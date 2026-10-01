@@ -317,3 +317,32 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "notes": "WHAT I DID AND DID NOT DO. I computed the record exactly as amendment 3 specifies, including the mechanical winner and the mechanical p90-to-5bp tolerance, because the order asks for them and `tieout_tolerance_proposed` is by its own name a PROPOSAL the CTO rules on. I did NOT quietly pick a different rule to get a better-looking number, and I did NOT write the preferred convention into the served method row -- amendment 3 forbids that and the served flow_convention stays END. WHAT I RECOMMEND, for the CTO's ruling: (1) do NOT adopt 2.90% as the tie-out bar. (2) Compare like day sets instead: either restrict the tie-out to periods where Opal withholds NO day (on this evidence that is zero of five periods, which is itself the finding), or have Black Diamond's own return recomputed over Opal's eligible day set, which the vendor API cannot do, or accept that the tie-out measures COVERAGE rather than AGREEMENT and rename what it reports. (3) Treat flow_convention_preferred as UNDETERMINED on this round rather than START: one discriminating day cannot rank three conventions, and recording START as 'preferred' invites a later reader to treat it as measured. (4) The enrichment that would actually settle it is a period set chosen for flow-bearing eligible days -- which needs either a tolerance wide enough to keep a large-flow day MEASURED, or the signed-basket instrument PRD ruling 20 names, and both are rulings rather than cell work. NOT CLAIMED: that either producer is wrong. The measured difference is explained by which days each one counts, and I have not found an arithmetic defect in this comparison."
 }
 ```
+
+
+## IRPT_DASHBD-S11 -- correction to my own row S10: START and MIDPOINT are identical on THREE of five periods, not all five; it is their MEDIANS that tie
+
+```json
+{
+  "id": "IRPT_DASHBD-S11",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.4.0_DS_ClientPlatform~S",
+  "surfaced_at": "2026-10-01T15:20:00Z",
+  "one_line": "CORRECTION TO MY OWN ROW S10, filed as a row because the channel is append-only. S10 states that START and MIDPOINT are 'identical to nine decimals on ALL FIVE' periods. THAT IS FALSE: they are identical on THREE of the five -- exactly the three with no eligible flow day -- and they differ on both periods starting 2026-03-16 (START -9.7580% against MIDPOINT -9.7872% on the 06-30 end, and -5.8650% against -5.8954% on the 08-28 end). What IS identical is their per-convention MEDIAN, 0.016754038 for both, and that is the fact that matters: the median of five values lands on one of the non-discriminating periods, so the tie between the two conventions is produced by the summary statistic rather than by the returns agreeing. S10's FINDINGS ARE UNCHANGED and this detail arguably sharpens them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE FIVE PERIODS AS THE RECORD STATES THEM, START against MIDPOINT: 0027265115 2026-03-16..2026-06-30 -> -0.097580 vs -0.097872 (DIFFER); 0027265115 2026-03-16..2026-08-28 -> -0.058650 vs -0.058954 (DIFFER); 0027265115 2026-04-08..2026-06-30 -> -0.098772 vs -0.098772 (identical); 0027265115 2026-07-01..2026-08-28 -> +0.043139 vs +0.043139 (identical); 0076459710 2026-07-08..2026-08-28 -> +0.091259 vs +0.091259 (identical).",
+      "THE TWO THAT DIFFER ARE EXACTLY THE TWO THAT CONTAIN THE ONE ELIGIBLE FLOW DAY (2026-03-25, account 0027265115, flow $448,559.28). The three that are identical are the three S10 already names as having ZERO eligible flow days. So the pattern is not a coincidence that weakens S10 -- it is S10's own mechanism showing through at period grain.",
+      "THE MEDIANS, which is what I actually read: per_convention_summary medians are START 0.016754038 and MIDPOINT 0.016754038, equal; END 0.016972979. With five periods the median is the third-smallest difference, which falls on 0027265115 2026-07-01..2026-08-28 -- a period with no eligible flow day, where all three conventions are the same number by construction. The tie is therefore an artifact of WHICH period the median selects.",
+      "HOW THE ERROR HAPPENED, because the mechanism is more useful than the correction: I read the per-convention SUMMARY (three identical medians, p90s and maxes) and stated it as a PER-PERIOD fact. The summary was true; the sentence I derived from it was about a different grain. It is the same wrong-grain move as reading a day-level census as an account-level claim, and CLAUDE.md rule 24 (ii) names the axis -- SAME GRAIN -- that it crosses."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "My own row IRPT_DASHBD-S10, as committed: 'START and MIDPOINT are identical to nine decimals on ALL FIVE' and, in the same row, 'START and MIDPOINT are identical to nine decimals on all five periods'.",
+  "world_is": "They are identical on three of five periods and differ on two. The per-convention medians are identical, which is the real and more interesting fact: the statistic that ranks the conventions is computed at a grain where two of them cannot differ. Everything else in S10 stands as measured -- 10 flow-bearing account-days with 1 eligible, three periods with zero, START's median margin of 0.000218941 resting on a single day, and the abs_diff being dominated by the day-set mismatch rather than by arithmetic.",
+  "notes": "ALSO CORRECTED IN THE SAME TURN, and found by the same check: the one-page md's first table row carried the 2026-04-08 period's returns against the 2026-03-16..2026-06-30 label, with invented day counts (69/73 and 4 gaps instead of the record's 65/73 and 8). I caught both by printing every cell of the table from the record before committing the md rather than trusting what I had typed. The JSON record was correct throughout -- only my prose copies were wrong, which is the argument for the record being the artifact and the md being a view of it. NO ACT IS OWED BY ANOTHER SEAT on this row."
+}
+```
