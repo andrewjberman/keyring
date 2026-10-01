@@ -68,4 +68,41 @@ validated offline.
 
 ## CTO half -- 1.0.0_SA_CTO
 
-(owed)
+SIGNED, 2026-10-01T15:13Z, on the pre-signature blob `3bb44f8e03` (@e5a8cab669). The legs, the stops and the write set stand as written: at most
+ONE liveness read, at most ONE operator sign-in, ONE upload and ONE Multi-Comp submission, no retry, a 60-minute deadline.
+
+VENDOR AUTHORITY, read from the records by this seat and stated so the basis is not the runner's one-line citation:
+
+- The host's calls (sign-in and maintenance, the report-generation calls, the sessionless lookups of the upload flow):
+  Andrew's standing word of 2026-09-23, item 3
+  (`org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260923_IRPT_SPEED_RECS_AND_ALWAYS_ON_YCHARTS_HOST_APPROVED.md:38-39`).
+  It names no report variant.
+- The attempt: his words of 2026-09-27, "yes you can run as many analysis attempts as needed". That record's own summary
+  describes K5 as "one Overview submission", which was the attempt in hand that day; his words say analysis attempts. This
+  half reads a Multi-Comp attempt as one of them, with the same bounds (one upload, one submission, no retry).
+- The comparison itself: his YES of 2026-09-27 ~19:5xZ, call 1, that Comparison and Multi-Comp reports may compare a portfolio
+  against Opal's model portfolios for firms that already see those models.
+No call outside those three is made in this window. The uploaded file is the two-ticker test portfolio, not a client's.
+
+Read by this seat (15:1xZ, reads only):
+
+- The st9 install output: running root `481166a8f2-st9` since 14:59:17Z; `resident_worker` `49305eeb90d80034`, `recipe`
+  `3a4e58515476b841` with `READ_BACK_POLLS` 1; library `9511060e04f45b51` unchanged; queue 0/0. These equal the digests this seat
+  took from the package bytes at 14:53Z.
+- The two host scripts' sha256 in the repo: `d3fef0997c999014` and `c2ec45793fbfbabe`, as the packet names them.
+- The catalogue (`ycharts/generate/templates.json`): `opal_short_term` (P:1728415) and `opal_intermediate_term` (P:1728315),
+  both `live_proven`, admission `IDENTITY_VERIFIED_ENTITLEMENT_GRANTED_M_VALIDATED`; the variant is derived from the key count.
+- The runner `e3_multicomp_run.sh`: the hop-8 runner with this window's folder, the st9 root and the two keys.
+
+Named by this half in addition:
+
+1. IF THE SUBMISSION IS REFUSED ON PERMISSION for Cottonwood (the firm does not see those models), that is the answer and the
+   attempt is over: no other firm and no other keys are tried in this window.
+2. THE OUTCOME QUOTES EVERY RECEIVE with its time and status answer (the st9 half's item 1), and the two stops of that half
+   apply unchanged: one redrive of a still-calculating dead-letter; a challenged single read withdraws E2.
+3. A READY Multi-Comp is NOT called live by anyone until `3.0.0_SA_CVO` grades the artifact and `2.0.0_SA_COO~D` walks it, as for
+   the Overview.
+4. Not verified by this seat: `hop8_run.sh`'s leg refusals, the offline validation of the K5 body, and that the session is
+   live (leg P reads it).
+
+-- 1.0.0_SA_CTO
