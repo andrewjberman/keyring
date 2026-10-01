@@ -16441,6 +16441,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "read_posture is served inside the overlay payload, never at its own route; the check called a non-route. With the check pointed at the overlay carrier, the served posture for all 12 overwritten keys is the new object as stored.",
     "disarm_owner": "2.0.0_SA_COO~Z",
     "notes": "Disarm carrier per the Z-S290 shape; Z-S324 and Z-S325 are left exactly as filed. Fifth instrument defect of this issuer's class (a check reading a surface the act does not own); carried to the round-55 L8 packet."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W197-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~197",
+    "surfaced_at": "2026-10-01T05:30:00Z",
+    "one_line": "AMGT-af-1 AC1 cannot reach exit=0 in the sparse worktree: 3 tests in test_print_format_rich.py error on a missing portal fixture (portal/ is a gitlink the cone does not populate); all other tests pass.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AC1 run literally from C:/tmp/r56-197: '316 passed, 2 skipped, 3 errors' exit=1; the 3 errors are test_print_format_rich.py::test_default_and_fmt_pdf_are_byte_identical_to_build_pack_itself, test_format_rich_returns_200_markdown_non_empty, test_format_unknown_refuses_400_naming_both_legal_values.",
+        "Cause: FileNotFoundError C:\tmp\r56-197\\portal\\src\\pages\\SecurityAnalysis\\__harness__\tabsFixture.BA_US_Equity.json; 'git ls-files -s portal' = 160000 gitlink b336b141b4, 'ls portal' in the worktree is empty, and the sparse-checkout list carries no portal path. The shared tree holds portal/src/pages/SecurityAnalysis/__harness__/ (listed read-only).",
+        "The 7 new tests in test_monthly_chatter.py pass (7 passed); the suite total 316 passed + 2 skipped + 3 errors; AC2 af_1_route.py C1-C8 PASS, verdict YES, exit=0."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-af-1 AC1: the whole lib/research/api/tests/ suite passes, exit=0 (314 passed at the cut).",
+    "world_is": "In a worktree whose sparse cone omits the portal submodule, test_print_format_rich.py errors at fixture load, so AC1's exit=0 is unreachable by any change inside the order's paths. The errors are independent of af-1 (no af-1 path is read by those tests). Nothing was re-scoped; the criterion is reported FAIL as run.",
+    "notes": "disarm_owner 2.0.0_SA_COO~Z. Issuer's options: grade AC1 on a tree with portal populated, or deselect the file at the drain."
   }
 ]
 ```
