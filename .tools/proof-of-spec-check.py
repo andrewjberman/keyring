@@ -220,6 +220,20 @@ def conditional_checks(inst: dict) -> list[str]:
 PENDING_SENTINEL = "PENDING-THIS-COMMIT"
 _COMMITISH_RE = re.compile(r"^[0-9a-f]{7,40}$")
 _REPO_ROOT = Path(__file__).resolve().parent.parent
+_WORD_BYTE = re.compile(rb"[A-Za-z0-9_]")
+
+
+def _token_present(tok: str, blob: bytes, whole_word: bool) -> bool:
+    """Is `tok` in `blob`? whole_word=False is the byte-substring test. whole_word=True refuses a match that sits
+    inside a longer word: where an edge of the token is a word character (letter, digit, underscore), the byte
+    beside that edge may not be one. An edge that is not a word character carries no boundary, so `--flag` and
+    `f(` match as they did."""
+    b = tok.encode("utf-8")
+    if not whole_word or not b:
+        return b in blob
+    pat = ((rb"(?<![A-Za-z0-9_])" if _WORD_BYTE.match(b[:1]) else b"") + re.escape(b)
+           + (rb"(?![A-Za-z0-9_])" if _WORD_BYTE.match(b[-1:]) else b""))
+    return re.search(pat, blob) is not None
 
 
 def artifact_resolution_check(inst: dict, inst_path=None) -> tuple[list[str], list[str]]:
@@ -276,7 +290,12 @@ def artifact_resolution_check(inst: dict, inst_path=None) -> tuple[list[str], li
             return (f"artifact-resolution/content: {path!r} at {where} LACKS the token(s) the row says it "
                     f"introduces: {missing} -- the pin exists but does not carry the change (88109 class)")
         if parent is not None:
-            already = [t for t in tokens if t.encode("utf-8") in parent]
+            # ESTATE_GOVERNANCE-S13 (re-filed from NFRA_CLDGRPH-W2-S19): the parent test was a byte-substring test, so
+            # `connect` read as ALREADY PRESENT because the parent held `connection`, and a real introduction was
+            # refused. A token that stands as a WHOLE WORD at the pin is now looked for as a whole word at the parent;
+            # a token found at the pin only inside a longer word keeps the substring test on both sides. Nothing that
+            # passed before is refused by this, and a pass still needs the token to be new in the form it has here.
+            already = [t for t in tokens if _token_present(t, parent, _token_present(t, here, True))]
             if already:
                 return (f"artifact-resolution/content: {path!r}: token(s) {already} are ALREADY present at the "
                         f"parent of {where} -- not introduced here; the row pins a commit that did not make the change")
