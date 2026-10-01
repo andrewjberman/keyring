@@ -917,3 +917,32 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Nothing was updated or run; the act is unsigned. Cites MDPF_SECCLASS-W10-S1 and -S4."
 }
 ```
+
+
+## MDPF_SECCLASS-S6 -- seven tests of the deploy tool have failed since its 2026-08-30 change; SC-e13 caused none of them
+
+```json
+{
+  "id": "MDPF_SECCLASS-S6",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-01T07:50:00Z",
+  "one_line": ".tools/test_safe_deploy.py reads 7 failed, 7 passed, and reads the same with the tool as it stood before SC-e13 (f136b6f559~1): four tests get INDEX_MISSING because their files sit outside the workspace and have no index entry, three raise TypeError 'Strings must be encoded before hashing'. Both come from the 2026-08-30 change that made safe-deploy upload the index blob (3d9eb2931d); the test file was last changed 2026-07-12 (d7359a797e).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Tool and test extracted with git show into one scratch folder and run with python -m pytest, 2026-10-01 07:2xZ: at f136b6f559~1 (SC-e13's parent) 7 failed, 7 passed; at CLOUD HEAD 7 failed, 7 passed; the same seven test names in both runs.",
+      "Failing tests: test_pass_gold_deploy, test_fail_nodeploy, test_fail_partial, test_fail_sha_mismatch (INDEX_MISSING: '<temp file> is outside the workspace; no index entry'); test_serve_release_authorized_with_ack, test_author_enumeration_notice, test_no_regression_clean_deploy (TypeError: Strings must be encoded before hashing, safe_deploy_core.py index_md5 line).",
+      "git log on .tools/safe_deploy_core.py: 3d9eb2931d (0.7.0_AE_CloudOps~K, 2026-08-30) 'safe-deploy uploads the INDEX BLOB and asserts the ETag'; git log on .tools/test_safe_deploy.py: newest commit d7359a797e, 2026-07-12.",
+      "Record: org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/RULING7_STALE_ROWS_REMEASURE_20261001.md; supersedes the count-only row MDPF_SECCLASS-W10-S3."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "1.0.0_SA_CTO round-6 ruling 5 and rulings batch 68 item 5: split the failures SC-e13 caused from the ones it inherited; the inherited ones are one row by 2.0.0_SA_COO~M and do not hold the round.",
+  "world_is": "SC-e13 caused 0 of the 7. The deploy tool's own test file has been half red for a month: its fixtures build temp files with no index entry and hand the tool strings where it now hashes index bytes. The real deploy path is unaffected (nine keys deployed today with every ETag equal to the index blob's md5).",
+  "notes": "Owner of the repair: the deploy tool's lane (0.7.0_AE_CloudOps, dark); it un-parks when an AE seat is live or the tool next changes. Not fixed here: the ruling asks this seat to fix only what SC-e13 caused, which is nothing."
+}
+```
