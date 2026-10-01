@@ -64,8 +64,10 @@ to the custody total and every other field unchanged from the before-read (the h
 
 ## Next-list, in order
 
-1. **Release the candidate**: two pins in `lambda-source-map.json` (`irpt-holdings`: `snapshot.py`, the contract),
-   build, `safe-apply`, after-read. Gates: the CTO half; 2.0.0_SA_COO~P's leg F5 closed.
+1. **Release the candidate.** 2.0.0_SA_COO~P runs it (its msg 103486): CTO batch 61 @8dcf5bbe7a item 2(d) makes
+   `irpt-holdings` a whole bundle at CLOUD HEAD under ~P's packet, which carries this seat's two members
+   (`snapshot.py`, the contract). This seat does not touch `lambda-source-map.json`. This seat's part: read ~P's
+   member census against the live zip when it arrives, then the after-read on the page. Gate: the CTO half.
 2. **H5** at the 2026-10-01 14:15Z `irpt-holdings-snapshot` fire: PHYS reads commodities / Metals on the Holdings
    page, and each firm's served CATEGORY names; then close the IRPT legs of ledger
    `secclass-bd-thread-r2-and-irpt-narrowed-m-20260930`. Goal criterion 3 is re-read on the same publication.
@@ -78,7 +80,7 @@ to the custody total and every other field unchanged from the before-read (the h
 | Needs | From (owner) | Interface / pin | State |
 |---|---|---|---|
 | CTO half on the release | `1.0.0_SA_CTO` | the half file at the merge commit | ASKED with this merge |
-| Leg F5 of ledger `irpt-service-principal-boundary-served-20261001` closed (same function; this act's BEFORE zip is that act's AFTER zip) | `2.0.0_SA_COO~P` | the ledger file | AWAITED: read from the file |
+| The whole-bundle `irpt-holdings` release, with its member census sent to this seat before the halves are asked | `2.0.0_SA_COO~P` | ~P's packet, citing the half file @9a3eef4cb1 | AWAITED (~P 103486; leg F5 was withdrawn from ~P's first packet and reopens in this one) |
 | The page consumes the three blocks (W2-11 rows, W2-15 totals) | `2.0.0_SA_COO~D` | docs contract @cc99dea562 | PUBLISHED with this merge |
 | `infra/aws/lambda/investor-reporting/_contracts/HoldingsSnapshot.schema.json` gains the three properties | `2.0.0_SA_COO~P` (issuer of open order IRPT_DASHBD.TO-DB-b-4, whose `<paths>` hold `_contracts/`) | docs contract @cc99dea562 | AWAITED; no reader of the route's response validates against that copy |
 
