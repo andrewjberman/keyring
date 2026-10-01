@@ -3146,6 +3146,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "The stamped hash is stale against the generator's scoped registry (a registry change landed after the restamp, or the restamp read a different scope).",
     "notes": "OWNER: AMGT_RESAPP, lane 2.0.0_SA_COO~Z (the file is RESAPP's AMGT-zz-4 / rk-92 surface; round-26 analysis ruling 4). Routed by this row and one message; not a CORPUS cell. Filed by the round-27 direct act CRPS-ac-3.",
     "disarm_owner": "2.0.0_SA_COO~Z"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W1-S25",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-09-30T17:00:00Z",
+    "one_line": "The ruled ZERO-DOMINATED rule (strictly more than half exact zeros, any key) moves 334 other figures (EQY_DPS 167, IS_DIV_PER_SHR 167: PER SHARE -> ZERO-DOMINATED) and breaks test_a_mostly_zero_dividend_yield_still_reads_percent (4 of 5 zeros pinned PERCENT); I exempted the dividend fields, which AC1 and AC2 forced.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ac1_check.py with the rule unexempted: TRANS EQY_DPS PER -> ZERO-DOMINATED 167; TRANS IS_DIV_PER_SHR PER -> ZERO-DOMINATED 167; other_unit_changes 334",
+        "ac1_AC2.sh with the rule unexempted: 1 failed, 63 passed (test_build_unit_map_series_round26.py::test_a_mostly_zero_dividend_yield_still_reads_percent: ZERO-DOMINATED 4 of 5 vs PERCENT)",
+        "after the exemption: ac1 other_unit_changes 0 bands_unchanged True; ac1_AC2 64 passed"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Ruling item 1: any key with strictly more than half exact-zero fiscal years reads ZERO-DOMINATED; item 2: every other key byte-unchanged; the round-26 suites stay green.",
+    "world_is": "The dividend keys are mostly zero legitimately (a zero payout, whose unit ZERO_VALUE_UNIT_FROM_BASIS defines from FIELD_BASIS), so the literal rule reclassifies them. build_unit_map.py zero_dominated_counts therefore skips ZERO_DOMINATED_EXEMPT = the ZERO_VALUE_UNIT_FROM_BASIS keys (EQY_DPS, IS_DIV_PER_SHR, BEST_DPS, BEST_DIV_YLD) plus EQY_DVD_YLD_IND (pinned by the round-26 test).",
+    "notes": "The exemption set is my reading, not ruled; the issuer may widen, narrow or drop it (one frozenset in build_unit_map.py).",
+    "disarm_owner": "2.0.0_SA_COO~X"
   }
 ]
 ```
