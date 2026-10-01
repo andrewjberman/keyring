@@ -5599,6 +5599,29 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "Restarting the ft driver re-arms both rows; do it only after the round-36 fix lands."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W91-S18",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~91",
+      "surfaced_at": "2026-10-01T20:30Z",
+      "one_line": "HVST-ai-3: ft/sa/barrons captures land under the code's DEFAULT runtime root, not under the per-publisher runtimes.json dir; ft's in-tab fetch has no challenge page to read, so its capture is the refused body.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Order cell 1.1-1.2: capture 'where the page is the challenge (the tab), the rendered DOM; for a REST refusal (sa), the response body'; status CLI 'reads the runtimes in runtimes.json'.",
+      "world_is": "(a) challenge_capture._runtime_root derives the root from the tab profile or default_profile_root().parent (config.json runtime_root), never from a driver's --runtime-root; the 4 bbg captures sit in .runtime/opal-data-harvest although runtimes.json names .runtime/opal-data-harvest-bbg for bbg, so the status CLI reads EVERY runtimes.json dir plus the config default and matches by publisher filename prefix. runtimes.json has no barrons key; sa's path is another worktree's. (b) ft is a TabSession but PacedSession.get reads the response of an in-page fetch (the tab page itself is not the challenge), so ft/sa captures are provenance source captured_refusal_body (sanitized body); the rendered DOM is taken only when the tab page's own content carries a bot-check signature. (c) the transport hook is skipped while PYTEST_CURRENT_TEST is set unless a test pins capture_root, so the suite's stub challenges never land in a live runtime. verification.py is in <paths> and was not changed.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/challenge_capture.py runtime_dirs/capture_refusal",
+          "lib/opal_data_harvest/transport.py PacedSession._capture_challenge",
+          "lib/opal_data_harvest/tab_transport.py TabSession.get",
+          "main-tree status read: bbg captures=4 under .runtime/opal-data-harvest"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "No hazard; recorded so a reader of limb_2b does not look for ft/sa/wsj captures under the per-publisher runtime dir."
     }
   ]
 ```

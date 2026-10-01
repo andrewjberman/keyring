@@ -78,7 +78,7 @@ honest state until a DataDome capture exists. The issuer grades AC1 by reading t
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>open</status>
+<status>complete</status>
 <round>36</round>
 <slot>~91</slot>
 <fabric>site-z</fabric>
