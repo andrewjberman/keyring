@@ -77,3 +77,7 @@ issuance tree.
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-01 ~10:0xZ):** ACCEPTED. Executor proof `174cf144e9` (AC1, AC2 PASS; entry CLOSED; artifact RhEQ661... -> hj5ITKr5Ct9Mn3ySEvztrK9eG.bnsHho; CodeSha256 /HInwjrn... -> g9H0TW2g...). The BLIND classifications read measured ALLOWED off the deployed body (classification 7 / crosswalk 63 / ticker 25). Issuer's independent read 09:5xZ: names YES, regression YES (`round58/ah2_issuer_*_read.out`).
+
+<status>complete</status>
