@@ -802,18 +802,33 @@ try {
           if (left) findings.push({ step: `search-${client}`, check: 'walker:input-not-cleared', claim: 'measured', observed: `the search box still held "${left}" before typing`, rule: 'each search starts from an empty box' })
           await combo.pressSequentially(client, { delay: 40 }).catch(() => {})
           const typedAt = Date.now()
-          await page.waitForTimeout(2500)
-          await checks(page, `search-${client}`)
-          // How long the typed search takes to ANSWER (the box stops reading "Loading"), up to SEARCH_ANSWER_CEILING_MS.
-          // The 2.5 s shot above is what a person sees first; this is when the list is the typed query's own.
+          // Two times, from the last keystroke: when the list FIRST holds an option carrying every typed token
+          // (the client is findable), and when the search has ANSWERED (the box stops reading "Loading"), each up to
+          // SEARCH_ANSWER_CEILING_MS. The usual screenshot is taken once, at 2.5 s: what a person sees first.
+          const typedTokens = client.toLowerCase().split(/[\s,&]+/).filter(Boolean)
+          let firstMatchMs = null
           let answeredMs = null
-          while (Date.now() - typedAt < SEARCH_ANSWER_CEILING_MS) {
-            const busy = await page.evaluate(() => /Loading/.test((document.querySelector('[role="combobox"][aria-label="Client search"]')?.closest('div')?.parentElement?.innerText) || '')).catch(() => false)
-            if (!busy) { answeredMs = Date.now() - typedAt; break }
-            await page.waitForTimeout(250)
+          let shotTaken = false
+          while (Date.now() - typedAt < SEARCH_ANSWER_CEILING_MS && (firstMatchMs === null || answeredMs === null)) {
+            const state = await page.evaluate((tokens) => {
+              const box = document.querySelector('[role="combobox"][aria-label="Client search"]')
+              const listId = box ? box.getAttribute('aria-controls') : null
+              const list = listId ? document.getElementById(listId) : null
+              const options = list ? [...list.querySelectorAll('[role="option"]')].map((o) => (o.textContent || '').toLowerCase()) : []
+              return {
+                busy: /Loading clients/.test(document.body.innerText || ''),
+                matched: options.some((o) => tokens.every((t) => o.includes(t))),
+              }
+            }, typedTokens).catch(() => ({ busy: true, matched: false }))
+            const elapsed = Date.now() - typedAt
+            if (firstMatchMs === null && state.matched) firstMatchMs = elapsed
+            if (answeredMs === null && !state.busy && elapsed > 400) answeredMs = elapsed
+            if (!shotTaken && elapsed >= 2500) { shotTaken = true; await checks(page, `search-${client}`) }
+            await page.waitForTimeout(200)
           }
-          searchTimings.push({ client_chars: client.length, answered_ms: answeredMs, ceiling_ms: SEARCH_ANSWER_CEILING_MS })
-          log('SEARCH ANSWERED', JSON.stringify(searchTimings[searchTimings.length - 1]))
+          if (!shotTaken) { await page.waitForTimeout(Math.max(0, 2500 - (Date.now() - typedAt))); await checks(page, `search-${client}`) }
+          searchTimings.push({ client_chars: client.length, first_match_ms: firstMatchMs, answered_ms: answeredMs, ceiling_ms: SEARCH_ANSWER_CEILING_MS })
+          log('SEARCH TIMING', JSON.stringify(searchTimings[searchTimings.length - 1]))
           if (answeredMs === null || answeredMs > 2500) await checks(page, `search-${client}-answered`)
           // Rank within THIS search's own listbox (aria-controls), never page-wide: the Firm <select> options also carry
           // role=option and sit earlier in the DOM (the same walk read "#5 of 17" for a client shown first of 13).
