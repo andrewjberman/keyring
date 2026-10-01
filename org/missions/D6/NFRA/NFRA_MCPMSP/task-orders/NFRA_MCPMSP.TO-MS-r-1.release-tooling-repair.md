@@ -85,7 +85,7 @@ status flip to complete as the LAST status tag only when all three pass.
 order of another project names `deploy-to-ec2.sh` or `tests/run_release_suites.sh`. Checks dry-run at base: AC1 FAIL
 as expected (script absent); AC2 FAIL as expected (flag undeclared, NOT executed -- the guard held).
 
-<status>complete</status>
+<!-- status history: complete @95603d3005 (merged ae2bceeeda); re-opened by AMENDMENT 1 @5962217f50 -->
 <round>2</round>
 <slot>~5</slot>
 <fabric>site-z</fabric>
