@@ -5427,3 +5427,82 @@ name the one known failure instead of silently inheriting it.
   "notes": "The host .env is not safe to source in a shell (unquoted lines 14, 15, 25, 35); read it via the service environ instead."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-01T02:30Z",
+  "one_line": "OG-tx-1 clause 6 (audit carries meeting and transcript ids) cannot use the audit module's per-tool args allowlist, because app/audit.py is outside the order's paths; the ids ride the audit record's detail field instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/audit.py _safe_args: a tool absent from _ARGS_ALLOWLIST has its args replaced by {'_omitted': 'args fail-closed (tool not in R8-PRIV allowlist)'}; none of find_online_meeting, list_meeting_transcripts, read_meeting_transcript is declared there, and audit.py is not in the order's <paths>.",
+      "app/tools.py _run gained an optional audit_detail argument; the two id-bearing tools pass 'meeting_id=<id> transcript_id=<id>', so every ok and error audit record carries the ids in `detail` and no text (test_audit_carries_ids_never_text, 8 of 8 pass).",
+      "Full gateway suite on this branch: 19 failed, 35 errors; the sampled failures (test_ogz1_ac05, test_ogz1_ac08, test_principal_cutover x11) reproduce identically on a git-archive of HEAD without this change, and test_ogz2_ac06 (operator-admin put count 4 vs 3) touches no tool code."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-OG-tx-1 clause 6: the audit record carries meeting id and transcript id, never transcript text.",
+  "world_is": "The ids are in the audit record's detail string, not in a structured args field; a structured args field needs a _ARGS_ALLOWLIST entry for each tool ({'meeting_id'}, {'meeting_id','transcript_id'}) in app/audit.py, a privacy decision the CVO co-verifies per that file's header.",
+  "notes": "Not blocking: the clause is met as written. If the structured form is wanted, it is an audit.py edit under its own order; the detail carrier then becomes redundant."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S6",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-01T02:50Z",
+  "one_line": "tx1.AC2 (and ml1.AC2) run `pytest tests/test_entitlement_admin.py` as a WHOLE FILE and demand rc 0, but test_ogz2_ac06 in that file already fails at HEAD~1 (4 puts vs 3), so AC2 reads FAIL although test_ogz2_ac08 passes after the +3 count bump.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/trnspt/checks/tx1.AC2.sh at 9fcd257fbd -> `REG 3 of 3; SCOPES same` then `pytest rc=1; named tests passed 0 of 1; failed/error lines 1`, RESULT: FAIL, exit=1.",
+      "python -m pytest tests/test_entitlement_admin.py -v at 9fcd257fbd -> `1 failed, 8 passed`; test_ogz2_ac08 PASSED, test_ogz2_ac06 FAILED (`expected profile + grant + operator_audit puts, got 4`; the fourth put is the POLICY#EMAILDENY# record of row W3-S22).",
+      "Same file extracted from git archive of HEAD~1 (the commit before this cell's change) with org/standards/NFRA_OPLGTW_CONTRACT.json: `1 failed, 8 passed`, the same test_ogz2_ac06 failure. The cell's change does not cause it.",
+      "_root.sh pytest_named runs the whole file (`python -m pytest <file> -v`), requires rc 0 and failed/error lines 0, and uses its second argument only to count a PASSED line; the check never selects the named test. ml1.AC2.sh line 15 has the same shape."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-OG-tx-1 AC2: `test_ogz2_ac08` passes after the three tools are added; expect `REG 3 of 3; SCOPES same ... RESULT: PASS ... exit=0`.",
+  "world_is": "The three tools are in both lists, the 17 scopes are unchanged and test_ogz2_ac08 passes (asserts 58). The check's rc=0 limb fails on an unrelated test in the same file; AC2 cannot be met as written from the order's own paths (test_ogz2_ac06 is in test_entitlement_admin.py, whose edit grant is the ac08 count bump).",
+  "notes": "Smallest remedies, issuer's choice: select the test in the check (`pytest <file>::<test>`), or update test_ogz2_ac06 to expect the fourth EMAILDENY put (a second edit to test_entitlement_admin.py, which this order's paths already name). The order is left OPEN; this worker did not edit the check or ac06."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S7",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-01T03:05Z",
+  "one_line": "Second defect in tx1.AC2 (and ml1.AC2), independent of Z-W15-S6: _root.sh pytest_named looks for `::test_ogz2_ac08 PASSED` on one line, but that test prints through capsys.disabled(), so its PASSED lands on a later line and the check counts 0 of 1 even when the test passes.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest tests/test_entitlement_admin.py::test_ogz2_ac08 -v -s at a7c70dc5b2 -> `1 passed`; the verbose output reads `tests\test_entitlement_admin.py::test_ogz2_ac08 ` then, lines later after the OGZ2-AC8 printout, a bare `PASSED`.",
+      "bash tx1.AC2.sh at a7c70dc5b2 -> `pytest rc=1; named tests passed 0 of 1; failed/error lines 1`: p=0 because the grep `::test_ogz2_ac08(\\[.*\\])? PASSED` never matches, and rc=1 because of Z-W15-S6's test_ogz2_ac06.",
+      "Same pytest_named in ml1.AC2.sh line 15 for the same test."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-OG-tx-1 AC2: `named tests passed` reads 1 of 1 for test_ogz2_ac08 once it passes.",
+  "world_is": "Fixing Z-W15-S6 alone leaves AC2 at `named tests passed 0 of 1`. Either the check selects the test and reads rc plus the `1 passed` summary instead of a per-line PASSED, or the test stops printing between its name and its verdict. Neither file is in this order's paths except test_entitlement_admin.py.",
+  "notes": "The order stays OPEN with AC2 FAIL. The three tools are in both lists (REG 3 of 3), the 17 scopes are unchanged (SCOPES same) and test_ogz2_ac08 passes at 58; only the check's two readings of the file are wrong."
+}
+```
