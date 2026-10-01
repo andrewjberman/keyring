@@ -460,6 +460,95 @@ Worker rows carry their slot's coordinate, `MDPF_TAXSMA-W<n>-S<k>`; a seat's row
     "spec_asserts": "TX-a-2 AC6 and the contract's artifacts list: the consolidator writes a category Gold parquet per scope at its LGIC address.",
     "world_is": "The served category-views already carry the Tax status extension from the existing canonical Gold; a second copy at a new home is a duplicate output path (CLAUDE.md NEVER) of an existing pipeline, whose LGIC conformance is its own migration project (Rule 30 non-application, R19).",
     "notes": "For the CTO at the round analysis: either strike artifacts.firm_category and global_category from the contract, or re-point the publisher's source to them as one migration. Not written meanwhile."
+  },
+  {
+    "id": "MDPF_TAXSMA-S10",
+    "project": "MDPF_TAXSMA",
+    "fabric": "laptop",
+    "surfaced_by": "0.0.0_AB_MSTR",
+    "surfaced_at": "2026-10-01T01:55Z",
+    "one_line": "S7's stated disarm ran (the shared tree was integrated with origin/CLOUD at merge 68e15a70df and pushed) and its four destroys are gone, but the opal-gateway root still cannot plan clean from the laptop: a live role created at 01:17:40Z by an applier whose commit is on no origin ref now plans as three destroys.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.0.0_AB_MSTR",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Merge 68e15a70df (0.0.0_AB_MSTR, 2026-10-01 01:36Z): origin/CLOUD 85a765dbcd into laptop CLOUD, safe-merge tree check 1939 files needed, 0 dropped, 0 foreign; pushed, origin/CLOUD 68e15a70df by ls-remote 01:4xZ.",
+        "4.0.0_SA_CRO msg 103416: plan of infra/aws/terraform/opal-gateway from the shared tree @2bccdd60d3 at 01:42Z, saved, not applied -- 2 to add (TX-i-3's), 1 to change, 3 to destroy: aws_iam_role.int_reader, aws_iam_role_policy.int_reader, aws_iam_role_policy.gw_assume_int_reader; live role gateway-global-internal-reader-role CreateDate 2026-10-01T01:17:40Z; no commit on any fetched ref names it; the change is aws_lambda_function.mcportal_grant_writer source_code_hash.",
+        "0.0.0_AB_MSTR~Z census (bus 978b9bd5, 00:52Z; org/tier0_exec/0.0.0_AB_MSTR/deliverables/SITEZ_LANDMINE_CENSUS_20261001_0052Z.md): site-Z CLOUD 118 ahead of origin, and its own opal-assets plan showed 1 destroy of a laptop-applied policy -- the mirror of this row, in the other direction."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S7's notes: integrating origin/CLOUD into the shared tree disarms the opal-gateway hazard for every laptop seat.",
+    "world_is": "The integrate removed the stale-tree cause and S7's four destroys, but not the hazard class: the root has appliers on both devices, each applying from a tree that lacks the other's unpushed commits, so a clean plan lasts only until the next apply on the other device. S7 is superseded by this row, not closed.",
+    "notes": "Cites MDPF_TAXSMA-S7 (append-only; S7 is not edited). Disarm of THIS instance: the site-Z applier's int_reader config reaches origin and the laptop pulls it; asked of 0.0.0_AB_MSTR~Z on the bus (279089b3). The standing shape goes to Andrew as a finding. Nothing applied on that root by any laptop seat; TX-i-3's two resources are moving to the mdpf-pipeline root (4.0.0_SA_CRO)."
+  },
+  {
+    "id": "MDPF_TAXSMA-S11",
+    "project": "MDPF_TAXSMA",
+    "fabric": "laptop",
+    "surfaced_by": "4.0.0_SA_CRO",
+    "surfaced_at": "2026-10-01T01:10Z",
+    "one_line": "No cell wires the Tax route's bearer or identity into the Gateway's .env: infra/aws/ec2/opal-gateway/deploy-to-ec2.sh carries 0 TAXSMA lines (shared tree and origin/CLOUD), it rewrites .env whole on every deploy, and no order's <paths> grants that file for this.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "grep -c TAXSMA on deploy-to-ec2.sh: 0 at local CLOUD and 0 at origin/CLOUD (2026-10-01T01:0xZ); the script's MS_INGEST_BEARER block is the pattern a Tax block would follow (fetch from Secrets Manager on the box, printf into .env).",
+        "Gateway host read 2026-10-01T01:25:43Z (SSM 54f67ddf-4924-4044-a1a5-32d4cd9f0762): app/taxsma_workbook.py ABSENT, 0 route lines in server.py, 0 TAXSMA_WORKBOOK_ keys in .env.",
+        "Path grants: TX-g-2 names deploy-to-ec2.sh only to bundle the module; TX-r-2 names EC2_MANIFEST.json and the ledger; TX-r-3 names the ledger only."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TX-r-3 AC2: TAXSMA_WORKBOOK_IDENTITY holds the bound principal in protected configuration and the route's bearer reaches the Gateway, across deploys.",
+    "world_is": "A value placed in the host's .env by hand is erased by the next deploy of any project; with no script lines the route stays UNAUTHORIZED_CAPABILITY / AUTH_REQUIRED after every release.",
+    "notes": "Close, this lane under the FAST lease: two lines in deploy-to-ec2.sh on origin's version (bearer from gateway/global/taxsma-workbook-token, identity from the activation record), shipped with the narrow Gateway release. Blocks TX-r-2's value and TX-r-3."
+  },
+  {
+    "id": "MDPF_TAXSMA-S12",
+    "project": "MDPF_TAXSMA",
+    "fabric": "laptop",
+    "surfaced_by": "4.0.0_SA_CRO",
+    "surfaced_at": "2026-10-01T01:23Z",
+    "one_line": "infra/aws/ec2/verify-ec2.sh --ssm reports 'All checked services are in sync' with rc 0 when it checked NOTHING: with jq off PATH it prints 0 checked; with jq on PATH it reports the Gateway 'unreachable via SSM' (Skipped 1) while the instance is running and its SSM agent Online.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.7.0_AE_CloudOps",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Run 2026-10-01T01:22Z from a seat shell: 'line 353: jq: command not found', 'Results: 0 checked', 'All checked services are in sync.', rc 0.",
+        "Run 01:23Z with the vendored jq on PATH: 'Instance i-07dccb1615503ac99 unreachable via SSM -- parity NOT determined', 'Clean 0, Drift 0, Skipped 1', 'All checked services are in sync.', rc 0.",
+        "Same minute: ec2 describe-instances state running; ssm describe-instance-information PingStatus Online; a direct send-command to that instance succeeded at 01:25:43Z."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "cloud-ops rule 11: verify-ec2.sh is the drift check between local source and deployed code; exit 0 = all checked services in sync.",
+    "world_is": "Exit 0 and the words 'in sync' are returned for zero services checked and for a service it could not reach. A seat that reads the exit code or the last line is told the Gateway matches source when no file was compared.",
+    "notes": "Disarm, the tool owner's: exit non-zero when checked - skipped is 0; resolve jq through .tools/jq.exe and fail closed (CLAUDE.md rule 16); find why its own SSM call reads the instance unreachable. Not relied on by this project: the Gateway host was read by a direct checksum command."
+  },
+  {
+    "id": "MDPF_TAXSMA-S13",
+    "project": "MDPF_TAXSMA",
+    "fabric": "laptop",
+    "surfaced_by": "4.0.0_SA_CRO",
+    "surfaced_at": "2026-10-01T01:47Z",
+    "one_line": "The commit-time naming gate grades a REFERENCE to an existing role as a NEW out-of-pattern role name: a Terraform literal 'opal-gateway-role' (a data source's name, then a local) was refused twice, though the file creates no role.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit 2026-10-01T01:4xZ on infra/aws/terraform/mdpf-pipeline/iam.tf: 'NAMING REFUSE iam.tf:1255 opal-gateway-role -> gateway-role; why: NEW and OUT-OF-PATTERN as IAM_ROLE' for data \"aws_iam_role\" name, and again at :1257 for a locals string.",
+        "The role is live and declared by its owning root as \"${var.name}-role\"; the committed form @9db0981bd6 spells it the same two-part way and the gate passes it. The apply-time plan limb graded 51 names, 0 REFUSE."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "LGIC_ENFORCE DEC-6: a NEW name that the builder would not produce is refused.",
+    "world_is": "A cross-root reference to a legacy-named live resource cannot be written as one literal; it passes only when composed from parts, which is the same string with the gate unable to see it.",
+    "notes": "For the gate's owner: either read a data source's name and a `role =` operand as references, or admit names already on the live legacy list. The composed spelling in iam.tf is stated in its own comment, not hidden."
   }
 ]
 ```

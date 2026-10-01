@@ -1,0 +1,340 @@
+{
+ "measured_at_utc": "2026-10-01T01:17:49Z",
+ "account": "313476888478",
+ "region": "us-east-1",
+ "gold_function": {
+  "read_at": "01:17:51Z",
+  "CodeSha256": "5aKNH5WBvahMQ83fY0JaNMjOlqoq6pCANJHViLRFwZQ=",
+  "downloaded_sha256_b64": "5aKNH5WBvahMQ83fY0JaNMjOlqoq6pCANJHViLRFwZQ=",
+  "LastModified": "2026-09-22T15:19:28.000+0000",
+  "Runtime": "python3.11",
+  "Handler": "mdpf_gold_consolidator.lambda_handler",
+  "Role": "mdpf-gold-lambda-role",
+  "env_keys": [
+   "MDPF_GOLD_COMMIT"
+  ],
+  "env_pins": {
+   "MDPF_GOLD_COMMIT": "5991626d4f4e583383a2dba09927c2a319463fec"
+  },
+  "members": 24,
+  "taxsma_named_members": [],
+  "members_containing": {
+   "run_taxsma_prelude": [],
+   "apply_taxsma_overlay": [],
+   "tax_additive_aum": []
+  }
+ },
+ "publisher_function": {
+  "read_at": "01:17:51Z",
+  "CodeSha256": "7X50uR1HrGyeEHZ4FWyHBNwTxt/XXJq5GNmR/eFfWE0=",
+  "downloaded_sha256_b64": "7X50uR1HrGyeEHZ4FWyHBNwTxt/XXJq5GNmR/eFfWE0=",
+  "LastModified": "2026-08-29T01:01:04.000+0000",
+  "Runtime": "python3.12",
+  "Handler": "lambda_function.lambda_handler",
+  "Role": "opal-assets-mdpf-egress-publisher-role",
+  "env_keys": [
+   "EXTRA_EXPECTED_SCOPES",
+   "GOLD_BUCKET",
+   "GOLD_ROOT",
+   "MDPF_PUBLISHER_COMMIT",
+   "ROUTE_BINDINGS_SHA256",
+   "S3_REGION",
+   "SERVE_BUCKET",
+   "SERVE_ROOT"
+  ],
+  "env_pins": {
+   "MDPF_PUBLISHER_COMMIT": "c0902245b07438eb0be65cf5e28241d4be56aa38"
+  },
+  "members": 4,
+  "taxsma_named_members": [],
+  "members_containing": {
+   "TAXSMA_ROLLOUT_SWITCH": [],
+   "taxsma_extend": [],
+   "read_taxsma_control": []
+  }
+ },
+ "capability_secret": {
+  "read_at": "01:17:52Z",
+  "exists": false,
+  "error": "ResourceNotFoundException"
+ },
+ "iam": {
+  "read_at": "01:17:53Z",
+  "mdpf-49f-taxsma-role": {
+   "exists": true,
+   "created": "2026-10-01T00:05:18Z",
+   "trusts": [
+    {
+     "AWS": "arn:aws:iam::313476888478:role/mdpf-gold-lambda-role"
+    }
+   ],
+   "inline_policies": [
+    "mdpf-49f-taxsma-policy"
+   ]
+  },
+  "mdpf-cot-taxsma-role": {
+   "exists": true,
+   "created": "2026-10-01T00:05:18Z",
+   "trusts": [
+    {
+     "AWS": "arn:aws:iam::313476888478:role/mdpf-gold-lambda-role"
+    }
+   ],
+   "inline_policies": [
+    "mdpf-cot-taxsma-policy"
+   ]
+  },
+  "mdpf-gold-lambda-role:mdpf-gold-taxsma-policy": {
+   "exists": true
+  },
+  "opal-assets-mdpf-egress-publisher-role:mdpf-publisher-taxsma-control-read-policy": {
+   "exists": true
+  }
+ },
+ "tax_storage": {
+  "read_at": "01:17:55Z",
+  "workbook Bronze": {
+   "bucket": "opal-data-assets",
+   "prefix": "gateway/global/bronze/taxsma_workbook/",
+   "objects": 0
+  },
+  "workbook Silver": {
+   "bucket": "opal-data-assets",
+   "prefix": "gateway/global/silver/taxsma_workbook/",
+   "objects": 0
+  },
+  "49financial dispositions": {
+   "bucket": "opal-data-49financial",
+   "prefix": "mdpf/49financial/state/taxsma_membership/",
+   "objects": 0
+  },
+  "49financial taxsma_assets": {
+   "bucket": "opal-data-49financial",
+   "prefix": "mdpf/49financial/gold/taxsma_assets/",
+   "objects": 0
+  },
+  "cottonwood dispositions": {
+   "bucket": "opal-data-cottonwood",
+   "prefix": "mdpf/cottonwood/state/taxsma_membership/",
+   "objects": 0
+  },
+  "cottonwood taxsma_assets": {
+   "bucket": "opal-data-cottonwood",
+   "prefix": "mdpf/cottonwood/gold/taxsma_assets/",
+   "objects": 0
+  },
+  "control": {
+   "bucket": "opal-data-mdpf",
+   "prefix": "mdpf/global/state/taxsma_control/",
+   "objects": 0
+  }
+ },
+ "custodian_inputs": {
+  "read_at": "01:17:56Z",
+  "0833 fact_rps_s2": {
+   "prefix": "schwab/08335338/silver/fact_rps_s2/",
+   "september_partitions": 20,
+   "latest": "2026-09-29"
+  },
+  "0833 fact_acc": {
+   "prefix": "schwab/08335338/silver/fact_acc/",
+   "september_partitions": 20,
+   "latest": "2026-09-29"
+  },
+  "0824 fact_acc": {
+   "prefix": "schwab/08242234/silver/fact_acc/",
+   "september_partitions": 20,
+   "latest": "2026-09-29"
+  },
+  "Black Diamond cottonwood fact_holdings": {
+   "prefix": "blackdiamond/cottonwood/silver/fact_holdings/",
+   "september_partitions": 20,
+   "latest": "2026-09-29"
+  }
+ },
+ "served_documents": {
+  "read_at": "01:17:57Z",
+  "bucket": "opal-data-portal-v2",
+  "platinum/mdpf/49financial/category-views.json": {
+   "bytes": 4229,
+   "last_modified": "2026-09-30T13:50:50Z",
+   "as_of": "2026-09-29",
+   "tax_member_paths": [
+    "/nodes/SMA/children/ALT Strategies/members[1]"
+   ],
+   "has_taxsma_coverage": false,
+   "has_taxsma_contract_version": false
+  },
+  "platinum/mdpf/49financial/aum-metrics.json": {
+   "bytes": 4154,
+   "last_modified": "2026-09-30T13:50:50Z",
+   "as_of": null,
+   "tax_member_paths": [],
+   "total_keys": [
+    "account_count",
+    "aum",
+    "model_aum",
+    "non_model_aum",
+    "q0",
+    "q1",
+    "q2",
+    "q3",
+    "series_start"
+   ],
+   "total_aum": 1743965549.58
+  },
+  "platinum/mdpf/49financial/aggregate-aua-timeseries.json": {
+   "bytes": 142249,
+   "last_modified": "2026-09-30T13:50:50Z",
+   "as_of": null,
+   "tax_member_paths": [],
+   "has_aggregate_basis": false,
+   "by_model_keys": [
+    "opal_div_sma",
+    "opal_growth_sma",
+    "opal_intermediate",
+    "opal_long_term_aggressive",
+    "opal_long_term_conservative",
+    "opal_short_term",
+    "opal_ultra_short_term"
+   ],
+   "frontier_aggregate": 1743965549.58,
+   "frontier_date": "2026-09-29"
+  },
+  "json/mdpf/49financial/category-views.json": {
+   "error": "NoSuchKey"
+  },
+  "json/mdpf/49financial/aum-metrics.json": {
+   "error": "NoSuchKey"
+  },
+  "json/mdpf/49financial/aggregate-aua-timeseries.json": {
+   "error": "NoSuchKey"
+  },
+  "platinum/mdpf/global/category-views.json": {
+   "bytes": 4202,
+   "last_modified": "2026-09-30T13:50:51Z",
+   "as_of": "2026-09-29",
+   "tax_member_paths": [
+    "/nodes/SMA/children/ALT Strategies/members[1]"
+   ],
+   "has_taxsma_coverage": false,
+   "has_taxsma_contract_version": false
+  },
+  "platinum/mdpf/global/aum-metrics.json": {
+   "bytes": 6809,
+   "last_modified": "2026-09-30T13:50:51Z",
+   "as_of": null,
+   "tax_member_paths": [],
+   "total_keys": [
+    "account_count",
+    "aum",
+    "model_aum",
+    "non_model_aum",
+    "q0",
+    "q1",
+    "q2",
+    "q3",
+    "series_start"
+   ],
+   "total_aum": 2066937285.42
+  },
+  "platinum/mdpf/global/aggregate-aua-timeseries.json": {
+   "bytes": 325102,
+   "last_modified": "2026-09-30T13:50:51Z",
+   "as_of": null,
+   "tax_member_paths": [],
+   "has_aggregate_basis": false,
+   "by_model_keys": [
+    "opal_blend_5050_int_ltc",
+    "opal_blend_5050_st_int",
+    "opal_div_sma",
+    "opal_growth_sma",
+    "opal_intermediate",
+    "opal_long_term_aggressive",
+    "opal_long_term_conservative",
+    "opal_short_term",
+    "opal_ultra_short_term"
+   ],
+   "frontier_aggregate": 2066937285.42,
+   "frontier_date": "2026-09-29"
+  },
+  "json/mdpf/global/category-views.json": {
+   "error": "NoSuchKey"
+  },
+  "json/mdpf/global/aum-metrics.json": {
+   "error": "NoSuchKey"
+  },
+  "json/mdpf/global/aggregate-aua-timeseries.json": {
+   "error": "NoSuchKey"
+  }
+ },
+ "gateway_host": {
+  "read_at": "2026-10-01T01:25:43Z (host clock)",
+  "instrument": "aws ssm send-command AWS-RunShellScript, command id 54f67ddf-4924-4044-a1a5-32d4cd9f0762, read-only sha256sum and grep -c",
+  "instance": "i-07dccb1615503ac99 (running, t4g.small, SSM Online)",
+  "service_opal_gateway": "active",
+  "app_taxsma_workbook_py": "ABSENT",
+  "server_py_lines_naming_taxsma_workbook": 0,
+  "config_py_lines_naming_TAXSMA_WORKBOOK": 0,
+  "env_file_keys_starting_TAXSMA_WORKBOOK": 0,
+  "server_py_sha256": "45d0494d3bc4266e7d6440a873384146460447c3d8b58330236b86de8f721b84",
+  "manifest_row": {
+   "deployed_commit": "42c52ed4d9e834b0f1cf4f96eb83f9b0f7a183df",
+   "deployed_at": "2026-09-30T18:34:17Z",
+   "deployed_by": "0.9.0_WK_NFRA_MCPINDEX~19",
+   "note": "the commit is not in this box's object store and origin refuses it by id; the host read above is the measurement"
+  },
+  "source_sha256": {
+   "app/taxsma_workbook.py at 030cef41b5 and local CLOUD (contract 0.6.0)": "6acc3e8ce8952cdddea67f260814af4abe6bc055f8f9a4c8300b23f3e2a6ee70",
+   "at e8f800e6a9 (round 1, contract 0.5.0)": "8d63bc5685a156922225b08d45df3aae67a22df4a5054be3aa02a34ea08740b5"
+  },
+  "deploy_script_TAXSMA_lines": {
+   "local CLOUD": 0,
+   "origin/CLOUD": 0
+  },
+  "external_probe": {
+   "GET /ms/taxsma-workbook unauthenticated": 302,
+   "GET /ms/<nonexistent> unauthenticated": 302,
+   "GET /mcp unauthenticated": 401,
+   "note": "the 302 is the load balancer's sign-in redirect and does not discriminate a deployed route from a missing one"
+  },
+  "verify_ec2_tool": "infra/aws/ec2/verify-ec2.sh --ssm opal-gateway returned rc 0 with 0 checked when jq was off PATH, and 'unreachable via SSM' with jq on PATH while describe-instance-information read Online; not used as evidence"
+ },
+ "portal": {
+  "read_at": "2026-10-01T01:27Z",
+  "instrument": "git fetch origin DEV PROD; git merge-base --is-ancestor; git show <ref>:<path> | grep -c",
+  "origin/DEV": {
+   "head": "970d5c75",
+   "accessor_commit_4235e77c": "IN",
+   "caption_commit_370d2fe8": "IN",
+   "caption_testid_lines": 1,
+   "getTaxSmaCoverage_lines": 2
+  },
+  "origin/PROD": {
+   "head": "ba8e971f",
+   "accessor_commit_4235e77c": "NOT IN",
+   "caption_commit_370d2fe8": "NOT IN",
+   "caption_testid_lines": 0,
+   "getTaxSmaCoverage_lines": 0
+  },
+  "page_reads": "/api/general/mdpf/{firmId}/category-views.json (src/api/endpoints/aum.ts)",
+  "tree_presence_rule": "src/components/CategoryViewTree.tsx: a node renders only when its served aum is above zero; members with a null or zero aum are filtered. Present on origin/DEV and origin/PROD (1 line each).",
+  "limit": "branch heads read, not the deployed bundles; no signed-in render"
+ },
+ "served_tax_member": {
+  "49financial": {
+   "path": "/nodes/SMA/children/ALT Strategies/members[1]",
+   "member_id": "tax",
+   "display_name": "Tax-Managed SMA",
+   "aum": null,
+   "served": true
+  },
+  "global": {
+   "path": "/nodes/SMA/children/ALT Strategies/members[1]",
+   "member_id": "tax",
+   "display_name": "Tax-Managed SMA",
+   "aum": null,
+   "served": true
+  }
+ }
+}
