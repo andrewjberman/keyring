@@ -151,7 +151,7 @@ run records, bronze/silver for BA and the browser profiles; it moves no served g
 
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>open</status>
+<status>complete</status>
 <round>32</round>
 <slot>~91</slot>
 <fabric>site-z</fabric>
