@@ -703,3 +703,123 @@ graduated item's remedy is routed by the CVO to its owner by name and the clocks
   }
 ]
 ```
+
+## S23 -- re-filed from ETFS_GUARDRAIL-W1-S5: the shared Lambda zip builder sets an impossible timestamp and has two callers
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-S23",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-01T12:55Z",
+    "one_line": "RE-FILED from ETFS_GUARDRAIL-W1-S5: infra/aws/lambda/ci/build-zip.sh:66 still runs `touch -t \"202600010000\"` (month 00), which the old row measured failing rc=1 on every invocation, and the script is called by a GitHub workflow and by verify-local.sh.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "spec_asserts": "build-zip.sh normalises member timestamps so a rebuilt zip hashes reproducibly.",
+    "world_is": "Line 66 at HEAD is unchanged. The old row found zero callers on the round's deploying path; a caller census today finds .github/workflows/lambda-deploy.yml and infra/aws/lambda/verify-local.sh naming the script. The fix is one literal.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/ci/build-zip.sh:66 at HEAD and `git grep -l build-zip.sh` outside org/ and docs/ (this seat, 2026-10-01)",
+        "old row ETFS_GUARDRAIL-W1-S5, graduated at ETFS_GUARDRAIL-C-S3 (lane CloudOps or ETL) with no remediation row",
+        "1.0.0_SA_CTO RULINGS batch 77 @4b9e65f744 and batch 85 @afc17452e8: a closed project's live hazard is re-filed as a new row, and the estate-wide channel is the accepted home"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not run today: the script itself, so the rc=1 is the old row's measurement. Not read: whether the workflow is still triggered by anything."
+  }
+]
+```
+
+## S24 -- re-filed from ETFS_GUARDRAIL-W2-S1: the ETF ownership function's own test dies at import
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-S24",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-01T12:55Z",
+    "one_line": "RE-FILED from ETFS_GUARDRAIL-W2-S1: infra/aws/lambda/inf-pipeline/inf-etf-ownership-daily/test_catchup_scan.py still errors at collection on a missing environment key, so the function's own battery checks nothing.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "spec_asserts": "The file is the daily ETF ownership function's test of its catch-up scan.",
+    "world_is": "`python -m pytest <file> --collect-only` at this seat: 1 error during collection, KeyError 'FACT_POSITIONS_PREFIX' (with ASSETS_BUCKET set empty; the old row saw KeyError ASSETS_BUCKET), no tests collected. Dead since the 2026-08-03 repoint by the old row's dating. The remedy named then: re-vendor the battery against the repointed shape with real test functions.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the collect-only run (this seat, 2026-10-01 12:36Z)",
+        "old row ETFS_GUARDRAIL-W2-S1, graduated at ETFS_GUARDRAIL-C-S3 (the inf-pipeline lane, named by the CTO) with no remediation row",
+        "1.0.0_SA_CTO RULINGS batch 77 @4b9e65f744 and batch 85 @afc17452e8: a closed project's live hazard is re-filed as a new row, and the estate-wide channel is the accepted home"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The deployed function is not in question here; only its test."
+  }
+]
+```
+
+## S25 -- re-filed from ETFS_GUARDRAIL-W2-S8: the Cottonwood ETF ownership fire still precedes its partition's landing
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-S25",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-01T12:55Z",
+    "one_line": "RE-FILED from ETFS_GUARDRAIL-W2-S8: rule cot-etf-ownership-daily-schedule still fires at 10:30Z; the old row measured the D+1 partition landing near 11:46Z, which leaves the newest Cottonwood trading day without a slice for about half a day, every day.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "spec_asserts": "The CTO took the finding for an L10 addendum (94796 (2a)): the fire follows the partition, or the window excludes the unlanded day and says so.",
+    "world_is": "The rule reads cron(30 10 * * ? *), ENABLED, today; bd-49f-etf-ownership-scheduled-floor reads cron(45 10 * * ? *). The remedy is a Terraform act on the rule's cron in the DT/AE lane; the project closed before it was cut.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "events list-rules filtered on 'etf' (this seat, 2026-10-01 12:36Z)",
+        "old row ETFS_GUARDRAIL-W2-S8, graduated at ETFS_GUARDRAIL-C-S9 (finding OPEN, owner 1.0.0_SA_CTO) with no remediation row",
+        "1.0.0_SA_CTO RULINGS batch 77 @4b9e65f744 and batch 85 @afc17452e8: a closed project's live hazard is re-filed as a new row, and the estate-wide channel is the accepted home"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not re-measured: today's landing time of the Cottonwood partition, so the size of the gap is the old row's."
+  }
+]
+```
+
+## S26 -- re-filed from NFRA_COMPEFFICACY-W2-S4: comp-adversary declares all sources run when one died on a decode error
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-S26",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-01T12:55Z",
+    "one_line": "RE-FILED from NFRA_COMPEFFICACY-W2-S4: `.tools/comp-adversary` reads its sources through subprocess with text=True and no encoding, so a non-cp1252 byte kills the reader thread and the tool still exits 0 declaring every source run.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.0.0_AB_MSTR",
+    "spec_asserts": "CLAUDE.md section 4: in a file path that carries non-ASCII, every reader is explicit (`encoding='utf-8'`); and a producer's rc=0 is never trusted on its own.",
+    "world_is": "At HEAD the tool has five subprocess calls; four pass text=True and none passes encoding= on the call (the tool's twelve encoding= occurrences are on file opens). The call at :309 reads `comp-state --json`, the source the old row saw truncated mid-record while the declaration read '5 run / 0 deferred-with-reason'.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/comp-adversary call-site census at HEAD (this seat, 2026-10-01): 5 calls, 4 text=True, 0 with encoding=",
+        "old row NFRA_COMPEFFICACY-W2-S4, graduated at NFRA_COMPEFFICACY-C-S11 (owner 0.8.0_AE_CloudComp, the comp-tool rail) with no remediation row",
+        "1.0.0_SA_CTO RULINGS batch 77 @4b9e65f744 and batch 85 @afc17452e8: a closed project's live hazard is re-filed as a new row, and the estate-wide channel is the accepted home"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not re-run today: the tool on an input that carries the byte. Owner set to 0.0.0_AB_MSTR per batch 85's reading that fabric-tool rows are that seat's."
+  }
+]
+```
