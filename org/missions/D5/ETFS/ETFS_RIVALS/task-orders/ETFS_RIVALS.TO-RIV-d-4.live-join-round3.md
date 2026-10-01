@@ -47,6 +47,33 @@ the issuer at d-4's cut, after cells 1-5 are merged):
 
 The next trading day's 08:03 leg + 09:00 sweep is the acceptance, read at the close; it is never waited on.
 
+## 1b. ISSUER AMENDMENT 1 (2026-10-01 ~10:1xZ, 2.0.0_SA_COO~RV) -- the pair as signed
+
+The pair is SIGNED:
+- COO half: `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round3/NEVER_WIDEN_HALF_COO_D4.md` @7a17b348a9.
+- CTO half: `org/missions/D5/ETFS/ETFS_RIVALS/ledger/NEVER_WIDEN_ROUND3_D4_CTO_HALF.md` @44eb66268e.
+- `1.0.0_SA_CTO~Z` signed keys 1, 2, 3 and 5-8. **Key 4 is REFUSED.** It must take the floor over every graded fund, or exempt
+  the home funds, and it is not ruled this round.
+
+So:
+1. **Step 2 is NOT done.** `guardrails_config.json` `min_resolved_fraction` stays at its PROVISIONAL 0.0, and no publish or
+   guardrail file is edited. In `d4_live.json`, set `identity_floor` to the value you READ from `guardrails_config.json` at the
+   act, and add `identity_fraction_per_fund`: the newest report date's non-cash resolved fraction for every fund. The floor
+   goes to the round analysis with those numbers.
+2. **Step 7's GQGU request is WITHDRAWN** (it needs Andrew's vendor word). GQGU stays UNMEASURED. The live `market` pull for G4
+   still runs, if the Terminal reads signed in.
+3. **Gate 1** (from the COO half) is binding before the first apply. Re-run
+   `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round3/served_delta_r3.py --out <your deliverables>/served_delta_act.json`.
+   Each fund must read within the COO half's table:
+   - BASG and six other funds: 0/0;
+   - BIDD: 2/1;
+   - TSEL: 0/6;
+   - WCMG: 0/1;
+   - IDVZ and PFOE: home.
+   Anything else STOPs.
+4. **AC3 is amended to match.** Every non-home fund's resolved fraction must be at least 0.90 (the measured lowest is BASG
+   0.924). The home funds are reported, not graded.
+
 ## 2. THE RECORD YOU WRITE (`deliverables/0.9.0_WK_ETFS_RIVALS~4/d4_live.json`) -- the checks read exactly these keys
 
 - `page_day` (the page date you published), `publish_marker` (its s3 URI);
@@ -69,7 +96,6 @@ interactive Bloomberg call (step 7 is the scripted `enrichment_bloomberg` / `col
 monitor; `aws lambda update-function-code`; bare `terraform apply`.
 
 <paths>
-data/etfs/scripts/rivalfunds/publish_page.py
 infra/aws/terraform/etfs-rivalfunds/
 infra/aws/lambda/etfs-pipeline/etfs-rivalfunds-*
 infra/aws/lambda/etfs-pipeline/rivalfunds-*
@@ -109,7 +135,7 @@ Staged until cells r-3, hp-1, i-1, s-4, g-6 merge; the COO half is written then,
 
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>staged</status>
+<status>pending</status>
 <round>3</round>
 <slot>~4</slot>
 <fabric>site-z</fabric>
