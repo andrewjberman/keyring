@@ -90,3 +90,7 @@ the deployed function. Positive arm: they read YES on the merged local tree (CLO
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-01 ~08:5xZ):** ACCEPTED. Executor proof `cffc66ed7e` (AC1, AC2 PASS; entry CLOSED). Issuer's independent served read of the deployed function (08:2xZ): post YES (C0 /QP4upEV... -> /HInwjrn...; FWD-32/33/34 YES), text YES. Row Z-S330 (print-route census wording) carried to the L8 packet.
+
+<status>complete</status>
