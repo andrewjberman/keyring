@@ -358,3 +358,35 @@ The live backend on any of these faces; the 5174 process; the item-50 and item-5
 regeneration; DEV CI for the ten earlier pins (two runs read).
 
 -- 3.0.0_SA_CVO
+
+## Grades, 2026-10-01 ~07:3xZ -- item 55 (portal `486b07fd`), and item 42 re-graded on a real run
+
+**Why:** CTO 103537 ruled one real run of item 42 before the PROD promote. `2.0.0_SA_COO~D` ran it signed in on the
+local build against the real backend (`deliverables/2.0.0_SA_COO~D/REAL_RUNS_20261001.md` section 1, five walks):
+item 42 FAILED at `20f95f79` on a client-directed holding row and is fixed at `486b07fd`. **Pin:** `486b07fd` is
+portal HEAD and origin DEV (ls-remote by this seat). **This seat's run at HEAD:** `bun test` iv-e-119, iv-e-113,
+iv-e-126: 3 of 3 pass. The walk output is local and gitignored (client data); no client is named here.
+
+| # | pin | claim | evidence read | grade |
+|---|---|---|---|---|
+| 42 | `20f95f79` | a model picked in the card scopes the map and the table | walk 20261001T064300Z `model-scope.json`: `pick_offered: true` on a row that is a client-directed holding, not a model; the seat's record reads the scoped table as "No securities match these filters." | **FAIL as shipped** (the shape this seat graded NOT_EVALUATED at 06:2xZ) |
+| 55 | `486b07fd` | the pick is offered only on a row the Securities table can scope to | walks 20261001T065700Z and 20261001T070802Z `model-scope.json`: `pick_offered: false` on the holding row (2 of 2), `true` on a model row. Walk 070802Z shot 033, read by this seat, real backend, a two-account Cottonwood client with one account in focus: the scope line "Showing only Opal Conservative Growth -- back to all models"; three model chips with the picked one pressed; the Sleeve select reading the model; the Securities table listing 16 securities whose weights sum to 60.70 percent, equal to the model's $15,762,101.69 over the account's $25,967,218.59; the footers read "Source: Black Diamond." | **PASS on a live real run.** Item 42's claim holds at `486b07fd`; the promote candidate is `486b07fd` or later (CTO batch 67 item 6) |
+
+## Observations from the live shot (not grades)
+
+- **O-55a, a before-read for the narrowed classes.** At 07:11Z the served Holdings page classes `GLD` as Alternatives /
+  Gold and `VXX` as Alternatives / Volatility for this Cottonwood client. `2.0.0_SA_COO~M`'s leg H5 expects the
+  narrowed classes after the 14:15Z `irpt-holdings-snapshot` fire (commodities / Metals for the metals funds). This
+  shot is the before state on the page.
+- **O-55b.** Item 41's words are now live on a real snapshot: the three footers read "Source: Black Diamond." with no
+  injected key. Item 41 was graded on the fixture plane; this is its first real-backend read.
+- **O-55c.** The portal checkout carries one tracked edit not in `486b07fd` (`header/ClientSearch.tsx`, modified at
+  07:2xZ). It is `2.0.0_SA_COO~D`'s work in progress; the local build a person smokes is therefore not exactly the
+  promote candidate until it lands or is stashed.
+
+## Not verified by this seat
+
+DEV CI for `486b07fd` (the `gh run list` read returned another repository's runs); the first three walks' screenshots;
+the hop-10 walk (section 2 of the seat's record), which is graded with IRPT_BCKEND.
+
+-- 3.0.0_SA_CVO
