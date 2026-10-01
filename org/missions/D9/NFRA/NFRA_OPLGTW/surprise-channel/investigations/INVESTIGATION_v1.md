@@ -5835,3 +5835,30 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W18-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~18",
+  "surfaced_at": "2026-10-01T07:20Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "OG-pr-1 PHASE B BLOCKED: safe-apply's naming plan limb REFUSES the order's policy name opal-gateway-gateway-read-secrets (IAM_POLICY OUT-OF-PATTERN, module name gateway-read-secrets-policy); ROLLED BACK, secrets deleted with 7-day window, ledger closed.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-apply.sh -chdir=infra/aws/terraform/opal-gateway apply -auto-approve -target=aws_iam_role_policy.gw_gateway_read_secrets rc=7 (run twice): '[naming-plan-gate] NAMING REFUSE aws_iam_role_policy.gw_gateway_read_secrets opal-gateway-gateway-read-secrets -> gateway-read-secrets-policy' / 'safe-apply: BLOCKED by the naming plan limb (LGIC_ENFORCE DEC-6, ENFORCE mode, rc=1). Nothing was planned further or applied.'",
+      "lib/opal_naming.py grade('opal-gateway-gateway-read-secrets','IAM_POLICY') = OUT-OF-PATTERN, suggests gateway-read-secrets-policy; grade('gateway-read-secrets-policy','IAM_POLICY') = CONFORMANT. Sibling conformant additions in the same root: gateway-read-mcportal-grant-changes-policy, gateway-invoke-mcportal-grant-writer-policy (mcportal_grant_writer.tf:197,219).",
+      "Targeted terraform plan (same feeds per A1) before the apply read 'Plan: 1 to add, 0 to change, 0 to destroy.' with the three exact secret ARNs and Action secretsmanager:GetSecretValue only; saved plan .scratch/og-pr-1.tfplan (not applied).",
+      "Secrets were created first (step 6) at rc=0: gateway/transcripts/bearer-tY9tUO, gateway/mail/bearer-g8XFDo, gateway/principals/rosters-wg59oX (pairs master 1 write 2). After the refusal they were rolled back per ANNOUNCE: delete-secret --recovery-window-in-days 7 x3, DeletedDate 2026-10-01T03:14 -04:00, restorable until 2026-10-08; describe-secret reads DeletedDate on all 3. No role policy was created. Ledger nfra-oplgtw-gateway-read-secrets closed with every leg ROLLED BACK, sentinel removed."
+    ]
+  },
+  "spec_asserts": "TO-OG-pr-1 step 1 names the policy '${var.name}-gateway-read-secrets' and step 6 expects a targeted safe-apply to land it.",
+  "world_is": "The naming plan limb under LGIC_ENFORCE refuses that name on an ADDITION; the order's name is out of pattern, the gate is not mine to override and the name is not mine to change (the order fixes it).",
+  "notes": "Remedy for the issuer, not done by the worker: either amend A2 renaming the policy to gateway-read-secrets-policy (a one-line change in gateway-read-secrets.tf; AC1/AC2 check ARNs and actions, not the policy name) or an R20 register entry Andrew acknowledges. Then re-run PHASE B. The three secret names are held in the 7-day deletion window: a re-run must first `aws secretsmanager restore-secret --secret-id <name>` x3 (values preserved) and the script's already-exists refusal then stands, so step 6 resumes at the targeted apply only; or recreate after the window with force-delete. The role of the whole-tree gate in row NFRA_MCPINDEX-Z-W21-S19 is unaffected here: the secrets that remedy needs do not currently exist as live secrets.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
