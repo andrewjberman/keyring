@@ -6365,3 +6365,78 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S19",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-01T18:17Z",
+  "one_line": "OG-tr-1 step 2: the broker store holds TWO records whose username is opalbloomberg@ -- one principal-keyed cache and one email-keyed cache -- both carrying the SAME oid (517aa5ee...), so the literal 'exactly ONE record' reads 2 while the identity reads 1 distinct oid and Part D MATCH.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: SSM b141c294-8b60-4526-b01a-8c83dce6efad (read-only; the host's own venv, FERNET_KEY and TOKEN_CACHE_DIR read from /proc/<MainPID>/environ, never echoed): 6 .bin cache files, 6 account records, username matches 2; the 4 non-matching records carry oids 2e21f8e5 (x2), 2844f2b9, ad037ea5.",
+      "RUN: SSM (owner-kind read, 'wk15 OG-tr-1 step2 owner kind'): the 2 matching records sit in 2 files whose names equal sha256('principal:<tid>/<oid>') (principal-keyed) and sha256('opalbloomberg@opalinvest.com') (email-keyed, the server-held identity cache); DISTINCT_MATCHING_OIDS 1; equal to the Part D value 517aa5ee-b4d0-425a-b493-5a22ff77ac4f (host-side equality, PART_D_EQUAL True).",
+      "DOC: app/token_broker.py @0a1d9079c6 _cache_owner_for / _principal_owner / _email_owner: a principal's cache is keyed 'principal:<tid>/<oid>' and a server-held identity's by the lowercased email, so one person legitimately holds both."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 2: exactly ONE record's username is opalbloomberg@opalinvest.com; neither or both STOPS with a BLOCKING row.",
+  "world_is": "Two records match, both with the same oid. I read 'both' as two different identities and did not file BLOCKING: the gate's purpose (the one oid that goes into the identity value) holds with 1 distinct oid, Part D MATCH. I proceeded through steps 3-7 (all read-only or release-branch) and the identity value is NOT yet fixed into any file or upload. The issuer confirms or overrules before PHASE B; a literal reading would STOP here.",
+  "notes": "The oid prefix in this row is the first 8 hex characters only. The identity value for PHASE B is '<tid>/<oid>' from the Part D values file (equal on the host).",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S20",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-01T18:17Z",
+  "one_line": "The order names row 'W15-S18' for the PHASE A verify script, but NFRA_OPLGTW-Z-W15-S18 is already filed and dispositioned (OG-rl-2's late verify read); this cell's next unused coordinate is S19, so the verify script is filed under this row.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "DOC: INVESTIGATION_v1.md at CLOUD @37fcbfcac9: NFRA_OPLGTW-Z-W15-S18 exists (OG-rl-2) and is adjudicated DISMISSED_WITH_REASON by NFRA_OPLGTW-Z-S38; ids W15-S19 and above were unused before this write.",
+      "RUN: deliverables/0.9.0_WK_NFRA_OPLGTW~15/tr_verify.py + tr_verify.sh + tr_release_md5.txt written at PHASE A. 'before' mode on the live host (SSM b893b5ab-1b75-475d-bc39-8521e5e02e63): env keys 46, tools 65, taxsma module present False, /ms/taxsma-workbook 404, /health 200. NEGATIVE CONTROL 'after' mode on the same un-deployed host (SSM 119af030-0c1f-49dc-8f28-03ebb5163611): VERIFY FAIL 4 of 8, the failing checks exactly the three md5 files (app/config.py, app/server.py, app/taxsma_workbook.py), the 46 -> 48 keys, the two TAXSMA keys non-empty and the route's no-bearer refusal."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 10: VERIFY with a script written at PHASE A, run immediately after the deploy returns (row W15-S18).",
+  "world_is": "The id S18 was taken before this order was cut, so the script is filed at S20 (S19 is the identity row). The script is written, exercised on the live host in both modes, and carried in the deliverables folder; it is not under the id the order names.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S21",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-01T18:17Z",
+  "one_line": "The deploy shape puts the identity value (a tid/oid pair, not a secret) in the SSM command text and in the AWS command history, and step 2's host read printed the full oid in its SSM output; both are the order's own design, filed so the exposure is on the record.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "DOC: release template deploy-to-ec2.sh (3a7d6a7dc8): TAXSMA_WORKBOOK_IDENTITY='${OG_TAXSMA_WORKBOOK_IDENTITY}' is expanded by the deploying shell into REMOTE_SCRIPT, which travels as the SSM command's parameters (the same path the old OG_MAIL_SENDER_TABLE took); the bearer never does (fetched on the host).",
+      "DOC: the spec's own text: the identity is 'Not a secret'; the Part D record already maps the same oid to WRITE_CAPABLE_PRINCIPALS, host-side.",
+      "RUN: step 2's SSM output b141c294-8b60-4526-b01a-8c83dce6efad carried each record's full oid, as the order asked ('printing ONLY each record's oid'); no file I wrote and no report carries more than 8 characters."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 5: the identity is validated, 'never committed'; step 2: the read prints each record's oid.",
+  "world_is": "Never committed and never echoed by this seat, but retrievable from SSM command history by anyone with ssm:GetCommandInvocation; the value is a non-secret principal identifier already present in host rosters.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
