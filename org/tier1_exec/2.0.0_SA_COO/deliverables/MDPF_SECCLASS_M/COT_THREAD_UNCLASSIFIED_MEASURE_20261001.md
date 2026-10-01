@@ -69,3 +69,51 @@ half for the re-point then names the residue it accepts.
 Not measured here: the same tickers at 49 Financial and Inflection (a canonical row is cross-firm, so each row's own
 half states its move on the Holdings tab and on Black Diamond gold); Cottonwood's `D_03` and `D_04`, which classify the
 same holdings through the same library.
+
+## ADDED 13:5xZ -- the no-ticker 101.3 million by name shape, and what was done about the ticker part
+
+**The no-ticker part is not one thing** (491 rows; the shape is read from the custody name by this record only, to
+size the residue -- it is NOT a rule any code applies):
+
+| name shape | supervision | rows | USD | how gold serves it today |
+|---|---|---|---|---|
+| other names (the largest: Voya) | Supervised | 12 | 28,721,603.18 | equity (the "else equity" guess) |
+| an individual bond or note (coupon, maturity) | Supervised | 280 | 25,503,844.13 | fixed_income (the name pattern) |
+| private fund or partnership wording | Supervised | 82 | 21,201,663.80 | equity (the guess) |
+| "Investor Manual Asset - ..." | Unsupervised | 51 | 20,020,398.35 | equity (the guess) |
+| other names | Unsupervised | 54 | 5,433,995.39 | equity (the guess) |
+| an individual bond or note | Unsupervised | 11 | 398,205.38 | fixed_income |
+| cash wording | Unsupervised | 1 | 24.86 | fixed_income |
+
+Three facts the half for the re-point must carry:
+
+1. **A ticker-keyed table cannot answer any of this.** Cottonwood's gold positions carry no CUSIP column, so the 348
+   CUSIP-keyed rows of the canonical table are unreachable from here too.
+2. **About 25.9 million of it is served RIGHT today** (individual bonds as fixed_income, by the name pattern the ruling
+   retires). Under shape (a) those bonds read unclassified. That is a served class that gets worse, and it is the one
+   place where "no name pattern" costs accuracy rather than a guess.
+3. **The knowledge for the rest was already written once, to the wrong table for this purpose.** The 941 rows of
+   `bd-securities-cot-new-p1-m-20260926` class Cottonwood names (held-away and manual assets as `other`, cash as `cash`)
+   in `bd-securities`, which Cottonwood's host never could read and which shape (a) never reads. `other` and `cash` are
+   classes of Cottonwood's mix (`C_06` `MIX_ASSET_CLASSES`) and are not classes of the canonical table (its five:
+   equity, fixed_income, structured, commodities, alternatives; cash is fixed_income / Cash).
+
+**The ticker part:** 21 seed rows were drafted for the largest tickers, each following a seed peer of its own kind
+(branch `coo-m-cot-seed-rows` @7612ad62d5, NOT on CLOUD: a seed run from CLOUD would write them; the dry run against the
+live table reads 21 to write of 160, 0 conflicts). **Two of the 21 are WITHDRAWN, FCASH and FIGXX**, on what the
+Holdings tab serves today (three local builds, 13:4xZ):
+
+- FCASH is served **cash / Money Market** today, by the bd-securities fallback: 133 nodes and 9,198,812.25 USD at
+  Cottonwood, 187 nodes and 1,453,523.02 USD at Inflection. The canonical table has no cash class; its one cash row,
+  the seed row CASH_USD, reads fixed_income / Cash. A canonical FCASH row in that form would move 10.65 million USD
+  from Cash to Fixed Income on a served page, the opposite of what row IRPT_BCKEND-W41-S1 asks. Whether the table
+  gains a `cash` class or its readers fold fixed_income / Cash to cash is a contract question for `1.0.0_SA_CTO`.
+- The other 19 carry 64,852,682.96 of the 103,800,390.12 USD (62.5%). What they move on the Holdings tab: at
+  Cottonwood a CLASS on 15,328,982.38 USD (EVSM equity to fixed_income, 10,216,541.88, a guess corrected; PSLV
+  alternatives to commodities, 2,440,594.86; SPYI alternatives to structured, 2,671,845.64) and a SUB CLASS on
+  15,124,299.01 USD (MEAR, VMLUX, FPNIX, EIBIX); at 49 Financial a class on 168,658.74 USD (PSLV, SPYI); at
+  Inflection nothing with a value. On Black Diamond gold lots: SPYI, PSLV and FPNIX, 18 lots, 164,063.07 USD, from
+  `other` to a class. Twelve of the 19 keep class and sub class at Cottonwood (38,496,339.35 USD: the fallback's table
+  layer already answers them the same), so only the source of the answer changes.
+- FIGXX is served fixed_income / Cash today (6 nodes, 2,737,377.41 USD at Cottonwood) and would not move; it is held
+  with FCASH so that cash is ruled once.
