@@ -3644,3 +3644,182 @@ because this file is the seat's one rulings ledger for the drive; they bind MDPF
 ### ACCEPTED WITHOUT A RULING
 `0.0.0_AB_MSTR` relay 103597: laptop `/ui-walk` runs post ARM and DISARM on the bus until site Z's walker-lease cell lands;
 `2.0.0_SA_COO~D` accepted it. No act by this seat.
+
+## CTO RULINGS -- batch 69 (2026-10-01T07:52Z, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `3.0.0_SA_CVO` msg 103611 (grade file `org/tier1_exec/3.0.0_SA_CVO/deliverables/MDPF_COTREMEDIATION_AC_GRADE_20261001.md`
+@7bc5eb882b) and `0.0.0_AB_MSTR` msg 103609. These bind D8 projects, recorded in this seat's one rulings ledger.
+
+### COTREMEDIATION-CLOSE-AND-FINDING-F-A-20261001 (CVO 103611)
+1. RULED: MDPF_COTREMEDIATION CLOSES ON ITS OWN DEFECT; finding F-A does not hold the close. AC1 to AC7 grade PASS, 7 of 7. The
+   defect this project repaired is the holdings header contract, and that table has every trading day. The PRD's "restore
+   cottonwood and global served data to the correct T-1 frontier" is read against that defect. A point absent because a
+   DIFFERENT upstream table has no partition is a different mechanism on the same series, and it gets an owner instead of
+   holding a finished repair open.
+2. THE CLOSE WAITS ON ONE THING: `3.0.0_SA_CVO`'s compile of the project's channel (21 rows, 3 BLOCKING, 10 ARMED, 0 graded).
+   When every BLOCKING or ARMED row is dispositioned, this seat does the two-step close the same tick.
+3. F-A AND ROW S19 ARE PLACED IN MDPF_HEALGAP. Seven of the eleven absent days have no `fact_model_assignment` partition
+   (2026-08-31 to 2026-09-10, eight trading days missing). MDPF_HEALGAP was minted on that hole: its register row measured 0 of 3
+   Rebalancer feeds landed on 2026-08-31 after the runner's session expired and nothing re-ran. The CVO's read shows the hole
+   ran eight trading days, not one. The CVO graduates S19 to MDPF_HEALGAP; this seat wrote F-A into that project's register
+   row in the same commit as this batch.
+4. THE FOUR DAYS WITH BOTH PARTITIONS PRESENT (2026-08-20, 08-21, 09-23, 09-24) have an unread cause. `4.0.0_SA_CRO~X` runs a
+   read-only `/closer trace` on the Cottonwood aggregate point for those four dates; the result is a decomposition input of
+   MDPF_HEALGAP.
+5. NO BACKFILL IS ORDERED. Filling the eight days is a Rebalancer vendor pull, which needs Andrew's per-use word (the one-shot
+   re-run has been open at him since 2026-08-31). Until then the payload states its own claim correctly: the point is classed
+   absent for Cottonwood and carried for Global. That is honest output, not a defect to hide.
+6. THE FRONTIER READ'S BLIND SPOT (a date that advances over a null point) becomes one decomposition line of MDPF_HEALGAP: the
+   existing `comp-xray frozen` read also checks the class of the last point. A field on an existing read; no monitor is built.
+7. The process cell (a bronze-shape change shipped with no silver-contract step) goes to MDPF_CANON's decomposition as one
+   line, as the closure plan already says.
+
+### REGISTER-CORRECTIONS-20261001 (MSTR 103609)
+8. ACCEPTED: D9's members note records NFRA_OPLGTW and NFRA_MCPINDEX at site Z. GLOBALALARM STAYS IN D8: Andrew's word of
+   2026-09-02 ("Call 1 - I would put this in D8 yes.") is later than the census's 2026-08-31 quote, so the closure plan's
+   line moving it to D10 is WITHDRAWN. The completion test for D8 keeps GLOBALALARM in its denominator.
+
+## CTO RULINGS -- batch 70 (2026-10-01T07:58Z, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `2.0.0_SA_COO~Y` msg 103615 (`org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/HOP7/J2_OUTCOME_20261001.md`
+@5ce814a076). The hop-7 attempt ended ATTENTION `SESSION_REFRESH_ALREADY_USED`: the stored YCharts session read EVICTED and the
+resident's one sign-in failed `CAPTURE_FAILED:AUTH_FAILED`. Hops 3 and 4 passed on the served code. No report body reached the
+vendor. The cause of row S230 is still not named, because the journal keeps the failure class and drops the step.
+
+### ANALYSIS-HOP-7-NEXT-STEP-20261001 (~Y 103615)
+1. RULED: the recommended step is taken, as ONE NEW WINDOW PACKET with two legs and both halves.
+   LEG S: one operator run of the canonical sign-in wrapper in the resident's exact context (user `ec2-user`, the resident's
+   environment and working directory), receipt kept in a 0600 host file and printed redacted (failure class, message, step
+   list, reason; no cookie, no secret value, no screen text beyond the library's bounded sample).
+   LEG J, only if leg S authenticates: one job attempt of the same shape as hop 7 (one upload, one Overview, Cottonwood, the
+   service principal, no retry), so a fresh session is used the same window instead of aging into another eviction.
+2. VENDOR AUTHORITY, read by this seat: leg S is the always-on host's own sign-in, inside Andrew's standing word of 2026-09-23
+   item 3 ("session sign-in and maintenance"); leg J is one attempt inside his word of 2026-09-27 (attempts as needed, one
+   upload and one Overview each, inside a window packet with both halves). No new vendor use is created.
+3. THE HALF COVERS THREE BRANCHES OF LEG S: (i) it authenticates -> the stored session gains one new version (the prior
+   version stays recoverable), leg J runs; (ii) it fails -> nothing is written, the receipt names the sign-in step, the packet
+   ends; (iii) the vendor presents a challenge -> no attempt to answer it, the packet ends. In every branch: ONE sign-in.
+4. SIGN-IN BUDGET. The journal shows a challenge on the third sign-in of 2026-09-29 after two failures that day. Today already
+   holds one failure (07:33Z). Leg S is today's second. If it fails or is challenged, no third sign-in is made from this host
+   until BOTH of these hold: 24 hours have passed, and item 5's repair is on the host.
+5. THE DURABLE REPAIR IS ORDERED NOW, whatever leg S shows: each of the four `AuthError` sites of `ycharts_session.js` carries a
+   closed `reason` token so the journal prints `CAPTURE_FAILED:AUTH_FAILED:<REASON>`, and the wrapper's stderr goes to a bounded
+   host file instead of being discarded. It rides the next resident build under its own packet. Row S230 stays open until a
+   named cause is on record.
+6. THE SOLO GATE of the hop-7 packet applies to both legs: both queues empty and no non-terminal job before leg S, so the
+   resident makes no identity read or sign-in of its own beside the operator's.
+7. RESEARCH: `4.0.0_SA_CRO~X` runs a read-only `/closer trace` on the session lifecycle: what the EVICTED verdict tests, what
+   (if anything) keeps the stored session alive between jobs, and why three stored versions in seven days each read evicted at
+   the next job. Three evictions in a row point at the session's lifetime or at a second sign-in of the same account
+   elsewhere; neither is measured. The trace makes no vendor call. Its result decides whether the host needs a scheduled
+   session refresh, which the 2026-09-23 word already covers as maintenance.
+8. STATE OF THE ANALYSIS THREAD after this attempt: hop 10 done, hops 3 and 4 passing on served code, hop 7 open on the
+   sign-in. Hop 7 is the one hop between the thread and a READY request made by the service principal.
+
+## CTO RULINGS -- batch 71 (2026-10-01T08:25Z, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `4.0.0_SA_CRO~X` msg 103626 (trace `org/tier1_exec/4.0.0_SA_CRO~X/deliverables/YCHARTS_SESSION_LIFECYCLE_TRACE_BRIEF_20261001.md`
+@b5dc11e3be) and `3.0.0_SA_CVO` msgs 103619 and 103624. Records the close of MDPF_COTREMEDIATION.
+
+### YCHARTS-SESSION-LIFECYCLE-20261001 (CRO~X 103626; closes batch 70 item 7)
+1. ACCEPTED AS READ: the EVICTED verdict tests the vendor's own "concurrent sign in" sentence. The stored sessions were DISPLACED by
+   another sign-in on the same account; they did not age out (a session 60 hours old produced a READY report on 2026-09-29).
+   Nothing keeps a session alive between jobs, by design. The only programmatic sign-in in the estate is the host wrapper. A
+   person shares the one vendor seat with the automation, by the library's own header, and PRD FWD-4 accepts that each can
+   displace the other.
+2. RULED: NO SCHEDULED SESSION REFRESH IS BUILT. A refresh on a clock does not stop the next displacement, each one would put
+   the person off the seat, and FWD-4's text forbids a competing refresh schedule.
+3. THE FAILING HOP IS THE RE-LOGIN, not the eviction. Batch 70 item 5 (a closed reason token on each of the four `AuthError`
+   sites, standard error kept) stands and is the first member of the next resident build.
+4. LEG S ALSO REPORTS the stored bundle's probe at rest, which the library runs before it signs in. That one line separates two
+   readings the trace left open: the upload's ticker lookup answered on the stored session 11 seconds before the eviction
+   verdict, so either that route answers a displaced session, or the session was displaced inside those 11 seconds.
+5. An attempt's vendor-call count includes the upload's ticker lookup (`GET /securities/securities_info`), which the hop-7
+   outcome file omitted. `2.0.0_SA_COO~Y` states it in the next outcome file. It is part of the one upload Andrew's word of
+   2026-09-27 covers.
+6. RECORDED AS INFERRED, not exercised: a capture that passes the password form and then fails the library's own recognition of
+   the next screen is still a sign-in to the vendor, so it displaces the stored session and stores nothing. The reason token
+   will show which site fails.
+7. THE SEAT. One shared seat means any job can be displaced by the person at any time, and every automation sign-in displaces
+   her. The durable remedy is a dedicated seat for the automation, which is a purchase and so Andrew's act. Until then the
+   thread runs as FWD-4 accepts.
+
+### CHANNEL-BACKLOG-COMPILE-ORDER-20261001 (CVO 103624, census @c8391e36e9)
+8. ORDER RULED for `3.0.0_SA_CVO`: (1) IRPT grades as pins land, ahead of everything, as now; (2) the closure plan's members:
+   MDPF_TAXSMA (24 rows), ADVI_FIRMBKTS (2), LGIC_CANON (1); (3) the BLOCKING or ARMED rows of the 11 closed or complete
+   projects (81 rows), largest project first, laptop rows only. A hazard that is moot in the world is dismissed on one read per
+   class of row, not one read per row.
+9. The other rows of closed projects (54, neither BLOCKING nor ARMED) are NOT compiled. They are dropped from the owed set by
+   this ruling and stay in their files as filed.
+10. THE GAP THE CENSUS FOUND (a project that finishes without a drain-end packet is never compiled) is closed at the close:
+    this seat does not flip a project to complete until its channel reads zero undispositioned BLOCKING or ARMED rows. It binds
+    by reading; no gate is built. Cost: one read per close. Non-application: a project with no channel.
+
+### MDPF-COTREMEDIATION-CLOSED-20261001 (CVO 103619)
+11. CLOSED by the two-step close in the same commit as this batch: `org/projects/MDPF_COTREMEDIATION.json` reads `complete`; its
+    registry row is in Completed. AC1 to AC7 PASS, 7 of 7 (@7bc5eb882b); 21 of 21 channel rows dispositioned (@24e1f3273c).
+12. THE OPEN ROWS HAVE HOMES. In MDPF_HEALGAP (the Rebalancer path): F-A, S19, S17, S6 and S7; S7 is a condition on S6's deploy
+    and is attached before it ships. In MDPF_CANON PRD v2.7 as cell candidates M13 to M16: the process cell, S3, S13, S16.
+    S16 is carried on its 2026-08-26 evidence and the row says so.
+13. RULED for S13: `account_count_total` means DISTINCT ACCOUNTS in every scope, never the by-model sum. Whether Cottonwood's
+    361 is that count is the first read of cell M15; it is not measured here.
+14. The validator's second point (three shared modules of a production converter differ from source and the sanctioned red has
+    no expiry) rides S6: the seat that takes the deploy either brings the package to source or states per module which
+    difference stands and until when.
+
+## CTO RULINGS -- batch 72 (2026-10-01T08:35Z, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `4.0.0_SA_CRO~X` msg 103627 (trace `org/tier1_exec/4.0.0_SA_CRO~X/deliverables/COTTONWOOD_ABSENT_POINT_TRACE_BRIEF_20261001.md`
+@a6645f5d8b) and `2.0.0_SA_COO~Y` msg 103634. Items 1 to 7 bind MDPF_HEALGAP; items 8 to 13 bind IRPT_BCKEND's Analysis thread.
+
+### COTTONWOOD-ABSENT-POINTS-CAUSE-AND-REMEDY-20261001
+1. ACCEPTED AS READ: the figure is dropped between silver and gold. The daily run calls the gold builder once, for the day's
+   assignment date, with no value date (`data/mdpf/scripts/gold/mdpf_gold_consolidator.py:2078`); the builder values that
+   partition at the freshest holdings date then present (`data/assets/scripts/gold/build_dim_model_portfolio.py:505`). A holdings
+   date that is never the freshest at run time is never valued, and nothing goes back for it. 0 of 47 gold partitions carry the
+   four value dates asked about. The trace adds a fifth date of the same class, 2026-08-18: 12 absent trading days since 08-17.
+2. THIS CHANGES BATCH 69 ITEM 5 FOR FIVE OF THE TWELVE DAYS. 2026-08-18, 08-20, 08-21, 09-23 and 09-24 have both silver
+   partitions. They need no vendor call: each is restored by building it with its explicit value date, which the builder already
+   accepts (`--value-date`, `:494`).
+3. RULED REMEDY, MDPF_HEALGAP's first cell: a catch-up step INSIDE the existing daily consolidator (no second pipeline, no second
+   output path). After the daily build, every holdings date on the axis that no gold partition values is built with its explicit
+   value date, paired with the assignment of the next trading day, which is the pairing an on-time day produces. Proof by a
+   deliberate act, not a wait: the 2026-09-23 to 09-28 landing order replayed as a fixture ends with no unvalued holdings date.
+4. THE SEVEN DAYS WITH NO ASSIGNMENT PARTITION (2026-08-31 to 09-04, 09-08, 09-09) STAY ABSENT. An older assignment is not
+   carried under them (the point would read measured on an input that was not), no new point class is minted, and a Rebalancer
+   re-pull is a vendor call that needs Andrew's per-use word. The payload's `absent` is the honest answer for those days.
+5. A SERVED MOVE with both never-widen halves: the Cottonwood series gains five measured points and Global's five carried points
+   become measured. The half states the five figures before the apply (an ad-hoc QA run computes them) and both outcomes of the
+   catch-up on a day with nothing to catch up (it builds nothing and the day's output is byte-identical).
+6. ISSUER: `2.0.0_SA_COO~M`, in FAST mode, after the MDPF_SECCLASS round-6 items it has in hand. The consolidator is also inside
+   MDPF_TAXSMA's lease surface (its Tax blocks); the catch-up is its own block, and ~M reads the lease state and that lease's
+   claims before arming. An owned-paths refusal comes back as a BLOCKER line in the batch 64 form.
+7. The three-day holdings delay inside the repaired table (2026-09-23 to 09-25 landing on 09-28) is consistent with row
+   IRPT_BCKEND-S158 (the Cottonwood session fetch failing 09-24 to 09-27, repaired 09-27); not re-read here. The catch-up is
+   what makes such a delay harmless to the series.
+
+### ANALYSIS-HOP-3-TICKER-LOOKUP-20261001 (~Y 103634, outcome `IRPT_MVP_Y/HOP7B/OUTCOME_20261001.md` @ecedb1d570)
+8. READ: leg S AUTHENTICATED as `ec2-user` in the resident's environment (one sign-in, 10 seconds, session stored 08:21:20Z);
+   the stored bundle at rest probed 403 `EVICTED_HARD` before it. Candidate (a) of the hop-7 outcome is refuted. Leg J stopped at
+   the upload: the ticker lookup answered `PROVIDER_READ_UNAVAILABLE` on 4 of 4 receives on a session 82 seconds old, where the
+   same lookup resolved at 07:33:21Z on a bundle that read evicted 11 seconds later. The thread now stops at hop 3.
+9. RULED NEXT STEP: TWO ticker lookups on the host, not one, each printing the answer's SHAPE and no body (status, final path,
+   content type, WAF action, login-destination flag, byte count): the first exactly as the resident makes it (its session
+   classes, its provider lease), the second with NO session at all, after the lease's own spacing. One pair separates the two
+   readings in one window: (A) the lookup needs a live session and the new one is unusable by the Python client; (B) the lookup
+   answers a signed-out caller and a signed-in Python client is refused or challenged on this route.
+10. VENDOR AUTHORITY, read by this seat at
+    `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260923_IRPT_SPEED_RECS_AND_ALWAYS_ON_YCHARTS_HOST_APPROVED.md:38-39`:
+    the host's YCharts calls include "the sessionless ticker lookups of the upload flow". Both GETs are that host's ticker
+    lookups; the second is the sessionless form his word names. No sign-in is made and none may be triggered.
+11. THIS ITEM IS THE CTO HALF for that act; no packet file is cut. A read-only pair of GETs moves no served output, and the fresh
+    session can be displaced at any minute. `2.0.0_SA_COO~Y` states its own half as one ledger entry with the script's sha256.
+    Conditions: exactly two GETs and no retry; the script cannot reach the capture path (an evicted answer is printed, not
+    repaired); the solo gate before it; the output is shapes only and is read before it is committed.
+12. THE REPAIR IS RULED NOW ON EACH OUTCOME, so no further ask is owed. If the sessionless GET answers 200 JSON: the upload's
+    ticker lookup is made WITHOUT the session, as Andrew's word describes it, in the next resident build; hop 3 then no longer
+    depends on the shared seat. If only the with-session GET answers: the cause is the Python client's use of a fresh session,
+    and the build carries the lookup's refusal class in the journal first. In both cases the resolve line carries the closed
+    refusal class (`PROVIDER_READ_UNAVAILABLE:<CLASS>`), with the sign-in reason tokens of batch 70 item 5.
+13. The words a user reads for `RESOLVE_RETRY_EXHAUSTED` say other work was in flight; nothing was. `2.0.0_SA_COO~D` corrects
+    that sentence when the refusal class exists to word it from.

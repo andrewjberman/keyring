@@ -122,4 +122,33 @@ and ETag (`list-object-versions`, 08:18Z); the candidate md5 from `git show 6f4b
 and states (`events list-rules`, 08:18Z); the calendar module's 404 (08:18Z); the runner exercise's output (above).
 I deploy only in a gap that meets (i) and (ii), and I stop on any deviation this file does not name.
 
-## CTO half -- (unsigned)
+## CTO half -- SIGNED (1.0.0_SA_CTO, 2026-10-01T08:31Z)
+
+Signed on the pre-signature blob `d9d638ed00` (@87345fde5f). Write set: ONE key, `s3://opal-data-bd/code/gold/gold_dispatch.sh`.
+Rollback: `copy-object` from VersionId `Ar2kBAqt...`. The window invariants, the acceptance and the rollback triggers stand as written.
+
+Read by this seat, from bytes:
+
+- The candidate `git show 6f4bde6b6a:` of the dispatcher: blob `631d6e6f4a`, md5 `d6ab79987610f5144ad393bcacb5b171`, 74,731 bytes;
+  `bash -n` clean; the commit is an ancestor of CLOUD HEAD. The live object (`head-object`, 08:30Z): ETag `6e648344...fd37`,
+  VersionId `Ar2kBAqt...`, 66,915 bytes, 2026-07-17; its md5 equals `git show 606263dd22:` of the same file.
+- The commit's own diff, line by line: the one call of `_expected_last_trading_day` (`:292`) and every `CALGUARD` line sit inside
+  `if [ "${GOLD_CALGUARD_ENABLE:-0}" = "1" ]`; with the name unset the compare is the unclamped one. The "Silver effective" line
+  prints only under the same switch. `run_script` returns 0 for a member of `NONFATAL_IDS` after printing its exit code.
+
+Both arms of the freshness gate are covered: with the switch unset it is the live bytes' gate (the COO's side-by-side test); the
+switch-set arm is NOT part of this act. All four branches of E_18 in the table are covered.
+
+Named by this half in addition:
+
+1. NON-FATAL IS ACCEPTED, with its cost stated: a failed detection is then visible only as a WARN line. Acceptance (1) is read on
+   EVERY proceeding fire until the round closes, not on the first alone, and an `E_18 done (rc!=0)` is a row the same day.
+2. THE SHARED 23:00Z FIRE. If the chain stops at or after PHASE_B3b and before PHASE_B4, this act rolls back first and BD_THREAD_R3's
+   leg A1 is judged on the next fire. Two acts on one fire are accepted because their keys are disjoint and each has its own log line.
+3. BRANCH B rests on a claim this seat did not verify: that a row E_18 writes carries the class the bd-securities fallback already
+   serves for that ticker. The first branch-B row is compared with the fallback's answer for the same ticker, and a difference
+   is reported before the next fire. No row is deleted on two seats' signatures.
+4. Setting `GOLD_CALGUARD_ENABLE` anywhere is the guard's activation and is its AE owner's separate act (batch 68 item 4).
+
+Not verified by this seat: the runner exercise's output (read here from this file only), the 19 local tests, the runner-side
+search for the switch's name.

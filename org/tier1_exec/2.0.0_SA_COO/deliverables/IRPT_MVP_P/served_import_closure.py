@@ -2,7 +2,7 @@
 """The import closure of `served.py` inside one function's flat zip, each member beside CLOUD's bytes
 (1.0.0_SA_CTO rulings batch 62 item 6; batch 61 item 3).
 
-    python served_import_closure.py <git worktree> <function> [--zip <built zip>] [--ref HEAD] [--json <out>]
+    python served_import_closure.py <git worktree> <function> [--zip <built zip>] [--ref HEAD] [--root served.py] [--json <out>]
 
 WHY: a served move of `served.py` was signed on the PRESENCE of the modules it imports. Two functions bundled a
 `canonical_profile_reads.py` of an older vintage, three bundled an `enforce.py` and `errors.py` that did not accept
@@ -68,6 +68,8 @@ def main(argv=None):
     ap.add_argument("function")
     ap.add_argument("--zip", dest="zip_path")
     ap.add_argument("--ref", default="HEAD")
+    ap.add_argument("--root", default="served.py",
+                    help="the member whose import closure is printed (served.py by default; retained.py for the adapter's retained reader)")
     ap.add_argument("--json", dest="json_out")
     a = ap.parse_args(argv)
 
@@ -95,10 +97,10 @@ def main(argv=None):
             raise SystemExit("ERROR: cannot read %s at %s" % (repo_path, pin or a.ref))
         return data
 
-    if "served.py" not in members:
-        raise SystemExit("ERROR: %s bundles no served.py" % a.function)
+    if a.root not in members:
+        raise SystemExit("ERROR: %s bundles no %s" % (a.function, a.root))
 
-    closure, outside, queue = [], set(), ["served.py"]
+    closure, outside, queue = [], set(), [a.root]
     seen = set()
     while queue:
         name = queue.pop(0)
@@ -140,8 +142,8 @@ def main(argv=None):
                      "pin": (pin or "")[:10]})
 
     rc_ref, ref_hash = _git(a.tree, "rev-parse", "--short=10", a.ref)
-    print("%s: import closure of served.py -- %d bundled member(s), %d module name(s) outside the bundle; ref %s; bytes from %s"
-          % (a.function, len(closure), len(outside), ref_hash.decode().strip() if rc_ref == 0 else a.ref,
+    print("%s: import closure of %s -- %d bundled member(s), %d module name(s) outside the bundle; ref %s; bytes from %s"
+          % (a.function, a.root, len(closure), len(outside), ref_hash.decode().strip() if rc_ref == 0 else a.ref,
              "the built zip" if zf else "the source-map row"))
     for r in rows:
         print("  %-9s %-28s bundled %s  ref %s  pin %-10s %s" % (
@@ -154,7 +156,7 @@ def main(argv=None):
     print("imported names outside the bundle and outside the standard library: %d %s" % (len(non_std), non_std))
     if a.json_out:
         with open(a.json_out, "w", encoding="utf-8") as fh:
-            json.dump({"function": a.function, "ref": a.ref, "closure": rows, "outside_bundle": sorted(outside)}, fh, indent=1)
+            json.dump({"function": a.function, "root": a.root, "ref": a.ref, "closure": rows, "outside_bundle": sorted(outside)}, fh, indent=1)
     return 1 if bad else 0
 
 
