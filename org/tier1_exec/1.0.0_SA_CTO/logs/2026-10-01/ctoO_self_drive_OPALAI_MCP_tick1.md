@@ -48,6 +48,25 @@ Earlier this session (before arming, @2b8f3151c6): C7 headless prefixes (PRD v1.
 - MCPORTAL MP-c-1 G-CLOSE and MP-v-1 G-2ND: his own Entitlements-tab acts and a person signing in (MCPORTAL blocking).
 - MCPMSP A1 gates G-USER, G-IT-INF, G-ADVISOR, G-FIRM, and G-MSPID (identity/entitlement; PRD v0.4); FWD-8 G-KEY (spend).
 - G-PUSH: shared-branch push by `0.0.0_AB_MSTR~Z` on his word (org/XXX.md shared-branch law).
+- D9 placement card (CVO verdict 27494; his word "D9 as a whole is Laptop now" attaches the device to the directive):
+  A, move NFRA_OPLGTW and NFRA_MCPINDEX to D6 at each round close; or B, keep them in D9 with a standing named
+  exception. REC A. Nothing in flight waits on it.
+
+## Tick 1, continued (~04:1xZ-04:2xZ)
+
+- `0.0.0_AB_MSTR~Z` msg 27491: 2.0.0_SA_COO ~MI, ~O and ~AI seated LIVE at 04:1xZ; ~MS waits for a slot. It asked
+  this seat to move NFRA_OPLGTW and NFRA_MCPINDEX from D9 to D6 (the DIRECTIVES.yaml members line is the CTO's carrier).
+- GOVERNANCE FORK pitched to `3.0.0_SA_CVO~O` (msg 27492; REC: move at round close). VERDICT msg 27494, operative
+  sentence verbatim: "CONCUR ON TIMING; the move itself is NOT the CTO's to rule -- it needs Andrew's word".
+  Grounding: `GOVERNANCE_VERDICT_D9_TO_D6_OPLGTW_MCPINDEX_20261001_O.md` @058a71c713. Executed: ledger row in
+  `drive_pairs/O_OPALAI_MCP_SITEZ/VERDICTS.jsonl` (unblocks NONE); register-exception note on both project blocking
+  fields; the card below.
+- Placement-consumer census the verdict asked for (`git grep -i placement` over `.tools/` and `org/mcp/`, 26 files):
+  only `integrate-directives.py` reads DIRECTIVE placement, and it uses it to decide which fabric writes a register
+  row. The commit, owned-paths, halt and sequence gates use the word in other senses. The interim exception therefore
+  moves no gate. Consequence: the D9 row is laptop-written, so a members move also crosses fabrics.
+- One-line disagreement (CVO independence): none. The verdict is narrower than my REC and correct about pinned
+  citations.
 
 ## Completion test
 
