@@ -4795,6 +4795,73 @@ carries none.
     "spec_asserts": "No secret value leaves the host's .env except into the service's environment.",
     "world_is": "One OTP bearer token sits in the SSM command-invocation output of that run (retained by SSM) and in this seat's session output.",
     "notes": "FIX AT THE INSTRUMENT, done before the cut: round-6 r8.AC2's host probe (r8_host.py) parses .env in Python the way systemd does and prints only tool names; the face of every round-6 host-touching order says never shell-source .env. DISARM: the rotation decision is the bearer's owner's (NFRA_OPLGTW, 2.0.0_SA_COO~O; OG-rl-1 already carries a bearer rotation, row Z-W17-S1) -- routed to ~O the same turn this row lands. ANSWERED (2.0.0_SA_COO~O msg 27684, ~08:59Z): the echoed word is the cot token (Secrets Manager blackdiamond/cot/otp-gateway-token), the same value row Z-W17-S1 names; NFRA_OPLGTW OG-rl-1 (amended A1) already rotates it, and its verify refuses the old value. This row disarms when OG-rl-1 lands; no separate act. The repeat class (a host .env that leaks when shell-sourced) goes on OPLGTW's next enrichment."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W24-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~24",
+    "surfaced_at": "2026-10-01T09:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "s16.AC1 counts a document as a writer from its SSM CONTENT (the string merge-daily-incremental in $LATEST or $DEFAULT) and never reads the trigger rule's state, so the order's option 'disable its trigger rule' alone cannot pass AC1: the documents' merge step must also be removed by a new SSM document version (Phase B publish, Default == Latest).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round6/checks/s16.AC1.sh: `runs.append(\"merge-daily-incremental\" in txt)` over get-document --document-version $LATEST and $DEFAULT; the notification arm reads bucket config only.",
+        "Same script: `if \"error\" in txt.lower()[:200] and \"merge\" not in txt` exits 2, so a retired document's first 200 characters must not carry the word error unless the text also carries the word merge."
+      ]
+    },
+    "spec_asserts": "Order MX-s-16 PHASE A item 3: 'remove its merge step, or disable its trigger rule, whichever leaves no dead-but-scheduled run'.",
+    "world_is": "Either option alone leaves AC1 FAIL: disabling the four rules leaves each document's content still naming merge-daily-incremental; removing the step alone leaves a dead-but-scheduled run. The plan does BOTH (documents rewritten as a retired no-op whose text omits the merge-script name; the four rules DISABLED through Terraform).",
+    "notes": "Done in Phase A on the branch (not published): the four infra/aws/ssm/opal-bd-*-download.json files and eventbridge.tf. Phase B publishes each document (update-document then update-document-default-version) and applies the saved plan. Rollback per key is in ANNOUNCE_MX-s-16.md section 5."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W24-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~24",
+    "surfaced_at": "2026-10-01T09:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The documents are NOT redundant on days with no _BRONZE_COMPLETE sentinel: bd-silver-merge ran on 10 of the last 14 calendar days (no sentinel and no invocation for 2026-09-21, 09-22, 09-28, 09-29; also none for 09-07..09-09, 09-14, 09-15), and on those days the document merge was the only same-day silver writer. Retiring it delays that silver to the next sentinel (REALIZED_DAILY_2026-09-21: document 09-21 21:46Z, bd-silver-merge 09-23 00:07Z, ~26h later; same 9,330 rows).",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3://opal-data-bd/bronze/2026-09-*/_BRONZE_COMPLETE.json listing (s3api list-objects-v2): sentinels exist for 09-02..09-06, 09-10..09-13, 09-16..09-20, 09-23..09-27, 09-30 and 10-01; none for 09-07..09-09, 09-14, 09-15, 09-21, 09-22, 09-28, 09-29.",
+        "/aws/lambda/bd-silver-merge, 20-day window: 10 invocations (09-18, 19, 20, 23, 24, 25, 26, 27, 30, 10-01). Document logs s3://opal-data-bd/logs/realized-download-2026-09-21.log, -09-22.log, -09-28.log and transaction-download-2026-09-21/22/28.log show the document wrote those inputs the same evening; bd-silver-merge first processed them 09-23 00:07Z and 09-30 00:08Z.",
+        "Census of the last 10 document runs per leg: realized 3 inputs, transactions 3, unrealized 48 (6 stubs x 8 runs), allocation 0; every realized and transaction input was also processed by bd-silver-merge later (final state identical: realized rows equal; transactions 0-row document partitions replaced by the Lambda's real rows)."
+      ]
+    },
+    "spec_asserts": "Order MX-s-16 cell: 'Served silver must not lose a partition or a row it has today' and the round-5 ruling that bd-silver-merge is the writer of record.",
+    "world_is": "Final-state DELTA is 0 for transactions and realized (the Lambda writes every input the documents did, same rows or more). TIMING DELTA is non-zero on sentinel-less days: the partition appears at the next sentinel instead of the same evening, up to ~26h later for a Monday input. Cause of the missing sentinels not diagnosed here (the runner's all-table-success rule).",
+    "notes": "DISARM: the never-widen halves read this before GO. Options for the issuer: (a) accept the lag, (b) hold the realized and transaction documents' retirement until the sentinel gap is fixed or ruled out, (c) retire only unrealized and allocations now. The plan is split per table in ANNOUNCE section 5 so (b) and (c) are separable: the four rules and four documents are independent keys."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W24-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~24",
+    "surfaced_at": "2026-10-01T09:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The four documents merge with a STALE copy of the script: they download s3://opal-data-bd/scripts/merge-daily-incremental.py (43,492 bytes, 2026-06-29, no etag logic, no empty-stub skip) while bd-silver-merge runs s3://opal-data-bd/code/silver/merge-daily-incremental.py (59,077 bytes, md5 c54d07908c = repo HEAD). Two code versions share one manifest per table, so the document run overwrites the Lambda's manifest state and the Lambda overwrites the document's, every cycle.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3api head-object: scripts/merge-daily-incremental.py ContentLength 43492 LastModified 2026-06-29T15:16:30Z; code/silver/merge-daily-incremental.py ContentLength 59077 LastModified 2026-07-02T20:49:25Z, ETag c54d07908c69e2d9a9035050e0367f40 == md5 of data/black_diamond/scripts/silver/merge-daily-incremental.py at CLOUD f797d8594a.",
+        "Document logs s3://opal-data-bd/logs/unrealized-download-2026-09-28, -29, -30 .log: 'Previously processed: 68' (09-28), '74' (09-29), '68' (09-30) -- the Lambda's 00:1xZ manifest write sets processed_files back to its 68 etag keys, the document re-adds the 6 stubs, and writes 6 x 0-row silver/unrealized/2026-07-0{3,4,5,6,7,9}.parquet (8016 bytes) each time.",
+        "s3://opal-data-bd/silver/incremental_unrealized_manifest.json read now: processed_files 68, processed_etags 68, daily_partitions 74, last_updated 2026-10-01T00:14:07Z (the Lambda's write)."
+      ]
+    },
+    "spec_asserts": "Order MX-s-16 cell table: the documents download the script and 'run it per table' as a second writer.",
+    "world_is": "The documents never ran the code the Lambda runs. Their transaction runs wrote 0-row partitions for freshly landed inputs (TRANSACTIONS_DAILY_2026-09-21, 09-22, 09-28 at 21:54Z) that the Lambda corrected 1-2 nights later.",
+    "notes": "Disarmed by MX-s-16 Phase B (documents retired). The stale scripts/ object is left in place (nothing deleted); after the retirement nothing references it. Rollback of the retirement would restore the stale-script writer."
   }
 ]
 ```
