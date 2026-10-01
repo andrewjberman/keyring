@@ -38,3 +38,15 @@ Also I am going to send you your self drive loop preemptively, wait for CRO befo
 
 This record is the carrier. The `org/ref/LIVE_ARMS.md` row is landed when the loop arms; it supersedes the
 2026-09-29 `1.0.0_SA_CTO~Z` AMGT fabric-ops row.
+
+## ARM TERMS (appended at arm, 2026-10-01 04:14Z, on the CRO~Z brief msg 27495)
+
+| term | value |
+|---|---|
+| scope | AMGT_CORPUS, AMGT_HARVST, AMGT_RESAPP, DSGN_AMGTV1, ETFS_RIVALS (site Z; scope name in logs and ledger: `AMGT_FRIDAY`) |
+| cadence | 60m, cron at :43 (session-only; this record is the carrier) |
+| call routing | `/self-drive` Step 1: the driver rules on its REC; design forks after CRO~Z research (`/closer trace` per Andrew's word); governance forks to 3.0.0_SA_CVO~Z |
+| cited act list | Andrew's login (Bloomberg Terminal sign-in); a vendor use no word of his names (a new residential arm; the standing CORPUS re-pull); recursive deletion; a promote payload his word does not name (CVO verdict 27503) |
+| paired_with | `/canonical-drive <own project> 30m` at 2.0.0_SA_COO~X (CORPUS), ~Z (RESAPP), ~D (DSGN_AMGTV1), ~H (HARVST); ~RV (ETFS_RIVALS) unchanged |
+| placement | `CTO_PLACEMENT_20261001_043xZ_AMGT_FRIDAY_DEMO_RESTRUCTURE.md` @e18d3a4e6a |
+| stop | DONE read from the register; HELD-AT-STOP (never for AMGT_HARVST, whose closing condition is Andrew's "we do not accept any defeat"); or Andrew's stand-down |
