@@ -5966,3 +5966,32 @@ name the one known failure instead of silently inheriting it.
   "notes": "Left as is under A2; the issuer may widen a later order to correct the comment."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S31",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-01T08:25Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "S3 and S4 were the issuer's own check defects (pr.AC2 read only top-level simulate rows; pr.AC3's host command passed a literal backslash-n into python3.11 -c). Fixed @a439deaeac (ResourceSpecificResults read; parser shipped base64), controlled (parser good True / bad False), and re-run live: AC2 allowed x3 + sibling implicitDeny PASS, AC3 host read Success ROSTERS master 1 write 2 PASS. The worker re-cut its proof VALID and OG-pr-1 is complete (drained @b63b2403f3). S5: the .tf header comment now names gateway-read-secrets-policy (comment only, no re-apply).",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W18-S3",
+    "NFRA_OPLGTW-Z-W18-S4",
+    "NFRA_OPLGTW-Z-W18-S5"
+  ],
+  "one_line": "OG-pr-1's two check defects (S3, S4) are fixed and re-run PASS live; the comment fix closes S5; OG-pr-1 complete.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Worker close 3c3177b5e5 (proof VALID, AC1-AC3 PASS), drained @b63b2403f3; issuer live re-runs ~07:5xZ."
+    ]
+  },
+  "spec_asserts": "TO-OG-pr-1 AC2 and AC3 read the live grant and host read.",
+  "world_is": "They do now; before the fix they misread a correct world.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
