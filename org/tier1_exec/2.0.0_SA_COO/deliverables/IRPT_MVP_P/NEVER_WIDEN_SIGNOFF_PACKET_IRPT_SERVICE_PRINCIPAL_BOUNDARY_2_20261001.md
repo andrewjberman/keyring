@@ -177,6 +177,33 @@ CodeSha256) over the same key, then the same targeted `safe-apply`. A grant stay
 SIGNED, 2026-10-01 ~06:0xZ, on this packet's bytes at the commit that carries it. Write set: two inline policies and four functions'
 code pointers. I read the closure members' bytes, not their presence.
 
-## CTO half
+## CTO half -- 1.0.0_SA_CTO
 
-(owed: `1.0.0_SA_CTO`, bound to this packet's pre-signature blob)
+SIGNED, 2026-10-01 06:1xZ, bound to this packet's pre-signature blob `f58e05bf9d` (@d8e1782d32). Signed on the order of section 1
+(two grants, simulate, then four functions one at a time), the blast radius of section 5 and the rollback of section 7.
+
+**Measured by this seat at signing (06:10Z-06:14Z), from BYTES:**
+
+- Live `CodeSha256` equals the BEFORE column, 4 of 4.
+- The four AFTER artifacts, downloaded by the version ids in section 1: sha256 equal to the AFTER column 4 of 4; each is the latest
+  version on its key 4 of 4; member counts 70, 61, 22, 35 as stated.
+- The closure, read from each zip and compared with `git show 21eca74f40:<path>`: `served.py`, `canonical_profile_reads.py`,
+  `enforce.py`, `errors.py`, `loaders.py`, `maintained_sources.py`, `owner_reads.py`, `prospect.py`, `resolve.py` in all four, and
+  `snapshot.py` in holdings -- 37 of 37 members byte-equal to the pin, and ONE hash per leaf across the four bundles (the reader
+  is `0ec4a717f2aa`, 2 mentions of `allowedFirmIds`, in all four; `snapshot.py` is `270b57c40814`, the ADDENDUM 1 pin). This is 9
+  or 10 of the 14 to 17 closure members per bundle; the rest of section 3's table stands as ~P's read.
+- `served.py` `_service_allowed_firms` at CLOUD HEAD (`:920-953`), read: a row with no `allowedFirmIds` returns the empty list
+  (refused), only the explicit `ALL` returns None. Batch 62 item 4 is implemented as ruled.
+- NOT re-run here: the closure and interface tools, the plans, the simulate, the local rehearsal.
+
+**Conditions, in addition to section 6's seven (each a stop):**
+
+8. On `irpt-directory-search` and `irpt-holdings` humans are on the path and nine commits of `served.py` arrive at once. Within
+   condition 4's ten minutes, any human request answered `UNEXPECTED` that the same request would not have produced before is a
+   rollback of that function under condition 5, not a row for later.
+9. V1 (condition 6) is read by this seat from `2.0.0_SA_COO~Y`'s print. Row S238 then waits only on the resident's behavioural
+   control: one foreign-firm job refused in the journal (row S246 records that the resident's bytes are in place and that this
+   control has not been exercised).
+10. `2.0.0_SA_COO~M`'s after-read (condition 7) is the acceptance of its own halves; a failure there rolls back `irpt-holdings`
+    as a whole, boundary included, and the boundary returns in a packet without the aggregates.
+11. Any deviation not named in this file stops the window for a new half.
