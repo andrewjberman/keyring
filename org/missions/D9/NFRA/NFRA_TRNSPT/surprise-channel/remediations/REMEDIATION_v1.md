@@ -65,11 +65,11 @@ Author: 3.0.0_SA_CVO, 2026-09-30. Graduated at round 1's L9 (ADJUDICATION_v1.md)
     "owner": "2.0.0_SA_COO~T",
     "round": "v2",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~T",
       "round": "v2"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "NFRA_TRNSPT-S7",
@@ -86,11 +86,11 @@ Author: 3.0.0_SA_CVO, 2026-09-30. Graduated at round 1's L9 (ADJUDICATION_v1.md)
     "owner": "2.0.0_SA_COO~T",
     "round": "v2",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~T",
       "round": "v2"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "NFRA_TRNSPT-S8",
@@ -107,11 +107,11 @@ Author: 3.0.0_SA_CVO, 2026-09-30. Graduated at round 1's L9 (ADJUDICATION_v1.md)
     "owner": "2.0.0_SA_COO~T",
     "round": "v2",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~T",
       "round": "v2"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "NFRA_TRNSPT-S9",
@@ -149,11 +149,11 @@ Author: 3.0.0_SA_CVO, 2026-09-30. Graduated at round 1's L9 (ADJUDICATION_v1.md)
     "owner": "2.0.0_SA_COO~T",
     "round": "v2",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~T",
       "round": "v2"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "NFRA_TRNSPT-W4-S8",
