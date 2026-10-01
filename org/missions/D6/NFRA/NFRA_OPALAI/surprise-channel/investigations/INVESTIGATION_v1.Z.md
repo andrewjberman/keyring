@@ -2130,6 +2130,27 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "OA-f-10 BOUNDS 2: never create, change or delete a firewall rule, account, ACL or codex config.",
     "world_is": "A `codex sandbox` call with the elevated override is not read-only: it triggers codex's setup refresh, which wrote read ACEs for the sandbox users on files under the operator's profile before the elevated lock step failed. Not repeated. Disarm owner n/a (INERT)."
-}
+},
+  {
+    "id": "NFRA_OPALAI-Z-S51",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~AI",
+    "surfaced_at": "2026-10-01T16:07Z",
+    "one_line": "safe-merge.sh on wk-NFRA_OPALAI-11 (OA-t-3 parent half: deletes .tools/hooks/bg-concierge-gate.sh + its test) printed 'COMMIT REFUSED DOWNSTREAM after this script's grade PASSED ... Aborting the merge' with no refusing hook's reason in its output, and the merge was LEFT OPEN in the shared tree (.git/MERGE_HEAD present, 4 paths staged) until the issuer ran git merge --abort.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-merge output: grade PASSED (surprise-row-gate OK, missions-tree-check OK, to-pipeline-gate MERGE COMMIT exempt, gitlink-publication-check refusals=0); then 'COMMIT REFUSED DOWNSTREAM' with no reason line.",
+        "org/git-author-override-audit.log 2026-10-01T16:07:15Z and 16:07:25Z: PASS 2.0.0_SA_COO~AI (MERGE COMMIT -- per-file lane check exempt), so owned-paths passed; the refuser is a later hook (candidate: the commit-msg chain).",
+        "Post-run: test -f .git/MERGE_HEAD -> present; git status showed D .tools/hooks/bg-concierge-gate.sh, D .tools/hooks/tests/test_bg_concierge_gate.sh, A t-3 proof instance, M t-3 order. git merge --abort rc=0 cleared it; peers' unstaged edits kept."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "safe-merge.sh: 'ON REFUSAL THIS ABORTS THE MERGE' (header), and a refusal names its reason.",
+    "world_is": "On a downstream commit-hook refusal the merge stayed open in the shared index and the refusing hook printed nothing. Owner of the tool: 0.0.0_AB_MSTR~Z (box operator). The OA-t-3 parent-half merge is deferred to the cutover sitting (CUTOVER_PLAN_20261001.md step 3, no live effect: the fence is unwired since 4c179f1826)."
+  }
 ]
 ```
