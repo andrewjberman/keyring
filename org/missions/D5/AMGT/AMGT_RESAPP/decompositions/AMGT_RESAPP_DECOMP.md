@@ -7384,3 +7384,23 @@ fanout:
   egress: none
   no_promote: true
 ```
+
+### 64f. AMENDMENT 1 (05:4xZ, before any spawn) -- af-2 names its overlay fields; af-5 and the served-text cell move to round 57
+
+**Inputs:** `1.0.0_SA_CTO~Z` msg 27539 (DSGN round-14 analysis @`950ae4bb4f` rulings 2-3: this seat writes served text, CONTRACT
+s.0/s.4; "fold both into your current Friday round as you see fit") and `2.0.0_SA_COO~D` msg 27542 (DSGN round 15 builds the header
+cell against named overlay fields).
+
+- **af-2 act item 5 added** (its AMENDMENT 1): `absent_reason` (plain words) and `places_moved` on the overlay axis reads. The names
+  were sent to COO~D (msg 27542 answered). No criterion changed.
+- **The issuance gate refuses a second order file in round 56** (`to-pipeline-gate`: ONE ISSUER PER ROUND keyed to the round; a recut
+  modifies orders and adds no file). Two consequences, both this issuer's defect at the cut (round 52 put its deploy order, ab-6, in
+  the same issuance):
+  1. `af-5`, THE ONE SCOPED-API REDEPLOY, is NOT ordered in round 56. It becomes round 57's FIRST cell, cut in the round-57 issuance
+     straight after this round's L10, carrying af-1 + af-2 (+ CORPUS ab-3's case_rule).
+  2. The served-text cell (CTO msg 27539) becomes round 57's `ag-` cell, in the same issuance as the redeploy so it rides that
+     deploy. Its check is committed now (`checks/af_7_text.py`), run at the base: C1 FAIL (16 of 1,106 served reason strings across
+     3 names x 4 routes carry a status token), C3 FAIL (ASML's absent posture carries no `absent_reason`), C2 PASS (no served BA string
+     says "no research pack", so that sentence may be page text; the round-57 cell settles it).
+- `af-6` (the af-3 cut-over merge under its pair) stays a direct act of this round.
+- **Fan-out:** unchanged -- wave_0 [af-1 ~197, af-2 ~198, af-3 ~199]; orders_total 3.

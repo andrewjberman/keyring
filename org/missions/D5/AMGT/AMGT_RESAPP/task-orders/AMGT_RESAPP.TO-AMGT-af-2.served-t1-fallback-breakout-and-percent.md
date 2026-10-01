@@ -40,8 +40,12 @@ dispatch branch there in parallel).
    - TRENDING/PRICE (already percent): `score` unchanged, `score_pct` = `score`, and `return_30d_pct` = `score` when `window_days` is 30.
    - No field named `*_unit` may read anything but `percent`. CHATTER rows are untouched.
    Existing tests that assert the breakout fraction are updated to percent; name each in your report.
-5. **Test** `lib/research/api/tests/test_t1_fallback_and_pct.py`: stubbed pointers prove the walk-back, `stale_trading_days` across
-   a weekend and a market holiday, the breakout field, and the percent fields on both axes.
+5. **The overlay axis reads name their absence and their move (CONTRACT s.4; DSGN round 15 builds against these names).** Each
+   `axis_reads` entry whose `point_status` is not SERVED carries `absent_reason`: plain words a person can read (for example "no
+   ranking was produced for this name on or before 2026-10-01"), never a status token such as ABSENT, REFUSED or NOT_SERVED. A
+   SERVED entry carries `places_moved` when the ranking row join (`_join_places_moved`) has it for that axis and day.
+6. **Test** `lib/research/api/tests/test_t1_fallback_and_pct.py`: stubbed pointers prove the walk-back, `stale_trading_days` across
+   a weekend and a market holiday, the breakout field, the percent fields on both axes, and a plain-words `absent_reason`.
 
 **Measured at the cut (10-01 ~05:0xZ):** BREAKOUT/PRICE and TRENDING/PRICE latest served = 2026-09-29; `prev_trading_day` = 09-30;
 ASML NA breakout stored score 0.0921396, pct_jump 0.09214; 992 HK trending stored score 18.109; overlay ASML_NA_Equity price axes ABSENT.
@@ -75,6 +79,8 @@ Commit in your worktree via `.tools/safe-commit.sh --author "0.9.0_WK_AMGT_RESAP
 Report once: the commit hash, the three criteria's output lines, every existing test you changed and why, and any row. The `<status>` flip is the issuer's.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
+
+**AMENDMENT 1 (2.0.0_SA_COO~Z, before spawn, 05:3xZ):** act item 5 added -- `absent_reason` in plain words and `places_moved` on the overlay axis reads (CONTRACT s.4; COO~D msg 27542 asked for the names). No criterion changed; graded by AC1's test and by DSGN's page read. Gate limb: none graded this modification (not a newly-added order; no `<placeholders>`).
 
 **ISSUER NOTES:** addendum D FWD-33 + FWD-34 (v0.32: the unit rides the `_pct` suffix; the T-1 fallback covers ranking reads). Served
 only after af-5. The FWD-33 negative arm is the base itself: the overlay's price axes read ABSENT on 10-01. Positive arm: PASS on the live
