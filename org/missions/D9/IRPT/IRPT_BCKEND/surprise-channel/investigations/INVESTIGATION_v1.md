@@ -14445,3 +14445,32 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Fix: `try(v.master, null) != null` (one expression; `try` swallows the attribute error, `can(...) && ...` does not short-circuit). The file sits under an open IRPT_DASHBD order's <paths> and outside this lane's lease; asked of the CTO."
 }
 ```
+
+## IRPT_BCKEND-S259 -- Inflection's Holdings publication of 2026-10-01 lists no securities for 91 of 884 accounts (49.98 million of 206.10 million USD); the day before it was 2 accounts. The producer's own rule for a split account (a managed part and an excluded part) withholds the positions, and the model-assignment source moved from the 2026-09-27 snapshot to 2026-10-01.
+
+```json
+{
+  "id": "IRPT_BCKEND-S259",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-01T15:50:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Inflection's Holdings publication of 2026-10-01 lists no securities for 91 of 884 accounts (49.98 million of 206.10 million USD); the day before it was 2 accounts. The producer's own rule for a split account withholds the positions, and the model-assignment source moved from the 2026-09-27 snapshot to 2026-10-01.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M (the Holdings producer is this lane's; what a split account shows is a served rule, so the change is ruled by 1.0.0_SA_CTO first)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "served publications, every node read 2026-10-01 15:2xZ-15:4xZ (irpt/inflection/platinum/holdings, the index's two newest dates). Business date 2026-09-29, revision 0d424b7541da: 884 accounts, 886 category lines, 555 model lines, 34,348 security rows, account total 206,515,069.94 USD, security rows 206,261,449.87 USD; 2 accounts whose security rows do not sum to the account (253,620.07 USD). Business date 2026-09-30, revision b29682b06ab6: 884 accounts, 975 category lines, 642 model lines, 29,328 security rows, account total 206,098,981.92 USD, security rows 156,121,904.85 USD; 91 such accounts (49,977,077.07 USD).",
+      "the 89 new accounts: each has exactly one model line (41,474,932.03 USD together; 41,682,215.67 USD with the 2 older accounts) and zero security rows under it; 0 of the 89 had a model line the day before. 975 - 886 = 89 extra category lines = one extra line per newly split account. By model name: Opal Intermediate Growth 38 lines 25,909,030.82 USD; IWM Moderate Taxable 11; 50/50 Opal Intermediate/Opal Long Term 11; Opal Short Term 8; Opal Ultra Short Term 5; IWM Moderately Aggressive Taxable 5; five more names, 11 lines.",
+      "source objects of the two manifests: the only differences are the daily custody snapshot and the model-assignment snapshot, silver/eclipse/2026-09-27/* on the earlier date and silver/eclipse/2026-10-01/* on the later (portfolios_full, portfolios_simple, models, model_composition). The retained membership map (date=2026-09-24) and the directory are the same objects on both.",
+      "data/assets/scripts/gold/investor_reporting/holdings_inf.py:403-426 (CLOUD HEAD): an account whose managed and excluded values tie to custody and whose excluded part is not zero gets a model line for the managed part and a Client line for the excluded part, and NO position rows (`DRILL WITHHELD: Orion marks every position is_managed and does not say which sit in the excluded part`). :371-374: when the two parts do NOT tie to custody the whole account goes to Client WITH its positions."
+    ]
+  },
+  "spec_asserts": "The producer's design treats a split account as the rare case: its positions are withheld because the custody feed does not say which sit in the excluded part. On 2026-09-29 that was 2 accounts.",
+  "world_is": "MEASURED: on today's publication it is 91 accounts and 24.2 percent of Inflection's dollars. For those accounts the Holdings tab shows the model amount and the client amount with no security listed, and the firm's class lines cover 156.12 of 206.10 million USD. INFERRED, not measured: the 89 moved from 'the two parts do not tie' (positions shown under Client) to 'the parts tie' because the assignment snapshot is now 1 day from the custody date instead of 3; the snapshot's own excluded values were not compared between the two dates. NOT MEASURED: one of the 91 on the page.",
+  "notes": "Nothing was deployed to the producer between the two publications by this lane. The fix is a served rule, not a repair: a split account could list its positions under the account without saying which part each sits in. Asked of 1.0.0_SA_CTO as one call."
+}
+```
