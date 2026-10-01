@@ -6334,3 +6334,34 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S38",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-01T15:55Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-rl-2 LIVE (opal-gateway 0a1d9079c6 since 15:34:29Z; ledger nfra-oplgtw-hx-mail-listing-release CLOSED; drained @63affda730; issuer re-grade on CLOUD rl2.AC1 9 of 9, AC2, AC3 PASS). Z-S36 disarmed: the shipped template reads MAIL_SENDER_TABLE host-side from deploy/mail_sender_table.txt (kept equal to criterion.py by a test) and refuses a missing or empty file before any .env write; L1 set hash MATCH before and after. W15-S16: the cut moved to e3567ce5f7 when MX-r-8 had landed ahead of the issuer's read -- the worker graded live by content; correct. W15-S17: a post-extract refusal leaves new files with the old process; covered by CVO L2 (rollback mandatory) and the blast-radius note; not triggered. W15-S18: the verify read came ~3 min after the restart, past the order's 90 s bound, because the verify script was written after the deploy; every reading passed and nothing was at risk -- the next release order carries the verify script pre-written at PHASE A.",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S36",
+    "NFRA_OPLGTW-Z-W15-S16",
+    "NFRA_OPLGTW-Z-W15-S17",
+    "NFRA_OPLGTW-Z-W15-S18"
+  ],
+  "one_line": "OG-rl-2 live: Z-S36 disarmed by the host-side sender-table read; W15-S16..S18 dispositioned (S18: verify past 90 s, all readings passed).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Worker report: deploy RC=0 15:34:56Z; verify md5 92 of 92, tools 65->65, keys 46->46, MAIL_SENDER_TABLE 3, L1 MATCH x2; AC1 9 of 9.",
+      "Issuer re-run on CLOUD @63affda730: rl2.AC1 LIST ARMS 9 of 9, rl2.AC2 PASS, rl2.AC3 PASS."
+    ]
+  },
+  "spec_asserts": "TO-OG-rl-2 PHASE B: verify within 90 s; the template reads the sender table host-side.",
+  "world_is": "Verify came at ~3 min with every reading passing; the template reads it host-side.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
