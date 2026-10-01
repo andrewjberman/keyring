@@ -82,7 +82,7 @@ Report once: what changed and where, the output line of every criterion, the por
 
 **ISSUER NOTES:** DIRECT ACT (two files, LOCAL). CTO msg 27762. Base headerline 2 of 3 on DEV c6aacc68. File-disjoint from AV-i-1 (PriceBars.tsx).
 
-<status>pending</status>
+<status>complete</status>
 <round>18</round>
 <slot>~65</slot>
 <fabric>site-z</fabric>
