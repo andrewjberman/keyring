@@ -1,0 +1,15 @@
+# drive log 2.0.0_SA_COO~H -- 2026-10-01 14Z-15Z (opal_bloomberg)
+
+## 14:2xZ: ag-1 COMPLETE, drained @1846fb9912 -- AC2 (auth) re-run at the base PASS: wsj 3 of 4 renewed unattended, barrons 3 of 3, hardware 0. FWD-11 robust-auth limb MET for wsj + barrons (bbg proven r33). ag-2 (sa signature) in flight; ag-3 drivers running.
+
+## tick 19 -- 14:44-15:0xZ: DRIVE FORWARD -- ag-2 COMPLETE drained @0a77c5cf82 (sa perimeterx false positive fixed; plants 7 passed at base). Load monitor window 1 (14:02:16-14:48:18Z) read hardware 12795 (all <= 14:24:18Z: a human at the console; session now console, RDP disconnected), injected 204; NO challenge event in any runtime inside window 1 -> no challenge solve overlaps human input. Monitor restarted as window 2 (PID 41724, from 14:49:11Z) with per-minute hardware buckets. Backfills: sa 13 jobs 1734 stored; bbg 3 jobs 66; wsj 7 jobs 57; ft job 1 running since 12:34Z. Live control owed: bbg 403s after @0a77c5cf82 must still route to challenge_passed.
+
+## 15:1x-15:2xZ: ROUND 34 CLOSED to L8 -- ag-3 record (issuer act) PASS: bbg 5 pairs 165 stored, wsj 8 pairs 61, sitemap 130, search 0. Record moved to round34/ag3_runs.json (lane refusal: ~92 deliverables not issuer-writable). Row Z-S54 disposes W90-S6. Close commit @dd3f8a3191; packet sent to CVO~Z. ft job 1 finished 15:01:37Z: 2h27m for 61 of 418 (ft cannot cover 89 by Fri -> round-35 item 1). Gold rebuild #3 planned ~20:30Z.
+
+## tick 20 -- 15:14Z: NUDGE -- r34 packet msg 27894 OFFER-EXHAUSTED (CVO~Z LIVE, IDLE) -> nudge sent with path + hash. Drivers: sa 17/2454, ft 1/61, bbg 7/189, wsj 9/84; monitor window 2 hardware 1235 at 15:13-15:14Z (a person at the console again; per-minute buckets recorded).
+
+## 15:2xZ: OPERATOR EVENT -- Andrew closed open windows ~15:13-15:14Z (monitor window 2: hardware 81 + 1154 in those minutes): ALL Chrome processes ended (0 left). ft, bbg, wsj in-tab jobs ended status=error at 15:14:06-15:15:04Z (partial stored: ft security-37dddff4d4357038 1, bbg security-e1596d485e713579 4, wsj BA 0). Each driver auto-resumed (1 of 8) into a ~15-min cooldown and relaunches Chrome on its profile; sa (REST) and the monitor unaffected. OWED: the 3 interrupted names are checkpointed done and will be skipped -> re-run them after the pass. bbg challenge_passed 15:11:30Z precedes the human-input minutes (clean).
+
+## 15:3x-15:5xZ: tick 21 -- round-34 analysis @6cbef26707 (27910, acked) -> round 35 ONE issuance @33bace02e0: ah-1 (~91 challenge capture + planted fixture), ah-2 (~90 per-minute load grader), ah-3 (~92 ft body unlock: 324/357 ft rejections were locked bodies). ft driver stopped (STOP_FT, ends after its current job). Tab drivers recovered from the window closing at 15:30:56Z (chrome 51 procs). MSTR 27917 (inf-etf-ownership-daily invokes) not ours -> acked, no reply per its ask.
+
+## tick 22 -- 15:44Z: NO-OP -- workers ~90/~91/~92 on round 35 (13 min in, no commit yet; ~92 waits on the ft driver's stop); drivers alive (sa 19/2474, bbg 8/193 job running since 15:29 resume, wsj 12/88, ft 2/62 finishing its last job); monitor hw 29431 -- a person at the console 15:40-15:44Z (up to 4592/min), those minutes VOID.

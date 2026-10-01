@@ -5423,6 +5423,28 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "Resolves AMGT_HARVST-Z-W90-S7 (append-only: that row is untouched). disarm_owner 2.0.0_SA_COO~H (nothing armed)."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S54",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-01T15:15Z",
+      "one_line": "Round-34 disposition record (rows are append-only): W90-S6 (BLOCKING: no ft/sa challenge met, AC2 cannot pass) is disarmed by the issuer's AMENDMENT 1 under CTO ruling 27860; W91-S16 and W90-S7/S8 need no act.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Spine L10: the slug goes only after every BLOCKING or ARMED row of the round is dispositioned.",
+      "world_is": "W90-S6: the criterion it blocked (a met-and-passed ft/sa challenge in fresh profiles) was re-pointed by ag-2 AMENDMENT 1 @7f375a0871 -- CTO ruling 27860 grades the captcha limb at backfill load (none presented = MET-BY-ABSENCE, labelled) plus a planted fixture; ag-2 then closed on the sa signature fix (@0a77c5cf82). W91-S16 (wsj/barrons sign-ins met no DataDome challenge) is an OBSERVATION carried into the FWD-11 limb table of the round-34 packet. W90-S7 is resolved by W90-S8 (fix 42ea2c30c1).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "commits 7f375a0871, 0a77c5cf82, 1846fb9912, 42ea2c30c1",
+          "deliverables/2.0.0_SA_COO_H/round34/ROUND34_DRAIN_END_PACKET.md"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "The disarm is an amendment under a CTO ruling, not a ruling that limits FWD-11: the captcha limb stays open (packet section 2)."
     }
   ]
 ```

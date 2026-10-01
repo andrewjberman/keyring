@@ -80,15 +80,19 @@ org/missions/D5/ETFS/ETFS_RIVALS/surprise-channel/investigations/INVESTIGATION_v
 (b) `gold_holdings_coverage.py` `g1_sources` picks the newest G1 by object name; route it through `revision.newest(objs)`.
 The drain runs the whole `data/etfs/scripts/rivalfunds/tests/` suite and must read 0 failed.
 
+**AMENDMENT 2 -- REOPEN (issuer ruling on row ETFS_RIVALS-Z-S9, 2026-10-01).** `gold_canonical_shape.py` stamps every issuer row `source_channel` with the constant `SOURCE_CHANNEL = "issuer-site:basg"` (line 105, written at `build_rows`), so GQGU's rows read as BASG's channel. An issuer row's `source_channel` is `issuer-site:<source>`, where `<source>` is the source token of the silver object the row came from (`gqgu-...parquet` -> `issuer-site:gqgu`; `basg-...` -> `issuer-site:basg`, unchanged). Add a test beside the code (`tests/test_v2_*.py`). One criterion is added: AC3.
+
 ## 4. PROOF OF SPEC (each invocation LITERAL, run from your worktree root)
 
 - **AC1** -- over the REAL 2026-09-29 inputs, G1's GICS sources name only the live G4 53bc393958bd, never the import (`org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round4/checks/v-2.AC1.py`)
 - **AC2** -- with a later-named second issuer fund's object planted on BASG's date, G1 holds BOTH funds' rows (`org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round4/checks/v-2.AC2.py`)
+- **AC3** (amendment 2) -- on the same planted date, G1's GQGU rows carry `source_channel` `issuer-site:gqgu`; control: BASG's stay `issuer-site:basg` (`org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round4/checks/v-2.AC3.py`)
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="RIV-v-2"><invocation>python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round4/checks/v-2.AC1.py</invocation><expect>AC1 RESULT: PASS 0 failures</expect></criterion>
 
   <criterion id="AC2" cell_refs="RIV-v-2"><invocation>python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round4/checks/v-2.AC2.py</invocation><expect>AC2 RESULT: PASS 0 failures</expect></criterion>
+  <criterion id="AC3" cell_refs="RIV-v-2"><invocation>python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round4/checks/v-2.AC3.py</invocation><expect>AC3 RESULT: PASS 0 failures</expect></criterion>
 </proof_of_spec>
 
 ## 5. WHEN YOU ARE DONE
@@ -102,7 +106,7 @@ at base 48ec92238a: v-2.AC1 FAIL, v-2.AC2 FAIL -- each FAIL as expected.
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>complete</status>
+<status>pending</status>
 <round>4</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>

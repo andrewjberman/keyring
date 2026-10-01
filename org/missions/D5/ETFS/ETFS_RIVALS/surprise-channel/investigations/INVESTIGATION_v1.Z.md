@@ -2235,6 +2235,29 @@
       ]
     },
     "notes": "The serve is the issuer's act (a replay of canonical_shape, then build-trade-schedule and publish_page over the dates), not this worker's. disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S9",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-01T15:55Z",
+    "one_line": "Every issuer G1 row is stamped source_channel 'issuer-site:basg', GQGU's included: the merged round-4 code would serve GQGU's 10798 rows labelled as BASG's channel.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/gold_canonical_shape.py@7e537d4b5b:105 SOURCE_CHANNEL = \"issuer-site:basg\"; :486 build_rows writes it on every issuer row.",
+        "deliverables/2.0.0_SA_COO~RV/round4/served_delta_r4.py at 7e537d4b5b (local replay): GQGU newest date 2026-09-28, 38 non-cash rows, source_channel ['issuer-site:basg'], source_used ['issuer'].",
+        "deliverables/2.0.0_SA_COO~RV/round4/checks/v-2.AC3.py at 7e537d4b5b: AC3 RESULT: FAIL 1 failures (GQGU ['issuer-site:basg']; control BASG ['issuer-site:basg'] OK)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-v-2 (one revision contract, per fund) and RIV-q-1 (GQGU's issuer route): each issuer fund's rows are its own; a row's lineage names the channel it came from.",
+    "world_is": "G1 reads GQGU's own silver object (v-2 AC2 PASS) but labels its rows with BASG's constant channel. Nothing is served yet: d-5 is staged.",
+    "notes": "Remedy (issuer, inside the decomposition): RIV-v-2 is REOPENED with amendment 2 -- an issuer row's source_channel is 'issuer-site:<the silver object's source token>'; criterion v-2.AC3 (GQGU rows 'issuer-site:gqgu', BASG control unchanged). d-5's cut waits on the reopen's drain; the served delta is re-read on the fixed code. Disarm: the drain of the reopen."
   }
 ]
 ```
