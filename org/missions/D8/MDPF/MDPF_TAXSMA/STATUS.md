@@ -82,7 +82,7 @@ Each is this seat's act under the lease. None makes Tax visible; TX-r-3 does.
 | S5 EC2 Stage 6 import (`lib.opal_naming` not on the runner tree) | this lane | the runner sync of `lib/` is one line in `mdpf-daily-dispatch.sh` (AE~V's tree) |
 | S6 Gateway deploy ships four projects | this lane | TX-r-2 cut NARROW at 1764e54a16 + TX-g-1's three commits + 030cef41b5 |
 | A traded row with a blank Account Number | Andrew | stays INVALID_ACCOUNT (no fallback) unless he says the workbook value counts |
-| The Gateway deploy script must write `TAXSMA_WORKBOOK_BEARER` (from the new secret) and `TAXSMA_WORKBOOK_IDENTITY` into `.env` | this lane, at TX-r-2/TX-r-3 | read of the deploy script at the narrow cut: UNREAD |
+| GAP, measured 2026-10-01T01:0xZ: `infra/aws/ec2/opal-gateway/deploy-to-ec2.sh` writes neither `TAXSMA_WORKBOOK_BEARER` nor `TAXSMA_WORKBOOK_IDENTITY` into the Gateway `.env` (0 TAXSMA lines in the shared tree and in origin/CLOUD), it rewrites `.env` whole on every deploy, and no cell's `<paths>` grants that file for this (TX-g-2 only bundled the module) | this lane; the script is outside the lease surface and NFRA_MCPINDEX edited it on origin | after the pull: extend the lease surface to that file, add the two lines on origin's version (the MS_INGEST_BEARER pattern), row S10 filed |
 
 ## Limits
 
