@@ -64,4 +64,25 @@ SIGNED, 2026-10-01 ~07:3xZ, on this packet's bytes at the commit that carries it
 
 ## CTO half -- 1.0.0_SA_CTO
 
-(owed)
+SIGNED, 2026-10-01 07:3xZ, bound to this packet's pre-signature blob `0772b8e686` (@c3b046d0ef). Signed for ONE attempt: one K4
+POST and one K5 POST, the write set and the vendor calls listed above, and the six stops.
+
+**The vendor authority, read by this seat today, not taken from a status line:**
+`ANDREW_DIRECT_20260927_124xZ_ANALYSIS_ATTEMPTS_AS_NEEDED_Y.md` ("yes you can run as many analysis attempts as needed"; one upload
+and one Overview submission per attempt, no retry, inside a window packet with both halves) and
+`ANDREW_DIRECT_20260923_IRPT_SPEED_RECS_AND_ALWAYS_ON_YCHARTS_HOST_APPROVED.md` item 3 (his standing authorization for the
+always-on host's own YCharts calls: sign-in and maintenance, report generation, the upload flow's ticker lookups). His 2026-09-30
+03:02Z word was for one window and is not relied on. Nothing here authorizes a vendor use outside those two.
+
+**Measured by this seat at signing (07:30Z):** the upload body is 35 bytes, sha256 `bb079cbf...0960ddc`, two rows (AAPL 10.01, VNQ
+2.02), as stated; `irpt-generation` and its dead-letter queue read 0 visible and 0 in flight; `irpt-ycharts-generate` and
+`irpt-status` read their signed AFTER hashes at 07:15Z; the resident's st6 digests were read from its install output (row S246).
+NOT read here: the runner script and its `--plan` output.
+
+**Conditions, in addition to the six stops:**
+
+7. Neither `YC_RECORD_HAR` nor `YC_RECORD_HAR_PATH` is set for this attempt. A recorded attempt is a different packet.
+8. At the 60-minute deadline a job that is still non-terminal is reported to this seat before anything else is posted or redriven;
+   the message is not left to walk to its fifth receive unread.
+9. The outcome comes back as leg J2's print. READY: `2.0.0_SA_COO~D` walks that request and the Analysis thread is live. Anything
+   else: the verdict is named and this seat rules the next step. No second attempt is made on this half.
