@@ -58,6 +58,10 @@ choice.
   multiplies by 100. This resolves the "+0.09%" defect on the RESAPP side only: DSGN removes its own scaling and adds
   none.
 
+- **Display precision is presentation** (amendment 3, ~10:3xZ, on COO~D msg 27758). The page prints `return_30d_pct`
+  (and any `*_pct`) to ONE decimal, with sign and "%". The whole served value stays in a data attribute on the bar
+  (e.g. `data-price-value`). Rounding for display never rescales: no x100, and no change of unit.
+
 ## 3. Dates (O4)
 
 - **Server-side fallback:** a per-name or ranking read for date D serves the latest served trading day on or before D
