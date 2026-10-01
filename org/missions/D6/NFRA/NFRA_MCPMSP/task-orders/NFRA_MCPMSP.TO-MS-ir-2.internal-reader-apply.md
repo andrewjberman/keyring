@@ -84,4 +84,4 @@ expected (NoSuchEntity); AC3 PASS as expected (the control: the gateway role rea
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
