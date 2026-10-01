@@ -4419,6 +4419,139 @@ carries none.
     "notes": "INERT: the drain merge of this branch onto CLOUD is expected to conflict in data_entitlement.py, DATA_CATALOG.yaml and emit_catalog_v02.py; the resolution is both sides plus a re-emit of DATA_CATALOG.yaml through emit_catalog_v02.py and the pins moved."
   },
   {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~21",
+    "surfaced_at": "2026-10-01T05:45Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "id": "NFRA_MCPINDEX-Z-W21-S12",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "one_line": "The release as ordered (blackdiamond added to ENABLED_INTEGRATIONS, nothing else) deploys a tool that fails closed forever: blackdiamond_list_fees reads BLACKDIAMOND_READER_ROLE_ARN and BLACKDIAMOND_READER_EXTERNAL_ID from the host environment and deploy-to-ec2.sh renders neither.",
+    "spec_asserts": "MX-r-7 item 2: deploy-to-ec2.sh:197 gains exactly blackdiamond (7 ids); r7.J1 asks a live BD question class through a principal session after the deploy.",
+    "world_is": "app/integrations/blackdiamond/integration.py:79-80,334-348 role_config(os.environ) raises RoleConfigError unless BLACKDIAMOND_READER_ROLE_ARN names gateway-blackdiamond-read-role AND BLACKDIAMOND_READER_EXTERNAL_ID matches the ExternalId pattern. The release's .env printf renders 35 keys, all 35 already on the host, 0 BLACKDIAMOND_*; the deploy-only artifact in-process: role_config RAISED RoleConfigError 'BLACKDIAMOND_READER_ROLE_ARN is not set to an IAM role ARN'. Unlike the Schwab service (MX-r-6 A3, row Z-W19-S7: SCHWAB_EXTERNAL_IDS_SECRET_ID names the secret aws_roles reads), the BD integration has NO secret-reading path: its ExternalId is read from an env VALUE, and the ExternalId (a uuid generated once by the apply) lives only in Secrets Manager opal/mcp/opal-gateway-blackdiamond-reader-external-id and the role's trust. Tool count would still move +2 (registration does not read the env) and /health, ids-enabled and shipped-dir checks (r7.AC2) would pass; the first blackdiamond_list_fees call would refuse.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "release 6e2f817066 (rel-nfra-mcpindex-r5-bd-release, C:/tmp/mx-rel10): python count of 'BLACKDIAMOND' in infra/aws/ec2/opal-gateway/deploy-to-ec2.sh = 0; env_keys_PHASEA.txt: release printf renders 35 keys, host has 35, 0 host keys unrendered, 0 rendered-but-absent.",
+        "deliverables/0.9.0_WK_NFRA_MCPINDEX~21/probes_r7/bd_inputs_probe_PHASEA.txt: role_config RAISED RoleConfigError on the deploy-only artifact extracted from dep-nfra-mcpindex-r5-bd-release cfd410608f.",
+        "app/integrations/schwab/aws_roles.py: EXTERNAL_IDS_SECRET_VAR = SCHWAB_EXTERNAL_IDS_SECRET_ID exists; no BLACKDIAMOND_* equivalent anywhere under infra/aws/ec2/opal-gateway except integration.py:79-80."
+      ]
+    },
+    "notes": "INERT: nothing is deployed. Options, the issuer's and the halves' to choose (the worker has not chosen and has not edited the release): (A) the release also renders BLACKDIAMOND_READER_ROLE_ARN (non-secret, derivable from the role name and account) and ships a secret-read path for the ExternalId in blackdiamond/integration.py (the Schwab A3 pattern: a *_SECRET_ID env key naming opal/mcp/opal-gateway-blackdiamond-reader-external-id, read by the gateway role under the secret's resource policy, no value in .env or the repo), which widens this order's code and .env keys; (B) the ExternalId VALUE is written into the host .env by the deploy at PHASE B from the secret (a deploy-time fetch like GRAPH_JSON/FERNET_KEY in the REMOTE_SCRIPT, value never in the repo); (C) accept a dormant tool and move r7.J1. The ExternalId value only exists after the IAM apply, so PHASE B ordering is apply, then deploy."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~21",
+    "surfaced_at": "2026-10-01T05:45Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "id": "NFRA_MCPINDEX-Z-W21-S13",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "one_line": "The saved terraform plan cannot create ONLY the reader role, its policy and the gateway's assume permission: blackdiamond_reader_iam.tf also creates the ExternalId secret and its version (5 to add), and a third secret resource, the secret policy the gateway reads it through, is not pulled in by a targeted plan (6 to add when named).",
+    "spec_asserts": "MX-r-7 item 3 / A2 / step 4: the saved plan CREATES only the Black Diamond reader role, its policy, and the gateway role's permission to assume it; any other planned change is a BLOCKING row.",
+    "world_is": "terraform plan -lock=false -target=aws_iam_role_policy.gw_assume_bd_reader -target=aws_iam_role_policy.bd_read_policy (2026-10-01T04:36Z, from the worker tree at CLOUD 4fb6d9e164, blackdiamond_reader_iam.tf blob equal to the release's): Plan 5 to add, 0 to change, 0 to destroy = aws_iam_role.bd_read, aws_iam_role_policy.bd_read_policy, aws_iam_role_policy.gw_assume_bd_reader (the three the order names) PLUS aws_secretsmanager_secret.bd_reader_external_id and aws_secretsmanager_secret_version.bd_reader_external_id (the role's trust and the gateway's assume statement both read the ExternalId from that secret version, so terraform pulls them in), plus two outputs. aws_secretsmanager_secret_policy.bd_reader_external_id_gw_read (the resource policy letting the gateway role read the secret) is not a dependency of the two targets, so the 5-resource plan leaves the secret unreadable by the gateway; naming it as a third target gives Plan 6 to add, 0 to change, 0 to destroy. No change, no destroy, no existing resource appears in either plan; measured absent before the plan: role gateway-blackdiamond-read-role, policy gateway-assume-blackdiamond-reader-policy, secret opal/mcp/opal-gateway-blackdiamond-reader-external-id (all NotFound).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/0.9.0_WK_NFRA_MCPINDEX~21/PLAN_MX-r-7_targeted_5.txt and PLAN_MX-r-7_targeted_6.txt (renders); saved binaries C:/tmp/mx-r7-bd-reader-targeted.tfplan sha256 492073669134077f2ab7cfeee7d088929321dd84c34fcbbb7e1684c45719b789 (5 to add) and C:/tmp/mx-r7-bd-reader-targeted6.tfplan sha256 0401378f8e104c6b2d54c4f4548917bc4fb0f18a6c945fa4eec5f8eab64da3a2 (6 to add).",
+        "infra/aws/terraform/opal-gateway/blackdiamond_reader_iam.tf (release 6e2f817066): resources bd_reader_external_id (secret), bd_reader_external_id (version, uuid() frozen by ignore_changes), bd_reader_external_id_gw_read (policy), bd_read, bd_read_policy, gw_assume_bd_reader.",
+        "aws iam get-role / get-role-policy and secretsmanager describe-secret read 2026-10-01: NoSuchEntity / ResourceNotFound for the three names; opal-gateway-role inline policies 16, 5018 of 10240 non-whitespace characters before the new policy."
+      ]
+    },
+    "notes": "INERT: nothing is applied. The two extra creates are the design of record in the t-13 file (its header lists the secret), and the order's own bound 1 ('the gateway role gains only the assume permission') holds in both plans. The never-widen halves rule whether Plan 6 (the full design; apply as ONE saved plan through safe-apply) replaces the order's three-resource sentence. The worker did not edit the .tf and saved both binaries."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~21",
+    "surfaced_at": "2026-10-01T05:45Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "id": "NFRA_MCPINDEX-Z-W21-S14",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "The release is cut on d61fde4693, which predates the R20 declared-exception gate and carrier, so the naming limb refused the release commit; two commits on the never-merged release and deploy-only branches were made under GIT_COMMIT_AUTHOR_OVERRIDE (audited), and one carries the CTO-lane NAMING_LEGACY_READS.json as a byte copy.",
+    "spec_asserts": "MX-r-7 A3: cut the release at the live ref d61fde4693, cherry-pick MX-t-13's and MX-t-10's gateway commits.",
+    "world_is": "safe-commit on the release tree at d61fde4693 refused with NAMING-GATE REFUSE 10 graded (the cells' hand-kept literals 49financial, opal-data-bd, silver/fees/, platinum/etfs/positioning_data.json are NEW there); the gate at that ref has no r20_exception kind and the 8 entries NFRA-MCPINDEX-R20-01..08 (0d71a22887) are not in its NAMING_LEGACY_READS.json. Carrier commit 6dda22dd40 puts .tools/naming-gate.py and org/standards/NAMING_LEGACY_READS.json at CLOUD 4fb6d9e164's bytes onto the release branch; its first attempt refused on the lane NAMING_LEGACY_READ_AUTHORITY (CTO role only) and passed under GIT_COMMIT_AUTHOR_OVERRIDE=0.9.0_WK_NFRA_MCPINDEX~21 (the Z-W14-S8 / Z-W19-S19 precedent). The release commit 6e2f817066 then passed the gate in WARN mode (10 graded); the deploy-only commit cfd410608f was also made under the override (gateway paths on CLOUD). Neither commit is merged or pushed; the carrier and the gate sit OUTSIDE infra/aws/ec2/opal-gateway, so the gateway tree object 3afbcca038973eee87577c1b58d2111cd0ab8ebe, and so the artifact, is untouched by them.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/tmp/mx-r7-rel-commit.log and C:/tmp/mx-r7-carrier.log (refusal text); git -C C:/tmp/mx-rel10 log: 6dda22dd40 (carrier), 6e2f817066 (release); git -C C:/tmp/mx-dep10 log: cfd410608f.",
+        "git diff --stat d61fde4693 6dda22dd40: exactly 2 files (.tools/naming-gate.py, org/standards/NAMING_LEGACY_READS.json), 0 in the gateway directory."
+      ]
+    },
+    "notes": "INERT: a scratch-branch record for the L8 reading. The override bypassed the lane refusal only; the naming gate was satisfied by the CTO's own carrier bytes, not waived."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~21",
+    "surfaced_at": "2026-10-01T05:45Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "id": "NFRA_MCPINDEX-Z-W21-S15",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "tests/test_opal_discover.py::test_index_vocabulary_routes_the_real_catalog is RED on CLOUD itself and in the release: MX-d-5 asserts a bare 'ETF holdings and fund flows' ask is NOT catalogued, and MX-t-10's platinum/etfs catalog row now answers it (catalogued=True).",
+    "spec_asserts": "MX-t-10 closed with t10.AC2 16 passed; MX-d-5's routing-precision test pins an uncatalogued ETF holdings ask.",
+    "world_is": "In the release tree (6e2f817066) the targeted seven-file run is 4 failed, 63 passed; the same files at the live ref d61fde4693 are 3 failed, 55 passed. The three common failures (test_ogz2_ac06, test_ogz1_ac05, test_ogz1_ac08) fail at the live ref itself. The fourth, test_index_vocabulary_routes_the_real_catalog (tests/test_opal_discover.py:390: assert etf['catalogued'] is False; printed 'ETF ask catalogued=True'), also fails in the worker tree at CLOUD 4fb6d9e164 (1 failed, 14 passed in test_opal_discover.py), so it entered with MX-t-10's catalog row, not with the release cut. The 14-file broad run (deploy guard, acceptance, MCPMSP, Schwab, OG-t-2 tests) has the IDENTICAL failure set in the release tree and the live-ref tree (18 of 18 names, 108 passed in each; the StreamableHTTP RuntimeErrors are this device's).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/0.9.0_WK_NFRA_MCPINDEX~21/probes_r7/tests_targeted_release_PHASEA.txt, tests_targeted_liveref_PHASEA.txt, tests_broad_release_PHASEA.txt, tests_broad_liveref_PHASEA.txt.",
+        "MOCK_GRAPH=1 python -m pytest tests/test_opal_discover.py in the worker tree at CLOUD 4fb6d9e164: 1 failed, 14 passed."
+      ]
+    },
+    "notes": "INERT for the deploy; it bears on r7.J1 reading, since discover will route an ETF holdings ask to etfs_get_positioning after the release. Whether the assertion or the routing is stale is the CTO's/issuer's to rule; the worker did not edit either."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~21",
+    "surfaced_at": "2026-10-01T05:45Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "id": "NFRA_MCPINDEX-Z-W21-S16",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "The writer of s3://opal-data-bd/silver/fees/ is named from a read-only trace: Lambda bd-49f-fees-runner (role bd-49f-fees-runner-role), fired by the ENABLED EventBridge rule bd-49f-fees-session-daily at 22:20Z MON-FRI through the Lambda bd-49f-session-trigger.",
+    "spec_asserts": "MX-r-7 A1: PHASE A's ANNOUNCE names the writer of silver/fees/ (row Z-W21-S3) from a read-only trace, or states it unattributed with what was read.",
+    "world_is": "Read-only AWS reads on 2026-10-01 ~05:1xZ: (1) the newest silver/fees partitions 2026-09-27, -28, -29 were last modified 2026-09-30T22:21:10Z, 18 seconds after bronze/fees/Fees_OpalCapital_Daily_2026-09-16_to_2026-09-30.xlsx (22:20:53Z); (2) the Lambda bd-49f-fees-runner (python3.11, role bd-49f-fees-runner-role, code last modified 2026-06-25) has log streams for 2026-09-28, -29 and -30 whose last events are 22:21:08Z, 22:21:09Z and 22:21:09.766Z, and the 09-30 stream prints 'OK: silver/fees/<date>.parquet' lines; (3) that role's inline policy bd-49f-fees-runner-policy allows s3:GetObject and s3:PutObject on opal-data-bd bronze/fees/* and silver/fees/*; (4) EventBridge rule bd-49f-fees-session-daily is ENABLED, cron(20 22 ? * MON-FRI *), target Lambda bd-49f-session-trigger (description: 'fees fresh-at-ETL ... runner=fees'); the older rule bd-49f-fees-runner-daily (cron 30 22) is DISABLED and says it is superseded by the session chain. The Playwright document whose last log is a 2026-09-25 login failure (the Z-W21-S3 premise) is not the writer: logs/fees-download-* stop at 2026-09-25 while bronze and silver kept landing through 2026-09-30. Not read: the session-trigger-to-runner hand-off (the 'bd-49f-session-complete' event is named in the disabled rule's description, its rule was not read).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws s3api list-objects-v2 / head-object on opal-data-bd silver/fees/ and bronze/fees/ 2026-10-01; aws events describe-rule / list-targets-by-rule for bd-49f-fees-session-daily and bd-49f-fees-runner-daily; aws lambda get-function-configuration bd-49f-fees-runner; aws iam get-role-policy bd-49f-fees-runner-role; aws logs get-log-events /aws/lambda/bd-49f-fees-runner stream 2026/09/30/[$LATEST]475931487bf04020ac7166a60728fe12."
+      ]
+    },
+    "notes": "INERT: this is the attribution the order asks the halves to see; the ANNOUNCE carries it. It leaves Z-W21-S3's staleness hazard as it was (no monitor, by moratorium): the tool's answer states its as_of."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~21",
+    "surfaced_at": "2026-10-01T06:15Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "id": "NFRA_MCPINDEX-Z-W21-S17",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "Issuer ruling A5 on rows Z-W21-S12 (option B) and Z-W21-S13 (Plan 6) is applied in the release; the ruling is recorded here because the surprise-row gate refuses an in-place edit of S12's and S13's notes.",
+    "spec_asserts": "The A5 hand-off asked the worker to update rows S12 and S13's notes with the ruling ('ruled by issuer A5: ...') and keep their dispositions as the schema allows.",
+    "world_is": "safe-commit's surprise-row gate refused the commit: EXISTING row NFRA_MCPINDEX-Z-W21-S12 was MUTATED in place (content hash 4ffad0d8f2c7 -> 791afe7e90ae) and likewise S13 (328fd9eddeed -> 5ad867515458); 'Corrections are NEW items citing the old id'. The in-place note edits were reverted (INVESTIGATION_v1.md is byte-equal to HEAD df1db63305 before this row) and the ruling is carried on this new row; S12 and S13 stand exactly as filed, still UNDER_INVESTIGATION, their dispositions the issuer's or the CVO's to set.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/tmp/mx-r7-announce-commit2.log: [surprise-row-gate] BLOCKED -- 2 violation(s) on NEW rows: EXISTING row NFRA_MCPINDEX-Z-W21-S12 was MUTATED in place; EXISTING row NFRA_MCPINDEX-Z-W21-S13 was MUTATED in place.",
+        "Task order NFRA_MCPINDEX.TO-MX-r-7.bd-release.md AMENDED A5 (rules S12 -> option B, S13 -> Plan 6); ANNOUNCE_MX-r-7.md v2 and probes_r7/env_keys_PHASEA_v2.txt, bd_inputs_probe_PHASEA_v2.txt carry the work."
+      ]
+    },
+    "notes": "RULED by issuer A5 (2.0.0_SA_COO~MI, 2026-10-01 ~06:0xZ). Z-W21-S12 -> OPTION B: the release's deploy-to-ec2.sh REMOTE_SCRIPT fetches the ExternalId on the host from opal/mcp/opal-gateway-blackdiamond-reader-external-id (JSON {data_read}, extracted like GRAPH_JSON) and the live .env printf gains exactly BLACKDIAMOND_READER_ROLE_ARN (gateway-blackdiamond-read-role) and BLACKDIAMOND_READER_EXTERNAL_ID (.env keys 35 -> 37); no gateway code change; no value in any file; option A (a runtime secret-read path) is carried to the round-5 analysis. DONE in PHASE A: release 08e6f78940, deploy-only 05e3eff563, gateway tree object b5733d7f9d58f57b400be419e97237e975e4772f equal in both; printf renders 37 keys with MASTER_ADMIN_PRINCIPALS and WRITE_CAPABLE_PRINCIPALS kept (probes_r7/env_keys_PHASEA_v2.txt); role_config OK on the deploy-only tree with the real role name and a dummy ExternalId, the live-ref render still raises RoleConfigError (probes_r7/bd_inputs_probe_PHASEA_v2.txt). Z-W21-S13 -> PLAN 6: the saved plan of record, 6 to add, 0 to change, 0 to destroy, replaces the order's three-resource sentence; any change or destroy is still BLOCKING; applied as ONE saved plan through safe-apply, re-planned at the GO and byte-equal in effect; Plan 6 binary C:/tmp/mx-r7-bd-reader-targeted6.tfplan sha256 0401378f8e104c6b2d54c4f4548917bc4fb0f18a6c945fa4eec5f8eab64da3a2 (re-hashed this session). Plan 5 is superseded."
+  },
+  {
     "id": "NFRA_MCPINDEX-Z-S69",
     "project": "NFRA_MCPINDEX",
     "fabric": "site-z",
@@ -4441,6 +4574,183 @@ carries none.
     "spec_asserts": "Ledger L5/L9 proof_required includes 'silver partition written' by the scheduled fire (Z-S61 notes: expect 'Found 1 new' on realized/transaction at the 09-30 fires).",
     "world_is": "Realized/transaction/allocation inputs are merged into silver by bd-silver-merge on S3 landing, about 21 hours before the document's fire, so the fire's merge is a correct no-op every night. Unrealized has new inputs the document itself merges (6 found 09-30).",
     "notes": "Issuer ruling inside the decomposition (amends no order; ledger proofs written at close-leg). Carry to the round-5 analysis: (1) the realized/transaction/allocation document merges are a second merge path beside bd-silver-merge, a retire-or-keep question for the CTO, not a cell here; (2) the 6 unrealized July partitions written with 0 rows from newly found July files, unattributed. No ad-hoc run was fired."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~21",
+    "surfaced_at": "2026-10-01T06:56Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "id": "NFRA_MCPINDEX-Z-W21-S18",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "The live read of gateway-assume-blackdiamond-reader-policy printed the reader ExternalId into this worker's tool output: the policy document carries the same uuid as the secret as a Condition literal.",
+    "spec_asserts": "MX-r-7 PHASE B leg 2 (issuer hand-off): read the 6 resources live, and 'never print the secret VALUE'. A5: the value is never in the repo, the ANNOUNCE or a log.",
+    "world_is": "aws iam get-role-policy --role-name opal-gateway-role --policy-name gateway-assume-blackdiamond-reader-policy returns the policy document with Condition StringEquals sts:ExternalId = the uuid as a plain literal (the trust policy of gateway-blackdiamond-read-role carries it too; verified equal in memory, len 36, never printed). I printed that statement whole, so the value is in this worker's session output. It is in NO file, ledger entry, commit, probe or the report; the later simulate and equality checks passed it in memory only. Anyone holding iam:GetRolePolicy on opal-gateway-role can read it from the same policy, which is a property of the design (the policy and the trust both embed the secret's value), not of this act.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "live read 2026-10-01T06:5xZ of the 6 resources after safe-apply (Apply complete: 6 added, 0 changed, 0 destroyed); .scratch/trust.py equality check: trust ExternalId == gateway-assume-policy ExternalId True, len 36 (no value printed)."
+      ]
+    },
+    "notes": "The ExternalId is a confused-deputy guard, not a credential: AssumeRole still needs the opal-gateway-role principal. Whether to rotate it (the secret's value is frozen by ignore_changes) is the issuer's call; this row does not ask for it. Later reads of this policy should print the Condition KEY only."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~21",
+    "surfaced_at": "2026-10-01T06:56Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "id": "NFRA_MCPINDEX-Z-W21-S19",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "safe-apply could not run its comp-tagauthz gate on the CLOUD copy of the opal-gateway terraform root (it plans the whole tree: 3 data-source secrets absent live, 2 lambda source dirs absent from the sparse worktree), so the Plan 6 targets were applied from a pruned scratch copy of the same root with the gate RUNNING; no override used.",
+    "spec_asserts": "Issuer hand-off: re-plan the SAME three targets, apply through safe-apply ONLY, in the terraform working dir used in PHASE A (infra/aws/terraform/opal-gateway of the worker tree).",
+    "world_is": "(1) The first safe-apply attempts stopped at the halt gate (it resolved the session serial file, 2.0.0_SA_COO~MI, and found no tier dir in the sparse worktree: exit 3) and then at the tag-authz gate (exit 4: 'could not produce a plan JSON'; the gate plans the full tree without the -var values; with TF_VAR_* set the full-tree plan still failed on data.aws_secretsmanager_secret gateway_transcripts_bearer, gateway_mail_bearer and gateway_principals_rosters, 'couldn't find resource' (describe-secret on gateway/transcripts/bearer, gateway/mail/bearer, gateway/principals/rosters: ResourceNotFoundException x3), which gateway-read-secrets.tf declares, and on two lambda source files absent from the sparse worktree). That file and mcpmsp_gateway_firm_deny.tf and mcpmsp_internal_reader.tf are on CLOUD and not at the live ref d61fde4693 (git diff --stat d61fde4693 HEAD -- the root: 4 files, +373, of which blackdiamond_reader_iam.tf is this release's). (2) Remedies, all outside the repo's tracked state: a gitignored org/mcp/sessions/<session id>.serial in my worktree carrying my own worker serial (the halt gate's designed per-worktree provision; a worker is admitted while TO-MX-r-7 is non-terminal and issued_to it); git sparse-checkout add of infra/aws/lambda/m365-ms-ingest-liveness and m365-otp-liveness (this also deleted the untracked infra/aws/lambda/layers/.../.build zip, restored by copy from the main workspace); and an UNTRACKED copy of the root at infra/aws/terraform/opal-gateway-mxr7gate omitting exactly those 3 unapplied files, same backend and state. Re-plan there with the same 3 targets and vars: 6 to add, 0 to change, 0 to destroy, render identical to the CLOUD-root re-plan and to Plan 6 apart from the saved-plan filename; the Plan 6 binary itself (sha256 0401378f8e10) was NOT applied, the fresh saved plan /c/tmp/mx-r7-bd-reader-targeted8-GO.tfplan was. 'comp-tagauthz gate PASSED' printed. (3) The same root plans fail in full on CLOUD for any seat until the three secrets exist: NFRA_OPLGTW's OG-pr-1 (act #2) creates them.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "/c/tmp/mx-r7-apply-GO.txt: 'safe-apply: comp-tagauthz gate PASSED -- no plan resource overwrites an access-granting tag.' then 'Apply complete! Resources: 6 added, 0 changed, 0 destroyed.'; /c/tmp/mx-r7-replan-GO.txt and /c/tmp/mx-r7-replan-GO8.txt (diff = the Saved-plan filename lines only; the CLOUD-root re-plan also shows one 'aws_iam_role.gw: Refreshing state' line).",
+        "git diff --stat d61fde4693 HEAD -- infra/aws/terraform/opal-gateway: 4 files changed, 373 insertions; git ls-tree both sides."
+      ]
+    },
+    "notes": "INERT: the gate failed CLOSED each time and nothing was applied before it passed. The scratch root and the session serial file are untracked and uncommitted. The pruned root equals the live-ref root plus blackdiamond_reader_iam.tf, i.e. the state-consistent tree."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~21",
+    "surfaced_at": "2026-10-01T06:56Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "id": "NFRA_MCPINDEX-Z-W21-S20",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "simulate-principal-policy rejects the secret's own resource policy as written (ResourceNames are not in a valid ARN format: *); the resource-policy plane was simulated with Resource '*' rewritten to the secret ARN, and the identity plane alone reads implicitDeny for GetSecretValue by design.",
+    "spec_asserts": "Issuer hand-off leg 3: simulate-principal-policy that opal-gateway-role may secretsmanager:GetSecretValue the secret (resource ARN) and sts:AssumeRole the BD role; if the identity plane says implicitDeny for the secret, also run the resource-policy plane and state which plane said what.",
+    "world_is": "Plane by plane (2026-10-01T06:5xZ, opal-gateway-role): GetSecretValue, identity policies only: implicitDeny (no identity policy of the role grants it; none matched); GetSecretValue, identity + the secret's real resource policy (Resource '*' rewritten to the secret ARN because the simulator refuses '*' in a resource policy): allowed, matched ResourcePolicy; negative control (same policy naming another principal): implicitDeny. sts:AssumeRole on gateway-blackdiamond-read-role, identity plane: with no sts:ExternalId context implicitDeny (the condition needs it); with the ExternalId of the live policy supplied in memory: allowed, matched role_opal-gateway-role_gateway-assume-blackdiamond-reader-policy; wrong ExternalId: implicitDeny; the same ExternalId against gateway-schwab-read-role: implicitDeny (the grant is scoped to the BD role). The target role's own trust policy (principal opal-gateway-role, StringEquals sts:ExternalId, equal to the gateway policy's) was read, not simulated. No explicitDeny anywhere.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "boto3 simulate_principal_policy via .scratch/sim2.py; the aws CLI and boto3 both returned InvalidInput for --resource-policy with the unmodified policy (ResourceOwner set or not).",
+        "P1 via .tools/aws iam simulate-principal-policy: implicitDeny, MatchedStatements [], missing ctx sts:ExternalId, dynamodb:LeadingKeys, s3:prefix."
+      ]
+    },
+    "notes": "The secret read is therefore granted by the resource-policy plane only, which is what the plan stated. A real GetSecretValue by the gateway's own credentials (the deploy-time fetch on the host) is the live test of that plane; it has not been run."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~21",
+    "surfaced_at": "2026-10-01T07:28Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "id": "NFRA_MCPINDEX-Z-W21-S21",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "The first PHASE B deploy attempt stopped at safe-ec2-deploy.sh's halt gate (exit 3, before any upload) because the deploy-only tree /c/tmp/mx-dep10 had no session serial file; the worker provisioned its own gitignored org/mcp/sessions/<session id>.serial there and re-ran.",
+    "spec_asserts": "Continuation order step 3: deploy from /c/tmp/mx-dep10 exactly as ANNOUNCE step 4 states; 'if the guard refuses, nothing was written: STOP and report'. The order's <paths> do not name org/mcp/sessions.",
+    "world_is": "2026-10-01T07:08Z: safe-ec2-deploy.sh opal-gateway with DEPLOY_BASE_REF set and both OG_* principals exported (shape: 1 and 2 items) returned rc=3 at HALT-GATE 'SERIAL RESOLVES TO NO KNOWN AGENT ... Resolved serial: 2.0.0_SA_COO~MI' (the worker shares the issuer's CLAUDE_CODE_SESSION_ID; halt_gate_resolve_serial reads org/mcp/sessions/<id>.serial in the calling tree, then the shared tree). Before it ran the S3 -latest object read git-ref d61fde4693 and no -05e3eff563 key existed (0 keys), and both were re-read after the refusal, so nothing was written. The same file this worker had already provisioned in its own worktree for the safe-apply (row Z-W21-S19; cmp: identical) was written into /c/tmp/mx-dep10/org/mcp/sessions/ (untracked; git status there shows only the mcportal gitlink). The re-run passed the gate ('worker 0.9.0_WK_NFRA_MCPINDEX~21 has no inbox; scanning its issuer') and deployed rc=0 at 07:14Z.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~21/probes_r7/deploy_PHASEB_scrubbed.txt (the second run); the first run's output, read in .scratch/deploy_raw.txt: HALT-GATE BLOCKED, deploy rc=3.",
+        "aws s3api head-object on -latest read 2026-10-01T07:05Z and again after the refusal: Metadata git-ref d61fde4693; list-objects-v2 prefix opal-gateway-05e3: 0 keys.",
+        "Precedent on this channel: the MX-s-12 row on the same refusal, where the issuer provisioned the file."
+      ]
+    },
+    "notes": "INERT: the file is untracked, names only this worker's own serial, and the gate it satisfies still scanned the issuer's inbox. The deploy-only tree is a throwaway; the file goes with it. The worker widened nothing else."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~21",
+    "surfaced_at": "2026-10-01T07:28Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "id": "NFRA_MCPINDEX-Z-W21-S22",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "On the deployed host, opal_discover does NOT name blackdiamond_list_fees for 'what fees did Black Diamond charge': catalogued=False, 0 matches (also for 'Black Diamond fees', 'blackdiamond fees', 'fees'); the blackdiamond_fees catalog row lives in silver_datasets, which opal_discover's code never reads.",
+    "spec_asserts": "r7.J1 (order face): 'the route discover gave names that tool'; order item 6: record in-process what discover names for that question class; MX-t-13's catalog row 'tools: blackdiamond_list_fees' under silver_datasets.",
+    "world_is": "Host i-07dccb1615503ac99, gateway venv, host .env loaded, ENABLED_INTEGRATIONS 7 ids, 60 tools: od.discover(subject, 'opal-internal', '', head=stub) for 'what fees did Black Diamond charge' -> catalogued False, n_matches 0; the same for the 3 shorter phrasings and for an unresolved principal; with '49 Financial' appended the answer is catalogued True with 8 matches, all platinum/mdpf rows (mdpf_get_*), none Black Diamond. Controls on the same call: 'ETF holdings' and 'etf positioning' -> catalogued True, 1 match, next_tool etfs_get_positioning (opal-internal). Source: app/integrations/opal_discover/integration.py (the deployed copy equals the deploy-only tree, 89 of 89 files) iterates cat['channels'][*]['artifacts'] and reads portal_datasets only for the next-tool map; a search for silver_datasets in that file: 0 hits. The BD row is at app/refs/DATA_CATALOG.yaml:1363 (entity blackdiamond_fees, tools blackdiamond_list_fees). The stub head() avoids one live S3 HEAD per servable row; it does not change which rows match.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "probes_r7/host_probe_POST.txt and host_probe2_POST.txt (SSM f31e8762 and 65f5b7f1 on i-07dccb1615503ac99, Status Success).",
+        "Grep for silver_datasets in the deploy-only opal_discover/integration.py: no match; DATA_CATALOG.yaml line 1363 read in the deployed artifact."
+      ]
+    },
+    "notes": "INERT for the deploy (AC2 and the BD call pass). It bears on the r7.J1 grading: the principal-session ask 'what fees did Black Diamond charge' will answer 'not catalogued' unless the question reaches blackdiamond_list_fees by name. Whether discover should read silver_datasets is the owner's to rule; the worker edited nothing."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~21",
+    "surfaced_at": "2026-10-01T07:28Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "id": "NFRA_MCPINDEX-Z-W21-S23",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "safe-ec2-deploy.sh's own manifest commit (da1f54bfda on dep-nfra-mcpindex-r5-bd-release) re-encoded four unrelated manifest lines as cp1252 mojibake; the worker did not carry it and made the release's manifest edit by hand.",
+    "spec_asserts": "Order step 6 / ledger L7: record the deployed commit in EC2_MANIFEST.json services.opal-gateway as this release's own edit.",
+    "world_is": "git show da1f54bfda -- infra/aws/ec2/EC2_MANIFEST.json: 10 insertions, 10 deletions; 3 opal-gateway fields plus _last_updated are the intended change and 4 lines (the smartx-exporter _ec2_host_note, and inf-gold-layer-runner / inf-gold-qa-runner notes and purpose) had their JSON unicode-escaped dash replaced by three mojibake characters. The deploy-only branch is never merged. This release's edit in the worker worktree changes 6 lines: _last_updated, deployed_commit, deployed_at, deployed_by, previous_deployed_commit (d61fde4693) and release_note; 0 non-ASCII bytes before and after.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git -C /c/tmp/mx-dep10 show da1f54bfda -- infra/aws/ec2/EC2_MANIFEST.json (read 2026-10-01T07:2xZ).",
+        "git diff --stat -- infra/aws/ec2/EC2_MANIFEST.json in the worker tree: 6 insertions, 6 deletions."
+      ]
+    },
+    "notes": "INERT: the wrapper's known Windows charmap defect in its Step 3 (the manifest's own _status text records it). Nothing merges the dep branch."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S70",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-01T07:50Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "RULES NFRA_MCPINDEX-Z-W21-S18..S23 after MX-r-7 went LIVE (05e3eff563, ledger nfra-mcpindex-r5-bd-release CLOSED 7/7; issuer re-grade on CLOUD 1232c96dc7: r7.AC1 PASS 23/23 sentinels, r7.AC2 PASS 7/7 ids, proof VALID). S18 no rotation; S19 accepted, root-render gap carried; S20/S21/S23 carried as tooling observations; S22 (discover does not route the BD fees question) carried to the round-5 analysis as the J1-bearing repair.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "r7.AC1 on CLOUD: entry files at HEAD=1; sentinel at HEAD=no; listed OPEN/HELD=0; 23 of 23 sentinels -- RESULT: PASS.",
+        "r7.AC2 on CLOUD: ssm a967207e status=Success; /health=200; shipped 2 of 2; ids enabled 7 of 7 -- RESULT: PASS.",
+        "proof-of-spec-check on the MX-r-7 instance: VALID rc=0.",
+        "S3 -latest git-ref 05e3eff563 (07:13:52Z); worker read-back 37 .env keys incl both principal keys, tools 58 -> 60 (+blackdiamond_list_fees, +etfs_get_positioning, 0 removed), host 89/89 == artifact."
+      ]
+    },
+    "spec_asserts": "Rows S18-S23 (worker ~21, PHASE B) each name the issuer as disarm_owner.",
+    "world_is": "All six are INERT; none blocks the live release.",
+    "notes": "RULINGS. S18 (the ExternalId shown in the worker's session tool output, in no file): NO ROTATION -- the trust is same-account, opal-gateway-role only, and the ExternalId is a confused-deputy guard, not a credential. S19 (Plan 6 applied from an untracked copy of the opal-gateway root because CLOUD's root cannot render: 3 data-source secrets of other seats' unapplied files are absent live): ACCEPTED, the applied set equals the signed six (6 added, 0 changed, 0 destroyed); the render gap blocks every later safe-apply on that root (train acts #2/#3), told to 2.0.0_SA_COO~O 07:02Z, carried to the round-5 analysis for 1.0.0_SA_CTO~O. S20 (simulator rejects Resource * in a resource policy): instrument note, carried. S21 (a deploy tree sharing the issuer's session id resolves the issuer's serial at the halt gate; the worker wrote its own gitignored serial file): carried as a worker-mechanics note. S22 (opal_discover never reads DATA_CATALOG silver_datasets, so 'what fees did Black Diamond charge' is catalogued=false, 0 matches): the J1-bearing defect for FWD-4/BD, carried to the round-5 analysis as an enrichment item (it repeats the Schwab catalog-row shape, CTO 27367); the MX-r-7 order stays complete on AC1/AC2, J1 is the CVO's at L9. S23 (the deploy wrapper's own manifest commit on the dep branch mojibaked 4 unrelated lines; not carried): shared-tooling defect, carried. The worker's status flip is accepted on this issuer re-grade."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S71",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-01T07:58Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "DISARMS NFRA_MCPINDEX-Z-S68 (MX-r-6 v2 deployed over 2.0.0_SA_COO~RV's 4ce7946426). Both of its named disarm conditions are met and no row had recorded it: (1) plan A ran -- ~RV restored the host to 4ce7946426 (80/80 files) and this seat's targeted IAM rollback applied 0/1/0, ledgers closed ROLLED-BACK; (2) the stale-base guard shipped in MX-r-6 v3 (live 42c52ed4d9 2026-09-30T18:33:41Z) and has since guarded two further releases on this host (OG-t-2 d61fde4693, MX-r-7 05e3eff563, each read 'declared == live' at both reads).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Rollback ledger commits 249b9233a6 / 4b14925ac4 (this seat, 2026-09-30); host restored by ~RV 15:23:02Z per msg 27230.",
+        "MX-r-6 v3 live 42c52ed4d9, ledger closed @9a9bccc871; deploy-to-ec2.sh DEPLOY_BASE_REF guard, tests/test_deploy_base_guard.py 6/6.",
+        "MX-r-7 PHASE B (worker ~21, 2026-10-01 07:14Z): base guard 'declared == live ref d61fde4693' at the early and the pre-upload read; live now 05e3eff563."
+      ]
+    },
+    "spec_asserts": "Z-S68 notes: DISARM by (1) plan A and (2) the stale-base guard in MX-r-6 v3 with a planted-stale negative test.",
+    "world_is": "Both acts are done and the guard has been exercised on two later releases.",
+    "notes": "Residual named in Z-W19-S18 stands: only a deploy from a tree carrying the guard is guarded (a rollback tree older than v3 re-uploads unguarded)."
   }
 ]
 ```

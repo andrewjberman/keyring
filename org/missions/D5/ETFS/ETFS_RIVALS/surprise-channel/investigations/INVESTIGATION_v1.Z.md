@@ -1654,6 +1654,116 @@
     "notes": "Observation for the G4/enrichment owner: the home funds' identity coverage is a crosswalk-content question, not a reader defect."
   },
   {
+    "id": "ETFS_RIVALS-Z-W2-S6",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~2",
+    "surfaced_at": "2026-10-01T07:30Z",
+    "one_line": "Check r-3.AC2 cannot pass against its own real-data fixture: with the split planted on TTE FP Equity, every one of the five funds that have G1 rows holds TTE FP or a real 2026-09-29 JP split, so the narrowed gate (correctly) holds all five and skips build-trade-schedule.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "r-3.AC2.py @d302af2186 planted_dividends: sec = first TXUE row whose ID is not a Curncy line = 'TTE FP Equity'; the G3 import is the real dividends.json copy plus that split ex-dated on the newest date 2026-09-29 (pull-enrichment marker at 2026-09-24).",
+        "Run on branch wk-rivals3-2 (worktree /c/tmp/wk-rivals3-2): chain detail held_funds = BIDD, CGIC, INEQ, SCHY, TXUE (5 of the 5 funds with G1 rows; IDVZ has none in round 3) -> 'FAIL: a G5 object for 2026-09-29 (0)', 'FAIL: at least one fund that is not held has G5 rows', AC2 RESULT: FAIL 2 failures.",
+        "G1 of 2026-09-28/29 security_bloomberg: TTE FP Equity is held by BIDD, CGIC, SCHY, TXUE; CGIC also holds 285A JP and 8035 JP, INEQ holds 1925 JP Equity -- the real G3 carries 'split' events ex 2026-09-29 on 1925, 2282, 285A, 3099, 5334, 5706, 8035, 8316, 8766 JP Equity.",
+        "Control, same chain with the split planted on a TXUE-only security ('4901 JP Equity', one of 21 TXUE-only Equity lines): held_funds = CGIC, INEQ, TXUE (CGIC/INEQ by the real JP splits), SCHY builds a G5 object with 8 rows, the later import covering 2026-09-29 writes trades-<rev>-v02.parquet carrying CGIC, INEQ, SCHY and reconciliation-<rev>-v02.parquet carrying all five funds."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cell RIV-r-3 item 2 and AC2: a split planted on one TXUE holding holds TXUE; the chain builds G5 for the un-held funds and at least one fund that is not held has G5 rows.",
+    "world_is": "A G3 event is keyed by security, not by fund: the plant on TTE FP Equity reaches every fund that holds TTE (4 of 5), and real JP splits on the same ex-date reach CGIC and INEQ independent of the plant, so no fund with G1 rows is left un-held. The implementation matches the cell's words (a fund is held only if its window holds the ex-date of a share-changing G3 action on a security it holds); the fixture is what cannot leave a fund free.",
+    "notes": "The issuer's amendment, not the worker's: plant on a TXUE-only security (the control above), or name the expected held set as the funds holding the planted security. The worker did not edit the check. Unit coverage of the narrowing (one fund held, the other builds; the later full object) is tests/test_r3_repairs.py."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W2-S7",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~2",
+    "surfaced_at": "2026-10-01T07:30Z",
+    "one_line": "The cell places report_date_freshness in publish_page.py, but the function lives in guardrails.py (not in <paths>), so the per-source trading-day check is implemented in publish_page.py and replaces the guardrails result for each fund.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/guardrails.py:56 def report_date_freshness (threshold = guardrails_config.json max_lag_trading_days, value 0, PROVISIONAL); publish_page.py calls guardrails.evaluate_fund and carries no freshness function.",
+        "Worker face section 3 <paths> lists publish_page.py, sweep.py, gold_trade_schedule.py, silver_issuer.py and tests, not guardrails.py or guardrails_config.json."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cell item 3 / section 2: publish_page.py's report_date_freshness counts trading days; the allowance is a named constant citing its row.",
+    "world_is": "publish_page.FRESHNESS_ALLOWANCE and publish_page.freshness_by_source (data/etfs/scripts/rivalfunds/publish_page.py) compute the check and the handler swaps them into each fund's results by check name; guardrails.report_date_freshness and the config's max_lag_trading_days=0 are unchanged and no longer reach any fund's page result. A caller of guardrails.evaluate_fund other than publish_page would still read the old threshold.",
+    "notes": "Moving the function into guardrails.py is a one-hunk change in a file this cell does not own; rounds that own guardrails.py can fold it back."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W2-S8",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~2",
+    "surfaced_at": "2026-10-01T07:30Z",
+    "one_line": "Between a partial G5 and the later full object, a held fund has no rows in the partial G5 and the page reads that as 'no trades' for its newest window, not as 'not computed'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "publish_page._load: trades_by_fund[t][d] = tdf[tdf.fund_ticker == t] over the greatest-revision G5 object of the date; a fund absent from the object gets an empty frame, rendered as a window with no trades.",
+        "gold_trade_schedule.run_stage on branch wk-rivals3-2: a held fund's window is left out of the partial object, which records the held funds only in its parquet schema metadata (rivalfunds.held_funds) and the batch marker's held_funds; publish_page reads neither."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cell item 2: every other fund builds its G5 now; a held fund builds when its marker arrives as a new object; the page reads the newest revision per date.",
+    "world_is": "Until the held fund's later object lands, the page shows that fund's newest window with zero trades while its status stays 'updated' if its checks pass; the page does not mark it held. The held set is recoverable (schema metadata, marker) but unread.",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "notes": "A small publish_page change (read HELD_META from the G5 object and mark the fund not updated with the held reason) closes it; it is not in this cell's four items, so it is left for the issuer to place."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W2-S9",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~2",
+    "surfaced_at": "2026-10-01T07:30Z",
+    "one_line": "'Corporate action' in the narrowed gate is read as the share-changing class of EVENT_CLASS (split, bonus, stock_div, spinoff, rights, warrant); income events (cash_div and the other income types) do not hold a fund.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/gold_trade_schedule.py EVENT_CLASS: class income | share | ignored; G3 on the real dividends.json import: cash_div 3032 of 4824 rows, daily accruals 1315, share-changing types (split 61, stock_div 18, spinoff 12, bonus 6, rights 3, warrant 1) 101 rows.",
+        "gold_trade_schedule.held_funds @wk-rivals3-2: classify_event(etype)[0] == 'share'; test_r3_repairs.py::test_held_funds_names_only_the_funds_with_a_share_changing_action_in_their_window asserts a cash_div on a held security holds nothing."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cell item 2: a fund is held only if its window contains the ex-date of a corporate action in the latest landed G3 on a security the fund holds.",
+    "world_is": "G3 carries 4781 events with an ex-date and a cash dividend is daily on a diversified fund, so reading every event type as a corporate action would hold every fund on nearly every day; income only moves the income_funded label and the G6 income count, never a share count, so it is left out of the hold.",
+    "notes": "One-line change if the ruling meant every G3 event: drop the class filter in gold_trade_schedule.held_funds."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W2-S10",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~2",
+    "surfaced_at": "2026-10-01T08:10Z",
+    "one_line": "Resolution of rows W2-S6, S7 and S8 under issuer amendment 1: W2-S8 is DISARMED (a held fund opens its trades section with 'Trades held: <reason>', never 'no trades'); and a defect of my own first commit, found and fixed, is that completeness graded a -vNN G5 object as a stale revision.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "W2-S6: r-3.AC2.py @360a2c062f plants on MTX GR Equity; run on branch wk-rivals3-2 it reads 'AC2 RESULT: PASS 0 failures' with held_funds CGIC, INEQ, TXUE and a G5 object for SCHY.",
+        "W2-S7: guardrails.report_date_freshness(day, dates, cfg, source) and guardrails.FRESHNESS_ALLOWANCE hold the per-source allowance (a call without a source keeps the config threshold, as in round 2); publish_page passes fund_source() to guardrails.evaluate_fund and has no override; tests/test_r3_repairs.py::test_freshness_is_counted_in_trading_days_against_the_sources_allowance.",
+        "W2-S8: gold_trade_schedule writes {fund: reason} into the partial G5's schema metadata (HELD_META); publish_page._load reads it (held_of_bytes), leaves the held fund's window undrawn, passes a trade_meta entry so completeness does not fail, and mark_held() inserts the 'Trades held:' line into the fund's data-trades div; tests/test_r3_repairs.py::test_a_held_fund_reads_trades_held_with_its_reason_never_no_trades asserts the banner, no 'No trades inferred' window, status updated, the manifest's trades_held, and that the banner is gone once the -v02 object lands.",
+        "Own defect: guardrails.completeness compares the G5 object's revision with the canonical revision, so the -v02 object would have read 'built from revision <rev>-v02, canonical_shape is <rev>'; publish_page._base_revision strips the -vNN suffix before the check."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Amendment 1 items 1-3: AC2 passes; freshness has one home in guardrails; a held fund never reads as no trades.",
+    "world_is": "render.py is read-only to this cell and draws no held state, so the banner is inserted into the rendered page by publish_page.mark_held at the fund's own data-trades div (it raises if the div is absent); the per-fund render read-back (render.render_fund) is run without the banner. A later render.py that draws held natively would let mark_held go.",
+    "notes": "W2-S8 disarmed in this cell. EVENT_CLASS's share class also holds on unmapped:Warrant (keep rule); the amendment's list omits it, the table is unchanged."
+  },
+  {
     "id": "ETFS_RIVALS-Z-W1-S21",
     "project": "ETFS_RIVALS",
     "fabric": "site-z",

@@ -146,7 +146,7 @@ Write the proof instance at the `<instance_path>`. Report once, in your final me
 **ISSUER NOTES (2.0.0_SA_COO~MI).** Reinstatement ruling B5; round-5 order item 4. Dry-run at base: r7.AC1 FAIL (no
 entry); r7.AC2 FAIL (shipped 1 of 2, ids enabled 5 of 7).
 
-<status>pending</status>
+<status>complete</status>
 <round>5</round>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>

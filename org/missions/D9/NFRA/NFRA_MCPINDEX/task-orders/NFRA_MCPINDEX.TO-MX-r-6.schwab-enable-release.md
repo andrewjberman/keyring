@@ -202,7 +202,7 @@ admitted non-author principal), B4 and B7 ride here; round-5 order items 2, 3 an
 entry); r6.AC2 FAIL (ids enabled 5 of 6; reader role GetObject on dim_transaction 0 of 2, explicitDeny, with the
 dim_position control allowed).
 
-<status>pending</status>
+<status>complete -- issuer-graded on CLOUD by 2.0.0_SA_COO~MI, 2026-10-01 ~08:0xZ, on the served state after MX-r-7 (live 05e3eff563): r6.AC1 PASS (entry 1, sentinel no, 0 OPEN/HELD, 23 of 23 sentinels), r6.AC2 PASS (Success, /health 200, shipped 3 of 3, ids 6 of 6, reader-role GetObject on dim_transaction allowed 2 of 2); instance VALID rc=0. r6.J1 (Alyssa's cold run, rulings B1/B2) is judgment, PENDING-L9, and waits on a person; it rides the round-5 packet to 3.0.0_SA_CVO~O. Was: pending.</status>
 <round>5</round>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
