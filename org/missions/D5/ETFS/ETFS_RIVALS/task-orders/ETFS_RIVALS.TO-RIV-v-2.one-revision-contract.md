@@ -82,17 +82,21 @@ The drain runs the whole `data/etfs/scripts/rivalfunds/tests/` suite and must re
 
 **AMENDMENT 2 -- REOPEN (issuer ruling on row ETFS_RIVALS-Z-S9, 2026-10-01).** `gold_canonical_shape.py` stamps every issuer row `source_channel` with the constant `SOURCE_CHANNEL = "issuer-site:basg"` (line 105, written at `build_rows`), so GQGU's rows read as BASG's channel. An issuer row's `source_channel` is `issuer-site:<source>`, where `<source>` is the source token of the silver object the row came from (`gqgu-...parquet` -> `issuer-site:gqgu`; `basg-...` -> `issuer-site:basg`, unchanged). Add a test beside the code (`tests/test_v2_*.py`). One criterion is added: AC3.
 
+**AMENDMENT 3 -- REOPEN (issuer ruling on row ETFS_RIVALS-Z-S10, ARMED, 2026-10-01).** The vehicle's enrichment step runs `python -m rivalfunds.enrichment_bloomberg --mode daily` and branches on 0 landed / 1 unreachable / 2 partial / 3 nothing written (`integrations/bloomberg/pipeline/scheduled_daily_pull.cmd` :470-485, READ only, never edit it), but `enrichment_bloomberg.py` has no `__main__`: it imports, exits 0, and the vehicle logs "landed" with nothing pulled. Give `enrichment_bloomberg.py` the collector's CLI shape (`collector_bloomberg.py` `exit_code` + `main` + `if __name__ == "__main__": sys.exit(main())`): `--mode` passes through to `handler_entry` unchanged (daily included), plus `--date`, `--sink` (default s3), `--batch-id`; print the result as JSON; exit by the collector's contract (OK 0; detail.unreachable 1; PARTIAL 2; anything else 3). NEVER run it against Bloomberg or S3: tests stub `handler_entry`. Add a test (`tests/test_v2_*.py`). A FOURTH criterion is added, AC4 -- reason: an ARMED row whose remedy lies in this cell's write set (`enrichment_bloomberg.py`) and has no other open cell this round.
+
 ## 4. PROOF OF SPEC (each invocation LITERAL, run from your worktree root)
 
 - **AC1** -- over the REAL 2026-09-29 inputs, G1's GICS sources name only the live G4 53bc393958bd, never the import (`org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round4/checks/v-2.AC1.py`)
 - **AC2** -- with a later-named second issuer fund's object planted on BASG's date, G1 holds BOTH funds' rows (`org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round4/checks/v-2.AC2.py`)
 - **AC3** (amendment 2) -- on the same planted date, G1's GQGU rows carry `source_channel` `issuer-site:gqgu`; control: BASG's stay `issuer-site:basg` (`org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round4/checks/v-2.AC3.py`)
+- **AC4** (amendment 3) -- `python -m rivalfunds.enrichment_bloomberg --help` prints a usage naming --mode, and main() maps a stubbed handler's results to the collector's exit contract with --mode daily passed through (`org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round4/checks/v-2.AC4.py`)
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="RIV-v-2"><invocation>python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round4/checks/v-2.AC1.py</invocation><expect>AC1 RESULT: PASS 0 failures</expect></criterion>
 
   <criterion id="AC2" cell_refs="RIV-v-2"><invocation>python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round4/checks/v-2.AC2.py</invocation><expect>AC2 RESULT: PASS 0 failures</expect></criterion>
   <criterion id="AC3" cell_refs="RIV-v-2"><invocation>python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round4/checks/v-2.AC3.py</invocation><expect>AC3 RESULT: PASS 0 failures</expect></criterion>
+  <criterion id="AC4" cell_refs="RIV-v-2"><invocation>python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round4/checks/v-2.AC4.py</invocation><expect>AC4 RESULT: PASS 0 failures</expect></criterion>
 </proof_of_spec>
 
 ## 5. WHEN YOU ARE DONE

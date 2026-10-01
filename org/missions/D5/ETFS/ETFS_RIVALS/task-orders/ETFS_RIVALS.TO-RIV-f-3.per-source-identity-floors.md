@@ -6,7 +6,7 @@
 <decomp_doc>org/missions/D5/ETFS/ETFS_RIVALS/decompositions/ETFS_RIVALS_DECOMP.md</decomp_doc>
 <owned_cells>RIV-f-3</owned_cells>
 </decomp_ref>
-<issued_to>0.9.0_WK_ETFS_RIVALS~3</issued_to>
+<issued_to>0.9.0_WK_ETFS_RIVALS~1</issued_to>
 <issued_by>2.0.0_SA_COO~RV</issued_by>
 <placeholders>NONE</placeholders>
 <preflight>
@@ -41,27 +41,33 @@ comp-adversary: RUN at L5 on the round-4 decomposition; declared on RIV-v-2, not
 
 You READ (never edit): `lib/`, `integrations/bloomberg/` (the Positioning pull is under an Andrew-direct no-modify order), the package's other modules, `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round{1,2,3,4}/checks/`, the device-local captures under `C:\Users\Opal Bloomberg\Desktop\ajb_workspace\.runtime\`, and live S3 READ-ONLY where a check mirrors it.
 
-You WRITE only the `<paths>` below (plus `deliverables/0.9.0_WK_ETFS_RIVALS~3/`). NEVER: any S3 write, any deploy, any Bloomberg or OpenAI call, the vehicle, any file another round-4 cell owns. Tests go beside the code as `tests/test_f3_*.py`, run with `python -m pytest <file> -q` from `data/etfs/scripts/`; the issuer runs the whole suite at the drain.
+You WRITE only the `<paths>` below (plus `deliverables/0.9.0_WK_ETFS_RIVALS~1/`; the reopen is slot ~1's). NEVER: any S3 write, any deploy, any Bloomberg or OpenAI call, the vehicle, any file another round-4 cell owns. Tests go beside the code as `tests/test_f3_*.py`, run with `python -m pytest <file> -q` from `data/etfs/scripts/`; the issuer runs the whole suite at the drain.
 
 <paths>
 data/etfs/scripts/rivalfunds/guardrails.py
 data/etfs/scripts/rivalfunds/guardrails_config.json
 data/etfs/scripts/rivalfunds/tests/test_f3_*.py
 data/etfs/scripts/rivalfunds/tests/test_p1_*.py
+data/etfs/scripts/rivalfunds/tests/test_p2_*.py
+data/etfs/scripts/rivalfunds/tests/test_r3_*.py
 org/missions/D5/ETFS/ETFS_RIVALS/surprise-channel/investigations/INVESTIGATION_v1.Z.md
 </paths>
+
+**AMENDMENT 1 -- REOPEN (issuer ruling on row ETFS_RIVALS-Z-W4-S8, ARMED, 2026-10-01), reissued to slot ~1.** RIV-d-5 committed the measured floors (issuer 0.23, bloomberg 0.99, home_producer 0.0; b366ed9d7e, on the d-5 branch) and 19 package tests went red: `test_p1_page_and_guardrails.py` 12, `test_p2_page_grouped_by_fund.py` 6, `test_r3_repairs.py` 1 -- their fixtures carry unresolved lines and the page reads the live `guardrails_config.json`. Make the suite independent of the committed floor VALUES: a test that is not ABOUT the identity floor pins the floor it needs (e.g. a fixture setting `RIVALFUNDS_GUARDRAILS_OVERRIDE`, the f-3 interface); a floor test keeps setting its own. Do NOT edit `guardrails_config.json` (its values are d-5's key 3) and do NOT weaken an assertion about what a page shows. One criterion is added: AC2.
 
 ## 4. PROOF OF SPEC (each invocation LITERAL, run from your worktree root)
 
 - **AC1** -- with an impossible Bloomberg floor via the override, TXUE fails identity_coverage naming 'bloomberg'; IDVZ (home) and BASG (issuer) pass their own floors (`org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round4/checks/f-3.AC1.py`)
+- **AC2** (amendment 1) -- the whole rivalfunds suite reads 0 failed under the committed floors via the override, and under zero floors as the control (`org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round4/checks/f-3.AC2.py`)
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="RIV-f-3"><invocation>python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round4/checks/f-3.AC1.py</invocation><expect>AC1 RESULT: PASS 0 failures</expect></criterion>
+  <criterion id="AC2" cell_refs="RIV-f-3"><invocation>python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round4/checks/f-3.AC2.py</invocation><expect>AC2 RESULT: PASS 0 failures</expect></criterion>
 </proof_of_spec>
 
 ## 5. WHEN YOU ARE DONE
 
-Write the instance at `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~3/ETFS_RIVALS.TO-RIV-f-3.per-source-identity-floors.proof_of_spec.json` with `to_id` `ETFS_RIVALS.TO-RIV-f-3.per-source-identity-floors`. Report once: each criterion's verdict line with the output above it; files written; any test assertion changed and why; rows filed (id + one line). Leave the `<status>` flip to the issuer.
+Write the instance at `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-f-3.per-source-identity-floors.proof_of_spec.json` with `to_id` `ETFS_RIVALS.TO-RIV-f-3.per-source-identity-floors`. Report once: each criterion's verdict line with the output above it; files written; any test assertion changed and why; rows filed (id + one line). Leave the `<status>` flip to the issuer.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 

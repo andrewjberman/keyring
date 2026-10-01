@@ -550,3 +550,12 @@ Gates OA-t-1, OA-t-3 and OA-e-6's launch path. It reaches the runtime at the cut
 
 Chain: alone, slot `~25`, nested base the local round-2 DEV @e69acf7. It is a precondition of the item-0 close run (ruling R3).
 The CTO's interim ruling (msg 27792) holds until AC3 passes: no DAPI client, blpapi or 8194-opening tool in the Opal_Agent runtime.
+
+## ADDENDUM R2-A9 -- the DAPI 8194 wall as a raw WFP filter pair (`1.0.0_SA_CTO~O` ruling R5 @9d6fbe3e97, msg 28059)
+
+| Cell | Builds | Risk |
+|---|---|---|
+| `OA-f-11` | new `opal_ai/opal/runtime/provision/wall-dapi-8194-wfp.ps1`: an Add-Type P/Invoke to fwpuclnt. One persistent sublayer (weight 0xFFFF) and two persistent BLOCK filters (ALE_AUTH_CONNECT_V4/V6), each matching ALE_USER_ID (both SIDs at run time), remote port 8194 and IS_LOOPBACK. Modes: -Plan, real (refuses on a loopback permit whose weight is >= ours; one transaction; read-back; then removes the inert R1 rules), -Remove. Acceptance: the same AC3 | LOCAL (direct act; the apply is Andrew's admin act) |
+
+Chain: alone, slot `~26`, nested base r2-dev @eeca5ca7d1. It supersedes OA-f-10's mechanism (R1 Firewall rules measured
+loopback-exempt: rows Z-W25-S3, Z-S52). It is a precondition of the item-0 close run (R3).

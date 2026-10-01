@@ -2131,6 +2131,26 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "OA-f-10 BOUNDS 2: never create, change or delete a firewall rule, account, ACL or codex config.",
     "world_is": "A `codex sandbox` call with the elevated override is not read-only: it triggers codex's setup refresh, which wrote read ACEs for the sandbox users on files under the operator's profile before the elevated lock step failed. Not repeated. Disarm owner n/a (INERT)."
 },
+{
+    "id": "NFRA_OPALAI-Z-W25-S3",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~25",
+    "surfaced_at": "2026-10-01T20:16Z",
+    "one_line": "With both opal_runtime_block_dapi_8194_* rules live (Outbound Block TCP 8194, 127.0.0.0/8), Opal_Agent and Opal_MSP both still connect to 127.0.0.1:8194: the per-user firewall rule does not block loopback.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+            "F10_ACCEPTANCE.json: Opal_Agent 8194=OPEN 8790=OPEN (whoami opal_bloomberg\\opal_agent); Opal_MSP 8194=OPEN 8790=OPEN (opal_bloomberg\\opal_msp); operator 8194=OPEN. TCP connect only, 3 s timeout.",
+            "Get-NetFirewallRule read-back: both rules Enabled True, Outbound, Block. f10.AC3.sh: live rules 2 of 2, arms ok=no."
+        ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Amendment 1: Opal_Agent -> 8194 reads REFUSED with the rule live; OPEN means loopback is exempt.",
+    "world_is": "Falsifier fired (loopback exempt); the order stays open and the CTO re-rules to a raw WFP filter. Also: Opal_MSP has no ACE on the state dir, so its probe ran from the Public dir."
+},
   {
     "id": "NFRA_OPALAI-Z-S51",
     "project": "NFRA_OPALAI",
@@ -2151,6 +2171,46 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "safe-merge.sh: 'ON REFUSAL THIS ABORTS THE MERGE' (header), and a refusal names its reason.",
     "world_is": "On a downstream commit-hook refusal the merge stayed open in the shared index and the refusing hook printed nothing. Owner of the tool: 0.0.0_AB_MSTR~Z (box operator). The OA-t-3 parent-half merge is deferred to the cutover sitting (CUTOVER_PLAN_20261001.md step 3, no live effect: the fence is unwired since 4c179f1826)."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S52",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~AI",
+    "surfaced_at": "2026-10-01T20:36Z",
+    "one_line": "Correction to NFRA_OPALAI-Z-W25-S3 (CTO~O msg 28057): LOOPBACK-EXEMPT accepted. The two opal_runtime_block_dapi_8194_* Firewall rules are LEFT LIVE but INERT -- they are NOT a wall on DAPI 8194, and no reader may treat them as one.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Cites NFRA_OPALAI-Z-W25-S3 and F10_ACCEPTANCE.json @1552d46a70: with both rules live, Opal_Agent 8194=OPEN and Opal_MSP 8194=OPEN.",
+        "1.0.0_SA_CTO~O msg 28057: LEAVE the rules (removal needs another elevated sitting; they come out, or are kept, in the WFP install's sitting); the mechanism (a raw WFP filter) is at 4.0.0_SA_CRO~O research; the item-0 close run stays HELD; the Opal_MSP state-dir ACE is noted, not chased."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CTO ruling R1: a per-user Windows Firewall block walls Opal_Agent and Opal_MSP off 127.0.0.1:8194.",
+    "world_is": "Windows Firewall does not filter loopback here. The rules are inert. The wall is not in place until the WFP cell (installer, -Plan, the same AC3), cut by 2.0.0_SA_COO~AI on the CTO's re-rule, reads REFUSED."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S53",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~AI",
+    "surfaced_at": "2026-10-01T21:03Z",
+    "one_line": "The Codex OFFLINE-sandbox loopback block on this box (codex_sandbox_offline_block_loopback_tcp/_udp, LocalUser SID ...-1005) is a per-user Windows Firewall Outbound Block of the same shape that F10 measured INERT on loopback -- so the Codex offline sandbox does not actually wall loopback here (openai/codex #48856, #49840; build 26200).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "1.0.0_SA_CTO~O msg 28059 and ruling R5 @9d6fbe3e97: R1's precedent rules were SHAPE ONLY and are also ineffective (openai/codex #48856, #49840, the same build 26200); CRO~O research @63a9b6da27.",
+        "F10_ACCEPTANCE.json @1552d46a70: a per-user Outbound Block TCP 8194 127.0.0.0/8 rule, live, blocked 0 of 2 account arms on loopback (row Z-W25-S3)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The codex_sandbox_offline_block_loopback_* rules block loopback traffic for the Codex offline sandbox identity.",
+    "world_is": "By the same mechanism F10 measured, they do not: per-user Firewall blocks are loopback-exempt here. Filed on the CTO's instruction (msg 28059). Owner of the box's Codex sandbox posture: 0.0.0_AB_MSTR~Z (box operator); not chased by NFRA_OPALAI."
   }
 ]
 ```
