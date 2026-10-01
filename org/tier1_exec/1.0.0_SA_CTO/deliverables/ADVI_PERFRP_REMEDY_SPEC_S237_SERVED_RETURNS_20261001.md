@@ -1,6 +1,6 @@
 # ADVI_PERFRP -- remedy spec for the wrong 49 Financial returns on the advisor page (rows IRPT_BCKEND-S237, S239, W100-S2)
 
-**Author:** `1.0.0_SA_CTO`, 2026-10-01 ~04:2xZ. **Status: SPEC ONLY. Nothing is cut and nothing is served.** The cell is cut by base
+**Author:** `1.0.0_SA_CTO`, 2026-10-01 ~04:1xZ. **Status: SPEC ONLY. Nothing is cut and nothing is served.** The cell is cut by base
 `2.0.0_SA_COO` (decision `CTO_DECISION_20261001_034xZ_S237_PERFRP_REMEDY_ROUTE.md` @8729d9792c) once Andrew lifts the D2 hold he
 set by name (`org/ref/LIVE_ARMS.md`, Holds). On that word this file becomes the PRD addendum for the cell, unchanged.
 
@@ -15,13 +15,13 @@ the 2025-01-09 partition, and links the bad day into every window that spans it.
 
 | fact | value | read by |
 |---|---|---|
-| the served object | `s3://opal-data-portal-v2/platinum/advi/49financial/perfrp_performance_account.json`, ONE version `E78kI4KB4KsZhdwsAFzfSvkI.kn5Snim`, 2026-09-01T03:16:07Z, 1,923,593 bytes | this seat, `list-object-versions`, 04:2xZ |
+| the served object | `s3://opal-data-portal-v2/platinum/advi/49financial/perfrp_performance_account.json`, ONE version `E78kI4KB4KsZhdwsAFzfSvkI.kn5Snim`, 2026-09-01T03:16:07Z, 1,923,593 bytes | this seat, `list-object-versions`, 04:1xZ |
 | served perfrp leaves at 49 Financial | 4, one version each: `perfrp_performance_account`, `perfrp_gainloss_account`, `perfrp_gainloss_relationship`, `perfrp_book_advisor` | same read |
 | it is served | HTTP 200 three times (09-26, 09-28, 09-30), two clients, in 152,160 access-log lines | `2.0.0_SA_COO~P` @abc3f0991c |
 | the leaf's population | 8,632 entries: 7,620 COMPUTED_PARTIAL, 997 NOT_COMPUTED_INPUTS_PRESENT, 15 NOT_COMPUTED_INPUTS_ABSENT | worker ~100, `S237_BLAST_RADIUS.json` |
 | four accounts probed, since-inception | 0093614544 +69.81% vs +8.47%; 0063952925 +99.79% vs +4.54%; 0027256463 -83.34% vs +28.47%; 0036184450 -12.75% vs +28.06% (served vs counterfactual) | worker ~100, `perfrp_si_counterfactual.json` |
 | accounts with a 2025-01-09 flow in `twr_daily` | 44 | row S237 (`0.4.0_DS_ClientPlatform~S`) |
-| **is 2025-01-09 the only such day?** | **Yes at partition grain.** Window 2024-07-08..2026-09-01: 786 calendar days, 541 trading days, 245 non-trading days (21 of them weekdays). `flow_ledger` holds a partition on exactly 1 of the 245: 2025-01-09. `twr_daily` the same. Positive control: 2025-01-10 present in both. | this seat, 04:2xZ, partition listing minus `lib/trading_calendar.py` |
+| **is 2025-01-09 the only such day?** | **Yes at partition grain.** Window 2024-07-08..2026-09-01: 786 calendar days, 541 trading days, 245 non-trading days (21 of them weekdays). `flow_ledger` holds a partition on exactly 1 of the 245: 2025-01-09. `twr_daily` the same. Positive control: 2025-01-10 present in both. | this seat, 04:1xZ, partition listing minus `lib/trading_calendar.py` |
 
 **Not measured:** flows whose ROW date is a closed day but which sit inside a trading day's partition (the listing sees partitions,
 not rows); which of the 44 accounts carry a figure in the leaf (4 of 44 probed); whether `perfrp_book_advisor.json` and the two
