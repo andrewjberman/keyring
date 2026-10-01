@@ -790,6 +790,28 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "spec_asserts": "TO-TR-x2 build item 3: re-materialise the two directories with git rm -r --cached + git checkout --; build item 4: both test fakes (FakeS3 and test_pull_handler.py's _MemS3) gain list_objects_v2.",
     "world_is": "git rm --cached leaves nothing for checkout -- to restore from, so checkout-index after deleting the files was used (no destructive git, bytes come from the index); the handler test's fake is production fixture-mode code in teams/pull.py (inside the grant), so the listing method landed there.",
     "notes": "_MemS3 now carries a listing method in the Lambda's fixture arm; no behaviour change for any caller that did not list."
+  },
+  {
+    "id": "NFRA_TRNSPT-S14",
+    "project": "NFRA_TRNSPT",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~T",
+    "surfaced_at": "2026-10-01T00:40:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "Running the transcripts test suite rewrites two TRACKED record files (deliverables/0.9.0_WK_NFRA_TRNSPT~4/WIPE_GATE_RECORD.json and ~2/WIPE_GATE_RECORD_R2.json): test_wipe_planted.py writes its gate record into the committed deliverables path on every run, so any tree that runs the suite shows those two files modified (line endings only here), and a seat's later commit or merge can trip on them.",
+    "disarm_owner": "2.0.0_SA_COO~T (round-3 repair item: the test writes its record to a temp path, and the committed record is produced by one explicit command)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "after python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_TRNSPT_T/R2_CHECKS/r2_suite_check.py at CLOUD 94d7d74a41 (SUITE-GREEN passed=133): git status shows both record files ' M'; git diff --numstat on each is empty (line endings only); restored with git restore",
+        "worker reports of TR-w-2, TR-f-2 and TR-x-2 each name the same leftover in their worktrees"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A test run leaves the tree as it found it.",
+    "world_is": "Two committed records are rewritten by every suite run.",
+    "notes": "Found at the issuer's drain hygiene; restored each time; not a content change."
   }
 ]
 ```
