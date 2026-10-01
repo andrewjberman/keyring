@@ -16,8 +16,8 @@ Order: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261001_161xZ_DE
 - IRPT_BCKEND ~Y: the Analysis thread is LIVE (CTO rulings batch 88, 13:13Z). The round enriches in the CTO's order E1
   (withdrawn), E2 (withdrawn, batch 97), E3 (done), E4 (`2.0.0_SA_COO~D`'s), E5, E6.
 - E3: Multi-Comp `REQ-a1d9abc0bc037ea3d9e4a7ed` READY 15:36Z, outcome
-  `IRPT_MVP_Y/E3_MULTICOMP/OUTCOME_E3_MULTICOMP_20261001.md` @be3dfa1d47; the CVO graded PASS (103899); it is live once
-  `2.0.0_SA_COO~D`'s page walk reads it (asked 15:54Z).
+  `IRPT_MVP_Y/E3_MULTICOMP/OUTCOME_E3_MULTICOMP_20261001.md` @be3dfa1d47; the CVO graded PASS (103899); walked 16:29Z;
+  NOT live until E7 (batch 98). The Overview stays live.
 - Served resident: root `/opt/irpt-resident/481166a8f2-st9` since 14:59:17Z on EC2 `i-0167fd745ad906a66`; rollback root
   `9ac9b56d3c-st8` kept on the host. It does not depend on this laptop.
 - On CLOUD, not served (the next resident build's members): item 15 `392149291372` (merge `fba4b93df2`): the
@@ -41,15 +41,20 @@ Order: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261001_161xZ_DE
 
 - This seat owes: nothing asked and unanswered. TO-IB-yr-271 (asked by 103899) is closed in this brief's commit as
   SUPERSEDED with an issuer amendment.
-- Owed to this seat: `2.0.0_SA_COO~D`'s page walk of `REQ-a1d9abc0bc037ea3d9e4a7ed` (asked 15:54Z).
+- Owed to this seat: nothing. `2.0.0_SA_COO~D` walked `REQ-a1d9abc0bc037ea3d9e4a7ed` at 16:29Z (103910): Ready,
+  100 of 100 sections, neither comparison named; the CTO ruled the arm not live until E7 (103913).
 - Signed halves outstanding: none. The st10 packet is not yet written.
 
 ## 5. Relaunch
 
-- RESPAWN: yes. The lease runs to 19:52Z and two built items wait on one release.
+- RESPAWN: yes. The lease runs to 19:52Z, two built items wait on one release, and E7 is ordered.
 - First three acts: (1) read this brief, `STATUS~Y.md` and the inbox (`check-inbox 2.0.0_SA_COO~Y`), ack every
-  message; (2) re-arm the inbox watcher and the 10-minute drive; (3) cut the st10 packet at CLOUD's HEAD (build,
-  gate against the running st9 tar, upload to new keys, packet + ledger, COO half, ask the CTO half).
+  message; (2) re-arm the inbox watcher and the 10-minute drive; (3) **E7 first** (CTO rulings batch 98 items 1-3
+  @29a6581479, msg 103913): the Multi-Comp arm is NOT live until a served route names the chosen comparisons --
+  serve their names from the request's frozen keys and the catalogue's labels, never read back from the PDF; then
+  `2.0.0_SA_COO~D` shows them and re-walks, and the CTO calls the arm live. E7 runs ahead of E5 and E6. The st10
+  packet for items 15 and 16 follows (build, gate against the running st9 tar, upload to new keys, packet + ledger,
+  COO half, ask the CTO half).
 - `--say` hint: "Read org/tier1_exec/2.0.0_SA_COO~Y/deliverables/REBOOT_BRIEF_20261001_2.0.0_SA_COO_Y.md, then
   org/missions/D9/IRPT/IRPT_BCKEND/STATUS~Y.md, then your inbox."
 
