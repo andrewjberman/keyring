@@ -33,6 +33,14 @@ conditions. This file closes those conditions; it does not repeat the round-26 t
    date; if it does, one fire for 2026-09-29 through the producer's own path. It mints a partition the adapter serves and it runs the
    producer off its own clock, so it carries both halves naming that one key and that manual state. If no date input exists, the gap is
    declared on the page under PRD ruling 18 and the input is its own cell.
+   **MEASURED 2026-10-01 04:1xZ (this seat, replacing the inference and the cell's first read):** `opal-data-49financial`
+   `irpt/49financial/gold/holdings_performance_manifest/` newest partition is `date=2026-09-28` (written 2026-09-29T14:45:04Z);
+   `date=2026-09-29` is ABSENT, positive control `date=2026-09-25` present. The date input EXISTS: `infra/aws/lambda/investor-reporting/
+   holdings-performance/handler.py:52-59` takes `event['date']` (the manual path its docstring names) and `:65` takes `dry_run`
+   (repo source; the live zip's bytes were not read). So the cell is one invoke with `{"date": "2026-09-29", "dry_run": true}`, then
+   the same without `dry_run`, under both halves naming every key the fire writes for that date under `holdings_performance_daily`
+   and `holdings_performance_manifest` (the dry run prints them; the daily prefix was not listed here). The scheduled 2026-10-01 11:30Z fire
+   computes 2026-09-30 by the handler's own rule and does not revisit 09-29.
 4. **The five ~M Holdings orders still `pending` at HEAD (Q3): RE-CUT, not drained and not retired.** Read at HEAD: m22-222 is
    already `superseded` (@3412dc5bbe); m25-251, m26-261, m27-271, m27-272, m28-281 read `pending` on CLOUD and `complete` only on
    `wk-IRPT_BCKEND-84` (12 commits ahead of CLOUD, built before IB-mr-291 changed the same files). ~M flips all five to `superseded`
