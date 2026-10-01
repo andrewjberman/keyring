@@ -5642,6 +5642,28 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "No hazard; recorded so a reader of limb_2b does not look for ft/sa/wsj captures under the per-publisher runtime dir."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S56",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-01T22:50Z",
+      "one_line": "HVST-ai-2 left OPEN: the ft session-death cause is found (no page load in the tab for ~10-40 min) but both keep-alive attempts died and 4 renewals then failed; the issuer stopped the worker to protect the ft account and holds ft sign-ins until 06:00Z.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "CTO r35 ruling 4: the ft driver returns only after a 2-hour run shows no logout.",
+      "world_is": "Merged @7a153720bc: diagnosis (FTSession_s never re-issued; a tab loading a page every <=8 min held 54 min; fetch-only died 24 min after the last load) and TabSession.keepalive (ft contract session_keepalive_seconds 300). Attempt 1 (home-page load) died at 13 min; attempt 2 (article load) died 90 s after the sign-in; then 4 renewals failed after the solver token. Repeated failed sign-ins risk an ft account lock, so the worker was stopped at 22:4xZ; no ft process or chrome remains. The ft backfill driver stays OFF.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "commits 7a153720bc (merge of 1c1093375f, 2e7a42aff4, 8a7c4aeb23, f474b6d2c9)",
+          "deliverables/0.9.0_WK_AMGT_HARVST~92/ai2_diagnosis.md"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Next: no ft sign-in before 06:00Z; then ONE re-seated attempt with a single renewal budget. If the session still dies, the CTO reads it at the round-36 analysis."
     }
   ]
 ```
