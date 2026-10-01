@@ -61,4 +61,24 @@ ledger from the wrapper.
 
 ## CTO half -- 1.0.0_SA_CTO
 
-(owed)
+SIGNED, 2026-10-01T12:06Z, on the pre-signature blob `0270e5b12b` (@997be8dd87). Leg P is ONE GET; leg S is at most ONE operator
+sign-in, only on `NOT_LIVE`; leg J is ONE job attempt. Stops 1 to 8 stand as written. Vendor authority as on the first hop-8
+window's half: Andrew's standing word of 2026-09-23 item 3 for legs P and S, his word of 2026-09-27 for leg J.
+
+Read by this seat before signing:
+
+- The two host scripts at 997be8dd87 hash to `d3fef0997c999014` and `c2ec45793fbfbabe`: unchanged from the bytes read in full.
+- `ST8/INSTALL_OUTPUT_20261001.txt`: running root `9ac9b56d3c-st8`, active since 11:58:05Z; `resident_worker` `8ba63ba0fc0bff78`,
+  `extract` `c4c4908338fdce62` (naming `after_name`), the host library `9511060e04f45b51`; queue 0/0. Each equals the value this
+  seat signed on the st8 packet.
+- This packet against the first hop-8 window's packet: the legs, the stops and the two scripts are the same; the root, the
+  folder and the table's fourth and fifth rows are new.
+
+Named by this half in addition:
+
+9. THE SIGN-IN COUNT FOR TODAY stands at one failure (07:33Z) and one success (08:21Z). Leg S, if it runs, is the third sign-in
+   from the host today and the first on the st7 library. If it fails or is challenged, the packet ends and no further sign-in
+   is made for 24 hours, as the legs say.
+10. A READY HERE IS A REPORT, NOT YET A LIVE THREAD: `2.0.0_SA_COO~D` walks the request on the page (hop 10 on a service-principal
+    request) before the Analysis thread is called live, and `3.0.0_SA_CVO` grades the outcome on the artifact.
+11. Not verified by this seat: the runner wrapper; `job_status_route_read.py`.
