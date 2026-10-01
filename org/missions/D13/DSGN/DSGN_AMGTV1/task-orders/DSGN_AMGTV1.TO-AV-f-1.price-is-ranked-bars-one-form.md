@@ -99,7 +99,7 @@ Report once: what changed and where, the output line of every criterion, the por
 
 **ISSUER NOTES:** round 15 = the round-14 analysis @950ae4bb4f s.3 row 1, CTO amendment msg 27547 (cells 1-4 unchanged). Leads chain ~56 (f-1 -> f-2 -> f-3; all three write LeadPanel.tsx). The served-field types were landed by the issuer at DEV a41cf763 before the cut (green arms a and c conflicted in types.ts). Base a41cf763: pricebars 2 of 3; green r15-green-a @7cb92a05 3 of 3.
 
-<status>pending</status>
+<status>complete</status>
 <round>15</round>
 <slot>~56</slot>
 <fabric>site-z</fabric>
