@@ -16418,6 +16418,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
  "spec_asserts": "COO never-widen half @53a6ad274e, READERS: 'The scoped API's read_posture serves the LATEST posture/v1/<key>/<as_of>.json by date (read_pool_object), as stored... The page's posture card reads read_posture.' AC1's expectation: 'the served /posture route serves the new object (its as_of and verdict)'.",
  "world_is": "There is no deployed /posture route on opal-amgt-scoped-api, so read_posture is not reachable over HTTP for any of the 33 subjects and the posture card has no served source. The half's blast-radius sentence -- 'a same-key overwrite therefore moves the served /posture for these 12 names' -- describes a reader that does not answer; the act's real reach is the STORE only. The issuer's comp-adversary note says AC1 'PASSES on a simulated post-state', and a simulated post-state cannot see an absent route, which is why the cut did not catch this. UNMEASURED here, and deliberately not reasoned to: whether /posture was ever deployed and removed, or never cut -- that is a code and deploy-history question on another seat's surface, and this seat did not sweep it.",
  "notes": "disarm_owner 2.0.0_SA_COO~Z (the issuer). ARMED because AC1 is ae-1's single criterion and its stop limb 6 names a failing AC1 as the ROLLBACK trigger, so the round cannot close until the issuer rules. NOT SELF-ADJUDICATED and NOT ROLLED BACK: this seat measured, left all 12 rollback VersionIds live in deliverables/0.7.0_AE_CloudOps~A/ae1-pre/pre.json, and reported upward the same turn -- the same discipline the issuer ruled correct for ad-2 L3 (msg 27355, AMENDMENT 2 @9d5bd13f74). The two dispositions open to the issuer: amend AC1's served limb to grade the route's REACHABILITY explicitly (so an absent route reads as a route defect, never as a content mismatch), or rule the served limb out of ae-1's scope and route /posture's absence to the seat that owns the scoped API. Sibling row on the same check: AMGT_RESAPP-Z-S324."
-}
+},
+  {
+    "id": "AMGT_RESAPP-Z-S326",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-10-01T05:58:00Z",
+    "one_line": "DISARM ACT for AMGT_RESAPP-Z-S325 (disarm_owner this seat): no scoped-API route is missing -- posture is served as the `posture` field of /security/{key}/overlay; the defect was the issuer's check, now amended (AMENDMENT 2) and re-run against the deployed function: exit=0, YES. Also answers Z-S324 for the L8 read.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/api/scoped_amgt.py scoped_amgt_route_table(): 18 routes, no /posture leaf; read_security_overlay returns `posture: read_posture(...)` -- the carrier the page reads.",
+        "ae_1_posture.py serve() AMENDMENT 2: reads /security/{key}/overlay `posture` and raises on a non-200 (_invoke meta kept). Re-run 2026-10-01 ~05:5xZ against opal-amgt-scoped-api: exit=0, 0 BAD, 12 targets, 1 verdict moved (KMB hold -> better), 'THE POSTURE BATCH READS THE HELD PACKS AND SERVES ITS OWN OUTPUT: YES' (deliverables/2.0.0_SA_COO~Z/round55/ae1_AC1_regrade_amendment2.out).",
+        "Z-S324: AC1 contains generated_at 0 times -- true of the instrument; the CTO half s.2 condition is evidenced by the executor's own reads in proof 0ecb5292c5 (post-act generated_at on 9 resolved bodies; new VersionId + LastModified on the 3 ABSENT bodies, judge.py writing generation=None there)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S325: the COO half says the scoped API's read_posture serves the latest posture object, and AC1's served limb reads it at /security/{key}/posture.",
+    "world_is": "read_posture is served inside the overlay payload, never at its own route; the check called a non-route. With the check pointed at the overlay carrier, the served posture for all 12 overwritten keys is the new object as stored.",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "notes": "Disarm carrier per the Z-S290 shape; Z-S324 and Z-S325 are left exactly as filed. Fifth instrument defect of this issuer's class (a check reading a surface the act does not own); carried to the round-55 L8 packet."
+  }
 ]
 ```
