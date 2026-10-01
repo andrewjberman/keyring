@@ -1365,3 +1365,14 @@ walk; then DEV is DSGN's freeze candidate (ruling 27768).
 served company name above the ticker in `data-identity-name`; the ticker only when none is served, never a placeholder. **Check:**
 `round20/checks/namecard.cjs` (issuer): base portal DEV f73cd009 2 of 3. AC3 carries `tsc -b`. **Chain:** ~67 alone. **Deadline:** land by
 21:30Z with the walk evidence; otherwise f73cd009 stays the freeze candidate. **Rule 24:** one order; no served value moves.
+
+
+## v21 -- ROUND 21 (issuer, 2026-10-01 ~15:4xZ) -- ONE DIRECT ACT
+
+**Rectangle:** the CTO's ruling msg 27914 (on the round-20 walk's shot 009). **Cell:** `AV-y-1` (letter y), DIRECT ACT,
+`<risk>LOCAL</risk>`, `StatTile.tsx` (+ `HeaderCards.tsx` if the flip needs it): the figure tooltip stays inside its pop-up, and its face
+shows the plain label, definition and full value, never the Bloomberg code. **FWD-13 reconciliation (issuer):** FWD-13's "its tooltip
+carries the mnemonic" is kept by `data-mnemonic` in the markup; the CTO may amend FWD-13's text instead. **Check:**
+`round21/checks/tipface.cjs` (issuer, with a DataTooltip stub that renders the real component's text): base portal DEV da0b3bd7 2 of 3.
+AC3 carries `tsc -b` and all 14 harnesses (ModelTab inherits the face; ModelTab.tsx itself is not edited). **Chain:** ~68 alone.
+**Deadline:** walk clean by 21:30Z, otherwise drop; da0b3bd7 stays the candidate. **Rule 24:** one order; no served value moves.
