@@ -7600,3 +7600,58 @@ fanout:
   egress: none
   no_promote: true
 ```
+
+
+## 68. ROUND 60 -- EVERY BAR OPENS ONTO ITS OWN NAME, ITS CODE-ONLY REDEPLOY. Two cells, one order and one direct act
+
+**Cut by `2.0.0_SA_COO~Z`** on `1.0.0_SA_CTO~Z`'s **ROUND 59 ANALYSIS** (`ledger/ROUND_ANALYSIS.round59.md` @`f03efb5e12`, msg 27848;
+round 59 CLOSED). Rulings carried:
+- 1: a served-read control discriminates by a field the act moves, never by an HTTP status alone;
+- 2: the overlay serves the ranking row's label, before 22:00Z, under a pair;
+- 3: Z-S332 (an unknown key's overlay answers 200) is carried to after Friday.
+
+### 68a. THE DEPLOY ACTS (round-56 ruling 3; measured at the cut ~13:2xZ)
+
+| # | act | state at the cut | carrier |
+|---|---|---|---|
+| 1 | the code: `read_security_overlay` serves top-level `name`, `name_source`, `display_name`, `display_name_source` by the ranking's own chain (classifications table -> crosswalk -> display ticker); the shared `identity` block untouched (rj-1: identical across routes) and resolved once | LANDED in the issuance commit; 379 passed | `aj-1` |
+| 2 | no new import; `--build-only` rc=0; CONTENT-DIFF 350 / 349 / 1 changed (`scoped_amgt.py`) | verified | none |
+| 3 | build + upload ONE artifact; ONE code-only `safe-apply` | -- | `aj-2` |
+| 4 | no IAM/route/gateway change: the classifications GetItem and the crosswalk read are already made by the ranking path | -- | none |
+
+### 68b. MEASUREMENTS
+
+- **Deployed base** (CodeSha256 `E6PdHVFB...`, 12:34:04Z; artifact `q0Vf.FzuGpVovbH.xb2dumggs4k5kMKB`): the ranking serves 94 keyed
+  rows, but no overlay carries `display_name` (94 of 94 differ). AMD/TSM `identity.identity_status` reads MEASURED.
+- **On the aj-1 tree, locally:** 94 of 94 overlays' `display_name` equals the row's; AMD "Advanced Micro Devices Inc"; TSM "Taiwan
+  Semiconductor Manufacturing Co Ltd ADR"; the identity block unchanged.
+- **The check** `round60/checks/aj_overlay_name.py`: deployed base FAIL C0, C2 (94), C3; C4 PASS; local YES.
+
+### 68c. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-aj-1` | THE OVERLAY CARRIES THE BAR'S LABEL | issuer | direct act (in the issuance commit) | LOCAL (served by aj-2) | `lib/research/api/scoped_amgt.py`, its tests |
+| `AMGT-aj-2` | THE CODE-ONLY REDEPLOY | `0.7.0_AE_CloudOps~A` | seat order, a pair | WORLD | the Lambda artifact, the deploy ledger |
+
+### 68d. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain = the analysis's one enrichment item.
+- **(ii) Same grain.** One field set; one deploy.
+- **(iii) Intent.** One axis: what a person clicks is what they see named.
+- **(iv) What a cell does NOT move.** aj-1 does not touch the identity block, any figure or any other route. aj-2 moves no route, IAM
+  or store.
+
+### 68e. EDGES AND FAN-OUT
+
+```
+aj-1 -> aj-2
+fanout:
+  cap: 3
+  orders_total: 1
+  chains_total: 1
+  wave_0: [aj-2 0.7.0_AE_CloudOps~A]   # GO after the CTO half; before 22:00Z
+  no_s3_deletes: true
+  egress: none
+  no_promote: true
+```
