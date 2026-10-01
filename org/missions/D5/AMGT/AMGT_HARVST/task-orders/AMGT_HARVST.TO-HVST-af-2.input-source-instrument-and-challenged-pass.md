@@ -75,6 +75,24 @@ profiles or traffic (the issuer's running backfills), a residential proxy, a Sec
   `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/AMGT_HARVST.TO-HVST-af-2.input-source-instrument-and-challenged-pass.proof_of_spec.json`
   with `to_id` `AMGT_HARVST.TO-HVST-af-2.input-source-instrument-and-challenged-pass`.
 
+## AMENDMENT 1 -- 2026-10-01 ~12:2xZ, the issuer, on the phase-B report (rows Z-W91-S11, S12, S13)
+
+1. **Z-W91-S11 RULED:** the press-and-hold WAS met (run 1, a 403 on the in-tab sitemap fetch) but the run driver had no
+   solve step, and the 10-request cap was spent. The challenged pass is now taken through the REAL collector path, where
+   `PacedSession` routes a tab leg's bot check to `verification.route_bot_check` once (wired @a7dbc71874): run ONE bbg
+   collector job for BA from the MAIN tree's runtime (`--runtime-root "C:/Users/Opal Bloomberg/Desktop/ajb_workspace/.runtime/opal-data-harvest"`,
+   `--publishers bbg --max-jobs 1`, backfill, floor 2026-01-01, `--new-only --no-sign-in`) with `InputSourceMonitor`
+   active for the whole job. Fresh budget: at most 15 bbg requests (stop the job past that). Record the job's
+   `challenge_passed` / `bot_check` events and the run record; build `af2_challenged_pass.json` from them (bbg's
+   `challenge_met` = the signature, `path` = the solver, `passed`, `solved_at`).
+2. **Z-W91-S12 RULED:** in `solve()`, a "Frame was detached" while locating the control re-locates ONCE on the page's
+   current frames (no new request); a second detach ends the solve `passed: false`. Plant it in
+   `test_af2_input_source.py`.
+3. **Z-W91-S13 RULED INERT:** 12 injected events in a 2-minute window with no hardware events is the harness's own
+   synthetic input -- exactly what the monitor exists to separate; it does not weaken the "no human hand" reading.
+4. **Sequencing:** bbg is ONE seat at a time. This re-run starts only after `HVST-af-4`'s live bbg job has ended (the
+   issuer hands it over then). wsj and barrons are not re-run (no challenge was met; recorded "none").
+
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** round-32 analysis @`749ec2c72e` item 2; row W91-S8 (ruled in Z-S52). Authority: R-21; placement R7.
