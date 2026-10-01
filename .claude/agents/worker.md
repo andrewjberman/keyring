@@ -34,7 +34,8 @@ standing worker rules: the face does not restate them and carries only what is s
 `export OPAL_AGENT_SERIAL=<serial>;`. Every commit is
 `bash .tools/safe-commit.sh --author "<serial> <<serial>@opal.agent>" -F <msgfile> -- <paths>`, `<msgfile>`
 written with the Write tool. Commit on your worktree branch only; never push, merge, rebase, `checkout --`
-or `clean`.
+or `clean`. **Every search names your worktree:** pass its absolute path to every Grep, Glob and Read call -- an
+un-pathed search reads the BASE checkout, not yours, and answers about the wrong tree with no error (MDPF_SECCLASS W8-S2).
 
 **The bar.** First act: print `git rev-parse --abbrev-ref HEAD` and `test -d org && test -d .tools && echo TREE-OK`
 -- if the worktree does not carry the paths the task order names, that is a BLOCKING row and your final

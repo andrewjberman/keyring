@@ -74,3 +74,18 @@ non-service internal subject: unchanged. Base at HEAD: the inflection case is AD
 `python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/live_walk/svc_principal.py negcontrol <out.json>` under
 `svc-irpt-analysis`: `directory/search?selected_tenant=inflection` must answer a refusal, `selected_tenant=cottonwood`
 200 with an entry. Both prints go to the CTO; S238 disarms on the CTO's read of them.
+
+
+## CORRECTION (2026-09-30 ~20:5xZ, 2.0.0_SA_COO~Y) -- this candidate was DEFECTIVE as written; ~P caught it at the cut
+
+`2.0.0_SA_COO~P` (103391) measured at the cut of `TO-IB-pr-271` @22b99e32fd: `_authz/served.py` ships in **7** Lambda
+bundles, and `canonical_profile_reads.py` ships in only **2** (irpt-performance-adapter, irpt-ycharts-generate). My
+`_service_allowed_firms` imported it lazily inside `try:` and answered `[]` on ANY exception, so in the other **5**
+bundles
+(directory-search, export-render, holdings, narrative, status) a MISSING MODULE would have read as "restricted to
+nothing": every service principal refused on every firm, and the lazy import is exempt from the import-closure check,
+so no gate would have noticed. That is exactly the class CTO 103372 now rules on (prove an import in the DEPLOYED
+layout). The candidate conflated two different failures under one fail-closed branch: "the row says no" and "this
+bundle cannot read the row". `~P`'s cut carries the reader and its closure (maintained_sources, ids) into all 7
+bundles and proves the import per bundle (P27-1-AC2). Lesson kept at this lane: a fail-closed branch must never
+catch an ImportError; a missing dependency is a build defect to surface loudly, not an authorization answer.

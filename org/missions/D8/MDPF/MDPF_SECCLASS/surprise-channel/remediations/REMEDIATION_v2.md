@@ -23,16 +23,16 @@ Author: 3.0.0_SA_CVO, 2026-09-30. Graduated at rounds 2-3's L9 (ADJUDICATION_v2.
     "owner": "2.0.0_SA_COO~M",
     "round": "v4",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~M",
       "round": "v4"
     },
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~M",
-      "at": null
+      "at": "2026-09-30T17:50Z"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "MDPF_SECCLASS-W6-S2",
@@ -78,16 +78,16 @@ Author: 3.0.0_SA_CVO, 2026-09-30. Graduated at rounds 2-3's L9 (ADJUDICATION_v2.
     "owner": "0.0.0_AB_MSTR",
     "round": "v4",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "0.0.0_AB_MSTR",
       "round": "v4"
     },
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "0.0.0_AB_MSTR",
-      "at": null
+      "at": "2026-09-30T17:35Z"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "MDPF_SECCLASS-W5-S2",

@@ -646,3 +646,274 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Same class as W6-S1 (E_18's hop), which was fixed for the repo tree only. Fix-forward is a code cell plus a new half (a new file on the runner is a deviation the signed half does not name). E18 IAM+deploy half's acceptance (first 04:00Z scheduled run of E_18) is unreachable as written: E_18 is not in the gold chain."
 }
 ```
+
+
+## MDPF_SECCLASS-W11-S1 -- SC-e-14's attribute_exists(ticker) breaks four older tests that pin the condition string
+
+```json
+{
+  "id": "MDPF_SECCLASS-W11-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~11",
+  "surfaced_at": "2026-09-30T20:10:00Z",
+  "one_line": "Adding attribute_exists(ticker) to the two S4 update conditions (as SC-e-14 orders) makes four existing tests in test_classified_by_v2.py and test_set_instrument_kind.py fail: they pin the exact string attribute_not_exists(<attr>) and their stubs key the refusal on it; both files are outside SC-e-14's paths.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest infra/aws/lambda/v2_portal/_shared/tests infra/aws/lambda/v2_portal/yang_pipeline/tests -q -p no:cacheprovider on wk-MDPF_SECCLASS-11 -> 7 failed, 78 passed. Four are caused by this cell: test_classified_by_v2.py::test_label_update_writes_only_classified_by (asserts ConditionExpression == 'attribute_not_exists(classified_by)', lines 201/216), ::test_label_update_refuses_an_already_labelled_row, test_set_instrument_kind.py::test_only_instrument_kind_changes (lines 54/73/94) and ::test_row_with_existing_kind_is_refused.",
+      "Three are NOT caused by this cell: test_classified_by_v2.py::test_contract_version_is_0_2_0 and ::test_contract_classified_by_has_four_values (contract is 0.3.0), and test_seed_etf_constituents.py::test_positioning_universe_plan_unchanged (expects table.batched but the script writes conditional puts) -- the last reproduced by running HEAD's unmodified seed-etf-constituents.py and test in a scratch copy: 1 failed, 7 passed."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "SC-e-14 (c): add attribute_exists(ticker) to each S4 update condition, one clause each; the order's AC1 names only the two new test files, and its paths grant does not include the older tests that pin the condition string.",
+  "world_is": "The new condition reads 'attribute_exists(ticker) AND attribute_not_exists(<attr>)'. The two older test files compare the condition string for equality, so they fail until updated (their stub refusal keys on the old string); the new test_update_requires_existing_row.py covers the new behaviour with a clause-evaluating stub. Also: an update on an absent key now raises RowAlreadyLabelled / KindAlreadySet (the same ConditionalCheckFailedException), whose names say 'already' -- no skeleton row is created, but the message is imprecise. No test was weakened; no out-of-grant file was edited.",
+  "notes": "Owner of the fix: the issuer (extend <paths> with the two older test files, or an L10 cell); the required edit is to their expected string and their stub's condition match."
+}
+```
+
+
+## MDPF_SECCLASS-W11-S2 -- correction to W11-S1: S4/contract assertions resolved by amendment 1; constituents-plan test failure is pre-existing on CLOUD
+
+```json
+{
+  "id": "MDPF_SECCLASS-W11-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~11",
+  "surfaced_at": "2026-09-30T21:00:00Z",
+  "one_line": "Correction to MDPF_SECCLASS-W11-S1 (amendment 1 resolves its four S4 assertions and two contract assertions; test_seed_etf_constituents.py::test_positioning_universe_plan_unchanged is pre-existing on CLOUD at line 202): recorded as a new row because the surprise-row gate refuses an in-place edit of W11-S1.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Amendment 1 (2.0.0_SA_COO~M, b4df4b3630) resolution of W11-S1: the four S4-string assertions in test_classified_by_v2.py and test_set_instrument_kind.py now pin 'attribute_exists(ticker) AND attribute_not_exists(<attr>)' and their stubs refuse on it (an already-set row still raises RowAlreadyLabelled / KindAlreadySet); the two contract assertions read contract_version and classified_by values from org/standards/MDPF_SECCLASS_CONTRACT.json at HEAD (the version check is now a floor of 0.2.0 and the values check a superset of the original four with a definition for every listed value, because the order forbids typing the version or values). python -m pytest test_classified_by_v2.py test_set_instrument_kind.py -q -p no:cacheprovider -> 24 passed; AC1 over four files -> 33 passed. test_set_instrument_kind.py's stub also still refuses seed-etf-constituents.py's kind-only condition 'attribute_not_exists(instrument_kind)', which is not an S4 script and is unchanged.",
+      "PRE-EXISTING on CLOUD, not granted, left alone: infra/aws/lambda/v2_portal/yang_pipeline/tests/test_seed_etf_constituents.py::test_positioning_universe_plan_unchanged fails at line 202 (assert [i['ticker'] for i in table.batched] == ['JPM'] -> AssertionError: assert [] == ['JPM']). Reproduced on CLOUD's UNMODIFIED script and test: git archive of infra/aws/lambda/v2_portal at 05f0a0b5af (the parent of this order's build commit cf24f07493) extracted to .scratch/base, python -m pytest test_seed_etf_constituents.py -q -p no:cacheprovider -> 1 failed, 7 passed, same line 202, same assertion. The script writes conditional puts where the test expects table.batched, so the failure does not come from SC-e-14's PRE-READ count edit."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment 1 to MDPF_SECCLASS.TO-SC-e14: record the failing test and line of test_seed_etf_constituents.py::test_positioning_universe_plan_unchanged as pre-existing in row W11-S1.",
+  "world_is": "Row W11-S1 cannot be edited in place: .tools/surprise-row-gate.py refuses a mutated existing row ('Corrections are NEW items citing the old id'), so the record lives in this new row citing MDPF_SECCLASS-W11-S1, which stays exactly as committed. The constituents-plan test failure is open and unowned; its repair is outside this order's grant.",
+  "notes": "Owner of the remaining failure: whoever owns seed-etf-constituents.py and its test (a separate cell). W11-S1's S4 and contract assertions are resolved by amendment 1."
+}
+```
+
+## MDPF_SECCLASS-W12-S1 -- seed-etf-classifications.py merge_item() carries classification_confidence and low_confidence onto a classifie
+
+```json
+{
+  "id": "MDPF_SECCLASS-W12-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~12",
+  "surfaced_at": "2026-09-30T22:15:00Z",
+  "one_line": "seed-etf-classifications.py merge_item() carries classification_confidence and low_confidence onto a classified_by='seed' row when a model row's ticker is added to the seed source, which contradicts MDPF_SECCLASS_CONTRACT 0.3.0 (a seed correction 'drops low_confidence entirely'; both fields present ONLY on a model row).",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M (issue a code cell in the seed script's owner lane: merge_item() must drop classification_confidence and low_confidence, or the contract sentence must be corrected, BEFORE any model row's ticker enters etf_classification.py; r6_model_reader_census.py re-grades this reader on the same exercise)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R6_CHECKS/r6_model_reader_census.py -> reader infra/aws/lambda/v2_portal/yang_pipeline/seed-etf-classifications.py FAILS-CONTRACT: merge_item(ACSG, <model row with classification_confidence=Decimal('0.62'), low_confidence=True>) returns classified_by='seed' together with both model attributes (R6_MODEL_READER_CENSUS_20260930.json, readers[].evidence).",
+      "infra/aws/lambda/v2_portal/yang_pipeline/seed-etf-classifications.py:113-117 '# Carry forward any attribute a curator added that this script does not derive' copies every existing attribute not already in item and not in PROVENANCE_FIELDS (line 45: last_updated, updated_by, classified_by); the two model fields are in neither.",
+      "org/standards/MDPF_SECCLASS_CONTRACT.json fields.low_confidence.rule24_record.state_coherence: 'a later seed correction of a model row replaces classified_by = seed and drops low_confidence entirely, same as classification_confidence'; fields.classification_confidence.absent: present ONLY on a model row.",
+      "Population today: the 260 classified R4 tickers overlap the seed source (etf_classification.ETF_CLASSIFICATIONS) by 0; live table read 2026-09-30 (2657 rows) holds classified_by scheduled 2281, legacy 238, seed 138, model 0, so no live row is wrong; the defect fires on the contract's own documented correction path."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order SC-e-15 step 2/3 and the CTO's ruling 2: every reader of etf-classifications tolerates a model row with no crash, no refusal and no strict-contract failure; MDPF_SECCLASS_CONTRACT 0.3.0 promises a seed correction drops both model attributes.",
+  "world_is": "The seed reader/merger runs without error on a model row but its merge loop preserves classification_confidence and low_confidence onto the rewritten seed row, leaving a seed row that claims a model confidence. The census reports FAILS-CONTRACT for this reader, so MODEL-READER-TOLERATED is not printed and the MODEL_ROWS act stays refused.",
+  "notes": "I did not change the reader (outside the order's paths). Independent of the classify_holdings row (W12-S2). Same grain as the contract's state_coherence statement for both fields."
+}
+```
+
+## MDPF_SECCLASS-W12-S2 -- ETFClassifier.classify_holdings (static) raises KeyError on any asset_class outside fixed_income/equity/hedge/
+
+```json
+{
+  "id": "MDPF_SECCLASS-W12-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~12",
+  "surfaced_at": "2026-09-30T22:15:00Z",
+  "one_line": "ETFClassifier.classify_holdings (static) raises KeyError on any asset_class outside fixed_income/equity/hedge/unknown, so it crashes on a model row classed alternatives, commodities or structured, and already on live rows of those classes (live: alternatives 4, commodities 8, structured 5); zero functional call sites, three byte-identical copies.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R6_CHECKS/r6_model_reader_census.py -> 3 readers CRASHES: ETFClassifier.classify_holdings in _shared/etf_classifications_dynamodb.py and the two positioning Lambda copies (md5 e62906eff240a853029181715fc9b451 on all three): KeyError('alternatives') on model row MDLX009; the control seed row ALTSEED (alternatives, classified_by=seed) raises the same KeyError.",
+      "infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py:165-200 result = {fixed_income, equity, hedge, unknown, unknown_tickers}; `result[asset_class] += weight` with no default.",
+      "comp-find 'classify_holdings(' --all (2026-09-30, 46476 files scanned, 8 hits): 7 definitions (3 copies of this method, 3 copies of a different static-module function, 1 unrelated INF _classify_holdings) and 1 call of the INF function; no caller of ETFClassifier.classify_holdings.",
+      "Live read of etf-classifications 2026-09-30: 2657 rows, asset_class equity 2054, fixed_income 586, commodities 8, structured 5, alternatives 4, so the crash is not new with the model rows."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order SC-e-15: find every reader of the table and exercise each reader's real function on a model row; a reader that crashes is the finding.",
+  "world_is": "The one client's static classify_holdings would crash on a model row of three of the five classes the model produces (alternatives/commodities/structured), but it has no caller and crashes identically on rows already live. The census grades it CRASHES because the order says do not weaken the check.",
+  "notes": "Whether a zero-caller method belongs in the reader set is the issuer's or CTO's ruling; I did not exclude it. Fix shape if kept: seed the result dict from the ratified class list and use setdefault, in three byte-identical copies (packaged into Lambdas, so a change is a deploy act). INERT because nothing calls it."
+}
+```
+
+## MDPF_SECCLASS-W12-S3 -- The census universe is the tracked tree at the worktree pin: the shared checkout holds untracked files (data/a
+
+```json
+{
+  "id": "MDPF_SECCLASS-W12-S3",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~12",
+  "surfaced_at": "2026-09-30T22:15:00Z",
+  "one_line": "The census universe is the tracked tree at the worktree pin: the shared checkout holds untracked files (data/assets/scripts/gold/irpt_reporting/, data/black_diamond/scripts/silver/lib/config.py and __init__.py, data/etfs/scripts/dedup/) this census cannot see, and the portal submodule is not checked out in the worktree, so the portal rows are READ-ONLY at the gitlink pin 3e2233de92.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git status at session start lists `?? data/assets/scripts/gold/irpt_reporting/`, `?? data/black_diamond/scripts/silver/lib/__init__.py`, `?? data/black_diamond/scripts/silver/lib/config.py`, `?? data/etfs/scripts/dedup/` in the shared checkout; none is in the worktree at 05f0a0b5af.",
+      "ls C:/Users/AndrewBerman/Desktop/wk_mdpf_secclass_12/portal is empty (git ls-tree HEAD portal = 160000 commit 3e2233de920b19e47bd37adad81d599ec7ffd12f); portal files were read with git show at that pin from the shared checkout's portal object store.",
+      "r6_model_reader_census.py completeness guard: code files naming the table outside org/docs/archive, tracked, are all in READERS/NOT_READERS or are tests; 0 UNCENSUSED at build."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order SC-e-15 step 1: find every reader of the table by re-running the comp-find searches; the half's census section binds a fresh census immediately before the act.",
+  "world_is": "Readers that exist only as untracked files in the shared checkout, or that arrive on the integrated tree after this cut, are outside this run. The check prints UNCENSUSED for any tracked code file naming the table that is in neither READERS nor NOT_READERS, so the act-time re-run on the integrated tree closes this; the portal rows re-verify their deciding lines automatically when portal/ is checked out.",
+  "notes": "Not a defect in the census; a stated bound. No untracked file was read."
+}
+```
+
+## MDPF_SECCLASS-W10-S1 -- the BD silver runner's bootstrap document does not fetch the shared client, so the silver builder would REFUSE on its runner after the gold redeploy (and the rolled-back builder breaks on the new library)
+
+```json
+{
+  "id": "MDPF_SECCLASS-W10-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~10",
+  "surfaced_at": "2026-09-30T21:25:00Z",
+  "one_line": "infra/aws/ssm/opal-bd-asset-dim-download.json stages the silver runner's tree with two gold-lib cp lines (etf_classifier.py, __init__.py) and no cp of code/gold/lib/_shared/*, so build_bd_assets_dim.py reaches gold/lib but the shared client is absent there: ETFClassifier.instance() refuses (BLOCKED, ImportError) until three cp lines and one mkdir are added to that document, which is outside this order's paths.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M (cut a cell that adds the three code/gold/lib/_shared cp lines to infra/aws/ssm/opal-bd-asset-dim-download.json and lands the document before the BD_THREAD_R3 redeploy; or hold the redeploy's silver leg)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ssm/opal-bd-asset-dim-download.json runCommand lines 'aws s3 cp s3://opal-data-bd/code/gold/lib/etf_classifier.py ...' and '.../code/gold/lib/__init__.py ...' only; python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R6_CHECKS/r6_deployed_layout_import.py (wk-MDPF_SECCLASS-10 @a170cf4cb2) prints 'SILVER-LAYOUT-AS-STAGED-TODAY REFUSED build_bd_assets_dim import=OK client=UNRESOLVED ImportError: BLOCKED: the shared ETFClassifier client ...' and, with the three shipped modules added to the staged tree, 'SILVER-LAYOUT-WITH-SHIPPED-ARTIFACTS OK ... client=<staged>/gold/lib/_shared/etf_classifications_dynamodb.py'.",
+      "live S3 code/silver/build_bd_assets_dim.py VersionId rfdhSeghulhB_Y1.qra.xVBUCFBU_35y (18:16:33Z, 16184 bytes, ETag 662ef035..) still calls ETFClassifier.instance() and reads the private _ticker_map/_name_map (1 match), which the SC-t-1 library drops (live code/gold/lib/etf_classifier.py after the 18:16Z rollback is the OLD one, VersionId yk0qwnF4Dyur2rUn1alS5Nt2_EtsR5Kx, 6605 bytes): redeploying lib/etf_classifier.py without the new builder breaks the silver job too, so the builder must ride the same act."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e13 step 3: find how the silver runner lays out code/silver/ and whether code/gold/ sits beside it; if the silver runner cannot reach the gold lib, make build_bd_assets_dim.py resolve it the same way, inside the grant.",
+  "world_is": "The silver runner DOES reach gold/lib (a repo-shaped RUNROOT built by cp lines; the builder's own ../gold sys.path insert resolves) so build_bd_assets_dim.py needed no change; what it cannot reach is the shared client, because the document that stages the runner is outside the grant (infra/aws/ssm is not in the paths block). The silver leg of the BD_THREAD_R3 redeploy is therefore stated in the half as gated on that document landing.",
+  "notes": "The daily asset-dim job fires about 22:10Z (bd_assets_dim.parquet LastModified 22:11Z on 09-28 and 09-29). The half (NEVER_WIDEN_HALF_REQUEST_SECCLASS_BD_THREAD_R3_20260930.md) names this as precondition P1 and does not authorise the silver leg without it."
+}
+```
+
+## MDPF_SECCLASS-W10-S2 -- E_18 has no trigger: gold_dispatch.sh lists no E_* id in its catalog or chains, so the 'first scheduled run' acceptance the order moves to cannot fire
+
+```json
+{
+  "id": "MDPF_SECCLASS-W10-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~10",
+  "surfaced_at": "2026-09-30T21:26:00Z",
+  "one_line": "data/black_diamond/scripts/gold/gold_dispatch.sh CATALOG (S_00, A_*, B_*, C_*, D_*) and every CHAIN_* exclude E_18, so no scheduled fire runs E_18.detect_new_securities.py; the live S3 copy (VersionId NVNguz8v2wHJW_KSsDx9S8MGpeMElqSE, 14:11:20Z, 13120 bytes) still carries the parents[4] hop and has not crashed only because nothing runs it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "gold_dispatch.sh CATALOG (lines ~92-117) and CHAIN_SILVER_PREP / CHAIN_DIMENSIONS / CHAIN_CANONICAL / CHAIN_DOWNSTREAM / CHAIN_FULL hold no E_ id; a Grep of data/black_diamond/scripts/gold/*.sh|yaml|md for E_18 finds only REGISTRY.md:128 and README_BUILD_SEQUENCE.md:79 (documentation).",
+      "infra/aws/terraform/bd-pipeline/iam.tf:729 comment says E_18 is run by the bd-gold-layer-runner 'via bd-gold-trigger -> gold_dispatch.sh, script 12+'; the dispatcher's own catalog does not carry it (same conclusion as row MDPF_SECCLASS-S5 notes)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e13 step 6: the half covers 'E_18's moved acceptance: its first scheduled run after the redeploy'.",
+  "world_is": "No schedule reaches E_18, so that acceptance has no event to wait on. The half states it as written and names the gap; the only proof of E_18's import on a runner this order can give is the deployed-layout check's extract. A trigger (a catalog entry or a named ad-hoc dry-run) is a decision for the signers, not this cell.",
+  "notes": "E_18's --upload writes only new etf-classifications rows (attribute_not_exists), cited from the E18 IAM half; a dry-run (no --upload) reads only."
+}
+```
+
+## MDPF_SECCLASS-W10-S3 -- the deploy tool's own test file .tools/test_safe_deploy.py fails 7 of 14 before and after this order's edit
+
+```json
+{
+  "id": "MDPF_SECCLASS-W10-S3",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~10",
+  "surfaced_at": "2026-09-30T21:27:00Z",
+  "one_line": ".tools/test_safe_deploy.py reports 7 failed / 7 passed (INDEX_MISSING in four deploy_file cases; 'Strings must be encoded before hashing' in three) both with and without the SC-e-13 edit to .tools/safe_deploy_core.py, so the file cannot stand as a regression guard for a change to that tool.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest .tools/test_safe_deploy.py -q -p no:cacheprovider on wk-MDPF_SECCLASS-10 with the edit -> '7 failed, 7 passed'; the same file run against git show HEAD:.tools/safe_deploy_core.py copied to .scratch/headtools/ -> '7 failed, 7 passed'.",
+      ".tools/tests/test_safe_deploy_distribution_member.py, test_safe_deploy_receipt_names_both_legs.py and test_deploy_ledger_held.py: 3 passed with the edit."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e13 step 1 edits safe_deploy_core.py; the constraint 'read .tools/safe_deploy_core.py before designing the mapping' assumes the tool is guarded by its tests.",
+  "world_is": "Half of the tool's own test file already fails at the base (a test-side hashing TypeError and index-blob lookups in a worktree where the fixture files are not staged); the order's mapping is exercised by its own test (test_deploy_tool_ships_the_shared_modules_beside_the_gold_files) and the deployed-layout check, not by that file.",
+  "notes": "Not widened: fixing the test file is outside the order's paths."
+}
+```
+
+## MDPF_SECCLASS-W10-S4 -- Amendment 1 of TO-SC-e13 (c3d41dc9dd) disarms row MDPF_SECCLASS-W10-S1 in the repo: infra/aws/ssm/opal-bd-asset-dim-download.json now stages the three
+
+```json
+{
+  "id": "MDPF_SECCLASS-W10-S4",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~10",
+  "surfaced_at": "2026-09-30T23:00:00Z",
+  "one_line": "Amendment 1 of TO-SC-e13 (c3d41dc9dd) disarms row MDPF_SECCLASS-W10-S1 in the repo: infra/aws/ssm/opal-bd-asset-dim-download.json now stages the three shipped shared modules, the deployed-layout check imports the silver builder from that document (SILVER-LAYOUT-AS-STAGED-TODAY OK) and exits non-zero on a silver gap; the live document (DefaultVersion 4) is unchanged until Leg 0 of the BD_THREAD_R3 half runs.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R6_CHECKS/r6_deployed_layout_import.py (wk-MDPF_SECCLASS-10) prints 'SILVER-LAYOUT-AS-STAGED-TODAY SHARED-KEYS-MATCH-TOOL document names 3 _shared keys, safe_deploy_core.shipped_artifacts_for names 3, sets equal', 'SILVER-LAYOUT-AS-STAGED-TODAY OK build_bd_assets_dim import=OK', 'SILVER-NEGATIVE-CONTROL REFUSED-AS-EXPECTED', exit 0; run against the pre-amendment document (git show c3d41dc9dd:infra/aws/ssm/opal-bd-asset-dim-download.json) it prints SHARED-KEYS-MISMATCH document=[] and REFUSED and exits 1.",
+      "Live document read only: .tools/aws ssm describe-document -> DefaultVersion=4 LatestVersion=4, Hash 294a7036...ae95e == sha256 of git show c3d41dc9dd:<file>; the repo edit is not live. The BD_THREAD_R3 half carries Leg 0 (the update-document act, the live version before, the rollback) and marks P1 satisfied by it per amendment 1."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row MDPF_SECCLASS-W10-S1 (BLOCKING, ARMED): the silver bootstrap document does not fetch the shared client, so the silver builder refuses after the gold redeploy; disarm owner 2.0.0_SA_COO~M.",
+  "world_is": "Amendment 1 put the document in this order's paths; the document, the check and the half are edited and proven locally. The disarm is complete only when Leg 0 runs live (not done here: no SSM update). W10-S1 itself is not edited.",
+  "notes": "Cites MDPF_SECCLASS-W10-S1. See MDPF_SECCLASS-W10-S5 for the ordering hazard inside Leg 0."
+}
+```
+
+## MDPF_SECCLASS-W10-S5 -- The silver trigger Lambda reads the SSM document at DocumentVersion '$LATEST', so update-document takes effect at the very next 22:10Z fire and restor
+
+```json
+{
+  "id": "MDPF_SECCLASS-W10-S5",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~10",
+  "surfaced_at": "2026-09-30T23:00:30Z",
+  "one_line": "The silver trigger Lambda reads the SSM document at DocumentVersion '$LATEST', so update-document takes effect at the very next 22:10Z fire and restoring the default version does not roll it back; and the three new cp sources are first-mint keys that the gold redeploy creates, so a fire between Leg 0 and step 1 exits at the first missing key (set -eo pipefail) BEFORE shutdown is armed and strands the runner.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M (sign the half with Leg 0 and step 1 as ONE gap between 22:10Z fires, or reorder so the shared keys exist before the document changes; and treat the rollback as republish-the-v4-bytes, not restore-default alone)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/bd-pipeline/bd-asset-dim-trigger/lambda_function.py:55-58 ssm.send_command(DocumentName=SSM_DOCUMENT, DocumentVersion='$LATEST'); rule bd-asset-dim-pipeline-trigger cron(10 22 ? * MON-FRI *) ENABLED (aws events describe-rule, read only); live Lambda code not byte-read, repo source cited.",
+      "infra/aws/ssm/opal-bd-asset-dim-download.json: 'set -eo pipefail' at the top of runCommand; each cp line ends '2>&1 | tee -a $LOG'; 'shutdown -h +2 &' comes after the dim rebuild, so an early exit leaves the instance running. The three _shared keys are head-object 404 today (R3 half, change 4); step 1 of the half creates them.",
+      "org/critical_paths/change_management/20260928T2032Z_nfra-mcpindex-bd-asset-dim-rest-schedule_deploy_completion.md leg L2 states 'Rollback = update-document-default-version 3' while the same trigger read $LATEST: that rollback form would not have moved the scheduled fire."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment 1: add the document update as its own leg BEFORE the silver builder's redeploy, with the live default version before and the rollback 'restore the prior default version'.",
+  "world_is": "Both halves of that instruction are unsafe as worded: the default version is not what the trigger runs ($LATEST is), and a document that changes before the shared keys exist fails the next fire without arming shutdown. Leg 0 in the half states the same-gap constraint and a two-part rollback (default to 4, then republish the v4 bytes as a new $LATEST); the order inside the gap stays the issuer's.",
+  "notes": "Nothing was updated or run; the act is unsigned. Cites MDPF_SECCLASS-W10-S1 and -S4."
+}
+```

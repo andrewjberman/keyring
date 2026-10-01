@@ -149,7 +149,13 @@ OVERRIDE_RE = re.compile(r"^#\s*surprise-row-override:\s*(\S.*)$", re.M)
 # DUPLICATED IN .tools/owned-paths-validate.py AS _TO_STATUS_RE -- two carriers of one pattern,
 # fixed identically in the same commit. Naming it because the next edit must move both.
 TO_STATUS_RE = re.compile(r"^\s*<status>\s*([A-Za-z_-]+)", re.I | re.M)
-TERMINAL_TO_WORDS = ("complete", "completed", "closed", "done", "superseded", "cancelled", "canceled", "withdrawn")
+# `parked` (1.0.0_SA_CTO 2026-09-30, on 3.0.0_SA_CVO's MDPF_SECCLASS rounds 4-5 review Q1): a PARKED order sits OUTSIDE
+# the current round's rectangle by the CTO's ruling (the relaunch brief: nothing waits on a dead seat; the order carries its
+# owner and the condition that un-parks it). It is therefore not an open order of the round, and it must not pin every later
+# slug's watermark. It RE-ENTERS the census the moment its issuer flips the status back (pending / staged / issued), so
+# nothing is lost: this reads a parked order as not-open, never as done.
+TERMINAL_TO_WORDS = ("complete", "completed", "closed", "done", "superseded", "cancelled", "canceled", "withdrawn",
+                     "parked")
 
 # GATE (iii), SECOND LIMB -- record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260903_045xZ_RECS_
 # APPROVED_CVO_SEND_REFUSED_L7_L9_GATE_III_INVESTIGATIONS_LIMB.md. A NEW route-carrying row under a TREE project is

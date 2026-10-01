@@ -392,6 +392,74 @@ Worker rows carry their slot's coordinate, `MDPF_TAXSMA-W<n>-S<k>`; a seat's row
     "spec_asserts": "A project's gateway release ships that project's change (TX-g-1) under that project's own gates.",
     "world_is": "A release built from CLOUD HEAD also ships NFRA_OPALAI's asker-scoped tool (dark for the concierge), NFRA_MCPINDEX's catalog entries, and NFRA_OPLGTW's OG-r-2 harness and OG-r-1 amend -- the last under Andrew's stop -- none of them graded for release by this project.",
     "notes": "Disarm, the issuer's call: cut this project's gateway release NARROW, at the deployed commit plus TX-g-1's three commits (the same shape NFRA_OPALAI's OA-t-6 was ruled to), or hold it until each other owner has released. Filed off-task by 1.0.0_SA_CTO~O (D6 program) because 2.0.0_SA_COO~T is not registered live, so a message would be a wish, not a delivery."
+  },
+  {
+    "id": "MDPF_TAXSMA-S7",
+    "project": "MDPF_TAXSMA",
+    "fabric": "laptop",
+    "surfaced_by": "4.0.0_SA_CRO",
+    "surfaced_at": "2026-09-30T22:03Z",
+    "one_line": "A terraform plan of infra/aws/terraform/opal-gateway from the shared tree's local CLOUD would DESTROY four live resources and revert one policy, because the shared tree is 864 commits behind origin/CLOUD and three other projects applied that root from commits only origin holds.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.0.0_AB_MSTR",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Plan 22:03Z from the shared tree (TX-i-3's two resources added in a new file): 'Plan: 2 to add, 1 to change, 4 to destroy' -- destroy aws_iam_role.inf_firm_reader, aws_iam_role_policy.inf_firm_reader, aws_iam_role_policy.gw_assume_inf_firm_reader, aws_iam_role_policy.gw_rivalfunds_read (each 'not in configuration'); update aws_iam_role_policy.schwab_data_read_policy (drops the two dim_transaction NotResource entries).",
+        "git fetch 23:0xZ: local-only 90, origin-only 864; the origin-only commits touching that root are a2c8413931 (NFRA_MCPMSP MS-t-2 amendment 1), d70267f372 + b9447adc2f + drain 302cdd9556 (ETFS_RIVALS RIV-w-1), 925b0357a5 (NFRA_MCPINDEX MX-s-15).",
+        "The same plan also failed on two build artifacts absent from the tree: the mcportal grant writer layer zip (resolved by downloading the deployed layer, sha256 equal to state) and its .build/staged directory (unresolved).",
+        "No origin-only commit touches the mdpf-pipeline or opal-assets roots (git log CLOUD..origin/CLOUD over the three roots lists only opal-gateway paths), and both planned clean."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TX-i-3 applies the capability secret and the Gateway role's read from the opal-gateway root once G-S records no NFRA_OPLGTW apply in flight and no diff that is not this cell's.",
+    "world_is": "The shared tree cannot produce a clean plan of that root for ANY seat: its desired state omits live grants. TX-i-3 was refused at the plan and nothing was applied; its file (taxsma_workbook.tf) is held uncommitted in the worktree wk-taxsma-cro so no other apply picks it up.",
+    "notes": "Disarm: integrate origin/CLOUD into the shared tree (the integrator's act), or plan and apply that root only from a tree at origin/CLOUD. Until then an apply of opal-gateway from the shared tree removes the Inflection firm reader and the rivalfunds read. G-S's WAF half is moot as measured: the plan carries no aws_wafv2_ip_set diff."
+  },
+  {
+    "id": "MDPF_TAXSMA-S8",
+    "project": "MDPF_TAXSMA",
+    "fabric": "laptop",
+    "surfaced_by": "4.0.0_SA_CRO",
+    "surfaced_at": "2026-09-30T21:50Z",
+    "one_line": "The Tax operational control write could never have landed: the full s3:// builder address was passed to conditional_put as a KEY in the assets bucket, conditional_put refuses a changed body at an existing key (the control is a current pointer), and the write ran even with Tax DISABLED.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "mdpf_gold_consolidator.py before 338665c1b1: conditional_put(s3, taxsma_operational_control_key(), ...) with taxsma_operational_control_key() returning 's3://opal-data-49financial/mdpf/49financial/state/taxsma_control/current.json' and conditional_put reading and writing Bucket=ASSETS_BUCKET, Key=key.",
+        "The deployed mdpf-gold-lambda bundle predates the Tax module (STATUS pin 5aKNH5WB.., 2026-08-29), so the defect never ran live.",
+        "Fixed at 338665c1b1: taxsma_put_control puts to the parsed bucket and key, isolated, only when Tax ran; test_taxsma_scoped_access.py ControlHome, 2 arms."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TX-a-2 AC5: the control is written at the one key its builder address names, and S08 (the publisher) reads it.",
+    "world_is": "TX-a-2's AC5 arm compared the key string to the builder output and passed, with no arm on which bucket received the put. The first release would have written a junk key into opal-data-assets every run and the publisher would have read SOURCE_UNAVAILABLE forever.",
+    "notes": "INERT: fixed before any release. The control also moved to the global scope (opal-data-mdpf) because the publisher's role is outside the 49financial fence and the control spans both Tax firms; contract amendment 2 at 338665c1b1."
+  },
+  {
+    "id": "MDPF_TAXSMA-S9",
+    "project": "MDPF_TAXSMA",
+    "fabric": "laptop",
+    "surfaced_by": "4.0.0_SA_CRO",
+    "surfaced_at": "2026-09-30T21:50Z",
+    "one_line": "The contract's N+1 category Gold copies (artifacts.firm_category / global_category) are no longer written: they had no reader, carried the same wrong-bucket defect as S8, and are a second home for the category-views document.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The publisher reads category-views from GOLD_BUCKET/GOLD_ROOT (opal-data-assets portal/gold/mdpf), never from taxsma_category_gold_key's addresses (opal-data-49financial, opal-data-mdpf): lambda_function.py derive_publish_set.",
+        "write_taxsma_category_gold handed the full s3:// address to conditional_put as a key in the assets bucket (same call shape as S8).",
+        "Call site removed at 338665c1b1 (the function and key builder remain); data/mdpf/tests/taxsma 216 of 216."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TX-a-2 AC6 and the contract's artifacts list: the consolidator writes a category Gold parquet per scope at its LGIC address.",
+    "world_is": "The served category-views already carry the Tax status extension from the existing canonical Gold; a second copy at a new home is a duplicate output path (CLAUDE.md NEVER) of an existing pipeline, whose LGIC conformance is its own migration project (Rule 30 non-application, R19).",
+    "notes": "For the CTO at the round analysis: either strike artifacts.firm_category and global_category from the contract, or re-point the publisher's source to them as one migration. Not written meanwhile."
   }
 ]
 ```

@@ -1321,3 +1321,35 @@ IB-pr-261 goes to worker slot 97 (S197: 1 + max(author lines 92, issued_to 96, b
 issuer's.
 
 fanout: 2 of 3 chains, cap 8 (the third chain is the issuer's own served move).
+
+## 25. ROUND 27, WORKSTREAM ~P (2026-09-30 ~19:3xZ, issuer 2.0.0_SA_COO~P, on 1.0.0_SA_CTO ROUND-26 ~P ANALYSIS @7c9ed807bb section 4)
+
+Round 26 repaired the INF chain's first break; the analysis rules the next four acts. The top cell is the API enforcement the CTO
+made a precondition for window 27 (S238). Three read-only answers decide what round 28 repairs, and one order goes to the Schwab
+ingest lane, parked while that lane is dark.
+
+**The reading behind IB-pr-271 (measured at the cut, recorded for the CTO's round-27 analysis):** seven Lambda bundles ship
+`_authz/served.py` (`lambda-source-map.json` `files`): irpt-performance-adapter, irpt-directory-search, irpt-narrative,
+irpt-ycharts-generate, irpt-export-render, irpt-holdings, irpt-status. Only irpt-performance-adapter and irpt-ycharts-generate ship
+`canonical_profile_reads.py`. The proposed patch (~Y @4a3cabe67d) imports it lazily inside the method with a catch-all that fails
+closed; `import-closure-check.py` exempts lazy imports by design. On a scratch copy the patch alone fails the deployed-layout check on
+exactly five bundles, and would have refused every service principal on every firm in directory-search (the S238 route) with no gate
+saying so. So the cell carries the module and its top-level closure (`maintained_sources.py`, `ids.py`) into every bundle that ships
+`served.py`, and the deployed-layout criterion (CTO 103370) proves the import in each bundle's own layout.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-271` | FWD-3 CONSTRAINT: `_authz/served.py` refuses a SERVICE principal's selected firm outside its `allowedFirmIds` (FIRM_BINDING), with the profile read injectable and the reader's closure in all 7 bundles; no build or apply in the cell | WORLD (source of 7 served functions; no deploy) | none | P27a |
+| `IB-pr-272` | FWD-3 (INF): three read-only answers -- the 09-24 NNA rows (ruling 1: branch A packet or branch B repair), why the mirror and silver-orion did not move `fact_positions` on today's raw (ruling 2), whether Orion positions accept an as-of date from documentation only (ruling 3) | WORLD (read-only; no write, no call) | none | P27b |
+| `IB-pr-273` | FWD-3 (49F): the S237/S239 blast-radius read -- the deployed adapter's SI and 3Y for 0093614544 and two others, its reader shape, and every served reader of `twr_daily` with a propagates flag (ruling 4) | WORLD (read-only on deployed bytes) | none | P27c |
+| `IB-pr-274` | FWD-3 (49F): the Schwab silver for 2026-09-29 lands via `/49-schwab-conv` and the cause of the missed hour is recorded (ruling 5, row S235); PARKED on `0.6.2_AE_PartnerETL~C` until that seat is LIVE | WORLD (silver data, AE lane) | none | P27d (parked) |
+| `IB-pr-275` | FWD-3 CONSTRAINT: the served move of IB-pr-271 -- build, a never-widen packet naming the 7 functions and each one's profile-table grant, both halves, targeted applies under a ledger, then ~Y's live negative control under svc-irpt-analysis (CTO 103318 item 2) | WORLD (served; the issuer's act, no worker face) | IB-pr-271 | P27a |
+
+Conditional, not cut (ruling 4): the 49F holdings-basis re-switch joins round 27 as the issuer's cell only if IB-pr-273 reads
+PROPAGATES. Conditional, not cut (ruling 1): the NNA excusal packet (branch A) or the upstream repair (branch B) follows IB-pr-272.
+Carried: S132 least privilege on the edge role; the INF adapter switch after S216 disarms and the INF producer fires on schedule.
+
+Slots 98, 99, 100 (S197: 1 + max(author lines 97, issued_to 97, branches 84) = 98). IB-pr-274 goes to the AE lane (parked); IB-pr-275
+is the issuer's.
+
+fanout: 3 of 4 chains, cap 8 (chain P27d is parked on a dark AE seat; IB-pr-275 rides chain P27a as the issuer's act).
