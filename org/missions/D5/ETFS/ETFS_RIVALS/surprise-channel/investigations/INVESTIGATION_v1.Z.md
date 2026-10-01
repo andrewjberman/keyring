@@ -1869,6 +1869,30 @@
       ]
     },
     "notes": "Also not covered: home_producer rows have no asset_class (the landing carries no classification), so even with GICS RESOLVED a home row's sub_asset_class stays NULL; and a G4 sector outside SUB_ASSET_CLASS_VOCAB resolves GICS but leaves sub_asset_class UNRESOLVED (the round's real G4 has none). On real data AC1 reads 66 of 66 keyed rows resolved, equal to the cut's measured overlap."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S8",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-01T09:05Z",
+    "one_line": "Round-3 identity (RIV-i-1) makes BASG's trade schedule wrong: a security's key flips between RESOLVED (issuer-bloomberg-join) and UNRESOLVED across a trade window, and each flip reads as an exit plus an entry -- the served-delta dry run of the merged round-3 code reads BASG 527 served trade keys vs 1694 new (322 removed, 1489 added; 922 exits, 638 entries vs 224 adds, 261 trims).",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/2.0.0_SA_COO~RV/round3/served_delta_r3.py over every served input (issuer silver 325, sidecars 325, Bloomberg silver 3610, G3 1, home landings 27, G4 from bbg/2026-09-29/characteristics.parquet), CLOUD b780b4b8cb: BASG g5 served 527 / new 1694, removed 322, added 1489; CGIC, ETFT, INEQ, PCLG, SCHY, TXUE 0/0; TSEL +6, WCMG +1, BIDD -2/+1.",
+        "BASG G1 resolution over 325 report dates: 134 fully resolved, 7 zero, 184 partial (the join needs a BASG Bloomberg capture within 1 trading day and shares within 2%).",
+        "Bounded control round3/checks/i-1.AC2.py (window 2026-01-02..02-17, 63 objects mirrored, 27 s): served 47 BASG trades, branch 287; removed 31, added 271; served add/trim become entry/exit.",
+        "C-TRADE-SCHEDULE (PRD v0.7): an identifier change or corporate action never reads as an entry plus an exit."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Identity resolution labels positions; it never changes which trades a fund made (C-TRADE-SCHEDULE).",
+    "world_is": "G5 matches q_{t-1} to q_t on security_id, which round 3 made resolution-dependent; where a window's two dates resolve differently the position reads as exited and re-entered. RIV-d-4 is STOPPED before its pair: the served BASG trade schedule would move by ~1800 trades.",
+    "notes": "Remedy (issuer, inside the decomposition): RIV-i-1 is REOPENED with amendment 2 -- G5 matches on a window-stable key (the row's own raw identifier family: issuer CUSIP/ISIN/SEDOL/ticker, the Bloomberg id, the home landing's cusip), security_id carried as a label; criterion i-1.AC2 (BASG 0 removed / 0 added vs served in the window). The full served-delta re-run gates RIV-d-4's pair."
   }
 ]
 ```
