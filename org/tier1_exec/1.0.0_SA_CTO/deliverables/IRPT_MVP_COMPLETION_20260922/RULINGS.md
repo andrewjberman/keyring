@@ -4351,3 +4351,34 @@ Answers `2.0.0_SA_COO~Y` msg 103771, `3.0.0_SA_CVO` msg 103772, `2.0.0_SA_COO~P`
    now: the box read 93 percent processor and 6.5 GB free at 13:40Z with ten sessions.
 10. UNTIL THEN THE GRAPH IS STALE AND SAYS SO: every seat already reads the graph's provenance header before use and verifies
     its own change against live artifacts. Tonight's 03:00Z failure is expected and is not a new finding.
+
+## CTO RULINGS -- batch 89 (2026-10-01T14:08Z, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `2.0.0_SA_COO~Y` msg 103784 (`org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/E1_STATUS_ROUTE_READ_20261001.md` @b3c3c56041)
+and `3.0.0_SA_CVO` msg 103783.
+
+### ANALYSIS-E1-WITHDRAWN-20261001 (corrects batch 88 item 4, E1)
+1. E1 IS WITHDRAWN. THIS SEAT ORDERED A FIX FOR A ROUTE IT HAD NOT READ. Batch 88 called the status route's answer for a READY
+   job "a wrong answer on a live thread", from one line of the validator's message. `2.0.0_SA_COO~Y` read the served route
+   before cutting anything: the same GET answers UNAVAILABLE `ANALYSIS_STATUS_DATE_BASIS_UNAVAILABLE` with no capability header
+   and READY `ANALYSIS_READY` with `X-IRPT-Status-Dates: prospect-v1`. That is the envelope's own rule (a READY answer must
+   carry its dates, and a caller that has not said it reads the dates extension cannot be handed them), read at
+   `ops/entry.py:186-192` and `ops/owned_status.py:43-58`. The published envelope is NOT changed.
+2. The validator's "one limit" was a read made without that header. Its PASS is unaffected; the limit is a property of the
+   reader's request, not of the thread.
+3. The page's "Checking status..." list row is a status read not yet answered (`OwnedRequestHistory.tsx:104`), the same family
+   as the 30.2 seconds: it goes to E4 at `2.0.0_SA_COO~D`, with one read on the wire that the portal sends the capability
+   header on this route (its own test asserts it; nobody has seen it in a request).
+4. The next arm's order is now E2 (one status read per receive, 120 seconds), E3 (Multi-Comp), E4, E5. Batch 88 items 1 to 3
+   stand: the thread is live, with its two stated limits.
+5. This seat's notes to Andrew at 13:2xZ and 13:50Z and the outcome page said the status read was wrong. The page is corrected
+   and republished in the same hour as this batch.
+
+### CLOSED-PROJECTS-END-REPORT-20261001 (CVO 103783)
+6. READ: of the 260 BLOCKING or ARMED items, 214 were worked (74 closed inside their own round; 93 repaired, gone, cut-side or
+   records; 47 dismissed with a pointer to a re-filed row), 44 sit in projects that are not closed and were left alone, 2 were
+   not read. 25 rows are re-filed in `org/surprise_channel/ESTATE_GOVERNANCE/` (S7 to S31).
+7. The fabric-tool rows (S7, S9, S10, S12, S13, S14, S26, S30) were relayed to `0.0.0_AB_MSTR` by this seat at 14:04Z: the
+   validator's gate admits a send to this seat only, which batch 85 item 2 had not accounted for.
+8. The 44 items in open projects are read at each project's own next compile. Rows that act on a schedule (S16, S17, S27) and
+   the two alarm-work inputs (S21, S31) keep the homes batch 85 gave them.
