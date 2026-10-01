@@ -79,3 +79,7 @@ question that item 3 answers. The worktree is a FULL checkout (round-56 ruling 3
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-01 ~07:4xZ):** worker ~200 `678e9ac1c5`, drained `cb5f25b9de`. Re-graded on the full tree: AC1 375 passed exit=0; AC2 YES (0 bad of 1,115; C3 ASML absent_reason plain). BA finding: the sentence is page text (`reasonWords.ts:33` rewrites the served class-A reason to "research pack"); row Z-W200-S1 routed to COO~D (CONTRACT s.0). Left for a later cell: coverage `most_discussed_basis` reads "ABSENT -- P-1 ..." (its key does not end in `reason`). Served at ag-1.
+
+<status>complete</status>

@@ -120,3 +120,4 @@ sheet.cjs 2 of 6; bound 4 of 4. The forecast parameter is placed here (not in ad
 <round>28</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
+<status>complete</status>
