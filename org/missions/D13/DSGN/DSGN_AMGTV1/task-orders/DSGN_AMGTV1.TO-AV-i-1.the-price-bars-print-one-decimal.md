@@ -77,7 +77,7 @@ Report once: what changed and where, the output line of every criterion, the por
 
 **ISSUER NOTES:** DIRECT ACT (one file, LOCAL). CTO ruling 27760 / CONTRACT amendment 3. Base precision 2 of 3 on DEV c6aacc68.
 
-<status>pending</status>
+<status>complete</status>
 <round>18</round>
 <slot>~64</slot>
 <fabric>site-z</fabric>
