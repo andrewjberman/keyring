@@ -68,31 +68,25 @@ on 3.0.0_SA_CVO's review `org/tier1_exec/3.0.0_SA_CVO/deliverables/MDPF_SECCLASS
    the table's gain. A stop between PHASE_B3b and PHASE_B4 rolls this back first; the first row E_18 writes is
    compared with the fallback's class. Black Diamond only (Cottonwood's dispatcher and an Inflection caller: row S2).
 5. **Ruling 3: DONE on this branch @1617619a6a.** The census prints, and writes only with `--write <path>`.
-6. **A canonical row for `CEMIX`: code committed @32acc85d2e (grant: CTO rulings batch 68); the half is NEXT; the
-   table is not written.** The seed source asserts equity / EM / active / fund; `seed-etf-classifications.py
-   --dry-run` reads 1 row to write of 139, 0 conflicts. Served effect measured on the local Cottonwood build: 97
-   position nodes carry the symbol -- 93 move fixed_income / International to equity / EM (67 assigned
-   2,039,120.10 USD, 26 observed 836,730.89 USD), 4 gain the sub class (200,276.77 USD); 0 nodes at 49 Financial
-   and Inflection. The Investor Reporting comparison list gains one named entry. The two Lambda copies are not
-   edited. Rollback is a corrected seed row; a delete needs Andrew's word.
+6. **A canonical row for `CEMIX`: WRITTEN 09:17:42Z; the served read is at 14:15Z.** Both halves signed @37ac46eed2.
+   Ledger `secclass-cemix-canonical-row-m-20261001`: W closed (1 row written, table 2,657 to 2,658, second dry run
+   0 of 139) and R closed (a local Cottonwood build after the row: 97 of 97 CEMIX nodes equity / EM, 0 of 1,508
+   other symbol groups changed); S open -- at the 14:15Z `irpt-holdings-snapshot` publication one Cottonwood
+   selection reads CEMIX under Equity and the class totals tie. The rule behind the wrong class is row S7.
 7. **Ruling 7: DONE.** The six stale rows are re-measured in
    `MDPF_SECCLASS_M/RULING7_STALE_ROWS_REMEASURE_20261001.md`: four recommended closed (S1, W2-S3, W5-S2, and W3-S3
    once leg A1 passes), two stay open with an owner and a condition (S2 narrowed to this seat's trigger cell plus an
    Inflection caller; W6-S2 on the parked AE order).
-8. **Ruling 6, row W11-S1: BLOCKED on a file grant (asked 08:56Z).** The exact contract-version pin replaces the
-   version floor and the superset check in `_shared/tests/test_classified_by_v2.py`, outside this seat's grant.
-9. **The MODEL_ROWS half: addendum 2 SIGNED by this seat; the CTO half is OWED; nothing written.** Ruled in three
-   sets (CTO batch 75): 14 rows are written -- nine whose class stays (set a) and five whose class moves with a
-   named peer row (set b: USRT, CSRSX, VCMDX, PFUNX, CAIBX) -- and twelve are withheld (the eleven low-confidence
-   ones and O). The writer is `yang_pipeline/write-model-rows.py` @2c2358e104 (dry run by default, conditional put
-   only, no overwrite, no delete; 11 tests) and the shared put now carries the two model fields (batch 78; a
-   scheduled item is identical before and after, 4 tests). Live dry run 10:04Z: `named=14 plan=14 refused=0`.
-   Served moves: set (b) moves a class on 325,021.86 USD at 49 Financial and 706,570.47 USD at Inflection; set (a)
-   changes the SUB class to the canonical word on 5,801,070.93 USD; Black Diamond gold gains a class on 7 held
-   tickers (976,963.75 USD). Next: the CTO's half, then ledger `secclass-model-rows-m-20261001`, a census
-   immediately before, the write, acceptance at the next Holdings publication and the next gold fire.
-   The twelve withheld tickers each need a seed row under its own half or stay on the fallback (O and PCOFX are
-   served a wrong class today, row S7).
+8. **Ruling 6, row W11-S1: DONE @d67a10fc01.** `_shared/tests/test_classified_by_v2.py` pins contract 0.3.0 and the
+   five `classified_by` values exactly (17 passed; on a 0.4.0 contract with a sixth value the two pinned tests fail).
+9. **MODEL_ROWS: 13 rows WRITTEN 11:05Z; two served reads open.** Both halves signed (CTO for 13 rows, CAIBX
+   excluded, @000b55fc4b). Ledger `secclass-model-rows-m-20261001`: P closed (census `MODEL-READER-TOLERATED`,
+   readers=36; dry run 13 of 13) and W closed (13 of 13 written; table 2,671; each row carries both model fields;
+   second dry run `plan=0 already_present=13`). Open: H, the next Holdings publication serves the moves of addendum
+   2 (set b moves a class on 706,570.47 USD at Inflection; set a moves the sub class on 5,801,070.93 USD), and G,
+   the next Black Diamond gold fire reads six held tickers (57 lots, 518,062.80 USD) with a class. The thirteen
+   withheld tickers (eleven low-confidence, O, CAIBX) each need a seed row under its own half or stay on the
+   fallback; O and PCOFX are served a wrong class today (row S7). REET against VNQ is row S8.
 
 10. **Queued by 1.0.0_SA_CTO 103641 (rulings batch 72 items 1-7 @65417358df): MDPF_HEALGAP cell 1, the gold catch-up
     step.** Not this project; it follows the round-6 items above. A served move with both halves, under its own FAST
