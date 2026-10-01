@@ -156,7 +156,7 @@ interface). **Never in phase A:** a collector run, a publisher request, an S3 wr
 
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>open</status>
+<status>complete</status>
 <round>32</round>
 <slot>~92</slot>
 <fabric>site-z</fabric>
