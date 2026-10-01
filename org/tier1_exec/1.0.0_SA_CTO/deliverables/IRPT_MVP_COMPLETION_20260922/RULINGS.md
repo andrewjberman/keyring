@@ -3342,3 +3342,53 @@ P states the exact UI act on DEV f1d02f30 that yields a server-accepted single-a
 case it is a product item (DSGN_IRPTV1 round 3 or a portal candidate) and the first Performance use waits on it; the plan is NOT widened to
 the relationship (a second word and a different calculation). Andrew is told: the click did not spend the use; do not click Performance again
 until P answers; the Holdings HAR stands. The CRO's cookie read stays owed before any next click.
+
+## 2026-10-01 05:09 UTC - Claude CTO batch 61: the Analysis surface's way forward, ruled on the trace of 4.0.0_SA_CRO~X; the comparison catalogue lists named rows only
+
+Authority: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261001_042xZ_SELF_DRIVE_60M_LAPTOP_FABRIC_FINAL_SAY_CLOSER_DRIVE_IRPT_FIRST.md`
+@c48af273cc (this seat is the final say for the Laptop Fabric; FAST mode; IRPT first). Instruments: the trace
+`org/tier1_exec/4.0.0_SA_CRO~X/deliverables/ANALYSIS_END_TO_END_GAP_BRIEF_20261001.md` @a465020d94 (12 hops from deployed bytes: WORKS 2,
+INCOMPLETE 5, MISSING 5; four packages downloaded, sha256 equal to the live CodeSha256 4 of 4; no invoke, no vendor call); row
+IRPT_BCKEND-S244 @fac7ac93d4; `2.0.0_SA_COO~Y` msg 103465; the IB-pr-275 packet, CTO half @d9972c6eb4.
+
+### IRPT-ANALYSIS-THREAD-20261001 (trace hops 3, 4, 6, 7, 8, 9, 10)
+1. THE LIVE THREAD IS CUT ON THE UPLOAD LANE: one Cottonwood CSV upload, an Overview with no comparison, no export, on the deployed
+   stack, ending in a READY report read on the page. It is the only lane that has ever produced a request. FWD-4's line "the request
+   arrives by EMAIL" is read as naming FWD-9's intake, not as a precondition of FWD-4's EXERCISED; the email lane (hops 1, 2) is
+   enrichment after the thread. The PRD addendum that says so is this seat's, at the next tick.
+2. ONE BUILD WINDOW comes first, because the thread crosses three units that are behind CLOUD (generate 15 modules, status 7, the
+   resident 17). Order inside it: (a) IB-pr-275 as signed (grants, then three functions' `served.py`); (b) `irpt-status` and
+   `irpt-ycharts-generate` at CLOUD HEAD as WHOLE bundles, `2.0.0_SA_COO~Y`'s packet with both halves, pending members shipped, not
+   pinned; (c) the resident at CLOUD HEAD, ~Y's, under a ledger (it picks up IB-yr-293, 62535e0fdc and IB-yr-291); (d)
+   `irpt-directory-search` and `irpt-holdings` at CLOUD HEAD as whole bundles, `2.0.0_SA_COO~P`'s packet with both halves.
+3. A WHOLE-BUNDLE RULE for (b) and (d): the three candidates withdrawn from IB-pr-275 failed because one module moved against
+   older siblings. A function whose bundled `enforce.py` or `errors.py` is an older vintage than the `served.py` it would receive
+   moves as a whole bundle at one commit, with the member census against the live zip and one invoke that reaches the changed path.
+4. ROW S244 IS ACCEPTED: on deployed bytes the service principal's firm limit is enforced NOWHERE (the running resident's
+   `current_authority.py` equals d3f612d94d and has 0 mentions of `allowedFirmIds`). Sweep-5's row S238 text "enforced at the job"
+   was true of CLOUD and false of the resident. S238 disarms on BOTH controls after the window: the directory negative control
+   refused at the API, and one foreign-firm job refused in the resident's own journal.
+5. THE HOP-7 DIAGNOSTIC IS ONE SOLO JOB, and it is not W27. After (a), (b) and (c) are in and their controls read by this seat,
+   `2.0.0_SA_COO~Y` runs ONE Overview job for Cottonwood on a cold resident, ledgered, under Andrew's standing word at that seat for
+   Analysis attempts, and reads the verdict journal. It either produces a report or names the session verdict. This amends ruling
+   103150's first condition (the cause is named BY this job, since the journal line of IB-yr-231 now names each eviction) and leaves
+   103318 standing for W27: the multi-case walk window opens only after S238 disarms. The job's path does not cross the directory
+   search or holdings, which is why (d) does not gate it.
+6. HOP 10: after (b), `2.0.0_SA_COO~D` walks one READY request on the local DEV build against the real backend, sections on screen;
+   that screenshot is the thread's last link. A PROD promotion is not part of the thread.
+7. `2.0.0_SA_COO~Y` reconciles two reads in STATUS~Y: row S229 says the resident is stopped, the trace reads the unit active since
+   2026-09-30T05:13:31Z with 0 restarts; and it opens the second dead-letter message (2 read against a baseline of 1).
+8. After the thread, in the trace's order: the remaining variants and firms (hop 8) with the catalogue (hop 5) first; the resolve
+   concurrency fix (hop 3); the vendor PDF link (hop 11); the Analysis export (hop 12); then the email lane.
+
+### IRPT-CATALOGUE-LIST-NAMED-ONLY-20261001 (row W88-S2; ~Y 103465)
+The comparison catalogue LIST serves the 4 model entries and the named ticker rows only (317 of 2,309 ticker rows at ~Y's read; 321
+entries). The 1,992 unnamed rows are not listed. `entry_for_ticker` keeps answering any typed ticker verbatim, as 103035 ruled. Reason:
+a list that is 86 percent bare tickers is not a catalogue a person can choose from, and the design was measured against 285 rows. The
+wiring (part 2 of ~Y's patch) proceeds on this; the grant (part 1) did not wait.
+
+### PARKED, with owner and the condition that un-parks it
+- The mail credential for the intake poller (`irpt/graph/app-registration` does not exist): owner Andrew or IT; un-parks when the
+  credential exists, or when he says the intake reads mail through the gateway's Microsoft 365 access instead (the same shape as row
+  S233; the gateway is site Z's).
+- The two-session question on the YCharts account (row S233): owner Andrew (a vendor probe needs his per-use word); not on the thread.

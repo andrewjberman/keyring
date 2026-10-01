@@ -1,0 +1,414 @@
+{
+ "author": "4.0.0_SA_CRO~X",
+ "asked_by": "1.0.0_SA_CTO msg 103471",
+ "surface": "Inflection performance thread (FWD-3, INF arm)",
+ "measured_window_utc": "2026-10-01T05:12Z to 05:30Z",
+ "claim": "measured unless a field says otherwise",
+ "pins": {
+  "workspace_CLOUD_HEAD_at_package_census": "641e5a8259"
+ },
+ "raw_opal-data-inf": {
+  "positions_jsonl_gz_tail": [
+   {
+    "key": "bronze/positions/2026-09-25.jsonl.gz",
+    "last_modified": "2026-09-25T11:50:54Z",
+    "size": 2303178
+   },
+   {
+    "key": "bronze/positions/2026-09-26.jsonl.gz",
+    "last_modified": "2026-09-26T11:51:44Z",
+    "size": 2306233
+   },
+   {
+    "key": "bronze/positions/2026-09-27.jsonl.gz",
+    "last_modified": "2026-09-27T11:51:13Z",
+    "size": 2310960
+   },
+   {
+    "key": "bronze/positions/2026-09-30.jsonl.gz",
+    "last_modified": "2026-09-30T15:18:55Z",
+    "size": 2309545
+   }
+  ],
+  "positions_parquet_tail": [
+   {
+    "key": "bronze/positions/2026-09-27.parquet",
+    "last_modified": "2026-09-27T11:24:53Z",
+    "size": 1281876
+   },
+   {
+    "key": "bronze/positions/2026-09-28.parquet",
+    "last_modified": "2026-09-28T11:25:15Z",
+    "size": 1281876
+   },
+   {
+    "key": "bronze/positions/2026-09-29.parquet",
+    "last_modified": "2026-09-29T11:25:59Z",
+    "size": 1282552
+   },
+   {
+    "key": "bronze/positions/2026-09-30.parquet",
+    "last_modified": "2026-09-30T11:25:51Z",
+    "size": 1281822
+   }
+  ],
+  "positions_counts": {
+   "jsonl_gz": 2344,
+   "parquet": 2351,
+   "jsonl_gz_written_on_own_date": 80,
+   "first_written_on_own_date": "2026-07-02"
+  },
+  "transactions_tail": [
+   {
+    "key": "bronze/transactions/2026-09-26.jsonl.gz",
+    "last_modified": "2026-09-26T11:41:28Z",
+    "size": 41462372
+   },
+   {
+    "key": "bronze/transactions/2026-09-27.jsonl.gz",
+    "last_modified": "2026-09-27T11:42:47Z",
+    "size": 41300525
+   },
+   {
+    "key": "bronze/transactions/2026-09-30.jsonl.gz",
+    "last_modified": "2026-09-30T15:03:57Z",
+    "size": 41420455
+   }
+  ],
+  "performance_tail": [
+   {
+    "key": "bronze/performance/2026-09-26.jsonl.gz",
+    "last_modified": "2026-09-26T11:48:58Z",
+    "size": 4429656
+   },
+   {
+    "key": "bronze/performance/2026-09-27.jsonl.gz",
+    "last_modified": "2026-09-27T11:48:52Z",
+    "size": 4430353
+   }
+  ]
+ },
+ "chain_status_json": {
+  "run_id": "chain_full_20260930_145412",
+  "status": "failed",
+  "started_at": "2026-09-30T14:54:12Z",
+  "updated_at": "2026-09-30T16:06:30Z",
+  "errors": [
+   "INF_API_PULL_PERF pull tolerated (exit=124)",
+   "INF_C_01 failed with exit=1",
+   "chain exit code 1"
+  ]
+ },
+ "mirror_opal-data-assets": {
+  "bronze_positions_tail": [
+   {
+    "key": "orion/inflection/bronze/positions/2026-09-25.jsonl.gz",
+    "last_modified": "2026-09-25T13:05:23Z",
+    "size": 2303178
+   },
+   {
+    "key": "orion/inflection/bronze/positions/2026-09-26.jsonl.gz",
+    "last_modified": "2026-09-26T13:05:23Z",
+    "size": 2306233
+   },
+   {
+    "key": "orion/inflection/bronze/positions/2026-09-27.jsonl.gz",
+    "last_modified": "2026-09-27T13:05:23Z",
+    "size": 2310960
+   }
+  ],
+  "conversions_september_tail": [
+   {
+    "key": "orion/inflection/meta/conversions/20260928T160043Z-cb627fe5.json",
+    "last_modified": "2026-09-28T16:00:47Z",
+    "size": 956
+   },
+   {
+    "key": "orion/inflection/meta/conversions/20260929T160043Z-6d4e0012.json",
+    "last_modified": "2026-09-29T16:00:47Z",
+    "size": 956
+   },
+   {
+    "key": "orion/inflection/meta/conversions/20260930T130528Z-f6adc5e8.json",
+    "last_modified": "2026-09-30T13:05:34Z",
+    "size": 872
+   },
+   {
+    "key": "orion/inflection/meta/conversions/20260930T160043Z-bcc6c8dc.json",
+    "last_modified": "2026-09-30T16:00:47Z",
+    "size": 956
+   }
+  ],
+  "conversions_october_objects": 0
+ },
+ "silver_fact_positions": {
+  "partitions": 2343,
+  "first": "2020-04-24",
+  "last": "2026-09-27",
+  "written_first": "2026-07-14T18:02:19Z",
+  "written_last": "2026-09-27T13:05:36Z"
+ },
+ "inf_holdings_gold_daily": {
+  "partitions": 1609,
+  "first": "2020-04-27",
+  "last": "2026-09-25",
+  "written_first": "2026-09-29T09:05:59Z",
+  "written_last": "2026-09-29T09:24:01Z"
+ },
+ "inf_holdings_gold_manifest": {
+  "partitions": 1609,
+  "first": "2020-04-27",
+  "last": "2026-09-25",
+  "written_first": "2026-09-29T09:06:00Z",
+  "written_last": "2026-09-29T09:24:02Z"
+ },
+ "trading_days_tail": {
+  "2026-09-25": "positions present, gold present",
+  "2026-09-28": "positions ABSENT, gold ABSENT",
+  "2026-09-29": "positions ABSENT, gold ABSENT",
+  "2026-09-30": "positions ABSENT, gold ABSENT",
+  "2026-10-01": "positions ABSENT, gold ABSENT (the day's pull is scheduled 11:15Z)"
+ },
+ "schedules": {
+  "opal-inf-bronze-runner-cron": "ENABLED cron(15 11 * * ? *)",
+  "inf-api-positions-daily": "ENABLED cron(22 11 * * ? *) (writes the coerced .parquet)",
+  "opal-assets-ingest-mirror-inf-daily": "ENABLED cron(5 13 * * ? *)",
+  "opal-assets-silver-orion-sweep-daily": "ENABLED cron(0 16 * * ? *)",
+  "inf-gold-full-on-bronze-complete": "DISABLED",
+  "inf-gold-incremental-daily": "DISABLED",
+  "irpt-holdings-performance-daily": "ENABLED cron(30 7 ? * MON-FRI *) America/New_York, input source schwab_08335338 only"
+ },
+ "functions_live": {
+  "irpt-performance-adapter": {
+   "CodeSha256": "+h/AH/RY7PK+MLuXyflt+YYzWg+jXHSXTOUBwr0EHbo=",
+   "LastModified": "2026-09-29T16:40:25.000+0000",
+   "Handler": "runtime.lambda_handler",
+   "downloaded_zip_equals_live": true
+  },
+  "irpt-holdings-performance-lambda": {
+   "CodeSha256": "gLRGHIyi6u6NEibnWwOlf80hq1tH8GlXVWRhmf81xwE=",
+   "LastModified": "2026-09-29T14:42:51.000+0000",
+   "Handler": "handler.lambda_handler",
+   "downloaded_zip_equals_live": true
+  },
+  "opal-assets-ingest-mirror": {
+   "CodeSha256": "XYgkNk8qRmT2WAR5G1RJDe+smfD9jCXQmoIFVxSeT3Y=",
+   "LastModified": "2026-08-11T02:28:57.000+0000",
+   "Handler": "lambda_function.lambda_handler",
+   "downloaded_zip_equals_live": true
+  },
+  "opal-assets-silver-orion": {
+   "CodeSha256": "dO6YMv6Gi477d6/g4Jbx/WLPro60rXwtFm7hA97ne0Y=",
+   "LastModified": "2026-09-27T10:35:46.000+0000",
+   "Handler": "lambda_function.lambda_handler",
+   "downloaded_zip_equals_live": true
+  },
+  "irpt-export-render": {
+   "CodeSha256": "BORQ2shbblG4OIG387kkAKTxUUtbPhw6LoLVx0mqGM4=",
+   "LastModified": "2026-09-28T12:51:42.000+0000",
+   "Handler": "entry.lambda_handler",
+   "downloaded_zip_equals_live": true
+  }
+ },
+ "package_census": {
+  "irpt-performance-adapter": {
+   "members": 70,
+   "py_behind_head": [
+    {
+     "member": "canonical_profile_reads.py",
+     "source": "infra/aws/lambda/investor-reporting/_scope/canonical_profile_reads.py",
+     "served_equals": "185dfb3e7f",
+     "not_served": [
+      "2704705672"
+     ]
+    },
+    {
+     "member": "holdings_gold.py",
+     "source": "infra/aws/lambda/investor-reporting/performance/holdings_gold.py",
+     "served_equals": "42e8fc647d",
+     "not_served": [
+      "ee3ff32e71"
+     ]
+    },
+    {
+     "member": "installed.py",
+     "source": "infra/aws/lambda/investor-reporting/performance/installed.py",
+     "served_equals": "8fe8108d95",
+     "not_served": [
+      "b917320dca"
+     ]
+    },
+    {
+     "member": "loaders.py",
+     "source": "infra/aws/lambda/investor-reporting/_authz/loaders.py",
+     "served_equals": "7925afb870",
+     "not_served": [
+      "8e9ed1b539",
+      "f13d9e9222",
+      "73896b6c42"
+     ]
+    },
+    {
+     "member": "maintained_sources.py",
+     "source": "infra/aws/lambda/investor-reporting/_scope/maintained_sources.py",
+     "served_equals": "19b38e2f22",
+     "not_served": [
+      "15b9f85eb3",
+      "65957b8afc"
+     ]
+    },
+    {
+     "member": "request_composition.py",
+     "source": "infra/aws/lambda/investor-reporting/reports/request_composition.py",
+     "served_equals": "37526d36ae",
+     "not_served": [
+      "f8c72944f3"
+     ]
+    },
+    {
+     "member": "retained.py",
+     "source": "infra/aws/lambda/investor-reporting/performance/retained.py",
+     "served_equals": "dd3be9a28a",
+     "not_served": [
+      "ee3ff32e71"
+     ]
+    },
+    {
+     "member": "routetable.py",
+     "source": "infra/aws/lambda/investor-reporting/_authz/routetable.py",
+     "served_equals": "1fcefdad74",
+     "not_served": [
+      "dd2ae95233"
+     ]
+    },
+    {
+     "member": "served.py",
+     "source": "infra/aws/lambda/investor-reporting/_authz/served.py",
+     "served_equals": "83673d731c",
+     "not_served": [
+      "f6c6b56f40",
+      "c716489be8"
+     ]
+    }
+   ],
+   "inflection_composition_on_deployed_bytes": "orion_selected + orion_live (one Reporting/Scope POST on the estate's Orion session, per-use token); holdings gold is composed for 49financial only (installed.py:58-77)",
+   "uploaded_candidate": {
+    "artifact_sha256_prefix": "XslOsVc9",
+    "s3_version_prefix": "iDmIiCgn",
+    "members_differing_from_live": [
+     "served.py"
+    ],
+    "moves_inflection_source": false
+   }
+  },
+  "irpt-holdings-performance-lambda": {
+   "members": 14,
+   "producer_and_sources_json_equal_head": true,
+   "sources": [
+    "schwab_08335338",
+    "orion",
+    "blackdiamond_z09"
+   ]
+  },
+  "opal-assets-silver-orion": {
+   "py_members": 7,
+   "identical_to_head": 7
+  },
+  "opal-assets-ingest-mirror": {
+   "lambda_function_py_equals_commit": "97c22dc234",
+   "newer_not_served": [
+    "97380d4869"
+   ]
+  }
+ },
+ "partition_date_basis_test": {
+  "method": "per (accountId, productId) with currentPrice > 0, count prices unchanged between the Friday and the Saturday partition; a partition holding its own close gives 100 percent",
+  "pairs": [
+   {
+    "fri": "2024-04-12",
+    "sat": "2024-04-13",
+    "unchanged": 6798,
+    "of": 6798,
+    "basis": "own close"
+   },
+   {
+    "fri": "2025-10-03",
+    "sat": "2025-10-04",
+    "unchanged": 8328,
+    "of": 8328,
+    "basis": "own close"
+   },
+   {
+    "fri": "2026-02-06",
+    "sat": "2026-02-07",
+    "unchanged": 8939,
+    "of": 8939,
+    "basis": "own close"
+   },
+   {
+    "fri": "2026-04-17",
+    "sat": "2026-04-18",
+    "unchanged": 9671,
+    "of": 9671,
+    "basis": "own close"
+   },
+   {
+    "fri": "2026-04-24",
+    "sat": "2026-04-25",
+    "unchanged": 9351,
+    "of": 9351,
+    "basis": "own close"
+   },
+   {
+    "fri": "2026-05-01",
+    "sat": "2026-05-02",
+    "unchanged": 9373,
+    "of": 9373,
+    "basis": "own close"
+   },
+   {
+    "fri": "2026-05-08",
+    "sat": "2026-05-09",
+    "unchanged": 1243,
+    "of": 9386,
+    "basis": "prior close"
+   },
+   {
+    "fri": "2026-06-05",
+    "sat": "2026-06-06",
+    "unchanged": 856,
+    "of": 11310,
+    "basis": "prior close"
+   },
+   {
+    "fri": "2026-08-07",
+    "sat": "2026-08-08",
+    "unchanged": 864,
+    "of": 11881,
+    "basis": "prior close"
+   },
+   {
+    "fri": "2026-09-25",
+    "sat": "2026-09-26",
+    "unchanged": 876,
+    "of": 12434,
+    "basis": "prior close"
+   }
+  ],
+  "saturday_to_sunday": "100 percent unchanged in all 4 weekends read (2024-04-13, 2026-06-06, 2026-08-08, 2026-09-26)",
+  "firm_totals_2026-09": {
+   "2026-09-25 Fri": 207404700.17,
+   "2026-09-26 Sat": 208110999.41,
+   "2026-09-27 Sun": 208110999.41
+  },
+  "seam": "between 2026-05-02 and 2026-05-08; not pinned to a day",
+  "local_copies": "deleted after each read; firm-level aggregates only"
+ },
+ "not_done": [
+  "no vendor call",
+  "no Lambda invoke",
+  "no signed-in portal read",
+  "no write to any AWS resource",
+  "no account-level value kept"
+ ]
+}

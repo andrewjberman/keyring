@@ -1,0 +1,911 @@
+{
+ "author": "4.0.0_SA_CRO~X",
+ "asked_by": "1.0.0_SA_CTO msg 103444",
+ "surface": "Investor Reporting Analysis (FWD-4 with FWD-9 intake)",
+ "measured_window_utc": "2026-10-01T04:31Z to 04:55Z",
+ "claim": "measured unless a field says otherwise",
+ "pins": {
+  "workspace_CLOUD_HEAD_at_package_census": "b80543a03c",
+  "portal_origin_DEV": "b336b141b4",
+  "portal_origin_PROD": "ba8e971f01"
+ },
+ "lambda_live": [
+  {
+   "function": "irpt-directory-refresh",
+   "CodeSha256": "DXuzx9jpOPKOq+CjWwL36SumE5tRBZA/kfi3y5jKBgk=",
+   "LastModified": "2026-09-24T20:59:50.000+0000",
+   "Handler": "refresh.lambda_handler"
+  },
+  {
+   "function": "irpt-directory-search",
+   "CodeSha256": "s0riHZ9hzTIypb/Ax+qEAtTstxH6xHE+iq1gEQXSKE4=",
+   "LastModified": "2026-09-29T14:58:27.000+0000",
+   "Handler": "entry.lambda_handler"
+  },
+  {
+   "function": "irpt-export-render",
+   "CodeSha256": "BORQ2shbblG4OIG387kkAKTxUUtbPhw6LoLVx0mqGM4=",
+   "LastModified": "2026-09-28T12:51:42.000+0000",
+   "Handler": "entry.lambda_handler"
+  },
+  {
+   "function": "irpt-holdings",
+   "CodeSha256": "U4/P5Bh3sfthi2QvZnYpqf4DbK4ffJskdhWgqgcMV8s=",
+   "LastModified": "2026-09-29T12:06:54.000+0000",
+   "Handler": "entry.lambda_handler"
+  },
+  {
+   "function": "irpt-holdings-performance-lambda",
+   "CodeSha256": "gLRGHIyi6u6NEibnWwOlf80hq1tH8GlXVWRhmf81xwE=",
+   "LastModified": "2026-09-29T14:42:51.000+0000",
+   "Handler": "handler.lambda_handler"
+  },
+  {
+   "function": "irpt-holdings-refresh-lambda",
+   "CodeSha256": "SGwrvwLH8fhriLW03s/oXMPE1Whjhix8pwKJYHhWKwI=",
+   "LastModified": "2026-09-26T19:13:41.000+0000",
+   "Handler": "refresh_dispatch.lambda_handler"
+  },
+  {
+   "function": "irpt-intake-poller",
+   "CodeSha256": "YpE2MyUwdGzMfLaUGXi8cClxoVHFFmOz5LT1BYmoTa8=",
+   "LastModified": "2026-09-11T12:55:52.000+0000",
+   "Handler": "poller.lambda_handler"
+  },
+  {
+   "function": "irpt-narrative",
+   "CodeSha256": "es/S9azussVLY2DfTj6hRjV1pqhZ8EaVCnaVcELqhPc=",
+   "LastModified": "2026-09-21T15:05:28.000+0000",
+   "Handler": "entry.lambda_handler"
+  },
+  {
+   "function": "irpt-performance-adapter",
+   "CodeSha256": "+h/AH/RY7PK+MLuXyflt+YYzWg+jXHSXTOUBwr0EHbo=",
+   "LastModified": "2026-09-29T16:40:25.000+0000",
+   "Handler": "runtime.lambda_handler"
+  },
+  {
+   "function": "irpt-status",
+   "CodeSha256": "ZYr+IDMpN0vtwnpxz+kOXKDMcjNpLrbbHdRm4TZerkY=",
+   "LastModified": "2026-09-28T14:04:55.000+0000",
+   "Handler": "status_installed.lambda_handler"
+  },
+  {
+   "function": "irpt-ycharts-generate",
+   "CodeSha256": "inrij6hLQiz/ZtOL3Wnzu3aA3xekxlRxYSEajtYqVZw=",
+   "LastModified": "2026-09-29T15:00:32.000+0000",
+   "Handler": "generate_installed.lambda_handler"
+  }
+ ],
+ "lambda_digest_recheck": "11 of 11 unchanged between 04:34Z and 04:53Z",
+ "downloaded_zip_sha256_equals_live_CodeSha256": {
+  "irpt-intake-poller": true,
+  "irpt-ycharts-generate": true,
+  "irpt-status": true,
+  "irpt-export-render": true
+ },
+ "package_census": {
+  "irpt-intake-poller": {
+   "members_total": 28,
+   "py_json_compared": 8,
+   "identical_to_head_first_pass": 6,
+   "py_behind_head": [],
+   "non_py_identical_at_another_head_path": [],
+   "non_py_differ": [],
+   "no_source_first_pass_suffix_resolved": [
+    {
+     "member": "firm_destination_policy.json",
+     "identical_to": "infra/aws/terraform/investor-reporting/core/firm_destination_policy.json",
+     "candidates": 1
+    },
+    {
+     "member": "firm_registry.json",
+     "identical_to": null,
+     "candidates": 1
+    }
+   ]
+  },
+  "irpt-ycharts-generate": {
+   "members_total": 111,
+   "py_json_compared": 97,
+   "identical_to_head_first_pass": 52,
+   "py_behind_head": [
+    {
+     "member": "broker.py",
+     "source": "infra/aws/lambda/investor-reporting/ycharts/session/broker.py",
+     "served_equals_commit": "b3fc529601",
+     "commits_not_served": [
+      "e2fdd01015"
+     ]
+    },
+    {
+     "member": "canonical_profile_reads.py",
+     "source": "infra/aws/lambda/investor-reporting/_scope/canonical_profile_reads.py",
+     "served_equals_commit": "185dfb3e7f",
+     "commits_not_served": [
+      "2704705672"
+     ]
+    },
+    {
+     "member": "certify.py",
+     "source": "infra/aws/lambda/investor-reporting/ycharts/extract/certify.py",
+     "served_equals_commit": "bcfbd380a1",
+     "commits_not_served": [
+      "ad817b55ea"
+     ]
+    },
+    {
+     "member": "current_authority.py",
+     "source": "infra/aws/lambda/investor-reporting/ycharts/generate/current_authority.py",
+     "served_equals_commit": "d3f612d94d",
+     "commits_not_served": [
+      "2704705672"
+     ]
+    },
+    {
+     "member": "entry.py",
+     "source": "infra/aws/lambda/investor-reporting/ycharts/generate/entry.py",
+     "served_equals_commit": "b357e0ba8f",
+     "commits_not_served": [
+      "53bbae9c4f",
+      "f7ae621369"
+     ]
+    },
+    {
+     "member": "extract.py",
+     "source": "infra/aws/lambda/investor-reporting/ycharts/extract/extract.py",
+     "served_equals_commit": "56a6e07e8f",
+     "commits_not_served": [
+      "12a67ed5ee"
+     ]
+    },
+    {
+     "member": "generate_installed.py",
+     "source": "infra/aws/lambda/investor-reporting/reports/generate_installed.py",
+     "served_equals_commit": "2e3d50caac",
+     "commits_not_served": [
+      "53bbae9c4f"
+     ]
+    },
+    {
+     "member": "job.py",
+     "source": "infra/aws/lambda/investor-reporting/ycharts/generate/job.py",
+     "served_equals_commit": "b3fc529601",
+     "commits_not_served": [
+      "b21aacec70"
+     ]
+    },
+    {
+     "member": "loaders.py",
+     "source": "infra/aws/lambda/investor-reporting/_authz/loaders.py",
+     "served_equals_commit": "7925afb870",
+     "commits_not_served": [
+      "8e9ed1b539",
+      "f13d9e9222",
+      "73896b6c42"
+     ]
+    },
+    {
+     "member": "recipe.py",
+     "source": "infra/aws/lambda/investor-reporting/ycharts/generate/recipe.py",
+     "served_equals_commit": "03ea5980cc",
+     "commits_not_served": [
+      "da519f31b4",
+      "0a1fc245cb",
+      "12a67ed5ee",
+      "49b85eacd2",
+      "38ee23deaa",
+      "b6739556ea",
+      "e2fdd01015",
+      "07f1982ab9"
+     ]
+    },
+    {
+     "member": "resident_main.py",
+     "source": "infra/aws/lambda/investor-reporting/ycharts/generate/resident_main.py",
+     "served_equals_commit": "b3fc529601",
+     "commits_not_served": [
+      "ec5804f6e0",
+      "746ddee18a"
+     ]
+    },
+    {
+     "member": "resident_worker.py",
+     "source": "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py",
+     "served_equals_commit": "2d6937be5e",
+     "commits_not_served": [
+      "7fc1a123f0",
+      "9e5cfc16c9",
+      "c125c68396",
+      "f2063238c1",
+      "da519f31b4",
+      "0a1fc245cb",
+      "12a67ed5ee",
+      "49b85eacd2",
+      "38ee23deaa",
+      "ec5804f6e0",
+      "b6739556ea",
+      "e2fdd01015",
+      "07f1982ab9"
+     ]
+    },
+    {
+     "member": "served.py",
+     "source": "infra/aws/lambda/investor-reporting/_authz/served.py",
+     "served_equals_commit": "83673d731c",
+     "commits_not_served": [
+      "f6c6b56f40",
+      "c716489be8"
+     ]
+    },
+    {
+     "member": "transport.py",
+     "source": "infra/aws/lambda/investor-reporting/ycharts/generate/transport.py",
+     "served_equals_commit": "8576bec142",
+     "commits_not_served": [
+      "b21aacec70"
+     ]
+    },
+    {
+     "member": "uploads.py",
+     "source": "infra/aws/lambda/investor-reporting/intake/uploads.py",
+     "served_equals_commit": "9efaf2850e",
+     "commits_not_served": [
+      "6b96d460f6"
+     ]
+    }
+   ],
+   "non_py_identical_at_another_head_path": [
+    "contracts/AnalysisReport.schema.json",
+    "contracts/AnalysisRequest.schema.json",
+    "contracts/ExportBundle.schema.json",
+    "contracts/ExportReceipt.schema.json",
+    "contracts/NarrativePacket.schema.json",
+    "contracts/RenderPackage.schema.json",
+    "contracts/ResolvedScope.schema.json"
+   ],
+   "non_py_differ": [
+    "BUILD_MANIFEST.json",
+    "contracts/PerformanceReport.schema.json"
+   ],
+   "no_source_first_pass_suffix_resolved": [
+    {
+     "member": "contracts/AnalysisSubmissionRequest.schema.json",
+     "identical_to": "docs/contracts/investor-reporting/v1/AnalysisSubmissionRequest.schema.json",
+     "candidates": 1
+    },
+    {
+     "member": "contracts/AnalysisUploadRequest.schema.json",
+     "identical_to": "docs/contracts/investor-reporting/v1/AnalysisUploadRequest.schema.json",
+     "candidates": 1
+    },
+    {
+     "member": "contracts/AnalysisUploadResult.schema.json",
+     "identical_to": "docs/contracts/investor-reporting/v1/AnalysisUploadResult.schema.json",
+     "candidates": 1
+    },
+    {
+     "member": "contracts/BoundaryRefusal.schema.json",
+     "identical_to": "docs/contracts/investor-reporting/v1/BoundaryRefusal.schema.json",
+     "candidates": 1
+    },
+    {
+     "member": "contracts/DirectoryContext.schema.json",
+     "identical_to": "docs/contracts/investor-reporting/v1/DirectoryContext.schema.json",
+     "candidates": 1
+    },
+    {
+     "member": "contracts/OwnedAnalysisRequest.schema.json",
+     "identical_to": "docs/contracts/investor-reporting/v1/OwnedAnalysisRequest.schema.json",
+     "candidates": 1
+    },
+    {
+     "member": "contracts/OwnedAnalysisRequestHistory.schema.json",
+     "identical_to": "docs/contracts/investor-reporting/v1/OwnedAnalysisRequestHistory.schema.json",
+     "candidates": 1
+    },
+    {
+     "member": "contracts/RequestComposition.schema.json",
+     "identical_to": "docs/contracts/investor-reporting/v1/RequestComposition.schema.json",
+     "candidates": 1
+    },
+    {
+     "member": "contracts/SelectedAccounts.schema.json",
+     "identical_to": "docs/contracts/investor-reporting/v1/SelectedAccounts.schema.json",
+     "candidates": 1
+    },
+    {
+     "member": "contracts/SelectionRequest.schema.json",
+     "identical_to": "docs/contracts/investor-reporting/v1/SelectionRequest.schema.json",
+     "candidates": 1
+    },
+    {
+     "member": "firm_destination_policy.json",
+     "identical_to": "infra/aws/terraform/investor-reporting/core/firm_destination_policy.json",
+     "candidates": 1
+    },
+    {
+     "member": "firm_registry.json",
+     "identical_to": null,
+     "candidates": 1
+    },
+    {
+     "member": "infra/logic/registry/exemptions.json",
+     "identical_to": null,
+     "candidates": 1
+    },
+    {
+     "member": "infra/logic/registry/remediations.json",
+     "identical_to": null,
+     "candidates": 1
+    },
+    {
+     "member": "infra/logic/registry/reporting_policies.json",
+     "identical_to": "infra/logic/registry/reporting_policies.json",
+     "candidates": 1
+    },
+    {
+     "member": "infra/logic/registry/resources.json",
+     "identical_to": "infra/logic/registry/resources.json",
+     "candidates": 1
+    },
+    {
+     "member": "infra/logic/registry/scopes.json",
+     "identical_to": null,
+     "candidates": 1
+    },
+    {
+     "member": "infra/logic/registry/systems.json",
+     "identical_to": null,
+     "candidates": 1
+    },
+    {
+     "member": "infra/logic/registry/tiers.json",
+     "identical_to": "infra/logic/registry/tiers.json",
+     "candidates": 1
+    },
+    {
+     "member": "lib/opal_naming.py",
+     "identical_to": null,
+     "candidates": 1
+    },
+    {
+     "member": "org/standards/NAMING_SCHEMA.json",
+     "identical_to": "org/standards/NAMING_SCHEMA.json",
+     "candidates": 1
+    }
+   ]
+  },
+  "irpt-status": {
+   "members_total": 43,
+   "py_json_compared": 43,
+   "identical_to_head_first_pass": 26,
+   "py_behind_head": [
+    {
+     "member": "enforce.py",
+     "source": "infra/aws/lambda/investor-reporting/_authz/enforce.py",
+     "served_equals_commit": "e9311289b1",
+     "commits_not_served": [
+      "755c13bc19",
+      "fe854ce6f1"
+     ]
+    },
+    {
+     "member": "entry.py",
+     "source": "infra/aws/lambda/investor-reporting/ops/entry.py",
+     "served_equals_commit": "e0f52fa041",
+     "commits_not_served": [
+      "bd52efb246"
+     ]
+    },
+    {
+     "member": "loaders.py",
+     "source": "infra/aws/lambda/investor-reporting/_authz/loaders.py",
+     "served_equals_commit": "7925afb870",
+     "commits_not_served": [
+      "8e9ed1b539",
+      "f13d9e9222",
+      "73896b6c42"
+     ]
+    },
+    {
+     "member": "owned_report.py",
+     "source": "infra/aws/lambda/investor-reporting/ops/owned_report.py",
+     "served_equals_commit": "03de809d50",
+     "commits_not_served": [
+      "6b96d460f6"
+     ]
+    },
+    {
+     "member": "served.py",
+     "source": "infra/aws/lambda/investor-reporting/_authz/served.py",
+     "served_equals_commit": "7a8d2a4ca3",
+     "commits_not_served": [
+      "f6c6b56f40",
+      "c716489be8",
+      "83673d731c",
+      "bd52efb246",
+      "fe854ce6f1",
+      "1fcefdad74",
+      "4fffe13f01"
+     ]
+    },
+    {
+     "member": "status.py",
+     "source": "infra/aws/lambda/investor-reporting/ops/status.py",
+     "served_equals_commit": "f4f16b283f",
+     "commits_not_served": [
+      "57ebb7ac6c"
+     ]
+    },
+    {
+     "member": "status_installed.py",
+     "source": "infra/aws/lambda/investor-reporting/reports/status_installed.py",
+     "served_equals_commit": "896680c2de",
+     "commits_not_served": [
+      "1fcefdad74"
+     ]
+    }
+   ],
+   "non_py_identical_at_another_head_path": [],
+   "non_py_differ": [],
+   "no_source_first_pass_suffix_resolved": [
+    {
+     "member": "firm_registry.json",
+     "identical_to": null,
+     "candidates": 1
+    },
+    {
+     "member": "infra/logic/registry/exemptions.json",
+     "identical_to": null,
+     "candidates": 1
+    },
+    {
+     "member": "infra/logic/registry/remediations.json",
+     "identical_to": null,
+     "candidates": 1
+    },
+    {
+     "member": "infra/logic/registry/reporting_policies.json",
+     "identical_to": "infra/logic/registry/reporting_policies.json",
+     "candidates": 1
+    },
+    {
+     "member": "infra/logic/registry/resources.json",
+     "identical_to": "infra/logic/registry/resources.json",
+     "candidates": 1
+    },
+    {
+     "member": "infra/logic/registry/scopes.json",
+     "identical_to": null,
+     "candidates": 1
+    },
+    {
+     "member": "infra/logic/registry/systems.json",
+     "identical_to": null,
+     "candidates": 1
+    },
+    {
+     "member": "infra/logic/registry/tiers.json",
+     "identical_to": "infra/logic/registry/tiers.json",
+     "candidates": 1
+    },
+    {
+     "member": "lib/opal_naming.py",
+     "identical_to": null,
+     "candidates": 1
+    },
+    {
+     "member": "org/standards/NAMING_SCHEMA.json",
+     "identical_to": "org/standards/NAMING_SCHEMA.json",
+     "candidates": 1
+    }
+   ]
+  },
+  "irpt-export-render": {
+   "members_total": 59,
+   "py_json_compared": 58,
+   "identical_to_head_first_pass": 40,
+   "py_behind_head": [
+    {
+     "member": "entry.py",
+     "source": "infra/aws/lambda/investor-reporting/export/entry.py",
+     "served_equals_commit": "5c0185fee2",
+     "commits_not_served": [
+      "0f00dbfb85"
+     ]
+    },
+    {
+     "member": "loaders.py",
+     "source": "infra/aws/lambda/investor-reporting/_authz/loaders.py",
+     "served_equals_commit": "7925afb870",
+     "commits_not_served": [
+      "8e9ed1b539",
+      "f13d9e9222",
+      "73896b6c42"
+     ]
+    },
+    {
+     "member": "served.py",
+     "source": "infra/aws/lambda/investor-reporting/_authz/served.py",
+     "served_equals_commit": "83673d731c",
+     "commits_not_served": [
+      "f6c6b56f40",
+      "c716489be8"
+     ]
+    }
+   ],
+   "non_py_identical_at_another_head_path": [
+    "irpt_contracts/ExportBundle.schema.json",
+    "irpt_contracts/ExportReceipt.schema.json",
+    "irpt_contracts/NarrativePacket.schema.json",
+    "irpt_contracts/RenderPackage.schema.json"
+   ],
+   "non_py_differ": [
+    "irpt_contracts/PerformanceReport.schema.json"
+   ],
+   "no_source_first_pass_suffix_resolved": [
+    {
+     "member": "firm_registry.json",
+     "identical_to": null,
+     "candidates": 1
+    },
+    {
+     "member": "infra/logic/registry/exemptions.json",
+     "identical_to": null,
+     "candidates": 1
+    },
+    {
+     "member": "infra/logic/registry/remediations.json",
+     "identical_to": null,
+     "candidates": 1
+    },
+    {
+     "member": "infra/logic/registry/reporting_policies.json",
+     "identical_to": "infra/logic/registry/reporting_policies.json",
+     "candidates": 1
+    },
+    {
+     "member": "infra/logic/registry/resources.json",
+     "identical_to": "infra/logic/registry/resources.json",
+     "candidates": 1
+    },
+    {
+     "member": "infra/logic/registry/scopes.json",
+     "identical_to": null,
+     "candidates": 1
+    },
+    {
+     "member": "infra/logic/registry/systems.json",
+     "identical_to": null,
+     "candidates": 1
+    },
+    {
+     "member": "infra/logic/registry/tiers.json",
+     "identical_to": "infra/logic/registry/tiers.json",
+     "candidates": 1
+    },
+    {
+     "member": "lib/opal_naming.py",
+     "identical_to": null,
+     "candidates": 1
+    },
+    {
+     "member": "org/standards/NAMING_SCHEMA.json",
+     "identical_to": "org/standards/NAMING_SCHEMA.json",
+     "candidates": 1
+    }
+   ]
+  }
+ },
+ "resident": {
+  "host": "i-0167fd745ad906a66 (irpt-ycharts-runner)",
+  "instance_state": "running",
+  "ssm_ping": "Online",
+  "unit": "irpt-analysis-resident.service",
+  "ActiveState": "active",
+  "SubState": "running",
+  "active_since": "2026-09-30T05:13:31Z",
+  "root": "/opt/irpt-resident/fe64236bbb-st5",
+  "NRestarts": 0,
+  "own_modules_listed": 92,
+  "identical_to_head": 72,
+  "behind_head": [
+   {
+    "member": "ycharts/generate/current_authority.py",
+    "source": "infra/aws/lambda/investor-reporting/ycharts/generate/current_authority.py",
+    "served_equals": "d3f612d94d",
+    "not_served": [
+     "2704705672"
+    ]
+   },
+   {
+    "member": "ycharts/generate/entry.py",
+    "source": "infra/aws/lambda/investor-reporting/ycharts/generate/entry.py",
+    "served_equals": "b357e0ba8f",
+    "not_served": [
+     "53bbae9c4f",
+     "f7ae621369"
+    ]
+   },
+   {
+    "member": "ycharts/generate/job.py",
+    "source": "infra/aws/lambda/investor-reporting/ycharts/generate/job.py",
+    "served_equals": "b3fc529601",
+    "not_served": [
+     "b21aacec70"
+    ]
+   },
+   {
+    "member": "ycharts/generate/resident_worker.py",
+    "source": "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py",
+    "served_equals": "7fc1a123f0",
+    "not_served": [
+     "62535e0fdc"
+    ]
+   },
+   {
+    "member": "ycharts/generate/transport.py",
+    "source": "infra/aws/lambda/investor-reporting/ycharts/generate/transport.py",
+    "served_equals": "8576bec142",
+    "not_served": [
+     "b21aacec70"
+    ]
+   },
+   {
+    "member": "intake/uploads.py",
+    "source": "infra/aws/lambda/investor-reporting/intake/uploads.py",
+    "served_equals": "9efaf2850e",
+    "not_served": [
+     "6b96d460f6"
+    ]
+   },
+   {
+    "member": "ops/entry.py",
+    "source": "infra/aws/lambda/investor-reporting/ops/entry.py",
+    "served_equals": "e0f52fa041",
+    "not_served": [
+     "bd52efb246"
+    ]
+   },
+   {
+    "member": "ops/owned_report.py",
+    "source": "infra/aws/lambda/investor-reporting/ops/owned_report.py",
+    "served_equals": "03de809d50",
+    "not_served": [
+     "6b96d460f6"
+    ]
+   },
+   {
+    "member": "ops/prospect_dates.py",
+    "source": "infra/aws/lambda/investor-reporting/ops/prospect_dates.py",
+    "served_equals": "b56b99c06f",
+    "not_served": [
+     "c296cdff9c"
+    ]
+   },
+   {
+    "member": "ops/status.py",
+    "source": "infra/aws/lambda/investor-reporting/ops/status.py",
+    "served_equals": "f4f16b283f",
+    "not_served": [
+     "57ebb7ac6c"
+    ]
+   },
+   {
+    "member": "_authz/enforce.py",
+    "source": "infra/aws/lambda/investor-reporting/_authz/enforce.py",
+    "served_equals": "e9311289b1",
+    "not_served": [
+     "755c13bc19",
+     "fe854ce6f1"
+    ]
+   },
+   {
+    "member": "_authz/loaders.py",
+    "source": "infra/aws/lambda/investor-reporting/_authz/loaders.py",
+    "served_equals": "7925afb870",
+    "not_served": [
+     "8e9ed1b539",
+     "f13d9e9222",
+     "73896b6c42"
+    ]
+   },
+   {
+    "member": "_authz/routetable.py",
+    "source": "infra/aws/lambda/investor-reporting/_authz/routetable.py",
+    "served_equals": "4356085122",
+    "not_served": [
+     "dd2ae95233",
+     "1fcefdad74"
+    ]
+   },
+   {
+    "member": "_authz/served.py",
+    "source": "infra/aws/lambda/investor-reporting/_authz/served.py",
+    "served_equals": "4fffe13f01",
+    "not_served": [
+     "f6c6b56f40",
+     "c716489be8",
+     "83673d731c",
+     "bd52efb246",
+     "fe854ce6f1",
+     "1fcefdad74"
+    ]
+   },
+   {
+    "member": "_scope/canonical_profile_reads.py",
+    "source": "infra/aws/lambda/investor-reporting/_scope/canonical_profile_reads.py",
+    "served_equals": "185dfb3e7f",
+    "not_served": [
+     "2704705672"
+    ]
+   },
+   {
+    "member": "reports/generate_installed.py",
+    "source": "infra/aws/lambda/investor-reporting/reports/generate_installed.py",
+    "served_equals": "a58859baa7",
+    "not_served": [
+     "53bbae9c4f",
+     "2e3d50caac",
+     "19d8f3038c",
+     "1fcefdad74"
+    ]
+   },
+   {
+    "member": "reports/status_installed.py",
+    "source": "infra/aws/lambda/investor-reporting/reports/status_installed.py",
+    "served_equals": "896680c2de",
+    "not_served": [
+     "1fcefdad74"
+    ]
+   }
+  ],
+  "no_head_source": [
+   "six.py",
+   "typing_extensions.py",
+   "reports/resident_bindings.json"
+  ],
+  "journal_since_start": {
+   "IRPT_RESIDENT_POLL handled=0": 4218,
+   "retained_for_retry CurrentAuthorityRefused ACTOR_NOT_FOUND": 4
+  },
+  "timers_matching_irpt_or_ycharts": 0,
+  "read_at": "2026-10-01T04:41:25Z",
+  "ssm_command_ids": [
+   "dbf38868-f8db-426d-8e28-fcca2bed618a",
+   "4d3a6313-04e8-4e2b-8950-5b97e8b1cf0c"
+  ]
+ },
+ "served_current_authority_py": {
+  "equals_commit": "d3f612d94d",
+  "allowedFirmIds_mentions": 0,
+  "ACTOR_FIRM_NOT_ALLOWED_mentions": 0,
+  "where": "irpt-ycharts-generate zip and resident st5 (same digest)"
+ },
+ "queues_visible_inflight": {
+  "irpt-intake": [
+   0,
+   0
+  ],
+  "irpt-intake-dlq": [
+   0,
+   0
+  ],
+  "irpt-generation": [
+   0,
+   0
+  ],
+  "irpt-generation-dlq": [
+   2,
+   0
+  ],
+  "irpt-export": [
+   0,
+   0
+  ],
+  "irpt-export-dlq": [
+   0,
+   0
+  ]
+ },
+ "event_source_mappings": {
+  "account_total": 6,
+  "on_irpt_queues_or_functions": 0
+ },
+ "schedules": {
+  "irpt-intake-poll": "DISABLED cron(0/15 8-23 * * ? *) America/New_York, last modified 2026-09-11T01:53:49Z",
+  "irpt-directory-refresh": "ENABLED",
+  "irpt-holdings-snapshot": "ENABLED",
+  "irpt-holdings-performance-daily": "ENABLED"
+ },
+ "intake": {
+  "poller_log_streams": 0,
+  "irpt-checkpoints_items": 0,
+  "irpt-outbox_items": 0,
+  "secret irpt/graph/app-registration": "ResourceNotFoundException (positive control ycharts/session/current: found, 2 versions)"
+ },
+ "tables": {
+  "irpt-requests_items": 1108,
+  "irpt-jobs_items": 17,
+  "irpt-jobs_state_counts": {
+   "READY": 5,
+   "ATTENTION": 8,
+   "SUBMITTING": 2,
+   "no state attribute": 2
+  },
+  "irpt-jobs_tenant_counts": {
+   "cottonwood": 13,
+   "inflection": 1,
+   "49financial": 1,
+   "_opal": 2
+  },
+  "scan_pages": 1
+ },
+ "secrets_metadata_only": {
+  "ycharts/session/current": "changed 2026-09-30T04:58:23Z",
+  "ycharts/login/credentials": "changed 2026-09-11T01:39:16Z",
+  "ycharts/credentials": "changed 2026-07-01T22:14:38Z",
+  "irpt/svc-irpt-analysis/password": "changed 2026-09-30T16:22:55Z"
+ },
+ "last_log_event": {
+  "irpt-ycharts-generate": "2026-09-30T03:36:09Z",
+  "irpt-status": "2026-09-30T23:31:37Z",
+  "irpt-export-render": "2026-09-29T04:01:50Z",
+  "irpt-intake-poller": "no log stream"
+ },
+ "api": {
+  "api_id": "7k3ed8px20",
+  "live_routes_total": 108,
+  "investor_reporting_routes": [
+   "GET /api/scoped/investor-reporting/analysis/requests",
+   "GET /api/scoped/investor-reporting/analysis/requests/{requestId}",
+   "GET /api/scoped/investor-reporting/analysis/{jobId}/sections",
+   "GET /api/scoped/investor-reporting/directory/browse",
+   "GET /api/scoped/investor-reporting/directory/search",
+   "GET /api/scoped/investor-reporting/export/{exportId}",
+   "GET /api/scoped/investor-reporting/export/{exportId}/download",
+   "GET /api/scoped/investor-reporting/holdings/{accountSetId}",
+   "GET /api/scoped/investor-reporting/narrative/{reportId}",
+   "GET /api/scoped/investor-reporting/performance/{accountSetId}",
+   "GET /api/scoped/investor-reporting/status",
+   "GET /api/scoped/investor-reporting/status/{jobId}",
+   "POST /api/scoped/investor-reporting/analysis",
+   "POST /api/scoped/investor-reporting/analysis/inputs",
+   "POST /api/scoped/investor-reporting/directory/resolve",
+   "POST /api/scoped/investor-reporting/export",
+   "POST /api/scoped/investor-reporting/selections"
+  ]
+ },
+ "export_live_config": {
+  "IRPT_EXPORT_RENDER": "on",
+  "IRPT_EXPORT_RENDERER": "unavailable",
+  "IRPT_PORTAL_ORIGIN": "https://opalinvest.dev",
+  "served_refusal": "retained_export.py:71-72 only a retained Performance report over a server-issued selection exports"
+ },
+ "portal": {
+  "served_origin": "https://opalinvest.dev",
+  "index_last_modified": "2026-09-29T18:21:28Z",
+  "origin_PROD_head_commit_time": "2026-09-29T18:17:31Z (ba8e971f, v2.1.191)",
+  "build_identity": "inferred from the 4-minute time alignment, not byte-diffed",
+  "served_chunk_with_ir_client": "resolveBundle-CvJ2kz79.js",
+  "served_operations_present": [
+   "analysis-input-upload",
+   "analysis-request-history",
+   "/analysis/requests",
+   "/analysis/{jobId}/sections",
+   "submit-export"
+  ],
+  "comparison_catalogue_operation": "absent at origin/PROD and origin/DEV (17 declared operations each)",
+  "analysis_tab_commits_on_DEV_not_PROD": 7,
+  "DEV_commits_not_on_PROD": 177
+ },
+ "not_done": [
+  "no vendor call",
+  "no Lambda invoke",
+  "no signed-in portal read",
+  "no write to any AWS resource",
+  "no secret value read",
+  "served portal bundle not rebuilt and byte-diffed"
+ ]
+}

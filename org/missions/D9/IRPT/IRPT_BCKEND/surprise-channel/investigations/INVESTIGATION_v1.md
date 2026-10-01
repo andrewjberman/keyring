@@ -14002,3 +14002,33 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "The author estimated the time instead of reading it. The times in ROUND_ANALYSIS.sweep5.md are corrected in the same commit as this row."
 }
 ```
+
+## IRPT_BCKEND-S244 -- the running resident does not enforce allowedFirmIds: IB-yr-293 is on CLOUD and not installed on st5
+
+```json
+{
+  "id": "IRPT_BCKEND-S244",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "4.0.0_SA_CRO~X",
+  "surfaced_at": "2026-10-01T05:00:00Z",
+  "one_line": "The RUNNING resident does not enforce allowedFirmIds. IB-yr-293 is on CLOUD and is NOT installed: the st5 root's ycharts/generate/current_authority.py equals commit d3f612d94d and contains 0 mentions of allowedFirmIds. With IB-pr-271 also unserved, the service principal's firm limit is enforced nowhere on deployed bytes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y (the resident and the Analysis journey are this lane's per Andrew-direct 2026-09-30 ~04:3xZ; the resident build and install are 2.0.0_SA_COO~P's act)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Host read 2026-10-01T04:41:25Z through Systems Manager (command 4d3a6313-04e8-4e2b-8950-5b97e8b1cf0c, read-only): irpt-analysis-resident active since 2026-09-30T05:13:31Z, ExecStart root /opt/irpt-resident/fe64236bbb-st5; sha256 of 92 own files listed, 72 identical to CLOUD, 17 behind.",
+      "Of the 17: ycharts/generate/current_authority.py equals d3f612d94d (2026-09-23) and _scope/canonical_profile_reads.py equals 185dfb3e7f; the one newer commit of each, 2704705672 (TO-IB-yr-293, decide() enforces allowedFirmIds), is not in the root.",
+      "Content check on the same bytes: the irpt-ycharts-generate zip (CodeSha256 inrij6hL.., downloaded 04:34Z, zip sha256 equal to live) carries current_authority.py at the same digest; it has 107 lines, 0 mentions of allowedFirmIds, 0 of ACTOR_FIRM_NOT_ALLOWED, 1 of ACTOR_NOT_FOUND (the positive control).",
+      "Also not installed on st5: resident_worker.py is at 7fc1a123f0 (IB-yr-231), one commit behind 62535e0fdc (a permanent authority refusal ends the job ATTENTION); job.py and transport.py lack b21aacec70 (IB-yr-291).",
+      "Record: org/tier1_exec/4.0.0_SA_CRO~X/deliverables/ANALYSIS_END_TO_END_GAP_BRIEF_20261001.md hop 6 and analysis_trace_20261001/EVIDENCE.json key resident.behind_head, @a465020d94."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IRPT_BCKEND-S238: 'allowedFirmIds is enforced only inside the resident since IB-yr-293' and 'the resident would then refuse the JOB at decide() with ACTOR_FIRM_NOT_ALLOWED (293), so no vendor call and no report could be produced for a non-cottonwood firm'. STATUS~Y section 0: 'Resident-side enforcement is LANDED'.",
+  "world_is": "MEASURED: landed on CLOUD, not on the host. A job accepted under svc-irpt-analysis for a firm outside its allowedFirmIds would today be admitted by the API (IB-pr-271 unserved) and run by the resident (293 not installed). NOT MEASURED: no such job was submitted and none is queued (irpt-generation 0 visible, 0 in flight at 04:45Z). The W27 window is not open, so nothing is exposed while it stays closed.",
+  "notes": "Disarm = a resident root built at or after 2704705672, read back by the digest of ycharts/generate/current_authority.py, before the W27 window opens. The S238 re-read (a foreign firm refused at the API) closes the API half only. Found on-task by a /closer trace asked by 1.0.0_SA_CTO (msg 103444); this seat moves no served code."
+}
+```
