@@ -200,3 +200,56 @@ One line per reader (verdict, path, function -- evidence; the full evidence is t
 
 **The MODEL_ROWS act is REFUSED unless a fresh census immediately before it prints `MODEL-READER-TOLERATED`.**
 
+## ADDENDUM 1 (2.0.0_SA_COO~M, 2026-10-01 09:0xZ) -- the served move measured, one sentence above corrected, the catalogue's reader added; NOT SIGNED
+
+**1. Ruling 1's two conditions are met** (`CTO_ROUND_ANALYSIS_MDPF_SECCLASS_ROUND_6_20261001.md` @453c6430ec). The
+comparison catalogue excludes a model-written row from its list and answers its ticker verbatim (2.0.0_SA_COO~Y, CLOUD
+@89c304eaeb, with its test). A fresh census, `R7_MODEL_READER_CENSUS_20261001_0730Z.json` @0883367f4f, reads readers=35
+tolerates=26 read_only=9 crashes=0 refuses=0 fails_contract=0, uncensused 0, `MODEL-READER-TOLERATED`. The three crashes
+(row W12-S2) and the seed contract failure (row W12-S1) of the table above are fixed (@a96e00c279, @9053ffba73).
+
+**2. Reader added to the table above (ruling 1):** `TOLERATES`
+`infra/aws/lambda/investor-reporting/ycharts/generate/comparison_catalogue.py :: classifications_reader -> build_catalogue /
+entry_for_ticker`, composed by `reports/generate_installed.py` (READ-ONLY). Behaviour: a paginated Scan projecting
+`ticker`, `name`, `identifier_namespace`, `classified_by`; a row whose `classified_by` is `model` lends no name, so it is
+absent from the served list and its ticker is answered verbatim. Exercised by the census through the real reader over a
+stubbed table: 0 of the named model rows are listed.
+
+**3. CORRECTION to "Blast radius", the sentence "readers ... see a real class where they previously saw none".** It is
+false for most of the 26. The Holdings producer answers a ticker the canonical table lacks from the bd-securities
+fallback, so these tickers are served a class TODAY, and a model row REPLACES that answer from the next publication on.
+Measured on the three local Holdings builds of 2026-10-01 00:51Z-01:00Z (actual positions, by `display.symbol`):
+25 of the 26 tickers are held (AMUSX is not).
+
+| firm | ticker | served today (fallback layer) | model row | nodes | USD | flagged |
+|---|---|---|---|---|---|---|
+| 49 Financial | CAIBX | fixed_income (table) | equity | 3 | 325,021.86 | |
+| 49 Financial | MLPTX | alternatives (table) | equity | 1 | 19,444.55 | yes |
+| 49 Financial | O | fixed_income (table) | alternatives | 9 | -91,808.10 | |
+| Cottonwood | O | fixed_income (table) | alternatives | 2 | -58,227.84 | |
+| Inflection | USRT | equity (table) | alternatives | 466 | 701,622.86 | |
+| Inflection | PCOFX | fixed_income (table) | commodities | 2 | 377,198.38 | yes |
+| Inflection | FFFHX | alternatives (table) | equity | 3 | 28,575.51 | yes |
+| Inflection | VCMDX | equity (ticker shape) | commodities | 1 | 3,876.73 | |
+| Inflection | CSRSX | equity (ticker shape) | alternatives | 1 | 1,070.88 | |
+| Inflection | BSBIX, BSBSX, FBIIX, PFUNX, PHLPX, PZTRX | equity (ticker shape) | fixed_income | 1,081 | 0.00 | 5 of 6 |
+| Inflection | MLPTX, TMAAX | alternatives (table) | equity | 245 | 0.00 | yes |
+| Inflection | CAIBX, O | fixed_income (table) | equity, alternatives | 2 | 0.00 | |
+
+USD whose served class changes: 49 Financial 252,658.31, Cottonwood -58,227.84, Inflection 1,112,344.36 (net of the
+negative `O` positions). The other held tickers keep their class (BAGIX, BAGSX, BSIIX, DODIX, EMXC, FXNAX, IGSB, JEMSX,
+FOCSX, RLY: 5,860,148.15 USD across the three firms); for those the row changes only the source of the answer.
+Black Diamond gold (C_06, D_03, D_04) and every other reader of the table move the same tickers where they hold them;
+that population is NOT measured here.
+
+**4. THE ACT HAS NO WRITER.** `classify-residual-model.py` has no write path by design, and
+`etf_classification_scheduled.write()` is the scheduled path's. A replay of the 26 named rows (conditional put,
+`classified_by: model`, the census's confidence, `low_confidence` under 0.80) needs a small writer with a dry run; its
+file is outside this seat's grant. Asked of `1.0.0_SA_CTO` 2026-10-01 09:0xZ.
+
+**5. Rollback, corrected.** The half's rollback is 26 `DeleteItem` calls. A delete is a destructive act that needs
+Andrew's word; two seat signatures are not that. Without it the remedy for a wrong model row is a seed row for that
+ticker (seed always wins, and the seed write drops the model's confidence fields).
+
+**The COO half is NOT signed.** It is signed after the writer exists, its dry run names exactly these 26 tickers as
+absent from the table, and a census run immediately before the act prints `MODEL-READER-TOLERATED`.

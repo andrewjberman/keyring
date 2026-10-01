@@ -79,14 +79,16 @@ on 3.0.0_SA_CVO's review `org/tier1_exec/3.0.0_SA_CVO/deliverables/MDPF_SECCLASS
    `MDPF_SECCLASS_M/RULING7_STALE_ROWS_REMEASURE_20261001.md`: four recommended closed (S1, W2-S3, W5-S2, and W3-S3
    once leg A1 passes), two stay open with an owner and a condition (S2 narrowed to this seat's trigger cell plus an
    Inflection caller; W6-S2 on the parked AE order).
-8. **Ruling 6, row W11-S1:** the exact contract-version pin replaces the version floor and the superset check in
-   `test_classified_by_v2.py`. The file is outside this seat's six-file grant: one blocker line first.
-9. **The MODEL_ROWS half: ruling 1's two conditions are MET; the half is not yet signed.** 2.0.0_SA_COO~Y's filter is
-   on CLOUD @89c304eaeb with its test, and `R7_MODEL_READER_CENSUS_20261001_0730Z.json` @0883367f4f reads
-   readers=35 tolerates=26 read_only=9 crashes=0 refuses=0 fails_contract=0, uncensused 0, `MODEL-READER-TOLERATED`
-   (before the filter the list would have offered 234 of 234 named model rows, 119 low-confidence). Next: add the
-   catalogue's reader to the half's reader table, re-read the half's act and both branches, sign the COO half and
-   ask the CTO's.
+8. **Ruling 6, row W11-S1: BLOCKED on a file grant (asked 08:56Z).** The exact contract-version pin replaces the
+   version floor and the superset check in `_shared/tests/test_classified_by_v2.py`, outside this seat's grant.
+9. **The MODEL_ROWS half: NOT signed; BLOCKED on a writer (asked of the CTO 09:0xZ).** Ruling 1's two conditions are
+   met (filter @89c304eaeb; census `R7_MODEL_READER_CENSUS_20261001_0730Z.json` reads `MODEL-READER-TOLERATED`).
+   Addendum 1 of the half records three things the worker's half did not: the act has NO writer (the model runner
+   has no write path); the rows REPLACE a class the bd-securities fallback serves today on 25 of 26 tickers, and
+   the class changes on 252,658.31 USD at 49 Financial, -58,227.84 USD at Cottonwood and 1,112,344.36 USD at
+   Inflection (Holdings builds; Black Diamond gold not measured); and the rollback by 26 deletes needs Andrew's
+   word. Next: the writer with a dry run, the dry run naming exactly the 26, a census immediately before, sign,
+   then the CTO's half.
 
 10. **Queued by 1.0.0_SA_CTO 103641 (rulings batch 72 items 1-7 @65417358df): MDPF_HEALGAP cell 1, the gold catch-up
     step.** Not this project; it follows the round-6 items above. A served move with both halves, under its own FAST
