@@ -60,6 +60,7 @@ block carries", a group the team's sheet does not have. And the block serves FY1
 
 <paths>
 portal/src/pages/SecurityAnalysis/modelSheet.ts
+portal/src/pages/SecurityAnalysis/__harness__/tabs.harness.cjs
 org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~1/AMGT_CORPUS.TO-CRPS-ad-1.sheet-in-the-sharepoint-shape.proof_of_spec.json
 org/missions/D5/AMGT/AMGT_CORPUS/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D5/AMGT/AMGT_CORPUS/task-orders/AMGT_CORPUS.TO-CRPS-ad-1.sheet-in-the-sharepoint-shape.md
@@ -94,6 +95,20 @@ checks under `org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/check
    instance.
 4. Report ONCE: what changed (the five mappings, the signature), the output line of every criterion, the portal and outer commit
    hashes, and any row.
+
+## 6. AMENDMENT 1 (issuer ruling on row `Z-W1-S26`) -- one harness path granted, one check re-anchored
+
+Item 2 (no Other-lines group) NECESSARILY breaks `tabs.harness.cjs` check `model_fiscal_rows_rendered` (`:388-391`, reported at
+`:427`): it requires `data-model-fiscal-cells` and the `data-model-cell` count to equal EVERY fiscal figure the payload carries
+(BA 97 of 165 after item 2). The issuer missed this at the cut. **Ruled:** item 2 stands; the path is granted above.
+
+Re-anchor that ONE check onto the same fact in the new shape: **every fiscal figure the SHEET carries renders**. The denominator is
+the payload's fiscal figures whose mnemonic is one of the sheet's row mnemonics (`FINANCIAL_SUMMARY_ROWS` and `MARGIN_HISTORY_ROWS`
+from `modelSheet.ts`) and whose year is a sheet year, in place of all fiscal figures. Keep every other condition of that line exactly
+as it is (the `Financial Summary` text and the `data-model-cases="ABSENT"` probe), keep the ABSENT branch, keep the check's name, and
+keep the harness at CHECKS-OK 20 of 20. Change nothing else in that file. Then re-run AC1-AC3 and finish per section 5.
+
+**AMENDMENT 1 (issuer notes):** row Z-W1-S26 ruled; path granted; the order remains pending.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
