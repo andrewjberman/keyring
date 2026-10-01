@@ -5267,3 +5267,81 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W12-S9",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~12",
+  "surfaced_at": "2026-10-01T01:35Z",
+  "one_line": "The first PHASE B step-10 attempt exited rc=3 at safe-ec2-deploy.sh's halt gate BEFORE any build or upload: the sparse release tree /c/tmp/og-rel2 held no org/tier1_exec/2.0.0_SA_COO home dir, so the gate could not validate the session's serial (the issuer's 2.0.0_SA_COO~O, inherited by this subagent); widened the sparse set by that one dir and re-ran.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "First attempt log (scratch, not committed): 'HALT-GATE: SERIAL RESOLVES TO NO KNOWN AGENT -- BLOCKED (fail-closed)', resolved serial 2.0.0_SA_COO~O, ACT END rc=3 at 2026-10-01T01:33:58Z, 7 s after start; no 'base guard' line, no upload line, no SSM dispatch in the log.",
+      ".tools/halt-gate-check.sh halt_gate_validate_serial (lines 189-217): a non-worker serial is valid only when a dir under ${HALT_GATE_REPO_ROOT}/org/tier{0_exec,0_utility,1_exec,2_senior,3_junior}/ has a name containing the base; the release tree's sparse set (Phase A) had no org/tier* dir.",
+      "Fix: `git sparse-checkout add org/tier1_exec/2.0.0_SA_COO` in /c/tmp/og-rel2 (3,717 tracked files, release HEAD unchanged d61fde4693, no tracked byte edited); the second attempt passed the gate (HALT_ACK=1) and ran. The K1 13-file host md5 read was repeated before BOTH attempts: 13 of 13 equal each time (01:33:51Z and 01:37:27Z)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-OG-t-2 step 10: the act runs from the release tree with HALT_ACK=1 and AGENT_NAME set, and the order's sparse-set note (widen if a gate needs it).",
+  "world_is": "The halt gate resolves identity from the SESSION (CLAUDE_CODE_SESSION_ID), not from AGENT_NAME, and a spawned worker shares its issuer's session, so a worker release from a sparse tree needs the ISSUER's agent home dir present. Fail-closed and harmless (rc=3 before upload); it repeats for any worker deploy from a sparse release tree.",
+  "notes": "No host or S3 state changed by the refused attempt. The fix is a working-tree-only widen of the release tree, not a commit."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W12-S10",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~12",
+  "surfaced_at": "2026-10-01T01:46Z",
+  "one_line": "The host audit record carries the caller's EMAIL in `user` and the resolved `tier`, never the principal key, so the two post-release tier reads were attributed by email (admin address, opalbloomberg address) plus a NON-BLANK tier, not by matching the principal pair.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "app/audit.py log_call (lines 129-139) writes ts, user (email), tool, args, outcome, detail, tier; no principal field.",
+      "Host read after deployed_at 2026-10-01T01:38:29Z, filtered to those two emails, tool present, no `event` field: 2 rows -- A_admin tier=master_admin tool=whoami ts=2026-10-01T01:44:01Z; B_opalbloomberg tier=standard tool=whoami ts=2026-10-01T01:44:24Z (ROWS_AFTER_DEPLOY 2).",
+      "The admin email also carries machine-held calls (ms_site_children, 15,725 in the 14-day pre-read, tier blank); the non-blank-tier filter excludes them, and no such row appeared after deployed_at."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Hand-off step 6: match the principal key in memory on the host or in the worker process, print only tier, tool and UTC.",
+  "world_is": "No audit field holds the principal, so the audit row proves the tier the release resolved for that email's call, and that the call came from the named session is the issuer's and Opal_Agent's statement, not the log's. The tier is computed from the principal on /mcp (token_broker/server set a principal on every /mcp call), so the tier value is the principal's.",
+  "notes": "Printed only tier, tool, UTC and the A/B labels; no tid/oid value was printed or written."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W12-S11",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~12",
+  "surfaced_at": "2026-10-01T01:48Z",
+  "one_line": "safe-ec2-deploy.sh committed the manifest on the RELEASE branch (dc8f99b436, 10 lines changed: _last_updated plus re-encodes of unrelated non-ASCII notes); the CLOUD-side record is hand-edited on this worker's branch (c0dc3b6422), six opal-gateway lines plus _last_updated, and the release-branch commit is not ported.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show dc8f99b436 on rel-nfra-oplgtw-tier-auth: EC2_MANIFEST.json 10 insertions, 10 deletions; 6 of the 10 added lines carry the mojibake lead character (the smartx-exporter and inf-gold-qa-runner notes among them), replacing the escaped em-dash sequence.",
+      "git diff on this branch before commit c0dc3b6422: 6 insertions, 6 deletions -- _last_updated, deployed_commit, deployed_at, deployed_by, release_note, previous_deployed_commit; mcportal_commit unchanged a3bff71ffa; file stayed LF with 0 CR and the recorded note is ASCII.",
+      "Same class as the 3a67e6fcf2 commit message for MX-r-6 v3 (the wrapper's rewrite re-encodes non-ASCII notes; not ported)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-OG-t-2 step 12: record EC2_MANIFEST.json services.opal-gateway as OG-e-2 step 13 did.",
+  "world_is": "The wrapper's own manifest commit lands only on the release branch, and a merge of that branch to CLOUD would carry the mojibake; the order keeps the release branch unmerged to CLOUD.",
+  "notes": "The release branch rel-nfra-oplgtw-tier-auth must not be merged to CLOUD as is; the CLOUD record is c0dc3b6422 on wk-NFRA_OPLGTW-12-t2."
+}
+```
