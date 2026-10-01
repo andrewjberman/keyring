@@ -1,5 +1,5 @@
 {
-  "contract_version": "0.1.0",
+  "contract_version": "0.2.0",
   "project": "IRPT_DASHBD",
   "prd": "org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md v0.5 @0e7fd8eeb6",
   "authored_by": "0.4.0_DS_ClientPlatform~S",
@@ -84,9 +84,9 @@
     },
     {
       "name": "tieout_tolerance_proposed",
-      "type": "null",
+      "type": "double",
       "nullable": true,
-      "meaning": "NULLABLE AND NULL ON THIS ROW BY THE ORDER'S OWN METHOD SPEC: TO-DB-b-1 states 'tieout_tolerance_proposed null (DB-b-3 fills it)'. It is the Black Diamond tie-out's proposed tolerance and DB-b-1 has no basis to assert one; writing a number here would be inventing the output of a cell that has not run"
+      "meaning": "the tie-out tolerance DB-b-3 PROPOSES, never one it ratifies. Null in 0.1.0 because DB-b-1 had no basis to assert a number; 0.037 now, measured by DB-b-3 as the preferred convention's p90 rounded up to the next 5 bp. STILL NULLABLE: a future method_version is emitted before its tie-out has run, so the column must be able to say 'not yet proposed'. READ THE MEASUREMENT RECORD BEFORE USING THE VALUE -- row IRPT_DASHBD-S10 and the record's own `sentence` field say this cell recommends AGAINST adopting it as a bar, because the difference it is a percentile of is dominated by the account-days Opal withheld and Black Diamond counted."
     },
     {
       "name": "gips_alignment",
@@ -146,12 +146,12 @@
     "token_census": "The five enum values that are not already ratified estate terms were introduced with this table at 0.1.0 and the producer is their only writer: TWR_DAILY_GEOMETRIC, cash_when_received, GROSS_ONLY, Account365, and the START/MIDPOINT members declared unused. The column name comparability_max_excluded_weight is new with PRD ruling 18 and appears in the PRD, this order and this producer only.",
     "token_census_finding": "NO COLLISION. Stated with its limit: this census is over the declared VALUES of a table minted by this round, so there is no prior consumer to collide with. That is a weaker claim than the account_return_daily 0.2.0 census, where an existing estate term could have clashed and the scans were run to check."
   },
-  "schema_hash": "fe0d01b511ef9b82e98ee031c4d6aefe27f08759e52189941e1e74fb3bb9786b",
+  "schema_hash": "198109613065ed7b72afd5ff178ac31c7ace2facddf0c65e96a65acfdd42e47d",
   "schema_hash_basis": "sha256 over the sorted 'name:type' lines joined by newline, types as the pyarrow type name the LANDED parquet carries -- identical to the basis the account_return_daily contract declares, so one method verifies both tables.",
-  "schema_hash_provenance": "COMPUTED FROM THE SERVED ARTIFACT, not from the producer's source: read back from s3://opal-data-49financial/irpt/49financial/gold/dim_return_method/method_version=1/data.parquet after the first mint. A contract derived from source could describe a table that was never emitted; this one cannot.",
+  "schema_hash_provenance": "COMPUTED FROM THE SERVED ARTIFACT after DB-b-3's single gold write, by the basis this file declares. The predecessor hash fe0d01b511ef9b82e98ee031c4d6aefe27f08759e52189941e1e74fb3bb9786b was correct for the same table while tieout_tolerance_proposed carried no value; the change is the column's type, not a change of table.",
   "landed_row": {
     "basis": "measured",
-    "read_at": "2026-10-01, after the first mint",
+    "read_at": "2026-10-01, after DB-b-3's method-row write",
     "values": {
       "method_version": 1,
       "method": "TWR_DAILY_GEOMETRIC",
@@ -165,12 +165,38 @@
       "comparability_max_excluded_weight": 0.002488,
       "guard_substitution": "WITHDRAWN (PRD v0.4 ruling 17): a guard disagreement serves no number; HOLDINGS_INCOME_FALLBACK is never emitted.",
       "day_count": "Account365",
-      "tieout_tolerance_proposed": null,
+      "tieout_tolerance_proposed": 0.037,
       "gips_alignment": "GIPS-aligned, not GIPS-compliant",
-      "measured_at": "2026-10-01T11:58:57Z",
+      "measured_at": "2026-10-01T15:12:54Z",
       "schema_version": "1.0",
       "source_pipeline": "irpt-reporting-adapter",
       "firm": "49financial"
     }
-  }
+  },
+  "supersedes": {
+    "contract_version": "0.1.0",
+    "schema_hash": "fe0d01b511ef9b82e98ee031c4d6aefe27f08759e52189941e1e74fb3bb9786b",
+    "why": "DB-b-3 wrote tieout_tolerance_proposed, so the column's parquet type changed from null to double and the schema_hash changed with it. The ISSUER predicted this when it landed 0.1.0 ('tieout_tolerance_proposed is null-typed in the parquet, so when DB-b-3 proposes a value its type and the hash change; that is a contract bump then'), which is why this is a versioned bump and not an in-place edit."
+  },
+  "method_versions": [
+    {
+      "method_version": 1,
+      "method": "TWR_DAILY_GEOMETRIC",
+      "flow_convention": "END",
+      "flow_convention_basis": "END is what the emitted returns were COMPUTED under, and it STAYS END. Amendment 3: a convention changes only by a new method_version with every return recomputed, never by writing a preferred convention into version 1. DB-3-AC2's counterexample set fails a row that names START over returns computed END, which is the defect this field exists to prevent.",
+      "flow_convention_measured_winner": "START",
+      "flow_convention_measured_winner_basis": "The lowest median |opal - bd| of the three conventions over the five eligible periods, ties to END -- the rule executed faithfully. READ AS UNDETERMINED RATHER THAN MEASURED: END, START and MIDPOINT differ only on flow-bearing days, and of the 10 flow-bearing account-days across those periods exactly ONE survives into the eligible population, so START's margin of 0.000218941 is one day in one account. START and MIDPOINT are identical to nine decimals on all five periods. Row IRPT_DASHBD-S10.",
+      "income_basis": "cash_when_received",
+      "fee_basis": "GROSS_ONLY",
+      "tolerance": 0.001244,
+      "large_flow_share": 0.002535,
+      "plausibility_band_low": -0.5,
+      "plausibility_band_high": 0.5,
+      "comparability_max_excluded_weight": 0.002488,
+      "tieout_tolerance_proposed": 0.037,
+      "day_count": "Account365",
+      "gips_alignment": "GIPS-aligned, not GIPS-compliant",
+      "values_read_from": "the LANDED parquet at irpt/49financial/gold/dim_return_method/method_version=1/data.parquet, not from the producer's source: these are the values a consumer actually receives."
+    }
+  ]
 }
