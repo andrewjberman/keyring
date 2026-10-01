@@ -191,3 +191,5 @@ PHASE A drained @0a5cc3c093 (ANNOUNCE_OG-t-2.md: 13 of 13 by content, 9 identiti
 3. **PHASE B principals.** The release branch renders the pairs from `OG_MASTER_ADMIN_PRINCIPALS` and
    `OG_WRITE_CAPABLE_PRINCIPALS` in the deploying shell (row Z-W12-S6). The issuer supplies both at the GO. The same
    no-print rule applies.
+
+<status>complete</status>
