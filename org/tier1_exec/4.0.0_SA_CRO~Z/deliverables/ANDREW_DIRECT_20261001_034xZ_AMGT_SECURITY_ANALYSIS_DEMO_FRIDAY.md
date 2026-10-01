@@ -46,6 +46,24 @@
 > manage the AMGT projects and will be informed with that brief you create on how to bring the various COOs in and how
 > to restructure/reorganize based on the guidelines im giving you here on what I think we need for Friday. Start now.
 
+## Addendum -- same channel, ~2026-10-01T04:0x-04:1xZ, four messages, verbatim
+
+Received while the brief (@`cadb87bd71`) was being committed; it answered the brief's recommendation of licensed
+access for bbg/wsj/barrons and of disabling automatic verification:
+
+> no licensed factiva bullshit, no
+
+> your recomendation is to figure out HARVST at all costs
+
+> Whenit comes to COO~H, they must do absolutely everything in their power to fgure out HARVST, that project is not
+> over until we beat captchas and have robust auth solution
+
+> Note and persist that we do not accept any defeat to that end.
+
+**Standing effect (as recorded, not adjudicated):** AMGT_HARVST does not close, and no seat reports it blocked or
+abandoned as a final state, until CAPTCHAs are beaten and a robust auth solution runs. Licensed bulk access (Factiva)
+is not a route. Recommended scope relay: the CTO carries this into the HARVST PRD as a closing condition.
+
 ## Carrier
 
 The record is the carrier. The brief this order produces is filed beside it; the one line to 1.0.0_SA_CTO~Z names
