@@ -4213,6 +4213,210 @@ carries none.
     },
     "spec_asserts": "<paths> IS the write grant; the lane gate admits exactly the paths the order names.",
     "world_is": "The v3 sentinel path was written outside the named grant and admitted; the ledger and sentinel for the slug the GO named are committed and closed."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W15-S6",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~15",
+    "surfaced_at": "2026-09-30T21:10Z",
+    "one_line": "MX-t-10 commits: the S5 naming refusal no longer stands (R20 X11 entries NFRA-MCPINDEX-R20-01..03 admit the three literals) and the S2 disarm (INDEX_TOOLS) lands with it; the served object refreshed since the first equality read, so the figure was re-proved.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python .tools/naming-gate.py --diff <git diff HEAD -- infra workflows> printed NAMING DECLARED-EXCEPTION for DATA_CATALOG.yaml:402 (R20-01), emit_catalog_v02.py:55 (R20-02, 3 occurrences) and :71 (R20-03), and 'NAMING-GATE: WARN 3 graded', rc=0; the literal counts held at 1 / 3 / 1 after the merge.",
+        "The frozen candidate (03a19ac282) applied with conflicts in 4 files against CLOUD's MX-q-3/MX-s-15 changes; each was resolved by keeping both sides (INDEX_TOOLS names mdpf_get_model_benchmarks, etfs_get_positioning and gateway_query_catalog; ALL_TOOLS = PINNED+(BENCH, ETFS, QUERY); the DATA_CATALOG header is the candidate's v0.4). AC1 5 of 5, AC2 16 passed 0 failed.",
+        "EQUALITY_MX-t-10.md re-measured: object now VersionId YAsEJRNn8j_3Mu.nmkr_hwALppMRQFCB (2026-09-30T13:01:30Z), PFDE aum 167398064.0, as-of 2026-09-29, equal on both sides; the 2026-09-29 version yBqGKuVXd0Fc3LLZDBV8ojJ_ONfgTbUY is superseded.",
+        "test_ogz1_ac05 and test_ogz1_ac08 re-baselined on an archive of CLOUD @7aba7bcc4d and on this tree: both fail in both (2 failed, 10 passed); this change did not cause them (row Z-W15-S4)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO MX-t-10 ruling B3: the frozen candidate commits as-is once the naming exception holds; A2: both new tools entitled and the registry assertion strict.",
+    "world_is": "The exception holds, the candidate committed with only the merge resolutions above, and the equality record carries the refreshed object's figure."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~21",
+    "surfaced_at": "2026-09-30T10:32Z",
+    "class": "OBSERVATION",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "id": "NFRA_MCPINDEX-Z-W21-S4",
+    "hazard_standing": "INERT",
+    "one_line": "The record's scope rule says a call is refused when the principal's firm is not 49financial; an Opal-internal principal has no firm, so the tool reads that rule as 'Opal-internal sees every firm (PRD sec.10.8), a firm principal only its own', and admits Opal-internal with scope=49financial.",
+    "spec_asserts": "MX-t-13 act item 3 and the record's Scope rule: 'a principal resolves only its own firm ... the call is refused when the principal's firm is not 49financial; a cottonwood, inflection, demo, global or master-shaped value is refused, never translated.'",
+    "world_is": "query_v0._principal resolves an Opal-internal email to (opal-internal, '') -- no firm -- and a firm email to ('firm', <firm>). Read literally, the record's rule refuses every internal principal. The catalog row this cell emits is firm_scope_rule firm-scoped, whose definition (catalog_entries/README.md) is 'a firm principal sees only its own firm's rows; Opal staff see every firm'. blackdiamond.integration.check_scope admits (opal-internal, '') and ('firm','49financial') for scope 49financial and refuses every other scope value and every other principal; test_mx_t13_scope_fenced covers 12 refused scope values and 7 refused principals.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/integrations/blackdiamond/integration.py check_scope (worktree wk-mcpindex-r5-21, uncommitted: row S9).",
+        "infra/aws/ec2/opal-gateway/app/query_v0.py _principal (:82-91) read 2026-09-30.",
+        "workflows/atom_decomposition/catalog_entries/README.md firm_scope_rule section."
+      ]
+    },
+    "notes": "INERT: the narrower literal reading (refuse internal principals) would make the tool unusable to the Opal staff who grade it; if the issuer wants it, only check_scope changes. The integration is dormant until MX-r-7."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~21",
+    "surfaced_at": "2026-09-30T10:32Z",
+    "class": "OBSERVATION",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "id": "NFRA_MCPINDEX-Z-W21-S5",
+    "hazard_standing": "INERT",
+    "one_line": "The naming builder has no `secret` kind, so the ExternalId secret of the new read role is hand-typed on its sibling's pattern (opal/mcp/opal-gateway-blackdiamond-reader-external-id), a departure CLAUDE.md rule 30 sends to a registry row or an R20 entry.",
+    "spec_asserts": "CLAUDE.md rule 30: every resource name is lib/opal_naming.py name() output; a builder refusal is a missing registry row.",
+    "world_is": "name('gateway', None, 'blackdiamond-reader-external-id', 'secret') raises 'kind secret is neither a NAMING_SCHEMA.json kind nor a cadence' (run 2026-09-30). The role and the assume policy names ARE builder output (gateway-blackdiamond-read-role, gateway-assume-blackdiamond-reader-policy). The existing Schwab ExternalId secret (opal/mcp/opal-gateway-schwab-reader-external-ids) is hand-typed the same way. NFRA_MCPINDEX owns no write path into infra/logic/registry/, so the gap is named here and not fixed.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/opal_naming.py name() run 2026-09-30 at a73e9cf57e (kind 'secret' refused).",
+        "infra/aws/terraform/opal-gateway/blackdiamond_reader_iam.tf header NAMES paragraph (worktree wk-mcpindex-r5-21, uncommitted: row S9).",
+        "infra/aws/terraform/opal-gateway/schwab_reader_iam.tf locals schwab_external_ids_secret_name."
+      ]
+    },
+    "notes": "INERT until MX-r-7 applies the file; the secret name is one local, renamed in one line if a kind is added or the apply is reworded."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~21",
+    "surfaced_at": "2026-09-30T10:32Z",
+    "class": "OBSERVATION",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "id": "NFRA_MCPINDEX-Z-W21-S6",
+    "hazard_standing": "INERT",
+    "one_line": "Before any change, the gateway suite at CLOUD a73e9cf57e already fails: test_entitlement_admin.py::test_ogz2_ac06 (a file whose tool-count pin this cell moves) and 10 more, plus 35 StreamableHTTP errors.",
+    "spec_asserts": "MX-t-13 act item 4: move the pinned tool-count tests only if your change moves them; run the named tests.",
+    "world_is": "Full gateway suite from a clean git-archive of HEAD (run 2026-09-30): 11 failed, 383 passed, 35 errors, 34 subtests passed. With this cell's edits: 8 failed, 390 passed, 35 errors. The failure sets differ by three tests (test_oga3_ac01, test_ogo1_ac07, test_ogq1_ac07 failed at base only, so they are load-sensitive) and no test fails with the change that passed at base. test_ogz2_ac06 fails at base and after ('expected profile + grant + operator_audit puts, got 4'). test_ogz2_ac08, the pin test this cell moves (52 to 53, and a blackdiamond entry in the per-integration pins), passes.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "tests run from .scratch/base (git archive HEAD) and from the worktree, 2026-09-30; failing-id lists diffed: base-only 3, change-only 0.",
+        "infra/aws/ec2/opal-gateway/tests/test_entitlement_admin.py lines 339-362 in the worktree (uncommitted: row S9)."
+      ]
+    },
+    "notes": "INERT: no path in this cell's paths causes them; the StreamableHTTP errors are a once-per-process session-manager limit of the acceptance harness."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~21",
+    "surfaced_at": "2026-09-30T10:32Z",
+    "class": "OBSERVATION",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "id": "NFRA_MCPINDEX-Z-W21-S7",
+    "hazard_standing": "INERT",
+    "one_line": "emit_catalog_v02.py cannot run in a worker's sparse worktree: it needs portal/src/api (an empty, uninitialised submodule directory) and org/tier0_utility/.../refs/census (outside the cone), and without them it rewrites census_ref on rows it does not own.",
+    "spec_asserts": "MX-t-13 act item 4: the catalog row is added through catalog_entries/ and the emitter, never a hand edit of DATA_CATALOG.yaml.",
+    "world_is": "First run: 'EMIT REFUSED: accessor index is EMPTY'. After extracting portal/src/api at the worktree's gitlink 3e2233de92 from the shared tree's portal repo with read-only `git archive` (the files sit in the ignored submodule directory and are not committed) the emitter ran but regenerated census_ref as 'NONE -- uncensused (L-14)' on rows that carry a census file today; widening the sparse cone to org/tier0_utility/0.0.3_BG_BBGTerminal/refs/census made a no-change re-emit reproduce HEAD byte for byte except the two built_at_git_head lines. I also ran `git checkout --` once on DATA_CATALOG.yaml to discard that first wrong regeneration (my own emitter output, nothing else in the file), which the worker rules forbid; the file was re-emitted immediately after.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "emit_catalog_v02.py :380 PORTAL_API and CENSUS_DIR, read 2026-09-30.",
+        "no-change re-emit diff at a73e9cf57e: 2 lines (built_at_git_head), 2026-09-30."
+      ]
+    },
+    "notes": "INERT for this cell; a later worker re-emitting the catalog needs the same two inputs or will silently lose census_ref on existing rows."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~21",
+    "surfaced_at": "2026-09-30T10:32Z",
+    "class": "OBSERVATION",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "id": "NFRA_MCPINDEX-Z-W21-S8",
+    "hazard_standing": "INERT",
+    "one_line": "MX-r-7 must set two environment variables for the gateway to use the read role (BLACKDIAMOND_READER_ROLE_ARN, BLACKDIAMOND_READER_EXTERNAL_ID), and the reused Schwab role adapter words its failures as 'the Schwab reader role'.",
+    "spec_asserts": "MX-t-13 act item 2: the tool reads only through the fenced role; enablement is MX-r-7's.",
+    "world_is": "Nothing in the repository's IaC sets SCHWAB_READER_ROLE_ARN/SCHWAB_READER_EXTERNAL_ID (comp-find, 5 hits, all code and tests), so the Schwab wiring is an enablement act outside this tree; the Black Diamond integration follows it. Unset or mis-named, role_config raises RoleConfigError at the first call and the tool answers an error, never a fallback to instance credentials (test_mx_t13_scope_fenced arm g). The tool reuses schwab.aws_roles.AssumedRole, whose STS-failure text names the Schwab reader role, so an assume failure of the BD role reads as a Schwab one in logs.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "comp-find 'SCHWAB_READER_EXTERNAL_ID' infra 2026-09-30: 5 hits, DEF 1 (aws_roles.py:79), TEST 4.",
+        "infra/aws/ec2/opal-gateway/app/integrations/blackdiamond/integration.py role_config and BlackDiamondIntegration._s3 (worktree wk-mcpindex-r5-21, uncommitted: row S9)."
+      ]
+    },
+    "notes": "INERT: fails loud. The release cell sets the two variables from the applied role and the secret this cell's terraform file creates."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~21",
+    "surfaced_at": "2026-09-30T10:51Z",
+    "class": "BLOCKING",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "id": "NFRA_MCPINDEX-Z-W21-S9",
+    "hazard_standing": "INERT",
+    "one_line": "MX-t-13's commit is REFUSED by the naming gate in ENFORCE mode: the order's read fence is the live hand-kept address opal-data-bd silver/fees/ (and scope 49financial), 5 literals refused, and the only lawful departure (a waiver entry at HEAD, R20) is outside the order's paths; the whole cell sits built and tested but uncommitted in the worktree.",
+    "spec_asserts": "MX-t-13 act items 1-2 and the record's Read fence: the tool reads exactly s3://opal-data-bd/silver/fees/ and the role Allows exactly that prefix; CLAUDE.md rule 30: every address is lib/opal_naming.py address() output; a deliberate departure is an R20 register entry Andrew acknowledges.",
+    "world_is": "bash .tools/safe-commit.sh over the cell's 14 files aborts 'BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode)', NAMING-GATE: REFUSE 9 graded (2026-09-30, two attempts; the first also refused a tf interpolation, fixed since). The 5 remaining REFUSE verdicts: integration.py:51 opal-data-bd (NEW and ALIAS as S3_BUCKET, 'read it through lookup(49financial)'); integration.py:52 silver/fees/ (NEW and OUT-OF-PATTERN as S3Key, the builder shape is {source}/{scope}/silver/fees/); integration.py:56 49financial (hand-kept carrier, context rule); blackdiamond_reader_iam.tf:30 opal-data-bd; blackdiamond_reader_iam.tf:41 silver/fees/. lookup('49financial') yields opal-data-49financial, and that bucket holds NO silver/fees/ (list-objects-v2 prefix silver/fees/ returned no Contents; its top-level prefixes are _campaign/, _code/, gold/, irpt/; read 2026-09-30): the live data is at the legacy alias (the record's R19 migration gap), so following the gate's pointer would read an empty bucket. The waiver carrier the gate honours is read from COMMITTED HEAD only (.tools/naming-gate.py load_legacy_reads: a self-grant in the graded commit is impossible) and needs an authority; no waiver exists for these literals. The role name, both policy names and the tool name are CONFORMANT. State of the cell in the worktree (uncommitted): integration, registry line, SAFE and INDEX_TOOLS entries, pins 52 to 53, catalog source file plus emitter change plus re-emitted DATA_CATALOG.yaml, blackdiamond_reader_iam.tf (terraform validate Success on a scratch copy), tests/test_blackdiamond.py, EQUALITY_MX-t-13.md (tool and served object equal at VersionId ktHEUzzqCOa7Xp_YAl9UkEXPDRq1Dsuh), the proof instance (proof-of-spec-check rc 0). t13.AC1 PASS and t13.AC2 PASS (4 of 4) run in the worktree.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/mcp/naming-gate.enforce present (safe-commit.sh :745) and the commit aborted with the verdict lines above, 2026-09-30.",
+        ".tools/naming-gate.py load_legacy_reads (:1084-1100): the waiver carrier is read from HEAD, never the index or disk.",
+        "aws s3api list-objects-v2 --bucket opal-data-49financial --prefix silver/fees/ -> no Contents (read-only, 2026-09-30).",
+        "infra/logic/registry/scopes.json scopes[0] aliases: spelling opal-data-bd, planes [bucket], lookup false, graded ALIAS of opal-data-49financial."
+      ]
+    },
+    "notes": "INERT: nothing is armed; the cell is stopped. TWO ways forward, the issuer's or the CTO's to choose: (A) land the R20 waiver entries (Andrew-acknowledged) for the five file+literal pairs in a commit BEFORE the cell's commit, then re-run the same safe-commit command from the worktree; or (B) rule that the integration takes bucket, prefix and scope from gateway configuration (env set by MX-r-7, like the role ARN) so the code holds no address, which still leaves the two terraform literals needing (A). The worker has not chosen, has not bypassed the gate, and has not redesigned the fence."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~21",
+    "surfaced_at": "2026-09-30T11:40Z",
+    "class": "BLOCKING",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "id": "NFRA_MCPINDEX-Z-W21-S10",
+    "hazard_standing": "INERT",
+    "one_line": "MX-t-13 A2 restructured to the waiver's syntax and all 5 draft carrier entries are RECOGNIZED by the gate's own checkers, yet the whole-gate verdict stays REFUSE on the same 5 literals: judge() refuses a NEW literal before the waiver is consulted, and every literal of a new file is NEW.",
+    "spec_asserts": "Order A2 (ruled by Z-S64): the LEGACY-READ waiver (.tools/naming-gate.py:99-110,942-1180, carrier org/standards/NAMING_LEGACY_READS.json) is the lawful route, and restructured literals plus carrier entries let the cell commit.",
+    "world_is": "2026-09-30: integration.py now names opal-data-bd, silver/fees/ and 49financial once each, as direct args 0, 2, 3 of ONE call _read_fence(...) inside _fence (helper _read_fence, body sha256 62fa1fbe6204cc8a13bded14c338e93986c4de2a017a1f3eda020a144a2f5629; args[1] is the Name access = 'read', the assignment the recognizer requires); blackdiamond_reader_iam.tf holds opal-data-bd only as locals.bd_bucket (1 reference) and silver/fees/ only as locals.bd_fees_prefix (1 reference), 0 occurrences of either in comments. Draft entries at deliverables/0.9.0_WK_NFRA_MCPINDEX~21/LEGACY_READS_DRAFT_MX-t-13.json. Running legacy_read_ok / tf_local_ok on each of the 5 entries against the worktree post-images returns True 5 of 5. Running the whole gate over the cell's diff with load_legacy_reads patched to those entries (authority_ok patched True, cutoff 2099) still prints NAMING-GATE: REFUSE 9 graded with the same 5 REFUSE lines (integration.py:64 x3, blackdiamond_reader_iam.tf:31 and :32). Cause: .tools/naming-gate.py judge() sets new = pre_text is None or not _in_pre(lit, pre_text) (a new file has pre_text None, so every literal is NEW) and returns REFUSE at 'if new and verdict in (OUT-OF-PATTERN, ALIAS)' (and the NEW hand-kept-carrier branch for 49financial) BEFORE the waiver lookup at 'if rem:' (the comment there says a NEW literal can never reach it, structurally). The one precedent, OPLGTW-LEGACY-READ-01, waived a literal in advi_49f_floor.tf that already existed at HEAD. So a waiver entry, at any authority and pin, cannot admit these literals in integration.py and blackdiamond_reader_iam.tf while both files are new. Not patched: .tools/naming-gate.py is outside the order's paths.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python .scratch/sim.py in the worktree (legacy_read_ok/tf_local_ok 5 of 5 True; patched whole-gate run REFUSE on the same 5 literals), 2026-09-30.",
+        ".tools/naming-gate.py judge(): 'new = pre_text is None or ...', the NEW branch above the 'THE ONE CONSUMPTION POINT OF THE LEGACY-READ WAIVER' comment.",
+        "org/standards/NAMING_LEGACY_READS.json at HEAD: the two existing entries both cover files present at HEAD."
+      ]
+    },
+    "notes": "INERT: nothing is armed; the cell is uncommitted. Ways forward, the issuer's or the CTO's to choose: (A) a two-commit route in which a commit first lands each file with NO refused literal (the address read from gateway configuration, or the tf locals fed by variables) and a later commit makes the literal an EXISTING one under the waiver, which reopens the fence design; (B) a CTO ruling that admits a NEW literal under a waiver (a gate change, owner 1.0.0_SA_CTO~O / 0.0.0_AB_MSTR); (C) a first commit of the two files with the literals removed from the graded lines is not possible for a hand-kept literal without changing the fence. The worker has not chosen and has not bypassed the gate."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~21",
+    "surfaced_at": "2026-09-30T17:55Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "id": "NFRA_MCPINDEX-Z-W21-S11",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "CLOUD advanced to 195e74f5ea (MX-t-10 etfs_get_positioning landed in the same gateway files) while this worker's merge of 7aba7bcc4d was committing; the merge commit's pre-commit hook took about 35 minutes.",
+    "spec_asserts": "Order step 1: bring CLOUD in (CLOUD @7aba7bcc4d carries the R20 carrier) and move the count pin to CLOUD's 53 plus this cell's one tool.",
+    "world_is": "The merge of 7aba7bcc4d landed as 975832d5ad and the count pin is 54 against it. git log HEAD..CLOUD now lists MX-t-10's drain 29a40f5d4c and its close 26cc4e7252, whose measured diff against this branch (git diff --stat HEAD...CLOUD) is data_entitlement.py, portal_index/integration.py, test_portal_index.py, DATA_CATALOG.yaml, emit_catalog_v02.py and a new catalog_entries/portal_etfs_positioning.yaml -- data_entitlement.py, DATA_CATALOG.yaml and emit_catalog_v02.py are files this cell also edits, and CLOUD's MX-t-10 adds a portal_index tool, so the registered-tool pin and the portal_index entry of the per-integration pin in test_entitlement_admin.py move again (55 expected, unmeasured) and the catalog re-emits when the drain merges. The merge commit (1,806 staged paths) spent about 35 minutes in the pre-commit chain: surprise-row-gate.py's standing corpus pass ran at about 7 percent CPU with no child process; a first attempt run in the foreground was killed at the 300 s tool bound and had to be re-run in the background.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git log --oneline HEAD..CLOUD (CLOUD 195e74f5ea) 2026-09-30.",
+        "git log -1 975832d5ad (merge of CLOUD 7aba7bcc4d)."
+      ]
+    },
+    "notes": "INERT: the drain merge of this branch onto CLOUD is expected to conflict in data_entitlement.py, DATA_CATALOG.yaml and emit_catalog_v02.py; the resolution is both sides plus a re-emit of DATA_CATALOG.yaml through emit_catalog_v02.py and the pins moved."
   }
 ]
 ```

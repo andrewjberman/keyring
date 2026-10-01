@@ -90,7 +90,7 @@ Then run AC1.
 
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>31</round>
 <slot>~87</slot>
 <fabric>site-z</fabric>

@@ -1098,3 +1098,66 @@ at full width (`test_ogx4_ac03`).
 - **PRD revision:** only if the remedied code still measures INSUFFICIENT on the same host.
 - **Slot:** `~11`, continuing the subagent that built OG-x-2, released OG-x-3 and measured OG-r-3.
 - **Label:** `<round>7</round>` (one issuance per round label; 3..6 are held); it drains with round 3.
+
+## ADDENDUM R3-T (2.0.0_SA_COO~O, 2026-10-01, on PRD v1.2 C7 @c9fd271499) -- workstream TRNSPT-DEPS (orders O1-O5)
+
+**Source.** PRD v1.2 C7 and its addendum table (`1.0.0_SA_CTO~O`, @725230b531, F1/N1 fix @c9fd271499; `prd-signoff.py
+status` ADMITTED). Inputs: the NFRA_TRNSPT dependency file
+`org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_TRNSPT_T/R1_GATEWAY_DEPENDENCIES_FOR_SITE_Z_20260930.md`, the transcript
+spec `docs/briefs/opal-gateway-meeting-transcript-tools-spec-20260929.md` sections 4-6, and the branch triage
+`deliverables/2.0.0_SA_COO~O/LAPTOP_MAIL_BRANCHES_TRIAGE_20260930.md` @6d41bd25ec. This is a WORKSTREAM under the
+project's one issuer: a scope, not a second round, and the round-3 orders are untouched. Each cell is graded on its own
+criteria only; NFRA_TRNSPT grades its own FWDs.
+
+**The domain, by subtraction.** C7 has 14 clauses: 3 interactive, 3 transcript, 2 mail, 1 attachment, 4 headless,
+the O3 measurement, and 2 preconditions. Each one maps below to exactly one owning cell. Excluded by name:
+- spec section 9 (OneDrive upload, item permissions), which C7 does not admit;
+- recordings, ad hoc calls and the application-permission route (spec section 7);
+- any alert on a refusal (C7 "No alert").
+
+| order | cell | what it is | risk | slot |
+|---|---|---|---|---|
+| O1 | `OG-tx-1` | BUILD: `find_online_meeting`, `list_meeting_transcripts` (follows `@odata.nextLink`) and `read_meeting_transcript` (`text/vtt` through an optional `accept` on `graph.call`, full-body sha256, offset/limit). Also `list_calendar` gains `onlineMeeting`, `seriesMasterId` and a start date. `innerError.code` is surfaced, with the two transcript codes distinct; there is no unattributed fallback. Each tool is registered in SAFE_TOOLS and NATIVE_TOOLS. The audit carries ids, never text. Scoped and restricted principals stay denied. | WORLD (floor) | ~15 |
+| O4 | `OG-ml-1` | BUILD: ADOPT `gw-mail-tools-int` @6a7b9e78fa minus the LD-0613 hunk; take the three f-branch test files; re-read the tool count at the cut; pin `pypdf` (0 pins today). `read_email`'s `$select` gains the four fields, and the filtered list uses an opaque page token. The attachment tool stays INSPECT-only. Supersedes f1-f3. | WORLD (floor) | ~15 |
+| O2 | `OG-hr-1` | BUILD: the headless transcripts route. A new prefix (builder-named), its own constant-time bearer accepted on that prefix only, a fail-closed GET-only Graph path allowlist, allow-by-key output (meeting id, transcript id, the two timestamps, the vtt body, bytes, sha256), the meeting allowlist as config, the server-held delegated token of the ONE fixed identity, and an audit of route, ids, bytes and bearer label. `/ms/*` is byte-unchanged. | WORLD (floor) | ~16 |
+| O5 | `OG-hr-2` | BUILD: the headless mail route on the same pattern with a second prefix and bearer. It serves ONLY messages whose sender is on the sender table (no thread reach, @c9fd271499). The output is O4's `$select` plus the body. `$value` bytes are returned ONLY for a non-inline `application/pdf` under the size cap, with sha256; everything else returns metadata. | WORLD (floor) | ~16 |
+| O3 | `OG-lt-1` | MEASURE: how long the server-held delegated token refreshes unattended before `NeedsLogin` (`app/token_broker.py:171-183`), with the instrument and timestamps. Read-only; under one day returns to the CTO before any `token_broker` change. | SERVED | ~17 |
+| O2+O5 (+O1, O4) | `OG-rl-1` | SERVED: ONE narrow gateway release of tx-1, ml-1, hr-1 and hr-2 from the deployed commit re-read at the cut (by content, row Z-S21). It covers the two bearer secrets (Secrets Manager, SECRET-grammar names from the builder), a NEVER-2 ledger and never-widen halves. Its FIRST criterion is the negative arms run on demand: a cross-prefix bearer refused; an off-allowlist meeting refused; an off-table sender refused, including one in a table sender's thread; a non-PDF attachment returns metadata only. | WORLD | ~15 |
+| O1 live | `OG-tx-2` | WORLD: spec section 6 steps 1-4 (REACH with its negative arm, COMPLETENESS, ATTRIBUTION, ALL FOUR) through the released tools as Andrew. HELD on G-TEAMS-TX. | WORLD | ~15 |
+
+**Edges:**
+- `OG-tx-1` -> `OG-ml-1` (both write `app/tools.py`, `destructive_ops.py`, `data_entitlement.py` and the tool-count
+  assertion; serialised in one slot so the count is re-read once);
+- `OG-ml-1` -> `OG-hr-2` (the route serves O4's `$select`);
+- `OG-hr-1` -> `OG-hr-2` (both register routes in `server.py`; one slot);
+- tx-1, ml-1, hr-1 and hr-2 -> `OG-rl-1`;
+- `OG-rl-1` -> `OG-tx-2`;
+- RELEASE SERIALISATION: OG-t-2 (round 3), then NFRA_MCPINDEX MX-r-7, then `OG-rl-1`. Each base is the previous live
+  ref, read by content.
+
+**Gates and holds:**
+- **The whole workstream is CUT after OG-t-2 lands** (`1.0.0_SA_CTO~O` msg 27439).
+- **G-TEAMS-TX** (Andrew via IT: `EnableGraphTranscriptAccess`, `EnableAttributedTranscripts`) holds `OG-tx-2` only.
+  The build and the release do not wait on it.
+- **G-SENDERS** holds `OG-rl-1`'s mail arm:
+  - the sender table's values (Manav's and Yang's addresses, NFRA_TRNSPT's data asset);
+  - 0 of 70 files in the NFRA_TRNSPT and `data/transcripts` trees name it (comp-find, corpus=all, 2026-10-01);
+  - Yang's addresses are not yet supplied (N1).
+- **G-MEETINGS** holds `OG-rl-1`'s transcript arm: the four allowlisted meeting ids. `find_online_meeting` resolves them
+  after release; until then the allowlist is empty, which fails closed.
+- **Route names come from `lib/opal_naming.py`.** It has a SECRET grammar but no route kind today, so a refusal is a
+  missing registry row (rule 30): a BLOCKING row routed to the registry owner, never a hand-typed name.
+
+**Fan-out:** 7 orders in 2 connected components ({tx-1, ml-1, hr-1, hr-2, rl-1, tx-2} and {lt-1}). There are
+N = 3 slots, cap 8:
+- `~15`: {tx-1, ml-1, rl-1, tx-2};
+- `~16`: {hr-1, hr-2}, which joins ~15 at ml-1 -> hr-2 and at rl-1;
+- `~17`: {lt-1}.
+
+Slots ~15..~17 are unused: round 3 named ~10..~14.
+
+**Battery (blindness stated):**
+- (a) The clause map above is a forward list over C7's 14 clauses. Its domain is C7 itself, not NFRA_TRNSPT's needs.
+- (b) Write-surface overlap was read from the PRD's own named files, not from a diff. A file the build discovers is
+  a surprise row.
+- (c) No cell grades NFRA_TRNSPT's FWD-1 or FWD-7. The positive mail and transcript runs are that project's.

@@ -5079,3 +5079,325 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W12-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~12",
+  "surfaced_at": "2026-09-30T22:50Z",
+  "one_line": "TO-OG-t-2 step 6 and AC3 say ENABLED_INTEGRATIONS renders `ycharts opal_portal globgrph`; the live template and the host carry SIX ids (ycharts opal_portal globgrph opal_discover portal_index schwab), so the order's literal value would REMOVE three integrations and AC3's literal compare reads FAIL.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 42c52ed4d9:infra/aws/ec2/opal-gateway/deploy-to-ec2.sh .env printf: ENABLED_INTEGRATIONS=ycharts opal_portal globgrph opal_discover portal_index schwab (live 33 keys incl. 5 Schwab host keys).",
+      "Read-only SSM 2026-09-30 (command 28544048-dae6-4033-ad28-b408544ea75d, Success): the host .env ENABLED_INTEGRATIONS line is the same six ids; /health 200.",
+      "deliverables/2.0.0_SA_COO~O/round2/checks/tr.AC3.sh compares the host line to the literal 'ENABLED_INTEGRATIONS=ycharts opal_portal globgrph'; the EC2_MANIFEST release_note of MX-r-6 v3 (42c52ed4d9) says ENABLED_INTEGRATIONS gained schwab (6 ids).",
+      "Release branch rel-nfra-oplgtw-tier-auth d61fde4693: rendered ENABLED_INTEGRATIONS equals live's six ids; the only template keys added are MASTER_ADMIN_PRINCIPALS and WRITE_CAPABLE_PRINCIPALS (live 33 keys -> 35, 0 removed, 0 shared values changed)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-OG-t-2 step 6: `ENABLED_INTEGRATIONS` must render `ycharts opal_portal globgrph`; AC3: `ENABLED_INTEGRATIONS` unchanged, graded against that literal.",
+  "world_is": "The string is the pre-Schwab value of the round-2 issuance base. The release keeps the live six-id value (the order's intent is 'unchanged'; its literal would be a three-integration regression). PHASE B's 'ENABLED_INTEGRATIONS unchanged' read is correct against the six ids; tr.AC3.sh's literal is not.",
+  "notes": "Issuer disposition needed before GO: amend tr.AC3.sh (and step 6's literal) to the live six-id value, read at act time. Not edited by this worker (outside <paths>)."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W12-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~12",
+  "surfaced_at": "2026-09-30T22:50Z",
+  "one_line": "tr.AC2.sh grades the shipped gateway files against the files changed by the ~12 slot's commits on the worktree HEAD; deploy-to-ec2.sh, which step 2's census and step 6 themselves ship, is not in that set, so AC2 reads 'outside the build cells set 1' and FAILS.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Reproduced AC2's three reads against the release (p=42c52ed4d9, c=d61fde4693) from the worker worktree: gateway files shipped 15; allowed set 14; foreign: infra/aws/ec2/opal-gateway/deploy-to-ec2.sh; descends=yes; tier.py email roster reads 0.",
+      "The release-branch commit that edits deploy-to-ec2.sh is authored by ~12 but lives only on rel-nfra-oplgtw-tier-auth, not in the worktree HEAD history AC2 reads.",
+      "TO-OG-t-2 step 2: the census 'names ONLY files the build cells changed, plus deploy-to-ec2.sh for step 6'."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AC2: the deployed commit ships only files the build slot's commits changed.",
+  "world_is": "The step-6 template edit is a release-branch change no committed build-slot commit on the worktree carries, so the check's allowed set cannot contain it.",
+  "notes": "Issuer disposition needed before GO: add deploy-to-ec2.sh to AC2's allowed set (an explicit exception for the step-6 file), or accept the one named foreign file. Not edited by this worker."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W12-S6",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~12",
+  "surfaced_at": "2026-09-30T22:50Z",
+  "one_line": "Step 6 adds `MASTER_ADMIN_PRINCIPALS=<value>` to the .env printf, but the hand-off forbids writing the tid/oid pairs into any committed file; the release branch therefore renders them from two deploy-time env vars and refuses to run without them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Release commit d61fde4693 (deploy-to-ec2.sh): printf %s count 9 -> 11 and argument count 9 -> 11; new args are OG_MASTER_ADMIN_PRINCIPALS and OG_WRITE_CAPABLE_PRINCIPALS; a guard before the stale-base read exits 3 with no build or upload when either is unset or any entry is not a <tid>/<oid> GUID pair (bash -n clean).",
+      "A rendered-.env check with the hand-off pairs in memory: 35 keys, 35 unique; both principal lines equal the pairs as handed (1 admin pair, 2 write-capable pairs); the four email roster keys stay.",
+      "Hand-off values are cited to org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/PART_D_RECORD_20260930.md @205c2e7f6c and appear in no committed file."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-OG-t-2 step 6 (add the two lines with the hand-off values) against the hand-off rule 'never write them into any committed file'.",
+  "world_is": "A literal printf line would put both pairs in a release-branch commit. The two values must be exported by the seat that runs PHASE B step 10 (the issuer re-supplies them at GO); the SSM command the deploy sends carries them to the host .env, as any .env value does.",
+  "notes": "PHASE B step 10's command gains two environment assignments: OG_MASTER_ADMIN_PRINCIPALS and OG_WRITE_CAPABLE_PRINCIPALS. Fail-closed if absent. The rollback tree /c/tmp/og-rb2 is the live template and needs neither."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W12-S7",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~12",
+  "surfaced_at": "2026-09-30T22:50Z",
+  "one_line": "The operator's upload client (identity_tool_allowlist.txt:19) does NOT expire at release time, but its only refresh family was revoked 2026-09-29 (refresh_token_reuse) so nothing holds it: it reads EXPIRED under OG-u-2's idle lifetime from about 2026-10-18 unless an authorization-code exchange extends it first.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Read-only consistent scan of gateway-access-state-table 2026-09-30: 303 items; oauth_client 6, none with an expires_at attribute (the release computes expiry at read from created_at + 2592000 s); expired at get_client 0 of 6; expired at exchange 0 of 6.",
+      "The operator client's record: created 2026-09-18, age 12.3 days, expiry in 17.7 days; live refresh families by client: 5 clients hold 7 live families, the operator client holds 0 (its one family: status revoked, revoked_reason refresh_token_reuse, last used 2026-09-29).",
+      "identity_tool_allowlist.txt:19 comment measured '1 active family, 1 client' on 2026-09-25; that family is now revoked."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-OG-t-2 step 4: count the oauth_client records that would read EXPIRED under OG-u-2 at release time and say whether the operator's upload client is among them.",
+  "world_is": "At release time the count is 0 of 6 and the operator client is not among them; the clock is 17.7 days, and a revoked family does not hold a client.",
+  "notes": "Not a STOP under step 4. Reported so the operator's next re-authorization is not left to chance."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W12-S8",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~12",
+  "surfaced_at": "2026-09-30T22:50Z",
+  "one_line": "Step-4 census: the table's only real POLICY partition is the write-capable person #1's, and it holds an ACTIVE email_deny record (plus 3 synthetic probe partitions from 2026-09-16); neither moves any tier, but the deny record is a live refusal on a roster principal's sign-in path.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Table scan 2026-09-30 (303 items): POLICY partitions = 1 real principal partition (principal_profile, 2 data_entitlement, 2 operator_audit, 1 email_deny status active, all for one principal that is in the WRITE_CAPABLE_PRINCIPALS hand-off) + 3 synthetic probe-og-i1 partitions + no tenant partition.",
+      "Step-4 delta table: 3 real principals (table union) + 2 audit-only persons + 1 server-held machine identity (callers ms, 49f, cot) + 3 synthetic probes = 9 identities; 0 deltas (1 machine identity: MASTER_ADMIN old and new via the email roster rule).",
+      "app/access_state.py email_deny_key: a denial-only record keyed by the email hash; it is read by the GUI path (/login, /sprint*) before any tier, not by resolve_tier."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-OG-t-2 step 4: the ONLY allowed delta is the synthetic test fixture.",
+  "world_is": "The three probe partitions are the allowed fixture class and show no tier delta. The active email_deny on a roster principal is a pre-existing state unchanged by this release.",
+  "notes": "Reported as observed; nothing in the release reads or writes it."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S22",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-09-30T23:05Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarmed by their disarm owner (the issuer): amendment A2 on TO-OG-t-2 corrects both of the issuer's own checks and the stale step-6 literal.",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W12-S4",
+    "NFRA_OPLGTW-Z-W12-S5"
+  ],
+  "one_line": "OG-t-2's AC3 literal ENABLED_INTEGRATIONS (3 ids) and AC2's allowed set (no deploy-to-ec2.sh) were the issuer's defects; A2 sets AC3 to live's six ids (or the step-8 BEFORE read) and allows deploy-to-ec2.sh.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 42c52ed4d9:infra/aws/ec2/opal-gateway/deploy-to-ec2.sh and the release head d61fde4693 both render ENABLED_INTEGRATIONS=ycharts opal_portal globgrph opal_discover portal_index schwab.",
+      "tr.AC2.sh after A2, run at CLOUD 0a5cc3c093 against the MX-r-6 v3 manifest record: RESULT FAIL with 21 files outside the build cells' set, the correct verdict for another project's release (negative control); deploy-to-ec2.sh is no longer foreign.",
+      "bash -n passes on both amended scripts."
+    ]
+  },
+  "spec_asserts": "TO-OG-t-2 step 6: ENABLED_INTEGRATIONS must render `ycharts opal_portal globgrph`; AC2: the release ships only files the build cells' commits changed.",
+  "world_is": "Live carries six integration ids after MX-r-4 and MX-r-6, so the literal would have dropped three; and step 6 itself adds deploy-to-ec2.sh to the shipped set.",
+  "notes": "AC2 and AC3 are graded after PHASE B on the committed record and the served host.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S23",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-09-30T23:55Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "A drain run by safe-merge.sh in the shared tree committed a peer's uncommitted project.json edit (1.0.0_SA_CTO~O's v1.2 lineage line) into the merge commit, and the same window lost that peer's PRD edit and this seat's own A2 edits.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git diff --stat 5345674e9d...wk-NFRA_OPLGTW-12-t2: 2 files changed; git show --stat 0a5cc3c093: 3 files, the third org/missions/D9/NFRA/NFRA_OPLGTW/project.json (+1 line, the v1.2 lineage entry by 1.0.0_SA_CTO~O).",
+      "725230b531 commit body (1.0.0_SA_CTO~O): the drain merge swept this seat's uncommitted working-tree edit and reverted the PRD edit, so this commit carries the PRD only.",
+      "The first attempt of the same drain was refused: 'safe-merge: REFUSED -- the index carries STAGED changes (possibly another seat's)'; the retry minutes later passed with an empty staged set while the peer's working-tree edit was still present."
+    ]
+  },
+  "spec_asserts": "CLAUDE.md 14b: a drain is graded against the shared index; safe-merge refuses when the index carries staged changes, so a drain carries only the branch.",
+  "world_is": "The staged-set refusal does not cover an UNSTAGED peer edit to a path the merge touches or auto-stages; a merge commit in the shared tree can absorb it, and the peer's later edits to the same area can be lost.",
+  "notes": "Net damage recovered by the peer: the lineage line is on CLOUD via 0a5cc3c093 and the PRD via 725230b531. For this seat: drain in a gap, and read `git status --short` on the branch's paths plus any peer-edited path before a shared-tree drain. The safe-merge limb (refuse when a merge would commit a path outside the branch's diff) belongs to the tool's owner.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W12-S9",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~12",
+  "surfaced_at": "2026-10-01T01:35Z",
+  "one_line": "The first PHASE B step-10 attempt exited rc=3 at safe-ec2-deploy.sh's halt gate BEFORE any build or upload: the sparse release tree /c/tmp/og-rel2 held no org/tier1_exec/2.0.0_SA_COO home dir, so the gate could not validate the session's serial (the issuer's 2.0.0_SA_COO~O, inherited by this subagent); widened the sparse set by that one dir and re-ran.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "First attempt log (scratch, not committed): 'HALT-GATE: SERIAL RESOLVES TO NO KNOWN AGENT -- BLOCKED (fail-closed)', resolved serial 2.0.0_SA_COO~O, ACT END rc=3 at 2026-10-01T01:33:58Z, 7 s after start; no 'base guard' line, no upload line, no SSM dispatch in the log.",
+      ".tools/halt-gate-check.sh halt_gate_validate_serial (lines 189-217): a non-worker serial is valid only when a dir under ${HALT_GATE_REPO_ROOT}/org/tier{0_exec,0_utility,1_exec,2_senior,3_junior}/ has a name containing the base; the release tree's sparse set (Phase A) had no org/tier* dir.",
+      "Fix: `git sparse-checkout add org/tier1_exec/2.0.0_SA_COO` in /c/tmp/og-rel2 (3,717 tracked files, release HEAD unchanged d61fde4693, no tracked byte edited); the second attempt passed the gate (HALT_ACK=1) and ran. The K1 13-file host md5 read was repeated before BOTH attempts: 13 of 13 equal each time (01:33:51Z and 01:37:27Z)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-OG-t-2 step 10: the act runs from the release tree with HALT_ACK=1 and AGENT_NAME set, and the order's sparse-set note (widen if a gate needs it).",
+  "world_is": "The halt gate resolves identity from the SESSION (CLAUDE_CODE_SESSION_ID), not from AGENT_NAME, and a spawned worker shares its issuer's session, so a worker release from a sparse tree needs the ISSUER's agent home dir present. Fail-closed and harmless (rc=3 before upload); it repeats for any worker deploy from a sparse release tree.",
+  "notes": "No host or S3 state changed by the refused attempt. The fix is a working-tree-only widen of the release tree, not a commit."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W12-S10",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~12",
+  "surfaced_at": "2026-10-01T01:46Z",
+  "one_line": "The host audit record carries the caller's EMAIL in `user` and the resolved `tier`, never the principal key, so the two post-release tier reads were attributed by email (admin address, opalbloomberg address) plus a NON-BLANK tier, not by matching the principal pair.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "app/audit.py log_call (lines 129-139) writes ts, user (email), tool, args, outcome, detail, tier; no principal field.",
+      "Host read after deployed_at 2026-10-01T01:38:29Z, filtered to those two emails, tool present, no `event` field: 2 rows -- A_admin tier=master_admin tool=whoami ts=2026-10-01T01:44:01Z; B_opalbloomberg tier=standard tool=whoami ts=2026-10-01T01:44:24Z (ROWS_AFTER_DEPLOY 2).",
+      "The admin email also carries machine-held calls (ms_site_children, 15,725 in the 14-day pre-read, tier blank); the non-blank-tier filter excludes them, and no such row appeared after deployed_at."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Hand-off step 6: match the principal key in memory on the host or in the worker process, print only tier, tool and UTC.",
+  "world_is": "No audit field holds the principal, so the audit row proves the tier the release resolved for that email's call, and that the call came from the named session is the issuer's and Opal_Agent's statement, not the log's. The tier is computed from the principal on /mcp (token_broker/server set a principal on every /mcp call), so the tier value is the principal's.",
+  "notes": "Printed only tier, tool, UTC and the A/B labels; no tid/oid value was printed or written."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W12-S11",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~12",
+  "surfaced_at": "2026-10-01T01:48Z",
+  "one_line": "safe-ec2-deploy.sh committed the manifest on the RELEASE branch (dc8f99b436, 10 lines changed: _last_updated plus re-encodes of unrelated non-ASCII notes); the CLOUD-side record is hand-edited on this worker's branch (c0dc3b6422), six opal-gateway lines plus _last_updated, and the release-branch commit is not ported.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show dc8f99b436 on rel-nfra-oplgtw-tier-auth: EC2_MANIFEST.json 10 insertions, 10 deletions; 6 of the 10 added lines carry the mojibake lead character (the smartx-exporter and inf-gold-qa-runner notes among them), replacing the escaped em-dash sequence.",
+      "git diff on this branch before commit c0dc3b6422: 6 insertions, 6 deletions -- _last_updated, deployed_commit, deployed_at, deployed_by, release_note, previous_deployed_commit; mcportal_commit unchanged a3bff71ffa; file stayed LF with 0 CR and the recorded note is ASCII.",
+      "Same class as the 3a67e6fcf2 commit message for MX-r-6 v3 (the wrapper's rewrite re-encodes non-ASCII notes; not ported)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-OG-t-2 step 12: record EC2_MANIFEST.json services.opal-gateway as OG-e-2 step 13 did.",
+  "world_is": "The wrapper's own manifest commit lands only on the release branch, and a merge of that branch to CLOUD would carry the mojibake; the order keeps the release branch unmerged to CLOUD.",
+  "notes": "The release branch rel-nfra-oplgtw-tier-auth must not be merged to CLOUD as is; the CLOUD record is c0dc3b6422 on wk-NFRA_OPLGTW-12-t2."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S24",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-01T02:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Since OG-t-2 (live d61fde4693), every opal-gateway release must supply OG_MASTER_ADMIN_PRINCIPALS and OG_WRITE_CAPABLE_PRINCIPALS at deploy time or deploy-to-ec2.sh refuses (exit 3); the values live only in a site-Z local file, not in Secrets Manager like the other gateway bearers.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ANNOUNCE_OG-t-2.md step 6: the release template renders the two principal lines from the deploying shell and refuses with exit 3 when either is unset or not a <tid>/<oid> GUID pair (row Z-W12-S6).",
+      "OG-t-2 landed 2026-10-01T01:38:29Z (ledger nfra-oplgtw-tier-auth-release CLOSED, drained @59f7d5808b); the next releaser is NFRA_MCPINDEX MX-r-7 (2.0.0_SA_COO~MI msg 27441).",
+      "The values' only copy is %LOCALAPPDATA%/opal/og-principals/part_d_20260930.json on site Z (PART_D_RECORD_20260930.md @205c2e7f6c); the template's other bearers are read on the host side at deploy."
+    ]
+  },
+  "spec_asserts": "TO-OG-t-2 issuer notes: the principal values ride the hand-off message, never a file; the release is a one-time act.",
+  "world_is": "The template edit persists into every later release cut from the live tree, so each releaser (any COO lane, either device) needs the values at deploy time; a releaser without them is refused before upload (safe), but blocked.",
+  "notes": "Interim: 2.0.0_SA_COO~O supplies the values off-repo on request (told 2.0.0_SA_COO~MI after 01:59Z). Remedy proposal for 1.0.0_SA_CTO~O: store both rosters as a Secrets Manager entry (SECRET-grammar name from the builder) read by deploy-to-ec2.sh like the other bearers, under its own ledger and halves. The local file stays until then.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W16-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~16",
+  "surfaced_at": "2026-10-01T02:10Z",
+  "one_line": "BLOCKING OG-hr-1 step 1: lib/opal_naming.py name() refuses every name the transcripts route needs -- no route kind, no secret kind, and the transcripts scope is a PRODUCT scope the scope slot will not take; no code written.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "name('gateway','transcripts','headless','route') -> ValueError: scope 'transcripts' is a PRODUCT scope; this slot takes FIRM/GLOBAL/MASTER (same refusal for kind 'secret' and kind 'api' with scope 'transcripts').",
+      "name('gateway',None,'transcripts','route') -> ValueError: kind 'route' is neither a NAMING_SCHEMA.json kind nor a cadence.",
+      "name('gateway',None,'transcripts-bearer','secret') -> ValueError: kind 'secret' is neither a NAMING_SCHEMA.json kind nor a cadence.",
+      "org/standards/NAMING_SCHEMA.json kind.values (20): lambda role policy profile sg api table queue dlq topic alerts alarm layer runner build document task sfn lb cluster; closed_at_l4 says 'secret was DROPPED: secrets keep their own slash-path grammar'; secret.grammar is '{system}/{scope}/{purpose}'; API_ROUTE is NOT GRADED (a served route contract).",
+      "lib/opal_naming.py grade('gateway/transcripts/bearer','SECRET') -> ('CONFORMANT', ...), but grade() is the grader, not a builder; there is no name()-class builder for the slash-path secret grammar.",
+      "The cell checks (checks/_names.py, hr1.AC2.sh) require secret_name == name(**secret_builder) and prefix == '/' + name(**prefix_builder), so no committed value can pass; hr1.AC2 cannot be met as written. Decomposition line 1148-1149 anticipated this refusal as a BLOCKING row.",
+      "Evidence: lib/opal_naming.py and infra/logic/registry/{systems,scopes}.json at f22e8677ab; run on branch wk-NFRA_OPLGTW-16-r8."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-OG-hr-1 step 1: the prefix and secret names are lib/opal_naming.py name() output; a refusal is a missing registry row (rule 30), a BLOCKING row, and the worker stops.",
+  "world_is": "name() has no route kind and no secret kind, and refuses scope 'transcripts' in the scope slot. Missing registry pieces: (a) a route kind or a route/secret builder in NAMING_SCHEMA.json and lib/opal_naming.py (a ruling on whether a headless route name is the graded API_ROUTE class or a new kind), and (b) a secret-grammar builder, or a ruling that the checks use grade(). Cells hr-1, hr-2 (same slot) and rl-1 (bearer secrets) all bind to the answer. ROUTE_NAMES.json, transcript_route.py, server.py, config.py and the tests were NOT written.",
+  "notes": "Owner of the registry rows: the registry owner (1.0.0_SA_CTO / the LGIC naming seat), routed by 2.0.0_SA_COO~O. The worker made no AWS or Graph call and no commit other than this row."
+}
+```

@@ -242,3 +242,139 @@ the onboarding view, replay beyond the minimum, keys, the daily page and sample,
    v0.3's named residual); their removal is an enrichment behind an internal reader role and never-widen sign-off.
 5. Cottonwood, the domain gate, the onboarding view, keys and caps, the daily page and sample, and production are
    enrichment.
+
+---
+
+# ROUND 2 -- THE ENRICHMENT CUT (L5, v2)
+
+```json
+{
+ "project": "NFRA_MCPMSP",
+ "decomp_version": "v2",
+ "step": 5,
+ "round": 2,
+ "input": "org/missions/D6/NFRA/NFRA_MCPMSP/ledger/ROUND_ANALYSIS.round1.md@5e2ff94c28 (section 4, E1-E5)",
+ "prd_ref": "org/missions/D6/NFRA/NFRA_MCPMSP/prd/NFRA_MCPMSP_PRD.md@7ecc812be5 (v0.4; ratified-text SIGNED current)",
+ "author": "2.0.0_SA_COO~MS",
+ "cells": 13,
+ "chains": 6,
+ "join_cells": 3,
+ "frozen": true
+}
+```
+
+**Author:** `2.0.0_SA_COO~MS`. **Input:** the CTO's round-1 analysis @5e2ff94c28, section 4, cut in ONE issuance; two CTO
+rulings at the cut: msg 27414 (E1's Deny: option (a) -- MCPMSP owns the internal role, NFRA_MCPINDEX routes its own two
+readers; the Deny cell is HELD until every gateway-identity reader of `opal-data-portal-v2` is routed) and msg 27416
+(`MSP_CALLING_IDENTITIES`, empty by default, scopes the pilot refusal to the MSP calling identity; the account is
+Andrew's -- gate G-MSPID). Round 1 (sections 1-9 above) stays frozen as its own record.
+
+## R2.1 GROUND TRUTH MEASURED AT THE CUT (site Z, CLOUD, 2026-09-30 ~22:3xZ)
+
+- The gateway runs `42c52ed4d9` (EC2_MANIFEST @3a67e6fcf2; NFRA_MCPINDEX MX-r-6). Every round-2 release is NARROW from
+  the deployed commit re-read at its own spawn.
+- The gateway identity reads `opal-data-portal-v2` through: `app/query_v0.py:58` (`_fetch_capped`, also the
+  opal-internal asker fetch), `app/integrations/portal_index/integration.py:273-275` and
+  `app/integrations/opal_discover/integration.py:228` (default boto3 client; NFRA_MCPINDEX's paths). The grant is
+  `infra/aws/terraform/opal-gateway/queryv0-iam.tf` (`gw_queryv0_portal_read`: `json/*`, `platinum/*`), plus
+  `daily-reports-iam.tf` (`daily-reports/*`).
+- Builder names (no registry row needed): `gateway-global-internal-reader-role`, `gateway-global-internal-reader-policy`,
+  `gateway-global-internal-assume-policy`, `gateway-firm-deny-policy`.
+- The gateway test fixture that writes audit to a temp file (`tests/conftest.py`, MP-f-1 @31b9d1975e) is on CLOUD but in
+  NO deployed commit (`093fc247c6`, `4ce7946426`, `42c52ed4d9` all lack `_AUDIT_FILE`), so a narrow release tree's suites
+  dirty the tracked `audit.jsonl` (R-5). The parent `mcportal` gitlink is `fa1ff9693b` (README only) while the manifest's
+  `mcportal_commit` is `a3bff71ffa` (R-4).
+- Sibling orders open on overlapping gateway paths at the cut: NFRA_MCPINDEX MX-t-10, MX-t-12 (`tests/test_portal_index.py`),
+  MX-t-13 (`tests/test_blackdiamond.py`, `tests/test_entitlement_admin.py`). No round-2 cell writes those files;
+  none writes `deploy-to-ec2.sh` but MS-r-1 and MS-d-2 (one slot).
+- `Opal_Agent`'s Claude is signed into the gateway as `opalbloomberg@opalinvest.com` (G-ACCT step 6); the operator launch
+  recipe that gives a typeable window is `.NET Process.Start` from a Medium-integrity shell
+  (`C:\Users\Opal Bloomberg\.opal_runtime\G-ACCT_STEP6_RESULT_20260930.md`).
+
+## R2.2 THE CELLS -- 13
+
+| cell | from | builds / runs | write surface | risk |
+|---|---|---|---|---|
+| `MS-c-1` | E1 | the reader census: every S3 read the gateway identity makes of `opal-data-portal-v2` (code call sites with bucket/prefix; the live policies on `opal-gateway-role`), printed with its denominator; and the DELTA question set: a fixed list of firm-scoped catalog keys whose served bytes (sha256) are captured on the host today, through the existing path, as E1-z's baseline | its deliverables only | WORLD (reads the served host over SSM) |
+| `MS-e1-t` | E1 | `infra/aws/terraform/opal-gateway/mcpmsp_internal_reader.tf`: the internal reader role (module `opal_name`, scope `global`), its policy = today's `gw_queryv0_portal_read` resources on the builder bucket, trust = the gateway role, the gateway's one AssumeRole policy; and `mcpmsp_gateway_firm_deny.tf`: an explicit Deny for `opal-gateway-role` on the firm-segment keys the census names (written now, applied only by MS-e1-z) | the two `.tf` files | WORLD (floor) |
+| `MS-e1-a` | E1 | targeted `safe-apply` of the internal role, its policy and the gateway's AssumeRole policy ONLY (never the Deny file's resources); live simulate: internal role reads a firm key and a global key ALLOWED; gateway AssumeRole on it ALLOWED | ledger paths | WORLD |
+| `MS-e1-g` | E1 | `app/internal_role.py` (new): the opal-internal S3 client assumed from env `INTERNAL_READER_ROLE_ARN` (unset = today's client, so a release before the role exists moves nothing); `query_v0._fetch_capped` reads through it; tests | `app/internal_role.py`, `app/query_v0.py`, `tests/test_mcpmsp_internal_role.py` | WORLD (floor) |
+| `MS-e1-z` | E1 | the Deny: HELD. Spawns only when (i) the census at its own cut prints every gateway-identity reader of `opal-data-portal-v2` routed (first criterion, with its denominator -- CTO 27414), (ii) the never-widen pair (CTO half + COO half) names the blast radius, (iii) MS-d-2 is live. Applies `mcpmsp_gateway_firm_deny.tf`; DELTA=0 on MS-c-1's question set after vs before; one JUDGMENT criterion (Rule J): `3.0.0_SA_CVO~O` grades the internal Analyst's and `/query/v0`'s served figures, dates and coverage unchanged | ledger paths | WORLD |
+| `MS-e2-g` | E2 | `app/sender_gate.py` (new) + `asker_scope.py`: the sender's address from the chat's member list (the member whose `userId` is the sender oid), Andrew's four allowed domains, the domain must match the tenant's registered firm (`opalinvest.com` = Opal's tenant), guest-form (`#EXT#`) refused, `opalinvest.com`/`49financial.com` senders refused `asker_pilot_scope` ONLY when the calling identity is in `MSP_CALLING_IDENTITIES` (env, empty default); the refusal entry gains `sender_email`, `sender_domain` (C4, no text); `audit.py` allowlist; tests | `app/sender_gate.py`, `app/asker_scope.py`, `app/audit.py`, `tests/test_mcpmsp_sender_gate.py` | WORLD (floor) |
+| `MS-e2-h` | E2 | the agent-side gate in `opal_ai/opal/runtime-msp/`: a PreToolUse hook on every send-message tool that allows a send only when the session transcript's most recent `opal_asker_query` for that chat returned a served answer (no `asker_scope_denied`); registered in `runtime-msp/.claude/settings.json`; fixture tests | `opal_ai/opal/runtime-msp/hooks/**`, `opal_ai/opal/runtime-msp/.claude/settings.json` | LOCAL |
+| `MS-e2-v` | E2 | the live arm: gates G-MSPID and MS-d-2 live and MS-e4-r's session; Andrew sends one Teams message from `opalinvest.com` to the MSP calling identity; the session calls `opal_asker_query`; no reply; one refusal entry (`asker_pilot_scope`, sender email/domain, no text) found in the audit record; one JUDGMENT criterion (Rule J): the CVO judges from the entry and the absent reply that the refusal came from the gate | its deliverables only | WORLD |
+| `MS-e3-g` | E3 | `app/admin_refusals.py` (new), owner-gated: `GET /api/admin/refusals` lists `asker_sender_refusal` entries (host audit + the audit lake), newest first, C4 fields; `POST /api/admin/refusals/approve` carries one approval to the writer -- `register_tenant` when the tid has no tenant row, then `widen` for the advisor -- relaying verdicts; the gateway writes nothing; tests | `app/admin_refusals.py`, `tests/test_admin_refusals.py` | WORLD (floor) |
+| `MS-e4-r` | E4 | one replayable run: gates G-MSPID and G-MSPCL (Claude installed and signed in under `Opal_MSP`, Andrew's act) and a checkout of opal_ai DEV at `C:\opal_runtime_msp\opal_ai`; Andrew starts the supervised session with the operator recipe and asks one question; the worker ships it with `ship-run.py --write` (transcript as exported by the operator) | its deliverables only (S3 writes under the builder address) | WORLD |
+| `MS-e4-x` | E4 | a second seat reconstructs the run from the record ALONE (the builder address's three objects): what was asked, what was looked up, allowed/refused, answered | its deliverables only | LOCAL |
+| `MS-r-1` | E5 | batch repair: R-4 -- `deploy-to-ec2.sh` builds the dashboard from a detached checkout of the manifest's `mcportal_commit` when the workspace `mcportal` is not a real checkout; R-5 -- `tests/run_release_suites.sh` (new) runs named gateway suites with `AUDIT_PATH` pointed at a temp file | `infra/aws/ec2/opal-gateway/deploy-to-ec2.sh`, `infra/aws/ec2/opal-gateway/tests/run_release_suites.sh` | WORLD (floor) |
+| `MS-d-2` | release | the NARROW release (join of MS-e1-g, MS-e1-a, MS-e2-g, MS-e3-g, MS-r-1): deployed commit re-read + this project's commits; item 0 the `admin_refusals` hookup in `admin_api.py`; `.env` gains `INTERNAL_READER_ROLE_ARN` and `MSP_CALLING_IDENTITIES` (G-MSPID's value, or empty); suites via `run_release_suites.sh`; MCP tool list unchanged | `app/admin_api.py` (hookup), `deploy-to-ec2.sh` (the two `.env` lines), `EC2_MANIFEST.json`, ledger paths | WORLD |
+
+**Fixed names:** `INTERNAL_READER_ROLE_ARN`, `MSP_CALLING_IDENTITIES` (env), refusal code `asker_pilot_scope`, refusal
+fields `sender_email`/`sender_domain`, routes `GET /api/admin/refusals` and `POST /api/admin/refusals/approve`,
+`tests/run_release_suites.sh`. **Hookups:** `admin_refusals` in `admin_api.py` -- carried by MS-d-2's item 0 (the issuer
+cannot write `infra/aws/**`, measured at round 1).
+
+## R2.3 DEPENDENCY EDGES AND CHAINS
+
+```
+chain A   MS-c-1 --> MS-e1-t --> MS-e1-a           the census names the Deny keys; the role is applied from the tf
+chain B   MS-e1-g                                  the query_v0 route
+chain C   MS-e2-g                                  the gateway sender gate
+chain D   MS-e3-g                                  the refusal routes
+chain E   MS-r-1 --> MS-d-2 --> MS-e1-z (HELD)     the tooling, the release, then the Deny
+chain F   MS-e2-h --> MS-e4-r --> MS-e4-x          the agent gate, the run, the replay
+joins     MS-d-2 (A + B + C + D + E); MS-e1-z (d-2 + readers routed + never-widen pair); MS-e2-v (d-2 + e4-r + G-MSPID)
+```
+
+**Fan-out:** `N = 6 of M = 6 chains, cap 8; join_cells: 3 (MS-d-2, MS-e1-z, MS-e2-v)`.
+
+## R2.4 BATTERY
+
+- `comp-iam` -- RUN (MS-e1-a simulations; MS-e1-z's reader census + simulate on the gateway role). Blindness: the named
+  roles and keys only.
+- `comp-adversary` -- RUN at MS-e1-z (the census is its adversary read: any unrouted reader blocks the Deny).
+- `comp-schedule` -- DECLARED-NOT-APPLICABLE: no cron, alarm or cadence.
+
+## R2.5 RULE 24 RECORD
+
+(i) MECE: E1-E5 = 5 items -> E1 census/tf/apply/route/Deny (5), E2 gateway/agent/live (3), E3 routes (1), E4 run/replay
+(2), E5 repair (1), + the release join (1) = 13; the analysis's "NOT in round 2" list is subtracted whole. (ii) Same
+grain: one adapter or one act per cell. (iii) One intent: the pilot's controls tighten -- the gateway reads no firm data
+on its own identity, the sender gate is complete, a refusal is queue-able, one run is replayable. (iv) What each does NOT
+move: MS-e1-g moves nothing until `INTERNAL_READER_ROLE_ARN` is set; MS-e1-a creates a role and grant, no Deny; MS-e2-g
+moves no Opal-staff serving unless the calling identity is listed; MS-e3-g writes nothing itself; MS-r-1 changes no
+served byte; MS-d-2 changes no Terraform.
+
+## R2.6 GATES
+
+- **G-MSPID** (MS-e2-v, MS-e4-r; MS-d-2 ships the value if given): the MSP calling identity -- G-USER now, or an existing
+  non-person account, not Andrew's, not opalbloomberg@, not Alyssa's. Holder: Andrew (CTO 27416 asks; forwarded record).
+- **G-MSPCL** (MS-e4-r): Claude installed and signed in under `Opal_MSP`, and the gateway sign-in as G-MSPID (an MFA act).
+  Holder: Andrew, with the operator launch recipe.
+- **G-NW-E1** (MS-e1-z): the never-widen pair (CTO half, COO half) naming the Deny's blast radius. Holders:
+  `1.0.0_SA_CTO~O`, `2.0.0_SA_COO~MS`.
+- **G-RDR** (MS-e1-z): NFRA_MCPINDEX has routed `portal_index` and `opal_discover` through the internal role (CTO 27414;
+  MCPINDEX's first round after MX-t-10/t-12). Holder: `2.0.0_SA_COO~MI`.
+
+## R2.7 WHAT THIS CUT DOES NOT CLAIM
+
+1. No cell has run. The Deny's key set comes from MS-c-1's census; the MSP identity from Andrew.
+2. Subtracted per the analysis: FWD-2/Cottonwood, FWD-6/7, FWD-8 (G-KEY), FWD-9..11, R-1 (parked), R-2 (laptop gate
+   owner), R-3 (NFRA_MCPORTAL), the launcher fix (NFRA_OPALAI), and A1 (PARKED, v0.4).
+
+## R2.9 CELL IDS AT ISSUANCE (the gate's grammar)
+
+`.tools/to-pipeline-gate.py` `CELL_ID_RE` admits `<PREFIX>-<1-4 lowercase letters>-<optional letter><digits>`; ten v2
+ids (`MS-e<n>-<letter>`) fail it. Renamed at issuance, one to one, meaning unchanged; the task orders carry the new ids.
+
+| v2 id | issued id | v2 id | issued id |
+|---|---|---|---|
+| `MS-e1-t` | `MS-ir-1` | `MS-e2-h` | `MS-sh-1` |
+| `MS-e1-a` | `MS-ir-2` | `MS-e2-v` | `MS-sv-1` |
+| `MS-e1-g` | `MS-ig-1` | `MS-e3-g` | `MS-rq-1` |
+| `MS-e1-z` | `MS-dn-1` | `MS-e4-r` | `MS-rn-1` |
+| `MS-e2-g` | `MS-sg-1` | `MS-e4-x` | `MS-rx-1` |
+
+Unchanged: `MS-c-1`, `MS-r-1`, `MS-d-2`, `MS-s-1`. Chains as issued: A `MS-c-1 -> MS-ir-1 -> MS-ir-2`; B `MS-ig-1`;
+C `MS-sg-1`; D `MS-rq-1`; E `MS-r-1 -> MS-d-2 -> MS-dn-1`; F `MS-sh-1 -> MS-rn-1 -> MS-rx-1`; G `MS-s-1`; joins
+`MS-d-2`, `MS-dn-1`, `MS-sv-1`.

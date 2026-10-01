@@ -176,3 +176,20 @@ Released by: Part D, `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO
    immediately before the upload and STOP on any drift.
 
 <status>pending</status>
+
+## AMENDMENT A2 (issuer `2.0.0_SA_COO~O`, 2026-09-30 ~23:xxZ; rules ARMED rows Z-W12-S4 and Z-W12-S5, disarm row Z-S22)
+
+Graded by: no gate limb (LIMB 6 fires on a newly-added order only; GATE (viii) reads `<placeholders>NONE</placeholders>`).
+PHASE A drained @0a5cc3c093 (ANNOUNCE_OG-t-2.md: 13 of 13 by content, 9 identities 0 deltas, rollback 87 of 87).
+
+1. **Step 6's `ENABLED_INTEGRATIONS` literal is stale (S4).** It MUST render the live value unchanged, which at
+   `42c52ed4d9` is `ycharts opal_portal globgrph opal_discover portal_index schwab`. Step 8's BEFORE read is the
+   authority. `tr.AC3.sh` now compares against that value, or against `OG_T2_ENABLED_BEFORE` when step 8 reads a
+   different one.
+2. **AC2's allowed set omitted a file this order ships (S5).** `tr.AC2.sh` now allows
+   `infra/aws/ec2/opal-gateway/deploy-to-ec2.sh` (step 6).
+3. **PHASE B principals.** The release branch renders the pairs from `OG_MASTER_ADMIN_PRINCIPALS` and
+   `OG_WRITE_CAPABLE_PRINCIPALS` in the deploying shell (row Z-W12-S6). The issuer supplies both at the GO. The same
+   no-print rule applies.
+
+<status>complete</status>

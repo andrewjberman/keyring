@@ -5,7 +5,7 @@
  "project": "ETFS_RIVALS",
  "directive": "D5",
  "fabric": "site-z",
- "prd_version": "v0.5",
+ "prd_version": "v0.6",
  "step": 4,
  "brief_ref": "docs/briefs/etf-holdings-research-20260929.md@77c891c869",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12"],
@@ -419,7 +419,7 @@ builder at v0.3. Every table:
 | G6 | `flow_reconciliation` | fund x trade window | (fund_id, window_end) | flow_factor_f, cash_line_delta_base, income_received_base, fx_conversion_base, corporate_action_count, income_funded_trade_count, unexplained_residual_base | MEASURED inputs, INFERRED residual | with G5 |
 | G7 | `trade_outcomes` | trade x horizon | (fund_id, security_id, window_end, horizon_td) | horizon_td {21, 63, 126}, fwd_security_tr, fwd_benchmark_tr (the fund's own holdings-weighted book), excess_tr, outcome {helped, hurt, flat}, price_coverage {full, partial, missing} | MEASURED returns, INFERRED attribution | after G5 and G4 |
 | G8 | `outcome_rollup` | fund x period x axis x bucket | (fund_id, period, axis {sector, security}, bucket) | n_trades, n_missing, hit_rate, mean_excess, sum_notional_base, window, denominator | INFERRED | after G7 |
-| G9 | `style_read` | fund x research window | (fund_id, window_end) | timing_concentration (share of trade notional in the top 4 weeks), reconstitution_share, breadth (share of the book touched), median_trade_size_pct, trade_count (context only), label {discretionary, systematic, undetermined}, control_passed | INFERRED | after G5; the label shows only when control_passed |
+| G9 | `style_read` | fund x research window | (fund_id, window_end) | **the gate (v0.6, `4.0.0_SA_CRO~Z` style-read preview @9fc7430875):** peak_book_share_days (every report pair touching at least 50% of the book, with dates) and recurrence (those days fall on a quarterly or monthly calendar grid, at least 3 occurrences across at least 2 years); label systematic when recurrence holds, discretionary when trading is present without it, undetermined below the minimum history. Descriptive context, not the gate: timing_concentration (share of trade notional in the top 4 weeks), reconstitution_share, breadth, median_trade_size_pct, trade_count. label {discretionary, systematic, undetermined}, control_passed (SCHY must read systematic) | INFERRED | after G5; the label shows only when control_passed |
 | G10 | `trend_projection` | fund x axis x bucket x horizon | (fund_id, axis, bucket, horizon) | trailing_net_flow_base (3 windows), direction {accumulating, reducing, flat}, persistence, projected_direction, falsifier (deterministic template), confidence | INFERRED | after G5 |
 | G11 | `peer_comparison` | group x fund x measure x period | (group_id, fund_id, measure, period) | value, rank_in_group, group_median, is_home | INFERRED (from G8-G10) | after G8-G10 |
 | G12 | `research_hypotheses` | fund x analysis run x item | (fund_id, run_id, item_id) | kind {projection_note, wildcard, process_account}, text, cited_rows (table, key, revision), invalidation, model_version, prompt_version | INFERRED (AI) | the analysis step, after G8-G11 |

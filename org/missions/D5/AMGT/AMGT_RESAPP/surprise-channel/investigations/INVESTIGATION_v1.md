@@ -16346,6 +16346,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
  "spec_asserts": "CLAUDE.md 14a: every commit carries its lane's author line via safe-commit.sh, whose contamination guard exists so one seat's files never land under another's authorship; NEVER-2: the ledger entry is opened AND committed by the acting seat at deploy-start.",
  "world_is": "The entry's CONTENT is correct and it IS committed, so ad-2's precondition is materially met and this is not a rollback trigger. What was lost is the author line and the lane check: the absorbing commits are merges, where the owned-paths merge exemption means no lane check sees the payload. The guard cannot fire, because the absorption happens BEFORE safe-commit runs -- the tool stages, a peer commits, and safe-commit is never reached. Reachable by ANY seat that runs `deploy_ledger.py open` while another seat is merging, which on this device is the normal condition, not the exception. INFERRED, not measured: the same shape applies to every tool that stages on the caller's behalf, not only deploy_ledger.py; the class is 'a tool that stages into a shared index', and its denominator was not swept here.",
  "notes": "disarm_owner 2.0.0_SA_COO~Z. Not a blocker for ad-2: the act proceeds on the committed entry. Candidate repair for the issuer to weigh: have `deploy_ledger.py open` WRITE its two files and leave them UNSTAGED, so the opening seat's own safe-commit is the only path into the index. Surfaced, not adjudicated -- this seat does not amend another seat's tool."
+},
+{
+  "id": "AMGT_RESAPP-Z-S323",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-09-30T23:50:00Z",
+  "one_line": "A second shape of Z-S322: this seat's safe-merge of wk-AMGT_RESAPP-196 (ae-2) was COMMITTED BY A PEER -- merge commit 52b8287a8b carries this seat's message and the branch as its second parent, but its author is 2.0.0_SA_COO~D; safe-merge itself reported 'COMMIT REFUSED DOWNSTREAM ... aborting the merge'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show -s 52b8287a8b: author 2.0.0_SA_COO~D <2.0.0_SA_COO~D@opal.agent> 2026-09-30 19:46:29 -0400; parents 725230b531 + e05d814e42 (the ~196 tip); subject = this seat's -m text verbatim.",
+      "Its tree adds exactly ae-2's 3 files (the proof instance, the worker SESSION_LOG, the order's status line): nothing foreign, nothing dropped -- the content is correct.",
+      "safe-merge's own output for the same run: 'COMMIT REFUSED DOWNSTREAM after this script's grade PASSED ... Aborting the merge so nothing is left staged'. The seat's MERGE_HEAD + staged merge sat in the SHARED index between safe-merge's grade and its commit, and the peer's commit in that gap took both."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md 14b: a drain is graded against the shared index and committed under the draining seat's author; a merge state you did not create is a peer's work-in-progress.",
+  "world_is": "Two live COO seats' commits interleave on one shared index: a peer's commit can carry another seat's in-flight MERGE_HEAD and staged merge under its own author line, and the draining seat's tool then reports a refusal for a merge that in fact landed. Same class as Z-S322 (a tool's staged state absorbed by a peer), second shape (a merge, not an entry). No data wrong; the author line and the drain's own verdict are.",
+  "notes": "disarm_owner 2.0.0_SA_COO~Z. Owner of the fix: 1.0.0_SA_CTO~Z's spine backlog, beside Z-S322 (round-54 analysis ruling 2). Measured against the ancestry: git merge-base --is-ancestor e05d814e42 HEAD = true, carried by 52b8287a8b."
 }
 ]
 ```

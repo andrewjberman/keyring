@@ -422,6 +422,181 @@
     "spec_asserts": "TO MS-a-3 AMENDMENT 2: commit in the nested repo naming OA-t-2/OA-t-3; the issuer drains the commit.",
     "world_is": "The nested commit exists locally on its branch; the issuer drains it from the nested branch (as with 47cfd4b). No parent gitlink commit was possible. verify-boundary.ps1 run from the worker shell prints 'BOUNDARY: CANNOT-RUN-AS-ACCOUNT deny probe could not start as Opal_MSP: Access is denied', exit 5 (the measured shell restriction; replaces the false BREACH).",
     "notes": "The real AC2 run remains Andrew's after the drain."
+  },
+  {
+    "project": "NFRA_MCPMSP",
+    "fabric": "site-z",
+    "surfaced_at": "2026-09-30T16:10Z",
+    "id": "NFRA_MCPMSP-Z-W7-S1",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPMSP~7",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "MS-s-1: safe-apply's two OTHER plan-reading gates (tag-authz and tombstone) still re-plan the whole tree with none of the caller's args, so for a targeted or planfile apply they grade a plan the apply does not run; the TO scopes only the naming stage.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MS",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/safe-apply.sh tag-authz stage and tombstone stage (after the naming plan stage): each runs `plan -input=false -lock=false -out=...` then `show -json` with no -target/-var/planfile; unchanged by this cell per 'Keep every other gate as it is'.",
+        "test_safe_apply_targeted.sh isolates them by fixture (tree has no default_tags; sandbox has no tombstone register), so its 5 of 5 PASS says nothing about them."
+      ]
+    },
+    "spec_asserts": "TO MS-s-1 section 1: keep every other gate as it is; a targeted or planfile apply is graded on the plan the apply runs.",
+    "world_is": "Only the naming plan stage renders the apply's own plan now. For a planfile apply the tag-authz and tombstone gates (when they run) plan the live tree afresh, and for a targeted apply they plan the whole tree; each can over-block a scoped apply on an unrelated resource or grade a different plan than the one applied. Not widened here.",
+    "notes": "Candidate follow-on cell: factor one scoped-plan renderer (SA_PLAN_ARGS / SA_PLANFILE in safe-apply.sh) and feed it to all three plan-reading stages."
+  },
+  {
+    "project": "NFRA_MCPMSP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPMSP~1",
+    "surfaced_at": "2026-09-30T18:30Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_MCPMSP-Z-W1-S9",
+    "one_line": "MS-c-1 item 2: the host's /opt/opal-gateway/.env cannot be shell-sourced (set -a; . ./.env fails with exit 127), so the baseline capture parsed .env as KEY=VALUE in python before calling query_v0._fetch_capped; MS-dn-1's re-run must do the same.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MS",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SSM command fd5c458a-8cca-4993-8d22-2b26ed6ef983 Failed: './.env: line 14: ...: command not found', 'line 15: cot: command not found', 'line 23: opal_portal: command not found', 'line 33: arn:aws:iam::313476888478:role/gateway-inf-firm-reader-role}: No such file or directory', exit status 127.",
+        "The python-parse run succeeded: 9 keys hashed, bytes equal the head-object ContentLength of each key; the recipe is in r2_c1_delta_baseline.json captured_on."
+      ]
+    },
+    "spec_asserts": "TO MS-c-1 item 2: over SSM, cd /opt/opal-gateway, load .env, run .venv/bin/python calling app.query_v0._fetch_capped(key).",
+    "world_is": "Unquoted values with spaces and a JSON value make .env a non-shell file; a shell load stops before python runs. No host write occurred in either attempt.",
+    "notes": "The gateway reads credentials from the instance role, so the .env values do not affect the S3 read itself."
+  },
+  {
+    "project": "NFRA_MCPMSP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPMSP~1",
+    "surfaced_at": "2026-09-30T18:30Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_MCPMSP-Z-W1-S10",
+    "one_line": "MS-c-1 item 1: the census denominator (call_sites_scanned=24) counts the order's boto3.client('s3') and get_object sites plus head_object, list_objects_v2 and non-literal client() sites, because opal_discover reads by HEAD and sprint_view lists; sprint_view.py (daily-reports/*) is a fifth reader beyond the three known at the cut.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MS",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python ast scan of infra/aws/ec2/opal-gateway/app/**: 24 sites in 11 files; census r2_c1_census.json readers[] has 5 entries, not_readers[] 6 files.",
+        "opal-gateway-daily-reports-read grants GetObject on opal-data-portal-v2/daily-reports/* and config.DAILY_REPORTS_BUCKET defaults to opal-data-portal-v2."
+      ]
+    },
+    "spec_asserts": "TO MS-c-1 item 1: call_sites_scanned counts boto3.client('s3'...) and .get_object( sites; known readers are three.",
+    "world_is": "A narrower count would omit the HEAD and list reads that the same IAM grants permit. The sprint_view reader reads daily-reports/, which is not firm data, so it falls outside the Deny's keys.",
+    "notes": "The Deny keys platinum/mdpf/{firm}/* do not touch daily-reports/*."
+  },
+  {
+    "project": "NFRA_MCPMSP",
+    "fabric": "site-z",
+    "surfaced_at": "2026-09-30T15:00Z",
+    "id": "NFRA_MCPMSP-Z-W4-S3",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPMSP~4",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "MS-rq-1: the asker_sender_refusal audit entry carries no sender_email/sender_domain args (audit.py allowlist = tid, oid, display_name, chat_id, reason); admin_refusals derives them from the record's `user` field.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MS",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/audit.py allowlist line for asker_sender_refusal; tests/test_mcpmsp_asker_firm.py asserts args equals exactly those five fields."
+      ]
+    },
+    "spec_asserts": "TO MS-rq-1 item 1: each listing entry carries sender_email and sender_domain.",
+    "world_is": "The stored entry has `user` (the calling email) but no sender args; the listing fills sender_email from args when present else `user`, and sender_domain from the email. Correct if `user` is the sender; if it is the gateway caller identity, the C4 sender fields are wrong."
+  },
+  {
+    "project": "NFRA_MCPMSP",
+    "fabric": "site-z",
+    "surfaced_at": "2026-09-30T15:30Z",
+    "id": "NFRA_MCPMSP-Z-W3-S3",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPMSP~3",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "MS-sg-1 AC2 cannot be met as written: the gate refuses an absent sender address (asker_sender_domain, per the TO), and every existing asker/adapter test fake returns chat members with no `email`, so 17 of 48 existing tests fail; the existing tests are outside this order's <paths>.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MS",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "e2g.AC2.sh at df4d410b66: 'asker + adapter + round-1 suites: 17 failed, 31 passed' RESULT: FAIL exit=1; at parent 0e3760b480 the same script read 48 passed, RESULT: PASS.",
+        "Cause isolated: the same six suites run with sender_gate.check patched to return None (scratch plugin, not committed) read '48 passed'; the failures are all code asker_sender_domain.",
+        "infra/aws/ec2/opal-gateway/tests/test_asker_binding.py:89-90 members fake returns {userId, tenantId} only; test_asker_scope.py, test_asker_nochannels.py and test_mcpmsp_asker_firm.py return no /members value at all (their default branch is {'chatType': 'oneOnOne'}), so sender_address() is None."
+      ]
+    },
+    "spec_asserts": "TO MS-sg-1 BOUNDS 2 / AC2: the existing asker/adapter suites stay green (>=48 passed, 0 failed) while an absent sender address is refused asker_sender_domain.",
+    "world_is": "Both cannot hold: a gate that refuses an absent address fails every existing test whose fake carries no member email. Not made to pass: treating an absent address as a pass would fail OPEN for any sender whose member record hides its email. Remedy for the issuer: amend those suites' fakes to carry an `email` per member (opalinvest.com for the Opal tenant, the firm's domain for a firm tenant) in a TO whose <paths> include them, or amend AC2.",
+    "notes": "AC1 and AC3 pass. Nothing is deployed; the branch is local."
+  },
+  {
+    "project": "NFRA_MCPMSP",
+    "fabric": "site-z",
+    "surfaced_at": "2026-09-30T15:30Z",
+    "id": "NFRA_MCPMSP-Z-W3-S4",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPMSP~3",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The commit-time naming gate (ENFORCE) refused app/sender_gate.py as written to the TO: the firm ids 49financial / inflection / cottonwood and the domain 49financial.com are 'hand-kept carriers'; sender_gate.py now reads the firm ids from catalog_gate.KNOWN_FIRMS and builds each domain as id + tail.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MS",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit.sh first attempt: 'naming-gate NAMING REFUSE app/sender_gate.py:23 49financial -> lookup(49financial)' (also :24, :25, :27), NAMING-GATE: REFUSE 5 graded; commit aborted, files unstaged.",
+        "app/sender_gate.py at df4d410b66: ALLOWED_DOMAINS built from catalog_gate.KNOWN_FIRMS zipped with tails (.com, wealth.com, mail.com); tests/test_mcpmsp_sender_gate.py::test_allowed_domain_matching_tenant_served pins the exact four domain->firm pairs."
+      ]
+    },
+    "spec_asserts": "TO MS-sg-1 build item 1: ALLOWED_DOMAINS written as the four domains mapped to firm.",
+    "world_is": "The mapping is derived by KNOWN_FIRMS position, so a reordered or extended KNOWN_FIRMS moves which domain maps to which firm; the pinned test fails first. A tidier carrier (an R20 exception or a registry row for the four domains) is outside this order's paths.",
+    "notes": "The gateway app cannot import lib/opal_naming (not in the deployed tree), so lookup() was not an option."
+  },
+  {
+    "project": "NFRA_MCPMSP",
+    "fabric": "site-z",
+    "surfaced_at": "2026-09-30T19:00Z",
+    "id": "NFRA_MCPMSP-Z-W3-S5",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPMSP~3",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "MS-sg-1 AMENDMENT 1 gives two instructions that cannot both hold for the unregistered-tenant fake: 'every faked member an email (unregistered tenant -> any address)' and 'change NO assertion'. test_unregistered_tenant_refused_and_logged pins the asker_sender_refusal args exactly, so an address on the stranger member adds sender_email/sender_domain (the TO's own build item 2: 'where resolvable') and the assertion fails. I kept the no-assertion-change instruction: the stranger-tenant member carries NO email.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MS",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/tests/test_mcpmsp_asker_firm.py: with email pat@example.org on the _STRANGER_TID member, 1 failed 29 passed; assertion at :210 'Left contains 2 more items: sender_domain example.org, sender_email pat@example.org'.",
+        "With the stranger member's email omitted: 30 passed over the four suites; the gate refuses on the tenant first (asker_tenant_denied) so the absent address does not change the code."
+      ]
+    },
+    "spec_asserts": "AMENDMENT 1: give every faked member an email (unregistered-tenant member -> any address) and change no assertion.",
+    "world_is": "The unregistered-tenant refusal path is therefore exercised in this suite with an address-less member only; an address-carrying unregistered member (the real Graph shape) is not asserted on by an existing test, and tests/test_mcpmsp_sender_gate.py::test_refusal_entry_has_sender_email_domain_no_text covers the entry fields for a gate refusal.",
+    "notes": "Issuer may instead widen the pinned args assertion to the address-carrying shape; that is an assertion change and was not made."
+  },
+  {
+    "project": "NFRA_MCPMSP",
+    "fabric": "site-z",
+    "surfaced_at": "2026-09-30T19:00Z",
+    "id": "NFRA_MCPMSP-Z-W3-S6",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPMSP~3",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The amendment's 'append the status flip to complete as the LAST status tag' names the order file, which is not in the order's <paths>; the lane gate admits a worker to its <paths> only, so the flip is left to the issuer (as for TO-MS-ig-1, b3f544ae45).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MS",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D6/NFRA/NFRA_MCPMSP/task-orders/NFRA_MCPMSP.TO-MS-sg-1.gateway-sender-gate.md is absent from the <paths> block (amended list: sender_gate.py, asker_scope.py, audit.py, five tests, deliverables/0.9.0_WK_NFRA_MCPMSP~3/**, INVESTIGATION_v1.Z.md).",
+        "b3f544ae45 'the worker's <paths> did not name the order file' -- the same disposition on the previous order."
+      ]
+    },
+    "spec_asserts": "AMENDMENT 1: append the status flip to complete as the LAST status tag when all three criteria pass.",
+    "world_is": "The worker cannot write the order file; the proof instance is the worker's whole completion artefact and the issuer flips.",
+    "notes": "No override attempted."
   }
 ]
 ```

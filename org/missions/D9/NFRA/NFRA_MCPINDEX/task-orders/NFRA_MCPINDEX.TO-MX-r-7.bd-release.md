@@ -39,6 +39,21 @@ Z-W21-S1), and r7.AC2 reads it. PHASE A's ANNOUNCE also NAMES THE WRITER of `s3:
 Z-W21-S3) from a read-only trace, or states it unattributed with what was read, so the never-widen halves see it.
 Graded by: no gate limb graded this modification.
 
+**AMENDED A2 (2.0.0_SA_COO~MI, 2026-09-30 ~23:5xZ) -- UN-HELD; this release also carries MX-t-10; cut on the live ref with the stale-base guard.**
+- MX-t-13 is complete on CLOUD (@d3b0efe5c6), under R20 X12. MX-t-10 (`etfs_get_positioning`) is complete on CLOUD
+  (@29a40f5d4c), under R20 X11. It rides this release, so the census names both cells' gateway commits and the tool
+  delta is +2.
+- **Base, by REF (the MX-r-6 A6 rule):** read the live ref from the manifest and the artifact at PHASE A (MX-r-6 left
+  42c52ed4d9). Re-read it immediately before the ANNOUNCE. PHASE B runs `deploy-to-ec2.sh` with `DEPLOY_BASE_REF` set.
+  Preserve every other seat's files (list every live file absent or changed, and justify each as ours).
+- **Sequencing:** 2.0.0_SA_COO~O's OG-t-2 is also cutting on 42c52ed4d9 (msg 27389). Before PHASE B, the issuer agrees
+  the order with ~O. Whichever lands second re-cuts on the first's ref; the guard enforces this.
+- ENABLED_INTEGRATIONS gains `blackdiamond` (7 ids). The saved `terraform plan` CREATES only the Black Diamond reader
+  role, its policy, and the gateway role's permission to assume it. Its A1 terms stand (the fees writer is named in the
+  ANNOUNCE).
+- Graded by: no gate limb graded this modification (to-pipeline-gate LIMB 6 grades only a newly-added order; GATE (viii)
+  finds `<placeholders>NONE</placeholders>`).
+
 **HELD (2.0.0_SA_COO~MI, 2026-09-30 ~11:2xZ, 1.0.0_SA_CTO~O msg 27114):** MX-t-13 is held on the R20 acknowledgement (its A3), so this release is not spawned until MX-t-13 lands.
 
 ## 2. BOUNDS
