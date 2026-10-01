@@ -2,13 +2,11 @@
 
 Seat `2.0.0_SA_COO~M` (CLAUDE). Contract
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md`. Reviewer `3.0.0_SA_CVO` (not seated
-at this write). As of 2026-10-01T04:4xZ.
+at this write). As of 2026-10-01T05:4xZ.
 
-Mode: FAST. Lease `IRPT_BCKEND~M`, `org/mcp/drive-mode.log` line 30, until 2026-10-01T12:31Z, on Andrew-direct
+Mode: FAST. Lease `IRPT_BCKEND~M`, `org/mcp/drive-mode.log` lines 30 and 35, until 2026-10-01T12:52Z, on Andrew-direct
 2026-10-01 ~04:2xZ (record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261001_042xZ_SELF_DRIVE_60M_LAPTOP_FABRIC_FINAL_SAY_CLOSER_DRIVE_IRPT_FIRST.md`
-@c48af273cc; CTO 103440). FULL -> FAST boundary run at 04:3xZ: no worker was running; nothing was cut (a round-30
-cut of three orders was drafted and dropped uncommitted); the five stale Holdings orders are flipped `superseded`.
-The pre-FAST long-form status is this file's previous git version.
+@c48af273cc; CTO 103440). The FULL -> FAST boundary ran at 04:3xZ (@ad8e18d5f8).
 
 Claim words: `measured` = read this session; `held` = cited from a record, not re-read.
 
@@ -17,17 +15,33 @@ Claim words: `measured` = read this session; `held` = cited from a record, not r
 | What | Value | Claim |
 |---|---|---|
 | Working branch / worktree | `coo-m-r30` at `../coo_m_r30` | measured |
-| CLOUD (local) / origin/CLOUD | c48af273cc / 0abf99fcd4 (ls-remote read 04:07Z) | measured |
-| Holdings class source on CLOUD | IB-mr-291 @9fef6a7e9c: canonical `etf-classifications` first, declared bd-securities fallback | measured (code read) |
-| Served Holdings packages | re-minted 2026-09-30 15:18-15:33Z, 44 members (one-window leg H3) | held (session log @9f8fd81494) |
-| Port source | branch `wk-IRPT_BCKEND-84` @00b88da890, 12 ahead of CLOUD, NOT merged; read with `git show` | measured |
-| investor_reporting suite at the base | SUITE-WHOLE 319 passed; holdings Lambda suite 147 passed | measured 04:2xZ |
+| Workspace candidate pin (route code) | 4e2feb5a32 -- `holdings/snapshot.py`, sha256 830e2b58...5c79 | measured |
+| Workspace candidate pin (contract) | cc99dea562 -- docs `HoldingsSnapshot.schema.json`, sha256 5805bd5e...d8c4 | measured |
+| Deployed `irpt-holdings` | NOT MOVED by this work. Its build takes `snapshot.py` @3e913e9ce9 and the contract @a69fe8e33e from `infra/aws/lambda/ci/lambda-source-map.json` | measured (source map read) |
+| Producer `holdings_snapshot.py` | byte-identical to its base 900da8bbb7 (IB-mr-291 classifier) | measured (`git diff` empty) |
+| CLOUD (local) / origin/CLOUD | read at the merge that carries this file / 0abf99fcd4 (ls-remote read 04:07Z) | measured |
+| Port source | branch `wk-IRPT_BCKEND-84` @00b88da890, NOT merged; no longer needed once this file is on CLOUD | measured |
 
 ## Live thread
 
 State: LIVE END TO END for the Holdings tab at three firms (goal criterion 1), held from the 09-27 walk HARs; not
-re-walked this session. First unproven hop today: the 14:15Z scheduled publication carrying the narrowed classes
-(next-list item 4).
+re-walked this session. Next unproven hop: the 14:15Z scheduled publication carrying the narrowed classes (item 4).
+
+## What this session built (items 1-3 of the earlier next-list, re-shaped by the real run)
+
+The Holdings route, not the producer, serves the fold. `snapshot.project()` (the one function every Holdings
+response passes through) now adds, over the viewer's selected accounts:
+- `security_aggregates` -- one row per security among actual positions (basis OBSERVED or ASSIGNED);
+- `class_totals` -- one row per class among those positions;
+- `class_totals_remainder` -- custody value with no actual position under it (never a class);
+- `source_vendor_keys` -- carried from the publication (the projection used to drop it, so W2-19 could not arrive).
+
+Why the shape changed: a producer-level fold covers the whole firm and the route drops it; TARGET nodes cannot be
+summed with actual ones (at 49 Financial they exceed custody in 3,891 of 7,565 accounts). Detail and census:
+`org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/NEVER_WIDEN_HALF_REQUEST_HOLDINGS_ROUTE_AGGREGATES_20261001.md`.
+
+Checks (measured): `holdings/tests/test_aggregates.py` 12 passed; holdings Lambda suite 159 passed; investor_reporting
+suite 324 passed; `stage.py --check` 4 of 4; the real run over 9,295 slices of three real builds, 0 not tied, 0 invalid.
 
 ## Acceptance IDs (goal record `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_M_GOAL_HOLDINGS_SNAPSHOT_MODEL_OVERLAY_LOOP_20M.md`)
 
@@ -36,59 +50,52 @@ re-walked this session. First unproven hop today: the 14:15Z scheduled publicati
 | (1) signed-in journey 49F / INF / COT | MET | held: ~D HARs w8 + w9 (09-27) |
 | (2) every active 49F/INF account resolvable or refused explicitly | MET on the then-current directories | held: census @f247a922a5 |
 | (3) COT soundness, window disclosed | NOT RE-READ; last read BROKEN (COT `CASH -- CASH` served as equity) | re-verify at item 4's publication |
-| W2-11 per-security aggregate, W2-15 per-class totals served | NOT STARTED on CLOUD | item 1 |
+| W2-11, W2-15, W2-19 served | CANDIDATE @4e2feb5a32 + @cc99dea562, not deployed | the half above; `R30_SELECTION_CENSUS_20261001.json` |
+| FWD-2 unclassified by name, on the narrowed classifier | tests on CLOUD with this merge | `tests/test_holdings_unclassified.py`, 5 passed |
 
 ## Write claims
 
-- `data/assets/scripts/gold/investor_reporting/holdings_snapshot.py::compute_holdings_aggregates` and its call sites.
-- `data/assets/scripts/gold/investor_reporting/tests/test_holdings_aggregates.py`.
-- `docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json` (two optional top-level properties).
+None open. The next claim is the release of the candidate (item 1 below) once its gates clear.
 
 ## Next proof
 
-Item 1: on the 291 base, a built Holdings document carries `security_aggregates` and `class_totals`, validates
-against the docs contract, and equals the base document once the two properties are removed. Shown by
-`tests/test_holdings_aggregates.py`, the whole suite, and one real local build per firm
-(`R30_CHECKS/r30_aggregates_census.py`).
+The deployed route returns the four fields for one selection per firm, with `class_totals` plus the remainder equal
+to the custody total and every other field unchanged from the before-read (the half's step 4).
 
 ## Next-list, in order
 
-1. **Aggregates port** (was IB-mr-261; CTO DECISION 103025): the producer serves one aggregate per security identity
-   and one total per asset class. LOCAL build; the served move is item 5.
-2. **Unclassified-by-name tests** (was IB-mr-271). Measured at CLOUD: `classify_security` (`:922-956`) already serves a
-   ticker neither source knows as `unclassified` / `NONE` with no refusal, and `canonical_lookup` (`:866-871`) returns
-   before any table call on an empty ticker. What is missing is the tests.
-3. **Holdings Lambda restage** (was IB-mr-272) with `infra/aws/lambda/investor-reporting/holdings/stage.py`, after
-   item 1's contract is committed. Measured: `stage.py --check` reads 3 of 4 members drifted (`errors.py`,
-   `handler.py`, the contract). See Dependencies before landing it on CLOUD.
-4. **H5** at the 2026-10-01 14:15Z `irpt-holdings-snapshot` fire: PHYS reads commodities / Metals on the Holdings
+1. **Release the candidate**: two pins in `lambda-source-map.json` (`irpt-holdings`: `snapshot.py`, the contract),
+   build, `safe-apply`, after-read. Gates: the CTO half; 2.0.0_SA_COO~P's leg F5 closed.
+2. **H5** at the 2026-10-01 14:15Z `irpt-holdings-snapshot` fire: PHYS reads commodities / Metals on the Holdings
    page, and each firm's served CATEGORY names; then close the IRPT legs of ledger
    `secclass-bd-thread-r2-and-irpt-narrowed-m-20260930`. Goal criterion 3 is re-read on the same publication.
-5. **Release of items 1-3** under a new never-widen half pair: the holdings Lambda redeploy with the restaged
-   members, then the Holdings package re-mint, then the served read.
-6. Carried from the pre-freeze list, not re-measured this session: the S173 re-point, the BD C_06 sealed-date
-   reprocess (W41-S2), the COT cash-line act, COT-new Part 2, the COT B_01b deploy. Each is re-measured before it
-   is claimed.
+3. Carried from the pre-freeze list, not re-measured this session: the S173 re-point, the BD C_06 sealed-date
+   reprocess (W41-S2), the COT cash-line act, COT-new Part 2, the COT B_01b deploy. Each is re-measured before it is
+   claimed.
 
 ## Dependencies
 
 | Needs | From (owner) | Interface / pin | State |
 |---|---|---|---|
-| `infra/aws/lambda/investor-reporting/_contracts/HoldingsSnapshot.schema.json` gains item 1's two properties | `2.0.0_SA_COO~P` (issuer of open order IRPT_DASHBD.TO-DB-b-4, whose `<paths>` hold `_contracts/`; the lease refused that surface) | the docs contract at item 1's pin | AWAITED: asked when item 1 has a pin |
-| Leg F5 of ledger `irpt-service-principal-boundary-served-20261001` (the `irpt_holdings` function, graded on a member census against the BEFORE zip) done before item 3's restage is on CLOUD | `2.0.0_SA_COO~P` | the ledger file | AWAITED: read from the file |
-| Both halves for item 5 | `1.0.0_SA_CTO` + this seat | the half item 1 writes | NOT YET ASKED |
+| CTO half on the release | `1.0.0_SA_CTO` | the half file at the merge commit | ASKED with this merge |
+| Leg F5 of ledger `irpt-service-principal-boundary-served-20261001` closed (same function; this act's BEFORE zip is that act's AFTER zip) | `2.0.0_SA_COO~P` | the ledger file | AWAITED: read from the file |
+| The page consumes the three blocks (W2-11 rows, W2-15 totals) | `2.0.0_SA_COO~D` | docs contract @cc99dea562 | PUBLISHED with this merge |
+| `infra/aws/lambda/investor-reporting/_contracts/HoldingsSnapshot.schema.json` gains the three properties | `2.0.0_SA_COO~P` (issuer of open order IRPT_DASHBD.TO-DB-b-4, whose `<paths>` hold `_contracts/`) | docs contract @cc99dea562 | AWAITED; no reader of the route's response validates against that copy |
 
 ## Parked
 
 | Question (off-thread) | Owner | Un-parks when |
 |---|---|---|
-| "FAST from 2026-10-01T04:31Z; pins graded after the fact" (the boundary's one line to the CVO) | `3.0.0_SA_CVO` | a CVO is seated; it reads this row |
-| MDPF_SECCLASS BD_THREAD_R3: both halves signed (@8769ffe8d5); the window is three live-read invariants | `2.0.0_SA_COO~M` | the 04:00Z BD gold run ends and the runner stops (running at 04:33Z); it must close before the 22:10Z silver fire and the 23:00Z gold fire |
-| The served industry half of W2-13 (the canonical table holds no industry field) | `1.0.0_SA_CTO` | the canonical-table project rules it |
+| "FAST from 2026-10-01T04:31Z; pins graded after the fact" (the boundary's one line to the CVO). Pins to grade: 4e2feb5a32, cc99dea562 | `3.0.0_SA_CVO` | a CVO is seated; it reads this row |
+| Cottonwood serves `CEMIX` (Causeway Emerging Markets, an equity fund) as fixed_income / International on 67 nodes, 2,039,120.10 USD, through a bd-securities name alias; 4 nodes read equity by ticker shape. One row in the canonical table fixes all 71 | `2.0.0_SA_COO~M` (MDPF_SECCLASS issuer) | MDPF_SECCLASS round 7 is cut (needs both halves: a served class moves) |
+| 49 Financial: 90.3 percent of custody (1,626,351,326.21 USD) has only a TARGET drill, so the remainder block is most of the page. Serve a second, separately labelled TARGET fold? | `1.0.0_SA_CTO` with `2.0.0_SA_COO~D` | the CTO rules (asked in the half) |
+| The declared fallback still classes an unknown 1-5 letter ticker `equity` by its shape (pinned in `tests/test_holdings_unclassified.py`) | `2.0.0_SA_COO~M` | MDPF_SECCLASS E8 and E9 land (the fallback's sunset) |
+| MDPF_SECCLASS BD_THREAD_R3: both halves signed (@8769ffe8d5); the window is three live-read invariants | `2.0.0_SA_COO~M` | the 04:00Z BD gold run ends and the runner stops (running at 05:18Z); it must close before the 22:10Z silver fire and the 23:00Z gold fire |
 | NOT_READY vs NOT_FOUND for a selected account with no custody row | `1.0.0_SA_CTO` | the CTO rules |
 
 ## Limits
 
-Nothing in items 1-3 is deployed or served; each is a LOCAL build until item 5's halves are signed. No product ID is
-PASS until the CVO grades a pinned candidate. HOLD 103137 on a table-only class source is unchanged. The census in
-item 1 reads the firm buckets, the table and served snapshots; it writes nothing to AWS.
+Nothing here is deployed. The census ran the route's own function over real built snapshots on this device; the
+deployed function, a multi-account selection other than the whole firm, and the page have not been exercised. The
+portal reader was read, not run. No product ID is PASS until the CVO grades a pinned candidate. HOLD 103137 on a
+table-only class source is unchanged.
