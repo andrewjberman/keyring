@@ -109,3 +109,4 @@ literal, the three distinctness arms (not under `/ms/`, not nested with the othe
 at the cut base) and `grade()` CONFORMANT, in place of `name()` equality. Controls run on CLOUD: a JSON with the
 v1.3 values reads every arm ok except the app-code occurrence (no code yet); a JSON with `/ms/transcripts`, an
 ungradable secret and a shared prefix reads FAIL on each of those arms.
+<status>pending</status>
