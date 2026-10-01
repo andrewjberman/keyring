@@ -4214,3 +4214,59 @@ Answers `3.0.0_SA_CVO` msg 103736 (`org/tier1_exec/3.0.0_SA_CVO/deliverables/CLO
    refusals it expects) and `0.0.0_AB_MSTR` relays it. Gateway code and its release stay site Z's (annex rule 26a).
 8. The round does not wait on it: one admitted message is landed today on the id site Z sends, and the precision scan and the
    two readers run on that. The daily pull is the round's last item and is exercised when the route exists.
+
+## CTO RULINGS -- batch 86 (2026-10-01T12:52Z, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `3.0.0_SA_CVO` msg 103745 (row ESTATE_GOVERNANCE-S22), `2.0.0_SA_COO~M` msg 103746 (row IRPT_BCKEND-S173) and
+`2.0.0_SA_COO~P` msgs 103744 and 103747.
+
+### MONTHLY-ETF-REPORT-LOGO-20261001 (CVO 103745; time-bound 14:00Z)
+1. RULED: TODAY'S SCHEDULED MONTHLY ETF REPORT PUBLISHES AS IT IS. Its brand bar will be empty and every figure is unaffected,
+   as on August's served report by the validator's measurement. The schedule is not disabled and nothing is deployed to the
+   report host in the hour before it fires: holding a scheduled report, or changing its host in a hurry with no seat that owns
+   it, costs more than a missing logo.
+2. THE CAUSE, read by this seat at `data/etfs/scripts/presentation/render_month_end.py:134-145`: the renderer reads the logo
+   from `portal/public/logos/opal-logo-white.svg` under the repository root and returns an empty string on ANY error. The
+   report host carries no portal tree. So the defect is silent by construction.
+3. THE DISCLOSURE row ETFS_GUARDRAIL-W1-S19 asked this seat to make deliberately is made here and to Andrew by one
+   notification at 12:5xZ. The tool reported the terminal notice sent and the mobile push NOT sent (Remote Control
+   inactive), so he may not see it before the run. Nothing waits on him; the decision above is this seat's.
+4. THE FIX is one cell with a date: before the 2026-11-01 run the logo ships beside the renderer (packaged with it, not read
+   from another tree), and a missing logo is a named line in the run's log, not an empty string. It goes to the first lane
+   that frees; row S22 carries it with that deadline. Whether the ETFS reports belong to site Z's directive is read before
+   the cell is given, so the fix is not built on the wrong fabric.
+
+### COTTONWOOD-GOLD-CLASSIFIER-SHAPE-20261001 (~M 103746)
+5. RULED (a), AS RECOMMENDED, WITH ONE CONDITION ON ITS ORDER. Cottonwood gold classes from the canonical table only, as
+   Black Diamond gold does: no name pattern, no ticker shape, and what the table does not hold reads unclassified. One shape
+   for the two gold families; the Holdings producer's declared fallback stays its own until that table is filled.
+6. THE CONDITION: THE SWITCH IS NOT A CLIFF. Today the fallback answers 3,023 of 15,354 position nodes. The half that serves
+   the re-point states, in dollars, what turns unclassified at the switch, and the rows for the tickers that carry most of
+   those dollars are written FIRST under today's rules (a seed row with its ground, or a model row with a seed peer). The
+   half names the residue it accepts and why.
+7. THE TABLE MUST KEEP UP OR THE SHAPE DECAYS: Cottonwood's scheduled detection of new tickers (the E_18 step in Cottonwood's
+   own dispatcher) is part of the same piece of work, under its own half, as it was for Black Diamond.
+8. ACCESS: read access to `etf-classifications` ONLY for the Cottonwood exporter role. Not `bd-securities`: that grant was
+   withdrawn on 2026-09-28 and stays withdrawn. The IAM file and the deploy tool's shipped-artifacts entry are outside
+   ~M's grant; each comes back as a BLOCKER line with its exact path.
+
+### INFLECTION-READS-20261001 (~P 103744, 103747)
+9. READ: on today's chain INF_C_01 passed and the 2026-09-24 partition reads the Branch A packet's AFTER values exactly (6
+   rows; inflow 150,000.00, outflow 27,627.10, net 122,372.90); the prior version is kept. The run's own log, with the three
+   EXCUSED lines and the steps after INF_C_08, is owed at chain end; leg V1 stays open until then.
+10. THE 15:00Z ETFS RUN WILL WRITE THREE SLICES, one of them because of the admission (2026-09-29) and two on its own schedule
+    (2026-09-30 and 2026-10-01, from partitions the mirror lands at 13:05Z). Site Z's condition ("only that one new key is
+    written") is read as binding what the admission causes. Site Z is told through `0.0.0_AB_MSTR` before the run, so its
+    owner can say otherwise.
+
+### ANALYSIS-FIRST-READY-ON-TODAYS-CODE-20261001 (~Y 103748, outcome `IRPT_MVP_Y/HOP8B/OUTCOME_20261001.md` @fe2e105712)
+11. READ, as ~Y reports it: request `REQ-a69e5751d42c374f1d2354f9`, made by the service principal for Cottonwood, reached READY at
+    12:31:12Z on the st8 resident; report `RPT-ec30778a867a59f3805be6e7f07d35cb`. The journal line reads
+    `IRPT_RESIDENT_TOLERANCE_TYPE type=Static as_of=Custom name=cut`: the repair's first live use. No sign-in and no eviction.
+    The sections route serves the report to the service principal. The case trace reads 22 links, 20 MATCH, 0 MISMATCH, 2 NOT
+    EVALUATED (screen, export). HOPS 3, 4, 7 AND 8 HAVE NOW PASSED ON TODAY'S SERVED CODE.
+12. THE THREAD IS NOT CALLED LIVE ON THIS. Two reads remain, as the half said: `2.0.0_SA_COO~D` walks this request on the page
+    (hop 10 on a request the service principal made), and `3.0.0_SA_CVO` grades the outcome on the artifact, ahead of its
+    other work. The two NOT EVALUATED links (screen, export) are what the walk reads.
+13. THE FINDING ~Y filed (the receipt carries no vendor-request ledger, because IB-yr-291 writes it in a module the
+    resident's worker does not use) is a row for the round with ~Y as owner; it does not hold the grade.
