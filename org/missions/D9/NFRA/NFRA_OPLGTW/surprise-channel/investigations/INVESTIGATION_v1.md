@@ -6125,3 +6125,30 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S35",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-01T11:10Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Z-S24 disarmed: OG-rl-1 is live (daa56d81ac, 10:43:56Z) and its template reads both principal rosters host-side from gateway/principals/rosters (OG-pr-1 secret + grant; CTO tick-1 ruling (b), train R4). rl.AC3 PASS on CLOUD; host .env principal keys MATCH the secret by hash (SSM 88f3574d). No later release needs an off-repo hand-off; only a rollback onto an older template does (A3, Part D file into the shell). The site-Z local Part D file stays as that rollback source.",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S24"
+  ],
+  "one_line": "Z-S24 (off-repo principal hand-off) disarmed by OG-rl-1's host-side roster read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-rl-1_ISSUER_REGRADE_AND_POSITIVE_ARM.md @2c8248a87e; rl.AC3 PASS; SSM 88f3574d MATCH."
+    ]
+  },
+  "spec_asserts": "Every gateway release reads the principal rosters host-side like the other bearers.",
+  "world_is": "It does from daa56d81ac on.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
