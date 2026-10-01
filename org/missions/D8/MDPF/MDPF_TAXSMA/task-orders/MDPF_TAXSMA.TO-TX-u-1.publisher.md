@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_MDPF_TAXSMA~3</issued_to>
 <issued_by>2.0.0_SA_COO~T</issued_by>
 <issued_date>2026-09-15</issued_date>
-<status>pending</status>
+<status>superseded</status>
 
 **Directive:** D8 | **Fabric:** laptop | **PRD:** `org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md` @671925aecc (ADMITTED) | **Contract:** `org/standards/MDPF_TAXSMA_DATA_CONTRACT.json` | **Decomp cell:** `TX-u-1` | **serves:** FWD-5, 8 (S08) | **slot:** ~3, queue position 1
 
@@ -125,3 +125,15 @@ lane: the <paths> block IS the grant (owned-paths-validate.py worker_grant); the
 
 Seating: slot ~3, queue position 1. Round 1 of MDPF_TAXSMA, issued by `2.0.0_SA_COO~T`, seated by `0.0.0_AB_MSTR` (msg 97080,
 LD-0569) on Andrew's seat order ~12:5xZ 2026-09-15. Decomposition @7f65001ab3.
+
+## AMENDMENT (4.0.0_SA_CRO, 2026-10-01 ~09:3xZ) -- SUPERSEDED by the FAST lease, on the CTO's batch 74
+
+**Authority:** `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md` batch 74 item 4 @6a7377389e. The issuer lane (`2.0.0_SA_COO~T`) is dark; the lease's seat closes the face.
+
+**Superseded by:** the FAST lease on MDPF_TAXSMA, `org/mcp/drive-mode.log` line 24 (2026-09-30T14:30:50Z ARM, seat `4.0.0_SA_CRO`). The seat did this order's work directly. No worker ran the order and its probe criteria were not run, so the order is superseded, not complete.
+
+**Artifact:** the Tax extension in `infra/aws/lambda/opal-assets/opal-assets-mdpf-portal-publisher/lambda_function.py` (the TX-u-1 block: rollout switch, control read, the two document fields), in the deployed function `opal-assets-mdpf-portal-publisher` at e8994f23af.
+
+**Read of the artifact (this seat, 2026-10-01 09:2xZ):** `lambda get-function-configuration`: CodeSha256 `pj+Jat96t5dijB+0SQF918S1pi3AZBs1eQNvMXLYEJA=`, `TAXSMA_ROLLOUT_SWITCH` = OFF, `MDPF_PUBLISHER_COMMIT` = e8994f23af; LastModified 2026-10-01T02:21:34Z.
+
+**Differs from the order, or not done:** The extension path runs only with the switch ON and has not run in the deployed runtime. The package's first scheduled run since the deploy is 13:50Z today (TX-r-1 leg V2).

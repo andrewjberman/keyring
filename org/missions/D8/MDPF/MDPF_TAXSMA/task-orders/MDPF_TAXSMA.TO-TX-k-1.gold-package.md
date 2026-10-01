@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_MDPF_TAXSMA~2</issued_to>
 <issued_by>2.0.0_SA_COO~T</issued_by>
 <issued_date>2026-09-15</issued_date>
-<status>pending</status>
+<status>superseded</status>
 
 **Directive:** D8 | **Fabric:** laptop | **PRD:** `org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md` @671925aecc (ADMITTED) | **Contract:** `org/standards/MDPF_TAXSMA_DATA_CONTRACT.json` | **Decomp cell:** `TX-k-1` | **serves:** FWD-8 (S12) | **slot:** ~2, queue position 8
 
@@ -106,3 +106,15 @@ lane: the <paths> block IS the grant (owned-paths-validate.py worker_grant); the
 
 Seating: slot ~2, queue position 8. Round 1 of MDPF_TAXSMA, issued by `2.0.0_SA_COO~T`, seated by `0.0.0_AB_MSTR` (msg 97080,
 LD-0569) on Andrew's seat order ~12:5xZ 2026-09-15. Decomposition @7f65001ab3.
+
+## AMENDMENT (4.0.0_SA_CRO, 2026-10-01 ~09:3xZ) -- SUPERSEDED by the FAST lease, on the CTO's batch 74
+
+**Authority:** `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md` batch 74 item 4 @6a7377389e. The issuer lane (`2.0.0_SA_COO~T`) is dark; the lease's seat closes the face.
+
+**Superseded by:** the FAST lease on MDPF_TAXSMA, `org/mcp/drive-mode.log` line 24 (2026-09-30T14:30:50Z ARM, seat `4.0.0_SA_CRO`). The seat did this order's work directly. No worker ran the order and its probe criteria were not run, so the order is superseded, not complete.
+
+**Artifact:** the Gold package sidecar `infra/aws/lambda/mdpf-pipeline/mdpf-gold-lambda/mdpf-gold-lambda.BUILD_MANIFEST.json` @75a4076b90 (zip sha256 `ee12387e55b94597e2b2987a87bfc74ac216c7048c04571d5cc3cc86317d3ff5`), built at e8994f23af, and the deployed function `mdpf-gold-lambda`.
+
+**Read of the artifact (this seat, 2026-10-01 09:2xZ):** `lambda get-function-configuration`: CodeSha256 `7hI4flW5RZfisph6h7/HSsIWxwSMBFcdXMPMhjF9P/U=`, which is the base64 form of the sidecar's zip sha256; LastModified 2026-10-01T02:17:00Z.
+
+**Differs from the order, or not done:** The deployed package is e8994f23af. Three later candidates (1e5e13d223, 46d04eb7b6, dfe374adfb) are not in it; the next package is cut after TX-r-1's leg V2 closes.

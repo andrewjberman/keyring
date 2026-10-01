@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_MDPF_TAXSMA~4</issued_to>
 <issued_by>2.0.0_SA_COO~T</issued_by>
 <issued_date>2026-09-15</issued_date>
-<status>pending</status>
+<status>superseded</status>
 
 **Directive:** D8 | **Fabric:** laptop | **PRD:** `org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md` @671925aecc (ADMITTED) | **Contract:** `org/standards/MDPF_TAXSMA_DATA_CONTRACT.json` | **Decomp cell:** `TX-c-3` | **serves:** FWD-5, 6 (S11) | **slot:** ~4, queue position 3
 
@@ -109,3 +109,15 @@ lane: the <paths> block IS the grant (owned-paths-validate.py worker_grant); the
 
 Seating: slot ~4, queue position 3. Round 1 of MDPF_TAXSMA, issued by `2.0.0_SA_COO~T`, seated by `0.0.0_AB_MSTR` (msg 97080,
 LD-0569) on Andrew's seat order ~12:5xZ 2026-09-15. Decomposition @7f65001ab3.
+
+## AMENDMENT (4.0.0_SA_CRO, 2026-10-01 ~09:3xZ) -- SUPERSEDED by the FAST lease, on the CTO's batch 74
+
+**Authority:** `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md` batch 74 item 4 @6a7377389e. The issuer lane (`2.0.0_SA_COO~T`) is dark; the lease's seat closes the face.
+
+**Superseded by:** the FAST lease on MDPF_TAXSMA, `org/mcp/drive-mode.log` line 24 (2026-09-30T14:30:50Z ARM, seat `4.0.0_SA_CRO`). The seat did this order's work directly. No worker ran the order and its probe criteria were not run, so the order is superseded, not complete.
+
+**Artifact:** portal commit 370d2fe8 (Model Portfolios says when a total includes Tax-Managed SMA, `src/pages/ModelPortfolios.tsx`), on origin/DEV.
+
+**Read of the artifact (this seat, 2026-10-01 09:2xZ):** `git -C portal merge-base --is-ancestor 370d2fe8 origin/DEV` is true at origin/DEV 2879d65b (fetched 09:2xZ); `ModelPortfolios.tsx` at origin/DEV carries 4 lines naming tax. The commit is not in origin/PROD.
+
+**Differs from the order, or not done:** On DEV only; the PROD promotion is gate G-P (Andrew). The caption has not been seen on a signed-in page with served Tax, because nothing serves Tax yet.
