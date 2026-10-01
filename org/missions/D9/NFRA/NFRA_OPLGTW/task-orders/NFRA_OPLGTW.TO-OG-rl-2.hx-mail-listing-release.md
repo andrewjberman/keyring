@@ -127,3 +127,4 @@ Criteria unchanged.
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
 <status>pending</status>
+<status>complete</status>
