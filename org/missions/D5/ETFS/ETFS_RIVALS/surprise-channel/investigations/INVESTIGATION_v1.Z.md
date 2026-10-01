@@ -2279,6 +2279,30 @@
       ]
     },
     "notes": "Resolves ETFS_RIVALS-Z-S9 (an existing row is never edited; this row carries the resolution). disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S10",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "4.0.0_SA_CRO~RV",
+    "surfaced_at": "2026-10-01T18:10Z",
+    "one_line": "The morning vehicle's enrichment step runs `python -m rivalfunds.enrichment_bloomberg --mode daily`, but the module has no __main__ entry, so it imports, exits 0 and logs 'RIVALFUNDS ENRICHMENT EXIT CODE: 94 -- landed' while pulling nothing: G3 corporate_actions and G4 security_market are never refreshed by the schedule.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "integrations/bloomberg/pipeline/scheduled_daily_pull.cmd :rivbbg_enr: \"%PY_AWS%\" -u -m rivalfunds.enrichment_bloomberg --mode daily; rc 0 maps to 94 'landed'.",
+        "data/etfs/scripts/rivalfunds/enrichment_bloomberg.py at CLOUD 74f12b3092: no '__main__', no main(), no argparse (collector_bloomberg.py has all three, :468, :488).",
+        "%USERPROFILE%/opal_bbg_logs/bbg_tplus1_20261001_070002.log: 'RIVALFUNDS ENRICHMENT STEP (RIV-e-1)' followed directly by 'RIVALFUNDS ENRICHMENT EXIT CODE: 94 -- landed.' with no producer output between them.",
+        "s3://opal-data-etfs/rivalfunds/etfs/gold/corporate_actions/: 1 object, date=2026-09-30, written 2026-10-01T01:12:07Z (the import); security_market/: 2 objects, date=2026-09-29 only, newest 11:10:48Z (a RIV-d-4 act). No pull_enrichment marker after 11:10:49Z. Read 2026-10-01 ~17:50Z."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD C-VENDOR / C-GOLD-MODEL G3, G4: dividends, corporate actions, prices and GICS are refreshed by the scripted Bloomberg enrichment on the morning vehicle (R-21); the vehicle leg comment: 'the enabled vehicle leg lands both'.",
+    "world_is": "The scheduled leg is a no-op that reports success. G3 holds one QA import (2026-09-30) and G4 one date (2026-09-29). C-INCOME-CLEAN and the share-changing gate read a frozen G3, so a split or dividend after 2026-09-30 is not applied; the GICS join reads a one-day G4 (latest G1 gics_sector fill: 0.0 for IDVZ, PFOE, BASG, BIDD, INEQ, SCHY).",
+    "notes": "Found by the read-only /closer trace (Andrew-direct @b7622c0b5a). Remedy is the issuer's, not this seat's: a CLI entry calling handler_entry({'mode':'daily','date':<as-of>,...}) with the collector's 0/1/2/3 exit contract, plus a live run read on S3. No change made here."
   }
 ]
 ```
