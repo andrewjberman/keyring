@@ -34,6 +34,10 @@ Order: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261001_161xZ_DE
 - First: read this brief and `org/missions/D13/DSGN/DSGN_IRPTV1/STATUS.md`; `/watcher`; read the inbox.
 - Second: read the three leases (re-arm any that lapsed, on its present surface, citing CTO batch 84 item 6 or batch 82); restart 5174.
 - Third: if 2.0.0_SA_COO~P's b-2/b-4 have landed, build plan item 5; else run the NFRA_TRNSPT `--apply` pull (one run, record it).
+- E7 (1.0.0_SA_CTO 103914, RULINGS batch 98 items 1-3 @29a6581479): the Multi-Comp arm is NOT live until a served route names
+  its comparisons. 2.0.0_SA_COO~Y serves the names first (from the request's frozen keys and the catalogue's labels). This seat's
+  part, the tick that route serves them: show the names on the opened request (`tabs/analysis/OwnedRequestHistory.tsx`), land
+  on DEV, then ONE re-walk of `REQ-a1d9abc0bc037ea3d9e4a7ed` with `--expect-text` for both names; 1.0.0_SA_CTO calls it live.
 - `--say`: read `org/tier1_exec/2.0.0_SA_COO~D/REBOOT_BRIEF_20261001_2.0.0_SA_COO_D.md`, then the inbox `org/mcp/inbox/2.0.0_SA_COO/~D/`.
 
 ## 6. Not done and not known
