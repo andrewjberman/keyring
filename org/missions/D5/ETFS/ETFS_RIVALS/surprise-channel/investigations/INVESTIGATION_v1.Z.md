@@ -1827,6 +1827,48 @@
       ]
     },
     "notes": "RIV-d-4 reads i1_identity.json for the identity_coverage floor; every fraction is 1.0 over two days, so the floor is not constrained by this window."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S24",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-01T08:35Z",
+    "one_line": "Resolution of row ETFS_RIVALS-Z-W1-S22: REPAIRED by issuer amendment 1 of RIV-g-6 -- the two stale RIV-hp-1 tests are deleted and the stale ProducerAddressError comment in gold_holdings_coverage.py is replaced; the rivalfunds suite reads 0 failed.",
+    "spec_asserts": "Amendment 1: delete test_an_unreadable_producer_file_raises_and_is_never_guessed and test_g1_fails_loud_when_the_producer_address_is_unreadable; fix the comment near gold_holdings_coverage.py:448; the suite must read 0 failed.",
+    "world_is": "python -m pytest rivalfunds/tests from data/etfs/scripts: 234 passed, 2 skipped, 0 failed after the repair (commit 0dce4474db), 241 passed, 2 skipped, 0 failed after the g-6 code (b789e6ae5a). The guarantee the two tests guarded (the address matches the producer's) is carried by tests/test_i1_home_producer_address.py.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/tests/test_hp1_home_producer.py@0dce4474db",
+        "data/etfs/scripts/rivalfunds/gold_holdings_coverage.py@0dce4474db (comment only)"
+      ]
+    },
+    "notes": "Row S22 is not edited (append-only); this row is its resolution."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S25",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-01T08:35Z",
+    "one_line": "G1's revision must change when a G4 lands, or a replay after the G4 import writes nothing (`s.exists(target)` short-circuits on an unchanged revision); the G4 pull reads G1 first, so G1 always precedes its G4 and the join is a SECOND G1 write. The revision therefore carries the G4 (`<ts16>-j<G4 date>-<sha8>`), which is a revision-form decision the order did not state.",
+    "spec_asserts": "Cell RIV-g-6: G1 rows keyed into the newest G4 on or before the report date take its GICS.",
+    "world_is": "Measured by test: G1 built with no G4 writes one revision; after a G4 lands the same replay writes a second revision with `-j<yyyymmdd>-` in its name and GICS RESOLVED, the earlier revision stays, and a third replay writes nothing. `j` sorts after hex digits and the home `h`, and a later G4 date sorts later, so `max(object name)` consumers (G2 g1_sources, the page) read the GICS revision. Two G4 revisions of the SAME date order by their hash (a coin flip, as the row-S19 class). A G4 that exists but matches no G1 row still changes the revision (identical content under a new name).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/gold_canonical_shape.py@b789e6ae5a _revision_of, _g4_for, apply_g4",
+        "data/etfs/scripts/rivalfunds/tests/test_g6_gics_join.py@b789e6ae5a test_a_g4_that_lands_after_g1_writes_a_new_latest_revision_and_keeps_the_old_one"
+      ]
+    },
+    "notes": "Also not covered: home_producer rows have no asset_class (the landing carries no classification), so even with GICS RESOLVED a home row's sub_asset_class stays NULL; and a G4 sector outside SUB_ASSET_CLASS_VOCAB resolves GICS but leaves sub_asset_class UNRESOLVED (the round's real G4 has none). On real data AC1 reads 66 of 66 keyed rows resolved, equal to the cut's measured overlap."
   }
 ]
 ```
