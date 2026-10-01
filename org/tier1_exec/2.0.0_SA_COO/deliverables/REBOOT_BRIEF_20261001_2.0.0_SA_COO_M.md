@@ -66,9 +66,9 @@ is deployed (18:03Z). Own work resumes until that word arrives.
   23:00Z gold fire and the page read for relationship z08327149.
 - `secclass-model-rows-m-20261001`: leg G = the 23:00Z gold fire reads the six held tickers with class_source etf-classifications.
 - `secclass-bd-thread-r2-and-irpt-narrowed-m-20260930` (HELD): only B4 open, read with r3's B4.
-- `healgap-cottonwood-catchup-m-20261001`: D1 and S on 2026-10-02 13:30Z (mdpf-gold-lambda), D2 the day after. Served-terms values
-  in `MDPF_HEALGAP_M/NEVER_WIDEN_HALF_REQUEST_HEALGAP_COTTONWOOD_CATCHUP_20261001.md`. If Tax is activated before that run, the CTO's
-  amended trigger admits exactly Tax branch 2 (extension fields, a null `tax` member); a Tax dollar on 10-02 still rolls back.
+- `healgap-cottonwood-catchup-m-20261001`: D1 and S CLOSED 19:3xZ on 4.0.0_SA_CRO's extra Gold run (19:18Z; manifest
+  `_manifests/2026-09-30/20261001T191940Z.json`: 5 built, 0 failed; the five Cottonwood points measured to the cent; every
+  other served difference is the Tax member). Only D2 open: the 2026-10-02 13:30Z run reads catchup 0 planned, 0 built.
 - HELD-STALE `cot-cash-admission-m-20260925` and `bd-securities-cot-new-p1-m-20260926`: gated on the Cottonwood re-point.
 - Worktrees: `C:/Users/AndrewBerman/Desktop/coo_m_r30` (on `coo-m-r30` @1c1d2a02c2, clean but for an untracked audit log; check
   out `coo-m-cot-carrier` there to continue the re-point, then switch back); `C:/Users/AndrewBerman/Desktop/coo_m_cot_seed`
