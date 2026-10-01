@@ -19,4 +19,6 @@
   "never two producers":
   - the Positioning page's shape, which is not touched at all;
   - the rivalfunds shape, which is separate.
-  "Never two producers" binds ONE shape. PRD C-HOME-PRODUCER v0.8 is reworded to that basis.
+  The admission is bound to IDVZ and PFOE on this word ONLY (scope fix on `3.0.0_SA_CVO~Z` msg 28027). It is not a general
+  carve-out of the no-duplicate-output veto, and any other fund or surface needs its own word from Andrew. PRD
+  C-HOME-PRODUCER v0.8 carries the bound wording.

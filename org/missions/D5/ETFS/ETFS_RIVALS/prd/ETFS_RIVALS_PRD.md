@@ -415,7 +415,9 @@ page itself.
   - Both the Positioning pull and this leg request the two funds from Bloomberg. **They serve two data shapes for two use
     cases**, so this is not two producers of one shape. Andrew-direct ~18:3xZ, VERBATIM: "We have two different data shapes
     needed for IDVZ and PFOE. On one side there is the existing Positioning page shape. That should not be touched at all.
-    Now, there is a rivalfunds angle. This is separate for separate use case." "Never two producers" binds within one shape.
+    Now, there is a rivalfunds angle. This is separate for separate use case." The second request is admitted for IDVZ and
+    PFOE ONLY, on that word. It is not a general rule that a second shape licenses a second producer. Any other fund or
+    surface needs its own word from Andrew.
   - **Bloomberg budget:** before the first scheduled fire with the four new names (IDVZ, PFOE, ACWI, IWM), the issuer
     measures the leg's request cost per `integrations/bloomberg/READ_HERE.md`. A measured breach STOPs and is rowed, and no
     name is silently dropped.
