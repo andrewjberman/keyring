@@ -77,3 +77,7 @@ regression on round 57's outcomes. Positive arm: `aj_overlay_name.py --where loc
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-01 ~14:2xZ):** ACCEPTED. Executor proof `1ccf6a59db` (AC1, AC2 PASS; entry CLOSED; artifact q0Vf... -> 1DFcRU3xDzUsi84yZnWv985DDF1MymMn; CodeSha256 E6PdHVFB... -> UnSqZgCDkSxM3J3roY8d+iVGZp+8JB1XnM/phfZrmeo=). Issuer's independent read 14:2xZ: 0 of 94 overlay/row differ, AMD/TSM company names, identity block unchanged; regressions (round 57 feed, round 59 price identity) YES.
+
+<status>complete</status>
