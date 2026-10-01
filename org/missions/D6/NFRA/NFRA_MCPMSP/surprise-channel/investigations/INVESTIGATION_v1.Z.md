@@ -444,6 +444,50 @@
     "spec_asserts": "TO MS-s-1 section 1: keep every other gate as it is; a targeted or planfile apply is graded on the plan the apply runs.",
     "world_is": "Only the naming plan stage renders the apply's own plan now. For a planfile apply the tag-authz and tombstone gates (when they run) plan the live tree afresh, and for a targeted apply they plan the whole tree; each can over-block a scoped apply on an unrelated resource or grade a different plan than the one applied. Not widened here.",
     "notes": "Candidate follow-on cell: factor one scoped-plan renderer (SA_PLAN_ARGS / SA_PLANFILE in safe-apply.sh) and feed it to all three plan-reading stages."
+  },
+  {
+    "project": "NFRA_MCPMSP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPMSP~1",
+    "surfaced_at": "2026-09-30T18:30Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_MCPMSP-Z-W1-S9",
+    "one_line": "MS-c-1 item 2: the host's /opt/opal-gateway/.env cannot be shell-sourced (set -a; . ./.env fails with exit 127), so the baseline capture parsed .env as KEY=VALUE in python before calling query_v0._fetch_capped; MS-dn-1's re-run must do the same.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MS",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SSM command fd5c458a-8cca-4993-8d22-2b26ed6ef983 Failed: './.env: line 14: ...: command not found', 'line 15: cot: command not found', 'line 23: opal_portal: command not found', 'line 33: arn:aws:iam::313476888478:role/gateway-inf-firm-reader-role}: No such file or directory', exit status 127.",
+        "The python-parse run succeeded: 9 keys hashed, bytes equal the head-object ContentLength of each key; the recipe is in r2_c1_delta_baseline.json captured_on."
+      ]
+    },
+    "spec_asserts": "TO MS-c-1 item 2: over SSM, cd /opt/opal-gateway, load .env, run .venv/bin/python calling app.query_v0._fetch_capped(key).",
+    "world_is": "Unquoted values with spaces and a JSON value make .env a non-shell file; a shell load stops before python runs. No host write occurred in either attempt.",
+    "notes": "The gateway reads credentials from the instance role, so the .env values do not affect the S3 read itself."
+  },
+  {
+    "project": "NFRA_MCPMSP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPMSP~1",
+    "surfaced_at": "2026-09-30T18:30Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_MCPMSP-Z-W1-S10",
+    "one_line": "MS-c-1 item 1: the census denominator (call_sites_scanned=24) counts the order's boto3.client('s3') and get_object sites plus head_object, list_objects_v2 and non-literal client() sites, because opal_discover reads by HEAD and sprint_view lists; sprint_view.py (daily-reports/*) is a fifth reader beyond the three known at the cut.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MS",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python ast scan of infra/aws/ec2/opal-gateway/app/**: 24 sites in 11 files; census r2_c1_census.json readers[] has 5 entries, not_readers[] 6 files.",
+        "opal-gateway-daily-reports-read grants GetObject on opal-data-portal-v2/daily-reports/* and config.DAILY_REPORTS_BUCKET defaults to opal-data-portal-v2."
+      ]
+    },
+    "spec_asserts": "TO MS-c-1 item 1: call_sites_scanned counts boto3.client('s3'...) and .get_object( sites; known readers are three.",
+    "world_is": "A narrower count would omit the HEAD and list reads that the same IAM grants permit. The sprint_view reader reads daily-reports/, which is not firm data, so it falls outside the Deny's keys.",
+    "notes": "The Deny keys platinum/mdpf/{firm}/* do not touch daily-reports/*."
   }
 ]
 ```
