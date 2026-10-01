@@ -2475,3 +2475,22 @@ record).
 **Bounds shared by both orders:** one seat per publisher (ag-1: wsj, barrons; ag-2: ft, sa; the issuer's ag-3 runs
 take bbg and wsj -- so ag-1's wsj work runs FIRST, before the issuer's wsj driver run starts); the main runtime is
 held by the ft backfill and `~92`'s runtime by the sa backfill -> every live job runs in its own runtime root.
+
+## 48. ROUND 35 -- L5 DECOMPOSITION v3.15, over the round-34 analysis (`ledger/ROUND_ANALYSIS.round34.md` @6cbef26707)
+
+**Issuer `2.0.0_SA_COO~H`**, 2026-10-01 ~15:4xZ. FWD-11 limb 1 MET for bbg/wsj/barrons; limb 2 open on all five;
+FWD-14 unmet. Series **`ah`**. The sa, bbg and wsj drivers keep running; the ft driver is stopped (`STOP_FT`, 15:4xZ)
+so `ah-3` holds ft alone.
+
+| analysis item | cell | order | class | slot |
+|---|---|---|---|---|
+| 1 a real challenge DOM captured per publisher at load -> the planted fixture the real solver passes (limb 2b) | `HVST-ah-1` | `ah-1` | LOCAL A (capture hook), then the issuer drains A so the live drivers capture; B (fixture + solve test) | `~91` |
+| 2 per-minute monitor windows; any minute with human input VOID; the limb-2a grade per publisher | `HVST-ah-2` | `ah-2` | LOCAL | `~90` |
+| 3 ft: 324 of 357 rejected fetches in job 1 were `publisher_did_not_unlock_body` -- unlock the ft bodies | `HVST-ah-3` | `ah-3` | WORLD | `~92` |
+
+**Fan-out: 3 of 3 chains, cap 3.** Write sets are disjoint: `ah-1` `verification.py`, `transport.py`,
+`challenge_capture.py`, `fixtures/challenges/`; `ah-2` `load_window_grade.py`; `ah-3` `publishers.py`,
+`tab_transport.py`, `contracts.json`. Each cell has its own test file.
+
+**Checks dry-run at the base (all FAIL as expected):** `round35/checks/ah-1.AC2.py` (no captured fixture),
+`ah-2.AC2.py` (no grader), `ah-3.AC2.py` (no ft record).
