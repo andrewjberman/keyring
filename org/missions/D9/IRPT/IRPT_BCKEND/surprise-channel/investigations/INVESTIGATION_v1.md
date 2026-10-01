@@ -14298,3 +14298,63 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Nothing reads the ledger today, so nothing is broken by its absence; the hop-7 and hop-8 outcome files counted vendor calls from the journal and the code path for that reason. The repair is the worker handing the transport's evidence list to the receipt in the ten-key shape job.py already defines; it rides the next resident build. The outcome that found it: org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/HOP8B/OUTCOME_20261001.md."
 }
 ```
+
+## IRPT_BCKEND-S254 -- DISARMS row IRPT_BCKEND-S245 (on 1.0.0_SA_CTO's read, msg 103769): Inflection's holdings gold is rebuilt on the measured close basis and dated correctly -- one account reproduced by hand before the seam, on the seam day and across a gap, 6 of 6 rows equal to 1e-12.
+
+```json
+{
+  "id": "IRPT_BCKEND-S254",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-01T13:12:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARMS row IRPT_BCKEND-S245 (on 1.0.0_SA_CTO's read, msg 103769): Inflection's holdings gold is rebuilt on the measured close basis and dated correctly -- one account reproduced by hand before the seam, on the seam day and across a gap, 6 of 6 rows equal to 1e-12.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/HAND_REPRODUCTION_INFLECTION_20261001.txt @a4e7794b18: account 226; 2026-04-30 (date=2026-04-29 -> date=2026-04-30), 2026-05-05 (date=2026-05-04 -> date=2026-05-06), and the window 2026-05-07..2026-05-13 whose third row is one linked row of span 2 from Friday's close; each row equals the gold's return, basket, start close, span and line count; the window by hand equals the product of the four gold rows (-0.036816721122). The instrument imports none of the producer's code.",
+      "1.0.0_SA_CTO msg 103769: the arithmetic re-done from the printed values for two rows and the window equals the file; batch 63 item 3(d) is met.",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/HOLDINGS_SOURCE_DATE_BASIS_READ_20261001.md @a0c9b39a8c: 555 trading-day partitions graded against the Schwab anchor (444 own-date before 2026-04-20; then 14 own-date, 92 prior-day, 3 no-single-close, 2 absent); sources.json 1.2 declares the segments @de3d423dce.",
+      "the first rebuilt partition read back at 11:4xZ: the new 2026-09-24 equals the 2026-09-29 build's 2026-09-25 on 792 of 792 OK accounts and differs from its 2026-09-24 on 727 -- the old gold dated each post-seam return one trading day late."
+    ]
+  },
+  "dismissal_reason": "The hazard of S245 was a gold whose rows from the seam on carried the prior trading day's return under the next day's date. The producer now reads the partition that holds each close, per source, as declared data, and the rebuilt rows reproduce by hand.",
+  "spec_asserts": "Row S245 and RULINGS batch 63 items 1-3: the date basis is data per source; the rebuild; three hand reproductions read by the CTO before anything serves the gold.",
+  "world_is": "MEASURED as above. STILL OPEN, and not disarmed here: the rebuild's leg V1 (the gap days' partitions still hold rows of the 2026-09-29 build; no reader may see them); 2026-07-01's partition is not admitted, so the close of 2026-06-30 stays in no partition and two gaps remain after the admissions (2026-05-11, 2026-06-30) plus 2026-08-10; nothing serves this gold until IB-pr-221's own packet.",
+  "notes": "The adapter half (batch 80 item 4) is on CLOUD @89b5a85abe, not served."
+}
+```
+
+## IRPT_BCKEND-S255 -- DISARMS row IRPT_BCKEND-S216 (disarm owner 2.0.0_SA_COO~P): Inflection's positions land in the monolith again -- today's mirror fire copied 2026-09-30 and 2026-10-01 and the converter landed both; 2026-09-29 is admitted from its coerced file; 2026-09-28 stays absent and loses no close.
+
+```json
+{
+  "id": "IRPT_BCKEND-S255",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-01T13:12:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARMS row IRPT_BCKEND-S216 (disarm owner 2.0.0_SA_COO~P): Inflection's positions land in the monolith again -- today's mirror fire copied 2026-09-30 and 2026-10-01 and the converter landed both; 2026-09-29 is admitted from its coerced file; 2026-09-28 stays absent and loses no close.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3 list opal-data-assets 2026-10-01 13:08Z: orion/inflection/bronze/positions/2026-09-30.jsonl.gz and 2026-10-01.jsonl.gz both written 13:05:23Z; silver fact_positions/date=2026-09-30 written 13:05:33Z and date=2026-10-01 written 13:07:39Z.",
+      "opal-data-inf bronze/positions/2026-10-01.jsonl.gz written 11:51Z by today's chain (chain_full_20261001_113344, INF_API_PULL_POSITIONS_DAILY ok): the raw now lands before the mirror's 13:05Z fire.",
+      "ledger inf-coerced-positions-admission-20261001 @29b6d93df5: date=2026-09-29 landed 12:50:08Z from 2026-09-29.parquet under both halves and site Z's word; graded 149 of 149 at the 2026-09-28 close.",
+      "partition_close_anchor_sweep.py 2026-09-28..2026-09-30 at 13:10Z: 09-28 ABSENT, 09-29 and 09-30 PRIOR_TRADING_DAY (149 of 149, 148 of 148). The holdings gold for 2026-09-25, 09-28, 09-29 and 09-30 landed at 13:0xZ, 4 of 4 days computed."
+    ]
+  },
+  "dismissal_reason": "The hazard of S216 was a positions feed that had stopped, blocking the Inflection holdings producer. The cause was upstream (the INF chain died before the raw pull from 09-28 to 09-30 morning; row W86-S1, closed) and the feed is landing on its own schedule again.",
+  "spec_asserts": "Row S216: orion/inflection/bronze/positions and silver/fact_positions end at 2026-09-27; two trading days missing.",
+  "world_is": "MEASURED as above. 2026-09-28 has no raw file and its coerced file is not admitted; a partition dated 09-28 would hold Friday's close, which the 09-26 and 09-27 partitions hold, so no close is lost. NOT DONE: the mirror's second scheduled fire and its counted SKIP for an unknown key class (batch 63 item 6); until then a raw that lands after 13:05Z waits a day.",
+  "notes": "The daily schedule entry for the orion source of the holdings producer (batch 63 item 7) is not built; the days above were run by hand under the rebuild's ledger."
+}
+```
