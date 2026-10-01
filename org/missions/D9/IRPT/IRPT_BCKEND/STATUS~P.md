@@ -1,11 +1,11 @@
 # IRPT_BCKEND~P (Performance, shared auth/routes/IaC/packaging) -- status
 
-Seat `2.0.0_SA_COO~P` (CLAUDE). **Mode FAST** until 2026-10-01T16:27Z: lease `IRPT_BCKEND~P`, re-armed 12:2xZ on `1.0.0_SA_CTO` RULINGS
-batch 84 item 5 (nine paths; the tool refused the producer directory and `holdings-performance/handler.py`, which two open
-IRPT_DASHBD orders name in `<paths>`). Andrew's word of ~04:2xZ:
+Seat `2.0.0_SA_COO~P` (CLAUDE). **Mode FAST** until 2026-10-01T19:45Z: lease `IRPT_BCKEND~P` re-armed 16:0xZ on `1.0.0_SA_CTO`
+RULINGS batch 95 item 2 (the nine paths plus `holdings-performance/locals.tf` and `schedule.tf`); lease `IRPT_DASHBD~P` until
+18:01Z (the producer directory). Andrew's word of ~04:2xZ:
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261001_042xZ_SELF_DRIVE_60M_LAPTOP_FABRIC_FINAL_SAY_CLOSER_DRIVE_IRPT_FIRST.md`.
-Loop: `/canonical-drive 10m` (LIVE_ARMS RELAUNCH row). IRPT_DASHBD workstream B stays FULL. As of 2026-10-01 ~13:2xZ. Earlier forms
-are in git (the 09:4xZ form @154651fcb7).
+Loop: `/canonical-drive 10m` (LIVE_ARMS RELAUNCH row). IRPT_DASHBD workstream B stays FULL. As of 2026-10-01 ~16:1xZ. Earlier forms
+are in git (the 13:2xZ form @776d8975ea).
 
 ## Standing Andrew words that govern this workstream (read first)
 
@@ -24,28 +24,26 @@ are in git (the 09:4xZ form @154651fcb7).
 | irpt-holdings-performance-lambda | `gLRGHIyi...` | 09-29 14:42:51 | producer and `sources.json` pinned at 363dc1fda4: declaration 1.1, emission 1.1, 49 Financial daily | NOT moved; CLOUD is two changes ahead (below) |
 | inf-ec2-launch-monitor | `t1QrzaDe...` | 09-30 16:19:48 | pr-242 | A1 closed @f080be46aa |
 
-Data acts today, each under both halves where a served table moved:
+Data acts today, each under both halves where a served table moved; every ledger below is CLOSED:
 
 | act | when (Z) | record |
 |---|---|---|
-| 49 Financial holdings gold `date=2026-09-29` minted (7,559 rows) | 07:13 | ledger closed @a7a6c3622f |
-| NNA excusals for accounts 866, 769, 1096 on 2026-09-24 put on the runner | 10:27 | packet @1f898d7db9 (CTO batch 79); ledger leg D1 closed; **leg V1 OPEN** |
-| silver `fact_positions/date=2026-08-06` admitted from its coerced file | 12:33 | packet @2a3c7e0feb (CTO @6f9fb8d201 part 1); leg A1 closed |
-| silver `fact_positions/date=2026-09-29` admitted from its coerced file, on site Z's word | 12:50 | same packet, part 2 branch (a); **leg A2 OPEN** |
-| Inflection holdings gold rebuilt (emission 1.2) | 11:40 onward | ledger `irpt-holdings-gold-inflection-rebuild-20261001`; **leg R1 RUNNING** (1,005 days landed at 13:18Z; about four chunks left) |
+| 49 Financial holdings gold `date=2026-09-29` minted (7,559 rows) | 07:13 | @a7a6c3622f |
+| NNA excusals for accounts 866, 769, 1096 on 2026-09-24 put on the runner | 10:27 | packet @1f898d7db9; rollback by version ends 2026-10-15 (@8773d27019) |
+| silver `fact_positions` 2026-08-06 and 2026-09-29 admitted from their coerced files | 12:33, 12:50 | packet @2a3c7e0feb, correction @9b0d0cbd5a |
+| Inflection holdings gold rebuilt at emission 1.2 (1,613 of 1,616 partitions) | 11:40 to 15:05 | @3cc5b831aa; three hand reproductions accepted |
 
-Rows closed today: S238 and S244's API half (S248); S247 (S249); S245 (S254, on the CTO's read of the hand reproductions); S216 (S255).
-Rows filed today and open: S250 (the coerced 2026-07-02 file differs from its raw file), S251 (the ETF ownership producer writes no
-staleness determinations), S252 (Cottonwood's lagged price minority).
+Rows filed today and open: S250, S251, S252, S257 (ARMED: the Inflection schedule fires too early; fixed in source, disarms on its
+first fire), S258 (the holdings-performance root did not plan; fixed in source @2d74e53d39, disarms at the serving packet).
 
 ## Source on CLOUD ahead of what is served (nothing below is built or applied)
 
-- `sources.json` 1.2 and the producer @de3d423dce: per-source `partition_close` segments (OWN_DATE, PRIOR_TRADING_DAY,
-  NO_SINGLE_CLOSE; measured over 555 Inflection trading-day partitions), `link_across_gaps` (Inflection only), emission 1.2 with
-  `span_trading_days`. 60 producer tests.
-- `performance/holdings_gold.py` @89b5a85abe: a linked row is chained and disclosed; a window edge inside linked days is marked.
-  237 performance tests.
-- The one admission path: `IRPT_MVP_P/admit_coerced_positions.py` (two dates in its table; every other date refused).
+- The producer @de3d423dce and `sources.json` 1.2 (close-basis segments, `link_across_gaps` for Inflection, emission 1.2).
+- `performance/holdings_gold.py` @89b5a85abe (linked rows chained and disclosed).
+- The holdings-performance root @2d74e53d39: plans with 0 errors, 7 to add (the Inflection function, roles, policies, schedule at
+  14:00 UTC); 49 Financial's entry unmoved. **Nobody applies it before the producer artifact is rebuilt** (the serving packet).
+- The mirror's stray-key skip and second schedule @2e00498347 (its own packet, after the serving packet).
+- Held UNCOMMITTED in the worktree for the packet: the adapter's source-map re-pin and the role's read grant (`retained.tf`).
 
 ## Write claims
 
@@ -58,26 +56,18 @@ staleness determinations), S252 (Cottonwood's lagged price minority).
 
 ## Next, in order
 
-1. **Close the three open legs** (each is a read, no new act):
-   - NNA V1: the chain `chain_full_20261001_113344` passed INF_C_01 (09-24 partition: 6 rows, the packet's AFTER totals, read
-     12:44Z). Owed: its own log at chain end (three EXCUSED lines; every step after INF_C_01 read; failures reported the same hour),
-     then the row that disarms W97-S3.
-   - Admission A2: after the 15:00Z `inf-etf-ownership-daily` run, list every key under `opal-data-etfs/daily/inflection/` with its
-     size, say which one the admission caused (expected three: 2026-09-29 from this act, 2026-09-30 and 2026-10-01 on their own),
-     and hand the listing to `0.0.0_AB_MSTR` for site Z with the CTO copied by path.
-   - Rebuild R1 then V1: list what landed today against the trading days; name every partition still holding the 2026-09-29 build.
-2. **The stale gap-day partitions** (2026-05-11, 2026-06-30, 2026-08-10: rows of the old build that no reader may see). Removing
-   them is an S3 delete; the alternative is a zero-row overwrite, which changes what the adapter does for a window ending on the
-   gap day. One ask to `1.0.0_SA_CTO` when R1 ends.
-3. **IB-pr-221's served move** (batch 63 item 3e; PRD ruling 23 arrives in the CTO's addendum): the adapter takes the firm-agnostic
-   `holdings_gold.py` with the linked-row handling, `installed.py` and the Inflection source, under its own packet; and the
-   producer Lambda takes the 1.2 pair with one schedule entry for `orion` (item 7), which also moves 49 Financial's daily
-   partitions to emission 1.2.
-4. **The mirror items** (batch 63 item 6): blocker sent 13:18Z; the files are outside this lane's lease and paths.
-5. **A named refusal for a directory search with no client firm** (`BucketUnmapped` answers `UNEXPECTED`): its own packet.
+1. **The Inflection serving packet** -- DRAFT @9893683dc3
+   (`org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/DRAFT_NEVER_WIDEN_PACKET_INFLECTION_PERFORMANCE_FROM_HOLDINGS_GOLD_20261001.md`).
+   ONE pre-condition open: the nine stale gap-day objects (Andrew's word on the delete, packet @3cc5b831aa; batch 92 item 6 has the
+   CTO reopen the disposition if none). Then build both artifacts, fill the hashes, ask both halves, ledger, apply in the packet's order.
+2. **The mirror release packet** (after 1): a real positions failure still stops the run; a stray key is a counted SKIP.
+3. **A named refusal for a directory search with no client firm** (`BucketUnmapped` in `_authz/loaders.py` answers `UNEXPECTED`).
 
-IRPT_DASHBD workstream B: contracts landed today, `account_return_daily` 0.2.0 @6a23aee53d and `dim_return_method` 0.1.0
-@3f9acac3aa; `0.4.0_DS_ClientPlatform~S` reports DB-b-1 emitted with 3 of 3 criteria passing and flips its own status.
+IRPT_DASHBD workstream B (this seat issues): DB-b-1 complete; DB-b-3 measured with both criteria passing, its flip is
+`0.4.0_DS_ClientPlatform~S`'s now that the method contract 0.2.0 is landed (@9ff75db8f2); rows S10/S11 recommend against the 3.70
+percent tolerance (judgment for the round analysis). DB-b-2 worker `0.9.0_WK_IRPT_DASHBD~1` SPAWNED 16:1xZ in DIR
+`C:\Users\AndrewBerman\Desktop\wk-irpt-dashbd-1` (amendments 3 and 4 @25c6d2607d, @8ff819062e); DB-b-4 queues on the same slot.
+L10 slug to the CTO when all four are terminal.
 
 ## Parked (owner; condition that un-parks it)
 
