@@ -84,6 +84,9 @@ lib/opal_data_harvest/publishers.py
 lib/opal_data_harvest/sa_quarantine.py
 lib/opal_data_harvest/test_ae1_sa_listing_body.py
 lib/research/harvest/publication_gold.py
+lib/opal_data_harvest/test_bronze_capture.py
+lib/opal_data_harvest/test_n1_received_bytes_and_run_record.py
+lib/opal_data_harvest/test_p2_fetched_and_stored_keys.py
 org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~90/
 org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
@@ -106,6 +109,22 @@ other publisher's leg.
 - INSTANCE NAMED EXACTLY
   `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~90/AMGT_HARVST.TO-HVST-ae-1.sa-wrong-object-repair.proof_of_spec.json`
   with `to_id` `AMGT_HARVST.TO-HVST-ae-1.sa-wrong-object-repair`.
+
+## AMENDMENT 1 -- 2026-10-01 ~05:5xZ, the issuer, on the phase-A report (rows Z-W90-S1, Z-W90-S2)
+
+1. **Z-W90-S1 ACCEPTED:** the bronze capture is `{"data": item}` (the listing item whole, inside `data`), so
+   `silver_from_bronze._extract_sa` reads the listed `id` and `title`. This replaces section 1 item 1's literal
+   `json.dumps(item, ...)`; everything else in item 1 stands.
+2. **Z-W90-S2 RULED:** a listing item the sa leg accepts for storage COUNTS AS FETCHED -- its body arrived in this job, so
+   the run record's `keys_fetched` and the outbox join keep their meaning (the run record is a source of served
+   coverage). Restore `self._note_fetch("sa:" + identity)` at the point the item is accepted (after the pre-floor and
+   held skips), with NO request made. Section 1 item 1's "`_note_fetch` is no longer called" is withdrawn.
+3. **Paths added:** `test_bronze_capture.py`, `test_n1_received_bytes_and_run_record.py`,
+   `test_p2_fetched_and_stored_keys.py`. Update ONLY their sa arms so they assert the listing-body behaviour (the sa
+   bronze capture parses to `{"data": <the listing item>}`; a planted new sa key is counted fetched and joins an outbox
+   row). Other publishers' arms are not touched.
+4. **Done when:** AC1 still passes, and `python -m pytest lib/opal_data_harvest/ -q` reads 0 failed (the base was 363
+   passed, 1 skipped; your 8 new tests make 371). Re-run AC1, update the instance, commit. Do not flip `<status>`.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
