@@ -94,6 +94,18 @@ on 3.0.0_SA_CVO's review `org/tier1_exec/3.0.0_SA_CVO/deliverables/MDPF_SECCLASS
     catch-up module and 16 tests are on CLOUD and wired nowhere; the live read-only plan is the ruling's five dates;
     the call line and the Lambda package row are `4.0.0_SA_CRO`'s.
 
+11. **The Cottonwood thread (row IRPT_BCKEND-S173; CTO rulings batch 86 items 5-8): IN HAND.** Ruled (a): Cottonwood
+    gold classes from the canonical table only, no name pattern, no ticker shape; what the table lacks reads
+    unclassified. Done: the library `data/cot/scripts/gold/lib/etf_classifier.py` @398a0ce84c (serve-held, 7 tests);
+    the measurement `MDPF_SECCLASS_M/COT_THREAD_UNCLASSIFIED_MEASURE_20261001.md` -- of 554.6 million USD, 205.1
+    million (37.0%) would read unclassified: 101.3 million with no ticker (held-away and manual assets) and 103.8
+    million in 271 tickers the table lacks, the top 25 carrying 84.3%. Next, in order: (i) rows for the top tickers
+    FIRST, each a seed row with its ground or a model row with a seed peer, under its own half (item 6);
+    (ii) the three callers' rule for an unknown ticker and for a holding with no ticker (C_06, D_03, D_04);
+    (iii) the host role's read on `etf-classifications` only and the shipped-artifacts entry -- two exact-file
+    grants asked 12:55Z; (iv) the half for the re-point, naming the residue; (v) Cottonwood's scheduled E_18
+    step, under its own half (item 7). It disposes the two ledger entries held since 2026-09-25/26.
+
 ## Dependencies
 
 | Needs | From (owner) | Interface / pin | State |
