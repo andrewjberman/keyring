@@ -1,7 +1,7 @@
 # MDPF_TAXSMA -- status (FAST lease, /closer-drive)
 
 Seat `4.0.0_SA_CRO` (CLAUDE). Contract `org/standards/MDPF_TAXSMA_DATA_CONTRACT.json` version 0.6.0 (amendment 2). Reviewer `3.0.0_SA_CVO`.
-As of 2026-10-01T02:0xZ. **PAUSED AT A CHECKPOINT on Andrew's word (he reboots the laptop):** `org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20261001_020xZ_GATEWAY_TF_TO_SITEZ_TAXSMA_FINISHES_ON_LAPTOP_CRO_CHECKPOINT_THEN_REBOOT.md`. No apply is in flight, no ledger is open, nothing is uncommitted. Lease: FAST MDPF_TAXSMA seat 4.0.0_SA_CRO until 2026-10-01T02:44Z (`org/mcp/drive-mode.log`); re-arm on resume.
+As of 2026-10-01T02:1xZ. RESUMED on Andrew's `/closer-drive MDPF_TAXSMA` at this terminal (02:04Z), after the 02:03Z checkpoint; the reboot waits for the next checkpoint. Lease: FAST MDPF_TAXSMA seat 4.0.0_SA_CRO until 2026-10-01T05:06Z (`org/mcp/drive-mode.log`), laptop-only surfaces (the Gateway surfaces are site Z's).
 Authority: `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260930_142xZ_TAXSMA_CLOSER_DRIVE_GO_RIA_COLUMN_WORKBOOK_FALLBACK.md` @d55b7066ba;
 priority `ANDREW_DIRECT_20260930_202xZ_TAXSMA_PRIORITY_THROUGH_MDPF_ALONGSIDE_DROPPED.md` @733b28e890 (Tax SMA through MDPF to every relevant surface).
 
@@ -49,7 +49,8 @@ Trace: `org/tier1_exec/4.0.0_SA_CRO/deliverables/TAXSMA_MODEL_PORTFOLIOS_END_TO_
 `data/mdpf/scripts/gold/{taxsma_*.py, mdpf_gold_consolidator.py (Tax blocks), dim_mdpf_aum_metrics.py (Tax blocks)}`,
 `data/mdpf/tests/taxsma/*`, `org/standards/MDPF_TAXSMA_DATA_CONTRACT.json`,
 `infra/aws/terraform/mdpf-pipeline/iam.tf` (the TX-i-1 block), `infra/aws/terraform/opal-assets/mdpf_egress_publisher.tf` (the TX-i-2 block),
-`infra/aws/terraform/opal-gateway/taxsma_workbook.tf` (held), the two package sidecars.
+the two package sidecars.
+**In progress (claimed 2026-10-01T02:0xZ on Andrew's `/closer-drive MDPF_TAXSMA` at this terminal): TX-r-1** -- `infra/aws/terraform/mdpf-pipeline/gold-lambda.tf` (the commit pin), `infra/aws/terraform/opal-assets/mdpf_portal_publisher.tf` (the commit pin, the rollout switch OFF), both function artifacts, the ledger entry `mdpf_taxsma-tx-r-1`.
 
 ## Next proof
 
