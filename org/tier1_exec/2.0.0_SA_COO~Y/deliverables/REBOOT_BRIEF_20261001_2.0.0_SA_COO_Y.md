@@ -52,7 +52,11 @@ Order: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261001_161xZ_DE
   message; (2) re-arm the inbox watcher and the 10-minute drive; (3) **E7 first** (CTO rulings batch 98 items 1-3
   @29a6581479, msg 103913): the Multi-Comp arm is NOT live until a served route names the chosen comparisons --
   serve their names from the request's frozen keys and the catalogue's labels, never read back from the PDF; then
-  `2.0.0_SA_COO~D` shows them and re-walks, and the CTO calls the arm live. E7 runs ahead of E5 and E6. The st10
+  `2.0.0_SA_COO~D` shows them and re-walks, and the CTO calls the arm live. E7 runs ahead of E5 and E6.
+  **E7's code is built and merged (item 17, `8c4398e32a`, merge `bf7495ee6b`)**: `ops/owned_requests.py` read()
+  returns `comparisons [{key, label}]` from the retained composition, and `OwnedAnalysisRequest.schema.json` gains
+  the optional property. Not served. Next: the never-widen packet for the `irpt-status` whole bundle at CLOUD's HEAD
+  (both halves; the CTO ratifies the contract text there), then tell `2.0.0_SA_COO~D` (field shape already sent). The st10
   packet for items 15 and 16 follows (build, gate against the running st9 tar, upload to new keys, packet + ledger,
   COO half, ask the CTO half).
 - `--say` hint: "Read org/tier1_exec/2.0.0_SA_COO~Y/deliverables/REBOOT_BRIEF_20261001_2.0.0_SA_COO_Y.md, then
