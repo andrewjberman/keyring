@@ -113,6 +113,7 @@ validated with `python .tools/proof-of-spec-check.py <instance>`. Report once pe
 - Pre-cut control: `tr.AC1.sh` reads `TAX ARMS 1 of 4` (module ABSENT, Tax path 302, `.env` 46 keys, no TAXSMA keys).
 
 <status>pending</status>
+<status>complete</status>
 <round>12</round>
 <slot>~15</slot>
 <fabric>site-z</fabric>

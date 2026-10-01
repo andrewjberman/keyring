@@ -5489,6 +5489,159 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "Fix is the issuer's: strip ANSI in the check, or pass --color=no / -p no:colour. The drain's AC2 re-run should run without FORCE_COLOR until then."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W92-S11",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~92",
+      "surfaced_at": "2026-10-01T19:25Z",
+      "one_line": "ah-3: the ft driver's per-job invocation (--no-sign-in) refuses a dead stored session, so a restarted ft driver makes 1 fetch and stops.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Order step 2: run the collector as backfill_driver.py invokes it (run --harvest-grammar --retrieval-mode backfill --floor --new-only --no-sign-in --security-json --publishers ft --max-jobs 1).",
+      "world_is": "At 2026-10-01T18:37:53Z that exact invocation on ASML ended status sign_in_refused after 1 fetch (detail '401 under --no-sign-in: no refresh'; the saved session file from 17:26Z was already dead). The same job without --no-sign-in read astn/ft/credentials, renewed once through ft_harvest_session.py (reauth_succeeded 18:42:18Z, network_auth_corroborated true) and ran. The ASML job in ah3_ft_runs.json therefore ran WITHOUT --no-sign-in, by the lead's word 'credentials only via the existing renewal path'.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "C:/Users/Opal Bloomberg/Desktop/ajb_workspace/.runtime/opal-data-harvest/runs/20261001T183753Z-ft-a8cddb0534.json",
+          "lib/opal_data_harvest/backfill_driver.py:178-179"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "When the ft driver is restarted every ft job begins on the same dead saved session and will refuse at fetch 1; the driver needs either a pre-job renewal or a first-job sign-in allowance. Not changed here (backfill_driver.py is outside the face's paths)."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W92-S12",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~92",
+      "surfaced_at": "2026-10-01T19:25Z",
+      "one_line": "ah-3: an ft session dies again about 20-30 minutes after each renewal; the worker renews once per job, so the job ends auth_failed_after_refresh and ft cools down 60 minutes.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Fix 1: barrier on a logged-out page raises AuthExpired and the worker renews once; the renewed session then serves the rest of the job.",
+      "world_is": "ASML job 20261001T183929Z-ft-da3e1ebf4a: renewal at 18:42:18Z, 63 fetches (23 stored, 1 locked), then auth_failed_after_refresh at 19:03:20Z (~21 min after the renewal) with the cooldown set to 20:03:20Z (60 min; the prior 17:37Z cooldown was 15 min). The prior seat's 17:04Z job did the same after ~33 min (48 stored of 77). The cause of the second death (server-side session lifetime, a concurrent login, or the bundle cookie replaced into a jar that then re-expires) is NOT diagnosed here: the barrier is read correctly, the session is not kept alive.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "C:/Users/Opal Bloomberg/Desktop/ajb_workspace/.runtime/opal-data-harvest/runs/20261001T183929Z-ft-da3e1ebf4a.json",
+          "runs/20261001T170405Z-ft-fd5eb3cc00.json (status auth_failed_after_refresh)",
+          "sqlite cooldown row ft until 1790885000 reason auth_failed_after_refresh"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Each ft job yields about 20-30 minutes of fetches per renewal, then ft is dark for an hour; the ASML name is not finished (144 previously stored, 129 skipped, more unfetched listing hits remain). A depth round for ft needs the renewal cadence or the session lifetime measured; it is a different root from the two fixed here."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W92-S13",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~92",
+      "surfaced_at": "2026-10-01T19:25Z",
+      "one_line": "ah-3: only ONE ft job ran: job 2 would start after the 60-minute cooldown (20:03Z) and breach the 90-minute cap; 'most ft listing hits' is not a stored number.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Order step 3: run the collector on 2 ft names chosen by the most ft listing hits; the lead's cap is 90 minutes for the two jobs, stop after job 1 if job 2 would exceed it.",
+      "world_is": "Job 1 (ASML, from 18:37Z) ended 19:03Z in cooldown to 20:03:20Z; a job 2 started then needs ~20+ minutes and would end past 20:08Z, so it was not run (the waiting launcher was killed, 0 ft processes and no Chrome left). Per-name ft listing-hit counts are not persisted anywhere readable offline (listing rows are per query page, not per hit); ASML was chosen as the name with 522 held keys and 416+ fetches, the next name in driver order (Adobe) was the planned job 2. ah3_ft_runs.json carries one job, 63 fetches, which clears AC2's own floor of 40.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "C:/Users/Opal Bloomberg/Desktop/wk-hvst-r32-92/.scratch/job2.out ('COOLDOWN wait 3351 s')",
+          "progress.sqlite3 cooldown ft"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Recorded so the issuer reads the run as 1 of 2 names; a second name is owed when the cooldown clears."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W92-S14",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~92",
+      "surfaced_at": "2026-10-01T19:25Z",
+      "one_line": "ah-3: the post-fix locked share (1 of 63) is measured over fetches AFTER 49 Premium teasers were skipped; AC2 cannot see the skips, so it grades the unlocked share of what was fetched, not coverage.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "AC2: locked = fetch outcomes carrying publisher_did_not_unlock_body, over at least 40 body fetches.",
+      "world_is": "Job da3e1ebf4a: 63 fetches, 23 stored, 39 rejected (34 company_not_mentioned), 1 publisher_did_not_unlock_body; skipped_keys 129 = 80 known_urls + 49 premium_tier. The Premium skips are persisted only as skipped_keys[].why inside the job record (the run_records counts carry skipped_as_held 129 with no split). So the locked share falling from 77% to 2% is the logged-in session (cause 1) plus not fetching Premium (cause 2, a coverage limit the TO names); the 49 Premium articles stay unreachable.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "runs/20261001T183929Z-ft-da3e1ebf4a.json skipped_keys",
+          "ah3_diagnosis.md"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Stated plainly in the diagnosis; the issuer's preflight adversary ('a fix that just stops fetching locked pages') applies to cause 2 by the TO's own design."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S55",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-01T19:40Z",
+      "one_line": "Round-35 disposition record (rows are append-only): W92-S11 and W92-S12 (ARMED: a restarted ft driver stalls on a dead session / the ft session dies ~20-30 min after each renewal) are disarmed by state -- the ft backfill driver stays OFF -- and carried to the round-36 proposal.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "An ARMED hazard disarms same-turn via its disarm_owner; spine L10 sends the slug only after every BLOCKING or ARMED row of the round is dispositioned.",
+      "world_is": "The ft backfill driver (PID 31976) exited at 16:1xZ on STOP_FT and is not restarted; no process runs ft (no python with --publishers ft, no chrome on browser-profiles/ft at 19:3xZ). Both hazards need a running ft driver to fire. The fixes they name (in-job renewal under the driver; the session-longevity diagnosis) are round-36 proposal item 1 in round35/ROUND35_DRAIN_END_PACKET.md.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "commits a78b06d3e6, 9b14622a78",
+          "deliverables/2.0.0_SA_COO_H/round35/ROUND35_DRAIN_END_PACKET.md",
+          ".runtime/harvest-backfill/ft_full_run2.out (driver exit + summary)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Restarting the ft driver re-arms both rows; do it only after the round-36 fix lands."
+    },
+    {
+        "id": "AMGT_HARVST-Z-W90-S10",
+        "project": "AMGT_HARVST",
+        "fabric": "site-z",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~90",
+        "surfaced_at": "2026-10-01T20:10Z",
+        "one_line": "ai-1 AC2 cannot grade live data from a worktree: .runtime is untracked, so the grader's runtimes.json is absent there and the grader raises FileNotFoundError.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "The face says run AC2 in the worktree and record its output; AC2 runs `python -m lib.opal_data_harvest.load_window_grade --json` with cwd = git toplevel.",
+        "world_is": "A bare AC2 run in the worktree exits rc=1 (runtimes.json not found under the worktree .runtime). To get a graded run I made a temporary directory junction .runtime -> the main tree .runtime (read-only use), ran AC2 (PASS, 0 failures; bbg 1068 requests, 191 clean minutes), then removed the junction with rmdir (main .runtime verified intact). The live data lives only in the main tree, so the issuer's main-tree re-run after the drain is the real grade.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "worktree wk-hvst-r32-90 AC2 runs 2026-10-01 ~20:0xZ"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION",
+        "notes": "No file in the main tree was written."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W91-S18",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~91",
+      "surfaced_at": "2026-10-01T20:30Z",
+      "one_line": "HVST-ai-3: ft/sa/barrons captures land under the code's DEFAULT runtime root, not under the per-publisher runtimes.json dir; ft's in-tab fetch has no challenge page to read, so its capture is the refused body.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Order cell 1.1-1.2: capture 'where the page is the challenge (the tab), the rendered DOM; for a REST refusal (sa), the response body'; status CLI 'reads the runtimes in runtimes.json'.",
+      "world_is": "(a) challenge_capture._runtime_root derives the root from the tab profile or default_profile_root().parent (config.json runtime_root), never from a driver's --runtime-root; the 4 bbg captures sit in .runtime/opal-data-harvest although runtimes.json names .runtime/opal-data-harvest-bbg for bbg, so the status CLI reads EVERY runtimes.json dir plus the config default and matches by publisher filename prefix. runtimes.json has no barrons key; sa's path is another worktree's. (b) ft is a TabSession but PacedSession.get reads the response of an in-page fetch (the tab page itself is not the challenge), so ft/sa captures are provenance source captured_refusal_body (sanitized body); the rendered DOM is taken only when the tab page's own content carries a bot-check signature. (c) the transport hook is skipped while PYTEST_CURRENT_TEST is set unless a test pins capture_root, so the suite's stub challenges never land in a live runtime. verification.py is in <paths> and was not changed.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/challenge_capture.py runtime_dirs/capture_refusal",
+          "lib/opal_data_harvest/transport.py PacedSession._capture_challenge",
+          "lib/opal_data_harvest/tab_transport.py TabSession.get",
+          "main-tree status read: bbg captures=4 under .runtime/opal-data-harvest"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "No hazard; recorded so a reader of limb_2b does not look for ft/sa/wsj captures under the per-publisher runtime dir."
     }
   ]
 ```

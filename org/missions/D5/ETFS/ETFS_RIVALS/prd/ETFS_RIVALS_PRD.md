@@ -5,10 +5,10 @@
  "project": "ETFS_RIVALS",
  "directive": "D5",
  "fabric": "site-z",
- "prd_version": "v0.7",
+ "prd_version": "v0.9",
  "step": 4,
  "brief_ref": "docs/briefs/etf-holdings-research-20260929.md@77c891c869",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12"],
+ "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20"],
  "status": "DRAFT"
 }
 ```
@@ -219,7 +219,8 @@ approved it.
          system, and why
          DONE WHEN  EXERCISED -- Andrew reads each fund's style read with its
                     evidence (timing concentration, breadth of the book touched,
-                    trade size), and the group's index fund (SCHY) reads as
+                    trade size), and each group's index control (v0.8: ACWI
+                    for the IDVZ group, IWM for the PFOE group) reads as
                     systematic on that same evidence
          ACCEPT     a count of trades alone is never the evidence; a label is
                     shown only after the control reads correctly
@@ -242,6 +243,142 @@ approved it.
          ACCEPT     a fund rivalling two Opal funds is stored once; adding a
                     group changes a mapping, not code
          SOURCE     brief O9, IV.4
+
+  ===== ADDENDUM B, v0.9, 2026-10-01 -- the presentation and the AI synthesis ====
+  From docs/briefs/rivalfunds-backend-data-ai-synthesis-20261001.md and
+  docs/briefs/rivalfunds-frontend-mcp-page-20261001.md (4.0.0_SA_CRO~RV, midstream,
+  on Andrew-direct @52eb8a5dc7, his two dictated transcripts verbatim).
+  STATUS: PROPOSED -- awaiting Andrew's confirmation, as FWD-1..12 were.
+  FWD-1..12 stand. FWD-1's trace stays reachable, and FWD-13 is this workstream's
+  thread.
+
+  FWD-13 (NEW, THE THREAD) Andrew opens the rival-funds page, reads IDVZ's best
+         and worst this month, quarter and year, then picks one rival and reads
+         its rankings, its buying trend and the AI's account of it
+         DONE WHEN  EXERCISED -- one live, signed-in read: the page opens on
+                    IDVZ's ranking for month-to-date; Andrew switches to
+                    quarter-to-date and year-to-date and the tables change; he
+                    picks one IDVZ rival and reads its ten best and ten worst
+                    holdings, five best and five worst sectors, its year's
+                    buying trend and the AI's two-part account; he follows one
+                    ranked figure back to the holdings and prices it came from
+         ACCEPT     everything he reads comes from that morning's real run; a
+                    figure built from sample data fails the outcome
+         SOURCE     backend brief O1; frontend brief O1; transcript 2
+                    ("default to IDVZ", "toggle MTD, QTD, YTD")
+
+  FWD-14 (NEW) Andrew ranks any fund's best and worst holdings and sectors for
+         the month, quarter and year to date, by the same rules for every fund
+         DONE WHEN  EXERCISED -- for every fund in both groups, Opal's own and
+                    each group's benchmark included, Andrew reads the ten
+                    holdings that added most to the fund's return and the ten
+                    that cost it most, and the five best and five worst sectors,
+                    for each of the three periods
+         ACCEPT     a figure Andrew checks agrees with what that fund's holdings
+                    and their prices add up to over the period; each table says
+                    which period and how many holdings it ranks; a holding with
+                    no price shows as missing, never dropped
+         SOURCE     backend brief O2; transcript 1 point one; transcript 2
+                    component 1
+         OPEN FOR ANDREW, two measures (CVO~Z msg 28052): (a) CONTRIBUTION:
+                    how much each holding added to or took from the fund's
+                    return over the period, weighted day by day by how much of
+                    it the fund held (those holdings rebuilt from its reports);
+                    this works for the benchmarks too. (b) TRADING RESULT: how
+                    the manager's buys and sells in that holding or sector
+                    worked out over the period ("by reverse engineering
+                    trading", transcript 1); a benchmark's result reads as
+                    index rebalancing. CTO recommendation: (a), with (b) kept
+                    in FWD-6.
+
+  FWD-15 (NEW) Andrew reads each fund's tilts and bets: where its buying has
+         trended this year, by holding and by sector
+         DONE WHEN  EXERCISED -- for every fund Andrew reads a simple
+                    year-to-date table in the same shape as the rankings: the
+                    ten holdings and five sectors its buying leaned into most,
+                    and the ten holdings and five sectors it leaned away from
+                    most, each line read as a tilt or a bet with a plain trend
+                    mark
+         ACCEPT     a trend is never presented as one that will continue; the
+                    table says how many trading days it covers
+         SOURCE     backend brief O3; transcript 1 point two ("just because
+                    there is a trend does not mean it is expected to continue
+                    indefinitely"); transcript 2 component 2
+
+  FWD-16 (NEW) Andrew reads what each fund has done in the last 30 days:
+         anything unusual, its big wins and its big losses
+         DONE WHEN  EXERCISED -- for every rival and both Opal funds (never
+                    a benchmark) Andrew reads the AI's account of the fund's
+                    last 30 days
+         ACCEPT     every figure in it points to where it came from; what was
+                    seen is kept apart from what is guessed; a benchmark has no
+                    such section
+         SOURCE     backend brief O5; frontend brief O4; transcript 2
+                    ("rolling 30-day view", "We do not need to apply any
+                    analysis to the benchmark")
+
+  FWD-17 (NEW) Andrew reads the AI's verdict on each fund's direction, weighed
+         against the wider market from Opal's own data
+         DONE WHEN  EXERCISED -- for every rival and both Opal funds (never
+                    a benchmark) Andrew reads a second account, written after
+                    and building on the 30-day account: whether the rankings
+                    and trends are borne out, contradicted or added to, given
+                    whether the manager trades by system or by discretion (the
+                    FWD-10 read); what the manager is getting right and wrong;
+                    what it expects the manager to do next and what would prove
+                    that wrong; it draws on Opal's own market readings (the fear
+                    and greed measures he named, global RSI, the news scanner,
+                    the trending topics and Data Harvest) before anything outside
+         ACCEPT     each market reading it uses shows the date it was taken; a
+                    stale reading is never turned into a trend; a later account
+                    never rewrites an earlier one; a benchmark has no such
+                    section
+         SOURCE     backend brief O6, O7, O8; transcript 1 point three;
+                    transcript 2 prompt two ("corroborate, refute, or
+                    otherwise enrich", "cached ... run one after another")
+
+  FWD-18 (NEW) The page reads as a presentation, not an audit log
+         DONE WHEN  EXERCISED -- Andrew reads the rankings, the buying trend and
+                    the AI accounts first, without scrolling past trade-by-trade
+                    detail, holdings lists or check tables; those stay one step
+                    away, and the dated archive stays
+         ACCEPT     Andrew can answer "where has this manager been winning and
+                    losing this quarter" from the first screen; a section with
+                    missing or failed data says so in its own place
+         SOURCE     frontend brief O5, O7; transcript 1 ("more of an audit log
+                    than a presentation", "scrolling from miles")
+
+  FWD-19 (NEW) The page looks and behaves like the Opal portal
+         DONE WHEN  EXERCISED -- a rendered page read side by side with the
+                    portal: the same card style, the same period switch in the
+                    order month, quarter, year, and the same light background;
+                    a fund picker lists each Opal fund with its rivals and its
+                    benchmark
+         ACCEPT     someone used to the portal reads the page as part of it;
+                    switching the period or the fund changes the tables and
+                    nothing else
+         SOURCE     frontend brief O2, O6; transcript 2 ("You should not be
+                    reinventing the wheel", "philosophy fixture cards",
+                    "a little dropdown")
+
+  FWD-20 (NEW) Every price, sector and market reading the rankings and the AI
+         need arrives each trading morning with nobody fetching it
+         DONE WHEN  EXERCISED -- over several consecutive trading days, every
+                    held security's price and sector, both benchmarks and every
+                    market reading the AI uses arrive on schedule
+         ACCEPT     Andrew does nothing by hand; an input that did not arrive is
+                    named on the page, never silently skipped
+         SOURCE     backend brief O9; transcript 1 ("locked in bronze
+                    ingestion for all relevant funds", "the operations as well")
+
+  CTO RULINGS ON THE BRIEFS' OPEN POINTS (Andrew may overrule any):
+  - The fund picker shows one fund at a time, grouped under its Opal fund, and
+    opens on IDVZ.
+  - The period and fund switches are built so that the page keeps working with
+    no scripts, as it does today. The page's no-script rule stands.
+  - The AI reads Opal's own data only. Web search needs Andrew's word.
+  - "Concentration of the market" is not one of the stored fear-and-greed
+    measures and is put to Andrew as a question.
 ```
 
 ## CONTRACTS
@@ -372,6 +509,17 @@ page itself.
 - **Source policy is per fund**, a field of the mapping (supersedes C-SOURCE-POLICY's single rule):
   - `bloomberg_primary`: the IDVZ group;
   - `issuer_first`: the PFOE group, as C-SOURCE-POLICY states.
+- **Index controls (v0.8, Andrew-direct 2026-10-01 ~18:2xZ, record @`19c5277a57`: "Use Russel 2000 for PFOE, ACWI for IDVZ";
+  "Dont need peer selection criteria, those are pre-decided by the asset management team").**
+  - Each group carries ONE `index_control` entry in `peer_group_map`:
+    - the IDVZ group: **ACWI** (iShares MSCI ACWI ETF);
+    - the PFOE group: **IWM** (iShares Russell 2000 ETF). Andrew named the Russell 2000 index, and the style control reads a
+      listed fund's published holdings, so the instrument is the index's largest listed tracker.
+  - **Both controls are `bloomberg_primary`.**
+  - **SCHY stays a member of the IDVZ group**, because the asset management team set the group, but it is no longer that
+    group's `index_control`.
+  - Every control is a mapping entry, never code (FWD-12).
+  - The peer sets are the asset management team's and are not re-derived. No selection criterion is written.
 
 **C-HOME-PRODUCER (one writer per fund's holdings).** IDVZ and PFOE are already pulled by
 `integrations/bloomberg/pipeline/etf_constituents_pull.py`.
@@ -386,6 +534,29 @@ page itself.
   - IDVZ and PFOE leave this pipeline's Bloomberg request.
 - **Never two producers of one fund's holdings** (CLAUDE.md, no duplicate output path). This stands; v0.4's striking of it is
   withdrawn.
+- **SUPERSEDED IN PART by v0.8 (Andrew-direct 2026-10-01 ~18:2xZ, record @`19c5277a57`, VERBATIM: "We should be able to pull all
+  this through the same bloomberg methodology that we do for all the other bbg-data pulls for the rivalfunds. Just add them to
+  the same queue on the job that does that.").**
+  - IDVZ and PFOE JOIN this pipeline's Bloomberg request (`rivalfunds.collector_bloomberg`, the box task's
+    `:rivalfunds_bbg_leg`). They join on the daily queue AND its history backfill to each fund's launch, because "the same
+    queue on the job" is the daily job.
+  - **One producer per fund inside this pipeline.** The Bloomberg leg becomes IDVZ's and PFOE's ONE producer here, and this
+    pipeline stops reading the Positioning landing for them.
+    - The read of `positioning-landing:constituents_issuer_fill` retires, and the `home_producer` source with it.
+    - The RIV-m-1 grain limit lifts, along with its "capture-forward from 2026-08-21" bound.
+    - Rows already served keep their `source_channel`, because history is never rewritten in place. The replay writes new
+      revisions under a pair.
+  - **The Positioning pull is still not modified** (Andrew 2026-09-30, "leave the existing pull alone"; "Anything ... additive").
+    This pipeline neither reads it nor writes it.
+  - Both the Positioning pull and this leg request the two funds from Bloomberg. **They serve two data shapes for two use
+    cases**, so this is not two producers of one shape. Andrew-direct ~18:3xZ, VERBATIM: "We have two different data shapes
+    needed for IDVZ and PFOE. On one side there is the existing Positioning page shape. That should not be touched at all.
+    Now, there is a rivalfunds angle. This is separate for separate use case." The second request is admitted for IDVZ and
+    PFOE ONLY, on that word. It is not a general rule that a second shape licenses a second producer. Any other fund or
+    surface needs its own word from Andrew.
+  - **Bloomberg budget:** before the first scheduled fire with the four new names (IDVZ, PFOE, ACWI, IWM), the issuer
+    measures the leg's request cost per `integrations/bloomberg/READ_HERE.md`. A measured breach STOPs and is rowed, and no
+    name is silently dropped.
 
 **C-INCOME-CLEAN (Addendum A FWD-5; Andrew: "did we already account for dividend/interest income? That should be covered").**
 - Before any residual reads as a trade, trade inference:
@@ -419,7 +590,7 @@ builder at v0.3. Every table:
 | G6 | `flow_reconciliation` | fund x trade window | (fund_id, window_end) | flow_factor_f, cash_line_delta_base, income_received_base, fx_conversion_base, corporate_action_count, income_funded_trade_count, unexplained_residual_base | MEASURED inputs, INFERRED residual | with G5 |
 | G7 | `trade_outcomes` | trade x horizon | (fund_id, security_id, window_end, horizon_td) | horizon_td {21, 63, 126}, fwd_security_tr, fwd_benchmark_tr (the fund's own holdings-weighted book), excess_tr, outcome {helped, hurt, flat}, price_coverage {full, partial, missing} | MEASURED returns, INFERRED attribution | after G5 and G4 |
 | G8 | `outcome_rollup` | fund x period x axis x bucket | (fund_id, period, axis {sector, security}, bucket) | n_trades, n_missing, hit_rate, mean_excess, sum_notional_base, window, denominator | INFERRED | after G7 |
-| G9 | `style_read` | fund x research window | (fund_id, window_end) | **the gate (v0.6, `4.0.0_SA_CRO~Z` style-read preview @9fc7430875):** peak_book_share_days (every report pair touching at least 50% of the book, with dates) and recurrence (those days fall on a quarterly or monthly calendar grid, at least 3 occurrences across at least 2 years); label systematic when recurrence holds, discretionary when trading is present without it, undetermined below the minimum history. Descriptive context, not the gate: timing_concentration (share of trade notional in the top 4 weeks), reconstitution_share, breadth, median_trade_size_pct, trade_count. label {discretionary, systematic, undetermined}, control_passed (SCHY must read systematic) | INFERRED | after G5; the label shows only when control_passed |
+| G9 | `style_read` | fund x research window | (fund_id, window_end) | **the gate (v0.6, `4.0.0_SA_CRO~Z` style-read preview @9fc7430875):** peak_book_share_days (every report pair touching at least 50% of the book, with dates) and recurrence (those days fall on a quarterly or monthly calendar grid, at least 3 occurrences across at least 2 years); label systematic when recurrence holds, discretionary when trading is present without it, undetermined below the minimum history. Descriptive context, not the gate: timing_concentration (share of trade notional in the top 4 weeks), reconstitution_share, breadth, median_trade_size_pct, trade_count. label {discretionary, systematic, undetermined}, control_passed (the group's `index_control` must read systematic: ACWI for IDVZ, IWM for PFOE, v0.8) | INFERRED | after G5; the label shows only when control_passed |
 | G10 | `trend_projection` | fund x axis x bucket x horizon | (fund_id, axis, bucket, horizon) | trailing_net_flow_base (3 windows), direction {accumulating, reducing, flat}, persistence, projected_direction, falsifier (deterministic template), confidence | INFERRED | after G5 |
 | G11 | `peer_comparison` | group x fund x measure x period | (group_id, fund_id, measure, period) | value, rank_in_group, group_median, is_home | INFERRED (from G8-G10) | after G8-G10 |
 | G12 | `research_hypotheses` | fund x analysis run x item | (fund_id, run_id, item_id) | kind {projection_note, wildcard, process_account}, text, cited_rows (table, key, revision), invalidation, model_version, prompt_version | INFERRED (AI) | the analysis step, after G8-G11 |
@@ -509,6 +680,26 @@ the `/sprint` precedent files.
 - The CVO grades JUDGMENT criteria at L9, citing the contract clause.
 
 ## PROVENANCE AND AMENDMENT HISTORY
+
+- v0.9 (2026-10-01, `1.0.0_SA_CTO~Z`), `/endpoint --forward` on `4.0.0_SA_CRO~RV`'s two briefs (msg 28050, record @`52eb8a5dc7`):
+  - The ENDPOINT gains **Addendum B, FWD-13..20, PROPOSED** and awaiting Andrew's confirmation.
+  - **Read:**
+    - the two briefs (18,838 and 12,827 bytes);
+    - this PRD's ENDPOINT.
+  - **NOT READ:** the task-order register, the round-4/5 decomposition, and the project JSON (Phase 0 reads the brief only).
+  - No CONTRACT changes yet. Contracts follow confirmation, and then the ratified half re-opens to `3.0.0_SA_CVO~Z`.
+
+- v0.8 (2026-10-01, `1.0.0_SA_CTO~Z`), on Andrew's three answers to `4.0.0_SA_CRO~RV`'s closer trace (record @`19c5277a57`, brief
+  @`381bec5549`):
+  - C-HOME-PRODUCER is superseded in part: IDVZ and PFOE join the Bloomberg leg, daily and backfill, as the one producer
+    inside this pipeline, and the Positioning pull is untouched.
+  - C-PEER-GROUPS gains the index controls (ACWI for IDVZ, IWM for PFOE), with SCHY a member but no longer the control.
+    No selection criterion is written.
+  - FWD-10's control and G9's `control_passed` follow.
+  - The hop-9 method rulings are recorded separately (`ledger/CTO_RULING_20261001_HOP9_METHOD_DEFECTS.md` @`4baf852611`).
+  - This is an ENDPOINT (FWD-10) and CONTRACTS change. Andrew's word names the controls, so the ratified half re-opens to
+    `3.0.0_SA_CVO~Z`.
+  - Round 4 (d-5) finishes as cut. These are round-5 cells.
 
 - v0.7 (2026-10-01, `1.0.0_SA_CTO~Z`), the round-2 analysis ruling 5 on row ETFS_RIVALS-Z-S1:
   - the C-SHAPES classification bullet now follows the ratified vocabulary the PRD names. For an equity row,

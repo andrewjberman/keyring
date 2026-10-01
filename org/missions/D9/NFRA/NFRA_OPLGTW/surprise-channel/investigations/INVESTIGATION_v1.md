@@ -6365,3 +6365,256 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S19",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-01T18:17Z",
+  "one_line": "OG-tr-1 step 2: the broker store holds TWO records whose username is opalbloomberg@ -- one principal-keyed cache and one email-keyed cache -- both carrying the SAME oid (517aa5ee...), so the literal 'exactly ONE record' reads 2 while the identity reads 1 distinct oid and Part D MATCH.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: SSM b141c294-8b60-4526-b01a-8c83dce6efad (read-only; the host's own venv, FERNET_KEY and TOKEN_CACHE_DIR read from /proc/<MainPID>/environ, never echoed): 6 .bin cache files, 6 account records, username matches 2; the 4 non-matching records carry oids 2e21f8e5 (x2), 2844f2b9, ad037ea5.",
+      "RUN: SSM (owner-kind read, 'wk15 OG-tr-1 step2 owner kind'): the 2 matching records sit in 2 files whose names equal sha256('principal:<tid>/<oid>') (principal-keyed) and sha256('opalbloomberg@opalinvest.com') (email-keyed, the server-held identity cache); DISTINCT_MATCHING_OIDS 1; equal to the Part D value 517aa5ee-b4d0-425a-b493-5a22ff77ac4f (host-side equality, PART_D_EQUAL True).",
+      "DOC: app/token_broker.py @0a1d9079c6 _cache_owner_for / _principal_owner / _email_owner: a principal's cache is keyed 'principal:<tid>/<oid>' and a server-held identity's by the lowercased email, so one person legitimately holds both."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 2: exactly ONE record's username is opalbloomberg@opalinvest.com; neither or both STOPS with a BLOCKING row.",
+  "world_is": "Two records match, both with the same oid. I read 'both' as two different identities and did not file BLOCKING: the gate's purpose (the one oid that goes into the identity value) holds with 1 distinct oid, Part D MATCH. I proceeded through steps 3-7 (all read-only or release-branch) and the identity value is NOT yet fixed into any file or upload. The issuer confirms or overrules before PHASE B; a literal reading would STOP here.",
+  "notes": "The oid prefix in this row is the first 8 hex characters only. The identity value for PHASE B is '<tid>/<oid>' from the Part D values file (equal on the host).",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S20",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-01T18:17Z",
+  "one_line": "The order names row 'W15-S18' for the PHASE A verify script, but NFRA_OPLGTW-Z-W15-S18 is already filed and dispositioned (OG-rl-2's late verify read); this cell's next unused coordinate is S19, so the verify script is filed under this row.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "DOC: INVESTIGATION_v1.md at CLOUD @37fcbfcac9: NFRA_OPLGTW-Z-W15-S18 exists (OG-rl-2) and is adjudicated DISMISSED_WITH_REASON by NFRA_OPLGTW-Z-S38; ids W15-S19 and above were unused before this write.",
+      "RUN: deliverables/0.9.0_WK_NFRA_OPLGTW~15/tr_verify.py + tr_verify.sh + tr_release_md5.txt written at PHASE A. 'before' mode on the live host (SSM b893b5ab-1b75-475d-bc39-8521e5e02e63): env keys 46, tools 65, taxsma module present False, /ms/taxsma-workbook 404, /health 200. NEGATIVE CONTROL 'after' mode on the same un-deployed host (SSM 119af030-0c1f-49dc-8f28-03ebb5163611): VERIFY FAIL 4 of 8, the failing checks exactly the three md5 files (app/config.py, app/server.py, app/taxsma_workbook.py), the 46 -> 48 keys, the two TAXSMA keys non-empty and the route's no-bearer refusal."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 10: VERIFY with a script written at PHASE A, run immediately after the deploy returns (row W15-S18).",
+  "world_is": "The id S18 was taken before this order was cut, so the script is filed at S20 (S19 is the identity row). The script is written, exercised on the live host in both modes, and carried in the deliverables folder; it is not under the id the order names.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S21",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-01T18:17Z",
+  "one_line": "The deploy shape puts the identity value (a tid/oid pair, not a secret) in the SSM command text and in the AWS command history, and step 2's host read printed the full oid in its SSM output; both are the order's own design, filed so the exposure is on the record.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "DOC: release template deploy-to-ec2.sh (3a7d6a7dc8): TAXSMA_WORKBOOK_IDENTITY='${OG_TAXSMA_WORKBOOK_IDENTITY}' is expanded by the deploying shell into REMOTE_SCRIPT, which travels as the SSM command's parameters (the same path the old OG_MAIL_SENDER_TABLE took); the bearer never does (fetched on the host).",
+      "DOC: the spec's own text: the identity is 'Not a secret'; the Part D record already maps the same oid to WRITE_CAPABLE_PRINCIPALS, host-side.",
+      "RUN: step 2's SSM output b141c294-8b60-4526-b01a-8c83dce6efad carried each record's full oid, as the order asked ('printing ONLY each record's oid'); no file I wrote and no report carries more than 8 characters."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 5: the identity is validated, 'never committed'; step 2: the read prints each record's oid.",
+  "world_is": "Never committed and never echoed by this seat, but retrievable from SSM command history by anyone with ssm:GetCommandInvocation; the value is a non-secret principal identifier already present in host rosters.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S39",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-01T18:45Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "W15-S19: two token-broker records match opalbloomberg@ but carry ONE oid (517aa5ee; the same person's principal-keyed and email-keyed caches, by cache file-name hashes), MATCH with the Part D record -- the identity gate (Andrew ~17:3xZ, CTO 27992 'neither or both' = two different people) is satisfied. W15-S20: the verify-script row id S18 was already taken; filed under S20 -- recorded. W15-S21: the identity value (a non-secret principal identifier) rides the SSM command text and step 2's SSM output carried it once; acceptable for a non-secret, and it is never committed to the repo.",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W15-S19",
+    "NFRA_OPLGTW-Z-W15-S20",
+    "NFRA_OPLGTW-Z-W15-S21"
+  ],
+  "one_line": "OG-tr-1 PHASE A rows ruled: one opalbloomberg@ oid (two caches) satisfies the identity gate; the other two recorded.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Worker PHASE A report, ANNOUNCE_OG-tr-1.md drained @abca11d3bc: 6 records, 2 matches, 1 distinct oid 517aa5ee, Part D MATCH."
+    ]
+  },
+  "spec_asserts": "TO-OG-tr-1 step 2: exactly ONE record must match.",
+  "world_is": "Two records match, both the same oid.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S22",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-01T18:55Z",
+  "one_line": "CVO guard M1's verify arm (mail and transcripts bearers presented to the Tax route) was run host-side against the host's own port, with the bearers read from Secrets Manager inside the host process; 'no Graph call' is read from the capability guard's order in the code and the 401 UNAUTHORIZED_CAPABILITY envelope, not observed on a Graph-side log.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~15/tr_m1.py arm (SSM 4bfd99ce-db7f-4a8b-9f3d-3e62a0e11ff7): mail bearer 401 UNAUTHORIZED_CAPABILITY, transcripts bearer 401 UNAUTHORIZED_CAPABILITY, both secrets non-empty; compare mode (SSM 242077e6-ac17-4430-99f7-d1ffb609eb4d) 6 tokens over 5 keys, all DIFFER.",
+      "DOC: app/taxsma_workbook.py operation order OPERATIONS = capability_guard, delegated_token, source_read: the refusal is the first operation, before the delegated token and the Graph read."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "M1: the mail bearer and the transcripts bearer each presented to /ms/taxsma-workbook read 401 UNAUTHORIZED_CAPABILITY with no Graph call (bearers read from Secrets Manager into memory, never printed).",
+  "world_is": "Both arms read 401 UNAUTHORIZED_CAPABILITY. The arm ran on the host over localhost:8080 (not through the ALB) so no bearer left the host; the absence of a Graph call is inferred from the guard order, not measured on a Graph log.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S40",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-01T19:10Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-tr-1 LIVE 3a7d6a7dc8 (18:50:02Z; ledger CLOSED; drained @b87c4b215f; issuer re-grade on CLOUD tr.AC1 TAX ARMS 4 of 4, tr.AC2 PASS). W15-S22: the M1 verify arm (mail and transcripts bearers -> 401 UNAUTHORIZED_CAPABILITY on /ms/taxsma-workbook) was run host-side; 'no Graph call' rests on the route's guard order (capability_guard first), not a Graph-side log -- accepted as the code-read evidence the CVO half named.",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W15-S22"
+  ],
+  "one_line": "OG-tr-1 (Tax SMA route, capability ON) live; W15-S22 accepted.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Issuer re-run on CLOUD: tr.AC1 4 of 4 (module 6acc3e8c, no-bearer 401 UNAUTHORIZED_CAPABILITY, /mcp 401, .env 48 capability ON); tr.AC2 shipped 5, outside 0."
+    ]
+  },
+  "spec_asserts": "CVO M1: the other bearers read 401 with no Graph call.",
+  "world_is": "401 observed; no-Graph-call inferred from the guard order.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S41",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-01T19:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "app/taxsma_workbook.py _OTHER_ROUTE_BEARERS (line ~116) omits TRANSCRIPT_BEARER and MAIL_BEARER, so the Tax route would not refuse a bearer equal to one of those; today all compare DIFFER (M1), so it is latent.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "3.0.0_SA_CVO~O second half @00cb40bfff (M1); OG-tr-1 M1 read: TRANSCRIPT_BEARER DIFFER, MAIL_BEARER DIFFER, OTP x2 DIFFER, MS_INGEST DIFFER, GRAPH_READ DIFFER."
+    ]
+  },
+  "spec_asserts": "The Tax route refuses its bearer while that value is also a credential of another route.",
+  "world_is": "The tuple predates the /hx bearers; a future equal value would pass that guard.",
+  "notes": "Fix (CTO 28026): add TRANSCRIPT_BEARER and MAIL_BEARER to the tuple in OPLGTW's NEXT gateway release; until then any bearer rotation compares DIFFER first.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S42",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-01T19:15Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "OG-tx-2 live run: the spec's Research Meeting REACH arm cannot pass as Andrew -- Andrew is not an invitee of the Research Team Meeting (403 3003); the other three meetings read in full as invitee-not-organizer.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/2.0.0_SA_COO~O/TRANSCRIPT_REACH_RUN.json: Morning Meeting 19 rows, OCIO IC 7, Asset Management IC 8, each latest transcript read complete, last cue within 4.1 s of endDateTime, speaker tags present; Research Team Meeting list 403 code 3003 'User does not have access to lookup meeting'.",
+      "list_calendar as Andrew: no Research Team Meeting instance on 2026-08-03 (an occurrence date in research_transcripts/structured) nor in 2026-09-21..2026-10-07; the 9/29 CRO pull (TRANSCRIPTS_FIRST_PULL_20260929.md) read the same 403."
+    ]
+  },
+  "spec_asserts": "Spec section 6 step 1: as Andrew, list_meeting_transcripts on the Research Meeting (a colleague organizes) returns 200 with at least one row; step 4 requires all four meetings.",
+  "world_is": "Andrew is not invited to the Research Team Meeting, so the delegated read is refused; the invitee hypothesis itself holds on 3 of 3 invitee meetings. OG-tx-2 AC1 will read 3 of 4 and FAIL honestly (the order's issuer note); the Research Meeting refusal serves as the negative arm.",
+  "notes": "Routed to 1.0.0_SA_CTO~O as an analysis item (order RECORD FACE): reach on the Research Meeting needs Andrew invited to the series, or the application route in the recon brief. No widening here. G-TEAMS-TX: neither GraphAccessToTranscriptsDisabled nor SpeakerAttributionNotAllowed seen.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S23",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-01T19:40Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "OG-tx-2 AC1 asks each read matched in the audit by transcript id AND byte count; the gateway audit record for read_meeting_transcript carries no byte count, so audit_match was set on transcript id and read count only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-mcp-audit/audit/dt=2026-10-01/ keys 2026-10-01T19:* (19 records): every read_meeting_transcript record has exactly the fields args, detail, outcome, tier, tool, ts, user; args is {_omitted: fail-closed (tool not in R8-PRIV allowlist)}; detail is 'meeting_id=... transcript_id=...'. 6 read records for 3 transcript ids (2 each, matching the 2 recorded reads per meeting); 4 list_meeting_transcripts records, the Research Meeting's with outcome=error '403 3003 User does not have access to lookup meeting'."
+    ]
+  },
+  "spec_asserts": "TO OG-tx-2 step 2: find the audit record carrying the same transcript id and byte count.",
+  "world_is": "The audit carries the transcript id but never a returned byte count, so byte-count matching is not possible from this sink; matching is by transcript id, user andrew@opalinvest.com, outcome ok, and 2 reads per meeting. The Research Meeting has rows 0, so audit_match there rests on its refused list call matched by meeting_id (1 error record). AC1 reads 3 of 4 and FAILs on rows, not on audit_match.",
+  "notes": "If byte-count matching is wanted, the gateway audit detail needs a returned-bytes field (OPLGTW release item for the CTO).",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S43",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-01T19:40Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Ruling on NFRA_OPLGTW-Z-S42 (CTO msg 28043): the Research Meeting is reached by an invitation to the series, not the application route; OG-tx-2 AC1 stays as written and reads 3 of 4 FAIL on CLOUD @c4edb2c0ec.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~O msg 28043: (a) invitation to the Research series by Andrew or the organizer, listed among Andrew's acts; (b) application route not taken (tenant-wide read, breaks the bound identity) unless the invitation is refused.",
+      "Issuer re-grade on CLOUD @c4edb2c0ec: tx2.AC1 'meetings passing all four of 4 required: 3 of 4 recorded; negative arm refused=True', RESULT: FAIL, exit=1; proof instance VALID (worker @3403243217)."
+    ]
+  },
+  "spec_asserts": "Spec section 6 step 4: all four meetings reachable as Andrew.",
+  "world_is": "Three reachable as invitee; the Research Meeting waits on an invitation (an act outside this project's write surface).",
+  "notes": "Supersedes the routing note of NFRA_OPLGTW-Z-S42. The L10 analysis carries the fourth meeting as an open reach item gated on the invitation.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```

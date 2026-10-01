@@ -2494,3 +2494,25 @@ so `ah-3` holds ft alone.
 
 **Checks dry-run at the base (all FAIL as expected):** `round35/checks/ah-1.AC2.py` (no captured fixture),
 `ah-2.AC2.py` (no grader), `ah-3.AC2.py` (no ft record).
+
+## 49. ROUND 36 -- L5 DECOMPOSITION v3.16, over the round-35 analysis (`ledger/ROUND_ANALYSIS.round35.md` @89539ccbc2)
+
+**Issuer `2.0.0_SA_COO~H`**, 2026-10-01 ~19:5xZ. Series **`ai`**. Rulings 1-4 shape the cells; ruling 2 (the overnight
+unattended run, 03:00-11:00Z) and ruling 6 (gold #3 at 20:00Z, #4 before Fri 13:00Z) are issuer acts; ruling 5 (the
+Andrew verbatim record) landed @72b72eb0cf / @db9e2f7d43.
+
+| analysis item | cell | order | class | slot |
+|---|---|---|---|---|
+| 1 limb 2a per minute, +/-1 guard band, 1,440 clean minutes, every clean-minute challenge passes | `HVST-ai-1` | `ai-1` | LOCAL | `~90` |
+| 2 ft session longevity; the ft driver returns only after a 2-hour run with no logout | `HVST-ai-2` | `ai-2` | WORLD | `~92` |
+| 3 capture-at-load armed on all five; same-vendor fixture equivalence for wsj/barrons; 2b reads OPEN (NO SAMPLE), never MET-BY-ABSENCE | `HVST-ai-3` | `ai-3` | LOCAL | `~91` |
+
+**Fan-out: 3 of 3 chains, cap 3.** The write sets are disjoint:
+- `ai-1`: `load_window_grade.py`.
+- `ai-2`: `publishers.py`, `tab_transport.py`, `worker.py`, `contracts.json`.
+- `ai-3`: `challenge_capture.py`, `verification.py`, `transport.py`.
+
+Each cell has its own test file.
+
+**Checks dry-run at the base (all FAIL as expected):** `round36/checks/ai-1.AC2.py` (the grader carries no
+per-minute fields), `ai-2.AC2.py` (no record), `ai-3.AC2.py` (no all-five status).

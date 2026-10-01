@@ -310,6 +310,15 @@ no worker batch.
 
 ## Calls only Andrew can make
 
+**ANSWERED by Andrew 2026-10-01 ~18:2xZ.** The verbatim record is
+`ANDREW_DIRECT_20261001_182xZ_ETFS_RIVALS_THREE_CALLS_ANSWERED.md`:
+1. IDVZ and PFOE go through the same rivalfunds Bloomberg pull, in the same queue as the other Bloomberg-sourced funds.
+2. Russell 2000 is the PFOE group's control and ACWI the IDVZ group's.
+3. No peer-selection criteria are needed: the asset management team pre-decides the sets, so hop 1's "undeclared peer
+   selection" finding is withdrawn.
+
+The recommendations below are kept as written at the time of asking.
+
 1. **A history source for IDVZ and PFOE.** My recommendation (corrected, see hop 4): the funds' own published
    holdings files, reached from AWS. That means PFOE on Pathfinder's Filepoint platform (the `OpalCap` namespace, the
    same platform class as GQGU) and IDVZ on its TrueShares page, read back to launch with their own provenance, after a
