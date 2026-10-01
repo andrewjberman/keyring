@@ -67,6 +67,12 @@ Write the instance at `org/missions/D6/NFRA/NFRA_MCPMSP/deliverables/0.9.0_WK_NF
 Report once, with: the role ARN (the release puts it in `.env`); the plan and apply lines; the three check lines; the
 ledger path; the commit hash; any row.
 
+**Handoff (issuer, 2026-10-01):** MS-ir-1 merged at 6e44ef41c6. The three targets are
+`aws_iam_role.int_reader`, `aws_iam_role_policy.int_reader`, `aws_iam_role_policy.gw_assume_int_reader` -- and NEVER
+`aws_iam_role_policy.gw_firm_deny`. `.tools/safe-apply.sh`'s naming plan stage now renders the TARGETED plan (MS-s-1,
+merged bd3fc6fcc1), so a whole-tree literal elsewhere no longer blocks this apply; a refusal on your three targets is a
+BLOCKING row. Run `git merge CLOUD` in your worktree first.
+
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** round-2 issuance (E1); WORLD: a grant. Checks dry-run at base: AC1 FAIL as expected; AC2 FAIL as
@@ -78,3 +84,4 @@ expected (NoSuchEntity); AC3 PASS as expected (the control: the gateway role rea
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+<status>pending</status>
