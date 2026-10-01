@@ -94,6 +94,10 @@ is deployed (18:03Z). Own work resumes until that word arrives.
 
 ## 7. Not done and not known
 - The split change's page effect is not walked (it is not deployed); its local build is the evidence.
+- `etf_classifier.py` serve-hold, three release conditions: (3) the shared client at `s3://opal-data-cot/code/gold/lib/_shared/`
+  is MET -- first-minted by the laptop push a3866c3dfb at 22:26Z-22:27Z (msg 103988), inert: the served `etf_classifier.py`
+  (2026-06-10) never reads `_shared/`. Still open: (1) the re-point packet's two halves, (2) the host role's read of
+  etf-classifications (the iam.tf statement below, not applied).
 - The iam.tf statement for the Cottonwood host role (`infra/aws/terraform/cot-pipeline/iam.tf` @47e510a186) is on CLOUD and NOT
   applied; an untargeted apply of that root by any seat would carry it.
 - Three census reachabilities not determined (the partners Lambda's Cottonwood bucket row; `ClientsTab.tsx:457`; the parity CLI).
