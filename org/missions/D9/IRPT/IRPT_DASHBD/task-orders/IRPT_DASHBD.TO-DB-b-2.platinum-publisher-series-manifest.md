@@ -51,6 +51,12 @@ the builder's addresses, and plan (not apply) its Lambda and daily schedule.
   write both objects at the builder's addresses; a `--local --accounts ... --upload` CLI for this round's run). Print size and build time
   per account. Include unit tests beside them (`tests/`) with a synthetic gold frame for the pure functions (the real run below is the
   criterion, the tests are hygiene).
+- ISSUER AMENDMENT 3 (2026-10-01 ~15:5xZ): two entries are REMOVED from `<paths>`: `infra/aws/terraform/investor-reporting/holdings-performance/`
+  and `infra/aws/lambda/investor-reporting/holdings-performance/handler.py`. This order cites them as the PATTERN to mirror and never
+  writes them; a read needs no grant, and as a write surface they collided with the IRPT_BCKEND lane that owns that root (the lease
+  tool refused it both ways). No criterion changes. ONE WARNING for the worker who mirrors the pattern: `holdings-performance/locals.tf`
+  line 37 as it stands at HEAD does NOT plan (`can(v.master) && v.master != null` evaluates both sides; row IRPT_BCKEND-S258); mirror
+  the repaired form, `try(v.master, null) != null`, and the Inflection schedule there is being re-timed (row IRPT_BCKEND-S257).
 - ISSUER AMENDMENT 2 (2026-10-01 ~04:5xZ): the SERIES contract below is ALREADY LANDED by the issuer @b80543a03c, ahead of the gold,
   so workstream F can build against it. READ it; do not rewrite it. Your publisher emits exactly its `series.required` and
   `manifest.required` keys with the meaning, unit and null rule each field's `sentence` states (`as_of` = the last `date` entry,
@@ -114,9 +120,7 @@ series `value` equals the gold `market_value_eod`; the saved plan creates the La
 <paths>
 infra/aws/lambda/investor-reporting/reporting-publish/
 infra/aws/terraform/investor-reporting/reporting-publish/
-infra/aws/terraform/investor-reporting/holdings-performance/
 infra/aws/terraform/modules/yang-lambda/
-infra/aws/lambda/investor-reporting/holdings-performance/handler.py
 infra/aws/lambda/investor-reporting/narrative/events.py
 infra/aws/lambda/ci/lambda-source-map.json
 infra/aws/lambda/ci/build-and-upload.sh
