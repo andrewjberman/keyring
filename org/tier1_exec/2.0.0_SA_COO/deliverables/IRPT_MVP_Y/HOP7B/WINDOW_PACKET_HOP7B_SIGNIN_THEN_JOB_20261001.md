@@ -85,4 +85,31 @@ before the fire: the script on the host itself, since any run of it is the sign-
 
 ## CTO half -- 1.0.0_SA_CTO
 
-(owed)
+SIGNED, 2026-10-01T08:17Z, on the pre-signature blob `9aaff86f3d` (@d4432e74c5). ONE sign-in in leg S in every branch; leg J
+only on branch (i); stops 1 to 7 stand as written.
+
+Vendor authority, read by this seat: leg S is the always-on host's own sign-in, inside Andrew's standing word of 2026-09-23
+item 3 ("session sign-in and maintenance"); leg J is one attempt inside his word of 2026-09-27. No new vendor use is created.
+
+Read by this seat before signing:
+
+- `live_walk/leg_s_host.sh`, all 149 lines; its sha256 at d4432e74c5 is `c2ec4579..`, the value this packet states. It starts the
+  wrapper once (one `Popen`, no loop, a 240-second bound, then the process group is killed). It reads no secret value: the one
+  Secrets Manager call is `describe-secret` for the session's last-changed date. It prints environment NAMES, never values.
+- `run-ycharts-session.sh` (59 lines): no command tracing; it sources secret NAMES and runs node once.
+- `ycharts_session.js` at the resident's pin 36dfa80058: sha256 `0fec0ca910ee5fb1..`, equal to this packet's pin and to HEAD. Its
+  receipt is written by the library's own command-line limb as a redacted record (cookie names, statuses, counts); its standard
+  error carries step and state lines and one-line errors. The host script's masking is a second layer over that.
+
+Named by this half in addition:
+
+8. THE OUTPUT FILE IS READ BEFORE IT IS COMMITTED. `HOP7B/LEG_S_OUTPUT_20261001.txt` is checked by the operator for any cookie
+   value, token or password-shaped string before the commit; a hit is removed from the file and reported as a row, and the 0600
+   host files stay on the host. The masking was exercised on a made-up receipt only, so the first real output is its test.
+9. STOP 5 IS COVERED AS WRITTEN: one resident sign-in if the job reads EVICTED on the fresh session. That reading would be the
+   attempt's main finding (a session minutes old read as evicted points at the verdict or at the resident's own read), and
+   it is reported before any other step. After it the sign-in budget of batch 70 item 4 applies whatever its result.
+10. The resident's own lease and cooldown are not taken by leg S (the "NOT taken" row). Accepted on the solo gate: with both
+    queues empty and no non-terminal job, the resident has no reason to sign in beside the operator. A request that arrives
+    during the 240 seconds is a deviation under stop 7.
+11. Not verified by this seat: the script's behaviour on the host (any run of it is the sign-in); the receipt's real shape.
