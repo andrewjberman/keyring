@@ -1,0 +1,78 @@
+Ledger irpt-analysis-whole-bundle-20261001 -- the apply window, operator 2.0.0_SA_COO~Y, 2026-10-01. Printed lines, verbatim.
+
+--- G1a: the Scan statement on irpt-ycharts-generate-role (safe-apply, saved plan, HALT_ACK=1 on 40 routine notices, 0 STOP lines)
+Plan: 0 to add, 1 to change, 0 to destroy.
+aws_iam_role_policy.generate: Modifying... [id=irpt-ycharts-generate-role:irpt-ycharts-generate]
+aws_iam_role_policy.generate: Modifications complete after 0s [id=irpt-ycharts-generate-role:irpt-ycharts-generate]
+Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
+simulate: dynamodb:Scan on table/etf-classifications -> allowed (irpt-ycharts-generate-role); implicitDeny (irpt-narrative-role, negative control); dynamodb:GetItem on opal-users-v2 -> allowed (the simulator's positive control)
+
+--- G1b: the service-profile-read policy on irpt-status-role
+Plan: 1 to add, 0 to change, 0 to destroy.
+aws_iam_role_policy.irpt_status_service_profile_read: Creating...
+aws_iam_role_policy.irpt_status_service_profile_read: Creation complete after 0s [id=irpt-status-role:irpt-status-service-profile-read-policy]
+Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
+simulate on irpt-status-role: dynamodb:Query (email-index) allowed; dynamodb:GetItem (table) allowed; kms:Decrypt with both context entries allowed; irpt-narrative-role dynamodb:GetItem implicitDeny (negative control)
+
+--- F1: irpt-ycharts-generate
+BEFORE irpt-ycharts-generate | CodeSha256 ESedDkLy40enY0fsupacLrXaUXzFw+UauPKNauOqeYc= | LastModified 2026-10-01T05:23:14 | LastUpdateStatus Successful | invoke StatusCode 200 FunctionError None | errorMessage False | reason CONTRACT_VERSION | keys ['contract_version', 'ok', 'operation', 'status']
+before-invoke rc=0
+  # module.irpt_ycharts_generate.aws_lambda_function.this will be updated in-place
+      ~ s3_object_version              = "BH8sOdyV6lknk1jj1qdIjIkKbDItmLVG" -> "J52XmUEjOQihij3Zam1B.EAeW3GXA7yr"
+      ~ source_code_hash               = "ESedDkLy40enY0fsupacLrXaUXzFw+UauPKNauOqeYc=" -> "arC65KbDPPssn2UXFzAP/U+zzXgIiS/fIddCFR28a6M="
+        # (28 unchanged attributes hidden)
+        # (4 unchanged blocks hidden)
+Plan: 0 to add, 1 to change, 0 to destroy.
+safe-apply rc=0 at 2026-10-01T06:51:18Z
+module.irpt_ycharts_generate.aws_lambda_function.this: Modifying... [id=irpt-ycharts-generate]
+module.irpt_ycharts_generate.aws_lambda_function.this: Modifications complete after 6s [id=irpt-ycharts-generate]
+Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
+AFTER irpt-ycharts-generate | CodeSha256 arC65KbDPPssn2UXFzAP/U+zzXgIiS/fIddCFR28a6M= | LastModified 2026-10-01T06:51:12 | LastUpdateStatus Successful | invoke StatusCode 200 FunctionError None | errorMessage False | reason CONTRACT_VERSION | keys ['contract_version', 'ok', 'operation', 'status']
+after-invoke rc=0
+No changes. Your infrastructure matches the configuration.
+AFTER_GENERATE | login HTTP 200 token True
+irpt-status            status-summary         HTTP 200 ok False state UNAVAILABLE reason NOT_FOUND date 2026-09-22 
+irpt-status            status-job             HTTP 200 ok None state UNAVAILABLE reason ANALYSIS_STATUS_DATE_BASIS_UNAVAILABLE date None 
+irpt-status            request-history        HTTP 200 ok None state None reason None date None count_items=13
+irpt-status            request-read           HTTP 200 ok None state None reason None date None 
+irpt-status            sections-by-request    HTTP 200 ok None state None reason None date None count_sections=76
+irpt-status            sections-by-report     HTTP 200 ok False state UNAVAILABLE reason INVALID_INPUT date None 
+irpt-ycharts-generate  analysis-own-firm      HTTP 200 ok False state UNAVAILABLE reason INVALID_INPUT date 2026-09-22 
+irpt-ycharts-generate  analysis-foreign-firm  HTTP 200 ok False state UNAVAILABLE reason FIRM_BINDING date None 
+
+--- F2: irpt-status
+BEFORE irpt-status | CodeSha256 ZYr+IDMpN0vtwnpxz+kOXKDMcjNpLrbbHdRm4TZerkY= | LastModified 2026-09-28T14:04:55 | LastUpdateStatus Successful | invoke StatusCode 200 FunctionError None | errorMessage False | reason CONTRACT_VERSION | keys ['contract_version', 'ok', 'operation', 'status']
+before-invoke rc=0
+  # module.irpt_status.aws_lambda_function.this will be updated in-place
+      ~ s3_object_version              = "7Uz6kDd_FqoCwpEfhUNaPRkx3fsSezxJ" -> "m1LolBKFxtfUUbodMML8ZuM.Wfo6Op.C"
+      ~ source_code_hash               = "ZYr+IDMpN0vtwnpxz+kOXKDMcjNpLrbbHdRm4TZerkY=" -> "2V7xV1+zII4+g6tV722Tk5M9LWJFMzLShyjq6Q+v/J4="
+        # (28 unchanged attributes hidden)
+        # (4 unchanged blocks hidden)
+Plan: 0 to add, 1 to change, 0 to destroy.
+safe-apply rc=0 at 2026-10-01T07:00:08Z
+module.irpt_status.aws_lambda_function.this: Modifying... [id=irpt-status]
+module.irpt_status.aws_lambda_function.this: Modifications complete after 7s [id=irpt-status]
+Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
+AFTER irpt-status | CodeSha256 2V7xV1+zII4+g6tV722Tk5M9LWJFMzLShyjq6Q+v/J4= | LastModified 2026-10-01T06:59:55 | LastUpdateStatus Successful | invoke StatusCode 200 FunctionError None | errorMessage False | reason CONTRACT_VERSION | keys ['contract_version', 'ok', 'operation', 'status']
+after-invoke rc=0
+AFTER_STATUS | login HTTP 200 token True
+irpt-status            status-summary         HTTP 200 ok False state UNAVAILABLE reason NOT_FOUND date 2026-09-22 
+irpt-status            status-job             HTTP 200 ok None state UNAVAILABLE reason ANALYSIS_STATUS_DATE_BASIS_UNAVAILABLE date None 
+irpt-status            request-history        HTTP 200 ok None state None reason None date None count_items=13
+irpt-status            request-read           HTTP 200 ok None state None reason None date None 
+irpt-status            sections-by-request    HTTP 200 ok None state None reason None date None count_sections=76
+irpt-status            sections-by-report     HTTP 200 ok False state UNAVAILABLE reason INVALID_INPUT date None 
+irpt-ycharts-generate  analysis-own-firm      HTTP 200 ok False state UNAVAILABLE reason INVALID_INPUT date 2026-09-22 
+irpt-ycharts-generate  analysis-foreign-firm  HTTP 200 ok False state UNAVAILABLE reason FIRM_BINDING date None 
+No changes. Your infrastructure matches the configuration.
+AFTER_STATUS_FOREIGN_FIRM | login HTTP 200 token True
+irpt-status            status-summary         HTTP 200 ok False state UNAVAILABLE reason FIRM_BINDING date None 
+irpt-status            status-job             HTTP 200 ok False state UNAVAILABLE reason FIRM_BINDING date None 
+irpt-status            request-history        HTTP 200 ok False state UNAVAILABLE reason FIRM_BINDING date None 
+irpt-status            request-read           HTTP 200 ok False state UNAVAILABLE reason FIRM_BINDING date None 
+irpt-status            sections-by-request    HTTP 200 ok False state UNAVAILABLE reason FIRM_BINDING date None 
+irpt-status            sections-by-report     HTTP 200 ok False state UNAVAILABLE reason FIRM_BINDING date None 
+irpt-ycharts-generate  analysis-own-firm      HTTP 200 ok False state UNAVAILABLE reason FIRM_BINDING date None 
+irpt-ycharts-generate  analysis-foreign-firm  HTTP 200 ok False state UNAVAILABLE reason FIRM_BINDING date None 
+irpt-status log group /aws/lambda/irpt-status | window 2026-10-01T06:59:55Z + 10 min | read at 07:11:29Z | events 44 | TypeError 0, ImportModuleError 0, Unable to import module 0, Traceback 0, Task timed out 0
+irpt-ycharts-generate log group /aws/lambda/irpt-ycharts-generate | window 2026-10-01T06:51:12Z + 10 min | read at 07:11:36Z | events 14 | TypeError 0, ImportModuleError 0, Unable to import module 0, Traceback 0, Task timed out 0
