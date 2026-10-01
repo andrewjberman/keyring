@@ -7480,3 +7480,64 @@ fanout:
   egress: none
   no_promote: true
 ```
+
+## 66. ROUND 58 -- EVERY BUBBLE NAMED FOR A PERSON, ITS CODE-ONLY REDEPLOY, AND THE af-6 GRADE. Four cells, one order and three direct acts
+
+**Cut by `2.0.0_SA_COO~Z`** on `1.0.0_SA_CTO~Z`'s **ROUND 57 ANALYSIS** (`ledger/ROUND_ANALYSIS.round57.md` @`ef95c930e1`, msg 27687;
+round 57 CLOSED, ag-1 LIVE). Enrichment items 1-3 are the rectangle. Rulings carried:
+- round-57 ruling 1: 0 of 95 rows equal their `security_key`; the fallback is the plain ticker; land before 22:00Z;
+- ruling 2: the 73 empty bubble names are HARVST depth, not a cell;
+- ruling 3: Z-S330 is corrected in this round's check.
+
+### 66a. THE DEPLOY ACTS THE NAME FIX NEEDS BEFORE IT SERVES (round-56 ruling 3; measured at the cut ~09:1xZ)
+
+| # | act | state at the cut | carrier |
+|---|---|---|---|
+| 1 | the code: `monthly_chatter._display_names(keys)` -- crosswalk name, then classifications name, then the identity's display ticker; `name_source` served per row | LANDED in the issuance commit; api tests 376 passed; local `bg_names.py` YES | `ah-1` |
+| 2 | no new import: `_classification_for_ticker` and `resolve_identity` are already in `scoped_amgt` (packaged); no CLOSURE_ROOTS change | verified by reading the diff | none |
+| 3 | the artifact at the GO commit; CONTENT-DIFF names the halves' list | the executor's `--build-only` at the GO | `ah-2` |
+| 4 | ONE code-only `safe-apply` (source hash only) | -- | `ah-2` |
+| 5 | no route, gateway or IAM change; the classifications GetItem is the read `read_rankings` already makes (`_join_classification`) | the role is unchanged | none |
+
+### 66b. MEASUREMENTS
+
+1. **Live base, before the fix:** 32 of 95 rows serve the raw key (`bg_names.py --where deployed` FAIL C2). The deployed function is
+   at CodeSha256 `/HInwjrnGBzDLzV2EnYyGFseCcXIuWC/ddnyYUpUEX8=` (08:20:58Z); artifact VersionId `RhEQ661Bi9gnVKhBphUCMtjH_rrsscPS`.
+2. **The name sources over the 95 covered keys:** crosswalk 63; classifications +7 (ASML, BA, HD, INTU, NU, PBR, ...); the remaining
+   25 carry no company name in either source and serve their display ticker ("9433 JP", "BP/ LN"). Full names for those 25 would need
+   a Bloomberg NAME pull (the terminal is Andrew's login; not this round).
+3. **The check:** `round58/checks/bg_names.py` -- at the base FAIL C2/C3 (32) locally and C0/C2 deployed; simulated positive arm YES;
+   on the ah-1 tree locally YES (63/7/25, the counts unmoved by C5).
+4. **DSGN wiring rows at the cut (item 3):** 0 open rows naming this seat beyond Z-S331 (the name fix itself).
+
+### 66c. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-ah-1` | EVERY BUBBLE NAMED FOR A PERSON | issuer | direct act (in the issuance commit) | LOCAL (served by ah-2) | `lib/research/api/monthly_chatter.py`, its test |
+| `AMGT-ah-2` | THE CODE-ONLY REDEPLOY OF THE NAME FIX | `0.7.0_AE_CloudOps~A` | seat order, a pair | WORLD | the Lambda artifact, the deploy ledger |
+| `AMGT-ah-3` | THE af-6 GRADE (carried from ag-3) | issuer | direct act after the 11:00Z fire | LOCAL read | deliverables, af-6 ledger leg L2 |
+| `AMGT-ah-4` | THE Z-S330 CENSUS WORDING | issuer | direct act (in the issuance commit) | LOCAL | `round56/checks/af_7_text.py` (wording only; the verdict logic is unchanged and still YES) |
+
+### 66d. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain = the analysis's three items plus ruling 3's check wording.
+- **(ii) Same grain.** One field fix; one deploy; one grade; one wording fix.
+- **(iii) Intent.** One axis: what the page prints is readable and served.
+- **(iv) What a cell does NOT move.** ah-1 moves no count, month or vintage (C5); ah-2 moves no route, IAM or store.
+
+### 66e. EDGES AND FAN-OUT
+
+```
+ah-1 -> ah-2
+ah-3, ah-4 -> (none)
+fanout:
+  cap: 3
+  orders_total: 1
+  chains_total: 1
+  wave_0: [ah-2 0.7.0_AE_CloudOps~A]   # GO after both halves; build commit named in the GO
+  direct: [ah-1 + ah-4 landed in the issuance commit, ah-3 after 11:00Z]
+  no_s3_deletes: true
+  egress: none
+  no_promote: true
+```

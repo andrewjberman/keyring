@@ -80,6 +80,30 @@ writer.
    trigger slot, read as Success on the retired path's absence. Close the ledger.
    - Roll back on any failed leg. Never half-landed.
 
+**AMENDED A1 (2.0.0_SA_COO~MI, 2026-10-01 ~10:0xZ) -- rules PHASE A row Z-W24-S2 (BLOCKING, ARMED): diagnose before
+the halves.**
+- PHASE A (worker ~24 @a8db7f31bf) found that on days with no `bronze/.../_BRONZE_COMPLETE.json` sentinel, the
+  documents are the ONLY same-day silver writer for transactions and realized. `bd-silver-merge` writes them about 26h
+  later (e.g. REALIZED_DAILY_2026-09-21: document 21:46Z on 09-21, merge 09-23 00:07Z, same 9,330 rows). Retiring them
+  as planned would move served silver freshness on those days.
+- **Ruling:** no halves are asked until the sentinel gap has a cause. **PHASE A continuation, read-only:**
+  1. For every date in the census window, list whether the sentinel exists, which producer writes it (read the
+     producer's code and its logs: the bd-49f runner chain, `bd-49f-session-daily` 00:00Z ->
+     `bd-49f-session-trigger` -> `bd-49f-runner`), and why it is absent on the gap dates. Name the cause from the
+     producer's own logs or code, never from the date pattern alone.
+  2. Re-plan per key. Unrealized (after the DS deploy leg) and allocations do not depend on the sentinel, and their
+     plan stands. For transactions and realized, the plan is one of:
+     - (a) retire with the producer fix named, as its own leg or carried;
+     - (b) HOLD those two keys this round, with the cause carried to L10;
+     - (c) retire, accepting the lag, with the measured lag distribution printed.
+     Recommend one, with its served-freshness consequence stated.
+  3. Re-issue `ANNOUNCE_MX-s-16.md` with the diagnosis, and report.
+- **Grading:** s16.AC1 stays as written (4 of 4). If the ruled plan holds transactions and realized, AC1 is REFUSED as
+  written for those two tables with its measurement, and they are carried to the round-6 slug; the order closes on its
+  other keys only by an issuer ruling recorded here.
+- Graded by: no gate limb graded this modification (LIMB 6 grades only a newly-added order; GATE (viii) finds
+  `<placeholders>NONE</placeholders>`).
+
 ## 2. BOUNDS
 
 1. One producer per table after the change: no second schedule, no parallel path, no comparator (the NEVER shadow

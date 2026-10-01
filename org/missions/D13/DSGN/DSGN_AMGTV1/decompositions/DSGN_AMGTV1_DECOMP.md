@@ -1311,3 +1311,22 @@ close:** a signed-in walk with the NEW walker (ARM/DISARMED posted to MSTR~Z), t
 **Rule 24:** (i) the analysis's five rows by subtraction: 5 orders (+ the walker steps in g-1), the NOT-cells named. (ii) One write set
 per chain, overlaps ruled (d). (iii) One intent per order. (iv) No order moves a served value: g-1 changes a tool; g-2 chrome; g-3 an
 instrument; g-4 the words of an unserved state; g-5 words and chrome.
+
+
+## v17 -- ROUND 17 (issuer, 2026-10-01 ~09:5xZ), over PRD v0.6 @bc4f634248 (ADMITTED) -- TWO DIRECT ACTS
+
+**Rectangle:** the round-16 analysis @ce875b7bc1 section 3, rows 1-2 (rulings 1-4). Freeze 22:00Z.
+- **Cell ids:** `AV-h-1`, `AV-h-2` (letter h).
+- **Both cells take the DIRECT-ACT path** (`/dispatch`: one cell, small, `<risk>LOCAL</risk>`; `<direct_act>true</direct_act>`; no
+  L2/L4-R/L8-L10; the close is the issuer's one real run).
+- **Placement (a):** row 1 is a walk plus a walker change. A worker cannot post ARM/DISARM to 0.0.0_AB_MSTR~Z, so the build half
+  (walk.mjs waits >= 30 s for `[data-price-bar]`, records a no-bars finding with the route body, flags raw-key bubble labels) is
+  AV-h-1, and the walk itself is the issuer's close act (ruling 1: bars render -> proven; no bar after the wait -> the route body and
+  component state captured and root-caused this round). After AMGT_RESAPP ah-2 deploys, the close walk re-reads the chatter labels
+  (ruling 3).
+- **Placement (b):** AV-h-2 is SecurityOverlay.tsx only (the identity card's panel background), disjoint from AV-h-1.
+- **Chains:** ~62 AV-h-1; ~63 AV-h-2. M = 2, N = 2, cap 3.
+- **Checks:** `round17/checks/pricewait.cjs` (issuer; base 2 of 3: no wait, no raw-key flag); `round16/checks/headerchrome.cjs` (base 2 of
+  3 on DEV 03311745: lowContrast 5 in each Security state).
+- **Portal base:** DEV 03311745 (LOCAL). **Frozen at the cut.**
+- **Rule 24:** two rows, two orders; one write set each; no served value moves (a walker change; a panel colour).

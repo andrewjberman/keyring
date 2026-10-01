@@ -68,22 +68,41 @@ HALT_GATE_AUDIT_LOG="${HALT_GATE_AUDIT_LOG:-${HALT_GATE_REPO_ROOT}/org/halt-gate
 halt_gate_resolve_serial() {
   local repo_root="${HALT_GATE_REPO_ROOT}" ctx="${HALT_GATE_CONTEXT_FILE}" serial=""
 
-  # Primary: session-id-keyed serial file (LD-0070 §7.2 canonical). Two directories, in order: this checkout's own
-  # (an issuer may provision a worker's serial inside the worker's worktree, so parallel workers of one session each
-  # resolve as themselves), then the SHARED checkout's, where a session's serial file actually lives. The second was
-  # unreachable from a linked worktree before 2026-09-15 (see HALT_GATE_SHARED_ROOT above).
+  # PER-TREE DECLARATION BEFORE THE SHARED ROOT (NFRA_MCPINDEX MX-x-4, row Z-W21-S21). A worker worktree that SHARES its
+  # issuer's CLAUDE_CODE_SESSION_ID resolved, through the shared root's <session>.serial, to the ISSUER's serial (rc=3 on
+  # the deployer). Order: (1) this checkout's own org/mcp/sessions/<session>.serial; (2) OPAL_AGENT_SERIAL exported in
+  # the environment; (3) the SHARED checkout's <session>.serial. A tree declaring neither reaches (3) exactly as before.
+  # (1) precedes (2) so a caller that provisions its own checkout (a test, a drain) keeps resolving from that checkout.
+  local sess_dir sess_file
   if [ -n "${CLAUDE_CODE_SESSION_ID:-}" ]; then
-    local sess_dir sess_file
-    for sess_dir in "${repo_root}/org/mcp/sessions" "${HALT_GATE_SHARED_ROOT}/org/mcp/sessions"; do
-      sess_file="${sess_dir}/${CLAUDE_CODE_SESSION_ID}.serial"
-      if [ -f "$sess_file" ]; then
-        serial="$(tr -d '\r\n[:space:]' < "$sess_file" 2>/dev/null)"
-        if [ -n "$serial" ]; then
-          printf '%s\n' "$serial"
-          return 0
-        fi
+    sess_file="${repo_root}/org/mcp/sessions/${CLAUDE_CODE_SESSION_ID}.serial"
+    if [ -f "$sess_file" ]; then
+      serial="$(tr -d '\r\n[:space:]' < "$sess_file" 2>/dev/null)"
+      if [ -n "$serial" ]; then
+        printf '%s\n' "$serial"
+        return 0
       fi
-    done
+    fi
+  fi
+  if [ -n "${OPAL_AGENT_SERIAL:-}" ]; then
+    serial="$(printf '%s' "$OPAL_AGENT_SERIAL" | tr -d '\r\n[:space:]')"
+    if [ -n "$serial" ]; then
+      printf '%s\n' "$serial"
+      return 0
+    fi
+  fi
+
+  # Primary: session-id-keyed serial file (LD-0070 sec 7.2 canonical), the SHARED checkout's, where a session's serial
+  # file actually lives. It was unreachable from a linked worktree before 2026-09-15 (see HALT_GATE_SHARED_ROOT above).
+  if [ -n "${CLAUDE_CODE_SESSION_ID:-}" ]; then
+    sess_file="${HALT_GATE_SHARED_ROOT}/org/mcp/sessions/${CLAUDE_CODE_SESSION_ID}.serial"
+    if [ -f "$sess_file" ]; then
+      serial="$(tr -d '\r\n[:space:]' < "$sess_file" 2>/dev/null)"
+      if [ -n "$serial" ]; then
+        printf '%s\n' "$serial"
+        return 0
+      fi
+    fi
 
     # Secondary (session-keyed, clobber-PROOF): the register_agent PostToolUse hook
     # (hook_register_orphan_cleanup.py) writes a per-(session,serial) marker
