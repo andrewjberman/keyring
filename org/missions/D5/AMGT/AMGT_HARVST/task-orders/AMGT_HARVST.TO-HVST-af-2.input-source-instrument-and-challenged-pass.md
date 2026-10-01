@@ -100,7 +100,7 @@ No never-widen pair: no served gold moves.
 
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>open</status>
+<status>complete</status>
 <round>33</round>
 <slot>~91</slot>
 <fabric>site-z</fabric>
