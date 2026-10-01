@@ -67,4 +67,30 @@ earlier windows ran today without a deviation; the runner's gates were read in `
 
 ## CTO half -- 1.0.0_SA_CTO
 
-(owed)
+SIGNED, 2026-10-01T10:43Z, on the pre-signature blob `4ab72f71b2` (@ffed19c0ae). Leg P is ONE GET; leg S is at most ONE operator
+sign-in and runs only on `NOT_LIVE`; leg J is ONE job attempt. Stops 1 to 8 stand as written.
+
+Vendor authority, read by this seat earlier today in the record's own lines: legs P and S are the host's session sign-in and
+maintenance (Andrew's standing word of 2026-09-23 item 3); leg J is one attempt inside his word of 2026-09-27. No new vendor use
+is created.
+
+Read by this seat before signing:
+
+- The two host scripts at ffed19c0ae hash to `d3fef0997c999014` and `c2ec45793fbfbabe`: the bytes this seat read in full for the
+  third and second windows. Neither changed.
+- `ST7/INSTALL_OUTPUT_20261001.txt`: the running root is `a3b35fd376-st7`; `resident_worker` `2ba09afaa8a2fc9e`,
+  `current_authority` `5291b3be7e0006ad`, `host_capture` `8288e724e843cb89`, `extract` `3f5e2bb0bc2299f6`, the host library
+  `9511060e04f45b51`, each equal to the value this seat signed on the st7 packet; queue 0/0. The precondition is met.
+
+The table of what each stop reads carries items 1 and 2 of the st7 half. All five outcomes of leg J and all three of leg S are
+covered.
+
+Named by this half in addition:
+
+9. LEG S, IF IT RUNS, IS THE FIRST SIGN-IN ON THE st7 LIBRARY. Its change is record literals only, read line by line by this
+   seat. If it fails where the same wrapper authenticated at 08:21Z, the receipt's reason token and step list are reported
+   before anything else, and the library's rollback (the `.before-a3b35fd376-st7` file, with the st6 root) is a new half, not
+   a reflex.
+10. THE 600-SECOND SPACING after a sign-in is accepted as a measurement aid, not as a fix: if the lookup is refused after it,
+    the refusal class and the seconds since the sign-in are the finding.
+11. Not verified by this seat: `hop8_run.sh` (its gates and plan mode are the COO's read).
