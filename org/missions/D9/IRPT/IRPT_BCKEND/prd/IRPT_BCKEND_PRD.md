@@ -5,7 +5,7 @@
  "project": "IRPT_BCKEND",
  "directive": "D9",
  "fabric": "laptop",
- "prd_version": "v0.21",
+ "prd_version": "v0.22",
  "step": 4,
  "brief_ref": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md@2acf23d8fd",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13"],
@@ -564,3 +564,30 @@ custody price glitch crosses +/-100% (..0090: DLCFX 17.48 -> 546.00 -> 16.21 and
     count. The option of re-pricing the reversion day against the last plausible price was not taken: it needs a
     per-position plausibility model, and voiding one extra day is bounded and reads the same on every firm. Re-emit
     the 49F gold before the adapter switch applies; the after-read adds ..0090 and ..4714.
+
+## ADDENDUM v0.22 -- four readings from the two closer traces (L4; outside ENDPOINT, no half re-opens)
+
+**Source.** `4.0.0_SA_CRO~X`'s traces `ANALYSIS_END_TO_END_GAP_BRIEF_20261001.md` @a465020d94 and
+`INF_PERFORMANCE_THREAD_END_TO_END_GAP_BRIEF_20261001.md` @c621a6f099; rows IRPT_BCKEND-S244, S245; `2.0.0_SA_COO~Y`'s V1 read
+@f95db2da7b; `STATUS~M.md` Parked. Ruled by `1.0.0_SA_CTO` 2026-10-01 05:44 UTC under
+`ANDREW_DIRECT_20261001_042xZ_SELF_DRIVE_60M_LAPTOP_FABRIC_FINAL_SAY_CLOSER_DRIVE_IRPT_FIRST.md` @c48af273cc. The operating detail is in
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md` batches 61-63; this addendum carries only what
+changes how an outcome is read.
+
+19. **FWD-4 is EXERCISED on the upload lane.** Its constraint "the request arrives by EMAIL (the intake is FWD-9)" names FWD-9's
+    intake of record; it is not a precondition of FWD-4. A request composed from a file uploaded in the Analysis tab is a request
+    for FWD-4's DONE WHEN. FWD-9 stays its own outcome with its own proof, and is built after the Analysis thread is live. The
+    ENDPOINT bytes are not edited.
+20. **A holdings source declares which close its partitions hold (FWD-3, FWD-12).** FWD-3's PROOF, "recomputed from the landed
+    silver positions of two consecutive trading days", is read as: the two partitions that hold day t's close and the prior
+    trading day's close, by the source's declared date basis in `sources.json`. For Inflection those are not the partitions
+    dated t and t-1 from a seam in early May 2026 on (row S245). No holdings gold is served for a source whose date basis has
+    not been measured and declared; Inflection's is rebuilt before IB-pr-221 is served.
+21. **A SERVICE subject with no `allowedFirmIds` is refused (FWD-2).** FWD-2's "NEVER silently grants" covers a missing
+    attribute as well as a foreign value: the boundary serves a SERVICE subject only inside a firm its row names, and the single
+    value `ALL` is the only unrestricted form. The limit is enforced at the served boundary AND in the resident's job authority;
+    row S238 disarms when both refuse a foreign firm on deployed bytes.
+22. **Holdings: a permitted account with no custody row answers NOT_READY; an account outside the viewer's permitted set answers
+    NOT_FOUND.** NOT_READY says the object exists for this viewer and its data has not landed, which is true and lets the page
+    say so. NOT_FOUND is the answer for an identifier the viewer may not see or that does not exist, and the two cases are
+    indistinguishable by design (FWD-2: a refusal reveals nothing).
