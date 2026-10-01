@@ -98,6 +98,7 @@ validated with `python .tools/proof-of-spec-check.py <instance>`. Report once pe
 - `<risk>` WORLD: a public-surface rule.
 
 <status>pending</status>
+<status>complete</status>
 <round>10</round>
 <slot>~18</slot>
 <fabric>site-z</fabric>
