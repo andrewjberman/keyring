@@ -73,3 +73,12 @@ first caught a check defect before the cut: the classed ABSENT verdict `absent` 
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+
+**AMENDMENT 2 (2.0.0_SA_COO~Z, 2026-10-01 ~05:5xZ, issuer close):** AC1's served limb called `/security/{key}/posture`, which is not a route
+(rows Z-S324, Z-S325): posture is served as the `posture` field of `/security/{key}/overlay`. `serve()` now reads that carrier and refuses a
+non-200. The issuer re-ran AC1 against the deployed function: exit=0, 0 BAD, YES
+(`deliverables/2.0.0_SA_COO~Z/round55/ae1_AC1_regrade_amendment2.out`). Executor proof @`0ecb5292c5`: 12 of 12 keys moved, 9 Anthropic
+calls (3 classed ABSENT make none), $0.9692, one verdict moved (KMB hold -> better). Andrew's per-use word: record @`17f29440e8`.
+Gate limb: none graded this modification (not newly added; `<placeholders>NONE`).
+
+<status>complete</status>

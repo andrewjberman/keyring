@@ -16418,6 +16418,98 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
  "spec_asserts": "COO never-widen half @53a6ad274e, READERS: 'The scoped API's read_posture serves the LATEST posture/v1/<key>/<as_of>.json by date (read_pool_object), as stored... The page's posture card reads read_posture.' AC1's expectation: 'the served /posture route serves the new object (its as_of and verdict)'.",
  "world_is": "There is no deployed /posture route on opal-amgt-scoped-api, so read_posture is not reachable over HTTP for any of the 33 subjects and the posture card has no served source. The half's blast-radius sentence -- 'a same-key overwrite therefore moves the served /posture for these 12 names' -- describes a reader that does not answer; the act's real reach is the STORE only. The issuer's comp-adversary note says AC1 'PASSES on a simulated post-state', and a simulated post-state cannot see an absent route, which is why the cut did not catch this. UNMEASURED here, and deliberately not reasoned to: whether /posture was ever deployed and removed, or never cut -- that is a code and deploy-history question on another seat's surface, and this seat did not sweep it.",
  "notes": "disarm_owner 2.0.0_SA_COO~Z (the issuer). ARMED because AC1 is ae-1's single criterion and its stop limb 6 names a failing AC1 as the ROLLBACK trigger, so the round cannot close until the issuer rules. NOT SELF-ADJUDICATED and NOT ROLLED BACK: this seat measured, left all 12 rollback VersionIds live in deliverables/0.7.0_AE_CloudOps~A/ae1-pre/pre.json, and reported upward the same turn -- the same discipline the issuer ruled correct for ad-2 L3 (msg 27355, AMENDMENT 2 @9d5bd13f74). The two dispositions open to the issuer: amend AC1's served limb to grade the route's REACHABILITY explicitly (so an absent route reads as a route defect, never as a content mismatch), or rule the served limb out of ae-1's scope and route /posture's absence to the seat that owns the scoped API. Sibling row on the same check: AMGT_RESAPP-Z-S324."
-}
+},
+  {
+    "id": "AMGT_RESAPP-Z-S326",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-10-01T05:58:00Z",
+    "one_line": "DISARM ACT for AMGT_RESAPP-Z-S325 (disarm_owner this seat): no scoped-API route is missing -- posture is served as the `posture` field of /security/{key}/overlay; the defect was the issuer's check, now amended (AMENDMENT 2) and re-run against the deployed function: exit=0, YES. Also answers Z-S324 for the L8 read.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/api/scoped_amgt.py scoped_amgt_route_table(): 18 routes, no /posture leaf; read_security_overlay returns `posture: read_posture(...)` -- the carrier the page reads.",
+        "ae_1_posture.py serve() AMENDMENT 2: reads /security/{key}/overlay `posture` and raises on a non-200 (_invoke meta kept). Re-run 2026-10-01 ~05:5xZ against opal-amgt-scoped-api: exit=0, 0 BAD, 12 targets, 1 verdict moved (KMB hold -> better), 'THE POSTURE BATCH READS THE HELD PACKS AND SERVES ITS OWN OUTPUT: YES' (deliverables/2.0.0_SA_COO~Z/round55/ae1_AC1_regrade_amendment2.out).",
+        "Z-S324: AC1 contains generated_at 0 times -- true of the instrument; the CTO half s.2 condition is evidenced by the executor's own reads in proof 0ecb5292c5 (post-act generated_at on 9 resolved bodies; new VersionId + LastModified on the 3 ABSENT bodies, judge.py writing generation=None there)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S325: the COO half says the scoped API's read_posture serves the latest posture object, and AC1's served limb reads it at /security/{key}/posture.",
+    "world_is": "read_posture is served inside the overlay payload, never at its own route; the check called a non-route. With the check pointed at the overlay carrier, the served posture for all 12 overwritten keys is the new object as stored.",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "notes": "Disarm carrier per the Z-S290 shape; Z-S324 and Z-S325 are left exactly as filed. Fifth instrument defect of this issuer's class (a check reading a surface the act does not own); carried to the round-55 L8 packet."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W197-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~197",
+    "surfaced_at": "2026-10-01T05:30:00Z",
+    "one_line": "AMGT-af-1 AC1 cannot reach exit=0 in the sparse worktree: 3 tests in test_print_format_rich.py error on a missing portal fixture (portal/ is a gitlink the cone does not populate); all other tests pass.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AC1 run literally from C:/tmp/r56-197: '316 passed, 2 skipped, 3 errors' exit=1; the 3 errors are test_print_format_rich.py::test_default_and_fmt_pdf_are_byte_identical_to_build_pack_itself, test_format_rich_returns_200_markdown_non_empty, test_format_unknown_refuses_400_naming_both_legal_values.",
+        "Cause: FileNotFoundError C:\tmp\r56-197\\portal\\src\\pages\\SecurityAnalysis\\__harness__\tabsFixture.BA_US_Equity.json; 'git ls-files -s portal' = 160000 gitlink b336b141b4, 'ls portal' in the worktree is empty, and the sparse-checkout list carries no portal path. The shared tree holds portal/src/pages/SecurityAnalysis/__harness__/ (listed read-only).",
+        "The 7 new tests in test_monthly_chatter.py pass (7 passed); the suite total 316 passed + 2 skipped + 3 errors; AC2 af_1_route.py C1-C8 PASS, verdict YES, exit=0."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-af-1 AC1: the whole lib/research/api/tests/ suite passes, exit=0 (314 passed at the cut).",
+    "world_is": "In a worktree whose sparse cone omits the portal submodule, test_print_format_rich.py errors at fixture load, so AC1's exit=0 is unreachable by any change inside the order's paths. The errors are independent of af-1 (no af-1 path is read by those tests). Nothing was re-scoped; the criterion is reported FAIL as run.",
+    "notes": "disarm_owner 2.0.0_SA_COO~Z. Issuer's options: grade AC1 on a tree with portal populated, or deselect the file at the drain."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W198-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~198",
+    "surfaced_at": "2026-10-01T05:57:00Z",
+    "one_line": "AC1 cannot exit 0 in a sparse worker worktree: test_print_format_rich.py needs portal/src/pages/SecurityAnalysis/__harness__/tabsFixture.BA_US_Equity.json, and portal is a gitlink (160000) the worktree does not check out -- 3 errors, identical before and after af-2's edit.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Baseline at 4a7d8bcb0f before any edit: pytest lib/research/api/tests/ = 309 passed, 2 skipped, 3 errors; the 3 errors are test_print_format_rich.py::{test_default_and_fmt_pdf_are_byte_identical_to_build_pack_itself, test_format_rich_returns_200_markdown_non_empty, test_format_unknown_refuses_400_naming_both_legal_values}, each FileNotFoundError on C:/tmp/r56-198/portal/src/pages/SecurityAnalysis/__harness__/tabsFixture.BA_US_Equity.json.",
+        "git ls-tree HEAD portal = '160000 commit b336b141b4...' (a submodule); git sparse-checkout list holds no portal cone; ls portal in the worktree is empty. The fixture exists in the shared tree's portal checkout (read-only listing of its __harness__ directory).",
+        "After af-2's edits: 330 passed, 2 skipped, 3 errors (the same three); every other test in the directory passes, test_t1_fallback_and_pct.py's 21 included. AC2 and AC3 run live from this worktree and exit=0."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-af-2 AC1: every test in lib/research/api/tests/ passes and exit=0.",
+    "world_is": "AC1 as literally written runs in a worktree whose portal submodule is not checked out, so three portal-fixture tests error with or without this change and the exit is 1. Nothing af-2 touched is implicated. Issuer to decide: accept AC1 as met on the 330 passing tests plus the baseline-identical 3 errors, or re-run AC1 in a tree that carries portal. No portal path is in this order's write grant, so none was created.",
+    "notes": "disarm_owner 2.0.0_SA_COO~Z."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S327",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-10-01T06:25:00Z",
+    "one_line": "RESOLVES AMGT_RESAPP-Z-W197-S1 and AMGT_RESAPP-Z-W198-S1: AC1 of af-1 and af-2 graded by the issuer on the FULL shared tree after both drains (portal populated): 342 passed, 0 errors, exit=0. The 3 errors the workers saw were the issuer's sparse worktree cone omitting the portal gitlink (test_print_format_rich.py's tabsFixture), identical at base.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CLOUD 78167bb8fc (af-1 drained cb1f56de68, af-2 drained 78167bb8fc): PYTHONPATH=. python -m pytest -q -p no:cacheprovider lib/research/api/tests/ -> 342 passed, exit=0.",
+        "Same tree, the live checks: af_1_route.py YES exit=0; af_2_serve.py --what fwd33 YES exit=0; --what fwd34 YES exit=0 (merged code, graded together).",
+        "Worker ~198 measured the 3 errors at base 4a7d8bcb0f before any edit (309 passed, 3 errors); both worker cones lacked portal/."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC1 of af-1 and af-2: every test in lib/research/api/tests passes, exit=0.",
+    "world_is": "In the workers' sparse worktrees AC1 could not exit 0 (3 base-identical errors from the absent portal fixture); on the full tree after both drains it does.",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "notes": "Issuer defect: the round-56 worktrees were cut with a sparse cone that omits portal/ (and first omitted org/surprise_channel, which the workers added). Later worker cones carry the gitlink or the order's AC1 names the deselection."
+  }
 ]
 ```

@@ -74,6 +74,7 @@ whose challenge is NOT passed is recorded honestly (`passed: false`, the signatu
 <paths>
 lib/opal_data_harvest/verification.py
 lib/opal_data_harvest/test_ae5_challenge_path.py
+lib/opal_data_harvest/discovery.py
 org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/
 org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
@@ -96,6 +97,20 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - INSTANCE NAMED EXACTLY
   `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/AMGT_HARVST.TO-HVST-ae-5.challenge-path-and-renewal.proof_of_spec.json`
   with `to_id` `AMGT_HARVST.TO-HVST-ae-5.challenge-path-and-renewal`.
+
+## AMENDMENT 1 -- 2026-10-01 ~06:0xZ, the issuer: phase A dispatched ahead of the first-light grade
+
+1. **Phase A is dispatched now** (slot ~91 is free; `ae-2` drained @594d7be519 with `TabSession` on CLOUD). Phase A's code
+   does not depend on the first-light result; the grade (cell `HVST-ae-3`, after 09:00Z) only sets each publisher's path
+   for phase B and is added as AMENDMENT 2 before phase B is handed over.
+2. **Date-ordered discovery** (section 1 item 3) goes in a new module `lib/opal_data_harvest/discovery.py` (path added),
+   not in `verification.py`.
+3. **Routing hookup is the issuer's:** the call from a leg's `bot_check` classification into `solve` sits in
+   `publishers.py` / `worker.py` (other cells' files). Export `solve(tab_session, publisher, signature)` and
+   `renew(tab_session, publisher)`; name in your report the exact call site and arguments the issuer should add. Section
+   1 item 2's plants (i)-(ii) test `solve`'s contract through a small `route_bot_check(tab_session, publisher,
+   signature, retry)` helper you export from `verification.py`.
+4. Execute PHASE A only, then report and stop.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 

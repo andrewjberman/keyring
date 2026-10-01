@@ -92,7 +92,7 @@ Report once: what changed and where, the output line of every criterion, the por
 
 **ISSUER NOTES:** analysis s.3 row 3, header half; the issuer split row 3 into this order (extraction + HeaderCards, no LeadPanel) and AV-f-3 (the panel header, chained on ~56 after this chain drains) so the extraction runs beside the bars. Chain ~57 alone. Base: cardface 0 of 3; green r15-green-b @69653d85 3 of 3.
 
-<status>pending</status>
+<status>complete</status>
 <round>15</round>
 <slot>~57</slot>
 <fabric>site-z</fabric>

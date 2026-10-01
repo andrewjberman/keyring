@@ -1458,6 +1458,72 @@
     "spec_asserts": "Row W5-S26: a stale test encodes the removed delete and reads RED for intended behaviour.",
     "world_is": "The test now encodes supersede-without-delete (d-3 amendment 4); W5-S26's hazard is disarmed by the issuer, its id carried here for the CVO's L9 read.",
     "notes": "Issuer direct act inside its own decomposition (the file belongs to terminal RIV-b-1; no live order owns it)."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S4",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-01T06:09Z",
+    "one_line": "Row W2-S4's ordering hazard was already fixed in code at 1faa6d4f8d (RIV-b-1 amendment 1, 2026-09-30 19:12Z) and is live since the d-3 apply (pin e622b2fef9, 04:10Z); this seat's round-2 packet claim (325/325 dates 'old-format', every landed-date re-capture keeps old rows) was a wrong-object measurement: issuer SILVER names are basg-<ts>-<sha12> for BOTH bronze key formats by design.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "silver_issuer._capture_id at CLOUD HEAD, exercised: new-format key basg-2026-09-29-20261001T120000Z-abcdef123456 -> 20261001T120000Z-abcdef123456; old-format basg-20260930T114700Z-2a559d4deb4e -> 20260930T114700Z-2a559d4deb4e (one order key across formats).",
+        "git log -S _CAPTURE_TAIL: 1faa6d4f8d 'silver_issuer capture ordering across key formats'; git merge-base --is-ancestor 1faa6d4f8d e622b2fef9 true (the d-3 apply pin).",
+        "gold_canonical_shape._revision reads the same <ts>-<sha12> tail from the silver name, so G1's issuer pick orders identically."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "DRAIN_END_READ_ROUND2.md @d152231e55 and the round-2 analysis ruling 1: W2-S4 ARMED, a re-capture of a landed BASG date keeps the old rows; round 3's first cell is the _capture_id change under a pair.",
+    "world_is": "The _capture_id change is in the deployed code. A SIBLING hazard remains: silver_issuer still deletes the superseded issuer silver object and the build-silver role has no s3:DeleteObject (policy rivalfunds-build-silver-lambda.json: Put/Get only), so a re-capture of a landed date writes the winner but no marker (the W5-S24 class on the issuer side). It has not fired: issuer silver holds exactly 1 object per date over 325 dates.",
+    "notes": "Issuer ruling: round 3's first cell becomes the issuer-side supersede-without-delete (the W5-S24 remedy, LOCAL), riding the round's deploy under its pair. Carried to 1.0.0_SA_CTO~Z as a decision record."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S5",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-01T06:09Z",
+    "one_line": "GQGU is absent from the page input because no reader covers it: the Bloomberg collector excludes it by constant (NO_BLOOMBERG_ROUTE) and the issuer collector carries BASG only; whether Bloomberg carries GQGU at all is UNMEASURED.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/collector_bloomberg.py:50 NO_BLOOMBERG_ROUTE = {'GQGU': 'NO-BLOOMBERG-ROUTE'}.",
+        "The PFOE-group census .runtime/amgt-reconn-daily-census-20260929/*.json: 436 of 439 files parsed, rows by ORIG_IDS fund TSEL 12166, BASG 11090, ETFT 6752, PCLG 6686, WCMG 5131, GQGU 0; the files carry no query text, so whether GQGU was requested is not recorded.",
+        "Served manifest rivalfunds/etfs/platinum/page/date=2026-09-30/manifest.json funds_in_input: 10 funds, GQGU absent; round-2 decomposition section 1 deferred GQGU's issuer adapter to round 3."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "C-PEER-GROUPS: the PFOE group includes GQGU; FWD-1 shows each group's funds.",
+    "world_is": "GQGU has no source in the pipeline. The NO-BLOOMBERG-ROUTE constant is an INFERENCE from a census that never names its request; a single scripted BQL holdings request for GQGU at the next Terminal sign-in measures it.",
+    "notes": "Filed at the round-3 cut per the round-2 analysis ruling 10. Not cut this round (not on the analysis's enrichment list); the measurement rides RIV-d-4's signed-in run if the Terminal is up."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S6",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-01T06:18Z",
+    "one_line": "Correction to row Z-S5: GQGU HAS a measured issuer route -- the same SEI filepoint format as BASG (gqg.filepoint.live SEI_GQG_Tradedate_Holdings_<MMDDYYYY>.txt) -- with 305 archived daily captures in the PFOE census; its absence is only the missing collector_issuer adapter, not a missing source.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".runtime/amgt-reconn-daily-census-20260929/gqgu/: 305 dated *.json sidecars + 305 *.txt captures (2025-07-14 .. 2026-09-28); 2025-07-14.json http_status 200, rows 35, weight_sum 100.02, date_matches true, url https://gqg.filepoint.live/assets/data/SEI_GQG_Tradedate_Holdings_07142025.txt.",
+        "2025-07-14.txt header date|fund_id|fund_name|fund_cusip|fund_ticker|security_group|...|percent_of_net_assets -- the column set silver_issuer.STRING_COLS / SOURCE_COLS already type for BASG.",
+        "Z-S5 read only the census root *.json (Bloomberg BQL) and missed the gqgu/ issuer folder."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Row Z-S5: GQGU has no reader; Bloomberg coverage UNMEASURED.",
+    "world_is": "An issuer adapter for GQGU (a second entry in collector_issuer's adapter table, the same parser) plus an import of the 305 archived days would put GQGU on the page with history back to 2025-07-14. Bloomberg's coverage of GQGU remains UNMEASURED.",
+    "notes": "Not on the round-2 analysis's enrichment list, so not cut by the issuer; carried to 1.0.0_SA_CTO~Z for placement (a small cell)."
   }
 ]
 ```
