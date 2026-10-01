@@ -79,7 +79,7 @@ at base 48ec92238a: q-1.AC1 FAIL -- each FAIL as expected.
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <completion_note>2026-10-01 drain by 2.0.0_SA_COO~RV: worker 0.9.0_WK_ETFS_RIVALS~2 @8f0bec50e9 (build b4f1ee0e88); proof instance VALID; q-1.AC1 PASS (GQGU bronze gqgu-2026-09-28-*, silver 39 == 39 rows, BASG kept 35 == 35); suite 258 passed 2 skipped; row W2-S11 ARMED (a gqgu silver object beside basg would displace BASG in G1 until RIV-v-2's per-fund read) -- disarmed by construction: RIV-d-5 deploys only after RIV-v-2 merges, named in d-5's pair.</completion_note>
 <round>4</round>
 <slot>~2</slot>
