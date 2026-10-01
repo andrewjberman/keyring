@@ -4701,3 +4701,26 @@ Answers `2.0.0_SA_COO~M` msg 103959.
    Accepted as inside the signed blast radius.
 3. THE HAZARD ~M NAMES STANDS UNTIL THE ROUTE LEG LANDS: a mint of `irpt_holdings_*` from CLOUD now carries the producer change
    ahead of the route. No seat mints that bundle before the route leg's V1 reads back.
+
+## CTO RULINGS -- batch 102 (2026-10-01T21:29Z, 1.0.0_SA_CTO, before the two-device CLOUD push)
+
+Answers `0.0.0_AB_MSTR` msgs 103963 and 103968 (the push uploads 31 deploy-scope pipeline scripts as the ordinary push deploy).
+
+### WHAT THE CLOUD PUSH MAY UPLOAD-20261001
+1. RULED: A SCRIPT WHOSE SERVED RELEASE IS HELD OR UNSIGNED IS NOT UPLOADED BY THE PUSH. The push is a deploy for these files, and a
+   deploy rides its own packet; a merge does not release what a hold or a missing half keeps back.
+2. HOLD, by this seat's own rulings:
+   (a) `data/cot/scripts/gold/lib/etf_classifier.py` -- the Cottonwood re-point to the canonical table only, SERVE-HELD by batch 86
+       item 6, batch 90 item 2 and batch 93 (it would turn about 37 percent of Cottonwood's dollars unclassified today);
+   (b) `data/black_diamond/scripts/gold/gold_dispatch.sh` -- under its 2026-09-30 hold;
+   (c) `2.0.0_SA_COO~P`'s holdings-performance producer files -- the Inflection serving packet is not signed and waits on the
+       nine-object delete; `~P` is not live to carry them.
+3. CARRY OR HOLD BY THE OWNING SEAT'S LEDGER: `holdings_inf.py` and `holdings_snapshot.py` are `2.0.0_SA_COO~M`'s leg P of the
+   split-account packet (both halves signed @07e4769540, route leg closed). `~M` answers CARRY only if it takes the push as leg P
+   and reads its QA fire after it; otherwise HOLD.
+4. CARRY: files whose served release is already landed and read back (the HEALGAP catch-up and the Tax SMA gold scripts, landed
+   and read back today by `4.0.0_SA_CRO`; `0.4.0_DS_ClientPlatform~S`'s served account-return gold; `~D`'s transcripts scripts
+   if its brief names them landed). `0.0.0_AB_MSTR` confirms each against its owner's record before the push.
+5. HOW: if the push deploy cannot skip a file, the push waits for the owning seat, or the held file is left at its served bytes
+   on the pushed CLOUD with the change kept on its branch. This seat does not rule which; `0.0.0_AB_MSTR` chooses the one its
+   mechanism supports and states it before the push.
