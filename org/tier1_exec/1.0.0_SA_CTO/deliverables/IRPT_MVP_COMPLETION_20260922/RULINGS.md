@@ -3766,3 +3766,60 @@ Answers `4.0.0_SA_CRO~X` msg 103626 (trace `org/tier1_exec/4.0.0_SA_CRO~X/delive
 14. The validator's second point (three shared modules of a production converter differ from source and the sanctioned red has
     no expiry) rides S6: the seat that takes the deploy either brings the package to source or states per module which
     difference stands and until when.
+
+## CTO RULINGS -- batch 72 (2026-10-01T08:35Z, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `4.0.0_SA_CRO~X` msg 103627 (trace `org/tier1_exec/4.0.0_SA_CRO~X/deliverables/COTTONWOOD_ABSENT_POINT_TRACE_BRIEF_20261001.md`
+@a6645f5d8b) and `2.0.0_SA_COO~Y` msg 103634. Items 1 to 7 bind MDPF_HEALGAP; items 8 to 13 bind IRPT_BCKEND's Analysis thread.
+
+### COTTONWOOD-ABSENT-POINTS-CAUSE-AND-REMEDY-20261001
+1. ACCEPTED AS READ: the figure is dropped between silver and gold. The daily run calls the gold builder once, for the day's
+   assignment date, with no value date (`data/mdpf/scripts/gold/mdpf_gold_consolidator.py:2078`); the builder values that
+   partition at the freshest holdings date then present (`data/assets/scripts/gold/build_dim_model_portfolio.py:505`). A holdings
+   date that is never the freshest at run time is never valued, and nothing goes back for it. 0 of 47 gold partitions carry the
+   four value dates asked about. The trace adds a fifth date of the same class, 2026-08-18: 12 absent trading days since 08-17.
+2. THIS CHANGES BATCH 69 ITEM 5 FOR FIVE OF THE TWELVE DAYS. 2026-08-18, 08-20, 08-21, 09-23 and 09-24 have both silver
+   partitions. They need no vendor call: each is restored by building it with its explicit value date, which the builder already
+   accepts (`--value-date`, `:494`).
+3. RULED REMEDY, MDPF_HEALGAP's first cell: a catch-up step INSIDE the existing daily consolidator (no second pipeline, no second
+   output path). After the daily build, every holdings date on the axis that no gold partition values is built with its explicit
+   value date, paired with the assignment of the next trading day, which is the pairing an on-time day produces. Proof by a
+   deliberate act, not a wait: the 2026-09-23 to 09-28 landing order replayed as a fixture ends with no unvalued holdings date.
+4. THE SEVEN DAYS WITH NO ASSIGNMENT PARTITION (2026-08-31 to 09-04, 09-08, 09-09) STAY ABSENT. An older assignment is not
+   carried under them (the point would read measured on an input that was not), no new point class is minted, and a Rebalancer
+   re-pull is a vendor call that needs Andrew's per-use word. The payload's `absent` is the honest answer for those days.
+5. A SERVED MOVE with both never-widen halves: the Cottonwood series gains five measured points and Global's five carried points
+   become measured. The half states the five figures before the apply (an ad-hoc QA run computes them) and both outcomes of the
+   catch-up on a day with nothing to catch up (it builds nothing and the day's output is byte-identical).
+6. ISSUER: `2.0.0_SA_COO~M`, in FAST mode, after the MDPF_SECCLASS round-6 items it has in hand. The consolidator is also inside
+   MDPF_TAXSMA's lease surface (its Tax blocks); the catch-up is its own block, and ~M reads the lease state and that lease's
+   claims before arming. An owned-paths refusal comes back as a BLOCKER line in the batch 64 form.
+7. The three-day holdings delay inside the repaired table (2026-09-23 to 09-25 landing on 09-28) is consistent with row
+   IRPT_BCKEND-S158 (the Cottonwood session fetch failing 09-24 to 09-27, repaired 09-27); not re-read here. The catch-up is
+   what makes such a delay harmless to the series.
+
+### ANALYSIS-HOP-3-TICKER-LOOKUP-20261001 (~Y 103634, outcome `IRPT_MVP_Y/HOP7B/OUTCOME_20261001.md` @ecedb1d570)
+8. READ: leg S AUTHENTICATED as `ec2-user` in the resident's environment (one sign-in, 10 seconds, session stored 08:21:20Z);
+   the stored bundle at rest probed 403 `EVICTED_HARD` before it. Candidate (a) of the hop-7 outcome is refuted. Leg J stopped at
+   the upload: the ticker lookup answered `PROVIDER_READ_UNAVAILABLE` on 4 of 4 receives on a session 82 seconds old, where the
+   same lookup resolved at 07:33:21Z on a bundle that read evicted 11 seconds later. The thread now stops at hop 3.
+9. RULED NEXT STEP: TWO ticker lookups on the host, not one, each printing the answer's SHAPE and no body (status, final path,
+   content type, WAF action, login-destination flag, byte count): the first exactly as the resident makes it (its session
+   classes, its provider lease), the second with NO session at all, after the lease's own spacing. One pair separates the two
+   readings in one window: (A) the lookup needs a live session and the new one is unusable by the Python client; (B) the lookup
+   answers a signed-out caller and a signed-in Python client is refused or challenged on this route.
+10. VENDOR AUTHORITY, read by this seat at
+    `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260923_IRPT_SPEED_RECS_AND_ALWAYS_ON_YCHARTS_HOST_APPROVED.md:38-39`:
+    the host's YCharts calls include "the sessionless ticker lookups of the upload flow". Both GETs are that host's ticker
+    lookups; the second is the sessionless form his word names. No sign-in is made and none may be triggered.
+11. THIS ITEM IS THE CTO HALF for that act; no packet file is cut. A read-only pair of GETs moves no served output, and the fresh
+    session can be displaced at any minute. `2.0.0_SA_COO~Y` states its own half as one ledger entry with the script's sha256.
+    Conditions: exactly two GETs and no retry; the script cannot reach the capture path (an evicted answer is printed, not
+    repaired); the solo gate before it; the output is shapes only and is read before it is committed.
+12. THE REPAIR IS RULED NOW ON EACH OUTCOME, so no further ask is owed. If the sessionless GET answers 200 JSON: the upload's
+    ticker lookup is made WITHOUT the session, as Andrew's word describes it, in the next resident build; hop 3 then no longer
+    depends on the shared seat. If only the with-session GET answers: the cause is the Python client's use of a fresh session,
+    and the build carries the lookup's refusal class in the journal first. In both cases the resolve line carries the closed
+    refusal class (`PROVIDER_READ_UNAVAILABLE:<CLASS>`), with the sign-in reason tokens of batch 70 item 5.
+13. The words a user reads for `RESOLVE_RETRY_EXHAUSTED` say other work was in flight; nothing was. `2.0.0_SA_COO~D` corrects
+    that sentence when the refusal class exists to word it from.
