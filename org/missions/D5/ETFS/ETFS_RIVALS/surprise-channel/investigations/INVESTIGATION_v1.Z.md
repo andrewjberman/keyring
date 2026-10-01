@@ -1524,6 +1524,92 @@
     "spec_asserts": "Row Z-S5: GQGU has no reader; Bloomberg coverage UNMEASURED.",
     "world_is": "An issuer adapter for GQGU (a second entry in collector_issuer's adapter table, the same parser) plus an import of the 305 archived days would put GQGU on the page with history back to 2025-07-14. Bloomberg's coverage of GQGU remains UNMEASURED.",
     "notes": "Not on the round-2 analysis's enrichment list, so not cut by the issuer; carried to 1.0.0_SA_CTO~Z for placement (a small cell)."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S17",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-01T07:25Z",
+    "one_line": "The order names etf_daily_pull.PREFIX/BUCKET as the landing's address, but the landing key is written by etf_constituents_pull.py (BUCKET, PREFIX and SUBFOLDER='constituents'); the reader parses that file's module-level constants, so a Lambda bundle without integrations/bloomberg/pipeline/etf_constituents_pull.py makes build-canonical-shape and build-coverage FAIL loud (ProducerAddressError) for every fund, not only the home funds.",
+    "spec_asserts": "Cell RIV-hp-1: address = the producer's own (etf_daily_pull.PREFIX / BUCKET), read, never rebuilt.",
+    "world_is": "Measured: etf_daily_pull.py:34-35 and etf_constituents_pull.py:53-55 assign the same BUCKET/PREFIX, but only etf_constituents_pull.py:55 holds SUBFOLDER and :308 writes `{PREFIX}/{asof_key}/{SUBFOLDER}/{name}.parquet`. home_producer.producer_address() reads etf_constituents_pull.py by ast (importing it would insert its hard-coded REPO paths on sys.path) and raises when the file is absent; both stages then return FAILED with detail.failures.home_producer or .evidence. Failing closed is deliberate (an unreadable address is never guessed) but the bundle must carry the file.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/home_producer.py@dfbce817fe producer_path/producer_address; PRODUCER_REL",
+        "integrations/bloomberg/pipeline/etf_constituents_pull.py:53-55 and :308 (read, not edited)",
+        "data/etfs/scripts/rivalfunds/tests/test_hp1_home_producer.py@dfbce817fe test_g1_fails_loud_when_the_producer_address_is_unreadable"
+      ]
+    },
+    "notes": "Armed against the round-3 deploy (RIV-d-4): the Lambda that runs build-canonical-shape / build-coverage must ship the producer file beside the package (path integrations/bloomberg/pipeline/etf_constituents_pull.py relative to the root four levels above homes.py), or the stage reads FAILED on its first run. Not measured here: how RIV-d-4 packages the Lambda."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S18",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-01T07:25Z",
+    "one_line": "The landing's folder date is the run's as-of key, not the report date: a Friday folder carries Monday-dated rows (2026-08-28 -> 2026-08-31, 2026-09-04 -> 2026-09-08 over Labor Day) and a Monday folder can re-carry the prior Friday's rows, so a (fund, date) appears in two folders; the reader keys on each row's date and the later folder's rows win.",
+    "spec_asserts": "C-HOME-PRODUCER: report date = each row's `date`; one file per run date holds four funds.",
+    "world_is": "Measured over the 27 landings 2026-08-21..2026-09-29 (read-only S3 list + get): 6 of 27 folders carry rows whose date is not the folder (2026-08-21->08-24, 08-24 holds both 08-21 and 08-24, 08-28->08-31, 09-04->09-08, 09-11->09-14, 09-18->09-21), IDVZ has 22 distinct report dates and PFOE 22 (23 across both) against 27 trading days, so G2 reads 44 new and 9 gap rows for the two funds over 2026-08-21..09-29 (a day before a fund's first landed day is not a row).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/home_producer.py@dfbce817fe Reader._index (later folder wins)",
+        "data/etfs/scripts/rivalfunds/tests/test_hp1_home_producer.py@dfbce817fe test_the_report_date_is_the_row_date_not_the_folder_and_the_later_folder_wins"
+      ]
+    },
+    "notes": "A local replay of all 27 landings through G1 and G2 (scratch sink, no S3 write) gave 1465 G1 rows (IDVZ 935, PFOE 530), 23 report dates, per fund-day weight sums 0.985..1.000 of net assets."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S19",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-01T07:25Z",
+    "one_line": "canonical_shape's 'latest revision = greatest revision id' is a hash coin-flip between two revisions with the same greatest capture ts (the multi-source revision is `<ts16>-<sha256[:12] of the fund:source:capture set>`), so adding home rows to a report date that already has a revision made of the other sources could leave the OLD revision the latest 50% of the time; the home-inclusive revision now carries an `h` before its hash digits so it sorts after any hex-hash revision at the same ts.",
+    "spec_asserts": "G1 module docstring: the LATEST revision of a partition is the greatest revision id; a consumer selects that one.",
+    "world_is": "Round 2's issuer+Bloomberg mix has the same ordering weakness for a re-run that adds a source at an existing ts; only the home-inclusive form is made deterministic here (revision `<ts16>-h<sha256[:11]>`), because the redeploy replay will add home rows to every already-written report date.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/gold_canonical_shape.py@dfbce817fe _revision_of",
+        "data/etfs/scripts/rivalfunds/tests/test_hp1_home_producer.py@dfbce817fe test_the_revision_with_home_rows_sorts_after_the_other_sources_revision_at_the_same_ts"
+      ]
+    },
+    "notes": "A consumer that selects the latest revision by max(object name) (G2 g1_sources, the page) is unchanged. Non-home revisions of a mixed bloomberg+issuer date keep the old hash-ordered form."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S20",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-01T07:25Z",
+    "one_line": "Every home row lands in G1 with resolution_status UNRESOLVED: the crosswalk the stage loads (s3://opal-data-harvest/crosswalk/v1/2026-09-29.json, 237 records) holds none of the IDVZ/PFOE CUSIPs or tickers (1465 of 1465 rows miss), and the landing carries no provider classification, so a non-cash home row's asset_class stays NULL / UNRESOLVED.",
+    "spec_asserts": "Cell RIV-hp-1: identity through the existing crosswalk path on CUSIP/ticker.",
+    "world_is": "Measured on the 27-landing local replay: resolution_status UNRESOLVED 1465, is_cash_line true 44 (2 per PFOE day via the flag, IDVZ's flag is null on all 41 rows and none is a sentinel line). Every row is kept with its raw CUSIP/ticker, so a later crosswalk widening resolves them on a replay; the page and G2 do not depend on resolution.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/gold_canonical_shape.py@dfbce817fe build_home_rows, _identity",
+        "lib/research/identity/crosswalk.py resolve('02390A101') and resolve('AMX') -> security_key None, 'crosswalk/v1 (as_of 2026-09-29, 237 records)'"
+      ]
+    },
+    "notes": "Observation for the G4/enrichment owner: the home funds' identity coverage is a crosswalk-content question, not a reader defect."
   }
 ]
 ```
