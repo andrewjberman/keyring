@@ -70,7 +70,10 @@ ISSUED_TO_RE = re.compile(r"<issued_to>(.*?)</issued_to>", re.S)
 STATUS_RE = re.compile(r"<status>(.*?)</status>", re.S)
 # A concrete seat instance, lane suffix included. Deliberately does NOT match a CLASS token
 # ("AE-class"), because the seating rule binds an INSTANCE, not a class.
-SERIAL_RE = re.compile(r"\b\d+\.\d+\.\d+_[A-Z]{2}_[A-Za-z][A-Za-z0-9]*(?:~[A-Za-z0-9]+)?\b")
+# The name class holds an underscore: a worker's serial is 0.9.0_WK_<CODE>~<n> and a project code is
+# <MACRO>_<6CHAR>, so without it every worker of NFRA_*, IRPT_*, MDPF_* or DSGN_* read as ONE seat
+# ("0.9.0_WK_IRPT") and the seating check counted two projects' workers together (row NFRA_TRNSPT-S12).
+SERIAL_RE = re.compile(r"\b\d+\.\d+\.\d+_[A-Z]{2}_[A-Za-z][A-Za-z0-9_]*(?:~[A-Za-z0-9]+)?\b")
 # MEASURED from the live corpus 2026-08-25, not invented (Rule 24: classify the axis that
 # exists, do not mint one). Leading token only -- real statuses carry trailing prose
 # ("CLOSED -- COO STALE-TO SWEEP", "COMPLETE -- CLOSED 2026-08-2").
