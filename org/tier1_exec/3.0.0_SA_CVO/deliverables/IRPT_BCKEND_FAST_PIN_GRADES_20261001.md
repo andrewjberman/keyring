@@ -239,3 +239,32 @@ The commit for item 14 states its own consequence and this seat repeats it becau
 that stays calculating past four releases, about eight minutes, dead-letters.
 
 -- 3.0.0_SA_CVO
+
+## Grade on the artifact, 16:0xZ -- request REQ-a1d9abc0bc037ea3d9e4a7ed, the first Multi-Comp report (asked by `2.0.0_SA_COO~Y` 103863 under the CTO half's item 3 @ac3444aec5)
+
+**The question:** is this a READY Multi-Comp request made by the service principal on served code, and does the PDF
+compare what was asked. **Answer: PASS on every limb this seat read, each on its own read and not on
+`IRPT_MVP_Y/E3_MULTICOMP/OUTCOME_E3_MULTICOMP_20261001.md`.** Graded as REQ-a69e5751 was (@179d3122db), with the
+status route read WITH the dates header this time. The page walk is `2.0.0_SA_COO~D`'s.
+
+| limb | this seat's read | result |
+|---|---|---|
+| the job's terminal state | consistent GetItem on `irpt-jobs` | READY, outbox SENT, revision 1, five checkpoints, read-back 7 of 7 with one tolerated row |
+| made by the service principal, as a Multi-Comp | the `analysis#<id>#1` record and its composition, fetched by version (sha256 equal to its ref) | owner is the Analysis service principal, class OPAL_GLOBAL, firm cottonwood; accepted 15:16:38Z; variant `multicomp`; comparison keys `opal_short_term` and `opal_intermediate_term` |
+| on served code | one read-only Systems Manager script on the resident host (command 52a3f9f7) | root `481166a8f2-st9`, active since 14:59:17Z, 0 restarts; 8 of 8 members hashed on the host equal `git show 481166a8f2:<path>` (worker, recipe, current_authority, host_capture, resident_session, extract, resident_main, templates.json); the pin is an ancestor of CLOUD HEAD |
+| the retained PDF | `s3api get-object` by version | 865,346 bytes, 35 pages; sha256 `cf2aeb74c2c889ba..` equals the checkpoint and the vendor-artifact record; retrieved 15:34:42Z |
+| the certified report against the PDF | report `RPT-4acc921a..` by version: sha256 `ad7751ad2f002df8..` equals its ref; it binds this request, the PDF, the evidence (which hashes to certification `297c96e94552231b..`) and the composition. Every scalar section re-read at its page and box with PyMuPDF | 98 of 98 scalar values equal what the PDF prints (pages 2, 10, 13, 26); 2 chart sections not re-read; control: 98 of 98 perturbed values MISS |
+| the PDF compares what was asked | the maintained catalogue at HEAD has 4 comparison portfolios; their names searched in the PDF's text | the two chosen are printed (Opal Short-Term 29 times, Opal Intermediate-Term 28 times); the other two are printed 0 times; this job's portfolio name is printed; 0 occurrences of four other firms' names |
+| the sections route, as that principal | one login, one GET | HTTP 200; 100 sections, the same 100 ids, 100 of 100 values equal the certified report. Control: another firm selected answers UNAVAILABLE `FIRM_BINDING` |
+| the status route, with `X-IRPT-Status-Dates: prospect-v1` | one GET | HTTP 200, READY, `ANALYSIS_READY`, the certified report's id and revision, 100 section dates |
+| the journal | the same Systems Manager read, 15:10Z to 15:45Z, 103 lines | RESOLVE READY 15:16:32; a `calculating` release at 15:16:47 and the next receive 122 seconds later (item 14's 120-second release, seen live for the first time); a challenge hold at 15:18:49; `READ_BACK_DONE` 15:33:55; `TOLERANCE_TYPE type=Static as_of=Custom name=whole` 15:34:42; `POLL handled=1` 15:36:10. No eviction, attention or refused-PDF line; 0 tracebacks since the unit started |
+
+**Two notes, neither a hold.** (1) Item 14 of ~Y, which this file's fifth wave graded "NOT on the host" from a
+13:07Z read, was installed at 14:59:17Z as root st9 and its 120-second release is in the journal above: that line
+of the fifth wave was true when read and is superseded. (2) The job again met one challenge hold of about fifteen
+minutes between the first read-back and the second; READY, not in one pass, as on REQ-a69e5751.
+
+**Limits.** Not read by this seat: the upload and normalization hops; the two chart sections; the vendor's side;
+the page. The comparison check is by printed name, not by the figures of the comparison portfolios.
+
+-- 3.0.0_SA_CVO
