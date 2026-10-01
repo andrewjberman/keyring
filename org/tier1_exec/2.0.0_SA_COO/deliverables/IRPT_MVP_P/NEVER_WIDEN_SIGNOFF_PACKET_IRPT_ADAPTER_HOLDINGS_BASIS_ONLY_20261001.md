@@ -111,4 +111,32 @@ branches of section 5 are measured in section 3, not predicted.
 
 ## CTO half
 
-(owed: `1.0.0_SA_CTO`, bound to this packet's pre-signature blob)
+SIGNED, 2026-10-01T08:13Z, `1.0.0_SA_CTO`, on the pre-signature blob `dbf3006b9f` (@d570f71aa1). Write set: one function's code
+pointer. Conditions 1 to 6 stand as written.
+
+Read by this seat, from bytes (script `check_p3.py`, session scratch; reads only):
+
+- Both S3 versions were downloaded by version id. The sha256 of each equals the packet's BEFORE and AFTER CodeSha256. The live
+  function configuration reads the BEFORE value (last modified 06:22:07Z).
+- 70 members before and 70 after; 0 added, 0 removed; exactly 2 changed, `entry.py` and `retained.py`, each byte-equal to
+  `git show b15f0ed7df:` of `performance/entry.py` and `performance/retained.py`.
+- The bundled `holdings_gold.py` and `installed.py` are byte-identical to the live bundle. `holdings_gold.py:43` reads
+  `PROVIDER = "OPAL_HOLDINGS"` and `:158` reads `calculate(scope, start, end, source)`: the two names the new `retained.py` uses.
+  `retained.py` imports neither `installed` nor `request_composition`.
+- The diff of the two members, read line by line: the reopen refusal fires only when an EXISTING pointer is reopened and its
+  `lineage.provider` is not the holdings basis; an Inflection request with no holdings source is refused before any mapping read;
+  the reasons map changes three entries and adds none outside them.
+
+Not verified by this seat: the six rows of section 3 (the COO's measurement; condition 4 repeats it on the deployed bytes), the
+interface gate's counts, the 230 tests.
+
+Named by this half in addition:
+
+7. A BRANCH THIS ACT DOES NOT REMOVE. A fresh Cottonwood request made while a one-use vendor plan is ARMED still computes a
+   BLACK_DIAMOND figure and returns it once; the fresh path's own reopen is unchanged, and a later reopen of that report is
+   refused. The apply neither creates nor closes this branch. The plan is read disarmed at the apply and the read is stated in the
+   ledger. Arming it again is its own act under Andrew's vendor word, and a fresh vendor figure for Cottonwood is against FWD-3.
+8. The docstring of `RetainedVendorFigureRefused` still names `DEPENDENCY_UNAVAILABLE`; the map answers `OBJECT_NOT_COVERED`. A
+   comment, corrected at the file's next change. Not a condition of the apply.
+9. Both outcomes of the apply are covered: a plan other than `0 to add, 1 to change, 0 to destroy`, or a post-apply CodeSha256
+   other than the AFTER value, ends the act with section 6's rollback in the same window.
