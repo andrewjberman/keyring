@@ -65,4 +65,13 @@ and the served page tonight says not-updated. Measured against "Andrew does noth
 `ETFS_RIVALS_PRD.md:68`), the thread's ordinary day now includes a manual Terminal sign-in. That is an endpoint question, not
 a defect, so it is the CTO's to put to Andrew, not this seat's to grade.
 
+
+## Addendum (2026-10-01 ~06:0xZ): W5-S12 disarm record
+
+`1.0.0_SA_CTO~Z`'s round-2 analysis `org/missions/D5/ETFS/ETFS_RIVALS/ledger/ROUND_ANALYSIS.round2.md` @01114ae8a8,
+ruling 9, IS the disarm record for `ETFS_RIVALS-Z-W5-S12`. The hazard ended at the thread-r1 ledger close, 2026-09-30
+15:33:58Z. The mechanism stays OPEN in `REMEDIATION_v1.Z.md`. `comp-surprise` keeps listing the item ARMED because its
+round-1 graduation row carries no `disarm` block and the gate refuses adding one in place. Read that listing against
+this addendum. The round-3 compile (ADJUDICATION_v3.Z) cites ruling 9 again.
+
 -- 3.0.0_SA_CVO
