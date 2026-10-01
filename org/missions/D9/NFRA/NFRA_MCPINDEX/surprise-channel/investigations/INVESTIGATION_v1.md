@@ -5308,6 +5308,48 @@ carries none.
     "spec_asserts": "r8.AC2 PASS means the served host routes; FAIL means it does not.",
     "world_is": "One of three runs read empty fields with a Success status while the host was healthy; the cause (output fetch timing or a client-side decode error swallowed into $o) was not isolated.",
     "notes": "Check hardened (round6/checks/r8.AC2.sh prints INSTRUMENT + the fetched head on an empty read). The MX-r-8 verdict stands on the worker's read-back (AC2 PASS at 12:4xZ) and 2 of 3 issuer re-runs. Carried to the round-6 slug as an instrument note with Z-S73's class (host reads through SSM on this device)."
-  }
+  },
+{
+  "id": "NFRA_MCPINDEX-Z-W22-S11",
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~22",
+  "surfaced_at": "2026-10-01T14:20Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "MX-v-7's compared figure is the per-trade_date TOTAL transaction_fee (63.43 for 2026-09-29), not one fee amount on one row, on the issuer's instruction.",
+  "spec_asserts": "Order step 1: take ONE figure from the answer (one fee amount on one row, named by its row key); no row content and no account identifier in the record.",
+  "world_is": "The issuer's dispatch message named the per-date total (after de-duplicating on transaction_id) as the one figure; row_key records 'per-date total: trade_date 2026-09-29'. Served 63.43 == source 63.43 (pyarrow over the VersionId-read object, 22853 rows, 22221 distinct transaction_id). A per-row compare was not run, so no row amount, hashed or plain, was read into any file.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~22/THREAD_RERUN_round6.json"
+    ]
+  },
+  "notes": "INERT: the total covers every matched row, so it also tests the 22,653 rows past the 200-row cap that a single returned row cannot; a row-level compare remains unrun."
+},
+{
+  "id": "NFRA_MCPINDEX-Z-W22-S12",
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~22",
+  "surfaced_at": "2026-10-01T14:20Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The host's in-process call went through the tool's answer() entry point with an OPAL_INTERNAL principal, not through the registered MCP tool wrapper.",
+  "spec_asserts": "Order step 1: call blackdiamond_list_fees in-process through the tool's own entry point, as MX-r-7's read-back did.",
+  "world_is": "The registered wrapper resolves the caller from request context (get_current_email), absent in an SSM shell. The probe called app.integrations.blackdiamond.integration.answer(s3, (OPAL_INTERNAL, ''), scope='49financial') with an S3 client from the integration's own _s3() (assumes gateway-blackdiamond-read-role), exactly MX-r-7's probe shape (probes_r7/host_probe_py.txt). Host tool list census read in the same process: 65 tools (42 native + 23 integration), blackdiamond_list_fees present.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~22/THREAD_RERUN_round6.json"
+    ]
+  },
+  "notes": "INERT: the served MCP wrapper path itself was exercised by the issuer's principal-session call (round6/R7_J1_PRINCIPAL_SESSION_ROUND6_20261001.md), whose figures equal this probe's."
+}
 ]
 ```
