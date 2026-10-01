@@ -16532,6 +16532,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "spec_asserts": "AMGT-rd-6's test header: the suite exercises price_axis_pull.py without opening a live session, run under the Python311 interpreter that carries blpapi.",
   "world_is": "Under the default python on this box the loopback-DAPI assertion cannot run because blpapi is not importable; a repo-wide hygiene run on that interpreter reads it as a failure unrelated to the price universe.",
   "notes": "disarm_owner 2.0.0_SA_COO~Z. Surfaced, not adjudicated; no change made to that test."
+},
+{
+  "id": "AMGT_RESAPP-Z-W200-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~200",
+  "surfaced_at": "2026-10-01T08:30:00Z",
+  "one_line": "BA's Thesis sentence \"no research pack for this security\" is written by the PAGE: reasonInWords (portal/src/pages/SecurityAnalysis/reasonWords.ts:33) rewrites the served dossier text \"no class A report for this security\" to \"research pack\" for ResearchTeamPillars (tabs/ThesisTab.tsx:117-130); no served string says \"no research pack\".",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "GET /api/scoped/amgt/security/BA_US_Equity/thesis run locally from C:/tmp/r57-200: dossier_fields.thesis_pillars = [] and dossier_fields.thesis_pillars_absent = {status: ABSENT, reason: \"no class A report for this security\"} (producer lib/research/corpus/continuation.py:731, stored in the gold research_dossier object s3://opal-data-harvest/amgt/harvest/gold/research_dossier/security_key=BA_US_Equity/as_of=2026-09-30.b841f66e4fd99f9c.json). drafting_status SERVED. No served string contains \"no research pack\" (af_7_text.py C2 reads [] at the base and after the change).",
+      "portal/src/pages/SecurityAnalysis/reasonWords.ts:33 `.replace(/\bclass[- ]A(?: report)?\b/g, 'research pack')` turns that string into \"no research pack for this security\"; tabs/ThesisTab.tsx:127 prints `${PILLARS_HEADING}: ${dossierReasonWords(absent.reason, fallback)}.` when thesis_pillars is empty and thesis_pillars_absent.reason is set.",
+      "The same name is not packless in the store: the dossier's own kpi_set cites BOEING ONE PAGER 2026 01 27_v1.pdf and .xlsx under bronze/research-report/security_key=BA_US_Equity/, and the Model tab serves BA's model block. The corpus holds one-page reports for BA and no class A pillar report, which is what the served text says; the page's word \"research pack\" for class A is what overstates it."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMGT-ag-2 item 3: if a served field produces the sentence the worker corrects that field; if the page writes it, one row names the component, the condition and the served field to read instead.",
+  "world_is": "The page writes it. Component: ResearchTeamPillars in portal/src/pages/SecurityAnalysis/tabs/ThesisTab.tsx, through reasonInWords in reasonWords.ts. Condition: dossier.thesis_pillars is empty AND dossier.thesis_pillars_absent.reason is the served string \"no class A report for this security\" (any name with no class A report, BA at the cut). The served field the page should read instead: dossier_fields.thesis_pillars_absent.reason, printed as served with the class-A-to-\"research pack\" substitution removed (or the server serving that reason in plain words, a gold-dossier or continuation.py text change this order's bounds do not allow); the page should say a full research report is not on file and that a one-page report and the model are. No portal file was edited and no served field was changed for this item.",
+  "notes": "disarm_owner 2.0.0_SA_COO~Z: the portal change belongs to a portal-lane order; ARMED because the same name's Exec and Model tabs show pack-derived content while the Thesis tab states there is no pack."
 }
 ]
 ```
