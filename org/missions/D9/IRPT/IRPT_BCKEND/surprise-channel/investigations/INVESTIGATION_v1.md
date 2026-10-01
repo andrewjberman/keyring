@@ -14094,3 +14094,33 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "S238 disarms on both controls of RULINGS batch 61 item 4: the directory negative control refused at the API, and one foreign-firm job refused in the resident's own journal. A SERVICE actor with no allowedFirmIds is still unrestricted in the resident (PRD v0.22 ruling 21, carried to the next resident build)."
 }
 ```
+
+
+## IRPT_BCKEND-S247 -- THREE RETAINED PERFORMANCE REPORTS CARRY A VENDOR'S CALCULATED RETURN AND ARE STILL IN THE REOPEN PATH'S REACH: one for Inflection (lineage.provider ORION) and two for Cottonwood (BLACK_DIAMOND), all retained 2026-09-27. FWD-3 forbids a vendor's calculated return as the served figure, and the adapter log shows 47 reopens since 2026-09-29T16:40Z that carry no firm.
+
+```json
+{
+  "id": "IRPT_BCKEND-S247",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "1.0.0_SA_CTO",
+  "surfaced_at": "2026-10-01T06:53:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "THREE RETAINED PERFORMANCE REPORTS CARRY A VENDOR'S CALCULATED RETURN AND ARE STILL IN THE REOPEN PATH'S REACH: one for Inflection (lineage.provider ORION) and two for Cottonwood (BLACK_DIAMOND), all retained 2026-09-27. FWD-3 forbids a vendor's calculated return as the served figure, and the adapter log shows 47 reopens since 2026-09-29T16:40Z that carry no firm.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3api list-objects-v2 opal-data-irpt, 2026-10-01 06:49Z (this seat): irpt/49financial/platinum/performance_reports/ 112 objects; irpt/inflection/... 1; irpt/cottonwood/... 2 (no listing truncated).",
+      "the three non-49F objects read (this seat, about 06:50Z): RPT-df47a1fc25f8b1895b7ef2b8407d7117 owner.firm_id inflection, report.lineage.provider ORION, window 2026-01-01..2026-09-22, LastModified 2026-09-27T04:11:18Z; RPT-12b885b84f7badf270d3969c106f7542 and RPT-b683f188c2e13da7865eeceace6334c3 owner.firm_id cottonwood, provider BLACK_DIAMOND, LastModified 2026-09-27T20:35:36Z and 04:31:32Z; each value_facts.basis begins 'vendor-supplied'.",
+      "2.0.0_SA_COO~P msg 103553: /aws/lambda/irpt-performance-adapter 2026-09-29T16:40Z..2026-10-01T06:47Z, 326 requests with a logged outcome, served 148 of which 47 are reopens of a retained report; the log carries no firm field; 114 fresh requests answered VendorEgressRefused.",
+      "0.9.0_WK_IRPT_BCKEND~100 S237_BLAST_RADIUS.json: for 49 Financial a pre-switch pointer sits at the OLD accepted-key namespace and is never found by the reopen path. That was measured for 49 Financial only."
+    ]
+  },
+  "spec_asserts": "IRPT_BCKEND PRD FWD-3 CONSTRAINT: a vendor's calculated return is a comparison point (FWD-13), never the served figure; Andrew-direct 2026-09-28 ~22:4xZ: every firm moves to the holdings basis.",
+  "world_is": "MEASURED: three retained reports for the two firms whose adapter is not yet switched carry a vendor's calculated return. NOT MEASURED: whether any of the 47 reopens returned one of them (the log has no firm field), and whether the reopen path can still find them for Inflection and Cottonwood.",
+  "notes": "Remedy and order: RULINGS batch 66. First a read-only attribution of the 47 reopens by report id; then the reopen path serves only a report whose lineage.provider is OPAL_HOLDINGS, as one adapter member under both halves."
+}
+```

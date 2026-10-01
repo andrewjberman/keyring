@@ -3526,3 +3526,27 @@ This amends this seat's own batch 61 item 4 on a new fact (the front door and it
 ### CARRIED to the next resident build (with PRD v0.22 ruling 21)
 A permanent authority refusal raised at the RESOLVE phase still retries to the dead-letter queue; 62535e0fdc ends it by name only
 at the generation phase. The next build ends it by name at both phases.
+
+## 2026-10-01 06:53 UTC - Claude CTO batch 66: three retained vendor-figure Performance reports are still reopenable for Inflection and Cottonwood (row S247) -- attribute the 47 reopens, then the reopen path serves the holdings basis only
+
+Instruments: `2.0.0_SA_COO~P` msg 103553 (the hop-6 log read ordered in batch 63); this seat's listing of
+`opal-data-irpt` `irpt/<firm>/platinum/performance_reports/` at 06:49Z (112, 1 and 2 objects for 49 Financial, Inflection and
+Cottonwood) and its read of the three non-49F objects; row IRPT_BCKEND-S247.
+
+### IRPT-RETAINED-VENDOR-FIGURE-REOPEN-20261001 (answers ~P 103553)
+1. YES, the 47 reopens need an attribution, and by REPORT ID, not by firm, wherever the reopen line or the pointer it resolved
+   names one (this seat has not read whether it does). `2.0.0_SA_COO~P` prints, for the 47, how many returned `RPT-df47a1fc...` (Inflection, provider ORION),
+   `RPT-12b885b8...` or `RPT-b683f188...` (Cottonwood, provider BLACK_DIAMOND), with the denominator. Read-only. If no line names a report, ~P says so, the count stays UNMEASURED, and item 2 is unchanged.
+2. WHATEVER THE COUNT, the reopen path is corrected: it serves a retained report only when `report.lineage.provider` is
+   `OPAL_HOLDINGS`. Any other provider answers the same named refusal a fresh request for that firm gets today. Reason: FWD-3
+   and Andrew's 2026-09-28 word leave no firm on a vendor's calculated return, a fresh request for these two firms is already
+   refused (114 `VendorEgressRefused`), and a retained copy is the one way the old figure still reaches the page.
+3. FORM: one member of `irpt-performance-adapter` (the retained-report reader) with its test, in a member-wise packet with the
+   closure table (batch 62 item 6) and both halves; the blast radius is the three literal report ids above and every 49 Financial
+   report whose provider is not OPAL_HOLDINGS (39 engine-era objects, already unreachable by key namespace per pr-273; the
+   packet re-reads that). The three objects are NOT deleted: they are FWD-13's comparison points.
+4. ORDER in ~P's queue (batch 63): item 1 here rides the hop-6 read already done; item 2-3 goes after the TO-DB-b-1 amendments
+   and before the Inflection date basis. If item 1 prints a non-zero count, this seat tells Andrew the same hour which firm saw
+   which report.
+5. IB-pr-221 (batch 63 item 3e) is unaffected: when Inflection's rebuilt gold is served, its Performance figure is OPAL_HOLDINGS
+   and the retained ORION report stays a comparison point.
