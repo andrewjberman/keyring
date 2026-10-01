@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-01T10:35:03.336095+00:00
-**Status:** OPEN
+**Status:** HELD-SOVEREIGN-GATED -- gate: external / scheduled bd-silver-merge run ~00:1xZ 2026-10-02 (S3 sentinel bronze/2026-10-02/_BRONZE_COMPLETE.json -> BronzeCompleteSilverMerge): must read failures=0 empty_stub=6 on unrealized; acceptance AC leg (held since 2026-10-01T10:56:43.866228+00:00)
 **Deploy:** NFRA_MCPINDEX MX-s-16: one writer per BD silver table (unrealized, allocations, transactions retired behind bd-silver-merge; realized HELD)
 **Authored by:** 0.9.0_WK_NFRA_MCPINDEX~24
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -19,7 +19,7 @@
 | T1 | activation | SSM opal-bd-transaction-download no-op v4 set DEFAULT (only if T0 clean) | Default==Latest==4 read-back | NOT APPLIED -- HELD by the consumer trace (row Z-W24-S8): opal-bd-transaction-download stays v3 DEFAULT (Default==Latest==3 read-back), bd-transaction-pipeline-trigger stays ENABLED; no act on this key, nothing to roll back | CLOSED 20261001T104758Z |
 | TF | activation | safe-apply targeted plan sha af1537fd: rules unrealized+transaction+allocation DISABLED, ProcessAllocationFiles notification removed | Plan 0/4/0 line + Apply complete line + describe-rule DISABLED x3 + notification ids read-back | re-plan 'Plan: 0 to add, 3 to change, 0 to destroy.' (transactions held; 2 rules + notification; saved binary sha256 3e97fe2c2481f54dc9be080bd602286a219776b03b092ff0f021fc39d78a45a7); safe-apply rc=0 'Apply complete! Resources: 0 added, 3 changed, 0 destroyed.'; read-back: bd-unrealized-pipeline-trigger DISABLED, bd-allocation-pipeline-trigger DISABLED, bd-transaction/realized ENABLED; notifications now GoldLayerPricesTrigger + BronzeCompleteSilverMerge (2), EventBridgeConfiguration {} unchanged; bd-allocation-processor Lambda LastModified 2026-04-06 (untouched) | CLOSED 20261001T105432Z |
 | AC | verify | s16.AC1 (3 of 4 tables at 1 writer, realized 2 by ruling) and s16.AC2 read-back; scheduled bd-silver-merge run ~00:1xZ reads failures=0 empty_stub=6 on unrealized | AC outputs + the scheduled run's log line |  | OPEN |
-| G1 | git | ledger entry + sentinel + deliverables committed on wk-nfra_mcpindex-6-24 | commit hash |  | OPEN |
+| G1 | git | ledger entry + sentinel + deliverables committed on wk-nfra_mcpindex-6-24 | commit hash | branch wk-nfra_mcpindex-6-24 LOCAL (nothing pushed): b1301bd64e (ledger open) and f4f3e2a629 (PHASE B work, plan render, read-back, row S8) | CLOSED 20261001T105643Z |
 
 ## Log
 
@@ -30,3 +30,5 @@
 - 20261001T104757Z LEG T0 closed: Read-only trace done 10:40-10:50Z: readers of silver/transactions listed (build_schwab_bd_account_xref, bd_price_update,
 - 20261001T104758Z LEG T1 closed: NOT APPLIED -- HELD by the consumer trace (row Z-W24-S8): opal-bd-transaction-download stays v3 DEFAULT (Default==Latest
 - 20261001T105432Z LEG TF closed: re-plan 'Plan: 0 to add, 3 to change, 0 to destroy.' (transactions held; 2 rules + notification; saved binary sha256 3e9
+- 20261001T105643Z LEG G1 closed: branch wk-nfra_mcpindex-6-24 LOCAL (nothing pushed): b1301bd64e (ledger open) and f4f3e2a629 (PHASE B work, plan render,
+- 20261001T105643Z HELD-SOVEREIGN-GATED gate=external/scheduled bd-silver-merge run ~00:1xZ 2026-10-02 (S3 sentinel bronze/2026-10-02/
