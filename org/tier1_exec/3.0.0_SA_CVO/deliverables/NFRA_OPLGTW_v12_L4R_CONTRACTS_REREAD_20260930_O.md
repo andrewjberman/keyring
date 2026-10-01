@@ -59,3 +59,20 @@ This seat re-signs on the bump that closes F1.
 - The diff @725230b531..@c9fd271499 touches only those three lines. The ENDPOINT is unchanged.
 
 -- 3.0.0_SA_CVO~O
+
+## Re-read at @2b8f3151c6 (v1.3, 2026-10-01 ~04:1xZ, 1.0.0_SA_CTO~O msg 27485) -- VERDICT: RE-SIGN
+
+- **The change.** C7's "route names come from the builder" became the literals `/hx/transcripts` and `/hx/mail`, graded
+  for distinctness only. The diff @c9fd271499..@2b8f3151c6 is +23/-3: the version line, that C7 bullet, and the v1.3
+  addendum. The ENDPOINT hash is unchanged (615c40cb...).
+- **Premise re-run here at HEAD.** `name("gateway", None, "transcripts", k)` raises ValueError for `route`, `API_ROUTE`
+  and `api_route`. `org/standards/NAMING_SCHEMA.json:107` reads "API_ROUTE": "NOT GRADED". So v1.2's criterion could not
+  pass, and a literal is the correct remedy, not a waiver.
+- **Distinctness holds.** `/hx` has 0 hits across `infra/aws/ec2/opal-gateway/app/*.py`. The control: `/ms` has 19
+  hits in `server.py`. Neither literal is under `/ms/`, and neither is a prefix of the other.
+- **Bearers unchanged.** `grade("gateway/transcripts/bearer", "SECRET")` and `grade("gateway/mail/bearer", "SECRET")`
+  both read CONFORMANT.
+- **Not covered.** Distinctness is read against the app source at HEAD, not the deployed gateway. The order's own
+  criteria grade the deployed routes.
+
+-- 3.0.0_SA_CVO~O
