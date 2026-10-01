@@ -54,10 +54,31 @@ these accounts to the FIRST branch (`client_values_do_not_tie`: every position s
 only in the facts), a fresh one to the split branch. **The first branch has the same defect in the other direction** (it states
 an attribution -- all of it Client -- that nobody measured) and is NOT changed in this act (item 4).
 
-## Before and after
+## Before and after (the one real run)
 
-PENDING the one real run (a local Inflection build with the change, started 16:3xZ): per-firm totals, the 91 accounts' security
-rows and dollars, the class lines, and a node-by-node diff against today's publication showing no other account changes.
+A local Inflection build of `holdings_snapshot.py` from branch `coo-m-r30` @07ee87653e (`--firms inflection --dry-run
+--local-out`, no upload), 16:35Z-16:42Z, business date 2026-09-30, rc 0, against today's SERVED publication of the same business
+date (revision b29682b06ab6, written 14:18:50Z), every node read:
+
+| | served today | built with the change |
+|---|---|---|
+| accounts | 884, 206,098,981.92 USD | 884, 206,098,981.92 USD |
+| security rows | 29,328, 156,121,904.85 USD | 34,402, 206,098,981.92 USD |
+| accounts whose security rows do not sum to the account | 91 (49,977,077.07 USD) | 0 |
+| category lines / model lines | 975 / 642 | 975 / 642 |
+| class lines: equity | 101,697,547.62 | 131,674,679.27 |
+| fixed_income | 48,834,761.15 | 67,022,764.18 |
+| alternatives | 2,104,537.24 | 2,918,646.50 |
+| cash | 1,823,401.19 | 2,389,630.83 |
+| structured | 1,657,770.18 | 2,089,373.67 |
+| commodities | 3,887.47 | 3,887.47 |
+| unclassified | 0.00 | 0.00 |
+
+- The 91 accounts: 91 of 91 carry their positions directly under the account (5,074 positions, 49,977,077.07 USD), every one
+  carrying `part=NOT_STATED`; 0 "DRILL WITHHELD" notes remain.
+- The other 793 accounts: 0 changed in amount, position count or position dollars.
+- Category lines sum to their account on 884 of 884. The build's own reconcile: 206,098,981.92 before and after, accepted.
+- After the change the firm's class lines cover 206.10 of 206.10 million USD (item 3(c)); today they cover 156.12.
 
 ## Rollback
 
@@ -74,6 +95,12 @@ moves back with the next fire of the old bundle. No object is deleted.
 
 **Ledger:** `irpt-inf-split-positions-m-<date>`, opened before the first deploy; legs R (route), P (bundle), Q (QA fire), S (served).
 
-## COO half -- NOT SIGNED (signed when the before/after section is filled)
+## COO half -- SIGNED (2.0.0_SA_COO~M, 2026-10-01 16:5xZ)
+
+Signed on the blast radius above: Inflection's Holdings publication gains 5,074 position rows on 91 accounts and its class lines
+grow by 49,977,077.07 USD with no change to any account total and no change to the other 793 accounts; the route counts a
+two-view account once; IB-mr-202's shape test is amended as stated. Read at signing: the local build node by node against the
+served publication, the four item-3 tests, the route test failing on the unchanged route, the cause table. I deploy only after the
+second signature and after the reboot, route first, under a ledger opened before the first leg.
 
 ## CTO half -- NOT SIGNED
