@@ -598,6 +598,27 @@ lanes:
       - 2.0.0_SA_COO~Y
     description: "CTO grantor, IRPT RULINGS batch 74, 2026-10-01 (msg 103652): the CLOUD_OPS_OR_ETL members preserved verbatim plus exact COO~Y, for one file inside the IRPT_BCKEND~Y FAST lease surface: the YCharts host's sign-in library (the reason tokens of batch 70 item 5). Code only: no deploy or apply grant; the host release keeps both never-widen halves. Struck when IRPT_BCKEND closes."
 
+  IRPT_BCKEND_FAST_P_INF_NNA:
+    permitted_agents:
+      - 0.4.0_DE_ClientPlatform
+      - 0.4.0_DE_ClientPlatform~A
+      - 0.4.0_DE_ClientPlatform~B
+      - 0.4.0_DS_ClientPlatform
+      - 0.4.0_DS_ClientPlatform~A
+      - 0.4.0_DS_ClientPlatform~B
+      - 0.4.0_DS_ClientPlatform~C
+      - 0.4.0_DS_ClientPlatform~D
+      - 0.4.0_DS_ClientPlatform~E
+      - 0.4.0_DT_ClientPlatform
+      - 0.4.2_RD_AdvisorIntelligence
+      - 0.4.2_RD_AdvisorIntelligence~A
+      - 0.4.2_RD_AdvisorIntelligence~B
+      - 0.4.2_RD_AdvisorIntelligence~C
+      - 0.4.2_RD_AdvisorIntelligence~D
+      - 4.0.0_SA_CRO~SWEEP   # sweep-executor, gate-constrained (ruling CTOB-RCG-001)
+      - 2.0.0_SA_COO~P
+    description: "CTO grantor, IRPT RULINGS batch 79, 2026-10-01 (msg 103683): the POD4 members preserved verbatim plus exact COO~P, for one file: the Inflection net-new-assets coverage excusals (row W97-S3, Branch A). Code only: the put of the runner's copy keeps both never-widen halves. Struck when IRPT_BCKEND closes."
+
   DATA_REFRESH_DEPLOY:
     permitted_agents:
       - 0.5.0_AE_OpalETL
@@ -2269,6 +2290,10 @@ paths:
   "data/inf/manual_api/pull_inflection_assets.py":
     lane: CLOUD_OPS_OR_ETL
     note: "Inflection assets puller — AE-maintained ops infra (HISTBF Wave B IAM gap fix flagged 2026-05-04 in ADHC_OWNPTH 48h scan FP-3)"
+
+  "data/inf/scripts/gold/lib/nna_coverage_excusals.json":
+    lane: IRPT_BCKEND_FAST_P_INF_NNA
+    note: "IRPT_BCKEND~P FAST lease, exact file; CTO grantor batch 79 (2026-10-01)."
 
   "data/inf/scripts/gold/**":
     lane: POD4

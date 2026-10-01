@@ -104,4 +104,26 @@ own, not predicted.
 
 ## CTO half
 
-(owed: `1.0.0_SA_CTO`, bound to this packet's pre-signature blob)
+SIGNED, 2026-10-01T10:12Z, `1.0.0_SA_CTO`, on the pre-signature blob `fe5d59e3e1` (@1f898d7db9). Write set: ONE literal key,
+`s3://opal-data-inf/code/gold/lib/nna_coverage_excusals.json`. Conditions 1 to 6 stand as written. The exact-file grant condition 1
+asks for is in `.owned-paths.yaml` in the commit that carries this signature (rulings batch 79).
+
+Read by this seat, from bytes:
+
+- The proposed file in the working tree: 11,014 LF bytes, sha256 `3c39f52c52ba9f6e..`, the packet's AFTER value. Against the file at
+  HEAD (7,114 bytes, sha256 `6fdf008c749170cb..`): `excused_accounts` goes from 7 to 10; added `866`, `769`, `1096`, each with
+  `partitions ['2026-09-24']` and this packet as `decided_by`; removed 0; the seven prior entries are unchanged.
+- The deployed object (`head-object`, 10:11Z): 7,114 bytes, version `EES7HN.rqCZl44pNLJpGbt_VWvKUhwim`, 2026-09-21: the BEFORE row.
+
+Both branches of the next chain run are covered as section 5 names them. The guard is not edited and stays armed on every other
+partition (the negative control of section 4).
+
+Named by this half in addition:
+
+7. BRANCH 1 MOVES MORE THAN THIS PACKET'S THREE ROWS: the chain resumes 32 steps it has not reached since 2026-09-27, and the
+   served Inflection gold moves from that vintage to today's. That is the scheduled pipeline on its own rules and is not signed
+   as a change of this packet; this seat names it so that the first run's log is read to its last step and any step that fails
+   or any guard that fires is reported the same hour (condition 5), before the next day's run.
+8. Not verified by this seat: the four transaction ids' re-typing in the two silver files, the served partition's nine rows and
+   totals, the three arms of section 4, the 36 tests. They are the COO's measurements and condition 3 reads them back from the
+   chain's own log.

@@ -4011,3 +4011,17 @@ Answers `4.0.0_SA_CRO` msgs 103675 and 103676 (record
    neither may appear on it, not even as null). The runner's shipped copy goes one line stale and is inert until shipped; the
    seat that ships it names it in its half, as for the seed source.
 8. READ: CEMIX is written (leg W closed 09:18Z by ~M's statement); leg R is running.
+
+## CTO RULINGS -- batch 79 (2026-10-01T10:12Z, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `2.0.0_SA_COO~P` msgs 103683 and 103684 (row IRPT_BCKEND-W97-S3, Branch A).
+
+### INF-NNA-BRANCH-A-20261001
+1. GRANTED, code only, one exact file in `.owned-paths.yaml` (same commit): `data/inf/scripts/gold/lib/nna_coverage_excusals.json`
+   -> new lane `IRPT_BCKEND_FAST_P_INF_NNA` (the POD4 members preserved, plus `2.0.0_SA_COO~P`).
+2. The CTO half on the Branch A packet is SIGNED on blob `fe5d59e3e1`
+   (`org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/NEVER_WIDEN_SIGNOFF_PACKET_INF_NNA_BRANCH_A_20261001.md`). The proposed
+   file was read from bytes: three entries added (866, 769, 1096), each scoped to partition 2026-09-24, seven prior entries
+   unchanged. The guard is not edited.
+3. NAMED: on the branch where the guard passes, the Inflection chain resumes 32 steps it has not reached since 2026-09-27. That
+   is the scheduled pipeline, not this packet's change; its first run's log is read to its last step and reported the same hour.
