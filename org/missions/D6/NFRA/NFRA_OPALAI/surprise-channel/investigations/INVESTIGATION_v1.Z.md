@@ -2131,6 +2131,26 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "OA-f-10 BOUNDS 2: never create, change or delete a firewall rule, account, ACL or codex config.",
     "world_is": "A `codex sandbox` call with the elevated override is not read-only: it triggers codex's setup refresh, which wrote read ACEs for the sandbox users on files under the operator's profile before the elevated lock step failed. Not repeated. Disarm owner n/a (INERT)."
 },
+{
+    "id": "NFRA_OPALAI-Z-W25-S3",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~25",
+    "surfaced_at": "2026-10-01T20:16Z",
+    "one_line": "With both opal_runtime_block_dapi_8194_* rules live (Outbound Block TCP 8194, 127.0.0.0/8), Opal_Agent and Opal_MSP both still connect to 127.0.0.1:8194: the per-user firewall rule does not block loopback.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+            "F10_ACCEPTANCE.json: Opal_Agent 8194=OPEN 8790=OPEN (whoami opal_bloomberg\\opal_agent); Opal_MSP 8194=OPEN 8790=OPEN (opal_bloomberg\\opal_msp); operator 8194=OPEN. TCP connect only, 3 s timeout.",
+            "Get-NetFirewallRule read-back: both rules Enabled True, Outbound, Block. f10.AC3.sh: live rules 2 of 2, arms ok=no."
+        ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Amendment 1: Opal_Agent -> 8194 reads REFUSED with the rule live; OPEN means loopback is exempt.",
+    "world_is": "Falsifier fired (loopback exempt); the order stays open and the CTO re-rules to a raw WFP filter. Also: Opal_MSP has no ACE on the state dir, so its probe ran from the Public dir."
+},
   {
     "id": "NFRA_OPALAI-Z-S51",
     "project": "NFRA_OPALAI",
