@@ -8,7 +8,7 @@ with their briefs"; "i do not want them cut off mid-stream"). **Author:** `1.0.0
 
 - Ten sessions were live (process census 16:17Z). Each stopped at its own checkpoint and wrote a brief; nothing is
   half-landed. Every open ledger entry waits only on a scheduled run or a read (each brief's section 3 names them).
-- Briefs in: 9 of 10 at writing. `0.4.0_DS_ClientPlatform~S`: see its row.
+- Briefs in: 10 of 10 (the last at 17:03Z). Nine seats are relaunched; `0.4.0_DS_ClientPlatform~S` stays down (its row).
 - Memory: the endpoint-protection service grew about 450 MB an hour and only a reboot clears it (`0.0.0_AB_MSTR` msg 103882).
 - Push state: laptop CLOUD about 537 commits ahead of origin `0abf99fcd4`; SITE Z is about 430 ahead of the same base. The
   first push after the reboot needs ONE merge of the two trunks, on Andrew's word (MSTR brief section 5a). A reboot keeps
@@ -31,7 +31,7 @@ names only what to read.
 | 7 | `3.0.0_SA_CVO` | `org/tier1_exec/3.0.0_SA_CVO/deliverables/REBOOT_BRIEF_20261001_3.0.0_SA_CVO.md` @79b8a2c5f0 | grades every pin the lanes land | grade new pins since 16:3xZ; compile MDPF_SECCLASS | -- |
 | 8 | `4.0.0_SA_CRO` | `org/tier1_exec/4.0.0_SA_CRO/deliverables/REBOOT_BRIEF_20261001_4.0.0_SA_CRO.md` @b0bb251e63 | gold hookup leg V2 | read the function's configuration; wait for the run | **2026-10-02 13:30Z**, same-day rollback if it fails |
 | 9 | `4.0.0_SA_CRO~X` | `org/tier1_exec/4.0.0_SA_CRO~X/deliverables/REBOOT_BRIEF_20261001_4.0.0_SA_CRO_X.md` @ce7fdbabe6 | research partner of the CTO's self-drive | heartbeat IDLE, wait for an ask | -- |
-| 10 | `0.4.0_DS_ClientPlatform~S` | brief NOT RECEIVED at 16:4xZ (the order was read at ~16:25Z; the seat reads IDLE). Interim: its session log `org/tier2_senior/0.4.0_DS_ClientPlatform/logs/2026-10-01/dsS_gold_landed_db_b_1_complete_and_db_b_3_measured_0730-1600Z.md` | IRPT_DASHBD worker seat; IDLE, holding the TO-DB-b-3 flip on `~P`'s 0.2.0 method-contract bump; TO-DB-b-1 complete | `~P` (its issuer) reseats it when the contract bump lands; read the brief if it arrives first | -- |
+| 10 | `0.4.0_DS_ClientPlatform~S` | `org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/REBOOT_BRIEF_20261001_0.4.0_DS_ClientPlatform_S.md` @887c7efc31 (arrived 17:03Z) | **RESPAWN: NO.** Both its task orders are flipped and graded (TO-DB-b-3 @38f828d708); no ledger, worktree or clock | -- | `~P` (its issuer) reseats it only when `1.0.0_SA_CTO` rules rows S9/S10 and that ruling needs a re-run |
 
 Owed to row 10 by row 2: the tie-out tolerance ruling (rows S9, S10, S11), named in its log as this seat's.
 
