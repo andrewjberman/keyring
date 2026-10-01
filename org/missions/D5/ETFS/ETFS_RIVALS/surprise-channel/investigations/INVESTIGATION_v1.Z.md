@@ -1200,6 +1200,156 @@
       ]
     },
     "notes": "The round-2 checks p-2.AC1 and p-2.AC2 constrain only data-group / data-fund / data-role / data-status / data-reason / data-calendar / data-source / data-excluded-*, so the wrapper choice is mine; a per-fund id scheme would need p-1.AC1 and p-1.AC2 amended by the issuer."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W5-S18",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~5",
+    "surfaced_at": "2026-10-01T01:30Z",
+    "one_line": "The capture sets hold 501 + 436 = 937 dated captures, not the 503 + 441 = 944 the order and the COO half name; the order counted directory entries.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~5/d3_act.py counts (run 2026-10-01T00:3xZ): idvz 501 dated captures (503 directory entries incl. run.json, runs.jsonl); pfoe 436 dated captures (444 entries incl. the basg/ and gqgu/ probe folders, coverage csv/json, run.json(l)).",
+        "C:/Users/Opal Bloomberg/Desktop/ajb_workspace/.runtime/amgt-reconn-daily-census-20260929/coverage_summary.json: bbg_date_requests 436."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "COO half key 1 and gate 6: 503 + 441 files, 944 imported captures; AC1 needs >= 900.",
+    "world_is": "937 capture files exist (every one a real Excel BQL response {requested_date, at, query, anchor, rows}); 503 and 444 are the directory entry counts. All 937 are imported; AC1's >= 900 holds. The gate-6 count was printed before the first landing as measured.",
+    "notes": "No STOP: gate 6 asks that the count be printed, and the pair's number is not a bound. The per-prefix counts in d3_live.json are the measured ones."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W5-S19",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~5",
+    "surfaced_at": "2026-10-01T01:30Z",
+    "one_line": "Two unit tests of other cells assert the pre-amendment map (home funds home_producer_pending) and fail now that step 1 sets both home funds to home_producer; they sit outside this order's paths.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m pytest data/etfs/scripts/rivalfunds/tests -q after peer_groups.json: 186 passed, 2 failed, 2 skipped. FAILED test_g01_universe.py::test_default_map_shape; FAILED test_g12_canonical_multi_source.py::test_home_producer_policy_is_counted_unread_and_pending_is_not_read (expects home_producer_unread == ['IDVZ'], gets ['IDVZ', 'PFOE']).",
+        "data/etfs/scripts/rivalfunds/tests/test_g01_universe.py and test_g12_canonical_multi_source.py are not in the TO-RIV-d-3 <paths> (only tests/test_d1_*.py is)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Step 1 sets BOTH home funds' source_policy to home_producer; the order's <paths> grant peer_groups.json and tests/test_d1_*.py only.",
+    "world_is": "The two tests encode round 2's earlier map (home_producer_pending for both home funds) and read RED against the amended map. No round-2 check script (u-1, g-3, b-1, p-2, m-1, e-1, g-4, h-1) fails: all 22 PASS with the amended map.",
+    "notes": "Whoever owns u-1 / g-3 updates the two assertions (the map entries, and the unread list to IDVZ and PFOE). Left unedited: not this order's paths."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W5-S20",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~5",
+    "surfaced_at": "2026-10-01T01:30Z",
+    "one_line": "The act ran G3 BEFORE the Bloomberg bronze import, not after: key4_served_delta.py --with-g3 compares against the LATEST served G1 per date, so once round-2 G1 revisions (several funds per date) are served it can no longer read 0 differing fund-dates.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round2/key4_served_delta.py: served = max(key) per date over canonical_shape, grouped by fund_ticker; the replay mirrors issuer inputs only, so any served fund not in the replay is a differing fund-date.",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~5/key4_with_g3.json: run after the G3 import landed (marker pull_enrichment/date=2026-09-30/import-r2-g3.json) and before any Bloomberg bronze, G1 or G5 write: G1 fund_dates_differing 0 (325); G5 removed 0 added 0, every class 0 incl. other."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order 1b step 3 lists the capture import, then the silver/G1/G2 build, then the G3 import; amendment 2 and the CTO half's condition require only that G3 lands before G5's first write and that key4 --with-g3 runs after G3 lands and before G5 writes.",
+    "world_is": "Order of the act: G0, G3 import, key4 --with-g3 (PASS), then the 937 captures in 9 date-ordered batches with the chain (silver, G1, G2, then G5+G6 and the page, G5 gated on the G3 marker). Both stated constraints hold; the step list's order was not followed so the CTO's positive arm is measured on pristine served G1.",
+    "notes": "A tick of the 08:03 leg after this act sees the same comparison problem if key4 is re-run: it is a one-time act script, not a recurring check."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W5-S21",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~5",
+    "surfaced_at": "2026-10-01T01:30Z",
+    "one_line": "collector_bloomberg.land_capture asks 'is this sha already in this acquisition partition' by listing the partition and GETting every sidecar, once per capture, and the whole census shares one or two acquisition dates, so a 937-capture import on the product's S3 sink costs about 440,000 GETs; the act drove the import through a sidecar-caching S3 sink.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/collector_bloomberg.py _existing_by_sha (lists bronze_prefix(acq) and json-loads every sidecar) called from land_capture for each capture; bronze date= is the UTC date of captured_at (2026-09-29 or 2026-09-30 for all 937).",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~5/d3_act.py CachedS3Sink: caches sidecar GETs only; every PUT still reads back from the wire (the cache is bypassed)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Step 3: run collector_bloomberg in import mode with sink s3 over both capture sets.",
+    "world_is": "The product's S3Sink would make that import quadratic in the partition's object count; the driver passes a sink OBJECT (sinks.get_sink passes objects through) that memoises sidecar GETs. The code that runs is the product's handler_entry; only the sink differs. The daily leg lands one capture per day and is unaffected.",
+    "notes": "A future backfill mode over many days on the product sink has the same shape for its own partition."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W5-S22",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~5",
+    "surfaced_at": "2026-10-01T01:30Z",
+    "one_line": "The order's step 5 names the 08:03 leg's exit as 80; the leg in scheduled_daily_pull.cmd exits 90-93 (collector) and 94-97 (enrichment), because 80-83 belong to the price leg.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "integrations/bloomberg/pipeline/scheduled_daily_pull.cmd :rivalfunds_bbg_leg header comment: 'RC_RIVBBG 90 = landed, 91 = Bloomberg unreachable, 92 = partial, 93 = nothing written ... disjoint from ... the price leg (80-83)'.",
+        "COO half 'Branch A ... exits 90 / Branch B exits 91' (the half states the vehicle's codes)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order 1b step 5: 'the next trading day's 08:03 leg (exit 80)'.",
+    "world_is": "The leg exits 90 landed / 91 unreachable; the COO half and the CTO half already read 90-97. The issuer reads exit 90 (Terminal signed in) or 91 (signed out) at the close.",
+    "notes": "Wording only; nothing in the act depends on it."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W5-S23",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~5",
+    "surfaced_at": "2026-10-01T01:30Z",
+    "one_line": "Wiring the round-2 stages needed four choices the order does not state: the sweep builds G0 daily and publishes the day's page when no publish marker exists, the trade-schedule gate is 'a pull-enrichment marker partitioned on or after the batch's newest report date', and a deliberate `only` event runs the G2 replay.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/sweep.py run_dag, enrichment_gate, run_gold_chain, handler_entry `only` (committed 96ba9a72ab); tests/test_d1_sweep.py (25 passed).",
+        "COO half 'Branch B ... the page publishes the prior day's data, with each fund's day marked not updated' and amendment 2 'build-trade-schedule for date D runs only when pull_enrichment has a marker for D (or for the import batch covering D)'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Amendment 2: wire the sweep and the marker rules so build-trade-schedule for D runs only when pull_enrichment has a marker for D or for the import batch covering D; Branch B: the page still publishes on a signed-out day.",
+    "world_is": "The gate reads every pull-enrichment marker partition and admits a batch when the newest is >= the batch's newest report date (the daily leg's marker is the act day, the import's is the window end 2026-09-30). A batch the gate holds is reported under waiting and re-read by the next sweep. A signed-out day therefore builds no new G5 for ANY fund, BASG included (round 1 built BASG's daily with no G3); the page still publishes with every stale fund marked not updated.",
+    "notes": "The BASG consequence of the W3-S13 rule on a signed-out morning is the pair's accepted Branch B; recorded so the issuer reads it as designed, not as a regression."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W5-S24",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~5",
+    "surfaced_at": "2026-10-01T02:10Z",
+    "one_line": "silver_bloomberg deletes the earlier capture's silver when a later capture wins the same (fund, report date), and key 7 grants the silver role no DeleteObject: a fund whose Bloomberg report date is carried (stale) makes its batch PARTIAL with no silver marker, so the marker-driven chain never fires for that batch; it hit the import (batches 04 and 05; 06 passed) and will hit the daily leg on every carried-date day.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "rivalfunds-build-silver-lambda request e5169551-345a-49c9-972c-653ce7d6f430 (batch import-r2-04, event {stage fetch-bloomberg, date 2026-09-30}): status PARTIAL, marker None, failures {bloomberg/etfs/silver/holdings/date=2025-08-15/TSEL-20260929T204240Z-f0b53029d9dd.parquet: 'could not remove superseded silver: AccessDenied ... s3:DeleteObject ... no identity-based policy allows the s3:DeleteObject action'}; the automatic run (ca0ce414-e70b-469a-80a1-ff359dbaf650) and a manual one (0d1b3347-abb0-4f31-bd87-f9cf11b77875) read the same.",
+        "data/etfs/scripts/rivalfunds/silver_bloomberg.py: the winning capture is put FIRST, then every earlier capture's silver for the same (fund, report date) is _delete()d; a failure goes to `failures` and the batch writes no marker. infra/aws/terraform/etfs-rivalfunds/policies/rivalfunds-build-silver-lambda.json carries no s3:DeleteObject (COO half key 7).",
+        "Bloomberg bronze sidecars import-r2-03 / import-r2-04: TSEL claimed_report_date 2025-08-15 on every capture requested 2025-08-15 .. 2025-10-08 (status OK: the DATES column equals the requested day, only REPORT_DATE is carried). The census itself: coverage_summary.json carried_dates WCMG 18 of 109, so carried report dates are routine, not an edge.",
+        "The local rehearsal on a local sink never saw it: LocalSink's delete is an unlink, so the same batch returned OK there."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Key 7: PutObject widens, no DeleteObject anywhere; step 3: silver, G1, G2 follow by marker or sweep.",
+    "world_is": "The silver stage needs DeleteObject (or a skip-if-superseded rule) for any (fund, report date) a later capture re-claims. Without it the batch has every silver object written (the new winner AND the older duplicate both stand; G1 reads the newest capture id per fund, so gold is right) but no marker. The act therefore drove the gold stages for the affected batches with an explicit replay event on rivalfunds-build-canonical-shape-lambda ({mode replay, start, end, batch_id <batch>}), which writes the canonical marker and so the G5 and page chain; the silver markers of those batches stay absent, and every later sweep re-runs their silver and gets PARTIAL again. The daily leg's one-capture-per-day batch fails the same way whenever any requested fund carries an older report date.",
+    "notes": "Disarm options for the issuer or the CTO: (a) grant s3:DeleteObject on bloomberg/etfs/silver/holdings/* to rivalfunds-build-silver-role (a pair amendment: key 7); (b) change silver_bloomberg to keep the earlier duplicate and mark the batch (a code cell); (c) accept that the 09:00 sweep cannot mark carried-date days. The worker deleted nothing. Next-day acceptance reads exit 90 only if the Terminal is signed in; with it signed in, the silver marker is the first thing to fail on a carried-date day."
   }
 ]
 ```
