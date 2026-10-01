@@ -48,9 +48,9 @@ Today's reads behind NFRA_OUTSET's ten:
 **Home of every re-filed row: `org/surprise_channel/ESTATE_GOVERNANCE/INVESTIGATION_v1.md`** (rows S7 to S11
 @531b115ff1, S12 to S21 @22746eedf5). Directives D0 and D11 have no open member project and the graph pipeline has
 no project with a seat. Filing a tooling hazard in an unrelated open project (Investor Reporting, say) would put an
-ARMED row in front of that project's slug, so the estate-wide channel was used instead. **That is a departure from
-the letter of batch 77 item 2 ("an open project that has a seat") and it is `1.0.0_SA_CTO`'s to overrule:** no drive
-loop reads this channel today.
+ARMED row in front of that project's slug, so the estate-wide channel was used instead. **Accepted as the home by
+`1.0.0_SA_CTO` RULINGS batch 85 @afc17452e8 (103741):** the CTO's tick now prints the channel's BLOCKING or ARMED
+count, so it has a reader.
 
 | new row | from | the hazard, on today's read |
 |---|---|---|
@@ -69,6 +69,11 @@ loop reads this channel today.
 | S19 | NFRA_CLDGRPH-W3-S16 | a graph test file collects zero tests |
 | S20 | NFRA_CLDGRPH-W1-S43 | the graph bucket is unversioned and dated snapshot keys are overwritten |
 | S21 | NFRA_CLDGRPH-W2-S72, S104, S106 | the alert topic every derive publishes to still has an SMS subscription; RESERVED FOR ANDREW, no answer on record |
+| S22 | ETFS_GUARDRAIL-W1-S19 | today's 14:00Z monthly ETF report is expected to publish with an empty brand bar. RULED batch 86: it publishes as is; the fix is one cell before 2026-11-01 |
+| S23 | ETFS_GUARDRAIL-W1-S5 | `build-zip.sh:66` sets month 00; the script has two callers |
+| S24 | ETFS_GUARDRAIL-W2-S1 | the ETF ownership function's test errors at collection |
+| S25 | ETFS_GUARDRAIL-W2-S8 | the Cottonwood ETF ownership rule still fires before its partition lands |
+| S26 | NFRA_COMPEFFICACY-W2-S4 | comp-adversary exits 0 when a source's reader dies on a decode error (owner `0.0.0_AB_MSTR`) |
 
 Dismissal documents of this batch: NFRA_OUTSET `ADJUDICATION_v4.md` (8 rows, 10 items: 5 with a pointer, 5 not
 live) and NFRA_CLDGRPH `ADJUDICATION_v6.md` (16 rows, 58 items: 29 with a pointer, 29 repaired, gone or cut-side).
@@ -86,19 +91,40 @@ deployed and equal to HEAD (clock: `1.0.0_SA_CTO`). NFRA_CLDGRPH's `REMEDIATION_
 the dismissals above. Row NFRA_CLDGRPH-W4-S10 (the workflow route has never published correctly, owner
 `0.0.0_AB_MSTR`) is outside the rowless set and was not touched.
 
+## Batch 3 (13:1xZ): 40 more items dismissed, 33 of them BLOCKING or ARMED
+
+ETFS_GUARDRAIL `ADJUDICATION_v3.md` (10 rows, 27 items: 5 with a pointer to S12 and S22 to S25; 22 closed in the
+round, repaired, deployed, or records) and NFRA_COMPEFFICACY `ADJUDICATION_v2.md` (3 rows, 13 items: 1 with a pointer
+to S26; 12 repaired or cut-side). Both channels now read 0 graduated items without a row.
+
+Reads behind the ETFS_GUARDRAIL dismissals: the deployed `etfs-reports-orchestrator` function and the renderer
+object the report host pulls each hash equal to HEAD; the function carries the month-key validation and a MessageId
+print on each of its three sends; the orders that cut the round's findings (EG-s-19, 20, 22, 23, 24, 29) read
+complete. The terminal send itself was not exercised: this seat does not fire a send.
+
 ## Running count against the 260
 
 | | items dismissed | of them BLOCKING or ARMED |
 |---|---|---|
 | batch 1 | 80 | 78 |
 | batch 2 | 68 | 66 |
-| total | 148 | 144 of 260 |
+| batch 3 | 40 | 33 |
+| total | 188 | 177 of 260 |
 
-## Remaining, in the ruled order
+Rows re-filed so far: 20 (S7 to S26), of which S7 is the limb-gap row the CTO ordered and 19 carry hazards read live
+today; 40 old items point at them.
 
-ETFS_GUARDRAIL 22; NFRA_COMPEFFICACY 11; the three groups graduated in their own rows (ETFS_INGEST 18,
-ETFS_POSITIONING 16, ADVI_PERFRP 14); the twelve smaller channels (33); the two unread items above. Each needs a
-read of the world, not of the row.
+## Remaining
+
+The three groups graduated in their own rows (ETFS_INGEST 18, ETFS_POSITIONING 16, ADVI_PERFRP 14); the twelve
+smaller channels (33); the two NFRA_CLDGRPH items not read (W1-S3, S116). Each needs a read of the world, not of
+the row.
+
+## Owed at the compile's end (batch 85)
+
+One list to `0.0.0_AB_MSTR` of the fabric-tool rows it owns (S7, S9, S10, S12, S13, S14, and now S26). S16 and S17
+go to `4.0.0_SA_CRO~X` as a read-only trace (the CTO's routing). S21 becomes an input of GLOBALALARM. This seat's
+broker gate admits a send to `1.0.0_SA_CTO` only, so the list is sent there for relay unless the gate admits it.
 
 ## End report (re-filed rows and their homes)
 
