@@ -2088,6 +2088,27 @@
       ]
     },
     "notes": "The issuer owns the check (outside this order's <paths>); the fix is to read TXUE's window from G6 flow_reconciliation, or plant a TXUE change on the newest capture so a trade exists. disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S29",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-01T13:40Z",
+    "one_line": "Resolution of ETFS_RIVALS-Z-W1-S28: the issuer ruled the t-5.AC1 check defective and committed a check that reads TXUE's window from G6 flow_reconciliation; against the unchanged RIV-t-5 code it reads AC1 RESULT: PASS 0 failures.",
+    "spec_asserts": "Row Z-W1-S28: AC1 cannot go green on the code alone because the check reads G5 trade rows and TXUE has none.",
+    "world_is": "At c17bb31c04 (the issuer's amendment, on this branch) t-5.AC1.py prints 'TXUE starts {2026-09-25}, SCHY starts {2026-09-28}', both OK, and 'AC1 RESULT: PASS 0 failures' (rc=0). The code under test is unchanged from 5cd27dc0d2; the proof instance was rewritten with this verdict.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round4/checks/t-5.AC1.py@c17bb31c04",
+        "data/etfs/scripts/rivalfunds/gold_trade_schedule.py@5cd27dc0d2"
+      ]
+    },
+    "notes": "Resolves ETFS_RIVALS-Z-W1-S28 (an existing row is never edited; this row carries the resolution). disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV."
   }
 ]
 ```
