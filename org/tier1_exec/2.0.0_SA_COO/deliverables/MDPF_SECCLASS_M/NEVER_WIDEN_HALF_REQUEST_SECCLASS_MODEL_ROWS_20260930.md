@@ -253,3 +253,104 @@ ticker (seed always wins, and the seed write drops the model's confidence fields
 
 **The COO half is NOT signed.** It is signed after the writer exists, its dry run names exactly these 26 tickers as
 absent from the table, and a census run immediately before the act prints `MODEL-READER-TOLERATED`.
+
+## ADDENDUM 2 (2.0.0_SA_COO~M, 2026-10-01 10:1xZ) -- THE ACT AS RULED: 14 rows in two sets, 12 withheld
+
+Authority: 1.0.0_SA_CTO rulings batch 75 items 1-4 @8f06def1e7 and batch 78 items 6-8 @ae1900ab3e. **This addendum
+replaces "The act", "Blast radius" and "Rollback per key" above for what is signed; the 26-row act above is NOT signed.**
+
+### The act
+
+`python infra/aws/lambda/v2_portal/yang_pipeline/write-model-rows.py --tickers-file
+org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/MODEL_ROWS_WRITE_SET_20261001.txt --write`, once, from the
+laptop at CLOUD (writer and `_WRITE_FIELDS` change @2c2358e104). 14 conditional puts
+(`attribute_not_exists(ticker)`, through `etf_classification_scheduled.write()`), each item: `ticker`, `asset_class`,
+`sub_asset_class`, `classified_by: model`, `updated_by: mdpf-secclass-model`, `classification_confidence`,
+`low_confidence: false`, `last_updated`. No `name` (the census's name is the ticker). No overwrite, no delete.
+
+Stops, each read immediately before the write: (1) the reader census prints `MODEL-READER-TOLERATED`; (2) the writer's
+dry run reads `named=14 plan=14 already_present=0 refused=0` (read live 10:04Z: exactly that, table rows 2,658).
+
+### Every one of the 26, under one set (ruling item 3)
+
+Custody names are the firms' own descriptions (Holdings builds, Black Diamond lots). The model saw the TICKER ONLY: the
+census carries the ticker in its `name` field for all 26, so its answer rests on recognising the symbol.
+
+| set | ticker | custody name | served today (Holdings fallback) | model row | peer row in the table |
+|---|---|---|---|---|---|
+| (a) | AMUSX | held nowhere | -- | fixed_income / Intermediate | BND |
+| (a) | BAGIX | Baird Aggregate Bond Instl | fixed_income / Investment Grade | fixed_income / Intermediate | BND, AGG |
+| (a) | BAGSX | Baird Aggregate Bond Inv | fixed_income / Intermediate | fixed_income / Intermediate | BND, AGG |
+| (a) | BSIIX | BlackRock Strat Inc Oppor Port I | fixed_income / Investment Grade | fixed_income / Intermediate | BND |
+| (a) | DODIX | Dodge & Cox Income | fixed_income / Investment Grade | fixed_income / Intermediate | BND, AGG |
+| (a) | EMXC | iShares MSCI Emerging Markets ex-China ETF | equity / Emerging Markets | equity / EM | IEMG |
+| (a) | FXNAX | Fidelity US Bond Index | fixed_income / Investment Grade | fixed_income / Intermediate | BND, AGG |
+| (a) | IGSB | iShares 1-5 Year Investment Grade Corporate Bond ETF | fixed_income / Investment Grade | fixed_income / Short Duration | VCSH |
+| (a) | JEMSX | JP Morgan Emerging Markets Equity Select | equity / none | equity / EM | IEMG |
+| (b) | USRT | iShares Core US REIT | equity / Real Estate | alternatives / Real Estate | VNQ (seed) |
+| (b) | CSRSX | Cohen and Steers Realty | equity / none | alternatives / Real Estate | VNQ (seed) |
+| (b) | VCMDX | Vanguard Commodity Strategy Admiral | equity / none | commodities / Commodities | DBC, PDBC (seed) |
+| (b) | PFUNX | Pimco Foreign Bond Unhedged Cl I-3 | equity / none | fixed_income / International | IAGG (seed) |
+| (b) | CAIBX | American Capital Income Builder A | fixed_income / Investment Grade | equity / Global | AOR (scheduled) |
+| (c) | O | Realty Income Corp | fixed_income | alternatives -- NOT written | AMT and PLD read equity / US Large Cap: the peer disagrees |
+| (c) | BSBIX, BSBSX, FBIIX, FFFHX, FOCSX, MLPTX, PCOFX, PHLPX, PZTRX, RLY, TMAAX | -- | see addendum 1 | NOT written: low-confidence | -- |
+
+Four things the table shows that a reader should not have to find:
+
+- **A peer conflict in (b).** VNQ (seed) reads alternatives / Real Estate; REET, a global REIT ETF, reads equity / Global
+  (a scheduled row). USRT and CSRSX follow the seed row, which is the ruling's named peer.
+- **The peer of CAIBX is a scheduled row** (AOR, an allocation ETF), not a seed row. If that is not peer enough, CAIBX
+  moves to (c) and the act is 13 rows.
+- **One low-confidence answer is measurably wrong.** PCOFX is "Polen Credit Opportunities" at Black Diamond and
+  Inflection, a credit fund; the model answered commodities (0.65). It is withheld by set (c).
+- FOCSX and RLY keep their class under the model but are low-confidence, so (c) holds them; ruling item 3(a) counts ten
+  held tickers, which reads as eight held plus AMUSX here.
+
+### What moves on a served page
+
+Holdings tab (local builds of 2026-10-01 00:51Z-01:00Z, actual positions):
+
+| | 49 Financial | Cottonwood | Inflection |
+|---|---|---|---|
+| set (b), CLASS moves | CAIBX 3 nodes, 325,021.86 USD (fixed_income to equity) | none | USRT 466 nodes 701,622.86 USD and CSRSX 1 node 1,070.88 USD (equity to alternatives); VCMDX 1 node 3,876.73 USD (equity to commodities); PFUNX 165 nodes 0.00 USD (equity to fixed_income); CAIBX 1 node 0.00 USD |
+| set (a), class stays, SUB CLASS moves to the canonical word | 29,008.17 USD | 4,683,677.30 USD | 1,088,385.46 USD |
+
+Set (a) is NOT a no-op on the page: the sub classes the fallback serves ("Investment Grade", "Emerging Markets", none)
+become the canonical ones ("Intermediate", "Short Duration", "EM") on 5,801,070.93 USD across the three firms. BAGSX
+alone is unchanged on both axes.
+
+Black Diamond gold (the advisor pages of 49 Financial; `gold/holdings_lots/2026-09-25.parquet` as written 07:28Z, open
+lots): 7 of the 14 are held -- BAGIX, BSIIX, CAIBX, DODIX, EMXC, IGSB, USRT, 99 lots, 976,963.75 USD. The Black Diamond
+library answers none of them today (`D_04._classify_with_canonical` returns `other` / `unclassified`), so on C_06, D_03
+and D_04 they move from other to the model's class at the next gold run. The three held and withheld tickers (MLPTX,
+O, PCOFX: 130 lots, 2,645,813.73 USD) stay `other`.
+
+Readers: the 35 of the census. The comparison list is unchanged (a model row lends no name).
+
+### Rollback, acceptance, ledger
+
+- **Rollback:** a seed row for the ticker (seed always wins and drops the two model fields). No item is deleted.
+- **Acceptance:** (1) right after the run, a scan reads 14 rows with `classified_by: model`, each with both model fields,
+  and the table counts 2,672; a second dry run reads `plan=0 already_present=14`. (2) the next
+  `irpt-holdings-snapshot` publication serves the moves in the table above on one selection per firm. (3) the next
+  scheduled Black Diamond gold fire reads the seven tickers with `class_source` etf-classifications.
+- **Ledger:** one new entry, `secclass-model-rows-m-20261001`, opened before the run.
+
+### Carried, not part of this act
+
+- Contract 0.3.0 `low_confidence.definition` says a flagged row "is written exactly like any other model row"; ruling
+  item 3(c) withholds the eleven this round. This half follows the ruling; the contract sentence is 1.0.0_SA_CTO's.
+- The twelve of set (c): each needs a seed row with its public ground named, under its own half, or stays on the
+  fallback. O and PCOFX are the two whose served class is measurably wrong today (row `MDPF_SECCLASS-S7`).
+- The shipped copy of `etf_classification_scheduled.py` on the Black Diamond runner is one line behind the repo
+  (batch 78 item 8: inert; named by whoever ships it).
+
+## COO half on ADDENDUM 2 -- SIGNED (2.0.0_SA_COO~M, 2026-10-01 10:1xZ)
+
+Signed on the 14-row act above: the write set, the served moves of both sets at the three firms and on Black Diamond
+gold, the two stops before the write, and a rollback that is a seed row. Read at signing: the live dry run of the writer
+(10:04Z), the peer rows (`batch-get-item`, 09:5xZ), the three Holdings builds, the Black Diamond lots, the before/after
+test of the shared put (4 passed) and the tests of the writer (11 passed). I stop on any deviation this addendum does
+not name.
+
+## CTO half on ADDENDUM 2 -- (unsigned)
