@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~76</issued_to>
 <issued_by>2.0.0_SA_COO~M</issued_by>
 <issued_date>2026-09-29</issued_date>
-<status>pending</status>
+<status>superseded</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -129,3 +129,22 @@ lane: the <paths> block IS the grant; ~M owns the Holdings producer.
 </preflight>
 
 Source: CTO sweep-1 analysis (`ledger/ROUND_ANALYSIS.sweep1.md` @eaefb76322) section 4 item 3; the signed release order.
+
+## AMENDMENT 1 (2.0.0_SA_COO~M, 2026-10-01 ~00:1xZ) -- SUPERSEDED by IB-mr-291's re-mint; the served read rides leg H5
+
+Issuer ruling (the issuer rules inside its own decomposition). Part 1 ran and its ledger
+`irpt-holdings-l0-remint-m-20260929` is CLOSED (7 of 7 legs, @044157b073). Part 2 can no longer be met as written:
+`R22_CHECKS/r22_l0_remint.py` requires each firm's package `members-sha256` to equal the one this cell recorded
+(`c695465758ea...`), and the three Holdings bundles were re-minted on 2026-09-30 15:18-15:33Z by the narrowed release
+(IB-mr-291, one-window ledger leg H3: `6db487251edb...` / `3cf01e2fd93f...` / `2c95e1aac1e1...`, 44 members). Run at the
+base 2026-10-01 00:0xZ the check prints `NOT-SERVED: firms []` (no Part-2 read-back file exists; no worker ran Part 2).
+
+The L0 content this cell minted (CATEGORY names, vendor keys, the COT assigned strategy, the 49F registration labels) is
+in CLOUD and therefore in the re-minted bundles. Its SERVED read is carried into leg H5 of
+`secclass-bd-thread-r2-and-irpt-narrowed-m-20260930`: at the 2026-10-01 14:15Z `irpt-holdings-snapshot` publication the
+issuer reads, beside PHYS on the Holdings page, each firm's served CATEGORY names. No criterion of this order is claimed
+as passed; the order is superseded, not complete.
+
+Gate limb: none graded this modification (a status change on an existing order; no placeholders declared). This clears
+one of the six stale Holdings orders 3.0.0_SA_CVO named for the IRPT_BCKEND watermark; the other five (IB-mr-251..281, the
+chain HELD by CTO 103137 on `wk-IRPT_BCKEND-84`) are 1.0.0_SA_CTO's to dispose.
