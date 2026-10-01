@@ -168,7 +168,7 @@ Dry-run at base (main tree, `OA_F9_REF=0a5c7c2`):
 - f9.AC2 base: FAIL as expected (`arm1 HOME jq -> deny lines=1`; arm2 deny 1; `PLAN: JQ lines=0`; arm4 PLAN lines=10).
 - f9.AC3 base: PASS as expected (control: refs Write and Edit G1-denied, state_dir Write allowed).
 
-<status>pending</status>
+<status>complete</status>
 <direct_act>true</direct_act>
 <slot>~24</slot>
 <fabric>site-z</fabric>

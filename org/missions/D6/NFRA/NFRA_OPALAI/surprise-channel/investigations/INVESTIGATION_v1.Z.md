@@ -2048,6 +2048,26 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "The runtime launcher (opal_ai/opal/runtime/launcher.ps1, OA-t-3) starts the Analyst as Opal_Agent in a window the operator can use, with every tool the runtime's own hooks need.",
     "world_is": "It starts the Analyst via Start-Process -Credential, whose window takes no keyboard input, and nothing puts jq on Opal_Agent's PATH, so the concierge-gate fails closed on every call. The same launcher and provisioning serve NFRA_MCPMSP's Opal_MSP (MS-t-3), so the fix is cut ONCE, here (NFRA_MCPMSP ROUND_ANALYSIS.round1.md @5e2ff94c28). Route: 2.0.0_SA_COO~AI cuts it at the next issuance, from launch-v2.ps1's pattern (Process.Start; Medium-integrity parent; gate output on a pipe) plus jq provisioning."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W24-S1",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~24",
+    "surfaced_at": "2026-10-01T04:43Z",
+    "one_line": "OA-f-9 needed a second nested commit: the first commit failed AC1 on a launcher header sentence, and the head-move guard refused the --amend.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AC1 (f9.AC1.sh) strips '#'-led lines then <# #> blocks, so the '#>' closer line is dropped first and the .SYNOPSIS block stays in the scanned text; the header sentence naming Start-Process with -Credential counted as Start-Process -Credential=1 at nested 97b3b19 (RESULT: FAIL).",
+        "git commit --amend in opal_ai was refused by the head-move guard (FORCE_HEADMOVE=1 required); I did not force it. The reword landed as a second nested commit b6e1867; AC1-AC3 then PASS at b6e1867 (opal_ai 0a5c7c2..b6e1867, two commits, same 4 files)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The face asks for one nested commit; AC1 counts Start-Process -Credential over launcher code only.",
+    "world_is": "Two nested commits (97b3b19, b6e1867); AC1's comment stripping leaves a <# #> block header in the scanned text whenever it ends with a '#>' line, so any header prose naming the retired form counts."
   }
 ]
 ```
