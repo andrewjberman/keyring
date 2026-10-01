@@ -946,3 +946,33 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Owner of the repair: the deploy tool's lane (0.7.0_AE_CloudOps, dark); it un-parks when an AE seat is live or the tool next changes. Not fixed here: the ruling asks this seat to fix only what SC-e13 caused, which is nothing."
 }
 ```
+
+
+## MDPF_SECCLASS-S7 -- the fallback's name-alias layer serves model guesses keyed by NAME, some flagged for review; CEMIX was one of them
+
+```json
+{
+  "id": "MDPF_SECCLASS-S7",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-01T09:30:00Z",
+  "one_line": "CEMIX read fixed_income on 93 Cottonwood position nodes because bd-securities holds a row keyed by the fund's NAME ('NAME::CAUSEWAY EMERGING MARKETS INSTL'), written 2026-03-20 by gpt-4o-mini with confidence 0.6 and needs_review true, rationale 'The name suggests a focus on emerging markets fixed income'; the Holdings fallback's NAME_ALIAS layer serves such a row as the class. bd-securities holds 7,108 NAME:: rows (gpt-4o-mini 4,226, gpt-5.4-mini 1,988, coo-manual 894), 2,118 of them under confidence 0.80 and 706 flagged needs_review.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M (per symbol: a canonical row answers before the fallback, as the CEMIX seed row now does; for the population: FWD-5's retirement of bd-securities. Which low-confidence name rows get a canonical row first is 1.0.0_SA_CTO's to order at the round-7 analysis)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bd_securities_fallback.ETFClassifier loaded live 2026-10-01 09:2xZ: 10,929 bd-securities rows, 8,690 name-map entries; normalize_name('CAUSEWAY EMERGING MARKETS INSTL') maps to the row 'NAME::CAUSEWAY EMERGING MARKETS INSTL' (asset_class fixed_income, classified_by gpt-4o-mini, confidence 0.6, needs_review true); classify('CEMIX', that name) returns fixed_income / International, and with the other custody description ('CEMIX - CAUSEWAY EMERGING MARKETS INSTL') returns equity by ticker shape.",
+      "Positions classed through NAME_ALIAS in the local Holdings builds of 2026-10-01 00:51Z-01:00Z (actual positions, by firm): 49 Financial 54 of 6,695 nodes, 10,197,607.13 USD; Cottonwood 819 of 15,354 nodes, 57,346,152.60 USD; Inflection 1,478 of 33,223 nodes, 792,539.76 USD.",
+      "Of those, answered by a row under confidence 0.80: 49 Financial 6 nodes 5,757,426.20 USD; Cottonwood 161 nodes 6,213,842.75 USD; Inflection 306 nodes 382,047.54 USD. Answered by a row flagged needs_review: Cottonwood 102 nodes 2,851,815.21 USD (93 of them CEMIX, 2,875,850.99 USD, now answered by the canonical row), Inflection 6 nodes 0.00 USD, 49 Financial 1 node 0.00 USD.",
+      "CTO half on the CEMIX row, item 1 (NEVER_WIDEN_HALF_REQUEST_SECCLASS_CEMIX_CANONICAL_ROW_20261001.md @37ac46eed2): 'Leg R names the alias rule that fired and counts the other symbols it classes today. That count is a row for the round.'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD FWD-6 keeps the bd-securities fallback as a DECLARED exception behind the canonical table for a ticker the table does not hold (CTO ruling 103169), read as one retiring table of classifications; rulings batch 75 item 3 withholds a NEW low-confidence model row from the canonical table.",
+  "world_is": "The retiring table is mostly model output keyed by name: 7,108 of its 10,929 rows are NAME:: rows, and its low-confidence and review-flagged rows are served today as classes on the Holdings tab at all three firms. A low-confidence model answer is withheld from the canonical table and served from the fallback at the same time.",
+  "notes": "Not measured: the Black Diamond gold readers (C_06, D_03, D_04), which read the same table through their own library. The counts are from builds made before the CEMIX row; the post-row build is leg R of ledger secclass-cemix-canonical-row-m-20261001."
+}
+```
