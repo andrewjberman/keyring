@@ -5,7 +5,7 @@
   "project": "AMGT_RESAPP",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.31",
+  "prd_version": "v0.32",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-security-analysis-20260910.md@19ce7d5b4d",
   "endpoint_outcomes": [
@@ -93,6 +93,10 @@ which held that L4-R forbids annotation, history and seat names across the whole
   row COO~Z) and Andrew-direct `4.0.0_SA_CRO~Z/deliverables/ANDREW_DIRECT_20261001_034xZ_AMGT_SECURITY_ANALYSIS_DEMO_FRIDAY.md`
   @`b28be1769f` ("RESAPP ... is just cleaning up pipelines and establishing what data we even give the opporuntity
   for the frontend to display ... its just data feeding").
+  v0.32 (2026-10-01, L4-R refusal `3.0.0_SA_CVO~Z` msg 27520 @`de947c1033`): FWD-32 / C-MONTHLY-CHATTER now follow
+  the shared CONTRACT section 1 (an empty month is absent, never a zero row); the unit rides the `_pct` field suffix
+  (FWD-34, C-MOVEMENT-IN-PERCENT); the T-1 fallback covers ranking reads too (FWD-33, C-SERVED-T1-FALLBACK); FWD-35
+  carries its terminal sign-in wait as a QUALIFIED WAIT.
 - **The transcription omission, recorded rather than quietly fixed.** The staged copy of this PRD
   carried a POINTER to the L2 endpoint artifact instead of the outcome cards, with a note saying the
   block "is transcribed into this section when this file lands in the tree." The landing was
@@ -861,8 +865,10 @@ disputable, by rule, and carry no technical language.*
                     the current month and the two before it, one row per name
                     per calendar month carrying the collected article count and
                     its count per publisher, read from the harvest archive's
-                    gold daily chatter; a name with nothing collected in a
-                    month reads a measured zero, not a missing row; the
+                    gold daily chatter; every covered name appears as a row,
+                    and a month in which nothing was collected for a name is
+                    absent from that name's months (the shared CONTRACT
+                    section 1 rule), never a fabricated zero row; the
                     response states the archive vintage it read; and the route
                     publishes no name-level hold for partial publisher
                     coverage. The read carries a POSITIVE CONTROL: one name
@@ -878,8 +884,9 @@ disputable, by rule, and carry no technical language.*
   FWD-33 Opening a name shows its latest price and chatter readings, every
          day, with the breakout reading where it says breakout
          DONE WHEN  EXERCISED -- for every covered name with a served
-                    ranking, a per-name lookup made on a calendar day after the
-                    producer's latest run returns that run's readings (the
+                    ranking, a per-name lookup AND a ranking read (the price
+                    bars read a ranking) made on a calendar day after the
+                    producer's latest run return that run's readings (the
                     latest served trading day, T-1), never an empty answer
                     because the lookup date has no file; the reading served as
                     the breakout value is the breakout row's value, never the
@@ -897,7 +904,11 @@ disputable, by rule, and carry no technical language.*
   FWD-34 Every movement figure the page is served is already in percent
          DONE WHEN  EXERCISED -- every price-movement figure in a served
                     ranking or per-name response (trending return and breakout
-                    jump alike) carries its unit, and the unit is percent: a
+                    jump alike) carries its unit in its field name's `_pct`
+                    suffix (shared CONTRACT section 2), and the unit is
+                    percent; where the existing payload also carries a unit
+                    field (e.g. `score_unit`), it reads percent and never
+                    contradicts the suffix: a
                     move the producer measured as the fraction 0.092 is served
                     as 9.2 with unit percent; no served field leaves the unit
                     to the page. Graded on one named example per axis against
@@ -918,7 +929,16 @@ disputable, by rule, and carry no technical language.*
                     thirty-day return, SIGNED, in percent; names without the
                     observations are counted and named in the generation's own
                     exclusion record, never silently absent. The generation
-                    came from the scheduled producer, not an ad-hoc run
+                    came from the scheduled producer, not an ad-hoc run.
+                    QUALIFIED WAIT: the scheduled producer (the 07:00 ET
+                    step on the terminal box) pulls through the site Z
+                    Bloomberg Terminal session, which only Andrew's login
+                    opens; reason and owner per placement
+                    CTO_PLACEMENT_20261001_043xZ section 5 item 1 (Andrew's
+                    act, asked at ~09:00 ET). Until that sign-in, the grade
+                    reads the latest scheduled generation and states the
+                    terminal's state beside it; it never substitutes an
+                    ad-hoc generation
          ACCEPT     The price bars on the Lead Panel show every covered name
                     that moved, longest first, with falls shown as falls --
                     not the 29 of 95 the old name list happened to hold.
@@ -2610,17 +2630,19 @@ cell here, never a page-side fetch or computation (`C-PRESENTATION-ONLY` stands)
 
 **`C-MONTHLY-CHATTER-NO-COVERAGE-GATE`.** The monthly chatter route (`FWD-32`) serves the raw collected count per name
 per calendar month, with its per-publisher breakdown, and applies NO name-level coverage gate. It is not a ranking, so
-`C-SERVER-SIDE-RANKING`'s chatter gate and its "no rank without signal" clause do not bind it; a zero is a measured
-zero and is served as one. Every response carries the gold vintage it read (the value must carry its claim). The
+`C-SERVER-SIDE-RANKING`'s chatter gate and its "no rank without signal" clause do not bind it; a month with nothing
+collected is absent from the name's months and is never written as a zero row (shared CONTRACT section 1). Every response carries the gold vintage it read (the value must carry its claim). The
 ranking jobs keep their own gates unchanged. Display label: "collected", never "market chatter" (brief VII.4).
 
-**`C-SERVED-T1-FALLBACK`.** A per-name lookup whose requested date has no producer file is answered from the latest
+**`C-SERVED-T1-FALLBACK`.** A per-name lookup or a ranking read whose requested date has no producer file is answered from the latest
 served generation at or before that date, and the response names the trading day it served. A failed or absent
 producer read is NOT an empty answer and is NOT a silent fallback across more than the trading calendar's gap: the
 trading frontier comes from `lib/trading_calendar.py`, and a gap wider than the latest trading day is served with its
 staleness stated. `C-RANKING-GENERATION` stands.
 
-**`C-MOVEMENT-IN-PERCENT`.** Every served movement figure carries an explicit unit field, and that unit is percent.
+**`C-MOVEMENT-IN-PERCENT`.** Every served movement figure carries its unit in its field name's `_pct` suffix (shared
+CONTRACT section 2), and that unit is percent; an existing unit field, where the payload has one, reads percent and
+never contradicts the suffix.
 Producers may store fractions; the conversion happens once, server-side, at serve time or at write time, and the cut
 names which.
 
