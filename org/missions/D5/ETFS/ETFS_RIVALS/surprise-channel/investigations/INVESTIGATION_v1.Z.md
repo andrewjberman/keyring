@@ -1739,6 +1739,29 @@
     "spec_asserts": "Cell item 2: a fund is held only if its window contains the ex-date of a corporate action in the latest landed G3 on a security the fund holds.",
     "world_is": "G3 carries 4781 events with an ex-date and a cash dividend is daily on a diversified fund, so reading every event type as a corporate action would hold every fund on nearly every day; income only moves the income_funded label and the G6 income count, never a share count, so it is left out of the hold.",
     "notes": "One-line change if the ruling meant every G3 event: drop the class filter in gold_trade_schedule.held_funds."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W2-S10",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~2",
+    "surfaced_at": "2026-10-01T08:10Z",
+    "one_line": "Resolution of rows W2-S6, S7 and S8 under issuer amendment 1: W2-S8 is DISARMED (a held fund opens its trades section with 'Trades held: <reason>', never 'no trades'); and a defect of my own first commit, found and fixed, is that completeness graded a -vNN G5 object as a stale revision.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "W2-S6: r-3.AC2.py @360a2c062f plants on MTX GR Equity; run on branch wk-rivals3-2 it reads 'AC2 RESULT: PASS 0 failures' with held_funds CGIC, INEQ, TXUE and a G5 object for SCHY.",
+        "W2-S7: guardrails.report_date_freshness(day, dates, cfg, source) and guardrails.FRESHNESS_ALLOWANCE hold the per-source allowance (a call without a source keeps the config threshold, as in round 2); publish_page passes fund_source() to guardrails.evaluate_fund and has no override; tests/test_r3_repairs.py::test_freshness_is_counted_in_trading_days_against_the_sources_allowance.",
+        "W2-S8: gold_trade_schedule writes {fund: reason} into the partial G5's schema metadata (HELD_META); publish_page._load reads it (held_of_bytes), leaves the held fund's window undrawn, passes a trade_meta entry so completeness does not fail, and mark_held() inserts the 'Trades held:' line into the fund's data-trades div; tests/test_r3_repairs.py::test_a_held_fund_reads_trades_held_with_its_reason_never_no_trades asserts the banner, no 'No trades inferred' window, status updated, the manifest's trades_held, and that the banner is gone once the -v02 object lands.",
+        "Own defect: guardrails.completeness compares the G5 object's revision with the canonical revision, so the -v02 object would have read 'built from revision <rev>-v02, canonical_shape is <rev>'; publish_page._base_revision strips the -vNN suffix before the check."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Amendment 1 items 1-3: AC2 passes; freshness has one home in guardrails; a held fund never reads as no trades.",
+    "world_is": "render.py is read-only to this cell and draws no held state, so the banner is inserted into the rendered page by publish_page.mark_held at the fund's own data-trades div (it raises if the div is absent); the per-fund render read-back (render.render_fund) is run without the banner. A later render.py that draws held natively would let mark_held go.",
+    "notes": "W2-S8 disarmed in this cell. EVENT_CLASS's share class also holds on unmapped:Warrant (keep rule); the amendment's list omits it, the table is unchanged."
   }
 ]
 ```
