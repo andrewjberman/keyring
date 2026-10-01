@@ -640,6 +640,36 @@ function readHoldingsAggregates(p, j) {
 // state reads Ready is opened instead and the record says so. Opening a request issues GETs only.
 const REQUEST_DETAIL_CEILING_MS = 45000
 const openedRequests = []
+// The hops of ONE open (IRPT RULINGS batch 88 item 4 E4: "30.2 seconds from the press to the sections is measured by
+// hop before anything is changed"). While a recorder is set, every Investor Reporting analysis or status request the
+// page makes is timed from the press: when it was sent, when its answer had fully arrived, and what it answered. For
+// the sections answer the served counts are read too (sections, undated sections), so the rows the page renders can
+// be set beside what was served. Counts and times only; no value of any report is written.
+let requestHops = null
+const hopStart = new WeakMap()
+function hopKind(p) {
+  if (/\/analysis\/requests\/[^/]+$/.test(p)) return 'request-read'
+  if (/\/analysis\/requests$/.test(p)) return 'request-list'
+  if (/\/analysis\/[^/]+\/sections$/.test(p)) return 'sections'
+  if (/\/status\/[^/]+$/.test(p)) return 'status-job'
+  if (/\/status$/.test(p)) return 'status-summary'
+  return /\/investor-reporting\/(analysis|status)/.test(p) ? 'other-analysis' : null
+}
+function noteHopRequest(req) {
+  if (requestHops && hopKind(pathOnly(req.url()))) hopStart.set(req, Date.now())
+}
+function noteHopResponse(req, res, json) {
+  if (!requestHops || !hopStart.has(req)) return
+  const p = pathOnly(req.url())
+  const kind = hopKind(p)
+  const row = { kind, sent_ms: hopStart.get(req) - requestHops.t0, answered_ms: Date.now() - requestHops.t0, http: res.status(), state: json?.status?.state ?? null, reason: json?.status?.public_reason_code ?? null }
+  row.took_ms = row.answered_ms - row.sent_ms
+  if (kind === 'sections' && json && json.data) {
+    row.served_sections = Array.isArray(json.data.sections) ? json.data.sections.length : null
+    row.served_undated_sections = Array.isArray(json.data.undated_sections) ? json.data.undated_sections.length : null
+  }
+  requestHops.rows.push(row)
+}
 async function openRequest(page, label, requestId) {
   const rows = page.locator('[data-row="owned-analysis-request"]')
   for (let w = 0; w < 40 && !(await rows.count().catch(() => 0)); w++) await page.waitForTimeout(500)
@@ -655,9 +685,12 @@ async function openRequest(page, label, requestId) {
     openedRequests.push(rec); return
   }
   const t0 = Date.now()
+  requestHops = { t0, rows: [] }
   await page.locator(`[data-row="owned-analysis-request"][data-request-id="${target.id}"] button`).first().click({ timeout: 5000 }).catch(() => {})
   const detail = page.locator('[data-slot="owned-request-detail"]')
   await detail.waitFor({ state: 'visible', timeout: 15000 }).catch(() => {})
+  // What the page showed WHEN, from the press: the dialog, its status words, the sections block (first seen, 250 ms steps).
+  const marks = { dialog_visible_ms: Date.now() - t0, status_words_ms: null, sections_block_ms: null }
   let read = null
   while (Date.now() - t0 < REQUEST_DETAIL_CEILING_MS) {
     read = await page.evaluate(() => {
@@ -665,21 +698,36 @@ async function openRequest(page, label, requestId) {
       if (!d) return null
       const status = d.querySelector('[role="status"]')
       const text = d.innerText || ''
+      const block = '[data-slot="owned-report-sections"]'
       return {
         status_words: status ? status.textContent : null,
-        section_blocks: d.querySelectorAll('[data-slot="owned-report-sections"]').length,
-        section_items: d.querySelectorAll('[data-slot="owned-report-sections"] section, [data-slot="owned-report-sections"] li, [data-slot="owned-report-sections"] [data-section-id]').length,
+        section_blocks: d.querySelectorAll(block).length,
+        // EXACT counts by the page's own markers: one card per served section, one row per value in it.
+        section_cards: d.querySelectorAll(`${block} [data-row="native-section"]`).length,
+        section_value_rows: d.querySelectorAll(`${block} [data-row="native-section-value"]`).length,
+        // The OLD count (`section_items`), kept and now explained: it never counted cards. Inside the block its
+        // selector matches the extraction-coverage panel's own <section> and every <li> of that panel's gap list
+        // (behind "Technical details"); a card is a <div data-row="native-section"> and matches none of it.
+        coverage_gap_items: d.querySelectorAll(`${block} [data-slot="extraction-coverage"] li`).length,
+        coverage_panels: d.querySelectorAll(`${block} [data-slot="extraction-coverage"]`).length,
+        section_items: d.querySelectorAll(`${block} section, ${block} li, ${block} [data-section-id]`).length,
         correction_words: (d.querySelector('[data-slot="request-correction-words"]') || {}).textContent || null,
         sections_unavailable_words: /Report sections are not available/.test(text),
         checking: /Checking request status/.test(text),
         text_chars: text.length,
       }
     }).catch(() => null)
+    if (read && read.status_words && !read.checking && marks.status_words_ms === null) marks.status_words_ms = Date.now() - t0
+    if (read && read.section_blocks > 0 && marks.sections_block_ms === null) marks.sections_block_ms = Date.now() - t0
     if (read && !read.checking && (read.section_blocks > 0 || read.sections_unavailable_words)) break
-    await page.waitForTimeout(500)
+    await page.waitForTimeout(250)
   }
   rec.waited_ms = Date.now() - t0
   rec.detail = read
+  rec.marks = marks
+  await page.waitForTimeout(600)                 // a late answer of an already-sent request still lands in the hops
+  rec.hops = requestHops.rows.slice().sort((a, b) => a.sent_ms - b.sent_ms)
+  requestHops = null
   await checks(page, `${label}-request-open`)
   await page.locator('[data-slot="owned-request-detail"]').evaluate((d) => { d.scrollTop = d.scrollHeight }).catch(() => {})
   await page.waitForTimeout(400)
@@ -814,15 +862,18 @@ try {
   const page = await context.newPage()
   page.on('console', (m) => { if (m.type() === 'error') consoleErrors.push({ step, text: m.text().slice(0, 300) }) })
   page.on('pageerror', (e) => consoleErrors.push({ step, text: 'PAGE ERROR: ' + String(e).slice(0, 300) }))
+  page.on('request', noteHopRequest)
   page.on('response', async (res) => {
     const req = res.request(); const p = pathOnly(req.url())
     netlog.push([req.method(), res.status(), p].join('\t'))
     if (!/\/api\//.test(p)) return
     let reason = null; let state = null; let ok = null
+    let body = null
     try {
-      const j = await res.json(); ok = j.ok ?? null; state = j.status?.state ?? null; reason = j.status?.public_reason_code ?? null
+      const j = await res.json(); body = j; ok = j.ok ?? null; state = j.status?.state ?? null; reason = j.status?.public_reason_code ?? null
       if (opt.holdingsAggregates && /\/investor-reporting\/holdings\//.test(p)) readHoldingsAggregates(p, j)
     } catch { /* not json */ }
+    noteHopResponse(req, res, body)
     if (res.status() >= 400 || ok === false || (reason && !/READY$/.test(reason))) apiIssues.push({ step, method: req.method(), path: p, http: res.status(), ok, state, reason })
   })
   await page.route('**/*', (route) => {
