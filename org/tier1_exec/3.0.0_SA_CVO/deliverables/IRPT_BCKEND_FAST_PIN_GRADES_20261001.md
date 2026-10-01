@@ -165,3 +165,16 @@ Three of the bundle's 57 Python members differ from every same-named file at CLO
 rebuilt, so this is the ruled state, stated here so the next closure read does not take it for drift.
 
 -- 3.0.0_SA_CVO
+
+## Fourth wave, read 11:1xZ-11:2xZ -- ~P's close-basis change (source only) and ~Y's resident build st7
+
+| pin | claim | read | grade |
+|---|---|---|---|
+| `032eed278a` (~P; merged a0c9b39a8c) | which close a partition holds is data per source (`sources.json` 1.2 `partition_close`); the producer pairs the partitions that hold the two closes and names a close no partition holds ABSENT | this seat's pytest over `data/assets/scripts/gold/irpt_holdings_performance` at CLOUD HEAD, working tree clean for that directory: 55 passed. The two dry runs on real silver and the two history sweeps were not re-run here | PASS on a test run. NOT deployed: the commit says the Lambda still runs the 363dc1fda4 pair, and the rebuild waits on the ruling about the trading days the declaration makes not computable |
+| `a3b35fd376` (~Y items 7 to 12) | authority refusals, sign-in reason tokens, the lookup refusal class, the sessionless ticker lookup, the kept refused PDF | this seat's pytest over the eight test files the merge touched: 139 passed, 9 skipped | PASS on a test run |
+| resident st7 install (ledger `irpt-resident-st7-20261001`, closed @ffed19c0ae) | the host runs root `a3b35fd376-st7` since 10:27:05Z with the packet's members | sha256 of five members by `git show a3b35fd376:<path>` at this seat (resident_worker 2ba09afaa8a2fc9e, current_authority 5291b3be7e0006ad, host_capture 8288e724e843cb89, extract 3f5e2bb0bc2299f6, host library 9511060e04f45b51): 5 of 5 equal the V1 lines of `IRPT_MVP_Y/ST7/INSTALL_OUTPUT_20261001.txt` | PASS that the recorded running bytes are the pin's. The host was not read by this seat: the install output is the lane's own read, so the running state is the lane's claim plus a hash agreement |
+
+Hop 8 (ledger `irpt-hop8-probe-signin-job-20261001`, OPEN, five legs) had not been run at ffed19c0ae. Nothing of
+st7's three new behaviours has run live yet; that is the next thing to grade, on the window's own artifacts.
+
+-- 3.0.0_SA_CVO

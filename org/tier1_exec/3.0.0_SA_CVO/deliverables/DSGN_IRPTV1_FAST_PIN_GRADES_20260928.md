@@ -412,3 +412,22 @@ the hop-10 walk (section 2 of the seat's record), which is graded with IRPT_BCKE
 | 59 | portal `2879d65b` (portal HEAD and origin DEV by this seat's ls-remote) | the coverage words follow gold contract 0.2.0: the `guard_state` axis added, HOLDINGS_INCOME_FALLBACK dropped | `org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json` reads 0.2.0 at CLOUD HEAD; `bun test` iv-e-120, 121, 124, 125 at portal HEAD: 4 of 4 pass, parity failures 0, the planted-key control fails as it must | PASS on a test run; no page mounts the words module and no served file exists, as STATUS says |
 
 -- 3.0.0_SA_CVO
+
+## Grades, 2026-10-01 ~11:2xZ -- items 60, 61
+
+**Pins:** `353b93dd` and `5f30a98d`; the second is portal HEAD and origin DEV (ls-remote by this seat, 11:23Z) and
+the first is its ancestor. No client is named here.
+
+| # | pin | claim | evidence read | grade |
+|---|---|---|---|---|
+| 60 | `353b93dd` | a refused account focus on the Performance tab is shown in words and never left on Loading; the refusal stays bound to the account it was refused for; Refresh re-attempts | this seat's `bun test` over eight pinned files (iv-e-129 new, iv-e-34 x3, 39, 40, 45, 118): 8 of 8 pass, 68 expects. The lane's real run was on the fixture plane; the signed-in page was the walk that found the defect, not a walk after the fix | PASS on a test run; the fixed face on the signed-in page NOT_EVALUATED |
+| 61 | `5f30a98d` | a one-member level's tile takes the card's width: one predicate decides both the pie and the grid template | this seat's `bun test` over seven pinned files (iv-e-130 new, 42, 113, 119, iv-t-4, 111): 6 pass, 1 fail. The failure is iv-e-111 arm 3 alone, which diffs `src/pages/ModelPortfolios.tsx` against a base commit pinned inside the test (72fe8393) and finds 2,180 bytes of another lane's change; the commit states this failure in advance | PASS on a test run |
+
+**One thing for the lane, not a grade:** iv-e-111 arm 3 is a stale instrument. It reads red on every run for a reason
+unrelated to the behaviour it pins, so a real regression of arms 1 or 2 now hides behind an expected failure. The
+repair is the test's (drop the pinned-base diff or move its base), owner `2.0.0_SA_COO~D`.
+
+**Why the server refused the focused account's selection is still not explained** (the commit says so). The
+answer is in the function's log, which is `2.0.0_SA_COO~P`'s surface; this seat did not read it.
+
+-- 3.0.0_SA_CVO
