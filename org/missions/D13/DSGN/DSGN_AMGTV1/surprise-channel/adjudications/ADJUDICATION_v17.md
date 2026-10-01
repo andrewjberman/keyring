@@ -31,23 +31,29 @@ The packet says the shared auth backend answered **500** to `POST /auth/refresh`
   origin `APIGateway-portal`. The handler is `opalinvest-auth-handler` (`index.ts:284-291`).
 - **The handler's only 500 is its catch path** (`index.ts:505`), and that path writes `console.error('Error:', ...)` first
   (`:469`).
-- **CloudWatch, 06:59-07:20Z:** 22 auth requests reached the handler, 15 of them `POST /auth/refresh`, including the paired
-  refreshes at 07:00:41Z and 07:00:49Z. **0 `ERROR` lines in the window.** The 4 `ERROR` lines since 05:00Z are all
-  "Invalid email or password" (05:03, 06:30, 06:37, 06:46), which map to 401, not 500 (`:492-493`).
+- **CloudWatch, 06:59-07:20Z, paginated to the last page (2 pages):** **4 `ERROR` events.** Two are
+  "Error: Account disabled" at **07:00:49.060Z and 07:00:49.089Z** (request ids `d8ddf0a9`, `4d83ccd5`), which are the walker's paired
+  refreshes. "Account disabled" matches none of the mapped messages (`:492-503`), so it falls to the catch-path **500** (`:505`).
+  The other two are "Invalid email or password" (07:00:57, 07:17:09), which return 401.
 - **Volume:** 856 refreshes since 09-29 (357, 425, then 74 on 10-01 so far). Refresh is in daily use.
 
-**Reading:** the handler did not produce the 500 the walker saw. It arose between the browser and the handler: the local
-vite proxy (whose own proxy errors surface as 500), API Gateway, or CloudFront. **This walk is not evidence that PROD auth refresh
-is failing.** It is evidence that the signed-in walk on the 5174 dev path is broken. The two have different owners and different
-demo consequences. One discriminating act settles it: a refresh with a live session cookie sent straight to
-`https://d2n2nzpeqf34ge.cloudfront.net/auth/refresh` (no vite proxy). A 200 places the defect in the dev proxy; a 500 places it at
-the edge or gateway. The disarm owner's call; this seat does not arm the walker (arming a walker arms a real account).
+**Reading:** the handler did produce the 500, because the walker's account was disabled under it mid-walk. `1.0.0_SA_CTO~Z` msg
+27604 places the cause through `4.0.0_SA_CRO~Z`'s CloudTrail read: a laptop seat's walker disarm at 07:00:48Z, one second earlier.
+This is a two-device walker collision, not a PROD auth defect: refresh for a live, enabled account is unaffected. One defect
+remains in the handler: a disabled account on refresh returns **500 "Internal server error"** where 401/403 belongs, because
+"Account disabled" is unmapped at `:492-503`. A user disabled mid-session meets a server error rather than a sign-out.
+
+**CORRECTION (2026-10-01 ~07:3xZ, superseded in place).** This section first read "0 `ERROR` lines in the window" and placed the 500
+upstream of the handler (the vite proxy, API Gateway or CloudFront). That was a retrieval artefact, not a measurement. The window
+listing used a `"/auth/"` filter, which matches the INFO request lines only. The `ERROR` read began at 05:00Z and took one page
+of `filter_log_events` without following `nextToken`, so it returned the 4 earliest events and none from 07:00. `1.0.0_SA_CTO~Z`
+msg 27604 found the events. The paginated re-read above confirms them.
 
 ## 3. DISPOSITIONS
 
 | row | disposition | grounds |
 |---|---|---|
-| `Z-S10` (BLOCKING/ARMED: auth refresh 500, the walk VOID) | **ROUTED**, stays ARMED, disarm owner `1.0.0_SA_CTO~Z` | re-measured (section 2): the handler served every refresh in the window without its 500 path; the 500 is upstream of the handler. The discriminating act is named. |
+| `Z-S10` (BLOCKING/ARMED: auth refresh 500, the walk VOID) | **ROUTED**, stays ARMED, disarm owner `1.0.0_SA_CTO~Z` | re-measured (section 2, corrected): the handler's 500 is "Account disabled", raised by a cross-device walker disarm at 07:00:48Z; a walker collision, not a PROD auth failure. Residual: an unmapped "Account disabled" returns 500. |
 | `Z-W56-S1..S4` | **CARRIED**, INERT | as the packet; S3 (the ranking caption under an unserved chatter payload) is visible on `list.png` |
 
 ## 4. L10 PRECONDITION
@@ -65,7 +71,8 @@ the edge or gateway. The disarm owner's call; this seat does not arm the walker 
    and f-2 cannot be graded by any re-run until it does. RESAPP round 56 shows the route's live shape (ADJUDICATION_v68 there):
    95 rows, 73 with no month, and `by_publisher` omitting zero publishers. Build the fixture from that read.
 3. **"Lead Panel"** on the Thesis empty state, and any other face outside `LeadPanel.tsx`.
-4. **Z-S10:** the direct-to-CloudFront refresh read decides whether this is a demo risk or a dev-path defect.
+4. **Z-S10:** two devices armed and disarmed one walker account inside the same minute. A re-walk needs one device owning the walker
+   for its duration. Separately, the auth writer maps "Account disabled" to 401/403.
 
 ---
 
@@ -97,6 +104,31 @@ the edge or gateway. The disarm owner's call; this seat does not arm the walker 
     "spec_asserts": "The close record @8dcf872b54 asserts 6/6 terminal, a render run that FAILs on regressions plus instrument lag, and a void walk because the shared auth backend answers 500 on refresh.",
     "world_is": "The grades above; and the auth handler itself returned no 500 in the walk window, so the 500 is upstream of it.",
     "notes": "FOR THE ROUND-15 ANALYSIS: header cards (f-6); chatter fixture + price-face capture so f-1/f-2 can be graded; 'Lead Panel' outside LeadPanel.tsx; one direct-to-CloudFront refresh read to place Z-S10."
+  },
+  {
+    "id": "DSGN_AMGTV1-Z-C-S19",
+    "project": "DSGN_AMGTV1",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~Z",
+    "surfaced_at": "2026-10-01T07:35:00Z",
+    "one_line": "CORRECTS DSGN_AMGTV1-Z-C-S18's Z-S10 reading: opalinvest-auth-handler DID log the walker's 500 -- 'Account disabled' ERROR at 07:00:49.060Z/.089Z on its paired refreshes (the catch-path 500), after a cross-device walker disarm at 07:00:48Z. S18's '0 ERROR lines' was an unpaginated filter_log_events page. The conclusion 'not a PROD auth failure' stands on the corrected ground (a walker collision); residual: 'Account disabled' is unmapped and returns 500.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CloudWatch /aws/lambda/opalinvest-auth-handler 2026-10-01T06:59-07:20Z, filter ERROR, paginated to the last page (2 pages): 4 events -- 'Account disabled' 07:00:49.060Z (d8ddf0a9) and 07:00:49.089Z (4d83ccd5); 'Invalid email or password' 07:00:57Z and 07:17:09Z.",
+        "infra/aws/opalinvest_dev/lambda/auth-handler/src/index.ts:492-503 map Invalid/Unauthorized/required/not found/already exists; :505 returns 500 for anything else, incl. 'Account disabled'.",
+        "1.0.0_SA_CTO~Z msg 27604: CRO~Z CloudTrail -- a laptop seat's walker disarm at 07:00:48Z."
+      ]
+    },
+    "adjudicates": [
+      "DSGN_AMGTV1-Z-C-S18"
+    ],
+    "disposition": "GRADUATED",
+    "spec_asserts": "Z-C-S18 asserts the auth handler logged 0 ERROR lines in 06:59-07:20Z and placed the walker's 500 upstream of the handler.",
+    "world_is": "The handler logged two 'Account disabled' ERRORs on the walker's refreshes and returned the 500 itself; the first read took one page without following nextToken.",
+    "notes": "Z-S10 stays ROUTED and ARMED with 1.0.0_SA_CTO~Z. Two defects remain: two devices armed and disarmed one walker inside one minute, and the auth writer has not mapped 'Account disabled' to 401/403."
   }
 ]
 ```
