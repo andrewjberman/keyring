@@ -57,3 +57,39 @@ same sitting. `2.0.0_SA_COO~AI` cuts the falsifier, the apply runbook and the E6
 
 `C:\blp\DAPI` is `BUILTIN\Users FullControl`, so a non-admin account can replace the Terminal's DAPI binaries. The
 box's operator, `0.0.0_AB_MSTR~Z`, owns it. Told in one line.
+
+## R5. Re-ruled after the AC3 falsifier -- 1.0.0_SA_CTO~O, 2026-10-01 ~21:0xZ
+
+**Measured:** `F10_ACCEPTANCE.json` @1552d46a70 (row Z-W25-S3). With both R1 rules live, 5 of 5 arms read OPEN, so
+the R1 Firewall rules are LOOPBACK-EXEMPT and inert. R1's precedent, the `codex_sandbox_offline_block_loopback_*`
+rules, was SHAPE ONLY and is also ineffective (openai/codex #48856 and #49840, the same build 26200). **Research:**
+`4.0.0_SA_CRO~O` @63a9b6da27, `WFP_LOOPBACK_8194_WALL_RESEARCH_20261001.md`. A max-weight boot-time loopback permit
+sits in the Firewall's own sublayer, and under Microsoft filter arbitration a block in a higher-priority sublayer is
+final.
+
+**R1 is SUPERSEDED as the mechanism. ADOPTED: a raw WFP filter pair.**
+- One persistent own sublayer (`FWPM_SUBLAYER_FLAG_PERSISTENT`, weight 0xFFFF).
+- Two persistent BLOCK filters, at `FWPM_LAYER_ALE_AUTH_CONNECT_V4` and `_V6`. Each ANDs three conditions:
+  - `ALE_USER_ID` = SDDL `O:LSD:(A;;CC;;;<Opal_Agent SID>)(A;;CC;;;<Opal_MSP SID>)`, with the SIDs resolved at run time
+    and never typed;
+  - `IP_REMOTE_PORT` 8194;
+  - `FLAGS` ALL_SET `IS_LOOPBACK`.
+- The installer is one PowerShell script with `Add-Type` P/Invoke to `fwpuclnt.dll`: no vendor tool and no install.
+  It has three modes: `-Plan` (prints, changes nothing), real (elevated, one transaction), and `-Remove` (deletes both
+  filters and the sublayer, one transaction).
+
+**One elevated sitting, never two.** The CRO's residual read is folded into the installer's real mode, BEFORE any act:
+- It enumerates the ALE_AUTH_CONNECT_V4 filters that permit loopback and prints each one's sublayer and weight.
+- **It REFUSES with no action if any such sublayer's weight is >= ours.** Equal weights have no documented order.
+- On that refusal the fallback is CRO section 3: deny Bash and PowerShell to the Analyst runtime through machine-wide
+  managed settings. This seat rules it on that measurement.
+
+**In the same sitting, after the read-back:** it removes the two inert R1 Firewall rules. They are proven to block
+nothing, so removing them changes no behavior, and they must not be read as a wall.
+
+**Authority:** Andrew's "sure" (msg 28000) was for the 8194 wall. The outcome is unchanged and only the mechanism
+moves, so the elevated run is his act under that word, listed with this citation.
+
+**Acceptance:** AC3 unchanged (5 arms). Opal_Agent and Opal_MSP read 8194 REFUSED or TIMEOUT, and 8790 OPEN; the
+operator reads 8194 OPEN. **Persistence** is a sixth arm read at the box's next NATURAL reboot, never a forced one; it
+is not a close precondition. The R3 placement stands: the wall precedes the item-0 close run.
