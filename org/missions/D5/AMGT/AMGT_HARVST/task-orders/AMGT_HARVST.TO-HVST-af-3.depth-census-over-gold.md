@@ -87,7 +87,7 @@ newest part, so its numbers rise after the issuer's paired gold rebuild.
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>open</status>
+<status>complete</status>
 <round>33</round>
 <slot>~90</slot>
 <fabric>site-z</fabric>
