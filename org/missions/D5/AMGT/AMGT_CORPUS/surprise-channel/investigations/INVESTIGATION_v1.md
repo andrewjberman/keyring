@@ -3215,6 +3215,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "The harness asserts the old subtraction invariant (every fiscal figure renders once), which the removal breaks by design; tabs.harness.cjs is read-only to this order. AC2 FAILs and the order stays open.",
     "notes": "Resolution needs the harness check re-scoped (a DSGN-owned file) or item 2 relaxed; not mine to choose.",
     "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W1-S27",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-10-01T07:00:00Z",
+    "one_line": "assembled.harness.cjs:336 asserts the ABSENT Model face carries the sentence 'No model in the research pack for this name yet'; CRPS-ad-3 item 5 (and face.cjs arm 7) bars 'in the research pack', so the two cannot both hold.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/SecurityAnalysis/__harness__/assembled.harness.cjs:336: modelOk on an ABSENT name requires tabHtml.model.includes('No model in the research pack for this name yet').",
+        "face.cjs arm 7 (round28) fails any ABSENT or BARE face matching /\\bin (the research|this) pack\\b/; ModelTab.tsx now says 'There is no model for this name yet.' on that face (portal commit f8350483).",
+        "assembled.harness.cjs is not in this order's <paths> and not in AC2's bound (AD3 names modelPattern, tabs, shell, errorEmpty); run bare it exits 'ERROR: --payload ... --ranked ... are both required', so its ABSENT arm was not run here."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Item 5: the ABSENT face never says something is missing 'in the research pack'; the harnesses that load the Model tab stay green (AC2, four named harnesses).",
+    "world_is": "A fifth harness that loads the Model tab (assembled.harness.cjs) pins the old ABSENT sentence byte for byte, so its ABSENT-name arm will read red the next time it is run with its payload arguments.",
+    "notes": "Re-anchor needed in assembled.harness.cjs:336 (the string to 'There is no model for this name yet'); not edited by this worker (outside <paths>). Also: the SERVED face still says 'In the research pack, but this page cannot show it yet...' on a refused row and 'not in the pack' in two footnotes; arm 7 reads only the ABSENT and BARE faces, so those were left.",
+    "disarm_owner": "2.0.0_SA_COO~X"
   }
 ]
 ```
