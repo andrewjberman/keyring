@@ -3192,6 +3192,75 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "The print/provenance predicates key on a retired pointer prefix, so the producer's current not-measured labels classify as MEASURED there. ac-2 does not move this: the BBSE3 unit reads MEASURED there before and after.",
     "notes": "Found while reading ac-2's served reach (NEVER_WIDEN_ROUND27_AC2_SERVED_ACT.md). Not a round-27 cell; a candidate enrichment item for the round-27 analysis.",
     "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W1-S26",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-10-01T06:00:00Z",
+    "one_line": "AC2 (bound.cjs AD1) cannot read 4 of 4 once the Other-lines group is removed as the order's item 2 requires: tabs.harness.cjs check model_fiscal_rows_rendered demands every fiscal figure rendered (cells === fiscal, 97/165 for BA now).",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/SecurityAnalysis/__harness__/tabs.harness.cjs:391 counts a name only when data-model-cell count === fiscal figure count; :427 check model_fiscal_rows_rendered.",
+        "AC2 output: HARNESS RED tabs.harness.cjs :: rc=1 (floor 20); AD1 BOUND: 3 of 4 harnesses green; modelPattern 12/12, shell 10/10, errorEmpty 12/12 green. AC1 6 of 6 and AC3 tsc exit=0 on the same bytes.",
+        "Run: tabs.harness.cjs prints MODEL BA_US_Equity:97/165 SAP_GY_Equity:120/190 BABA_US_Equity:113/183; the other 19 checks true."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Removing the Other-lines group (order item 2) leaves the page's own harnesses at their floors (AC2, 4 of 4).",
+    "world_is": "The harness asserts the old subtraction invariant (every fiscal figure renders once), which the removal breaks by design; tabs.harness.cjs is read-only to this order. AC2 FAILs and the order stays open.",
+    "notes": "Resolution needs the harness check re-scoped (a DSGN-owned file) or item 2 relaxed; not mine to choose.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W1-S27",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-10-01T07:00:00Z",
+    "one_line": "assembled.harness.cjs:336 asserts the ABSENT Model face carries the sentence 'No model in the research pack for this name yet'; CRPS-ad-3 item 5 (and face.cjs arm 7) bars 'in the research pack', so the two cannot both hold.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/SecurityAnalysis/__harness__/assembled.harness.cjs:336: modelOk on an ABSENT name requires tabHtml.model.includes('No model in the research pack for this name yet').",
+        "face.cjs arm 7 (round28) fails any ABSENT or BARE face matching /\\bin (the research|this) pack\\b/; ModelTab.tsx now says 'There is no model for this name yet.' on that face (portal commit f8350483).",
+        "assembled.harness.cjs is not in this order's <paths> and not in AC2's bound (AD3 names modelPattern, tabs, shell, errorEmpty); run bare it exits 'ERROR: --payload ... --ranked ... are both required', so its ABSENT arm was not run here."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Item 5: the ABSENT face never says something is missing 'in the research pack'; the harnesses that load the Model tab stay green (AC2, four named harnesses).",
+    "world_is": "A fifth harness that loads the Model tab (assembled.harness.cjs) pins the old ABSENT sentence byte for byte, so its ABSENT-name arm will read red the next time it is run with its payload arguments.",
+    "notes": "Re-anchor needed in assembled.harness.cjs:336 (the string to 'There is no model for this name yet'); not edited by this worker (outside <paths>). Also: the SERVED face still says 'In the research pack, but this page cannot show it yet...' on a refused row and 'not in the pack' in two footnotes; arm 7 reads only the ABSENT and BARE faces, so those were left.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S75",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-10-01T07:42:57Z",
+    "one_line": "DISARMS AMGT_CORPUS-Z-W1-S27: assembled.harness.cjs's model check is re-anchored (portal 54f3a252, on local DEV 209678ff) -- the SERVED arm's denominator is the fiscal figures on the sheet's rows (it also broke once CRPS-ad-1 removed the Other lines, wider than S27 named) and the ABSENT arm reads 'no model' without a presupposed pack.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal 54f3a252 assembled.harness.cjs: fiscalTotal = fiscal figures whose mnemonic is a FINANCIAL_SUMMARY_ROWS/MARGIN_HISTORY_ROWS mnemonic and whose year is a sheet year; ABSENT arm /\\bno model\\b/i (the tabs.harness.cjs re-anchor at 14cf369e/f8350483, mirrored).",
+        "The harness does not run at portal 78cf9877 or f4adf790 either: 'Cannot find module @/ui/components/states' (main tree, BA thesis fixture + rankings.BREAKOUT_PRICE.json) -- pre-existing, outside every bound list; the re-anchor holds for when it is repaired.",
+        "Chain checks after the act on the DEV-merged branch: face.cjs 8/8, sheet.cjs 6/6, bound 4/4, tsc -b rc 0; full page-harness suite 15 of 16 on both DEV and the chain (posture.harness.cjs RED on both)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Every page harness that anchors the Model face reads the face CRPS-ad-1/ad-3 built.",
+    "world_is": "assembled.harness.cjs now does; it remains non-runnable for a reason unrelated to the Model tab (a missing module alias in its loader), which is DSGN_AMGTV1's harness surface.",
+    "notes": "Issuer direct act at the chain-A drain (decomposition v28.0). Also on the SERVED face, two footnotes and the refused-row sentence still say 'not in the pack' / 'In the research pack' (S27's note); arm 7 grades only the ABSENT faces. A candidate enrichment item, not a hazard.",
+    "disarm_owner": "2.0.0_SA_COO~X"
   }
 ]
 ```

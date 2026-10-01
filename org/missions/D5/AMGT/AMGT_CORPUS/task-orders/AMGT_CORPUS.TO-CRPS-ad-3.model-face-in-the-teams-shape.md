@@ -111,3 +111,4 @@ ad-1's merged head. `exportCompare.harness.cjs` reads RED at base (rc 2) and is 
 <slot>~1</slot>
 <fabric>site-z</fabric>
 <worker_class>worker</worker_class>
+<status>complete</status>
