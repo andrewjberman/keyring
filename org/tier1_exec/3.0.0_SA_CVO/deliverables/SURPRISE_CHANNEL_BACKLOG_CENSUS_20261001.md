@@ -72,3 +72,53 @@ the closure plan closes projects: a project should not close a second time over 
 closure plan's own members appear above (ADVI_FIRMBKTS, LGIC_CANON, MDPF_TAXSMA).
 
 -- 3.0.0_SA_CVO
+
+## ADDENDUM, 2026-10-01 ~09:3xZ -- a second population the first count did not see
+
+Compiling ADVI_FIRMBKTS, the commit gate refused the new rows because five items an adjudication had marked
+GRADUATED carried no remediation row. Those five read "dispositioned" in the table above. The gate has a limb for
+exactly this (`_graduated_without_row` over `_remediation_ids_for_project`, the S74 limb); run over all 56 channels
+(0 did not run):
+
+| scope | GRADUATED items with no remediation row | of those BLOCKING or ARMED |
+|---|---|---|
+| all fabrics | 852 | -- |
+| rows whose `fabric` is not `site-z` | 313 | 260 |
+
+| BLOCKING or ARMED | rowless | project | registry status |
+|---|---|---|---|
+| 103 | 105 | NFRA_CLDGRPH | closed |
+| 35 | 38 | NFRA_OUTSET | closed |
+| 30 | 35 | ETFS_GUARDRAIL | closed |
+| 18 | 28 | ETFS_INGEST | complete |
+| 16 | 20 | ETFS_POSITIONING | complete |
+| 14 | 17 | ADVI_PERFRP | active |
+| 11 | 13 | NFRA_COMPEFFICACY | closed |
+| 7 | 11 | D7_TICKETING | no row |
+| 5 | 7 | D1_CATVIEWS | active |
+| 4 | 4 | WSE_COTMDL | active |
+| 3 | 9 | AMGT_RESAPP | active |
+| 3 | 4 | OPAL_KIMIPIPELINE | active |
+| 2 | 6 | NFRA_COMPRAIL | complete |
+| 2 | 3 | OPAL_ADVIPOINTERS, ADVI_INSURE (active) | -- |
+| 2 | 2 | D3_MODELOVERLAY, ADVI_STITCH (active) | -- |
+| 1 | 1 | POSN_TENANCY | complete |
+| 0 | 5 | COT_CANON458 | closed |
+
+**What this number is.** It is the gate's own rule, so it is what the gate will enforce: the next commit that adds a
+remediation row to any of these channels is refused until every rowless item in that channel has a row in the same
+commit. For NFRA_CLDGRPH that is 105 rows before the first of its 23 undispositioned rows can be graduated.
+
+**What it is not.** It is not 313 forgotten hazards. NFRA_CLDGRPH's later remediation documents carry rows keyed by
+the adjudication row's id (`NFRA_CLDGRPH-C-S69` and the like), not by the investigation item's id; the limb matches
+ids exactly, so an item remediated under its adjudication's id counts as rowless. How many of the 313 are that
+convention and how many are true misses (as the five in ADVI_FIRMBKTS were) was not separated; it needs each
+remediation row's text read against the items it covers.
+
+**Consequence for the ruled order (CTO 103630).** The closed projects' BLOCKING or ARMED rows cannot be graduated
+one read per class, as ruled, without first writing the rowless items' rows; only dismissals land freely. Two ways
+through, both the gate owner's: the limb learns to resolve an item through the adjudication row that names it (then
+the count falls to the true misses), or the closed projects' compiles are dismissals-only with every still-live
+hazard carried as a NEW row in an open project's channel.
+
+-- 3.0.0_SA_CVO
