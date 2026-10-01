@@ -5081,6 +5081,31 @@ carries none.
     "spec_asserts": "The worker commit rule: every commit goes through safe-commit.sh --author ... -F <msgfile> -- <paths>.",
     "world_is": "A merge commit cannot go through safe-commit.sh with a pathspec; the merge was finished with `git add <the one conflicted file>` + `git commit -F` as the worker identity. The commit's tree carries the CLOUD side's files as CLOUD merged them.",
     "notes": "INERT: nothing to disarm. Candidate enrichment: a worker-merge limb in safe-commit.sh (as safe-merge.sh --continue is for the drain)."
+  },
+  {
+      "project": "NFRA_MCPINDEX",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~24",
+      "surfaced_at": "2026-10-01T10:50Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "NFRA_MCPINDEX-Z-W24-S8",
+      "one_line": "PHASE B consumer trace of silver/transactions same-day partition existence found a live reader: the bd gold dispatch's comp-freshness gate (bd_silver_transactions, severity ERROR, fail_age_hours 48, flat wall-clock hours on the newest LastModified under the prefix) is kept PASS/WARN on sentinel-less Mon/Tue only by the transaction document's 21:54Z empty-placeholder write; without it the gate FAILs and blocks the 04:00Z and 23:00Z gold dispatches on 4 of 4 measured gap weeks. TRANSACTIONS HELD.",
+      "class": "BLOCKING",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~MI",
+      "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+              "data/black_diamond/scripts/gold/gold_freshness_config.yaml:95-105 (branch @b1301bd64e): artifact bd_silver_transactions, s3_key_prefix s3://opal-data-bd/silver/transactions/, warn_age_hours 30, fail_age_hours 48, severity ERROR, scripts [A_00, A_03]; no freshness_basis or trading_artifact key, and .tools/comp-freshness _basis_decision returns 'flat' for it (the trading regex does not match the entry).",
+              ".tools/comp-freshness:343-421 get_latest_modified: age = now minus the max LastModified of any object under the prefix; data/black_diamond/scripts/gold/gold_dispatch.sh:1296-1335 runs `comp-freshness chain bd` in chain mode and prints 'DISPATCH BLOCKED' with exit 1 on FAIL. Schedules read live: bd-canonical-prices-daily cron(0 4 * * ? *) ENABLED, bd-gold-nightly-fallback cron(0 23 ? * MON-SAT *) ENABLED.",
+              "Measured from s3api list-object-versions silver/transactions/ (181 versions since 2026-08-25): newest-write age at the 04:00Z and 23:00Z dispatch slots on 09-08, 09-15, 09-22, 09-29 (Tuesdays after a sentinel-less Monday): with the document's 21:54Z writes 6.1h and 1.1h; with those writes removed 51.7-51.8h and 70.7-70.8h, i.e. at or past the 48h FAIL line in 8 of 8 slots (4 of 4 weeks); 09-09 reads 75.7h and 94.7h (holiday week). Slots on the sentinel days after (09-16, 09-23, 09-30) read the same either way.",
+              "gold_dispatch.sh:230-290 check_freshness also keys on the newest silver/transactions KEY-NAME date (aws s3 ls + regex) against gold data_as_of; a gap-day placeholder partition advances that key date, so its removal changes when this skip gate proceeds (a latest-available read, not a per-date existence need; content unchanged).",
+              "B_03.account_gains.py:322-345 reads silver/transactions/<date>.parquet per date but an absent date and the empty placeholder both yield no income (has_income False), so it is NOT keyed on existence; the sovereign sec.8 hold on the bd freshness config means `comp-freshness` skips it in agent context (NOTE printed), so the live verdict was computed from the object LastModified history above, not by running the gate (COMP_FRESHNESS_PIPELINE not set)."
+          ]
+      },
+      "spec_asserts": "A2: transactions GO on one precondition -- a read-only consumer trace; 'If any consumer keys on a same-day partition existing, file a BLOCKING row and HOLD transactions.' Served content unchanged on gap days.",
+      "world_is": "Served CONTENT is unchanged (the placeholder is empty), but the document's gap-day write is the only thing refreshing the newest-LastModified that an ERROR-severity pre-dispatch freshness gate reads; retiring it would flip that gate to FAIL on every sentinel-less Monday night through Tuesday, blocking the gold dispatch. The trace found the reader, so transactions HELD: document stays v3 DEFAULT, bd-transaction-pipeline-trigger stays ENABLED, the plan re-cut to 3 resources.",
+      "notes": "DISARM (2.0.0_SA_COO~MI, round-6 slug): retiring the transaction document is safe only with either the sentinel fix (S4: accept a measured has_data_rows=0 for the transactions PERIOD table, in the shared data/cot ingest) so bd-silver-merge writes on Mon/Tue, or a ruling on the freshness entry's basis (the CONFIG is under the sovereign sec.8 hold, not a worker edit). Realized HELD for the same sentinel cause (S2/S4). Not an act of this order."
   }
 ]
 ```
