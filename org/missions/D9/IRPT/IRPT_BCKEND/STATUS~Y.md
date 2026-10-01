@@ -1,297 +1,113 @@
 # IRPT_BCKEND~Y (Analysis) -- status
 
-Seat `2.0.0_SA_COO~Y` (CLAUDE), `/canonical-drive 10m` standard form (lease FULL; LIVE_ARMS RELAUNCH row 2026-09-28,
-re-authorised by the post-crash relaunch brief 2026-09-30 13:0xZ). As of 2026-09-30T14:4xZ. Older sections below are
-kept for pins and the served-artifact map; this section supersedes their next-lists.
+Seat `2.0.0_SA_COO~Y` (CLAUDE). Mode FAST: lease `IRPT_BCKEND~Y` armed 2026-10-01T04:33Z until 12:33Z on Andrew's word
+(record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261001_042xZ_SELF_DRIVE_60M_LAPTOP_FABRIC_FINAL_SAY_CLOSER_DRIVE_IRPT_FIRST.md`,
+CTO 103441). Loop `/canonical-drive IRPT_BCKEND` 10m (LIVE_ARMS RELAUNCH row). Way forward: CTO rulings batch 61
+@8dcf5bbe7a, ruled on the trace `org/tier1_exec/4.0.0_SA_CRO~X/deliverables/ANALYSIS_END_TO_END_GAP_BRIEF_20261001.md`.
+Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-01T05:2xZ. The version before FAST is at @5c19dcc1fe
+(rounds 19 to 29, windows 22 and 24, the served-artifact map).
 
-## 0. ROUND 29 CLOSED at this lane (3 of 3 drained); svc-irpt-analysis EXISTS; W27 WAITS on ~P's API cut (CTO 103317)
-
-As of 2026-09-30T18:4xZ. Drain-end packet: `deliverables/2.0.0_SA_COO~Y/R29_Y_DRAIN_END_PACKET_20260930.md` (the CVO's L8 input).
-
-| cell | on CLOUD | what |
-|---|---|---|
-| IB-yr-291 | @1561789a42 | receipt.json carries `vendor_requests` (ten-key shapes, refused off-shape); the replay conforms (amendment 1) |
-| IB-yr-292 | @f39c3b0617 | `contextOptions()` records a HAR only behind `YC_RECORD_HAR=1`; `har_scrub.py` proven by a planted value |
-| IB-yr-293 | @784ac650d0 | the projection carries `allowedFirmIds`; `decide()` refuses `ACTOR_FIRM_NOT_ALLOWED` |
-
-Real runs on CLOUD: 9 of 9 criteria at their stated reading. Hygiene: 25 of 27 generate test files green alone; the 2
-reds are red at the base too (pre-existing).
-
-**Shared-surface hash for `~P` (CONTRACT row 21):** `_scope/canonical_profile_reads.py` one-field patch at @784ac650d0.
-
-**The principal (ledger CLOSED @4303ef0b2e):** `svc-irpt-analysis@opalinvest.com`, admin / service / opal-capital /
-active / allowedFirmIds cottonwood; secret readers = the walker's user only (24 of 24 roles explicitDeny).
-
-**CTO RULING 103317:** the API half IS a precondition. `~P` cuts API enforcement of `allowedFirmIds` for service
-principals with a test; Y's exact patch is `deliverables/IRPT_MVP_Y/API_ALLOWED_FIRMS_PATCH_CANDIDATE_FOR_P_20260930.md`
-@4a3cabe67d. **ONE next proof:** once it lands, Y's live re-read (`svc_principal.py negcontrol`: inflection refused,
-cottonwood 200) -> both prints to the CTO -> S238 disarms -> the W27 window (also needs the resident, `~P`'s under CTO 103150).
-
-**Round 30 list:** the certifier data path; S231's terminal state for a permanent authority refusal; ONE hygiene cell
-(W94-S2 + the two base-red generate test files); the issuance commit states CTO 103159 and CTO 103372.
-
-**Pre-cut measurement for the certifier cell (tick 74, 19:4xZ):** the data path EXISTS without a contract change.
-`ycharts/generate/publisher.py` `publish()` already loads and hash-checks the retained composition (`_promote_sources`,
-`json.loads(retained["data"])["resolved"]`), and `RequestComposition.schema.json` carries `resolved.comparison_catalog`
-(object, maxProperties 5, one `$defs/comparison` per chosen key). Today `publish()` calls
-`build_publication(data, census, ...)` (publisher.py:115) and `build_publication` -> `verify_extraction` calls
-`certify.certify(eligible, pdf_bytes, census=census)` (publication.py:151) and `certify(charts, ...)` (:192) with no
-comparisons. The cell threads the catalogue's chosen names publisher -> build_publication -> certify, and certify refuses
-a COMPARISON/MULTI report whose PDF prints none of them. Paths: publisher.py (IRPT_Y_ACCESS_INTEGRATION_P, Y semantic
-writer), extract/publication.py, extract/certify.py and their tests. No import-line change is implied (CTO 103372 not
-engaged unless one is added).
-
-## 0-prior. Round 19 ~Y CLOSED (2 of 2 orders drained); round 20 list
-
-Decomposition `decompositions/IRPT_BCKEND_DECOMP_R19_Y.md` (@89f619e28b, amendments 1 @ecbb08548f and 2 @81cb041780).
-Close record `deliverables/2.0.0_SA_COO~Y/R19_Y_DRAIN_CLOSE_20260928.md` @89966f267c.
-
-| item | where it stands |
-|---|---|
-| 6 saved-type refusal before generation | TO-IB-yr-1 DRAINED @ec8f69f718; rides ~P's next resident + generate build (~P 102430), and ~Y runs the four gates on the built artifact when asked |
-| 8 lookup test without env var | TO-IB-yr-2 DRAINED @7b99390ae3 |
-| 1-4 Comparison window, W15 screen/export, Y2 arms, first 49F + INF reports | ride ~P's ONE window packet (~P 102407, 102410); in STATUS~P's next-list @522946a513 |
-| 5 recovery and revocation | unit-, real-entry- and live-organic-covered; the deliberate live revocation arm rides the same ~P packet (~P 102423) |
-| 7 branded Analysis export | ~P's by CONTRACT.md:23 (amendment 2); on ~P's next-list after K8 (~P 102471); ~Y supplies the AnalysisReport schema and owner shape on ask |
-
-Round 20 ~Y rectangle (issuer acts, no cells uncovered):
-1. The four gates (zip_module_census `--expect`, zip_cold_start_smoke `--owner-refusal`, status_role_sim, offline_submit_proof
-   `--live-env`) on ~P's built resident + generate artifact carrying @ec8f69f718.
-2. At ~P's window drain: `case_trace.py <firm> <REQ>` on every ~Y body (Comparison, Y2 XLSX, Y2 Target Weight, the
-   INF and 49F Overviews) and the revocation arm (plus the resident journal). Commit each trace under
-   `deliverables/2.0.0_SA_COO~Y/`.
-3. On ~P's cut of the branded export: supply the AnalysisReport schema and the request-owned retained shape.
-
-Rows: W63-S1 (INERT, the issuer's proof-path stem; the same class as S167/W42-S4), S187 (INERT, worker-slot reuse; owner
-1.0.0_SA_CTO), DSGN_IRPTV1-S35 (~D portal surface). 0 ARMED rows without a seated owner.
-
-## 0a. Window 22 WALKED -- round 20 item 2, partly discharged (2026-09-29T14:4xZ, after the 13:4xZ respawn)
-
-Proof and per-body route record: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/W22/PART_Y_EVIDENCE_20260929.md`
-@`827cbc166f` (LOCAL; `ls-remote` origin/CLOUD `15655f4a25`). Authority: ~P's packet blob `1f3bf0914f` (@6550c62cdf),
-halves CTO `3b209c072c` / CRO `af1940e31d`, ledger `irpt-ui-walk-principal-w22-20260929`. Cap 5 submissions, all 5 used,
-one login / one K4 / at most one K5 each, no retry, no replay. All five terminal by name 39 min inside the 15:10:37Z cap.
-
-| body | firm | terminal state | trace |
-|---|---|---|---|
-| Y1 Comparison `opal_long_term` CSV | cottonwood | job **READY**, report `RPT-2e21b52e..` | `case_trace.py` 22 links, **20 MATCH / 0 MISMATCH / 2 NOT_EVALUATED** |
-| Y2 Multi-Comp CSV | cottonwood | **NEEDS_CORRECTION** `RESOLVE_RETRY_EXHAUSTED` (203 s) | no REQ -- K5 not made (packet branch) |
-| Y3 Target Weight n=1000 **XLSX** | cottonwood | **ATTENTION** `SESSION_REFRESH_ALREADY_USED` | no `checkpoint_pdf`, so no trace |
-| Y4 Overview CSV | 49financial | **NEEDS_CORRECTION** `RESOLVE_RETRY_EXHAUSTED` (183 s) | no REQ -- K5 not made |
-| Y5 Overview CSV | inflection | **NEEDS_CORRECTION** `RESOLVE_RETRY_EXHAUSTED` (182 s) | no REQ -- K5 not made |
-
-**What the window settles.** **S194 READ AND DISARMED** on Y1: `variant COMPARISON` for the key count
-(`template_id 14141824`), and of the catalogue's portfolios the retained PDF prints exactly `Opal Long-Term`, on 16
-pages; `COMPARISON_NOT_PRINTED` did not fire; 72/72 scalar sections re-read at their own page and coordinates, 0 misses;
-the served foreign-firm name check passes. **S193 READ LIVE three times** (Y2, Y4, Y5), from the NEEDS_CORRECTION rows
-themselves per the CTO's condition 1, each carrying `reason RESOLVE_RETRY_EXHAUSTED` and one ERROR finding with
-`actions: [REPLACE_FILE]`. The three orders those arms belong to -- `TO-IB-yr-201`, `TO-IB-yr-211`, `TO-IB-yr-221`, all
-`<risk>WORLD</risk>`, all `complete` -- now have their ONE REAL RUN. DLQ `irpt-generation-dlq` 1/0, unchanged from
-create: no growth, no BLOCKING row.
-
-**Round 20 item 2 is PARTLY discharged.** Traced: the Comparison. Not traceable, and carried: Multi-Comp, the Y2
-Target Weight report, the first certified 49financial report, a certified Inflection report -- three of the five bodies
-never reached K5 and the fourth produced no PDF, so there is no REQ or PDF for the later hops to read. The revocation
-arm did not run (W22 carries no arm R). Target Weight IS proven through the vendor short of a report
-(`rows_echoed 2`, `AAPL 600.0` / `VNQ 400.0` Dollars, `upload_record_id 780748`, `model_portfolio_id 2367113`).
-
-**Rows filed, both OBSERVATION / `hazard_standing` INERT, owner `2.0.0_SA_COO~Y`:**
-- `IRPT_BCKEND-S206` @`befabb9a7b` -- `PROVIDER_READ_UNAVAILABLE` tracks CONCURRENCY, not the file. Y1 and Y2 carry the
-  same upload bytes 14 s apart and resolved 1 s vs 203 s; both READY resolves are the first after an idle gap; Y4 and Y5
-  were dispatched 16 s apart. `REPLACE_FILE` is unactionable for those three rows.
-- `IRPT_BCKEND-S207` @`827cbc166f` -- Y3's vendor session was evicted TWICE inside one 31.5-min request. The refusal is
-  the designed one (`resident_worker.py:126-129`, tested at `test_resident_worker.py:264`), so it is not a defect; what
-  the row carries is the double eviction and the fact that the resident journals NO line for a job ATTENTION (79 lines
-  over 14:08-14:34Z, all `IRPT_RESIDENT_POLL`), so the code is recoverable only from `irpt-jobs`.
-
-**Next at this lane, unblocked:** nothing. Every ~Y-issued order is terminal (5 of 5; denominator 137 order files
-scanned). The four carried report arms each need ONE more window packet from `2.0.0_SA_COO~P`, and no code is owed by
-~Y for any of them. Leg D1 credoff was handed to ~P at 14:32:50Z.
-
-## 0b. Window 24 WALKED and ROUND 23 CUT (2026-09-29 evening)
-
-### W24: zero reports, and the blocking reason named
-
-Proof: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/W24/PART_Y_EVIDENCE_20260929.md` @e146a80a3d. Packet blob
-`3089695cc6` @cbbe9ed0db (amendment 1 is part P only); CTO 102899, CRO 102904; ledger
-`irpt-ui-walk-principal-w24-20260929`. GO 17:25Z, **Y1 fired 17:26:11Z**, part Y complete 18:00:20Z, **18 min inside
-the 18:18:34Z cap**. Credoff handed to ~P 18:03:10Z.
-
-| arm | firm | terminal state |
-|---|---|---|
-| 1 Multi-Comp | cottonwood | NORMALIZED 2 s -> **ATTENTION `SESSION_REFRESH_ALREADY_USED`** 17:41:39Z |
-| 2 Target Weight n=1000 XLSX | cottonwood | **NEEDS_CORRECTION `RESOLVE_RETRY_EXHAUSTED`** (issuer's overlap; S215) |
-| 3 Overview | 49financial | NORMALIZED 2 s -> **ATTENTION `SESSION_REFRESH_ALREADY_USED`** 18:00:00Z |
-| 4 Overview | inflection | **CAP-TRUNCATED by name**, 18 min remained |
-
-The S206 discriminator was **dropped by name** (~P 102921) on ~Y's measured budget. **ZERO reports; all four report
-arms still carry** -- Multi-Comp, the Target Weight report, the first certified 49financial, and a certified
-Inflection. DLQ 1 before and 1 after, equal, so no BLOCKING row was owed there.
-
-### Rows this lane filed
-
-- **`IRPT_BCKEND-S215`** @b902e33b15 -- **S206 CONFIRMED on a second build.** A defect in `w24_run_arms.sh` (an MSYS
-  path embedded in a `python -c` source body, which MSYS does not convert) skipped the jobs-terminal wait and
-  overlapped arms 1-2, running the dropped discriminator by accident: arm 1 solo NORMALIZED, arm 2 into its live
-  generation exhausted. First reproduction off `wnt7hjAB`. Provenance recorded as the issuer's defect: not designed,
-  not pre-registered, not randomised.
-- **`IRPT_BCKEND-S218`** @e146a80a3d -- **BLOCKING / ARMED**, `disarm_owner` `2.0.0_SA_COO~P`. Both jobs that reached
-  the vendor, two tenants, each SOLO, died at the session refresh. `inrij6hL` 2 of 2; `wnt7hjAB` 1 of 2.
-- **W22's `screen` link is now EVALUATED and NOT MET** (addendum @2912983044): `RPT-2e21b52e` sections serve 200 /
-  UNAVAILABLE / `UNEXPECTED` / "bundle was not rendered". The deleted walk principal is NOT the cause -- an ownership
-  failure would serve `NOT_AUTHORIZED`, and `interactive_access.authorize_current` returns True for any `OPAL_GLOBAL`
-  viewer regardless of the stored `principal_id`. The missing artifact is the rendered bundle. ~P owns that row (S213).
-
-### Round 23 ~Y: cut and spawned
-
-`decompositions/IRPT_BCKEND_DECOMP_R23_Y.md`, **one cell `IB-yr-231`**, order `TO-IB-yr-231` @4f2a591f61, worker
-`~83` on `wk-IRPT_BCKEND-83` (spawned @cb7e028c6c, `pending`). fanout 1 of 1, cap 8.
-
-The mechanism that shaped it: `refresh_session()` is reachable only from `step()` on an `eviction_verdict`, so
-`SESSION_REFRESH_ALREADY_USED` means the job was **evicted twice**, the first eviction spending the one admitted
-refresh. `1.0.0_SA_CTO` ruled a pre-claim session fix (102967) and then **amended on that reading** (102970):
-observe, discriminate, remedy, with the one-refresh allowance unchanged in every branch. The cell is the observation
-only -- journal the matched verdict per eviction and the job's terminal ATTENTION code. It closes `S207` as a side
-effect. Steps 2 and 3 are deliberately uncut: step 2 is a live read this lane performs once the journal carries the
-verdict, step 3 the amendment that reading decides.
-
-Base dry-run, measured: AC1 FAIL, AC2 FAIL, AC3 PASS both parametrizations.
-
-### What this lane is waiting on
-
-1. **Worker `~83`** to finish `IB-yr-231` (running at this write).
-2. Then `2.0.0_SA_COO~P` to rebuild the resident carrying it -- served code never moves by ~Y.
-3. Then **one solo job on a cold resident** (step 2), which needs an Analysis window packet from ~P.
-4. The four report arms remain blocked behind S218 for as long as no job can reach the vendor session.
-
-## 0c. Walk-2 placed on this lane; rounds 23, 24 and 25 (2026-09-29 late)
-
-### Three CTO decisions this lane now works under
-
-| id | the ruling | why it matters here |
-|---|---|---|
-| **103026** | Walk-2 backend placed: *"~Y: W2-04/05 names from the model catalog + etf-classifications, no external lookup; W2-06 correction words on the status wire; W2-07 is S206/S218."* | the round-24/25 rectangle |
-| **103035** | **No substitution to bd-securities** -- *"Andrew is retiring bd-securities, so a new reader of it is the fork he named."* A ticker etf-classifications lacks **shows its ticker verbatim, never "Comparison N"**. The coverage gap is `MDPF_SECCLASS`'s first need. | ~Y had RECOMMENDED bd-securities on coverage (96.5% vs 21.1%); the CTO's reason was one this lane did not have, and it overrides the coverage argument |
-| **103038** | **Shape B**, on ~Y's measurement: the catalogue rides a **sibling scoped GET**, not ResolvedScope. Conditions: the existing `/api/scoped/investor-reporting/` family, same authz guard and tenant check; its own new `_contracts` v1 schema, `additionalProperties: false`; any new resource name is builder output (rule 30). | `_contracts/ResolvedScope.schema.json` is `additionalProperties: false` with 12 properties, so the catalogue could not be added quietly |
-
-A fourth decision, **102970**, amended 102967 on ~Y's mechanism reading and governs round 23: observe, discriminate,
-remedy -- and **the one-refresh allowance does not change in any branch.**
-
-### Round 23 ~Y -- CLOSED and drained
-
-`IB-yr-231` (`TO-IB-yr-231`), worker `~83`, `<risk>WORLD</risk>`. **Drained @caa2432e1c**; verified on CLOUD.
-`resident_worker.py` now prints `IRPT_RESIDENT_EVICTION verdict=<NAME> job=<id>` on every eviction and
-`IRPT_RESIDENT_ATTENTION code=<code> job=<id>` when a job ends ATTENTION, through a closed-token formatter that cannot
-leak vendor material. **No behaviour changed** -- 0 lines touch `claim_intent`, `SESSION_REFRESH_ALREADY_USED` or
-`request_budget`. **This closes `IRPT_BCKEND-S207`.** L8 packet `R23_Y_DRAIN_END_PACKET_20260929.md` @e583ddf14a sent
-to `3.0.0_SA_CVO`, READ at 20:08:28Z; **the L9 grade is still owed.**
-
-### Round 24 ~Y -- CLOSED at one cell, and an issuer error recorded
-
-`IB-yr-241` (`TO-IB-yr-241`), worker `~87`, `<risk>WORLD</risk>`. **Drained @b8b5cefc6e.** `ops/status.py` now offers
-`{"action": "CORRECT", "safe": true, "description": "<words>"}` from an enumerated table when a NEEDS_CORRECTION
-envelope's code is mapped. **No contract change**: `actions[]` already had `CORRECT` and a required `description`, and
-`public_reason_code` remains *"a code, never a message"*. Only `RESOLVE_RETRY_EXHAUSTED` is mapped, and its words
-**deliberately do not blame the file** -- S206/S215 measured that as the wrong remedy.
-
-**The error, recorded in R24 amendment 3:** round 24's rectangle was TWO cells and this lane cut `IB-yr-241` alone,
-which closed the round's issuance. `to-pipeline-gate` then refused `IB-yr-242` -- *"ONE ISSUER PER ROUND is keyed to
-the ROUND, never the serial (Rule 27)"*. Both should have been cut in one issuance. **Three retries preceded reading
-the refusal**; a repeated failure is a message, not an index race.
-
-### Round 25 ~Y -- IN FLIGHT
-
-`IB-yr-242` (`TO-IB-yr-242`) @42acbd8ccc, worker `~88` on `wk-IRPT_BCKEND-88`, spawned @634b3832f6,
-`decompositions/IRPT_BCKEND_DECOMP_R25_Y.md`. The round exists only as the remedy for the issuance error; the cell's
-content is unchanged. Battery `R24_CHECKS/test_r24_y2_catalogue_read.py`, base dry-run AC1-AC3 FAIL / **AC4 PASS**
-(the control asserts ResolvedScope stayed v1 -- a cell that took the rejected option fails it).
-
-### The Andrew worktree edict (MSTR 103046)
-
-*"as they have agents close out, those worktrees (if all committed) also need to be wiped."* Both worker worktrees were
-removed and their branches deleted **in the same act that drained them**. Each removal needed `--force` because the tree
-held an untracked `.scratch/`; in both cases the content was read first and found already landed (commit messages in
-git, and a `status.bak` byte-identical to CLOUD), so the deviation from the edict's "no `--force`" is recorded with its
-reason rather than taken silently. **0 stale worktree registrations** at the last sweep.
-
-### What this lane waits on
-
-1. **Worker `~88`** on `IB-yr-242` (running).
-2. **`3.0.0_SA_CVO`** -- the L9 grade of @e583ddf14a.
-3. **`2.0.0_SA_COO~P`** -- the rebuild carrying `IB-yr-231` AND `IB-yr-241`. Both are INERT until it lands.
-4. **Then S218 step 2**: one solo job on a cold resident, whose journal now distinguishes a pre-job session rejection
-   from per-call evictions. That read is this lane's and needs an Analysis window packet.
-5. **The four report arms remain blocked behind S218** while no job can reach the vendor session.
-
-## 1. Pins
+## Pins
 
 | What | Value |
 |---|---|
-| Work in progress | NONE. The Y worktree `C:/Users/AndrewBerman/Desktop/irpt-mvp-y-20260922` is clean (0 lines of `git status --short`); the main tree holds 0 uncommitted Y-owned paths. |
-| Y branch | `irpt-mvp-y-20260922` @`0a24edfe38` -- **DRAINED**. Measured 2026-09-29T15:0xZ: `git rev-list --count CLOUD..irpt-mvp-y-20260922` = **0** and `git merge-base --is-ancestor` says **ANCESTOR**, so every commit on it is already in CLOUD history. The earlier pin here ("25 commits not on CLOUD ... the drain is MSTR's act 4") was STALE. Positive control in the same sweep: `irpt-m-cot-b1` ahead=5 NOT-ANCESTOR. `project.json.blocking` still names the Y leg as owed -- not ~Y's field to edit; surfaced as row `IRPT_BCKEND-S208` and to `0.0.0_AB_MSTR` the same turn. Per CLAUDE.md NEVER-2 the leg closes SUPERSEDED, never re-executed. |
-| Y records on CLOUD | log `b0adb91aac`; handoff `465692aa2b`; case_trace Comparison `33addf0c02`; resident SSM read `add7a41cfd`; rebuild 3 gates 3+4 `3f40796915`; GRANT release arms `46b975e6aa`. These are the POST-S19 hashes; any older pin resolves through `org/tier0_exec/0.0.0_AB_MSTR/deliverables/S19_PURGE_COMMIT_MAP_20260928.txt`. |
-| Tools | `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/live_walk/` (live_chain, case_trace, offline_submit_proof, zip_module_census, zip_cold_start_smoke, status_role_sim, served_drift_census) |
+| Worktree | branch `coo-y-r30` at `C:/Users/AndrewBerman/Desktop/coo-y-r30` |
+| Item 1, permanent authority refusal ends the job (S231) | candidate `62535e0fdc`, on CLOUD by merge `f1c8ade8b4` |
+| Item 2, certification handed the chosen comparisons (S194, S213) | candidate `b75e571a74`, on CLOUD by merge `1ee1c56e9b` plus re-land `3a16cc442b` |
+| Item 3, generate tests green; routes.json consumer notes (W94-S2, W91-S1) | candidate `ec4dddd69b`, on CLOUD by re-land `3a16cc442b` |
+| Item 4, etf-classifications reader (W88-S2) | candidate `0ad0e6867d`, on CLOUD by merge `ca9d060bb2` |
+| Item 5, catalogue list serves named rows only (batch 61) | candidate `efde229443`, on CLOUD by merge `53dcb65acd` |
+| Deployed | NOTHING of items 1 to 5. Resident root `/opt/irpt-resident/fe64236bbb-st5`; generate `inrij6hL..`; status `ZYr+IDMp..` |
+| Push state | LOCAL; origin/CLOUD `0abf99fcd4` (ls-remote read 05:2xZ). CLOUD is pushed by `0.0.0_AB_MSTR` only |
 
-## 2. Deployed artifact -> source commit, per served function (Y's surface; read live 2026-09-28 17:4xZ)
+## Live thread
 
-| Served function | Live identity (read by Y) | Source |
-|---|---|---|
-| `irpt-ycharts-generate` | CodeSha256 `AdE17rT6..`, LastModified 13:11:54Z, Successful; S3 `investor-reporting/irpt-ycharts-generate.zip` VersionId `BIEsyaNn..` | P branch `irpt-p-publish-20260923` cherry-picks `3f80724d2e`/`3b10bc336c`/`3523706d32`/`987689c242` (= backend `2e3d50caac`, `6096ee740b`, `c1fd6c5e52`, `15b9f85eb3`). Members: templates.json `54656584` (Y `0a24edfe38`), publication.py `6aa82b3a` (Y `14568b9ec1`), maintained_sources.py `774eca9b` (M `15b9f85eb3`), generate_installed.py `b4f33b37` (`2e3d50caac`), publisher.py `68900af6`. Ledger `irpt-generate-resident-grant-20260928` CLOSED 13:19:08Z. |
-| resident `irpt-analysis-resident.service` on `i-0167fd745ad906a66` | SSM `cce9269f` (17:4xZ): ExecStart root `/opt/irpt-resident/fe64236bbb-st2`, active, MainPID 235902 since 13:17:56Z, NRestarts 0, 0 Tracebacks over 4 h | tar `ec2/investor-reporting-ycharts/resident/irpt-resident-fe64-st2.tar.gz` VersionId `2ZLL.I5j..`, sha256 `f681024b..`; `build_resident_package.py` = st's overrides + templates.json `6096ee740b`, maintained_sources.py + publication.py/publisher.py `c1fd6c5e52`/`15b9f85eb3`. Rollback root `fe64236bbb-st` kept on the host. |
-| `irpt-status` | CodeSha256 `ZYr+IDMp..`, LastModified 14:04:55Z, Successful; S3 `investor-reporting/irpt-status.zip` VersionId `7Uz6kDd_..` | rebuild 3 MINIMAL: bMMJ members + submission.py `9929a829` (pin `5cec1a3892`) + prospect_dates.py `e5bae585`; ops/entry.py at bMMJ's `9da6a1a6`; P's ci record `b4f5492e9e`. Plus the irpt-status-role original_holdings read grant (3 firms, registry-derived). |
-| `irpt-intake-poller` | CodeSha256 `YpE2MyUw..`, LastModified 2026-09-11T12:55:52Z | unchanged since 09-11. The 09-27 served drift census (`SERVED_DRIFT_CENSUS_20260927.md`, `64953b61a7`) shows 4/4 Y modules identical to source. |
+NOT LIVE. The thread is the upload lane (batch 61 item 1): one Cottonwood CSV upload, an Overview, a READY report read
+on the page. First failing hop: 7, the YCharts session (the last 3 of 3 jobs that reached the vendor died there). The
+thread also crosses three deployed units that are behind CLOUD, so one build window comes first.
 
-Live proof that the four compose: REQ-67e12718 reads READY ANALYSIS_READY, date_basis PER_SECTION, 51 section dates on
-the served `ZYr+IDMp` (P's after-read 14:05:33Z in ledger `irpt-status-dates-rebuild3-20260928` leg D1, equal to Y's
-gate 4). Y did not re-invoke it: the next check would not change the next-list.
+## Next, in the order batch 61 ruled
 
-## 3. Open ledger entries touching Y's surface
+1. **(b) `irpt-status` and `irpt-ycharts-generate` at CLOUD HEAD as WHOLE bundles** -- this seat's packet, both halves:
+   member census against the live zip, pending members shipped not pinned, one invoke per function that reaches the
+   changed path, same-window rollback. Waits on (a), `2.0.0_SA_COO~P`'s IB-pr-275 (CTO half signed @d9972c6eb4).
+2. **(c) The resident at CLOUD HEAD under a ledger** -- this seat's. It picks up IB-yr-293, item 1, item 2 and
+   IB-yr-291. Read-back: the digest of `ycharts/generate/current_authority.py` on the host (row S244's disarm).
+   Then redrive the two dead-lettered messages on purpose (below); each ends by name.
+3. **The hop-7 diagnostic: ONE solo Cottonwood Overview job on a cold resident**, ledgered, under Andrew's standing word
+   at this seat for Analysis attempts; read the verdict journal. It produces a report or names the session verdict
+   (this names row S230's cause and amends 103150's first condition). Not W27.
+4. **S238's two controls after the window:** the directory negative control refused at the API (`svc_principal.py
+   negcontrol`, after `~P`'s second packet), and one foreign-firm job refused in the resident's own journal. Then W27.
+5. After the thread: one job per remaining arm (Multi-Comp, Target Weight, 49 Financial, Inflection), the catalogue
+   route served first; the resolve concurrency fix; the vendor PDF link; the Analysis export; the email lane.
 
-| Entry | Owner | Open leg | Closes when |
-|---|---|---|---|
-| `irpt-status-dates-rebuild3-20260928` | 2.0.0_SA_COO~P | A1: K10, the page reads REQ-67e12718 READY PER_SECTION | 2.0.0_SA_COO~D walks the page (the API half is already READY) |
+## Reads reconciled (batch 61 item 7), measured 2026-10-01 05:1xZ
 
-Y opens no ledger entry of its own; deploys and served installs are P's. Every other `irpt-*` entry open on CLOUD
-(`adapter-render-*`, `export-*`) is P's or M's and does not touch Analysis. Census: every one of the 9 worktrees was read
-with `ls-tree` of `org/critical_paths/.open_deploys/`.
+- **The resident is ACTIVE, not stopped.** Journal: stopped 2026-09-30T03:50:15Z, started 05:13:31Z under this seat's
+  ledger `irpt-resident-restart-3variant-20260930` (leg D1 closed 05:15:33Z), 0 restarts since. Row S229's "the
+  resident is stopped" describes the 83 minutes before that start.
+- **The dead-letter queue's two messages are named.** `irpt-generation` 0 visible, 0 in flight; `irpt-generation-dlq` 2,
+  peeked at visibility 0, nothing deleted: `REQ-3a1b73a8dead02a17a09043b` (sent 2026-09-27T00:12:06Z, the baseline one)
+  and `REQ-86f1ce7062356bc5c109ce12` (sent 2026-09-30T03:36:09Z, the added one). The second was received five times
+  (03:36, 05:13, 05:28, 05:43, 05:58Z; the last four each `CurrentAuthorityRefused ACTOR_NOT_FOUND`), which is the
+  queue's maxReceiveCount.
+- **The two SUBMITTING job rows are those same two jobs.** Both carry `intent_session_refresh`, detail
+  `{"operation":"session_refresh"}`, no lease. Neither can become terminal on served code. After (c), a redrive ends
+  each by name: `REQ-86f1ce70` reads ACTOR_NOT_FOUND (item 1); `REQ-3a1b73a8` reads ACTOR_NOT_FOUND or
+  SESSION_REFRESH_ALREADY_USED, whichever its actor's row decides.
+- `irpt-jobs` is 17 rows: READY 5, ATTENTION 8, SUBMITTING 2, and 2 rows that are not jobs (tenant `_opal`: the
+  session lease row, released, owner `irpt-ycharts-runner/312680`, fence 19; and one PROVIDER_OPERATION row).
+- **Row S230, as far as the journal goes:** 03:36:10Z `IRPT_RESIDENT_EVICTION verdict=EVICTED job=REQ-86f1ce70`, then
+  03:36:28Z `retained_for_retry class=OperationRefused code=CAPTURE_FAILED:AUTH_FAILED`. The first vendor operation was
+  evicted and the one admitted refresh failed inside the capture 18 s later. Why the capture failed is not in the
+  resident's journal; item 3 above names it.
 
-## 4. Next-list, in priority order (becomes round 19's cells)
+## Rows this lane holds
 
-1. **The first live Comparison window (FWD-4 arms).** K4 is W15's CSV. K5 is `opal_long_term` via `live_chain.py`
-   `WALK_COMPARISON_KEYS`, one Comparison and two Multi-Comp bodies, each schema-valid. Then `case_trace.py cottonwood <REQ>`.
-   Everything the window needs is served (generate `AdE17rT6` + resident st2). It needs one window packet from ~P; no
-   code is owed.
-2. **Close window 15's two NOT_EVALUATED links.** (a) The screen: ~D's K10 on REQ-67e12718, the same act as the rebuild 3
-   A1 leg. (b) The export: window 16. The Analysis export is unbuilt and refused by name; the CTO ruled it an enrichment
-   under FWD-9 (101465).
-3. **The Y2 arm windows.** The XLSX template and Target Weight arms are ready in `live_chain.py` (`e29a2e7d27`, pre-S19
-   `5d371a403e`). Each needs one window.
-4. **The first certified Analysis report per remaining firm: 49financial, then Inflection.** No certified vendor PDF
-   exists yet for either; each firm's first window produces one. The certifier's firm check already derives every
-   firm's name from the registry (`14568b9ec1`, `0a24edfe38`).
-5. **Recovery and revocation, proven live.** The goal's recovery/revocation requirements have offline proofs only
-   (retained-PDF recovery, ownership checks at `2874e37647`). A cell drives each deliberately, with the organic case as
-   the negative arm.
-6. **Enrichment: read back the saved `model_portfolio_type` before the report is generated.** This is the W15-3
-   Static-only rule's pre-check (CTO 102021).
-7. **Branded Analysis export (FWD-9 enrichment).** Unbuilt; it follows item 2(b).
-8. **Hygiene, at the drain:** `intake/tests/test_security_resolution.py:31` needs IRPT_LOOKUP_FIXTURE_ROOT (Y). The Y
-   worktree is a sparse checkout, so two `test_broker_recovery_evidence` arms fail only there (Y).
+| Row | State |
+|---|---|
+| S231 | code landed (item 1); disarms when the resident carrying it ends `REQ-86f1ce70` by name |
+| S229 | conditions: cause named (item 3 above), retained message handled (the redrive), restart under a ledger (done 09-30) |
+| S244 | ARMED; disarms on the resident build's read-back (next 2) |
+| W88-S2 | reader landed and inert; the grant and the wiring are an exact patch for `2.0.0_SA_COO~P`: `deliverables/2.0.0_SA_COO~Y/R30_PATCH_FOR_P_W88_S2_20261001.md` |
+| W94-S2, W91-S1 | repaired by item 3; for the CVO to close |
+| W91-S2 | NOT repaired: `_contracts/tests/test_seam_paired.py` is held by the open order IRPT_DASHBD TO-DB-b-4. Ready check `R30_checks/check_303_seam_handlers.py` (FAIL at HEAD: 4 no-handler lines, 8 of 12). Owner of the file's grant: that order's issuer; un-parks when the order is terminal |
+| W92-S1 | READ: the portal never rendered a finding's `actions`. `tabs/analysis/ProspectComposer.tsx:309-319` (portal @7c354824) prints `result.reason`, a fixed sentence and each finding's `code`; `InputReview.tsx:30-41` keys its control on `reasonCode`. So the vocabulary change removed no rendered action. For the CVO to close |
+| W92-S4 | waits on `irpt-status` served at CLOUD HEAD (next 1), then one read of `RPT-2e21b52e` sections expecting NOT_READY |
 
-Parked, not a cell: the Shares price source (CTO 100887 refused it by name for v1; re-ask when the Dollars journey is
-graded). The unknown-key refusal's public code UNEXPECTED is P's surprise row, unreachable from the UI.
+## Write claims
 
-## 5. Andrew acts in flight
+`infra/aws/lambda/investor-reporting/ycharts/**`; `infra/aws/ec2/investor-reporting-ycharts/**`;
+`docs/contracts/investor-reporting/v1/routes.json`; this file; `deliverables/2.0.0_SA_COO~Y/**`;
+`org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/**`. NOT this seat's, measured by refusal:
+`infra/aws/terraform/investor-reporting/ycharts/generate.tf` (lane IRPT_COMPLETION_P), `reports/**` (`~P`'s lease),
+`_contracts/tests/**` (the open IRPT_DASHBD order).
 
-None at this lane. Standing word at ~Y (09-27 12:4xZ): "yes you can run as many analysis attempts as needed". Vendor egress
-is permitted but ledgered; a served move needs the never-widen halves.
+## Parked, each with its owner and the condition that un-parks it
+
+- The upload-resolution path still retries a permanent authority refusal: ending it needs a finding code, a contract
+  vocabulary edit. Owner this seat; after the thread.
+- `ProspectComposer.tsx:311` tells the user to correct the file for every NEEDS_CORRECTION upload, including
+  RESOLVE_RETRY_EXHAUSTED, which rows S206 and S215 measured is not the file's fault. Owner `2.0.0_SA_COO~D`; un-parks
+  with the corrected words served on the upload answer.
+- `pytest _contracts _authz/tests` in one process reads 7 failed, 329 passed in the main tree (row W98-S1 names the
+  census half; the rest is a `transport` module-name collision). Owner `2.0.0_SA_COO~P`.
+- The FAST notice to `3.0.0_SA_CVO` ("FAST from 04:33Z; pins graded after the fact") is not sent: no CVO seat is live.
+  Un-parks when one registers; this file is its carrier until then.
+
+## Limits
+
+Nothing here is served. Items 1 to 5 are proven offline and by read-only real runs (the retained vendor PDF of
+REQ-7ea49c2d for item 2; the live classifications table for items 4 and 5). Item 1's real run is the redrive after (c).
 
 ## Standing directives (carried)
 
-- No firm id typed in code or JSON; run `.tools/naming-gate.py --diff <diff> --enforce` explicitly (the Y worktree does not
-  enforce it).
-- Before any irpt-status or generate apply, P asks for Y's four gates on the BUILT artifact: zip_module_census (with
-  `--expect` intents), zip_cold_start_smoke `--owner-refusal`, status_role_sim (planned policy), offline_submit_proof
-  `--live-env`.
-- The walk-principal password is read BY NAME from SSM into memory and never printed.
-- "Nobody runs AC8 again"; do not remove the `wk-nfra-oplgtw-og-v-4-p1` worktree.
+- No firm id typed in code or JSON; run `.tools/naming-gate.py --diff <diff> --enforce` explicitly in a worktree.
+- Before any irpt-status or generate apply: the four gates on the BUILT artifact (zip_module_census with `--expect`,
+  zip_cold_start_smoke `--owner-refusal`, status_role_sim, offline_submit_proof `--live-env`).
+- A password is read BY NAME from its store into memory and never printed.
+- Vendor egress is on Andrew's standing word at this seat for Analysis attempts, ledgered; a served move needs both
+  never-widen halves. "Nobody runs AC8 again"; do not remove the `wk-nfra-oplgtw-og-v-4-p1` worktree.
+- Read safe-merge's exit code and its "tree check" line on every merge (merge `1ee1c56e9b` dropped 14 of 15 files at
+  exit 0; `0.0.0_AB_MSTR` fixed the tool @380ebf5954).
