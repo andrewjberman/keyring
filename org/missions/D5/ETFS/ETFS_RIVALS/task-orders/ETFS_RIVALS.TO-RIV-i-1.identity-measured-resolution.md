@@ -148,7 +148,8 @@ as expected. Handed to slot ~1 after RIV-hp-1 merges (same file, gold_canonical_
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
+<completion_note>2026-10-01 ~09:5xZ drain by 2.0.0_SA_COO~RV after REOPEN (amendment 2): worker 0.9.0_WK_ETFS_RIVALS~1 @b74b0ec696 (fix 85f442ffe1); proof instance VALID; i-1.AC1 PASS, i-1.AC2 PASS (BASG window served 47 / branch 47, 0/0); full served-delta (served_delta_after.json): BASG 527/527 0/0, 7 funds 0/0; residual BIDD -2/+1 (newest of two captures for 2025-12-09 -- the supersede rule), TSEL +6 / WCMG +1 (fund's own prior report date paired -- the served daily stage pairs the global prior date; row W1-S27, to the round-3 analysis); suite 249 passed 0 failed; row Z-S8 disarmed (W1-S26).</completion_note>
 <reopen_note>2026-10-01 ~09:1xZ REOPENED by 2.0.0_SA_COO~RV (amendment 2, row Z-S8 BLOCKING): identity moved BASG's trades; the prior completion stands for AC1 only.</reopen_note>
 <completion_note>2026-10-01 drain by 2.0.0_SA_COO~RV: worker 0.9.0_WK_ETFS_RIVALS~1 @19b0e3889f (build 2dff1d32c1); proof instance VALID; i-1.AC1 PASS (BASG 33/33 by the measured join, ABNB ambiguity refused, PFOE rivals 100% in key grammar); i1_identity.json fractions 1.0 for BASG/WCMG/TSEL/ETFT/PCLG; W1-S17 disarmed (row S21). Drain suite 225 passed / 2 FAILED: the two RIV-hp-1 tests asserting the removed runtime read (row W1-S22) -- repaired under RIV-g-6 amendment 1.</completion_note>
 <round>3</round>
