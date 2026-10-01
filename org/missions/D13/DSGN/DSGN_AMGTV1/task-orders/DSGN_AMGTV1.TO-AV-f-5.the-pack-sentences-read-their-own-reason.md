@@ -86,7 +86,7 @@ Report once: what changed and where, the output line of every criterion, the por
 
 **ISSUER NOTES:** analysis s.3 row 5, narrowed by CTO msg 27547 (ModelTab.tsx -> AMGT_CORPUS; the Model-face half moved to CORPUS round 28). Second on chain ~58 (both orders write reasonWords.ts). Base: packwords 1 of 3; green r15-green-d @86944155 3 of 3. The ModelTab pack lines ("No model in the research pack"; team-case "not in this pack") are routed to 2.0.0_SA_COO~X, the writer.
 
-<status>pending</status>
+<status>complete</status>
 <round>15</round>
 <slot>~58</slot>
 <fabric>site-z</fabric>
