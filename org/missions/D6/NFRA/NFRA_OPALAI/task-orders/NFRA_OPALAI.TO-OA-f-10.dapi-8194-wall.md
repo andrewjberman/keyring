@@ -26,7 +26,7 @@ Bloomberg only through the view server on `127.0.0.1:8790`.
 The ruling is a Windows Firewall rule per account:
 - Outbound, Block, TCP;
 - `LocalUser` = that account's SID;
-- RemoteAddress `127.0.0.0/8` and `::1`;
+- RemoteAddress `127.0.0.0/8` only (AMENDMENT 2: no IPv6 arm; bbcomm listens on 127.0.0.1 only, and New-NetFirewallRule rejects `::1`);
 - RemotePort **8194 only**.
 
 **8790 stays open.** The shape is the same as two rules already live on this box, `codex_sandbox_offline_block_loopback_tcp`
@@ -53,12 +53,12 @@ and `_udp`, whose `LocalUser` reads `O:LSD:(A;;CC;;;<SID>)`. You do three things
    - Each account's SID is resolved at run time with `Get-LocalUser`. No SID is typed in the file. An unknown account
      prints `WALL: REFUSE UNKNOWN-ACCOUNT <name>` and exits 2, before any act.
    - **`-Plan`** changes nothing and runs at any privilege. It prints exactly one line per account,
-     `PLAN: RULE opal_runtime_block_dapi_8194_<account> OUTBOUND BLOCK TCP 127.0.0.0/8,::1 REMOTEPORT 8194 LOCALUSER <SID>`,
+     `PLAN: RULE opal_runtime_block_dapi_8194_<account> OUTBOUND BLOCK TCP 127.0.0.0/8 REMOTEPORT 8194 LOCALUSER <SID>`,
      then exits 0. No line names 8790.
    - **Real mode** first refuses a non-elevated token: `ELEVATION REQUIRED: ... No action was taken.` and exit 3,
      before any act. Elevated, it does the following:
      - for each account, creates the rule with `New-NetFirewallRule`, replacing any existing rule with that
-       DisplayName. Use `-LocalUser "O:LSD:(A;;CC;;;<SID>)"`, `-RemotePort 8194`, `-RemoteAddress 127.0.0.0/8,::1`
+       DisplayName. Use `-LocalUser "O:LSD:(A;;CC;;;<SID>)"`, `-RemotePort 8194`, `-RemoteAddress 127.0.0.0/8`
        and `-Profile Any`;
      - reads each rule back (port filter 8194/TCP, the address filter, `LocalUser` containing the SID) and prints
        `VERIFY: <displayname> OK`, or `VERIFY: <displayname> FAIL` with exit 4.
@@ -97,6 +97,16 @@ and an elevated run re-ACLs. Readings:
 - OPEN: loopback is exempt; the rule is removed or left inert, and the CTO re-rules to a raw WFP filter.
 The item-0 close run stays held until the 8194 arm reads REFUSED. Gate: LIMB 6 does not fire on a modification, and
 GATE (viii) graded it (<placeholders>NONE).
+
+
+**ISSUER AMENDMENT 2 (2.0.0_SA_COO~AI, 2026-10-01 ~17:5xZ; `1.0.0_SA_CTO~O` msg 28005):** the first elevated apply
+(0.0.0_AB_MSTR~Z, msg 28003, from PROD 9c0a80b, under Andrew's UAC) FAILED on both creates: "New-NetFirewallRule : An
+unspecified, multicast, broadcast, or loopback IPv6 address was specified." 0 rules were created and nothing was left
+partial. RULED: `-RemoteAddress '127.0.0.0/8'` only, because bbcomm listens on 127.0.0.1 only (CRO research @5d804ea419).
+The VERIFY readback drops its `::1` term. f10.AC2 now requires `127.0.0.0/8` and no `::1`. Dry-run at 9c0a80b:
+well-formed=0, FAIL as expected. The fix lands on r2-dev, and 0.0.0_AB_MSTR~Z re-runs it from that reviewed commit
+(blob sha verified) under Andrew's "sure". Promoting it to PROD rides the next G-PUSH. Gate: LIMB 6 does not fire on a
+modification, and GATE (viii) graded it.
 
 <status>` IN PLACE, by replacing the existing tag. Never append a second tag; the row gate
    reads the FIRST tag. Standing rules also apply: no push, no install, no vendor call. REFUSE a criterion you cannot
