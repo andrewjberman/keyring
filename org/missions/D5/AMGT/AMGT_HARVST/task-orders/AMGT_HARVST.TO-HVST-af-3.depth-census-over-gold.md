@@ -67,6 +67,19 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
   `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~90/AMGT_HARVST.TO-HVST-af-3.depth-census-over-gold.proof_of_spec.json`
   with `to_id` `AMGT_HARVST.TO-HVST-af-3.depth-census-over-gold`.
 
+## AMENDMENT 1 -- 2026-10-01 ~12:4xZ, the issuer, on the census report (row Z-W90-S4)
+
+1. **Z-W90-S4 ACTED ON:** the gold securities file is now 212 rows (the 21 crosswalk keys added under the CTO-signed
+   ADDENDUM 1 @e24ca120a2), and served gold was rebuilt over it @e0d3a13ef1 (act record
+   `deliverables/2.0.0_SA_COO_H/round32/gold_rebuild_act_20261001T122401Z.json`, `universe_file`
+   `deliverables/2.0.0_SA_COO_H/round33/securities.universe.r33.json`).
+2. **The census's gold key set is what GOLD CARRIES, never a fixed file:** `depth_census` takes the set of
+   `security_key`s from the NEWEST `chatter_daily` part (it carries every security gold was built over), and matches on
+   company / aliases / sa_symbol / ticker against the universe file that part was built from (the newest gold act
+   record's `universe_file`, else the r33 file, else ~46's). Print `GOLD KEYS: <n> (from <daily part key>)`.
+3. Plant: a crosswalk key present in the daily part's key set maps even when the base ~46 file lacks it.
+4. Re-run the census, AC1 and AC2; flip `<status>` when both pass. No other change.
+
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** round-32 analysis @`749ec2c72e` item 3; row Z-S51. Gold is served-only-by-hand; this census reads the
