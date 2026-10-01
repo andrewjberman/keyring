@@ -5569,3 +5569,30 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W18-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~18",
+  "surfaced_at": "2026-10-01T05:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "A plain or -target plan of infra/aws/terraform/opal-gateway cannot reach the expected missing-secrets refusal in a fresh worktree: two required variables and two untracked build artifacts stop it first.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "terraform plan on infra/aws/terraform/opal-gateway @6903868aa7 fails first on 'No value for required variable' mcportal_owner_key_claim and mcportal_owner_key (mcportal_grant_writer.tf:142,151; no default, no tfvars file).",
+      "With the two variables set, plan fails on mcportal_grant_writer.tf:53 filebase64sha256 of infra/aws/lambda/layers/mcportal-grant-writer-deps/.build/mcportal-grant-writer-deps.zip (untracked build output); -target=aws_iam_role_policy.gw_gateway_read_secrets does not avoid it.",
+      "Reading achieved in a scratch mirror under .scratch/planmirror (tracked tf, modules, logic registry, two liveness lambda dirs, dummy build files, placeholder variable values): the three data sources fail 'couldn't find resource', the expected refusal. The mirror is not the apply path.",
+      "Phase B's targeted safe-apply in the worktree will meet the same two stops: it needs the two variable values and the .build files (or the CLOUD-HEAD checkout that carries them)."
+    ]
+  },
+  "spec_asserts": "TO-OG-pr-1 PHASE A step 3: safe-apply plan on infra/aws/terraform/opal-gateway refuses on the missing secrets.",
+  "world_is": "The plan refuses first on unset required variables and absent build artifacts; the missing-secrets refusal is reached only with placeholders and dummy artifacts.",
+  "notes": "Phase B needs a ruling on how the targeted apply is fed: real owner-key values (not mine to hold) or a targeted apply that does not evaluate the grant-writer files.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
