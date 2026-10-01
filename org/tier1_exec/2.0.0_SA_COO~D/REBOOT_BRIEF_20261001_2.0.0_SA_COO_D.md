@@ -19,7 +19,8 @@ Order: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261001_161xZ_DE
 ## 3. Open acts that must survive the reboot
 - Ledger entries in `org/critical_paths/`: NONE held by this seat (all 21 `.open_deploys/*.json` read at 16:3xZ; none names this seat).
 - Worktrees: NONE owned. This seat works in the main checkout (`ajb_workspace`, `portal` on DEV). Portal tree: no tracked edit. A test run can regenerate `portal/src/pages/InvestorReporting/contracts/wire/*` on disk; restore it with `git -C portal restore --worktree -- src/pages/InvestorReporting/contracts/wire`, never commit it.
-- The UI walker account: DISARMED at 16:30:17Z (login refused after). Walks run one device at a time: before any walk send 0.0.0_AB_MSTR an ARM request and wait for the relay of site Z's ack; send a DISARMED line after (CTO 103599).
+- The UI walker account: this seat DISARMED at 16:30:17Z (login refused after). SITE Z ARMED IT AT 16:33Z (0.0.0_AB_MSTR
+  103909): do NOT walk or disarm after the reboot until 0.0.0_AB_MSTR relays site Z's DISARMED. Walks run one device at a time: before any walk send 0.0.0_AB_MSTR an ARM request and wait for the relay of site Z's ack; send a DISARMED line after (CTO 103599).
 - The dev server on 5174 (bun dev:live, detached) dies with the reboot: restart it from `portal` with `bun run dev:live --port 5174`.
 - Clocks: none of this seat's. Workspace commits are LOCAL on CLOUD (the push is 0.0.0_AB_MSTR's).
 
