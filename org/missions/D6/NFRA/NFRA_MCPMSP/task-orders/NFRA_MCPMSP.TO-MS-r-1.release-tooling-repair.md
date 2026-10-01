@@ -79,6 +79,15 @@ Your `<paths>` grow by exactly `infra/aws/ec2/opal-gateway/tests/test_deploy_bas
 control (below). First `git merge CLOUD` in your worktree; re-run AC1-AC3, rewrite the proof instance, and append the
 status flip to complete as the LAST status tag only when all three pass.
 
+## AMENDMENT 2 (issuer, 2026-10-01 ~05:0xZ) -- the R6 redo (CTO ruling `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_20261001_OPAL_GATEWAY_RELEASE_TRAIN.md` @cf5989190d, C10)
+
+AMENDMENT 1's PASS (@c740481308) rested on uncommitted edits in `C:/tmp/ms-5`. Redone on a fresh worktree cut from CLOUD
+HEAD 8a198b327b (carries ae2bceeeda and 4daa5094ae): the same two-file edit, committed @720199de7d; proof @6ce3fae87c;
+drained to CLOUD @dddcd61f5b. Issuer re-grade on the merged main tree: r1.AC1 7 passed, audit.jsonl unchanged, PASS;
+r1.AC2 MCPORTAL-RESOLVED @a3bff71ffa count=1 rc=0, build/upload lines=0, PASS; r1.AC3 6 passed, PASS. No criterion
+changed. Graded by: no gate limb graded this modification (LIMB 6 grades only a newly-added order; GATE (viii) finds
+`<placeholders>NONE</placeholders>`).
+
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** round-2 issuance (E5, batch repair; worker-light per report 2 C7). Sibling check at the cut: no open
@@ -91,4 +100,5 @@ as expected (script absent); AC2 FAIL as expected (flag undeclared, NOT executed
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker-light</worker_class>
-<status>pending</status>
+<!-- status history: pending @4daa5094ae; complete by the issuer after the R6 redo @dddcd61f5b -->
+<status>complete</status>
