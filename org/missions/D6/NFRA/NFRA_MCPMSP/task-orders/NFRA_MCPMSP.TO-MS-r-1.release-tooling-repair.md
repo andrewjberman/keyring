@@ -42,6 +42,7 @@ Two defects that stopped round 1's release:
 <paths>
 infra/aws/ec2/opal-gateway/deploy-to-ec2.sh
 infra/aws/ec2/opal-gateway/tests/run_release_suites.sh
+infra/aws/ec2/opal-gateway/tests/test_deploy_base_guard.py
 org/missions/D6/NFRA/NFRA_MCPMSP/deliverables/0.9.0_WK_NFRA_MCPMSP~5/**
 org/missions/D6/NFRA/NFRA_MCPMSP/surprise-channel/investigations/INVESTIGATION_v1.Z.md
 </paths>
@@ -55,12 +56,28 @@ Read, never write: `infra/aws/ec2/EC2_MANIFEST.json`, `mcportal` (nested repo, g
 <proof_of_spec>
   <criterion id="AC1" cell_refs="MS-r-1"><invocation>bash org/missions/D6/NFRA/NFRA_MCPMSP/deliverables/2.0.0_SA_COO~MS/round2/checks/r1.AC1.sh; echo "exit=$?"</invocation><expect>suite (tests/test_mcpmsp_asker_firm.py, --noconftest): N passed (N >= 1), 0 failed; tracked audit.jsonl unchanged=yes -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="MS-r-1"><invocation>bash org/missions/D6/NFRA/NFRA_MCPMSP/deliverables/2.0.0_SA_COO~MS/round2/checks/r1.AC2.sh; echo "exit=$?"</invocation><expect>resolve line: MCPORTAL-RESOLVED: dir @a3bff71ffa... (count=1, rc=0); manifest mcportal_commit matches; build/upload lines=0 -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC3" cell_refs="MS-r-1"><invocation>bash org/missions/D6/NFRA/NFRA_MCPMSP/deliverables/2.0.0_SA_COO~MS/round2/checks/r1.AC3.sh; echo "exit=$?"</invocation><expect>deploy base guard suite: >=6 passed, 0 failed -- RESULT: PASS -- exit=0</expect></criterion>
 </proof_of_spec>
 
 ## 5. WHEN YOU ARE DONE
 
 Write the instance at `org/missions/D6/NFRA/NFRA_MCPMSP/deliverables/0.9.0_WK_NFRA_MCPMSP~5/NFRA_MCPMSP.TO-MS-r-1.release-tooling-repair.proof_of_spec.json`.
 Report once, with: the two check lines; the commit hash; any row. Then STOP: this slot continues with MS-d-2.
+
+## AMENDMENT 1 (issuer, 2026-10-01 ~02:0xZ, on the drain's full-suite diff)
+
+The issuer's drain ran the whole gateway suite at the issuance base and after your merge: six NEW failures, all in
+`tests/test_deploy_base_guard.py` (6 passed at base, 6 failed after). Cause, measured: the R-4 resolver runs at the top of
+`deploy-to-ec2.sh` and reads `EC2_MANIFEST.json` with `jq`; that test's rig stubs `jq` (it prints `{"commands": []}`) and
+writes no manifest, so the script exits 1 ("manifest mcportal_commit ... is absent") before the base-ref guard's exit 2.
+Fix, keeping R-4 fail-closed:
+1. The resolver reads `services.opal-gateway.mcportal_commit` with `python` (stdlib `json`), not `jq`.
+2. The rig fixture in `tests/test_deploy_base_guard.py` writes `infra/aws/ec2/EC2_MANIFEST.json` into its temp workspace
+   with `services.opal-gateway.mcportal_commit` = the rig's own mcportal commit (`m1`). FIXTURE ONLY: change no assertion.
+3. `MCPORTAL_RESOLVE_ONLY=1` still exits 0 before any aws/ssh/scp line (AC2 unchanged).
+Your `<paths>` grow by exactly `infra/aws/ec2/opal-gateway/tests/test_deploy_base_guard.py`. A new criterion AC3 is the
+control (below). First `git merge CLOUD` in your worktree; re-run AC1-AC3, rewrite the proof instance, and append the
+status flip to complete as the LAST status tag only when all three pass.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
@@ -74,3 +91,4 @@ as expected (script absent); AC2 FAIL as expected (flag undeclared, NOT executed
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker-light</worker_class>
+<status>pending</status>
