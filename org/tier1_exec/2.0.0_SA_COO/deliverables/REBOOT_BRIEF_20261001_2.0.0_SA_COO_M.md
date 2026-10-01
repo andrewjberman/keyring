@@ -14,8 +14,11 @@ Push state: everything below is LOCAL; origin/CLOUD is 0abf99fcd4 (ls-remote 17:
 COOs involved in Tax SMA put it ahead of their own projects; the laptop reboot holds until `4.0.0_SA_CRO` proves Tax SMA on the
 Model Portfolios page. This seat signed the COO half of the activation (below). At 17:44Z it offered the CRO one item (per-firm
 isolation of `taxsma_sources.load_sources`, so a missing Cottonwood source fails Cottonwood only) or any other the CRO names.
-**UNANSWERED at 17:50Z.** The prelude change it needs sits in the CRO's own deployed code (`mdpf_gold_consolidator.py:1332-1338`
-and S05); build nothing there unless the CRO names it. Own work is held behind Tax SMA meanwhile.
+**ANSWERED 18:06Z (msg 103941): no build item.** The one item, event-triggered: when `4.0.0_SA_CRO`
+says Tax is served (after site Z's Gateway release, the activation and two ad-hoc runs), read the Model Portfolios page on DEV for
+49 Financial and Global -- the totals, the caption, the SMA > ALT Strategies Tax leaf -- and report it against
+`org/missions/D8/MDPF/MDPF_TAXSMA/STATUS.md`. Per-firm isolation of `load_sources` stays parked. The first-day rule Andrew ruled
+is deployed (18:03Z). Own work resumes until that word arrives.
 
 ## 3. Where the work stands
 - **Inflection split accounts (IRPT_BCKEND row S259; 91 of 884 accounts listed no positions, 49.98 M USD).** SIGNED BOTH HALVES,
@@ -65,13 +68,14 @@ and S05); build nothing there unless the CRO names it. Own work is held behind T
 ## 5. Owed
 - This seat owes: the split-account deploy (signed); the Cottonwood re-point packet with its seven portal changes (batch 93 item 4,
   batch 99 item 3); the reads of tonight's and tomorrow's runs above.
-- Others owe this seat: `1.0.0_SA_CTO` the half on the 19 seed rows (16:13Z); `4.0.0_SA_CRO` its answer on a Tax SMA item (17:44Z).
+- Others owe this seat: `1.0.0_SA_CTO` the half on the 19 seed rows (16:13Z); `4.0.0_SA_CRO` the word that Tax is served (then
+  this seat reads the Model Portfolios page, section 2).
 - Signed by this seat: the COO half on Tax SMA activation TX-r-3, `COO_HALF_TAXSMA_TX_R_3_ACTIVATION_20261001.md` @07d269eb28
   (both halves now in place; the activation, its ledger and portal PROD are `4.0.0_SA_CRO`'s and Andrew's).
 
 ## 6. Relaunch
 - RESPAWN: yes -- four ledger entries close on tonight's and tomorrow's runs, one signed deploy and one packet are owed.
-- First three things: run /watcher; read this brief and the inbox (first: any CRO answer on Tax SMA); deploy the signed
+- First three things: run /watcher; read this brief and the inbox (first: has the CRO said Tax is served? then the page read); deploy the signed
   split-account packet, route first, under its ledger.
 - `--say` hint: "read org/tier1_exec/2.0.0_SA_COO/deliverables/REBOOT_BRIEF_20261001_2.0.0_SA_COO_M.md, then your inbox".
 
