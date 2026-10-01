@@ -1652,6 +1652,71 @@
       ]
     },
     "notes": "Observation for the G4/enrichment owner: the home funds' identity coverage is a crosswalk-content question, not a reader defect."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S21",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-01T08:00Z",
+    "one_line": "Resolution of row ETFS_RIVALS-Z-W1-S17 (ARMED, runtime parse of etf_constituents_pull.py): DISARMED by issuer amendment 1 -- home_producer.py now carries BUCKET, PREFIX and SUBFOLDER as module constants and reads nothing outside the package at runtime, and a repo-side drift test pins them to the producer's module-level values.",
+    "spec_asserts": "Amendment 1: no runtime read of any file outside the package; constants with a comment citing etf_constituents_pull.py:53-55; a test_i1_* drift test.",
+    "world_is": "home_producer.py has no ast/pathlib import and no producer_path; tests/test_i1_home_producer_address.py asserts (a) the three constants equal etf_constituents_pull.py's BUCKET/PREFIX/SUBFOLDER whenever that file is present (skip when absent) and (b) producer_address()/landing_uri() work with Path.read_text patched to raise. Measured: both pass; the producer's values today are opal-data-etfs / bbg / constituents.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/home_producer.py@2dff1d32c1 BUCKET, PREFIX, SUBFOLDER",
+        "data/etfs/scripts/rivalfunds/tests/test_i1_home_producer_address.py@2dff1d32c1",
+        "integrations/bloomberg/pipeline/etf_constituents_pull.py:53-55 (read, not edited)"
+      ]
+    },
+    "notes": "Row S17 is not edited (append-only); this row is its resolution. The fail-loud-on-unreadable-address behaviour hp-1 shipped is gone with the runtime read; a drifted producer is now caught by the drift test in the repo, not by the stage."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S22",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-01T08:00Z",
+    "one_line": "Amendment 1 removes behaviour that two RIV-hp-1 tests assert, and test_hp1_home_producer.py is outside this order's paths, so they now FAIL: test_an_unreadable_producer_file_raises_and_is_never_guessed and test_g1_fails_loud_when_the_producer_address_is_unreadable (both monkeypatch the removed hp._ADDR / hp.producer_path and expect ProducerAddressError / a FAILED stage). Left unedited.",
+    "spec_asserts": "RIV-i-1 paths: tests/test_i1_*.py, test_g1_canonical_shape.py, test_g12_canonical_multi_source.py; amendment 1: 'no runtime read of any file outside the package'.",
+    "world_is": "Full rivalfunds suite on this branch: 225 passed, 2 skipped, 2 failed (only those two). Both are obsolete, not wrong: they assert the S17 mechanism the amendment replaces. gold_holdings_coverage.py:448 also carries a comment naming home_producer.ProducerAddressError (a comment only, outside this order's paths).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/tests/test_hp1_home_producer.py@2dff1d32c1 lines 85-90 and 202-210",
+        "python -m pytest rivalfunds/tests from data/etfs/scripts: 2 failed, 225 passed, 2 skipped"
+      ]
+    },
+    "notes": "Needs the issuer to grant test_hp1_home_producer.py to a later cell (delete both tests, or point them at the drift test) before the drain's pytest read; no operational effect."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S23",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-01T08:00Z",
+    "one_line": "Two judgment calls inside the issuer join are mine, not the order's: candidates are counted by DISTINCT Bloomberg id (a security held as two lots is one candidate), and the Bloomberg evidence is the fund's silver at the report date, else the previous trading day, else the next (first found), never a merge of days. The order's G1 assertion for SHRT US Equity (UNRESOLVED) changed to RESOLVED by bloomberg-form, the intended effect.",
+    "spec_asserts": "Cell RIV-i-1: unique Bloomberg row of the same fund at the same report date or the nearest within 1 trading day; two or more = AMBIGUOUS.",
+    "world_is": "Measured on the real window 2026-09-25..09-28 (no plant): BASG issuer 68 of 68 non-cash rows resolved by issuer-bloomberg-join; WCMG 48/48, TSEL 56/56, ETFT 58/58, PCLG 58/58 resolved (bloomberg-form 40/26/30/20, crosswalk-pool the rest). The crosswalk (237 records) resolved 0 of 68 BASG issuer rows, so the join carries all of BASG. Not measured: a security that Bloomberg lists under two ids for one fund-day with the same root on purpose (the planted ABNB LN case is the refusal arm).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/identity.py@2dff1d32c1 issuer_join",
+        "data/etfs/scripts/rivalfunds/gold_canonical_shape.py@2dff1d32c1 _bbg_join_rows, _identity, _bbg_identity",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/i1_identity.json"
+      ]
+    },
+    "notes": "RIV-d-4 reads i1_identity.json for the identity_coverage floor; every fraction is 1.0 over two days, so the floor is not constrained by this window."
   }
 ]
 ```
