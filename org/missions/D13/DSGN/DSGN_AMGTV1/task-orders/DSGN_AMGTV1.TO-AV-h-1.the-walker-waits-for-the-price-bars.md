@@ -81,7 +81,7 @@ Report once: what changed and where, the output line of every criterion, the por
 
 **ISSUER NOTES:** DIRECT ACT (one cell, ~30 lines, LOCAL). round-16 analysis s.3 row 1 (build half; the walk is the issuer's close act). Base pricewait 2 of 3.
 
-<status>pending</status>
+<status>complete</status>
 <round>17</round>
 <slot>~62</slot>
 <fabric>site-z</fabric>
