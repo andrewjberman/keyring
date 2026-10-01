@@ -533,6 +533,50 @@
     "spec_asserts": "TO MS-sg-1 build item 1: ALLOWED_DOMAINS written as the four domains mapped to firm.",
     "world_is": "The mapping is derived by KNOWN_FIRMS position, so a reordered or extended KNOWN_FIRMS moves which domain maps to which firm; the pinned test fails first. A tidier carrier (an R20 exception or a registry row for the four domains) is outside this order's paths.",
     "notes": "The gateway app cannot import lib/opal_naming (not in the deployed tree), so lookup() was not an option."
+  },
+  {
+    "project": "NFRA_MCPMSP",
+    "fabric": "site-z",
+    "surfaced_at": "2026-09-30T19:00Z",
+    "id": "NFRA_MCPMSP-Z-W3-S5",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPMSP~3",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "MS-sg-1 AMENDMENT 1 gives two instructions that cannot both hold for the unregistered-tenant fake: 'every faked member an email (unregistered tenant -> any address)' and 'change NO assertion'. test_unregistered_tenant_refused_and_logged pins the asker_sender_refusal args exactly, so an address on the stranger member adds sender_email/sender_domain (the TO's own build item 2: 'where resolvable') and the assertion fails. I kept the no-assertion-change instruction: the stranger-tenant member carries NO email.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MS",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/tests/test_mcpmsp_asker_firm.py: with email pat@example.org on the _STRANGER_TID member, 1 failed 29 passed; assertion at :210 'Left contains 2 more items: sender_domain example.org, sender_email pat@example.org'.",
+        "With the stranger member's email omitted: 30 passed over the four suites; the gate refuses on the tenant first (asker_tenant_denied) so the absent address does not change the code."
+      ]
+    },
+    "spec_asserts": "AMENDMENT 1: give every faked member an email (unregistered-tenant member -> any address) and change no assertion.",
+    "world_is": "The unregistered-tenant refusal path is therefore exercised in this suite with an address-less member only; an address-carrying unregistered member (the real Graph shape) is not asserted on by an existing test, and tests/test_mcpmsp_sender_gate.py::test_refusal_entry_has_sender_email_domain_no_text covers the entry fields for a gate refusal.",
+    "notes": "Issuer may instead widen the pinned args assertion to the address-carrying shape; that is an assertion change and was not made."
+  },
+  {
+    "project": "NFRA_MCPMSP",
+    "fabric": "site-z",
+    "surfaced_at": "2026-09-30T19:00Z",
+    "id": "NFRA_MCPMSP-Z-W3-S6",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPMSP~3",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The amendment's 'append the status flip to complete as the LAST status tag' names the order file, which is not in the order's <paths>; the lane gate admits a worker to its <paths> only, so the flip is left to the issuer (as for TO-MS-ig-1, b3f544ae45).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MS",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D6/NFRA/NFRA_MCPMSP/task-orders/NFRA_MCPMSP.TO-MS-sg-1.gateway-sender-gate.md is absent from the <paths> block (amended list: sender_gate.py, asker_scope.py, audit.py, five tests, deliverables/0.9.0_WK_NFRA_MCPMSP~3/**, INVESTIGATION_v1.Z.md).",
+        "b3f544ae45 'the worker's <paths> did not name the order file' -- the same disposition on the previous order."
+      ]
+    },
+    "spec_asserts": "AMENDMENT 1: append the status flip to complete as the LAST status tag when all three criteria pass.",
+    "world_is": "The worker cannot write the order file; the proof instance is the worker's whole completion artefact and the issuer flips.",
+    "notes": "No override attempted."
   }
 ]
 ```
