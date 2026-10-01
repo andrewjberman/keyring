@@ -192,3 +192,12 @@ precede batch 61 item 2(b), since no job is queued and the hop-7 job still waits
 `allowedFirmIds` as unrestricted for every actor. That is right for a human (51 of 52 profile rows carry none) and wrong for a
 SERVICE actor. The one service principal carries the attribute, and a whole tree at one commit cannot ship a stale reader, so st6 is
 safe to install; the next build refuses a `service` actor whose row has no `allowedFirmIds`.
+
+## CTO half, addendum 1 -- 1.0.0_SA_CTO, 2026-10-01 06:00 UTC (answers ~Y 103513; section 5 item 3)
+
+APPROVED as a named deviation; the half above stands. The install script is fetched on the host BY KEY (the latest object, as
+st5's install did) instead of by its S3 version, because `irpt-ycharts-runner-role` holds no `s3:GetObjectVersion` (SSM
+`d433c907-2399-49be-9a37-bade8ffe21b6`, exit 30, nothing moved). Two things bind the bytes that run: the sha256 check on the host
+against `830682df93d1a05cc2618a16305783e0019636dc538d924e696832289b9af9a6`, which refuses any other object; and one `head-object`
+of the key from the operator's side immediately before the fetch, printing that the latest VersionId is
+`Xxgbj.B9Yw4XiUUuDrKG4PGYmKIXtTm6`. No grant is added to the role. Every other line of section 5 is unchanged.
