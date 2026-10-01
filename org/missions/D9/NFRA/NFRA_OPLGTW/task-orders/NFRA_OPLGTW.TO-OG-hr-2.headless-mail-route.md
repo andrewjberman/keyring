@@ -110,3 +110,4 @@ at the cut base) and `grade()` CONFORMANT, in place of `name()` equality. Contro
 v1.3 values reads every arm ok except the app-code occurrence (no code yet); a JSON with `/ms/transcripts`, an
 ungradable secret and a shared prefix reads FAIL on each of those arms.
 <status>pending</status>
+<status>complete</status>
