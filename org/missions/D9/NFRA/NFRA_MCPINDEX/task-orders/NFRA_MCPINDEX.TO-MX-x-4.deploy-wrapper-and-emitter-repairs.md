@@ -114,7 +114,7 @@ the three scripts you checked. Do not edit this task order beyond your status fl
 named with its owner) is the issuer's drain check, not a face criterion; the MX-d-5 assertion retirement rides MX-d-6.
 Battery dry-run at base: x4.AC1, AC2 and AC3 each FAIL as expected (test file absent).
 
-<status>pending</status>
+<status>complete</status>
 <round>6</round>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
