@@ -126,6 +126,28 @@ other publisher's leg.
 4. **Done when:** AC1 still passes, and `python -m pytest lib/opal_data_harvest/ -q` reads 0 failed (the base was 363
    passed, 1 skipped; your 8 new tests make 371). Re-run AC1, update the instance, commit. Do not flip `<status>`.
 
+## AMENDMENT 2 -- 2026-10-01 ~06:5xZ, the issuer: phase B is a measured DELTA=0 act on served output (no pair)
+
+1. **Measured at signing** (`round32/checks/ae-1.signing.py`, output `round32/ae1_signing.json`; the gold builders' own
+   code through a capturing client, 0 puts sent): with the 33 quarantined keys, `build_mention` reproduces the served
+   snapshot exactly -- 379 rows, 0 gone, 0 added, 0 changed, digest
+   `08f636c18d66ce8888f8d7cfdc761bacf8f047d9a22c3bf65fce9248415c0e6a`. None of the 33 keys was ever in served gold (the
+   unrelated articles do not mention the securities). CLAUDE.md NEVER-1: a verified DELTA=0 needs no hold, so phase B
+   carries NO never-widen pair.
+2. **`build-daily` is DROPPED from phase B.** Its dry build moves 8 rows and adds 191, all from the as-of date advancing and
+   round 31's run records (ASML 09-27..09-30 coverage) -- not from the quarantine. That is the daily producer's own
+   cadence, not this cell's act.
+3. **Phase B, in order (section 2 is replaced):**
+   1. `python -m lib.opal_data_harvest.sa_quarantine census` must print `WRONG-OBJECT: 38 of 85`; anything else is a STOP
+      with a row.
+   2. `python -m lib.opal_data_harvest.sa_quarantine quarantine --apply`, ONCE (one never-overwrite object under
+      `seeking-alpha/harvest/silver/quarantine/`, plus the local `~90/ae1_quarantine.json`).
+   3. `python -m lib.research.harvest.publication_gold build-mention --securities-json org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~46/securities.universe.json --as-of <the UTC date of the act>`, ONCE.
+   4. **DELTA gate:** read the part it wrote; its rows' digest (sha256 over the sorted `json.dumps(row, sort_keys=True,
+      default=str)` lines, as `ae-1.signing.py` computes it) must equal the digest above. If it differs, STOP and file a
+      BLOCKING row naming both digests; do not run anything else.
+   5. Run AC2 and AC3, update the instance, and flip `<status>` to `complete` when both pass.
+
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:**
