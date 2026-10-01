@@ -4610,6 +4610,29 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "Issuer direct act (LOCAL, one line, under the size floor): the test now derives started_at from the original key's date= partition, so it exercises the same key on any run date. Graded by the round-31 close re-run of ad1_ac3."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S51",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-01T05:25Z",
+      "one_line": "FWD-14's census joins two key spaces that share 0 keys: the 89-name collector universe (BA, security-<hash>) and the gold article_security_mention table (BA_US_Equity, ...); only 32 of 89 names carry a ticker, and a ticker-derived key reaches 13.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "PRD v0.13 FWD-14 DONE WHEN: a census over the stored mention table prints, for every security in the 89-name collector universe and each of the five publishers, the count of distinct articles since 2026-01-01 (denominator: the universe's size).",
+      "world_is": "At 2026-10-01 ~05:1xZ: `python -m lib.opal_data_harvest universe` keys (89) vs gold mention newest part date=2026-09-30/part-20260930T134616Z keys (71): intersection 0. Gold is built over deliverables/0.9.0_WK_AMGT_HARVST~46/securities.universe.json (crosswalk-resolved keys); 57 of 89 universe rows have ticker null. Silver discovered_for carries universe keys for harvest-grammar jobs, and 992_HK_Equity for Lenovo's older rows (a third form).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "round32/checks/ae-4.AC3.py base run: UNIVERSE 89; SECURITIES WITH ANY 3 of 89 (silver, by discovered_for)",
+          "gold mention part-20260930T134616Z: 71 distinct security_key, 0 of form security-*",
+          "universe rows: ticker present 32 of 89"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Round 32 grades the driver's depth on the collector's own silver keyed by discovered_for (ae-4 AC3). Which population and key FWD-14's census joins on (a crosswalk from universe key to gold key, or the gold securities file as the population) is an ENDPOINT-text question for 1.0.0_SA_CTO~Z."
     }
   ]
 ```

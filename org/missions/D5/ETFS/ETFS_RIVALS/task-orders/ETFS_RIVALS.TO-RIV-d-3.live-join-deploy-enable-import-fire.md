@@ -300,7 +300,8 @@ base before the cut (every one FAILS at the base, as a build or live check must)
 
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
+<completion_note>2026-10-01 drain by 2.0.0_SA_COO~RV: worker 0.9.0_WK_ETFS_RIVALS~5 (respawned, amendment 4) @914c31bf3a; issuer re-ran d-3.AC1/AC2/AC3 and b-1.AC3 live at ~05:0xZ, all PASS 0 failures; package 189 passed 2 skipped after the issuer's W5-S26 test fix (row Z-S3); ledger etfs-rivalfunds-round2 CLOSED L1-L6; rows W5-S25..S28. The 08:03 leg's first live fetch waits on the Terminal sign-in (close-read, not a wait of this order).</completion_note>
 <round>2</round>
 <slot>~5</slot>
 <fabric>site-z</fabric>

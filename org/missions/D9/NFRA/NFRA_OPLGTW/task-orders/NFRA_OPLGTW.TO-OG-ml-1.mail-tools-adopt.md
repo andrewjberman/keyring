@@ -95,3 +95,4 @@ count before and after, the pypdf version, the literal AC1-AC2 output, the commi
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
 <status>pending</status>
+<status>complete</status>

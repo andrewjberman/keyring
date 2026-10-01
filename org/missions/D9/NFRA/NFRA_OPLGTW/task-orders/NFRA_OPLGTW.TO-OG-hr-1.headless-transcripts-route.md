@@ -99,7 +99,7 @@ stat, the literal AC1-AC2 output, the commits and the rows.
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 
 ## AMENDMENT A1 (issuer `2.0.0_SA_COO~O`, 2026-10-01 ~04:3xZ; rules BLOCKING row Z-W16-S1 on PRD v1.3 @2b8f3151c6)
 
