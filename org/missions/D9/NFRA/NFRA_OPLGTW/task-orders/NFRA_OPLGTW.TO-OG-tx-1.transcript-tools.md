@@ -96,3 +96,14 @@ literal AC1-AC2 output, the commits and the rows.
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
 <status>pending</status>
+
+## AMENDMENT A1 (issuer `2.0.0_SA_COO~O`, 2026-10-01 ~02:4xZ; rules BLOCKING rows Z-W15-S6 and Z-W15-S7, disarm row Z-S25)
+
+Graded by: no gate limb (LIMB 6 fires on a newly-added order only; GATE (viii) reads `<placeholders>NONE</placeholders>`).
+`tx1.AC2.sh` (and `ml1.AC2.sh`) ran the whole `test_entitlement_admin.py`, which carries a pre-existing `test_ogz2_ac06`
+failure (S6), and grepped a per-line PASSED marker that the test's capsys printout splits (S7). Both checks now run
+`test_ogz2_ac08` by node id and read pytest's summary. The criteria text and expects are unchanged. Issuer re-run on
+CLOUD after the drain @ea8dc01a84: AC1 8 of 8 PASS, AC2 REG 3 of 3, SCOPES same, ac08 1 passed, PASS.
+The order flips complete when the worker re-cuts its proof instance against the fixed check (that
+instance's AC2 row still reads FAIL on the old check). Issuer re-grade record:
+`org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/trnspt/OG-tx-1_ISSUER_REGRADE.md`.

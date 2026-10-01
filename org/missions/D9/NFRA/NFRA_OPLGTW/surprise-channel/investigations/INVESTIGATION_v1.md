@@ -5506,3 +5506,34 @@ name the one known failure instead of silently inheriting it.
   "notes": "The order stays OPEN with AC2 FAIL. The three tools are in both lists (REG 3 of 3), the 17 scopes are unchanged (SCOPES same) and test_ogz2_ac08 passes at 58; only the check's two readings of the file are wrong."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S25",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-01T02:45Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarmed by their disarm owner (the issuer): amendment A1 on TO-OG-tx-1 fixes the issuer's own checks tx1.AC2.sh and ml1.AC2.sh; the issuer re-run reads PASS.",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W15-S6",
+    "NFRA_OPLGTW-Z-W15-S7"
+  ],
+  "one_line": "The AC2 checks for OG-tx-1 and OG-ml-1 ran a whole test file with a pre-existing failure and grepped a split PASSED line; they now run test_ogz2_ac08 by node id and read pytest's summary.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Issuer re-run of tx1.AC2.sh on CLOUD after drain @ea8dc01a84: REG 3 of 3; SCOPES same; test_ogz2_ac08 by node id rc=0, 1 passed; RESULT: PASS.",
+      "Issuer re-run of tx1.AC1.sh on CLOUD: named tests passed 8 of 8; RESULT: PASS.",
+      "Worker report: test_ogz2_ac06 fails identically at HEAD~1 (4 puts, expected 3); it is not graded by any TRNSPT-DEPS order."
+    ]
+  },
+  "spec_asserts": "TO-OG-tx-1 AC2: test_ogz2_ac08 passes, read through the check's pytest_named helper.",
+  "world_is": "pytest_named runs the whole file and demands rc 0, and matches '::name PASSED' on one line; both are wrong for a file with an unrelated failing test and for a test that prints under capsys.disabled().",
+  "notes": "test_ogz2_ac06's own failure (and the 19 failed / 35 errors in the full suite, sampled as pre-existing) is a gateway-suite hygiene item for the next round, not this workstream's.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
