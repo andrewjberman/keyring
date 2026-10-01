@@ -7541,3 +7541,62 @@ fanout:
   egress: none
   no_promote: true
 ```
+
+## 67. ROUND 59 -- EVERY PRICE BAR OPENS AND NAMES A COVERED SECURITY (DEMO-BLOCKING), ITS CODE-ONLY REDEPLOY. Three cells, one order and two direct acts
+
+**Cut by `2.0.0_SA_COO~Z`** on `1.0.0_SA_CTO~Z`'s **ROUND 58 ANALYSIS** (`ledger/ROUND_ANALYSIS.round58.md` @`9e4c311cfc`, msg 27787;
+round 58 CLOSED). Rulings carried: 1, the price identity gap is DEMO-BLOCKING, before 22:00Z; 2, a serve-time join with no producer
+change; 3, af-6 closes on its branch-A grade.
+
+### 67a. THE DEPLOY ACTS THE JOIN NEEDS BEFORE IT SERVES (round-56 ruling 3; measured at the cut ~11:5xZ)
+
+| # | act | state at the cut | carrier |
+|---|---|---|---|
+| 1 | the code: `read_rankings` keys an unkeyed row by an EXACT `ticker` match against the covered universe's crosswalk tickers (`_join_covered_identity`; `identity_basis` says so); the crosswalk filler then names newly keyed rows; every row gains `display_name` (name, else the monthly route's source for its key, else its ticker) | LANDED in the issuance commit; 378 passed; local check YES | `ai-1` |
+| 2 | no new import into the package: `covered_universe` and `monthly_chatter` are already packaged (ag-1); `--build-only` rc=0, 1 file changed | verified | none |
+| 3 | the artifact at the GO commit; CONTENT-DIFF exactly `scoped_amgt.py` | the executor's build | `ai-2` |
+| 4 | ONE code-only `safe-apply` | -- | `ai-2` |
+| 5 | no IAM change: the `research_dossier/` listing is already granted (ag-1 exercised it on the monthly route) | -- | none |
+
+### 67b. MEASUREMENTS
+
+1. **Deployed base (CodeSha256 `g9H0TW2g...`, 09:48:26Z):** TRENDING and BREAKOUT price each serve 94 rows (09-30, af-6's
+   generation). 62 of 94 rows have no `security_key` (`identity_status` UNRESOLVED) and 58 have no `name`; no row carries
+   `display_name`. Top-10 rows unkeyed include AMD US and TSM US. All 62 unkeyed tickers match the covered universe's crosswalk
+   tickers exactly (0 unmatched).
+2. **On the ai-1 tree, locally:** 0 rows without a key, 0 without `display_name`, 0 raw-key labels, every key covered, `score_pct`
+   kept. Rows with a company `name`: 70 of 94 (from 36); the rest are labelled by their display ticker.
+3. **The check:** `round59/checks/ai_price_identity.py` -- deployed base FAILS C0, C2 (62 per axis) and C3 (94 per axis); C5 PASSES;
+   local YES.
+4. **Item 2 (af-6):** already done in round 58: grade `round58/ah3_af6_grade_branchA.out`, NEVER-2 entry CLOSED `3373f73c27`. No cell.
+
+### 67c. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-ai-1` | THE SERVE-TIME PRICE IDENTITY JOIN | issuer | direct act (in the issuance commit) | LOCAL (served by ai-2) | `lib/research/api/scoped_amgt.py`, its tests, the api conftest (hermetic index) |
+| `AMGT-ai-2` | THE CODE-ONLY REDEPLOY OF THE JOIN | `0.7.0_AE_CloudOps~A` | seat order, a pair | WORLD | the Lambda artifact, the deploy ledger |
+| `AMGT-ai-3` | af-6 GRADE + LEDGER CLOSE | issuer | already landed (round 58) | -- | -- |
+
+### 67d. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain = the analysis's two items. The second is already satisfied and is recorded, not re-cut.
+- **(ii) Same grain.** One join; one deploy.
+- **(iii) Intent.** One axis: every price bar can open a covered name and shows a name.
+- **(iv) What a cell does NOT move.** ai-1 moves no score, rank, unit or stored generation, and leaves already-keyed rows unchanged.
+  ai-2 moves no route, IAM or store.
+
+### 67e. EDGES AND FAN-OUT
+
+```
+ai-1 -> ai-2
+fanout:
+  cap: 3
+  orders_total: 1
+  chains_total: 1
+  wave_0: [ai-2 0.7.0_AE_CloudOps~A]   # GO after both halves; before 22:00Z
+  direct: [ai-1 landed here; ai-3 landed in round 58]
+  no_s3_deletes: true
+  egress: none
+  no_promote: true
+```

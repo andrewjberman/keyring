@@ -4849,6 +4849,206 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "disposition": "UNDER_INVESTIGATION",
       "disarm_owner": "2.0.0_SA_COO~H",
       "notes": "The collector's worker.py is outside this order's write grant; no fix was attempted."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W91-S4",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~91",
+      "surfaced_at": "2026-10-01T10:50Z",
+      "one_line": "verification.py's press-and-hold locator fallback (verification_locator.locate) reads secret astn/kimi/api-key and POSTs a page screenshot to api.moonshot.ai; my phase A solve() inherited it and it fired once at 09:39Z in the anonymous census profile (ReadTimeout after 25 s).",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "spec_asserts": "CLAUDE.md Agent Autonomy: NEVER call an external vendor API without Andrew's explicit per-use word; order bounds: no Secrets write (a read is not named); solve() is to run the solver in the tab's own page.",
+      "world_is": "Phase A's _solve_press_and_hold fell back, when the exact text 'PRESS & HOLD' was not matched (PerimeterX's DOM text is 'Press & Hold', upper-cased by CSS), to verification_locator.locate, which boto3-reads SecretId astn/kimi/api-key and requests.post('https://api.moonshot.ai/v1/chat/completions') with page.screenshot() base64. At 09:39Z on bbg's anonymous census page it raised requests ReadTimeout (request sent, response not read). Fixed for solve() in this order: the locator is now local DOM (role=button / text, case-insensitive), no vendor call; plant test_ix asserts the source names no locate(). repair() (existing callers) still carries the same fallback at its 'PRESS & HOLD' branch.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/verification_locator.py@90c760302b (locate -> api.moonshot.ai)",
+          "lib/opal_data_harvest/verification.py repair() bbg branch (box is None -> locate)",
+          "traceback of the 09:39Z census run (ReadTimeout, api.moonshot.ai:443)",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/ae5_discovery_census.json (bbg navigations)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "notes": "Whether the one screenshot (an anonymous challenge page, no credentials) reached the vendor is unread. The repair() path is outside what this order changes."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W91-S5",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~91",
+      "surfaced_at": "2026-10-01T10:50Z",
+      "one_line": "TabSession.seed() can never seed: __init__ already did page.goto(origin), which sets the publisher's own cookies, so seed()'s 'profile holds no cookie for the origin domain' test is always false.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "spec_asserts": "tab_transport.py seed(): 'Import cookies ONCE, only when the profile holds none for the origin's domain; returns True if seeded'; publishers.py _ensure_session seeds a seed_from_bundle publisher's fresh profile (bbg, ft).",
+      "world_is": "In the main-tree bbg profile (new, created by this order) a probe printed seeded=false at 09:55Z with a vault envelope present: the homepage load in TabSession.__init__ had set bloomberg.com cookies, so seed() returned False. Every seed_from_bundle publisher therefore runs on an anonymous profile and the stored bundle is never imported. For bbg this changes nothing today (an earned profile passes the challenge itself) and wsj/barrons are seed false by ruling; for ft it means the warm identity was never injected.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/tab_transport.py lines 71-82 (__init__ goto, then seed)",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/ae5_discovery_census.json"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "notes": "No fix attempted: tab_transport.py is outside this order's write grant."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W91-S6",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~91",
+      "surfaced_at": "2026-10-01T10:50Z",
+      "one_line": "bbg's anonymous census arm could not measure any date-ordered route (PerimeterX 403 on every non-homepage fetch, 17 of 20 requests spent), so the bbg routes were measured in the main bbg profile after solve() earned a pass -- a deviation from the order's anonymous-profile rule.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "AMENDMENT 2 step 0: ANONYMOUS TabSession, at most 20 requests per publisher, no sign-in, no seeding.",
+      "world_is": "Anonymous in-tab fetches of bbg: robots.txt, /latest, /feeds/bbiz/sitemap_news.xml, /feeds/bbiz/sitemap_index.xml, /sitemap.xml, /markets all 403 'Are you a robot?' (one genuine 404 for /feeds/sitemap_news.xml); a press-and-hold in that profile ended 'Please try again'. After the main bbg profile earned its pass (solve, 10:03Z) robots.txt, /sitemaps/news/index.xml, latest.xml, 2026-9.xml and 2026-1.xml were fetched there (a warm arm, 6 more bbg requests) and ROUTES['bbg'] set from them. wsj's census stayed fully anonymous (11 requests).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/ae5_discovery_census.json (publishers.bbg.warm_arm)",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/ae5_walk_bbg.json"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Recorded in the census file; the measured route is /sitemaps/news/{year}-{month}.xml, order within a month MIXED."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W91-S7",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~91",
+      "surfaced_at": "2026-10-01T10:50Z",
+      "one_line": "verification.renew() as built in phase A did not call solve() on a sign-in challenge; an unsolved DataDome slider at the Dow Jones SSO was followed by 'Access is temporarily restricted' on every later load of the same profile, wsj and barrons alike.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "AMENDMENT 2 step 1: a sign-in challenge goes to solve() once.",
+      "world_is": "09:48Z wsj and 09:51Z barrons: renew() timed out at the SSO form (Locator.fill; a captcha-delivery frame showing the slider, then the 'temporarily restricted' page with the same initialCid on every reload at 09:57, 10:07, 10:22). A FRESH profile at a scratch root showed the slider and renew() -> solve(slider_drag, passed) -> sign-in succeeded at 10:24Z, so the block was that profile's DataDome state, not the box IP. renew() now solves ONCE on a sign-in challenge (confirm='control_gone') and signs in once more (plant test_x). The two poisoned profile directories were RENAMED (not deleted) to browser-profiles/wsj.poisoned-20261001T1025Z and barrons.poisoned-20261001T1025Z; wsj and barrons were minted in clean profiles at 10:25Z and 10:26Z.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/ae5_renewal.json (earlier_attempts, first_mint)",
+          "lib/opal_data_harvest/verification.py renew()"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Two renamed Chrome profile directories remain under .runtime/opal-data-harvest/browser-profiles (gitignored); removal is the issuer's call."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W91-S8",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~91",
+      "surfaced_at": "2026-10-01T10:50Z",
+      "one_line": "Windows GetLastInputInfo (verification.last_operator_input) changes about every 2-3 minutes on this box from a source that is not this worker, so any unattended window longer than ~2 minutes reads operator_input_detected true.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "spec_asserts": "AC2/AC3: operator_input_detected false per publisher, measured as verification.last_operator_input unchanged; FWD-11 'no human hand at any point'.",
+      "world_is": "A 1 s sampler (ae5_operator_input_ticks.txt, 10:16Z-10:44Z) recorded dwTime changes at 10:16:50, 10:17:35, 10:19:46, 10:23:36, 10:26:03, 10:28:03, 10:31:23, 10:34:36, 10:37:00, 10:40:47, 10:43:55 while this worker's code issued no OS input (Playwright/CDP events do not drive this clock). Several ticks coincide with this seat's own tool calls (10:34:36 and 10:40:47 were the launcher's wait ending; 10:43:55 preceded a command by seconds), so the agent harness is a candidate source. Runs of 4+ minutes (the bbg and wsj full listing walks, 10:17-10:21 and 10:27-10:31) read True; legs of 70-145 s that fell between ticks read False. The AC2 record is built from the clean legs; the walks are recorded separately with operator_input true. Any long unattended run (the ft/sa backfills, a full collector run) will read the same unless the source is found.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/ae5_operator_input_ticks.txt",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/ae5_unattended_run.json (listing_walk_evidence)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "notes": "The source (a human, a keep-awake, the agent harness, another seat's input injection) is not identified."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W91-S9",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~91",
+      "surfaced_at": "2026-10-01T10:50Z",
+      "one_line": "bbg's press-and-hold is answered 'Please try again' on the first hold and accepted on the next hold of the same widget; solve() now holds at most twice (one challenge, no retry loop).",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "verification.solve: the solver once per solve; PRD C-HV-TRUST-TOKEN: solve ONCE.",
+      "world_is": "Observed: anonymous census profile hold 1 -> still 403; main profile 09:55Z hold 1 -> 'Please try again' (screenshot), 10:03Z a second hold -> page 'Markets - Bloomberg', robots.txt and /markets 200; a quick-run solve at 10:35Z with one hold failed (leg ended challenge_failed); at 10:41Z with the two-hold solver the same challenge passed (http 200) and the leg collected 3 articles. The solver logs of the pass and the fail are identical (fill reaches ~143, 'no checkmark or peak detected'), so the hold itself does not show the cause.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/ae5_run1_bbg.json (failed solve, 10:34Z)",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/ae5_unattended_run.json (bbg challenge_detail, passed)",
+          "lib/opal_data_harvest/verification.py _solve_press_and_hold; plant test_xi"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Whether the second hold is what PerimeterX needs, or a fresh profile always needs two, is one passing observation each way."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W91-S10",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~91",
+      "surfaced_at": "2026-10-01T10:50Z",
+      "one_line": "barrons search returned HTTP 200 with 0 parseable hits once (10:34Z, three browsers running), then 16 hits on every other call; wsj's TabSession homepage load timed out once (10:40Z). A zero-hit 200 reads as 'no articles', not as a failure.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "spec_asserts": "DowJones.discover: hits = _parse_urls(search page); an empty list is a result, not an error.",
+      "world_is": "ae5_run1_barrons.json: requests [200 /search], hits 0, articles 0; the same call at 10:36Z by hand and in the 10:40Z leg returned 16 hits (527,810 bytes). The 0-hit body was not kept. The wsj leg at 10:40:50Z died in TabSession.__init__ page.goto timeout 30000 ms, no request sent; its re-run at 10:44Z passed. Cause of either: unmeasured.",
+      "grounding": {
+        "status": "INFERRED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/ae5_run1_barrons.json",
+          "lib/opal_data_harvest/publishers.py DowJones.discover/_parse_urls"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "notes": "A listing that parses to zero hits on a 200 is silent in the collector; a retained body would tell a soft block from an empty page."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S52",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-01T11:08Z",
+      "one_line": "Round-32 disposition record (rows are append-only): every round-32 row the file still reads ARMED is disarmed by a landed commit or ruled here -- W90-S2, W92-S1, W92-S4, W91-S4, W91-S5 disarmed; W91-S8 and W91-S10 ruled.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Spine L10: the slug goes only after every BLOCKING or ARMED row of the round is dispositioned.",
+      "world_is": "W90-S2 (four base tests asserted the article GET): disarmed by ae-1 AMENDMENT 1 @cec6fb0ba6 + worker @03457e5899, recorded W90-S3. W92-S1 (sa silver empty struct themes): fixed @254ea37cf6. W92-S4 (no-response exceptions ended every sa job error): fixed @3669bd0f0a (+ @6039cefc48 once-per-job account check, bounded transport-class auto-resume). W91-S4 (repair() could post a page screenshot to an external vision API): disarmed @220a74350a, local DOM locator only. W91-S5 (TabSession.seed could never seed): fixed @791616d9b6 then @3cdb41b7e2 (adds only the bundle cookies the profile lacks). W91-S8 RULED: the box's last-input clock ticks every 2-3 min with no human present (the agent harness is a candidate source), so operator_input_detected cannot discriminate a human hand from harness input; ae-5 AC2 holds only for the short leg windows it records, and FWD-11's 'no human hand' is carried as INFERRED until a discriminating instrument (input-source attribution) exists -- a round-33 input to the CTO. W91-S10 RULED INERT: one barrons search 200 with 0 parseable hits and one wsj homepage timeout, both single INFERRED transients with no repeat.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "commits cec6fb0ba6, 03457e5899, 254ea37cf6, 3669bd0f0a, 6039cefc48, 791616d9b6, 3cdb41b7e2, 220a74350a",
+          "deliverables/0.9.0_WK_AMGT_HARVST~91/ae5_unattended_run.json (operator-input windows)",
+          "lib/opal_data_harvest suite at the trunk after 220a74350a: 442 passed, 1 skipped"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "The disarming commits each carry a negative control (a test failing on the pre-fix code). W91-S8 is the one ruling that limits a FWD claim; it goes to the CTO in the L8 packet."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W90-S4",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~90",
+      "surfaced_at": "2026-10-01T11:55Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "class": "BLOCKING",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "one_line": "HVST-af-3 AC2 FAILS honestly: 68 of 89 universe rows map to a gold security_key; 21 do not, because the gold securities file (191 rows) has no row for them under any key the resolvers produce.",
+      "spec_asserts": "TO HVST-af-3 / AC2: the crosswalk then the ~46 securities file maps the 89 universe rows to gold keys; PASS needs MAPPED >= 80 of 89.",
+      "world_is": "depth_census on gold part-20261001T114722Z.parquet: MAPPED 68 of 89 (49 via crosswalk key present in the file, 19 via file company/alias/sa_symbol/ticker match, e.g. AstraZeneca -> AZN_US_Equity, BNP Paribas -> BNPQY_US_Equity). 21 UNMAPPED, each because crosswalk.resolve gives a canonical key (shown) that the ~46 securities file lacks and no company/alias/sa_symbol/ticker form matches: Adobe (ADBE_US_Equity); Air Liquide (AI_FP_Equity); Cadence (CDNS_US_Equity); Celsius (CELH_US_Equity); Clorox (CLX_US_Equity); Global Payments (GPN_US_Equity); HEICO Corporation (HEI_US_Equity); International Container Terminals (ICT_PM_Equity; the file's ICT_US_Equity is 'International Container Termin' with ticker 'ICT US Equity', not matched on any form, so not taken); JD.com (JD_US_Equity); MSCI Inc (MSCI_US_Equity); Manila Electric (MER_PM_Equity); Michelin (ML_FP_Equity); Mitsubishi UFJ Financial Group (8306_JP_Equity); Nike (NKE_US_Equity); Schlumberger (SLB_US_Equity); Shopify (SHOP_CN_Equity); Sumitomo Mitsui Financial Group (8316_JP_Equity); Synopsys (SNPS_US_Equity); Tokyo Electron (8035_JP_Equity); Tokyo Marine (8766_JP_Equity); Zoetis (ZTS_US_Equity). Gold is built over the securities file, so these 21 names cannot carry gold mentions until the file gains them. AT 50+: 5 of 89, AT 100+: 3 of 89. No key was synthesized.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "deliverables/0.9.0_WK_AMGT_HARVST~90/af3_census.out and af3_census.json",
+          "deliverables/0.9.0_WK_AMGT_HARVST~90/af3_AC2.out (AC2 RESULT: FAIL, only 68 of 89 mapped)",
+          "lib/opal_data_harvest/depth_census.py map_universe"
+        ]
+      },
+      "notes": "Fix is the issuer's: add the 21 names to the gold securities file (crosswalk-resolved keys) and rebuild gold; the census then maps them with no code change. Also: the census writes LF-only bytes, because AC2's `$`-anchored regexes fail on Windows CRLF."
     }
   ]
 ```

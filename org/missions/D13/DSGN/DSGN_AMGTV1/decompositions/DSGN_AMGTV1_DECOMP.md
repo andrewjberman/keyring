@@ -1344,3 +1344,15 @@ the header's readings line reads the monthly route ("<k> of <n> covered names co
 ranking caption, and "1 name" never "1 names". Check `round18/checks/headerline.cjs` (issuer): base 2 of 3. Chain ~65 alone.
 **Width:** M = 2 chains (~64, ~65), N = 2, cap 3.
 **Rule 24:** two rows, two orders, file-disjoint; no served value moves (display rounding; a caption reading a served route).
+
+
+## v19 -- ROUND 19 (issuer, 2026-10-01 ~11:1xZ) -- ONE DIRECT ACT
+
+**Rectangle:** the CTO's ruling msg 27768 on the round-18 close: the selected-name header's chatter cell reads the legacy ranking point
+("TRENDING (CHATTER) #1 | 0/100"). **Cell:** `AV-j-1` (letter j), DIRECT ACT, `<risk>LOCAL</risk>`, `SecurityOverlay.tsx`: the cell
+(`data-header-reading="chatter"`) shows the name's collected count for the latest month from `useCollectedChatter`, or a designed absent
+sentence; no "#", "/100" or "Trending". **Check:** `round19/checks/chattercell.cjs` (issuer): base portal DEV 4c02f293 2 of 3.
+**Retired:** round15 `headerread.cjs`'s chatter-cell clause (it grades the legacy rank and score this ruling removes); its breakout clause
+is read on the live walk. **New cut rule applied:** the order carries `tsc -b` in AC3. **Chain:** ~66 alone. **Close:** the issuer's live
+walk; then DEV is DSGN's freeze candidate (ruling 27768).
+**Rule 24:** one row, one order; no served value moves (a cell now reads a served count instead of a dead ranking point).

@@ -212,3 +212,4 @@ before the halves (step 7a run ahead of the GO), so the halves bind the bytes th
   off-repo roster hand-off; the rollback on the 2c0f84966d template does (S12 ruling stands).
 Criteria unchanged.
 <status>pending</status>
+<status>complete</status>

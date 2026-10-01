@@ -6074,3 +6074,107 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S15",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-01T10:40Z",
+  "one_line": "safe-ec2-deploy.sh's halt gate refuses (rc 3, NOT bypassable by HALT_ACK) from the sparse release tree /c/tmp/og-rel4: its serial validation looks for the issuer's home folder under org/tier1_exec/ of the calling tree, which the cone did not carry.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: halt_gate_check sourced in /c/tmp/og-rel4 with the wrapper's own HALT_GATE_* env, before the fix -> 'SERIAL RESOLVES TO NO KNOWN AGENT -- BLOCKED', resolved serial 2.0.0_SA_COO~O (session serial file), rc=3.",
+      "READ: .tools/halt-gate-check.sh halt_gate_validate_serial lines 189-217 loops ${HALT_GATE_REPO_ROOT}/org/{tier0_exec,...,tier1_exec,...}/*/ and og-rel4's sparse cone listed only org/tier0 among tier dirs.",
+      "ACT (environment only, no gate edit or override): git sparse-checkout add 'org/tier1_exec/2.0.0_SA_COO~O' in /c/tmp/og-rel4; git status unchanged (HEAD daa56d81ac, only ' M mcportal'); the same probe then returns rc=0 with an empty pending list (0 STOP lines, 0 routine), which satisfies CVO guard K4 before HALT_ACK=1 is spent."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The act runs 'from /c/tmp/og-rel4' through safe-ec2-deploy.sh with HALT_ACK=1.",
+  "world_is": "A release tree cut sparse without the issuer's tier-home folder cannot pass the halt gate at all; HALT_ACK does not help (rc 3 is the identity limb). Nothing tracked changed; the cone gained one directory.",
+  "notes": "Candidate for the release-tree recipe in the next enrichment: add org/tier1_exec/<issuer> to the sparse cone at cut.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S34",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-01T11:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The released deploy template's host-side roster check logs 'write_capable 1 pairs' while the rendered .env and the secret both hold 2 pairs (hash MATCH): a log-count defect, not a lost principal.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-rl-1 deploy output: 'OK: principal rosters read host-side and valid (master_admin 1 pair; write_capable 1 pairs)'.",
+      "Issuer SSM 88f3574d-014d-4aa7-b073-ad3c5663ef2e on i-07dccb1615503ac99 after the release: WRITE_CAPABLE_PRINCIPALS env_pairs 2 secret_pairs 2 MATCH; MASTER_ADMIN_PRINCIPALS env_pairs 1 secret_pairs 1 MATCH (counts and hashes only, nothing sourced)."
+    ]
+  },
+  "spec_asserts": "The release's log line reports the roster shape it validated.",
+  "world_is": "The values are correct; the count in the log line is wrong, so a reader of the log would believe a write principal was dropped.",
+  "notes": "Fix the count in deploy-to-ec2.sh's roster log line at OPLGTW's next enrichment (with Z-S32's .env shape fix); no hazard to the served tiers.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S35",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-01T11:10Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Z-S24 disarmed: OG-rl-1 is live (daa56d81ac, 10:43:56Z) and its template reads both principal rosters host-side from gateway/principals/rosters (OG-pr-1 secret + grant; CTO tick-1 ruling (b), train R4). rl.AC3 PASS on CLOUD; host .env principal keys MATCH the secret by hash (SSM 88f3574d). No later release needs an off-repo hand-off; only a rollback onto an older template does (A3, Part D file into the shell). The site-Z local Part D file stays as that rollback source.",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S24"
+  ],
+  "one_line": "Z-S24 (off-repo principal hand-off) disarmed by OG-rl-1's host-side roster read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-rl-1_ISSUER_REGRADE_AND_POSITIVE_ARM.md @2c8248a87e; rl.AC3 PASS; SSM 88f3574d MATCH."
+    ]
+  },
+  "spec_asserts": "Every gateway release reads the principal rosters host-side like the other bearers.",
+  "world_is": "It does from daa56d81ac on.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S36",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-01T12:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The live deploy template (daa56d81ac) renders MAIL_SENDER_TABLE from OG_MAIL_SENDER_TABLE with an empty default, so any later gateway release whose deployer does not export it silently blanks the table and /hx/mail refuses every message; the .env key census cannot see it (the key stays, its value empties).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show daa56d81ac:infra/aws/ec2/opal-gateway/deploy-to-ec2.sh lines 170-175: OG_MAIL_SENDER_TABLE=\"${OG_MAIL_SENDER_TABLE:-}\" with a character check only; line 351: 'empty refuses every message'.",
+      "Found by NFRA_MCPINDEX MX-r-8 PHASE A (row NFRA_MCPINDEX-Z-W22-S4, 2.0.0_SA_COO~MI msg 27812) before its slot-4 deploy.",
+      "Interim: the gateway queue (2.0.0_SA_COO~MI, ~MS) was given the repo export line at ~12:1xZ (criterion.py DEFAULT_AUTHORS, 3 entries, passes the template charset)."
+    ]
+  },
+  "spec_asserts": "PRD v1.3 C7: the mail route serves the senders on NFRA_TRNSPT's sender table.",
+  "world_is": "The table survives only a release whose deployer exports it; a missed export is silent.",
+  "notes": "Remedy for OPLGTW's next enrichment: the template refuses (no upload) when OG_MAIL_SENDER_TABLE is empty, or builds it from criterion.py itself at deploy. Until then every releaser exports it (queue told).",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```

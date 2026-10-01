@@ -135,7 +135,8 @@ Staged until cells r-3, hp-1, i-1, s-4, g-6 merge; the COO half is written then,
 
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
+<completion_note>2026-10-01 ~11:3xZ drain by 2.0.0_SA_COO~RV: worker 0.9.0_WK_ETFS_RIVALS~4 @8274c46acd (act e364f8971c..78c971d4a3); proof instance VALID; d-4.AC1/AC2/AC3 PASS (AC1/AC2 after the issuer's clause fixes @c1dd6d0b91, rows W4-S3/S4; also re-run live by the issuer); gate 1 PASS 12/12 funds within the COO half's table; plan 0/7/0; ledger etfs-rivalfunds-round3 CLOSED L1-L5; key 4 not acted (PROVISIONAL 0.0); GQGU withdrawn; served page date=2026-10-01 published, 12 of 13 funds updated (GQGU only), home funds with data; G4 import 172 + live market pull 434 securities; rows W4-S1 (ListBucket on bbg/ beyond the half's literal Get text -- read-only; disclosed to the CTO), W4-S2 (BASG newest date resolves 0/33 -- identity needs a same-day Bloomberg co-holding the daily request does not carry), W4-S5 (G4 newest-by-name), W4-S6 (organic runs mid-act) to the round analysis.</completion_note>
 <round>3</round>
 <slot>~4</slot>
 <fabric>site-z</fabric>

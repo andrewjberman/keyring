@@ -100,7 +100,7 @@ Checker arms were exercised with a synthetic file, then removed:
 **SPAWN ONLY WHEN** Part A has landed: `Opal_Agent` exists, and `verify-boundary.ps1` reads `BOUNDARY: DENIED-OK`. The
 slot continues here after OA-e-5.
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <slot>~14</slot>
 <fabric>site-z</fabric>
