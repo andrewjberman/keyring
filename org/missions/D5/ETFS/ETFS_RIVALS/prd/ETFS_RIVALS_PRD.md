@@ -5,7 +5,7 @@
  "project": "ETFS_RIVALS",
  "directive": "D5",
  "fabric": "site-z",
- "prd_version": "v0.6",
+ "prd_version": "v0.7",
  "step": 4,
  "brief_ref": "docs/briefs/etf-holdings-research-20260929.md@77c891c869",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12"],
@@ -304,7 +304,7 @@ Every other gold table is `address('rivalfunds','etfs','gold','<table>', ...)`. 
   - each field with its source and as-of date.
 
   Andrew's L1 point 3: *"a denormalized base table with all info that we'd want. Every holding, every sub asset class and GICS
-  industry tag in fields, anything we can get, put it all in there."* **A GICS sector never stands in for a sub-asset class**
+  industry tag in fields, anything we can get, put it all in there."* **A finer GICS level (industry group, industry, sub-industry) never stands in for a sub-asset class; for an equity row the `sub_asset_class` IS its GICS sector, per the ratified vocabulary (`etf_positioning_gold.py` `SUB_ASSET_CLASS_VOCAB`), both fields carried and agreeing by construction** (v0.7, CTO ruling on row ETFS_RIVALS-Z-S1, round-2 analysis ruling 5)
   (the spec's own `:97` warning, and the grain defect DSGN_AMGTV1 rounds 8-9 fixed). A value that cannot be resolved is
   carried with a status, never guessed.
 
@@ -510,6 +510,10 @@ the `/sprint` precedent files.
 
 ## PROVENANCE AND AMENDMENT HISTORY
 
+- v0.7 (2026-10-01, `1.0.0_SA_CTO~Z`), the round-2 analysis ruling 5 on row ETFS_RIVALS-Z-S1:
+  - the C-SHAPES classification bullet now follows the ratified vocabulary the PRD names. For an equity row,
+    `sub_asset_class` IS its GICS sector, and a finer GICS level never stands in for a sub-asset class.
+  - This is a CONTRACTS change with no ENDPOINT change, so the ratified half re-opens to `3.0.0_SA_CVO~Z`.
 - v0.3 (2026-09-30, `1.0.0_SA_CTO~Z`): **Addendum A.**
   - The ENDPOINT gains the peer groups: FWD-1/2/3/5/6/7 amended, FWD-10/11/12 new. Andrew confirmed it via `4.0.0_SA_CRO~Z`
     (msg 27241, record @`2bc18b60a5`), with FWD-1 covering both Opal ETFs.
