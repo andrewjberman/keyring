@@ -7,8 +7,8 @@ org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260926_220xZ_UI_WALKER_
 
     python ui_walker_account.py status     # is the row present, active or disabled, and armed for how long
     python ui_walker_account.py provision  # create the row ONCE, disabled, with no usable password
-    python ui_walker_account.py arm        # fresh random password -> SSM SecureString; row status active
-    python ui_walker_account.py disarm     # row status disabled + unusable hash; SSM deleted; login refused
+    python ui_walker_account.py arm        # lease (armedBy/armedAt) then password -> SSM; prints HOLDER <id>; HELD if a live lease
+    python ui_walker_account.py disarm <holder>  # holder only: row status disabled + unusable hash; SSM deleted; login refused
 
 THE SAFETY MODEL:
 - The row is `role admin`, `firmId opal-capital`, `userType Dev`, because /investor-reporting admits only that
@@ -25,6 +25,7 @@ import datetime as dt
 import json
 import os
 import secrets
+import socket
 import sys
 import urllib.error
 import urllib.request
@@ -87,13 +88,14 @@ def status(quiet=False):
     else:
         st = (row.get("status") or {}).get("S")
         armed_at = (row.get("armedAt") or {}).get("S")
+        armed_by = (row.get("armedBy") or {}).get("S")
         age = None
         if armed_at:
             age = (_now() - dt.datetime.strptime(armed_at, "%Y-%m-%dT%H:%M:%S.%fZ").replace(
                 tzinfo=dt.timezone.utc)).total_seconds() / 60.0
-        line = "STATUS: row PRESENT %s status=%s role=%s userType=%s armed=%s%s; SSM %s" % (
+        line = "STATUS: row PRESENT %s status=%s role=%s userType=%s armed=%s%s armedBy=%s; SSM %s" % (
             EMAIL, st, (row.get("role") or {}).get("S"), (row.get("userType") or {}).get("S"),
-            "yes" if armed_at else "no", "" if age is None else " (%.1f min ago)" % age,
+            "yes" if armed_at else "no", "" if age is None else " (%.1f min ago)" % age, armed_by or "none",
             "PRESENT" if _param_present() else "ABSENT")
         out = {"row": True, "status": st, "armed_minutes": age}
         if st == "active" and age is not None and age > MAX_ARMED_MINUTES:
@@ -116,23 +118,44 @@ def provision():
     return status()
 
 
+def _holder_id():
+    return "%s:%d:%s" % (socket.gethostname(), os.getpid(), secrets.token_hex(4))
+
+
 def arm():
+    """Lease first (one conditional UpdateItem), then mint. A live lease is never stolen."""
     row = get_row()
     if not row:
         raise SystemExit("STOP: row absent -- run provision first")
+    holder = _holder_id()
+    now = _now()
+    cutoff = _iso(now - dt.timedelta(minutes=MAX_ARMED_MINUTES))
+    try:
+        _ddb().update_item(
+            TableName=TABLE, Key={"PK": {"S": PK}, "SK": {"S": SK}},
+            UpdateExpression="SET armedBy = :b, armedAt = :t",
+            ConditionExpression="attribute_not_exists(armedAt) OR armedAt < :c",
+            ExpressionAttributeValues={":b": {"S": holder}, ":t": {"S": _iso(now)}, ":c": {"S": cutoff}})
+    except ClientError as e:
+        if e.response["Error"]["Code"] != "ConditionalCheckFailedException":
+            raise
+        cur = get_row() or {}
+        raise SystemExit("HELD by %s since %s" % ((cur.get("armedBy") or {}).get("S", "<unknown legacy holder>"),
+                                                  (cur.get("armedAt") or {}).get("S", "<unknown>")))
     password = secrets.token_urlsafe(32)
     pw_hash = bcrypt.hashpw(password.encode("ascii"), bcrypt.gensalt(SALT_ROUNDS)).decode("ascii")
     _ssm().put_parameter(Name=PARAM, Value=password, Type="SecureString", Overwrite=True,
                          Description="Opal UI walker password for ONE walk; deleted at disarm")
     del password
     _ddb().update_item(TableName=TABLE, Key={"PK": {"S": PK}, "SK": {"S": SK}},
-                       UpdateExpression="SET passwordHash = :h, #s = :a, armedAt = :t",
+                       UpdateExpression="SET passwordHash = :h, #s = :a",
+                       ConditionExpression="armedBy = :b",
                        ExpressionAttributeNames={"#s": "status"},
-                       ExpressionAttributeValues={":h": {"S": pw_hash}, ":a": {"S": "active"},
-                                                  ":t": {"S": _iso(_now())}})
+                       ExpressionAttributeValues={":h": {"S": pw_hash}, ":a": {"S": "active"}, ":b": {"S": holder}})
     print("OK: ARMED %s; password by NAME %s (value never printed); disarm within %d min"
           % (EMAIL, PARAM, MAX_ARMED_MINUTES))
-    return status()
+    print("HOLDER %s" % holder)
+    return holder
 
 
 def _login(password):
@@ -148,7 +171,8 @@ def _login(password):
         return e.code in (401, 403), "HTTP %d %s" % (e.code, text[:100])
 
 
-def disarm():
+def disarm(holder):
+    """Runs only for the holder that armed: the UpdateItem is conditional on armedBy = holder."""
     password = None
     try:
         password = _ssm().get_parameter(Name=PARAM, WithDecryption=True)["Parameter"]["Value"]
@@ -156,10 +180,19 @@ def disarm():
         if e.response["Error"]["Code"] != "ParameterNotFound":
             raise
     if get_row():
-        _ddb().update_item(TableName=TABLE, Key={"PK": {"S": PK}, "SK": {"S": SK}},
-                           UpdateExpression="SET passwordHash = :h, #s = :d REMOVE armedAt",
-                           ExpressionAttributeNames={"#s": "status"},
-                           ExpressionAttributeValues={":h": {"S": _unusable_hash()}, ":d": {"S": "disabled"}})
+        try:
+            _ddb().update_item(TableName=TABLE, Key={"PK": {"S": PK}, "SK": {"S": SK}},
+                               UpdateExpression="SET passwordHash = :h, #s = :d REMOVE armedBy, armedAt",
+                               ConditionExpression="armedBy = :b",
+                               ExpressionAttributeNames={"#s": "status"},
+                               ExpressionAttributeValues={":h": {"S": _unusable_hash()}, ":d": {"S": "disabled"},
+                                                          ":b": {"S": holder}})
+        except ClientError as e:
+            if e.response["Error"]["Code"] != "ConditionalCheckFailedException":
+                raise
+            cur = get_row() or {}
+            raise SystemExit("REFUSED: %s is not the holder (held by %s) -- nothing changed"
+                             % (holder, (cur.get("armedBy") or {}).get("S", "nobody")))
     try:
         _ssm().delete_parameter(Name=PARAM)
     except ClientError as e:
@@ -188,6 +221,6 @@ def secret():
 
 if __name__ == "__main__":
     cmds = {"status": status, "provision": provision, "arm": arm, "disarm": disarm, "secret": secret}
-    if len(sys.argv) != 2 or sys.argv[1] not in cmds:
-        raise SystemExit("usage: ui_walker_account.py status|provision|arm|disarm")
-    cmds[sys.argv[1]]()
+    if len(sys.argv) < 2 or sys.argv[1] not in cmds or len(sys.argv) != (3 if sys.argv[1] == "disarm" else 2):
+        raise SystemExit("usage: ui_walker_account.py status|provision|arm|disarm <holder>")
+    cmds[sys.argv[1]](*sys.argv[2:])
