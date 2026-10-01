@@ -14155,3 +14155,34 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Still open and not disarmed here: a SERVICE actor with no allowedFirmIds is unrestricted in the resident (PRD v0.22 ruling 21, next resident build); a permanent refusal at the resolve phase retries to the dead-letter queue (batch 65)."
 }
 ```
+
+## IRPT_BCKEND-S249 -- DISARMS row IRPT_BCKEND-S247 (disarm owner 2.0.0_SA_COO~P): the three retained vendor-figure Performance reports no longer reopen. Measured before and after on the deployed bytes: the adapter live until 2026-10-01T08:20:26Z DID return all three for their own account set and window; the adapter live since refuses all three and answers OBJECT_NOT_COVERED.
+
+```json
+{
+  "id": "IRPT_BCKEND-S249",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-01T08:33:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARMS row IRPT_BCKEND-S247 (disarm owner 2.0.0_SA_COO~P): the three retained vendor-figure Performance reports no longer reopen. Measured before and after on the deployed bytes: the adapter live until 2026-10-01T08:20:26Z DID return all three for their own account set and window; the adapter live since refuses all three and answers OBJECT_NOT_COVERED.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/NEVER_WIDEN_SIGNOFF_PACKET_IRPT_ADAPTER_HOLDINGS_BASIS_ONLY_20261001.md, both halves (COO @d570f71aa1, CTO @f94239ab13 on blob dbf3006b9f): one targeted safe-apply of module.irpt_performance_adapter.aws_lambda_function.this, 08:18:08Z..08:20:36Z, plan 0 add 1 change 0 destroy; live CodeSha256 cdbFZDJAW5g4ym+3wl9kyD9WVfYmm6AVZBuwd0c6eJI= (LastModified 08:20:26Z); full-root re-plan No changes.",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/retained_reopen_before_after.py run at 08:22Z with BEFORE = the artifact live until the apply (PCcoNYrB...) and AFTER = the bytes downloaded from Lambda after it (sha256 equal to the live CodeSha256, 70 members): reopen Inflection RPT-df47a1fc (ORION) REOPENED -> ProviderPathNotComposed, OBJECT_NOT_COVERED; reopen Cottonwood RPT-12b885b8 and RPT-b683f188 (BLACK_DIAMOND) REOPENED -> RetainedVendorFigureRefused, OBJECT_NOT_COVERED; fresh Inflection and fresh Cottonwood DEPENDENCY_UNAVAILABLE -> OBJECT_NOT_COVERED; control: the newest 49 Financial OPAL_HOLDINGS report (112 listed) reopens on both. The harness stubs authorize true and the vendor transport to refuse; reads only.",
+      "the three reports are every object under irpt/inflection and irpt/cottonwood platinum/performance_reports/ in opal-data-irpt (3 listed at 08:22Z); none was deleted.",
+      "/aws/lambda/irpt-performance-adapter 08:20:26Z..08:30:26Z (window complete): 9 events, 2 invocations (this seat's two probes), 0 TypeError / ImportModuleError / Traceback / timeout lines, 0 UNEXPECTED.",
+      "live function configuration read 08:16Z: IRPT_PERFORMANCE_APPROVED_PLAN is absent (7 variables listed), so no one-use vendor plan is armed (CTO half item 7)."
+    ]
+  },
+  "dismissal_reason": "The hazard of S247 was a vendor's calculated return reachable as the served Performance figure through the reopen path. The reopen of an existing pointer now refuses any report whose lineage.provider is not OPAL_HOLDINGS, and all three such reports are refused on the deployed bytes.",
+  "spec_asserts": "Row S247 and RULINGS batch 66 items 2-3, batch 67 item 4: the reopen path serves the holdings basis only; a firm not yet on the holdings basis answers OBJECT_NOT_COVERED with no retry offered.",
+  "world_is": "MEASURED: S247's open question is answered -- before the apply the reopen path returned all three vendor figures (so they were reachable from 2026-09-27 until 2026-10-01T08:20:26Z); after it, none. NOT MEASURED: how many of the 47 logged reopens were one of the three (the log names no report). NOT OBSERVED: a real vendor-path request in the ten minutes after the apply (0 arrived), so the log's own OBJECT_NOT_COVERED line is not yet seen.",
+  "notes": "Not closed by this act (CTO half item 7): a fresh Cottonwood request made while a one-use vendor plan is ARMED still computes a BLACK_DIAMOND figure once; arming is its own act under Andrew's vendor word. The docstring of RetainedVendorFigureRefused still names DEPENDENCY_UNAVAILABLE (CTO half item 8), corrected at the file's next change. The Performance tab's wording of OBJECT_NOT_COVERED is 2.0.0_SA_COO~D's."
+}
+```
