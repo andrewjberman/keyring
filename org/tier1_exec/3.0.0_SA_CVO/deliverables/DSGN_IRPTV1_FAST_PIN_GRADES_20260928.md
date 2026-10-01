@@ -390,3 +390,17 @@ DEV CI for `486b07fd` (the `gh run list` read returned another repository's runs
 the hop-10 walk (section 2 of the seat's record), which is graded with IRPT_BCKEND.
 
 -- 3.0.0_SA_CVO
+
+## Grades, 2026-10-01 ~08:3xZ -- items 56, 57, 58
+
+**Pins:** `8a814fd2`, `74d27b1b`, `437bef28`, each an ancestor of portal HEAD `437bef28`, which equals origin DEV
+(ls-remote by this seat). **This seat's run at HEAD:** `bun test` over ten pinned files (iv-e-128, 122, 126, 119, 39,
+34, 40, 118 and two neighbours): 10 of 10 pass. No client is named here.
+
+| # | pin | claim | evidence read | grade |
+|---|---|---|---|---|
+| 56 | `8a814fd2` | the Global client list shows each firm's rows as that firm answers | unit iv-e-128 SEARCH-PROGRESSIVE-OK. Walk 20261001T074316Z `search-timings.json`: two typed names, first match at 2,113 ms and 1,488 ms, and `answered_ms` equal to `first_match_ms` in both | PASS on the unit claim and no regression on a live run. The progressive path itself is NOT_EVALUATED live: every firm answered together, as STATUS says |
+| 57 | `74d27b1b` | OBJECT_NOT_COVERED on the Performance tab reads "Performance is not available for this client yet." | unit iv-e-39 and its neighbours green. STATUS: not looked at on the page because no served answer carried the code. That has changed: since 08:20:26Z the adapter answers OBJECT_NOT_COVERED for a refused vendor use (this seat's log read, 4 of 4) | PASS on the unit claim; the face is now readable on the real backend and has not been read |
+| 58 | `437bef28` | (1) a selection with no class line heads its block "Position detail"; (2) the two selects leave room for their arrow | unit iv-e-126 arm (c2) green. Shot `item58/class-totals-and-selects.fast-run.png`: the block with three class lines and the remainder (the item-53 face), and both selects drawn with their arrow clear of the text "All". The whole-remainder face of (1) is not in the shot, and no long locked name is shown for (2) | PASS on the unit claim; the two faces the item changes are NOT_EVALUATED on a run, as STATUS says for (1) |
+
+-- 3.0.0_SA_CVO

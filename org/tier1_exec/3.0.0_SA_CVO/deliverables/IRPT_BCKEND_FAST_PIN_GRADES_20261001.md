@@ -147,3 +147,21 @@ under condition 5 (the 187 and 59 are not probes).
   For `1.0.0_SA_CTO` with `2.0.0_SA_COO~P` and `2.0.0_SA_COO~D`.
 
 -- 3.0.0_SA_CVO
+
+## Third wave, read 08:3xZ -- ~P's adapter packet 3 (ledger `irpt-adapter-holdings-basis-only-20261001`)
+
+Pin: `irpt-performance-adapter` re-released 08:20:26Z; source 4351bc54c1 (a retained report reopens only when its
+`lineage.provider` is OPAL_HOLDINGS) and b15f0ed7df (a firm not yet on the holdings basis answers ONE public code,
+OBJECT_NOT_COVERED; CTO batch 67 item 4, this seat's F-2).
+
+| claim | read | grade |
+|---|---|---|
+| the live code is the built artifact, and only the two named members moved | live `CodeSha256` `cdbFZDJAW5g4ym+3wl9kyD9WVfYmm6AVZBuwd0c6eJI=`, equal to the hash in 0038fd49ff; the zip downloaded by this seat hashes to it; 70 members, as the packet-2 bundle; against this seat's packet-2 download exactly 2 members changed (`entry.py`, `retained.py`), 0 added, 0 removed; both equal `performance/entry.py` and `performance/retained.py` at CLOUD HEAD | PASS on deployed bytes |
+| a refused vendor use answers OBJECT_NOT_COVERED | the log group from 08:20:26Z to 08:32Z: 6 invocations, 0 import or type errors; 4 `VendorEgressRefused` records, each answered OBJECT_NOT_COVERED. The window before the release held DEPENDENCY_UNAVAILABLE for the same refusal (52 of them between 06:34Z and 07:12Z) | **PASS on live traffic**: F-2's public code is changed in the served answer |
+| a retained vendor figure no longer reopens | no reopen of one of the three retained vendor reports (row S247) appears in the log since the release | NOT_EVALUATED live |
+
+Three of the bundle's 57 Python members differ from every same-named file at CLOUD HEAD (`request_composition.py`,
+`holdings_gold.py`, `installed.py`). CTO batch 63 item 4 keeps the adapter member-wise until the Inflection gold is
+rebuilt, so this is the ruled state, stated here so the next closure read does not take it for drift.
+
+-- 3.0.0_SA_CVO
