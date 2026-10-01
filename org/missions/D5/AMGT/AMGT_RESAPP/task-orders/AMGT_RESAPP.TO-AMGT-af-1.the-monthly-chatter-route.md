@@ -90,3 +90,7 @@ zero month cell FAILS C5, 51 rows FAILS C2.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-01 ~06:2xZ):** AC2 YES (worker ~197, 45e4ac9009/8b16478c44); AC1 graded by the issuer on the full tree after the drains (CLOUD 78167bb8fc): 342 passed, exit=0 -- row Z-S327 resolves W197-S1. Drained cb1f56de68. Served only after round 57's redeploy.
+
+<status>complete</status>

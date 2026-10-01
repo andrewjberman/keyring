@@ -92,3 +92,7 @@ responses transformed to the specified shape.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-01 ~06:2xZ):** AC2 YES and AC3 YES (worker ~198, a88531512b/0d3a9d939d; re-run on the merged tree, both YES); AC1 graded by the issuer on the full tree (CLOUD 78167bb8fc): 342 passed, exit=0 -- row Z-S327 resolves W198-S1. Drained 78167bb8fc. Served only after round 57's redeploy.
+
+<status>complete</status>
