@@ -5424,3 +5424,29 @@ name the one known failure instead of silently inheriting it.
   "notes": "Smallest remedies, issuer's choice: select the test in the check (`pytest <file>::<test>`), or update test_ogz2_ac06 to expect the fourth EMAILDENY put (a second edit to test_entitlement_admin.py, which this order's paths already name). The order is left OPEN; this worker did not edit the check or ac06."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S7",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-01T03:05Z",
+  "one_line": "Second defect in tx1.AC2 (and ml1.AC2), independent of Z-W15-S6: _root.sh pytest_named looks for `::test_ogz2_ac08 PASSED` on one line, but that test prints through capsys.disabled(), so its PASSED lands on a later line and the check counts 0 of 1 even when the test passes.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest tests/test_entitlement_admin.py::test_ogz2_ac08 -v -s at a7c70dc5b2 -> `1 passed`; the verbose output reads `tests\test_entitlement_admin.py::test_ogz2_ac08 ` then, lines later after the OGZ2-AC8 printout, a bare `PASSED`.",
+      "bash tx1.AC2.sh at a7c70dc5b2 -> `pytest rc=1; named tests passed 0 of 1; failed/error lines 1`: p=0 because the grep `::test_ogz2_ac08(\\[.*\\])? PASSED` never matches, and rc=1 because of Z-W15-S6's test_ogz2_ac06.",
+      "Same pytest_named in ml1.AC2.sh line 15 for the same test."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-OG-tx-1 AC2: `named tests passed` reads 1 of 1 for test_ogz2_ac08 once it passes.",
+  "world_is": "Fixing Z-W15-S6 alone leaves AC2 at `named tests passed 0 of 1`. Either the check selects the test and reads rc plus the `1 passed` summary instead of a per-line PASSED, or the test stops printing between its name and its verdict. Neither file is in this order's paths except test_entitlement_admin.py.",
+  "notes": "The order stays OPEN with AC2 FAIL. The three tools are in both lists (REG 3 of 3), the 17 scopes are unchanged (SCOPES same) and test_ogz2_ac08 passes at 58; only the check's two readings of the file are wrong."
+}
+```
