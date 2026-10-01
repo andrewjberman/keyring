@@ -5286,6 +5286,28 @@ carries none.
       ]
     },
     "notes": "INERT: the append-only channel conflicts on every merge when two seats append at the same offset (the doctrine's own warning). No row was edited or dropped."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S75",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-01T13:51Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "MX-r-8 is COMPLETE and drained (@d68390694a): live e3567ce5f7, ledger nfra-mcpindex-r6-rdr-release CLOSED 5/5, issuer re-grade on CLOUD r8.AC1 PASS (22/22 sentinels), proof VALID, manifest e3567ce5f7 (prev daa56d81ac). r8.AC2 read FAIL once on the issuer re-grade ('status=Success; /health=; next_tools=[]') and PASS on 2 immediate re-runs; the host read healthy throughout (active since 12:36:38Z, NRestarts=0, /health 200). An empty SSM output with status=Success is an instrument read the check could not tell from a served failure; the check now prints the fetched head when its fields are empty.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "r8.AC2 runs ~13:46Z: ssm c2a9a126 FAIL (empty fields); ~13:50Z: ssm c4e5fcb8 PASS and 9ba82a77 PASS (BD -> blackdiamond_list_fees, ETF -> etfs_get_positioning, /health 200).",
+        "Host read ~13:49Z (SSM): systemctl is-active=active, ActiveEnterTimestamp 12:36:38 UTC, NRestarts=0, /health 200.",
+        "A first host read failed client-side with aws 'charmap' codec can't encode '\u25cf' (systemctl status glyph): the cp1252 CLI breaks on non-ASCII SSM output -- a second instrument class."
+      ]
+    },
+    "spec_asserts": "r8.AC2 PASS means the served host routes; FAIL means it does not.",
+    "world_is": "One of three runs read empty fields with a Success status while the host was healthy; the cause (output fetch timing or a client-side decode error swallowed into $o) was not isolated.",
+    "notes": "Check hardened (round6/checks/r8.AC2.sh prints INSTRUMENT + the fetched head on an empty read). The MX-r-8 verdict stands on the worker's read-back (AC2 PASS at 12:4xZ) and 2 of 3 issuer re-runs. Carried to the round-6 slug as an instrument note with Z-S73's class (host reads through SSM on this device)."
   }
 ]
 ```
