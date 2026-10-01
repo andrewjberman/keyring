@@ -33,13 +33,19 @@ choice.
     "partial_months": ["2026-10"],
     "rows": [
       { "security_key": "...", "display_name": "...",
-        "by_month": { "2026-09": { "collected": 12, "by_publisher": {"sa": 7, "wsj": 3, "bbg": 2, "ft": 0, "barrons": 0} } } }
+        "by_month": { "2026-09": { "collected": 12, "by_publisher": {"sa": 7, "wsj": 3, "bbg": 2} } } }
     ]
   }
   ```
 - **`collected`** is the raw count of collected articles that name the security in that calendar month. It has
   **no coverage gate**: partial publisher coverage still counts (R11). A month with nothing is absent from
   `by_month`; it is never written as a zero row.
+- **`by_publisher` lists only publishers with at least one article in that month** (amendment 2, ~06:3xZ, on CVO v68).
+  A publisher absent from the map reads as "none collected", and the page never reads it as a number. This is the
+  empty-month rule applied to publishers.
+- **Every covered name is a row, even with an empty `by_month`.** The page sizes bubbles only for names with a
+  collected count in the cursor's month, and prints the denominator beside the chart, e.g. "22 of 95 covered names have
+  collected articles this period". It never hides the gap.
 - One call returns every month. The page's month cursor flips client-side, with no fetch per step.
 - **Label:** the page captions sizes as "articles collected", never as "market chatter" (brief VII.4).
 
