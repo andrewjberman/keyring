@@ -2191,6 +2191,26 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "CTO ruling R1: a per-user Windows Firewall block walls Opal_Agent and Opal_MSP off 127.0.0.1:8194.",
     "world_is": "Windows Firewall does not filter loopback here. The rules are inert. The wall is not in place until the WFP cell (installer, -Plan, the same AC3), cut by 2.0.0_SA_COO~AI on the CTO's re-rule, reads REFUSED."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S53",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~AI",
+    "surfaced_at": "2026-10-01T21:03Z",
+    "one_line": "The Codex OFFLINE-sandbox loopback block on this box (codex_sandbox_offline_block_loopback_tcp/_udp, LocalUser SID ...-1005) is a per-user Windows Firewall Outbound Block of the same shape that F10 measured INERT on loopback -- so the Codex offline sandbox does not actually wall loopback here (openai/codex #48856, #49840; build 26200).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "1.0.0_SA_CTO~O msg 28059 and ruling R5 @9d6fbe3e97: R1's precedent rules were SHAPE ONLY and are also ineffective (openai/codex #48856, #49840, the same build 26200); CRO~O research @63a9b6da27.",
+        "F10_ACCEPTANCE.json @1552d46a70: a per-user Outbound Block TCP 8194 127.0.0.0/8 rule, live, blocked 0 of 2 account arms on loopback (row Z-W25-S3)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The codex_sandbox_offline_block_loopback_* rules block loopback traffic for the Codex offline sandbox identity.",
+    "world_is": "By the same mechanism F10 measured, they do not: per-user Firewall blocks are loopback-exempt here. Filed on the CTO's instruction (msg 28059). Owner of the box's Codex sandbox posture: 0.0.0_AB_MSTR~Z (box operator); not chased by NFRA_OPALAI."
   }
 ]
 ```
