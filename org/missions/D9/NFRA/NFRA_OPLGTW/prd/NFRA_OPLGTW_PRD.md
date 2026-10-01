@@ -3,7 +3,7 @@
   "project": "NFRA_OPLGTW",
   "directive": "D9",
   "fabric": "site-z",
-  "prd_version": "v1.2",
+  "prd_version": "v1.3",
   "step": 4,
   "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_1511ET_NFRA_OPLGTW_D9_REGISTRATION_AND_PRD.md@45ce4e5b73",
   "endpoint_outcomes": [
@@ -218,8 +218,10 @@ builds them because it owns the gateway, and it grades only each order's own cri
 **Headless content routes (orders O2, O5).**
 - **A new capability, never a widening of `/ms/*`.** The `/ms/*` route's contract is structure-only and it "can NEVER
   echo file content, a body/preview, or any comms field" (`app/ms_ingest.py`). That stays true. Transcripts, mail
-  bodies and attachment bytes are served ONLY on two new prefixes, one for transcripts and one for mail. Their route
-  names come from the builder.
+  bodies and attachment bytes are served ONLY on two new prefixes, one for transcripts and one for mail: the fixed
+  literals `/hx/transcripts` and `/hx/mail` (v1.3). A route path is not a `lib/opal_naming.py` kind (`name()` refuses
+  `route`; NAMING_SCHEMA marks API_ROUTE NOT GRADED), so these two are graded only for distinctness: neither is under
+  `/ms/`, neither is a prefix of the other, and neither collides with a route already mounted in `app/server.py`.
 - **Bearers.** Each prefix has its own static capability bearer:
   - stored in Secrets Manager under a `lib/opal_naming.py` SECRET-grammar name;
   - compared in constant time;
@@ -375,3 +377,21 @@ Every O2/O5 release is NARROW from the deployed commit re-read at the cut, under
 never-widen halves: the release adds a content surface. Each route's first criterion is a negative arm run on demand:
 a bearer from the other prefix refused; a meeting off the allowlist refused; a message from a sender off the table
 refused, including an off-table sender in a table sender's thread; a non-PDF attachment returns metadata only.
+
+### v1.3 addendum (2026-10-01 ~03:5xZ, 1.0.0_SA_CTO~O) -- C7 headless prefixes are fixed literals
+
+Input: `2.0.0_SA_COO~O` msg 27476 (row NFRA_OPLGTW-Z-W16-S1, OG-hr-1 stopped at step 1). Authority: Andrew-direct
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261001_035xZ_NEXT_CALLS_GO_NO_TAXSMA_CRO_O_RESOURCE.md`
+(OPTION 1).
+
+- **Why v1.2 could not be met.** v1.2 said the two route names "come from the builder". The builder has no route kind:
+  `name("gateway", None, "transcripts", k)` raises `ValueError` for `route`, `API_ROUTE` and `api_route` (re-run
+  here at HEAD). A criterion asking for builder output that cannot exist can never pass.
+- **The change (C7, one bullet).** The prefixes are the literals `/hx/transcripts` and `/hx/mail`. They are graded for
+  distinctness only (not under `/ms/`, not a prefix of each other, no collision with a mounted route). `/hx` is unused
+  in `app/server.py` at HEAD.
+- **Unchanged.** Bearer secrets keep the SECRET grammar and are graded with `grade(<name>, "SECRET")`
+  (`gateway/transcripts/bearer` reads CONFORMANT). Every other C7 clause stands: one bearer per prefix, the
+  allowlists, GET only, allow-by-key output, and the negative arms in the v1.2 addendum.
+- **Sign-off.** This edits CONTRACTS text, so the ratified-text half re-opens for `3.0.0_SA_CVO~O`. ENDPOINT is
+  unchanged. The issuer amends OG-hr-1, OG-hr-2 and OG-rl-1 itself.
