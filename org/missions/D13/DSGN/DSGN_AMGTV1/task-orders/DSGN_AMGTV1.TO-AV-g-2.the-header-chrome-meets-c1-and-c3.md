@@ -83,7 +83,7 @@ Report once: what changed and where, the output line of every criterion, the por
 
 **ISSUER NOTES:** analysis s.4 row 2 (ruling 4). Leads chain ~60 (g-2 -> g-4; both write LeadPanel.tsx). Green r16-green-e @ea7b0a9b 3 of 3 (write set HeaderCards.tsx + LeadPanel.tsx).
 
-<status>pending</status>
+<status>complete</status>
 <round>16</round>
 <slot>~60</slot>
 <fabric>site-z</fabric>
