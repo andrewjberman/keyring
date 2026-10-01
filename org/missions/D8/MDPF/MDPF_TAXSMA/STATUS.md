@@ -1,7 +1,7 @@
 # MDPF_TAXSMA -- status (FAST lease, /closer-drive)
 
 Seat `4.0.0_SA_CRO` (CLAUDE). Contract `org/standards/MDPF_TAXSMA_DATA_CONTRACT.json` version 0.6.0 (amendment 2). Reviewer `3.0.0_SA_CVO`.
-As of 2026-10-01T02:1xZ. RESUMED on Andrew's `/closer-drive MDPF_TAXSMA` at this terminal (02:04Z), after the 02:03Z checkpoint; the reboot waits for the next checkpoint. Lease: FAST MDPF_TAXSMA seat 4.0.0_SA_CRO until 2026-10-01T05:06Z (`org/mcp/drive-mode.log`), laptop-only surfaces (the Gateway surfaces are site Z's).
+As of 2026-10-01T02:2xZ. **AT A CHECKPOINT: the Tax-off backend release (TX-r-1) is applied; its ledger is OPEN with one leg left (V2, the 13:50Z publisher run) and its state written.** Resumed 02:04Z on Andrew's `/closer-drive MDPF_TAXSMA` at this terminal. Lease: FAST MDPF_TAXSMA seat 4.0.0_SA_CRO until 2026-10-01T05:06Z (`org/mcp/drive-mode.log`), laptop-only surfaces (the Gateway surfaces are site Z's).
 Authority: `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260930_142xZ_TAXSMA_CLOSER_DRIVE_GO_RIA_COLUMN_WORKBOOK_FALLBACK.md` @d55b7066ba;
 priority `ANDREW_DIRECT_20260930_202xZ_TAXSMA_PRIORITY_THROUGH_MDPF_ALONGSIDE_DROPPED.md` @733b28e890 (Tax SMA through MDPF to every relevant surface).
 
@@ -12,13 +12,13 @@ priority `ANDREW_DIRECT_20260930_202xZ_TAXSMA_PRIORITY_THROUGH_MDPF_ALONGSIDE_DR
 | Working branch / worktree | `wk-mdpf_taxsma-cro` at `C:/Users/AndrewBerman/Desktop/wk-taxsma-cro`, fully merged, nothing uncommitted |
 | Workspace candidate pin | e8994f23af (both packages are built from it); the checkpoint commit is the one carrying this file |
 | Portal candidate pin | 370d2fe8 on origin/DEV (accessor + page caption); origin/DEV head 970d5c75 at 01:01Z; PROD untouched |
-| Deployed artifact pin | mdpf-gold-lambda CodeSha256 5aKNH5WB.. (S3 version 8eu2ppmBW1z1.., LastModified 2026-09-22T15:19Z, 24 members, NO taxsma module); publisher MDPF_PUBLISHER_COMMIT c0902245b0 -- Tax code NOT DEPLOYED |
-| Built, not uploaded | mdpf-gold-lambda zip sha256 ee12387e55b94597.. (39 modules); publisher zip sha256 a63f896adf7ab797.. |
+| Deployed artifact pin | mdpf-gold-lambda CodeSha256 7hI4flW5.. (S3 version U4JsC9gYCgaK.., deployed 2026-10-01T02:17Z, 39 modules, Tax code present, Tax DISABLED: no TAXSMA_ env); publisher CodeSha256 pj+Jat96.. (S3 version Deg26fXt.., deployed 02:21Z, `TAXSMA_ROLLOUT_SWITCH = OFF`). Both built from e8994f23af |
+| Rollback | Gold artifact prior S3 version 8eu2ppmBW1z1j2MOwTQc3G27uo9SbDXD (code 5aKNH5WB..); publisher prior version ZLaQC2nGuQ2hP72JpdTA4RWfciYhFoql (code 7X50uR1H..): copy that version onto the key with its `content-sha256`, restore the two commit pins, plan, `safe-apply` |
 | Push state | origin/CLOUD 68e15a70df (ls-remote read 01:39Z) carries this seat's work through 75a4076b90; everything after it is LOCAL |
 
 ## Live thread
 
-State: NOT LIVE. Nothing serves Tax. Live tonight: the IAM the thread needs (two scoped prelude roles, the Gold role's
+State: NOT LIVE. Nothing serves Tax (by design of this release: Tax DISABLED, switch OFF). The Tax CODE is now deployed in both functions. Live tonight: the IAM the thread needs (two scoped prelude roles, the Gold role's
 assume + control write, the publisher's control read). Hops 2-7 exercised offline on real data (E2a/E2b). The Tax-off
 release is proven a zero business delta offline (16 of 16 bodies, deployed bundle vs new bundle, `qa_local`).
 First failing hop: 1 (the Gateway workbook route is not on the host; its release is now site Z's, requested in `org/missions/D8/MDPF/MDPF_TAXSMA/deliverables/4.0.0_SA_CRO/SITEZ_GATEWAY_RELEASE_REQUEST_TX-r-2.md`). The secret exists, with no value.
@@ -35,11 +35,11 @@ Trace: `org/tier1_exec/4.0.0_SA_CRO/deliverables/TAXSMA_MODEL_PORTFOLIOS_END_TO_
 | TX-i-1 scoped prelude roles | APPLIED 2026-10-01T00:03:55Z, ledger CLOSED @14670cf66c | 5 added; re-plan No changes; SIMULATION 30 of 30; exercise owed at TX-r-3. TWO roles (49f, cot), not one: each firm bucket admits only its own short token |
 | TX-i-2 publisher control read | APPLIED 2026-10-01T00:16:59Z, ledger CLOSED @73ef80ab94 | 1 added; re-plan No changes; SIMULATION 10 of 10; exercise owed at TX-r-3 |
 | TX-i-3 capability secret + Gateway read | APPLIED 2026-10-01T01:52:55Z from the `mdpf-pipeline` root, ledger CLOSED @c3d2237872 | 2 added; re-plan No changes; EXERCISED from the Gateway host 01:56:15Z (new secret admitted with no value; a secret not held AccessDenied). Not applied from `opal-gateway`: that root still has appliers whose commits are not on origin (rows S7, S10), and Andrew ruled it is applied from site Z only |
-| TX-k-1 gold package | CANDIDATE, built at e8994f23af, sidecar @75a4076b90 | 39 modules; import closure OK; `qa_local` green 16 of 16 from the extracted zip |
-| TX-u-1 / TX-u-2 publisher extension + package | CANDIDATE, built at e8994f23af, sidecar @75a4076b90 | control read re-pointed to the global key @338665c1b1; harness arms in the 216 |
+| TX-k-1 gold package | DEPLOYED 2026-10-01T02:17Z (built at e8994f23af, sidecar @75a4076b90) | deployed CodeSha256 equals the built zip; 39 modules |
+| TX-u-1 / TX-u-2 publisher extension + package | DEPLOYED 2026-10-01T02:21Z (built at e8994f23af, sidecar @75a4076b90) | deployed CodeSha256 equals the built zip; switch OFF on the applied plane |
 | TX-c-1 / TX-c-3 portal accessor + page caption | CANDIDATE portal 370d2fe8 on origin/DEV | 10 bun arms; tsc 0; no signed-in render (no served Tax yet) |
 | TX-c-2 tree leaf | NOT STARTED (component under the DSGN_IRPTV1 lease; the tree already renders the tax member's served amount) | |
-| TX-r-1 backend release, Tax off | READY TO RUN, not started | pre-proof: deployed vs new bundle, both `qa_local` green 16 of 16, every body difference a process-time path. Needs: upload both zips, two plans, two safe-applies, one deployed `qa_local` invoke, then the 13:50Z publisher fire for AC6 |
+| TX-r-1 backend release, Tax off | APPLIED 2026-10-01T02:15:52Z (Gold) and 02:20:56Z (publisher); ledger `mdpf_taxsma-tx-r-1` OPEN, 5 of 6 legs closed | both re-plans No changes; DEPLOYED before/after `qa_local` invokes both green 16 of 16, body diff 16 of 16 process-time only, 0 business-different; leg V2 = the 13:50Z publisher run, read by `deliverables/4.0.0_SA_CRO/probes/tx_r_1_served_delta.py compare deliverables/4.0.0_SA_CRO/tx_r_1_served_baseline.json` |
 | TX-r-2 Gateway release, capability off | REQUESTED OF SITE Z (Andrew-direct 02:0xZ: gateway releases are site Z's) | request file above; includes the two `.env` lines the deploy script lacks (row S11) |
 | TX-r-3 activation | NOT STARTED, held on G-W and G-P | see Dependencies |
 | TX-v-1 re-cut / TX-v-2 / TX-v-3 / TX-o-1 | NOT STARTED (this seat builds, the CVO grades each changed case) | 102 expected cases written for 0.5.0 |
@@ -50,18 +50,19 @@ Trace: `org/tier1_exec/4.0.0_SA_CRO/deliverables/TAXSMA_MODEL_PORTFOLIOS_END_TO_
 `data/mdpf/tests/taxsma/*`, `org/standards/MDPF_TAXSMA_DATA_CONTRACT.json`,
 `infra/aws/terraform/mdpf-pipeline/iam.tf` (the TX-i-1 block), `infra/aws/terraform/opal-assets/mdpf_egress_publisher.tf` (the TX-i-2 block),
 the two package sidecars.
-**In progress (claimed 2026-10-01T02:0xZ on Andrew's `/closer-drive MDPF_TAXSMA` at this terminal): TX-r-1** -- `infra/aws/terraform/mdpf-pipeline/gold-lambda.tf` (the commit pin), `infra/aws/terraform/opal-assets/mdpf_portal_publisher.tf` (the commit pin, the rollout switch OFF), both function artifacts, the ledger entry `mdpf_taxsma-tx-r-1`.
+The ledger entry `mdpf_taxsma-tx-r-1` and its sentinel (OPEN until leg V2).
 
 ## Next proof
 
-On resume, in order, each this seat's act under a re-armed lease:
-1. TX-r-1: the Tax-off backend release. Set `MDPF_GOLD_COMMIT` and `MDPF_PUBLISHER_COMMIT` to
-   e8994f23af282296037bd28bb539ac55cc9465dd and add `TAXSMA_ROLLOUT_SWITCH = "OFF"` on the publisher; upload the two
-   zips (gold sha256 ee12387e55b94597.., publisher a63f896adf7ab797..) with `content-sha256` metadata; ledger; two
-   plans; two `safe-apply`; one deployed `qa_local` invoke; AC6 at the 13:50Z publisher run. Rollback: the Gold
-   artifact's prior S3 version 8eu2ppmBW1z1j2MOwTQc3G27uo9SbDXD.
-2. Site Z's reply on the Gateway release, then activation (TX-r-3) once Andrew's three items exist.
-Neither makes Tax visible alone; activation does, one trading day later by the current rule.
+1. **TX-r-1 leg V2, after the 13:50Z publisher run:** from the workspace root,
+   `py -3.12 org/missions/D8/MDPF/MDPF_TAXSMA/deliverables/4.0.0_SA_CRO/probes/tx_r_1_served_delta.py compare org/missions/D8/MDPF/MDPF_TAXSMA/deliverables/4.0.0_SA_CRO/tx_r_1_served_baseline.json`
+   (16 of 16 expected: shapes unchanged, baseline history dates unchanged, the Tax member still null, each file rewritten);
+   then `deploy_ledger.py close-leg --slug mdpf_taxsma-tx-r-1 --leg-id V2`, `close`, commit both ledger paths.
+   A FAIL there is the next item: roll back per the Pins row.
+2. Site Z's reply on the Gateway release (request file in `deliverables/4.0.0_SA_CRO/`).
+3. Activation (TX-r-3) once Andrew's items exist: the opalbloomberg sign-in at the Gateway and the never-widen sign-off.
+4. Unblocked meanwhile, this seat: the Cottonwood double-count read (bd-rebalancer model assignments for the two
+   accounts); the 0.6.0 re-cut of the expected cases (TX-v-1) and the journey harness (TX-v-2).
 
 ## Dependencies
 
