@@ -1,20 +1,21 @@
 # MDPF_TAXSMA -- status (FAST lease, /closer-drive)
 
-Seat `4.0.0_SA_CRO` (CLAUDE). Contract `org/standards/MDPF_TAXSMA_DATA_CONTRACT.json` version 0.6.0 (amendment 2). Reviewer `3.0.0_SA_CVO`.
-As of 2026-10-01T02:2xZ. **AT A CHECKPOINT: the Tax-off backend release (TX-r-1) is applied; its ledger is OPEN with one leg left (V2, the 13:50Z publisher run) and its state written.** Resumed 02:04Z on Andrew's `/closer-drive MDPF_TAXSMA` at this terminal. Lease: FAST MDPF_TAXSMA seat 4.0.0_SA_CRO until 2026-10-01T05:06Z (`org/mcp/drive-mode.log`), laptop-only surfaces (the Gateway surfaces are site Z's).
+Seat `4.0.0_SA_CRO` (CLAUDE). Contract `org/standards/MDPF_TAXSMA_DATA_CONTRACT.json` version 0.6.0 (amendment 3). Reviewer `3.0.0_SA_CVO`.
+As of 2026-10-01T03:5xZ, after the laptop reboot (boot 03:09Z). **The Tax-off backend release (TX-r-1) is applied; its ledger is OPEN with one leg left (V2, the 13:50Z publisher run). Both functions re-read 03:29Z: code hashes unchanged, Tax DISABLED, switch OFF.** Lease: FAST MDPF_TAXSMA seat 4.0.0_SA_CRO until 2026-10-01T05:06Z (`org/mcp/drive-mode.log`), laptop-only surfaces (the Gateway surfaces are site Z's).
 Authority: `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260930_142xZ_TAXSMA_CLOSER_DRIVE_GO_RIA_COLUMN_WORKBOOK_FALLBACK.md` @d55b7066ba;
-priority `ANDREW_DIRECT_20260930_202xZ_TAXSMA_PRIORITY_THROUGH_MDPF_ALONGSIDE_DROPPED.md` @733b28e890 (Tax SMA through MDPF to every relevant surface).
+priority `ANDREW_DIRECT_20260930_202xZ_TAXSMA_PRIORITY_THROUGH_MDPF_ALONGSIDE_DROPPED.md` @733b28e890 (Tax SMA through MDPF to every relevant surface);
+placement `ANDREW_DIRECT_20261001_033xZ_TAXSMA_TAX_PORTFOLIOS_ARE_SMAS_NOT_MODELS_SMA_CATEGORY.md` @fc06bf47d6 (the Tax portfolios are SMAs, not models; SMA category).
 
 ## Pins
 
 | What | Value |
 |---|---|
 | Working branch / worktree | `wk-mdpf_taxsma-cro` at `C:/Users/AndrewBerman/Desktop/wk-taxsma-cro`, fully merged, nothing uncommitted |
-| Workspace candidate pin | e8994f23af (both packages are built from it); the checkpoint commit is the one carrying this file |
+| Workspace candidate pin | e8994f23af is what is DEPLOYED (both packages are built from it). The Cottonwood-into-Global fold is a later candidate, 1e5e13d223. It is NOT in either deployed package |
 | Portal candidate pin | 370d2fe8 on origin/DEV (accessor + page caption); origin/DEV head 970d5c75 at 01:01Z; PROD untouched |
 | Deployed artifact pin | mdpf-gold-lambda CodeSha256 7hI4flW5.. (S3 version U4JsC9gYCgaK.., deployed 2026-10-01T02:17Z, 39 modules, Tax code present, Tax DISABLED: no TAXSMA_ env); publisher CodeSha256 pj+Jat96.. (S3 version Deg26fXt.., deployed 02:21Z, `TAXSMA_ROLLOUT_SWITCH = OFF`). Both built from e8994f23af |
 | Rollback | Gold artifact prior S3 version 8eu2ppmBW1z1j2MOwTQc3G27uo9SbDXD (code 5aKNH5WB..); publisher prior version ZLaQC2nGuQ2hP72JpdTA4RWfciYhFoql (code 7X50uR1H..): copy that version onto the key with its `content-sha256`, restore the two commit pins, plan, `safe-apply` |
-| Push state | origin/CLOUD 68e15a70df (ls-remote read 01:39Z) carries this seat's work through 75a4076b90; everything after it is LOCAL |
+| Push state | origin/CLOUD 0abf99fcd4 (ls-remote read 03:29Z) carries this seat's work through the 02:45Z session log 171bcc4da8; everything after it is LOCAL |
 
 ## Live thread
 
@@ -32,6 +33,7 @@ Trace: `org/tier1_exec/4.0.0_SA_CRO/deliverables/TAXSMA_MODEL_PORTFOLIOS_END_TO_
 | E1 engine (RIA firm axis, custodian per firm, workbook fallback, loaders) | CANDIDATE @62fa52fa6f + f4c4614f33 | real run on Yang's corrected sheet: 49F 11 of 11 = 17,034,745.40 (measured 12,584,745.40 + workbook-stated 4,450,000.00); Cottonwood 2 of 2 = 6,041,791.65 |
 | E2a production wiring | CANDIDATE @0e1d37e80b + bd2e9a1181, re-wired per firm @338665c1b1 | 216 of 216 |
 | E2b served fold | CANDIDATE @faf88511b9 + 3f03d42024 | real served spines 09-29: 49F 1,761,000,294.98 on timeseries, category tree and aum-metrics alike; Global 2,083,972,030.82 to the cent |
+| E2c Cottonwood's Tax added to Global once, with an overlap control on Cottonwood's model-assigned accounts | CANDIDATE @1e5e13d223; NOT deployed | 223 of 223; real run on 09-29 data, zero writes: Global 2,066,937,285.42 base + 24,817,481.13 Tax (49F 18,768,112.35 + Cottonwood 6,049,368.78) = 2,091,754,766.55, fee-basis components sum to the cent, category tree SMA > ALT Strategies 24,817,481.13, frontier cell 13 of 13 covered; control: the assignment reader returns 0 keys, and 47 (both Tax accounts inside) with the `--` filter lifted |
 | TX-i-1 scoped prelude roles | APPLIED 2026-10-01T00:03:55Z, ledger CLOSED @14670cf66c | 5 added; re-plan No changes; SIMULATION 30 of 30; exercise owed at TX-r-3. TWO roles (49f, cot), not one: each firm bucket admits only its own short token |
 | TX-i-2 publisher control read | APPLIED 2026-10-01T00:16:59Z, ledger CLOSED @73ef80ab94 | 1 added; re-plan No changes; SIMULATION 10 of 10; exercise owed at TX-r-3 |
 | TX-i-3 capability secret + Gateway read | APPLIED 2026-10-01T01:52:55Z from the `mdpf-pipeline` root, ledger CLOSED @c3d2237872 | 2 added; re-plan No changes; EXERCISED from the Gateway host 01:56:15Z (new secret admitted with no value; a secret not held AccessDenied). Not applied from `opal-gateway`: that root still has appliers whose commits are not on origin (rows S7, S10), and Andrew ruled it is applied from site Z only |
@@ -61,8 +63,10 @@ The ledger entry `mdpf_taxsma-tx-r-1` and its sentinel (OPEN until leg V2).
    A FAIL there is the next item: roll back per the Pins row.
 2. Site Z's reply on the Gateway release (request file in `deliverables/4.0.0_SA_CRO/`).
 3. Activation (TX-r-3) once Andrew's items exist: the opalbloomberg sign-in at the Gateway and the never-widen sign-off.
-4. Unblocked meanwhile, this seat: the Cottonwood double-count read (bd-rebalancer model assignments for the two
-   accounts); the 0.6.0 re-cut of the expected cases (TX-v-1) and the journey harness (TX-v-2).
+4. Unblocked meanwhile, this seat: the 0.6.0 re-cut of the expected cases (TX-v-1) and the journey harness
+   (TX-v-2); Cottonwood's own tree showing the Tax leaf under SMA (see Parked).
+5. After leg V2 closes, and never before it (a second release would erase what V2 measures): rebuild both
+   packages at the E2c candidate and release them Tax-off under a new ledger entry.
 
 ## Dependencies
 
@@ -80,11 +84,11 @@ The ledger entry `mdpf_taxsma-tx-r-1` and its sentinel (OPEN until leg V2).
 | Question (off-thread) | Owner | Un-parks when |
 |---|---|---|
 | FIRST-DAY RULE: an account counts only for valuation dates on or after its first Gateway observation (`taxsma_membership.resolve_date_status`), so Tax first appears on the scheduled run ONE TRADING DAY AFTER activation | Andrew | he accepts the one-day lag, or rules that the first observation also covers the prior business day |
-| Cottonwood's Tax ($6.04M on 09-28) is not added to Global: it would double-count if those accounts also carry a Cottonwood model assignment | this lane | a read of bd-rebalancer model assignments for the two accounts shows none, or Andrew rules |
+| Cottonwood's OWN category tree still reads "no SMA category members": its two Tax accounts ($6.05M on 09-29) sit inside Client there. Showing them under SMA means a per-firm basis for the `tax` member (carve-out at Cottonwood, additive at 49F and Global), a registry schema change | this lane builds; Andrew's placement word @fc06bf47d6 covers it; the Rule 24 record is owed with the change | next item after TX-v-1, or sooner on Andrew's word |
 | aum-metrics `non_model_assets_detail` (W-6) is built before the Tax step, so its enterprise_total stays pre-Tax | this lane | the page is shown to read it; else leave |
 | Outside 49F's 17.03M: workbook row 9 (Traded=No, awaiting a transfer, 2.30M on 0833) and two 0833 accounts labelled Opal Tax SMA 145 with no workbook row (1.03M + 0.96M), UNCONFIRMED candidates | Yang (workbook rows) / Andrew | two rows added with Traded=Yes; the transfer settling |
 | STRATEGY_CONFLICT valued (workbook SMA 145 vs custodian SMA 200 on 2 accounts): `taxsma_assets.IDENTITY_STATUSES_VALUED` | Andrew (reverse by one tuple edit) | if he wants a label conflict to withhold value |
-| Black Diamond accounts whose Account Number is masked-only (937 of 984 on 09-28) can never match; a Cottonwood Tax claim on one falls to the workbook value | this lane | a BD field carrying the full number is found, or Andrew accepts the fallback |
+| CORRECTED 03:5xZ: the 937 of 984 Black Diamond accounts that form no key are NOT masked; their numbers are in other custodian formats (nine digits, eleven digits, hyphenated). Only the 47 eight-digit numbers form a key, which is the format every Tax claim has. A Cottonwood Tax claim outside those 47 falls to the workbook value | this lane | a Cottonwood Tax account appears at a custodian whose numbers are not eight digits |
 | The contract's N+1 category Gold copies are not written (surprise S9) | `1.0.0_SA_CTO` at the round analysis | strike the two artifacts, or re-point the publisher to them as one migration |
 | S5 EC2 Stage 6 import (`lib.opal_naming` not on the runner tree) | this lane | the runner sync of `lib/` is one line in `mdpf-daily-dispatch.sh` (AE~V's tree) |
 | S6 Gateway deploy ships four projects | this lane | TX-r-2 cut NARROW at 1764e54a16 + TX-g-1's three commits + 030cef41b5 |
@@ -93,7 +97,8 @@ The ledger entry `mdpf_taxsma-tx-r-1` and its sentinel (OPEN until leg V2).
 
 ## Limits
 
-No Tax code is deployed and nothing serves Tax. The two IAM applies are verified by SIMULATION only; no session of the new
+Nothing serves Tax (the deployed Tax code is DISABLED). The E2c fold is exercised on real data offline only, under
+this seat's own credentials, not the function's role. The two IAM applies are verified by SIMULATION only; no session of the new
 roles has been opened (they trust only the Gold function and Lambda). The Tax-off zero-delta proof is a local `qa_local` run
 on Python 3.12 against the Lambda's Python 3.11 runtime and layers; the deployed `qa_local` invoke at TX-r-1 is the real-runtime
 arm. The first-run read of a missing dispositions object under a prefix-conditioned ListBucket is unexercised. No product ID is
