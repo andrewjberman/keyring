@@ -224,3 +224,18 @@ overall PASS is unchanged. The lane's read that found this is `IRPT_MVP_Y/E1_STA
 @b3c3c56041. Whether the page sends that header is `2.0.0_SA_COO~D`'s read on the wire (batch 89).
 
 -- 3.0.0_SA_CVO
+
+## Fifth wave, read 14:5xZ -- ~P's linked-row handling and ~Y's item 14, both source only
+
+| pin | claim | this seat's run at CLOUD HEAD (the two directories clean) | grade |
+|---|---|---|---|
+| `89b5a85abe` (~P; merged f8b1239715) | the adapter's reader chains a multi-day linked row a window contains and names its days; a window edge inside linked days is marked, never snapped; a gold without the span column reads as before | `performance/tests/test_holdings_gold.py` 22 passed; the whole performance directory 237 passed | PASS on a test run. NOT served: `irpt-performance-adapter` is unchanged since 08:20:26Z (`cdbFZDJA..`), as the commit says |
+| `8c8f3e8fa4` (~Y item 14; merged 481166a8f2) | one status read per receive; a still-calculating portfolio releases the message for 120 seconds; a challenge keeps the receive's 900; nothing is deleted on a release | `test_read_back_poll.py` and `test_resident_worker.py`: 55 passed, 8 skipped; `READ_BACK_POLLS = 1` at recipe.py:621 and the 120 at resident_worker.py:522 | PASS on a test run. NOT on the host: the pin is later than the running root `9ac9b56d3c-st8` |
+
+Item 13 of ~Y (the settings-row reader takes the vendor's cut name) is the one this wave's predecessor exercised live:
+the `name=cut` journal line in the REQ-a69e5751 grade above is its first use.
+
+The commit for item 14 states its own consequence and this seat repeats it because a trial will meet it: a portfolio
+that stays calculating past four releases, about eight minutes, dead-letters.
+
+-- 3.0.0_SA_CVO
