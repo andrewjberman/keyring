@@ -4531,3 +4531,31 @@ and `0.0.0_AB_MSTR` msg 103822.
    reader's DEPLOYED code (CLAUDE.md 22a, code: deployed bytes against the build input), or the half says "reader not read".
 6. OPEN, not this seat's to answer: three direct invokes of that function at about 14:01Z wrote the 2026-09-28, 09-29 and
    09-30 slices, and `2.0.0_SA_COO~P` did not make them. The question is at site Z through `0.0.0_AB_MSTR`. Nothing was deleted.
+
+## CTO RULINGS -- batch 95 (2026-10-01T15:38Z, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `2.0.0_SA_COO~P` msgs 103825 and 103831 (`org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/IB_PR_221_INFLECTION_SERVING_PREP_20261001.md`
+@617581b40b, read whole), and reads `0.0.0_AB_MSTR` msgs 103828 and 103832.
+
+### INFLECTION-SERVING-PACKET-BLOCKERS-20261001
+1. BLOCKER 3 IS CLEARED IN THIS COMMIT: IRPT_BCKEND PRD v0.23 carries ruling 23 (a holdings gap is linked, never estimated; a gap
+   day has no partition). It sits outside ENDPOINT, so no sign-off half re-opens.
+2. BLOCKER 2 NEEDS NO GRANT. `infra/aws/terraform/investor-reporting/**` is lane `IRPT_COMPLETION_P`, which already names
+   `2.0.0_SA_COO~P` (read from `.owned-paths.yaml` by this seat: both files resolve to that lane). What refuses is the lease, and
+   each seat re-arms its own: ~P widens its `IRPT_DASHBD~P` lease to `holdings-performance/locals.tf` and `schedule.tf`; an open
+   IRPT_DASHBD order names that root, so the tool admits it.
+3. `locals.tf` line 37: the one-expression repair is ~P's to choose; the test is that `terraform plan` on the root reads with 0
+   errors and a diff naming only what IB-er-501 declared. Seven errors at HEAD means the Inflection function and schedule
+   were never applied: the packet says so and does not call them a change to something live.
+4. `schedule.tf`, THE INFLECTION ENTRY ONLY: it fires at 14:00 UTC, Monday to Friday, declared in UTC because its upstream (the
+   mirror's 13:05Z fire) is declared in UTC. The partition landed 13:05Z to 13:08Z on the one day measured, and a too-early
+   fire does not fail loudly, so the margin is deliberate. 49 Financial's entry is NOT moved by this act. When the mirror's
+   second fire is released, a second Inflection entry after it is the mirror packet's to propose.
+5. TWO PULLERS OF ONE ARTIFACT (CLAUDE.md NEVER-2): the packet names both functions that pull the producer zip, states 49
+   Financial's after-state (emission 1.2, one added column), and shows a dry run of one 49 Financial day before and after
+   with the return unchanged. If that cannot be shown, the two functions take separate artifact keys first.
+6. BLOCKER 1 STANDS: the nine-object delete is Andrew's (batch 92). His packet's path was printed to him at 15:2xZ.
+
+### READ
+7. Site Z accepts the 2026-09-28 ETFS slice (the series' T-1 convention predicts it). Its question to every laptop seat, who
+   made three direct invokes at 14:01Z, is answered by this seat: NOT THIS SEAT (msg to `0.0.0_AB_MSTR`, 15:3xZ).

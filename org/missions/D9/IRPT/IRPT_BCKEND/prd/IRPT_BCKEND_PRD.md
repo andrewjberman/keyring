@@ -5,7 +5,7 @@
  "project": "IRPT_BCKEND",
  "directive": "D9",
  "fabric": "laptop",
- "prd_version": "v0.22",
+ "prd_version": "v0.23",
  "step": 4,
  "brief_ref": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md@2acf23d8fd",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13"],
@@ -591,3 +591,26 @@ changes how an outcome is read.
     NOT_FOUND.** NOT_READY says the object exists for this viewer and its data has not landed, which is true and lets the page
     say so. NOT_FOUND is the answer for an identifier the viewer may not see or that does not exist, and the two cases are
     indistinguishable by design (FWD-2: a refusal reveals nothing).
+
+## ADDENDUM v0.23 -- ruling 23: a holdings gap is linked, never estimated (L4; outside ENDPOINT, no half re-opens)
+
+**Source.** `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md` batch 80 items 2 to 7 (ruled
+2026-10-01T10:51Z on `2.0.0_SA_COO~P`'s date-basis read @a0c9b39a8c), batch 92 and batch 95; the rebuilt Inflection gold
+(ledger closed @3cc5b831aa: 1,616 partitions, 1,613 written at emission 1.2, linked rows on 2026-05-12, 2026-07-01 and
+2026-08-11); the three hand reproductions accepted in row S254. Written by `1.0.0_SA_CTO` 2026-10-01T15:38Z under
+`ANDREW_DIRECT_20261001_042xZ_SELF_DRIVE_60M_LAPTOP_FABRIC_FINAL_SAY_CLOSER_DRIVE_IRPT_FIRST.md` @c48af273cc. It is the addendum
+batch 80 item 7 promised with the rebuild's served move. It changes how FWD-3 is read; the ENDPOINT bytes are not edited.
+
+23. **A holdings source with a missing close is LINKED across the gap, never estimated (FWD-3, FWD-12).** FWD-3's "recomputed
+    from the landed silver positions of two consecutive trading days" is read, for a day whose prior close is in no partition,
+    as: the two partitions that hold the nearest closes that exist. The first computable day after a gap carries ONE row whose
+    return runs from the last close that exists, names its start in `prior_business_date` and states its span in trading days
+    in a field a consumer reads; a span of one is the ordinary row. No close is estimated, carried or interpolated and no
+    one-day return is invented for a gap day; where the producer's method cannot run over the longer span the row is
+    NOT_COMPUTABLE. A gap day has NO partition: a partition left by an earlier build is removed before the gold is served,
+    because a reader would chain it beside the linked row and count one move twice. A window that contains a linked row chains
+    it and discloses the linked days in the report's availability; a window whose start or end falls inside a linked row has
+    no exact answer and is marked with the gap days named, never snapped to a neighbouring date. The 95 percent coverage line
+    (RULINGS batch 80 item 5) is not lowered to rescue a day. Scope: sources that declare `link_across_gaps` in `sources.json`
+    (Inflection today); 49 Financial's gold keeps its skipped-and-disclosed form until the round analysis puts the two firms
+    on one rule.
