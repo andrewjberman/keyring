@@ -2453,3 +2453,25 @@ slots **`~90`..`~92`**; fan-out cap 3 (placement). The sa backfill (issuer, deta
 
 **NOT cells:** the served gold rebuild (a SERVED act; COO half @534a521e45, CTO half asked) -- the issuer's act under
 the pair; a residential arm (Andrew's act).
+
+## 47. ROUND 34 -- L5 DECOMPOSITION v3.14, over the round-33 analysis (`ledger/ROUND_ANALYSIS.round33.md` @b25abce8d4)
+
+**Issuer `2.0.0_SA_COO~H`**, 2026-10-01 ~13:3xZ. FWD-14 (6 of 89 at 50+) and FWD-11 (bbg only) NOT MET; no defeat.
+Series **`ag`**. The sa and ft backfills (issuer, detached) keep running.
+
+| analysis item | cell | order | class | slot | dispatch |
+|---|---|---|---|---|---|
+| 1 wsj/barrons re-mint + a challenged pass under the monitor | `HVST-ag-1` | `ag-1` | WORLD | `~91` | now |
+| 2 ft and sa challenged passes under the monitor | `HVST-ag-2` | `ag-2` | LOCAL A (an ft solver if needed), WORLD B | `~90` | now |
+| 3 bbg/wsj sitemap discovery feeding the driver | `HVST-ag-3` | none: issuer direct act -- the collector's tab legs already list through the sitemaps (af-4) and the driver calls the collector; the act is the bbg and wsj driver runs in their own runtime roots (row Z-W91-S14: one job per runtime), recorded as `~92/ag3_runs.json` | WORLD | issuer | now |
+
+**Fan-out: 2 workers over 2 independent chains, cap 3** (cell 3 needs no worker). Write sets: `ag-1` the deliverables +
+`verification.py` (a slider fix only if needed); `ag-2` the deliverables + `verification.py` (an ft solver) + its test.
+`ag-1` and `ag-2` both MAY touch `verification.py` -> `ag-1` may not edit it (it records, it does not build); `ag-2` owns it.
+
+**Checks dry-run at the base (all FAIL as expected):** `ag-1.AC2` (no record), `ag-2.AC2` (no record), `ag-3.AC2` (no
+record).
+
+**Bounds shared by both orders:** one seat per publisher (ag-1: wsj, barrons; ag-2: ft, sa; the issuer's ag-3 runs
+take bbg and wsj -- so ag-1's wsj work runs FIRST, before the issuer's wsj driver run starts); the main runtime is
+held by the ft backfill and `~92`'s runtime by the sa backfill -> every live job runs in its own runtime root.
