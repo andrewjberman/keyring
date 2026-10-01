@@ -4699,6 +4699,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W90-S3",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~90",
+      "surfaced_at": "2026-10-01T07:30Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "one_line": "Row Z-W90-S2 is disarmed by AMENDMENT 1 @cec6fb0ba6 and worker commit 03457e5899, but the surprise-row gate refuses an in-place edit of an existing row, so the disarm is recorded here as a new row.",
+      "spec_asserts": "Issuer instruction (AMENDMENT 1 handover): edit ONLY row AMGT_HARVST-Z-W90-S2 in place, hazard_standing INERT, notes 'Disarmed by AMENDMENT 1 @cec6fb0ba6 and <commit>'.",
+      "world_is": "2026-10-01, wk-AMGT_HARVST-90: safe-commit refused the in-place edit ('EXISTING row AMGT_HARVST-Z-W90-S2 was MUTATED in place (content hash b92a70b84d98 -> f2b6df1fcee6)'); only an ARMED->DISARMED clock advance with `at` is admitted in place, and only on a remediation row. I did not use the audited override (not authorised by the instruction) and reverted my edit. State of Z-W90-S2: its two disarm conditions are met -- the issuer amendment added the four test files to <paths> and ruled the fetched-key question (cec6fb0ba6); 03457e5899 restores _note_fetch with no request and updates the sa arms. Suite at 03457e5899: 1 failed (test_worker.py, row Z-W91-S1, fixed on CLOUD @250c895b8e), 394 passed, 1 skipped; 0 of the 4 Z-W90-S2 tests fail.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/publishers.py seeking_alpha @03457e5899",
+          "deliverables/0.9.0_WK_AMGT_HARVST~90/ae1_suite_A.out"
+        ]
+      },
+      "notes": "Reader: treat Z-W90-S2 as disarmed (INERT) from 03457e5899. If the issuer wants the S2 row itself edited, that needs the audited '# surprise-row-override' on the commit, which is the issuer's or CTO's call."
     }
   ]
 ```
