@@ -200,3 +200,97 @@ at :84, because flips APPEND. A first-match parse reads the stale one and would 
 
 **NEVER-2 entry `20261001T0500Z`: CLOSED**, all 3 legs proven, sentinel removed. Nothing is owed by this lane
 on `AMGT_RESAPP.TO-AMGT-ae-1`.
+
+---
+
+# SECOND ORDER OF THIS SESSION -- AMGT_RESAPP.TO-AMGT-ag-1, the one scoped-API redeploy
+
+**archetype:** DEPLOY
+
+**Order:** `org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-ag-1.the-one-redeploy.md`
+**Risk:** WORLD | **Round:** 57 | **GO:** msg 27624, READ-acked (it states ag-2 RIDES, so AC2 was GRADED)
+**Commits:** `957a020416` (item 0 / the build commit), `47ee1cbee2` (ledger OPEN), `cffc66ed7e` (proof)
+**Push state:** LOCAL @`cffc66ed7e`; `origin/CLOUD` at `0abf99fcd4` (ls-remote read 08:5xZ).
+
+## What landed
+
+One of each, as the halves bound it: item 0 (CLOSURE_ROOTS gains `lib.trading_calendar`), ONE artifact
+upload, ONE code-only `safe-apply`.
+
+- Base re-read LIVE and **UNMOVED** before the build: CodeSha256 `/QP4upEV...`, LastModified
+  2026-09-30T15:22:01Z, artifact VersionId `C9brZ5Qd6_.iSbxw3NKZOxHuDByQScll` -- all equal to both halves.
+- Artifact -> `RhEQ661Bi9gnVKhBphUCMtjH_rrsscPS`, content-sha256
+  `/HInwjrnGBzDLzV2EnYyGFseCcXIuWC/ddnyYUpUEX8=`, 41,115,264 B, read back by the script.
+- Plan: **0 to add, 1 to change, 0 to destroy** -- one resource, three attribute lines, no
+  destroy/IAM/route/gateway/alias. The **saved** plan was applied, so only reviewed actions could land.
+- Live after: CodeSha256 **equals the uploaded artifact's sha**, so the deployed bytes are the BUILT bytes
+  rather than merely different ones. CodeSize equals the uploaded ContentLength.
+- **AC1 PASS** exit=0; **AC2 PASS** exit=0. NEVER-2 entry CLOSED, all 5 legs proven.
+
+## The two things worth keeping
+
+**1. Item 0's real risk was not the line -- it was whether anything imports the module.** A closure root only
+packages what the import walk SEES. Had nothing imported `lib.trading_calendar`, adding the root would have
+changed nothing and `--build-only` would still have exited 0 with the file absent. `comp-find` settled it
+before the build: 7 hits across 346 files scanned, 5 SURFACED all in `scoped_amgt.py`, and `:745` does a
+request-time `import lib.trading_calendar as trading_calendar` -- with the author's own comment at `:743`
+naming the CLOSURE_ROOT requirement and why the DOTTED form is used (`from lib import trading_calendar`
+reads as module `lib` to the walk). AC1's FWD-33 then proved it LIVE: `stale_trading_days=1` is served, a
+clause that could only have raised ImportError without it.
+
+**2. A pass that is narrower than its own sentence (row Z-S330).** AC2 printed three `REFUSED: deployed read
+failed` lines and then passed. Two of the three were **status 200 with `application/pdf`** -- successful
+responses misclassed as refusals, because `capture_lib._invoke` cannot json-parse a PDF and returns
+`(None, meta)`. So the print route contributed **0 of the 1,114** reason strings for all 3 names, while the
+printed sentence still reads "3 names x 4 routes" -- because that factor is `len(NAMES) x len(LEAVES)` at
+`af_7_text.py:83`, computed from the CONSTANTS, never from what was walked. Two numbers in one sentence with
+different provenance, and only the structural one can lie. `af_7_text.py:36` shows the LOCAL check
+deliberately graded that non-JSON body "by its text"; the deployed swap lost the capability rather than
+never having it. AC2 is **met as written** and L5 closed on that basis -- the census's adequacy is the
+issuer's call, not mine.
+
+## Instrument traps hit
+
+- **The shared tree moved mid-act.** Peers advanced CLOUD HEAD from my build commit `957a020416` to
+  `5429f9284b` between `--build-only` and the upload. So I graded the CONTENT-DIFF **twice** -- on each
+  build's own output -- rather than carrying the first grade forward. Both CLEAR, which made "nothing moved
+  underneath me" a measurement instead of an assumption.
+- **A peer's merge blocked the commit, and nothing was staged.** safe-commit refused on an in-progress merge
+  in the shared index. I did not touch it (a merge I did not create is a peer's work-in-progress); by the
+  time I read `MERGE_HEAD` it had already cleared, and the retry landed.
+- **The surprise-channel append anchor broke on a peer's indentation.** My appender anchored on
+  `\n}\n]\n` and the array now closes with a two-space indent, so it refused and wrote nothing -- failing
+  closed, correctly. Fixed by making the anchor tolerate leading whitespace. Worth keeping: the appender
+  should match on SHAPE, not on one peer's formatting.
+- **Native Python read an MSYS `/c/...` path as ZERO files, silently** -- twice this session. A failed
+  retrieval returning a VALUE. `C:/...` works. The count is the only tell.
+- **Heredoc escaping mangled a regex twice**; the fix was to stop patching through a heredoc and write the
+  script with a file writer instead.
+
+## Compiler Tools
+
+| tool | invocation | result |
+|---|---|---|
+| `comp-find` | `comp-find 'trading_calendar' lib/research --files` | PASS and load-bearing -- see finding 1. 7 hits / 346 files scanned, SURFACED=5 TEST=2. |
+| `comp-schedule` | not run | Preflight declares NOT-APPLICABLE (one redeploy by hand). Not re-derived. |
+| `comp-iam` | not re-run (issuer ran it with a PutObject negative control) | The clause this seat graded is the one the order names: the PLAN shows no IAM change. Corroborated live by AC1 exercising the riders' reads end to end. |
+| `comp-adversary` | not re-run | Base arm recorded under controls.mutant; each base symptom answered specifically post-act. |
+| `comp-routes behaviors` | not run | GAP, named: the plan held no CloudFront/gateway change. It is also the nearest tool to "is this route deployed" and reads CloudFront behaviors, not a handler's route table -- the same distinction as this session's earlier `Z-S325`. |
+
+## Files modified
+
+- `infra/aws/terraform/harvest/build-and-upload-scoped-amgt.sh` (item 0, one line + comment).
+- `org/critical_paths/change_management/20261001T0759Z_...ag1...md` + its sentinel -- OPENED at `47ee1cbee2`,
+  CLOSED 08:30:21Z with 5 legs proven.
+- `.../surprise-channel/investigations/INVESTIGATION_v1.md` -- row `AMGT_RESAPP-Z-S330` (702 -> 703 rows, 0 lost).
+- `.../deliverables/0.7.0_AE_CloudOps~A/` -- the proof instance, `ag1-pre.json`, `ag1-evidence/` (9 files).
+- NOT touched: the order's `<status>` (the issuer's), and `infra/aws/terraform/harvest/ag1.tfplan` was left in
+  place -- outside this order's `<paths>`, and the dir already carries `i4.tfplan` / `ww1.tfplan` from prior rounds.
+
+## MCP traffic
+
+- IN 27624 (the GO) -- READ-acked. OUT 27646 to `2.0.0_SA_COO~Z` -- the completion report, no ask.
+
+## Blockers
+
+None. Nothing is owed by this lane on ag-1; the `<status>` flip is the issuer's.
