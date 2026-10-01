@@ -201,3 +201,157 @@ graduated item's remedy is routed by the CVO to its owner by name and the clocks
   }
 ]
 ```
+
+## S7 -- the row gate's rowlessness limb does not resolve an item through its adjudication row (filed on the CTO's order, INERT)
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-S7",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-01T11:45Z",
+    "one_line": "The row gate's rowlessness limb compares ids exactly, so an item whose remedy is carried under its adjudication row's id reads 'graduated with no remediation row'. Filed once on the CTO's order; repaired when a LIVE project is refused by it, not before.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "0.0.0_AB_MSTR",
+    "spec_asserts": "`.tools/surprise-row-gate.py` `_graduated_without_row` (def at :908) refuses a new remediation row while a graduated item of the project has none: the limb is meant to find graduations nobody carried.",
+    "world_is": "The limb takes the set of ids that remediation rows bear and subtracts it from the graduated item ids. It does not resolve an item through the adjudication row that graduated it. Two older conventions therefore read as rowless: (a) a worker-form item whose clocks were written on the adjudication row itself, and (b) a remedy carried on a remediation row keyed by the adjudication row's id. Across the estate 158 remediation rows bear an adjudication-row id (some are the remedy of the adjudication's own finding, so 158 is an upper bound on class (b), not its size). On closed projects this is worked around by dismissals (batch 77 item 2); the limb is correct on a live project until one is refused for this reason.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`_graduated_without_row` source read at this seat 2026-10-01: exact-id set difference",
+        "census at this seat 2026-10-01 over every tree and legacy channel through the gate's own `_remediation_ids_for_project`: 158 remediation ids matching `-C-S<n>`",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/SURPRISE_CHANNEL_BACKLOG_CENSUS_20261001.md addendum @6c620c531a: 852 rowless graduated items, 313 not site Z's, 260 BLOCKING or ARMED",
+        "1.0.0_SA_CTO RULINGS batch 77 item 4 @4b9e65f744: 'THE LIMB'S OWN GAP IS ONE ROW, not an order ... owner 0.0.0_AB_MSTR (fabric tooling), standing INERT. It is repaired when a LIVE project is refused by it, not before.'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Un-park condition: a commit by a seat on an OPEN project is refused by this limb for an item whose remedy is carried under its adjudication row's id."
+  }
+]
+```
+
+## S8 -- re-filed from NFRA_OUTSET-W1-S21: `deployed_state` has no value for a deploy-scope artifact committed and deliberately not deployed
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-S8",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-01T11:45Z",
+    "one_line": "RE-FILED from NFRA_OUTSET-W1-S21: the proof-of-spec schema's `deployed_state` has no value for a deploy-scope artifact that is committed and deliberately not deployed, so an instance records the least-wrong value.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "spec_asserts": "org/standards/PROOF_OF_SPEC.schema.json closes `deployed_state` to an enum, and CLAUDE.md section 4 requires a value to carry its claim in a field a consumer can reject on.",
+    "world_is": "The enum at HEAD is still {DEPLOYED-VERIFIED, COMMITTED-NOT-DEPLOY-SCOPE, STAGED-AWAITING-GATE}. A deploy-scope artifact that a cell commits and is not allowed to deploy fits none: COMMITTED-NOT-DEPLOY-SCOPE is false, and STAGED-AWAITING-GATE asserts a gate that may not exist. A reader of the field takes an undeployed artifact for one waiting on a named gate. The remedy is a schema decision (a fourth value, or a ruling that STAGED-AWAITING-GATE covers the case), and a value-enum change carries its rule-24 record.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/standards/PROOF_OF_SPEC.schema.json at HEAD, read at this seat 2026-10-01: three enum values, as the old row says",
+        "old row NFRA_OUTSET-W1-S21 (org/missions/D11/NFRA/NFRA_OUTSET/surprise-channel/investigations/), graduated at NFRA_OUTSET-C-S4 with owner 1.0.0_SA_CTO and no remediation row",
+        "1.0.0_SA_CTO RULINGS batch 77 @4b9e65f744 (org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md): a hazard of a closed project that is live today is re-filed as a new row in an open channel, citing the old id; the old row is dismissed with that pointer"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Home: this channel, because the hazard is a fabric tool or standard and directives D0 and D11 (the old rows' directives) have no open member project; filing it in an unrelated open project would put an ARMED row in front of that project's L10. Not measured: how many proof-of-spec instances at HEAD record STAGED-AWAITING-GATE for an artifact with no gate."
+  }
+]
+```
+
+## S9 -- re-filed from NFRA_OUTSET-W1-S17: `comp-heat federated --sql` is unrestricted under a read-only docstring
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-S9",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-01T11:45Z",
+    "one_line": "RE-FILED from NFRA_OUTSET-W1-S17: `comp-heat federated --sql` sends the caller's SQL to Trino unread, under a module docstring that says the tool is read-only and never writes to any store.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "spec_asserts": "`.tools/comp-heat`'s own module docstring: ADVISORY-ONLY and READ-ONLY, never writes to the repo or any store.",
+    "world_is": "At HEAD `.tools/comp-heat:860-861` returns the `--sql` string as the statement to run, and `.tools/_trino_fed.py` carries no statement inspection (0 occurrences of a read-only guard, a refusal, or any of INSERT, DELETE, DROP, UPDATE, CREATE). Whether a write would succeed depends on the Trino identity's grants, which this seat did not read; the tool's stated contract is not enforced by the tool on the one path that could break it. The remedy is the tool owner's choice between narrowing the docstring and restricting the surface.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/comp-heat:860-861 and the docstring, read at this seat 2026-10-01",
+        ".tools/_trino_fed.py token census at this seat 2026-10-01: read-only 0, refus 0, write verbs 0, select 2",
+        "old row NFRA_OUTSET-W1-S17, graduated at NFRA_OUTSET-C-S4 (owner then 0.8.0_AE_CloudComp; comp-heat's registry owner is 1.0.0_SA_CTO by its header) with no remediation row",
+        "1.0.0_SA_CTO RULINGS batch 77 @4b9e65f744 (org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md): a hazard of a closed project that is live today is re-filed as a new row in an open channel, citing the old id; the old row is dismissed with that pointer"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Home: this channel, because the hazard is a fabric tool or standard and directives D0 and D11 (the old rows' directives) have no open member project; filing it in an unrelated open project would put an ARMED row in front of that project's L10. Not measured: the Trino identity's write grants, so the standing is the row's original and not a demonstrated write."
+  }
+]
+```
+
+## S10 -- re-filed from NFRA_OUTSET-W1-S13 and W2-S10: two traps a worker cannot re-derive are in no worker face or doctrine
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-S10",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-01T11:45Z",
+    "one_line": "RE-FILED from NFRA_OUTSET-W1-S13 and NFRA_OUTSET-W2-S10: two traps a worker cannot re-derive at the call site are in no worker face, worker definition or doctrine file.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "spec_asserts": "CLAUDE.md rule 22a exists to carry instrument traps 'you cannot re-derive at the call site'; rule 27 makes the task order's worker face the worker's whole context.",
+    "world_is": "(1) In the Bash tool `cd X && A & B; C` backgrounds the whole `cd X && A` list, so B and C run in the session's default directory, which for a worker is the MAIN workspace: a worker ran the main tree's copy of a test and wrote a file there believing it was in its worktree. (2) Running a COPY of a comp-tool from a scratch directory, or exec-ing it in-process, fail-softs on `__file__` and returns clean-looking false results in opposite directions. Neither is stated in `.claude/agents/worker.md` (0 lines mentioning backgrounding) or in docs/doctrine/CLAUDE_ANNEX.md (0 matches for a copied comp-tool or `__file__`). The stray file of (1) is gone from the main tree's .scratch/. The remedy is one line each where a worker reads it.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".claude/agents/worker.md and docs/doctrine/CLAUDE_ANNEX.md at HEAD, read at this seat 2026-10-01: no statement of either trap",
+        ".scratch/os2_falsifier.txt: absent at this seat 2026-10-01 (the old row's first limb is moot)",
+        "old rows NFRA_OUTSET-W1-S13 and NFRA_OUTSET-W2-S10, graduated at NFRA_OUTSET-C-S4 with no remediation row",
+        "1.0.0_SA_CTO RULINGS batch 77 @4b9e65f744 (org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md): a hazard of a closed project that is live today is re-filed as a new row in an open channel, citing the old id; the old row is dismissed with that pointer"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Home: this channel, because the hazard is a fabric tool or standard and directives D0 and D11 (the old rows' directives) have no open member project; filing it in an unrelated open project would put an ARMED row in front of that project's L10."
+  }
+]
+```
+
+## S11 -- re-filed from NFRA_OUTSET-W1-S14: the graph_nodes metadata prefix still cannot be listed in-band
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-S11",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-01T11:45Z",
+    "one_line": "RE-FILED from NFRA_OUTSET-W1-S14: the graph warehouse's graph_nodes metadata prefix still cannot be listed in-band; a summarised listing did not finish in 280 seconds.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "spec_asserts": "infra/aws/globgrph/derive_runner.py:505-535 describes a nightly Nessie-ref-aware mark and sweep over warehouse/globgrph/ that bounds historical-snapshot accumulation.",
+    "world_is": "`aws s3 ls --recursive --summarize` of s3://opal-313476888478-globgrph/warehouse/globgrph/graph_nodes_4c6c23bd-fffa-427e-9cd9-7a9deaa3426d/metadata/ was terminated by this seat's 280-second bound before it printed a total, so today's object count is NOT obtained. On 2026-09-05 the old row counted 183,447 objects on the table, 134,616 under metadata/, 20,374 of them metadata.json files with none expired. A prefix that cannot be listed in 280 seconds is not one a sweep has brought to 'one overwrite's worth of files'. Either the sweep does not run, or it does not reach this prefix; which one was not read.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the listing run at this seat 2026-10-01 11:36Z-11:41Z: exit 143 at the 280 s bound, no total printed",
+        "infra/aws/globgrph/derive_runner.py:505-541 at HEAD: the maintenance design and `_MAINT_SWEEP_PREFIX = \"warehouse/globgrph/\"`",
+        "old row NFRA_OUTSET-W1-S14, graduated at NFRA_OUTSET-C-S4 (the globgrph lane via the CTO) with no remediation row",
+        "1.0.0_SA_CTO RULINGS batch 77 @4b9e65f744 (org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md): a hazard of a closed project that is live today is re-filed as a new row in an open channel, citing the old id; the old row is dismissed with that pointer"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Home: this channel, because the hazard is a fabric tool or standard and directives D0 and D11 (the old rows' directives) have no open member project; filing it in an unrelated open project would put an ARMED row in front of that project's L10. Not measured: the object count today, whether the sweep is scheduled, and its last run. A slow listing is also what a slow network looks like; one run does not separate them."
+  }
+]
+```
