@@ -21,22 +21,18 @@ says Tax is served (after site Z's Gateway release, the activation and two ad-ho
 is deployed (18:03Z). Own work resumes until that word arrives.
 
 ## 3. Where the work stands
-- **Inflection split accounts -- ACT IN FLIGHT 2026-10-01 ~20:0xZ, BLOCKED AT LEG R.** Ledger `irpt-inf-split-positions-m-20261001`
-  OPEN @0d52746cfa. Leg M CLOSED: `coo-m-r30` merged to CLOUD @b4d4548d5a (326 + 165 tests pass). Leg R (route FIRST) needs the
-  `irpt-holdings` staged_from row in `infra/aws/lambda/ci/lambda-source-map.json` re-pinned (snapshot.py 21eca74f40 -> b26847ea04,
-  sha256 9f07f1b4..); the owned-paths gate refuses this seat (row is 2.0.0_SA_COO~P's). Grant asked of 1.0.0_SA_CTO 20:03Z.
-  Patch kept at `$TEMP/tf_split/repin.patch`; the shared tree is clean. The pin also carries 38b72bf469 (-0.0 -> 0.0), named in
-  the packet's addendum 1 @5d4a1b60fe. NOTHING DEPLOYED; the route and the three bundles are at their prior bytes. HAZARD: any
-  `safe-deploy --mint-bundle irpt_holdings_*` from CLOUD now carries the producer change ahead of the route. Then: build-and-upload
-  irpt-holdings, plan (code hash only), safe-apply, QA projection unchanged; then P, Q, S below.
-  (Original state:) SIGNED BOTH HALVES. Packet `IRPT_MVP_M/NEVER_WIDEN_HALF_REQUEST_INF_SPLIT_ACCOUNT_POSITIONS_20261001.md` on branch
-  `coo-m-r30` @cab9bf875d (blob b645c6a3fa; the branch head 1c1d2a02c2 differs from it in 0 files); CTO half
-  `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_INF_SPLIT_ACCOUNT_POSITIONS_20261001.md` @07e4769540 (msg 103916). Local build:
-  security rows 156.12 -> 206.10 M USD = custody, 91 of 91 accounts carry 5,074 positions, 793 others unchanged. Steps: merge
-  `coo-m-r30` to CLOUD; open ledger `irpt-inf-split-positions-m-<date>`; ROUTE FIRST (`infra/aws/terraform/investor-reporting/holdings`,
-  safe-apply); then `safe-deploy --mint-bundle irpt_holdings_inf`; QA fire `irpt-holdings-refresh-lambda {qa:true}` and QUOTE the
-  49 Financial and Cottonwood reconciles in the ledger (CTO condition 1); then the 14:15Z publication with the count of accounts
-  in each branch (condition 2) and one walked split account.
+- **Inflection split accounts -- DEPLOYED 2026-10-01; only leg S open.** Ledger `irpt-inf-split-positions-m-20261001`: M (merge
+  @b4d4548d5a), R (route irpt-holdings CodeSha256 tS/APci3.. at 20:13:14Z, lane grant CTO batch 101), P (three irpt_holdings_*
+  bundles minted 20:39Z-20:41Z from each firm's OWN live members with only the two signed files swapped, worktree
+  `C:/Users/AndrewBerman/Desktop/coo_m_mint`, branch `coo-m-split-mint`, scratch, removable), Q (QA fire Success x3; Inflection
+  QA = the packet's build; 49 Financial 7,570/7,570 and Cottonwood 851/851 unchanged; live route reconciles 884/884, prior
+  route 793/884) all CLOSED. LEG S, 2026-10-02 after the 14:15Z irpt-holdings-snapshot fire: run
+  `IRPT_MVP_M/R30_CHECKS/split_qa_read.py` adapted to the served namespace, state the count of accounts in each branch (CTO
+  condition 2: the stale-assignment swing can send them back to `client_values_do_not_tie`), walk one split account on the
+  page, close S. The push of 21:3xZ: this seat answered HOLD for holdings_snapshot.py/holdings_inf.py (msg 103971) -- the
+  directory runner's commit-routed bundle `investor-reporting.tar.gz` holds holdings_snapshot.py and no half covers it.
+  Packet `IRPT_MVP_M/NEVER_WIDEN_HALF_REQUEST_INF_SPLIT_ACCOUNT_POSITIONS_20261001.md` (on CLOUD, addendum 1 @5d4a1b60fe);
+  CTO half @07e4769540.
 - **Cottonwood seed rows (19).** Half `MDPF_SECCLASS_M/NEVER_WIDEN_HALF_REQUEST_SECCLASS_COT_SEED_ROWS_20261001.md` @ff4195fccb on
   CLOUD: COO half signed, **CTO half asked 16:13Z, unanswered**. Code on branch `coo-m-cot-seed-rows` @15a9717715, NOT on CLOUD.
   After signature: merge; pre-run dry run must read 19 of 158 with 0 conflicts; run the seed script; ledger
@@ -84,7 +80,7 @@ is deployed (18:03Z). Own work resumes until that word arrives.
 - Clocks: 22:10Z silver; 23:00Z Black Diamond gold; 2026-10-02 13:30Z mdpf-gold-lambda; 14:15Z irpt-holdings-snapshot.
 
 ## 5. Owed
-- This seat owes: the split-account deploy (signed); the Cottonwood re-point packet with its seven portal changes (batch 93 item 4,
+- This seat owes: the split-account leg S read (2026-10-02 after 14:15Z; deploy done 2026-10-01); the Cottonwood re-point packet with its seven portal changes (batch 93 item 4,
   batch 99 item 3); the reads of tonight's and tomorrow's runs above.
 - Others owe this seat: `1.0.0_SA_CTO` the half on the 19 seed rows (16:13Z); `4.0.0_SA_CRO` the word that Tax is served (then
   this seat reads the Model Portfolios page, section 2).
