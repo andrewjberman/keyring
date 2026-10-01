@@ -466,9 +466,18 @@
   "incomplete_rule_served_totals_0_6_0": "Andrew-direct 2026-09-30 (org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260930_183xZ_TAXSMA_E2B_CARRY_LAST_COMPLETE_AND_NO_BACKFILL.md): on a valuation date on/after Tax's first COMPLETE observation where Tax is not complete, the served 49financial and Global totals carry the most recent complete Tax figure; the coverage names it (tax_value_basis CARRIED_LAST_COMPLETE, last_complete_date) and value_status stays the day's own status. Before the first complete observation the series carries the pre-Tax base (no backfill): tax_value_basis NOT_OBSERVED, reason BEFORE_FIRST_OBSERVATION.",
   "aggregate_basis_by_scope_0_6_0": {
    "49financial": "INCLUDES_ADDITIVE",
-   "global": "INCLUDES_ADDITIVE (49financial's Tax only; Cottonwood's parked)",
+   "global": "INCLUDES_ADDITIVE (49financial's Tax plus Cottonwood's, each added once)",
    "cottonwood": "INCLUDED_IN_BASE",
    "inflection": "NOT_APPLICABLE"
+  },
+  "global_fold_by_firm_0_6_0": {
+   "rule": "Global's Tax leaf is the sum of the firms' served Tax, each under its own carry and no-backfill rule. Cottonwood's Tax is in no Global leg (Global takes Cottonwood's model dollars only; a Tax SMA account carries no model), so it is added once. Cottonwood's own scope does not move.",
+   "overlap_base_by_firm": {
+    "49financial": "the 0824 base population for the valuation date",
+    "cottonwood": "the accounts carrying a Rebalancer strategy (strategy_name other than '--') on the newest fact_model_assignment partition on or before the valuation date, keyed by the table's own account_number"
+   },
+   "coverage_cell": "A Global cell on a date Cottonwood contributes no value is 49financial's cell. Otherwise it describes the summed value: counts and dollar claims added, reason codes unioned, value_status the weaker of the two, tax_value_basis CARRIED_LAST_COMPLETE when either part is carried, last_complete_date the older. Same keys as a firm cell.",
+   "not_built": "Cottonwood's own category tree does not yet show the Tax leaf under SMA; its Tax accounts stay inside Client there."
   }
  },
  "operations": {
@@ -802,6 +811,13 @@
    "by": "4.0.0_SA_CRO under the FAST lease",
    "what": "As built for TX-i-1/TX-i-2 (wire unchanged, version held): one scoped prelude role per Tax firm because each firm bucket admits only its own short token; the capability bearer is read from its secret under the 49financial session, never carried in the function environment; the operational control moves to the global scope (it spans both firms, and the publisher's role is outside the 49financial fence) and is a plain overwrite written only when Tax runs; the N+1 category Gold copies are not written (no reader, and a second home is a duplicate output path).",
    "authority": "org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260930_202xZ_TAXSMA_PRIORITY_THROUGH_MDPF_ALONGSIDE_DROPPED.md"
+  },
+  {
+   "version": "0.6.0",
+   "when": "2026-10-01",
+   "by": "4.0.0_SA_CRO under the FAST lease",
+   "what": "Global's Tax is 49financial's plus Cottonwood's (wire keys unchanged, version held). Measured before the change: both Cottonwood Tax accounts carry strategy '--' on the 09-28, 09-29 and 09-30 fact_model_assignment partitions, and all 47 eight-digit account numbers in that table read '--'. The overlap rule gains a per-firm base (categories.global_fold_by_firm_0_6_0); the Global coverage cell sums the firms that contribute. CANDIDATE: not deployed.",
+   "authority": "org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261001_033xZ_TAXSMA_TAX_PORTFOLIOS_ARE_SMAS_NOT_MODELS_SMA_CATEGORY.md"
   }
  ]
 }
