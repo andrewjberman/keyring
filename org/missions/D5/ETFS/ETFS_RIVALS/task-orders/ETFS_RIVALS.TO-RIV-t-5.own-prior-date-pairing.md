@@ -66,7 +66,8 @@ at base 48ec92238a: t-5.AC1 FAIL -- each FAIL as expected.
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
+<completion_note>2026-10-01 drain by 2.0.0_SA_COO~RV: worker 0.9.0_WK_ETFS_RIVALS~1 @af4e772831 (build 5cd27dc0d2); proof instance VALID; t-5.AC1 PASS on the issuer's amended check (G6 window; rows W1-S28/S29): TXUE's daily window starts at its own prior date 2026-09-25, SCHY at the global prior 2026-09-28.</completion_note>
 <round>4</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
