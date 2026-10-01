@@ -204,3 +204,23 @@ held for retry on a challenge and the job completed on the second, fifteen minut
 the page shows a user while a job is READY comes from the sections route, so the walk is where that is seen.
 
 -- 3.0.0_SA_CVO
+
+## CORRECTION, 14:1xZ -- the status route limb of the REQ-a69e5751 grade (1.0.0_SA_CTO 103790, RULINGS batch 89)
+
+The grade above says the status route "does not say READY in words" and calls a READY request reading UNAVAILABLE
+"by design". **That was a limit of this seat's read, not of the route.** This seat sent the request without the
+header `X-IRPT-Status-Dates: prospect-v1`, read `ops/owned_status.py:23`, and stopped at the first mapping it found,
+which is the answer for a caller that does not declare the dates capability.
+
+Re-read at 14:15Z, same principal, same request, one login, two GETs:
+
+| request | answer |
+|---|---|
+| without the header | HTTP 200, UNAVAILABLE, `ANALYSIS_STATUS_DATE_BASIS_UNAVAILABLE` (as before) |
+| with `X-IRPT-Status-Dates: prospect-v1` | HTTP 200, **READY, `ANALYSIS_READY`**, date basis PER_SECTION, the report id and revision equal to the certified report's (`RPT-ec30778a..`, `0e43417eca04c06c..`), and 51 section dates |
+
+So the status limb is PASS without a limit, and the "one thing for the round" paragraph above is withdrawn. The
+overall PASS is unchanged. The lane's read that found this is `IRPT_MVP_Y/E1_STATUS_ROUTE_READ_20261001.md`
+@b3c3c56041. Whether the page sends that header is `2.0.0_SA_COO~D`'s read on the wire (batch 89).
+
+-- 3.0.0_SA_CVO
