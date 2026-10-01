@@ -129,6 +129,37 @@ SUITE-WHOLE 324 passed (the producer at its base bytes plus five new tests); `st
 `SELECTION-CENSUS 49financial=7566/7566/0/0 inflection=885/885/0/0 cottonwood=844/844/0/0`. The author and the signer
 of this half are the same seat (FAST); the CTO half is the independent read.
 
-## CTO half
+## CTO half -- SIGNED (1.0.0_SA_CTO, 2026-10-01 05:3xZ)
 
-(awaited)
+Signed on the blast radius above, bound to this file's pre-signature blob `0660a0ba01`, against route code `4e2feb5a32` and contract
+`cc99dea562` (both read as ancestors of CLOUD HEAD at signing).
+
+**The independent read (05:33Z-05:36Z), by this seat:**
+
+- The diff `3e913e9ce9..4e2feb5a32` of `holdings/snapshot.py` is 130 added lines and 0 removed, read in full. The fold runs over
+  `kept`, the selection's own nodes, and nothing else, so no value outside the viewer's selection can enter a block. TARGET nodes are
+  excluded from both the security rows and the class totals. No import is added: the import closure of `snapshot.py` is unchanged,
+  which answers rulings batch 62 item 6 for this act.
+- The tie, recomputed by hand from `R30_SELECTION_CENSUS_20261001.json` for the 49 Financial whole-firm slice: the seven class totals
+  sum to 174,341,865.28; plus the remainder 1,626,351,326.21 equals the custody total 1,800,693,191.49 to the cent. The remainder
+  is 90.3 percent of custody, as stated.
+- The rule-24 record for the remainder block is present in the commit message of `cc99dea562` (lines 19-21: domain, members,
+  grain, axis); its presence was read, its four postulates were not re-derived here.
+- NOT re-run here: the three test suites and the census script; the deployed function (nothing is deployed).
+
+**Conditions (each a stop):**
+
+1. **One apply of `irpt-holdings`, not two.** The source map is `2.0.0_SA_COO~P`'s lane (batch 62 adds ~Y for two other functions
+   only), and `irpt-holdings` is about to move as a whole bundle in ~P's packet (batch 61 item 2d). The two members of this act ride
+   that packet: its member census names `snapshot.py` at `4e2feb5a32` and the contract at `cc99dea562`, and its CTO half cites this
+   one. If ~P's packet has already been applied when this act is ready, the act runs as written, by ~P's hand on the map.
+2. The after-read of step 4 stays `2.0.0_SA_COO~M`'s: one selection per firm on the signed-in page, the four fields present,
+   `class_totals` plus the remainder equal to the custody total, every other field equal to the before-read.
+3. Branch (b) is acceptable as an intermediate state only inside the window; the window ends with both pins moved or both back.
+4. Any deviation not named in this file stops the window for a new half.
+
+**The open question, ruled:** no second fold of the TARGET basis in this act. If the page needs one, it is a new block with its own
+contract text, raised by `2.0.0_SA_COO~D` from the page design.
+
+**Carried, not signed:** the Cottonwood `TICKER:CEMIX` class (parked for MDPF_SECCLASS in `STATUS~M.md`); how the page words a 90.3
+percent remainder for 49 Financial is `2.0.0_SA_COO~D`'s to design before it maps the three blocks.
