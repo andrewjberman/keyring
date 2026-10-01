@@ -5345,3 +5345,29 @@ name the one known failure instead of silently inheriting it.
   "notes": "The release branch rel-nfra-oplgtw-tier-auth must not be merged to CLOUD as is; the CLOUD record is c0dc3b6422 on wk-NFRA_OPLGTW-12-t2."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S24",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-01T02:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Since OG-t-2 (live d61fde4693), every opal-gateway release must supply OG_MASTER_ADMIN_PRINCIPALS and OG_WRITE_CAPABLE_PRINCIPALS at deploy time or deploy-to-ec2.sh refuses (exit 3); the values live only in a site-Z local file, not in Secrets Manager like the other gateway bearers.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ANNOUNCE_OG-t-2.md step 6: the release template renders the two principal lines from the deploying shell and refuses with exit 3 when either is unset or not a <tid>/<oid> GUID pair (row Z-W12-S6).",
+      "OG-t-2 landed 2026-10-01T01:38:29Z (ledger nfra-oplgtw-tier-auth-release CLOSED, drained @59f7d5808b); the next releaser is NFRA_MCPINDEX MX-r-7 (2.0.0_SA_COO~MI msg 27441).",
+      "The values' only copy is %LOCALAPPDATA%/opal/og-principals/part_d_20260930.json on site Z (PART_D_RECORD_20260930.md @205c2e7f6c); the template's other bearers are read on the host side at deploy."
+    ]
+  },
+  "spec_asserts": "TO-OG-t-2 issuer notes: the principal values ride the hand-off message, never a file; the release is a one-time act.",
+  "world_is": "The template edit persists into every later release cut from the live tree, so each releaser (any COO lane, either device) needs the values at deploy time; a releaser without them is refused before upload (safe), but blocked.",
+  "notes": "Interim: 2.0.0_SA_COO~O supplies the values off-repo on request (told 2.0.0_SA_COO~MI after 01:59Z). Remedy proposal for 1.0.0_SA_CTO~O: store both rosters as a Secrets Manager entry (SECRET-grammar name from the builder) read by deploy-to-ec2.sh like the other bearers, under its own ledger and halves. The local file stays until then.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
