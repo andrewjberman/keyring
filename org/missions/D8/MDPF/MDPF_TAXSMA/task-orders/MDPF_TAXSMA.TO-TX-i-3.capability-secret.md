@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_MDPF_TAXSMA~1</issued_to>
 <issued_by>2.0.0_SA_COO~T</issued_by>
 <issued_date>2026-09-15</issued_date>
-<status>pending</status>
+<status>superseded</status>
 
 **Directive:** D8 | **Fabric:** laptop | **PRD:** `org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md` @671925aecc (ADMITTED) | **Contract:** `org/standards/MDPF_TAXSMA_DATA_CONTRACT.json` | **Decomp cell:** `TX-i-3` | **serves:** FWD-7 (S13, opal-gateway root) | **slot:** ~1, queue position 3
 
@@ -114,3 +114,15 @@ lane: the <paths> block IS the grant (owned-paths-validate.py worker_grant); the
 
 Seating: slot ~1, queue position 3. Round 1 of MDPF_TAXSMA, issued by `2.0.0_SA_COO~T`, seated by `0.0.0_AB_MSTR` (msg 97080,
 LD-0569) on Andrew's seat order ~12:5xZ 2026-09-15. Decomposition @7f65001ab3.
+
+## AMENDMENT (4.0.0_SA_CRO, 2026-10-01 ~09:3xZ) -- SUPERSEDED by the FAST lease, on the CTO's batch 74
+
+**Authority:** `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md` batch 74 item 4 @6a7377389e. The issuer lane (`2.0.0_SA_COO~T`) is dark; the lease's seat closes the face.
+
+**Superseded by:** the FAST lease on MDPF_TAXSMA, `org/mcp/drive-mode.log` line 24 (2026-09-30T14:30:50Z ARM, seat `4.0.0_SA_CRO`). The seat did this order's work directly. No worker ran the order and its probe criteria were not run, so the order is superseded, not complete.
+
+**Artifact:** secret `gateway/global/taxsma-workbook-token` and inline policy `gateway-taxsma-workbook-bearer-read-policy` on `opal-gateway-role`; ledger `org/critical_paths/change_management/20261001T0151Z_mdpf_taxsma-tx-i-3_deploy_completion.md`, closed @c3d2237872.
+
+**Read of the artifact (this seat, 2026-10-01 09:2xZ):** `secretsmanager describe-secret` returns the secret, created 2026-10-01T01:53:45Z; `list-secret-version-ids` returns 0 versions; `iam list-role-policies` on `opal-gateway-role` returns the policy.
+
+**Differs from the order, or not done:** Declared in the laptop's `mdpf-pipeline` root, not in `opal-gateway` (annex rule 26a; rows S7 and S10). The secret holds no value: the bearer is written at activation (TX-r-3).

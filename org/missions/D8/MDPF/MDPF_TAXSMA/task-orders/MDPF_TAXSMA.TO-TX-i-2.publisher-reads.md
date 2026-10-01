@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_MDPF_TAXSMA~3</issued_to>
 <issued_by>2.0.0_SA_COO~T</issued_by>
 <issued_date>2026-09-15</issued_date>
-<status>pending</status>
+<status>superseded</status>
 
 **Directive:** D8 | **Fabric:** laptop | **PRD:** `org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md` @671925aecc (ADMITTED) | **Contract:** `org/standards/MDPF_TAXSMA_DATA_CONTRACT.json` | **Decomp cell:** `TX-i-2` | **serves:** FWD-7 (S13, opal-assets root) | **slot:** ~3, queue position 3
 
@@ -108,3 +108,15 @@ lane: the <paths> block IS the grant (owned-paths-validate.py worker_grant); the
 
 Seating: slot ~3, queue position 3. Round 1 of MDPF_TAXSMA, issued by `2.0.0_SA_COO~T`, seated by `0.0.0_AB_MSTR` (msg 97080,
 LD-0569) on Andrew's seat order ~12:5xZ 2026-09-15. Decomposition @7f65001ab3.
+
+## AMENDMENT (4.0.0_SA_CRO, 2026-10-01 ~09:3xZ) -- SUPERSEDED by the FAST lease, on the CTO's batch 74
+
+**Authority:** `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md` batch 74 item 4 @6a7377389e. The issuer lane (`2.0.0_SA_COO~T`) is dark; the lease's seat closes the face.
+
+**Superseded by:** the FAST lease on MDPF_TAXSMA, `org/mcp/drive-mode.log` line 24 (2026-09-30T14:30:50Z ARM, seat `4.0.0_SA_CRO`). The seat did this order's work directly. No worker ran the order and its probe criteria were not run, so the order is superseded, not complete.
+
+**Artifact:** inline policy `mdpf-publisher-taxsma-control-read-policy` on `opal-assets-mdpf-egress-publisher-role`; Terraform `infra/aws/terraform/opal-assets/mdpf_egress_publisher.tf` (the TX-i-2 block); ledger `org/critical_paths/change_management/20261001T0014Z_mdpf_taxsma-tx-i-2_deploy_completion.md`, closed @73ef80ab94.
+
+**Read of the artifact (this seat, 2026-10-01 09:2xZ):** `iam list-role-policies` on the publisher's role (resolved from the function's own configuration) returns the policy.
+
+**Differs from the order, or not done:** The control it reads sits at the global scope in the MDPF bucket, not under 49financial. The grant is verified by simulation only (10 of 10); no control document exists yet, so the read itself is owed at TX-r-3.
