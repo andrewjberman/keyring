@@ -517,6 +517,17 @@ unenforced restatements.
     ⚠ **Terraform is NOT at one path on every device -- resolve the binary, never assume a baked one.**
     Every existing gate binds unchanged, and **owning the apply means owning NEVER#6's completion
     obligation, not escaping it.** On-box wrapper set + the deploy-completion ledger path: `/cloud-ops`.
+    **26a. THE GATEWAY TERRAFORM ROOT AND GATEWAY RELEASES ARE APPLIED FROM SITE Z ONLY.** The root is
+    `infra/aws/terraform/opal-gateway`; a gateway release is the Gateway host deploy
+    (`infra/aws/ec2/opal-gateway/deploy-to-ec2.sh`). A laptop seat never plans or applies that root and never
+    runs that deploy. Laptop work that needs a gateway change lands its code on `CLOUD` and places ONE order
+    with site Z's gateway owner (NFRA_OPLGTW: `1.0.0_SA_CTO~O` / `2.0.0_SA_COO~O`), relayed by `0.0.0_AB_MSTR`
+    over the bus. Why: that root and that host are shared by five site-Z projects, so a second applier is a
+    second writer of one served surface. Mechanism: binds by reading; no gate carries it. COST: one cross-fabric
+    order per gateway change. NON-APPLICATION: a laptop-owned root that only grants or reads a gateway resource
+    (the Tax SMA capability secret and its Gateway read were applied from `mdpf-pipeline`). Record:
+    `org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20261001_020xZ_GATEWAY_TF_TO_SITEZ_TAXSMA_FINISHES_ON_LAPTOP_CRO_CHECKPOINT_THEN_REBOOT.md`
+    (suggestion 1, "yeah i agree"; landed by `1.0.0_SA_CTO` 2026-10-01).
 
 ## Agent Autonomy
 
