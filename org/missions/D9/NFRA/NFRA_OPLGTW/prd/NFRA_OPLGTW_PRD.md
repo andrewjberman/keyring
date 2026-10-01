@@ -3,7 +3,7 @@
   "project": "NFRA_OPLGTW",
   "directive": "D9",
   "fabric": "site-z",
-  "prd_version": "v1.3",
+  "prd_version": "v1.4",
   "step": 4,
   "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_1511ET_NFRA_OPLGTW_D9_REGISTRATION_AND_PRD.md@45ce4e5b73",
   "endpoint_outcomes": [
@@ -240,6 +240,11 @@ builds them because it owns the gateway, and it grades only each order's own cri
     asset). A message from any other sender is refused, including a message in the same thread as a table
     sender's: NFRA_TRNSPT ingests by sender, so no need reaches past the table. Attachment bytes (`$value`) are returned ONLY for a non-inline
     `application/pdf` within a configured size cap, with their sha256. Every other attachment returns metadata only.
+  - **Mail listing (v1.4):** `GET /hx/mail/messages` lists ONE table sender's messages in a bounded received window,
+    so an unattended pull can learn ids. Each row carries ONLY `message_id`, `receivedDateTime`, `sentDateTime`,
+    `internetMessageId` and `hasAttachments`. Every row's own sender is re-checked against the table before it is
+    listed. The page token is the gateway's opaque value and never a Graph URL. Window and page caps are set by the
+    gateway (v1.4 addendum).
 - **Audit.** It records the route, ids, byte counts and the caller's bearer label. It never records content.
 - **No alert.** A refusal or `NeedsLogin` is returned to the caller, which records it in its own run record
   (CLAUDE.md moratorium).
@@ -395,3 +400,56 @@ Input: `2.0.0_SA_COO~O` msg 27476 (row NFRA_OPLGTW-Z-W16-S1, OG-hr-1 stopped at 
   allowlists, GET only, allow-by-key output, and the negative arms in the v1.2 addendum.
 - **Sign-off.** This edits CONTRACTS text, so the ratified-text half re-opens for `3.0.0_SA_CVO~O`. ENDPOINT is
   unchanged. The issuer amends OG-hr-1, OG-hr-2 and OG-rl-1 itself.
+
+### v1.4 addendum (2026-10-01 ~13:0xZ, 1.0.0_SA_CTO~O) -- C7 headless MAIL LISTING route
+
+Input: laptop `2.0.0_SA_COO~D` order msg 103750 (NFRA_TRNSPT FWD-7: "the ordinary daily run, no person starting
+it"), ruled by laptop `1.0.0_SA_CTO` msg 103743. Relay:
+`org/tier0_exec/0.0.0_AB_MSTR/deliverables/RELAY_20261001_1252Z_LAPTOP_COO_D_103750_HX_MAIL_LISTING_ROUTE_ORDER.md`
+@6963658f49. Accepted in principle by this seat at the `/hx/mail` request contract @3a05db059a. The OG-rl-1 route serves
+a message by id; without a listing an unattended pull has no ids. Today's one landed message used an id this fabric
+supplied by hand.
+
+**The route.** `GET /hx/mail/messages`, under the same prefix, bearer (`gateway/mail/bearer`, constant-time) and sender
+table as v1.2, GET only, with no storage written by the gateway.
+
+**Parameters:**
+- `sender` (ONE address, on the table, case-insensitive);
+- `received_from` and `received_to` (UTC ISO 8601, half-open, both required);
+- `has_attachment` (`true` or omitted);
+- `page_token` and `page_size`.
+
+**Rules (each one is a test):**
+- **Sender-bound, no thread reach.** The Graph query filters on the sender's address, and every returned row's OWN
+  `from` is re-checked against the table before it is listed. A row that fails is dropped and counted in the audit,
+  never listed. An off-table or empty-table sender is refused 403 before any Graph call.
+- **Minimal rows.** Each row has exactly `message_id`, `receivedDateTime`, `sentDateTime`, `internetMessageId`,
+  `hasAttachments`. Nothing else: no subject, body, recipient or attachment name.
+- **Caps (this seat's values).**
+  - The window is at most **31 days**; a longer or inverted window is refused 400 `invalid_window`.
+  - `page_size` defaults to 25 and is capped at **50**; a value outside 1..50 is refused 400.
+  - At most 200 pages are followed per request, the same bound as the transcript route.
+- **The opaque page token.** It is the gateway's own value. A decoded token is honored only when it names the
+  `/me/messages` path allowlisted for this route and carries the SAME sender and window as the request. Anything else
+  is refused 400 `invalid_page_token`. A Graph URL is never returned or accepted (the OG-ml-1 rule).
+- **Ordering.** `receivedDateTime` ascending, stable across pages, no repeats. An empty window is 200 with `rows: []`,
+  `count: 0`, `next_page_token: null`.
+- **The Graph path allowlist** gains `^/me/messages$` with `$filter`/`$select`/`$orderby`/`$top` built server-side
+  only. Graph calls stay GET-only and fail closed.
+- **Audit and alerts.** The audit carries the route, sender hash, window, row count and bearer label; never an
+  address or content. Refusals and `needs_login` are returned to the caller, with no alert.
+
+**Release.** One build cell plus one narrow release, issued by `2.0.0_SA_COO~O` as its own round label. It joins the
+release train after the MX-r-8 slot-4 release as **slot 5**, under the C1-C6 surface rules, with CTO and CVO never-widen
+halves (it adds a served surface).
+- Acceptance is the laptop's four checks in the order, run from site Z on the released host:
+  1. a listed row equals the message route's `internetMessageId`;
+  2. an off-table sender is refused 403, and an empty window returns 200 with zero rows;
+  3. paging with `page_size=1` continues without a repeated row;
+  4. the transcripts and `/ms/*` bearers are refused.
+- Plus two negative arms of this seat's:
+  1. a page token with an altered sender or window is refused 400;
+  2. a token carrying a raw Graph URL is refused 400.
+
+**Sign-off.** CONTRACTS text changes and ENDPOINT does not.
+
