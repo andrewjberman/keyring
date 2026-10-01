@@ -5599,6 +5599,26 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "Restarting the ft driver re-arms both rows; do it only after the round-36 fix lands."
+    },
+    {
+        "id": "AMGT_HARVST-Z-W90-S10",
+        "project": "AMGT_HARVST",
+        "fabric": "site-z",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~90",
+        "surfaced_at": "2026-10-01T20:10Z",
+        "one_line": "ai-1 AC2 cannot grade live data from a worktree: .runtime is untracked, so the grader's runtimes.json is absent there and the grader raises FileNotFoundError.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "The face says run AC2 in the worktree and record its output; AC2 runs `python -m lib.opal_data_harvest.load_window_grade --json` with cwd = git toplevel.",
+        "world_is": "A bare AC2 run in the worktree exits rc=1 (runtimes.json not found under the worktree .runtime). To get a graded run I made a temporary directory junction .runtime -> the main tree .runtime (read-only use), ran AC2 (PASS, 0 failures; bbg 1068 requests, 191 clean minutes), then removed the junction with rmdir (main .runtime verified intact). The live data lives only in the main tree, so the issuer's main-tree re-run after the drain is the real grade.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "worktree wk-hvst-r32-90 AC2 runs 2026-10-01 ~20:0xZ"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION",
+        "notes": "No file in the main tree was written."
     }
   ]
 ```

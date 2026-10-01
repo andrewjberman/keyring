@@ -74,7 +74,7 @@ Andrew; his word overrides it.
 
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
-<status>open</status>
+<status>complete</status>
 <round>36</round>
 <slot>~90</slot>
 <fabric>site-z</fabric>
