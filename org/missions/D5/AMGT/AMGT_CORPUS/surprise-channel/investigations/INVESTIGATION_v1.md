@@ -3238,6 +3238,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "A fifth harness that loads the Model tab (assembled.harness.cjs) pins the old ABSENT sentence byte for byte, so its ABSENT-name arm will read red the next time it is run with its payload arguments.",
     "notes": "Re-anchor needed in assembled.harness.cjs:336 (the string to 'There is no model for this name yet'); not edited by this worker (outside <paths>). Also: the SERVED face still says 'In the research pack, but this page cannot show it yet...' on a refused row and 'not in the pack' in two footnotes; arm 7 reads only the ABSENT and BARE faces, so those were left.",
     "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S75",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-10-01T07:42:57Z",
+    "one_line": "DISARMS AMGT_CORPUS-Z-W1-S27: assembled.harness.cjs's model check is re-anchored (portal 54f3a252, on local DEV 209678ff) -- the SERVED arm's denominator is the fiscal figures on the sheet's rows (it also broke once CRPS-ad-1 removed the Other lines, wider than S27 named) and the ABSENT arm reads 'no model' without a presupposed pack.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal 54f3a252 assembled.harness.cjs: fiscalTotal = fiscal figures whose mnemonic is a FINANCIAL_SUMMARY_ROWS/MARGIN_HISTORY_ROWS mnemonic and whose year is a sheet year; ABSENT arm /\\bno model\\b/i (the tabs.harness.cjs re-anchor at 14cf369e/f8350483, mirrored).",
+        "The harness does not run at portal 78cf9877 or f4adf790 either: 'Cannot find module @/ui/components/states' (main tree, BA thesis fixture + rankings.BREAKOUT_PRICE.json) -- pre-existing, outside every bound list; the re-anchor holds for when it is repaired.",
+        "Chain checks after the act on the DEV-merged branch: face.cjs 8/8, sheet.cjs 6/6, bound 4/4, tsc -b rc 0; full page-harness suite 15 of 16 on both DEV and the chain (posture.harness.cjs RED on both)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Every page harness that anchors the Model face reads the face CRPS-ad-1/ad-3 built.",
+    "world_is": "assembled.harness.cjs now does; it remains non-runnable for a reason unrelated to the Model tab (a missing module alias in its loader), which is DSGN_AMGTV1's harness surface.",
+    "notes": "Issuer direct act at the chain-A drain (decomposition v28.0). Also on the SERVED face, two footnotes and the refused-row sentence still say 'not in the pack' / 'In the research pack' (S27's note); arm 7 grades only the ABSENT faces. A candidate enrichment item, not a hazard.",
+    "disarm_owner": "2.0.0_SA_COO~X"
   }
 ]
 ```
