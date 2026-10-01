@@ -82,7 +82,9 @@ any row.
 `opal_discover`; holder `2.0.0_SA_COO~MI`), G-NW-E1 (never-widen pair: CTO half `1.0.0_SA_CTO~O` + COO half
 `2.0.0_SA_COO~MS`, naming the blast radius -- cited here by amendment), and MS-d-2 live. Checks dry-run at base: AC1 FAIL
 as expected (16 sites, 3 reader files, 3 unrouted); AC2 FAIL as expected (all allowed); AC3 FAIL as expected (baseline
-absent); AC4 FAIL as expected. AC1 is file-grain by design (query_v0 keeps its default client as the ARN-unset
+absent); AC4 FAIL as expected. AC3 rewritten before any spawn (row Z-W1-S9: the host .env cannot be shell-sourced, and the
+producers rewrite these objects daily) to compare the host-served bytes against S3 read in the same minute: base PASS
+as expected, 9 of 9 (it is the control the Deny must keep). AC1 is file-grain by design (query_v0 keeps its default client as the ARN-unset
 fallback); AC3 is the served proof.
 
 <status>staged</status>

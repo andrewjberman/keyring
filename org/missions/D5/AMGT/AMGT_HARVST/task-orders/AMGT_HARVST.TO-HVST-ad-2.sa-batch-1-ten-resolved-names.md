@@ -78,6 +78,26 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/
   only on the sa root plus the run records; the outbox empty after upload. AC2 prints the measured pages per name and the
   re-based sa ceiling for the other 79 names.
 
+**AMENDMENT 1 (issuer, 2026-09-30 ~23:5xZ) -- rows `Z-W88-S1` and `Z-W88-S2`: re-run the 9 names that made NO request, in universe order, with two added STOP statuses. Under a RE-SIGNED pair.**
+- **What ran** (the record is in `~88/`):
+  - BA ran FIRST, because the issuer's plan file was dumped with sorted keys (`ad2_common.dump` `sort_keys=True`) and the
+    worker ran in key order. That is an issuer defect (`Z-W88-S1`).
+  - BA took 1 listing page OK (span 2026-09-21..09-30). Its one article answered 502, so the job ended `upstream_unavailable`
+    and set a 15-minute sa cooldown.
+  - The other 9 invocations ended `cooldown` with **0 requests**, because `cooldown` and `upstream_unavailable` were not STOP
+    statuses (`Z-W88-S2`).
+  - 0 names were reached; nothing was measured.
+- **The re-run (phase A2), ONLY the 9 zero-request names,** one invocation each, in the collector's universe order:
+  ASML `security-81a74ed057551e58`, Adobe `security-37dddff4d4357038`, Air Liquide `security-dac5b3449b489f3f`, Alibaba
+  `security-b05e0ccdc9868504`, America Movil `security-dc7848a34d3ffabd`, AstraZeneca `security-5f0ff2697ffe2748`, BB Seguridade
+  `security-2674f09dec47231a`, BNP Paribas `security-e1596d485e713579`, BP `security-a37b3e6572f2baa4`. BA is NOT re-run.
+- **The argv is the same** (`--no-sign-in`, sa only, `--max-jobs 1`).
+- **Before each invocation:** read the runtime `cooldown` table. If sa is under cooldown, STOP.
+- **The STOP statuses gain `upstream_unavailable` and `cooldown`:** a 5xx ends the batch, and so does a skip.
+- **Timing:** it ENDS by 08:00Z, and no invocation starts after 07:45Z.
+- **Upload once, and AC1/AC2 over the COMBINED record:** the first pass plus A2, in one `ad2_runs.json`.
+- **Gate limb:** `to-pipeline-gate` grades a modified order's `<placeholders>` only (NONE).
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
 <status>pending</status>

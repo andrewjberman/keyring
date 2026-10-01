@@ -78,7 +78,7 @@ the two check lines; the commit hash; any row.
 base: AC1 FAIL as expected (census absent); AC2 FAIL as expected (baseline absent). Slot `~1` continues to MS-ir-1,
 then MS-ir-2.
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>

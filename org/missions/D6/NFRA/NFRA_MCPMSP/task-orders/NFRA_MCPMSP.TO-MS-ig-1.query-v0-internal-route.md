@@ -81,3 +81,4 @@ alone (MS-rx-1 takes a fresh slot `~8`: the replay is a second seat's).
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker-light</worker_class>
+<status>complete</status>

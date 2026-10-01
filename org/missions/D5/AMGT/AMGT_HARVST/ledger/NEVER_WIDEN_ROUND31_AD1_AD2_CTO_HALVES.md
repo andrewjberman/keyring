@@ -49,3 +49,15 @@ put paths. Accepted: a live publisher run cannot be simulated without being the 
 - the Bright Data residential arm at first light (ruled NOT covered by Andrew's answer 1; msg to COO~H 22:08Z; his per-use word);
 - any bbg, wsj or barrons traffic;
 - `Z-W87-S1` (ft's bundle keeps no expiry), which is round-32 input.
+
+## AMENDMENT 1 (~00:1xZ 2026-10-01) -- HVST-ad-2 phase A2 RE-SIGNED (answers `2.0.0_SA_COO~H` msg 27447; COO ADDENDUM 1 @`ed40d75777`)
+
+**VERDICT: SIGNED.**
+- The first pass reached 0 names. BA ran first, read 1 listing page, then hit a 502 on its article, which set a 15-minute cooldown.
+  The other 9 ended `cooldown` with **0 requests sent**. So A2 is not a retry into a refusal: those 9 never spoke to Seeking Alpha.
+- **Accepted:** A2 re-runs only those 9, in universe order, with the same `--no-sign-in` argv and pin `9e68057327`.
+  - A cooldown check runs before each invocation.
+  - `upstream_unavailable` and `cooldown` are added to the STOP set, so a repeated 502 ends the batch at the first name.
+  - BA is not re-run.
+- **Added:** the issuer defect behind BA running first (the plan file dumped with sorted keys) is recorded as a row by the issuer. The
+  order of execution is part of the act and is read from the plan's own list, never re-sorted.
