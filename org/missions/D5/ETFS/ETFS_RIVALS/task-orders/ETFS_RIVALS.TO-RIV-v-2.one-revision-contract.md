@@ -70,8 +70,15 @@ data/etfs/scripts/rivalfunds/tests/test_g12_*.py
 data/etfs/scripts/rivalfunds/tests/test_g6_*.py
 data/etfs/scripts/rivalfunds/tests/test_p2_*.py
 data/etfs/scripts/rivalfunds/tests/test_s4_*.py
+data/etfs/scripts/rivalfunds/tests/test_hp1_home_producer.py
+data/etfs/scripts/rivalfunds/gold_holdings_coverage.py
 org/missions/D5/ETFS/ETFS_RIVALS/surprise-channel/investigations/INVESTIGATION_v1.Z.md
 </paths>
+
+**AMENDMENT 1 (issuer ruling on rows Z-W1-S30 and Z-W1-S31, 2026-10-01).** Two repairs join this cell; no criterion is added.
+(a) `tests/test_hp1_home_producer.py` `test_the_revision_with_home_rows_sorts_after_the_other_sources_revision_at_the_same_ts` asserts the retired `-h` letter form. Rewrite it to the one revision contract: a G1 build with home rows at a capture time already taken is ordered by `revision.newest` after the earlier build (the `-b<NN>` sequence), and a home-only build carries its own capture time; no letter form.
+(b) `gold_holdings_coverage.py` `g1_sources` picks the newest G1 by object name; route it through `revision.newest(objs)`.
+The drain runs the whole `data/etfs/scripts/rivalfunds/tests/` suite and must read 0 failed.
 
 ## 4. PROOF OF SPEC (each invocation LITERAL, run from your worktree root)
 
