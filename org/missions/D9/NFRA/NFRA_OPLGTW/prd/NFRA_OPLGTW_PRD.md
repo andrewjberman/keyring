@@ -234,8 +234,9 @@ builds them because it owns the gateway, and it grades only each order's own cri
     and its sha256. ONLY meetings on a configured meeting allowlist are reachable. That list starts with the four
     meetings of the spec's section 6.4.
   - **Mail:** the message fields of O4's `$select` plus the body. ONLY messages whose sender is on NFRA_TRNSPT's
-    sender table (a data asset: Manav's and Yang's addresses) are reachable, plus messages that share a
-    `conversationId` with one of them. Attachment bytes (`$value`) are returned ONLY for a non-inline
+    sender table are reachable: Manav's addresses, and Yang's once her addresses are supplied (the table is a data
+    asset). A message from any other sender is refused, including a message in the same thread as a table
+    sender's: NFRA_TRNSPT ingests by sender, so no need reaches past the table. Attachment bytes (`$value`) are returned ONLY for a non-inline
     `application/pdf` within a configured size cap, with their sha256. Every other attachment returns metadata only.
 - **Audit.** It records the route, ids, byte counts and the caller's bearer label. It never records content.
 - **No alert.** A refusal or `NeedsLogin` is returned to the caller, which records it in its own run record
@@ -368,9 +369,9 @@ tool count, so it is cut after OG-t-2's release lands on those files, or rebased
 | O2 | headless transcripts route | C7 headless | Meeting allowlist. Its bearer is a new Secrets Manager entry, under the ledger. |
 | O3 | stored sign-in lifetime | C7 O3 | A measurement. Under one day returns here. |
 | O4 | mail tools | C7 interactive | ADOPT `gw-mail-tools-int` 6a7b9e78fa, minus the LD-0613 hunk, per the triage. The ac08 count is re-read at the cut. It takes the three f-branch test files. Supersedes f1-f3. |
-| O5 | headless mail route | C7 headless | The sender-table bound, and PDF bytes only. This is the byte-returning `$value` download NFRA_TRNSPT needs for bronze. |
+| O5 | headless mail route | C7 headless | The sender-table bound, with no thread reach, and PDF bytes only. This is the byte-returning `$value` download NFRA_TRNSPT needs for bronze. |
 
 Every O2/O5 release is NARROW from the deployed commit re-read at the cut, under a change-ledger entry, with
 never-widen halves: the release adds a content surface. Each route's first criterion is a negative arm run on demand:
 a bearer from the other prefix refused; a meeting off the allowlist refused; a message from a sender off the table
-refused; a non-PDF attachment returns metadata only.
+refused, including an off-table sender in a table sender's thread; a non-PDF attachment returns metadata only.
