@@ -4795,6 +4795,72 @@ carries none.
     "spec_asserts": "No secret value leaves the host's .env except into the service's environment.",
     "world_is": "One OTP bearer token sits in the SSM command-invocation output of that run (retained by SSM) and in this seat's session output.",
     "notes": "FIX AT THE INSTRUMENT, done before the cut: round-6 r8.AC2's host probe (r8_host.py) parses .env in Python the way systemd does and prints only tool names; the face of every round-6 host-touching order says never shell-source .env. DISARM: the rotation decision is the bearer's owner's (NFRA_OPLGTW, 2.0.0_SA_COO~O; OG-rl-1 already carries a bearer rotation, row Z-W17-S1) -- routed to ~O the same turn this row lands. ANSWERED (2.0.0_SA_COO~O msg 27684, ~08:59Z): the echoed word is the cot token (Secrets Manager blackdiamond/cot/otp-gateway-token), the same value row Z-W17-S1 names; NFRA_OPLGTW OG-rl-1 (amended A1) already rotates it, and its verify refuses the old value. This row disarms when OG-rl-1 lands; no separate act. The repeat class (a host .env that leaks when shell-sourced) goes on OPLGTW's next enrichment."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~23",
+    "surfaced_at": "2026-10-01T09:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "hazard_standing": "INERT",
+    "id": "NFRA_MCPINDEX-Z-W23-S1",
+    "class": "OBSERVATION",
+    "one_line": "MX-x-4 (a): the order's description of safe-ec2-deploy.sh differs from the file in three places; each handled conservatively and the order's own bounds kept.",
+    "spec_asserts": "Order (a): the manifest rewrite 'is at :99' too; only deployed_commit, deployed_at, previous_deployed_commit (if set) and _last_updated may move; put the logic in a small helper the test can call (a new helper file is not in <paths>).",
+    "world_is": "infra/aws/ec2/safe-ec2-deploy.sh@f797d8594a: :99 is a READ (jq -r source_path | tr -d CR into a variable, no write), left unchanged; the wrapper's rewrite also sets services.<svc>.deployed_by (the acting serial) and never sets previous_deployed_commit, so the helper keeps deployed_by moving (dropping it would change the manifest's attribution ledger) and no previous_deployed_commit is written; the helper is a heredoc INSIDE the wrapper (no new file is admitted by <paths>), which .tools/tests/test_safe_ec2_deploy_manifest.py extracts and calls.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 85,125p and 190,230p infra/aws/ec2/safe-ec2-deploy.sh at f797d8594a (read 2026-10-01).",
+        "python json round trip of the real infra/aws/ec2/EC2_MANIFEST.json (read only): dumps(indent=2, ensure_ascii=True) is byte-equal to the file (74166 B, 0 CR, 18 unicode-escape sequences, 0 raw non-ASCII)."
+      ]
+    },
+    "notes": "INERT: the issuer may rule the deployed_by carry-over or a separate helper file at the round-N analysis."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~23",
+    "surfaced_at": "2026-10-01T09:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "hazard_standing": "INERT",
+    "id": "NFRA_MCPINDEX-Z-W23-S2",
+    "class": "OBSERVATION",
+    "one_line": "MX-x-4 (b): .tools/test-haltgt-recipient-scoping.sh fails at HEAD before this change (0 of 9 with OPAL_AGENT_SERIAL set, 2 of 8 unset) because it identifies the gate through the retired .comp-graph/.agent_context file; unrelated to the serial order.",
+    "spec_asserts": "Order (b) bound 2: every changed script keeps its interface for current callers; callers of halt-gate-check.sh named.",
+    "world_is": "Ran the pre-change halt-gate-check.sh (git show HEAD copy, in a temp tree) under the test with OPAL_AGENT_SERIAL exported: RESULT 0 passed, 9 failed. With the new gate: unset 2 passed 6 failed; set 2 passed 7 failed. The gate removed the .agent_context fallback on 2026-07-13, so the fixture's identity never reaches it. The other callers' tests that DO key on a session-id serial file inside their fake root (.tools/halt-gate-ld0131-test.sh 7/7, .tools/tests/test_safe_apply_targeted.sh PASS) pass with OPAL_AGENT_SERIAL set, because the worktree's own session file is read BEFORE the env declaration.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bash .scratch/oldrepo/.tools/test-haltgt-recipient-scoping.sh (old gate, env set): RESULT: 0 passed, 9 failed, rc=1.",
+        "bash .tools/halt-gate-ld0131-test.sh and .tools/tests/test_safe_apply_targeted.sh with OPAL_AGENT_SERIAL exported, new gate: ALL PASS / RESULT: PASS."
+      ]
+    },
+    "notes": "INERT: a pre-existing red test, not made worse by the change; its repair (declare a session file in its fixture root) is outside this order's paths."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~23",
+    "surfaced_at": "2026-10-01T09:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "hazard_standing": "INERT",
+    "id": "NFRA_MCPINDEX-Z-W23-S3",
+    "class": "OBSERVATION",
+    "one_line": "MX-x-4 (c): the portal submodule is not checked out in a worker worktree, so the default emitter invocation refuses on an empty accessor index and test_merged_definition::test_condition_helpers_census_and_accessors fails in the worktree before and after this change.",
+    "spec_asserts": "Order (c): a plain invocation still works where the inputs exist; keep the default invocation working.",
+    "world_is": "portal/src/api is absent in the worktree wk-mcpindex-r6-23 (ls: No such file or directory), so accessor_index() == {} and the pre-existing test asserts getAUMSummary in idx -> AssertionError; --portal-api now lets a caller point at the portal checkout. The catalog-writing path itself was not run here (no census-present full emit: it would write the live DATA_CATALOG.yaml).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ls portal/src/api in the worktree -> No such file or directory.",
+        "python -m pytest workflows/atom_decomposition/tests -q: 39 passed, 1 failed (that test), 1 of 40."
+      ]
+    },
+    "notes": "INERT: MX-d-6 runs the emitter at its own base; it should pass --portal-api if its tree lacks the submodule."
   }
 ]
 ```
