@@ -731,6 +731,29 @@
  "disarm_owner": "2.0.0_SA_COO~D",
  "spec_asserts": "AC3: errorEmpty.harness.cjs:12 green means the starred error and empty states still read as designed.",
  "world_is": "The harness is green but its starred-state claims are not exercised on a StarredList; the round-16 cut can retire the StarredList claims or re-point them at the bubbles' starred empty state."
+},
+{
+ "id": "DSGN_AMGTV1-Z-S10",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~D",
+ "surfaced_at": "2026-10-01T07:05Z",
+ "one_line": "The round-15 close walk is VOID: after a 200 login the next full page load calls POST /auth/refresh with the session cookie and the shared auth backend (CloudFront d2n2nzpeqf34ge) answers HTTP 500, so the app lands on /login. Any reload of a protected page signs the user out.",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "tmp/ui-walk/20261001T070037Z/netlog.tsv (site Z): line 85 POST 200 /auth/login, 86 GET 200 /auth/me, 180 GET 200 /security-analysis (full load), 259 and 263 POST 500 /auth/refresh",
+   "curl -X POST http://localhost:5174/auth/refresh without a cookie: 401 {\"error\":\"No refresh token\"} (the route is up; the 500 is on a cookie-bearing refresh)",
+   "round-14 walk N (tmp/ui-walk/20260930T235353Z, 2026-09-30 23:53Z) navigated the same routes signed in with 0 API issues: the refresh path worked then",
+   "5174 = C:/tmp/amgt-walk-5174 at 93134bae (tree = portal DEV f4adf790), dev server restarted after a reboot (CTO~Z msg 27581); /auth proxies to https://d2n2nzpeqf34ge.cloudfront.net (vite.config.ts:86)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "1.0.0_SA_CTO~Z",
+ "spec_asserts": "The close walk is the one real run of round 15 (decomposition v15 battery); a signed-in session survives a page load (FWD-1 hop 1, real login).",
+ "world_is": "The shared auth refresh answers 500 on a cookie-bearing request; the walk cannot leave the first page signed in, so no signed-in walk of the round-15 faces exists. Owner: the auth backend's writer (not DSGN, which owns presentation only); routed to 1.0.0_SA_CTO~Z for placement. The Friday walk 18:00-21:00 ET and the PROD demo depend on it."
 }
 ]
 ```
