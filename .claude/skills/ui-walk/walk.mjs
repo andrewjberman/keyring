@@ -43,6 +43,8 @@ for (let i = 0; i < argv.length; i++) {
   else if (a === '--keep-armed') opt.keepArmed = true
   else if (a === '--headed') opt.headed = true
   else if (a === '--deep') opt.deep = true
+  else if (a === '--model-scope') opt.modelScope = true
+  else if (a === '--open-request') opt.openRequest = argv[++i]
   else if (a === '--no-login') opt.login = false
   // Extra wait after every settle, for a read whose answer lands after networkidle (a retained Performance
   // reopen fires after the account switch, so a 1200 ms settle screenshots "Loading"). Default 0: unchanged.
@@ -552,6 +554,139 @@ async function pressAll(page, scopeSel, label, maxPresses = 18) {
   return [...seen]
 }
 
+// ---- --model-scope: pick ONE model inside the Holdings card and read what the tab shows under that scope -------
+// (DSGN_IRPTV1 FAST item 42, 1.0.0_SA_CTO 103536). The pick control is `[data-slot=breakdown-row-scope]`, offered in
+// a card tile's breakdown dialog. The step opens card buttons one at a time (an account tile re-scopes the tab, so
+// the buttons are re-read each round) until a pick control appears, presses the first one, and records the scope
+// line, the map's chips, the Sleeve select and the table's row count. A pick is page state only: it sends nothing.
+const modelScopes = []
+// ---- --open-request <REQ-id>: open ONE listed analysis request and read what its dialog shows -------------------
+// (IRPT RULINGS batch 61 item 6 / CTO condition 9: one READY request walked on the local build against the real
+// backend, sections on screen.) The row is found by `data-request-id`; when that id is not listed, the first row whose
+// state reads Ready is opened instead and the record says so. Opening a request issues GETs only.
+const REQUEST_DETAIL_CEILING_MS = 45000
+const openedRequests = []
+async function openRequest(page, label, requestId) {
+  const rows = page.locator('[data-row="owned-analysis-request"]')
+  for (let w = 0; w < 40 && !(await rows.count().catch(() => 0)); w++) await page.waitForTimeout(500)
+  const listed = await page.evaluate(() => [...document.querySelectorAll('[data-row="owned-analysis-request"]')].map((r) => ({
+    id: r.getAttribute('data-request-id'), state: (r.querySelector('[data-slot="owned-request-state"]') || {}).textContent || null })))
+  let target = listed.find((r) => r.id === requestId)
+  const byId = Boolean(target)
+  if (!target) target = listed.find((r) => /^Ready\b/.test(r.state || ''))
+  const rec = { label, asked: requestId, listed: listed.length, listed_ready: listed.filter((r) => /^Ready\b/.test(r.state || '')).length, opened: target ? target.id : null, opened_by_id: byId, row_state: target ? target.state : null }
+  if (!target) {
+    await checks(page, `${label}-request-not-listed`)
+    findings.push({ step: `${label}-open-request`, check: 'analysis:no-ready-request-listed', claim: 'measured', observed: `${listed.length} request(s) listed, none Ready and none with the asked id`, rule: 'a READY request opens with its sections on screen' })
+    openedRequests.push(rec); return
+  }
+  const t0 = Date.now()
+  await page.locator(`[data-row="owned-analysis-request"][data-request-id="${target.id}"] button`).first().click({ timeout: 5000 }).catch(() => {})
+  const detail = page.locator('[data-slot="owned-request-detail"]')
+  await detail.waitFor({ state: 'visible', timeout: 15000 }).catch(() => {})
+  let read = null
+  while (Date.now() - t0 < REQUEST_DETAIL_CEILING_MS) {
+    read = await page.evaluate(() => {
+      const d = document.querySelector('[data-slot="owned-request-detail"]')
+      if (!d) return null
+      const status = d.querySelector('[role="status"]')
+      const text = d.innerText || ''
+      return {
+        status_words: status ? status.textContent : null,
+        section_blocks: d.querySelectorAll('[data-slot="owned-report-sections"]').length,
+        section_items: d.querySelectorAll('[data-slot="owned-report-sections"] section, [data-slot="owned-report-sections"] li, [data-slot="owned-report-sections"] [data-section-id]').length,
+        correction_words: (d.querySelector('[data-slot="request-correction-words"]') || {}).textContent || null,
+        sections_unavailable_words: /Report sections are not available/.test(text),
+        checking: /Checking request status/.test(text),
+        text_chars: text.length,
+      }
+    }).catch(() => null)
+    if (read && !read.checking && (read.section_blocks > 0 || read.sections_unavailable_words)) break
+    await page.waitForTimeout(500)
+  }
+  rec.waited_ms = Date.now() - t0
+  rec.detail = read
+  await checks(page, `${label}-request-open`)
+  await page.locator('[data-slot="owned-request-detail"]').evaluate((d) => { d.scrollTop = d.scrollHeight }).catch(() => {})
+  await page.waitForTimeout(400)
+  await checks(page, `${label}-request-open-end`)
+  openedRequests.push(rec)
+  await page.keyboard.press('Escape').catch(() => {})
+  await page.waitForTimeout(400)
+}
+
+const SEARCH_ANSWER_CEILING_MS = 30000
+const searchTimings = []
+async function modelScope(page, label, maxPresses = 10) {
+  const read = () => page.evaluate(() => {
+    const scope = document.querySelector('[data-slot="holdings-model-scope"]')
+    const sleeve = document.querySelector('[data-slot="security-filter-sleeve"]')
+    const chips = [...document.querySelectorAll('[data-slot="treemap-model-filter-option"]')]
+    return {
+      scope_line: scope ? scope.textContent.trim() : null,
+      scope_model: scope ? scope.getAttribute('data-model') : null,
+      chips: chips.length,
+      chips_pressed: chips.filter((b) => b.getAttribute('aria-pressed') === 'true').map((b) => b.textContent.trim()),
+      chips_locked: chips.filter((b) => b.disabled).length,
+      sleeve_value: sleeve ? sleeve.value : null,
+      sleeve_locked: sleeve ? sleeve.disabled : null,
+      // security rows only: the panel's class-totals block is a table of its own and is hidden under a scope
+      table_rows: document.querySelectorAll('[data-slot="security-list"] tbody tr:not([data-slot="class-total"]):not([data-slot="class-totals-remainder"])').length,
+      table_empty_words: /No securities match these filters/.test((document.querySelector('[data-slot="security-list"]') || {}).innerText || ''),
+      map_tiles: document.querySelectorAll('[data-slot="holdings-treemap"] [data-slot="treemap-tile"], [data-slot="holdings-treemap"] svg g rect').length,
+    }
+  })
+  const before = await read()
+  const seen = new Set()
+  let pickText = null
+  const opened = []
+  for (let round = 0; round < maxPresses && timeLeft() && pickText === null; round++) {
+    const btns = page.locator('[data-slot="holdings-drill-tree"] button:visible')
+    // an account tile re-scopes the tab and its answer can take seconds: wait for the card's buttons to be back
+    for (let w = 0; w < 20 && !(await btns.count().catch(() => 0)); w++) await page.waitForTimeout(500)
+    const n = await btns.count().catch(() => 0)
+    const texts = []
+    for (let i = 0; i < n; i++) texts.push(((await btns.nth(i).innerText().catch(() => '')) || (await btns.nth(i).getAttribute('aria-label').catch(() => '')) || '').replace(/\s+/g, ' ').trim())
+    // a breakdown opener first (it is where the pick control lives), then the Models tile, then the rest in page order
+    const rank = (t) => (/view breakdown/i.test(t) ? 0 : /models/i.test(t) ? 1 : 2)
+    const order = texts.map((t, i) => i).sort((a, b) => rank(texts[a]) - rank(texts[b]) || a - b)
+    let pressed = false
+    for (const i of order) {
+      const b = btns.nth(i)
+      const txt = texts[i]
+      if (!txt || seen.has(txt) || DO_NOT_CLICK.test(txt)) continue
+      seen.add(txt)
+      if (await b.isDisabled().catch(() => true)) continue
+      await b.click({ timeout: 3000 }).catch(() => {})
+      await settle(page, 1800)
+      opened.push(txt.slice(0, 40))
+      pressed = true
+      const pick = page.locator('[data-slot="breakdown-row-scope"]:visible').first()
+      if (await pick.count().catch(() => 0)) {
+        pickText = ((await pick.innerText().catch(() => '')) || '').replace(/\s+/g, ' ').trim()
+        await checks(page, `${label}-model-pick-offered`)
+        await pick.click({ timeout: 3000 }).catch(() => {})
+        await settle(page, 1500)
+      } else {
+        await page.keyboard.press('Escape').catch(() => {})
+        await page.waitForTimeout(400)
+      }
+      break
+    }
+    if (!pressed) break
+  }
+  const after = await read()
+  await checks(page, `${label}-model-scope`)
+  await page.locator('[data-slot="security-list"]').scrollIntoViewIfNeeded().catch(() => {})
+  await page.waitForTimeout(400)
+  await checks(page, `${label}-model-scope-table`)
+  modelScopes.push({ label, opened, pick_offered: pickText !== null, pick_text: pickText, before, after })
+  if (pickText === null) findings.push({ step: `${label}-model-scope`, check: 'model-scope:no-pick-offered', claim: 'measured', observed: `no model pick control appeared after opening ${opened.length} card button(s)`, rule: 'a card breakdown that lists models offers the scope pick (W2-22)' })
+  // leave the tab as it was found: the scope line's own control returns to all models
+  await page.locator('[data-slot="holdings-all-models"]').first().click({ timeout: 3000 }).catch(() => {})
+  await page.waitForTimeout(400)
+}
+
 // ---- drill: every top-level row, then its first drillable child, down to 4 levels ------------------------------
 // Rows are the SliceTable's `tr[data-slot=slice-row]` (clickable when data-child-count > 0); the breadcrumb is
 // `nav[data-slot=holdings-breadcrumbs]`, whose first entry ("All holdings") returns to the top.
@@ -666,8 +801,20 @@ try {
           const left = await combo.inputValue().catch(() => '')
           if (left) findings.push({ step: `search-${client}`, check: 'walker:input-not-cleared', claim: 'measured', observed: `the search box still held "${left}" before typing`, rule: 'each search starts from an empty box' })
           await combo.pressSequentially(client, { delay: 40 }).catch(() => {})
+          const typedAt = Date.now()
           await page.waitForTimeout(2500)
           await checks(page, `search-${client}`)
+          // How long the typed search takes to ANSWER (the box stops reading "Loading"), up to SEARCH_ANSWER_CEILING_MS.
+          // The 2.5 s shot above is what a person sees first; this is when the list is the typed query's own.
+          let answeredMs = null
+          while (Date.now() - typedAt < SEARCH_ANSWER_CEILING_MS) {
+            const busy = await page.evaluate(() => /Loading/.test((document.querySelector('[role="combobox"][aria-label="Client search"]')?.closest('div')?.parentElement?.innerText) || '')).catch(() => false)
+            if (!busy) { answeredMs = Date.now() - typedAt; break }
+            await page.waitForTimeout(250)
+          }
+          searchTimings.push({ client_chars: client.length, answered_ms: answeredMs, ceiling_ms: SEARCH_ANSWER_CEILING_MS })
+          log('SEARCH ANSWERED', JSON.stringify(searchTimings[searchTimings.length - 1]))
+          if (answeredMs === null || answeredMs > 2500) await checks(page, `search-${client}-answered`)
           // Rank within THIS search's own listbox (aria-controls), never page-wide: the Firm <select> options also carry
           // role=option and sit earlier in the DOM (the same walk read "#5 of 17" for a client shown first of 13).
           const listId = await combo.getAttribute('aria-controls').catch(() => null)
@@ -701,9 +848,17 @@ try {
               const p = await drill(page, '[data-slot="holdings-tab"]', `${client}-holdings`)
               drillPaths.push({ client, paths: p })
               log('DRILL PATHS', JSON.stringify(p).slice(0, 400))
+              if (opt.modelScope) {
+                await modelScope(page, `${client}-holdings`)
+                log('MODEL SCOPE', JSON.stringify(modelScopes[modelScopes.length - 1]).slice(0, 900))
+              }
             }
             await exploreScope(page, '[data-slot="tabs"]', `${client}-${name}`)
             if (opt.periodsPerAccount && /performance/.test(name)) await periodsPerAccount(page, '[data-slot="tabs"]', `${client}-${name}`)
+            if (opt.openRequest && /analysis/.test(name)) {
+              await openRequest(page, `${client}-analysis`, opt.openRequest)
+              log('OPEN REQUEST', JSON.stringify(openedRequests[openedRequests.length - 1]).slice(0, 900))
+            }
             if (opt.deep) {
               const pressed = await pressAll(page, '[data-slot="tabs"]', `${client}-${name}`)
               log('PRESSED', name, JSON.stringify(pressed).slice(0, 300))
@@ -741,6 +896,9 @@ try {
   writeFileSync(path.join(OUT, 'findings.json'), JSON.stringify(doc, null, 1))
   if (loadStates.length) writeFileSync(path.join(OUT, 'load-states.json'), JSON.stringify(loadStates, null, 1))
   if (timelineDays.length) writeFileSync(path.join(OUT, 'timeline-days.json'), JSON.stringify(timelineDays, null, 1))
+  if (modelScopes.length) writeFileSync(path.join(OUT, 'model-scope.json'), JSON.stringify(modelScopes, null, 1))
+  if (searchTimings.length) writeFileSync(path.join(OUT, 'search-timings.json'), JSON.stringify(searchTimings, null, 1))
+  if (openedRequests.length) writeFileSync(path.join(OUT, 'analysis-request.json'), JSON.stringify(openedRequests, null, 1))
   writeFileSync(path.join(OUT, 'lead-lists.json'), JSON.stringify({ schema_version: '1.0', tool: 'ui-walk', stamp, lists: leadLists }, null, 1))
   writeFileSync(path.join(OUT, 'netlog.tsv'), netlog.join('\n') + '\n')
   writeFileSync(path.join(OUT, 'guard.tsv'), guard.join('\n') + '\n')

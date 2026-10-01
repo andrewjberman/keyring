@@ -75,6 +75,12 @@ The lead-panel walk also presses one legend button (`[data-series-ticker]`) per 
 
 Every opened timeline day (the `--day` step, the newest day and the first event) waits for the day's STATE, not for time: `waitForDayState(page, date)` polls the opened day's container `[data-timeline-selected-day="<date>"]` for article rows (`state: "rows"`), the designed empty day (`"empty"`) or the failed dissection (`"failed"`), every 250 ms, and shoots at the first state seen; if none appears within `DAY_STATE_CEILING_MS` (20,000 ms; the deployed `/timeline/day` answers in about 5.5 s for a day with articles) the result is `"ceiling"`, recorded as its own result and never graded as rows. `timeline-days.json` is written whenever any day was opened, one record per opened day with `via` (`day`, `newest` or `event`), `security`, `date`, `pressed`, `state` and `waited_ms`; the `--day` records also carry `article_rows_in_page_order`, read only when `state` is `rows`.
 
+`--model-scope` (with `--client`) runs one step on the Holdings tab: it opens the card's buttons one at a time (a breakdown opener first) until a model pick control `[data-slot="breakdown-row-scope"]` appears, presses it, and writes `model-scope.json` beside `findings.json` with the scope line, the map chips, the Sleeve select and the table's SECURITY row count before and after (the class-totals block's rows are not counted). No pick offered records `model-scope:no-pick-offered`. A pick is page state only.
+
+`--open-request <REQ-id>` (with `--client`) opens ONE listed analysis request on the Analysis tab, by `data-request-id`, else the first row whose state reads Ready, and writes `analysis-request.json` with what the dialog shows (status words, section blocks, the correction sentence) and the wait in ms, up to `REQUEST_DETAIL_CEILING_MS` (45,000). Opening a request issues GETs only.
+
+Every `--client` search also records when the typed search ANSWERS (the box stops reading "Loading"), up to `SEARCH_ANSWER_CEILING_MS` (30,000 ms), in `search-timings.json`; the 2.5 s screenshot stays what a person sees first, and a slower answer gets its own `search-<client>-answered` step.
+
 The skill runs:
 
 ```
