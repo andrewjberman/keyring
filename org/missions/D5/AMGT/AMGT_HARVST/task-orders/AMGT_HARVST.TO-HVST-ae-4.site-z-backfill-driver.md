@@ -99,6 +99,26 @@ interface). **Never in phase A:** a collector run, a publisher request, an S3 wr
   `org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~92/AMGT_HARVST.TO-HVST-ae-4.site-z-backfill-driver.proof_of_spec.json`
   with `to_id` `AMGT_HARVST.TO-HVST-ae-4.site-z-backfill-driver`.
 
+## AMENDMENT 1 -- 2026-10-01 ~07:0xZ, the issuer: phase B's shape and authority
+
+1. **Authority.** Vendor egress: R-21 @`b390c36444` (Andrew-direct 2026-09-24: "you have all the egress you want for
+   vendors ... the pull should be deterministic/scripted"); the driver is that script, sa on its existing route
+   (placement R7). **No never-widen pair:** the run writes only sa bronze/silver, run records and the outbox upload; it
+   moves NO served gold (`chatter_daily` / `article_security_mention` are rebuilt only by hand, and that rebuild is a
+   separate act that carries its own pair). Section 2's "under the signed never-widen pair" is withdrawn.
+2. **Precondition (FWD-12):** phase B starts only after `HVST-ae-1` phase B is complete on CLOUD (the census reads 0
+   outside the quarantine). The issuer hands phase B over only then.
+3. **Phase B, in order (section 2 is replaced):**
+   1. Dry run first: `python -m lib.opal_data_harvest.backfill_driver --dry-run --publishers sa --checkpoint org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~92/ae4_checkpoint.json` (prints the BUDGET line and 89 PLAN lines; keep it as `ae4B_dryrun.out`).
+   2. The real run over the FIRST 6 names of the plan (`--names` with those 6 keys, `--publishers sa`, the same
+      `--checkpoint`). After the 3rd job ends, stop it the way an operator would (Ctrl-C / a console break the driver
+      handles after the current job), then re-run the SAME command: it must skip the 3 done pairs and run the other 3
+      (FWD-15 b). Keep both outputs (`ae4B_run1.out`, `ae4B_run2.out`) and the checkpoint.
+   3. Copy the run summary to `~92/ae4_run_summary.json`; run AC1, AC2, AC3; update the instance; flip `<status>` to
+      `complete` when all three pass.
+4. **The full 89-name run is the issuer's** direct act, continued from the SAME checkpoint as a long-running process
+   after this order closes (it runs for hours; a worker does not hold it).
+
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:**
