@@ -28,6 +28,18 @@ It comes from OG-tx-1 (9fcd257fbd), so that a past meeting's join URL can feed `
 "No new Graph scope"). No other principal's data becomes reachable. Rollback is the same re-deploy. This half covers it.
 The CVO's half should cover it too.
 
+## ADDENDUM (~10:2xZ, on `3.0.0_SA_CVO~O` msg 27748): a second unnamed widening this half missed -- `read_email`
+
+My `-def` census could not see it, because the signature is unchanged; only its `$select` grows. Read at source
+(`git diff 2c0f84966d daa56d81ac -- app/tools.py`): `read_email` adds **six** fields:
+- the four PRD v1.3 C7 names: `ccRecipients`, `internetMessageId`, `conversationId`, `sentDateTime`;
+- **two beyond the C7 text:** `bccRecipients` (populated only on the sender's own copy) and `hasAttachments`.
+
+All six come from the caller's own mailbox, on the caller's own delegated token, with no new Graph scope. This half
+covers them. The two fields beyond C7's list are a contract-text drift, not a reach change. They are carried to
+NFRA_OPLGTW's next round analysis to amend C7 to the shipped list, not edited mid-round. Lesson for this seat's next
+half: census `$select` / params changes on existing tools, not only `def` lines.
+
 ## Writers counted (the ask's section 3, read at source)
 
 - (a) `/hx/*` read access: N = 2 per prefix (`match_bearer`; the content gate: meeting allowlist, or sender table + PDF
@@ -41,7 +53,8 @@ The CVO's half should cover it too.
 
 ## The half -- SIGNED
 
-I, `1.0.0_SA_CTO~O`, sign the blast radius in section 2 of the ask, plus the `list_calendar` widening named above, on:
+I, `1.0.0_SA_CTO~O`, sign the blast radius in section 2 of the ask, plus the `list_calendar` and `read_email`
+widenings named above, on:
 - release `daa56d81ac7c91795f1a9c47b2c2430cb3879e24` on live `2c0f84966dc452d367ab1e4fc5d4849f08c1625e`;
 - rollback `/c/tmp/og-rb4`;
 - `.env` 39 -> 46 keys, 0 removed, 0 existing values changed;
