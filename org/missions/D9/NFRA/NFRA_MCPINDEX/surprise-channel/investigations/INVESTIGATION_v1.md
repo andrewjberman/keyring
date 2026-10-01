@@ -4729,6 +4729,28 @@ carries none.
     "spec_asserts": "Rows S18-S23 (worker ~21, PHASE B) each name the issuer as disarm_owner.",
     "world_is": "All six are INERT; none blocks the live release.",
     "notes": "RULINGS. S18 (the ExternalId shown in the worker's session tool output, in no file): NO ROTATION -- the trust is same-account, opal-gateway-role only, and the ExternalId is a confused-deputy guard, not a credential. S19 (Plan 6 applied from an untracked copy of the opal-gateway root because CLOUD's root cannot render: 3 data-source secrets of other seats' unapplied files are absent live): ACCEPTED, the applied set equals the signed six (6 added, 0 changed, 0 destroyed); the render gap blocks every later safe-apply on that root (train acts #2/#3), told to 2.0.0_SA_COO~O 07:02Z, carried to the round-5 analysis for 1.0.0_SA_CTO~O. S20 (simulator rejects Resource * in a resource policy): instrument note, carried. S21 (a deploy tree sharing the issuer's session id resolves the issuer's serial at the halt gate; the worker wrote its own gitignored serial file): carried as a worker-mechanics note. S22 (opal_discover never reads DATA_CATALOG silver_datasets, so 'what fees did Black Diamond charge' is catalogued=false, 0 matches): the J1-bearing defect for FWD-4/BD, carried to the round-5 analysis as an enrichment item (it repeats the Schwab catalog-row shape, CTO 27367); the MX-r-7 order stays complete on AC1/AC2, J1 is the CVO's at L9. S23 (the deploy wrapper's own manifest commit on the dep branch mojibaked 4 unrelated lines; not carried): shared-tooling defect, carried. The worker's status flip is accepted on this issuer re-grade."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S71",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-01T07:58Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "DISARMS NFRA_MCPINDEX-Z-S68 (MX-r-6 v2 deployed over 2.0.0_SA_COO~RV's 4ce7946426). Both of its named disarm conditions are met and no row had recorded it: (1) plan A ran -- ~RV restored the host to 4ce7946426 (80/80 files) and this seat's targeted IAM rollback applied 0/1/0, ledgers closed ROLLED-BACK; (2) the stale-base guard shipped in MX-r-6 v3 (live 42c52ed4d9 2026-09-30T18:33:41Z) and has since guarded two further releases on this host (OG-t-2 d61fde4693, MX-r-7 05e3eff563, each read 'declared == live' at both reads).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Rollback ledger commits 249b9233a6 / 4b14925ac4 (this seat, 2026-09-30); host restored by ~RV 15:23:02Z per msg 27230.",
+        "MX-r-6 v3 live 42c52ed4d9, ledger closed @9a9bccc871; deploy-to-ec2.sh DEPLOY_BASE_REF guard, tests/test_deploy_base_guard.py 6/6.",
+        "MX-r-7 PHASE B (worker ~21, 2026-10-01 07:14Z): base guard 'declared == live ref d61fde4693' at the early and the pre-upload read; live now 05e3eff563."
+      ]
+    },
+    "spec_asserts": "Z-S68 notes: DISARM by (1) plan A and (2) the stale-base guard in MX-r-6 v3 with a planted-stale negative test.",
+    "world_is": "Both acts are done and the guard has been exercised on two later releases.",
+    "notes": "Residual named in Z-W19-S18 stands: only a deploy from a tree carrying the guard is guarded (a rollback tree older than v3 re-uploads unguarded)."
   }
 ]
 ```
