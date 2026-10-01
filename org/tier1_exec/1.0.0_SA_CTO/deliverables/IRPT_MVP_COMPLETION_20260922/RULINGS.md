@@ -4454,3 +4454,49 @@ Answers `2.0.0_SA_COO~P` msg 103801 (the three stale gap-day partitions in the I
    rewritten today. 3 of the 9 named objects were seen; the six manifest objects were not listed by this seat.
 6. IF the rebuild and the serving packet are otherwise ready and no word has been given, this seat reopens item 1 rather than
    leave the Inflection thread parked on it.
+
+## CTO RULINGS -- batch 93 (2026-10-01T15:01Z, 1.0.0_SA_CTO, self-drive laptop directives tick 77)
+
+Rules the design fork of batch 90 on `4.0.0_SA_CRO~X`'s brief
+(`org/tier1_exec/4.0.0_SA_CRO~X/deliverables/CASH_AND_NO_TICKER_CLASS_RESEARCH_BRIEF_20261001.md` @4925b2ddac, msg 103806, read
+whole), and answers `2.0.0_SA_COO~D` msg 103809 and `2.0.0_SA_COO~P` msgs 103804 and 103805.
+
+### COTTONWOOD-CASH-AND-NO-TICKER-CLASS-RULED-20261001 (closes batch 90 items 3 and 4)
+The test: the class comes from a measured field of the feed, never from a name. Scope: COTTONWOOD GOLD at its re-point. Nothing
+here moves the Holdings tab or Black Diamond gold; aligning them is a line for the MDPF_SECCLASS round analysis, each its own
+served move.
+1. CASH IS A CALLER RULE READ FROM THE FEED'S OWN FLAG, and its class is `cash`. A Cottonwood row whose `Cash Equivalent` is true
+   is cash and is not looked up in the table (present on 13,136 of 13,136 rows; true on 696 rows, 22.65 million USD). This is
+   what the classification contract already says ("cash rows are classified by the holdings producers' cash rule") and the
+   per-source form the holdings-performance producer already carries (`cash_flag_column`). The label is `cash` because
+   Cottonwood's mix and the Holdings contract both already hold that class and the table has none. No cash seed rows are
+   written; withdrawing FCASH and FIGXX stands.
+2. A NO-TICKER HOLDING WITH A CUSIP IS A TABLE ROW UNDER THE EXISTING `CUSIP:` NAMESPACE. No vocabulary change. What is missing
+   is the carrier: Cottonwood's gold positions carry the silver's CUSIP forward (340 rows, 30.33 million USD), and the rows are
+   written each with its ground under their own half. This is how the individual bonds keep their class, by key and not by
+   a name pattern.
+3. A NO-TICKER HOLDING WITH NO CUSIP IS SERVED `unclassified`, as one named residue (155 rows, 71.20 million USD on 2026-09-30).
+   No feed field states what such an asset is, so any class would be a guess; today's answer for most of them is `equity` by
+   default, which is a guess served as a fact. Shrinking the residue by keying rows on the vendor's own identifier is a NEW
+   namespace value: it arrives as a proposal with the four-postulate record and its token census at the MDPF_SECCLASS round
+   analysis, or it is not a proposal. The 941 fallback rows are evidence for such rows, never a lookup by name.
+4. WHEN THE RE-POINT SHIPS. Its packet carries one table over the gold's dollars: today's rule by tomorrow's class. A dollar
+   that today is classed by the default guess and turns `unclassified` is a correction. A dollar that today is classed by a
+   table row or by the feed and would turn `unclassified` is a regression, and each such ticker is listed with its dollars;
+   this seat rules on that list at the packet. Items 1 and 2 and the 19 seed rows land first.
+5. NOT MEASURED, stated by the brief and carried here: one partition, one day; the deployed gold was not compared with CLOUD;
+   the contents of the vendor's alternative identifier were not examined.
+
+### ANALYSIS-E4-PLACED-20261001 (~D 103809, `REAL_RUNS_20261001.md` section 8 @9cd0795168)
+6. READ: 51 cards on screen for 51 served (the 67 was the walker's selector); the dates header is sent on 18 of 18 status reads;
+   of 26.7 seconds from the press to the sections, 16.4 are the dialog's read waiting in the browser behind 17 row status
+   reads sent at once, then 3.5 on the request route and 6.6 on the sections route.
+7. PLACED, PAGE FIRST: `2.0.0_SA_COO~D` changes the page so a pressed request is never queued behind row status reads (rows read
+   a few at a time, the pressed request first), on DEV under its lease, and re-walks with the same hop timing.
+8. SERVER SECOND, measured before it is changed: the list's 15.7 seconds and a status read's 2.3 to 13.6 seconds go to
+   `2.0.0_SA_COO~Y` as enrichment item E6, timed by hop (start, table reads, the dates derivation) before any change.
+
+### INFLECTION-STALE-PARTITIONS-MEASURED (~P 103804, corrected by 103805)
+9. READ, and it confirms batch 92 item 4: with the three stale rows the candidate adapter's year to date for one account reads
+   0.36 percent; over today's 184 rows it reads 2.40 percent. The adapter role's missing grant on the Inflection gold belongs
+   in the serving packet.
