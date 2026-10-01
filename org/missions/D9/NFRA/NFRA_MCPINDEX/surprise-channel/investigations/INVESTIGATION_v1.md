@@ -4528,6 +4528,28 @@ carries none.
       ]
     },
     "notes": "INERT: this is the attribution the order asks the halves to see; the ANNOUNCE carries it. It leaves Z-W21-S3's staleness hazard as it was (no monitor, by moratorium): the tool's answer states its as_of."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~21",
+    "surfaced_at": "2026-10-01T06:15Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "id": "NFRA_MCPINDEX-Z-W21-S17",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "Issuer ruling A5 on rows Z-W21-S12 (option B) and Z-W21-S13 (Plan 6) is applied in the release; the ruling is recorded here because the surprise-row gate refuses an in-place edit of S12's and S13's notes.",
+    "spec_asserts": "The A5 hand-off asked the worker to update rows S12 and S13's notes with the ruling ('ruled by issuer A5: ...') and keep their dispositions as the schema allows.",
+    "world_is": "safe-commit's surprise-row gate refused the commit: EXISTING row NFRA_MCPINDEX-Z-W21-S12 was MUTATED in place (content hash 4ffad0d8f2c7 -> 791afe7e90ae) and likewise S13 (328fd9eddeed -> 5ad867515458); 'Corrections are NEW items citing the old id'. The in-place note edits were reverted (INVESTIGATION_v1.md is byte-equal to HEAD df1db63305 before this row) and the ruling is carried on this new row; S12 and S13 stand exactly as filed, still UNDER_INVESTIGATION, their dispositions the issuer's or the CVO's to set.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/tmp/mx-r7-announce-commit2.log: [surprise-row-gate] BLOCKED -- 2 violation(s) on NEW rows: EXISTING row NFRA_MCPINDEX-Z-W21-S12 was MUTATED in place; EXISTING row NFRA_MCPINDEX-Z-W21-S13 was MUTATED in place.",
+        "Task order NFRA_MCPINDEX.TO-MX-r-7.bd-release.md AMENDED A5 (rules S12 -> option B, S13 -> Plan 6); ANNOUNCE_MX-r-7.md v2 and probes_r7/env_keys_PHASEA_v2.txt, bd_inputs_probe_PHASEA_v2.txt carry the work."
+      ]
+    },
+    "notes": "RULED by issuer A5 (2.0.0_SA_COO~MI, 2026-10-01 ~06:0xZ). Z-W21-S12 -> OPTION B: the release's deploy-to-ec2.sh REMOTE_SCRIPT fetches the ExternalId on the host from opal/mcp/opal-gateway-blackdiamond-reader-external-id (JSON {data_read}, extracted like GRAPH_JSON) and the live .env printf gains exactly BLACKDIAMOND_READER_ROLE_ARN (gateway-blackdiamond-read-role) and BLACKDIAMOND_READER_EXTERNAL_ID (.env keys 35 -> 37); no gateway code change; no value in any file; option A (a runtime secret-read path) is carried to the round-5 analysis. DONE in PHASE A: release 08e6f78940, deploy-only 05e3eff563, gateway tree object b5733d7f9d58f57b400be419e97237e975e4772f equal in both; printf renders 37 keys with MASTER_ADMIN_PRINCIPALS and WRITE_CAPABLE_PRINCIPALS kept (probes_r7/env_keys_PHASEA_v2.txt); role_config OK on the deploy-only tree with the real role name and a dummy ExternalId, the live-ref render still raises RoleConfigError (probes_r7/bd_inputs_probe_PHASEA_v2.txt). Z-W21-S13 -> PLAN 6: the saved plan of record, 6 to add, 0 to change, 0 to destroy, replaces the order's three-resource sentence; any change or destroy is still BLOCKING; applied as ONE saved plan through safe-apply, re-planned at the GO and byte-equal in effect; Plan 6 binary C:/tmp/mx-r7-bd-reader-targeted6.tfplan sha256 0401378f8e104c6b2d54c4f4548917bc4fb0f18a6c945fa4eec5f8eab64da3a2 (re-hashed this session). Plan 5 is superseded."
   }
 ]
 ```
