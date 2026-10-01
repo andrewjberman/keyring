@@ -2258,6 +2258,27 @@
     "spec_asserts": "RIV-v-2 (one revision contract, per fund) and RIV-q-1 (GQGU's issuer route): each issuer fund's rows are its own; a row's lineage names the channel it came from.",
     "world_is": "G1 reads GQGU's own silver object (v-2 AC2 PASS) but labels its rows with BASG's constant channel. Nothing is served yet: d-5 is staged.",
     "notes": "Remedy (issuer, inside the decomposition): RIV-v-2 is REOPENED with amendment 2 -- an issuer row's source_channel is 'issuer-site:<the silver object's source token>'; criterion v-2.AC3 (GQGU rows 'issuer-site:gqgu', BASG control unchanged). d-5's cut waits on the reopen's drain; the served delta is re-read on the fixed code. Disarm: the drain of the reopen."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S35",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-01T17:05Z",
+    "one_line": "Resolution of ETFS_RIVALS-Z-S9: an issuer row's source_channel is now issuer-site:<source token of its silver object>, so GQGU's G1 rows read issuer-site:gqgu and BASG's stay issuer-site:basg; v-2.AC3 reads PASS. Neighbour left as is: the issuer rows' extra_attributes namespace key is still the constant 'basg' (SOURCE_NS) for every issuer fund.",
+    "spec_asserts": "Row Z-S9 (BLOCKING): gold_canonical_shape.py SOURCE_CHANNEL = 'issuer-site:basg' is written on every issuer row, so GQGU's rows read as BASG's channel; RIV-v-2 amendment 2 @2be56969b2 rules the fix into the cell.",
+    "world_is": "At 44f95d2c6c: v-2.AC3 prints 'source_channel: GQGU ['issuer-site:gqgu'], BASG ['issuer-site:basg']' and 'AC3 RESULT: PASS 0 failures'; AC1 and AC2 still PASS; python -m pytest rivalfunds/tests -q (from data/etfs/scripts) reads 292 passed, 2 skipped, 0 failed. extra_attributes still carries {'basg': {...}} on a GQGU row (gold_canonical_shape.py SOURCE_NS); the cell names source_channel only, so it is not changed here.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/gold_canonical_shape.py@44f95d2c6c _source_channel",
+        "data/etfs/scripts/rivalfunds/tests/test_v2_source_channel.py@44f95d2c6c"
+      ]
+    },
+    "notes": "Resolves ETFS_RIVALS-Z-S9 (an existing row is never edited; this row carries the resolution). disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV."
   }
 ]
 ```
