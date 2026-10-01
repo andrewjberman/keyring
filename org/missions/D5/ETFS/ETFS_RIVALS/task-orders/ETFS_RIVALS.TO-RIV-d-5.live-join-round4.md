@@ -105,7 +105,7 @@ written then with the served delta measured per fund.
 
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>staged</status>
+<status>pending</status>
 <round>4</round>
 <slot>~4</slot>
 <fabric>site-z</fabric>
