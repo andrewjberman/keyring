@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Three live GETs of ONE job through the served routes, as the service principal: does any route serve a document?
+"""Four live GETs of ONE job through the served routes, as the service principal: does any route serve a document?
 
     python job_status_route_read.py <tenant> <request-id> <out.json>
 
@@ -37,10 +37,14 @@ def main(argv):
     headers = {"Authorization": "Bearer " + token, "X-Contract-Version": "v1", "Content-Type": "application/json"}
     query = "?selected_tenant=" + tenant
     rows, served = [], []
-    for name, path in (("status-job", "status/%s%s" % (request_id, query)),
-                       ("request-read", "analysis/requests/%s%s" % (request_id, query)),
-                       ("sections-by-request", "analysis/%s/sections%s" % (request_id, query))):
-        code, resp = sp._call("GET", reads.BASE + path, None, headers, log)
+    # The status route answers READY only to a caller that declares the dates capability, as the portal does
+    # (ops/entry.py job_status; E1_STATUS_ROUTE_READ_20261001.md). Both forms are read, so neither is mistaken for the other.
+    capable = dict(headers, **{"X-IRPT-Status-Dates": "prospect-v1"})
+    for name, path, sent in (("status-job", "status/%s%s" % (request_id, query), headers),
+                             ("status-job-with-dates", "status/%s%s" % (request_id, query), capable),
+                             ("request-read", "analysis/requests/%s%s" % (request_id, query), headers),
+                             ("sections-by-request", "analysis/%s/sections%s" % (request_id, query), headers)):
+        code, resp = sp._call("GET", reads.BASE + path, None, sent, log)
         row = {"probe": name, "http": code}
         row.update(reads.shape(resp))
         data = resp.get("data") if isinstance(resp, dict) else None
