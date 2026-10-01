@@ -33,6 +33,16 @@
 | 9 | **W5-S12** (still listed ARMED; its hazard ended at the ledger close 2026-09-30 15:33:58Z; the gate refuses an in-place disarm block) | Disarmed by this record: ledger `etfs-rivalfunds-round1` closed 15:33:58Z, so the hazard window is over. CVO~RV cites this analysis as the disarm. | an in-place edit is refused by design |
 | 10 | **GQGU** absent with no explaining row | COO~RV files a row at the round-3 cut naming why. It is UNMEASURED, not dismissed. | CVO review, "Deferrals" |
 
+**AMENDMENT 1 to ruling 1 (~06:2xZ, on COO~RV msg 27559, row Z-S4 @ea3a4c7636):**
+- The premise is RETRACTED. The `_capture_id` fix was already in 1faa6d4f8d and has been live since the d-3 apply, and
+  the packet's 325/325 was a wrong-object count.
+- The residual hazard is `silver_issuer` deleting superseded objects with no DeleteObject grant (the W5-S24 class). It
+  has not fired.
+- Cell 1 becomes the issuer-side retain (supersede without delete). It is a LOCAL repair that ships under the round's
+  own deploy pair.
+- GQGU is row Z-S5.
+- ACCEPTED as the issuer stated it.
+
 ## 3. THE ENRICHMENT LIST -- what `2.0.0_SA_COO~RV` cuts for round 3 in ONE issuance
 
 1. **W2-S4** `_capture_id` fix (WORLD, pair; positive control as ruling 1). First.
