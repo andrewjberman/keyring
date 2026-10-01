@@ -1,0 +1,191 @@
+{
+ "author": "4.0.0_SA_CRO~X",
+ "asked_by": "1.0.0_SA_CTO msg 103742",
+ "read_window_utc": "2026-10-01T12:47Z to 13:15Z",
+ "claim": "measured unless a field says otherwise",
+ "stitch_builds": [
+  {
+   "id": "88fdb880",
+   "status": "FAILED",
+   "failed_phases": [
+    [
+     "BUILD",
+     "FAILED",
+     38
+    ]
+   ]
+  },
+  {
+   "id": "a6a66cd3",
+   "status": "SUCCEEDED",
+   "failed_phases": []
+  },
+  {
+   "id": "a2b72541",
+   "status": "SUCCEEDED",
+   "failed_phases": []
+  },
+  {
+   "id": "4d0807e5",
+   "status": "SUCCEEDED",
+   "failed_phases": []
+  },
+  {
+   "id": "d9e5a190",
+   "status": "SUCCEEDED",
+   "failed_phases": []
+  },
+  {
+   "id": "3166aa5f",
+   "status": "SUCCEEDED",
+   "failed_phases": []
+  },
+  {
+   "id": "3f03a52c",
+   "status": "SUCCEEDED",
+   "failed_phases": []
+  },
+  {
+   "id": "6a9f0eb3",
+   "status": "SUCCEEDED",
+   "failed_phases": []
+  },
+  {
+   "id": "d8df915f",
+   "status": "SUCCEEDED",
+   "failed_phases": []
+  },
+  {
+   "id": "81926d6a",
+   "status": "SUCCEEDED",
+   "failed_phases": []
+  }
+ ],
+ "failed_build_log_lines": [
+  "GRAIN-SENTINEL: FAIL (1 violation group(s))",
+  "[AC-GRAIN.2] SCHEDULE: count 26 vs baseline 10 = 2.60x (outside [0.4, 2.5]x band)",
+  "ERROR: GRAIN_SENTINEL_FAIL -- refusing to emit grain-violating stitch graph",
+  "Command did not exit successfully python3 infra/aws/globgrph/derive_stitch.py --out /tmp/stitch_graph.json exit status 2"
+ ],
+ "prior_build_log_line": "GRAIN-SENTINEL: PASS (0 identity-format + 0 magnitude violations)  [build a6a66cd3, 2026-09-30]",
+ "scheduler_schedules_live": 26,
+ "schedules_created_last": [
+  {
+   "name": "irpt-holdings-performance-daily",
+   "state": "ENABLED",
+   "created": "2026-09-29T02:44:56Z",
+   "modified": "2026-09-29T14:42:57Z"
+  },
+  {
+   "name": "etfs-rivalfunds-sweep-daily",
+   "state": "ENABLED",
+   "created": "2026-09-30T10:40:19Z",
+   "modified": "2026-09-30T10:40:19Z"
+  },
+  {
+   "name": "etfs-rivalfunds-daily",
+   "state": "ENABLED",
+   "created": "2026-09-30T10:40:19Z",
+   "modified": "2026-09-30T10:40:19Z"
+  }
+ ],
+ "stitch_artifact": {
+  "key": "s3://opal-313476888478-globgrph/stitch/stitch_graph.json",
+  "written": "2026-09-30T03:01:34Z",
+  "meta": {
+   "built_at": null,
+   "aws_snapshot": "snapshots/20260930/graph-20260930.tar.gz",
+   "total_nodes": 29206,
+   "total_edges": 63320
+  },
+  "edge_counts_five_stitch_types": {
+   "ROUTES_TO": 142,
+   "WRITES": 984,
+   "READS": 1266,
+   "DERIVES_FROM": 218,
+   "STORED_IN": 137
+  },
+  "five_type_total": 2747,
+  "stored_in_targets": {
+   "arn:aws:s3:::opal-data-bd": 124,
+   "arn:aws:s3:::opal-data-inf": 11,
+   "arn:aws:s3:::opal-data-mdpf": 2
+  }
+ },
+ "derive_fold_log": [
+  "2026-09-30T02:11:54Z INFO: SERVED_FROM_STITCH formed=27 unresolved_visible=18 (object_miss=0 iam_denied=6 node_miss=0 family_deferred=12)",
+  "2026-09-30T02:11:56Z INFO: STITCH_INGEST nodes=444 edges=728 skipped_dup=28682 stamped=0 skipped_unmapped_type=0 skipped_edge_unresolved=2010 producer=stitch-codebuild vintage=2026-09-29T03:01:18Z",
+  "2026-09-30T02:13:33Z OK: ICEBERG_EDGES_WRITTEN count=65054",
+  "2026-10-01T02:12:04Z INFO: SERVED_FROM_STITCH formed=27 unresolved_visible=18 (object_miss=0 iam_denied=6 node_miss=0 family_deferred=12)",
+  "2026-10-01T02:12:06Z INFO: STITCH_INGEST nodes=446 edges=728 skipped_dup=28760 stamped=0 skipped_unmapped_type=0 skipped_edge_unresolved=2019 producer=stitch-codebuild vintage=2026-09-30T03:01:20Z",
+  "2026-10-01T02:13:39Z OK: ICEBERG_EDGES_WRITTEN count=65203"
+ ],
+ "projection_load_log": [
+  "2026-09-30T02:26:27Z INFO: NODES_DEDUP unique=29125 (from 29148 rows, key_collisions=0)",
+  "2026-09-30T02:26:27Z INFO: EDGES_WRITTEN written=64656 skipped_missing_endpoint=398",
+  "2026-09-30T02:26:27Z INFO: EDGES_STORED count=62347 (merge_attempts=64656, collapsed_by_merge=2309)",
+  "2026-10-01T02:26:57Z INFO: NODES_DEDUP unique=29206 (from 29229 rows, key_collisions=0)",
+  "2026-10-01T02:26:57Z INFO: EDGES_WRITTEN written=64800 skipped_missing_endpoint=403",
+  "2026-10-01T02:26:57Z INFO: EDGES_STORED count=62488 (merge_attempts=64800, collapsed_by_merge=2312)"
+ ],
+ "served_graph_comp_kuzu": {
+  "vintage_line": "Built from the estate as of 2026-10-01 12:52:57 UTC. Stitch source: stitch-codebuild built 2026-09-30T03:01:20Z.",
+  "edges_by_type_and_layer": {
+   "DERIVES_FROM inter": 218,
+   "READS aws": 835,
+   "READS inter": 292,
+   "ROUTES_TO aws": 122,
+   "SERVED_FROM aws": 27,
+   "WRITES aws": 627,
+   "WRITES inter": 218,
+   "STORED_IN": 0
+  },
+  "inter_layer_total": 728,
+  "bucket_nodes": {
+   "S3_BUCKET keyed by arn": 41,
+   "S3_BUCKET_POLICY keyed by name": 17
+  }
+ },
+ "derive_image": {
+  "task_definition": "globgrph-derive-runner:9",
+  "image": "313476888478.dkr.ecr.us-east-1.amazonaws.com/opal-globgrph-derive-runner@sha256:17ccc9b01855138e2abd0c36938c62a21ffd0730bf7886b9758a5317b4d24d04",
+  "ecr": [
+   {
+    "tags": [
+     "20260904-080337"
+    ],
+    "pushed": "2026-09-04T08:03:52Z",
+    "digest": "sha256:1b89853fe44133f10a6"
+   },
+   {
+    "tags": [
+     "20260909-203936"
+    ],
+    "pushed": "2026-09-09T20:39:50Z",
+    "digest": "sha256:478d0a43742b2ed5a44"
+   },
+   {
+    "tags": [
+     "latest",
+     "20260910-010924"
+    ],
+    "pushed": "2026-09-10T01:09:39Z",
+    "digest": "sha256:17ccc9b01855138e2ab"
+   }
+  ],
+  "first_commit_with_widened_test": "d4b17b4f6f 2026-09-10T01:57:41-04:00 CG-s-33(NFRA_CLDGRPH, 0.9.0_WK_NFRA_CLDGRPH~1): the bucket identity made one at BOTH planes -- STORED_IN 137 of 137 and SERVED_FROM 27 of 27 now land on S3_BUCKET ",
+  "log_lines_matching_ENDPOINT_": 0,
+  "positive_control_STITCH_lines": 1,
+  "parent_revision_test": "derive_runner.py line 2348 at d4b17b4f6f^: source in ids and target in ids"
+ },
+ "inferred": [
+  "the deployed image lacks the widened endpoint test (image not pulled)",
+  "all 137 STORED_IN are among the 2,019 unresolved (by subtraction from served counts)"
+ ],
+ "not_done": [
+  "no build",
+  "no re-run",
+  "no write",
+  "deployed image not pulled"
+ ]
+}

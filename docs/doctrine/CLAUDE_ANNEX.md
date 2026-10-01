@@ -237,6 +237,26 @@ Doctrine: `docs/doctrine/A_VALUE_MUST_CARRY_ITS_CLAIM.md`.
     **IAM instrument traps (comp-iam is a FLOOR, `simulate-principal-policy`'s four false-deny modes --
     multi-ARN, conditioned grant, unvalidated action name, WRONG-GRAIN resource ARN (NFRA_OUTSET-S3) --
     `accessanalyzer validate-policy`): `/cloud-ops`.**
+    **SHELL AND TOOL-COPY traps (added 2026-10-01 by `0.0.0_AB_MSTR` from ESTATE_GOVERNANCE-S10, S14 and S30; each
+    re-measured that day):**
+    (a) **`.tools/jq.exe` writes CRLF.** A jq-written TSV read by shell field-splitting carries a trailing CR in
+    its LAST field, so a lookup keyed on that field misses with no error. Pass `-b` (`--binary`; measured on the
+    vendored jq-1.7.1: `"a"\r\n` without it, `"a"\n` with it) or strip with `tr -d '\r'`. The aws shim is the other
+    carrier of the same CR.
+    (b) **`cd X && A & B; C` backgrounds the whole `cd X && A` list**, so `B` and `C` run in the directory the
+    shell started in. For a worker that directory is the MAIN workspace, not its worktree: it runs the main
+    tree's copy and writes there believing otherwise. Never put `&` after a `cd ... &&` chain whose later
+    commands depend on the `cd`; background with the tool's own option, or `cd` in its own call.
+    (c) **A COPY of a comp-tool run from another directory, or exec-ed in-process, fail-softs on `__file__`** and
+    returns clean-looking false results, in either direction. Run the tool where it lives. When a candidate must
+    be exercised before it lands, put it BESIDE the original under a different name and run it there.
+    (d) **`opal-data-portal-v2` expires noncurrent object versions after 14 days** (lifecycle rule
+    `expire-noncurrent-versions-14d`, Enabled; read by `get-bucket-lifecycle-configuration`). "The overwritten
+    bytes are recoverable" is true for two weeks and false after; a rollback plan that leans on a prior version
+    states the date it stops being true.
+    *Cost of each: one flag, one extra call, one copy beside the original, one date in a rollback line.
+    Non-application: (a) a jq result consumed whole by another JSON reader; (b) a chain with no `&`;
+    (c) the tool invoked at its own path; (d) a bucket whose lifecycle a seat has read and found without the rule.*
 28. **THE SUBSTRATE TEST -- BEFORE YOU BUILD ON A RESOURCE, QUALIFY IT: SEVEN QUESTIONS, THREE
     DECLARED GRAINS.** A resource you are about to make LOAD-BEARING earns a SUBSTRATE CARD; a
     resource you are merely reading does not. Andrew-direct 2026-08-26.
@@ -517,6 +537,17 @@ unenforced restatements.
     ⚠ **Terraform is NOT at one path on every device -- resolve the binary, never assume a baked one.**
     Every existing gate binds unchanged, and **owning the apply means owning NEVER#6's completion
     obligation, not escaping it.** On-box wrapper set + the deploy-completion ledger path: `/cloud-ops`.
+    **26a. THE GATEWAY TERRAFORM ROOT AND GATEWAY RELEASES ARE APPLIED FROM SITE Z ONLY.** The root is
+    `infra/aws/terraform/opal-gateway`; a gateway release is the Gateway host deploy
+    (`infra/aws/ec2/opal-gateway/deploy-to-ec2.sh`). A laptop seat never plans or applies that root and never
+    runs that deploy. Laptop work that needs a gateway change lands its code on `CLOUD` and places ONE order
+    with site Z's gateway owner (NFRA_OPLGTW: `1.0.0_SA_CTO~O` / `2.0.0_SA_COO~O`), relayed by `0.0.0_AB_MSTR`
+    over the bus. Why: that root and that host are shared by five site-Z projects, so a second applier is a
+    second writer of one served surface. Mechanism: binds by reading; no gate carries it. COST: one cross-fabric
+    order per gateway change. NON-APPLICATION: a laptop-owned root that only grants or reads a gateway resource
+    (the Tax SMA capability secret and its Gateway read were applied from `mdpf-pipeline`). Record:
+    `org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20261001_020xZ_GATEWAY_TF_TO_SITEZ_TAXSMA_FINISHES_ON_LAPTOP_CRO_CHECKPOINT_THEN_REBOOT.md`
+    (suggestion 1, "yeah i agree"; landed by `1.0.0_SA_CTO` 2026-10-01).
 
 ## Agent Autonomy
 

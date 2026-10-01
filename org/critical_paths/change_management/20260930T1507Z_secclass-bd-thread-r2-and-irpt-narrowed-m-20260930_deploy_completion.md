@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-09-30T15:07:35.925267+00:00
-**Status:** HELD-SOVEREIGN-GATED -- gate: external / BD legs rolled back 18:16:09Z (row MDPF_SECCLASS-S5); B4 waits on a fix-forward under a NEW CTO half (condition 7); IRPT leg H5 reads at the 2026-10-01 14:15Z irpt-holdings-snapshot fire (held since 2026-09-30T18:27:23.213179+00:00)
+**Status:** HELD-SOVEREIGN-GATED -- gate: external / Held for leg H5 ONLY: the 2026-10-01 14:15Z irpt-holdings-snapshot scheduled publication (PHYS commodities/Metals on the Investor Reporting Holdings page; each firm's served manifest advances). The BD legs B3 (rolled back) and B4 are SUPERSEDED by ledger secclass-bd-thread-r3-m-20261001, whose legs X, A1, A2 and B4 carry them (held since 2026-09-30T18:27:23.213179+00:00)
 **Deploy:** ONE WINDOW: IRPT_BCKEND IB-mr-291 narrowed Holdings release (IAM CanonicalClassifierLookup + re-mint 3 bundles + QA + served publication) with MDPF_SECCLASS BD_THREAD_R2 (5 BD files deployed + chain run + FWD-1 page read) -- halves COO 6d44575a7f / CTO b4cd4a46ba; packet ONE_WINDOW_PACKET_BD_THREAD_R2_AND_IB_MR_291_20260930.md
 **Authored by:** 2.0.0_SA_COO~M
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -33,3 +33,4 @@
 - 20260930T163447Z LEG B1 closed: HALT_ACK=1 safe-deploy 16:29:39Z from CLOUD b6cfb3316e (the five files unchanged since @ae7aa281b0, contained in 9fef6a7
 - 20260930T182722Z LEG B3 closed: ROLLED BACK, NOT ACCEPTED. Exercise run bd-gold-trigger {mode incremental} 16:36:55Z (runner i-01003b035d2988dfb): C_06 
 - 20260930T182723Z HELD-SOVEREIGN-GATED gate=external/BD legs rolled back 18:16:09Z (row MDPF_SECCLASS-S5); B4 waits on a fix-forward 
+- 20261001T065552Z HELD-SOVEREIGN-GATED gate=external/Held for leg H5 ONLY: the 2026-10-01 14:15Z irpt-holdings-snapshot scheduled pub

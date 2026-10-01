@@ -30,12 +30,15 @@ from decimal import Decimal
 
 from boto3.dynamodb.types import TypeDeserializer
 
-AWS = r"C:\Users\AndrewBerman\Desktop\ajb_workspace\.tools\aws.cmd"
-# The extractor's own reader for the printed settings row (Y @36837771d6); the served resident carries it once P ships.
-EXTRACT = r"C:\Users\AndrewBerman\Desktop\irpt-mvp-y-20260922\infra\aws\lambda\investor-reporting\ycharts\extract"
+# Derived from this file's own place in the workspace, never typed: the tool reads the tree it sits in.
+_REPO = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "..", "..", ".."))
+AWS = os.path.join(_REPO, ".tools", "aws.cmd")
+# The extractor's own reader for the printed settings row, at the workspace's HEAD: the reader the resident serves
+# since st8 (2026-10-01), which takes the portfolio's name whole or as the vendor cuts it (extract.after_name).
+EXTRACT = os.path.join(_REPO, "infra", "aws", "lambda", "investor-reporting", "ycharts", "extract")
 # The recipe's own variant rule, and the maintained comparison catalogue (templates.json, CRLF-normalized sha 54656584
-# = the served generate AdE17rT6 and resident st2 member).
-GENERATE = r"C:\Users\AndrewBerman\Desktop\irpt-mvp-y-20260922\infra\aws\lambda\investor-reporting\ycharts\generate"
+# = the served generate and the resident's member).
+GENERATE = os.path.join(_REPO, "infra", "aws", "lambda", "investor-reporting", "ycharts", "generate")
 _de = TypeDeserializer()
 
 

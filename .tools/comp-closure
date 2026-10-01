@@ -31,6 +31,14 @@
 # !! directions (hid a false yesterday, hides a true today).
 # !! Repair routed to the D0 tooling queue (after the cap repair); do NOT tidy the duplicate
 # !! helper before this lands. Read a DIVERGENT verdict from this tool as SUSPECT until then.
+# !! COMPARISON REPAIRED 2026-10-01 (0.0.0_AB_MSTR, ESTATE_GOVERNANCE-S30), in the settled order: (a) every
+# !! member row now carries eq_head_basis / eq_deployed_commit_basis (RAW_BYTES or EOL_NORMALIZED) and the
+# !! raw result (raw_eq_head / raw_eq_deployed_commit), which survive the UNMEASURED short-circuit; (b) a TEXT
+# !! member that differs from the repo bytes only in CRLF versus LF is equal under EOL_NORMALIZED, and the
+# !! bundle's basis sentence counts the members that rest on it. A binary member (a NUL byte) is never
+# !! normalised. Self-test arms 15-15d. NOT changed: the multi-home census still reads RAW bytes, so the
+# !! "do not tidy the duplicate helper" constraint above is now a question for whoever consolidates it,
+# !! no longer a hazard armed by this comparison.
 #
 # Bounds: read-only live AWS; the lambda source map is a BUILD INPUT read and never rewritten;
 # nothing armed; `plane` carried opaque (CTO 63744). Rule-16 clean: cd / dirname / pwd / python only.

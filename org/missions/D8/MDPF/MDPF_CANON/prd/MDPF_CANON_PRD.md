@@ -5,7 +5,7 @@
  "project": "MDPF_CANON",
  "directive": "D8",
  "fabric": "laptop",
- "prd_version": "v2.6",
+ "prd_version": "v2.8",
  "step": 4,
  "brief_ref": "docs/briefs/d8-mdpf-canon-migration-brief-20260913.md@fd579d3caf",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8"],
@@ -28,6 +28,10 @@ one-bucket build; it now names the rule), PATHS, the SURFACE MANIFEST and BRIEF 
 firm-attributable tables), and the `state` instance, which cited R21 for an address R21 itself (his GAP-1 ruling, 09-13) and Rule 30 both
 home in the firm bucket and which `address()` already returns that way -- a standing ruling applied, no new question. The 08-18 "MDPF gold
 stays at opal-data-assets/portal/gold/" word is superseded for firm-attributable tables only; `global` and the code home are untouched.
+
+**v2.7 (2026-10-01T08:23Z, `1.0.0_SA_CTO`) -- four cell candidates carried in from MDPF_COTREMEDIATION's close; ENDPOINT and CONTRACTS are unchanged.** Rulings batch 71 of `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md`. Rows M13 to M16 below are the served-shape and process items that project's channel left open (`org/surprise_channel/MDPF_COTREMEDIATION/REMEDIATION_v1.md`, rows S3, S13, S16, and the registry's process cell). They are placed here because this project defines the pipeline's contract step and its served shape. No outcome is added; each row serves an existing FWD.
+
+**v2.8 (2026-10-01T09:53Z, `1.0.0_SA_CTO`) -- one more cell candidate, M17, placed from MDPF_TAXSMA's row S5 (rulings batch 78); ENDPOINT and CONTRACTS are unchanged.**
 
 **Brief:** `docs/briefs/d8-mdpf-canon-migration-brief-20260913.md` @`fd579d3caf`, author `4.0.0_SA_CRO~D`.
 - The later touch @`9ba5e5370d` is a one-line diff to the REFS `PROJECT` line.
@@ -363,6 +367,11 @@ One row per candidate cell. The decomposition at L5 is the COO lane's, and it ma
 | M10 the dedicated runner | FWD-6 | O6; IV.8 | C the fence, `key()` and `address()`; P the runner | -- | the runner's host and its per-firm roles | a run for one firm, after `LGIC_ENFORCE` E5 applies the fence; the fence's bytes read before and after | the run writes only builder-generated keys under that firm's `mdpf/{firm}/platinum/`; the fence's bytes are identical before and after, with no exemption row added |
 | M11 the retirements and the hold | FWD-8 | O8; IV.9; IV.12 | C the decommission standard | the hold file; the three prior cleanups' kill lists (the negative control) | `org/missions/D8/MDPF/MDPF_CANON/deliverables/` | the hold re-pointed or superseded with the producer's read cited; the read instrument's observed-live stamp; the 45-day record per tree, once every reader is repointed | the record shows no reader or writer for the whole stretch on a named instrument; the hold is true; each removal is its own confirmed act |
 | M12 the stale served key | FWD-4, FWD-5 | Part V bullet 10 | P the served JSON | `dim_mdpf_aum_timeseries.py`; the portal's readers of the key | -- | the key's portal readers named; one of the two dispositions chosen | the staged repoint is finished, or the key is retired with its readers named; not both |
+| M13 the silver-contract step | FWD-5 | IV.4 | C the key string | `data/assets/scripts/silver/mirror_conversion.py` `assert_declared_header`; the vendor template change path | -- | the 2026-08-20 change (commit 17c38a26f2) replayed as the fixture: a bronze-shape change with no silver declaration | a bronze-shape change cannot ship without its silver declaration in the same act; the replayed change is refused before any object is written |
+| M14 the served date axis | FWD-4 | O4 | P the served JSON | the cottonwood slice and the global fold; `lib/trading_calendar.py` | -- | the nine non-trading dates on the cottonwood and global axes (row MDPF_COTREMEDIATION-S3), read from the served payloads; never-widen sign-off (CTO and COO) | no scope's served axis carries a non-trading date, or the payload states in a field why two scopes do; the other two scopes are byte-identical before and after |
+| M15 the account count's meaning | FWD-4 | O4 | P the served JSON | the publisher; the by-model counts | -- | row MDPF_COTREMEDIATION-S13: cottonwood total 361 against a by-model sum of 542 on 2026-09-29, the other three scopes equal. RULED (batch 71): `account_count_total` means DISTINCT ACCOUNTS in every scope, never the by-model sum; whether cottonwood's 361 is that count is read first | every scope's total is the distinct-account count and the payload names that basis in a field a consumer can read; a scope whose accounts hold more than one model shows total below the by-model sum, stated |
+| M16 the run manifest's status | FWD-1 | O1 | P the gold artifact | the gold run manifest writer | -- | row MDPF_COTREMEDIATION-S16 (evidence of 2026-08-26, NOT re-read): reconciliation PASS on a run that built 6 of 12 objects | the status field is computed over the scopes the run set out to build; a run made partial on purpose cannot read PASS |
+| M17 the runner's dead stage | FWD-8 | O8; IV.9 | C the decommission standard | the EC2 daily runner's Stage 6 (the parallel revamp stage) and its completion marker `gold/mdpf_revamp/meta/cycle-complete.json` | -- | row MDPF_TAXSMA-S5 as read by `4.0.0_SA_CRO` on 2026-10-01 (`org/missions/D8/MDPF/MDPF_TAXSMA/deliverables/4.0.0_SA_CRO/ARMED_ROWS_READ_20261001.md`): the stage red since at least 2026-09-18, its marker last written 2026-08-14, the four staged spines written by the Gold function itself; why it first failed is UNMEASURED and is read before anything is removed | the stage is retired under the decommission standard and is NOT repaired: a repaired stage would be a second writer of the staged spines, which M2 forbids; the spines' one writer is named, and the day's served output is byte-identical before and after |
 
 ## PATHS
 

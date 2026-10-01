@@ -1,0 +1,25 @@
+# MDPF_SECCLASS item 9 -- the model rows this act writes (CTO rulings batch 75 item 3; CTO half on
+# addendum 2, SIGNED FOR 13 ROWS @000b55fc4b).
+# Input of infra/aws/lambda/v2_portal/yang_pipeline/write-model-rows.py --tickers-file.
+# 13 of the census's 26 candidates. The other 13 are NOT written as model rows: the eleven
+# low-confidence ones (BSBIX BSBSX FBIIX FFFHX FOCSX MLPTX PCOFX PHLPX PZTRX RLY TMAAX), O (its peers
+# of the same kind, AMT and PLD, read equity, not the model's alternatives) and CAIBX (its peer AOR is
+# a scheduled row; a class that moves follows a SEED peer -- excluded by the CTO half).
+
+# set (a): the model's class equals the class served today; the sub class moves to the canonical word (9;
+# AMUSX is held nowhere)
+AMUSX
+BAGIX
+BAGSX
+BSIIX
+DODIX
+EMXC
+FXNAX
+IGSB
+JEMSX
+
+# set (b): the class moves, not low-confidence, with a named SEED peer row of the same kind (4)
+USRT    # peer VNQ   alternatives / Real Estate (seed)
+CSRSX   # peer VNQ   alternatives / Real Estate (seed)
+VCMDX   # peer DBC, PDBC  commodities / Commodities (seed)
+PFUNX   # peer IAGG  fixed_income / International (seed)

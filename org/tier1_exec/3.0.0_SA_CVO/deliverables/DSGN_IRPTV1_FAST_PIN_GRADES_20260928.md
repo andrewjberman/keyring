@@ -309,3 +309,133 @@ is two `display_name` values on the NFRA_TRNSPT rows.
   keyed on either would read the fallback until regeneration.
 
 -- 3.0.0_SA_CVO
+
+## Grades, 2026-10-01 ~06:2xZ -- items 42 to 54 (asked by `1.0.0_SA_CTO` 103508; DSGN_IRPTV1 and IRPT_DASHBD workstream F)
+
+**Leases:** FAST `DSGN_IRPTV1` until 12:31:43Z and FAST `IRPT_DASHBD~D` until 12:32:19Z (`drive-mode.py status`, 05:51Z).
+**Pins:** all twelve (`20f95f79`, `ffc3c346`, `c98fa91e`, `c63553cf`, `57cf660e`, `63fb6318`, `970d5c75`, `e9a37ac1`,
+`7c354824`, `772dcdd8`, `a75e6a29`, `54bd4224`) are ancestors of portal HEAD `54bd4224`, which equals origin DEV
+(ls-remote by this seat). **CI:** runs 36822129829 (`54bd4224`) and 36821411702 (`a75e6a29`) read `completed success`
+(`gh run view`). **This seat's own run at portal HEAD:** `bun test` over twelve pinned files, 12 of 12 pass (iv-e-113,
+117, 119, 120, 121, 122, 123, 124, 125, 126, 127, 47; 1.37 s); portal dirty count 15 before and after. **Claim class of
+every real run below:** fixture plane on 5174 or a synthetic series; nothing reached the live backend. Each PNG named
+was read by this seat.
+
+| # | pin (portal DEV) | project | evidence read | grade |
+|---|---|---|---|---|
+| 42 | `20f95f79` + `ffc3c346` (W2-22 remainder, a model becomes the tab's scope) | DSGN_IRPTV1 | unit iv-e-119 MODEL-SCOPE-OK. Shot `item42/w2-22.fast-run.png`: the scope line "Showing only Core Growth Model -- back to all models" and the Sleeve select reading "Core Growth Model" are present; the map still draws three tiles (the model at 100.0% beside two "not supplied" tiles at 60.0% and 40.0%) and the table reads "No securities match these filters." The seat's own driver verdict is FAIL and STATUS says so (the injected MODEL node is not adapted as a model) | PASS on the unit claim; **NOT_EVALUATED on a real run: the one artifact shows a scoped tab with an unscoped map and an empty table** |
+| 43 | none (probe, W2-16) | DSGN_IRPTV1 | `item43/measurements.json`: five widths (1440, 1180, 1024, 820, 390), `scrollWidth` equal to the viewport and `nextClipped: false` at the four read in full | PASS as a probe: the clip is not reproduced |
+| 45 | `c98fa91e` (vendor view regenerated) | DSGN_IRPTV1 | iv-e-117 green; `python lib/opal_naming.py validate` reads OK (51 system rows, 0 refusals, registry@f56fa0ff8d7f4235). The registry mark has moved since the pin's `31046c489fdb4a1c`; whether the committed view still equals a fresh builder run was not re-generated | PASS; row NFRA_TRNSPT-S4's refusal is gone |
+| 46 | `c63553cf` (FCASH joins the Cash row) | DSGN_IRPTV1 | unit iv-e-113 SECURITIES-FOLD-OK. Shot `item46/fcash.fast-run.png`: the Securities table shows ONE Cash row, 6.00%, $12,000.00; the map draws CASH 2.5% and FCASH 3.5% as two tiles, as STATUS says | PASS on the fixture-plane real run |
+| 47 | `57cf660e` (coverage words) | IRPT_DASHBD F | unit iv-e-120: parity failures 0, a planted contract member fails parity | PASS on a test run; no page mounts it |
+| 48 | `63fb6318` (window math) | IRPT_DASHBD F | unit iv-e-121 WINDOW-MATH-OK | PASS on a test run; no page mounts it |
+| 49 | `970d5c75` (search ranks held rows) | DSGN_IRPTV1 | unit iv-e-122 and iv-e-47 green; no real-run artifact was found under the lane's deliverables (no `item49` folder; STATUS says "screenshot read" without a path) | PASS on the unit claim; NOT_EVALUATED on a real run |
+| 50 | `e9a37ac1` (W2-06 words) | DSGN_IRPTV1 | unit iv-e-123 CORRECTION-WORDS-OK. Shot `item50/w2-06-words.fast-run.png`: "Job status: Needs correction" then "This request could not be resolved while other work was in flight. Nothing is wrong with your file; submit the request again." outside Technical details; no code or id on the face | PASS on the fixture-plane real run; the served CORRECT action is unread (hop 10's walk) |
+| 51 | `7c354824` (SERIES contract read) | IRPT_DASHBD F | unit iv-e-124: parity failures 0, a planted contract key fails parity | PASS on a test run; no page mounts it |
+| 52 | `772dcdd8` (dashboard Performance chart) | IRPT_DASHBD F | unit iv-e-125 DASHBOARD-PERFORMANCE-OK. Shot `item52/dashboard-performance.design-look.png`, headed "DESIGN LOOK ONLY -- synthetic series": the title "Total return, before advisory fees", five presets and two date fields, a brush, the headline 13.80% with three coverage sentences, a visible gap in the curve, and the refusal panel with its sentence | PASS as a design look; NOT_EVALUATED for FWD-1 (no served file, no page mounts it), as STATUS says |
+| 53 | `a75e6a29` (W2-15 class totals) | DSGN_IRPTV1 | unit iv-e-126 CLASS-TOTALS-OK. Shot `item53/class-totals.fast-run.png`: "Held positions by asset class", Cash 1.00%, Fixed Income 2.70%, Equity 6.00%, then under a rule "No position detail 90.30% $180,600.00" and both sentences; the four lines sum to 100.00% and $200,000.00 | PASS on the fixture-plane real run; the served blocks are unread (the route does not serve them yet) |
+| 54 | `54bd4224` (holdings NOT_READY in words) | DSGN_IRPTV1 | unit iv-e-127 HOLDINGS-NOT-READY-OK. Shot `item54/holdings-not-ready.fast-run.png`: "This account's holdings have not arrived yet." and one detail line on a white panel, a closed Details disclosure, no code and no danger icon | PASS on the fixture-plane real run. The "Back to all accounts" half of the commit is not in the shot: not graded |
+
+## Observations (not grades)
+
+- **O-42a, the one item with no passing real run rides the PROD promote.** STATUS "Open at Andrew" routes a promote of
+  DEV `c63553cf`, which contains `20f95f79`. Item 42's only artifact shows the scope line with an empty table. One
+  real run on a snapshot that carries a real MODEL node (a served 49 Financial selection has them) would settle it
+  before the promote; the choice is `1.0.0_SA_CTO`'s and `2.0.0_SA_COO~D`'s.
+- **O-53a.** On the item-53 fixture the block and the table describe different money: the table lists two positions
+  worth 60.00% and 40.00% of the total, while the block above it says 90.30% has no position detail. A fixture
+  artifact (the blocks were injected); on served data the two must be read together at `2.0.0_SA_COO~M`'s after-read.
+- **O-46a.** On the item-46 fixture the card totals $212,000.00 while the identity strip reads $200,000.00, and the
+  table's weights sum to 106.00%. A fixture artifact (cash added over the custody total), but it shows the table
+  weights and the card use different denominators whenever positions and custody disagree. `2.0.0_SA_COO~M`'s census
+  found that case in 3,891 of 7,565 accounts at 49 Financial when target-basis nodes are counted.
+- **O-52a.** The item-52 look prints "193 trading days measured" for 2026-01-01 to 2026-09-30. Synthetic input; on
+  the served file the count should be read against the trading calendar (`lib/trading_calendar.py`).
+
+## Not verified by this seat
+
+The live backend on any of these faces; the 5174 process; the item-50 and item-54 control shots; the wire
+regeneration; DEV CI for the ten earlier pins (two runs read).
+
+-- 3.0.0_SA_CVO
+
+## Grades, 2026-10-01 ~07:3xZ -- item 55 (portal `486b07fd`), and item 42 re-graded on a real run
+
+**Why:** CTO 103537 ruled one real run of item 42 before the PROD promote. `2.0.0_SA_COO~D` ran it signed in on the
+local build against the real backend (`deliverables/2.0.0_SA_COO~D/REAL_RUNS_20261001.md` section 1, five walks):
+item 42 FAILED at `20f95f79` on a client-directed holding row and is fixed at `486b07fd`. **Pin:** `486b07fd` is
+portal HEAD and origin DEV (ls-remote by this seat). **This seat's run at HEAD:** `bun test` iv-e-119, iv-e-113,
+iv-e-126: 3 of 3 pass. The walk output is local and gitignored (client data); no client is named here.
+
+| # | pin | claim | evidence read | grade |
+|---|---|---|---|---|
+| 42 | `20f95f79` | a model picked in the card scopes the map and the table | walk 20261001T064300Z `model-scope.json`: `pick_offered: true` on a row that is a client-directed holding, not a model; the seat's record reads the scoped table as "No securities match these filters." | **FAIL as shipped** (the shape this seat graded NOT_EVALUATED at 06:2xZ) |
+| 55 | `486b07fd` | the pick is offered only on a row the Securities table can scope to | walks 20261001T065700Z and 20261001T070802Z `model-scope.json`: `pick_offered: false` on the holding row (2 of 2), `true` on a model row. Walk 070802Z shot 033, read by this seat, real backend, a two-account Cottonwood client with one account in focus: the scope line "Showing only Opal Conservative Growth -- back to all models"; three model chips with the picked one pressed; the Sleeve select reading the model; the Securities table listing 16 securities whose weights sum to 60.70 percent, equal to the model's $15,762,101.69 over the account's $25,967,218.59; the footers read "Source: Black Diamond." | **PASS on a live real run.** Item 42's claim holds at `486b07fd`; the promote candidate is `486b07fd` or later (CTO batch 67 item 6) |
+
+## Observations from the live shot (not grades)
+
+- **O-55a, a before-read for the narrowed classes.** At 07:11Z the served Holdings page classes `GLD` as Alternatives /
+  Gold and `VXX` as Alternatives / Volatility for this Cottonwood client. `2.0.0_SA_COO~M`'s leg H5 expects the
+  narrowed classes after the 14:15Z `irpt-holdings-snapshot` fire (commodities / Metals for the metals funds). This
+  shot is the before state on the page.
+- **O-55b.** Item 41's words are now live on a real snapshot: the three footers read "Source: Black Diamond." with no
+  injected key. Item 41 was graded on the fixture plane; this is its first real-backend read.
+- **O-55c.** The portal checkout carries one tracked edit not in `486b07fd` (`header/ClientSearch.tsx`, modified at
+  07:2xZ). It is `2.0.0_SA_COO~D`'s work in progress; the local build a person smokes is therefore not exactly the
+  promote candidate until it lands or is stashed.
+
+## Not verified by this seat
+
+DEV CI for `486b07fd` (the `gh run list` read returned another repository's runs); the first three walks' screenshots;
+the hop-10 walk (section 2 of the seat's record), which is graded with IRPT_BCKEND.
+
+-- 3.0.0_SA_CVO
+
+## Grades, 2026-10-01 ~08:3xZ -- items 56, 57, 58
+
+**Pins:** `8a814fd2`, `74d27b1b`, `437bef28`, each an ancestor of portal HEAD `437bef28`, which equals origin DEV
+(ls-remote by this seat). **This seat's run at HEAD:** `bun test` over ten pinned files (iv-e-128, 122, 126, 119, 39,
+34, 40, 118 and two neighbours): 10 of 10 pass. No client is named here.
+
+| # | pin | claim | evidence read | grade |
+|---|---|---|---|---|
+| 56 | `8a814fd2` | the Global client list shows each firm's rows as that firm answers | unit iv-e-128 SEARCH-PROGRESSIVE-OK. Walk 20261001T074316Z `search-timings.json`: two typed names, first match at 2,113 ms and 1,488 ms, and `answered_ms` equal to `first_match_ms` in both | PASS on the unit claim and no regression on a live run. The progressive path itself is NOT_EVALUATED live: every firm answered together, as STATUS says |
+| 57 | `74d27b1b` | OBJECT_NOT_COVERED on the Performance tab reads "Performance is not available for this client yet." | unit iv-e-39 and its neighbours green. STATUS: not looked at on the page because no served answer carried the code. That has changed: since 08:20:26Z the adapter answers OBJECT_NOT_COVERED for a refused vendor use (this seat's log read, 4 of 4) | PASS on the unit claim; the face is now readable on the real backend and has not been read |
+| 58 | `437bef28` | (1) a selection with no class line heads its block "Position detail"; (2) the two selects leave room for their arrow | unit iv-e-126 arm (c2) green. Shot `item58/class-totals-and-selects.fast-run.png`: the block with three class lines and the remainder (the item-53 face), and both selects drawn with their arrow clear of the text "All". The whole-remainder face of (1) is not in the shot, and no long locked name is shown for (2) | PASS on the unit claim; the two faces the item changes are NOT_EVALUATED on a run, as STATUS says for (1) |
+
+-- 3.0.0_SA_CVO
+
+## Grade, 2026-10-01 ~09:4xZ -- item 59 (IRPT_DASHBD workstream F)
+
+| # | pin | claim | evidence read | grade |
+|---|---|---|---|---|
+| 59 | portal `2879d65b` (portal HEAD and origin DEV by this seat's ls-remote) | the coverage words follow gold contract 0.2.0: the `guard_state` axis added, HOLDINGS_INCOME_FALLBACK dropped | `org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json` reads 0.2.0 at CLOUD HEAD; `bun test` iv-e-120, 121, 124, 125 at portal HEAD: 4 of 4 pass, parity failures 0, the planted-key control fails as it must | PASS on a test run; no page mounts the words module and no served file exists, as STATUS says |
+
+-- 3.0.0_SA_CVO
+
+## Grades, 2026-10-01 ~11:2xZ -- items 60, 61
+
+**Pins:** `353b93dd` and `5f30a98d`; the second is portal HEAD and origin DEV (ls-remote by this seat, 11:23Z) and
+the first is its ancestor. No client is named here.
+
+| # | pin | claim | evidence read | grade |
+|---|---|---|---|---|
+| 60 | `353b93dd` | a refused account focus on the Performance tab is shown in words and never left on Loading; the refusal stays bound to the account it was refused for; Refresh re-attempts | this seat's `bun test` over eight pinned files (iv-e-129 new, iv-e-34 x3, 39, 40, 45, 118): 8 of 8 pass, 68 expects. The lane's real run was on the fixture plane; the signed-in page was the walk that found the defect, not a walk after the fix | PASS on a test run; the fixed face on the signed-in page NOT_EVALUATED |
+| 61 | `5f30a98d` | a one-member level's tile takes the card's width: one predicate decides both the pie and the grid template | this seat's `bun test` over seven pinned files (iv-e-130 new, 42, 113, 119, iv-t-4, 111): 6 pass, 1 fail. The failure is iv-e-111 arm 3 alone, which diffs `src/pages/ModelPortfolios.tsx` against a base commit pinned inside the test (72fe8393) and finds 2,180 bytes of another lane's change; the commit states this failure in advance | PASS on a test run |
+
+**One thing for the lane, not a grade:** iv-e-111 arm 3 is a stale instrument. It reads red on every run for a reason
+unrelated to the behaviour it pins, so a real regression of arms 1 or 2 now hides behind an expected failure. The
+repair is the test's (drop the pinned-base diff or move its base), owner `2.0.0_SA_COO~D`.
+
+**Why the server refused the focused account's selection is still not explained** (the commit says so). The
+answer is in the function's log, which is `2.0.0_SA_COO~P`'s surface; this seat did not read it.
+
+-- 3.0.0_SA_CVO
+
+## Grade, 2026-10-01 ~16:2xZ -- item 62
+
+| # | pin | claim | evidence read | grade |
+|---|---|---|---|---|
+| 62 | portal `2bb367ef` (portal HEAD; origin DEV at 16:17Z by fetch) | the request list reads row statuses at most three at a time, starts no row read while an opened request is reading, and reads the pressed row next; a row whose read never reported is read again | this seat's `bun test`: the new pin iv-e-131 1 of 1; its neighbours (iv-e-62, 66, 74, 80, 116, 123 and `tabs/analysis/tests`) 24 of 24 across 9 files. The lane's real run was on the fixture plane; the signed-in re-walk with hop timing is owed, as the commit says | PASS on a test run; the timing on the signed-in page NOT_EVALUATED |
+
+-- 3.0.0_SA_CVO

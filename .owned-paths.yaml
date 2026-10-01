@@ -88,7 +88,9 @@ lanes:
       - 0.2.0_DT_PortfolioAnalytics
       - 0.2.0_DS_PortfolioAnalytics
       - 2.0.0_SA_COO~P
-    description: "CTO grantor IRPT-P-BUILD-01, 2026-09-22: exact shared source-map file only; preserve YANG_PIPELINE_DEPLOY incumbents plus exact COO~P. P may change IRPT build composition only under completion contract, with non-IRPT member equality proof and independent review; no upload/deploy grant. Path gate is file-granular, not JSON-member enforcement."
+      - 2.0.0_SA_COO~Y
+      - 2.0.0_SA_COO~M
+    description: "CTO grantor IRPT-P-BUILD-01, 2026-09-22: exact shared source-map file only; preserve YANG_PIPELINE_DEPLOY incumbents plus exact COO~P. P may change IRPT build composition only under completion contract, with non-IRPT member equality proof and independent review; no upload/deploy grant. Path gate is file-granular, not JSON-member enforcement. CTO grantor IRPT RULINGS batch 62, 2026-10-01: exact COO~Y added for the rows of irpt-status and irpt-ycharts-generate only (the whole-bundle moves of batch 61 item 2b); every other row stays COO~P's. CTO grantor IRPT RULINGS batch 101, 2026-10-01: exact COO~M added for the irpt-holdings row only (the split-account route leg, packet signed @07e4769540); every other row stays as before."
 
   # Andrew-direct IRPT completion, CTO grantor 2026-09-22.
   # Preserve incumbent AE permissions; add only the exact implementing COO.
@@ -526,6 +528,129 @@ lanes:
       - 0.2.0_DT_PortfolioAnalytics
       - 0.2.0_DS_PortfolioAnalytics
     description: "yang-pipeline deploy lane — the full AE CLOUD_OPS_OR_ETL set (PRESERVED verbatim, so AE deploys of all pipelines via the shared source map are unaffected) PLUS 0.2.0_DT_PortfolioAnalytics, who holds Full DT Authority over yang-pipeline and whose lambda deploys MECHANICALLY write the source map + yang TF CHANGELOG. SCOPED to yang-pipeline — NOT a blanket infra/aws grant. Closes the DT-enum gap (3 audited GIT_COMMIT_AUTHOR_OVERRIDE on the clean yang-v2.4.12 deploy 2026-06-26 — a repeat override for a STANDING role-authorized action = a coverage gap to close). Mirrors the TRADE_PIPELINE_INFRA (DT 0.3.0) + YCHARTS (DS) code-owner-gets-scoped-infra precedents. Drafted by 0.2.0_DT per COO approval 20260626T154102Z; CTO arch-gated 2026-06-26 — DT authority SOURCE-VERIFIED (prompt.md:39 'yang-pipeline — Full DT Authority' + deliverables/deployment_map.xml:26 module name=yang-pipeline authority=full), and AE set verified == CLOUD_OPS_OR_ETL exactly (no AE regression on the shared source map). Grantor-landed (SoD: grantee does not commit its own permission grant). 0.8.0_AE_CloudComp added 2026-07-02 by 2.0.0_SA_COO~B: base 0.8.0 is an AE (LD-0218 unified AWS+MS compiler/AE owner of infra/aws/globgrph) now deploying a globgrph lambda (opal-globgrph-tool-activity-freshness, NFRA_TOOLHEALTH emit-wiring L4 a0e340134) whose deploy MECHANICALLY writes the shared source map (Rule 4) -- the same code-owner-gets-the-shared-source-map use as the DT-yang precedent; scoped to the ONE source-map file by the exact-file longest-match; cross-pipeline mis-writes bounded by the CI drift detection like every lane member. Same recurring AE-enumeration gap as the ANY_EXEC_OR_AE base-0.8.0 add earlier this session. CC CTO. 0.2.0_DS_PortfolioAnalytics added 2026-08-03 by 2.0.0_SA_COO (grantor, SoD): STANDING code-lane role -- org toolkit routes Lambda SOURCE to pod DS (DS codes, DT deploys), CTO monpub-w2 TO assigns DS this Lambda, Andrew-direct scoped the yang benchmarks Lambda to DS per the 05dcbe7651 lane-note; repeat audited GIT_COMMIT_AUTHOR_OVERRIDE 2026-08-03T15:47:54Z = coverage gap per this lane's own doctrine. COO ruled permanent-scoped; CTO ARCH-GATE PASS 20260803T155644Z (permanent, not TO-temporary -- a temporary grant would re-manufacture the next override outside MDLP). Code lane only; TF deploy mechanism unchanged (DT/AE)."
+
+  MDPF_SECCLASS_FAST_M_YANG:
+    permitted_agents:
+      - 0.5.0_AE_OpalETL
+      - 0.5.0_AE_OpalETL~B
+      - 0.6.0_AE_PartnerETL
+      - 0.6.1_AE_PartnerETL
+      - 0.6.2_AE_PartnerETL
+      - 0.7.0_AE_CloudOps
+      - 0.7.0_AE_CloudOps~A
+      - 0.7.0_AE_CloudOps~B
+      - 0.7.0_AE_CloudOps~C
+      - 0.8.0_AE_CloudComp
+      - 0.2.0_DT_PortfolioAnalytics
+      - 0.2.0_DS_PortfolioAnalytics
+      - 2.0.0_SA_COO~M
+    description: "CTO grantor, IRPT RULINGS batch 64, 2026-10-01 (msg 103505): the YANG_PIPELINE_DEPLOY members preserved verbatim plus exact COO~M, for the exact files of the MDPF_SECCLASS FAST lease (drive-mode.log, ARM MDPF_SECCLASS 2026-10-01T05:39:44Z). Files: the seed script and the two bundled copies of the etf-classifications client under yang_pipeline. Code only: no deploy or apply grant; served moves keep both never-widen halves. Struck when MDPF_SECCLASS closes."
+
+  MDPF_SECCLASS_FAST_M_AE:
+    permitted_agents:
+      - 0.5.0_AE_OpalETL
+      - 0.5.0_AE_OpalETL~B
+      - 0.6.0_AE_PartnerETL
+      - 0.6.1_AE_PartnerETL
+      - 0.6.2_AE_PartnerETL
+      - 0.7.0_AE_CloudOps
+      - 0.7.0_AE_CloudOps~A
+      - 0.7.0_AE_CloudOps~B
+      - 0.7.0_AE_CloudOps~C
+      - 0.8.0_AE_CloudComp
+      - 4.0.0_SA_CRO~SWEEP   # sweep-executor, gate-constrained (ruling CTOB-RCG-001)
+      - 2.0.0_SA_COO~M
+    description: "CTO grantor, IRPT RULINGS batch 64, 2026-10-01 (msg 103505): the CLOUD_OPS_OR_ETL members preserved verbatim plus exact COO~M, for the exact files of the MDPF_SECCLASS FAST lease (drive-mode.log, ARM MDPF_SECCLASS 2026-10-01T05:39:44Z). Files: the single-home etf-classifications client under v2_portal/_shared and the BD gold dispatch script. Code only: no deploy or apply grant; served moves keep both never-widen halves. Struck when MDPF_SECCLASS closes."
+
+  MDPF_SECCLASS_FAST_M_POD4:
+    permitted_agents:
+      - 0.4.0_DE_ClientPlatform
+      - 0.4.0_DE_ClientPlatform~A
+      - 0.4.0_DE_ClientPlatform~B
+      - 0.4.0_DS_ClientPlatform
+      - 0.4.0_DS_ClientPlatform~A
+      - 0.4.0_DS_ClientPlatform~B
+      - 0.4.0_DS_ClientPlatform~C
+      - 0.4.0_DS_ClientPlatform~D
+      - 0.4.0_DS_ClientPlatform~E
+      - 0.4.0_DT_ClientPlatform
+      - 0.4.2_RD_AdvisorIntelligence
+      - 0.4.2_RD_AdvisorIntelligence~A
+      - 0.4.2_RD_AdvisorIntelligence~B
+      - 0.4.2_RD_AdvisorIntelligence~C
+      - 0.4.2_RD_AdvisorIntelligence~D
+      - 4.0.0_SA_CRO~SWEEP   # sweep-executor, gate-constrained (ruling CTOB-RCG-001)
+      - 2.0.0_SA_COO~M
+    description: "CTO grantor, IRPT RULINGS batch 64, 2026-10-01 (msg 103505): the POD4 members preserved verbatim plus exact COO~M, for the exact files of the MDPF_SECCLASS FAST lease (drive-mode.log, ARM MDPF_SECCLASS 2026-10-01T05:39:44Z). File: the BD gold script E_18.detect_new_securities.py. Code only: no deploy or apply grant; served moves keep both never-widen halves. Struck when MDPF_SECCLASS closes."
+
+  IRPT_BCKEND_FAST_Y_HOST:
+    permitted_agents:
+      - 0.5.0_AE_OpalETL
+      - 0.5.0_AE_OpalETL~B
+      - 0.6.0_AE_PartnerETL
+      - 0.6.1_AE_PartnerETL
+      - 0.6.2_AE_PartnerETL
+      - 0.7.0_AE_CloudOps
+      - 0.7.0_AE_CloudOps~A
+      - 0.7.0_AE_CloudOps~B
+      - 0.7.0_AE_CloudOps~C
+      - 0.8.0_AE_CloudComp
+      - 4.0.0_SA_CRO~SWEEP   # sweep-executor, gate-constrained (ruling CTOB-RCG-001)
+      - 2.0.0_SA_COO~Y
+    description: "CTO grantor, IRPT RULINGS batch 74, 2026-10-01 (msg 103652): the CLOUD_OPS_OR_ETL members preserved verbatim plus exact COO~Y, for one file inside the IRPT_BCKEND~Y FAST lease surface: the YCharts host's sign-in library (the reason tokens of batch 70 item 5). Code only: no deploy or apply grant; the host release keeps both never-widen halves. Struck when IRPT_BCKEND closes."
+
+  IRPT_BCKEND_FAST_P_INF_NNA:
+    permitted_agents:
+      - 0.4.0_DE_ClientPlatform
+      - 0.4.0_DE_ClientPlatform~A
+      - 0.4.0_DE_ClientPlatform~B
+      - 0.4.0_DS_ClientPlatform
+      - 0.4.0_DS_ClientPlatform~A
+      - 0.4.0_DS_ClientPlatform~B
+      - 0.4.0_DS_ClientPlatform~C
+      - 0.4.0_DS_ClientPlatform~D
+      - 0.4.0_DS_ClientPlatform~E
+      - 0.4.0_DT_ClientPlatform
+      - 0.4.2_RD_AdvisorIntelligence
+      - 0.4.2_RD_AdvisorIntelligence~A
+      - 0.4.2_RD_AdvisorIntelligence~B
+      - 0.4.2_RD_AdvisorIntelligence~C
+      - 0.4.2_RD_AdvisorIntelligence~D
+      - 4.0.0_SA_CRO~SWEEP   # sweep-executor, gate-constrained (ruling CTOB-RCG-001)
+      - 2.0.0_SA_COO~P
+    description: "CTO grantor, IRPT RULINGS batch 79, 2026-10-01 (msg 103683): the POD4 members preserved verbatim plus exact COO~P, for one file: the Inflection net-new-assets coverage excusals (row W97-S3, Branch A). Code only: the put of the runner's copy keeps both never-widen halves. Struck when IRPT_BCKEND closes."
+
+  IRPT_BCKEND_FAST_M_COT_IAM:
+    permitted_agents:
+      - 0.5.0_AE_OpalETL
+      - 0.5.0_AE_OpalETL~B
+      - 0.6.0_AE_PartnerETL
+      - 0.6.1_AE_PartnerETL
+      - 0.6.2_AE_PartnerETL
+      - 0.7.0_AE_CloudOps
+      - 0.7.0_AE_CloudOps~A
+      - 0.7.0_AE_CloudOps~B
+      - 0.7.0_AE_CloudOps~C
+      - 0.8.0_AE_CloudComp
+      - 4.0.0_SA_CRO~SWEEP   # sweep-executor, gate-constrained (ruling CTOB-RCG-001)
+      - 2.0.0_SA_COO~M
+    description: "CTO grantor, IRPT RULINGS batch 87, 2026-10-01 (msg 103756): the CLOUD_OPS_OR_ETL members preserved verbatim plus exact COO~M, for one file: the Cottonwood pipeline's IAM file, for ONE statement (dynamodb:GetItem and dynamodb:Scan on the etf-classifications table only; nothing on bd-securities) on the exporter role's policy (row IRPT_BCKEND-S173). Code only: the plan and safe-apply are a separate act under both never-widen halves. Struck when IRPT_BCKEND closes."
+
+  IRPT_BCKEND_FAST_P_MIRROR:
+    permitted_agents:
+      - 0.5.0_AE_OpalETL
+      - 0.5.0_AE_OpalETL~B
+      - 0.6.0_AE_PartnerETL
+      - 0.6.1_AE_PartnerETL
+      - 0.6.2_AE_PartnerETL
+      - 0.7.0_AE_CloudOps
+      - 0.7.0_AE_CloudOps~A
+      - 0.7.0_AE_CloudOps~B
+      - 0.7.0_AE_CloudOps~C
+      - 0.8.0_AE_CloudComp
+      - 4.0.0_SA_CRO~SWEEP   # sweep-executor, gate-constrained (ruling CTOB-RCG-001)
+      - 2.0.0_SA_COO~P
+    description: "CTO grantor, IRPT RULINGS batch 88, 2026-10-01 (msg 103775): the CLOUD_OPS_OR_ETL members preserved verbatim plus exact COO~P, for three files of the OPAL_ASSETS ingest mirror (batch 63 item 6: an unknown key class is a counted SKIP line; a second scheduled Inflection fire). Code only: the mirror walks every firm's rows, so its release is its own packet with both never-widen halves. Struck when IRPT_BCKEND closes."
 
   DATA_REFRESH_DEPLOY:
     permitted_agents:
@@ -2143,8 +2268,12 @@ paths:
   # Specific override (longest-match-wins): dispatch orchestrator is AE-maintained ops
   # infra, not a DS data script. Mirrors orion-gold-dispatch.sh reclassification
   # (2026-04-30). Authorized by same COO lane-violation flag precedent.
+  "data/black_diamond/scripts/gold/E_18.detect_new_securities.py":
+    lane: MDPF_SECCLASS_FAST_M_POD4
+    note: "MDPF_SECCLASS FAST lease, exact file; CTO grantor batch 64 (2026-10-01)."
+
   "data/black_diamond/scripts/gold/gold_dispatch.sh":
-    lane: CLOUD_OPS_OR_ETL
+    lane: MDPF_SECCLASS_FAST_M_AE
     note: "BD gold dispatch orchestrator — AE-maintained, not a DS data script"
 
   "data/black_diamond/scripts/gold/run_gold_layer.sh":
@@ -2194,6 +2323,10 @@ paths:
   "data/inf/manual_api/pull_inflection_assets.py":
     lane: CLOUD_OPS_OR_ETL
     note: "Inflection assets puller — AE-maintained ops infra (HISTBF Wave B IAM gap fix flagged 2026-05-04 in ADHC_OWNPTH 48h scan FP-3)"
+
+  "data/inf/scripts/gold/lib/nna_coverage_excusals.json":
+    lane: IRPT_BCKEND_FAST_P_INF_NNA
+    note: "IRPT_BCKEND~P FAST lease, exact file; CTO grantor batch 79 (2026-10-01)."
 
   "data/inf/scripts/gold/**":
     lane: POD4
@@ -2282,9 +2415,73 @@ paths:
     lane: POD1_OR_AE
     note: "Semantic news-pipeline Lambdas (currently inactive but kept in lane) — POD1 DS authors, AE deploys."
 
+  "infra/aws/ec2/investor-reporting-ycharts/ycharts_session.js":
+    lane: IRPT_BCKEND_FAST_Y_HOST
+    note: "IRPT_BCKEND~Y FAST lease, exact file; CTO grantor batch 74 (2026-10-01)."
+
+  "infra/aws/terraform/cot-pipeline/iam.tf":
+    lane: IRPT_BCKEND_FAST_M_COT_IAM
+    note: "IRPT_BCKEND~M FAST lease, exact file, ONE statement; CTO grantor batch 87 (2026-10-01)."
+
+  "infra/aws/lambda/opal-assets/opal-assets-ingest-mirror/lambda_function.py":
+    lane: IRPT_BCKEND_FAST_P_MIRROR
+    note: "IRPT_BCKEND~P FAST lease, exact file; CTO grantor batch 88 (2026-10-01)."
+
+  "infra/aws/lambda/opal-assets/tests/test_ingest_mirror_unknown_key_skip.py":
+    lane: IRPT_BCKEND_FAST_P_MIRROR
+    note: "IRPT_BCKEND~P FAST lease, exact file; CTO grantor batch 88 (2026-10-01)."
+
+  "infra/aws/terraform/opal-assets/mirror.tf":
+    lane: IRPT_BCKEND_FAST_P_MIRROR
+    note: "IRPT_BCKEND~P FAST lease, exact file; CTO grantor batch 88 (2026-10-01)."
+
   "infra/aws/lambda/v2_portal/01_market_overview/**":
     lane: POD1_OR_AE
     note: "Market Overview Lambdas (tiered-generator, rsi-tiered-generator, regime-classifier, fear-greed-fetcher) — POD1 DS authors, AE deploys."
+
+  "infra/aws/lambda/v2_portal/yang_pipeline/write-model-rows.py":
+    lane: MDPF_SECCLASS_FAST_M_YANG
+    note: "MDPF_SECCLASS FAST lease, exact NEW file (the model-row writer, dry run by default, conditional put only); CTO grantor batch 75 (2026-10-01)."
+
+  "infra/aws/lambda/v2_portal/yang_pipeline/seed-etf-classifications.py":
+    lane: MDPF_SECCLASS_FAST_M_YANG
+    note: "MDPF_SECCLASS FAST lease, exact file; CTO grantor batch 64 (2026-10-01)."
+
+  "infra/aws/lambda/v2_portal/yang_pipeline/positioning/yang-generate-positioning/etf_classifications_dynamodb.py":
+    lane: MDPF_SECCLASS_FAST_M_YANG
+    note: "MDPF_SECCLASS FAST lease, exact file; CTO grantor batch 64 (2026-10-01)."
+
+  "infra/aws/lambda/v2_portal/yang_pipeline/positioning/yang-generate-holdings-attribution/etf_classifications_dynamodb.py":
+    lane: MDPF_SECCLASS_FAST_M_YANG
+    note: "MDPF_SECCLASS FAST lease, exact file; CTO grantor batch 64 (2026-10-01)."
+
+  "infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py":
+    lane: MDPF_SECCLASS_FAST_M_AE
+    note: "MDPF_SECCLASS FAST lease, exact file; CTO grantor batch 64 (2026-10-01)."
+
+  "infra/aws/lambda/v2_portal/_shared/tests/test_classified_by_v2.py":
+    lane: MDPF_SECCLASS_FAST_M_AE
+    note: "MDPF_SECCLASS FAST lease, exact test file (the contract-version pin, row W11-S1); CTO grantor batch 73 (2026-10-01)."
+
+  "infra/aws/lambda/v2_portal/_shared/tests/test_set_instrument_kind.py":
+    lane: MDPF_SECCLASS_FAST_M_AE
+    note: "MDPF_SECCLASS FAST lease, exact test file (the contract-version pin, row W11-S1); CTO grantor batch 73 (2026-10-01)."
+
+  "infra/aws/lambda/v2_portal/_shared/etf_classification_scheduled.py":
+    lane: MDPF_SECCLASS_FAST_M_AE
+    note: "MDPF_SECCLASS FAST lease, exact file, ONE change (two names added to _WRITE_FIELDS, with a test); CTO grantor batch 78 (2026-10-01)."
+
+  "infra/aws/lambda/v2_portal/_shared/etf_classification.py":
+    lane: MDPF_SECCLASS_FAST_M_AE
+    note: "MDPF_SECCLASS FAST lease, exact file (the seed source and its copies); CTO grantor batch 68 (2026-10-01)."
+
+  "infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/etf_classification.py":
+    lane: MDPF_SECCLASS_FAST_M_AE
+    note: "MDPF_SECCLASS FAST lease, exact file (the seed source and its copies); CTO grantor batch 68 (2026-10-01)."
+
+  "infra/aws/lambda/v2_portal/yang_pipeline/portfolios/yang-generate-etf-returns/etf_classification.py":
+    lane: MDPF_SECCLASS_FAST_M_YANG
+    note: "MDPF_SECCLASS FAST lease, exact file (the seed source and its copies); CTO grantor batch 68 (2026-10-01)."
 
   "infra/aws/lambda/v2_portal/yang_pipeline/**":
     lane: YANG_PIPELINE_DEPLOY

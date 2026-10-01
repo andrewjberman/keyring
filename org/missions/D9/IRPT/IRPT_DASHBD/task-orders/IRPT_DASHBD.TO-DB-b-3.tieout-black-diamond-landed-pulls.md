@@ -5,7 +5,7 @@
 <issued_to>0.4.0_DS_ClientPlatform~S</issued_to>
 <issued_by>2.0.0_SA_COO~P</issued_by>
 <issued_date>2026-09-30</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>seat</worker_class>
@@ -41,6 +41,23 @@ start it does not hold). Map `bd_internal_id` -> `schwab_account` through `s3://
 (`accounts[]` rows: `bd_internal_id`, `schwab_account`, `status`). Read every JSON you use and list its key in the record. Where a
 relationship is not in the roster, say so and skip it (denominator printed).
 
+**ISSUER AMENDMENT 3 (2026-10-01 ~06:2xZ; row IRPT_DASHBD-S4 limb c, row S6 limb d) -- where it differs from the two paragraphs
+below, this block wins.**
+- **Like for like.** END, START and MIDPOINT are ALL recomputed here from the same raw daily columns (`market_value_eod`,
+  `external_flow`) over ONE eligible population: the account-days whose emitted `total_return_daily` is non-null. You do NOT read
+  `total_return_daily` as the END candidate (the guard may have withheld or graded it). END = `(V_t - F_t) / V_(t-1) - 1`.
+- **A null breaks the link.** A period that contains a day with a null emitted return is linked in segments around it and the gap is
+  stated (`gap_days` per period); a null is never read as 0.0.
+- **Three different facts, three fields.** `flow_convention_ran` (always `END`: what the emitted gold was computed under),
+  `flow_convention_preferred` (the lowest median of the three, ties to END: what this comparison prefers), and the served method
+  row's `flow_convention`, which STAYS `END`. You do NOT write the preferred convention into `dim_return_method`. A change of
+  convention is a new `method_version` with every return recomputed, and it is `1.0.0_SA_CTO`'s ruling on your record.
+- **The one gold write** of this cell is `tieout_tolerance_proposed` on the `method_version=1` row (and the same value in the
+  method contract, with `flow_convention_preferred` recorded in the contract's measurement record only).
+- **The record is recomputable.** Each period row carries the three period returns and `bd_twr`; `abs_diff` is the difference of
+  the stated returns for the preferred convention, and DB-3-AC1 recomputes it. One row per (account, period): a duplicate period is
+  a defect. `per_convention_summary` is non-empty for all three.
+
 **What you compute, per (account, period the oracle carries).** From DB-b-1's gold rows for the account over [start, end]: the geometric
 link of `total_return_daily` under the END convention as emitted, AND recomputed under START and MIDPOINT conventions from the same daily
 columns (`market_value_eod`, `external_flow`, `income_received`: START = `(V_t - V_(t-1) - F_t) / (V_(t-1) + F_t)`, MIDPOINT =
@@ -63,12 +80,13 @@ rules, and that a re-emit is a round-2 cell; the contract records the winner as 
 not END write `flow_convention_winner` in the record as the value you wrote to the row, and name the discrepancy in the md.
 
 <criterion id="DB-3-AC1" cell_refs="DB-b-3"><invocation>python "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~P/checks/r1/p1_3_ac1_tieout_record.py" .</invocation><expect>DB-3-AC1 PASS</expect></criterion>
-`DB-3-AC1` -- the record exists, `vendor_calls` is 0 or is non-zero only beside an `overlap_before_pull` below 5, every oracle key sits under the bronze prefix and reads, >= 5 periods with the named
-fields, the summary recomputes, a positive proposed tolerance and a named winner with all three conventions summarised. Base: FAIL.
+`DB-3-AC1` -- the record exists, `vendor_calls` is 0 or is non-zero only beside an `overlap_before_pull` below 5, every oracle key sits under the bronze prefix and reads, >= 5 DISTINCT (account, period) rows with the named
+fields, every `abs_diff` RECOMPUTES from the row's stated returns, the summary recomputes from those, a positive proposed tolerance and a named preferred convention with all three conventions summarised (amendment 3). Base: FAIL.
 
 <criterion id="DB-3-AC2" cell_refs="DB-b-3"><invocation>python "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~P/checks/r1/p1_3_ac2_method_winner_written.py" .</invocation><expect>DB-3-AC2 PASS</expect></criterion>
-`DB-3-AC2` -- the method contract's `method_versions[0]` and the served `dim_return_method` row both carry the record's winner and proposal.
-Base: FAIL.
+`DB-3-AC2` -- the served `dim_return_method` row's `flow_convention` is the convention the emitted returns were COMPUTED under (the
+check recomputes END from the raw columns on sampled MEASURED days and compares it with `total_return_daily`), the row and the method
+contract both carry the record's `proposed_tieout_tolerance`, and the record's `flow_convention_ran` is `END` (amendment 3). Base: FAIL.
 
 <expected_criteria>DB-3-AC1,DB-3-AC2</expected_criteria>
 

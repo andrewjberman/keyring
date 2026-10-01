@@ -3342,3 +3342,1385 @@ P states the exact UI act on DEV f1d02f30 that yields a server-accepted single-a
 case it is a product item (DSGN_IRPTV1 round 3 or a portal candidate) and the first Performance use waits on it; the plan is NOT widened to
 the relationship (a second word and a different calculation). Andrew is told: the click did not spend the use; do not click Performance again
 until P answers; the Holdings HAR stands. The CRO's cookie read stays owed before any next click.
+
+## 2026-10-01 05:09 UTC - Claude CTO batch 61: the Analysis surface's way forward, ruled on the trace of 4.0.0_SA_CRO~X; the comparison catalogue lists named rows only
+
+Authority: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261001_042xZ_SELF_DRIVE_60M_LAPTOP_FABRIC_FINAL_SAY_CLOSER_DRIVE_IRPT_FIRST.md`
+@c48af273cc (this seat is the final say for the Laptop Fabric; FAST mode; IRPT first). Instruments: the trace
+`org/tier1_exec/4.0.0_SA_CRO~X/deliverables/ANALYSIS_END_TO_END_GAP_BRIEF_20261001.md` @a465020d94 (12 hops from deployed bytes: WORKS 2,
+INCOMPLETE 5, MISSING 5; four packages downloaded, sha256 equal to the live CodeSha256 4 of 4; no invoke, no vendor call); row
+IRPT_BCKEND-S244 @fac7ac93d4; `2.0.0_SA_COO~Y` msg 103465; the IB-pr-275 packet, CTO half @d9972c6eb4.
+
+### IRPT-ANALYSIS-THREAD-20261001 (trace hops 3, 4, 6, 7, 8, 9, 10)
+1. THE LIVE THREAD IS CUT ON THE UPLOAD LANE: one Cottonwood CSV upload, an Overview with no comparison, no export, on the deployed
+   stack, ending in a READY report read on the page. It is the only lane that has ever produced a request. FWD-4's line "the request
+   arrives by EMAIL" is read as naming FWD-9's intake, not as a precondition of FWD-4's EXERCISED; the email lane (hops 1, 2) is
+   enrichment after the thread. The PRD addendum that says so is this seat's, at the next tick.
+2. ONE BUILD WINDOW comes first, because the thread crosses three units that are behind CLOUD (generate 15 modules, status 7, the
+   resident 17). Order inside it: (a) IB-pr-275 as signed (grants, then three functions' `served.py`); (b) `irpt-status` and
+   `irpt-ycharts-generate` at CLOUD HEAD as WHOLE bundles, `2.0.0_SA_COO~Y`'s packet with both halves, pending members shipped, not
+   pinned; (c) the resident at CLOUD HEAD, ~Y's, under a ledger (it picks up IB-yr-293, 62535e0fdc and IB-yr-291); (d)
+   `irpt-directory-search` and `irpt-holdings` at CLOUD HEAD as whole bundles, `2.0.0_SA_COO~P`'s packet with both halves.
+3. A WHOLE-BUNDLE RULE for (b) and (d): the three candidates withdrawn from IB-pr-275 failed because one module moved against
+   older siblings. A function whose bundled `enforce.py` or `errors.py` is an older vintage than the `served.py` it would receive
+   moves as a whole bundle at one commit, with the member census against the live zip and one invoke that reaches the changed path.
+4. ROW S244 IS ACCEPTED: on deployed bytes the service principal's firm limit is enforced NOWHERE (the running resident's
+   `current_authority.py` equals d3f612d94d and has 0 mentions of `allowedFirmIds`). Sweep-5's row S238 text "enforced at the job"
+   was true of CLOUD and false of the resident. S238 disarms on BOTH controls after the window: the directory negative control
+   refused at the API, and one foreign-firm job refused in the resident's own journal.
+5. THE HOP-7 DIAGNOSTIC IS ONE SOLO JOB, and it is not W27. After (a), (b) and (c) are in and their controls read by this seat,
+   `2.0.0_SA_COO~Y` runs ONE Overview job for Cottonwood on a cold resident, ledgered, under Andrew's standing word at that seat for
+   Analysis attempts, and reads the verdict journal. It either produces a report or names the session verdict. This amends ruling
+   103150's first condition (the cause is named BY this job, since the journal line of IB-yr-231 now names each eviction) and leaves
+   103318 standing for W27: the multi-case walk window opens only after S238 disarms. The job's path does not cross the directory
+   search or holdings, which is why (d) does not gate it.
+6. HOP 10: after (b), `2.0.0_SA_COO~D` walks one READY request on the local DEV build against the real backend, sections on screen;
+   that screenshot is the thread's last link. A PROD promotion is not part of the thread.
+7. `2.0.0_SA_COO~Y` reconciles two reads in STATUS~Y: row S229 says the resident is stopped, the trace reads the unit active since
+   2026-09-30T05:13:31Z with 0 restarts; and it opens the second dead-letter message (2 read against a baseline of 1).
+8. After the thread, in the trace's order: the remaining variants and firms (hop 8) with the catalogue (hop 5) first; the resolve
+   concurrency fix (hop 3); the vendor PDF link (hop 11); the Analysis export (hop 12); then the email lane.
+
+### IRPT-CATALOGUE-LIST-NAMED-ONLY-20261001 (row W88-S2; ~Y 103465)
+The comparison catalogue LIST serves the 4 model entries and the named ticker rows only (317 of 2,309 ticker rows at ~Y's read; 321
+entries). The 1,992 unnamed rows are not listed. `entry_for_ticker` keeps answering any typed ticker verbatim, as 103035 ruled. Reason:
+a list that is 86 percent bare tickers is not a catalogue a person can choose from, and the design was measured against 285 rows. The
+wiring (part 2 of ~Y's patch) proceeds on this; the grant (part 1) did not wait.
+
+### PARKED, with owner and the condition that un-parks it
+- The mail credential for the intake poller (`irpt/graph/app-registration` does not exist): owner Andrew or IT; un-parks when the
+  credential exists, or when he says the intake reads mail through the gateway's Microsoft 365 access instead (the same shape as row
+  S233; the gateway is site Z's).
+- The two-session question on the YCharts account (row S233): owner Andrew (a vendor probe needs his per-use word); not on the thread.
+
+## 2026-10-01 05:32 UTC - Claude CTO batch 62: IB-pr-275's V1 holds on 1 of 3 functions -- repair forward, the boundary fails CLOSED on an absent attribute, and a packet proves its import closure
+
+Instruments: `2.0.0_SA_COO~Y` msg 103479 and `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/V1_SERVICE_BOUNDARY_20261001.md` @f95db2da7b
+(one login as `svc-irpt-analysis`; foreign firm then own firm on each function; the three live zips' sha256 equal the live CodeSha256,
+3 of 3); the applied move @07cbc7684b; `2.0.0_SA_COO~Y` msg 103480.
+
+### IRPT-SERVICE-BOUNDARY-V1-1-OF-3-20261001
+1. V1 IS ACCEPTED AS MEASURED: `irpt-export-render` refuses the foreign firm (FIRM_BINDING); `irpt-performance-adapter` and
+   `irpt-ycharts-generate` still admit it, because both bundle `canonical_profile_reads.py` 3e5868cf2fc0, the vintage before IB-yr-293,
+   whose projection does not name `allowedFirmIds`. The ledger leg V1 stays open. Row S238 and W27 stay closed.
+2. THE MISS IS THIS SEAT'S AS WELL AS THE PACKET'S. The CTO half @d9972c6eb4 checked that `canonical_profile_reads.py` was PRESENT in
+   all three zips and did not read its bytes. A member's presence was taken for its vintage.
+3. NO ROLLBACK. Before the move both functions admitted the foreign firm; after it they still do, and no human path changed. Rolling
+   back restores nothing and spends two applies. The repair goes forward.
+4. THE BOUNDARY FAILS CLOSED ON AN ABSENT ATTRIBUTE. `served.py` reads a SERVICE row with no `allowedFirmIds` as unrestricted, which
+   is what turned a stale reader into an open door. Changed: a SERVICE subject whose row carries no `allowedFirmIds` attribute is
+   refused FIRM_BINDING on every selected firm; only the explicit value `ALL` is unrestricted. Population measured in the packet: 1
+   service principal of 52 profile rows, and its row carries the attribute, so no principal changes behaviour at HEAD. A stale reader
+   then shows as a refusal of the principal's OWN firm, which is loud, instead of an admission of a foreign one, which is silent.
+   `2.0.0_SA_COO~P` owns `served.py`: one edit and one test arm.
+5. THE REPAIR: `irpt-performance-adapter` receives the reader at CLOUD HEAD and item 4's `served.py`, `2.0.0_SA_COO~P`'s packet, both
+   halves; `irpt-ycharts-generate` receives both inside `2.0.0_SA_COO~Y`'s whole-bundle move (batch 61 item 2b). `irpt-export-render`
+   takes item 4's `served.py` in ~P's same packet. V1 is then re-read on all three.
+6. A PACKET PROVES ITS IMPORT CLOSURE (this extends batch 61 item 3). For a function whose `served.py` moves, the packet prints,
+   for every bundled module `served.py` imports directly or through a sibling, the member's hash beside CLOUD's at the packet's pin,
+   and names each member that differs with its reason. A closure member older than the pin is a stop. This seat reads that table
+   at signing; it replaces the presence check that failed here.
+
+### IRPT-SOURCE-MAP-LANE-Y-20261001 (~Y 103480)
+`2.0.0_SA_COO~Y` is added to lane IRPT_COMPLETION_SOURCE_MAP in `.owned-paths.yaml`, in this batch's commit, for the rows of
+`irpt-status` and `irpt-ycharts-generate` only. Reason: the build tool writes those rows, so the whole-bundle move cannot be built by
+a seat that cannot commit them; a hand-off of each build's pins to `2.0.0_SA_COO~P` would put a second seat inside every build. The
+gate is file-granular, so the row scope binds by reading: every other row stays ~P's, and the two seats do not build in the same
+minute (the later one merges forward).
+
+## 2026-10-01 05:37 UTC - Claude CTO batch 63: the Inflection performance thread's way forward -- the gold's date basis is ruled BEFORE anything serves it (row S245); ~P's order of work
+
+Instruments: `org/tier1_exec/4.0.0_SA_CRO~X/deliverables/INF_PERFORMANCE_THREAD_END_TO_END_GAP_BRIEF_20261001.md` @c621a6f099 (8 hops:
+WORKS 1, INCOMPLETE 5, MISMATCHED 1, MISSING 1; five packages downloaded, sha256 equal to the live CodeSha256 5 of 5; price comparison
+across 10 Friday-Saturday and 4 Saturday-Sunday partition pairs; no invoke, no vendor call); row IRPT_BCKEND-S245 @ad7a9aed58.
+
+### IRPT-INF-DATE-BASIS-20261001 (trace hop 5; row S245, BLOCKING, disarm owner this seat)
+1. S245 IS ACCEPTED. Since a seam between 2026-05-02 and 2026-05-08, an Inflection partition dated D holds the close of the trading
+   day BEFORE D (the daily pull runs before the open). The producer pairs `date=t` with `date=prev_trading_day(t)` for every
+   source, so each Inflection gold row from the seam on carries the prior trading day's return under the next day's date. Nothing
+   serves that gold today, so no served figure is wrong; the rebuild is free until IB-pr-221 is served.
+2. THE DATE BASIS IS DATA, PER SOURCE. `sources.json` gains, for each source, which close a partition dated D holds, with an
+   effective-from date where a source changed (Inflection: own-date close before the seam, prior-trading-day close from it). The
+   producer reads that field and pairs the two partitions that hold day t's close and the prior trading day's close. The field's
+   values arrive with their rule-24 record in the same commit. No date arithmetic is hard-coded per firm.
+3. ORDER, each a stop for the next: (a) the cell first finds the seam's exact day by comparing consecutive partitions across
+   2026-05-01..2026-05-09, and reads the same basis question for Cottonwood's Black Diamond source and re-confirms 49 Financial's
+   (Schwab) with one Friday-Saturday pair each; (b) the producer change and its test; (c) the Inflection gold rebuilt over its
+   whole history under one ledger entry; (d) one account's return reproduced BY HAND for three days -- one before the seam, the
+   seam day, one after -- from the two partitions that hold each close; (e) only then IB-pr-221's served move, under its own
+   packet and both halves. S245 disarms at (d), on this seat's read of the three reproductions.
+4. THE ADAPTER DOES NOT GO TO CLOUD HEAD BEFORE (d). `irpt-performance-adapter` is 9 modules behind and three of them are
+   IB-pr-221. Its repair in batch 62 stays member-wise (the reader and `served.py`, with the closure table); the switch waits.
+
+### IRPT-INF-LIVE-ADAPTER-READ-20261001 (trace hop 6)
+The served adapter routes an Inflection request to a live Orion `Reporting/Scope` call and, by its code, returns the vendor's
+calculated return or refuses. FWD-3 forbids a vendor return as the served figure. No request was made to see which. ONE read, by
+`2.0.0_SA_COO~P`: the function's log group since 2026-09-29T16:40Z for any Inflection performance request and what it answered,
+count printed with its denominator. Zero requests: nothing to do before (e). Any served vendor figure: a row, and this seat rules the
+interim refusal the same hour.
+
+### IRPT-INF-RAW-AND-MIRROR-20261001 (trace hops 1, 2)
+5. The two run days with no `.jsonl.gz` (09-28, 09-29): under item 1 the 09-28 partition repeats Friday's close, so ONE close is at
+   stake, Monday's, held by the 09-29 partition. The coerced `2026-09-29.parquet` is admitted for that ONE date if, and only if, on
+   three dates where both forms exist the columns the silver converter reads are equal row for row; the comparison is printed with
+   its denominator and the admitted partition carries its provenance. Unequal on any column: a declared gap under PRD ruling 18. No
+   vendor as-of pull is asked.
+6. The mirror gains a SECOND SCHEDULED fire later in the day, not an object trigger (a production pipeline is scheduled). An unknown
+   key class is a counted SKIP line, never an error exit, so a real positions failure reads differently from the stray key (rows
+   W99-S3, W99-S4).
+7. After (c): one schedule entry for the `orion` source of the holdings producer, after the mirror's fire.
+8. The step-33 guard and its Branch A packet are OFF this thread's path (trace hop 4) and keep their own track.
+
+### ORDER OF WORK for `2.0.0_SA_COO~P` (this seat rules the queue; each item is already ruled elsewhere)
+(1) the batch-61 item 2d packet with batch 62's items 4-6 -- the cross-firm row closes first; (2) the TO-DB-b-1 amendments for rows
+IRPT_DASHBD-S4, S6, S7 and PRD v0.4 -- a live seat is blocked on them; (3) the 49 Financial 09-29 catch-up (two invokes, both
+halves); (4) the Inflection date basis, items 2-3 above, with the log read of hop 6 done first because it costs minutes; (5) the
+NNA Branch A packet; (6) the mirror items. If (4) would wait more than one of this seat's ticks behind (1)-(3), this seat seats a
+second performance lane rather than let it queue.
+
+## 2026-10-01 05:49 UTC - Claude CTO batch 64: a scoped owned-paths grant for 2.0.0_SA_COO~M on the MDPF_SECCLASS FAST surface (msg 103505); the rule for the next FAST lane that meets the path gate
+
+Instruments: `2.0.0_SA_COO~M` msg 103505 (safe-commit refused W12-S1: `infra/aws/lambda/v2_portal/yang_pipeline/` is lane
+YANG_PIPELINE_DEPLOY and `infra/aws/lambda/v2_portal/_shared/` is CLOUD_OPS_OR_ETL; neither names the seat); the lease
+`org/mcp/drive_mode/MDPF_SECCLASS.json` (six code files and two record folders); `.owned-paths.yaml` parsed after the edit.
+
+### MDPF-SECCLASS-FAST-M-PATH-GRANT-20261001
+Ruled (a), the grant, not the audited override. Three lanes are added, each the path's incumbent lane preserved verbatim plus exact
+`2.0.0_SA_COO~M`, and each bound to exact files only (longest match wins over the directory rows):
+- MDPF_SECCLASS_FAST_M_YANG (YANG_PIPELINE_DEPLOY's 12 members + 1): the seed script and the two bundled copies of the client under
+  `yang_pipeline/`;
+- MDPF_SECCLASS_FAST_M_AE (CLOUD_OPS_OR_ETL's 11 + 1): `v2_portal/_shared/etf_classifications_dynamodb.py` and
+  `data/black_diamond/scripts/gold/gold_dispatch.sh`;
+- MDPF_SECCLASS_FAST_M_POD4 (POD4's 16 + 1): `data/black_diamond/scripts/gold/E_18.detect_new_securities.py`.
+Read after the edit: the file parses; the three lanes count 13, 12 and 17 members; the six rows resolve to them; the three incumbent
+lanes are unchanged. No incumbent loses a path and none gains one. Code only: no deploy or apply is granted, and a served move keeps
+both halves. The lanes are struck when MDPF_SECCLASS closes.
+
+### THE RULE FOR THE NEXT ONE
+A FAST lease does not grant a path. A lane whose lease surface holds a file its seat cannot commit sends ONE blocker naming the
+exact files; this seat lands an exact-file grant of the same shape (incumbents preserved plus the seat) the same hour. The audited
+override (`GIT_COMMIT_AUTHOR_OVERRIDE`) is not used for work a lease names: a repeated override for a standing, authorised act is a
+coverage gap, and the grant is its remedy.
+
+## 2026-10-01 06:16 UTC - Claude CTO batch 65: the resident's foreign-firm control is NOT driven live -- no test row in a client firm's partition; batch 61 item 4 amended on that fact
+
+Instruments: `2.0.0_SA_COO~Y` msg 103527; row IRPT_BCKEND-S246 @5e20d89868; the st6 install outputs @d70857d3ce; the CVO's grades
+`org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_BCKEND_FAST_PIN_GRADES_20261001.md` @f1c914570d.
+
+### IRPT-RESIDENT-FOREIGN-FIRM-CONTROL-20261001 (~Y 103527; rows S238, S244)
+Ruled (2). Batch 61 item 4 asked for one foreign-firm job refused in the resident's own journal. ~Y measured what that takes: the
+only front door is one upload for Inflection under `svc-irpt-analysis`, through `irpt-ycharts-generate` while it still admits the
+foreign firm; it leaves an upload object and a RESOLVING row in Inflection's partition and a message that retries to the dead-letter
+queue. That is a test write into a client firm's storage, made by exploiting the hole the same window closes. It is not driven.
+
+The resident's half of rows S244 and S238 rests on three things, each stated for what it is:
+1. MEASURED: the running `current_authority.py` is `211e1c15af68bdb4..` (5 mentions of `allowedFirmIds`), read on the host and
+   equal to the package bytes this seat read before signing (row S246).
+2. MEASURED OFFLINE, by ~Y: the pin's tests of `decide()` for a foreign firm (the five nodes ~Y names). The CVO graded ~Y's pins
+   PASS on test runs (103524); whether those runs included these five nodes was not read here.
+3. NOT EXERCISED LIVE, and recorded so: no foreign-firm job has been refused on the host. An absent live arm is not a passed one.
+Row S238 disarms on the API controls alone -- the directory negative control refused, the adapter and export-render refusing the
+foreign firm, and `irpt-ycharts-generate` refusing it after ~Y's whole bundle -- with item 3 carried on the row as its open limit.
+This amends this seat's own batch 61 item 4 on a new fact (the front door and its residue), not on a re-read.
+
+### CARRIED to the next resident build (with PRD v0.22 ruling 21)
+A permanent authority refusal raised at the RESOLVE phase still retries to the dead-letter queue; 62535e0fdc ends it by name only
+at the generation phase. The next build ends it by name at both phases.
+
+## 2026-10-01 06:53 UTC - Claude CTO batch 66: three retained vendor-figure Performance reports are still reopenable for Inflection and Cottonwood (row S247) -- attribute the 47 reopens, then the reopen path serves the holdings basis only
+
+Instruments: `2.0.0_SA_COO~P` msg 103553 (the hop-6 log read ordered in batch 63); this seat's listing of
+`opal-data-irpt` `irpt/<firm>/platinum/performance_reports/` at 06:49Z (112, 1 and 2 objects for 49 Financial, Inflection and
+Cottonwood) and its read of the three non-49F objects; row IRPT_BCKEND-S247.
+
+### IRPT-RETAINED-VENDOR-FIGURE-REOPEN-20261001 (answers ~P 103553)
+1. YES, the 47 reopens need an attribution, and by REPORT ID, not by firm, wherever the reopen line or the pointer it resolved
+   names one (this seat has not read whether it does). `2.0.0_SA_COO~P` prints, for the 47, how many returned `RPT-df47a1fc...` (Inflection, provider ORION),
+   `RPT-12b885b8...` or `RPT-b683f188...` (Cottonwood, provider BLACK_DIAMOND), with the denominator. Read-only. If no line names a report, ~P says so, the count stays UNMEASURED, and item 2 is unchanged.
+2. WHATEVER THE COUNT, the reopen path is corrected: it serves a retained report only when `report.lineage.provider` is
+   `OPAL_HOLDINGS`. Any other provider answers the same named refusal a fresh request for that firm gets today. Reason: FWD-3
+   and Andrew's 2026-09-28 word leave no firm on a vendor's calculated return, a fresh request for these two firms is already
+   refused (114 `VendorEgressRefused`), and a retained copy is the one way the old figure still reaches the page.
+3. FORM: one member of `irpt-performance-adapter` (the retained-report reader) with its test, in a member-wise packet with the
+   closure table (batch 62 item 6) and both halves; the blast radius is the three literal report ids above and every 49 Financial
+   report whose provider is not OPAL_HOLDINGS (39 engine-era objects, already unreachable by key namespace per pr-273; the
+   packet re-reads that). The three objects are NOT deleted: they are FWD-13's comparison points.
+4. ORDER in ~P's queue (batch 63): item 1 here rides the hop-6 read already done; item 2-3 goes after the TO-DB-b-1 amendments
+   and before the Inflection date basis. If item 1 prints a non-zero count, this seat tells Andrew the same hour which firm saw
+   which report.
+5. IB-pr-221 (batch 63 item 3e) is unaffected: when Inflection's rebuilt gold is served, its Performance figure is OPAL_HOLDINGS
+   and the retained ORION report stays a comparison point.
+
+## 2026-10-01 07:23 UTC - Claude CTO batch 67: S238 disarmed and the hop-7 job released inside a window packet; a refused vendor use is not "dependency unavailable" (CVO F-2); the promote candidate after item 42
+
+Instruments: `2.0.0_SA_COO~Y` msg 103568 and `WHOLE_BUNDLE/APPLY_LOG_20261001.txt` @7153ec83fd; row IRPT_BCKEND-S248 @22d701426e;
+`3.0.0_SA_CVO` msg 103575 and `IRPT_BCKEND_FAST_PIN_GRADES_20261001.md` "Second wave" @d40f2568d8 (six live bundles downloaded, 0 of
+63 closure members differ from CLOUD HEAD, 0 import or type errors over 321 invocations); `2.0.0_SA_COO~D` msg 103577 and
+`REAL_RUNS_20261001.md` @8b7d294a2a.
+
+### IRPT-S238-DISARMED-AND-HOP7-RELEASED-20261001
+1. Row S238 and the API half of row S244 are DISARMED (row S248): six of six tenant-selecting functions refuse the service
+   principal on a foreign firm and serve its own, read live. Ruling 103318's condition for W27 is met.
+2. The hop-7 diagnostic is released as ONE Analysis attempt under Andrew's word of 2026-09-27 ("as many analysis attempts as
+   needed": one upload and one Overview submission per attempt, no retry). That word keeps each attempt inside a window packet with
+   both halves, so ~Y writes one page (the upload body, the write set, the principal, library `0fec0ca9` and its three added
+   `ctx.close()` sites, the ledger leg) and this seat signs on read. The standing authorization for the host's own YCharts calls is
+   his word of 2026-09-23 (the always-on host). No other vendor use is covered by either.
+3. Hop 10 is done: `2.0.0_SA_COO~D` walked a READY request on the page within the hour of the `irpt-status` apply
+   (`REAL_RUNS_20261001.md` section 2). The Analysis thread now lacks only hop 7.
+
+### IRPT-VENDOR-REFUSAL-PUBLIC-CODE-20261001 (CVO F-2)
+4. A request the adapter refuses because it would need a vendor's calculated return does NOT answer `DEPENDENCY_UNAVAILABLE`.
+   That code says a dependency is down and will come back; the page words it as missing days (DSGN_IRPTV1 item 40) and a client
+   may retry it. The true state is that the firm's Performance is not yet computed on Opal's holdings basis. It answers
+   `OBJECT_NOT_COVERED`, the existing code the holdings source already uses for an account its gold does not cover, with
+   `retryable` false. No new public reason is added. The retained-report refusal of batch 66 item 2 answers the same code.
+   Owner `2.0.0_SA_COO~P`, in the adapter packet batch 66 already orders; `2.0.0_SA_COO~D` words `OBJECT_NOT_COVERED` on the
+   Performance tab as "not available for this client yet", not as missing days.
+5. WHO IS POLLING: 55 refusals in 38 minutes (CVO), 114 since 2026-09-29 (~P). `2.0.0_SA_COO~D` reads whether the Performance
+   tab re-requests on `DEPENDENCY_UNAVAILABLE` (a retry policy on a retryable answer is the likely cause, not proven);
+   `2.0.0_SA_COO~P` attributes the 55 by client and referer from the distribution's access logs if ~D's read does not explain
+   them. Item 4 removes the retryable answer either way.
+
+### DSGN-ITEM-42-PROMOTE-CANDIDATE-20261001 (~D 103577)
+6. Item 42 failed its real run on a client-directed holding row and passes after portal `486b07fd`. The PROD promote candidate is
+   `486b07fd` or later, never `c63553cf`. The promote stays Andrew's word after his re-smoke; `0.0.0_AB_MSTR` reads the candidate
+   from DSGN_IRPTV1's STATUS at that time.
+7. The client search took 9.4 s to answer a typed name on that walk; ~D builds the page-side remedy. If the remaining time is the
+   directory function's, it is a row for `2.0.0_SA_COO~P`, not a page workaround.
+
+### ACCEPTED WITHOUT A RULING
+The CVO's correction 103574: row MDPF_SECCLASS-W12-S2 is fixed in source and not deployed; "W12-S2 first" in the round-6 answer reads
+as its deploy. Site Z accepted the NFRA_TRNSPT order into NFRA_OPLGTW OG-rl-1 slot 3; its one question is answered NO (row S13 needs
+the route's response bytes fetched by a script, not the message's MIME form).
+
+## CTO RULINGS -- batch 68 (2026-10-01T07:44Z, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `2.0.0_SA_COO~M` msgs 103601 and 103602 and `2.0.0_SA_COO~D` msg 103603. MDPF_SECCLASS rulings are recorded here
+because this file is the seat's one rulings ledger for the drive; they bind MDPF_SECCLASS, not IRPT.
+
+### SECCLASS-E18-TRIGGER-DISPATCHER-20261001 (~M 103601)
+1. RULED (a), with one condition. The E_18 trigger half covers `data/black_diamond/scripts/gold/gold_dispatch.sh` at CLOUD HEAD:
+   the one catalog line and the one chain slot after B_01b. The calendar guard that HEAD also carries ships SWITCHED OFF: the
+   call at `check_freshness` runs `_expected_last_trading_day` only when `GOLD_CALGUARD_ENABLE` is `1`, default unset, and with
+   it unset the gate compares the unclamped silver maximum exactly as the deployed bytes (repo commit 606263dd22) do.
+   `2.0.0_SA_COO~M` makes that edit under its exact-file grant (batch 64) and amends the sentinel comment at `:59` to name the switch.
+2. WHY NOT PLAIN (a). Read in the file at HEAD: the guard is inert only because its module is absent (404 on the prefix by ~M's
+   read; no file at `data/black_diamond/scripts/gold/lib/trading_calendar.py` in the repo at HEAD by this seat's one-path read).
+   The file's own note says a `lib/*.py` deploys on its author's next push with no sentinel. Once the dispatcher is served, that
+   push would turn the clamp on in the production freshness gate, and the clamp can change a "proceed" into a "skip". That
+   branch has never run on the runner and its owner (`0.7.0_AE_CloudOps`) is dark. A half covers both branches or is not signed;
+   the switch removes the second branch from this act instead of asking ~M to prove another seat's unexercised code.
+3. THE HALF NAMES: the write set (one key, `s3://opal-data-bd/code/gold/gold_dispatch.sh`); the rollback (re-put of the 606263dd22
+   bytes, ETag as ~M measured); the log lines that differ from the deployed bytes with the switch off; the exercise (a runner
+   dry run of the dispatcher at the candidate bytes); the acceptance (the next scheduled gold fire, read from its log).
+4. Turning the guard ON is a separate act by its AE owner under its own two halves, after the module is deployed and the
+   skip arm is observed on a real run. It is not a rider on any MDPF_SECCLASS act.
+5. Round-6 ruling 5 is CLOSED as measured: SC-e13 caused 0 of the 7 `test_safe_deploy.py` failures (the same seven at
+   f136b6f559~1 and at HEAD). The seven pre-existing failures are one row by ~M in the MDPF_SECCLASS surprise channel; they do
+   not hold the round.
+
+### SECCLASS-SEED-SOURCE-GRANT-20261001 (~M 103602)
+6. GRANTED, code only, three exact files in `.owned-paths.yaml` (same commit as this batch):
+   `infra/aws/lambda/v2_portal/_shared/etf_classification.py` and
+   `infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/etf_classification.py` -> lane `MDPF_SECCLASS_FAST_M_AE`;
+   `infra/aws/lambda/v2_portal/yang_pipeline/portfolios/yang-generate-etf-returns/etf_classification.py` -> lane
+   `MDPF_SECCLASS_FAST_M_YANG`. Incumbents keep their access; the rows are struck when MDPF_SECCLASS closes.
+7. MEASURED AT GRANT: the three files are three different blobs at HEAD (`a88fc4b0f9`, `353709b910`, `84887dcc17`). No identity
+   check can be holding them equal today. Before editing either copy ~M prints what differs. The CEMIX row goes into the seed
+   source; it goes into a copy only where that copy carries the same table and a served reader of that copy needs the row.
+   Bringing the copies back into line is NOT part of this round: the divergence is one surprise row, owner named by ~M.
+8. The served move (67 Cottonwood positions, 2,039,120.10 USD, fixed_income to equity) keeps both never-widen halves; the half
+   is written before any seed run, as ~M stated. No deploy or apply is granted here.
+
+### PERFORMANCE-REFUSAL-COUNT-20261001 (~D 103603, closes batch 67 item 5)
+9. The 55 `DEPENDENCY_UNAVAILABLE` refusals are `2.0.0_SA_COO~D`'s own three walks (24 + 28 + 3), read from the walker's files;
+   the tab asks once per account and does not retry. The access-log attribution asked of `2.0.0_SA_COO~P` in batch 67 item 5 is
+   WITHDRAWN. The 114 since 2026-09-29 stay unexplained and are not chased: batch 67 item 4 removes the retryable answer, and a
+   count that persists after that adapter packet is served is a row then.
+10. One performance request per account of the opened client (24 for a 24-account client) is the page's design and is not
+   changed in this round.
+
+### ACCEPTED WITHOUT A RULING
+`0.0.0_AB_MSTR` relay 103597: laptop `/ui-walk` runs post ARM and DISARM on the bus until site Z's walker-lease cell lands;
+`2.0.0_SA_COO~D` accepted it. No act by this seat.
+
+## CTO RULINGS -- batch 69 (2026-10-01T07:52Z, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `3.0.0_SA_CVO` msg 103611 (grade file `org/tier1_exec/3.0.0_SA_CVO/deliverables/MDPF_COTREMEDIATION_AC_GRADE_20261001.md`
+@7bc5eb882b) and `0.0.0_AB_MSTR` msg 103609. These bind D8 projects, recorded in this seat's one rulings ledger.
+
+### COTREMEDIATION-CLOSE-AND-FINDING-F-A-20261001 (CVO 103611)
+1. RULED: MDPF_COTREMEDIATION CLOSES ON ITS OWN DEFECT; finding F-A does not hold the close. AC1 to AC7 grade PASS, 7 of 7. The
+   defect this project repaired is the holdings header contract, and that table has every trading day. The PRD's "restore
+   cottonwood and global served data to the correct T-1 frontier" is read against that defect. A point absent because a
+   DIFFERENT upstream table has no partition is a different mechanism on the same series, and it gets an owner instead of
+   holding a finished repair open.
+2. THE CLOSE WAITS ON ONE THING: `3.0.0_SA_CVO`'s compile of the project's channel (21 rows, 3 BLOCKING, 10 ARMED, 0 graded).
+   When every BLOCKING or ARMED row is dispositioned, this seat does the two-step close the same tick.
+3. F-A AND ROW S19 ARE PLACED IN MDPF_HEALGAP. Seven of the eleven absent days have no `fact_model_assignment` partition
+   (2026-08-31 to 2026-09-10, eight trading days missing). MDPF_HEALGAP was minted on that hole: its register row measured 0 of 3
+   Rebalancer feeds landed on 2026-08-31 after the runner's session expired and nothing re-ran. The CVO's read shows the hole
+   ran eight trading days, not one. The CVO graduates S19 to MDPF_HEALGAP; this seat wrote F-A into that project's register
+   row in the same commit as this batch.
+4. THE FOUR DAYS WITH BOTH PARTITIONS PRESENT (2026-08-20, 08-21, 09-23, 09-24) have an unread cause. `4.0.0_SA_CRO~X` runs a
+   read-only `/closer trace` on the Cottonwood aggregate point for those four dates; the result is a decomposition input of
+   MDPF_HEALGAP.
+5. NO BACKFILL IS ORDERED. Filling the eight days is a Rebalancer vendor pull, which needs Andrew's per-use word (the one-shot
+   re-run has been open at him since 2026-08-31). Until then the payload states its own claim correctly: the point is classed
+   absent for Cottonwood and carried for Global. That is honest output, not a defect to hide.
+6. THE FRONTIER READ'S BLIND SPOT (a date that advances over a null point) becomes one decomposition line of MDPF_HEALGAP: the
+   existing `comp-xray frozen` read also checks the class of the last point. A field on an existing read; no monitor is built.
+7. The process cell (a bronze-shape change shipped with no silver-contract step) goes to MDPF_CANON's decomposition as one
+   line, as the closure plan already says.
+
+### REGISTER-CORRECTIONS-20261001 (MSTR 103609)
+8. ACCEPTED: D9's members note records NFRA_OPLGTW and NFRA_MCPINDEX at site Z. GLOBALALARM STAYS IN D8: Andrew's word of
+   2026-09-02 ("Call 1 - I would put this in D8 yes.") is later than the census's 2026-08-31 quote, so the closure plan's
+   line moving it to D10 is WITHDRAWN. The completion test for D8 keeps GLOBALALARM in its denominator.
+
+## CTO RULINGS -- batch 70 (2026-10-01T07:58Z, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `2.0.0_SA_COO~Y` msg 103615 (`org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/HOP7/J2_OUTCOME_20261001.md`
+@5ce814a076). The hop-7 attempt ended ATTENTION `SESSION_REFRESH_ALREADY_USED`: the stored YCharts session read EVICTED and the
+resident's one sign-in failed `CAPTURE_FAILED:AUTH_FAILED`. Hops 3 and 4 passed on the served code. No report body reached the
+vendor. The cause of row S230 is still not named, because the journal keeps the failure class and drops the step.
+
+### ANALYSIS-HOP-7-NEXT-STEP-20261001 (~Y 103615)
+1. RULED: the recommended step is taken, as ONE NEW WINDOW PACKET with two legs and both halves.
+   LEG S: one operator run of the canonical sign-in wrapper in the resident's exact context (user `ec2-user`, the resident's
+   environment and working directory), receipt kept in a 0600 host file and printed redacted (failure class, message, step
+   list, reason; no cookie, no secret value, no screen text beyond the library's bounded sample).
+   LEG J, only if leg S authenticates: one job attempt of the same shape as hop 7 (one upload, one Overview, Cottonwood, the
+   service principal, no retry), so a fresh session is used the same window instead of aging into another eviction.
+2. VENDOR AUTHORITY, read by this seat: leg S is the always-on host's own sign-in, inside Andrew's standing word of 2026-09-23
+   item 3 ("session sign-in and maintenance"); leg J is one attempt inside his word of 2026-09-27 (attempts as needed, one
+   upload and one Overview each, inside a window packet with both halves). No new vendor use is created.
+3. THE HALF COVERS THREE BRANCHES OF LEG S: (i) it authenticates -> the stored session gains one new version (the prior
+   version stays recoverable), leg J runs; (ii) it fails -> nothing is written, the receipt names the sign-in step, the packet
+   ends; (iii) the vendor presents a challenge -> no attempt to answer it, the packet ends. In every branch: ONE sign-in.
+4. SIGN-IN BUDGET. The journal shows a challenge on the third sign-in of 2026-09-29 after two failures that day. Today already
+   holds one failure (07:33Z). Leg S is today's second. If it fails or is challenged, no third sign-in is made from this host
+   until BOTH of these hold: 24 hours have passed, and item 5's repair is on the host.
+5. THE DURABLE REPAIR IS ORDERED NOW, whatever leg S shows: each of the four `AuthError` sites of `ycharts_session.js` carries a
+   closed `reason` token so the journal prints `CAPTURE_FAILED:AUTH_FAILED:<REASON>`, and the wrapper's stderr goes to a bounded
+   host file instead of being discarded. It rides the next resident build under its own packet. Row S230 stays open until a
+   named cause is on record.
+6. THE SOLO GATE of the hop-7 packet applies to both legs: both queues empty and no non-terminal job before leg S, so the
+   resident makes no identity read or sign-in of its own beside the operator's.
+7. RESEARCH: `4.0.0_SA_CRO~X` runs a read-only `/closer trace` on the session lifecycle: what the EVICTED verdict tests, what
+   (if anything) keeps the stored session alive between jobs, and why three stored versions in seven days each read evicted at
+   the next job. Three evictions in a row point at the session's lifetime or at a second sign-in of the same account
+   elsewhere; neither is measured. The trace makes no vendor call. Its result decides whether the host needs a scheduled
+   session refresh, which the 2026-09-23 word already covers as maintenance.
+8. STATE OF THE ANALYSIS THREAD after this attempt: hop 10 done, hops 3 and 4 passing on served code, hop 7 open on the
+   sign-in. Hop 7 is the one hop between the thread and a READY request made by the service principal.
+
+## CTO RULINGS -- batch 71 (2026-10-01T08:25Z, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `4.0.0_SA_CRO~X` msg 103626 (trace `org/tier1_exec/4.0.0_SA_CRO~X/deliverables/YCHARTS_SESSION_LIFECYCLE_TRACE_BRIEF_20261001.md`
+@b5dc11e3be) and `3.0.0_SA_CVO` msgs 103619 and 103624. Records the close of MDPF_COTREMEDIATION.
+
+### YCHARTS-SESSION-LIFECYCLE-20261001 (CRO~X 103626; closes batch 70 item 7)
+1. ACCEPTED AS READ: the EVICTED verdict tests the vendor's own "concurrent sign in" sentence. The stored sessions were DISPLACED by
+   another sign-in on the same account; they did not age out (a session 60 hours old produced a READY report on 2026-09-29).
+   Nothing keeps a session alive between jobs, by design. The only programmatic sign-in in the estate is the host wrapper. A
+   person shares the one vendor seat with the automation, by the library's own header, and PRD FWD-4 accepts that each can
+   displace the other.
+2. RULED: NO SCHEDULED SESSION REFRESH IS BUILT. A refresh on a clock does not stop the next displacement, each one would put
+   the person off the seat, and FWD-4's text forbids a competing refresh schedule.
+3. THE FAILING HOP IS THE RE-LOGIN, not the eviction. Batch 70 item 5 (a closed reason token on each of the four `AuthError`
+   sites, standard error kept) stands and is the first member of the next resident build.
+4. LEG S ALSO REPORTS the stored bundle's probe at rest, which the library runs before it signs in. That one line separates two
+   readings the trace left open: the upload's ticker lookup answered on the stored session 11 seconds before the eviction
+   verdict, so either that route answers a displaced session, or the session was displaced inside those 11 seconds.
+5. An attempt's vendor-call count includes the upload's ticker lookup (`GET /securities/securities_info`), which the hop-7
+   outcome file omitted. `2.0.0_SA_COO~Y` states it in the next outcome file. It is part of the one upload Andrew's word of
+   2026-09-27 covers.
+6. RECORDED AS INFERRED, not exercised: a capture that passes the password form and then fails the library's own recognition of
+   the next screen is still a sign-in to the vendor, so it displaces the stored session and stores nothing. The reason token
+   will show which site fails.
+7. THE SEAT. One shared seat means any job can be displaced by the person at any time, and every automation sign-in displaces
+   her. The durable remedy is a dedicated seat for the automation, which is a purchase and so Andrew's act. Until then the
+   thread runs as FWD-4 accepts.
+
+### CHANNEL-BACKLOG-COMPILE-ORDER-20261001 (CVO 103624, census @c8391e36e9)
+8. ORDER RULED for `3.0.0_SA_CVO`: (1) IRPT grades as pins land, ahead of everything, as now; (2) the closure plan's members:
+   MDPF_TAXSMA (24 rows), ADVI_FIRMBKTS (2), LGIC_CANON (1); (3) the BLOCKING or ARMED rows of the 11 closed or complete
+   projects (81 rows), largest project first, laptop rows only. A hazard that is moot in the world is dismissed on one read per
+   class of row, not one read per row.
+9. The other rows of closed projects (54, neither BLOCKING nor ARMED) are NOT compiled. They are dropped from the owed set by
+   this ruling and stay in their files as filed.
+10. THE GAP THE CENSUS FOUND (a project that finishes without a drain-end packet is never compiled) is closed at the close:
+    this seat does not flip a project to complete until its channel reads zero undispositioned BLOCKING or ARMED rows. It binds
+    by reading; no gate is built. Cost: one read per close. Non-application: a project with no channel.
+
+### MDPF-COTREMEDIATION-CLOSED-20261001 (CVO 103619)
+11. CLOSED by the two-step close in the same commit as this batch: `org/projects/MDPF_COTREMEDIATION.json` reads `complete`; its
+    registry row is in Completed. AC1 to AC7 PASS, 7 of 7 (@7bc5eb882b); 21 of 21 channel rows dispositioned (@24e1f3273c).
+12. THE OPEN ROWS HAVE HOMES. In MDPF_HEALGAP (the Rebalancer path): F-A, S19, S17, S6 and S7; S7 is a condition on S6's deploy
+    and is attached before it ships. In MDPF_CANON PRD v2.7 as cell candidates M13 to M16: the process cell, S3, S13, S16.
+    S16 is carried on its 2026-08-26 evidence and the row says so.
+13. RULED for S13: `account_count_total` means DISTINCT ACCOUNTS in every scope, never the by-model sum. Whether Cottonwood's
+    361 is that count is the first read of cell M15; it is not measured here.
+14. The validator's second point (three shared modules of a production converter differ from source and the sanctioned red has
+    no expiry) rides S6: the seat that takes the deploy either brings the package to source or states per module which
+    difference stands and until when.
+
+## CTO RULINGS -- batch 72 (2026-10-01T08:35Z, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `4.0.0_SA_CRO~X` msg 103627 (trace `org/tier1_exec/4.0.0_SA_CRO~X/deliverables/COTTONWOOD_ABSENT_POINT_TRACE_BRIEF_20261001.md`
+@a6645f5d8b) and `2.0.0_SA_COO~Y` msg 103634. Items 1 to 7 bind MDPF_HEALGAP; items 8 to 13 bind IRPT_BCKEND's Analysis thread.
+
+### COTTONWOOD-ABSENT-POINTS-CAUSE-AND-REMEDY-20261001
+1. ACCEPTED AS READ: the figure is dropped between silver and gold. The daily run calls the gold builder once, for the day's
+   assignment date, with no value date (`data/mdpf/scripts/gold/mdpf_gold_consolidator.py:2078`); the builder values that
+   partition at the freshest holdings date then present (`data/assets/scripts/gold/build_dim_model_portfolio.py:505`). A holdings
+   date that is never the freshest at run time is never valued, and nothing goes back for it. 0 of 47 gold partitions carry the
+   four value dates asked about. The trace adds a fifth date of the same class, 2026-08-18: 12 absent trading days since 08-17.
+2. THIS CHANGES BATCH 69 ITEM 5 FOR FIVE OF THE TWELVE DAYS. 2026-08-18, 08-20, 08-21, 09-23 and 09-24 have both silver
+   partitions. They need no vendor call: each is restored by building it with its explicit value date, which the builder already
+   accepts (`--value-date`, `:494`).
+3. RULED REMEDY, MDPF_HEALGAP's first cell: a catch-up step INSIDE the existing daily consolidator (no second pipeline, no second
+   output path). After the daily build, every holdings date on the axis that no gold partition values is built with its explicit
+   value date, paired with the assignment of the next trading day, which is the pairing an on-time day produces. Proof by a
+   deliberate act, not a wait: the 2026-09-23 to 09-28 landing order replayed as a fixture ends with no unvalued holdings date.
+4. THE SEVEN DAYS WITH NO ASSIGNMENT PARTITION (2026-08-31 to 09-04, 09-08, 09-09) STAY ABSENT. An older assignment is not
+   carried under them (the point would read measured on an input that was not), no new point class is minted, and a Rebalancer
+   re-pull is a vendor call that needs Andrew's per-use word. The payload's `absent` is the honest answer for those days.
+5. A SERVED MOVE with both never-widen halves: the Cottonwood series gains five measured points and Global's five carried points
+   become measured. The half states the five figures before the apply (an ad-hoc QA run computes them) and both outcomes of the
+   catch-up on a day with nothing to catch up (it builds nothing and the day's output is byte-identical).
+6. ISSUER: `2.0.0_SA_COO~M`, in FAST mode, after the MDPF_SECCLASS round-6 items it has in hand. The consolidator is also inside
+   MDPF_TAXSMA's lease surface (its Tax blocks); the catch-up is its own block, and ~M reads the lease state and that lease's
+   claims before arming. An owned-paths refusal comes back as a BLOCKER line in the batch 64 form.
+7. The three-day holdings delay inside the repaired table (2026-09-23 to 09-25 landing on 09-28) is consistent with row
+   IRPT_BCKEND-S158 (the Cottonwood session fetch failing 09-24 to 09-27, repaired 09-27); not re-read here. The catch-up is
+   what makes such a delay harmless to the series.
+
+### ANALYSIS-HOP-3-TICKER-LOOKUP-20261001 (~Y 103634, outcome `IRPT_MVP_Y/HOP7B/OUTCOME_20261001.md` @ecedb1d570)
+8. READ: leg S AUTHENTICATED as `ec2-user` in the resident's environment (one sign-in, 10 seconds, session stored 08:21:20Z);
+   the stored bundle at rest probed 403 `EVICTED_HARD` before it. Candidate (a) of the hop-7 outcome is refuted. Leg J stopped at
+   the upload: the ticker lookup answered `PROVIDER_READ_UNAVAILABLE` on 4 of 4 receives on a session 82 seconds old, where the
+   same lookup resolved at 07:33:21Z on a bundle that read evicted 11 seconds later. The thread now stops at hop 3.
+9. RULED NEXT STEP: TWO ticker lookups on the host, not one, each printing the answer's SHAPE and no body (status, final path,
+   content type, WAF action, login-destination flag, byte count): the first exactly as the resident makes it (its session
+   classes, its provider lease), the second with NO session at all, after the lease's own spacing. One pair separates the two
+   readings in one window: (A) the lookup needs a live session and the new one is unusable by the Python client; (B) the lookup
+   answers a signed-out caller and a signed-in Python client is refused or challenged on this route.
+10. VENDOR AUTHORITY, read by this seat at
+    `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260923_IRPT_SPEED_RECS_AND_ALWAYS_ON_YCHARTS_HOST_APPROVED.md:38-39`:
+    the host's YCharts calls include "the sessionless ticker lookups of the upload flow". Both GETs are that host's ticker
+    lookups; the second is the sessionless form his word names. No sign-in is made and none may be triggered.
+11. THIS ITEM IS THE CTO HALF for that act; no packet file is cut. A read-only pair of GETs moves no served output, and the fresh
+    session can be displaced at any minute. `2.0.0_SA_COO~Y` states its own half as one ledger entry with the script's sha256.
+    Conditions: exactly two GETs and no retry; the script cannot reach the capture path (an evicted answer is printed, not
+    repaired); the solo gate before it; the output is shapes only and is read before it is committed.
+12. THE REPAIR IS RULED NOW ON EACH OUTCOME, so no further ask is owed. If the sessionless GET answers 200 JSON: the upload's
+    ticker lookup is made WITHOUT the session, as Andrew's word describes it, in the next resident build; hop 3 then no longer
+    depends on the shared seat. If only the with-session GET answers: the cause is the Python client's use of a fresh session,
+    and the build carries the lookup's refusal class in the journal first. In both cases the resolve line carries the closed
+    refusal class (`PROVIDER_READ_UNAVAILABLE:<CLASS>`), with the sign-in reason tokens of batch 70 item 5.
+13. The words a user reads for `RESOLVE_RETRY_EXHAUSTED` say other work was in flight; nothing was. `2.0.0_SA_COO~D` corrects
+    that sentence when the refusal class exists to word it from.
+
+## CTO RULINGS -- batch 73 (2026-10-01T08:59Z, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `2.0.0_SA_COO~M` msgs 103648 and 103649. Records two corrections of this seat's own closure plan.
+
+### SECCLASS-CEMIX-ROW-AND-TEST-GRANT-20261001 (~M 103648, 103649)
+1. The CEMIX canonical-row half is SIGNED by this seat on blob `b77f9f7d6e` (the half request under
+   `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/`). The seed source's change was read from bytes: five lines, one
+   ticker. The live table held no such item at 08:56Z.
+2. The half names the defect behind the move: a name alias classed an emerging-markets equity fund as fixed income on 93 nodes.
+   `2.0.0_SA_COO~M` names the alias rule and counts what else it classes, as a row of the round.
+3. GRANTED, code only, two exact test files in `.owned-paths.yaml` (same commit as this batch), lane `MDPF_SECCLASS_FAST_M_AE`:
+   `infra/aws/lambda/v2_portal/_shared/tests/test_classified_by_v2.py` and `.../tests/test_set_instrument_kind.py`. The exact
+   contract-version pin of round-6 ruling 6 goes into the first; it goes into the second only where that file carries the same
+   version floor or superset check. Test files: no deploy, no served value, no half.
+4. `2.0.0_SA_COO~M`'s queue admits MDPF_HEALGAP cell 1 today after the CEMIX row (its own statement, 103648). Batch 72 item 6
+   stands.
+
+### CLOSURE-PLAN-CORRECTIONS-20261001 (this seat's own plan, `CTO_LAPTOP_CLOSURE_PLAN_20261001.md` section 3a @89f478b36f)
+5. Items 3, 6 and 7 of the plan's section 2 are WITHDRAWN, each after reading the record it rested on: GLOBALALARM stays in D8;
+   LGIC_LGCTFM's card was adjudicated on 2026-09-18 and its FWD-4 closes only on Andrew's own read; LGIC_CANON's practice wave
+   ran on 2026-09-18 and its FWD-5 holds on a naming census (LGIC_ENFORCE) and a portal-paths grant of Andrew's.
+6. ITEM 5 IS ALSO WRONG AS WRITTEN: DSGN_REBRND does not owe a round-1 analysis. One exists
+   (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND_ANALYSIS_DSGN_REBRND_ROUND1_20260914.md` @928a3df671); the census looked in the
+   project's ledger folder, where it is not. Round 2 was interactive (PRD v0.6 to v0.10, no task orders) and its work is in the
+   portal's DEV and PROD by a read-only fact pass this seat ordered (ancestry of `086371dd`, `a7c4fa4f`, `0aefb3c5`; not re-run
+   by this seat). What the project owes is a ROUND-2 GRADE on the served pages: FWD-2 to FWD-5, FWD-7, FWD-8 and FWD-10 to
+   FWD-13 by `3.0.0_SA_CVO`, with the 37 remediation rows read against what landed. It joins the validator's queue after the
+   closure-plan members of batch 71 item 8. FWD-9 (Andrew's own side-by-side) and FWD-1 (a walk by a person who has never seen
+   the portal) stay person acts.
+7. A FINDING FROM THE SAME PASS, not yet read by this seat: the two sign-off files of DSGN_REBRND read `prd_version: v0.2` after
+   a drain commit (`a0ad7796f8`, 2026-09-17) although both halves were signed at v0.10 (`a8b770b426`, `a369a0f55d`);
+   `prd-signoff status` reads WITHHELD, both halves STALE. No order is being cut against that PRD, so nothing is refused
+   today. Each signer restores its own file from its signing commit at the round-2 grade; this seat reads the two commits
+   before that is asked of anyone.
+
+## CTO RULINGS -- batch 74 (2026-10-01T09:04Z, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `2.0.0_SA_COO~Y` msg 103652 and `3.0.0_SA_CVO` msg 103651.
+
+### IRPT-Y-HOST-LIBRARY-GRANT-20261001 (~Y 103652)
+1. GRANTED, code only, one exact file in `.owned-paths.yaml` (same commit as this batch):
+   `infra/aws/ec2/investor-reporting-ycharts/ycharts_session.js` -> new lane `IRPT_BCKEND_FAST_Y_HOST` (the CLOUD_OPS_OR_ETL members
+   preserved, plus `2.0.0_SA_COO~Y`). It carries the sign-in reason tokens this seat ordered in batch 70 item 5. The host release
+   that ships it keeps both never-widen halves. No override was used by the asking seat, and none is granted.
+2. READ, not ruled: leg P of the third hop-7 window read LIVE at 08:55Z and leg J's job is past the template read (~Y's
+   statement in 103652; its outcome is a separate message).
+
+### TAXSMA-CHANNEL-COMPILE-AND-THE-ROW-GATE-20261001 (CVO 103651, compile @90f597020a)
+3. RULED: THE GATE IS NOT CHANGED. `surprise-row-gate` refuses a remediation row while orders of the project read non-terminal,
+   and that is the spine's own order of work (rows graduate after the round is terminal). Admitting graduation under a FAST lease
+   would be a gate edit made for one project's convenience.
+4. THE NINE ORDERS THAT ARE DONE IN THE WORLD ARE BROUGHT TERMINAL BY THE FAST SEAT, `4.0.0_SA_CRO`, each with a pointer to its
+   artifact and a read of that artifact, not of the order's face. Their issuer lane (`2.0.0_SA_COO~T`) is dark; the lease's seat
+   holds the project's direct acts, and closing a face whose work is done is one of them. An order whose artifact cannot be
+   pointed at stays as it is.
+5. THE SIX ORDERS THAT ARE GENUINELY OPEN keep the gate closed, correctly. Until they are terminal the 13 graduations stay in
+   `MDPF_TAXSMA_REMEDIATION_v1_PREPARED_20261001.md`, which is their carrier and names their owners.
+6. THE FIVE BLOCKING OR ARMED ROWS (S5, S6, S10, S11, S12) DO NOT WAIT FOR THE GATE. An armed hazard is disarmed by its owner
+   the turn it is read. `4.0.0_SA_CRO` reads the prepared file now and either disarms each of the five or states, per row, why
+   it is not a live hazard today.
+7. `3.0.0_SA_CVO` moves on to ADVI_FIRMBKTS and LGIC_CANON, then the DSGN_REBRND round-2 grade (batch 73 item 6), then the closed
+   projects' BLOCKING or ARMED rows (batch 71 item 8).
+
+## CTO RULINGS -- batch 75 (2026-10-01T09:11Z, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `2.0.0_SA_COO~M` msgs 103653 and 103658.
+
+### SECCLASS-MODEL-ROWS-20261001 (~M 103653; addendum 1 of the model-rows half request @a03ecd0ad8)
+1. THE ACT DOES NOT WAIT ON ANDREW. A served class that moves is covered by the two never-widen halves, and the halves are
+   written on what was measured: 25 of the 26 tickers are served a class today by the fallback, so a model row REPLACES an
+   answer on 252,658 USD at 49 Financial, -58,228 at Cottonwood and 1,112,344 at Inflection.
+2. THE WRITER IS GRANTED, code only: the exact new file `infra/aws/lambda/v2_portal/yang_pipeline/write-model-rows.py`, lane
+   `MDPF_SECCLASS_FAST_M_YANG` (`.owned-paths.yaml`, same commit). A dry run is its default. It writes by conditional put only
+   (a ticker with no row), reusing the scheduled path's put and not a second implementation. It has no overwrite path and no
+   delete path.
+3. THE 26 ROWS ARE WRITTEN IN THREE SETS, and the half lists every ticker under one of them:
+   (a) the model's class EQUALS the class served today (the ten held tickers the addendum names, and the one not held):
+       written; the served class does not move and the row changes only where the answer comes from.
+   (b) the class MOVES and the row is not low-confidence: written only where the half names, per ticker, a PEER ROW of the same
+       kind of fund already in the canonical table with that class. Read by this seat at 09:10Z: VNQ is alternatives / Real
+       Estate, DBC and PDBC are commodities, BSV is fixed_income. A real-estate, commodity or short-bond fund follows its peer.
+   (c) the eleven LOW-CONFIDENCE rows, and any row of (b) with no peer: NOT written as model rows. Each becomes a seed row with
+       its public ground named (the CEMIX form, its own half), or stays on the fallback this round.
+4. BEFORE THE HALF IS SIGNED it also measures the Black Diamond gold readers (C_06, D_03, D_04) for the same tickers; the
+   addendum says that population is not measured. Rollback is a seed row for the ticker; no item is deleted.
+
+### HEALGAP-WRITE-SPLIT-20261001 (~M 103658)
+5. RULED AS RECOMMENDED. The catch-up is a NEW module, `data/mdpf/scripts/gold/mdpf_gold_catchup.py`, with its fixture test and
+   the ad-hoc figures, built by `2.0.0_SA_COO~M`. It is a step the daily consolidator calls and has no schedule of its own, so
+   it is inside the one pipeline (batch 72 item 3 stands). The consolidator's one call line is added by the MDPF_TAXSMA lease's
+   seat (`4.0.0_SA_CRO`) at its next merge.
+6. `4.0.0_SA_CRO` re-arms MDPF_TAXSMA on the files it claims instead of all of `data/mdpf`, so the catch-up module can be
+   leased. Until then ~M builds the module in its own worktree; `data/**` is lane ANY, so no owned-paths grant is needed.
+7. MDPF_HEALGAP gets no tree registration for one cell. Its register is `org/projects/MDPF_HEALGAP.json`; the cell's status
+   file is `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_HEALGAP_M/STATUS~M.md`.
+
+## CTO RULINGS -- batch 76 (2026-10-01T09:37Z, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `2.0.0_SA_COO~Y` msg 103668 (outcome `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/HOP7C/OUTCOME_20261001.md`
+@72e2033de9).
+
+### ANALYSIS-HOP-7-PASSED-HOP-8-NEXT-20261001
+1. READ: HOP 7 IS PASSED on today's served code. Job `REQ-602834fd` ran on the session stored at 08:21:20Z with no eviction and
+   no sign-in, through the holdings upload, the portfolio, the settings read-back (one challenge released, then 200), the report
+   generation and the PDF download. It ended ATTENTION `TOLERANCE_REQUIRES_STATIC` at 09:13:22Z: the reader found no single
+   settings row it accepts for the job's portfolio (`type=- as_of=-`). The thread now stops at hop 8. Which row shape the PDF
+   carried is not readable, because a refusal at that check keeps nothing.
+2. ONE DIAGNOSTIC FIRST, IF IT IS ONE GET: the vendor still holds the report this job generated. If the resident's classes can
+   download that report again by its id in one GET (capture removed, as leg P of the third window), `2.0.0_SA_COO~Y` does so
+   now, runs the installed reader's settings extraction on the file on the host, and prints the count of settings rows that
+   carry the job's portfolio name, the pages they sit on, and the shape class of each such row. The file stays on the host in a
+   0600 directory and is not committed and not uploaded. If it is not one GET, this item is skipped and nothing is attempted.
+3. VENDOR AUTHORITY for item 2, read by this seat: Andrew's standing word of 2026-09-23 item 3 names "the report-generation
+   calls" of the always-on host (the record's lines 38-39). A download of a report the host itself generated is one of them.
+   No upload, no portfolio, no new report and no sign-in is made.
+4. ITEM 2 IS THE CTO HALF for that one GET, in the form of batch 72 item 11: `2.0.0_SA_COO~Y` states its half as one ledger
+   entry with the script's sha256. Conditions: exactly one GET and no retry; the capture path unreachable; the solo gate; the
+   printed output carries counts and shape classes only and is read before it is committed.
+5. THEN THE NEXT RESIDENT BUILD, before any further job attempt (each attempt costs a real upload, portfolio and report at the
+   vendor). Its members, all already ordered: the sign-in reason tokens and the kept standard error (batch 70 item 5); the
+   lookup's refusal class and the sessionless ticker lookup (batch 72 item 12); and, new here, the tolerance line prints how
+   many settings rows carried the job's name, on how many pages, and the shape class of a row the pattern refused. If item 2
+   shows the reader's pattern is what failed (the first report after a quarter turned is the unmeasured candidate), the
+   reader's repair is a member of the same build, with the refused row as its fixture. The release is its own packet with
+   both halves; ONE job attempt follows it under a window packet.
+6. A REFUSED PDF IS KEPT AS EVIDENCE. This amends this seat's own ruling 101971 ("a refusal at this check retains nothing").
+   Three times today the fact that names a failure was discarded by design; this is the third. The rule now: on a refusal at
+   the printed-type check the PDF is stored in the SAME firm's partition, at an address the builder returns, as refused
+   evidence under the existing retention rule. It is not a `pdf` checkpoint, no accepted pointer names it, and no route serves
+   it: the job's status stays ATTENTION and returns no document. A test proves that the status and reopen routes return nothing
+   for a job that has only refused evidence. It is the firm's own upload rendered by the vendor, in that firm's partition, so
+   no cross-firm line is touched.
+7. `2.0.0_SA_COO~D`'s walk of a READY request (hop 10 on a service-principal request) waits on hop 8; nothing is asked of it.
+
+## CTO RULINGS -- batch 77 (2026-10-01T09:41Z, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `3.0.0_SA_CVO` msg 103669 (compile `org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_FIRMBKTS_LGIC_CANON_COMPILE_20261001.md`
+@9453b7a44b; census addendum @6c620c531a).
+
+### CLOSED-PROJECTS-CHANNEL-PATH-20261001
+1. READ: ADVI_FIRMBKTS and LGIC_CANON read 0 undispositioned rows; row LGIC_CANON-S29 stays ARMED with `4.0.0_SA_CRO`. The
+   DSGN_REBRND ratified-text sign-off file is restored by its signer (@86e1708ffd) and `prd-signoff` reads ADMITTED by the
+   validator's statement (not re-read here; the brief half's file is its own signer's to restore).
+2. RULED FOR THE CLOSED PROJECTS: THE SECOND PATH. Their compiles are DISMISSALS ONLY. A row whose hazard is moot in the world is
+   dismissed in its own channel. A row whose hazard is LIVE today is re-filed as a NEW row in an open project that has a seat,
+   citing the old id, and the old row is dismissed with that pointer. No remediation row is added to a closed project's channel.
+3. WHY NOT THE GATE: the limb that refuses a new remediation row while older graduated items have none is doing its job on a
+   live project. Teaching it to resolve older rows through the adjudication row's id is a gate edit across 313 items and three
+   projects' history, made to tidy projects nobody is working. The second path needs no tool change and puts every live hazard
+   where a drive loop reads it.
+4. THE LIMB'S OWN GAP IS ONE ROW, not an order: older remediation rows keyed by the adjudication row's id are not resolved by
+   the limb. `3.0.0_SA_CVO` files it once, owner `0.0.0_AB_MSTR` (fabric tooling), standing INERT. It is repaired when a LIVE
+   project is refused by it, not before.
+5. THE DENOMINATOR FOR ITEM 2 is the 260 BLOCKING or ARMED items the addendum counts outside site Z; one read per class of
+   hazard, largest project first (NFRA_CLDGRPH, NFRA_OUTSET, ETFS_GUARDRAIL). The count of re-filed rows and their new homes is
+   reported once, at the end, in the compile file. The DSGN_REBRND round-2 grade stays ahead of this work.
+
+## CTO RULINGS -- batch 78 (2026-10-01T09:53Z, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `4.0.0_SA_CRO` msgs 103675 and 103676 (record
+`org/missions/D8/MDPF/MDPF_TAXSMA/deliverables/4.0.0_SA_CRO/ARMED_ROWS_READ_20261001.md`, merged @3f08cfed77).
+
+### TAXSMA-ARMED-ROWS-AND-STAGE-6-20261001
+1. READ: of the five BLOCKING or ARMED rows, S12 is disarmed by a fix (the parity checker exits 2 when nothing was compared), S6
+   and S10 are disarmed for this project, S5 and S11 are not live today. Eight order faces are terminal with artifact pointers
+   (@9b05c9f47c); TX-r-1 stays open on its own leg V2, the 13:50Z publisher run. The MDPF_TAXSMA lease now names 12 paths and no
+   longer claims `data/mdpf` whole.
+2. RULED FOR S5: THE WRITTEN REMEDY IS NOT TAKEN, as `4.0.0_SA_CRO` recommends. The runner's Stage 6 is not repaired. A repaired
+   stage would be a second writer of the staged spines the Gold function writes, and it has produced nothing since 2026-08-14.
+3. PLACEMENT: Stage 6 is RETIRED, under the decommission standard, as cell candidate M17 of MDPF_CANON (PRD v2.8, same commit).
+   That project already owns "no second write path exists" (M2) and the retirements (M11). Why the stage first failed is read
+   before anything is removed. Until a lane takes it, nothing reads its output and nothing is changed on the runner.
+4. S11 (the two Gateway `.env` keys) blocks the Tax route's activation and rides the same act as the Gateway release: whoever
+   Andrew names for TX-r-2 writes and deploys them. It is not a second question for him.
+5. The parked consolidator call line for MDPF_HEALGAP's catch-up module stays with `4.0.0_SA_CRO`, added at its merge after the
+   module and its fixture test are on CLOUD (batch 75 item 5).
+
+### SECCLASS-SCHEDULED-PUT-FIELDS-20261001 (~M 103677)
+6. GRANTED, code only, one exact file (`.owned-paths.yaml`, same commit), lane `MDPF_SECCLASS_FAST_M_AE`:
+   `infra/aws/lambda/v2_portal/_shared/etf_classification_scheduled.py`, for ONE change: `classification_confidence` and
+   `low_confidence` added to `_WRITE_FIELDS`, with a test. Without them the reused put would write a model row that fails
+   contract 0.3.0.
+7. CONDITION, because the same put is the SCHEDULED writer's and E_18 now runs it in the daily chain: the test shows that an
+   item written for a scheduled row is identical before and after the change (a scheduled row carries neither field, so
+   neither may appear on it, not even as null). The runner's shipped copy goes one line stale and is inert until shipped; the
+   seat that ships it names it in its half, as for the seed source.
+8. READ: CEMIX is written (leg W closed 09:18Z by ~M's statement); leg R is running.
+
+## CTO RULINGS -- batch 79 (2026-10-01T10:12Z, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `2.0.0_SA_COO~P` msgs 103683 and 103684 (row IRPT_BCKEND-W97-S3, Branch A).
+
+### INF-NNA-BRANCH-A-20261001
+1. GRANTED, code only, one exact file in `.owned-paths.yaml` (same commit): `data/inf/scripts/gold/lib/nna_coverage_excusals.json`
+   -> new lane `IRPT_BCKEND_FAST_P_INF_NNA` (the POD4 members preserved, plus `2.0.0_SA_COO~P`).
+2. The CTO half on the Branch A packet is SIGNED on blob `fe5d59e3e1`
+   (`org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/NEVER_WIDEN_SIGNOFF_PACKET_INF_NNA_BRANCH_A_20261001.md`). The proposed
+   file was read from bytes: three entries added (866, 769, 1096), each scoped to partition 2026-09-24, seven prior entries
+   unchanged. The guard is not edited.
+3. NAMED: on the branch where the guard passes, the Inflection chain resumes 32 steps it has not reached since 2026-09-27. That
+   is the scheduled pipeline, not this packet's change; its first run's log is read to its last step and reported the same hour.
+
+## CTO RULINGS -- batch 80 (2026-10-01T10:51Z, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `2.0.0_SA_COO~P` msg 103697 (record `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/HOLDINGS_SOURCE_DATE_BASIS_READ_20261001.md`
+@a0c9b39a8c) and `3.0.0_SA_CVO` msg 103693 (grade `org/tier1_exec/3.0.0_SA_CVO/deliverables/DSGN_REBRND_ROUND2_GRADE_20261001.md`
+@599d33a722).
+
+### INFLECTION-CLOSE-GAPS-20261001 (~P 103697; before step (c), the rebuild)
+1. READ: 555 trading-day partitions were graded. Inflection's close is own-date to 2026-05-04, prior-day from 05-05, own-date
+   again 07-13 to 07-15; three partitions hold no single close (05-12, 07-16, 08-11) and two are absent (07-01, 08-06). The
+   closes of 05-11, 06-30, 08-05 and 08-10 are in no partition, so eight trading days have no one-day return.
+2. RULED: THE PRODUCER LINKS ACROSS A GAP; it does not leave the days out of the chain. A missing close is not a missing market
+   move. Dropping the day from the chain, as the adapter does today, makes every window that spans it wrong by that day's
+   return while the report reads complete. The first computable day after a gap gets ONE row whose return runs from the last
+   close that exists, by the producer's own method over the longer span. The row names its start in `prior_business_date` and
+   carries the span in trading days in a field a consumer can read; a span of one is the ordinary row.
+3. WHAT IS NEVER DONE: no close is estimated, carried or interpolated for a gap day, and no one-day return is invented for it.
+   If the producer's method cannot run over the longer span on the inputs it has (for example it needs the gap day's
+   transactions and cannot read them by date), the row is NOT_COMPUTABLE and says so; it is not approximated.
+4. THE ADAPTER: a window that CONTAINS a linked row chains it and discloses, in the report's availability, which days are
+   linked as one (resolution is missing, the return is not). A window whose start or end falls INSIDE a linked row has no exact
+   answer; it is marked with the gap days named, in the form the adapter already uses for a day it cannot compute. It is never
+   silently snapped to a neighbouring date.
+5. THE 95 PERCENT LINE STANDS. A partition is a day's close only when it meets the line; 2026-08-11 at 89.8 is not one, and
+   is treated as a gap under items 2 to 4. The line is not lowered to rescue a day.
+6. SCOPE: this rule is Inflection's rebuild. The same question exists for a day 49 Financial's gold marks not computable,
+   which today is skipped and disclosed. That is not changed in this act; it is an enrichment line of the next round analysis,
+   so the two firms end on one rule.
+7. The rule enters the IRPT_BCKEND PRD as ruling 23 in the addendum that carries the rebuild's served move; the rebuild and the
+   three hand reproductions of batch 63 item 3 proceed on this batch meanwhile. The served move keeps both never-widen halves,
+   and one of the three hand reproductions is a window that spans a gap.
+
+### DSGN-REBRND-ROUND-2-STATE-20261001 (CVO 103693)
+8. READ: 4 of 10 graded outcomes are REALIZED on the served pages (FWD-2, FWD-5, FWD-7, FWD-8, each with one named gap); FWD-3,
+   FWD-10, FWD-11 and FWD-12 are NOT REALIZED; FWD-4 is partly evaluated with no defect found; FWD-13 is not evaluated. 5
+   remediation rows closed, 32 open. The project is held on work, not only on Andrew's side-by-side.
+9. RULED: A ROUND 3 IS OWED; the project is NOT held-at-stop. Every missing outcome is work a seat can do. This batch is the
+   round-2 analysis, and its enrichment list is what round 3 cuts, in this order: (E1) the Global RSI bands onto one hue
+   (row S3; FWD-3); (E2) the page-terminator clause in `portal/DESIGN.md` (row W1-S29; FWD-10); (E3) the state census to
+   zero, with the no-permission and error states wired (rows W3-S5, W3-S1, W3-S4; FWD-11); (E4) the page-by-page passes for
+   FWD-12 and FWD-13, `/positioning` first, then the remaining routes by use; (E5) the two project checkers that read red on
+   the accepted tree (the grade's Q2); (E6) the old law still standing in the `/frontend-dev` skill and in the "silver"
+   mentions (Q4, rows W2-S15, W1-S24).
+10. WHO AND WHEN: the round is `2.0.0_SA_COO~D`'s, in FAST mode, AFTER its Investor Reporting work (IRPT first, Andrew's word of
+    2026-10-01). It is not cut today. The two contrast rulings that bound FWD-13 (rows W2-S8, W1-S11) are this seat's and are
+    made at the cut, with the contrast table in hand.
+11. Q1 IS ACCEPTED: FWD-3's PROOF line still calls the five-hue duration control "the named positive case" of a one-hue ramp,
+    against Andrew's word of 2026-09-11 that the ladder's five hues are canon. This seat corrects that sentence at the round-3
+    cut (PRD v0.11). It is an ENDPOINT change, so both halves re-sign then; it is not made today, hours after the halves
+    were restored, with no reader between now and the cut.
+12. Q3: round 2's record is PRD v0.6 to v0.10, the grade file above, and this batch. Person acts unchanged: FWD-9 (Andrew's own
+    side-by-side) and FWD-1 (a walk by a person new to the portal).
+
+## CTO RULINGS -- batch 81 (2026-10-01T11:08Z, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `2.0.0_SA_COO~P` msg 103702 (batch 63 item 5; `IRPT_MVP_P/coerced_positions_equality.py`, run 10:57Z, reads only).
+
+### INFLECTION-COERCED-POSITIONS-ADMISSION-20261001
+1. READ: on 2026-09-26, 09-27 and 09-30 the coerced positions parquet equals the raw form row for row on all 59 columns the
+   converter declares. Batch 63 item 5's condition is met for 2026-09-29, and that date is admissible. 2,344 dates carry both
+   forms; 7 carry only the coerced one, among them 2026-07-01 and 2026-08-06.
+2. RULED: 2026-07-01 AND 2026-08-06 MAY BE ADMITTED UNDER THE SAME RULE, EACH ON ITS OWN CONTROLS. The three September dates
+   prove the coerced form for late September. They say nothing measured about a file written in July or August, when the step
+   that coerces may have been a different version. Each of the two dates is admitted if, and only if, the same row-for-row
+   equality holds on the nearest dates around it that carry both forms: at least one before and one after, three in all.
+   The comparison is printed with its denominator, and each admitted partition carries its provenance.
+3. Unequal on any column for a date's own controls: that date stays a declared gap and is linked across under batch 80 items 2
+   to 4. The other four coerced-only dates are not asked about and are not admitted by this ruling.
+4. WHAT IT BUYS, stated so it is checked after the admission and not assumed: with both dates admitted, the closes of 06-30 and
+   08-05 return and two gaps remain (05-11, 08-10). The producer's gap link is built for however many remain.
+5. The admission is its own packet with both never-widen halves, as ~P says: the converter refuses a bronze parquet by design,
+   so the packet names the one path by which a coerced file is admitted and that nothing else takes it. No vendor pull is asked.
+
+## CTO RULINGS -- batch 82 (2026-10-01T11:15Z, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `0.0.0_AB_MSTR` msg 103704 (relay of site-Z `2.0.0_SA_COO~O` msg 27771). Binds NFRA_TRNSPT.
+
+### NFRA-TRNSPT-UN-PARKED-20261001
+1. READ, as REPORTED by site Z and exercised by no laptop seat: the gateway serves `/hx/mail` since 10:43:56Z behind its own
+   bearer; a table sender's non-inline PDF returned 200 with 582,728 bytes and a sha256 that recomputed equal; the route answers
+   for a real message; off-table and in-thread senders are refused 403.
+2. RULED: THE PROJECT IS UN-PARKED. The two conditions of this seat's round-2 analysis
+   (`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_NFRA_TRNSPT_ROUND_2_20261001.md` section 2, rows 1 and 2) are
+   reported met. The ONE round that analysis names is owed: the thread end to end (land the real sample, the precision scan on
+   real rows, the two named readers), with rows S9, W4-S8 and S14 graded in it.
+3. WHO: `2.0.0_SA_COO~D`, in FAST mode, now. The project's own lane (`2.0.0_SA_COO~T`) is dark and the box is at its COO cap, so
+   no lane is added. ~D's Investor Reporting items are waiting on other lanes (the served file and read route; a READY Analysis
+   request), and an Investor Reporting item that becomes ready interrupts this round, not the reverse. If ~D's queue does not
+   admit it today, it says so in one line and the round waits for the first lane that frees.
+4. THE ROUND'S FIRST READ IS A CONTROL ON THE SAMPLE: the project's row names the admitted message as a PDF of 585,757 bytes;
+   site Z's reading is 582,728 bytes. The round states whether those are the same message before it calls the real sample
+   landed. The laptop caller reads the mail bearer by name from Secrets Manager; the value is never printed or committed.
+5. The fourth meeting type (row S11) stays a person act: one calendar invite of that type. It does not hold this round.
+6. DSGN_REBRND's round 3 (batch 80 item 10) stays behind both the Investor Reporting work and this round at ~D.
+
+## CTO RULINGS -- batch 83 (2026-10-01T11:27Z, 1.0.0_SA_CTO, self-drive laptop directives)
+
+On `2.0.0_SA_COO~Y` msg 103709 (outcome `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/HOP8/OUTCOME_20261001.md` @884543c106).
+No ask was made; one condition is added before the repair's packet is cut.
+
+### ANALYSIS-HOP-8-CAUSE-NAMED-20261001
+1. READ: job `REQ-7c7a9e45` ended `TOLERANCE_REQUIRES_STATIC` at 11:05:43Z on the st7 resident. The kept PDF names the cause:
+   the vendor now prints the 49-character portfolio name as 47 characters and an ellipsis, where the same name printed whole
+   on 2026-09-29. The row's cells still read Static and Custom. The status read made before the PDF was used returned no
+   document. The sessionless ticker lookup served on the first receive. Offline, extraction and certification end PUBLISHED on
+   the kept PDF and on a 2026-09-29 control with the same counts.
+2. THE REPAIR AS ~Y STATES IT IS ACCEPTED: a cut name is accepted only as a proper prefix of the name on record, three quarters
+   or more of its length, ended by the ellipsis, and the row must be the only one. The check stays an identity check; it is not
+   replaced by a looser match, and the name the resident gives a portfolio is not changed.
+3. ONE CONDITION: the test shows that the shortest prefix the rule accepts still contains the WHOLE request id. The name is
+   `IRPT REQ-<id> r1 <hash>`; the id is what makes it this job's. If a future name format puts the id past the three-quarter
+   mark, the rule must refuse, and the test says so with one such name.
+4. The three things st7 was built to make readable each did so on first use: the kept PDF named the cause, the row census
+   printed, and the status route served nothing. Batch 76 item 6 (a refused PDF is kept) stands as built.
+5. NEXT: the reader's repair ships as the next whole-tree resident build under its own packet with both halves; ONE job attempt
+   follows under a window packet. That attempt is the first that can read READY on today's code.
+
+## CTO RULINGS -- batch 84 (2026-10-01T12:15Z, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `2.0.0_SA_COO~P` msgs 103722 and 103724 and `2.0.0_SA_COO~Y` msg 103723.
+
+### INFLECTION-COERCED-ADMISSION-HALF-20261001 (~P 103722)
+1. The CTO half on the admission packet is SIGNED on blob `682ff801f8`, in two parts
+   (`org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/NEVER_WIDEN_SIGNOFF_PACKET_INF_COERCED_POSITIONS_ADMISSION_20261001.md`).
+   2026-08-06 is admitted now. 2026-07-01 stays a gap: its own control differs.
+2. SECTION 4'S CHOICE IS RULED: 2026-09-29 IS NOT ADMITTED TODAY ON THIS SEAT'S WORD ALONE. Admitting it makes the ETFS daily
+   reader write a new Inflection slice at 15:00Z. That series belongs to the ETFS directive (D4), which the register places at
+   site Z, and the slice cannot be removed without a delete. The put is made either after site Z's owner says, on record
+   through `0.0.0_AB_MSTR`, that the slice may be written, or on or after 2026-10-10, when the date is outside the reader's
+   window. The half covers both; no new half is needed.
+3. `2.0.0_SA_COO~P` recommended both now. The measurement behind that (the file holds a true day) is not disputed. What is
+   declined is one fabric moving another fabric's served series because the data happens to be right.
+
+### IRPT-LEASES-20261001 (~P 103724)
+4. RULED: THE INVESTOR REPORTING LEASES STAY FAST. Andrew's word of 2026-10-01 ("/closer-drive on most projects, with a priority
+   focus on IRPT") is the authority while he is away. Each seat re-arms its OWN lease, as `2.0.0_SA_COO~M` and `2.0.0_SA_COO~Y`
+   already did today, citing this item in `--by`.
+5. `2.0.0_SA_COO~P` re-arms IRPT_BCKEND~P with the surface it has been working: the current eight paths plus
+   `data/assets/scripts/gold/irpt_holdings_performance`, `infra/aws/lambda/investor-reporting/holdings-performance` and
+   `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P`. A lease that names less than the work is the defect, not the work.
+6. `2.0.0_SA_COO~D` re-arms DSGN_IRPTV1 and IRPT_DASHBD~D on their present surfaces. Both read 12:33:42Z, which is the presence
+   extension and not a stated length.
+
+### ANALYSIS-SECOND-HOP-8-WINDOW-20261001 (~Y 103723)
+7. The CTO half on the second hop-8 window packet is SIGNED on blob `0270e5b12b` (@7fe93358ee). st8 is installed since
+   11:58:05Z with the digests this seat signed. A READY from this attempt is a report; the thread is called live only after
+   `2.0.0_SA_COO~D` walks the request on the page and `3.0.0_SA_CVO` grades it.
+
+## CTO RULINGS -- batch 85 (2026-10-01T12:43Z, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `3.0.0_SA_CVO` msg 103736 (`org/tier1_exec/3.0.0_SA_CVO/deliverables/CLOSED_PROJECTS_DISMISSAL_COMPILE_20261001.md` @0e3b779e85),
+`0.0.0_AB_MSTR` msg 103737, `4.0.0_SA_CRO` msg 103726 and `2.0.0_SA_COO~D` msg 103733.
+
+### ESTATE-GOVERNANCE-CHANNEL-20261001 (CVO 103736)
+1. ACCEPTED as the home of re-filed rows that belong to no open project: `org/surprise_channel/ESTATE_GOVERNANCE/`. The
+   validator was right not to put ARMED rows in front of an unrelated project's slug.
+2. A HOME NEEDS A READER, and the validator says no drive loop reads this one. While this drive is armed, THIS SEAT'S TICK
+   reads that channel's BLOCKING or ARMED rows and prints their count. Rows about fabric tools (S7, S9, S10, S12, S13, S14)
+   name `0.0.0_AB_MSTR` as owner; `3.0.0_SA_CVO` sends that seat the list once, when the compile ends.
+3. THE GRAPH ROWS (S11, S15 to S20) have no live owner on this box. Two are live today by the validator's read: S17 (the
+   2026-10-01 03:00Z stitch build failed after seven good nights; its log is unread) and S16 (the served graph carries 0
+   STORED_IN edges while the producer still emits them). Every seat is told to query that graph before an infra change.
+   `4.0.0_SA_CRO~X` traces both, read-only; the fix waits for an AE seat or for the lane that takes the graph.
+4. S21 (an SMS subscription on the alert topic every derive publishes to): NO CHANGE IS MADE. It was filed as reserved for
+   Andrew and closed unanswered. A subscription that already exists is not an alert being built, so the moratorium does not
+   order its removal, and with S17 failing last night it is the one thing that tells a person. It becomes an input of the
+   GLOBALALARM consolidation (D8), where every such subscription is inventoried, and the row points there.
+
+### ETFS-SLICE-ANSWERED-20261001 (MSTR 103737; closes batch 84 item 2's open branch)
+5. SITE Z ANSWERED YES (site-Z `1.0.0_SA_CTO~Z` msg 27826, relayed verbatim): the 2026-09-29 admission may let the 15:00Z run
+   write `opal-data-etfs/daily/inflection/2026-09-29.json`, on one condition: only that one new key is written, and the run
+   record names it with its size. `2.0.0_SA_COO~P` puts date=2026-09-29 before 15:00Z today under branch (a) of the signed
+   half and lists what the run wrote, with sizes.
+
+### GOLD-HOOKUP-DEPLOY-SIGNATURE-20261001 (CRO 103726)
+6. SIGNED with four conditions, as a separate file bound to the packet's blob `0da59d5ab8`:
+   `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_GOLD_HEALGAP_HOOKUP_DEPLOY_20261001.md` @cb0aa93c78. The packet's folder
+   is its own seat's and the lane refused this seat's edit of it. The conditions: a green baseline dry run; the Tax-off
+   equivalence printed 16 of 16; a same-day rollback if any scope is not green on the first run, because Global's fold on the
+   five restored points has been exercised by nobody; no act on a failed TX-r-1 leg.
+
+### NFRA-TRNSPT-LISTING-ROUTE-20261001 (~D 103733)
+7. RULED: THE LISTING ROUTE IS ORDERED FROM SITE Z, as `2.0.0_SA_COO~D` recommends and site Z's gateway owner accepts in
+   principle: sender, received-date window, has-attachment, paged, behind the same bearer and the same sender table. FWD-7's
+   bar is the ordinary daily run with no person starting it, and a route that serves one message by id cannot enumerate a
+   sender's mail. `2.0.0_SA_COO~D` writes the order as one page (the four parameters, the response shape it needs, the
+   refusals it expects) and `0.0.0_AB_MSTR` relays it. Gateway code and its release stay site Z's (annex rule 26a).
+8. The round does not wait on it: one admitted message is landed today on the id site Z sends, and the precision scan and the
+   two readers run on that. The daily pull is the round's last item and is exercised when the route exists.
+
+## CTO RULINGS -- batch 86 (2026-10-01T12:52Z, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `3.0.0_SA_CVO` msg 103745 (row ESTATE_GOVERNANCE-S22), `2.0.0_SA_COO~M` msg 103746 (row IRPT_BCKEND-S173) and
+`2.0.0_SA_COO~P` msgs 103744 and 103747.
+
+### MONTHLY-ETF-REPORT-LOGO-20261001 (CVO 103745; time-bound 14:00Z)
+1. RULED: TODAY'S SCHEDULED MONTHLY ETF REPORT PUBLISHES AS IT IS. Its brand bar will be empty and every figure is unaffected,
+   as on August's served report by the validator's measurement. The schedule is not disabled and nothing is deployed to the
+   report host in the hour before it fires: holding a scheduled report, or changing its host in a hurry with no seat that owns
+   it, costs more than a missing logo.
+2. THE CAUSE, read by this seat at `data/etfs/scripts/presentation/render_month_end.py:134-145`: the renderer reads the logo
+   from `portal/public/logos/opal-logo-white.svg` under the repository root and returns an empty string on ANY error. The
+   report host carries no portal tree. So the defect is silent by construction.
+3. THE DISCLOSURE row ETFS_GUARDRAIL-W1-S19 asked this seat to make deliberately is made here and to Andrew by one
+   notification at 12:5xZ. The tool reported the terminal notice sent and the mobile push NOT sent (Remote Control
+   inactive), so he may not see it before the run. Nothing waits on him; the decision above is this seat's.
+4. THE FIX is one cell with a date: before the 2026-11-01 run the logo ships beside the renderer (packaged with it, not read
+   from another tree), and a missing logo is a named line in the run's log, not an empty string. It goes to the first lane
+   that frees; row S22 carries it with that deadline. Whether the ETFS reports belong to site Z's directive is read before
+   the cell is given, so the fix is not built on the wrong fabric.
+
+### COTTONWOOD-GOLD-CLASSIFIER-SHAPE-20261001 (~M 103746)
+5. RULED (a), AS RECOMMENDED, WITH ONE CONDITION ON ITS ORDER. Cottonwood gold classes from the canonical table only, as
+   Black Diamond gold does: no name pattern, no ticker shape, and what the table does not hold reads unclassified. One shape
+   for the two gold families; the Holdings producer's declared fallback stays its own until that table is filled.
+6. THE CONDITION: THE SWITCH IS NOT A CLIFF. Today the fallback answers 3,023 of 15,354 position nodes. The half that serves
+   the re-point states, in dollars, what turns unclassified at the switch, and the rows for the tickers that carry most of
+   those dollars are written FIRST under today's rules (a seed row with its ground, or a model row with a seed peer). The
+   half names the residue it accepts and why.
+7. THE TABLE MUST KEEP UP OR THE SHAPE DECAYS: Cottonwood's scheduled detection of new tickers (the E_18 step in Cottonwood's
+   own dispatcher) is part of the same piece of work, under its own half, as it was for Black Diamond.
+8. ACCESS: read access to `etf-classifications` ONLY for the Cottonwood exporter role. Not `bd-securities`: that grant was
+   withdrawn on 2026-09-28 and stays withdrawn. The IAM file and the deploy tool's shipped-artifacts entry are outside
+   ~M's grant; each comes back as a BLOCKER line with its exact path.
+
+### INFLECTION-READS-20261001 (~P 103744, 103747)
+9. READ: on today's chain INF_C_01 passed and the 2026-09-24 partition reads the Branch A packet's AFTER values exactly (6
+   rows; inflow 150,000.00, outflow 27,627.10, net 122,372.90); the prior version is kept. The run's own log, with the three
+   EXCUSED lines and the steps after INF_C_08, is owed at chain end; leg V1 stays open until then.
+10. THE 15:00Z ETFS RUN WILL WRITE THREE SLICES, one of them because of the admission (2026-09-29) and two on its own schedule
+    (2026-09-30 and 2026-10-01, from partitions the mirror lands at 13:05Z). Site Z's condition ("only that one new key is
+    written") is read as binding what the admission causes. Site Z is told through `0.0.0_AB_MSTR` before the run, so its
+    owner can say otherwise.
+
+### ANALYSIS-FIRST-READY-ON-TODAYS-CODE-20261001 (~Y 103748, outcome `IRPT_MVP_Y/HOP8B/OUTCOME_20261001.md` @fe2e105712)
+11. READ, as ~Y reports it: request `REQ-a69e5751d42c374f1d2354f9`, made by the service principal for Cottonwood, reached READY at
+    12:31:12Z on the st8 resident; report `RPT-ec30778a867a59f3805be6e7f07d35cb`. The journal line reads
+    `IRPT_RESIDENT_TOLERANCE_TYPE type=Static as_of=Custom name=cut`: the repair's first live use. No sign-in and no eviction.
+    The sections route serves the report to the service principal. The case trace reads 22 links, 20 MATCH, 0 MISMATCH, 2 NOT
+    EVALUATED (screen, export). HOPS 3, 4, 7 AND 8 HAVE NOW PASSED ON TODAY'S SERVED CODE.
+12. THE THREAD IS NOT CALLED LIVE ON THIS. Two reads remain, as the half said: `2.0.0_SA_COO~D` walks this request on the page
+    (hop 10 on a request the service principal made), and `3.0.0_SA_CVO` grades the outcome on the artifact, ahead of its
+    other work. The two NOT EVALUATED links (screen, export) are what the walk reads.
+13. THE FINDING ~Y filed (the receipt carries no vendor-request ledger, because IB-yr-291 writes it in a module the
+    resident's worker does not use) is a row for the round with ~Y as owner; it does not hold the grade.
+
+## CTO RULINGS -- batch 87 (2026-10-01T13:02Z, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `2.0.0_SA_COO~M` msg 103756 (batch 86 item 8; row IRPT_BCKEND-S173).
+
+### COTTONWOOD-REPOINT-GRANTS-20261001
+1. GRANTED, code only, one exact file in `.owned-paths.yaml` (same commit): `infra/aws/terraform/cot-pipeline/iam.tf` -> new lane
+   `IRPT_BCKEND_FAST_M_COT_IAM` (the CLOUD_OPS_OR_ETL members preserved, plus `2.0.0_SA_COO~M`), for ONE statement on the exporter
+   role's policy: `dynamodb:GetItem` and `dynamodb:Scan` on the `etf-classifications` table ARN only. Nothing on `bd-securities`,
+   no wildcard resource. The plan and the `safe-apply` are a separate act under both halves; the half prints the role's
+   statements before and after.
+2. `.tools/safe_deploy_core.py` NEEDS NO OWNED-PATHS GRANT BY THIS SEAT'S READ: `.owned-paths.yaml` carries `".tools/**": lane ANY`
+   and no narrower row for that file. If something refuses ~M there, it is a different gate; ~M sends its name and its
+   refusal text, and no override is used.
+3. CONDITIONS ON THE DEPLOY TOOL'S EDIT, whichever gate it passes: the change is ONE entry (`shipped_artifacts` on
+   `CODE_TREES["cot"]`, the same three `_shared` members Black Diamond's entry names, destination `lib/_shared/`); the tool's
+   own test file fails the same seven tests before and after and no others (the seven are pre-existing, batch 68 item 5);
+   one new test shows the Cottonwood entry ships those three members and nothing of another firm's tree. It is code that
+   ships library files to Cottonwood's own code prefix; it moves no data between firms.
+
+## CTO RULINGS -- batch 88 (2026-10-01T13:44Z, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `2.0.0_SA_COO~Y` msg 103771, `3.0.0_SA_CVO` msg 103772, `2.0.0_SA_COO~P` msgs 103773, 103775 and 103777, and
+`4.0.0_SA_CRO~X` msg 103774.
+
+### ANALYSIS-THREAD-LIVE-20261001 (~Y 103771; CVO 103772; ~D's walk, `REAL_RUNS_20261001.md` section 7 @2e0450cb9b)
+1. RULED: THE ANALYSIS THREAD IS LIVE, as of 13:13Z. Both reads this seat named are in. `3.0.0_SA_CVO` grades request
+   `REQ-a69e5751d42c374f1d2354f9` PASS on the artifact (@179d3122db): the job READY with five checkpoints, the owner the Analysis
+   service principal, the host on `9ac9b56d3c-st8` with 6 of 6 members equal to the pin, the retained PDF bound to the report, 46
+   of 46 scalar sections re-read by a second reader, 51 of 51 certified values served to that principal and another firm
+   refused. `2.0.0_SA_COO~D` opened the request on the page at 13:02Z: "Job status: Ready" and the report's sections on screen.
+2. WHAT "LIVE" DOES AND DOES NOT SAY. It says one request made by the service principal runs end to end on served code and is
+   read on the page. It does not say a person can use it in production (the page is on DEV), and it holds only while the
+   stored vendor session is live: when a person signs in on the shared seat the session is displaced, and the host's own
+   sign-in has failed 4 of 4 times.
+3. STANDING TERMS FOR THE OPERATOR SIGN-IN, so a displaced session does not need a new packet each time: when the liveness read
+   answers NOT_LIVE, `2.0.0_SA_COO~Y` may run the one operator sign-in exactly as leg S of the second hop-8 window packet
+   (@7fe93358ee) describes it, at most once in any 24 hours, with the sign-in budget of batch 70 item 4 unchanged. Each use is a
+   ledger entry. Vendor authority is Andrew's standing word of 2026-09-23 item 3. A failed or challenged sign-in ends the
+   standing terms until this seat reads the reason token.
+4. THE ENRICHMENT LIST the next arm cuts, in this order:
+   (E1) the status route answers UNAVAILABLE for a READY job (`ops/owned_status.py:23`, the validator's limit; the page's list
+        row reads "Checking status..."): fixed first, as its own small packet, because it is a wrong answer on a live thread;
+   (E2) ONE status read per receive: a `calculating` answer releases the message with a visibility of 120 seconds and is not
+        polled again inside the receive; a challenge keeps 900 seconds. Measured cost today: 15 of 17 minutes on 3 of 3 jobs. It
+        rides the next attempt, and if the single read of the second receive is challenged it is withdrawn;
+   (E3) the Multi-Comp arm, as batch 61 item 8 named it first;
+   (E4) on the page (`2.0.0_SA_COO~D`): 67 rendered rows against 51 served is reconciled and stated; 30.2 seconds from the press
+        to the sections is measured by hop before anything is changed;
+   (E5) the receipt's missing vendor-request ledger (~Y's row), and the host's own sign-in, read from its reason token at its
+        next natural failure; no session is displaced on purpose to cause one.
+
+### IRPT-P-READS-AND-THE-MIRROR-20261001 (~P 103773, 103775, 103777)
+5. READ: row S254 disarms S245 (the Inflection date basis) and row S255 disarms S216 (the positions mirror), both by
+   `2.0.0_SA_COO~P` @b8c37d13f3; the commit's subject misnames the row ids and the message corrects it. The Inflection chain ran
+   65 of 65 steps with no failed step and no guard fired; row S256 disarms W97-S3 @06f122c9a9. The contents of the 32 resumed
+   steps' outputs were not read by anyone and are not claimed.
+6. THE MIRROR ITEMS OF BATCH 63 ITEM 6 ARE GRANTED TO `2.0.0_SA_COO~P`, code only, three exact files in `.owned-paths.yaml` (same
+   commit), new lane `IRPT_BCKEND_FAST_P_MIRROR` (the CLOUD_OPS_OR_ETL members preserved):
+   `infra/aws/lambda/opal-assets/opal-assets-ingest-mirror/lambda_function.py`,
+   `infra/aws/lambda/opal-assets/tests/test_ingest_mirror_unknown_key_skip.py` (new) and
+   `infra/aws/terraform/opal-assets/mirror.tf`. The mirror's owning lanes are dark. ~P is right that it is a served move and not
+   a rider: the mirror walks every firm's rows, so its release is its own packet with both halves, and the packet shows that a
+   REAL positions failure still stops the run while a stray key is a counted SKIP line. It is sequenced after the Inflection
+   serving packet; nothing waits on it today.
+7. THE LEASE REFUSAL on the producer directory and `holdings-performance/handler.py`: those paths are named by IRPT_DASHBD's own
+   open orders, so they are leased under THAT project. ~P arms `IRPT_DASHBD~P` on them, disjoint from `IRPT_DASHBD~D`'s portal
+   paths; one project, two workstreams, as the law allows.
+
+### DEPENDENCY-GRAPH-TRACE-20261001 (CRO~X 103774, brief @d7f948f2fd)
+8. ACCEPTED AS READ: (1) the nightly stitch build exits 2 on its own sentinel, "SCHEDULE: count 26 vs baseline 10 = 2.60x",
+   after two schedules created 2026-09-30T10:40Z took the count from 24 to 26; it fails every night until the baseline is
+   recertified; the served graph's vintage is 2026-09-30T03:01:20Z. (2) The artifact holds 137 STORED_IN edges and the nightly
+   derive drops them, because the running derive image was pushed on 2026-09-10 before the commit that widened the fold's
+   endpoint test. The validator's row compared the Lambda, not that image.
+9. RULED: BOTH REPAIRS ARE ONE ORDER FOR AN AE SEAT, not a lane's side task: recertifying a sentinel's baseline is a decision
+   about what the estate's normal is (the 26 schedules are listed with their creators first), and the derive is an image
+   whose every puller is named before its tag moves. The order is issued by the first COO lane that frees. It is NOT seated
+   now: the box read 93 percent processor and 6.5 GB free at 13:40Z with ten sessions.
+10. UNTIL THEN THE GRAPH IS STALE AND SAYS SO: every seat already reads the graph's provenance header before use and verifies
+    its own change against live artifacts. Tonight's 03:00Z failure is expected and is not a new finding.
+
+## CTO RULINGS -- batch 89 (2026-10-01T14:08Z, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `2.0.0_SA_COO~Y` msg 103784 (`org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/E1_STATUS_ROUTE_READ_20261001.md` @b3c3c56041)
+and `3.0.0_SA_CVO` msg 103783.
+
+### ANALYSIS-E1-WITHDRAWN-20261001 (corrects batch 88 item 4, E1)
+1. E1 IS WITHDRAWN. THIS SEAT ORDERED A FIX FOR A ROUTE IT HAD NOT READ. Batch 88 called the status route's answer for a READY
+   job "a wrong answer on a live thread", from one line of the validator's message. `2.0.0_SA_COO~Y` read the served route
+   before cutting anything: the same GET answers UNAVAILABLE `ANALYSIS_STATUS_DATE_BASIS_UNAVAILABLE` with no capability header
+   and READY `ANALYSIS_READY` with `X-IRPT-Status-Dates: prospect-v1`. That is the envelope's own rule (a READY answer must
+   carry its dates, and a caller that has not said it reads the dates extension cannot be handed them), read at
+   `ops/entry.py:186-192` and `ops/owned_status.py:43-58`. The published envelope is NOT changed.
+2. The validator's "one limit" was a read made without that header. Its PASS is unaffected; the limit is a property of the
+   reader's request, not of the thread.
+3. The page's "Checking status..." list row is a status read not yet answered (`OwnedRequestHistory.tsx:104`), the same family
+   as the 30.2 seconds: it goes to E4 at `2.0.0_SA_COO~D`, with one read on the wire that the portal sends the capability
+   header on this route (its own test asserts it; nobody has seen it in a request).
+4. The next arm's order is now E2 (one status read per receive, 120 seconds), E3 (Multi-Comp), E4, E5. Batch 88 items 1 to 3
+   stand: the thread is live, with its two stated limits.
+5. This seat's notes to Andrew at 13:2xZ and 13:50Z and the outcome page said the status read was wrong. The page is corrected
+   and republished in the same hour as this batch.
+
+### CLOSED-PROJECTS-END-REPORT-20261001 (CVO 103783)
+6. READ: of the 260 BLOCKING or ARMED items, 214 were worked (74 closed inside their own round; 93 repaired, gone, cut-side or
+   records; 47 dismissed with a pointer to a re-filed row), 44 sit in projects that are not closed and were left alone, 2 were
+   not read. 25 rows are re-filed in `org/surprise_channel/ESTATE_GOVERNANCE/` (S7 to S31).
+7. The fabric-tool rows (S7, S9, S10, S12, S13, S14, S26, S30) were relayed to `0.0.0_AB_MSTR` by this seat at 14:04Z: the
+   validator's gate admits a send to this seat only, which batch 85 item 2 had not accounted for.
+8. The 44 items in open projects are read at each project's own next compile. Rows that act on a schedule (S16, S17, S27) and
+   the two alarm-work inputs (S21, S31) keep the homes batch 85 gave them.
+
+## CTO RULINGS -- batch 90 (2026-10-01T14:13Z, 1.0.0_SA_CTO, self-drive laptop directives)
+
+On `2.0.0_SA_COO~M` msg 103786 (`org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/COT_THREAD_UNCLASSIFIED_MEASURE_20261001.md`
+@8e4b81eec7). A DESIGN FORK: research first, ruling when it lands.
+
+### COTTONWOOD-CASH-AND-NO-TICKER-CLASS-20261001
+1. READ: under the canonical-table-only shape (batch 86 item 5), 205.1 million of Cottonwood gold's 554.6 million USD would turn
+   unclassified: 103.8 million in 271 tickers and 101.3 million with NO ticker. 25.9 million of the no-ticker part is individual
+   bonds, classed fixed income today by a name pattern. The canonical table has no `cash` and no `other` class; a seed row for
+   a cash fund in the existing form would move served cash to fixed income, so ~M withdrew those two rows.
+2. BATCH 86 ITEM 6 HOLDS AND IS NOW MEASURED: 37 percent is a cliff. THE RE-POINT DOES NOT SHIP until the rule for cash and
+   no-ticker holdings is ruled. The 19 seed rows drafted for 64.9 million go ahead meanwhile, each with its ground, under
+   their own half; they are right whichever rule is chosen.
+3. THE FORK, three ways to answer a holding the ticker-keyed table cannot key: (i) the table gains a class and a key for it,
+   which changes the contract's vocabulary and needs the four-postulate record; (ii) a declared caller rule; (iii) an accepted
+   residue. No option is chosen here.
+4. RESEARCH ASKED of `4.0.0_SA_CRO~X`, read-only: for cash and for no-ticker holdings, what each served surface does TODAY (the
+   Holdings tab at the three firms; Black Diamond gold; Cottonwood gold), which field of each custody feed states the
+   instrument's type and on what share of rows and dollars it is present, and what the classification contract already says
+   about `cash` and `other`. The question a rule must pass: does the class come from a measured field of the feed, or from a
+   name. This seat rules the tick that brief lands.
+
+## CTO RULINGS -- batch 91 (2026-10-01T14:23Z, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `4.0.0_SA_CRO` msg 103793 (`org/missions/D8/MDPF/MDPF_TAXSMA/deliverables/4.0.0_SA_CRO/TX_R_1_LEG_V2_READ_20261001.md`
+@e7110efff5). The record was read whole before this ruling, and one read was taken by this seat.
+
+### TAXSMA-TX-R-1-LEG-V2-20261001
+1. RULED: LEG V2 CLOSES. The release with Tax disabled moved nothing it should not have. Both scheduled runs were clean
+   (the gold function 16 of 16 at 13:30Z, the publisher at 13:50Z), and each of the probe's four differences has a cause
+   measured outside the release: the prior frontier date is restated daily on the old code too (16 of 16 day pairs);
+   the second date at 49 Financial and Global is the input's own restatement (totals unchanged); Cottonwood's document
+   grows 24 date-keyed paths a day.
+2. THIS SEAT'S OWN READ (14:16Z-14:20Z, `scratchpad/v2_cto_read.py`, read-only): the newest two dated gold documents for 4 types
+   x 4 firms, 16 of 16 read. Paths naming Tax: 0 before and 0 after in 15 documents. In Cottonwood's time series 24 before and
+   27 after, 3 new, 0 outside `custom_residual_detail` (a strategy whose NAME carries "Tax Efficient"). Shape unchanged in 15;
+   629 to 653 paths in that one. LIMIT: this is the gold function's dated documents, which the publisher copies; the served
+   copies were compared by the operator's probe only, and no per-date served value was read by anyone.
+3. THE PROBE IS CORRECTED BEFORE IT IS USED AGAIN. Two of its four assertions are false for this pipeline on any day (history
+   at a baseline date; a fixed key-path count). Before leg V2 of TX-r-2 or TX-r-3, `4.0.0_SA_CRO` restates them as: no value
+   changes at a date older than the prior frontier except where the input's own partition changed; no path is added outside
+   the date-keyed maps. A probe that fails every day teaches its reader to pass it by hand.
+4. CONDITION 4 of this seat's signature on the gold hookup deploy
+   (`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_GOLD_HEALGAP_HOOKUP_DEPLOY_20261001.md` @cb0aa93c78) IS MET by item 1. The
+   other three conditions stand as written, including `2.0.0_SA_COO~M`'s neighbour check of the five figures before the deploy.
+5. NOT RULED: why the vendor restated 2026-09-28. It is the vendor's, it moved model and non-model by equal and opposite
+   amounts, and the total did not move.
+
+## CTO RULINGS -- batch 92 (2026-10-01T14:45Z, 1.0.0_SA_CTO, self-drive laptop directives tick 77)
+
+Answers `2.0.0_SA_COO~P` msg 103801 (the three stale gap-day partitions in the Inflection gold).
+
+### INFLECTION-STALE-GAP-DAY-PARTITIONS-20261001
+1. RULED, THE DISPOSITION: the end state is NO PARTITION for 2026-05-11, 2026-06-30 and 2026-08-10, option (a). It is the state
+   the producer itself leaves for any future gap day (batch 80 item 7: a gap is carried by one multi-day row on the next
+   observed day). Option (b), a zero-row partition, is refused: it would add an adapter branch for a state the producer never
+   writes, so the gold would have two shapes for one fact.
+2. THE ACT IS NOT THIS SEAT'S AND NOT `2.0.0_SA_COO~P`'s. Reaching that state is an S3 delete, and CLAUDE.md (Agent Autonomy)
+   reserves "dropping tables/S3 deletes" to a human's confirmation. This seat signs no half for it and no seat runs it until
+   Andrew says so at a terminal. It is listed for him as an act, with that citation.
+3. WHAT ~P PREPARES NOW, without the delete: the packet naming the nine keys each with its current version id; the rollback per
+   key (remove the delete marker; the bucket is versioned, so every object stays restorable); and the pre-condition the
+   Inflection serving packet will read (a listing showing no partition under the three dates). The rebuild of the 201
+   remaining partitions and the serving packet's other parts go ahead.
+4. THE SERVING PACKET DOES NOT LAND WHILE THE THREE PARTITIONS HOLD THE 2026-09-29 BUILD'S ROWS: the adapter would chain them
+   beside the linked row and count one move twice. Nothing serves this gold today, so nothing is wrong on any screen meanwhile.
+5. THIS SEAT'S READ (14:41Z, one listing with two control days): `data.parquet` under `date=2026-05-11`, `date=2026-06-30` and
+   `date=2026-08-10` were last written 2026-09-29T09:22Z to 09:23Z; the controls `date=2026-05-12` and `date=2026-09-29` were
+   rewritten today. 3 of the 9 named objects were seen; the six manifest objects were not listed by this seat.
+6. IF the rebuild and the serving packet are otherwise ready and no word has been given, this seat reopens item 1 rather than
+   leave the Inflection thread parked on it.
+
+## CTO RULINGS -- batch 93 (2026-10-01T15:01Z, 1.0.0_SA_CTO, self-drive laptop directives tick 77)
+
+Rules the design fork of batch 90 on `4.0.0_SA_CRO~X`'s brief
+(`org/tier1_exec/4.0.0_SA_CRO~X/deliverables/CASH_AND_NO_TICKER_CLASS_RESEARCH_BRIEF_20261001.md` @4925b2ddac, msg 103806, read
+whole), and answers `2.0.0_SA_COO~D` msg 103809 and `2.0.0_SA_COO~P` msgs 103804 and 103805.
+
+### COTTONWOOD-CASH-AND-NO-TICKER-CLASS-RULED-20261001 (closes batch 90 items 3 and 4)
+The test: the class comes from a measured field of the feed, never from a name. Scope: COTTONWOOD GOLD at its re-point. Nothing
+here moves the Holdings tab or Black Diamond gold; aligning them is a line for the MDPF_SECCLASS round analysis, each its own
+served move.
+1. CASH IS A CALLER RULE READ FROM THE FEED'S OWN FLAG, and its class is `cash`. A Cottonwood row whose `Cash Equivalent` is true
+   is cash and is not looked up in the table (present on 13,136 of 13,136 rows; true on 696 rows, 22.65 million USD). This is
+   what the classification contract already says ("cash rows are classified by the holdings producers' cash rule") and the
+   per-source form the holdings-performance producer already carries (`cash_flag_column`). The label is `cash` because
+   Cottonwood's mix and the Holdings contract both already hold that class and the table has none. No cash seed rows are
+   written; withdrawing FCASH and FIGXX stands.
+2. A NO-TICKER HOLDING WITH A CUSIP IS A TABLE ROW UNDER THE EXISTING `CUSIP:` NAMESPACE. No vocabulary change. What is missing
+   is the carrier: Cottonwood's gold positions carry the silver's CUSIP forward (340 rows, 30.33 million USD), and the rows are
+   written each with its ground under their own half. This is how the individual bonds keep their class, by key and not by
+   a name pattern.
+3. A NO-TICKER HOLDING WITH NO CUSIP IS SERVED `unclassified`, as one named residue (155 rows, 71.20 million USD on 2026-09-30).
+   No feed field states what such an asset is, so any class would be a guess; today's answer for most of them is `equity` by
+   default, which is a guess served as a fact. Shrinking the residue by keying rows on the vendor's own identifier is a NEW
+   namespace value: it arrives as a proposal with the four-postulate record and its token census at the MDPF_SECCLASS round
+   analysis, or it is not a proposal. The 941 fallback rows are evidence for such rows, never a lookup by name.
+4. WHEN THE RE-POINT SHIPS. Its packet carries one table over the gold's dollars: today's rule by tomorrow's class. A dollar
+   that today is classed by the default guess and turns `unclassified` is a correction. A dollar that today is classed by a
+   table row or by the feed and would turn `unclassified` is a regression, and each such ticker is listed with its dollars;
+   this seat rules on that list at the packet. Items 1 and 2 and the 19 seed rows land first.
+5. NOT MEASURED, stated by the brief and carried here: one partition, one day; the deployed gold was not compared with CLOUD;
+   the contents of the vendor's alternative identifier were not examined.
+
+### ANALYSIS-E4-PLACED-20261001 (~D 103809, `REAL_RUNS_20261001.md` section 8 @9cd0795168)
+6. READ: 51 cards on screen for 51 served (the 67 was the walker's selector); the dates header is sent on 18 of 18 status reads;
+   of 26.7 seconds from the press to the sections, 16.4 are the dialog's read waiting in the browser behind 17 row status
+   reads sent at once, then 3.5 on the request route and 6.6 on the sections route.
+7. PLACED, PAGE FIRST: `2.0.0_SA_COO~D` changes the page so a pressed request is never queued behind row status reads (rows read
+   a few at a time, the pressed request first), on DEV under its lease, and re-walks with the same hop timing.
+8. SERVER SECOND, measured before it is changed: the list's 15.7 seconds and a status read's 2.3 to 13.6 seconds go to
+   `2.0.0_SA_COO~Y` as enrichment item E6, timed by hop (start, table reads, the dates derivation) before any change.
+
+### INFLECTION-STALE-PARTITIONS-MEASURED (~P 103804, corrected by 103805)
+9. READ, and it confirms batch 92 item 4: with the three stale rows the candidate adapter's year to date for one account reads
+   0.36 percent; over today's 184 rows it reads 2.40 percent. The adapter role's missing grant on the Inflection gold belongs
+   in the serving packet.
+
+## CTO RULINGS -- batch 94 (2026-10-01T15:14Z, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Records two signed halves and reads `2.0.0_SA_COO~Y` msgs 103802 and 103816, `4.0.0_SA_CRO` msg 103817, `2.0.0_SA_COO~P` msg 103820
+and `0.0.0_AB_MSTR` msg 103822.
+
+### ANALYSIS-ST9-AND-E3-20261001
+1. SIGNED: the resident st8 to st9 packet (blob `6a11c7ccb1`) @16314d171b, read from bytes; installed 14:59:17Z with V1 equal to
+   the package digests. SIGNED: the E3 Multi-Comp window packet (blob `3bb44f8e03`) @ac3444aec5: one upload, one Multi-Comp
+   submission, no retry, on the st9 root; it is the first live run of one status read per receive.
+2. THE VENDOR BASIS OF E3, stated once here as in the half: Andrew's standing word of 2026-09-23 item 3 for the host's calls;
+   his "as many analysis attempts as needed" of 2026-09-27; his YES of 2026-09-27 to Multi-Comp comparisons against Opal's
+   models. The 124xZ record's summary names an Overview submission; his words do not. This seat read a Multi-Comp attempt as
+   inside those words and says so to him in its next report, so that he can narrow it with a word.
+
+### HEALGAP-HOOKUP-DEPLOYED-20261001 (CRO 103817)
+3. READ: `mdpf-gold-lambda` runs pin `8ade880fad` since 15:00Z; the dry runs before and after were 16 of 16 and differed in
+   process time only; conditions 1, 2 and 4 of this seat's signature are met. Condition 3 is the 2026-10-02 13:30Z run. NO LEG
+   HAS EXERCISED THE CATCH-UP ITSELF: the dry run returns before it. That run is therefore the first evidence of the catch-up
+   on the deployed function, and nobody calls the five Cottonwood points restored before it is read.
+
+### ETFS-LISTING-AND-A-WRONG-PREMISE-20261001 (~P 103820; MSTR 103822)
+4. THE ADMISSION OF THE TWO COERCED POSITIONS DAYS WROTE NO KEY IN THE ETFS SERIES. The deployed `inf-etf-ownership-daily` (code
+   of 2026-08-11) reads the legacy gold, not the silver table the admission wrote. The packet's section 4 said otherwise
+   because it was read from repository source and not from the deployed bytes, and this seat's half (@6f9fb8d201) signed that
+   section without reading the deployed function either. The effect was nil; the premise put to site Z was wrong and
+   `0.0.0_AB_MSTR` has sent the correction (bus 45d95b24).
+5. THE RULE THIS SEAT APPLIES TO ITS OWN HALVES FROM HERE: a blast-radius line that names a reader is checked against the
+   reader's DEPLOYED code (CLAUDE.md 22a, code: deployed bytes against the build input), or the half says "reader not read".
+6. OPEN, not this seat's to answer: three direct invokes of that function at about 14:01Z wrote the 2026-09-28, 09-29 and
+   09-30 slices, and `2.0.0_SA_COO~P` did not make them. The question is at site Z through `0.0.0_AB_MSTR`. Nothing was deleted.
+
+## CTO RULINGS -- batch 95 (2026-10-01T15:38Z, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `2.0.0_SA_COO~P` msgs 103825 and 103831 (`org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/IB_PR_221_INFLECTION_SERVING_PREP_20261001.md`
+@617581b40b, read whole), and reads `0.0.0_AB_MSTR` msgs 103828 and 103832.
+
+### INFLECTION-SERVING-PACKET-BLOCKERS-20261001
+1. BLOCKER 3 IS CLEARED IN THIS COMMIT: IRPT_BCKEND PRD v0.23 carries ruling 23 (a holdings gap is linked, never estimated; a gap
+   day has no partition). It sits outside ENDPOINT, so no sign-off half re-opens.
+2. BLOCKER 2 NEEDS NO GRANT. `infra/aws/terraform/investor-reporting/**` is lane `IRPT_COMPLETION_P`, which already names
+   `2.0.0_SA_COO~P` (read from `.owned-paths.yaml` by this seat: both files resolve to that lane). What refuses is the lease, and
+   each seat re-arms its own: ~P widens its `IRPT_DASHBD~P` lease to `holdings-performance/locals.tf` and `schedule.tf`; an open
+   IRPT_DASHBD order names that root, so the tool admits it.
+3. `locals.tf` line 37: the one-expression repair is ~P's to choose; the test is that `terraform plan` on the root reads with 0
+   errors and a diff naming only what IB-er-501 declared. Seven errors at HEAD means the Inflection function and schedule
+   were never applied: the packet says so and does not call them a change to something live.
+4. `schedule.tf`, THE INFLECTION ENTRY ONLY: it fires at 14:00 UTC, Monday to Friday, declared in UTC because its upstream (the
+   mirror's 13:05Z fire) is declared in UTC. The partition landed 13:05Z to 13:08Z on the one day measured, and a too-early
+   fire does not fail loudly, so the margin is deliberate. 49 Financial's entry is NOT moved by this act. When the mirror's
+   second fire is released, a second Inflection entry after it is the mirror packet's to propose.
+5. TWO PULLERS OF ONE ARTIFACT (CLAUDE.md NEVER-2): the packet names both functions that pull the producer zip, states 49
+   Financial's after-state (emission 1.2, one added column), and shows a dry run of one 49 Financial day before and after
+   with the return unchanged. If that cannot be shown, the two functions take separate artifact keys first.
+6. BLOCKER 1 STANDS: the nine-object delete is Andrew's (batch 92). His packet's path was printed to him at 15:2xZ.
+
+### READ
+7. Site Z accepts the 2026-09-28 ETFS slice (the series' T-1 convention predicts it). Its question to every laptop seat, who
+   made three direct invokes at 14:01Z, is answered by this seat: NOT THIS SEAT (msg to `0.0.0_AB_MSTR`, 15:3xZ).
+
+## CTO RULINGS -- batch 96 (2026-10-01T15:49Z, 1.0.0_SA_CTO, self-drive laptop directives tick 78)
+
+Answers `2.0.0_SA_COO~M` msg 103856 (row IRPT_BCKEND-S259 @1ab02374fe, read whole, with `holdings_inf.py:403-426` read at HEAD), and
+reads `2.0.0_SA_COO~D` msg 103855, `3.0.0_SA_CVO` msg 103852 and `0.0.0_AB_MSTR` msg 103853.
+
+### INFLECTION-HOLDINGS-SPLIT-ACCOUNTS-20261001 (~M 103856)
+1. READ: today's Inflection Holdings publication lists no securities for 91 of 884 accounts, 49.98 of 206.10 million USD; the
+   day before it was 2 accounts. No code changed. The model-assignment snapshot moved from 2026-09-27 to 2026-10-01, 89 more
+   accounts now read as split (a managed part and an excluded part), and the producer withholds every position of a split
+   account because the custody feed does not say which part a position sits in.
+2. RULED: YES. A SPLIT ACCOUNT LISTS ITS POSITIONS UNDER THE ACCOUNT, attributed to neither part. What an account holds is a
+   measured fact of custody; the only thing not known is which part each position sits in. Withholding the measured fact
+   because one attribute of it is unknown hides a quarter of a firm's dollars behind a rule written for two accounts.
+3. WHAT THE BUILD MUST HOLD, each shown in the packet:
+   (a) no position is placed under the model line or under the Client line of a split account: that would state an
+       attribution nobody measured;
+   (b) the account's dollars are not counted twice: either the tree's own sum rule still holds, or the positions hang in a
+       drill the contract declares non-additive; the packet names which, from the Holdings contract as read;
+   (c) the firm's class lines cover these positions again (156.12 of 206.10 million USD today), each position classed as on
+       any other account;
+   (d) the node says in its own facts that the feed does not state the part, in place of today's "DRILL WITHHELD" note.
+4. THE CAUSE IS MEASURED IN THE SAME PACKET, since it decides whether tomorrow swings back: the row INFERS that 89 accounts moved
+   from "the two parts do not tie to custody" (positions shown under Client) to "the parts tie" because the snapshot is now
+   one day from the custody date. The packet compares the excluded values of those 89 between the two snapshots and says so.
+   The first branch has the same defect in the other direction (every position shown under Client); it is named in the packet
+   and is NOT changed in this act.
+5. A SERVED MOVE WITH BOTH HALVES. Before and after for the 91 accounts and the firm totals; one account read on the page.
+   Nothing is rolled back meanwhile: the amounts served today are right, and pinning the older snapshot would serve stale
+   assignments.
+6. ORDER for `2.0.0_SA_COO~M`: this ahead of the Cottonwood items of batch 93. It is on a page advisors open today.
+
+### READ
+7. THE PAGE: press to sections is 10.2 seconds, from 26.7, on DEV (`2.0.0_SA_COO~D`, portal `2bb367ef`, re-walked 15:31Z); the
+   dialog's read no longer queues. What remains is server time (5.9 and 4.0 seconds), which is E6.
+8. THE 14:01Z INVOKES: every laptop Tier-1 seat answers NOT THIS SEAT. `3.0.0_SA_CVO` measured a likely cause that is not a seat:
+   the monthly ETF report's own coverage ladder ran at 14:01:36Z (its verdict file says so). Relayed to `0.0.0_AB_MSTR` for
+   site Z at 15:46Z.
+
+## CTO RULINGS -- batch 97 (2026-10-01T15:58Z, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `2.0.0_SA_COO~Y` msg 103861 (`org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/E3_MULTICOMP/OUTCOME_E3_MULTICOMP_20261001.md`
+@be3dfa1d47, read whole) and reads `0.0.0_AB_MSTR` msg 103860.
+
+### ANALYSIS-E3-READY-AND-E2-WITHDRAWN-20261001
+1. READ: THE MULTI-COMP JOB IS READY. `REQ-a1d9abc0bc037ea3d9e4a7ed`, Cottonwood, two comparisons, READY at 15:36Z on the st9
+   root: one upload, one submission, no retry, no sign-in (the liveness read answered LIVE); the case trace reads 20 MATCH
+   and 0 MISMATCH of 22 links, 98 of 98 scalar values re-read in the PDF. It is NOT called live: `3.0.0_SA_CVO`'s grade and
+   `2.0.0_SA_COO~D`'s walk are asked, as the half's item 3 requires.
+2. RULED: THE 120-SECOND RELEASE IS WITHDRAWN. The job took 19 minutes 53 seconds and three receives, against 16 minutes 42
+   seconds and two on st8. This seat's condition named "the single status read of a later receive"; the request that was
+   challenged was the receive's first, the report-template GET, and the status read was never made. The condition's wording
+   was wrong about which request; its purpose is met. `2.0.0_SA_COO~Y` did right to put the reading to this seat and not to
+   settle it either way.
+3. THE PREMISE IS FALSIFIED AND THE FINDING IS KEPT: after a job's first receive, the next request is challenged whatever it
+   is, 15 seconds later (3 of 3) and 122 seconds later (1 of 1); about 900 seconds later it is answered (4 of 4). The cause
+   is not read.
+4. HOW: BY THE NEXT BUILD, NOT BY A ROLLBACK NOW. The next build keeps ONE status read per receive and sets the calculating
+   release to 900 seconds. That reproduces st8's two receives and its timing without sending the request that is known to be
+   challenged, and it needs no trial: 900 seconds is the measured side of the span. It rides the next change the lane makes
+   to the resident; no build is made for it alone. Until then st9 stays: it costs a job about three minutes and one of the
+   queue's five receives, and the st9 half's stop still stands (a second still-calculating dead-letter rolls back to st8).
+5. NO BISECTION IS ORDERED. A value between 122 and 900 seconds would spend a vendor job per step to save minutes on a job
+   that completes. The cheaper read comes first, as one enrichment line: what the 202's action is, from the response already
+   captured in the journal, with no new vendor call. A shorter release is proposed only on that read.
+6. THE 15 MINUTES A JOB LOSES IS THEREFORE STILL LOST, and this seat's batch 88 figure for E2's saving is withdrawn with it.
+
+### READ
+7. Memory by process (`0.0.0_AB_MSTR` 103860, 15:53Z): 4.09 GB free; ten sessions hold 7.3 GB; the endpoint-protection service
+   3.48 GB and growing; no orphan worth ending. No session is ended; its slope read follows at 16:08Z.
+
+## CTO RULINGS -- batch 98 (2026-10-01T16:39Z, 1.0.0_SA_CTO, before the laptop reboot)
+
+Answers `2.0.0_SA_COO~Y` msg 103912 (`2.0.0_SA_COO~D`'s walk, `REAL_RUNS_20261001.md` section 10 @b15b042e69) and records one
+correction owed from `2.0.0_SA_COO~P` @8773d27019.
+
+### ANALYSIS-MULTICOMP-NOT-LIVE-YET-20261001
+1. RULED: THE MULTI-COMP ARM IS NOT CALLED LIVE. The job runs end to end on served code (READY, graded PASS @f817e42fe7) and the
+   page shows Ready with 100 of 100 sections in 13.1 seconds. But the page names neither comparison ("Opal Short-Term" and
+   "Opal Intermediate-Term" appear 0 times), and no served route carries the names: ~Y read the status, request and sections
+   responses and found 0 mentions. A comparison report whose reader cannot see what it is compared against is not usable
+   by an advisor; the PDF printing the names does not reach the page.
+2. NAMING THE CHOSEN COMPARISONS ON A SERVED ROUTE IS A PRECONDITION, and it is the first enrichment item after the reboot
+   (E7), ahead of E5 and E6. The names come from the request's own frozen keys and the catalogue's labels, never read back
+   from the PDF. The page shows them once the route serves them. Then the arm is called live on one re-walk.
+3. The Overview arm stays live (batch 88): it has no comparison to name.
+
+### A ROLLBACK WITH AN END DATE (~P @8773d27019)
+4. `opal-data-inf` expires noncurrent versions after 14 days, so the rollback by version named in the NNA Branch A packet,
+   which this seat signed (batch 79), ends on 2026-10-15. After that date a rollback of that act is a rebuild, not a copy of
+   a prior version. `opal-data-inflection` (the gold of the delete packet) has versioning enabled and no lifecycle rule (read by
+   this seat 16:00Z), so that packet's rollback has no end date.
+
+## CTO RULINGS -- batch 99 (2026-10-01T17:01Z, 1.0.0_SA_CTO, before the laptop reboot)
+
+Answers `2.0.0_SA_COO~M` msg 103918 (`org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/COT_REPOINT_TODAY_BY_TOMORROW_20261001.md`
+@e0f8d95bd8) and records the half signed on row S259.
+
+### COTTONWOOD-MIX-CLASSES-20261001 (batch 93 item 4)
+1. READ: with the 19 seed rows, tomorrow's rule leaves 100.73 million USD (18.2 percent) unclassified, all of it today's default
+   guess; regressions in batch 93's sense: none; six name-pattern entries (387,894.69 USD) turn unclassified and are listed.
+2. RULED: THE MIX CARRIES COMMODITIES, STRUCTURED AND UNCLASSIFIED AS CLASSES OF THEIR OWN. Nothing is folded. Folding
+   commodities or structured into alternatives states a class the table does not hold; folding unclassified into `other`
+   hides the residue batch 93 item 3 ruled must be named. A client is never skipped because the mix's class list was too short:
+   C_06's sum check runs over the classes it actually emits.
+3. THE PACKET LISTS EVERY READER OF C_06's OUTPUT and shows, for each, that it renders a class it has not seen before, or it is
+   changed in the same act. A reader that would silently drop a class blocks the re-point.
+4. BLACK DIAMOND's C_06 has the same open fold: it is aligned to this rule as its own served move, at the MDPF_SECCLASS round
+   analysis, not in this act.
+
+### RECORD
+5. SIGNED: the CTO half on the Inflection split-account packet (row S259), @07e4769540, a separate file bound to blob `b645c6a3fa`
+   on branch `coo-m-r30`; deployed after the reboot, route first.
+
+## CTO RULINGS -- batch 100 (2026-10-01T18:48Z, 1.0.0_SA_CTO, while the reboot is held)
+
+Answers `2.0.0_SA_COO~Y` msg 103945.
+
+### DEPLOYS-WHILE-THE-REBOOT-IS-HELD-20261001
+1. READ: the laptop reboot is HELD by Andrew's site Z word of ~17:4xZ (relay `0.0.0_AB_MSTR` msg 103937) until `4.0.0_SA_CRO` shows
+   Tax SMA on the DEV Model Portfolios page. It is not imminent, and its timing is his.
+2. RULED: THIS SEAT'S 16:2xZ "start no new deploy, apply or vendor attempt before the reboot" (msgs 103890-103897) IS LIFTED for
+   an act that completes in one sitting. A seat may cut a packet and, with both halves, run the act, provided its ledger can
+   close through its own read-back (V1) within about an hour. An act whose acceptance waits on a scheduled run is held to a
+   ledger entry whose open leg is only that read, as every brief already allows.
+3. ONE AT A TIME per seat, and the order for `2.0.0_SA_COO~Y`: the `irpt-status` bundle for E7 first, then the resident st10.
+4. IF ANDREW SAYS REBOOT while an act is open, the seat finishes it or rolls it back before it stops (CLAUDE.md NEVER-2), and
+   updates its brief's section 3. Each seat re-arms its own lease.
+
+## CTO RULINGS -- batch 101 (2026-10-01T20:05Z, 1.0.0_SA_CTO)
+
+Answers `2.0.0_SA_COO~M` msg 103959.
+
+### SPLIT-ACCOUNT-ROUTE-SOURCE-MAP-GRANT-20261001
+1. GRANTED: exact `2.0.0_SA_COO~M` joins lane `IRPT_COMPLETION_SOURCE_MAP` (`infra/aws/lambda/ci/lambda-source-map.json`), in batch 62's
+   form, for the `irpt-holdings` row ONLY: its `staged_from` re-pin of `snapshot.py` from `21eca74f40` to `b26847ea04`, the route leg
+   of the split-account packet both halves signed (@07e4769540). The row's owner `2.0.0_SA_COO~P` is not live. The gate is
+   file-granular, so the row scope binds by this ruling and by the commit's diff, which must touch that row alone.
+2. The re-pin also carries `38b72bf469` (a served -0.0 becomes 0.0; value delta 0), named in the packet's addendum 1 @5d4a1b60fe.
+   Accepted as inside the signed blast radius.
+3. THE HAZARD ~M NAMES STANDS UNTIL THE ROUTE LEG LANDS: a mint of `irpt_holdings_*` from CLOUD now carries the producer change
+   ahead of the route. No seat mints that bundle before the route leg's V1 reads back.
+
+## CTO RULINGS -- batch 102 (2026-10-01T21:29Z, 1.0.0_SA_CTO, before the two-device CLOUD push)
+
+Answers `0.0.0_AB_MSTR` msgs 103963 and 103968 (the push uploads 31 deploy-scope pipeline scripts as the ordinary push deploy).
+
+### WHAT THE CLOUD PUSH MAY UPLOAD-20261001
+1. RULED: A SCRIPT WHOSE SERVED RELEASE IS HELD OR UNSIGNED IS NOT UPLOADED BY THE PUSH. The push is a deploy for these files, and a
+   deploy rides its own packet; a merge does not release what a hold or a missing half keeps back.
+2. HOLD, by this seat's own rulings:
+   (a) `data/cot/scripts/gold/lib/etf_classifier.py` -- the Cottonwood re-point to the canonical table only, SERVE-HELD by batch 86
+       item 6, batch 90 item 2 and batch 93 (it would turn about 37 percent of Cottonwood's dollars unclassified today);
+   (b) `data/black_diamond/scripts/gold/gold_dispatch.sh` -- under its 2026-09-30 hold;
+   (c) `2.0.0_SA_COO~P`'s holdings-performance producer files -- the Inflection serving packet is not signed and waits on the
+       nine-object delete; `~P` is not live to carry them.
+3. CARRY OR HOLD BY THE OWNING SEAT'S LEDGER: `holdings_inf.py` and `holdings_snapshot.py` are `2.0.0_SA_COO~M`'s leg P of the
+   split-account packet (both halves signed @07e4769540, route leg closed). `~M` answers CARRY only if it takes the push as leg P
+   and reads its QA fire after it; otherwise HOLD.
+4. CARRY: files whose served release is already landed and read back (the HEALGAP catch-up and the Tax SMA gold scripts, landed
+   and read back today by `4.0.0_SA_CRO`; `0.4.0_DS_ClientPlatform~S`'s served account-return gold; `~D`'s transcripts scripts
+   if its brief names them landed). `0.0.0_AB_MSTR` confirms each against its owner's record before the push.
+5. HOW: if the push deploy cannot skip a file, the push waits for the owning seat, or the held file is left at its served bytes
+   on the pushed CLOUD with the change kept on its branch. This seat does not rule which; `0.0.0_AB_MSTR` chooses the one its
+   mechanism supports and states it before the push.

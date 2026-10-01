@@ -377,6 +377,29 @@ directives:
       projects: [OPAL_TAXSMA, OPAL_TAXROSTER, OPAL_TAXSMA_PT2, OPAL_TAXSMA_REGISTRY,
                  IRPT_FNTEND, IRPT_BCKEND, NFRA_OPLGTW, NFRA_SPMOVE, NFRA_MCPINDEX, NFRA_TRNSPT,
                  IRPT_DASHBD]
+      members_note: "PER-MEMBER PLACEMENT EXCEPTIONS -- THE SECOND AND THIRD (the first is DSGN_AMGTV1 under D13). Recorded
+        2026-10-01 by 0.0.0_AB_MSTR (register owner) on 1.0.0_SA_CTO's ask msg 103593
+        (org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_LAPTOP_CLOSURE_PLAN_20261001.md section 2 item 2). D9 stays placed
+        LAPTOP; these two members run at SITE Z. Both stay in the member set above: this note records where a member runs
+        and removes nothing.
+        NFRA_OPLGTW -- SITE Z since 2026-09-27 ~12:2xZ. Andrew-direct at the 1.0.0_SA_CTO~O terminal, VERBATIM AND ENTIRE:
+        'recs approved', answering two cards: call 1, re-seat NFRA_OPLGTW's CTO and CVO legs from the laptop to ~O (REC yes);
+        call 2, whether D9 as a whole moves to site Z (REC (a) no) -- approved as (a): D9 does not move and the per-project
+        placement fields carry placement. Record
+        org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260927_122xZ_CTO_O_CALLS_1_2_RECS_APPROVED_OPLGTW_RESEAT.md.
+        The project row reads fabric site-z, placement SITEZ, coo_lane 2.0.0_SA_COO~O.
+        NFRA_MCPINDEX -- SITE Z. The project row reads fabric site-z, placement SITEZ, coo_lane 2.0.0_SA_COO~MI, and its
+        phase text dates the re-seat to the ~O fabric 2026-09-24 ~23:0xZ. His word that names it at site Z is his own
+        invocation at the 1.0.0_SA_CTO~O terminal 2026-09-28 ~22:2xZ, VERBATIM: '/self-drive [30m] NFRA_OPLGTW NFRA_OPALAI
+        NFRA_MCPORTAL NFRA_MCPINDEX' (record
+        org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260928_222xZ_SELF_DRIVE_O_FABRIC_FOUR_PROJECTS.md), read
+        with his call-2 answer above. NOT FOUND by the register owner: a word of his dated 2026-09-24 for the re-seat itself.
+        ALSO NOT RESOLVED HERE: that project row's fabric_ruling field still reads 'laptop -- INHERITED FROM THE DIRECTIVE',
+        which contradicts its own fabric and placement fields; the field belongs to the project row and its CTO
+        (1.0.0_SA_CTO~O), and is routed, not edited by the register owner.
+        WHAT NO TOOL DOES WITH THIS NOTE: directives-check.py displays the directive's device (LAPTOP) for every member, and
+        nothing reads this note. The device fact a drive reads is the project row's own fabric field. A later move of D9
+        does NOT move these two members without his word."
     stance: "Assess-first: state-assessment deliverable (repo prior-art census incl. the stalled
       08-04 TO seat-or-supersede, workflow map, SharePoint sync review, hole list) -> Andrew review
       -> Yang/Alyssa meeting -> pipeline-build TOs. Recordings pair + SMARTX CSVs INGESTED @ad01cca427

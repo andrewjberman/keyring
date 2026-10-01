@@ -352,7 +352,8 @@
   "event_idempotency": "source_event_id hashes canonical source identity, full account key, logical snapshot_id, previous accepted event id and normalized Traded state; omit retry time/run UUID. Repeated logical snapshots create no duplicate transition or shifted date. Process current observations by original Gateway observed_at and a persisted watermark. Older unseen snapshots are retained as historical evidence with TRADED_EVENT_ORDER_CONFLICT and cannot silently roll current state backward; conflicting snapshots at the same observed_at refuse. Replay cannot overwrite immutable Gold or bypass pending-next-date corrections.",
   "automatic_history_fields": "For a source-generated event, actor is the S03 service identity, evidence_ref is protected Bronze/Silver lineage, effective_date=date(source_observed_at), membership_date_basis=FIRST_OBSERVED_UTC, and traded_value is YES or NO. source_event_id is stable; no null/invalid Traded or manual date can activate. Invalid/duplicate identities preserve source-row evidence but do not create a falsely resolved per-account transition.",
   "legacy_reason_compatibility": "MEMBERSHIP_DATE_UNVERIFIED remains readable historical evidence; current automatic-date failures use TRADED_HISTORY_UNVERIFIED. DISPOSITION_REQUIRED may identify an unresolved identity/transfer/strategy correction only, never an initial membership attestation gate.",
-  "date_comparison": "Compare membership effective_date (the UTC calendar date of source_observed_at) directly to the supplied exchange-session valuation_date as ISO calendar dates: start <= valuation_date < end, with an absent end open. Do not convert valuation_date into a timestamp, reinterpret source_observed_at in exchange-local time, or roll the boundary to a session. The exchange calendar chooses valid/expected valuation sessions only. For example, 2026-09-16T00:30:00Z is September15 at20:30 EDT, but the membership boundary is September16. A new YES with no earlier state leaves September15 unverified; retained NO history instead proves exclusion. An explicit NO at that instant leaves previously proven September15 membership intact and excludes September16 onward until reactivation. Current business_active_accounts reflects the accepted flag immediately at source_observed_at, independently of those dated-value consequences. Weekend/holiday boundaries produce no invented session or value."
+  "date_comparison": "Compare membership effective_date (the UTC calendar date of source_observed_at) directly to the supplied exchange-session valuation_date as ISO calendar dates: start <= valuation_date < end, with an absent end open. Do not convert valuation_date into a timestamp, reinterpret source_observed_at in exchange-local time, or roll the boundary to a session. The exchange calendar chooses valid/expected valuation sessions only. For example, 2026-09-16T00:30:00Z is September15 at20:30 EDT, but the membership boundary is September16. A new YES with no earlier state leaves September15 unverified; retained NO history instead proves exclusion. An explicit NO at that instant leaves previously proven September15 membership intact and excludes September16 onward until reactivation. Current business_active_accounts reflects the accepted flag immediately at source_observed_at, independently of those dated-value consequences. Weekend/holiday boundaries produce no invented session or value.",
+  "effective_date_rule_first_observation_0_6_0": "Andrew-direct 2026-10-01 ~17:4xZ (org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261001_174xZ_TAXSMA_FIRST_DAY_COVERS_PRIOR_DAY_EXTRA_RUNS_TODAY_DEV.md): an account's FIRST automatic observation, when it is traded, also covers the trading day before its UTC observation date. Applied at read (taxsma_membership.resolve_date_status); stored events keep their date; a later NO or reactivation keeps its own date."
  },
  "valuation": {
   "basis": "dim_balance.net_mv_plus_cash via b00 canonical_valuation",
@@ -466,9 +467,18 @@
   "incomplete_rule_served_totals_0_6_0": "Andrew-direct 2026-09-30 (org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260930_183xZ_TAXSMA_E2B_CARRY_LAST_COMPLETE_AND_NO_BACKFILL.md): on a valuation date on/after Tax's first COMPLETE observation where Tax is not complete, the served 49financial and Global totals carry the most recent complete Tax figure; the coverage names it (tax_value_basis CARRIED_LAST_COMPLETE, last_complete_date) and value_status stays the day's own status. Before the first complete observation the series carries the pre-Tax base (no backfill): tax_value_basis NOT_OBSERVED, reason BEFORE_FIRST_OBSERVATION.",
   "aggregate_basis_by_scope_0_6_0": {
    "49financial": "INCLUDES_ADDITIVE",
-   "global": "INCLUDES_ADDITIVE (49financial's Tax only; Cottonwood's parked)",
+   "global": "INCLUDES_ADDITIVE (49financial's Tax plus Cottonwood's, each added once)",
    "cottonwood": "INCLUDED_IN_BASE",
    "inflection": "NOT_APPLICABLE"
+  },
+  "global_fold_by_firm_0_6_0": {
+   "rule": "Global's Tax leaf is the sum of the firms' served Tax, each under its own carry and no-backfill rule. Cottonwood's Tax is in no Global leg (Global takes Cottonwood's model dollars only; a Tax SMA account carries no model), so it is added once. Cottonwood's own scope does not move.",
+   "overlap_base_by_firm": {
+    "49financial": "the 0824 base population for the valuation date",
+    "cottonwood": "the accounts carrying a Rebalancer strategy (strategy_name other than '--') on the newest fact_model_assignment partition on or before the valuation date, keyed by the table's own account_number"
+   },
+   "coverage_cell": "A Global cell on a date Cottonwood contributes no value is 49financial's cell. Otherwise it describes the summed value: counts and dollar claims added, reason codes unioned, value_status the weaker of the two, tax_value_basis CARRIED_LAST_COMPLETE when either part is carried, last_complete_date the older. Same keys as a firm cell.",
+   "cottonwood_tree": "Cottonwood's own category tree shows the Tax leaf under SMA > ALT Strategies as a carve-out of Client (registry SMA_BASIS_BY_SCOPE: tax at cottonwood is carve_out). Its totals do not move. The member joins its by_model only once Cottonwood has a served Tax value."
   }
  },
  "operations": {
@@ -802,6 +812,20 @@
    "by": "4.0.0_SA_CRO under the FAST lease",
    "what": "As built for TX-i-1/TX-i-2 (wire unchanged, version held): one scoped prelude role per Tax firm because each firm bucket admits only its own short token; the capability bearer is read from its secret under the 49financial session, never carried in the function environment; the operational control moves to the global scope (it spans both firms, and the publisher's role is outside the 49financial fence) and is a plain overwrite written only when Tax runs; the N+1 category Gold copies are not written (no reader, and a second home is a duplicate output path).",
    "authority": "org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260930_202xZ_TAXSMA_PRIORITY_THROUGH_MDPF_ALONGSIDE_DROPPED.md"
+  },
+  {
+   "version": "0.6.0",
+   "when": "2026-10-01",
+   "by": "4.0.0_SA_CRO under the FAST lease",
+   "what": "Global's Tax is 49financial's plus Cottonwood's (wire keys unchanged, version held). Measured before the change: both Cottonwood Tax accounts carry strategy '--' on the 09-28, 09-29 and 09-30 fact_model_assignment partitions, and all 47 eight-digit account numbers in that table read '--'. The overlap rule gains a per-firm base (categories.global_fold_by_firm_0_6_0); the Global coverage cell sums the firms that contribute. Cottonwood's own tree shows the Tax leaf under SMA as a carve-out of Client, totals unchanged (Rule 24 record org/missions/D8/MDPF/MDPF_TAXSMA/deliverables/4.0.0_SA_CRO/RULE24_SMA_BASIS_BY_SCOPE.md). CANDIDATE: not deployed.",
+   "authority": "org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261001_033xZ_TAXSMA_TAX_PORTFOLIOS_ARE_SMAS_NOT_MODELS_SMA_CATEGORY.md"
+  },
+  {
+   "version": "0.6.0",
+   "when": "2026-10-01",
+   "by": "4.0.0_SA_CRO under the FAST lease",
+   "what": "membership.effective_date_rule_first_observation_0_6_0: the first traded observation also covers the prior trading day (wire keys unchanged, version held).",
+   "authority": "org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261001_174xZ_TAXSMA_FIRST_DAY_COVERS_PRIOR_DAY_EXTRA_RUNS_TODAY_DEV.md"
   }
  ]
 }

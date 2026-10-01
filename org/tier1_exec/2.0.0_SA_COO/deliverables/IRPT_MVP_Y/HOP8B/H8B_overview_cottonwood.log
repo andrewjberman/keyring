@@ -1,0 +1,10 @@
+12:14:10Z LOGGED_IN login status 200
+12:14:10Z PASSWORD_RETAINED /irpt/svc-irpt-analysis/password (the packet deletes it at its last arm)
+12:14:16Z K4 POST 200 state RESOLVING | upload_id UP-d8cd5bd962e63db3ff8978e004c79b55bd25c85870e37082f269b44734e30a00
+12:14:22Z K4 resolved NORMALIZED | input_id portfolio_53fdd193e73757ae2d33148f9906604d477e1f5f99aa3563243d8e22af0d0b9e
+12:14:30Z K5 POST 200 | state QUEUED | identity {"tenant_firm_id": "cottonwood", "request_id": "REQ-a69e5751d42c374f1d2354f9", "revision": 1, "immutable": true, "ingestion_gate_revision": "schemas-58ffc2ebee9ed61681175e34cd756ec172eb2fa3ad457da3e0995186f9ea81f8", "destination_policy_revision": "e0046398e23951451498c0fcfec29154db5b26d4c70d80c4121f
+12:14:36Z state SUBMITTING | outbox SENT | detail {"operation":"portfolio_create"}
+12:30:32Z state CERTIFYING | outbox SENT | detail {"phase":"retained_pdf_publication"}
+12:31:12Z state READY | outbox SENT | detail {"certification_sha256":"01ab310000eaa3d03e22397eef8f9fad9dd5629a5e6d5f2eacd98192e01bccf5","report_id":"RPT-ec30778a867a59f3805be6e7f07d35cb","revision":"0e43417eca04c06c743629c9cbac4e715be48aebcee7081889d46ee866703526"}
+12:31:12Z TERMINAL READY -- holding the 20 s floor before the next body
+12:31:32Z floor held; next body may start

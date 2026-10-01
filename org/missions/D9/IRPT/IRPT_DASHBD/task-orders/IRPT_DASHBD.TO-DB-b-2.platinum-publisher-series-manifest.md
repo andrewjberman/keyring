@@ -51,6 +51,23 @@ the builder's addresses, and plan (not apply) its Lambda and daily schedule.
   write both objects at the builder's addresses; a `--local --accounts ... --upload` CLI for this round's run). Print size and build time
   per account. Include unit tests beside them (`tests/`) with a synthetic gold frame for the pure functions (the real run below is the
   criterion, the tests are hygiene).
+- ISSUER AMENDMENT 4 (2026-10-01 ~16:1xZ, at the spawn): the gold LANDED today and its contracts moved after this face was cut.
+  READ THE CONTRACT FILES, not the column list in "Where things are": `IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json` is at 0.2.0
+  with 19 columns (the list above plus `guard_state` and `carried_days`; `return_basis` is now `TWR` or `NOT_MEASURABLE` only) and
+  `IRPT_DASHBD_DIM_RETURN_METHOD_CONTRACT.json` is at 0.2.0. The gold holds 559 date partitions, 2024-07-08..2026-09-28, 1,105 rows
+  (0.4.0_DS_ClientPlatform~S, msg 103740). "The five sample accounts" below means every `account_id` in the newest partition,
+  however many that is. A gold column the SERIES contract does not name is NOT added to the series: that is a row, not an edit.
+- ISSUER AMENDMENT 3 (2026-10-01 ~15:5xZ): two entries are REMOVED from `<paths>`: `infra/aws/terraform/investor-reporting/holdings-performance/`
+  and `infra/aws/lambda/investor-reporting/holdings-performance/handler.py`. This order cites them as the PATTERN to mirror and never
+  writes them; a read needs no grant, and as a write surface they collided with the IRPT_BCKEND lane that owns that root (the lease
+  tool refused it both ways). No criterion changes. ONE WARNING for the worker who mirrors the pattern: `holdings-performance/locals.tf`
+  line 37 as it stands at HEAD does NOT plan (`can(v.master) && v.master != null` evaluates both sides; row IRPT_BCKEND-S258); mirror
+  the repaired form, `try(v.master, null) != null`, and the Inflection schedule there is being re-timed (row IRPT_BCKEND-S257).
+- ISSUER AMENDMENT 2 (2026-10-01 ~04:5xZ): the SERIES contract below is ALREADY LANDED by the issuer @b80543a03c, ahead of the gold,
+  so workstream F can build against it. READ it; do not rewrite it. Your publisher emits exactly its `series.required` and
+  `manifest.required` keys with the meaning, unit and null rule each field's `sentence` states (`as_of` = the last `date` entry,
+  `first_data_date` = the first, `depth` a negative decimal fraction, a null `total_return_daily` left null). A field you find you
+  cannot emit as written is a row, never an edit to the file. The original text of the cut follows for the record.
 - The SERIES contract `org/standards/IRPT_DASHBD_SERIES_CONTRACT.json`: `contract_version "0.1.0"`, `project`, `prd`, `writer "workstream B"`,
   `reader "the Performance page"`, `series.required` = [`date`, `value`, `total_return_daily`, `return_basis`, `day_quality`, `external_flow`,
   `income`, `holdings_price_return`, `method_version`, `as_of`, `first_data_date`, `history_scope`, `drawdown_episodes`], `series.optional` =
@@ -109,9 +126,7 @@ series `value` equals the gold `market_value_eod`; the saved plan creates the La
 <paths>
 infra/aws/lambda/investor-reporting/reporting-publish/
 infra/aws/terraform/investor-reporting/reporting-publish/
-infra/aws/terraform/investor-reporting/holdings-performance/
 infra/aws/terraform/modules/yang-lambda/
-infra/aws/lambda/investor-reporting/holdings-performance/handler.py
 infra/aws/lambda/investor-reporting/narrative/events.py
 infra/aws/lambda/ci/lambda-source-map.json
 infra/aws/lambda/ci/build-and-upload.sh

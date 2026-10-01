@@ -212,7 +212,7 @@ Reader: **1.0.0_SA_CTO only**, one slug for this project. No row carries `route`
     "owner": "2.0.0_SA_COO (DSGN_REBRND round-2 cut; 2.0.0_SA_COO~D held round 1)",
     "round": "v1",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO (DSGN_REBRND round-2 cut; 2.0.0_SA_COO~D held round 1)",
       "round": "v1"
     }
@@ -390,7 +390,7 @@ Reader: **1.0.0_SA_CTO only**, one slug for this project. No row carries `route`
     "owner": "2.0.0_SA_COO (DSGN_REBRND round-2 cut; 2.0.0_SA_COO~D held round 1)",
     "round": "v1",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO (DSGN_REBRND round-2 cut; 2.0.0_SA_COO~D held round 1)",
       "round": "v1"
     }
@@ -526,7 +526,7 @@ Reader: **1.0.0_SA_CTO only**, one slug for this project. No row carries `route`
     "owner": "2.0.0_SA_COO (DSGN_REBRND round-2 cut; 2.0.0_SA_COO~D held round 1)",
     "round": "v1",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO (DSGN_REBRND round-2 cut; 2.0.0_SA_COO~D held round 1)",
       "round": "v1"
     }
@@ -547,14 +547,14 @@ Reader: **1.0.0_SA_CTO only**, one slug for this project. No row carries `route`
     "owner": "1.0.0_SA_CTO",
     "round": "v1",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO",
       "round": "v1"
     },
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "1.0.0_SA_CTO",
-      "at": null
+      "at": "2026-10-01T10:20Z"
     }
   },
   {
@@ -825,14 +825,14 @@ Reader: **1.0.0_SA_CTO only**, one slug for this project. No row carries `route`
     "owner": "1.0.0_SA_CTO",
     "round": "v1",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO",
       "round": "v1"
     },
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "1.0.0_SA_CTO",
-      "at": null
+      "at": "2026-10-01T10:20Z"
     }
   },
   {

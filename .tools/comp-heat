@@ -45,6 +45,7 @@ import argparse
 import datetime as _dt
 import json
 import os
+import re
 import sys
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
@@ -892,6 +893,34 @@ def _print_federated_vintage(sqls, clock) -> int:
     return sum(1 for r in rows if r["claim"] != federated_vintage.CLAIM_MEASURED)
 
 
+_READ_ONLY_FIRST = ("SELECT", "WITH", "SHOW", "DESCRIBE", "DESC", "VALUES", "EXPLAIN")
+
+
+def _sql_refusal(sql: str):
+    """None when `sql` opens as ONE read-only statement; otherwise the reason it is refused.
+
+    ESTATE_GOVERNANCE-S9 (re-filed from NFRA_OUTSET-W1-S17): `--sql` was handed to Trino unread, under a module
+    docstring that says this tool never writes to any store. The contract is now enforced where the string enters:
+    comments are stripped for the READ only (the caller's own text is what is sent), the first keyword must be a
+    read verb, a second statement is refused, and EXPLAIN ANALYZE is refused because it executes what it explains.
+    This is a guard on the tool's own surface, not a statement about the Trino identity's grants."""
+    body = re.sub(r"/\*.*?\*/", " ", sql, flags=re.S)
+    body = re.sub(r"--[^\r\n]*", " ", body).strip()
+    if body.endswith(";"):
+        body = body[:-1].rstrip()
+    if not body:
+        return "the statement is empty"
+    if ";" in body:
+        return "it carries a ';' inside the text (one statement only)"
+    first = re.match(r"[A-Za-z_]+", body)
+    kw = first.group(0).upper() if first else ""
+    if kw not in _READ_ONLY_FIRST:
+        return "its first keyword is %r, not one of %s" % (kw or body[:12], ", ".join(_READ_ONLY_FIRST))
+    if kw == "EXPLAIN" and re.match(r"EXPLAIN\s+ANALYZE\b", body, flags=re.I):
+        return "EXPLAIN ANALYZE executes the statement it explains"
+    return None
+
+
 def cmd_federated(a) -> int:
     # comp-heat federated = the LIVE-Trino graph x code-heat view (the federation's net-new over
     # the git-local freshness/drift engines). Engine: .tools/_trino_fed.py (0.8.0_AE, S5; transport
@@ -909,6 +938,13 @@ def cmd_federated(a) -> int:
     # unlike every other subcommand -- nothing burns wall-clock to make a near-zero budget register
     # as spent before the live call fires), so this is the one subcommand that ALSO gates on the
     # NOMINAL budget against the transport's own known floor, not on elapsed time alone.
+    if a.sql:
+        why = _sql_refusal(a.sql)
+        if why:
+            sys.stderr.write("comp-heat federated: REFUSED before dispatch -- --sql must be one read-only "
+                             "statement and %s. comp-heat is READ-ONLY by its own contract; nothing was "
+                             "sent to Trino.\n" % why)
+            return 2
     if _compbudget is None:
         return _budget_unavailable(a)
     try:
@@ -1039,7 +1075,9 @@ def main(argv=None) -> int:
         help="hot/cold across estate ASSETS x their git code-heat (LIVE Trino federation; graph-joined)")
     fed.add_argument("--top", type=int, default=0, help="also show the N coldest files")
     fed.add_argument("--sql",
-                     help="run an arbitrary federated Trino query instead. BOUNDED like every "
+                     help="run ONE read-only federated Trino statement instead (SELECT, WITH, SHOW, "
+                          "DESCRIBE, VALUES, or EXPLAIN without ANALYZE; anything else is REFUSED "
+                          "before dispatch, rc 2). BOUNDED like every "
                           "other subcommand: a budget below the transport's own ~200s floor is "
                           "REFUSED before dispatch, and once dispatched the ECS waiter is capped "
                           "from --budget (the remote task is not cancelled -- the bound is on "

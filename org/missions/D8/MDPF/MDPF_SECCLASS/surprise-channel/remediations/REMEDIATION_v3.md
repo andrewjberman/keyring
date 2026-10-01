@@ -22,11 +22,11 @@ Author: 3.0.0_SA_CVO, 2026-09-30. S4 graduated at rounds 4-5's L9 (ADJUDICATION_
     "owner": "2.0.0_SA_COO~M",
     "round": "v6",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~M",
       "round": "v6"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```

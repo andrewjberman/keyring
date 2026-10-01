@@ -1,9 +1,9 @@
 {
-  "contract_version": "0.1.0",
+  "contract_version": "0.2.0",
   "project": "IRPT_DASHBD",
   "prd": "org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md",
   "authored_by": "0.4.0_DS_ClientPlatform~S",
-  "authored_under": "IRPT_DASHBD.TO-DB-b-1 (round 1, workstream B)",
+  "authored_under": "PRD v0.5 @0e7fd8eeb6 rulings 17-21 and IRPT_DASHBD.TO-DB-b-1 ISSUER AMENDMENT 5 (b) @f4f57b6fe4. Written UNCOMMITTED by 0.4.0_DS_ClientPlatform~S and landed by the issuer: org/standards/ is owned-paths lane ANY_EXEC and this seat is refused there (row IRPT_DASHBD-S2), which amendment 4 settled as remedy (1).",
   "table": "account_return_daily",
   "grain": "account x trading day",
   "partition": "date=YYYY-MM-DD",
@@ -94,6 +94,12 @@
       "meaning": "what this day's number stands on"
     },
     {
+      "name": "guard_state",
+      "type": "string",
+      "nullable": false,
+      "meaning": "what the holdings-price-return guard DID with this account-day: whether it graded the day at all, and if so whether it agreed. NON-NULL because it is how a consumer tells a guarded number from an unguarded one, and a null there is an unguarded number wearing no label."
+    },
+    {
       "name": "history_scope",
       "type": "string",
       "nullable": false,
@@ -132,7 +138,6 @@
     ],
     "return_basis": [
       "TWR",
-      "HOLDINGS_INCOME_FALLBACK",
       "NOT_MEASURABLE"
     ],
     "fee_amount_reason": [
@@ -141,116 +146,54 @@
     "holdings_price_return_reason": [
       "NO_HOLDINGS_ROW",
       "HOLDINGS_NOT_OK"
+    ],
+    "guard_state": [
+      "GRADED_AGREED",
+      "GRADED_DISAGREED",
+      "NOT_GRADED_OUTSIDE_DOMAIN",
+      "NOT_GRADED_NO_NEIGHBOUR",
+      "GUARD_NOT_REACHED"
     ]
   },
   "rule24_record": {
     "i_mece_over_a_declared_domain": {
       "day_quality": "domain: 'what does this account-day's number stand on'. MEASURED (the form computed and the guard agreed) | FLOW_UNRECONCILED (the form and the holdings-plus-income cross-check disagree beyond the measured tolerance) | LARGE_FLOW (the flow is a large share of the base; the value still enters) | NOT_MEASURABLE (no return is computable INSIDE the book -- non-positive prior value, or outside the plausibility band) | SOURCE_LAG (the custodian has not delivered the day). Covered by subtraction: a day is either emitted or not; an emitted day either has a computable base or not (NOT_MEASURABLE); a computable day either reconciles (MEASURED / LARGE_FLOW) or not (FLOW_UNRECONCILED); a day the feed has not delivered is SOURCE_LAG. A day BEFORE the account's first positive value is emitted as NO ROW AT ALL, which is why the domain says 'account-day' and not 'trading day' -- that case is outside the domain rather than a sixth member (ISSUER AMENDMENT 1).",
-      "return_basis": "domain: 'which arithmetic produced total_return_daily'. TWR (the C-METHOD form) | HOLDINGS_INCOME_FALLBACK (price return plus income, served when the guard refuses the form) | NOT_MEASURABLE (no number is served). Exhaustive by construction: the column is null iff the value is NOT_MEASURABLE.",
-      "history_scope": "domain: 'how much of this account's life does the table hold'. FULL | PARTIAL_HISTORY. Every round-1 row carries PARTIAL_HISTORY because the emit is a QA thread over six accounts and the all-accounts run is round 2; FULL is declared now so the value exists when that run lands, rather than being added as a schema change then."
+      "return_basis": "domain: which arithmetic produced total_return_daily. TWR (the C-METHOD form) | NOT_MEASURABLE (no number is served). HOLDINGS_INCOME_FALLBACK is REMOVED: ruling 17 withdrew the substitution because the holdings return covers the priced, included, LONG basket while total_return_daily covers the whole account, so one cannot stand in for the other. Exhaustive by construction: the column is null iff the value is NOT_MEASURABLE.",
+      "history_scope": "domain: 'how much of this account's life does the table hold'. FULL | PARTIAL_HISTORY. Every round-1 row carries PARTIAL_HISTORY because the emit is a QA thread over six accounts and the all-accounts run is round 2; FULL is declared now so the value exists when that run lands, rather than being added as a schema change then.",
+      "guard_state": "domain: what the holdings guard did with this account-day, over EVERY EMITTED ROW. GRADED_AGREED (it ran inside the comparability domain and the difference was at or below the tolerance) | GRADED_DISAGREED (it ran and the difference exceeded the tolerance) | NOT_GRADED_OUTSIDE_DOMAIN (a usable neighbour return existed but the day fell outside the comparability domain: a short position, an excluded weight above the derived ceiling, a different valuation interval, or a non-OK holdings status) | NOT_GRADED_NO_NEIGHBOUR (no usable neighbour return existed for the account-day at all) | GUARD_NOT_REACHED (the day's verdict was settled before the guard was consulted: no usable V_(t-1), or F_t knowably incomplete through an absent transaction partition, an unvalued in-kind leg or an unparseable cash amount). COVERED BY SUBTRACTION, not by a forward list: every emitted row either reached the guard or did not; a row that reached it either had the day graded or not; graded splits on the tolerance; not-graded splits on whether a usable neighbour existed. There is no sixth state because those four questions are exhaustive and each answer is binary."
     },
-    "ii_same_grain": "Every member of day_quality and return_basis is an ACCOUNT-DAY property; history_scope is an ACCOUNT property carried onto each of its rows. The two grains are separate columns and neither is folded into the other.",
-    "iii_intent_coherence": "day_quality answers HOW MUCH TO TRUST the day; return_basis answers WHAT THE NUMBER IS. They are deliberately not one axis: a FLOW_UNRECONCILED day still serves a number (the fallback), and a LARGE_FLOW day serves the form's own number. Collapsing them would make 'served a fallback' and 'flagged as large' the same kind of fact, which they are not.",
-    "iv_state_coherence": "Name which values one remedy does NOT move. Finding a missing flow or price moves FLOW_UNRECONCILED to MEASURED; it does NOT move LARGE_FLOW (nothing 'fixes' a genuinely large flow -- it is a reader's warning), and it does NOT move NOT_MEASURABLE where the base is non-positive (no amount of data gives an account a positive prior value it did not have). The feed landing moves SOURCE_LAG and nothing else. Three members, three disjoint remedies.",
+    "ii_same_grain": "Every member of day_quality, return_basis and guard_state is an ACCOUNT-DAY property; history_scope is an ACCOUNT property carried on every row of that account and is the one deliberate grain exception, declared here rather than left to be noticed.",
+    "iii_intent_coherence": "guard_state answers ONE question -- what the guard did -- and nothing else. It deliberately does NOT say whether the day is served (day_quality), which arithmetic ran (return_basis), or why a neighbour was unusable (holdings_price_return_reason). Those are separate axes on the same row, and collapsing any two of them is the defect ruling 18 corrected: FLOW_UNRECONCILED alone could not distinguish the guard disagreeing from the guard never running, and both were served under one label.",
+    "iv_state_coherence": "WHICH VALUES ONE REMEDY DOES NOT MOVE. Landing the IRPT_BCKEND signed-basket instrument (ruling 20's named enrichment) would move NOT_GRADED_OUTSIDE_DOMAIN toward the GRADED members and would move nothing else. Repairing an upstream delivery gap moves GUARD_NOT_REACHED only. Widening the derived ceiling moves part of NOT_GRADED_OUTSIDE_DOMAIN and cannot touch NOT_GRADED_NO_NEIGHBOUR, which needs a holdings row to exist at all. GRADED_DISAGREED is moved by none of them: it is the one member that reports a real disagreement between two computations rather than an absence, so no coverage remedy can reduce it.",
     "token_census": {
-      "_method": "comp-find '\\b<VALUE>\\b' data infra/aws/lambda portal/src, run 2026-09-30 ~18:1xZ. 'hits' is the total across the scope; 'def_band' is the number of matches on a DEFINITION line, which is the number that decides a collision -- a prose mention is not a competing definition.",
-      "_denominator": "12876 file(s) scanned in scope [corpus=all]; 4800 EPHEMERAL-FLOOR and 2011 BINARY files not searched, both printed by the tool.",
-      "FULL": {
-        "hits": 297,
-        "def_band": 2,
-        "foreign_definitions": [
-          "infra/aws/lambda/layers/pyiceberg-nessie-deps/python/pyiceberg/io/pyarrow.py:2045 FULL = \"full\""
-        ],
-        "collision": false,
-        "why": "the only other definition is a vendored pyiceberg constant whose VALUE is the lowercase string 'full'; it shares the identifier, not the served value, and it is a third-party dependency this estate does not author."
-      },
-      "PARTIAL_HISTORY": {
-        "hits": 1,
-        "def_band": 1,
-        "foreign_definitions": [],
-        "collision": false,
-        "why": "sole definition is this contract's producer."
-      },
-      "MEASURED": {
-        "hits": 1183,
-        "def_band": 6,
-        "foreign_definitions": [
-          "data/cot/scripts/bronze/cot_bronze_ingest.py:524 RN_MEASURED_COMPLETE = \"MEASURED-COMPLETE\"",
-          "portal/src/pages/SecurityAnalysis/__harness__/peersPattern.harness.cjs:175 status: 'MEASURED'",
-          "portal/src/pages/SecurityAnalysis/__harness__/peersReadFailed.harness.cjs:75 status: 'MEASURED'",
-          "data/assets/scripts/gold/cottonwood_aua.py:71 (comment only, not a definition of this token)"
-        ],
-        "collision": false,
-        "why": "THE NEAREST NEIGHBOUR, named rather than counted: the cot ingest defines a DIFFERENT string ('MEASURED-COMPLETE'), and the two portal harnesses carry status: 'MEASURED' on a SECURITY IDENTITY -- a different object, a different axis, and a different column. No consumer reads both through one field. The 1,183 total is dominated by the English word in prose across this estate's own documentation, which a word-boundary census cannot separate from a value and which no typed column confuses."
-      },
-      "FLOW_UNRECONCILED": {
-        "hits": 3,
-        "def_band": 1,
-        "foreign_definitions": [],
-        "collision": false,
-        "why": "sole definition is this contract's producer."
-      },
-      "LARGE_FLOW": {
-        "hits": 2,
-        "def_band": 1,
-        "foreign_definitions": [],
-        "collision": false,
-        "why": "sole definition is this contract's producer."
-      },
-      "NOT_MEASURABLE": {
-        "hits": 4,
-        "def_band": 1,
-        "foreign_definitions": [],
-        "collision": false,
-        "why": "sole definition is this contract's producer; it is declared on two axes (day_quality and return_basis) BY DESIGN, and those two uses agree -- the column is null exactly when both carry it."
-      },
-      "SOURCE_LAG": {
-        "hits": 4,
-        "def_band": 1,
-        "foreign_definitions": [],
-        "collision": false,
-        "why": "sole definition is this contract's producer; the value is also a C-COVERAGE member the PRD declares, which is the same meaning at the project grain."
-      },
-      "TWR": {
-        "hits": 126,
-        "def_band": 1,
-        "foreign_definitions": [],
-        "collision": false,
-        "why": "the sole DEFINITION is this contract's producer. The other 125 hits are prose plus the RETIRING engine's own names (twr_daily, c02_twr_engine, TRUE_TWR), which C-SHADOW retires and which are table and module names rather than a competing enum value. The overlap therefore shrinks over time rather than growing, and no consumer resolves a return_basis through a table name."
-      },
-      "HOLDINGS_INCOME_FALLBACK": {
-        "hits": 1,
-        "def_band": 1,
-        "foreign_definitions": [],
-        "collision": false,
-        "why": "sole definition is this contract's producer."
-      },
-      "FEE_RAIL_UNUSED": {
-        "hits": 4,
-        "def_band": 1,
-        "foreign_definitions": [],
-        "collision": false,
-        "why": "sole definition is this contract's producer; also a C-COVERAGE member and a C-FEERAIL term the PRD declares, the same meaning at the project grain."
-      },
-      "NO_HOLDINGS_ROW": {
-        "hits": 1,
-        "def_band": 1,
-        "foreign_definitions": [],
-        "collision": false,
-        "why": "sole definition is this contract's producer."
-      },
-      "HOLDINGS_NOT_OK": {
-        "hits": 1,
-        "def_band": 1,
-        "foreign_definitions": [],
-        "collision": false,
-        "why": "sole definition is this contract's producer."
-      }
+      "method": "comp-find word-boundary regex over the whole repo corpus (corpus=all), one scan per proposed member plus one for the column name, denominators printed per scan.",
+      "denominator": "212,320 to 212,369 files scanned per run (the corpus grew during the sweep as this session's own commits landed), 94,069 ephemeral-floor files not searched, 7 unreadable, about 7,600 binary.",
+      "GRADED_AGREED": "1 hit, and it is comp-tool's OWN run logs (.comp-graph/.comp_dedup, org/mcp/comp-tool-runs.jsonl, org/mcp/comp-which-rail.log). Zero in any first-party source.",
+      "GRADED_DISAGREED": "1 hit, the same three comp-tool log files. Zero in first-party source.",
+      "NOT_GRADED_OUTSIDE_DOMAIN": "0 hits.",
+      "NOT_GRADED_NO_NEIGHBOUR": "0 hits.",
+      "GUARD_NOT_REACHED": "0 hits.",
+      "guard_state": "55 hits across 8 files, all accounted for: this producer, the task order, a PRD-derived inbox message, this session's log, a message archive, and the one worth naming -- def guard_state(path) in org/tier1_exec/3.0.0_SA_CVO/deliverables/aor_f2_pin_does_not_bind_a00.py plus its use in 4.0.0_SA_CRO~C's ATOM_LAYER0_INTEGRATION driver."
     },
-    "token_census_method": "comp-find '\\b<VALUE>\\b' over data, infra/aws/lambda, portal/src; word-boundary; denominator 12,876 files scanned in corpus=all (4,800 ephemeral-floor and 2,011 binary files not searched, both printed by the tool).",
-    "token_census_finding": "NO COMPETING ENUM DEFINITION EXISTS for any of the thirteen values: every value's DEF band resolves to this contract's own producer, with two exceptions that are not collisions -- FULL's other DEF is a vendored pyiceberg constant whose VALUE is lowercase 'full', and MEASURED's other DEFs are a different string ('MEASURED-COMPLETE' in the cot bronze ingest) and a portal SecurityAnalysis harness that carries status: 'MEASURED' on a SECURITY IDENTITY, a different axis and a different object. The three high-count tokens (MEASURED 1,183, FULL 297, TWR 126) are LEXICALLY common and SEMANTICALLY unique here; a consumer rejects on the typed column, not on the token. TWR's 126 hits are overwhelmingly the RETIRING engine's own names (twr_daily, c02_twr_engine) which C-SHADOW retires, so that overlap shrinks rather than grows."
+    "token_census_method": "A TRAP THIS CENSUS WALKED INTO, recorded because it would mislead the next reader: the 1 hit on GRADED_AGREED and GRADED_DISAGREED is the INSTRUMENT'S OWN FOOTPRINT. comp-find logs every query and the corpus includes those logs, so a token census run twice finds its first run. The hits were identified BY PATH before being dismissed, not assumed away.",
+    "token_census_finding": "NO COLLISION. All five members are absent from first-party source. The column NAME guard_state exists elsewhere as a FUNCTION (def guard_state(path) in a CVO deliverable script, answering a file-path question) and in no served or declared SCHEMA anywhere in the estate: different grain, different intent, no shared consumer. Adopting the name here is therefore not a Rule 24 (iii) cross-table intent collision. Stated as a measurement rather than a reassurance -- the function is named, its file is named, and a reader can disagree.",
+    "member_evidence": {
+      "basis": "measured",
+      "live_run": "473 rows, 83 trading days (2026-06-01..2026-09-28), the six round-1 accounts, graded against MEASURED_THRESHOLDS_R1 at tolerance 0.001244: GRADED_AGREED 152, NOT_GRADED_OUTSIDE_DOMAIN 309, GUARD_NOT_REACHED 10, GRADED_DISAGREED 2, NOT_GRADED_NO_NEIGHBOUR 0. Zero nulls, zero values outside the declared set, zero rows carrying HOLDINGS_INCOME_FALLBACK.",
+      "unexercised_member_proved_by_mutant": "NOT_GRADED_NO_NEIGHBOUR is 0 on live data, and a declared member nothing produces is the exact defect SOURCE_LAG had. Proved with a sealed mutant: with the neighbour table forced empty, all 5 rows of a control window take NOT_GRADED_NO_NEIGHBOUR and stay MEASURED/TWR with a served value (correct: their flow is within the tolerance). The same window unmutated gives GRADED_AGREED 5."
+    }
   },
-  "schema_hash": "b5fa8e4e48bf60ab5bb34cf7e4179ebfdcff8aa9d507ccedbd32eac700222058",
+  "schema_hash": "1b25d37ba6cfcf5a7413373ccdca57e306b86614aff94472ca65ca0025484946",
   "schema_hash_basis": "sha256 over the sorted 'name:type' lines joined by newline, types as the pyarrow type name the producer's ARROW_SCHEMA carries. The check recomputes it against the landed parquet, so contract and artifact cannot drift.",
-  "firm_specific_columns": "NONE. A firm-specific column is a contract violation (C-SHAPE); no sb_cd, tr_cd or any Schwab code survives into this table -- they live only in the adapter's sources.json."
+  "firm_specific_columns": "NONE. A firm-specific column is a contract violation (C-SHAPE); no sb_cd, tr_cd or any Schwab code survives into this table -- they live only in the adapter's sources.json.",
+  "supersedes": {
+    "contract_version": "0.1.0",
+    "schema_hash": "b5fa8e4e48bf60ab5bb34cf7e4179ebfdcff8aa9d507ccedbd32eac700222058",
+    "changes": [
+      "return_basis LOSES the member HOLDINGS_INCOME_FALLBACK (ruling 17: the substitution is withdrawn, so a guard disagreement serves no number).",
+      "NEW non-null string column guard_state, 19 columns in all (ruling 18's field: what the holdings guard DID with the account-day)."
+    ]
+  },
+  "schema_hash_control": "THE METHOD IS CONTROLLED, not asserted: recomputing it over the same ARROW_SCHEMA with guard_state removed reproduces 0.1.0's published hash b5fa8e4e48bf60ab5bb34cf7e4179ebfdcff8aa9d507ccedbd32eac700222058 exactly. A hash whose method could not reproduce the previous published value would be unverifiable.",
+  "producer_pin": "data/assets/scripts/gold/irpt_reporting/account_return_daily.py -- the 19-field ARROW_SCHEMA this hash is taken from. The producer commit carrying guard_state must land WITH this contract, because the check recomputes the hash against the landed parquet."
 }

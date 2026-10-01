@@ -6,7 +6,7 @@ synthetic `classified_by = "model"` rows built from the real R4 Kimi K3 results
 (R4_MODEL_CLASSIFY_CENSUS_20260930.json: every result with a non-null asset_class, 260 rows).
 ONLY the table is stubbed (an in-memory DynamoDB double that returns what boto3 returns:
 Decimal numbers, bool flags, projected scans, paginated scans, conditional writes). No AWS call
-is made and nothing is written anywhere but the census JSON.
+is made. A bare run prints and writes nothing; `--write <path>` writes the census JSON to that path.
 
 A reader is one verdict: TOLERATES (exercised, no crash, no refusal, no contract failure),
 CRASHES, REFUSES (raised a refusal for the model row), FAILS-CONTRACT (an output breaks a strict
@@ -750,6 +750,37 @@ def ex_classify_residual():
                 "tickers: the runner's own census sees a model row as a live row, so it is never re-planned" % (n, len(MODEL)))
 
 
+def ex_write_model_rows():
+    """The model path's WRITER reads the table twice before it plans (vocabulary, existing tickers).
+    A ticker that already has a model row must come back PRESENT and never be planned again."""
+    with World(), isolated([YANG, SHARED]):
+        mod = load("infra/aws/lambda/v2_portal/yang_pipeline/write-model-rows.py", "ex_write_model_rows")
+        import etf_classifications_dynamodb as cm
+        clf = cm.ETFClassifier()
+        vocab = mod.TableVocabulary.from_live_table(clf)
+        live = mod.existing_tickers(clf)
+        expect(all(r["ticker"] in live for r in MODEL), "existing_tickers missed a model row")
+        firm = [r for r in MODEL if not r.get("low_confidence")][:25]
+        expect(len(firm) > 0, "no model row above the confidence threshold to exercise")
+        cands = {r["ticker"]: {"key": r["ticker"], "asset_class": r["asset_class"],
+                               "sub_asset_class": r.get("sub_asset_class"), "name": r.get("name"),
+                               "confidence": float(r["classification_confidence"]), "low_confidence": False}
+                 for r in firm}
+        rows, refused, present = mod.plan_rows(list(cands), cands, vocab, live)
+        expect(rows == [], "the writer planned %d ticker(s) that already have a model row" % len(rows))
+        expect(refused == [], "the writer refused %d existing model ticker(s): %s" % (len(refused), refused[:2]))
+        expect(sorted(present) == sorted(cands), "PRESENT %d != %d" % (len(present), len(cands)))
+        flagged = next((r for r in MODEL if r.get("low_confidence")), None)
+        if flagged is not None:
+            cand = {"key": "ZZNEWLOW", "asset_class": flagged["asset_class"], "confidence": 0.5, "low_confidence": True}
+            _, low_refused, _ = mod.plan_rows(["ZZNEWLOW"], {"ZZNEWLOW": cand}, vocab, live)
+            expect(len(low_refused) == 1 and low_refused[0][1].startswith("LOW-CONFIDENCE"),
+                   "a low-confidence candidate was not refused")
+        return ("TableVocabulary.from_live_table and existing_tickers read the table with %d model rows in it; plan_rows "
+                "over %d tickers that already hold a model row planned 0 and reported all %d PRESENT (left as they "
+                "are); a new low-confidence candidate is refused, never planned" % (len(MODEL), len(cands), len(present)))
+
+
 def ex_scoped_amgt():
     rel = "lib/research/api/scoped_amgt.py"
     with World() as w, isolated([ROOT]):
@@ -784,23 +815,42 @@ def ex_positioning_chain():
 
 def ex_comparison_catalogue():
     base = ROOT / "infra/aws/lambda/investor-reporting/ycharts/generate"
-    with World(), isolated([base]):
+    with World() as w, isolated([base]):
         mod = load("infra/aws/lambda/investor-reporting/ycharts/generate/comparison_catalogue.py", "ex_comparison_catalogue")
-        port = lambda: {r["ticker"]: dict(r) for r in MODEL}  # noqa: E731 -- the injected read_classifications port
-        cat = mod.build_catalogue(tenant="t1", read_classifications=port)
-        names = {e["ticker"]: e for e in cat["entries"] if e.get("ticker")}
-        expect(all(r["ticker"] in names for r in MODEL), "a model ticker missing from the catalogue")
+        # The REAL reader (row IRPT_BCKEND-W88-S2, composed by reports/generate_installed.py since 2026-10-01): a
+        # paginated low-level Scan, here over the table double holding the control rows and every model row.
+        reader = mod.classifications_reader(FakeDdbClient(w.tables))
+        rows = reader()
+        expect(all(r["ticker"].upper() in rows for r in MODEL), "the real reader missed a model row")
+        cat = mod.build_catalogue(tenant="t1", read_classifications=reader)
+        listed = {e["ticker"] for e in cat["entries"] if e.get("ticker")}
         import jsonschema
         schema = json.loads((ROOT / "infra/aws/lambda/investor-reporting/_contracts/ComparisonCatalogue.schema.json").read_text(encoding="utf-8"))
         errs = list(jsonschema.Draft202012Validator(schema).iter_errors(cat))
         expect(not errs, "catalogue fails its closed schema: %s" % [e.message for e in errs[:3]])
         extra = sorted({k for e in cat["entries"] for k in e} - {"key", "label", "ticker", "name_source"})
         expect(not extra, "model attributes leaked into catalogue entries: %s" % extra)
-        return ("build_catalogue with the injected port returning %d model rows -> %d entries, all model tickers named "
-                "(name_source etf_classifications), validates against ComparisonCatalogue.schema.json (closed), entry "
-                "keys limited to key/label/ticker/name_source. The port is UNWIRED in the deployed function "
-                "(entry.py:165 passes read_classifications through; ENTRY installs none), so no row reaches it today"
-                % (len(MODEL), len(cat["entries"])))
+        # A model row enters the served LIST when the write gives it a name. The double names every model row (its
+        # own name, else its ticker); the planned write names only the rows whose model result carries one.
+        named = [r for r in MODEL if r["name"] != r["ticker"]]
+        named_listed = [r for r in named if r["ticker"].upper() in listed]
+        low = sum(1 for r in named_listed if r["low_confidence"])
+        # 1.0.0_SA_CTO round-6 ruling 1 (CTO_ROUND_ANALYSIS_MDPF_SECCLASS_ROUND_6_20261001.md): "a model-written row
+        # never supplies a name to a list a person picks from". Until the catalogue filters classified_by = model
+        # this reader FAILS-CONTRACT, which withholds MODEL-READER-TOLERATED and so holds the MODEL_ROWS half.
+        if named_listed:
+            fails_contract("CTO round-6 ruling 1: the comparison LIST offers %d of the %d named model rows (%d of them "
+                           "low_confidence) with name_source etf_classifications and no sign of classified_by = model; "
+                           "the reader projects ticker, name and identifier_namespace only. The filter is "
+                           "2.0.0_SA_COO~Y's (comparison_catalogue.py)" % (len(named_listed), len(named), low))
+        verbatim = mod.entry_for_ticker(named[0]["ticker"], tenant="t1", read_classifications=reader) if named else None
+        expect(verbatim is None or verbatim["name_source"] == "ticker_verbatim",
+               "entry_for_ticker names a model-written row: %r" % (verbatim,))
+        return ("classifications_reader (real paginated Scan over the double, %d rows) read all %d model rows; "
+                "build_catalogue -> %d entries, 0 of the %d named model rows listed (CTO round-6 ruling 1), "
+                "entry_for_ticker answers a model ticker verbatim; validates against ComparisonCatalogue.schema.json "
+                "(closed), entry keys limited to key/label/ticker/name_source"
+                % (len(w.main.rows), len(MODEL), len(cat["entries"]), len(named)))
 
 
 # ---------------------------------------------------------------------------------------------
@@ -924,13 +974,18 @@ READERS = [
     ("data/black_diamond/scripts/classification/seed_canonical_securities.py", "_yang_conflicts", ex_seed_canonical),
     ("data/black_diamond/scripts/classification/seed_bd_securities.py", "seed (one-time copy into bd-securities)", ex_seed_bd),
     ("infra/aws/lambda/v2_portal/yang_pipeline/classify-residual-model.py", "table_rows_at_build/existing_tickers", ex_classify_residual),
+    ("infra/aws/lambda/v2_portal/yang_pipeline/write-model-rows.py", "TableVocabulary.from_live_table/existing_tickers/plan_rows (the model path's writer)", ex_write_model_rows),
     ("lib/research/api/scoped_amgt.py", "_join_classification/_classification_for_ticker", ex_scoped_amgt),
     ("lib/research/identity/positioning_chain.py", "read_etf_classifications/resolve_one", ex_positioning_chain),
-    ("infra/aws/lambda/investor-reporting/ycharts/generate/comparison_catalogue.py", "build_catalogue (injected port, unwired)", ex_comparison_catalogue),
+    ("infra/aws/lambda/investor-reporting/ycharts/generate/comparison_catalogue.py", "classifications_reader (the real paginated Scan) + build_catalogue", ex_comparison_catalogue),
     ("infra/aws/lambda/investor-reporting/ycharts/generate/entry.py", "read_comparison_catalogue (delegates to build_catalogue)",
      lambda: read_only_delegate("infra/aws/lambda/investor-reporting/ycharts/generate/entry.py",
-                                "Delegates to comparison_catalogue.build_catalogue (exercised above); no classifications port is installed on ENTRY.",
+                                "Delegates to comparison_catalogue.build_catalogue (exercised above); the port it passes through is composed by reports/generate_installed.py (next row).",
                                 ["return _catalogue.build_catalogue(tenant=ctx.tenant, read_classifications=read_classifications)"])),
+    ("infra/aws/lambda/investor-reporting/reports/generate_installed.py", "compose_ports: wires read_classifications to the real reader",
+     lambda: read_only_delegate("infra/aws/lambda/investor-reporting/reports/generate_installed.py",
+                                "Composition only: installs comparison_catalogue.classifications_reader (exercised above) as the catalogue's read_classifications port; it reads no row itself.",
+                                ['"read_classifications": comparison_catalogue.classifications_reader(clients["dynamodb"]),'])),
     ("portal/src/pages/AdvisorIntelligence/_shared/lib/composition.ts", "CANONICAL_CLASSES / normalizeMixTo4Class (portal asset-class mapping)", read_only_portal_composition),
     ("portal/src/pages/InvestorReporting/contracts/wire/HoldingsSnapshot.ts", "asset_class wire type", read_only_portal_wire),
     ("org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md", "IRPT_DASHBD C-CLASSES consumer (PRD only, no code yet)", read_only_dashbd_classes),
@@ -1035,6 +1090,8 @@ def run_one(fn):
 
 
 def main() -> int:
+    # Read the flag BEFORE any exercise runs: one exercise drives a script through sys.argv.
+    write_to = Path(sys.argv[sys.argv.index("--write") + 1]) if "--write" in sys.argv else None
     files = tracked_files()
     search, universe = search_census(files)
     readers = []
@@ -1066,7 +1123,12 @@ def main() -> int:
         "comp_find_at_build": COMP_FIND_AT_BUILD,
         "not_readers": NOT_READERS,
     }
-    OUT.write_text(json.dumps(doc, indent=2, sort_keys=False) + "\n", encoding="utf-8")
+    # A dated record is written ONLY when asked for (3.0.0_SA_CVO round-6 Q3: a record that changes whenever anyone
+    # runs the check is not a record). A bare run prints and writes nothing.
+    if write_to is not None:
+        target = write_to
+        target.write_text(json.dumps(doc, indent=2, sort_keys=False) + "\n", encoding="utf-8")
+        print("WROTE %s" % target.as_posix())
     for r in readers:
         print("READER %-15s %s :: %s" % (r["verdict"], r["path"], r["function"]))
     for f in missing:

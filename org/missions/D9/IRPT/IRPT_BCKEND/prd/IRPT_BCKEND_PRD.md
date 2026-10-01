@@ -5,7 +5,7 @@
  "project": "IRPT_BCKEND",
  "directive": "D9",
  "fabric": "laptop",
- "prd_version": "v0.21",
+ "prd_version": "v0.23",
  "step": 4,
  "brief_ref": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md@2acf23d8fd",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13"],
@@ -564,3 +564,53 @@ custody price glitch crosses +/-100% (..0090: DLCFX 17.48 -> 546.00 -> 16.21 and
     count. The option of re-pricing the reversion day against the last plausible price was not taken: it needs a
     per-position plausibility model, and voiding one extra day is bounded and reads the same on every firm. Re-emit
     the 49F gold before the adapter switch applies; the after-read adds ..0090 and ..4714.
+
+## ADDENDUM v0.22 -- four readings from the two closer traces (L4; outside ENDPOINT, no half re-opens)
+
+**Source.** `4.0.0_SA_CRO~X`'s traces `ANALYSIS_END_TO_END_GAP_BRIEF_20261001.md` @a465020d94 and
+`INF_PERFORMANCE_THREAD_END_TO_END_GAP_BRIEF_20261001.md` @c621a6f099; rows IRPT_BCKEND-S244, S245; `2.0.0_SA_COO~Y`'s V1 read
+@f95db2da7b; `STATUS~M.md` Parked. Ruled by `1.0.0_SA_CTO` 2026-10-01 05:44 UTC under
+`ANDREW_DIRECT_20261001_042xZ_SELF_DRIVE_60M_LAPTOP_FABRIC_FINAL_SAY_CLOSER_DRIVE_IRPT_FIRST.md` @c48af273cc. The operating detail is in
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md` batches 61-63; this addendum carries only what
+changes how an outcome is read.
+
+19. **FWD-4 is EXERCISED on the upload lane.** Its constraint "the request arrives by EMAIL (the intake is FWD-9)" names FWD-9's
+    intake of record; it is not a precondition of FWD-4. A request composed from a file uploaded in the Analysis tab is a request
+    for FWD-4's DONE WHEN. FWD-9 stays its own outcome with its own proof, and is built after the Analysis thread is live. The
+    ENDPOINT bytes are not edited.
+20. **A holdings source declares which close its partitions hold (FWD-3, FWD-12).** FWD-3's PROOF, "recomputed from the landed
+    silver positions of two consecutive trading days", is read as: the two partitions that hold day t's close and the prior
+    trading day's close, by the source's declared date basis in `sources.json`. For Inflection those are not the partitions
+    dated t and t-1 from a seam in early May 2026 on (row S245). No holdings gold is served for a source whose date basis has
+    not been measured and declared; Inflection's is rebuilt before IB-pr-221 is served.
+21. **A SERVICE subject with no `allowedFirmIds` is refused (FWD-2).** FWD-2's "NEVER silently grants" covers a missing
+    attribute as well as a foreign value: the boundary serves a SERVICE subject only inside a firm its row names, and the single
+    value `ALL` is the only unrestricted form. The limit is enforced at the served boundary AND in the resident's job authority;
+    row S238 disarms when both refuse a foreign firm on deployed bytes.
+22. **Holdings: a permitted account with no custody row answers NOT_READY; an account outside the viewer's permitted set answers
+    NOT_FOUND.** NOT_READY says the object exists for this viewer and its data has not landed, which is true and lets the page
+    say so. NOT_FOUND is the answer for an identifier the viewer may not see or that does not exist, and the two cases are
+    indistinguishable by design (FWD-2: a refusal reveals nothing).
+
+## ADDENDUM v0.23 -- ruling 23: a holdings gap is linked, never estimated (L4; outside ENDPOINT, no half re-opens)
+
+**Source.** `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md` batch 80 items 2 to 7 (ruled
+2026-10-01T10:51Z on `2.0.0_SA_COO~P`'s date-basis read @a0c9b39a8c), batch 92 and batch 95; the rebuilt Inflection gold
+(ledger closed @3cc5b831aa: 1,616 partitions, 1,613 written at emission 1.2, linked rows on 2026-05-12, 2026-07-01 and
+2026-08-11); the three hand reproductions accepted in row S254. Written by `1.0.0_SA_CTO` 2026-10-01T15:38Z under
+`ANDREW_DIRECT_20261001_042xZ_SELF_DRIVE_60M_LAPTOP_FABRIC_FINAL_SAY_CLOSER_DRIVE_IRPT_FIRST.md` @c48af273cc. It is the addendum
+batch 80 item 7 promised with the rebuild's served move. It changes how FWD-3 is read; the ENDPOINT bytes are not edited.
+
+23. **A holdings source with a missing close is LINKED across the gap, never estimated (FWD-3, FWD-12).** FWD-3's "recomputed
+    from the landed silver positions of two consecutive trading days" is read, for a day whose prior close is in no partition,
+    as: the two partitions that hold the nearest closes that exist. The first computable day after a gap carries ONE row whose
+    return runs from the last close that exists, names its start in `prior_business_date` and states its span in trading days
+    in a field a consumer reads; a span of one is the ordinary row. No close is estimated, carried or interpolated and no
+    one-day return is invented for a gap day; where the producer's method cannot run over the longer span the row is
+    NOT_COMPUTABLE. A gap day has NO partition: a partition left by an earlier build is removed before the gold is served,
+    because a reader would chain it beside the linked row and count one move twice. A window that contains a linked row chains
+    it and discloses the linked days in the report's availability; a window whose start or end falls inside a linked row has
+    no exact answer and is marked with the gap days named, never snapped to a neighbouring date. The 95 percent coverage line
+    (RULINGS batch 80 item 5) is not lowered to rescue a day. Scope: sources that declare `link_across_gaps` in `sources.json`
+    (Inflection today); 49 Financial's gold keeps its skipped-and-disclosed form until the round analysis puts the two firms
+    on one rule.

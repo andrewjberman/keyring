@@ -201,3 +201,776 @@ graduated item's remedy is routed by the CVO to its owner by name and the clocks
   }
 ]
 ```
+
+## S7 -- the row gate's rowlessness limb does not resolve an item through its adjudication row (filed on the CTO's order, INERT)
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-S7",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-01T11:45Z",
+    "one_line": "The row gate's rowlessness limb compares ids exactly, so an item whose remedy is carried under its adjudication row's id reads 'graduated with no remediation row'. Filed once on the CTO's order; repaired when a LIVE project is refused by it, not before.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "0.0.0_AB_MSTR",
+    "spec_asserts": "`.tools/surprise-row-gate.py` `_graduated_without_row` (def at :908) refuses a new remediation row while a graduated item of the project has none: the limb is meant to find graduations nobody carried.",
+    "world_is": "The limb takes the set of ids that remediation rows bear and subtracts it from the graduated item ids. It does not resolve an item through the adjudication row that graduated it. Two older conventions therefore read as rowless: (a) a worker-form item whose clocks were written on the adjudication row itself, and (b) a remedy carried on a remediation row keyed by the adjudication row's id. Across the estate 158 remediation rows bear an adjudication-row id (some are the remedy of the adjudication's own finding, so 158 is an upper bound on class (b), not its size). On closed projects this is worked around by dismissals (batch 77 item 2); the limb is correct on a live project until one is refused for this reason.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "`_graduated_without_row` source read at this seat 2026-10-01: exact-id set difference",
+        "census at this seat 2026-10-01 over every tree and legacy channel through the gate's own `_remediation_ids_for_project`: 158 remediation ids matching `-C-S<n>`",
+        "org/tier1_exec/3.0.0_SA_CVO/deliverables/SURPRISE_CHANNEL_BACKLOG_CENSUS_20261001.md addendum @6c620c531a: 852 rowless graduated items, 313 not site Z's, 260 BLOCKING or ARMED",
+        "1.0.0_SA_CTO RULINGS batch 77 item 4 @4b9e65f744: 'THE LIMB'S OWN GAP IS ONE ROW, not an order ... owner 0.0.0_AB_MSTR (fabric tooling), standing INERT. It is repaired when a LIVE project is refused by it, not before.'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Un-park condition: a commit by a seat on an OPEN project is refused by this limb for an item whose remedy is carried under its adjudication row's id."
+  }
+]
+```
+
+## S8 -- re-filed from NFRA_OUTSET-W1-S21: `deployed_state` has no value for a deploy-scope artifact committed and deliberately not deployed
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-S8",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-01T11:45Z",
+    "one_line": "RE-FILED from NFRA_OUTSET-W1-S21: the proof-of-spec schema's `deployed_state` has no value for a deploy-scope artifact that is committed and deliberately not deployed, so an instance records the least-wrong value.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "spec_asserts": "org/standards/PROOF_OF_SPEC.schema.json closes `deployed_state` to an enum, and CLAUDE.md section 4 requires a value to carry its claim in a field a consumer can reject on.",
+    "world_is": "The enum at HEAD is still {DEPLOYED-VERIFIED, COMMITTED-NOT-DEPLOY-SCOPE, STAGED-AWAITING-GATE}. A deploy-scope artifact that a cell commits and is not allowed to deploy fits none: COMMITTED-NOT-DEPLOY-SCOPE is false, and STAGED-AWAITING-GATE asserts a gate that may not exist. A reader of the field takes an undeployed artifact for one waiting on a named gate. The remedy is a schema decision (a fourth value, or a ruling that STAGED-AWAITING-GATE covers the case), and a value-enum change carries its rule-24 record.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/standards/PROOF_OF_SPEC.schema.json at HEAD, read at this seat 2026-10-01: three enum values, as the old row says",
+        "old row NFRA_OUTSET-W1-S21 (org/missions/D11/NFRA/NFRA_OUTSET/surprise-channel/investigations/), graduated at NFRA_OUTSET-C-S4 with owner 1.0.0_SA_CTO and no remediation row",
+        "1.0.0_SA_CTO RULINGS batch 77 @4b9e65f744 (org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md): a hazard of a closed project that is live today is re-filed as a new row in an open channel, citing the old id; the old row is dismissed with that pointer"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Home: this channel, because the hazard is a fabric tool or standard and directives D0 and D11 (the old rows' directives) have no open member project; filing it in an unrelated open project would put an ARMED row in front of that project's L10. Not measured: how many proof-of-spec instances at HEAD record STAGED-AWAITING-GATE for an artifact with no gate."
+  }
+]
+```
+
+## S9 -- re-filed from NFRA_OUTSET-W1-S17: `comp-heat federated --sql` is unrestricted under a read-only docstring
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-S9",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-01T11:45Z",
+    "one_line": "RE-FILED from NFRA_OUTSET-W1-S17: `comp-heat federated --sql` sends the caller's SQL to Trino unread, under a module docstring that says the tool is read-only and never writes to any store.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "spec_asserts": "`.tools/comp-heat`'s own module docstring: ADVISORY-ONLY and READ-ONLY, never writes to the repo or any store.",
+    "world_is": "At HEAD `.tools/comp-heat:860-861` returns the `--sql` string as the statement to run, and `.tools/_trino_fed.py` carries no statement inspection (0 occurrences of a read-only guard, a refusal, or any of INSERT, DELETE, DROP, UPDATE, CREATE). Whether a write would succeed depends on the Trino identity's grants, which this seat did not read; the tool's stated contract is not enforced by the tool on the one path that could break it. The remedy is the tool owner's choice between narrowing the docstring and restricting the surface.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/comp-heat:860-861 and the docstring, read at this seat 2026-10-01",
+        ".tools/_trino_fed.py token census at this seat 2026-10-01: read-only 0, refus 0, write verbs 0, select 2",
+        "old row NFRA_OUTSET-W1-S17, graduated at NFRA_OUTSET-C-S4 (owner then 0.8.0_AE_CloudComp; comp-heat's registry owner is 1.0.0_SA_CTO by its header) with no remediation row",
+        "1.0.0_SA_CTO RULINGS batch 77 @4b9e65f744 (org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md): a hazard of a closed project that is live today is re-filed as a new row in an open channel, citing the old id; the old row is dismissed with that pointer"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Home: this channel, because the hazard is a fabric tool or standard and directives D0 and D11 (the old rows' directives) have no open member project; filing it in an unrelated open project would put an ARMED row in front of that project's L10. Not measured: the Trino identity's write grants, so the standing is the row's original and not a demonstrated write."
+  }
+]
+```
+
+## S10 -- re-filed from NFRA_OUTSET-W1-S13 and W2-S10: two traps a worker cannot re-derive are in no worker face or doctrine
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-S10",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-01T11:45Z",
+    "one_line": "RE-FILED from NFRA_OUTSET-W1-S13 and NFRA_OUTSET-W2-S10: two traps a worker cannot re-derive at the call site are in no worker face, worker definition or doctrine file.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "spec_asserts": "CLAUDE.md rule 22a exists to carry instrument traps 'you cannot re-derive at the call site'; rule 27 makes the task order's worker face the worker's whole context.",
+    "world_is": "(1) In the Bash tool `cd X && A & B; C` backgrounds the whole `cd X && A` list, so B and C run in the session's default directory, which for a worker is the MAIN workspace: a worker ran the main tree's copy of a test and wrote a file there believing it was in its worktree. (2) Running a COPY of a comp-tool from a scratch directory, or exec-ing it in-process, fail-softs on `__file__` and returns clean-looking false results in opposite directions. Neither is stated in `.claude/agents/worker.md` (0 lines mentioning backgrounding) or in docs/doctrine/CLAUDE_ANNEX.md (0 matches for a copied comp-tool or `__file__`). The stray file of (1) is gone from the main tree's .scratch/. The remedy is one line each where a worker reads it.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".claude/agents/worker.md and docs/doctrine/CLAUDE_ANNEX.md at HEAD, read at this seat 2026-10-01: no statement of either trap",
+        ".scratch/os2_falsifier.txt: absent at this seat 2026-10-01 (the old row's first limb is moot)",
+        "old rows NFRA_OUTSET-W1-S13 and NFRA_OUTSET-W2-S10, graduated at NFRA_OUTSET-C-S4 with no remediation row",
+        "1.0.0_SA_CTO RULINGS batch 77 @4b9e65f744 (org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md): a hazard of a closed project that is live today is re-filed as a new row in an open channel, citing the old id; the old row is dismissed with that pointer"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Home: this channel, because the hazard is a fabric tool or standard and directives D0 and D11 (the old rows' directives) have no open member project; filing it in an unrelated open project would put an ARMED row in front of that project's L10."
+  }
+]
+```
+
+## S11 -- re-filed from NFRA_OUTSET-W1-S14: the graph_nodes metadata prefix still cannot be listed in-band
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-S11",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-01T11:45Z",
+    "one_line": "RE-FILED from NFRA_OUTSET-W1-S14: the graph warehouse's graph_nodes metadata prefix still cannot be listed in-band; a summarised listing did not finish in 280 seconds.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "spec_asserts": "infra/aws/globgrph/derive_runner.py:505-535 describes a nightly Nessie-ref-aware mark and sweep over warehouse/globgrph/ that bounds historical-snapshot accumulation.",
+    "world_is": "`aws s3 ls --recursive --summarize` of s3://opal-313476888478-globgrph/warehouse/globgrph/graph_nodes_4c6c23bd-fffa-427e-9cd9-7a9deaa3426d/metadata/ was terminated by this seat's 280-second bound before it printed a total, so today's object count is NOT obtained. On 2026-09-05 the old row counted 183,447 objects on the table, 134,616 under metadata/, 20,374 of them metadata.json files with none expired. A prefix that cannot be listed in 280 seconds is not one a sweep has brought to 'one overwrite's worth of files'. Either the sweep does not run, or it does not reach this prefix; which one was not read.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the listing run at this seat 2026-10-01 11:36Z-11:41Z: exit 143 at the 280 s bound, no total printed",
+        "infra/aws/globgrph/derive_runner.py:505-541 at HEAD: the maintenance design and `_MAINT_SWEEP_PREFIX = \"warehouse/globgrph/\"`",
+        "old row NFRA_OUTSET-W1-S14, graduated at NFRA_OUTSET-C-S4 (the globgrph lane via the CTO) with no remediation row",
+        "1.0.0_SA_CTO RULINGS batch 77 @4b9e65f744 (org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md): a hazard of a closed project that is live today is re-filed as a new row in an open channel, citing the old id; the old row is dismissed with that pointer"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Home: this channel, because the hazard is a fabric tool or standard and directives D0 and D11 (the old rows' directives) have no open member project; filing it in an unrelated open project would put an ARMED row in front of that project's L10. Not measured: the object count today, whether the sweep is scheduled, and its last run. A slow listing is also what a slow network looks like; one run does not separate them."
+  }
+]
+```
+
+## S12 -- re-filed from NFRA_CLDGRPH-W1-S11 and W1-S27: the halt gate resolves a seat's identity from a session file only
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-S12",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-01T12:15Z",
+    "one_line": "RE-FILED from NFRA_CLDGRPH-W1-S11 and W1-S27: `.tools/halt-gate-check.sh` never reads OPAL_AGENT_SERIAL, so a worker's first safe-apply in a fresh worktree is refused IDENTITY UNRESOLVED until it writes a runtime file no task-order face names.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "spec_asserts": "CLAUDE.md rule 27: the task order's worker face is the worker's whole context; the fabric's other identity readers prefer OPAL_AGENT_SERIAL.",
+    "world_is": "0 occurrences of OPAL_AGENT_SERIAL in .tools/halt-gate-check.sh at HEAD. The refusal fails closed and prints its own remedy, so the cost is one refused call and one file written outside the worker's named paths, on every fresh worktree that applies. The durable fix was named as one line in the resolver.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/halt-gate-check.sh token count at HEAD (this seat, 2026-10-01): 0",
+        "old rows in org/missions/D0/NFRA/NFRA_CLDGRPH/surprise-channel/investigations/, graduated at NFRA_CLDGRPH-C-S24 and C-S31 with owner 1.0.0_SA_CTO and no remediation row",
+        "1.0.0_SA_CTO RULINGS batch 77 @4b9e65f744: a hazard of a closed project that is live today is re-filed as a new row in an open channel, citing the old id; the old row is dismissed with that pointer",
+        "NFRA_CLDGRPH was closed 2026-09-23 on Andrew's word, 'a close on his word, not a graded close' with no outcome claimed REALIZED (project.json close_note), so its open items were never worked off"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Home: this channel. D0 has no open member project, and the graph pipeline has no project with a seat today; filing in an unrelated open project would put an ARMED row in front of that project's L10. Not exercised today: no apply was attempted from a worker identity."
+  }
+]
+```
+
+## S13 -- re-filed from NFRA_CLDGRPH-W2-S19: proof-of-spec-check's `introduces` rung matches substrings
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-S13",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-01T12:15Z",
+    "one_line": "RE-FILED from NFRA_CLDGRPH-W2-S19: proof-of-spec-check's `introduces` rung is a substring match, so a token is 'already present at the parent' when a longer word contains it, and a real introduction is refused.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "spec_asserts": ".tools/proof-of-spec-check.py:239-259: a row's `introduces` tokens must be present at the pin and absent at the parent.",
+    "world_is": "Lines 274 and 279 at HEAD test `t.encode('utf-8') in here` and `in parent`: a byte-substring test with no word boundary. The old instance was `connect` read as present because the parent held `connection` in a comment. It fails closed (a valid row is refused), and the workaround the row measured costs a second commit that invalidates the instance's other artifact rows.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/proof-of-spec-check.py:270-280 at HEAD (this seat, 2026-10-01)",
+        "old rows in org/missions/D0/NFRA/NFRA_CLDGRPH/surprise-channel/investigations/, graduated at NFRA_CLDGRPH-C-S24 with no remediation row",
+        "1.0.0_SA_CTO RULINGS batch 77 @4b9e65f744: a hazard of a closed project that is live today is re-filed as a new row in an open channel, citing the old id; the old row is dismissed with that pointer",
+        "NFRA_CLDGRPH was closed 2026-09-23 on Andrew's word, 'a close on his word, not a graded close' with no outcome claimed REALIZED (project.json close_note), so its open items were never worked off"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Home: this channel. D0 has no open member project, and the graph pipeline has no project with a seat today; filing in an unrelated open project would put an ARMED row in front of that project's L10."
+  }
+]
+```
+
+## S14 -- re-filed from NFRA_CLDGRPH-W1-S24: the vendored jq emits CRLF and no doctrine line says so
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-S14",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-01T12:15Z",
+    "one_line": "RE-FILED from NFRA_CLDGRPH-W1-S24: `.tools/jq.exe` emits CRLF, so a jq-written TSV read by shell field-splitting carries a trailing CR in its last field; the trap is in no doctrine file.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "spec_asserts": "CLAUDE.md rule 16 names `.tools/jq.exe` as vendored and rule 22a carries the instrument traps a seat cannot re-derive.",
+    "world_is": "CLAUDE.md mentions jq once (resolve it first, fail closed) and says nothing of line endings; docs/doctrine/CLAUDE_ANNEX.md has 0 lines pairing jq with CRLF. The old row measured 4 of 4 lookups failing on a last field ending in CR. The aws shim's CR is handled by `tr -d '\\r'` at the call sites that know; jq is the second carrier.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CLAUDE.md:257 and an annex search at HEAD (this seat, 2026-10-01)",
+        "old rows in org/missions/D0/NFRA/NFRA_CLDGRPH/surprise-channel/investigations/, graduated at NFRA_CLDGRPH-C-S24 ('the doctrine line is the CTO's') with no remediation row",
+        "1.0.0_SA_CTO RULINGS batch 77 @4b9e65f744: a hazard of a closed project that is live today is re-filed as a new row in an open channel, citing the old id; the old row is dismissed with that pointer",
+        "NFRA_CLDGRPH was closed 2026-09-23 on Andrew's word, 'a close on his word, not a graded close' with no outcome claimed REALIZED (project.json close_note), so its open items were never worked off"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Home: this channel. D0 has no open member project, and the graph pipeline has no project with a seat today; filing in an unrelated open project would put an ARMED row in front of that project's L10. Not re-measured today: jq's output bytes."
+  }
+]
+```
+
+## S15 -- re-filed from NFRA_CLDGRPH-W4-S4, W4-S6, W6-S3 and W7-S2: instruction surfaces still describe the retired graph engine
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-S15",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-01T12:15Z",
+    "one_line": "RE-FILED from NFRA_CLDGRPH-W4-S4, W4-S6, W6-S3 and W7-S2: the graph call manifest and three modules still describe or route to the retired local graph engine, and rule 20 sends every seat to that manifest.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "spec_asserts": "CLAUDE.md rule 20: pick the graph call from org/modules/graph/graph-call-manifest.yaml. The local store is retired; the served projection is the one graph.",
+    "world_is": "At HEAD: the manifest's `freshness:` at line 1290 still names db-path infra/aws/globgrph/kuzu_stitch_db, a directory that does not exist, and .tools/tool_index.py mirrors it; 11 of the manifest's 129 entries carry a comp-aws subcommand as canonical_call with status canonical, including the write paths the old row says Andrew's word deprecated; org/modules/graph/comp_ws4_crosswalk.py:6-12, comp_debt/grounding_lib.py:195-203 and comp_legacywriter.py:235-239 still describe the local marker-head engine. The one canonical entry that calls comp-kuzu (cloud.read.served_vintage) works: this seat used it today.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "manifest and module reads at HEAD (this seat, 2026-10-01): line 1290; 11 comp-aws canonical entries of 129; the three module sites",
+        "infra/aws/globgrph/kuzu_stitch_db: absent on disk",
+        "old rows in org/missions/D0/NFRA/NFRA_CLDGRPH/surprise-channel/investigations/, graduated at NFRA_CLDGRPH-C-S50 and C-S56 (owner 1.0.0_SA_CTO, the manifest owner executes) with no remediation row",
+        "1.0.0_SA_CTO RULINGS batch 77 @4b9e65f744: a hazard of a closed project that is live today is re-filed as a new row in an open channel, citing the old id; the old row is dismissed with that pointer",
+        "NFRA_CLDGRPH was closed 2026-09-23 on Andrew's word, 'a close on his word, not a graded close' with no outcome claimed REALIZED (project.json close_note), so its open items were never worked off"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Home: this channel. D0 has no open member project, and the graph pipeline has no project with a seat today; filing in an unrelated open project would put an ARMED row in front of that project's L10. Not read: the cost and rebuild_trigger fields of cloud.cluster.page_panel_drilldown (W4-S6's two fields)."
+  }
+]
+```
+
+## S16 -- re-filed from thirteen NFRA_CLDGRPH rows: the served graph carries no STORED_IN edge while its producer still emits the family
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-S16",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-01T12:15Z",
+    "one_line": "RE-FILED from NFRA_CLDGRPH-W2-S68, W2-S70, S96, S97, S102, W1-S37, W1-S38, S110, S113, W1-S39, S111, W3-S18, W1-S47 and W2-S61: the served graph has 0 STORED_IN edges today, derive_stitch.py still emits them, and SERVED_FROM's 27 edges still land on bucket-POLICY nodes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "spec_asserts": "infra/aws/globgrph/derive_stitch.py:17 and :339: S3_DATA_KEY -[STORED_IN]-> S3_BUCKET is 'THE boundary edge' and the producer builds it.",
+    "world_is": "The served projection (vintage 2026-10-01T12:02Z, stitch source built 2026-09-30T03:01:20Z) answers: OWNED_BY to S3_BUCKET 232, OWNED_BY to MS_USER 7,057, SERVED_FROM to S3_BUCKET_POLICY 27, and no STORED_IN edge at all; node types S3_BUCKET 41 and S3_BUCKET_POLICY 17 both exist, which is what the round-9 key-collision fix was for, and the running updater equals HEAD. The retirement of STORED_IN was ruled NOT done under four conditions and the family was twice seen dropping to zero unexplained; today's zero cannot be told from either. A consumer asking which bucket a data key is stored in gets nothing and no refusal. The producer's input also still contains its own prior output for edge kinds other than STORED_IN (derive_stitch.py:568).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "comp-kuzu, two Cypher reads over CloudEdge.edge_type and CloudNode.node_type (this seat, 2026-10-01 12:02Z-12:04Z), vintage line as printed",
+        "git grep of STORED_IN over the graph producers at HEAD: the emitter at derive_stitch.py:339, SOLE_WRITTEN_EDGE_TYPES at :91, PRIOR_CYCLE_DROP_REQUEST at :108",
+        "opal-globgrph-incremental-updater: the deployed lambda_function.py hashes equal to HEAD's (this seat's download, 2026-10-01); LastModified 2026-09-10T21:07:39Z",
+        "old rows in org/missions/D0/NFRA/NFRA_CLDGRPH/surprise-channel/investigations/, graduated at NFRA_CLDGRPH-C-S60, C-S65, C-S79 and C-S85 (lane 0.8.0_AE_CloudComp through the CTO) with no remediation row",
+        "1.0.0_SA_CTO RULINGS batch 77 @4b9e65f744: a hazard of a closed project that is live today is re-filed as a new row in an open channel, citing the old id; the old row is dismissed with that pointer",
+        "NFRA_CLDGRPH was closed 2026-09-23 on Andrew's word, 'a close on his word, not a graded close' with no outcome claimed REALIZED (project.json close_note), so its open items were never worked off"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Home: this channel. D0 has no open member project, and the graph pipeline has no project with a seat today; filing in an unrelated open project would put an ARMED row in front of that project's L10. Not measured: how many STORED_IN edges the last stitch build emitted, so whether the zero arises at the producer, the fold or the projection is open. This is the one row of the set a graph consumer would act on."
+  }
+]
+```
+
+## S17 -- re-filed from NFRA_CLDGRPH-W3-S10: last night's cloud stitch build failed
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-S17",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-01T12:15Z",
+    "one_line": "RE-FILED from NFRA_CLDGRPH-W3-S10: the cloud stitch producer now succeeds (7 of the last 8 nightly builds) but the 2026-10-01 03:00Z build FAILED on derive_stitch.py exit 2, and a failed night leaves the previous artifact in place.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "spec_asserts": "opal-stitch-produce runs nightly on cron(0 3 * * ? *) and the served graph's stitch layer is its output.",
+    "world_is": "The eight most recent builds, all rule-initiated: seven SUCCEEDED (2026-09-24 through 2026-09-30) and the latest, started 2026-10-01T03:00:12Z, FAILED in the BUILD phase after 38 s on `python3 infra/aws/globgrph/derive_stitch.py --out /tmp/stitch_graph.json`, exit status 2. The old row's claim (never succeeded, 67 of 67) is no longer true. The served vintage line does disclose the stitch's age ('Stitch source: stitch-codebuild built 2026-09-30T03:01:20Z'), so a reader of that line can see a missed night; nothing else says so. One failed night is one day of stitch age; whether it repeats is tonight's build.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "codebuild list-builds-for-project and batch-get-builds for opal-stitch-produce (this seat, 2026-10-01 11:56Z): 8 builds read, statuses and the failed phase as stated",
+        "the comp-kuzu vintage line read at 12:02Z",
+        "old rows in org/missions/D0/NFRA/NFRA_CLDGRPH/surprise-channel/investigations/, graduated at NFRA_CLDGRPH-C-S34 with no remediation row",
+        "1.0.0_SA_CTO RULINGS batch 77 @4b9e65f744: a hazard of a closed project that is live today is re-filed as a new row in an open channel, citing the old id; the old row is dismissed with that pointer",
+        "NFRA_CLDGRPH was closed 2026-09-23 on Andrew's word, 'a close on his word, not a graded close' with no outcome claimed REALIZED (project.json close_note), so its open items were never worked off"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Home: this channel. D0 has no open member project, and the graph pipeline has no project with a seat today; filing in an unrelated open project would put an ARMED row in front of that project's L10. Not read: the failed build's log, so the cause of exit 2 is unknown. No alert is proposed (standing moratorium)."
+  }
+]
+```
+
+## S18 -- re-filed from NFRA_CLDGRPH-W1-S8: the resource-summaries producer has no trigger
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-S18",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-01T12:15Z",
+    "one_line": "RE-FILED from NFRA_CLDGRPH-W1-S8: globgrph-resource-summaries-producer still has no rule and no schedule, so it runs only when someone starts it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "spec_asserts": "CLAUDE.md section 5: production pipelines must be scheduled.",
+    "world_is": "No EventBridge rule and no EventBridge Scheduler schedule has a name containing 'summar' other than exec-summary-trigger, which is another pipeline's. The old row found the task definition referenced only by a Terraform output. Declare a trigger or retire the producer.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "events list-rules and scheduler list-schedules filtered on the name (this seat, 2026-10-01 12:08Z)",
+        "old rows in org/missions/D0/NFRA/NFRA_CLDGRPH/surprise-channel/investigations/, graduated at NFRA_CLDGRPH-C-S24 (lane 0.7.0_AE_CloudOps) with no remediation row",
+        "1.0.0_SA_CTO RULINGS batch 77 @4b9e65f744: a hazard of a closed project that is live today is re-filed as a new row in an open channel, citing the old id; the old row is dismissed with that pointer",
+        "NFRA_CLDGRPH was closed 2026-09-23 on Andrew's word, 'a close on his word, not a graded close' with no outcome claimed REALIZED (project.json close_note), so its open items were never worked off"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Home: this channel. D0 has no open member project, and the graph pipeline has no project with a seat today; filing in an unrelated open project would put an ARMED row in front of that project's L10. The read is by NAME: a trigger named without 'summar' whose target is this task definition would be missed. Not read: the age of the producer's output."
+  }
+]
+```
+
+## S19 -- re-filed from NFRA_CLDGRPH-W3-S16: a test file that collects zero tests
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-S19",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-01T12:15Z",
+    "one_line": "RE-FILED from NFRA_CLDGRPH-W3-S16: infra/aws/globgrph/tests/test_kuzu_incremental_refresh.py collects zero tests under pytest, so any order naming it in a pytest invocation gets a green that checked nothing.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "spec_asserts": "A task order's mechanical criterion names an invocation and an expectation (CLAUDE.md rule 27).",
+    "world_is": "`python -m pytest infra/aws/globgrph/tests/test_kuzu_incremental_refresh.py --collect-only -q` prints 'no tests collected'. The file is a main()-style self-test. The remedy is a collectable surface or the file's removal from pytest paths.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the collect-only run (this seat, 2026-10-01 12:08Z)",
+        "old rows in org/missions/D0/NFRA/NFRA_CLDGRPH/surprise-channel/investigations/, graduated at NFRA_CLDGRPH-C-S48 (lane 0.8.0_AE_CloudComp) with no remediation row",
+        "1.0.0_SA_CTO RULINGS batch 77 @4b9e65f744: a hazard of a closed project that is live today is re-filed as a new row in an open channel, citing the old id; the old row is dismissed with that pointer",
+        "NFRA_CLDGRPH was closed 2026-09-23 on Andrew's word, 'a close on his word, not a graded close' with no outcome claimed REALIZED (project.json close_note), so its open items were never worked off"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Home: this channel. D0 has no open member project, and the graph pipeline has no project with a seat today; filing in an unrelated open project would put an ARMED row in front of that project's L10."
+  }
+]
+```
+
+## S20 -- re-filed from NFRA_CLDGRPH-W1-S43: a dated snapshot key is overwritten in place on an unversioned bucket
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-S20",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-01T12:15Z",
+    "one_line": "RE-FILED from NFRA_CLDGRPH-W1-S43: the graph bucket is still unversioned, so a dated snapshot key that a record cites can be overwritten and the cited bytes are then gone.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "spec_asserts": "Records cite s3://opal-313476888478-globgrph/snapshots/<date>/graph-<date>.tar.gz as if a dated key were immutable.",
+    "world_is": "`get-bucket-versioning` on opal-313476888478-globgrph returns no Status today. Round 9's TO-CG-I-4 measured 118 citations of dated keys in 539 files (21 still valid, 12 overwritten, 85 undecidable) and chose a writer-side key as the remedy, filed with two blockers and not implemented before the close.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3api get-bucket-versioning (this seat, 2026-10-01 11:56Z): empty",
+        "TO-CG-I-4's status line in org/missions/D0/NFRA/NFRA_CLDGRPH/task-orders/",
+        "old rows in org/missions/D0/NFRA/NFRA_CLDGRPH/surprise-channel/investigations/, graduated at NFRA_CLDGRPH-C-S72 (lane 0.8.0_AE_CloudComp) whose remediation row exists only in an untracked draft, REMEDIATION_v4.md",
+        "1.0.0_SA_CTO RULINGS batch 77 @4b9e65f744: a hazard of a closed project that is live today is re-filed as a new row in an open channel, citing the old id; the old row is dismissed with that pointer",
+        "NFRA_CLDGRPH was closed 2026-09-23 on Andrew's word, 'a close on his word, not a graded close' with no outcome claimed REALIZED (project.json close_note), so its open items were never worked off"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Home: this channel. D0 has no open member project, and the graph pipeline has no project with a seat today; filing in an unrelated open project would put an ARMED row in front of that project's L10."
+  }
+]
+```
+
+## S21 -- re-filed from NFRA_CLDGRPH-W2-S72, S104 and S106: every graph derive publishes to a topic with an SMS subscription (reserved for Andrew)
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-S21",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-01T12:15Z",
+    "one_line": "RE-FILED from NFRA_CLDGRPH-W2-S72, S104 and S106: the critical-surface alert topic still has an SMS subscription, and the old rows measured every graph derive, nightly included, publishing a SEV1 page and a digest to it. The call was RESERVED FOR ANDREW and the project closed without his answer on record.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "spec_asserts": "The old rows' handling: nothing is unsubscribed or edited by a seat; the question is Andrew's.",
+    "world_is": "`sns list-subscriptions-by-topic` on opal-critical-surface-alerts returns two subscriptions, protocols sqs and sms (endpoints not printed here). The derive's two publishes per run were measured on 2026-09-10 and not re-read today. If both still hold, a phone is paged once a night by a scheduled run.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sns list-subscriptions-by-topic, protocols only (this seat, 2026-10-01 11:56Z)",
+        "old rows in org/missions/D0/NFRA/NFRA_CLDGRPH/surprise-channel/investigations/, graduated at NFRA_CLDGRPH-C-S60 ('RESERVED FOR ANDREW, hold in force') with no remediation row",
+        "1.0.0_SA_CTO RULINGS batch 77 @4b9e65f744: a hazard of a closed project that is live today is re-filed as a new row in an open channel, citing the old id; the old row is dismissed with that pointer",
+        "NFRA_CLDGRPH was closed 2026-09-23 on Andrew's word, 'a close on his word, not a graded close' with no outcome claimed REALIZED (project.json close_note), so its open items were never worked off"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Home: this channel. D0 has no open member project, and the graph pipeline has no project with a seat today; filing in an unrelated open project would put an ARMED row in front of that project's L10. Not read: the derive log for last night's publishes; whether the subscription is wanted. This seat changes nothing here. It belongs in the CTO's open calls for Andrew."
+  }
+]
+```
+
+## S22 -- re-filed from ETFS_GUARDRAIL-W1-S19: today's 14:00Z monthly ETF report is expected to publish without the logo
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-S22",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-01T12:45Z",
+    "one_line": "RE-FILED from ETFS_GUARDRAIL-W1-S19, with a clock: the monthly ETF report fires today at 14:00Z (cron(0 10 1 * ? *) America/New_York) and the renderer the report host pulls still resolves the Opal logo from a path that does not exist on that host, so the scheduled September report is expected to publish, and to be emailed, with an empty brand bar.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "spec_asserts": "data/etfs/scripts/presentation/render_month_end.py:134-145 `opal_logo_svg()` inlines the white Opal logo into the report's navy brand bar.",
+    "world_is": "The function reads <renderer dir>/../../../../portal/public/logos/opal-logo-white.svg and returns an empty string on any error. The orchestrator runs the renderer on the report host from /opt/etfs-reports after copying it from s3://opal-313476888478-lambda-artifacts/ec2/etfs-reports/render_month_end.py; that object hashes equal to CLOUD HEAD's file (77,130 bytes), so the host will run this resolver, and from /opt/etfs-reports the path resolves outside any portal checkout. The old row measured the effect on the served August report: five inlined logo SVGs gone, 62,420 to 43,376 characters, every number identical; the served August HTML today is 43,376 bytes. The adjudication (ETFS_GUARDRAIL-C-S14) armed it at the CTO: 'until it lands the 10-01 fire publishes a brand-less report, which is a disclosure the CTO should make deliberately rather than discover'. The project closed without it landing. Schedule etfs-reports-monthly-run is ENABLED.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "scheduler get-schedule etfs-reports-monthly-run (this seat, 2026-10-01 12:37Z): cron(0 10 1 * ? *), America/New_York, ENABLED",
+        "s3 cp of the renderer object and sha256 against HEAD (this seat, 2026-10-01 12:43Z): equal; the Lambda's REPORTS_ARTIFACT_PREFIX is set to that same prefix",
+        "the deployed etfs-reports-orchestrator lambda_function.py hashes equal to HEAD (this seat's download, LastModified 2026-09-10T17:44:50Z)",
+        "s3api list of platinum/reports/2026-08/: etf_ownership.html 43,376 bytes",
+        "old row ETFS_GUARDRAIL-W1-S19, graduated at ETFS_GUARDRAIL-C-S14 with no remediation row",
+        "1.0.0_SA_CTO RULINGS batch 77 @4b9e65f744"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not read: whether the logo file exists at the resolved path on the host (the old row says it does not). This seat changes nothing: the choices (let it publish as is and say so, or land a fix before 14:00Z, or hold the fire) are the CTO's and, for a hold of a scheduled delivery, Andrew's. Cosmetic: every figure in the report is unaffected."
+  }
+]
+```
+
+## S23 -- re-filed from ETFS_GUARDRAIL-W1-S5: the shared Lambda zip builder sets an impossible timestamp and has two callers
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-S23",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-01T12:55Z",
+    "one_line": "RE-FILED from ETFS_GUARDRAIL-W1-S5: infra/aws/lambda/ci/build-zip.sh:66 still runs `touch -t \"202600010000\"` (month 00), which the old row measured failing rc=1 on every invocation, and the script is called by a GitHub workflow and by verify-local.sh.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "spec_asserts": "build-zip.sh normalises member timestamps so a rebuilt zip hashes reproducibly.",
+    "world_is": "Line 66 at HEAD is unchanged. The old row found zero callers on the round's deploying path; a caller census today finds .github/workflows/lambda-deploy.yml and infra/aws/lambda/verify-local.sh naming the script. The fix is one literal.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/ci/build-zip.sh:66 at HEAD and `git grep -l build-zip.sh` outside org/ and docs/ (this seat, 2026-10-01)",
+        "old row ETFS_GUARDRAIL-W1-S5, graduated at ETFS_GUARDRAIL-C-S3 (lane CloudOps or ETL) with no remediation row",
+        "1.0.0_SA_CTO RULINGS batch 77 @4b9e65f744 and batch 85 @afc17452e8: a closed project's live hazard is re-filed as a new row, and the estate-wide channel is the accepted home"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not run today: the script itself, so the rc=1 is the old row's measurement. Not read: whether the workflow is still triggered by anything."
+  }
+]
+```
+
+## S24 -- re-filed from ETFS_GUARDRAIL-W2-S1: the ETF ownership function's own test dies at import
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-S24",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-01T12:55Z",
+    "one_line": "RE-FILED from ETFS_GUARDRAIL-W2-S1: infra/aws/lambda/inf-pipeline/inf-etf-ownership-daily/test_catchup_scan.py still errors at collection on a missing environment key, so the function's own battery checks nothing.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "spec_asserts": "The file is the daily ETF ownership function's test of its catch-up scan.",
+    "world_is": "`python -m pytest <file> --collect-only` at this seat: 1 error during collection, KeyError 'FACT_POSITIONS_PREFIX' (with ASSETS_BUCKET set empty; the old row saw KeyError ASSETS_BUCKET), no tests collected. Dead since the 2026-08-03 repoint by the old row's dating. The remedy named then: re-vendor the battery against the repointed shape with real test functions.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the collect-only run (this seat, 2026-10-01 12:36Z)",
+        "old row ETFS_GUARDRAIL-W2-S1, graduated at ETFS_GUARDRAIL-C-S3 (the inf-pipeline lane, named by the CTO) with no remediation row",
+        "1.0.0_SA_CTO RULINGS batch 77 @4b9e65f744 and batch 85 @afc17452e8: a closed project's live hazard is re-filed as a new row, and the estate-wide channel is the accepted home"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The deployed function is not in question here; only its test."
+  }
+]
+```
+
+## S25 -- re-filed from ETFS_GUARDRAIL-W2-S8: the Cottonwood ETF ownership fire still precedes its partition's landing
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-S25",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-01T12:55Z",
+    "one_line": "RE-FILED from ETFS_GUARDRAIL-W2-S8: rule cot-etf-ownership-daily-schedule still fires at 10:30Z; the old row measured the D+1 partition landing near 11:46Z, which leaves the newest Cottonwood trading day without a slice for about half a day, every day.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "spec_asserts": "The CTO took the finding for an L10 addendum (94796 (2a)): the fire follows the partition, or the window excludes the unlanded day and says so.",
+    "world_is": "The rule reads cron(30 10 * * ? *), ENABLED, today; bd-49f-etf-ownership-scheduled-floor reads cron(45 10 * * ? *). The remedy is a Terraform act on the rule's cron in the DT/AE lane; the project closed before it was cut.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "events list-rules filtered on 'etf' (this seat, 2026-10-01 12:36Z)",
+        "old row ETFS_GUARDRAIL-W2-S8, graduated at ETFS_GUARDRAIL-C-S9 (finding OPEN, owner 1.0.0_SA_CTO) with no remediation row",
+        "1.0.0_SA_CTO RULINGS batch 77 @4b9e65f744 and batch 85 @afc17452e8: a closed project's live hazard is re-filed as a new row, and the estate-wide channel is the accepted home"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not re-measured: today's landing time of the Cottonwood partition, so the size of the gap is the old row's."
+  }
+]
+```
+
+## S26 -- re-filed from NFRA_COMPEFFICACY-W2-S4: comp-adversary declares all sources run when one died on a decode error
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-S26",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-01T12:55Z",
+    "one_line": "RE-FILED from NFRA_COMPEFFICACY-W2-S4: `.tools/comp-adversary` reads its sources through subprocess with text=True and no encoding, so a non-cp1252 byte kills the reader thread and the tool still exits 0 declaring every source run.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.0.0_AB_MSTR",
+    "spec_asserts": "CLAUDE.md section 4: in a file path that carries non-ASCII, every reader is explicit (`encoding='utf-8'`); and a producer's rc=0 is never trusted on its own.",
+    "world_is": "At HEAD the tool has five subprocess calls; four pass text=True and none passes encoding= on the call (the tool's twelve encoding= occurrences are on file opens). The call at :309 reads `comp-state --json`, the source the old row saw truncated mid-record while the declaration read '5 run / 0 deferred-with-reason'.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/comp-adversary call-site census at HEAD (this seat, 2026-10-01): 5 calls, 4 text=True, 0 with encoding=",
+        "old row NFRA_COMPEFFICACY-W2-S4, graduated at NFRA_COMPEFFICACY-C-S11 (owner 0.8.0_AE_CloudComp, the comp-tool rail) with no remediation row",
+        "1.0.0_SA_CTO RULINGS batch 77 @4b9e65f744 and batch 85 @afc17452e8: a closed project's live hazard is re-filed as a new row, and the estate-wide channel is the accepted home"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not re-run today: the tool on an input that carries the byte. Owner set to 0.0.0_AB_MSTR per batch 85's reading that fabric-tool rows are that seat's."
+  }
+]
+```
+
+## S27 -- re-filed from ETFS_POSITIONING-Z-S1 and Z-S2: the Bloomberg daily ETF pull's as-of is holiday-blind and its tripwire cannot fire
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-S27",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-01T13:32Z",
+    "one_line": "RE-FILED from ETFS_POSITIONING-Z-S1 and Z-S2: integrations/bloomberg/pipeline/etf_daily_pull.py still takes its as-of from pandas BDay(-1), which knows weekends and no market holiday, and its tripwire compares that value with the same expression computed again.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "spec_asserts": "CLAUDE.md section 5: one frontier, lib/trading_calendar.py; the pull's exit 60 is documented as 'TRIPWIRE REFUSED -- as-of != BDay(-1)'.",
+    "world_is": "Lines 122-125 at HEAD: `asof = today + BDay(-1)`, `expected = Timestamp.today().normalize() + BDay(-1)`, refuse if they differ. The control can differ from the value only if `today` is not today; it cannot catch a wrong as-of. The file imports no trading calendar. On the first fire after a market holiday the as-of is the closed day. The next exposure is the fire of Friday 2026-11-27 (Thanksgiving, 2026-11-26).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "integrations/bloomberg/pipeline/etf_daily_pull.py:117-125 at HEAD (this seat, 2026-10-01): five BDay lines, no trading_calendar reference",
+        "old rows ETFS_POSITIONING-Z-S1 and Z-S2 (org/surprise_channel/ETFS_POSITIONING/INVESTIGATION_v1.Z.md), graduated in their own rows with no remediation row",
+        "1.0.0_SA_CTO RULINGS batch 77 @4b9e65f744 and batch 85 @afc17452e8: a finished project's live hazard is re-filed as a new row, and the estate-wide channel is the accepted home"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not exercised: a run on a post-holiday date. What a closed-day as-of does downstream (a prefix dated on a closed day, a gold step keyed on it) was not traced."
+  }
+]
+```
+
+## S28 -- re-filed from ETFS_INGEST-Z-S10: a live scheduled rule with no Terraform
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-S28",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-01T13:32Z",
+    "one_line": "RE-FILED from ETFS_INGEST-Z-S10: rule opal-assets-silver-etf-sweep-daily is ENABLED at cron(30 23 * * ? *) and the name appears in no .tf file under infra/aws.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "spec_asserts": "Schedules are declared in Terraform; a live resource with no declaration is drift nobody's plan can see.",
+    "world_is": "`events list-rules` returns the rule ENABLED today. A search of every tracked .tf file under infra/aws for the rule's name returns 0 files.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "events list-rules filtered on 'etf' (this seat, 2026-10-01 12:36Z); a token read of the rule name over tracked .tf files (0 hits)",
+        "old row ETFS_INGEST-Z-S10 (org/surprise_channel/ETFS_INGEST/INVESTIGATION_v1.Z.md), graduated in its own row with no remediation row",
+        "1.0.0_SA_CTO RULINGS batch 77 @4b9e65f744 and batch 85 @afc17452e8: a finished project's live hazard is re-filed as a new row, and the estate-wide channel is the accepted home"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "The search is by literal name; a rule built from an interpolated name would be missed. Not read: the rule's target."
+  }
+]
+```
+
+## S29 -- re-filed from ETFS_INGEST-Z-S27: the served ETF payload cannot say whether a missing value is absent or failed
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-S29",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-01T13:32Z",
+    "one_line": "RE-FILED from ETFS_INGEST-Z-S27: platinum/etfs/positioning_data.json still carries no field that distinguishes 'this security has no such value' from 'the fetch failed', so a correct null and a failure render the same.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "spec_asserts": "CLAUDE.md section 4: a value must carry its claim in a field a consumer can reject on (measured, inferred, held, absent).",
+    "world_is": "The served object (147,629 bytes, written 2026-10-01T13:01:31Z) has top-level keys data_as_of, data_as_of_spread, data_date, generated_at, note and portfolios; its text holds 0 occurrences of a claim, fetch-status or unavailable token. The old row records that this cost a false defect report on the first smoke test.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3 cp of the served object and a token census (this seat, 2026-10-01 13:3xZ)",
+        "old row ETFS_INGEST-Z-S27, graduated in its own row with no remediation row",
+        "1.0.0_SA_CTO RULINGS batch 77 @4b9e65f744 and batch 85 @afc17452e8: a finished project's live hazard is re-filed as a new row, and the estate-wide channel is the accepted home"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Not measured: how many nulls the payload carries today."
+  }
+]
+```
+
+## S30 -- re-filed from ETFS_INGEST-Z-S23 and Z-S17: two instrument facts a seat cannot re-derive
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-S30",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-01T13:32Z",
+    "one_line": "RE-FILED from ETFS_INGEST-Z-S23 and Z-S17: (1) opal-data-portal-v2 expires noncurrent object versions after 14 days, so 'the overwritten bytes are recoverable' is true for two weeks only; (2) comp-closure compares package members by raw bytes, so a correct deploy with different line endings reads as divergent.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.0.0_AB_MSTR",
+    "spec_asserts": "CLAUDE.md rule 22a carries the instrument traps a seat cannot re-derive at the call site; comp-closure is the estate's code-layer instrument for deployed-versus-built.",
+    "world_is": "(1) `get-bucket-lifecycle-configuration` on opal-data-portal-v2 today: rule expire-noncurrent-versions-14d, Enabled, 14 days. No doctrine line states it. (2) .tools/comp-closure's own header (lines 17-29) says the byte compare is RAW and names the fix (normalise per member and state which comparison was used); the fix is not in the tool.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3api get-bucket-lifecycle-configuration (this seat, 2026-10-01 13:3xZ)",
+        ".tools/comp-closure:17-29 at HEAD",
+        "old rows ETFS_INGEST-Z-S23 and Z-S17, graduated in their own rows with no remediation row",
+        "1.0.0_SA_CTO RULINGS batch 77 @4b9e65f744 and batch 85 @afc17452e8: a finished project's live hazard is re-filed as a new row, and the estate-wide channel is the accepted home"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Owner 0.0.0_AB_MSTR per batch 85's reading that fabric-tool rows are that seat's. Two remedies that do not move together: one doctrine line, one tool change."
+  }
+]
+```
+
+## S31 -- re-filed from ETFS_INGEST-Z-S5: a failed constituents leg of the Bloomberg pull summons nobody
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-S31",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-01T13:32Z",
+    "one_line": "RE-FILED from ETFS_INGEST-Z-S5: the old row found the morning freshness check reading only the Models artifact, so a failure of the ETF constituents leg is seen by nobody, and that leg's source is current-day-only, which makes a missed day permanent.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "spec_asserts": "integrations/bloomberg/READ_HERE.md: the derived layer is current-day-only.",
+    "world_is": "Not re-measured today beyond this: the Bloomberg landing prefixes under opal-data-etfs/bbg/ run to 2026-09-30 (29 dated prefixes), so no day is missing at the frontier now. Whether any check reads the constituents leg was not read. Under the standing moratorium nothing is built here; this is an input to the alarm work the CTO named (GLOBALALARM), like row S21.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3api list-objects-v2 with a delimiter on bbg/ (this seat, 2026-10-01 13:3xZ): 29 prefixes, last 2026-09-30",
+        "old row ETFS_INGEST-Z-S5, graduated in its own row with no remediation row",
+        "1.0.0_SA_CTO RULINGS batch 77 @4b9e65f744 and batch 85 @afc17452e8: a finished project's live hazard is re-filed as a new row, and the estate-wide channel is the accepted home"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Carried on the old row's measurement. Standing ARMED because a single missed day cannot be recovered."
+  }
+]
+```

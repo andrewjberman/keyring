@@ -1,0 +1,60 @@
+ssm 6d4a5011-0f7a-4f02-869a-3f7dca6d27b9 Success rc 0
+lookup-shape start 20261001T084227Z resident pid 360874 root /opt/irpt-resident/36dfa80058-st6
+stored session read: state OK fence 21 generation d56deb6f
+--- GET 1: as the resident makes it (its session, its provider lease)
+  one request made; the lease is released
+  info.body_complete = True
+  info.bytes = 695
+  info.content_type = 'application/json'
+  info.final_url_path = '/securities/securities_info'
+  info.login_destination = False
+  info.method = 'GET'
+  info.path = '/securities/securities_info'
+  info.set_cookie_count = 0
+  info.status = 200
+  info.waf_action = None
+  method is GET                            holds
+  path is the route                        holds
+  final path is the route                  holds
+  status is 200                            holds
+  body complete                            holds
+  not a login destination                  holds
+  no WAF action                            holds
+  content type is application/json         holds
+  body is bytes within the size bound      holds
+  byte count equals the body               holds
+  body: 695 bytes; html page False; mentions login False; mentions captcha False
+  body JSON: list of 2; first row keys benchmark, detailed_security_type, display_security_id, end_date, features_needed, id, inception_date, instance_id, security_id, security_name, securitylist_security_id, sharing, start_date
+  classified AAPL: state FOUND reason EXACT_PROVIDER_MATCH candidates 1
+  classified VNQ: state FOUND reason EXACT_PROVIDER_MATCH candidates 1
+WITH_SESSION_VERDICT=ACCEPTED
+--- GET 2: with NO session (no cookie jar), the same headers, after the lease's spacing
+  one request made; no cookie was sent
+  info.body_complete = True
+  info.bytes = 695
+  info.content_type = 'application/json'
+  info.final_url_path = '/securities/securities_info'
+  info.login_destination = False
+  info.method = 'GET'
+  info.path = '/securities/securities_info'
+  info.set_cookie_count = 0
+  info.status = 200
+  info.waf_action = None
+  method is GET                            holds
+  path is the route                        holds
+  final path is the route                  holds
+  status is 200                            holds
+  body complete                            holds
+  not a login destination                  holds
+  no WAF action                            holds
+  content type is application/json         holds
+  body is bytes within the size bound      holds
+  byte count equals the body               holds
+  body: 695 bytes; html page False; mentions login False; mentions captcha False
+  body JSON: list of 2; first row keys benchmark, detailed_security_type, display_security_id, end_date, features_needed, id, inception_date, instance_id, security_id, security_name, securitylist_security_id, sharing, start_date
+  classified AAPL: state FOUND reason EXACT_PROVIDER_MATCH candidates 1
+  classified VNQ: state FOUND reason EXACT_PROVIDER_MATCH candidates 1
+NO_SESSION_VERDICT=ACCEPTED
+python rc 0
+lookup-shape end 20261001T084231Z
+

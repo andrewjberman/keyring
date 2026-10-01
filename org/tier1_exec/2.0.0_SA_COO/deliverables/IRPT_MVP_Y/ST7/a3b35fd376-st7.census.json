@@ -1,0 +1,49 @@
+{
+ "pin": "a3b35fd3765a24c597827544f42278a1b2bbb3cc",
+ "new_root": "a3b35fd376-st7",
+ "old_root": "36dfa80058-st6",
+ "members": 243,
+ "tar_sha256": "c12a37d6934840691d98d93e4b8196f8744a09f02dbce4682e7cc2c8b024bf01",
+ "tar_bytes": 757559,
+ "added": [],
+ "removed": [],
+ "changed": [
+  "_authz/served.py",
+  "intake/resolution_broker.py",
+  "reports/resident_bindings.json",
+  "ycharts-host/ycharts_session.js",
+  "ycharts/extract/extract.py",
+  "ycharts/generate/comparison_catalogue.py",
+  "ycharts/generate/current_authority.py",
+  "ycharts/generate/resident_worker.py",
+  "ycharts/session/host_capture.py",
+  "ycharts/session/operation_lease.py",
+  "ycharts/session/resident_session.py"
+ ],
+ "pinned_members": {
+  "ycharts/generate/resident_main.py": "0e5c17e7b9ccc2386e5104f7a9030e4cee18722f826b04a32dabfdebb493bfb1",
+  "ycharts/generate/resident_worker.py": "2ba09afaa8a2fc9e1ece2b87afa9559d304f1dd675bbfb7d19382deef0a51a32",
+  "ycharts/generate/current_authority.py": "5291b3be7e0006ade14db553caa78aa74fc6c91f638e63077a1be15607f16dec",
+  "ycharts/generate/recipe.py": "b2fbd720eefcd76751a16ae662a76d81e6ffbf99c98273771a26ed894d4f611f",
+  "ycharts/generate/job.py": "02137c1bd42556a7d9988b5cbe4178e8f81a6bea75377ab51dad944694a6a4b2",
+  "ycharts/generate/transport.py": "72875c61c0cf24dcdc65b55478b9a72d4e947621fcd47d86d4628d540775b420",
+  "ycharts/generate/publisher.py": "fd1fb2e3b38305556330ced96e326d632b0c0946aee3badf2f4065c351c37a96",
+  "ycharts/generate/templates.json": "54656584f476b616622368d60c227b1519a70f3e9aced14edb88c776f9823866",
+  "ycharts/extract/extract.py": "3f5e2bb0bc2299f6b5f8bda2eb3ecce58209689566116cf5b433747b0f4c0d0e",
+  "ycharts/extract/publication.py": "5a3c676c64ea630909e44d165f126e9351e8a5b8cab9b927d50607a83c1b368b",
+  "ycharts/extract/certify.py": "0a18fdf5bee20ce3856a7d5b9b404f3e63511d84403d68a6e198e146845ceff1",
+  "ycharts/session/broker.py": "3d490d6d719569c9abc9d4c7998156c25f1e1e72edbe32cec924e145131355a7",
+  "ycharts/session/host_capture.py": "8288e724e843cb89b2cf5f8c36564caa61678a76d7a14c822ba325b34893b86d",
+  "_scope/canonical_profile_reads.py": "0ec4a717f2aa2c127df62f5bf0f0f3f56164359875b992620b2006e3d4af9557",
+  "_scope/maintained_sources.py": "774eca9bde60a1dd4e9c1aaffc73b3b9ae41fbe85914a28cc4b506d3c9edba61",
+  "reports/resident_installed.py": "7e69601a8bfddff61ef4300fb97003beb342bc4cccc380fe28304542a56652fa"
+ },
+ "library_sha256": "9511060e04f45b51744f7eef68f4a1c4921367b3388fe9acee8b83d708ddcc90",
+ "wrapper_sha256": "55ddb8f7947cba7cdca1b9139d4d0a1a3ad620e330c86ba3ab648d334763aff9",
+ "gates": {
+  "G1": true,
+  "G2": true,
+  "G3": true,
+  "G4": true
+ }
+}

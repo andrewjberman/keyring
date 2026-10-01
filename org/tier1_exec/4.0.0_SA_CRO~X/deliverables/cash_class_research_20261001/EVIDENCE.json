@@ -1,0 +1,428 @@
+{
+ "author": "4.0.0_SA_CRO~X",
+ "asked_by": "1.0.0_SA_CTO msg 103794",
+ "read_window_utc": "2026-10-01T14:16Z to 14:48Z",
+ "claim": "measured on the 2026-09-30 partition of each feed, rows with a positive market value; firm-level only",
+ "blackdiamond_cottonwood": {
+  "positive_rows": 13136,
+  "usd": 556193338.22,
+  "identifier_shape": {
+   "ticker ticker-shaped / cusip present": {
+    "rows": 12306,
+    "usd": 435392878.84
+   },
+   "ticker blank / cusip blank": {
+    "rows": 155,
+    "usd": 71201130.56
+   },
+   "ticker ticker-shaped / cusip blank": {
+    "rows": 335,
+    "usd": 19264500.72
+   },
+   "ticker blank / cusip present": {
+    "rows": 340,
+    "usd": 30334828.1
+   }
+  },
+  "cash_equivalent_by_identifier": {
+   "true / ticker present / cusip present": {
+    "rows": 394,
+    "usd": 5943529.08
+   },
+   "false / ticker present / cusip present": {
+    "rows": 11912,
+    "usd": 429449349.76
+   },
+   "false / ticker blank / cusip blank": {
+    "rows": 155,
+    "usd": 71201130.56
+   },
+   "true / ticker present / cusip blank": {
+    "rows": 302,
+    "usd": 16707383.22
+   },
+   "false / ticker blank / cusip present": {
+    "rows": 340,
+    "usd": 30334828.1
+   },
+   "false / ticker present / cusip blank": {
+    "rows": 33,
+    "usd": 2557117.5
+   }
+  },
+  "cash_equivalent_true_names_top": {
+   "FCASH": 16707383.22,
+   "FIDELITY PHILLIPS STREET TRUST GOVT CASH RESV": 4226965.58,
+   "CASH": 1715912.46,
+   "FDIC BANK DEPOSIT SWEEP NOT COVERED BY SIPC": 651.04
+  },
+  "supervision_by_usd": {
+   "Unsupervised / Unsupervised": 34036916.63,
+   "Supervised / Supervised": 522156421.58
+  },
+  "columns": [
+   "Market Value",
+   "Units",
+   "Unaccrued Market Value",
+   "Accrual",
+   "Relationship ID",
+   "PortfolioID",
+   "AccountID",
+   "Account Number",
+   "Account Supervised",
+   "AssetID",
+   "Asset Name",
+   "Asset Display Name",
+   "Original Asset Name",
+   "Last Dividend",
+   "Symbol",
+   "Ticker",
+   "CUSIP",
+   "Alternative Identifier",
+   "Expense Ratio",
+   "Cash Equivalent",
+   "Holding Supervised",
+   "_source_file",
+   "_source_as_of",
+   "_source",
+   "_feed",
+   "_schema_version"
+  ],
+  "no_ticker_breakdown": {
+   "cusip blank / alt id present / Unsupervised / cash equivalent false": {
+    "rows": 64,
+    "usd": 21139569.55
+   },
+   "cusip blank / alt id present / Supervised / cash equivalent false": {
+    "rows": 91,
+    "usd": 50061561.01
+   },
+   "cusip present / alt id blank / Unsupervised / cash equivalent false": {
+    "rows": 53,
+    "usd": 4713054.43
+   },
+   "cusip present / alt id blank / Supervised / cash equivalent false": {
+    "rows": 287,
+    "usd": 25621773.67
+   }
+  }
+ },
+ "orion_inflection": {
+  "positive_rows": 12415,
+  "usd": 206547190.61,
+  "rows_total": 36110,
+  "no_ticker": {
+   "rows": 0,
+   "usd": 0
+  },
+  "fields": {
+   "assetClass": {
+    "present_rows": 12415,
+    "present_usd_share": 1.0,
+    "distinct": 64,
+    "values_by_usd_share": {},
+    "values_by_rows": {},
+    "no_ticker_present_rows": 0,
+    "no_ticker_present_usd_share": null
+   },
+   "productCategory": {
+    "present_rows": 12415,
+    "present_usd_share": 1.0,
+    "distinct": 3,
+    "values_by_usd_share": {
+     "Equity": 0.6696,
+     "Bond": 0.2741,
+     "Money Market": 0.0563
+    },
+    "values_by_rows": {
+     "Equity": 7113,
+     "Bond": 4465,
+     "Money Market": 837
+    },
+    "no_ticker_present_rows": 0,
+    "no_ticker_present_usd_share": null
+   },
+   "productType": {
+    "present_rows": 12415,
+    "present_usd_share": 1.0,
+    "distinct": 3,
+    "values_by_usd_share": {
+     "Stock/ETF": 0.8326,
+     "Mutual Fund": 0.1629,
+     "CD": 0.0045
+    },
+    "values_by_rows": {
+     "Stock/ETF": 10627,
+     "Mutual Fund": 1771,
+     "CD": 17
+    },
+    "no_ticker_present_rows": 0,
+    "no_ticker_present_usd_share": null
+   },
+   "productSubType": {
+    "present_rows": 12415,
+    "present_usd_share": 1.0,
+    "distinct": 9,
+    "values_by_usd_share": {
+     "ETF": 0.6147,
+     "Common Stock": 0.2068,
+     "Mutual Fund": 0.1066,
+     "Cash or Equivalent": 0.0563,
+     "Exchange Traded Note": 0.01,
+     "CD": 0.0045,
+     "Closed End Fund": 0.0007,
+     "REIT": 0.0004,
+     "Preferred Stock": 0.0
+    },
+    "values_by_rows": {
+     "ETF": 7875,
+     "Common Stock": 2216,
+     "Mutual Fund": 934,
+     "Cash or Equivalent": 837,
+     "Exchange Traded Note": 529,
+     "CD": 17,
+     "Closed End Fund": 2,
+     "REIT": 2,
+     "Preferred Stock": 3
+    },
+    "no_ticker_present_rows": 0,
+    "no_ticker_present_usd_share": null
+   },
+   "isCustodialCash": {
+    "present_rows": 12415,
+    "present_usd_share": 1.0,
+    "distinct": 2,
+    "values_by_usd_share": {
+     "False": 0.9908,
+     "True": 0.0092
+    },
+    "values_by_rows": {
+     "False": 12209,
+     "True": 206
+    },
+    "no_ticker_present_rows": 0,
+    "no_ticker_present_usd_share": null
+   }
+  }
+ },
+ "schwab_49financial": {
+  "positive_rows": 105744,
+  "usd": 1777540790.49,
+  "columns": [
+   "account_id",
+   "business_date",
+   "cusip",
+   "l_s",
+   "accounting_rule_code",
+   "ticker_symbol",
+   "industry_ticker_symbol",
+   "isin",
+   "sedol",
+   "tax_code",
+   "quantity_settled_unsettled",
+   "quantity_settled",
+   "quantity_unsettled_long",
+   "quantity_unsettled_short",
+   "quantity_cash_settled",
+   "quantity_margin_settled",
+   "quantity_short_settled",
+   "quantity_wheniss_settled",
+   "non_tradable_quantity",
+   "market_value_settled_unsettled",
+   "closing_price",
+   "closing_price_unfactored",
+   "factor",
+   "asset_backed_factor",
+   "secprice_lstupdte",
+   "_source_file",
+   "_source_as_of",
+   "_master_observed",
+   "_section",
+   "_schema_version"
+  ],
+  "fields": {
+   "cusip": {
+    "present_rows": 105703,
+    "distinct": 2295
+   },
+   "l_s": {
+    "present_rows": 105741,
+    "distinct": 1,
+    "values_by_usd_share": {
+     "L": 0.9989
+    }
+   },
+   "accounting_rule_code": {
+    "present_rows": 105741,
+    "distinct": 2,
+    "values_by_usd_share": {
+     "CASH": 0.9607,
+     "MARGIN": 0.0382
+    }
+   },
+   "ticker_symbol": {
+    "present_rows": 105546,
+    "distinct": 2149
+   },
+   "industry_ticker_symbol": {
+    "present_rows": 105546,
+    "distinct": 2149
+   },
+   "isin": {
+    "present_rows": 105662,
+    "distinct": 2255
+   },
+   "sedol": {
+    "present_rows": 98257,
+    "distinct": 1590
+   },
+   "tax_code": {
+    "present_rows": 105741,
+    "distinct": 11,
+    "values_by_usd_share": {
+     "E": 0.8367,
+     "A": 0.0863,
+     "F": 0.0341,
+     "Z": 0.0192,
+     "Q": 0.0139,
+     "K": 0.003,
+     "B": 0.003,
+     "M": 0.0018,
+     "I": 0.0008,
+     "T": 0.0,
+     "N": 0.0
+    }
+   },
+   "non_tradable_quantity": {
+    "present_rows": 105744,
+    "distinct": 3,
+    "values_by_usd_share": {
+     "0.00000": 1.0,
+     "44247.07000": 0.0,
+     "225.00000": 0.0
+    }
+   },
+   "_source_file": {
+    "present_rows": 105744,
+    "distinct": 1,
+    "values_by_usd_share": {
+     "08335338.CRS20260930.RPS.zip": 1.0
+    }
+   },
+   "_source_as_of": {
+    "present_rows": 105744,
+    "distinct": 1,
+    "values_by_usd_share": {
+     "20260930": 1.0
+    }
+   },
+   "_master_observed": {
+    "present_rows": 105744,
+    "distinct": 1,
+    "values_by_usd_share": {
+     "08335338": 1.0
+    }
+   },
+   "_section": {
+    "present_rows": 105744,
+    "distinct": 1,
+    "values_by_usd_share": {
+     "D1": 1.0
+    }
+   },
+   "_schema_version": {
+    "present_rows": 105744,
+    "distinct": 1,
+    "values_by_usd_share": {
+     "1.0": 1.0
+    }
+   }
+  },
+  "identifier_shape": {
+   "ticker present / cusip present": {
+    "rows": 105546,
+    "usd": 1736820777.79
+   },
+   "ticker blank / cusip present": {
+    "rows": 157,
+    "usd": 13970781.44
+   },
+   "ticker blank / cusip blank": {
+    "rows": 41,
+    "usd": 26749231.26
+   }
+  },
+  "cash_shape_test": {
+   "ticker / not cash-shaped": {
+    "rows": 105472,
+    "usd": 1731191211.87
+   },
+   "cusip only / not cash-shaped": {
+    "rows": 157,
+    "usd": 13970781.44
+   },
+   "ticker / price 1.00 and quantity == value": {
+    "rows": 74,
+    "usd": 5629565.92
+   },
+   "no identifier / not cash-shaped": {
+    "rows": 20,
+    "usd": 4711860.49
+   },
+   "no identifier / price 1.00 and quantity == value": {
+    "rows": 21,
+    "usd": 22037370.77
+   }
+  },
+  "no_ticker_tax_code_usd": {
+   "cusip only / E": 1359674.87,
+   "cusip only / M": 3231052.91,
+   "no identifier / E": 1310049.56,
+   "no identifier / Q": 23223064.19,
+   "cusip only / I": 1387789.43,
+   "no identifier / Z": 216117.51,
+   "no identifier / ": 2000000.0,
+   "cusip only / B": 5283320.89,
+   "cusip only / Z": 2660821.95,
+   "cusip only / N": 37.05,
+   "cusip only / T": 47860.62,
+   "cusip only / A": 223.72
+  }
+ },
+ "etf_classifications": {
+  "rows": 2671,
+  "asset_class": {
+   "fixed_income": 594,
+   "equity": 2057,
+   "structured": 5,
+   "commodities": 9,
+   "alternatives": 6
+  },
+  "cash_or_money_market_sub_class_by_asset_class": {
+   "fixed_income": 18
+  },
+  "identifier_namespace": {
+   "CUSIP": 348,
+   "None": 2323
+  }
+ },
+ "blackdiamond_49financial_silver_tables": [
+  "fact_insurance_insurancerelationshiplist_export",
+  "fact_insurance_relationshipaccountdetailsearch",
+  "fact_insurance_relationshipdetail"
+ ],
+ "quoted_from_2.0.0_SA_COO~M": {
+  "FCASH on the Holdings tab": "cash / Money Market; 9,198,812.25 USD at Cottonwood, 1,453,523.02 USD at Inflection",
+  "FIGXX on the Holdings tab": "fixed_income / Cash; 2,737,377.41 USD at Cottonwood",
+  "Cottonwood gold, no ticker": "101,279,735.09 USD; 491 rows",
+  "source": "COT_THREAD_UNCLASSIFIED_MEASURE_20261001.md @8e4b81eec7"
+ },
+ "not_done": [
+  "no vendor call",
+  "no write",
+  "served Holdings snapshots not read",
+  "deployed gold bytes not compared",
+  "overlay feeds not measured",
+  "Alternative Identifier contents not examined"
+ ]
+}

@@ -549,6 +549,29 @@ Worker rows carry their slot's coordinate, `MDPF_TAXSMA-W<n>-S<k>`; a seat's row
     "spec_asserts": "LGIC_ENFORCE DEC-6: a NEW name that the builder would not produce is refused.",
     "world_is": "A cross-root reference to a legacy-named live resource cannot be written as one literal; it passes only when composed from parts, which is the same string with the gate unable to see it.",
     "notes": "For the gate's owner: either read a data source's name and a `role =` operand as references, or admit names already on the live legacy list. The composed spelling in iam.tf is stated in its own comment, not hidden."
+  },
+  {
+    "id": "MDPF_TAXSMA-S14",
+    "project": "MDPF_TAXSMA",
+    "fabric": "laptop",
+    "surfaced_by": "4.0.0_SA_CRO",
+    "surfaced_at": "2026-10-01T09:16Z",
+    "one_line": "The EC2 mdpf-daily-runner emitted no ChainFailed and no RevampParallelFailed datapoint on 2026-09-28, 09-29 or 09-30, after emitting both on every day from 09-18 to 09-27, although its instance last launched 2026-09-30T13:30:35Z.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "cloudwatch get-metric-statistics, namespace MDPF/DailyChain, dimension Service=mdpf-daily-runner, period 86400, 2026-09-18 to 2026-10-01T09:30Z (read 09:16Z): RevampParallelFailed has 10 datapoints, 09-18 through 09-27, each Maximum 1.0 SampleCount 1; ChainFailed has datapoints on 09-26 and 09-27 in the window 09-26 to 10-01 and none after.",
+        "cloudwatch list-metrics on the namespace: 2 metric names (ChainFailed, RevampParallelFailed).",
+        "ec2 describe-instances, tag Name=*mdpf*: mdpf-daily-runner, state stopped, LaunchTime 2026-09-30T13:30:35Z.",
+        "s3api head-object opal-data-assets gold/mdpf_revamp/meta/cycle-complete.json: LastModified 2026-08-14T07:28:26Z, so Stage 6 has not completed a cycle since then."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "infra/aws/ec2/mdpf-daily-runner/mdpf-daily-dispatch.sh puts RevampParallelFailed (and the chain's ChainFailed) to MDPF/DailyChain on each run, so a run leaves a datapoint whether it passed or failed.",
+    "world_is": "Three consecutive days carry no datapoint on either metric while the instance was launched on at least the last of them. Either the runner stops before it reaches its metric lines, or it is launched and does not run the dispatch. Not read: a runner log, the launch history for 09-28 and 09-29, or the legacy chain's own outputs.",
+    "notes": "INERT for this project: the served MDPF documents and the staged spines are written by the Gold function at 13:30Z (staged spines last written 2026-09-30T13:30:54Z to 13:31:15Z). Unmeasured for whatever still reads the runner's legacy outputs. For the runner's owner (the AE lane; no live seat on the laptop) or the CTO's placement: read one runner log for 09-30. Found while reading row S5."
   }
 ]
 ```

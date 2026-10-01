@@ -52,10 +52,15 @@ from datetime import datetime, timezone
 ROOT = None
 
 
+# EVERY subprocess read below names its decoder (ESTATE_GOVERNANCE-S26, re-filed from NFRA_COMPEFFICACY-W2-S4).
+# text=True alone decodes with the locale codec (cp1252 on this estate): one byte it cannot map kills the reader
+# thread, stdout arrives None or cut mid-record, and the tool still exited 0 declaring every source run.
+# errors="replace" keeps a bad byte visible as U+FFFD instead of ending the read.
 def repo_root():
     global ROOT
     if ROOT is None:
-        r = subprocess.run(["git", "rev-parse", "--show-toplevel"], capture_output=True, text=True)
+        r = subprocess.run(["git", "rev-parse", "--show-toplevel"], capture_output=True, text=True,
+                           encoding="utf-8", errors="replace")
         if r.returncode != 0:
             print("ERROR: not in a git repo (comp-adversary is repo-scoped)")
             sys.exit(2)
@@ -64,7 +69,8 @@ def repo_root():
 
 
 def _git(*args):
-    return subprocess.run(["git", "-C", repo_root()] + list(args), capture_output=True, text=True)
+    return subprocess.run(["git", "-C", repo_root()] + list(args), capture_output=True, text=True,
+                          encoding="utf-8", errors="replace")
 
 
 COMMIT_RE = re.compile(r"@`?([0-9a-f]{7,40})\b")
@@ -289,7 +295,7 @@ def _comp_read_digest(rel, budget_bytes):
         return None, "comp-read not present at %s (packet DEFERRED, not silently skipped)" % tool
     try:
         r = subprocess.run(["python", tool, rel], capture_output=True, text=True,
-                           timeout=60, cwd=repo_root())
+                           encoding="utf-8", errors="replace", timeout=60, cwd=repo_root())
         if r.returncode != 0:
             return None, "comp-read rc=%d" % r.returncode
         txt = _ascii(r.stdout or "")
@@ -307,7 +313,8 @@ def _comp_read_digest(rel, budget_bytes):
 def comp_state_drift():
     try:
         r = subprocess.run(["python", os.path.join(repo_root(), ".tools", "comp-state"), "--json"],
-                           capture_output=True, text=True, timeout=120, cwd=repo_root())
+                           capture_output=True, text=True, encoding="utf-8", errors="replace",
+                           timeout=120, cwd=repo_root())
         if r.returncode != 0:
             return None, "comp-state rc=%d (source DEFERRED, not silently skipped)" % r.returncode
         return (r.stdout[:4000] or "").strip(), None

@@ -1,0 +1,14 @@
+{
+  "package_pin": "a3b35fd3765a24c597827544f42278a1b2bbb3cc",
+  "member_overrides": {},
+  "census_pin": "2874e37647",
+  "members": 243,
+  "package_manifest_sha256": "66eb243813f09e5144432fbc0d429b8de3f9dd90f0d4436a086e34a2bbce7090",
+  "core_state_serial": 5,
+  "queue_url": "https://sqs.us-east-1.amazonaws.com/313476888478/irpt-generation",
+  "jobs_table": "irpt-jobs",
+  "requests_table": "irpt-requests",
+  "wrapper_sha256": "55ddb8f7947cba7cdca1b9139d4d0a1a3ad620e330c86ba3ab648d334763aff9",
+  "library_sha256": "9511060e04f45b51744f7eef68f4a1c4921367b3388fe9acee8b83d708ddcc90",
+  "out": "C:\\Users\\ANDREW~1\\AppData\\Local\\Temp\\claude\\C--Users-AndrewBerman-Desktop-ajb-workspace\\9977cbf8-f410-43e9-9b26-267706d1a00d\\scratchpad\\st7\\pkg"
+}

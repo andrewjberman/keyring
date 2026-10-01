@@ -1,0 +1,59 @@
+accounts OK on all 6 reproduced days: 788; of those with 4 to 9 basket lines on 2026-04-30: 23
+account 226 (the Orion accountId as the gold carries it)
+== 1 before the seam | gold row 2026-04-30 | start close 2026-04-29 read from date=2026-04-29 | end close read from date=2026-04-30
+      BAC              value       42889.86  price    52.8800 ->    53.4600  basket  contribution     470.4258
+      FCASH            value         665.81  price     1.0000 ->          -  cash    contribution       0.0000
+      FDRXX            value       18214.46  price     1.0000 ->     1.0000  basket  contribution       0.0000
+      FID:CASH         value           0.00  price     0.0000 ->          -  cash    contribution       0.0000
+      MSFT             value       49183.88  price   424.4600 ->   407.7800  basket  contribution   -1932.7784
+   BY HAND  return -0.013179808011  basket 110954.01  lines in 5 out 0
+   GOLD     return -0.013179808011  basket 110954.01  lines in 5  status OK  prior_business_date 2026-04-29  span 1  (manifest: read date=2026-04-29 and date=2026-04-30)
+   EQUAL to 1e-12, same start close, same span, same line count: True
+== 2 the seam day | gold row 2026-05-05 | start close 2026-05-04 read from date=2026-05-04 | end close read from date=2026-05-06
+      BAC              value       42330.21  price    52.1900 ->    53.1200  basket  contribution     754.3034
+      FCASH            value         717.03  price     1.0000 ->          -  cash    contribution       0.0000
+      FDRXX            value       18214.46  price     1.0000 ->     1.0000  basket  contribution       0.0000
+      FID:CASH         value           0.00  price     0.0000 ->          -  cash    contribution       0.0000
+      MSFT             value       47927.80  price   413.6200 ->   411.3800  basket  contribution    -259.5577
+   BY HAND  return 0.004531073751  basket 109189.50  lines in 5 out 0
+   GOLD     return 0.004531073751  basket 109189.50  lines in 5  status OK  prior_business_date 2026-05-04  span 1  (manifest: read date=2026-05-04 and date=2026-05-06)
+   EQUAL to 1e-12, same start close, same span, same line count: True
+== 3 window: Thu | gold row 2026-05-07 | start close 2026-05-06 read from date=2026-05-07 | end close read from date=2026-05-08
+      BAC              value       43473.83  price    53.6000 ->    52.7500  basket  contribution    -689.4171
+      FCASH            value         717.03  price     1.0000 ->          -  cash    contribution       0.0000
+      FDRXX            value       18214.46  price     1.0000 ->     1.0000  basket  contribution       0.0000
+      FID:CASH         value           0.00  price     0.0000 ->          -  cash    contribution       0.0000
+      MSFT             value       47967.20  price   413.9600 ->   420.7700  basket  contribution     789.1019
+   BY HAND  return 0.000903167226  basket 110372.52  lines in 5 out 0
+   GOLD     return 0.000903167226  basket 110372.52  lines in 5  status OK  prior_business_date 2026-05-06  span 1  (manifest: read date=2026-05-07 and date=2026-05-08)
+   EQUAL to 1e-12, same start close, same span, same line count: True
+== 3 window: Fri | gold row 2026-05-08 | start close 2026-05-07 read from date=2026-05-08 | end close read from date=2026-05-11
+      BAC              value       42784.42  price    52.7500 ->    51.3100  basket  contribution   -1167.9538
+      FCASH            value         717.03  price     1.0000 ->          -  cash    contribution       0.0000
+      FDRXX            value       18214.46  price     1.0000 ->     1.0000  basket  contribution       0.0000
+      FID:CASH         value           0.00  price     0.0000 ->          -  cash    contribution       0.0000
+      MSFT             value       48756.30  price   420.7700 ->   415.1200  basket  contribution    -654.6881
+   BY HAND  return -0.016498646085  basket 110472.21  lines in 5 out 0
+   GOLD     return -0.016498646085  basket 110472.21  lines in 5  status OK  prior_business_date 2026-05-07  span 1  (manifest: read date=2026-05-08 and date=2026-05-11)
+   EQUAL to 1e-12, same start close, same span, same line count: True
+== 3 window: Tue, LINKED over Mon | gold row 2026-05-12 | start close 2026-05-08 read from date=2026-05-11 | end close read from date=2026-05-13
+      BAC              value       41616.46  price    51.3100 ->    50.7800  basket  contribution    -429.8718
+      FCASH            value         717.03  price     1.0000 ->          -  cash    contribution       0.0000
+      FDRXX            value       18214.46  price     1.0000 ->     1.0000  basket  contribution       0.0000
+      FID:CASH         value           0.00  price     0.0000 ->          -  cash    contribution       0.0000
+      MSFT             value       48101.61  price   415.1200 ->   407.7700  basket  contribution    -851.6738
+   BY HAND  return -0.011795221698  basket 108649.56  lines in 5 out 0
+   GOLD     return -0.011795221698  basket 108649.56  lines in 5  status OK  prior_business_date 2026-05-08  span 2  (manifest: read date=2026-05-11 and date=2026-05-13)
+   EQUAL to 1e-12, same start close, same span, same line count: True
+== 3 window: Wed | gold row 2026-05-13 | start close 2026-05-12 read from date=2026-05-13 | end close read from date=2026-05-14
+      BAC              value       41186.59  price    50.7800 ->    49.8400  basket  contribution    -762.4142
+      FCASH            value         717.03  price     1.0000 ->          -  cash    contribution       0.0000
+      FDRXX            value       18214.46  price     1.0000 ->     1.0000  basket  contribution       0.0000
+      FID:CASH         value           0.00  price     0.0000 ->          -  cash    contribution       0.0000
+      MSFT             value       47249.94  price   407.7700 ->   405.2100  basket  contribution    -296.6374
+   BY HAND  return -0.009863753321  basket 107368.02  lines in 5 out 0
+   GOLD     return -0.009863753321  basket 107368.02  lines in 5  status OK  prior_business_date 2026-05-12  span 1  (manifest: read date=2026-05-13 and date=2026-05-14)
+   EQUAL to 1e-12, same start close, same span, same line count: True
+== 3 the window 2026-05-07 .. 2026-05-13: gold row for the gap day 2026-05-11: no row from this rebuild; a STALE row of the 2026-09-29 build (schema 1.1) is still in that partition and is NOT part of this window's product -- its disposition is the rebuild ledger's leg V1
+   window return BY HAND -0.036816721122 | product of the four gold rows -0.036816721122 | equal to 1e-12: True
+RESULT: 6 of 6 rows equal; window equal True

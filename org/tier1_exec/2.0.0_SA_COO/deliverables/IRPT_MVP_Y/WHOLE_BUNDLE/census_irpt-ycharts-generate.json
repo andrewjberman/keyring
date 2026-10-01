@@ -1,0 +1,657 @@
+{
+ "function": "irpt-ycharts-generate",
+ "pin": "21eca74f402c99d5db10e59529a86f8dc03e6659",
+ "live_code_sha256": "ESedDkLy40enY0fsupacLrXaUXzFw+UauPKNauOqeYc=",
+ "live_zip_hashes_to_it": true,
+ "live_members": 111,
+ "pin_members": 112,
+ "identical": 85,
+ "eol_only": [
+  "fixtures/har/FIXTURE_MANIFEST.json",
+  "fixtures/har/collection.json",
+  "fixtures/har/create_201.json",
+  "fixtures/har/create_422_fee.json",
+  "fixtures/har/dashboard.json",
+  "fixtures/har/decision_branches.json",
+  "fixtures/har/generate_201.json",
+  "fixtures/har/generate_404_minimal.json",
+  "fixtures/har/status_drifted.json",
+  "fixtures/har/status_ok.json",
+  "fixtures/har/templates.json",
+  "fixtures/har/upload_ok.json",
+  "fixtures/har/validate_200.json",
+  "templates.json"
+ ],
+ "changed": [
+  "broker.py",
+  "canonical_profile_reads.py",
+  "certify.py",
+  "contracts/HoldingsSnapshot.schema.json",
+  "contracts/PerformanceReport.schema.json",
+  "current_authority.py",
+  "entry.py",
+  "extract.py",
+  "firm_registry.json",
+  "fixtures/har/report.pdf",
+  "generate_installed.py",
+  "infra/logic/registry/exemptions.json",
+  "infra/logic/registry/remediations.json",
+  "infra/logic/registry/scopes.json",
+  "infra/logic/registry/systems.json",
+  "job.py",
+  "lib/opal_naming.py",
+  "loaders.py",
+  "publication.py",
+  "publisher.py",
+  "recipe.py",
+  "resident_main.py",
+  "resident_worker.py",
+  "served.py",
+  "transport.py",
+  "uploads.py"
+ ],
+ "added": [
+  "comparison_catalogue.py"
+ ],
+ "removed": [],
+ "history": [
+  {
+   "member": "broker.py",
+   "source": "infra/aws/lambda/investor-reporting/ycharts/session/broker.py",
+   "live_equals": "b3fc529601",
+   "ahead": [
+    [
+     "e2fdd01015",
+     "fix(2.0.0_SA_COO~P, irpt resident): read-back WAF refresh -- apply ~Y's P_READ_BACK_WAF_REFRESH_2026"
+    ]
+   ]
+  },
+  {
+   "member": "canonical_profile_reads.py",
+   "source": "infra/aws/lambda/investor-reporting/_scope/canonical_profile_reads.py",
+   "live_equals": "185dfb3e7f",
+   "ahead": [
+    [
+     "2704705672",
+     "feat(IRPT_BCKEND TO-IB-yr-293, 0.9.0_WK_IRPT_BCKEND~96): decide() enforces allowedFirmIds -- ACTOR_F"
+    ]
+   ]
+  },
+  {
+   "member": "certify.py",
+   "source": "infra/aws/lambda/investor-reporting/ycharts/extract/certify.py",
+   "live_equals": "bcfbd380a1",
+   "ahead": [
+    [
+     "b75e571a74",
+     "fast(IRPT_BCKEND ~Y item 2, 2.0.0_SA_COO~Y): certification is handed the request's chosen comparison"
+    ],
+    [
+     "ad817b55ea",
+     "fix(IRPT_BCKEND hop 7, 2.0.0_SA_COO~P): apply ~Y's P_HOP7_CHART_DATE_CERTIFY -- a whole-page chart's"
+    ]
+   ]
+  },
+  {
+   "member": "contracts/HoldingsSnapshot.schema.json",
+   "source": "docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json",
+   "live_equals": "1206612f63",
+   "ahead": [
+    [
+     "cc99dea562",
+     "contract(IRPT_BCKEND ~M item 1, 2.0.0_SA_COO~M FAST): HoldingsSnapshot -- the served blocks cover AC"
+    ],
+    [
+     "a72904d984",
+     "fix(IRPT_BCKEND ~M item 1, 2.0.0_SA_COO~M FAST): the aggregates leave the producer -- a firm-wide fo"
+    ],
+    [
+     "1f5d1049c3",
+     "feat(IRPT_BCKEND ~M item 1, 2.0.0_SA_COO~M FAST): Holdings serves per-security aggregates and per-cl"
+    ]
+   ]
+  },
+  {
+   "member": "contracts/PerformanceReport.schema.json",
+   "source": "docs/contracts/investor-reporting/v1/PerformanceReport.schema.json",
+   "live_equals": "69cac32dce",
+   "ahead": [
+    [
+     "78eeb223f8",
+     "contract(2.0.0_SA_COO~P, irpt performance): PerformanceReport lineage.provider gains OPAL_HOLDINGS i"
+    ]
+   ]
+  },
+  {
+   "member": "current_authority.py",
+   "source": "infra/aws/lambda/investor-reporting/ycharts/generate/current_authority.py",
+   "live_equals": "d3f612d94d",
+   "ahead": [
+    [
+     "2704705672",
+     "feat(IRPT_BCKEND TO-IB-yr-293, 0.9.0_WK_IRPT_BCKEND~96): decide() enforces allowedFirmIds -- ACTOR_F"
+    ]
+   ]
+  },
+  {
+   "member": "entry.py",
+   "source": "infra/aws/lambda/investor-reporting/ycharts/generate/entry.py",
+   "live_equals": "b357e0ba8f",
+   "ahead": [
+    [
+     "0ad0e6867d",
+     "fast(IRPT_BCKEND ~Y item 4, 2.0.0_SA_COO~Y): the comparison catalogue gains a real etf-classificatio"
+    ],
+    [
+     "53bbae9c4f",
+     "IRPT_BCKEND TO-IB-yr-261: register and serve the comparison-catalogue GET (AC1, AC2 pass; AC3 refuse"
+    ],
+    [
+     "f7ae621369",
+     "feat(IRPT_BCKEND, 0.9.0_WK_IRPT_BCKEND~88): comparison catalogue read module + closed v1 contract; r"
+    ]
+   ]
+  },
+  {
+   "member": "extract.py",
+   "source": "infra/aws/lambda/investor-reporting/ycharts/extract/extract.py",
+   "live_equals": "56a6e07e8f",
+   "ahead": [
+    [
+     "12a67ed5ee",
+     "fix(2.0.0_SA_COO~P, irpt resident): the level_as_of_type read-back tolerance applies to STATIC model"
+    ]
+   ]
+  },
+  {
+   "member": "firm_registry.json",
+   "source": "data/firm_registry.json",
+   "live_equals": "39cbad4214",
+   "ahead": [
+    [
+     "8e9ed1b539",
+     "registry(NFRA_TRNSPT TO-TR-g1, 0.9.0_WK_NFRA_TRNSPT~3): systems.json rows outlook and sharepoint (VE"
+    ],
+    [
+     "f13d9e9222",
+     "integrate(0.0.0_AB_MSTR): transcripts STEP 3 -- scopes.json transcripts bucket_provisioned -> true +"
+    ],
+    [
+     "73896b6c42",
+     "integrate(0.0.0_AB_MSTR): transcripts landing step 1 -- registry rows (scope transcripts, system tea"
+    ]
+   ]
+  },
+  {
+   "member": "fixtures/har/report.pdf",
+   "source": "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/report.pdf",
+   "live_equals": null,
+   "ahead": [
+    [
+     "5e4a92380b",
+     "IB-s-9: the YCharts generation chain as Opal's own async job -- source"
+    ]
+   ]
+  },
+  {
+   "member": "generate_installed.py",
+   "source": "infra/aws/lambda/investor-reporting/reports/generate_installed.py",
+   "live_equals": "2e3d50caac",
+   "ahead": [
+    [
+     "4f43b48050",
+     "fast(IRPT_BCKEND~P, 2.0.0_SA_COO~P): land 2.0.0_SA_COO~Y's exact patch for row W88-S2 -- the etf-cla"
+    ],
+    [
+     "53bbae9c4f",
+     "IRPT_BCKEND TO-IB-yr-261: register and serve the comparison-catalogue GET (AC1, AC2 pass; AC3 refuse"
+    ]
+   ]
+  },
+  {
+   "member": "infra/logic/registry/exemptions.json",
+   "source": "infra/logic/registry/exemptions.json",
+   "live_equals": "845343f925",
+   "ahead": [
+    [
+     "8b4c15c6ba",
+     "registry(4.0.0_SA_CRO): admit irpt-holdings-role by exact name on the three firm buckets' fence"
+    ]
+   ]
+  },
+  {
+   "member": "infra/logic/registry/remediations.json",
+   "source": "infra/logic/registry/remediations.json",
+   "live_equals": "3ea3fec204",
+   "ahead": [
+    [
+     "fd3b3b7bf2",
+     "registry(4.0.0_SA_CRO): ETFS_CANON remediation row + tension map item 8, applying the CTO relay patc"
+    ]
+   ]
+  },
+  {
+   "member": "infra/logic/registry/scopes.json",
+   "source": "infra/logic/registry/scopes.json",
+   "live_equals": "14b52ca13a",
+   "ahead": [
+    [
+     "0146e0c954",
+     "merge(0.0.0_AB_MSTR): origin/CLOUD 33c1d096a3 (site Z pushes, 1460 commits) into laptop CLOUD -- And"
+    ],
+    [
+     "d451070fb1",
+     "registry(4.0.0_SA_CRO~Z, rivalfunds): etfs scope to GENERAL tenancy + system key rivalfunds -- ETF r"
+    ],
+    [
+     "f13d9e9222",
+     "integrate(0.0.0_AB_MSTR): transcripts STEP 3 -- scopes.json transcripts bucket_provisioned -> true +"
+    ],
+    [
+     "73896b6c42",
+     "integrate(0.0.0_AB_MSTR): transcripts landing step 1 -- registry rows (scope transcripts, system tea"
+    ],
+    [
+     "6dcd6df254",
+     "registry(4.0.0_SA_CRO, PLATFORM_LOGIC_DOCS): the cottonwood alias note reads the measured bucket sta"
+    ],
+    [
+     "de56cfd02f",
+     "registry(4.0.0_SA_CRO, PLATFORM_LOGIC_DOCS): scopes.json MASTER row z09 -> cottonwood, parallel to 0"
+    ]
+   ]
+  },
+  {
+   "member": "infra/logic/registry/systems.json",
+   "source": "infra/logic/registry/systems.json",
+   "live_equals": "6c07797a9c",
+   "ahead": [
+    [
+     "224058ea3f",
+     "registry(NFRA_TRNSPT, 2.0.0_SA_COO~T): display_name on the outlook and sharepoint VENDOR rows -- the"
+    ],
+    [
+     "fed423d013",
+     "drain: merge wk-NFRA_TRNSPT-3 (row gate clean on the merged index)"
+    ],
+    [
+     "cd2ffcca99",
+     "register(PLATFORM_LOGIC_DOCS, 4.0.0_SA_CRO): systems.json -- display_name on the 23 VENDOR rows plus"
+    ],
+    [
+     "8e9ed1b539",
+     "registry(NFRA_TRNSPT TO-TR-g1, 0.9.0_WK_NFRA_TRNSPT~3): systems.json rows outlook and sharepoint (VE"
+    ],
+    [
+     "d451070fb1",
+     "registry(4.0.0_SA_CRO~Z, rivalfunds): etfs scope to GENERAL tenancy + system key rivalfunds -- ETF r"
+    ],
+    [
+     "73896b6c42",
+     "integrate(0.0.0_AB_MSTR): transcripts landing step 1 -- registry rows (scope transcripts, system tea"
+    ],
+    [
+     "03c7f7f593",
+     "build(NFRA_MCPORTAL MP-t-2, 0.9.0_WK_NFRA_MCPORTAL~3): the grant-writer Lambda -- name('mcportal', N"
+    ],
+    [
+     "ec4e000709",
+     "Merge remote-tracking branch 'origin/CLOUD' into SITEZ"
+    ]
+   ]
+  },
+  {
+   "member": "job.py",
+   "source": "infra/aws/lambda/investor-reporting/ycharts/generate/job.py",
+   "live_equals": "b3fc529601",
+   "ahead": [
+    [
+     "b21aacec70",
+     "IRPT_BCKEND.TO-IB-yr-291: the READY receipt carries the vendor endpoint ledger"
+    ]
+   ]
+  },
+  {
+   "member": "lib/opal_naming.py",
+   "source": "lib/opal_naming.py",
+   "live_equals": "14b52ca13a",
+   "ahead": [
+    [
+     "b5dc2e63d1",
+     "fix(1.0.0_SA_CTO): a VENDOR row without display_name is a WARN, not a registry refusal -- the refusa"
+    ],
+    [
+     "70c4aa2e1a",
+     "naming(1.0.0_SA_CTO): VENDOR_DISPLAY_NAMES generated view in lib/opal_naming.py -- a whole-file port"
+    ],
+    [
+     "01646908e1",
+     "lib(1.0.0_SA_CTO): FIRM_DISPLAY_NAMES view target for the Investor Reporting portal (DSGN_IRPTV1 IV-"
+    ],
+    [
+     "e8abdf8d81",
+     "lib(NFRA_MCPINDEX.TO-MX-s-11, 1.0.0_SA_CTO~O): the ASSET_DIM_REST_PIN target -- VIEWS row, TARGET_RE"
+    ]
+   ]
+  },
+  {
+   "member": "loaders.py",
+   "source": "infra/aws/lambda/investor-reporting/_authz/loaders.py",
+   "live_equals": "7925afb870",
+   "ahead": [
+    [
+     "8e9ed1b539",
+     "registry(NFRA_TRNSPT TO-TR-g1, 0.9.0_WK_NFRA_TRNSPT~3): systems.json rows outlook and sharepoint (VE"
+    ],
+    [
+     "f13d9e9222",
+     "integrate(0.0.0_AB_MSTR): transcripts STEP 3 -- scopes.json transcripts bucket_provisioned -> true +"
+    ],
+    [
+     "73896b6c42",
+     "integrate(0.0.0_AB_MSTR): transcripts landing step 1 -- registry rows (scope transcripts, system tea"
+    ]
+   ]
+  },
+  {
+   "member": "publication.py",
+   "source": "infra/aws/lambda/investor-reporting/ycharts/extract/publication.py",
+   "live_equals": "c1fd6c5e52",
+   "ahead": [
+    [
+     "3a16cc442b",
+     "reland(IRPT_BCKEND ~Y FAST items 2 and 3, 2.0.0_SA_COO~Y): merge 1ee1c56e9b carried 1 of the branch'"
+    ]
+   ]
+  },
+  {
+   "member": "publisher.py",
+   "source": "infra/aws/lambda/investor-reporting/ycharts/generate/publisher.py",
+   "live_equals": "c1fd6c5e52",
+   "ahead": [
+    [
+     "3a16cc442b",
+     "reland(IRPT_BCKEND ~Y FAST items 2 and 3, 2.0.0_SA_COO~Y): merge 1ee1c56e9b carried 1 of the branch'"
+    ]
+   ]
+  },
+  {
+   "member": "recipe.py",
+   "source": "infra/aws/lambda/investor-reporting/ycharts/generate/recipe.py",
+   "live_equals": "03ea5980cc",
+   "ahead": [
+    [
+     "da519f31b4",
+     "build(IRPT_BCKEND.TO-IB-yr-201, 0.9.0_WK_IRPT_BCKEND~71): a Comparison names its compared models to "
+    ],
+    [
+     "0a1fc245cb",
+     "build(IRPT_BCKEND IB-yr-1, 0.9.0_WK_IRPT_BCKEND~63): saved portfolio type refuses a tolerated settin"
+    ],
+    [
+     "12a67ed5ee",
+     "fix(2.0.0_SA_COO~P, irpt resident): the level_as_of_type read-back tolerance applies to STATIC model"
+    ],
+    [
+     "49b85eacd2",
+     "fix(2.0.0_SA_COO~P, irpt resident): read-back TOLERATES level_as_of_type -- records the stored value"
+    ],
+    [
+     "38ee23deaa",
+     "fix(2.0.0_SA_COO~P, irpt resident): read-back release-and-resume -- at most 2 status GETs per receiv"
+    ],
+    [
+     "b6739556ea",
+     "fix(2.0.0_SA_COO~P, irpt resident): W11 defects -- capture env strips PYTHON* (LEASE_NOT_HELD was th"
+    ],
+    [
+     "e2fdd01015",
+     "fix(2.0.0_SA_COO~P, irpt resident): read-back WAF refresh -- apply ~Y's P_READ_BACK_WAF_REFRESH_2026"
+    ],
+    [
+     "07f1982ab9",
+     "fix(IRPT_BCKEND window-7 read-back, 2.0.0_SA_COO~P): the portfolio read-back waits out YCharts `calc"
+    ]
+   ]
+  },
+  {
+   "member": "resident_main.py",
+   "source": "infra/aws/lambda/investor-reporting/ycharts/generate/resident_main.py",
+   "live_equals": "b3fc529601",
+   "ahead": [
+    [
+     "ec5804f6e0",
+     "fix(2.0.0_SA_COO~P, irpt resident): W13 diagnostics -- the journal names the stored drifted value as"
+    ],
+    [
+     "746ddee18a",
+     "fix(IRPT_BCKEND S151, 2.0.0_SA_COO~P): a retained resident failure names its closed reason -- CAPTUR"
+    ]
+   ]
+  },
+  {
+   "member": "resident_worker.py",
+   "source": "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py",
+   "live_equals": "2d6937be5e",
+   "ahead": [
+    [
+     "62535e0fdc",
+     "fast(IRPT_BCKEND ~Y item 1, 2.0.0_SA_COO~Y): a permanent authority refusal ends the job ATTENTION wi"
+    ],
+    [
+     "7fc1a123f0",
+     "feat(0.9.0_WK_IRPT_BCKEND~83): IB-yr-231 resident journals the matched eviction verdict and a job's "
+    ],
+    [
+     "9e5cfc16c9",
+     "drive(0.9.0_WK_IRPT_BCKEND~73): IB-yr-221 amendment 1 -- 4th resolve RETRY ends the job (row NEEDS_C"
+    ],
+    [
+     "c125c68396",
+     "build(0.9.0_WK_IRPT_BCKEND~73): IRPT_BCKEND.TO-IB-yr-221 -- a resolve_upload RETRY gives up by name "
+    ],
+    [
+     "f2063238c1",
+     "complete(0.9.0_WK_IRPT_BCKEND~71): IB-yr-211 -- a resolve_upload RETRY is logged with its code and r"
+    ],
+    [
+     "da519f31b4",
+     "build(IRPT_BCKEND.TO-IB-yr-201, 0.9.0_WK_IRPT_BCKEND~71): a Comparison names its compared models to "
+    ],
+    [
+     "0a1fc245cb",
+     "build(IRPT_BCKEND IB-yr-1, 0.9.0_WK_IRPT_BCKEND~63): saved portfolio type refuses a tolerated settin"
+    ],
+    [
+     "12a67ed5ee",
+     "fix(2.0.0_SA_COO~P, irpt resident): the level_as_of_type read-back tolerance applies to STATIC model"
+    ],
+    [
+     "49b85eacd2",
+     "fix(2.0.0_SA_COO~P, irpt resident): read-back TOLERATES level_as_of_type -- records the stored value"
+    ],
+    [
+     "38ee23deaa",
+     "fix(2.0.0_SA_COO~P, irpt resident): read-back release-and-resume -- at most 2 status GETs per receiv"
+    ],
+    [
+     "ec5804f6e0",
+     "fix(2.0.0_SA_COO~P, irpt resident): W13 diagnostics -- the journal names the stored drifted value as"
+    ],
+    [
+     "b6739556ea",
+     "fix(2.0.0_SA_COO~P, irpt resident): W11 defects -- capture env strips PYTHON* (LEASE_NOT_HELD was th"
+    ],
+    [
+     "e2fdd01015",
+     "fix(2.0.0_SA_COO~P, irpt resident): read-back WAF refresh -- apply ~Y's P_READ_BACK_WAF_REFRESH_2026"
+    ],
+    [
+     "07f1982ab9",
+     "fix(IRPT_BCKEND window-7 read-back, 2.0.0_SA_COO~P): the portfolio read-back waits out YCharts `calc"
+    ]
+   ]
+  },
+  {
+   "member": "served.py",
+   "source": "infra/aws/lambda/investor-reporting/_authz/served.py",
+   "live_equals": "f6c6b56f40",
+   "ahead": [
+    [
+     "f9a00f732c",
+     "fix(IRPT_BCKEND~P served boundary, 2.0.0_SA_COO~P): a SERVICE row with no allowedFirmIds attribute i"
+    ]
+   ]
+  },
+  {
+   "member": "transport.py",
+   "source": "infra/aws/lambda/investor-reporting/ycharts/generate/transport.py",
+   "live_equals": "8576bec142",
+   "ahead": [
+    [
+     "b21aacec70",
+     "IRPT_BCKEND.TO-IB-yr-291: the READY receipt carries the vendor endpoint ledger"
+    ]
+   ]
+  },
+  {
+   "member": "uploads.py",
+   "source": "infra/aws/lambda/investor-reporting/intake/uploads.py",
+   "live_equals": "9efaf2850e",
+   "ahead": [
+    [
+     "6b96d460f6",
+     "fix(0.9.0_WK_IRPT_BCKEND~92): TO-IB-yr-282 -- NEEDS_CORRECTION answer carries the envelope's correct"
+    ]
+   ]
+  }
+ ],
+ "served_closure": [
+  {
+   "member": "served.py",
+   "pin_sha256": "455cd77ea46e71ca",
+   "live_sha256": "85f1fd83f0e144ef",
+   "state": "CHANGED vs live"
+  },
+  {
+   "member": "enforce.py",
+   "pin_sha256": "4245b5f8aded61b6",
+   "live_sha256": "4245b5f8aded61b6",
+   "state": "identical to live"
+  },
+  {
+   "member": "errors.py",
+   "pin_sha256": "b60f25ccaa706b7a",
+   "live_sha256": "b60f25ccaa706b7a",
+   "state": "identical to live"
+  },
+  {
+   "member": "resolve.py",
+   "pin_sha256": "24b407fa00ff0fc3",
+   "live_sha256": "24b407fa00ff0fc3",
+   "state": "identical to live"
+  },
+  {
+   "member": "grant.py",
+   "pin_sha256": "2756be537b165b18",
+   "live_sha256": "2756be537b165b18",
+   "state": "identical to live"
+  },
+  {
+   "member": "owner_reads.py",
+   "pin_sha256": "f21d26dcce7c46bf",
+   "live_sha256": "f21d26dcce7c46bf",
+   "state": "identical to live"
+  },
+  {
+   "member": "prospect.py",
+   "pin_sha256": "f556b0997dfa7310",
+   "live_sha256": "f556b0997dfa7310",
+   "state": "identical to live"
+  },
+  {
+   "member": "ids.py",
+   "pin_sha256": "f1659861d469c25d",
+   "live_sha256": "f1659861d469c25d",
+   "state": "identical to live"
+  },
+  {
+   "member": "loaders.py",
+   "pin_sha256": "763f0a0d4445481c",
+   "live_sha256": "4ffd0e37f665a848",
+   "state": "CHANGED vs live"
+  },
+  {
+   "member": "routetable.py",
+   "pin_sha256": "fbd20fb97a64c84c",
+   "live_sha256": "fbd20fb97a64c84c",
+   "state": "identical to live"
+  },
+  {
+   "member": "interactive_access.py",
+   "pin_sha256": "bba07a3f4eeb947b",
+   "live_sha256": "bba07a3f4eeb947b",
+   "state": "identical to live"
+  },
+  {
+   "member": "canonical_profile_reads.py",
+   "pin_sha256": "0ec4a717f2aa2c12",
+   "live_sha256": "3e5868cf2fc0dd93",
+   "state": "CHANGED vs live"
+  },
+  {
+   "member": "keys.py",
+   "pin_sha256": "56ee3cc22e802579",
+   "live_sha256": "56ee3cc22e802579",
+   "state": "identical to live"
+  },
+  {
+   "member": "maintained_sources.py",
+   "pin_sha256": "774eca9bde60a1dd",
+   "live_sha256": "774eca9bde60a1dd",
+   "state": "identical to live"
+  },
+  {
+   "member": "custody.py",
+   "pin_sha256": "23cda6b0e3dd88df",
+   "live_sha256": "23cda6b0e3dd88df",
+   "state": "identical to live"
+  },
+  {
+   "member": "selection.py",
+   "pin_sha256": "7ba910b85e2fce4f",
+   "live_sha256": "7ba910b85e2fce4f",
+   "state": "identical to live"
+  },
+  {
+   "member": "selection_store.py",
+   "pin_sha256": "583507a70e3a0074",
+   "live_sha256": "583507a70e3a0074",
+   "state": "identical to live"
+  }
+ ],
+ "built": {
+  "members": 112,
+  "differ_from_pin": [
+   "fixtures/har/report.pdf"
+  ],
+  "closure_stale": [],
+  "crlf_members": [
+   "fixtures/har/FIXTURE_MANIFEST.json",
+   "fixtures/har/collection.json",
+   "fixtures/har/create_201.json",
+   "fixtures/har/create_422_fee.json",
+   "fixtures/har/dashboard.json",
+   "fixtures/har/decision_branches.json",
+   "fixtures/har/generate_201.json",
+   "fixtures/har/generate_404_minimal.json",
+   "fixtures/har/status_drifted.json",
+   "fixtures/har/status_ok.json",
+   "fixtures/har/templates.json",
+   "fixtures/har/upload_ok.json",
+   "fixtures/har/validate_200.json",
+   "templates.json"
+  ],
+  "zip_sha256_b64": "arC65KbDPPssn2UXFzAP/U+zzXgIiS/fIddCFR28a6M="
+ }
+}

@@ -917,3 +917,91 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Nothing was updated or run; the act is unsigned. Cites MDPF_SECCLASS-W10-S1 and -S4."
 }
 ```
+
+
+## MDPF_SECCLASS-S6 -- seven tests of the deploy tool have failed since its 2026-08-30 change; SC-e13 caused none of them
+
+```json
+{
+  "id": "MDPF_SECCLASS-S6",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-01T07:50:00Z",
+  "one_line": ".tools/test_safe_deploy.py reads 7 failed, 7 passed, and reads the same with the tool as it stood before SC-e13 (f136b6f559~1): four tests get INDEX_MISSING because their files sit outside the workspace and have no index entry, three raise TypeError 'Strings must be encoded before hashing'. Both come from the 2026-08-30 change that made safe-deploy upload the index blob (3d9eb2931d); the test file was last changed 2026-07-12 (d7359a797e).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Tool and test extracted with git show into one scratch folder and run with python -m pytest, 2026-10-01 07:2xZ: at f136b6f559~1 (SC-e13's parent) 7 failed, 7 passed; at CLOUD HEAD 7 failed, 7 passed; the same seven test names in both runs.",
+      "Failing tests: test_pass_gold_deploy, test_fail_nodeploy, test_fail_partial, test_fail_sha_mismatch (INDEX_MISSING: '<temp file> is outside the workspace; no index entry'); test_serve_release_authorized_with_ack, test_author_enumeration_notice, test_no_regression_clean_deploy (TypeError: Strings must be encoded before hashing, safe_deploy_core.py index_md5 line).",
+      "git log on .tools/safe_deploy_core.py: 3d9eb2931d (0.7.0_AE_CloudOps~K, 2026-08-30) 'safe-deploy uploads the INDEX BLOB and asserts the ETag'; git log on .tools/test_safe_deploy.py: newest commit d7359a797e, 2026-07-12.",
+      "Record: org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/RULING7_STALE_ROWS_REMEASURE_20261001.md; supersedes the count-only row MDPF_SECCLASS-W10-S3."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "1.0.0_SA_CTO round-6 ruling 5 and rulings batch 68 item 5: split the failures SC-e13 caused from the ones it inherited; the inherited ones are one row by 2.0.0_SA_COO~M and do not hold the round.",
+  "world_is": "SC-e13 caused 0 of the 7. The deploy tool's own test file has been half red for a month: its fixtures build temp files with no index entry and hand the tool strings where it now hashes index bytes. The real deploy path is unaffected (nine keys deployed today with every ETag equal to the index blob's md5).",
+  "notes": "Owner of the repair: the deploy tool's lane (0.7.0_AE_CloudOps, dark); it un-parks when an AE seat is live or the tool next changes. Not fixed here: the ruling asks this seat to fix only what SC-e13 caused, which is nothing."
+}
+```
+
+
+## MDPF_SECCLASS-S7 -- the fallback's name-alias layer serves model guesses keyed by NAME, some flagged for review; CEMIX was one of them
+
+```json
+{
+  "id": "MDPF_SECCLASS-S7",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-01T09:30:00Z",
+  "one_line": "CEMIX read fixed_income on 93 Cottonwood position nodes because bd-securities holds a row keyed by the fund's NAME ('NAME::CAUSEWAY EMERGING MARKETS INSTL'), written 2026-03-20 by gpt-4o-mini with confidence 0.6 and needs_review true, rationale 'The name suggests a focus on emerging markets fixed income'; the Holdings fallback's NAME_ALIAS layer serves such a row as the class. bd-securities holds 7,108 NAME:: rows (gpt-4o-mini 4,226, gpt-5.4-mini 1,988, coo-manual 894), 2,118 of them under confidence 0.80 and 706 flagged needs_review.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M (per symbol: a canonical row answers before the fallback, as the CEMIX seed row now does; for the population: FWD-5's retirement of bd-securities. Which low-confidence name rows get a canonical row first is 1.0.0_SA_CTO's to order at the round-7 analysis)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bd_securities_fallback.ETFClassifier loaded live 2026-10-01 09:2xZ: 10,929 bd-securities rows, 8,690 name-map entries; normalize_name('CAUSEWAY EMERGING MARKETS INSTL') maps to the row 'NAME::CAUSEWAY EMERGING MARKETS INSTL' (asset_class fixed_income, classified_by gpt-4o-mini, confidence 0.6, needs_review true); classify('CEMIX', that name) returns fixed_income / International, and with the other custody description ('CEMIX - CAUSEWAY EMERGING MARKETS INSTL') returns equity by ticker shape.",
+      "Positions classed through NAME_ALIAS in the local Holdings builds of 2026-10-01 00:51Z-01:00Z (actual positions, by firm): 49 Financial 54 of 6,695 nodes, 10,197,607.13 USD; Cottonwood 819 of 15,354 nodes, 57,346,152.60 USD; Inflection 1,478 of 33,223 nodes, 792,539.76 USD.",
+      "Of those, answered by a row under confidence 0.80: 49 Financial 6 nodes 5,757,426.20 USD; Cottonwood 161 nodes 6,213,842.75 USD; Inflection 306 nodes 382,047.54 USD. Answered by a row flagged needs_review: Cottonwood 102 nodes 2,851,815.21 USD (93 of them CEMIX, 2,875,850.99 USD, now answered by the canonical row), Inflection 6 nodes 0.00 USD, 49 Financial 1 node 0.00 USD.",
+      "CTO half on the CEMIX row, item 1 (NEVER_WIDEN_HALF_REQUEST_SECCLASS_CEMIX_CANONICAL_ROW_20261001.md @37ac46eed2): 'Leg R names the alias rule that fired and counts the other symbols it classes today. That count is a row for the round.'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD FWD-6 keeps the bd-securities fallback as a DECLARED exception behind the canonical table for a ticker the table does not hold (CTO ruling 103169), read as one retiring table of classifications; rulings batch 75 item 3 withholds a NEW low-confidence model row from the canonical table.",
+  "world_is": "The retiring table is mostly model output keyed by name: 7,108 of its 10,929 rows are NAME:: rows, and its low-confidence and review-flagged rows are served today as classes on the Holdings tab at all three firms. A low-confidence model answer is withheld from the canonical table and served from the fallback at the same time.",
+  "notes": "Not measured: the Black Diamond gold readers (C_06, D_03, D_04), which read the same table through their own library. The counts are from builds made before the CEMIX row; the post-row build is leg R of ledger secclass-cemix-canonical-row-m-20261001."
+}
+```
+
+
+## MDPF_SECCLASS-S8 -- two real-estate funds of one kind sit in two classes: VNQ (seed) alternatives, REET (scheduled) equity
+
+```json
+{
+  "id": "MDPF_SECCLASS-S8",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-01T11:10:00Z",
+  "one_line": "The canonical table classes real-estate funds two ways: VNQ and VNQI are seed rows reading alternatives / Real Estate (and International Real Estate), while REET, the iShares Global REIT ETF, is a scheduled row reading equity / Global. The two model rows written today, USRT and CSRSX, follow the seed row (alternatives / Real Estate), so REET is now the one REIT fund in the table that reads equity.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "batch-get-item on etf-classifications, 2026-10-01 09:5xZ: VNQ alternatives / Real Estate (seed, fund); VNQI alternatives / International Real Estate (seed, fund); REET equity / Global (scheduled, no instrument_kind, no name). 1.0.0_SA_CTO re-read the same rows at 10:29Z (CTO half on MODEL_ROWS addendum 2 @000b55fc4b).",
+      "The scheduled row's class comes from the bd-securities input the scheduled path copies; the seed rows are the product decision recorded in the seed source (etf_classification.py: 'VNQ': 'alternatives').",
+      "The same split holds for single REIT stocks: AMT and PLD are scheduled rows reading equity / US Large Cap, which is why the model's answer for O (Realty Income, alternatives) was withheld (addendum 2, set c).",
+      "CTO half, item 3: 'REET's scheduled row disagrees with the seed row for its own kind of fund; that is one row for the round (owner 2.0.0_SA_COO~M), not part of this act.'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD C-WRITER: seed always wins; a scheduled row lands only where no row exists and copies a class that is already in the canonical vocabulary. Nothing in the contract says two funds of one kind must share a class.",
+  "world_is": "A person reading the Holdings tab sees a US REIT ETF under Alternatives and a global REIT ETF under Equity. The remedy is one seed row for REET (seed always wins), which moves a served class and so needs its own half; whether single REIT stocks (AMT, PLD, O) are equity or alternatives is a product decision the seed source does not record.",
+  "notes": "Not measured: who holds REET and for how much. A census of scheduled rows whose fund kind has a seed peer in another class would bound the whole set; this row names the one pair found."
+}
+```

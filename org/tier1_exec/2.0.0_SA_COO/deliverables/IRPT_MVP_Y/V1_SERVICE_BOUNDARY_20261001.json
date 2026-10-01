@@ -1,0 +1,269 @@
+{
+ "principal": "svc-irpt-analysis@opalinvest.com",
+ "at": "2026-10-01T05:27:14.281695Z",
+ "foreign": "inflection",
+ "own": "cottonwood",
+ "results": [
+  {
+   "function": "irpt-performance-adapter",
+   "method": "GET",
+   "route": "performance",
+   "inflection": {
+    "http": 200,
+    "ok": false,
+    "reason": "INVALID_INPUT"
+   },
+   "cottonwood": {
+    "http": 200,
+    "ok": false,
+    "reason": "INVALID_INPUT"
+   },
+   "holds": false
+  },
+  {
+   "function": "irpt-ycharts-generate",
+   "method": "POST",
+   "route": "analysis",
+   "inflection": {
+    "http": 200,
+    "ok": false,
+    "reason": "INVALID_INPUT"
+   },
+   "cottonwood": {
+    "http": 200,
+    "ok": false,
+    "reason": "INVALID_INPUT"
+   },
+   "holds": false
+  },
+  {
+   "function": "irpt-export-render",
+   "method": "GET",
+   "route": "export",
+   "inflection": {
+    "http": 200,
+    "ok": false,
+    "reason": "FIRM_BINDING"
+   },
+   "cottonwood": {
+    "http": 200,
+    "ok": false,
+    "reason": "NOT_FOUND"
+   },
+   "holds": true
+  }
+ ],
+ "held": 1,
+ "of": 3,
+ "calls": [
+  {
+   "at": "2026-10-01T05:27:03.529900Z",
+   "method": "POST",
+   "path": "/auth/login",
+   "status": 200,
+   "response": {
+    "accessToken": "<redacted>",
+    "user": {
+     "email": "svc-irpt-analysis@opalinvest.com",
+     "name": "IRPT Analysis Service",
+     "role": "admin",
+     "mustChangePassword": false
+    }
+   },
+   "request": {
+    "email": "svc-irpt-analysis@opalinvest.com",
+    "password": "<redacted>"
+   }
+  },
+  {
+   "at": "2026-10-01T05:27:11.816777Z",
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/performance/ASET-00000000000000000000000000?selected_tenant=inflection",
+   "status": 200,
+   "response": {
+    "ok": false,
+    "contract_version": "v1",
+    "operation": "performance-report",
+    "status": {
+     "operation": {
+      "operation_id": "performance-report",
+      "operation_kind": "read",
+      "revision": "v1"
+     },
+     "state": "UNAVAILABLE",
+     "source_dates": {
+      "source_completion_date": null,
+      "business_date": "2026-09-25"
+     },
+     "actions": [
+      {
+       "action": "NONE",
+       "safe": true,
+       "description": "no retry or recovery action is offered for this outcome"
+      }
+     ],
+     "public_reason_code": "INVALID_INPUT"
+    },
+    "firm_id": "fir_b6b200b4395e94aaa604d5fa"
+   }
+  },
+  {
+   "at": "2026-10-01T05:27:12.334473Z",
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/performance/ASET-00000000000000000000000000?selected_tenant=cottonwood",
+   "status": 200,
+   "response": {
+    "ok": false,
+    "contract_version": "v1",
+    "operation": "performance-report",
+    "status": {
+     "operation": {
+      "operation_id": "performance-report",
+      "operation_kind": "read",
+      "revision": "v1"
+     },
+     "state": "UNAVAILABLE",
+     "source_dates": {
+      "source_completion_date": null,
+      "business_date": "2026-09-22"
+     },
+     "actions": [
+      {
+       "action": "NONE",
+       "safe": true,
+       "description": "no retry or recovery action is offered for this outcome"
+      }
+     ],
+     "public_reason_code": "INVALID_INPUT"
+    },
+    "firm_id": "fir_0fe2a06331f1b4a68133fcb2"
+   }
+  },
+  {
+   "at": "2026-10-01T05:27:12.880447Z",
+   "method": "POST",
+   "path": "/api/scoped/investor-reporting/analysis?selected_tenant=inflection",
+   "status": 200,
+   "response": {
+    "ok": false,
+    "contract_version": "v1",
+    "operation": "analysis-requests",
+    "status": {
+     "operation": {
+      "operation_id": "analysis-requests",
+      "operation_kind": "read",
+      "revision": "v1"
+     },
+     "state": "UNAVAILABLE",
+     "source_dates": {
+      "source_completion_date": null,
+      "business_date": "2026-09-25"
+     },
+     "actions": [
+      {
+       "action": "NONE",
+       "safe": true,
+       "description": "no retry or recovery action is offered for this outcome"
+      }
+     ],
+     "public_reason_code": "INVALID_INPUT"
+    },
+    "firm_id": "fir_b6b200b4395e94aaa604d5fa"
+   }
+  },
+  {
+   "at": "2026-10-01T05:27:13.400250Z",
+   "method": "POST",
+   "path": "/api/scoped/investor-reporting/analysis?selected_tenant=cottonwood",
+   "status": 200,
+   "response": {
+    "ok": false,
+    "contract_version": "v1",
+    "operation": "analysis-requests",
+    "status": {
+     "operation": {
+      "operation_id": "analysis-requests",
+      "operation_kind": "read",
+      "revision": "v1"
+     },
+     "state": "UNAVAILABLE",
+     "source_dates": {
+      "source_completion_date": null,
+      "business_date": "2026-09-22"
+     },
+     "actions": [
+      {
+       "action": "NONE",
+       "safe": true,
+       "description": "no retry or recovery action is offered for this outcome"
+      }
+     ],
+     "public_reason_code": "INVALID_INPUT"
+    },
+    "firm_id": "fir_0fe2a06331f1b4a68133fcb2"
+   }
+  },
+  {
+   "at": "2026-10-01T05:27:13.704014Z",
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/export/EXP-00000000000000000000000000?selected_tenant=inflection",
+   "status": 200,
+   "response": {
+    "ok": false,
+    "contract_version": "v1",
+    "operation": "export-receipt",
+    "status": {
+     "operation": {
+      "operation_id": "export-receipt",
+      "operation_kind": "read",
+      "revision": "v1"
+     },
+     "state": "UNAVAILABLE",
+     "source_dates": {
+      "source_completion_date": null
+     },
+     "actions": [
+      {
+       "action": "NONE",
+       "safe": true,
+       "description": "no retry or recovery action is offered for this outcome"
+      }
+     ],
+     "public_reason_code": "FIRM_BINDING"
+    }
+   }
+  },
+  {
+   "at": "2026-10-01T05:27:14.281695Z",
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/export/EXP-00000000000000000000000000?selected_tenant=cottonwood",
+   "status": 200,
+   "response": {
+    "ok": false,
+    "contract_version": "v1",
+    "operation": "export-receipt",
+    "status": {
+     "operation": {
+      "operation_id": "export-receipt",
+      "operation_kind": "read",
+      "revision": "v1"
+     },
+     "state": "UNAVAILABLE",
+     "source_dates": {
+      "source_completion_date": null,
+      "business_date": "2026-09-22"
+     },
+     "actions": [
+      {
+       "action": "NONE",
+       "safe": true,
+       "description": "no retry or recovery action is offered for this outcome"
+      }
+     ],
+     "public_reason_code": "NOT_FOUND"
+    },
+    "firm_id": "fir_0fe2a06331f1b4a68133fcb2"
+   }
+  }
+ ]
+}

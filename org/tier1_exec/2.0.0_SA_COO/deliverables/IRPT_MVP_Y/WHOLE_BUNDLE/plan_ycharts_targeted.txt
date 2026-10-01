@@ -1,0 +1,84 @@
+data.terraform_remote_state.core: Reading...
+data.aws_lambda_layer_version.irpt_common: Reading...
+module.irpt_ycharts_generate.data.aws_s3_object.artifact: Reading...
+data.aws_caller_identity.current: Reading...
+data.aws_dynamodb_table.users: Reading...
+aws_iam_role.generate: Refreshing state... [id=irpt-ycharts-generate-role]
+data.aws_caller_identity.current: Read complete after 0s [id=313476888478]
+module.irpt_ycharts_generate.data.aws_s3_object.artifact: Read complete after 0s [id=opal-313476888478-lambda-artifacts/investor-reporting/irpt-ycharts-generate.zip]
+data.aws_lambda_layer_version.irpt_common: Read complete after 0s [id=arn:aws:lambda:us-east-1:313476888478:layer:irpt-common:5]
+data.terraform_remote_state.core: Read complete after 1s
+data.aws_dynamodb_table.users: Read complete after 0s [id=opal-users-v2]
+aws_iam_role_policy.generate: Refreshing state... [id=irpt-ycharts-generate-role:irpt-ycharts-generate]
+module.irpt_ycharts_generate.aws_lambda_function.this: Refreshing state... [id=irpt-ycharts-generate]
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  ~ update in-place
+Terraform will perform the following actions:
+  # aws_iam_role_policy.generate will be updated in-place
+  ~ resource "aws_iam_role_policy" "generate" {
+        id          = "irpt-ycharts-generate-role:irpt-ycharts-generate"
+        name        = "irpt-ycharts-generate"
+      ~ policy      = jsonencode(
+          ~ {
+              ~ Statement = [
+                    # (13 unchanged elements hidden)
+                    {
+                        Action    = [
+                            "kms:Decrypt",
+                        ]
+                        Condition = {
+                            StringEquals = {
+                                "kms:EncryptionContext:aws:dynamodb:tableName" = "opal-users-v2"
+                                "kms:ViaService"                               = "dynamodb.us-east-1.amazonaws.com"
+                            }
+                        }
+                        Effect    = "Allow"
+                        Resource  = [
+                            "arn:aws:kms:us-east-1:313476888478:key/64f25291-4015-42c5-ad41-40e42325deb7",
+                        ]
+                        Sid       = "DecryptCanonicalUsersTableViaDynamoOnly"
+                    },
+                  + {
+                      + Action   = [
+                          + "dynamodb:Scan",
+                        ]
+                      + Effect   = "Allow"
+                      + Resource = [
+                          + "arn:aws:dynamodb:us-east-1:313476888478:table/etf-classifications",
+                        ]
+                      + Sid      = "ScanEtfClassificationsForComparisonNames"
+                    },
+                ]
+                # (1 unchanged attribute hidden)
+            }
+        )
+        # (2 unchanged attributes hidden)
+    }
+  # module.irpt_ycharts_generate.aws_lambda_function.this will be updated in-place
+  ~ resource "aws_lambda_function" "this" {
+        id                             = "irpt-ycharts-generate"
+      ~ last_modified                  = "2026-10-01T05:23:14.000+0000" -> (known after apply)
+      ~ s3_object_version              = "BH8sOdyV6lknk1jj1qdIjIkKbDItmLVG" -> "J52XmUEjOQihij3Zam1B.EAeW3GXA7yr"
+      ~ source_code_hash               = "ESedDkLy40enY0fsupacLrXaUXzFw+UauPKNauOqeYc=" -> "arC65KbDPPssn2UXFzAP/U+zzXgIiS/fIddCFR28a6M="
+        tags                           = {
+            "Cell"      = "IB-s-9"
+            "ManagedBy" = "Terraform"
+            "Module"    = "yang-lambda"
+            "Project"   = "IRPT_BCKEND"
+            "System"    = "InvestorReporting"
+        }
+        # (28 unchanged attributes hidden)
+        # (4 unchanged blocks hidden)
+    }
+Plan: 0 to add, 2 to change, 0 to destroy.
+Warning: Resource targeting is in effect
+You are creating a plan with the -target option, which means that the result
+of this plan may not represent all of the changes requested by the current
+configuration.
+The -target option is not for routine use, and is provided only for
+exceptional situations such as recovering from errors or mistakes, or when
+Terraform specifically suggests to use it as part of an error message.
+─────────────────────────────────────────────────────────────────────────────
+Note: You didn't use the -out option to save this plan, so Terraform can't
+guarantee to take exactly these actions if you run "terraform apply" now.

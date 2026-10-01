@@ -13941,3 +13941,536 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Issuer/CTO may want the missing-row case decided before the served move; the change is one line in _service_allowed_firms."
 }
 ```
+
+
+## IRPT_BCKEND-S242 -- RULING on sweep 5 (slug 103404) that DISARMS rows IRPT_BCKEND-S235 and IRPT_BCKEND-S236, closes IRPT_BCKEND-W97-S2, and records that IRPT_BCKEND-W86-S1 was disarmed on its own mechanism while IRPT_BCKEND-S216 alone carries the per-account frontier read (disarm owner 1.0.0_SA_CTO).
+
+```json
+{
+  "id": "IRPT_BCKEND-S242",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "1.0.0_SA_CTO",
+  "surfaced_at": "2026-10-01T04:15:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "RULING on sweep 5 (slug 103404) that DISARMS rows IRPT_BCKEND-S235 and IRPT_BCKEND-S236, closes IRPT_BCKEND-W97-S2, and records that IRPT_BCKEND-W86-S1 was disarmed on its own mechanism while IRPT_BCKEND-S216 alone carries the per-account frontier read (disarm owner 1.0.0_SA_CTO).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "S235: s3api list-objects-v2 opal-data-assets schwab/08335338/silver/dim_position/date=2026-09- at 2026-10-01 03:5xZ (this seat): date=2026-09-29/data.parquet LastModified 2026-09-30T21:46:40Z; date=2026-09-28 at 2026-09-29T09:46:44Z. The partition the row called ABSENT exists, 12 hours late.",
+      "S236: REMEDIATION_v15 row S236 -- both gap partitions carry zero OK rows by the engine's own REFUSE-not-fabricate rule; no figure is served from them; TO-IB-pr-263 superseded @ed0be5b557.",
+      "W97-S2: .tools/halt-gate-check.sh at HEAD -- a worker is admitted and its ISSUER's inbox is scanned (:157-198, :342-349); HALT_ACK is the routine-ack path (:463-466); HALT_OVERRIDE is the audited override.",
+      "W86-S1: ROUND_ANALYSIS.round26P.md @7c9ed807bb section 1 -- run chain_full_20260930_145412 passes step 3 and landed raw positions and transactions for 09-30; fact_positions still ends at 2026-09-27 (S216).",
+      "org/missions/D9/IRPT/IRPT_BCKEND/ledger/ROUND_ANALYSIS.sweep5.md (co-committed)"
+    ]
+  },
+  "dismissal_reason": "S235: the silver landed, so the row's hazard is gone; the unread cause of the late landing stays with TO-IB-pr-274 and the missing 09-29 holdings gold is a new cell (sweep-5 analysis section 2 item 3). S236: the remedy the row asks for is a ruling, and the ruling is no new status value. W97-S2: the gate already has a worker rule; the remedy is an issuer rule on the worker face. W86-S1: CTO 103088's joint condition is split on the round-26 run evidence.",
+  "spec_asserts": "REMEDIATION_v15 holds S235 and S236 ARMED and W97-S2 OPEN with owner 1.0.0_SA_CTO, and holds W86-S1 ARMED on CTO 103088's joint condition with S216.",
+  "world_is": "MEASURED: the 2026-09-29 Schwab dim_position partition exists (landed 2026-09-30T21:46:40Z). RULED: REFUSED-NO-BMV stays at the series' first partition; a worker passes a routine-only HALT-GATE print with HALT_ACK=1 when its order's invocation names it; W86-S1 is closed and S216 stays ARMED.",
+  "notes": "Still ARMED after this row, unchanged: W97-S3 (the NNA Branch A packet is ~P's next act), S237 and S239 (placed on ADVI_PERFRP, parked on Andrew's D2 hold, record @8729d9792c), S232, S233, S238, S216."
+}
+```
+
+
+## IRPT_BCKEND-S243 -- CORRECTION to row IRPT_BCKEND-S242 (same author): its surfaced_at 2026-10-01T04:15:00Z and its S235 read time '03:5xZ' were written ahead of the clock; the row was committed at 03:46Z (a50d8207bc) and the S3 read ran at about 03:40Z. No ruling in S242 changes.
+
+```json
+{
+  "id": "IRPT_BCKEND-S243",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "1.0.0_SA_CTO",
+  "surfaced_at": "2026-10-01T03:50:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "CORRECTION to row IRPT_BCKEND-S242 (same author): its surfaced_at 2026-10-01T04:15:00Z and its S235 read time '03:5xZ' were written ahead of the clock; the row was committed at 03:46Z (a50d8207bc) and the S3 read ran at about 03:40Z. No ruling in S242 changes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "date -u printed 2026-10-01T03:47:08Z AFTER commit a50d8207bc, which carries row S242 with surfaced_at 04:15:00Z",
+      "the surprise-row gate refused an in-place edit of S242 (content hash 268f49fc39f9 -> e2fa214ffbe6): corrections are new rows citing the old id"
+    ]
+  },
+  "dismissal_reason": "A clock error in a record, corrected by this row; nothing in the world depends on the two times.",
+  "spec_asserts": "Row IRPT_BCKEND-S242 states it was surfaced at 2026-10-01T04:15:00Z and that the S235 read ran at 03:5xZ.",
+  "world_is": "MEASURED: S242 was committed at 03:46:19Z; the S3 read behind its S235 evidence ran at about 03:40Z.",
+  "notes": "The author estimated the time instead of reading it. The times in ROUND_ANALYSIS.sweep5.md are corrected in the same commit as this row."
+}
+```
+
+## IRPT_BCKEND-S244 -- the running resident does not enforce allowedFirmIds: IB-yr-293 is on CLOUD and not installed on st5
+
+```json
+{
+  "id": "IRPT_BCKEND-S244",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "4.0.0_SA_CRO~X",
+  "surfaced_at": "2026-10-01T05:00:00Z",
+  "one_line": "The RUNNING resident does not enforce allowedFirmIds. IB-yr-293 is on CLOUD and is NOT installed: the st5 root's ycharts/generate/current_authority.py equals commit d3f612d94d and contains 0 mentions of allowedFirmIds. With IB-pr-271 also unserved, the service principal's firm limit is enforced nowhere on deployed bytes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y (the resident and the Analysis journey are this lane's per Andrew-direct 2026-09-30 ~04:3xZ; the resident build and install are 2.0.0_SA_COO~P's act)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Host read 2026-10-01T04:41:25Z through Systems Manager (command 4d3a6313-04e8-4e2b-8950-5b97e8b1cf0c, read-only): irpt-analysis-resident active since 2026-09-30T05:13:31Z, ExecStart root /opt/irpt-resident/fe64236bbb-st5; sha256 of 92 own files listed, 72 identical to CLOUD, 17 behind.",
+      "Of the 17: ycharts/generate/current_authority.py equals d3f612d94d (2026-09-23) and _scope/canonical_profile_reads.py equals 185dfb3e7f; the one newer commit of each, 2704705672 (TO-IB-yr-293, decide() enforces allowedFirmIds), is not in the root.",
+      "Content check on the same bytes: the irpt-ycharts-generate zip (CodeSha256 inrij6hL.., downloaded 04:34Z, zip sha256 equal to live) carries current_authority.py at the same digest; it has 107 lines, 0 mentions of allowedFirmIds, 0 of ACTOR_FIRM_NOT_ALLOWED, 1 of ACTOR_NOT_FOUND (the positive control).",
+      "Also not installed on st5: resident_worker.py is at 7fc1a123f0 (IB-yr-231), one commit behind 62535e0fdc (a permanent authority refusal ends the job ATTENTION); job.py and transport.py lack b21aacec70 (IB-yr-291).",
+      "Record: org/tier1_exec/4.0.0_SA_CRO~X/deliverables/ANALYSIS_END_TO_END_GAP_BRIEF_20261001.md hop 6 and analysis_trace_20261001/EVIDENCE.json key resident.behind_head, @a465020d94."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IRPT_BCKEND-S238: 'allowedFirmIds is enforced only inside the resident since IB-yr-293' and 'the resident would then refuse the JOB at decide() with ACTOR_FIRM_NOT_ALLOWED (293), so no vendor call and no report could be produced for a non-cottonwood firm'. STATUS~Y section 0: 'Resident-side enforcement is LANDED'.",
+  "world_is": "MEASURED: landed on CLOUD, not on the host. A job accepted under svc-irpt-analysis for a firm outside its allowedFirmIds would today be admitted by the API (IB-pr-271 unserved) and run by the resident (293 not installed). NOT MEASURED: no such job was submitted and none is queued (irpt-generation 0 visible, 0 in flight at 04:45Z). The W27 window is not open, so nothing is exposed while it stays closed.",
+  "notes": "Disarm = a resident root built at or after 2704705672, read back by the digest of ycharts/generate/current_authority.py, before the W27 window opens. The S238 re-read (a foreign firm refused at the API) closes the API half only. Found on-task by a /closer trace asked by 1.0.0_SA_CTO (msg 103444); this seat moves no served code."
+}
+```
+
+## IRPT_BCKEND-S245 -- Inflection's holdings gold is dated one trading day late: a daily-pulled partition dated D holds the prior close
+
+```json
+{
+  "id": "IRPT_BCKEND-S245",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "4.0.0_SA_CRO~X",
+  "surfaced_at": "2026-10-01T05:30:00Z",
+  "one_line": "Inflection's holdings-basis gold is dated one trading day late since early May 2026. A daily-pulled fact_positions partition dated D holds the close of the trading day BEFORE D (it is pulled about 07:51 Eastern on D), and the producer pairs date=t with date=prev_trading_day(t) for every source, so the row dated t is the previous trading day's return.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO (a per-source date basis is a PRD ruling on ruling 5's day axis; the producer and sources.json change that follows is 2.0.0_SA_COO~P's)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Read 2026-10-01 05:2xZ, opal-data-assets orion/inflection/silver/fact_positions, per (accountId, productId) with currentPrice > 0, prices unchanged from the Friday partition to the Saturday partition: 2026-05-08 1,243 of 9,386; 2026-06-05 856 of 11,310; 2026-08-07 864 of 11,881; 2026-09-25 876 of 12,434. Saturday to Sunday: 100 percent unchanged in 4 of 4 weekends read. So Saturday's partition is the first to hold Friday's close.",
+      "Firm totals of currentValue: date=2026-09-25 (Fri) 207,404,700.17; date=2026-09-26 (Sat) 208,110,999.41; date=2026-09-27 (Sun) 208,110,999.41.",
+      "The history was backfilled on the other basis: Friday to Saturday 100 percent unchanged at 2024-04-12, 2025-10-03, 2026-02-06, 2026-04-17, 2026-04-24 and 2026-05-01 (6 of 6). The seam lies between 2026-05-02 and 2026-05-08; its day is not pinned.",
+      "data/assets/scripts/gold/irpt_holdings_performance/holdings_performance.py:838-855 at CLOUD and in the deployed irpt-holdings-performance-lambda (gLRGHIyi.., producer equal to CLOUD): p0 = partition prev_trading_day(day), p1 = partition day, with no per-source date basis.",
+      "The pull: opal-data-inf bronze/positions/<run date>.jsonl.gz lands about 11:51Z (2026-09-26 11:51:44Z, 2026-09-27 11:51:13Z); data/inf/manual_api/pull_inflection_positions_daily.py passes each date as the API's as-of path segment. That a past date returns its own close while today, before the open, returns the prior close is INFERRED from the two measured bases; the API was not called.",
+      "Record: org/tier1_exec/4.0.0_SA_CRO~X/deliverables/INF_PERFORMANCE_THREAD_END_TO_END_GAP_BRIEF_20261001.md hop 5 and inf_performance_trace_20261001/EVIDENCE.json key partition_date_basis_test."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "sources.json, orion entry, date_column_comment: 'snapshot_date and _source_as_of each hold exactly the partition's own date'. PRD ruling 5: the day axis is lib/trading_calendar.py over the partition. FWD-3 PROOF: the gold's daily rows are recomputed from the landed silver positions of two consecutive trading days and match.",
+  "world_is": "MEASURED: the column holds the partition's date; the prices are the prior close. The 49 Financial source is on the other basis (the partition for trading day D lands the next calendar day and holds D's close, handler.py docstring), so one gold shape carries two date meanings. A hand recomputation from the same two partitions would MATCH and still be the wrong day, so FWD-3's proof as written cannot see this. NOT SERVED TODAY: the deployed adapter does not read Inflection's gold (IB-pr-221 unserved), so no advisor has seen a shifted figure. NOT MEASURED: the seam's exact day; the gold rows themselves around the seam (a zero-return day is inferred, not read); Cottonwood's basis; other consumers of fact_positions and of the Inflection directory's as-of.",
+  "notes": "ARMED because IB-pr-221's served move is on 2.0.0_SA_COO~P's list behind row S216, and it would serve this gold. Disarm = a date basis declared per source as data, the producer pairing the partitions that hold day t's close and the prior close, the Inflection gold rebuilt (free while unserved), and one account's row reproduced by hand against that basis. A side effect worth the ruling: under the measured basis the missing 2026-09-28 pull would have repeated Friday's close, already held by the 09-26 and 09-27 partitions, so of the two missing run days only 09-29 carries a close nothing else holds. Row at INVESTIGATION_v1.md around line 9211 noted the same key-date semantic for the directory and left it to that owner. Found on-task by a /closer trace asked by 1.0.0_SA_CTO (msg 103471)."
+}
+```
+
+
+## IRPT_BCKEND-S246 -- RULING on row IRPT_BCKEND-S244 (disarm owner 1.0.0_SA_CTO): its RESIDENT half is closed on this seat's read of the st6 install -- the running current_authority.py is 211e1c15af68bdb4 with 5 mentions of allowedFirmIds; its API half and row IRPT_BCKEND-S238 stay ARMED (the served boundary holds on 1 of 3 moved functions and 3 more are not moved).
+
+```json
+{
+  "id": "IRPT_BCKEND-S246",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "1.0.0_SA_CTO",
+  "surfaced_at": "2026-10-01T06:09:10Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "RULING on row IRPT_BCKEND-S244 (disarm owner 1.0.0_SA_CTO): its RESIDENT half is closed on this seat's read of the st6 install -- the running current_authority.py is 211e1c15af68bdb4 with 5 mentions of allowedFirmIds; its API half and row IRPT_BCKEND-S238 stay ARMED (the served boundary holds on 1 of 3 moved functions and 3 more are not moved).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/ST6/INSTALL_OUTPUT_20261001.txt @d70857d3ce lines 24-27: running root /opt/irpt-resident/36dfa80058-st6; current_authority 211e1c15af68bdb4.. allowedFirmIds mentions 5; worker 71cdc42832a41b2e.. PERMANENT_AUTHORITY_REFUSALS mentions 2; reader 0ec4a717f2aa..; host library 0fec0ca910ee5fb1..",
+      "this seat's own read of the st6 tar by S3 version before signing (CTO half @743aa8920c): the same four digests, each byte-equal to git at 36dfa80058",
+      "R1_REDRIVE_OUTPUT_20261001.txt @d70857d3ce: both dead-lettered jobs ended ATTENTION ACTOR_NOT_FOUND, each branch written before its move (actor profile row ABSENT, email-index count 0); both queues 0/0; 0 vendor calls",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/V1_SERVICE_BOUNDARY_20261001.md @f95db2da7b: the API boundary holds on irpt-export-render only"
+    ]
+  },
+  "dismissal_reason": "This row records a half-disarm; it carries no new hazard. The resident now runs the code that refuses a job whose actor's allowedFirmIds does not name the job's firm.",
+  "spec_asserts": "Row S244: on deployed bytes the service principal's firm limit is enforced nowhere.",
+  "world_is": "MEASURED: the resident enforces it by its running bytes (digest read on the host and from the package). NOT EXERCISED: no foreign-firm job has been refused in the resident's journal yet. The API enforces it on 1 of the 6 functions that select a tenant.",
+  "notes": "S238 disarms on both controls of RULINGS batch 61 item 4: the directory negative control refused at the API, and one foreign-firm job refused in the resident's own journal. A SERVICE actor with no allowedFirmIds is still unrestricted in the resident (PRD v0.22 ruling 21, carried to the next resident build)."
+}
+```
+
+
+## IRPT_BCKEND-S247 -- THREE RETAINED PERFORMANCE REPORTS CARRY A VENDOR'S CALCULATED RETURN AND ARE STILL IN THE REOPEN PATH'S REACH: one for Inflection (lineage.provider ORION) and two for Cottonwood (BLACK_DIAMOND), all retained 2026-09-27. FWD-3 forbids a vendor's calculated return as the served figure, and the adapter log shows 47 reopens since 2026-09-29T16:40Z that carry no firm.
+
+```json
+{
+  "id": "IRPT_BCKEND-S247",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "1.0.0_SA_CTO",
+  "surfaced_at": "2026-10-01T06:53:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "THREE RETAINED PERFORMANCE REPORTS CARRY A VENDOR'S CALCULATED RETURN AND ARE STILL IN THE REOPEN PATH'S REACH: one for Inflection (lineage.provider ORION) and two for Cottonwood (BLACK_DIAMOND), all retained 2026-09-27. FWD-3 forbids a vendor's calculated return as the served figure, and the adapter log shows 47 reopens since 2026-09-29T16:40Z that carry no firm.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3api list-objects-v2 opal-data-irpt, 2026-10-01 06:49Z (this seat): irpt/49financial/platinum/performance_reports/ 112 objects; irpt/inflection/... 1; irpt/cottonwood/... 2 (no listing truncated).",
+      "the three non-49F objects read (this seat, about 06:50Z): RPT-df47a1fc25f8b1895b7ef2b8407d7117 owner.firm_id inflection, report.lineage.provider ORION, window 2026-01-01..2026-09-22, LastModified 2026-09-27T04:11:18Z; RPT-12b885b84f7badf270d3969c106f7542 and RPT-b683f188c2e13da7865eeceace6334c3 owner.firm_id cottonwood, provider BLACK_DIAMOND, LastModified 2026-09-27T20:35:36Z and 04:31:32Z; each value_facts.basis begins 'vendor-supplied'.",
+      "2.0.0_SA_COO~P msg 103553: /aws/lambda/irpt-performance-adapter 2026-09-29T16:40Z..2026-10-01T06:47Z, 326 requests with a logged outcome, served 148 of which 47 are reopens of a retained report; the log carries no firm field; 114 fresh requests answered VendorEgressRefused.",
+      "0.9.0_WK_IRPT_BCKEND~100 S237_BLAST_RADIUS.json: for 49 Financial a pre-switch pointer sits at the OLD accepted-key namespace and is never found by the reopen path. That was measured for 49 Financial only."
+    ]
+  },
+  "spec_asserts": "IRPT_BCKEND PRD FWD-3 CONSTRAINT: a vendor's calculated return is a comparison point (FWD-13), never the served figure; Andrew-direct 2026-09-28 ~22:4xZ: every firm moves to the holdings basis.",
+  "world_is": "MEASURED: three retained reports for the two firms whose adapter is not yet switched carry a vendor's calculated return. NOT MEASURED: whether any of the 47 reopens returned one of them (the log has no firm field), and whether the reopen path can still find them for Inflection and Cottonwood.",
+  "notes": "Remedy and order: RULINGS batch 66. First a read-only attribution of the 47 reopens by report id; then the reopen path serves only a report whose lineage.provider is OPAL_HOLDINGS, as one adapter member under both halves."
+}
+```
+
+
+## IRPT_BCKEND-S248 -- RULING that DISARMS row IRPT_BCKEND-S238 and the API half of row IRPT_BCKEND-S244 (disarm owner 1.0.0_SA_CTO): the served boundary refuses svc-irpt-analysis on a foreign firm on all SIX functions that select a tenant, read live, and serves it on its own firm; the resident's live foreign-firm arm stays NOT EXERCISED and is carried as the rows' limit.
+
+```json
+{
+  "id": "IRPT_BCKEND-S248",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "1.0.0_SA_CTO",
+  "surfaced_at": "2026-10-01T07:18:15Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "RULING that DISARMS row IRPT_BCKEND-S238 and the API half of row IRPT_BCKEND-S244 (disarm owner 1.0.0_SA_CTO): the served boundary refuses svc-irpt-analysis on a foreign firm on all SIX functions that select a tenant, read live, and serves it on its own firm; the resident's live foreign-firm arm stays NOT EXERCISED and is carried as the rows' limit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/V1_SERVICE_BOUNDARY_REREAD_20261001.md @164c3dec00 (read by this seat): svc-irpt-analysis selecting inflection answers FIRM_BINDING on irpt-performance-adapter, irpt-export-render, irpt-directory-search (0 entries; the control that armed S238 served 1 entry on 2026-09-30) and irpt-holdings; cottonwood is not refused on any of the four.",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/WHOLE_BUNDLE/APPLY_LOG_20261001.txt @7153ec83fd lines 58-76 (read by this seat): after the apply, irpt-ycharts-generate answers INVALID_INPUT with Cottonwood's date for the own firm and FIRM_BINDING for inflection; irpt-status serves the own firm (13 history items, 76 sections) and answers FIRM_BINDING on all six probes when inflection is selected.",
+      "this seat's own reads: live CodeSha256 of irpt-ycharts-generate arC65KbD.. (06:51:12Z) and irpt-status 2V7xV1+z.. (06:59:55Z) equal the signed AFTER column (07:15Z); every .py member of both artifacts and 37 closure members of the other four were byte-equal to the pin before signing (@2e511a71c6, @5ff5bac77f).",
+      "row IRPT_BCKEND-S246 @5e20d89868: the resident runs current_authority.py 211e1c15af68bdb4 (5 mentions of allowedFirmIds); no foreign-firm job has been refused on the host (RULINGS batch 65)."
+    ]
+  },
+  "dismissal_reason": "The hazard of S238 was one service principal admitted to a foreign firm at the API. Six of six tenant-selecting functions now refuse it, including the directory read that armed the row. irpt-narrative has no tenant selection.",
+  "spec_asserts": "Rows S238 and S244: svc-irpt-analysis (allowedFirmIds cottonwood) is served a foreign firm's resource; the limit is enforced nowhere on deployed bytes. CTO ruling 103318: W27 opens only after the API enforces and the negative control reads refused.",
+  "world_is": "MEASURED live on 2026-10-01 between 06:3xZ and 07:1xZ: FIRM_BINDING for inflection on six of six functions; the own firm served on six of six. Ruling 103318's condition for W27 is met. NOT EXERCISED: a foreign-firm job refused by the resident (no front door exists once the API refuses; RULINGS batch 65).",
+  "notes": "Still open and not disarmed here: a SERVICE actor with no allowedFirmIds is unrestricted in the resident (PRD v0.22 ruling 21, next resident build); a permanent refusal at the resolve phase retries to the dead-letter queue (batch 65)."
+}
+```
+
+## IRPT_BCKEND-S249 -- DISARMS row IRPT_BCKEND-S247 (disarm owner 2.0.0_SA_COO~P): the three retained vendor-figure Performance reports no longer reopen. Measured before and after on the deployed bytes: the adapter live until 2026-10-01T08:20:26Z DID return all three for their own account set and window; the adapter live since refuses all three and answers OBJECT_NOT_COVERED.
+
+```json
+{
+  "id": "IRPT_BCKEND-S249",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-01T08:33:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARMS row IRPT_BCKEND-S247 (disarm owner 2.0.0_SA_COO~P): the three retained vendor-figure Performance reports no longer reopen. Measured before and after on the deployed bytes: the adapter live until 2026-10-01T08:20:26Z DID return all three for their own account set and window; the adapter live since refuses all three and answers OBJECT_NOT_COVERED.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/NEVER_WIDEN_SIGNOFF_PACKET_IRPT_ADAPTER_HOLDINGS_BASIS_ONLY_20261001.md, both halves (COO @d570f71aa1, CTO @f94239ab13 on blob dbf3006b9f): one targeted safe-apply of module.irpt_performance_adapter.aws_lambda_function.this, 08:18:08Z..08:20:36Z, plan 0 add 1 change 0 destroy; live CodeSha256 cdbFZDJAW5g4ym+3wl9kyD9WVfYmm6AVZBuwd0c6eJI= (LastModified 08:20:26Z); full-root re-plan No changes.",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/retained_reopen_before_after.py run at 08:22Z with BEFORE = the artifact live until the apply (PCcoNYrB...) and AFTER = the bytes downloaded from Lambda after it (sha256 equal to the live CodeSha256, 70 members): reopen Inflection RPT-df47a1fc (ORION) REOPENED -> ProviderPathNotComposed, OBJECT_NOT_COVERED; reopen Cottonwood RPT-12b885b8 and RPT-b683f188 (BLACK_DIAMOND) REOPENED -> RetainedVendorFigureRefused, OBJECT_NOT_COVERED; fresh Inflection and fresh Cottonwood DEPENDENCY_UNAVAILABLE -> OBJECT_NOT_COVERED; control: the newest 49 Financial OPAL_HOLDINGS report (112 listed) reopens on both. The harness stubs authorize true and the vendor transport to refuse; reads only.",
+      "the three reports are every object under irpt/inflection and irpt/cottonwood platinum/performance_reports/ in opal-data-irpt (3 listed at 08:22Z); none was deleted.",
+      "/aws/lambda/irpt-performance-adapter 08:20:26Z..08:30:26Z (window complete): 9 events, 2 invocations (this seat's two probes), 0 TypeError / ImportModuleError / Traceback / timeout lines, 0 UNEXPECTED.",
+      "live function configuration read 08:16Z: IRPT_PERFORMANCE_APPROVED_PLAN is absent (7 variables listed), so no one-use vendor plan is armed (CTO half item 7)."
+    ]
+  },
+  "dismissal_reason": "The hazard of S247 was a vendor's calculated return reachable as the served Performance figure through the reopen path. The reopen of an existing pointer now refuses any report whose lineage.provider is not OPAL_HOLDINGS, and all three such reports are refused on the deployed bytes.",
+  "spec_asserts": "Row S247 and RULINGS batch 66 items 2-3, batch 67 item 4: the reopen path serves the holdings basis only; a firm not yet on the holdings basis answers OBJECT_NOT_COVERED with no retry offered.",
+  "world_is": "MEASURED: S247's open question is answered -- before the apply the reopen path returned all three vendor figures (so they were reachable from 2026-09-27 until 2026-10-01T08:20:26Z); after it, none. NOT MEASURED: how many of the 47 logged reopens were one of the three (the log names no report). NOT OBSERVED: a real vendor-path request in the ten minutes after the apply (0 arrived), so the log's own OBJECT_NOT_COVERED line is not yet seen.",
+  "notes": "Not closed by this act (CTO half item 7): a fresh Cottonwood request made while a one-use vendor plan is ARMED still computes a BLACK_DIAMOND figure once; arming is its own act under Andrew's vendor word. The docstring of RetainedVendorFigureRefused still names DEPENDENCY_UNAVAILABLE (CTO half item 8), corrected at the file's next change. The Performance tab's wording of OBJECT_NOT_COVERED is 2.0.0_SA_COO~D's."
+}
+```
+
+## IRPT_BCKEND-S250 -- The coerced Inflection positions file for 2026-07-02 is NOT equal to its raw file: 4 of 59 columns differ in 9 of 33,618 rows (isRebalance and modelName on 7 rows, productType and productSubType on 2). Every other compared date is equal on all 59. Nobody has read why.
+
+```json
+{
+  "id": "IRPT_BCKEND-S250",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-01T12:22:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The coerced Inflection positions file for 2026-07-02 is NOT equal to its raw file: 4 of 59 columns differ in 9 of 33,618 rows (isRebalance and modelName on 7 rows, productType and productSubType on 2). Every other compared date is equal on all 59. Nobody has read why.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO (placement: the coercing producer in opal-data-inf bronze/positions is not owned in this channel; the INF raw producers are the AE ingest's)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/coerced_positions_equality.py @2a3c7e0feb, run 2026-10-01 11:3xZ on 2026-06-29, 2026-06-30, 2026-07-02 (rows matched on id): 06-29 and 06-30 equal on 59 of 59 columns; 07-02 unequal on 4 -- e.g. id 13523 raw isRebalance True, modelName 'Opal Ultra Short Term' against coerced False and ''; id 36414 raw productType 'Stock/ETF' against coerced 'Mutual Fund'.",
+      "the same instrument on 2026-08-04, 08-05, 08-07, 09-26, 09-27, 09-30: equal on 59 of 59 columns, 35,219 to 36,110 rows each.",
+      "opal-data-inf bronze/positions/: 2,344 dates carry both forms, 7 only the coerced one (listed 10:57Z)."
+    ]
+  },
+  "spec_asserts": "CTO rulings batch 81 item 2: a coerced date is admitted only if the coerced and raw forms are equal row for row on its own neighbouring dates. Batch 81 half item 7 on the admission packet: the four differing columns are one row for the round.",
+  "world_is": "MEASURED: one of nine compared dates differs, in attribute columns only (no price, share or value column differs). NOT MEASURED: why -- two pulls at different times against a vendor that edited the rows in between, or a different coercing step in early July. Consequence taken: 2026-07-01 is not admitted and stays a gap the producer links across.",
+  "notes": "Read-only finding; no act. If the cause is two pulls minutes apart, the coerced form is a different READ of the vendor, not a coercion of the same bytes, and equality on other dates is a coincidence of quiet days."
+}
+```
+
+## IRPT_BCKEND-S251 -- The ETF ownership producer's source says it writes a per-date staleness determination to orion/inflection/meta/dedup/ on every run; that prefix holds 0 objects, and the live function's code is dated 2026-08-11.
+
+```json
+{
+  "id": "IRPT_BCKEND-S251",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-01T12:22:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The ETF ownership producer's source says it writes a per-date staleness determination to orion/inflection/meta/dedup/ on every run; that prefix holds 0 objects, and the live function's code is dated 2026-08-11.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO (placement: inf-etf-ownership-daily and the ETFS daily series are the ETFS directive's, which the register places at site Z; not this workstream's)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/inf-pipeline/inf-etf-ownership-daily/lambda_function.py lines 22-46 at HEAD: 'the determination is WRITTEN ... to opal-data-assets/orion/inflection/meta/dedup/date={date}.json on every run'.",
+      "s3 list of opal-data-assets orion/inflection/meta/dedup at 2026-10-01 12:0xZ (paginated): 0 objects; orion/inflection/meta/ holds only conversions/ and backfill-status.json.",
+      "lambda get-function-configuration inf-etf-ownership-daily at 12:0xZ: CodeSha256 Sibchin3yNut..., LastModified 2026-08-11T10:29:39; its environment carries both the legacy keys (INF_BUCKET, HOLDINGS_PREFIX) and the new ones (ASSETS_BUCKET, FACT_POSITIONS_PREFIX, META_DEDUP_PREFIX); opal-data-etfs daily/inflection/ carries a slice per day through 2026-09-27."
+    ]
+  },
+  "spec_asserts": "The producer's own docstring: every processed date gets a DUPLICATE / SUSPECT / CLEAN determination written beside the source, 'extending the same historical ledger the retroactive sweep populated'.",
+  "world_is": "MEASURED: no determination object exists under the declared prefix. NOT MEASURED: whether the deployed bytes are the dedup-aware version (the deployed zip was not compared with the source), whether determinations are written somewhere else, and whether the daily slices carry a verdict.",
+  "notes": "Found while naming the second reader of fact_positions for the coerced-positions admission packet. This workstream's own every-day grading (org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/HOLDINGS_SOURCE_DATE_BASIS_READ_20261001.md) found three partitions that hold no single close (2026-05-12, 2026-07-16, 2026-08-11), which is the SUSPECT class that ledger was meant to record."
+}
+```
+
+## IRPT_BCKEND-S252 -- Cottonwood's Black Diamond holdings partitions hold their own date's close for most securities but a minority, up to 6 percent of the securities that moved, carry the PRIOR day's close; the minority is not explained and the declared basis is one value per partition.
+
+```json
+{
+  "id": "IRPT_BCKEND-S252",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-01T12:22:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Cottonwood's Black Diamond holdings partitions hold their own date's close for most securities but a minority, up to 6 percent of the securities that moved, carry the PRIOR day's close; the minority is not explained and the declared basis is one value per partition.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P (this workstream's declaration; un-parks when Cottonwood's holdings gold is to be served)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/partition_close_anchor.py on 10 partitions 2026-06-10..2026-09-25 against the Schwab own-date anchor: own-date 326 of 351 to 540 of 543 of the securities whose close moved; prior-day 0, 1, 0, 22, 1, 21, 19, 18, 1, 19 per day; neither 2 to 25.",
+      "data/assets/scripts/gold/irpt_holdings_performance/sources.json @de3d423dce: blackdiamond_z09 partition_close is one OWN_DATE segment, basis inferred (10 of 81 partitions read)."
+    ]
+  },
+  "spec_asserts": "sources.json 1.2: a partition holds one close. PRD v0.19 ruling 4: the Cottonwood price is Market Value over Units.",
+  "world_is": "MEASURED on 10 of 81 partitions: on five of the ten days 3.4 to 5.9 percent of the moved securities (18 of 526 to 22 of 371) are priced at the prior day's close. For those securities the holdings return is dated one day late on those days. NOT MEASURED: which securities (a class that prices late, such as funds whose value posts after the vendor's cut, is the likely one) and the other 71 partitions.",
+  "notes": "Nothing serves the Cottonwood holdings gold. Before it is served: grade every partition with partition_close_anchor_sweep.py --source blackdiamond and name the lagged class."
+}
+```
+
+
+## IRPT_BCKEND-S253 -- The READY receipt of a resident job carries no vendor_requests ledger: IB-yr-291 writes the ledger in ycharts/generate/job.py, and the resident's generation worker returns its own three-key receipt, so the first READY job since that order landed has no record of the vendor requests it made.
+
+```json
+{
+  "id": "IRPT_BCKEND-S253",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-01T12:55:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The READY receipt of a resident job carries no vendor_requests ledger: IB-yr-291 writes the ledger in ycharts/generate/job.py, and the resident's generation worker returns its own three-key receipt, so the first READY job since that order landed has no record of the vendor requests it made.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Y (the Analysis lane; un-parks when the vendor PDF link or a vendor-usage count is built on the receipt, or at the next resident build, whichever comes first)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Job REQ-a69e5751d42c374f1d2354f9 (cottonwood), READY 2026-10-01T12:31:12Z on resident root 9ac9b56d3c-st8: irpt-jobs job_detail keys are certification_sha256, report_id, revision (3 keys); the row's five checkpoints (upload, portfolio, read_back, pdf, publication) were walked for the key vendor_requests: 0 found.",
+      "The term vendor_requests over infra/aws/lambda/investor-reporting/**/*.py: 12 occurrences in 3 files -- ycharts/generate/job.py 3 (a comment at :80 and the two writes at :341 and :505), tests/run_offline_suite.py 8, tests/test_receipt_ledger.py 1. resident_worker.py: 0. Its run() returns self.store.put_state(request_id, 'READY', receipt) with the receipt of self.publication.finish().",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/ST6/NEVER_WIDEN_SIGNOFF_PACKET_RESIDENT_ST6_20261001.md section 4, first row: 'the READY receipt also carries vendor_requests (ten-key shapes, no values)' -- written by this seat from the member list (job.py changed in the package), not from a run."
+    ]
+  },
+  "spec_asserts": "Task order IB-yr-291 (receipt-carries-vendor-endpoint-ledger) and the st6 never-widen packet's blast-radius row: an Analysis job that reaches READY on the resident carries the ledger of its vendor requests on its receipt.",
+  "world_is": "MEASURED on 1 of 1 READY jobs made since the order landed: the receipt has three keys and no ledger. The ledger exists only on the receipt job.py builds, a path the resident's worker does not take. NOT MEASURED: whether any deployed path still runs job.py's receipt (the Lambda-side generate entry accepts and queues; it does not generate). The st6 packet's row was this seat's own claim from a member census, and it was wrong for the resident.",
+  "notes": "Nothing reads the ledger today, so nothing is broken by its absence; the hop-7 and hop-8 outcome files counted vendor calls from the journal and the code path for that reason. The repair is the worker handing the transport's evidence list to the receipt in the ten-key shape job.py already defines; it rides the next resident build. The outcome that found it: org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/HOP8B/OUTCOME_20261001.md."
+}
+```
+
+## IRPT_BCKEND-S254 -- DISARMS row IRPT_BCKEND-S245 (on 1.0.0_SA_CTO's read, msg 103769): Inflection's holdings gold is rebuilt on the measured close basis and dated correctly -- one account reproduced by hand before the seam, on the seam day and across a gap, 6 of 6 rows equal to 1e-12.
+
+```json
+{
+  "id": "IRPT_BCKEND-S254",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-01T13:12:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARMS row IRPT_BCKEND-S245 (on 1.0.0_SA_CTO's read, msg 103769): Inflection's holdings gold is rebuilt on the measured close basis and dated correctly -- one account reproduced by hand before the seam, on the seam day and across a gap, 6 of 6 rows equal to 1e-12.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/HAND_REPRODUCTION_INFLECTION_20261001.txt @a4e7794b18: account 226; 2026-04-30 (date=2026-04-29 -> date=2026-04-30), 2026-05-05 (date=2026-05-04 -> date=2026-05-06), and the window 2026-05-07..2026-05-13 whose third row is one linked row of span 2 from Friday's close; each row equals the gold's return, basket, start close, span and line count; the window by hand equals the product of the four gold rows (-0.036816721122). The instrument imports none of the producer's code.",
+      "1.0.0_SA_CTO msg 103769: the arithmetic re-done from the printed values for two rows and the window equals the file; batch 63 item 3(d) is met.",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/HOLDINGS_SOURCE_DATE_BASIS_READ_20261001.md @a0c9b39a8c: 555 trading-day partitions graded against the Schwab anchor (444 own-date before 2026-04-20; then 14 own-date, 92 prior-day, 3 no-single-close, 2 absent); sources.json 1.2 declares the segments @de3d423dce.",
+      "the first rebuilt partition read back at 11:4xZ: the new 2026-09-24 equals the 2026-09-29 build's 2026-09-25 on 792 of 792 OK accounts and differs from its 2026-09-24 on 727 -- the old gold dated each post-seam return one trading day late."
+    ]
+  },
+  "dismissal_reason": "The hazard of S245 was a gold whose rows from the seam on carried the prior trading day's return under the next day's date. The producer now reads the partition that holds each close, per source, as declared data, and the rebuilt rows reproduce by hand.",
+  "spec_asserts": "Row S245 and RULINGS batch 63 items 1-3: the date basis is data per source; the rebuild; three hand reproductions read by the CTO before anything serves the gold.",
+  "world_is": "MEASURED as above. STILL OPEN, and not disarmed here: the rebuild's leg V1 (the gap days' partitions still hold rows of the 2026-09-29 build; no reader may see them); 2026-07-01's partition is not admitted, so the close of 2026-06-30 stays in no partition and two gaps remain after the admissions (2026-05-11, 2026-06-30) plus 2026-08-10; nothing serves this gold until IB-pr-221's own packet.",
+  "notes": "The adapter half (batch 80 item 4) is on CLOUD @89b5a85abe, not served."
+}
+```
+
+## IRPT_BCKEND-S255 -- DISARMS row IRPT_BCKEND-S216 (disarm owner 2.0.0_SA_COO~P): Inflection's positions land in the monolith again -- today's mirror fire copied 2026-09-30 and 2026-10-01 and the converter landed both; 2026-09-29 is admitted from its coerced file; 2026-09-28 stays absent and loses no close.
+
+```json
+{
+  "id": "IRPT_BCKEND-S255",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-01T13:12:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARMS row IRPT_BCKEND-S216 (disarm owner 2.0.0_SA_COO~P): Inflection's positions land in the monolith again -- today's mirror fire copied 2026-09-30 and 2026-10-01 and the converter landed both; 2026-09-29 is admitted from its coerced file; 2026-09-28 stays absent and loses no close.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3 list opal-data-assets 2026-10-01 13:08Z: orion/inflection/bronze/positions/2026-09-30.jsonl.gz and 2026-10-01.jsonl.gz both written 13:05:23Z; silver fact_positions/date=2026-09-30 written 13:05:33Z and date=2026-10-01 written 13:07:39Z.",
+      "opal-data-inf bronze/positions/2026-10-01.jsonl.gz written 11:51Z by today's chain (chain_full_20261001_113344, INF_API_PULL_POSITIONS_DAILY ok): the raw now lands before the mirror's 13:05Z fire.",
+      "ledger inf-coerced-positions-admission-20261001 @29b6d93df5: date=2026-09-29 landed 12:50:08Z from 2026-09-29.parquet under both halves and site Z's word; graded 149 of 149 at the 2026-09-28 close.",
+      "partition_close_anchor_sweep.py 2026-09-28..2026-09-30 at 13:10Z: 09-28 ABSENT, 09-29 and 09-30 PRIOR_TRADING_DAY (149 of 149, 148 of 148). The holdings gold for 2026-09-25, 09-28, 09-29 and 09-30 landed at 13:0xZ, 4 of 4 days computed."
+    ]
+  },
+  "dismissal_reason": "The hazard of S216 was a positions feed that had stopped, blocking the Inflection holdings producer. The cause was upstream (the INF chain died before the raw pull from 09-28 to 09-30 morning; row W86-S1, closed) and the feed is landing on its own schedule again.",
+  "spec_asserts": "Row S216: orion/inflection/bronze/positions and silver/fact_positions end at 2026-09-27; two trading days missing.",
+  "world_is": "MEASURED as above. 2026-09-28 has no raw file and its coerced file is not admitted; a partition dated 09-28 would hold Friday's close, which the 09-26 and 09-27 partitions hold, so no close is lost. NOT DONE: the mirror's second scheduled fire and its counted SKIP for an unknown key class (batch 63 item 6); until then a raw that lands after 13:05Z waits a day.",
+  "notes": "The daily schedule entry for the orion source of the holdings producer (batch 63 item 7) is not built; the days above were run by hand under the rebuild's ledger."
+}
+```
+
+## IRPT_BCKEND-S256 -- DISARMS row IRPT_BCKEND-W97-S3 (disarm owner 2.0.0_SA_COO~P): the Inflection gold chain passes the NNA coverage guard and runs to its last step -- 65 of 65 steps, none failed -- with three date-scoped excusals on record for one re-typed internal transfer; the guard was not disabled.
+
+```json
+{
+  "id": "IRPT_BCKEND-S256",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-01T13:32:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARMS row IRPT_BCKEND-W97-S3 (disarm owner 2.0.0_SA_COO~P): the Inflection gold chain passes the NNA coverage guard and runs to its last step -- 65 of 65 steps, none failed -- with three date-scoped excusals on record for one re-typed internal transfer; the guard was not disabled.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/NEVER_WIDEN_SIGNOFF_PACKET_INF_NNA_BRANCH_A_20261001.md, both halves (COO @1f898d7db9, CTO batch 79 @4e06e44bb7): three date-scoped excusals (866, 769, 1096; partition 2026-09-24), source @94aff463e3, put to s3://opal-data-inf/code/gold/lib/nna_coverage_excusals.json at 10:27:12Z (sha256 3c39f52c52ba..., prior version EES7HN... kept).",
+      "s3://opal-data-inf/diagnostic/chain_logs/chain_full_20261001_113302.log, read to its last line: at 12:38:43Z three 'NNA COVERAGE: account ... is EXCUSED [partitions ['2026-09-24']]' lines (769, 866, 1096) and 'OK: NNA partition coverage -- 1,444 partition(s) being written, no account dropped from any of them (3 excused by review).'",
+      "status.json 13:27Z: chain_full_20261001_113344 complete, step 65 of 65, no step non-ok, errors empty, last step INF_D_11.",
+      "gold/canonical/canonical_nna_2026-09-24.parquet read 12:44Z: version xGrZgj8e... (12:39:34Z), 6 rows, the three accounts absent, inflow 150,000.00, outflow 27,627.10, net 122,372.90 -- the packet's AFTER column; the prior 9-row version is kept."
+    ]
+  },
+  "dismissal_reason": "The hazard of W97-S3 was the full chain ending failed at step 33 on every run, leaving INF_C_02 to INF_D_11 unreached. The guard's own remedy -- a recorded, reviewed decision -- is on the record under both halves, and today's scheduled run reached its last step.",
+  "spec_asserts": "Row W97-S3; ROUND_ANALYSIS.round26P.md ruling 1 (Branch A): a never-widen packet of the three literal keys; the guard is never disabled.",
+  "world_is": "MEASURED as above: Branch 1 of the packet's section 5 is the one that happened. The served Inflection gold moved from its 2026-09-27 vintage to today's on the pipeline's own schedule. NOT READ by this seat: the content of each of the 32 resumed steps' outputs (only that none failed, no traceback, no regression line; 2,760 WARN lines in 39 routine shapes).",
+  "notes": "A re-typing that arrives later for another account will stop the chain at step 33 again; that is the guard working, and it is a new row and a new read, never an extension of these excusals."
+}
+```
+
+## IRPT_BCKEND-S257 -- The Inflection holdings-producer function and schedule declared in Terraform (IB-er-501, unapplied) fire at 07:30 America/New_York, before the partition that holds the prior day's close lands (13:05Z): under the measured close basis the day they target is not computable at fire time.
+
+```json
+{
+  "id": "IRPT_BCKEND-S257",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-01T15:02:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The Inflection holdings-producer function and schedule declared in Terraform (IB-er-501, unapplied) fire at 07:30 America/New_York, before the partition that holds the prior day's close lands (13:05Z): under the measured close basis the day they target is not computable at fire time.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P (the serving packet of batch 63 items 3e and 7 re-times the entry before anything applies it)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/holdings-performance/schedule.tf @357f39fdf4 (0.9.0_WK_IRPT_BCKEND~80, 2026-09-29): module.irpt_holdings_performance_inf and aws_scheduler_schedule.irpt_holdings_performance_inf, state ENABLED, cron(30 7 ? * MON-FRI *) America/New_York, input source orion. Its comment reasons from 'the silver for day D lands on day D', which is true of the PARTITION DATE and not of the close it holds.",
+      "live, read 2026-10-01 14:59Z: 224 functions listed, 1 matches holdings-performance (irpt-holdings-performance-lambda, the 49 Financial one); 26 schedules listed, 1 matches (irpt-holdings-performance-daily, source schwab_08335338). The Inflection function and schedule are DESIRED, not APPLIED.",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/HOLDINGS_SOURCE_DATE_BASIS_READ_20261001.md: from the partition dated 2026-05-05 a partition dated D holds the close of the trading day before D; today's date=2026-10-01 landed at 13:07:39Z.",
+      "the handler (holdings-performance/handler.py _target_day) computes prev_trading_day(expected_last_trading_day(now)): fired at 11:30Z on trading day T it asks for T-1, whose close is in the partition dated T, not yet landed."
+    ]
+  },
+  "spec_asserts": "IB-er-501's comment: 07:30 America/New_York remains SAFE for Inflection, an enormous margin over the true worst case.",
+  "world_is": "MEASURED: under sources.json 1.2 the fire would find the day-t close absent every trading day and, with link_across_gaps, the NEXT day's fire would link across a close that exists by then -- every Inflection row would become a two-day linked row dated one day late. NOT APPLIED, so nothing does this today. An untargeted apply in the holdings-performance root would create the function and the schedule as declared.",
+  "notes": "The entry belongs after the mirror's fire (13:05Z), or after its second fire once that is released. It is re-timed in the serving packet; until then nobody applies that root untargeted."
+}
+```
+
+## IRPT_BCKEND-S258 -- The holdings-performance Terraform root does not plan at CLOUD HEAD: locals.tf line 37 reads `can(v.master) && v.master != null`, Terraform evaluates both sides, and every top-level string of sources.json and every source without a `master` raises Unsupported attribute (7 errors).
+
+```json
+{
+  "id": "IRPT_BCKEND-S258",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-01T15:22:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The holdings-performance Terraform root does not plan at CLOUD HEAD: locals.tf line 37 reads `can(v.master) && v.master != null`, Terraform evaluates both sides, and every top-level string of sources.json and every source without a `master` raises Unsupported attribute (7 errors).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P (the Inflection serving packet needs this root; the fix is one expression, in the packet's own source change)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "terraform plan -lock=false in infra/aws/terraform/investor-reporting/holdings-performance at CLOUD HEAD, 2026-10-01 15:20Z (after init -reconfigure on this laptop): 7 x 'Error: Unsupported attribute on locals.tf line 37' -- 5 'Can't access attributes on a primitive-typed value (string)' and 2 'This object does not have an attribute named \"master\"'.",
+      "data/assets/scripts/gold/irpt_holdings_performance/sources.json: 5 top-level strings (schema_version, doc and three _-prefixed comments) and 2 sources with no `master` (orion, blackdiamond_z09). The strings and the orion entry predate today's change; the count matches.",
+      "live: irpt-holdings-performance-lambda CodeSha256 gLRGHIyi..., last modified 2026-09-29T14:42:51Z; the Inflection function and schedule declared by IB-er-501 (@357f39fdf4) do not exist (row S257)."
+    ]
+  },
+  "spec_asserts": "IB-er-501's record: the Inflection function, role and schedule are declared and plan cleanly; `can()` guards the attribute.",
+  "world_is": "MEASURED: the root cannot be planned or applied by anyone as it stands, so IB-er-501's resources cannot have been applied from this HEAD and no untargeted apply can create them (which makes row S257's hazard inert until this is fixed). The live 49 Financial function is unaffected: it was applied before the expression stopped evaluating. NOT MEASURED: at which commit the root last planned.",
+  "notes": "Fix: `try(v.master, null) != null` (one expression; `try` swallows the attribute error, `can(...) && ...` does not short-circuit). The file sits under an open IRPT_DASHBD order's <paths> and outside this lane's lease; asked of the CTO."
+}
+```
+
+## IRPT_BCKEND-S259 -- Inflection's Holdings publication of 2026-10-01 lists no securities for 91 of 884 accounts (49.98 million of 206.10 million USD); the day before it was 2 accounts. The producer's own rule for a split account (a managed part and an excluded part) withholds the positions, and the model-assignment source moved from the 2026-09-27 snapshot to 2026-10-01.
+
+```json
+{
+  "id": "IRPT_BCKEND-S259",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-01T15:50:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Inflection's Holdings publication of 2026-10-01 lists no securities for 91 of 884 accounts (49.98 million of 206.10 million USD); the day before it was 2 accounts. The producer's own rule for a split account withholds the positions, and the model-assignment source moved from the 2026-09-27 snapshot to 2026-10-01.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M (the Holdings producer is this lane's; what a split account shows is a served rule, so the change is ruled by 1.0.0_SA_CTO first)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "served publications, every node read 2026-10-01 15:2xZ-15:4xZ (irpt/inflection/platinum/holdings, the index's two newest dates). Business date 2026-09-29, revision 0d424b7541da: 884 accounts, 886 category lines, 555 model lines, 34,348 security rows, account total 206,515,069.94 USD, security rows 206,261,449.87 USD; 2 accounts whose security rows do not sum to the account (253,620.07 USD). Business date 2026-09-30, revision b29682b06ab6: 884 accounts, 975 category lines, 642 model lines, 29,328 security rows, account total 206,098,981.92 USD, security rows 156,121,904.85 USD; 91 such accounts (49,977,077.07 USD).",
+      "the 89 new accounts: each has exactly one model line (41,474,932.03 USD together; 41,682,215.67 USD with the 2 older accounts) and zero security rows under it; 0 of the 89 had a model line the day before. 975 - 886 = 89 extra category lines = one extra line per newly split account. By model name: Opal Intermediate Growth 38 lines 25,909,030.82 USD; IWM Moderate Taxable 11; 50/50 Opal Intermediate/Opal Long Term 11; Opal Short Term 8; Opal Ultra Short Term 5; IWM Moderately Aggressive Taxable 5; five more names, 11 lines.",
+      "source objects of the two manifests: the only differences are the daily custody snapshot and the model-assignment snapshot, silver/eclipse/2026-09-27/* on the earlier date and silver/eclipse/2026-10-01/* on the later (portfolios_full, portfolios_simple, models, model_composition). The retained membership map (date=2026-09-24) and the directory are the same objects on both.",
+      "data/assets/scripts/gold/investor_reporting/holdings_inf.py:403-426 (CLOUD HEAD): an account whose managed and excluded values tie to custody and whose excluded part is not zero gets a model line for the managed part and a Client line for the excluded part, and NO position rows (`DRILL WITHHELD: Orion marks every position is_managed and does not say which sit in the excluded part`). :371-374: when the two parts do NOT tie to custody the whole account goes to Client WITH its positions."
+    ]
+  },
+  "spec_asserts": "The producer's design treats a split account as the rare case: its positions are withheld because the custody feed does not say which sit in the excluded part. On 2026-09-29 that was 2 accounts.",
+  "world_is": "MEASURED: on today's publication it is 91 accounts and 24.2 percent of Inflection's dollars. For those accounts the Holdings tab shows the model amount and the client amount with no security listed, and the firm's class lines cover 156.12 of 206.10 million USD. INFERRED, not measured: the 89 moved from 'the two parts do not tie' (positions shown under Client) to 'the parts tie' because the assignment snapshot is now 1 day from the custody date instead of 3; the snapshot's own excluded values were not compared between the two dates. NOT MEASURED: one of the 91 on the page.",
+  "notes": "Nothing was deployed to the producer between the two publications by this lane. The fix is a served rule, not a repair: a split account could list its positions under the account without saying which part each sits in. Asked of 1.0.0_SA_CTO as one call."
+}
+```

@@ -120,6 +120,22 @@ CODE_TREES: dict[str, dict] = {
             "silver": ("data/cot/scripts/silver", "code/silver/"),
             "bronze": ("data/cot/scripts/bronze", "code/bronze/"),
         },
+        # MDPF_SECCLASS, the Cottonwood thread (row IRPT_BCKEND-S173; CTO rulings batch 87 item
+        # 3): Cottonwood's gold host syncs code/gold/ and has no infra/ tree beside it, so the
+        # shared classifier client ships beside the gold files exactly as the Black Diamond entry
+        # above does. Same three members, for the same two readers: lib/etf_classifier.py (the
+        # client) and E_18.detect_new_securities.py (the scheduled planner and the one module it
+        # imports at load).
+        "shipped_artifacts": {
+            "gold": {
+                "dest_subdir": "lib/_shared/",
+                "members": (
+                    "infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py",
+                    "infra/aws/lambda/v2_portal/_shared/etf_classification_scheduled.py",
+                    "infra/aws/lambda/v2_portal/_shared/etf_classification.py",
+                ),
+            },
+        },
         # SECOND DEPLOY TARGETS (CPR-5 2026-08-11; CTO-ruled remedy, COO
         # 063335Z staffing; DS owns, AE verifies the landing). ONE source, N
         # declared targets -- the fan-out declared ONCE at the convergence

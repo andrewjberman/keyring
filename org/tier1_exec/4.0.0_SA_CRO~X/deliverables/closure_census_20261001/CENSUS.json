@@ -1,0 +1,634 @@
+{
+ "author": "4.0.0_SA_CRO~X",
+ "asked_by": "1.0.0_SA_CTO msg 103547",
+ "collected_utc": "2026-10-01T06:44Z to 07:12Z",
+ "workspace_head_at_collection": "7b21f4e4a6",
+ "denominator": {
+  "members_of_the_ten_laptop_directives": 48,
+  "closed_or_complete": 14,
+  "open": 34,
+  "excluded_by_the_ask": [
+   "IRPT_BCKEND",
+   "IRPT_DASHBD",
+   "DSGN_IRPTV1"
+  ],
+  "in_scope": 31
+ },
+ "claim": "counts are measured from artifacts; class and basis are the author's judgment on them",
+ "tally": {
+  "HELD": 9,
+  "NEEDS-A-LANE": 12,
+  "CLOSE-NOW": 1,
+  "ONE-JOURNEY-SHORT": 6,
+  "NOT-LAPTOP": 3
+ },
+ "projects": [
+  {
+   "code": "OPAL_ADVIPOINTERS",
+   "directive": "D2",
+   "class": "HELD",
+   "basis": "HELD: \"D2 off until Andrew lifts it\" (org/ref/LIVE_ARMS.md, Holds). Beyond the hold: the 49 Financial repoint chain (P4-PINS-CERT-49F, P4-REPOINT-49F) and the standing R-WATCH order; P4-PROMOTE-49F was ruled superseded 09-17.",
+   "register_status": "active",
+   "project_rows": [
+    "org/projects/OPAL_ADVIPOINTERS.json"
+   ],
+   "task_order_files": 21,
+   "task_orders_by_status_tag": {
+    "complete": 12,
+    "no-status-tag": 3,
+    "pending": 5,
+    "complete-on-the-built-artifact": 1
+   },
+   "to_check_active": 8,
+   "commits_naming_code_since_2026-09-17": 2,
+   "commits_naming_code_total": 135,
+   "sequence": "PROJECT OPAL_ADVIPOINTERS: UNPLACED -- a register project the sequence does not list: not sequenced, so its own directive's rules govern it",
+   "last_commit": "5c4b5b0499|2026-09-17T14:56:41-04:00|1.0.0_SA_CTO|ruling(1.0.0_SA_CTO): OPAL_ADVIPOINTERS.P4-PROMOTE-49F is SUPERSEDED -- payload verified an ancestor of origin/PROD on a second instrument; the promot"
+  },
+  {
+   "code": "ADVI_INSURE",
+   "directive": "D2",
+   "class": "HELD",
+   "basis": "HELD: \"D2 off until Andrew lifts it\" (org/ref/LIVE_ARMS.md, Holds). Beyond the hold: three pending orders, TO-H2-AE and TO-H3-AE (the 09:46Z gold fire racing the silver write) and TO-R1-DS, each addressed to a lane that is not live.",
+   "register_status": "active",
+   "project_rows": [
+    "org/projects/ADVI_INSURE.json"
+   ],
+   "task_order_files": 8,
+   "task_orders_by_status_tag": {
+    "pending": 3,
+    "complete": 5
+   },
+   "to_check_active": 3,
+   "commits_naming_code_since_2026-09-17": 3,
+   "commits_naming_code_total": 211,
+   "sequence": "PROJECT ADVI_INSURE: UNPLACED -- a register project the sequence does not list: not sequenced, so its own directive's rules govern it",
+   "last_commit": "b5ec516399|2026-09-29T00:37:17-04:00|1.0.0_SA_CTO|gate(1.0.0_SA_CTO): check_complete_flip -- the <proof_of_spec> tag only ADDS a candidate, never refuses (amends e9d19be279, row IRPT_BCKEND-W42-S4)"
+  },
+  {
+   "code": "ADVI_STITCH",
+   "directive": "D2",
+   "class": "HELD",
+   "basis": "HELD: \"D2 off until Andrew lifts it\" (org/ref/LIVE_ARMS.md, Holds). Beyond the hold: nothing is in flight. Both orders are complete; Phase B waits on Phase A's close and on the Fidelity ingestion. Nearest of the eight to a close.",
+   "register_status": "active",
+   "project_rows": [
+    "org/projects/ADVI_STITCH.json"
+   ],
+   "task_order_files": 2,
+   "task_orders_by_status_tag": {
+    "complete": 2
+   },
+   "to_check_active": 0,
+   "commits_naming_code_since_2026-09-17": 0,
+   "commits_naming_code_total": 60,
+   "sequence": "PROJECT ADVI_STITCH: UNPLACED -- a register project the sequence does not list: not sequenced, so its own directive's rules govern it",
+   "last_commit": "cad9d2a0f0|2026-09-09T21:25:23-04:00|1.0.0_SA_CTO|prd-delta(D2 pre-tree, 1.0.0_SA_CTO): the eight active D2 cards added beside D0/D1 (cross-checked against the CRO's 09-01 member-set index @c236b6ffdb"
+  },
+  {
+   "code": "ADVI_PERFRP",
+   "directive": "D2",
+   "class": "HELD",
+   "basis": "HELD: \"D2 off until Andrew lifts it\" (org/ref/LIVE_ARMS.md, Holds). Beyond the hold: the served perfrp leaf carries the wrong 49 Financial returns (rows S237, S239, W100-S2); the remedy spec exists @db236d33fd; the scoped hold-lift (call 2 of 04:0xZ) is not yet answered.",
+   "register_status": "active",
+   "project_rows": [
+    "org/projects/ADVI_PERFRP.json"
+   ],
+   "task_order_files": 5,
+   "task_orders_by_status_tag": {
+    "active": 2,
+    "pending": 1,
+    "complete": 2
+   },
+   "to_check_active": 3,
+   "commits_naming_code_since_2026-09-17": 10,
+   "commits_naming_code_total": 411,
+   "sequence": "PROJECT ADVI_PERFRP: UNPLACED -- a register project the sequence does not list: not sequenced, so its own directive's rules govern it",
+   "last_commit": "f4f57b6fe4|2026-10-01T02:11:29-04:00|2.0.0_SA_COO~P|amend(IRPT_DASHBD.TO-DB-b-1, 2.0.0_SA_COO~P): issuer amendment 5 -- PRD v0.4 rulings 17-19 and the review's order-level defects (rows S3-S7): the ac"
+  },
+  {
+   "code": "ADVI_COTKEY",
+   "directive": "D2",
+   "class": "HELD",
+   "basis": "HELD: \"D2 off until Andrew lifts it\" (org/ref/LIVE_ARMS.md, Holds). Beyond the hold: no decomposition and no order; the key of record was ruled 08-26; it needs a data-science lane.",
+   "register_status": "active",
+   "project_rows": [
+    "org/projects/ADVI_COTKEY.json"
+   ],
+   "task_order_files": 0,
+   "task_orders_by_status_tag": {},
+   "to_check_active": 0,
+   "commits_naming_code_since_2026-09-17": 0,
+   "commits_naming_code_total": 40,
+   "sequence": "PROJECT ADVI_COTKEY: UNPLACED -- a register project the sequence does not list: not sequenced, so its own directive's rules govern it",
+   "last_commit": "cad9d2a0f0|2026-09-09T21:25:23-04:00|1.0.0_SA_CTO|prd-delta(D2 pre-tree, 1.0.0_SA_CTO): the eight active D2 cards added beside D0/D1 (cross-checked against the CRO's 09-01 member-set index @c236b6ffdb"
+  },
+  {
+   "code": "ADVI_49F",
+   "directive": "D2",
+   "class": "HELD",
+   "basis": "HELD: \"D2 off until Andrew lifts it\" (org/ref/LIVE_ARMS.md, Holds). Beyond the hold: 19 of 20 orders complete; the one left is c02-REEMITRETIRE, on a lane that is not live.",
+   "register_status": "active",
+   "project_rows": [
+    "org/projects/ADVI_49F.json"
+   ],
+   "task_order_files": 20,
+   "task_orders_by_status_tag": {
+    "complete": 19,
+    "pending": 1
+   },
+   "to_check_active": 1,
+   "commits_naming_code_since_2026-09-17": 2,
+   "commits_naming_code_total": 350,
+   "sequence": "PROJECT ADVI_49F: UNPLACED -- a register project the sequence does not list: not sequenced, so its own directive's rules govern it",
+   "last_commit": "db699faf13|2026-09-24T20:11:28-04:00|2.0.0_SA_COO~P|check(2.0.0_SA_COO~P, irpt performance): 49F engine vs Black Diamond over EVERY paired account -- 5194 of 5309 compared; 4372 within 10bp (84.2%), 4"
+  },
+  {
+   "code": "ADVI_BDPARITY",
+   "directive": "D2",
+   "class": "HELD",
+   "basis": "HELD: \"D2 off until Andrew lifts it\" (org/ref/LIVE_ARMS.md, Holds). Beyond the hold: the full-population census (P2), the drive-to-exact loop (P3) and the tie-out oracle (T1) are open on lanes that are not live.",
+   "register_status": "active",
+   "project_rows": [
+    "org/projects/ADVI_BDPARITY.json"
+   ],
+   "task_order_files": 7,
+   "task_orders_by_status_tag": {
+    "complete": 2,
+    "superseded-with-rehome": 1,
+    "pending": 1,
+    "staged": 2,
+    "p": 1
+   },
+   "to_check_active": 4,
+   "commits_naming_code_since_2026-09-17": 0,
+   "commits_naming_code_total": 124,
+   "sequence": "PROJECT ADVI_BDPARITY: UNPLACED -- a register project the sequence does not list: not sequenced, so its own directive's rules govern it",
+   "last_commit": "cad9d2a0f0|2026-09-09T21:25:23-04:00|1.0.0_SA_CTO|prd-delta(D2 pre-tree, 1.0.0_SA_CTO): the eight active D2 cards added beside D0/D1 (cross-checked against the CRO's 09-01 member-set index @c236b6ffdb"
+  },
+  {
+   "code": "ADVI_ROSTERCOLS",
+   "directive": "D2",
+   "class": "HELD",
+   "basis": "HELD: \"D2 off until Andrew lifts it\" (org/ref/LIVE_ARMS.md, Holds). Beyond the hold: registered only; no PRD exists.",
+   "register_status": "active",
+   "project_rows": [
+    "org/projects/ADVI_ROSTERCOLS.json"
+   ],
+   "task_order_files": 0,
+   "task_orders_by_status_tag": {},
+   "to_check_active": 0,
+   "commits_naming_code_since_2026-09-17": 0,
+   "commits_naming_code_total": 22,
+   "sequence": "PROJECT ADVI_ROSTERCOLS: UNPLACED -- a register project the sequence does not list: not sequenced, so its own directive's rules govern it",
+   "last_commit": "cad9d2a0f0|2026-09-09T21:25:23-04:00|1.0.0_SA_CTO|prd-delta(D2 pre-tree, 1.0.0_SA_CTO): the eight active D2 cards added beside D0/D1 (cross-checked against the CRO's 09-01 member-set index @c236b6ffdb"
+  },
+  {
+   "code": "D3_MODELOVERLAY",
+   "directive": "D3",
+   "class": "NEEDS-A-LANE",
+   "basis": "Short of a decomposition: the PRD was approved for stage 3 and no COO lane was seated. Four pre-pipeline orders have read staged for 43 days and await adopt-or-supersede. The custodian fork was ruled (b) on 09-03; the remedy design is a later cell.",
+   "register_status": "active",
+   "project_rows": [
+    "org/projects/D3_MODELOVERLAY.json"
+   ],
+   "task_order_files": 7,
+   "task_orders_by_status_tag": {
+    "staged": 4,
+    "complete": 3
+   },
+   "to_check_active": 4,
+   "commits_naming_code_since_2026-09-17": 0,
+   "commits_naming_code_total": 46,
+   "sequence": "PROJECT D3_MODELOVERLAY: UNPLACED -- a register project the sequence does not list: not sequenced, so its own directive's rules govern it",
+   "last_commit": "85ad2a5839|2026-09-02T21:51:55-04:00|2.0.0_SA_COO|record(ANDREW-DIRECT 20260903T015xZ): \"All recs approved, ratify D0 and D8\" -- MACROS.yaml D0 [NFRA] and D8 [ETFS, MDPF, AUTH] flipped to RATIFIED cit"
+  },
+  {
+   "code": "OPAL_TICKET_VNEXT",
+   "directive": "D7",
+   "class": "NEEDS-A-LANE",
+   "basis": "Short of a decomposition: the PRD landed 08-31 @c2837692bc; no order exists. Its first phase is a read of the current ticket system.",
+   "register_status": "active",
+   "project_rows": [
+    "org/projects/OPAL_TICKET_VNEXT.json"
+   ],
+   "task_order_files": 0,
+   "task_orders_by_status_tag": {},
+   "to_check_active": 0,
+   "commits_naming_code_since_2026-09-17": 2,
+   "commits_naming_code_total": 12,
+   "sequence": "PROJECT OPAL_TICKET_VNEXT: UNPLACED -- a register project the sequence does not list: not sequenced, so its own directive's rules govern it",
+   "last_commit": "c1717499bf|2026-09-24T21:39:43-04:00|1.0.0_SA_CTO~O|ruling(NFRA_OPALAI Z-S10, 1.0.0_SA_CTO~O): the parent-side teams-watch.py stays as the operator plane's tool for the D7 intake runner; only the Anal"
+  },
+  {
+   "code": "MDPF_COTREMEDIATION",
+   "directive": "D8",
+   "class": "CLOSE-NOW",
+   "basis": "STALE RECORD: org/projects/MDPF_COTREMEDIATION.json reads dep_stage PRD and blocking 'Awaiting COO atom-decomp (Rule 27 stage 3)'. Both orders are complete (the silver-contract build and deploy; the rerun and payload proof) and Cottonwood's silver is current: fact_holdings date=2026-09-29 written 2026-09-30T11:46Z. For the CTO at close: this census did not look for a grade of AC1-AC7, and found no order for the process cell (why a bronze-shape change shipped with no silver-contract step).",
+   "register_status": "active",
+   "project_rows": [
+    "org/projects/MDPF_COTREMEDIATION.json"
+   ],
+   "task_order_files": 2,
+   "task_orders_by_status_tag": {
+    "complete": 2
+   },
+   "to_check_active": 0,
+   "commits_naming_code_since_2026-09-17": 3,
+   "commits_naming_code_total": 82,
+   "sequence": "PROJECT MDPF_COTREMEDIATION: UNPLACED -- a register project the sequence does not list: not sequenced, so its own directive's rules govern it",
+   "last_commit": "ff76c4eb4c|2026-09-22T13:51:30-04:00|1.0.0_SA_CTO|row(MDPF_COTREMEDIATION-S21, 1.0.0_SA_CTO): S20's disarm condition is MET and measured, and its carrier cannot hold the clock -- an investigation row "
+  },
+  {
+   "code": "MDPF_HEALGAP",
+   "directive": "D8",
+   "class": "NEEDS-A-LANE",
+   "basis": "Short of a seat and of two answers. The decomposition exists (08-31) and its cells read PENDING-ANDREW; two of four calls were answered 08-31, the one-shot re-run was not. STALE RECORD: the row says the project stays under D8's site Z placement; D8 was moved back to the laptop the same night @e1e2ff275b.",
+   "register_status": "active",
+   "project_rows": [
+    "org/projects/MDPF_HEALGAP.json"
+   ],
+   "task_order_files": 0,
+   "task_orders_by_status_tag": {},
+   "to_check_active": 0,
+   "commits_naming_code_since_2026-09-17": 0,
+   "commits_naming_code_total": 28,
+   "sequence": "PROJECT MDPF_HEALGAP: UNPLACED -- a register project the sequence does not list: not sequenced, so its own directive's rules govern it",
+   "last_commit": "366b145db7|2026-09-02T15:24:05-04:00|0.0.0_AB_MSTR~Z|registry(header): the 6-char code rule is FALSE OF 46% OF ITS OWN REGISTER -- state it as preferred-and-unenforced with the denominator, so Andrew'"
+  },
+  {
+   "code": "AUTH_SELFHEAL",
+   "directive": "D8",
+   "class": "NEEDS-A-LANE",
+   "basis": "Short of a decomposition and an owner: the PRD landed 08-31 @094d18aaee; one order (the cookie-riding consumer inventory) has read pending and unassigned for 31 days.",
+   "register_status": "active",
+   "project_rows": [
+    "org/projects/AUTH_SELFHEAL.json"
+   ],
+   "task_order_files": 1,
+   "task_orders_by_status_tag": {
+    "pending": 1
+   },
+   "to_check_active": 1,
+   "commits_naming_code_since_2026-09-17": 1,
+   "commits_naming_code_total": 17,
+   "sequence": "PROJECT AUTH_SELFHEAL: UNPLACED -- a register project the sequence does not list: not sequenced, so its own directive's rules govern it",
+   "last_commit": "a47993af9c|2026-09-23T15:23:20-04:00|4.0.0_SA_CRO~X|brief(opal_ai L1, 4.0.0_SA_CRO~X): the Opal Analyst as a microproduct -- one agent + one indexed MCP in three slices (Opal -> Template -> Clients); "
+  },
+  {
+   "code": "GLOBALALARM",
+   "directive": "D8",
+   "class": "NEEDS-A-LANE",
+   "basis": "Short of its PRD, which is the CTO's own act; nothing else exists. STALE RECORD: it is registered under D8 while Andrew's word of 08-31 calls it 'a D10 directive project'. The alarm moratorium is why the plan exists and does not hold the plan itself.",
+   "register_status": "active",
+   "project_rows": [
+    "org/projects/GLOBALALARM.json"
+   ],
+   "task_order_files": 0,
+   "task_orders_by_status_tag": {},
+   "to_check_active": 0,
+   "commits_naming_code_since_2026-09-17": 0,
+   "commits_naming_code_total": 20,
+   "sequence": "PROJECT GLOBALALARM: UNPLACED -- a register project the sequence does not list: not sequenced, so its own directive's rules govern it",
+   "last_commit": "643116f787|2026-09-10T14:49:31-04:00|2.0.0_SA_COO|proposal(MACROS.yaml D9: [IRPT]): the Rule 24 four-postulate record and its census -- the ratification is ALREADY GIVEN, so this is the string's citat"
+  },
+  {
+   "code": "MDPF_CANON",
+   "directive": "D8",
+   "class": "NEEDS-A-LANE",
+   "basis": "Short of a COO lane for L5: PRD v2.6 reads ADMITTED with both halves signed and current. It is first in Andrew's seat priority (sequence stage 0). The v2.3 hold on M6's code home (LGIC_NAMING-S7) stands.",
+   "register_status": "active",
+   "project_rows": [
+    "org/projects/MDPF_CANON.json",
+    "org/missions/D8/MDPF/MDPF_CANON/project.json"
+   ],
+   "task_order_files": 0,
+   "task_orders_by_status_tag": {},
+   "to_check_active": 0,
+   "commits_naming_code_since_2026-09-17": 27,
+   "commits_naming_code_total": 116,
+   "sequence": "PROJECT MDPF_CANON: PLACED -- stage 0 of the sequence",
+   "last_commit": "ff25b2c5d3|2026-09-28T21:36:06-04:00|2.0.0_SA_COO~O|amend(NFRA_OPLGTW.TO-OG-h-1 A1, 2.0.0_SA_COO~O): item A without renormalizing DATA_CATALOG.yaml -- one named -text exception (row Z-W13-S5)"
+  },
+  {
+   "code": "ADVI_FIRMBKTS",
+   "directive": "D8",
+   "class": "NEEDS-A-LANE",
+   "basis": "Short of a COO lane for L5. STALE RECORD: the project row says both L4-R halves are re-owed; prd-signoff reads v1.3 ADMITTED, both signed and current. F4's first criterion is which identity the bucket fence admits, and its unlock includes a console step of Andrew's (IRPT_BCKEND IB-rtf-5).",
+   "register_status": "active",
+   "project_rows": [
+    "org/projects/ADVI_FIRMBKTS.json",
+    "org/missions/D8/ADVI/ADVI_FIRMBKTS/project.json"
+   ],
+   "task_order_files": 0,
+   "task_orders_by_status_tag": {},
+   "to_check_active": 0,
+   "commits_naming_code_since_2026-09-17": 81,
+   "commits_naming_code_total": 149,
+   "sequence": "PROJECT ADVI_FIRMBKTS: PLACED -- stage 2 of the sequence",
+   "last_commit": "4b0265036a|2026-09-30T07:01:07-04:00|2.0.0_SA_COO~MI|amend(NFRA_MCPINDEX.TO-MX-t-13 A2, 2.0.0_SA_COO~MI): the BD tool's legacy literals go through the LEGACY-READ waiver -- restructure to its syntax ("
+  },
+  {
+   "code": "MDPF_TAXSMA",
+   "directive": "D8",
+   "class": "ONE-JOURNEY-SHORT",
+   "basis": "The journey: the Tax SMA total served through MDPF to the Model Portfolios page. Seated (4.0.0_SA_CRO, FAST). It waits on Andrew for who runs the Gateway release, and on the sign-in and never-widen halves for activation.",
+   "register_status": "active",
+   "project_rows": [
+    "org/projects/MDPF_TAXSMA.json",
+    "org/missions/D8/MDPF/MDPF_TAXSMA/project.json"
+   ],
+   "task_order_files": 27,
+   "task_orders_by_status_tag": {
+    "complete": 12,
+    "pending": 13,
+    "staged": 2
+   },
+   "to_check_active": 15,
+   "commits_naming_code_since_2026-09-17": 147,
+   "commits_naming_code_total": 231,
+   "sequence": "PROJECT MDPF_TAXSMA: PLACED -- stage 0 of the sequence",
+   "last_commit": "bc8413dbd8|2026-10-01T02:21:41-04:00|3.0.0_SA_CVO|grade(DSGN_IRPTV1 + IRPT_DASHBD F items 42-54, MDPF_TAXSMA pins, 3.0.0_SA_CVO): twelve portal pins PASS on unit runs, item 42 NOT_EVALUATED on a real "
+  },
+  {
+   "code": "MDPF_SECCLASS",
+   "directive": "D8",
+   "class": "ONE-JOURNEY-SHORT",
+   "basis": "The journey: the Black Diamond classification thread served (BD_THREAD_R3). Seated (2.0.0_SA_COO~M, FAST), with its deploy ledger opened 06:10Z today. 20 of 21 orders complete; SC-e12 is parked on a cloud-operations lane.",
+   "register_status": "active",
+   "project_rows": [
+    "org/projects/MDPF_SECCLASS.json",
+    "org/missions/D8/MDPF/MDPF_SECCLASS/project.json"
+   ],
+   "task_order_files": 21,
+   "task_orders_by_status_tag": {
+    "complete": 20,
+    "parked": 1
+   },
+   "to_check_active": 1,
+   "commits_naming_code_since_2026-09-17": 161,
+   "commits_naming_code_total": 161,
+   "sequence": "PROJECT MDPF_SECCLASS: UNPLACED -- a register project the sequence does not list: not sequenced, so its own directive's rules govern it",
+   "last_commit": "c6c769bb3d|2026-10-01T02:50:16-04:00|2.0.0_SA_COO~M|record(MDPF_SECCLASS BD_THREAD_R3, 2.0.0_SA_COO~M): the restore targets -- the latest VersionId of every served key in the families the chain overwr"
+  },
+  {
+   "code": "OPAL_TAXSMA",
+   "directive": "D9",
+   "class": "ONE-JOURNEY-SHORT",
+   "basis": "The journey: one real Tax Lot date run through /tax-pt1, /tax-pt2 and /tax-pt3; part 3 exists as a skill and is exercised on synthetic data only. The owner lane (0.5.0_AE_OpalETL~A) does not respawn. STALE RECORD: the row still calls /tax-pt3 unbuilt.",
+   "register_status": "active",
+   "project_rows": [
+    "org/projects/OPAL_TAXSMA.json"
+   ],
+   "task_order_files": 0,
+   "task_orders_by_status_tag": {},
+   "to_check_active": 1,
+   "commits_naming_code_since_2026-09-17": 0,
+   "commits_naming_code_total": 70,
+   "sequence": "PROJECT OPAL_TAXSMA: UNPLACED -- a register project the sequence does not list: not sequenced, so its own directive's rules govern it",
+   "last_commit": "f603d1a3b0|2026-09-10T15:34:13-04:00|0.0.0_AB_MSTR|register(D9 members): CORRECT the two codes to Andrew's own -- IRPT_FNTEND and IRPT_BCKEND. My row was fifteen minutes old and already wrong"
+  },
+  {
+   "code": "OPAL_TAXROSTER",
+   "directive": "D9",
+   "class": "NEEDS-A-LANE",
+   "basis": "Short of a decomposition: the PRD landed 08-27. STALE RECORD: stage 3 is assigned to 2.0.0_SA_COO~Z, a site Z lane, while D9 has been a laptop directive since 09-10. No commit since 08-31.",
+   "register_status": "active",
+   "project_rows": [
+    "org/projects/OPAL_TAXROSTER.json"
+   ],
+   "task_order_files": 0,
+   "task_orders_by_status_tag": {},
+   "to_check_active": 0,
+   "commits_naming_code_since_2026-09-17": 0,
+   "commits_naming_code_total": 5,
+   "sequence": "PROJECT OPAL_TAXROSTER: UNPLACED -- a register project the sequence does not list: not sequenced, so its own directive's rules govern it",
+   "last_commit": "bccf1c6bd1|2026-08-31T15:39:13-04:00|0.0.0_AB_MSTR|register(hygiene scan) + LD-0488: attached 4 active orphans to D4/D9 -- and did NOT apply the supersede heuristic, because BOTH halves fail against m"
+  },
+  {
+   "code": "OPAL_TAXSMA_PT2",
+   "directive": "D9",
+   "class": "NEEDS-A-LANE",
+   "basis": "Short of a reconcile by a live seat: two orders (the silver report table; the gateway entitlement) have read staged for 76 days and the owner lane does not respawn. Whether MDPF_TAXSMA has overtaken either was not established here.",
+   "register_status": "active",
+   "project_rows": [
+    "org/projects/OPAL_TAXSMA_PT2.json"
+   ],
+   "task_order_files": 3,
+   "task_orders_by_status_tag": {
+    "complete": 1,
+    "staged": 2
+   },
+   "to_check_active": 2,
+   "commits_naming_code_since_2026-09-17": 0,
+   "commits_naming_code_total": 30,
+   "sequence": "PROJECT OPAL_TAXSMA_PT2: UNPLACED -- a register project the sequence does not list: not sequenced, so its own directive's rules govern it",
+   "last_commit": "643116f787|2026-09-10T14:49:31-04:00|2.0.0_SA_COO|proposal(MACROS.yaml D9: [IRPT]): the Rule 24 four-postulate record and its census -- the ratification is ALREADY GIVEN, so this is the string's citat"
+  },
+  {
+   "code": "OPAL_TAXSMA_REGISTRY",
+   "directive": "D9",
+   "class": "NEEDS-A-LANE",
+   "basis": "Short of a reconcile by a live seat, and a probable close after it: all five orders read staged for 76 days, yet /tax-newacc (WS-R4) is a shipped skill and MDPF_TAXSMA's PRD reads the registry as existing. Not every workstream was checked against its artifact, so it is not classed CLOSE-NOW.",
+   "register_status": "active",
+   "project_rows": [
+    "org/projects/OPAL_TAXSMA_REGISTRY.json"
+   ],
+   "task_order_files": 5,
+   "task_orders_by_status_tag": {
+    "staged": 5
+   },
+   "to_check_active": 5,
+   "commits_naming_code_since_2026-09-17": 0,
+   "commits_naming_code_total": 11,
+   "sequence": "PROJECT OPAL_TAXSMA_REGISTRY: UNPLACED -- a register project the sequence does not list: not sequenced, so its own directive's rules govern it",
+   "last_commit": "643116f787|2026-09-10T14:49:31-04:00|2.0.0_SA_COO|proposal(MACROS.yaml D9: [IRPT]): the Rule 24 four-postulate record and its census -- the ratification is ALREADY GIVEN, so this is the string's citat"
+  },
+  {
+   "code": "NFRA_OPLGTW",
+   "directive": "D9",
+   "class": "NOT-LAPTOP",
+   "basis": "The project row reads fabric site-z (re-seated to the ~O fabric 09-27); rule 26a places gateway releases at site Z. 13 orders active there.",
+   "register_status": "active",
+   "project_rows": [
+    "org/projects/NFRA_OPLGTW.json",
+    "org/missions/D9/NFRA/NFRA_OPLGTW/project.json"
+   ],
+   "task_order_files": 61,
+   "task_orders_by_status_tag": {
+    "complete": 30,
+    "no-status-tag": 22,
+    "staged": 6,
+    "superseded": 3
+   },
+   "to_check_active": 13,
+   "commits_naming_code_since_2026-09-17": 529,
+   "commits_naming_code_total": 710,
+   "sequence": "PROJECT NFRA_OPLGTW: PLACED -- stage 0 of the sequence",
+   "last_commit": "83cdd8dac1|2026-09-30T22:52:10-04:00|2.0.0_SA_COO~O|state(NFRA_OPLGTW project.json, 2.0.0_SA_COO~O): wind-down for reboot -- OG-t-2 and OG-lt-1 complete, OG-tx-1 re-graded PASS (flip owed), OG-hr-1 pa"
+  },
+  {
+   "code": "NFRA_SPMOVE",
+   "directive": "D9",
+   "class": "NEEDS-A-LANE",
+   "basis": "Short of a COO lane for L5. STALE RECORD: the row says PRD v0.1 with both halves owed; prd-signoff reads v0.3 ADMITTED, both signed and current. It is outside Andrew's 09-17 seat order.",
+   "register_status": "active",
+   "project_rows": [
+    "org/projects/NFRA_SPMOVE.json",
+    "org/missions/D9/NFRA/NFRA_SPMOVE/project.json"
+   ],
+   "task_order_files": 0,
+   "task_orders_by_status_tag": {},
+   "to_check_active": 0,
+   "commits_naming_code_since_2026-09-17": 26,
+   "commits_naming_code_total": 28,
+   "sequence": "PROJECT NFRA_SPMOVE: UNPLACED -- a register project the sequence does not list: not sequenced, so its own directive's rules govern it",
+   "last_commit": "3fcae11c5d|2026-09-24T16:33:27-04:00|3.0.0_SA_CVO~Z|review(NFRA_OPALAI v0.1 L4-R ratified-text, 3.0.0_SA_CVO~Z): SIGN -- ENDPOINT verified VERBATIM 13 of 13 against its pin, C9's imported baseline tra"
+  },
+  {
+   "code": "NFRA_MCPINDEX",
+   "directive": "D9",
+   "class": "NOT-LAPTOP",
+   "basis": "The project row reads fabric site-z (re-seated to the ~O fabric 09-24); round 5 is executing there under 2.0.0_SA_COO~MI.",
+   "register_status": "active",
+   "project_rows": [
+    "org/projects/NFRA_MCPINDEX.json",
+    "org/missions/D9/NFRA/NFRA_MCPINDEX/project.json"
+   ],
+   "task_order_files": 80,
+   "task_orders_by_status_tag": {
+    "complete": 24,
+    "superseded": 31,
+    "no-status-tag": 25
+   },
+   "to_check_active": 4,
+   "commits_naming_code_since_2026-09-17": 575,
+   "commits_naming_code_total": 575,
+   "sequence": "PROJECT NFRA_MCPINDEX: PLACED -- stage 0 of the sequence",
+   "last_commit": "c9f2d70bba|2026-09-30T20:36:42-04:00|2.0.0_SA_COO~MI|log(2.0.0_SA_COO~MI): session 07:45Z-00:33Z -- NFRA_MCPINDEX reinstated; round 5 cut; Schwab enable live (v3 42c52ed4d9 after a v2 rollback); Alyss"
+  },
+  {
+   "code": "NFRA_TRNSPT",
+   "directive": "D9",
+   "class": "ONE-JOURNEY-SHORT",
+   "basis": "The journey: FWD-1, a Teams transcript pulled through the gateway's headless route into the table; its first two hops wait on site Z (OG-hr-1). Rounds 1 and 2 are closed (17 of 17 orders complete) and the round-2 compile landed 06:52Z today; the CTO's round-2 analysis is the next act.",
+   "register_status": "active",
+   "project_rows": [
+    "org/projects/NFRA_TRNSPT.json",
+    "org/missions/D9/NFRA/NFRA_TRNSPT/project.json"
+   ],
+   "task_order_files": 17,
+   "task_orders_by_status_tag": {
+    "complete": 17
+   },
+   "to_check_active": 0,
+   "commits_naming_code_since_2026-09-17": 95,
+   "commits_naming_code_total": 95,
+   "sequence": "PROJECT NFRA_TRNSPT: UNPLACED -- a register project the sequence does not list: not sequenced, so its own directive's rules govern it",
+   "last_commit": "c0c0895117|2026-09-30T20:33:32-04:00|2.0.0_SA_COO~T|log(2.0.0_SA_COO~T): post-crash relaunch -- NFRA_TRNSPT round 1 (12 of 12, closed @2b7372f583) and round 2 (5 of 5, closed @881af50a86) cut, drained"
+  },
+  {
+   "code": "DSGN_REBRND",
+   "directive": "D13",
+   "class": "ONE-JOURNEY-SHORT",
+   "basis": "The journey: FWD-9, Andrew's own side-by-side read of the portal against an institutional competitor (and FWD-1's first-time viewer). 15 of 15 orders complete; the compile and adjudication exist; no round analysis is in the ledger. STALE RECORD: the row says 'Next: L7 spawn 3 worker slots' and that all work is confined to feature/d13-visual-elevation; that branch is on neither remote and the work is on portal DEV (52 commits).",
+   "register_status": "active",
+   "project_rows": [
+    "org/projects/DSGN_REBRND.json",
+    "org/missions/D13/DSGN/DSGN_REBRND/project.json"
+   ],
+   "task_order_files": 15,
+   "task_orders_by_status_tag": {
+    "complete": 15
+   },
+   "to_check_active": 0,
+   "commits_naming_code_since_2026-09-17": 14,
+   "commits_naming_code_total": 128,
+   "sequence": "PROJECT DSGN_REBRND: UNPLACED -- a register project the sequence does not list: not sequenced, so its own directive's rules govern it",
+   "last_commit": "68cc8f94bd|2026-09-24T22:42:39-04:00|0.9.0_WK_DSGN_IRPTV1~11|complete(DSGN_IRPTV1.TO-IV-e-19, 0.9.0_WK_DSGN_IRPTV1~11): progressive disclosure is portal law -- IVE19-AC1..AC3 PASS-by-output, AC4 recor"
+  },
+  {
+   "code": "DSGN_AMGTV1",
+   "directive": "D13",
+   "class": "NOT-LAPTOP",
+   "basis": "The project row reads fabric site-z; rounds 13 and 14 ran at site Z under the AMGT self-drive arm (org/ref/LIVE_ARMS.md).",
+   "register_status": "active",
+   "project_rows": [
+    "org/projects/DSGN_AMGTV1.json",
+    "org/missions/D13/DSGN/DSGN_AMGTV1/project.json"
+   ],
+   "task_order_files": 73,
+   "task_orders_by_status_tag": {
+    "no-status-tag": 68,
+    "complete": 5
+   },
+   "to_check_active": 3,
+   "commits_naming_code_since_2026-09-17": 274,
+   "commits_naming_code_total": 274,
+   "sequence": "PROJECT DSGN_AMGTV1: UNPLACED -- a register project the sequence does not list: not sequenced, so its own directive's rules govern it",
+   "last_commit": "85159f8d1c|2026-09-30T22:20:07-04:00|0.0.0_AB_MSTR~Z|gitlink(0.0.0_AB_MSTR~Z): portal -> b336b141 for pre-reboot parity -- portal DEV merge of site-Z DSGN_AMGTV1 rounds 13-14 (a3f94ad3) with origin/DE"
+  },
+  {
+   "code": "LGIC_CANON",
+   "directive": "D14",
+   "class": "ONE-JOURNEY-SHORT",
+   "basis": "The journey: FWD-5, the new-firm checklist run end to end on a practice wave over an existing firm's subject. 5 of 6 outcomes realized; 29 orders complete. The wave waits on Andrew's choice of subject (MDPF_CANON or 49 Financial), scheduled for 09-21; the project rows carry no record of the decision.",
+   "register_status": "active",
+   "project_rows": [
+    "org/projects/LGIC_CANON.json",
+    "org/missions/D14/LGIC/LGIC_CANON/project.json"
+   ],
+   "task_order_files": 30,
+   "task_orders_by_status_tag": {
+    "complete": 29,
+    "withdrawn": 1
+   },
+   "to_check_active": 0,
+   "commits_naming_code_since_2026-09-17": 184,
+   "commits_naming_code_total": 398,
+   "sequence": "PROJECT LGIC_CANON: PLACED -- stage 1 of the sequence",
+   "last_commit": "07ec2c9eb9|2026-09-21T12:44:37-04:00|4.0.0_SA_CRO|row(LGIC_CANON-S29, 4.0.0_SA_CRO): the doctrine's generated naming section is stale AND un-re-renderable -- a ruled 09-20 correction lives only inside"
+  },
+  {
+   "code": "LGIC_ENFORCE",
+   "directive": "D14",
+   "class": "NEEDS-A-LANE",
+   "basis": "Short of a seat for FWD-5 clause 2: about 1,055 registry decisions, ruled 'a project, not a round'. 6 of 7 outcomes realized; 72 orders complete. 2.0.0_SA_COO~G's log of 09-21 records that seat as sequenced after MDPF_TAXSMA and NFRA_MCPINDEX.",
+   "register_status": "active",
+   "project_rows": [
+    "org/projects/LGIC_ENFORCE.json",
+    "org/missions/D14/LGIC/LGIC_ENFORCE/project.json"
+   ],
+   "task_order_files": 74,
+   "task_orders_by_status_tag": {
+    "complete": 72,
+    "superseded": 2
+   },
+   "to_check_active": 0,
+   "commits_naming_code_since_2026-09-17": 518,
+   "commits_naming_code_total": 850,
+   "sequence": "PROJECT LGIC_ENFORCE: PLACED -- stage 1 of the sequence",
+   "last_commit": "044157b073|2026-09-30T10:02:54-04:00|2.0.0_SA_COO~M|ledger(MDPF_SECCLASS + IRPT_BCKEND ~M, 2.0.0_SA_COO~M): post-crash relaunch acts -- FWD-3 VNQI seeded and CLOSED, E_18 IAM step 1 applied (builder n"
+  },
+  {
+   "code": "LGIC_LGCTFM",
+   "directive": "D14",
+   "class": "HELD",
+   "basis": "HELD: \"LGIC_LGCTFM HOLDS AT STOP AT ROUND 10'S CLOSE. NO ROUND 11 IS CUT.\" (the project row, CTO ruling of 09-20). 8 of 10 outcomes realized. FWD-4 bars on Andrew's read of ANDREW_CARD.md, for which the CTO is the recorded fallback adjudicator; FWD-6 bars on LGIC_CANON's practice wave.",
+   "register_status": "active",
+   "project_rows": [
+    "org/projects/LGIC_LGCTFM.json",
+    "org/missions/D14/LGIC/LGIC_LGCTFM/project.json"
+   ],
+   "task_order_files": 32,
+   "task_orders_by_status_tag": {
+    "complete": 31,
+    "superseded": 1
+   },
+   "to_check_active": 0,
+   "commits_naming_code_since_2026-09-17": 373,
+   "commits_naming_code_total": 419,
+   "sequence": "PROJECT LGIC_LGCTFM: PLACED -- stage 1 of the sequence",
+   "last_commit": "893aa7463c|2026-09-23T12:58:55-04:00|1.0.0_SA_CTO~C|spine v3.18: the backend/infrastructure thread (call 5b approved)"
+  }
+ ]
+}

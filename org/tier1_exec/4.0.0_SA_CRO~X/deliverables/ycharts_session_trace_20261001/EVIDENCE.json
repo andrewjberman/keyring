@@ -1,0 +1,197 @@
+{
+ "read_at": "2026-10-01T08:08:35Z",
+ "eventbridge_rules": [
+  {
+   "name": "ycharts-session-capture-schedule",
+   "state": "DISABLED",
+   "schedule": "rate(72 hours)"
+  },
+  {
+   "name": "ycharts-session-probe-schedule",
+   "state": "DISABLED",
+   "schedule": "cron(0 */6 * * ? *)"
+  }
+ ],
+ "scheduler_schedules": [],
+ "lambda_functions": [
+  {
+   "function": "ycharts-session-probe",
+   "last_modified": "2026-05-22T15:16:20",
+   "last_log_event": "2026-09-24T00:00:38Z"
+  },
+  {
+   "function": "irpt-ycharts-generate",
+   "last_modified": "2026-10-01T06:51:12",
+   "last_log_event": "2026-10-01T07:33:17Z"
+  },
+  {
+   "function": "ycharts-market-data-pull",
+   "last_modified": "2026-05-22T17:30:22",
+   "last_log_event": "2026-05-26T14:58:07Z"
+  },
+  {
+   "function": "ycharts-session-capture",
+   "last_modified": "2026-05-22T15:16:00",
+   "last_log_event": "no log stream"
+  }
+ ],
+ "secrets": {
+  "ycharts/session/current": {
+   "last_changed": "2026-09-30T04:58:23Z",
+   "last_accessed_date": "2026-10-01T00:00:00Z",
+   "versions": [
+    {
+     "created": "2026-09-24T08:56:48Z",
+     "stages": []
+    },
+    {
+     "created": "2026-09-27T02:02:24Z",
+     "stages": [
+      "AWSPREVIOUS"
+     ]
+    },
+    {
+     "created": "2026-09-30T04:58:23Z",
+     "stages": [
+      "AWSCURRENT"
+     ]
+    }
+   ]
+  },
+  "ycharts/login/credentials": {
+   "last_changed": "2026-09-11T01:39:16Z",
+   "last_accessed_date": "2026-10-01T00:00:00Z",
+   "versions": [
+    {
+     "created": "2026-09-10T15:30:04Z",
+     "stages": [
+      "AWSPREVIOUS"
+     ]
+    },
+    {
+     "created": "2026-09-11T01:39:16Z",
+     "stages": [
+      "AWSCURRENT"
+     ]
+    }
+   ]
+  },
+  "ycharts/credentials": {
+   "last_changed": "2026-07-01T22:14:38Z",
+   "last_accessed_date": "2026-09-23T00:00:00Z",
+   "versions": [
+    {
+     "created": "2026-05-20T22:02:07Z",
+     "stages": []
+    },
+    {
+     "created": "2026-05-21T18:57:33Z",
+     "stages": []
+    },
+    {
+     "created": "2026-05-26T21:56:43Z",
+     "stages": []
+    },
+    {
+     "created": "2026-07-01T18:40:05Z",
+     "stages": [
+      "AWSPREVIOUS"
+     ]
+    },
+    {
+     "created": "2026-07-01T22:14:38Z",
+     "stages": [
+      "AWSCURRENT"
+     ]
+    }
+   ]
+  },
+  "ycharts/session/research-20260911": {
+   "last_changed": "2026-09-12T03:23:03Z",
+   "last_accessed_date": "2026-09-11T00:00:00Z",
+   "versions": [
+    {
+     "created": "2026-09-11T02:30:44Z",
+     "stages": []
+    },
+    {
+     "created": "2026-09-11T02:32:13Z",
+     "stages": []
+    },
+    {
+     "created": "2026-09-11T02:39:37Z",
+     "stages": []
+    },
+    {
+     "created": "2026-09-11T02:39:57Z",
+     "stages": []
+    },
+    {
+     "created": "2026-09-11T02:43:33Z",
+     "stages": []
+    },
+    {
+     "created": "2026-09-11T02:44:48Z",
+     "stages": []
+    },
+    {
+     "created": "2026-09-11T02:44:56Z",
+     "stages": []
+    },
+    {
+     "created": "2026-09-11T02:50:10Z",
+     "stages": []
+    },
+    {
+     "created": "2026-09-11T02:50:33Z",
+     "stages": []
+    },
+    {
+     "created": "2026-09-11T03:37:16Z",
+     "stages": []
+    }
+   ]
+  }
+ },
+ "cloudtrail": {
+  "ycharts/session/current": {
+   "since": "2026-09-24T08:10:55Z",
+   "events": 15,
+   "event_names": [
+    "DescribeSecret",
+    "GetResourcePolicy"
+   ],
+   "limit": "no GetSecretValue event is returned for any of the three secrets, including the resident's read of the session at 07:33Z today, so this lookup cannot see secret reads"
+  },
+  "ycharts/login/credentials": {
+   "since": "2026-09-24T08:10:55Z",
+   "events": 1,
+   "event_names": [
+    "DescribeSecret"
+   ],
+   "limit": "no GetSecretValue event is returned for any of the three secrets, including the resident's read of the session at 07:33Z today, so this lookup cannot see secret reads"
+  },
+  "ycharts/credentials": {
+   "since": "2026-09-24T08:10:55Z",
+   "events": 89,
+   "event_names": [
+    "DescribeSecret",
+    "GetResourcePolicy"
+   ],
+   "limit": "no GetSecretValue event is returned for any of the three secrets, including the resident's read of the session at 07:33Z today, so this lookup cannot see secret reads"
+  }
+ },
+ "author": "4.0.0_SA_CRO~X",
+ "asked_by": "1.0.0_SA_CTO msg 103617",
+ "claim": "measured AWS metadata; no secret value read",
+ "journal_today_quoted_from_J2": {
+  "07:33:21Z": "IRPT_RESIDENT_RESOLVE state=READY",
+  "07:33:32Z": "IRPT_RESIDENT_EVICTION verdict=EVICTED",
+  "07:33:52Z": "retained_for_retry CAPTURE_FAILED:AUTH_FAILED"
+ },
+ "not_done": [
+  "no vendor call",
+  "no host command",
+  "no secret value read"
+ ]
+}

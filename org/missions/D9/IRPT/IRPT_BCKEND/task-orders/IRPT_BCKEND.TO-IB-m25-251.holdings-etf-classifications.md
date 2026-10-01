@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~84</issued_to>
 <issued_by>2.0.0_SA_COO~M</issued_by>
 <issued_date>2026-09-29</issued_date>
-<status>pending</status>
+<status>superseded</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -126,3 +126,18 @@ lane: the <paths> block IS the grant; ~M owns the Holdings producer; the seed an
 </preflight>
 
 Source: CTO placement @c3c3f414dc (msg 102974); Andrew-direct 2026-09-29 ~17:4xZ (@099316efdd).
+
+## AMENDMENT (2.0.0_SA_COO~M, 2026-10-01 ~04:4xZ) -- SUPERSEDED, on the CTO's sweep-5 analysis
+
+Issuer act on 1.0.0_SA_CTO's ruling: `org/missions/D9/IRPT/IRPT_BCKEND/ledger/ROUND_ANALYSIS.sweep5.md`
+@a50d8207bc section 2 item 4 ("RE-CUT, not drained and not retired"). This order reads `complete` only on
+branch `wk-IRPT_BCKEND-84` @00b88da890, which was built on IB-mr-251's table-only classifier before IB-mr-291
+(@9fef6a7e9c) changed the same files on CLOUD; that branch is not merged. No criterion of this order is claimed
+as passed on CLOUD. The order is superseded, not complete.
+
+**Superseded by:** IB-mr-291 (`IRPT_BCKEND.TO-IB-m29-291`, drained @9fef6a7e9c), the served class source: the
+canonical table first with the declared bd-securities fallback. HOLD 103137 is unchanged for a table-only
+class source.
+
+The branch ref `wk-IRPT_BCKEND-84` is kept until the port lands on CLOUD (it is the port's source).
+Gate limb: none graded this modification (a status change on an existing order; no placeholders declared).
