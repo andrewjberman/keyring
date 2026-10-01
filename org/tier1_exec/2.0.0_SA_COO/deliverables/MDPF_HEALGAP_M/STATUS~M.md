@@ -6,10 +6,14 @@ items 5-7. Trace: `org/tier1_exec/4.0.0_SA_CRO~X/deliverables/COTTONWOOD_ABSENT_
 
 ## Lease
 
-NOT ARMED. `drive-mode.py arm MDPF_HEALGAP --surface data/mdpf/scripts/gold/mdpf_gold_consolidator.py` was REFUSED at
-09:06Z: the live FAST lease MDPF_TAXSMA (seat `4.0.0_SA_CRO`) holds all of `data/mdpf`. Ruled (batch 75 items 5-6): the
-catch-up is a NEW module built in this seat's worktree; `4.0.0_SA_CRO` re-arms MDPF_TAXSMA on its claimed files; the
-consolidator's one call line is added by that seat at its next merge.
+FAST, armed 11:39Z until 19:39Z, seat `2.0.0_SA_COO~M`, surface: the module, its test and
+`org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_HEALGAP_M`. (The first arm, on the consolidator, was refused at 09:06Z
+while MDPF_TAXSMA held all of `data/mdpf`; that lease is now on its claimed files, batch 75 item 6.) The consolidator's
+one call line stays `4.0.0_SA_CRO`'s.
+
+## Write claims
+
+None open. The module and its test are landed; the next writes here are ledger legs.
 
 ## Pins
 
@@ -35,11 +39,17 @@ builds and each dry run returns rc 0 and RECONCILE PASS (QA run 11:16Z-11:23Z).
 
 ## Next, in order
 
-1. The CTO's half on the five-object act.
-2. `4.0.0_SA_CRO` adds the call line and the package row and deploys `mdpf-gold-lambda` (its lease, its ledger).
-3. Ledger `healgap-cottonwood-catchup-m-20261001`, opened before that deploy with the five prior VersionIds.
-4. The first daily run after the deploy: the `catchup` block reads five built; one trace per date to the served point;
-   the second daily run reads 0 planned.
+1. **Both halves are SIGNED** (CTO half @9fb81ec9f6). The CTO half's sanity read is done (the half's addendum 1): the
+   fold equals the served file on 5 of 5 neighbour dates, and the five restored values in served terms are
+   136,124,300.89; 139,107,569.53; 139,653,361.92; 175,667,910.62; 176,412,889.04, each between its neighbours or within
+   0.82 percent of the nearer one.
+2. **Ledger `healgap-cottonwood-catchup-m-20261001`: OPEN**, leg P closed (the five prior VersionIds; the sanity read).
+3. **WAITING ON `4.0.0_SA_CRO`:** the call line, the package row and the `mdpf-gold-lambda` deploy, under its own ledger
+   entry and packet. Hand-off: `HOOKUP_HANDOFF_FOR_4.0.0_SA_CRO.md` (state READY TO WIRE).
+4. Leg D1, the first 13:30Z run after that deploy: the manifest's `catchup` block reads five built, 0 failed; each of the
+   five objects carries its value date; the older dates' earliest partitions are byte-unchanged.
+5. Leg S: one trace per date to the served Cottonwood and Global points; 49 Financial and Inflection byte-unchanged.
+6. Leg D2, the next day's run: `catchup` reads 0 planned.
 
 ## Parked
 

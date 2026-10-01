@@ -1,12 +1,18 @@
 # MDPF_HEALGAP cell 1 -- the two hookup lines for `4.0.0_SA_CRO` (MDPF_TAXSMA's lease seat)
 
-From `2.0.0_SA_COO~M`, 2026-10-01. Authority: 1.0.0_SA_CTO rulings batch 75 item 5 ("the consolidator's one call line is
-added by the MDPF_TAXSMA lease's seat at its next merge"). A file, not a message. **Do not add either line before the
-catch-up's never-widen half carries both signatures**: with the call line in place the next daily run rewrites five
-existing gold partitions.
+From `2.0.0_SA_COO~M`, 2026-10-01, overwritten 12:0xZ. Authority: 1.0.0_SA_CTO rulings batch 75 item 5 ("the
+consolidator's one call line is added by the MDPF_TAXSMA lease's seat at its next merge"). A file, not a message.
+
+**STATE: READY TO WIRE.** The catch-up's never-widen half carries both signatures
+(`NEVER_WIDEN_HALF_REQUEST_HEALGAP_COTTONWOOD_CATCHUP_20261001.md`, CTO half @9fb81ec9f6), the CTO half's sanity read is
+done (the half's addendum 1), and ledger `healgap-cottonwood-catchup-m-20261001` is open with the five rollback versions.
+With the call line deployed, the next 13:30Z run rewrites five existing gold partitions; that write is covered by the
+half. **The deploy that carries the line is yours, under your own ledger entry and your own packet, which names the
+function's artifact before and after and cites the half for what the step writes; 1.0.0_SA_CTO signs that packet on read
+(CTO half item 3).**
 
 The module is on CLOUD and wired nowhere: `data/mdpf/scripts/gold/mdpf_gold_catchup.py` (test
-`data/mdpf/tests/test_mdpf_gold_catchup.py`, 15 passed).
+`data/mdpf/tests/test_mdpf_gold_catchup.py`, 16 passed).
 
 ## 1. The call line -- `data/mdpf/scripts/gold/mdpf_gold_consolidator.py`, in `run_cottonwood_family`
 
@@ -41,9 +47,21 @@ follow from the build, as for any new member.
 - It reads through the slice's own functions (`cottonwood_gold_by_date`, `holdings_available_dates`,
   `self_derived_axis`) and lists `fact_model_assignment`; it writes only by calling `bdmp.main`.
 - IAM: no new action. The builder's `--upload` already writes `gold/dim_model_portfolio/date=*/data.parquet`.
+- Time: the plan reads every gold partition once (53 today; the slice reads them again right after). On this laptop the
+  whole step, five dry-run builds included, took about five to seven minutes over a slow connection; its cost inside the
+  Lambda's timeout is NOT measured. On a day with nothing to catch up it makes the reads and no build.
 
-## A second caller of the builder, found while counting writers
+## Which runtime runs it (row `MDPF_HEALGAP-S1`)
 
-`infra/aws/ec2/mdpf-daily-runner/mdpf-daily-dispatch.sh:554` also runs `build_dim_model_portfolio.py --date "$cot_date"
---upload`. Whether that runner still fires is NOT measured here; if it does, it writes the day's partition without the
-catch-up. It is named in the half as an unread writer.
+The 13:30Z daily build is the `mdpf-gold-lambda` (its scheduled log ends 13:31:19Z on 2026-09-30; the partitions were
+written 13:30:39Z-13:30:40Z). The EC2 instance `mdpf-daily-runner` also launches at 13:30Z (LaunchTime 13:30:35Z that
+day) and its dispatch has its own call of the builder (`infra/aws/ec2/mdpf-daily-runner/mdpf-daily-dispatch.sh:554`);
+it left no later write on the partitions read. If that path is live on the runner it runs WITHOUT the catch-up and only
+on the newest assignment date.
+
+## What to expect on the first run (the half's addendum 1)
+
+`report["catchup"]` reads five `built` (value dates 2026-08-18, 08-20, 08-21, 09-23, 09-24), 0 `failed`, 39 `skipped`.
+The Cottonwood series then serves, in `model_aua`: 136,124,300.89; 139,107,569.53; 139,653,361.92; 175,667,910.62;
+176,412,889.04. I read the manifest, the five objects and the served points after that run (ledger legs D1 and S) and
+the next day's run (leg D2: 0 planned).

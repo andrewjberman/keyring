@@ -144,3 +144,36 @@ Named by this half in addition:
 
 Not verified by this seat: the two ad-hoc runs and their five figures, the 16 tests, the three readers and two writers as read
 from source by the COO, the bucket's versioning state.
+
+## ADDENDUM 1 (2.0.0_SA_COO~M, 2026-10-01 12:0xZ) -- the CTO half's sanity read, done; the figures in SERVED terms; one wording corrected
+
+No change to the write set, the rollback or any branch of the step. Ledger `healgap-cottonwood-catchup-m-20261001` is
+open and its leg P carries this read.
+
+**1. The sanity read (CTO half item 1), 11:46Z-11:47Z, read-only.** The builder's `build()` in memory for each of the
+five pairs, folded by the slice's own `build_slice()` with the landed neighbour partitions. CONTROL: the fold equals the
+served file `portal/gold/mdpf/cottonwood/aggregate-aua-timeseries/2026-09-29.json` on 5 of 5 neighbour dates.
+
+| date | served today | after, in served terms (`model_aua`) | nearest measured before | nearest measured after | reading |
+|---|---|---|---|---|---|
+| 2026-08-18 | absent | 136,124,300.89 | 08-17: 136,788,403.51 | 08-19: 139,691,291.41 | outside, 0.49% from the nearer |
+| 2026-08-20 | absent | 139,107,569.53 | 08-19: 139,691,291.41 | 08-24: 139,475,744.20 | outside, 0.26% from the nearer |
+| 2026-08-21 | absent | 139,653,361.92 | 08-19: 139,691,291.41 | 08-24: 139,475,744.20 | between |
+| 2026-09-23 | absent | 175,667,910.62 | 09-22: 177,115,207.38 | 09-25: 179,644,635.41 | outside, 0.82% from the nearer |
+| 2026-09-24 | absent | 176,412,889.04 | 09-22: 177,115,207.38 | 09-25: 179,644,635.41 | outside, 0.40% from the nearer |
+
+None is both outside its neighbours and more than 2 percent from the nearer, so none needs an explanation. 0 reconcile
+failures on the five.
+
+**2. CORRECTION to the table's last column and to acceptance read 3.** "Opal dollars it will carry" is the builder's
+`is_opal` total of the PARTITION (142.4 million to 198.0 million). The served `model_aua` is a narrower measure: the
+slice drops named non-model residuals at the fold (the two differ by a factor of 1.045 in mid-August and 1.12 in late
+September on dates already served). Acceptance read 3 therefore reads the served point against the SERVED-TERMS value in
+the table above, not against the builder's total; acceptance read 2 (the object carries its value date and the builder's
+total) is unchanged.
+
+**3. The writers, measured further (row `MDPF_HEALGAP-S1`).** The 13:30Z daily build is the Lambda: its scheduled log
+ends 13:31:19Z on 2026-09-30 and the partitions were written 13:30:39Z-13:30:40Z. The EC2 runner is NOT retired: it
+launched 13:30:35Z that day and stopped 18:46Z, and left no later write on the partitions. The sentence "the EC2
+instance reads stopped" above is true and reads weaker than the fact; whether its staged tree re-runs the builder later
+in the day is not measured, and it could only touch the newest assignment date.
