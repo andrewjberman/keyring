@@ -49,7 +49,9 @@ is deployed (18:03Z). Own work resumes until that word arrives.
   shared checkout, and the served data carries none of the new classes until the gold side ships -- so the branch ships WITH
   the re-point packet, its acceptance being a Cottonwood page walk after the gold deploy. Before the push:
   `git -C <worktree> log origin/DEV..HEAD` lists only this seat's commit; merge DEV forward first. Lease
-  MDPF_SECCLASS re-armed 18:1xZ to cover these files (same expiry). Then the packet (both halves), the
+  MDPF_SECCLASS re-armed 18:1xZ to cover these files (same expiry). PACKET DRAFTED (unsigned): `MDPF_SECCLASS_M/NEVER_WIDEN_HALF_REQUEST_COT_REPOINT_20261001.md` @1ffbf6a639
+  -- legs M, I, A, G, P, R, S. Open before signing: the 19 seed rows' CTO half; the CUSIP rows' own half (batch 93 item 2:
+  7.49 M USD of no-ticker CUSIPs lack a `CUSIP:` row; not written); the writer count per served key. Then the packet (both halves), the
   IAM statement's plan and safe-apply, the shipped-artifacts deploy, and a Cottonwood page walk.
 - **Done today, closed:** CEMIX entry; model-rows leg H; classifier-release leg H5 (the 14:18Z Holdings publication read at three
   firms, two page walks).
