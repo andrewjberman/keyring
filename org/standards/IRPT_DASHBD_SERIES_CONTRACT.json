@@ -1,0 +1,181 @@
+{
+  "contract_version": "0.1.0",
+  "project": "IRPT_DASHBD",
+  "prd": "org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md",
+  "prd_contracts": ["C-SERVE", "C-SEAM"],
+  "writer": "workstream B",
+  "reader": "the Performance page",
+  "authored_by": "2.0.0_SA_COO~P",
+  "authored_under": "IRPT_DASHBD.TO-DB-b-2 lines 54-61 (the field lists fixed at the cut), landed by the issuer ahead of the gold on 2.0.0_SA_COO~D's ask 103446",
+  "source_table_contract": "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json",
+  "files": {
+    "series": "series.json.gz -- one gzip-compressed JSON object per account at lib.opal_naming.address(\"irpt\", <firm>, \"platinum\", \"reporting\", \"account=<id>\", \"series.json.gz\")",
+    "manifest": "manifest.json -- one JSON object per account beside the series file"
+  },
+  "change_rule": "C-SEAM: workstream B is the only writer of this file and the page is its only reader. A field the page needs and the file lacks is a change request to the issuer of workstream B, never a page-side derivation from another source. Enum members are defined once, in source_table_contract; this file names the enum and never restates its members.",
+  "series": {
+    "shape": "columnar: each per-day key is an array with one entry per emitted account-day, all of one length, aligned by index with `date`; the other required keys are scalars or a list of episode objects",
+    "required": [
+      "date",
+      "value",
+      "total_return_daily",
+      "return_basis",
+      "day_quality",
+      "external_flow",
+      "income",
+      "holdings_price_return",
+      "method_version",
+      "as_of",
+      "first_data_date",
+      "history_scope",
+      "drawdown_episodes"
+    ],
+    "optional": [
+      "class_value",
+      "class_weight",
+      "class_names"
+    ],
+    "array_keys": [
+      "date",
+      "value",
+      "total_return_daily",
+      "return_basis",
+      "day_quality",
+      "external_flow",
+      "income",
+      "holdings_price_return"
+    ],
+    "fields": {
+      "date": {
+        "kind": "per-day array of string",
+        "source": "business_date",
+        "sentence": "The trading day of each entry as YYYY-MM-DD, strictly increasing; never null, and a day before the account's first positive value has no entry at all."
+      },
+      "value": {
+        "kind": "per-day array of number",
+        "source": "market_value_eod",
+        "sentence": "The custodian's whole-account market value at end of day, cash included, in US dollars; never null."
+      },
+      "total_return_daily": {
+        "kind": "per-day array of number or null",
+        "source": "total_return_daily",
+        "sentence": "The daily total return as a decimal fraction (0.01 is one percent); null exactly where `return_basis` is NOT_MEASURABLE, and a null BREAKS the geometric link with a stated gap -- the page never fills it, carries it forward or treats it as zero."
+      },
+      "return_basis": {
+        "kind": "per-day array of string",
+        "source": "return_basis",
+        "sentence": "Which arithmetic produced that day's `total_return_daily`, a member of the source table contract's `return_basis` enum; never null."
+      },
+      "day_quality": {
+        "kind": "per-day array of string",
+        "source": "day_quality",
+        "sentence": "What that day's number stands on, a member of the source table contract's `day_quality` enum; never null."
+      },
+      "external_flow": {
+        "kind": "per-day array of number",
+        "source": "external_flow",
+        "sentence": "The net external flow of the day in US dollars, capital in positive; never null, 0.0 on a day with no flow."
+      },
+      "income": {
+        "kind": "per-day array of number",
+        "source": "income_received",
+        "sentence": "Income recognised on cash receipt that day in US dollars; never null, 0.0 on a day with none."
+      },
+      "holdings_price_return": {
+        "kind": "per-day array of number or null",
+        "source": "holdings_price_return",
+        "sentence": "The price-only daily return of the account's held securities as a decimal fraction, a diagnostic beside the total return and never a substitute for it; null where the holdings row is absent or not OK."
+      },
+      "method_version": {
+        "kind": "scalar integer",
+        "source": "method_version",
+        "sentence": "The `dim_return_method` row every figure in the file was produced under; never null."
+      },
+      "as_of": {
+        "kind": "scalar string",
+        "source": "the last entry of `date`",
+        "sentence": "The newest trading day the file holds, as YYYY-MM-DD; never null."
+      },
+      "first_data_date": {
+        "kind": "scalar string",
+        "source": "the first entry of `date`",
+        "sentence": "The first trading day the file holds for this account, as YYYY-MM-DD; never null."
+      },
+      "history_scope": {
+        "kind": "scalar string",
+        "source": "history_scope",
+        "sentence": "How much of the account's life the file holds, a member of the source table contract's `history_scope` enum; never null."
+      },
+      "drawdown_episodes": {
+        "kind": "list of objects {peak_date, trough_date, recovery_date, depth}",
+        "source": "computed by the publisher from the linked `total_return_daily` (the rule of infra/aws/lambda/investor-reporting/narrative/events.py: a trough of at least 50 basis points lasting at least 2 days)",
+        "sentence": "Each material peak-to-trough decline: `peak_date` and `trough_date` as YYYY-MM-DD, `recovery_date` as YYYY-MM-DD or null while the decline has not recovered, and `depth` as a negative decimal fraction (growth at the trough over growth at the peak, minus one); the list is empty, never null, when no episode qualifies."
+      },
+      "class_value": {
+        "kind": "optional; per-class arrays of per-day number",
+        "source": "account_class_daily (not built in round 1)",
+        "sentence": "The market value held in each asset class by day in US dollars; the key is ABSENT until `account_class_daily` exists, and the page reads absence as no class view yet."
+      },
+      "class_weight": {
+        "kind": "optional; per-class arrays of per-day number",
+        "source": "account_class_daily (not built in round 1)",
+        "sentence": "Each class's share of `value` by day as a decimal fraction; ABSENT under the same rule as `class_value`."
+      },
+      "class_names": {
+        "kind": "optional; list of string",
+        "source": "account_class_daily (not built in round 1)",
+        "sentence": "The class labels in the order `class_value` and `class_weight` use; ABSENT under the same rule as `class_value`."
+      }
+    }
+  },
+  "manifest": {
+    "required": [
+      "account_id",
+      "firm",
+      "method_version",
+      "as_of",
+      "first_data_date",
+      "history_scope",
+      "coverage_summary",
+      "byte_sizes",
+      "built_at",
+      "publisher_version"
+    ],
+    "fields": {
+      "account_id": {
+        "sentence": "The custodian account id in the source table's account form; never null."
+      },
+      "firm": {
+        "sentence": "The registry-derived firm scope the account belongs to; never null and never a typed token."
+      },
+      "method_version": {
+        "sentence": "Equal to the series file's `method_version`; never null."
+      },
+      "as_of": {
+        "sentence": "Equal to the series file's `as_of`; never null."
+      },
+      "first_data_date": {
+        "sentence": "Equal to the series file's `first_data_date`; never null."
+      },
+      "history_scope": {
+        "sentence": "Equal to the series file's `history_scope`; never null."
+      },
+      "coverage_summary": {
+        "sentence": "Two count maps over the series file's days, `day_quality` and `return_basis`, each from enum member to a whole number of days, and each summing to the length of `date`; never null."
+      },
+      "byte_sizes": {
+        "sentence": "A map from served object name to its stored size in bytes; the entry `series.json.gz` equals that object's ContentLength; never null."
+      },
+      "built_at": {
+        "sentence": "When the publisher wrote the two files, as an ISO-8601 UTC timestamp; never null."
+      },
+      "publisher_version": {
+        "sentence": "The version string of the publisher code that wrote the files; never null."
+      }
+    }
+  },
+  "open_changes": [
+    "PRD v0.4 ruling 17 (@a8a65b9f62): HOLDINGS_INCOME_FALLBACK is never emitted; the member leaves the source table contract in that file's own versioned edit, and this file changes nothing because it names the enum and not its members.",
+    "PRD v0.4 ruling 18: the field that says whether the holdings guard graded a day is declared first in the source table contract with its rule-24 record; it enters `series.optional` here in the contract_version that follows that edit."
+  ]
+}
