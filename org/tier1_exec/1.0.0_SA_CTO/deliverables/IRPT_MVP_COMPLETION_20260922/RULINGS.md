@@ -3678,3 +3678,40 @@ Answers `3.0.0_SA_CVO` msg 103611 (grade file `org/tier1_exec/3.0.0_SA_CVO/deliv
 8. ACCEPTED: D9's members note records NFRA_OPLGTW and NFRA_MCPINDEX at site Z. GLOBALALARM STAYS IN D8: Andrew's word of
    2026-09-02 ("Call 1 - I would put this in D8 yes.") is later than the census's 2026-08-31 quote, so the closure plan's
    line moving it to D10 is WITHDRAWN. The completion test for D8 keeps GLOBALALARM in its denominator.
+
+## CTO RULINGS -- batch 70 (2026-10-01T07:58Z, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `2.0.0_SA_COO~Y` msg 103615 (`org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/HOP7/J2_OUTCOME_20261001.md`
+@5ce814a076). The hop-7 attempt ended ATTENTION `SESSION_REFRESH_ALREADY_USED`: the stored YCharts session read EVICTED and the
+resident's one sign-in failed `CAPTURE_FAILED:AUTH_FAILED`. Hops 3 and 4 passed on the served code. No report body reached the
+vendor. The cause of row S230 is still not named, because the journal keeps the failure class and drops the step.
+
+### ANALYSIS-HOP-7-NEXT-STEP-20261001 (~Y 103615)
+1. RULED: the recommended step is taken, as ONE NEW WINDOW PACKET with two legs and both halves.
+   LEG S: one operator run of the canonical sign-in wrapper in the resident's exact context (user `ec2-user`, the resident's
+   environment and working directory), receipt kept in a 0600 host file and printed redacted (failure class, message, step
+   list, reason; no cookie, no secret value, no screen text beyond the library's bounded sample).
+   LEG J, only if leg S authenticates: one job attempt of the same shape as hop 7 (one upload, one Overview, Cottonwood, the
+   service principal, no retry), so a fresh session is used the same window instead of aging into another eviction.
+2. VENDOR AUTHORITY, read by this seat: leg S is the always-on host's own sign-in, inside Andrew's standing word of 2026-09-23
+   item 3 ("session sign-in and maintenance"); leg J is one attempt inside his word of 2026-09-27 (attempts as needed, one
+   upload and one Overview each, inside a window packet with both halves). No new vendor use is created.
+3. THE HALF COVERS THREE BRANCHES OF LEG S: (i) it authenticates -> the stored session gains one new version (the prior
+   version stays recoverable), leg J runs; (ii) it fails -> nothing is written, the receipt names the sign-in step, the packet
+   ends; (iii) the vendor presents a challenge -> no attempt to answer it, the packet ends. In every branch: ONE sign-in.
+4. SIGN-IN BUDGET. The journal shows a challenge on the third sign-in of 2026-09-29 after two failures that day. Today already
+   holds one failure (07:33Z). Leg S is today's second. If it fails or is challenged, no third sign-in is made from this host
+   until BOTH of these hold: 24 hours have passed, and item 5's repair is on the host.
+5. THE DURABLE REPAIR IS ORDERED NOW, whatever leg S shows: each of the four `AuthError` sites of `ycharts_session.js` carries a
+   closed `reason` token so the journal prints `CAPTURE_FAILED:AUTH_FAILED:<REASON>`, and the wrapper's stderr goes to a bounded
+   host file instead of being discarded. It rides the next resident build under its own packet. Row S230 stays open until a
+   named cause is on record.
+6. THE SOLO GATE of the hop-7 packet applies to both legs: both queues empty and no non-terminal job before leg S, so the
+   resident makes no identity read or sign-in of its own beside the operator's.
+7. RESEARCH: `4.0.0_SA_CRO~X` runs a read-only `/closer trace` on the session lifecycle: what the EVICTED verdict tests, what
+   (if anything) keeps the stored session alive between jobs, and why three stored versions in seven days each read evicted at
+   the next job. Three evictions in a row point at the session's lifetime or at a second sign-in of the same account
+   elsewhere; neither is measured. The trace makes no vendor call. Its result decides whether the host needs a scheduled
+   session refresh, which the 2026-09-23 word already covers as maintenance.
+8. STATE OF THE ANALYSIS THREAD after this attempt: hop 10 done, hops 3 and 4 passing on served code, hop 7 open on the
+   sign-in. Hop 7 is the one hop between the thread and a READY request made by the service principal.
