@@ -5862,3 +5862,32 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S30",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-01T07:55Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Ruled by amendment A2 on TO-OG-pr-1: the order's typed policy name was the issuer's defect; the policy is the builder's output gateway-read-secrets-policy (CONFORMANT). PHASE B resumes with restore-secret on the three names (values preserved) and the targeted apply. The worker's stop-and-roll-back was correct and is not re-run.",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W18-S2"
+  ],
+  "one_line": "OG-pr-1's refused policy name (W18-S2) is replaced with the builder's CONFORMANT name; PHASE B resumes from restore-secret.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py name('gateway', None, 'read-secrets', 'policy') -> 'gateway-read-secrets-policy'; grade(...,'IAM_POLICY') -> CONFORMANT; grade('opal-gateway-gateway-read-secrets','IAM_POLICY') OUT-OF-PATTERN (worker).",
+      "Worker rollback drained @8e87440071: ledger nfra-oplgtw-gateway-read-secrets CLOSED ROLLED BACK, sentinel removed; three secrets deleted with a 7-day recovery window (restorable to 2026-10-08)."
+    ]
+  },
+  "spec_asserts": "TO-OG-pr-1 PHASE A step 1: the policy is named ${var.name}-gateway-read-secrets.",
+  "world_is": "The commit-time naming plan limb is in ENFORCE mode for this root; a typed non-conforming name cannot apply.",
+  "notes": "While the three secrets are pending deletion, the gateway-read-secrets.tf data sources on CLOUD cannot resolve (NFRA_MCPINDEX-Z-W21-S19 stays live for other seats' whole-tree reads) until the resume restores them.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```

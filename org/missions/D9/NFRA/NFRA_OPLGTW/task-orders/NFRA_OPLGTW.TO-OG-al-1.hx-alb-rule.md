@@ -32,7 +32,8 @@ unauthenticated request on them is redirected to the sign-in (measured: 302 to `
    `path_pattern` condition with exactly `/hx/transcripts/*` and `/hx/mail/*`, and a priority that is unused on the
    live listener (live priorities at the cut: 10, 20, 30, 31, 32, 33, 34; re-read with `aws elbv2 describe-rules` and
    name the one you take, 35 if still free). A header comment states why (the C7 bearer is the gate, as `/ms/*`), and
-   the post-apply verify. No other resource.
+   the post-apply verify. No other resource. Any name or `Name` tag you give it is `lib/opal_naming.py` `name()`
+   output (rule 30); a builder refusal is a BLOCKING row, never a typed name.
 2. A TARGETED plan of that one resource, fed as `OG-pr-1` A1 feeds its plan (owner-key variables from the live
    grant-writer Lambda into `TF_VAR_*`, never printed; the grant writer's staged build and the deps-layer zip). It
    must read exactly 1 to add, 0 to change, 0 to destroy.
