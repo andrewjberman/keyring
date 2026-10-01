@@ -1,0 +1,67 @@
+diff --git a/infra/aws/lambda/ci/lambda-source-map.json b/infra/aws/lambda/ci/lambda-source-map.json
+index 0f14505ddd..7e93c19dc3 100644
+--- a/infra/aws/lambda/ci/lambda-source-map.json
++++ b/infra/aws/lambda/ci/lambda-source-map.json
+@@ -3290,9 +3290,9 @@
+         },
+         {
+           "repo_path": "infra/aws/lambda/investor-reporting/performance/installed.py",
+-          "pin": "66469ce9435d082f279827092a4e262eb5e99358",
++          "pin": "89b5a85abecd3133e8c9a14fab668ea6c799bf40",
+           "packaged_as": "installed.py",
+-          "sha256": "b00fc65e9006f58067f596ae9d578be0dcef9e135b9f226711603e1912f13e03"
++          "sha256": "8e42e8b245960799ced3d47864eac357c070c3c3b62a4ea5b1c98c99ff75ba18"
+         },
+         {
+           "repo_path": "infra/aws/lambda/investor-reporting/_scope/interactive_access.py",
+@@ -3500,9 +3500,9 @@
+         },
+         {
+           "repo_path": "infra/aws/lambda/investor-reporting/performance/holdings_gold.py",
+-          "pin": "a595a142645b559e5fded8e3c3f69975a80176b8",
++          "pin": "89b5a85abecd3133e8c9a14fab668ea6c799bf40",
+           "packaged_as": "holdings_gold.py",
+-          "sha256": "afc37c0a0123fbca05dd03cb3e3d09ef8ece421dd1a02f9fa96c6b94f2ea9d5a"
++          "sha256": "2a11e588d3dfe143caadaa00621f1a0f1471cde87d52f86724de56b6af1e8a76"
+         }
+       ],
+       "_staged_from_note": "Retained Performance installation candidate: the CTO-reviewed v4 member set (5cdb889b5e, 59 members, Linux replay 2fb5422b04) plus retained.py at f04d1e71bd and authorization.py/runtime.py at 068e9ccd85, every member pinned at b3fc529601b61f34c676f380870009a23d441a83 and blob-hash verified. Candidate only until the CTO GO and safe-apply; artifact fields below are rewritten by build-and-upload after a verified write.",
+diff --git a/infra/aws/terraform/investor-reporting/performance/retained.tf b/infra/aws/terraform/investor-reporting/performance/retained.tf
+index b0a4330038..079865c35f 100644
+--- a/infra/aws/terraform/investor-reporting/performance/retained.tf
++++ b/infra/aws/terraform/investor-reporting/performance/retained.tf
+@@ -56,7 +56,11 @@ locals {
+   # The Orion session secret id: the SAME value as jwt_freshness.SM_SECRET_ID, the constant orion_live reads
+   # at use (joined from its provider parts, as Cottonwood's BD session id is below).
+   performance_inf_session_secret = join("/", ["orion", "jwt", "current"])
+-  performance_served_firms       = [local.performance_firm.long, local.performance_engine_firm.long, local.performance_inf_firm.long]
++  # Inflection on the holdings-basis gold (PRD ADDENDUM v0.19 ruling 11: 49F, then Inflection; IB-pr-221): READ-ONLY on
++  # its own holdings_performance_daily, in its own registry bucket. The prefix is builder output
++  # (lib/opal_naming.py address("irpt", "inflection", "gold", "holdings_performance_daily", "date=...")), not typed.
++  performance_inf_holdings_prefix = "irpt/${local.performance_inf_firm.long}/gold/holdings_performance_daily/"
++  performance_served_firms        = [local.performance_firm.long, local.performance_engine_firm.long, local.performance_inf_firm.long]
+   # The ONE armed plan names its firm; only that firm's provider session is readable while it is armed.
+   performance_plan_firm = var.approved_performance_plan == null ? null : jsondecode(var.approved_performance_plan).firm_id
+   performance_storage_prefixes = [
+@@ -101,6 +105,21 @@ resource "aws_iam_role_policy" "performance_retained" {
+         Action   = ["s3:GetObject", "s3:GetObjectVersion"]
+         Resource = ["arn:aws:s3:::${local.performance_engine_firm.bucket}/${local.performance_holdings_prefix}date=*/data.parquet"]
+       },
++      {
++        Sid      = "ReadINFHoldingsGoldPartitionInventory"
++        Effect   = "Allow"
++        Action   = ["s3:ListBucket"]
++        Resource = ["arn:aws:s3:::${local.performance_inf_firm.bucket}"]
++        Condition = { StringEquals = {
++          "s3:prefix" = local.performance_inf_holdings_prefix
++        } }
++      },
++      {
++        Sid      = "ReadINFHoldingsGoldPartitions"
++        Effect   = "Allow"
++        Action   = ["s3:GetObject", "s3:GetObjectVersion"]
++        Resource = ["arn:aws:s3:::${local.performance_inf_firm.bucket}/${local.performance_inf_holdings_prefix}date=*/data.parquet"]
++      },
+       {
+         Sid      = "ReadINFMappingPartitionInventory"
+         Effect   = "Allow"
