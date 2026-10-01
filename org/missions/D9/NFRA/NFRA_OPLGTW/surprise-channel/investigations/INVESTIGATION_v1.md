@@ -6593,3 +6593,28 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S43",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-01T19:40Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Ruling on NFRA_OPLGTW-Z-S42 (CTO msg 28043): the Research Meeting is reached by an invitation to the series, not the application route; OG-tx-2 AC1 stays as written and reads 3 of 4 FAIL on CLOUD @c4edb2c0ec.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~O msg 28043: (a) invitation to the Research series by Andrew or the organizer, listed among Andrew's acts; (b) application route not taken (tenant-wide read, breaks the bound identity) unless the invitation is refused.",
+      "Issuer re-grade on CLOUD @c4edb2c0ec: tx2.AC1 'meetings passing all four of 4 required: 3 of 4 recorded; negative arm refused=True', RESULT: FAIL, exit=1; proof instance VALID (worker @3403243217)."
+    ]
+  },
+  "spec_asserts": "Spec section 6 step 4: all four meetings reachable as Andrew.",
+  "world_is": "Three reachable as invitee; the Research Meeting waits on an invitation (an act outside this project's write surface).",
+  "notes": "Supersedes the routing note of NFRA_OPLGTW-Z-S42. The L10 analysis carries the fourth meeting as an open reach item gated on the invitation.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
