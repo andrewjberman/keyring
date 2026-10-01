@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~D` (CLAUDE). Contract: PRD `org/missions/D13/DSGN/DSGN_IRPTV1
 @5d44d0fa62. Reviewer `3.0.0_SA_CVO` (grades each landed pin after the fact). Authority: Andrew-direct 17:3xZ record
 @229b3fd184; CTO placement @1d443e50db (msg 102388); LIVE_ARMS row `/canonical-drive 10m`, the FAST lease routing each
 tick here; post-crash relaunch 2026-09-30 13:0xZ (`org/tier0_exec/0.0.0_AB_MSTR/deliverables/RELAUNCH_BRIEF_20260930_130xZ_POST_CRASH.md`).
-**As of 2026-10-01T11:1xZ.** Mode FAST on Andrew's word of ~04:2xZ (record
+**As of 2026-10-01T13:1xZ.** Mode FAST on Andrew's word of ~04:2xZ (record
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261001_042xZ_SELF_DRIVE_60M_LAPTOP_FABRIC_FINAL_SAY_CLOSER_DRIVE_IRPT_FIRST.md`
 @c48af273cc, CTO 103442): this seat armed its own 8-hour leases at 04:31Z and 04:32Z (below). Relaunch on Andrew-direct 2026-10-01 ~04:0xZ (record
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261001_040xZ_GO_WITH_RECOMMENDATION_BRING_ON_COOS_VIA_MSTR_SPAWN.md`);
@@ -160,8 +160,14 @@ same tab; W2-07's other half (why a job needs attention, IRPT_BCKEND); row S40's
   `org/tier1_exec/3.0.0_SA_CVO/deliverables/DSGN_REBRND_ROUND2_GRADE_20261001.md` @599d33a722). Nothing is asked
   today; un-parks on the word that the Investor Reporting work is done. This seat's brief-half sign-off file is
   restored (@60e46b2f0c).
-- Item 57's wording has still not been read on the signed-in page (item 60 lets it show): one walk, on the next
-  walker window this seat asks for, with `--performance-state`.
+- ~~Item 57's wording on the signed-in page~~ READ at 13:01Z (walk 9, `REAL_RUNS_20261001.md` section 7): the
+  Performance tab reads the sentence, code behind a closed disclosure; item 60 holds on the real backend.
+- THE ANALYSIS THREAD'S LAST LINK on a service-principal request (2.0.0_SA_COO~Y 103749; CTO batch 84 item 7):
+  `REQ-a69e5751d42c374f1d2354f9` opened by its id on the page at 13:02Z, "Job status: Ready", the report sections
+  on screen (walk 9). The thread is called live on 3.0.0_SA_CVO's grade, not on this line.
+- Both leases were re-armed by this seat at 12:28Z to 20:28Z on their present surfaces (1.0.0_SA_CTO 103731, RULINGS
+  batch 84 items 4 and 6). A third lease, `NFRA_TRNSPT` (to 15:40Z), is this seat's too: its state is
+  `org/missions/D9/NFRA/NFRA_TRNSPT/STATUS.md`. An Investor Reporting item interrupts it.
 - Served display text with producer wording (a model sleeve's Cash row; a client-directed holding's label that starts
   with a system code): owner 2.0.0_SA_COO~M.
 
