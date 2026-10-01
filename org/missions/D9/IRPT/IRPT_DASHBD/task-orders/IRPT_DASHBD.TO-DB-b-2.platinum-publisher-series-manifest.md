@@ -51,6 +51,11 @@ the builder's addresses, and plan (not apply) its Lambda and daily schedule.
   write both objects at the builder's addresses; a `--local --accounts ... --upload` CLI for this round's run). Print size and build time
   per account. Include unit tests beside them (`tests/`) with a synthetic gold frame for the pure functions (the real run below is the
   criterion, the tests are hygiene).
+- ISSUER AMENDMENT 2 (2026-10-01 ~04:5xZ): the SERIES contract below is ALREADY LANDED by the issuer @b80543a03c, ahead of the gold,
+  so workstream F can build against it. READ it; do not rewrite it. Your publisher emits exactly its `series.required` and
+  `manifest.required` keys with the meaning, unit and null rule each field's `sentence` states (`as_of` = the last `date` entry,
+  `first_data_date` = the first, `depth` a negative decimal fraction, a null `total_return_daily` left null). A field you find you
+  cannot emit as written is a row, never an edit to the file. The original text of the cut follows for the record.
 - The SERIES contract `org/standards/IRPT_DASHBD_SERIES_CONTRACT.json`: `contract_version "0.1.0"`, `project`, `prd`, `writer "workstream B"`,
   `reader "the Performance page"`, `series.required` = [`date`, `value`, `total_return_daily`, `return_basis`, `day_quality`, `external_flow`,
   `income`, `holdings_price_return`, `method_version`, `as_of`, `first_data_date`, `history_scope`, `drawdown_episodes`], `series.optional` =
