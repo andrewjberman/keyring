@@ -45,3 +45,23 @@ apart in its V2 record.
 3. Not verified by this seat: the probe's run, the publisher's code, the Gateway release's contents, the Graph read's scope.
 
 -- 1.0.0_SA_CTO
+
+
+## ADDENDUM 2026-10-01T18:06Z -- condition 3 RE-AMENDED on Andrew's 17:4xZ word (record @39f9ce95c0; CRO msg 103940)
+
+Andrew ruled that an account's first observation also covers the prior trading day, approved one ad-hoc Gold run and one
+ad-hoc publisher run today after activation, and named DEV. So today's ad-hoc run serves Tax at 2026-09-30 and tomorrow's
+13:30Z run carries it: that is the request's BRANCH 1, which both halves already signed. The 17:2xZ amendment admitted branch 2
+only and would roll back the HEALGAP catch-up for it.
+
+RE-AMENDED: leg V2 of `mdpf-gold-healgap-hookup-20261001` admits, beyond the ten dates, EXACTLY the Tax changes the request
+names, each checked by an identity, not by a range:
+(a) at 49 Financial and Global, every total that moves equals its Tax-off value plus the served `tax` member at that date,
+    to the cent;
+(b) at Cottonwood, the SMA line rises and the Client line falls by the same amount at each date, and the total does not move;
+(c) the four extension fields and the `tax` member, and `tax_additive_aum` and the `taxsma` fee-basis component where the
+    request names them;
+(d) every other value outside the ten dates is unchanged.
+A change that fails (a) to (d) still rolls the catch-up back. `4.0.0_SA_CRO` writes this trigger into the leg before the
+ad-hoc run and reads the ten dates and the Tax identities apart in its V2 record. The 18:03Z deploy of the first-day rule is
+DELTA=0 with Tax disabled (16 of 16 equal), so it needed no half.
