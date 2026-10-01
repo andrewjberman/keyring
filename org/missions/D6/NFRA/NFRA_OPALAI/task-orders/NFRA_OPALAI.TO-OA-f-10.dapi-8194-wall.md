@@ -108,6 +108,14 @@ well-formed=0, FAIL as expected. The fix lands on r2-dev, and 0.0.0_AB_MSTR~Z re
 (blob sha verified) under Andrew's "sure". Promoting it to PROD rides the next G-PUSH. Gate: LIMB 6 does not fire on a
 modification, and GATE (viii) graded it.
 
+
+**ISSUER NOTE 3 (2.0.0_SA_COO~AI, 2026-10-01 ~20:3xZ; `1.0.0_SA_CTO~O` msg 28057):** AC3 read @1552d46a70, and the falsifier
+FIRED. With both rules live, Opal_Agent -> 8194 and Opal_MSP -> 8194 read OPEN (LOOPBACK-EXEMPT, rows Z-W25-S3 and Z-S52). The two
+`opal_runtime_block_dapi_8194_*` rules are LEFT LIVE but **INERT. They are NOT a wall.** They come out, or are kept, in the
+same elevated sitting as the WFP install. The mechanism goes back to the CTO: a raw WFP filter, now at
+`4.0.0_SA_CRO~O` research. On that ruling the issuer cuts ONE new cell (the installer, a -Plan, and the same AC3). This
+order stays open until then. The item-0 close run stays HELD, and the interim (no DAPI client in the runtime) holds.
+
 <status>` IN PLACE, by replacing the existing tag. Never append a second tag; the row gate
    reads the FIRST tag. Standing rules also apply: no push, no install, no vendor call. REFUSE a criterion you cannot
    meet as written, and report the refusal with its measurement.
