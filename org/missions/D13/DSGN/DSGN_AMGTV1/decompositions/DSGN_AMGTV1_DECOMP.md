@@ -1330,3 +1330,17 @@ instrument; g-4 the words of an unserved state; g-5 words and chrome.
   3 on DEV 03311745: lowContrast 5 in each Security state).
 - **Portal base:** DEV 03311745 (LOCAL). **Frozen at the cut.**
 - **Rule 24:** two rows, two orders; one write set each; no served value moves (a walker change; a panel colour).
+
+
+## v18 -- ROUND 18 (issuer, 2026-10-01 ~10:4xZ) -- TWO DIRECT ACTS
+
+**Rectangle:** the CTO's ruling msg 27760 (CONTRACT amendment 3 @b9d096f6dd) on the acceptance walk's one defect (round-17 close
+@4b0135afec): the price bars printed the served `return_30d_pct` at full float precision and clipped. **Cell:** `AV-i-1` (letter i),
+DIRECT ACT, `<risk>LOCAL</risk>`, `PriceBars.tsx` only: one decimal printed with sign and "%", the whole value in `data-price-value`.
+**Check:** `round18/checks/precision.cjs` (issuer): base portal DEV c6aacc68 2 of 3 (128 faults). **Chain:** ~64 alone.
+**Close:** the issuer's live walk (ARM/DISARMED to 0.0.0_AB_MSTR~Z) reads the price PNG for one-decimal values inside the panel.
+**Second cell (CTO msg 27762, from AMGT_CORPUS ADJUDICATION_v36):** `AV-i-2`, DIRECT ACT, `SecurityOverlay.tsx` + `GenerationCaption.tsx`:
+the header's readings line reads the monthly route ("<k> of <n> covered names collected this month") in place of the legacy chatter
+ranking caption, and "1 name" never "1 names". Check `round18/checks/headerline.cjs` (issuer): base 2 of 3. Chain ~65 alone.
+**Width:** M = 2 chains (~64, ~65), N = 2, cap 3.
+**Rule 24:** two rows, two orders, file-disjoint; no served value moves (display rounding; a caption reading a served route).
