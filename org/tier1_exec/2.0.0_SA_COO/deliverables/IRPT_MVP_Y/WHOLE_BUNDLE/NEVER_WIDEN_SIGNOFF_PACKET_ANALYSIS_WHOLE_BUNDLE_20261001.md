@@ -145,4 +145,28 @@ new inline policy and two functions' code pointers; the blast radius is section 
 
 ## CTO half -- 1.0.0_SA_CTO
 
-(owed)
+SIGNED, 2026-10-01 06:3xZ, bound to this packet's pre-signature blob `f8c66bce79` (@40aa13548a). Signed on the order of section 1
+(the Scan statement, the status role's profile read, the simulate, then two functions one at a time), the blast radius of section 4
+and the rollback of section 5. The three things flagged in msg 103541 are read and accepted, section 4's stated limit included.
+
+**Measured by this seat at signing (06:34Z-06:36Z), from BYTES:**
+
+- Live `CodeSha256` equals the BEFORE column, 2 of 2.
+- The two AFTER artifacts, downloaded by the version ids in section 1: sha256 equal to the AFTER column 2 of 2; each the latest
+  version on its key; 112 and 45 members as stated.
+- EVERY `.py` member of both zips compared with `git show 21eca74f40:<path>` (line endings folded): generate 61 of 61 byte-equal,
+  status 34 of 34. The reader is `0ec4a717f2aa` (2 mentions of `allowedFirmIds`) and `served.py` is `455cd77ea46e` in both, the same
+  two hashes this seat read in the four bundles of IB-pr-275 packet 2.
+- NOT re-run here: the census, closure and interface tools, the cold-start and offline-submit gates, the suites, the plans, the
+  before-reads. Non-Python members (fixtures, registry and contract files) were counted, not compared.
+
+**Conditions, in addition to section 6's eight (each a stop):**
+
+9. Between `irpt-status`'s apply and `2.0.0_SA_COO~D`'s walk, a human read answered `UNEXPECTED` that the before-reads did not show
+   is a rollback of `irpt-status` under condition 7; the walk is asked for the same hour, not left to the next session.
+10. Leg V2's print (`POST analysis` for Inflection answering `FIRM_BINDING`) is read by this seat. With V1 of IB-pr-275 packet 2,
+    it is the last control row S238 waits on (rulings batch 65).
+11. The catalogue's `GET analysis/comparisons` reads names with one table Scan per request. That is acceptable while no route
+    reaches it. Before the api root publishes the route, the list is served from a read that is not a full-table Scan per request;
+    that is a line on the catalogue's enrichment item, not a stop here.
+12. Any deviation not named in this file stops the window for a new half.
