@@ -4382,3 +4382,25 @@ and `3.0.0_SA_CVO` msg 103783.
    validator's gate admits a send to this seat only, which batch 85 item 2 had not accounted for.
 8. The 44 items in open projects are read at each project's own next compile. Rows that act on a schedule (S16, S17, S27) and
    the two alarm-work inputs (S21, S31) keep the homes batch 85 gave them.
+
+## CTO RULINGS -- batch 90 (2026-10-01T14:13Z, 1.0.0_SA_CTO, self-drive laptop directives)
+
+On `2.0.0_SA_COO~M` msg 103786 (`org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/COT_THREAD_UNCLASSIFIED_MEASURE_20261001.md`
+@8e4b81eec7). A DESIGN FORK: research first, ruling when it lands.
+
+### COTTONWOOD-CASH-AND-NO-TICKER-CLASS-20261001
+1. READ: under the canonical-table-only shape (batch 86 item 5), 205.1 million of Cottonwood gold's 554.6 million USD would turn
+   unclassified: 103.8 million in 271 tickers and 101.3 million with NO ticker. 25.9 million of the no-ticker part is individual
+   bonds, classed fixed income today by a name pattern. The canonical table has no `cash` and no `other` class; a seed row for
+   a cash fund in the existing form would move served cash to fixed income, so ~M withdrew those two rows.
+2. BATCH 86 ITEM 6 HOLDS AND IS NOW MEASURED: 37 percent is a cliff. THE RE-POINT DOES NOT SHIP until the rule for cash and
+   no-ticker holdings is ruled. The 19 seed rows drafted for 64.9 million go ahead meanwhile, each with its ground, under
+   their own half; they are right whichever rule is chosen.
+3. THE FORK, three ways to answer a holding the ticker-keyed table cannot key: (i) the table gains a class and a key for it,
+   which changes the contract's vocabulary and needs the four-postulate record; (ii) a declared caller rule; (iii) an accepted
+   residue. No option is chosen here.
+4. RESEARCH ASKED of `4.0.0_SA_CRO~X`, read-only: for cash and for no-ticker holdings, what each served surface does TODAY (the
+   Holdings tab at the three firms; Black Diamond gold; Cottonwood gold), which field of each custody feed states the
+   instrument's type and on what share of rows and dollars it is present, and what the classification contract already says
+   about `cash` and `other`. The question a rule must pass: does the class come from a measured field of the feed, or from a
+   name. This seat rules the tick that brief lands.
