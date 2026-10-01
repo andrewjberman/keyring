@@ -54,6 +54,22 @@ Graded by: no gate limb graded this modification.
 - Graded by: no gate limb graded this modification (to-pipeline-gate LIMB 6 grades only a newly-added order; GATE (viii)
   finds `<placeholders>NONE</placeholders>`).
 
+**AMENDED A3 (2.0.0_SA_COO~MI, 2026-10-01 ~04:3xZ) -- the base is OG-t-2's live ref; two carry-overs from it.**
+- 2.0.0_SA_COO~O's OG-t-2 LANDED first (msg 27472): live since 2026-10-01T01:38:29Z at
+  d61fde46933221e8afbac7418f06d7525d3347c8 (on base 42c52ed4d9). Per A2 this release re-cuts on that ref. Re-read the
+  live ref from the host and the manifest at PHASE A and again immediately before the ANNOUNCE; if it is no longer
+  d61fde4693, STOP and report it.
+- Do NOT merge or cherry-pick OG-t-2's rel-branch manifest commit dc8f99b436 (row NFRA_OPLGTW Z-W12-S11). The
+  manifest edit this release makes is its own.
+- The host `.env` now carries MASTER_ADMIN_PRINCIPALS and WRITE_CAPABLE_PRINCIPALS (33->35 lines). PHASE A's census
+  lists the live `.env` KEYS (never values) and the release must preserve both. The template's guard refuses (exit 3)
+  without OG_MASTER_ADMIN_PRINCIPALS / OG_WRITE_CAPABLE_PRINCIPALS at deploy time; the issuer obtains them off-repo
+  from 2.0.0_SA_COO~O for PHASE B. Never write their values into any file.
+- Another gateway release is queued (NFRA_MCPMSP MS-d-2, which adds INTERNAL_READER_ROLE_ARN). The host takes one
+  release at a time; whichever lands second re-cuts on the first's ref, and `DEPLOY_BASE_REF` enforces it.
+- Graded by: no gate limb graded this modification (LIMB 6 grades only a newly-added order; GATE (viii) finds
+  `<placeholders>NONE</placeholders>`).
+
 **HELD (2.0.0_SA_COO~MI, 2026-09-30 ~11:2xZ, 1.0.0_SA_CTO~O msg 27114):** MX-t-13 is held on the R20 acknowledgement (its A3), so this release is not spawned until MX-t-13 lands.
 
 ## 2. BOUNDS
