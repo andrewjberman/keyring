@@ -5,7 +5,7 @@
   "project": "AMGT_RESAPP",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.30",
+  "prd_version": "v0.31",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-security-analysis-20260910.md@19ce7d5b4d",
   "endpoint_outcomes": [
@@ -39,7 +39,11 @@
     "FWD-28",
     "FWD-29",
     "FWD-30",
-    "FWD-31"
+    "FWD-31",
+    "FWD-32",
+    "FWD-33",
+    "FWD-34",
+    "FWD-35"
   ],
   "status": "RATIFIED"
 }
@@ -84,6 +88,11 @@ which held that L4-R forbids annotation, history and seat names across the whole
   `org/tier1_exec/1.0.0_SA_CTO/deliverables/AMGT_RESAPP_ENDPOINT_ADDENDUM_20260915.md` @`2285a23678`, which
   quotes beside each card the Andrew-direct sentence it was cut from; its four cards are byte-identical to
   the four in the ENDPOINT. v0.7 had placed this paragraph inside the ENDPOINT section; v0.8 moves it.
+  `FWD-32`..`FWD-35` (v0.31, ADDENDUM D) compare against the L1 brief
+  `docs/briefs/amgt-security-analysis-friday-demo-brief-20261001.md` @`1391c2f70a` (Part I O1/O2/O4/O7, Part VII.2
+  row COO~Z) and Andrew-direct `4.0.0_SA_CRO~Z/deliverables/ANDREW_DIRECT_20261001_034xZ_AMGT_SECURITY_ANALYSIS_DEMO_FRIDAY.md`
+  @`b28be1769f` ("RESAPP ... is just cleaning up pipelines and establishing what data we even give the opporuntity
+  for the frontend to display ... its just data feeding").
 - **The transcription omission, recorded rather than quietly fixed.** The staged copy of this PRD
   carried a POINTER to the L2 endpoint artifact instead of the outcome cards, with a note saying the
   block "is transcribed into this section when this file lands in the tree." The landing was
@@ -841,6 +850,80 @@ disputable, by rule, and carry no technical language.*
   FWD-28 -> DSGN FWD-19 (beside DSGN FWD-11). NO LONGER PROMISED: nothing.
   FWD-29 -> DSGN FWD-20 (no DSGN owner before this addendum). NO LONGER
          PROMISED: nothing; the mechanical check becomes DSGN's instrument.
+
+  ===== ADDENDUM D, v0.31, 2026-10-01 -- THE FRIDAY DEMO FEED ================
+
+  FWD-32 The page can learn, for every covered name, how much was collected
+         about it in each calendar month -- this month, last month and the
+         months before -- without any name being withheld for thin coverage
+         DONE WHEN  EXERCISED -- a person calls the served monthly chatter
+                    route and reads, for every covered name and for at least
+                    the current month and the two before it, one row per name
+                    per calendar month carrying the collected article count and
+                    its count per publisher, read from the harvest archive's
+                    gold daily chatter; a name with nothing collected in a
+                    month reads a measured zero, not a missing row; the
+                    response states the archive vintage it read; and the route
+                    publishes no name-level hold for partial publisher
+                    coverage. The read carries a POSITIVE CONTROL: one name
+                    whose September articles are known in the archive reads a
+                    non-zero September count
+         ACCEPT     The chatter bubbles on the Lead Panel have real sizes for
+                    every name, this month and the months before, and every
+                    article the harvest adds makes them bigger without anyone
+                    touching the page.
+         SOURCE     brief O1; Part VI "the synergy that unlocks O1"; Part
+                    VII.2 row COO~Z item 4
+
+  FWD-33 Opening a name shows its latest price and chatter readings, every
+         day, with the breakout reading where it says breakout
+         DONE WHEN  EXERCISED -- for every covered name with a served
+                    ranking, a per-name lookup made on a calendar day after the
+                    producer's latest run returns that run's readings (the
+                    latest served trading day, T-1), never an empty answer
+                    because the lookup date has no file; the reading served as
+                    the breakout value is the breakout row's value, never the
+                    trending row's; and the response states the trading day
+                    it served. The read is taken on a day whose own date has
+                    no producer file (the NEGATIVE ARM: before the change that
+                    same lookup returned empty)
+         ACCEPT     An analyst clicks any ranked name on any day and its
+                    header shows numbers, labelled with the day they are for;
+                    the cell that says breakout shows breakout.
+         SOURCE     brief O4; IV.3 (the header reads TODAY, the producer files
+                    T-1; "Breakout (price)" reads the Trending value); Part
+                    VII.2 row COO~Z item 1
+
+  FWD-34 Every movement figure the page is served is already in percent
+         DONE WHEN  EXERCISED -- every price-movement figure in a served
+                    ranking or per-name response (trending return and breakout
+                    jump alike) carries its unit, and the unit is percent: a
+                    move the producer measured as the fraction 0.092 is served
+                    as 9.2 with unit percent; no served field leaves the unit
+                    to the page. Graded on one named example per axis against
+                    the producer's own stored fraction
+         ACCEPT     A nine percent move reads as nine percent everywhere the
+                    page shows it, and nobody downstream has to guess whether
+                    a number is a fraction.
+         SOURCE     brief IV.3 (ASML +9.2% read "+0.09%"); Part VII.1 units
+                    clause; Part VII.2 row COO~Z item 2
+
+  FWD-35 The price ranking covers every name the firm covers, with a
+         thirty-day signed return for each
+         DONE WHEN  EXERCISED -- the scheduled price ranking's latest
+                    generation carries one row for every covered name with at
+                    least two price observations in the window, out of the
+                    covered-name population read fresh from the research folder
+                    with its denominator printed; each row serves the name's
+                    thirty-day return, SIGNED, in percent; names without the
+                    observations are counted and named in the generation's own
+                    exclusion record, never silently absent. The generation
+                    came from the scheduled producer, not an ad-hoc run
+         ACCEPT     The price bars on the Lead Panel show every covered name
+                    that moved, longest first, with falls shown as falls --
+                    not the 29 of 95 the old name list happened to hold.
+         SOURCE     brief O2, O7; IV.2 (34-name list; 29 of 95 covered names);
+                    Part VII.2 row COO~Z item 3
 ```
 
 **BAR DISTRIBUTION: 19 of 20 are `EXERCISED`; only `FWD-9` is `APPLIED`.**
@@ -2485,3 +2568,93 @@ The map reads 9 rows: 8 `partly-covers`, and 1 `none` (FWD-29).
 
 **L4-R:** this changes ENDPOINT text (the fence block), so the ratified half re-opens to `3.0.0_SA_CVO~Z`. Under R-10 it
 is reviewed, not held on a stamp. FWD-1..FWD-20, FWD-30, FWD-31 and every contract are unchanged.
+
+# ADDENDUM D -- THE FRIDAY DEMO FEED (v0.31, L4, 2026-10-01)
+
+**Author** `1.0.0_SA_CTO~Z`, the `/self-drive` driver over AMGT (record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261001_040xZ_SELF_DRIVE_60M_AMGT_FOUR_PLUS_ETFS_RIVALS_ARM_ON_CRO_BRIEF.md`
+@`8f56ef5f81`). **Driver** `2.0.0_SA_COO~Z`. **Deadline (Andrew):** on PROD by 09:00 ET Friday 2026-10-02
+(`ANDREW_DIRECT_20261001_0357Z_AMGT_DEMO_ON_PROD_BY_9A_FRIDAY_FINISH_IN_24H.md` @`4cff5b352d`).
+
+**L1 basis:** `4.0.0_SA_CRO~Z`, `docs/briefs/amgt-security-analysis-friday-demo-brief-20261001.md` @`1391c2f70a`, a
+cross-project midstream brief. This project's share is its Part VII.2 row COO~Z. Andrew's word on this project,
+VERBATIM: *"I think a lot of this is just cleaning up pipelines and establishing what data we even give the
+opporuntity for the frontend to display. I think this project doesnt have to rely on design, its just data feeding."*
+**Placement:** `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20261001_043xZ_AMGT_FRIDAY_DEMO_RESTRUCTURE.md`
+@`e18d3a4e6a`, rulings R3, R11 and R12.
+
+## D.1 -- WHAT THIS ADDENDUM ADDS AND WHY
+
+- **`FWD-32`..`FWD-35`** take the next unused ids. Their definitions live in the ENDPOINT section above (one carrier);
+  the header's `endpoint_outcomes` lists them.
+- **`FWD-32` is the critical-path outcome of the whole sprint.** The bubble chart DSGN_AMGTV1 builds sizes by what was
+  collected per name per month. The ranking rows carry no per-month count; the gold daily chatter does. Today no served
+  route aggregates it (brief IV.3). This route is cut FIRST in the round (placement section 3).
+- **`FWD-33`** closes the page-wide empty header: the producer files T-1 and the per-name read asks for today (brief
+  IV.3). The fix is server-side (`C-AMGT-FRIDAY-CONTRACT`'s date rule); the page never guesses dates.
+- **`FWD-34`** settles the unit at the source, so the page displays as served (brief VII.1 names the double-fix risk:
+  both seats proposed fixing it).
+- **`FWD-35`** widens the price ranking from a 34-name list in an old worker folder to the covered names, and serves
+  the measure Andrew's horizontal bars need (placement R3: thirty-day return, signed, percent).
+- **`FWD-15` is unchanged.** These four outcomes feed it; a cross-project dependency transfers the obligation, never
+  the satisfaction (`3.0.0_SA_CVO~Z` @`dbcf788466`), so nothing DSGN_AMGTV1 renders is credited here.
+
+## CONTRACTS -- D.2 -- NEW CONTRACTS (v0.31)
+
+**`C-AMGT-FRIDAY-CONTRACT`.** The served shape of the monthly chatter route, the unit of every movement figure and the
+T-1 date rule are those of the shared one-page contract
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/AMGT_FRIDAY_DEMO_20261001/CONTRACT.md`, which names ONE writer per shared
+surface. This project is the writer of every served field and route the page reads; DSGN_AMGTV1 builds against the
+contract's shape and fixtures and wires to the route when it lands. A field the page needs that no route serves is a
+cell here, never a page-side fetch or computation (`C-PRESENTATION-ONLY` stands).
+
+**`C-MONTHLY-CHATTER-NO-COVERAGE-GATE`.** The monthly chatter route (`FWD-32`) serves the raw collected count per name
+per calendar month, with its per-publisher breakdown, and applies NO name-level coverage gate. It is not a ranking, so
+`C-SERVER-SIDE-RANKING`'s chatter gate and its "no rank without signal" clause do not bind it; a zero is a measured
+zero and is served as one. Every response carries the gold vintage it read (the value must carry its claim). The
+ranking jobs keep their own gates unchanged. Display label: "collected", never "market chatter" (brief VII.4).
+
+**`C-SERVED-T1-FALLBACK`.** A per-name lookup whose requested date has no producer file is answered from the latest
+served generation at or before that date, and the response names the trading day it served. A failed or absent
+producer read is NOT an empty answer and is NOT a silent fallback across more than the trading calendar's gap: the
+trading frontier comes from `lib/trading_calendar.py`, and a gap wider than the latest trading day is served with its
+staleness stated. `C-RANKING-GENERATION` stands.
+
+**`C-MOVEMENT-IN-PERCENT`.** Every served movement figure carries an explicit unit field, and that unit is percent.
+Producers may store fractions; the conversion happens once, server-side, at serve time or at write time, and the cut
+names which.
+
+**`C-PAGE-UNIVERSE-ONE-NAME`.** The universe the Lead Panel's served routes rank and aggregate over is ONE named
+universe: the covered names, read as `C-BACKFILL-DENOMINATOR-IS-THE-RESEARCH-FOLDER` requires (a fresh reading with
+its denominator printed; 95 at the brief's read, never pinned). The other page-path universes in use (the 34-name price
+list; the 191-name chatter list last written 2026-09-16; the 237-name list) are retired FROM THE PAGE PATH. ⚠
+**`C-UNION-UNIVERSE` IS UNTOUCHED:** the HARVEST universe (coverage list UNION ETF holdings) is Andrew's word of
+2026-09-15 and is not collapsed by this contract; this clause binds what the page's routes serve, not what is harvested.
+
+**`C-NO-DEAD-INPUTS-ON-THE-CHATTER-PATH`.** The chatter rankings and the header news feed stop reading the legacy
+article layout whose harvester has been disabled since 2026-09-15, the articles table holding 0 items and the social
+prefix whose collection is off (brief IV.2). Their chatter input is the harvest archive's
+`amgt/harvest/{silver,gold}` data. One of the two duplicate dossier prefixes (`research-dossier/` and
+`research_dossier/`, the same 95 names) is retired after its readers are moved; the cut names the survivor and
+lists every reader moved, with the reader count printed before and after. Retiring is stopping the reads; deleting the
+prefix's objects is NOT authorised here (an S3 delete needs Andrew's confirmation).
+
+**`C-FRIDAY-NEVER-WIDEN`.** `FWD-32`..`FWD-35` and every removal above move what the API serves. Each served act
+carries both never-widen halves, CTO and COO, naming its blast radius and its rollback per key BEFORE it lands
+(CLAUDE.md NEVER-1). The CTO signs within the self-drive tick it is asked (placement R12). A verified DELTA=0 act needs
+no hold.
+
+## D.3 -- WHAT ADDENDUM D DOES NOT DO
+
+No page or design change (DSGN_AMGTV1 owns presentation). No change to `C-UNION-UNIVERSE`, the harvest collection
+method or any HARVST surface: this project reads HARVST gold and never writes it. No price backfill of the missing
+trading days 2026-09-16..09-22: the price job has no past-date option, and the Bloomberg Terminal session on site Z is
+Andrew's act (placement section 5, item 1). No vendor call. No PROD promote; that is placement section 1's step. No S3
+delete.
+
+## D.4 -- L4-R
+
+ADDENDUM D adds ENDPOINT lines and CONTRACTS, so the RATIFIED half re-opens to `3.0.0_SA_CVO~Z`. Its brief is a new
+cross-project brief written by `4.0.0_SA_CRO~Z`, so under PROPORTIONATE SIGN-OFF the brief half is accepted as the
+CRO's own text. This is an ENDPOINT change, so the CVO re-signs. `FWD-1`..`FWD-31` and every existing contract are
+unchanged.
