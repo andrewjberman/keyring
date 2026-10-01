@@ -5402,6 +5402,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "Not touched (lib/opal_data_harvest/bot_check.py is outside this order's paths)."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W90-S8",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~90",
+      "surfaced_at": "2026-10-01T15:00Z",
+      "one_line": "Z-W90-S7 resolved: bot_check perimeterx signature now needs the challenge; sa's hidden px-captcha mount reads no signature (fix 42ea2c30c1).",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Amendment 1: a PerimeterX signature needs a visible challenge or the block page, not the bare mount or script include.",
+      "world_is": "Fix at 42ea2c30c1. Zero saved real bbg PerimeterX challenge DOM html files exist under the HARVST deliverables (count 0), so plant ii uses the existing synthetic px-captcha fixture in test_ac1_bot_check_class.py plus a visible-mount DOM and a block page. Mount pattern is id=px-captcha element (sa's real page also carries a .px-captcha-visible CSS selector, not a mount). A real bbg challenge DOM carried in the future must be added to plant ii; the bbg press-and-hold text is already caught by the earlier bloomberg_press_and_hold signature.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/bot_check.py@42ea2c30c1",
+          "lib/opal_data_harvest/test_ag2_sa_signature.py@42ea2c30c1"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Resolves AMGT_HARVST-Z-W90-S7 (append-only: that row is untouched). disarm_owner 2.0.0_SA_COO~H (nothing armed)."
     }
   ]
 ```
