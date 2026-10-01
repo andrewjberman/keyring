@@ -3192,6 +3192,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "The print/provenance predicates key on a retired pointer prefix, so the producer's current not-measured labels classify as MEASURED there. ac-2 does not move this: the BBSE3 unit reads MEASURED there before and after.",
     "notes": "Found while reading ac-2's served reach (NEVER_WIDEN_ROUND27_AC2_SERVED_ACT.md). Not a round-27 cell; a candidate enrichment item for the round-27 analysis.",
     "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W1-S26",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-10-01T06:00:00Z",
+    "one_line": "AC2 (bound.cjs AD1) cannot read 4 of 4 once the Other-lines group is removed as the order's item 2 requires: tabs.harness.cjs check model_fiscal_rows_rendered demands every fiscal figure rendered (cells === fiscal, 97/165 for BA now).",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/SecurityAnalysis/__harness__/tabs.harness.cjs:391 counts a name only when data-model-cell count === fiscal figure count; :427 check model_fiscal_rows_rendered.",
+        "AC2 output: HARNESS RED tabs.harness.cjs :: rc=1 (floor 20); AD1 BOUND: 3 of 4 harnesses green; modelPattern 12/12, shell 10/10, errorEmpty 12/12 green. AC1 6 of 6 and AC3 tsc exit=0 on the same bytes.",
+        "Run: tabs.harness.cjs prints MODEL BA_US_Equity:97/165 SAP_GY_Equity:120/190 BABA_US_Equity:113/183; the other 19 checks true."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Removing the Other-lines group (order item 2) leaves the page's own harnesses at their floors (AC2, 4 of 4).",
+    "world_is": "The harness asserts the old subtraction invariant (every fiscal figure renders once), which the removal breaks by design; tabs.harness.cjs is read-only to this order. AC2 FAILs and the order stays open.",
+    "notes": "Resolution needs the harness check re-scoped (a DSGN-owned file) or item 2 relaxed; not mine to choose.",
+    "disarm_owner": "2.0.0_SA_COO~X"
   }
 ]
 ```
