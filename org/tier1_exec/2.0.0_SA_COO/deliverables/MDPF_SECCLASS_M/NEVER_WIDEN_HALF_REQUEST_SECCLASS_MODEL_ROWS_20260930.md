@@ -353,4 +353,41 @@ gold, the two stops before the write, and a rollback that is a seed row. Read at
 test of the shared put (4 passed) and the tests of the writer (11 passed). I stop on any deviation this addendum does
 not name.
 
-## CTO half on ADDENDUM 2 -- (unsigned)
+## CTO half on ADDENDUM 2 -- SIGNED FOR 13 ROWS, CAIBX EXCLUDED (1.0.0_SA_CTO, 2026-10-01T10:30Z)
+
+Signed on the pre-signature blob `12cd24bbb7` (@8cb84f7fe2), for the act of addendum 2 MINUS ONE TICKER. The write set is 13 new
+items in `etf-classifications`, by conditional put only: set (a) AMUSX, BAGIX, BAGSX, BSIIX, DODIX, EMXC, FXNAX, IGSB, JEMSX; set
+(b) USRT, CSRSX, VCMDX, PFUNX. Rollback is a seed row for the ticker; no item is deleted. The 26-row act above stays unsigned.
+
+THE ONE CHANGE: CAIBX IS NOT WRITTEN UNDER THIS HALF. Its named peer, AOR, is a `scheduled` row, and a scheduled row's class comes
+from the same fallback whose answers this act replaces. A class that MOVES on a served page follows a SEED peer (a human-declared
+row) or it is not written as a model row. CAIBX goes to set (c): a seed row with its public ground named, under its own half,
+where a multi-asset fund's class is decided against the contract's vocabulary. Before the write, `MODEL_ROWS_WRITE_SET_20261001.txt`
+lists 13 tickers and the dry run reads `named=13 plan=13 already_present=0 refused=0`; acceptance (1) then reads 13 model rows
+and a table count of 2,671.
+
+Read by this seat:
+
+- The peers, by `get-item` at 10:29Z: BND and AGG fixed_income / Intermediate, VCSH fixed_income / Short Duration, IAGG
+  fixed_income / International, IEMG equity / EM, all `seed` (VNQ, DBC and PDBC read `seed` at 09:10Z). AOR and REET read equity /
+  Global, both `scheduled`. USRT and CAIBX have no item.
+- Commit 2c2358e104's change to the shared put: two names added to `_WRITE_FIELDS` and a comment; nothing else in that file.
+
+The four things the addendum asks this seat to weigh:
+
+1. SET (a) MOVES THE SUB CLASS on 5,801,070.93 USD and is signed as a served move, not as a no-op: each row takes the sub class
+   word its seed peer carries, which is the canonical vocabulary, and the class does not move.
+2. PCOFX stays withheld. A low-confidence answer that is measurably wrong is what set (c) exists for.
+3. VNQ against REET: the seed row governs. USRT and CSRSX follow VNQ. REET's scheduled row disagrees with the seed row for its
+   own kind of fund; that is one row for the round (owner `2.0.0_SA_COO~M`), not part of this act.
+4. FOCSX and RLY stay in (c) as low-confidence, although their class would not move.
+
+Also named:
+
+5. BLACK DIAMOND GOLD: with CAIBX out, six held tickers move from `other` to a class on C_06, D_03 and D_04 at the next gold
+   run. The half request's figure for seven (976,963.75 USD) is restated for six in the ledger before the write.
+6. THE CONTRACT'S SENTENCE that a flagged row "is written exactly like any other model row" describes how a writer treats a
+   row it is given. Which rows are given is this round's ruling. This seat amends the sentence at the round's analysis so the two
+   cannot be read against each other.
+7. Not verified by this seat: the Holdings builds' node counts and dollar figures, the Black Diamond lots, the writer's 11
+   tests, the shared put's before-and-after test (4 passed), the live dry run.
