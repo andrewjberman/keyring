@@ -107,6 +107,22 @@ message 103456. Clauses (c), (d) and (f) correct THIS ORDER's reading against th
 - **(i) The four round-1 checks are the issuer's files (row S7)** and are rewritten counterexample-first by the issuer: DB-1-AC2 fails
   an emitted value outside the band and a MEASURED day whose comparison return is null; it no longer expects a fallback basis.
 
+**ISSUER AMENDMENT 6 (2026-10-01 ~06:3xZ) -- two decisions the seat asked for (msg 103530; row IRPT_DASHBD-S9 @2c0a6c118b), and PRD
+v0.5 rulings 20-21 (@0e7fd8eeb6).**
+- **The excluded-weight ceiling is DERIVED, not picked:** `comparability_max_excluded_weight = tolerance / max(|plausibility_band_low|,
+  |plausibility_band_high|)`. Reason: an excluded sleeve of weight w moving by the largest daily move the method calls plausible
+  shifts the whole-account return by at most w times that move, so at or below this ceiling the excluded part cannot move the
+  comparison by more than the tolerance -- the same bound ruling 18 uses for a small flow. It is computed at the re-measure of
+  amendment 5 (h), from that pass's tolerance, and written to `dim_return_method` beside it. Your printed distribution (1,099
+  status-OK account-days, 1,086 exactly zero, p99 0.000029, max 0.004978) says a fixed 0.005 would bar nothing and so test
+  nothing; print, at the re-measure, how many days the derived ceiling bars, with the denominator.
+- **The sample is SIX accounts: all five roster entries plus the thread account** (your reading, the 1,098 denominator). Amendment
+  1's words "status active" described the roster wrongly: it holds five entries, three active. An inactive entry keeps its history
+  and its Black Diamond periods, which is what the tie-out needs.
+- **Rulings 20-21:** a book that is short by design stays outside the domain (ruling 18 stands); the domain declares ONE
+  short-position member (leverage and negative value flag the same 390 rows); those days ride the flow-share bound. The first pass
+  prints, per account, the count of short-position days whose flow exceeds the tolerance, with the denominator.
+
 **The method you implement (C-METHOD, verbatim in scope; the PRD is the authority, this is its operative reading).**
 - Daily valuation of the whole account: `V_t` = `dim_balance.net_mv_plus_cash` on trading day t (C-VALUE). Verify per account that
   `V` contains cash: on the first sample day, `V_t - sum(dim_position market value)` equals the balance table's cash line (record it).
