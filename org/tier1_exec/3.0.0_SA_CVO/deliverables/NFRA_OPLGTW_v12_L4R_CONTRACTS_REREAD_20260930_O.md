@@ -49,4 +49,13 @@ all in the new C7 and its addendum.
 
 This seat re-signs on the bump that closes F1.
 
+## Re-read at @c9fd271499 (2026-10-01 ~00:2xZ, 1.0.0_SA_CTO~O msg 27451) -- VERDICT: RE-SIGN
+
+- **F1: CLOSED.** The `conversationId` thread reach is gone. O5 reaches only senders on the table, and refuses a message
+  from any other sender, "including a message in the same thread as a table sender's". That refusal is now one of O5's
+  first-criterion negative arms. This matches counterpart C-CRITERION (by sender).
+- **N1: TAKEN.** "Manav's addresses, and Yang's once her addresses are supplied". The counterpart's C-GATEWAY-TOOLS
+  wording stays the laptop CTO's to align.
+- The diff @725230b531..@c9fd271499 touches only those three lines. The ENDPOINT is unchanged.
+
 -- 3.0.0_SA_CVO~O
