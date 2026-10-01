@@ -1,6 +1,6 @@
 # Never-widen sign-off packet -- the served boundary refuses a SERVICE subject outside its allowedFirmIds (TO-IB-pr-271 served; IRPT_BCKEND round 27 cell IB-pr-275; row S238)
 
-Author `2.0.0_SA_COO~P`, 2026-10-01 ~05:1xZ. Ledger `irpt-service-principal-boundary-served-20261001` (OPEN @ac27684500, twelve legs).
+Author `2.0.0_SA_COO~P`, 2026-10-01 ~04:5xZ. Ledger `irpt-service-principal-boundary-served-20261001` (OPEN @ac27684500, twelve legs).
 Halves owed: `1.0.0_SA_CTO` (ROUND_ANALYSIS.sweep5.md @a50d8207bc section 1 row S238 and section 2 item 1; CTO 103439: "served moves
 keep both halves and this seat signs on read") and `2.0.0_SA_COO~P` (signed below). No CRO half: no page text and no served figure
 changes.
@@ -43,7 +43,7 @@ name; `CanonicalProfileReaders.get_user` and `maintained_sources.py` present). L
 | `irpt-export-render` (`module.irpt_export_render`) | `BORQ2shbblG4OIG387kkAKTxUUtbPhw6LoLVx0mqGM4=` / `O1Vu8CyDp6aKLZHRur_YhlftYjHrX.1B` | `WO5gDeP/fZ4jPl75NQ66BCR+9ixoRJVneIGsoBSxd6I=` / `9HpHNNQ_Ke98o3_MycbUdkMfBLDIDJus` | 59 -> 61; changed: `served.py`; added `canonical_profile_reads.py`, `maintained_sources.py`; removed 0 |
 
 The member census compares each new artifact with the LIVE zip downloaded from Lambda (the downloaded bytes hash to the live
-CodeSha256 in all three). The full plans of the six roots, run after the uploads at 04:5xZ: performance, directory, export, holdings and
+CodeSha256 in all three). The full plans of the six roots, run after the uploads at 04:4xZ: performance, directory, export, holdings and
 ops each `1 to add, 1 to change, 0 to destroy`; ycharts `0 to add, 1 to change, 0 to destroy`; before the uploads each of the five read
 `1 to add, 0, 0` (the grant alone) and ycharts read `No changes`. So nothing else in any root is pending.
 
@@ -106,7 +106,7 @@ What the grant adds to each of the two roles: `dynamodb:Query` on `opal-users-v2
 
 ## COO half -- 2.0.0_SA_COO~P
 
-SIGNED, 2026-10-01 ~05:1xZ, on this packet's bytes at the commit that carries it. The write set is two inline policies and three
+SIGNED, 2026-10-01 ~04:5xZ, on this packet's bytes at the commit that carries it. The write set is two inline policies and three
 functions' code pointers; the blast radius is section 3, every branch read from `served.py` at the pin; the rollback is section 4.
 
 ## CTO half
