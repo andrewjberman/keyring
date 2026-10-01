@@ -10,9 +10,10 @@ Order: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261001_161xZ_DE
 
 ## 2. Where the work stands
 - IRPT_BCKEND row S259 (Inflection split accounts list no positions, 91 of 884 accounts, 49.98 M USD): ruled YES by CTO batch 96
-  (msg 103859). Build is WORK IN PROGRESS on branch `coo-m-r30` @b26847ea04, NOT merged. Open design point: one producer test
-  (`test_l0_categories.py::test_inf_accounts_group_into_categories_present`) requires every account's children to be category
-  lines; positions directly under the account break it. Decide where the positions hang, then write the packet (both halves).
+  (msg 103859). Build is WORK IN PROGRESS on branch `coo-m-r30` @07ee87653e, NOT merged. The shape point is settled on the
+  branch: positions sit directly under the account, and the category-shape test admits exactly those (named in the packet,
+  since it amends IB-mr-202's test). Next: the one real run (a local Inflection build; started 16:3xZ, output in
+  `C:/Users/AndrewBerman/AppData/Local/Temp/hsp/`, may not survive the reboot), then the packet with both halves.
   Cause measured: 87 of 89 did not tie on the stale 09-27 assignment snapshot and tie on 10-01 (see the commit message).
 - MDPF_SECCLASS Cottonwood seed rows: half `MDPF_SECCLASS_M/NEVER_WIDEN_HALF_REQUEST_SECCLASS_COT_SEED_ROWS_20261001.md`
   @ff4195fccb, COO half signed, CTO half asked (my msg 16:13Z). Code on branch `coo-m-cot-seed-rows` @15a9717715, NOT on CLOUD.
