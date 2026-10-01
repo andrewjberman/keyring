@@ -38,7 +38,7 @@
 #
 # EXIT CODES: 0 merged | 1 refused, merge aborted | 2 usage/precondition, nothing done
 #             4 CONFLICT, THE MERGE IS OPEN AND YOURS TO RESOLVE (nothing landed)
-#             5 COMMITTED BUT THE BRANCH WAS NOT CARRIED (tree check, see _verify_merge_tree)
+#             5 COMMITTED BUT THE BRANCH WAS NOT CARRIED, in whole or in part (tree check, see _verify_merge_tree)
 #
 # Owner 2.0.0_SA_COO (the drain is the COO's limb). Lane .tools/ (ANY).
 set -uo pipefail
@@ -86,7 +86,7 @@ if [ "${1:-}" = "--self-test" ]; then
   chk "a CONFLICT does NOT abort -- the S36 fix (exit 4, merge left open)" \
       "grep -q 'CONFLICT -- THE MERGE IS OPEN AND NOTHING HAS LANDED' '$0' && grep -q 'exit 4' '$0'"
   chk "the conflict path records what the merge staged (so --continue can spot a foreign file)" \
-      "grep -q 'git diff --cached --name-only > \"\$STATE\"' '$0'"
+      "grep -q 'comm -12 \"\$STATE.cached\" \"\$STATE.mine\" > \"\$STATE\"' '$0'"
   chk "--continue refuses while any path is still UNRESOLVED" \
       "grep -q 'still carry unresolved conflict markers' '$0'"
   chk "--continue refuses a path THIS MERGE DID NOT STAGE (the drain-sweep guard)" \
@@ -100,6 +100,9 @@ if [ "${1:-}" = "--self-test" ]; then
   # REGRESSION ARM (1.0.0_SA_CTO~Z 2026-09-29): "MERGED" was printed on merges whose tree equals ^1.
   chk "the commit path reads the TREE before reporting MERGED (exit 5 when the branch was not carried)" \
       "grep -q '_verify_merge_tree HEAD' '$0' && grep -q 'COMMITTED BUT THE BRANCH WAS NOT CARRIED' '$0'"
+  # REGRESSION ARM (2.0.0_SA_COO~Y 103457): a PARTIAL drop on parents that merge clean returned 0 and printed MERGED.
+  chk "a partial drop is graded against the clean merge tree of the parents (exit 5 when a needed file is lost)" \
+      "grep -q 'git merge-tree --write-tree' '$0' && grep -q 'NEEDED FILE(S) WERE NOT CARRIED' '$0'"
   chk "--verify-merge refuses a non-merge commit" \
       "! bash '$0' --verify-merge \"\$(git rev-list --no-merges -n 1 HEAD)\" >/dev/null 2>&1"
   echo "DENOMINATOR: $((n-fails)) of $n arm(s) passed"
@@ -136,11 +139,12 @@ _merge_open() { [ -f "$(git rev-parse --git-path MERGE_HEAD 2>/dev/null || echo 
 # ancestor: a re-run is a no-op and /cleanup would delete its worktree as "merged". ONLY THE TREE TELLS.
 # NEED    = files the branch changed (merge-base..^2) that the first parent did not already carry.
 # DROPPED = NEED files the merge commit did not change. All of NEED dropped -> rc 5 (not carried).
-#           Some dropped -> WARN only: a PICK-ours conflict resolution is legitimate.
+#           Some dropped -> rc 5 when the parents merge CLEAN and the file differs from that clean merge tree
+#           (no conflict, so no PICK-ours: lost work); WARN only when the parents conflict (a PICK-ours is legitimate).
 # FOREIGN = files the merge commit changed that the branch never touched -> WARN only: a drain may
 #           legitimately carry task-order status closes in the merge commit (/dispatch Step 5).
 _verify_merge_tree() {
-  local m="$1" mb bfiles need landed dropped foreign nn nd
+  local m="$1" mb bfiles need landed dropped foreign nn nd mt mtrc exp lost nl
   git rev-parse -q --verify "$m^2" >/dev/null 2>&1 || { echo "safe-merge: $m is not a merge commit -- nothing to verify" >&2; return 2; }
   mb="$(git merge-base "$m^1" "$m^2" 2>/dev/null)" || { echo "safe-merge: no merge-base for $m -- tree check could not run" >&2; return 2; }
   bfiles="$(git diff --name-only "$mb" "$m^2" | LC_ALL=C sort)"
@@ -164,6 +168,28 @@ _verify_merge_tree() {
     return 5
   fi
   if [ "$nd" -gt 0 ]; then
+    # PARTIAL DROP (2.0.0_SA_COO~Y msg 103457: 1ee1c56e9b carried 1 of 16 needed files and this function returned 0).
+    # Whether a partial drop is legitimate is decidable from the two PARENTS alone: `git merge-tree --write-tree`
+    # rebuilds the merge without touching any index. rc 0 = the parents merge CLEAN, so nobody resolved a conflict,
+    # a PICK-ours is impossible, and that tree is exactly what this commit had to carry -- a dropped file that
+    # differs from it is lost work (rc 5). A dropped file that EQUALS it is not lost: the first parent already held
+    # the branch's change. rc non-zero (a real conflict, or a git without --write-tree) keeps the WARN below.
+    mt="$(git merge-tree --write-tree "$m^1" "$m^2" 2>/dev/null)"; mtrc=$?
+    exp="${mt%%$'\n'*}"
+    if [ "$mtrc" -eq 0 ] && git rev-parse -q --verify "${exp}^{tree}" >/dev/null 2>&1; then
+      lost="$(LC_ALL=C comm -12 <(printf '%s\n' "$dropped" | sed '/^$/d') <(git diff --name-only "$exp" "$m" | LC_ALL=C sort))"
+      nl="$(printf '%s\n' "$lost" | sed '/^$/d' | wc -l | tr -d ' ')"
+      if [ "$nl" -gt 0 ]; then
+        echo "safe-merge: *** COMMITTED BUT ${nl} OF ${nn} NEEDED FILE(S) WERE NOT CARRIED -- the parents merge CLEAN, so there was no conflict to resolve and each one is lost work. ***" >&2
+        echo "            The branch now reads as MERGED (an ancestor), so re-running safe-merge is a no-op." >&2
+        echo "            Land each file's merged content, then commit it by path under your serial:" >&2
+        printf '%s\n' "$lost" | sed '/^$/d; s/^/              /' >&2
+        echo "                git restore --source=${exp} -- <the files above>   (the clean merge tree of the two parents)" >&2
+        return 5
+      fi
+      echo "safe-merge: ${nd} of ${nn} needed file(s) equal the first parent, and so does the clean merge tree -- the first parent already carried them; nothing lost"
+      return 0
+    fi
     echo "safe-merge: WARN -- ${nd} of ${nn} needed file(s) kept the first parent's version (fine for a PICK-ours resolution; otherwise it is lost work):" >&2
     printf '%s\n' "$dropped" | sed '/^$/d; s/^/              /' >&2
   fi
@@ -449,7 +475,7 @@ rm -f "$STATE" "$STATE.branch" 2>/dev/null || true
 # Read the TREE now, before reporting anything (see _verify_merge_tree).
 _vrc=0; _verify_merge_tree HEAD || _vrc=$?
 if [ "$_vrc" -eq 5 ]; then
-  echo "safe-merge: NOT MERGED -- commit $(git rev-parse --short HEAD) landed WITHOUT the branch's content (exit 5)." >&2
+  echo "safe-merge: NOT MERGED -- commit $(git rev-parse --short HEAD) landed WITHOUT the branch's content, in whole or in part (exit 5)." >&2
   exit 5
 fi
 echo "safe-merge: MERGED and committed -- $(git rev-parse --short HEAD)"
