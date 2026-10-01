@@ -93,6 +93,42 @@ It must read, for BASG:
 Anything else STOPs the act before G5 writes. The two G3 label cells may now name the imported G3 revision; that is the
 expected move.
 
+## 1f. ISSUER AMENDMENT 4 (2026-10-01 ~04:0xZ, 2.0.0_SA_COO~RV) -- RESUME after the reboot wind-down; row W5-S24 disarmed by a silver change
+
+This order was stopped PARTIAL at the reboot (drain @e12fefdbff, on origin). The ledger entry `etfs-rivalfunds-round2` is OPEN and
+committed: do NOT open a second one. Continue it, and close it or roll back per key at the end. Your worktree is cut from CLOUD HEAD.
+Read `deliverables/0.9.0_WK_ETFS_RIVALS~5/d3_live.json` first. Its `remaining` list is your work, in this order:
+
+1. **Disarm row ETFS_RIVALS-Z-W5-S24 (silver supersedes WITHOUT deleting).**
+   - The issuer rules the remedy, and it is NOT a DeleteObject grant: key 7 of the signed pair reads "no DeleteObject anywhere".
+   - In `data/etfs/scripts/rivalfunds/silver_bloomberg.py`, remove the `_delete` of earlier captures' silver objects (lines 249-256 at
+     CLOUD HEAD and the `_delete` import). Keep each one recorded in `dropped` with `"was_in_silver": True, "retained": True`.
+     Reword the module docstring's dedupe paragraph: superseded silver is retained; readers take the newest capture per (fund,
+     report date).
+   - Why this is safe: `gold_canonical_shape._bbg_latest` reads the newest capture per fund at a date, and
+     `gold_holdings_coverage.bbg_stats` reads by exact capture id. So a retained object changes no gold value.
+   - Add `data/etfs/scripts/rivalfunds/tests/test_d1_silver_supersede_retains.py`. A local sink with an existing older capture at
+     a (fund, date), replayed with a newer one, must: return `OK` WITH a marker; keep both objects; and record the older one
+     `retained`.
+   - Run the whole package with `python -m pytest data/etfs/scripts/rivalfunds/tests -q`. Your only failures may be the two
+     S19 tests, which item 2 fixes.
+   - Ship it with the next in-place `safe-apply` of the `etfs-rivalfunds` stack (key 6: a `source_code_hash` update to the
+     build-silver Lambda only). Any other plan line STOPs.
+   - Then record the row's resolution in `INVESTIGATION_v1.Z.md`. The new code must be live BEFORE batches 07 and 08 import.
+2. **Row S19 (two stale tests).**
+   - `test_g01_universe.py::test_default_map_shape` must expect `policy("PFOE") == "home_producer"`.
+   - `test_g12_canonical_multi_source.py::test_home_producer_policy_is_counted_unread_and_pending_is_not_read` must expect
+     `home_producer_unread == ["IDVZ", "PFOE"]`. Keep its pending-is-not-read limb on a fixture map that sets one fund
+     `home_producer_pending`.
+   - Change no production behaviour for this item.
+3. **Import batches 07 and 08** (`d3_act.py chunk 7 --sink s3`, then `chunk 8 --sink s3`). Build gold by marker. Batches 04 and 05
+   are already built (gold came from replay events); leave them unless AC2 shows a gap.
+4. **The G2 full-history replay, then republish the page.** The two events are named in `remaining`.
+5. **The one enabling line** (step 4 of section 1b). Then re-run `b-1.AC3` (it must still PASS), then AC1-AC3. Close ledger keys
+   L3-L6 with proof. Update `d3_live.json` (`act_state`, every prefix count, the request ids, `remaining` emptied).
+6. No Bloomberg request, and no Terminal sign-in. The first live 08:03 fetch waits on Andrew's sign-in. That is the close-read,
+   never a wait in this order.
+
 ## 2. THE RULINGS THAT REACH EVERY CELL (inlined verbatim from the decomposition)
 
 ### Round 2
@@ -220,6 +256,9 @@ OpenAI call; any alert, alarm, SNS or monitor; any file another cell of this rou
 data/etfs/scripts/rivalfunds/peer_groups.json
 data/etfs/scripts/rivalfunds/sweep.py
 data/etfs/scripts/rivalfunds/tests/test_d1_*.py
+data/etfs/scripts/rivalfunds/silver_bloomberg.py
+data/etfs/scripts/rivalfunds/tests/test_g01_universe.py
+data/etfs/scripts/rivalfunds/tests/test_g12_canonical_multi_source.py
 infra/aws/terraform/etfs-rivalfunds/
 infra/aws/lambda/etfs-pipeline/etfs-rivalfunds-*
 infra/aws/lambda/etfs-pipeline/rivalfunds-*
