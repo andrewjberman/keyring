@@ -5596,3 +5596,31 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S27",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-01T05:25Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Ruled by the issuer in amendment A1 on TO-OG-pr-1: the targeted apply is fed as OG-n-1's was -- owner-key variables read from the live grant-writer Lambda into TF_VAR_* (never printed), the grant writer's staged build made by its own build_package.py, and the deps-layer zip copied from the main tree's untracked build output. None of those resources is targeted; the 1/0/0 plan reading guards against spill.",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W18-S1"
+  ],
+  "one_line": "How OG-pr-1's targeted apply is fed (row W18-S1) is ruled by amendment A1, on the OG-n-1 precedent.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-n-1 proof AC2 invocation: TF_VAR_mcportal_owner_key_claim=sub TF_VAR_mcportal_owner_key=$(aws lambda get-function-configuration --function-name mcportal-grant-writer-lambda ... MCPORTAL_OWNER_KEY) -> targeted plan rc=0.",
+      "infra/aws/terraform/opal-gateway/mcportal_grant_writer.tf: source_dir .../mcportal-grant-writer-lambda/.build/staged (made by build_package.py) and filename .../layers/mcportal-grant-writer-deps/.build/mcportal-grant-writer-deps.zip (present untracked in the main tree)."
+    ]
+  },
+  "spec_asserts": "TO-OG-pr-1 PHASE B step 6: a targeted safe-apply of the one role policy.",
+  "world_is": "The root requires two variables without defaults and two build outputs before any plan; the order now names their source.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```

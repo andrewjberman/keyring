@@ -57,7 +57,15 @@ to the deploy variables `OG_MASTER_ADMIN_PRINCIPALS` (one `<tid>/<oid>` pair) an
 
 5. Open the NEVER-2 ledger, slug `nfra-oplgtw-gateway-read-secrets`, with `python .tools/deploy_ledger.py open ...`
    (legs: secrets, grant, simulate, host-read). Commit the entry AND its sentinel BEFORE the act.
-6. Run the secret script. Then run a TARGETED `safe-apply` of `aws_iam_role_policy.<yours>`. The plan must read
+6. Run the secret script. Then run a TARGETED `safe-apply` of `aws_iam_role_policy.<yours>`, fed as `OG-n-1` was
+   (amendment A1, row Z-W18-S1):
+   - `TF_VAR_mcportal_owner_key_claim=sub` and `TF_VAR_mcportal_owner_key` read from the LIVE Lambda
+     (`aws lambda get-function-configuration --function-name mcportal-grant-writer-lambda --region us-east-1 --query
+     Environment.Variables.MCPORTAL_OWNER_KEY --output text`) into the variable, never printed or written to a file;
+   - the grant writer's `.build/staged` made by `python infra/aws/lambda/mcportal/mcportal-grant-writer-lambda/build_package.py`
+     in your worktree, and `infra/aws/lambda/layers/mcportal-grant-writer-deps/.build/mcportal-grant-writer-deps.zip`
+     copied from the main tree `C:/Users/Opal Bloomberg/Desktop/ajb_workspace/` (untracked build output; neither is
+     targeted, so neither is applied). The plan must read
    exactly 1 to add, 0 to change, 0 to destroy. This is Terraform act #2 of the gateway train: if another
    `safe-apply` on `infra/aws/terraform/opal-gateway` is in flight, wait for it and record that.
 7. Run AC2 and AC3. Close every leg with its proof and commit.
@@ -118,3 +126,12 @@ values), the plan and apply readings, the literal AC output, commits and rows.
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+
+## AMENDMENT A1 (issuer `2.0.0_SA_COO~O`, 2026-10-01 ~05:2xZ; rules row Z-W18-S1)
+
+Graded by: no gate limb (a modification; GATE (viii) reads `<placeholders>NONE</placeholders>`). Step 6 names how the
+targeted apply is fed: the owner-key variables from the live Lambda (the `OG-n-1` precedent in this project,
+`deliverables/0.9.0_WK_NFRA_OPLGTW~14/NFRA_OPLGTW.TO-OG-n-1.gateway-eip.proof_of_spec.json` AC2), the grant writer's
+staged build made locally, and the deps-layer zip copied from the main tree. None of those resources is targeted, and
+the plan's 1-to-add / 0 / 0 reading is the guard against any spill. PHASE B's GO waits on Terraform act #1 of the
+gateway train (MX-r-7, CTO ruling C4: targeted, never concurrent, in train order).
