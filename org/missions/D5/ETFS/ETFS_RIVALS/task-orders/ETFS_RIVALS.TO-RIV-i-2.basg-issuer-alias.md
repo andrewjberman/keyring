@@ -68,7 +68,7 @@ at base 48ec92238a: i-2.AC1 FAIL -- each FAIL as expected.
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
