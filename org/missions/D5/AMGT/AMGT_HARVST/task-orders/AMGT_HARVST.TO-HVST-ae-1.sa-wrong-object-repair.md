@@ -158,7 +158,7 @@ other publisher's leg.
 
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>open</status>
+<status>complete</status>
 <round>32</round>
 <slot>~90</slot>
 <fabric>site-z</fabric>
