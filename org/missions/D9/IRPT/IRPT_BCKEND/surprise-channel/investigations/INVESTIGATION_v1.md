@@ -14417,3 +14417,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "The entry belongs after the mirror's fire (13:05Z), or after its second fire once that is released. It is re-timed in the serving packet; until then nobody applies that root untargeted."
 }
 ```
+
+## IRPT_BCKEND-S258 -- The holdings-performance Terraform root does not plan at CLOUD HEAD: locals.tf line 37 reads `can(v.master) && v.master != null`, Terraform evaluates both sides, and every top-level string of sources.json and every source without a `master` raises Unsupported attribute (7 errors).
+
+```json
+{
+  "id": "IRPT_BCKEND-S258",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-01T15:22:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The holdings-performance Terraform root does not plan at CLOUD HEAD: locals.tf line 37 reads `can(v.master) && v.master != null`, Terraform evaluates both sides, and every top-level string of sources.json and every source without a `master` raises Unsupported attribute (7 errors).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P (the Inflection serving packet needs this root; the fix is one expression, in the packet's own source change)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "terraform plan -lock=false in infra/aws/terraform/investor-reporting/holdings-performance at CLOUD HEAD, 2026-10-01 15:20Z (after init -reconfigure on this laptop): 7 x 'Error: Unsupported attribute on locals.tf line 37' -- 5 'Can't access attributes on a primitive-typed value (string)' and 2 'This object does not have an attribute named \"master\"'.",
+      "data/assets/scripts/gold/irpt_holdings_performance/sources.json: 5 top-level strings (schema_version, doc and three _-prefixed comments) and 2 sources with no `master` (orion, blackdiamond_z09). The strings and the orion entry predate today's change; the count matches.",
+      "live: irpt-holdings-performance-lambda CodeSha256 gLRGHIyi..., last modified 2026-09-29T14:42:51Z; the Inflection function and schedule declared by IB-er-501 (@357f39fdf4) do not exist (row S257)."
+    ]
+  },
+  "spec_asserts": "IB-er-501's record: the Inflection function, role and schedule are declared and plan cleanly; `can()` guards the attribute.",
+  "world_is": "MEASURED: the root cannot be planned or applied by anyone as it stands, so IB-er-501's resources cannot have been applied from this HEAD and no untargeted apply can create them (which makes row S257's hazard inert until this is fixed). The live 49 Financial function is unaffected: it was applied before the expression stopped evaluating. NOT MEASURED: at which commit the root last planned.",
+  "notes": "Fix: `try(v.master, null) != null` (one expression; `try` swallows the attribute error, `can(...) && ...` does not short-circuit). The file sits under an open IRPT_DASHBD order's <paths> and outside this lane's lease; asked of the CTO."
+}
+```
