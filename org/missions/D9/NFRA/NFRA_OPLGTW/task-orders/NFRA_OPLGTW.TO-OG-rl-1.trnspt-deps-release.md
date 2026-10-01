@@ -175,4 +175,20 @@ are complete and drained (tx-1 @be10dc29d8, ml-1 @4ca87da779, hr-1 @43f34bae73, 
 on CLOUD). PHASE A runs now against the live ref, so the release is ready for train R1's swap with MS-d-2. `OG-pr-1`
 not yet landed is recorded as pending in step 4 (no STOP). New step 7a re-cuts onto the live ref at GO if it moved.
 Criteria unchanged.
+
+## AMENDMENT A3 (issuer `2.0.0_SA_COO~O`, 2026-10-01 ~07:0xZ; rules PHASE A rows Z-W15-S9..S13 by row Z-S29)
+
+Graded by: no gate limb (a modification; GATE (viii) reads `<placeholders>NONE</placeholders>`). PHASE A drained
+@0116dd05fe. ROLLBACK (S12): a rollback on the live template reads the two rosters from the site-Z Part D file into the
+rolling-back shell only, with the `OG-pr-1` script's mapping, never printed. ROTATION (S13): proceeds with the cot box
+stopped; the gateway side is verified by the step-4 probe. Step 3's "3 adopted" test files read as the cells' 6 new
+test files in all (S9). Criteria unchanged.
+
+## AMENDMENT A4 (issuer `2.0.0_SA_COO~O`, 2026-10-01 ~07:1xZ; the sender table's source)
+
+Graded by: no gate limb (a modification; GATE (viii) reads `<placeholders>NONE</placeholders>`). Step 5's sender
+table is NFRA_TRNSPT's own data asset, read at GO from HEAD: `data/transcripts/scripts/outlook/criterion.py`
+`DEFAULT_AUTHORS` (Manav's two addresses, the 49 one built from the registry's email domain, and Yang's), evaluated by
+importing that module, never retyped. The render carries it in `MAIL_SENDER_TABLE`; the template commits no address.
+No off-repo input is needed for it at GO. Criteria unchanged.
 <status>pending</status>

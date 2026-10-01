@@ -164,3 +164,39 @@ under an amended AC1; it is removable the moment that is settled.
    33 subjects, so the page's posture card has no served source. Surfaced in `Z-S325`, not adjudicated here.
 3. **[this seat]** On the disposition: either close L2 and the ledger entry, or execute the rollback from
    `ae1-pre/pre.json` and close it SUPERSEDED. Both are one act; neither is started without the ruling.
+
+---
+
+## CLOSE-OUT (ruling msg 27564, 06:20Z) -- ACCEPTED, and the finding survived the fix
+
+The issuer ruled the served limb **its check's defect, not the act's**: posture is not served by a
+`/posture` route at all, it rides `/security/{key}/overlay` as that payload's `posture` field
+(`read_security_overlay -> read_posture`). The amendment re-points `serve()` at that carrier and **raises on a
+non-200** instead of returning an empty dict for the next comparison to misread. Order flipped `complete`;
+no rollback wanted; the 12 prior VersionIds stay in `ae1-pre/pre.json` as the record.
+
+**AC1 re-run BY THIS SEAT, not cited from the issuer's run:** `targets 12; verdicts moved 1`, **no BAD line**,
+label YES, **exit=0** (`evidence/ae1_ac1_amended.txt`).
+
+**And not closed on the producer's self-report.** The served plane was re-read independently of the check, by
+invoking the deployed function directly and comparing to the stored object per key: overlay **status 200 on
+12 of 12** (70,657-99,606 B), posture field **PRESENT on 12 of 12**, served `as_of` + `verdict` **EQUAL to
+stored on 12 of 12** -- AGREE 12, disagree 0, refused 0 (`evidence/ae1_overlay_verify.txt`).
+
+**Two controls, because an amendment that re-points a limb is exactly where a loosening would hide:**
+
+1. A planted mismatch on VLO (`verdict 'steer_clear'` against the stored `'better'`) reads **DISAGREE** -- the
+   comparison still discriminates.
+2. `/api/scoped/amgt/security/VLO_US_Equity/posture` **still returns 404** after the amendment. So this is a
+   CHECK fix, not a route deployment, and row `Z-S325`'s finding remains a true fact about the estate rather
+   than something the fix absorbed. `Z-S325` is disarmed by the issuer's carrier row `Z-S326`.
+
+**One citation inconsistency, recorded and not reconciled:** the check file labels the change `AMENDMENT 1`
+at line 79; the ruling message calls it `AMENDMENT 2`. Noted in the proof instance so a later reader chasing
+either label finds the other.
+
+**One trap worth carrying:** the order's `<status>` now holds TWO tags -- `pending` at :70 and `complete`
+at :84, because flips APPEND. A first-match parse reads the stale one and would call this order open.
+
+**NEVER-2 entry `20261001T0500Z`: CLOSED**, all 3 legs proven, sentinel removed. Nothing is owed by this lane
+on `AMGT_RESAPP.TO-AMGT-ae-1`.

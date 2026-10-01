@@ -16487,6 +16487,51 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AMGT-af-2 AC1: every test in lib/research/api/tests/ passes and exit=0.",
     "world_is": "AC1 as literally written runs in a worktree whose portal submodule is not checked out, so three portal-fixture tests error with or without this change and the exit is 1. Nothing af-2 touched is implicated. Issuer to decide: accept AC1 as met on the 330 passing tests plus the baseline-identical 3 errors, or re-run AC1 in a tree that carries portal. No portal path is in this order's write grant, so none was created.",
     "notes": "disarm_owner 2.0.0_SA_COO~Z."
-  }
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S327",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-10-01T06:25:00Z",
+    "one_line": "RESOLVES AMGT_RESAPP-Z-W197-S1 and AMGT_RESAPP-Z-W198-S1: AC1 of af-1 and af-2 graded by the issuer on the FULL shared tree after both drains (portal populated): 342 passed, 0 errors, exit=0. The 3 errors the workers saw were the issuer's sparse worktree cone omitting the portal gitlink (test_print_format_rich.py's tabsFixture), identical at base.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CLOUD 78167bb8fc (af-1 drained cb1f56de68, af-2 drained 78167bb8fc): PYTHONPATH=. python -m pytest -q -p no:cacheprovider lib/research/api/tests/ -> 342 passed, exit=0.",
+        "Same tree, the live checks: af_1_route.py YES exit=0; af_2_serve.py --what fwd33 YES exit=0; --what fwd34 YES exit=0 (merged code, graded together).",
+        "Worker ~198 measured the 3 errors at base 4a7d8bcb0f before any edit (309 passed, 3 errors); both worker cones lacked portal/."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC1 of af-1 and af-2: every test in lib/research/api/tests passes, exit=0.",
+    "world_is": "In the workers' sparse worktrees AC1 could not exit 0 (3 base-identical errors from the absent portal fixture); on the full tree after both drains it does.",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "notes": "Issuer defect: the round-56 worktrees were cut with a sparse cone that omits portal/ (and first omitted org/surprise_channel, which the workers added). Later worker cones carry the gitlink or the order's AC1 names the deselection."
+  },
+  {
+  "id": "AMGT_RESAPP-Z-W199-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~199",
+  "surfaced_at": "2026-10-01T07:30:00Z",
+  "one_line": "integrations/bloomberg/research/tests/test_price_axis_pull.py::test_price_axis_pull_client_is_the_loopback_dapi_not_a_lambda fails on this box's python with ModuleNotFoundError: No module named 'blpapi' -- untouched by AMGT-af-3, outside its AC1 file list.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest -q -p no:cacheprovider integrations/bloomberg/research/tests/test_price_axis_pull.py in C:/tmp/r56-199: 1 failed, 4 passed; the failure imports blp_client, which imports blpapi, absent from the default `python` here (READ_HERE.md section 3 names a different interpreter for it).",
+      "AC1 of AMGT-af-3 names test_price_universe.py and lib/research/price/tests/ only (35 passed, exit=0); the new test stubs blp_client via sys.modules and never imports blpapi."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMGT-rd-6's test header: the suite exercises price_axis_pull.py without opening a live session, run under the Python311 interpreter that carries blpapi.",
+  "world_is": "Under the default python on this box the loopback-DAPI assertion cannot run because blpapi is not importable; a repo-wide hygiene run on that interpreter reads it as a failure unrelated to the price universe.",
+  "notes": "disarm_owner 2.0.0_SA_COO~Z. Surfaced, not adjudicated; no change made to that test."
+}
 ]
 ```

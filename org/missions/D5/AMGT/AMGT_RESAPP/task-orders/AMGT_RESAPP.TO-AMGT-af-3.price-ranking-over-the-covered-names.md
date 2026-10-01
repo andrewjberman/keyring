@@ -80,3 +80,7 @@ terminal session is Andrew's login (placement s.5 item 1).
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-01 ~06:2xZ):** AC1 35 of 35 and AC2 YES (worker ~199, bd145a4531; 95 mapped, 0 unmapped). NOT drained: its merge into the site-Z working tree IS the served act, af-6, held for both never-widen halves (COO half round56/NEVER_WIDEN_HALF_COO_AF6.md).
+
+<status>complete</status>
