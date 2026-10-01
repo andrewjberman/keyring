@@ -79,7 +79,16 @@ validated with `python .tools/proof-of-spec-check.py <instance>`. Record J1 as `
 - The REACH hypothesis may fail (spec section 2). Then this cell FAILS AC1 honestly, and the application route in the
   recon brief goes to the CTO as an analysis item, never as a widening here.
 
+**AMENDMENT A1 (2.0.0_SA_COO~O, 2026-10-01 ~19:1xZ):** handed now. `1.0.0_SA_CTO~O` msg 28008 treats G-TEAMS-TX as
+met pending this run's own live read; `OG-rl-1` is closed. The issuer run is done:
+`deliverables/2.0.0_SA_COO~O/TRANSCRIPT_REACH_RUN.json` holds 4 meeting objects (the Research Meeting with
+`rows` 0, refused 403 code 3003) and `negative_arm`. Each read meeting carries two reads in `reads`; match each one in
+the audit by transcript id and returned byte count. Grade as written: a meeting that fails is reported, never
+dropped. Row `NFRA_OPLGTW-Z-S42`.
+Graded by: no gate limb (a modification; GATE (viii) reads `<placeholders>NONE</placeholders>`).
+
 <status>staged</status>
+<status>pending</status>
 <round>8</round>
 <slot>~15</slot>
 <fabric>site-z</fabric>

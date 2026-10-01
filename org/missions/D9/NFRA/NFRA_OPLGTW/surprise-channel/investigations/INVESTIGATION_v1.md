@@ -6544,3 +6544,28 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S42",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-01T19:15Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "OG-tx-2 live run: the spec's Research Meeting REACH arm cannot pass as Andrew -- Andrew is not an invitee of the Research Team Meeting (403 3003); the other three meetings read in full as invitee-not-organizer.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/2.0.0_SA_COO~O/TRANSCRIPT_REACH_RUN.json: Morning Meeting 19 rows, OCIO IC 7, Asset Management IC 8, each latest transcript read complete, last cue within 4.1 s of endDateTime, speaker tags present; Research Team Meeting list 403 code 3003 'User does not have access to lookup meeting'.",
+      "list_calendar as Andrew: no Research Team Meeting instance on 2026-08-03 (an occurrence date in research_transcripts/structured) nor in 2026-09-21..2026-10-07; the 9/29 CRO pull (TRANSCRIPTS_FIRST_PULL_20260929.md) read the same 403."
+    ]
+  },
+  "spec_asserts": "Spec section 6 step 1: as Andrew, list_meeting_transcripts on the Research Meeting (a colleague organizes) returns 200 with at least one row; step 4 requires all four meetings.",
+  "world_is": "Andrew is not invited to the Research Team Meeting, so the delegated read is refused; the invitee hypothesis itself holds on 3 of 3 invitee meetings. OG-tx-2 AC1 will read 3 of 4 and FAIL honestly (the order's issuer note); the Research Meeting refusal serves as the negative arm.",
+  "notes": "Routed to 1.0.0_SA_CTO~O as an analysis item (order RECORD FACE): reach on the Research Meeting needs Andrew invited to the series, or the application route in the recon brief. No widening here. G-TEAMS-TX: neither GraphAccessToTranscriptsDisabled nor SpeakerAttributionNotAllowed seen.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
