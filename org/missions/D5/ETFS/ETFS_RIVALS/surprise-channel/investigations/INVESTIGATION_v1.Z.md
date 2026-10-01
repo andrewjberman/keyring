@@ -2174,6 +2174,46 @@
       ]
     },
     "notes": "One line to fix: `latest = revision.newest(objs)`. disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S32",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-01T15:20Z",
+    "one_line": "Resolution of ETFS_RIVALS-Z-W1-S30: test_hp1_home_producer.py's retired `-h` assertions are replaced by the one revision contract (second build at a taken capture time orders after the first via revision.newest and the -b<NN> sequence; a home-only build carries its own capture time; no letter form).",
+    "spec_asserts": "Row ETFS_RIVALS-Z-W1-S30: S30 open; the issuer ruled it into RIV-v-2 (amendment 1 @717070ea84, paths widened).",
+    "world_is": "At 9ee33a86d4 `python -m pytest data/etfs/scripts/rivalfunds/tests -q` (from data/etfs/scripts): 280 passed, 2 skipped, 0 failed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/tests/test_hp1_home_producer.py@9ee33a86d4"
+      ]
+    },
+    "notes": "RESOLVED at 9ee33a86d4; resolves ETFS_RIVALS-Z-W1-S30 (an existing row is never edited; this row carries the resolution). disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S33",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-01T15:20Z",
+    "one_line": "Resolution of ETFS_RIVALS-Z-W1-S31: gold_holdings_coverage.g1_sources takes revision.newest(objs) instead of max(name); a test plants a legacy -j name beside a newer -b04 build and reads the build.",
+    "spec_asserts": "Row ETFS_RIVALS-Z-W1-S31: S31 open; the issuer ruled it into RIV-v-2 (amendment 1 @717070ea84, paths widened).",
+    "world_is": "At 9ee33a86d4 tests/test_hp1_home_producer.py::test_g2_reads_the_newest_g1_by_capture_time_not_the_greatest_name passes; before the change it read the `-j` object.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/gold_holdings_coverage.py@9ee33a86d4 g1_sources"
+      ]
+    },
+    "notes": "RESOLVED at 9ee33a86d4; resolves ETFS_RIVALS-Z-W1-S31 (an existing row is never edited; this row carries the resolution). disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV."
   }
 ]
 ```
