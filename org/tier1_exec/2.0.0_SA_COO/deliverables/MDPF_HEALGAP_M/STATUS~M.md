@@ -19,9 +19,12 @@ None open. The module and its test are landed; the next writes here are ledger l
 
 - Module `data/mdpf/scripts/gold/mdpf_gold_catchup.py` and test `data/mdpf/tests/test_mdpf_gold_catchup.py` (16 passed):
   on CLOUD (commits 524ee9beb1, 1124461a6c, 5082ed0513). Wired nowhere. Nothing is deployed, nothing is written.
-- Half: `NEVER_WIDEN_HALF_REQUEST_HEALGAP_COTTONWOOD_CATCHUP_20261001.md`, COO half signed; the CTO half is owed.
-- Hand-off: `HOOKUP_HANDOFF_FOR_4.0.0_SA_CRO.md` (the call line and the Lambda package row; both held until the half
-  carries two signatures).
+- Half: `NEVER_WIDEN_HALF_REQUEST_HEALGAP_COTTONWOOD_CATCHUP_20261001.md`, BOTH halves signed (CTO @9fb81ec9f6), with
+  addendum 1 (the sanity read; the figures in served terms).
+- Ledger: `healgap-cottonwood-catchup-m-20261001`, open; leg P closed.
+- Hand-off: `HOOKUP_HANDOFF_FOR_4.0.0_SA_CRO.md`, state READY TO WIRE.
+- Row: `MDPF_HEALGAP-S1` (`org/surprise_channel/MDPF_HEALGAP/INVESTIGATION_v1.md` @e96bc4c4d8): the EC2 daily runner
+  still launches at 13:30Z; the Lambda wrote the partitions read.
 
 ## Live thread
 
