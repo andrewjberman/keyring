@@ -6440,3 +6440,32 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S39",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-01T18:45Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "W15-S19: two token-broker records match opalbloomberg@ but carry ONE oid (517aa5ee; the same person's principal-keyed and email-keyed caches, by cache file-name hashes), MATCH with the Part D record -- the identity gate (Andrew ~17:3xZ, CTO 27992 'neither or both' = two different people) is satisfied. W15-S20: the verify-script row id S18 was already taken; filed under S20 -- recorded. W15-S21: the identity value (a non-secret principal identifier) rides the SSM command text and step 2's SSM output carried it once; acceptable for a non-secret, and it is never committed to the repo.",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W15-S19",
+    "NFRA_OPLGTW-Z-W15-S20",
+    "NFRA_OPLGTW-Z-W15-S21"
+  ],
+  "one_line": "OG-tr-1 PHASE A rows ruled: one opalbloomberg@ oid (two caches) satisfies the identity gate; the other two recorded.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Worker PHASE A report, ANNOUNCE_OG-tr-1.md drained @abca11d3bc: 6 records, 2 matches, 1 distinct oid 517aa5ee, Part D MATCH."
+    ]
+  },
+  "spec_asserts": "TO-OG-tr-1 step 2: exactly ONE record must match.",
+  "world_is": "Two records match, both the same oid.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
