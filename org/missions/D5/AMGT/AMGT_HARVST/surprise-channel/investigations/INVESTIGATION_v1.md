@@ -4764,6 +4764,68 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W92-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~92",
+      "surfaced_at": "2026-10-01T07:30Z",
+      "one_line": "Every sa silver append fails: all 229 rebuilt article rows carry themes={} (an empty struct) and pyarrow refuses to write it to parquet, so upload-harvest returns rc=2 and the 229 raw outbox rows stay pending.",
+      "class": "BLOCKING",
+      "hazard_standing": "ARMED",
+      "spec_asserts": "Order AMENDMENT 1 item 3.2 and section 1: after each job ONE upload-harvest uploads what the job stored (bronze and silver) so AC3 can read the collector's own silver by discovered_for; 'the only S3 writes are ... its upload of what the sa jobs stored'.",
+      "world_is": "Job 1 (security-81a74ed057551e58, ASML) stored 229 bodies; the driver's upload-harvest (cap=243: 229 raw + 14 listing) returned rc=2. harvest_listing_outbox: 14 uploaded. harvest_raw_outbox: 229 pending, attempts=1, error_code=ArrowNotImplementedError for all 229. Reproduced offline (no network): silver_from_bronze.article_rows over the 229 queued bodies gives pa.Table.from_pylist OK but pq.write_table fails 'Cannot write struct type themes with no child field to Parquet', themes==({}) on 229 of 229 rows; every other column writes. Uploads.HarvestUploader put_article_bronze already ran per article before the silver step (bronze objects exist; write-once). Nothing reached silver, so AC3 cannot rise above its baseline (20 of 20). The fault is in uploads.py / silver_from_bronze.py (not in this order's paths); the driver does not capture upload-harvest output, so only the rc and the outbox error_code name the cause. ARMED: any further sa job (the issuer's full 89-name run) will queue its articles and fail the same silver append, leaving the outbox growing with no silver.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~92/ae4B_run1.out line 'UPLOAD sa security-81a74ed057551e58 cap=243 rc=2'",
+          ".runtime/opal-data-harvest/progress.sqlite3 (worktree wk-hvst-r32-92) harvest_raw_outbox: ('ArrowNotImplementedError', 1, 229); lib/opal_data_harvest/uploads.py HarvestUploader._run_articles silver group except-branch"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "notes": "Candidate fix is a normalisation of an empty dict to None (or a dummy field) in silver_from_bronze.article_rows or the silver writer; it is outside this order's write grant, so it was not attempted."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W92-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~92",
+      "surfaced_at": "2026-10-01T07:30Z",
+      "one_line": "The first sa job (ASML) ended status=error after 229 articles stored: a requests Timeout 85 s after its 14th listing page; the driver honoured the STOP set and stopped the sa leg, so the stop-after-3-and-resume exercise could not run.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Order AMENDMENT 1 item 3.2: run the first 6 names, stop after the 3rd job ends, re-run the same command and see the 3 done pairs skipped and the other 3 run; 'if a job ends in a STOP status the driver stops the sa leg: that is a recorded result'.",
+      "world_is": "Job 1 ran 07:01:59Z-07:12:41Z (10m42s): 14 auth_check + 14 listing requests all 200, 289 fetch attempts from the listings (229 fetched, 60 rejected: short_or_partial_body / company_not_mentioned), then the job raised Timeout (run record jobs[0].status=error; runs/20261001T070159Z-sa-ede1ed2e6f.json error_type=Timeout; collector set a 900 s cooldown). Checkpoint: done=[sa, security-81a74ed057551e58, error], stopped={sa: error}, stored 229. Re-running the same command printed 'SKIP sa: stopped earlier with error', ran 0 jobs, no request. Jobs 2-6 did not run, so the 3+3 skip evidence is not obtained; this is the FWD-15 (f) arm (STOP honoured) observed live and the FWD-15 (b) arm still unexercised on the real collector. Title check on the 229 stored bodies vs the 280 listing titles in the runtime: 0 differ, 7 articles had no listing title to compare.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~92/ae4B_run1.out and ae4B_run2.out and ae4_checkpoint.json",
+          ".runtime/opal-data-harvest/runs/20261001T070159Z-sa-ede1ed2e6f.json (worktree wk-hvst-r32-92)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W92-S3",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~92",
+      "surfaced_at": "2026-10-01T07:30Z",
+      "one_line": "A console Ctrl-C cannot be delivered to the driver from a tool shell here (no console, GenerateConsoleCtrlEvent reaches no handler), and the driver has no stop file; the planned stop would have been a kill between jobs.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Order AMENDMENT 1 item 3.2: stop the run 'the way an operator would (Ctrl-C / a console break the driver handles after the current job)'; the issuer allows a stop file or termination between jobs if that does not work.",
+      "world_is": "A stand-in python process that installs the driver's own SIGINT handler and is sent GenerateConsoleCtrlEvent (both from the same console and from an AttachConsole/CREATE_NEW_CONSOLE launcher) never ran its handler (it printed its no-signal timeout line). backfill_driver.py has no stop file. Prepared fallback: a watcher process polled the checkpoint and ran taskkill /T /F as soon as it showed 3 done pairs (a kill lands just after the 4th job starts, so that job re-runs on resume with --new-only dedupe). Not used, because the leg stopped on job 1; this is the method that would have been reported.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/backfill_driver.py class Interrupt (SIGINT only), worktree wk-hvst-r32-92",
+          "stand-in test output, scratch .scratch/launcher.py and launcher2.py in worktree wk-hvst-r32-92"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
     }
   ]
 ```

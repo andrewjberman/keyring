@@ -123,6 +123,7 @@ values), the plan and apply readings, the literal AC output, commits and rows.
 - `<risk>` WORLD: an IAM grant and secrets.
 
 <status>pending</status>
+<status>complete</status>
 <round>9</round>
 <slot>~18</slot>
 <fabric>site-z</fabric>
