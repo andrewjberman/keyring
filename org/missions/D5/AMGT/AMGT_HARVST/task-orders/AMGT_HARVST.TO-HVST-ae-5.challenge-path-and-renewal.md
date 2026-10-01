@@ -112,6 +112,33 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
    signature, retry)` helper you export from `verification.py`.
 4. Execute PHASE A only, then report and stop.
 
+## AMENDMENT 2 -- 2026-10-01 ~09:3xZ, the issuer: the first-light grade, the census, the re-mint (CTO 27695, 27700)
+
+The grade is `org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_H/round32/FIRST_LIGHT_GRADE.md`. In short: the
+box IP is clean (anonymous homepages 200 on all four); ft passes in-tab; bbg's SEARCH raises PerimeterX; wsj and barrons
+refuse the injected stored bundle (DataDome 401) -- those bundles are burned. Phase B is REPLACED by this, in order:
+
+0. **Discovery-route census (read-only; the CTO re-ruled it into this cell, msg 27700).** For bbg and wsj, list the
+   DATE-ORDERED routes -- sections, sitemaps, archive pages; NEVER search -- by fetching them in an ANONYMOUS
+   TabSession (a fresh profile under your deliverables, no seeding, no sign-in), at most 20 requests per publisher at
+   the collector's pacing. For each route record: URL pattern, HTTP status, whether items carry dates, newest and
+   oldest date seen, items per page, and whether it reaches 2026-01-01. Write `~91/ae5_discovery_census.json` and set
+   `discovery.ROUTES` (and its params) to the measured routes; a route not measured stays out. Window: bbg + wsj are
+   yours alone until 10:30Z (the issuer schedules publishers so one seat touches each at a time).
+1. **Re-mint wsj and barrons** in clean persistent profiles under the collector's profile root (`default_profile_root()`):
+   the contract now reads `"seed_from_bundle": false` for both (@`5240180fdb`), so NOTHING is injected; `renew()` signs
+   in INSIDE the profile, unattended (credentials from `dowjones/credentials`, read only when the session is stale). A
+   sign-in challenge goes to `solve()` once, never a retry loop. Record before/after hashes of the browser jar.
+2. **The unattended challenge run** (the old phase B, otherwise unchanged): bbg, wsj, barrons with validation security
+   BA, each in its own persistent profile; bbg uses ONLY the census's date-ordered route (no search). Write
+   `ae5_unattended_run.json`; the renewal record `ae5_renewal.json` is step 1's (wsj or barrons carries FWD-11's
+   renewal half; Z-W91-S3: bbg has no in-profile sign-in).
+3. AC1, AC2, AC3; update the instance; flip `<status>` when all pass. Honest failures are recorded (`passed: false`,
+   the signature) and are never a final state (`C-HV-NO-DEFEAT`).
+
+**Authority:** R-21 (scripted vendor egress); placement R7 (no residential arm). **No never-widen pair:** the run writes
+run records, bronze/silver for BA and the browser profiles; it moves no served gold.
+
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:**

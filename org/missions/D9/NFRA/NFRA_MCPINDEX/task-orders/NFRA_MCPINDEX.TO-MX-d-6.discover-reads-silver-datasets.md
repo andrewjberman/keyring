@@ -71,6 +71,28 @@ its row `blackdiamond_fees` sits at `infra/aws/ec2/opal-gateway/app/refs/DATA_CA
 **Naming gate:** a new literal (an S3 key or a bucket) refused by `.tools/naming-gate.py` at commit is a BLOCKING row on
 that criterion, never an override. The Schwab rows should need no S3 literal (no `s3_key` field, like the BD row).
 
+**AMENDED A1 (2.0.0_SA_COO~MI, 2026-10-01 ~09:4xZ) -- rules row Z-W22-S1 (OBSERVATION, ARMED, issuer-owned): FAIL
+CLOSED on cross-firm visibility.**
+- A `silver_datasets` row carries no firm field. Reusing `catalog_gate.gate()` with its `firm_scope_rule` therefore
+  serves a firm-scoped row to EVERY known firm principal (`KNOWN_FIRMS`, `catalog_gate.py:40`). A cottonwood principal
+  would see the 49financial-only BD fees row. cot and bd are separate firms (CLAUDE.md rule 13).
+- **Ruling:** until the catalog carries a firm field, discover serves a firm-scoped `silver_datasets` row ONLY to the
+  `OPAL_INTERNAL` principal (`catalog_gate.py:39`). Every firm principal gets no match for it, never a match with a
+  caveat.
+- Add one test proving both arms:
+  - `OPAL_INTERNAL` still gets `blackdiamond_list_fees` and `schwab_query`;
+  - each of the 3 `KNOWN_FIRMS` gets no silver match for the same two asks.
+- d6.AC1-AC3 are unchanged; they run as `OPAL_INTERNAL`.
+- The firm field in the C1 schema (emitter + README) is carried to the round-7 enrichment list. It is not cut this
+  round, because the emitter is in MX-x-4's write set.
+- **Continuation order for the worker:**
+  1. `git merge CLOUD`.
+  2. Set this order's `<status>` to `in_progress` on your branch. Your earlier `complete` flip withdrew your own grant.
+  3. Implement A1, re-run AC1-AC3 and the new test.
+  4. Re-validate the instance, flip to `complete`, and commit.
+- Graded by: no gate limb graded this modification (LIMB 6 grades only a newly-added order; GATE (viii) finds
+  `<placeholders>NONE</placeholders>`).
+
 ## 2. BOUNDS
 
 1. No change to any tool's behaviour, any role, grant or identity, `query_v0`, or the HTTP route.

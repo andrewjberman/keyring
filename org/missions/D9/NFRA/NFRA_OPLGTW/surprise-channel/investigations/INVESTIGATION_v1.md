@@ -6020,3 +6020,30 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S33",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-01T09:30Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarmed by standing rule (1.0.0_SA_CTO~O msg 27705 (1)): no seat or worker sources /opt/opal-gateway/.env in a shell; a key read uses names only (grep -o '^[A-Z_]*=') or /proc/<service pid>/environ for one named key, never echoed. The rule rides every release ANNOUNCE (OG-rl-1 A5). The leaked cot OTP value rotates at OG-rl-1 (ruling (2); consumer: the cot bd-auto-login /otp/fetch caller; 49f untouched). The shape fix (render multi-word values so systemd EnvironmentFile and bash read them the same, or a host read helper) is placed on OPLGTW's next enrichment (ruling (3)). Hazard INERT under the rule.",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S32"
+  ],
+  "one_line": "Z-S32 disarmed by the CTO's standing no-shell-sourcing rule; rotation at OG-rl-1; shape fix on the next enrichment.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~O msg 27705 rulings (1)-(3); TO-OG-rl-1 amendment A5."
+    ]
+  },
+  "spec_asserts": "Static bearers reach the host .env and are never printed.",
+  "world_is": "Shell-sourcing the .env prints a bearer; it is now barred by rule until the shape fix.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
