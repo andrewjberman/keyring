@@ -2393,6 +2393,10 @@ paths:
     lane: MDPF_SECCLASS_FAST_M_AE
     note: "MDPF_SECCLASS FAST lease, exact test file (the contract-version pin, row W11-S1); CTO grantor batch 73 (2026-10-01)."
 
+  "infra/aws/lambda/v2_portal/_shared/etf_classification_scheduled.py":
+    lane: MDPF_SECCLASS_FAST_M_AE
+    note: "MDPF_SECCLASS FAST lease, exact file, ONE change (two names added to _WRITE_FIELDS, with a test); CTO grantor batch 78 (2026-10-01)."
+
   "infra/aws/lambda/v2_portal/_shared/etf_classification.py":
     lane: MDPF_SECCLASS_FAST_M_AE
     note: "MDPF_SECCLASS FAST lease, exact file (the seed source and its copies); CTO grantor batch 68 (2026-10-01)."
