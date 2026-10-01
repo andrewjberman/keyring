@@ -14032,3 +14032,34 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Disarm = a resident root built at or after 2704705672, read back by the digest of ycharts/generate/current_authority.py, before the W27 window opens. The S238 re-read (a foreign firm refused at the API) closes the API half only. Found on-task by a /closer trace asked by 1.0.0_SA_CTO (msg 103444); this seat moves no served code."
 }
 ```
+
+## IRPT_BCKEND-S245 -- Inflection's holdings gold is dated one trading day late: a daily-pulled partition dated D holds the prior close
+
+```json
+{
+  "id": "IRPT_BCKEND-S245",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "4.0.0_SA_CRO~X",
+  "surfaced_at": "2026-10-01T05:30:00Z",
+  "one_line": "Inflection's holdings-basis gold is dated one trading day late since early May 2026. A daily-pulled fact_positions partition dated D holds the close of the trading day BEFORE D (it is pulled about 07:51 Eastern on D), and the producer pairs date=t with date=prev_trading_day(t) for every source, so the row dated t is the previous trading day's return.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO (a per-source date basis is a PRD ruling on ruling 5's day axis; the producer and sources.json change that follows is 2.0.0_SA_COO~P's)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Read 2026-10-01 05:2xZ, opal-data-assets orion/inflection/silver/fact_positions, per (accountId, productId) with currentPrice > 0, prices unchanged from the Friday partition to the Saturday partition: 2026-05-08 1,243 of 9,386; 2026-06-05 856 of 11,310; 2026-08-07 864 of 11,881; 2026-09-25 876 of 12,434. Saturday to Sunday: 100 percent unchanged in 4 of 4 weekends read. So Saturday's partition is the first to hold Friday's close.",
+      "Firm totals of currentValue: date=2026-09-25 (Fri) 207,404,700.17; date=2026-09-26 (Sat) 208,110,999.41; date=2026-09-27 (Sun) 208,110,999.41.",
+      "The history was backfilled on the other basis: Friday to Saturday 100 percent unchanged at 2024-04-12, 2025-10-03, 2026-02-06, 2026-04-17, 2026-04-24 and 2026-05-01 (6 of 6). The seam lies between 2026-05-02 and 2026-05-08; its day is not pinned.",
+      "data/assets/scripts/gold/irpt_holdings_performance/holdings_performance.py:838-855 at CLOUD and in the deployed irpt-holdings-performance-lambda (gLRGHIyi.., producer equal to CLOUD): p0 = partition prev_trading_day(day), p1 = partition day, with no per-source date basis.",
+      "The pull: opal-data-inf bronze/positions/<run date>.jsonl.gz lands about 11:51Z (2026-09-26 11:51:44Z, 2026-09-27 11:51:13Z); data/inf/manual_api/pull_inflection_positions_daily.py passes each date as the API's as-of path segment. That a past date returns its own close while today, before the open, returns the prior close is INFERRED from the two measured bases; the API was not called.",
+      "Record: org/tier1_exec/4.0.0_SA_CRO~X/deliverables/INF_PERFORMANCE_THREAD_END_TO_END_GAP_BRIEF_20261001.md hop 5 and inf_performance_trace_20261001/EVIDENCE.json key partition_date_basis_test."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "sources.json, orion entry, date_column_comment: 'snapshot_date and _source_as_of each hold exactly the partition's own date'. PRD ruling 5: the day axis is lib/trading_calendar.py over the partition. FWD-3 PROOF: the gold's daily rows are recomputed from the landed silver positions of two consecutive trading days and match.",
+  "world_is": "MEASURED: the column holds the partition's date; the prices are the prior close. The 49 Financial source is on the other basis (the partition for trading day D lands the next calendar day and holds D's close, handler.py docstring), so one gold shape carries two date meanings. A hand recomputation from the same two partitions would MATCH and still be the wrong day, so FWD-3's proof as written cannot see this. NOT SERVED TODAY: the deployed adapter does not read Inflection's gold (IB-pr-221 unserved), so no advisor has seen a shifted figure. NOT MEASURED: the seam's exact day; the gold rows themselves around the seam (a zero-return day is inferred, not read); Cottonwood's basis; other consumers of fact_positions and of the Inflection directory's as-of.",
+  "notes": "ARMED because IB-pr-221's served move is on 2.0.0_SA_COO~P's list behind row S216, and it would serve this gold. Disarm = a date basis declared per source as data, the producer pairing the partitions that hold day t's close and the prior close, the Inflection gold rebuilt (free while unserved), and one account's row reproduced by hand against that basis. A side effect worth the ruling: under the measured basis the missing 2026-09-28 pull would have repeated Friday's close, already held by the 09-26 and 09-27 partitions, so of the two missing run days only 09-29 carries a close nothing else holds. Row at INVESTIGATION_v1.md around line 9211 noted the same key-date semantic for the directory and left it to that owner. Found on-task by a /closer trace asked by 1.0.0_SA_CTO (msg 103471)."
+}
+```
