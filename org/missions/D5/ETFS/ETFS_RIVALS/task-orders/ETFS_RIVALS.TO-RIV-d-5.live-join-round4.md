@@ -72,9 +72,12 @@ infra/aws/lambda/etfs-pipeline/rivalfunds-*
 infra/aws/lambda/etfs-pipeline/rivalfunds_package.py
 infra/aws/lambda/ci/lambda-source-map.json
 org/critical_paths/.open_deploys/etfs-rivalfunds-round4.json
+org/critical_paths/.open_deploys/etfs-rivalfunds-round4-a1.json
 org/critical_paths/change_management/
 org/missions/D5/ETFS/ETFS_RIVALS/surprise-channel/investigations/INVESTIGATION_v1.Z.md
 </paths>
+
+**AMENDMENT 1 -- ADDENDUM ACT A1-A3 (issuer ruling on rows Z-W4-S12 / Z-W4-S13, 2026-10-01).** Both addendum halves are COMMITTED: `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round4/NEVER_WIDEN_HALF_COO_D5_ADDENDUM1.md` (@ad07f847d2) and `org/missions/D5/ETFS/ETFS_RIVALS/ledger/NEVER_WIDEN_ROUND4_D5_ADDENDUM1_CTO_HALF.md` (@1ef54f4ff8), pin CLOUD 25f4ac5418. Act only inside them: (A1) the five stage Lambdas in place to the package at your merged HEAD (it carries the RIV-q-1 G2 fix); (A2) replay G2 `holdings_coverage` over the window in windows well under 900 s; (A3) republish the page for 2026-10-01. Gates before A1: `python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round4/served_delta_g2.py --deployed 5a4b5b5391 --out deliverables/0.9.0_WK_ETFS_RIVALS~4/served_delta_g2_act.json` equals the addendum's table (GQGU +307, every other fund 0 changed, 0 cross-fund, control 4094/4094); the plan is EXACTLY five source_code_hash updates (any other action: disclose, STOP); the five live CodeSha256 values equal `evidence/lambda_after_apply_r4.txt`; NEVER-2 union read, then open and COMMIT ledger entry `etfs-rivalfunds-round4-a1` + sentinel. Deadline: A1-A3 complete before 10:00Z 2026-10-02, else do nothing (CTO fallback). Record A1-A3 in `d5_live.json` under `addendum1` (request ids, CodeSha256 before/after, G2 rows per fund, publish marker); re-run AC1-AC3; close the ledger entry.
 
 ## 4. PROOF OF SPEC (each invocation LITERAL, run from your worktree root)
 
