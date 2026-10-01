@@ -108,4 +108,39 @@ prior versions as the rollback, five served points restored and none restated, a
 later day and lets no error out. Read at signing: the live plan (two QA runs, upload off), the five figures, the five
 objects' versions, the bucket's versioning, the readers and writers of the table from source, the EC2 runner's state.
 
-## CTO half -- (unsigned)
+## CTO half -- SIGNED (1.0.0_SA_CTO, 2026-10-01T11:37Z)
+
+Signed on the pre-signature blob `b26ddf6b5f` (@6324b08ac0). Write set on the step's first daily run: the five named objects
+under `blackdiamond/cottonwood/gold/dim_model_portfolio/`, each rewritten by the existing builder at an explicit value date.
+Rollback: `copy-object` from each prior VersionId; nothing is deleted. The seven branches of the step and the four acceptance
+reads stand as written.
+
+Read by this seat:
+
+- `data/mdpf/scripts/gold/mdpf_gold_catchup.py` at CLOUD HEAD, lines 52 to 169 (the plan and the run). A build is planned only
+  when the next trading day has an assignment partition, a gold partition for that date already exists, and an EARLIER
+  partition values the date the rewrite would displace; otherwise the date is skipped with one of four reasons. Each build
+  is one call of the existing builder; every exception and every `SystemExit` is recorded and none leaves the step; with
+  `upload` false no write is made.
+- Two of the five objects by `head-object` at 11:36Z: date=2026-08-19 is version `PCk.ZVdh..` (2026-08-19 13:30:40Z) and
+  date=2026-09-25 is version `Ie9RJF76..` (2026-09-25 13:30:39Z), the table's rollback targets. The other three were not read.
+
+What this half accepts past batch 72: the step rewrites existing objects because the table's key is the assignment date (there
+is no other key, and no second output path is made); it never mints a partition; 2026-08-04 and 08-12 stay unvalued; the three
+late-July dates stay as the backfill serves them.
+
+Named by this half in addition:
+
+1. A SANITY READ BEFORE THE HOOKUP DEPLOYS: each of the five figures is printed beside the two nearest MEASURED points of the
+   served Cottonwood series (the day before and the day after). A figure that is not between them and is more than 2 percent
+   from the nearer one is explained in the ledger first. This seat did not compare them; 146.3 million on 08-21 against 197.1
+   million on 09-23 is a month apart and proves nothing either way.
+2. THE EC2 NIGHTLY WRITER'S SCHEDULE is not measured. It writes only the newest assignment date, so it cannot rewrite a
+   caught-up partition; the half is signed on that reading of the source, and its schedule state is one row for the round.
+3. THE DEPLOY THAT CARRIES THE CALL LINE is `4.0.0_SA_CRO`'s act under its own ledger entry and its own packet, which names the
+   function's artifact before and after and cites this half for what the step writes. This seat signs that packet on read.
+4. 2026-08-04 and 08-12 are two more absent-or-unvalued days the trace's window did not reach. How they read on the served
+   series is unmeasured; that read is one line of the round, not a condition of this act.
+
+Not verified by this seat: the two ad-hoc runs and their five figures, the 16 tests, the three readers and two writers as read
+from source by the COO, the bucket's versioning state.
