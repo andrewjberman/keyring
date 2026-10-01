@@ -5537,3 +5537,35 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S26",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-01T04:35Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Both adjudicated rows have an owning order now. Z-W16-S1: PRD v1.3 C7 (CTO msg 27481, option (a)) makes the prefixes the fixed literals /hx/transcripts and /hx/mail and grades secrets with grade(); amendment A1 on OG-hr-1 and OG-hr-2 rewrites step 1 and the issuer's checks/_names.py to that text. Z-W17-S1: CTO ruling (c) ROTATE; amendment A1 on OG-rl-1 rotates blackdiamond/cot/otp-gateway-token in that release, with a refused-old / accepted-new verify.",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W16-S1",
+    "NFRA_OPLGTW-Z-W17-S1"
+  ],
+  "one_line": "The route-name block (W16-S1) is ruled by PRD v1.3 and amended into OG-hr-1/hr-2; the printed .env value (W17-S1) is the cot OTP bearer and is rotated at OG-rl-1.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "PRD org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md v1.3 addendum @2b8f3151c6; prd-signoff.py status NFRA_OPLGTW -> ADMITTED.",
+      "checks/_names.py controls on CLOUD: the v1.3 values read every arm ok except the app-code occurrence (no code yet); /ms/transcripts, an ungradable secret and a shared prefix each read FAIL.",
+      "Live render template d61fde4693 deploy-to-ec2.sh line 296: .env line 14 is OTP_BEARER=%s, filled with \"$OTP_BEARER_49F $OTP_BEARER_COT\" unquoted; sourcing it under bash runs the second token as a command, so the printed 64-hex value is the cot token (blackdiamond/cot/otp-gateway-token).",
+      "CTO rulings (c) and (d): org/missions/D9/NFRA/NFRA_OPLGTW/project.json blocking, tick-1 prefix (msg 27490)."
+    ]
+  },
+  "spec_asserts": "TO-OG-hr-1 step 1 (pre-A1): names are lib/opal_naming.py name() output. TO-OG-lt-1: a read-only measurement prints no secret.",
+  "world_is": "name() has no route kind (now ruled out of the contract), and one cot OTP bearer value appeared once in a worker's SSM output (rotation now ordered).",
+  "notes": "Z-S24 stays ARMED until OG-rl-1 serves the host-side roster read (CTO ruling R4); OG-pr-1 creates the secret and grant first (R3).",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
