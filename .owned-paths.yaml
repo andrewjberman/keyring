@@ -2365,6 +2365,10 @@ paths:
     lane: POD1_OR_AE
     note: "Market Overview Lambdas (tiered-generator, rsi-tiered-generator, regime-classifier, fear-greed-fetcher) — POD1 DS authors, AE deploys."
 
+  "infra/aws/lambda/v2_portal/yang_pipeline/write-model-rows.py":
+    lane: MDPF_SECCLASS_FAST_M_YANG
+    note: "MDPF_SECCLASS FAST lease, exact NEW file (the model-row writer, dry run by default, conditional put only); CTO grantor batch 75 (2026-10-01)."
+
   "infra/aws/lambda/v2_portal/yang_pipeline/seed-etf-classifications.py":
     lane: MDPF_SECCLASS_FAST_M_YANG
     note: "MDPF_SECCLASS FAST lease, exact file; CTO grantor batch 64 (2026-10-01)."
