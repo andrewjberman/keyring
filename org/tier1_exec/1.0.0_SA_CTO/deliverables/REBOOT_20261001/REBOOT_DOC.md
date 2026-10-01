@@ -31,7 +31,9 @@ names only what to read.
 | 7 | `3.0.0_SA_CVO` | `org/tier1_exec/3.0.0_SA_CVO/deliverables/REBOOT_BRIEF_20261001_3.0.0_SA_CVO.md` @79b8a2c5f0 | grades every pin the lanes land | grade new pins since 16:3xZ; compile MDPF_SECCLASS | -- |
 | 8 | `4.0.0_SA_CRO` | `org/tier1_exec/4.0.0_SA_CRO/deliverables/REBOOT_BRIEF_20261001_4.0.0_SA_CRO.md` @b0bb251e63 | gold hookup leg V2 | read the function's configuration; wait for the run | **2026-10-02 13:30Z**, same-day rollback if it fails |
 | 9 | `4.0.0_SA_CRO~X` | `org/tier1_exec/4.0.0_SA_CRO~X/deliverables/REBOOT_BRIEF_20261001_4.0.0_SA_CRO_X.md` @ce7fdbabe6 | research partner of the CTO's self-drive | heartbeat IDLE, wait for an ask | -- |
-| 10 | `0.4.0_DS_ClientPlatform~S` | brief NOT YET RECEIVED at writing | IRPT_DASHBD worker seat; holds the TO-DB-b-3 flip on `~P`'s 0.2.0 contract bump | read the brief once it lands; until then, `~P` (its issuer) reseats it on need | -- |
+| 10 | `0.4.0_DS_ClientPlatform~S` | brief NOT RECEIVED at 16:4xZ (the order was read at ~16:25Z; the seat reads IDLE). Interim: its session log `org/tier2_senior/0.4.0_DS_ClientPlatform/logs/2026-10-01/dsS_gold_landed_db_b_1_complete_and_db_b_3_measured_0730-1600Z.md` | IRPT_DASHBD worker seat; IDLE, holding the TO-DB-b-3 flip on `~P`'s 0.2.0 method-contract bump; TO-DB-b-1 complete | `~P` (its issuer) reseats it when the contract bump lands; read the brief if it arrives first | -- |
+
+Owed to row 10 by row 2: the tie-out tolerance ruling (rows S9, S10, S11), named in its log as this seat's.
 
 Rows 3 to 6 are four COO lanes: Andrew's IRPT exception to the cap of three stands; no fifth lane.
 
