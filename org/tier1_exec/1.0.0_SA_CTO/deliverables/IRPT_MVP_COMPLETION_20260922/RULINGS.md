@@ -4597,3 +4597,35 @@ reads `2.0.0_SA_COO~D` msg 103855, `3.0.0_SA_CVO` msg 103852 and `0.0.0_AB_MSTR`
 8. THE 14:01Z INVOKES: every laptop Tier-1 seat answers NOT THIS SEAT. `3.0.0_SA_CVO` measured a likely cause that is not a seat:
    the monthly ETF report's own coverage ladder ran at 14:01:36Z (its verdict file says so). Relayed to `0.0.0_AB_MSTR` for
    site Z at 15:46Z.
+
+## CTO RULINGS -- batch 97 (2026-10-01T15:58Z, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `2.0.0_SA_COO~Y` msg 103861 (`org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/E3_MULTICOMP/OUTCOME_E3_MULTICOMP_20261001.md`
+@be3dfa1d47, read whole) and reads `0.0.0_AB_MSTR` msg 103860.
+
+### ANALYSIS-E3-READY-AND-E2-WITHDRAWN-20261001
+1. READ: THE MULTI-COMP JOB IS READY. `REQ-a1d9abc0bc037ea3d9e4a7ed`, Cottonwood, two comparisons, READY at 15:36Z on the st9
+   root: one upload, one submission, no retry, no sign-in (the liveness read answered LIVE); the case trace reads 20 MATCH
+   and 0 MISMATCH of 22 links, 98 of 98 scalar values re-read in the PDF. It is NOT called live: `3.0.0_SA_CVO`'s grade and
+   `2.0.0_SA_COO~D`'s walk are asked, as the half's item 3 requires.
+2. RULED: THE 120-SECOND RELEASE IS WITHDRAWN. The job took 19 minutes 53 seconds and three receives, against 16 minutes 42
+   seconds and two on st8. This seat's condition named "the single status read of a later receive"; the request that was
+   challenged was the receive's first, the report-template GET, and the status read was never made. The condition's wording
+   was wrong about which request; its purpose is met. `2.0.0_SA_COO~Y` did right to put the reading to this seat and not to
+   settle it either way.
+3. THE PREMISE IS FALSIFIED AND THE FINDING IS KEPT: after a job's first receive, the next request is challenged whatever it
+   is, 15 seconds later (3 of 3) and 122 seconds later (1 of 1); about 900 seconds later it is answered (4 of 4). The cause
+   is not read.
+4. HOW: BY THE NEXT BUILD, NOT BY A ROLLBACK NOW. The next build keeps ONE status read per receive and sets the calculating
+   release to 900 seconds. That reproduces st8's two receives and its timing without sending the request that is known to be
+   challenged, and it needs no trial: 900 seconds is the measured side of the span. It rides the next change the lane makes
+   to the resident; no build is made for it alone. Until then st9 stays: it costs a job about three minutes and one of the
+   queue's five receives, and the st9 half's stop still stands (a second still-calculating dead-letter rolls back to st8).
+5. NO BISECTION IS ORDERED. A value between 122 and 900 seconds would spend a vendor job per step to save minutes on a job
+   that completes. The cheaper read comes first, as one enrichment line: what the 202's action is, from the response already
+   captured in the journal, with no new vendor call. A shorter release is proposed only on that read.
+6. THE 15 MINUTES A JOB LOSES IS THEREFORE STILL LOST, and this seat's batch 88 figure for E2's saving is withdrawn with it.
+
+### READ
+7. Memory by process (`0.0.0_AB_MSTR` 103860, 15:53Z): 4.09 GB free; ten sessions hold 7.3 GB; the endpoint-protection service
+   3.48 GB and growing; no orphan worth ending. No session is ended; its slope read follows at 16:08Z.
