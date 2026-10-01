@@ -6308,3 +6308,60 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S18",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-01T15:40Z",
+  "one_line": "Step 10's 90 s verify window was missed: the host verify read at 15:37:31Z, about 3 minutes after the 15:34:2xZ restart, and the first verify's L1 hash step died on a quoting error in my own script, so L1 MATCH was read at 15:38:25Z.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: deploy log act_rl2.log: ACT START 15:33:12Z, upload 15:33:56Z, manifest stamp Time 2026-10-01T15:34:29Z, DEPLOY RC=0 15:34:56Z; the verify SSM a25dbdb3-82e3-44c7-bb04-82e8998c2c25 printed HOST TIME 2026-10-01T15:37:31Z.",
+      "RUN: the L1-after step in that script raised SyntaxError (a backslash escape lost to the harness heredoc); SSM 49fa771c-7556-4a53-a615-6ef5ae01d2ba re-ran it with chr(13)/chr(10) at 15:38:25Z: process-env items 3 MATCH, shipped-file items 3 MATCH.",
+      "RUN: every verify reading (md5 92 of 92, tool list byte-equal to BEFORE, .env 46 keys same set, ENABLED_INTEGRATIONS unchanged, probes, rl2.AC1.sh 9 of 9 at 15:38:53Z) passed; no rollback was needed."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 10: VERIFY from the host within 90 s of the deploy; L1: hash-compare the sender set before and after the deploy.",
+  "world_is": "The verify script was authored after the deploy returned (it needed the 92-file release md5 list), so the first host read came about 3 minutes after the restart; the new listing route was therefore serving unverified for that interval. Nothing failed, so no rollback decision turned on the lateness. The L1 comparison itself ran twice on the host (the failed run changed nothing).",
+  "notes": "For a future release the verify script (md5 list, tool-list diff, L1 after, probes) can be prepared at PHASE A so the post-deploy read is one SSM call; a 90 s bound is not reachable when the script is written after the act.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S38",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-01T15:55Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-rl-2 LIVE (opal-gateway 0a1d9079c6 since 15:34:29Z; ledger nfra-oplgtw-hx-mail-listing-release CLOSED; drained @63affda730; issuer re-grade on CLOUD rl2.AC1 9 of 9, AC2, AC3 PASS). Z-S36 disarmed: the shipped template reads MAIL_SENDER_TABLE host-side from deploy/mail_sender_table.txt (kept equal to criterion.py by a test) and refuses a missing or empty file before any .env write; L1 set hash MATCH before and after. W15-S16: the cut moved to e3567ce5f7 when MX-r-8 had landed ahead of the issuer's read -- the worker graded live by content; correct. W15-S17: a post-extract refusal leaves new files with the old process; covered by CVO L2 (rollback mandatory) and the blast-radius note; not triggered. W15-S18: the verify read came ~3 min after the restart, past the order's 90 s bound, because the verify script was written after the deploy; every reading passed and nothing was at risk -- the next release order carries the verify script pre-written at PHASE A.",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S36",
+    "NFRA_OPLGTW-Z-W15-S16",
+    "NFRA_OPLGTW-Z-W15-S17",
+    "NFRA_OPLGTW-Z-W15-S18"
+  ],
+  "one_line": "OG-rl-2 live: Z-S36 disarmed by the host-side sender-table read; W15-S16..S18 dispositioned (S18: verify past 90 s, all readings passed).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Worker report: deploy RC=0 15:34:56Z; verify md5 92 of 92, tools 65->65, keys 46->46, MAIL_SENDER_TABLE 3, L1 MATCH x2; AC1 9 of 9.",
+      "Issuer re-run on CLOUD @63affda730: rl2.AC1 LIST ARMS 9 of 9, rl2.AC2 PASS, rl2.AC3 PASS."
+    ]
+  },
+  "spec_asserts": "TO-OG-rl-2 PHASE B: verify within 90 s; the template reads the sender table host-side.",
+  "world_is": "Verify came at ~3 min with every reading passing; the template reads it host-side.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```

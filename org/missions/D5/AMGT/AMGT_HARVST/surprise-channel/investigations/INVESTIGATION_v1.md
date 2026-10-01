@@ -5445,6 +5445,28 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "The disarm is an amendment under a CTO ruling, not a ruling that limits FWD-11: the captcha limb stays open (packet section 2)."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W90-S9",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~90",
+      "surfaced_at": "2026-10-01T15:50Z",
+      "one_line": "ah-2 AC2 run from the main tree with PYTHONPATH=<worktree> cannot import the grader: the main tree's own lib/ package shadows it.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "AC2 runs `python -m lib.opal_data_harvest.load_window_grade --json` with cwd = git toplevel and reads the live monitor windows.",
+      "world_is": "From the main tree (cwd) with PYTHONPATH=worktree, the check's subprocess prints 'No module named lib.opal_data_harvest.load_window_grade' (cwd's lib/ wins over PYTHONPATH). The same grader run from main cwd as a script path over the live data grades fine: 2 windows, 5 publishers, all INSUFFICIENT (clean_hours 0 of 24). AC2 is to be re-run after the drain.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "wk-AMGT_HARVST-90-r35 lib/opal_data_harvest/load_window_grade.py",
+          "worktree .scratch/live.json"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Nothing armed; the issuer re-runs AC2 on the merged tree."
     }
   ]
 ```

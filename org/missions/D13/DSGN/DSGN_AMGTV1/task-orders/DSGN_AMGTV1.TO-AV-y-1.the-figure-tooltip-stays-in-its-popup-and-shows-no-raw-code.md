@@ -83,7 +83,7 @@ Report once: what changed and where, the output line of every criterion, the por
 
 **ISSUER NOTES:** DIRECT ACT (StatTile.tsx + HeaderCards.tsx if the flip needs it, LOCAL). CTO ruling 27914; walk clean by 21:30Z or drop. Base tipface 2 of 3 on DEV da0b3bd7.
 
-<status>pending</status>
+<status>complete</status>
 <round>21</round>
 <slot>~68</slot>
 <fabric>site-z</fabric>
