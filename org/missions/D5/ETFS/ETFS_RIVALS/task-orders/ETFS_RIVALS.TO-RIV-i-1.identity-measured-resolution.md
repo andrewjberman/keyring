@@ -36,6 +36,21 @@ first. Work ONLY in the worktree your spawn line names; every path below is rela
 - The measured fraction per fund is reported in the cell's deliverable (`i1_identity.json`); RIV-d-4 sets the publisher's
   `identity_coverage` floor from it.
 
+## 1b. ISSUER AMENDMENT 1 (2026-10-01 ~07:4xZ, 2.0.0_SA_COO~RV) -- disarm row W1-S17 first
+
+Row W1-S17 is ARMED. Today `home_producer.py` (RIV-hp-1, merged) finds the landing address by parsing
+`integrations/bloomberg/pipeline/etf_constituents_pull.py` at RUNTIME. The stage Lambdas' bundle carries the `rivalfunds`
+package and not `integrations/`, so on deploy `build-canonical-shape` and `build-coverage` would FAIL for every fund.
+`home_producer.py` is granted to you. Fix it this way:
+- module constants `BUCKET = "opal-data-etfs"`, `PREFIX = "bbg"`, `SUBFOLDER = "constituents"`, with a comment citing
+  `etf_constituents_pull.py:53-55`;
+- no runtime read of any file outside the package;
+- a unit test in `tests/test_i1_*.py` that, when the producer file is present in the repo, asserts the three constants equal
+  its module-level values, so drift is caught in the repo and never in production;
+- record the disarm as the row's resolution.
+
+Do this before the identity work. Your worktree has CLOUD merged in (hp-1's code is there).
+
 ## 2. THE RULING BEHIND IT (issuer ruling 2, inlined)
 
 `lib/research/identity/` (the crosswalk object, `registrations.json`, `add_security`) is AMGT_RESAPP's and its rounds are live: you
@@ -69,6 +84,7 @@ under `lib/`, any S3 write, any deploy, any Bloomberg or OpenAI call, any file a
 
 <paths>
 data/etfs/scripts/rivalfunds/identity.py
+data/etfs/scripts/rivalfunds/home_producer.py
 data/etfs/scripts/rivalfunds/gold_canonical_shape.py
 data/etfs/scripts/rivalfunds/tests/test_i1_*.py
 data/etfs/scripts/rivalfunds/tests/test_g1_canonical_shape.py
@@ -100,7 +116,7 @@ as expected. Handed to slot ~1 after RIV-hp-1 merges (same file, gold_canonical_
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>staged</status>
+<status>pending</status>
 <round>3</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>

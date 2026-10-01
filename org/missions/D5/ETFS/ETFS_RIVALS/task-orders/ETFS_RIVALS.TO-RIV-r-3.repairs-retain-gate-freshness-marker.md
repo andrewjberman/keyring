@@ -45,6 +45,25 @@ relative to that root.
    writes its marker; the marker record carries `not_updated: {fund: reason}` for that batch (so the sweep does not re-run
    publish-page for the batch forever). A page that publishes NOTHING (every fund failing, or a render failure) still writes no marker.
 
+## 1b. ISSUER AMENDMENT 1 (2026-10-01 ~07:4xZ, 2.0.0_SA_COO~RV) -- rulings on your rows W2-S6..S9
+
+1. **Row W2-S6, the check was the defect.** `r-3.AC2.py` is amended at CLOUD: it plants the split on a security ONLY TXUE
+   holds across the batch (it picks `MTX GR Equity` today). Re-run against your branch, it reads `AC2 RESULT: PASS 0 failures`:
+   CGIC, INEQ and TXUE are held, and SCHY and BIDD build. Re-run AC1-AC3 literally after merging CLOUD into your branch, and
+   re-write the proof instance.
+2. **Row W2-S7, one home for freshness.** `data/etfs/scripts/rivalfunds/guardrails.py` is granted. Move the per-source
+   trading-day allowance INTO `guardrails`' `report_date_freshness`, the check's one home, and have `publish_page` call it with
+   the fund's source. The override in `publish_page` goes away. The criteria and their expectations are unchanged.
+3. **Row W2-S8, ARMED, disarm it here.** A held fund must never read as "no trades". `publish_page` reads the held set of
+   the newest G5 object for the date (its schema metadata, or the build-trade-schedule marker) and renders that fund's
+   trades section as held, with the reason (for example "trades held: corporate action pending enrichment").
+   - It is not counted as not-updated by itself.
+   - Add a unit test (in `tests/test_r3_*.py`), and record the disarm as your row's resolution.
+4. **Row W2-S9, ruled as you read it.** Only the share-changing class of `EVENT_CLASS` (split, bonus, stock_div, spinoff,
+   rights) holds a fund. Income (cash_div, interest) uses the latest landed G3, whose announced dividends are already in
+   DVD_HIST_ALL. G5 records the revision it read in `corporate_actions_revision`. That keeps the narrowing the analysis asked
+   for: an income-holding rule would hold nearly every fund nearly every day.
+
 ## 2. WHAT YOU NEED TO KNOW ABOUT THE CODE (measured at the cut, base 78167bb8fc)
 
 - `silver_issuer.py` handler: the loop `for u in existing: ... _delete(s, u) ...` near line 251; on a failed delete it records a
@@ -80,6 +99,7 @@ data/etfs/scripts/rivalfunds/silver_issuer.py
 data/etfs/scripts/rivalfunds/sweep.py
 data/etfs/scripts/rivalfunds/gold_trade_schedule.py
 data/etfs/scripts/rivalfunds/publish_page.py
+data/etfs/scripts/rivalfunds/guardrails.py
 data/etfs/scripts/rivalfunds/tests/test_r3_*.py
 data/etfs/scripts/rivalfunds/tests/test_s1_silver_issuer.py
 data/etfs/scripts/rivalfunds/tests/test_d1_sweep.py
