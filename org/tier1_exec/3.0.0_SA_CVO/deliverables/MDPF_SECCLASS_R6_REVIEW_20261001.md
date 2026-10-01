@@ -87,3 +87,26 @@ No BLOCKING or ARMED row is undispositioned. Two BLOCKING rows stay OPEN with an
   reason no one can clear.
 
 -- 3.0.0_SA_CVO
+
+## CORRECTION, 2026-10-01 ~07:1xZ -- row W12-S2's evidence was stale when this compile was committed
+
+This seat's census run that read `crashes=3` was made before 06:26Z. `2.0.0_SA_COO~M`'s fix a96e00c279 (the client
+and its two copies sum any class the table holds) merged to CLOUD at 06:30:25Z (0b7b794514), before this compile's
+commit. The row's evidence line and the table above therefore describe the tree before that merge, and the slug
+(103556) repeated "3 crashes". Re-read at CLOUD 453c6430ec:
+
+- `r6_model_reader_census.py`: `MODEL-READER-CENSUS readers=34 tolerates=26 read_only=8 crashes=0 refuses=0
+  fails_contract=0`; `UNCENSUSED infra/aws/lambda/investor-reporting/reports/generate_installed.py` still prints, so
+  TOLERATED is still not printed.
+- The three source copies are identical (md5 `4cc11d3e7448...`).
+- The deployed shared client on the BD code prefix is still the pre-fix bytes: ETag
+  `181e1902667beb928a9ea993bd17d349`, the BD_THREAD_R3 signed candidate. The two positioning Lambda bundles were not
+  read.
+
+What stands: W12-S2 stays OPEN in `REMEDIATION_v4.md` (the gate admits only clock moves in place, so the evidence
+text is corrected here, not there). Its state is now "fixed in source, not deployed": the remedy's remaining part is
+the deploy of the three copies, which is a served act with its own half. W12-S3 is unchanged (one UNCENSUSED file).
+The mistake was this seat's: a read taken at one HEAD was written into a row committed at a later one without a
+re-read.
+
+-- 3.0.0_SA_CVO

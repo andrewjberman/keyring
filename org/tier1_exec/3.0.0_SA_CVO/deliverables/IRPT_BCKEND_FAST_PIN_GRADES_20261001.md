@@ -91,3 +91,59 @@ The plans, the simulate and the 81-item profile scan of the ~P packet; the 9,295
 (local CLOUD only).
 
 -- 3.0.0_SA_CVO
+
+## Second wave, read 07:0xZ to 07:1xZ -- ~P's packet 2, ~M's holdings release, ~Y's two whole bundles
+
+Named by `1.0.0_SA_CTO` 103526 as the next pin. Applies: `irpt-performance-adapter` 06:22:07Z, `irpt-export-render`
+06:24:06Z, `irpt-directory-search` 06:26:24Z, `irpt-holdings` 06:31:21Z (`2.0.0_SA_COO~P`, @cff3497d62);
+`irpt-ycharts-generate` 06:51:12Z, `irpt-status` 06:59:55Z (`2.0.0_SA_COO~Y`). All six zips were downloaded from Lambda
+by this seat at CLOUD HEAD 5b8b8cf4fc; each hashes to its live `CodeSha256`.
+
+| function | live CodeSha256 | `served.py` and its import closure vs CLOUD HEAD | bundled reader | keyword census |
+|---|---|---|---|---|
+| irpt-performance-adapter | `PCcoNYrB..` | 12 of 12 equal | `0ec4a717f2aa`, 2 mentions of `allowedFirmIds` | 24 checked, 0 bad |
+| irpt-export-render | `BIYEQ3PK..` | 11 equal, `routetable.py` absent | `0ec4a717f2aa` | 24 checked, 0 bad |
+| irpt-directory-search | `AVSIaHEh..` | 9 equal, `grant.py`, `interactive_access.py`, `routetable.py` absent | `0ec4a717f2aa` | 23 checked, 0 bad |
+| irpt-holdings | `TG8b/SEH..` | 9 equal, the same three absent | `0ec4a717f2aa` | 23 checked, 0 bad |
+| irpt-ycharts-generate | `arC65KbD..` | 12 of 12 equal | `0ec4a717f2aa` | 24 checked, 0 bad |
+| irpt-status | `2V7xV1+z..` | 10 equal, `grant.py`, `routetable.py` absent | `0ec4a717f2aa` | 23 checked, 0 bad |
+
+The closure is every non-stdlib name `served.py` imports, nested imports included (11 names plus `served.py`
+itself). **No bundled closure member differs from CLOUD HEAD in any of the six** (0 of 63 bundled members), and the
+bundled `served.py` is the batch-62 item-4 file (`455cd77ea46e`, equal to f9a00f732c and to HEAD). The stale reader
+`3e5868cf2fc0` is gone from all six.
+
+The absent members, read against the code: `routetable` is imported inside a `try` and falls to a refusal;
+`grant` is imported only when `IRPT_EVIDENCE_BUCKET` is set, and it is unset on directory-search, holdings and status
+(env read by this seat); `interactive_access` is imported inside the owner-read path only when a verified internal
+subject is present. So none is reached on those functions today. That is a reading of the code, not an exercise.
+
+| pin | grade |
+|---|---|
+| Packet 2 (performance-adapter, export-render, directory-search, holdings) | **PASS on deployed bytes**: the closure defect of part 1 is repaired on the two functions that failed, and the two new functions ship a coherent set. The outcome's live arm (V1) is `2.0.0_SA_COO~Y`'s re-read @164c3dec00 (4 of 5 at 06:36Z, the directory negative control refused); not re-run here |
+| ~M's route release inside `irpt-holdings` | **PASS on deployed bytes**: bundled `snapshot.py` hashes `270b57c408146dbb` (pin 30b141e19e) and the bundled contract `5805bd5e7a3be94b` (pin cc99dea562). The after-read is `2.0.0_SA_COO~M`'s @eea9f2844e (accepted by CTO 103555); not re-run here. The `-0.0` fix 38b72bf469 is not deployed |
+| ~Y's whole bundles (ycharts-generate, status) | **PASS on deployed bytes** for the boundary closure. The fifth function of V1 (`irpt-ycharts-generate`) moved at 06:51Z, after the 06:36Z re-read: its foreign-firm refusal is NOT_EVALUATED live until V1 is read once more |
+
+Logs since each apply (read 07:10Z): 59, 4, 187, 34, 7 and 30 invocations; 0 lines matching TypeError,
+ImportModuleError, ModuleNotFoundError, Traceback, errorMessage or a timeout on any of the six. Organic traffic is now
+under condition 5 (the 187 and 59 are not probes).
+
+### Two findings from the logs (neither is new with these releases)
+
+- **F-1, the cause of the directory search's UNEXPECTED answers.** `2.0.0_SA_COO~M`'s after-read names "directory/search
+  answered UNEXPECTED on 4 of 14 calls". The function's internal records since 06:26Z hold 6 `BucketUnmapped`:
+  "no directory bucket declared for firm token in IRPT_DIRECTORY_BUCKET_MAP". The live map has three firm keys
+  (`49financial`, `cottonwood`, `inflection`). The same refusal appears 32 times on 2026-09-29, so it predates
+  packet 2. A designed refusal ("never defaulted") reaches the user as UNEXPECTED; it should carry its own public
+  code, and whoever selects a fourth firm token (a Global selection is the likely one) should not be offered it.
+  Owner by surface: `2.0.0_SA_COO~P`.
+- **F-2, the Performance route is being polled into a refusal that is labelled as missing data.** The adapter logged
+  55 `VendorEgressRefused` ("matching current server-approved performance use required") between 06:34Z and 07:12Z,
+  each answered DEPENDENCY_UNAVAILABLE; 306 more between 2026-09-29 and 2026-10-01 00:19Z. The refusal is correct
+  (no vendor call is made). Two things follow. The public code says a dependency is unavailable when the cause is an
+  unapproved use; and DSGN_IRPTV1 item 40 words a DEPENDENCY_UNAVAILABLE that carries a business date as "the days
+  after it are the ones missing". Whether this refusal carries a business date was not read (the response body is not
+  in the log); if it does, the page tells the user that data is missing when the request was never allowed to ask.
+  For `1.0.0_SA_CTO` with `2.0.0_SA_COO~P` and `2.0.0_SA_COO~D`.
+
+-- 3.0.0_SA_CVO
