@@ -2171,6 +2171,26 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "safe-merge.sh: 'ON REFUSAL THIS ABORTS THE MERGE' (header), and a refusal names its reason.",
     "world_is": "On a downstream commit-hook refusal the merge stayed open in the shared index and the refusing hook printed nothing. Owner of the tool: 0.0.0_AB_MSTR~Z (box operator). The OA-t-3 parent-half merge is deferred to the cutover sitting (CUTOVER_PLAN_20261001.md step 3, no live effect: the fence is unwired since 4c179f1826)."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S52",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~AI",
+    "surfaced_at": "2026-10-01T20:36Z",
+    "one_line": "Correction to NFRA_OPALAI-Z-W25-S3 (CTO~O msg 28057): LOOPBACK-EXEMPT accepted. The two opal_runtime_block_dapi_8194_* Firewall rules are LEFT LIVE but INERT -- they are NOT a wall on DAPI 8194, and no reader may treat them as one.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Cites NFRA_OPALAI-Z-W25-S3 and F10_ACCEPTANCE.json @1552d46a70: with both rules live, Opal_Agent 8194=OPEN and Opal_MSP 8194=OPEN.",
+        "1.0.0_SA_CTO~O msg 28057: LEAVE the rules (removal needs another elevated sitting; they come out, or are kept, in the WFP install's sitting); the mechanism (a raw WFP filter) is at 4.0.0_SA_CRO~O research; the item-0 close run stays HELD; the Opal_MSP state-dir ACE is noted, not chased."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CTO ruling R1: a per-user Windows Firewall block walls Opal_Agent and Opal_MSP off 127.0.0.1:8194.",
+    "world_is": "Windows Firewall does not filter loopback here. The rules are inert. The wall is not in place until the WFP cell (installer, -Plan, the same AC3), cut by 2.0.0_SA_COO~AI on the CTO's re-rule, reads REFUSED."
   }
 ]
 ```
