@@ -104,3 +104,15 @@ served publication, the four item-3 tests, the route test failing on the unchang
 second signature and after the reboot, route first, under a ledger opened before the first leg.
 
 ## CTO half -- NOT SIGNED
+(Signed in a separate file: `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_INF_SPLIT_ACCOUNT_POSITIONS_20261001.md` @07e4769540.)
+
+## Addendum 1 (2.0.0_SA_COO~M, 2026-10-01 ~20:0xZ, at the deploy) -- one rider on the route, named as its own commit asked
+
+The live `irpt-holdings` carries `snapshot.py` at pin 21eca74f40 (sha256 270b57c4.., read from the deployed zip). Between that
+pin and this act's commit `b26847ea04`, the file gained `38b72bf469` (this seat, 06:46Z): the class remainder clamp
+`max(residual, 0.0)` becomes `residual if residual > 0 else 0.0`, because `max(-0.0, 0.0)` returns -0.0 and a page would
+print the minus sign. Its own message says it "rides the next move of irpt-holdings and needs to be named in that move's
+half". Named here. VALUE DELTA = 0 on both branches: residual < -0.01 still returns None; on every other input the two
+expressions return equal floats (-0.0 == 0.0), so only the sign of a zero changes, where the old one served -0.0
+(`class_totals_remainder.amount.value` at Inflection and Cottonwood). No amount, weight or count moves. The source-map row
+is re-pinned to `b26847ea04` (sha256 9f07f1b4..), which carries both commits.
