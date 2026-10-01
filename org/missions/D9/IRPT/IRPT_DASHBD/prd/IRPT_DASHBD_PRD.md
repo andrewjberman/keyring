@@ -5,7 +5,7 @@
  "project": "IRPT_DASHBD",
  "directive": "D9",
  "fabric": "laptop",
- "prd_version": "v0.3",
+ "prd_version": "v0.4",
  "step": 4,
  "brief_ref": "docs/briefs/reporting-dashboard-backend-brief-20260930.md@0ee065b116",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10"],
@@ -360,3 +360,36 @@ extension, a nine-way matrix), raised by `2.0.0_SA_COO~P` as 103354. Ruled by `1
     LGIC lane to widen the register to gold. `2.0.0_SA_COO~P` amends DB-1-AC1 to drop its gold policy-file half; the emit was never
     blocked.
 
+## ADDENDUM v0.4 -- C-GUARD never substitutes; the emitted value is the value graded (L4; outside the ENDPOINT section, so no half re-opens)
+
+**Source.** Row `IRPT_DASHBD-S5` @d8c2bad446 (0.4.0_DS_ClientPlatform~S, msg 103434: the methodology review Andrew commissioned,
+both producers executed on a fixture). Ruled by `1.0.0_SA_CTO` 2026-10-01 ~04:0xZ. Andrew's word on the guard is message 4 of
+`ANDREW_DIRECT_20260930_06xxZ_REPORTING_DASHBOARD_TWO_BRIEFS_SCOPE_ANSWERS.md`: "avoid flows having hyperexaggerated effects on
+performance ... a conservative, GIPS methodology. I think you can probably fill in the rest". The substitution below was the fill,
+not his word, and FWD-8 already forbids its result: "a day the data cannot support says so instead of showing a plausible wrong
+number".
+
+17. **The fallback is withdrawn.** C-GUARD's clause "`total_return_daily` falls back to price return plus income with
+    `return_basis = HOLDINGS_INCOME_FALLBACK`" is read as superseded. The holdings return covers the priced, included, long basket;
+    `total_return_daily` covers the whole account. They are different populations, so one cannot stand in for the other (the row's
+    fixture: a true whole-account +0.5% day emitted as +5% at excluded weight 0.9). On a guard disagreement the day is
+    `day_quality FLOW_UNRECONCILED`, `total_return_daily` is null, `return_basis` is `NOT_MEASURABLE`, and the link breaks with a
+    stated gap, exactly as C-GUARD already says for a `NOT_MEASURABLE` day. An unvalued in-kind leg takes the same path (C-METHOD).
+    `HOLDINGS_INCOME_FALLBACK` is never emitted; the contract file removes the member in its own versioned edit with its rule-24
+    record, and ruling 12's closed list is read without it from that edit on.
+18. **The holdings comparison is a qualified diagnostic with a declared comparability domain.** The reader carries the holdings
+    gold's excluded weight, negative-value and leverage fields and its status beside the return; it no longer loads three columns.
+    The guard GRADES a day only inside the domain (bounds measured in round 1 and written to `dim_return_method` with the tolerance:
+    a ceiling on excluded weight, no leverage, no negative value, holdings status OK, the same valuation interval). Outside the
+    domain the guard did not grade, and the row says so in a field the contract file declares with its rule-24 record. A day the
+    guard did not grade is `MEASURED` only when `|F_t| / V_(t-1)` is at or below the guard tolerance, because a flow that small
+    cannot move the return by more than the tolerance even if it is wholly misdated; otherwise it is `FLOW_UNRECONCILED` and
+    `NOT_MEASURABLE`. A flow never enters the return unguarded (Andrew, messages 4-5). Round 1 prints, per account, the count of
+    days each branch took, with its denominator; this seat reads that count before any figure is served.
+19. **One eligibility function runs AFTER selection, on the value that is emitted.** Required inputs present, every value finite,
+    the method applicable, every blocking flag clear, and the plausibility band applied to the emitted `total_return_daily`, not to
+    a raw value that is then discarded. The round-1 guard check fails on an out-of-band emitted value and never coerces a null
+    comparison return to 0.0; `2.0.0_SA_COO~P` amends TO-DB-b-1 and its check to this ruling.
+
+**Not ruled here.** Rows S4 and S6 name the order's own text and stay with `2.0.0_SA_COO~P`. Row S3's quarantine is accepted: the
+tolerance, the large-flow share and the band are re-measured after the S3 repairs and are not written to `dim_return_method` before.
