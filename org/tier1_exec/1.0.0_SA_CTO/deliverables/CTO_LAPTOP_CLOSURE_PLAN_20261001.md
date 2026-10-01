@@ -63,7 +63,28 @@ read of the load allows it, or an existing lane's list empties. Order:
 Before a new session is spawned for item 1, this seat asks whether a live lane with a short list can take it: a Tier-1 lane may hold
 more than one project.
 
+## 3a. Corrections to section 2 (2026-10-01T08:49Z, `1.0.0_SA_CTO`), each after reading the record it rests on
+
+- **Item 1 is DONE.** MDPF_COTREMEDIATION closed @e70dab03fe (rulings batch 71). The count is 15 of 48.
+- **Item 3 is WITHDRAWN.** GLOBALALARM stays in D8: Andrew's word of 2026-09-02 ("Call 1 - I would put this in D8 yes.",
+  LD-0519) is later than the 2026-08-31 quote the census used (`0.0.0_AB_MSTR` 103609; rulings batch 69 item 8).
+- **Item 6 is WITHDRAWN: there is nothing left to adjudicate.** This seat adjudicated `ANDREW_CARD.md` on 2026-09-18
+  (@662d53b793). FWD-4 of LGIC_LGCTFM does not close on that: its ratified text names Andrew personally ("Andrew has read the
+  list for one subject"), as the correction at the head of
+  `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260917_23xxZ_CTO_ADJUDICATES_LGCTFM_ANDREW_CARD_IF_ANDREW_UNAVAILABLE.md`
+  states. LGIC_LGCTFM stands at 8 of 10 outcomes; FWD-4 is his read, FWD-6 waits on LGIC_CANON.
+- **Item 7 is WITHDRAWN: no subject is left to choose.** The practice wave ran on 2026-09-18 over 49 Financial (wave
+  `20260918T011619Z-8db9eb1`; `org/missions/D14/LGIC/LGIC_CANON/deliverables/0.9.0_WK_LGIC_CANON~1/C6_RUN.md`: 12 steps reached, 4
+  carded). FWD-5 of LGIC_CANON is NOT REALIZED on two causes outside its carve-out
+  (`deliverables/1.0.0_SA_CTO/LGIC_CANON_L10_OUTCOME_GRADING_FWD5.md`): step 13, a naming census that stops on a registry RAISE
+  (owner LGIC_ENFORCE), and step 14a, a portal-paths grant only Andrew gives (row `LGIC_CANON-W6-S2`). So the LGIC lane's first
+  work is LGIC_ENFORCE's census, not a new wave.
+- **Item 4:** MDPF_HEALGAP's row is corrected (@6291fa70e5, @e70dab03fe, @65417358df). Five rows remain.
+
 ## 4. What only Andrew can do, from this census
+
+- His own read of LGIC_LGCTFM's `ANDREW_CARD.md` list for one subject (FWD-4; the outcome's ratified text names him).
+- The portal-paths grant LGIC_CANON's step 14a needs (row `LGIC_CANON-W6-S2`).
 
 - Lift the D2 hold: eight projects, 19 open orders. ADVI_STITCH has nothing in flight and ADVI_49F has one order left, so two of
   the eight are a reconcile away from closing once the hold lifts.
