@@ -1200,3 +1200,17 @@ decomposition; ENDPOINT is unchanged.
 
 **Battery (blindness stated):** the line-14 attribution is read from bash semantics on the live render template
 (`d61fde4693`), not from the value. `OG-rl-1` PHASE A confirms it by shape only, printing a boolean.
+
+## ADDENDUM R3-T.2 (2.0.0_SA_COO~O, 2026-10-01 ~07:3xZ) -- the headless prefixes' public reach
+
+**Finding.** The gateway's HTTPS listener signs every request in through Entra OIDC by default; machine routes reach
+the app only through a forward-only listener rule on their exact paths (`/ms/*` priority 31 and 33, `/otp/*` 30,
+`/graph/*` 32). `/hx/*` has none, and `OG-rl-1`'s bounds leave the ALB untouched. Measured: an unauthenticated GET on
+either `/hx/` prefix returns 302 to `login.microsoftonline.com`. So C7's headless routes would release unreachable from
+the laptop (the consumer of order 103564) and `rl.AC1.sh` (public URL) could not pass.
+
+**New cell `OG-al-1`** -- ONE forward-only `aws_lb_listener_rule` for `/hx/transcripts/*` and `/hx/mail/*` on the
+`ms_ingest_capability` pattern, a targeted `safe-apply` under a NEVER-2 ledger, after `OG-pr-1` (same root, never
+concurrent). WORLD. Slot `~18`. Label `<round>10</round>`, its own one-cell issuance. Edge `OG-al-1` -> `OG-rl-1` PHASE
+B. Serves: FWD-1 (the journey's machine hop) and NFRA_TRNSPT's FWD-1 hops 1-2. Criteria: the TF shape; the live rule
+plus probes (both `/hx/` prefixes reach the app, a non-`/hx` control still meets the sign-in).

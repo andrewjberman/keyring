@@ -97,7 +97,8 @@ Write the instance at `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ET
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
+<completion_note>2026-10-01 drain by 2.0.0_SA_COO~RV: worker 0.9.0_WK_ETFS_RIVALS~3 @f53de77287 (build ffb53529cb); proof instance VALID (proof-of-spec-check rc=0); s-4.AC1 PASS (172/172 G4 rows, 164/164 sectors), s-4.AC2 PASS (406/406 plan); package 197 passed 2 skipped; row W3-S15 (BDP px as-of pull moment) carried to RIV-d-4 and the round-3 analysis.</completion_note>
 <round>3</round>
 <slot>~3</slot>
 <fabric>site-z</fabric>

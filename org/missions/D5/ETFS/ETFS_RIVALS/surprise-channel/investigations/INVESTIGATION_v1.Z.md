@@ -1526,6 +1526,48 @@
     "notes": "Not on the round-2 analysis's enrichment list, so not cut by the issuer; carried to 1.0.0_SA_CTO~Z for placement (a small cell)."
   },
   {
+    "id": "ETFS_RIVALS-Z-S7",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-01T07:03Z",
+    "one_line": "The seating lint (gate2, to-decomp-ref-lint seating_check) read the round-3 orders' worker serial 0.9.0_WK_ETFS_RIVALS~<n> as the seat '0.9.0_WK_ETFS' and printed REFUSED SEATING for all 6 orders against ETFS_GUARDRAIL's worker order -- a prefix parse of a worker code that contains an underscore; the commit still landed (rc=0).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit of ec32d71501 (round-3 issuance): '[gate2] REFUSED: ...TO-RIV-hp-1... SEATING: this NEW task order for ETFS_RIVALS is addressed to 0.9.0_WK_ETFS, which already holds open TOs on 1 OTHER pipeline project(s): ETFS_GUARDRAIL (1 open: ETFS_GUARDRAIL.TO-EG-s-21.the-driven-refusal.md)' -- the same line for r-3, s-4, i-1, g-6, d-4; rc=0 and the commit is on CLOUD (d302af2186).",
+        "The seating rule binds Tier-2 seat instances (CLAUDE.md rule 27, 'ONE PROJECT PER TIER-2 SEAT INSTANCE'); a worker serial 0.9.0_WK_<CODE>~<n> is per project by construction."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A worker serial 0.9.0_WK_<CODE>~<n> names its project; the seating check never folds two projects' workers into one seat.",
+    "world_is": "The resolver truncates the worker code at the first underscore (ETFS_RIVALS -> ETFS), so any two projects sharing a code prefix (ETFS_RIVALS, ETFS_GUARDRAIL, ETFS_INGEST) read as one multi-project seat. Today it prints REFUSED but did not block this commit; if the limb is switched to enforcing it blocks every such issuance.",
+    "notes": "Gate owner 1.0.0_SA_CTO (to-decomp-ref-lint.py / to-check.py's assignee resolver). Carried to the round-3 drain-end read."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W3-S15",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~3",
+    "surfaced_at": "2026-10-01T07:10Z",
+    "one_line": "G4 px_close/total_return_index come from a BDP reference pull (PX_LAST, DAY_TO_DAY_TOT_RETURN_GROSS_DVDS) that Bloomberg answers as of the pull moment, not as of the partition `date`; the cell names no override, so the producer stamps as_of = date and is correct only when the vehicle leg runs on the trading day itself.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/enrichment_bloomberg.py `_market_pull` calls `_blp_reference_data(batch, MARKET_FIELDS)` with no overrides; integrations/bloomberg/mcp/blp_client.py `reference_data` is the BDP-equivalent (current static/reference values).",
+        "Not exercised live (the Terminal is signed out); a pull for a past `date` would label current values with that date. Nothing in this cell backfills G4."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-s-4: G4 carries `px_close` and `total_return_index` per `date`, written by `market` wired into `daily` after the dividends pull.",
+    "world_is": "Correct when the daily leg runs after the close of `date`; a late or replayed run (or a historical `date`) would write today's PX_LAST under the older partition. A historical-price request (HistoricalDataRequest, or a PX_LAST/DAY_TO_DAY_TOT_RETURN overrides set to the date) is the other shape and is not in this cell.",
+    "notes": "For RIV-d-4's first live run (check the run date equals `date`) and the round-3 analysis (whether G5 or the page ever reads G4 price for a past date). disarm_owner 2.0.0_SA_COO~RV if it arms."
+  },
+  {
     "id": "ETFS_RIVALS-Z-W1-S17",
     "project": "ETFS_RIVALS",
     "fabric": "site-z",
