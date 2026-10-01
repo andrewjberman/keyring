@@ -12,7 +12,7 @@
 <preflight>
 comp-schedule: DECLARED-NOT-APPLICABLE -- a one-shot deploy; no cron, alarm, monitor or cadence.
 comp-iam: DECLARED-NOT-APPLICABLE -- this order makes no IAM change. The two new secrets use the host's existing bearer mechanism; if PHASE A step 4 finds the host role cannot read them, that is a BLOCKING row back to the issuer (an IAM change is its own cut), never a grant here.
-comp-adversary: DECLARED-NOT-APPLICABLE -- the release shape is the CTO's (PRD v1.2 C7: narrow, ledger, never-widen halves).
+comp-adversary: DECLARED-NOT-APPLICABLE -- the release shape is the CTO's (PRD v1.3 C7 @2b8f3151c6: narrow, ledger, never-widen halves).
 EGRESS CLASS, declared: NONE beyond Opal's own AWS (S3 upload, SSM, Secrets Manager) and the public gateway URL.
 </preflight>
 
@@ -20,7 +20,10 @@ EGRESS CLASS, declared: NONE beyond Opal's own AWS (S3 upload, SSM, Secrets Mana
 
 The build cells `OG-tx-1`, `OG-ml-1`, `OG-hr-1` and `OG-hr-2` are complete on CLOUD and NOT deployed. Ship them NARROW:
 the live commit plus those cells' own gateway commits, and nothing else CLOUD holds. Read PRD
-`org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md` v1.2 C7 whole.
+`org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md` v1.3 C7 whole (at @2b8f3151c6 or later). `OG-pr-1` is also
+complete: the secrets `gateway/transcripts/bearer`, `gateway/mail/bearer` and `gateway/principals/rosters` exist and
+`opal-gateway-role` reads exactly those three. The release order is the CTO's
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_20261001_OPAL_GATEWAY_RELEASE_TRAIN.md` (R1, R2 C1-C6, R4).
 
 **Grade by CONTENT, never ancestry** (row `NFRA_OPLGTW-Z-S21`). Deploy-only refs carry history without bytes.
 
@@ -46,10 +49,24 @@ the live commit plus those cells' own gateway commits, and nothing else CLOUD ho
    - Names come from `deliverables/0.9.0_WK_NFRA_OPLGTW~16/ROUTE_NAMES.json`.
    - Say whether the host role already reads them, by reading its policy. If it does not, STOP with a BLOCKING row
      that names the exact grant. This order applies no IAM change.
-   - Plan the creation of both secrets (random 32 bytes, never printed). Create nothing.
+   - The two bearer secrets already exist (`OG-pr-1`). Confirm each with `describe-secret`; never read a value.
+   - **Rotation (CTO ruling (c), row Z-W17-S1).** This release rotates the cot OTP capability bearer, Secrets
+     Manager `blackdiamond/cot/otp-gateway-token` (the second token of host `.env` line 14, `OTP_BEARER`). Confirm the
+     attribution by shape only: print whether that secret's value is 64 hex, a boolean, never the value. Read every
+     presenter of that bearer (who reads the secret, and whether each reads it per call or caches it) and name a
+     non-mutating `/otp/*` probe for the verify. A presenter that caches it is a BLOCKING row, never a skipped
+     rotation.
 5. **`.env` render.** `deploy-to-ec2.sh`'s printf has equal `%s` and argument counts. The changes are additive only:
    - the two bearers;
-   - the sender table, from the issuer at GO (gate G-SENDERS: Manav's and Yang's addresses, never committed);
+   - the sender table, from the issuer at GO: Manav's addresses as they stand; Yang's join when supplied, as a data
+     change (CTO ruling (d): G-SENDERS is not a gate). Never committed;
+   - the principal rosters, read HOST-SIDE (CTO ruling R4, row Z-S24): the on-host script fetches
+     `gateway/principals/rosters`, parses `master_admin` and `write_capable` with `python3.11`, and refuses (no `.env`
+     written, no restart) unless each is a valid `<tid>/<oid>` pair list; the deploying-shell guard for
+     `OG_MASTER_ADMIN_PRINCIPALS` / `OG_WRITE_CAPABLE_PRINCIPALS` goes. The `MASTER_ADMIN_PRINCIPALS=` and
+     `WRITE_CAPABLE_PRINCIPALS=` lines stay;
+   - hand-merged onto the LIVE printf line, never a CLOUD-sourced one (C1). `ANNOUNCE` prints the `.env` KEY set
+     before and after, keys only. The ac08 count is LIVE + OWN (C3);
    - the meeting allowlist (empty until G-MEETINGS);
    - the PDF size cap.
 
@@ -65,13 +82,14 @@ the live commit plus those cells' own gateway commits, and nothing else CLOUD ho
 9. NEVER-2 ledger, slug `nfra-oplgtw-trnspt-deps-release`, opened with `python .tools/deploy_ledger.py open ...`
    (legs: secrets, upload, install + verify, manifest, rollback-proven). Commit the entry AND its sentinel BEFORE the
    act.
-10. Create the two secrets as planned. Then act from the release tree with `DEPLOY_BASE_REF=<live full sha>`.
+10. Put a new random value (never printed) on `blackdiamond/cot/otp-gateway-token`. Then act from the release tree with `DEPLOY_BASE_REF=<live full sha>`.
 11. VERIFY from the host within 90 s:
     - `/health` 200;
     - md5 of the shipped files equals the release bytes;
     - the tool list AFTER equals BEFORE plus exactly the 5 new tools;
     - `ENABLED_INTEGRATIONS` unchanged;
-    - `/ms/*` answers as before.
+    - `/ms/*` answers as before;
+    - on the step-4 `/otp/*` probe, the pre-rotation cot value is refused and the new one is accepted.
 
     Then run `rl.AC1.sh` (the negative arms). Any failure: roll back, re-verify, close the ledger ROLLED BACK.
 12. Record `EC2_MANIFEST.json` `services.opal-gateway` (`deployed_commit`, `previous_deployed_commit`, `deployed_at`,
@@ -102,11 +120,13 @@ render lines). Rows: id `NFRA_OPLGTW-Z-W15-S<k>`, fabric `site-z`, disarm_owner 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="OG-rl-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/trnspt/checks/rl.AC1.sh; echo "exit=$?"</invocation><expect>(?s)ARMS 6 of 6 refused-or-metadata.*RESULT: PASS.*exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="OG-rl-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/trnspt/checks/rl.AC2.sh; echo "exit=$?"</invocation><expect>(?s)sentinel at HEAD=no;.*outside the build slots' set 0; ms_ingest.py shipped 0.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC3" cell_refs="OG-rl-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/trnspt/checks/rl.AC3.sh; echo "exit=$?"</invocation><expect>(?s)GUID literals in the template: 0.*template reads gateway/principals/rosters host-side: True.*deploying-shell roster requirement still present: False.*bash -n rc=0.*RESULT: PASS.*exit=0</expect></criterion>
 </proof_of_spec>
 
 - `AC1`: C7's first criterion for each route, against the SERVED gateway. The issuer supplies the four message and
   attachment ids at run time; an arm without its input is NOT RUN, which is a FAIL.
 - `AC2`: NEVER-2 is closed, and the release is narrow, shipping only the build slots' files with `/ms/*` unshipped.
+- `AC3`: the SHIPPED template reads the rosters host-side (R4); no release after this one needs an off-repo hand-off.
 
 ## 5. WHEN YOU ARE DONE
 
@@ -117,7 +137,8 @@ validated with `python .tools/proof-of-spec-check.py <instance>`. Report once pe
 
 **ISSUER NOTES:**
 - Slot ~15, queue position 3. HANDED only when `OG-tx-1`, `OG-ml-1`, `OG-hr-1` and `OG-hr-2` are drained, and OG-t-2
-  and NFRA_MCPINDEX MX-r-7 have landed (release serialisation). PHASE B also needs G-SENDERS (Yang's addresses, N1).
+  and NFRA_MCPINDEX MX-r-7 have landed (release serialisation), and `OG-pr-1` is complete. G-SENDERS is NOT a gate
+  (ruling (d)). The halves also cover the cot OTP bearer rotation and the host-side roster read.
 - The halves' blast radius: the shipped file set, the two secrets, the `.env` delta and the negative arms. Rollback is the prebuilt live artifact plus the old `.env`; the secrets can be deleted with a recovery window.
 - Risk WORLD: a deploy that adds a content surface.
 
@@ -127,3 +148,15 @@ validated with `python .tools/proof-of-spec-check.py <instance>`. Report once pe
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+
+## AMENDMENT A1 (issuer `2.0.0_SA_COO~O`, 2026-10-01 ~04:3xZ; on PRD v1.3 @2b8f3151c6 and CTO rulings (b), (c), (d))
+
+Graded by: no gate limb (LIMB 6 fires on a newly-added order only; GATE (viii) reads `<placeholders>NONE</placeholders>`).
+- PRD citation v1.2 -> v1.3; the secret names come from `ROUTE_NAMES.json` as before, now graded with `grade()`.
+- (b) row Z-S24 and CTO ruling R4: the release template reads the rosters host-side (new criterion AC3, `rl.AC3.sh`,
+  controlled: it reads FAIL on today's live template on exactly the two arms the edit must move); `OG-pr-1` (R3)
+  creates the secrets and the grant first; new edge `OG-pr-1` -> `OG-rl-1` PHASE B. The train order is R1.
+- (c) row Z-W17-S1: the release rotates `blackdiamond/cot/otp-gateway-token` (line 14's second token, attributed by bash
+  semantics on the live template and confirmed by shape in step 4), with a refused-old / accepted-new verify.
+- (d) G-SENDERS is not a gate: the sender table ships as it stands.
+AC1 and AC2 and their invocations are unchanged; AC3 is added.

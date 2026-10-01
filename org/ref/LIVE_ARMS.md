@@ -30,12 +30,14 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
   (his `/self-drive` invocation, 2026-09-28 ~22:2xZ); landed by 1.0.0_SA_CTO~O. Record
   `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260928_222xZ_SELF_DRIVE_O_FABRIC_FOUR_PROJECTS.md`. Stop:
   all four `status: complete`, HELD-AT-STOP, or Andrew's stand-down.
-- `1.0.0_SA_CTO~Z` `/self-drive 30m` over "AMGT fabric ops" (AMGT_CORPUS, AMGT_RESAPP, AMGT_HARVST, DSGN_AMGTV1).
-  The driver rules all calls, and 3.0.0_SA_CVO~Z adjudicates any reserved call. Paired with `2.0.0_SA_COO~X` / `~Z` /
-  `~H` / `~D` running `/canonical-drive <own project> 30m` (+15m). Class DIRECTED, chooser Andrew (post-crash restart
-  word, 2026-09-29 ~18:3xZ); landed by 1.0.0_SA_CTO~Z. Record
-  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260929_183xZ_SELF_DRIVE_AMGT_FABRIC_OPS.md`.
-  Stop: every project in scope `status: complete`, HELD-AT-STOP, or Andrew's stand-down.
+- `1.0.0_SA_CTO~Z` `/self-drive 60m` over AMGT_CORPUS, AMGT_HARVST, AMGT_RESAPP, DSGN_AMGTV1, ETFS_RIVALS (the
+  Friday demo: PROD by 09:00 ET 2026-10-02). The driver adjudicates every open call; CRO~Z runs `/closer trace` on
+  request. Paired with `2.0.0_SA_COO~X` / `~Z` / `~H` / `~D` running `/canonical-drive <own project> 30m`; `~RV`
+  unchanged. Class DIRECTED, chooser Andrew (2026-10-01 ~04:0xZ, armed on the CRO~Z brief 04:14Z); landed by
+  1.0.0_SA_CTO~Z. Record
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261001_040xZ_SELF_DRIVE_60M_AMGT_FOUR_PLUS_ETFS_RIVALS_ARM_ON_CRO_BRIEF.md`;
+  placement `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20261001_043xZ_AMGT_FRIDAY_DEMO_RESTRUCTURE.md`.
+  Stop: DONE read from the register, HELD-AT-STOP (never for AMGT_HARVST), or Andrew's stand-down.
 - `2.0.0_SA_COO~A` `/drive` NFRA_CLDGRPH to CLOSED:
   `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_171xZ_CLDGRPH_HOLDS_OFF_WRAP_IT_UP.md`.
 - `2.0.0_SA_COO~X` `/drive` NFRA_C3MATERIALIZE:
@@ -56,6 +58,9 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
 
 ## Struck
 
+- SITE-Z `1.0.0_SA_CTO~Z` `/self-drive 30m` "AMGT fabric ops" (record
+  `ANDREW_DIRECT_20260929_183xZ_SELF_DRIVE_AMGT_FABRIC_OPS.md`). Struck 2026-10-01 by `1.0.0_SA_CTO~Z`: the 09-30 wind-down
+  for the reboot cancelled its crons, and Andrew's 2026-10-01 ~04:0xZ `/self-drive 60m` row above supersedes it.
 - SITE-Z `1.0.0_SA_CTO~Z` `/self-drive 30m` AMGT + DSGN_AMGTV1 with its COO pairs (record
   `ANDREW_DIRECT_20260928_220xZ_SELF_DRIVE_AMGT_AND_DSGN_AMGTV1.md`). Struck 2026-09-29 by `1.0.0_SA_CTO~Z`. The 11:34 ET
   crash ended the arm and it was never re-armed. Andrew's post-crash word of ~18:3xZ is the new AMGT arm above. A

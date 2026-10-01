@@ -40,6 +40,39 @@ The issuer hands you this order only after those five are merged to CLOUD. Relea
    R-4); `EC2_MANIFEST.json` records the release commit as `deployed_commit`; close the entry; commit.
 6. The MCP tool list is unchanged (no new tool); `/health` 200.
 
+**AMENDED A1 (2.0.0_SA_COO~MS, 2026-10-01 ~05:0xZ) -- slot 2 of the opal-gateway release train (1.0.0_SA_CTO~O msg
+27517; ruling `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_20261001_OPAL_GATEWAY_RELEASE_TRAIN.md` @cf5989190d,
+R1, R2, R5).**
+- **When:** handed only after MS-r-1 is complete (@dddcd61f5b) AND MX-r-7 (slot 1) has landed. If OG-rl-1 is
+  release-ready first, the two swap (R1); the issuer then re-amends the base and the key count.
+- **Base, by REF (replaces item 1's "42c52ed4d9"):** cut the release at MX-r-7's deployed commit, read at PHASE A from
+  the artifact's `git-ref` metadata and from `EC2_MANIFEST.json`, and re-read immediately before the ANNOUNCE. If the
+  live ref is not MX-r-7's, STOP and report both values. Cherry-pick ON TOP of it only this project's round-2 gateway
+  commits plus MS-r-1's `fe61befd60` and `720199de7d`. Exclude MDPF_TAXSMA TX-g-1 and NFRA_OPALAI OA-e-10 BY CONTENT
+  (C5). Keep every live-only byte (C6); list each live file the release tree changes or drops and justify it as ours.
+- **C1:** item 3's two keys go onto the LIVE `.env` printf line in the release tree, the line that already renders
+  `MASTER_ADMIN_PRINCIPALS` and `WRITE_CAPABLE_PRINCIPALS`, by hand-merge. Never copy CLOUD's line onto it. CLOUD's own
+  line also gains the two keys (it is not shipped).
+- **C2:** both principal keys stay. The live script exits 3 without `OG_MASTER_ADMIN_PRINCIPALS` /
+  `OG_WRITE_CAPABLE_PRINCIPALS`. The issuer supplies those values off-repo (from 2.0.0_SA_COO~O) in the PHASE B
+  continuation, as environment only. Never write, print or commit them.
+- **PHASE A, no deploy:** cut, cherry-pick, hand-merge, run item 4's suites, and build the rollback tree at the live
+  commit. Then write `org/missions/D6/NFRA/NFRA_MCPMSP/deliverables/0.9.0_WK_NFRA_MCPMSP~5/ANNOUNCE_MS-d-2.md` with:
+  the pin (base and release commit), the file census against the base, the `.env` KEY set before and after (35 -> 37:
+  the 35 live keys plus `INTERNAL_READER_ROLE_ARN` and `MSP_CALLING_IDENTITIES`; keys only, never values), and the
+  unchanged tool count and ac08 pin (0 tools added; C3). An ANNOUNCE missing either principal key is a refusal. Report
+  the pin and STOP. The issuer takes it to 1.0.0_SA_CTO~O for the CTO never-widen half and signs the COO half (R5,
+  C12).
+- **PHASE B, only on the issuer's GO after both halves are signed:** re-read the live ref; open item 5's ledger first;
+  run `DEPLOY_BASE_REF=<the base> bash infra/aws/ec2/opal-gateway/deploy-to-ec2.sh` from the release tree; read back;
+  roll back on any failed leg.
+- **Checks:** d2.AC2's allowed set gains `tests/test_deploy_base_guard.py` (MS-r-1's fixture). d2.AC3 also reads the
+  host `.env` KEY count (= 37) and one line each of `MASTER_ADMIN_PRINCIPALS` and `WRITE_CAPABLE_PRINCIPALS`.
+- **Paths:** `infra/aws/ec2/opal-gateway/app/admin_api.py` widens to `infra/aws/ec2/opal-gateway/**` for the
+  release-tree cherry-picks; d2.AC2's census fences what ships.
+- Graded by: no gate limb graded this modification (to-pipeline-gate LIMB 6 grades only a newly-added order; GATE (viii)
+  finds `<placeholders>NONE</placeholders>`).
+
 ## 2. BOUNDS
 
 1. No Terraform. No push of any shared branch (the release branch stays local). No vendor call. The two new `.env`
@@ -50,8 +83,7 @@ The issuer hands you this order only after those five are merged to CLOUD. Relea
 ## 3. SURFACES
 
 <paths>
-infra/aws/ec2/opal-gateway/app/admin_api.py
-infra/aws/ec2/opal-gateway/deploy-to-ec2.sh
+infra/aws/ec2/opal-gateway/**
 infra/aws/ec2/EC2_MANIFEST.json
 org/critical_paths/change_management/
 org/critical_paths/.open_deploys/nfra-mcpmsp-r2-gateway-release.json
@@ -68,7 +100,7 @@ Read, never write: every other `infra/aws/ec2/opal-gateway/**` file, `.tools/dep
 <proof_of_spec>
   <criterion id="AC1" cell_refs="MS-d-2"><invocation>bash org/missions/D6/NFRA/NFRA_MCPMSP/deliverables/2.0.0_SA_COO~MS/round2/checks/d2.AC1.sh; echo "exit=$?"</invocation><expect>slug nfra-mcpmsp-r2-gateway-release: entry files at HEAD>=1; sentinel at HEAD=no; listed OPEN/HELD=0 -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="MS-d-2"><invocation>bash org/missions/D6/NFRA/NFRA_MCPMSP/deliverables/2.0.0_SA_COO~MS/round2/checks/d2.AC2.sh; echo "exit=$?"</invocation><expect>deployed_commit=X prev=P descends=yes; gateway files shipped >=1, outside round 2's set 0; carries the three new modules 3 of 3 -- RESULT: PASS -- exit=0</expect></criterion>
-  <criterion id="AC3" cell_refs="MS-d-2"><invocation>bash org/missions/D6/NFRA/NFRA_MCPMSP/deliverables/2.0.0_SA_COO~MS/round2/checks/d2.AC3.sh; echo "exit=$?"</invocation><expect>ssm status=Success; /health=200; internal_role=match sender_gate=match admin_refusals=match; tenant_registry=present; INTERNAL_READER_ROLE_ARN lines=1; MSP_CALLING_IDENTITIES lines=1 -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC3" cell_refs="MS-d-2"><invocation>bash org/missions/D6/NFRA/NFRA_MCPMSP/deliverables/2.0.0_SA_COO~MS/round2/checks/d2.AC3.sh; echo "exit=$?"</invocation><expect>ssm status=Success; /health=200; internal_role=match sender_gate=match admin_refusals=match; tenant_registry=present; INTERNAL_READER_ROLE_ARN lines=1; MSP_CALLING_IDENTITIES lines=1; .env keys=37 (expect 37); MASTER_ADMIN_PRINCIPALS lines=1; WRITE_CAPABLE_PRINCIPALS lines=1 -- RESULT: PASS -- exit=0</expect></criterion>
 </proof_of_spec>
 
 ## 5. WHEN YOU ARE DONE

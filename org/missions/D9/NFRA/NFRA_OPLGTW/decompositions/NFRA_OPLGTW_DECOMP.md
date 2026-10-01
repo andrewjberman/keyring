@@ -1161,3 +1161,42 @@ Slots ~15..~17 are unused: round 3 named ~10..~14.
 - (b) Write-surface overlap was read from the PRD's own named files, not from a diff. A file the build discovers is
   a surprise row.
 - (c) No cell grades NFRA_TRNSPT's FWD-1 or FWD-7. The positive mail and transcript runs are that project's.
+
+## ADDENDUM R3-T.1 (2.0.0_SA_COO~O, 2026-10-01 ~04:3xZ, on PRD v1.3 @2b8f3151c6 and the CTO's self-drive tick-1 rulings)
+
+**Source.** PRD v1.3 C7 (`1.0.0_SA_CTO~O` msg 27481, option (a); `prd-signoff.py status` ADMITTED) and the four rulings
+in `project.json` `blocking` (tick-1 prefix, msg 27490, arming record @80102ed73d). The issuer rules inside its own
+decomposition; ENDPOINT is unchanged.
+
+- **Names (supersedes R3-T "Route names come from `lib/opal_naming.py`").** The headless prefixes are the fixed literals
+  `/hx/transcripts` and `/hx/mail`, graded for distinctness only. The bearer secrets are `gateway/transcripts/bearer`
+  and `gateway/mail/bearer`, each `grade(..., "SECRET")` CONFORMANT. Row Z-W16-S1 is dispositioned by amendment A1 on
+  `OG-hr-1` and `OG-hr-2`.
+- **G-SENDERS is NOT a gate** (ruling (d)). The sender table is a data asset; `OG-rl-1` ships it with Manav's addresses
+  as they stand, and Yang's join when supplied, as a data change.
+- **New cell `OG-pr-1` -- the gateway read secrets and their one grant** (CTO ruling R3 / C11,
+  `CTO_RULING_20261001_OPAL_GATEWAY_RELEASE_TRAIN.md` @cf5989190d; tick-1 ruling (b), row Z-S24). It creates THREE
+  Secrets Manager entries out of band, values never printed: `gateway/transcripts/bearer` and `gateway/mail/bearer`
+  (random), and `gateway/principals/rosters` (both rosters, from the site-Z Part D file). One Terraform role policy
+  `opal-gateway-gateway-read-secrets` grants `secretsmanager:GetSecretValue` on exactly those three ARNs (the
+  `graph-read.tf` pattern), by a targeted `safe-apply` that is Terraform act #2 of the train (C4), under a NEVER-2
+  ledger. Acceptance (R3): `simulate-principal-policy` reads `allowed` on all three and `implicitDeny` on a sibling
+  `gateway/*` ARN; and the host reads the roster secret's shape under its own role. WORLD. Slot `~18` (new; independent
+  of the build chain). No service changes. Label: `<round>9</round>`, its own one-cell issuance (round 8's issuance
+  admits no new file).
+- **OG-rl-1 carries R4.** Its release-branch `deploy-to-ec2.sh` reads the rosters host-side from
+  `gateway/principals/rosters` (the deploying-shell variables go), and it no longer creates the two bearers (OG-pr-1
+  did). A third criterion, `rl.AC3.sh`, reads the SHIPPED template.
+- **Rotation (ruling (c), row Z-W17-S1).** The value printed was host `.env` line 14's second token: line 14 is
+  `OTP_BEARER=<49f> <cot>` unquoted, so `bash` ran the second token as a command and printed it. That is the cot OTP
+  capability bearer, Secrets Manager `blackdiamond/cot/otp-gateway-token`. `OG-rl-1` rotates it in the same release,
+  after PHASE A reads every presenter of that bearer and how each one reads it.
+
+**Edges added:** `OG-pr-1` -> `OG-rl-1` PHASE B (the grant is applied first). Train order (R1): MX-r-7 -> MS-d-2 ->
+`OG-rl-1` (swap with MS-d-2 if ready first); until `OG-rl-1` serves, the issuer hands the rosters off-repo to
+`2.0.0_SA_COO~MI` and `2.0.0_SA_COO~MS` (C2).
+
+**Fan-out:** 8 orders in 2 connected components; slots `~15`, `~16`, `~17` (closed), `~18`; cap 8.
+
+**Battery (blindness stated):** the line-14 attribution is read from bash semantics on the live render template
+(`d61fde4693`), not from the value. `OG-rl-1` PHASE A confirms it by shape only, printing a boolean.

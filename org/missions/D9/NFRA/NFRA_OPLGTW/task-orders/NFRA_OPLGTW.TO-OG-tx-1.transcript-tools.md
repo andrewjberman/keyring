@@ -107,3 +107,5 @@ CLOUD after the drain @ea8dc01a84: AC1 8 of 8 PASS, AC2 REG 3 of 3, SCOPES same,
 The order flips complete when the worker re-cuts its proof instance against the fixed check (that
 instance's AC2 row still reads FAIL on the old check). Issuer re-grade record:
 `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/trnspt/OG-tx-1_ISSUER_REGRADE.md`.
+
+<status>complete</status>

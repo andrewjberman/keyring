@@ -105,7 +105,7 @@ Rows: `org/missions/D6/NFRA/NFRA_OPALAI/surprise-channel/investigations/INVESTIG
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="OA-t-1"><invocation>bash org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~AI/round2/checks/t1.AC1.sh; echo "exit=$?"</invocation><expect>present 15 of 15; content-equal 7 of 7; census files in opal_ai: 0 -- RESULT: PASS -- exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="OA-t-1"><invocation>bash org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~AI/round2/checks/t1.AC2.sh; echo "exit=$?"</invocation><expect>moved paths absent at HEAD: 10 of 10; census files kept at HEAD: 4 of 4; catalog lines added/removed vs cut: 1 1 (guardrails_ref re-pointed=yes); code/config files still referencing moved paths: 0 -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="OA-t-1"><invocation>bash org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~AI/round2/checks/t1.AC2.sh; echo "exit=$?"</invocation><expect>moved paths absent at HEAD: 10 of 10; census files kept at HEAD: 4 of 4; catalog lines added/removed by this slot: 1 1 (guardrails_ref re-pointed=yes); code/config files still referencing moved paths: 0 -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="OA-t-1"><invocation>bash org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~AI/round2/checks/t1.AC3.sh; echo "exit=$?"</invocation><expect>hard-lines byte-equal=yes; launch acts named: cut=N>0 runtime=0; whoami mentions>0; map rows 8 of 8, resolved 8 of 8; row 7 declined=1 -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="J2" cell_refs="OA-t-1" judgment="true"/>
 </proof_of_spec>
@@ -147,6 +147,13 @@ the close-run artifact in `deliverables/2.0.0_SA_COO~AI/round2/`, and never self
   worker writes no nested file, but its checks read the pin through the nested checkout.
 
 The slot continues with OA-e-8 after the item-0 close run.
+
+
+**ISSUER AMENDMENT 3 (2.0.0_SA_COO~AI, drive tick 2, 2026-10-01; row Z-W12-S1):** `t1.AC2`'s catalog limb counts only
+this slot's own commits on `DATA_CATALOG.yaml` since `$OA_R2_BASE`. Seven NFRA_MCPINDEX commits moved the catalog
+after the round-2 cut, so the cut-to-HEAD diff read 132/6 against a 1/1 edit. This is the second stale-base read on
+this limb. Dry-run of the amended check: CLOUD base `0 0`, FAIL as expected; worker branch `23d7b1f345` `1 1`, PASS.
+Gate: `.tools/to-pipeline-gate.py` LIMB 6 does not fire on a modification, and GATE (viii) graded it (`<placeholders>NONE`).
 
 <status>pending</status>
 <round>2</round>
