@@ -582,6 +582,22 @@ lanes:
       - 2.0.0_SA_COO~M
     description: "CTO grantor, IRPT RULINGS batch 64, 2026-10-01 (msg 103505): the POD4 members preserved verbatim plus exact COO~M, for the exact files of the MDPF_SECCLASS FAST lease (drive-mode.log, ARM MDPF_SECCLASS 2026-10-01T05:39:44Z). File: the BD gold script E_18.detect_new_securities.py. Code only: no deploy or apply grant; served moves keep both never-widen halves. Struck when MDPF_SECCLASS closes."
 
+  IRPT_BCKEND_FAST_Y_HOST:
+    permitted_agents:
+      - 0.5.0_AE_OpalETL
+      - 0.5.0_AE_OpalETL~B
+      - 0.6.0_AE_PartnerETL
+      - 0.6.1_AE_PartnerETL
+      - 0.6.2_AE_PartnerETL
+      - 0.7.0_AE_CloudOps
+      - 0.7.0_AE_CloudOps~A
+      - 0.7.0_AE_CloudOps~B
+      - 0.7.0_AE_CloudOps~C
+      - 0.8.0_AE_CloudComp
+      - 4.0.0_SA_CRO~SWEEP   # sweep-executor, gate-constrained (ruling CTOB-RCG-001)
+      - 2.0.0_SA_COO~Y
+    description: "CTO grantor, IRPT RULINGS batch 74, 2026-10-01 (msg 103652): the CLOUD_OPS_OR_ETL members preserved verbatim plus exact COO~Y, for one file inside the IRPT_BCKEND~Y FAST lease surface: the YCharts host's sign-in library (the reason tokens of batch 70 item 5). Code only: no deploy or apply grant; the host release keeps both never-widen halves. Struck when IRPT_BCKEND closes."
+
   DATA_REFRESH_DEPLOY:
     permitted_agents:
       - 0.5.0_AE_OpalETL
@@ -2340,6 +2356,10 @@ paths:
   "infra/aws/lambda/semantic-news-*/**":
     lane: POD1_OR_AE
     note: "Semantic news-pipeline Lambdas (currently inactive but kept in lane) — POD1 DS authors, AE deploys."
+
+  "infra/aws/ec2/investor-reporting-ycharts/ycharts_session.js":
+    lane: IRPT_BCKEND_FAST_Y_HOST
+    note: "IRPT_BCKEND~Y FAST lease, exact file; CTO grantor batch 74 (2026-10-01)."
 
   "infra/aws/lambda/v2_portal/01_market_overview/**":
     lane: POD1_OR_AE
