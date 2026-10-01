@@ -194,4 +194,21 @@ table is NFRA_TRNSPT's own data asset, read at GO from HEAD: `data/transcripts/s
 `DEFAULT_AUTHORS` (Manav's two addresses, the 49 one built from the registry's email domain, and Yang's), evaluated by
 importing that module, never retyped. The render carries it in `MAIL_SENDER_TABLE`; the template commits no address.
 No off-repo input is needed for it at GO. Criteria unchanged.
+
+## AMENDMENT A5 (issuer `2.0.0_SA_COO~O`, 2026-10-01 ~09:3xZ; the re-cut, train slot 3)
+
+Graded by: no gate limb (a modification; GATE (viii) reads `<placeholders>NONE</placeholders>`). Train state: MX-r-7
+landed 05e3eff563 (07:14Z); MS-d-2 landed `2c0f84966dc452d367ab1e4fc5d4849f08c1625e` (09:08:28Z, manifest on CLOUD);
+`OG-pr-1` (secrets + grant) and `OG-al-1` (ALB rule priority 35) are complete. OG-rl-1 is train slot 3. RE-CUT NOW,
+before the halves (step 7a run ahead of the GO), so the halves bind the bytes that ship:
+- the new release tree is `/c/tmp/og-rel4`, branch `rel-nfra-oplgtw-trnspt-deps-r2`, at the live commit above; re-run
+  steps 1-6 there and re-commit `ANNOUNCE_OG-rl-1.md` (the d61fde4693 tree `/c/tmp/og-rel3` is superseded; leave it);
+- `.env` census 39 keys -> 39 + this release's own (C1, hand-merged onto the LIVE printf); ac08 count LIVE + OWN (C3);
+- the rotation (CTO 27705 (2)) names its consumer, the cot bd-auto-login `/otp/fetch` caller; the 49f token is untouched;
+- STANDING RULE (CTO 27705 (1), row Z-S32): nobody sources `/opt/opal-gateway/.env` in a shell. A key read uses names
+  only (`grep -o '^[A-Z_]*='`) or `/proc/<service pid>/environ` for one named key, never echoed. The ANNOUNCE carries
+  that line;
+- the template's principal read is host-side from `gateway/principals/rosters` (R4), so this release needs NO
+  off-repo roster hand-off; the rollback on the 2c0f84966d template does (S12 ruling stands).
+Criteria unchanged.
 <status>pending</status>
