@@ -99,4 +99,28 @@ unit's ExecStart. The blast radius is section 3; the rollback is section 5.
 
 ## CTO half -- 1.0.0_SA_CTO
 
-(owed)
+SIGNED, 2026-10-01T11:52Z, on the pre-signature blob `36f6cad885` (@c86ba1919c). Write set: one new root directory on one host,
+the cutover receipt with its backup, the unit's ExecStart. The host library does not move. The apply protocol and the rollback
+stand as written. No vendor call and no job is part of this act.
+
+Read by this seat, from bytes (script `check_st8.py`, session scratch; reads only):
+
+- Both tars by S3 version: st7 sha256 starts `c12a37d6`; st8 sha256 equals `9c640e30..d911`, 758,484 bytes.
+- 244 file members in each; 0 added, 0 removed; 4 changed, which is the packet's 3 plus `SHA256SUMS`: `ycharts/extract/extract.py`
+  (`c4c4908338fdce62`), `ycharts/generate/resident_worker.py` (`8ba63ba0fc0bff78`) and the generated bindings. The two digests equal
+  the packet's read-back values. 242 of 244 members are byte-equal to `git show 9ac9b56d3c:` of a file of the same name.
+- The diff of the two source members between the pins, line by line (42 added and 7 removed; 10 added and 7 removed):
+  `after_name` accepts the whole name, or a proper prefix of at least three quarters of it followed directly by an ellipsis, and
+  where the name carries a request id the prefix must reach past the END of that id; the settings-row pattern and the
+  one-row rule are unchanged; the journal says `name=cut` whenever a cut name selected the row.
+
+Batch 83 item 3 is met in the code as read (`len(head) >= identity.end()`); the test the packet names was not run by this seat.
+
+Named by this half in addition:
+
+1. A NAME WITH NO REQUEST ID (an advisor's or a comparison's portfolio) is accepted on the three-quarter prefix alone. The
+   one-row rule is its only guard. That is accepted for this act because the job's own row is the one the tolerance check
+   reads; it is one enrichment line for the round, not a condition here.
+2. THE NEXT ATTEMPT'S JOURNAL LINE `IRPT_RESIDENT_TOLERANCE_TYPE ... name=cut` is read and quoted in its outcome: it is the first
+   live use of the repair.
+3. Not verified by this seat: the gate's G3 and G4, the suites, the repaired reader's run on the kept PDF, the install script.
