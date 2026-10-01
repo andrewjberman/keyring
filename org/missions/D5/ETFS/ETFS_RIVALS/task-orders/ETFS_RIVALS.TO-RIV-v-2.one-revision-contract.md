@@ -102,7 +102,7 @@ at base 48ec92238a: v-2.AC1 FAIL, v-2.AC2 FAIL -- each FAIL as expected.
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>4</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
