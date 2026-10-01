@@ -16368,6 +16368,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "spec_asserts": "CLAUDE.md 14b: a drain is graded against the shared index and committed under the draining seat's author; a merge state you did not create is a peer's work-in-progress.",
   "world_is": "Two live COO seats' commits interleave on one shared index: a peer's commit can carry another seat's in-flight MERGE_HEAD and staged merge under its own author line, and the draining seat's tool then reports a refusal for a merge that in fact landed. Same class as Z-S322 (a tool's staged state absorbed by a peer), second shape (a merge, not an entry). No data wrong; the author line and the drain's own verdict are.",
   "notes": "disarm_owner 2.0.0_SA_COO~Z. Owner of the fix: 1.0.0_SA_CTO~Z's spine backlog, beside Z-S322 (round-54 analysis ruling 2). Measured against the ancestry: git merge-base --is-ancestor e05d814e42 HEAD = true, carried by 52b8287a8b."
+},
+{
+  "id": "AMGT_RESAPP-Z-W199-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~199",
+  "surfaced_at": "2026-10-01T07:30:00Z",
+  "one_line": "integrations/bloomberg/research/tests/test_price_axis_pull.py::test_price_axis_pull_client_is_the_loopback_dapi_not_a_lambda fails on this box's python with ModuleNotFoundError: No module named 'blpapi' -- untouched by AMGT-af-3, outside its AC1 file list.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest -q -p no:cacheprovider integrations/bloomberg/research/tests/test_price_axis_pull.py in C:/tmp/r56-199: 1 failed, 4 passed; the failure imports blp_client, which imports blpapi, absent from the default `python` here (READ_HERE.md section 3 names a different interpreter for it).",
+      "AC1 of AMGT-af-3 names test_price_universe.py and lib/research/price/tests/ only (35 passed, exit=0); the new test stubs blp_client via sys.modules and never imports blpapi."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMGT-rd-6's test header: the suite exercises price_axis_pull.py without opening a live session, run under the Python311 interpreter that carries blpapi.",
+  "world_is": "Under the default python on this box the loopback-DAPI assertion cannot run because blpapi is not importable; a repo-wide hygiene run on that interpreter reads it as a failure unrelated to the price universe.",
+  "notes": "disarm_owner 2.0.0_SA_COO~Z. Surfaced, not adjudicated; no change made to that test."
 }
 ]
 ```
