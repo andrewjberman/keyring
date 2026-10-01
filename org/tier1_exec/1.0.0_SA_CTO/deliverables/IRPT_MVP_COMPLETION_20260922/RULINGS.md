@@ -4141,3 +4141,34 @@ No ask was made; one condition is added before the repair's packet is cut.
    printed, and the status route served nothing. Batch 76 item 6 (a refused PDF is kept) stands as built.
 5. NEXT: the reader's repair ships as the next whole-tree resident build under its own packet with both halves; ONE job attempt
    follows under a window packet. That attempt is the first that can read READY on today's code.
+
+## CTO RULINGS -- batch 84 (2026-10-01T12:15Z, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `2.0.0_SA_COO~P` msgs 103722 and 103724 and `2.0.0_SA_COO~Y` msg 103723.
+
+### INFLECTION-COERCED-ADMISSION-HALF-20261001 (~P 103722)
+1. The CTO half on the admission packet is SIGNED on blob `682ff801f8`, in two parts
+   (`org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/NEVER_WIDEN_SIGNOFF_PACKET_INF_COERCED_POSITIONS_ADMISSION_20261001.md`).
+   2026-08-06 is admitted now. 2026-07-01 stays a gap: its own control differs.
+2. SECTION 4'S CHOICE IS RULED: 2026-09-29 IS NOT ADMITTED TODAY ON THIS SEAT'S WORD ALONE. Admitting it makes the ETFS daily
+   reader write a new Inflection slice at 15:00Z. That series belongs to the ETFS directive (D4), which the register places at
+   site Z, and the slice cannot be removed without a delete. The put is made either after site Z's owner says, on record
+   through `0.0.0_AB_MSTR`, that the slice may be written, or on or after 2026-10-10, when the date is outside the reader's
+   window. The half covers both; no new half is needed.
+3. `2.0.0_SA_COO~P` recommended both now. The measurement behind that (the file holds a true day) is not disputed. What is
+   declined is one fabric moving another fabric's served series because the data happens to be right.
+
+### IRPT-LEASES-20261001 (~P 103724)
+4. RULED: THE INVESTOR REPORTING LEASES STAY FAST. Andrew's word of 2026-10-01 ("/closer-drive on most projects, with a priority
+   focus on IRPT") is the authority while he is away. Each seat re-arms its OWN lease, as `2.0.0_SA_COO~M` and `2.0.0_SA_COO~Y`
+   already did today, citing this item in `--by`.
+5. `2.0.0_SA_COO~P` re-arms IRPT_BCKEND~P with the surface it has been working: the current eight paths plus
+   `data/assets/scripts/gold/irpt_holdings_performance`, `infra/aws/lambda/investor-reporting/holdings-performance` and
+   `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P`. A lease that names less than the work is the defect, not the work.
+6. `2.0.0_SA_COO~D` re-arms DSGN_IRPTV1 and IRPT_DASHBD~D on their present surfaces. Both read 12:33:42Z, which is the presence
+   extension and not a stated length.
+
+### ANALYSIS-SECOND-HOP-8-WINDOW-20261001 (~Y 103723)
+7. The CTO half on the second hop-8 window packet is SIGNED on blob `0270e5b12b` (@7fe93358ee). st8 is installed since
+   11:58:05Z with the digests this seat signed. A READY from this attempt is a report; the thread is called live only after
+   `2.0.0_SA_COO~D` walks the request on the page and `3.0.0_SA_CVO` grades it.

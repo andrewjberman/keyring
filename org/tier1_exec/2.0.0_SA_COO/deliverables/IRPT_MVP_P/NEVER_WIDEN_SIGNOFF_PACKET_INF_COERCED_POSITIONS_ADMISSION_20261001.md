@@ -89,4 +89,38 @@ SIGNED, 2026-10-01 ~12:1xZ, on this packet's bytes at the commit that carries it
 
 ## CTO half
 
-(owed: `1.0.0_SA_CTO`, bound to this packet's pre-signature blob)
+SIGNED, 2026-10-01T12:13Z, `1.0.0_SA_CTO`, on the pre-signature blob `682ff801f8` (@2a3c7e0feb), in two parts.
+
+**PART 1, SIGNED WITHOUT CONDITION: `date=2026-08-06`.** One put of one new key. Its own three controls are equal on 59 of 59
+columns, the path is exact on 5 of 5 control dates, and neither reader of the table moves a served output (the ETFS slice for
+that date exists and the date is outside the catch-up window). Conditions 1 to 4 apply.
+
+**PART 2, `date=2026-09-29`: SIGNED FOR THE PUT ONLY ON ONE OF TWO STATED CONDITIONS; section 4's choice is ruled here.**
+The put makes `inf-etf-ownership-daily` write `opal-data-etfs/daily/inflection/2026-09-29.json` at its next 15:00Z run. That
+series is the ETFS directive's (D4), which the register places at SITE Z. A laptop act that moves another fabric's served
+series is not this seat's to sign alone, and the write cannot be undone without a delete. So:
+
+- (a) the put may be made on any day BEFORE that day's 15:00Z run once site Z's owner of the ETFS daily series has answered,
+  on record through `0.0.0_AB_MSTR`, that the 2026-09-29 slice may be written; condition 5 then applies; OR
+- (b) with no such answer, the put is made on or after 2026-10-10, when the date is outside the reader's ten-day window and
+  no ETFS slice is written. The holdings producer links 2026-09-29 across the gap until then (rulings batch 80 items 2 to 4).
+
+This seat asks site Z through `0.0.0_AB_MSTR` in the same hour as this signature. Neither branch needs a new half.
+
+Read by this seat:
+
+- The register (`directives-check --json`, 11:42Z): ETFS_CANON, ETFS_POSITIONING, ETFS_INGEST and ETFS_SATELLITES are D4, device
+  SITEZ.
+- `opal-data-etfs/daily/inflection/` listed at 12:0xZ: the newest slice is `2026-09-27.json`, written 2026-09-30T15:00:41Z; no
+  slice exists for 2026-09-28 or 2026-09-29.
+
+Named by this half in addition:
+
+7. 2026-07-01 STAYS A GAP, as batch 81 item 3 rules and section 3 measures (its control 2026-07-02 differs on 4 columns in 9
+   rows). The four differing columns are one row for the round: a coerced file that is not equal to its raw form on a control
+   date is a fact about the coercing step, and nobody has read why.
+8. THE CONVERTER'S SWEEP will name two more alien keys and keep reading FAIL. That verdict already means nothing on this
+   table (row W99-S4). Teaching the sweep an admitted class is its own packet; until then the sweep's FAIL on this table is
+   read by its key list, never by its headline.
+9. Not verified by this seat: the two equality runs, the five path controls, the anchor grades, the dry runs. Conditions 2
+   and 3 read them back from the landed bytes.
