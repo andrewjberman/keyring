@@ -635,6 +635,22 @@ lanes:
       - 2.0.0_SA_COO~M
     description: "CTO grantor, IRPT RULINGS batch 87, 2026-10-01 (msg 103756): the CLOUD_OPS_OR_ETL members preserved verbatim plus exact COO~M, for one file: the Cottonwood pipeline's IAM file, for ONE statement (dynamodb:GetItem and dynamodb:Scan on the etf-classifications table only; nothing on bd-securities) on the exporter role's policy (row IRPT_BCKEND-S173). Code only: the plan and safe-apply are a separate act under both never-widen halves. Struck when IRPT_BCKEND closes."
 
+  IRPT_BCKEND_FAST_P_MIRROR:
+    permitted_agents:
+      - 0.5.0_AE_OpalETL
+      - 0.5.0_AE_OpalETL~B
+      - 0.6.0_AE_PartnerETL
+      - 0.6.1_AE_PartnerETL
+      - 0.6.2_AE_PartnerETL
+      - 0.7.0_AE_CloudOps
+      - 0.7.0_AE_CloudOps~A
+      - 0.7.0_AE_CloudOps~B
+      - 0.7.0_AE_CloudOps~C
+      - 0.8.0_AE_CloudComp
+      - 4.0.0_SA_CRO~SWEEP   # sweep-executor, gate-constrained (ruling CTOB-RCG-001)
+      - 2.0.0_SA_COO~P
+    description: "CTO grantor, IRPT RULINGS batch 88, 2026-10-01 (msg 103775): the CLOUD_OPS_OR_ETL members preserved verbatim plus exact COO~P, for three files of the OPAL_ASSETS ingest mirror (batch 63 item 6: an unknown key class is a counted SKIP line; a second scheduled Inflection fire). Code only: the mirror walks every firm's rows, so its release is its own packet with both never-widen halves. Struck when IRPT_BCKEND closes."
+
   DATA_REFRESH_DEPLOY:
     permitted_agents:
       - 0.5.0_AE_OpalETL
@@ -2405,6 +2421,18 @@ paths:
   "infra/aws/terraform/cot-pipeline/iam.tf":
     lane: IRPT_BCKEND_FAST_M_COT_IAM
     note: "IRPT_BCKEND~M FAST lease, exact file, ONE statement; CTO grantor batch 87 (2026-10-01)."
+
+  "infra/aws/lambda/opal-assets/opal-assets-ingest-mirror/lambda_function.py":
+    lane: IRPT_BCKEND_FAST_P_MIRROR
+    note: "IRPT_BCKEND~P FAST lease, exact file; CTO grantor batch 88 (2026-10-01)."
+
+  "infra/aws/lambda/opal-assets/tests/test_ingest_mirror_unknown_key_skip.py":
+    lane: IRPT_BCKEND_FAST_P_MIRROR
+    note: "IRPT_BCKEND~P FAST lease, exact file; CTO grantor batch 88 (2026-10-01)."
+
+  "infra/aws/terraform/opal-assets/mirror.tf":
+    lane: IRPT_BCKEND_FAST_P_MIRROR
+    note: "IRPT_BCKEND~P FAST lease, exact file; CTO grantor batch 88 (2026-10-01)."
 
   "infra/aws/lambda/v2_portal/01_market_overview/**":
     lane: POD1_OR_AE
