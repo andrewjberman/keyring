@@ -2387,6 +2387,69 @@
       ]
     },
     "notes": "Remedy (issuer): read cfg['thresholds']['min_resolved_fraction'] (or guardrails.load_config()). disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W4-S12",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~4",
+    "surfaced_at": "2026-10-01T20:55Z",
+    "one_line": "G2 (holdings_coverage) has no GQGU path: a full-window G2 replay of 2025-07-14..2026-09-30 writes 307 coverage days and 0 GQGU rows, so the served GQGU block keeps 'No coverage rows (G2) for this fund in the window: the history calendar is unavailable'.",
+    "spec_asserts": "NEVER_WIDEN_HALF_COO_D5.md key 4 (gold G1, G2, G5 and G6 as new revisions) and the issuer's ruling at ~20:3xZ: replaying G2 over the replay window gives GQGU coverage rows and its calendar.",
+    "world_is": "daily-lambda 'only: build-coverage' mode replay: probe 53200ea1-6b4c-4dfb-9dbd-20890e800ae0 (2026-09-14..2026-09-30, 83.8 s, nothing rewritten) and full window 99756aa9-bde9-4b52-85e2-c53e35e680f7 (2025-07-14..2026-09-30, 324.9 s, marker d5-g2-r4-full status OK, written_new 4): read back, the 307 coverage objects in the window hold 3068 rows and 0 rows with fund_id GQGU (12 funds appear). Cause in code: gold_holdings_coverage.py _issuer_obs returns [] unless BASG is in the funds it reads and stamps every issuer sidecar 'fund': BASG; issuer_rows reads silver by basg.SOURCE and filters fund_ticker == the fund. G2 was not widened by RIV-q-1 or any round-4 cell. Page republished (marker d5-publish-r4b, request d3d8440b-cd95-4037-a49e-76ec0246fbd9): GQGU block unchanged. The act did not change code. The four coverage days 2026-04-23..04-28 that my windowed G1 replay (end 2026-04-28) had rewritten with a through-date of 04-28 were rewritten again by the full-window run (written_new 4).",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/gold_holdings_coverage.py@b366ed9d7e _issuer_obs (:276-297) and _Evidence.issuer_rows (:224-236)",
+        "s3://opal-data-etfs/rivalfunds/etfs/state/build_coverage/date=2026-10-01/d5-g2-r4-full.json and the 307 objects under rivalfunds/etfs/gold/holdings_coverage/ (read back: GQGU rows 0)"
+      ]
+    },
+    "notes": "Remedy (issuer, round-5 code cell): make the issuer evidence reader per fund (ADAPTERS), reading each fund's own silver source. disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. See row Z-W4-S13 for the armed consequence."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W4-S13",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~4",
+    "surfaced_at": "2026-10-01T20:56Z",
+    "one_line": "G2's issuer evidence reader attributes EVERY issuer sidecar to BASG and keeps the greatest capture id per day, so tomorrow's 07:00 GQGU capture (landed after BASG's) can displace BASG's own observation for that day and read BASG as 0 rows.",
+    "spec_asserts": "RIV-q-1: GQGU rides the issuer route beside BASG without displacing it ('BASG's object for that date is kept'); the next trading day's 07:00 fetch for both funds, 08:03 leg and 09:00 sweep are the acceptance.",
+    "world_is": "gold_holdings_coverage.py _issuer_obs lists every .json sidecar under issuer-site bronze (BASG's and GQGU's alike) and builds each observation with 'fund': BASG; _latest keeps the greatest capture_id per (fund, source, expected day); issuer_rows then looks for silver basg-<capture_id>.parquet (absent for a GQGU capture), falls back to parsing the GQGU bronze and keeps rows with fund_ticker == BASG. Today the 305 GQGU captures (captured_at 2026-09-29T20:4xZ) are all OLDER than BASG's capture for the same requested date (read of all 632 sidecars: 305 GQGU dates, 305 with a BASG capture, 0 where GQGU is newer), so the full-window G2 replay is unaffected (BASG rows unchanged in 2026-09-14..09-30). The deployed daily fetch lands BASG then GQGU in one run, so a day's GQGU capture id sorts after BASG's. INFERRED from the code, not yet observed: the next G2 daily over expected day 2026-10-01 reads BASG's coverage for that day from the GQGU file (0 BASG rows).",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/gold_holdings_coverage.py@b366ed9d7e _issuer_obs :276-297, _latest :313-320, _Evidence.issuer_rows :224-236",
+        "S3 sidecar read of issuer-site/etfs/bronze/holdings/ at 2026-10-01 20:5xZ: 632 sidecars, 305 gqgu, 327 basg, no GQGU capture newer than BASG's for any requested date"
+      ]
+    },
+    "notes": "Hazard: the acceptance read (08:03 leg, 09:00 sweep, G2 daily lookback) lands on the first trading day both funds are fetched. The worker cannot change code or the fetch schedule in this act. Remedy (round 5, before 2026-10-02 07:00 ET if the acceptance is to read clean): filter _issuer_obs by sidecar source/fund so each fund reads only its own captures. disarm_owner 2.0.0_SA_COO~RV."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W4-S14",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~4",
+    "surfaced_at": "2026-10-01T21:05Z",
+    "one_line": "d-5.AC2 takes 353 s from this worktree, so under the worker's 120 s bound it reads rc 124 twice; its output line is only produced under a longer bound.",
+    "spec_asserts": "Worker standing rule: each criterion's invocation runs under 'timeout 120'; a timeout (rc 124) is the recorded output, retried once.",
+    "world_is": "'timeout 120 python .../round4/checks/d-5.AC2.py' read rc=124 at 121 s on both tries (evidence/d-5.AC2.retry.output.txt); 'timeout 600 python .../d-5.AC2.py' read 'AC2 RESULT: PASS 0 failures' rc=0 in 353 s (TSEL 101 served windows, WCMG 42, none mismatched; evidence/d-5.AC2.output.txt). The check lists every served G1 and G5 object in rivalfunds/etfs/gold/ and reads each parquet of the replay window one at a time. The criterion is recorded PASS on the 600 s run with this row; the bounded run is NOT a pass.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~4/evidence/d-5.AC2.output.txt and d-5.AC2.retry.output.txt (this worktree)"
+      ]
+    },
+    "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. The check could read the served parquets in parallel; its owner is the issuer."
   }
 ]
 ```
