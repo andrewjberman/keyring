@@ -22,7 +22,11 @@ Order: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261001_161xZ_DE
 - Cottonwood re-point, the carrier: `B_00` now copies silver's `cusip` and `cash_equivalent` into Cottonwood's gold positions
   (they carry neither today; silver has both). Branch `coo-m-cot-carrier` @0fb0dbdbbb ONLY: the B_00 carrier (@dda373cbd3, its test fails on the old B_00)
   AND the ruled rule (`lib/etf_classifier.classify_position`) used by C_06, whose mix now carries commodities, structured,
-  cash, unclassified and other (Cottonwood gold tests 19 passed). Still to do: D_03 and D_04, then the reader census. It is reverted on `coo-m-r30` (@1c1d2a02c2) so it cannot ride the split-account merge; `coo-m-r30` equals the signed
+  cash, unclassified and other (Cottonwood gold tests 19 passed). D_03 and D_04 on the same rule @2e3ae332b2 (D_04 reads holdings_lots, 0 objects at
+  Cottonwood). READER CENSUS started: C_06's output is read in-tree by D_03 and D_04; the first BLOCKING reader found is
+  `portal/src/pages/AdvisorIntelligence/_shared/lib/composition.ts:117-118` (`normalizeMixTo4Class` skips any class outside its
+  list, so `unclassified` would be silently dropped and the slices re-scaled) -- it changes in the same act. Not yet read: the
+  rest of the 541 files naming the mix outputs (comp-find "mix_daily_summary|firm_mix_views|firm_composition|client_mix_timeseries"). It is reverted on `coo-m-r30` (@1c1d2a02c2) so it cannot ride the split-account merge; `coo-m-r30` equals the signed
   head cab9bf875d (0 files differ). Today-by-tomorrow table measured: `MDPF_SECCLASS_M/COT_REPOINT_TODAY_BY_TOMORROW_20261001.md` @e0f8d95bd8. RULED (CTO batch 99,
   msg 103919): C_06's mix carries commodities, structured and unclassified as their own classes; nothing folded, no client skipped.
 - Cottonwood re-point: ruled by CTO batch 93 (cash from the feed's flag as class `cash`; a no-ticker CUSIP is a table row;
@@ -48,6 +52,8 @@ Order: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261001_161xZ_DE
 ## 4. Owed
 - I owe 1.0.0_SA_CTO: the Cottonwood re-point packet (batch 93 item 4).
 - Others owe me: the CTO half on the 19 seed rows (my msg 16:13Z).
+- Signed by this seat 17:2xZ: the COO half on Tax SMA activation TX-r-3 (`COO_HALF_TAXSMA_TX_R_3_ACTIVATION_20261001.md`
+  @07d269eb28); the activation and its ledger are 4.0.0_SA_CRO's.
 - OWED BY THIS SEAT AFTER THE REBOOT (CTO batch 99 item 3, msg 103919): the Cottonwood re-point packet lists EVERY reader of
   C_06's output and shows each renders a class it has not seen before (commodities, structured, unclassified), or changes it
   in the same act; a reader that would silently drop a class blocks the re-point. Build: the callers' rule (cash flag -> cash;
