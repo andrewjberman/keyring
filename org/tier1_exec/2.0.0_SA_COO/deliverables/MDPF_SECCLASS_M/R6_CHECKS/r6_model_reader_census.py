@@ -750,6 +750,37 @@ def ex_classify_residual():
                 "tickers: the runner's own census sees a model row as a live row, so it is never re-planned" % (n, len(MODEL)))
 
 
+def ex_write_model_rows():
+    """The model path's WRITER reads the table twice before it plans (vocabulary, existing tickers).
+    A ticker that already has a model row must come back PRESENT and never be planned again."""
+    with World(), isolated([YANG, SHARED]):
+        mod = load("infra/aws/lambda/v2_portal/yang_pipeline/write-model-rows.py", "ex_write_model_rows")
+        import etf_classifications_dynamodb as cm
+        clf = cm.ETFClassifier()
+        vocab = mod.TableVocabulary.from_live_table(clf)
+        live = mod.existing_tickers(clf)
+        expect(all(r["ticker"] in live for r in MODEL), "existing_tickers missed a model row")
+        firm = [r for r in MODEL if not r.get("low_confidence")][:25]
+        expect(len(firm) > 0, "no model row above the confidence threshold to exercise")
+        cands = {r["ticker"]: {"key": r["ticker"], "asset_class": r["asset_class"],
+                               "sub_asset_class": r.get("sub_asset_class"), "name": r.get("name"),
+                               "confidence": float(r["classification_confidence"]), "low_confidence": False}
+                 for r in firm}
+        rows, refused, present = mod.plan_rows(list(cands), cands, vocab, live)
+        expect(rows == [], "the writer planned %d ticker(s) that already have a model row" % len(rows))
+        expect(refused == [], "the writer refused %d existing model ticker(s): %s" % (len(refused), refused[:2]))
+        expect(sorted(present) == sorted(cands), "PRESENT %d != %d" % (len(present), len(cands)))
+        flagged = next((r for r in MODEL if r.get("low_confidence")), None)
+        if flagged is not None:
+            cand = {"key": "ZZNEWLOW", "asset_class": flagged["asset_class"], "confidence": 0.5, "low_confidence": True}
+            _, low_refused, _ = mod.plan_rows(["ZZNEWLOW"], {"ZZNEWLOW": cand}, vocab, live)
+            expect(len(low_refused) == 1 and low_refused[0][1].startswith("LOW-CONFIDENCE"),
+                   "a low-confidence candidate was not refused")
+        return ("TableVocabulary.from_live_table and existing_tickers read the table with %d model rows in it; plan_rows "
+                "over %d tickers that already hold a model row planned 0 and reported all %d PRESENT (left as they "
+                "are); a new low-confidence candidate is refused, never planned" % (len(MODEL), len(cands), len(present)))
+
+
 def ex_scoped_amgt():
     rel = "lib/research/api/scoped_amgt.py"
     with World() as w, isolated([ROOT]):
@@ -943,6 +974,7 @@ READERS = [
     ("data/black_diamond/scripts/classification/seed_canonical_securities.py", "_yang_conflicts", ex_seed_canonical),
     ("data/black_diamond/scripts/classification/seed_bd_securities.py", "seed (one-time copy into bd-securities)", ex_seed_bd),
     ("infra/aws/lambda/v2_portal/yang_pipeline/classify-residual-model.py", "table_rows_at_build/existing_tickers", ex_classify_residual),
+    ("infra/aws/lambda/v2_portal/yang_pipeline/write-model-rows.py", "TableVocabulary.from_live_table/existing_tickers/plan_rows (the model path's writer)", ex_write_model_rows),
     ("lib/research/api/scoped_amgt.py", "_join_classification/_classification_for_ticker", ex_scoped_amgt),
     ("lib/research/identity/positioning_chain.py", "read_etf_classifications/resolve_one", ex_positioning_chain),
     ("infra/aws/lambda/investor-reporting/ycharts/generate/comparison_catalogue.py", "classifications_reader (the real paginated Scan) + build_catalogue", ex_comparison_catalogue),
