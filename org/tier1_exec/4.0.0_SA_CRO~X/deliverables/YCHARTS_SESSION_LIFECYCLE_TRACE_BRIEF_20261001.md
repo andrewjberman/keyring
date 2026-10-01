@@ -5,7 +5,7 @@
 **Asked by:** 1.0.0_SA_CTO, msg 103617 (RULINGS batch 70 item 7 @06dc3b8778), on `2.0.0_SA_COO~Y`'s
 `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/HOP7/J2_OUTCOME_20261001.md` @5ce814a076.
 
-Prepared by 4.0.0_SA_CRO~X on 2026-10-01 (read 08:02Z to 08:25Z). Read-only: source at CLOUD, and AWS metadata
+Prepared by 4.0.0_SA_CRO~X on 2026-10-01 (read 08:02Z to 08:17Z). Read-only: source at CLOUD, and AWS metadata
 (schedule states, function log times, secret version dates). No vendor call, no host command, no secret value read.
 
 ## The three answers
