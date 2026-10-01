@@ -5678,3 +5678,129 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S9",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-01T06:45Z",
+  "one_line": "OG-rl-1 step 3 counts 4 new + 3 adopted test files; the four cells add 6 new gateway test files.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "GIT: git show --stat 9fcd257fbd a7c70dc5b2 2fbc683db9 adc979b13b 1afce6312e -- infra/aws/ec2/opal-gateway/tests: 6 files with status A.",
+      "RUN: /c/tmp/og-rel3 pytest of the 6 files, AUDIT_PATH isolated: 46 passed, rc 0 (org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~15/ANNOUNCE_OG-rl-1.md step 3)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 3: 'the build cells' 4 new test files plus the 3 adopted ones' (7 files).",
+  "world_is": "OG-tx-1 adds test_transcript_tools.py, OG-hr-1 test_transcript_route.py, OG-hr-2 test_mail_route.py, OG-ml-1 test_inspect_email_attachment.py, test_list_email_filtered.py and test_read_email_fields.py: 6 new files, plus the modified test_entitlement_admin.py. All 6 were run (46 passed) with ac08 and ratelimit.",
+  "notes": "INERT: a miscount in the order text; nothing was left unrun.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S10",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-01T06:45Z",
+  "one_line": "The four cells' gateway commits do not apply cleanly to live d61fde4693: 3 of 16 files conflicted and were resolved by hand to live plus the cells' own additions.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: per-file git merge-file of 9fcd257fbd a7c70dc5b2 2fbc683db9 adc979b13b 1afce6312e onto d61fde4693: 5 conflict reports across the 3 files; the other 13 files merged clean.",
+      "GIT: git diff --stat d61fde4693 f12f874154 -- infra/aws/ec2/opal-gateway at /c/tmp/og-rel3: 17 files, 1989 insertions, 39 deletions; 0 paths outside the gateway directory (org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~15/ANNOUNCE_OG-rl-1.md step 2)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 2: apply the cells' gateway commits to the live tree by diff, oldest first, census naming only files the cells changed.",
+  "world_is": "CLOUD carries MX-t-13 (blackdiamond_list_fees), MX-t-10, MS-sg-1 and OA-e-10 changes that live lacks, so destructive_ops.py, server.py and tests/test_entitlement_admin.py conflicted (git apply --3way and git merge-file). Each resolved to live bytes plus only the cell's additions; the ac08 count is LIVE 53 + OWN 5 = 58 (C3). Per-file +/- of the release equals the sum of the cells' own numstats.",
+  "notes": "INERT: the hand resolutions are additive and census-checked; the release HEAD f12f874154 is the artifact to grade.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S11",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-01T06:45Z",
+  "one_line": "On the release tree tests/test_browser_oidc.py::test_oga3_ac07 fails (KeyError 'transcript_route'), a test that passes on live; it already fails on CLOUD with KeyError 'taxsma_workbook'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: /c/tmp/og-rel3 pytest tests/test_browser_oidc.py::test_oga3_ac07 -> FAILED KeyError: 'transcript_route' (tests/test_browser_oidc.py:374).",
+      "RUN: /c/tmp/wk-oplgtw-15 (CLOUD @0110c22ed5) same test -> FAILED KeyError: 'taxsma_workbook'; /c/tmp/og-rb3 (live) tests/test_browser_oidc.py -> 6 passed, 1 failed (test_oga3_ac01 FileNotFoundError)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 3 names seven test files plus ac08 and ratelimit; the release is narrow and its census admits only files the cells changed.",
+  "world_is": "OG-hr-1 adds Route(transcript_route.LIST_ROUTE, ...) to server.py. test_browser_oidc._declared_routes resolves a non-literal route path only through names {oauth_as, browser_oidc}, so test_oga3_ac07 raises KeyError. On live alone test_oga3_ac07 passes (the file run reads 6 passed, 1 failed, and the 1 failed is test_oga3_ac01, a FileNotFoundError); on the release ac07 fails alone. tests/ is not in the artifact, and the file is outside the census, so it was not edited.",
+  "notes": "INERT for the host (a test file, not shipped). The issuer may add the two module names to the test's name map as its own cut; whole-suite runs on live and release are order-dependent (35 StreamableHTTP errors on both).",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S12",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-01T06:45Z",
+  "one_line": "Rolling back with the LIVE template needs OG_MASTER_ADMIN_PRINCIPALS and OG_WRITE_CAPABLE_PRINCIPALS in the deploying shell; the release template no longer takes them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CODE: git show d61fde4693:infra/aws/ec2/opal-gateway/deploy-to-ec2.sh lines 133-145 (OG_MASTER_ADMIN_PRINCIPALS at line 135): ': \"${OG_MASTER_ADMIN_PRINCIPALS:?REFUSED (no upload) ...}\"' and the pair checks.",
+      "DOC: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~15/ANNOUNCE_OG-rl-1.md step 6 names the command with the two variables."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 6: name the re-deploy command with DEPLOY_BASE_REF for the rollback built from the live ref.",
+  "world_is": "The live d61fde4693 template carries the OG-t-2 guard that refuses (exit 3, before any upload) unless both variables are set to valid pairs. A rollback therefore needs them from the Part D record (org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/PART_D_RECORD_20260930.md). The rollback renders the old 35-key .env.",
+  "notes": "ARMED because a rollback under a failed verify would refuse until those values are in the shell; fail-closed, no host change. Disarm: the issuer holds the two values from the Part D record at GO, or cuts the rollback tree with the release's host-side read.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S13",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-01T06:45Z",
+  "one_line": "The cot OTP bearer's second presenter, the cot box script, reads the secret per call in the repo copy, but the deployed copy on cot-exporter (stopped, not SSM-registered) could not be read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CODE: infra/aws/ec2/bd-cot-auto-login/bd_49f_auto_login.js:42-47,187 (smGet shells to aws secretsmanager get-secret-value per call).",
+      "IAM: git grep HEAD infra/aws/terraform: cot-pipeline/iam.tf:302 is the only role-level read of blackdiamond/cot/otp-gateway-token besides opal-gateway-golive.",
+      "RUN: aws ssm send-command --instance-ids i-0643a5bee8a8feabf -> InvalidInstanceId (instance state stopped, ec2 describe-instances)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 4 rotation (CTO ruling (c), row Z-W17-S1): read every presenter of the cot bearer, whether each reads per call or caches, and name a non-mutating /otp/* probe; a presenter that caches is BLOCKING.",
+  "world_is": "Presenters: the gateway host (reloads at restart) and bd_49f_auto_login.js on cot-exporter i-0643a5bee8a8feabf (role cot-exporter-ec2-role, the only other grant). The repo copy runs smGet(BD_OTP_GATEWAY_SECRET_ID) per OTP request, no cache (line 187). The instance is stopped and SendCommand returns InvalidInstanceId, so the deployed script (repo md5 7d37465ba68e8ddf44a66c008179d080) is unmeasured. Probe named: GET /otp/health on the host with the AWSPREVIOUS value (401) and the AWSCURRENT value (200 or 503).",
+  "notes": "ARMED: if the deployed box copy cached the token, its next login after the rotation would fail 401 until the cache clears. Disarm: the issuer reads the box copy when the instance next runs, or accepts the repo copy as the measure.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
