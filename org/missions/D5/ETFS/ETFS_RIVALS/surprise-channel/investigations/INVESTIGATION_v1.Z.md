@@ -2303,6 +2303,28 @@
     "spec_asserts": "PRD C-VENDOR / C-GOLD-MODEL G3, G4: dividends, corporate actions, prices and GICS are refreshed by the scripted Bloomberg enrichment on the morning vehicle (R-21); the vehicle leg comment: 'the enabled vehicle leg lands both'.",
     "world_is": "The scheduled leg is a no-op that reports success. G3 holds one QA import (2026-09-30) and G4 one date (2026-09-29). C-INCOME-CLEAN and the share-changing gate read a frozen G3, so a split or dividend after 2026-09-30 is not applied; the GICS join reads a one-day G4 (latest G1 gics_sector fill: 0.0 for IDVZ, PFOE, BASG, BIDD, INEQ, SCHY).",
     "notes": "Found by the read-only /closer trace (Andrew-direct @b7622c0b5a). Remedy is the issuer's, not this seat's: a CLI entry calling handler_entry({'mode':'daily','date':<as-of>,...}) with the collector's 0/1/2/3 exit contract, plus a live run read on S3. No change made here."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S36",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-01T17:50Z",
+    "one_line": "Resolution of ETFS_RIVALS-Z-S10: enrichment_bloomberg.py now has the collector's CLI (exit_code, main, __main__), v-2.AC4 reads PASS. The order is silent on the date: handler_entry's `daily` returns FAILED without one and the vehicle passes none, so main() defaults it to the trading day before today ET, the collector's own default.",
+    "spec_asserts": "Row Z-S10 (ARMED): scheduled_daily_pull.cmd:470-485 runs `python -m rivalfunds.enrichment_bloomberg --mode daily` and branches on 0/1/2/3, but the module had no __main__, so the step exited 0 and logged 'landed' with nothing pulled. Amendment 3 @ab795cfa62: --mode passes through unchanged; also --date, --sink (default s3), --batch-id; JSON result; exit OK 0 / unreachable 1 / PARTIAL 2 / else 3.",
+    "world_is": "At 4fe8d6dc4d: v-2.AC4 prints 'AC4 RESULT: PASS 0 failures' (--help names --mode; stubbed results OK/unreachable/PARTIAL/SKIPPED exit 0/1/2/3 with mode daily); AC1-AC3 still PASS; python -m pytest rivalfunds/tests -q (from data/etfs/scripts) reads 302 passed, 2 skipped, 0 failed. Decision outside the order: enrichment_bloomberg._daily_dividends and _market_pull return FAILED 'daily needs a date' when `date` is absent and the vehicle's line passes no --date, so without a default every vehicle run would exit 3 (nothing written) -- loud now, but still no pull. main() therefore sets date = collector_bloomberg's default, prev_trading_day(today ET), for modes daily, market and plan-market only; an explicit --date is kept and import/import-market get none. The G1 date it names is the one the same vehicle's collector step just landed. Nothing was run against Bloomberg or S3 (handler_entry stubbed; the AC4 child process stubs it too).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/enrichment_bloomberg.py@4fe8d6dc4d main, exit_code",
+        "data/etfs/scripts/rivalfunds/tests/test_v2_enrichment_cli.py@4fe8d6dc4d",
+        "integrations/bloomberg/pipeline/scheduled_daily_pull.cmd:470-485 (read only)"
+      ]
+    },
+    "notes": "Resolves ETFS_RIVALS-Z-S10 (an existing row is never edited). If the issuer wants the date left to the caller, drop the default in main(); the vehicle would then need to pass --date. disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV."
   }
 ]
 ```
