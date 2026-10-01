@@ -1255,3 +1255,59 @@ run's PNGs read. **The Friday close walk** (CRO~Z `/ui-walk`, 18:00-21:00 ET) fo
 NOT-cells named. (ii) One write set per chain, the cross-chain harness overlap ruled (e). (iii) One intent per order. (iv) No order moves
 a served value: f-1 orders served bars by a served value (CONTRACT s.2) and prints it as served; f-2 sizes by a served count; f-4 prints
 served fields where the page printed the wrong one; f-3, f-5 and f-6 change chrome and words.
+
+
+## v16 -- ROUND 16 (issuer, 2026-10-01 ~08:3xZ), over PRD v0.6 @bc4f634248 (ADMITTED)
+
+**Rectangle:** the round-15 analysis's enrichment list.
+- **Source:** `1.0.0_SA_CTO~Z`'s `ledger/ROUND_ANALYSIS.round15.md` @68e34e1e97 section 4, rows 1-5, rulings 1-5 (cells 1-3 first);
+  the CTO's walker rule (msg 27641: ARM / DISARMED posts to 0.0.0_AB_MSTR~Z until the lease lands). Freeze 22:00Z.
+- **Cell ids:** `AV-g-1`..`AV-g-5` (letter g; e, f, k-w are on disk).
+- **NOT cells:** ModelTab's "Lead Panel" (AMGT_CORPUS's file; fixed by that writer at portal 54f3a252); the live price face's empty
+  ranking and the chatter route's 400 (AMGT_RESAPP af-2 / round 57 deploys -- server-side); `format:money` and the timeline findings
+  of walk 20261001T073050Z (carried to the round-16 analysis); the posture harness's S3 instability.
+- **The issuer's placements:**
+  - (a) **g-1 carries a second item:** the walker's lead-panel steps (walk.mjs still walks Trending/Breakout x List/Chart --
+    `walker:control-missing` x4 on walk 073050Z); the same file as the lease, so the same order.
+  - (b) **Ruling on row AMGT_RESAPP-Z-W200-S1:** the Thesis pillars "no research pack" stays -- the designed worded form of the
+    served "class A report" (CTO round-13 ruling 1, k-1 MET; round-14 reasonwords and round-15 packwords grade it; AV-f-5 made Exec
+    agree). nolabel.cjs carries the clause gated off (PILLARS_GRADED). Correction sent to 2.0.0_SA_COO~Z.
+  - (c) **Chains from the green arms' write sets:** ~59 g-1 -> g-5 (file-disjoint: `.claude/skills/ui-walk/*` then the tabs and
+    SecurityOverlay -- chained only for throughput under cap 3); ~60 g-2 -> g-4 (both `LeadPanel.tsx`); ~61 g-3 (the instrument).
+  - (d) **Cross-chain overlap, ruled:** g-3 may re-anchor `errorEmpty`/`leadPanelPattern`/`tabs` harness claims; g-4 may re-anchor
+    `errorEmpty`/`tabs`; g-3 may add `data-chatter-denominator` to `ChatterBubbles.tsx` (an attribute) while g-4 may touch the same
+    file's unserved branch. Region-disjoint; the issuer merges at the drain and re-runs every check on the merged DEV.
+  - (e) **Checks at the cut:** every check dry-run at base DEV 209678ff (the negative arms pin f4adf790 or the pre-round walker
+    files). g-3's and g-4's helper green arm (r16-green-g) was in progress at the cut; g-3 and g-4 are QUEUED behind g-2/the slot
+    opening, and the issuer reads that green arm 3 of 3 before handing either over (or amends with the gate limb named).
+  - (f) **Width:** cap 3. M = 3 chains, N = 3 now (g-1, g-2, g-3 -- g-3 handed when its green proof reads), K = 2 queued (g-4, g-5).
+- **Portal base:** site-Z local DEV `209678ff` (f4adf790 + AMGT_CORPUS round 28's ModelTab/modelSheet commits). LOCAL.
+- **Fixtures:** `round16/fixtures/r16g.collected.chatter.json` (+ its builder) -- the CONTRACT s.1 live shape (95 rows, 73 empty).
+- **Frozen at the cut.**
+
+| cell | row | what it builds | serves | writes | slot | risk |
+|---|---|---|---|---|---|---|
+| `AV-g-1` | 1 (+a) | the walker lease (conditional DDB lease before SSM; holder-only disarm); walk.mjs walks the Friday faces | FWD-20, FWD-1 | `.claude/skills/ui-walk/{ui_walker_account.py,walk.mjs,SKILL.md}` | ~59 | LOCAL |
+| `AV-g-2` | 2 | header cards fill their grid at equal widths; eyebrows >= 11px with passing contrast | FWD-23, 20 | `SA/components/{HeaderCards,LeadPanel}.tsx` | ~60 | LOCAL |
+| `AV-g-3` | 3 | the render instrument: live-shape chatter fixture, price- and chatter-face captures, fwd18/band/fwd19 re-anchored | FWD-20, 21, 22 | `portal/scripts/{ui-contract-check,ui-measure}.mjs`, `uiContractFixtures.json`, `ChatterBubbles.tsx` (attribute), 3 harnesses (re-anchor) | ~61 | LOCAL |
+| `AV-g-4` | 4 | the chatter face's designed unavailable sentence until the route is served | FWD-21, 19 | `SA/components/{LeadPanel,ChatterBubbles}.tsx`, 2 harnesses (re-anchor) | ~60 (after g-2) | LOCAL |
+| `AV-g-5` | 5 | no "Lead Panel" on any DSGN face; the identity block through GraphicCard | FWD-23, 11 | `SA/tabs/{Thesis,Peers,Posture,ExecManagement}Tab.tsx`, `SA/components/SecurityOverlay.tsx` | ~59 (after g-1) | LOCAL |
+
+**Checks (`round16/checks/`, dry-run at base DEV 209678ff):**
+
+| check | base (FAIL as expected) | green arm |
+|---|---|---|
+| walkerlease.py | 1 of 3 (arm 1 0 of 6; arm 3 vacuous on the base module) | 3 of 3 (r16-green-f @49bf677ac4) |
+| walksteps.cjs (issuer) | 2 of 3 (7 faults: List/Chart/Breakout, no bars/bubbles/cursor, data-row-lead) | -- (static; the next close walk) |
+| headerchrome.cjs | 2 of 3 (sizes 10px and lowContrast in 6 of 6 states; widths 137/195/86/169; arm 3 /philosophy control), ~10 min | 3 of 3 (r16-green-e @ea7b0a9b) |
+| instrument.cjs | 2 of 3 (8 faults: no chatter fixture, no price/chatter captures, fwd18, band, fwd19; arm 3 5 of 5 planted caught), 303 s | in progress (r16-green-g) |
+| unavailable.cjs | 2 of 3 ("Read failure" + the SourceCaption under the unserved chatter face) | in progress (r16-green-g) |
+| nolabel.cjs | 2 of 3 (9 faults: 4 tabs "Lead Panel"; identity block off the card face) | 3 of 3 (r16-green-h @2f48ad29) |
+
+**Cut rules applied:** at most three mechanical criteria per order; no check compares values against a base snapshot; harness changes
+are re-anchors only. **Battery:** comp-schedule and comp-iam DECLARED-NOT-APPLICABLE (walkerlease stubs every AWS call). **The issuer's
+close:** a signed-in walk with the NEW walker (ARM/DISARMED posted to MSTR~Z), the render run with g-3's instrument, PNGs read.
+
+**Rule 24:** (i) the analysis's five rows by subtraction: 5 orders (+ the walker steps in g-1), the NOT-cells named. (ii) One write set
+per chain, overlaps ruled (d). (iii) One intent per order. (iv) No order moves a served value: g-1 changes a tool; g-2 chrome; g-3 an
+instrument; g-4 the words of an unserved state; g-5 words and chrome.
