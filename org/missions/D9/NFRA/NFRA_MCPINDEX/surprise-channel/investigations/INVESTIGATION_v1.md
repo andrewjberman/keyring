@@ -4574,6 +4574,71 @@ carries none.
     "spec_asserts": "Ledger L5/L9 proof_required includes 'silver partition written' by the scheduled fire (Z-S61 notes: expect 'Found 1 new' on realized/transaction at the 09-30 fires).",
     "world_is": "Realized/transaction/allocation inputs are merged into silver by bd-silver-merge on S3 landing, about 21 hours before the document's fire, so the fire's merge is a correct no-op every night. Unrealized has new inputs the document itself merges (6 found 09-30).",
     "notes": "Issuer ruling inside the decomposition (amends no order; ledger proofs written at close-leg). Carry to the round-5 analysis: (1) the realized/transaction/allocation document merges are a second merge path beside bd-silver-merge, a retire-or-keep question for the CTO, not a cell here; (2) the 6 unrealized July partitions written with 0 rows from newly found July files, unattributed. No ad-hoc run was fired."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~21",
+    "surfaced_at": "2026-10-01T06:56Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "id": "NFRA_MCPINDEX-Z-W21-S18",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "The live read of gateway-assume-blackdiamond-reader-policy printed the reader ExternalId into this worker's tool output: the policy document carries the same uuid as the secret as a Condition literal.",
+    "spec_asserts": "MX-r-7 PHASE B leg 2 (issuer hand-off): read the 6 resources live, and 'never print the secret VALUE'. A5: the value is never in the repo, the ANNOUNCE or a log.",
+    "world_is": "aws iam get-role-policy --role-name opal-gateway-role --policy-name gateway-assume-blackdiamond-reader-policy returns the policy document with Condition StringEquals sts:ExternalId = the uuid as a plain literal (the trust policy of gateway-blackdiamond-read-role carries it too; verified equal in memory, len 36, never printed). I printed that statement whole, so the value is in this worker's session output. It is in NO file, ledger entry, commit, probe or the report; the later simulate and equality checks passed it in memory only. Anyone holding iam:GetRolePolicy on opal-gateway-role can read it from the same policy, which is a property of the design (the policy and the trust both embed the secret's value), not of this act.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "live read 2026-10-01T06:5xZ of the 6 resources after safe-apply (Apply complete: 6 added, 0 changed, 0 destroyed); .scratch/trust.py equality check: trust ExternalId == gateway-assume-policy ExternalId True, len 36 (no value printed)."
+      ]
+    },
+    "notes": "The ExternalId is a confused-deputy guard, not a credential: AssumeRole still needs the opal-gateway-role principal. Whether to rotate it (the secret's value is frozen by ignore_changes) is the issuer's call; this row does not ask for it. Later reads of this policy should print the Condition KEY only."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~21",
+    "surfaced_at": "2026-10-01T06:56Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "id": "NFRA_MCPINDEX-Z-W21-S19",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "safe-apply could not run its comp-tagauthz gate on the CLOUD copy of the opal-gateway terraform root (it plans the whole tree: 3 data-source secrets absent live, 2 lambda source dirs absent from the sparse worktree), so the Plan 6 targets were applied from a pruned scratch copy of the same root with the gate RUNNING; no override used.",
+    "spec_asserts": "Issuer hand-off: re-plan the SAME three targets, apply through safe-apply ONLY, in the terraform working dir used in PHASE A (infra/aws/terraform/opal-gateway of the worker tree).",
+    "world_is": "(1) The first safe-apply attempts stopped at the halt gate (it resolved the session serial file, 2.0.0_SA_COO~MI, and found no tier dir in the sparse worktree: exit 3) and then at the tag-authz gate (exit 4: 'could not produce a plan JSON'; the gate plans the full tree without the -var values; with TF_VAR_* set the full-tree plan still failed on data.aws_secretsmanager_secret gateway_transcripts_bearer, gateway_mail_bearer and gateway_principals_rosters, 'couldn't find resource' (describe-secret on gateway/transcripts/bearer, gateway/mail/bearer, gateway/principals/rosters: ResourceNotFoundException x3), which gateway-read-secrets.tf declares, and on two lambda source files absent from the sparse worktree). That file and mcpmsp_gateway_firm_deny.tf and mcpmsp_internal_reader.tf are on CLOUD and not at the live ref d61fde4693 (git diff --stat d61fde4693 HEAD -- the root: 4 files, +373, of which blackdiamond_reader_iam.tf is this release's). (2) Remedies, all outside the repo's tracked state: a gitignored org/mcp/sessions/<session id>.serial in my worktree carrying my own worker serial (the halt gate's designed per-worktree provision; a worker is admitted while TO-MX-r-7 is non-terminal and issued_to it); git sparse-checkout add of infra/aws/lambda/m365-ms-ingest-liveness and m365-otp-liveness (this also deleted the untracked infra/aws/lambda/layers/.../.build zip, restored by copy from the main workspace); and an UNTRACKED copy of the root at infra/aws/terraform/opal-gateway-mxr7gate omitting exactly those 3 unapplied files, same backend and state. Re-plan there with the same 3 targets and vars: 6 to add, 0 to change, 0 to destroy, render identical to the CLOUD-root re-plan and to Plan 6 apart from the saved-plan filename; the Plan 6 binary itself (sha256 0401378f8e10) was NOT applied, the fresh saved plan /c/tmp/mx-r7-bd-reader-targeted8-GO.tfplan was. 'comp-tagauthz gate PASSED' printed. (3) The same root plans fail in full on CLOUD for any seat until the three secrets exist: NFRA_OPLGTW's OG-pr-1 (act #2) creates them.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "/c/tmp/mx-r7-apply-GO.txt: 'safe-apply: comp-tagauthz gate PASSED -- no plan resource overwrites an access-granting tag.' then 'Apply complete! Resources: 6 added, 0 changed, 0 destroyed.'; /c/tmp/mx-r7-replan-GO.txt and /c/tmp/mx-r7-replan-GO8.txt (diff = the Saved-plan filename lines only; the CLOUD-root re-plan also shows one 'aws_iam_role.gw: Refreshing state' line).",
+        "git diff --stat d61fde4693 HEAD -- infra/aws/terraform/opal-gateway: 4 files changed, 373 insertions; git ls-tree both sides."
+      ]
+    },
+    "notes": "INERT: the gate failed CLOSED each time and nothing was applied before it passed. The scratch root and the session serial file are untracked and uncommitted. The pruned root equals the live-ref root plus blackdiamond_reader_iam.tf, i.e. the state-consistent tree."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~21",
+    "surfaced_at": "2026-10-01T06:56Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "id": "NFRA_MCPINDEX-Z-W21-S20",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "simulate-principal-policy rejects the secret's own resource policy as written (ResourceNames are not in a valid ARN format: *); the resource-policy plane was simulated with Resource '*' rewritten to the secret ARN, and the identity plane alone reads implicitDeny for GetSecretValue by design.",
+    "spec_asserts": "Issuer hand-off leg 3: simulate-principal-policy that opal-gateway-role may secretsmanager:GetSecretValue the secret (resource ARN) and sts:AssumeRole the BD role; if the identity plane says implicitDeny for the secret, also run the resource-policy plane and state which plane said what.",
+    "world_is": "Plane by plane (2026-10-01T06:5xZ, opal-gateway-role): GetSecretValue, identity policies only: implicitDeny (no identity policy of the role grants it; none matched); GetSecretValue, identity + the secret's real resource policy (Resource '*' rewritten to the secret ARN because the simulator refuses '*' in a resource policy): allowed, matched ResourcePolicy; negative control (same policy naming another principal): implicitDeny. sts:AssumeRole on gateway-blackdiamond-read-role, identity plane: with no sts:ExternalId context implicitDeny (the condition needs it); with the ExternalId of the live policy supplied in memory: allowed, matched role_opal-gateway-role_gateway-assume-blackdiamond-reader-policy; wrong ExternalId: implicitDeny; the same ExternalId against gateway-schwab-read-role: implicitDeny (the grant is scoped to the BD role). The target role's own trust policy (principal opal-gateway-role, StringEquals sts:ExternalId, equal to the gateway policy's) was read, not simulated. No explicitDeny anywhere.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "boto3 simulate_principal_policy via .scratch/sim2.py; the aws CLI and boto3 both returned InvalidInput for --resource-policy with the unmodified policy (ResourceOwner set or not).",
+        "P1 via .tools/aws iam simulate-principal-policy: implicitDeny, MatchedStatements [], missing ctx sts:ExternalId, dynamodb:LeadingKeys, s3:prefix."
+      ]
+    },
+    "notes": "The secret read is therefore granted by the resource-policy plane only, which is what the plan stated. A real GetSecretValue by the gateway's own credentials (the deploy-time fetch on the host) is the live test of that plane; it has not been run."
   }
 ]
 ```
