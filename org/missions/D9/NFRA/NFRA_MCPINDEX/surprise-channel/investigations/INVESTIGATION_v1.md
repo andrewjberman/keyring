@@ -4926,6 +4926,186 @@ carries none.
     "spec_asserts": "MX-g-3 act 1: keep _s3_head()'s Config (timeouts) when building or wrapping the client.",
     "world_is": "On the role path discover's HEAD runs through the shared cached role client under its default botocore timeouts, wrapped in an 8 second wall-clock bound (_bounded_head, thread + result(timeout)); a timeout surfaces as a named absent served_written_at error class. On the unset path the Config is unchanged.",
     "notes": "Not a hazard: a hung HEAD cannot stall an answer past ~8s on either path. Candidate enrichment: a Config parameter on internal_role.s3_client() (NFRA_MCPMSP's file) so a reader can ask for its own timeouts without sharing a cache entry."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W24-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~24",
+    "surfaced_at": "2026-10-01T09:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "s16.AC1 counts a document as a writer from its SSM CONTENT (the string merge-daily-incremental in $LATEST or $DEFAULT) and never reads the trigger rule's state, so the order's option 'disable its trigger rule' alone cannot pass AC1: the documents' merge step must also be removed by a new SSM document version (Phase B publish, Default == Latest).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round6/checks/s16.AC1.sh: `runs.append(\"merge-daily-incremental\" in txt)` over get-document --document-version $LATEST and $DEFAULT; the notification arm reads bucket config only.",
+        "Same script: `if \"error\" in txt.lower()[:200] and \"merge\" not in txt` exits 2, so a retired document's first 200 characters must not carry the word error unless the text also carries the word merge."
+      ]
+    },
+    "spec_asserts": "Order MX-s-16 PHASE A item 3: 'remove its merge step, or disable its trigger rule, whichever leaves no dead-but-scheduled run'.",
+    "world_is": "Either option alone leaves AC1 FAIL: disabling the four rules leaves each document's content still naming merge-daily-incremental; removing the step alone leaves a dead-but-scheduled run. The plan does BOTH (documents rewritten as a retired no-op whose text omits the merge-script name; the four rules DISABLED through Terraform).",
+    "notes": "Done in Phase A on the branch (not published): the four infra/aws/ssm/opal-bd-*-download.json files and eventbridge.tf. Phase B publishes each document (update-document then update-document-default-version) and applies the saved plan. Rollback per key is in ANNOUNCE_MX-s-16.md section 5."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W24-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~24",
+    "surfaced_at": "2026-10-01T09:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The documents are NOT redundant on days with no _BRONZE_COMPLETE sentinel: bd-silver-merge ran on 10 of the last 14 calendar days (no sentinel and no invocation for 2026-09-21, 09-22, 09-28, 09-29; also none for 09-07..09-09, 09-14, 09-15), and on those days the document merge was the only same-day silver writer. Retiring it delays that silver to the next sentinel (REALIZED_DAILY_2026-09-21: document 09-21 21:46Z, bd-silver-merge 09-23 00:07Z, ~26h later; same 9,330 rows).",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3://opal-data-bd/bronze/2026-09-*/_BRONZE_COMPLETE.json listing (s3api list-objects-v2): sentinels exist for 09-02..09-06, 09-10..09-13, 09-16..09-20, 09-23..09-27, 09-30 and 10-01; none for 09-07..09-09, 09-14, 09-15, 09-21, 09-22, 09-28, 09-29.",
+        "/aws/lambda/bd-silver-merge, 20-day window: 10 invocations (09-18, 19, 20, 23, 24, 25, 26, 27, 30, 10-01). Document logs s3://opal-data-bd/logs/realized-download-2026-09-21.log, -09-22.log, -09-28.log and transaction-download-2026-09-21/22/28.log show the document wrote those inputs the same evening; bd-silver-merge first processed them 09-23 00:07Z and 09-30 00:08Z.",
+        "Census of the last 10 document runs per leg: realized 3 inputs, transactions 3, unrealized 48 (6 stubs x 8 runs), allocation 0; every realized and transaction input was also processed by bd-silver-merge later (final state identical: realized rows equal; transactions 0-row document partitions replaced by the Lambda's real rows)."
+      ]
+    },
+    "spec_asserts": "Order MX-s-16 cell: 'Served silver must not lose a partition or a row it has today' and the round-5 ruling that bd-silver-merge is the writer of record.",
+    "world_is": "Final-state DELTA is 0 for transactions and realized (the Lambda writes every input the documents did, same rows or more). TIMING DELTA is non-zero on sentinel-less days: the partition appears at the next sentinel instead of the same evening, up to ~26h later for a Monday input. Cause of the missing sentinels not diagnosed here (the runner's all-table-success rule).",
+    "notes": "DISARM: the never-widen halves read this before GO. Options for the issuer: (a) accept the lag, (b) hold the realized and transaction documents' retirement until the sentinel gap is fixed or ruled out, (c) retire only unrealized and allocations now. The plan is split per table in ANNOUNCE section 5 so (b) and (c) are separable: the four rules and four documents are independent keys."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W24-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~24",
+    "surfaced_at": "2026-10-01T09:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The four documents merge with a STALE copy of the script: they download s3://opal-data-bd/scripts/merge-daily-incremental.py (43,492 bytes, 2026-06-29, no etag logic, no empty-stub skip) while bd-silver-merge runs s3://opal-data-bd/code/silver/merge-daily-incremental.py (59,077 bytes, md5 c54d07908c = repo HEAD). Two code versions share one manifest per table, so the document run overwrites the Lambda's manifest state and the Lambda overwrites the document's, every cycle.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3api head-object: scripts/merge-daily-incremental.py ContentLength 43492 LastModified 2026-06-29T15:16:30Z; code/silver/merge-daily-incremental.py ContentLength 59077 LastModified 2026-07-02T20:49:25Z, ETag c54d07908c69e2d9a9035050e0367f40 == md5 of data/black_diamond/scripts/silver/merge-daily-incremental.py at CLOUD f797d8594a.",
+        "Document logs s3://opal-data-bd/logs/unrealized-download-2026-09-28, -29, -30 .log: 'Previously processed: 68' (09-28), '74' (09-29), '68' (09-30) -- the Lambda's 00:1xZ manifest write sets processed_files back to its 68 etag keys, the document re-adds the 6 stubs, and writes 6 x 0-row silver/unrealized/2026-07-0{3,4,5,6,7,9}.parquet (8016 bytes) each time.",
+        "s3://opal-data-bd/silver/incremental_unrealized_manifest.json read now: processed_files 68, processed_etags 68, daily_partitions 74, last_updated 2026-10-01T00:14:07Z (the Lambda's write)."
+      ]
+    },
+    "spec_asserts": "Order MX-s-16 cell table: the documents download the script and 'run it per table' as a second writer.",
+    "world_is": "The documents never ran the code the Lambda runs. Their transaction runs wrote 0-row partitions for freshly landed inputs (TRANSACTIONS_DAILY_2026-09-21, 09-22, 09-28 at 21:54Z) that the Lambda corrected 1-2 nights later.",
+    "notes": "Disarmed by MX-s-16 Phase B (documents retired). The stale scripts/ object is left in place (nothing deleted); after the retirement nothing references it. Rollback of the retirement would restore the stale-script writer."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~24",
+    "surfaced_at": "2026-10-01T10:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_MCPINDEX-Z-W24-S4",
+    "one_line": "CAUSE of row Z-W24-S2: the bd-49f sentinel writer refuses a legitimately empty PERIOD-table window. On 9 of 9 sentinel-less dates the transactions sidecar was has_data_rows=0, and emit_bronze_sentinel requires >=1 data row, so bronze/<D>/_BRONZE_COMPLETE.json is never written and bd-silver-merge never fires; nothing 'failed'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "/aws/lambda/bd-49f-runner, run_date 2026-09-21 00:06:57Z, 09-22 00:11:55Z, 09-28 00:10:21Z, 09-29 00:08:13Z: 'WARN: bronze sentinel NOT emitted -- 1 object(s) present but NOT content-complete (no sidecar attesting >=1 data row): forwardfill_v2/transactions/TRANSACTIONS_DAILY_<D>.xlsx' (4 of 4 retained gap dates); the same runs print 'WARN: transactions @<D> export has 0 data rows ... PERIOD table, an empty increment is legitimate ... landing.' and RESULT 'failed': [], 'auth_dead': False.",
+        "data/cot/scripts/bronze/cot_bronze_ingest.py@92518d0d86:1328-1370 (emit_bronze_sentinel) and :632-662 (_table_complete: return int(meta.get('has_data_rows',0)) == 1 for every non-holdings table, period tables included).",
+        "S3 versioned: the FIRST version of s3://opal-data-bd/forwardfill_v2/transactions/_complete/<D>.json has has_data_rows=0 (4,354-4,357 B objects) on 9 of 9 sentinel-less dates in 2026-09-03..10-01 (09-07, 08, 09, 14, 15, 21, 22, 28, 29) and has_data_rows=1 on 20 of 20 sentinel dates; the 5 dates older than the 14-day log retention are graded on the sidecar alone.",
+        "bd-49f-session-daily cron(0 0 * * ? *) ENABLED daily; bd-49f-session-trigger invoked bd-49f-runner 14 of 14 retained days (09-18..10-01): the chain ran every day, it is not a scheduler or auth gap."
+      ]
+    },
+    "spec_asserts": "Row Z-W24-S2: 'cause of the missing sentinels not diagnosed here (the runner's all-table-success rule)'. A1 requires the cause named from the producer's own logs or code.",
+    "world_is": "The producer's all-table rule is a CONTENT rule, and the content rule was written for the snapshot tables (ADVI_BDAPIMIG 2026-07-09 header-only allocations stub). Applied to transactions, a PERIOD table whose newest 3-day window is empty on Mon/Tue run dates (and Wed after a Monday holiday), it withholds the sentinel on 9 of 29 days. Why BD returns the empty window is INFERRED (the same dates re-pulled 2-3 days later carry real rows), the sidecar is measured.",
+    "notes": "Fix is outside MX-s-16 <paths> (shared script under data/cot/, or the runner lambda source): accept a MEASURED has_data_rows=0 sidecar for a PERIOD table (transactions) in the sentinel check only, table-scoped so cot and the snapshot-table rule are unchanged; negative control = a snapshot table with 0 rows still refused. Deploy is a DS leg to code/bronze/. Recommended carried to round 7 (ANNOUNCE s5). Left alone, the realized silver lag (+26.5 h every Monday, +2.5 h every Tuesday if the realized document is retired) is armed."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~24",
+    "surfaced_at": "2026-10-01T10:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_MCPINDEX-Z-W24-S5",
+    "one_line": "bd-49f-runner prints 'OK: bronze sentinel emitted for <D>' immediately after the shared module printed 'WARN: bronze sentinel NOT emitted': the runner's success line is unconditional on a no-write return.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "/aws/lambda/bd-49f-runner 2026-09-21 00:06:57Z: 'WARN: bronze sentinel NOT emitted ...' then 'OK: bronze sentinel emitted for 2026-09-21 (tables=[...])'; same pair on 09-22 00:11:55Z, 09-28 00:10:21Z, 09-29 00:08:13Z (4 of 4 gap dates); s3://opal-data-bd/bronze/<those dates>/ has no object.",
+        "infra/aws/lambda/bd-pipeline/bd-49f-runner/lambda_function.py@92518d0d86:181-189: mod.emit_bronze_sentinel returns None either way; the runner prints OK after any return without an exception."
+      ]
+    },
+    "spec_asserts": "Runner docstring: 'Bronze sentinel ... emitted HERE on ALL-table success'; the runner's own log line asserts emission.",
+    "world_is": "Any reader of the runner's log or RESULT line sees success on a day the sentinel was not written (RESULT also lists all tables as landed). This misled the first MX-s-16 census into reading the gap as unexplained.",
+    "notes": "INERT to data; ARMED for diagnosis: a log-based check of 'sentinel emitted' reads TRUE on a withheld day. Fix belongs with the S4 producer change (the emit function returning a bool, or the runner printing OK only after a head_object). Not in this order's paths."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~24",
+    "surfaced_at": "2026-10-01T10:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_MCPINDEX-Z-W24-S6",
+    "one_line": "MX-s-14 A1/A2 PHASE A test commands wrote silver/realized and silver/transactions for 2026-09-29 at 06:37Z and 07:02Z, so the 09-29 document slot (21:46Z / 21:53Z) found 'No new ... files' and the 09-29 'document vs merge' comparison is contaminated.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ssm list-commands 2026-09-29 02:36-03:03 EDT (06:36-07:03Z): comments 'MX-s-14 A1 PHASE A test: edited command list, merge only' and 'MX-s-14 A2 PHASE A test: {unrealized,realized,allocation,transaction} edited command list, merge only'; silver/realized/2026-09-29.parquet first version 07:02Z, silver/transactions/2026-09-29.parquet first version 06:37Z (35,269 B, the merge shape).",
+        "s3://opal-data-bd/logs/realized-download-2026-09-29.log (21:46:10Z) and transaction-download-2026-09-29.log (21:53:54Z): 'No new realized files to process' / 'No new files to process'."
+      ]
+    },
+    "spec_asserts": "Order census: the document is the only same-day writer on sentinel-less days.",
+    "world_is": "On 2026-09-29 the same-day writer was a PHASE A test run, not the scheduled document; the 09-29 lag-now figure is not measurable and is shown n/a in ANNOUNCE 0.4. 8 of 9 gap dates are clean document writes.",
+    "notes": "INERT: no state to disarm; recorded so a later reader does not count 09-29 as a document write."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~24",
+    "surfaced_at": "2026-10-01T10:17Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_MCPINDEX-Z-W24-S7",
+    "one_line": "The A2 step 'git merge CLOUD' conflicted on the append-only INVESTIGATION_v1.md, and the worker commit path (.tools/safe-commit.sh -- <path>) refuses during a merge, so the merge commit was made with plain `git commit -F` under the worker's GIT_AUTHOR/COMMITTER identity.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit.sh output at merge 98716e81e1..: 'git refuses commit --only -- <pathspec> during a merge ... NOTHING WAS STAGED BY THIS RUN ... if the merge is YOURS, finish it (git merge --continue / --abort) first.'",
+        "Resolution: union of both sides' rows by id (CLOUD 214 rows + Z-W24-S1..S6 = 220 rows, 220 unique ids, JSON valid, 0 conflict markers); merge commit 8bfbd30b34 on wk-nfra_mcpindex-6-24; surprise-row-gate on the commit: OK, parent-carried rows exempt."
+      ]
+    },
+    "spec_asserts": "The worker commit rule: every commit goes through safe-commit.sh --author ... -F <msgfile> -- <paths>.",
+    "world_is": "A merge commit cannot go through safe-commit.sh with a pathspec; the merge was finished with `git add <the one conflicted file>` + `git commit -F` as the worker identity. The commit's tree carries the CLOUD side's files as CLOUD merged them.",
+    "notes": "INERT: nothing to disarm. Candidate enrichment: a worker-merge limb in safe-commit.sh (as safe-merge.sh --continue is for the drain)."
+  },
+  {
+      "project": "NFRA_MCPINDEX",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~24",
+      "surfaced_at": "2026-10-01T10:50Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "NFRA_MCPINDEX-Z-W24-S8",
+      "one_line": "PHASE B consumer trace of silver/transactions same-day partition existence found a live reader: the bd gold dispatch's comp-freshness gate (bd_silver_transactions, severity ERROR, fail_age_hours 48, flat wall-clock hours on the newest LastModified under the prefix) is kept PASS/WARN on sentinel-less Mon/Tue only by the transaction document's 21:54Z empty-placeholder write; without it the gate FAILs and blocks the 04:00Z and 23:00Z gold dispatches on 4 of 4 measured gap weeks. TRANSACTIONS HELD.",
+      "class": "BLOCKING",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~MI",
+      "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+              "data/black_diamond/scripts/gold/gold_freshness_config.yaml:95-105 (branch @b1301bd64e): artifact bd_silver_transactions, s3_key_prefix s3://opal-data-bd/silver/transactions/, warn_age_hours 30, fail_age_hours 48, severity ERROR, scripts [A_00, A_03]; no freshness_basis or trading_artifact key, and .tools/comp-freshness _basis_decision returns 'flat' for it (the trading regex does not match the entry).",
+              ".tools/comp-freshness:343-421 get_latest_modified: age = now minus the max LastModified of any object under the prefix; data/black_diamond/scripts/gold/gold_dispatch.sh:1296-1335 runs `comp-freshness chain bd` in chain mode and prints 'DISPATCH BLOCKED' with exit 1 on FAIL. Schedules read live: bd-canonical-prices-daily cron(0 4 * * ? *) ENABLED, bd-gold-nightly-fallback cron(0 23 ? * MON-SAT *) ENABLED.",
+              "Measured from s3api list-object-versions silver/transactions/ (181 versions since 2026-08-25): newest-write age at the 04:00Z and 23:00Z dispatch slots on 09-08, 09-15, 09-22, 09-29 (Tuesdays after a sentinel-less Monday): with the document's 21:54Z writes 6.1h and 1.1h; with those writes removed 51.7-51.8h and 70.7-70.8h, i.e. at or past the 48h FAIL line in 8 of 8 slots (4 of 4 weeks); 09-09 reads 75.7h and 94.7h (holiday week). Slots on the sentinel days after (09-16, 09-23, 09-30) read the same either way.",
+              "gold_dispatch.sh:230-290 check_freshness also keys on the newest silver/transactions KEY-NAME date (aws s3 ls + regex) against gold data_as_of; a gap-day placeholder partition advances that key date, so its removal changes when this skip gate proceeds (a latest-available read, not a per-date existence need; content unchanged).",
+              "B_03.account_gains.py:322-345 reads silver/transactions/<date>.parquet per date but an absent date and the empty placeholder both yield no income (has_income False), so it is NOT keyed on existence; the sovereign sec.8 hold on the bd freshness config means `comp-freshness` skips it in agent context (NOTE printed), so the live verdict was computed from the object LastModified history above, not by running the gate (COMP_FRESHNESS_PIPELINE not set)."
+          ]
+      },
+      "spec_asserts": "A2: transactions GO on one precondition -- a read-only consumer trace; 'If any consumer keys on a same-day partition existing, file a BLOCKING row and HOLD transactions.' Served content unchanged on gap days.",
+      "world_is": "Served CONTENT is unchanged (the placeholder is empty), but the document's gap-day write is the only thing refreshing the newest-LastModified that an ERROR-severity pre-dispatch freshness gate reads; retiring it would flip that gate to FAIL on every sentinel-less Monday night through Tuesday, blocking the gold dispatch. The trace found the reader, so transactions HELD: document stays v3 DEFAULT, bd-transaction-pipeline-trigger stays ENABLED, the plan re-cut to 3 resources.",
+      "notes": "DISARM (2.0.0_SA_COO~MI, round-6 slug): retiring the transaction document is safe only with either the sentinel fix (S4: accept a measured has_data_rows=0 for the transactions PERIOD table, in the shared data/cot ingest) so bd-silver-merge writes on Mon/Tue, or a ruling on the freshness entry's basis (the CONFIG is under the sovereign sec.8 hold, not a worker edit). Realized HELD for the same sentinel cause (S2/S4). Not an act of this order."
   }
 ]
 ```
