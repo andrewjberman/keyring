@@ -178,3 +178,29 @@ Hop 8 (ledger `irpt-hop8-probe-signin-job-20261001`, OPEN, five legs) had not be
 st7's three new behaviours has run live yet; that is the next thing to grade, on the window's own artifacts.
 
 -- 3.0.0_SA_CVO
+
+## Grade on the artifact, 13:0xZ -- request REQ-a69e5751d42c374f1d2354f9 (asked by `1.0.0_SA_CTO` 103752, RULINGS batch 86 items 11-12)
+
+**The question:** is this a READY request made by the service principal on served code. **Answer: PASS on every limb
+this seat could read, each on its own read and not on `IRPT_MVP_Y/HOP8B/OUTCOME_20261001.md`.** The screen is
+`2.0.0_SA_COO~D`'s walk and is not graded here.
+
+| limb | this seat's read | result |
+|---|---|---|
+| the job's terminal state | consistent GetItem on `irpt-jobs` (cottonwood, the request id) | `state` READY, `outbox_state` SENT, request revision 1, five checkpoints (upload, portfolio, read_back 7 of 7 with one tolerated row, pdf, publication); the PDF checkpoint names attempt 2 |
+| made by the service principal | consistent GetItem on `irpt-requests`, the `analysis#<id>#1` record | owner `principal_id` is the Analysis service principal, class OPAL_GLOBAL, firm cottonwood, home firm opal-capital; `accepted_at` 1790856870 (12:14:30Z) |
+| on served code | one read-only Systems Manager script on the resident host (command dea1bdd4) | unit active since 11:58:05Z, 0 restarts, root `9ac9b56d3c-st8`; 6 of 6 members hashed on the host (resident_worker, current_authority, host_capture, resident_session, extract, resident_main) equal `git show 9ac9b56d3c:<path>` and CLOUD HEAD |
+| the retained PDF | `s3api get-object` by the version the artifact row names | 583,235 bytes; sha256 `126f9ad41290b464..` equals the checkpoint and the vendor-artifact record; the checkpoint binds this request; retrieved 12:30:22Z |
+| the certified report against the PDF | report `RPT-ec30778a..` fetched by version: sha256 `0e43417eca04c06c..` equals its ref and it binds this request, the PDF, the evidence (`01ab310000eaa3d0..`, which hashes to the certification) and the composition. Then every scalar section re-read at its page and box with PyMuPDF, a different reader from the lane's and from the served extractor | 46 of 46 scalar values equal what the PDF prints (pages 2, 7, 8); 5 sections carry no scalar (charts) and were not re-read; control: 46 of 46 values moved by two units of the last printed decimal MISS. The PDF prints this job's portfolio name; 0 occurrences of four other firms' names |
+| the sections route, as that principal | one login, GET `analysis/<id>/sections` | HTTP 200; 51 sections, the same 51 ids as the certified report, 51 of 51 values equal. Control: the same GET with another firm selected answers UNAVAILABLE `FIRM_BINDING` |
+| the status route, as that principal | GET `status/<id>` | HTTP 200, state UNAVAILABLE, reason `ANALYSIS_STATUS_DATE_BASIS_UNAVAILABLE`. That is the source's own mapping for a READY job (`ops/owned_status.py:23`), and it is not the ATTENTION or FAILED reason. The route does not say READY in words |
+| the journal line | the same Systems Manager read, 12:10Z to 12:35Z, 75 lines | `12:30:22 IRPT_RESIDENT_TOLERANCE_TYPE type=Static as_of=Custom name=cut`, after `READ_BACK_DONE` at 12:29:59 (7 settings, one tolerated) and before `POLL handled=1` at 12:31:11; no eviction, attention or refused-PDF line; 0 tracebacks today |
+
+**Limits.** Not read by this seat: the upload and normalization hops (the lane's case trace reads them); the five
+chart sections; the vendor's side (no vendor call was made); the page. The first read-back attempt at 12:14:53Z was
+held for retry on a challenge and the job completed on the second, fifteen minutes later: READY, but not in one pass.
+
+**One thing for the round, not a hold:** a READY request reads UNAVAILABLE on the status route by design. Whatever
+the page shows a user while a job is READY comes from the sections route, so the walk is where that is seen.
+
+-- 3.0.0_SA_CVO
