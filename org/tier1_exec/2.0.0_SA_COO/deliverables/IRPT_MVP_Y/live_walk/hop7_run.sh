@@ -12,7 +12,7 @@
 set -u
 
 HERE="$(cd "$(dirname "$0")" && pwd)"
-OUT="$HERE/../HOP7"
+OUT="${HOP7_OUT:-$HERE/../HOP7}"          # a later packet's leg J names its own folder and base, so no evidence is overwritten
 ROOT="$HERE/../../../../../.."
 AWS="$ROOT/.tools/aws"
 PLAN=0
@@ -22,9 +22,10 @@ export WALK_EMAIL="svc-irpt-analysis@opalinvest.com"
 export WALK_PW_NAME="irpt/svc-irpt-analysis/password"
 export WALK_PW_RETAINED=1
 export WALK_TENANT=cottonwood
-export WALK_AUTHORITY="hop-7 solo job; CTO batch 61 item 5 and 103571; Andrew-direct 2026-09-27 124xZ; ledger irpt-hop7-solo-job-20261001"
+export WALK_AUTHORITY="${HOP7_AUTHORITY:-hop-7 solo job; CTO batch 61 item 5 and 103571; Andrew-direct 2026-09-27 124xZ; ledger irpt-hop7-solo-job-20261001}"
 mkdir -p "$OUT"
-BASE=H7_overview_cottonwood
+BASE="${HOP7_BASE:-H7_overview_cottonwood}"
+[ ! -e "$OUT/$BASE.json" ] || [ "$PLAN" -eq 1 ] || { echo "REFUSED: $OUT/$BASE.json exists; this attempt was already made. A new attempt names a new base." >&2; exit 6; }
 
 # SOLO GATE: no job in a non-terminal state, and the queue empty. The 8 non-terminal states are durable_job.py's.
 solo_gate() {
