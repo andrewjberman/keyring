@@ -55,26 +55,35 @@ on 3.0.0_SA_CVO's review `org/tier1_exec/3.0.0_SA_CVO/deliverables/MDPF_SECCLASS
 2. **W12-S2: DONE on CLOUD @a96e00c279.** `ETFClassifier.classify_holdings` no longer raises KeyError on a class
    beyond the four it seeds (the client and its two copies; 7 tests). The Black Diamond copy trails CLOUD by this one
    line in a method with no caller; it catches up at item 4's deploy.
-3. **Ruling 5, row W10-S3:** `.tools/test_safe_deploy.py` reads 7 failed, 7 passed. Run the same file at SC-e13's
-   parent commit to split the failures SC-e13 caused from the ones it inherited; fix the first, row the rest. A
-   path-gate refusal on the two tool files gets one blocker line.
-4. **E_18's trigger (row W10-S2).** `gold_dispatch.sh` carries no E_ id. A production pipeline is scheduled, so the
-   trigger is built: a deploy, its own ledger entry, both halves; E_18's first scheduled run is that entry's
-   acceptance. The old entry `secclass-e18-iam-and-deploy-m-20260930` is CLOSED @eb5cee03df on E_18's dry run on the
-   runner (ruling 4): rc 0, signed bytes on the runner, nothing written.
+3. **Ruling 5, row W10-S3: MEASURED.** `.tools/test_safe_deploy.py` reads 7 failed, 7 passed at SC-e13's parent
+   and at HEAD, the same seven tests: SC-e13 caused 0 of 7. All seven come from the 2026-08-30 index-blob change
+   (`3d9eb2931d`); owner the deploy tool's lane (`0.7.0_AE_CloudOps`, dark). Record:
+   `MDPF_SECCLASS_M/RULING7_STALE_ROWS_REMEASURE_20261001.md`.
+4. **E_18's trigger (row W10-S2): BLOCKED on one CTO call (asked 07:33Z).** `gold_dispatch.sh` carries no E_ id.
+   The deployed dispatcher (ETag `6e648344...`, 2026-07-17) equals commit 606263dd22; CLOUD HEAD is 88 lines ahead
+   of it: 0.7.0_AE_CloudOps's calendar guard of 2026-08-29, held build-only by its own sentinel
+   (`gold_dispatch.sh:59`); its module `code/gold/lib/trading_calendar.py` reads 404 on the prefix. A dispatcher
+   deploy for E_18 serves that guard too. Asked: (a) one half covering the dispatcher at HEAD, or (b) park with the
+   guard. The old entry `secclass-e18-iam-and-deploy-m-20260930` is CLOSED @eb5cee03df on E_18's dry run on the
+   runner (ruling 4).
 5. **Ruling 3: DONE on this branch @1617619a6a.** The census prints, and writes only with `--write <path>`.
-6. **A canonical row for `CEMIX`.** Cottonwood serves it fixed_income / International on 67 positions
-   (2,039,120.10 USD, a real build 2026-10-01) through a bd-securities name alias; it is an emerging-markets equity
-   fund. A served class moves: both halves.
-7. **Ruling 7:** re-measure the six stale open rows once each (S1, S2, W2-S3, W3-S3, W5-S2, W6-S2); close each or
-   name its owner and condition.
+6. **A canonical row for `CEMIX`: BLOCKED on a file grant (asked 07:34Z).** The live table holds no `CEMIX` row
+   (scan 07:42Z); Cottonwood serves it fixed_income / International on 67 positions (2,039,120.10 USD) through a
+   bd-securities name alias; it is an emerging-markets equity fund (`IEMG`'s row reads equity / EM). The row is
+   added in the seed source `_shared/etf_classification.py`, outside this seat's six-file grant. A served class
+   moves: both halves, written before any seed run.
+7. **Ruling 7: DONE.** The six stale rows are re-measured in
+   `MDPF_SECCLASS_M/RULING7_STALE_ROWS_REMEASURE_20261001.md`: four recommended closed (S1, W2-S3, W5-S2, and W3-S3
+   once leg A1 passes), two stay open with an owner and a condition (S2 narrowed to this seat's trigger cell plus an
+   Inflection caller; W6-S2 on the parked AE order).
 8. **Ruling 6, row W11-S1:** the exact contract-version pin replaces the version floor and the superset check in
    `test_classified_by_v2.py`. The file is outside this seat's six-file grant: one blocker line first.
-9. **The MODEL_ROWS half -- HELD by ruling 1.** Not signed until 2.0.0_SA_COO~Y's filter is on CLOUD (the comparison
-   list excludes rows whose `classified_by` is the model value) and a fresh census prints the catalogue's reader as
-   tolerating. Today `R7_MODEL_READER_CENSUS_20261001.json` reads readers=35 tolerates=25 read_only=9 crashes=0
-   refuses=0 fails_contract=1, uncensused 0: the one failure is that reader, which would offer 234 of 234 named
-   model rows, 119 of them low-confidence.
+9. **The MODEL_ROWS half: ruling 1's two conditions are MET; the half is not yet signed.** 2.0.0_SA_COO~Y's filter is
+   on CLOUD @89c304eaeb with its test, and `R7_MODEL_READER_CENSUS_20261001_0730Z.json` @0883367f4f reads
+   readers=35 tolerates=26 read_only=9 crashes=0 refuses=0 fails_contract=0, uncensused 0, `MODEL-READER-TOLERATED`
+   (before the filter the list would have offered 234 of 234 named model rows, 119 low-confidence). Next: add the
+   catalogue's reader to the half's reader table, re-read the half's act and both branches, sign the COO half and
+   ask the CTO's.
 
 ## Dependencies
 
