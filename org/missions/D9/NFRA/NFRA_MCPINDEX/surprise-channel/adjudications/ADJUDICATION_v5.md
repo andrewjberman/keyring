@@ -229,3 +229,42 @@ Input: `investigations/INVESTIGATION_v1.md`, 94 UNDER_INVESTIGATION by the chann
   }
 ]
 ```
+
+
+## L9 re-grade after MX-r-8 (3.0.0_SA_CVO~O, 2026-10-01 ~12:5xZ)
+
+```json
+[
+  {
+    "id": "NFRA_MCPINDEX-Z-C-S35",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~O",
+    "surfaced_at": "2026-10-01T12:55:00Z",
+    "one_line": "L9 re-grade: MXR7-J1 PASS. On live e3567ce5f7 (MX-r-8, 12:36Z) discover names blackdiamond_list_fees for the BD fees question and schwab_query for 'Schwab positions'; the tool's 2026-09-29 answer equals the source object read by VersionId on every figure. Slug row Z-W21-S22 is REMEDIATED.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "FWD-4 PROOF for Black Diamond (MXR7-J1): a live answer per tool class whose figure and as-of equal the source object read by VersionId, and the route discover gave names that tool.",
+    "world_is": "This seat's session (whoami Andrew, admitted Opal principal), tool list refreshed after the OG-rl-1 and MX-r-8 releases. (1) opal_discover('what fees did Black Diamond charge'): catalogued=true, entity blackdiamond_fees, channel silver_datasets, next_tool blackdiamond_list_fees (at 08:1xZ the same ask read catalogued=false). (2) blackdiamond_list_fees(scope=49financial): status ok, as_of 2026-09-29, source_as_of 2026-09-29, 1 of 1 partition, rows_matched 22,853, duplicate_transaction_ids 632, totals 2026-09-29 rows_deduplicated 22,221, transaction_fee 63.43, account_fee 0.0, truncated at 200. (3) s3://opal-data-bd/silver/fees/2026-09-29.parquet VersionId Qp7FdHII2X4JQYzDSOAB9wGi1UcNJfpt (the only version, 2026-09-30T22:21:10Z, 1,084,791 B), recomputed here: 22,853 rows, all trade_date 2026-09-29, 22,221 after de-duplicating transaction_id, 632 duplicate rows over 611 distinct ids, transaction_fee 63.43, account_fee 0.00, z08 22,853 of 22,853. Every figure equal. (4) opal_discover('Schwab positions'): catalogued=true, schwab_dim_position and schwab_dim_balance, next_tool schwab_query. Two observations, neither a defect against the criterion: the field duplicate_transaction_ids counts duplicate ROWS (632), not distinct ids (611); and a silver row's freshness reads claim 'absent' for both latest_value and served_written_at, deferring the date to the tool's own as_of -- honest, but the r6 cold run's 'freshness' clause should be graded knowing discover names only the field for silver rows.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "opal-gateway live: S3 ec2/opal-gateway/opal-gateway-latest.tar.gz ETag 9b440e69... == opal-gateway-e3567ce5f7.tar.gz (12:36Z); MX-r-8 halves 633d7427a1 (COO) and aaf822e7ad (CTO)",
+        "this seat's opal_discover and blackdiamond_list_fees calls, 2026-10-01 ~12:4xZ-12:5xZ (opal-mcp-audit)",
+        "s3api get-object opal-data-bd silver/fees/2026-09-29.parquet --version-id Qp7FdHII2X4JQYzDSOAB9wGi1UcNJfpt, read by this seat",
+        "c6adb5f700 (MX-d-6: opal_discover reads silver_datasets, 4 Schwab catalog rows)"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Grade record only: this row opens and adjudicates no investigation item.",
+    "grades": [
+      {
+        "criterion": "MXR7-J1",
+        "instance": "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~21/NFRA_MCPINDEX.TO-MX-r-7.bd-release.proof_of_spec.json@9d1fff079d",
+        "verdict": "PASS",
+        "reason": "Supersedes Z-C-S34's FAIL on re-measurement after MX-r-8: every clause now holds -- the analysis record (MXA8-J1 PASS), the tool list (+blackdiamond_list_fees), a live principal-session answer whose figures and as-of equal the source object by VersionId (22,853 / 22,221 / 632 / 63.43 / 0.00 / 2026-09-29), and the discover route naming that tool."
+      }
+    ]
+  }
+]
+```
