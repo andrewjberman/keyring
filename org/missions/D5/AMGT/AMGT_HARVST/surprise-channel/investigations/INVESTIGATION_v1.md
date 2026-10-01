@@ -5688,6 +5688,29 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "Disarm: a bbg HTML branch in silver_from_bronze (same parse the bbg acceptance used), then the pending outbox drains on the next upload and gold rebuild #4 picks it up. The driver keeps collecting meanwhile (bronze lands; rows wait)."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W91-S19",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~91",
+      "surfaced_at": "2026-10-01T23:55Z",
+      "one_line": "1 of 811 pending bbg bodies parses cleanly through the new HTML branch but cannot be written to parquet: bbg:TD7VMGKGCTIZ00 carries body.content[].data.attachment.duration as int in two nodes and as the string '1150000' in a third, so pa.Table.from_pylist raises ArrowInvalid and silver_append raises SilverRowError.",
+      "class": "BLOCKING",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "TO HVST-ai-4 AC2: the pending bbg outbox drains to silver (the face names the parse; it does not name nested type conflicts).",
+      "world_is": "Offline over all 811 pending bbg bodies (outbox opened read-only; the pending count grew from 807 to 811 while I worked, the driver being live): article_rows parsed 811 of 811 with 0 empty titles, 0 without a 2026 published date, 0 empty text blocks, article_id equal to the outbox id on 811. pa.Table.from_pylist over each (source, run_stamp) group of the real fetched_at stamps: 810 groups OK, 1 group (this one row) fails: path body.content[].data.attachment.duration int (315840, 661320) vs str ('1150000'). store.silver_append (lib/research/harvest/store.py:455-460) turns that into SilverRowError, so the row stays pending with an error code and the same fault would hit any other row of the same run_stamp group. The same struct comes through the as-received JSON route, so this is a property of the vendor body, not of the branch. The branch does not coerce it: that is outside the face's bounded parse.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/silver_from_bronze.py _extract_bbg_html @ branch wk-AMGT_HARVST-91-r36b",
+          "lib/research/harvest/store.py:455-460",
+          "bbg_TD7VMGKGCTIZ00.html in .runtime/opal-data-harvest-bbg/harvest_raw/"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "One row of 811 stays pending after the drain unless the issuer rules a nested-type coercion (a cell on the vendor body, not on the parse) or accepts the single stranded row for gold #4."
     }
   ]
 ```
