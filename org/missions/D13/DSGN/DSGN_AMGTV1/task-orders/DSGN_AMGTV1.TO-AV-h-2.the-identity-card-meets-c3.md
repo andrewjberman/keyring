@@ -75,7 +75,7 @@ Report once: what changed and where, the output line of every criterion, the por
 
 **ISSUER NOTES:** DIRECT ACT (one line, LOCAL). round-16 analysis s.3 row 2. Base headerchrome 2 of 3 (the close re-run 09:22Z).
 
-<status>pending</status>
+<status>complete</status>
 <round>17</round>
 <slot>~63</slot>
 <fabric>site-z</fabric>
