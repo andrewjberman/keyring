@@ -22,10 +22,26 @@ import svc_principal as sp
 FOREIGN, OWN = "inflection", "cottonwood"
 BASE = "/api/scoped/investor-reporting/"
 PROBES = [
-    ("irpt-performance-adapter", "GET", "performance/ASET-00000000000000000000000000", None),
-    ("irpt-ycharts-generate", "POST", "analysis", {}),
-    ("irpt-export-render", "GET", "export/EXP-00000000000000000000000000", None),
+    ("irpt-performance-adapter", "GET", "performance/ASET-00000000000000000000000000", None, ""),
+    ("irpt-ycharts-generate", "POST", "analysis", {}, ""),
+    ("irpt-export-render", "GET", "export/EXP-00000000000000000000000000", None, ""),
+    # Row S238's own negative control: the directory population of the selected firm, ONE entry at most. The log
+    # keeps the COUNT of entries and the codes, never an entry (names are the firm's data).
+    ("irpt-directory-search", "GET", "directory/search", None, "&q=&limit=1"),
+    ("irpt-holdings", "GET", "holdings/ASET-00000000000000000000000000", None, ""),
 ]
+
+
+def shape_of(resp):
+    """What the log keeps of an answer: codes, the business date and counts. Never a client's values."""
+    if not isinstance(resp, dict):
+        return {"non_json": str(resp)[:80]}
+    status = resp.get("status") if isinstance(resp.get("status"), dict) else {}
+    data = resp.get("data")
+    entries = data.get("entries") if isinstance(data, dict) else (data if isinstance(data, list) else None)
+    return {"ok": resp.get("ok"), "operation": resp.get("operation"), "state": status.get("state"),
+            "reason": reason_of(resp), "business_date": (status.get("source_dates") or {}).get("business_date"),
+            "entries_returned": len(entries) if isinstance(entries, list) else None, "keys": sorted(resp)}
 
 
 def reason_of(resp):
@@ -49,16 +65,19 @@ def main(out):
         return 1
     headers = {"Authorization": "Bearer " + token, "X-Contract-Version": "v1", "Content-Type": "application/json"}
     results, held = [], 0
-    for function, method, path, body in PROBES:
+    for function, method, path, body, extra in PROBES:
         row = {"function": function, "method": method, "route": path.split("/")[0]}
         for firm in (FOREIGN, OWN):
-            code, resp = sp._call(method, BASE + path + "?selected_tenant=" + firm, body, headers, log)
-            reason = reason_of(resp)
-            row[firm] = {"http": code, "ok": resp.get("ok") if isinstance(resp, dict) else None, "reason": reason}
-            print("%-26s %-4s %-12s selected_tenant=%-10s HTTP %s reason %s"
-                  % (function, method, row["route"], firm, code, reason))
+            code, resp = sp._call(method, BASE + path + "?selected_tenant=" + firm + extra, body, headers, log)
+            seen = shape_of(resp)
+            log[-1]["response"] = seen  # the shape only: an admitted directory read returns a firm's entry
+            row[firm] = {"http": code, "ok": seen.get("ok"), "reason": seen.get("reason"),
+                         "business_date": seen.get("business_date"), "entries_returned": seen.get("entries_returned")}
+            print("%-26s %-4s %-12s selected_tenant=%-10s HTTP %s reason %s business_date %s entries %s"
+                  % (function, method, row["route"], firm, code, seen.get("reason"), seen.get("business_date"),
+                     seen.get("entries_returned")))
         good = row[FOREIGN]["reason"] == "FIRM_BINDING" and row[OWN]["reason"] != "FIRM_BINDING" \
-            and row[OWN]["http"] is not None
+            and row[OWN]["http"] is not None and not row[FOREIGN]["entries_returned"]
         row["holds"] = good
         held += 1 if good else 0
         results.append(row)

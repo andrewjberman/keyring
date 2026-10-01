@@ -1,0 +1,337 @@
+{
+ "principal": "svc-irpt-analysis@opalinvest.com",
+ "at": "2026-10-01T06:35:28.916187Z",
+ "foreign": "inflection",
+ "own": "cottonwood",
+ "results": [
+  {
+   "function": "irpt-performance-adapter",
+   "method": "GET",
+   "route": "performance",
+   "inflection": {
+    "http": 200,
+    "ok": false,
+    "reason": "FIRM_BINDING",
+    "business_date": null,
+    "entries_returned": null
+   },
+   "cottonwood": {
+    "http": 200,
+    "ok": false,
+    "reason": "INVALID_INPUT",
+    "business_date": "2026-09-22",
+    "entries_returned": null
+   },
+   "holds": true
+  },
+  {
+   "function": "irpt-ycharts-generate",
+   "method": "POST",
+   "route": "analysis",
+   "inflection": {
+    "http": 200,
+    "ok": false,
+    "reason": "INVALID_INPUT",
+    "business_date": "2026-09-25",
+    "entries_returned": null
+   },
+   "cottonwood": {
+    "http": 200,
+    "ok": false,
+    "reason": "INVALID_INPUT",
+    "business_date": "2026-09-22",
+    "entries_returned": null
+   },
+   "holds": false
+  },
+  {
+   "function": "irpt-export-render",
+   "method": "GET",
+   "route": "export",
+   "inflection": {
+    "http": 200,
+    "ok": false,
+    "reason": "FIRM_BINDING",
+    "business_date": null,
+    "entries_returned": null
+   },
+   "cottonwood": {
+    "http": 200,
+    "ok": false,
+    "reason": "NOT_FOUND",
+    "business_date": "2026-09-22",
+    "entries_returned": null
+   },
+   "holds": true
+  },
+  {
+   "function": "irpt-directory-search",
+   "method": "GET",
+   "route": "directory",
+   "inflection": {
+    "http": 200,
+    "ok": false,
+    "reason": "FIRM_BINDING",
+    "business_date": null,
+    "entries_returned": null
+   },
+   "cottonwood": {
+    "http": 200,
+    "ok": null,
+    "reason": null,
+    "business_date": null,
+    "entries_returned": 1
+   },
+   "holds": true
+  },
+  {
+   "function": "irpt-holdings",
+   "method": "GET",
+   "route": "holdings",
+   "inflection": {
+    "http": 200,
+    "ok": false,
+    "reason": "FIRM_BINDING",
+    "business_date": null,
+    "entries_returned": null
+   },
+   "cottonwood": {
+    "http": 200,
+    "ok": false,
+    "reason": "OBJECT_NOT_COVERED",
+    "business_date": "2026-09-22",
+    "entries_returned": null
+   },
+   "holds": true
+  }
+ ],
+ "held": 4,
+ "of": 5,
+ "calls": [
+  {
+   "at": "2026-10-01T06:35:07.208618Z",
+   "method": "POST",
+   "path": "/auth/login",
+   "status": 200,
+   "response": {
+    "accessToken": "<redacted>",
+    "user": {
+     "email": "svc-irpt-analysis@opalinvest.com",
+     "name": "IRPT Analysis Service",
+     "role": "admin",
+     "mustChangePassword": false
+    }
+   },
+   "request": {
+    "email": "svc-irpt-analysis@opalinvest.com",
+    "password": "<redacted>"
+   }
+  },
+  {
+   "at": "2026-10-01T06:35:08.549912Z",
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/performance/ASET-00000000000000000000000000?selected_tenant=inflection",
+   "status": 200,
+   "response": {
+    "ok": false,
+    "operation": "performance-report",
+    "state": "UNAVAILABLE",
+    "reason": "FIRM_BINDING",
+    "business_date": null,
+    "entries_returned": null,
+    "keys": [
+     "contract_version",
+     "ok",
+     "operation",
+     "status"
+    ]
+   }
+  },
+  {
+   "at": "2026-10-01T06:35:09.789342Z",
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/performance/ASET-00000000000000000000000000?selected_tenant=cottonwood",
+   "status": 200,
+   "response": {
+    "ok": false,
+    "operation": "performance-report",
+    "state": "UNAVAILABLE",
+    "reason": "INVALID_INPUT",
+    "business_date": "2026-09-22",
+    "entries_returned": null,
+    "keys": [
+     "contract_version",
+     "firm_id",
+     "ok",
+     "operation",
+     "status"
+    ]
+   }
+  },
+  {
+   "at": "2026-10-01T06:35:13.295228Z",
+   "method": "POST",
+   "path": "/api/scoped/investor-reporting/analysis?selected_tenant=inflection",
+   "status": 200,
+   "response": {
+    "ok": false,
+    "operation": "analysis-requests",
+    "state": "UNAVAILABLE",
+    "reason": "INVALID_INPUT",
+    "business_date": "2026-09-25",
+    "entries_returned": null,
+    "keys": [
+     "contract_version",
+     "firm_id",
+     "ok",
+     "operation",
+     "status"
+    ]
+   }
+  },
+  {
+   "at": "2026-10-01T06:35:14.777502Z",
+   "method": "POST",
+   "path": "/api/scoped/investor-reporting/analysis?selected_tenant=cottonwood",
+   "status": 200,
+   "response": {
+    "ok": false,
+    "operation": "analysis-requests",
+    "state": "UNAVAILABLE",
+    "reason": "INVALID_INPUT",
+    "business_date": "2026-09-22",
+    "entries_returned": null,
+    "keys": [
+     "contract_version",
+     "firm_id",
+     "ok",
+     "operation",
+     "status"
+    ]
+   }
+  },
+  {
+   "at": "2026-10-01T06:35:17.694930Z",
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/export/EXP-00000000000000000000000000?selected_tenant=inflection",
+   "status": 200,
+   "response": {
+    "ok": false,
+    "operation": "export-receipt",
+    "state": "UNAVAILABLE",
+    "reason": "FIRM_BINDING",
+    "business_date": null,
+    "entries_returned": null,
+    "keys": [
+     "contract_version",
+     "ok",
+     "operation",
+     "status"
+    ]
+   }
+  },
+  {
+   "at": "2026-10-01T06:35:20.601993Z",
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/export/EXP-00000000000000000000000000?selected_tenant=cottonwood",
+   "status": 200,
+   "response": {
+    "ok": false,
+    "operation": "export-receipt",
+    "state": "UNAVAILABLE",
+    "reason": "NOT_FOUND",
+    "business_date": "2026-09-22",
+    "entries_returned": null,
+    "keys": [
+     "contract_version",
+     "firm_id",
+     "ok",
+     "operation",
+     "status"
+    ]
+   }
+  },
+  {
+   "at": "2026-10-01T06:35:21.905328Z",
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/directory/search?selected_tenant=inflection&q=&limit=1",
+   "status": 200,
+   "response": {
+    "ok": false,
+    "operation": "directory-search",
+    "state": "UNAVAILABLE",
+    "reason": "FIRM_BINDING",
+    "business_date": null,
+    "entries_returned": null,
+    "keys": [
+     "contract_version",
+     "ok",
+     "operation",
+     "status"
+    ]
+   }
+  },
+  {
+   "at": "2026-10-01T06:35:24.239144Z",
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/directory/search?selected_tenant=cottonwood&q=&limit=1",
+   "status": 200,
+   "response": {
+    "ok": null,
+    "operation": "directory-search",
+    "state": null,
+    "reason": null,
+    "business_date": null,
+    "entries_returned": 1,
+    "keys": [
+     "contract_version",
+     "data",
+     "firm_id",
+     "operation",
+     "unprojected_grant"
+    ]
+   }
+  },
+  {
+   "at": "2026-10-01T06:35:26.452875Z",
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/holdings/ASET-00000000000000000000000000?selected_tenant=inflection",
+   "status": 200,
+   "response": {
+    "ok": false,
+    "operation": "holdings-snapshot",
+    "state": "UNAVAILABLE",
+    "reason": "FIRM_BINDING",
+    "business_date": null,
+    "entries_returned": null,
+    "keys": [
+     "contract_version",
+     "ok",
+     "operation",
+     "status"
+    ]
+   }
+  },
+  {
+   "at": "2026-10-01T06:35:28.916187Z",
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/holdings/ASET-00000000000000000000000000?selected_tenant=cottonwood",
+   "status": 200,
+   "response": {
+    "ok": false,
+    "operation": "holdings-snapshot",
+    "state": "UNAVAILABLE",
+    "reason": "OBJECT_NOT_COVERED",
+    "business_date": "2026-09-22",
+    "entries_returned": null,
+    "keys": [
+     "contract_version",
+     "firm_id",
+     "ok",
+     "operation",
+     "status"
+    ]
+   }
+  }
+ ]
+}
