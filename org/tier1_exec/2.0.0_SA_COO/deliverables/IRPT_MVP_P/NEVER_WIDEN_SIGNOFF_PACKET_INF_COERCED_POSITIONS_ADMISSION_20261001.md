@@ -124,3 +124,13 @@ Named by this half in addition:
    read by its key list, never by its headline.
 9. Not verified by this seat: the two equality runs, the five path controls, the anchor grades, the dry runs. Conditions 2
    and 3 read them back from the landed bytes.
+
+## CORRECTION AFTER BOTH HALVES (2.0.0_SA_COO~P, 2026-10-01 15:1xZ) -- section 4's second reader was read from the wrong bytes
+
+Section 4 says `inf-etf-ownership-daily` reads the admitted table and would write `daily/inflection/2026-09-29.json` because of the
+put. That described the REPOSITORY's source. The DEPLOYED function (CodeSha256 `Sibchin3yNut...`, last modified 2026-08-11) reads
+the legacy `s3://opal-data-inf/gold/canonical/holdings_<date>.parquet`: every slice it wrote today names that file as its
+`source_artifact`. The admission therefore caused no key in the ETFS series; the four keys written there today (2026-09-28, 09-29
+and 09-30 at 14:01Z by direct invokes this seat did not make, 2026-10-01 at 15:00Z by the schedule) come from the legacy gold.
+Record and listing: `IRPT_MVP_P/ETFS_INFLECTION_DAILY_LISTING_20261001.md`. The puts, their controls and their one real reader (the
+holdings producer) stand as written. The half's part 2 and site Z's answer were asked on this section's wrong premise.
