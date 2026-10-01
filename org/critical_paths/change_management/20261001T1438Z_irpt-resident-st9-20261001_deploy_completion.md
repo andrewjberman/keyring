@@ -12,10 +12,11 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| U1 | s3-prefix | tar and install script on new keys in opal-313476888478-lambda-artifacts ec2/investor-reporting-ycharts/resident | both read back by S3 version with sha256 equal to the built bytes |  | OPEN |
+| U1 | s3-prefix | tar and install script on new keys in opal-313476888478-lambda-artifacts ec2/investor-reporting-ycharts/resident | both read back by S3 version with sha256 equal to the built bytes | irpt-resident-481166a8f2-st9.tar.gz version WCfp.LuKrNtKpv31dANEaOtAebXoGfRw read back sha256 486d0c356c989c58121e6a9f67d3caae04a5c08434cdf8cd1297b289cc88a4ce (758863 bytes, HeadObject 404 before); resident_host_install_481166a8f2-st9.sh version SojZdtkv9FjeiJTIHAWVkG7zCXVRo3LU read back sha256 5350877bd4e1a16537f935d3e68717f5a831bd77f85c68e5c9de6bfe24a53332 | CLOSED 20261001T143807Z |
 | D1 | ec2-baked-asset | install on i-0167fd745ad906a66 through Systems Manager, both halves at HEAD first | the script's output: tar and member checks, factory check, unit restart, poll; or its rollback |  | OPEN |
 | V1 | verify | the running root and digests read back on the host | root 481166a8f2-st9; resident_worker and recipe digests equal the packet's; library unchanged; unit active and polling; queue 0/0 |  | OPEN |
 
 ## Log
 
 - 20261001T143806Z OPENED by 2.0.0_SA_COO~Y with 3 leg(s)
+- 20261001T143807Z LEG U1 closed: irpt-resident-481166a8f2-st9.tar.gz version WCfp.LuKrNtKpv31dANEaOtAebXoGfRw read back sha256 486d0c356c989c58121e6a9f67

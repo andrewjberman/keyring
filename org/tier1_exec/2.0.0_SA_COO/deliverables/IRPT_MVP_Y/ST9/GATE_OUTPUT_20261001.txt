@@ -1,0 +1,8 @@
+G1 manifest: 243 of 243 members hash to their SHA256SUMS line
+G2 whole tree at the pin: 241 of 241 members equal `git show 481166a8f2:<path>`; not compared 2 (census/YCHARTS_COMPARISON_REPORT_FIELD_SCRAPE_20260909.json, reports/resident_bindings.json)
+G3 compile: 98 of 98 .py members compile; non-ASCII characters in text members: 1
+G4 route and boundary pair: 2 operation constant(s) in entry.py, 0 not served by generate_installed.py 
+G5 census against the running package: added 0, removed 0, changed 3, identical 240 (running 243, new 243)
+tar 481166a8f2-st9.tar.gz sha256 486d0c356c989c58121e6a9f67d3caae04a5c08434cdf8cd1297b289cc88a4ce bytes 758863
+install script resident_host_install_481166a8f2-st9.sh sha256 5350877bd4e1a16537f935d3e68717f5a831bd77f85c68e5c9de6bfe24a53332
+GATE PASS
