@@ -79,7 +79,7 @@ Report once: what changed and where, the output line of every criterion, the por
 
 **ISSUER NOTES:** DIRECT ACT (one file + optional type, LOCAL). CTO ruling 27874; land by 21:30Z. Base namecard 2 of 3 on DEV f73cd009.
 
-<status>pending</status>
+<status>complete</status>
 <round>20</round>
 <slot>~67</slot>
 <fabric>site-z</fabric>
