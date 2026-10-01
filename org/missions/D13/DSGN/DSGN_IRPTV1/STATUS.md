@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~D` (CLAUDE). Contract: PRD `org/missions/D13/DSGN/DSGN_IRPTV1
 @5d44d0fa62. Reviewer `3.0.0_SA_CVO` (grades each landed pin after the fact). Authority: Andrew-direct 17:3xZ record
 @229b3fd184; CTO placement @1d443e50db (msg 102388); LIVE_ARMS row `/canonical-drive 10m`, the FAST lease routing each
 tick here; post-crash relaunch 2026-09-30 13:0xZ (`org/tier0_exec/0.0.0_AB_MSTR/deliverables/RELAUNCH_BRIEF_20260930_130xZ_POST_CRASH.md`).
-**As of 2026-10-01T13:1xZ.** Mode FAST on Andrew's word of ~04:2xZ (record
+**As of 2026-10-01T14:5xZ.** Mode FAST on Andrew's word of ~04:2xZ (record
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261001_042xZ_SELF_DRIVE_60M_LAPTOP_FABRIC_FINAL_SAY_CLOSER_DRIVE_IRPT_FIRST.md`
 @c48af273cc, CTO 103442): this seat armed its own 8-hour leases at 04:31Z and 04:32Z (below). Relaunch on Andrew-direct 2026-10-01 ~04:0xZ (record
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261001_040xZ_GO_WITH_RECOMMENDATION_BRING_ON_COOS_VIA_MSTR_SPAWN.md`);
@@ -165,6 +165,13 @@ same tab; W2-07's other half (why a job needs attention, IRPT_BCKEND); row S40's
 - THE ANALYSIS THREAD'S LAST LINK on a service-principal request (2.0.0_SA_COO~Y 103749; CTO batch 84 item 7):
   `REQ-a69e5751d42c374f1d2354f9` opened by its id on the page at 13:02Z, "Job status: Ready", the report sections
   on screen (walk 9). The thread is called live on 3.0.0_SA_CVO's grade, not on this line.
+- E4 (1.0.0_SA_CTO batch 88 item 4, batch 89 item 4) MEASURED, nothing changed (`REAL_RUNS_20261001.md` section 8):
+  51 section cards on screen = 51 served (the walker's old 67 counted the coverage panel's gap list); from the press
+  to the sections 26.7 s, of which 16.4 s is the dialog's read queued in the browser behind 17 row status reads,
+  3.5 s the request route, 6.6 s the sections route; the list itself 15.7 s; every status read carries
+  `X-IRPT-Status-Dates: prospect-v1`. What to change is 1.0.0_SA_CTO's to place (reported 14:5xZ).
+- The Analysis thread is LIVE on 1.0.0_SA_CTO's ruling of 13:44Z (batch 88 item 1; the CVO's PASS @179d3122db and
+  this seat's walk 9). Item 2 of that batch says what live does not mean.
 - Both leases were re-armed by this seat at 12:28Z to 20:28Z on their present surfaces (1.0.0_SA_CTO 103731, RULINGS
   batch 84 items 4 and 6). A third lease, `NFRA_TRNSPT` (to 15:40Z), is this seat's too: its state is
   `org/missions/D9/NFRA/NFRA_TRNSPT/STATUS.md`. An Investor Reporting item interrupts it.
