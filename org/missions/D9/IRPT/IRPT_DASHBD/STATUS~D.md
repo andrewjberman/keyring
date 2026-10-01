@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~D` (CLAUDE). Contract: PRD `org/missions/D9/IRPT/IRPT_DASHBD/
 (ENDPOINT unchanged since @2cb022f549; C-LEASE and ruling 6.7 place F's items on this seat). Reviewer `3.0.0_SA_CVO`
 (grades each landed pin after the fact, as DSGN_IRPTV1 pins). Authority: Andrew-direct 2026-10-01 ~04:2xZ, record
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261001_042xZ_SELF_DRIVE_60M_LAPTOP_FABRIC_FINAL_SAY_CLOSER_DRIVE_IRPT_FIRST.md`
-@c48af273cc (CTO 103442). **As of 2026-10-01T04:5xZ.** This file holds F's claims and next-list; the pins, the landed
+@c48af273cc (CTO 103442). **As of 2026-10-01T05:1xZ.** This file holds F's claims and next-list; the pins, the landed
 table and the screen are in `org/missions/D13/DSGN/DSGN_IRPTV1/STATUS.md` (one seat, one portal checkout).
 
 ## Pins
@@ -12,7 +12,8 @@ table and the screen are in `org/missions/D13/DSGN/DSGN_IRPTV1/STATUS.md` (one s
 | What | Value |
 |---|---|
 | Lease | FAST `IRPT_DASHBD~D` until 2026-10-01T12:32:19Z, surface `portal/src/pages/InvestorReporting/tabs/reporting`, `portal/src/pages/InvestorReporting/dashboard`; armed by this seat 04:32:19Z (`org/mcp/drive-mode.log`) |
-| Landed for F | `dashboard/coverageWords.ts` (portal `57cf660e`, plan item 3) and `dashboard/windowMath.ts` (portal `63fb6318`, plan item 2); no page mounts either yet |
+| Landed for F | plan item 3 `dashboard/coverageWords.ts` (portal `57cf660e`), item 2 `dashboard/windowMath.ts` (`63fb6318`), item 1 `dashboard/seriesContract.ts` (`7c354824`), item 4 `dashboard/DashboardPerformance.tsx` (`772dcdd8`, origin DEV by ls-remote 05:12Z); no page mounts the chart yet |
+| SERIES contract read | `org/standards/IRPT_DASHBD_SERIES_CONTRACT.json` 0.1.0 @b80543a03c (landed by 2.0.0_SA_COO~P on this seat's ask; pin iv-e-124 binds the page's key lists to it) |
 | Build plan | `org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/2.0.0_SA_COO~D/item44/IRPT_DASHBD_HOP5_BUILD_PLAN.md` |
 | Gold contract read | `org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json` 0.1.0 @10939bbfa4 (unchanged by PRD v0.4; the two members v0.4 names, FLOW_UNRECONCILED and NOT_MEASURABLE, are in the contract and in `coverageWords.ts`) |
 
@@ -24,16 +25,16 @@ the outcome", so no page is mounted against an invented shape.
 ## Write claims
 
 - `2.0.0_SA_COO~D`: `portal/src/pages/InvestorReporting/dashboard/*`, `portal/src/pages/InvestorReporting/tabs/reporting/*`.
-- Next claim: plan items 1 and 4 (`dashboard/seriesContract.ts`, `dashboard/DashboardPerformance.tsx`).
+- Next claim: plan item 5 (`tabs/reporting/ReportingTab.tsx`, the per-account switch).
 
 ## Next (in order)
 
-1. Plan item 1, the contract read with its named refusal. Waits on `org/standards/IRPT_DASHBD_SERIES_CONTRACT.json`
-   (absent at 04:5xZ). Asked of `2.0.0_SA_COO~P` at 04:33Z: land the file ahead of DB-b-1's gold, since TO-DB-b-2
-   `:54-58` already fixes its whole content and it reads no data.
-2. Plan item 4, the Performance chart, the same tick item 1 lands.
-3. Plan item 5, the per-account switch in `tabs/reporting/ReportingTab.tsx`, plus the one real signed-in run. Waits on
-   a served `series.json.gz` and `manifest.json` (TO-DB-b-2) and the read route (TO-DB-b-4), both `pending`.
+1. Plan item 5, the per-account switch in `tabs/reporting/ReportingTab.tsx` (C-SHADOW, ruling 6.9: this figure INSTEAD of
+   IRPT_BCKEND's for an account whose manifest serves, never both), plus the one real signed-in run that prints the time
+   to the painted chart beside the file's size. Waits on a served `series.json.gz` and `manifest.json` (TO-DB-b-2) and the
+   read route (TO-DB-b-4), both `pending`.
+2. When the gold contract drops HOLDINGS_INCOME_FALLBACK (PRD v0.4 ruling 17, its own versioned edit), pin iv-e-120 fails
+   until `coverageWords.ts` drops the member too: one edit here, the tick that contract version is committed.
 
 ## Parked (one line each, owner + the condition that un-parks it)
 
