@@ -13941,3 +13941,35 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Issuer/CTO may want the missing-row case decided before the served move; the change is one line in _service_allowed_firms."
 }
 ```
+
+
+## IRPT_BCKEND-S242 -- RULING on sweep 5 (slug 103404) that DISARMS rows IRPT_BCKEND-S235 and IRPT_BCKEND-S236, closes IRPT_BCKEND-W97-S2, and records that IRPT_BCKEND-W86-S1 was disarmed on its own mechanism while IRPT_BCKEND-S216 alone carries the per-account frontier read (disarm owner 1.0.0_SA_CTO).
+
+```json
+{
+  "id": "IRPT_BCKEND-S242",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "1.0.0_SA_CTO",
+  "surfaced_at": "2026-10-01T04:15:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "RULING on sweep 5 (slug 103404) that DISARMS rows IRPT_BCKEND-S235 and IRPT_BCKEND-S236, closes IRPT_BCKEND-W97-S2, and records that IRPT_BCKEND-W86-S1 was disarmed on its own mechanism while IRPT_BCKEND-S216 alone carries the per-account frontier read (disarm owner 1.0.0_SA_CTO).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "S235: s3api list-objects-v2 opal-data-assets schwab/08335338/silver/dim_position/date=2026-09- at 2026-10-01 03:5xZ (this seat): date=2026-09-29/data.parquet LastModified 2026-09-30T21:46:40Z; date=2026-09-28 at 2026-09-29T09:46:44Z. The partition the row called ABSENT exists, 12 hours late.",
+      "S236: REMEDIATION_v15 row S236 -- both gap partitions carry zero OK rows by the engine's own REFUSE-not-fabricate rule; no figure is served from them; TO-IB-pr-263 superseded @ed0be5b557.",
+      "W97-S2: .tools/halt-gate-check.sh at HEAD -- a worker is admitted and its ISSUER's inbox is scanned (:157-198, :342-349); HALT_ACK is the routine-ack path (:463-466); HALT_OVERRIDE is the audited override.",
+      "W86-S1: ROUND_ANALYSIS.round26P.md @7c9ed807bb section 1 -- run chain_full_20260930_145412 passes step 3 and landed raw positions and transactions for 09-30; fact_positions still ends at 2026-09-27 (S216).",
+      "org/missions/D9/IRPT/IRPT_BCKEND/ledger/ROUND_ANALYSIS.sweep5.md (co-committed)"
+    ]
+  },
+  "dismissal_reason": "S235: the silver landed, so the row's hazard is gone; the unread cause of the late landing stays with TO-IB-pr-274 and the missing 09-29 holdings gold is a new cell (sweep-5 analysis section 2 item 3). S236: the remedy the row asks for is a ruling, and the ruling is no new status value. W97-S2: the gate already has a worker rule; the remedy is an issuer rule on the worker face. W86-S1: CTO 103088's joint condition is split on the round-26 run evidence.",
+  "spec_asserts": "REMEDIATION_v15 holds S235 and S236 ARMED and W97-S2 OPEN with owner 1.0.0_SA_CTO, and holds W86-S1 ARMED on CTO 103088's joint condition with S216.",
+  "world_is": "MEASURED: the 2026-09-29 Schwab dim_position partition exists (landed 2026-09-30T21:46:40Z). RULED: REFUSED-NO-BMV stays at the series' first partition; a worker passes a routine-only HALT-GATE print with HALT_ACK=1 when its order's invocation names it; W86-S1 is closed and S216 stays ARMED.",
+  "notes": "Still ARMED after this row, unchanged: W97-S3 (the NNA Branch A packet is ~P's next act), S237 and S239 (placed on ADVI_PERFRP, parked on Andrew's D2 hold, record @8729d9792c), S232, S233, S238, S216."
+}
+```
