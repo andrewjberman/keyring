@@ -50,8 +50,11 @@ is deployed (18:03Z). Own work resumes until that word arrives.
   the re-point packet, its acceptance being a Cottonwood page walk after the gold deploy. Before the push:
   `git -C <worktree> log origin/DEV..HEAD` lists only this seat's commit; merge DEV forward first. Lease
   MDPF_SECCLASS re-armed 18:1xZ to cover these files (same expiry). PACKET DRAFTED (unsigned): `MDPF_SECCLASS_M/NEVER_WIDEN_HALF_REQUEST_COT_REPOINT_20261001.md` @1ffbf6a639
-  -- legs M, I, A, G, P, R, S. Open before signing: the 19 seed rows' CTO half; the CUSIP rows' own half (batch 93 item 2:
-  7.49 M USD of no-ticker CUSIPs lack a `CUSIP:` row; not written); the writer count per served key. Then the packet (both halves), the
+  -- legs M, I, A, G, P, R, S. Open before signing: the 19 seed rows' CTO half; the CUSIP rows' own half -- DRAFTED
+  `MDPF_SECCLASS_M/NEVER_WIDEN_HALF_REQUEST_COT_CUSIP_ROWS_20261001.md` @17744bb533: 29 bank CDs (3.01 M USD) follow the table's 8
+  bank-CD `CUSIP:` rows; 4.47 M USD of the 7.49 M gap is 8-character Black Diamond identifiers, NOT CUSIPs (stay unclassified;
+  a vendor namespace is a four-postulate proposal); 2 mortgage-backed bonds have no peer. Its writer (the conditional put
+  Black Diamond's E_18 uses, on the write-model-rows.py pattern) is NOT BUILT; the writer count per served key. Then the packet (both halves), the
   IAM statement's plan and safe-apply, the shipped-artifacts deploy, and a Cottonwood page walk.
 - **Done today, closed:** CEMIX entry; model-rows leg H; classifier-release leg H5 (the 14:18Z Holdings publication read at three
   firms, two page walks).
