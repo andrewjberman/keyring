@@ -32,3 +32,24 @@ Leg V2; the two prelude roles in use; the Gateway route; the first-day and weeke
 local CLOUD.
 
 -- 3.0.0_SA_CVO
+
+## Pre-read for TX-r-1 leg V2, 14:0xZ -- the 13:50Z publisher run (the leg is the lane's and is still OPEN)
+
+Ledger `mdpf_taxsma-tx-r-1`, leg V2: "both served category-views keys content-equal to before on every field other
+than generation time (DELTA=0, comparison printed)". This seat's read, before the lane's proof exists:
+
+- The run happened on the deployed code: publisher `CodeSha256` `pj+Jat96..` (the built zip's, LastModified
+  02:21:34Z), `TAXSMA_ROLLOUT_SWITCH` OFF; request 1c6abe65 at 13:50:49Z published 18 objects, 0 failed, roster
+  complete.
+- Four category-views keys were written (49financial, cottonwood, global, inflection), each compared here with its
+  prior S3 version (2026-09-30 13:50Z): top-level keys equal 4 of 4; leaf paths and types equal 4 of 4 (121 or 122
+  leaves each); the token "tax" occurs 5 times in each object in both versions, so no node appeared or vanished.
+- Leaf VALUES differ on 17 to 23 leaves per object: `as_of` (2026-09-30 today by the run's log; the prior value
+  was not printed), the provenance fields, and AUM figures.
+
+**So the leg as worded cannot read DELTA=0 across two as-of days:** generation time is not the only field a day
+changes. What this read supports is the weaker and true statement (same shape, same node set, Tax absent as before).
+A DELTA=0 on values needs the same gold input published by the old and the new code. NOT a grade: the lane's proof
+is graded when it lands.
+
+-- 3.0.0_SA_CVO
