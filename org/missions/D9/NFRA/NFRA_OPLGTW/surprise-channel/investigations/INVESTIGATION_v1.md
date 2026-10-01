@@ -5891,3 +5891,78 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W18-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~18",
+  "surfaced_at": "2026-10-01T07:45Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "OG-pr-1 AC2's checker (_pr.py simulate) cannot read a multi-resource simulate-principal-policy result: it reads 0 granted / 0 sibling ARNs and prints FAIL although the live decisions are allowed x3 and implicitDeny x1.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/trnspt/checks/pr.AC2.sh -> 'simulate: granted ARNs 0 []; sibling gateway/* ARNs 0 []' RESULT: FAIL exit=1 (grant applied: get-role-policy opal-gateway-role/gateway-read-secrets-policy shows 1 statement, GetSecretValue, the 3 exact ARNs).",
+      "The same simulate-principal-policy call with 4 resource ARNs returns ONE EvaluationResults row whose top-level EvalResourceName is the template 'arn:aws:secretsmanager:${Region}:${Account}:secret:${SecretId}' (EvalDecision implicitDeny); the per-ARN decisions are in ResourceSpecificResults. Read from there: transcripts/bearer-tY9tUO allowed; mail/bearer-g8XFDo allowed; principals/rosters-wg59oX allowed; gateway/notgranted/probe-AbCdEf implicitDeny.",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/trnspt/checks/_pr.py simulate() iterates only top-level EvaluationResults[].EvalResourceName, so the granted and sibling lists are always empty for a multi-resource call."
+    ]
+  },
+  "spec_asserts": "AC2 expects 'granted ARNs 3 [allowed x3]; sibling gateway/* ARNs 1 [implicitDeny]' RESULT: PASS from pr.AC2.sh.",
+  "world_is": "The criterion's checker mis-parses the AWS response shape, so AC2 FAILS as written while the world state it tests is correct. The checker is outside the worker's paths; the worker did not edit or work around it.",
+  "notes": "Remedy for the issuer: read EvaluationResults[0].ResourceSpecificResults[] (EvalResourceName, EvalResourceDecision) in _pr.py simulate(), then re-run AC2. Not done by the worker. TO-OG-pr-1 left without a complete flip for this reason.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W18-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~18",
+  "surfaced_at": "2026-10-01T07:50Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "OG-pr-1 AC3's host command (_pr_hostcmd.py) embeds json.dumps(PARSE) with literal backslash-n inside a shell python3.11 -c argument, so the host python SyntaxErrors and the host read prints nothing; the host read itself works.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/trnspt/checks/pr.AC3.sh run before the ledger close: 'host read status=Failed;' (empty output), ssm command cee287ee-5d37-4fc5-92b8-46307b2bd32c StandardError: 'SyntaxError: unexpected character after line continuation character' at the -c string (the \n sequences are literal text in the shell command).",
+      "Same read with a semicolon-joined one-line parse, SSM command 6b32df70-74cd-404b-877c-dadc1c89d075 on i-07dccb1615503ac99 under its own role: Status Success, 'ROSTERS master 1 write 2 all-pairs True' (shape only, no value printed). So the gateway role can GetSecretValue the rosters secret.",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/trnspt/checks/_pr_hostcmd.py: CMD = ... + json.dumps(PARSE), where PARSE holds newline characters."
+    ]
+  },
+  "spec_asserts": "AC3 expects 'host read status=Success; ROSTERS master 1 write [1-9]\\d* all-pairs True' from pr.AC3.sh.",
+  "world_is": "AC3 FAILS as written on the host command's own construction, independent of the grant, which is live and works. The checker is outside the worker's paths; the worker did not edit it.",
+  "notes": "Remedy for the issuer: build the parse as one line (statements joined by ';') or ship it base64/heredoc, then re-run AC3 after the ledger close is committed. The worker's own supplementary read above is evidence of intent, not the criterion's output.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W18-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~18",
+  "surfaced_at": "2026-10-01T07:50Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "gateway-read-secrets.tf's header comment still names the superseded policy opal-gateway-gateway-read-secrets in its post-apply verify line; A2 allowed only the one name line to change.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/opal-gateway/gateway-read-secrets.tf header: 'aws iam get-role-policy --role-name opal-gateway-role --policy-name opal-gateway-gateway-read-secrets'; live policy name is gateway-read-secrets-policy (get-role-policy read 07:4xZ)."
+    ]
+  },
+  "spec_asserts": "A2: 'nothing else in that file changes'.",
+  "world_is": "A comment, not code; a reader following it runs get-role-policy on a name that does not exist.",
+  "notes": "Left as is under A2; the issuer may widen a later order to correct the comment."
+}
+```
