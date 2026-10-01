@@ -1,0 +1,76 @@
+{
+ "at": "2026-10-01T11:08:29.170802Z",
+ "principal": "svc-irpt-analysis@opalinvest.com",
+ "tenant": "cottonwood",
+ "request_id": "REQ-7c7a9e45eb496564f635754a",
+ "rows": [
+  {
+   "probe": "status-job",
+   "http": 200,
+   "ok": null,
+   "operation": "status-job",
+   "state": "UNAVAILABLE",
+   "reason": "ANALYSIS_REQUIRES_ATTENTION",
+   "business_date": null,
+   "actions": [],
+   "top_keys": [
+    "contract_version",
+    "data",
+    "firm_id",
+    "operation",
+    "unprojected_grant"
+   ],
+   "data_keys": [
+    "actions",
+    "operation",
+    "public_reason_code",
+    "source_dates",
+    "state"
+   ],
+   "document_keys_present": []
+  },
+  {
+   "probe": "request-read",
+   "http": 200,
+   "ok": null,
+   "operation": "analysis-request-read",
+   "state": null,
+   "reason": null,
+   "business_date": null,
+   "actions": [],
+   "top_keys": [
+    "contract_version",
+    "data",
+    "firm_id",
+    "operation",
+    "unprojected_grant"
+   ],
+   "data_keys": [
+    "accepted_at",
+    "identity"
+   ],
+   "document_keys_present": []
+  },
+  {
+   "probe": "sections-by-request",
+   "http": 200,
+   "ok": false,
+   "operation": "analysis-report",
+   "state": "UNAVAILABLE",
+   "reason": "NOT_FOUND",
+   "business_date": null,
+   "actions": [
+    "NONE"
+   ],
+   "top_keys": [
+    "contract_version",
+    "firm_id",
+    "ok",
+    "operation",
+    "status"
+   ],
+   "document_keys_present": []
+  }
+ ],
+ "verdict": "NONE_SERVED"
+}

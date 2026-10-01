@@ -1,0 +1,10 @@
+10:49:23Z LOGGED_IN login status 200
+10:49:23Z PASSWORD_RETAINED /irpt/svc-irpt-analysis/password (the packet deletes it at its last arm)
+10:49:31Z K4 POST 200 state RESOLVING | upload_id UP-febe6975df059f84b0ac251721b9859c75e244aff98b927a51645d7ccbebb21b
+10:49:34Z K4 resolved NORMALIZED | input_id portfolio_08387858a26012833f9ad5eec3591eba4d397f4280c8d28f33a35623462946fb
+10:49:39Z K5 POST 200 | state QUEUED | identity {"tenant_firm_id": "cottonwood", "request_id": "REQ-7c7a9e45eb496564f635754a", "revision": 1, "immutable": true, "ingestion_gate_revision": "schemas-58ffc2ebee9ed61681175e34cd756ec172eb2fa3ad457da3e0995186f9ea81f8", "destination_policy_revision": "e0046398e23951451498c0fcfec29154db5b26d4c70d80c4121f
+10:49:42Z state SUBMITTING | outbox SENT | detail {"operation":"holdings_upload"}
+11:05:37Z state DOWNLOADING | outbox SENT | detail {"phase":"vendor_pdf"}
+11:05:57Z state ATTENTION | outbox SENT | detail {"code":"TOLERANCE_REQUIRES_STATIC"}
+11:05:57Z TERMINAL ATTENTION -- holding the 20 s floor before the next body
+11:06:17Z floor held; next body may start
