@@ -6569,3 +6569,27 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S23",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-01T19:40Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "OG-tx-2 AC1 asks each read matched in the audit by transcript id AND byte count; the gateway audit record for read_meeting_transcript carries no byte count, so audit_match was set on transcript id and read count only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-mcp-audit/audit/dt=2026-10-01/ keys 2026-10-01T19:* (19 records): every read_meeting_transcript record has exactly the fields args, detail, outcome, tier, tool, ts, user; args is {_omitted: fail-closed (tool not in R8-PRIV allowlist)}; detail is 'meeting_id=... transcript_id=...'. 6 read records for 3 transcript ids (2 each, matching the 2 recorded reads per meeting); 4 list_meeting_transcripts records, the Research Meeting's with outcome=error '403 3003 User does not have access to lookup meeting'."
+    ]
+  },
+  "spec_asserts": "TO OG-tx-2 step 2: find the audit record carrying the same transcript id and byte count.",
+  "world_is": "The audit carries the transcript id but never a returned byte count, so byte-count matching is not possible from this sink; matching is by transcript id, user andrew@opalinvest.com, outcome ok, and 2 reads per meeting. The Research Meeting has rows 0, so audit_match there rests on its refused list call matched by meeting_id (1 error record). AC1 reads 3 of 4 and FAILs on rows, not on audit_match.",
+  "notes": "If byte-count matching is wanted, the gateway audit detail needs a returned-bytes field (OPLGTW release item for the CTO).",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
