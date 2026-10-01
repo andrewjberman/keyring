@@ -280,20 +280,25 @@ approved it.
                     no price shows as missing, never dropped
          SOURCE     backend brief O2; transcript 1 point one; transcript 2
                     component 1
-         CTO READING (Andrew may overrule): "best and worst" means how much
-                    each holding added to or took from the fund's return over
-                    the period, weighted by how much of it the fund held day by
-                    day, with those holdings rebuilt from the fund's reports.
-                    That one measure works for the rivals, Opal's funds and the
-                    index benchmarks alike. The trade-by-trade results stay in
-                    FWD-6.
+         OPEN FOR ANDREW, two measures (CVO~Z msg 28052): (a) CONTRIBUTION:
+                    how much each holding added to or took from the fund's
+                    return over the period, weighted day by day by how much of
+                    it the fund held (those holdings rebuilt from its reports);
+                    this works for the benchmarks too. (b) TRADING RESULT: how
+                    the manager's buys and sells in that holding or sector
+                    worked out over the period ("by reverse engineering
+                    trading", transcript 1); a benchmark's result reads as
+                    index rebalancing. CTO recommendation: (a), with (b) kept
+                    in FWD-6.
 
   FWD-15 (NEW) Andrew reads each fund's tilts and bets: where its buying has
          trended this year, by holding and by sector
          DONE WHEN  EXERCISED -- for every fund Andrew reads a simple
-                    year-to-date table of where its buying went, by holding and
-                    by sector, each line read as a tilt or a bet with a plain
-                    trend mark
+                    year-to-date table in the same shape as the rankings: the
+                    ten holdings and five sectors its buying leaned into most,
+                    and the ten holdings and five sectors it leaned away from
+                    most, each line read as a tilt or a bet with a plain trend
+                    mark
          ACCEPT     a trend is never presented as one that will continue; the
                     table says how many trading days it covers
          SOURCE     backend brief O3; transcript 1 point two ("just because
@@ -314,17 +319,20 @@ approved it.
 
   FWD-17 (NEW) Andrew reads the AI's verdict on each fund's direction, weighed
          against the wider market from Opal's own data
-         DONE WHEN  EXERCISED -- for one fund Andrew reads a second account,
-                    written after and building on the 30-day account: whether
-                    the rankings and trends are borne out, contradicted or
-                    added to, what the manager is getting right and wrong, what
-                    it expects the manager to do next and what would prove that
-                    wrong; it draws on Opal's own market readings (the fear and
-                    greed measures he named, global RSI, the news scanner, the
-                    trending topics and Data Harvest) before anything outside
+         DONE WHEN  EXERCISED -- for every rival and both Opal funds (never
+                    a benchmark) Andrew reads a second account, written after
+                    and building on the 30-day account: whether the rankings
+                    and trends are borne out, contradicted or added to, given
+                    whether the manager trades by system or by discretion (the
+                    FWD-10 read); what the manager is getting right and wrong;
+                    what it expects the manager to do next and what would prove
+                    that wrong; it draws on Opal's own market readings (the fear
+                    and greed measures he named, global RSI, the news scanner,
+                    the trending topics and Data Harvest) before anything outside
          ACCEPT     each market reading it uses shows the date it was taken; a
                     stale reading is never turned into a trend; a later account
-                    never rewrites an earlier one
+                    never rewrites an earlier one; a benchmark has no such
+                    section
          SOURCE     backend brief O6, O7, O8; transcript 1 point three;
                     transcript 2 prompt two ("corroborate, refute, or
                     otherwise enrich", "cached ... run one after another")
