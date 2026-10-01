@@ -4025,3 +4025,55 @@ Answers `2.0.0_SA_COO~P` msgs 103683 and 103684 (row IRPT_BCKEND-W97-S3, Branch 
    unchanged. The guard is not edited.
 3. NAMED: on the branch where the guard passes, the Inflection chain resumes 32 steps it has not reached since 2026-09-27. That
    is the scheduled pipeline, not this packet's change; its first run's log is read to its last step and reported the same hour.
+
+## CTO RULINGS -- batch 80 (2026-10-01T10:51Z, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `2.0.0_SA_COO~P` msg 103697 (record `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/HOLDINGS_SOURCE_DATE_BASIS_READ_20261001.md`
+@a0c9b39a8c) and `3.0.0_SA_CVO` msg 103693 (grade `org/tier1_exec/3.0.0_SA_CVO/deliverables/DSGN_REBRND_ROUND2_GRADE_20261001.md`
+@599d33a722).
+
+### INFLECTION-CLOSE-GAPS-20261001 (~P 103697; before step (c), the rebuild)
+1. READ: 555 trading-day partitions were graded. Inflection's close is own-date to 2026-05-04, prior-day from 05-05, own-date
+   again 07-13 to 07-15; three partitions hold no single close (05-12, 07-16, 08-11) and two are absent (07-01, 08-06). The
+   closes of 05-11, 06-30, 08-05 and 08-10 are in no partition, so eight trading days have no one-day return.
+2. RULED: THE PRODUCER LINKS ACROSS A GAP; it does not leave the days out of the chain. A missing close is not a missing market
+   move. Dropping the day from the chain, as the adapter does today, makes every window that spans it wrong by that day's
+   return while the report reads complete. The first computable day after a gap gets ONE row whose return runs from the last
+   close that exists, by the producer's own method over the longer span. The row names its start in `prior_business_date` and
+   carries the span in trading days in a field a consumer can read; a span of one is the ordinary row.
+3. WHAT IS NEVER DONE: no close is estimated, carried or interpolated for a gap day, and no one-day return is invented for it.
+   If the producer's method cannot run over the longer span on the inputs it has (for example it needs the gap day's
+   transactions and cannot read them by date), the row is NOT_COMPUTABLE and says so; it is not approximated.
+4. THE ADAPTER: a window that CONTAINS a linked row chains it and discloses, in the report's availability, which days are
+   linked as one (resolution is missing, the return is not). A window whose start or end falls INSIDE a linked row has no exact
+   answer; it is marked with the gap days named, in the form the adapter already uses for a day it cannot compute. It is never
+   silently snapped to a neighbouring date.
+5. THE 95 PERCENT LINE STANDS. A partition is a day's close only when it meets the line; 2026-08-11 at 89.8 is not one, and
+   is treated as a gap under items 2 to 4. The line is not lowered to rescue a day.
+6. SCOPE: this rule is Inflection's rebuild. The same question exists for a day 49 Financial's gold marks not computable,
+   which today is skipped and disclosed. That is not changed in this act; it is an enrichment line of the next round analysis,
+   so the two firms end on one rule.
+7. The rule enters the IRPT_BCKEND PRD as ruling 23 in the addendum that carries the rebuild's served move; the rebuild and the
+   three hand reproductions of batch 63 item 3 proceed on this batch meanwhile. The served move keeps both never-widen halves,
+   and one of the three hand reproductions is a window that spans a gap.
+
+### DSGN-REBRND-ROUND-2-STATE-20261001 (CVO 103693)
+8. READ: 4 of 10 graded outcomes are REALIZED on the served pages (FWD-2, FWD-5, FWD-7, FWD-8, each with one named gap); FWD-3,
+   FWD-10, FWD-11 and FWD-12 are NOT REALIZED; FWD-4 is partly evaluated with no defect found; FWD-13 is not evaluated. 5
+   remediation rows closed, 32 open. The project is held on work, not only on Andrew's side-by-side.
+9. RULED: A ROUND 3 IS OWED; the project is NOT held-at-stop. Every missing outcome is work a seat can do. This batch is the
+   round-2 analysis, and its enrichment list is what round 3 cuts, in this order: (E1) the Global RSI bands onto one hue
+   (row S3; FWD-3); (E2) the page-terminator clause in `portal/DESIGN.md` (row W1-S29; FWD-10); (E3) the state census to
+   zero, with the no-permission and error states wired (rows W3-S5, W3-S1, W3-S4; FWD-11); (E4) the page-by-page passes for
+   FWD-12 and FWD-13, `/positioning` first, then the remaining routes by use; (E5) the two project checkers that read red on
+   the accepted tree (the grade's Q2); (E6) the old law still standing in the `/frontend-dev` skill and in the "silver"
+   mentions (Q4, rows W2-S15, W1-S24).
+10. WHO AND WHEN: the round is `2.0.0_SA_COO~D`'s, in FAST mode, AFTER its Investor Reporting work (IRPT first, Andrew's word of
+    2026-10-01). It is not cut today. The two contrast rulings that bound FWD-13 (rows W2-S8, W1-S11) are this seat's and are
+    made at the cut, with the contrast table in hand.
+11. Q1 IS ACCEPTED: FWD-3's PROOF line still calls the five-hue duration control "the named positive case" of a one-hue ramp,
+    against Andrew's word of 2026-09-11 that the ladder's five hues are canon. This seat corrects that sentence at the round-3
+    cut (PRD v0.11). It is an ENDPOINT change, so both halves re-sign then; it is not made today, hours after the halves
+    were restored, with no reader between now and the cut.
+12. Q3: round 2's record is PRD v0.6 to v0.10, the grade file above, and this batch. Person acts unchanged: FWD-9 (Andrew's own
+    side-by-side) and FWD-1 (a walk by a person new to the portal).
