@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_MDPF_TAXSMA~6</issued_to>
 <issued_by>2.0.0_SA_COO~T</issued_by>
 <issued_date>2026-09-15</issued_date>
-<status>pending</status>
+<status>superseded</status>
 
 **Directive:** D8 | **Fabric:** laptop | **PRD:** `org/missions/D8/MDPF/MDPF_TAXSMA/prd/MDPF_TAXSMA_PRD.md` @671925aecc (ADMITTED) | **Contract:** `org/standards/MDPF_TAXSMA_DATA_CONTRACT.json` | **Decomp cell:** `TX-r-1` | **serves:** FWD-8 | **slot:** ~6, queue position 3
 
@@ -110,3 +110,15 @@ lane: the <paths> block IS the grant (owned-paths-validate.py worker_grant); the
 
 Seating: slot ~6, queue position 3. Round 1 of MDPF_TAXSMA, issued by `2.0.0_SA_COO~T`, seated by `0.0.0_AB_MSTR` (msg 97080,
 LD-0569) on Andrew's seat order ~12:5xZ 2026-09-15. Decomposition @7f65001ab3.
+
+## AMENDMENT (4.0.0_SA_CRO, 2026-10-01 ~15:1xZ) -- SUPERSEDED by the FAST lease, on the CTO's batch 74
+
+**Authority:** `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md` batch 74 item 4 @6a7377389e (the nine world-done orders), and batch 91 item 1 @4f0f4cf641 (leg V2 closes). The issuer lane (`2.0.0_SA_COO~T`) is dark; the lease's seat closes the face.
+
+**Superseded by:** the FAST lease on MDPF_TAXSMA, `org/mcp/drive-mode.log` line 24 (2026-09-30T14:30:50Z ARM, seat `4.0.0_SA_CRO`). The seat ran this release directly. No worker ran the order and its probe criteria were not run, so the order is superseded, not complete.
+
+**Artifact:** ledger `org/critical_paths/change_management/20261001T0210Z_mdpf_taxsma-tx-r-1_deploy_completion.md`, CLOSED @62301c017b, 6 of 6 legs proven: both packages built at e8994f23af and applied on 2026-10-01 (Gold 02:15:52Z, publisher 02:20:56Z), Tax DISABLED and the rollout switch OFF. Leg V2's read is `org/missions/D8/MDPF/MDPF_TAXSMA/deliverables/4.0.0_SA_CRO/TX_R_1_LEG_V2_READ_20261001.md` @e7110efff5.
+
+**Read of the artifact (this seat, 2026-10-01 15:08Z):** the ledger entry reads `Status: CLOSED -- nothing stranded -- closed 20261001T143222Z` and its sentinel is gone. The publisher function still runs this release: CodeSha256 `pj+Jat96t5dijB+0SQF918S1pi3AZBs1eQNvMXLYEJA=`, last modified 02:21:34Z, switch OFF. The Gold function has since moved to pin 8ade880fad (15:00:26Z, ledger `mdpf-gold-healgap-hookup-20261001`), still Tax DISABLED.
+
+**Differs from the order, or not done:** leg V2's probe read 12 of 16; the four differing documents were traced to causes outside the release and `1.0.0_SA_CTO` closed the leg on that record. The probe's history and shape assertions are owed a restatement before the next release's V2 (batch 91 item 3).
