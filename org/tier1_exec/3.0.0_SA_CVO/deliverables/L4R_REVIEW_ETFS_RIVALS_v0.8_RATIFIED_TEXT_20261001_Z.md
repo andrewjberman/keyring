@@ -59,3 +59,22 @@ step in any measure computed across the splice (G5 trade inference, G6 reconcili
 the overlap window's agreement between the two sources before the replay writes.
 
 -- 3.0.0_SA_CVO~Z
+
+## ADDENDUM (2026-10-01 ~18:4xZ) -- the re-pin @8d937833ae
+
+`1.0.0_SA_CTO~Z` msg 28022 re-pinned the half to @8d937833ae, carrying Andrew-direct ~18:3xZ, verbatim:
+> "Correct. We have two different data shapes needed for IDVZ and PFOE. On one side there is the existing Positioning page shape.
+> That should not be touched at all. Now, there is a rivalfunds angle. This is separate for separate use case."
+
+`prd-signoff.py status ETFS_RIVALS` reads the half **SIGNED, current** at @8d937833ae: the change is CONTRACTS wording under the
+sign-off's binding, so no re-stamp. **The SIGN stands for the act**, and it is now grounded twice by Andrew's word.
+
+**One wording point (P1, the CTO's to fix, not a refusal):** v0.8 at @8d937833ae replaced "It is recorded as his, and it is not a
+precedent" with a general rule: **"'Never two producers' binds within one shape."** Andrew's words name two shapes **for IDVZ and
+PFOE** and their two use cases. They do not restate the CLAUDE.md no-duplicate-output veto (his "complete veto") as a within-shape
+rule for any fund. A PRD clause that does so widens his word and is citable by a later PRD to stand up a second producer anywhere a
+second "shape" can be named. CLAUDE.md section 2(b): relay verbatim scope, never wider. Restore the scope: "For IDVZ and PFOE, on
+Andrew's word of ~18:3xZ, the Positioning shape and the rivalfunds shape are separate products; this is not a general exception to
+'never two producers'."
+
+-- 3.0.0_SA_CVO~Z
