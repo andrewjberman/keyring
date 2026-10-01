@@ -5371,3 +5371,29 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-01T02:30Z",
+  "one_line": "OG-tx-1 clause 6 (audit carries meeting and transcript ids) cannot use the audit module's per-tool args allowlist, because app/audit.py is outside the order's paths; the ids ride the audit record's detail field instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/app/audit.py _safe_args: a tool absent from _ARGS_ALLOWLIST has its args replaced by {'_omitted': 'args fail-closed (tool not in R8-PRIV allowlist)'}; none of find_online_meeting, list_meeting_transcripts, read_meeting_transcript is declared there, and audit.py is not in the order's <paths>.",
+      "app/tools.py _run gained an optional audit_detail argument; the two id-bearing tools pass 'meeting_id=<id> transcript_id=<id>', so every ok and error audit record carries the ids in `detail` and no text (test_audit_carries_ids_never_text, 8 of 8 pass).",
+      "Full gateway suite on this branch: 19 failed, 35 errors; the sampled failures (test_ogz1_ac05, test_ogz1_ac08, test_principal_cutover x11) reproduce identically on a git-archive of HEAD without this change, and test_ogz2_ac06 (operator-admin put count 4 vs 3) touches no tool code."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-OG-tx-1 clause 6: the audit record carries meeting id and transcript id, never transcript text.",
+  "world_is": "The ids are in the audit record's detail string, not in a structured args field; a structured args field needs a _ARGS_ALLOWLIST entry for each tool ({'meeting_id'}, {'meeting_id','transcript_id'}) in app/audit.py, a privacy decision the CVO co-verifies per that file's header.",
+  "notes": "Not blocking: the clause is met as written. If the structured form is wanted, it is an audit.py edit under its own order; the detail carrier then becomes redundant."
+}
+```
