@@ -5995,3 +5995,28 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S32",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-01T09:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The opal-gateway host .env is not shell-safe (unquoted multi-word values on lines 14, 15, 25, 35); two seats have now leaked the cot OTP bearer by sourcing it in bash over SSM (rows Z-W17-S1, NFRA_MCPINDEX-Z-S73).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "NFRA_OPLGTW-Z-W17-S1 (OG-lt-1 probe, 2026-10-01 ~02:1xZ) and NFRA_MCPINDEX-Z-S73 (MX round-6 probe, ~09:0xZ): `set -a; . ./.env` printed line 14's second word in 'command not found'.",
+      "Live render template d61fde4693/05e3eff563 deploy-to-ec2.sh: OTP_BEARER=%s filled with \"$OTP_BEARER_49F $OTP_BEARER_COT\" and OTP_BEARER_LABELS=49f cot, unquoted."
+    ]
+  },
+  "spec_asserts": "Static bearers reach the host .env and are never printed (secrets-iam.tf mechanism).",
+  "world_is": "Any shell-sourcing read prints a bearer; the rotation in OG-rl-1 (A1) fixes the leaked value, not the shape that leaks it.",
+  "notes": "Remedy candidates for OG-OPLGTW's next enrichment (not mid-round): render multi-word values quoted in a form systemd EnvironmentFile and bash both read identically, or a host read helper that parses .env as systemd does; plus a runbook line. The leaked value itself rotates at OG-rl-1.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
