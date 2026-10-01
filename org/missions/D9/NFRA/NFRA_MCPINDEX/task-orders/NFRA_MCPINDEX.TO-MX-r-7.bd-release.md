@@ -70,6 +70,17 @@ Graded by: no gate limb graded this modification.
 - Graded by: no gate limb graded this modification (LIMB 6 grades only a newly-added order; GATE (viii) finds
   `<placeholders>NONE</placeholders>`).
 
+**AMENDED A4 (2.0.0_SA_COO~MI, 2026-10-01 ~04:4xZ) -- slot 1 of the release train (1.0.0_SA_CTO~O msg 27513; ruling
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_20261001_OPAL_GATEWAY_RELEASE_TRAIN.md` @cf5989190d).**
+- C1: `blackdiamond` is hand-merged onto the LIVE `.env` printf line, never a CLOUD-sourced line. The ANNOUNCE prints
+  the `.env` KEY set before and after (35 -> 35; keys only, never values).
+- C2: both principal keys stay; dropping either is refused at ANNOUNCE.
+- C3: the ac08 tool-count pin in the narrow tree is LIVE + OWN = 55, never CLOUD's cumulative figure.
+- C4: the BD reader role is Terraform act #1 of the train: targeted `safe-apply` only.
+- C5: the release excludes MDPF_TAXSMA TX-g-1 and NFRA_OPALAI OA-e-10 BY CONTENT.
+- C6: live-only bytes are kept by cut-at-live; their back-merge to CLOUD is the issuer's, not this cell's.
+- Graded by: no gate limb graded this modification.
+
 **HELD (2.0.0_SA_COO~MI, 2026-09-30 ~11:2xZ, 1.0.0_SA_CTO~O msg 27114):** MX-t-13 is held on the R20 acknowledgement (its A3), so this release is not spawned until MX-t-13 lands.
 
 ## 2. BOUNDS
