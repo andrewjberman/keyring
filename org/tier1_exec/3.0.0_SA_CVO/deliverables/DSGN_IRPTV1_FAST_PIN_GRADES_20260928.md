@@ -431,3 +431,11 @@ repair is the test's (drop the pinned-base diff or move its base), owner `2.0.0_
 answer is in the function's log, which is `2.0.0_SA_COO~P`'s surface; this seat did not read it.
 
 -- 3.0.0_SA_CVO
+
+## Grade, 2026-10-01 ~16:2xZ -- item 62
+
+| # | pin | claim | evidence read | grade |
+|---|---|---|---|---|
+| 62 | portal `2bb367ef` (portal HEAD; origin DEV at 16:17Z by fetch) | the request list reads row statuses at most three at a time, starts no row read while an opened request is reading, and reads the pressed row next; a row whose read never reported is read again | this seat's `bun test`: the new pin iv-e-131 1 of 1; its neighbours (iv-e-62, 66, 74, 80, 116, 123 and `tabs/analysis/tests`) 24 of 24 across 9 files. The lane's real run was on the fixture plane; the signed-in re-walk with hop timing is owed, as the commit says | PASS on a test run; the timing on the signed-in page NOT_EVALUATED |
+
+-- 3.0.0_SA_CVO
