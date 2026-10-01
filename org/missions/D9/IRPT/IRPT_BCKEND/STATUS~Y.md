@@ -1,62 +1,75 @@
 # IRPT_BCKEND~Y (Analysis) -- status
 
-Seat `2.0.0_SA_COO~Y` (CLAUDE). Mode FAST: lease `IRPT_BCKEND~Y` armed 2026-10-01T04:33Z until 12:33Z on Andrew's word
+Seat `2.0.0_SA_COO~Y` (CLAUDE). Mode FAST: lease `IRPT_BCKEND~Y` re-armed 2026-10-01T11:52Z until 19:52Z on Andrew's word
 (record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261001_042xZ_SELF_DRIVE_60M_LAPTOP_FABRIC_FINAL_SAY_CLOSER_DRIVE_IRPT_FIRST.md`).
-Loop `/canonical-drive IRPT_BCKEND` 10m (LIVE_ARMS RELAUNCH row). Way forward: CTO rulings batches 61, 62, 65, 70, 72 and
-76 in `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md`. Reviewer `3.0.0_SA_CVO`
-(grades pins after the fact). As of 2026-10-01T10:1xZ.
+Loop `/canonical-drive IRPT_BCKEND` 10m (LIVE_ARMS RELAUNCH row). Way forward: CTO rulings batches 61, 62, 65, 70, 72,
+76 and 83 in `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md`. Reviewer `3.0.0_SA_CVO`
+(grades pins after the fact). As of 2026-10-01T13:0xZ.
 
 ## Pins
 
 | What | Value |
 |---|---|
-| Worktree | branch `coo-y-r30` at `C:/Users/AndrewBerman/Desktop/coo-y-r30`, equal to CLOUD at the merge below |
-| Items 1 to 12 on CLOUD | 1 to 6 as before (`62535e0fdc`, `b75e571a74`, `ec4dddd69b`, `0ad0e6867d`, `efde229443`, `e118089403`); 7 and 9 `ffb94090dc` (service actor with no firm list refused; resolve-phase refusal ends by name; the lookup's refusal class); 8 `25c32c3b58` (sign-in reason tokens; kept stderr); 10 `1253002a2f` (sessionless ticker lookup); 11 and 12 `2775cae84b` (tolerance row census; refused PDF kept as evidence). Merge `a3b35fd376`, 16 of 16 files |
-| SERVED: the resident | `/opt/irpt-resident/36dfa80058-st6` since 06:02:56Z. Host capture library `0fec0ca910ee5fb1..` |
-| BUILT, not installed | `a3b35fd376-st7`: tar sha256 `c12a37d6..`, install script `ad9f91d5..`, gate PASS; packet `IRPT_MVP_Y/ST7/NEVER_WIDEN_SIGNOFF_PACKET_RESIDENT_ST7_20261001.md` @9b1ff6fb28, COO half signed, CTO half asked 10:09Z; ledger `irpt-resident-st7-20261001` OPEN (U1 closed) |
+| Worktree | branch `coo-y-r30` at `C:/Users/AndrewBerman/Desktop/coo-y-r30`, merged into CLOUD at `9ac9b56d3c` |
+| Items 1 to 13 on CLOUD | 1 to 6 (`62535e0fdc`, `b75e571a74`, `ec4dddd69b`, `0ad0e6867d`, `efde229443`, `e118089403`); 7 and 9 `ffb94090dc`; 8 `25c32c3b58`; 10 `1253002a2f`; 11 and 12 `2775cae84b` (merge `a3b35fd376`); 13 `82cdfe9802`, the settings-row reader takes the vendor's cut name (merge `9ac9b56d3c`) |
+| SERVED: the resident | `/opt/irpt-resident/9ac9b56d3c-st8` since 11:58:05Z (ledger `irpt-resident-st8-20261001` CLOSED). The whole tree at 9ac9b56d3c: every item above. Host capture library `9511060e04f45b51..` (st7's, with the sign-in reason tokens) |
 | SERVED: `irpt-ycharts-generate` | `arC65KbDPPssn2UX..` since 06:51:12Z (whole bundle at 21eca74f40) |
 | SERVED: `irpt-status` | `2V7xV1+zII4+g6tV..` since 06:59:55Z (whole bundle at 21eca74f40) |
-| Stored YCharts session | version of 2026-10-01T08:21:20Z (fence 21), stored by the operator sign-in of the second window; read LIVE at 08:55Z and used by a job at 09:13Z |
-| Push state | LOCAL; origin/CLOUD `0abf99fcd4` (ls-remote read 10:0xZ). CLOUD is pushed by `0.0.0_AB_MSTR` only |
+| NOT served | the catalogue route (no API route is published for it); items 6 to 13 in the two Lambda bundles (none of them is on a Lambda's path except the catalogue filter, which rides the next generate build) |
+| Stored YCharts session | the version of 2026-10-01T08:21:20Z (fence 21), stored by one operator sign-in; read LIVE at 12:12Z; it carried three jobs |
+| Push state | LOCAL; origin/CLOUD `0abf99fcd4` (ls-remote read 12:5xZ). CLOUD is pushed by `0.0.0_AB_MSTR` only |
 
 ## Live thread
 
-NOT LIVE end to end. The upload lane (one Cottonwood CSV, an Overview, a READY report read on the page) now runs on
-served code through hop 7 and stops at **hop 8, the check of the portfolio type the vendor prints in the PDF**.
+**The upload lane ran end to end on served code at 12:31Z, back end only.** `REQ-a69e5751d42c374f1d2354f9` (Cottonwood,
+one CSV upload, an Overview, submitted by the service principal) is READY with certified report
+`RPT-ec30778a867a59f3805be6e7f07d35cb`; the sections route serves it; the case trace reads 22 links, 20 MATCH, 0
+MISMATCH. **NOT yet called live:** hop 10, the page walk of this request, is asked of `2.0.0_SA_COO~D` (12:50Z), and
+`3.0.0_SA_CVO` grades the outcome on the artifact (CTO half, item 10).
 
-Four windows today, each with both halves and a closed ledger:
+Six windows today, each with both halves and a closed ledger:
 
-| window | what it showed | file |
+| window | what it showed | file under `IRPT_MVP_Y/` |
 |---|---|---|
-| hop 7 (07:33Z) | stored session EVICTED; the resident's own re-login `AUTH_FAILED`; job ATTENTION `SESSION_REFRESH_ALREADY_USED` | `IRPT_MVP_Y/HOP7/J2_OUTCOME_20261001.md` |
-| second (08:21Z) | an operator sign-in as the resident's user AUTHENTICATED and stored a fresh session; the job's upload then met `PROVIDER_READ_UNAVAILABLE` 4 of 4 | `IRPT_MVP_Y/HOP7B/OUTCOME_20261001.md` |
-| lookup diagnostic (08:42Z) | the ticker lookup answers 200 JSON with the session AND with none | `IRPT_MVP_Y/HOP3/OUTCOME_20261001.md` |
-| third (08:55Z) | session read LIVE; `REQ-602834fd` passed upload, portfolio, read-back, report and PDF download; ATTENTION `TOLERANCE_REQUIRES_STATIC` (`type=- as_of=-`) | `IRPT_MVP_Y/HOP7C/OUTCOME_20261001.md` |
+| hop 7 (07:33Z) | stored session EVICTED; the resident's own re-login `AUTH_FAILED` | `HOP7/J2_OUTCOME_20261001.md` |
+| second (08:21Z) | an operator sign-in as the resident's user AUTHENTICATED; the upload's lookup then refused 4 of 4 | `HOP7B/OUTCOME_20261001.md` |
+| lookup diagnostic (08:42Z) | the ticker lookup answers 200 JSON with the session and with none | `HOP3/OUTCOME_20261001.md` |
+| third (08:55Z) | the job ran through the PDF download; refused at the printed-type check, PDF not kept | `HOP7C/OUTCOME_20261001.md` |
+| hop 8 on st7 (10:47Z) | the same refusal, NAMED by st7's census and kept PDF: the vendor prints the name cut with an ellipsis | `HOP8/OUTCOME_20261001.md` |
+| hop 8 on st8 (12:12Z) | READY; `TOLERANCE_TYPE type=Static as_of=Custom name=cut` | `HOP8B/OUTCOME_20261001.md` |
 
-Three failures today were unreadable because the fact that names them was discarded by design (the sign-in step, the
-lookup's status, the refused PDF's row). The st7 build makes each of them print its cause.
+Two resident releases today, each a whole tree at one commit under a never-widen packet with both halves: st7
+(`ST7/`, the diagnostics and the sessionless lookup) and st8 (`ST8/`, the reader's repair).
 
 ## Next
 
-1. **Install st7** on the CTO half (`ST7/install_fetch_and_run.sh` through Systems Manager; V1 read-back closes the
-   ledger). No vendor call.
-2. **ONE job attempt** under a new window packet (batch 76 item 5): a liveness read first, then one upload and one
-   Overview. A refusal at hop 8 now prints the row census and keeps the PDF, so the reader's repair has its fixture.
-3. After hop 8: `2.0.0_SA_COO~D` walks the READY request (hop 10 on a service-principal request); then batch 61's
-   order: one job per remaining arm, the catalogue route (not a full-table Scan per request), the resolve concurrency
-   fix, the vendor PDF link, the Analysis export, the email lane.
+1. `2.0.0_SA_COO~D`'s walk of `REQ-a69e5751d42c374f1d2354f9` on the page; on a clean walk the CTO calls the thread.
+2. The next resident build, when one is due, carries row S253's repair (the receipt's vendor request ledger).
+3. Batch 61's order after the thread: one job per remaining arm (Multi-Comp, Target Weight, 49 Financial,
+   Inflection), each an Analysis attempt under a window packet; the catalogue route, served from a read that is not
+   a full-table Scan per request; the resolve concurrency fix; the vendor PDF link; the Analysis export; the email lane.
 
 ## Rows this lane holds
 
 | Row | State |
 |---|---|
-| S230 | OPEN. The resident's own sign-in fails `AUTH_FAILED` 4 of 4; the same wrapper run by an operator as the resident's user signs in. The reason token (st7) names the step at the next occurrence. By the CTO's trace the session is displaced by another sign-in on the shared seat, not aged out |
-| S231 | DONE on served code (both dead-lettered jobs ended ATTENTION `ACTOR_NOT_FOUND` at 06:04Z); for the CVO to close |
-| S238, S244 | S238 disarmed in the CTO's row S248; S244's resident half closed in row S246 |
+| S230 | OPEN. The resident's OWN sign-in fails `AUTH_FAILED` 4 of 4 and is unnamed; the same wrapper run by an operator as the resident's user signs in. Not met again today (one operator sign-in carried three jobs). st7's reason token names the step at its next occurrence. Until then a job that meets a displaced session ends ATTENTION and an operator sign-in under a packet is the way back |
+| S253 | OPEN, inert (this seat's, 12:55Z): the READY receipt of a resident job carries no `vendor_requests` ledger; IB-yr-291 writes it in `job.py`, which the resident's worker does not use |
+| S231 | DONE on served code; for the CVO to close |
 | W88-S2 | reader served in the generate bundle; grant applied; the route is not published |
 | W94-S2, W91-S1, W92-S1 | repaired or read; for the CVO to close |
 | W91-S2 | NOT repaired: `_contracts/tests/test_seam_paired.py` is held by the open order IRPT_DASHBD TO-DB-b-4 |
 | W92-S4 | one read of a report whose blob is absent is still owed |
+
+## Enrichment candidates this day measured, none built
+
+- Each job loses 15 minutes: the first receive's second status poll, about 17 seconds after the portfolio is
+  created, draws a 202 read challenge (3 of 3 jobs today) and the message waits out its 900-second visibility.
+- The words a user reads for `RESOLVE_RETRY_EXHAUSTED` say other work was in flight (`2.0.0_SA_COO~D`, batch 72 item
+  13; the refusal class now exists to word it from).
+- A name with no request id is accepted by the cut-name rule on its three-quarter prefix alone (st8 half, item 1).
+- The vendor cuts a 49-character portfolio name at 47; a shorter name would never be cut. Not changed: batch 83
+  keeps the name and makes the reader an identity check.
 
 ## Write claims
 
@@ -68,8 +81,6 @@ file; `deliverables/2.0.0_SA_COO~Y/**`; `org/tier1_exec/2.0.0_SA_COO/deliverable
 
 ## Parked, each with its owner and the condition that un-parks it
 
-- The words a user reads for `RESOLVE_RETRY_EXHAUSTED` say other work was in flight. Owner `2.0.0_SA_COO~D` (batch
-  72 item 13); un-parks when st7 is served and the refusal class exists to word it from.
 - The two source-map rows' `deployed_code_sha256` and `last_deployed_*` fields still describe 2026-09-24. Owner this
   seat; un-parks with the pipeline's next recorded deploy.
 - Request history lists the same requests under any selected client. Owner `2.0.0_SA_COO~D` for the label; whether
@@ -77,15 +88,18 @@ file; `deliverables/2.0.0_SA_COO~Y/**`; `org/tier1_exec/2.0.0_SA_COO/deliverable
 - Three test-path defects in files that are `2.0.0_SA_COO~P`'s (`reports/tests/test_resident_installed.py` alone: 10
   passed, 1 failed; `test_generate_installed.py` at collection; `_authz/tests`, row W98-S1).
 - The node of `ycharts/session/tests/test_host_capture.py` that runs a real wrapper needs a POSIX host. Owner this
-  seat; un-parks at the first st7 capture, whose stderr file is the live read.
+  seat; un-parks at the first resident-run capture on st7 or later, whose stderr file is the live read.
+- One kept artifact in Cottonwood's partition that nothing references, under the 30-day rule: the refused PDF of
+  `REQ-7c7a9e45` (`ART-58f132884b3f5dc8..`). Owner this seat; it is the fixture's source and needs nothing.
 - The FAST notice to `3.0.0_SA_CVO` is carried by this file.
 
 ## Limits
 
-No sign-in has run on the st7 capture library. The sessionless lookup has not run through the resident's own child
-process. Every certified report so far is Cottonwood's; the resident-side refusal of a foreign-firm job is proven by
-the installed digest and offline nodes, not by a live job. At the vendor each attempt leaves an upload record, a
-model portfolio and, when it gets that far, a generated report.
+No sign-in has run on the st7 capture library (`9511060e..`). The resident's own sign-in is unrepaired. Every
+certified report so far is Cottonwood's, from this lane's test upload; no other firm, variant or real client file
+has run. The page has not yet shown the READY request of 12:31Z. At the vendor each attempt leaves an upload record,
+a model portfolio and, when it gets that far, a generated report: five attempts today, of which three reached the
+vendor's upload (three upload records, three model portfolios, three generated reports).
 
 ## Standing directives (carried)
 
@@ -95,4 +109,5 @@ model portfolio and, when it gets that far, a generated report.
 - Vendor egress is on Andrew's standing words (2026-09-23 for the host's own calls, 2026-09-27 for Analysis attempts),
   each use inside a packet with both halves; no sign-in is made from the host outside one. A served move needs both
   never-widen halves. "Nobody runs AC8 again"; do not remove the `wk-nfra-oplgtw-og-v-4-p1` worktree.
-- Read safe-merge's exit code and its "tree check" line on every merge.
+- Read safe-merge's exit code and its "tree check" line on every merge, and build nothing on a merge that did not
+  land (a build this afternoon was made at the wrong commit that way and discarded before any gate).
