@@ -20,8 +20,9 @@ Order: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261001_161xZ_DE
   After signature: merge, pre-run dry run must read 19 of 158 with 0 conflicts, run the seed script, open ledger
   `secclass-cot-seed-rows-m-20261001`.
 - Cottonwood re-point, the carrier: `B_00` now copies silver's `cusip` and `cash_equivalent` into Cottonwood's gold positions
-  (they carry neither today; silver has both). Branch `coo-m-cot-carrier` @dda373cbd3 ONLY, with its test (fails on the old
-  B_00). It is reverted on `coo-m-r30` (@1c1d2a02c2) so it cannot ride the split-account merge; `coo-m-r30` equals the signed
+  (they carry neither today; silver has both). Branch `coo-m-cot-carrier` @0fb0dbdbbb ONLY: the B_00 carrier (@dda373cbd3, its test fails on the old B_00)
+  AND the ruled rule (`lib/etf_classifier.classify_position`) used by C_06, whose mix now carries commodities, structured,
+  cash, unclassified and other (Cottonwood gold tests 19 passed). Still to do: D_03 and D_04, then the reader census. It is reverted on `coo-m-r30` (@1c1d2a02c2) so it cannot ride the split-account merge; `coo-m-r30` equals the signed
   head cab9bf875d (0 files differ). Today-by-tomorrow table measured: `MDPF_SECCLASS_M/COT_REPOINT_TODAY_BY_TOMORROW_20261001.md` @e0f8d95bd8. RULED (CTO batch 99,
   msg 103919): C_06's mix carries commodities, structured and unclassified as their own classes; nothing folded, no client skipped.
 - Cottonwood re-point: ruled by CTO batch 93 (cash from the feed's flag as class `cash`; a no-ticker CUSIP is a table row;
@@ -39,7 +40,7 @@ Order: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261001_161xZ_DE
 - Held entries `cot-cash-admission-m-20260925` and `bd-securities-cot-new-p1-m-20260926`:
   HELD-STALE, gated on the Cottonwood re-point; nothing to do before it.
 - Worktrees: `C:/Users/AndrewBerman/Desktop/coo_m_r30` (coo-m-r30 @1c1d2a02c2, clean but for an untracked audit log; branch
-  `coo-m-cot-carrier` @dda373cbd3 has no worktree);
+  `coo-m-cot-carrier` @0fb0dbdbbb has no worktree; check it out there to continue);
   `C:/Users/AndrewBerman/Desktop/coo_m_cot_seed` (coo-m-cot-seed-rows @15a9717715, clean);
   `C:/Users/AndrewBerman/Desktop/wk_irpt_bckend_84` (old worker branch; deleting it waits on Andrew's word).
 - Clocks: 22:10Z silver, 23:00Z Black Diamond gold, 2026-10-02 13:30Z mdpf-gold-lambda, 14:15Z irpt-holdings-snapshot.
