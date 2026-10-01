@@ -6152,3 +6152,29 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S36",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-01T12:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The live deploy template (daa56d81ac) renders MAIL_SENDER_TABLE from OG_MAIL_SENDER_TABLE with an empty default, so any later gateway release whose deployer does not export it silently blanks the table and /hx/mail refuses every message; the .env key census cannot see it (the key stays, its value empties).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show daa56d81ac:infra/aws/ec2/opal-gateway/deploy-to-ec2.sh lines 170-175: OG_MAIL_SENDER_TABLE=\"${OG_MAIL_SENDER_TABLE:-}\" with a character check only; line 351: 'empty refuses every message'.",
+      "Found by NFRA_MCPINDEX MX-r-8 PHASE A (row NFRA_MCPINDEX-Z-W22-S4, 2.0.0_SA_COO~MI msg 27812) before its slot-4 deploy.",
+      "Interim: the gateway queue (2.0.0_SA_COO~MI, ~MS) was given the repo export line at ~12:1xZ (criterion.py DEFAULT_AUTHORS, 3 entries, passes the template charset)."
+    ]
+  },
+  "spec_asserts": "PRD v1.3 C7: the mail route serves the senders on NFRA_TRNSPT's sender table.",
+  "world_is": "The table survives only a release whose deployer exports it; a missed export is silent.",
+  "notes": "Remedy for OPLGTW's next enrichment: the template refuses (no upload) when OG_MAIL_SENDER_TABLE is empty, or builds it from criterion.py itself at deploy. Until then every releaser exports it (queue told).",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```

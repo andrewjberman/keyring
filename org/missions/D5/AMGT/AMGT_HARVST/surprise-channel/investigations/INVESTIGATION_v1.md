@@ -5049,6 +5049,202 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "notes": "Fix is the issuer's: add the 21 names to the gold securities file (crosswalk-resolved keys) and rebuild gold; the census then maps them with no code change. Also: the census writes LF-only bytes, because AC2's `$`-anchored regexes fail on Windows CRLF."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W91-S11",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~91",
+      "surfaced_at": "2026-10-01T12:05Z",
+      "one_line": "HVST-af-2 AC2 not met: no challenge was met AND passed under the input-source monitor inside the 10-request-per-publisher cap (bbg met a PerimeterX press-and-hold 403 once, unhandled by the run-1 driver, then none in 4 more attempts; wsj and barrons met no DataDome slider in 2 runs each).",
+      "class": "BLOCKING",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Face s2: drive bbg's blocked route until its press-and-hold appears and solve it; <=10 requests per publisher; AC2 needs one publisher with challenge_met != none, passed true, a path, solved_at inside a window whose hardware_input_events is 0.",
+      "world_is": "Five runs, each under its own InputSourceMonitor, hardware_input_events 0 in all five (run 1: 11:51:33Z-11:53:54Z, injected 12; runs 2-5 injected 0). bbg: run 1 in-tab GET /sitemaps/news/2026-10.xml = 403 bloomberg_press_and_hold (driver had no solve step for it); run 2 sitemap 2026-10 = 200, 0 boeing slugs; run 3 raised 'Locator.count: Frame was detached' (see W91-S12); runs 4 and 5 navigated sitemaps 2026-9 and 2026-10, no control, 200-shaped XML. bbg requests: 2+2+3+2+1 = 10, the cap, so the budget is spent. wsj/barrons: run 1 and run 2 each homepage + sign-in route + account check (logged in, 200): no slider; 3+3 = 6 of 10 used each. af2_challenged_pass.json carries bbg passed false with the 403 signature; AC2 reads 'CHALLENGED PASSES: 0' and FAIL.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/af2_challenged_pass.json",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/af2_run1_detail.json",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/af2_run3_detail.json",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/af2_run5_detail.json"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "The press-and-hold is intermittent, not deterministic on a given route: it appeared on the first bbg fetch after idle (run 1) and not on later ones. A cut that needs a met challenge needs either a budget for a retry loop across time or a way to provoke it that is not a search. The instrument itself is proven (seam: injected 1, hardware 0; AC1 passes)."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W91-S12",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~91",
+      "surfaced_at": "2026-10-01T12:05Z",
+      "one_line": "verification.solve() against a live bbg page raised 'Locator.count: Frame was detached' once (run 3, 11:58:38Z-11:59:02Z): the control lookup in _press_and_hold_box / _control_visible iterates page.frames and calls count() with no guard against a frame that detaches mid-iteration.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "solve() locates the press-and-hold control from the page's DOM and holds it (round 32 passed it live).",
+      "world_is": "Run 3's driver reached a 403 on the bbg sitemap fetch and called V.solve(ts,'bbg',sig,route=...,monitor=mon): solve's first attempt found no control, navigated this page to the route, and the next _press_and_hold_box read raised playwright Error 'Locator.count: Frame was detached' while the navigation was settling. The traceback was not kept (my driver caught and recorded only the message); the line is INFERRED from the message and from solve's call order. Runs 4 and 5 guarded the check with a retry and did not reproduce it.",
+      "grounding": {
+        "status": "INFERRED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/af2_run3_detail.json",
+          "lib/opal_data_harvest/verification.py _press_and_hold_box/_control_visible/solve"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Not fixed here: the face limits verification.py to the optional monitor and solved_at. A guard around the frame walk (catch the Error, wait, retry once) is the candidate."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W91-S13",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~91",
+      "surfaced_at": "2026-10-01T12:05Z",
+      "one_line": "The hook counted 12 injected OS input events in one 140 s window (run 1) and 0 in four others; hardware stayed 0 in all five. Source of the 12 is unidentified (harness input, another seat's tool, or the browser), and Playwright/CDP input is invisible to the hook by design.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "W91-S8: the last-input clock ticks with no human present, so it cannot tell a human from injected input.",
+      "world_is": "Run 1 window 2026-10-01T11:51:33Z..11:53:54Z: hardware_input_events 0, injected_input_events 12 (the seam run proved the hook counts a SendInput move as injected 1, hardware 0). Runs 2-5: injected 0. 'hardware 0' is a claim about OS input devices only; it says nothing about CDP events the browser dispatches internally.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/af2_run1_challenged_pass.json",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/af2_seam.out"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Confirms W91-S8's premise that injected input occurs on this box; the instrument separates it from a hand."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W92-S5",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~92",
+      "surfaced_at": "2026-10-01T12:16Z",
+      "one_line": "af-4: discovery.discover is passed the PacedSession, not the bare inner TabSession.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "TO phase A item 1: list through `discovery.discover(self._session.inner, pub, <company query>, floor=...)`.",
+      "world_is": "discover() calls tab_session.get; on the bare inner a sitemap GET bypasses PacedSession, so it would carry no pacing, no request_attempts row (AC2 reads /sitemaps/news/ paths from request_attempts) and no once-per-leg challenge route. The leg passes self.session (PacedSession), which forwards `origin` to the inner TabSession by __getattr__; a fake TabSession inner still receives every request. discover() also now treats a raised UpstreamUnavailable(404) at page 1 as the first-of-month step-back, because PacedSession raises a 404 rather than returning it.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/publishers.py Publisher._sitemap_items @e0b221d743",
+          "lib/opal_data_harvest/discovery.py discover @e0b221d743",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~92/af4_bbg_run.json request_attempts: 2 sitemap rows"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "The same single browser identity serves every request; only the wrapper differs from the face's wording."
+    },
+{
+      "id": "AMGT_HARVST-Z-W92-S6",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~92",
+      "surfaced_at": "2026-10-01T12:16Z",
+      "one_line": "af-4: a bbg sitemap item carries a URL and no story id, so the article is fetched as its page and read from __NEXT_DATA__.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "TO phase A item 1: the sitemap item's URL and date replace the search hit; relevance by the existing body check after the article fetch 'as today'.",
+      "world_is": "'As today' is module.article(session, resourceId) -> /article/api/story/id/{id}; the id (e.g. TLUURIGFWR2800) is not derivable from the sitemap URL (/news/articles/YYYY-MM-DD/slug). The tab leg fetches the article page in-tab and reads the story from the embedded __NEXT_DATA__ (JSON-LD NewsArticle as a fallback), id = story.id. Live: 8 of 8 accepted articles came through http_embedded_json; the JSON-LD fallback and the bucket pre-check by URL-hash identity (article_known) are exercised only by plants, not live.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~92/af4_bbg_run.json accepted[].transport",
+          "lib/opal_data_harvest/publishers.py bbg_page_story @e0b221d743"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Matches how the round-32 ae-5 walk read the same pages."
+    },
+{
+      "id": "AMGT_HARVST-Z-W92-S7",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~92",
+      "surfaced_at": "2026-10-01T12:16Z",
+      "one_line": "af-4: the live job ran with --floor 2026-09-24, not 2026-01-01, to hold the ~40-request cap.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "TO phase B: `--floor 2026-01-01 ... at most ~40 requests; stop the job if it exceeds that`.",
+      "world_is": "backfill_bound(BA, bbg, 2026-01-01) read 2026-09-10 (the stored watermark 2026-09-10T00:49Z): the literal job would have fetched every Boeing-slug article dated 09-10 onward with no article cap in backfill mode (the run record is written only when a job ends, request_attempts folded in a `finally`, so a killed job leaves none). The job was run with --floor 2026-09-24 (bound = max(floor, watermark) = 09-24): 11 request attempts (2 sitemaps, 9 article GETs of which 1 was the 403 bot_check, solved once, then 200), 8 accepted, 0 rejected, 0 on /search.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~92/af4_bbg_run.json",
+          "harvest_grammar.backfill_bound read-only S3 watermark BA/bbg = 2026-09-10T00:49:23Z"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "The sitemap leg has no per-job article cap in backfill mode; a full-floor bbg backfill is request-unbounded by design (one GET per matching article)."
+    },
+{
+      "id": "AMGT_HARVST-Z-W92-S8",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~92",
+      "surfaced_at": "2026-10-01T12:16Z",
+      "one_line": "af-4: default_profile_root() resolves from the module's own tree, so a worker's worktree holds an empty bbg profile.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "TO phase B: run from the main tree's runtime so the main-tree bbg profile (earned in round 32) is used.",
+      "world_is": "--runtime-root only moves the runtime files; TabSession's profile root is tab_transport.default_profile_root() = <module tree>/.runtime/opal-data-harvest/browser-profiles, which in this worktree is empty. A directory junction .runtime/opal-data-harvest/browser-profiles -> the main tree's browser-profiles (gitignored path) was created for the one job and removed after it (junction only; the main bbg profile was verified present afterwards).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/tab_transport.py default_profile_root",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~92/af4_bbg_run.json status new_articles under the main bbg profile"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Any worker ordered to run a tab job under the main profile from its worktree needs the same junction, or the code merged to the main tree first."
+    },
+{
+      "id": "AMGT_HARVST-Z-W92-S9",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~92",
+      "surfaced_at": "2026-10-01T12:16Z",
+      "one_line": "af-4: a sitemap listing's reached_span reads stop_bound at the fetch date (2026-10-01..2026-10-01), not the dates the walk reached.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "spec_asserts": "FWD-15 (e) discovery in date order back to the floor, with the run record's reach carrying the span covered.",
+      "world_is": "worker.fold_listing_reach reads each captured listing through silver_from_bronze.listing_hit_rows, which parses search JSON/HTML and not a sitemap XML; the job walked 2026-10 and 2026-9 down to 09-24 but its record carries reached_span {start 2026-10-01, end 2026-10-01, basis stop_bound}. The sitemap bytes were recorded as listings (ext xml, ~1.7 MB for 2026-9) into harvest_listing_outbox; the upload-harvest silver step over an xml listing was not run in this order.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~92/af4_bbg_run.json reached_span",
+          "lib/opal_data_harvest/worker.py fold_listing_reach",
+          "lib/opal_data_harvest/silver_from_bronze.py listing_hit_rows"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Reach/coverage readers of the run record under-count a sitemap leg until listing_hit_rows (or fold_listing_reach) reads the sitemap's dated items; outside this order's paths.",
+      "disarm_owner": "2.0.0_SA_COO~H"
+    },
+{
+      "id": "AMGT_HARVST-Z-W92-S10",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~92",
+      "surfaced_at": "2026-10-01T12:16Z",
+      "one_line": "af-4: the issuer's running sa backfill driver executes from this worktree, so Phase A edits were live to its next jobs.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "TO: write only the face's <paths>; ft and sa are the issuer's running backfills, never touched.",
+      "world_is": "At job start the sa driver (python -m lib.opal_data_harvest.backfill_driver --publishers sa) and its child jobs (runtime root .../wk-hvst-r32-92/.runtime/opal-data-harvest) were running from this worktree's code, so commit e0b221d743 (publishers.py, discovery.py) was imported by the sa child jobs started after it. The change touches only the bbg and wsj tab legs and discover(); the sa path is unchanged and the collector suite passed (448 passed, 1 skipped). No ft or sa profile, request or file was touched by this worker.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "powershell Get-CimInstance Win32_Process: driver pid 39060 and child 43756 at 2026-10-01T12:07Z",
+          "git show e0b221d743 --stat"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Recorded so the issuer reads any sa-run difference after that commit against this commit."
     }
   ]
 ```
