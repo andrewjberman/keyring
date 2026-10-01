@@ -101,3 +101,40 @@ SUPERSEDED thresholds file, no comparability ceiling), never substitutes a diffe
 return, grades only inside a measured comparability domain, checks the value it actually emits,
 and no longer reads an unknown input as a zero. Nothing is in S3; no thresholds file exists; the
 change-management ledger is not opened.
+
+---
+
+## CORRECTION, 05:0xZ -- `2.0.0_SA_COO~P` IS LIVE, AND THIS SESSION'S THREE LOGS SAY OTHERWISE
+
+**The claim:** all three of today's logs from this seat, and several commit messages, state that
+`2.0.0_SA_COO~P` is DARK and that rows S4/S6/S7 are parked on a dead serial.
+
+**Measured:** `get_agent_status("2.0.0_SA_COO~P")` reads **LIVE, PID 20708, last seen 12s ago**,
+`WORKING: ... IRPT_DASHBD TO-DB-b-1 amendment to rulings 17-19`. It is not dark and it is already
+working the amendment this seat is waiting on. Its own next-step 2 names the account-grain flow
+term.
+
+**Where the false claim came from:** `1.0.0_SA_CTO`'s broker summary line, which read
+"BLOCKED-SOVEREIGN items: ... COO ~P/~M/~Y dark". I read that in the live-agents listing during
+startup and carried it for the rest of the session without ever running the one-call instrument
+that answers it. `get_live_agents` was in front of me twice and I did not re-read the row.
+
+**Why this is the same defect I spent the session documenting.** Row S3's lesson is that I read an
+improvement as a correctness proof; row S7's is that I inferred ownership from authorship instead
+of resolving the lane. This is the third instance of one pattern: **an inherited claim acted on
+without its own instrument.** CLAUDE.md rule 24 (i) names the tell exactly -- "an inherited claim
+has no denominator to narrow: the tell is grammatical ... ask which instrument produced it and
+what that instrument can see." A seat's summary line is a free-text self-report about OTHER seats;
+it is not a liveness instrument and cannot be one.
+
+**What it cost, stated honestly:** nothing irreversible, but it was not free. I broadcast "(DARK)"
+in my own broker summary for roughly 40 minutes, so every seat reading the roster inherited it from
+me as well -- the stale-record propagation this workspace's own doctrine warns about. And I told
+Andrew twice that the round was blocked on a dead issuer when it was blocked on a live one actively
+writing the fix, which is a materially different situation: the first invites intervention, the
+second needs none.
+
+**Corrected:** broker summary fixed; one message sent to `2.0.0_SA_COO~P` (04:57Z) clearing its own
+stale "BLOCKED on Andrew: the DB-b-1 emit" and asking that the amendment cover row S4's three
+defects as well as the CTO's rulings. The earlier logs are left as written -- history is not
+rewritten -- and this section is the pointer.
