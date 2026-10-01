@@ -4751,6 +4751,50 @@ carries none.
     "spec_asserts": "Z-S68 notes: DISARM by (1) plan A and (2) the stale-base guard in MX-r-6 v3 with a planted-stale negative test.",
     "world_is": "Both acts are done and the guard has been exercised on two later releases.",
     "notes": "Residual named in Z-W19-S18 stands: only a deploy from a tree carrying the guard is guarded (a rollback tree older than v3 re-uploads unguarded)."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S72",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-01T08:58Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The BD silver writer of record fails UNREALIZED every night: bd-silver-merge's unrealized merge read 'SUMMARY: 6 processed | new=6 reprocess=0 skip=68 | failures=6 | rows_added=0' on both 2026-09-30 00:15Z and 2026-10-01 00:14Z, while the opal-bd-unrealized-download document's merge wrote 6 silver/unrealized partitions (2026-07-03..07-09, 0 rows each) at its 2026-09-30 21:39Z fire. Retiring the document's merge (round-6 item 7) without diagnosing this would leave unrealized with a failing sole writer.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "/aws/lambda/bd-silver-merge, last 36h, read by the issuer 2026-10-01 ~09:1xZ during the round-6 battery dry run: the two unrealized SUMMARY lines quoted; transactions failures=0 (178,993 rows), realized failures=0 (9,989 rows), allocations new=0.",
+        "s3://opal-data-bd/silver/unrealized/2026-07-03..07-09.parquet (6 objects, 8016 bytes) LastModified 2026-09-30T21:39:18-27Z, written by the document fire (row Z-S69)."
+      ]
+    },
+    "spec_asserts": "Round-5 analysis s.3 (Z-S69 ruling): bd-silver-merge stays the writer of record and the documents' merge step is retired, so each BD table has 1 writer.",
+    "world_is": "For unrealized, the writer of record fails on the same 6 new files each night and writes nothing; only the document wrote them (as empty partitions).",
+    "notes": "DISARM: MX-s-16 PHASE A diagnoses the 6 failures from the Lambda's per-file log and the source files, and the unrealized document's merge is retired only when bd-silver-merge processes them (or they are ruled out of scope with evidence). s16.AC2 grades transactions/realized/allocations and prints unrealized ungraded, citing this row."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S73",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-01T08:58Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "A shell-sourced read of the gateway host's /opt/opal-gateway/.env echoes secret values: its values are unquoted, so `set -a; . ./.env` executes the second word of a multi-word value as a command and prints it in the error. The issuer's round-6 battery dry run (SSM, ~09:0xZ) did exactly that once; the error text carried one token of the OTP_BEARER line (.env line 14) into the SSM command output and this session's tool output. The value is in no file, row, commit or message.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "SSM AWS-RunShellScript on i-07dccb1615503ac99, the issuer's r8 probe debug run: './.env: line 14: <token>: command not found', './.env: line 15: cot: command not found' (OTP_BEARER_LABELS='49f cot'), './.env: line 25: opal_portal: command not found' (ENABLED_INTEGRATIONS), './.env: line 37: ...gateway-inf-firm-reader-role}: No such file or directory' (FIRM_ROLE_ARNS).",
+        "systemd unit opal-gateway: EnvironmentFile=/opt/opal-gateway/.env (systemd parses it without a shell, so the service is unaffected); ExecStart /opt/opal-gateway/.venv/bin/uvicorn."
+      ]
+    },
+    "spec_asserts": "No secret value leaves the host's .env except into the service's environment.",
+    "world_is": "One OTP bearer token sits in the SSM command-invocation output of that run (retained by SSM) and in this seat's session output.",
+    "notes": "FIX AT THE INSTRUMENT, done before the cut: round-6 r8.AC2's host probe (r8_host.py) parses .env in Python the way systemd does and prints only tool names; the face of every round-6 host-touching order says never shell-source .env. DISARM: the rotation decision is the bearer's owner's (NFRA_OPLGTW, 2.0.0_SA_COO~O; OG-rl-1 already carries a bearer rotation, row Z-W17-S1) -- routed to ~O the same turn this row lands. ANSWERED (2.0.0_SA_COO~O msg 27684, ~08:59Z): the echoed word is the cot token (Secrets Manager blackdiamond/cot/otp-gateway-token), the same value row Z-W17-S1 names; NFRA_OPLGTW OG-rl-1 (amended A1) already rotates it, and its verify refuses the old value. This row disarms when OG-rl-1 lands; no separate act. The repeat class (a host .env that leaks when shell-sourced) goes on OPLGTW's next enrichment."
   }
 ]
 ```
