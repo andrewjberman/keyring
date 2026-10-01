@@ -87,6 +87,43 @@ fi
 # the commit limb's switch. In WARN mode this stage NEVER changes this script's exit code: not on a REFUSE
 # verdict, not on the limb's own error (NAMING ERROR), not on a missing interpreter or a missing limb. In
 # ENFORCE mode it is fail-closed: any non-zero exit stops here with exit 6, before terraform is called.
+# THE SCOPED APPLY (cell MS-s-1, NFRA_MCPMSP round 2; the gate owner's ruling): an apply that names a -target, or
+# a saved PLANFILE, runs a plan that is NOT the whole tree's -- so grading the whole tree's plan grades the wrong
+# plan. For such a SCOPED apply the plan stage below renders the plan the apply runs (the caller's -target,
+# -replace, -var, -var-file, -refresh and -destroy go to `plan`; a planfile is read with `show -json <planfile>`,
+# never re-planned) and its verdict BINDS; the pre-plan stage (the tree's literals) is WARN only there; and a plan
+# that cannot be rendered REFUSES in ENFORCE (exit 7). An UNSCOPED apply (no -target, no planfile) is unchanged.
+# The caller's args are parsed once, here: everything after the first `apply` word.
+SA_TARGETED=0; SA_PLANFILE=""; SA_PLAN_ARGS=()
+sa_seen_apply=0; sa_pending=""
+for arg in "$@"; do
+  if [ "$sa_seen_apply" -eq 0 ]; then
+    [ "$arg" = "apply" ] && sa_seen_apply=1
+    continue
+  fi
+  if [ -n "$sa_pending" ]; then   # the value of a two-token flag (-target X, -var k=v, -parallelism 5, ...)
+    [ "$sa_pending" = "forward" ] && SA_PLAN_ARGS+=("$arg")
+    sa_pending=""
+    continue
+  fi
+  case "$arg" in
+    -target|--target)           SA_TARGETED=1; SA_PLAN_ARGS+=("$arg"); sa_pending=forward ;;
+    -target=*|--target=*)       SA_TARGETED=1; SA_PLAN_ARGS+=("$arg") ;;
+    -replace|--replace|-var|--var|-var-file|--var-file)
+                                SA_PLAN_ARGS+=("$arg"); sa_pending=forward ;;
+    -replace=*|--replace=*|-var=*|--var=*|-var-file=*|--var-file=*|-refresh|--refresh|-refresh=*|--refresh=*|-destroy|--destroy|-destroy=*|--destroy=*)
+                                SA_PLAN_ARGS+=("$arg") ;;
+    -parallelism|--parallelism|-lock-timeout|--lock-timeout|-state|--state|-state-out|--state-out|-backup|--backup)
+                                sa_pending=skip ;;   # an apply-only flag that takes a separate value: not a planfile
+    -*)                         : ;;
+    *)                          [ -z "$SA_PLANFILE" ] && SA_PLANFILE="$arg" ;;
+  esac
+done
+SA_SCOPED=0
+if [ "$SA_TARGETED" -eq 1 ] || [ -n "$SA_PLANFILE" ]; then
+  SA_SCOPED=1
+fi
+
 NAPPLY_GATE="$SCRIPT_DIR/naming-apply-gate.py"
 NAPPLY_TREE="."
 for arg in "$@"; do
@@ -104,12 +141,15 @@ if [ -f "$NAPPLY_GATE" ]; then
 else
   NAPPLY_OUT="NAMING ERROR the safe-apply naming limb is absent at $NAPPLY_GATE"; NAPPLY_RC=2
 fi
-if [ "$NAPPLY_ENFORCE" -eq 1 ] && [ "$NAPPLY_RC" -ne 0 ]; then
+if [ "$NAPPLY_ENFORCE" -eq 1 ] && [ "$NAPPLY_RC" -ne 0 ] && [ "$SA_SCOPED" -eq 0 ]; then
   printf '%s\n' "$NAPPLY_OUT" | sed 's/^/  [naming-apply-gate] /' >&2
   echo "safe-apply: BLOCKED by the naming limb (LGIC_ENFORCE DEC-6, ENFORCE mode, rc=$NAPPLY_RC). Nothing was planned or applied." >&2
   exit 6
 elif [ -n "$NAPPLY_OUT" ]; then
   printf '%s\n' "$NAPPLY_OUT" | sed 's/^/  [naming-apply-gate] /' >&2
+  if [ "$SA_SCOPED" -eq 1 ] && [ "$NAPPLY_RC" -ne 0 ]; then
+    echo "safe-apply: WARN -- the pre-plan naming stage (rc=$NAPPLY_RC) is WARN only for a targeted or planfile apply; the plan stage below decides." >&2
+  fi
 fi
 
 # -----------------------------------------------------------------------------
@@ -120,10 +160,23 @@ fi
 # (tag-authz, tombstone below) and before terraform apply itself -- so a REFUSE here means NOTHING further is
 # planned or applied. Same WARN/ENFORCE switch as the commit limb and the pre-plan stage (NAPPLY_ENFORCE, set
 # above). In WARN mode this stage never changes this script's exit code, exactly as the pre-plan stage above.
+# MS-s-1: for a SCOPED apply (SA_SCOPED, above) the plan it renders carries the caller's -target/-replace/-var/
+# -var-file/-refresh/-destroy args, or is the given planfile read with `show -json` (no re-plan), and a plan
+# that cannot render REFUSES in ENFORCE (exit 7) rather than passing as a gap.
 NPLAN_TMP="$(mktemp 2>/dev/null || echo "${TMPDIR:-/tmp}/safe-apply-naming-plan.$$")"
-NPLAN_BLOCKED=0
-if "$TERRAFORM" ${NAPPLY_TREE:+-chdir="$NAPPLY_TREE"} plan -input=false -lock=false -out="$NPLAN_TMP.bin" >/dev/null 2>"$NPLAN_TMP.err" \
+NPLAN_BLOCKED=0; NPLAN_RC=0; NPLAN_RENDERED=0
+if [ -n "$SA_PLANFILE" ]; then
+  "$TERRAFORM" ${NAPPLY_TREE:+-chdir="$NAPPLY_TREE"} show -json "$SA_PLANFILE" > "$NPLAN_TMP.json" 2>"$NPLAN_TMP.err" && NPLAN_RENDERED=1
+elif [ "$SA_TARGETED" -eq 1 ]; then
+  if "$TERRAFORM" ${NAPPLY_TREE:+-chdir="$NAPPLY_TREE"} plan -input=false -lock=false ${SA_PLAN_ARGS[@]+"${SA_PLAN_ARGS[@]}"} -out="$NPLAN_TMP.bin" >/dev/null 2>"$NPLAN_TMP.err" \
+     && "$TERRAFORM" ${NAPPLY_TREE:+-chdir="$NAPPLY_TREE"} show -json "$NPLAN_TMP.bin" > "$NPLAN_TMP.json" 2>>"$NPLAN_TMP.err"; then
+    NPLAN_RENDERED=1
+  fi
+elif "$TERRAFORM" ${NAPPLY_TREE:+-chdir="$NAPPLY_TREE"} plan -input=false -lock=false -out="$NPLAN_TMP.bin" >/dev/null 2>"$NPLAN_TMP.err" \
    && "$TERRAFORM" ${NAPPLY_TREE:+-chdir="$NAPPLY_TREE"} show -json "$NPLAN_TMP.bin" > "$NPLAN_TMP.json" 2>>"$NPLAN_TMP.err"; then
+  NPLAN_RENDERED=1
+fi
+if [ "$NPLAN_RENDERED" -eq 1 ]; then
   if [ -f "$NAPPLY_GATE" ]; then
     NPLAN_OUT="$(python "$NAPPLY_GATE" --plan-json "$NPLAN_TMP.json" 2>&1)"; NPLAN_RC=$?
   else
@@ -134,8 +187,13 @@ if "$TERRAFORM" ${NAPPLY_TREE:+-chdir="$NAPPLY_TREE"} plan -input=false -lock=fa
     NPLAN_BLOCKED=1
   fi
 else
-  echo "safe-apply: WARN -- the naming plan limb could NOT render a plan for $NAPPLY_TREE, so it checked NOTHING." >&2
-  echo "            This is a GAP, not a pass; the pre-plan stage above still ran on the tree's literals." >&2
+  if [ "$SA_SCOPED" -eq 1 ] && [ "$NAPPLY_ENFORCE" -eq 1 ]; then
+    NPLAN_BLOCKED=1; NPLAN_RC="unrenderable"
+    echo "safe-apply: ERROR -- the naming plan limb could NOT render the plan this targeted or planfile apply runs for $NAPPLY_TREE; ENFORCE refuses (a plan that cannot render grades nothing)." >&2
+  else
+    echo "safe-apply: WARN -- the naming plan limb could NOT render a plan for $NAPPLY_TREE, so it checked NOTHING." >&2
+    echo "            This is a GAP, not a pass; the pre-plan stage above still ran on the tree's literals." >&2
+  fi
   if [ -s "$NPLAN_TMP.err" ]; then
     sed -e 's/^/  [naming-plan-gate] terraform: /' "$NPLAN_TMP.err" >&2
   fi

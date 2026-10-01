@@ -422,6 +422,28 @@
     "spec_asserts": "TO MS-a-3 AMENDMENT 2: commit in the nested repo naming OA-t-2/OA-t-3; the issuer drains the commit.",
     "world_is": "The nested commit exists locally on its branch; the issuer drains it from the nested branch (as with 47cfd4b). No parent gitlink commit was possible. verify-boundary.ps1 run from the worker shell prints 'BOUNDARY: CANNOT-RUN-AS-ACCOUNT deny probe could not start as Opal_MSP: Access is denied', exit 5 (the measured shell restriction; replaces the false BREACH).",
     "notes": "The real AC2 run remains Andrew's after the drain."
+  },
+  {
+    "project": "NFRA_MCPMSP",
+    "fabric": "site-z",
+    "surfaced_at": "2026-09-30T16:10Z",
+    "id": "NFRA_MCPMSP-Z-W7-S1",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPMSP~7",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "MS-s-1: safe-apply's two OTHER plan-reading gates (tag-authz and tombstone) still re-plan the whole tree with none of the caller's args, so for a targeted or planfile apply they grade a plan the apply does not run; the TO scopes only the naming stage.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~MS",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".tools/safe-apply.sh tag-authz stage and tombstone stage (after the naming plan stage): each runs `plan -input=false -lock=false -out=...` then `show -json` with no -target/-var/planfile; unchanged by this cell per 'Keep every other gate as it is'.",
+        "test_safe_apply_targeted.sh isolates them by fixture (tree has no default_tags; sandbox has no tombstone register), so its 5 of 5 PASS says nothing about them."
+      ]
+    },
+    "spec_asserts": "TO MS-s-1 section 1: keep every other gate as it is; a targeted or planfile apply is graded on the plan the apply runs.",
+    "world_is": "Only the naming plan stage renders the apply's own plan now. For a planfile apply the tag-authz and tombstone gates (when they run) plan the live tree afresh, and for a targeted apply they plan the whole tree; each can over-block a scoped apply on an unrelated resource or grade a different plan than the one applied. Not widened here.",
+    "notes": "Candidate follow-on cell: factor one scoped-plan renderer (SA_PLAN_ARGS / SA_PLANFILE in safe-apply.sh) and feed it to all three plan-reading stages."
   }
 ]
 ```
