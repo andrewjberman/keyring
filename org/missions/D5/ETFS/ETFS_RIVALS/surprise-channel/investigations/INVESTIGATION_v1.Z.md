@@ -2322,6 +2322,71 @@
       ]
     },
     "notes": "Hazard: the drain's repo-wide hygiene (pytest of the package) reads red on merge. Remedy (issuer, a build cell outside d-5's paths): those 19 tests pin their own min_resolved_fraction via the monkeypatch seam test_f3_identity_floors.py already uses, so they stop depending on the shipped value. Disarm: that cell's drain."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W4-S9",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~4",
+    "surfaced_at": "2026-10-01T19:00Z",
+    "one_line": "The silver-triggered G1 run of a 60-report-date batch exceeds the canonical-shape Lambda's 900 s ceiling (about 12 s per date and growing with history): chunks 2 and 3 of the GQGU import timed out before their G1 marker.",
+    "spec_asserts": "RIV-d-5 step 2: 'silver and G1 by marker' for the 305 GQGU days; the five Lambdas' timeouts (generated.auto.tfvars.json: canonical-shape 900 s) hold a batch of the importer's size.",
+    "world_is": "rivalfunds-build-canonical-shape-lambda, marker-driven daily batches of 60 report dates (d5-gqgu-00..03, fetch_holdings markers at date=2026-10-01): batch 00 ran 696.7 s and batch 01 858.1 s (both whole, G1 + G2 + G5 + G6 + publish markers written); batch 02's request 836e425a ran 900000 ms Status: timeout at 18:31:57Z with the G1 marker already written at 18:31:30Z, and its async retry (same RequestId, 18:32:56Z) finished the G2/G5/G6 stages in 124 s; batch 03's request 1984c6f7 ran 900000 ms Status: timeout at 18:47:02Z with NO G1 marker, and a same-RequestId retry started 18:48:04Z. The Lambda's G1 stage costs about 9.5, 11.6 and 14+ s per report date (the per-date alias history read grows with the G1 history), so a 60-date batch crosses 900 s at about the third quarter of the history. The act continues under the issuer's ruling (coordinator message at 18:55Z): silver first for every GQGU date, then explicit synchronous replay windows of about 30 dates, then G5 and G6, then publish; the auto-chained runs that time out are not the act's record.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CloudWatch /aws/lambda/rivalfunds-build-canonical-shape-lambda REPORT lines at 18:01:52Z (696656 ms), 18:16:32Z (858125 ms), 18:31:57Z (900000 ms timeout, 836e425a), 18:47:02Z (900000 ms timeout, 1984c6f7)",
+        "s3://opal-data-etfs/rivalfunds/etfs/state/{build_silver,build_canonical_shape,build_coverage,build_trade_schedule}/date=2026-10-01/d5-gqgu-0{0,1,2,3}.json (LastModified read at 18:47Z)",
+        "data/etfs/scripts/rivalfunds/gold_canonical_shape.py handler_entry (the marker is written only when the batch is whole); org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~4/evidence/ (this worktree)"
+      ]
+    },
+    "notes": "Hazard: any marker-driven batch of more than about 45 report dates (a backfill, a long outage's catch-up) times out its G1 stage; the retry recovers only because written objects persist. Remedy (round-5 code, not this act): bound a marker-driven G1 batch by the Lambda's remaining budget the way the sweep's _budget does, or raise the daily cadence of the history read. disarm_owner 2.0.0_SA_COO~RV: the round-5 remediation cell, as ruled."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W4-S10",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~4",
+    "surfaced_at": "2026-10-01T20:20Z",
+    "one_line": "GQGU reads not-updated on the served 2026-10-01 page by report_date_freshness (latest report 2026-09-28, expected 2026-09-30, lag 2), not by identity_coverage, so its block carries no issuer badge and d-5.AC1's first clause FAILs; both halves' expected outcome named only the identity branches.",
+    "spec_asserts": "NEVER_WIDEN_HALF_COO_D5.md EXPECTED OUTCOME and the CTO half's BOTH BRANCHES: GQGU reads updated (Branch A, identity_coverage at or above 0.23) or not-updated by identity_coverage (Branch B); the page shows GQGU with issuer data.",
+    "world_is": "Page date=2026-10-01 (marker d5-publish-r4, manifest funds_updated 12 of 13): PFOE/GQGU status not-updated, check report_date_freshness FAIL 'latest report 2026-09-28 vs expected 2026-09-30: lag 2 trading day(s) against the allowance of 0 trading day(s) for source issuer'; identity_coverage PASS (38 of 38 identified; 9 resolved by the alias; resolved 0.2368 >= 0.23). The GQGU archive ends 2026-09-28 (the BQL pull is withdrawn) and the daily route fetches T-1 only, so GQGU's 2026-09-29 and 2026-09-30 reports are not landed; the G1 for 305 dates carries 10798 GQGU rows, all source_channel issuer-site:gqgu (evidence/gqgu_g1_readback.txt). The failed view renders no holdings table and no data-source badge, so d-5.AC1 clause 1 reads FAIL (evidence/d-5.AC1.output.txt). The act did not fetch the two days: an ad-hoc fetch-holdings invocation against the issuer's site is not a step of the cell or a key of either half. Neighbouring GQGU defects observed: the page shows no G2 coverage rows for GQGU (calendar 'unavailable').",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3://opal-data-etfs/rivalfunds/etfs/platinum/page/date=2026-10-01/manifest.json (GQGU entry) and index.html (GQGU block)",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~4/evidence/d-5.AC1.output.txt and gqgu_g1_readback.txt (this worktree)"
+      ]
+    },
+    "notes": "Options for the issuer (none taken by the worker): (a) authorize a fetch-holdings backfill of GQGU 2026-09-29..2026-09-30 through the deployed Lambda (key 5's route, same egress, new gqgu-* objects only) then re-publish the page; (b) accept the next trading day's 07:00 fetch as the acceptance read, which lands T-1 only and leaves 2026-09-29 and 2026-09-30 as calendar gaps. disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W4-S11",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~4",
+    "surfaced_at": "2026-10-01T20:21Z",
+    "one_line": "d-5.AC1's second clause reads min_resolved_fraction at the TOP LEVEL of guardrails_config.json, but the file keeps it under thresholds.min_resolved_fraction.value, so the clause reads {} and FAILs whatever floors are committed.",
+    "spec_asserts": "d-5.AC1 clause 2: the committed config carries the recorded per-source floors (check at deliverables/2.0.0_SA_COO~RV/round4/checks/d-5.AC1.py: cfg.get('min_resolved_fraction')).",
+    "world_is": "data/etfs/scripts/rivalfunds/guardrails_config.json at b366ed9d7e has top-level keys ['_comment', 'thresholds']; cfg.get('min_resolved_fraction') is None and the check prints 'guardrails_config carries the per-source floors the act recorded ({})'. The committed values are thresholds.min_resolved_fraction.value = {issuer 0.23, bloomberg 0.99, home_producer 0.0, home_funds {IDVZ 0.0, PFOE 0.0}}, equal to d5_live.json floors, and the deployed packages carry them (evidence/lambda_after_apply_r4.txt). Same class as row Z-W4-S3 (a check's construction grades a clause the data cannot satisfy); the check is outside d-5's paths and unedited.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round4/checks/d-5.AC1.py@e0729dbad3 (mrf = cfg.get('min_resolved_fraction'))",
+        "data/etfs/scripts/rivalfunds/guardrails_config.json@b366ed9d7e"
+      ]
+    },
+    "notes": "Remedy (issuer): read cfg['thresholds']['min_resolved_fraction'] (or guardrails.load_config()). disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV."
   }
 ]
 ```
