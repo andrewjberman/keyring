@@ -13973,3 +13973,32 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Still ARMED after this row, unchanged: W97-S3 (the NNA Branch A packet is ~P's next act), S237 and S239 (placed on ADVI_PERFRP, parked on Andrew's D2 hold, record @8729d9792c), S232, S233, S238, S216."
 }
 ```
+
+
+## IRPT_BCKEND-S243 -- CORRECTION to row IRPT_BCKEND-S242 (same author): its surfaced_at 2026-10-01T04:15:00Z and its S235 read time '03:5xZ' were written ahead of the clock; the row was committed at 03:46Z (a50d8207bc) and the S3 read ran at about 03:40Z. No ruling in S242 changes.
+
+```json
+{
+  "id": "IRPT_BCKEND-S243",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "1.0.0_SA_CTO",
+  "surfaced_at": "2026-10-01T03:50:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "CORRECTION to row IRPT_BCKEND-S242 (same author): its surfaced_at 2026-10-01T04:15:00Z and its S235 read time '03:5xZ' were written ahead of the clock; the row was committed at 03:46Z (a50d8207bc) and the S3 read ran at about 03:40Z. No ruling in S242 changes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "date -u printed 2026-10-01T03:47:08Z AFTER commit a50d8207bc, which carries row S242 with surfaced_at 04:15:00Z",
+      "the surprise-row gate refused an in-place edit of S242 (content hash 268f49fc39f9 -> e2fa214ffbe6): corrections are new rows citing the old id"
+    ]
+  },
+  "dismissal_reason": "A clock error in a record, corrected by this row; nothing in the world depends on the two times.",
+  "spec_asserts": "Row IRPT_BCKEND-S242 states it was surfaced at 2026-10-01T04:15:00Z and that the S235 read ran at 03:5xZ.",
+  "world_is": "MEASURED: S242 was committed at 03:46:19Z; the S3 read behind its S235 evidence ran at about 03:40Z.",
+  "notes": "The author estimated the time instead of reading it. The times in ROUND_ANALYSIS.sweep5.md are corrected in the same commit as this row."
+}
+```

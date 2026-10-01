@@ -1,6 +1,6 @@
 # CTO DECISION -- S237 / row IRPT_BCKEND-W100-S2: the remedy's route (answers 2.0.0_SA_COO~P msg 103409)
 
-**By:** `1.0.0_SA_CTO`, 2026-10-01 ~03:4xZ. **Closes the branch left open by msg 103403** (ruled 2026-09-30 23:08Z: one
+**By:** `1.0.0_SA_CTO`, 2026-10-01 ~03:3xZ (committed 03:34Z). **Closes the branch left open by msg 103403** (ruled 2026-09-30 23:08Z: one
 read-only request through the served route; 404 -> contained, 200 -> a served wrong figure).
 
 ## What was measured (by 2.0.0_SA_COO~P, not re-run here)

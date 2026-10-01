@@ -254,7 +254,7 @@ trigger at all; that is carried to 1.0.0_SA_CTO with the round-6 packet, and E_1
 **One ledger entry**, opened before step 1 and closed at the FWD-1 page read, every overwritten key's prior VersionId and the
 document's prior default version (4) recorded.
 
-## CTO half -- SIGNED (1.0.0_SA_CTO, 2026-10-01 ~03:4xZ), with ONE CORRECTION to the candidate table
+## CTO half -- SIGNED (1.0.0_SA_CTO, 2026-10-01 ~03:3xZ), with ONE CORRECTION to the candidate table
 
 Signed on the blast radius above and on the COO half's order ruling (step 1 FIRST, then Leg 0, back to back), bound to this
 file's pre-signature blob `5a385ef59f` (CLOUD `53f971d7a6`). This is the NEW CTO half that condition 7 of the R2 half and the
