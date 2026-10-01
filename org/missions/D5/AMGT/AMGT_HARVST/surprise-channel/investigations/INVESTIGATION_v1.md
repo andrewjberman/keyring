@@ -4495,6 +4495,50 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
             ]
         },
         "notes": "The batch is unmeasured for 9 names. The window to 07:45Z is open and the cooldown has expired at 23:25Z, but the act's table is one invocation per name and the worker did not re-run. Re-run, re-cut or accept is the issuer's call."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S48",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-01T00:15Z",
+      "one_line": "ISSUER DEFECT: the ad-2 checks dumped the plan with sort_keys=True, so the act ran names in alphabetical key order (BA first) instead of the collector's universe order the order named; BA's article 502 then set a 15-min cooldown that skipped the other 9 with 0 requests.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "HVST-ad-2 section 1: the 10 names run 'in order' -- the collector's universe order, ASML first.",
+      "world_is": "round31/checks/ad2_common.py dump() used json.dump(..., sort_keys=True); ~88/ad2_plan.json therefore listed keys alphabetically (BA, security-...); the worker ran the plan's key order. Fixed @ed40d75777 (no sort_keys); A2's order is the order's own explicit list (CTO @288a4b254c: read the run order from the plan's own list, never a re-sort).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "round31/checks/ad2_common.py dump() before @ed40d75777",
+          "~88/ad2_runs.json invocations order (BA first) on the merged record @87661b48c6"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "The issuer's own row per the CTO re-sign @288a4b254c. Pairs with the worker's Z-W88-S1. Disarmed by @ed40d75777 and A2's explicit order."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S49",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-01T00:15Z",
+      "one_line": "The ad-2 worker (~88) also wrote its 49 deliverables and its two channel rows into the SHARED tree (untracked / uncommitted), which refused the drain ('local changes would be overwritten'); every file was byte-identical to its branch and the rows equal, so the issuer removed the duplicates and the drain landed @87661b48c6.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "The worker prompt: work, run and commit ONLY in the worktree.",
+      "world_is": "49 untracked files under deliverables/0.9.0_WK_AMGT_HARVST~88/ plus INVESTIGATION_v1.md +47 lines (rows Z-W88-S1/S2) in the shared tree; cmp per file vs wk-AMGT_HARVST-88 = 0 differing; the two rows equal by value.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "scratchpad m88d.out: git merge refused (local changes / untracked would be overwritten)",
+          "per-file cmp against git show wk-AMGT_HARVST-88:<path>: 49 of 49 identical"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Likely the checks' WK path resolves from ROOT = git toplevel of the CWD; a worker invoking a check from the shared tree path writes there. The A2 dispatch names the worktree as the ONLY write location and runs every check from the worktree root."
     }
   ]
 ```
