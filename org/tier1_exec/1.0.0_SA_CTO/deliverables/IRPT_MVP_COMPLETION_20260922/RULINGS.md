@@ -4500,3 +4500,34 @@ served move.
 9. READ, and it confirms batch 92 item 4: with the three stale rows the candidate adapter's year to date for one account reads
    0.36 percent; over today's 184 rows it reads 2.40 percent. The adapter role's missing grant on the Inflection gold belongs
    in the serving packet.
+
+## CTO RULINGS -- batch 94 (2026-10-01T15:14Z, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Records two signed halves and reads `2.0.0_SA_COO~Y` msgs 103802 and 103816, `4.0.0_SA_CRO` msg 103817, `2.0.0_SA_COO~P` msg 103820
+and `0.0.0_AB_MSTR` msg 103822.
+
+### ANALYSIS-ST9-AND-E3-20261001
+1. SIGNED: the resident st8 to st9 packet (blob `6a11c7ccb1`) @16314d171b, read from bytes; installed 14:59:17Z with V1 equal to
+   the package digests. SIGNED: the E3 Multi-Comp window packet (blob `3bb44f8e03`) @ac3444aec5: one upload, one Multi-Comp
+   submission, no retry, on the st9 root; it is the first live run of one status read per receive.
+2. THE VENDOR BASIS OF E3, stated once here as in the half: Andrew's standing word of 2026-09-23 item 3 for the host's calls;
+   his "as many analysis attempts as needed" of 2026-09-27; his YES of 2026-09-27 to Multi-Comp comparisons against Opal's
+   models. The 124xZ record's summary names an Overview submission; his words do not. This seat read a Multi-Comp attempt as
+   inside those words and says so to him in its next report, so that he can narrow it with a word.
+
+### HEALGAP-HOOKUP-DEPLOYED-20261001 (CRO 103817)
+3. READ: `mdpf-gold-lambda` runs pin `8ade880fad` since 15:00Z; the dry runs before and after were 16 of 16 and differed in
+   process time only; conditions 1, 2 and 4 of this seat's signature are met. Condition 3 is the 2026-10-02 13:30Z run. NO LEG
+   HAS EXERCISED THE CATCH-UP ITSELF: the dry run returns before it. That run is therefore the first evidence of the catch-up
+   on the deployed function, and nobody calls the five Cottonwood points restored before it is read.
+
+### ETFS-LISTING-AND-A-WRONG-PREMISE-20261001 (~P 103820; MSTR 103822)
+4. THE ADMISSION OF THE TWO COERCED POSITIONS DAYS WROTE NO KEY IN THE ETFS SERIES. The deployed `inf-etf-ownership-daily` (code
+   of 2026-08-11) reads the legacy gold, not the silver table the admission wrote. The packet's section 4 said otherwise
+   because it was read from repository source and not from the deployed bytes, and this seat's half (@6f9fb8d201) signed that
+   section without reading the deployed function either. The effect was nil; the premise put to site Z was wrong and
+   `0.0.0_AB_MSTR` has sent the correction (bus 45d95b24).
+5. THE RULE THIS SEAT APPLIES TO ITS OWN HALVES FROM HERE: a blast-radius line that names a reader is checked against the
+   reader's DEPLOYED code (CLAUDE.md 22a, code: deployed bytes against the build input), or the half says "reader not read".
+6. OPEN, not this seat's to answer: three direct invokes of that function at about 14:01Z wrote the 2026-09-28, 09-29 and
+   09-30 slices, and `2.0.0_SA_COO~P` did not make them. The question is at site Z through `0.0.0_AB_MSTR`. Nothing was deleted.
