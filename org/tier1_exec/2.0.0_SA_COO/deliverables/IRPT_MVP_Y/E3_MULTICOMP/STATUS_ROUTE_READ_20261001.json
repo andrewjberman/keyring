@@ -1,0 +1,109 @@
+{
+ "at": "2026-10-01T15:39:55.669312Z",
+ "principal": "svc-irpt-analysis@opalinvest.com",
+ "tenant": "cottonwood",
+ "request_id": "REQ-a1d9abc0bc037ea3d9e4a7ed",
+ "rows": [
+  {
+   "probe": "status-job",
+   "http": 200,
+   "ok": null,
+   "operation": "status-job",
+   "state": "UNAVAILABLE",
+   "reason": "ANALYSIS_STATUS_DATE_BASIS_UNAVAILABLE",
+   "business_date": null,
+   "actions": [],
+   "top_keys": [
+    "contract_version",
+    "data",
+    "firm_id",
+    "operation",
+    "unprojected_grant"
+   ],
+   "data_keys": [
+    "actions",
+    "operation",
+    "public_reason_code",
+    "source_dates",
+    "state"
+   ],
+   "document_keys_present": []
+  },
+  {
+   "probe": "status-job-with-dates",
+   "http": 200,
+   "ok": null,
+   "operation": "status-job",
+   "state": "READY",
+   "reason": "ANALYSIS_READY",
+   "business_date": null,
+   "actions": [],
+   "top_keys": [
+    "contract_version",
+    "data",
+    "firm_id",
+    "operation",
+    "unprojected_grant"
+   ],
+   "data_keys": [
+    "actions",
+    "operation",
+    "public_reason_code",
+    "source_dates",
+    "state"
+   ],
+   "document_keys_present": []
+  },
+  {
+   "probe": "request-read",
+   "http": 200,
+   "ok": null,
+   "operation": "analysis-request-read",
+   "state": null,
+   "reason": null,
+   "business_date": null,
+   "actions": [],
+   "top_keys": [
+    "contract_version",
+    "data",
+    "firm_id",
+    "operation",
+    "unprojected_grant"
+   ],
+   "data_keys": [
+    "accepted_at",
+    "identity"
+   ],
+   "document_keys_present": []
+  },
+  {
+   "probe": "sections-by-request",
+   "http": 200,
+   "ok": null,
+   "operation": "analysis-report",
+   "state": null,
+   "reason": null,
+   "business_date": null,
+   "actions": [],
+   "top_keys": [
+    "contract_version",
+    "data",
+    "firm_id",
+    "operation",
+    "unprojected_grant"
+   ],
+   "data_keys": [
+    "extraction_coverage",
+    "extraction_validation",
+    "request_ref",
+    "sections",
+    "undated_sections"
+   ],
+   "count_sections": 100,
+   "document_keys_present": [
+    "sections"
+   ]
+  }
+ ],
+ "verdict": "SERVED:status-job-with-dates,sections-by-request"
+}
