@@ -84,7 +84,17 @@ while IFS= read -r line; do
     # The remote URL. Prefer the submodule's own origin (what a push there
     # actually targets); fall back to .gitmodules.
     # -----------------------------------------------------------------------
-    URL="$(git -C "$ROOT/$SMPATH" config --get remote.origin.url 2>/dev/null || true)"
+    # Only ask the submodule for its origin when it IS its own repository. An
+    # uninitialized submodule directory resolves upward to the SUPERPROJECT, whose
+    # origin would test the gitlink against the wrong remote (row MSTRZ-GL-1).
+    URL=""
+    SM_TOP="$(git -C "$ROOT/$SMPATH" rev-parse --show-toplevel 2>/dev/null || true)"
+    SUPER_TOP="$(git -C "$ROOT" rev-parse --show-toplevel 2>/dev/null || true)"
+    if [ -n "$SM_TOP" ] && [ "$SM_TOP" != "$SUPER_TOP" ]; then
+        URL="$(git -C "$ROOT/$SMPATH" config --get remote.origin.url 2>/dev/null || true)"
+    else
+        echo "SKIP: gitlink-publication-check: '$SMPATH' is not an initialized repository here; reading its URL from .gitmodules"
+    fi
     if [ -z "$URL" ]; then
         URL="$(git config -f "$ROOT/.gitmodules" --get "submodule.$SMPATH.url" 2>/dev/null || true)"
     fi
