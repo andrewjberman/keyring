@@ -5,7 +5,7 @@
   "project": "AMGT_HARVST",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.12",
+  "prd_version": "v0.13",
   "step": 4,
   "brief_ref": "org/missions/D5/AMGT/AMGT_HARVST/brief/BRIEF_AMGT_PUBLICATIONS_BRONZE_SILVER_GOLD_20260922.md@5b90a0b839",
   "endpoint_outcomes": [
@@ -18,13 +18,19 @@
     "FWD-7",
     "FWD-8",
     "FWD-9",
-    "FWD-10"
+    "FWD-10",
+    "FWD-11",
+    "FWD-12",
+    "FWD-13",
+    "FWD-14",
+    "FWD-15"
   ],
   "status": "RATIFIED"
 }
 ```
 
-**author** `1.0.0_SA_CTO~Z` (L2 endpoint and L4 PRD). **driver** `2.0.0_SA_COO~Y` (L5, L6, to completion).
+**author** `1.0.0_SA_CTO~Z` (L2 endpoint and L4 PRD). **driver** `2.0.0_SA_COO~H` (L5, L6, to completion;
+seated by the CTO placement of 2026-10-01, which follows `2.0.0_SA_COO~Y`).
 
 | | |
 |---|---|
@@ -72,6 +78,33 @@ This version:
 - binds `C-SILVER-PARQUET` and `C-DEDUPE-BY-KEY` explicitly (R4).
 
 The matching `C-ONE-STORE` amendment lands in `AMGT_RESAPP` v0.23, in the same turn.
+
+### v0.13 CHANGE NOTE -- 2026-10-01 ~04:3xZ, `1.0.0_SA_CTO~Z` (the Friday-demo addendum)
+
+**Inputs:**
+- the CRO~Z brief `docs/briefs/amgt-security-analysis-friday-demo-brief-20261001.md` @`1391c2f70a`, Parts IV.4, IV.5
+  and the VII.2 COO~H row;
+- the CTO placement `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20261001_043xZ_AMGT_FRIDAY_DEMO_RESTRUCTURE.md`
+  @`e18d3a4e6a`, rulings R7 and R8;
+- Andrew's words, verbatim in the order's addendum,
+  `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/ANDREW_DIRECT_20261001_034xZ_AMGT_SECURITY_ANALYSIS_DEMO_FRIDAY.md`:
+  - 03:4xZ: *"I think we need to have the process for backfill on these companies be a local, sitez Box process"*;
+    *"The metric for completion here is deep backfill, ideally as much as we can possibly get, would love to see 50+
+    articles per security going back to January, ideally 100+."*
+  - ~04:0x-04:1xZ: *"no licensed factiva bullshit, no"* / *"your recomendation is to figure out HARVST at all costs"* /
+    *"Whenit comes to COO~H, they must do absolutely everything in their power to fgure out HARVST, that project is not
+    over until we beat captchas and have robust auth solution"* / *"Note and persist that we do not accept any defeat
+    to that end."*
+
+**This version:**
+- **ENDPOINT:** appends FWD-11 to FWD-15. FWD-11 is the project's CLOSING CONDITION. FWD-12 is a precondition: no
+  backfill writes until it is DONE.
+- **CONTRACTS:** adds `C-HV-NO-DEFEAT` and `C-HV-ONE-IDENTITY`, and amends `C-HV-TRUST-TOKEN`: a `bot_check` routes the
+  leg to the challenge path instead of only stopping it.
+- **Sections 2-5:** the boundary takes in the site Z backfill driver, the constraints carry R7 (egress) and the
+  no-licensed-route rule, the manifest adds H11-H14, and section 5 names the residential arm as Andrew's act.
+- **Not changed:** FWD-10's end state (collection in Opal's cloud). The backfill is a site Z run (Andrew 03:4xZ);
+  FWD-10 already permits the site Z box "until the local job matures".
 
 ---
 
@@ -202,6 +235,101 @@ act a seat can take on demand; none is a wait.
                     don't mind having a dedicated small or nano ec2"); ~17:4xZ
                     ("Maybe its a local job until it matures in process");
                     confirmed ~21:0xZ ("2yes")
+
+  ===== v0.13, 2026-10-01 -- FWD-11..FWD-15 appended (the Friday-demo addendum; Andrew 03:4xZ and ~04:0x-04:1xZ) =====
+
+  FWD-11 THE CLOSING CONDITION -- collection beats the publishers' bot
+         checks and runs on a robust auth solution, on all five
+         publishers, and this project is not over until it does
+         DONE WHEN  EXERCISED -- one unattended run on the site Z box, with no
+                    human hand at any point, meets each publisher's live
+                    challenge (DataDome on wsj and barrons, bbg's
+                    press-and-hold, FT's Security Verification, sa's checks)
+                    and passes it, then collects the validation security's
+                    articles. In the same run, a session made deliberately
+                    stale is renewed without Andrew and written back to its
+                    store. The run record names, per publisher, the challenge
+                    met, the path that passed it, and the session source
+         ACCEPT     No publisher's articles depend on Andrew solving a
+                    challenge or signing in by hand, and a lapsed session
+                    renews itself.
+         RULE       Andrew: "that project is not over until we beat captchas
+                    and have robust auth solution"; "we do not accept any
+                    defeat to that end". BLOCKED is never this project's final
+                    state, and the project never closes, parks or
+                    HELD-AT-STOPs on a refusal. Licensed bulk access (Factiva
+                    or any other) is NOT a route ("no licensed factiva
+                    bullshit, no").
+         SOURCE     Andrew-direct ~2026-10-01T04:0x-04:1xZ (the CRO~Z order's
+                    addendum); brief IV.5, VII.2 COO~H items 2 and 4
+
+  FWD-12 Every stored Seeking Alpha article is the article its listing
+         named (PRECONDITION: no backfill writes until this is DONE)
+         DONE WHEN  EXERCISED -- (a) every sa row since 2026-01-01 whose stored
+                    article is not the listed item is quarantined and counted,
+                    with the count printed against the rows checked; (b) the
+                    sa path no longer requests /api/v3/articles/{news_id} and
+                    takes the body from the listing; (c) the listing page cap
+                    is raised past 25; (d) a re-check over every stored sa row
+                    reads 0 mismatches
+         ACCEPT     The sa history shows the articles the publisher listed for
+                    the company, never an unrelated 2023 article under the
+                    listed title.
+         SOURCE     brief IV.4 (32 of 49 checked sa rows stored an unrelated
+                    article; publishers.py:540); VII.2 COO~H item 1
+
+  FWD-13 Each publisher is reached by ONE browser identity: the session is
+         used by the browser that earned it
+         DONE WHEN  EXERCISED -- for each of the five publishers, one run shows
+                    (a) one persistent per-publisher browser profile on the
+                    site Z box is the only session source; (b) every request
+                    that carries that session presents the earning browser's
+                    TLS fingerprint and User-Agent, or runs inside that
+                    browser's own tab; (c) no client writes cookies back over
+                    the browser session (a before/after hash of the stored
+                    session reads unchanged except by the browser itself)
+         ACCEPT     The collector never presents a session cookie from a
+                    client the publisher did not issue it to.
+         SOURCE     brief IV.4 (the chrome146 TLS vs Chrome 154 UA split; ft's
+                    hard-coded Chrome/126; auth.py:24-41 cookie write-back),
+                    IV.5 (cookie bound to fingerprint); Andrew 03:4xZ ("changing
+                    headers from the crawl session to the rest api session")
+
+  FWD-14 Every security in the collector universe has a deep news history
+         since 1 January 2026: 50+ articles, ideally 100+ (Andrew's number)
+         DONE WHEN  EXERCISED -- a census over the stored mention table prints,
+                    for every security in the 89-name collector universe and
+                    for each of the five publishers, the count of distinct
+                    articles published since 2026-01-01 (denominator: the
+                    universe's size); DONE when every security reads 50 or
+                    more, with the count at 100 or more reported beside it
+         ACCEPT     Opening any covered name shows a news history back to
+                    January deep enough to read, from all five publishers.
+         RULE       Andrew's number is the bar and is not re-based by any
+                    seat. A security a census reads below 50 stays OPEN with
+                    its per-publisher counts and the listing totals each
+                    publisher showed, so the shortfall is attributable.
+         SOURCE     Andrew-direct 03:4xZ ("would love to see 50+ articles per
+                    security going back to January, ideally 100+"); brief IV.4
+                    (4 of 89 names have any article; 0 at 50+)
+
+  FWD-15 A site Z backfill driver collects the whole universe and survives
+         interruption
+         DONE WHEN  EXERCISED -- a driver run over all 89 names on the site Z
+                    box (a) prints each publisher's daily request budget before
+                    it starts; (b) is stopped mid-run and resumed from its
+                    checkpoint with no article fetched twice; (c) uploads what
+                    it collects to the store in the same run; (d) runs sa
+                    first; (e) for bbg and wsj, discovers articles in date
+                    order back to 2026-01-01 rather than by search relevance;
+                    and (f) honours the existing STOP set
+         ACCEPT     The backfill is one local process that can be left
+                    running, restarted after a stop, and read from the store
+                    as it goes.
+         SOURCE     Andrew-direct 03:4xZ ("the process for backfill on these
+                    companies be a local, sitez Box process"); brief IV.4 (no
+                    driver exists; scheduled task Disabled; uploads off),
+                    VII.2 COO~H items 3, 5 and 6
 ```
 
 ---
@@ -831,6 +959,25 @@ applied here.
   - Expiry still reads as above: an auth failure that persists after backoff whose kept body matches no bot-check signature.
   - **(v0.11, CVO~Z msg 27289)** Every refusal keeps its body, bounded as ft's F1 is. A refusal with no kept body is `unclassified`,
     and `unclassified` is never expiry. A missing body cannot pass the signature test vacuously.
+  - **(v0.13, FWD-11) A `bot_check` routes the leg to the CHALLENGE PATH; it no longer only stops the leg.** The amended rule:
+    - The leg hands the challenge to the challenge path (`lib/opal_data_harvest/verification.py`, extended to every publisher)
+      inside the SAME browser identity that met it (`C-HV-ONE-IDENTITY`).
+    - A blind retry against a check stays forbidden. The challenge path is the only retry.
+    - If the challenge path does not pass, the leg stops and the run record writes `bot_check` + `challenge_failed` with the
+      signature. That is a result to work on, never a final state (`C-HV-NO-DEFEAT`).
+    - Solving a challenge is not a sign-in. The trust-token order above is unchanged.
+
+**`C-HV-ONE-IDENTITY` (v0.13, FWD-13).**
+- Each publisher has ONE persistent browser profile on the site Z box, and it is the only source of that publisher's session.
+- A request carrying the session either runs inside that browser's tab or presents that browser's TLS fingerprint AND
+  User-Agent. No hard-coded User-Agent string is permitted on any publisher path.
+- No client writes cookies back over the browser's stored session. Only the browser updates its own session.
+
+**`C-HV-NO-DEFEAT` (v0.13, FWD-11; Andrew-direct ~2026-10-01T04:0x-04:1xZ).**
+- AMGT_HARVST is not closed, parked, abandoned or reported BLOCKED as a final state until FWD-11 is DONE.
+- A round whose collection is refused carries the refusal forward as the next round's input, never as the project's
+  outcome.
+- Licensed bulk access (Factiva or any other) is not a route.
 
 ---
 
@@ -841,7 +988,9 @@ applied here.
 - bronze, silver and gold for them;
 - the chatter projection;
 - the timeline graph and its dissection on the security page;
-- the desktop outbox upload.
+- the desktop outbox upload;
+- (v0.13) the challenge path for all five publishers, one browser identity per publisher, and the site Z backfill
+  driver (a run the operator starts; not a schedule).
 
 **Out:**
 - non-English press for HK and JP names (the brief's call 5: UNRESOLVED-BY-DESIGN in this version);
@@ -867,6 +1016,12 @@ applied here.
 - A weight or threshold is a working default, stated in the deliverable, never invented as a constant elsewhere.
 - Bloomberg's per-symbol `news()` call (`bloomberg_rest_fetch.py:119-123`) is tried once in the validation run, inside
   the cap. It is adopted or recorded UNRESOLVED with its reason.
+- **(v0.13) FWD-12 comes first.** No backfill (H10, H14) writes to the store until FWD-12 is DONE, because the
+  wrong-object rows already feed `chatter_daily`.
+- **(v0.13, placement R7) Egress.** sa keeps the route it runs on today. No new residential (Bright Data) arm is opened
+  for bbg, wsj, barrons or ft without Andrew's per-use word (section 5). Every other FWD-11/FWD-13 act proceeds without it.
+- **(v0.13) No licensed route.** No cell proposes or builds licensed bulk access (Factiva or any other); Andrew ruled it
+  out ~04:0xZ.
 
 ## 4. SURFACE MANIFEST (step 4 -> step 5) -- one row per ENGINE
 
@@ -882,6 +1037,10 @@ applied here.
 | H8 | timeline graph and dissection | the portal security page plus `scoped_amgt.py`; design spec first | H5, H6 | FWD-5, FWD-6 |
 | H9 | desktop outbox upload into the new grammar | `lib/opal_data_harvest` uploader | H1, H2 | FWD-8 |
 | H10 | the 2026 backfill run: floor 2026-01-01 plus watermark, page counts printed first, `retrieval_mode=backfill` | the harvester, H1-H6 end to end | H1-H6 | FWD-9 |
+| H11 | sa wrong-object repair: quarantine, listing body, page cap | `lib/opal_data_harvest/publishers.py` (`:540`), `sa_rest_fetch.py` | H1 | FWD-12 |
+| H12 | one browser identity per publisher: persistent profile, in-tab or matched TLS+UA transport, no cookie write-back | `lib/opal_data_harvest/auth.py`, the `*_rest_fetch.py` clients, the harvest sessions | H1 | FWD-13 |
+| H13 | challenge path for all five publishers | `lib/opal_data_harvest/verification.py` (`contracts.json:80`) | H12 | FWD-11 |
+| H14 | site Z backfill driver over 89 names: budget, checkpoint/resume, uploads on, sa first, date-ordered bbg/wsj discovery | a new driver over the harvester | H11, H12, H13 | FWD-14, FWD-15 |
 
 ## 5. CALLS THAT STAY ANDREW'S (the brief's s.8)
 
@@ -891,7 +1050,14 @@ The build proceeds on the working defaults above. His word changes a value, not 
 - the roundup threshold;
 - the event thresholds;
 - non-English press (out of this version);
-- publisher terms on stored bodies (already his).
+- publisher terms on stored bodies (already his);
+- (v0.13) a residential (Bright Data) egress arm on the site Z box for bbg, wsj, barrons or ft: his per-use vendor word
+  (CLAUDE.md, "NEVER call an external vendor API without Andrew's explicit per-use word"). "At all costs" does not name
+  that use (placement R7). FWD-11 and FWD-13 proceed without it.
+
+**Ruled by Andrew, not open (v0.13):** automatic challenge solving stays on and is extended (FWD-11); licensed access
+is not a route; the publisher-terms and legal risk the brief recorded (IV.5) is his accepted call and is not
+re-litigated by any seat.
 
 **Ruled by the L4 author** (a design fork the brief researched): silver is built FROM BRONZE, not from the normalised
 record, because the vendor fields gold needs (tags, language, paywall) exist only there.

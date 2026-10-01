@@ -380,3 +380,9 @@ BLOCKED (mstr-ledger-check): strategic MSTR commit touches non-record paths but 
 <!-- sig: INTEGRITY|ERROR-FAILCLOSED|org/law-edit-audit.log|baseline missing: C:\Users\AndrewBerman\Desktop\ajb_workspace\org\audit\archive\laptop\#-#-#T#Z\org_law-edit-audit.log -->
 - log: org/law-edit-audit.log
 - detail: baseline missing: C:\Users\AndrewBerman\Desktop\ajb_workspace\org\audit\archive\laptop\2026-09-24T051000Z\org_law-edit-audit.log
+
+## 2026-10-01T032304Z -- INTEGRITY -- NON-APPEND-EDIT
+<!-- sig: INTEGRITY|NON-APPEND-EDIT|org/law-edit-audit.log|non-append edit: first divergence at line #, col # (baseline #B / live-head #B) -->
+- log: org/law-edit-audit.log
+- detail: non-append edit: first divergence at line 19, col 1 (baseline 3583B / live-head 3275B)
+- action: THIS log PINNED at its prior baseline (evidence preserved, still FIRING); other covered logs continue to archive. Needs human authority ruling (clause 3).

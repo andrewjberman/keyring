@@ -1170,3 +1170,209 @@ posture-cites-open.png for k-7), its PNGs read.
 cross-chain overlap ruled (e). (iii) One intent per cell. (iv) No cell moves a served value, figure, verdict, count or order: k-1, k-4 and
 k-2 change words and where a served reason sits; k-3 and k-5 frame a served absence or history; k-6 changes type size and radius; k-7
 changes an instrument.
+
+
+## v15 -- ROUND 15, THE FRIDAY ROUND (issuer, 2026-10-01 ~05:5xZ), over PRD v0.6 @bc4f634248 (ADMITTED)
+
+**Rectangle:** the round-14 analysis's enrichment list.
+- **Source:** `1.0.0_SA_CTO~Z`'s `ledger/ROUND_ANALYSIS.round14.md` @950ae4bb4f section 3, rows 1-5, rulings 1-4, as amended by the CTO's
+  msg 27547 (CONTRACT amendment 1 @c7f9fa44fa: `tabs/ModelTab.tsx` is AMGT_CORPUS's through the Friday freeze; row 5 is narrowed to the
+  BA pack sentences on Thesis and Exec; k-5's Model-face half moved to CORPUS round 28). Plus row `DSGN_AMGTV1-Z-S9` (a repair, batched
+  into row 4's cell). The shared Friday CONTRACT `org/tier1_exec/1.0.0_SA_CTO/deliverables/AMGT_FRIDAY_DEMO_20261001/CONTRACT.md` binds.
+- **Cell ids:** `AV-f-1`..`AV-f-6`. Letters e, k-w are on disk, so round 15 takes `f`.
+- **NOT cells:** the Model-face contradiction (k-5 PARTIAL, moved to AMGT_CORPUS by msg 27547; the ModelTab pack lines were routed to
+  `2.0.0_SA_COO~X`, the writer); Posture's served "ABSENT" (ruling 3, AMGT_RESAPP's); the PROD promote (Andrew's act); row Z-W4-S1
+  (exportCompare vs the page, an export surface not on the demo).
+- **The issuer's placements:**
+  - (a) **Row 3 is split into two orders:** `AV-f-6` (extract the /philosophy card face into `src/ui/components/graphic/GraphicCard.tsx`;
+    the four selected-name header cards render through it) and `AV-f-3` (the Lead Panel header through it). The extraction touches no
+    LeadPanel file, so it runs beside the bars; the panel half chains after it.
+  - (b) **Chains from the MEASURED write sets** of four issuer-spawned helpers' green arms (scratch roots `C:/tmp/dsgn-r15-green-{a..d}`,
+    portal branches `r15-green-{a..d}` off b336b141), and `git merge-tree` over them: a x b conflicts on `LeadPanel.tsx` and
+    `leadPanelPattern.harness.cjs` (both on chain ~56, serial); a x c conflicted only on `types.ts`; b x c clean.
+  - (c) **Issuer DIRECT-ACT before the cut:** portal DEV `a41cf763` types the served Friday fields once (AMGT_RESAPP af-2's names per its
+    COO's msg 27543 and the CONTRACT s.1-4 shapes): `places_moved(_reason)` on ranking rows; `return_30d_pct`, `score_pct`,
+    `pct_jump_pct` on price rows; the `CollectedChatter*` payload; `as_of_date`, `requested_as_of`, `dated`, `stale_trading_days`,
+    `absent_reason` on an axis read. Additive, tsc -b rc=0, 13 of 13 page harnesses green. This removes the a x c conflict.
+  - (d) **Chain ~56: f-1 -> f-2 -> f-3** (all write `LeadPanel.tsx`). f-3 ALSO waits for chain ~57 to drain (it imports `GraphicCard`):
+    the issuer merges ~57 into CLOUD/DEV and into the ~56 branches before handing f-3 over. **Chain ~57: f-6.** **Chain ~58: f-4 -> f-5**
+    (both write `reasonWords.ts`).
+  - (e) **Cross-chain overlap, ruled by the issuer:** the harness files `errorEmpty`, `tabs`, `shell` are granted to chains ~56 (re-anchors),
+    ~57 (a `GraphicCard` stub) and ~58 (`shell`'s `axis_footnote` re-anchor): region-disjoint; merge-tree auto-merged a x b on all three.
+    The issuer merges at the drain.
+  - (f) **The chatter route:** AV-f-2 adds the client call to the already-mounted template
+    `/lead-panel/timeseries/collected/chatter` now (CONTRACT s.1 names it mounted), so no separate wiring cell is needed when AMGT_RESAPP
+    serves it; until then the face is the designed empty state, never fixture data. The header's fields (AV-f-4) are af-2's served names;
+    the price bars read `return_30d_pct` on the existing trending price route. When RESAPP lands them on DEV the issuer re-runs the
+    checks on live captures (a fixture refresh, no shape change).
+  - (g) **Width:** analysis cap 3 (placement s.2, the box runs 8 COO lanes). M = 3 chains, N = 3 now, K = 3 queued (f-2, f-3, f-5 follow on
+    their own slots).
+- **Portal base:** site-Z local DEV `a41cf763` (on top of b336b141 = origin/DEV at the cut; a41cf763 is LOCAL).
+- **Fixtures:** `round15/fixtures/` -- `r15a.*` (the trending price ranking with `return_30d_pct`; the CONTRACT s.1 monthly payload), `r15c.*`
+  (BA, VLO, 6501 overlays in the af-2 shape, renamed by the issuer; 6501's live /thesis capture with the M-1 reason), grant diffs
+  `r15{a,b,c}.grant.*`. `round15/checks/_load.cjs` reads round15/fixtures first, then round 14's.
+- **Frozen at the cut.**
+
+| cell | row | what it builds | serves | writes (SA/ = portal/src/pages/SecurityAnalysis/) | slot | risk |
+|---|---|---|---|---|---|---|
+| `AV-f-1` | 1 | price as ranked horizontal bars of the served `return_30d_pct`, |value| order, sign by colour; the List/Chart toggle, the line chart, the Movement control and the price list removed; the whole universe read | FWD-22, 18, 2 | `SA/components/{PriceBars (new),LeadPanel}.tsx`, `SA/hooks/useLeadPanelApi.ts`, `SA/constants.ts`, 4 granted harnesses | ~56 | LOCAL |
+| `AV-f-2` | 2 | chatter as one bubble per security, area ~ the month's `collected`, a month cursor, "articles collected"; the client call to the mounted template | FWD-21 | `SA/components/{ChatterBubbles (new),LeadPanel}.tsx`, `SA/hooks/useLeadPanelApi.ts`, `portal/src/api/endpoints/amgt-lead-panel.ts`, `SA/constants.ts`, the same 4 harnesses | ~56 (after f-1) | LOCAL |
+| `AV-f-6` | 3 (header half) | the /philosophy card face extracted (byte-identical /philosophy); the four header cards through it | FWD-23 | `src/ui/components/graphic/GraphicCard.tsx` (new), `pages/CapitalMarketAssumptions/components/PhilosophyPillars.tsx`, `SA/components/HeaderCards.tsx`, 4 granted harness stubs | ~57 | LOCAL |
+| `AV-f-3` | 3 (panel half) | the Lead Panel header through the card face, no internal name, Starred a Segmented, 0 hex in the panel's chart files | FWD-23 | `SA/components/{LeadPanel,PriceBars,ChatterBubbles}.tsx`, `leadPanelPattern.harness.cjs` (granted) | ~56 (after f-2 AND ~57's drain) | LOCAL |
+| `AV-f-4` | 4 + Z-S9 | the header prints the served `as_of_date`, "Breakout (price)" reads the breakout row, places moved, `absent_reason`; the reason mapping drops interface codes | FWD-24, 11 | `SA/components/SecurityOverlay.tsx`, `SA/reasonWords.ts`, `shell.harness.cjs` (granted) | ~58 | LOCAL |
+| `AV-f-5` | 5 (narrowed) | Thesis and Exec pack sentences read their own served reason (no presupposed pack) | FWD-11 | `SA/reasonWords.ts`, `SA/components/ThesisCards.tsx`, `SA/tabs/ExecManagementTab.tsx` | ~58 (after f-4) | LOCAL |
+
+**Edges and chains:** one data edge (f-3 imports f-6's module). M = 3 chains (~56 f-1 -> f-2 -> f-3; ~57 f-6; ~58 f-4 -> f-5), N = 3 now,
+K = 3 queued, cap 3. Write sets pairwise disjoint across chains EXCEPT placement (e). The surprise channel is shared append-only.
+
+**Checks (`round15/checks/`, dry-run by the issuer at base DEV a41cf763 from the shared root):**
+
+| check | base (FAIL as expected) | green arm |
+|---|---|---|
+| pricebars.cjs | 2 of 3 (0 bars for 32 served rows; View toggle, Movement control, list table on the price face; arms 2-3 controls) | 3 of 3 (r15-green-a @7cb92a05) |
+| bubbles.cjs | 2 of 3 (no ChatterBubbles.tsx, no bubbles in LeadPanel; arms 2-3 controls) | 3 of 3 (r15-green-a @7cb92a05) |
+| cardface.cjs | 0 of 3 (no shared module; 4 of 4 cards not through the face; no module to mutate) | 3 of 3 (r15-green-b @69653d85) |
+| panelhead.cjs | 2 of 3 (title "Lead Panel", no card-face header, hand-built Starred; arms 2-3 controls) | 3 of 3 (r15-green-b @69653d85) |
+| headerread.cjs | 2 of 3 (15 faults: Breakout reads Trending, places moved, "today", no served day, M-1; arms 2-3 controls) | 3 of 3 (r15-green-c @993d933c, issuer-renamed to af-2 names) |
+| packwords.cjs | 1 of 3 (BA, VLO, 992 HK Exec presuppose a pack the served reason says is missing; arm 3 control; served reasons agree 6 of 6) | 3 of 3 (r15-green-d @86944155) |
+
+- Every green arm: tsc -b rc=0; the harnesses each loads green with its grants; round-14 reasonwords, execfooter, modelhistory 3 of 3
+  where touched. posture.harness.cjs reads S3 live and is unstable in scratch roots: excluded from every bound (its stub grant still
+  applies). assembled and exportCompare need arguments: red at base, not bounds.
+- **Issuer check notes:** every check renders statically (seconds, not the 15-minute builds of round 14); the negative arms extract the
+  b336b141 sources with git into a temp dir; hooks are stubbed, so the live read limit and the cursor click are carried by the cell
+  text and the close walk, not the checks.
+
+**Cut rules applied:** (a) queue-aware bases: no check compares values against a base snapshot. (b) Every harness break is granted with
+its exact diff (`git apply --check` OK on a41cf763 for all 10). (c) At most three mechanical criteria per order.
+
+**Battery:** comp-schedule and comp-iam DECLARED-NOT-APPLICABLE. comp-adversary: the checks above plus round 14's bytes.cjs. Blind spots
+are named per order. **The issuer's close:** the signed-out control; a signed-in walk on the drained DEV build (the price bars, the
+chatter bubbles stepped two months, the panel header beside /philosophy, BA, VLO and 6501's headers, BA's Thesis and Exec); the render
+run's PNGs read. **The Friday close walk** (CRO~Z `/ui-walk`, 18:00-21:00 ET) follows the freeze.
+
+**Rule 24:** (i) MECE over the analysis's five rows by subtraction: 6 orders (row 3 split in two), Z-S9 batched into row 4, the four
+NOT-cells named. (ii) One write set per chain, the cross-chain harness overlap ruled (e). (iii) One intent per order. (iv) No order moves
+a served value: f-1 orders served bars by a served value (CONTRACT s.2) and prints it as served; f-2 sizes by a served count; f-4 prints
+served fields where the page printed the wrong one; f-3, f-5 and f-6 change chrome and words.
+
+
+## v16 -- ROUND 16 (issuer, 2026-10-01 ~08:3xZ), over PRD v0.6 @bc4f634248 (ADMITTED)
+
+**Rectangle:** the round-15 analysis's enrichment list.
+- **Source:** `1.0.0_SA_CTO~Z`'s `ledger/ROUND_ANALYSIS.round15.md` @68e34e1e97 section 4, rows 1-5, rulings 1-5 (cells 1-3 first);
+  the CTO's walker rule (msg 27641: ARM / DISARMED posts to 0.0.0_AB_MSTR~Z until the lease lands). Freeze 22:00Z.
+- **Cell ids:** `AV-g-1`..`AV-g-5` (letter g; e, f, k-w are on disk).
+- **NOT cells:** ModelTab's "Lead Panel" (AMGT_CORPUS's file; fixed by that writer at portal 54f3a252); the live price face's empty
+  ranking and the chatter route's 400 (AMGT_RESAPP af-2 / round 57 deploys -- server-side); `format:money` and the timeline findings
+  of walk 20261001T073050Z (carried to the round-16 analysis); the posture harness's S3 instability.
+- **The issuer's placements:**
+  - (a) **g-1 carries a second item:** the walker's lead-panel steps (walk.mjs still walks Trending/Breakout x List/Chart --
+    `walker:control-missing` x4 on walk 073050Z); the same file as the lease, so the same order.
+  - (b) **Ruling on row AMGT_RESAPP-Z-W200-S1:** the Thesis pillars "no research pack" stays -- the designed worded form of the
+    served "class A report" (CTO round-13 ruling 1, k-1 MET; round-14 reasonwords and round-15 packwords grade it; AV-f-5 made Exec
+    agree). nolabel.cjs carries the clause gated off (PILLARS_GRADED). Correction sent to 2.0.0_SA_COO~Z.
+  - (c) **Chains from the green arms' write sets:** ~59 g-1 -> g-5 (file-disjoint: `.claude/skills/ui-walk/*` then the tabs and
+    SecurityOverlay -- chained only for throughput under cap 3); ~60 g-2 -> g-4 (both `LeadPanel.tsx`); ~61 g-3 (the instrument).
+  - (d) **Cross-chain overlap, ruled:** g-3 may re-anchor `errorEmpty`/`leadPanelPattern`/`tabs` harness claims; g-4 may re-anchor
+    `errorEmpty`/`tabs`; g-3 may add `data-chatter-denominator` to `ChatterBubbles.tsx` (an attribute) while g-4 may touch the same
+    file's unserved branch. Region-disjoint; the issuer merges at the drain and re-runs every check on the merged DEV.
+  - (e) **Checks at the cut:** every check dry-run at base DEV 209678ff (the negative arms pin f4adf790 or the pre-round walker
+    files). g-3's and g-4's helper green arm (r16-green-g) was in progress at the cut; g-3 and g-4 are QUEUED behind g-2/the slot
+    opening, and the issuer reads that green arm 3 of 3 before handing either over (or amends with the gate limb named).
+  - (f) **Width:** cap 3. M = 3 chains, N = 3 now (g-1, g-2, g-3 -- g-3 handed when its green proof reads), K = 2 queued (g-4, g-5).
+- **Portal base:** site-Z local DEV `209678ff` (f4adf790 + AMGT_CORPUS round 28's ModelTab/modelSheet commits). LOCAL.
+- **Fixtures:** `round16/fixtures/r16g.collected.chatter.json` (+ its builder) -- the CONTRACT s.1 live shape (95 rows, 73 empty).
+- **Frozen at the cut.**
+
+| cell | row | what it builds | serves | writes | slot | risk |
+|---|---|---|---|---|---|---|
+| `AV-g-1` | 1 (+a) | the walker lease (conditional DDB lease before SSM; holder-only disarm); walk.mjs walks the Friday faces | FWD-20, FWD-1 | `.claude/skills/ui-walk/{ui_walker_account.py,walk.mjs,SKILL.md}` | ~59 | LOCAL |
+| `AV-g-2` | 2 | header cards fill their grid at equal widths; eyebrows >= 11px with passing contrast | FWD-23, 20 | `SA/components/{HeaderCards,LeadPanel}.tsx` | ~60 | LOCAL |
+| `AV-g-3` | 3 | the render instrument: live-shape chatter fixture, price- and chatter-face captures, fwd18/band/fwd19 re-anchored | FWD-20, 21, 22 | `portal/scripts/{ui-contract-check,ui-measure}.mjs`, `uiContractFixtures.json`, `ChatterBubbles.tsx` (attribute), 3 harnesses (re-anchor) | ~61 | LOCAL |
+| `AV-g-4` | 4 | the chatter face's designed unavailable sentence until the route is served | FWD-21, 19 | `SA/components/{LeadPanel,ChatterBubbles}.tsx`, 2 harnesses (re-anchor) | ~60 (after g-2) | LOCAL |
+| `AV-g-5` | 5 | no "Lead Panel" on any DSGN face; the identity block through GraphicCard | FWD-23, 11 | `SA/tabs/{Thesis,Peers,Posture,ExecManagement}Tab.tsx`, `SA/components/SecurityOverlay.tsx` | ~59 (after g-1) | LOCAL |
+
+**Checks (`round16/checks/`, dry-run at base DEV 209678ff):**
+
+| check | base (FAIL as expected) | green arm |
+|---|---|---|
+| walkerlease.py | 1 of 3 (arm 1 0 of 6; arm 3 vacuous on the base module) | 3 of 3 (r16-green-f @49bf677ac4) |
+| walksteps.cjs (issuer) | 2 of 3 (7 faults: List/Chart/Breakout, no bars/bubbles/cursor, data-row-lead) | -- (static; the next close walk) |
+| headerchrome.cjs | 2 of 3 (sizes 10px and lowContrast in 6 of 6 states; widths 137/195/86/169; arm 3 /philosophy control), ~10 min | 3 of 3 (r16-green-e @ea7b0a9b) |
+| instrument.cjs | 2 of 3 (8 faults: no chatter fixture, no price/chatter captures, fwd18, band, fwd19; arm 3 5 of 5 planted caught), 303 s | in progress (r16-green-g) |
+| unavailable.cjs | 2 of 3 ("Read failure" + the SourceCaption under the unserved chatter face) | in progress (r16-green-g) |
+| nolabel.cjs | 2 of 3 (9 faults: 4 tabs "Lead Panel"; identity block off the card face) | 3 of 3 (r16-green-h @2f48ad29) |
+
+**Cut rules applied:** at most three mechanical criteria per order; no check compares values against a base snapshot; harness changes
+are re-anchors only. **Battery:** comp-schedule and comp-iam DECLARED-NOT-APPLICABLE (walkerlease stubs every AWS call). **The issuer's
+close:** a signed-in walk with the NEW walker (ARM/DISARMED posted to MSTR~Z), the render run with g-3's instrument, PNGs read.
+
+**Rule 24:** (i) the analysis's five rows by subtraction: 5 orders (+ the walker steps in g-1), the NOT-cells named. (ii) One write set
+per chain, overlaps ruled (d). (iii) One intent per order. (iv) No order moves a served value: g-1 changes a tool; g-2 chrome; g-3 an
+instrument; g-4 the words of an unserved state; g-5 words and chrome.
+
+
+## v17 -- ROUND 17 (issuer, 2026-10-01 ~09:5xZ), over PRD v0.6 @bc4f634248 (ADMITTED) -- TWO DIRECT ACTS
+
+**Rectangle:** the round-16 analysis @ce875b7bc1 section 3, rows 1-2 (rulings 1-4). Freeze 22:00Z.
+- **Cell ids:** `AV-h-1`, `AV-h-2` (letter h).
+- **Both cells take the DIRECT-ACT path** (`/dispatch`: one cell, small, `<risk>LOCAL</risk>`; `<direct_act>true</direct_act>`; no
+  L2/L4-R/L8-L10; the close is the issuer's one real run).
+- **Placement (a):** row 1 is a walk plus a walker change. A worker cannot post ARM/DISARM to 0.0.0_AB_MSTR~Z, so the build half
+  (walk.mjs waits >= 30 s for `[data-price-bar]`, records a no-bars finding with the route body, flags raw-key bubble labels) is
+  AV-h-1, and the walk itself is the issuer's close act (ruling 1: bars render -> proven; no bar after the wait -> the route body and
+  component state captured and root-caused this round). After AMGT_RESAPP ah-2 deploys, the close walk re-reads the chatter labels
+  (ruling 3).
+- **Placement (b):** AV-h-2 is SecurityOverlay.tsx only (the identity card's panel background), disjoint from AV-h-1.
+- **Chains:** ~62 AV-h-1; ~63 AV-h-2. M = 2, N = 2, cap 3.
+- **Checks:** `round17/checks/pricewait.cjs` (issuer; base 2 of 3: no wait, no raw-key flag); `round16/checks/headerchrome.cjs` (base 2 of
+  3 on DEV 03311745: lowContrast 5 in each Security state).
+- **Portal base:** DEV 03311745 (LOCAL). **Frozen at the cut.**
+- **Rule 24:** two rows, two orders; one write set each; no served value moves (a walker change; a panel colour).
+
+
+## v18 -- ROUND 18 (issuer, 2026-10-01 ~10:4xZ) -- TWO DIRECT ACTS
+
+**Rectangle:** the CTO's ruling msg 27760 (CONTRACT amendment 3 @b9d096f6dd) on the acceptance walk's one defect (round-17 close
+@4b0135afec): the price bars printed the served `return_30d_pct` at full float precision and clipped. **Cell:** `AV-i-1` (letter i),
+DIRECT ACT, `<risk>LOCAL</risk>`, `PriceBars.tsx` only: one decimal printed with sign and "%", the whole value in `data-price-value`.
+**Check:** `round18/checks/precision.cjs` (issuer): base portal DEV c6aacc68 2 of 3 (128 faults). **Chain:** ~64 alone.
+**Close:** the issuer's live walk (ARM/DISARMED to 0.0.0_AB_MSTR~Z) reads the price PNG for one-decimal values inside the panel.
+**Second cell (CTO msg 27762, from AMGT_CORPUS ADJUDICATION_v36):** `AV-i-2`, DIRECT ACT, `SecurityOverlay.tsx` + `GenerationCaption.tsx`:
+the header's readings line reads the monthly route ("<k> of <n> covered names collected this month") in place of the legacy chatter
+ranking caption, and "1 name" never "1 names". Check `round18/checks/headerline.cjs` (issuer): base 2 of 3. Chain ~65 alone.
+**Width:** M = 2 chains (~64, ~65), N = 2, cap 3.
+**Rule 24:** two rows, two orders, file-disjoint; no served value moves (display rounding; a caption reading a served route).
+
+
+## v19 -- ROUND 19 (issuer, 2026-10-01 ~11:1xZ) -- ONE DIRECT ACT
+
+**Rectangle:** the CTO's ruling msg 27768 on the round-18 close: the selected-name header's chatter cell reads the legacy ranking point
+("TRENDING (CHATTER) #1 | 0/100"). **Cell:** `AV-j-1` (letter j), DIRECT ACT, `<risk>LOCAL</risk>`, `SecurityOverlay.tsx`: the cell
+(`data-header-reading="chatter"`) shows the name's collected count for the latest month from `useCollectedChatter`, or a designed absent
+sentence; no "#", "/100" or "Trending". **Check:** `round19/checks/chattercell.cjs` (issuer): base portal DEV 4c02f293 2 of 3.
+**Retired:** round15 `headerread.cjs`'s chatter-cell clause (it grades the legacy rank and score this ruling removes); its breakout clause
+is read on the live walk. **New cut rule applied:** the order carries `tsc -b` in AC3. **Chain:** ~66 alone. **Close:** the issuer's live
+walk; then DEV is DSGN's freeze candidate (ruling 27768).
+**Rule 24:** one row, one order; no served value moves (a cell now reads a served count instead of a dead ranking point).
+
+
+## v20 -- ROUND 20 (issuer, 2026-10-01 ~14:4xZ) -- ONE DIRECT ACT
+
+**Rectangle:** the CTO's ruling msg 27874 (on COO~Z 27871: the overlay serves top-level `display_name` for all 94 names). **Cell:**
+`AV-x-1` (letter x; e-w are on disk), DIRECT ACT, `<risk>LOCAL</risk>`, `SecurityOverlay.tsx` (+ the optional fields in `types.ts`): the
+served company name above the ticker in `data-identity-name`; the ticker only when none is served, never a placeholder. **Check:**
+`round20/checks/namecard.cjs` (issuer): base portal DEV f73cd009 2 of 3. AC3 carries `tsc -b`. **Chain:** ~67 alone. **Deadline:** land by
+21:30Z with the walk evidence; otherwise f73cd009 stays the freeze candidate. **Rule 24:** one order; no served value moves.
+
+
+## v21 -- ROUND 21 (issuer, 2026-10-01 ~15:4xZ) -- ONE DIRECT ACT
+
+**Rectangle:** the CTO's ruling msg 27914 (on the round-20 walk's shot 009). **Cell:** `AV-y-1` (letter y), DIRECT ACT,
+`<risk>LOCAL</risk>`, `StatTile.tsx` (+ `HeaderCards.tsx` if the flip needs it): the figure tooltip stays inside its pop-up, and its face
+shows the plain label, definition and full value, never the Bloomberg code. **FWD-13 reconciliation (issuer):** FWD-13's "its tooltip
+carries the mnemonic" is kept by `data-mnemonic` in the markup; the CTO may amend FWD-13's text instead. **Check:**
+`round21/checks/tipface.cjs` (issuer, with a DataTooltip stub that renders the real component's text): base portal DEV da0b3bd7 2 of 3.
+AC3 carries `tsc -b` and all 14 harnesses (ModelTab inherits the face; ModelTab.tsx itself is not edited). **Chain:** ~68 alone.
+**Deadline:** walk clean by 21:30Z, otherwise drop; da0b3bd7 stays the candidate. **Rule 24:** one order; no served value moves.

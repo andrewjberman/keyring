@@ -2048,6 +2048,169 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "The runtime launcher (opal_ai/opal/runtime/launcher.ps1, OA-t-3) starts the Analyst as Opal_Agent in a window the operator can use, with every tool the runtime's own hooks need.",
     "world_is": "It starts the Analyst via Start-Process -Credential, whose window takes no keyboard input, and nothing puts jq on Opal_Agent's PATH, so the concierge-gate fails closed on every call. The same launcher and provisioning serve NFRA_MCPMSP's Opal_MSP (MS-t-3), so the fix is cut ONCE, here (NFRA_MCPMSP ROUND_ANALYSIS.round1.md @5e2ff94c28). Route: 2.0.0_SA_COO~AI cuts it at the next issuance, from launch-v2.ps1's pattern (Process.Start; Medium-integrity parent; gate output on a pipe) plus jq provisioning."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W24-S1",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~24",
+    "surfaced_at": "2026-10-01T04:43Z",
+    "one_line": "OA-f-9 needed a second nested commit: the first commit failed AC1 on a launcher header sentence, and the head-move guard refused the --amend.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AC1 (f9.AC1.sh) strips '#'-led lines then <# #> blocks, so the '#>' closer line is dropped first and the .SYNOPSIS block stays in the scanned text; the header sentence naming Start-Process with -Credential counted as Start-Process -Credential=1 at nested 97b3b19 (RESULT: FAIL).",
+        "git commit --amend in opal_ai was refused by the head-move guard (FORCE_HEADMOVE=1 required); I did not force it. The reword landed as a second nested commit b6e1867; AC1-AC3 then PASS at b6e1867 (opal_ai 0a5c7c2..b6e1867, two commits, same 4 files)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The face asks for one nested commit; AC1 counts Start-Process -Credential over launcher code only.",
+    "world_is": "Two nested commits (97b3b19, b6e1867); AC1's comment stripping leaves a <# #> block header in the scanned text whenever it ends with a '#>' line, so any header prose naming the retired form counts."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W14-S1",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~14",
+    "surfaced_at": "2026-10-01T04:50Z",
+    "one_line": "OA-e-6 control dead on 8194: the operator's own TCP connect to 127.0.0.1:8194 was REFUSED (no bbcomm.exe, nothing listening), so the Opal_Agent 8194 arm (also REFUSED) cannot discriminate account reach from a dead listener; AC2 FAILS as written. 8790 was OPEN for both accounts (PARTIAL).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "2026-10-01 ~04:45Z, from C:\tmp\\oa-14: System.Net.Sockets.TcpClient 3 s connect as Opal_Bloomberg\\Opal Bloomberg -> 8194 REFUSED (refused, not timeout), 8790 OPEN (view server started by the cell with the operator's Python311 and BLOOMBERG_MCP_TRANSPORT=streamable-http; stopped afterwards, 0 listeners on 8790 re-read). Get-Process for bbcomm|blpterm|wintrv|bloomberg returned nothing; Get-NetTCPConnection -State Listen -LocalPort 8194,8790 returned nothing before the start.",
+        "Same probe run as Opal_Bloomberg\\Opal_Agent via Start-Process -Credential (script and result in C:\\opal_runtime\\state, both removed after reading): 8194 REFUSED, 8790 OPEN.",
+        "Per the face (step 1) the terminal was not started. Server start under the operator's default Python 3.14 failed ModuleNotFoundError blpapi; Python311 has blpapi and mcp, so the cell used it (no install). Start-Process -Credential printed one 'Access is denied' on a first attempt with -WorkingDirectory/-WindowStyle Hidden, and on a second attempt printed 'directory name is invalid' yet the child ran and wrote its result (whoami recorded as ...\\Opal_Agent)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OA-e-6 step 1: the operator arms are the control; bbcomm.exe is running and 8194 is OPEN for the operator, so a closed Opal_Agent arm means the account's reach.",
+    "world_is": "bbcomm.exe is not running on this box at measurement time and nothing listens on 8194, so the operator control is REFUSED and the 8194 verdict component is non-discriminating. The 8790 arm is a sound control (operator OPEN) and Opal_Agent reached it. Re-measurement of 8194 needs the terminal up (the cell forbids the worker starting it); disarm owner n/a (INERT)."
+  },
+{
+    "id": "NFRA_OPALAI-Z-W25-S1",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~25",
+    "surfaced_at": "2026-10-01T12:30Z",
+    "one_line": "OA-f-10 AC1 REFUSED: no non-elevated invocation of `codex sandbox` runs under the CodexSandboxOffline identity (SID -1005), so the falsifier cannot measure whether a per-user Firewall rule blocks loopback; mechanism recorded INCONCLUSIVE.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+            "~/.codex/config.toml (operator profile) carries [windows] sandbox = \"unelevated\"; every `codex sandbox` form that launched (`-P :read-only`, `-P :workspace`, `--sandbox-state-json` with a managed restricted-filesystem profile + --sandbox-state-disable-network) printed whoami = opal_bloomberg/opal bloomberg (the operator) and the 8194 probe read OPEN, i.e. a restricted token of the operator, not the offline identity.",
+            "The profile that demands the elevated backend (managed, file_system restricted, entries []) refused: 'windows sandbox failed: Restricted read-only access requires the elevated Windows sandbox backend'. `-c windows.sandbox=\"elevated\"` (a per-invocation override, no file edited) failed: 'helper_sandbox_lock_failed: lock sandbox bin dir .codex/.sandbox-bin failed: SetNamedSecurityInfoW sandbox dir failed: 5' (access denied; needs an Administrator token).",
+            "Control arm outside: whoami Opal Bloomberg, 127.0.0.1:8194 OPEN (3 s TcpClient). Live rules codex_sandbox_offline_block_loopback_tcp/_udp name LocalUser SID ...-1005 = CodexSandboxOffline (Get-LocalUser). No other identity was tried: the CodexSandboxOffline credential is DPAPI-held in .codex/.sandbox-secrets and is not ours to read."
+        ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OA-f-10 step 1: some `codex sandbox` invocation prints a whoami different from the operator's, giving an inside-the-offline-sandbox arm.",
+    "world_is": "With windows.sandbox=unelevated the sandbox is the operator's own restricted token; the offline identity exists only on the elevated backend, which a non-elevated session cannot set up. F10_FALSIFIER.json records mechanism INCONCLUSIVE; AC1 is refused and the order stays open. The question needs an Administrator-run `codex sandbox` (elevated backend), or the CTO to accept the live codex_sandbox_offline_block_loopback_* rules (setup log 2026-09-11: 'firewall rule configured ... LocalUserAuthorizedList ...-1005') as the per-user-loopback evidence. Disarm owner n/a (INERT)."
+},
+{
+    "id": "NFRA_OPALAI-Z-W25-S2",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~25",
+    "surfaced_at": "2026-10-01T12:30Z",
+    "one_line": "The `codex sandbox -c windows.sandbox=\"elevated\"` attempt, tried once to reach the offline identity, made codex itself run a read-ACL refresh over the operator's home before failing; a side effect the order's bound (no ACL change) did not anticipate.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+            "~/.codex/.sandbox/sandbox.2026-10-01.log 2026-10-01T12:19:54Z: many 'granting read ACE to <path> for sandbox users' lines then 'read ACL run completed'; setup_error.json and deny_read_acl_state.json both stamped 08:19 local, the minute of the one elevated-override call. The same call returned helper_sandbox_lock_failed (access denied) at the .sandbox-bin lock.",
+            "No firewall rule, account or config.toml byte was changed by this worker (config.toml unchanged; Get-NetFirewallRule listing was read-only). The grants are codex's own refresh toward its own sandbox accounts and are not reverted here (reverting would itself be an ACL change)."
+        ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OA-f-10 BOUNDS 2: never create, change or delete a firewall rule, account, ACL or codex config.",
+    "world_is": "A `codex sandbox` call with the elevated override is not read-only: it triggers codex's setup refresh, which wrote read ACEs for the sandbox users on files under the operator's profile before the elevated lock step failed. Not repeated. Disarm owner n/a (INERT)."
+},
+{
+    "id": "NFRA_OPALAI-Z-W25-S3",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~25",
+    "surfaced_at": "2026-10-01T20:16Z",
+    "one_line": "With both opal_runtime_block_dapi_8194_* rules live (Outbound Block TCP 8194, 127.0.0.0/8), Opal_Agent and Opal_MSP both still connect to 127.0.0.1:8194: the per-user firewall rule does not block loopback.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+            "F10_ACCEPTANCE.json: Opal_Agent 8194=OPEN 8790=OPEN (whoami opal_bloomberg\\opal_agent); Opal_MSP 8194=OPEN 8790=OPEN (opal_bloomberg\\opal_msp); operator 8194=OPEN. TCP connect only, 3 s timeout.",
+            "Get-NetFirewallRule read-back: both rules Enabled True, Outbound, Block. f10.AC3.sh: live rules 2 of 2, arms ok=no."
+        ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Amendment 1: Opal_Agent -> 8194 reads REFUSED with the rule live; OPEN means loopback is exempt.",
+    "world_is": "Falsifier fired (loopback exempt); the order stays open and the CTO re-rules to a raw WFP filter. Also: Opal_MSP has no ACE on the state dir, so its probe ran from the Public dir."
+},
+  {
+    "id": "NFRA_OPALAI-Z-S51",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~AI",
+    "surfaced_at": "2026-10-01T16:07Z",
+    "one_line": "safe-merge.sh on wk-NFRA_OPALAI-11 (OA-t-3 parent half: deletes .tools/hooks/bg-concierge-gate.sh + its test) printed 'COMMIT REFUSED DOWNSTREAM after this script's grade PASSED ... Aborting the merge' with no refusing hook's reason in its output, and the merge was LEFT OPEN in the shared tree (.git/MERGE_HEAD present, 4 paths staged) until the issuer ran git merge --abort.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-merge output: grade PASSED (surprise-row-gate OK, missions-tree-check OK, to-pipeline-gate MERGE COMMIT exempt, gitlink-publication-check refusals=0); then 'COMMIT REFUSED DOWNSTREAM' with no reason line.",
+        "org/git-author-override-audit.log 2026-10-01T16:07:15Z and 16:07:25Z: PASS 2.0.0_SA_COO~AI (MERGE COMMIT -- per-file lane check exempt), so owned-paths passed; the refuser is a later hook (candidate: the commit-msg chain).",
+        "Post-run: test -f .git/MERGE_HEAD -> present; git status showed D .tools/hooks/bg-concierge-gate.sh, D .tools/hooks/tests/test_bg_concierge_gate.sh, A t-3 proof instance, M t-3 order. git merge --abort rc=0 cleared it; peers' unstaged edits kept."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "safe-merge.sh: 'ON REFUSAL THIS ABORTS THE MERGE' (header), and a refusal names its reason.",
+    "world_is": "On a downstream commit-hook refusal the merge stayed open in the shared index and the refusing hook printed nothing. Owner of the tool: 0.0.0_AB_MSTR~Z (box operator). The OA-t-3 parent-half merge is deferred to the cutover sitting (CUTOVER_PLAN_20261001.md step 3, no live effect: the fence is unwired since 4c179f1826)."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S52",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~AI",
+    "surfaced_at": "2026-10-01T20:36Z",
+    "one_line": "Correction to NFRA_OPALAI-Z-W25-S3 (CTO~O msg 28057): LOOPBACK-EXEMPT accepted. The two opal_runtime_block_dapi_8194_* Firewall rules are LEFT LIVE but INERT -- they are NOT a wall on DAPI 8194, and no reader may treat them as one.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Cites NFRA_OPALAI-Z-W25-S3 and F10_ACCEPTANCE.json @1552d46a70: with both rules live, Opal_Agent 8194=OPEN and Opal_MSP 8194=OPEN.",
+        "1.0.0_SA_CTO~O msg 28057: LEAVE the rules (removal needs another elevated sitting; they come out, or are kept, in the WFP install's sitting); the mechanism (a raw WFP filter) is at 4.0.0_SA_CRO~O research; the item-0 close run stays HELD; the Opal_MSP state-dir ACE is noted, not chased."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CTO ruling R1: a per-user Windows Firewall block walls Opal_Agent and Opal_MSP off 127.0.0.1:8194.",
+    "world_is": "Windows Firewall does not filter loopback here. The rules are inert. The wall is not in place until the WFP cell (installer, -Plan, the same AC3), cut by 2.0.0_SA_COO~AI on the CTO's re-rule, reads REFUSED."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S53",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~AI",
+    "surfaced_at": "2026-10-01T21:03Z",
+    "one_line": "The Codex OFFLINE-sandbox loopback block on this box (codex_sandbox_offline_block_loopback_tcp/_udp, LocalUser SID ...-1005) is a per-user Windows Firewall Outbound Block of the same shape that F10 measured INERT on loopback -- so the Codex offline sandbox does not actually wall loopback here (openai/codex #48856, #49840; build 26200).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "1.0.0_SA_CTO~O msg 28059 and ruling R5 @9d6fbe3e97: R1's precedent rules were SHAPE ONLY and are also ineffective (openai/codex #48856, #49840, the same build 26200); CRO~O research @63a9b6da27.",
+        "F10_ACCEPTANCE.json @1552d46a70: a per-user Outbound Block TCP 8194 127.0.0.0/8 rule, live, blocked 0 of 2 account arms on loopback (row Z-W25-S3)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The codex_sandbox_offline_block_loopback_* rules block loopback traffic for the Codex offline sandbox identity.",
+    "world_is": "By the same mechanism F10 measured, they do not: per-user Firewall blocks are loopback-exempt here. Filed on the CTO's instruction (msg 28059). Owner of the box's Codex sandbox posture: 0.0.0_AB_MSTR~Z (box operator); not chased by NFRA_OPALAI."
   }
 ]
 ```

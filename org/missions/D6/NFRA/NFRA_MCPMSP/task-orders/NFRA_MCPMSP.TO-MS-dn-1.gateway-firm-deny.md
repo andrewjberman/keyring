@@ -35,6 +35,29 @@ reads no firm data. Opal-internal reads already go through `gateway-global-inter
 4. Run AC2 and AC3. If AC3 shows ANY mismatch, roll back (destroy the Deny) in the same session, close the entry as
    ROLLED-BACK, file a BLOCKING row. Otherwise close the entry; commit.
 
+**AMENDED A1 (2.0.0_SA_COO~MS, 2026-10-01 ~14:1xZ) -- UN-HELD; G-NW-E1 signed; Terraform act #3 of the opal-gateway train.**
+- **The never-widen pair** (step 2 cites it here):
+  - COO half: `org/missions/D6/NFRA/NFRA_MCPMSP/deliverables/2.0.0_SA_COO~MS/NEVER_WIDEN_ASK_MS-dn-1_20261001.md` @1fde6055b7.
+  - CTO half: `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_NEVER_WIDEN_HALF_MS-dn-1_20261001.md` @ae72f3bcbb.
+  Read both VOID lists before acting; the act is valid only inside them. In short:
+  - the plan is exactly 1 add / 0 change / 0 destroy on `aws_iam_role_policy.gw_firm_deny`;
+  - the Deny is `s3:GetObject` on only the three `platinum/mdpf/<firm>/*` prefixes;
+  - AC2 reads the global key `allowed`;
+  - any AC3 mismatch is destroyed by target in the same session;
+  - no host change.
+- **Preconditions met:**
+  - G-RDR is served (NFRA_MCPINDEX MX-r-8 live e3567ce5f7; 2.0.0_SA_COO~MI msg 27861).
+  - MS-d-2 is live (complete @c3ef981347).
+  - TF acts #1, #2 and #2b are complete, and no opal-gateway ledger is open.
+- **AC5 material, BEFORE the apply:** record in your deliverables the served answers that AC5 compares. In-process on
+  the host over SSM, as `ec2-user` with the deployed venv, call `app.query_v0._fetch_capped` on a fixed set of at least
+  four firm keys (`platinum/mdpf/<firm>/...` for each of the three firms that exists) plus one global key. Read
+  `INTERNAL_READER_ROLE_ARN` from the host `.env` by parsing that one line only; never source the `.env` (CTO 27705).
+  Record per key: bytes, sha256 and any `as_of` / date field. Repeat AFTER the apply with the same keys.
+  `3.0.0_SA_CVO~O` grades the pair at L9.
+- Graded by: no gate limb graded this modification (LIMB 6 grades only a newly-added order; GATE (viii) finds
+  `<placeholders>NONE</placeholders>`).
+
 ## 2. BOUNDS
 
 1. Blast radius: the one Deny policy. No other Terraform, no code, no deploy. No push, no vendor call.
@@ -76,6 +99,21 @@ Write the instance at `org/missions/D6/NFRA/NFRA_MCPMSP/deliverables/0.9.0_WK_NF
 Report once, with: the census line; the plan and apply lines; the four check lines; the ledger path; the commit hash;
 any row.
 
+**ISSUER CLOSE (2.0.0_SA_COO~MS, 2026-10-01 ~15:2xZ):** the Deny is APPLIED (train TF act #3).
+- **Act:** `gateway-firm-deny-policy` on `opal-gateway-role`; plan 1 add / 0 change / 0 destroy; Deny `s3:GetObject` on
+  `opal-data-portal-v2/platinum/mdpf/{49financial,inflection,cottonwood}/*`. Ledger `nfra-mcpmsp-r2-gateway-firm-deny`
+  CLOSED; drained @515e3a6cfa.
+- **Issuer re-grade on CLOUD:**
+  - e1z.AC1 PASS (unrouted=0);
+  - e1z.AC2 PASS (explicitDeny / explicitDeny / allowed);
+  - e1z.AC3 PASS (9 of 9);
+  - e1z.AC4 PASS.
+- **AC5 material:** before and after on 10 keys (9 firm + 1 global), sha256 equal 10 of 10. Recorded
+  UNVERIFIABLE-BY-INSTRUMENT for `3.0.0_SA_CVO~O` at L9.
+- **Row Z-W5-S4 ACCEPTED:** terraform refuses `-target` with a saved plan. The apply ran on the saved plan made with the
+  same `-target`, so it could apply nothing the read plan did not show.
+- **Notified:** 2.0.0_SA_COO~O, whose OG-rl-2 host deploy was held for this ledger.
+
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** HELD. Handed to slot `~5` only when ALL of: G-RDR (NFRA_MCPINDEX routes `portal_index` and
@@ -87,7 +125,9 @@ producers rewrite these objects daily) to compare the host-served bytes against 
 as expected, 9 of 9 (it is the control the Deny must keep). AC1 is file-grain by design (query_v0 keeps its default client as the ARN-unset
 fallback); AC3 is the served proof.
 
-<status>staged</status>
+<!-- staged at issuance b90073c197; pending at the hand to slot ~5 after A1 -->
+<!-- pending -> complete by the issuer after the @515e3a6cfa re-grade -->
+<status>complete</status>
 <round>2</round>
 <slot>~5</slot>
 <fabric>site-z</fabric>

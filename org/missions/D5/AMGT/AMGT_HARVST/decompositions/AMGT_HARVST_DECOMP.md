@@ -2380,3 +2380,139 @@ The first two are disjoint, so the A0 phases run in parallel.
 - the warm-up in the harvester (waits on first light);
 - sa batches 2+;
 - the cloud host (phase 2).
+
+## 45. ROUND 32 -- L5 DECOMPOSITION v3.12, over the round-31 analysis (`ledger/ROUND_ANALYSIS.round31.md` @309b2da963) + PRD v0.13 (the Friday addendum, ADMITTED)
+
+**Issuer `2.0.0_SA_COO~H`**, 2026-10-01 ~05:3xZ. Seated by the CTO placement @`e18d3a4e6a` (fan-out cap 3).
+- Round 31 is CLOSED. Andrew: the project "is not over until we beat captchas and have robust auth solution"; "we do not
+  accept any defeat". BLOCKED is never a final state (`C-HV-NO-DEFEAT`).
+- **Rulings carried** (analysis section 4 and its rulings): the 105-page sa ceiling is VOID; `error` joins the STOP set
+  (`Z-W88-S3`); R7, sa keeps its route, and no new residential arm is opened.
+- Series **`ae`**; slots **`~90`..`~92`**.
+
+| analysis item | cell | order | class | slot | dispatch |
+|---|---|---|---|---|---|
+| 1 FWD-12 wrong-object repair (precondition) | `HVST-ae-1` | `ae-1` | LOCAL A, then WORLD B (quarantine + gold rebuild), pair | `~90` | A now; B on the pair over the merged code |
+| 2 FWD-13 one browser identity | `HVST-ae-2` | `ae-2` | LOCAL | `~91` | now |
+| 3 first-light grade + confound arm | `HVST-ae-3` | none: the issuer's direct act after the 09:00Z fire (analysis item 3) | WORLD (publisher traffic after 05:00 ET) | issuer | ~09:1xZ |
+| 4 FWD-15 the site Z backfill driver, sa first | `HVST-ae-4` | `ae-4` | LOCAL A (code), then WORLD B (the sa run), pair | `~92` | A now (code has no data edge); B after `ae-1` B drains |
+| 5 FWD-11 the challenge path for bbg, wsj, barrons + renewal | `HVST-ae-5` | `ae-5` | LOCAL A, then WORLD B, pair | `~91` (after `ae-2`) | A after `ae-2` drains and `HVST-ae-3` is graded |
+
+**Fan-out: 3 workers over 2 dependency chains, cap 3** (placement). Chain A: `ae-1` -> `ae-4` B. Chain B: `ae-2`, `ae-3`
+-> `ae-5`. `ae-4` A (code only) has no data edge, so it takes the third slot now; its WORLD run waits on `ae-1` B.
+
+**Write sets (disjoint):**
+
+| order | owns |
+|---|---|
+| `ae-1` | `publishers.py` (the sa leg + the sa page cap), `sa_quarantine.py` (new), `test_ae1_sa_listing_body.py` (new), the silver-read exclusion in `lib/research/harvest/publication_gold.py` |
+| `ae-2` | `tab_transport.py` (new), `auth.py`, `contracts.json`, the three CRO REST clients' UA lines, `test_ae2_one_identity.py` (new) |
+| `ae-4` | `backfill_driver.py` (new), `test_ae4_backfill_driver.py` (new) |
+| `ae-5` | `verification.py`, `test_ae5_challenge_path.py` (new) |
+
+**Hookups at the merge (no cell owns them):** the `publishers.py` session build selects `TabSession` for a publisher whose
+contract reads `"transport": "tab"` (ae-2's export; `publishers.py` is ae-1's file).
+
+**Premises measured at the cut:**
+- sa silver: 85 rows over 66 parts; **38 WRONG-OBJECT** (listing-discovered, raw `/api/v3/articles/{news_id}` capture,
+  title unequal to the stored listing hit: 32 with a differing title, all dated 2023; 6 with no stored hit, dated 2021).
+  A DATE is not the signature: 4 genuine 2025 Lenovo items are listed in live mode. Oracle `round32/checks/ae1_common.py`.
+- gold `article_security_mention` newest part `date=2026-09-30/part-20260930T134616Z`: 379 rows, 139 sa.
+- **KEY SPACE (row `Z-S51`):** the collector universe (89 keys, `BA` / `security-<hash>`) and gold (`BA_US_Equity`, 71
+  keys) share 0 keys; 32 of 89 names carry a ticker. FWD-14's census is graded here on the collector's own silver,
+  keyed by `discovered_for`; the gold join is the CTO's to rule.
+- depth baseline: 20 distinct sa articles since 2026-01-01 over universe keys; 3 of 89 names with any; 0 at 50+.
+- the in-tab transport idiom exists (`verification.py:164`, `page.evaluate(fetch(url, {credentials:'include'}))`).
+
+**Checks dry-run at the base (all FAIL as expected; they are build checks):** `ae-1.AC2` (38 of 85 outside a
+quarantine), `ae-1.AC3` (no manifest), `ae-2.AC2` (`tab_transport` absent), `ae-4.AC2` (driver absent), `ae-4.AC3` (no
+run summary; 20 = baseline), `ae-5.AC2` / `ae-5.AC3` (no record).
+
+**NOT cells this round:** a residential arm for bbg/wsj/barrons/ft (Andrew's act, analysis section 5); FWD-14's own
+census (graded when the driver's runs mature); the cloud host (phase 2).
+
+## 46. ROUND 33 -- L5 DECOMPOSITION v3.13, over the round-32 analysis (`ledger/ROUND_ANALYSIS.round32.md` @749ec2c72e)
+
+**Issuer `2.0.0_SA_COO~H`**, 2026-10-01 ~11:4xZ. FWD-14 (6 of 89 at 50+) and FWD-11 NOT MET; no defeat. Series **`af`**;
+slots **`~90`..`~92`**; fan-out cap 3 (placement). The sa backfill (issuer, detached) keeps running throughout.
+
+| analysis item | cell | order | class | slot | dispatch |
+|---|---|---|---|---|---|
+| 0 remove `verification_locator.py` | `HVST-af-0` | none: issuer direct act, DONE @ca957fb24a | LOCAL | issuer | done |
+| 1 ft in-tab backfill | `HVST-af-1` | none: issuer direct act (unlock re-probe 12:02Z after the 429; then the detached driver) | WORLD | issuer | ~12:0xZ |
+| 2 input-source instrument + a CHALLENGED pass (wsj/barrons re-mint already done in ae-5) | `HVST-af-2` | `af-2` | LOCAL A, WORLD B | `~91` | now |
+| 3 Z-S51 census fix + the FWD-14 depth table over gold | `HVST-af-3` | `af-3` | LOCAL (S3 reads) | `~90` | now |
+| 4 bbg date-ordered discovery (the census was measured in ae-5: wsj + bbg monthly sitemaps reach 2026-01) -> wire `discovery` into the collector's bbg/wsj listing + a live bbg job | `HVST-af-4` | `af-4` | LOCAL A, WORLD B | `~92` | now |
+
+**Fan-out: 3 workers over 3 independent chains, cap 3.** Write sets: `af-2` `input_source.py` (new) + its test +
+`verification.py`; `af-3` `depth_census.py` (new) + its test; `af-4` `publishers.py` (the bbg and wsj listing legs) +
+`discovery.py` + its test. Disjoint.
+
+**Checks dry-run at the base (all FAIL as expected):** `af-2.AC2` (no record), `af-3.AC2` (module absent), `af-4.AC2`
+(no record). AC1 of each order is the worker's plant test.
+
+**NOT cells:** the served gold rebuild (a SERVED act; COO half @534a521e45, CTO half asked) -- the issuer's act under
+the pair; a residential arm (Andrew's act).
+
+## 47. ROUND 34 -- L5 DECOMPOSITION v3.14, over the round-33 analysis (`ledger/ROUND_ANALYSIS.round33.md` @b25abce8d4)
+
+**Issuer `2.0.0_SA_COO~H`**, 2026-10-01 ~13:3xZ. FWD-14 (6 of 89 at 50+) and FWD-11 (bbg only) NOT MET; no defeat.
+Series **`ag`**. The sa and ft backfills (issuer, detached) keep running.
+
+| analysis item | cell | order | class | slot | dispatch |
+|---|---|---|---|---|---|
+| 1 wsj/barrons re-mint + a challenged pass under the monitor | `HVST-ag-1` | `ag-1` | WORLD | `~91` | now |
+| 2 ft and sa challenged passes under the monitor | `HVST-ag-2` | `ag-2` | LOCAL A (an ft solver if needed), WORLD B | `~90` | now |
+| 3 bbg/wsj sitemap discovery feeding the driver | `HVST-ag-3` | none: issuer direct act -- the collector's tab legs already list through the sitemaps (af-4) and the driver calls the collector; the act is the bbg and wsj driver runs in their own runtime roots (row Z-W91-S14: one job per runtime), recorded as `~92/ag3_runs.json` | WORLD | issuer | now |
+
+**Fan-out: 2 workers over 2 independent chains, cap 3** (cell 3 needs no worker). Write sets: `ag-1` the deliverables +
+`verification.py` (a slider fix only if needed); `ag-2` the deliverables + `verification.py` (an ft solver) + its test.
+`ag-1` and `ag-2` both MAY touch `verification.py` -> `ag-1` may not edit it (it records, it does not build); `ag-2` owns it.
+
+**Checks dry-run at the base (all FAIL as expected):** `ag-1.AC2` (no record), `ag-2.AC2` (no record), `ag-3.AC2` (no
+record).
+
+**Bounds shared by both orders:** one seat per publisher (ag-1: wsj, barrons; ag-2: ft, sa; the issuer's ag-3 runs
+take bbg and wsj -- so ag-1's wsj work runs FIRST, before the issuer's wsj driver run starts); the main runtime is
+held by the ft backfill and `~92`'s runtime by the sa backfill -> every live job runs in its own runtime root.
+
+## 48. ROUND 35 -- L5 DECOMPOSITION v3.15, over the round-34 analysis (`ledger/ROUND_ANALYSIS.round34.md` @6cbef26707)
+
+**Issuer `2.0.0_SA_COO~H`**, 2026-10-01 ~15:4xZ. FWD-11 limb 1 MET for bbg/wsj/barrons; limb 2 open on all five;
+FWD-14 unmet. Series **`ah`**. The sa, bbg and wsj drivers keep running; the ft driver is stopped (`STOP_FT`, 15:4xZ)
+so `ah-3` holds ft alone.
+
+| analysis item | cell | order | class | slot |
+|---|---|---|---|---|
+| 1 a real challenge DOM captured per publisher at load -> the planted fixture the real solver passes (limb 2b) | `HVST-ah-1` | `ah-1` | LOCAL A (capture hook), then the issuer drains A so the live drivers capture; B (fixture + solve test) | `~91` |
+| 2 per-minute monitor windows; any minute with human input VOID; the limb-2a grade per publisher | `HVST-ah-2` | `ah-2` | LOCAL | `~90` |
+| 3 ft: 324 of 357 rejected fetches in job 1 were `publisher_did_not_unlock_body` -- unlock the ft bodies | `HVST-ah-3` | `ah-3` | WORLD | `~92` |
+
+**Fan-out: 3 of 3 chains, cap 3.** Write sets are disjoint: `ah-1` `verification.py`, `transport.py`,
+`challenge_capture.py`, `fixtures/challenges/`; `ah-2` `load_window_grade.py`; `ah-3` `publishers.py`,
+`tab_transport.py`, `contracts.json`. Each cell has its own test file.
+
+**Checks dry-run at the base (all FAIL as expected):** `round35/checks/ah-1.AC2.py` (no captured fixture),
+`ah-2.AC2.py` (no grader), `ah-3.AC2.py` (no ft record).
+
+## 49. ROUND 36 -- L5 DECOMPOSITION v3.16, over the round-35 analysis (`ledger/ROUND_ANALYSIS.round35.md` @89539ccbc2)
+
+**Issuer `2.0.0_SA_COO~H`**, 2026-10-01 ~19:5xZ. Series **`ai`**. Rulings 1-4 shape the cells; ruling 2 (the overnight
+unattended run, 03:00-11:00Z) and ruling 6 (gold #3 at 20:00Z, #4 before Fri 13:00Z) are issuer acts; ruling 5 (the
+Andrew verbatim record) landed @72b72eb0cf / @db9e2f7d43.
+
+| analysis item | cell | order | class | slot |
+|---|---|---|---|---|
+| 1 limb 2a per minute, +/-1 guard band, 1,440 clean minutes, every clean-minute challenge passes | `HVST-ai-1` | `ai-1` | LOCAL | `~90` |
+| 2 ft session longevity; the ft driver returns only after a 2-hour run with no logout | `HVST-ai-2` | `ai-2` | WORLD | `~92` |
+| 3 capture-at-load armed on all five; same-vendor fixture equivalence for wsj/barrons; 2b reads OPEN (NO SAMPLE), never MET-BY-ABSENCE | `HVST-ai-3` | `ai-3` | LOCAL | `~91` |
+
+**Fan-out: 3 of 3 chains, cap 3.** The write sets are disjoint:
+- `ai-1`: `load_window_grade.py`.
+- `ai-2`: `publishers.py`, `tab_transport.py`, `worker.py`, `contracts.json`.
+- `ai-3`: `challenge_capture.py`, `verification.py`, `transport.py`.
+
+Each cell has its own test file.
+
+**Checks dry-run at the base (all FAIL as expected):** `round36/checks/ai-1.AC2.py` (the grader carries no
+per-minute fields), `ai-2.AC2.py` (no record), `ai-3.AC2.py` (no all-five status).

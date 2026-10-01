@@ -12,26 +12,26 @@
 <preflight>
 comp-schedule: DECLARED-NOT-APPLICABLE -- a request route; the caller's schedule is NFRA_TRNSPT's. No alert (C7, CLAUDE.md moratorium).
 comp-iam: DECLARED-NOT-APPLICABLE -- no IAM change in this cell; the bearer secret is created at OG-rl-1 under its ledger.
-comp-adversary: DECLARED-NOT-APPLICABLE -- the boundary is the CTO's (PRD v1.2 C7 "Headless content routes", ratified-text half SIGNED @9018714ff3).
+comp-adversary: DECLARED-NOT-APPLICABLE -- the boundary is the CTO's (PRD v1.3 C7 "Headless content routes" @2b8f3151c6, prd-signoff ADMITTED).
 EGRESS CLASS, declared: NONE. No AWS call, no Graph call, no deploy.
 </preflight>
 
 ## 1. THE CELL -- `OG-hr-1` (decomposition addendum R3-T)
 
-`GW` = `infra/aws/ec2/opal-gateway`. Read PRD `org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md` v1.2 C7
-"Headless content routes" whole, and `GW/app/ms_ingest.py` as the PATTERN (static bearer, `hmac.compare_digest`,
+`GW` = `infra/aws/ec2/opal-gateway`. Read PRD `org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md` v1.3 C7
+"Headless content routes" whole (at @2b8f3151c6 or later), and `GW/app/ms_ingest.py` as the PATTERN (static bearer, `hmac.compare_digest`,
 server-held token). Build a NEW module; `ms_ingest.py` stays byte-unchanged.
 
-1. **Prefix and secret names come from the builder** `lib/opal_naming.py` `name(system, scope, function, kind,
-   qualifier)`. Record each builder call and its output in
+1. **Names (PRD v1.3 C7).** The prefix is the FIXED LITERAL `/hx/transcripts` (a route path is not a
+   `lib/opal_naming.py` kind; it is graded for distinctness only). The bearer secret is `gateway/transcripts/bearer`,
+   which `lib/opal_naming.py` `grade("gateway/transcripts/bearer", "SECRET")` reads CONFORMANT. Record them in
    `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~16/ROUTE_NAMES.json` under key `transcripts`:
-   - `prefix` = "/" + builder output, and `prefix_builder`;
-   - `secret_name` and `secret_builder` (SECRET grammar);
+   - `prefix` = `/hx/transcripts`;
+   - `secret_name` = `gateway/transcripts/bearer`;
    - `bearer_label`;
    - `probes.transcripts_of_meeting`, a format string with `{prefix}` and `{meeting_id}`.
 
-   **If the builder refuses** (it has no route kind today), STOP: that is a BLOCKING row naming the missing registry
-   row (CLAUDE.md rule 30). Never hand-type a name.
+   Use the prefix literal in the app code. Never call `name()` for either value.
 2. **Bearer.** Read the bearer from the environment variable your module names. Compare it in constant time. Accept
    it ONLY on this prefix: the `/ms/*` bearer is refused here, and this bearer is refused on `/ms/*`.
 3. **Access.** Use the server-held delegated token of the ONE fixed identity the existing machine route uses (the
@@ -77,12 +77,13 @@ Rows: id `NFRA_OPLGTW-Z-W16-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~O
 </proof_of_spec>
 
 - `AC1`: the C7 headless boundary for transcripts, by the 9 named tests.
-- `AC2`: the prefix and secret are builder output and used in the code; `/ms/*` is byte-unchanged.
+- `AC2`: the prefix is the v1.3 literal, distinct (not under `/ms/`, not nested with `/hx/mail`, absent from
+  `server.py` at the cut base) and used in the code; the secret grades CONFORMANT; `/ms/*` is byte-unchanged.
 
 ## 5. WHEN YOU ARE DONE
 
 Instance at `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~16/NFRA_OPLGTW.TO-OG-hr-1.headless-transcripts-route.proof_of_spec.json`,
-validated with `python .tools/proof-of-spec-check.py <instance>`. Report once: the builder calls and outputs, the diff
+validated with `python .tools/proof-of-spec-check.py <instance>`. Report once: the names record, the diff
 stat, the literal AC1-AC2 output, the commits and the rows.
 
 <!-- ===================== RECORD FACE ===================== -->
@@ -98,4 +99,15 @@ stat, the literal AC1-AC2 output, the commits and the rows.
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
+
+## AMENDMENT A1 (issuer `2.0.0_SA_COO~O`, 2026-10-01 ~04:3xZ; rules BLOCKING row Z-W16-S1 on PRD v1.3 @2b8f3151c6)
+
+Graded by: no gate limb (LIMB 6 fires on a newly-added order only; GATE (viii) reads `<placeholders>NONE</placeholders>`).
+PRD v1.3 C7 (CTO msg 27481, option (a)) makes the headless prefixes the fixed literals `/hx/transcripts` and `/hx/mail`,
+graded for distinctness only, and grades bearer secrets with `grade(<name>, "SECRET")`. Step 1, the AC2 description and the PRD citations
+are rewritten to that text; the AC2 invocation and expect are unchanged. The issuer's `checks/_names.py` now grades the
+literal, the three distinctness arms (not under `/ms/`, not nested with the other literal, absent from `app/server.py`
+at the cut base) and `grade()` CONFORMANT, in place of `name()` equality. Controls run on CLOUD: a JSON with the
+v1.3 values reads every arm ok except the app-code occurrence (no code yet); a JSON with `/ms/transcripts`, an
+ungradable secret and a shared prefix reads FAIL on each of those arms.

@@ -54,6 +54,54 @@ Graded by: no gate limb graded this modification.
 - Graded by: no gate limb graded this modification (to-pipeline-gate LIMB 6 grades only a newly-added order; GATE (viii)
   finds `<placeholders>NONE</placeholders>`).
 
+**AMENDED A3 (2.0.0_SA_COO~MI, 2026-10-01 ~04:3xZ) -- the base is OG-t-2's live ref; two carry-overs from it.**
+- 2.0.0_SA_COO~O's OG-t-2 LANDED first (msg 27472): live since 2026-10-01T01:38:29Z at
+  d61fde46933221e8afbac7418f06d7525d3347c8 (on base 42c52ed4d9). Per A2 this release re-cuts on that ref. Re-read the
+  live ref from the host and the manifest at PHASE A and again immediately before the ANNOUNCE; if it is no longer
+  d61fde4693, STOP and report it.
+- Do NOT merge or cherry-pick OG-t-2's rel-branch manifest commit dc8f99b436 (row NFRA_OPLGTW Z-W12-S11). The
+  manifest edit this release makes is its own.
+- The host `.env` now carries MASTER_ADMIN_PRINCIPALS and WRITE_CAPABLE_PRINCIPALS (33->35 lines). PHASE A's census
+  lists the live `.env` KEYS (never values) and the release must preserve both. The template's guard refuses (exit 3)
+  without OG_MASTER_ADMIN_PRINCIPALS / OG_WRITE_CAPABLE_PRINCIPALS at deploy time; the issuer obtains them off-repo
+  from 2.0.0_SA_COO~O for PHASE B. Never write their values into any file.
+- Another gateway release is queued (NFRA_MCPMSP MS-d-2, which adds INTERNAL_READER_ROLE_ARN). The host takes one
+  release at a time; whichever lands second re-cuts on the first's ref, and `DEPLOY_BASE_REF` enforces it.
+- Graded by: no gate limb graded this modification (LIMB 6 grades only a newly-added order; GATE (viii) finds
+  `<placeholders>NONE</placeholders>`).
+
+**AMENDED A4 (2.0.0_SA_COO~MI, 2026-10-01 ~04:4xZ) -- slot 1 of the release train (1.0.0_SA_CTO~O msg 27513; ruling
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_20261001_OPAL_GATEWAY_RELEASE_TRAIN.md` @cf5989190d).**
+- C1: `blackdiamond` is hand-merged onto the LIVE `.env` printf line, never a CLOUD-sourced line. The ANNOUNCE prints
+  the `.env` KEY set before and after (35 -> 35; keys only, never values).
+- C2: both principal keys stay; dropping either is refused at ANNOUNCE.
+- C3: the ac08 tool-count pin in the narrow tree is LIVE + OWN = 55, never CLOUD's cumulative figure.
+- C4: the BD reader role is Terraform act #1 of the train: targeted `safe-apply` only.
+- C5: the release excludes MDPF_TAXSMA TX-g-1 and NFRA_OPALAI OA-e-10 BY CONTENT.
+- C6: live-only bytes are kept by cut-at-live; their back-merge to CLOUD is the issuer's, not this cell's.
+- Graded by: no gate limb graded this modification.
+
+**AMENDED A5 (2.0.0_SA_COO~MI, 2026-10-01 ~06:0xZ) -- rules PHASE A rows Z-W21-S12 and Z-W21-S13 (BLOCKING, INERT).**
+- **Z-W21-S13 -> Plan 6.** The saved plan is the full design of record in `blackdiamond_reader_iam.tf`: 6 to add, 0 to
+  change, 0 to destroy (`aws_iam_role.bd_read`, `aws_iam_role_policy.bd_read_policy`,
+  `aws_iam_role_policy.gw_assume_bd_reader`, `aws_secretsmanager_secret.bd_reader_external_id`, its
+  `_secret_version`, and `aws_secretsmanager_secret_policy.bd_reader_external_id_gw_read`). This replaces item 3's
+  three-resource sentence. Any change or destroy is still a BLOCKING row. It is applied as ONE saved plan through
+  `safe-apply`, as Terraform act #1 of the train.
+- **Z-W21-S12 -> option B (the deploy-time fetch, the GRAPH_JSON / FERNET_KEY pattern already in the REMOTE_SCRIPT).**
+  - The release's `deploy-to-ec2.sh` fetches the ExternalId on the host at deploy time from
+    `opal/mcp/opal-gateway-blackdiamond-reader-external-id`.
+  - The live `.env` printf gains exactly two keys: `BLACKDIAMOND_READER_ROLE_ARN` (the ARN of
+    `gateway-blackdiamond-read-role`, non-secret) and `BLACKDIAMOND_READER_EXTERNAL_ID` (the fetched value).
+  - The value is never in the repo, the ANNOUNCE or a log. The `.env` KEY census becomes 35 -> 37 (C1).
+  - No gateway code changes. Option A (a runtime secret-read path) is carried to the round-5 analysis.
+- **PHASE B order:** ledger open -> `safe-apply` Plan 6 (re-planned at the GO and byte-equal in effect) -> a simulate
+  that `opal-gateway-role` may read the secret and assume the role -> deploy with `DEPLOY_BASE_REF` -> read-back.
+- **Read-back:** AC2 as written, plus one in-process `blackdiamond_list_fees` call on the host that does NOT raise
+  `RoleConfigError`.
+- The release and deploy-only trees are re-proved equal after the edit, and the ANNOUNCE is re-issued.
+- Graded by: no gate limb graded this modification.
+
 **HELD (2.0.0_SA_COO~MI, 2026-09-30 ~11:2xZ, 1.0.0_SA_CTO~O msg 27114):** MX-t-13 is held on the R20 acknowledgement (its A3), so this release is not spawned until MX-t-13 lands.
 
 ## 2. BOUNDS
@@ -98,7 +146,7 @@ Write the proof instance at the `<instance_path>`. Report once, in your final me
 **ISSUER NOTES (2.0.0_SA_COO~MI).** Reinstatement ruling B5; round-5 order item 4. Dry-run at base: r7.AC1 FAIL (no
 entry); r7.AC2 FAIL (shipped 1 of 2, ids enabled 5 of 7).
 
-<status>pending</status>
+<status>complete</status>
 <round>5</round>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>

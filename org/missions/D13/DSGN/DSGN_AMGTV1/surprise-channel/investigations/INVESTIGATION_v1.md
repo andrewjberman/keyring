@@ -645,6 +645,180 @@
  "disarm_owner": "2.0.0_SA_COO~D",
  "spec_asserts": "AV-k-4 / ruling 5 with ruling 1: Exec's empty sentence reads the served reason in words; no code on the face (portal DESIGN.md design law; FWD-11).",
  "world_is": "The live served management reason carries an interface code (M-1) and producer vocabulary (\"management object has landed\"); reasonWords drops code lists in parentheses and lowercases ALL-CAPS names but keeps a letter-dash-digit code. Round-15 input: the shared mapping drops interface codes of that shape (and the fixtures are refreshed from the live reasons), or the producer serves a reader sentence -- the CTO's call at the round-14 analysis."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W56-S1",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~56",
+ "surfaced_at": "2026-10-01T06:26Z",
+ "one_line": "AV-f-2's cell text names the bubble attribute data-chatter-bubble; the graded check bubbles.cjs reads data-bubble, so I carry both attributes on each circle.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/2.0.0_SA_COO~D/round15/checks/bubbles.cjs bubblesIn(): the regex requires an element carrying data-bubble=\"<security_key>\"; the order's cell text (item 1) says data-chatter-bubble=\"<security_key>\"",
+   "portal/src/pages/SecurityAnalysis/components/ChatterBubbles.tsx @5cbbdfcd: the circle carries data-bubble and data-chatter-bubble with the same value; bubbles.cjs 3 of 3 arms with both"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "2.0.0_SA_COO~D",
+ "spec_asserts": "AV-f-2 item 1: each bubble is an SVG circle carrying data-chatter-bubble=\"<security_key>\".",
+ "world_is": "The issuer's check (the order's AC1 oracle) matches only data-bubble; carrying both satisfies the cell text and the check. The round-16 cut can name one attribute."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W56-S2",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~56",
+ "surfaced_at": "2026-10-01T06:27Z",
+ "one_line": "AV-f-2 says Chatter renders bubbles and nothing else, but the granted harness claims (errorEmpty starred cases, leadPanelPattern source_footer and stale_dated_said) still read a StarredList and the ranking SourceCaption under subject Chatter, so two paths keep them.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "portal/src/pages/SecurityAnalysis/__harness__/errorEmpty.harness.cjs:155-264 (props subject CHATTER; starredOnly cases render the real LeadPanel and expect StarredList)",
+   "portal/src/pages/SecurityAnalysis/__harness__/leadPanelPattern.harness.cjs:197-209 and :340-380 (universeHtml is LeadPanel on CHATTER with useCollectedChatter stubbed to data undefined; source_footer wants exactly one Source: line and stale_dated_said wants the ranking disclosure)",
+   "portal/src/pages/SecurityAnalysis/components/LeadPanel.tsx @5cbbdfcd: Chatter with Starred only on renders StarredList (unchanged branch); the ranking SourceCaption renders under Chatter whenever the bubbles payload is not served; once it is served the footer is the one bubbles line (articles collected per month, from the harvest, and the as_of)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "2.0.0_SA_COO~D",
+ "spec_asserts": "AV-f-2 item 3: subject Chatter renders ChatterBubbles and NOTHING else (no list, no line chart, no toggle); the footer under the bubbles names the source in words and the served as_of.",
+ "world_is": "With Starred only on, Chatter shows the starred list, not bubbles (the granted harnesses keep that branch green). With the bubbles payload unserved, Chatter shows the designed empty state plus the ranking source caption. With the payload served and Starred only off, the face is bubbles and the bubbles footer only (bubbles.cjs arm 1: 0 list, 0 line chart, 0 toggle). A bubbles-only Starred reading would need the four harness claims re-anchored again."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W56-S3",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~56",
+ "surfaced_at": "2026-10-01T06:55Z",
+ "one_line": "AV-f-3 amendment 1 says the chatter face never renders the ranking SourceCaption, but with the bubbles payload unserved I still render it, because the bound harnesses (tabs generation_captions_present, leadPanelPattern source_footer and stale_dated_said, errorEmpty) read it there and only leadPanelPattern is in my paths.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "portal/src/pages/SecurityAnalysis/components/LeadPanel.tsx @424dbd27: footer is the bubbles line when the s.1 payload is served, else ResolutionNote + SourceCaption (the AV-f-2 fallback)",
+   "measured on the worktree: with the footer empty for Chatter-unserved, bound.cjs F3 read 1 of 4 (leadPanelPattern, errorEmpty, tabs RED; the tabs failure is generation_captions_present); restoring the fallback reads 4 of 4 with 0 other change; the same three read 15/12/20 green on the pre-work portal HEAD",
+   "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/2.0.0_SA_COO~D/round15/checks/bubbles.cjs grades no unserved-payload or Starred-on footer, so amendment 1's footer clause is graded by no check"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "2.0.0_SA_COO~D",
+ "spec_asserts": "AV-f-3 amendment 1: the chatter face never renders the ranking SourceCaption; AC3: the four bound harnesses stay green (leadPanelPattern:15, errorEmpty:12, tabs:20, shell:10).",
+ "world_is": "Served bubbles (Starred only on or off) carry the bubbles footer only. A Chatter face with no served payload (loading, read failure, not the s.1 shape) shows its designed empty state plus the ranking caption, so AC3 reads 4 of 4. A literal reading needs the tabs and errorEmpty harnesses (outside this order's paths) re-anchored to render Chatter with a served payload."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W56-S4",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~56",
+ "surfaced_at": "2026-10-01T06:56Z",
+ "one_line": "With StarredList gone from the chatter face, errorEmpty's starred-case checks (unresolved_row_navigates, a_click_sent_a_ticker, error_claims_no_daily_row, each expected false) pass because no row renders, so they no longer grade the starred list's behaviour; AC3 reads green on them by absence.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "portal/src/pages/SecurityAnalysis/__harness__/errorEmpty.harness.cjs:155-264 and its expected block: three checks expect false, one expects starred_error_differs_from_starred_empty true",
+   "portal/src/pages/SecurityAnalysis/components/LeadPanel.tsx @424dbd27: StarredList is no longer imported; errorEmpty read 12 of 12 with it absent, so the false-expected checks are met by no row and the one true check is met by the differing ranking footers"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "2.0.0_SA_COO~D",
+ "spec_asserts": "AC3: errorEmpty.harness.cjs:12 green means the starred error and empty states still read as designed.",
+ "world_is": "The harness is green but its starred-state claims are not exercised on a StarredList; the round-16 cut can retire the StarredList claims or re-point them at the bubbles' starred empty state."
+},
+{
+ "id": "DSGN_AMGTV1-Z-S10",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~D",
+ "surfaced_at": "2026-10-01T07:05Z",
+ "one_line": "The round-15 close walk is VOID: after a 200 login the next full page load calls POST /auth/refresh with the session cookie and the shared auth backend (CloudFront d2n2nzpeqf34ge) answers HTTP 500, so the app lands on /login. Any reload of a protected page signs the user out.",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "tmp/ui-walk/20261001T070037Z/netlog.tsv (site Z): line 85 POST 200 /auth/login, 86 GET 200 /auth/me, 180 GET 200 /security-analysis (full load), 259 and 263 POST 500 /auth/refresh",
+   "curl -X POST http://localhost:5174/auth/refresh without a cookie: 401 {\"error\":\"No refresh token\"} (the route is up; the 500 is on a cookie-bearing refresh)",
+   "round-14 walk N (tmp/ui-walk/20260930T235353Z, 2026-09-30 23:53Z) navigated the same routes signed in with 0 API issues: the refresh path worked then",
+   "5174 = C:/tmp/amgt-walk-5174 at 93134bae (tree = portal DEV f4adf790), dev server restarted after a reboot (CTO~Z msg 27581); /auth proxies to https://d2n2nzpeqf34ge.cloudfront.net (vite.config.ts:86)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "1.0.0_SA_CTO~Z",
+ "spec_asserts": "The close walk is the one real run of round 15 (decomposition v15 battery); a signed-in session survives a page load (FWD-1 hop 1, real login).",
+ "world_is": "The shared auth refresh answers 500 on a cookie-bearing request; the walk cannot leave the first page signed in, so no signed-in walk of the round-15 faces exists. Owner: the auth backend's writer (not DSGN, which owns presentation only); routed to 1.0.0_SA_CTO~Z for placement. The Friday walk 18:00-21:00 ET and the PROD demo depend on it."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W61-S1",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~61",
+ "surfaced_at": "2026-10-01T08:20Z",
+ "one_line": "The assignment names deliverables/0.9.0_WK_DSGN_AMGTV1~60/ as the proof-instance model, but that folder is absent from this worktree (HEAD 8b8ca27187); the highest present is ~58, so the instance is modelled on ~58's AV-f-4 instance.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "ls org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/ at 8b8ca27187: 0.9.0_WK_DSGN_AMGTV1~1 through ~58, no ~60 (ls rc=2 on the named path)",
+   "modelled on deliverables/0.9.0_WK_DSGN_AMGTV1~58/DSGN_AMGTV1.TO-AV-f-4.the-header-reads-its-numbers.proof_of_spec.json"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "2.0.0_SA_COO~D",
+ "spec_asserts": "Proof instance modelled on org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~60/*.proof_of_spec.json.",
+ "world_is": "The ~60 instance is not on this branch (an unmerged worker branch or a different slot); the schema, not the model, is the binding form and proof-of-spec-check reads the instance."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W65-S1",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~65",
+ "surfaced_at": "2026-10-01T10:30Z",
+ "one_line": "AV-i-2 could not be built as specified alone: round15 _load.cjs wraps a stubbed hook's return in {data}, so headerline.cjs only sees the monthly set through data.data, and tabs.harness.cjs counts >=2 data-generation-caption per header (chatter + price), which the removed legacy chatter caption supplied.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "round15/checks/_load.cjs:91-92 hookState.impl[key] result is wrapped as { data: <result> }; headerline.cjs:70 returns the wrapper itself as the set",
+   "tabs.harness.cjs:324,586 tally.captionsSecurityMode >= 2 * n; first run after the edit: CHECKS-WRONG-WAY generation_captions_present, I2 BOUND 3 of 4",
+   "resolved in portal f049ec3c: collectedChatterWords reads through a wrapped { data }; the chatter span keeps data-generation-caption/-detail of the chatter axis (data attributes only, no visible legacy text)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "2.0.0_SA_COO~D",
+ "spec_asserts": "Replace the chatter GenerationCaption with the monthly read; no harness may change; AC1 3 of 3 and AC3 4 of 4 green.",
+ "world_is": "A plain k-of-n span fails headerline arm 1 (wrapper shape) and tabs.harness (caption count); the span carries the chatter generation as data attributes and unwraps a stub-shaped data."
+},
+{
+ "id": "DSGN_AMGTV1-Z-S11",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~D",
+ "surfaced_at": "2026-10-01T16:47Z",
+ "one_line": "walk.mjs's occluded-popover check reads 9 of 9 covered on every pointer-events-none tooltip: document.elementFromPoint skips such elements, so an open, unobstructed figure tooltip is always reported occluded.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   ".claude/skills/ui-walk/walk.mjs:102-111 samples 9 points with document.elementFromPoint and counts any hit outside the popover; StatTile.tsx FigureTooltip carries className pointer-events-none",
+   "round21/checks/hoverprobe.mjs first run (walk/hover-20261001T160250Z): COVER 9 of 9 on all 7 visible tooltips; with the tooltip subtree's pointer events on for the hit-test only, 0 of 9 on every tooltip (walk/hover-20261001T163908Z, BA 13 of 13 clean)",
+   "tmp/ui-walk/20261001T164049Z UIW-...-006 occluded-popover 9 of 9 on shot 010, where the tooltip is visibly unobstructed inside the Financials pop-up"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "2.0.0_SA_COO~D",
+ "spec_asserts": "An occluded-popover finding means another element covers an open popover (walk.mjs check 1: 'dropdowns behind nav bars').",
+ "world_is": "For a pointer-events-none popover the finding is produced by the instrument, not the page; DSGN rounds 20-21 read it as a false positive and graded occlusion with hoverprobe.mjs's corrected hit-test instead. walk.mjs is not this seat's to edit."
 }
 ]
 ```

@@ -12,22 +12,23 @@
 <preflight>
 comp-schedule: DECLARED-NOT-APPLICABLE -- a request route; the daily pull's schedule is NFRA_TRNSPT's. No alert (C7).
 comp-iam: DECLARED-NOT-APPLICABLE -- no IAM change in this cell; the bearer secret is created at OG-rl-1 under its ledger.
-comp-adversary: DECLARED-NOT-APPLICABLE -- the boundary is the CTO's (PRD v1.2 C7 @c9fd271499: sender table only, no thread reach; PDF bytes only).
+comp-adversary: DECLARED-NOT-APPLICABLE -- the boundary is the CTO's (PRD v1.3 C7 @2b8f3151c6: sender table only, no thread reach; PDF bytes only).
 EGRESS CLASS, declared: NONE. No AWS call, no Graph call, no deploy.
 </preflight>
 
 ## 1. THE CELL -- `OG-hr-2` (decomposition addendum R3-T)
 
-`GW` = `infra/aws/ec2/opal-gateway`. Read PRD `org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md` v1.2 C7
-"Headless content routes" whole AT @c9fd271499 OR LATER. The mail clause there has NO `conversationId` thread reach.
+`GW` = `infra/aws/ec2/opal-gateway`. Read PRD `org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md` v1.3 C7
+"Headless content routes" whole AT @2b8f3151c6 OR LATER. The mail clause there has NO `conversationId` thread reach.
 Build on the same pattern as `OG-hr-1` (your queue position 1, same worktree), with a SECOND prefix and bearer.
 
-1. **Names.** Add key `mail` to `deliverables/0.9.0_WK_NFRA_OPLGTW~16/ROUTE_NAMES.json`, built the same way:
-   - `prefix` + `prefix_builder`, `secret_name` + `secret_builder`, `bearer_label`;
+1. **Names (PRD v1.3 C7).** Add key `mail` to `deliverables/0.9.0_WK_NFRA_OPLGTW~16/ROUTE_NAMES.json`:
+   - `prefix` = the FIXED LITERAL `/hx/mail`; `secret_name` = `gateway/mail/bearer` (`grade(..., "SECRET")` reads
+     CONFORMANT); `bearer_label`;
    - `probes.message`, with `{prefix}` and `{message_id}`;
    - `probes.attachment`, with `{prefix}`, `{message_id}` and `{attachment_id}`.
 
-   A builder refusal is a BLOCKING row (rule 30).
+   Use the prefix literal in the app code. Never call `name()` for either value.
 2. **Bearer.** Its own bearer, compared in constant time and accepted only on this prefix. The transcripts bearer and
    the `/ms/*` bearer are refused here.
 3. **Senders.** ONLY messages whose sender address is on the SENDER TABLE are served.
@@ -75,12 +76,13 @@ Rows: id `NFRA_OPLGTW-Z-W16-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~O
 </proof_of_spec>
 
 - `AC1`: the C7 mail boundary (sender table only, no thread reach, PDF bytes only), by the 10 named tests.
-- `AC2`: the prefix and secret are builder output, distinct from the transcripts route's; `/ms/*` is byte-unchanged.
+- `AC2`: the prefix is the v1.3 literal, distinct (not under `/ms/`, not nested with `/hx/transcripts`, absent from
+  `server.py` at the cut base) and used in the code; the secret grades CONFORMANT; `/ms/*` is byte-unchanged.
 
 ## 5. WHEN YOU ARE DONE
 
 Instance at `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~16/NFRA_OPLGTW.TO-OG-hr-2.headless-mail-route.proof_of_spec.json`,
-validated with `python .tools/proof-of-spec-check.py <instance>`. Report once: the builder calls and outputs, the diff
+validated with `python .tools/proof-of-spec-check.py <instance>`. Report once: the names record, the diff
 stat, the literal AC1-AC2 output, the commits and the rows.
 
 <!-- ===================== RECORD FACE ===================== -->
@@ -96,3 +98,16 @@ stat, the literal AC1-AC2 output, the commits and the rows.
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+
+## AMENDMENT A1 (issuer `2.0.0_SA_COO~O`, 2026-10-01 ~04:3xZ; rules BLOCKING row Z-W16-S1 on PRD v1.3 @2b8f3151c6)
+
+Graded by: no gate limb (LIMB 6 fires on a newly-added order only; GATE (viii) reads `<placeholders>NONE</placeholders>`).
+PRD v1.3 C7 (CTO msg 27481, option (a)) makes the headless prefixes the fixed literals `/hx/transcripts` and `/hx/mail`,
+graded for distinctness only, and grades bearer secrets with `grade(<name>, "SECRET")`. Step 1 and the AC2 description
+are rewritten to that text; the AC2 invocation and expect are unchanged. The issuer's `checks/_names.py` now grades the
+literal, the three distinctness arms (not under `/ms/`, not nested with the other literal, absent from `app/server.py`
+at the cut base) and `grade()` CONFORMANT, in place of `name()` equality. Controls run on CLOUD: a JSON with the
+v1.3 values reads every arm ok except the app-code occurrence (no code yet); a JSON with `/ms/transcripts`, an
+ungradable secret and a shared prefix reads FAIL on each of those arms.
+<status>pending</status>
+<status>complete</status>

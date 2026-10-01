@@ -5537,3 +5537,1084 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S26",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-01T04:35Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Both adjudicated rows have an owning order now. Z-W16-S1: PRD v1.3 C7 (CTO msg 27481, option (a)) makes the prefixes the fixed literals /hx/transcripts and /hx/mail and grades secrets with grade(); amendment A1 on OG-hr-1 and OG-hr-2 rewrites step 1 and the issuer's checks/_names.py to that text. Z-W17-S1: CTO ruling (c) ROTATE; amendment A1 on OG-rl-1 rotates blackdiamond/cot/otp-gateway-token in that release, with a refused-old / accepted-new verify.",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W16-S1",
+    "NFRA_OPLGTW-Z-W17-S1"
+  ],
+  "one_line": "The route-name block (W16-S1) is ruled by PRD v1.3 and amended into OG-hr-1/hr-2; the printed .env value (W17-S1) is the cot OTP bearer and is rotated at OG-rl-1.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "PRD org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md v1.3 addendum @2b8f3151c6; prd-signoff.py status NFRA_OPLGTW -> ADMITTED.",
+      "checks/_names.py controls on CLOUD: the v1.3 values read every arm ok except the app-code occurrence (no code yet); /ms/transcripts, an ungradable secret and a shared prefix each read FAIL.",
+      "Live render template d61fde4693 deploy-to-ec2.sh line 296: .env line 14 is OTP_BEARER=%s, filled with \"$OTP_BEARER_49F $OTP_BEARER_COT\" unquoted; sourcing it under bash runs the second token as a command, so the printed 64-hex value is the cot token (blackdiamond/cot/otp-gateway-token).",
+      "CTO rulings (c) and (d): org/missions/D9/NFRA/NFRA_OPLGTW/project.json blocking, tick-1 prefix (msg 27490)."
+    ]
+  },
+  "spec_asserts": "TO-OG-hr-1 step 1 (pre-A1): names are lib/opal_naming.py name() output. TO-OG-lt-1: a read-only measurement prints no secret.",
+  "world_is": "name() has no route kind (now ruled out of the contract), and one cot OTP bearer value appeared once in a worker's SSM output (rotation now ordered).",
+  "notes": "Z-S24 stays ARMED until OG-rl-1 serves the host-side roster read (CTO ruling R4); OG-pr-1 creates the secret and grant first (R3).",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W18-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~18",
+  "surfaced_at": "2026-10-01T05:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "A plain or -target plan of infra/aws/terraform/opal-gateway cannot reach the expected missing-secrets refusal in a fresh worktree: two required variables and two untracked build artifacts stop it first.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "terraform plan on infra/aws/terraform/opal-gateway @6903868aa7 fails first on 'No value for required variable' mcportal_owner_key_claim and mcportal_owner_key (mcportal_grant_writer.tf:142,151; no default, no tfvars file).",
+      "With the two variables set, plan fails on mcportal_grant_writer.tf:53 filebase64sha256 of infra/aws/lambda/layers/mcportal-grant-writer-deps/.build/mcportal-grant-writer-deps.zip (untracked build output); -target=aws_iam_role_policy.gw_gateway_read_secrets does not avoid it.",
+      "Reading achieved in a scratch mirror under .scratch/planmirror (tracked tf, modules, logic registry, two liveness lambda dirs, dummy build files, placeholder variable values): the three data sources fail 'couldn't find resource', the expected refusal. The mirror is not the apply path.",
+      "Phase B's targeted safe-apply in the worktree will meet the same two stops: it needs the two variable values and the .build files (or the CLOUD-HEAD checkout that carries them)."
+    ]
+  },
+  "spec_asserts": "TO-OG-pr-1 PHASE A step 3: safe-apply plan on infra/aws/terraform/opal-gateway refuses on the missing secrets.",
+  "world_is": "The plan refuses first on unset required variables and absent build artifacts; the missing-secrets refusal is reached only with placeholders and dummy artifacts.",
+  "notes": "Phase B needs a ruling on how the targeted apply is fed: real owner-key values (not mine to hold) or a targeted apply that does not evaluate the grant-writer files.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S27",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-01T05:25Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Ruled by the issuer in amendment A1 on TO-OG-pr-1: the targeted apply is fed as OG-n-1's was -- owner-key variables read from the live grant-writer Lambda into TF_VAR_* (never printed), the grant writer's staged build made by its own build_package.py, and the deps-layer zip copied from the main tree's untracked build output. None of those resources is targeted; the 1/0/0 plan reading guards against spill.",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W18-S1"
+  ],
+  "one_line": "How OG-pr-1's targeted apply is fed (row W18-S1) is ruled by amendment A1, on the OG-n-1 precedent.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-n-1 proof AC2 invocation: TF_VAR_mcportal_owner_key_claim=sub TF_VAR_mcportal_owner_key=$(aws lambda get-function-configuration --function-name mcportal-grant-writer-lambda ... MCPORTAL_OWNER_KEY) -> targeted plan rc=0.",
+      "infra/aws/terraform/opal-gateway/mcportal_grant_writer.tf: source_dir .../mcportal-grant-writer-lambda/.build/staged (made by build_package.py) and filename .../layers/mcportal-grant-writer-deps/.build/mcportal-grant-writer-deps.zip (present untracked in the main tree)."
+    ]
+  },
+  "spec_asserts": "TO-OG-pr-1 PHASE B step 6: a targeted safe-apply of the one role policy.",
+  "world_is": "The root requires two variables without defaults and two build outputs before any plan; the order now names their source.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S8",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-01T05:12Z",
+  "one_line": "ml1.AC2.sh counts the four C7 read_email fields with a single-line grep over '$select' lines, which scores 0 of 4 on the adopted code because 5ec089b9a1 splits the $select string across three source lines; the worker joined it to one line (behaviour identical).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CHECK: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/trnspt/checks/ml1.AC2.sh: grep -E '\\$select' tools.py | grep -q $fld, per field -- line-bound.",
+      "CODE: gw-f1-read-email-fields 5ec089b9a1 infra/aws/ec2/opal-gateway/app/tools.py read_email: the $select string continues on two further lines, so ccRecipients/internetMessageId/conversationId/sentDateTime are not on a line containing '$select'.",
+      "RUN: first AC2 run on the adopted code printed 'read_email $select fields present 0 of 4' with test_ogz2_ac08 rc=0 and REG 2 of 2; the worker's one-line join makes it 4 of 4 with no change to the Graph request."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AC2: read_email's $select carries the 4 C7 fields, counted by a line-bound grep; the adopted branch code is taken as reviewed.",
+  "world_is": "The adopted code carries all four fields (plus bcc, hasAttachments) but on continuation lines; the check could not see them. The worker joined the string to one 150-character line in app/tools.py (inside paths) rather than edit the issuer's check.",
+  "notes": "INERT: layout only. The issuer may instead make the check read the whole read_email function; either is valid.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S28",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-01T05:45Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Z-W15-S8: the worker joined read_email's $select string onto one source line so the issuer's line-based ml1.AC2 grep could read it; the Graph request is byte-identical and ml1.AC2 PASSES on CLOUD after the drain (@4ca87da779). OG-ml-1 is complete; the grep's line-shape limit is recorded here and the check is not re-cut. Separately, the issuer's own hr1/hr2.AC2 cut base read the merge-base with CLOUD, which after a drain contains the cell's own route and read a false collision on CLOUD; fixed in this commit to the parent of the commit that added the route module (hr1.AC2 PASS on CLOUD and on the worker branch).",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W15-S8"
+  ],
+  "one_line": "OG-ml-1's one-line $select reformat (W15-S8) is behaviour-identical and its AC2 passes on CLOUD; the issuer's hr AC2 cut base is fixed to grade the same before and after a drain.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ml1.AC2.sh on CLOUD @4ca87da779: REG 2 of 2; SCOPES same; ac08 1 passed; $select fields present 4 of 4; pypdf pins 1; LD-0613 changed 0; RESULT: PASS.",
+      "hr1.AC2.sh on CLOUD @43f34bae73 before the fix: prefix occurrences in server.py at base 43f34bae73: 1 (the drain commit itself) -> NAMES FAIL; after the fix: at base 6903868aa7: 0 -> RESULT: PASS."
+    ]
+  },
+  "spec_asserts": "TO-OG-ml-1 AC2 and TO-OG-hr-1 AC2 read the same verdict on the worker branch and on CLOUD.",
+  "world_is": "Both checks read source shape (one grep line; one merge-base); both are now graded consistently.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S9",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-01T06:45Z",
+  "one_line": "OG-rl-1 step 3 counts 4 new + 3 adopted test files; the four cells add 6 new gateway test files.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "GIT: git show --stat 9fcd257fbd a7c70dc5b2 2fbc683db9 adc979b13b 1afce6312e -- infra/aws/ec2/opal-gateway/tests: 6 files with status A.",
+      "RUN: /c/tmp/og-rel3 pytest of the 6 files, AUDIT_PATH isolated: 46 passed, rc 0 (org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~15/ANNOUNCE_OG-rl-1.md step 3)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 3: 'the build cells' 4 new test files plus the 3 adopted ones' (7 files).",
+  "world_is": "OG-tx-1 adds test_transcript_tools.py, OG-hr-1 test_transcript_route.py, OG-hr-2 test_mail_route.py, OG-ml-1 test_inspect_email_attachment.py, test_list_email_filtered.py and test_read_email_fields.py: 6 new files, plus the modified test_entitlement_admin.py. All 6 were run (46 passed) with ac08 and ratelimit.",
+  "notes": "INERT: a miscount in the order text; nothing was left unrun.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S10",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-01T06:45Z",
+  "one_line": "The four cells' gateway commits do not apply cleanly to live d61fde4693: 3 of 16 files conflicted and were resolved by hand to live plus the cells' own additions.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: per-file git merge-file of 9fcd257fbd a7c70dc5b2 2fbc683db9 adc979b13b 1afce6312e onto d61fde4693: 5 conflict reports across the 3 files; the other 13 files merged clean.",
+      "GIT: git diff --stat d61fde4693 f12f874154 -- infra/aws/ec2/opal-gateway at /c/tmp/og-rel3: 17 files, 1989 insertions, 39 deletions; 0 paths outside the gateway directory (org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~15/ANNOUNCE_OG-rl-1.md step 2)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 2: apply the cells' gateway commits to the live tree by diff, oldest first, census naming only files the cells changed.",
+  "world_is": "CLOUD carries MX-t-13 (blackdiamond_list_fees), MX-t-10, MS-sg-1 and OA-e-10 changes that live lacks, so destructive_ops.py, server.py and tests/test_entitlement_admin.py conflicted (git apply --3way and git merge-file). Each resolved to live bytes plus only the cell's additions; the ac08 count is LIVE 53 + OWN 5 = 58 (C3). Per-file +/- of the release equals the sum of the cells' own numstats.",
+  "notes": "INERT: the hand resolutions are additive and census-checked; the release HEAD f12f874154 is the artifact to grade.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S11",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-01T06:45Z",
+  "one_line": "On the release tree tests/test_browser_oidc.py::test_oga3_ac07 fails (KeyError 'transcript_route'), a test that passes on live; it already fails on CLOUD with KeyError 'taxsma_workbook'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: /c/tmp/og-rel3 pytest tests/test_browser_oidc.py::test_oga3_ac07 -> FAILED KeyError: 'transcript_route' (tests/test_browser_oidc.py:374).",
+      "RUN: /c/tmp/wk-oplgtw-15 (CLOUD @0110c22ed5) same test -> FAILED KeyError: 'taxsma_workbook'; /c/tmp/og-rb3 (live) tests/test_browser_oidc.py -> 6 passed, 1 failed (test_oga3_ac01 FileNotFoundError)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 3 names seven test files plus ac08 and ratelimit; the release is narrow and its census admits only files the cells changed.",
+  "world_is": "OG-hr-1 adds Route(transcript_route.LIST_ROUTE, ...) to server.py. test_browser_oidc._declared_routes resolves a non-literal route path only through names {oauth_as, browser_oidc}, so test_oga3_ac07 raises KeyError. On live alone test_oga3_ac07 passes (the file run reads 6 passed, 1 failed, and the 1 failed is test_oga3_ac01, a FileNotFoundError); on the release ac07 fails alone. tests/ is not in the artifact, and the file is outside the census, so it was not edited.",
+  "notes": "INERT for the host (a test file, not shipped). The issuer may add the two module names to the test's name map as its own cut; whole-suite runs on live and release are order-dependent (35 StreamableHTTP errors on both).",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S12",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-01T06:45Z",
+  "one_line": "Rolling back with the LIVE template needs OG_MASTER_ADMIN_PRINCIPALS and OG_WRITE_CAPABLE_PRINCIPALS in the deploying shell; the release template no longer takes them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CODE: git show d61fde4693:infra/aws/ec2/opal-gateway/deploy-to-ec2.sh lines 133-145 (OG_MASTER_ADMIN_PRINCIPALS at line 135): ': \"${OG_MASTER_ADMIN_PRINCIPALS:?REFUSED (no upload) ...}\"' and the pair checks.",
+      "DOC: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~15/ANNOUNCE_OG-rl-1.md step 6 names the command with the two variables."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 6: name the re-deploy command with DEPLOY_BASE_REF for the rollback built from the live ref.",
+  "world_is": "The live d61fde4693 template carries the OG-t-2 guard that refuses (exit 3, before any upload) unless both variables are set to valid pairs. A rollback therefore needs them from the Part D record (org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/PART_D_RECORD_20260930.md). The rollback renders the old 35-key .env.",
+  "notes": "ARMED because a rollback under a failed verify would refuse until those values are in the shell; fail-closed, no host change. Disarm: the issuer holds the two values from the Part D record at GO, or cuts the rollback tree with the release's host-side read.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S13",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-01T06:45Z",
+  "one_line": "The cot OTP bearer's second presenter, the cot box script, reads the secret per call in the repo copy, but the deployed copy on cot-exporter (stopped, not SSM-registered) could not be read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CODE: infra/aws/ec2/bd-cot-auto-login/bd_49f_auto_login.js:42-47,187 (smGet shells to aws secretsmanager get-secret-value per call).",
+      "IAM: git grep HEAD infra/aws/terraform: cot-pipeline/iam.tf:302 is the only role-level read of blackdiamond/cot/otp-gateway-token besides opal-gateway-golive.",
+      "RUN: aws ssm send-command --instance-ids i-0643a5bee8a8feabf -> InvalidInstanceId (instance state stopped, ec2 describe-instances)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 4 rotation (CTO ruling (c), row Z-W17-S1): read every presenter of the cot bearer, whether each reads per call or caches, and name a non-mutating /otp/* probe; a presenter that caches is BLOCKING.",
+  "world_is": "Presenters: the gateway host (reloads at restart) and bd_49f_auto_login.js on cot-exporter i-0643a5bee8a8feabf (role cot-exporter-ec2-role, the only other grant). The repo copy runs smGet(BD_OTP_GATEWAY_SECRET_ID) per OTP request, no cache (line 187). The instance is stopped and SendCommand returns InvalidInstanceId, so the deployed script (repo md5 7d37465ba68e8ddf44a66c008179d080) is unmeasured. Probe named: GET /otp/health on the host with the AWSPREVIOUS value (401) and the AWSCURRENT value (200 or 503).",
+  "notes": "ARMED: if the deployed box copy cached the token, its next login after the rotation would fail 401 until the cache clears. Disarm: the issuer reads the box copy when the instance next runs, or accepts the repo copy as the measure.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S29",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-01T07:05Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Issuer rulings on OG-rl-1 PHASE A's rows (amendment A3). S12: a rollback on the live d61fde4693 template takes OG_MASTER_ADMIN_PRINCIPALS / OG_WRITE_CAPABLE_PRINCIPALS from the site-Z Part D file into the rolling-back shell only (the OG-pr-1 script's mapping, PART_D_RECORD_20260930.md), never printed; after OG-rl-1 serves, the host-side read covers every later deploy. S13: the cot box (cot-exporter) is STOPPED and not SSM-registered, so no presenter runs during the rotation; the repo copy reads the secret per call; an unmeasured deployed copy that cached the old value would fail visibly (401 on /otp/*) at its next start, with no data loss, and is re-read by restarting it. The rotation proceeds under CTO ruling (c); the gateway side is verified by the step-4 probe (old 401, new accepted). S9, S10, S11 are INERT observations recorded by the worker: S9 the order counts 7 new test files where the cells add 6 (the order text is wrong, not the release); S10 three conflicts resolved to live bytes plus the cells' own additions; S11 test_browser_oidc.py::test_oga3_ac07 KeyErrors on any new route module (already failing on CLOUD on taxsma_workbook), not shipped, a gateway-suite hygiene item for the next round.",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W15-S9",
+    "NFRA_OPLGTW-Z-W15-S10",
+    "NFRA_OPLGTW-Z-W15-S11",
+    "NFRA_OPLGTW-Z-W15-S12",
+    "NFRA_OPLGTW-Z-W15-S13"
+  ],
+  "one_line": "OG-rl-1 PHASE A rows ruled: rollback rosters from the Part D file into the shell (S12); rotation proceeds with the cot box stopped (S13); S9-S11 recorded.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Worker PHASE A report and ANNOUNCE_OG-rl-1.md drained @0116dd05fe: live d61fde4693, host md5 84 of 84; release census 17 files (16 cell + deploy-to-ec2.sh); rollback artifact 87 files equal to live S3; cot OTP secret 64 hex equals .env line 14's second token; cot box script reads the secret per call; cot-exporter stopped, not SSM-registered."
+    ]
+  },
+  "spec_asserts": "TO-OG-rl-1 PHASE A steps 4 and 6: presenters named; rollback proven.",
+  "world_is": "Rollback on the live template needs the rosters in the shell; the cot presenter cannot be measured while stopped.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W18-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~18",
+  "surfaced_at": "2026-10-01T07:20Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "OG-pr-1 PHASE B BLOCKED: safe-apply's naming plan limb REFUSES the order's policy name opal-gateway-gateway-read-secrets (IAM_POLICY OUT-OF-PATTERN, module name gateway-read-secrets-policy); ROLLED BACK, secrets deleted with 7-day window, ledger closed.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-apply.sh -chdir=infra/aws/terraform/opal-gateway apply -auto-approve -target=aws_iam_role_policy.gw_gateway_read_secrets rc=7 (run twice): '[naming-plan-gate] NAMING REFUSE aws_iam_role_policy.gw_gateway_read_secrets opal-gateway-gateway-read-secrets -> gateway-read-secrets-policy' / 'safe-apply: BLOCKED by the naming plan limb (LGIC_ENFORCE DEC-6, ENFORCE mode, rc=1). Nothing was planned further or applied.'",
+      "lib/opal_naming.py grade('opal-gateway-gateway-read-secrets','IAM_POLICY') = OUT-OF-PATTERN, suggests gateway-read-secrets-policy; grade('gateway-read-secrets-policy','IAM_POLICY') = CONFORMANT. Sibling conformant additions in the same root: gateway-read-mcportal-grant-changes-policy, gateway-invoke-mcportal-grant-writer-policy (mcportal_grant_writer.tf:197,219).",
+      "Targeted terraform plan (same feeds per A1) before the apply read 'Plan: 1 to add, 0 to change, 0 to destroy.' with the three exact secret ARNs and Action secretsmanager:GetSecretValue only; saved plan .scratch/og-pr-1.tfplan (not applied).",
+      "Secrets were created first (step 6) at rc=0: gateway/transcripts/bearer-tY9tUO, gateway/mail/bearer-g8XFDo, gateway/principals/rosters-wg59oX (pairs master 1 write 2). After the refusal they were rolled back per ANNOUNCE: delete-secret --recovery-window-in-days 7 x3, DeletedDate 2026-10-01T03:14 -04:00, restorable until 2026-10-08; describe-secret reads DeletedDate on all 3. No role policy was created. Ledger nfra-oplgtw-gateway-read-secrets closed with every leg ROLLED BACK, sentinel removed."
+    ]
+  },
+  "spec_asserts": "TO-OG-pr-1 step 1 names the policy '${var.name}-gateway-read-secrets' and step 6 expects a targeted safe-apply to land it.",
+  "world_is": "The naming plan limb under LGIC_ENFORCE refuses that name on an ADDITION; the order's name is out of pattern, the gate is not mine to override and the name is not mine to change (the order fixes it).",
+  "notes": "Remedy for the issuer, not done by the worker: either amend A2 renaming the policy to gateway-read-secrets-policy (a one-line change in gateway-read-secrets.tf; AC1/AC2 check ARNs and actions, not the policy name) or an R20 register entry Andrew acknowledges. Then re-run PHASE B. The three secret names are held in the 7-day deletion window: a re-run must first `aws secretsmanager restore-secret --secret-id <name>` x3 (values preserved) and the script's already-exists refusal then stands, so step 6 resumes at the targeted apply only; or recreate after the window with force-delete. The role of the whole-tree gate in row NFRA_MCPINDEX-Z-W21-S19 is unaffected here: the secrets that remedy needs do not currently exist as live secrets.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S30",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-01T07:55Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Ruled by amendment A2 on TO-OG-pr-1: the order's typed policy name was the issuer's defect; the policy is the builder's output gateway-read-secrets-policy (CONFORMANT). PHASE B resumes with restore-secret on the three names (values preserved) and the targeted apply. The worker's stop-and-roll-back was correct and is not re-run.",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W18-S2"
+  ],
+  "one_line": "OG-pr-1's refused policy name (W18-S2) is replaced with the builder's CONFORMANT name; PHASE B resumes from restore-secret.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py name('gateway', None, 'read-secrets', 'policy') -> 'gateway-read-secrets-policy'; grade(...,'IAM_POLICY') -> CONFORMANT; grade('opal-gateway-gateway-read-secrets','IAM_POLICY') OUT-OF-PATTERN (worker).",
+      "Worker rollback drained @8e87440071: ledger nfra-oplgtw-gateway-read-secrets CLOSED ROLLED BACK, sentinel removed; three secrets deleted with a 7-day recovery window (restorable to 2026-10-08)."
+    ]
+  },
+  "spec_asserts": "TO-OG-pr-1 PHASE A step 1: the policy is named ${var.name}-gateway-read-secrets.",
+  "world_is": "The commit-time naming plan limb is in ENFORCE mode for this root; a typed non-conforming name cannot apply.",
+  "notes": "While the three secrets are pending deletion, the gateway-read-secrets.tf data sources on CLOUD cannot resolve (NFRA_MCPINDEX-Z-W21-S19 stays live for other seats' whole-tree reads) until the resume restores them.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W18-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~18",
+  "surfaced_at": "2026-10-01T07:45Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "OG-pr-1 AC2's checker (_pr.py simulate) cannot read a multi-resource simulate-principal-policy result: it reads 0 granted / 0 sibling ARNs and prints FAIL although the live decisions are allowed x3 and implicitDeny x1.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/trnspt/checks/pr.AC2.sh -> 'simulate: granted ARNs 0 []; sibling gateway/* ARNs 0 []' RESULT: FAIL exit=1 (grant applied: get-role-policy opal-gateway-role/gateway-read-secrets-policy shows 1 statement, GetSecretValue, the 3 exact ARNs).",
+      "The same simulate-principal-policy call with 4 resource ARNs returns ONE EvaluationResults row whose top-level EvalResourceName is the template 'arn:aws:secretsmanager:${Region}:${Account}:secret:${SecretId}' (EvalDecision implicitDeny); the per-ARN decisions are in ResourceSpecificResults. Read from there: transcripts/bearer-tY9tUO allowed; mail/bearer-g8XFDo allowed; principals/rosters-wg59oX allowed; gateway/notgranted/probe-AbCdEf implicitDeny.",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/trnspt/checks/_pr.py simulate() iterates only top-level EvaluationResults[].EvalResourceName, so the granted and sibling lists are always empty for a multi-resource call."
+    ]
+  },
+  "spec_asserts": "AC2 expects 'granted ARNs 3 [allowed x3]; sibling gateway/* ARNs 1 [implicitDeny]' RESULT: PASS from pr.AC2.sh.",
+  "world_is": "The criterion's checker mis-parses the AWS response shape, so AC2 FAILS as written while the world state it tests is correct. The checker is outside the worker's paths; the worker did not edit or work around it.",
+  "notes": "Remedy for the issuer: read EvaluationResults[0].ResourceSpecificResults[] (EvalResourceName, EvalResourceDecision) in _pr.py simulate(), then re-run AC2. Not done by the worker. TO-OG-pr-1 left without a complete flip for this reason.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W18-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~18",
+  "surfaced_at": "2026-10-01T07:50Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "OG-pr-1 AC3's host command (_pr_hostcmd.py) embeds json.dumps(PARSE) with literal backslash-n inside a shell python3.11 -c argument, so the host python SyntaxErrors and the host read prints nothing; the host read itself works.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/trnspt/checks/pr.AC3.sh run before the ledger close: 'host read status=Failed;' (empty output), ssm command cee287ee-5d37-4fc5-92b8-46307b2bd32c StandardError: 'SyntaxError: unexpected character after line continuation character' at the -c string (the \n sequences are literal text in the shell command).",
+      "Same read with a semicolon-joined one-line parse, SSM command 6b32df70-74cd-404b-877c-dadc1c89d075 on i-07dccb1615503ac99 under its own role: Status Success, 'ROSTERS master 1 write 2 all-pairs True' (shape only, no value printed). So the gateway role can GetSecretValue the rosters secret.",
+      "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/trnspt/checks/_pr_hostcmd.py: CMD = ... + json.dumps(PARSE), where PARSE holds newline characters."
+    ]
+  },
+  "spec_asserts": "AC3 expects 'host read status=Success; ROSTERS master 1 write [1-9]\\d* all-pairs True' from pr.AC3.sh.",
+  "world_is": "AC3 FAILS as written on the host command's own construction, independent of the grant, which is live and works. The checker is outside the worker's paths; the worker did not edit it.",
+  "notes": "Remedy for the issuer: build the parse as one line (statements joined by ';') or ship it base64/heredoc, then re-run AC3 after the ledger close is committed. The worker's own supplementary read above is evidence of intent, not the criterion's output.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W18-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~18",
+  "surfaced_at": "2026-10-01T07:50Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "gateway-read-secrets.tf's header comment still names the superseded policy opal-gateway-gateway-read-secrets in its post-apply verify line; A2 allowed only the one name line to change.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/opal-gateway/gateway-read-secrets.tf header: 'aws iam get-role-policy --role-name opal-gateway-role --policy-name opal-gateway-gateway-read-secrets'; live policy name is gateway-read-secrets-policy (get-role-policy read 07:4xZ)."
+    ]
+  },
+  "spec_asserts": "A2: 'nothing else in that file changes'.",
+  "world_is": "A comment, not code; a reader following it runs get-role-policy on a name that does not exist.",
+  "notes": "Left as is under A2; the issuer may widen a later order to correct the comment."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S31",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-01T08:25Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "S3 and S4 were the issuer's own check defects (pr.AC2 read only top-level simulate rows; pr.AC3's host command passed a literal backslash-n into python3.11 -c). Fixed @a439deaeac (ResourceSpecificResults read; parser shipped base64), controlled (parser good True / bad False), and re-run live: AC2 allowed x3 + sibling implicitDeny PASS, AC3 host read Success ROSTERS master 1 write 2 PASS. The worker re-cut its proof VALID and OG-pr-1 is complete (drained @b63b2403f3). S5: the .tf header comment now names gateway-read-secrets-policy (comment only, no re-apply).",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W18-S3",
+    "NFRA_OPLGTW-Z-W18-S4",
+    "NFRA_OPLGTW-Z-W18-S5"
+  ],
+  "one_line": "OG-pr-1's two check defects (S3, S4) are fixed and re-run PASS live; the comment fix closes S5; OG-pr-1 complete.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Worker close 3c3177b5e5 (proof VALID, AC1-AC3 PASS), drained @b63b2403f3; issuer live re-runs ~07:5xZ."
+    ]
+  },
+  "spec_asserts": "TO-OG-pr-1 AC2 and AC3 read the live grant and host read.",
+  "world_is": "They do now; before the fix they misread a correct world.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S32",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-01T09:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The opal-gateway host .env is not shell-safe (unquoted multi-word values on lines 14, 15, 25, 35); two seats have now leaked the cot OTP bearer by sourcing it in bash over SSM (rows Z-W17-S1, NFRA_MCPINDEX-Z-S73).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "NFRA_OPLGTW-Z-W17-S1 (OG-lt-1 probe, 2026-10-01 ~02:1xZ) and NFRA_MCPINDEX-Z-S73 (MX round-6 probe, ~09:0xZ): `set -a; . ./.env` printed line 14's second word in 'command not found'.",
+      "Live render template d61fde4693/05e3eff563 deploy-to-ec2.sh: OTP_BEARER=%s filled with \"$OTP_BEARER_49F $OTP_BEARER_COT\" and OTP_BEARER_LABELS=49f cot, unquoted."
+    ]
+  },
+  "spec_asserts": "Static bearers reach the host .env and are never printed (secrets-iam.tf mechanism).",
+  "world_is": "Any shell-sourcing read prints a bearer; the rotation in OG-rl-1 (A1) fixes the leaked value, not the shape that leaks it.",
+  "notes": "Remedy candidates for OG-OPLGTW's next enrichment (not mid-round): render multi-word values quoted in a form systemd EnvironmentFile and bash both read identically, or a host read helper that parses .env as systemd does; plus a runbook line. The leaked value itself rotates at OG-rl-1.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S33",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-01T09:30Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarmed by standing rule (1.0.0_SA_CTO~O msg 27705 (1)): no seat or worker sources /opt/opal-gateway/.env in a shell; a key read uses names only (grep -o '^[A-Z_]*=') or /proc/<service pid>/environ for one named key, never echoed. The rule rides every release ANNOUNCE (OG-rl-1 A5). The leaked cot OTP value rotates at OG-rl-1 (ruling (2); consumer: the cot bd-auto-login /otp/fetch caller; 49f untouched). The shape fix (render multi-word values so systemd EnvironmentFile and bash read them the same, or a host read helper) is placed on OPLGTW's next enrichment (ruling (3)). Hazard INERT under the rule.",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S32"
+  ],
+  "one_line": "Z-S32 disarmed by the CTO's standing no-shell-sourcing rule; rotation at OG-rl-1; shape fix on the next enrichment.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~O msg 27705 rulings (1)-(3); TO-OG-rl-1 amendment A5."
+    ]
+  },
+  "spec_asserts": "Static bearers reach the host .env and are never printed.",
+  "world_is": "Shell-sourcing the .env prints a bearer; it is now barred by rule until the shape fix.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S14",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-01T10:05Z",
+  "one_line": "On the LIVE 2c0f84966d tree two template-reading tests fail on their own: test_deploy_base_guard (5 of 6 refuse without the OG_* roster env) and test_schwab_host_inputs (ENABLED_INTEGRATIONS now 7 ids); the release template passes the first.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: /c/tmp/og-rb4 (detached at 2c0f84966d, AUDIT_PATH isolated) tests/test_deploy_base_guard.py without OG_MASTER_ADMIN_PRINCIPALS / OG_WRITE_CAPABLE_PRINCIPALS -> FAILED, the script exits 1 with 'OG_MASTER_ADMIN_PRINCIPALS: REFUSED (no upload)'; the same file with two synthetic pairs exported -> 6 passed.",
+      "RUN: /c/tmp/og-rel4 (release HEAD daa56d81ac) tests/test_deploy_base_guard.py with no OG_* variable -> 6 passed (the R4 edit removes the deploying-shell guard).",
+      "RUN: tests/test_schwab_host_inputs.py::test_printf_names_the_five_host_inputs_and_no_secret_value -> FAILED on /c/tmp/og-rb4 (live) and on /c/tmp/og-rel4 identically: the rendered ENABLED_INTEGRATIONS holds 7 ids (blackdiamond, MX-r-7), the test expects 6. The release does not touch that key.",
+      "DOC: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~15/ANNOUNCE_OG-rl-1.md step 3."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 3 grades the cells' new tests, test_ogz2_ac08 and test_ratelimit on the release tree; nothing is said of the template-reading tests.",
+  "world_is": "Neither failure is the release's: the live tree already fails both (the guard test needs the roster variables the OG-t-2 template demands; the Schwab test predates MX-r-7's seventh id). The release template removes the first failure; the second is an out-of-census test file, not shipped, not edited.",
+  "notes": "INERT for the host (tests are not in the artifact). A candidate for the next enrichment: the Schwab test's expected id list.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S15",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-01T10:40Z",
+  "one_line": "safe-ec2-deploy.sh's halt gate refuses (rc 3, NOT bypassable by HALT_ACK) from the sparse release tree /c/tmp/og-rel4: its serial validation looks for the issuer's home folder under org/tier1_exec/ of the calling tree, which the cone did not carry.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: halt_gate_check sourced in /c/tmp/og-rel4 with the wrapper's own HALT_GATE_* env, before the fix -> 'SERIAL RESOLVES TO NO KNOWN AGENT -- BLOCKED', resolved serial 2.0.0_SA_COO~O (session serial file), rc=3.",
+      "READ: .tools/halt-gate-check.sh halt_gate_validate_serial lines 189-217 loops ${HALT_GATE_REPO_ROOT}/org/{tier0_exec,...,tier1_exec,...}/*/ and og-rel4's sparse cone listed only org/tier0 among tier dirs.",
+      "ACT (environment only, no gate edit or override): git sparse-checkout add 'org/tier1_exec/2.0.0_SA_COO~O' in /c/tmp/og-rel4; git status unchanged (HEAD daa56d81ac, only ' M mcportal'); the same probe then returns rc=0 with an empty pending list (0 STOP lines, 0 routine), which satisfies CVO guard K4 before HALT_ACK=1 is spent."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The act runs 'from /c/tmp/og-rel4' through safe-ec2-deploy.sh with HALT_ACK=1.",
+  "world_is": "A release tree cut sparse without the issuer's tier-home folder cannot pass the halt gate at all; HALT_ACK does not help (rc 3 is the identity limb). Nothing tracked changed; the cone gained one directory.",
+  "notes": "Candidate for the release-tree recipe in the next enrichment: add org/tier1_exec/<issuer> to the sparse cone at cut.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S34",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-01T11:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The released deploy template's host-side roster check logs 'write_capable 1 pairs' while the rendered .env and the secret both hold 2 pairs (hash MATCH): a log-count defect, not a lost principal.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-rl-1 deploy output: 'OK: principal rosters read host-side and valid (master_admin 1 pair; write_capable 1 pairs)'.",
+      "Issuer SSM 88f3574d-014d-4aa7-b073-ad3c5663ef2e on i-07dccb1615503ac99 after the release: WRITE_CAPABLE_PRINCIPALS env_pairs 2 secret_pairs 2 MATCH; MASTER_ADMIN_PRINCIPALS env_pairs 1 secret_pairs 1 MATCH (counts and hashes only, nothing sourced)."
+    ]
+  },
+  "spec_asserts": "The release's log line reports the roster shape it validated.",
+  "world_is": "The values are correct; the count in the log line is wrong, so a reader of the log would believe a write principal was dropped.",
+  "notes": "Fix the count in deploy-to-ec2.sh's roster log line at OPLGTW's next enrichment (with Z-S32's .env shape fix); no hazard to the served tiers.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S35",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-01T11:10Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Z-S24 disarmed: OG-rl-1 is live (daa56d81ac, 10:43:56Z) and its template reads both principal rosters host-side from gateway/principals/rosters (OG-pr-1 secret + grant; CTO tick-1 ruling (b), train R4). rl.AC3 PASS on CLOUD; host .env principal keys MATCH the secret by hash (SSM 88f3574d). No later release needs an off-repo hand-off; only a rollback onto an older template does (A3, Part D file into the shell). The site-Z local Part D file stays as that rollback source.",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S24"
+  ],
+  "one_line": "Z-S24 (off-repo principal hand-off) disarmed by OG-rl-1's host-side roster read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-rl-1_ISSUER_REGRADE_AND_POSITIVE_ARM.md @2c8248a87e; rl.AC3 PASS; SSM 88f3574d MATCH."
+    ]
+  },
+  "spec_asserts": "Every gateway release reads the principal rosters host-side like the other bearers.",
+  "world_is": "It does from daa56d81ac on.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S36",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-01T12:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The live deploy template (daa56d81ac) renders MAIL_SENDER_TABLE from OG_MAIL_SENDER_TABLE with an empty default, so any later gateway release whose deployer does not export it silently blanks the table and /hx/mail refuses every message; the .env key census cannot see it (the key stays, its value empties).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show daa56d81ac:infra/aws/ec2/opal-gateway/deploy-to-ec2.sh lines 170-175: OG_MAIL_SENDER_TABLE=\"${OG_MAIL_SENDER_TABLE:-}\" with a character check only; line 351: 'empty refuses every message'.",
+      "Found by NFRA_MCPINDEX MX-r-8 PHASE A (row NFRA_MCPINDEX-Z-W22-S4, 2.0.0_SA_COO~MI msg 27812) before its slot-4 deploy.",
+      "Interim: the gateway queue (2.0.0_SA_COO~MI, ~MS) was given the repo export line at ~12:1xZ (criterion.py DEFAULT_AUTHORS, 3 entries, passes the template charset)."
+    ]
+  },
+  "spec_asserts": "PRD v1.3 C7: the mail route serves the senders on NFRA_TRNSPT's sender table.",
+  "world_is": "The table survives only a release whose deployer exports it; a missed export is silent.",
+  "notes": "Remedy for OPLGTW's next enrichment: the template refuses (no upload) when OG_MAIL_SENDER_TABLE is empty, or builds it from criterion.py itself at deploy. Until then every releaser exports it (queue told).",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~16",
+  "surfaced_at": "2026-10-01T13:32Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "id": "NFRA_OPLGTW-Z-W16-S2",
+  "one_line": "OG-hl-1 item 3 ('the allowlist gains exactly ^/me/messages$') and bound 2.1 ('the existing three mail routes keep their behaviour, their tests stay green') collide: tests/test_mail_route.py::test_graph_get_only_fails_closed asserts a bare '/me/messages' is REFUSED by _graph; I kept both by giving the listing its own one-path tuple.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/tests/test_mail_route.py line 298-303: '/me/messages' is in the must-raise-PathRefused list passed to mr._graph('GET', bad); adding the pattern to _GRAPH_ALLOWED made that test FAIL (1 failed, 30 passed) before the change below.",
+      "app/mail_route.py now carries _LIST_ALLOWED = (^/me/messages$,) beside the unchanged _GRAPH_ALLOWED; _graph(..., listing=True) grades against it, so the by-id routes can never reach the list path. 31 passed across test_mail_listing, test_mail_route, test_transcript_route; hl1.AC2's source check for ^/me/messages$ still matches.",
+      "tests/test_mail_route.py is outside this order's <paths>, so the stale assertion could not be edited; branch wk-NFRA_OPLGTW-16-r8."
+    ]
+  },
+  "spec_asserts": "TO-OG-hl-1 item 3: the allowlist (the one _graph function) gains exactly ^/me/messages$; bound 2.1: existing mail-route tests stay green.",
+  "world_is": "Both cannot hold literally: a single shared tuple makes test_graph_get_only_fails_closed fail. The split keeps the test green and is tighter (by-id routes still refuse the list path); the _graph function is the same single Graph-calling path with one keyword. If the release wants one tuple, test_mail_route.py line 298 must drop '/me/messages' (the COO's cut, not mine).",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~16",
+  "surfaced_at": "2026-10-01T13:32Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "id": "NFRA_OPLGTW-Z-W16-S3",
+  "one_line": "The worktree's sparse cone excluded data/transcripts, so criterion.py (the single source test_sender_table_file_equals_criterion and hl1.AC2 import) was absent; I added data/transcripts/scripts/outlook to this worktree's own sparse-checkout.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list showed 14 cones (no data/); git ls-tree HEAD data/transcripts/scripts/outlook lists criterion.py (blob 57bffe67f4).",
+      "git sparse-checkout add data/transcripts/scripts/outlook; extensions.worktreeConfig=true so the change is in .git/worktrees/wk-oplgtw-16/config.worktree only, no tracked file or other worktree touched."
+    ]
+  },
+  "spec_asserts": "TO-OG-hl-1 item 7/AC2: the test and _hl.py import data/transcripts/scripts/outlook/criterion.py from the worktree.",
+  "world_is": "The worker worktree cut lacks that path unless the cone is widened; a worker on another cut would hit the same ModuleNotFound/file-absent. The tracked files are unchanged.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S37",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-01T13:50Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-hl-1 complete (drained @9c62463b78; issuer re-grade AC1 12 of 12, AC2 HL ok PASS on CLOUD). W16-S2: the listing path got its own allowlist tuple selected only by the listing handler, so the by-id routes still refuse a bare /me/messages (test_mail_route's fail-closed test stays green) -- stricter than one shared tuple and inside v1.4's 'the allowlist gains ^/me/messages$'; accepted. W16-S3: a worktree-only sparse-cone addition (data/transcripts/scripts/outlook), no tracked change; recorded.",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W16-S2",
+    "NFRA_OPLGTW-Z-W16-S3"
+  ],
+  "one_line": "OG-hl-1's two INERT rows accepted: a per-route listing allowlist (stricter) and a worktree-only sparse cone.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "hl1.AC1/AC2 re-run on CLOUD after the drain @9c62463b78: 12 of 12; HL ok; ms_ingest 0."
+    ]
+  },
+  "spec_asserts": "TO-OG-hl-1 step 3: the allowlist gains exactly ^/me/messages$.",
+  "world_is": "It does, on its own tuple used only by the listing handler.",
+  "notes": "The listing's Graph $filter/$orderby shape and $skiptoken continuation are tested against stubs only; OG-rl-2 AC1 (live) is their first real test.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S16",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-01T14:40Z",
+  "one_line": "The handoff said MX-r-8 (slot 4) had NOT landed and live is daa56d81ac; the manifest at HEAD, the host md5 and the S3 git-ref all read e3567ce5f7 (landed 12:37Z), so PHASE A was cut on e3567ce5f7.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "DOC: infra/aws/ec2/EC2_MANIFEST.json services.opal-gateway at CLOUD 2f895e20a5: deployed_commit e3567ce5f788f45195bec065f4d2fc5a68a38cd3, deployed_at 2026-10-01T12:37:03Z, previous_deployed_commit daa56d81ac7c91795f1a9c47b2c2430cb3879e24.",
+      "RUN: read-only SSM 097772bc-f82e-450b-a628-afd55bd87964 (Success): md5sum of the 91 shipped files against git show e3567ce5f7:<file> -> 91 of 91 identical (0 mismatch); host .env 46 lines.",
+      "RUN: aws s3api head-object ec2/opal-gateway/opal-gateway-latest.tar.gz and opal-gateway-e3567ce5f7.tar.gz: 460,595 bytes each, git-ref e3567ce5f788f45195bec065f4d2fc5a68a38cd3, 12:36Z."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The handoff: live opal-gateway is daa56d81ac; NFRA_MCPINDEX MX-r-8 has not landed; at GO re-read live and re-cut if it moved.",
+  "world_is": "It moved before PHASE A: MX-r-8 landed at 12:37Z. Step 1 (live commit from the manifest at HEAD, confirmed by host md5) was done against e3567ce5f7, and the release tree og-rel5 is cut on it, so the step-7 re-cut is already satisfied for now. MX-r-8 changed 3 served files (opal_discover, portal_index, internal_role paths), none of OG-hl-1's.",
+  "notes": "Rollback command therefore uses DEPLOY_BASE_REF=<release commit> and the rollback tree is /c/tmp/og-rb5 at e3567ce5f7. A mover of the live ref before GO (another slot) re-opens step 7.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S17",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-01T14:40Z",
+  "one_line": "The sender-table refusal must read the SHIPPED file, so it runs after the artifact is extracted: a refusal leaves the new code on disk (old process, old .env) and the stale table file is removed before the extract.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "DOC: release 0a1d9079c6 deploy-to-ec2.sh: sudo rm -f ${REMOTE_DIR}/deploy/mail_sender_table.txt, then tar -xzf, then the read and the two REFUSED branches (exit 3), all before the .env printf and before systemctl restart.",
+      "RUN: rehearse3.py rendered that block as the deploying shell's unquoted heredoc and ran it under set -euo pipefail on 7 synthetic files: missing 3, empty 3, blank lines only 3, one valid 0, three valid with CRLF 0, bad character 3, shell metacharacters 3.",
+      "RUN: the whole on-host script rendered with dummy variables: bash -n rc=0."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 4: the on-host script reads ${REMOTE_DIR}/deploy/mail_sender_table.txt and refuses before any .env write or restart.",
+  "world_is": "The file exists on the host only after the extract, so the refusal cannot precede the extract. Effect of a refusal: new app files are on disk while the running process and .env are unchanged until the next restart (the roster refusal ahead of it is the only one that leaves the host wholly untouched). I added a rm -f of the old table file before the extract so that a missing file in the artifact refuses instead of passing on a stale copy; the running service reads MAIL_SENDER_TABLE from the environment, never the file.",
+  "notes": "Alternative if the issuer prefers a wholly untouched host on refusal: read the file from the tarball with tar -xzOf before extracting; not done because the order names the extracted path.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S18",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-01T15:40Z",
+  "one_line": "Step 10's 90 s verify window was missed: the host verify read at 15:37:31Z, about 3 minutes after the 15:34:2xZ restart, and the first verify's L1 hash step died on a quoting error in my own script, so L1 MATCH was read at 15:38:25Z.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: deploy log act_rl2.log: ACT START 15:33:12Z, upload 15:33:56Z, manifest stamp Time 2026-10-01T15:34:29Z, DEPLOY RC=0 15:34:56Z; the verify SSM a25dbdb3-82e3-44c7-bb04-82e8998c2c25 printed HOST TIME 2026-10-01T15:37:31Z.",
+      "RUN: the L1-after step in that script raised SyntaxError (a backslash escape lost to the harness heredoc); SSM 49fa771c-7556-4a53-a615-6ef5ae01d2ba re-ran it with chr(13)/chr(10) at 15:38:25Z: process-env items 3 MATCH, shipped-file items 3 MATCH.",
+      "RUN: every verify reading (md5 92 of 92, tool list byte-equal to BEFORE, .env 46 keys same set, ENABLED_INTEGRATIONS unchanged, probes, rl2.AC1.sh 9 of 9 at 15:38:53Z) passed; no rollback was needed."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 10: VERIFY from the host within 90 s of the deploy; L1: hash-compare the sender set before and after the deploy.",
+  "world_is": "The verify script was authored after the deploy returned (it needed the 92-file release md5 list), so the first host read came about 3 minutes after the restart; the new listing route was therefore serving unverified for that interval. Nothing failed, so no rollback decision turned on the lateness. The L1 comparison itself ran twice on the host (the failed run changed nothing).",
+  "notes": "For a future release the verify script (md5 list, tool-list diff, L1 after, probes) can be prepared at PHASE A so the post-deploy read is one SSM call; a 90 s bound is not reachable when the script is written after the act.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S38",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-01T15:55Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-rl-2 LIVE (opal-gateway 0a1d9079c6 since 15:34:29Z; ledger nfra-oplgtw-hx-mail-listing-release CLOSED; drained @63affda730; issuer re-grade on CLOUD rl2.AC1 9 of 9, AC2, AC3 PASS). Z-S36 disarmed: the shipped template reads MAIL_SENDER_TABLE host-side from deploy/mail_sender_table.txt (kept equal to criterion.py by a test) and refuses a missing or empty file before any .env write; L1 set hash MATCH before and after. W15-S16: the cut moved to e3567ce5f7 when MX-r-8 had landed ahead of the issuer's read -- the worker graded live by content; correct. W15-S17: a post-extract refusal leaves new files with the old process; covered by CVO L2 (rollback mandatory) and the blast-radius note; not triggered. W15-S18: the verify read came ~3 min after the restart, past the order's 90 s bound, because the verify script was written after the deploy; every reading passed and nothing was at risk -- the next release order carries the verify script pre-written at PHASE A.",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S36",
+    "NFRA_OPLGTW-Z-W15-S16",
+    "NFRA_OPLGTW-Z-W15-S17",
+    "NFRA_OPLGTW-Z-W15-S18"
+  ],
+  "one_line": "OG-rl-2 live: Z-S36 disarmed by the host-side sender-table read; W15-S16..S18 dispositioned (S18: verify past 90 s, all readings passed).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Worker report: deploy RC=0 15:34:56Z; verify md5 92 of 92, tools 65->65, keys 46->46, MAIL_SENDER_TABLE 3, L1 MATCH x2; AC1 9 of 9.",
+      "Issuer re-run on CLOUD @63affda730: rl2.AC1 LIST ARMS 9 of 9, rl2.AC2 PASS, rl2.AC3 PASS."
+    ]
+  },
+  "spec_asserts": "TO-OG-rl-2 PHASE B: verify within 90 s; the template reads the sender table host-side.",
+  "world_is": "Verify came at ~3 min with every reading passing; the template reads it host-side.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S19",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-01T18:17Z",
+  "one_line": "OG-tr-1 step 2: the broker store holds TWO records whose username is opalbloomberg@ -- one principal-keyed cache and one email-keyed cache -- both carrying the SAME oid (517aa5ee...), so the literal 'exactly ONE record' reads 2 while the identity reads 1 distinct oid and Part D MATCH.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: SSM b141c294-8b60-4526-b01a-8c83dce6efad (read-only; the host's own venv, FERNET_KEY and TOKEN_CACHE_DIR read from /proc/<MainPID>/environ, never echoed): 6 .bin cache files, 6 account records, username matches 2; the 4 non-matching records carry oids 2e21f8e5 (x2), 2844f2b9, ad037ea5.",
+      "RUN: SSM (owner-kind read, 'wk15 OG-tr-1 step2 owner kind'): the 2 matching records sit in 2 files whose names equal sha256('principal:<tid>/<oid>') (principal-keyed) and sha256('opalbloomberg@opalinvest.com') (email-keyed, the server-held identity cache); DISTINCT_MATCHING_OIDS 1; equal to the Part D value 517aa5ee-b4d0-425a-b493-5a22ff77ac4f (host-side equality, PART_D_EQUAL True).",
+      "DOC: app/token_broker.py @0a1d9079c6 _cache_owner_for / _principal_owner / _email_owner: a principal's cache is keyed 'principal:<tid>/<oid>' and a server-held identity's by the lowercased email, so one person legitimately holds both."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 2: exactly ONE record's username is opalbloomberg@opalinvest.com; neither or both STOPS with a BLOCKING row.",
+  "world_is": "Two records match, both with the same oid. I read 'both' as two different identities and did not file BLOCKING: the gate's purpose (the one oid that goes into the identity value) holds with 1 distinct oid, Part D MATCH. I proceeded through steps 3-7 (all read-only or release-branch) and the identity value is NOT yet fixed into any file or upload. The issuer confirms or overrules before PHASE B; a literal reading would STOP here.",
+  "notes": "The oid prefix in this row is the first 8 hex characters only. The identity value for PHASE B is '<tid>/<oid>' from the Part D values file (equal on the host).",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S20",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-01T18:17Z",
+  "one_line": "The order names row 'W15-S18' for the PHASE A verify script, but NFRA_OPLGTW-Z-W15-S18 is already filed and dispositioned (OG-rl-2's late verify read); this cell's next unused coordinate is S19, so the verify script is filed under this row.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "DOC: INVESTIGATION_v1.md at CLOUD @37fcbfcac9: NFRA_OPLGTW-Z-W15-S18 exists (OG-rl-2) and is adjudicated DISMISSED_WITH_REASON by NFRA_OPLGTW-Z-S38; ids W15-S19 and above were unused before this write.",
+      "RUN: deliverables/0.9.0_WK_NFRA_OPLGTW~15/tr_verify.py + tr_verify.sh + tr_release_md5.txt written at PHASE A. 'before' mode on the live host (SSM b893b5ab-1b75-475d-bc39-8521e5e02e63): env keys 46, tools 65, taxsma module present False, /ms/taxsma-workbook 404, /health 200. NEGATIVE CONTROL 'after' mode on the same un-deployed host (SSM 119af030-0c1f-49dc-8f28-03ebb5163611): VERIFY FAIL 4 of 8, the failing checks exactly the three md5 files (app/config.py, app/server.py, app/taxsma_workbook.py), the 46 -> 48 keys, the two TAXSMA keys non-empty and the route's no-bearer refusal."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 10: VERIFY with a script written at PHASE A, run immediately after the deploy returns (row W15-S18).",
+  "world_is": "The id S18 was taken before this order was cut, so the script is filed at S20 (S19 is the identity row). The script is written, exercised on the live host in both modes, and carried in the deliverables folder; it is not under the id the order names.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S21",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-01T18:17Z",
+  "one_line": "The deploy shape puts the identity value (a tid/oid pair, not a secret) in the SSM command text and in the AWS command history, and step 2's host read printed the full oid in its SSM output; both are the order's own design, filed so the exposure is on the record.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "DOC: release template deploy-to-ec2.sh (3a7d6a7dc8): TAXSMA_WORKBOOK_IDENTITY='${OG_TAXSMA_WORKBOOK_IDENTITY}' is expanded by the deploying shell into REMOTE_SCRIPT, which travels as the SSM command's parameters (the same path the old OG_MAIL_SENDER_TABLE took); the bearer never does (fetched on the host).",
+      "DOC: the spec's own text: the identity is 'Not a secret'; the Part D record already maps the same oid to WRITE_CAPABLE_PRINCIPALS, host-side.",
+      "RUN: step 2's SSM output b141c294-8b60-4526-b01a-8c83dce6efad carried each record's full oid, as the order asked ('printing ONLY each record's oid'); no file I wrote and no report carries more than 8 characters."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 5: the identity is validated, 'never committed'; step 2: the read prints each record's oid.",
+  "world_is": "Never committed and never echoed by this seat, but retrievable from SSM command history by anyone with ssm:GetCommandInvocation; the value is a non-secret principal identifier already present in host rosters.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S39",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-01T18:45Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "W15-S19: two token-broker records match opalbloomberg@ but carry ONE oid (517aa5ee; the same person's principal-keyed and email-keyed caches, by cache file-name hashes), MATCH with the Part D record -- the identity gate (Andrew ~17:3xZ, CTO 27992 'neither or both' = two different people) is satisfied. W15-S20: the verify-script row id S18 was already taken; filed under S20 -- recorded. W15-S21: the identity value (a non-secret principal identifier) rides the SSM command text and step 2's SSM output carried it once; acceptable for a non-secret, and it is never committed to the repo.",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W15-S19",
+    "NFRA_OPLGTW-Z-W15-S20",
+    "NFRA_OPLGTW-Z-W15-S21"
+  ],
+  "one_line": "OG-tr-1 PHASE A rows ruled: one opalbloomberg@ oid (two caches) satisfies the identity gate; the other two recorded.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Worker PHASE A report, ANNOUNCE_OG-tr-1.md drained @abca11d3bc: 6 records, 2 matches, 1 distinct oid 517aa5ee, Part D MATCH."
+    ]
+  },
+  "spec_asserts": "TO-OG-tr-1 step 2: exactly ONE record must match.",
+  "world_is": "Two records match, both the same oid.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S22",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-01T18:55Z",
+  "one_line": "CVO guard M1's verify arm (mail and transcripts bearers presented to the Tax route) was run host-side against the host's own port, with the bearers read from Secrets Manager inside the host process; 'no Graph call' is read from the capability guard's order in the code and the 401 UNAUTHORIZED_CAPABILITY envelope, not observed on a Graph-side log.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~15/tr_m1.py arm (SSM 4bfd99ce-db7f-4a8b-9f3d-3e62a0e11ff7): mail bearer 401 UNAUTHORIZED_CAPABILITY, transcripts bearer 401 UNAUTHORIZED_CAPABILITY, both secrets non-empty; compare mode (SSM 242077e6-ac17-4430-99f7-d1ffb609eb4d) 6 tokens over 5 keys, all DIFFER.",
+      "DOC: app/taxsma_workbook.py operation order OPERATIONS = capability_guard, delegated_token, source_read: the refusal is the first operation, before the delegated token and the Graph read."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "M1: the mail bearer and the transcripts bearer each presented to /ms/taxsma-workbook read 401 UNAUTHORIZED_CAPABILITY with no Graph call (bearers read from Secrets Manager into memory, never printed).",
+  "world_is": "Both arms read 401 UNAUTHORIZED_CAPABILITY. The arm ran on the host over localhost:8080 (not through the ALB) so no bearer left the host; the absence of a Graph call is inferred from the guard order, not measured on a Graph log.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S40",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-01T19:10Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-tr-1 LIVE 3a7d6a7dc8 (18:50:02Z; ledger CLOSED; drained @b87c4b215f; issuer re-grade on CLOUD tr.AC1 TAX ARMS 4 of 4, tr.AC2 PASS). W15-S22: the M1 verify arm (mail and transcripts bearers -> 401 UNAUTHORIZED_CAPABILITY on /ms/taxsma-workbook) was run host-side; 'no Graph call' rests on the route's guard order (capability_guard first), not a Graph-side log -- accepted as the code-read evidence the CVO half named.",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W15-S22"
+  ],
+  "one_line": "OG-tr-1 (Tax SMA route, capability ON) live; W15-S22 accepted.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Issuer re-run on CLOUD: tr.AC1 4 of 4 (module 6acc3e8c, no-bearer 401 UNAUTHORIZED_CAPABILITY, /mcp 401, .env 48 capability ON); tr.AC2 shipped 5, outside 0."
+    ]
+  },
+  "spec_asserts": "CVO M1: the other bearers read 401 with no Graph call.",
+  "world_is": "401 observed; no-Graph-call inferred from the guard order.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S41",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-01T19:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "app/taxsma_workbook.py _OTHER_ROUTE_BEARERS (line ~116) omits TRANSCRIPT_BEARER and MAIL_BEARER, so the Tax route would not refuse a bearer equal to one of those; today all compare DIFFER (M1), so it is latent.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "3.0.0_SA_CVO~O second half @00cb40bfff (M1); OG-tr-1 M1 read: TRANSCRIPT_BEARER DIFFER, MAIL_BEARER DIFFER, OTP x2 DIFFER, MS_INGEST DIFFER, GRAPH_READ DIFFER."
+    ]
+  },
+  "spec_asserts": "The Tax route refuses its bearer while that value is also a credential of another route.",
+  "world_is": "The tuple predates the /hx bearers; a future equal value would pass that guard.",
+  "notes": "Fix (CTO 28026): add TRANSCRIPT_BEARER and MAIL_BEARER to the tuple in OPLGTW's NEXT gateway release; until then any bearer rotation compares DIFFER first.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S42",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-01T19:15Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "OG-tx-2 live run: the spec's Research Meeting REACH arm cannot pass as Andrew -- Andrew is not an invitee of the Research Team Meeting (403 3003); the other three meetings read in full as invitee-not-organizer.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/2.0.0_SA_COO~O/TRANSCRIPT_REACH_RUN.json: Morning Meeting 19 rows, OCIO IC 7, Asset Management IC 8, each latest transcript read complete, last cue within 4.1 s of endDateTime, speaker tags present; Research Team Meeting list 403 code 3003 'User does not have access to lookup meeting'.",
+      "list_calendar as Andrew: no Research Team Meeting instance on 2026-08-03 (an occurrence date in research_transcripts/structured) nor in 2026-09-21..2026-10-07; the 9/29 CRO pull (TRANSCRIPTS_FIRST_PULL_20260929.md) read the same 403."
+    ]
+  },
+  "spec_asserts": "Spec section 6 step 1: as Andrew, list_meeting_transcripts on the Research Meeting (a colleague organizes) returns 200 with at least one row; step 4 requires all four meetings.",
+  "world_is": "Andrew is not invited to the Research Team Meeting, so the delegated read is refused; the invitee hypothesis itself holds on 3 of 3 invitee meetings. OG-tx-2 AC1 will read 3 of 4 and FAIL honestly (the order's issuer note); the Research Meeting refusal serves as the negative arm.",
+  "notes": "Routed to 1.0.0_SA_CTO~O as an analysis item (order RECORD FACE): reach on the Research Meeting needs Andrew invited to the series, or the application route in the recon brief. No widening here. G-TEAMS-TX: neither GraphAccessToTranscriptsDisabled nor SpeakerAttributionNotAllowed seen.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S23",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-01T19:40Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "OG-tx-2 AC1 asks each read matched in the audit by transcript id AND byte count; the gateway audit record for read_meeting_transcript carries no byte count, so audit_match was set on transcript id and read count only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-mcp-audit/audit/dt=2026-10-01/ keys 2026-10-01T19:* (19 records): every read_meeting_transcript record has exactly the fields args, detail, outcome, tier, tool, ts, user; args is {_omitted: fail-closed (tool not in R8-PRIV allowlist)}; detail is 'meeting_id=... transcript_id=...'. 6 read records for 3 transcript ids (2 each, matching the 2 recorded reads per meeting); 4 list_meeting_transcripts records, the Research Meeting's with outcome=error '403 3003 User does not have access to lookup meeting'."
+    ]
+  },
+  "spec_asserts": "TO OG-tx-2 step 2: find the audit record carrying the same transcript id and byte count.",
+  "world_is": "The audit carries the transcript id but never a returned byte count, so byte-count matching is not possible from this sink; matching is by transcript id, user andrew@opalinvest.com, outcome ok, and 2 reads per meeting. The Research Meeting has rows 0, so audit_match there rests on its refused list call matched by meeting_id (1 error record). AC1 reads 3 of 4 and FAILs on rows, not on audit_match.",
+  "notes": "If byte-count matching is wanted, the gateway audit detail needs a returned-bytes field (OPLGTW release item for the CTO).",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S43",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-01T19:40Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Ruling on NFRA_OPLGTW-Z-S42 (CTO msg 28043): the Research Meeting is reached by an invitation to the series, not the application route; OG-tx-2 AC1 stays as written and reads 3 of 4 FAIL on CLOUD @c4edb2c0ec.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~O msg 28043: (a) invitation to the Research series by Andrew or the organizer, listed among Andrew's acts; (b) application route not taken (tenant-wide read, breaks the bound identity) unless the invitation is refused.",
+      "Issuer re-grade on CLOUD @c4edb2c0ec: tx2.AC1 'meetings passing all four of 4 required: 3 of 4 recorded; negative arm refused=True', RESULT: FAIL, exit=1; proof instance VALID (worker @3403243217)."
+    ]
+  },
+  "spec_asserts": "Spec section 6 step 4: all four meetings reachable as Andrew.",
+  "world_is": "Three reachable as invitee; the Research Meeting waits on an invitation (an act outside this project's write surface).",
+  "notes": "Supersedes the routing note of NFRA_OPLGTW-Z-S42. The L10 analysis carries the fourth meeting as an open reach item gated on the invitation.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```

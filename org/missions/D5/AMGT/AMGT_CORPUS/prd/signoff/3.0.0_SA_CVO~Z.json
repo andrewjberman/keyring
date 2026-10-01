@@ -1,12 +1,12 @@
 {
   "prd": "AMGT_CORPUS_PRD.md",
-  "prd_version": "v0.6",
-  "prd_pin": "9e326e11c1e05d310de5308371192bf3aa118000",
+  "prd_version": "v0.7",
+  "prd_pin": "7d73abbe0e772b4e120d687096857c66db17b41a",
   "half": "ratified-text",
-  "half_hash": "3904bc2cd8c22b6637b3d8a1d5a6a4b86c69eb13ba93c03c6fe1dd9767d9e756",
-  "endpoint_hash": "ed5f594354d0d65648874b26c61b311cd162a8be3c2281c0820dfd6471110068",
+  "half_hash": "d8e517aa6c0f2bb06b33b4375efc078dfa8e4819a7c6aed4445df8c85c077303",
+  "endpoint_hash": "f4f907ec60d261e1a06fff95f998d300dc18d35016332e997b429958a0968029",
   "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_CORPUS_L4R_RATIFIED_TEXT_REVIEW_20260926_Z_SIGN3.md@9c41aca4c9",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_AMGT_CORPUS_v0.7_RATIFIED_TEXT_20261001_Z.md@de947c1033",
   "signed_by": "3.0.0_SA_CVO~Z",
-  "signed_at": "2026-09-26T11:18:50Z"
+  "signed_at": "2026-10-01T04:40:11Z"
 }

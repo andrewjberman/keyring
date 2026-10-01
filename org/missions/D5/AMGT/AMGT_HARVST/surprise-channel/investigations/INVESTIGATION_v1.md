@@ -4587,6 +4587,1061 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
             ]
         },
         "notes": "The worker did not edit the check (outside the order's paths). Its own AC2 verdict line is absent; the issuer fixes the formatting or accepts the derived run."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S50",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-01T04:38Z",
+      "one_line": "test_o1_run_record_reach.py::test_the_persisted_record_is_never_overwritten hardcodes started_at 2026-09-30, so it passes only when run on UTC date 2026-09-30; on 10-01 the second persist lands on a DIFFERENT key (date=2026-09-30), the put succeeds, no refusal is emitted, and the suite reads 1 failed.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "HVST-ad-1 AC3 (and every later collector-suite criterion): python -m pytest lib/opal_data_harvest/ passes, 0 base-passing tests failing.",
+      "world_is": "Round-31 close run at trunk bc4f634248 (2026-10-01T04:35Z): ad1_ac3 rc=1, 1 failed 362 passed 1 skipped; the failing test's captured stdout shows two run_record_persisted events, keys date=2026-10-01/... and date=2026-09-30/..., both put_performed true. worker.py _persist_run_record partitions by started_at, so the never-overwrite refusal is only exercised when the second call's date equals the first's. Test authored a45c9bb54f (2026-09-30 04:17Z). No product defect: the conditional put is untouched.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "deliverables/2.0.0_SA_COO_H/round31/rerun/ad1_ac3.txt",
+          "lib/opal_data_harvest/test_o1_run_record_reach.py line 168 at bc4f634248",
+          "lib/opal_data_harvest/worker.py:905 partition = store.date_partition(started_at)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Issuer direct act (LOCAL, one line, under the size floor): the test now derives started_at from the original key's date= partition, so it exercises the same key on any run date. Graded by the round-31 close re-run of ad1_ac3."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S51",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-01T05:25Z",
+      "one_line": "FWD-14's census joins two key spaces that share 0 keys: the 89-name collector universe (BA, security-<hash>) and the gold article_security_mention table (BA_US_Equity, ...); only 32 of 89 names carry a ticker, and a ticker-derived key reaches 13.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "PRD v0.13 FWD-14 DONE WHEN: a census over the stored mention table prints, for every security in the 89-name collector universe and each of the five publishers, the count of distinct articles since 2026-01-01 (denominator: the universe's size).",
+      "world_is": "At 2026-10-01 ~05:1xZ: `python -m lib.opal_data_harvest universe` keys (89) vs gold mention newest part date=2026-09-30/part-20260930T134616Z keys (71): intersection 0. Gold is built over deliverables/0.9.0_WK_AMGT_HARVST~46/securities.universe.json (crosswalk-resolved keys); 57 of 89 universe rows have ticker null. Silver discovered_for carries universe keys for harvest-grammar jobs, and 992_HK_Equity for Lenovo's older rows (a third form).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "round32/checks/ae-4.AC3.py base run: UNIVERSE 89; SECURITIES WITH ANY 3 of 89 (silver, by discovered_for)",
+          "gold mention part-20260930T134616Z: 71 distinct security_key, 0 of form security-*",
+          "universe rows: ticker present 32 of 89"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Round 32 grades the driver's depth on the collector's own silver keyed by discovered_for (ae-4 AC3). Which population and key FWD-14's census joins on (a crosswalk from universe key to gold key, or the gold securities file as the population) is an ENDPOINT-text question for 1.0.0_SA_CTO~Z."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~90",
+      "surfaced_at": "2026-10-01T05:45Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W90-S1",
+      "one_line": "HVST-ae-1 item 1 as written (bronze = the bare listing item) would give silver title None and a synthesised article_id: _extract_sa reads payload['data'] as ONE dict, and a bare item has no 'data'.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "HVST-ae-1 section 1 item 1: raw_bytes = json.dumps(item, ensure_ascii=True, sort_keys=True).encode('ascii') -- the bronze capture IS the listing item; silver is built from the bronze capture.",
+      "world_is": "lib/opal_data_harvest/silver_from_bronze.py:79-80 _extract_sa does data = payload.get('data') or {}. Run at 2026-10-01 ~05:3xZ on this worktree: article_rows('sa', bare_item_bytes, 'as_received', ...) -> article_id '8254c329a92850f6d539dd37' (a hash), title None, id None; the same item wrapped as {'data': item} -> article_id '123', title 'T', id '123'. silver_from_bronze.py is outside this order's <paths>. I stored {'data': item} (the JSON:API envelope the extractor reads; the item is inside it, whole and unchanged) so that silver reads the LISTED id and title. Plants (ii) assert bytes['data'] equals the listing item and a silver round-trip reads the listed id and title.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/silver_from_bronze.py:79-80 @43f34bae73",
+          "lib/opal_data_harvest/test_ae1_sa_listing_body.py::test_ii_silver_reads_the_stored_listing_item_as_the_listed_article"
+        ]
+      },
+      "notes": "If a bare item was intended, silver_from_bronze._extract_sa needs a listing-item branch (a cell outside this order's paths). The wrapped form needs none."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~90",
+      "surfaced_at": "2026-10-01T05:45Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W90-S2",
+      "one_line": "Four base tests assert the replaced sa behaviour (an article GET stored as the bronze capture; sa keys_fetched/keys_stored_join non-empty): the collector suite reads 4 failed, 367 passed, 1 skipped against 363 passed, 1 skipped at the cut. Their files are outside this order's paths.",
+      "class": "BLOCKING",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Order instruction: run python -m pytest lib/opal_data_harvest/ -q before committing and report the pass count against the base (363 passed, 1 skipped).",
+      "world_is": "2026-10-01 ~05:4xZ, this worktree: 4 failed, 367 passed, 1 skipped. FAILED: test_bronze_capture.py::test_article_raw_bytes_are_response_body_sa; test_n1_received_bytes_and_run_record.py::test_n1_received_bytes_stored_as_received_beside_rebuild[sa] and ::test_n1_run_record_counts_held_keys_skipped_and_a_planted_new_key_fetched (article_gets for sa now 0, keys_fetched empty); test_p2_fetched_and_stored_keys.py::test_p2b_every_fetched_key_of_every_publisher_joins_an_outbox_row[sa]. Each asserts the pre-repair mechanism (an /api/v3/articles/{id} GET whose response is the bronze capture, noted by _note_fetch). 0 of these 4 touch another publisher. Consequence beyond the tests: with no article request and no _note_fetch, an sa run record's keys_fetched is empty and keys_stored_join has no sa entries; the worker's fetched/stored ledger no longer counts sa articles as fetched. I did not edit those four tests (outside <paths>) and did not re-add _note_fetch (the order says it is no longer called).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "deliverables/0.9.0_WK_AMGT_HARVST~90/ae1_suite_A.out",
+          "lib/opal_data_harvest/publishers.py seeking_alpha @ this branch"
+        ]
+      },
+      "notes": "Disarm: an issuer amendment adding the four test files to <paths> (their sa arms to assert the listing-body behaviour), or a ruling on whether sa run records should still count the listing item as a fetched key."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W91-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~91",
+      "surfaced_at": "2026-10-01T06:00Z",
+      "one_line": "HVST-ae-2 changes persist_http_cookies on purpose; base test lib/opal_data_harvest/test_worker.py::Tests::test_rotated_http_cookies_survive_next_job_without_new_login_timestamp asserts the write-back and now fails, and test_worker.py is outside the order's <paths>.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Order HVST-ae-2 section 1 item 2 and the closing instruction: a base test whose behaviour the cookie write-back removal changes is named in the report with the update made; the full collector suite is reported against the base 363 passed, 1 skipped.",
+      "world_is": "At worktree wk-hvst-r32-91 on base d152231e55 plus the ae-2 change: python -m pytest lib/opal_data_harvest/ -q reads 1 failed, 370 passed, 1 skipped (base 363 passed + 8 new plants = 371; the 1 failure is the base test). The test calls manager.persist_http_cookies('barrons', envelope, session) then manager.get('barrons') and expects all_cookies[0].value == TEST-ROTATED-VALUE and http_updated_at in saved; with no write-back the vault holds nothing, so get() falls through to SessionManager.refresh, which the HVST-r-4 conftest poison refuses (HarvestPoisonError). Not edited: test_worker.py is not a path this order grants. Proposed update for the issuer or a later cell: replace the test body with the inverse assertion (vault bytes SHA-256 before == after persist_http_cookies); test_ae2_one_identity.py::test_ii already asserts that inverse.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/test_worker.py:324-337 at d152231e55",
+          "lib/opal_data_harvest/auth.py persist_http_cookies (this branch)",
+          "pytest -q run in wk-hvst-r32-91: 1 failed, 370 passed, 1 skipped"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W90-S3",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~90",
+      "surfaced_at": "2026-10-01T07:30Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "one_line": "Row Z-W90-S2 is disarmed by AMENDMENT 1 @cec6fb0ba6 and worker commit 03457e5899, but the surprise-row gate refuses an in-place edit of an existing row, so the disarm is recorded here as a new row.",
+      "spec_asserts": "Issuer instruction (AMENDMENT 1 handover): edit ONLY row AMGT_HARVST-Z-W90-S2 in place, hazard_standing INERT, notes 'Disarmed by AMENDMENT 1 @cec6fb0ba6 and <commit>'.",
+      "world_is": "2026-10-01, wk-AMGT_HARVST-90: safe-commit refused the in-place edit ('EXISTING row AMGT_HARVST-Z-W90-S2 was MUTATED in place (content hash b92a70b84d98 -> f2b6df1fcee6)'); only an ARMED->DISARMED clock advance with `at` is admitted in place, and only on a remediation row. I did not use the audited override (not authorised by the instruction) and reverted my edit. State of Z-W90-S2: its two disarm conditions are met -- the issuer amendment added the four test files to <paths> and ruled the fetched-key question (cec6fb0ba6); 03457e5899 restores _note_fetch with no request and updates the sa arms. Suite at 03457e5899: 1 failed (test_worker.py, row Z-W91-S1, fixed on CLOUD @250c895b8e), 394 passed, 1 skipped; 0 of the 4 Z-W90-S2 tests fail.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/publishers.py seeking_alpha @03457e5899",
+          "deliverables/0.9.0_WK_AMGT_HARVST~90/ae1_suite_A.out"
+        ]
+      },
+      "notes": "Reader: treat Z-W90-S2 as disarmed (INERT) from 03457e5899. If the issuer wants the S2 row itself edited, that needs the audited '# surprise-row-override' on the commit, which is the issuer's or CTO's call."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W91-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~91",
+      "surfaced_at": "2026-10-01T07:00Z",
+      "one_line": "No date-ordered (newest-first, date-filtered) listing route for bbg or wsj is measured anywhere in the harvester or the CRO scripts; lib/opal_data_harvest/discovery.py implements the two routes UNMEASURED.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Order HVST-ae-5 phase A item 3: find the route in the existing harvester and CRO scripts; if none is measured, implement against the route the TabSession can open in-tab, name it, and say it is unmeasured.",
+      "world_is": "publishers.py bloomberg() issues /nemo-next/api/search/query?query=&page= and DowJones.discover() issues /search?query=&page= (relevance search); bloomberg_rest_fetch.py search() and wsj_rest_fetch.py carry no sort or date parameter; PAGE_PARAM entries are all verified False. discovery.py therefore uses bbg /nemo-next/api/search/query?query=\"<company>\"&sort=time:desc&page=N and wsj /search?query=&isToggleOn=true&operator=AND&sort=date-desc&startDate=2026/01/01&endDate=<today>&page=N, the date-sort parameters those publishers' own search pages expose (from the UI, not measured in this repo). discover() raises if a walked listing's dates ever rise, so a route that does not honour the sort fails loud rather than walking relevance order. Phase B first light measures both and overrides discovery.ROUTES / _params.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/publishers.py bloomberg() and DowJones.discover() at bd29533457",
+          "org/tier1_exec/4.0.0_SA_CRO/scripts/bloomberg_rest_fetch.py search() at bd29533457",
+          "lib/opal_data_harvest/discovery.py (this branch)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W91-S3",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~91",
+      "surfaced_at": "2026-10-01T07:00Z",
+      "one_line": "bbg's existing sign-in (bloomberg_harvest_session.py, Google OAuth) is a module-level script that launches its own browser, so renew() has no in-profile sign-in for bbg; wsj and barrons have one (a port of dowjones_harvest_session steps).",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Order HVST-ae-5 phase A item 4: when the profile's session is stale, the harvester's existing sign-in runs INSIDE the persistent profile, unattended.",
+      "world_is": "dowjones_harvest_session.harvest() launches its own non-persistent browser; bloomberg_harvest_session.py runs its whole flow at import time (module level sync_playwright, no function to hand a page to). verification.dowjones_signin(page, publisher, credentials) re-states the Dow Jones SSO steps against the TabSession's own page (the call is renew's default for wsj and barrons; credentials read from dowjones/credentials only when a stale session is found). For bbg renew() raises RequestRejected unless a signin(page, publisher, credentials) callable is passed; the bbg account check (ACCOUNT_CHECKS['bbg'], login.bloomberg.com/user-info, another origin from the tab) is also unmeasured in-tab. FWD-11's renewal half names one stale session, so wsj or barrons carries AC3; bbg renewal is open.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/tier1_exec/4.0.0_SA_CRO/scripts/dowjones_harvest_session.py harvest() at bd29533457",
+          "org/tier1_exec/4.0.0_SA_CRO/scripts/bloomberg_harvest_session.py lines 1-70 and 603-823 at bd29533457",
+          "lib/opal_data_harvest/verification.py renew, dowjones_signin (this branch)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W92-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~92",
+      "surfaced_at": "2026-10-01T07:30Z",
+      "one_line": "Every sa silver append fails: all 229 rebuilt article rows carry themes={} (an empty struct) and pyarrow refuses to write it to parquet, so upload-harvest returns rc=2 and the 229 raw outbox rows stay pending.",
+      "class": "BLOCKING",
+      "hazard_standing": "ARMED",
+      "spec_asserts": "Order AMENDMENT 1 item 3.2 and section 1: after each job ONE upload-harvest uploads what the job stored (bronze and silver) so AC3 can read the collector's own silver by discovered_for; 'the only S3 writes are ... its upload of what the sa jobs stored'.",
+      "world_is": "Job 1 (security-81a74ed057551e58, ASML) stored 229 bodies; the driver's upload-harvest (cap=243: 229 raw + 14 listing) returned rc=2. harvest_listing_outbox: 14 uploaded. harvest_raw_outbox: 229 pending, attempts=1, error_code=ArrowNotImplementedError for all 229. Reproduced offline (no network): silver_from_bronze.article_rows over the 229 queued bodies gives pa.Table.from_pylist OK but pq.write_table fails 'Cannot write struct type themes with no child field to Parquet', themes==({}) on 229 of 229 rows; every other column writes. Uploads.HarvestUploader put_article_bronze already ran per article before the silver step (bronze objects exist; write-once). Nothing reached silver, so AC3 cannot rise above its baseline (20 of 20). The fault is in uploads.py / silver_from_bronze.py (not in this order's paths); the driver does not capture upload-harvest output, so only the rc and the outbox error_code name the cause. ARMED: any further sa job (the issuer's full 89-name run) will queue its articles and fail the same silver append, leaving the outbox growing with no silver.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~92/ae4B_run1.out line 'UPLOAD sa security-81a74ed057551e58 cap=243 rc=2'",
+          ".runtime/opal-data-harvest/progress.sqlite3 (worktree wk-hvst-r32-92) harvest_raw_outbox: ('ArrowNotImplementedError', 1, 229); lib/opal_data_harvest/uploads.py HarvestUploader._run_articles silver group except-branch"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "notes": "Candidate fix is a normalisation of an empty dict to None (or a dummy field) in silver_from_bronze.article_rows or the silver writer; it is outside this order's write grant, so it was not attempted."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W92-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~92",
+      "surfaced_at": "2026-10-01T07:30Z",
+      "one_line": "The first sa job (ASML) ended status=error after 229 articles stored: a requests Timeout 85 s after its 14th listing page; the driver honoured the STOP set and stopped the sa leg, so the stop-after-3-and-resume exercise could not run.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Order AMENDMENT 1 item 3.2: run the first 6 names, stop after the 3rd job ends, re-run the same command and see the 3 done pairs skipped and the other 3 run; 'if a job ends in a STOP status the driver stops the sa leg: that is a recorded result'.",
+      "world_is": "Job 1 ran 07:01:59Z-07:12:41Z (10m42s): 14 auth_check + 14 listing requests all 200, 289 fetch attempts from the listings (229 fetched, 60 rejected: short_or_partial_body / company_not_mentioned), then the job raised Timeout (run record jobs[0].status=error; runs/20261001T070159Z-sa-ede1ed2e6f.json error_type=Timeout; collector set a 900 s cooldown). Checkpoint: done=[sa, security-81a74ed057551e58, error], stopped={sa: error}, stored 229. Re-running the same command printed 'SKIP sa: stopped earlier with error', ran 0 jobs, no request. Jobs 2-6 did not run, so the 3+3 skip evidence is not obtained; this is the FWD-15 (f) arm (STOP honoured) observed live and the FWD-15 (b) arm still unexercised on the real collector. Title check on the 229 stored bodies vs the 280 listing titles in the runtime: 0 differ, 7 articles had no listing title to compare.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~92/ae4B_run1.out and ae4B_run2.out and ae4_checkpoint.json",
+          ".runtime/opal-data-harvest/runs/20261001T070159Z-sa-ede1ed2e6f.json (worktree wk-hvst-r32-92)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W92-S3",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~92",
+      "surfaced_at": "2026-10-01T07:30Z",
+      "one_line": "A console Ctrl-C cannot be delivered to the driver from a tool shell here (no console, GenerateConsoleCtrlEvent reaches no handler), and the driver has no stop file; the planned stop would have been a kill between jobs.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Order AMENDMENT 1 item 3.2: stop the run 'the way an operator would (Ctrl-C / a console break the driver handles after the current job)'; the issuer allows a stop file or termination between jobs if that does not work.",
+      "world_is": "A stand-in python process that installs the driver's own SIGINT handler and is sent GenerateConsoleCtrlEvent (both from the same console and from an AttachConsole/CREATE_NEW_CONSOLE launcher) never ran its handler (it printed its no-signal timeout line). backfill_driver.py has no stop file. Prepared fallback: a watcher process polled the checkpoint and ran taskkill /T /F as soon as it showed 3 done pairs (a kill lands just after the 4th job starts, so that job re-runs on resume with --new-only dedupe). Not used, because the leg stopped on job 1; this is the method that would have been reported.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/backfill_driver.py class Interrupt (SIGINT only), worktree wk-hvst-r32-92",
+          "stand-in test output, scratch .scratch/launcher.py and launcher2.py in worktree wk-hvst-r32-92"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W92-S4",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~92",
+      "surfaced_at": "2026-10-01T08:40Z",
+      "one_line": "Both real sa jobs so far (ASML then ADBE) end status=error from an exception at the end of the job after every article was stored (ASML: Timeout; ADBE: ConnectionError, 121 stored, 0 left pending after upload), so the STOP set ends the leg after ONE job each time and the live 3-then-stop-then-resume exercise of FWD-15 (b) still cannot run on the real collector.",
+      "class": "BLOCKING",
+      "hazard_standing": "ARMED",
+      "spec_asserts": "Order AMENDMENT 2 item 5.2: with --clear-stop sa over the first 6 names, create the stop file after the 3rd done pair, then re-run the same command and see the done pairs skipped and the rest run (FWD-15 b); 'If a job ends in a STOP status the leg stops: that is a recorded result'.",
+      "world_is": "After clearing sa (cooldown expired) job 1 of the run, security-37dddff4d4357038 (ADBE), ran 08:22:48Z-08:27:24Z: 6 auth_check + 6 listing requests all 200, 139 fetch attempts (121 stored, 18 rejected, 21 skipped as held), then runs/20261001T082248Z-sa-be0e3df711.json status=error error_type=ConnectionError retry_at +900 s (worker.py cooldown 'transport_or_runtime_error'); the last logged http event is the 6th listing page at 08:26:45Z, job_finished 39 s later. The driver uploaded (cap 127, rc 0), recorded stopped={sa: error}, and ended; its same-command re-run (--clear-stop sa) printed 'COOLDOWN sa: still cooling for 460 s ... no job started' and left the checkpoint byte-identical, per the order (never clear again inside this order). Two real jobs, two error endings (Timeout, ConnectionError); the stop file was never created because the leg stopped at 1 done pair after clearing, not 3. The stop-file ends-after-job-2 and clear-stop-after-cooldown behaviours are proved by the plants only. The issuer's 89-name run will stop after every job unless the cause (a transport exception raised after the work completes) is fixed in the collector or the issuer clears per job. Also measured: title check of the 350 stored sa bodies against the 400 listing rows in the runtime, 330 comparable, 0 differ.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~92/ae4B2_run1.out, ae4B2_run2.out, ae4_checkpoint.json",
+          ".runtime/opal-data-harvest/runs/20261001T082248Z-sa-be0e3df711.json and run_records/20261001T082248Z-run-e3e0acc4.json (worktree wk-hvst-r32-92)",
+          "lib/opal_data_harvest/worker.py line 747 (status=error, 900 s cooldown on any exception in the job)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "notes": "The collector's worker.py is outside this order's write grant; no fix was attempted."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W91-S4",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~91",
+      "surfaced_at": "2026-10-01T10:50Z",
+      "one_line": "verification.py's press-and-hold locator fallback (verification_locator.locate) reads secret astn/kimi/api-key and POSTs a page screenshot to api.moonshot.ai; my phase A solve() inherited it and it fired once at 09:39Z in the anonymous census profile (ReadTimeout after 25 s).",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "spec_asserts": "CLAUDE.md Agent Autonomy: NEVER call an external vendor API without Andrew's explicit per-use word; order bounds: no Secrets write (a read is not named); solve() is to run the solver in the tab's own page.",
+      "world_is": "Phase A's _solve_press_and_hold fell back, when the exact text 'PRESS & HOLD' was not matched (PerimeterX's DOM text is 'Press & Hold', upper-cased by CSS), to verification_locator.locate, which boto3-reads SecretId astn/kimi/api-key and requests.post('https://api.moonshot.ai/v1/chat/completions') with page.screenshot() base64. At 09:39Z on bbg's anonymous census page it raised requests ReadTimeout (request sent, response not read). Fixed for solve() in this order: the locator is now local DOM (role=button / text, case-insensitive), no vendor call; plant test_ix asserts the source names no locate(). repair() (existing callers) still carries the same fallback at its 'PRESS & HOLD' branch.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/verification_locator.py@90c760302b (locate -> api.moonshot.ai)",
+          "lib/opal_data_harvest/verification.py repair() bbg branch (box is None -> locate)",
+          "traceback of the 09:39Z census run (ReadTimeout, api.moonshot.ai:443)",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/ae5_discovery_census.json (bbg navigations)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "notes": "Whether the one screenshot (an anonymous challenge page, no credentials) reached the vendor is unread. The repair() path is outside what this order changes."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W91-S5",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~91",
+      "surfaced_at": "2026-10-01T10:50Z",
+      "one_line": "TabSession.seed() can never seed: __init__ already did page.goto(origin), which sets the publisher's own cookies, so seed()'s 'profile holds no cookie for the origin domain' test is always false.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "spec_asserts": "tab_transport.py seed(): 'Import cookies ONCE, only when the profile holds none for the origin's domain; returns True if seeded'; publishers.py _ensure_session seeds a seed_from_bundle publisher's fresh profile (bbg, ft).",
+      "world_is": "In the main-tree bbg profile (new, created by this order) a probe printed seeded=false at 09:55Z with a vault envelope present: the homepage load in TabSession.__init__ had set bloomberg.com cookies, so seed() returned False. Every seed_from_bundle publisher therefore runs on an anonymous profile and the stored bundle is never imported. For bbg this changes nothing today (an earned profile passes the challenge itself) and wsj/barrons are seed false by ruling; for ft it means the warm identity was never injected.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/tab_transport.py lines 71-82 (__init__ goto, then seed)",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/ae5_discovery_census.json"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "notes": "No fix attempted: tab_transport.py is outside this order's write grant."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W91-S6",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~91",
+      "surfaced_at": "2026-10-01T10:50Z",
+      "one_line": "bbg's anonymous census arm could not measure any date-ordered route (PerimeterX 403 on every non-homepage fetch, 17 of 20 requests spent), so the bbg routes were measured in the main bbg profile after solve() earned a pass -- a deviation from the order's anonymous-profile rule.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "AMENDMENT 2 step 0: ANONYMOUS TabSession, at most 20 requests per publisher, no sign-in, no seeding.",
+      "world_is": "Anonymous in-tab fetches of bbg: robots.txt, /latest, /feeds/bbiz/sitemap_news.xml, /feeds/bbiz/sitemap_index.xml, /sitemap.xml, /markets all 403 'Are you a robot?' (one genuine 404 for /feeds/sitemap_news.xml); a press-and-hold in that profile ended 'Please try again'. After the main bbg profile earned its pass (solve, 10:03Z) robots.txt, /sitemaps/news/index.xml, latest.xml, 2026-9.xml and 2026-1.xml were fetched there (a warm arm, 6 more bbg requests) and ROUTES['bbg'] set from them. wsj's census stayed fully anonymous (11 requests).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/ae5_discovery_census.json (publishers.bbg.warm_arm)",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/ae5_walk_bbg.json"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Recorded in the census file; the measured route is /sitemaps/news/{year}-{month}.xml, order within a month MIXED."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W91-S7",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~91",
+      "surfaced_at": "2026-10-01T10:50Z",
+      "one_line": "verification.renew() as built in phase A did not call solve() on a sign-in challenge; an unsolved DataDome slider at the Dow Jones SSO was followed by 'Access is temporarily restricted' on every later load of the same profile, wsj and barrons alike.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "AMENDMENT 2 step 1: a sign-in challenge goes to solve() once.",
+      "world_is": "09:48Z wsj and 09:51Z barrons: renew() timed out at the SSO form (Locator.fill; a captcha-delivery frame showing the slider, then the 'temporarily restricted' page with the same initialCid on every reload at 09:57, 10:07, 10:22). A FRESH profile at a scratch root showed the slider and renew() -> solve(slider_drag, passed) -> sign-in succeeded at 10:24Z, so the block was that profile's DataDome state, not the box IP. renew() now solves ONCE on a sign-in challenge (confirm='control_gone') and signs in once more (plant test_x). The two poisoned profile directories were RENAMED (not deleted) to browser-profiles/wsj.poisoned-20261001T1025Z and barrons.poisoned-20261001T1025Z; wsj and barrons were minted in clean profiles at 10:25Z and 10:26Z.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/ae5_renewal.json (earlier_attempts, first_mint)",
+          "lib/opal_data_harvest/verification.py renew()"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Two renamed Chrome profile directories remain under .runtime/opal-data-harvest/browser-profiles (gitignored); removal is the issuer's call."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W91-S8",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~91",
+      "surfaced_at": "2026-10-01T10:50Z",
+      "one_line": "Windows GetLastInputInfo (verification.last_operator_input) changes about every 2-3 minutes on this box from a source that is not this worker, so any unattended window longer than ~2 minutes reads operator_input_detected true.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "spec_asserts": "AC2/AC3: operator_input_detected false per publisher, measured as verification.last_operator_input unchanged; FWD-11 'no human hand at any point'.",
+      "world_is": "A 1 s sampler (ae5_operator_input_ticks.txt, 10:16Z-10:44Z) recorded dwTime changes at 10:16:50, 10:17:35, 10:19:46, 10:23:36, 10:26:03, 10:28:03, 10:31:23, 10:34:36, 10:37:00, 10:40:47, 10:43:55 while this worker's code issued no OS input (Playwright/CDP events do not drive this clock). Several ticks coincide with this seat's own tool calls (10:34:36 and 10:40:47 were the launcher's wait ending; 10:43:55 preceded a command by seconds), so the agent harness is a candidate source. Runs of 4+ minutes (the bbg and wsj full listing walks, 10:17-10:21 and 10:27-10:31) read True; legs of 70-145 s that fell between ticks read False. The AC2 record is built from the clean legs; the walks are recorded separately with operator_input true. Any long unattended run (the ft/sa backfills, a full collector run) will read the same unless the source is found.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/ae5_operator_input_ticks.txt",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/ae5_unattended_run.json (listing_walk_evidence)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "notes": "The source (a human, a keep-awake, the agent harness, another seat's input injection) is not identified."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W91-S9",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~91",
+      "surfaced_at": "2026-10-01T10:50Z",
+      "one_line": "bbg's press-and-hold is answered 'Please try again' on the first hold and accepted on the next hold of the same widget; solve() now holds at most twice (one challenge, no retry loop).",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "verification.solve: the solver once per solve; PRD C-HV-TRUST-TOKEN: solve ONCE.",
+      "world_is": "Observed: anonymous census profile hold 1 -> still 403; main profile 09:55Z hold 1 -> 'Please try again' (screenshot), 10:03Z a second hold -> page 'Markets - Bloomberg', robots.txt and /markets 200; a quick-run solve at 10:35Z with one hold failed (leg ended challenge_failed); at 10:41Z with the two-hold solver the same challenge passed (http 200) and the leg collected 3 articles. The solver logs of the pass and the fail are identical (fill reaches ~143, 'no checkmark or peak detected'), so the hold itself does not show the cause.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/ae5_run1_bbg.json (failed solve, 10:34Z)",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/ae5_unattended_run.json (bbg challenge_detail, passed)",
+          "lib/opal_data_harvest/verification.py _solve_press_and_hold; plant test_xi"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Whether the second hold is what PerimeterX needs, or a fresh profile always needs two, is one passing observation each way."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W91-S10",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~91",
+      "surfaced_at": "2026-10-01T10:50Z",
+      "one_line": "barrons search returned HTTP 200 with 0 parseable hits once (10:34Z, three browsers running), then 16 hits on every other call; wsj's TabSession homepage load timed out once (10:40Z). A zero-hit 200 reads as 'no articles', not as a failure.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "spec_asserts": "DowJones.discover: hits = _parse_urls(search page); an empty list is a result, not an error.",
+      "world_is": "ae5_run1_barrons.json: requests [200 /search], hits 0, articles 0; the same call at 10:36Z by hand and in the 10:40Z leg returned 16 hits (527,810 bytes). The 0-hit body was not kept. The wsj leg at 10:40:50Z died in TabSession.__init__ page.goto timeout 30000 ms, no request sent; its re-run at 10:44Z passed. Cause of either: unmeasured.",
+      "grounding": {
+        "status": "INFERRED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/ae5_run1_barrons.json",
+          "lib/opal_data_harvest/publishers.py DowJones.discover/_parse_urls"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "notes": "A listing that parses to zero hits on a 200 is silent in the collector; a retained body would tell a soft block from an empty page."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S52",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-01T11:08Z",
+      "one_line": "Round-32 disposition record (rows are append-only): every round-32 row the file still reads ARMED is disarmed by a landed commit or ruled here -- W90-S2, W92-S1, W92-S4, W91-S4, W91-S5 disarmed; W91-S8 and W91-S10 ruled.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Spine L10: the slug goes only after every BLOCKING or ARMED row of the round is dispositioned.",
+      "world_is": "W90-S2 (four base tests asserted the article GET): disarmed by ae-1 AMENDMENT 1 @cec6fb0ba6 + worker @03457e5899, recorded W90-S3. W92-S1 (sa silver empty struct themes): fixed @254ea37cf6. W92-S4 (no-response exceptions ended every sa job error): fixed @3669bd0f0a (+ @6039cefc48 once-per-job account check, bounded transport-class auto-resume). W91-S4 (repair() could post a page screenshot to an external vision API): disarmed @220a74350a, local DOM locator only. W91-S5 (TabSession.seed could never seed): fixed @791616d9b6 then @3cdb41b7e2 (adds only the bundle cookies the profile lacks). W91-S8 RULED: the box's last-input clock ticks every 2-3 min with no human present (the agent harness is a candidate source), so operator_input_detected cannot discriminate a human hand from harness input; ae-5 AC2 holds only for the short leg windows it records, and FWD-11's 'no human hand' is carried as INFERRED until a discriminating instrument (input-source attribution) exists -- a round-33 input to the CTO. W91-S10 RULED INERT: one barrons search 200 with 0 parseable hits and one wsj homepage timeout, both single INFERRED transients with no repeat.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "commits cec6fb0ba6, 03457e5899, 254ea37cf6, 3669bd0f0a, 6039cefc48, 791616d9b6, 3cdb41b7e2, 220a74350a",
+          "deliverables/0.9.0_WK_AMGT_HARVST~91/ae5_unattended_run.json (operator-input windows)",
+          "lib/opal_data_harvest suite at the trunk after 220a74350a: 442 passed, 1 skipped"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "The disarming commits each carry a negative control (a test failing on the pre-fix code). W91-S8 is the one ruling that limits a FWD claim; it goes to the CTO in the L8 packet."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W90-S4",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~90",
+      "surfaced_at": "2026-10-01T11:55Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "class": "BLOCKING",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "one_line": "HVST-af-3 AC2 FAILS honestly: 68 of 89 universe rows map to a gold security_key; 21 do not, because the gold securities file (191 rows) has no row for them under any key the resolvers produce.",
+      "spec_asserts": "TO HVST-af-3 / AC2: the crosswalk then the ~46 securities file maps the 89 universe rows to gold keys; PASS needs MAPPED >= 80 of 89.",
+      "world_is": "depth_census on gold part-20261001T114722Z.parquet: MAPPED 68 of 89 (49 via crosswalk key present in the file, 19 via file company/alias/sa_symbol/ticker match, e.g. AstraZeneca -> AZN_US_Equity, BNP Paribas -> BNPQY_US_Equity). 21 UNMAPPED, each because crosswalk.resolve gives a canonical key (shown) that the ~46 securities file lacks and no company/alias/sa_symbol/ticker form matches: Adobe (ADBE_US_Equity); Air Liquide (AI_FP_Equity); Cadence (CDNS_US_Equity); Celsius (CELH_US_Equity); Clorox (CLX_US_Equity); Global Payments (GPN_US_Equity); HEICO Corporation (HEI_US_Equity); International Container Terminals (ICT_PM_Equity; the file's ICT_US_Equity is 'International Container Termin' with ticker 'ICT US Equity', not matched on any form, so not taken); JD.com (JD_US_Equity); MSCI Inc (MSCI_US_Equity); Manila Electric (MER_PM_Equity); Michelin (ML_FP_Equity); Mitsubishi UFJ Financial Group (8306_JP_Equity); Nike (NKE_US_Equity); Schlumberger (SLB_US_Equity); Shopify (SHOP_CN_Equity); Sumitomo Mitsui Financial Group (8316_JP_Equity); Synopsys (SNPS_US_Equity); Tokyo Electron (8035_JP_Equity); Tokyo Marine (8766_JP_Equity); Zoetis (ZTS_US_Equity). Gold is built over the securities file, so these 21 names cannot carry gold mentions until the file gains them. AT 50+: 5 of 89, AT 100+: 3 of 89. No key was synthesized.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "deliverables/0.9.0_WK_AMGT_HARVST~90/af3_census.out and af3_census.json",
+          "deliverables/0.9.0_WK_AMGT_HARVST~90/af3_AC2.out (AC2 RESULT: FAIL, only 68 of 89 mapped)",
+          "lib/opal_data_harvest/depth_census.py map_universe"
+        ]
+      },
+      "notes": "Fix is the issuer's: add the 21 names to the gold securities file (crosswalk-resolved keys) and rebuild gold; the census then maps them with no code change. Also: the census writes LF-only bytes, because AC2's `$`-anchored regexes fail on Windows CRLF."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W91-S11",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~91",
+      "surfaced_at": "2026-10-01T12:05Z",
+      "one_line": "HVST-af-2 AC2 not met: no challenge was met AND passed under the input-source monitor inside the 10-request-per-publisher cap (bbg met a PerimeterX press-and-hold 403 once, unhandled by the run-1 driver, then none in 4 more attempts; wsj and barrons met no DataDome slider in 2 runs each).",
+      "class": "BLOCKING",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Face s2: drive bbg's blocked route until its press-and-hold appears and solve it; <=10 requests per publisher; AC2 needs one publisher with challenge_met != none, passed true, a path, solved_at inside a window whose hardware_input_events is 0.",
+      "world_is": "Five runs, each under its own InputSourceMonitor, hardware_input_events 0 in all five (run 1: 11:51:33Z-11:53:54Z, injected 12; runs 2-5 injected 0). bbg: run 1 in-tab GET /sitemaps/news/2026-10.xml = 403 bloomberg_press_and_hold (driver had no solve step for it); run 2 sitemap 2026-10 = 200, 0 boeing slugs; run 3 raised 'Locator.count: Frame was detached' (see W91-S12); runs 4 and 5 navigated sitemaps 2026-9 and 2026-10, no control, 200-shaped XML. bbg requests: 2+2+3+2+1 = 10, the cap, so the budget is spent. wsj/barrons: run 1 and run 2 each homepage + sign-in route + account check (logged in, 200): no slider; 3+3 = 6 of 10 used each. af2_challenged_pass.json carries bbg passed false with the 403 signature; AC2 reads 'CHALLENGED PASSES: 0' and FAIL.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/af2_challenged_pass.json",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/af2_run1_detail.json",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/af2_run3_detail.json",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/af2_run5_detail.json"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "The press-and-hold is intermittent, not deterministic on a given route: it appeared on the first bbg fetch after idle (run 1) and not on later ones. A cut that needs a met challenge needs either a budget for a retry loop across time or a way to provoke it that is not a search. The instrument itself is proven (seam: injected 1, hardware 0; AC1 passes)."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W91-S12",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~91",
+      "surfaced_at": "2026-10-01T12:05Z",
+      "one_line": "verification.solve() against a live bbg page raised 'Locator.count: Frame was detached' once (run 3, 11:58:38Z-11:59:02Z): the control lookup in _press_and_hold_box / _control_visible iterates page.frames and calls count() with no guard against a frame that detaches mid-iteration.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "solve() locates the press-and-hold control from the page's DOM and holds it (round 32 passed it live).",
+      "world_is": "Run 3's driver reached a 403 on the bbg sitemap fetch and called V.solve(ts,'bbg',sig,route=...,monitor=mon): solve's first attempt found no control, navigated this page to the route, and the next _press_and_hold_box read raised playwright Error 'Locator.count: Frame was detached' while the navigation was settling. The traceback was not kept (my driver caught and recorded only the message); the line is INFERRED from the message and from solve's call order. Runs 4 and 5 guarded the check with a retry and did not reproduce it.",
+      "grounding": {
+        "status": "INFERRED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/af2_run3_detail.json",
+          "lib/opal_data_harvest/verification.py _press_and_hold_box/_control_visible/solve"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Not fixed here: the face limits verification.py to the optional monitor and solved_at. A guard around the frame walk (catch the Error, wait, retry once) is the candidate."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W91-S13",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~91",
+      "surfaced_at": "2026-10-01T12:05Z",
+      "one_line": "The hook counted 12 injected OS input events in one 140 s window (run 1) and 0 in four others; hardware stayed 0 in all five. Source of the 12 is unidentified (harness input, another seat's tool, or the browser), and Playwright/CDP input is invisible to the hook by design.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "W91-S8: the last-input clock ticks with no human present, so it cannot tell a human from injected input.",
+      "world_is": "Run 1 window 2026-10-01T11:51:33Z..11:53:54Z: hardware_input_events 0, injected_input_events 12 (the seam run proved the hook counts a SendInput move as injected 1, hardware 0). Runs 2-5: injected 0. 'hardware 0' is a claim about OS input devices only; it says nothing about CDP events the browser dispatches internally.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/af2_run1_challenged_pass.json",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/af2_seam.out"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Confirms W91-S8's premise that injected input occurs on this box; the instrument separates it from a hand."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W92-S5",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~92",
+      "surfaced_at": "2026-10-01T12:16Z",
+      "one_line": "af-4: discovery.discover is passed the PacedSession, not the bare inner TabSession.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "TO phase A item 1: list through `discovery.discover(self._session.inner, pub, <company query>, floor=...)`.",
+      "world_is": "discover() calls tab_session.get; on the bare inner a sitemap GET bypasses PacedSession, so it would carry no pacing, no request_attempts row (AC2 reads /sitemaps/news/ paths from request_attempts) and no once-per-leg challenge route. The leg passes self.session (PacedSession), which forwards `origin` to the inner TabSession by __getattr__; a fake TabSession inner still receives every request. discover() also now treats a raised UpstreamUnavailable(404) at page 1 as the first-of-month step-back, because PacedSession raises a 404 rather than returning it.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/publishers.py Publisher._sitemap_items @e0b221d743",
+          "lib/opal_data_harvest/discovery.py discover @e0b221d743",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~92/af4_bbg_run.json request_attempts: 2 sitemap rows"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "The same single browser identity serves every request; only the wrapper differs from the face's wording."
+    },
+{
+      "id": "AMGT_HARVST-Z-W92-S6",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~92",
+      "surfaced_at": "2026-10-01T12:16Z",
+      "one_line": "af-4: a bbg sitemap item carries a URL and no story id, so the article is fetched as its page and read from __NEXT_DATA__.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "TO phase A item 1: the sitemap item's URL and date replace the search hit; relevance by the existing body check after the article fetch 'as today'.",
+      "world_is": "'As today' is module.article(session, resourceId) -> /article/api/story/id/{id}; the id (e.g. TLUURIGFWR2800) is not derivable from the sitemap URL (/news/articles/YYYY-MM-DD/slug). The tab leg fetches the article page in-tab and reads the story from the embedded __NEXT_DATA__ (JSON-LD NewsArticle as a fallback), id = story.id. Live: 8 of 8 accepted articles came through http_embedded_json; the JSON-LD fallback and the bucket pre-check by URL-hash identity (article_known) are exercised only by plants, not live.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~92/af4_bbg_run.json accepted[].transport",
+          "lib/opal_data_harvest/publishers.py bbg_page_story @e0b221d743"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Matches how the round-32 ae-5 walk read the same pages."
+    },
+{
+      "id": "AMGT_HARVST-Z-W92-S7",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~92",
+      "surfaced_at": "2026-10-01T12:16Z",
+      "one_line": "af-4: the live job ran with --floor 2026-09-24, not 2026-01-01, to hold the ~40-request cap.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "TO phase B: `--floor 2026-01-01 ... at most ~40 requests; stop the job if it exceeds that`.",
+      "world_is": "backfill_bound(BA, bbg, 2026-01-01) read 2026-09-10 (the stored watermark 2026-09-10T00:49Z): the literal job would have fetched every Boeing-slug article dated 09-10 onward with no article cap in backfill mode (the run record is written only when a job ends, request_attempts folded in a `finally`, so a killed job leaves none). The job was run with --floor 2026-09-24 (bound = max(floor, watermark) = 09-24): 11 request attempts (2 sitemaps, 9 article GETs of which 1 was the 403 bot_check, solved once, then 200), 8 accepted, 0 rejected, 0 on /search.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~92/af4_bbg_run.json",
+          "harvest_grammar.backfill_bound read-only S3 watermark BA/bbg = 2026-09-10T00:49:23Z"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "The sitemap leg has no per-job article cap in backfill mode; a full-floor bbg backfill is request-unbounded by design (one GET per matching article)."
+    },
+{
+      "id": "AMGT_HARVST-Z-W92-S8",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~92",
+      "surfaced_at": "2026-10-01T12:16Z",
+      "one_line": "af-4: default_profile_root() resolves from the module's own tree, so a worker's worktree holds an empty bbg profile.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "TO phase B: run from the main tree's runtime so the main-tree bbg profile (earned in round 32) is used.",
+      "world_is": "--runtime-root only moves the runtime files; TabSession's profile root is tab_transport.default_profile_root() = <module tree>/.runtime/opal-data-harvest/browser-profiles, which in this worktree is empty. A directory junction .runtime/opal-data-harvest/browser-profiles -> the main tree's browser-profiles (gitignored path) was created for the one job and removed after it (junction only; the main bbg profile was verified present afterwards).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/tab_transport.py default_profile_root",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~92/af4_bbg_run.json status new_articles under the main bbg profile"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Any worker ordered to run a tab job under the main profile from its worktree needs the same junction, or the code merged to the main tree first."
+    },
+{
+      "id": "AMGT_HARVST-Z-W92-S9",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~92",
+      "surfaced_at": "2026-10-01T12:16Z",
+      "one_line": "af-4: a sitemap listing's reached_span reads stop_bound at the fetch date (2026-10-01..2026-10-01), not the dates the walk reached.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "spec_asserts": "FWD-15 (e) discovery in date order back to the floor, with the run record's reach carrying the span covered.",
+      "world_is": "worker.fold_listing_reach reads each captured listing through silver_from_bronze.listing_hit_rows, which parses search JSON/HTML and not a sitemap XML; the job walked 2026-10 and 2026-9 down to 09-24 but its record carries reached_span {start 2026-10-01, end 2026-10-01, basis stop_bound}. The sitemap bytes were recorded as listings (ext xml, ~1.7 MB for 2026-9) into harvest_listing_outbox; the upload-harvest silver step over an xml listing was not run in this order.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~92/af4_bbg_run.json reached_span",
+          "lib/opal_data_harvest/worker.py fold_listing_reach",
+          "lib/opal_data_harvest/silver_from_bronze.py listing_hit_rows"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Reach/coverage readers of the run record under-count a sitemap leg until listing_hit_rows (or fold_listing_reach) reads the sitemap's dated items; outside this order's paths.",
+      "disarm_owner": "2.0.0_SA_COO~H"
+    },
+{
+      "id": "AMGT_HARVST-Z-W92-S10",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~92",
+      "surfaced_at": "2026-10-01T12:16Z",
+      "one_line": "af-4: the issuer's running sa backfill driver executes from this worktree, so Phase A edits were live to its next jobs.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "TO: write only the face's <paths>; ft and sa are the issuer's running backfills, never touched.",
+      "world_is": "At job start the sa driver (python -m lib.opal_data_harvest.backfill_driver --publishers sa) and its child jobs (runtime root .../wk-hvst-r32-92/.runtime/opal-data-harvest) were running from this worktree's code, so commit e0b221d743 (publishers.py, discovery.py) was imported by the sa child jobs started after it. The change touches only the bbg and wsj tab legs and discover(); the sa path is unchanged and the collector suite passed (448 passed, 1 skipped). No ft or sa profile, request or file was touched by this worker.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "powershell Get-CimInstance Win32_Process: driver pid 39060 and child 43756 at 2026-10-01T12:07Z",
+          "git show e0b221d743 --stat"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Recorded so the issuer reads any sa-run difference after that commit against this commit."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W90-S5",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~90",
+      "surfaced_at": "2026-10-01T12:55Z",
+      "one_line": "Z-W90-S4 disarmed: gold rebuilt over 212 securities @e0d3a13ef1; depth_census now takes gold's key set from the newest chatter_daily part and maps 89 of 89.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "TO HVST-af-3 AMENDMENT 1: the census's gold key set is what gold carries (newest chatter_daily part); AC2 needs MAPPED >= 80 of 89.",
+      "world_is": "depth_census on mention part date=2026-10-01/part-20261001T122711Z.parquet, daily part date=2026-10-01/part-20261001T123001Z.parquet: GOLD KEYS 212, MAPPED 89 of 89, 0 UNMAPPED, AT 50+ 6 of 89, AT 100+ 3 of 89, S3 WRITES 0; AC2 RESULT: PASS. The 21 names row Z-W90-S4 listed now map; no key was synthesized. 11 of the 21 newly mapped names read total=0 (gold rows exist, no 2026 mentions yet).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "deliverables/0.9.0_WK_AMGT_HARVST~90/af3_census2.out and af3_census2.json",
+          "deliverables/2.0.0_SA_COO_H/round32/gold_rebuild_act_20261001T122401Z.json"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Supersedes the BLOCKING state of Z-W90-S4 (row not edited; append-only).",
+      "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~91",
+      "surfaced_at": "2026-10-01T12:55Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W91-S14",
+      "one_line": "af-2 amendment 1: the main runtime's worker.lock is held by the issuer's ft backfill, so the bbg job ran from this worktree's runtime root.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Amendment 1 item 1: run ONE bbg collector job for BA with --runtime-root the MAIN tree's .runtime/opal-data-harvest.",
+      "world_is": "The first attempt failed 'Another local harvest worker owns the lock' (storage.WorkerLock, worker.lock under the runtime root): ft backfill pid 31976 and its child job pid 46664 run on the main runtime root since 2026-10-01 12:34Z. The job was run with --runtime-root <this worktree>/.runtime/opal-data-harvest instead, with the main bbg browser profile reached by a directory junction (removed after; the profile untouched) and ONLY secrets/bbg.dpapi copied into that root (deleted after). The run record, events and progress state are therefore the worktree's, not the main runtime's; bbg in the main runtime has no record of this job's articles (S3 run_record put_performed true). No ft/sa profile or traffic was touched.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/af2_driver.py",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/af2_job_run_record.json",
+          "lib/opal_data_harvest/storage.py WorkerLock",
+          "powershell Get-CimInstance Win32_Process: pids 31976, 46664 at 2026-10-01T12:43Z"
+        ]
+      },
+      "notes": "The one-worker lock is per runtime root, so a bbg job and an ft backfill cannot share the main root; the issuer reads the job's articles from the worktree root."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~91",
+      "surfaced_at": "2026-10-01T12:55Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W91-S15",
+      "one_line": "af-2: on the collector path solve() is called without the monitor, so the outcome carries no solved_at; the record's solved_at is the challenge_passed event time.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Order phase A item 2: solve() accepts an optional monitor and stamps solved_at; amendment 1: solved_at from the job's own events.",
+      "world_is": "verification.route_bot_check calls solve(tab_session, publisher, signature, route=route) with no monitor, so a collector-path solve carries no solved_at. The challenge_passed event's `at` (2026-10-01T12:47:34.317801+00:00, inside the monitor window 12:45:56.68 .. 12:50:00.94) was used as solved_at, and the record says so (solved_at_source). The 'Frame was detached' of Z-W91-S12 did not recur in this job (re-locate path exercised by test_v only).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/verification.py route_bot_check",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/af2_challenged_pass.json"
+        ]
+      },
+      "notes": "Outside this order's reach: threading a monitor through PacedSession is a separate cell if the issuer wants solve()'s own stamp in collector records."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S53",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-01T13:10Z",
+      "one_line": "Round-33 disposition record (rows are append-only): the four round-33 rows the file still reads ARMED are disarmed by landed commits -- W90-S4, W91-S11, W91-S12, W92-S9.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Spine L10: the slug goes only after every BLOCKING or ARMED row of the round is dispositioned.",
+      "world_is": "W90-S4 (21 universe names absent from the gold securities file): gold universe widened 191 -> 212 under the CTO-signed ADDENDUM 1 (@78aac97ada, CTO @e24ca120a2), gold rebuilt @e0d3a13ef1, census re-run maps 89 of 89 (@8e5a41ed67, recorded W90-S5). W91-S11 (no challenged pass earned): af-2 AMENDMENT 1 @c6e376360e; the recut passed bbg's press-and-hold through the real collector path under InputSourceMonitor, hardware input 0 (@12fee81398). W91-S12 (solve raised on a detached frame): re-locate once, planted (@640483677d, merged @12fee81398). W92-S9 (sitemap-XML listing not parsed by the reach and listing silver): fixed @ce17235845 with a negative control.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "commits 78aac97ada, e24ca120a2, e0d3a13ef1, 8e5a41ed67, c6e376360e, 12fee81398, 640483677d, ce17235845",
+          "deliverables/0.9.0_WK_AMGT_HARVST~91/af2_challenged_pass.json",
+          "deliverables/0.9.0_WK_AMGT_HARVST~90/af3_census2.out"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Every disarm is by a landed commit; none is a ruling that limits a FWD claim."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~91",
+      "surfaced_at": "2026-10-01T13:45Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W91-S16",
+      "one_line": "ag-1: 6 of 6 fresh-profile in-profile Dow Jones sign-ins (3 wsj, 3 barrons) met NO DataDome challenge and renewed 200; no wsj/barrons challenged pass was earned, AC2 FAIL.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Order ag-1 section 0: the sign-in route is where DataDome meets a new browser, so a fresh profile's renew() meets the DataDome slider and solve() passes it (AC2 needs one wsj/barrons met-and-passed challenge).",
+      "world_is": "Under one InputSourceMonitor window (13:34:33Z..13:40:08Z, hardware 0, injected 24) each of wsj a1/a2/a3 and barrons a1/a2/a3 (fresh profile folders under deliverables/0.9.0_WK_AMGT_HARVST~91/r34-profiles/<pub>/aN) ran verification.renew(): wsj a1 and a3 and barrons a1-a3 read stale, signed in inside the profile and renewed true (account check 200), no DataDome control visible, solve() never called (solves=[] in every attempt); wsj a2 raised TimeoutError Page.goto 30000 ms before sign-in (no challenge, no sign-in). Requests used: wsj 9 of 15, barrons 12 of 15 (a request = a TabSession open, an in-tab fetch, or a goto). The record ag1_challenged_pass.json says challenge_met none for both; AC2 prints 'CHALLENGED PASSES: 0' and FAIL. The round-32 'Access is temporarily restricted' block was not reproduced by a clean sign-in; no challenge was forced. AC1 5 passed.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/ag1_detail.json",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/ag1_challenged_pass.json",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/ag1_ac2_output.txt"
+        ]
+      },
+      "notes": "The unproven arm for wsj/barrons is a challenge met on the harvest path (the issuer's wsj driver run) rather than at sign-in; the issuer decides whether a challenged pass can be earned there under a monitor. No solver defect observed (the solver was never reached)."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W90-S6",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~90",
+      "surfaced_at": "2026-10-01T13:45Z",
+      "one_line": "ag-2: neither ft's Security Verification nor sa's PerimeterX press-and-hold was MET in six fresh anonymous profiles, so AC2 (a challenged pass) cannot be earned and no ft solver was built.",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Order cell 0 / round-33 item 2: ft shows a Security Verification interstitial to browsers it does not trust; sa's web origin can show a PerimeterX press-and-hold; AC2 needs a publisher of (ft, sa) with a challenge met and passed under a hardware-0 monitor window.",
+      "world_is": "Phase A (fresh profile each, monitor hardware 0 / injected 0): ft home, ft search?q=Boeing, an ft article (4 requests), sa home, sa /symbol/BA, sa /market-news (3 requests) -- every page rendered normally, no bot-check signature on ft, no visible control on sa. Phase B (3 fresh profiles per publisher, 9 requests each, collector-shaped in-tab fetches of ft search and sa api/v3/symbols/ba/news included, monitor window 13:38:40Z..13:39:39Z, hardware 0, injected 12): every response 200 with no signature on ft and sa's APIs, no slider/press-and-hold control on any page. ag2_challenged_pass.json records both publishers challenge_met none. No ft solver was written: no Security Verification DOM was ever seen to build one from. The order's own wording ('if met') is the case taken.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~90/ag2_explore_1.json",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~90/ag2_explore_2.json",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~90/ag2_phaseB_raw.json",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~90/ag2_challenged_pass.json",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~90/ag2_AC2.out"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "What would pass it: a profile/route ft actually challenges (the issuer's backfill sessions, or a higher request rate than 9 per profile -- both outside this order's bounds), or sa's REST route under its residential arm refused by PerimeterX; the challenge must appear before a solver can be written from its DOM."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W90-S7",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~90",
+      "surfaced_at": "2026-10-01T13:45Z",
+      "one_line": "bot_check.signature_of reads a normal sa page as 'perimeterx': the page carries a hidden px-captcha mount, so a page-text signature check on sa is a false positive.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "bot_check SIGNATURES: perimeterx = px-captcha|perimeterx|/_px../ over the body marks a bot check.",
+      "world_is": "seekingalpha.com home (1.07 MB) and /symbol/BA and /market-news rendered normally (real titles) yet signature_of returns 'perimeterx' on all three, from <div id=\"px-captcha-wrapper\" class=\"... hidden ...\"> plus an inline .px-captcha-visible CSS rule; no visible #px-captcha, no hold-control text. In-tab fetches of sa's REST news API returned 200 with no signature. Any future sa wiring that confirms by page text (confirm=control_gone or signature_of on a page body) would read a passed page as challenged.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~90/ag2_sa_noncheck_excerpt.html",
+          "lib/opal_data_harvest/test_ag2_ft_sa_solvers.py::test_plant_ii_sa_hidden_perimeterx_mount_is_not_a_press_and_hold_control",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~90/ag2_explore_2.json"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Not touched (lib/opal_data_harvest/bot_check.py is outside this order's paths)."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W90-S8",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~90",
+      "surfaced_at": "2026-10-01T15:00Z",
+      "one_line": "Z-W90-S7 resolved: bot_check perimeterx signature now needs the challenge; sa's hidden px-captcha mount reads no signature (fix 42ea2c30c1).",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Amendment 1: a PerimeterX signature needs a visible challenge or the block page, not the bare mount or script include.",
+      "world_is": "Fix at 42ea2c30c1. Zero saved real bbg PerimeterX challenge DOM html files exist under the HARVST deliverables (count 0), so plant ii uses the existing synthetic px-captcha fixture in test_ac1_bot_check_class.py plus a visible-mount DOM and a block page. Mount pattern is id=px-captcha element (sa's real page also carries a .px-captcha-visible CSS selector, not a mount). A real bbg challenge DOM carried in the future must be added to plant ii; the bbg press-and-hold text is already caught by the earlier bloomberg_press_and_hold signature.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/bot_check.py@42ea2c30c1",
+          "lib/opal_data_harvest/test_ag2_sa_signature.py@42ea2c30c1"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Resolves AMGT_HARVST-Z-W90-S7 (append-only: that row is untouched). disarm_owner 2.0.0_SA_COO~H (nothing armed)."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S54",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-01T15:15Z",
+      "one_line": "Round-34 disposition record (rows are append-only): W90-S6 (BLOCKING: no ft/sa challenge met, AC2 cannot pass) is disarmed by the issuer's AMENDMENT 1 under CTO ruling 27860; W91-S16 and W90-S7/S8 need no act.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Spine L10: the slug goes only after every BLOCKING or ARMED row of the round is dispositioned.",
+      "world_is": "W90-S6: the criterion it blocked (a met-and-passed ft/sa challenge in fresh profiles) was re-pointed by ag-2 AMENDMENT 1 @7f375a0871 -- CTO ruling 27860 grades the captcha limb at backfill load (none presented = MET-BY-ABSENCE, labelled) plus a planted fixture; ag-2 then closed on the sa signature fix (@0a77c5cf82). W91-S16 (wsj/barrons sign-ins met no DataDome challenge) is an OBSERVATION carried into the FWD-11 limb table of the round-34 packet. W90-S7 is resolved by W90-S8 (fix 42ea2c30c1).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "commits 7f375a0871, 0a77c5cf82, 1846fb9912, 42ea2c30c1",
+          "deliverables/2.0.0_SA_COO_H/round34/ROUND34_DRAIN_END_PACKET.md"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "The disarm is an amendment under a CTO ruling, not a ruling that limits FWD-11: the captcha limb stays open (packet section 2)."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W90-S9",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~90",
+      "surfaced_at": "2026-10-01T15:50Z",
+      "one_line": "ah-2 AC2 run from the main tree with PYTHONPATH=<worktree> cannot import the grader: the main tree's own lib/ package shadows it.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "AC2 runs `python -m lib.opal_data_harvest.load_window_grade --json` with cwd = git toplevel and reads the live monitor windows.",
+      "world_is": "From the main tree (cwd) with PYTHONPATH=worktree, the check's subprocess prints 'No module named lib.opal_data_harvest.load_window_grade' (cwd's lib/ wins over PYTHONPATH). The same grader run from main cwd as a script path over the live data grades fine: 2 windows, 5 publishers, all INSUFFICIENT (clean_hours 0 of 24). AC2 is to be re-run after the drain.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "wk-AMGT_HARVST-90-r35 lib/opal_data_harvest/load_window_grade.py",
+          "worktree .scratch/live.json"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Nothing armed; the issuer re-runs AC2 on the merged tree."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W91-S17",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~91",
+      "surfaced_at": "2026-10-01T16:50Z",
+      "one_line": "ah-1 AC2 greps for lines that START with PASSED; a colourised pytest run (FORCE_COLOR set) prefixes an ESC sequence and the check FAILs a passing test.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "AC2 prints a PASSED line containing the publisher name; its check is line.startswith(\"PASSED\") on the subprocess output of pytest -rA.",
+      "world_is": "In this worker shell FORCE_COLOR=3 is set, so pytest -rA writes ESC[32mPASSED ESC[0m lib/...::test_fixture_solve[bbg] even into a pipe; AC2 then prints 'AC2 RESULT: FAIL ... bbg: no PASSED fixture-solve test' although the test passed (1 passed). With FORCE_COLOR unset (env -u FORCE_COLOR) the same AC2 prints 'AC2 RESULT: PASS (0 failure(s))'. The check file and pytest.ini lie outside this order's paths, so nothing here can make the line colour-proof.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_H/round35/checks/ah-1.AC2.py (the startswith test)",
+          "AC2 run with FORCE_COLOR=3 (FAIL) and with env -u FORCE_COLOR (PASS), both in worker ~91's phase B turn"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Fix is the issuer's: strip ANSI in the check, or pass --color=no / -p no:colour. The drain's AC2 re-run should run without FORCE_COLOR until then."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W92-S11",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~92",
+      "surfaced_at": "2026-10-01T19:25Z",
+      "one_line": "ah-3: the ft driver's per-job invocation (--no-sign-in) refuses a dead stored session, so a restarted ft driver makes 1 fetch and stops.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Order step 2: run the collector as backfill_driver.py invokes it (run --harvest-grammar --retrieval-mode backfill --floor --new-only --no-sign-in --security-json --publishers ft --max-jobs 1).",
+      "world_is": "At 2026-10-01T18:37:53Z that exact invocation on ASML ended status sign_in_refused after 1 fetch (detail '401 under --no-sign-in: no refresh'; the saved session file from 17:26Z was already dead). The same job without --no-sign-in read astn/ft/credentials, renewed once through ft_harvest_session.py (reauth_succeeded 18:42:18Z, network_auth_corroborated true) and ran. The ASML job in ah3_ft_runs.json therefore ran WITHOUT --no-sign-in, by the lead's word 'credentials only via the existing renewal path'.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "C:/Users/Opal Bloomberg/Desktop/ajb_workspace/.runtime/opal-data-harvest/runs/20261001T183753Z-ft-a8cddb0534.json",
+          "lib/opal_data_harvest/backfill_driver.py:178-179"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "When the ft driver is restarted every ft job begins on the same dead saved session and will refuse at fetch 1; the driver needs either a pre-job renewal or a first-job sign-in allowance. Not changed here (backfill_driver.py is outside the face's paths)."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W92-S12",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~92",
+      "surfaced_at": "2026-10-01T19:25Z",
+      "one_line": "ah-3: an ft session dies again about 20-30 minutes after each renewal; the worker renews once per job, so the job ends auth_failed_after_refresh and ft cools down 60 minutes.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Fix 1: barrier on a logged-out page raises AuthExpired and the worker renews once; the renewed session then serves the rest of the job.",
+      "world_is": "ASML job 20261001T183929Z-ft-da3e1ebf4a: renewal at 18:42:18Z, 63 fetches (23 stored, 1 locked), then auth_failed_after_refresh at 19:03:20Z (~21 min after the renewal) with the cooldown set to 20:03:20Z (60 min; the prior 17:37Z cooldown was 15 min). The prior seat's 17:04Z job did the same after ~33 min (48 stored of 77). The cause of the second death (server-side session lifetime, a concurrent login, or the bundle cookie replaced into a jar that then re-expires) is NOT diagnosed here: the barrier is read correctly, the session is not kept alive.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "C:/Users/Opal Bloomberg/Desktop/ajb_workspace/.runtime/opal-data-harvest/runs/20261001T183929Z-ft-da3e1ebf4a.json",
+          "runs/20261001T170405Z-ft-fd5eb3cc00.json (status auth_failed_after_refresh)",
+          "sqlite cooldown row ft until 1790885000 reason auth_failed_after_refresh"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Each ft job yields about 20-30 minutes of fetches per renewal, then ft is dark for an hour; the ASML name is not finished (144 previously stored, 129 skipped, more unfetched listing hits remain). A depth round for ft needs the renewal cadence or the session lifetime measured; it is a different root from the two fixed here."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W92-S13",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~92",
+      "surfaced_at": "2026-10-01T19:25Z",
+      "one_line": "ah-3: only ONE ft job ran: job 2 would start after the 60-minute cooldown (20:03Z) and breach the 90-minute cap; 'most ft listing hits' is not a stored number.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Order step 3: run the collector on 2 ft names chosen by the most ft listing hits; the lead's cap is 90 minutes for the two jobs, stop after job 1 if job 2 would exceed it.",
+      "world_is": "Job 1 (ASML, from 18:37Z) ended 19:03Z in cooldown to 20:03:20Z; a job 2 started then needs ~20+ minutes and would end past 20:08Z, so it was not run (the waiting launcher was killed, 0 ft processes and no Chrome left). Per-name ft listing-hit counts are not persisted anywhere readable offline (listing rows are per query page, not per hit); ASML was chosen as the name with 522 held keys and 416+ fetches, the next name in driver order (Adobe) was the planned job 2. ah3_ft_runs.json carries one job, 63 fetches, which clears AC2's own floor of 40.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "C:/Users/Opal Bloomberg/Desktop/wk-hvst-r32-92/.scratch/job2.out ('COOLDOWN wait 3351 s')",
+          "progress.sqlite3 cooldown ft"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Recorded so the issuer reads the run as 1 of 2 names; a second name is owed when the cooldown clears."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W92-S14",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~92",
+      "surfaced_at": "2026-10-01T19:25Z",
+      "one_line": "ah-3: the post-fix locked share (1 of 63) is measured over fetches AFTER 49 Premium teasers were skipped; AC2 cannot see the skips, so it grades the unlocked share of what was fetched, not coverage.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "AC2: locked = fetch outcomes carrying publisher_did_not_unlock_body, over at least 40 body fetches.",
+      "world_is": "Job da3e1ebf4a: 63 fetches, 23 stored, 39 rejected (34 company_not_mentioned), 1 publisher_did_not_unlock_body; skipped_keys 129 = 80 known_urls + 49 premium_tier. The Premium skips are persisted only as skipped_keys[].why inside the job record (the run_records counts carry skipped_as_held 129 with no split). So the locked share falling from 77% to 2% is the logged-in session (cause 1) plus not fetching Premium (cause 2, a coverage limit the TO names); the 49 Premium articles stay unreachable.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "runs/20261001T183929Z-ft-da3e1ebf4a.json skipped_keys",
+          "ah3_diagnosis.md"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Stated plainly in the diagnosis; the issuer's preflight adversary ('a fix that just stops fetching locked pages') applies to cause 2 by the TO's own design."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S55",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-01T19:40Z",
+      "one_line": "Round-35 disposition record (rows are append-only): W92-S11 and W92-S12 (ARMED: a restarted ft driver stalls on a dead session / the ft session dies ~20-30 min after each renewal) are disarmed by state -- the ft backfill driver stays OFF -- and carried to the round-36 proposal.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "An ARMED hazard disarms same-turn via its disarm_owner; spine L10 sends the slug only after every BLOCKING or ARMED row of the round is dispositioned.",
+      "world_is": "The ft backfill driver (PID 31976) exited at 16:1xZ on STOP_FT and is not restarted; no process runs ft (no python with --publishers ft, no chrome on browser-profiles/ft at 19:3xZ). Both hazards need a running ft driver to fire. The fixes they name (in-job renewal under the driver; the session-longevity diagnosis) are round-36 proposal item 1 in round35/ROUND35_DRAIN_END_PACKET.md.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "commits a78b06d3e6, 9b14622a78",
+          "deliverables/2.0.0_SA_COO_H/round35/ROUND35_DRAIN_END_PACKET.md",
+          ".runtime/harvest-backfill/ft_full_run2.out (driver exit + summary)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Restarting the ft driver re-arms both rows; do it only after the round-36 fix lands."
+    },
+    {
+        "id": "AMGT_HARVST-Z-W90-S10",
+        "project": "AMGT_HARVST",
+        "fabric": "site-z",
+        "surfaced_by": "0.9.0_WK_AMGT_HARVST~90",
+        "surfaced_at": "2026-10-01T20:10Z",
+        "one_line": "ai-1 AC2 cannot grade live data from a worktree: .runtime is untracked, so the grader's runtimes.json is absent there and the grader raises FileNotFoundError.",
+        "class": "OBSERVATION",
+        "hazard_standing": "INERT",
+        "spec_asserts": "The face says run AC2 in the worktree and record its output; AC2 runs `python -m lib.opal_data_harvest.load_window_grade --json` with cwd = git toplevel.",
+        "world_is": "A bare AC2 run in the worktree exits rc=1 (runtimes.json not found under the worktree .runtime). To get a graded run I made a temporary directory junction .runtime -> the main tree .runtime (read-only use), ran AC2 (PASS, 0 failures; bbg 1068 requests, 191 clean minutes), then removed the junction with rmdir (main .runtime verified intact). The live data lives only in the main tree, so the issuer's main-tree re-run after the drain is the real grade.",
+        "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                "worktree wk-hvst-r32-90 AC2 runs 2026-10-01 ~20:0xZ"
+            ]
+        },
+        "disposition": "UNDER_INVESTIGATION",
+        "notes": "No file in the main tree was written."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W91-S18",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~91",
+      "surfaced_at": "2026-10-01T20:30Z",
+      "one_line": "HVST-ai-3: ft/sa/barrons captures land under the code's DEFAULT runtime root, not under the per-publisher runtimes.json dir; ft's in-tab fetch has no challenge page to read, so its capture is the refused body.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Order cell 1.1-1.2: capture 'where the page is the challenge (the tab), the rendered DOM; for a REST refusal (sa), the response body'; status CLI 'reads the runtimes in runtimes.json'.",
+      "world_is": "(a) challenge_capture._runtime_root derives the root from the tab profile or default_profile_root().parent (config.json runtime_root), never from a driver's --runtime-root; the 4 bbg captures sit in .runtime/opal-data-harvest although runtimes.json names .runtime/opal-data-harvest-bbg for bbg, so the status CLI reads EVERY runtimes.json dir plus the config default and matches by publisher filename prefix. runtimes.json has no barrons key; sa's path is another worktree's. (b) ft is a TabSession but PacedSession.get reads the response of an in-page fetch (the tab page itself is not the challenge), so ft/sa captures are provenance source captured_refusal_body (sanitized body); the rendered DOM is taken only when the tab page's own content carries a bot-check signature. (c) the transport hook is skipped while PYTEST_CURRENT_TEST is set unless a test pins capture_root, so the suite's stub challenges never land in a live runtime. verification.py is in <paths> and was not changed.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/challenge_capture.py runtime_dirs/capture_refusal",
+          "lib/opal_data_harvest/transport.py PacedSession._capture_challenge",
+          "lib/opal_data_harvest/tab_transport.py TabSession.get",
+          "main-tree status read: bbg captures=4 under .runtime/opal-data-harvest"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "No hazard; recorded so a reader of limb_2b does not look for ft/sa/wsj captures under the per-publisher runtime dir."
     }
   ]
 ```

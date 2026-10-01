@@ -16368,6 +16368,310 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "spec_asserts": "CLAUDE.md 14b: a drain is graded against the shared index and committed under the draining seat's author; a merge state you did not create is a peer's work-in-progress.",
   "world_is": "Two live COO seats' commits interleave on one shared index: a peer's commit can carry another seat's in-flight MERGE_HEAD and staged merge under its own author line, and the draining seat's tool then reports a refusal for a merge that in fact landed. Same class as Z-S322 (a tool's staged state absorbed by a peer), second shape (a merge, not an entry). No data wrong; the author line and the drain's own verdict are.",
   "notes": "disarm_owner 2.0.0_SA_COO~Z. Owner of the fix: 1.0.0_SA_CTO~Z's spine backlog, beside Z-S322 (round-54 analysis ruling 2). Measured against the ancestry: git merge-base --is-ancestor e05d814e42 HEAD = true, carried by 52b8287a8b."
+},
+{
+ "id": "AMGT_RESAPP-Z-S324",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.7.0_AE_CloudOps~A",
+ "surfaced_at": "2026-10-01T05:25:00Z",
+ "one_line": "The CTO never-widen half for ae-1 says 'AC1 checks the first' of its two re-judgment conditions, but ae_1_posture.py contains the strings 'generation' and 'generated_at' ZERO times, so a PASS of AC1 is no evidence at all that a re-judged body says it was re-judged; and on the classed-ABSENT branch the condition is unsatisfiable by the body, because judge.py:394 writes generation=None.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "Token census over the check at the pin (byte-equal to 51df60aa1a): `cat .../round55/checks/ae_1_posture.py | grep -c 'generation|generated_at'` = 0. Its summary() reads exactly verdict, as_of, comparable, cites_validated/total and packs[].counts.drafted_sentences -- no generation path. Denominator: 1 file, 168 lines, the whole check.",
+   "judge.py:394 inside _absent_document(): '\"generation\": None,'. So an ABSENT document has no generation dict and therefore no generated_at, by the producer's own rule.",
+   "judge.py:536-543, the resolved branch: generation carries run_id, model, usage, effort, generated_at = datetime.datetime.utcnow() at write time, prompt_sha256, answer_sha256. So the condition IS satisfiable on the resolved branch, and only there.",
+   "CTO half @312405a2f4 s.2, quoted from the committed bytes (2,105 B at pin == 2,105 B in worktree): 'each new document's `generation` block must carry the post-act `generated_at`, and the run evidence must name the D-1 object version (or content sha) each pack read. AC1 checks the first, and the drain packet records the second.'",
+   "Pre-batch the three ABSENT targets were ASML_NA_Equity, HAL_US_Equity, PBR_US_Equity (ae1_pre.txt), so the unsatisfiable branch is reachable by up to 3 of the 12 keys. Which ones actually land ABSENT is read from the batch's own output, never predicted."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "CTO never-widen half @312405a2f4 s.2: every re-judged body carries a post-act generated_at, and AC1 is the instrument that checks it.",
+ "world_is": "AC1 does not read the generation block on any branch, so it can neither confirm nor refuse the condition -- a PASS is silent about it, which is the ABSENT != EXERCISED-AGAINST shape. Separately, the condition as written cannot hold for a classed-ABSENT document at all, because the producer writes generation=None there. NOT a blocker and NOT a rollback trigger: this seat satisfies the condition in its own L3 evidence instead of through AC1 -- per target it reads the new body's generation.generated_at where the body has one, and names the S3 LastModified beside the new VersionId on the ABSENT branch, saying which of the two it is. INFERRED, not measured: whether the earlier rounds' halves make the same AC-checks-it claim about a condition their check does not read -- that denominator was not swept here.",
+ "notes": "disarm_owner 2.0.0_SA_COO~Z (the issuer). Surfaced, not adjudicated: this seat does not amend another seat's check or another seat's half. Candidate repair for the issuer to weigh: have the post limb read doc['generation'] and grade generated_at against the act window, with the ABSENT branch graded on the object's LastModified instead -- which would make the condition checkable on both branches rather than one. Raised while executing AMGT_RESAPP.TO-AMGT-ae-1; the batch was not halted."
+},
+{
+ "id": "AMGT_RESAPP-Z-S325",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.7.0_AE_CloudOps~A",
+ "surfaced_at": "2026-10-01T05:32:00Z",
+ "one_line": "AC1's served limb cannot pass for ANY subject: the deployed opal-amgt-scoped-api has no /posture route at all. GET /api/scoped/amgt/security/<K>/posture returns 404 {'refused': true, 'reason': 'no /api/scoped/amgt route for GET ...'} on 3 of 3 keys this act overwrote AND 3 of 3 keys it never touched, while /thesis on the SAME function returns 200. So ae-1's 24 BAD lines are ONE cause, and that cause is not the act.",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "Direct probe through the check's own invoker, capture_lib._invoke, with the META PRINTED (the check's serve() discards it): TOUCHED VLO_US_Equity / BABA_US_Equity / ASML_NA_Equity -> status 404, body 'no /api/scoped/amgt route for GET /api/scoped/amgt/security/<K>/posture'. Evidence file deliverables/0.7.0_AE_CloudOps~A/evidence/ae1_served_probe.txt.",
+   "UNTOUCHED CONTROL drawn from a printed denominator: 33 posture subjects listed under posture/v1/, 12 touched by this act, 21 untouched. 2317_TT_Equity, 9433_JP_Equity, 992_HK_Equity -> the SAME 404. The route is absent for keys this act never wrote, so the act cannot be its cause.",
+   "POSITIVE CONTROL on the same function and the same prefix: /api/scoped/amgt/security/VLO_US_Equity/thesis -> 200, 658,610 B; .../2317_TT_Equity/thesis -> 200, 481,945 B. The function is up and the prefix resolves; only /posture is missing from its route table.",
+   "WHY AC1 MISREPORTS IT: ae_1_posture.py serve() is 'body, _m = cl._invoke(...); return body or {}'. _invoke returns (None, meta) on any non-200, so a 404 becomes {} and paths({}) is empty, which the post limb then prints as 'served /as_of None != stored ...' -- a content mismatch, not a missing route. 24 BAD lines, 12 of 12 targets, 1 signature.",
+   "WHY pre DID NOT CATCH IT: pre's volatile set is the paths that DIFFER between two serves 3 s apart. Two empty serves differ on 0 paths, so 'volatile []' on 12 of 12 reads identically for a stable route and a dead one. The pre capture was never evidence that /posture served.",
+   "STORE PLANE, by contrast, is sound on every limb AC1 can actually reach: 12 of 12 at new VersionIds (0 unmoved), packs equal to the live D-1 sections (BABA 38->34, HD 38->20, BA 38->17, COST 39->15, HD 36->20, INTU 40->26, KMB 39->18, NU 27->8, SAP 38->30, VLO 39->13, each equal to ad-2's post-hold pack counts), cites validated == total on all 12, every verdict in the enum."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "COO never-widen half @53a6ad274e, READERS: 'The scoped API's read_posture serves the LATEST posture/v1/<key>/<as_of>.json by date (read_pool_object), as stored... The page's posture card reads read_posture.' AC1's expectation: 'the served /posture route serves the new object (its as_of and verdict)'.",
+ "world_is": "There is no deployed /posture route on opal-amgt-scoped-api, so read_posture is not reachable over HTTP for any of the 33 subjects and the posture card has no served source. The half's blast-radius sentence -- 'a same-key overwrite therefore moves the served /posture for these 12 names' -- describes a reader that does not answer; the act's real reach is the STORE only. The issuer's comp-adversary note says AC1 'PASSES on a simulated post-state', and a simulated post-state cannot see an absent route, which is why the cut did not catch this. UNMEASURED here, and deliberately not reasoned to: whether /posture was ever deployed and removed, or never cut -- that is a code and deploy-history question on another seat's surface, and this seat did not sweep it.",
+ "notes": "disarm_owner 2.0.0_SA_COO~Z (the issuer). ARMED because AC1 is ae-1's single criterion and its stop limb 6 names a failing AC1 as the ROLLBACK trigger, so the round cannot close until the issuer rules. NOT SELF-ADJUDICATED and NOT ROLLED BACK: this seat measured, left all 12 rollback VersionIds live in deliverables/0.7.0_AE_CloudOps~A/ae1-pre/pre.json, and reported upward the same turn -- the same discipline the issuer ruled correct for ad-2 L3 (msg 27355, AMENDMENT 2 @9d5bd13f74). The two dispositions open to the issuer: amend AC1's served limb to grade the route's REACHABILITY explicitly (so an absent route reads as a route defect, never as a content mismatch), or rule the served limb out of ae-1's scope and route /posture's absence to the seat that owns the scoped API. Sibling row on the same check: AMGT_RESAPP-Z-S324."
+},
+  {
+    "id": "AMGT_RESAPP-Z-S326",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-10-01T05:58:00Z",
+    "one_line": "DISARM ACT for AMGT_RESAPP-Z-S325 (disarm_owner this seat): no scoped-API route is missing -- posture is served as the `posture` field of /security/{key}/overlay; the defect was the issuer's check, now amended (AMENDMENT 2) and re-run against the deployed function: exit=0, YES. Also answers Z-S324 for the L8 read.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "lib/research/api/scoped_amgt.py scoped_amgt_route_table(): 18 routes, no /posture leaf; read_security_overlay returns `posture: read_posture(...)` -- the carrier the page reads.",
+        "ae_1_posture.py serve() AMENDMENT 2: reads /security/{key}/overlay `posture` and raises on a non-200 (_invoke meta kept). Re-run 2026-10-01 ~05:5xZ against opal-amgt-scoped-api: exit=0, 0 BAD, 12 targets, 1 verdict moved (KMB hold -> better), 'THE POSTURE BATCH READS THE HELD PACKS AND SERVES ITS OWN OUTPUT: YES' (deliverables/2.0.0_SA_COO~Z/round55/ae1_AC1_regrade_amendment2.out).",
+        "Z-S324: AC1 contains generated_at 0 times -- true of the instrument; the CTO half s.2 condition is evidenced by the executor's own reads in proof 0ecb5292c5 (post-act generated_at on 9 resolved bodies; new VersionId + LastModified on the 3 ABSENT bodies, judge.py writing generation=None there)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S325: the COO half says the scoped API's read_posture serves the latest posture object, and AC1's served limb reads it at /security/{key}/posture.",
+    "world_is": "read_posture is served inside the overlay payload, never at its own route; the check called a non-route. With the check pointed at the overlay carrier, the served posture for all 12 overwritten keys is the new object as stored.",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "notes": "Disarm carrier per the Z-S290 shape; Z-S324 and Z-S325 are left exactly as filed. Fifth instrument defect of this issuer's class (a check reading a surface the act does not own); carried to the round-55 L8 packet."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W197-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~197",
+    "surfaced_at": "2026-10-01T05:30:00Z",
+    "one_line": "AMGT-af-1 AC1 cannot reach exit=0 in the sparse worktree: 3 tests in test_print_format_rich.py error on a missing portal fixture (portal/ is a gitlink the cone does not populate); all other tests pass.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AC1 run literally from C:/tmp/r56-197: '316 passed, 2 skipped, 3 errors' exit=1; the 3 errors are test_print_format_rich.py::test_default_and_fmt_pdf_are_byte_identical_to_build_pack_itself, test_format_rich_returns_200_markdown_non_empty, test_format_unknown_refuses_400_naming_both_legal_values.",
+        "Cause: FileNotFoundError C:\tmp\r56-197\\portal\\src\\pages\\SecurityAnalysis\\__harness__\tabsFixture.BA_US_Equity.json; 'git ls-files -s portal' = 160000 gitlink b336b141b4, 'ls portal' in the worktree is empty, and the sparse-checkout list carries no portal path. The shared tree holds portal/src/pages/SecurityAnalysis/__harness__/ (listed read-only).",
+        "The 7 new tests in test_monthly_chatter.py pass (7 passed); the suite total 316 passed + 2 skipped + 3 errors; AC2 af_1_route.py C1-C8 PASS, verdict YES, exit=0."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-af-1 AC1: the whole lib/research/api/tests/ suite passes, exit=0 (314 passed at the cut).",
+    "world_is": "In a worktree whose sparse cone omits the portal submodule, test_print_format_rich.py errors at fixture load, so AC1's exit=0 is unreachable by any change inside the order's paths. The errors are independent of af-1 (no af-1 path is read by those tests). Nothing was re-scoped; the criterion is reported FAIL as run.",
+    "notes": "disarm_owner 2.0.0_SA_COO~Z. Issuer's options: grade AC1 on a tree with portal populated, or deselect the file at the drain."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W198-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~198",
+    "surfaced_at": "2026-10-01T05:57:00Z",
+    "one_line": "AC1 cannot exit 0 in a sparse worker worktree: test_print_format_rich.py needs portal/src/pages/SecurityAnalysis/__harness__/tabsFixture.BA_US_Equity.json, and portal is a gitlink (160000) the worktree does not check out -- 3 errors, identical before and after af-2's edit.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Baseline at 4a7d8bcb0f before any edit: pytest lib/research/api/tests/ = 309 passed, 2 skipped, 3 errors; the 3 errors are test_print_format_rich.py::{test_default_and_fmt_pdf_are_byte_identical_to_build_pack_itself, test_format_rich_returns_200_markdown_non_empty, test_format_unknown_refuses_400_naming_both_legal_values}, each FileNotFoundError on C:/tmp/r56-198/portal/src/pages/SecurityAnalysis/__harness__/tabsFixture.BA_US_Equity.json.",
+        "git ls-tree HEAD portal = '160000 commit b336b141b4...' (a submodule); git sparse-checkout list holds no portal cone; ls portal in the worktree is empty. The fixture exists in the shared tree's portal checkout (read-only listing of its __harness__ directory).",
+        "After af-2's edits: 330 passed, 2 skipped, 3 errors (the same three); every other test in the directory passes, test_t1_fallback_and_pct.py's 21 included. AC2 and AC3 run live from this worktree and exit=0."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-af-2 AC1: every test in lib/research/api/tests/ passes and exit=0.",
+    "world_is": "AC1 as literally written runs in a worktree whose portal submodule is not checked out, so three portal-fixture tests error with or without this change and the exit is 1. Nothing af-2 touched is implicated. Issuer to decide: accept AC1 as met on the 330 passing tests plus the baseline-identical 3 errors, or re-run AC1 in a tree that carries portal. No portal path is in this order's write grant, so none was created.",
+    "notes": "disarm_owner 2.0.0_SA_COO~Z."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S327",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-10-01T06:25:00Z",
+    "one_line": "RESOLVES AMGT_RESAPP-Z-W197-S1 and AMGT_RESAPP-Z-W198-S1: AC1 of af-1 and af-2 graded by the issuer on the FULL shared tree after both drains (portal populated): 342 passed, 0 errors, exit=0. The 3 errors the workers saw were the issuer's sparse worktree cone omitting the portal gitlink (test_print_format_rich.py's tabsFixture), identical at base.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CLOUD 78167bb8fc (af-1 drained cb1f56de68, af-2 drained 78167bb8fc): PYTHONPATH=. python -m pytest -q -p no:cacheprovider lib/research/api/tests/ -> 342 passed, exit=0.",
+        "Same tree, the live checks: af_1_route.py YES exit=0; af_2_serve.py --what fwd33 YES exit=0; --what fwd34 YES exit=0 (merged code, graded together).",
+        "Worker ~198 measured the 3 errors at base 4a7d8bcb0f before any edit (309 passed, 3 errors); both worker cones lacked portal/."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AC1 of af-1 and af-2: every test in lib/research/api/tests passes, exit=0.",
+    "world_is": "In the workers' sparse worktrees AC1 could not exit 0 (3 base-identical errors from the absent portal fixture); on the full tree after both drains it does.",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "notes": "Issuer defect: the round-56 worktrees were cut with a sparse cone that omits portal/ (and first omitted org/surprise_channel, which the workers added). Later worker cones carry the gitlink or the order's AC1 names the deselection."
+  },
+  {
+  "id": "AMGT_RESAPP-Z-W199-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~199",
+  "surfaced_at": "2026-10-01T07:30:00Z",
+  "one_line": "integrations/bloomberg/research/tests/test_price_axis_pull.py::test_price_axis_pull_client_is_the_loopback_dapi_not_a_lambda fails on this box's python with ModuleNotFoundError: No module named 'blpapi' -- untouched by AMGT-af-3, outside its AC1 file list.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest -q -p no:cacheprovider integrations/bloomberg/research/tests/test_price_axis_pull.py in C:/tmp/r56-199: 1 failed, 4 passed; the failure imports blp_client, which imports blpapi, absent from the default `python` here (READ_HERE.md section 3 names a different interpreter for it).",
+      "AC1 of AMGT-af-3 names test_price_universe.py and lib/research/price/tests/ only (35 passed, exit=0); the new test stubs blp_client via sys.modules and never imports blpapi."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMGT-rd-6's test header: the suite exercises price_axis_pull.py without opening a live session, run under the Python311 interpreter that carries blpapi.",
+  "world_is": "Under the default python on this box the loopback-DAPI assertion cannot run because blpapi is not importable; a repo-wide hygiene run on that interpreter reads it as a failure unrelated to the price universe.",
+  "notes": "disarm_owner 2.0.0_SA_COO~Z. Surfaced, not adjudicated; no change made to that test."
+},
+{
+  "id": "AMGT_RESAPP-Z-W200-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~200",
+  "surfaced_at": "2026-10-01T08:30:00Z",
+  "one_line": "BA's Thesis sentence \"no research pack for this security\" is written by the PAGE: reasonInWords (portal/src/pages/SecurityAnalysis/reasonWords.ts:33) rewrites the served dossier text \"no class A report for this security\" to \"research pack\" for ResearchTeamPillars (tabs/ThesisTab.tsx:117-130); no served string says \"no research pack\".",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "GET /api/scoped/amgt/security/BA_US_Equity/thesis run locally from C:/tmp/r57-200: dossier_fields.thesis_pillars = [] and dossier_fields.thesis_pillars_absent = {status: ABSENT, reason: \"no class A report for this security\"} (producer lib/research/corpus/continuation.py:731, stored in the gold research_dossier object s3://opal-data-harvest/amgt/harvest/gold/research_dossier/security_key=BA_US_Equity/as_of=2026-09-30.b841f66e4fd99f9c.json). drafting_status SERVED. No served string contains \"no research pack\" (af_7_text.py C2 reads [] at the base and after the change).",
+      "portal/src/pages/SecurityAnalysis/reasonWords.ts:33 `.replace(/\bclass[- ]A(?: report)?\b/g, 'research pack')` turns that string into \"no research pack for this security\"; tabs/ThesisTab.tsx:127 prints `${PILLARS_HEADING}: ${dossierReasonWords(absent.reason, fallback)}.` when thesis_pillars is empty and thesis_pillars_absent.reason is set.",
+      "The same name is not packless in the store: the dossier's own kpi_set cites BOEING ONE PAGER 2026 01 27_v1.pdf and .xlsx under bronze/research-report/security_key=BA_US_Equity/, and the Model tab serves BA's model block. The corpus holds one-page reports for BA and no class A pillar report, which is what the served text says; the page's word \"research pack\" for class A is what overstates it."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMGT-ag-2 item 3: if a served field produces the sentence the worker corrects that field; if the page writes it, one row names the component, the condition and the served field to read instead.",
+  "world_is": "The page writes it. Component: ResearchTeamPillars in portal/src/pages/SecurityAnalysis/tabs/ThesisTab.tsx, through reasonInWords in reasonWords.ts. Condition: dossier.thesis_pillars is empty AND dossier.thesis_pillars_absent.reason is the served string \"no class A report for this security\" (any name with no class A report, BA at the cut). The served field the page should read instead: dossier_fields.thesis_pillars_absent.reason, printed as served with the class-A-to-\"research pack\" substitution removed (or the server serving that reason in plain words, a gold-dossier or continuation.py text change this order's bounds do not allow); the page should say a full research report is not on file and that a one-page report and the model are. No portal file was edited and no served field was changed for this item.",
+  "notes": "disarm_owner 2.0.0_SA_COO~Z: the portal change belongs to a portal-lane order; ARMED because the same name's Exec and Model tabs show pack-derived content while the Thesis tab states there is no pack."
+},
+  {
+    "id": "AMGT_RESAPP-Z-S328",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-10-01T07:40:00Z",
+    "one_line": "DISARM ACT for AMGT_RESAPP-Z-W200-S1 (disarm_owner this seat): the BA 'no research pack' sentence is page text (portal reasonWords.ts:33 rewrites the served class-A reason); the presentation writer DSGN_AMGTV1 (2.0.0_SA_COO~D, CONTRACT s.0) takes it as round-16 order DSGN_AMGTV1.TO-AV-g-5.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Worker ~200 (ag-2, 678e9ac1c5): no served string says 'no research pack' (af_7_text.py C2, 0 of 1,115 served reasons); the served dossier_fields.thesis_pillars_absent.reason reads 'no class A report for this security', true for BA (one-pager reports only).",
+        "2.0.0_SA_COO~D msg (RE 27611, 2026-10-01T07:37Z): AV-g-5 shows the reason as served, with no 'research pack' rewrite."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-W200-S1: the page's Thesis sentence contradicts the Exec and Model tabs for BA.",
+    "world_is": "The contradiction is introduced by a page-side rewrite of a true served reason; the served side is consistent. The fix is presentation and is owned by DSGN AV-g-5.",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "notes": "Disarm carrier per the Z-S290 shape; Z-W200-S1 is left as filed. Routed under CONTRACT s.0 (one writer per surface: page presentation is DSGN_AMGTV1)."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S329",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-10-01T07:55:00Z",
+    "one_line": "CORRECTS AMGT_RESAPP-Z-S328: Z-W200-S1 is disarmed by a DSGN issuer RULING, not by order AV-g-5 (which does not change the Thesis pillars wording). 'research pack' is DSGN's designed worded form of the served 'class A report'; since DSGN AV-f-5 the Exec sentence agrees with it, so the page faces no longer contradict.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "2.0.0_SA_COO~D msg 27627 (2026-10-01T07:53Z), correcting its msg 27619: issuer ruling recorded in DSGN round-16 decomposition v16 placement b; grounds CTO round-13 analysis ruling 1 (k-1 MET at L9 with no 'class A' token on a face); round-14 reasonwords and round-15 packwords grade the wording.",
+        "DSGN AV-f-5 (drained 78cf9877, portal): the Exec management and roster sentences read their own served reason ('neither a research pack nor an earnings update'), no presupposed pack.",
+        "Served side unchanged and true: dossier_fields.thesis_pillars_absent.reason 'no class A report for this security'; 0 served strings say 'no research pack' (ag-2 AC2)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S328: DSGN takes Z-W200-S1 as round-16 order AV-g-5.",
+    "world_is": "AV-g-5 does not touch the pillars wording; the disarm basis is the presentation writer's wording ruling plus AV-f-5's Exec agreement.",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "notes": "Z-S328 left as filed (append-only). Presentation wording is DSGN_AMGTV1's under CONTRACT s.0; this seat writes served text only, which needs no change."
+  },
+{
+ "id": "AMGT_RESAPP-Z-S330",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.7.0_AE_CloudOps~A",
+ "surfaced_at": "2026-10-01T08:45:00Z",
+ "one_line": "AC2 prints 'denominator: 1114 served reason string(s) across 3 names x 4 routes' and PASSES, but the PRINT route contributed ZERO of those 1,114 for all 3 names -- so C1's claim covers 3 of the 4 routes it names. The '4 routes' is computed from len(LEAVES) at af_7_text.py:83, i.e. from the CONSTANTS, never from what was walked, so the sentence cannot shrink when a route drops out.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "AC2's own run (--what text) printed THREE 'REFUSED: deployed read failed' lines, all on the print route, immediately before passing: BA_US_Equity/print status 200 content_type application/pdf; ASML_NA_Equity/print status 200 content_type application/pdf; AMZN_US_Equity/print status 404 with body 'no printable pack for AMZN_US_Equity: identity MEASURED, landed display form None'. Evidence deliverables/0.7.0_AE_CloudOps~A/ag1-evidence/ag1_ac2.txt.",
+   "TWO of the three are status 200 -- the route WORKED. capture_lib._invoke cannot json-parse a PDF body, so it returns (None, meta), and ag_1_served's wrapper classes a SUCCESSFUL 200 as a REFUSAL. Only the AMZN 404 is a genuine non-200, and its body is itself a plain-words reason, which is ag-2's intent rather than a defect.",
+   "af_7_text.py:21 LEAVES = (overlay, thesis, print, coverage); :83 prints the sentence from len(NAMES) x len(LEAVES). The 1,114 comes from the actual walk but the '3 x 4' comes from the constants, so two numbers in ONE sentence have different provenance and the structural one cannot fall when a leaf yields nothing.",
+   "af_7_text.py:36 carries the comment 'a non-JSON body (the print route renders HTML): reasons there are graded by its text' -- the LOCAL check deliberately graded print's non-JSON body. The round-57 swap of the call from the local handler to an invoke of the deployed function LOSES that grading; the capability existed and was dropped by the swap, not absent by design.",
+   "Corroborated by AC2's own C2 line, independently of this reading: it reports pack-derived fields served by ['overlay', 'thesis'] -- print absent from a list where the local check would have had it.",
+   "NOT a regression introduced by this act: the print route answers 200 with a PDF for 2 of 3 names on the newly deployed code, so the route is healthy; what is missing is the CHECK's reading of it."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "AC2's expect: 'C1, C2 and C3 PASS on the deployed function; THE DEPLOYED FUNCTION SERVES EVERY REASON IN PLAIN WORDS: YES', with the check's own sentence scoping C1 to 3 names x 4 routes.",
+ "world_is": "C1 is proven for overlay, thesis and coverage and is UNEXAMINED for print on the deployed function -- ABSENT, not EXERCISED-AGAINST, across 1 of the 4 routes the sentence names. AC2 is nonetheless MET AS WRITTEN and was closed as such in ledger leg L5: its expect is C0 plus C1/C2/C3 PASS plus the YES line plus exit=0, and the deployed function returned all of that. This seat does not grade the adequacy of another seat's census. INFERRED, not measured: whether the same deployed-swap drop affects the other round-56 graders reused by ag_1_served (af_1_route, af_2_serve) -- those passed every clause, but their leaf sets were not swept for a non-JSON route, and that denominator is not established here.",
+ "notes": "disarm_owner 2.0.0_SA_COO~Z (the issuer). INERT and NOT a rollback trigger: both criteria passed, the deploy stands, and the round can close. Surfaced, not adjudicated -- this seat does not amend another seat's check. Candidate repair for the issuer to weigh: have the deployed-swap wrapper treat a 200 with a non-JSON content_type as a BODY TO GRADE AS TEXT (the local check's own behaviour at af_7_text.py:36) and reserve REFUSED for a true non-200, and print the route denominator from the leaves actually WALKED rather than from len(LEAVES) -- which would make a dropped route visible in the sentence instead of silent. Sibling rows from the same seat on the same class of instrument: AMGT_RESAPP-Z-S324, AMGT_RESAPP-Z-S325."
+},
+  {
+    "id": "AMGT_RESAPP-Z-S331",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-10-01T08:45:00Z",
+    "one_line": "The served monthly chatter route (FWD-32, live since 08:20:58Z) names 63 of 95 covered rows; the other 32 serve the raw security key as display_name (e.g. 9433_JP_Equity), which DSGN prints as served on the bubble face.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Live read 2026-10-01 08:4xZ: monthly_chatter._display_names() names 63 of 95 covered keys (worker ~197 measured the same at af-1).",
+        "resolve_identity() for the 32 unnamed keys carries NO name field (keys: bloomberg, display_ticker, security_key, identity_*, crosswalk_*); 0 of 32 have one there. Names exist elsewhere for some (e.g. ASML 'ASML Holding NV' on the rank-series rows).",
+        "2.0.0_SA_COO~D msg 27670: DSGN round-16 instrument fixture shows the raw key on the face."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "C-PRESENTATION-ONLY + CONTRACT s.0: the route serves what the page prints; a person-readable name for every covered row.",
+    "world_is": "display_name falls back to the security key for 32 of 95 rows because the route's name source (the ranking crosswalk) covers 63.",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "notes": "Round-58 enrichment candidate: one name source for all 95 covered names (dossier / model block / series-name join), with display_ticker as the stated fallback, never the raw key. Not a mid-round act (round 57 frozen)."
+  },
+{
+ "id": "AMGT_RESAPP-Z-S332",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.7.0_AE_CloudOps~A",
+ "surfaced_at": "2026-10-01T12:50:00Z",
+ "one_line": "ai-2's CTO condition 3 names 'a 200 on /security/<key>/overlay' as the proof that a price bar OPENS its security -- but a FABRICATED key (ZZZZ_XX_Equity) also returns 200, so the status code cannot tell a covered key from an impossible one. The sound discriminator is a field the COO half already names: identity_status (MEASURED vs UNRESOLVED).",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "Measured post-act on the deployed function: /api/scoped/amgt/security/AMD_US_Equity/overlay -> 200, 73,327 B; TSM_US_Equity -> 200, 32,242 B; ZZZZ_XX_Equity, a key that cannot exist -> ALSO 200, 3,427 B. Status is 200/200/200, so it is not discriminating. Evidence deliverables/0.7.0_AE_CloudOps~A/ai2-evidence/ai2_condition3.txt (where the control is printed as BROKEN) and ai2_condition3_control.txt (the repair).",
+   "THE DISCRIMINATOR THAT DOES WORK, found by comparing the bodies rather than the codes: identity_status reads MEASURED for AMD and TSM and UNRESOLVED for the fabricated key. Populated top-level keys 12 / 12 / 6 of 13; the fabricated body is an unpopulated shell carrying axis_reads, bloomberg_session_state, description, feed, identity and posture only.",
+   "The field was already in the spec: the COO half @e52b6d1bb5 describes the join as setting 'identity_basis: covered_universe_bloomberg_join, identity_status MEASURED'. So the better oracle was named one document away from the condition that asked for a status code.",
+   "NOT a defect of the act and NOT a regression: AC1's C2/C5 independently prove 0 of 94 rows unkeyed and 0 foreign keys on both axes, so every served bar does carry a covered key. The gap is in the CONDITION'S INSTRUMENT, not in the deployed behaviour.",
+   "Condition 3 is met AS WRITTEN -- AMD 200 and TSM 200 were obtained -- and also met on the stronger reading, since both are identity_status MEASURED with populated bodies. Closed on that basis in ledger leg L3."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "CTO half @45e3aefae0 condition 3: 'It also confirms that AMD's and TSM's bars open their overlay (a 200 on /security/<key>/overlay).'",
+ "world_is": "A 200 on that route is returned for any key, including a fabricated one, so the named test cannot distinguish 'the bar opens a covered security' from 'the route answered'. Read literally the condition is satisfiable by a key that does not exist, which makes it a weak guard for a DEMO-BLOCKING identity fix -- precisely the class where a green check should not be able to come from nothing. The deployed behaviour is correct on every other measure. INFERRED, not measured: whether other per-name routes (thesis, peers, coverage, print) behave the same way for an unresolved key -- only overlay was probed here, and that denominator is not established.",
+ "notes": "disarm_owner 2.0.0_SA_COO~Z (the issuer). INERT: both criteria passed, the deploy stands, the round can close, and nothing is blocked. Surfaced, not adjudicated -- this seat does not amend another seat's half. Candidate repair for the issuer to weigh: state the condition as 'identity_status MEASURED on a populated overlay body' rather than 'a 200', which is a one-word change that makes the clause fail when it should. Sibling rows from this seat on the same class -- a check that passes for a reason other than the one it names: AMGT_RESAPP-Z-S324, AMGT_RESAPP-Z-S325, AMGT_RESAPP-Z-S330."
 }
 ]
 ```

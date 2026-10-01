@@ -7285,3 +7285,373 @@ fanout:
   egress: ae-1 only -- 12 Anthropic messages, on Andrew's per-use word; ae-2 none
   no_promote: true
 ```
+
+
+## 64. ROUND 56 -- THE FRIDAY DEMO FEED: THE MONTHLY CHATTER ROUTE, THE SERVED T-1 FALLBACK WITH BREAKOUT READING BREAKOUT, PERCENT BY NAME, THE PRICE RANKING OVER THE COVERED NAMES. Seven cells, four orders now (af-5 ordered at its predecessors' merge) and three direct acts
+
+**Cut by `2.0.0_SA_COO~Z`** on `1.0.0_SA_CTO~Z`'s PRD **ADDENDUM D** (v0.31 `18c3f9c496`, v0.32 `c505327bd7`; ratified half SIGNED by
+`3.0.0_SA_CVO~Z`, brief half accepted as the CRO's text: `prd-signoff.py status` read ADMITTED at 05:07Z), the shared CONTRACT
+(`org/tier1_exec/1.0.0_SA_CTO/deliverables/AMGT_FRIDAY_DEMO_20261001/CONTRACT.md` @`b8c93f6342`) and the placement
+(`CTO_PLACEMENT_20261001_043xZ_AMGT_FRIDAY_DEMO_RESTRUCTURE.md` @`e18d3a4e6a`, section 3: the monthly chatter route FIRST, then the date
+fallback, units and the price universe; fan-out cap 3). Round 55 is still open on `AMGT-ae-1` (GO sent 04:34Z, `0.7.0_AE_CloudOps~A`
+LIVE); the placement allows the Friday round to proceed beside it. CTO ruling msg 27527: an empty month is ABSENT (CONTRACT s.1).
+CTO msg 27433: the scoped-API redeploy carries CORPUS ab-3's case_rule (`c50db70fb0`); it is `af-5` here.
+
+### 64a. THE ITEMS
+
+| addendum D item | lands in |
+|---|---|
+| FWD-32 the monthly chatter route (critical path; DSGN's bubbles) | `af-0` the covered-universe loader (direct act, landed in this issuance) + `af-1` the route |
+| FWD-33 the served T-1 fallback, breakout reads breakout | `af-2` |
+| FWD-34 percent by name | `af-2` (same read functions; one build, three criteria) |
+| FWD-35 the price ranking over the covered names | `af-3` (producer); its cut-over merge IS the served act (the 07:00 ET scheduled task runs the site-Z working tree) |
+| the served acts (C-FRIDAY-NEVER-WIDEN) | `af-5` the one scoped-API redeploy (af-1 + af-2 + CORPUS ab-3), `af-6` the af-3 cut-over merge; each under its CTO+COO halves |
+| repairs | `af-4` direct act: Z-S73 (`test_harvest_prefixes` REGISTRY_HASH stale; the CORPUS row names this seat owner). The generator's fresh render differs from the committed module on the 2 hash lines only (4 diff lines; every prefix constant equal), so served prefixes move DELTA=0 |
+
+**NOT cells this round (Friday critical path first; each is enrichment for round 57):** C-NO-DEAD-INPUTS (the chatter ranking and
+header feed off the legacy article layout; one dossier prefix retired after its readers move), the chatter RANKING universe
+(C-PAGE-UNIVERSE-ONE-NAME for the chatter-axis Lambda), the Breakout x Chatter axis (placement R6: Trending only for Friday). None of
+FWD-32..35 needs them.
+
+### 64b. MEASUREMENTS THE CUT RESTS ON (04:4x-05:0xZ, live, read-only)
+
+1. **Covered universe.** `amgt/harvest/gold/research_dossier/` holds 95 `security_key=` folders (447 objects); the hyphen twin holds
+   the same 95 (846 objects). Two folders are slash-safe minted (`BP-SLASH-_LN_Equity`, `NG-SLASH-_LN_Equity`); decoded by
+   `crosswalk.security_key_from_slash_safe` they resolve (`BP/ LN`, `NG/ LN`). `af-0` returns decoded keys: 95.
+2. **Gold for FWD-32.** `chatter_daily` is a FULL snapshot per object (latest: 52,143 rows = 191 names x 273 days, 2026-01-01..09-30)
+   and carries NO per-publisher count. `article_security_mention` is also a full snapshot (latest: 379 distinct (article, name)
+   pairs, 71 names, publishers sa/wsj/bbg/barrons/ft). Of the 95 covered names, 51 appear in `chatter_daily` and 23 in the mention
+   table. On every 2026 name-month the two agree (147 of 147 with collected > 0); they differ only before 2026, where `chatter_daily`
+   has no days. Positive control: `BA_US_Equity` September = 20 in both.
+3. **The route today.** `GET .../lead-panel/timeseries/collected/chatter` returns 400 refused (`movement_gate.py:211-217`: movement must
+   be TRENDING or BREAKOUT). The template is mounted (`scoped_amgt_route_table()`, 18 routes; `test_scoped_amgt_mount.py:128`), so no
+   gateway or terraform change is needed. `pool_reader._gold_latest_snapshot_rows(table)` reads any gold table's newest snapshot. IAM
+   already grants both prefixes (`scoped-amgt-api.tf:203-205`).
+4. **FWD-33.** `read_rankings` already walks back (`_find_latest_served_pointer`, 14 calendar days): on 10-01 it served BREAKOUT/PRICE
+   and TRENDING/PRICE from 2026-09-29 (`dated: true`). `read_point_record` (`:821`) has NO fallback: the overlay's four per-name reads
+   ask for today's UTC date and read ABSENT (ASML NA, 10-01). The overlay's `price` is the TRENDING row (`:2165`); the page labels it
+   "Breakout (price)". `lib/trading_calendar.py` is not imported anywhere in `lib/research`; `prev_trading_day(10-01)` = 09-30.
+5. **FWD-34.** TRENDING/PRICE `score` is percent (`price/axis.py:36`, 992 HK 18.109); BREAKOUT/PRICE `score` and `pct_jump` are
+   fractions (ASML NA 0.0921396 / 0.09214, `movement_gate.py:386-400`). No unit field exists. The breakout rank series passes the
+   fraction (`read_rank_series`).
+6. **FWD-35.** The producer is `integrations/bloomberg/research/price_axis_pull.py` (07:00 ET step of `OPAL_BBGTML_daily_pull` on this
+   box); universe = the 34-name `0.9.0_WK_AMGT_RESAPP~4/universe.json` (`--universe` default, `:239`). Names with < 2 observations are
+   logged and dropped BEFORE `compute_price_axis`, so they are absent from the generation's own `excluded` record. The 30-day window
+   exists (`WINDOW_DAYS = 30`). The crosswalk resolves 95 of 95 decoded covered keys to a Bloomberg form.
+7. **Checks.** Every check below was run at the base (each FAILS on the clauses its cell moves) and on a simulated post-state (each
+   PASSES); af-1's also on two planted negatives (a zero month cell; 51 rows of 95), each FAILS.
+
+### 64c. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-af-0` | THE COVERED-UNIVERSE LOADER | issuer | direct act (in the issuance commit) | LOCAL | `lib/research/coverage/covered_universe.py` |
+| `AMGT-af-1` | THE MONTHLY CHATTER ROUTE | `~197` | worker | LOCAL (served by af-5) | `lib/research/api/monthly_chatter.py` (new), `scoped_amgt.py` handler timeseries-dispatch hunk only, its test |
+| `AMGT-af-2` | THE SERVED T-1 FALLBACK, BREAKOUT READS BREAKOUT, PERCENT BY NAME | `~198` | worker | LOCAL (served by af-5) | `scoped_amgt.py` read functions and serializers (NOT the handler), its test |
+| `AMGT-af-3` | THE PRICE RANKING OVER THE COVERED NAMES | `~199` | worker | LOCAL (served by af-6) | `price_axis_pull.py`, its test |
+| `AMGT-af-4` | REPAIR: Z-S73 | issuer | direct act (in the issuance commit; `gen_harvest_prefixes.py --write`, then `--check` rc 0 and `test_harvest_prefixes.py` 6 passed) | LOCAL | `lib/research/api/_harvest_prefixes.py` (hash lines only) |
+| `AMGT-af-5` | THE ONE SCOPED-API REDEPLOY (af-1 + af-2 + CORPUS ab-3) | `0.7.0_AE_CloudOps~A` | seat order, a pair | WORLD | the Lambda artifact, the deploy ledger (cut when af-1 and af-2 merge) |
+| `AMGT-af-6` | THE af-3 CUT-OVER (merge under its pair; FWD-35 graded on the scheduled generation, QUALIFIED WAIT) | issuer | direct act | WORLD | the merge, the halves, deliverables |
+
+af-5 is in this rectangle and is ORDERED when af-1 and af-2 land (its face names their merge SHAs, which do not exist yet). The
+rectangle is frozen here.
+
+### 64d. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain = addendum D's four outcomes, C-FRIDAY-NEVER-WIDEN's served acts and the one owned repair. FWD-33 and FWD-34
+  share one cell because both are serve-time transforms of the same read functions.
+- **(ii) Same grain.** One route; one family of read functions; one producer; one repair; one redeploy; one merge.
+- **(iii) Intent.** One axis: the page's figures are served, dated and in percent by the API, never computed by the page.
+- **(iv) What a cell does NOT move.** af-1 moves no ranking and no gate; af-2 moves no chatter score and no producer store (conversion
+  at SERVE time); af-3 moves no breakout rule and no chatter axis; no cell writes HARVST gold, deletes an S3 object, calls a vendor or
+  promotes the portal.
+
+### 64e. EDGES AND FAN-OUT
+
+```
+af-0 -> af-1, af-3
+af-1, af-2 -> af-5
+af-3 -> af-6
+af-4 -> (none)
+fanout:
+  cap: 3
+  orders_total: 4
+  chains_total: 4
+  wave_0: [af-1 ~197, af-2 ~198, af-3 ~199]   # af-0 and af-4 landed by the issuer in the issuance commit
+  wave_2: [af-5 0.7.0_AE_CloudOps~A]      # after af-1 and af-2 merge + both halves
+  wave_2b: [af-6 issuer]                  # after af-3 is drained to its branch + both halves; before the 07:00 ET fire
+  no_s3_deletes: true
+  egress: none
+  no_promote: true
+```
+
+### 64f. AMENDMENT 1 (05:4xZ, before any spawn) -- af-2 names its overlay fields; af-5 and the served-text cell move to round 57
+
+**Inputs:** `1.0.0_SA_CTO~Z` msg 27539 (DSGN round-14 analysis @`950ae4bb4f` rulings 2-3: this seat writes served text, CONTRACT
+s.0/s.4; "fold both into your current Friday round as you see fit") and `2.0.0_SA_COO~D` msg 27542 (DSGN round 15 builds the header
+cell against named overlay fields).
+
+- **af-2 act item 5 added** (its AMENDMENT 1): `absent_reason` (plain words) and `places_moved` on the overlay axis reads. The names
+  were sent to COO~D (msg 27542 answered). No criterion changed.
+- **The issuance gate refuses a second order file in round 56** (`to-pipeline-gate`: ONE ISSUER PER ROUND keyed to the round; a recut
+  modifies orders and adds no file). Two consequences, both this issuer's defect at the cut (round 52 put its deploy order, ab-6, in
+  the same issuance):
+  1. `af-5`, THE ONE SCOPED-API REDEPLOY, is NOT ordered in round 56. It becomes round 57's FIRST cell, cut in the round-57 issuance
+     straight after this round's L10, carrying af-1 + af-2 (+ CORPUS ab-3's case_rule).
+  2. The served-text cell (CTO msg 27539) becomes round 57's `ag-` cell, in the same issuance as the redeploy so it rides that
+     deploy. Its check is committed now (`checks/af_7_text.py`), run at the base: C1 FAIL (16 of 1,106 served reason strings across
+     3 names x 4 routes carry a status token), C3 FAIL (ASML's absent posture carries no `absent_reason`), C2 PASS (no served BA string
+     says "no research pack", so that sentence may be page text; the round-57 cell settles it).
+- `af-6` (the af-3 cut-over merge under its pair) stays a direct act of this round.
+- **Fan-out:** unchanged -- wave_0 [af-1 ~197, af-2 ~198, af-3 ~199]; orders_total 3.
+
+
+## 65. ROUND 57 -- THE ONE SCOPED-API REDEPLOY THAT SERVES THE FRIDAY FEED, EVERY SERVED REASON IN PLAIN WORDS, AND THE af-6 GRADE. Four cells, two orders and two direct acts
+
+**Cut by `2.0.0_SA_COO~Z`** on `1.0.0_SA_CTO~Z`'s **ROUND 56 ANALYSIS** (`ledger/ROUND_ANALYSIS.round56.md` @`5ca1a00f56`, msg 27566;
+round 56 CLOSED). Enrichment items 1-3 are this round's rectangle. Rulings carried:
+- round-55 ruling 2: served limbs compare a moving field against its printed pre-act value;
+- round-56 ruling 1: `by_publisher` omits zero publishers (the route stands);
+- round-56 ruling 3: the cut check lists every deploy act the FWDs need before serving (65a below).
+
+### 65a. THE DEPLOY ACTS FWD-32..34 NEED BEFORE THEY SERVE (round-56 ruling 3; measured at the cut, 06:4x-07:0xZ)
+
+| # | act | state at the cut | carrier |
+|---|---|---|---|
+| 1 | the code on CLOUD: af-1 (route), af-2 (fallback, breakout_price, percent) | MERGED (`cb1f56de68`, `78167bb8fc`) | done |
+| 2 | the cold-start import chain: `monthly_chatter` imported at REQUEST time (its chain reaches pyarrow, as the timeline loaders do) | FIXED: `--build-only` isolated-runtime arm FAILED before, rc=0 after | `ag-0` (`78235d722f`) |
+| 3 | `lib/trading_calendar.py` in the package: `CLOSURE_ROOTS` lacked it, and `from lib import trading_calendar` hid it from the AST walk | the import is FIXED in dotted form (`ag-0`); the CLOSURE_ROOTS line is AE-lane | `ag-1` item 0 |
+| 4 | the artifact built at the GO commit; `CONTENT-DIFF` names exactly the halves' file list | at the cut: files 347, IDENTICAL 336, CHANGED 8, ADDED 3 vs live `/QP4upEV...` | `ag-1` |
+| 5 | ONE `safe-apply`, code only (the function's source hash); plan printed; any destroy = STOP (MSTR~Z HOLD 27462) | -- | `ag-1` |
+| 6 | NO gateway or route change: the template `timeseries/{movement}/{subject}` is mounted (18 routes; `test_scoped_amgt_mount.py` passes) | verified | none |
+| 7 | NO IAM change: gold `chatter_daily` / `article_security_mention` reads and `research_dossier/` listing are already granted (`scoped-amgt-api.tf:203-226`); DynamoDB pointer reads unchanged | to be exercised live by AC1 | `ag-1` AC1 |
+
+**The riders the build carries (CONTENT-DIFF at the cut, every CHANGED file traced to its commit):**
+- `case_rule.py`: CORPUS ab-3 `c4d3e8dfa2` (named by CTO msg 27433).
+- `dossier.py`: CORPUS ab-1 `0c234ef97d` (slash-safe dossier paths).
+- `publication_gold.py`: HARVST ae-1 phase A `1b55276f0d` (quarantine; NON-INERT for the timeline routes).
+- `lib/opal_naming.py` + `infra/logic/registry/{systems,scopes}.json`: the VENDOR display_name changes (`70c4aa2e1a`, `b5dc2e63d1`,
+  NFRA_TRNSPT `8e9ed1b539`/`224058ea3f`).
+- `_harvest_prefixes.py`: af-4's hash, DELTA=0.
+- `scoped_amgt.py`: af-2 + ag-0. ADDED: `monthly_chatter.py`, `covered_universe.py`, `trading_calendar.py`.
+
+The halves name each, and `ag-2`'s files join the list when it drains.
+
+### 65b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-ag-0` | THE PACKAGE CLOSURE (scoped_amgt.py half) | issuer | direct act (landed `78235d722f`) | LOCAL | `lib/research/api/scoped_amgt.py` |
+| `AMGT-ag-2` | EVERY SERVED REASON IN PLAIN WORDS; BA'S RESEARCH-PACK CLAIMS AGREE | `~200` | worker | LOCAL (served by ag-1) | the producers of served reason strings under `lib/research/`, its test |
+| `AMGT-ag-1` | THE ONE SCOPED-API REDEPLOY (af-1 + af-2 + ag-0 + ag-2 + the riders) | `0.7.0_AE_CloudOps~A` | seat order, a pair | WORLD | the build script's CLOSURE_ROOTS line, the Lambda artifact, the deploy ledger |
+| `AMGT-ag-3` | THE af-6 GRADE (after the 11:00Z fire; branch A or B) | issuer | direct act | LOCAL read | deliverables, the af-6 ledger leg L2 |
+
+### 65c. MEASUREMENTS
+
+1. **Served-text base (live, the deployed function):** 1,105 served `*reason` strings across 3 names x 4 routes; 16 carry a status
+   token; ASML's posture (verdict `absent`) carries no `absent_reason`. No served BA string says "no research pack" (C2 base PASS:
+   the sentence may be page text, which ag-2 settles).
+2. **Redeploy check base (`round57/checks/ag_1_served.py`, the deployed function):** C0 FAIL (CodeSha256 `/QP4upEV...` unmoved);
+   FWD-32 C1 FAIL (400 refused); FWD-33 C1 FAIL (overlay price axes ABSENT); FWD-34 C1 FAIL (breakout score a fraction). The merged
+   local tree passes every grader YES (the positive arm).
+
+### 65d. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain = the analysis's three enrichment items plus the closure fix ruling 3 surfaced.
+- **(ii) Same grain.** One code fix; one text cell; one deploy; one grade.
+- **(iii) Intent.** One axis: what the page reads is served by the deployed function, in plain words.
+- **(iv) What a cell does NOT move.** ag-1 moves no route, no IAM, no store; ag-2 moves no figure, verdict or ranking; ag-3 writes
+  nothing to any store.
+
+### 65e. EDGES AND FAN-OUT
+
+```
+ag-0 -> ag-1
+ag-2 -> ag-1          # the issuer may GO ag-1 without ag-2 if ag-2 has not drained by the halves' signing; the GO says so
+ag-3 -> (none)        # after the 11:00Z fire
+fanout:
+  cap: 3
+  orders_total: 2
+  chains_total: 2
+  wave_0: [ag-2 ~200]
+  wave_1: [ag-1 0.7.0_AE_CloudOps~A]     # GO after ag-2 drains + both halves; the build commit named in the GO
+  direct: [ag-0 landed, ag-3 after 11:00Z]
+  no_s3_deletes: true
+  egress: none
+  no_promote: true
+```
+
+## 66. ROUND 58 -- EVERY BUBBLE NAMED FOR A PERSON, ITS CODE-ONLY REDEPLOY, AND THE af-6 GRADE. Four cells, one order and three direct acts
+
+**Cut by `2.0.0_SA_COO~Z`** on `1.0.0_SA_CTO~Z`'s **ROUND 57 ANALYSIS** (`ledger/ROUND_ANALYSIS.round57.md` @`ef95c930e1`, msg 27687;
+round 57 CLOSED, ag-1 LIVE). Enrichment items 1-3 are the rectangle. Rulings carried:
+- round-57 ruling 1: 0 of 95 rows equal their `security_key`; the fallback is the plain ticker; land before 22:00Z;
+- ruling 2: the 73 empty bubble names are HARVST depth, not a cell;
+- ruling 3: Z-S330 is corrected in this round's check.
+
+### 66a. THE DEPLOY ACTS THE NAME FIX NEEDS BEFORE IT SERVES (round-56 ruling 3; measured at the cut ~09:1xZ)
+
+| # | act | state at the cut | carrier |
+|---|---|---|---|
+| 1 | the code: `monthly_chatter._display_names(keys)` -- crosswalk name, then classifications name, then the identity's display ticker; `name_source` served per row | LANDED in the issuance commit; api tests 376 passed; local `bg_names.py` YES | `ah-1` |
+| 2 | no new import: `_classification_for_ticker` and `resolve_identity` are already in `scoped_amgt` (packaged); no CLOSURE_ROOTS change | verified by reading the diff | none |
+| 3 | the artifact at the GO commit; CONTENT-DIFF names the halves' list | the executor's `--build-only` at the GO | `ah-2` |
+| 4 | ONE code-only `safe-apply` (source hash only) | -- | `ah-2` |
+| 5 | no route, gateway or IAM change; the classifications GetItem is the read `read_rankings` already makes (`_join_classification`) | the role is unchanged | none |
+
+### 66b. MEASUREMENTS
+
+1. **Live base, before the fix:** 32 of 95 rows serve the raw key (`bg_names.py --where deployed` FAIL C2). The deployed function is
+   at CodeSha256 `/HInwjrnGBzDLzV2EnYyGFseCcXIuWC/ddnyYUpUEX8=` (08:20:58Z); artifact VersionId `RhEQ661Bi9gnVKhBphUCMtjH_rrsscPS`.
+2. **The name sources over the 95 covered keys:** crosswalk 63; classifications +7 (ASML, BA, HD, INTU, NU, PBR, ...); the remaining
+   25 carry no company name in either source and serve their display ticker ("9433 JP", "BP/ LN"). Full names for those 25 would need
+   a Bloomberg NAME pull (the terminal is Andrew's login; not this round).
+3. **The check:** `round58/checks/bg_names.py` -- at the base FAIL C2/C3 (32) locally and C0/C2 deployed; simulated positive arm YES;
+   on the ah-1 tree locally YES (63/7/25, the counts unmoved by C5).
+4. **DSGN wiring rows at the cut (item 3):** 0 open rows naming this seat beyond Z-S331 (the name fix itself).
+
+### 66c. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-ah-1` | EVERY BUBBLE NAMED FOR A PERSON | issuer | direct act (in the issuance commit) | LOCAL (served by ah-2) | `lib/research/api/monthly_chatter.py`, its test |
+| `AMGT-ah-2` | THE CODE-ONLY REDEPLOY OF THE NAME FIX | `0.7.0_AE_CloudOps~A` | seat order, a pair | WORLD | the Lambda artifact, the deploy ledger |
+| `AMGT-ah-3` | THE af-6 GRADE (carried from ag-3) | issuer | direct act after the 11:00Z fire | LOCAL read | deliverables, af-6 ledger leg L2 |
+| `AMGT-ah-4` | THE Z-S330 CENSUS WORDING | issuer | direct act (in the issuance commit) | LOCAL | `round56/checks/af_7_text.py` (wording only; the verdict logic is unchanged and still YES) |
+
+### 66d. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain = the analysis's three items plus ruling 3's check wording.
+- **(ii) Same grain.** One field fix; one deploy; one grade; one wording fix.
+- **(iii) Intent.** One axis: what the page prints is readable and served.
+- **(iv) What a cell does NOT move.** ah-1 moves no count, month or vintage (C5); ah-2 moves no route, IAM or store.
+
+### 66e. EDGES AND FAN-OUT
+
+```
+ah-1 -> ah-2
+ah-3, ah-4 -> (none)
+fanout:
+  cap: 3
+  orders_total: 1
+  chains_total: 1
+  wave_0: [ah-2 0.7.0_AE_CloudOps~A]   # GO after both halves; build commit named in the GO
+  direct: [ah-1 + ah-4 landed in the issuance commit, ah-3 after 11:00Z]
+  no_s3_deletes: true
+  egress: none
+  no_promote: true
+```
+
+## 67. ROUND 59 -- EVERY PRICE BAR OPENS AND NAMES A COVERED SECURITY (DEMO-BLOCKING), ITS CODE-ONLY REDEPLOY. Three cells, one order and two direct acts
+
+**Cut by `2.0.0_SA_COO~Z`** on `1.0.0_SA_CTO~Z`'s **ROUND 58 ANALYSIS** (`ledger/ROUND_ANALYSIS.round58.md` @`9e4c311cfc`, msg 27787;
+round 58 CLOSED). Rulings carried: 1, the price identity gap is DEMO-BLOCKING, before 22:00Z; 2, a serve-time join with no producer
+change; 3, af-6 closes on its branch-A grade.
+
+### 67a. THE DEPLOY ACTS THE JOIN NEEDS BEFORE IT SERVES (round-56 ruling 3; measured at the cut ~11:5xZ)
+
+| # | act | state at the cut | carrier |
+|---|---|---|---|
+| 1 | the code: `read_rankings` keys an unkeyed row by an EXACT `ticker` match against the covered universe's crosswalk tickers (`_join_covered_identity`; `identity_basis` says so); the crosswalk filler then names newly keyed rows; every row gains `display_name` (name, else the monthly route's source for its key, else its ticker) | LANDED in the issuance commit; 378 passed; local check YES | `ai-1` |
+| 2 | no new import into the package: `covered_universe` and `monthly_chatter` are already packaged (ag-1); `--build-only` rc=0, 1 file changed | verified | none |
+| 3 | the artifact at the GO commit; CONTENT-DIFF exactly `scoped_amgt.py` | the executor's build | `ai-2` |
+| 4 | ONE code-only `safe-apply` | -- | `ai-2` |
+| 5 | no IAM change: the `research_dossier/` listing is already granted (ag-1 exercised it on the monthly route) | -- | none |
+
+### 67b. MEASUREMENTS
+
+1. **Deployed base (CodeSha256 `g9H0TW2g...`, 09:48:26Z):** TRENDING and BREAKOUT price each serve 94 rows (09-30, af-6's
+   generation). 62 of 94 rows have no `security_key` (`identity_status` UNRESOLVED) and 58 have no `name`; no row carries
+   `display_name`. Top-10 rows unkeyed include AMD US and TSM US. All 62 unkeyed tickers match the covered universe's crosswalk
+   tickers exactly (0 unmatched).
+2. **On the ai-1 tree, locally:** 0 rows without a key, 0 without `display_name`, 0 raw-key labels, every key covered, `score_pct`
+   kept. Rows with a company `name`: 70 of 94 (from 36); the rest are labelled by their display ticker.
+3. **The check:** `round59/checks/ai_price_identity.py` -- deployed base FAILS C0, C2 (62 per axis) and C3 (94 per axis); C5 PASSES;
+   local YES.
+4. **Item 2 (af-6):** already done in round 58: grade `round58/ah3_af6_grade_branchA.out`, NEVER-2 entry CLOSED `3373f73c27`. No cell.
+
+### 67c. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-ai-1` | THE SERVE-TIME PRICE IDENTITY JOIN | issuer | direct act (in the issuance commit) | LOCAL (served by ai-2) | `lib/research/api/scoped_amgt.py`, its tests, the api conftest (hermetic index) |
+| `AMGT-ai-2` | THE CODE-ONLY REDEPLOY OF THE JOIN | `0.7.0_AE_CloudOps~A` | seat order, a pair | WORLD | the Lambda artifact, the deploy ledger |
+| `AMGT-ai-3` | af-6 GRADE + LEDGER CLOSE | issuer | already landed (round 58) | -- | -- |
+
+### 67d. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain = the analysis's two items. The second is already satisfied and is recorded, not re-cut.
+- **(ii) Same grain.** One join; one deploy.
+- **(iii) Intent.** One axis: every price bar can open a covered name and shows a name.
+- **(iv) What a cell does NOT move.** ai-1 moves no score, rank, unit or stored generation, and leaves already-keyed rows unchanged.
+  ai-2 moves no route, IAM or store.
+
+### 67e. EDGES AND FAN-OUT
+
+```
+ai-1 -> ai-2
+fanout:
+  cap: 3
+  orders_total: 1
+  chains_total: 1
+  wave_0: [ai-2 0.7.0_AE_CloudOps~A]   # GO after both halves; before 22:00Z
+  direct: [ai-1 landed here; ai-3 landed in round 58]
+  no_s3_deletes: true
+  egress: none
+  no_promote: true
+```
+
+
+## 68. ROUND 60 -- EVERY BAR OPENS ONTO ITS OWN NAME, ITS CODE-ONLY REDEPLOY. Two cells, one order and one direct act
+
+**Cut by `2.0.0_SA_COO~Z`** on `1.0.0_SA_CTO~Z`'s **ROUND 59 ANALYSIS** (`ledger/ROUND_ANALYSIS.round59.md` @`f03efb5e12`, msg 27848;
+round 59 CLOSED). Rulings carried:
+- 1: a served-read control discriminates by a field the act moves, never by an HTTP status alone;
+- 2: the overlay serves the ranking row's label, before 22:00Z, under a pair;
+- 3: Z-S332 (an unknown key's overlay answers 200) is carried to after Friday.
+
+### 68a. THE DEPLOY ACTS (round-56 ruling 3; measured at the cut ~13:2xZ)
+
+| # | act | state at the cut | carrier |
+|---|---|---|---|
+| 1 | the code: `read_security_overlay` serves top-level `name`, `name_source`, `display_name`, `display_name_source` by the ranking's own chain (classifications table -> crosswalk -> display ticker); the shared `identity` block untouched (rj-1: identical across routes) and resolved once | LANDED in the issuance commit; 379 passed | `aj-1` |
+| 2 | no new import; `--build-only` rc=0; CONTENT-DIFF 350 / 349 / 1 changed (`scoped_amgt.py`) | verified | none |
+| 3 | build + upload ONE artifact; ONE code-only `safe-apply` | -- | `aj-2` |
+| 4 | no IAM/route/gateway change: the classifications GetItem and the crosswalk read are already made by the ranking path | -- | none |
+
+### 68b. MEASUREMENTS
+
+- **Deployed base** (CodeSha256 `E6PdHVFB...`, 12:34:04Z; artifact `q0Vf.FzuGpVovbH.xb2dumggs4k5kMKB`): the ranking serves 94 keyed
+  rows, but no overlay carries `display_name` (94 of 94 differ). AMD/TSM `identity.identity_status` reads MEASURED.
+- **On the aj-1 tree, locally:** 94 of 94 overlays' `display_name` equals the row's; AMD "Advanced Micro Devices Inc"; TSM "Taiwan
+  Semiconductor Manufacturing Co Ltd ADR"; the identity block unchanged.
+- **The check** `round60/checks/aj_overlay_name.py`: deployed base FAIL C0, C2 (94), C3; C4 PASS; local YES.
+
+### 68c. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-aj-1` | THE OVERLAY CARRIES THE BAR'S LABEL | issuer | direct act (in the issuance commit) | LOCAL (served by aj-2) | `lib/research/api/scoped_amgt.py`, its tests |
+| `AMGT-aj-2` | THE CODE-ONLY REDEPLOY | `0.7.0_AE_CloudOps~A` | seat order, a pair | WORLD | the Lambda artifact, the deploy ledger |
+
+### 68d. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain = the analysis's one enrichment item.
+- **(ii) Same grain.** One field set; one deploy.
+- **(iii) Intent.** One axis: what a person clicks is what they see named.
+- **(iv) What a cell does NOT move.** aj-1 does not touch the identity block, any figure or any other route. aj-2 moves no route, IAM
+  or store.
+
+### 68e. EDGES AND FAN-OUT
+
+```
+aj-1 -> aj-2
+fanout:
+  cap: 3
+  orders_total: 1
+  chains_total: 1
+  wave_0: [aj-2 0.7.0_AE_CloudOps~A]   # GO after the CTO half; before 22:00Z
+  no_s3_deletes: true
+  egress: none
+  no_promote: true
+```

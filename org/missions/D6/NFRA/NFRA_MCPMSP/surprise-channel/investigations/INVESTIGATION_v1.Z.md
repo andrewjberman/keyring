@@ -597,6 +597,97 @@
     "spec_asserts": "AMENDMENT 1: append the status flip to complete as the LAST status tag when all three criteria pass.",
     "world_is": "The worker cannot write the order file; the proof instance is the worker's whole completion artefact and the issuer flips.",
     "notes": "No override attempted."
+  },
+  {
+    "project": "NFRA_MCPMSP",
+    "fabric": "site-z",
+    "surfaced_at": "2026-10-01T08:20Z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPMSP~5",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MS",
+    "id": "NFRA_MCPMSP-Z-W5-S1",
+    "one_line": "BLOCKING on the release COMMIT: safe-commit's owned-paths gate reads the worker's grant from the task order AT HEAD of the committing worktree; the release worktree is cut at 05e3eff563, which does not carry the order, so every release-tree commit is refused with a lane violation (CLOUD_OPS_OR_ETL) on the gateway paths the order's <paths> names. The release content is built and verified but is STAGED, not committed; no override was used.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "In C:/tmp/ms-5d-rel (HEAD 05e3eff563), bash .tools/safe-commit.sh ... -- infra/aws/ec2/opal-gateway/app/internal_role.py ... returned rc=1: 'ERROR: owned-paths lane violation(s) detected (block mode): VIOLATION: infra/aws/ec2/opal-gateway/app/internal_role.py -- lane=CLOUD_OPS_OR_ETL'; git log -1 afterwards still 05e3eff563.",
+        ".tools/owned-paths-validate.py _worker_orders(): 'git ls-files org/missions/D*/*/<CODE>/task-orders/*.md' then 'git show HEAD:<path>' in the committing worktree; the order file is absent from 05e3eff563, so the worker grant is empty.",
+        "The same safe-commit from C:/tmp/ms-5d (HEAD carries the order) committed the CLOUD-side change as 6ebfce0a2f with the same author and paths class."
+      ]
+    },
+    "spec_asserts": "Order item 1/A1/A2: cut the release branch AT the live commit and bring the round-2 gateway commits onto it so the release commit descends from it; the order's <paths> widens to infra/aws/ec2/opal-gateway/** for the release-tree cherry-picks; the lane gate admits a worker to exactly the paths its order names.",
+    "world_is": "A worktree at the deploy-only base has no copy of the task order, so the gate admits the worker to nothing there. The release tree holds the 6 picks, item 0 and the hand-merged .env keys as STAGED content (git write-tree 3ec0d875d99a8301efd367b34c2f7b3b0c0b0451, 17 files vs base); no release commit exists, so the pin has a tree hash and no commit hash.",
+    "notes": "Not worked around: the audited GIT_COMMIT_AUTHOR_OVERRIDE and git commit-tree plumbing were not used (worker rules: a path the lane lacks is a BLOCKING row, never an override). Issuer options: authorize the audited override for the release commit, or have the release commit made from a tree that carries the order, or re-cut the release branch with the order file committed on it (the census would then list one org/ file)."
+  },
+  {
+    "project": "NFRA_MCPMSP",
+    "fabric": "site-z",
+    "surfaced_at": "2026-10-01T08:20Z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPMSP~5",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MS",
+    "id": "NFRA_MCPMSP-Z-W5-S2",
+    "one_line": "tests/test_deploy_base_guard.py (item 4's suite) fails 5 of 6 on the release tree unless valid-shaped OG_MASTER_ADMIN_PRINCIPALS / OG_WRITE_CAPABLE_PRINCIPALS are in the environment: the live-line deploy script refuses at ':?' (exit 1) before the base guard the fixture expects (exit 3). The fixture was written against CLOUD's script, which has no principals gate.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "release tree, no principals env: 'tests/test_deploy_base_guard.py ... 5 failed 1 passed'; stderr deploy-to-ec2.sh:170: OG_MASTER_ADMIN_PRINCIPALS: REFUSED (no upload): ... required; assert 1 == 3.",
+        "same suite with two syntactically valid zero-GUID <tid>/<oid> placeholders exported (test inputs only, not the issuer's values, not written anywhere): 6 passed.",
+        "final suite line on the release tree with those placeholders: 93 passed, rc=0, audit.jsonl md5 2e05d36768ee9b3cad061ee0da8ca396 before and after."
+      ]
+    },
+    "spec_asserts": "Order item 4: run_release_suites.sh over the touched and asker/admin suites, all green, tracked audit.jsonl unchanged.",
+    "world_is": "The suite is green only with the principals env set; the PHASE B suite re-run (or any reader reproducing the suite line) must export placeholders of that shape. The issuer's real values were not used.",
+    "notes": "Fixture not edited (it is MS-r-1's test file, in the release set)."
+  },
+  {
+    "project": "NFRA_MCPMSP",
+    "fabric": "site-z",
+    "surfaced_at": "2026-10-01T08:20Z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPMSP~5",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MS",
+    "id": "NFRA_MCPMSP-Z-W5-S3",
+    "one_line": "Three suites fail IDENTICALLY at base 05e3eff563 and on the release tree, so they are not this release's: test_data_entitlement_guard.py::test_ogz1_ac05 (KeyError 'unclassified'), ::test_ogz1_ac08 (route-class set mismatch, 38 routes), test_entitlement_admin.py::test_ogz2_ac06 (4 puts, expected 3). They were left out of item 4's suite line; the registered-tool counts (51 / 55) are the same on both trees.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git archive 05e3eff563 (infra/aws/ec2/opal-gateway + org/standards/NFRA_OPLGTW_CONTRACT.json) run with pytest tests/test_data_entitlement_guard.py tests/test_entitlement_admin.py: 3 failed 18 passed; the release tree: 3 failed 18 passed; the three FAILED node ids are identical.",
+        "OGZ1-AC4/AC6/AC7 'registered tools 51' and OGZ2-AC8 'DENOMINATOR 55 registered tool(s)' lines are byte-identical on both trees (diff = IDENTICAL).",
+        "The full gateway tests/ directory did not finish inside a 590 s bound; it was not graded."
+      ]
+    },
+    "spec_asserts": "Order item 4 / A1: every gateway suite the release touches plus the asker/admin suites are green; the tool count and the 'ac08 pin' are unchanged.",
+    "world_is": "'ac08' names several tests (test_ogz1_ac08 fails at base already); the worker read 'ac08 pin unchanged' as: tool counts and the three failing node ids are identical at base and release. The order does not say which ac08 it means.",
+    "notes": "Issuer to say which ac08 the announce must pin if it is not the registered-tool count."
+  },
+  {
+    "project": "NFRA_MCPMSP",
+    "fabric": "site-z",
+    "surfaced_at": "2026-10-01T14:30Z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPMSP~5",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MS",
+    "id": "NFRA_MCPMSP-Z-W5-S4",
+    "one_line": "MS-dn-1 step 3 names 'safe-apply ... apply -target=<Deny resources>'; terraform refuses -target together with a saved plan file, so the apply was run on the saved targeted plan (same -target at plan time) instead. The applied change is the plan the worker read: 1 add, 0 change, 0 destroy.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "plan: terraform plan -target=aws_iam_role_policy.gw_firm_deny -out=.scratch/dn1.tfplan (worker worktree): 'Plan: 1 to add, 0 to change, 0 to destroy', one Deny s3:GetObject statement, three platinum/mdpf/<firm>/* resources.",
+        "apply: bash .tools/safe-apply.sh -chdir=infra/aws/terraform/opal-gateway apply -no-color -input=false <saved plan>: HALT-GATE passed, 'Apply complete! Resources: 1 added, 0 changed, 0 destroyed.'"
+      ]
+    },
+    "spec_asserts": "Order step 3 / the signed halves: a targeted safe-apply reading exactly 1 add, 0 change, 0 destroy on aws_iam_role_policy.gw_firm_deny.",
+    "world_is": "The apply consumed a saved plan (stricter than -target at apply time: it cannot apply anything the read plan did not show). Private TF data dir at a /tmp mktemp path, writer variables read from the live function environment into TF_VAR_ shell variables and never printed or written.",
+    "notes": "No action needed unless the issuer wants the order text to say 'apply the saved targeted plan'."
   }
 ]
 ```

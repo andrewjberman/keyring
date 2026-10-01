@@ -3169,6 +3169,144 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "The dividend keys are mostly zero legitimately (a zero payout, whose unit ZERO_VALUE_UNIT_FROM_BASIS defines from FIELD_BASIS), so the literal rule reclassifies them. build_unit_map.py zero_dominated_counts therefore skips ZERO_DOMINATED_EXEMPT = the ZERO_VALUE_UNIT_FROM_BASIS keys (EQY_DPS, IS_DIV_PER_SHR, BEST_DPS, BEST_DIV_YLD) plus EQY_DVD_YLD_IND (pinned by the round-26 test).",
     "notes": "The exemption set is my reading, not ruled; the issuer may widen, narrow or drop it (one frozenset in build_unit_map.py).",
     "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S74",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-10-01T04:55:17Z",
+    "one_line": "provenance/validate.py:32 derive_unit_status and render_print.py:208/:289 mark a figure's unit unmeasured only on the prefix 'SEE field_map.json'; the served blocks now carry 'UNRESOLVED-ON-<sec>: ...' (and, after ac-2, 'ZERO-DOMINATED: ...'), which both read as MEASURED.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "validate.py:23 and render_print.py:83: UNRESOLVED_UNIT_PREFIX = \"SEE field_map.json\"; validate.py:32 returns MEASURED for any other non-empty unit.",
+        "S3 derived/model_block/BBSE3_BZ_Equity/20260930T231715Z/model_block.json CAPITAL_EXPEND unit 'UNRESOLVED-ON-BBSE3 BZ Equity: sampled magnitude 0.172 does not discriminate absolute vs millions' (read 2026-10-01).",
+        "scoped_amgt.py:1261 imports only apply_corrected_price_overlay / load_corrected_price_overlay from render_print, so the served /thesis path does not call either predicate (INERT on the served path)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A unit the producer did not measure (UNRESOLVED, ZERO-DOMINATED) is classified unmeasured by every reader that classifies units.",
+    "world_is": "The print/provenance predicates key on a retired pointer prefix, so the producer's current not-measured labels classify as MEASURED there. ac-2 does not move this: the BBSE3 unit reads MEASURED there before and after.",
+    "notes": "Found while reading ac-2's served reach (NEVER_WIDEN_ROUND27_AC2_SERVED_ACT.md). Not a round-27 cell; a candidate enrichment item for the round-27 analysis.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W1-S26",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-10-01T06:00:00Z",
+    "one_line": "AC2 (bound.cjs AD1) cannot read 4 of 4 once the Other-lines group is removed as the order's item 2 requires: tabs.harness.cjs check model_fiscal_rows_rendered demands every fiscal figure rendered (cells === fiscal, 97/165 for BA now).",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/SecurityAnalysis/__harness__/tabs.harness.cjs:391 counts a name only when data-model-cell count === fiscal figure count; :427 check model_fiscal_rows_rendered.",
+        "AC2 output: HARNESS RED tabs.harness.cjs :: rc=1 (floor 20); AD1 BOUND: 3 of 4 harnesses green; modelPattern 12/12, shell 10/10, errorEmpty 12/12 green. AC1 6 of 6 and AC3 tsc exit=0 on the same bytes.",
+        "Run: tabs.harness.cjs prints MODEL BA_US_Equity:97/165 SAP_GY_Equity:120/190 BABA_US_Equity:113/183; the other 19 checks true."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Removing the Other-lines group (order item 2) leaves the page's own harnesses at their floors (AC2, 4 of 4).",
+    "world_is": "The harness asserts the old subtraction invariant (every fiscal figure renders once), which the removal breaks by design; tabs.harness.cjs is read-only to this order. AC2 FAILs and the order stays open.",
+    "notes": "Resolution needs the harness check re-scoped (a DSGN-owned file) or item 2 relaxed; not mine to choose.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W1-S27",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-10-01T07:00:00Z",
+    "one_line": "assembled.harness.cjs:336 asserts the ABSENT Model face carries the sentence 'No model in the research pack for this name yet'; CRPS-ad-3 item 5 (and face.cjs arm 7) bars 'in the research pack', so the two cannot both hold.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal/src/pages/SecurityAnalysis/__harness__/assembled.harness.cjs:336: modelOk on an ABSENT name requires tabHtml.model.includes('No model in the research pack for this name yet').",
+        "face.cjs arm 7 (round28) fails any ABSENT or BARE face matching /\\bin (the research|this) pack\\b/; ModelTab.tsx now says 'There is no model for this name yet.' on that face (portal commit f8350483).",
+        "assembled.harness.cjs is not in this order's <paths> and not in AC2's bound (AD3 names modelPattern, tabs, shell, errorEmpty); run bare it exits 'ERROR: --payload ... --ranked ... are both required', so its ABSENT arm was not run here."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Item 5: the ABSENT face never says something is missing 'in the research pack'; the harnesses that load the Model tab stay green (AC2, four named harnesses).",
+    "world_is": "A fifth harness that loads the Model tab (assembled.harness.cjs) pins the old ABSENT sentence byte for byte, so its ABSENT-name arm will read red the next time it is run with its payload arguments.",
+    "notes": "Re-anchor needed in assembled.harness.cjs:336 (the string to 'There is no model for this name yet'); not edited by this worker (outside <paths>). Also: the SERVED face still says 'In the research pack, but this page cannot show it yet...' on a refused row and 'not in the pack' in two footnotes; arm 7 reads only the ABSENT and BARE faces, so those were left.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S75",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-10-01T07:42:57Z",
+    "one_line": "DISARMS AMGT_CORPUS-Z-W1-S27: assembled.harness.cjs's model check is re-anchored (portal 54f3a252, on local DEV 209678ff) -- the SERVED arm's denominator is the fiscal figures on the sheet's rows (it also broke once CRPS-ad-1 removed the Other lines, wider than S27 named) and the ABSENT arm reads 'no model' without a presupposed pack.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal 54f3a252 assembled.harness.cjs: fiscalTotal = fiscal figures whose mnemonic is a FINANCIAL_SUMMARY_ROWS/MARGIN_HISTORY_ROWS mnemonic and whose year is a sheet year; ABSENT arm /\\bno model\\b/i (the tabs.harness.cjs re-anchor at 14cf369e/f8350483, mirrored).",
+        "The harness does not run at portal 78cf9877 or f4adf790 either: 'Cannot find module @/ui/components/states' (main tree, BA thesis fixture + rankings.BREAKOUT_PRICE.json) -- pre-existing, outside every bound list; the re-anchor holds for when it is repaired.",
+        "Chain checks after the act on the DEV-merged branch: face.cjs 8/8, sheet.cjs 6/6, bound 4/4, tsc -b rc 0; full page-harness suite 15 of 16 on both DEV and the chain (posture.harness.cjs RED on both)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Every page harness that anchors the Model face reads the face CRPS-ad-1/ad-3 built.",
+    "world_is": "assembled.harness.cjs now does; it remains non-runnable for a reason unrelated to the Model tab (a missing module alias in its loader), which is DSGN_AMGTV1's harness surface.",
+    "notes": "Issuer direct act at the chain-A drain (decomposition v28.0). Also on the SERVED face, two footnotes and the refused-row sentence still say 'not in the pack' / 'In the research pack' (S27's note); arm 7 grades only the ABSENT faces. A candidate enrichment item, not a hazard.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W1-S28",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-10-01T09:00:00Z",
+    "one_line": "CRPS-ae-1 ruling 2 prints every Dividend yield cell as a percent at 1 dp, but the served E-column figure (BEST_DIV_YLD) is a DECIMAL fraction, so BA's 2026E-2028E cells read 0.0%, 0.1%, 0.6% from served values 0.00254, 0.14533, 0.60315 -- a number whose unit the page cannot read as the history's percent.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "BA thesis capture (DSGN round14 fixtures), forecast_figures BEST_DIV_YLD: unit 'DECIMAL (differs from CRO's PERCENT reading on SAP)', value 0.002540650406504065 for the first E year; the history cells of the same row (EQY_DVD_YLD_IND) are PERCENT (3.6485 prints 3.6%).",
+        "Rendered row on the ae-1 build: 'Dividend yield (%) | 3.6% | 2.3% | 2.5% | 2.5% | 8.4% | -- | -- | -- | -- | 0.0% | 0.1% | 0.6%' (probe through DSGN's loader, .scratch/probe2.cjs in worktree crps-r29-1).",
+        "face29.cjs arm 2 grades only the shape of the printed figure (1 dp and %), so it passes; the full served value stays in data-model-cell."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Ruling 2: percent rows print 1 dp followed by %, display only, no figure derived (C-PRESENTATION-ONLY); every served value stays as served.",
+    "world_is": "Applying the ruling literally to a row whose E columns are served on a different unit (a fraction, not a percent) prints a figure that may be 100 times too small beside its history (if the served DECIMAL is a fraction); converting it (x100) would be deriving a figure, which the order bars, so the worker left it as the ruling reads.",
+    "notes": "Needs a ruling: either the E cells of a DECIMAL-unit forecast print as a percent (a unit conversion the CTO would have to grant) or the row prints them unconverted with their own unit word. Same class likely for BEST_PE_RATIO (served unit UNRESOLVED on BA) on names whose P/E row is not refused.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S76",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-10-01T09:25:25Z",
+    "one_line": "DISARMS AMGT_CORPUS-Z-W1-S28 (issuer ruling): BEST_DIV_YLD's served values ARE percent -- BA's consensus DPS over its price reproduces them exactly -- so printing 0.0% / 0.1% / 0.6% at the percent row type is correct and no conversion is needed; the defect is only the producer's unit LABEL 'DECIMAL' on that field.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "BA thesis fixture: BEST_DPS FY1-FY3 = 0.005, 0.286, 1.187; BEST_DIV_YLD FY1-FY3 = 0.002540650406504065, 0.14532520325203252, 0.603150406504065; BA price USD 196.80 (header PX_LAST, the walk's face).",
+        "0.005 / 196.8 x 100 = 0.00254; 0.286 / 196.8 x 100 = 0.14533; 1.187 / 196.8 x 100 = 0.60315 -- equal to the served BEST_DIV_YLD to the digits served: the field is a PERCENT of price.",
+        "History EQY_DVD_YLD_IND on the same row prints 3.6%, 2.3%, 2.5% (percent); the E cells 0.0% / 0.1% / 0.6% sit on the same scale."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A figure's served unit label names the scale its value is on.",
+    "world_is": "BEST_DIV_YLD values are on the percent scale while the block labels the unit DECIMAL. The page prints them correctly as percent; a reader of the unit label alone would be misled.",
+    "notes": "Ruled at the round-29 drain: no page change. The label is the producer's (build_unit_map / model_block_pull forecast units) -- a candidate enrichment item for the round-29 analysis; FWD-22 untouched.",
+    "disarm_owner": "2.0.0_SA_COO~X"
   }
 ]
 ```

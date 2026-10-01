@@ -1161,3 +1161,98 @@ Slots ~15..~17 are unused: round 3 named ~10..~14.
 - (b) Write-surface overlap was read from the PRD's own named files, not from a diff. A file the build discovers is
   a surprise row.
 - (c) No cell grades NFRA_TRNSPT's FWD-1 or FWD-7. The positive mail and transcript runs are that project's.
+
+## ADDENDUM R3-T.1 (2.0.0_SA_COO~O, 2026-10-01 ~04:3xZ, on PRD v1.3 @2b8f3151c6 and the CTO's self-drive tick-1 rulings)
+
+**Source.** PRD v1.3 C7 (`1.0.0_SA_CTO~O` msg 27481, option (a); `prd-signoff.py status` ADMITTED) and the four rulings
+in `project.json` `blocking` (tick-1 prefix, msg 27490, arming record @80102ed73d). The issuer rules inside its own
+decomposition; ENDPOINT is unchanged.
+
+- **Names (supersedes R3-T "Route names come from `lib/opal_naming.py`").** The headless prefixes are the fixed literals
+  `/hx/transcripts` and `/hx/mail`, graded for distinctness only. The bearer secrets are `gateway/transcripts/bearer`
+  and `gateway/mail/bearer`, each `grade(..., "SECRET")` CONFORMANT. Row Z-W16-S1 is dispositioned by amendment A1 on
+  `OG-hr-1` and `OG-hr-2`.
+- **G-SENDERS is NOT a gate** (ruling (d)). The sender table is a data asset; `OG-rl-1` ships it with Manav's addresses
+  as they stand, and Yang's join when supplied, as a data change.
+- **New cell `OG-pr-1` -- the gateway read secrets and their one grant** (CTO ruling R3 / C11,
+  `CTO_RULING_20261001_OPAL_GATEWAY_RELEASE_TRAIN.md` @cf5989190d; tick-1 ruling (b), row Z-S24). It creates THREE
+  Secrets Manager entries out of band, values never printed: `gateway/transcripts/bearer` and `gateway/mail/bearer`
+  (random), and `gateway/principals/rosters` (both rosters, from the site-Z Part D file). One Terraform role policy
+  `opal-gateway-gateway-read-secrets` grants `secretsmanager:GetSecretValue` on exactly those three ARNs (the
+  `graph-read.tf` pattern), by a targeted `safe-apply` that is Terraform act #2 of the train (C4), under a NEVER-2
+  ledger. Acceptance (R3): `simulate-principal-policy` reads `allowed` on all three and `implicitDeny` on a sibling
+  `gateway/*` ARN; and the host reads the roster secret's shape under its own role. WORLD. Slot `~18` (new; independent
+  of the build chain). No service changes. Label: `<round>9</round>`, its own one-cell issuance (round 8's issuance
+  admits no new file).
+- **OG-rl-1 carries R4.** Its release-branch `deploy-to-ec2.sh` reads the rosters host-side from
+  `gateway/principals/rosters` (the deploying-shell variables go), and it no longer creates the two bearers (OG-pr-1
+  did). A third criterion, `rl.AC3.sh`, reads the SHIPPED template.
+- **Rotation (ruling (c), row Z-W17-S1).** The value printed was host `.env` line 14's second token: line 14 is
+  `OTP_BEARER=<49f> <cot>` unquoted, so `bash` ran the second token as a command and printed it. That is the cot OTP
+  capability bearer, Secrets Manager `blackdiamond/cot/otp-gateway-token`. `OG-rl-1` rotates it in the same release,
+  after PHASE A reads every presenter of that bearer and how each one reads it.
+
+**Edges added:** `OG-pr-1` -> `OG-rl-1` PHASE B (the grant is applied first). Train order (R1): MX-r-7 -> MS-d-2 ->
+`OG-rl-1` (swap with MS-d-2 if ready first); until `OG-rl-1` serves, the issuer hands the rosters off-repo to
+`2.0.0_SA_COO~MI` and `2.0.0_SA_COO~MS` (C2).
+
+**Fan-out:** 8 orders in 2 connected components; slots `~15`, `~16`, `~17` (closed), `~18`; cap 8.
+
+**Battery (blindness stated):** the line-14 attribution is read from bash semantics on the live render template
+(`d61fde4693`), not from the value. `OG-rl-1` PHASE A confirms it by shape only, printing a boolean.
+
+## ADDENDUM R3-T.2 (2.0.0_SA_COO~O, 2026-10-01 ~07:3xZ) -- the headless prefixes' public reach
+
+**Finding.** The gateway's HTTPS listener signs every request in through Entra OIDC by default; machine routes reach
+the app only through a forward-only listener rule on their exact paths (`/ms/*` priority 31 and 33, `/otp/*` 30,
+`/graph/*` 32). `/hx/*` has none, and `OG-rl-1`'s bounds leave the ALB untouched. Measured: an unauthenticated GET on
+either `/hx/` prefix returns 302 to `login.microsoftonline.com`. So C7's headless routes would release unreachable from
+the laptop (the consumer of order 103564) and `rl.AC1.sh` (public URL) could not pass.
+
+**New cell `OG-al-1`** -- ONE forward-only `aws_lb_listener_rule` for `/hx/transcripts/*` and `/hx/mail/*` on the
+`ms_ingest_capability` pattern, a targeted `safe-apply` under a NEVER-2 ledger, after `OG-pr-1` (same root, never
+concurrent). WORLD. Slot `~18`. Label `<round>10</round>`, its own one-cell issuance. Edge `OG-al-1` -> `OG-rl-1` PHASE
+B. Serves: FWD-1 (the journey's machine hop) and NFRA_TRNSPT's FWD-1 hops 1-2. Criteria: the TF shape; the live rule
+plus probes (both `/hx/` prefixes reach the app, a non-`/hx` control still meets the sign-in).
+
+## ADDENDUM R3-T.3 (2.0.0_SA_COO~O, 2026-10-01 ~13:2xZ, on PRD v1.4 @dabb8e1e9f) -- the /hx/mail LISTING route
+
+**Source.** PRD v1.4 C7 "Mail listing" and its addendum (`prd-signoff.py status` ADMITTED); laptop order 103750 (relay
+@6963658f49); `1.0.0_SA_CTO~O` msg 27843 (cut one build + one release as its own round label; fold Z-S36's durable
+fix). Label `<round>11</round>`, ONE issuance, two cells, one chain (`OG-hl-1` -> `OG-rl-2`). fanout: 1 of 1 chain,
+cap 8.
+
+| cell | what | risk | slot |
+|---|---|---|---|
+| `OG-hl-1` | BUILD: `GET /hx/mail/messages` in `app/mail_route.py` (`LIST_ROUTE`), registered in `server.py`; the v1.4 rules (sender-bound with a per-row own-`from` re-check, 5-key rows, 31-day window, page_size 1..50 default 25, 200 pages, an opaque page token bound to sender + window + the allowlisted path and never a Graph URL, ascending `receivedDateTime`, empty window 200/0/null); the Graph allowlist gains `^/me/messages$`; audit = route, sender HASH, window, row count, label. PLUS Z-S36's durable fix's single source: `deploy/mail_sender_table.txt`, one address per line, kept equal to `criterion.py` `DEFAULT_AUTHORS` by a test (the `deploy/NFRA_OPLGTW_CONTRACT.json` pattern). | WORLD (floor) | ~16 |
+| `OG-rl-2` | RELEASE, train slot 5 (after MX-r-8): narrow, from the live ref; the template reads `MAIL_SENDER_TABLE` host-side from the shipped `deploy/mail_sender_table.txt` and REFUSES an empty table before any `.env` write (the deploying-shell `OG_MAIL_SENDER_TABLE` goes); NEVER-2 ledger; CTO + CVO halves. Acceptance: the laptop's four checks + the issuer's two token arms (9 conditions, `rl2.AC1.sh`). | WORLD | ~15 |
+
+**Z-S36's fix, the issuer's choice of form.** The CTO asked for a host-side read "like the R4 rosters". The rosters are
+secrets and live in Secrets Manager; the sender table is a committed data asset (`criterion.py`). A Secrets Manager copy
+would be a second runtime source that drifts from `criterion.py` (Yang's addresses land there) and needs a fourth ARN on
+the grant (a Terraform act). The artifact-shipped file kept equal by a test is host-side, single-source and needs no IAM.
+
+**Battery (blindness stated):** the paging arm needs a window holding two or more table-sender messages with
+attachments; 2026-08-01..31 (half-open, to 08-31T00:00Z) holds five on today's read (`search_email`: 08-02, 08-09, 08-15, 08-22, 08-30), but the mailbox can change.
+
+## ADDENDUM R3-T.4 (2.0.0_SA_COO~O, 2026-10-01 ~17:4xZ) -- the Tax SMA gateway release, both halves (Andrew-direct ~17:2xZ)
+
+**Source.** Andrew-direct ~17:2xZ "Site Z does both" (relay `org/tier0_exec/0.0.0_AB_MSTR/deliverables/RELAY_20261001_1726Z_ANDREW_DIRECT_SITEZ_RUNS_TAXSMA_GATEWAY_RELEASE_BOTH_HALVES.md`
+@d34037d1f5): the MDPF_TAXSMA exclusion is lifted for THIS one release. Spec: laptop `4.0.0_SA_CRO` msg 103933 (relay
+`RELAY_20261001_1733Z_LAPTOP_CRO_103933_TAXSMA_GATEWAY_RELEASE_SPEC.md` @65e0886dc1). Andrew ~17:3xZ: capability ON at
+this deploy, the opalbloomberg@ oid confirmed from the host broker record before any upload (msgs 27991, 27992).
+`1.0.0_SA_CTO~O` msg 27986: cut as round label 12. Label `<round>12</round>`, ONE issuance, two cells, two independent
+chains; fanout: 2 of 2 chains, cap 8.
+
+| cell | what | risk | slot |
+|---|---|---|---|
+| `OG-tt-1` | TERRAFORM (train act #4): ONE forward-only `aws_lb_listener_rule` for EXACTLY `/ms/taxsma-workbook` (no `/ms/*` wildcard), on the `hx-capability.tf` pattern, a free priority, targeted `safe-apply`, plan 1/0/0, NEVER-2 ledger `nfra-oplgtw-taxsma-alb-rule`. | WORLD | ~18 |
+| `OG-tr-1` | NARROW APP RELEASE on live `0a1d9079c6`: the four Tax files from CLOUD (`app/taxsma_workbook.py` sha256 `6acc3e8c...`, its `server.py` import + Route, its `config.py` two fields, `tests/test_taxsma_workbook.py`) merged onto the live bytes, plus two `.env` lines in `deploy-to-ec2.sh`: `TAXSMA_WORKBOOK_BEARER` read host-side from `gateway/global/taxsma-workbook-token` (the role's read exists, laptop TX-i-3) and refused when empty; `TAXSMA_WORKBOOK_IDENTITY` from the deploying shell, validated as one `<tid>/<oid>` pair (a personal identifier: never committed), the opalbloomberg@ oid confirmed from the host token-broker record before any upload. `.env` 46 -> 48. CTO + CVO halves; NEVER-2 ledger `nfra-oplgtw-taxsma-route-release`. | WORLD | ~15 |
+
+**Acceptance** (the spec's section 4): `tr.AC1.sh` (module sha256 on the host; no-bearer `UNAUTHORIZED_CAPABILITY`
+through the ALB; `/mcp` 401 unchanged; `.env` 48 keys, capability ON), `tr.AC2.sh` (narrow + NEVER-2), `tt.AC1/AC2`
+(the rule's shape, then live with probes: the Tax path reaches the app, an unknown `/ms` path and `/` still sign in,
+`/ms/sites` still 401). The rule's ARN and priority are reported.
+
+**Blindness stated:** the identity is confirmed from the broker's account records by username; the Part D record
+(`PART_D_RECORD_20260930.md`) is the second source for the same mapping.
