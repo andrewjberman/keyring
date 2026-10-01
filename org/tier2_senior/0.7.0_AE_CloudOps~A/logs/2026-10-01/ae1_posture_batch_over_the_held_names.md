@@ -294,3 +294,85 @@ issuer's call, not mine.
 ## Blockers
 
 None. Nothing is owed by this lane on ag-1; the `<status>` flip is the issuer's.
+
+---
+
+# THIRD ORDER OF THIS SESSION -- AMGT_RESAPP.TO-AMGT-ah-2, the name-fix redeploy
+
+**archetype:** DEPLOY
+
+**Order:** `org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-ah-2.the-name-fix-redeploy.md`
+**Risk:** WORLD | **Round:** 58 | **GO:** msg 27703, READ-acked
+**Commits:** `e85243de69` (ledger OPEN), `174cf144e9` (proof)
+**Push state:** LOCAL @`174cf144e9`; `origin/CLOUD` at `0abf99fcd4` (ls-remote read 09:5xZ).
+
+## What landed
+
+One artifact upload, one code-only `safe-apply`. Base re-read live and **unmoved** at
+`/HInwjrnGBzDLzV2EnYyGFseCcXIuWC/ddnyYUpUEX8=` with artifact `RhEQ661Bi9gnVKhBphUCMtjH_rrsscPS` -- both
+exactly what `ag-1` produced an hour earlier, so the chain across rounds 57 and 58 is continuous and that
+continuity is itself evidence nothing else redeployed this function in between.
+
+- Artifact -> `hj5ITKr5Ct9Mn3ySEvztrK9eG.bnsHho`, sha `g9H0TW2garLGS0zMoLmJgFQU8a/6ZJUGMwJaYFSkc/c=`, 41,115,765 B.
+- CONTENT-DIFF **exactly one file** -- `lib/research/api/monthly_chatter.py` -- 350 / 349 / 1 / 0 / 0.
+- Plan: **0 add, 1 change, 0 destroy**, three attribute lines, no destroy/IAM/route/gateway/alias. Saved plan applied.
+- Live after: CodeSha256 **equals the uploaded sha**; CodeSize equals the uploaded ContentLength.
+- **AC1 PASS** exit=0; **AC2 PASS** exit=0 (no regression). Entry CLOSED, 4 legs proven. No row this round.
+
+## The one that mattered: a branch no criterion could see
+
+The preflight declared the classifications-table GetItem **BLIND** -- one action, one table, no IAM
+simulation -- and said plainly that a DENIED read would leave those names on the ticker fallback, which C2
+still passes. So **AC1 is structurally unable to distinguish granted from denied.** Worse, `bg_names.py`
+never prints `name_source` at all, so the pass carries no trace of which branch ran.
+
+I read the distribution off the deployed body myself: **classification 7, crosswalk 63, ticker 25, 95 of 95
+rows**, every count equal to the halves' expected branch. `classification = 7` and not `0` means the GetItem
+was **ALLOWED**. That is the allowed branch *measured on the live plane*, not inferred from a green criterion
+-- and it is the whole reason the preflight assigned the count-read to the executor rather than to the check.
+
+Worth keeping: an IAM *simulate* would have been the weaker instrument here. `/cloud-ops` lists four
+independent false-deny modes for `simulate-principal-policy`, and it fails in the under-granted direction
+precisely against a narrowly scoped principal -- which is what this role is. The served count is the thing
+the page actually depends on, so exercising it beat simulating it.
+
+## Measured rather than inherited
+
+Going in, the worktree differed from the build commit in four peer-landed `lib/opal_data_harvest` files
+(`contracts.json`, `publishers.py`, `tab_transport.py`, `test_ae2_hookup.py`). The CTO half reasons they sit
+outside the function's closure. I tested each against the packaged set instead of trusting it -- **all four
+read NOT PACKAGED** -- so the one-file diff is a property of the import closure rather than luck. The
+fabricated-path control confirms the membership test discriminates.
+
+## One self-correction
+
+My first `name_source` read hit `/api/scoped/amgt/timeseries/collected/chatter` and got a 404. The real route
+is `/api/scoped/amgt/lead-panel/timeseries/collected/chatter` (`af_1_route.py:23`) -- I had dropped
+`lead-panel/`. A wrong-object error of mine, caught by the 404 rather than by producing a plausible wrong
+number, and fixed by reading the path out of the grader instead of guessing a second time.
+
+## Compiler Tools
+
+| tool | invocation | result |
+|---|---|---|
+| `comp-schedule` | not run | Preflight declares NOT-APPLICABLE (one redeploy by hand). |
+| `comp-iam` | not re-run; issuer ran it and declared the classifications GetItem BLIND | The gating clause is the PLAN's no-IAM change, and it holds. The blind read was then settled by live exercise, not simulation -- see above on why that is the stronger instrument here. |
+| `comp-adversary` | not re-run | Base arm (C2: 32 of 95 serving the raw key) answered specifically post-act: 0 of 95. |
+| `comp-pipescript` | not run -- not applicable | A Lambda artifact redeploy, not a gold/silver/bronze script; triggers no pipeline. |
+
+## Files modified
+
+- `org/critical_paths/change_management/20261001T0938Z_...ah2...md` + sentinel -- OPENED `e85243de69`,
+  CLOSED 09:54:15Z, 4 legs proven.
+- `.../deliverables/0.7.0_AE_CloudOps~A/` -- the proof instance, `ah2-pre.json`, `ah2-evidence/` (7 files).
+- NOT touched: the order's `<status>` (the issuer's); `infra/aws/terraform/harvest/ah2.tfplan` left in place,
+  outside this order's `<paths>`.
+
+## MCP traffic
+
+- IN 27703 (the GO) -- READ-acked. OUT to `2.0.0_SA_COO~Z` -- the completion report, no ask.
+
+## Blockers
+
+None. Three orders complete this session (`ae-1`, `ag-1`, `ah-2`); nothing owed by this lane. All `<status>`
+flips are the issuer's.
