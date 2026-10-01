@@ -40,11 +40,14 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
   `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_171xZ_CLDGRPH_HOLDS_OFF_WRAP_IT_UP.md`.
 - `2.0.0_SA_COO~X` `/drive` NFRA_C3MATERIALIZE:
   `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260828_050xZ_COOX_DRIVE_LOOP_NFRA_C3MATERIALIZE.md`.
-- `1.0.0_SA_CTO` `/self-drive 30m laptop directives` DIRECTED (Andrew-direct 2026-09-28 ~23:0xZ, "/self-drive [30m]
-  Laptop Fabric"): `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260928_230xZ_SELF_DRIVE_LAPTOP_FABRIC.md`.
-  Chooser Andrew; landed by 1.0.0_SA_CTO. Paired with the RELAUNCH COO rows above. It supersedes this seat's 09-12
-  fabric row and 09-11 D9 IRPT row. RESERVED under it: vendor/egress off Opal infrastructure; unrecoverable acts;
-  money and contracts; every hold he set by name. Stop: DONE read from the register, HELD-AT-STOP, or his stand-down.
+- `1.0.0_SA_CTO` `/self-drive 60m laptop directives` DIRECTED (Andrew-direct 2026-10-01 ~04:2xZ, typed at this seat):
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261001_042xZ_SELF_DRIVE_60M_LAPTOP_FABRIC_FINAL_SAY_CLOSER_DRIVE_IRPT_FIRST.md`.
+  Chooser Andrew; landed by 1.0.0_SA_CTO. This seat is the final say for the Laptop Fabric; the goal is to close out what
+  is open; `/closer-drive` (FAST) on most projects, IRPT first; `4.0.0_SA_CRO~X` runs `/closer trace` on this seat's ask.
+  Each project's COO lane arms its own FAST lease on this word. Paired with the RELAUNCH COO rows above, re-seated
+  2026-10-01 on `ANDREW_DIRECT_20261001_040xZ_GO_WITH_RECOMMENDATION_BRING_ON_COOS_VIA_MSTR_SPAWN.md`. RESERVED under it:
+  the never-widen sign-off; vendor egress off Opal infrastructure; shared-branch pushes; unrecoverable acts; money and
+  contracts; every hold he set by name. Stop: DONE read from the register, HELD-AT-STOP, or his stand-down.
 - `1.0.0_SA_CTO` `/self-drive MDPF_TAXSMA,NFRA_OPLGTW,LGIC_NAMING,LGIC_ENFORCE,LGIC_CANON` -- PAUSED by the managed
   wind-down, resume authority:
   `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_193xZ_COO_GOALS_AND_CTO_SELF_DRIVE_ADJUDICATES.md`.
@@ -55,6 +58,10 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
   mechanism and cadence RESERVED to Andrew).
 
 ## Struck
+
+- `1.0.0_SA_CTO` `/self-drive 30m laptop directives` (record `ANDREW_DIRECT_20260928_230xZ_SELF_DRIVE_LAPTOP_FABRIC.md`):
+  struck 2026-10-01 by 1.0.0_SA_CTO. Chooser Andrew: his 2026-10-01 ~04:2xZ word re-arms the same scope at 60m with new
+  terms (the row above). A successor does not re-arm the 30m row.
 
 - SITE-Z `1.0.0_SA_CTO~Z` `/self-drive 30m` AMGT + DSGN_AMGTV1 with its COO pairs (record
   `ANDREW_DIRECT_20260928_220xZ_SELF_DRIVE_AMGT_AND_DSGN_AMGTV1.md`). Struck 2026-09-29 by `1.0.0_SA_CTO~Z`. The 11:34 ET

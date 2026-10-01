@@ -23,3 +23,8 @@
 ## Stops
 
 (appended here on DONE, HELD-AT-STOP or stand-down)
+
+- **2026-10-01 ~04:2xZ, SUPERSEDED by a new word of Andrew's on the same scope** (not DONE, not HELD-AT-STOP): he typed
+  `/self-drive [60m]` with new terms at this seat. The arm continues under
+  `ANDREW_DIRECT_20261001_042xZ_SELF_DRIVE_60M_LAPTOP_FABRIC_FINAL_SAY_CLOSER_DRIVE_IRPT_FIRST.md`. Last log under this
+  record: `self_drive_laptop_directives_tick65.md` @80d82efd8c. The 30m cron `8379b484` is deleted.
