@@ -5334,6 +5334,28 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "Every disarm is by a landed commit; none is a ruling that limits a FWD claim."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~91",
+      "surfaced_at": "2026-10-01T13:45Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W91-S16",
+      "one_line": "ag-1: 6 of 6 fresh-profile in-profile Dow Jones sign-ins (3 wsj, 3 barrons) met NO DataDome challenge and renewed 200; no wsj/barrons challenged pass was earned, AC2 FAIL.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Order ag-1 section 0: the sign-in route is where DataDome meets a new browser, so a fresh profile's renew() meets the DataDome slider and solve() passes it (AC2 needs one wsj/barrons met-and-passed challenge).",
+      "world_is": "Under one InputSourceMonitor window (13:34:33Z..13:40:08Z, hardware 0, injected 24) each of wsj a1/a2/a3 and barrons a1/a2/a3 (fresh profile folders under deliverables/0.9.0_WK_AMGT_HARVST~91/r34-profiles/<pub>/aN) ran verification.renew(): wsj a1 and a3 and barrons a1-a3 read stale, signed in inside the profile and renewed true (account check 200), no DataDome control visible, solve() never called (solves=[] in every attempt); wsj a2 raised TimeoutError Page.goto 30000 ms before sign-in (no challenge, no sign-in). Requests used: wsj 9 of 15, barrons 12 of 15 (a request = a TabSession open, an in-tab fetch, or a goto). The record ag1_challenged_pass.json says challenge_met none for both; AC2 prints 'CHALLENGED PASSES: 0' and FAIL. The round-32 'Access is temporarily restricted' block was not reproduced by a clean sign-in; no challenge was forced. AC1 5 passed.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/ag1_detail.json",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/ag1_challenged_pass.json",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/ag1_ac2_output.txt"
+        ]
+      },
+      "notes": "The unproven arm for wsj/barrons is a challenge met on the harvest path (the issuer's wsj driver run) rather than at sign-in; the issuer decides whether a challenged pass can be earned there under a monitor. No solver defect observed (the solver was never reached)."
     }
   ]
 ```
