@@ -4928,6 +4928,73 @@ carries none.
       ]
     },
     "notes": "INERT: MX-d-6 runs the emitter at its own base; it should pass --portal-api if its tree lacks the submodule."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~24",
+    "surfaced_at": "2026-10-01T10:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_MCPINDEX-Z-W24-S4",
+    "one_line": "CAUSE of row Z-W24-S2: the bd-49f sentinel writer refuses a legitimately empty PERIOD-table window. On 9 of 9 sentinel-less dates the transactions sidecar was has_data_rows=0, and emit_bronze_sentinel requires >=1 data row, so bronze/<D>/_BRONZE_COMPLETE.json is never written and bd-silver-merge never fires; nothing 'failed'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "/aws/lambda/bd-49f-runner, run_date 2026-09-21 00:06:57Z, 09-22 00:11:55Z, 09-28 00:10:21Z, 09-29 00:08:13Z: 'WARN: bronze sentinel NOT emitted -- 1 object(s) present but NOT content-complete (no sidecar attesting >=1 data row): forwardfill_v2/transactions/TRANSACTIONS_DAILY_<D>.xlsx' (4 of 4 retained gap dates); the same runs print 'WARN: transactions @<D> export has 0 data rows ... PERIOD table, an empty increment is legitimate ... landing.' and RESULT 'failed': [], 'auth_dead': False.",
+        "data/cot/scripts/bronze/cot_bronze_ingest.py@92518d0d86:1328-1370 (emit_bronze_sentinel) and :632-662 (_table_complete: return int(meta.get('has_data_rows',0)) == 1 for every non-holdings table, period tables included).",
+        "S3 versioned: the FIRST version of s3://opal-data-bd/forwardfill_v2/transactions/_complete/<D>.json has has_data_rows=0 (4,354-4,357 B objects) on 9 of 9 sentinel-less dates in 2026-09-03..10-01 (09-07, 08, 09, 14, 15, 21, 22, 28, 29) and has_data_rows=1 on 20 of 20 sentinel dates; the 5 dates older than the 14-day log retention are graded on the sidecar alone.",
+        "bd-49f-session-daily cron(0 0 * * ? *) ENABLED daily; bd-49f-session-trigger invoked bd-49f-runner 14 of 14 retained days (09-18..10-01): the chain ran every day, it is not a scheduler or auth gap."
+      ]
+    },
+    "spec_asserts": "Row Z-W24-S2: 'cause of the missing sentinels not diagnosed here (the runner's all-table-success rule)'. A1 requires the cause named from the producer's own logs or code.",
+    "world_is": "The producer's all-table rule is a CONTENT rule, and the content rule was written for the snapshot tables (ADVI_BDAPIMIG 2026-07-09 header-only allocations stub). Applied to transactions, a PERIOD table whose newest 3-day window is empty on Mon/Tue run dates (and Wed after a Monday holiday), it withholds the sentinel on 9 of 29 days. Why BD returns the empty window is INFERRED (the same dates re-pulled 2-3 days later carry real rows), the sidecar is measured.",
+    "notes": "Fix is outside MX-s-16 <paths> (shared script under data/cot/, or the runner lambda source): accept a MEASURED has_data_rows=0 sidecar for a PERIOD table (transactions) in the sentinel check only, table-scoped so cot and the snapshot-table rule are unchanged; negative control = a snapshot table with 0 rows still refused. Deploy is a DS leg to code/bronze/. Recommended carried to round 7 (ANNOUNCE s5). Left alone, the realized silver lag (+26.5 h every Monday, +2.5 h every Tuesday if the realized document is retired) is armed."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~24",
+    "surfaced_at": "2026-10-01T10:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_MCPINDEX-Z-W24-S5",
+    "one_line": "bd-49f-runner prints 'OK: bronze sentinel emitted for <D>' immediately after the shared module printed 'WARN: bronze sentinel NOT emitted': the runner's success line is unconditional on a no-write return.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "/aws/lambda/bd-49f-runner 2026-09-21 00:06:57Z: 'WARN: bronze sentinel NOT emitted ...' then 'OK: bronze sentinel emitted for 2026-09-21 (tables=[...])'; same pair on 09-22 00:11:55Z, 09-28 00:10:21Z, 09-29 00:08:13Z (4 of 4 gap dates); s3://opal-data-bd/bronze/<those dates>/ has no object.",
+        "infra/aws/lambda/bd-pipeline/bd-49f-runner/lambda_function.py@92518d0d86:181-189: mod.emit_bronze_sentinel returns None either way; the runner prints OK after any return without an exception."
+      ]
+    },
+    "spec_asserts": "Runner docstring: 'Bronze sentinel ... emitted HERE on ALL-table success'; the runner's own log line asserts emission.",
+    "world_is": "Any reader of the runner's log or RESULT line sees success on a day the sentinel was not written (RESULT also lists all tables as landed). This misled the first MX-s-16 census into reading the gap as unexplained.",
+    "notes": "INERT to data; ARMED for diagnosis: a log-based check of 'sentinel emitted' reads TRUE on a withheld day. Fix belongs with the S4 producer change (the emit function returning a bool, or the runner printing OK only after a head_object). Not in this order's paths."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~24",
+    "surfaced_at": "2026-10-01T10:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_MCPINDEX-Z-W24-S6",
+    "one_line": "MX-s-14 A1/A2 PHASE A test commands wrote silver/realized and silver/transactions for 2026-09-29 at 06:37Z and 07:02Z, so the 09-29 document slot (21:46Z / 21:53Z) found 'No new ... files' and the 09-29 'document vs merge' comparison is contaminated.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ssm list-commands 2026-09-29 02:36-03:03 EDT (06:36-07:03Z): comments 'MX-s-14 A1 PHASE A test: edited command list, merge only' and 'MX-s-14 A2 PHASE A test: {unrealized,realized,allocation,transaction} edited command list, merge only'; silver/realized/2026-09-29.parquet first version 07:02Z, silver/transactions/2026-09-29.parquet first version 06:37Z (35,269 B, the merge shape).",
+        "s3://opal-data-bd/logs/realized-download-2026-09-29.log (21:46:10Z) and transaction-download-2026-09-29.log (21:53:54Z): 'No new realized files to process' / 'No new files to process'."
+      ]
+    },
+    "spec_asserts": "Order census: the document is the only same-day writer on sentinel-less days.",
+    "world_is": "On 2026-09-29 the same-day writer was a PHASE A test run, not the scheduled document; the 09-29 lag-now figure is not measurable and is shown n/a in ANNOUNCE 0.4. 8 of 9 gap dates are clean document writes.",
+    "notes": "INERT: no state to disarm; recorded so a later reader does not count 09-29 as a document write."
   }
 ]
 ```
