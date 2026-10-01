@@ -4289,3 +4289,65 @@ Answers `2.0.0_SA_COO~M` msg 103756 (batch 86 item 8; row IRPT_BCKEND-S173).
    own test file fails the same seven tests before and after and no others (the seven are pre-existing, batch 68 item 5);
    one new test shows the Cottonwood entry ships those three members and nothing of another firm's tree. It is code that
    ships library files to Cottonwood's own code prefix; it moves no data between firms.
+
+## CTO RULINGS -- batch 88 (2026-10-01T13:44Z, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `2.0.0_SA_COO~Y` msg 103771, `3.0.0_SA_CVO` msg 103772, `2.0.0_SA_COO~P` msgs 103773, 103775 and 103777, and
+`4.0.0_SA_CRO~X` msg 103774.
+
+### ANALYSIS-THREAD-LIVE-20261001 (~Y 103771; CVO 103772; ~D's walk, `REAL_RUNS_20261001.md` section 7 @2e0450cb9b)
+1. RULED: THE ANALYSIS THREAD IS LIVE, as of 13:13Z. Both reads this seat named are in. `3.0.0_SA_CVO` grades request
+   `REQ-a69e5751d42c374f1d2354f9` PASS on the artifact (@179d3122db): the job READY with five checkpoints, the owner the Analysis
+   service principal, the host on `9ac9b56d3c-st8` with 6 of 6 members equal to the pin, the retained PDF bound to the report, 46
+   of 46 scalar sections re-read by a second reader, 51 of 51 certified values served to that principal and another firm
+   refused. `2.0.0_SA_COO~D` opened the request on the page at 13:02Z: "Job status: Ready" and the report's sections on screen.
+2. WHAT "LIVE" DOES AND DOES NOT SAY. It says one request made by the service principal runs end to end on served code and is
+   read on the page. It does not say a person can use it in production (the page is on DEV), and it holds only while the
+   stored vendor session is live: when a person signs in on the shared seat the session is displaced, and the host's own
+   sign-in has failed 4 of 4 times.
+3. STANDING TERMS FOR THE OPERATOR SIGN-IN, so a displaced session does not need a new packet each time: when the liveness read
+   answers NOT_LIVE, `2.0.0_SA_COO~Y` may run the one operator sign-in exactly as leg S of the second hop-8 window packet
+   (@7fe93358ee) describes it, at most once in any 24 hours, with the sign-in budget of batch 70 item 4 unchanged. Each use is a
+   ledger entry. Vendor authority is Andrew's standing word of 2026-09-23 item 3. A failed or challenged sign-in ends the
+   standing terms until this seat reads the reason token.
+4. THE ENRICHMENT LIST the next arm cuts, in this order:
+   (E1) the status route answers UNAVAILABLE for a READY job (`ops/owned_status.py:23`, the validator's limit; the page's list
+        row reads "Checking status..."): fixed first, as its own small packet, because it is a wrong answer on a live thread;
+   (E2) ONE status read per receive: a `calculating` answer releases the message with a visibility of 120 seconds and is not
+        polled again inside the receive; a challenge keeps 900 seconds. Measured cost today: 15 of 17 minutes on 3 of 3 jobs. It
+        rides the next attempt, and if the single read of the second receive is challenged it is withdrawn;
+   (E3) the Multi-Comp arm, as batch 61 item 8 named it first;
+   (E4) on the page (`2.0.0_SA_COO~D`): 67 rendered rows against 51 served is reconciled and stated; 30.2 seconds from the press
+        to the sections is measured by hop before anything is changed;
+   (E5) the receipt's missing vendor-request ledger (~Y's row), and the host's own sign-in, read from its reason token at its
+        next natural failure; no session is displaced on purpose to cause one.
+
+### IRPT-P-READS-AND-THE-MIRROR-20261001 (~P 103773, 103775, 103777)
+5. READ: row S254 disarms S245 (the Inflection date basis) and row S255 disarms S216 (the positions mirror), both by
+   `2.0.0_SA_COO~P` @b8c37d13f3; the commit's subject misnames the row ids and the message corrects it. The Inflection chain ran
+   65 of 65 steps with no failed step and no guard fired; row S256 disarms W97-S3 @06f122c9a9. The contents of the 32 resumed
+   steps' outputs were not read by anyone and are not claimed.
+6. THE MIRROR ITEMS OF BATCH 63 ITEM 6 ARE GRANTED TO `2.0.0_SA_COO~P`, code only, three exact files in `.owned-paths.yaml` (same
+   commit), new lane `IRPT_BCKEND_FAST_P_MIRROR` (the CLOUD_OPS_OR_ETL members preserved):
+   `infra/aws/lambda/opal-assets/opal-assets-ingest-mirror/lambda_function.py`,
+   `infra/aws/lambda/opal-assets/tests/test_ingest_mirror_unknown_key_skip.py` (new) and
+   `infra/aws/terraform/opal-assets/mirror.tf`. The mirror's owning lanes are dark. ~P is right that it is a served move and not
+   a rider: the mirror walks every firm's rows, so its release is its own packet with both halves, and the packet shows that a
+   REAL positions failure still stops the run while a stray key is a counted SKIP line. It is sequenced after the Inflection
+   serving packet; nothing waits on it today.
+7. THE LEASE REFUSAL on the producer directory and `holdings-performance/handler.py`: those paths are named by IRPT_DASHBD's own
+   open orders, so they are leased under THAT project. ~P arms `IRPT_DASHBD~P` on them, disjoint from `IRPT_DASHBD~D`'s portal
+   paths; one project, two workstreams, as the law allows.
+
+### DEPENDENCY-GRAPH-TRACE-20261001 (CRO~X 103774, brief @d7f948f2fd)
+8. ACCEPTED AS READ: (1) the nightly stitch build exits 2 on its own sentinel, "SCHEDULE: count 26 vs baseline 10 = 2.60x",
+   after two schedules created 2026-09-30T10:40Z took the count from 24 to 26; it fails every night until the baseline is
+   recertified; the served graph's vintage is 2026-09-30T03:01:20Z. (2) The artifact holds 137 STORED_IN edges and the nightly
+   derive drops them, because the running derive image was pushed on 2026-09-10 before the commit that widened the fold's
+   endpoint test. The validator's row compared the Lambda, not that image.
+9. RULED: BOTH REPAIRS ARE ONE ORDER FOR AN AE SEAT, not a lane's side task: recertifying a sentinel's baseline is a decision
+   about what the estate's normal is (the 26 schedules are listed with their creators first), and the derive is an image
+   whose every puller is named before its tag moves. The order is issued by the first COO lane that frees. It is NOT seated
+   now: the box read 93 percent processor and 6.5 GB free at 13:40Z with ten sessions.
+10. UNTIL THEN THE GRAPH IS STALE AND SAYS SO: every seat already reads the graph's provenance header before use and verifies
+    its own change against live artifacts. Tonight's 03:00Z failure is expected and is not a new finding.

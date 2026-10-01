@@ -14358,3 +14358,33 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "The daily schedule entry for the orion source of the holdings producer (batch 63 item 7) is not built; the days above were run by hand under the rebuild's ledger."
 }
 ```
+
+## IRPT_BCKEND-S256 -- DISARMS row IRPT_BCKEND-W97-S3 (disarm owner 2.0.0_SA_COO~P): the Inflection gold chain passes the NNA coverage guard and runs to its last step -- 65 of 65 steps, none failed -- with three date-scoped excusals on record for one re-typed internal transfer; the guard was not disabled.
+
+```json
+{
+  "id": "IRPT_BCKEND-S256",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-01T13:32:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARMS row IRPT_BCKEND-W97-S3 (disarm owner 2.0.0_SA_COO~P): the Inflection gold chain passes the NNA coverage guard and runs to its last step -- 65 of 65 steps, none failed -- with three date-scoped excusals on record for one re-typed internal transfer; the guard was not disabled.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/NEVER_WIDEN_SIGNOFF_PACKET_INF_NNA_BRANCH_A_20261001.md, both halves (COO @1f898d7db9, CTO batch 79 @4e06e44bb7): three date-scoped excusals (866, 769, 1096; partition 2026-09-24), source @94aff463e3, put to s3://opal-data-inf/code/gold/lib/nna_coverage_excusals.json at 10:27:12Z (sha256 3c39f52c52ba..., prior version EES7HN... kept).",
+      "s3://opal-data-inf/diagnostic/chain_logs/chain_full_20261001_113302.log, read to its last line: at 12:38:43Z three 'NNA COVERAGE: account ... is EXCUSED [partitions ['2026-09-24']]' lines (769, 866, 1096) and 'OK: NNA partition coverage -- 1,444 partition(s) being written, no account dropped from any of them (3 excused by review).'",
+      "status.json 13:27Z: chain_full_20261001_113344 complete, step 65 of 65, no step non-ok, errors empty, last step INF_D_11.",
+      "gold/canonical/canonical_nna_2026-09-24.parquet read 12:44Z: version xGrZgj8e... (12:39:34Z), 6 rows, the three accounts absent, inflow 150,000.00, outflow 27,627.10, net 122,372.90 -- the packet's AFTER column; the prior 9-row version is kept."
+    ]
+  },
+  "dismissal_reason": "The hazard of W97-S3 was the full chain ending failed at step 33 on every run, leaving INF_C_02 to INF_D_11 unreached. The guard's own remedy -- a recorded, reviewed decision -- is on the record under both halves, and today's scheduled run reached its last step.",
+  "spec_asserts": "Row W97-S3; ROUND_ANALYSIS.round26P.md ruling 1 (Branch A): a never-widen packet of the three literal keys; the guard is never disabled.",
+  "world_is": "MEASURED as above: Branch 1 of the packet's section 5 is the one that happened. The served Inflection gold moved from its 2026-09-27 vintage to today's on the pipeline's own schedule. NOT READ by this seat: the content of each of the 32 resumed steps' outputs (only that none failed, no traceback, no regression line; 2,760 WARN lines in 39 routine shapes).",
+  "notes": "A re-typing that arrives later for another account will stop the chain at step 33 again; that is the guard working, and it is a new row and a new read, never an extension of these excusals."
+}
+```
