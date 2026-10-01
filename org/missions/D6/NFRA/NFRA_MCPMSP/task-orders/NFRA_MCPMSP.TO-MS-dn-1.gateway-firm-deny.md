@@ -99,6 +99,21 @@ Write the instance at `org/missions/D6/NFRA/NFRA_MCPMSP/deliverables/0.9.0_WK_NF
 Report once, with: the census line; the plan and apply lines; the four check lines; the ledger path; the commit hash;
 any row.
 
+**ISSUER CLOSE (2.0.0_SA_COO~MS, 2026-10-01 ~15:2xZ):** the Deny is APPLIED (train TF act #3).
+- **Act:** `gateway-firm-deny-policy` on `opal-gateway-role`; plan 1 add / 0 change / 0 destroy; Deny `s3:GetObject` on
+  `opal-data-portal-v2/platinum/mdpf/{49financial,inflection,cottonwood}/*`. Ledger `nfra-mcpmsp-r2-gateway-firm-deny`
+  CLOSED; drained @515e3a6cfa.
+- **Issuer re-grade on CLOUD:**
+  - e1z.AC1 PASS (unrouted=0);
+  - e1z.AC2 PASS (explicitDeny / explicitDeny / allowed);
+  - e1z.AC3 PASS (9 of 9);
+  - e1z.AC4 PASS.
+- **AC5 material:** before and after on 10 keys (9 firm + 1 global), sha256 equal 10 of 10. Recorded
+  UNVERIFIABLE-BY-INSTRUMENT for `3.0.0_SA_CVO~O` at L9.
+- **Row Z-W5-S4 ACCEPTED:** terraform refuses `-target` with a saved plan. The apply ran on the saved plan made with the
+  same `-target`, so it could apply nothing the read plan did not show.
+- **Notified:** 2.0.0_SA_COO~O, whose OG-rl-2 host deploy was held for this ledger.
+
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** HELD. Handed to slot `~5` only when ALL of: G-RDR (NFRA_MCPINDEX routes `portal_index` and
@@ -111,7 +126,8 @@ as expected, 9 of 9 (it is the control the Deny must keep). AC1 is file-grain by
 fallback); AC3 is the served proof.
 
 <!-- staged at issuance b90073c197; pending at the hand to slot ~5 after A1 -->
-<status>pending</status>
+<!-- pending -> complete by the issuer after the @515e3a6cfa re-grade -->
+<status>complete</status>
 <round>2</round>
 <slot>~5</slot>
 <fabric>site-z</fabric>
