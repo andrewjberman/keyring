@@ -59,13 +59,15 @@ on 3.0.0_SA_CVO's review `org/tier1_exec/3.0.0_SA_CVO/deliverables/MDPF_SECCLASS
    and at HEAD, the same seven tests: SC-e13 caused 0 of 7. All seven come from the 2026-08-30 index-blob change
    (`3d9eb2931d`); owner the deploy tool's lane (`0.7.0_AE_CloudOps`, dark). Record:
    `MDPF_SECCLASS_M/RULING7_STALE_ROWS_REMEASURE_20261001.md`.
-4. **E_18's trigger (row W10-S2): BLOCKED on one CTO call (asked 07:33Z).** `gold_dispatch.sh` carries no E_ id.
-   The deployed dispatcher (ETag `6e648344...`, 2026-07-17) equals commit 606263dd22; CLOUD HEAD is 88 lines ahead
-   of it: 0.7.0_AE_CloudOps's calendar guard of 2026-08-29, held build-only by its own sentinel
-   (`gold_dispatch.sh:59`); its module `code/gold/lib/trading_calendar.py` reads 404 on the prefix. A dispatcher
-   deploy for E_18 serves that guard too. Asked: (a) one half covering the dispatcher at HEAD, or (b) park with the
-   guard. The old entry `secclass-e18-iam-and-deploy-m-20260930` is CLOSED @eb5cee03df on E_18's dry run on the
-   runner (ruling 4).
+4. **E_18's trigger (row W10-S2): BUILT, half written, CTO half OWED; not deployed.** Ruled (a) with a switch
+   (CTO rulings batch 68): `gold_dispatch.sh` @6f4bde6b6a gains E_18's catalog line, its slot between B_01b and B_02
+   (`PHASE_B3b`, non-fatal), and the calendar guard behind `GOLD_CALGUARD_ENABLE` (default off: the freshness gate
+   prints and returns what the live bytes do, by test). Test 19 of 19; the candidate ran on the runner from a
+   scratch folder as `--single E_18 --dry-run` (exit 0, E_18 rc=0, written 0). Half:
+   `MDPF_SECCLASS_M/NEVER_WIDEN_HALF_REQUEST_SECCLASS_E18_TRIGGER_DISPATCHER_20261001.md` (one key, rollback by
+   VersionId). Next: the CTO's half, then ledger `secclass-e18-trigger-dispatcher-m-20261001`, the put while the
+   runner is stopped, acceptance at the first scheduled gold fire whose gate proceeds. Black Diamond only:
+   Cottonwood's dispatcher is outside this seat's files and Inflection has no caller (row S2).
 5. **Ruling 3: DONE on this branch @1617619a6a.** The census prints, and writes only with `--write <path>`.
 6. **A canonical row for `CEMIX`: BLOCKED on a file grant (asked 07:34Z).** The live table holds no `CEMIX` row
    (scan 07:42Z); Cottonwood serves it fixed_income / International on 67 positions (2,039,120.10 USD) through a
