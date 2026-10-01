@@ -6100,3 +6100,28 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S34",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-01T11:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The released deploy template's host-side roster check logs 'write_capable 1 pairs' while the rendered .env and the secret both hold 2 pairs (hash MATCH): a log-count defect, not a lost principal.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-rl-1 deploy output: 'OK: principal rosters read host-side and valid (master_admin 1 pair; write_capable 1 pairs)'.",
+      "Issuer SSM 88f3574d-014d-4aa7-b073-ad3c5663ef2e on i-07dccb1615503ac99 after the release: WRITE_CAPABLE_PRINCIPALS env_pairs 2 secret_pairs 2 MATCH; MASTER_ADMIN_PRINCIPALS env_pairs 1 secret_pairs 1 MATCH (counts and hashes only, nothing sourced)."
+    ]
+  },
+  "spec_asserts": "The release's log line reports the roster shape it validated.",
+  "world_is": "The values are correct; the count in the log line is wrong, so a reader of the log would believe a write principal was dropped.",
+  "notes": "Fix the count in deploy-to-ec2.sh's roster log line at OPLGTW's next enrichment (with Z-S32's .env shape fix); no hazard to the served tiers.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
