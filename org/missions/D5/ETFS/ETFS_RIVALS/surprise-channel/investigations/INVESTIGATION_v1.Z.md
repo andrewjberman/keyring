@@ -2279,6 +2279,49 @@
       ]
     },
     "notes": "Resolves ETFS_RIVALS-Z-S9 (an existing row is never edited; this row carries the resolution). disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W4-S7",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~4",
+    "surfaced_at": "2026-10-01T17:20Z",
+    "one_line": "COO half act-start gate 3's control (a Put on an unrelated prefix stays DENIED) cannot hold for the device identity: it is AdministratorAccess, so every Put simulates allowed; the discriminating control was run on the stage roles instead and key 2's Put reads allowed.",
+    "spec_asserts": "NEVER_WIDEN_HALF_COO_D5.md gate 3: the IAM simulator allows key 2's PutObject for the device identity; the control is a Put on an unrelated prefix, which stays DENIED.",
+    "world_is": "simulate-principal-policy on user/Andrew_Berman returns allowed for s3:PutObject on issuer-site bronze/silver AND on daily/x, bbg/..., opal-data-assets/x and a nonexistent bucket, matched statement AdministratorAccess. Key 2's Put is allowed (gate 3's first clause holds); the control clause is vacuous for this identity. Control run instead on the stage roles: rivalfunds-publish-page-role and rivalfunds-build-silver-role read implicitDeny on the same bronze key and on daily/x; fetch-holdings-role allows bronze Put and denies silver Put; no role allows s3:DeleteObject (evidence/iam_simulation_r4.txt).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~4/evidence/iam_simulation_r4.txt (this worktree)",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round4/NEVER_WIDEN_HALF_COO_D5.md@a10ebe8d92 gate 3"
+      ]
+    },
+    "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. The act's bronze writes are the device identity's by the half's own key 2, so the allowed Put is the intended state; only the control wording needs the issuer's reading."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W4-S8",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~4",
+    "surfaced_at": "2026-10-01T17:50Z",
+    "one_line": "Committing the cell's per-source floors (issuer 0.23, bloomberg 0.99) turns 19 of the package's 294 unit tests red: test_p1, test_p2 and test_r3 read the SHIPPED guardrails_config.json with synthetic fixtures that resolve 0 of their lines.",
+    "spec_asserts": "RIV-d-5 step 3 sets the floors in guardrails_config.json; RIV-f-3 (merged) leaves 'python -m pytest rivalfunds/tests' green (292 passed, 2 skipped at 44f95d2c6c, row Z-W1-S35).",
+    "world_is": "From data/etfs/scripts at the act's HEAD with the floors committed: 'python -m pytest rivalfunds/tests -q' reads 19 failed, 273 passed, 2 skipped. With the HEAD~ config (all 0.0) the same three files read 38 passed. The failing tests are in test_p1_page_and_guardrails.py (12), test_p2_page_grouped_by_fund.py (6) and test_r3_repairs.py (1): their synthetic reports resolve 0.0 of their non-cash lines, so identity_coverage FAILs at floor 0.23/0.99 where it passed at 0.0 (list: evidence/failing_with_floors.txt). The live package is unaffected (tests are not staged); the page behaviour is the intended one. The act is not stopped: floors are signed by both halves; this is a test-suite coupling the cell did not name, and its paths do not grant data/etfs/scripts/rivalfunds/tests/.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~4/evidence/failing_with_floors.txt (this worktree)",
+        "data/etfs/scripts/rivalfunds/guardrails_config.json (the floors commit of this act)"
+      ]
+    },
+    "notes": "Hazard: the drain's repo-wide hygiene (pytest of the package) reads red on merge. Remedy (issuer, a build cell outside d-5's paths): those 19 tests pin their own min_resolved_fraction via the monkeypatch seam test_f3_identity_floors.py already uses, so they stop depending on the shipped value. Disarm: that cell's drain."
   }
 ]
 ```
