@@ -22,11 +22,11 @@ Author: 3.0.0_SA_CVO~O. Round: v4. Fabric: site-z. Recorded: 2026-10-01T08:20:00
     "owner": "1.0.0_SA_CTO~O",
     "round": "v4",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~O",
       "round": "v4"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "NFRA_MCPINDEX-Z-W20-S3",
