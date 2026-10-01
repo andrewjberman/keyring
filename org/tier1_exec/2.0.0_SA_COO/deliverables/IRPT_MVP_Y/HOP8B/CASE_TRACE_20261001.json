@@ -1,0 +1,232 @@
+{
+ "summary": {
+  "tenant": "cottonwood",
+  "request_id": "REQ-a69e5751d42c374f1d2354f9",
+  "revision": 1,
+  "report_id": "RPT-ec30778a867a59f3805be6e7f07d35cb",
+  "links": 22,
+  "match": 20,
+  "mismatch": 0,
+  "not_evaluated": 2
+ },
+ "links": [
+  {
+   "hop": "request",
+   "claim": "the composition's bytes hash to the request's composition_ref",
+   "verdict": "MATCH",
+   "measured": {
+    "sha256": "e7df778ee811d2ab",
+    "request_id": "REQ-a69e5751d42c374f1d2354f9",
+    "variant": "overview"
+   }
+  },
+  {
+   "hop": "request",
+   "claim": "the composition binds the browser's input_id to that input's own artifact",
+   "verdict": "MATCH",
+   "measured": {
+    "input_id": "portfolio_53fdd193e73757ae"
+   }
+  },
+  {
+   "hop": "request",
+   "claim": "the variant is the recipe's for the comparison count, and every recipe source names one template",
+   "verdict": "MATCH",
+   "measured": {
+    "keys": [],
+    "variant": "OVERVIEW",
+    "template_id": [
+     "14141822"
+    ]
+   }
+  },
+  {
+   "hop": "request",
+   "claim": "each chosen key's frozen identity is the maintained catalogue's (security id, label, model portfolio)",
+   "verdict": "MATCH",
+   "measured": {
+    "frozen": {},
+    "catalogue_sha": "54656584"
+   }
+  },
+  {
+   "hop": "input",
+   "claim": "the normalized artifact hashes to its content-addressed input id",
+   "verdict": "MATCH",
+   "measured": {
+    "sha256": "53fdd193e73757ae"
+   }
+  },
+  {
+   "hop": "upload",
+   "claim": "the retained original upload hashes to its recorded content_sha256, and the input cites it",
+   "verdict": "MATCH",
+   "measured": {
+    "filename": "aapl-vnq-12.03.csv",
+    "lane": "TEMPLATE_UPLOAD",
+    "sha256": "bb079cbf53aaa2be"
+   }
+  },
+  {
+   "hop": "normalize",
+   "claim": "every uploaded row reaches the normalized holdings at the same dollars, and the total reconciles",
+   "verdict": "MATCH",
+   "measured": {
+    "upload": {
+     "AAPL": "10.01",
+     "VNQ": "2.02"
+    },
+    "total": "12.03"
+   }
+  },
+  {
+   "hop": "normalize",
+   "claim": "the upload's normalization row reads NORMALIZED and names this input",
+   "verdict": "MATCH",
+   "measured": {
+    "rows": 1,
+    "state": "NORMALIZED"
+   }
+  },
+  {
+   "hop": "vendor",
+   "claim": "the vendor's upload echo equals the normalized holdings (rows sent = rows echoed)",
+   "verdict": "MATCH",
+   "measured": {
+    "echoed": {
+     "AAPL": "10.01",
+     "VNQ": "2.02"
+    },
+    "upload_record_id": 782478,
+    "weight_unit": "Dollars"
+   }
+  },
+  {
+   "hop": "vendor",
+   "claim": "the saved portfolio's settings read back: every row matches or is a tolerated, recorded row",
+   "verdict": "MATCH",
+   "measured": {
+    "matched": "7/7",
+    "tolerated": [
+     "level_as_of_type=custom_date"
+    ],
+    "portfolio": 2372934
+   }
+  },
+  {
+   "hop": "job",
+   "claim": "the job is READY for this request revision",
+   "verdict": "MATCH",
+   "measured": {
+    "state": "READY"
+   }
+  },
+  {
+   "hop": "pdf",
+   "claim": "the retained PDF hashes to its checkpoint, and the checkpoint binds this request",
+   "verdict": "MATCH",
+   "measured": {
+    "sha256": "126f9ad41290b464",
+    "bytes": 583235,
+    "retrieved_at": "2026-10-01T12:30:22Z"
+   }
+  },
+  {
+   "hop": "pdf",
+   "claim": "the PDF's settings table prints a row for THIS job's portfolio name (the vendor document is ours)",
+   "verdict": "MATCH",
+   "measured": {
+    "name": "IRPT REQ-a69e5751d42c374f1d2354f9 r1 3f4a32561f5c",
+    "printed": {
+     "type": "Static",
+     "as_of": "Custom",
+     "name_cut": true
+    }
+   }
+  },
+  {
+   "hop": "pdf",
+   "claim": "the effective settings the report records are the read-back's actual values",
+   "verdict": "MATCH",
+   "measured": {
+    "effective": {
+     "benchmark": "^SPXTR",
+     "level_as_of_type": "custom_date",
+     "management_fee": 0.003,
+     "rebalance_frequency": "quarterly",
+     "reinvest_dividends": false,
+     "start_of_series": "oldest",
+     "tax_status": "non_qualified"
+    }
+   }
+  },
+  {
+   "hop": "pdf",
+   "claim": "of the catalogue's portfolios, the PDF prints exactly the chosen comparisons (the vendor compared what was asked)",
+   "verdict": "MATCH",
+   "measured": {
+    "printed": {}
+   }
+  },
+  {
+   "hop": "pdf",
+   "claim": "the served foreign-firm name check passes the PDF for its own firm",
+   "verdict": "MATCH",
+   "measured": {
+    "foreign": []
+   }
+  },
+  {
+   "hop": "extract",
+   "claim": "the extraction evidence hashes to the certification sha the publication recorded",
+   "verdict": "MATCH",
+   "measured": {
+    "sha256": "01ab310000eaa3d0"
+   }
+  },
+  {
+   "hop": "report",
+   "claim": "the report hashes to its REPORT# ref, and binds this request, PDF, composition and evidence",
+   "verdict": "MATCH",
+   "measured": {
+    "report_id": "RPT-ec30778a867a59f3805be6e7f07d35cb",
+    "sha256": "0e43417eca04c06c"
+   }
+  },
+  {
+   "hop": "report",
+   "claim": "the report's owner cites the original upload",
+   "verdict": "MATCH",
+   "measured": {
+    "prospect_input_id": "UP-d8cd5bd962e63db3f"
+   }
+  },
+  {
+   "hop": "sections",
+   "claim": "every scalar section's value is printed at its own page and coordinates in the retained PDF",
+   "verdict": "MATCH",
+   "measured": {
+    "reread": "46/46",
+    "sections": 51,
+    "charts": 5,
+    "misses": [],
+    "as_of_dates": {
+     "2026-10-01": 5,
+     "2026-09-30": 46
+    }
+   }
+  },
+  {
+   "hop": "screen",
+   "claim": "the portal renders these sections for this report revision, and a reload keeps them",
+   "verdict": "NOT_EVALUATED",
+   "reason": "2.0.0_SA_COO~D's K10 walk on RPT-ec30778a867a59f3805be6e7f07d35cb"
+  },
+  {
+   "hop": "export",
+   "claim": "the same-revision export carries these sections",
+   "verdict": "NOT_EVALUATED",
+   "reason": "window 16 (K7 + K8 export), 2.0.0_SA_COO~P"
+  }
+ ]
+}
