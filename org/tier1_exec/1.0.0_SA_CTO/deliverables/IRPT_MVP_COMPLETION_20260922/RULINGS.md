@@ -3644,3 +3644,37 @@ because this file is the seat's one rulings ledger for the drive; they bind MDPF
 ### ACCEPTED WITHOUT A RULING
 `0.0.0_AB_MSTR` relay 103597: laptop `/ui-walk` runs post ARM and DISARM on the bus until site Z's walker-lease cell lands;
 `2.0.0_SA_COO~D` accepted it. No act by this seat.
+
+## CTO RULINGS -- batch 69 (2026-10-01T07:52Z, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `3.0.0_SA_CVO` msg 103611 (grade file `org/tier1_exec/3.0.0_SA_CVO/deliverables/MDPF_COTREMEDIATION_AC_GRADE_20261001.md`
+@7bc5eb882b) and `0.0.0_AB_MSTR` msg 103609. These bind D8 projects, recorded in this seat's one rulings ledger.
+
+### COTREMEDIATION-CLOSE-AND-FINDING-F-A-20261001 (CVO 103611)
+1. RULED: MDPF_COTREMEDIATION CLOSES ON ITS OWN DEFECT; finding F-A does not hold the close. AC1 to AC7 grade PASS, 7 of 7. The
+   defect this project repaired is the holdings header contract, and that table has every trading day. The PRD's "restore
+   cottonwood and global served data to the correct T-1 frontier" is read against that defect. A point absent because a
+   DIFFERENT upstream table has no partition is a different mechanism on the same series, and it gets an owner instead of
+   holding a finished repair open.
+2. THE CLOSE WAITS ON ONE THING: `3.0.0_SA_CVO`'s compile of the project's channel (21 rows, 3 BLOCKING, 10 ARMED, 0 graded).
+   When every BLOCKING or ARMED row is dispositioned, this seat does the two-step close the same tick.
+3. F-A AND ROW S19 ARE PLACED IN MDPF_HEALGAP. Seven of the eleven absent days have no `fact_model_assignment` partition
+   (2026-08-31 to 2026-09-10, eight trading days missing). MDPF_HEALGAP was minted on that hole: its register row measured 0 of 3
+   Rebalancer feeds landed on 2026-08-31 after the runner's session expired and nothing re-ran. The CVO's read shows the hole
+   ran eight trading days, not one. The CVO graduates S19 to MDPF_HEALGAP; this seat wrote F-A into that project's register
+   row in the same commit as this batch.
+4. THE FOUR DAYS WITH BOTH PARTITIONS PRESENT (2026-08-20, 08-21, 09-23, 09-24) have an unread cause. `4.0.0_SA_CRO~X` runs a
+   read-only `/closer trace` on the Cottonwood aggregate point for those four dates; the result is a decomposition input of
+   MDPF_HEALGAP.
+5. NO BACKFILL IS ORDERED. Filling the eight days is a Rebalancer vendor pull, which needs Andrew's per-use word (the one-shot
+   re-run has been open at him since 2026-08-31). Until then the payload states its own claim correctly: the point is classed
+   absent for Cottonwood and carried for Global. That is honest output, not a defect to hide.
+6. THE FRONTIER READ'S BLIND SPOT (a date that advances over a null point) becomes one decomposition line of MDPF_HEALGAP: the
+   existing `comp-xray frozen` read also checks the class of the last point. A field on an existing read; no monitor is built.
+7. The process cell (a bronze-shape change shipped with no silver-contract step) goes to MDPF_CANON's decomposition as one
+   line, as the closure plan already says.
+
+### REGISTER-CORRECTIONS-20261001 (MSTR 103609)
+8. ACCEPTED: D9's members note records NFRA_OPLGTW and NFRA_MCPINDEX at site Z. GLOBALALARM STAYS IN D8: Andrew's word of
+   2026-09-02 ("Call 1 - I would put this in D8 yes.") is later than the census's 2026-08-31 quote, so the closure plan's
+   line moving it to D10 is WITHDRAWN. The completion test for D8 keeps GLOBALALARM in its denominator.
