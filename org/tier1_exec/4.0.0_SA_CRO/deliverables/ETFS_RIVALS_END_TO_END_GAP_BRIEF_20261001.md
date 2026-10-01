@@ -145,13 +145,20 @@ What exists: `home_producer.py` reads the Positioning constituents landing (C-HO
 The mismatch: 22 reports per Opal fund against 91 to 501 per rival.
 - RIV-m-1 recorded the shortfall as a stated LIMIT, capture-forward from 2026-08-21.
 - PFOE has traded since 2025-12-31, so about 9 months of its history exist and are not used.
-- Opal holds PFOE's book in its own custodial data (`data/black_diamond` / `data/cot` positions cubes name the PFOE
-  seeding).
+- PFOE publishes as a Pathfinder ETF on the Filepoint website platform, under the `OpalCap` client namespace
+  (`pathfinderetfs.com/assets/data/FilepointOpalCap...`; DS log 2026-05-18). That is the same platform class as GQGU's
+  measured issuer route. Its holdings file and archive depth are UNMEASURED.
+- **Correction (2026-10-01 ~18:1xZ, on `1.0.0_SA_CTO~Z` msg 28012):** this brief first named "Opal's custodial data
+  (`data/black_diamond` / `data/cot` positions cubes)" as PFOE's history. That is wrong on two counts:
+  - those cubes hold CLIENT ACCOUNTS' units of PFOE (the 2025-12-31 seeding journals), not PFOE's own holdings;
+  - `cot` is a separate firm, which CLAUDE.md forbids a pipeline tree to reference.
 - Identity resolution on home rows is 0% (`crosswalk:miss` on all 41 IDVZ and 23 PFOE lines), so G4's GICS join cannot
   reach them.
 
 Close: an **Andrew call** (below) on a history source for the two Opal funds that does not touch the Positioning pull.
-Then a backfill read into home-producer silver, under its own provenance, back to each fund's launch.
+The first act is a read-only reachability and archive-depth probe of each fund's own issuer files, run from AWS like
+RIV-r-1: PFOE on Filepoint, IDVZ on its TrueShares page. Then a backfill read into home-producer silver, under its own
+provenance, back to each fund's launch. The predecessor fund PFOE was seeded from is kept distinct (FWD-2).
 
 ### 5. Bronze -> typed silver -- WORKS
 
@@ -303,10 +310,13 @@ no worker batch.
 
 ## Calls only Andrew can make
 
-1. **A history source for IDVZ and PFOE.** My recommendation: read Opal's own custodial holdings (already landed for
-   PFOE in the Black Diamond / COT data) back to each fund's launch, as a READ with its own provenance. That needs no
-   vendor egress and leaves the Positioning pull untouched. It reverses the "stated limit" RIV-m-1 recorded under
-   C-HOME-PRODUCER, so it needs Andrew's word and a CTO ruling on "never two producers".
+1. **A history source for IDVZ and PFOE.** My recommendation (corrected, see hop 4): the funds' own published
+   holdings files, reached from AWS. That means PFOE on Pathfinder's Filepoint platform (the `OpalCap` namespace, the
+   same platform class as GQGU) and IDVZ on its TrueShares page, read back to launch with their own provenance, after a
+   reachability and archive-depth probe. The Positioning pull stays untouched. The Positioning pull lands only from
+   2026-08-21, so the history would come from a second source for the early dates. That reverses the "stated limit"
+   RIV-m-1 recorded under C-HOME-PRODUCER, so it needs Andrew's word and a CTO ruling on "never two producers" (for
+   example, the issuer file for dates before 2026-08-21 and the Positioning pull from then on).
 2. **A passive control for the PFOE group**, the counterpart of SCHY. My recommendation: one broad international equity
    index ETF matching PFOE's mandate; the CRO names candidates on request.
 3. **Confirm the peer sets** against a written criterion (or name the criterion). My recommendation: same region and
