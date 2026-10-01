@@ -81,7 +81,7 @@ Write the proof instance at the `<instance_path>` (J1 and J2 under UNVERIFIABLE-
 (round 5's material: `deliverables/2.0.0_SA_COO~MI/round5/R7_J1_PRINCIPAL_SESSION_20261001.md`) and books Alyssa's run
 through 0.0.0_AB_MSTR~Z for Andrew. Battery dry-run at base: v7.AC1 FAIL as expected (record absent).
 
-<status>pending</status>
+<status>complete</status>
 <round>6</round>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
