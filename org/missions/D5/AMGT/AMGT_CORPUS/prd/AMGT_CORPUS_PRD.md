@@ -5,7 +5,7 @@
   "project": "AMGT_CORPUS",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.6",
+  "prd_version": "v0.7",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-claude-analysis-layer-brief-20260922.md@6c52138c2f",
   "endpoint_outcomes": [
@@ -27,7 +27,10 @@
     "FWD-16",
     "FWD-17",
     "FWD-18",
-    "FWD-19"
+    "FWD-19",
+    "FWD-20",
+    "FWD-21",
+    "FWD-22"
   ],
   "status": "RATIFIED"
 }
@@ -179,7 +182,10 @@ L2 addendum on that project once the Lenovo trial's wave 2 is graded.
 
 `FWD-n` ids are PERMANENT and never reused. `DONE WHEN` is the bar, not the current state. **Each outcome is provable
 by an act a seat can take on demand; none is a wait** -- there is no scheduled fire anywhere in this endpoint, because
-the corpus is a static local library and every artifact below is derived by a run someone starts.
+the corpus is a static local library and every artifact below is derived by a run someone starts. **v0.7 (ADDENDUM
+B) makes ONE exception, `FWD-22`:** the Bloomberg figures under the Model tab refresh on a schedule. It is still
+provable on demand -- the act is firing the scheduled task's own trigger ad hoc and reading the re-pulled blocks -- and
+its one essential wait is expressly qualified: Andrew's standing word for the recurring pull (vendor per-use rule).
 
 ```
 
@@ -408,6 +414,22 @@ the corpus is a static local library and every artifact below is derived by a ru
                     without saying why.
          SOURCE     brief O3 :63. The 22 added mnemonics' FIGURES wait on R-16's
                     unauthorized V3 word; labels and row order do not
+         AMENDED    1.0.0_SA_CTO~Z, v0.7 (ADDENDUM B), 2026-10-01. THE SHAPE IS
+                    THE TEAM'S SHAREPOINT SHEET, AND A ROW WITH NO SHAREPOINT
+                    ORIGIN LEAVES THE UI RATHER THAN READ ABSENT. As first
+                    written this fence would render ~100 rows per name with
+                    50-65 of them empty (brief 20261001 IV.1) -- more rows that
+                    read "unsupported" to a viewer, against Andrew's 03:4xZ
+                    direction ("we use the same model shapes from the
+                    sharepoint"). DONE WHEN now reads: the rows are those the
+                    team's SharePoint model template carries for that business
+                    type, in its order and labels; the score tiles, the
+                    rule-based upside/downside lines, the "Other lines" the
+                    team sheet does not carry, and the planned broker /
+                    consensus / dividend template rows are NOT rendered; the
+                    team's Upside/Base/Downside cases still render as the
+                    team's, cited. Rows the template carries are graded under
+                    FWD-20 (a figure on every row).
   FWD-13 Every folded field is CITED or ABSENT with a readable reason
          DONE WHEN  EXERCISED -- a census over the dossier's fields prints zero
                     fields that are neither cited nor reason-bearing, with the
@@ -535,6 +557,53 @@ the corpus is a static local library and every artifact below is derived by a ru
                     resolved / 123 stored; 60 folders / 228 files NOT ingested
                     BECAUSE IDENTITY RESOLUTION FAILED. The blocker is IDENTITY,
                     not acquisition: 60 of 93.
+  FWD-20 A viewer opens any name's Model tab and every row the team's sheet
+         carries shows a figure: market data from Bloomberg, judgment from
+         the team -- no row reads unsupported
+         DONE WHEN  EXERCISED -- over every name with a model block, a census of
+                    the rendered rows prints shown / refused / absent / unmapped
+                    with the denominator, and unmapped reads 0 (the five
+                    hard-coded rows -- Revenue/Sh, FCF yield, FCF margin, RoTA,
+                    Earnings margin, modelSheet.ts null mnemonics -- read the
+                    fields the block already pulls); a zero-valued figure whose
+                    sign is otherwise measured is SHOWN, not refused (control:
+                    BA's DPS); analyst-judgment rows (case multiples, case
+                    assumptions, peer selection) show the SharePoint value,
+                    cited; and a row that still cannot show says why in words a
+                    PM reads, never "ABSENT", "REFUSED --" or "not read"
+         ACCEPT     A PM reads a price-dependent multiple they would otherwise
+                    have recomputed by hand in the SharePoint workbook.
+         SOURCE     Andrew-direct 2026-10-01 03:4xZ ("a lot of fields that are
+                    unsupported ... hook up those fields with bloomberg so they
+                    update automatically"); brief 20261001 IV.1 (500 unmapped =
+                    5 rows x 100 names; 37 refused by the sign check,
+                    run_checks.py:31-60 -> figure.py:90-107); placement R9
+  FWD-21 The served 2026E-2028E forecasts are readable on the Model tab
+         DONE WHEN  EXERCISED -- for a name whose block carries forecast years,
+                    the tab renders 2026E, 2027E and 2028E beside the history
+                    columns from the served object, and a name without them
+                    reads the reason; the history columns are byte-unchanged
+         ACCEPT     The sheet reads forward the way the team's workbook does.
+         SOURCE     brief 20261001 IV.1 ("The 2026E-2028E forecasts are served
+                    but no portal code reads them"); placement R9
+  FWD-22 Every name's Bloomberg figures refresh on a schedule, so the Model tab
+         is current without anyone starting a run
+         DONE WHEN  EXERCISED -- the scheduled pull's own trigger, fired on
+                    demand, re-pulls EVERY name with a block (not only names
+                    with none), and every block's as_of advances to the run's
+                    date with the denominator of names printed; the next
+                    scheduled fire is the acceptance
+         ACCEPT     A figure on the tab is never older than the last trading
+                    day's scheduled pull.
+         SOURCE     Andrew-direct 2026-10-01 03:4xZ ("so they update
+                    automatically"); brief 20261001 IV.1 (94 of 100 blocks from
+                    ONE pull on 2026-09-25; amgt-induction-daily pulls only
+                    names with no block)
+         WAIT       ESSENTIAL AND QUALIFIED: the recurring pull is a vendor use,
+                    so its grading act runs only after Andrew's standing word
+                    for it (placement CTO_PLACEMENT_20261001_043xZ section 5
+                    item 2; his earlier word covered one run). No cell for this
+                    outcome is cut before that word.
 
 ```
 
@@ -893,3 +962,64 @@ half is re-owed to `3.0.0_SA_CVO~Z`; and it rests on a new L1 brief, so the BRIE
 SUSPENDED THE L4-R SIGNATURE AS A BAR FOR AMGT -- THE REVIEW IS KEPT, THE RITUAL IS NOT** -- so the halves are
 routed and a round is not held hostage to a stamp. `FWD-1`..`FWD-9`, R1..R11 and every contract but
 `C-NO-VENDOR-CALL` are unchanged, so nothing already signed is re-opened by this addendum.
+
+# ADDENDUM B -- THE FRIDAY DEMO: THE MODEL TAB IN THE SHAREPOINT SHAPE (v0.7, L4, 2026-10-01)
+
+**Author** `1.0.0_SA_CTO~Z`. **Driver** `2.0.0_SA_COO~X`. **Placement**
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20261001_043xZ_AMGT_FRIDAY_DEMO_RESTRUCTURE.md` @`e18d3a4e6a`,
+ruling R9. **Deadline (Andrew):** on PROD by 09:00 ET Friday 2026-10-02 (record @`4cff5b352d`).
+
+**L1 basis** -- `4.0.0_SA_CRO~Z`, `docs/briefs/amgt-security-analysis-friday-demo-brief-20261001.md` @`1391c2f70a`,
+Part IV.1 and the Part VII.2 row for COO~X. **Andrew-direct 2026-10-01 ~03:4xZ, VERBATIM, the sentences this addendum
+answers** (record `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/ANDREW_DIRECT_20261001_034xZ_AMGT_SECURITY_ANALYSIS_DEMO_FRIDAY.md`):
+*"For CORPUS, I'd say we clearly want all research models imported and fit to the application components ... there is
+a lot of fields that are "unsupported" ... Something I think the completion feature would be here is that we use the
+same model shapes from the sharepoint and our goal is simply to make sure that we can hook up those fields with
+bloomberg so they update automatically."*
+
+## B.1 -- WHAT CHANGES IN THE ENDPOINT (three new outcomes, one amended, none retired)
+
+The definitions live in the ENDPOINT section above (one carrier; A.3's lesson). This section holds the reasoning.
+- **FWD-12 AMENDED.** The row set is the team's SharePoint template, and rows with no SharePoint origin LEAVE the UI.
+  As written it would have rendered ~100 rows with 50-65 empty, which is the "unsupported" look Andrew named.
+- **FWD-20 NEW.** A figure on every row the sheet carries. It absorbs the brief's three cheapest fixes: the five
+  `modelSheet.ts` null rows (500 of 682 not-shown rows), the zero-value sign over-refusal (37 refused rows), and
+  internal state words ("ABSENT", "REFUSED --", "not read") replaced by reasons a PM reads.
+- **FWD-21 NEW.** The served 2026E-2028E forecasts are shown.
+- **FWD-22 NEW, GATED.** Scheduled refresh of every name. Its only essential wait is Andrew's standing word for the
+  recurring Bloomberg pull; no cell is cut for it before that word (placement section 5 item 2).
+
+**Andrew's hypothesis, as measured (brief IV.1), stated so no seat re-tests it:** what displays is the Bloomberg pull,
+not the SharePoint material, and the missing rows are not "added on with no pipeline". The SharePoint workbooks are
+themselves Bloomberg Excel templates (`BDP`/`BDH`), so "same shape, hooked to Bloomberg" is directly buildable.
+
+## CONTRACTS -- B.2 -- `C-NO-VENDOR-CALL` IS AMENDED A SECOND TIME, CONDITIONALLY
+
+`FWD-22` needs the Model-block figure pull to recur, which A.4 limit 3 bars ("THE MODEL PULL IS A SEPARATE PER-USE
+WORD"). Ruled, narrowly:
+
+> **`C-NO-VENDOR-CALL` (v0.7).** As v0.5, plus: **ON ANDREW'S STANDING WORD AND NOT BEFORE IT, the Model-block
+> figure pull of every name with a block may recur on a schedule, from a SCRIPTED DETERMINISTIC PRODUCER on the
+> terminal box.** Until that word exists, the v0.5 text binds unchanged and `FWD-22` has no cell. The Claude API
+> stays barred. A.4's limits 1 and 2 bind the recurring pull too.
+
+`FWD-20` and `FWD-21` need NO vendor call: they read fields already in the served blocks.
+
+## B.3 -- WHAT THIS ADDENDUM DOES NOT DO
+
+- No change to `FWD-1`..`FWD-11` or `FWD-13`..`FWD-19`.
+- No page-architecture change.
+- No Peers-tab change.
+- No `AMGT_RESAPP` surface written: the Model tab is in `portal/src/pages/SecurityAnalysis/`, the write surface this
+  project's Model-tab cells already used.
+- ⚠ **One prior sentence is superseded for `FWD-22` alone:** A.7's "No notifier and no schedule" (which spoke of
+  the dossier rebuild) and the ENDPOINT preamble's "there is no scheduled fire anywhere in this endpoint". The
+  preamble now says so in place. A.7 is left as written because it speaks of `FWD-17`'s rebuild, which is still
+  person-started.
+
+## B.4 -- L4-R
+
+Both changed sections are in the RATIFIED half: ENDPOINT (`FWD-12` amended, `FWD-20`..`FWD-22`, the preamble) and
+CONTRACTS (B.2). So the ratified-text half is re-owed to `3.0.0_SA_CVO~Z`. The brief half is accepted: the brief was
+written by `4.0.0_SA_CRO~Z` (CLAUDE.md L4-R PROPORTIONATE SIGN-OFF). Per R-10, the review is kept and the round is not
+held hostage to a stamp.

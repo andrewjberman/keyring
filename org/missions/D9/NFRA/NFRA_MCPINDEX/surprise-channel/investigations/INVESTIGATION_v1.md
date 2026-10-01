@@ -4550,6 +4550,30 @@ carries none.
       ]
     },
     "notes": "RULED by issuer A5 (2.0.0_SA_COO~MI, 2026-10-01 ~06:0xZ). Z-W21-S12 -> OPTION B: the release's deploy-to-ec2.sh REMOTE_SCRIPT fetches the ExternalId on the host from opal/mcp/opal-gateway-blackdiamond-reader-external-id (JSON {data_read}, extracted like GRAPH_JSON) and the live .env printf gains exactly BLACKDIAMOND_READER_ROLE_ARN (gateway-blackdiamond-read-role) and BLACKDIAMOND_READER_EXTERNAL_ID (.env keys 35 -> 37); no gateway code change; no value in any file; option A (a runtime secret-read path) is carried to the round-5 analysis. DONE in PHASE A: release 08e6f78940, deploy-only 05e3eff563, gateway tree object b5733d7f9d58f57b400be419e97237e975e4772f equal in both; printf renders 37 keys with MASTER_ADMIN_PRINCIPALS and WRITE_CAPABLE_PRINCIPALS kept (probes_r7/env_keys_PHASEA_v2.txt); role_config OK on the deploy-only tree with the real role name and a dummy ExternalId, the live-ref render still raises RoleConfigError (probes_r7/bd_inputs_probe_PHASEA_v2.txt). Z-W21-S13 -> PLAN 6: the saved plan of record, 6 to add, 0 to change, 0 to destroy, replaces the order's three-resource sentence; any change or destroy is still BLOCKING; applied as ONE saved plan through safe-apply, re-planned at the GO and byte-equal in effect; Plan 6 binary C:/tmp/mx-r7-bd-reader-targeted6.tfplan sha256 0401378f8e104c6b2d54c4f4548917bc4fb0f18a6c945fa4eec5f8eab64da3a2 (re-hashed this session). Plan 5 is superseded."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S69",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-01T04:35Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "RESOLVES NFRA_MCPINDEX-Z-S61. The MX-s-14 strip ledger closes: unrealized v3's scheduled 09-30 21:39Z fire wrote 6 silver partitions (write arm EXERCISED), and realized/transaction/allocation can never write on their fire because their silver writer of record is the S3-triggered Lambda bd-silver-merge, which merges each input ~5 minutes after it lands (~00:1xZ). The issuer rules L5/L9 satisfied by fire Success on the new version + merge exit 0; MX-s-14 complete.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ssm list-commands since 2026-09-29T21:00Z: unrealized/realized/transaction/allocation Success x2 each on $LATEST; describe-document Default==Latest 3/3/3/5 (read 2026-10-01T04:3xZ).",
+        "logs/unrealized-download-2026-09-30.log: 'Found 6 new unrealized files', 'Merge exit code: 0'; silver/unrealized/2026-07-03..07-09 (6 objects, 8016 bytes, 0 rows each) LastModified 2026-09-30T21:39:18-27Z.",
+        "logs/{realized,transaction,allocation}-download-2026-09-30.log: 'No new ... files', 'Merge exit code: 0'.",
+        "/aws/lambda/bd-silver-merge 2026-10-01T00:11:07Z 'sentinel run_date=2026-10-01 (merge --all)': NEW TRANSACTIONS_DAILY_2026-10-01.xlsx -> silver/transactions/2026-10-01.parquet (110,685 rows), head-object LastModified 00:13:44Z; allocation merge new=0 skip=131. get-policy principal s3.amazonaws.com, SourceArn arn:aws:s3:::opal-data-bd.",
+        "s14.AC1/AC2/AC3 re-run by the issuer 2026-10-01T04:2xZ: RESULT: PASS each (AC3 slot 2026-09-29T21:53Z, runs 2, success 2)."
+      ]
+    },
+    "spec_asserts": "Ledger L5/L9 proof_required includes 'silver partition written' by the scheduled fire (Z-S61 notes: expect 'Found 1 new' on realized/transaction at the 09-30 fires).",
+    "world_is": "Realized/transaction/allocation inputs are merged into silver by bd-silver-merge on S3 landing, about 21 hours before the document's fire, so the fire's merge is a correct no-op every night. Unrealized has new inputs the document itself merges (6 found 09-30).",
+    "notes": "Issuer ruling inside the decomposition (amends no order; ledger proofs written at close-leg). Carry to the round-5 analysis: (1) the realized/transaction/allocation document merges are a second merge path beside bd-silver-merge, a retire-or-keep question for the CTO, not a cell here; (2) the 6 unrealized July partitions written with 0 rows from newly found July files, unattributed. No ad-hoc run was fired."
   }
 ]
 ```

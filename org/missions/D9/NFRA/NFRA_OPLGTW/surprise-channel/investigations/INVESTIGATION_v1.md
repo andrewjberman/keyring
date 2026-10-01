@@ -5537,3 +5537,144 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S26",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-01T04:35Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Both adjudicated rows have an owning order now. Z-W16-S1: PRD v1.3 C7 (CTO msg 27481, option (a)) makes the prefixes the fixed literals /hx/transcripts and /hx/mail and grades secrets with grade(); amendment A1 on OG-hr-1 and OG-hr-2 rewrites step 1 and the issuer's checks/_names.py to that text. Z-W17-S1: CTO ruling (c) ROTATE; amendment A1 on OG-rl-1 rotates blackdiamond/cot/otp-gateway-token in that release, with a refused-old / accepted-new verify.",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W16-S1",
+    "NFRA_OPLGTW-Z-W17-S1"
+  ],
+  "one_line": "The route-name block (W16-S1) is ruled by PRD v1.3 and amended into OG-hr-1/hr-2; the printed .env value (W17-S1) is the cot OTP bearer and is rotated at OG-rl-1.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "PRD org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md v1.3 addendum @2b8f3151c6; prd-signoff.py status NFRA_OPLGTW -> ADMITTED.",
+      "checks/_names.py controls on CLOUD: the v1.3 values read every arm ok except the app-code occurrence (no code yet); /ms/transcripts, an ungradable secret and a shared prefix each read FAIL.",
+      "Live render template d61fde4693 deploy-to-ec2.sh line 296: .env line 14 is OTP_BEARER=%s, filled with \"$OTP_BEARER_49F $OTP_BEARER_COT\" unquoted; sourcing it under bash runs the second token as a command, so the printed 64-hex value is the cot token (blackdiamond/cot/otp-gateway-token).",
+      "CTO rulings (c) and (d): org/missions/D9/NFRA/NFRA_OPLGTW/project.json blocking, tick-1 prefix (msg 27490)."
+    ]
+  },
+  "spec_asserts": "TO-OG-hr-1 step 1 (pre-A1): names are lib/opal_naming.py name() output. TO-OG-lt-1: a read-only measurement prints no secret.",
+  "world_is": "name() has no route kind (now ruled out of the contract), and one cot OTP bearer value appeared once in a worker's SSM output (rotation now ordered).",
+  "notes": "Z-S24 stays ARMED until OG-rl-1 serves the host-side roster read (CTO ruling R4); OG-pr-1 creates the secret and grant first (R3).",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W18-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~18",
+  "surfaced_at": "2026-10-01T05:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "A plain or -target plan of infra/aws/terraform/opal-gateway cannot reach the expected missing-secrets refusal in a fresh worktree: two required variables and two untracked build artifacts stop it first.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "terraform plan on infra/aws/terraform/opal-gateway @6903868aa7 fails first on 'No value for required variable' mcportal_owner_key_claim and mcportal_owner_key (mcportal_grant_writer.tf:142,151; no default, no tfvars file).",
+      "With the two variables set, plan fails on mcportal_grant_writer.tf:53 filebase64sha256 of infra/aws/lambda/layers/mcportal-grant-writer-deps/.build/mcportal-grant-writer-deps.zip (untracked build output); -target=aws_iam_role_policy.gw_gateway_read_secrets does not avoid it.",
+      "Reading achieved in a scratch mirror under .scratch/planmirror (tracked tf, modules, logic registry, two liveness lambda dirs, dummy build files, placeholder variable values): the three data sources fail 'couldn't find resource', the expected refusal. The mirror is not the apply path.",
+      "Phase B's targeted safe-apply in the worktree will meet the same two stops: it needs the two variable values and the .build files (or the CLOUD-HEAD checkout that carries them)."
+    ]
+  },
+  "spec_asserts": "TO-OG-pr-1 PHASE A step 3: safe-apply plan on infra/aws/terraform/opal-gateway refuses on the missing secrets.",
+  "world_is": "The plan refuses first on unset required variables and absent build artifacts; the missing-secrets refusal is reached only with placeholders and dummy artifacts.",
+  "notes": "Phase B needs a ruling on how the targeted apply is fed: real owner-key values (not mine to hold) or a targeted apply that does not evaluate the grant-writer files.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S27",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-01T05:25Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Ruled by the issuer in amendment A1 on TO-OG-pr-1: the targeted apply is fed as OG-n-1's was -- owner-key variables read from the live grant-writer Lambda into TF_VAR_* (never printed), the grant writer's staged build made by its own build_package.py, and the deps-layer zip copied from the main tree's untracked build output. None of those resources is targeted; the 1/0/0 plan reading guards against spill.",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W18-S1"
+  ],
+  "one_line": "How OG-pr-1's targeted apply is fed (row W18-S1) is ruled by amendment A1, on the OG-n-1 precedent.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OG-n-1 proof AC2 invocation: TF_VAR_mcportal_owner_key_claim=sub TF_VAR_mcportal_owner_key=$(aws lambda get-function-configuration --function-name mcportal-grant-writer-lambda ... MCPORTAL_OWNER_KEY) -> targeted plan rc=0.",
+      "infra/aws/terraform/opal-gateway/mcportal_grant_writer.tf: source_dir .../mcportal-grant-writer-lambda/.build/staged (made by build_package.py) and filename .../layers/mcportal-grant-writer-deps/.build/mcportal-grant-writer-deps.zip (present untracked in the main tree)."
+    ]
+  },
+  "spec_asserts": "TO-OG-pr-1 PHASE B step 6: a targeted safe-apply of the one role policy.",
+  "world_is": "The root requires two variables without defaults and two build outputs before any plan; the order now names their source.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S8",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-01T05:12Z",
+  "one_line": "ml1.AC2.sh counts the four C7 read_email fields with a single-line grep over '$select' lines, which scores 0 of 4 on the adopted code because 5ec089b9a1 splits the $select string across three source lines; the worker joined it to one line (behaviour identical).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CHECK: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/trnspt/checks/ml1.AC2.sh: grep -E '\\$select' tools.py | grep -q $fld, per field -- line-bound.",
+      "CODE: gw-f1-read-email-fields 5ec089b9a1 infra/aws/ec2/opal-gateway/app/tools.py read_email: the $select string continues on two further lines, so ccRecipients/internetMessageId/conversationId/sentDateTime are not on a line containing '$select'.",
+      "RUN: first AC2 run on the adopted code printed 'read_email $select fields present 0 of 4' with test_ogz2_ac08 rc=0 and REG 2 of 2; the worker's one-line join makes it 4 of 4 with no change to the Graph request."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AC2: read_email's $select carries the 4 C7 fields, counted by a line-bound grep; the adopted branch code is taken as reviewed.",
+  "world_is": "The adopted code carries all four fields (plus bcc, hasAttachments) but on continuation lines; the check could not see them. The worker joined the string to one 150-character line in app/tools.py (inside paths) rather than edit the issuer's check.",
+  "notes": "INERT: layout only. The issuer may instead make the check read the whole read_email function; either is valid.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S28",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-01T05:45Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Z-W15-S8: the worker joined read_email's $select string onto one source line so the issuer's line-based ml1.AC2 grep could read it; the Graph request is byte-identical and ml1.AC2 PASSES on CLOUD after the drain (@4ca87da779). OG-ml-1 is complete; the grep's line-shape limit is recorded here and the check is not re-cut. Separately, the issuer's own hr1/hr2.AC2 cut base read the merge-base with CLOUD, which after a drain contains the cell's own route and read a false collision on CLOUD; fixed in this commit to the parent of the commit that added the route module (hr1.AC2 PASS on CLOUD and on the worker branch).",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W15-S8"
+  ],
+  "one_line": "OG-ml-1's one-line $select reformat (W15-S8) is behaviour-identical and its AC2 passes on CLOUD; the issuer's hr AC2 cut base is fixed to grade the same before and after a drain.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ml1.AC2.sh on CLOUD @4ca87da779: REG 2 of 2; SCOPES same; ac08 1 passed; $select fields present 4 of 4; pypdf pins 1; LD-0613 changed 0; RESULT: PASS.",
+      "hr1.AC2.sh on CLOUD @43f34bae73 before the fix: prefix occurrences in server.py at base 43f34bae73: 1 (the drain commit itself) -> NAMES FAIL; after the fix: at base 6903868aa7: 0 -> RESULT: PASS."
+    ]
+  },
+  "spec_asserts": "TO-OG-ml-1 AC2 and TO-OG-hr-1 AC2 read the same verdict on the worker branch and on CLOUD.",
+  "world_is": "Both checks read source shape (one grep line; one merge-base); both are now graded consistently.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```

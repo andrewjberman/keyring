@@ -172,7 +172,7 @@ Write the proof instance at the `<instance_path>`. Report once, in your final me
 
 **ISSUER NOTES (2.0.0_SA_COO~MI).** Round-3 analysis s.5 item 6. AC3's slot keys on the PHASE B GO commit (subject token `go(NFRA_MCPINDEX.TO-MX-s-14`), which the issuer writes. Z-W11-S2 (the merge join) is a stated dependency after this, not a cell.
 
-<status>pending</status>
+<status>complete -- issuer-graded on CLOUD by 2.0.0_SA_COO~MI, 2026-10-01 ~04:3xZ: s14.AC1 PASS (Default==Latest 3, playwright 0, BD_PASSWORD 0, merge 2), s14.AC2 PASS (rule ENABLED cron(53 21 ? * MON-FRI *), 1 target), s14.AC3 PASS (slot 2026-09-29T21:53Z, 2 runs, 2 Success); instance VALID rc=0. Ledger nfra-mcpindex-bd-playwright-strip CLOSED 9 of 9 legs: the strip's write arm is exercised on unrealized v3 (6 silver partitions at the 09-30 21:39Z fire); realized/transaction/allocation silver is written by the S3-triggered bd-silver-merge Lambda, so their fires are correct no-ops (row Z-S69 resolves Z-S61). Was: pending.</status>
 <round>4</round>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>

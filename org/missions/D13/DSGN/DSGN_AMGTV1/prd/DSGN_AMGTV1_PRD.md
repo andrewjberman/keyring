@@ -5,10 +5,10 @@
  "project": "DSGN_AMGTV1",
  "directive": "D13",
  "fabric": "site-z",
- "prd_version": "v0.5",
+ "prd_version": "v0.6",
  "step": 4,
  "brief_ref": "docs/briefs/dsgn-amgtv1-security-analysis-frontend-brief-20260928.md@08eefaac9d",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20"],
+ "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21", "FWD-22", "FWD-23", "FWD-24"],
  "status": "DRAFT"
 }
 ```
@@ -27,8 +27,10 @@ Landed verbatim from `org/tier1_exec/1.0.0_SA_CTO/deliverables/DSGN_AMGTV1_ENDPO
 
 ```
   FWD-1  A portfolio manager opens Security Analysis, finds Valero in today's
-         Trending x Price list by its name, opens it, and reads it as cards --
+         Trending x Price ranking by its name, opens it, and reads it as cards --
          end to end on the live product
+         (v0.6: the ranking is FWD-22's bars; the list form is retired by
+         FWD-2's v0.6 restatement)
          DONE WHEN  EXERCISED -- one live walk, signed in with a real account,
                     on real data, ending in Valero's Recommendation card open
          ACCEPT     The PM picks Valero out of the list by its company name, reads
@@ -48,6 +50,14 @@ Landed verbatim from `org/tier1_exec/1.0.0_SA_CTO/deliverables/DSGN_AMGTV1_ENDPO
                     out like the Positioning page's holdings breakdown. No row names
                     a company by a code the PM would have to look up.
          SOURCE     brief O2 (:64-69); M2, M4, M6, M14
+         v0.6 RESTATED (CTO~Z placement ruling R5; Andrew 2026-10-01 03:4xZ
+                    "No other views for chatter, no other views for price"): the
+                    list form is RETIRED. The same identity -- name, ticker, asset
+                    class, sub-asset class, sector, the period figure and places
+                    moved -- is read on each FWD-21 bubble and each FWD-22 bar (its
+                    label, or one hover away). DONE WHEN: the walk reads every
+                    identity field on 3 bubbles and 3 bars; no mark names a company
+                    by a code alone.
 
   FWD-3  A PM can read how names moved over time without untangling a knot of
          lines
@@ -56,6 +66,12 @@ Landed verbatim from `org/tier1_exec/1.0.0_SA_CTO/deliverables/DSGN_AMGTV1_ENDPO
                     labelled by company name, there is one legend, and the PM can pick
                     out one name and follow it.
          SOURCE     brief O3 (:71-75); M2, M3, M5, M14
+         RETIRED    v0.6 (CTO~Z placement rulings R5 + R10). Andrew 2026-10-01
+                    03:4xZ rejected the "lines with normalized y-axis percentile
+                    ranks" view: chatter is always the bubble chart (FWD-21), price
+                    always horizontal bars (FWD-22), no other views. The line-history
+                    view, the per-row sparkline and the highlight chart (fork F1) are
+                    removed, not built. Not graded.
 
   FWD-4  A PM reads a security's headline figures as four cards, each opening
          to the detail
@@ -187,6 +203,10 @@ Landed verbatim from `org/tier1_exec/1.0.0_SA_CTO/deliverables/DSGN_AMGTV1_ENDPO
                     mode and == 1 (Refresh) in Security mode
          ACCEPT     One purple action per view (C8).
          SOURCE     AMGT_RESAPP FWD-27
+         v0.6       Movement (Trending / Breakout) renders Trending only through
+                    the Friday demo (CTO~Z ruling R6: Breakout x Chatter served empty
+                    16 days); the Movement control is absent, not disabled, and
+                    returns when Breakout x Chatter serves. Subject stays.
   FWD-19 Every panel renders one of the four DESIGNED states when empty
          DONE WHEN  EXERCISED -- PanelEmpty, PanelLoading, PanelError and
                     PanelNoPermission from src/ui/components/states each captured
@@ -209,6 +229,66 @@ Landed verbatim from `org/tier1_exec/1.0.0_SA_CTO/deliverables/DSGN_AMGTV1_ENDPO
          ACCEPT     A JSON PASS WITHOUT THE PNG READ BY A PERSON IS CARE, NOT A
                     CONTROL; FWD-11's side-by-side read is the person's arm.
          SOURCE     AMGT_RESAPP FWD-29 (no DSGN owner before v0.4)
+
+  ===== v0.6, 2026-10-01 -- THE FRIDAY DEMO (FWD-21..FWD-24) ==============
+  Andrew 2026-10-01 03:4xZ (verbatim in 4.0.0_SA_CRO~Z/deliverables/
+  ANDREW_DIRECT_20261001_034xZ_AMGT_SECURITY_ANALYSIS_DEMO_FRIDAY.md); on
+  PROD by 09:00 ET 2026-10-02 (@4cff5b352d). Brief O1-O4 (@1391c2f70a).
+  Every served field these read is AMGT_RESAPP's, per the shared CONTRACT
+  org/tier1_exec/1.0.0_SA_CTO/deliverables/AMGT_FRIDAY_DEMO_20261001/
+  CONTRACT.md.
+
+  FWD-21 A PM sees what is being talked about, by period, as bubbles
+         DONE WHEN  EXERCISED -- one live walk on the portal build: the chatter
+                    view renders ONE bubble per security, its area sized by the
+                    collected count for that security in the selected calendar
+                    month, read from the served monthly route (CONTRACT section
+                    1); a cursor steps this month, M-1, M-2 and back, and at least
+                    one bubble's size changes between two steps on served data;
+                    the size is labelled "collected", never "market chatter"
+         ACCEPT     The PM says which names were collected most this month, steps
+                    back two months and says what changed. Chatter has this ONE
+                    form: no list, line or toggle to another chatter view exists
+                    on the page.
+         SOURCE     brief O1; CTO~Z rulings R4, R5
+
+  FWD-22 A PM sees what moved in price, ranked, as horizontal bars
+         DONE WHEN  EXERCISED -- the price view renders horizontal bars, longest
+                    first and descending vertically, one per security, the
+                    measure the 30-day return, signed, in percent, printed as
+                    served (the page never rescales a served unit); a DOM census
+                    of the price view reads 0 line charts and 0 view toggles
+         ACCEPT     The PM reads the biggest mover first and the sign of each
+                    move. Price has this ONE form.
+         SOURCE     brief O2; CTO~Z rulings R3, R5
+
+  FWD-23 The Lead Panel and the selected-name header look like the rest of
+         the portal
+         DONE WHEN  EXERCISED -- the panel's header and the selected-name header
+                    are built from the /philosophy fixture-card face
+                    (PhilosophyPillars, extracted per C-ESTATE-FIXTURES with its
+                    before/after render), its colours come from lib/chartColors.ts
+                    (0 hard-coded hex in the panel's chart files), its controls are
+                    the shared Segmented control (0 hand-built controls), and no
+                    visible text reads an internal name ("Lead Panel")
+         ACCEPT     Put beside /philosophy, a reviewer reads the same card family;
+                    a person reads the PNGs and cites a clause for any rejection.
+         SOURCE     brief O3; Andrew "It was a big improvement to start bringing in
+                    those /philosophy fixture cards, need to keep going with that"
+
+  FWD-24 A PM opens a name and reads its numbers, never an empty or
+         mislabelled cell
+         DONE WHEN  EXERCISED -- on 3 names walked, the selected-name header
+                    shows the chatter and price readings of the latest served
+                    trading day the payload carries (the page computes no date);
+                    the cell labelled "Breakout (price)" reads the breakout row;
+                    every unit prints as served; "places moved" prints wherever
+                    served; a DOM census reads 0 "not served" for a field the
+                    payload carries, beside a positive control (a field the
+                    payload truly lacks renders its designed empty state)
+         ACCEPT     No cell on the demo thread reads empty because of a date,
+                    label or unit convention.
+         SOURCE     brief O4, IV.3; CONTRACT sections 2-3
 ```
 
 ## CONTRACTS
@@ -229,8 +309,9 @@ inline in another page is EXTRACTED into a shared module, and that page renders 
 (a before/after render is the extraction's criterion). Nothing is forked. `portal/DESIGN.md` C1-C14 and the colour law
 govern.
 
-**C-FORKS (ruled @`ac5433b35b`).** F1 both a per-row rank/price sparkline and a highlight chart (the ported
-`ModelTiltTimeSeriesView` with legend toggles); F2 classification from `etf-classifications` only; F3 the officer
+**C-FORKS (ruled @`ac5433b35b`).** F1 ~~both a per-row rank/price sparkline and a highlight chart (the ported
+`ModelTiltTimeSeriesView` with legend toggles)~~ RETIRED v0.6 with FWD-3 (chatter = bubbles, price = bars, no other
+views); F2 classification from `etf-classifications` only; F3 the officer
 fallback order filing -> dossier -> Bloomberg -> Lusha -> search, every vendor leg on Andrew's per-use word, the page
 naming each roster's source; F4 Opal Data Harvest only on the timeline in round 1; F5 this project owns presentation,
 AMGT_RESAPP keeps the payloads.
@@ -240,6 +321,13 @@ team typed) and a `currency` that may be null. The page prints the team's figure
 the team's pack", and never beside the Price tile as if in the listing's currency (on 5 of 8 names read, the symbol is not
 the listing currency). FWD-4's "every money figure in the company's own currency" binds served figures, not a pack's typed
 symbol.
+
+**C-FRIDAY (v0.6).** The shared CONTRACT `org/tier1_exec/1.0.0_SA_CTO/deliverables/AMGT_FRIDAY_DEMO_20261001/CONTRACT.md`
+binds this project with one writer per shared surface: (1) the monthly collected-count route is AMGT_RESAPP's; the page
+consumes its shape and, until it is served, builds FWD-21 against fixtures of that exact shape, never against a page-side
+aggregate; (2) units: the page prints a served unit as served and never rescales (breakout arrives in percent); (3) dates:
+the server falls back to the latest served ranking and the page never computes or guesses a date. A defect on a shared
+surface is fixed by its writer only; a page-side fix of a served value is refused at the cut.
 
 **C-ASKS (owned elsewhere; this project renders them when served):**
 
@@ -252,6 +340,8 @@ symbol.
 | the dossier's team recommendation, management passage and description are served | AMGT_CORPUS | open |
 | exec roster re-run with its fallback chain; posture re-run; peers dedupe and identity | AMGT_RESAPP | open |
 | white-ground `PanelHeader` / `PanelFooter` variants | DSGN_REBRND (laptop) | open, cross-fabric: WAITED ON, never driven here |
+| monthly collected-count route per security (FWD-21) | AMGT_RESAPP | open (v0.6; CONTRACT section 1) |
+| per-name latest-served date fallback; breakout in percent; 95-name price universe (FWD-22, FWD-24) | AMGT_RESAPP | open (v0.6) |
 
 ## THE THREAD (FWD-1) -- round 1 builds it end to end
 
@@ -274,7 +364,11 @@ hygiene runs at the drain. The round-1 analysis ends in the enrichment list.
 
 ## ENRICHMENT BACKLOG (off the thread, in the brief's order)
 
-FWD-2 (classified rows, rank change, the Holdings Breakdown pattern), FWD-3 (sparklines + highlight chart), FWD-4 (all
+**v0.6, FIRST:** the Friday demo (PROD by 09:00 ET 2026-10-02; freeze Thu 18:00 ET): FWD-23 and the removal half of
+FWD-21/FWD-22 (toggle, line chart, list view) need no route and start at once; FWD-24's page fixes next; FWD-21 builds on
+fixtures of the CONTRACT's route shape and wires to the live route when AMGT_RESAPP serves it. Then the backlog below.
+
+FWD-2 (classified rows, rank change -- v0.6 on the bubbles and bars), ~~FWD-3 (sparklines + highlight chart)~~ RETIRED v0.6, FWD-4 (all
 four cards and their modals, currency per figure), FWD-5 (the timeline spine and per-security word cloud), FWD-6 (Thesis
 modals with evidence), FWD-7 (exec roster with source), FWD-8 (peers table), FWD-9 (plain line names, missing-line
 reasons), FWD-10 (posture verdict card / empty state), FWD-11 (the side-by-side review). The register
@@ -300,6 +394,13 @@ criteria at L9 on the PNGs, citing the contract clause.
 
 ## PROVENANCE AND AMENDMENT HISTORY
 
+- v0.6 (2026-10-01, `1.0.0_SA_CTO~Z`): the Friday demo. Andrew 2026-10-01 03:4xZ (CRO~Z order + brief @1391c2f70a) and the
+  CTO~Z placement `CTO_PLACEMENT_20261001_043xZ_AMGT_FRIDAY_DEMO_RESTRUCTURE.md` @e18d3a4e6a, rulings R3-R6 and R10.
+  FWD-21..FWD-24 added (bubbles + month cursor; ranked bars; /philosophy card family; populated, correctly labelled
+  header). FWD-3 RETIRED and fork F1 retired with it. FWD-2 restated (identity on the marks; the list form retired);
+  FWD-1 reads "ranking" for "list"; FWD-18 renders Trending only through the demo. C-FRIDAY added (the shared CONTRACT).
+  ENDPOINT change: both halves re-open (v3.19); the ratified-text half to `3.0.0_SA_CVO~Z`, the brief half accepted as
+  CRO-authored under proportionate sign-off.
 - v0.5 (2026-09-30, `1.0.0_SA_CTO~Z`): FWD-20's control clause re-stated. COO~D measured at the round-12 cut (msg 27092) that the
   pre-redesign build already passes every style clause except the band (AMGT_RESAPP rounds 37-38 fixed that chrome first), so "the
   pre-redesign page FAILS each clause" could not be met. The clause's purpose is CAN-FAIL: a planted page fails each clause beside a

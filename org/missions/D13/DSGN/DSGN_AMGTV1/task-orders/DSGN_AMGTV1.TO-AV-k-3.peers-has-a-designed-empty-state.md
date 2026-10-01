@@ -91,7 +91,7 @@ ui-contract-check.mjs). Cross-chain overlap with AV-k-2 (chain ~52): PeersTab.ts
 the standalone no-permission block of ui-contract-check.mjs -- region-disjoint, merge-tree 0 conflicts, the issuer merges at the drain.
 Base 118cd005: peersempty.cjs 1 of 3 (866 s); green r14-green-c @b7931ed3 3 of 3 (928 s).
 
-<status>pending</status>
+<status>complete</status>
 <round>14</round>
 <slot>~53</slot>
 <fabric>site-z</fabric>

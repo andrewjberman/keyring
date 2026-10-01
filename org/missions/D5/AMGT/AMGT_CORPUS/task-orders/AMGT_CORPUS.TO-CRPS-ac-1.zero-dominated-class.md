@@ -96,3 +96,16 @@ FAIL (no tests).
 <slot>~1</slot>
 <fabric>site-z</fabric>
 <status>complete</status>
+
+## 7. AMENDMENT 1 (issuer ruling on row `Z-W1-S25`, after complete) -- no path change
+
+The worker exempted the dividend keys from the ZERO-DOMINATED rule: `ZERO_DOMINATED_EXEMPT` = the `ZERO_VALUE_UNIT_FROM_BASIS` keys
+(EQY_DPS, IS_DIV_PER_SHR, BEST_DPS, BEST_DIV_YLD) plus EQY_DVD_YLD_IND (`build_unit_map.py:399`, `:419`). Without it the literal
+rule moves 334 figures (EQY_DPS 167, IS_DIV_PER_SHR 167) and breaks the round-26 dividend-yield test.
+
+**Ruled: ACCEPTED as built.** A zero payout is a measured zero whose unit comes from the field basis, so these keys are not
+unmeasured. The exemption is what makes AC1 read `other_unit_changes 0` over 100 keys. Graded by: no gate limb (a record-face ruling
+on a complete order; no criterion, path or placeholder changed).
+
+**AMENDMENT 1 (issuer notes):** row Z-W1-S25 ruled ACCEPT by `2.0.0_SA_COO~X` 2026-10-01; the order stays complete.
+<status>complete</status>

@@ -2048,6 +2048,47 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "The runtime launcher (opal_ai/opal/runtime/launcher.ps1, OA-t-3) starts the Analyst as Opal_Agent in a window the operator can use, with every tool the runtime's own hooks need.",
     "world_is": "It starts the Analyst via Start-Process -Credential, whose window takes no keyboard input, and nothing puts jq on Opal_Agent's PATH, so the concierge-gate fails closed on every call. The same launcher and provisioning serve NFRA_MCPMSP's Opal_MSP (MS-t-3), so the fix is cut ONCE, here (NFRA_MCPMSP ROUND_ANALYSIS.round1.md @5e2ff94c28). Route: 2.0.0_SA_COO~AI cuts it at the next issuance, from launch-v2.ps1's pattern (Process.Start; Medium-integrity parent; gate output on a pipe) plus jq provisioning."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W24-S1",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~24",
+    "surfaced_at": "2026-10-01T04:43Z",
+    "one_line": "OA-f-9 needed a second nested commit: the first commit failed AC1 on a launcher header sentence, and the head-move guard refused the --amend.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AC1 (f9.AC1.sh) strips '#'-led lines then <# #> blocks, so the '#>' closer line is dropped first and the .SYNOPSIS block stays in the scanned text; the header sentence naming Start-Process with -Credential counted as Start-Process -Credential=1 at nested 97b3b19 (RESULT: FAIL).",
+        "git commit --amend in opal_ai was refused by the head-move guard (FORCE_HEADMOVE=1 required); I did not force it. The reword landed as a second nested commit b6e1867; AC1-AC3 then PASS at b6e1867 (opal_ai 0a5c7c2..b6e1867, two commits, same 4 files)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The face asks for one nested commit; AC1 counts Start-Process -Credential over launcher code only.",
+    "world_is": "Two nested commits (97b3b19, b6e1867); AC1's comment stripping leaves a <# #> block header in the scanned text whenever it ends with a '#>' line, so any header prose naming the retired form counts."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W14-S1",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~14",
+    "surfaced_at": "2026-10-01T04:50Z",
+    "one_line": "OA-e-6 control dead on 8194: the operator's own TCP connect to 127.0.0.1:8194 was REFUSED (no bbcomm.exe, nothing listening), so the Opal_Agent 8194 arm (also REFUSED) cannot discriminate account reach from a dead listener; AC2 FAILS as written. 8790 was OPEN for both accounts (PARTIAL).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "2026-10-01 ~04:45Z, from C:\tmp\\oa-14: System.Net.Sockets.TcpClient 3 s connect as Opal_Bloomberg\\Opal Bloomberg -> 8194 REFUSED (refused, not timeout), 8790 OPEN (view server started by the cell with the operator's Python311 and BLOOMBERG_MCP_TRANSPORT=streamable-http; stopped afterwards, 0 listeners on 8790 re-read). Get-Process for bbcomm|blpterm|wintrv|bloomberg returned nothing; Get-NetTCPConnection -State Listen -LocalPort 8194,8790 returned nothing before the start.",
+        "Same probe run as Opal_Bloomberg\\Opal_Agent via Start-Process -Credential (script and result in C:\\opal_runtime\\state, both removed after reading): 8194 REFUSED, 8790 OPEN.",
+        "Per the face (step 1) the terminal was not started. Server start under the operator's default Python 3.14 failed ModuleNotFoundError blpapi; Python311 has blpapi and mcp, so the cell used it (no install). Start-Process -Credential printed one 'Access is denied' on a first attempt with -WorkingDirectory/-WindowStyle Hidden, and on a second attempt printed 'directory name is invalid' yet the child ran and wrote its result (whoami recorded as ...\\Opal_Agent)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OA-e-6 step 1: the operator arms are the control; bbcomm.exe is running and 8194 is OPEN for the operator, so a closed Opal_Agent arm means the account's reach.",
+    "world_is": "bbcomm.exe is not running on this box at measurement time and nothing listens on 8194, so the operator control is REFUSED and the 8194 verdict component is non-discriminating. The 8790 arm is a sound control (operator OPEN) and Opal_Agent reached it. Re-measurement of 8194 needs the terminal up (the cell forbids the worker starting it); disarm owner n/a (INERT)."
   }
 ]
 ```

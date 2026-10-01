@@ -1350,6 +1350,180 @@
     "spec_asserts": "Key 7: PutObject widens, no DeleteObject anywhere; step 3: silver, G1, G2 follow by marker or sweep.",
     "world_is": "The silver stage needs DeleteObject (or a skip-if-superseded rule) for any (fund, report date) a later capture re-claims. Without it the batch has every silver object written (the new winner AND the older duplicate both stand; G1 reads the newest capture id per fund, so gold is right) but no marker. The act therefore drove the gold stages for the affected batches with an explicit replay event on rivalfunds-build-canonical-shape-lambda ({mode replay, start, end, batch_id <batch>}), which writes the canonical marker and so the G5 and page chain; the silver markers of those batches stay absent, and every later sweep re-runs their silver and gets PARTIAL again. The daily leg's one-capture-per-day batch fails the same way whenever any requested fund carries an older report date.",
     "notes": "Disarm options for the issuer or the CTO: (a) grant s3:DeleteObject on bloomberg/etfs/silver/holdings/* to rivalfunds-build-silver-role (a pair amendment: key 7); (b) change silver_bloomberg to keep the earlier duplicate and mark the batch (a code cell); (c) accept that the 09:00 sweep cannot mark carried-date days. The worker deleted nothing. Next-day acceptance reads exit 90 only if the Terminal is signed in; with it signed in, the silver marker is the first thing to fail on a carried-date day."
+  },
+  {
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~5",
+    "surfaced_at": "2026-10-01T04:47Z",
+    "id": "ETFS_RIVALS-Z-W5-S25",
+    "one_line": "RESOLUTION of row ETFS_RIVALS-Z-W5-S24: silver_bloomberg now supersedes WITHOUT deleting (issuer amendment 4); the live build-silver Lambda returned OK with a marker for batches 07 and 08, so the marker-driven chain fires on a carried-report-date batch.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/silver_bloomberg.py@e622b2fef9: the _delete import and the delete loop are gone; each earlier capture's silver is kept in `dropped` with was_in_silver True and retained True; test_d1_silver_supersede_retains.py PASS (local sink: OK with marker, both objects kept, older recorded retained).",
+        "safe-apply etfs-rivalfunds 2026-10-01T04:10Z: Apply complete! Resources: 0 added, 5 changed, 0 destroyed (source_code_hash only); import batch import-r2-07 and import-r2-08: build_bloomberg_silver markers state/build_bloomberg_silver/date=2026-09-30/import-r2-07.json (04:16:06Z) and import-r2-08.json (04:20:54Z), then canonical, trade_schedule, build_flow_reconciliation markers followed; no DeleteObject was granted (key 7 of the pair stands; the silver role policy is unchanged by this apply).",
+        "Batches 04 and 05 keep no silver marker (their silver was written by round-2's first session under the old code; gold was built by replay events); d-3.AC2 reads no gap, so they were left as the order says."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Amendment 4 item 1: silver supersedes without deleting; the new code is live before batches 07 and 08 import.",
+    "world_is": "Done as specified. The retained duplicate silver objects now stand beside the winner for every (fund, report date) a later capture re-claims; readers take the newest capture per (fund, report date), so gold is unchanged. S24 is disarmed by construction for the daily leg too.",
+    "notes": "Disposition of S24 itself is the issuer's; this row records the resolution evidence and edits no existing row."
+  },
+  {
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~5",
+    "surfaced_at": "2026-10-01T04:47Z",
+    "id": "ETFS_RIVALS-Z-W5-S26",
+    "one_line": "test_b1_bloomberg_channel.py::test_latest_capture_wins_per_fund_and_report_date asserts the DELETED-silver behaviour (AAA 3 rows after a later capture) and now FAILS (5 rows: the older capture's 2 rows are retained); the file is outside this order's <paths>, so it was not edited.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m pytest data/etfs/scripts/rivalfunds/tests -q --color=no at e622b2fef9: 1 failed, 188 passed, 2 skipped; the one failure is data/etfs/scripts/rivalfunds/tests/test_b1_bloomberg_channel.py:141 `assert {'AAA': 5, 'BBB': 3} == {'AAA': 3, 'BBB': 3}`.",
+        "The order's <paths> name test_d1_*, test_g01_universe and test_g12 only; amendment 4 item 1 says the only failures may be the two S19 tests, and did not foresee this third one."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Amendment 4 item 1: running the whole package, the only failures may be the two S19 tests.",
+    "world_is": "A third stale test, owned by RIV-b-1's file, encodes the removed delete. Fix is one assertion: the test should read the newest capture per fund (or expect AAA 5 rows, 3 of them from the later capture id). Until it changes, any run of the whole package reads RED for a reason that is the intended behaviour.",
+    "notes": "Disarm: add test_b1_bloomberg_channel.py to a cell's <paths> (a one-line assertion change) or have the issuer amend this order's <paths>."
+  },
+  {
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~5",
+    "surfaced_at": "2026-10-01T04:47Z",
+    "id": "ETFS_RIVALS-Z-W5-S27",
+    "one_line": "Amendment 4 item 1 says the silver code ships as 'a source_code_hash update to the build-silver Lambda only'; the plan was five aws_lambda_function in-place source_code_hash updates, because all five Lambdas stage the same rivalfunds/ package.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "terraform plan -out saved plan at 2026-10-01T04:09Z: Plan: 0 to add, 5 to change, 0 to destroy; terraform show of the plan: only source_code_hash and last_modified differ on each of the five aws_lambda_function.stage[...] resources, no other resource in the plan.",
+        "infra/aws/lambda/etfs-pipeline/rivalfunds_package.py STAGED: data/etfs/scripts/rivalfunds is copied whole into every Lambda's tree, so one module edit changes every archive hash."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Amendment 4 item 1: key 6 is a source_code_hash update to the build-silver Lambda only; any other plan line STOPs.",
+    "world_is": "The act applied the five hash updates. They are inside the signed pair's key 6 (five Lambdas, in-place source_code_hash, no create or destroy) and carry no policy, rule or other change, so the worker proceeded; the other four Lambdas run the same package with an unreferenced stage module change.",
+    "notes": "Recorded so the issuer reads it as the staging design, not a deviation of the act. Source map stamped for all five at e622b2fef9."
+  },
+  {
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~5",
+    "surfaced_at": "2026-10-01T04:47Z",
+    "id": "ETFS_RIVALS-Z-W5-S28",
+    "one_line": "The page for batch import-r2-08 published (new revision) but publish_page wrote no marker: the aggregate guardrail report_date_freshness FAILs for WCMG, TSEL, ETFT and PCLG (Bloomberg report date carried 2026-09-28 vs expected 2026-09-29).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "etfs-rivalfunds-daily-lambda request 97a8dc31-b6d5-46a4-926d-d568ca064643 (event date 2026-09-30, only publish-page): status PARTIAL, outputs index.html + manifest.json, marker null.",
+        "s3://opal-data-etfs/rivalfunds/etfs/platinum/page/date=2026-09-30/manifest.json: checks report_date_freshness FAIL (WCMG, TSEL, ETFT, PCLG latest report 2026-09-28, lag 1 trading day, threshold 0 PROVISIONAL); content_repeat, completeness, identity_coverage, render_readback PASS; funds IDVZ/BIDD, CGIC, INEQ, SCHY, TXUE and PFOE/BASG updated through 2026-09-29.",
+        "publish_page.py handler_entry: `marker = None if agg_failed else write_marker(...)`; the PARTIAL status is the designed no-marker path."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Step 3: the page follows by marker or sweep.",
+    "world_is": "The page is served and grouped; four issuer_first funds read not-updated with the freshness reason (their Bloomberg report date was carried one trading day). This is the guardrail doing its job on real data, and it leaves the batch's publish marker absent, so a later sweep re-runs publish-page for that batch and reads PARTIAL again until those funds' report dates advance.",
+    "notes": "Not a defect of the act; recorded so the close-read does not take the missing import-r2-08 publish marker for a failed publish."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S3",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-01T05:09Z",
+    "one_line": "Disarm of ETFS_RIVALS-Z-W5-S26 by its disarm owner: test_b1_bloomberg_channel.py::test_latest_capture_wins_per_fund_and_report_date now asserts the reader's view (newest capture per fund) and that the superseded capture is recorded retained; the whole package reads 189 passed, 2 skipped, 0 failed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m pytest data/etfs/scripts/rivalfunds/tests -q in /c/tmp/wk-rivals2-5r at 914c31bf3a plus the one-test edit: 189 passed, 2 skipped (was 1 failed, 188 passed at the worker's report).",
+        "The edit filters the date's silver to max(captured_at) per fund_ticker before the row-count assertion, mirroring gold_canonical_shape._bbg_latest; no production file changed."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Row W5-S26: a stale test encodes the removed delete and reads RED for intended behaviour.",
+    "world_is": "The test now encodes supersede-without-delete (d-3 amendment 4); W5-S26's hazard is disarmed by the issuer, its id carried here for the CVO's L9 read.",
+    "notes": "Issuer direct act inside its own decomposition (the file belongs to terminal RIV-b-1; no live order owns it)."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S4",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-01T06:09Z",
+    "one_line": "Row W2-S4's ordering hazard was already fixed in code at 1faa6d4f8d (RIV-b-1 amendment 1, 2026-09-30 19:12Z) and is live since the d-3 apply (pin e622b2fef9, 04:10Z); this seat's round-2 packet claim (325/325 dates 'old-format', every landed-date re-capture keeps old rows) was a wrong-object measurement: issuer SILVER names are basg-<ts>-<sha12> for BOTH bronze key formats by design.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "silver_issuer._capture_id at CLOUD HEAD, exercised: new-format key basg-2026-09-29-20261001T120000Z-abcdef123456 -> 20261001T120000Z-abcdef123456; old-format basg-20260930T114700Z-2a559d4deb4e -> 20260930T114700Z-2a559d4deb4e (one order key across formats).",
+        "git log -S _CAPTURE_TAIL: 1faa6d4f8d 'silver_issuer capture ordering across key formats'; git merge-base --is-ancestor 1faa6d4f8d e622b2fef9 true (the d-3 apply pin).",
+        "gold_canonical_shape._revision reads the same <ts>-<sha12> tail from the silver name, so G1's issuer pick orders identically."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "DRAIN_END_READ_ROUND2.md @d152231e55 and the round-2 analysis ruling 1: W2-S4 ARMED, a re-capture of a landed BASG date keeps the old rows; round 3's first cell is the _capture_id change under a pair.",
+    "world_is": "The _capture_id change is in the deployed code. A SIBLING hazard remains: silver_issuer still deletes the superseded issuer silver object and the build-silver role has no s3:DeleteObject (policy rivalfunds-build-silver-lambda.json: Put/Get only), so a re-capture of a landed date writes the winner but no marker (the W5-S24 class on the issuer side). It has not fired: issuer silver holds exactly 1 object per date over 325 dates.",
+    "notes": "Issuer ruling: round 3's first cell becomes the issuer-side supersede-without-delete (the W5-S24 remedy, LOCAL), riding the round's deploy under its pair. Carried to 1.0.0_SA_CTO~Z as a decision record."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S5",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-01T06:09Z",
+    "one_line": "GQGU is absent from the page input because no reader covers it: the Bloomberg collector excludes it by constant (NO_BLOOMBERG_ROUTE) and the issuer collector carries BASG only; whether Bloomberg carries GQGU at all is UNMEASURED.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/collector_bloomberg.py:50 NO_BLOOMBERG_ROUTE = {'GQGU': 'NO-BLOOMBERG-ROUTE'}.",
+        "The PFOE-group census .runtime/amgt-reconn-daily-census-20260929/*.json: 436 of 439 files parsed, rows by ORIG_IDS fund TSEL 12166, BASG 11090, ETFT 6752, PCLG 6686, WCMG 5131, GQGU 0; the files carry no query text, so whether GQGU was requested is not recorded.",
+        "Served manifest rivalfunds/etfs/platinum/page/date=2026-09-30/manifest.json funds_in_input: 10 funds, GQGU absent; round-2 decomposition section 1 deferred GQGU's issuer adapter to round 3."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "C-PEER-GROUPS: the PFOE group includes GQGU; FWD-1 shows each group's funds.",
+    "world_is": "GQGU has no source in the pipeline. The NO-BLOOMBERG-ROUTE constant is an INFERENCE from a census that never names its request; a single scripted BQL holdings request for GQGU at the next Terminal sign-in measures it.",
+    "notes": "Filed at the round-3 cut per the round-2 analysis ruling 10. Not cut this round (not on the analysis's enrichment list); the measurement rides RIV-d-4's signed-in run if the Terminal is up."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S6",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-01T06:18Z",
+    "one_line": "Correction to row Z-S5: GQGU HAS a measured issuer route -- the same SEI filepoint format as BASG (gqg.filepoint.live SEI_GQG_Tradedate_Holdings_<MMDDYYYY>.txt) -- with 305 archived daily captures in the PFOE census; its absence is only the missing collector_issuer adapter, not a missing source.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        ".runtime/amgt-reconn-daily-census-20260929/gqgu/: 305 dated *.json sidecars + 305 *.txt captures (2025-07-14 .. 2026-09-28); 2025-07-14.json http_status 200, rows 35, weight_sum 100.02, date_matches true, url https://gqg.filepoint.live/assets/data/SEI_GQG_Tradedate_Holdings_07142025.txt.",
+        "2025-07-14.txt header date|fund_id|fund_name|fund_cusip|fund_ticker|security_group|...|percent_of_net_assets -- the column set silver_issuer.STRING_COLS / SOURCE_COLS already type for BASG.",
+        "Z-S5 read only the census root *.json (Bloomberg BQL) and missed the gqgu/ issuer folder."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Row Z-S5: GQGU has no reader; Bloomberg coverage UNMEASURED.",
+    "world_is": "An issuer adapter for GQGU (a second entry in collector_issuer's adapter table, the same parser) plus an import of the 305 archived days would put GQGU on the page with history back to 2025-07-14. Bloomberg's coverage of GQGU remains UNMEASURED.",
+    "notes": "Not on the round-2 analysis's enrichment list, so not cut by the issuer; carried to 1.0.0_SA_CTO~Z for placement (a small cell)."
   }
 ]
 ```

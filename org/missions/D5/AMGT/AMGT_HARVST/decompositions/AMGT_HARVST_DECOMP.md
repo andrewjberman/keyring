@@ -2380,3 +2380,53 @@ The first two are disjoint, so the A0 phases run in parallel.
 - the warm-up in the harvester (waits on first light);
 - sa batches 2+;
 - the cloud host (phase 2).
+
+## 45. ROUND 32 -- L5 DECOMPOSITION v3.12, over the round-31 analysis (`ledger/ROUND_ANALYSIS.round31.md` @309b2da963) + PRD v0.13 (the Friday addendum, ADMITTED)
+
+**Issuer `2.0.0_SA_COO~H`**, 2026-10-01 ~05:3xZ. Seated by the CTO placement @`e18d3a4e6a` (fan-out cap 3).
+- Round 31 is CLOSED. Andrew: the project "is not over until we beat captchas and have robust auth solution"; "we do not
+  accept any defeat". BLOCKED is never a final state (`C-HV-NO-DEFEAT`).
+- **Rulings carried** (analysis section 4 and its rulings): the 105-page sa ceiling is VOID; `error` joins the STOP set
+  (`Z-W88-S3`); R7, sa keeps its route, and no new residential arm is opened.
+- Series **`ae`**; slots **`~90`..`~92`**.
+
+| analysis item | cell | order | class | slot | dispatch |
+|---|---|---|---|---|---|
+| 1 FWD-12 wrong-object repair (precondition) | `HVST-ae-1` | `ae-1` | LOCAL A, then WORLD B (quarantine + gold rebuild), pair | `~90` | A now; B on the pair over the merged code |
+| 2 FWD-13 one browser identity | `HVST-ae-2` | `ae-2` | LOCAL | `~91` | now |
+| 3 first-light grade + confound arm | `HVST-ae-3` | none: the issuer's direct act after the 09:00Z fire (analysis item 3) | WORLD (publisher traffic after 05:00 ET) | issuer | ~09:1xZ |
+| 4 FWD-15 the site Z backfill driver, sa first | `HVST-ae-4` | `ae-4` | LOCAL A (code), then WORLD B (the sa run), pair | `~92` | A now (code has no data edge); B after `ae-1` B drains |
+| 5 FWD-11 the challenge path for bbg, wsj, barrons + renewal | `HVST-ae-5` | `ae-5` | LOCAL A, then WORLD B, pair | `~91` (after `ae-2`) | A after `ae-2` drains and `HVST-ae-3` is graded |
+
+**Fan-out: 3 workers over 2 dependency chains, cap 3** (placement). Chain A: `ae-1` -> `ae-4` B. Chain B: `ae-2`, `ae-3`
+-> `ae-5`. `ae-4` A (code only) has no data edge, so it takes the third slot now; its WORLD run waits on `ae-1` B.
+
+**Write sets (disjoint):**
+
+| order | owns |
+|---|---|
+| `ae-1` | `publishers.py` (the sa leg + the sa page cap), `sa_quarantine.py` (new), `test_ae1_sa_listing_body.py` (new), the silver-read exclusion in `lib/research/harvest/publication_gold.py` |
+| `ae-2` | `tab_transport.py` (new), `auth.py`, `contracts.json`, the three CRO REST clients' UA lines, `test_ae2_one_identity.py` (new) |
+| `ae-4` | `backfill_driver.py` (new), `test_ae4_backfill_driver.py` (new) |
+| `ae-5` | `verification.py`, `test_ae5_challenge_path.py` (new) |
+
+**Hookups at the merge (no cell owns them):** the `publishers.py` session build selects `TabSession` for a publisher whose
+contract reads `"transport": "tab"` (ae-2's export; `publishers.py` is ae-1's file).
+
+**Premises measured at the cut:**
+- sa silver: 85 rows over 66 parts; **38 WRONG-OBJECT** (listing-discovered, raw `/api/v3/articles/{news_id}` capture,
+  title unequal to the stored listing hit: 32 with a differing title, all dated 2023; 6 with no stored hit, dated 2021).
+  A DATE is not the signature: 4 genuine 2025 Lenovo items are listed in live mode. Oracle `round32/checks/ae1_common.py`.
+- gold `article_security_mention` newest part `date=2026-09-30/part-20260930T134616Z`: 379 rows, 139 sa.
+- **KEY SPACE (row `Z-S51`):** the collector universe (89 keys, `BA` / `security-<hash>`) and gold (`BA_US_Equity`, 71
+  keys) share 0 keys; 32 of 89 names carry a ticker. FWD-14's census is graded here on the collector's own silver,
+  keyed by `discovered_for`; the gold join is the CTO's to rule.
+- depth baseline: 20 distinct sa articles since 2026-01-01 over universe keys; 3 of 89 names with any; 0 at 50+.
+- the in-tab transport idiom exists (`verification.py:164`, `page.evaluate(fetch(url, {credentials:'include'}))`).
+
+**Checks dry-run at the base (all FAIL as expected; they are build checks):** `ae-1.AC2` (38 of 85 outside a
+quarantine), `ae-1.AC3` (no manifest), `ae-2.AC2` (`tab_transport` absent), `ae-4.AC2` (driver absent), `ae-4.AC3` (no
+run summary; 20 = baseline), `ae-5.AC2` / `ae-5.AC3` (no record).
+
+**NOT cells this round:** a residential arm for bbg/wsj/barrons/ft (Andrew's act, analysis section 5); FWD-14's own
+census (graded when the driver's runs mature); the cloud host (phase 2).
