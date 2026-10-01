@@ -134,7 +134,8 @@ as expected; AC2 FAIL as expected (0 of 3 modules; the manifest's pre-value 093f
 42c52ed4d9 -- round 1's and MCPINDEX's releases were cherry-picked; AC2 reads PREV at the release's own value change,
 so the release must build ON the deployed commit); AC3 FAIL as expected (modules absent on host; /health 200).
 
-<status>staged</status>
+<!-- status history: staged at issuance b90073c197; pending at the PHASE A hand to slot ~5 after A2 @ef6c65c219 -->
+<status>pending</status>
 <round>2</round>
 <slot>~5</slot>
 <fabric>site-z</fabric>
