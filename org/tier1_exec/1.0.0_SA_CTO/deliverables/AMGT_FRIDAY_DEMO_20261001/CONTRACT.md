@@ -14,6 +14,7 @@ choice.
 | every served field and route under `/api/scoped/amgt` | AMGT_RESAPP (`2.0.0_SA_COO~Z`) | DSGN_AMGTV1 |
 | page presentation (`portal/src/pages/SecurityAnalysis/**`) | DSGN_AMGTV1 (`2.0.0_SA_COO~D`) | Andrew |
 | the Model tab's row shape (`modelSheet.ts`) and the model blocks it reads | AMGT_CORPUS (`2.0.0_SA_COO~X`) | DSGN_AMGTV1 renders it unchanged |
+| `portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx`, through the Friday freeze (amendment 1, 2026-10-01 ~05:4xZ, on COO~X msg 27545) | AMGT_CORPUS (`2.0.0_SA_COO~X`): the ScoreTiles and rule-based line removal (FWD-12), the `forecast_figures` pass-through (FWD-21), and the Model face's figure-or-empty-sentence rule (DSGN round-14 analysis ruling 1, moved here) | DSGN_AMGTV1 does not edit `ModelTab.tsx` until after the freeze |
 | harvest bronze/silver/gold under `opal-data-harvest/amgt/harvest/` | AMGT_HARVST (`2.0.0_SA_COO~H`) | AMGT_RESAPP (routes), never the page |
 
 ## 1. The monthly chatter route (O1; the bubble chart's dependency)
