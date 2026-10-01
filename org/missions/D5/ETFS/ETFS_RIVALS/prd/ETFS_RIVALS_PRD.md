@@ -5,10 +5,10 @@
  "project": "ETFS_RIVALS",
  "directive": "D5",
  "fabric": "site-z",
- "prd_version": "v0.8",
+ "prd_version": "v0.9",
  "step": 4,
  "brief_ref": "docs/briefs/etf-holdings-research-20260929.md@77c891c869",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12"],
+ "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20"],
  "status": "DRAFT"
 }
 ```
@@ -243,6 +243,134 @@ approved it.
          ACCEPT     a fund rivalling two Opal funds is stored once; adding a
                     group changes a mapping, not code
          SOURCE     brief O9, IV.4
+
+  ===== ADDENDUM B, v0.9, 2026-10-01 -- the presentation and the AI synthesis ====
+  From docs/briefs/rivalfunds-backend-data-ai-synthesis-20261001.md and
+  docs/briefs/rivalfunds-frontend-mcp-page-20261001.md (4.0.0_SA_CRO~RV, midstream,
+  on Andrew-direct @52eb8a5dc7, his two dictated transcripts verbatim).
+  STATUS: PROPOSED -- awaiting Andrew's confirmation, as FWD-1..12 were.
+  FWD-1..12 stand. FWD-1's trace stays reachable, and FWD-13 is this workstream's
+  thread.
+
+  FWD-13 (NEW, THE THREAD) Andrew opens the rival-funds page, reads IDVZ's best
+         and worst this month, quarter and year, then picks one rival and reads
+         its rankings, its buying trend and the AI's account of it
+         DONE WHEN  EXERCISED -- one live, signed-in read: the page opens on
+                    IDVZ's ranking for month-to-date; Andrew switches to
+                    quarter-to-date and year-to-date and the tables change; he
+                    picks one IDVZ rival and reads its ten best and ten worst
+                    holdings, five best and five worst sectors, its year's
+                    buying trend and the AI's two-part account; he follows one
+                    ranked figure back to the holdings and prices it came from
+         ACCEPT     everything he reads comes from that morning's real run; a
+                    figure built from sample data fails the outcome
+         SOURCE     backend brief O1; frontend brief O1; transcript 2
+                    ("default to IDVZ", "toggle MTD, QTD, YTD")
+
+  FWD-14 (NEW) Andrew ranks any fund's best and worst holdings and sectors for
+         the month, quarter and year to date, by the same rules for every fund
+         DONE WHEN  EXERCISED -- for every fund in both groups, Opal's own and
+                    each group's benchmark included, Andrew reads the ten
+                    holdings that added most to the fund's return and the ten
+                    that cost it most, and the five best and five worst sectors,
+                    for each of the three periods
+         ACCEPT     a figure Andrew checks agrees with what that fund's holdings
+                    and their prices add up to over the period; each table says
+                    which period and how many holdings it ranks; a holding with
+                    no price shows as missing, never dropped
+         SOURCE     backend brief O2; transcript 1 point one; transcript 2
+                    component 1
+         CTO READING (Andrew may overrule): "best and worst" means how much
+                    each holding added to or took from the fund's return over
+                    the period, weighted by how much of it the fund held day by
+                    day, with those holdings rebuilt from the fund's reports.
+                    That one measure works for the rivals, Opal's funds and the
+                    index benchmarks alike. The trade-by-trade results stay in
+                    FWD-6.
+
+  FWD-15 (NEW) Andrew reads each fund's tilts and bets: where its buying has
+         trended this year, by holding and by sector
+         DONE WHEN  EXERCISED -- for every fund Andrew reads a simple
+                    year-to-date table of where its buying went, by holding and
+                    by sector, each line read as a tilt or a bet with a plain
+                    trend mark
+         ACCEPT     a trend is never presented as one that will continue; the
+                    table says how many trading days it covers
+         SOURCE     backend brief O3; transcript 1 point two ("just because
+                    there is a trend does not mean it is expected to continue
+                    indefinitely"); transcript 2 component 2
+
+  FWD-16 (NEW) Andrew reads what each fund has done in the last 30 days:
+         anything unusual, its big wins and its big losses
+         DONE WHEN  EXERCISED -- for every rival and both Opal funds (never
+                    a benchmark) Andrew reads the AI's account of the fund's
+                    last 30 days
+         ACCEPT     every figure in it points to where it came from; what was
+                    seen is kept apart from what is guessed; a benchmark has no
+                    such section
+         SOURCE     backend brief O5; frontend brief O4; transcript 2
+                    ("rolling 30-day view", "We do not need to apply any
+                    analysis to the benchmark")
+
+  FWD-17 (NEW) Andrew reads the AI's verdict on each fund's direction, weighed
+         against the wider market from Opal's own data
+         DONE WHEN  EXERCISED -- for one fund Andrew reads a second account,
+                    written after and building on the 30-day account: whether
+                    the rankings and trends are borne out, contradicted or
+                    added to, what the manager is getting right and wrong, what
+                    it expects the manager to do next and what would prove that
+                    wrong; it draws on Opal's own market readings (the fear and
+                    greed measures he named, global RSI, the news scanner, the
+                    trending topics and Data Harvest) before anything outside
+         ACCEPT     each market reading it uses shows the date it was taken; a
+                    stale reading is never turned into a trend; a later account
+                    never rewrites an earlier one
+         SOURCE     backend brief O6, O7, O8; transcript 1 point three;
+                    transcript 2 prompt two ("corroborate, refute, or
+                    otherwise enrich", "cached ... run one after another")
+
+  FWD-18 (NEW) The page reads as a presentation, not an audit log
+         DONE WHEN  EXERCISED -- Andrew reads the rankings, the buying trend and
+                    the AI accounts first, without scrolling past trade-by-trade
+                    detail, holdings lists or check tables; those stay one step
+                    away, and the dated archive stays
+         ACCEPT     Andrew can answer "where has this manager been winning and
+                    losing this quarter" from the first screen; a section with
+                    missing or failed data says so in its own place
+         SOURCE     frontend brief O5, O7; transcript 1 ("more of an audit log
+                    than a presentation", "scrolling from miles")
+
+  FWD-19 (NEW) The page looks and behaves like the Opal portal
+         DONE WHEN  EXERCISED -- a rendered page read side by side with the
+                    portal: the same card style, the same period switch in the
+                    order month, quarter, year, and the same light background;
+                    a fund picker lists each Opal fund with its rivals and its
+                    benchmark
+         ACCEPT     someone used to the portal reads the page as part of it;
+                    switching the period or the fund changes the tables and
+                    nothing else
+         SOURCE     frontend brief O2, O6; transcript 2 ("You should not be
+                    reinventing the wheel", "philosophy fixture cards",
+                    "a little dropdown")
+
+  FWD-20 (NEW) Every price, sector and market reading the rankings and the AI
+         need arrives each trading morning with nobody fetching it
+         DONE WHEN  EXERCISED -- over several consecutive trading days, every
+                    held security's price and sector, both benchmarks and every
+                    market reading the AI uses arrive on schedule
+         ACCEPT     Andrew does nothing by hand; an input that did not arrive is
+                    named on the page, never silently skipped
+         SOURCE     backend brief O9; transcript 1 ("locked in bronze
+                    ingestion for all relevant funds", "the operations as well")
+
+  CTO RULINGS ON THE BRIEFS' OPEN POINTS (Andrew may overrule any):
+  - The fund picker shows one fund at a time, grouped under its Opal fund, and
+    opens on IDVZ.
+  - The period and fund switches are built so that the page keeps working with
+    no scripts, as it does today. The page's no-script rule stands.
+  - The AI reads Opal's own data only. Web search needs Andrew's word.
+  - "Concentration of the market" is not one of the stored fear-and-greed
+    measures and is put to Andrew as a question.
 ```
 
 ## CONTRACTS
@@ -544,6 +672,14 @@ the `/sprint` precedent files.
 - The CVO grades JUDGMENT criteria at L9, citing the contract clause.
 
 ## PROVENANCE AND AMENDMENT HISTORY
+
+- v0.9 (2026-10-01, `1.0.0_SA_CTO~Z`), `/endpoint --forward` on `4.0.0_SA_CRO~RV`'s two briefs (msg 28050, record @`52eb8a5dc7`):
+  - The ENDPOINT gains **Addendum B, FWD-13..20, PROPOSED** and awaiting Andrew's confirmation.
+  - **Read:**
+    - the two briefs (18,838 and 12,827 bytes);
+    - this PRD's ENDPOINT.
+  - **NOT READ:** the task-order register, the round-4/5 decomposition, and the project JSON (Phase 0 reads the brief only).
+  - No CONTRACT changes yet. Contracts follow confirmation, and then the ratified half re-opens to `3.0.0_SA_CVO~Z`.
 
 - v0.8 (2026-10-01, `1.0.0_SA_CTO~Z`), on Andrew's three answers to `4.0.0_SA_CRO~RV`'s closer trace (record @`19c5277a57`, brief
   @`381bec5549`):
