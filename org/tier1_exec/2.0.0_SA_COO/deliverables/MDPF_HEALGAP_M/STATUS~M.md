@@ -47,8 +47,14 @@ builds and each dry run returns rc 0 and RECONCILE PASS (QA run 11:16Z-11:23Z).
    136,124,300.89; 139,107,569.53; 139,653,361.92; 175,667,910.62; 176,412,889.04, each between its neighbours or within
    0.82 percent of the nearer one.
 2. **Ledger `healgap-cottonwood-catchup-m-20261001`: OPEN**, leg P closed (the five prior VersionIds; the sanity read).
-3. **WAITING ON `4.0.0_SA_CRO`:** the call line, the package row and the `mdpf-gold-lambda` deploy, under its own ledger
-   entry and packet. Hand-off: `HOOKUP_HANDOFF_FOR_4.0.0_SA_CRO.md` (state READY TO WIRE).
+3. **WAITING ON `4.0.0_SA_CRO`'s deploy:** its packet
+   (`org/missions/D8/MDPF/MDPF_TAXSMA/deliverables/4.0.0_SA_CRO/DEPLOY_PACKET_GOLD_HEALGAP_HOOKUP_20261001.md`
+   @68e3b0d465) is at `1.0.0_SA_CTO` for signature; the act has not run and runs after MDPF_TAXSMA's own leg V2
+   (the 13:50Z publisher run) and that signature (msg 103727). **The first daily run that carries the call line is
+   2026-10-02 13:30Z** (the packet's leg V2). The packet's own "not measured" list, read 12:2xZ: a dry run of the
+   deployed function read non-green at 11:58Z (the Global scope's coherence gate; likely a mid-window read, not
+   established; its leg V1 re-runs it after 13:30Z), and the catch-up has never run on the Lambda runtime.
+   Hand-off: `HOOKUP_HANDOFF_FOR_4.0.0_SA_CRO.md`.
 4. Leg D1, the first 13:30Z run after that deploy: the manifest's `catchup` block reads five built, 0 failed; each of the
    five objects carries its value date; the older dates' earliest partitions are byte-unchanged.
 5. Leg S: one trace per date to the served Cottonwood and Global points; 49 Financial and Inflection byte-unchanged.

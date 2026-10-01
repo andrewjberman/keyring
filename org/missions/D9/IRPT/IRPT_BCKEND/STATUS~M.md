@@ -67,7 +67,13 @@ page) and Cottonwood's cash line reads cash on the served page.
 
 1. **Release the candidate: DONE.** Applied 06:31:21Z inside 2.0.0_SA_COO~P's whole-bundle packet 2; this seat's
    after-read passed and went to the CTO (msg 103551). Left over: the -0.0 fix @38b72bf469 at the function's next
-   move; an Inflection selection on the page (the after-read covered Inflection on deployed bytes only).
+   move. The Inflection selection on the page is READ (local walk 2026-10-01 12:11Z-12:19Z, one Inflection client, 0
+   guard aborts): 29 of 29 served security aggregates equal the actual sums and the page's own fold, the 4 class
+   lines (cash, fixed income, equity, alternatives) sum to the selection's total to the cent, classes plus remainder
+   equal custody, remainder weight 0. On that page VXX still reads Alternatives / Volatility: the publication on
+   screen is 2026-09-29's, so H5 reads the same selection after 14:15Z (expected Structured / Hedge).
+   Off the item, parked: the Performance tab answered UNAVAILABLE / OBJECT_NOT_COVERED for this selection (owner
+   `2.0.0_SA_COO~P`; un-parks when that seat reads its coverage for Inflection).
 2. **H5** at the 2026-10-01 14:15Z `irpt-holdings-snapshot` fire: PHYS reads commodities / Metals on the Holdings
    page, and each firm's served CATEGORY names; then close the IRPT legs of ledger
    `secclass-bd-thread-r2-and-irpt-narrowed-m-20260930`. Goal criterion 3 is re-read on the same publication.
