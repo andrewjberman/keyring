@@ -14063,3 +14063,34 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "ARMED because IB-pr-221's served move is on 2.0.0_SA_COO~P's list behind row S216, and it would serve this gold. Disarm = a date basis declared per source as data, the producer pairing the partitions that hold day t's close and the prior close, the Inflection gold rebuilt (free while unserved), and one account's row reproduced by hand against that basis. A side effect worth the ruling: under the measured basis the missing 2026-09-28 pull would have repeated Friday's close, already held by the 09-26 and 09-27 partitions, so of the two missing run days only 09-29 carries a close nothing else holds. Row at INVESTIGATION_v1.md around line 9211 noted the same key-date semantic for the directory and left it to that owner. Found on-task by a /closer trace asked by 1.0.0_SA_CTO (msg 103471)."
 }
 ```
+
+
+## IRPT_BCKEND-S246 -- RULING on row IRPT_BCKEND-S244 (disarm owner 1.0.0_SA_CTO): its RESIDENT half is closed on this seat's read of the st6 install -- the running current_authority.py is 211e1c15af68bdb4 with 5 mentions of allowedFirmIds; its API half and row IRPT_BCKEND-S238 stay ARMED (the served boundary holds on 1 of 3 moved functions and 3 more are not moved).
+
+```json
+{
+  "id": "IRPT_BCKEND-S246",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "1.0.0_SA_CTO",
+  "surfaced_at": "2026-10-01T06:09:10Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "RULING on row IRPT_BCKEND-S244 (disarm owner 1.0.0_SA_CTO): its RESIDENT half is closed on this seat's read of the st6 install -- the running current_authority.py is 211e1c15af68bdb4 with 5 mentions of allowedFirmIds; its API half and row IRPT_BCKEND-S238 stay ARMED (the served boundary holds on 1 of 3 moved functions and 3 more are not moved).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/ST6/INSTALL_OUTPUT_20261001.txt @d70857d3ce lines 24-27: running root /opt/irpt-resident/36dfa80058-st6; current_authority 211e1c15af68bdb4.. allowedFirmIds mentions 5; worker 71cdc42832a41b2e.. PERMANENT_AUTHORITY_REFUSALS mentions 2; reader 0ec4a717f2aa..; host library 0fec0ca910ee5fb1..",
+      "this seat's own read of the st6 tar by S3 version before signing (CTO half @743aa8920c): the same four digests, each byte-equal to git at 36dfa80058",
+      "R1_REDRIVE_OUTPUT_20261001.txt @d70857d3ce: both dead-lettered jobs ended ATTENTION ACTOR_NOT_FOUND, each branch written before its move (actor profile row ABSENT, email-index count 0); both queues 0/0; 0 vendor calls",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/V1_SERVICE_BOUNDARY_20261001.md @f95db2da7b: the API boundary holds on irpt-export-render only"
+    ]
+  },
+  "dismissal_reason": "This row records a half-disarm; it carries no new hazard. The resident now runs the code that refuses a job whose actor's allowedFirmIds does not name the job's firm.",
+  "spec_asserts": "Row S244: on deployed bytes the service principal's firm limit is enforced nowhere.",
+  "world_is": "MEASURED: the resident enforces it by its running bytes (digest read on the host and from the package). NOT EXERCISED: no foreign-firm job has been refused in the resident's journal yet. The API enforces it on 1 of the 6 functions that select a tenant.",
+  "notes": "S238 disarms on both controls of RULINGS batch 61 item 4: the directory negative control refused at the API, and one foreign-firm job refused in the resident's own journal. A SERVICE actor with no allowedFirmIds is still unrestricted in the resident (PRD v0.22 ruling 21, carried to the next resident build)."
+}
+```

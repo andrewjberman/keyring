@@ -54,6 +54,59 @@ reporting gold, `account_return_daily`, for the round-1 sample over its full his
   `address("irpt","49financial","gold","dim_return_method","method_version=1")` -> `.../gold/dim_return_method/method_version=1`.
   A builder refusal is a registry row to add, never a hand-typed key.
 
+**ISSUER AMENDMENT 5 (2026-10-01 ~06:2xZ) -- READ THIS BEFORE THE METHOD BELOW; where the two differ, this block wins.** Sources: PRD
+v0.4 rulings 17-19 (@a8a65b9f62); rows IRPT_DASHBD-S3..S7 @48d3647120 (the methodology review, triaged by this seat); the seat's
+message 103456. Clauses (c), (d) and (f) correct THIS ORDER's reading against the PRD it names; nothing here changes the PRD.
+- **(a) The guard never substitutes (rulings 17-19).** Read the PRD addendum at the cited commit; your implementation @13d7b428ed is
+  under this face now. On a guard disagreement, or an unvalued in-kind leg: `day_quality FLOW_UNRECONCILED`, `total_return_daily`
+  null, `return_basis NOT_MEASURABLE`. `HOLDINGS_INCOME_FALLBACK` is never emitted. The guard grades a day only inside the
+  comparability domain; outside it the day is `MEASURED` only when `|F_t| / V_(t-1)` is at or below the tolerance. ONE eligibility
+  function runs after selection on the EMITTED value (required inputs present, every value finite, enums in their sets, the
+  plausibility band on the emitted `total_return_daily`).
+- **(b) The contract moves to `contract_version 0.2.0` in its own edit (ruling 17's last sentence, ruling 18's field).** You write it
+  uncommitted and the issuer lands it (amendment 4): `return_basis` loses `HOLDINGS_INCOME_FALLBACK`; a new non-null string column
+  `guard_state` says what the holdings guard did with the day. Its domain is "every emitted account-day" and it must separate at
+  least: graded and agreed; graded and disagreed; not graded, outside the comparability domain; not graded, no holdings row. YOU
+  propose the member names with the rule-24 four-postulate record and the word-boundary token census beside them, as the 0.1.0 file
+  did; `schema_hash` is recomputed. The comparability ceiling on excluded weight is chosen by the ISSUER from the distribution your
+  first pass prints (ruling 18; a producer does not pick the bound it is graded against): print it, stop, and report it.
+- **(c) THE ACCOUNT BOUNDARY (row S4 limb a).** The table's grain is the account, so `F_t` is every cash leg that CROSSES THE MEASURED
+  ACCOUNT's boundary: class EXTERNAL, PLUS a leg the flow ledger resolved INTERNAL by `pair-match` or `text-counterpart` provenance
+  (money that left this account for another account). This is the rule `c02_twr_engine.py` already carries by CTO ruling
+  (`_GRAIN_CLASSES['account']`, `INTER_ACCOUNT_PROVENANCE`), read as prior art, not imported. A `same-account-type-transfer` stays
+  INTERNAL and out of `F_t` (the money never left the account). The sentence below that makes a matched cross-account cash leg
+  INTERNAL for `F_t` is SUPERSEDED. Because matched and unmatched cross-account legs now both enter `F_t`, the matcher's
+  not-one-to-one defect no longer moves an account-grain figure; record each leg's provenance in the first-pass census and leave the
+  matcher's repair to the relationship-grain cell. Print, per account, the count and dollars of legs that enter `F_t` by each route.
+- **(d) THE FEE BASIS (row S4 limb b).** The PRD says "GROSS of advisory fees" and C-FEERAIL says "`FEE` as a flow class". So an
+  ADVISORY fee debited from the account is a FLOW: legs of class FEE-MANAGEMENT, FEE-MANAGEMENT-VERIFIED and
+  FEE-MANAGEMENT-INFERRED enter `F_t` as capital out (negative), which adds the fee back and makes the return gross of advisory fees,
+  as `fee_basis GROSS_ONLY` says. FEE-ADMIN is an expense of the account, not an advisory fee: it stays out of `F_t` and inside the
+  return. `fee_amount` stays null with `FEE_RAIL_UNUSED` (the rail is the per-day fee COLUMN, still unused). The recommendation in
+  row S4 to relabel the series as net is NOT taken: it would change a PRD contract, and the PRD's own text already says how the
+  arithmetic becomes gross. Print the count and dollars of fee legs admitted per class with the denominator.
+- **(e) VALUATION INTERVALS (row S6 limb c).** The row stays one per account per TRADING day. Inside it, link through every custodian
+  valuation that exists: for trading day t with prior valuation day t-1, take each custodian partition day d in (t-1, t] that carries
+  a positive `net_mv_plus_cash` for the account, in order, and compound `(V_d - F_d) / V_(d-1)` over them, each day's flows entering
+  on that day. Where no intervening valuation exists the skipped-day sum below stands. `external_flow` and `income_received` remain
+  the sums over the window; `carried_days` still counts the custodian days folded in. This is daily valuation on the days the
+  custodian valued the account, not a sub-period estimate (C-FLOWTIME claims none).
+- **(f) UNKNOWN INPUT IS A STATE, NEVER A ZERO (row S6 limbs a, b; `docs/doctrine/A_VALUE_MUST_CARRY_ITS_CLAIM.md`).** A cash row of
+  the account-day whose amount does not parse, whose direction is unreadable, whose key is absent from the code table, or whose class
+  is UNRESOLVED is UNKNOWN cash. If any unknown row's amount does not parse, or the absolute sum of unknown cash over `V_(t-1)`
+  exceeds the tolerance, the day is `FLOW_UNRECONCILED` and `NOT_MEASURABLE`; at or below the tolerance it cannot move the return by
+  more than the tolerance and the day keeps its other verdict (ruling 18's bound). A transaction partition that is ABSENT on a day
+  the balance partition exists is `SOURCE_LAG` and `NOT_MEASURABLE`, and it is read differently from a partition that exists and is
+  empty. An account's first data date is a property of the ACCOUNT: the first positive value over the whole history up to the
+  request's end, never over the request window, so one date emits the same row alone or inside a range.
+- **(g) FOREIGN TAX (row S6 limb e; ruling 6.5).** In this adapter a row whose `withholding_code_column` reads the withholding marker
+  is neither flow nor income, whatever partition the shared code table gives it; declare that override as data in `sources.json`.
+  You do NOT edit the shared table: it is the CRO's file and the served 49F engine reads it.
+- **(h) The thresholds are re-measured AFTER (c)-(g) are in the producer,** over the six accounts, on domain days, with the wider
+  denominator printed, and reach `dim_return_method` only then (row S3's quarantine stands until that pass).
+- **(i) The four round-1 checks are the issuer's files (row S7)** and are rewritten counterexample-first by the issuer: DB-1-AC2 fails
+  an emitted value outside the band and a MEASURED day whose comparison return is null; it no longer expects a fallback basis.
+
 **The method you implement (C-METHOD, verbatim in scope; the PRD is the authority, this is its operative reading).**
 - Daily valuation of the whole account: `V_t` = `dim_balance.net_mv_plus_cash` on trading day t (C-VALUE). Verify per account that
   `V` contains cash: on the first sample day, `V_t - sum(dim_position market value)` equals the balance table's cash line (record it).
@@ -139,8 +192,10 @@ carry the thread account; `dim_return_method/method_version=1` has one row with 
 
 <criterion id="DB-1-AC2" cell_refs="DB-b-1"><invocation>python "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~P/checks/r1/p1_1_ac2_guard_seam.py" .</invocation><expect>DB-1-AC2 PASS</expect></criterion>
 `DB-1-AC2` -- the seam against the REAL neighbour: over 40 sampled partitions, `holdings_price_return` equals IRPT_BCKEND's gold
-`daily_return` per (account, day) where that row is OK; MEASURED days sit within the tolerance and carry a positive `market_value_eod`;
-FLOW_UNRECONCILED days carry `HOLDINGS_INCOME_FALLBACK`. Base: FAIL (no gold).
+`daily_return` per (account, day) where that row is OK; a MEASURED day the guard graded sits within the tolerance and carries a positive
+`market_value_eod`; a FLOW_UNRECONCILED day carries a null `total_return_daily` and `return_basis NOT_MEASURABLE`; no row carries
+`HOLDINGS_INCOME_FALLBACK`; every emitted `total_return_daily` is finite and inside the plausibility band; a MEASURED day whose
+comparison return is null is one the row itself says the guard did not grade (amendment 5 (a), (b), (i)). Base: FAIL (no gold).
 
 <criterion id="DB-1-AC3" cell_refs="DB-b-1"><invocation>python "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~P/checks/r1/p1_ledger_closed.py" . irpt-dashbd-account-return-daily-49f-r1-20260930 DB-1-AC3</invocation><expect>DB-1-AC3 PASS</expect></criterion>
 `DB-1-AC3` -- the ledger entry is CLOSED with every leg proven and no sentinel. Base: FAIL (no entry).

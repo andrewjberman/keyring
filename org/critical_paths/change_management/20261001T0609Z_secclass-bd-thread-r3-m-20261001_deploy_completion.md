@@ -1,0 +1,28 @@
+# Deploy Completion Record
+**Date opened:** 2026-10-01T06:09:35.109060+00:00
+**Status:** OPEN
+**Deploy:** MDPF_SECCLASS BD_THREAD_R3: redeploy the BD thread with the shared classifier client inside code/gold (six files + three shipped modules, then the silver staging document v5); halves COO+CTO SIGNED @8769ffe8d5; supersedes the BD legs B3/B4 of secclass-bd-thread-r2-and-irpt-narrowed-m-20260930, which stays HELD for its IRPT leg H5 only
+**Authored by:** 2.0.0_SA_COO~M
+**Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
+**Window:** 20.0h (OPEN past window -> RED COO alarm via `deploy_ledger.py check --red`)
+
+---
+
+## Manifest (every leg must carry proof before CLOSE)
+
+| leg | kind | target | proof required | proof | state |
+|---|---|---|---|---|---|
+| P | verify | invariants and restore targets, read live before step 1 | runner stopped and last gold run exit 0; next silver fire more than 30 min away; six code keys prior VersionIds; three _shared keys 404; document default 4 and v4 bytes saved with hash | Read live 06:06-06:10Z. (i) runner i-01003b035d2988dfb stopped (User initiated) after the 04:00Z run: log gold_incremental_2026-10-01_20261001_060534.log ends COMPLETE (exit code: 0) at 06:05:34Z. (ii) next silver fire bd-asset-dim-pipeline-trigger cron(10 22 ? * MON-FRI *) = 22:10Z today, about 16 h away. (iii) next scheduled gold fire bd-gold-nightly-fallback 23:00Z. Restore targets, six code keys, VersionId/ETag equal the half's table 6 of 6: C_06 DF0mrQMYPQUVaROwXfWx_ujZzby33Pd_ D_03 yAWDop5v36OOwguqHMJovAMw3ISs1nMv D_04 mLh4U.wMEWiVMNO9Ztbsvjubgrk1Z_Qm E_18 NVNguz8v2wHJW_KSsDx9S8MGpeMElqSE lib yk0qwnF4Dyur2rUn1alS5Nt2_EtsR5Kx silver rfdhSeghulhB_Y1.qra.xVBUCFBU_35y. Three lib/_shared keys 404, 3 of 3. Document default 4 latest 4 Hash 294a7036...ae95e; v4 bytes saved (9,900 bytes, sha256 equals that Hash) before the publish. Act inputs unchanged since the CTO signing HEAD 53f971d7a6 (git diff empty); nine candidate md5 at HEAD equal the signed values. | CLOSED 20261001T061649Z |
+| S1 | s3-prefix | ONE safe-deploy call: six BD files + three shipped lib/_shared modules to opal-data-bd code/gold and code/silver | DEPLOYED and VERIFY OK per file; ETag of lib/_shared/etf_classifications_dynamodb.py reads 181e1902667beb928a9ea993bd17d349 | HALT_ACK=1 safe-deploy 06:11:03-06:13:07Z from CLOUD d8e1782d32+ (0 STOP lines; 40 routine messages acknowledged), ONE call, rc 0: DEPLOYED-SHIPPED x3 first (06:11:37-46Z) then DEPLOYED [bd] x6 (06:11:50-12:10Z); VERIFY OK comp-pipescript deployed x6; gate PASS 6 of 6. Readback head-object 06:14Z: ETag equals the signed md5 on 9 of 9 keys; lib/_shared/etf_classifications_dynamodb.py ETag 181e1902667beb928a9ea993bd17d349 (CTO condition 1). New VersionIds: C_06 S1.KsOFBBQwftbA95vubbHYa1kFtP.Vn D_03 7xEAZkTQBL2M1D0AZzgtE4QxtNZhYbVP D_04 fc_AlGdW.mlCI7BXds6ILVS4qwmhyI.1 E_18 B4t7HuFKMKxyAVAHfJOozJNrjbBSA7nr lib SLjBWVc1qu9cN6C8MfzBJkwlV0smZFXW silver t1hx91RdOeqfewqzDzN39jMb4.wcV373. | CLOSED 20261001T061649Z |
+| L0 | activation | SSM document opal-bd-asset-dim-download: publish the git-show bytes as version 5 and set default 5 | new DocumentVersion 5 with Hash d3a38c7b...d3f407; default 5; readback carries the three _shared cp lines | After S1 completed (order: step 1 first, CTO condition 1). 06:14:57Z ssm update-document --content file://doc_v5.json (git show HEAD bytes, 10,840 bytes) --document-version LATEST -> DocumentVersion 5, Hash d3a38c7b1a92b3d92030c241ab6502245c5a25d3b40930dcef67548943d3f407 (equals the signed sha256); Active; update-document-default-version 5; describe-document reads default 5 latest 5; get-document (default) equals the published file as parsed JSON and carries 3 lib/_shared cp lines; done 06:16:10Z, about 16 h before the next silver fire. Rollback bytes doc_v4_rollback.json (hash 294a7036...ae95e) held in the seat's scratch. | CLOSED 20261001T061650Z |
+| X | verify | exercise: one ad-hoc BD gold run on the real runner (import proof, not acceptance) | C_06, D_03, D_04 done rc=0; no IndexError and no BLOCKED in the log; served keys prior VersionIds recorded before the run |  | OPEN |
+| A1 | verify | acceptance: the first scheduled gold fire after step 1 (23:00Z) | C_06, D_03, D_04 exit 0 and the served keys advance |  | OPEN |
+| A2 | verify | acceptance: the first 22:10Z silver fire after Leg 0 | silver/bd_assets_dim.parquet advances |  | OPEN |
+| B4 | verify | the COO's one live FWD-1 run to the page for relationship z08327149 | VXX structured/Hedge, GLD and PHYS commodities/Metals, class_source etf-classifications, bd_securities_reads 0, on the real page |  | OPEN |
+
+## Log
+
+- 20261001T060935Z OPENED by 2.0.0_SA_COO~M with 7 leg(s)
+- 20261001T061649Z LEG P closed: Read live 06:06-06:10Z. (i) runner i-01003b035d2988dfb stopped (User initiated) after the 04:00Z run: log gold_increment
+- 20261001T061649Z LEG S1 closed: HALT_ACK=1 safe-deploy 06:11:03-06:13:07Z from CLOUD d8e1782d32+ (0 STOP lines; 40 routine messages acknowledged), ONE c
+- 20261001T061650Z LEG L0 closed: After S1 completed (order: step 1 first, CTO condition 1). 06:14:57Z ssm update-document --content file://doc_v5.json (g

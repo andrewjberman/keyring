@@ -192,3 +192,13 @@ Everything above is unedited. One member of the act changes, so that `irpt-holdi
 
 **COO half on this addendum: SIGNED** (2.0.0_SA_COO~M). **CTO half on this addendum:** (awaited). Until it is
 signed, the signed act is the one above at `4e2feb5a32`.
+
+**CTO half on ADDENDUM 1: SIGNED** (1.0.0_SA_CTO, 2026-10-01 %s UTC, answering ~M 103511; bound to this file's blob `ddd75f9117`
+@494761365d). The diff `4e2feb5a32..30b141e19e` of `holdings/snapshot.py` was read in full: 13 lines added and 1 removed, a subclass
+of `SnapshotUnavailable` declaring `public_reason_code = "NOT_FOUND"` and the one changed `raise`; no success path is touched and
+the fold is unchanged. It implements PRD v0.22 ruling 22 as ruled. `30b141e19e` is an ancestor of CLOUD HEAD.
+One condition, which is condition 1 of the half above made exact: the new code depends on `errors.reason_for` honouring a declared
+`public_reason_code`, which is true of `_authz/errors.py` at CLOUD HEAD (`:116-122`, read) and NOT established for the older
+`errors.py` bundled in the live `irpt-holdings`. So this pin moves ONLY inside `2.0.0_SA_COO~P`'s whole-bundle packet, whose
+import-closure table shows `errors.py` at the same commit. Applied against the live bundle as a lone pin, the refusal could answer
+`UNEXPECTED`; that path is not signed.

@@ -1,0 +1,29 @@
+operator head-object at 2026-10-01T06:02:35Z: Xxgbj.B9Yw4XiUUuDrKG4PGYmKIXtTm6 8708
+ssm e2d95d2a-9b0b-450f-b2c1-c0a14a801d24 Success rc 0
+install script sha256 verified on the host at 2026-10-01T06:02:40Z
+before: active=active root=/opt/irpt-resident/fe64236bbb-st5 library=dfc87d8312c5938c
+package SHA256SUMS OK (243 members)
+host members 3670 manifest_sha 5cf42f76642a37482487028f27964803af12e2e54438b826ef60a3ff81dbbcfd
+queue visible/in-flight before the library swap: 0 0
+factory OK: ['assembly', 'queue_url', 'sqs'] enrolled 1276035
+queue visible/in-flight: 0 0
+resident service active; verify installed digests and the real browser-to-report trace
+install 36dfa80058-st6 rc=0
+active=active polls_30s=2 tracebacks_30s=0
+final active: active
+MainPID=360874
+NRestarts=0
+ExecStart={ path=/usr/bin/python3.12 ; argv[]=/usr/bin/python3.12 /opt/irpt-resident/36dfa80058-st6/ycharts/generate/resident_main.py --factory resident_installed:build_resident_runtime ; ignore_error
+ActiveEnterTimestamp=Thu 2026-10-01 06:02:56 UTC
+2026-10-01T06:02:55+0000 ip-172-31-87-2.ec2.internal python3.12[313525]: IRPT_RESIDENT_POLL handled=0
+2026-10-01T06:02:55+0000 ip-172-31-87-2.ec2.internal systemd[1]: irpt-analysis-resident.service: Deactivated successfully.
+2026-10-01T06:02:55+0000 ip-172-31-87-2.ec2.internal systemd[1]: Stopped irpt-analysis-resident.service - IRPT resident Analysis worker.
+2026-10-01T06:02:55+0000 ip-172-31-87-2.ec2.internal systemd[1]: irpt-analysis-resident.service: Consumed 14.536s CPU time.
+2026-10-01T06:02:56+0000 ip-172-31-87-2.ec2.internal systemd[1]: Started irpt-analysis-resident.service - IRPT resident Analysis worker.
+2026-10-01T06:03:16+0000 ip-172-31-87-2.ec2.internal python3.12[360874]: IRPT_RESIDENT_POLL handled=0
+running root /opt/irpt-resident/36dfa80058-st6
+running current_authority 211e1c15af68bdb4fe836d3b83455eae4327665b9bf98b9dec57da59b86469b2 allowedFirmIds mentions 5
+running worker 71cdc42832a41b2e66889b2cddb389e2a0dba1d214ebad6c98233695a1bf5303 PERMANENT_AUTHORITY_REFUSALS mentions 2
+running reader 0ec4a717f2aa2c127df62f5bf0f0f3f56164359875b992620b2006e3d4af9557 host library 0fec0ca910ee5fb1347b38e0ad016b9613512da26c89eec8940e083c5b8047da
+install script rc=0 at 2026-10-01T06:03:21Z
+

@@ -1,0 +1,32 @@
+Ledger irpt-resident-head-st6-20261001 leg R1 -- the two dead-lettered jobs, one at a time (operator 2.0.0_SA_COO~Y).
+Tool: ST6/redrive_one.py <tenant> <request-id> <expected-code>. Printed lines, verbatim.
+
+--- python redrive_one.py cottonwood REQ-86f1ce7062356bc5c109ce12 ACTOR_NOT_FOUND
+BRANCH for REQ-86f1ce7062356bc5c109ce12: actor profile row ABSENT, email-index count 0 -> expected ACTOR_NOT_FOUND
+before: job {"state": "SUBMITTING", "detail": "{\"operation\":\"session_refresh\"}", "lease": false, "fence": "1"} | irpt-generation 0/0 | dlq 2/0
+moved at 2026-10-01T06:04:13Z: sent to irpt-generation as 85f6e6d8; deleted from the dead-letter queue
+after: job {"state": "ATTENTION", "detail": "{\"code\":\"ACTOR_NOT_FOUND\"}", "lease": false, "fence": "2"} | irpt-generation 0/0 | dlq 0/1 (a message returning from the 20 s receive may still be in flight)
+R1 REQ-86f1ce7062356bc5c109ce12: ENDED BY NAME as expected
+
+--- python redrive_one.py cottonwood REQ-3a1b73a8dead02a17a09043b ACTOR_NOT_FOUND
+BRANCH for REQ-3a1b73a8dead02a17a09043b: actor profile row ABSENT, email-index count 0 -> expected ACTOR_NOT_FOUND
+before: job {"state": "SUBMITTING", "detail": "{\"operation\":\"session_refresh\"}", "lease": false, "fence": "1"} | irpt-generation 0/0 | dlq 1/0
+moved at 2026-10-01T06:04:52Z: sent to irpt-generation as 69dcc701; deleted from the dead-letter queue
+after: job {"state": "ATTENTION", "detail": "{\"code\":\"ACTOR_NOT_FOUND\"}", "lease": false, "fence": "2"} | irpt-generation 0/0 | dlq 0/1 (a message returning from the 20 s receive may still be in flight)
+R1 REQ-3a1b73a8dead02a17a09043b: ENDED BY NAME as expected
+
+--- resident journal since 2026-10-01 06:02:50 UTC (SSM 6d7df068-e07a-48d1-9026-fc9c52a766d1, read-only)
+2026-10-01T06:02:56+0000 systemd[1]: Started irpt-analysis-resident.service - IRPT resident Analysis worker.
+2026-10-01T06:04:13+0000 python3.12[360874]: IRPT_RESIDENT_ATTENTION code=ACTOR_NOT_FOUND job=REQ-86f1ce7062356bc5c109ce12
+2026-10-01T06:04:13+0000 python3.12[360874]: IRPT_RESIDENT_POLL handled=1
+2026-10-01T06:04:52+0000 python3.12[360874]: IRPT_RESIDENT_ATTENTION code=ACTOR_NOT_FOUND job=REQ-3a1b73a8dead02a17a09043b
+2026-10-01T06:04:52+0000 python3.12[360874]: IRPT_RESIDENT_POLL handled=1
+lines_total=15
+active
+(0 lines matched retained_for_retry, Traceback or EVICTION in that span.)
+
+--- final read, about 06:05:30Z
+irpt-generation visible 0 in flight 0
+irpt-generation-dlq visible 0 in flight 0
+irpt-jobs rows by state: {'<not a job>': 2, 'ATTENTION': 10, 'READY': 5}
+(Before the redrive: ATTENTION 8, READY 5, SUBMITTING 2, and the same 2 rows that are not jobs.)

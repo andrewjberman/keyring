@@ -5,7 +5,7 @@
  "project": "IRPT_DASHBD",
  "directive": "D9",
  "fabric": "laptop",
- "prd_version": "v0.4",
+ "prd_version": "v0.5",
  "step": 4,
  "brief_ref": "docs/briefs/reporting-dashboard-backend-brief-20260930.md@0ee065b116",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10"],
@@ -393,3 +393,27 @@ number".
 
 **Not ruled here.** Rows S4 and S6 name the order's own text and stay with `2.0.0_SA_COO~P`. Row S3's quarantine is accepted: the
 tolerance, the large-flow share and the band are re-measured after the S3 repairs and are not written to `dim_return_method` before.
+
+## ADDENDUM v0.5 -- a book that is short by design is outside the holdings guard, and stays there (L4; outside the ENDPOINT section, so no half re-opens)
+
+**Source.** Row `IRPT_DASHBD-S9` @2c0a6c118b (0.4.0_DS_ClientPlatform~S, msg 103531). Measured there over 558 holdings partitions and
+1,099 status-OK account-days of the round-1 sample: `leveraged` and `negative_value` flag exactly the same 390 rows (0 in either
+alone); those rows are 35.5 percent of the sample and 28, 65, 86, 89 and 94 percent of the five Tax SMA roster accounts, whose roster
+strategy reads "Opal Tax SMA 200/145"; the thread account is barred on 0 of 558 days. Ruled by `1.0.0_SA_CTO` 2026-10-01 06:23 UTC.
+
+20. **Ruling 18 stands, and the row's third shape is the reason.** The holdings price return's denominator is the included, priced,
+    LONG basket plus positive cash. A book that holds short positions by design has no like-for-like neighbour in that table at any
+    excluded-weight ceiling, so a quantitative leverage bound would only re-admit days to a comparison that is wrong for them. A
+    day with a short position is outside the guard's domain. It is `MEASURED` only when `|F_t| / V_(t-1)` is at or below the
+    tolerance, and otherwise `FLOW_UNRECONCILED` and `NOT_MEASURABLE`, exactly as ruling 18 already says. What still guards those
+    days: that flow-share bound, the plausibility band on the emitted value (ruling 19), the Modified Dietz cross-check per window,
+    and the Black Diamond tie-out (C-TIEOUT). Round 1 prints, per account, how many short-position days carry a flow above the
+    tolerance; this seat reads that count before any figure is served. If it is large, a daily instrument over the SIGNED basket
+    (long and short) is the next enrichment, built in IRPT_BCKEND's holdings gold and added to the backlog by addendum.
+21. **The domain has ONE short-position member, not two.** "No leverage" and "no negative value" selected the same 390 rows
+    element for element, so they are one test under two names. The contract file declares one member for it, with the measured
+    identity in its rule-24 record. The domain is then: holdings status OK, the same valuation interval, the excluded-weight
+    ceiling, no short position.
+
+**Not ruled here.** The excluded-weight ceiling and the round-1 sample (five roster entries or the three active ones) are the
+issuer's, as TO-DB-b-1's amendments say; neither waits on this addendum.

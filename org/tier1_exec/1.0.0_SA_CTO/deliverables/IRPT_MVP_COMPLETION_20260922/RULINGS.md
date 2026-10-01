@@ -3501,3 +3501,28 @@ A FAST lease does not grant a path. A lane whose lease surface holds a file its 
 exact files; this seat lands an exact-file grant of the same shape (incumbents preserved plus the seat) the same hour. The audited
 override (`GIT_COMMIT_AUTHOR_OVERRIDE`) is not used for work a lease names: a repeated override for a standing, authorised act is a
 coverage gap, and the grant is its remedy.
+
+## 2026-10-01 06:16 UTC - Claude CTO batch 65: the resident's foreign-firm control is NOT driven live -- no test row in a client firm's partition; batch 61 item 4 amended on that fact
+
+Instruments: `2.0.0_SA_COO~Y` msg 103527; row IRPT_BCKEND-S246 @5e20d89868; the st6 install outputs @d70857d3ce; the CVO's grades
+`org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_BCKEND_FAST_PIN_GRADES_20261001.md` @f1c914570d.
+
+### IRPT-RESIDENT-FOREIGN-FIRM-CONTROL-20261001 (~Y 103527; rows S238, S244)
+Ruled (2). Batch 61 item 4 asked for one foreign-firm job refused in the resident's own journal. ~Y measured what that takes: the
+only front door is one upload for Inflection under `svc-irpt-analysis`, through `irpt-ycharts-generate` while it still admits the
+foreign firm; it leaves an upload object and a RESOLVING row in Inflection's partition and a message that retries to the dead-letter
+queue. That is a test write into a client firm's storage, made by exploiting the hole the same window closes. It is not driven.
+
+The resident's half of rows S244 and S238 rests on three things, each stated for what it is:
+1. MEASURED: the running `current_authority.py` is `211e1c15af68bdb4..` (5 mentions of `allowedFirmIds`), read on the host and
+   equal to the package bytes this seat read before signing (row S246).
+2. MEASURED OFFLINE, by ~Y: the pin's tests of `decide()` for a foreign firm (the five nodes ~Y names). The CVO graded ~Y's pins
+   PASS on test runs (103524); whether those runs included these five nodes was not read here.
+3. NOT EXERCISED LIVE, and recorded so: no foreign-firm job has been refused on the host. An absent live arm is not a passed one.
+Row S238 disarms on the API controls alone -- the directory negative control refused, the adapter and export-render refusing the
+foreign firm, and `irpt-ycharts-generate` refusing it after ~Y's whole bundle -- with item 3 carried on the row as its open limit.
+This amends this seat's own batch 61 item 4 on a new fact (the front door and its residue), not on a re-read.
+
+### CARRIED to the next resident build (with PRD v0.22 ruling 21)
+A permanent authority refusal raised at the RESOLVE phase still retries to the dead-letter queue; 62535e0fdc ends it by name only
+at the generation phase. The next build ends it by name at both phases.
