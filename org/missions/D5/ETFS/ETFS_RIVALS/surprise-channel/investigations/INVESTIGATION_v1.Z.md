@@ -2601,6 +2601,49 @@
       ]
     },
     "notes": "Resolves ETFS_RIVALS-Z-W4-S13 (an existing row is never edited; this row carries the resolution). disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV; the hazard is disarmed on the deployed bytes, the acceptance read confirms it live."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S11",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-01T22:40Z",
+    "one_line": "Disarm of ETFS_RIVALS-Z-W2-S11 (a GQGU silver object displacing BASG in G1): RIV-v-2 reads issuer silver per fund; v-2.AC2 holds BASG 35 and GQGU 35 in one G1, and the served round-4 G1 carries GQGU's 10798 rows beside BASG's unchanged 11306.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "round4/checks/v-2.AC2.py PASS at 46033207f4 and 7bc86da43a (issuer re-runs)",
+        "round4/served_delta_r4_pin.json: BASG g1 rows 11306 -> 11306, GQGU 0 -> 10798",
+        "served page 2026-10-01 (d5-publish-a1): BASG updated, source issuer"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Row Z-W2-S11 ARMED until RIV-v-2 lands (guarded by d-5's dependency on v-2).",
+    "world_is": "v-2 landed (cfc1b0dcf8 and amendments) before d-5's apply; BASG is not displaced in served G1.",
+    "notes": "Resolves ETFS_RIVALS-Z-W2-S11 (an existing row is never edited). disarm_owner was 2.0.0_SA_COO~RV."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S12",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-01T22:40Z",
+    "one_line": "Bound of ETFS_RIVALS-Z-W4-S9 (the silver-triggered G1 replay exceeds the 900 s ceiling): it bites only on a BULK silver batch (d-5's 60-date GQGU import); the daily silver batch carries 1-2 report dates (BASG + GQGU) and runs well inside the ceiling. The code fix is round-5 remediation; until then a bulk import drives G1 by explicit windowed replays (the d-5 ruling).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CloudWatch rivalfunds-build-canonical-shape-lambda: Status timeout 18:31:57Z / 18:47:02Z / 19:03:04Z during the bulk import; windowed replays 19:15Z+ ok",
+        "d-5 worker report: G1 for 307 dates driven by explicit windows (row S9)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Row Z-W4-S9 BLOCKING/ARMED, disarm_owner 2.0.0_SA_COO~RV.",
+    "world_is": "No bulk silver batch is scheduled; the daily path is bounded. Carried to the round-4 analysis as remediation.",
+    "notes": "Disarm by procedure (no bulk import without windowed G1); the code fix is a round-5 cell."
   }
 ]
 ```
