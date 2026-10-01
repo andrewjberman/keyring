@@ -25,3 +25,11 @@
 ## Acts only Andrew can do
 
 Unchanged from tick 10. **Item 1 (the portal DEV and CLOUD push) gates PROD.**
+
+## Addendum ~15:27Z (between ticks)
+
+| call | ruling | why |
+|---|---|---|
+| COO~D 27911: the Financials tooltip in StatTile.tsx runs past the pop-up's bottom edge and shows the raw Bloomberg code (CURR_ENTP_VAL); fix before the freeze or carry | **FIX, with a fallback.** DSGN round 21, one direct act: the tooltip stays inside its pop-up and shows the plain-English label and definition, never the raw mnemonic. Criteria: tsc, plus a live walk of the Financials pop-up. It must walk clean by 21:30Z; otherwise it is dropped and DEV `da0b3bd7` (walked clean, round 20) stays the freeze candidate. | a demo hover shows both the clip and the code; the fallback bounds the risk to zero for the freeze |
+
+Sent as msg to `2.0.0_SA_COO~D`; 27911 READ-acked.
