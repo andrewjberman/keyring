@@ -1958,6 +1958,114 @@
     },
     "disposition": "UNDER_INVESTIGATION",
     "notes": "disarm_owner (if ever armed): 2.0.0_SA_COO~RV. Scope: no non-rivalfunds resource changes; the plan is read at the apply."
+  },
+  {
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~4",
+    "surfaced_at": "2026-10-01T11:25Z",
+    "class": "OBSERVATION",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "ETFS_RIVALS-Z-W4-S2",
+    "hazard_standing": "INERT",
+    "one_line": "BASG identity resolves through a same-day Bloomberg co-holding join, and the daily Bloomberg request does not carry BASG, so every NEW BASG report date resolves 0 of 33 (the 0.924 / 0.939 'measured lowest' is a history figure that will not recur).",
+    "spec_asserts": "COO half / amendment 1: the measured lowest non-home fraction is BASG 0.924; AC3 grades every non-home fund at >= 0.90 at the newest report date; the floor goes to the round analysis with the per-fund numbers.",
+    "world_is": "G1 date=2026-09-29 (replayed) BASG: 31 RESOLVED by resolution_method issuer-bloomberg-join ('Bloomberg silver co-holding of the same fund and day') and 2 crosswalk:miss = 0.9394. G1 date=2026-09-30 (the organic 07:00 ET batch 096abe3d, then the 11:13Z vehicle Bloomberg leg): BASG 0 of 33 RESOLVED, all crosswalk:miss against crosswalk/v1/2026-09-29.json (237 records), source_used issuer. Bloomberg silver for 2026-09-30 holds BIDD CGIC ETFT INEQ PCLG SCHY TSEL TXUE WCMG and no BASG; the d-3 gate 0 request excludes BASG and GQGU. So BASG's newest report date reads 0.0 and stays 0.0 until the request carries it or the crosswalk learns BASG's forms. d4_live.json identity_fraction_per_fund carries both the 09-29 and each-fund-newest-date numbers. guardrails_config min_resolved_fraction is 0.0 (unchanged), so nothing is failed today; any floor above 0.0 over every graded fund would put BASG not-updated every day.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~4/d4_live.json identity_fraction_per_fund",
+        "S3 rivalfunds/etfs/gold/canonical_shape/date=2026-09-29/holdings-20261001T105835Z-j20260929-71e7e87c.parquet and date=2026-09-30/holdings-20261001T111339Z-j20260929-47a78634.parquet (resolution_method per BASG row)",
+        "bloomberg/etfs/silver/holdings/date=2026-09-30/ (9 funds, no BASG)"
+      ]
+    },
+    "notes": "disarm_owner (if a floor is raised): 2.0.0_SA_COO~RV. Input to the round-3 analysis, key 4's re-sign."
+  },
+  {
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~4",
+    "surfaced_at": "2026-10-01T11:25Z",
+    "class": "OBSERVATION",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "ETFS_RIVALS-Z-W4-S3",
+    "hazard_standing": "INERT",
+    "one_line": "d-4.AC2 asserts the re-capture id appears in G1's dataset_revision, but G1's revision is '<newest capture ts>-<h|j hash of the inputs>' since the home-inclusive scheme, so the clause cannot hold for any date whose G1 holds more than the issuer capture; the G1 object DOES read the re-capture (snapshot_id, silver_uri and bronze_uri carry it).",
+    "spec_asserts": "AC2 (checks/d-4.AC2.py last check): 'G1 ... reads the re-capture for BASG' graded as any(cid in r for r in dataset_revision values) with cid 20261001T105835Z-bfd36047cb41.",
+    "world_is": "Control: report date 2026-09-29, fetch-holdings backfill request 52dc7b59-e450-4c53-b9aa-9d0f661513ed -> bronze basg-2026-09-29-20261001T105835Z-bfd36047cb41.txt, silver basg-20261001T105835Z-bfd36047cb41.parquet BESIDE the retained basg-20260930T110033Z-bfd36047cb41.parquet (2 objects), build_silver marker status OK. The newest G1 at that date (holdings-20261001T105835Z-j20260929-71e7e87c.parquet; the control batch's own was ...-h330041300fa) carries dataset_revision '20261001T105835Z-j20260929-71e7e87c' for BASG; its snapshot_id is BASG-2026-09-29-bfd36047cb41, silver_uri .../basg-20261001T105835Z-bfd36047cb41.parquet, bronze_uri .../basg-2026-09-29-20261001T105835Z-bfd36047cb41.txt. AC2 therefore reads 3 OK and 1 FAIL (rc=1) on a correct act. The bytes were unchanged (same sha12 bfd36047cb41), as the COO half predicted.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round3/checks/d-4.AC2.py (clause graded)",
+        "S3 issuer-site/etfs/silver/holdings/date=2026-09-29/ (2 objects) and rivalfunds/etfs/gold/canonical_shape/date=2026-09-29/ BASG rows (columns snapshot_id, silver_uri, bronze_uri, dataset_revision)",
+        "data/etfs/scripts/rivalfunds/gold_canonical_shape.py docstring line 64 (revision shape)"
+      ]
+    },
+    "notes": "The check is the issuer's file outside this order's paths and was not edited. The criterion's expected line is left FAIL in the proof; the issuer may amend the clause (e.g. grade snapshot_id/silver_uri) at its own cut. disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV."
+  },
+  {
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~4",
+    "surfaced_at": "2026-10-01T11:25Z",
+    "class": "OBSERVATION",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "ETFS_RIVALS-Z-W4-S4",
+    "hazard_standing": "INERT",
+    "one_line": "d-4.AC1 compares the FAIL-check fund tickers (manifest keys cut at '/') with the publish marker's not_updated keys, which are '<group>/<fund>' (PFOE/ETFT), so the clause can never match a non-empty set: it passed only once the page had no FAIL-status fund.",
+    "spec_asserts": "AC1 (checks/d-4.AC1.py last check): flagged <= set(map(str, body['not_updated'].keys())) with flagged = {k.split('/')[-1] ...}.",
+    "world_is": "At 11:04Z the page date=2026-10-01 (publish request ca245e04-3f89-4686-a197-3fb453431fd2, marker d4-publish-r3) had 4 FAIL-status funds (ETFT PCLG TSEL WCMG, report_date_freshness lag 2 trading days) and the marker named all four as 'PFOE/ETFT' etc.: AC1 read FAIL on 'names every not-updated fund (ETFT, PCLG, TSEL, WCMG)'. After the 11:13Z vehicle Bloomberg leg landed 2026-09-30 captures for those four, the republished page (request 4721b79b-9853-4743-9f18-7be5031f8436, marker d4-publish-r3b) read not_updated = {PFOE/GQGU} only, flagged empty, and AC1 passed (vacuously for the key shape).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "checks/d-4.AC1.py last check; the first act-time run printed FAIL on the 4 tickers",
+        "S3 rivalfunds/etfs/state/publish_page/date=2026-10-01/d4-publish-r3.json (keys 'PFOE/ETFT', ...) and d4-publish-r3b.json"
+      ]
+    },
+    "notes": "Latent: the next day a fund is FAIL-flagged, AC1-shaped checks mismatch. Not edited (issuer's file). disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV."
+  },
+  {
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~4",
+    "surfaced_at": "2026-10-01T11:25Z",
+    "class": "OBSERVATION",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "ETFS_RIVALS-Z-W4-S5",
+    "hazard_standing": "INERT",
+    "one_line": "G4's 'newest object at a partition' is the greatest OBJECT NAME, which sorts by the revision hash, so at date=2026-09-29 the QA import (market-20260929-afcd903ad844, 172 rows, no price) outranks the later live pull (market-20260929-53bc393958bd, 434 rows, 430 GICS sectors, 430 PX_LAST) by hex order alone.",
+    "spec_asserts": "gold_canonical_shape._g4_for: 'the greatest partition date <= rd, then its greatest object name'; COO half branch A: the live market pull lands G4 for G1's securities.",
+    "world_is": "After the step-4 import (marker d4-g4-import-market) and the Terminal-signed-in live pull (blp_client health ok at 11:07:34Z via the Python311 blpapi interpreter; marker d4-g4-market-market, 434 securities, 0 security errors), rivalfunds/etfs/gold/security_market/date=2026-09-29/ holds both objects and the G1 join reads the import ('a' > '5'). Both objects use revision <as_of date>-<sha12>, and a market pull's as_of is the partition date, not the pull time, so there is no recency in the name. Not harmful to AC3 (the import resolves 164 sectors); the daily vehicle leg partitions by the act day, so the tie is specific to a same-date import plus pull. No G1 replay was run after the live pull for that reason.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/gold_canonical_shape.py _g4_for (sorted (date, object name))",
+        "S3 rivalfunds/etfs/gold/security_market/date=2026-09-29/ (2 objects)",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~4/d4_live.json terminal"
+      ]
+    },
+    "notes": "A delete of the import object is a HUMAN word, never the worker's. disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV."
+  },
+  {
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~4",
+    "surfaced_at": "2026-10-01T11:25Z",
+    "class": "OBSERVATION",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "ETFS_RIVALS-Z-W4-S6",
+    "hazard_standing": "INERT",
+    "one_line": "Two scheduled producers fired INSIDE the act window and shaped what the page read back: the 07:00 ET fetch-holdings daily (request marker 096abe3d, 11:00:33Z) ran on the just-applied code, and the vehicle's Bloomberg leg landed 2026-09-30 captures for 9 funds at 11:13Z once the Terminal was signed in; the four Bloomberg-fallback PFOE rivals were therefore not-updated (lag 2) at 11:04Z and updated (lag 1) at 11:25Z.",
+    "spec_asserts": "COO half expected outcome: 'The four Bloomberg-fallback PFOE rivals pass freshness at a lag of 1 trading day'; the order does not name the vehicle or the 07:00 fetch as co-writers during the act.",
+    "world_is": "Publish markers on date=2026-10-01: d4-control-basg-20260929 (11:00:14Z, 6 not-updated incl. BASG, from the marker chain of the control), 096abe3d (11:01:38Z, 5), d4-publish-r3 (11:04:05Z, 5: ETFT PCLG TSEL WCMG lag 2, GQGU no G1), d4-publish-r3b (the last, 1: GQGU). The four rivals' latest Bloomberg report was 2026-09-28 until bloomberg/etfs/bronze/holdings/date=2026-10-01/batch-20261001T111301Z-... landed at 11:13:44Z (fetch_bloomberg marker batch-20261001T111301Z, written by the machine's vehicle, not by this worker). No Bloomberg holdings request was made by the worker (collector_bloomberg was not run; the only vendor call was the scripted market reference-data pull).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "S3 rivalfunds/etfs/state/publish_page/date=2026-10-01/ (4 markers) and state/fetch_bloomberg/date=2026-09-30/batch-20261001T111301Z.json",
+        "CloudWatch REPORT lines of the five Lambdas since 10:53Z (request ids in d4_live.json lambda_request_ids)"
+      ]
+    },
+    "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV."
   }
 ]
 ```
