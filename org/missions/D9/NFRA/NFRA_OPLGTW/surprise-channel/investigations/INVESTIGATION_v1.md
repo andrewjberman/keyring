@@ -6440,3 +6440,27 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S22",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-01T18:55Z",
+  "one_line": "CVO guard M1's verify arm (mail and transcripts bearers presented to the Tax route) was run host-side against the host's own port, with the bearers read from Secrets Manager inside the host process; 'no Graph call' is read from the capability guard's order in the code and the 401 UNAUTHORIZED_CAPABILITY envelope, not observed on a Graph-side log.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~15/tr_m1.py arm (SSM 4bfd99ce-db7f-4a8b-9f3d-3e62a0e11ff7): mail bearer 401 UNAUTHORIZED_CAPABILITY, transcripts bearer 401 UNAUTHORIZED_CAPABILITY, both secrets non-empty; compare mode (SSM 242077e6-ac17-4430-99f7-d1ffb609eb4d) 6 tokens over 5 keys, all DIFFER.",
+      "DOC: app/taxsma_workbook.py operation order OPERATIONS = capability_guard, delegated_token, source_read: the refusal is the first operation, before the delegated token and the Graph read."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "M1: the mail bearer and the transcripts bearer each presented to /ms/taxsma-workbook read 401 UNAUTHORIZED_CAPABILITY with no Graph call (bearers read from Secrets Manager into memory, never printed).",
+  "world_is": "Both arms read 401 UNAUTHORIZED_CAPABILITY. The arm ran on the host over localhost:8080 (not through the ALB) so no bearer left the host; the absence of a Graph call is inferred from the guard order, not measured on a Graph log.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
