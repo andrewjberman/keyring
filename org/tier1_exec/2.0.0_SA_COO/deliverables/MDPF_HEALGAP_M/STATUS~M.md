@@ -13,42 +13,45 @@ consolidator's one call line is added by that seat at its next merge.
 
 ## Pins
 
-- Module `data/mdpf/scripts/gold/mdpf_gold_catchup.py` and test `data/mdpf/tests/test_mdpf_gold_catchup.py`: on branch
-  `coo-m-r30` (see the commit that carries this file). Code only. Nothing is deployed, nothing is written.
+- Module `data/mdpf/scripts/gold/mdpf_gold_catchup.py` and test `data/mdpf/tests/test_mdpf_gold_catchup.py` (16 passed):
+  on CLOUD (commits 524ee9beb1, 1124461a6c, 5082ed0513). Wired nowhere. Nothing is deployed, nothing is written.
+- Half: `NEVER_WIDEN_HALF_REQUEST_HEALGAP_COTTONWOOD_CATCHUP_20261001.md`, COO half signed; the CTO half is owed.
+- Hand-off: `HOOKUP_HANDOFF_FOR_4.0.0_SA_CRO.md` (the call line and the Lambda package row; both held until the half
+  carries two signatures).
 
-## What is built
+## Live thread
 
-- `plan()`: for each holdings date on the axis that no gold partition values, the build `--date <next trading day>
-  --value-date <that date>`. Skips, each with its reason: no assignment partition for the next trading day (the seven
-  days stay absent); a rewrite that would restate or drop an older date (no EARLIER partition values it); the newest
-  date, which its own daily run values.
-- `run()`: plans from live state through the slice's own readers and calls the existing builder. A failed build is
-  recorded and does not raise. With `upload=False` every build is the builder's dry run.
-- Test, 13 passed: the September replay (control: two dates dropped; with the step: none, built on the landing day),
-  the August replay (three dates), the seven no-assignment days, the restate guard, a day with nothing to do
-  (zero builder calls), and a failed build.
+Not wired. The step's one real run so far is read-only: against live silver with `upload` off it plans exactly five
+builds and each dry run returns rc 0 and RECONCILE PASS (QA run 11:16Z-11:23Z).
 
-## One fact the half must carry
+## What the live plan read (53 gold partitions, 78 holdings dates on the axis, 44 valued by no partition)
 
-The gold partition key is the ASSIGNMENT date. Valuing holdings date V rewrites partition `date=<next trading day>`,
-which today carries an older value date. Five existing partitions are rewritten (expected: 08-19, 08-21, 08-24, 09-24,
-09-25). The older date stays served by the same partition as before, because the slice keeps the EARLIEST assignment
-per value date and the guard requires that earlier partition to exist. Rollback is the prior object version per key.
+| outcome | dates |
+|---|---|
+| built (dry run) | 08-18, 08-20, 08-21, 09-23, 09-24 -- Opal totals 142,434,495.60; 145,708,847.84; 146,275,792.27; 197,132,575.38; 198,026,295.50 |
+| skipped, no assignment partition for the next trading day | 34 (June 15, July 12, 08-31, September 6) |
+| skipped, no partition to rewrite (the step never mints one) | 07-28, 07-29, 07-30 |
+| skipped, would restate an older date | 08-04, 08-12 |
 
 ## Next, in order
 
-1. Read the ad-hoc QA run (live plan plus the builder's dry run per date; no write): the five figures for the half.
-2. Count the readers of `gold/dim_model_portfolio` partitions by key (the slice reads by value date; the pair reads
-   today's partition), so the half names who sees a rewritten partition.
-3. The never-widen half: the five keys, their before and after value dates, the five figures, both outcomes on a day
-   with nothing to catch up, the rollback per key. COO half, then the CTO's.
-4. Hand-off to `4.0.0_SA_CRO` (file, not message): the one call line in `run_cottonwood_family` after the daily
-   build and before the slice, and the module's entry in the MDPF gold Lambda's package list (the package is flat).
-5. After both halves and the hookup: ledger entry, the apply, one trace per date to the served point.
+1. The CTO's half on the five-object act.
+2. `4.0.0_SA_CRO` adds the call line and the package row and deploys `mdpf-gold-lambda` (its lease, its ledger).
+3. Ledger `healgap-cottonwood-catchup-m-20261001`, opened before that deploy with the five prior VersionIds.
+4. The first daily run after the deploy: the `catchup` block reads five built; one trace per date to the served point;
+   the second daily run reads 0 planned.
 
 ## Parked
 
 | Question | Owner | Un-parks when |
 |---|---|---|
 | The seven days with no assignment partition stay absent (ruling item 4) | Andrew (a Rebalancer re-pull is a vendor call) | his per-use word |
+| 07-28, 07-29, 07-30: buildable, but each would mint a gold partition in the backfill's range | `1.0.0_SA_CTO` | it rules them in or out |
+| 08-04 and 08-12: valued by no partition; how they read on the served series is unmeasured | `2.0.0_SA_COO~M` | the first trace of acceptance reads the series |
 | MDPF_TAXSMA's lease surface is the whole directory | `4.0.0_SA_CRO` | it re-arms on its claimed files (batch 75 item 6) |
+| Whether the EC2 nightly (`mdpf-daily-dispatch.sh:554`) still fires; the instance reads stopped | `0.7.0_AE_CloudOps` (dark) | an AE seat is live |
+
+## Limits
+
+The five figures are the builder's dry-run totals, not served values. The Holdings and S3 reads of this session ran on
+a connection that timed out once inside a build (10:33Z); the step now records such an error instead of raising.
