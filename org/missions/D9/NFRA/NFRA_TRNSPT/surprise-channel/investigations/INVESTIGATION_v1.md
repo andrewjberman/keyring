@@ -768,6 +768,28 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "spec_asserts": "TO-TR-f2 build item 2: load_tables returns the label assets+registry; the order's <paths> omit test_outlook_bronze.py.",
     "world_is": "The one round-1 assertion on the label was not updated, so it fails on the required label. The order forbids weakening a test to pass and does not grant the file; the new test_outlook_envelope.py asserts the ruled label (7 passed).",
     "notes": "One-line fix for whoever holds that file: accept label == 'assets+registry'. Left unedited by this worker."
+  },
+  {
+    "id": "NFRA_TRNSPT-W1-S7",
+    "project": "NFRA_TRNSPT",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~1",
+    "surfaced_at": "2026-09-30T23:30:00Z",
+    "one_line": "TO-TR-x2 build item 3's re-materialise command (git rm -r --cached then git checkout --) cannot restore files from an index it just emptied, and the pull handler's fixture fake _MemS3 lives in teams/pull.py, not in a test file; both were handled inside the grant with different acts than the order names.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git ls-files --eol data/transcripts/assets data/transcripts/scripts/tests/fixtures before: 29 files i/lf w/crlf; after 'git ls-files -z <the two dirs> | xargs -0 rm -f' then 'git ls-files -z <the two dirs> | xargs -0 git checkout-index -f --': 39 i/lf w/lf (1 i/-text w/-text unchanged); checkout-index -f alone without the rm left all 29 CRLF",
+        "infra/aws/lambda/transcripts-pull/handler.py builds pull._MemS3() (data/transcripts/scripts/teams/pull.py), so test_pull_handler.py has no fake of its own; list_objects_v2 (Prefix, ContinuationToken, MaxKeys, IsTruncated, NextContinuationToken) was added to pull._MemS3 and to tests/test_teams_land_bronze.py FakeS3",
+        "python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_TRNSPT_T/R2_CHECKS/r2_suite_check.py: SUITE-GREEN passed=133 failed=0"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-TR-x2 build item 3: re-materialise the two directories with git rm -r --cached + git checkout --; build item 4: both test fakes (FakeS3 and test_pull_handler.py's _MemS3) gain list_objects_v2.",
+    "world_is": "git rm --cached leaves nothing for checkout -- to restore from, so checkout-index after deleting the files was used (no destructive git, bytes come from the index); the handler test's fake is production fixture-mode code in teams/pull.py (inside the grant), so the listing method landed there.",
+    "notes": "_MemS3 now carries a listing method in the Lambda's fixture arm; no behaviour change for any caller that did not list."
   }
 ]
 ```
