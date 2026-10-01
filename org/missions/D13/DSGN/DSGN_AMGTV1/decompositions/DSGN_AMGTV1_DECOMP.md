@@ -1356,3 +1356,12 @@ sentence; no "#", "/100" or "Trending". **Check:** `round19/checks/chattercell.c
 is read on the live walk. **New cut rule applied:** the order carries `tsc -b` in AC3. **Chain:** ~66 alone. **Close:** the issuer's live
 walk; then DEV is DSGN's freeze candidate (ruling 27768).
 **Rule 24:** one row, one order; no served value moves (a cell now reads a served count instead of a dead ranking point).
+
+
+## v20 -- ROUND 20 (issuer, 2026-10-01 ~14:4xZ) -- ONE DIRECT ACT
+
+**Rectangle:** the CTO's ruling msg 27874 (on COO~Z 27871: the overlay serves top-level `display_name` for all 94 names). **Cell:**
+`AV-x-1` (letter x; e-w are on disk), DIRECT ACT, `<risk>LOCAL</risk>`, `SecurityOverlay.tsx` (+ the optional fields in `types.ts`): the
+served company name above the ticker in `data-identity-name`; the ticker only when none is served, never a placeholder. **Check:**
+`round20/checks/namecard.cjs` (issuer): base portal DEV f73cd009 2 of 3. AC3 carries `tsc -b`. **Chain:** ~67 alone. **Deadline:** land by
+21:30Z with the walk evidence; otherwise f73cd009 stays the freeze candidate. **Rule 24:** one order; no served value moves.

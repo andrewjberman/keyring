@@ -83,7 +83,7 @@ elsewhere. "ag-1 may close on this limb." Your record reads barrons 3 of 3, wsj 
 
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>open</status>
+<status>complete</status>
 <round>34</round>
 <slot>~91</slot>
 <fabric>site-z</fabric>

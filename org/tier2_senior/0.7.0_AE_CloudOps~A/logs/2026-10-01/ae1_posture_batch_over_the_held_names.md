@@ -457,3 +457,65 @@ the proof instance so the committed artifact is not misread.
 ## Blockers
 
 None. Four orders complete this session (`ae-1`, `ag-1`, `ah-2`, `ai-2`); nothing owed by this lane.
+
+---
+
+# FIFTH ORDER OF THIS SESSION -- AMGT_RESAPP.TO-AMGT-aj-2, the overlay-name redeploy
+
+**archetype:** DEPLOY
+
+**Order:** `.../task-orders/AMGT_RESAPP.TO-AMGT-aj-2.the-overlay-name-redeploy.md`
+**Risk:** WORLD | **Round:** 60 | **GO:** msg 27858, READ-acked | **Deadline:** 22:00Z, landed **13:59Z**
+**Commits:** `a2e64034c9` (ledger OPEN), `1ccf6a59db` (proof)
+**Push state:** LOCAL @`1ccf6a59db`; `origin/CLOUD` at `0abf99fcd4`.
+
+## What landed
+
+One upload, one code-only `safe-apply`. Base unmoved at `E6PdHVFB...` with artifact `q0Vf...` -- what `ai-2`
+produced, so the chain across rounds 57-60 is unbroken.
+
+- Artifact -> `1DFcRU3xDzUsi84yZnWv985DDF1MymMn`, sha `UnSqZgCDkSxM3J3roY8d+iVGZp+8JB1XnM/phfZrmeo=`.
+- CONTENT-DIFF exactly `lib/research/api/scoped_amgt.py`, 350/349/1/0/0, **zero peer drift** this round.
+- Plan `0 add, 1 change, 0 destroy`; saved plan applied; live CodeSha256 equals the uploaded sha.
+- **AC1 PASS**, **AC2 PASS**. Entry CLOSED, 4 legs proven. No row.
+- AC1's core claim graded across the FULL population: **0 of 94** overlay/row `display_name` mismatches.
+
+## The loop closing on my own earlier finding
+
+Round 59's `Z-S332` said the condition's oracle -- a 200 on overlay -- was non-discriminating, and named
+`identity_status` as the field that works. This round the CTO's condition 3 reads "**not the HTTP status**"
+and AC1's C4 names `identity_status`. The weak oracle is excluded by the criterion's own wording now, so the
+strong form is graded by construction rather than by a side read. A row became a spec change in one round.
+
+## What I still had to read myself
+
+C4's **detail string is empty** -- it passes "the identity block unchanged, AMD/TSM MEASURED" without showing
+any values. So I read them: **AMD MEASURED, TSM MEASURED, fabricated key UNRESOLVED**, all three returning
+HTTP 200, which is exactly why the status cannot be the oracle.
+
+And one property **no clause asserts**, measured because it is the thing that would quietly go wrong: the
+fabricated key's new top-level `name` is **None**, not a ticker fallback. The name path does not invent a
+label for a key that cannot resolve.
+
+I did **not** file a fifth row for C4. It is reporting thinness, not a bad oracle, and after `Z-S324`,
+`Z-S325`, `Z-S330` and `Z-S332` another row in that family is noise rather than signal -- recorded in the
+proof and leg L3 instead.
+
+## Fixed rather than re-noted
+
+`ai-2`'s proof recorded that two static headings in my content-diff grader had been carried over from the
+`ah-2` variant and named the wrong file. This round's grader derives every heading from its `EXPECT_CHANGED`
+constant, so that class of error cannot recur.
+
+## Compiler Tools
+
+| tool | invocation | result |
+|---|---|---|
+| `comp-schedule` | not run | Preflight declares NOT-APPLICABLE. |
+| `comp-iam` | not re-run; issuer ran it, 0 new actions, BLIND | Gating clause is the plan's no-IAM change, and it holds. The reads were already exercised live by this seat in rounds 58-59, so "0 new actions" is corroborated, not assumed. A denied read would show as an overlay/row mismatch; C2 reads 0 of 94. |
+| `comp-adversary` | not re-run | Base arm (94 of 94 overlays without `display_name`) answered specifically: 0 of 94 mismatches. |
+| `comp-pipescript` | not applicable | A Lambda redeploy; BOUNDS 1 forbids any store write. |
+
+## Blockers
+
+None. Five orders complete this session (`ae-1`, `ag-1`, `ah-2`, `ai-2`, `aj-2`); nothing owed by this lane.
