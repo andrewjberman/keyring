@@ -13,12 +13,14 @@
 set -u
 
 HERE="$(cd "$(dirname "$0")" && pwd)"
-OUT="$HERE/../HOP8"
+OUT="${HOP8_OUT:-$HERE/../HOP8}"                 # a later window names its own folder, root, base and ledger
 ROOT="$HERE/../../../../../.."
 AWS="$ROOT/.tools/aws"
 P_OUT="$OUT/LEG_P_OUTPUT_20261001.txt"
 S_OUT="$OUT/LEG_S_OUTPUT_20261001.txt"
-WANT_ROOT="/opt/irpt-resident/a3b35fd376-st7"
+WANT_ROOT="${HOP8_ROOT:-/opt/irpt-resident/a3b35fd376-st7}"
+BASE="${HOP8_BASE:-H8_overview_cottonwood}"
+AUTHORITY="${HOP8_AUTHORITY:-hop-8 window leg J; CTO batch 76 item 5; Andrew-direct 2026-09-27 124xZ; ledger irpt-hop8-probe-signin-job-20261001}"
 mkdir -p "$OUT"
 
 solo_gate() {
@@ -56,7 +58,7 @@ case "${1:-}" in
     solo_gate || exit 3
     echo "  leg P would send: live_walk/session_probe_host.sh sha256 $(sha256sum "$HERE/session_probe_host.sh" | cut -c1-16) (ONE GET, no sign-in)"
     echo "  leg S would send: live_walk/leg_s_host.sh sha256 $(sha256sum "$HERE/leg_s_host.sh" | cut -c1-16) (ONE sign-in; only if P reads NOT_LIVE)"
-    echo "  leg J would run : hop7_run.sh with base H8_overview_cottonwood (ONE upload, ONE Overview)"
+    echo "  leg J would run : hop7_run.sh with base $BASE (ONE upload, ONE Overview)"
     echo "PLAN ONLY -- nothing fired."
     ;;
   --leg-p)
@@ -89,9 +91,7 @@ case "${1:-}" in
       echo "REFUSED: no live session by leg P or leg S; leg J is not run." >&2; exit 7
     fi
     root_gate || exit 4
-    HOP7_OUT="$OUT" HOP7_BASE=H8_overview_cottonwood \
-      HOP7_AUTHORITY="hop-8 window leg J; CTO batch 76 item 5; Andrew-direct 2026-09-27 124xZ; ledger irpt-hop8-probe-signin-job-20261001" \
-      bash "$HERE/hop7_run.sh"
+    HOP7_OUT="$OUT" HOP7_BASE="$BASE" HOP7_AUTHORITY="$AUTHORITY" bash "$HERE/hop7_run.sh"
     ;;
   *)
     echo "usage: hop8_run.sh --plan | --leg-p | --leg-s | --leg-j" >&2
