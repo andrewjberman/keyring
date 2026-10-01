@@ -216,8 +216,13 @@ What exists: the Performance export chain (bundle, render dispatch, receipt, dow
 Export control, which targets this tab.
 
 The exact gap: the served `retained_export.py:71-72` refuses anything but a Performance report ("only a retained
-Performance report over a server-issued selection exports"), and the live configuration reads
-`IRPT_EXPORT_RENDERER=unavailable`. The CTO ruled the Analysis export an enrichment under FWD-9 (101465).
+Performance report over a server-issued selection exports"). The CTO ruled the Analysis export an enrichment under
+FWD-9 (101465).
+
+CORRECTION (05:3xZ, same author): this paragraph first also cited the live value `IRPT_EXPORT_RENDERER=unavailable`
+as part of the gap. That was wrong. `infra/aws/terraform/investor-reporting/export/lambda.tf:72-77` states the value
+is deliberate and permanent: the function is a controller that dispatches the render to a browser host, and has no
+renderer of its own. It says nothing about whether an export can render. The refusal above is the whole gap.
 
 Close: admit `ANALYSIS` in the retained-export resolver with its own template, and render it on the host the
 Performance export uses. Proof: one exported PDF whose sections equal the report revision on screen.
