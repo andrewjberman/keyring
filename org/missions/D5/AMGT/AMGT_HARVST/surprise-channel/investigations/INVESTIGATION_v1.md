@@ -4587,6 +4587,29 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
             ]
         },
         "notes": "The worker did not edit the check (outside the order's paths). Its own AC2 verdict line is absent; the issuer fixes the formatting or accepts the derived run."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S50",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-01T04:38Z",
+      "one_line": "test_o1_run_record_reach.py::test_the_persisted_record_is_never_overwritten hardcodes started_at 2026-09-30, so it passes only when run on UTC date 2026-09-30; on 10-01 the second persist lands on a DIFFERENT key (date=2026-09-30), the put succeeds, no refusal is emitted, and the suite reads 1 failed.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "HVST-ad-1 AC3 (and every later collector-suite criterion): python -m pytest lib/opal_data_harvest/ passes, 0 base-passing tests failing.",
+      "world_is": "Round-31 close run at trunk bc4f634248 (2026-10-01T04:35Z): ad1_ac3 rc=1, 1 failed 362 passed 1 skipped; the failing test's captured stdout shows two run_record_persisted events, keys date=2026-10-01/... and date=2026-09-30/..., both put_performed true. worker.py _persist_run_record partitions by started_at, so the never-overwrite refusal is only exercised when the second call's date equals the first's. Test authored a45c9bb54f (2026-09-30 04:17Z). No product defect: the conditional put is untouched.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "deliverables/2.0.0_SA_COO_H/round31/rerun/ad1_ac3.txt",
+          "lib/opal_data_harvest/test_o1_run_record_reach.py line 168 at bc4f634248",
+          "lib/opal_data_harvest/worker.py:905 partition = store.date_partition(started_at)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Issuer direct act (LOCAL, one line, under the size floor): the test now derives started_at from the original key's date= partition, so it exercises the same key on any run date. Graded by the round-31 close re-run of ad1_ac3."
     }
   ]
 ```
