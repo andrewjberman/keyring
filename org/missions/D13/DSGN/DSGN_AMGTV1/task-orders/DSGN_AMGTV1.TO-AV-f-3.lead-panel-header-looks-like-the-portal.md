@@ -27,6 +27,14 @@ branches before you start; keep AV-f-1/AV-f-2's work whole. Build in `portal/src
    in the header actions.
 2. **`LeadPanel.tsx`, `PriceBars.tsx`, `ChatterBubbles.tsx`:** 0 hard-coded hex colour literals and 0 raw Tailwind palette shades;
    colours from `lib/chartColors.ts`.
+3. **ISSUER AMENDMENT 1 (row DSGN_AMGTV1-Z-W56-S2; ruling R5 "no other views for chatter"):** in `LeadPanel.tsx`, "Starred only"
+   on the Chatter subject filters the BUBBLES (it never renders `StarredList` or any list), and the chatter face never renders the
+   ranking `SourceCaption` (its footer is the bubbles' own source line). The price face's Starred filter stays as AV-f-1 built it.
+4. **ISSUER AMENDMENT 2 (CONTRACT amendment 2 @5ca1a00f56, CTO msg 27571):** the live route returns ALL covered names (95; most with
+   an empty `by_month`). `ChatterBubbles.tsx` sizes bubbles only for names with a count in the cursor's month and prints the
+   denominator beside the chart: "<k> of <n> covered names have collected articles this period" (k = names with a count in the
+   month, n = all served rows). A missing `by_publisher` key means "none collected" -- never a printed zero. `bubbles.cjs` (AC2)
+   now grades the denominator line on a fixture of 22 rows (10 with an empty `by_month`, zero publishers dropped).
 
 **The rules every cell keeps (PRD CONTRACTS, binding):** C-PRESENTATION-ONLY -- the page derives nothing it is not served
 (the ONE exception the shared CONTRACT s.2 writes: the page orders price bars by the absolute value of the served
@@ -85,7 +93,7 @@ Report once: what changed and where, the output line of every criterion, the por
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
-**ISSUER NOTES:** analysis s.3 row 3, panel half. Third on chain ~56, AND after chain ~57 drains (it imports AV-f-6's GraphicCard): the issuer hands it to slot ~56 only after merging ~57 into CLOUD/DEV and into the ~56 branches. Base: panelhead 2 of 3; green 3 of 3.
+**ISSUER NOTES:** AMENDED before hand-over (items 3-4, rows Z-W56-S2 and CONTRACT amendment 2; bubbles.cjs arm 1 + mutant 'nodenom' amended by the issuer; graded by to-pipeline-gate on modification: GATE (viii) placeholders only).  analysis s.3 row 3, panel half. Third on chain ~56, AND after chain ~57 drains (it imports AV-f-6's GraphicCard): the issuer hands it to slot ~56 only after merging ~57 into CLOUD/DEV and into the ~56 branches. Base: panelhead 2 of 3; green 3 of 3.
 
 <status>pending</status>
 <round>15</round>
