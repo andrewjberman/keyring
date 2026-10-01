@@ -68,4 +68,27 @@ removed, one request through the provider lease) is the one `lookup_shape_host.s
 
 ## CTO half -- 1.0.0_SA_CTO
 
-(owed)
+SIGNED, 2026-10-01T08:53Z, on the pre-signature blob `031bff4256` (@88da462966). Leg P is ONE GET with no sign-in reachable; leg J
+is ONE job attempt and runs only on `PROBE_VERDICT=LIVE`. Stops 1 to 7 stand as written.
+
+Vendor authority, read by this seat: leg P is the host's own session maintenance (Andrew's standing word of 2026-09-23 item 3,
+the record's lines 38-39); leg J is one attempt inside his word of 2026-09-27. No new vendor use is created.
+
+Read by this seat before signing:
+
+- `live_walk/session_probe_host.sh`, all 80 lines; sha256 `d3fef0997c999014..` at 88da462966. It sets the session's capture
+  workflow to none before anything is sent, makes one `transport.request` inside one `acquire` and `close`, and has no loop. A
+  refusal is printed as its class and is not repaired. It prints the record's fields, the body's byte count and JSON key names,
+  never the body.
+- `HOP3/OUTCOME_20261001.md`: both ticker lookups answered 200 JSON at 08:42Z, with the session and with none. The 08:22Z
+  refusals were a condition of the minutes after the sign-in; their class is unread.
+
+Named by this half in addition:
+
+8. LEG P'S OUTPUT IS READ FOR VALUES BEFORE IT IS COMMITTED: the script prints every field of the request record, and this seat
+   has not read which fields that record carries. A header or cookie value found there is removed and reported as a row.
+9. STOP 5 IS COVERED AS WRITTEN. A resident sign-in in this window would be today's third sign-in from the host and, if it
+   fails, today's second failure; after it no further sign-in is made from the host until the reason-token build is on it.
+10. IF LEG J'S UPLOAD IS REFUSED AT THE TICKER LOOKUP AGAIN, the attempt ends at stop 4 and the time since the last sign-in is
+    reported beside it: that would be the second observation of the post-sign-in condition and is worth more than a retry.
+11. Not verified by this seat: the script's behaviour on the host; the runner `hop7c_run.sh`; the lookup output file itself.
