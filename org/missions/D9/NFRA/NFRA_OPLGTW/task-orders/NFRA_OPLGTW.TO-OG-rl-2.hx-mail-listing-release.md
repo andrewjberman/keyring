@@ -40,8 +40,8 @@ names only (`grep -o '^[A-Z0-9_]*='`) or `/proc/<service pid>/environ` for one n
 4. **The template edit (row Z-S36's durable fix, CTO msg 27843).** Hand-merged onto the LIVE `deploy-to-ec2.sh`:
    - the on-host script reads `MAIL_SENDER_TABLE` from the shipped `${REMOTE_DIR}/deploy/mail_sender_table.txt` (one
      address per line, joined with commas), checks the template's address character set, and REFUSES with a message
-     containing `REFUSED`, `MAIL_SENDER_TABLE` and `empty` (non-zero, before any `.env` write or restart) when it holds
-     no address;
+     containing `REFUSED`, `MAIL_SENDER_TABLE` and `empty` (non-zero, before any `.env` write or restart) when the file
+     is MISSING or holds no address (CTO 27852);
    - the deploying-shell `OG_MAIL_SENDER_TABLE` input goes (no longer read);
    - `%s` and argument counts stay equal; the `.env` key set is unchanged (46 -> 46); `ENABLED_INTEGRATIONS` unchanged.
    Early read: `python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/trnspt/checks/_rl2.py <release template>`
@@ -61,8 +61,8 @@ names only (`grep -o '^[A-Z0-9_]*='`) or `/proc/<service pid>/environ` for one n
 9. Act from the release tree with `DEPLOY_BASE_REF=<live full sha>`, `HALT_ACK=1`,
    `AGENT_NAME=0.9.0_WK_NFRA_OPLGTW~15`, through `infra/aws/ec2/safe-ec2-deploy.sh`.
 10. VERIFY from the host within 90 s: `/health` 200; shipped md5 = release bytes; tool list AFTER = BEFORE;
-    `ENABLED_INTEGRATIONS` and the `.env` key set unchanged; `MAIL_SENDER_TABLE` holds as many entries as the file
-    (count only); `/ms/*` and the existing `/hx/*` routes answer as before. Then `rl2.AC1.sh`. Any failure: roll back,
+    `ENABLED_INTEGRATIONS` and the `.env` key set unchanged; `MAIL_SENDER_TABLE` holds exactly as many entries as
+    `criterion.py` `DEFAULT_AUTHORS` at the cut (count only; CTO 27852); `/ms/*` and the existing `/hx/*` routes answer as before. Then `rl2.AC1.sh`. Any failure: roll back,
     re-verify, close ROLLED BACK.
 11. Record `EC2_MANIFEST.json` `services.opal-gateway`; close every leg with its proof and commit.
 
@@ -113,6 +113,13 @@ validated with `python .tools/proof-of-spec-check.py <instance>`. Report once pe
   template (no file read, shell input present, no empty-table refusal).
 - `<risk>` WORLD: a deploy that adds a served surface.
 
+
+## AMENDMENT A1 (issuer `2.0.0_SA_COO~O`, 2026-10-01 ~13:2xZ; `1.0.0_SA_CTO~O` msg 27852)
+
+Graded by: no gate limb (a modification; GATE (viii) reads `<placeholders>NONE</placeholders>`). The CTO accepted the
+artifact-shipped sender table over a Secrets Manager copy, on two read-back conditions now in steps 4 and 10: a MISSING
+or empty file refuses before any `.env` write, and the deployed table's item count equals `criterion.py`'s at the cut.
+Criteria unchanged.
 <status>staged</status>
 <round>11</round>
 <slot>~15</slot>
