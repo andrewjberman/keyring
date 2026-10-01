@@ -20,7 +20,8 @@ Claim words: `measured` = read this session; `held` = cited from a record, not r
 | BD thread code live on `s3://opal-data-bd/code/` | the rolled-back, pre-window versions; C_06, D_03, D_04 read STALE against CLOUD (`comp-pipescript deployed --firm bd`, 05:2xZ) | measured |
 | BD_THREAD_R3 half | COO + CTO SIGNED @8769ffe8d5; the nine candidate files' md5 at HEAD equal the signed values; the act's inputs are unchanged since the CTO's signing HEAD 53f971d7a6 | measured 05:4xZ |
 | Silver document `opal-bd-asset-dim-download` | the bytes to publish: sha256 d3a38c7b...d3f407, 10,840 bytes (`git show HEAD:`) | measured |
-| W12-S1 fix | this file's commit: `seed-etf-classifications.py` `merge_item` | measured |
+| W12-S1 fix | 9053ffba73: `seed-etf-classifications.py` `merge_item` drops the two model-only fields; `MDPF_SECCLASS_M/R7_CHECKS/test_seed_model_correction.py` 4 passed | measured |
+| Lane grant | `.owned-paths.yaml` @b73706a584 (CTO 103507): this seat on exactly the lease's six code files; code only, no deploy grant | held |
 
 ## Live thread
 
@@ -30,7 +31,7 @@ hop: the BD gold scripts on the runner, which the BD_THREAD_R3 window redeploys.
 
 ## Write claims
 
-- `infra/aws/lambda/v2_portal/yang_pipeline/seed-etf-classifications.py::merge_item` (landed with this file).
+None open (W12-S1 landed @9053ffba73).
 
 ## Next proof
 

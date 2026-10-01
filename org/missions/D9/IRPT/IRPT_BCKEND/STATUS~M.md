@@ -2,7 +2,7 @@
 
 Seat `2.0.0_SA_COO~M` (CLAUDE). Contract
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md`. Reviewer `3.0.0_SA_CVO` (not seated
-at this write). As of 2026-10-01T05:4xZ.
+at this write). As of 2026-10-01T05:5xZ.
 
 Mode: FAST. Lease `IRPT_BCKEND~M`, `org/mcp/drive-mode.log` lines 30 and 35, until 2026-10-01T12:52Z, on Andrew-direct
 2026-10-01 ~04:2xZ (record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261001_042xZ_SELF_DRIVE_60M_LAPTOP_FABRIC_FINAL_SAY_CLOSER_DRIVE_IRPT_FIRST.md`
@@ -15,7 +15,7 @@ Claim words: `measured` = read this session; `held` = cited from a record, not r
 | What | Value | Claim |
 |---|---|---|
 | Working branch / worktree | `coo-m-r30` at `../coo_m_r30` | measured |
-| Workspace candidate pin (route code) | 4e2feb5a32 -- `holdings/snapshot.py`, sha256 830e2b58...5c79 | measured |
+| Workspace candidate pin (route code) | 30b141e19e -- `holdings/snapshot.py`, sha256 270b57c4...3871 (the fold as signed at 4e2feb5a32, plus PRD v0.22 ruling 22: 13 lines) | measured |
 | Workspace candidate pin (contract) | cc99dea562 -- docs `HoldingsSnapshot.schema.json`, sha256 5805bd5e...d8c4 | measured |
 | Deployed `irpt-holdings` | NOT MOVED by this work. Its build takes `snapshot.py` @3e913e9ce9 and the contract @a69fe8e33e from `infra/aws/lambda/ci/lambda-source-map.json` | measured (source map read) |
 | Producer `holdings_snapshot.py` | byte-identical to its base 900da8bbb7 (IB-mr-291 classifier) | measured (`git diff` empty) |
@@ -49,8 +49,8 @@ suite 324 passed; `stage.py --check` 4 of 4; the real run over 9,295 slices of t
 |---|---|---|
 | (1) signed-in journey 49F / INF / COT | MET | held: ~D HARs w8 + w9 (09-27) |
 | (2) every active 49F/INF account resolvable or refused explicitly | MET on the then-current directories | held: census @f247a922a5 |
-| (3) COT soundness, window disclosed | NOT RE-READ; last read BROKEN (COT `CASH -- CASH` served as equity) | re-verify at item 4's publication |
-| W2-11, W2-15, W2-19 served | CANDIDATE @4e2feb5a32 + @cc99dea562, not deployed | the half above; `R30_SELECTION_CENSUS_20261001.json` |
+| (3) COT soundness, window disclosed | In today's real local build at CLOUD code, all 886 Cottonwood nodes with symbol CASH and description CASH read `cash` (basis NAME_PATTERN), of 15,354 SECURITY nodes. The SERVED read is still owed | measured on the build; re-verify at the 14:15Z publication (item 2) |
+| W2-11, W2-15, W2-19 served | CANDIDATE @30b141e19e + @cc99dea562, not deployed | the half above; `R30_SELECTION_CENSUS_20261001.json` |
 | FWD-2 unclassified by name, on the narrowed classifier | tests on CLOUD with this merge | `tests/test_holdings_unclassified.py`, 5 passed |
 
 ## Write claims
@@ -79,7 +79,7 @@ to the custody total and every other field unchanged from the before-read (the h
 
 | Needs | From (owner) | Interface / pin | State |
 |---|---|---|---|
-| CTO half on the release | `1.0.0_SA_CTO` | the half file at the merge commit | ASKED with this merge |
+| CTO half on the release | `1.0.0_SA_CTO` | the half file | SIGNED @d43c3b0a2a at route pin 4e2feb5a32; ADDENDUM 1 (the pin moves to 30b141e19e for ruling 22) ASKED with this merge |
 | The whole-bundle `irpt-holdings` release, with its member census sent to this seat before the halves are asked | `2.0.0_SA_COO~P` | ~P's packet, citing the half file @9a3eef4cb1 | AWAITED (~P 103486; leg F5 was withdrawn from ~P's first packet and reopens in this one) |
 | The page consumes the three blocks (W2-11 rows, W2-15 totals) | `2.0.0_SA_COO~D` | docs contract @cc99dea562 | PUBLISHED with this merge |
 | `infra/aws/lambda/investor-reporting/_contracts/HoldingsSnapshot.schema.json` gains the three properties | `2.0.0_SA_COO~P` (issuer of open order IRPT_DASHBD.TO-DB-b-4, whose `<paths>` hold `_contracts/`) | docs contract @cc99dea562 | AWAITED; no reader of the route's response validates against that copy |
@@ -93,7 +93,7 @@ to the custody total and every other field unchanged from the before-read (the h
 | 49 Financial: 90.3 percent of custody (1,626,351,326.21 USD) has only a TARGET drill, so the remainder block is most of the page. Serve a second, separately labelled TARGET fold? | `1.0.0_SA_CTO` with `2.0.0_SA_COO~D` | the CTO rules (asked in the half) |
 | The declared fallback still classes an unknown 1-5 letter ticker `equity` by its shape (pinned in `tests/test_holdings_unclassified.py`) | `2.0.0_SA_COO~M` | MDPF_SECCLASS E8 and E9 land (the fallback's sunset) |
 | MDPF_SECCLASS BD_THREAD_R3: both halves signed (@8769ffe8d5); the window is three live-read invariants | `2.0.0_SA_COO~M` | the 04:00Z BD gold run ends and the runner stops (running at 05:18Z); it must close before the 22:10Z silver fire and the 23:00Z gold fire |
-| NOT_READY vs NOT_FOUND for a selected account with no custody row | `1.0.0_SA_CTO` | the CTO rules |
+| PRD v0.22 ruling 22 says an account outside the viewer's permitted set answers NOT_FOUND. The projection now does (pin 30b141e19e). The guard and the entry's reasons map still answer `OBJECT_NOT_COVERED` for an uncovered object (`_authz`, `holdings/entry.py`); 10 refusal assertions in the holdings tests pin that code | `2.0.0_SA_COO~P` (shared auth surface; `entry.py` is in open order IRPT_DASHBD.TO-DB-b-4's paths) | ~P or the CTO says whether ruling 22 moves that code too |
 
 ## Limits
 
