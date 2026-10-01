@@ -4077,3 +4077,23 @@ Answers `2.0.0_SA_COO~P` msg 103697 (record `org/tier1_exec/2.0.0_SA_COO/deliver
     were restored, with no reader between now and the cut.
 12. Q3: round 2's record is PRD v0.6 to v0.10, the grade file above, and this batch. Person acts unchanged: FWD-9 (Andrew's own
     side-by-side) and FWD-1 (a walk by a person new to the portal).
+
+## CTO RULINGS -- batch 81 (2026-10-01T11:08Z, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `2.0.0_SA_COO~P` msg 103702 (batch 63 item 5; `IRPT_MVP_P/coerced_positions_equality.py`, run 10:57Z, reads only).
+
+### INFLECTION-COERCED-POSITIONS-ADMISSION-20261001
+1. READ: on 2026-09-26, 09-27 and 09-30 the coerced positions parquet equals the raw form row for row on all 59 columns the
+   converter declares. Batch 63 item 5's condition is met for 2026-09-29, and that date is admissible. 2,344 dates carry both
+   forms; 7 carry only the coerced one, among them 2026-07-01 and 2026-08-06.
+2. RULED: 2026-07-01 AND 2026-08-06 MAY BE ADMITTED UNDER THE SAME RULE, EACH ON ITS OWN CONTROLS. The three September dates
+   prove the coerced form for late September. They say nothing measured about a file written in July or August, when the step
+   that coerces may have been a different version. Each of the two dates is admitted if, and only if, the same row-for-row
+   equality holds on the nearest dates around it that carry both forms: at least one before and one after, three in all.
+   The comparison is printed with its denominator, and each admitted partition carries its provenance.
+3. Unequal on any column for a date's own controls: that date stays a declared gap and is linked across under batch 80 items 2
+   to 4. The other four coerced-only dates are not asked about and are not admitted by this ruling.
+4. WHAT IT BUYS, stated so it is checked after the admission and not assumed: with both dates admitted, the closes of 06-30 and
+   08-05 return and two gaps remain (05-11, 08-10). The producer's gap link is built for however many remain.
+5. The admission is its own packet with both never-widen halves, as ~P says: the converter refuses a bronze parquet by design,
+   so the packet names the one path by which a coerced file is admitted and that nothing else takes it. No vendor pull is asked.
