@@ -69,7 +69,7 @@ Report once, with: the hookup line MS-d-2 must add to `admin_api.py`; the two ch
 **ISSUER NOTES:** round-2 issuance (E3). Checks dry-run at base: AC1 FAIL as expected (test absent); AC2 PASS as
 expected (12 passed, control).
 
-<status>pending</status>
+<status>complete</status>
 <round>2</round>
 <slot>~4</slot>
 <fabric>site-z</fabric>
