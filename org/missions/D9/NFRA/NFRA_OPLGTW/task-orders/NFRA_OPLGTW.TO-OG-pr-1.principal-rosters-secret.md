@@ -32,7 +32,9 @@ to the deploy variables `OG_MASTER_ADMIN_PRINCIPALS` (one `<tid>/<oid>` pair) an
 1. **Terraform.** Write `infra/aws/terraform/opal-gateway/gateway-read-secrets.tf` on the
    `infra/aws/terraform/opal-gateway/graph-read.tf` pattern:
    - three metadata-only `data "aws_secretsmanager_secret"` blocks, one per name above;
-   - ONE `aws_iam_role_policy` named `"${var.name}-gateway-read-secrets"` on `aws_iam_role.gw.id`, ONE statement,
+   - ONE `aws_iam_role_policy` named `"gateway-read-secrets-policy"` (the builder's output,
+     `lib/opal_naming.py` `name("gateway", None, "read-secrets", "policy")`, cited in a comment beside it; amendment
+     A2) on `aws_iam_role.gw.id`, ONE statement,
      `Action = ["secretsmanager:GetSecretValue"]`, `Resource` = the list of exactly those three `.arn` references;
    - no `aws_secretsmanager_secret_version`;
    - a header comment on `graph-read.tf`'s pattern: why, mechanism, values created out of band, the post-apply verify.
@@ -135,3 +137,18 @@ targeted apply is fed: the owner-key variables from the live Lambda (the `OG-n-1
 staged build made locally, and the deps-layer zip copied from the main tree. None of those resources is targeted, and
 the plan's 1-to-add / 0 / 0 reading is the guard against any spill. PHASE B's GO waits on Terraform act #1 of the
 gateway train (MX-r-7, CTO ruling C4: targeted, never concurrent, in train order).
+
+## AMENDMENT A2 (issuer `2.0.0_SA_COO~O`, 2026-10-01 ~07:5xZ; rules BLOCKING row Z-W18-S2)
+
+Graded by: no gate limb (a modification; GATE (viii) reads `<placeholders>NONE</placeholders>`). PHASE B's targeted
+`safe-apply` was refused by the naming plan limb (LGIC_ENFORCE DEC-6): `opal-gateway-gateway-read-secrets` grades
+OUT-OF-PATTERN as an IAM_POLICY. The order typed that name, which is the issuer's defect (CLAUDE.md rule 30: every
+resource name is builder output). The policy is now `gateway-read-secrets-policy` = `name("gateway", None,
+"read-secrets", "policy")`, CONFORMANT. The worker stopped, rolled the three secrets back to a 7-day recovery window and
+closed the ledger ROLLED BACK (@cf4426a167, drained @8e87440071) -- the correct act. RESUME of PHASE B:
+- re-open the ledger with the same slug `nfra-oplgtw-gateway-read-secrets` (a new entry; commit entry and sentinel
+  before the act);
+- `aws secretsmanager restore-secret --secret-id <name>` for the three names (values preserved; the creation script is
+  NOT re-run; its refusal on an existing name stands);
+- edit the one name line in `gateway-read-secrets.tf`; then the targeted `safe-apply` per step 6 (1 / 0 / 0);
+- step 7 as written.

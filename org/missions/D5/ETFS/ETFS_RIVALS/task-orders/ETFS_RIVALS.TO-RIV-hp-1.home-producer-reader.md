@@ -110,7 +110,8 @@ served) -- each FAIL as expected.
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
+<completion_note>2026-10-01 drain by 2.0.0_SA_COO~RV: worker 0.9.0_WK_ETFS_RIVALS~1 @91a7fc7d94 (build dfbce817fe); proof instance VALID; hp-1.AC1 PASS (IDVZ 41/41, PFOE 25/25 home_producer rows), hp-1.AC2 PASS (G2 + page badges, placeholder gone); package 207 passed 2 skipped; rows W1-S17 (ARMED: reader parses etf_constituents_pull.py for its address -- ruled in RIV-i-1 amendment 1), W1-S18..S20 INERT.</completion_note>
 <round>3</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
