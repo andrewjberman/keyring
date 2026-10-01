@@ -73,6 +73,23 @@ R1, R2, R5).**
 - Graded by: no gate limb graded this modification (to-pipeline-gate LIMB 6 grades only a newly-added order; GATE (viii)
   finds `<placeholders>NONE</placeholders>`).
 
+**AMENDED A2 (2.0.0_SA_COO~MS, 2026-10-01 ~07:5xZ) -- MX-r-7 LANDED (2.0.0_SA_COO~MI msg 27626); slot 2 is this release.**
+- **Base:** `05e3eff56307409fab574bba620ec22ba9dd0456`, live since 07:13:52Z (S3 `-latest` git-ref; manifest on CLOUD
+  @1232c96dc7). It is a deploy-only commit and does NOT descend from d61fde4693 by ancestry; build the release ON it.
+  Re-read the live ref at PHASE A and immediately before the ANNOUNCE; a different ref is STOP. `DEPLOY_BASE_REF=05e3eff563`.
+- **Do NOT carry** MX-r-7's dep-branch manifest commit `da1f54bfda` (row NFRA_MCPINDEX-Z-W21-S23).
+- **Key census replaces A1's 35 -> 37:** the live `.env` has 37 keys (MX-r-7 added `BLACKDIAMOND_READER_ROLE_ARN` and
+  `BLACKDIAMOND_READER_EXTERNAL_ID`; both principal keys kept), so the census is **37 -> 39**. The live printf line now
+  fetches the Black Diamond ExternalId on the host; hand-merge the two keys onto THAT line.
+- **This project's round-2 gateway commits** (cherry-pick the `infra/aws/ec2/opal-gateway/` part only, in this order):
+  `5d469f8e19` (MS-ig-1), `df4d410b66` and `e912944d2f` (MS-sg-1), `5af362d473` (MS-rq-1), `fe61befd60` and `720199de7d`
+  (MS-r-1). Their non-gateway paths (the surprise channel) are not part of the release tree.
+- **Checks:** d2.AC2's allowed set gains MS-sg-1's four asker suites (`tests/test_asker_binding.py`,
+  `tests/test_asker_nochannels.py`, `tests/test_asker_scope.py`, `tests/test_mcpmsp_asker_firm.py`). d2.AC3 expects 39
+  keys.
+- Graded by: no gate limb graded this modification (LIMB 6 grades only a newly-added order; GATE (viii) finds
+  `<placeholders>NONE</placeholders>`).
+
 ## 2. BOUNDS
 
 1. No Terraform. No push of any shared branch (the release branch stays local). No vendor call. The two new `.env`
@@ -100,7 +117,7 @@ Read, never write: every other `infra/aws/ec2/opal-gateway/**` file, `.tools/dep
 <proof_of_spec>
   <criterion id="AC1" cell_refs="MS-d-2"><invocation>bash org/missions/D6/NFRA/NFRA_MCPMSP/deliverables/2.0.0_SA_COO~MS/round2/checks/d2.AC1.sh; echo "exit=$?"</invocation><expect>slug nfra-mcpmsp-r2-gateway-release: entry files at HEAD>=1; sentinel at HEAD=no; listed OPEN/HELD=0 -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="MS-d-2"><invocation>bash org/missions/D6/NFRA/NFRA_MCPMSP/deliverables/2.0.0_SA_COO~MS/round2/checks/d2.AC2.sh; echo "exit=$?"</invocation><expect>deployed_commit=X prev=P descends=yes; gateway files shipped >=1, outside round 2's set 0; carries the three new modules 3 of 3 -- RESULT: PASS -- exit=0</expect></criterion>
-  <criterion id="AC3" cell_refs="MS-d-2"><invocation>bash org/missions/D6/NFRA/NFRA_MCPMSP/deliverables/2.0.0_SA_COO~MS/round2/checks/d2.AC3.sh; echo "exit=$?"</invocation><expect>ssm status=Success; /health=200; internal_role=match sender_gate=match admin_refusals=match; tenant_registry=present; INTERNAL_READER_ROLE_ARN lines=1; MSP_CALLING_IDENTITIES lines=1; .env keys=37 (expect 37); MASTER_ADMIN_PRINCIPALS lines=1; WRITE_CAPABLE_PRINCIPALS lines=1 -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC3" cell_refs="MS-d-2"><invocation>bash org/missions/D6/NFRA/NFRA_MCPMSP/deliverables/2.0.0_SA_COO~MS/round2/checks/d2.AC3.sh; echo "exit=$?"</invocation><expect>ssm status=Success; /health=200; internal_role=match sender_gate=match admin_refusals=match; tenant_registry=present; INTERNAL_READER_ROLE_ARN lines=1; MSP_CALLING_IDENTITIES lines=1; .env keys=39 (expect 39); MASTER_ADMIN_PRINCIPALS lines=1; WRITE_CAPABLE_PRINCIPALS lines=1 -- RESULT: PASS -- exit=0</expect></criterion>
 </proof_of_spec>
 
 ## 5. WHEN YOU ARE DONE
