@@ -16464,6 +16464,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "spec_asserts": "AMGT-af-1 AC1: the whole lib/research/api/tests/ suite passes, exit=0 (314 passed at the cut).",
     "world_is": "In a worktree whose sparse cone omits the portal submodule, test_print_format_rich.py errors at fixture load, so AC1's exit=0 is unreachable by any change inside the order's paths. The errors are independent of af-1 (no af-1 path is read by those tests). Nothing was re-scoped; the criterion is reported FAIL as run.",
     "notes": "disarm_owner 2.0.0_SA_COO~Z. Issuer's options: grade AC1 on a tree with portal populated, or deselect the file at the drain."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-W198-S1",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_RESAPP~198",
+    "surfaced_at": "2026-10-01T05:57:00Z",
+    "one_line": "AC1 cannot exit 0 in a sparse worker worktree: test_print_format_rich.py needs portal/src/pages/SecurityAnalysis/__harness__/tabsFixture.BA_US_Equity.json, and portal is a gitlink (160000) the worktree does not check out -- 3 errors, identical before and after af-2's edit.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Baseline at 4a7d8bcb0f before any edit: pytest lib/research/api/tests/ = 309 passed, 2 skipped, 3 errors; the 3 errors are test_print_format_rich.py::{test_default_and_fmt_pdf_are_byte_identical_to_build_pack_itself, test_format_rich_returns_200_markdown_non_empty, test_format_unknown_refuses_400_naming_both_legal_values}, each FileNotFoundError on C:/tmp/r56-198/portal/src/pages/SecurityAnalysis/__harness__/tabsFixture.BA_US_Equity.json.",
+        "git ls-tree HEAD portal = '160000 commit b336b141b4...' (a submodule); git sparse-checkout list holds no portal cone; ls portal in the worktree is empty. The fixture exists in the shared tree's portal checkout (read-only listing of its __harness__ directory).",
+        "After af-2's edits: 330 passed, 2 skipped, 3 errors (the same three); every other test in the directory passes, test_t1_fallback_and_pct.py's 21 included. AC2 and AC3 run live from this worktree and exit=0."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "AMGT-af-2 AC1: every test in lib/research/api/tests/ passes and exit=0.",
+    "world_is": "AC1 as literally written runs in a worktree whose portal submodule is not checked out, so three portal-fixture tests error with or without this change and the exit is 1. Nothing af-2 touched is implicated. Issuer to decide: accept AC1 as met on the 330 passing tests plus the baseline-identical 3 errors, or re-run AC1 in a tree that carries portal. No portal path is in this order's write grant, so none was created.",
+    "notes": "disarm_owner 2.0.0_SA_COO~Z."
   }
 ]
 ```
