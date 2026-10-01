@@ -27,3 +27,7 @@
 - 20261001T150530Z LEG V1 closed: Two DEPLOYED qa_local invokes with qa_return_bodies (dry run, zero S3 writes), both after the 13:30Z scheduled run. BEFO
 - 20261001T1725Z LEG V2 proof_required AMENDED by 4.0.0_SA_CRO on 1.0.0_SA_CTO msg 103926: admits exactly MDPF_TAXSMA TX-r-3 branch 2; a Tax dollar on 2026-10-02 still rolls back
 - 20261001T1810Z LEG V2 proof_required RE-AMENDED by 4.0.0_SA_CRO on 1.0.0_SA_CTO msg 103942: admits TX-r-3 branch 1, each Tax change checked by identities (a)-(d); supersedes the 17:2xZ amendment
+
+## V2 trigger amendment 2026-10-01 22:0xZ (4.0.0_SA_CRO, CTO ruling (a) msg 103978)
+
+AMENDED 2026-10-01 22:0xZ by 4.0.0_SA_CRO on 1.0.0_SA_CTO ruling (a), msg 103978, CTO half CTO_HALF_COTTONWOOD_CUSTOM_AND_SMA_20261001.md @3338690683: the trigger ALSO admits the Cottonwood custom-model + Opal SMA sleeve change (request NEVER_WIDEN_REQUEST_COTTONWOOD_CUSTOM_AND_SMA_20261001.md @d2d219824a) ONLY under five identities -- (1) Cottonwood total unchanged; (2) Cottonwood Models gain == its Custom sum; (3) Cottonwood Client loss == Custom + SMA (PFDE, DIVZ if present); (4) Global total and Global Custom move by exactly Cottonwood's Custom sum, Global SMA and Client unchanged; (5) 49 Financial and Inflection change only by null Custom members. Anything else rolls back.

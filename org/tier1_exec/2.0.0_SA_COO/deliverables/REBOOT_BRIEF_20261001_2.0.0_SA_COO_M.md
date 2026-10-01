@@ -69,9 +69,8 @@ is deployed (18:03Z). Own work resumes until that word arrives.
   23:00Z gold fire and the page read for relationship z08327149.
 - `secclass-model-rows-m-20261001`: leg G = the 23:00Z gold fire reads the six held tickers with class_source etf-classifications.
 - `secclass-bd-thread-r2-and-irpt-narrowed-m-20260930` (HELD): only B4 open, read with r3's B4.
-- `healgap-cottonwood-catchup-m-20261001`: D1 and S CLOSED 19:3xZ on 4.0.0_SA_CRO's extra Gold run (19:18Z; manifest
-  `_manifests/2026-09-30/20261001T191940Z.json`: 5 built, 0 failed; the five Cottonwood points measured to the cent; every
-  other served difference is the Tax member). Only D2 open: the 2026-10-02 13:30Z run reads catchup 0 planned, 0 built.
+- `healgap-cottonwood-catchup-m-20261001`: CLOSED 22:1xZ, all four legs. D2 read on the CRO's 22:08Z Gold run (manifest
+  `_manifests/2026-09-30/20261001T220850Z.json`: catchup 0 planned, 0 built, 0 failed). Nothing owed on it.
 - HELD-STALE `cot-cash-admission-m-20260925` and `bd-securities-cot-new-p1-m-20260926`: gated on the Cottonwood re-point.
 - Worktrees: `C:/Users/AndrewBerman/Desktop/coo_m_r30` (on `coo-m-r30` @1c1d2a02c2, clean but for an untracked audit log; check
   out `coo-m-cot-carrier` there to continue the re-point, then switch back); `C:/Users/AndrewBerman/Desktop/coo_m_cot_seed`
