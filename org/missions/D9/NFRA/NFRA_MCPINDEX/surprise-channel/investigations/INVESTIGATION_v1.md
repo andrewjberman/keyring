@@ -4706,6 +4706,29 @@ carries none.
       ]
     },
     "notes": "INERT: the wrapper's known Windows charmap defect in its Step 3 (the manifest's own _status text records it). Nothing merges the dep branch."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S70",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-01T07:50Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "RULES NFRA_MCPINDEX-Z-W21-S18..S23 after MX-r-7 went LIVE (05e3eff563, ledger nfra-mcpindex-r5-bd-release CLOSED 7/7; issuer re-grade on CLOUD 1232c96dc7: r7.AC1 PASS 23/23 sentinels, r7.AC2 PASS 7/7 ids, proof VALID). S18 no rotation; S19 accepted, root-render gap carried; S20/S21/S23 carried as tooling observations; S22 (discover does not route the BD fees question) carried to the round-5 analysis as the J1-bearing repair.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "r7.AC1 on CLOUD: entry files at HEAD=1; sentinel at HEAD=no; listed OPEN/HELD=0; 23 of 23 sentinels -- RESULT: PASS.",
+        "r7.AC2 on CLOUD: ssm a967207e status=Success; /health=200; shipped 2 of 2; ids enabled 7 of 7 -- RESULT: PASS.",
+        "proof-of-spec-check on the MX-r-7 instance: VALID rc=0.",
+        "S3 -latest git-ref 05e3eff563 (07:13:52Z); worker read-back 37 .env keys incl both principal keys, tools 58 -> 60 (+blackdiamond_list_fees, +etfs_get_positioning, 0 removed), host 89/89 == artifact."
+      ]
+    },
+    "spec_asserts": "Rows S18-S23 (worker ~21, PHASE B) each name the issuer as disarm_owner.",
+    "world_is": "All six are INERT; none blocks the live release.",
+    "notes": "RULINGS. S18 (the ExternalId shown in the worker's session tool output, in no file): NO ROTATION -- the trust is same-account, opal-gateway-role only, and the ExternalId is a confused-deputy guard, not a credential. S19 (Plan 6 applied from an untracked copy of the opal-gateway root because CLOUD's root cannot render: 3 data-source secrets of other seats' unapplied files are absent live): ACCEPTED, the applied set equals the signed six (6 added, 0 changed, 0 destroyed); the render gap blocks every later safe-apply on that root (train acts #2/#3), told to 2.0.0_SA_COO~O 07:02Z, carried to the round-5 analysis for 1.0.0_SA_CTO~O. S20 (simulator rejects Resource * in a resource policy): instrument note, carried. S21 (a deploy tree sharing the issuer's session id resolves the issuer's serial at the halt gate; the worker wrote its own gitignored serial file): carried as a worker-mechanics note. S22 (opal_discover never reads DATA_CATALOG silver_datasets, so 'what fees did Black Diamond charge' is catalogued=false, 0 matches): the J1-bearing defect for FWD-4/BD, carried to the round-5 analysis as an enrichment item (it repeats the Schwab catalog-row shape, CTO 27367); the MX-r-7 order stays complete on AC1/AC2, J1 is the CVO's at L9. S23 (the deploy wrapper's own manifest commit on the dep branch mojibaked 4 unrelated lines; not carried): shared-tooling defect, carried. The worker's status flip is accepted on this issuer re-grade."
   }
 ]
 ```
