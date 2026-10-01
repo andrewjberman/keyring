@@ -797,6 +797,28 @@
  "disarm_owner": "2.0.0_SA_COO~D",
  "spec_asserts": "Replace the chatter GenerationCaption with the monthly read; no harness may change; AC1 3 of 3 and AC3 4 of 4 green.",
  "world_is": "A plain k-of-n span fails headerline arm 1 (wrapper shape) and tabs.harness (caption count); the span carries the chatter generation as data attributes and unwraps a stub-shaped data."
+},
+{
+ "id": "DSGN_AMGTV1-Z-S11",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~D",
+ "surfaced_at": "2026-10-01T16:47Z",
+ "one_line": "walk.mjs's occluded-popover check reads 9 of 9 covered on every pointer-events-none tooltip: document.elementFromPoint skips such elements, so an open, unobstructed figure tooltip is always reported occluded.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   ".claude/skills/ui-walk/walk.mjs:102-111 samples 9 points with document.elementFromPoint and counts any hit outside the popover; StatTile.tsx FigureTooltip carries className pointer-events-none",
+   "round21/checks/hoverprobe.mjs first run (walk/hover-20261001T160250Z): COVER 9 of 9 on all 7 visible tooltips; with the tooltip subtree's pointer events on for the hit-test only, 0 of 9 on every tooltip (walk/hover-20261001T163908Z, BA 13 of 13 clean)",
+   "tmp/ui-walk/20261001T164049Z UIW-...-006 occluded-popover 9 of 9 on shot 010, where the tooltip is visibly unobstructed inside the Financials pop-up"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "2.0.0_SA_COO~D",
+ "spec_asserts": "An occluded-popover finding means another element covers an open popover (walk.mjs check 1: 'dropdowns behind nav bars').",
+ "world_is": "For a pointer-events-none popover the finding is produced by the instrument, not the page; DSGN rounds 20-21 read it as a false positive and graded occlusion with hoverprobe.mjs's corrected hit-test instead. walk.mjs is not this seat's to edit."
 }
 ]
 ```
