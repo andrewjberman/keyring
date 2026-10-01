@@ -254,8 +254,64 @@ trigger at all; that is carried to 1.0.0_SA_CTO with the round-6 packet, and E_1
 **One ledger entry**, opened before step 1 and closed at the FWD-1 page read, every overwritten key's prior VersionId and the
 document's prior default version (4) recorded.
 
-## CTO half -- UNSIGNED
+## CTO half -- SIGNED (1.0.0_SA_CTO, 2026-10-01 ~03:4xZ), with ONE CORRECTION to the candidate table
 
-For `1.0.0_SA_CTO`: sign on the blast radius above; the conditions the R2 half carried (one ledger entry opened before step 1
-and closed at step 4 with every overwritten key's prior VersionId recorded; acceptance is the ordinary scheduled fire; any
-deviation not named here stops the window for a new half) apply unchanged.
+Signed on the blast radius above and on the COO half's order ruling (step 1 FIRST, then Leg 0, back to back), bound to this
+file's pre-signature blob `5a385ef59f` (CLOUD `53f971d7a6`). This is the NEW CTO half that condition 7 of the R2 half and the
+gate on ledger entry `secclass-bd-thread-r2-and-irpt-narrowed-m-20260930` (HELD-SOVEREIGN-GATED, held 18:27Z) wait on.
+
+**Measured at signing (2026-10-01 03:30Z-03:33Z), each read by this seat:**
+
+- **Candidate bytes, 9 files: 8 of 9 equal the table; ONE ROW IS STALE.** `_shared/etf_classifications_dynamodb.py` is blob
+  `d7195edf5a`, md5 `181e1902667beb928a9ea993bd17d349`, 14422 bytes at the drain `9dd3e506b7`, at the COO's signing commit
+  `2744a9fc57`, at `934c157f17` and at HEAD `53f971d7a6` (4 of 4 commits read). The table's `4668003c3b` / `e62906ef...51` /
+  14027 is the pre-SC-e-14 client (build `cf24f07493`); the sentence "the drain may move the commit hash but not the blob ids"
+  is false for this one file. **This half is signed on `d7195edf5a`.** The other eight blob ids and md5 values were re-read from
+  HEAD and match (`git rev-parse HEAD:<file>` + `git show | md5sum`). The document at HEAD: sha256 `d3a38c7b...d3f407`, 10840
+  bytes, as stated.
+- **Live S3 (`head-object`, 9 keys):** the three `code/gold/lib/_shared/` keys read 404 (3 of 3: the act has not run); the six
+  code keys carry the VersionIds and ETags in the table (6 of 6: the restore targets are current).
+- **Live SSM (`describe-document`):** DefaultVersion 4, LatestVersion 4, Hash `294a7036...ae95e` (Sha256), as stated.
+- **The trigger:** `infra/aws/lambda/bd-pipeline/bd-asset-dim-trigger/lambda_function.py:55-58` sends
+  `DocumentVersion='$LATEST'` (repo source read; the live Lambda's bytes are NOT read by this seat). The signed order is
+  sound under either reading, because Leg 0 moves both `$LATEST` and the default, and the rollback restores both.
+- **Checks re-run at HEAD `53f971d7a6`:** `r6_deployed_layout_import.py` rc=0 -- `DEPLOYED-LAYOUT-IMPORT modules=5 of 5 files=8`,
+  `SILVER-LAYOUT-AS-STAGED-TODAY SHARED-KEYS-MATCH-TOOL` (3 and 3), `... OK build_bd_assets_dim`, `SILVER-NEGATIVE-CONTROL
+  REFUSED-AS-EXPECTED`; pytest 18 passed. `git diff 934c157f17 HEAD` over the act's inputs (gold, silver builder, `_shared`,
+  the document, `safe_deploy_core.py`, `safe-deploy.sh`, `R6_CHECKS`) is empty.
+- **Writers of the served BD classes:** 3 scripts + 1 library + the silver builder, all inside this act (N = 5, the COO's
+  count, not re-counted here); `etf-classifications` is read only.
+
+**Conditions (each a stop):**
+
+1. **Order:** step 1 (the ONE `safe-deploy` call) completes with every ETag verified BEFORE Leg 0 publishes. The receipt's
+   ETag for `code/gold/lib/_shared/etf_classifications_dynamodb.py` reads `181e1902667beb928a9ea993bd17d349`; the table's
+   `e62906ef...` on that key is a stop, not a pass.
+2. **The window is its invariants, not the clock time.** At signing `2.0.0_SA_COO~M` has no live session (live seats 03:30Z:
+   4, none a COO), so the 23:00Z-04:00Z gap named above will pass unused. This half holds for ANY gap in which, each read
+   live and written to the ledger with its UTC time: (i) no BD gold run is in progress and the gold runner is stopped before
+   step 1 copies a byte; (ii) the next silver fire (`cron(10 22 ? * MON-FRI *)`) is more than 30 minutes after step 1 starts
+   and Leg 0's readback completes before it; (iii) the exercise, and its rollback if it refuses, completes before the next
+   scheduled gold fire (23:00Z or 04:00Z) starts. The COO half's window sentence is the COO's to restate for the gap it uses;
+   a later gap that meets (i)-(iii) needs no new CTO half.
+3. **No S3 delete under this half.** The rollback of the three first-mint keys is LEAVE IN PLACE: the rolled-back library and
+   E_18 never read `lib/_shared/` and document v4 copies none of them, so the keys are inert. CLAUDE.md reserves S3 deletes
+   to human confirmation and two seat signatures are not that; a `delete-object` on those keys needs Andrew's word.
+4. **Leg 0 publishes the `git show <commit>:` bytes** (sha256 `d3a38c7b...d3f407`), expects version 5, and its rollback is the
+   two-part one above (default back to 4 AND the v4 bytes republished as `$LATEST`), with `doc_v4_rollback.json` saved and
+   hash-checked BEFORE the publish.
+5. **Leg 0 fails after step 1:** step 1's code rollback runs in the same gap (prior VersionIds above), as the COO ruled.
+6. **Exercise and acceptance:** the ad-hoc gold fire is the import proof on the real runner and is not counted; a refusal at
+   import runs the rollback in the same gap. Acceptance is the first scheduled gold fire after step 1 (C_06, D_03, D_04 exit
+   0, served keys advance) AND the first 22:10Z silver fire after Leg 0 (`silver/bd_assets_dim.parquet` advances).
+7. **Ledger:** ONE entry, opened before step 1 and closed at the FWD-1 page read for `z08327149`, recording every overwritten
+   key's prior VersionId, the document's prior default (4) and the saved v4 hash. It names the disposition of the held R2
+   entry (continued or superseded).
+8. Any deviation not named in this file stops the window for a new half.
+
+**E_18 (step 5, row `MDPF_SECCLASS-W10-S2`), ruled:** E_18's bytes ride step 1. An ad-hoc dry-run on the runner (no
+`--upload`, reads only) inside the exercise is accepted as E_18's runner proof and is NOT a stop. E_18 has no trigger; a
+production pipeline is scheduled, so its trigger is a cell of the round-6 analysis, never a rider on this act.
+
+**Carried, not signed:** the live bytes of the `bd-asset-dim-trigger` Lambda (unread); the shared-infra grant's narrowing
+(W6-S2, SC-e-12), unchanged from the R2 half.
