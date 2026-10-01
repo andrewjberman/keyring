@@ -1214,3 +1214,23 @@ the laptop (the consumer of order 103564) and `rl.AC1.sh` (public URL) could not
 concurrent). WORLD. Slot `~18`. Label `<round>10</round>`, its own one-cell issuance. Edge `OG-al-1` -> `OG-rl-1` PHASE
 B. Serves: FWD-1 (the journey's machine hop) and NFRA_TRNSPT's FWD-1 hops 1-2. Criteria: the TF shape; the live rule
 plus probes (both `/hx/` prefixes reach the app, a non-`/hx` control still meets the sign-in).
+
+## ADDENDUM R3-T.3 (2.0.0_SA_COO~O, 2026-10-01 ~13:2xZ, on PRD v1.4 @dabb8e1e9f) -- the /hx/mail LISTING route
+
+**Source.** PRD v1.4 C7 "Mail listing" and its addendum (`prd-signoff.py status` ADMITTED); laptop order 103750 (relay
+@6963658f49); `1.0.0_SA_CTO~O` msg 27843 (cut one build + one release as its own round label; fold Z-S36's durable
+fix). Label `<round>11</round>`, ONE issuance, two cells, one chain (`OG-hl-1` -> `OG-rl-2`). fanout: 1 of 1 chain,
+cap 8.
+
+| cell | what | risk | slot |
+|---|---|---|---|
+| `OG-hl-1` | BUILD: `GET /hx/mail/messages` in `app/mail_route.py` (`LIST_ROUTE`), registered in `server.py`; the v1.4 rules (sender-bound with a per-row own-`from` re-check, 5-key rows, 31-day window, page_size 1..50 default 25, 200 pages, an opaque page token bound to sender + window + the allowlisted path and never a Graph URL, ascending `receivedDateTime`, empty window 200/0/null); the Graph allowlist gains `^/me/messages$`; audit = route, sender HASH, window, row count, label. PLUS Z-S36's durable fix's single source: `deploy/mail_sender_table.txt`, one address per line, kept equal to `criterion.py` `DEFAULT_AUTHORS` by a test (the `deploy/NFRA_OPLGTW_CONTRACT.json` pattern). | WORLD (floor) | ~16 |
+| `OG-rl-2` | RELEASE, train slot 5 (after MX-r-8): narrow, from the live ref; the template reads `MAIL_SENDER_TABLE` host-side from the shipped `deploy/mail_sender_table.txt` and REFUSES an empty table before any `.env` write (the deploying-shell `OG_MAIL_SENDER_TABLE` goes); NEVER-2 ledger; CTO + CVO halves. Acceptance: the laptop's four checks + the issuer's two token arms (9 conditions, `rl2.AC1.sh`). | WORLD | ~15 |
+
+**Z-S36's fix, the issuer's choice of form.** The CTO asked for a host-side read "like the R4 rosters". The rosters are
+secrets and live in Secrets Manager; the sender table is a committed data asset (`criterion.py`). A Secrets Manager copy
+would be a second runtime source that drifts from `criterion.py` (Yang's addresses land there) and needs a fourth ARN on
+the grant (a Terraform act). The artifact-shipped file kept equal by a test is host-side, single-source and needs no IAM.
+
+**Battery (blindness stated):** the paging arm needs a window holding two or more table-sender messages with
+attachments; 2026-08-01..31 (half-open, to 08-31T00:00Z) holds five on today's read (`search_email`: 08-02, 08-09, 08-15, 08-22, 08-30), but the mailbox can change.

@@ -78,3 +78,7 @@ deployed counts (62 / 94) are the base.
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-01 ~12:5xZ):** ACCEPTED. Executor proof `a30a3443fc` (AC1, AC2 PASS; entry CLOSED; artifact hj5ITKr5... -> q0Vf.FzuGpVovbH.xb2dumggs4k5kMKB; CodeSha256 g9H0TW2g... -> E6PdHVFB9z1xUcvCRtNIALjgAaCzNtolAdzaKmCssvM=). Issuer's independent read: both axes 0 of 94 unkeyed, display_name 94 of 94, company name 70 of 94; regression YES; overlay discriminator per row Z-S332: AMD/TSM identity_status MEASURED, a fabricated key UNRESOLVED (all three 200).
+
+<status>complete</status>

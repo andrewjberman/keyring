@@ -70,7 +70,8 @@ at base 48ec92238a: f-3.AC1 FAIL -- each FAIL as expected.
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
+<completion_note>2026-10-01 drain by 2.0.0_SA_COO~RV: worker 0.9.0_WK_ETFS_RIVALS~3 @46ee51aff0 (build a1a01427c9); proof instance VALID; f-3.AC1 PASS (TXUE fails an impossible bloomberg floor naming the source; IDVZ home and BASG issuer pass their own); per-source floors PROVISIONAL 0.0 + home_funds {IDVZ, PFOE}; env override RIVALFUNDS_GUARDRAILS_OVERRIDE; no rows.</completion_note>
 <round>4</round>
 <slot>~3</slot>
 <fabric>site-z</fabric>

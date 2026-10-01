@@ -2068,6 +2068,29 @@
     "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV."
   },
   {
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~2",
+    "surfaced_at": "2026-10-01T13:00Z",
+    "class": "OBSERVATION",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "ETFS_RIVALS-Z-W2-S11",
+    "hazard_standing": "ARMED",
+    "one_line": "Once RIV-q-1 lands a gqgu-<capture_id>.parquet beside basg-<capture_id>.parquet under one issuer-silver date, gold_canonical_shape reads ONE issuer silver object for the date by max(_revision), and that object is the GQGU one, so BASG's issuer rows leave the G1 pick until RIV-v-2's per-fund read lands.",
+    "spec_asserts": "Order RIV-q-1 section 2: 'G1's per-fund read is RIV-v-2's (do not edit gold_canonical_shape.py)'; silver is made per fund '<source>-<capture_id>' with BASG unchanged.",
+    "world_is": "gold_canonical_shape.py:279-283 _revision(uri) strips only the 'basg-' prefix, else returns the whole stem; :695-696 issuer_latest = max(issuer_uris, key=_revision) over EVERY *.parquet under issuer_silver(rd) and :699-700 reads only that one object for issuer_rows/issuer_funds. Measured at this worktree (q-1 code, base 53784a663e): _revision('.../gqgu-20260929T204244Z-5986610e156b.parquet') = 'gqgu-20260929T204244Z-5986610e156b', _revision('.../basg-20260929T204617Z-2a559d4deb4e.parquet') = '20260929T204617Z-2a559d4deb4e'; max(...) = the gqgu object ('g' sorts after '2'), i.e. a date with both objects feeds G1 GQGU's 39 rows only and BASG falls to its bloomberg fallback. Today's tree is not affected: no gqgu object exists in S3 silver; the exposure begins when q-1's collector/silver is deployed and a gqgu silver object lands before v-2's per-fund G1 read is deployed.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/gold_canonical_shape.py:279-283 and :695-700 @53784a663e",
+        "python import of gold_canonical_shape in the q-1 worktree: max over the two object names returned the gqgu object (output above)",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round4/checks/q-1.AC1.py silver objects: ['basg-20260929T204617Z-2a559d4deb4e.parquet', 'gqgu-20260929T204244Z-5986610e156b.parquet']"
+      ]
+    },
+    "notes": "disarm_owner: 2.0.0_SA_COO~RV -- deploy order: RIV-v-2's per-fund issuer read (and _revision made source-aware) must be live before, or with, the q-1 silver deploy; otherwise run no build-canonical-shape against a date holding a gqgu object. The worker touched nothing outside its paths.",
+    "disarm_owner": "2.0.0_SA_COO~RV"
+  },
+  {
     "id": "ETFS_RIVALS-Z-W1-S28",
     "project": "ETFS_RIVALS",
     "fabric": "site-z",
