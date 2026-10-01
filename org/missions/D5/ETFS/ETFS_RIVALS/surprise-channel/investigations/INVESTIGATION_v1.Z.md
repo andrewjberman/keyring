@@ -2644,6 +2644,30 @@
     "spec_asserts": "Row Z-W4-S9 BLOCKING/ARMED, disarm_owner 2.0.0_SA_COO~RV.",
     "world_is": "No bulk silver batch is scheduled; the daily path is bounded. Carried to the round-4 analysis as remediation.",
     "notes": "Disarm by procedure (no bulk import without windowed G1); the code fix is a round-5 cell."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S13",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-01T22:55Z",
+    "one_line": "The issuer identity floor is one value for every issuer fund, set by its weakest fund: GQGU's newest report resolves 0.2368, so the committed issuer floor is 0.23 and BASG (1.000 today) is held only to 0.23 -- a BASG regression to 24% would serve as updated.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/guardrails_config.json@550af8d320 thresholds.min_resolved_fraction.value = {issuer 0.23, bloomberg 0.99, home_producer 0.0, home_funds {IDVZ 0.0, PFOE 0.0}}",
+        "data/etfs/scripts/rivalfunds/guardrails.py resolved_floor(): per-fund entries exist only for home_producer (home_funds); an issuer fund takes the source floor",
+        "round4/served_delta_r4_pin.json: newest resolved fraction GQGU 0.2368 (2026-09-28), BASG 1.0 (2026-09-30)",
+        "round4/NEVER_WIDEN_HALF_COO_D5.md key 3 disclosure; CTO half @a8913dccef signed key 3 as written"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Analysis ruling 3 (round 3) and the round-4 floors rule: each source's floor is the minimum newest-date resolved fraction of that source's funds.",
+    "world_is": "Nothing serves wrong today (BASG 1.0, GQGU 0.2368 both pass). The floor cannot detect a BASG identity regression down to 0.23.",
+    "notes": "Carrier row for the round-4 analysis ruling 3 (@6dcb0074e4): resolved_floor() gains per-fund entries under `issuer`, BASG's floor set from BASG's own resolution. Round-5 cell (enrichment item 6)."
   }
 ]
 ```
