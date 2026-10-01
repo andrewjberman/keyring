@@ -4926,6 +4926,74 @@ carries none.
     "spec_asserts": "MX-g-3 act 1: keep _s3_head()'s Config (timeouts) when building or wrapping the client.",
     "world_is": "On the role path discover's HEAD runs through the shared cached role client under its default botocore timeouts, wrapped in an 8 second wall-clock bound (_bounded_head, thread + result(timeout)); a timeout surfaces as a named absent served_written_at error class. On the unset path the Config is unchanged.",
     "notes": "Not a hazard: a hung HEAD cannot stall an answer past ~8s on either path. Candidate enrichment: a Config parameter on internal_role.s3_client() (NFRA_MCPMSP's file) so a reader can ask for its own timeouts without sharing a cache entry."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~22",
+    "surfaced_at": "2026-10-01T11:55Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "id": "NFRA_MCPINDEX-Z-W22-S4",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "one_line": "The live host's MAIL_SENDER_TABLE key is SET (3 items, len 67) and the live deploy-to-ec2.sh renders it from the deploy-time input OG_MAIL_SENDER_TABLE (default empty); a PHASE B deploy run without the same value rewrites it to EMPTY, which refuses every mail-route message, and the .env KEY census (46 == 46) cannot see it.",
+    "spec_asserts": "MX-r-8 item 4: this release adds NO .env key; the key set before and after must be equal; read the live script to know what the deploy needs.",
+    "world_is": "deploy-to-ec2.sh at daa56d81ac: OG_MAIL_SENDER_TABLE=\"${OG_MAIL_SENDER_TABLE:-}\" (line ~173), validated against an address character set, rendered by the .env printf as MAIL_SENDER_TABLE=%s. The host .env (read in Python, never shell-sourced) carries MAIL_SENDER_TABLE SET len=67 items=3 at 2026-10-01T11:49:56Z. The rosters are host-side now (R4), so OG_MASTER_ADMIN_PRINCIPALS / OG_WRITE_CAPABLE_PRINCIPALS are NOT needed; OG_MAIL_SENDER_TABLE is the one deploy-time data input left.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~22/probes_r8/host_read_FINAL.txt (---STATE MAIL_SENDER_TABLE SET len=67 items=3; 46 keys, 46 distinct)",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~22/probes_r8/env_keys_PHASEA.txt (rendered 46 == host 46, 0 dropped, 0 added)",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~22/ANNOUNCE_MX-r-8.md section PHASE B inputs"
+      ]
+    },
+    "notes": "DISARM (issuer, before PHASE B): supply OG_MAIL_SENDER_TABLE in the deploying shell with the SAME value OG-rl-1 deployed (it is DATA the issuer holds, never in a committed file), and read back MAIL_SENDER_TABLE state SET items=3 len=67 before and after with probes_r8/host_read.py. The value is addresses, not a secret, but this worker has not read it: it reads KEY names and the key's state only."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~22",
+    "surfaced_at": "2026-10-01T11:55Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "id": "NFRA_MCPINDEX-Z-W22-S5",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "The release and deploy-only commits were made under GIT_COMMIT_AUTHOR_OVERRIDE (audited) because the cut tree at the live ref daa56d81ac does not carry this task order, so the worker lane gate finds no non-terminal order at HEAD naming the gateway paths; both are scratch-branch commits, never merged, never pushed.",
+    "spec_asserts": "MX-r-8 section 1 item 2 and the host-safety note: apply the two cells' gateway-path commits onto the live ref; commit on the worker's branch.",
+    "world_is": "safe-commit in /c/tmp/mx-rel11 (daa56d81ac) refused: 5 of 5 gateway paths 'no NON-TERMINAL task order at HEAD issued_to this serial names this path'. The same refusal class as Z-W21-S14; the override bypassed the lane refusal only (commit-gate passed; the naming gate was in its WARN window with a sparse tree). The deploy-only commit e3567ce5f7 on CLOUD 220a74350a was made under the same override for the same reason (its gateway paths are in this order's <paths>, but the base tree carries a different order set).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git -C /c/tmp/mx-rel11 log -1 01845e91cf; git -C /c/tmp/mx-dep11 log -1 e3567ce5f7",
+        "git diff --name-only daa56d81ac 01845e91cf: 5 files, all under infra/aws/ec2/opal-gateway/"
+      ]
+    },
+    "notes": "INERT: a scratch-branch record for the L8 reading. The gateway tree objects of the two commits are equal (7d222e01f6) and untouched by the override."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~22",
+    "surfaced_at": "2026-10-01T11:55Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "id": "NFRA_MCPINDEX-Z-W22-S6",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "The internal reader role that MX-g-3 routes portal_index and discover through (gateway-global-internal-reader-role) holds s3:GetObject on opal-data-portal-v2 json/* and platinum/* and no s3:ListBucket, so an ABSENT key reads as AccessDenied, not NoSuchKey: portal_index's reader returns a named IntegrationError for an absent object where the instance-role path returned None.",
+    "spec_asserts": "MX-g-3: portal_index and opal_discover read portal-v2 through internal_role.s3_client(); a read of an absent object is 'absent -> None'.",
+    "world_is": "get-role-policy (read-only, 2026-10-01T11:4xZ): one inline policy gateway-global-internal-reader-policy, one statement InternalReaderPortalRead, Allow s3:GetObject on arn:aws:s3:::opal-data-portal-v2/json/* and arn:aws:s3:::opal-data-portal-v2/platinum/*; no ListBucket. portal_index.s3_getter maps only NoSuchKey/404 to None; any other code (S3 answers a missing key with 403 to a caller that lacks ListBucket) raises IntegrationError 'read of <key> failed: ClientError AccessDenied'. A first simulate-principal-policy attempt (two resource ARNs) returned one placeholder result (arn:aws:s3:::${BucketName}/${KeyName}, implicitDeny) and is NOT a verdict; the policy statement itself is the evidence.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~22/probes_r8/internal_reader_policy_statements_PHASEA.txt",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~22/probes_r8/internal_reader_policies_PHASEA.txt",
+        "infra/aws/ec2/opal-gateway/app/integrations/portal_index/integration.py s3_getter (release 01845e91cf lines 266-295)"
+      ]
+    },
+    "notes": "INERT: every key the catalog names exists, so the live read path does not meet the absent case; it matters only when a portal object is removed. Not a defect in this release's job (routing); r8.AC2 reads the served path at PHASE B."
   }
 ]
 ```
