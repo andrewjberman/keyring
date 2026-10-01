@@ -24,8 +24,12 @@ Loop `/canonical-drive IRPT_BCKEND` 10m (LIVE_ARMS RELAUNCH row). Way forward: C
 **The upload lane ran end to end on served code at 12:31Z, back end only.** `REQ-a69e5751d42c374f1d2354f9` (Cottonwood,
 one CSV upload, an Overview, submitted by the service principal) is READY with certified report
 `RPT-ec30778a867a59f3805be6e7f07d35cb`; the sections route serves it; the case trace reads 22 links, 20 MATCH, 0
-MISMATCH. **NOT yet called live:** hop 10, the page walk of this request, is asked of `2.0.0_SA_COO~D` (12:50Z), and
-`3.0.0_SA_CVO` grades the outcome on the artifact (CTO half, item 10).
+MISMATCH. **Hop 10 is walked:** `2.0.0_SA_COO~D` opened the request by its id on the page at 13:02Z: "Job status:
+Ready", the Report sections block on screen, 0 UNEXPECTED, 0 page errors
+(`org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/2.0.0_SA_COO~D/REAL_RUNS_20261001.md` section 7 @2e0450cb9b). Seen and
+not failures: 30.2 seconds from the press to the sections; the list row read "Checking status..."; 67 rendered rows by
+a selector against 51 served sections (46 scalar, 5 chart, 0 undated), not reconciled. **Calling the thread live is
+`1.0.0_SA_CTO`'s, after `3.0.0_SA_CVO`'s grade** (CTO half, item 10); the next arm's order was asked at 13:13Z.
 
 Six windows today, each with both halves and a closed ledger:
 
@@ -43,7 +47,8 @@ Two resident releases today, each a whole tree at one commit under a never-widen
 
 ## Next
 
-1. `2.0.0_SA_COO~D`'s walk of `REQ-a69e5751d42c374f1d2354f9` on the page; on a clean walk the CTO calls the thread.
+1. The CTO's ruling on the next arm (asked 13:13Z; batch 61 item 8 names Multi-Comp first) and the CVO's grade of the
+   READY outcome. `IRPT_MVP_Y/ENRICHMENT_CANDIDATES_20261001.md` carries six measured candidates for that analysis.
 2. The next resident build, when one is due, carries row S253's repair (the receipt's vendor request ledger).
 3. Batch 61's order after the thread: one job per remaining arm (Multi-Comp, Target Weight, 49 Financial,
    Inflection), each an Analysis attempt under a window packet; the catalogue route, served from a read that is not
