@@ -477,7 +477,7 @@
     "cottonwood": "the accounts carrying a Rebalancer strategy (strategy_name other than '--') on the newest fact_model_assignment partition on or before the valuation date, keyed by the table's own account_number"
    },
    "coverage_cell": "A Global cell on a date Cottonwood contributes no value is 49financial's cell. Otherwise it describes the summed value: counts and dollar claims added, reason codes unioned, value_status the weaker of the two, tax_value_basis CARRIED_LAST_COMPLETE when either part is carried, last_complete_date the older. Same keys as a firm cell.",
-   "not_built": "Cottonwood's own category tree does not yet show the Tax leaf under SMA; its Tax accounts stay inside Client there."
+   "cottonwood_tree": "Cottonwood's own category tree shows the Tax leaf under SMA > ALT Strategies as a carve-out of Client (registry SMA_BASIS_BY_SCOPE: tax at cottonwood is carve_out). Its totals do not move. The member joins its by_model only once Cottonwood has a served Tax value."
   }
  },
  "operations": {
@@ -816,7 +816,7 @@
    "version": "0.6.0",
    "when": "2026-10-01",
    "by": "4.0.0_SA_CRO under the FAST lease",
-   "what": "Global's Tax is 49financial's plus Cottonwood's (wire keys unchanged, version held). Measured before the change: both Cottonwood Tax accounts carry strategy '--' on the 09-28, 09-29 and 09-30 fact_model_assignment partitions, and all 47 eight-digit account numbers in that table read '--'. The overlap rule gains a per-firm base (categories.global_fold_by_firm_0_6_0); the Global coverage cell sums the firms that contribute. CANDIDATE: not deployed.",
+   "what": "Global's Tax is 49financial's plus Cottonwood's (wire keys unchanged, version held). Measured before the change: both Cottonwood Tax accounts carry strategy '--' on the 09-28, 09-29 and 09-30 fact_model_assignment partitions, and all 47 eight-digit account numbers in that table read '--'. The overlap rule gains a per-firm base (categories.global_fold_by_firm_0_6_0); the Global coverage cell sums the firms that contribute. Cottonwood's own tree shows the Tax leaf under SMA as a carve-out of Client, totals unchanged (Rule 24 record org/missions/D8/MDPF/MDPF_TAXSMA/deliverables/4.0.0_SA_CRO/RULE24_SMA_BASIS_BY_SCOPE.md). CANDIDATE: not deployed.",
    "authority": "org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261001_033xZ_TAXSMA_TAX_PORTFOLIOS_ARE_SMAS_NOT_MODELS_SMA_CATEGORY.md"
   }
  ]
