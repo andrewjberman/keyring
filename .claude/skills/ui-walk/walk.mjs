@@ -67,7 +67,7 @@ mkdirSync(path.join(OUT, 'shots'), { recursive: true })
 const log = (...m) => console.log(new Date().toISOString().slice(11, 19), ...m)
 
 // ---- account ------------------------------------------------------------------------------------------------------
-const py = (cmd, extraEnv = {}) => execFileSync('python', [ACCOUNT, cmd], { encoding: 'utf8', env: { ...process.env, ...extraEnv }, stdio: ['ignore', 'pipe', 'pipe'] })
+const py = (cmd, extraEnv = {}, ...args) => execFileSync('python', [ACCOUNT, cmd, ...args], { encoding: 'utf8', env: { ...process.env, ...extraEnv }, stdio: ['ignore', 'pipe', 'pipe'] })
 
 // ---- the network guard: the admitted classes ----------------------------------------------------------------------
 const ADMITTED_POST = [/\/auth\/login$/, /\/auth\/refresh$/, /\/auth\/logout$/,
@@ -250,8 +250,7 @@ async function exploreScope(page, scopeSel, label) {
 }
 
 // ---- AMGT Security Analysis: every Lead Panel combination, then each --security with its overlay and five tabs -----
-// Movement x Subject x View = 8 lead-panel states (constants.ts MOVEMENT_OPTIONS / SUBJECT_OPTIONS; LeadPanel.tsx view
-// toggle). A --security is picked by clicking its row text in the lead panel, else typed into "Search any ticker".
+// Friday faces (rulings R5/R6): Trending only, no list or chart view; Chatter = month bubbles, Price = bars. A --security is picked by clicking its row text in the lead panel, else typed into "Search any ticker".
 // Starring is a write and stays blocked by the network guard.
 const AMGT_TABS = ['Thesis', 'Exec Management', 'Peers', 'Model', 'Posture']
 async function clickLabel(page, name) {
@@ -263,38 +262,43 @@ async function clickLabel(page, name) {
   if (await t.count().catch(() => 0)) return t.click({ timeout: 4000 }).then(() => true).catch(() => false)
   return false
 }
-async function amgtLeadState(page, movement, subject, view) {
-  const okM = await clickLabel(page, movement)
+async function amgtLeadState(page, subject) {
   const okS = await clickLabel(page, subject)
-  const v = page.locator(`[aria-label="${view}"]`).first()
-  const okV = (await v.count().catch(() => 0)) ? await v.click({ timeout: 4000 }).then(() => true).catch(() => false) : false
-  const missing = [!okM && movement, !okS && subject, !okV && view].filter(Boolean)
-  if (missing.length) findings.push({ step, check: 'walker:control-missing', claim: 'measured', observed: `control not found or not clickable: ${missing.join(', ')}` })
+  if (!okS) findings.push({ step, check: 'walker:control-missing', claim: 'measured', observed: `control not found or not clickable: ${subject}` })
   await settle(page, 1500)
 }
-// ---- FWD-2: read every row of a lead-panel List view (the four lists go to lead-lists.json) -------------------------
-// Reads only what the page prints: the row's lead text, its ticker line, its name-state attribute and its whole visible text.
-async function readLeadList(page, list) {
-  const rows = await page.locator('li[data-row-name-state]').evaluateAll((lis) => lis.map((li) => ({
-    lead: (li.querySelector('[data-row-lead]')?.textContent || '').trim(),
-    ticker: (li.querySelector('[data-row-ticker]')?.textContent || '').trim() || null,
-    name_state: li.getAttribute('data-row-name-state'),
-    text: (li.innerText || '').replace(/\s+/g, ' ').trim(),
+// ---- price bars: read every bar of the Price face (lead-lists.json) --------------------------------------------------
+// Reads only what the page prints: each bar's data-price-bar attribute, its name-state attribute and its visible text.
+async function readPriceBars(page, list) {
+  const rows = await page.locator('[data-price-bar]').evaluateAll((els) => els.map((el) => ({
+    bar: el.getAttribute('data-price-bar'),
+    name_state: el.getAttribute('data-row-name-state') || el.closest('[data-row-name-state]')?.getAttribute('data-row-name-state') || null,
+    text: ((el.closest('li') || el).innerText || '').replace(/\s+/g, ' ').trim(),
   }))).catch(() => [])
   leadLists.push({ list, row_count: rows.length, rows })
-  log(`LEAD LIST ${list}: ${rows.length} row(s) read`)
+  log(`LEAD LIST ${list}: ${rows.length} price bar(s) read`)
+}
+// ---- chatter: read the month bubbles, then press the month cursor ---------------------------------------------------
+async function readBubbles(page, list) {
+  const n = await page.locator('[data-bubble], [data-chatter-bubble]').count().catch(() => 0)
+  log(`LEAD BUBBLES ${list}: ${n} bubble(s) read`)
+  const cur = page.getByRole('button', { name: 'Earlier month' }).first()
+  if (await cur.count().catch(() => 0)) {
+    const pressed = await cur.click({ timeout: 4000 }).then(() => true).catch(() => false)
+    if (pressed) { await settle(page, 1000); await checks(page, `lead-${list}-cursor`) }
+  } else findings.push({ step, check: 'walker:control-missing', claim: 'measured', observed: 'control not found: Earlier month' })
 }
 
 // ---- FWD-1: one company picked BY ITS NAME, then the thread hop by hop ----------------------------------------------
-// The row is found by the company name its lead line prints (`[data-row-lead]`), on Trending x Price, List view. Never by
+// The name is found by its price bar's row, on Trending x Price. Never by
 // ticker and never through the ticker search box. A name no row prints is a measured finding and the thread stops.
 async function walkThread(page, route, name) {
   step = `thread ${name}`
   await page.goto(opt.base + route, { waitUntil: 'domcontentloaded', timeout: 30000 })
   await settle(page, 2500)
-  await amgtLeadState(page, 'Trending', 'Price', 'List view')
-  const rows = page.locator('li[data-row-name-state]')
-  const lead = rows.locator('[data-row-lead]').filter({ hasText: name }).first()
+  await amgtLeadState(page, 'Price')
+  const rows = page.locator('[data-price-bar]')
+  const lead = page.locator('li:has([data-price-bar])').filter({ hasText: name }).first()
   const nRows = await rows.count().catch(() => 0)
   if (!(await lead.count().catch(() => 0))) {
     findings.push({ step, check: 'thread:name-not-found', claim: 'measured', observed: `no row of the Trending x Price list (${nRows} rows) reads the company name "${name}"`, rule: 'FWD-1: the PM picks the company out of the list by its name' })
@@ -424,27 +428,13 @@ async function waitForLoaded(page) {
 const loadStates = []
 
 async function walkSecurityAnalysis(page, route) {
-  for (const movement of ['Trending', 'Breakout']) {
-    for (const subject of ['Chatter', 'Price']) {
-      for (const view of ['List view', 'Chart view']) {
-        if (!timeLeft()) return
-        step = `amgt lead ${movement}-${subject}-${view}`
-        await amgtLeadState(page, movement, subject, view)
-        await checks(page, `lead-${movement}-${subject}-${view.split(' ')[0]}`)
-        if (view === 'List view') await readLeadList(page, `${movement} x ${subject}`)
-        if (view === 'Chart view') {
-          // press the first legend button (one name picked), then grade the picked line
-          const legend = page.locator('[data-series-ticker]').first()
-          if (await legend.count().catch(() => 0)) {
-            const pressed = await legend.click({ timeout: 4000 }).then(() => true).catch(() => false)
-            if (pressed) {
-              await settle(page, 1000)
-              await checks(page, `lead-${movement}-${subject}-Chart-picked`)
-            }
-          }
-        }
-      }
-    }
+  for (const subject of ['Chatter', 'Price']) {
+    if (!timeLeft()) return
+    step = `amgt lead Trending-${subject}`
+    await amgtLeadState(page, subject)
+    await checks(page, `lead-Trending-${subject}`)
+    if (subject === 'Price') await readPriceBars(page, 'Trending x Price')
+    else await readBubbles(page, 'Trending-Chatter')
   }
   if (opt.thread) await walkThread(page, route, opt.thread)
   for (const sec of opt.securities) {
@@ -452,7 +442,7 @@ async function walkSecurityAnalysis(page, route) {
     step = `amgt select ${sec}`
     await page.goto(opt.base + route, { waitUntil: 'domcontentloaded', timeout: 30000 })
     await settle(page, 2500)
-    await amgtLeadState(page, 'Trending', 'Price', 'List view')
+    await amgtLeadState(page, 'Price')
     let picked = false
     const row = page.getByText(sec, { exact: true }).first()
     if (await row.count().catch(() => 0)) picked = await row.click({ timeout: 4000 }).then(() => true).catch(() => false)
@@ -588,12 +578,13 @@ async function drill(page, scopeSel, label) {
 
 // ---- main ---------------------------------------------------------------------------------------------------------
 let armedHere = false
+let holder = null
 let browser
 const t0 = Date.now()
 try {
   let password = null
   if (opt.login) {
-    if (opt.arm) { log(py('arm').trim()); armedHere = true } else log(py('status').trim())
+    if (opt.arm) { const armOut = py('arm'); log(armOut.trim()); holder = (armOut.match(/^HOLDER (\S+)/m) || [])[1] || null; armedHere = true } else log(py('status').trim())
     password = py('secret', { UI_WALK_CHILD: '1' })
   } else log('NO LOGIN: signed-out control, the walker account is not touched')
   try {
@@ -725,7 +716,7 @@ try {
   }
 } finally {
   if (browser) await browser.close().catch(() => {})
-  if (armedHere && !opt.keepArmed) { try { log(py('disarm').trim()) } catch (e) { log('DISARM FAILED -- run: python .claude/skills/ui-walk/ui_walker_account.py disarm', String(e.stderr || e.message).slice(0, 300)) } }
+  if (armedHere && !opt.keepArmed) { try { log(py('disarm', {}, holder).trim()) } catch (e) { log('DISARM FAILED -- run: python .claude/skills/ui-walk/ui_walker_account.py disarm <holder> (holder: armedBy in status)', String(e.stderr || e.message).slice(0, 300)) } }
   // outputs: one UNIQUE finding per (check, observed, selector), with every step and screenshot it was seen at
   const byKey = new Map()
   for (const f of findings) {

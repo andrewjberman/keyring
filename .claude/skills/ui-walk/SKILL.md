@@ -27,14 +27,14 @@ breaks from canonical design patterns, etc."*
 | Guard | How |
 |---|---|
 | **The account is dormant at rest** | `opal-users-v2` `USER#usr_opal_ui_walker` (`opal-ui-walker@opal.test`, role admin, internal, Dev) sits at `status disabled` with a password hash nobody knows, and no SSM parameter exists. |
-| **One walk, one password** | `arm` mints a random password into SSM `/opal/ui-walker/password` and sets the row active. `disarm` sets it disabled, replaces the hash, deletes the parameter, and proves a login is refused. The walker arms and disarms ITSELF, and the disarm runs in a `finally` block. |
+| **One walk, one password, one lease** | `arm` first takes a lease (one conditional DynamoDB write of `armedBy` = `<hostname>:<pid>:<8 hex>` and `armedAt`; a live lease under 60 minutes prints `HELD by <armedBy> since <armedAt>` and mints nothing), then mints a random password into SSM `/opal/ui-walker/password`, sets the row active and prints `HOLDER <id>`. `disarm <holder>` runs only for that holder (a non-holder is refused and nothing changes); it sets it disabled, replaces the hash, deletes the parameter, and proves a login is refused. The walker arms and disarms ITSELF, and the disarm runs in a `finally` block. |
 | **Nobody sees the password** | Nothing prints it. The walker reads it in-process through `ui_walker_account.py secret`, which refuses unless the walker spawned it. **Never run `secret` by hand.** |
 | **Read-only by construction** | A browser-side network guard admits only GET/HEAD/OPTIONS and the POSTs `/auth/login`, `/auth/refresh`, `/auth/logout`, `.../directory/resolve` and `.../selections`. Every other request is aborted and logged (`guard.tsv`), and the portal's telemetry is answered locally (never sent). Buttons matching export, generate, submit, upload, delete, save, send, approve, reset, sign-out and contact-support are never clicked. |
 | **Protected channel** | `--base` must be `http://localhost:<port>`: the local `bun run dev:live` build, which reaches the live data and auth front door through CloudFront. |
 | **Client data stays local** | Output goes to `tmp/ui-walk/<stamp>/` (gitignored at `.gitignore:89`). Never commit a walk's screenshots, never paste them into a message, and never send them off Opal infrastructure. A brief quotes findings in words. |
 
 **If a walk dies mid-run** (the terminal closed, the machine slept), run
-`python .claude/skills/ui-walk/ui_walker_account.py status` and, if it reads `status=active`, `disarm` at once. `status`
+`python .claude/skills/ui-walk/ui_walker_account.py status` and, if it reads `status=active`, `disarm <armedBy from status>` at once. `status`
 warns when the account has been armed for more than 60 minutes.
 
 ## Prerequisites
@@ -67,9 +67,9 @@ is reachable. Use it for a per-account AFTER read after a provider or adapter sw
 dialog never blocks the next tab. File pickers are `<input type=file>` and are never pressed. A deep walk takes
 about 12-15 minutes per client.
 
-The lead-panel walk also presses one legend button (`[data-series-ticker]`) per Chart view and screenshots the picked line as `lead-<movement>-<subject>-Chart-picked`.
+The lead-panel walk steps the Friday faces (Trending only): 'Chatter' (reads the month bubbles, presses 'Earlier month', step `lead-Trending-Chatter-cursor`) and 'Price' (reads each `[data-price-bar]` into `lead-lists.json`).
 
-`--thread "<company name>"` (with `--route /security-analysis`) picks that company out of the Trending x Price list BY THE NAME the row prints (never by ticker) and walks five steps `thread-1-list` .. `thread-5-recommendation-window` (a name no row prints records `thread:name-not-found`); every List view's rows are written to `lead-lists.json` beside `findings.json`; each `--security` also presses its newest timeline day (`<sec>-timeline-day`) and opens the first event span (`<sec>-timeline-event`), else records `timeline:no-event-element`.
+`--thread "<company name>"` (with `--route /security-analysis`) picks that company out of the Trending x Price bars BY THE NAME its price-bar row prints (never by ticker) and walks five steps `thread-1-list` .. `thread-5-recommendation-window` (a name no row prints records `thread:name-not-found`); the Price bars are written to `lead-lists.json` beside `findings.json`; each `--security` also presses its newest timeline day (`<sec>-timeline-day`) and opens the first event span (`<sec>-timeline-event`), else records `timeline:no-event-element`.
 
 `--day "<security>=<YYYY-MM-DD>"` (repeatable, with `--security <name>`) presses that name's timeline bar `[data-day-bar="<date>"]` (else records `timeline:day-not-found`), runs the checks step `<sec>-timeline-day-<date>`, and writes each day's article rows in the order the page lists them to `timeline-days.json` beside `findings.json`.
 
@@ -89,7 +89,7 @@ Investor Reporting walk takes about 5 minutes per client.
 ## Step 1 -- Walk
 
 Run the walker and read its last lines: `SUMMARY`, `DISARM ... REFUSED`, `OUT`. **If DISARM does not print `REFUSED`,
-stop and run `disarm` again. Escalate if it still fails.**
+stop and run `disarm <holder>` again. Escalate if it still fails.**
 
 ## Step 2 -- LOOK at every screenshot (the checks are pointers, not the verdict)
 
@@ -158,6 +158,6 @@ What the checks flag (the `check` field):
 
 ## Files
 
-- `.claude/skills/ui-walk/ui_walker_account.py`: status | provision | arm | disarm (and `secret`, walker only).
+- `.claude/skills/ui-walk/ui_walker_account.py`: status | provision | arm | disarm <holder> (and `secret`, walker only).
 - `.claude/skills/ui-walk/walk.mjs`: the walker.
 - `docs/briefs/irpt-ui-review-coverage-check.py`: the register coverage check.

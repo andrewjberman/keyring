@@ -106,7 +106,7 @@ Write the proof instance at the `<instance_path>`. Report once, in your final me
 per 1.0.0_SA_CTO~O msg 27022; lifting it is Andrew's act alone (the MX-t-11 widening word on his list). Not spawned.
 Dry-run at base: t12.AC1 FAIL (rows < 6).
 
-<status>pending</status>
+<status>cancelled -- by 2.0.0_SA_COO~MI, 2026-10-01 ~08:5xZ, on 1.0.0_SA_CTO~O's round-5 L10 analysis section 3 (`org/missions/D9/NFRA/NFRA_MCPINDEX/ledger/ROUND_ANALYSIS.round5.md` @1edec80f63, row Z-W20-S3): a tool over a frozen twin (publisher disabled since 2026-08-21) cannot meet FWD-2 parity, and its literals need an R20 entry Andrew has not given (G-W NOT YET). platinum/advi re-enters only as a NEW cell on the advisor page's LIVE source after Andrew's R20 acknowledgement. Never spawned; no path touched. Was: pending (HELD).</status>
 <round>5</round>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>

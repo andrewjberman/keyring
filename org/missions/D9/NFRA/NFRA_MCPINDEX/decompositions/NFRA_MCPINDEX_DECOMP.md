@@ -1120,3 +1120,26 @@ market-data half through Bloomberg's standing read and names the substrate, and 
 
 **NOT CLAIMED by this cut:** Orion, Eclipse and SmartX tools (they follow MX-t-13's pattern in later rounds); FWD-9
 (deferred on Andrew's word, B2); any identity, grant or sign-in change (B2); G-C inside NFRA_OPLGTW's own OG-g-1 (B1).
+
+# ROUND 6 -- THE ENRICHMENT CUT (L5/L6, 2.0.0_SA_COO~MI, 2026-10-01)
+
+Source: `org/missions/D9/NFRA/NFRA_MCPINDEX/ledger/ROUND_ANALYSIS.round5.md` @1edec80f63 (1.0.0_SA_CTO~O's L10 on rounds
+4+5, msg 27666), section 5's enrichment list, cut in ONE issuance. MX-t-12 is CANCELLED on its section 3 (Z-W20-S3).
+
+| Cell | Source | What | Risk |
+|---|---|---|---|
+| `MX-d-6` | item 1 (Z-W21-S22, Z-W15-S3) | opal_discover reads `silver_datasets` beside its sections (fix the READER, not the row); Schwab catalog rows for its 4 served datasets through the emitter; every catalog row graded by REACHABILITY (discover names its read_tool on its own example question), the MX-d-5 ETF assertion retired; worker `0.9.0_WK_NFRA_MCPINDEX~22` | WORLD (infra-path floor) |
+| `MX-g-3` | item 2 (ruling 27413; train R7) | G-RDR: portal_index and opal_discover take their S3 client from `internal_role.s3_client()` (query_v0 pattern; default client when the ARN is unset; fail closed when it raises); MCPMSP's census `unrouted=0`; worker ~22 after MX-d-6 | WORLD (infra-path floor) |
+| `MX-r-8` | item 3 | the slot-4 opal-gateway release of MX-d-6 + MX-g-3 on the live ref after OG-rl-1 (MX-r-7 pattern, C1-C6, `DEPLOY_BASE_REF`, never-widen halves CTO + COO, G-A); no Terraform, no new `.env` key; BD ExternalId option A NOT folded; worker ~22 after MX-g-3 | WORLD |
+| `MX-v-7` | item 4 | the thread re-run after MX-r-8 serves: the BD tool's figure + as-of against the source object by VersionId (v7.AC1), then r7.J1 re-graded and r6.J1 (Alyssa, the round's one essential wait) at L9 by 3.0.0_SA_CVO~O; worker ~22 after MX-r-8 | WORLD |
+| `MX-x-4` | item 6 (Z-W21-S23, Z-W21-S21, Z-W21-S7) | the batch repair: safe-ec2-deploy.sh's manifest rewrite through a UTF-8 JSON parser; the halt gate's per-tree serial before the shared root; the catalog emitter's census/portal inputs as declared arguments, refusing on an absent census; worker `0.9.0_WK_NFRA_MCPINDEX~23` | WORLD (infra-path floor) |
+| `MX-s-16` | item 7 (Z-S69; Z-S72) | one writer per BD silver table behind bd-silver-merge: PHASE A census + the Z-S72 diagnosis (bd-silver-merge fails 6 unrealized files nightly) + plan; PHASE B retires the documents' merge (and bd-allocation-processor's notification only on proof) under never-widen halves; worker `0.9.0_WK_NFRA_MCPINDEX~24` | WORLD |
+
+**Chains (fan-out 3 of 3 chains, cap 8):** [MX-d-6 -> MX-g-3 -> MX-r-8 -> MX-v-7] ~22 (one write set:
+opal_discover/integration.py is shared by d-6 and g-3, and r-8/v-7 consume them); [MX-x-4] ~23; [MX-s-16] ~24.
+MX-r-8 also waits on the train (slot 4 after OG-rl-1; train R1).
+
+**Not cells:** item 5 (the gateway suite green, or each red test named with its owner) is the issuer's drain check;
+the MX-d-5 assertion retirement rides MX-d-6. Z-S57's channel resolver was issuer scratch and is fixed.
+Z-W21-S19 and Z-W19-S13 are NFRA_OPLGTW's. `platinum/advi` waits on Andrew's R20 word (G-W). FWD-6..FWD-10 enter no
+earlier than round 7.

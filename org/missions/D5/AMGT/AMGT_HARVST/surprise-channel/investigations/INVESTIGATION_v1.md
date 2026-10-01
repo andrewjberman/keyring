@@ -4826,6 +4826,29 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W92-S4",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~92",
+      "surfaced_at": "2026-10-01T08:40Z",
+      "one_line": "Both real sa jobs so far (ASML then ADBE) end status=error from an exception at the end of the job after every article was stored (ASML: Timeout; ADBE: ConnectionError, 121 stored, 0 left pending after upload), so the STOP set ends the leg after ONE job each time and the live 3-then-stop-then-resume exercise of FWD-15 (b) still cannot run on the real collector.",
+      "class": "BLOCKING",
+      "hazard_standing": "ARMED",
+      "spec_asserts": "Order AMENDMENT 2 item 5.2: with --clear-stop sa over the first 6 names, create the stop file after the 3rd done pair, then re-run the same command and see the done pairs skipped and the rest run (FWD-15 b); 'If a job ends in a STOP status the leg stops: that is a recorded result'.",
+      "world_is": "After clearing sa (cooldown expired) job 1 of the run, security-37dddff4d4357038 (ADBE), ran 08:22:48Z-08:27:24Z: 6 auth_check + 6 listing requests all 200, 139 fetch attempts (121 stored, 18 rejected, 21 skipped as held), then runs/20261001T082248Z-sa-be0e3df711.json status=error error_type=ConnectionError retry_at +900 s (worker.py cooldown 'transport_or_runtime_error'); the last logged http event is the 6th listing page at 08:26:45Z, job_finished 39 s later. The driver uploaded (cap 127, rc 0), recorded stopped={sa: error}, and ended; its same-command re-run (--clear-stop sa) printed 'COOLDOWN sa: still cooling for 460 s ... no job started' and left the checkpoint byte-identical, per the order (never clear again inside this order). Two real jobs, two error endings (Timeout, ConnectionError); the stop file was never created because the leg stopped at 1 done pair after clearing, not 3. The stop-file ends-after-job-2 and clear-stop-after-cooldown behaviours are proved by the plants only. The issuer's 89-name run will stop after every job unless the cause (a transport exception raised after the work completes) is fixed in the collector or the issuer clears per job. Also measured: title check of the 350 stored sa bodies against the 400 listing rows in the runtime, 330 comparable, 0 differ.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~92/ae4B2_run1.out, ae4B2_run2.out, ae4_checkpoint.json",
+          ".runtime/opal-data-harvest/runs/20261001T082248Z-sa-be0e3df711.json and run_records/20261001T082248Z-run-e3e0acc4.json (worktree wk-hvst-r32-92)",
+          "lib/opal_data_harvest/worker.py line 747 (status=error, 900 s cooldown on any exception in the job)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "notes": "The collector's worker.py is outside this order's write grant; no fix was attempted."
     }
   ]
 ```

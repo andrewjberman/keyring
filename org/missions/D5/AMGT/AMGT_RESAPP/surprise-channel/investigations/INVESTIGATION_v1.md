@@ -16600,6 +16600,54 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "AV-g-5 does not touch the pillars wording; the disarm basis is the presentation writer's wording ruling plus AV-f-5's Exec agreement.",
     "disarm_owner": "2.0.0_SA_COO~Z",
     "notes": "Z-S328 left as filed (append-only). Presentation wording is DSGN_AMGTV1's under CONTRACT s.0; this seat writes served text only, which needs no change."
+  },
+{
+ "id": "AMGT_RESAPP-Z-S330",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.7.0_AE_CloudOps~A",
+ "surfaced_at": "2026-10-01T08:45:00Z",
+ "one_line": "AC2 prints 'denominator: 1114 served reason string(s) across 3 names x 4 routes' and PASSES, but the PRINT route contributed ZERO of those 1,114 for all 3 names -- so C1's claim covers 3 of the 4 routes it names. The '4 routes' is computed from len(LEAVES) at af_7_text.py:83, i.e. from the CONSTANTS, never from what was walked, so the sentence cannot shrink when a route drops out.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "AC2's own run (--what text) printed THREE 'REFUSED: deployed read failed' lines, all on the print route, immediately before passing: BA_US_Equity/print status 200 content_type application/pdf; ASML_NA_Equity/print status 200 content_type application/pdf; AMZN_US_Equity/print status 404 with body 'no printable pack for AMZN_US_Equity: identity MEASURED, landed display form None'. Evidence deliverables/0.7.0_AE_CloudOps~A/ag1-evidence/ag1_ac2.txt.",
+   "TWO of the three are status 200 -- the route WORKED. capture_lib._invoke cannot json-parse a PDF body, so it returns (None, meta), and ag_1_served's wrapper classes a SUCCESSFUL 200 as a REFUSAL. Only the AMZN 404 is a genuine non-200, and its body is itself a plain-words reason, which is ag-2's intent rather than a defect.",
+   "af_7_text.py:21 LEAVES = (overlay, thesis, print, coverage); :83 prints the sentence from len(NAMES) x len(LEAVES). The 1,114 comes from the actual walk but the '3 x 4' comes from the constants, so two numbers in ONE sentence have different provenance and the structural one cannot fall when a leaf yields nothing.",
+   "af_7_text.py:36 carries the comment 'a non-JSON body (the print route renders HTML): reasons there are graded by its text' -- the LOCAL check deliberately graded print's non-JSON body. The round-57 swap of the call from the local handler to an invoke of the deployed function LOSES that grading; the capability existed and was dropped by the swap, not absent by design.",
+   "Corroborated by AC2's own C2 line, independently of this reading: it reports pack-derived fields served by ['overlay', 'thesis'] -- print absent from a list where the local check would have had it.",
+   "NOT a regression introduced by this act: the print route answers 200 with a PDF for 2 of 3 names on the newly deployed code, so the route is healthy; what is missing is the CHECK's reading of it."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "AC2's expect: 'C1, C2 and C3 PASS on the deployed function; THE DEPLOYED FUNCTION SERVES EVERY REASON IN PLAIN WORDS: YES', with the check's own sentence scoping C1 to 3 names x 4 routes.",
+ "world_is": "C1 is proven for overlay, thesis and coverage and is UNEXAMINED for print on the deployed function -- ABSENT, not EXERCISED-AGAINST, across 1 of the 4 routes the sentence names. AC2 is nonetheless MET AS WRITTEN and was closed as such in ledger leg L5: its expect is C0 plus C1/C2/C3 PASS plus the YES line plus exit=0, and the deployed function returned all of that. This seat does not grade the adequacy of another seat's census. INFERRED, not measured: whether the same deployed-swap drop affects the other round-56 graders reused by ag_1_served (af_1_route, af_2_serve) -- those passed every clause, but their leaf sets were not swept for a non-JSON route, and that denominator is not established here.",
+ "notes": "disarm_owner 2.0.0_SA_COO~Z (the issuer). INERT and NOT a rollback trigger: both criteria passed, the deploy stands, and the round can close. Surfaced, not adjudicated -- this seat does not amend another seat's check. Candidate repair for the issuer to weigh: have the deployed-swap wrapper treat a 200 with a non-JSON content_type as a BODY TO GRADE AS TEXT (the local check's own behaviour at af_7_text.py:36) and reserve REFUSED for a true non-200, and print the route denominator from the leaves actually WALKED rather than from len(LEAVES) -- which would make a dropped route visible in the sentence instead of silent. Sibling rows from the same seat on the same class of instrument: AMGT_RESAPP-Z-S324, AMGT_RESAPP-Z-S325."
+},
+  {
+    "id": "AMGT_RESAPP-Z-S331",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-10-01T08:45:00Z",
+    "one_line": "The served monthly chatter route (FWD-32, live since 08:20:58Z) names 63 of 95 covered rows; the other 32 serve the raw security key as display_name (e.g. 9433_JP_Equity), which DSGN prints as served on the bubble face.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Live read 2026-10-01 08:4xZ: monthly_chatter._display_names() names 63 of 95 covered keys (worker ~197 measured the same at af-1).",
+        "resolve_identity() for the 32 unnamed keys carries NO name field (keys: bloomberg, display_ticker, security_key, identity_*, crosswalk_*); 0 of 32 have one there. Names exist elsewhere for some (e.g. ASML 'ASML Holding NV' on the rank-series rows).",
+        "2.0.0_SA_COO~D msg 27670: DSGN round-16 instrument fixture shows the raw key on the face."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "C-PRESENTATION-ONLY + CONTRACT s.0: the route serves what the page prints; a person-readable name for every covered row.",
+    "world_is": "display_name falls back to the security key for 32 of 95 rows because the route's name source (the ranking crosswalk) covers 63.",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "notes": "Round-58 enrichment candidate: one name source for all 95 covered names (dossier / model block / series-name join), with display_ticker as the stated fallback, never the raw key. Not a mid-round act (round 57 frozen)."
   }
 ]
 ```

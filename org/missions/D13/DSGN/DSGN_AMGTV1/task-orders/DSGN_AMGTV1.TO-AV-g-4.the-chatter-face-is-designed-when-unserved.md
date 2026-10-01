@@ -36,7 +36,7 @@ estate pieces, colours from `portal/src/lib/chartColors.ts`. **Design law (porta
 field name or path may sit in a data attribute or in code, never in visible text; no light ink on a white panel. The shared Friday
 CONTRACT: `org/tier1_exec/1.0.0_SA_CTO/deliverables/AMGT_FRIDAY_DEMO_20261001/CONTRACT.md` (read it).
 
-**Harness changes:** `errorEmpty` and `tabs` may change ONLY to re-anchor a claim about the unserved chatter face (the same fact).
+**Harness changes (ISSUER AMENDMENT 1):** `errorEmpty`, `tabs` and `leadPanelPattern` may change ONLY to re-anchor a claim about the chatter face's ranking caption (ruling 3 removes it): the green arm (r16-green-g @9cea7642) moved their caption renders to the Price face -- the same fact.
 
 ## 2. BOUNDS
 
@@ -54,6 +54,7 @@ portal/src/pages/SecurityAnalysis/components/LeadPanel.tsx
 portal/src/pages/SecurityAnalysis/components/ChatterBubbles.tsx
 portal/src/pages/SecurityAnalysis/__harness__/errorEmpty.harness.cjs
 portal/src/pages/SecurityAnalysis/__harness__/tabs.harness.cjs
+portal/src/pages/SecurityAnalysis/__harness__/leadPanelPattern.harness.cjs
 org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~60/
 org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
@@ -85,9 +86,9 @@ Report once: what changed and where, the output line of every criterion, the por
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
-**ISSUER NOTES:** analysis s.4 row 4 (ruling 3). Second on chain ~60 (LeadPanel.tsx). Base unavailable 2 of 3.
+**ISSUER NOTES:** AMENDED before hand-over (leadPanelPattern added to the write surface; helper G's green arm r16-green-g @9cea7642 unavailable 3 of 3; graded on modification by to-pipeline-gate GATE viii only).  analysis s.4 row 4 (ruling 3). Second on chain ~60 (LeadPanel.tsx). Base unavailable 2 of 3.
 
-<status>pending</status>
+<status>complete</status>
 <round>16</round>
 <slot>~60</slot>
 <fabric>site-z</fabric>
