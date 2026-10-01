@@ -20,9 +20,10 @@ EGRESS CLASS, declared: NONE beyond Opal's own AWS (S3 upload, SSM, Secrets Mana
 
 The build cells `OG-tx-1`, `OG-ml-1`, `OG-hr-1` and `OG-hr-2` are complete on CLOUD and NOT deployed. Ship them NARROW:
 the live commit plus those cells' own gateway commits, and nothing else CLOUD holds. Read PRD
-`org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md` v1.3 C7 whole (at @2b8f3151c6 or later). `OG-pr-1` is also
-complete: the secrets `gateway/transcripts/bearer`, `gateway/mail/bearer` and `gateway/principals/rosters` exist and
-`opal-gateway-role` reads exactly those three. The release order is the CTO's
+`org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md` v1.3 C7 whole (at @2b8f3151c6 or later). `OG-pr-1` creates the
+secrets `gateway/transcripts/bearer`, `gateway/mail/bearer` and `gateway/principals/rosters` and grants
+`opal-gateway-role` exactly those three (gateway-train Terraform act #2). PHASE A may run before `OG-pr-1` lands;
+PHASE B never does. The release order is the CTO's
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_20261001_OPAL_GATEWAY_RELEASE_TRAIN.md` (R1, R2 C1-C6, R4).
 
 **Grade by CONTENT, never ancestry** (row `NFRA_OPLGTW-Z-S21`). Deploy-only refs carry history without bytes.
@@ -47,9 +48,11 @@ complete: the secrets `gateway/transcripts/bearer`, `gateway/mail/bearer` and `g
    - Read how the host gets its existing static bearers today (`OTP_BEARER`, `MS_INGEST_BEARER` in
      `deploy-to-ec2.sh`'s render), and use that same mechanism for the two new bearers.
    - Names come from `deliverables/0.9.0_WK_NFRA_OPLGTW~16/ROUTE_NAMES.json`.
-   - Say whether the host role already reads them, by reading its policy. If it does not, STOP with a BLOCKING row
-     that names the exact grant. This order applies no IAM change.
-   - The two bearer secrets already exist (`OG-pr-1`). Confirm each with `describe-secret`; never read a value.
+   - Say whether the host role already reads them, by reading its policy. Before `OG-pr-1` lands, record
+     `grant pending OG-pr-1` and continue; once it has landed, a missing grant is a BLOCKING row naming the exact
+     grant. This order applies no IAM change.
+   - Confirm each of the three secrets with `describe-secret` (never read a value). Before `OG-pr-1` lands they read
+     ABSENT; record that and continue.
    - **Rotation (CTO ruling (c), row Z-W17-S1).** This release rotates the cot OTP capability bearer, Secrets
      Manager `blackdiamond/cot/otp-gateway-token` (the second token of host `.env` line 14, `OTP_BEARER`). Confirm the
      attribution by shape only: print whether that secret's value is 64 hex, a boolean, never the value. Read every
@@ -76,7 +79,11 @@ complete: the secrets `gateway/transcripts/bearer`, `gateway/mail/bearer` and `g
 7. Write `ANNOUNCE_OG-rl-1.md` in your deliverables with steps 1-6's numbers (no secret, no address), commit it, and
    report. Do NOT upload.
 
-### PHASE B (GO): only after the issuer says GO (both halves SIGNED, off-hours, the gateway queue told)
+### PHASE B (GO): only after the issuer says GO (both halves SIGNED, off-hours, the gateway queue told, `OG-pr-1` complete)
+
+7a. **Re-read the live ref** (`EC2_MANIFEST.json` at HEAD and the host). If it moved since PHASE A (MX-r-7 or MS-d-2
+    landed), re-cut `/c/tmp/og-rel3` onto the new live ref, re-run steps 1-6, and re-commit `ANNOUNCE_OG-rl-1.md`
+    before any act (CTO ruling R1; the stale-base guard refuses otherwise).
 
 8. BEFORE reads: the on-host tool list and `ENABLED_INTEGRATIONS`.
 9. NEVER-2 ledger, slug `nfra-oplgtw-trnspt-deps-release`, opened with `python .tools/deploy_ledger.py open ...`
@@ -136,8 +143,8 @@ validated with `python .tools/proof-of-spec-check.py <instance>`. Report once pe
 <!-- ===================== RECORD FACE ===================== -->
 
 **ISSUER NOTES:**
-- Slot ~15, queue position 3. HANDED only when `OG-tx-1`, `OG-ml-1`, `OG-hr-1` and `OG-hr-2` are drained, and OG-t-2
-  and NFRA_MCPINDEX MX-r-7 have landed (release serialisation), and `OG-pr-1` is complete. G-SENDERS is NOT a gate
+- Slot ~15, queue position 3. PHASE A handed once `OG-tx-1`, `OG-ml-1`, `OG-hr-1` and `OG-hr-2` are drained (A2).
+  PHASE B GO only after `OG-pr-1` is complete and MX-r-7 has landed (train R1; it swaps with MS-d-2 if ready first). G-SENDERS is NOT a gate
   (ruling (d)). The halves also cover the cot OTP bearer rotation and the host-side roster read.
 - The halves' blast radius: the shipped file set, the two secrets, the `.env` delta and the negative arms. Rollback is the prebuilt live artifact plus the old `.env`; the secrets can be deleted with a recovery window.
 - Risk WORLD: a deploy that adds a content surface.
@@ -160,3 +167,12 @@ Graded by: no gate limb (LIMB 6 fires on a newly-added order only; GATE (viii) r
   semantics on the live template and confirmed by shape in step 4), with a refused-old / accepted-new verify.
 - (d) G-SENDERS is not a gate: the sender table ships as it stands.
 AC1 and AC2 and their invocations are unchanged; AC3 is added.
+
+## AMENDMENT A2 (issuer `2.0.0_SA_COO~O`, 2026-10-01 ~06:1xZ; PHASE A handed early)
+
+Graded by: no gate limb (a modification; GATE (viii) reads `<placeholders>NONE</placeholders>`). The four build cells
+are complete and drained (tx-1 @be10dc29d8, ml-1 @4ca87da779, hr-1 @43f34bae73, hr-2 @f20c20896c; issuer re-grade PASS
+on CLOUD). PHASE A runs now against the live ref, so the release is ready for train R1's swap with MS-d-2. `OG-pr-1`
+not yet landed is recorded as pending in step 4 (no STOP). New step 7a re-cuts onto the live ref at GO if it moved.
+Criteria unchanged.
+<status>pending</status>
