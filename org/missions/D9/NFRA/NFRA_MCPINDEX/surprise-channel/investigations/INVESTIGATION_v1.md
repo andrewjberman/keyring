@@ -5129,6 +5129,163 @@ carries none.
     "spec_asserts": "Z-W24-S8 (worker ~24): the gold dispatch's comp-freshness gate FAILs and BLOCKS when bd_silver_transactions is >=48h old.",
     "world_is": "A table the config grades the same way has read FAIL-aged on most slots for weeks and the scheduled chain ran every night; which of the three skip paths applies (PATH, bypass flag, or the bd config skipped) was not read.",
     "notes": "No act taken: transactions stays HELD (no state changed; safe). Carried to the round-6 slug for 1.0.0_SA_CTO~O with Z-W24-S8: (1) which skip path the production chain takes; (2) the freshness config grades weekly tables (allocations, unrealized) on a 48h daily threshold -- a basis defect (CLAUDE.md: a freshness entry lacking a trading-day basis false-alarms); (3) with (1) settled, transactions' retirement can be re-ruled."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~22",
+    "surfaced_at": "2026-10-01T11:55Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "id": "NFRA_MCPINDEX-Z-W22-S4",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "one_line": "The live host's MAIL_SENDER_TABLE key is SET (3 items, len 67) and the live deploy-to-ec2.sh renders it from the deploy-time input OG_MAIL_SENDER_TABLE (default empty); a PHASE B deploy run without the same value rewrites it to EMPTY, which refuses every mail-route message, and the .env KEY census (46 == 46) cannot see it.",
+    "spec_asserts": "MX-r-8 item 4: this release adds NO .env key; the key set before and after must be equal; read the live script to know what the deploy needs.",
+    "world_is": "deploy-to-ec2.sh at daa56d81ac: OG_MAIL_SENDER_TABLE=\"${OG_MAIL_SENDER_TABLE:-}\" (line ~173), validated against an address character set, rendered by the .env printf as MAIL_SENDER_TABLE=%s. The host .env (read in Python, never shell-sourced) carries MAIL_SENDER_TABLE SET len=67 items=3 at 2026-10-01T11:49:56Z. The rosters are host-side now (R4), so OG_MASTER_ADMIN_PRINCIPALS / OG_WRITE_CAPABLE_PRINCIPALS are NOT needed; OG_MAIL_SENDER_TABLE is the one deploy-time data input left.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~22/probes_r8/host_read_FINAL.txt (---STATE MAIL_SENDER_TABLE SET len=67 items=3; 46 keys, 46 distinct)",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~22/probes_r8/env_keys_PHASEA.txt (rendered 46 == host 46, 0 dropped, 0 added)",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~22/ANNOUNCE_MX-r-8.md section PHASE B inputs"
+      ]
+    },
+    "notes": "DISARM (issuer, before PHASE B): supply OG_MAIL_SENDER_TABLE in the deploying shell with the SAME value OG-rl-1 deployed (it is DATA the issuer holds, never in a committed file), and read back MAIL_SENDER_TABLE state SET items=3 len=67 before and after with probes_r8/host_read.py. The value is addresses, not a secret, but this worker has not read it: it reads KEY names and the key's state only."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~22",
+    "surfaced_at": "2026-10-01T11:55Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "id": "NFRA_MCPINDEX-Z-W22-S5",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "The release and deploy-only commits were made under GIT_COMMIT_AUTHOR_OVERRIDE (audited) because the cut tree at the live ref daa56d81ac does not carry this task order, so the worker lane gate finds no non-terminal order at HEAD naming the gateway paths; both are scratch-branch commits, never merged, never pushed.",
+    "spec_asserts": "MX-r-8 section 1 item 2 and the host-safety note: apply the two cells' gateway-path commits onto the live ref; commit on the worker's branch.",
+    "world_is": "safe-commit in /c/tmp/mx-rel11 (daa56d81ac) refused: 5 of 5 gateway paths 'no NON-TERMINAL task order at HEAD issued_to this serial names this path'. The same refusal class as Z-W21-S14; the override bypassed the lane refusal only (commit-gate passed; the naming gate was in its WARN window with a sparse tree). The deploy-only commit e3567ce5f7 on CLOUD 220a74350a was made under the same override for the same reason (its gateway paths are in this order's <paths>, but the base tree carries a different order set).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git -C /c/tmp/mx-rel11 log -1 01845e91cf; git -C /c/tmp/mx-dep11 log -1 e3567ce5f7",
+        "git diff --name-only daa56d81ac 01845e91cf: 5 files, all under infra/aws/ec2/opal-gateway/"
+      ]
+    },
+    "notes": "INERT: a scratch-branch record for the L8 reading. The gateway tree objects of the two commits are equal (7d222e01f6) and untouched by the override."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~22",
+    "surfaced_at": "2026-10-01T11:55Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "id": "NFRA_MCPINDEX-Z-W22-S6",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "The internal reader role that MX-g-3 routes portal_index and discover through (gateway-global-internal-reader-role) holds s3:GetObject on opal-data-portal-v2 json/* and platinum/* and no s3:ListBucket, so an ABSENT key reads as AccessDenied, not NoSuchKey: portal_index's reader returns a named IntegrationError for an absent object where the instance-role path returned None.",
+    "spec_asserts": "MX-g-3: portal_index and opal_discover read portal-v2 through internal_role.s3_client(); a read of an absent object is 'absent -> None'.",
+    "world_is": "get-role-policy (read-only, 2026-10-01T11:4xZ): one inline policy gateway-global-internal-reader-policy, one statement InternalReaderPortalRead, Allow s3:GetObject on arn:aws:s3:::opal-data-portal-v2/json/* and arn:aws:s3:::opal-data-portal-v2/platinum/*; no ListBucket. portal_index.s3_getter maps only NoSuchKey/404 to None; any other code (S3 answers a missing key with 403 to a caller that lacks ListBucket) raises IntegrationError 'read of <key> failed: ClientError AccessDenied'. A first simulate-principal-policy attempt (two resource ARNs) returned one placeholder result (arn:aws:s3:::${BucketName}/${KeyName}, implicitDeny) and is NOT a verdict; the policy statement itself is the evidence.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~22/probes_r8/internal_reader_policy_statements_PHASEA.txt",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~22/probes_r8/internal_reader_policies_PHASEA.txt",
+        "infra/aws/ec2/opal-gateway/app/integrations/portal_index/integration.py s3_getter (release 01845e91cf lines 266-295)"
+      ]
+    },
+    "notes": "INERT: every key the catalog names exists, so the live read path does not meet the absent case; it matters only when a portal object is removed. Not a defect in this release's job (routing); r8.AC2 reads the served path at PHASE B."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~22",
+    "surfaced_at": "2026-10-01T12:55Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "id": "NFRA_MCPINDEX-Z-W22-S7",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "The order's instruction to build OG_MAIL_SENDER_TABLE 'from the repo root of the tree you deploy from' cannot be followed: the sparse deploy-only tree /c/tmp/mx-dep11 carries no data/transcripts, so criterion.py does not import there; the table was built from the worker worktree root (a full tree, CLOUD merged) in the same bash call as the deploy.",
+    "spec_asserts": "Issuer instruction for MX-r-8 PHASE B step 3: export OG_MAIL_SENDER_TABLE from criterion.DEFAULT_AUTHORS, run from the repo root of the tree you deploy from; confirm 3 items / 67 chars.",
+    "world_is": "In /c/tmp/mx-dep11, `import criterion` with data/transcripts/scripts/outlook on sys.path raised ModuleNotFoundError (the path is absent from the sparse tree). In the worker worktree the same command printed items=3 chars=67 and the address-character-set check passed. The value reached the deploy only through the shell environment and appears in no file.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~22/probes_r8/host_read_PHASEB_BEFORE.txt and host_read_PHASEB_AFTER.txt (---STATE MAIL_SENDER_TABLE SET len=67 items=3 both)",
+        "deploy-to-ec2.sh line ~173-177 (OG_MAIL_SENDER_TABLE read from the environment)"
+      ]
+    },
+    "notes": "INERT: the shape read-back (3 items, 67 chars, before and after) is the check that matters and it passed. The two trees' criterion.py are the same CLOUD bytes (worktree merged CLOUD c6e376360e). A future deploy-only tree cut for a release that needs this value should carry data/transcripts/scripts/outlook/criterion.py, or the order should name the full worktree."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~22",
+    "surfaced_at": "2026-10-01T12:55Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "id": "NFRA_MCPINDEX-Z-W22-S8",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "The deploy wrapper's own dep-branch manifest commit (93eacb12e9 on dep-nfra-mcpindex-r6-rdr-release) updates only _last_updated, deployed_commit, deployed_at and deployed_by, leaving release_note and previous_deployed_commit stale, and its commit ran the naming gate with a FileNotFoundError on the sparse tree's missing org/missions/DIRECTIVES.yaml (WARN window, did not block).",
+    "spec_asserts": "Issuer: record the manifest (deployed_commit e3567ce5f7, previous daa56d81ac); never carry the wrapper's own dep-branch manifest commit if it mangles bytes.",
+    "world_is": "git show 93eacb12e9 in /c/tmp/mx-dep11: 1 file, 4 insertions, 4 deletions; previous_deployed_commit still read 2c0f84966d (OG-rl-1's value). Not carried. The manifest on this branch was edited by hand (4ce50b6150): deployed_commit, deployed_at 12:37:03Z, deployed_by, release_note (new text prepended, the live chain kept after ' ||| PREVIOUS: '), previous_deployed_commit daa56d81ac, _last_updated; valid JSON, LF endings as before, 6 insertions / 6 deletions.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~22/probes_r8/deploy_PHASEB_scrubbed.txt (naming-gate FileNotFoundError line; Manifest committed line)",
+        "git show 4ce50b6150 -- infra/aws/ec2/EC2_MANIFEST.json"
+      ]
+    },
+    "notes": "INERT: a record for the L8 reading. The wrapper's manifest writer does not maintain previous_deployed_commit or release_note, so every release edits them by hand (MX-r-7 did the same)."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~22",
+    "surfaced_at": "2026-10-01T12:55Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "id": "NFRA_MCPINDEX-Z-W22-S9",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "Row Z-W22-S4 (ARMED, MAIL_SENDER_TABLE would be emptied by a deploy without OG_MAIL_SENDER_TABLE) is DISARMED by this PHASE B: the table was supplied in the deploying shell and the read-back read SET items=3 len=67 before and after.",
+    "spec_asserts": "Z-W22-S4 disarm: supply OG_MAIL_SENDER_TABLE with the same value OG-rl-1 deployed, and read the key's state before and after.",
+    "world_is": "host .env parsed in Python (never shell-sourced): before 12:34:10Z MAIL_SENDER_TABLE SET len=67 items=3; deploy rc=0 at 12:37:03Z; after 12:43:42Z SET len=67 items=3. Keys 46 == 46, 0 dropped, 0 added. Only the shape was read; no value was printed or filed.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~22/probes_r8/host_read_PHASEB_BEFORE.txt",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~22/probes_r8/host_read_PHASEB_AFTER.txt",
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~22/probes_r8/env_keys_before_after_PHASEB.txt"
+      ]
+    },
+    "notes": "INERT: recorded so the L8 reader can close Z-W22-S4 against a measured read-back. The shape equality does not prove the 3 addresses are the same 3, only that the count and length are; the value came from the same repo source (criterion.DEFAULT_AUTHORS) the issuer verified."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~22",
+    "surfaced_at": "2026-10-01T12:55Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "id": "NFRA_MCPINDEX-Z-W22-S10",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "safe-commit.sh cannot commit the merge that `git merge CLOUD` leaves in a worker worktree (a pathspec is required, and a merge in flight is refused by design); the merge was completed with `git merge --continue` under the worker's author identity, as safe-commit's refusal text prescribes.",
+    "spec_asserts": "Order/issuer: run `git merge CLOUD` first, keep both sides' rows in INVESTIGATION_v1.md; every commit via safe-commit.sh.",
+    "world_is": "safe-commit without a pathspec exited 'pathspec required after --'; with a merge in progress it exits 3 by design. The merge commit aef39b3474 was made with GIT_AUTHOR_NAME/EMAIL set to the worker serial and GIT_EDITOR=true; the hooks (surprise-row-gate, gitlink check) ran and passed. The investigation file conflict had 3 interleaved hunks: resolved by taking CLOUD's file whole and appending this worker's 3 rows (Z-W22-S4..S6) textually after CLOUD's last row; 226 rows, 226 distinct ids, valid JSON.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show aef39b3474 --stat",
+        "git show aef39b3474:org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/INVESTIGATION_v1.md (226 rows)"
+      ]
+    },
+    "notes": "INERT: the append-only channel conflicts on every merge when two seats append at the same offset (the doctrine's own warning). No row was edited or dropped."
   }
 ]
 ```
