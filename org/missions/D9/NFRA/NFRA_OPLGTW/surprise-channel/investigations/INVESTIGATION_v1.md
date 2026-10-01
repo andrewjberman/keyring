@@ -6256,3 +6256,55 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S16",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-01T14:40Z",
+  "one_line": "The handoff said MX-r-8 (slot 4) had NOT landed and live is daa56d81ac; the manifest at HEAD, the host md5 and the S3 git-ref all read e3567ce5f7 (landed 12:37Z), so PHASE A was cut on e3567ce5f7.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "DOC: infra/aws/ec2/EC2_MANIFEST.json services.opal-gateway at CLOUD 2f895e20a5: deployed_commit e3567ce5f788f45195bec065f4d2fc5a68a38cd3, deployed_at 2026-10-01T12:37:03Z, previous_deployed_commit daa56d81ac7c91795f1a9c47b2c2430cb3879e24.",
+      "RUN: read-only SSM 097772bc-f82e-450b-a628-afd55bd87964 (Success): md5sum of the 91 shipped files against git show e3567ce5f7:<file> -> 91 of 91 identical (0 mismatch); host .env 46 lines.",
+      "RUN: aws s3api head-object ec2/opal-gateway/opal-gateway-latest.tar.gz and opal-gateway-e3567ce5f7.tar.gz: 460,595 bytes each, git-ref e3567ce5f788f45195bec065f4d2fc5a68a38cd3, 12:36Z."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The handoff: live opal-gateway is daa56d81ac; NFRA_MCPINDEX MX-r-8 has not landed; at GO re-read live and re-cut if it moved.",
+  "world_is": "It moved before PHASE A: MX-r-8 landed at 12:37Z. Step 1 (live commit from the manifest at HEAD, confirmed by host md5) was done against e3567ce5f7, and the release tree og-rel5 is cut on it, so the step-7 re-cut is already satisfied for now. MX-r-8 changed 3 served files (opal_discover, portal_index, internal_role paths), none of OG-hl-1's.",
+  "notes": "Rollback command therefore uses DEPLOY_BASE_REF=<release commit> and the rollback tree is /c/tmp/og-rb5 at e3567ce5f7. A mover of the live ref before GO (another slot) re-opens step 7.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S17",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-01T14:40Z",
+  "one_line": "The sender-table refusal must read the SHIPPED file, so it runs after the artifact is extracted: a refusal leaves the new code on disk (old process, old .env) and the stale table file is removed before the extract.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "DOC: release 0a1d9079c6 deploy-to-ec2.sh: sudo rm -f ${REMOTE_DIR}/deploy/mail_sender_table.txt, then tar -xzf, then the read and the two REFUSED branches (exit 3), all before the .env printf and before systemctl restart.",
+      "RUN: rehearse3.py rendered that block as the deploying shell's unquoted heredoc and ran it under set -euo pipefail on 7 synthetic files: missing 3, empty 3, blank lines only 3, one valid 0, three valid with CRLF 0, bad character 3, shell metacharacters 3.",
+      "RUN: the whole on-host script rendered with dummy variables: bash -n rc=0."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 4: the on-host script reads ${REMOTE_DIR}/deploy/mail_sender_table.txt and refuses before any .env write or restart.",
+  "world_is": "The file exists on the host only after the extract, so the refusal cannot precede the extract. Effect of a refusal: new app files are on disk while the running process and .env are unchanged until the next restart (the roster refusal ahead of it is the only one that leaves the host wholly untouched). I added a rm -f of the old table file before the extract so that a missing file in the artifact refuses instead of passing on a stale copy; the running service reads MAIL_SENDER_TABLE from the environment, never the file.",
+  "notes": "Alternative if the issuer prefers a wholly untouched host on refusal: read the file from the tarball with tar -xzOf before extracting; not done because the order names the extracted path.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
