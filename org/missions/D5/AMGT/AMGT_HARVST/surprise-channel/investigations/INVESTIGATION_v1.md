@@ -5664,6 +5664,30 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "Next: no ft sign-in before 06:00Z; then ONE re-seated attempt with a single renewal budget. If the session still dies, the CTO reads it at the round-36 analysis."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S57",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-01T23:25Z",
+      "one_line": "bbg backfill never reaches silver/gold: 772 of 779 stored bbg articles sit pending in the upload outbox with JSONDecodeError (0 uploaded) -- the in-tab path stores bbg bodies as HTML pages, and silver_from_bronze.article_rows parses bbg as JSON.",
+      "class": "BLOCKING",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "FWD-14 depth: every stored article reaches gold through upload-harvest (bronze put + silver row from the same bytes).",
+      "world_is": ".runtime/opal-data-harvest-bbg/progress.sqlite3 harvest_raw_outbox at 23:2xZ: pending/JSONDecodeError 772, pending/None 7, uploaded 0; the driver's UPLOAD lines read rc=2 on 55 of 57 bbg uploads since the first job (13:35Z). Reproduced offline: article_rows('bbg', <a stored .html payload starting '<!DOCTYPE html>'>) raises JSONDecodeError at char 0. The same reproduction on a pending wsj html item builds rows OK; wsj is 301 uploaded / 6 SilverRowError / 1 ArrowNotImplementedError. Gold rebuild #3 (20:00Z) therefore carries no bbg backfill article.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          ".runtime/opal-data-harvest-bbg/progress.sqlite3 (harvest_raw_outbox)",
+          ".runtime/opal-data-harvest-bbg/last-harvest-upload.json",
+          ".runtime/harvest-backfill/bbg_full_run.out (UPLOAD rc=2 x55)",
+          "lib/opal_data_harvest/uploads.py:186-235"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Disarm: a bbg HTML branch in silver_from_bronze (same parse the bbg acceptance used), then the pending outbox drains on the next upload and gold rebuild #4 picks it up. The driver keeps collecting meanwhile (bronze lands; rows wait)."
     }
   ]
 ```
