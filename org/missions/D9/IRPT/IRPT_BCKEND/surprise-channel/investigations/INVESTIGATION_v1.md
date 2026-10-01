@@ -14124,3 +14124,34 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Remedy and order: RULINGS batch 66. First a read-only attribution of the 47 reopens by report id; then the reopen path serves only a report whose lineage.provider is OPAL_HOLDINGS, as one adapter member under both halves."
 }
 ```
+
+
+## IRPT_BCKEND-S248 -- RULING that DISARMS row IRPT_BCKEND-S238 and the API half of row IRPT_BCKEND-S244 (disarm owner 1.0.0_SA_CTO): the served boundary refuses svc-irpt-analysis on a foreign firm on all SIX functions that select a tenant, read live, and serves it on its own firm; the resident's live foreign-firm arm stays NOT EXERCISED and is carried as the rows' limit.
+
+```json
+{
+  "id": "IRPT_BCKEND-S248",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "1.0.0_SA_CTO",
+  "surfaced_at": "2026-10-01T07:18:15Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "RULING that DISARMS row IRPT_BCKEND-S238 and the API half of row IRPT_BCKEND-S244 (disarm owner 1.0.0_SA_CTO): the served boundary refuses svc-irpt-analysis on a foreign firm on all SIX functions that select a tenant, read live, and serves it on its own firm; the resident's live foreign-firm arm stays NOT EXERCISED and is carried as the rows' limit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/V1_SERVICE_BOUNDARY_REREAD_20261001.md @164c3dec00 (read by this seat): svc-irpt-analysis selecting inflection answers FIRM_BINDING on irpt-performance-adapter, irpt-export-render, irpt-directory-search (0 entries; the control that armed S238 served 1 entry on 2026-09-30) and irpt-holdings; cottonwood is not refused on any of the four.",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/WHOLE_BUNDLE/APPLY_LOG_20261001.txt @7153ec83fd lines 58-76 (read by this seat): after the apply, irpt-ycharts-generate answers INVALID_INPUT with Cottonwood's date for the own firm and FIRM_BINDING for inflection; irpt-status serves the own firm (13 history items, 76 sections) and answers FIRM_BINDING on all six probes when inflection is selected.",
+      "this seat's own reads: live CodeSha256 of irpt-ycharts-generate arC65KbD.. (06:51:12Z) and irpt-status 2V7xV1+z.. (06:59:55Z) equal the signed AFTER column (07:15Z); every .py member of both artifacts and 37 closure members of the other four were byte-equal to the pin before signing (@2e511a71c6, @5ff5bac77f).",
+      "row IRPT_BCKEND-S246 @5e20d89868: the resident runs current_authority.py 211e1c15af68bdb4 (5 mentions of allowedFirmIds); no foreign-firm job has been refused on the host (RULINGS batch 65)."
+    ]
+  },
+  "dismissal_reason": "The hazard of S238 was one service principal admitted to a foreign firm at the API. Six of six tenant-selecting functions now refuse it, including the directory read that armed the row. irpt-narrative has no tenant selection.",
+  "spec_asserts": "Rows S238 and S244: svc-irpt-analysis (allowedFirmIds cottonwood) is served a foreign firm's resource; the limit is enforced nowhere on deployed bytes. CTO ruling 103318: W27 opens only after the API enforces and the negative control reads refused.",
+  "world_is": "MEASURED live on 2026-10-01 between 06:3xZ and 07:1xZ: FIRM_BINDING for inflection on six of six functions; the own firm served on six of six. Ruling 103318's condition for W27 is met. NOT EXERCISED: a foreign-firm job refused by the resident (no front door exists once the API refuses; RULINGS batch 65).",
+  "notes": "Still open and not disarmed here: a SERVICE actor with no allowedFirmIds is unrestricted in the resident (PRD v0.22 ruling 21, next resident build); a permanent refusal at the resolve phase retries to the dead-letter queue (batch 65)."
+}
+```
