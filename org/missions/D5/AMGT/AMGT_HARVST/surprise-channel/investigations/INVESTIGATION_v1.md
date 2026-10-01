@@ -5576,6 +5576,29 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "Stated plainly in the diagnosis; the issuer's preflight adversary ('a fix that just stops fetching locked pages') applies to cause 2 by the TO's own design."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S55",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-01T19:40Z",
+      "one_line": "Round-35 disposition record (rows are append-only): W92-S11 and W92-S12 (ARMED: a restarted ft driver stalls on a dead session / the ft session dies ~20-30 min after each renewal) are disarmed by state -- the ft backfill driver stays OFF -- and carried to the round-36 proposal.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "An ARMED hazard disarms same-turn via its disarm_owner; spine L10 sends the slug only after every BLOCKING or ARMED row of the round is dispositioned.",
+      "world_is": "The ft backfill driver (PID 31976) exited at 16:1xZ on STOP_FT and is not restarted; no process runs ft (no python with --publishers ft, no chrome on browser-profiles/ft at 19:3xZ). Both hazards need a running ft driver to fire. The fixes they name (in-job renewal under the driver; the session-longevity diagnosis) are round-36 proposal item 1 in round35/ROUND35_DRAIN_END_PACKET.md.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "commits a78b06d3e6, 9b14622a78",
+          "deliverables/2.0.0_SA_COO_H/round35/ROUND35_DRAIN_END_PACKET.md",
+          ".runtime/harvest-backfill/ft_full_run2.out (driver exit + summary)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Restarting the ft driver re-arms both rows; do it only after the round-36 fix lands."
     }
   ]
 ```
