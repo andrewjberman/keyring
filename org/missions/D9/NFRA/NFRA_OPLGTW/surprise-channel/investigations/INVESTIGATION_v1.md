@@ -6493,3 +6493,54 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S40",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-01T19:10Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-tr-1 LIVE 3a7d6a7dc8 (18:50:02Z; ledger CLOSED; drained @b87c4b215f; issuer re-grade on CLOUD tr.AC1 TAX ARMS 4 of 4, tr.AC2 PASS). W15-S22: the M1 verify arm (mail and transcripts bearers -> 401 UNAUTHORIZED_CAPABILITY on /ms/taxsma-workbook) was run host-side; 'no Graph call' rests on the route's guard order (capability_guard first), not a Graph-side log -- accepted as the code-read evidence the CVO half named.",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W15-S22"
+  ],
+  "one_line": "OG-tr-1 (Tax SMA route, capability ON) live; W15-S22 accepted.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Issuer re-run on CLOUD: tr.AC1 4 of 4 (module 6acc3e8c, no-bearer 401 UNAUTHORIZED_CAPABILITY, /mcp 401, .env 48 capability ON); tr.AC2 shipped 5, outside 0."
+    ]
+  },
+  "spec_asserts": "CVO M1: the other bearers read 401 with no Graph call.",
+  "world_is": "401 observed; no-Graph-call inferred from the guard order.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S41",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-01T19:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "app/taxsma_workbook.py _OTHER_ROUTE_BEARERS (line ~116) omits TRANSCRIPT_BEARER and MAIL_BEARER, so the Tax route would not refuse a bearer equal to one of those; today all compare DIFFER (M1), so it is latent.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "3.0.0_SA_CVO~O second half @00cb40bfff (M1); OG-tr-1 M1 read: TRANSCRIPT_BEARER DIFFER, MAIL_BEARER DIFFER, OTP x2 DIFFER, MS_INGEST DIFFER, GRAPH_READ DIFFER."
+    ]
+  },
+  "spec_asserts": "The Tax route refuses its bearer while that value is also a credential of another route.",
+  "world_is": "The tuple predates the /hx bearers; a future equal value would pass that guard.",
+  "notes": "Fix (CTO 28026): add TRANSCRIPT_BEARER and MAIL_BEARER to the tuple in OPLGTW's NEXT gateway release; until then any bearer rotation compares DIFFER first.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
