@@ -2430,3 +2430,26 @@ run summary; 20 = baseline), `ae-5.AC2` / `ae-5.AC3` (no record).
 
 **NOT cells this round:** a residential arm for bbg/wsj/barrons/ft (Andrew's act, analysis section 5); FWD-14's own
 census (graded when the driver's runs mature); the cloud host (phase 2).
+
+## 46. ROUND 33 -- L5 DECOMPOSITION v3.13, over the round-32 analysis (`ledger/ROUND_ANALYSIS.round32.md` @749ec2c72e)
+
+**Issuer `2.0.0_SA_COO~H`**, 2026-10-01 ~11:4xZ. FWD-14 (6 of 89 at 50+) and FWD-11 NOT MET; no defeat. Series **`af`**;
+slots **`~90`..`~92`**; fan-out cap 3 (placement). The sa backfill (issuer, detached) keeps running throughout.
+
+| analysis item | cell | order | class | slot | dispatch |
+|---|---|---|---|---|---|
+| 0 remove `verification_locator.py` | `HVST-af-0` | none: issuer direct act, DONE @ca957fb24a | LOCAL | issuer | done |
+| 1 ft in-tab backfill | `HVST-af-1` | none: issuer direct act (unlock re-probe 12:02Z after the 429; then the detached driver) | WORLD | issuer | ~12:0xZ |
+| 2 input-source instrument + a CHALLENGED pass (wsj/barrons re-mint already done in ae-5) | `HVST-af-2` | `af-2` | LOCAL A, WORLD B | `~91` | now |
+| 3 Z-S51 census fix + the FWD-14 depth table over gold | `HVST-af-3` | `af-3` | LOCAL (S3 reads) | `~90` | now |
+| 4 bbg date-ordered discovery (the census was measured in ae-5: wsj + bbg monthly sitemaps reach 2026-01) -> wire `discovery` into the collector's bbg/wsj listing + a live bbg job | `HVST-af-4` | `af-4` | LOCAL A, WORLD B | `~92` | now |
+
+**Fan-out: 3 workers over 3 independent chains, cap 3.** Write sets: `af-2` `input_source.py` (new) + its test +
+`verification.py`; `af-3` `depth_census.py` (new) + its test; `af-4` `publishers.py` (the bbg and wsj listing legs) +
+`discovery.py` + its test. Disjoint.
+
+**Checks dry-run at the base (all FAIL as expected):** `af-2.AC2` (no record), `af-3.AC2` (module absent), `af-4.AC2`
+(no record). AC1 of each order is the worker's plant test.
+
+**NOT cells:** the served gold rebuild (a SERVED act; COO half @534a521e45, CTO half asked) -- the issuer's act under
+the pair; a residential arm (Andrew's act).
