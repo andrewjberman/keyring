@@ -6178,3 +6178,52 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~16",
+  "surfaced_at": "2026-10-01T13:32Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "id": "NFRA_OPLGTW-Z-W16-S2",
+  "one_line": "OG-hl-1 item 3 ('the allowlist gains exactly ^/me/messages$') and bound 2.1 ('the existing three mail routes keep their behaviour, their tests stay green') collide: tests/test_mail_route.py::test_graph_get_only_fails_closed asserts a bare '/me/messages' is REFUSED by _graph; I kept both by giving the listing its own one-path tuple.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/tests/test_mail_route.py line 298-303: '/me/messages' is in the must-raise-PathRefused list passed to mr._graph('GET', bad); adding the pattern to _GRAPH_ALLOWED made that test FAIL (1 failed, 30 passed) before the change below.",
+      "app/mail_route.py now carries _LIST_ALLOWED = (^/me/messages$,) beside the unchanged _GRAPH_ALLOWED; _graph(..., listing=True) grades against it, so the by-id routes can never reach the list path. 31 passed across test_mail_listing, test_mail_route, test_transcript_route; hl1.AC2's source check for ^/me/messages$ still matches.",
+      "tests/test_mail_route.py is outside this order's <paths>, so the stale assertion could not be edited; branch wk-NFRA_OPLGTW-16-r8."
+    ]
+  },
+  "spec_asserts": "TO-OG-hl-1 item 3: the allowlist (the one _graph function) gains exactly ^/me/messages$; bound 2.1: existing mail-route tests stay green.",
+  "world_is": "Both cannot hold literally: a single shared tuple makes test_graph_get_only_fails_closed fail. The split keeps the test green and is tighter (by-id routes still refuse the list path); the _graph function is the same single Graph-calling path with one keyword. If the release wants one tuple, test_mail_route.py line 298 must drop '/me/messages' (the COO's cut, not mine).",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~16",
+  "surfaced_at": "2026-10-01T13:32Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "id": "NFRA_OPLGTW-Z-W16-S3",
+  "one_line": "The worktree's sparse cone excluded data/transcripts, so criterion.py (the single source test_sender_table_file_equals_criterion and hl1.AC2 import) was absent; I added data/transcripts/scripts/outlook to this worktree's own sparse-checkout.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git sparse-checkout list showed 14 cones (no data/); git ls-tree HEAD data/transcripts/scripts/outlook lists criterion.py (blob 57bffe67f4).",
+      "git sparse-checkout add data/transcripts/scripts/outlook; extensions.worktreeConfig=true so the change is in .git/worktrees/wk-oplgtw-16/config.worktree only, no tracked file or other worktree touched."
+    ]
+  },
+  "spec_asserts": "TO-OG-hl-1 item 7/AC2: the test and _hl.py import data/transcripts/scripts/outlook/criterion.py from the worktree.",
+  "world_is": "The worker worktree cut lacks that path unless the cone is widened; a worker on another cut would hit the same ModuleNotFound/file-absent. The tracked files are unchanged.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
