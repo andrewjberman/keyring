@@ -1234,3 +1234,25 @@ the grant (a Terraform act). The artifact-shipped file kept equal by a test is h
 
 **Battery (blindness stated):** the paging arm needs a window holding two or more table-sender messages with
 attachments; 2026-08-01..31 (half-open, to 08-31T00:00Z) holds five on today's read (`search_email`: 08-02, 08-09, 08-15, 08-22, 08-30), but the mailbox can change.
+
+## ADDENDUM R3-T.4 (2.0.0_SA_COO~O, 2026-10-01 ~17:4xZ) -- the Tax SMA gateway release, both halves (Andrew-direct ~17:2xZ)
+
+**Source.** Andrew-direct ~17:2xZ "Site Z does both" (relay `org/tier0_exec/0.0.0_AB_MSTR/deliverables/RELAY_20261001_1726Z_ANDREW_DIRECT_SITEZ_RUNS_TAXSMA_GATEWAY_RELEASE_BOTH_HALVES.md`
+@d34037d1f5): the MDPF_TAXSMA exclusion is lifted for THIS one release. Spec: laptop `4.0.0_SA_CRO` msg 103933 (relay
+`RELAY_20261001_1733Z_LAPTOP_CRO_103933_TAXSMA_GATEWAY_RELEASE_SPEC.md` @65e0886dc1). Andrew ~17:3xZ: capability ON at
+this deploy, the opalbloomberg@ oid confirmed from the host broker record before any upload (msgs 27991, 27992).
+`1.0.0_SA_CTO~O` msg 27986: cut as round label 12. Label `<round>12</round>`, ONE issuance, two cells, two independent
+chains; fanout: 2 of 2 chains, cap 8.
+
+| cell | what | risk | slot |
+|---|---|---|---|
+| `OG-tt-1` | TERRAFORM (train act #4): ONE forward-only `aws_lb_listener_rule` for EXACTLY `/ms/taxsma-workbook` (no `/ms/*` wildcard), on the `hx-capability.tf` pattern, a free priority, targeted `safe-apply`, plan 1/0/0, NEVER-2 ledger `nfra-oplgtw-taxsma-alb-rule`. | WORLD | ~18 |
+| `OG-tr-1` | NARROW APP RELEASE on live `0a1d9079c6`: the four Tax files from CLOUD (`app/taxsma_workbook.py` sha256 `6acc3e8c...`, its `server.py` import + Route, its `config.py` two fields, `tests/test_taxsma_workbook.py`) merged onto the live bytes, plus two `.env` lines in `deploy-to-ec2.sh`: `TAXSMA_WORKBOOK_BEARER` read host-side from `gateway/global/taxsma-workbook-token` (the role's read exists, laptop TX-i-3) and refused when empty; `TAXSMA_WORKBOOK_IDENTITY` from the deploying shell, validated as one `<tid>/<oid>` pair (a personal identifier: never committed), the opalbloomberg@ oid confirmed from the host token-broker record before any upload. `.env` 46 -> 48. CTO + CVO halves; NEVER-2 ledger `nfra-oplgtw-taxsma-route-release`. | WORLD | ~15 |
+
+**Acceptance** (the spec's section 4): `tr.AC1.sh` (module sha256 on the host; no-bearer `UNAUTHORIZED_CAPABILITY`
+through the ALB; `/mcp` 401 unchanged; `.env` 48 keys, capability ON), `tr.AC2.sh` (narrow + NEVER-2), `tt.AC1/AC2`
+(the rule's shape, then live with probes: the Tax path reaches the app, an unknown `/ms` path and `/` still sign in,
+`/ms/sites` still 401). The rule's ARN and priority are reported.
+
+**Blindness stated:** the identity is confirmed from the broker's account records by username; the Part D record
+(`PART_D_RECORD_20260930.md`) is the second source for the same mapping.
