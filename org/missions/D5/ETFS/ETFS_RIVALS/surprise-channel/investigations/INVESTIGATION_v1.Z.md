@@ -1524,6 +1524,27 @@
     "spec_asserts": "Row Z-S5: GQGU has no reader; Bloomberg coverage UNMEASURED.",
     "world_is": "An issuer adapter for GQGU (a second entry in collector_issuer's adapter table, the same parser) plus an import of the 305 archived days would put GQGU on the page with history back to 2025-07-14. Bloomberg's coverage of GQGU remains UNMEASURED.",
     "notes": "Not on the round-2 analysis's enrichment list, so not cut by the issuer; carried to 1.0.0_SA_CTO~Z for placement (a small cell)."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S7",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-01T07:03Z",
+    "one_line": "The seating lint (gate2, to-decomp-ref-lint seating_check) read the round-3 orders' worker serial 0.9.0_WK_ETFS_RIVALS~<n> as the seat '0.9.0_WK_ETFS' and printed REFUSED SEATING for all 6 orders against ETFS_GUARDRAIL's worker order -- a prefix parse of a worker code that contains an underscore; the commit still landed (rc=0).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit of ec32d71501 (round-3 issuance): '[gate2] REFUSED: ...TO-RIV-hp-1... SEATING: this NEW task order for ETFS_RIVALS is addressed to 0.9.0_WK_ETFS, which already holds open TOs on 1 OTHER pipeline project(s): ETFS_GUARDRAIL (1 open: ETFS_GUARDRAIL.TO-EG-s-21.the-driven-refusal.md)' -- the same line for r-3, s-4, i-1, g-6, d-4; rc=0 and the commit is on CLOUD (d302af2186).",
+        "The seating rule binds Tier-2 seat instances (CLAUDE.md rule 27, 'ONE PROJECT PER TIER-2 SEAT INSTANCE'); a worker serial 0.9.0_WK_<CODE>~<n> is per project by construction."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A worker serial 0.9.0_WK_<CODE>~<n> names its project; the seating check never folds two projects' workers into one seat.",
+    "world_is": "The resolver truncates the worker code at the first underscore (ETFS_RIVALS -> ETFS), so any two projects sharing a code prefix (ETFS_RIVALS, ETFS_GUARDRAIL, ETFS_INGEST) read as one multi-project seat. Today it prints REFUSED but did not block this commit; if the limb is switched to enforcing it blocks every such issuance.",
+    "notes": "Gate owner 1.0.0_SA_CTO (to-decomp-ref-lint.py / to-check.py's assignee resolver). Carried to the round-3 drain-end read."
   }
 ]
 ```
