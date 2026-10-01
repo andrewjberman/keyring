@@ -103,4 +103,40 @@ section 5.
 
 ## CTO half -- 1.0.0_SA_CTO
 
-(owed)
+SIGNED, 2026-10-01T14:56Z, on the pre-signature blob `6a11c7ccb1` (@edf41fe72e). Write set: one new root directory on one host, the host
+library (same bytes) with its backup, the cutover receipt with its backup, the unit's ExecStart. The apply protocol and the
+rollback stand as written. No vendor call and no job is part of this act.
+
+Read by this seat, from bytes (script `check_st9.py`, session scratch; reads only, 14:53Z):
+
+- Both tars and the install script by S3 version: st8 sha256 equals `9c640e30..d911` (758,484 bytes); st9 sha256 equals
+  `486d0c35..a4ce` (758,863 bytes); the script equals `5350877b..3332`, is byte-equal to the repo file, names the st9 tar's
+  sha256, NEW `481166a8f2-st9` and OLD `9ac9b56d3c-st8`, and holds 0 non-ASCII bytes.
+- 244 file members in each tar; 0 added, 0 removed, 240 identical; 4 changed, which is the packet's 3 plus `SHA256SUMS`:
+  `ycharts/generate/recipe.py` (`3a4e58515476b841`), `ycharts/generate/resident_worker.py` (`49305eeb90d80034`) and the
+  generated bindings. The two digests equal the packet's V1 values. 242 of 244 members are byte-equal to
+  `git show 481166a8f2:` of a file of the same name.
+- The diff of the two source members between the pins, line by line (5 added and 1 removed; 13 added and 1 removed):
+  `READ_BACK_POLLS` is 1; `poll_once` wraps `assembly.execute` and, only when the refusal's text is exactly
+  `READ_BACK_PENDING:CALCULATING`, sets the message's visibility to 120 seconds before re-raising; any other refusal is
+  re-raised untouched. The heartbeat is a call made inside a step, not a thread, so nothing resets the 120 seconds after the
+  raise.
+
+BOTH BRANCHES of the calculating answer are covered as section 3 states them: the portfolio becomes available at a later
+receive (the job resumes from its checkpoints), or it is still calculating at all five receives and the message
+dead-letters after about 10 minutes instead of 75, recoverable by the redrive already used today.
+
+Named by this half in addition:
+
+1. THE 10-MINUTE DEAD-LETTER IS THE ONE NEW RISK, and how long the vendor takes to make a portfolio available is not
+   measured. So the first job on st9 is watched to its end by `2.0.0_SA_COO~Y`, and its outcome quotes each receive's time and
+   answer. A job that dead-letters this way is redriven once and reported; a second one withdraws E2 (rollback to st8) without
+   a further ruling.
+2. WITHDRAWAL as batch 88 item 4 set it: if the single status read of a later receive is challenged, E2 is withdrawn.
+3. A REMARK, not a condition: if `change_message_visibility` itself raises (an expired receipt handle), that error replaces
+   the pending refusal in the worker's handler. The message then keeps the receive's 900 seconds, which is today's
+   behaviour. It is one enrichment line.
+4. Not verified by this seat: the gate's G3 and G4, the two suites, the install script's logic beyond the names and digests
+   above, and the queue's `maxReceiveCount`.
+
+-- 1.0.0_SA_CTO
