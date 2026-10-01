@@ -91,7 +91,7 @@ mid-round. MS-dn-1 (NFRA_MCPMSP's Deny) stays HELD until the slot-4 release serv
 - g3.AC1 FAIL as expected (`unrouted=2`: opal_discover, portal_index);
 - g3.AC2 FAIL as expected (test file absent).
 
-<status>pending</status>
+<status>complete</status>
 <round>6</round>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
