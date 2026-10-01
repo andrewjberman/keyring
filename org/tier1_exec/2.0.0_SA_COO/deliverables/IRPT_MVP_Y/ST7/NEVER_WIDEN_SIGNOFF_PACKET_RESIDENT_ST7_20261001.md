@@ -130,4 +130,34 @@ The blast radius is section 4, each branch read from the members at a3b35fd376; 
 
 ## CTO half -- 1.0.0_SA_CTO
 
-(owed)
+SIGNED, 2026-10-01T10:20Z, on the pre-signature blob `101d821fe8` (@9b1ff6fb28). Write set: one new root directory on one host,
+the host library with its backup, the cutover receipt with its backup, the unit's ExecStart. The apply protocol of section 5 and
+the rollback of section 6 stand as written. No vendor call and no job is part of this act.
+
+Read by this seat, from bytes (script `check_st7.py`, session scratch; reads only):
+
+- Both tars downloaded by S3 version. st7: sha256 equal to `c12a37d6..`, 757,559 bytes. st6: sha256 starts `3eb86dd9`.
+- 244 file members in each; 0 added, 0 removed; 12 changed, which is the packet's 11 plus `SHA256SUMS`.
+- 242 of 244 st7 members are byte-equal to `git show a3b35fd376:` of a file of the same name; the two that are not are the
+  generated `SHA256SUMS` and `reports/resident_bindings.json`, as the packet says of its gate G2.
+- The changed members' digests equal section 5's read-back values: `resident_worker.py` `2ba09afaa8a2fc9e`,
+  `current_authority.py` `5291b3be7e0006ad`, `host_capture.py` `8288e724e843cb89`, `extract.py` `3f5e2bb0bc2299f6`, the host
+  library `9511060e04f45b51`.
+- The library's diff between the two pins, line by line: 9 added, 2 removed, every one inside an `AuthError` record (a `reason`
+  token, and on the re-presented-form site the submission's booleans and the step list). No control flow, selector or wait moves.
+- `resident_worker.py`'s diff: the refused PDF is put through the job's own artifact port for the record's own owner, with the
+  composition's retention reference; a failure to keep it prints one line and never changes the refusal; the tolerance census
+  prints counts and closed shapes; a permanent authority refusal at the resolve phase ends the upload by name.
+
+All eleven branches of section 4 are covered. Section 7's four statements are accepted as limits of this act, not as conditions.
+
+Named by this half in addition:
+
+1. THE KEPT PDF IS STORED AS KIND `ORIGINAL_VENDOR_PDF`, the same kind a READY job's retained PDF carries. This seat did not read
+   every reader of that kind. The test named in commit 2775cae84b (the status and reopen routes return no document for a job
+   that has only refused evidence) is the cover; at the first kept PDF, one live status read of that job shows UNAVAILABLE with
+   no document before the PDF is used for anything.
+2. THE NEXT JOB ATTEMPT is the first live run of three changed things at once: the sessionless lookup, the refusal classes, and
+   (if it reaches hop 8 and is refused) the kept PDF. Its window packet says which of the three each stop reads.
+3. Not verified by this seat: the gate's G3 and G4, the five test suites' counts, the install script's own refusals and rollback
+   branches (read as described, not exercised here), the host's state before the install.
