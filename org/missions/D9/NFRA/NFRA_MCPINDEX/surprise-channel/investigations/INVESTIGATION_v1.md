@@ -5106,6 +5106,29 @@ carries none.
       "spec_asserts": "A2: transactions GO on one precondition -- a read-only consumer trace; 'If any consumer keys on a same-day partition existing, file a BLOCKING row and HOLD transactions.' Served content unchanged on gap days.",
       "world_is": "Served CONTENT is unchanged (the placeholder is empty), but the document's gap-day write is the only thing refreshing the newest-LastModified that an ERROR-severity pre-dispatch freshness gate reads; retiring it would flip that gate to FAIL on every sentinel-less Monday night through Tuesday, blocking the gold dispatch. The trace found the reader, so transactions HELD: document stays v3 DEFAULT, bd-transaction-pipeline-trigger stays ENABLED, the plan re-cut to 3 resources.",
       "notes": "DISARM (2.0.0_SA_COO~MI, round-6 slug): retiring the transaction document is safe only with either the sentinel fix (S4: accept a measured has_data_rows=0 for the transactions PERIOD table, in the shared data/cot ingest) so bd-silver-merge writes on Mon/Tue, or a ruling on the freshness entry's basis (the CONFIG is under the sovereign sec.8 hold, not a worker edit). Realized HELD for the same sentinel cause (S2/S4). Not an act of this order."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-S74",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-01T11:06Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The bd gold chain's comp-freshness gate does NOT block scheduled chain dispatch in production: bd_silver_allocations (fail_age_hours 48, ERROR, gold_freshness_config.yaml:107-116) read >=48h in 36 of 48 dispatch slots 09-08..10-01 (70-118h at the 09-28/09-29/09-30 23:00Z slots), yet the scheduled chain wrote 9-19 gold checkpoints in each of those 23Z-00Z windows. So the HOLD premise of Z-W24-S8 (a transactions FAIL blocks gold) is contradicted by measurement, and MX-s-16's unrealized retirement (its silver will now age weekly, crossing 48h ~10-02 23Z) changes gold's behaviour no more than allocations already does.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3api list-object-versions opal-data-bd silver/allocations/ since 09-01: 8 writes, Sundays only (09-06,13,20,27 x2); age at the 04Z/23Z slots >=48h in 36 of 48.",
+        "silver/unrealized/ since 09-01: 100 writes, 6 per weekday = the 6 empty-stub rewrites by the retired document (Z-S72 ping-pong); >=48h in 2 of 48 slots.",
+        "gold/.checkpoints/ writes per hour since 09-26: 09-28T23Z 9 + 09-29T00Z 19; 09-29T23Z 9 + 09-30T00Z 18; 09-30T23Z 9 + 10-01T00Z 19 (the scheduled nightly chain).",
+        "data/black_diamond/scripts/gold/gold_dispatch.sh:1296-1335: the gate fires only in --chain mode when comp-freshness is on PATH and --no-freshness-check is absent; exit 1 blocks."
+      ]
+    },
+    "spec_asserts": "Z-W24-S8 (worker ~24): the gold dispatch's comp-freshness gate FAILs and BLOCKS when bd_silver_transactions is >=48h old.",
+    "world_is": "A table the config grades the same way has read FAIL-aged on most slots for weeks and the scheduled chain ran every night; which of the three skip paths applies (PATH, bypass flag, or the bd config skipped) was not read.",
+    "notes": "No act taken: transactions stays HELD (no state changed; safe). Carried to the round-6 slug for 1.0.0_SA_CTO~O with Z-W24-S8: (1) which skip path the production chain takes; (2) the freshness config grades weekly tables (allocations, unrealized) on a 48h daily threshold -- a basis defect (CLAUDE.md: a freshness entry lacking a trading-day basis false-alarms); (3) with (1) settled, transactions' retirement can be re-ruled."
   }
 ]
 ```
