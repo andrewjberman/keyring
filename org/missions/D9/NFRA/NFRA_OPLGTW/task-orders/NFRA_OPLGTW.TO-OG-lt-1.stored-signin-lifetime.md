@@ -95,3 +95,4 @@ validated with `python .tools/proof-of-spec-check.py <instance>`. Record J1 as `
 <risk>SERVED</risk>
 <worker_class>worker-light</worker_class>
 <status>pending</status>
+<status>complete</status>

@@ -5401,3 +5401,29 @@ name the one known failure instead of silently inheriting it.
   "notes": "Owner of the registry rows: the registry owner (1.0.0_SA_CTO / the LGIC naming seat), routed by 2.0.0_SA_COO~O. The worker made no AWS or Graph call and no commit other than this row."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W17-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~17",
+  "surfaced_at": "2026-10-01T02:30Z",
+  "one_line": "The stored sign-in's last INTERACTIVE time is not in the token store; the order's step 1 asks for it, so it was inferred from the gateway audit log. Separately, an early probe sourcing the host .env in a shell printed one 64-hex line into the worker's SSM output.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Host i-07dccb1615503ac99, read-only SSM 2026-10-01T02:10-02:15Z: the MSAL cache entries (Account, IdToken, RefreshToken, AccessToken, AppMetadata) carry no interactive-sign-in time; RefreshToken.last_modification_time and AccessToken.cached_at equal the last refresh write (02:03:06Z, then 02:15:07Z after the on-demand refresh).",
+      "/opt/opal-gateway/audit.jsonl rows for the identity: 62391 rows, 3 needs_login rows all on 2026-08-15 (last 03:21:57Z), first non-needs_login row 03:23:06Z; that bracket is the inferred interactive time (inferred, within about 70 s).",
+      "Probe 1 ran `set -a; . /opt/opal-gateway/.env` under bash; .env lines 14, 15, 25 and 35 are not shell-clean (unquoted values), so bash printed `command not found` for line 14's value, a 64-hex string (likely a bearer), into the SSM response and the worker transcript only. Nothing was committed or written to a file; the later runs read the service's own environ via /proc and printed no value."
+    ]
+  },
+  "spec_asserts": "TO-OG-lt-1 step 1: read the token store's metadata for when the identity last signed in interactively.",
+  "world_is": "The store holds no interactive-sign-in field; the value is derived from the audit log, and the span claim stays measured as a lower bound. A 64-hex .env value (probably an ingest or other bearer) appeared once in the worker's tool output and is a rotation candidate for the issuer's judgment.",
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The host .env is not safe to source in a shell (unquoted lines 14, 15, 25, 35); read it via the service environ instead."
+}
+```
