@@ -2066,6 +2066,28 @@
       ]
     },
     "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S28",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-01T13:10Z",
+    "one_line": "RIV-t-5 AC1 reads TXUE's window_start from the G5 TRADE rows, but on the check's own planted data TXUE has ZERO inferred trades in every window, so G5 holds no TXUE row to read; the own-prior pairing IS built (G6 flow_reconciliation carries TXUE window 2026-09-25 -> 2026-09-29), so AC1 cannot go green on the code alone.",
+    "spec_asserts": "RIV-t-5 AC1 expects 'a DAILY G5 build gives TXUE a window starting at its OWN prior date' and the check asserts it as `own_prior in starts('TXUE')` over G5 `window_start`.",
+    "world_is": "Run of org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round4/checks/t-5.AC1.py at 5cd27dc0d2: 'TXUE starts set(), SCHY starts {2026-09-28}'; AC1 RESULT: FAIL 1 failures (the control passes). The G6 object of the same daily run (read in a scratch copy of the check) lists TXUE window_start 2026-09-25 window_end 2026-09-29 window_trading_days 2 flow_factor_f 1.0 next to SCHY 2026-09-28; a replay over the same sink also writes no TXUE G5 row at 2026-09-25, 09-28 or 09-29 (only SCHY), because TXUE's holdings are unchanged between those captures and a window with no trade writes no G5 row. Before the fix the daily build formed no TXUE window at all (G6 had SCHY only); the unit tests tests/test_t5_own_prior_pairing.py (4, plant a real trade) fail on base and pass at 5cd27dc0d2.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round4/checks/t-5.AC1.py (the `starts` lambda reads df = G5)",
+        "data/etfs/scripts/rivalfunds/gold_trade_schedule.py@5cd27dc0d2 run_stage",
+        "data/etfs/scripts/rivalfunds/tests/test_t5_own_prior_pairing.py@5cd27dc0d2"
+      ]
+    },
+    "notes": "The issuer owns the check (outside this order's <paths>); the fix is to read TXUE's window from G6 flow_reconciliation, or plant a TXUE change on the newest capture so a trade exists. disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV."
   }
 ]
 ```
