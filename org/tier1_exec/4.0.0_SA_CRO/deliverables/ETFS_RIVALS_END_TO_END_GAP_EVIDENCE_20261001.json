@@ -1,0 +1,571 @@
+{
+ "prepared_by": "4.0.0_SA_CRO~RV",
+ "read_window_utc": "2026-10-01T17:30Z..18:15Z",
+ "workspace_pin_code_read": "CLOUD 74f12b3092",
+ "method": "read-only boto3 list/get over s3://opal-data-etfs/rivalfunds/etfs/gold/*; newest object per date by LastModified; no writes",
+ "denominators": {
+  "g2_objects": 502,
+  "g2_rows": 4094,
+  "g5_objects_newest_per_date": 501,
+  "g5_rows": 19165,
+  "g6_rows": 3656,
+  "funds_served": [
+   "BASG",
+   "BIDD",
+   "CGIC",
+   "ETFT",
+   "IDVZ",
+   "INEQ",
+   "PCLG",
+   "PFOE",
+   "SCHY",
+   "TSEL",
+   "TXUE",
+   "WCMG"
+  ],
+  "funds_in_map": 13
+ },
+ "g2_selected_status_by_fund": {
+  "BASG": {
+   "gap": 0,
+   "new": 326,
+   "repeat": 0
+  },
+  "BIDD": {
+   "gap": 1,
+   "new": 464,
+   "repeat": 6
+  },
+  "CGIC": {
+   "gap": 1,
+   "new": 496,
+   "repeat": 5
+  },
+  "ETFT": {
+   "gap": 2,
+   "new": 206,
+   "repeat": 0
+  },
+  "IDVZ": {
+   "gap": 6,
+   "new": 22,
+   "repeat": 0
+  },
+  "INEQ": {
+   "gap": 1,
+   "new": 498,
+   "repeat": 3
+  },
+  "PCLG": {
+   "gap": 2,
+   "new": 225,
+   "repeat": 13
+  },
+  "PFOE": {
+   "gap": 5,
+   "new": 22,
+   "repeat": 0
+  },
+  "SCHY": {
+   "gap": 1,
+   "new": 501,
+   "repeat": 0
+  },
+  "TSEL": {
+   "gap": 2,
+   "new": 394,
+   "repeat": 42
+  },
+  "TXUE": {
+   "gap": 1,
+   "new": 417,
+   "repeat": 2
+  },
+  "WCMG": {
+   "gap": 2,
+   "new": 91,
+   "repeat": 18
+  }
+ },
+ "g2_report_span_by_fund": {
+  "BASG": {
+   "min": "2025-06-13",
+   "max": "2026-09-30",
+   "count": "326"
+  },
+  "BIDD": {
+   "min": "2024-11-12",
+   "max": "2026-09-29",
+   "count": "464"
+  },
+  "CGIC": {
+   "min": "2024-09-30",
+   "max": "2026-09-29",
+   "count": "496"
+  },
+  "ETFT": {
+   "min": "2025-12-02",
+   "max": "2026-09-28",
+   "count": "206"
+  },
+  "IDVZ": {
+   "min": "2026-08-21",
+   "max": "2026-09-29",
+   "count": "22"
+  },
+  "INEQ": {
+   "min": "2024-09-30",
+   "max": "2026-09-29",
+   "count": "498"
+  },
+  "PCLG": {
+   "min": "2025-10-16",
+   "max": "2026-09-28",
+   "count": "225"
+  },
+  "PFOE": {
+   "min": "2026-08-24",
+   "max": "2026-09-29",
+   "count": "22"
+  },
+  "SCHY": {
+   "min": "2024-09-30",
+   "max": "2026-09-29",
+   "count": "501"
+  },
+  "TSEL": {
+   "min": "2024-12-31",
+   "max": "2026-09-28",
+   "count": "394"
+  },
+  "TXUE": {
+   "min": "2025-01-29",
+   "max": "2026-09-29",
+   "count": "417"
+  },
+  "WCMG": {
+   "min": "2026-04-23",
+   "max": "2026-09-28",
+   "count": "91"
+  }
+ },
+ "g2_selected_source_by_fund": {
+  "BASG": {
+   "bloomberg": 0,
+   "home_producer": 0,
+   "issuer": 326
+  },
+  "BIDD": {
+   "bloomberg": 470,
+   "home_producer": 0,
+   "issuer": 0
+  },
+  "CGIC": {
+   "bloomberg": 501,
+   "home_producer": 0,
+   "issuer": 0
+  },
+  "ETFT": {
+   "bloomberg": 206,
+   "home_producer": 0,
+   "issuer": 0
+  },
+  "IDVZ": {
+   "bloomberg": 0,
+   "home_producer": 22,
+   "issuer": 0
+  },
+  "INEQ": {
+   "bloomberg": 501,
+   "home_producer": 0,
+   "issuer": 0
+  },
+  "PCLG": {
+   "bloomberg": 238,
+   "home_producer": 0,
+   "issuer": 0
+  },
+  "PFOE": {
+   "bloomberg": 0,
+   "home_producer": 22,
+   "issuer": 0
+  },
+  "SCHY": {
+   "bloomberg": 501,
+   "home_producer": 0,
+   "issuer": 0
+  },
+  "TSEL": {
+   "bloomberg": 436,
+   "home_producer": 0,
+   "issuer": 0
+  },
+  "TXUE": {
+   "bloomberg": 419,
+   "home_producer": 0,
+   "issuer": 0
+  },
+  "WCMG": {
+   "bloomberg": 109,
+   "home_producer": 0,
+   "issuer": 0
+  }
+ },
+ "g5_action_by_fund": {
+  "BASG": {
+   "add": 415,
+   "entry": 10,
+   "exit": 14,
+   "trim": 400
+  },
+  "BIDD": {
+   "add": 796,
+   "entry": 72,
+   "exit": 63,
+   "trim": 389
+  },
+  "CGIC": {
+   "add": 4472,
+   "entry": 179,
+   "exit": 123,
+   "trim": 4489
+  },
+  "ETFT": {
+   "add": 68,
+   "entry": 14,
+   "exit": 17,
+   "trim": 79
+  },
+  "IDVZ": {
+   "add": 18,
+   "entry": 0,
+   "exit": 5,
+   "trim": 13
+  },
+  "INEQ": {
+   "add": 715,
+   "entry": 252,
+   "exit": 253,
+   "trim": 747
+  },
+  "PCLG": {
+   "add": 83,
+   "entry": 15,
+   "exit": 14,
+   "trim": 96
+  },
+  "PFOE": {
+   "add": 7,
+   "entry": 3,
+   "exit": 3,
+   "trim": 5
+  },
+  "SCHY": {
+   "add": 2328,
+   "entry": 96,
+   "exit": 101,
+   "trim": 1661
+  },
+  "TSEL": {
+   "add": 146,
+   "entry": 18,
+   "exit": 18,
+   "trim": 178
+  },
+  "TXUE": {
+   "add": 289,
+   "entry": 22,
+   "exit": 22,
+   "trim": 394
+  },
+  "WCMG": {
+   "add": 40,
+   "entry": 4,
+   "exit": 1,
+   "trim": 18
+  }
+ },
+ "g5_confidence_by_fund": {
+  "BASG": {
+   "CLEAN": 1,
+   "CORP-ACTION": 0,
+   "FLOW-WINDOW": 16,
+   "ID-CHANGE": 0,
+   "STALE-WIDENED": 0,
+   "UNRESOLVED": 822
+  },
+  "BIDD": {
+   "CLEAN": 105,
+   "CORP-ACTION": 3,
+   "FLOW-WINDOW": 93,
+   "ID-CHANGE": 0,
+   "STALE-WIDENED": 3,
+   "UNRESOLVED": 1116
+  },
+  "CGIC": {
+   "CLEAN": 647,
+   "CORP-ACTION": 0,
+   "FLOW-WINDOW": 773,
+   "ID-CHANGE": 0,
+   "STALE-WIDENED": 15,
+   "UNRESOLVED": 7828
+  },
+  "ETFT": {
+   "CLEAN": 47,
+   "CORP-ACTION": 0,
+   "FLOW-WINDOW": 7,
+   "ID-CHANGE": 0,
+   "STALE-WIDENED": 0,
+   "UNRESOLVED": 124
+  },
+  "IDVZ": {
+   "CLEAN": 0,
+   "CORP-ACTION": 0,
+   "FLOW-WINDOW": 0,
+   "ID-CHANGE": 2,
+   "STALE-WIDENED": 0,
+   "UNRESOLVED": 34
+  },
+  "INEQ": {
+   "CLEAN": 140,
+   "CORP-ACTION": 7,
+   "FLOW-WINDOW": 188,
+   "ID-CHANGE": 0,
+   "STALE-WIDENED": 0,
+   "UNRESOLVED": 1632
+  },
+  "PCLG": {
+   "CLEAN": 59,
+   "CORP-ACTION": 0,
+   "FLOW-WINDOW": 34,
+   "ID-CHANGE": 0,
+   "STALE-WIDENED": 6,
+   "UNRESOLVED": 109
+  },
+  "PFOE": {
+   "CLEAN": 0,
+   "CORP-ACTION": 0,
+   "FLOW-WINDOW": 0,
+   "ID-CHANGE": 1,
+   "STALE-WIDENED": 0,
+   "UNRESOLVED": 17
+  },
+  "SCHY": {
+   "CLEAN": 423,
+   "CORP-ACTION": 1,
+   "FLOW-WINDOW": 209,
+   "ID-CHANGE": 0,
+   "STALE-WIDENED": 0,
+   "UNRESOLVED": 3553
+  },
+  "TSEL": {
+   "CLEAN": 82,
+   "CORP-ACTION": 0,
+   "FLOW-WINDOW": 54,
+   "ID-CHANGE": 0,
+   "STALE-WIDENED": 0,
+   "UNRESOLVED": 224
+  },
+  "TXUE": {
+   "CLEAN": 85,
+   "CORP-ACTION": 3,
+   "FLOW-WINDOW": 58,
+   "ID-CHANGE": 0,
+   "STALE-WIDENED": 0,
+   "UNRESOLVED": 581
+  },
+  "WCMG": {
+   "CLEAN": 9,
+   "CORP-ACTION": 0,
+   "FLOW-WINDOW": 0,
+   "ID-CHANGE": 0,
+   "STALE-WIDENED": 14,
+   "UNRESOLVED": 40
+  }
+ },
+ "g5_id_change_rows": [
+  {
+   "fund_ticker": "IDVZ",
+   "window_end": "2026-08-31",
+   "security_key": "55622104",
+   "counterpart_security_key": "055622104",
+   "shares_before": "107367.0",
+   "shares_after": "107925.0",
+   "weight_before": "0.022799999999999997",
+   "weight_after": "0.0229"
+  },
+  {
+   "fund_ticker": "IDVZ",
+   "window_end": "2026-09-23",
+   "security_key": "H42097107",
+   "counterpart_security_key": "526250105",
+   "shares_before": "77406.0",
+   "shares_after": "42133.0",
+   "weight_before": "0.0194",
+   "weight_after": "0.0199"
+  },
+  {
+   "fund_ticker": "PFOE",
+   "window_end": "2026-09-28",
+   "security_key": "91377B109",
+   "counterpart_security_key": "74762E102",
+   "shares_before": "423306.0",
+   "shares_after": "5388.0",
+   "weight_before": "0.0398",
+   "weight_after": "0.04"
+  }
+ ],
+ "g6_flow_factor_out_of_band": [
+  {
+   "fund_ticker": "TSEL",
+   "window_end": "2025-01-16",
+   "flow_factor_f": "3.8005738880918223",
+   "trade_count": "19"
+  },
+  {
+   "fund_ticker": "TXUE",
+   "window_end": "2025-04-14",
+   "flow_factor_f": "83.0",
+   "trade_count": "25"
+  },
+  {
+   "fund_ticker": "INEQ",
+   "window_end": "2025-08-29",
+   "flow_factor_f": "0.0",
+   "trade_count": "100"
+  },
+  {
+   "fund_ticker": "INEQ",
+   "window_end": "2025-11-28",
+   "flow_factor_f": "0.0",
+   "trade_count": "102"
+  },
+  {
+   "fund_ticker": "ETFT",
+   "window_end": "2025-12-03",
+   "flow_factor_f": "11.0",
+   "trade_count": "1"
+  },
+  {
+   "fund_ticker": "ETFT",
+   "window_end": "2026-01-07",
+   "flow_factor_f": "2.5090909090909093",
+   "trade_count": "5"
+  },
+  {
+   "fund_ticker": "WCMG",
+   "window_end": "2026-07-20",
+   "flow_factor_f": "2.0",
+   "trade_count": "5"
+  }
+ ],
+ "g6_schy_top_windows": [
+  {
+   "window_end": "2026-03-23",
+   "trade_count": "124"
+  },
+  {
+   "window_end": "2025-03-24",
+   "trade_count": "108"
+  },
+  {
+   "window_end": "2026-06-22",
+   "trade_count": "102"
+  },
+  {
+   "window_end": "2024-12-23",
+   "trade_count": "101"
+  },
+  {
+   "window_end": "2025-12-22",
+   "trade_count": "100"
+  },
+  {
+   "window_end": "2026-09-21",
+   "trade_count": "100"
+  }
+ ],
+ "g6_share_windows_with_trades": {
+  "BASG": 0.489,
+  "BIDD": 0.623,
+  "CGIC": 0.974,
+  "ETFT": 0.429,
+  "IDVZ": 0.773,
+  "INEQ": 0.321,
+  "PCLG": 0.446,
+  "PFOE": 0.182,
+  "SCHY": 0.992,
+  "TSEL": 0.329,
+  "TXUE": 0.528,
+  "WCMG": 0.467
+ },
+ "g1_latest_fill_2026_09_30": {
+  "note": "non-cash rows of each fund's newest report among G1 dates 2026-09-28..30 (objects holdings-20260930T151342Z-hbcddddf095a, holdings-20261001T105835Z-j20260929-71e7e87c, holdings-20261001T111339Z-j20260929-47a78634)",
+  "resolved": {
+   "BASG": 0.0,
+   "BIDD": 1.0,
+   "CGIC": 1.0,
+   "ETFT": 1.0,
+   "IDVZ": 0.0,
+   "INEQ": 1.0,
+   "PCLG": 1.0,
+   "PFOE": 0.0,
+   "SCHY": 0.99,
+   "TSEL": 1.0,
+   "TXUE": 1.0,
+   "WCMG": 1.0
+  },
+  "gics_sector": {
+   "BASG": 0.0,
+   "BIDD": 0.0,
+   "CGIC": 0.026,
+   "ETFT": 0.483,
+   "IDVZ": 0.0,
+   "INEQ": 0.0,
+   "PCLG": 0.655,
+   "PFOE": 0.0,
+   "SCHY": 0.0,
+   "TSEL": 0.536,
+   "TXUE": 0.041,
+   "WCMG": 0.104
+  },
+  "gics_industry": "0.0 for every fund",
+  "gics_sub_industry": "0.0 for every fund"
+ },
+ "live_aws": {
+  "schedules": {
+   "etfs-rivalfunds-daily": "ENABLED cron(0 7 ? * MON-FRI *) America/New_York -> etfs-rivalfunds-fetch-holdings-lambda",
+   "etfs-rivalfunds-sweep-daily": "ENABLED cron(0 9 ? * MON-FRI *) America/New_York -> etfs-rivalfunds-daily-lambda"
+  },
+  "lambdas_last_modified": "all five 2026-10-01T10:53Z (the round-3 apply); round-4 code not deployed at read time (RIV-d-5 staged, COO~RV applying)",
+  "fired": {
+   "fetch_holdings_scheduled": [
+    "2026-09-30T11:00:34Z",
+    "2026-10-01T11:00:33Z"
+   ],
+   "sweep_scheduled": "2026-10-01T13:00:18Z (build_peer_group_map marker only)",
+   "bloomberg_vehicle_leg": "2026-10-01 ~11:13Z first scheduled run, exit 90; enrichment exit 94 with no producer output (row ETFS_RIVALS-Z-S10)"
+  },
+  "gold_dates": {
+   "canonical_shape": "502 dates 2024-09-30..2026-09-30",
+   "trade_schedule": "501 dates",
+   "corporate_actions": "1 object date=2026-09-30 (import)",
+   "security_market": "2 objects date=2026-09-29"
+  },
+  "page_2026_10_01": {
+   "status": "published",
+   "funds_total": 13,
+   "funds_updated": 12,
+   "batch_id": "d4-publish-r3b",
+   "generated_at": "2026-10-01T11:16:08Z",
+   "readback": true,
+   "sections": [
+    "Most recent trades, by Opal fund",
+    "Latest holdings by fund",
+    "Data status"
+   ]
+  },
+  "gateway_signed_out_probe": "302 to Entra login for /healthz, /rivalfunds, /rivalfunds/archive, /rivalfunds/2026-10-01 AND /rivalfunds/nonexistent-zz: undiscriminating, proves nothing about the route"
+ },
+ "code_absent": "comp-find 'openai|research_hypotheses|style_read|trade_outcomes|peer_comparison|trend_projection|outcome_rollup' over data/etfs/scripts/rivalfunds + infra/aws/lambda/etfs-pipeline: 0 hits across 71 files"
+}

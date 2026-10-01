@@ -748,6 +748,31 @@
     },
     "spec_asserts": "NFRA_MCPORTAL-Z-S15: the halt gate refuses every two-letter lane.",
     "world_is": "At 64a3ef4b4e the two-letter ~O COO lanes pass serial validation; a digit lane is still refused outside the worker limb."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S17",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MP",
+    "surfaced_at": "2026-10-01T16:55Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "adjudicates": [
+      "NFRA_MCPORTAL-Z-S10"
+    ],
+    "one_line": "DISARMS NFRA_MCPORTAL-Z-S10, measured on the DEPLOYED bytes ahead of the first WRITTEN outcome (G-CLOSE with Alyssa): the live mcportal-grant-writer-lambda's lambda_function.py sets who = '<claim name> <email>' and never the owner-key value. It is byte-identical to CLOUD HEAD, including after NFRA_MCPMSP's register_tenant redeploy of 2026-09-30T10:58Z.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws lambda get-function mcportal-grant-writer-lambda Code.Location, 2026-10-01 ~16:5xZ: zip of 11 entries; lambda_function.py sha256 prefix 7e80d4359859 = CLOUD HEAD's file; :325 ctx[\"who\"] = (\"%s %s\" % (owner.claim, owner.email)) if owner.email else owner.claim; :190 \"who\": s(who).",
+        "lambda_function.py:98 'claim: str   # the configured owner-key claim: \"oid\" or \"sub\"' -- the claim NAME; the live env MCPORTAL_OWNER_KEY_CLAIM=sub, key present (43 chars), read by key presence and length only.",
+        "mcportal-grant-changes-table holds 1 item (narrow REFUSED NO-OWNER-HEADER 2026-09-29T05:00Z, who=UNVERIFIED); no WRITTEN item exists yet."
+      ]
+    },
+    "spec_asserts": "NFRA_MCPORTAL-Z-S10 is ARMED: the first WRITTEN item would store the owner-key value.",
+    "world_is": "The deployed writer stores the claim name and email only, so the G-CLOSE narrow and widen write no owner-key value. Z-S11 had disarmed on the plan (MP-b-3 shipped through MP-a-2); this row is the measurement on the running bytes.",
+    "notes": "Re-measured because a second project's cell redeployed the same function after MP-a-2's drain."
   }
 ]
 ```

@@ -1,0 +1,20 @@
+2026-09-24T14:08:41Z REFUSED author=Andrew Berman paths= CLAUDE.md order=<none> reason=ANDREW_LAW_EDIT_ORDER is not set.
+2026-09-24T14:08:41Z REFUSED author=Andrew Berman paths= org/XXX.md order=org/nope/ANDREW_DIRECT_x.md reason=the named record does not exist on disk and is not staged: org/nope/ANDREW_DIRECT_x.md
+2026-09-24T14:08:42Z PASS author=Andrew Berman paths= CLAUDE.md order=org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260924_140xZ_LAW_FILES_RULES_ONLY_AND_LOCKED.md
+2026-09-24T14:11:09Z PASS author=1.0.0_SA_CTO paths= CLAUDE.md org/XXX.md order=org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260924_140xZ_LAW_FILES_RULES_ONLY_AND_LOCKED.md
+2026-09-24T14:16:15Z PASS author=1.0.0_SA_CTO paths= CLAUDE.md order=org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260924_141xZ_YES_TO_ALL_SIX_PROCESS_CUTS.md
+2026-09-24T16:55:22Z PASS author=1.0.0_SA_CTO paths= CLAUDE.md order=org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260924_160xZ_CLAUDE_MD_FIRST_POINT_STANDARD_TECHNICAL_ENGLISH.md
+2026-09-24T17:04:25Z PASS author=1.0.0_SA_CTO paths= CLAUDE.md org/XXX.md order=org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260924_170xZ_YES_TO_ALL_FOUR_LAW_LOCKED_AND_GATE_ITEMS.md
+2026-09-24T17:11:05Z REFUSED author=1.0.0_SA_CTO paths= CLAUDE.md order=org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260924_170xZ_MEMORY_PREFERENCES_ONLY_AND_THREE_HELD_ITEMS_YES.md reason=the named record does not exist on disk and is not staged: org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260924_170xZ_MEMORY_PREFERENCES_ONLY_AND_THREE_HELD_ITEMS_YES.md
+2026-09-24T17:12:48Z PASS author=1.0.0_SA_CTO paths= CLAUDE.md order=org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260924_170xZ_MEMORY_PREFERENCES_ONLY_AND_THREE_HELD_ITEMS_YES.md
+2026-09-24T17:18:14Z REFUSED author=1.0.0_SA_CTO paths= CLAUDE.md org/XXX.md order=<none> reason=ANDREW_LAW_EDIT_ORDER is not set.
+2026-09-24T17:18:48Z PASS author=1.0.0_SA_CTO paths= CLAUDE.md org/XXX.md order=org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260924_170xZ_YES_TO_ALL_FOUR_LAW_LOCKED_AND_GATE_ITEMS.md
+2026-09-24T17:38:26Z PASS author=1.0.0_SA_CTO paths= org/XXX.md order=org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260924_173xZ_XXX_MD_GUIDANCE_ONLY_NO_TEMPORAL_ITEMS.md
+2026-09-24T17:43:16Z PASS author=1.0.0_SA_CTO paths= org/XXX.md order=org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260924_173xZ_XXX_MD_GUIDANCE_ONLY_NO_TEMPORAL_ITEMS.md
+2026-09-24T18:08:56Z PASS author=1.0.0_SA_CTO paths= CLAUDE.md order=org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260924_180xZ_RULE27_L10_WORDING_MATCHES_SPINE.md
+2026-09-24T18:10:41Z REFUSED author=1.0.0_SA_CTO paths= CLAUDE.md order=<none> reason=ANDREW_LAW_EDIT_ORDER is not set.
+2026-09-24T18:12:45Z PASS author=1.0.0_SA_CTO paths= CLAUDE.md order=org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260924_180xZ_RULE27_L10_WORDING_MATCHES_SPINE.md
+2026-09-24T18:53:05Z REFUSED author=0.0.0_AB_MSTR~Z paths= org/XXX.md order=<none> reason=ANDREW_LAW_EDIT_ORDER is not set.
+2026-09-24T19:05:38Z PASS author=0.0.0_AB_MSTR~Z paths= org/XXX.md order=org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260924_173xZ_XXX_MD_GUIDANCE_ONLY_NO_TEMPORAL_ITEMS.md
+2026-09-24T21:16:13Z PASS author=0.0.0_AB_MSTR~Z paths= CLAUDE.md order=org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260924_180xZ_RULE27_L10_WORDING_MATCHES_SPINE.md
+2026-09-29T05:59:33Z REFUSED-BUDGET author=1.0.0_SA_CTO~Z over= .claude/skills/self-drive/SKILL.md(28602>25600 bytes; HEAD 28517)
