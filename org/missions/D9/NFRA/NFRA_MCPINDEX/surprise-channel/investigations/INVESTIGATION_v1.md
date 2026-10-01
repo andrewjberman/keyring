@@ -4797,6 +4797,137 @@ carries none.
     "notes": "FIX AT THE INSTRUMENT, done before the cut: round-6 r8.AC2's host probe (r8_host.py) parses .env in Python the way systemd does and prints only tool names; the face of every round-6 host-touching order says never shell-source .env. DISARM: the rotation decision is the bearer's owner's (NFRA_OPLGTW, 2.0.0_SA_COO~O; OG-rl-1 already carries a bearer rotation, row Z-W17-S1) -- routed to ~O the same turn this row lands. ANSWERED (2.0.0_SA_COO~O msg 27684, ~08:59Z): the echoed word is the cot token (Secrets Manager blackdiamond/cot/otp-gateway-token), the same value row Z-W17-S1 names; NFRA_OPLGTW OG-rl-1 (amended A1) already rotates it, and its verify refuses the old value. This row disarms when OG-rl-1 lands; no separate act. The repeat class (a host .env that leaks when shell-sourced) goes on OPLGTW's next enrichment."
   },
   {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~23",
+    "surfaced_at": "2026-10-01T09:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "hazard_standing": "INERT",
+    "id": "NFRA_MCPINDEX-Z-W23-S1",
+    "class": "OBSERVATION",
+    "one_line": "MX-x-4 (a): the order's description of safe-ec2-deploy.sh differs from the file in three places; each handled conservatively and the order's own bounds kept.",
+    "spec_asserts": "Order (a): the manifest rewrite 'is at :99' too; only deployed_commit, deployed_at, previous_deployed_commit (if set) and _last_updated may move; put the logic in a small helper the test can call (a new helper file is not in <paths>).",
+    "world_is": "infra/aws/ec2/safe-ec2-deploy.sh@f797d8594a: :99 is a READ (jq -r source_path | tr -d CR into a variable, no write), left unchanged; the wrapper's rewrite also sets services.<svc>.deployed_by (the acting serial) and never sets previous_deployed_commit, so the helper keeps deployed_by moving (dropping it would change the manifest's attribution ledger) and no previous_deployed_commit is written; the helper is a heredoc INSIDE the wrapper (no new file is admitted by <paths>), which .tools/tests/test_safe_ec2_deploy_manifest.py extracts and calls.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sed -n 85,125p and 190,230p infra/aws/ec2/safe-ec2-deploy.sh at f797d8594a (read 2026-10-01).",
+        "python json round trip of the real infra/aws/ec2/EC2_MANIFEST.json (read only): dumps(indent=2, ensure_ascii=True) is byte-equal to the file (74166 B, 0 CR, 18 unicode-escape sequences, 0 raw non-ASCII)."
+      ]
+    },
+    "notes": "INERT: the issuer may rule the deployed_by carry-over or a separate helper file at the round-N analysis."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~23",
+    "surfaced_at": "2026-10-01T09:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "hazard_standing": "INERT",
+    "id": "NFRA_MCPINDEX-Z-W23-S2",
+    "class": "OBSERVATION",
+    "one_line": "MX-x-4 (b): .tools/test-haltgt-recipient-scoping.sh fails at HEAD before this change (0 of 9 with OPAL_AGENT_SERIAL set, 2 of 8 unset) because it identifies the gate through the retired .comp-graph/.agent_context file; unrelated to the serial order.",
+    "spec_asserts": "Order (b) bound 2: every changed script keeps its interface for current callers; callers of halt-gate-check.sh named.",
+    "world_is": "Ran the pre-change halt-gate-check.sh (git show HEAD copy, in a temp tree) under the test with OPAL_AGENT_SERIAL exported: RESULT 0 passed, 9 failed. With the new gate: unset 2 passed 6 failed; set 2 passed 7 failed. The gate removed the .agent_context fallback on 2026-07-13, so the fixture's identity never reaches it. The other callers' tests that DO key on a session-id serial file inside their fake root (.tools/halt-gate-ld0131-test.sh 7/7, .tools/tests/test_safe_apply_targeted.sh PASS) pass with OPAL_AGENT_SERIAL set, because the worktree's own session file is read BEFORE the env declaration.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bash .scratch/oldrepo/.tools/test-haltgt-recipient-scoping.sh (old gate, env set): RESULT: 0 passed, 9 failed, rc=1.",
+        "bash .tools/halt-gate-ld0131-test.sh and .tools/tests/test_safe_apply_targeted.sh with OPAL_AGENT_SERIAL exported, new gate: ALL PASS / RESULT: PASS."
+      ]
+    },
+    "notes": "INERT: a pre-existing red test, not made worse by the change; its repair (declare a session file in its fixture root) is outside this order's paths."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~23",
+    "surfaced_at": "2026-10-01T09:40Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "hazard_standing": "INERT",
+    "id": "NFRA_MCPINDEX-Z-W23-S3",
+    "class": "OBSERVATION",
+    "one_line": "MX-x-4 (c): the portal submodule is not checked out in a worker worktree, so the default emitter invocation refuses on an empty accessor index and test_merged_definition::test_condition_helpers_census_and_accessors fails in the worktree before and after this change.",
+    "spec_asserts": "Order (c): a plain invocation still works where the inputs exist; keep the default invocation working.",
+    "world_is": "portal/src/api is absent in the worktree wk-mcpindex-r6-23 (ls: No such file or directory), so accessor_index() == {} and the pre-existing test asserts getAUMSummary in idx -> AssertionError; --portal-api now lets a caller point at the portal checkout. The catalog-writing path itself was not run here (no census-present full emit: it would write the live DATA_CATALOG.yaml).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "ls portal/src/api in the worktree -> No such file or directory.",
+        "python -m pytest workflows/atom_decomposition/tests -q: 39 passed, 1 failed (that test), 1 of 40."
+      ]
+    },
+    "notes": "INERT: MX-d-6 runs the emitter at its own base; it should pass --portal-api if its tree lacks the submodule."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W22-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~22",
+    "surfaced_at": "2026-10-01T09:25Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "A silver_datasets row carries no firm field, so discover's firm gate cannot name WHICH firm a firm-scoped row belongs to: MX-d-6 hands the existing catalog_gate.gate() a gate row whose firm is the asking firm principal itself, so every KNOWN firm principal is shown a firm-scoped silver row (e.g. a cottonwood principal is shown the 49financial-only blackdiamond_fees row). The read tool still enforces its own grant, so no data moves; the row's existence and caveats are what a wrong-firm principal sees.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/integrations/opal_discover/integration.py _silver_answer (branch wk-nfra_mcpindex-6-22): gate row firm = principal_firm for rule firm-scoped; test_silver_row_firm_gate_is_the_existing_gate asserts internal/49financial True, nosuchfirm/unresolved False.",
+        "workflows/atom_decomposition/catalog_entries/README.md: the C1 schema is exactly 8 fields and firm_scope_rule is firm-scoped / opal-internal-only / all-firms-aggregate; there is no firm field to bind a row to one firm (emit_catalog_v02.py validate_entry refuses an extra key)."
+      ]
+    },
+    "spec_asserts": "MX-d-6 act 1: a firm-scoped silver row is servable to the principal kinds the existing gate admits for that rule; reuse the gate.",
+    "world_is": "The existing gate admits a firm principal only on row firm == principal firm; a silver row has no firm, so the rule alone admits every known firm principal. discover is dormant until MX-r-8 releases it.",
+    "notes": "DISARM: before MX-r-8 enables opal_discover, either a C1 schema change gives a silver entry a firm field (an emitter + README change, not this cell's paths) or the issuer accepts that a wrong-firm principal sees the row's existence while the read tool denies the read."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W22-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~22",
+    "surfaced_at": "2026-10-01T09:25Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "Row Z-W15-S3's cause, measured: mdpf_get_model_benchmarks' two example questions reach no tool because the benchmarks_and_models channel's only keyword in each ask is the plain lower-case word 'benchmark', which MX-d-5's weak-match rule refuses to select on; the portal row was never matched on its own text. MX-d-6 matches portal_datasets rows on their own text too (answered as the channel artifact whose accessor the row names), which also makes 'ETF holdings and fund flows' catalogued (etfs_get_positioning).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "At the base, discover('Did the Ultra-Short Term model beat its index benchmark since inception?') -> catalogued False, matches [] (scratch probe, worktree wk-mcpindex-r6-22, before the edit); after: [('mp.05.model-portfolio-benchmarks','mdpf_get_model_benchmarks')].",
+        "d6.AC3 after the edit: REACHABILITY: 10 of 10 catalog rows naming a read tool are reachable; tests/routing/run_routing.py ROUTING: 24 of 27 (unchanged from the base 24)."
+      ]
+    },
+    "spec_asserts": "MX-d-6 act 3: measure first why the model_benchmarks row is unreachable, then make it reachable.",
+    "world_is": "The own-text rule (>= 2 content words and >= 60% of the ask's, plural folded) is a recall floor over every row's own example questions, so every row is reachable by its own example question by construction; whether a real user's paraphrase reaches it is measured only by the 27-ask routing harness, which carries no Schwab, BD or model-benchmark dataset ask.",
+    "notes": "Not a hazard. Candidate enrichment: add dataset asks for the BD, Schwab and model-benchmark rows to tests/routing/questions.yaml so the harness grades their recall, not only their own example questions."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W22-S3",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~22",
+    "surfaced_at": "2026-10-01T10:15Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "MX-g-3 asked that discover's HEAD keep its botocore Config (connect 3s, read 5s, 1 attempt) when it takes the internal-role client; that client is built and cached by app/internal_role.py (not in this order's paths) with the default Config and shared with query_v0, so the Config cannot be applied to it. With the ARN unset the Config is kept exactly; with the ARN set the HEAD is bounded by an 8 second wall clock instead.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "app/internal_role.py _default_s3 (this worktree, c6adb5f700 lineage) builds boto3.client('s3', aws_access_key_id=..., aws_session_token=...) with no Config, and caches the client in _CACHE keyed by ARN only; query_v0._fetch_capped takes the same cached client.",
+        "s3_client() accepts an s3_factory, but a Config'd factory would be cached under the same ARN key and handed to query_v0 (max_attempts 1, 5s read on 4 MB objects) or lose to query_v0's earlier entry: either way the Config is not discover's alone.",
+        "tests/test_internal_role_routing.py::test_unset_arn_keeps_default_client asserts the Config (3, 5, max_attempts 1) on the unset path; test_opal_discover_heads_through_internal_role asserts the role path; both pass (g3.AC2 3 of 3)."
+      ]
+    },
+    "spec_asserts": "MX-g-3 act 1: keep _s3_head()'s Config (timeouts) when building or wrapping the client.",
+    "world_is": "On the role path discover's HEAD runs through the shared cached role client under its default botocore timeouts, wrapped in an 8 second wall-clock bound (_bounded_head, thread + result(timeout)); a timeout surfaces as a named absent served_written_at error class. On the unset path the Config is unchanged.",
+    "notes": "Not a hazard: a hung HEAD cannot stall an answer past ~8s on either path. Candidate enrichment: a Config parameter on internal_role.s3_client() (NFRA_MCPMSP's file) so a reader can ask for its own timeouts without sharing a cache entry."
+  },
+  {
     "id": "NFRA_MCPINDEX-Z-W24-S1",
     "project": "NFRA_MCPINDEX",
     "fabric": "site-z",
@@ -4862,72 +4993,6 @@ carries none.
     "spec_asserts": "Order MX-s-16 cell table: the documents download the script and 'run it per table' as a second writer.",
     "world_is": "The documents never ran the code the Lambda runs. Their transaction runs wrote 0-row partitions for freshly landed inputs (TRANSACTIONS_DAILY_2026-09-21, 09-22, 09-28 at 21:54Z) that the Lambda corrected 1-2 nights later.",
     "notes": "Disarmed by MX-s-16 Phase B (documents retired). The stale scripts/ object is left in place (nothing deleted); after the retirement nothing references it. Rollback of the retirement would restore the stale-script writer."
-  },
-  {
-    "project": "NFRA_MCPINDEX",
-    "fabric": "site-z",
-    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~23",
-    "surfaced_at": "2026-10-01T09:40Z",
-    "disposition": "UNDER_INVESTIGATION",
-    "disarm_owner": "2.0.0_SA_COO~MI",
-    "hazard_standing": "INERT",
-    "id": "NFRA_MCPINDEX-Z-W23-S1",
-    "class": "OBSERVATION",
-    "one_line": "MX-x-4 (a): the order's description of safe-ec2-deploy.sh differs from the file in three places; each handled conservatively and the order's own bounds kept.",
-    "spec_asserts": "Order (a): the manifest rewrite 'is at :99' too; only deployed_commit, deployed_at, previous_deployed_commit (if set) and _last_updated may move; put the logic in a small helper the test can call (a new helper file is not in <paths>).",
-    "world_is": "infra/aws/ec2/safe-ec2-deploy.sh@f797d8594a: :99 is a READ (jq -r source_path | tr -d CR into a variable, no write), left unchanged; the wrapper's rewrite also sets services.<svc>.deployed_by (the acting serial) and never sets previous_deployed_commit, so the helper keeps deployed_by moving (dropping it would change the manifest's attribution ledger) and no previous_deployed_commit is written; the helper is a heredoc INSIDE the wrapper (no new file is admitted by <paths>), which .tools/tests/test_safe_ec2_deploy_manifest.py extracts and calls.",
-    "grounding": {
-      "status": "GROUNDED",
-      "evidence": [
-        "sed -n 85,125p and 190,230p infra/aws/ec2/safe-ec2-deploy.sh at f797d8594a (read 2026-10-01).",
-        "python json round trip of the real infra/aws/ec2/EC2_MANIFEST.json (read only): dumps(indent=2, ensure_ascii=True) is byte-equal to the file (74166 B, 0 CR, 18 unicode-escape sequences, 0 raw non-ASCII)."
-      ]
-    },
-    "notes": "INERT: the issuer may rule the deployed_by carry-over or a separate helper file at the round-N analysis."
-  },
-  {
-    "project": "NFRA_MCPINDEX",
-    "fabric": "site-z",
-    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~23",
-    "surfaced_at": "2026-10-01T09:40Z",
-    "disposition": "UNDER_INVESTIGATION",
-    "disarm_owner": "2.0.0_SA_COO~MI",
-    "hazard_standing": "INERT",
-    "id": "NFRA_MCPINDEX-Z-W23-S2",
-    "class": "OBSERVATION",
-    "one_line": "MX-x-4 (b): .tools/test-haltgt-recipient-scoping.sh fails at HEAD before this change (0 of 9 with OPAL_AGENT_SERIAL set, 2 of 8 unset) because it identifies the gate through the retired .comp-graph/.agent_context file; unrelated to the serial order.",
-    "spec_asserts": "Order (b) bound 2: every changed script keeps its interface for current callers; callers of halt-gate-check.sh named.",
-    "world_is": "Ran the pre-change halt-gate-check.sh (git show HEAD copy, in a temp tree) under the test with OPAL_AGENT_SERIAL exported: RESULT 0 passed, 9 failed. With the new gate: unset 2 passed 6 failed; set 2 passed 7 failed. The gate removed the .agent_context fallback on 2026-07-13, so the fixture's identity never reaches it. The other callers' tests that DO key on a session-id serial file inside their fake root (.tools/halt-gate-ld0131-test.sh 7/7, .tools/tests/test_safe_apply_targeted.sh PASS) pass with OPAL_AGENT_SERIAL set, because the worktree's own session file is read BEFORE the env declaration.",
-    "grounding": {
-      "status": "GROUNDED",
-      "evidence": [
-        "bash .scratch/oldrepo/.tools/test-haltgt-recipient-scoping.sh (old gate, env set): RESULT: 0 passed, 9 failed, rc=1.",
-        "bash .tools/halt-gate-ld0131-test.sh and .tools/tests/test_safe_apply_targeted.sh with OPAL_AGENT_SERIAL exported, new gate: ALL PASS / RESULT: PASS."
-      ]
-    },
-    "notes": "INERT: a pre-existing red test, not made worse by the change; its repair (declare a session file in its fixture root) is outside this order's paths."
-  },
-  {
-    "project": "NFRA_MCPINDEX",
-    "fabric": "site-z",
-    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~23",
-    "surfaced_at": "2026-10-01T09:40Z",
-    "disposition": "UNDER_INVESTIGATION",
-    "disarm_owner": "2.0.0_SA_COO~MI",
-    "hazard_standing": "INERT",
-    "id": "NFRA_MCPINDEX-Z-W23-S3",
-    "class": "OBSERVATION",
-    "one_line": "MX-x-4 (c): the portal submodule is not checked out in a worker worktree, so the default emitter invocation refuses on an empty accessor index and test_merged_definition::test_condition_helpers_census_and_accessors fails in the worktree before and after this change.",
-    "spec_asserts": "Order (c): a plain invocation still works where the inputs exist; keep the default invocation working.",
-    "world_is": "portal/src/api is absent in the worktree wk-mcpindex-r6-23 (ls: No such file or directory), so accessor_index() == {} and the pre-existing test asserts getAUMSummary in idx -> AssertionError; --portal-api now lets a caller point at the portal checkout. The catalog-writing path itself was not run here (no census-present full emit: it would write the live DATA_CATALOG.yaml).",
-    "grounding": {
-      "status": "GROUNDED",
-      "evidence": [
-        "ls portal/src/api in the worktree -> No such file or directory.",
-        "python -m pytest workflows/atom_decomposition/tests -q: 39 passed, 1 failed (that test), 1 of 40."
-      ]
-    },
-    "notes": "INERT: MX-d-6 runs the emitter at its own base; it should pass --portal-api if its tree lacks the submodule."
   },
   {
     "project": "NFRA_MCPINDEX",

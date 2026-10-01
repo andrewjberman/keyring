@@ -267,6 +267,21 @@ async function amgtLeadState(page, subject) {
   if (!okS) findings.push({ step, check: 'walker:control-missing', claim: 'measured', observed: `control not found or not clickable: ${subject}` })
   await settle(page, 1500)
 }
+// ---- price wait: the Price face fills after the route answers; wait for the first bar before the read and the shot ----
+const PRICE_WAIT_MS = 30000
+let priceWaitMs = null
+let lastPriceBody = null
+async function waitPriceBars(page) {
+  const t0 = Date.now()
+  const got = await page.locator('[data-price-bar]').first().waitFor({ timeout: PRICE_WAIT_MS }).then(() => true).catch(() => false)
+  priceWaitMs = Date.now() - t0
+  log(`PRICE WAIT: ${got ? 'bar present' : 'NO BAR'} after ${priceWaitMs} ms`)
+  if (got) return
+  findings.push({ step, claim: 'measured', check: 'price:no-bars-after-wait', observed: `no [data-price-bar] after waiting ${priceWaitMs} ms (limit ${PRICE_WAIT_MS} ms)`, wait_ms: priceWaitMs, rule: 'FWD-22: the Price face shows its bars' })
+  const txt = await page.evaluate(() => document.body.innerText).catch((e) => `DOM text read failed: ${e.message}`)
+  writeFileSync(path.join(OUT, 'price-face-dom.txt'), String(txt))
+  writeFileSync(path.join(OUT, 'price-response-body.txt'), lastPriceBody === null ? 'no lead-panel/rankings/trending/price response was seen in the network log' : lastPriceBody)
+}
 // ---- price bars: read every bar of the Price face (lead-lists.json) --------------------------------------------------
 // Reads only what the page prints: each bar's data-price-bar attribute, its name-state attribute and its visible text.
 async function readPriceBars(page, list) {
@@ -275,13 +290,18 @@ async function readPriceBars(page, list) {
     name_state: el.getAttribute('data-row-name-state') || el.closest('[data-row-name-state]')?.getAttribute('data-row-name-state') || null,
     text: ((el.closest('li') || el).innerText || '').replace(/\s+/g, ' ').trim(),
   }))).catch(() => [])
-  leadLists.push({ list, row_count: rows.length, rows })
+  leadLists.push({ list, row_count: rows.length, price_wait_ms: priceWaitMs, rows })
   log(`LEAD LIST ${list}: ${rows.length} price bar(s) read`)
 }
 // ---- chatter: read the month bubbles, then press the month cursor ---------------------------------------------------
 async function readBubbles(page, list) {
   const n = await page.locator('[data-bubble], [data-chatter-bubble]').count().catch(() => 0)
   log(`LEAD BUBBLES ${list}: ${n} bubble(s) read`)
+  const raw = await page.locator('[data-bubble]').evaluateAll((els) => els.filter((el) => {
+    const key = (el.getAttribute('data-bubble') || '').trim()
+    return key && (el.innerText || '').replace(/\s+/g, ' ').trim() === key
+  }).length).catch(() => 0)
+  if (raw) findings.push({ step, claim: 'measured', check: 'chatter:raw-key-label', observed: `${raw} of ${n} bubble(s) show their data-bubble key as the visible label`, count: raw, rule: 'design law: a code or key never sits in visible text' })
   const cur = page.getByRole('button', { name: 'Earlier month' }).first()
   if (await cur.count().catch(() => 0)) {
     const pressed = await cur.click({ timeout: 4000 }).then(() => true).catch(() => false)
@@ -432,6 +452,7 @@ async function walkSecurityAnalysis(page, route) {
     if (!timeLeft()) return
     step = `amgt lead Trending-${subject}`
     await amgtLeadState(page, subject)
+    if (subject === 'Price') await waitPriceBars(page)
     await checks(page, `lead-Trending-${subject}`)
     if (subject === 'Price') await readPriceBars(page, 'Trending x Price')
     else await readBubbles(page, 'Trending-Chatter')
@@ -599,6 +620,7 @@ try {
   page.on('response', async (res) => {
     const req = res.request(); const p = pathOnly(req.url())
     netlog.push([req.method(), res.status(), p].join('\t'))
+    if (/lead-panel\/rankings\/trending\/price/.test(p)) lastPriceBody = await res.text().then((t) => `HTTP ${res.status()}\n${t}`).catch((e) => `body read failed: ${e.message}`)
     if (!/\/api\//.test(p)) return
     let reason = null; let state = null; let ok = null
     try { const j = await res.json(); ok = j.ok ?? null; state = j.status?.state ?? null; reason = j.status?.public_reason_code ?? null } catch { /* not json */ }

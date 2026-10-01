@@ -1869,6 +1869,74 @@
       ]
     },
     "notes": "Also not covered: home_producer rows have no asset_class (the landing carries no classification), so even with GICS RESOLVED a home row's sub_asset_class stays NULL; and a G4 sector outside SUB_ASSET_CLASS_VOCAB resolves GICS but leaves sub_asset_class UNRESOLVED (the round's real G4 has none). On real data AC1 reads 66 of 66 keyed rows resolved, equal to the cut's measured overlap."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S8",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-01T09:05Z",
+    "one_line": "Round-3 identity (RIV-i-1) makes BASG's trade schedule wrong: a security's key flips between RESOLVED (issuer-bloomberg-join) and UNRESOLVED across a trade window, and each flip reads as an exit plus an entry -- the served-delta dry run of the merged round-3 code reads BASG 527 served trade keys vs 1694 new (322 removed, 1489 added; 922 exits, 638 entries vs 224 adds, 261 trims).",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/2.0.0_SA_COO~RV/round3/served_delta_r3.py over every served input (issuer silver 325, sidecars 325, Bloomberg silver 3610, G3 1, home landings 27, G4 from bbg/2026-09-29/characteristics.parquet), CLOUD b780b4b8cb: BASG g5 served 527 / new 1694, removed 322, added 1489; CGIC, ETFT, INEQ, PCLG, SCHY, TXUE 0/0; TSEL +6, WCMG +1, BIDD -2/+1.",
+        "BASG G1 resolution over 325 report dates: 134 fully resolved, 7 zero, 184 partial (the join needs a BASG Bloomberg capture within 1 trading day and shares within 2%).",
+        "Bounded control round3/checks/i-1.AC2.py (window 2026-01-02..02-17, 63 objects mirrored, 27 s): served 47 BASG trades, branch 287; removed 31, added 271; served add/trim become entry/exit.",
+        "C-TRADE-SCHEDULE (PRD v0.7): an identifier change or corporate action never reads as an entry plus an exit."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Identity resolution labels positions; it never changes which trades a fund made (C-TRADE-SCHEDULE).",
+    "world_is": "G5 matches q_{t-1} to q_t on security_id, which round 3 made resolution-dependent; where a window's two dates resolve differently the position reads as exited and re-entered. RIV-d-4 is STOPPED before its pair: the served BASG trade schedule would move by ~1800 trades.",
+    "notes": "Remedy (issuer, inside the decomposition): RIV-i-1 is REOPENED with amendment 2 -- G5 matches on a window-stable key (the row's own raw identifier family: issuer CUSIP/ISIN/SEDOL/ticker, the Bloomberg id, the home landing's cusip), security_id carried as a label; criterion i-1.AC2 (BASG 0 removed / 0 added vs served in the window). The full served-delta re-run gates RIV-d-4's pair."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S26",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-01T09:45Z",
+    "one_line": "Resolution of the identity half of row ETFS_RIVALS-Z-S8 (BLOCKING): G5 now matches positions on a window-stable raw identifier key with security_id as a label only, so identity no longer moves a trade -- BASG over the dry run's 325 dates reads 527 served / 527 new, 0 removed, 0 added (was 322 removed / 1489 added).",
+    "spec_asserts": "Amendment 2: G5 matches a fund's positions within a window on the row's own raw identifier family; a trade's security_id is the resolved key only when the window's two rows agree; i-1.AC1 still PASS; i-1.AC2 PASS.",
+    "world_is": "gold_trade_schedule.stable_key: Bloomberg row -> its Bloomberg id; else CUSIP, ISIN, SEDOL, ticker, raw_identifier of the row's own columns (an issuer row that joined a Bloomberg id is still keyed by its CUSIP); a hand-built frame with no identifier columns keeps the old key. Measured: i-1.AC1 PASS (BASG 33/33, WCMG 48/48, TSEL 28/28, ETFT 29/29, PCLG 29/29); i-1.AC2 PASS (served 47, branch 47, 0 removed, 0 added); served_delta_r3.py per fund g5_removed/g5_added: BASG 0/0, CGIC 0/0, ETFT 0/0, INEQ 0/0, PCLG 0/0, SCHY 0/0, TXUE 0/0, BIDD 2/1, TSEL 0/6, WCMG 0/1, IDVZ 0/33 and PFOE 0/18 (home, new by design). Judgment calls: the trade's security_key is the resolved id only when every row of the position on both reports resolves to the same id (else the raw key, confidence UNRESOLVED), which keeps publish_page's trace key (security_id if RESOLVED else raw_identifier) valid for rows resolved on both dates; G3 event lookup also tries the position's resolved id.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/gold_trade_schedule.py@85f442ffe1 stable_key, _side, _pair_rows.label",
+        "data/etfs/scripts/rivalfunds/tests/test_i1_trade_stable_key.py@85f442ffe1",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/served_delta_after.json"
+      ]
+    },
+    "notes": "Row Z-S8 is the issuer's; this row is the worker-side record that the identity cause is closed."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S27",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-01T09:45Z",
+    "one_line": "The three non-home residuals of the served-delta run (BIDD 2 removed / 1 added, TSEL 6 added, WCMG 1 added) are NOT identity: BIDD is a later Bloomberg capture of the same fund-day that dropped a zero-quantity row, and TSEL and WCMG are windows the served per-date G5 builds never form because the stage pairs a date only with the PREVIOUS GLOBAL G1 date while the replay pairs each fund's own consecutive dates.",
+    "spec_asserts": "Amendment 2 report: every non-home fund must read 0/0, or each difference named with its cause in a row.",
+    "world_is": "BIDD: G1 2025-12-09 has 46 rows served vs 45 new; bloomberg/etfs/silver/holdings/date=2025-12-09/ holds BIDD-20260930T151237Z-a201a4187d3d.parquet (46 rows, REL LN Equity position 0) and BIDD-20260930T151241Z-ebe3da8e8a7f.parquet (45 rows, no REL LN): served G1 (revision 20260930T151237Z) was built from the first capture, G1 reads the newest. The trim -165677 (REL LN, served, key 2025-12-09|trim) reads exit -165677 in the new G5 and the served 2025-12-11 'exit 0.0' on REL LN disappears: 2 removed, 1 added. TSEL: new G5 holds window 2025-08-15..2025-10-09 (6 trades: APP +1718, DDOG -1498, DGCXX entry, DGVXX trim, NET -1497, SPOT +1423, all STALE-WIDENED); the served objects at date=2025-10-09 (trades-20260930T151225Z-246cac1873a4, 26 rows: BIDD, CGIC, SCHY, TXUE) have no TSEL row because gold_trade_schedule.run_stage adds only `ordered[i-1]`, the previous date any fund has (2025-10-08), to the frames and TSEL has no G1 there (37 global dates lie between its 2025-08-15 and 2025-10-09). WCMG: window 2026-08-27..2026-08-31 (DGCXX +630.05, STALE-WIDENED), same cause (global prior date 2026-08-28, WCMG has no G1 on it).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/served_delta_after.json per_fund BIDD, TSEL, WCMG g5_examples",
+        "data/etfs/scripts/rivalfunds/gold_trade_schedule.py@85f442ffe1 run_stage (`need.add(ordered[i - 1])`, the global previous date)",
+        "S3 read-only: rivalfunds/etfs/gold/trade_schedule/date=2025-10-09/ (2 objects), canonical_shape date=2025-12-09 (revision 20260930T151237Z) and the two BIDD silver objects of that date"
+      ]
+    },
+    "notes": "Not changed here: run_stage is outside this order's paths for behaviour (it is the stage's per-date pairing). Whether the served per-date build should pair a fund with its own prior report date is a decision for the issuer; if it should, the served G5 gains these 7 windows' trades by design, not by identity."
   }
 ]
 ```

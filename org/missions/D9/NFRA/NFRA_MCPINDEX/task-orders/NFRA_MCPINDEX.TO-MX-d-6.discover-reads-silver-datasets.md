@@ -144,7 +144,7 @@ Do not edit this task order beyond your status flip.
 - d6.AC3 FAIL as expected (REACHABILITY 4 of 6; BD fees and model_benchmarks UNREACHABLE).
 Chain head of [MX-d-6 -> MX-g-3 -> MX-r-8 -> MX-v-7], worker ~22.
 
-<status>pending</status>
+<status>complete</status>
 <round>6</round>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>

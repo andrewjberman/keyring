@@ -6047,3 +6047,30 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S14",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-01T10:05Z",
+  "one_line": "On the LIVE 2c0f84966d tree two template-reading tests fail on their own: test_deploy_base_guard (5 of 6 refuse without the OG_* roster env) and test_schwab_host_inputs (ENABLED_INTEGRATIONS now 7 ids); the release template passes the first.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: /c/tmp/og-rb4 (detached at 2c0f84966d, AUDIT_PATH isolated) tests/test_deploy_base_guard.py without OG_MASTER_ADMIN_PRINCIPALS / OG_WRITE_CAPABLE_PRINCIPALS -> FAILED, the script exits 1 with 'OG_MASTER_ADMIN_PRINCIPALS: REFUSED (no upload)'; the same file with two synthetic pairs exported -> 6 passed.",
+      "RUN: /c/tmp/og-rel4 (release HEAD daa56d81ac) tests/test_deploy_base_guard.py with no OG_* variable -> 6 passed (the R4 edit removes the deploying-shell guard).",
+      "RUN: tests/test_schwab_host_inputs.py::test_printf_names_the_five_host_inputs_and_no_secret_value -> FAILED on /c/tmp/og-rb4 (live) and on /c/tmp/og-rel4 identically: the rendered ENABLED_INTEGRATIONS holds 7 ids (blackdiamond, MX-r-7), the test expects 6. The release does not touch that key.",
+      "DOC: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~15/ANNOUNCE_OG-rl-1.md step 3."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 3 grades the cells' new tests, test_ogz2_ac08 and test_ratelimit on the release tree; nothing is said of the template-reading tests.",
+  "world_is": "Neither failure is the release's: the live tree already fails both (the guard test needs the roster variables the OG-t-2 template demands; the Schwab test predates MX-r-7's seventh id). The release template removes the first failure; the second is an out-of-census test file, not shipped, not edited.",
+  "notes": "INERT for the host (tests are not in the artifact). A candidate for the next enrichment: the Schwab test's expected id list.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```

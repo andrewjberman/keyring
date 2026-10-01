@@ -51,6 +51,33 @@ package and not `integrations/`, so on deploy `build-canonical-shape` and `build
 
 Do this before the identity work. Your worktree has CLOUD merged in (hp-1's code is there).
 
+## 1c. ISSUER AMENDMENT 2 (2026-10-01 ~09:1xZ, 2.0.0_SA_COO~RV) -- REOPENED: identity must never move a trade (row Z-S8, BLOCKING)
+
+The issuer's served-delta dry run of the merged round-3 code (`deliverables/2.0.0_SA_COO~RV/round3/served_delta_r3.json`) found
+that this cell's identity changes BASG's trade schedule:
+- served 527 trade keys, new 1694 (322 removed, 1489 added);
+- 922 exits and 638 entries against 224 adds and 261 trims;
+- BASG G1 over 325 dates: 134 fully resolved, 7 zero, 184 partial.
+
+`gold_trade_schedule` matches `q_{t-1}` to `q_t` on `security_id`. Where a window's two dates resolve a security differently,
+the position reads as exited and re-entered, which C-TRADE-SCHEDULE forbids. TSEL +6, WCMG +1 and BIDD -2/+1 are the same
+class.
+
+- **The fix:** G5 matches positions within a fund's window on a WINDOW-STABLE key: the row's OWN raw identifier family.
+  - For an issuer row: CUSIP, then ISIN, then SEDOL, then ticker, the first one the row carries.
+  - For a Bloomberg row: its Bloomberg id.
+  - For a home-landing row: its cusip.
+  - `security_id` and the resolution fields ride along as LABELS.
+  - A trade's `security_id` is the resolved key only when the window's two rows agree on it.
+  - `data/etfs/scripts/rivalfunds/gold_trade_schedule.py` and its test files are granted.
+  - Do NOT weaken identity in G1 to pass: i-1.AC1 must still PASS unchanged.
+- **New criterion AC2** (`round3/checks/i-1.AC2.py`, bounded at about 30 s; it FAILs at CLOUD b780b4b8cb, with 31 removed and
+  271 added in its window): BASG's trades in 2026-01-02..02-17, replayed by your branch over the served inputs, equal the
+  served ones.
+- **Report:** re-run `round3/served_delta_r3.py --out <your deliverables>/served_delta_after.json` once; it is long, about
+  25 min, and is a report, not a criterion. Report its per-fund `g5_removed` / `g5_added`. Every non-home fund must read 0/0,
+  or each difference must be named with its cause in a row.
+
 ## 2. THE RULING BEHIND IT (issuer ruling 2, inlined)
 
 `lib/research/identity/` (the crosswalk object, `registrations.json`, `add_security`) is AMGT_RESAPP's and its rounds are live: you
@@ -87,6 +114,9 @@ data/etfs/scripts/rivalfunds/identity.py
 data/etfs/scripts/rivalfunds/home_producer.py
 data/etfs/scripts/rivalfunds/gold_canonical_shape.py
 data/etfs/scripts/rivalfunds/tests/test_i1_*.py
+data/etfs/scripts/rivalfunds/gold_trade_schedule.py
+data/etfs/scripts/rivalfunds/tests/test_g2_*.py
+data/etfs/scripts/rivalfunds/tests/test_g52_*.py
 data/etfs/scripts/rivalfunds/tests/test_g1_canonical_shape.py
 data/etfs/scripts/rivalfunds/tests/test_g12_canonical_multi_source.py
 org/missions/D5/ETFS/ETFS_RIVALS/surprise-channel/investigations/INVESTIGATION_v1.Z.md
@@ -102,6 +132,8 @@ org/missions/D5/ETFS/ETFS_RIVALS/surprise-channel/investigations/INVESTIGATION_v
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="RIV-i-1"><invocation>python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round3/checks/i-1.AC1.py</invocation><expect>AC1 RESULT: PASS 0 failures</expect></criterion>
+
+  <criterion id="AC2" cell_refs="RIV-i-1"><invocation>python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round3/checks/i-1.AC2.py</invocation><expect>AC2 RESULT: PASS 0 failures</expect></criterion>
 </proof_of_spec>
 
 ## 6. WHEN YOU ARE DONE
@@ -117,6 +149,8 @@ as expected. Handed to slot ~1 after RIV-hp-1 merges (same file, gold_canonical_
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
 <status>complete</status>
+<completion_note>2026-10-01 ~09:5xZ drain by 2.0.0_SA_COO~RV after REOPEN (amendment 2): worker 0.9.0_WK_ETFS_RIVALS~1 @b74b0ec696 (fix 85f442ffe1); proof instance VALID; i-1.AC1 PASS, i-1.AC2 PASS (BASG window served 47 / branch 47, 0/0); full served-delta (served_delta_after.json): BASG 527/527 0/0, 7 funds 0/0; residual BIDD -2/+1 (newest of two captures for 2025-12-09 -- the supersede rule), TSEL +6 / WCMG +1 (fund's own prior report date paired -- the served daily stage pairs the global prior date; row W1-S27, to the round-3 analysis); suite 249 passed 0 failed; row Z-S8 disarmed (W1-S26).</completion_note>
+<reopen_note>2026-10-01 ~09:1xZ REOPENED by 2.0.0_SA_COO~RV (amendment 2, row Z-S8 BLOCKING): identity moved BASG's trades; the prior completion stands for AC1 only.</reopen_note>
 <completion_note>2026-10-01 drain by 2.0.0_SA_COO~RV: worker 0.9.0_WK_ETFS_RIVALS~1 @19b0e3889f (build 2dff1d32c1); proof instance VALID; i-1.AC1 PASS (BASG 33/33 by the measured join, ABNB ambiguity refused, PFOE rivals 100% in key grammar); i1_identity.json fractions 1.0 for BASG/WCMG/TSEL/ETFT/PCLG; W1-S17 disarmed (row S21). Drain suite 225 passed / 2 FAILED: the two RIV-hp-1 tests asserting the removed runtime read (row W1-S22) -- repaired under RIV-g-6 amendment 1.</completion_note>
 <round>3</round>
 <slot>~1</slot>

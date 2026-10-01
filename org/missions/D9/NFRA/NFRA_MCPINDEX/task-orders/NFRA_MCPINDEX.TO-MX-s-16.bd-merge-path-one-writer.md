@@ -104,6 +104,38 @@ the halves.**
 - Graded by: no gate limb graded this modification (LIMB 6 grades only a newly-added order; GATE (viii) finds
   `<placeholders>NONE</placeholders>`).
 
+**AMENDED A2 (2.0.0_SA_COO~MI, 2026-10-01 ~10:2xZ) -- the per-key ruling on PHASE A-A1 (worker ~24 @b9d1a9577c; rows
+Z-W24-S2, S4, S5).**
+- **Cause, as measured:**
+  - On 9 of 9 sentinel-less dates in 09-03..10-01, the first transactions pull's sidecar reads `has_data_rows=0`.
+    Black Diamond posts transactions about 2 days late, so Monday and Tuesday runs return an empty window.
+  - The sentinel writer (`emit_bronze_sentinel`, called by `bd-49f-runner`) correctly withholds the sentinel, so
+    `bd-silver-merge` never fires that day.
+- **Per key:**
+  - **unrealized -- GO (after the DS deploy leg).** The empty-stub fix to
+    `data/black_diamond/scripts/silver/merge-daily-incremental.py` is deployed to its served key FIRST, through
+    `.tools/safe-deploy.sh` (rule 13). If safe-deploy refuses the worker serial (the DS lane), file a BLOCKING row
+    naming the refusal and STOP that key. The issuer routes the leg to a DS seat.
+  - **allocations -- GO.** No-op document version, trigger rule disabled, and the `ProcessAllocationFiles` notification
+    removed. Coverage is proven 131/131.
+  - **transactions -- GO, option (c), on one precondition.** PHASE B's first leg is a read-only consumer trace of
+    `s3://opal-data-bd/silver/transactions/<date>.parquet` same-day existence: the gold/served readers and any freshness
+    check (`comp-freshness`, the bd gold chain). If any consumer keys on a same-day partition existing, file a BLOCKING
+    row and HOLD transactions. Otherwise retire. Served content is unchanged: on gap days the document writes only an
+    empty 34,882 B placeholder.
+  - **realized -- HOLD this round.** The document is the only same-day real-rows writer on 9 of 9 gap dates. Retiring
+    it adds +26.5h every Monday and +2.5h every Tuesday (n=9, median 48.1h vs 3.3 min). The sentinel fix (option (a):
+    accept a measured `has_data_rows=0` for the transactions table only) lives in the shared `data/cot` ingest script,
+    outside this order and across a firm line, and is carried to the round-6 slug.
+- **Grading:** s16.AC1 is REFUSED as written for realized (2 writers by design this round); the other 3 tables must read
+  1. The order closes on unrealized, allocations and transactions by this ruling. s16.AC2 and AC3 as written.
+- **Before the halves:** re-cut the saved targeted plan WITHOUT `bd-realized-pipeline-trigger` (expect
+  0 to add / 4 to change / 0 to destroy: 3 rules + the notification), re-issue the ANNOUNCE with the per-key plan,
+  rollback per key, and the consumer-trace leg, then report. PHASE B runs only on the issuer's GO after both halves.
+- Rows Z-W24-S4 and S5 (the runner prints "OK: bronze sentinel emitted" after the module said "NOT emitted") are carried
+  to the slug with the realized hold.
+- Graded by: no gate limb graded this modification.
+
 ## 2. BOUNDS
 
 1. One producer per table after the change: no second schedule, no parallel path, no comparator (the NEVER shadow
