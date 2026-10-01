@@ -47,11 +47,18 @@
       "note": "L5, 2026-09-30, 2.0.0_SA_COO~RV. Round 2 (enrichment), 9 cells, 4 chains + join RIV-d-3; archived at the round-3 cut (bytes of the round-2 ETFS_RIVALS_DECOMP.md)."
     },
     {
-      "path": "org/missions/D5/ETFS/ETFS_RIVALS/decompositions/ETFS_RIVALS_DECOMP.md",
+      "path": "org/missions/D5/ETFS/ETFS_RIVALS/decompositions/ETFS_RIVALS_DECOMP.round3.md",
       "version": "v3.0",
       "round": 3,
       "prd_ref": "prd/ETFS_RIVALS_PRD.md@01114ae8a8",
-      "note": "L5, 2026-10-01, 2.0.0_SA_COO~RV. Round 3 (enrichment) from the round-2 analysis @01114ae8a8: 6 cells (RIV-r-3, hp-1, i-1, s-4, g-6, d-4), 3 chains + join RIV-d-4."
+      "note": "L5, 2026-10-01, 2.0.0_SA_COO~RV. Round 3 (enrichment) from the round-2 analysis @01114ae8a8: 6 cells (RIV-r-3, hp-1, i-1, s-4, g-6, d-4), 3 chains + join RIV-d-4. Archived at the round-4 cut."
+    },
+    {
+      "path": "org/missions/D5/ETFS/ETFS_RIVALS/decompositions/ETFS_RIVALS_DECOMP.md",
+      "version": "v4.0",
+      "round": 4,
+      "prd_ref": "prd/ETFS_RIVALS_PRD.md@01114ae8a8",
+      "note": "L5, 2026-10-01, 2.0.0_SA_COO~RV. Round 4 from the round-3 analysis @d4a1e22801: 6 cells (RIV-t-5, v-2, i-2, q-1, f-3, d-5), 3 chains + join RIV-d-5."
     }
   ],
   "decomposition_lineage": [],
