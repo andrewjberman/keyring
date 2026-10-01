@@ -48,20 +48,33 @@ scheduled gold fire and the first 22:10Z silver fire accept it, then the page re
    `MDPF_SECCLASS_M/BD_THREAD_R3_PRIOR_VERSIONS_20261001.json.gz` @c6c769bb3d (53,927 keys) and the six code
    VersionIds in leg P. If C_06, D_03 or D_04 refuses at import, the code rollback runs in the same gap. Then
    A2 (22:10Z silver fire), A1 (23:00Z gold fire), B4 (the page read for z08327149).
-2. **W12-S2: DONE on CLOUD @a96e00c279** (merged 0b7b794514, after item 1's deploy step shipped the signed
-   bytes). `ETFClassifier.classify_holdings` no longer raises KeyError on a class beyond the four it seeds (the
-   client and its two copies, identical at blob 4cbbb67ae5; 7 tests). The Black Diamond copy trails CLOUD by this
-   one line in a method with no caller; it catches up at item 4's deploy.
-3. **The MODEL_ROWS half.** With items W12-S1 and W12-S2 the census reads
-   `MODEL-READER-CENSUS readers=34 tolerates=26 read_only=8 crashes=0 refuses=0 fails_contract=0` on the branch.
-   A fresh dated census is written when item 2 is on CLOUD; it also has to place
-   `UNCENSUSED infra/aws/lambda/investor-reporting/reports/generate_installed.py`, which the run printed.
-4. **E_18's trigger** (row W10-S2): `gold_dispatch.sh` carries no E_* id, so E_18 never runs on a schedule. A
-   production pipeline is scheduled; the change is a deploy and takes both halves.
-5. **A canonical row for `CEMIX`**: Cottonwood serves it fixed_income / International on 67 positions
-   (2,039,120.10 USD, measured on a real build 2026-10-01) through a bd-securities name alias; it is an
-   emerging-markets equity fund. A served class moves, so it takes both halves.
-6. The exact contract-version pin (round-6 deviation 1).
+Items 2-8 are in the order of 1.0.0_SA_CTO's round-6 answer
+(`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_MDPF_SECCLASS_ROUND_6_20261001.md` @453c6430ec, section 3),
+on 3.0.0_SA_CVO's review `org/tier1_exec/3.0.0_SA_CVO/deliverables/MDPF_SECCLASS_R6_REVIEW_20261001.md`.
+
+2. **W12-S2: DONE on CLOUD @a96e00c279.** `ETFClassifier.classify_holdings` no longer raises KeyError on a class
+   beyond the four it seeds (the client and its two copies; 7 tests). The Black Diamond copy trails CLOUD by this one
+   line in a method with no caller; it catches up at item 4's deploy.
+3. **Ruling 5, row W10-S3:** `.tools/test_safe_deploy.py` reads 7 failed, 7 passed. Run the same file at SC-e13's
+   parent commit to split the failures SC-e13 caused from the ones it inherited; fix the first, row the rest. A
+   path-gate refusal on the two tool files gets one blocker line.
+4. **E_18's trigger (row W10-S2).** `gold_dispatch.sh` carries no E_ id. A production pipeline is scheduled, so the
+   trigger is built: a deploy, its own ledger entry, both halves; E_18's first scheduled run is that entry's
+   acceptance. The old entry `secclass-e18-iam-and-deploy-m-20260930` is CLOSED @eb5cee03df on E_18's dry run on the
+   runner (ruling 4): rc 0, signed bytes on the runner, nothing written.
+5. **Ruling 3: DONE on this branch @1617619a6a.** The census prints, and writes only with `--write <path>`.
+6. **A canonical row for `CEMIX`.** Cottonwood serves it fixed_income / International on 67 positions
+   (2,039,120.10 USD, a real build 2026-10-01) through a bd-securities name alias; it is an emerging-markets equity
+   fund. A served class moves: both halves.
+7. **Ruling 7:** re-measure the six stale open rows once each (S1, S2, W2-S3, W3-S3, W5-S2, W6-S2); close each or
+   name its owner and condition.
+8. **Ruling 6, row W11-S1:** the exact contract-version pin replaces the version floor and the superset check in
+   `test_classified_by_v2.py`. The file is outside this seat's six-file grant: one blocker line first.
+9. **The MODEL_ROWS half -- HELD by ruling 1.** Not signed until 2.0.0_SA_COO~Y's filter is on CLOUD (the comparison
+   list excludes rows whose `classified_by` is the model value) and a fresh census prints the catalogue's reader as
+   tolerating. Today `R7_MODEL_READER_CENSUS_20261001.json` reads readers=35 tolerates=25 read_only=9 crashes=0
+   refuses=0 fails_contract=1, uncensused 0: the one failure is that reader, which would offer 234 of 234 named
+   model rows, 119 of them low-confidence.
 
 ## Dependencies
 
