@@ -460,6 +460,29 @@ Worker rows carry their slot's coordinate, `MDPF_TAXSMA-W<n>-S<k>`; a seat's row
     "spec_asserts": "TX-a-2 AC6 and the contract's artifacts list: the consolidator writes a category Gold parquet per scope at its LGIC address.",
     "world_is": "The served category-views already carry the Tax status extension from the existing canonical Gold; a second copy at a new home is a duplicate output path (CLAUDE.md NEVER) of an existing pipeline, whose LGIC conformance is its own migration project (Rule 30 non-application, R19).",
     "notes": "For the CTO at the round analysis: either strike artifacts.firm_category and global_category from the contract, or re-point the publisher's source to them as one migration. Not written meanwhile."
+  },
+  {
+    "id": "MDPF_TAXSMA-S10",
+    "project": "MDPF_TAXSMA",
+    "fabric": "laptop",
+    "surfaced_by": "0.0.0_AB_MSTR",
+    "surfaced_at": "2026-10-01T01:55Z",
+    "one_line": "S7's stated disarm ran (the shared tree was integrated with origin/CLOUD at merge 68e15a70df and pushed) and its four destroys are gone, but the opal-gateway root still cannot plan clean from the laptop: a live role created at 01:17:40Z by an applier whose commit is on no origin ref now plans as three destroys.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "0.0.0_AB_MSTR",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Merge 68e15a70df (0.0.0_AB_MSTR, 2026-10-01 01:36Z): origin/CLOUD 85a765dbcd into laptop CLOUD, safe-merge tree check 1939 files needed, 0 dropped, 0 foreign; pushed, origin/CLOUD 68e15a70df by ls-remote 01:4xZ.",
+        "4.0.0_SA_CRO msg 103416: plan of infra/aws/terraform/opal-gateway from the shared tree @2bccdd60d3 at 01:42Z, saved, not applied -- 2 to add (TX-i-3's), 1 to change, 3 to destroy: aws_iam_role.int_reader, aws_iam_role_policy.int_reader, aws_iam_role_policy.gw_assume_int_reader; live role gateway-global-internal-reader-role CreateDate 2026-10-01T01:17:40Z; no commit on any fetched ref names it; the change is aws_lambda_function.mcportal_grant_writer source_code_hash.",
+        "0.0.0_AB_MSTR~Z census (bus 978b9bd5, 00:52Z; org/tier0_exec/0.0.0_AB_MSTR/deliverables/SITEZ_LANDMINE_CENSUS_20261001_0052Z.md): site-Z CLOUD 118 ahead of origin, and its own opal-assets plan showed 1 destroy of a laptop-applied policy -- the mirror of this row, in the other direction."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "S7's notes: integrating origin/CLOUD into the shared tree disarms the opal-gateway hazard for every laptop seat.",
+    "world_is": "The integrate removed the stale-tree cause and S7's four destroys, but not the hazard class: the root has appliers on both devices, each applying from a tree that lacks the other's unpushed commits, so a clean plan lasts only until the next apply on the other device. S7 is superseded by this row, not closed.",
+    "notes": "Cites MDPF_TAXSMA-S7 (append-only; S7 is not edited). Disarm of THIS instance: the site-Z applier's int_reader config reaches origin and the laptop pulls it; asked of 0.0.0_AB_MSTR~Z on the bus (279089b3). The standing shape goes to Andrew as a finding. Nothing applied on that root by any laptop seat; TX-i-3's two resources are moving to the mdpf-pipeline root (4.0.0_SA_CRO)."
   }
 ]
 ```
