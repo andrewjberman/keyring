@@ -638,7 +638,7 @@ function readHoldingsAggregates(p, j) {
 // (IRPT RULINGS batch 61 item 6 / CTO condition 9: one READY request walked on the local build against the real
 // backend, sections on screen.) The row is found by `data-request-id`; when that id is not listed, the first row whose
 // state reads Ready is opened instead and the record says so. Opening a request issues GETs only.
-const REQUEST_DETAIL_CEILING_MS = 45000
+const REQUEST_DETAIL_CEILING_MS = 90000   // 45,000 until walk 20261001T142136Z, whose sections landed 0.5 s after it
 const openedRequests = []
 // The hops of ONE open (IRPT RULINGS batch 88 item 4 E4: "30.2 seconds from the press to the sections is measured by
 // hop before anything is changed"). While a recorder is set, every Investor Reporting analysis or status request the
@@ -656,14 +656,35 @@ function hopKind(p) {
   return /\/investor-reporting\/(analysis|status)/.test(p) ? 'other-analysis' : null
 }
 function noteHopRequest(req) {
-  if (requestHops && hopKind(pathOnly(req.url()))) hopStart.set(req, Date.now())
+  const kind = requestHops ? hopKind(pathOnly(req.url())) : null
+  if (!kind) return
+  hopStart.set(req, Date.now())
+  // sent per kind, so a read that was sent and never answered inside the window shows as sent minus answered
+  requestHops.sent = requestHops.sent || {}
+  requestHops.sent[kind] = (requestHops.sent[kind] || 0) + 1
 }
-function noteHopResponse(req, res, json) {
+function noteHopResponse(req, res, json, headers) {
   if (!requestHops || !hopStart.has(req)) return
   const p = pathOnly(req.url())
   const kind = hopKind(p)
   const row = { kind, sent_ms: hopStart.get(req) - requestHops.t0, answered_ms: Date.now() - requestHops.t0, http: res.status(), state: json?.status?.state ?? null, reason: json?.status?.public_reason_code ?? null }
   row.took_ms = row.answered_ms - row.sent_ms
+  // WHERE the time went, from the browser's own resource timing: `queued_ms` is from the page issuing the request to
+  // the request leaving on a connection (a dev build speaks HTTP/1.1 to localhost, six connections per host, so a
+  // burst of reads queues here); `server_ms` is from the request leaving to the first byte of the answer.
+  try {
+    const t = req.timing()
+    row.queued_ms = t.requestStart >= 0 ? Math.round(t.requestStart) : null
+    row.server_ms = t.requestStart >= 0 && t.responseStart >= 0 ? Math.round(t.responseStart - t.requestStart) : null
+  } catch { row.queued_ms = null; row.server_ms = null }
+  // Batch 89 item 4: does the page declare the dates capability on a status read? The header's own value, as sent.
+  // POSITIVE CONTROL beside it: whether the same request carried an Authorization header (every scoped read does),
+  // so a null here is "the header was not sent", never "this reader cannot see request headers".
+  if (kind === 'status-job' || kind === 'status-summary') {
+    const h = headers || {}
+    row.status_dates_header = h['x-irpt-status-dates'] ?? null
+    row.saw_authorization_header = typeof h.authorization === 'string' && h.authorization.length > 0
+  }
   if (kind === 'sections' && json && json.data) {
     row.served_sections = Array.isArray(json.data.sections) ? json.data.sections.length : null
     row.served_undated_sections = Array.isArray(json.data.undated_sections) ? json.data.undated_sections.length : null
@@ -684,8 +705,12 @@ async function openRequest(page, label, requestId) {
     findings.push({ step: `${label}-open-request`, check: 'analysis:no-ready-request-listed', claim: 'measured', observed: `${listed.length} request(s) listed, none Ready and none with the asked id`, rule: 'a READY request opens with its sections on screen' })
     openedRequests.push(rec); return
   }
+  // The recorder runs from the Analysis tab's own click when the walk started it there (the list's per-row status
+  // reads are sent before any press); every hop's time is from that origin and `press_ms` places the press on it.
   const t0 = Date.now()
-  requestHops = { t0, rows: [] }
+  if (!requestHops) requestHops = { t0, rows: [] }
+  rec.press_ms = t0 - requestHops.t0
+  rec.row_states_at_press = listed.reduce((acc, r) => { const k = (r.state || 'none').replace(/\s+--.*$/, '').slice(0, 40); acc[k] = (acc[k] || 0) + 1; return acc }, {})
   await page.locator(`[data-row="owned-analysis-request"][data-request-id="${target.id}"] button`).first().click({ timeout: 5000 }).catch(() => {})
   const detail = page.locator('[data-slot="owned-request-detail"]')
   await detail.waitFor({ state: 'visible', timeout: 15000 }).catch(() => {})
@@ -727,6 +752,7 @@ async function openRequest(page, label, requestId) {
   rec.marks = marks
   await page.waitForTimeout(600)                 // a late answer of an already-sent request still lands in the hops
   rec.hops = requestHops.rows.slice().sort((a, b) => a.sent_ms - b.sent_ms)
+  rec.hops_sent_by_kind = requestHops.sent || {}
   requestHops = null
   await checks(page, `${label}-request-open`)
   await page.locator('[data-slot="owned-request-detail"]').evaluate((d) => { d.scrollTop = d.scrollHeight }).catch(() => {})
@@ -873,7 +899,7 @@ try {
       const j = await res.json(); body = j; ok = j.ok ?? null; state = j.status?.state ?? null; reason = j.status?.public_reason_code ?? null
       if (opt.holdingsAggregates && /\/investor-reporting\/holdings\//.test(p)) readHoldingsAggregates(p, j)
     } catch { /* not json */ }
-    noteHopResponse(req, res, body)
+    if (requestHops && hopStart.has(req)) noteHopResponse(req, res, body, await req.allHeaders().catch(() => req.headers()))
     if (res.status() >= 400 || ok === false || (reason && !/READY$/.test(reason))) apiIssues.push({ step, method: req.method(), path: p, http: res.status(), ok, state, reason })
   })
   await page.route('**/*', (route) => {
@@ -983,6 +1009,7 @@ try {
             step = `tab ${name}`
             await page.keyboard.press('Escape').catch(() => {})   // no dialog may stand over the tab strip
             await page.waitForTimeout(300)
+            if (opt.openRequest && /analysis/.test(name)) requestHops = { t0: Date.now(), rows: [] }
             await tabs.nth(i).click().catch(() => {})
             await settle(page, 2500)
             await checks(page, `${client}-${name}`)
