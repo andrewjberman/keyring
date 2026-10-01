@@ -1437,6 +1437,27 @@
     "spec_asserts": "Step 3: the page follows by marker or sweep.",
     "world_is": "The page is served and grouped; four issuer_first funds read not-updated with the freshness reason (their Bloomberg report date was carried one trading day). This is the guardrail doing its job on real data, and it leaves the batch's publish marker absent, so a later sweep re-runs publish-page for that batch and reads PARTIAL again until those funds' report dates advance.",
     "notes": "Not a defect of the act; recorded so the close-read does not take the missing import-r2-08 publish marker for a failed publish."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S3",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-01T05:09Z",
+    "one_line": "Disarm of ETFS_RIVALS-Z-W5-S26 by its disarm owner: test_b1_bloomberg_channel.py::test_latest_capture_wins_per_fund_and_report_date now asserts the reader's view (newest capture per fund) and that the superseded capture is recorded retained; the whole package reads 189 passed, 2 skipped, 0 failed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m pytest data/etfs/scripts/rivalfunds/tests -q in /c/tmp/wk-rivals2-5r at 914c31bf3a plus the one-test edit: 189 passed, 2 skipped (was 1 failed, 188 passed at the worker's report).",
+        "The edit filters the date's silver to max(captured_at) per fund_ticker before the row-count assertion, mirroring gold_canonical_shape._bbg_latest; no production file changed."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Row W5-S26: a stale test encodes the removed delete and reads RED for intended behaviour.",
+    "world_is": "The test now encodes supersede-without-delete (d-3 amendment 4); W5-S26's hazard is disarmed by the issuer, its id carried here for the CVO's L9 read.",
+    "notes": "Issuer direct act inside its own decomposition (the file belongs to terminal RIV-b-1; no live order owns it)."
   }
 ]
 ```
