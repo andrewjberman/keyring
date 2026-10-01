@@ -14269,3 +14269,32 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Nothing serves the Cottonwood holdings gold. Before it is served: grade every partition with partition_close_anchor_sweep.py --source blackdiamond and name the lagged class."
 }
 ```
+
+
+## IRPT_BCKEND-S253 -- The READY receipt of a resident job carries no vendor_requests ledger: IB-yr-291 writes the ledger in ycharts/generate/job.py, and the resident's generation worker returns its own three-key receipt, so the first READY job since that order landed has no record of the vendor requests it made.
+
+```json
+{
+  "id": "IRPT_BCKEND-S253",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-01T12:55:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The READY receipt of a resident job carries no vendor_requests ledger: IB-yr-291 writes the ledger in ycharts/generate/job.py, and the resident's generation worker returns its own three-key receipt, so the first READY job since that order landed has no record of the vendor requests it made.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Y (the Analysis lane; un-parks when the vendor PDF link or a vendor-usage count is built on the receipt, or at the next resident build, whichever comes first)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Job REQ-a69e5751d42c374f1d2354f9 (cottonwood), READY 2026-10-01T12:31:12Z on resident root 9ac9b56d3c-st8: irpt-jobs job_detail keys are certification_sha256, report_id, revision (3 keys); the row's five checkpoints (upload, portfolio, read_back, pdf, publication) were walked for the key vendor_requests: 0 found.",
+      "The term vendor_requests over infra/aws/lambda/investor-reporting/**/*.py: 12 occurrences in 3 files -- ycharts/generate/job.py 3 (a comment at :80 and the two writes at :341 and :505), tests/run_offline_suite.py 8, tests/test_receipt_ledger.py 1. resident_worker.py: 0. Its run() returns self.store.put_state(request_id, 'READY', receipt) with the receipt of self.publication.finish().",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/ST6/NEVER_WIDEN_SIGNOFF_PACKET_RESIDENT_ST6_20261001.md section 4, first row: 'the READY receipt also carries vendor_requests (ten-key shapes, no values)' -- written by this seat from the member list (job.py changed in the package), not from a run."
+    ]
+  },
+  "spec_asserts": "Task order IB-yr-291 (receipt-carries-vendor-endpoint-ledger) and the st6 never-widen packet's blast-radius row: an Analysis job that reaches READY on the resident carries the ledger of its vendor requests on its receipt.",
+  "world_is": "MEASURED on 1 of 1 READY jobs made since the order landed: the receipt has three keys and no ledger. The ledger exists only on the receipt job.py builds, a path the resident's worker does not take. NOT MEASURED: whether any deployed path still runs job.py's receipt (the Lambda-side generate entry accepts and queues; it does not generate). The st6 packet's row was this seat's own claim from a member census, and it was wrong for the resident.",
+  "notes": "Nothing reads the ledger today, so nothing is broken by its absence; the hop-7 and hop-8 outcome files counted vendor calls from the journal and the code path for that reason. The repair is the worker handing the transport's evidence list to the receipt in the ten-key shape job.py already defines; it rides the next resident build. The outcome that found it: org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/HOP8B/OUTCOME_20261001.md."
+}
+```
