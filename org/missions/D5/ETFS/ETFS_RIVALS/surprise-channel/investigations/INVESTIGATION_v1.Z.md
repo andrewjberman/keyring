@@ -2347,6 +2347,48 @@
       ]
     },
     "notes": "Resolves ETFS_RIVALS-Z-W4-S8 (an existing row is never edited). Any future page test that reads the live config and is not about the floor takes this fixture by import. disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S38",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-01T19:20Z",
+    "one_line": "Resolution of ETFS_RIVALS-Z-W4-S13: an issuer observation's fund is now the sidecar's own `fund` (legacy sidecar without one: BASG), so the morning's later GQGU capture can no longer displace BASG's coverage row; q-1.AC2 reads PASS.",
+    "spec_asserts": "Row Z-W4-S13 (ARMED): _issuer_obs stamped every issuer-site sidecar fund BASG and _latest kept the latest capture per (fund, source, day), so from the next 07:00 ET fetch BASG's coverage row would read GQGU's capture with 0 BASG rows. Amendment 1 @75505deacf.",
+    "world_is": "At c91d7dc313, q-1.AC2 prints 'BASG [(basg-2026-09-28-20260929T204617Z-2a559d4, 35)]' / 'GQGU [(gqgu-2026-09-28-20260929T204622Z-5986610, 39)]' and 'AC2 RESULT: PASS 0 failures' (at e01c6d0676: BASG on a gqgu capture with 0 rows, no GQGU row). tests/test_q1_gqgu_coverage.py (4 tests; 3 fail on the old gold_holdings_coverage.py, the legacy-sidecar one passes on both by design) covers either capture order and the legacy sidecar. q-1.AC1 still PASS. python -m pytest rivalfunds/tests -q (from data/etfs/scripts) reads 306 passed, 2 skipped, 0 failed. BASG's rows are unchanged: its own capture, 35 rows, same silver object name basg-<capture id>.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/gold_holdings_coverage.py@c91d7dc313 _issuer_obs, _Evidence.issuer_rows",
+        "data/etfs/scripts/rivalfunds/tests/test_q1_gqgu_coverage.py@c91d7dc313"
+      ]
+    },
+    "notes": "Resolves ETFS_RIVALS-Z-W4-S13 (ARMED) (an existing row is never edited; this row carries the resolution). The deploy of gold_holdings_coverage to the QA Lambda is the issuer's act and is due before the 07:00 ET fetch; this worker deployed nothing and touched no S3. disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S39",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-01T19:20Z",
+    "one_line": "Resolution of ETFS_RIVALS-Z-W4-S12: every issuer-route fund of the map (the adapters registry) is observed from its own silver object (the sidecar's `source`), so GQGU gets its own G2 coverage row and its calendar no longer reads unavailable.",
+    "spec_asserts": "Row Z-W4-S12: _issuer_obs returned nothing unless BASG was in funds, so GQGU never got a coverage row; _Evidence.issuer_rows read the silver object under BASG's source name. Amendment 1 @75505deacf.",
+    "world_is": "At c91d7dc313: _issuer_obs observes `{f in funds if f in ADAPTERS}`; issuer_rows reads `<sidecar source or basg>-<capture id>.parquet`; q-1.AC2 shows GQGU's coverage row from a gqgu-* capture with 39 rows (the file's GQGU count); a fund with no adapter (TXUE) is observed as nothing (tests/test_q1_gqgu_coverage.py::test_an_issuer_route_fund_is_observed_only_when_the_map_reads_it). Neighbour not changed (outside the cell): gold_canonical_shape.SOURCE_NS 'basg' key in extra_attributes, noted in row Z-W1-S35.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/gold_holdings_coverage.py@c91d7dc313 _issuer_obs, _Evidence.issuer_rows",
+        "data/etfs/scripts/rivalfunds/tests/test_q1_gqgu_coverage.py@c91d7dc313"
+      ]
+    },
+    "notes": "Resolves ETFS_RIVALS-Z-W4-S12 (an existing row is never edited; this row carries the resolution). The deploy of gold_holdings_coverage to the QA Lambda is the issuer's act and is due before the 07:00 ET fetch; this worker deployed nothing and touched no S3. disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV."
   }
 ]
 ```
