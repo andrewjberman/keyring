@@ -1,0 +1,176 @@
+{
+  "contract_version": "0.1.0",
+  "project": "IRPT_DASHBD",
+  "prd": "org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md v0.5 @0e7fd8eeb6",
+  "authored_by": "0.4.0_DS_ClientPlatform~S",
+  "authored_under": "IRPT_DASHBD.TO-DB-b-1 (C-SHAPE, annex 17c, ADDENDUM ruling 12) with amendments 5 and 6. Row IRPT_DASHBD-S2 recorded that this file waited on the MEASURED thresholds; they are measured and landed, so it is written now. UNCOMMITTED by design: org/standards/ is owned-paths lane ANY_EXEC and this seat is refused there, so the issuer lands it (amendment 4, remedy (1) of row S2).",
+  "table": "dim_return_method",
+  "grain": "ONE ROW PER METHOD VERSION. Not per day, not per account, not per firm: the row describes the arithmetic, and a change to the arithmetic is a new method_version.",
+  "partition": "method_version=<int>, one partition per version",
+  "producer": "data/assets/scripts/gold/irpt_reporting/account_return_daily.py :: emit_method_row",
+  "address": "lib.opal_naming.address(\"irpt\",\"49financial\",\"gold\",\"dim_return_method\",\"method_version=1\") -- never a hand-typed key",
+  "columns": [
+    {
+      "name": "method_version",
+      "type": "int64",
+      "nullable": false,
+      "meaning": "the immutable version of the METHOD this row describes; every account_return_daily row's method_version points here"
+    },
+    {
+      "name": "method",
+      "type": "string",
+      "nullable": false,
+      "meaning": "the arithmetic family actually implemented"
+    },
+    {
+      "name": "flow_convention",
+      "type": "string",
+      "nullable": false,
+      "meaning": "when a flow is recognised within the day; END is what the producer COMPUTES (DB-b-3 may evaluate others, which is a different fact)"
+    },
+    {
+      "name": "income_basis",
+      "type": "string",
+      "nullable": false,
+      "meaning": "when income enters the numerator"
+    },
+    {
+      "name": "fee_basis",
+      "type": "string",
+      "nullable": false,
+      "meaning": "whether the return is gross or net of advisory fees; GROSS_ONLY, and the arithmetic achieves it by admitting FEE-MANAGEMENT legs to F_t as capital out so V_t - F_t adds the fee back (amendment 5 (d))"
+    },
+    {
+      "name": "tolerance",
+      "type": "double",
+      "nullable": false,
+      "meaning": "the MEASURED guard tolerance: p99 of |r_t - (holdings_price_return + income_return)| over the account-days inside the comparability domain"
+    },
+    {
+      "name": "large_flow_share",
+      "type": "double",
+      "nullable": false,
+      "meaning": "the MEASURED large-flow threshold on |F_t| / V_(t-1)"
+    },
+    {
+      "name": "plausibility_band_low",
+      "type": "double",
+      "nullable": false,
+      "meaning": "the lower bound the EMITTED total_return_daily must sit inside (ruling 19 moved this check after selection)"
+    },
+    {
+      "name": "plausibility_band_high",
+      "type": "double",
+      "nullable": false,
+      "meaning": "the upper bound the EMITTED total_return_daily must sit inside"
+    },
+    {
+      "name": "comparability_max_excluded_weight",
+      "type": "double",
+      "nullable": false,
+      "meaning": "the DERIVED ceiling above which the holdings guard does not grade a day: tolerance / max(|band|) per TO-DB-b-1 amendment 6, not a percentile and not chosen by the producer"
+    },
+    {
+      "name": "guard_substitution",
+      "type": "string",
+      "nullable": false,
+      "meaning": "a stated negative: that the guard never substitutes a different population's return (ruling 17). Declared as data because a consumer cannot otherwise tell a withdrawn behaviour from an unimplemented one"
+    },
+    {
+      "name": "day_count",
+      "type": "string",
+      "nullable": false,
+      "meaning": "the day-count convention"
+    },
+    {
+      "name": "tieout_tolerance_proposed",
+      "type": "null",
+      "nullable": true,
+      "meaning": "NULLABLE AND NULL ON THIS ROW BY THE ORDER'S OWN METHOD SPEC: TO-DB-b-1 states 'tieout_tolerance_proposed null (DB-b-3 fills it)'. It is the Black Diamond tie-out's proposed tolerance and DB-b-1 has no basis to assert one; writing a number here would be inventing the output of a cell that has not run"
+    },
+    {
+      "name": "gips_alignment",
+      "type": "string",
+      "nullable": false,
+      "meaning": "the alignment claim, stated as a limit rather than a certification"
+    },
+    {
+      "name": "measured_at",
+      "type": "string",
+      "nullable": false,
+      "meaning": "when this method row was emitted, UTC"
+    },
+    {
+      "name": "schema_version",
+      "type": "string",
+      "nullable": false,
+      "meaning": "the producer's schema version for this table"
+    },
+    {
+      "name": "source_pipeline",
+      "type": "string",
+      "nullable": false,
+      "meaning": "the producing pipeline, for provenance"
+    },
+    {
+      "name": "firm",
+      "type": "string",
+      "nullable": false,
+      "meaning": "the registry-derived firm scope; never a typed token"
+    }
+  ],
+  "enums": {
+    "method": [
+      "TWR_DAILY_GEOMETRIC"
+    ],
+    "flow_convention": [
+      "END",
+      "START",
+      "MIDPOINT"
+    ],
+    "income_basis": [
+      "cash_when_received"
+    ],
+    "fee_basis": [
+      "GROSS_ONLY"
+    ],
+    "day_count": [
+      "Account365"
+    ]
+  },
+  "rule24_record": {
+    "i_mece_over_a_declared_domain": "flow_convention -- domain: 'at what point in the day is a flow recognised'. END | START | MIDPOINT. All three are declared although only END is implemented, because DB-b-3's convention comparison exists to evaluate the other two and a value it may select must already be expressible; declaring them now is cheaper than a schema change mid-round. WHAT THIS COLUMN DOES NOT SAY, and the review's F11 is exactly this confusion: it reports the convention the arithmetic RAN under, never the one a comparison preferred nor the one a policy owner approved. method -- domain: 'which arithmetic family'. One member today. income_basis, fee_basis, day_count -- each one member today, each a closed set so a consumer can reject an unexpected value rather than parse free text.",
+    "ii_same_grain": "Every column is a property of the METHOD VERSION. measured_at is the emission instant of this row, which is still a property of the version rather than of any account-day. There is no account or date column here by design: joining this table to a return row is done through method_version alone.",
+    "iii_intent_coherence": "The table answers ONE question: what arithmetic produced the numbers that point at it. It deliberately carries no quality counts, no row totals and no per-account figures -- those are account-day facts and live on account_return_daily or in the round's deliverables. guard_substitution is the one apparent exception and is included under this axis deliberately: a withdrawn behaviour is part of the method's definition, and a consumer that cannot see the withdrawal cannot distinguish it from a behaviour never built.",
+    "iv_state_coherence": "WHICH VALUES ONE REMEDY DOES NOT MOVE. Re-measuring the guard numbers moves tolerance, large_flow_share and comparability_max_excluded_weight together, because the ceiling is DERIVED from the first and the band; it moves neither the band itself (a PRD default) nor any convention column. DB-b-3 filling tieout_tolerance_proposed moves that column alone and must not touch the others. Implementing a different flow convention is NOT an update to flow_convention: it is a new method_version with its own partition and a recomputation of every return that pointed at the old one.",
+    "token_census": "The five enum values that are not already ratified estate terms were introduced with this table at 0.1.0 and the producer is their only writer: TWR_DAILY_GEOMETRIC, cash_when_received, GROSS_ONLY, Account365, and the START/MIDPOINT members declared unused. The column name comparability_max_excluded_weight is new with PRD ruling 18 and appears in the PRD, this order and this producer only.",
+    "token_census_finding": "NO COLLISION. Stated with its limit: this census is over the declared VALUES of a table minted by this round, so there is no prior consumer to collide with. That is a weaker claim than the account_return_daily 0.2.0 census, where an existing estate term could have clashed and the scans were run to check."
+  },
+  "schema_hash": "fe0d01b511ef9b82e98ee031c4d6aefe27f08759e52189941e1e74fb3bb9786b",
+  "schema_hash_basis": "sha256 over the sorted 'name:type' lines joined by newline, types as the pyarrow type name the LANDED parquet carries -- identical to the basis the account_return_daily contract declares, so one method verifies both tables.",
+  "schema_hash_provenance": "COMPUTED FROM THE SERVED ARTIFACT, not from the producer's source: read back from s3://opal-data-49financial/irpt/49financial/gold/dim_return_method/method_version=1/data.parquet after the first mint. A contract derived from source could describe a table that was never emitted; this one cannot.",
+  "landed_row": {
+    "basis": "measured",
+    "read_at": "2026-10-01, after the first mint",
+    "values": {
+      "method_version": 1,
+      "method": "TWR_DAILY_GEOMETRIC",
+      "flow_convention": "END",
+      "income_basis": "cash_when_received",
+      "fee_basis": "GROSS_ONLY",
+      "tolerance": 0.001244,
+      "large_flow_share": 0.002535,
+      "plausibility_band_low": -0.5,
+      "plausibility_band_high": 0.5,
+      "comparability_max_excluded_weight": 0.002488,
+      "guard_substitution": "WITHDRAWN (PRD v0.4 ruling 17): a guard disagreement serves no number; HOLDINGS_INCOME_FALLBACK is never emitted.",
+      "day_count": "Account365",
+      "tieout_tolerance_proposed": null,
+      "gips_alignment": "GIPS-aligned, not GIPS-compliant",
+      "measured_at": "2026-10-01T11:58:57Z",
+      "schema_version": "1.0",
+      "source_pipeline": "irpt-reporting-adapter",
+      "firm": "49financial"
+    }
+  }
+}
