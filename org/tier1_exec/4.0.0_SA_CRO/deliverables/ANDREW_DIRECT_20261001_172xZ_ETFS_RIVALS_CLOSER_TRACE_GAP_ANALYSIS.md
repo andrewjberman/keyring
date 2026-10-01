@@ -10,6 +10,10 @@
 > project with that directive. My goal is to first make sure that the methodology is sound and we have an adequate
 > base of comparison for both Opal and Non-Opal ETFs and all data pipelines and schedules are set up. Go now.
 
+## Verbatim, same channel, mid-trace (~18:0xZ)
+
+> GQGU only started in July of 2025, so that is one aspect of this worth keepin mind
+
 ## Scope as given (not adjudicated wider or narrower)
 
 - Sole work of this session: ETFS_RIVALS.
