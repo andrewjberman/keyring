@@ -88,9 +88,10 @@ on 3.0.0_SA_CVO's review `org/tier1_exec/3.0.0_SA_CVO/deliverables/MDPF_SECCLASS
    withheld tickers (eleven low-confidence, O, CAIBX) each need a seed row under its own half or stay on the
    fallback; O and PCOFX are served a wrong class today (row S7). REET against VNQ is row S8.
 
-10. **Queued by 1.0.0_SA_CTO 103641 (rulings batch 72 items 1-7 @65417358df): MDPF_HEALGAP cell 1, the gold catch-up
-    step.** Not this project; it follows the round-6 items above. A served move with both halves, under its own FAST
-    lease, after reading MDPF_TAXSMA's lease claims on the consolidator. Not started.
+10. **MDPF_HEALGAP cell 1 (CTO 103641; rulings batch 72 and batch 75): built, half signed by this seat, CTO half owed.**
+    Not this project. Its state is `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_HEALGAP_M/STATUS~M.md`: the
+    catch-up module and 16 tests are on CLOUD and wired nowhere; the live read-only plan is the ruling's five dates;
+    the call line and the Lambda package row are `4.0.0_SA_CRO`'s.
 
 ## Dependencies
 
