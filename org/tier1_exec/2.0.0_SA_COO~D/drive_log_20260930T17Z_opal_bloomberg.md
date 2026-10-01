@@ -1,0 +1,5 @@
+# drive log 2026-09-30 17Z-19Z -- 2.0.0_SA_COO~D (/canonical-drive DSGN_AMGTV1)
+
+- 2026-09-30T17:22Z | DSGN_AMGTV1 | L7 (last order) | r13 | TOs 5/6 | thread y | NO-OP (own worker running its long checks: scripts last edited 16:50Z, the AC runs take ~6-7 min each); committed 16Z log; inbox empty
+- 2026-09-30T18:23Z | DSGN_AMGTV1 | L7->drain | r13 | TOs 6/6 terminal | thread y | DRIVE FORWARD: l-6 reported (5ed07150/223bf3a0cc); proof VALID, strip 3/3, sweep 3/3, rendercontrol+fwd1419 re-running; drain ~51 next; rows Z-S7/Z-S8 drafted (append after the drain, channel is append-only); inbox empty
+- 2026-09-30T19:21Z | DSGN_AMGTV1 | L8 sent (awaiting L9/L10) | r13 | TOs 6/6 drained | thread y | DRIVE FORWARD: chain ~51 drained (DEV ccca64ef -> 118cd005, tsc 0, ALL 16/16; CLOUD ae55273059, foreign 5 = COO~RV's staged ETFS_RIVALS files, msg 27328 leave); rows Z-S7/Z-S8 @84234c5ca6; close render PASS 63/FAIL 11 (FWD-14..18 PASS; fwd19 peers/empty FAIL; sizes/radii x5 newly visible via refreshed fixtures, pre-existing at ba62e945); close @8044f39976; drain-end read -> CTO~Z, L8 packet -> CVO~Z (both DELIVERED)

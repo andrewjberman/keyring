@@ -66,7 +66,7 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~
 **ISSUER NOTES:** round-50 analysis ruling 6. Base: AC1 FAIL (file absent). Graded at `pVa+sgzj` BEFORE zz-8 moves the base; the
 issuer grades AC1 at this order's drain, ahead of the zz-8 GO.
 
-<status>pending</status>
+<status>complete</status>
 <round>51</round>
 <slot>~182</slot>
 <fabric>site-z</fabric>

@@ -23,16 +23,22 @@ comp-adversary: RUN at L5 -- the adversary is a rebuild that "succeeds" while th
    - `1.0.0_SA_CTO~Z`'s half.
 
    **Act only inside them.**
-3. The BEFORE state the halves name (sa silver parts, ETags, row count) reads the same at the start of the act.
-   Otherwise STOP and report.
+3. The BEFORE state the halves name reads the same at the start of the act:
+   `python org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_H/round25/checks/o-4.signing.py` (no `--signing`)
+   prints `BEFORE == signing ... OK` and writes `~64/o4_before.json`. Otherwise STOP and report.
+4. `HVST-o-5` is `complete`. Its pair holds the sa root as a no-write control.
 
 ## 1. THE ACT
 
 1. Print the BEFORE state.
-2. Rebuild sa silver ONCE through the collector's own silver path, from code at or after `HVST-o-3`'s merge:
-   `lib/opal_data_harvest/silver_from_bronze.article_rows` over every stored sa bronze article object, then
-   `lib/research/harvest/store.silver_append`, which skips unchanged rows by `record_hash` and writes new parts
-   never-overwrite. No hand-rolled writer, and no other source.
+2. Rebuild sa silver ONCE through the collector's own silver path, from CLOUD code at or after `3886894d16`:
+   - the rows are `o4_common.rebuilt_rows()` (in `.../round25/checks/`), which is
+     `lib/opal_data_harvest/silver_from_bronze.article_rows` over every stored sa bronze article object with `n-2`'s
+     lineage rules;
+   - write them with
+     `lib/research/harvest/store.silver_append("seeking-alpha", "article", rows, ("article_key",), store.stamp(<now UTC>))`.
+
+   Your act script lives in `~64/scripts/o4_act.py`. No hand-rolled writer, and no other source.
 3. Run AC1 and AC2.
 4. **Rollback** (named in the halves): forward only. A further rebuild corrects; a delete is a human word.
 
@@ -72,9 +78,18 @@ with `to_id` `AMGT_HARVST.TO-HVST-o-4.served-sa-silver-rebuild`. Report once, wi
    - They are dry-run at the base, where AC1 FAILS because the rows are not yet served.
    - The files do not exist at this cut, and the dispatch waits for them. This is the same recorded departure as `n-4`.
 
+**AMENDMENT 1 (issuer, 2026-09-30 ~05:0xZ) -- checks written after `o-3` drained (@`592860d126`), dry-run at the base.**
+- `o-4.signing.py`, `o-4.AC1.py` and `o-4.AC2.py` each FAIL at the base for the right reason: 0 of 3 parts, 0 of 5 MOVED
+  served as rebuilt, a re-run would write 11.
+- The COO half is `round25/NEVER_WIDEN_HALF_COO_O4.md`. The expected write is 11 rows (MOVED 5, NEW 6) in 3 parts, and
+  keys go from 46 to 52.
+- Dispatch also waits on `o-5`'s completion (section 0, item 4). The act's rows come from the issuer's `o4_common`, so the
+  write and the check share one rebuild.
+- Gate limb: `to-pipeline-gate` grades a modified order's `<placeholders>` only (NONE).
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>25</round>
 <slot>~64</slot>
 <fabric>site-z</fabric>

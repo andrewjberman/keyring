@@ -109,9 +109,22 @@ with `to_id` `AMGT_HARVST.TO-HVST-o-5.lenovo-backfill-four-live-publishers`. Rep
   - Then act exactly as section 1, with the amended command. Step 6's repeat is the same amended command.
 - **Gate limb:** `.tools/to-pipeline-gate.py` grades a modified order's `<placeholders>` only (NONE here).
 
+**AMENDMENT 2 (issuer, 2026-09-30 ~05:1xZ) -- after attempt 2 (`2747a7d0fb`; row `Z-W65-S3` BLOCKING -> disarmed by this re-cut).**
+- **The miss.** The grammar collection path queues to the local outbox. The S3 writer is `upload-harvest`.
+- **Added act 3, ONCE, after both runs (already done):**
+  `python -m lib.opal_data_harvest upload-harvest --max-objects 40 --retrieval-mode backfill --runtime-root "C:/Users/Opal Bloomberg/Desktop/ajb_workspace/.runtime/opal-data-harvest"`,
+  from the pinned worktree.
+- **Before act 3:** print the preflight again (worktree path, HEAD, the lib diff vs `65aa9251bc`), and run `o-5.before.py`,
+  which must still read OK.
+- **After act 3:** run `o-5.AC1.py`, then `o-5.AC2.py`.
+- **ft joins the no-write roots.** AC2 now grades "re-fetches nothing held", and reads PASS on the recorded runs.
+- **No new collection run.** The two recorded runs stand.
+- The COO half is re-signed as its AMENDMENT 2, and the CTO half is re-asked. Dispatch waits for the CTO's re-sign.
+- **Gate limb:** `to-pipeline-gate` grades a modified order's `<placeholders>` only (NONE).
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>25</round>
 <slot>~65</slot>
 <fabric>site-z</fabric>

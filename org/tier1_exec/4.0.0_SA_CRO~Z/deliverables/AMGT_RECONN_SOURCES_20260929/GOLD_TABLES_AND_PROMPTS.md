@@ -55,7 +55,7 @@ Resource names (Andrew named the pipeline `etfs-rivalfunds-daily`, revision 2), 
 
 - `etfs-rivalfunds-daily` — the daily schedule, CONFORMANT as EVENT_RULE and as SCHEDULE.
 - `etfs-rivalfunds-daily-lambda` and `etfs-rivalfunds-fetch-holdings-lambda` — CONFORMANT as LAMBDA.
-- `rivalfunds-etfs-build-canonical-shape-lambda` and `rivalfunds-etfs-publish-page-lambda` -- CONFORMANT as LAMBDA (September 30 ~04:1x UTC). Further stage resources are graded when named.
+- `rivalfunds-build-canonical-shape-lambda` and `rivalfunds-publish-page-lambda` -- `name()` output (corrected per PRD v0.1 C-NAMES; the earlier `rivalfunds-etfs-...` forms passed `grade()` but `name()` refuses a PRODUCT scope in that slot). Further stage resources take `name()` output when named.
 
 Runtime templates shown above are documentation, not deployable names; expand and grade actual values. Local script filenames follow repository language conventions. Existing tier-first keys in the bucket (`bronze/`, `silver/`, `gold/`, `daily/`, `platinum/`) belong to other pipelines and are neither read nor moved here.
 
@@ -188,7 +188,7 @@ The repeat issuer and deployed-code metadata capture is `.runtime/amgt-reconn-br
 
 Precedent, read September 30: `daily_reports/scripts/publish_daily_report.py` writes each day's pages to `s3://opal-data-portal-v2/daily-reports/<DAY>/` with a size-and-ETag read-back; the gateway's `infra/aws/ec2/opal-gateway/app/sprint_view.py` serves `/sprint` (latest), `/sprint/<day>` and `/sprint/archive` (a `list_objects_v2` delimiter listing of the day prefixes) behind Entra sign-in and an optional roster; `infra/aws/terraform/opal-gateway/daily-reports-iam.tf` grants the gateway `GetObject` on that prefix and `ListBucket` on the bucket. The generator is a scheduled container Lambda that authors with an OpenAI call and renders through the repository's own renderer.
 
-For rivalfunds (Andrew, item 4): the publisher writes the day's page and its data to `rivalfunds/etfs/platinum/page/date=<DAY>/` in `opal-data-etfs`, read back before it reports success; a day is never overwritten silently. The gateway gets a `/rivalfunds` route module modelled on `sprint_view.py` (`/rivalfunds`, `/rivalfunds/<day>`, `/rivalfunds/archive`) and a grant scoped to that platinum prefix. The viewer wall defaults to the /sprint tenant wall; a narrower roster is Andrew's to name. R12 reads platinum as JSON: the PRD settles whether the page is stored rendered (as /sprint does) or rendered by the route from the stored JSON.
+For rivalfunds (Andrew, item 4): the publisher writes the day's page and its data to `rivalfunds/etfs/platinum/page/date=<DAY>/` in `opal-data-etfs`, read back before it reports success; a day is never overwritten silently. The gateway gets a `/rivalfunds` route module modelled on `sprint_view.py` (`/rivalfunds`, `/rivalfunds/<day>`, `/rivalfunds/archive`) and a grant scoped to that platinum prefix. Viewers: any signed-in account (Andrew 2026-09-30), the /sprint tenant wall with no narrower roster. R12 reads platinum as JSON: the PRD settles whether the page is stored rendered (as /sprint does) or rendered by the route from the stored JSON.
 
 The analyses are OpenAI calls (authorized, item 4) over the S5 tables through the S7 prompt contracts. The model and prompt versions and the input manifest are stored beside the page.
 

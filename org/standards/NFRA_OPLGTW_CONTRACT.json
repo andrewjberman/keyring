@@ -10,7 +10,8 @@
   "datasets": [
     "dim_position",
     "dim_balance",
-    "dim_asset"
+    "dim_asset",
+    "dim_transaction"
   ],
   "operations": [
     "list",
@@ -184,6 +185,23 @@
       "maturity_date",
       "prod_code",
       "prodcatg_code"
+    ],
+    "dim_transaction": [
+      "account_ref",
+      "business_date",
+      "trade_date",
+      "settlmnt_date",
+      "tr_cd",
+      "sb_cd",
+      "transaction_category",
+      "tran_srcde",
+      "debit_credit",
+      "cusip",
+      "ticker_symbol",
+      "quantity",
+      "price",
+      "gross_amount",
+      "net_amount"
     ]
   },
   "additive_fields": {
@@ -203,7 +221,8 @@
       "bank_sweep_ibf",
       "bank_cash"
     ],
-    "dim_asset": []
+    "dim_asset": [],
+    "dim_transaction": []
   },
   "quantity_sum_required_groups": [
     "cusip",
@@ -233,12 +252,13 @@
       "catalog_snapshot",
       "oauth_pending_authorization",
       "operator_audit",
-      "email_deny"
+      "email_deny",
+      "tenant_firm"
     ],
     "consistency": "strong_reads_and_conditional_transactions",
     "ttl": "cleanup_only_never_authorization",
     "key_namespaces": {
-      "POLICY": "profile/grant/approval/operator audit, and denial-only email_deny (POLICY#EMAILDENY#<sha256hex(\"og-email-deny/v1|\" + email.strip().lower())>; routes and operator writer compute the same function); operator writes only; no TTL or ordinary delete",
+      "POLICY": "profile/grant/approval/operator audit, and denial-only email_deny (POLICY#EMAILDENY#<sha256hex(\"og-email-deny/v1|\" + email.strip().lower())>; routes and operator writer compute the same function), and the tenant-to-firm row tenant_firm (POLICY#TENANT#<tid>, one Microsoft tenant id -> one firm_id; written ONLY by the NFRA_MCPORTAL grant writer's register_tenant op, read by the gateway; NFRA_MCPMSP C2, amended 2026-09-30 by 1.0.0_SA_CTO~O as OPLGTW CTO under Andrew's G-OPLGTW \"lift fully\" of 2026-09-26); operator writes only; no TTL or ordinary delete",
       "RUNTIME": "client/pending-auth/code/refresh/ticket/catalog; runtime conditional writes and expiring records"
     },
     "runtime_policy_access": "strong read only; write actions require all LeadingKeys match RUNTIME#*"

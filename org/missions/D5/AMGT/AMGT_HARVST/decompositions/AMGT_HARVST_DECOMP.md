@@ -2137,3 +2137,246 @@ dry-run at the base before the dispatch. This is the one recorded departure from
 - The portal DEV promotion (Andrew's, through the integrator).
 - The other 190 names' backfill (next round, on the Lenovo run's actual pages).
 - The `CHATTER_AXIS_SOURCE` flip, which is re-cut when gold resolves a gradable pair.
+
+## 38. ROUND 26 -- L5 DECOMPOSITION v3.5, over the round-25 analysis (`ledger/ROUND_ANALYSIS.round25.md` @300ea99310)
+
+**Issuer `2.0.0_SA_COO~H`**, 2026-09-30 ~06:1xZ. Round 25 is CLOSED: the first SERVED writes since round 22, both pairs held on
+the output, 2 of 9 FWDs REALIZED. Series **`p`**; slots **`~66`..`~69`**.
+
+**Rulings applied:**
+- **Ruling 1:** every WORLD half names the command that reaches the put, the config defaults the argv leaves unset, and a
+  stub put-count dry run.
+- **Ruling 2:** every check base is pinned at cut.
+
+| analysis item | order | class | slot | dispatch |
+|---|---|---|---|---|
+| 1 the mention rebuild (FWD-2; inputs to FWD-4/7; the ANDREW-DIRECT count) | `HVST-p-1` | WORLD, under a pair | `~66` | after its pair and issuer checks |
+| 2 FWD-3's two rows: the never-stored fetch, the wsj key split | `HVST-p-2` | LOCAL | `~67` | now |
+| 3 a span-bearing Lenovo bbg/wsj run, its upload, the `chatter_daily` coverage rebuild (FWD-7) | `HVST-p-3` | WORLD, under a pair plus R-21 scripted egress | `~68` | after `p-1` drains, then its pair and checks |
+| 4 why ft and barrons refuse (FWD-1/9) | `HVST-p-4` | LOCAL, no request sent | `~69` | now |
+
+**Fan-out: 4 of 4 chains.**
+- `p-2` and `p-4` are spawned now.
+- `p-1` is spawned when its pair is committed.
+- `p-3` follows `p-1`: its daily build reads the newest mention snapshot. N = 4 slots; cap 8.
+
+**Write sets:**
+- `p-2` owns `worker.py`, `publishers.py` and `storage.py` for its fix.
+- `p-3`'s act runs on the code pinned at its signing.
+- `p-1`, `p-3` and `p-4` write only their deliverables and the served objects their halves name.
+
+**NOT cells:**
+- the other 190 names (ruling 4: ft and barrons are read first);
+- the gold flip (waits on `p-3`'s evidence);
+- the schedule (Andrew's).
+
+**Section 38 addendum (issuer, 2026-09-30 ~07:5xZ) -- `p-3` split per `ledger/CTO_RULING_ROUND26_P3_SPLIT_AND_FWD7_DENOMINATOR_20260930.md`.**
+- `HVST-p-3` is part (a) only, the `chatter_daily` rebuild: complete @`49611d45cb`.
+- **Part (b)** (the span-bearing Lenovo bbg/wsj run, its upload, and the rebuild that reads the persisted run record) is
+  **carried to round 27 as its first cell.**
+  - `to-pipeline-gate` refuses a second issuance within round 26 (ONE ISSUER PER ROUND). `p-3` is terminal.
+  - Round 27 opens FWD-7's denominator work, and (b) is that work's positive arm.
+- Its COO half and checks are already signed at `round26/NEVER_WIDEN_HALF_COO_P5.md` and `round26/checks/p-5.*`. The round-27
+  order cites them, re-measured at its cut.
+
+## 39. ROUND 27 -- L5 DECOMPOSITION v3.6, over the round-26 analysis (`ledger/ROUND_ANALYSIS.round26.md` @ff4405d3d5)
+
+**Issuer `2.0.0_SA_COO~H`**, 2026-09-30 ~08:3xZ. Round 26 is CLOSED, 2 of 9 FWDs REALIZED. PRD v0.4 adds
+`C-HV-RANK-DECLARED-SET` and `C-HV-COVERED-VS-FOUND`.
+- The packet's "serves `[bbg, wsj]`" was the union. The series reads `[bbg, wsj]` on 8 of 273 days (CVO v35, ruling 1).
+- Series **`q`**; slots **`~70`..`~75`** plus the seat `0.7.0_AE_CloudOps~A`.
+
+| analysis item | order | class | slot | dispatch / merge |
+|---|---|---|---|---|
+| 1 `p-3(b)`: span-bearing Lenovo run, upload, and the rebuild reading the persisted run record | `HVST-q-1` | WORLD, under a pair plus R-21 | `~70` | FIRST, once the CTO half is signed at the cut |
+| 2 `Z-S44`: bbg as-received parses into silver | `HVST-q-2` | LOCAL | `~71` | now; merges after `q-1` drains |
+| 3 FWD-7 eligibility census, declared set (bbg, wsj), COVERED only | `HVST-q-3` | LOCAL read | `~72` | after `q-1` drains |
+| 4 `C-HV-RANK-DECLARED-SET` in code (`chatter_axis`, `generation_writer.py`) | `HVST-q-4` | LOCAL | `~73` | now; merges after `q-1` drains |
+| 5 `C-HV-COVERED-VS-FOUND` in code (`publishers_found_codes`) | `HVST-q-5` | LOCAL | `~74` | now; merges after `q-1` drains |
+| 6 barrons B2 guard edit + ft F1 403 body, tests only | `HVST-q-6` | LOCAL, no request | `~75` | now; merges after `q-1` drains |
+| 7 the gold flip on the declared-set rule | `HVST-q-7` | WORLD, under a pair plus NEVER-2 | `0.7.0_AE_CloudOps~A` | after `q-3` and `q-4` merge; issuer checks from `q-3`'s N |
+
+**Fan-out: 7 of 7 cut in ONE issuance.**
+- `q-1` goes first (ruling 6).
+- `q-2`, `q-4`, `q-5` and `q-6` run now, with their merges held until `q-1` drains.
+- `q-3` follows `q-1`, and `q-7` follows `q-3` and `q-4`.
+- N = 6 slots + 1 seat; cap 8.
+
+**Write sets:**
+
+| order | owns |
+|---|---|
+| `q-2` | `silver_from_bronze.py` |
+| `q-4` | `chatter_axis.py`, `generation_writer.py` |
+| `q-5` | `publication_gold.py` (`daily_rows` fields and schema only) and `timeline_api.py` |
+| `q-6` | `worker.py`, `transport.py` |
+| `q-1`, `q-3`, `q-7` | their deliverables and the served objects their halves name |
+
+**NOT cells:**
+- the 190-name backfill;
+- the bbg silver rebuild (round 28);
+- the schedule (Andrew's).
+
+## 40. ROUND 28 -- L5 DECOMPOSITION v3.7, over the round-27 analysis (`ledger/ROUND_ANALYSIS.round27.md` @8c0b34526b)
+
+**Issuer `2.0.0_SA_COO~H`**, 2026-09-30 ~09:5xZ.
+- Round 27 is CLOSED, 2 of 9 FWDs REALIZED. PRD v0.5: the declared set is derived from config.
+- Series **`aa`** (every single letter is used); slots **`~76`..`~80`**.
+
+| analysis item | order | class | slot | dispatch |
+|---|---|---|---|---|
+| 1 reach from cached listings + the rejected-key hold | `HVST-aa-1` | LOCAL | `~76` | now |
+| 2 fresh-day span-bearing Lenovo run + the daily rebuild serving `publishers_found_codes` | `HVST-aa-2` | WORLD, under a pair plus R-21 | `~77` | after `aa-1` merges, on a fresh UTC day (>= 2026-10-01); the pair is signed against the merged code |
+| 3 the served bbg silver rebuild on `q-2`'s parse | `HVST-aa-3` | WORLD, under a pair | `~78` | after the CTO rules the 11 hash-keyed rows' fate (carded ~09:43Z); does not overlap `aa-2` |
+| 4 the declared set derived from `ENABLED_PUBLISHERS` minus universe-wide refusals | `HVST-aa-4` | LOCAL | `~79` | now |
+| 5 the pre-run listing-page print over the 190 names (`C-HV-EGRESS`) | `HVST-aa-5` | LOCAL, no request | `~80` | now |
+
+**Fan-out: 5 of 5 cut.**
+- `aa-1`, `aa-4` and `aa-5` start now.
+- `aa-2` follows `aa-1` and a fresh day.
+- `aa-3` follows its ruling.
+- N = 5 slots; cap 8.
+
+**Write sets:**
+
+| order | owns |
+|---|---|
+| `aa-1` | `worker.py`, `publishers.py` |
+| `aa-4` | `chatter_axis.py` |
+| `aa-2`, `aa-3`, `aa-5` | their deliverables and the served objects their halves name |
+
+**NOT cells:**
+- the gold flip (it needs at least 10 eligible names);
+- the backfill run (round 29);
+- the barrons and ft runs (Andrew's).
+
+## 41. ROUND 29 -- L5 DECOMPOSITION v3.8, over the round-28 analysis (`ledger/ROUND_ANALYSIS.round28.md` @c907537920)
+
+**Issuer `2.0.0_SA_COO~H`**, 2026-09-30 ~12:5xZ.
+- Round 28 is CLOSED, 2 of 9 FWDs REALIZED. The run-record path is a SOURCE of coverage; FWD-7 is bound only by reach.
+- Series **`ab`**; slots **`~81`..`~83`**.
+
+| analysis item | order | class | slot | dispatch |
+|---|---|---|---|---|
+| 1 live wsj reach from `timestamp` (`Z-W76-S1`), `p-2`'s test re-pointed (`Z-W76-S2`), `NM5NLQ6K50XZ01` seeded into the hold | `HVST-ab-1` | LOCAL | `~81` | now |
+| 2 the mention rebuild over silver with the 11 bbg rows | `HVST-ab-2` | WORLD, under a pair | `~82` | after its halves are signed; does not overlap `ab-3` |
+| 3 backfill batch 1, 10 names x {bbg, wsj}, measured-first | `HVST-ab-3` | WORLD, under a pair plus R-21 | `~83` | after `ab-1` merges; halves signed against the merged code; does not overlap `ab-2` |
+
+**Fan-out: 3 of 3 cut.**
+- Chain 1: `ab-1` then `ab-3`.
+- Chain 2: `ab-2`.
+- The WORLD acts run one at a time. N = 3 slots; cap 8.
+
+**Write sets:**
+
+| order | owns |
+|---|---|
+| `ab-1` | `publishers.py`, `worker.py`, `test_p2_fetched_and_stored_keys.py`, its new test, and one seed row in the runtime `rejected_hold` |
+| `ab-2`, `ab-3` | their deliverables and the served objects their halves name |
+
+**Issuer ruling on `Z-W76-S1`:** `_hit_date` reads `timestamp` and `printPublicationDate`, so a wsj backfill bound-stops at
+the floor. The paging change is intended, because it spends fewer pages.
+
+**NOT cells:**
+- batches 2+ (they wait on batch 1's measurement);
+- the gold flip (the declared set is empty);
+- the barrons and ft runs (Andrew's);
+- the daily rebuild that reads the new mention snapshot and batch 1 (a later paired rebuild).
+
+## 42. ROUND 29 RE-CUT -- L5 DECOMPOSITION v3.9, over PRD v0.9 (`C-HV-TRUST-TOKEN`) and Andrew-direct 2026-09-30 ~12:5xZ
+
+**Issuer `2.0.0_SA_COO~H`**, 2026-09-30 ~14:0xZ.
+- **The source:** CTO msg 27155. The record is
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260930_125xZ_OPEN_CALLS_RECS_APPROVED_TRUST_TOKENS_BACKOFF.md`.
+  PRD v0.9 @`e1b5fd6d8c`, signed @`b9f1a8bc81`.
+- **The act list moved:** Andrew's word moved barrons B1, ft and the schedule re-arm out of his acts and into collection work.
+  The CTO directed them into round 29.
+
+**A re-cut into the round's ONE issuance.** It MODIFIES orders and adds no file. `to-pipeline-gate` refused three added order
+files: ONE ISSUER PER ROUND is keyed to the round, and a re-cut adds no file.
+
+| item | carried by | class | dispatch |
+|---|---|---|---|
+| `C-HV-TRUST-TOKEN` in the collector: Secrets credentials, stored token first, a 429 is not expiry, bounded backoff with jitter, every attempt in the run record | `HVST-ab-1` AMENDMENT 2 (phase B) | LOCAL | after `ab-1` AMENDMENT 1 reports; the same worktree, where `publishers.py` and `worker.py` are already `ab-1`'s |
+| barrons (B1) and ft Lenovo jobs, token-first, ft's kept 403 body read first | `HVST-ab-3` AMENDMENT 1: the batch-1 collection run also carries Lenovo x {barrons, ft}, under the same pair | WORLD, pair plus R-21 | after `ab-1` (both amendments) merges |
+| re-arm the collection schedule, daily, for the names batch 1 reached | `HVST-ab-3` AMENDMENT 1, phase B, under a re-signed pair | WORLD, pair | after batch 1's after-reads pass |
+
+**The chains now:**
+- Chain 1: `ab-1` (A1, A2), then `ab-3` (phase A: batch 1 plus barrons/ft Lenovo), then `ab-3` phase B (the schedule).
+- Chain 2: `ab-2`.
+
+The WORLD acts run one at a time, `ab-2` then `ab-3`. N = 3 slots; cap 8.
+
+**NOT cells:**
+- the ft credential re-harvest (superseded: the credentials are in AWS Secrets);
+- the NEVER-2 edit (Andrew asked to see the text; the CTO's).
+
+## 43. ROUND 30 -- L5 DECOMPOSITION v3.10, over the round-29 analysis (`ledger/ROUND_ANALYSIS.round29.md` @d0bc0a79f0)
+
+**Issuer `2.0.0_SA_COO~H`**, 2026-09-30 ~17:3xZ.
+- Round 29 is CLOSED, 2 of 9 FWDs REALIZED. PRD v0.10 adds the `bot_check` class; `prd-signoff` reads ADMITTED (the
+  ENDPOINT hash is unchanged).
+- Series **`ac`**; slots **`~84`..`~86`**. The round-29 addendum's refused files never landed, so these slots are unused.
+
+| analysis item | order | class | slot | dispatch |
+|---|---|---|---|---|
+| 1 the `bot_check` attempt class (v0.10); the repair-failed path keeps its body | `HVST-ac-1` | LOCAL | `~84` | now |
+| 2 the sa probe on RESOLVED securities, the account read first | `HVST-ac-2` | WORLD, pair + R-21 | `~85` | after its halves; does not overlap `ac-3` |
+| 3 the paired daily rebuild carrying `ab-2`'s pairs | `HVST-ac-3` | WORLD, pair | `~86` | after its halves; does not overlap `ac-2` |
+
+**Fan-out: 3 of 3 cut, in 3 independent chains.** The WORLD acts run one at a time: `ac-3` first (its inputs are fixed now),
+then `ac-2`. N = 3 slots; cap 8.
+
+**Write sets:**
+
+| order | owns |
+|---|---|
+| `ac-1` | `transport.py`, `worker.py`, `verification.py`, a new `bot_check.py`, and its test |
+| `ac-2`, `ac-3` | their deliverables and the served objects their halves name |
+
+**Premise corrected at the cut:** the analysis's "four batch-1 kept bodies" are TWO (wsj, ft). bbg's and barrons' refusals were
+raised by `verification.py` ~:21 without the response, so `ac-1` change 3 keeps that body from now on.
+
+**NOT cells:**
+- the batch-1 retry for wsj, ft, bbg and barrons (Andrew's headed session refresh; analysis section 5);
+- any challenge handler (his 09-15 sequencing);
+- batches 2+;
+- a licensed-route probe.
+
+## 44. ROUND 31 -- L5 DECOMPOSITION v3.11, over the round-30 analysis (`ledger/ROUND_ANALYSIS.round30.md` @6adebef352)
+
+**Issuer `2.0.0_SA_COO~H`**, 2026-09-30 ~20:2xZ.
+- Round 30 is CLOSED, 2 of 9 FWDs REALIZED; FWD-3 moved (covered-vs-found is live on the served route).
+- **Bound by** the CTO cloud ruling section 0 and `4.0.0_SA_CRO~Z`'s bot-ops playbook @`7bcc258369`: NO traffic to bbg, wsj
+  or barrons from the site Z box before the 05:00 ET first light.
+- Series **`ad`**; slots **`~87`..`~89`**.
+
+| analysis item | order | class | slot | dispatch |
+|---|---|---|---|---|
+| 1 the token store: wsj and barrons bundles into Secrets; ft's bundle expiry; the sa check's `{user_id}` (`Z-W85-S2`) | `HVST-ad-1` | LOCAL A0, then WORLD (Secrets writes), pair | `~87` | A0 now; the pair on the merged code |
+| 2 sa batch 1: 10 resolved `sa_symbol` names, measured-first, stop at the first challenge, never a sign-in | `HVST-ad-2` | LOCAL A0 (`--no-sign-in`), then WORLD, pair + R-21 | `~88` | A0 now; the pair on the merged code; the act finishes before 08:00Z 10-01 |
+| 3 the residential-IP assignability read | `HVST-ad-3` | LOCAL read | `~89` | now |
+
+**Fan-out: 3 of 3 cut, in 3 independent chains.** The WORLD phases run one at a time. N = 3 slots; cap 8.
+
+**Write sets:**
+
+| order | owns |
+|---|---|
+| `ad-1` | `credentials.py`, `sa_rest_fetch.py` (the collector's sa consumer), its test |
+| `ad-2` | `__main__.py`, `sessions.py`, `worker.py`, its test |
+| `ad-3` | its deliverables only |
+
+The first two are disjoint, so the A0 phases run in parallel.
+
+**Premises re-measured at the cut** (ruling 4):
+- the bundles to store are 2 (`wsj.dpapi`, `barrons.dpapi`);
+- the resolved universe has 89 rows, all with `sa_symbol`, and the first 10 are named in `ad-2`;
+- there is NO `--no-sign-in` switch in `__main__.py` today.
+
+**NOT cells:**
+- bbg, wsj and barrons (the playbook's first light at 05:00 ET is `2.0.0_SA_COO~H`'s own act on Andrew's word, per cloud
+  ruling section 0 item 3b);
+- the warm-up in the harvester (waits on first light);
+- sa batches 2+;
+- the cloud host (phase 2).

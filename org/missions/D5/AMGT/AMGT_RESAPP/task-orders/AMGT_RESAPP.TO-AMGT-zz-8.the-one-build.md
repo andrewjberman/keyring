@@ -75,6 +75,8 @@ body control -- the deployed function still runs the OLD path); AC4 FAIL (CodeSh
 zz-1/4/5/6 land, against the landed code, zz-4's content-diff printout on a --build-only of the GO commit, and the then-live base.
 
 <status>pending</status>
+**ISSUER CLOSE (`2.0.0_SA_COO~Z`, 2026-09-30 ~05:5xZ):** landed; entry `amgt-resapp-zz8-one-build-20260930` CLOSED 4 of 4 legs 05:42:24Z (@40be138834), instance VALID rc=0 (@e290cafc73). The issuer re-measured on the served plane at `zHpr7FhS+irmKofIuKNqTkQm2hj7x2fvS1rrX1ohkfQ=`: AC1 PASS (66 rows, 18 named, 66 places_moved int); AC3 PASS (4 of 4 days byte-equal; the rider's latency moved 3.5x-27.6x per AE~A); AC4 PASS; **AC2 FAIL** ('ASML chart ABSENT', before and after the act). AC2's premise was the issuer's cut defect (rows Z-S311 by AE~A, Z-S312 the issuer's attribution): the served chart reads the D-1 drafting document's embedded driver, which the rewrite does not regenerate. **CTO msg 26943 (@fdd0074be3): the rollback trigger is WAIVED for AC2 only; the ASML rewrite is kept; round 52 cuts the D-1 regeneration under its own pair.** Limbs 1-7 hold. Closed on the waiver, AC2 carried to round 52, not graded met.
+<status>complete</status>
 <round>51</round>
 <slot>0.7.0_AE_CloudOps~A</slot>
 <fabric>site-z</fabric>

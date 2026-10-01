@@ -5,7 +5,7 @@
   "project": "AMGT_HARVST",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.3",
+  "prd_version": "v0.12",
   "step": 4,
   "brief_ref": "org/missions/D5/AMGT/AMGT_HARVST/brief/BRIEF_AMGT_PUBLICATIONS_BRONZE_SILVER_GOLD_20260922.md@5b90a0b839",
   "endpoint_outcomes": [
@@ -17,7 +17,8 @@
     "FWD-6",
     "FWD-7",
     "FWD-8",
-    "FWD-9"
+    "FWD-9",
+    "FWD-10"
   ],
   "status": "RATIFIED"
 }
@@ -174,6 +175,33 @@ act a seat can take on demand; none is a wait.
                     ran.
          SOURCE     Andrew "the first job is basically going to be doing a
                     backfill back to the start of 2026"; brief s.3.3, s.6.5
+
+  ===== v0.12, 2026-09-30 -- FWD-10 appended; DONE WHEN CONFIRMED by Andrew ("2yes", ~21:0xZ) =====
+
+  FWD-10 Collection runs in Opal's cloud from a stored long-lived token,
+         over each publication's REST shape -- no crawler, no login page,
+         no desktop
+         DONE WHEN  EXERCISED -- one on-demand run on the cloud harvester (a
+                    small EC2, or a Lambda where a probe measured that
+                    publication unchallenged) starts from each publication's
+                    token in AWS Secrets, pulls the validation security's
+                    articles for all five publications through their REST
+                    shapes, and signs in -- on the same host -- only for a
+                    publication whose token its probe showed not to work;
+                    the run record names, per publication, the token source,
+                    the host, and each attempt's class. The run may be the
+                    site Z box until the local job matures; the cloud host
+                    is the end state.
+         ACCEPT     No collection depends on Andrew's desktop or on anyone
+                    signing in by hand; a lapsed token is renewed in the
+                    cloud and written back to Secrets.
+         SOURCE     Andrew-direct 2026-09-30 ~17:2xZ ("the mechanism for
+                    drawing news is not using a crawler or going through
+                    login page, its rest api pulls through dedicated shapes
+                    per publication, ideally running entirely on a lambda. I
+                    don't mind having a dedicated small or nano ec2"); ~17:4xZ
+                    ("Maybe its a local job until it matures in process");
+                    confirmed ~21:0xZ ("2yes")
 ```
 
 ---
@@ -746,6 +774,63 @@ key for research, Andrew 2026-09-22).
 
 **`C-HV-DESIGN-SPEC-FIRST`.** No `.tsx` for the timeline until its design spec is approved. This is `AMGT_RESAPP`'s rule,
 applied here.
+
+**`C-HV-RANK-DECLARED-SET` (v0.4, FWD-7's denominator).** The chatter rank is a partial rank over a DECLARED publisher set.
+- Each generation declares its publisher set. **It is DERIVED, never typed:** every publisher in `ENABLED_PUBLISHERS`, minus any
+  publisher whose collection, in the window, EITHER refused for the whole universe OR ran no UNIVERSE-SCOPE job (both read from
+  the run records). A publisher has universe-scope collection when the UNION of its jobs' targets (`jobs[]`: publisher,
+  security_key) across the window's run records covers the generation's universe, so a backfill run in batches qualifies
+  (v0.8). A per-name trial,
+  such as sa on ASML or bbg/wsj on Lenovo, is NOT one: it neither adds a publisher nor keeps one in. A publisher outside the set is
+  named on the page as not searched. Config decides membership; the run records decide only exit. (v0.7 replaces v0.6's "ran no job
+  at all". Under that rule, one trial held 189 of 191 names ineligible on a publisher that never searched them. That contradicts the
+  partial-rank research this contract rests on: no estate surface withholds a whole product for one incomplete member.)
+- **The census prints, per excluded name, which declared publishers it lacks** (v0.7).
+- **An EMPTY declared set HOLDs** with `empty_reason` `NO_DECLARED_PUBLISHER`. Eligibility over an empty set is vacuous and is never
+  scored (v0.6).
+- A name is ELIGIBLE only if every publisher in the declared set covered every day of the window. Any other name is EXCLUDED
+  with its reason (`PARTIAL_COVERAGE`, `NOT_SEARCHED`) and is never scored.
+- Eligibility is decided BEFORE the no-signal test. An unsearched name is never read as a quiet one.
+- The score counts only articles from publishers in the declared set. A found-only article (`C-HV-COVERED-VS-FOUND`) is
+  served on the timeline and never scored, so one name's incidental extra source cannot outrank another's.
+- Every generation prints its population: `{declared_publishers, universe, eligible, ranked, excluded: {reason: count}}` and
+  the excluded names, through the shared `generation_writer.py`. The footer reads "Ranked N of U names; M not ranked (coverage
+  incomplete)".
+- FLOOR: 10 eligible names. Below it the generation HOLDs with an `empty_reason`, and the prior generation stays served.
+- Grounds: `ledger/CTO_RULING_FWD7_DENOMINATOR_DECLARED_PUBLISHER_SET_20260930.md` (@`ddcc71fd2d`), on the research at
+  `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/RESEARCH_PARTIAL_COVERAGE_RANKING_20260930.md` (@`784068f4c0`).
+
+**`C-HV-COVERED-VS-FOUND` (v0.4).** A day row keeps two publisher sets, and neither stands in for the other.
+- `publishers_covered_codes` is the set of publishers whose listing for that name ran over that day (SEARCHED).
+- `publishers_found_codes` is the set of publishers whose articles that day serves, by whatever path found them (FWD-3 names
+  the path per article).
+- A publisher in the found set but not in the covered set reads as "found, listing not run", never as "not searched".
+- Coverage marks (`data_status`, FWD-7 eligibility) read the COVERED set only. A found-only article never makes a day
+  SEARCHED.
+
+
+**`C-HV-TRUST-TOKEN` (v0.9, Andrew-direct 2026-09-30 ~12:5xZ, record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260930_125xZ_OPEN_CALLS_RECS_APPROVED_TRUST_TOKENS_BACKOFF.md`).**
+- Publisher credentials are read from AWS Secrets Manager. None is asked of Andrew, typed, or harvested by an agent.
+- A run starts from the stored trust/session token of a prior successful run. A fresh sign-in or crawl runs ONLY when that token is
+  shown not to work.
+- **A rate limit is never read as token expiry.** A 429 or throttle response backs off and retries, and the token is kept. Only an
+  auth failure that persists after backoff (a 401, or a 403 whose kept body says the session is invalid) marks the token expired.
+- Every REST call retries with bounded exponential backoff plus jitter on rate-limit responses. Each attempt's status and wait is
+  written to the run record, so a reader can tell throttling from expiry.
+- **(v0.10, round-29 analysis; CVO~Z ADJUDICATION_v38 s.2) A bot check is never token expiry.**
+  - Each attempt in the run record carries a class. `bot_check` is one of them.
+  - A refusal is `bot_check` when its kept body matches a named signature. The list:
+    - DataDome's `captcha-delivery.com` page;
+    - FT's "Security Verification" interstitial;
+    - bbg's press-and-hold challenge.
+  - The record writes the matched signature's name beside the class.
+  - A `bot_check` attempt never marks the token expired and never starts a sign-in or crawl.
+  - It stops that publisher's leg: no retry is made against a check.
+  - A new signature is added to the list when a kept body shows one, never inferred.
+  - Expiry still reads as above: an auth failure that persists after backoff whose kept body matches no bot-check signature.
+  - **(v0.11, CVO~Z msg 27289)** Every refusal keeps its body, bounded as ft's F1 is. A refusal with no kept body is `unclassified`,
+    and `unclassified` is never expiry. A missing body cannot pass the signature test vacuously.
 
 ---
 

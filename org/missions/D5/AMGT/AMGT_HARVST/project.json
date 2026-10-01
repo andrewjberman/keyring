@@ -130,6 +130,41 @@
       "path": "org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md",
       "version": "v3.4",
       "note": "L5 recut, 2026-09-30, 2.0.0_SA_COO~H. Round 25: five orders HVST-o-1..o-5 over ROUND_ANALYSIS.round24.md @6c5b4339a1 (ruling 2 amended @e49bbdb3d2); section 37."
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md",
+      "version": "v3.5",
+      "note": "L5 recut, 2026-09-30, 2.0.0_SA_COO~H. Round 26: four orders HVST-p-1..p-4 over ROUND_ANALYSIS.round25.md @300ea99310; section 38."
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md",
+      "version": "v3.6",
+      "note": "L5 recut, 2026-09-30, 2.0.0_SA_COO~H. Round 27: seven orders HVST-q-1..q-7 over ROUND_ANALYSIS.round26.md @ff4405d3d5; section 39."
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md",
+      "version": "v3.7",
+      "note": "L5 recut, 2026-09-30, 2.0.0_SA_COO~H. Round 28: five orders HVST-aa-1..aa-5 over ROUND_ANALYSIS.round27.md; section 40."
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md",
+      "version": "v3.8",
+      "note": "L5 recut, 2026-09-30, 2.0.0_SA_COO~H. Round 29: three orders HVST-ab-1..ab-3 over ROUND_ANALYSIS.round28.md @c907537920; section 41."
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md",
+      "version": "v3.9",
+      "note": "Round-29 re-cut, 2026-09-30, 2.0.0_SA_COO~H. PRD v0.9 C-HV-TRUST-TOKEN + Andrew-direct ~12:5xZ: ab-1 AMENDMENT 2 (the contract), ab-3 AMENDMENT 1 (barrons/ft Lenovo jobs + phase B schedule re-arm); section 42."
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md",
+      "version": "v3.10",
+      "note": "L5 recut, 2026-09-30, 2.0.0_SA_COO~H. Round 30: three orders HVST-ac-1..ac-3 over ROUND_ANALYSIS.round29.md @d0bc0a79f0; section 43."
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md",
+      "version": "v3.11",
+      "note": "L5 recut, 2026-09-30, 2.0.0_SA_COO~H. Round 31: three orders HVST-ad-1..ad-3 over ROUND_ANALYSIS.round30.md @6adebef352; section 44."
     }
   ],
   "leads": [

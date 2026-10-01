@@ -428,6 +428,201 @@
  "disarm_owner": "2.0.0_SA_COO~D",
  "spec_asserts": "Row DSGN_AMGTV1-Z-W28-S1 (ARMED, disarm owner this seat): AV-s-3's face presumed a timeline walk that the integrator merge had dropped from walk.mjs.",
  "world_is": "Restored at HEAD by the issuer, every walker feature of rounds 4-7 present and every walker check green; the file-level cause (a conflict resolved to one side) is the integrator's merge, noted for 0.0.0_AB_MSTR~Z. Resolves Z-W28-S1."
+},
+{
+ "id": "DSGN_AMGTV1-Z-S5",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~D",
+ "surfaced_at": "2026-09-30T06:12Z",
+ "one_line": "Three literal BACKSPACE bytes (0x08) where regexes meant \b: tabs/ModelTab.tsx:295 (AV-o-3, portal cb14d218) makes AZN's Model tab read \"Opal's opal's historical-multiple reference\"; components/HeaderBrief.tsx:48-49 (since 2515f456, round 1) means no description source ever reads \"Company description from Bloomberg\". tsc and all 16 harnesses pass them.",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "walk I tmp/ui-walk/20260930T055658Z shot 192 (AZN Model): \"Opal's opal's historical-multiple reference: quote currency 'GBp' ...\"",
+   "byte scan of portal/src/pages/SecurityAnalysis at DEV 5810586a: 3 bytes below 0x20 other than tab/LF/CR, at HeaderBrief.tsx:48, :49 and ModelTab.tsx:295, each 0x08 inside /^...<0x08>/",
+   "round10/checks/bytes.cjs at DEV 5810586a: 0 of 3; on a scratch copy with the three bytes replaced by \b: 3 of 3, cases.cjs 3 of 3, ALL 16 of 16 harnesses, tsc -b rc=0",
+   "cases.cjs arm 2 passed the defect: it asks that each rule line START with Opal's, which \"Opal's opal's ...\" does -- a check blind spot, closed by bytes.cjs arm 2"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "2.0.0_SA_COO~D",
+ "spec_asserts": "AV-o-3 item 2: a served label that already starts \"Opal's\" is kept as served; AV-e-1 (round 1): a Bloomberg description source reads \"Company description from Bloomberg\".",
+ "world_is": "Both regexes carry 0x08 instead of \b, so neither ever matches: the label is prefixed twice and the source never names Bloomberg. Ruled by the issuer: AV-o-3 AMENDMENT 1 re-opens that order to replace the three bytes and nothing else (a new order file in an issued round is refused by to-pipeline-gate LIMB 6)."
+},
+{
+ "id": "DSGN_AMGTV1-Z-S6",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~D",
+ "surfaced_at": "2026-09-30T06:35Z",
+ "one_line": "Resolves Z-S5: AV-o-3 AMENDMENT 1 (worker ~37, portal d11747a7, drained CLOUD 4813813e75 / site-Z DEV 2bb60cc3) replaced the three 0x08 bytes with a backslash-b word boundary and nothing else.",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "round10/checks/bytes.cjs on the merged bytes: 3 of 3 (0 control bytes over 56 source files; AZN's rule label read once; a Bloomberg description source reads 'Company description from Bloomberg')",
+   "portal diff d11747a7: 2 files, 3 lines; cases.cjs 3 of 3; Q3 bound 3 of 3 (two issuer re-runs); portal tsc -b rc=0",
+   "1.0.0_SA_CTO~Z msg 26978: a census over all 991 portal src code files reads 0 files with 0x08 at 2bb60cc3 -- the class is gone portal-wide"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "2.0.0_SA_COO~D",
+ "spec_asserts": "Row DSGN_AMGTV1-Z-S5 (ARMED, disarm owner this seat): three literal backspace bytes broke two regexes on the page.",
+ "world_is": "Repaired and drained; bytes.cjs stays in round 10's checks so a reintroduced control byte in the page's source fails a check, not only a walk. Resolves Z-S5."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W47-S1",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~47",
+ "surfaced_at": "2026-09-30T11:38Z",
+ "one_line": "AV-m-4 AC2: portal/src/pages/SecurityAnalysis/__harness__/timelineFourStates.harness.cjs cannot load TimelinePanel.tsx once it imports ./publisherNames; the harness is outside <paths>.",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "bound.cjs Q3 at worktree wk-DSGN_AMGTV1-47: 'HARNESS RED timelineFourStates.harness.cjs :: rc=1', 3 of 4 green; shell 10/10, posture 32/32, tabs 20/20 green",
+   "node timelineFourStates.harness.cjs: 'Error: Cannot find module ./publisherNames' raised from its own source() loader (lines 106-113), which resolves only STUBS, ../../../lib/dateUtils, ../../lib/dateUtils and ../dateWords, else falls to require()",
+   "publishers.cjs 3 of 3, bytes.cjs 3 of 3, portal tsc -b rc=0 on the same bytes"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "2.0.0_SA_COO~D",
+ "spec_asserts": "The cut: with an import-free shared module 'the issuer's helper measured no harness change' and Q3 stays green; a bound harness may be re-anchored only if named in <paths>.",
+ "world_is": "timelineFourStates.harness.cjs loads TimelinePanel through its own loader with no './publisherNames' branch, so the required import fails it (the issuer's own _load.cjs resolves it, which is why the helper read green). Fix needs one line in that harness (a './publisherNames' branch returning source('src/pages/SecurityAnalysis/components/publisherNames.ts')), which <paths> does not grant. Worker did not duplicate the map inside TimelinePanel.tsx to dodge it."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W47-S2",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~47",
+ "surfaced_at": "2026-09-30T12:05Z",
+ "one_line": "Resolves DSGN_AMGTV1-Z-W47-S1: AMENDMENT 1 granted the one loader line; timelineFourStates.harness.cjs now resolves ./publisherNames and Q3 reads 4 of 4 green.",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "timelineFourStates.harness.cjs load(name): added after the ../dateWords line -- if (name === './publisherNames') return source('src/pages/SecurityAnalysis/components/publisherNames.ts');",
+   "bound.cjs Q3 after the line: 'HARNESS GREEN timelineFourStates.harness.cjs :: rc=0' ... 'Q3 BOUND: 4 of 4 harnesses green', exit=0; publishers.cjs 3 of 3 and bytes.cjs 3 of 3, exit=0"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "2.0.0_SA_COO~D",
+ "spec_asserts": "AMENDMENT 1 of AV-m-4 (issuer 2.0.0_SA_COO~D, on row DSGN_AMGTV1-Z-W47-S1): one harness line makes the bound harness load the shared module and Q3 green.",
+ "world_is": "The one line landed exactly as granted and nothing else in the harness moved; the S1 blocker is cleared and AC2 reads 4 of 4."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W45-S1",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~45",
+ "surfaced_at": "2026-09-30T12:16Z",
+ "one_line": "AV-m-1's cell says ui-smoke.mjs writes the per-state grades, but ui-smoke.mjs is a one-route screenshot tool; the six-state driver is ui-contract-check.mjs, so grades.json is written there.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "portal/scripts/ui-smoke.mjs @DEV 846ecc6c takes ONE <route> <outfile.png> per run and has no state loop; portal/scripts/ui-contract-check.mjs lines 60-72 and 379-409 own the six states (list, thesis, exec, peers, model, posture) and spawn ui-smoke.mjs and ui-measure.mjs per state",
+   "round12/checks/rendercontrol.cjs:55 invokes `scripts/ui-contract-check.mjs --dist <dir> --out <dir>` and reads <out>/grades.json -- the check itself already names the driver, so no criterion is affected",
+   "--dist was added to all three scripts as asked (ui-dist.mjs helper); rendercontrol.cjs 3 of 3 arms, exit=0"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "AV-m-1 item 2: `<out>/grades.json`, beside the PNGs and per-state JSON and the printed table, is written by the instrument ui-smoke.mjs (driven by ui-contract-check.mjs and ui-measure.mjs).",
+ "world_is": "grades.json is written by ui-contract-check.mjs, the only script that runs all six states; ui-smoke.mjs and ui-measure.mjs gained --dist and (measure) the readings the grades are made of. The CTO's PRD wording 'ui-smoke.mjs ... writes, for each of the six states' names the instrument as a family."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W45-S2",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~45",
+ "surfaced_at": "2026-09-30T12:16Z",
+ "one_line": "The cell names tabPanelsWhite ('the tab panel is white with a hairline border') without saying where the panel is; I read it as the tab's painted wrapper, else its top-level painted surfaces, and DEV passes it in all five Security states.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "DEV 846ecc6c build, exec.png of the DEV run (C:/tmp/dsgn-r12-devrun-final/exec.png): the [data-tab-panel] div is transparent and sits INSIDE a white hairline panel that wraps it (Exec, Peers, Model); in Thesis and Posture the [data-tab-panel] div is transparent and its children are the white panels",
+   "a first reading that looked only inside [data-tab-panel] graded Exec, Peers and Model FAIL on DEV (a false alarm: zebra table rows and skeleton bars read as non-white surfaces); the final reading is in ui-measure.mjs section 8 (tabPanels)",
+   "final DEV run: tabPanelsWhite PASS in thesis, exec, peers, model, posture; pre-redesign build (8fa7abde): PASS in all five as well (the clause does not discriminate the two builds -- darkContainers does)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "AV-m-1 item 3: tabPanelsWhite: the tab panel is white with a hairline border (N/A in list).",
+ "world_is": "Reading used: the tab panel's surface is the nearest painted ancestor below <main> (>300px wide, >=40px tall), else the top-level painted surfaces inside it (table rows and skeleton bars excluded); PASS iff at least one exists, every one is opaque white (255,255,255) and carries a light (luminance >= 0.4) 1px+ border. Zero surfaces grades FAIL, never PASS. A different reading is a change to ui-measure.mjs section 8 only. Separately: the issuer's clean page grades bandIsIdentityHeader FAIL (a static page carries no data-starred-toggle Lead Panel marker); AV-m-1's arm 2 asks only the eight style clauses, so nothing is affected."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W51-S1",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~51",
+ "surfaced_at": "2026-09-30T17:18Z",
+ "one_line": "AV-l-6's fwd14 names a sentence's PASS face and its passage and accession line; on DEV a PASS sentence paints no face and the page never prints an accession, so I graded the attribute and the citation line in words.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "portal/src/pages/SecurityAnalysis/components/ThesisCards.tsx SentenceBlock (lines 276-280 at DEV ba62e945): the sentence carries data-verbatim-check and renders a CheckFaceBadge only when the verdict is not PASS; ThesisTab.tsx header comment: the face 'never' prints the accession number",
+   "DEV run (C:/tmp/dsgn-r13-dist/dev, three windows opened): 17 sentences, 17 read data-verbatim-check=PASS with no badge; 18 citation lines [data-citation-document] name the document in words (10-K, filing date, section path)",
+   "reading used in ui-contract-check.mjs gradeFwd14: the FACE is the data-verbatim-check attribute (a non-PASS verdict must also show its badge) and the ACCESSION LINE is the [data-citation-document] line; a page whose PASS sentences must paint a visible face would need that reading changed in gradeFwd14 only"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "AV-l-6 fwd14: in the Thesis windows each sentence shows its PASS face and passage count; opening it reveals the passage and accession line from the DOM.",
+ "world_is": "DEV paints no visible face on a PASS sentence (attribute only) and prints no accession number (the citation line names the filing in words), so the clause as worded has no literal DOM referent; the reading above grades what the page actually renders."
+},
+{
+ "id": "DSGN_AMGTV1-Z-S7",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~D",
+ "surfaced_at": "2026-09-30T16:40Z",
+ "one_line": "AV-l-1 carries the served dossier reason onto the page verbatim, and for every name WITH a dossier the served reasons are producer words: BA's Exec and Thesis read \"no MANAGEMENT section in class A missing or class B missing\" and \"no report's RECOMMENDATION line names a fund token (IDVZ|PFOE|DIVZ)\".",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "round13/fixtures/thesisBundle.BA_US_Equity.json:17122 and :17127 (dossier_fields.management.reason, dossier_fields.fund_of_record.reason); the same two strings in the 992_HK and VLO captures, the fund-token string in TSM's: 4 of the 5 captured bundles carry them; 6501 (no dossier) reads the plain 'no research dossier exists for this name'",
+   "walk M (tmp/ui-walk/20260930T162446Z, signed-in, 5174) BA Exec and Thesis shots show both strings on the face; the /api/scoped/amgt/security/BA%20US/compare 500 on the Posture step of the same walk is row Z-S8",
+   "AV-l-1 item 1 asked for the served reason as served (C-PRESENTATION-ONLY), so l-1 met its criteria; the words are the producer's (AMGT_RESAPP dossier builder), not the page's"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "2.0.0_SA_COO~D",
+ "spec_asserts": "Design law (portal DESIGN.md): a code, field name or path may sit in a data attribute or in code, never in visible text; AV-l-1: the page reads the served dossier reason.",
+ "world_is": "The served reason for a name with a dossier is a producer diagnostic (section names, class letters, a fund-token regex), so the page shows machine words by carrying the reason faithfully. Round-14 input: either RESAPP serves a reader sentence beside its diagnostic, or the page maps the reason class to one plain sentence and keeps the diagnostic in a data- attribute. Which one is the CTO's call at the round-13 analysis."
+},
+{
+ "id": "DSGN_AMGTV1-Z-S8",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~D",
+ "surfaced_at": "2026-09-30T16:40Z",
+ "one_line": "On the signed-in walk the Posture step for BA calls /api/scoped/amgt/security/BA%20US/compare and gets HTTP 500: the display ticker, not the security key (BA_US_Equity), is used as the path key.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "tmp/ui-walk/20260930T162446Z/findings.json api_issues: {step 'amgt BA US tab Posture', GET /api/scoped/amgt/security/BA%20US/compare, http 500}",
+   "the round-13 captures read the compare route under the key BA_US_Equity (round13/fixtures, BA compare capture) and it answers; the other BA routes on the same walk use BA_US_Equity",
+   "walk M ran on 5174 serving a4b81627 (CTO~Z's worktree C:/tmp/amgt-walk-5174), which predates DEV ccca64ef. At DEV the one /compare fetcher (portal/src/api/endpoints/amgt-lead-panel.ts:157 getModelCompare, via hooks/useLeadPanelApi.ts:171 useModelCompare) always sends ?from=&to=; the walk logged no query, so the walk's call site is not yet located at DEV (the walker may strip queries)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "2.0.0_SA_COO~D",
+ "spec_asserts": "The page addresses every scoped security route by the security key the list served (BA_US_Equity).",
+ "world_is": "One Posture call keys on the display ticker 'BA US' and the route answers 500 (a 404 or a named refusal would be the honest miss). Round-14 input: find the call site at DEV and key it on the security key; the route's 500 on an unknown key goes to AMGT_RESAPP."
 }
 ]
 ```

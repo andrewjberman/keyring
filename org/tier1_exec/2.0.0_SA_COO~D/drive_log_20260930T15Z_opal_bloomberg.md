@@ -1,0 +1,6 @@
+# drive log 2026-09-30 15Z -- 2.0.0_SA_COO~D (/canonical-drive DSGN_AMGTV1)
+
+- 2026-09-30T15:16Z | DSGN_AMGTV1 | L6 -> L7 | r13 | TOs 0/6 | thread y | DRIVE FORWARD: ONE issuance @265d39a87b (6 orders, 3 chains: ~49 l-1->l-3, ~50 l-2, ~51 l-4->l-5->l-6); chain C green arm r13-green-c @19420ece/cc2705d1/9ce993d3 all 3/3 (fwd19 FAIL on DEV honestly: Peers lacks a designed empty state); provisioning slots 49-51 at portal ba62e945
+- 2026-09-30T15:24Z | DSGN_AMGTV1 | L7 | r13 | TOs 0/6 | thread y | DRIVE FORWARD: slots 49-51 provisioned (portal ba62e945); workers spawned: ~49 l-1 (worker), ~50 l-2, ~51 l-4 (l-3 follows on ~49; l-5, l-6 on ~51)
+- 2026-09-30T15:35Z | DSGN_AMGTV1 | L7 drain | r13 | TOs 1/6 | thread y | DRIVE FORWARD: l-2 ~50 drained (VALID; fiscal 3/3, bytes 3/3 my re-run; DEV ba62e945 -> 20b62fb5, tsc 0; CLOUD c83e48ce9c, dropped 0 foreign 0); l-1 ~49 and l-4 ~51 executing
+- 2026-09-30T15:47Z | DSGN_AMGTV1 | L7 drain | r13 | TOs 3/6 | thread y | DRIVE FORWARD: l-1 ~49 drained ahead of chain end (VALID; dossier 3/3; DEV 20b62fb5 -> 032f881d, tsc 0, ALL 16 of 16; CLOUD fa793b887c) -> signalled MSTR~Z (msg RE 27161) with the one runner for the 16 harnesses; l-4 ~51 complete (757b0c54 / b83f6c83c7); spawned l-3 on ~49 and l-5 on ~51

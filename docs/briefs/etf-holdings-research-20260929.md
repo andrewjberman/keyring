@@ -112,7 +112,7 @@ A separate `rivalfunds` scope pointing at `opal-data-etfs` was refused by the va
 | Gold | `s3://opal-data-etfs/rivalfunds/etfs/gold/<table>/date=...` |
 | Platinum (served, by day) | `s3://opal-data-etfs/rivalfunds/etfs/platinum/page/date=...` |
 
-All nine proposed keys graded CONFORMANT (September 30 ~04:1x UTC). `etfs-rivalfunds-daily` graded CONFORMANT as EVENT_RULE and SCHEDULE; `etfs-rivalfunds-daily-lambda`, `rivalfunds-etfs-build-canonical-shape-lambda` and `rivalfunds-etfs-publish-page-lambda` as LAMBDA.
+All nine proposed keys graded CONFORMANT (September 30 ~04:1x UTC). `etfs-rivalfunds-daily` graded CONFORMANT as EVENT_RULE and SCHEDULE; `etfs-rivalfunds-daily-lambda` as LAMBDA. Stage Lambdas take `name()` output, not grade-only names: `rivalfunds-build-canonical-shape-lambda` and `rivalfunds-publish-page-lambda` (corrected per PRD v0.1 C-NAMES; `name()` refuses scope `etfs` in the resource scope slot although `grade()` passed the earlier `rivalfunds-etfs-...` forms).
 
 ## PART V — WHAT MUST BE TRUE: THE NON-NEGOTIABLE HOPS
 
@@ -147,4 +147,4 @@ The research does not establish issuer publication times, AWS reachability of th
 - **PRIOR ART:** [supporting specification](../../org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/AMGT_RECONN_SOURCES_20260929/GOLD_TABLES_AND_PROMPTS.md); [Bloomberg access evidence](../../org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/AMGT_RECONN_SOURCES_20260929/BBG_EXCEL_ACCESS_VERIFIED.md); [daily census](../../org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/AMGT_RECONN_SOURCES_20260929/DAILY_COVERAGE_CENSUS.md); [Andrew-direct record](../../org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/AMGT_RECONN_SOURCES_20260929/ANDREW_DIRECT.md); /daily-sprint serving: `infra/aws/lambda/daily_sprint_generator/`, `infra/aws/ec2/opal-gateway/app/sprint_view.py`, `daily_reports/scripts/publish_daily_report.py`, `infra/aws/terraform/opal-gateway/daily-reports-iam.tf`; identity: `lib/research/identity/crosswalk.py`, `add_security.py`.
 - **NAMING AUTHORITY:** `org/standards/NAMING_SCHEMA.json`; `infra/logic/registry/{systems,scopes,tiers}.json`; `lib/opal_naming.py`.
 - **PLACEMENT AUTHORITY:** `infra/logic/02_DOCTRINE.md` R4 (narrowed 2026-09-18) and the GENERAL tenancy in `tiers.json`; Andrew's September 29 reaffirmations in `ANDREW_DIRECT.md`.
-- **AUTHORIZATIONS ON RECORD:** OpenAI for the analyses (Andrew, item 4). Bloomberg for backfill and enrichment (items 7, 13); each pull remains subject to Andrew's per-use vendor word.
+- **AUTHORIZATIONS ON RECORD:** OpenAI for the analyses (Andrew, item 4). Bloomberg for backfill, the daily fallback and dividend/price enrichment under R-21, scripted pulls only, never an agent turn (Andrew 2026-09-30: "Agreed"). No Bloomberg support correspondence (Andrew: "im fine with fragile, just need to run the tests and see how it goes day over day"). Viewers: any signed-in account. DONE WHEN lines APPROVED 2026-09-30.
