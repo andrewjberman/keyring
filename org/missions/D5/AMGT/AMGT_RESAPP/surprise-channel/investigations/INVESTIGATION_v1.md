@@ -16577,6 +16577,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     "world_is": "The contradiction is introduced by a page-side rewrite of a true served reason; the served side is consistent. The fix is presentation and is owned by DSGN AV-g-5.",
     "disarm_owner": "2.0.0_SA_COO~Z",
     "notes": "Disarm carrier per the Z-S290 shape; Z-W200-S1 is left as filed. Routed under CONTRACT s.0 (one writer per surface: page presentation is DSGN_AMGTV1)."
+  },
+  {
+    "id": "AMGT_RESAPP-Z-S329",
+    "project": "AMGT_RESAPP",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~Z",
+    "surfaced_at": "2026-10-01T07:55:00Z",
+    "one_line": "CORRECTS AMGT_RESAPP-Z-S328: Z-W200-S1 is disarmed by a DSGN issuer RULING, not by order AV-g-5 (which does not change the Thesis pillars wording). 'research pack' is DSGN's designed worded form of the served 'class A report'; since DSGN AV-f-5 the Exec sentence agrees with it, so the page faces no longer contradict.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "2.0.0_SA_COO~D msg 27627 (2026-10-01T07:53Z), correcting its msg 27619: issuer ruling recorded in DSGN round-16 decomposition v16 placement b; grounds CTO round-13 analysis ruling 1 (k-1 MET at L9 with no 'class A' token on a face); round-14 reasonwords and round-15 packwords grade the wording.",
+        "DSGN AV-f-5 (drained 78cf9877, portal): the Exec management and roster sentences read their own served reason ('neither a research pack nor an earnings update'), no presupposed pack.",
+        "Served side unchanged and true: dossier_fields.thesis_pillars_absent.reason 'no class A report for this security'; 0 served strings say 'no research pack' (ag-2 AC2)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S328: DSGN takes Z-W200-S1 as round-16 order AV-g-5.",
+    "world_is": "AV-g-5 does not touch the pillars wording; the disarm basis is the presentation writer's wording ruling plus AV-f-5's Exec agreement.",
+    "disarm_owner": "2.0.0_SA_COO~Z",
+    "notes": "Z-S328 left as filed (append-only). Presentation wording is DSGN_AMGTV1's under CONTRACT s.0; this seat writes served text only, which needs no change."
   }
 ]
 ```
