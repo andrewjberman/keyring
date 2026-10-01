@@ -59,21 +59,22 @@ on 3.0.0_SA_CVO's review `org/tier1_exec/3.0.0_SA_CVO/deliverables/MDPF_SECCLASS
    and at HEAD, the same seven tests: SC-e13 caused 0 of 7. All seven come from the 2026-08-30 index-blob change
    (`3d9eb2931d`); owner the deploy tool's lane (`0.7.0_AE_CloudOps`, dark). Record:
    `MDPF_SECCLASS_M/RULING7_STALE_ROWS_REMEASURE_20261001.md`.
-4. **E_18's trigger (row W10-S2): BUILT, half written, CTO half OWED; not deployed.** Ruled (a) with a switch
-   (CTO rulings batch 68): `gold_dispatch.sh` @6f4bde6b6a gains E_18's catalog line, its slot between B_01b and B_02
-   (`PHASE_B3b`, non-fatal), and the calendar guard behind `GOLD_CALGUARD_ENABLE` (default off: the freshness gate
-   prints and returns what the live bytes do, by test). Test 19 of 19; the candidate ran on the runner from a
-   scratch folder as `--single E_18 --dry-run` (exit 0, E_18 rc=0, written 0). Half:
-   `MDPF_SECCLASS_M/NEVER_WIDEN_HALF_REQUEST_SECCLASS_E18_TRIGGER_DISPATCHER_20261001.md` (one key, rollback by
-   VersionId). Next: the CTO's half, then ledger `secclass-e18-trigger-dispatcher-m-20261001`, the put while the
-   runner is stopped, acceptance at the first scheduled gold fire whose gate proceeds. Black Diamond only:
-   Cottonwood's dispatcher is outside this seat's files and Inflection has no caller (row S2).
+4. **E_18's trigger (row W10-S2): DEPLOYED 08:41:28Z, acceptance OPEN.** `s3://opal-data-bd/code/gold/gold_dispatch.sh`
+   serves commit 6f4bde6b6a (ETag `d6ab7998...b171`, VersionId `VikjYXAE...`; prior `Ar2kBAqt...` is the rollback
+   target): E_18 runs between B_01b and B_02 (`PHASE_B3b`, non-fatal) and the calendar guard sits behind
+   `GOLD_CALGUARD_ENABLE`, unset. Both halves signed @985bae1fee. Ledger `secclass-e18-trigger-dispatcher-m-20261001`:
+   P and D closed, A open. Acceptance, read from the log of the 23:00Z fire (and every proceeding fire until the round
+   closes): `E_18 done (rc=0)`, `PHASE_B3b complete`, 0 `CALGUARD` lines, chain exit 0, written / refused equal to
+   the table's gain. A stop between PHASE_B3b and PHASE_B4 rolls this back first; the first row E_18 writes is
+   compared with the fallback's class. Black Diamond only (Cottonwood's dispatcher and an Inflection caller: row S2).
 5. **Ruling 3: DONE on this branch @1617619a6a.** The census prints, and writes only with `--write <path>`.
-6. **A canonical row for `CEMIX`: BLOCKED on a file grant (asked 07:34Z).** The live table holds no `CEMIX` row
-   (scan 07:42Z); Cottonwood serves it fixed_income / International on 67 positions (2,039,120.10 USD) through a
-   bd-securities name alias; it is an emerging-markets equity fund (`IEMG`'s row reads equity / EM). The row is
-   added in the seed source `_shared/etf_classification.py`, outside this seat's six-file grant. A served class
-   moves: both halves, written before any seed run.
+6. **A canonical row for `CEMIX`: code committed @32acc85d2e (grant: CTO rulings batch 68); the half is NEXT; the
+   table is not written.** The seed source asserts equity / EM / active / fund; `seed-etf-classifications.py
+   --dry-run` reads 1 row to write of 139, 0 conflicts. Served effect measured on the local Cottonwood build: 97
+   position nodes carry the symbol -- 93 move fixed_income / International to equity / EM (67 assigned
+   2,039,120.10 USD, 26 observed 836,730.89 USD), 4 gain the sub class (200,276.77 USD); 0 nodes at 49 Financial
+   and Inflection. The Investor Reporting comparison list gains one named entry. The two Lambda copies are not
+   edited. Rollback is a corrected seed row; a delete needs Andrew's word.
 7. **Ruling 7: DONE.** The six stale rows are re-measured in
    `MDPF_SECCLASS_M/RULING7_STALE_ROWS_REMEASURE_20261001.md`: four recommended closed (S1, W2-S3, W5-S2, and W3-S3
    once leg A1 passes), two stay open with an owner and a condition (S2 narrowed to this seat's trigger cell plus an
@@ -86,6 +87,10 @@ on 3.0.0_SA_CVO's review `org/tier1_exec/3.0.0_SA_CVO/deliverables/MDPF_SECCLASS
    (before the filter the list would have offered 234 of 234 named model rows, 119 low-confidence). Next: add the
    catalogue's reader to the half's reader table, re-read the half's act and both branches, sign the COO half and
    ask the CTO's.
+
+10. **Queued by 1.0.0_SA_CTO 103641 (rulings batch 72 items 1-7 @65417358df): MDPF_HEALGAP cell 1, the gold catch-up
+    step.** Not this project; it follows the round-6 items above. A served move with both halves, under its own FAST
+    lease, after reading MDPF_TAXSMA's lease claims on the consolidator. Not started.
 
 ## Dependencies
 
