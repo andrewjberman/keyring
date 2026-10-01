@@ -138,3 +138,57 @@ second needs none.
 stale "BLOCKED on Andrew: the DB-b-1 emit" and asking that the amendment cover row S4's three
 defects as well as the CTO's rulings. The earlier logs are left as written -- history is not
 rewritten -- and this section is the pointer.
+
+---
+
+## ADDENDUM 05:1x-05:3xZ -- the F12 half only a seat with read access could close, and one guard
+
+### Row S8: the review's F12 remedy has no precondition in this feed (`b5e1445a56`)
+
+REVIEW.md F12 prescribed "source event identity and an explicit version/correction rule, or
+verify a trustworthy upstream invariant", and said plainly it could not tell whether the live feed
+violates uniqueness -- the archive carried no custodian data. Measured over all 561 partitions:
+
+| | result |
+|---|---|
+| `dim_balance` uniqueness | **CLEAN** -- 3,215,820 rows = 3,215,820 distinct (account, day) pairs; 0 accounts with a second row; 0 partitions with a second object |
+| `fact_trn` event identity | **NONE USABLE** -- of 17 identifier-shaped columns among 140, none unique per row; best `account_id` 6,014 of 25,651; `cashiering_transaction_identifier` 244; eleven carry a single constant |
+| `fact_trn` duplicates on read columns | 1,099 of 3,209,771 (0.034%), recorded as an **UPPER BOUND** |
+
+So BOTH branches of the prescribed remedy are closed, and a producer-side dedup cannot be written
+correctly today: the only available key is the (account, code, amount, date) tuple the repair
+explicitly forbids. The 1,099 cannot be resolved into real duplicates without the identity that
+does not exist, and saying so is the finding rather than a gap in it. Routes to the Schwab ingest
+lane -- a per-event key belongs in fact_trn's silver build, not a reporting cell. Deliverable:
+`INPUT_UNIQUENESS_CENSUS_R1.json`.
+
+### The guard, and a second self-imposed wait corrected (`a277bba0bc`)
+
+`account_values()` ends in `groupby.sum()`, so a repeated balance row would DOUBLE V_t -- the
+denominator of `r_t` and the base of every return linking through it -- and nothing downstream
+could notice, because a doubled whole-account value is a plausible number. The invariant S8
+measured is now ENFORCED where it is relied on: a repeat REFUSES, naming the account and day, and
+does not pick a row (choosing one would invent a value the custodian never stated). Scope is the
+frame after the `accounts` filter, so a QA-thread run cannot refuse over an account it never reads.
+
+Verified mutant and control: real `date=2026-09-25` PASSES at 7,548 accounts (zero behavioural
+change on live data, by construction); one duplicated row REFUSES, naming `0010020692`. Full
+graded dry-run after the change: 50 rows, unchanged.
+
+**Row S8 said I would take this "on the issuer's word" and I took it without one.** Re-examined,
+that deference does not hold: no emitted value changes, it fails closed rather than open, and it
+enforces something I had just measured. Waiting would have been the invented approval gate
+CLAUDE.md forbids. The issuer can still re-route it; it cannot un-double a V_t already served.
+
+**That is the second self-imposed wait I corrected today** (the first was row S6 limb (a)
+@`6915ceb469`), against one inherited claim I failed to check (`~P` DARK). Both directions of the
+same underlying habit: treating a sentence -- mine or someone else's -- as though it were a
+measurement. The fix is identical in both directions and it is cheap: name the instrument that
+would settle it, then run that instrument.
+
+### Issuer state, measured rather than assumed
+
+`TO-DB-b-1`'s last amendment is still 4 @`b116670d7c`; the rulings 17-19 amendment has NOT landed.
+`2.0.0_SA_COO~P` is LIVE and its recent commits are all IRPT_BCKEND `IB-pr-275` -- the DB-b-1
+amendment is queued behind its round-27 close, which its own summary lists first. So the wait is
+real and open-ended, not a dead seat. Message sent 04:57Z clearing its stale Andrew-block.
