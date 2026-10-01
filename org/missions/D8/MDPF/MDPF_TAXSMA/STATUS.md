@@ -1,79 +1,93 @@
 # MDPF_TAXSMA -- status (FAST lease, /closer-drive)
 
-Seat `4.0.0_SA_CRO` (CLAUDE). Contract `org/standards/MDPF_TAXSMA_DATA_CONTRACT.json` version 0.6.0. Reviewer `3.0.0_SA_CVO`.
-As of 2026-09-30T16:0xZ. Lease: FAST MDPF_TAXSMA seat 4.0.0_SA_CRO until 17:41Z (`org/mcp/drive-mode.log`).
-Authority: `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260930_142xZ_TAXSMA_CLOSER_DRIVE_GO_RIA_COLUMN_WORKBOOK_FALLBACK.md` @d55b7066ba.
+Seat `4.0.0_SA_CRO` (CLAUDE). Contract `org/standards/MDPF_TAXSMA_DATA_CONTRACT.json` version 0.6.0 (amendment 2). Reviewer `3.0.0_SA_CVO`.
+As of 2026-10-01T01:0xZ. Lease: FAST MDPF_TAXSMA seat 4.0.0_SA_CRO until 2026-10-01T02:44Z (`org/mcp/drive-mode.log`).
+Authority: `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20260930_142xZ_TAXSMA_CLOSER_DRIVE_GO_RIA_COLUMN_WORKBOOK_FALLBACK.md` @d55b7066ba;
+priority `ANDREW_DIRECT_20260930_202xZ_TAXSMA_PRIORITY_THROUGH_MDPF_ALONGSIDE_DROPPED.md` @733b28e890 (Tax SMA through MDPF to every relevant surface).
 
 ## Pins
 
 | What | Value |
 |---|---|
-| Working branch / worktree | `wk-mdpf_taxsma-cro` at `C:/Users/AndrewBerman/Desktop/wk-taxsma-cro` |
-| Workspace candidate pin | stage A 79b446e0e0 + 56491c907c + 030cef41b5 + 8609ffe5bd; stage B = the two commits after this file's |
-| Portal candidate pin | 4235e77c on DEV via merge 29bfec2d (origin/DEV read back 17:3xZ); PROD untouched |
-| Deployed artifact pin | mdpf-gold-lambda CodeSha256 5aKNH5WB.. (bundle 2026-08-29, NO taxsma module) -- NOT DEPLOYED |
-| Push state | LOCAL (ls-remote not read since 13:4xZ) |
+| Working branch / worktree | `wk-mdpf_taxsma-cro` at `C:/Users/AndrewBerman/Desktop/wk-taxsma-cro` (holds one UNCOMMITTED file: `infra/aws/terraform/opal-gateway/taxsma_workbook.tf`, TX-i-3, held until the shared tree carries origin) |
+| Workspace candidate pin | e8994f23af (both packages are built from it); shared-tree HEAD 75a4076b90 at 01:00Z |
+| Portal candidate pin | 370d2fe8 on origin/DEV (accessor + page caption); origin/DEV head 970d5c75 at 01:01Z; PROD untouched |
+| Deployed artifact pin | mdpf-gold-lambda CodeSha256 5aKNH5WB.. (S3 version 8eu2ppmBW1z1.., LastModified 2026-09-22T15:19Z, 24 members, NO taxsma module); publisher MDPF_PUBLISHER_COMMIT c0902245b0 -- Tax code NOT DEPLOYED |
+| Built, not uploaded | mdpf-gold-lambda zip sha256 ee12387e55b94597.. (39 modules); publisher zip sha256 a63f896adf7ab797.. |
+| Push state | LOCAL (origin/CLOUD 85a765dbcd at the 23:0xZ fetch; `0.0.0_AB_MSTR` pull-merges and pushes on Andrew's cue, msg 103413) |
 
 ## Live thread
 
-State: NOT LIVE. Hop 1 (workbook -> Gateway route) is code only, route not deployed. Hops 2-7 (Bronze -> Silver -> membership -> reconcile -> assets -> aggregate/consolidator prelude) EXERCISED OFFLINE on 2026-09-30 against the live 2026-09-28 custodian partitions and the live workbook grid: `taxsma_prelude_run.py` run_result COMPLETE, 49financial 9 of 9 covered. Hops 8-10 (publisher -> served category-views -> portal leaf) not built.
-First failing hop: 1 (route undeployed) and 8 (publisher not wired).
+State: NOT LIVE. Nothing serves Tax. Live tonight: the IAM the thread needs (two scoped prelude roles, the Gold role's
+assume + control write, the publisher's control read). Hops 2-7 exercised offline on real data (E2a/E2b). The Tax-off
+release is proven a zero business delta offline (16 of 16 bodies, deployed bundle vs new bundle, `qa_local`).
+First failing hop: 1 (the Gateway workbook route is not deployed; its secret is not created).
 
 ## Acceptance IDs (decomp cells; state = this lane's read, CVO grades the pin)
 
 | ID | State | Evidence |
 |---|---|---|
 | TX-p-1, v-1, g-1, g-2, b-1, b-2, m-1, m-2, m-3, m-4, a-1, a-2 | COMPLETE (round 1, drained by COO~T) | position record @cbfeeef31f |
-| E1 engine: RIA firm axis + custodian-per-firm + workbook fallback + loaders | CANDIDATE @62fa52fa6f + f4c4614f33 | 189 of 189; real run 2 on Yang's corrected sheet (Traded=Yes on rows 12-15): 49F expected 11 covered 11, 17,034,745.40 (measured 12,584,745.40 + workbook-stated 4,450,000.00); Cottonwood 2 of 2, 6,041,791.65 measured on Black Diamond |
-| TX-k-1 gold package (+ `lib/opal_naming` subpackage + registry + schema + contract, S5) | CANDIDATE (the commit after f4c4614f33) | 39 of 39 members hash-equal to pin; closure OK; layer deps 0 FAIL; cold-start smoke from the extracted zip; Terraform plan NOT run (root claimed) |
-| TX-u-1 publisher extension (switch default OFF) | CANDIDATE @96f7932f91 + 5f58087a79 | 9 harness arms; real category document published offline with the switch ON: one put, Tax leaf covered 11 of 11 |
-| TX-u-2 publisher package | CANDIDATE (the commit after 5f58087a79) | 12 of 12 members hash-equal to pin 96f7932f91; sidecar declared; layer deps 0 FAIL (tool now reads the sidecar); Terraform env default and plan NOT done (root claimed) |
-| TX-i-3 / TX-i-1 / TX-i-2 IAM applies | BLOCKED (Terraform roots claimed by NFRA_IAMROLES202609 IAM-t-3) | |
-| E2a production wiring (global sheet snapshot, per-firm dispositions + assets Gold, S3 Gold store, live loaders in the handler) | CANDIDATE @0e1d37e80b + bd2e9a1181 | 203 of 203; real run per-firm: 49F 11 of 11 = 17,034,745.40, Cottonwood 2 of 2 = 6,041,791.65, both Gold partitions COMPLETE |
-| E2b served fold (Tax into 49F and Global totals; carry last complete, no backfill -- Andrew-direct 18:3xZ) | CANDIDATE @faf88511b9 | 211 of 211; real served spines 09-29: 49F 1,761,000,294.98 on timeseries, category tree and aum-metrics alike; Global 2,083,972,030.82 reconciles to the cent with a named taxsma component; L-1 PASS x 4 |
-| TX-c-1 portal accessor | CANDIDATE portal 4235e77c (branch wk-taxsma-c1, pull-merged origin/DEV 20f95f79 at 29bfec2d) | 6 bun arms; tsc clean on the branch; on the merged tree the only two tsc errors are in COO~D's iv-e-119 test (`.block` read without narrowing the union), pre-existing at 20f95f79 |
-| TX-c-3 page caption ("Total includes Tax-Managed SMA $X · valued <date>", "(last complete figure)" when carried) | CANDIDATE portal 370d2fe8 on origin/DEV | 10 bun arms; tsc 0; eslint 0 errors; no signed-in render (no served Tax until activation; walker disabled) |
-| TX-c-2 tree leaf | NOT STARTED (component under DSGN_IRPTV1 lease; the tree already renders the tax member's served amount) | |
-| TX-v-1 re-cut / TX-v-2 / TX-v-3 / TX-o-1 | NOT STARTED -- decision owed (Parked): independent author for the expected cases | expected_cases.json: 102 cases (A07 26, A03 18, A01 13, A05 12, A02 10, A04 10, A08 7, A06 6), written for 0.5.0 |
-| TX-r-1 / TX-r-2 / TX-r-3 | NOT STARTED (G-O grade, G-W, G-P ahead) | |
+| E1 engine (RIA firm axis, custodian per firm, workbook fallback, loaders) | CANDIDATE @62fa52fa6f + f4c4614f33 | real run on Yang's corrected sheet: 49F 11 of 11 = 17,034,745.40 (measured 12,584,745.40 + workbook-stated 4,450,000.00); Cottonwood 2 of 2 = 6,041,791.65 |
+| E2a production wiring | CANDIDATE @0e1d37e80b + bd2e9a1181, re-wired per firm @338665c1b1 | 216 of 216 |
+| E2b served fold | CANDIDATE @faf88511b9 + 3f03d42024 | real served spines 09-29: 49F 1,761,000,294.98 on timeseries, category tree and aum-metrics alike; Global 2,083,972,030.82 to the cent |
+| TX-i-1 scoped prelude roles | APPLIED 2026-10-01T00:03:55Z, ledger CLOSED @14670cf66c | 5 added; re-plan No changes; SIMULATION 30 of 30; exercise owed at TX-r-3. TWO roles (49f, cot), not one: each firm bucket admits only its own short token |
+| TX-i-2 publisher control read | APPLIED 2026-10-01T00:16:59Z, ledger CLOSED @73ef80ab94 | 1 added; re-plan No changes; SIMULATION 10 of 10; exercise owed at TX-r-3 |
+| TX-i-3 capability secret + Gateway read | REFUSED AT THE PLAN (surprise S7); file written, held uncommitted | plan from the shared tree: 2 to add, 1 to change, 4 to destroy -- the destroys are other projects' live grants that only origin's commits declare. Un-blocks when the shared tree carries origin/CLOUD |
+| TX-k-1 gold package | CANDIDATE, built at e8994f23af, sidecar @75a4076b90 | 39 modules; import closure OK; `qa_local` green 16 of 16 from the extracted zip |
+| TX-u-1 / TX-u-2 publisher extension + package | CANDIDATE, built at e8994f23af, sidecar @75a4076b90 | control read re-pointed to the global key @338665c1b1; harness arms in the 216 |
+| TX-c-1 / TX-c-3 portal accessor + page caption | CANDIDATE portal 370d2fe8 on origin/DEV | 10 bun arms; tsc 0; no signed-in render (no served Tax yet) |
+| TX-c-2 tree leaf | NOT STARTED (component under the DSGN_IRPTV1 lease; the tree already renders the tax member's served amount) | |
+| TX-r-1 backend release, Tax off | READY TO RUN, not started | pre-proof: deployed vs new bundle, both `qa_local` green 16 of 16, every body difference a process-time path. Needs: upload both zips, two plans, two safe-applies, one deployed `qa_local` invoke, then the 13:50Z publisher fire for AC6 |
+| TX-r-2 Gateway release, capability off | NOT STARTED | cut NARROW (S6); needs the G-O read of OG-r-1 @e2f11d1e3d |
+| TX-r-3 activation | NOT STARTED, held on G-W and G-P | see Dependencies |
+| TX-v-1 re-cut / TX-v-2 / TX-v-3 / TX-o-1 | NOT STARTED (this seat builds, the CVO grades each changed case) | 102 expected cases written for 0.5.0 |
 
 ## Write claims
 
-`data/mdpf/scripts/gold/{taxsma_*.py, mdpf_gold_consolidator.py::run_taxsma_prelude, dim_mdpf_aggregate_aua_timeseries.py::tax_coverage_entry}`,
-`data/mdpf/tests/taxsma/*`, `org/standards/MDPF_TAXSMA_DATA_CONTRACT.json`, `infra/aws/ec2/opal-gateway/app/taxsma_workbook.py` (+ its test).
-Next claim: `infra/aws/lambda/mdpf-pipeline/mdpf-gold-lambda/build_package.py` + manifest (TX-k-1).
+`data/mdpf/scripts/gold/{taxsma_*.py, mdpf_gold_consolidator.py (Tax blocks), dim_mdpf_aum_metrics.py (Tax blocks)}`,
+`data/mdpf/tests/taxsma/*`, `org/standards/MDPF_TAXSMA_DATA_CONTRACT.json`,
+`infra/aws/terraform/mdpf-pipeline/iam.tf` (the TX-i-1 block), `infra/aws/terraform/opal-assets/mdpf_egress_publisher.tf` (the TX-i-2 block),
+`infra/aws/terraform/opal-gateway/taxsma_workbook.tf` (held), the two package sidecars.
 
 ## Next proof
 
-The consumer: TX-c-1 (`portal/src/api/endpoints/aum.ts` typed accessor for the 15 coverage fields and the two document fields, TTL at most five minutes, failed transport never cached, explicit refresh crosses both caches) proved by `bun test` in the portal, then TX-c-3 (`ModelPortfolios.tsx` honest affected totals); TX-c-2 waits for DSGN_IRPTV1 to release `CategoryViewTree.tsx`.
-Deferred: the plan-only Terraform passes for TX-k-1 (mdpf-pipeline root) and TX-u-2 (opal-assets root: `TAXSMA_ROLLOUT_SWITCH = "OFF"` env default) -- both roots claimed by IAM-t-3.
+1. TX-i-3 from the shared tree once it carries origin: plan must read exactly 2 to add.
+2. TX-r-1: the Tax-off backend release; AC6 is the 13:50Z publisher fire.
+3. TX-r-2: the narrow Gateway release with the route's capability off.
+Each is this seat's act under the lease. None makes Tax visible; TX-r-3 does.
 
 ## Dependencies
 
 | Needs | From (owner) | Interface / pin | State |
 |---|---|---|---|
-| Terraform roots for TX-i-3 / TX-i-1 / TX-i-2 | IRPT_BCKEND (TO-IB-rtc-6 names infra/aws/terraform/mdpf-pipeline/iam.tf; rtc-7, rtd-4..7 claim the mdpf-pipeline root) and NFRA_OUTSET (TO-OS-s-18 claims infra/aws/terraform/) | open orders with no status tag (lease tool reads them open, correctly); the IAM-t-3 claim was a misread, fixed @05f0a0b5af | BLOCKED; sequencing asked of 1.0.0_SA_CTO 19:5xZ |
-| `portal/src/components/CategoryViewTree.tsx` | 2.0.0_SA_COO~D (DSGN_IRPTV1 FAST lease) | lease ends / component released | AWAITED |
-| G-O grade of OG-r-1 readback @e2f11d1e3d | issuer (this lane under Andrew's word) | TX-r-2 first line | AWAITED |
-| G-W never-widen halves | 1.0.0_SA_CTO + a COO | TX-r-3 | AWAITED |
-| G-P consumer promotion | Andrew | TX-r-3 | AWAITED |
-| 2026-09-29 custodian partitions (0833 fact_rps_s2 last = 2026-09-28 at 13:3xZ) | Schwab CRS feed | T-1 frontier | AWAITED (trading-calendar: 09-29 is T-1 today, tdb 1, HEALTHY) |
+| The shared tree carrying origin/CLOUD (864 commits) | `0.0.0_AB_MSTR` on Andrew's cue | msg 103413; this seat answered CLEAR 01:00Z | IN FLIGHT |
+| The opalbloomberg@opalinvest.com account signed in at the Gateway, so its tid/oid resolves and the first controlled read can run (G-A) | Andrew | TX-r-3 AC2, AC5, AC6 | AWAITED -- access is believed, UNMEASURED |
+| G-W never-widen halves naming both served keys | `1.0.0_SA_CTO` + a COO (the CTO seat died 23:2xZ; relaunch pending) | TX-r-3 AC3 | AWAITED |
+| G-P consumer promotion (portal DEV to PROD) | Andrew | TX-r-3 AC4 | AWAITED |
+| G-O grade of OG-r-1 readback @e2f11d1e3d | this lane under Andrew's word | TX-r-2 first line | AWAITED |
+| `portal/src/components/CategoryViewTree.tsx` | `2.0.0_SA_COO~D` (DSGN_IRPTV1 FAST lease) | lease ends / component released | AWAITED |
 
 ## Parked
 
 | Question (off-thread) | Owner | Un-parks when |
 |---|---|---|
-| DECIDED 2026-09-30 ~19:5xZ by this seat under /closer-drive (no subagents; the CVO grades each pin after the fact, call 3): this seat re-cuts the 0.6.0-affected expected cases and builds TX-v-2/v-3; every changed case is listed for 3.0.0_SA_CVO's grade in the pin's report | 4.0.0_SA_CRO | closed |
-| Cottonwood's Tax ($6.04M on 09-28) is not added to Global yet: it would double-count if those accounts also carry a Cottonwood model assignment | this lane | a read of bd-rebalancer model assignments for the two accounts shows none (then one line in apply_taxsma_overlay), or Andrew rules |
+| FIRST-DAY RULE: an account counts only for valuation dates on or after its first Gateway observation (`taxsma_membership.resolve_date_status`), so Tax first appears on the scheduled run ONE TRADING DAY AFTER activation | Andrew | he accepts the one-day lag, or rules that the first observation also covers the prior business day |
+| Cottonwood's Tax ($6.04M on 09-28) is not added to Global: it would double-count if those accounts also carry a Cottonwood model assignment | this lane | a read of bd-rebalancer model assignments for the two accounts shows none, or Andrew rules |
 | aum-metrics `non_model_assets_detail` (W-6) is built before the Tax step, so its enterprise_total stays pre-Tax | this lane | the page is shown to read it; else leave |
-| TRADED-ONLY is the rule and Yang's sheet now reflects it (rows 12-15 flipped to Yes 2026-09-30 ~16:2xZ). Still outside 49F's 17.03M: row 9 (Traded=No, awaiting a transfer, 2.30M on 0833) and two 0833 accounts labelled Opal Tax SMA 145 with no workbook row (1.03M + 0.96M), reported as UNCONFIRMED candidates | Yang (workbook rows) / Andrew | two rows added with Traded=Yes; the transfer settling |
-| STRATEGY_CONFLICT valued (workbook SMA 145 vs custodian SMA 200 on 2 accounts): decision at `taxsma_assets.IDENTITY_STATUSES_VALUED` | Andrew (reverse by one tuple edit) | if he wants a label conflict to withhold value |
-| Black Diamond accounts whose Account Number is masked-only (937 of 984 on 09-28) can never match; a Cottonwood Tax claim on one falls to the workbook value | this lane | a BD field carrying the full number is found, or Andrew accepts the fallback for them |
-| TX-v-1 expected cases (A02 "additional candidates", A04 "workbook estimate rejected") contradict 0.6.0 | this lane | TX-v-2 item re-cuts them under the amended rule |
-| S5 EC2 Stage 6 import (`lib.opal_naming` not on the runner tree) | this lane | TX-k-1 packages `lib/`; the runner sync of `lib/` is one line in `mdpf-daily-dispatch.sh` (AE~V's tree) |
+| Outside 49F's 17.03M: workbook row 9 (Traded=No, awaiting a transfer, 2.30M on 0833) and two 0833 accounts labelled Opal Tax SMA 145 with no workbook row (1.03M + 0.96M), UNCONFIRMED candidates | Yang (workbook rows) / Andrew | two rows added with Traded=Yes; the transfer settling |
+| STRATEGY_CONFLICT valued (workbook SMA 145 vs custodian SMA 200 on 2 accounts): `taxsma_assets.IDENTITY_STATUSES_VALUED` | Andrew (reverse by one tuple edit) | if he wants a label conflict to withhold value |
+| Black Diamond accounts whose Account Number is masked-only (937 of 984 on 09-28) can never match; a Cottonwood Tax claim on one falls to the workbook value | this lane | a BD field carrying the full number is found, or Andrew accepts the fallback |
+| The contract's N+1 category Gold copies are not written (surprise S9) | `1.0.0_SA_CTO` at the round analysis | strike the two artifacts, or re-point the publisher to them as one migration |
+| S5 EC2 Stage 6 import (`lib.opal_naming` not on the runner tree) | this lane | the runner sync of `lib/` is one line in `mdpf-daily-dispatch.sh` (AE~V's tree) |
 | S6 Gateway deploy ships four projects | this lane | TX-r-2 cut NARROW at 1764e54a16 + TX-g-1's three commits + 030cef41b5 |
-| A traded row with a blank Account Number | Andrew | stays INVALID_ACCOUNT / unresolved (no fallback) unless he says the workbook value counts |
+| A traded row with a blank Account Number | Andrew | stays INVALID_ACCOUNT (no fallback) unless he says the workbook value counts |
+| The Gateway deploy script must write `TAXSMA_WORKBOOK_BEARER` (from the new secret) and `TAXSMA_WORKBOOK_IDENTITY` into `.env` | this lane, at TX-r-2/TX-r-3 | read of the deploy script at the narrow cut: UNREAD |
 
 ## Limits
 
-Nothing deployed, nothing served, no apply run, no Gateway deploy, no S3 write by the harness. The real run's first pass is seeded (clock at 2026-09-27) so the membership history covers the valuation date; an unseeded fresh store reads TRADED_HISTORY_UNVERIFIED for every account, which is what production will show on its first day and clear on its second. Cottonwood's two workbook rows are Traded=No, so no Cottonwood population was exercised live (unit arms only). No product ID is PASS until the CVO says so on a pinned candidate.
+No Tax code is deployed and nothing serves Tax. The two IAM applies are verified by SIMULATION only; no session of the new
+roles has been opened (they trust only the Gold function and Lambda). The Tax-off zero-delta proof is a local `qa_local` run
+on Python 3.12 against the Lambda's Python 3.11 runtime and layers; the deployed `qa_local` invoke at TX-r-1 is the real-runtime
+arm. The first-run read of a missing dispositions object under a prefix-conditioned ListBucket is unexercised. No product ID is
+PASS until the CVO says so on a pinned candidate.
