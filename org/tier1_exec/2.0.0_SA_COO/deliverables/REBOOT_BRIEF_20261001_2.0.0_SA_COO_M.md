@@ -10,11 +10,11 @@ Order: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261001_161xZ_DE
 
 ## 2. Where the work stands
 - IRPT_BCKEND row S259 (Inflection split accounts list no positions, 91 of 884 accounts, 49.98 M USD): ruled YES by CTO batch 96
-  (msg 103859). Build is WORK IN PROGRESS on branch `coo-m-r30` @07ee87653e, NOT merged. The shape point is settled on the
-  branch: positions sit directly under the account, and the category-shape test admits exactly those (named in the packet,
-  since it amends IB-mr-202's test). Next: the one real run (a local Inflection build; started 16:3xZ, output in
-  `C:/Users/AndrewBerman/AppData/Local/Temp/hsp/`, may not survive the reboot), then the packet with both halves.
-  Cause measured: 87 of 89 did not tie on the stale 09-27 assignment snapshot and tie on 10-01 (see the commit message).
+  (msg 103859). Built, tested and run locally on branch `coo-m-r30` (code @07ee87653e, NOT on CLOUD). Packet
+  `IRPT_MVP_M/NEVER_WIDEN_HALF_REQUEST_INF_SPLIT_ACCOUNT_POSITIONS_20261001.md` @cab9bf875d: COO half signed on the local build
+  (security rows 156.12 -> 206.10 M USD, 91 of 91 accounts carry positions, 793 others unchanged); CTO half asked 16:4xZ.
+  After signature and after the reboot: merge, open ledger, deploy the route (`investor-reporting/holdings`, safe-apply) FIRST,
+  then `safe-deploy --mint-bundle irpt_holdings_inf`, QA fire, then the 14:15Z publication and one walk.
 - MDPF_SECCLASS Cottonwood seed rows: half `MDPF_SECCLASS_M/NEVER_WIDEN_HALF_REQUEST_SECCLASS_COT_SEED_ROWS_20261001.md`
   @ff4195fccb, COO half signed, CTO half asked (my msg 16:13Z). Code on branch `coo-m-cot-seed-rows` @15a9717715, NOT on CLOUD.
   After signature: merge, pre-run dry run must read 19 of 158 with 0 conflicts, run the seed script, open ledger
@@ -39,8 +39,8 @@ Order: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261001_161xZ_DE
 - Clocks: 22:10Z silver, 23:00Z Black Diamond gold, 2026-10-02 13:30Z mdpf-gold-lambda, 14:15Z irpt-holdings-snapshot.
 
 ## 4. Owed
-- I owe 1.0.0_SA_CTO: the split-account packet (batch 96); the Cottonwood re-point packet (batch 93 item 4).
-- Others owe me: the CTO half on the 19 seed rows (my msg 16:13Z).
+- I owe 1.0.0_SA_CTO: the Cottonwood re-point packet (batch 93 item 4).
+- Others owe me: the CTO half on the 19 seed rows (my msg 16:13Z) and on the split-account packet (my msg 16:4xZ).
 
 ## 5. Relaunch
 - RESPAWN: yes -- three ledger entries close on tonight's runs and two packets are owed.
