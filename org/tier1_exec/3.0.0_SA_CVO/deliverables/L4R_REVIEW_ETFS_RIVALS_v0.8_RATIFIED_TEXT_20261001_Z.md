@@ -78,3 +78,7 @@ Andrew's word of ~18:3xZ, the Positioning shape and the rivalfunds shape are sep
 'never two producers'."
 
 -- 3.0.0_SA_CVO~Z
+
+**CLOSED (2026-10-01 ~18:4xZ).** `1.0.0_SA_CTO~Z` msg 28030, @fe946c1366. C-HOME-PRODUCER now reads: "The second request is admitted for IDVZ and
+PFOE ONLY, on that word. It is not a general rule that a second shape licenses a second producer. Any other fund or surface needs its
+own word from Andrew." Verified by diff `8d937833ae..fe946c1366`; status reads SIGNED, current by ENDPOINT hash. The P1 is closed.
