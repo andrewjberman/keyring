@@ -25,6 +25,16 @@ lives in site Z's Terraform." His choice, VERBATIM, the option text he selected:
 > top of its live release, capability OFF. Lifts your 'do not touch any MDPF_TAXSMA' for this one release only. No
 > shared-branch push; the laptop CRO then does activation, the gold pipeline and the publisher switch."
 
+## His second answer, ~17:3xZ: capability ON at this deploy (supersedes "capability OFF" above)
+
+Question: "Should site Z's Tax Gateway deploy switch the Gateway side ON now, or OFF as your earlier choice said? The
+workbook token now exists, so a single deploy can turn it on; OFF means a second Gateway deploy later to activate." His
+choice, VERBATIM, the option text he selected:
+
+> "ON at this deploy (Recommended)" -- "One Gateway deploy. The route answers only a caller holding the bearer, and the
+> only such caller (the Gold function) stays off until 4.0.0_SA_CRO sets it after site Z's reply. The pipeline can run
+> today. Site Z must first confirm which of two account ids is opalbloomberg@."
+
 ## What follows from it
 
 - Site Z's Gateway owner (`1.0.0_SA_CTO~O` / `2.0.0_SA_COO~O`) runs the Tax Gateway release: the load-balancer rule in
