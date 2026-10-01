@@ -11,7 +11,7 @@ placement `ANDREW_DIRECT_20261001_033xZ_TAXSMA_TAX_PORTFOLIOS_ARE_SMAS_NOT_MODEL
 | What | Value |
 |---|---|
 | Working branch / worktree | `wk-mdpf_taxsma-cro` at `C:/Users/AndrewBerman/Desktop/wk-taxsma-cro`, fully merged, nothing uncommitted |
-| Workspace candidate pin | e8994f23af is what is DEPLOYED (both packages are built from it). The Cottonwood-into-Global fold is a later candidate, 1e5e13d223. It is NOT in either deployed package |
+| Workspace candidate pin | e8994f23af is what is DEPLOYED (both packages are built from it). Two later candidates, 1e5e13d223 (Cottonwood's Tax into Global) and 46d04eb7b6 (Cottonwood's tree shows the Tax leaf under SMA). Neither is in either deployed package |
 | Portal candidate pin | 370d2fe8 on origin/DEV (accessor + page caption); origin/DEV head 970d5c75 at 01:01Z; PROD untouched |
 | Deployed artifact pin | mdpf-gold-lambda CodeSha256 7hI4flW5.. (S3 version U4JsC9gYCgaK.., deployed 2026-10-01T02:17Z, 39 modules, Tax code present, Tax DISABLED: no TAXSMA_ env); publisher CodeSha256 pj+Jat96.. (S3 version Deg26fXt.., deployed 02:21Z, `TAXSMA_ROLLOUT_SWITCH = OFF`). Both built from e8994f23af |
 | Rollback | Gold artifact prior S3 version 8eu2ppmBW1z1j2MOwTQc3G27uo9SbDXD (code 5aKNH5WB..); publisher prior version ZLaQC2nGuQ2hP72JpdTA4RWfciYhFoql (code 7X50uR1H..): copy that version onto the key with its `content-sha256`, restore the two commit pins, plan, `safe-apply` |
@@ -34,6 +34,7 @@ Trace: `org/tier1_exec/4.0.0_SA_CRO/deliverables/TAXSMA_MODEL_PORTFOLIOS_END_TO_
 | E2a production wiring | CANDIDATE @0e1d37e80b + bd2e9a1181, re-wired per firm @338665c1b1 | 216 of 216 |
 | E2b served fold | CANDIDATE @faf88511b9 + 3f03d42024 | real served spines 09-29: 49F 1,761,000,294.98 on timeseries, category tree and aum-metrics alike; Global 2,083,972,030.82 to the cent |
 | E2c Cottonwood's Tax added to Global once, with an overlap control on Cottonwood's model-assigned accounts | CANDIDATE @1e5e13d223; NOT deployed | 223 of 223; real run on 09-29 data, zero writes: Global 2,066,937,285.42 base + 24,817,481.13 Tax (49F 18,768,112.35 + Cottonwood 6,049,368.78) = 2,091,754,766.55, fee-basis components sum to the cent, category tree SMA > ALT Strategies 24,817,481.13, frontier cell 13 of 13 covered; control: the assignment reader returns 0 keys, and 47 (both Tax accounts inside) with the `--` filter lifted |
+| E2d Cottonwood's own tree shows the Tax leaf under SMA, as a carve-out of Client; the SMA basis is declared per firm where it differs | CANDIDATE @46d04eb7b6; NOT deployed | 226 of 226; Gold suite 94 passed, 3 failed (the S1 baseline three); real run on 09-29 data: Cottonwood SMA 0.00 -> 6,049,368.78, Client 362,884,540.60 -> 356,835,171.82, total 541,913,026.79 both ways; Rule 24 record `deliverables/4.0.0_SA_CRO/RULE24_SMA_BASIS_BY_SCOPE.md` |
 | TX-i-1 scoped prelude roles | APPLIED 2026-10-01T00:03:55Z, ledger CLOSED @14670cf66c | 5 added; re-plan No changes; SIMULATION 30 of 30; exercise owed at TX-r-3. TWO roles (49f, cot), not one: each firm bucket admits only its own short token |
 | TX-i-2 publisher control read | APPLIED 2026-10-01T00:16:59Z, ledger CLOSED @73ef80ab94 | 1 added; re-plan No changes; SIMULATION 10 of 10; exercise owed at TX-r-3 |
 | TX-i-3 capability secret + Gateway read | APPLIED 2026-10-01T01:52:55Z from the `mdpf-pipeline` root, ledger CLOSED @c3d2237872 | 2 added; re-plan No changes; EXERCISED from the Gateway host 01:56:15Z (new secret admitted with no value; a secret not held AccessDenied). Not applied from `opal-gateway`: that root still has appliers whose commits are not on origin (rows S7, S10), and Andrew ruled it is applied from site Z only |
@@ -64,9 +65,9 @@ The ledger entry `mdpf_taxsma-tx-r-1` and its sentinel (OPEN until leg V2).
 2. Site Z's reply on the Gateway release (request file in `deliverables/4.0.0_SA_CRO/`).
 3. Activation (TX-r-3) once Andrew's items exist: the opalbloomberg sign-in at the Gateway and the never-widen sign-off.
 4. Unblocked meanwhile, this seat: the 0.6.0 re-cut of the expected cases (TX-v-1) and the journey harness
-   (TX-v-2); Cottonwood's own tree showing the Tax leaf under SMA (see Parked).
+   (TX-v-2); the Cottonwood supervised-population read (see Parked).
 5. After leg V2 closes, and never before it (a second release would erase what V2 measures): rebuild both
-   packages at the E2c candidate and release them Tax-off under a new ledger entry.
+   packages at the E2d candidate (it contains E2c) and release them Tax-off under a new ledger entry.
 
 ## Dependencies
 
@@ -84,7 +85,8 @@ The ledger entry `mdpf_taxsma-tx-r-1` and its sentinel (OPEN until leg V2).
 | Question (off-thread) | Owner | Un-parks when |
 |---|---|---|
 | FIRST-DAY RULE: an account counts only for valuation dates on or after its first Gateway observation (`taxsma_membership.resolve_date_status`), so Tax first appears on the scheduled run ONE TRADING DAY AFTER activation | Andrew | he accepts the one-day lag, or rules that the first observation also covers the prior business day |
-| Cottonwood's OWN category tree still reads "no SMA category members": its two Tax accounts ($6.05M on 09-29) sit inside Client there. Showing them under SMA means a per-firm basis for the `tax` member (carve-out at Cottonwood, additive at 49F and Global), a registry schema change | this lane builds; Andrew's placement word @fc06bf47d6 covers it; the Rule 24 record is owed with the change | next item after TX-v-1, or sooner on Andrew's word |
+| Does Cottonwood's `Client > Opal Supervised` figure (from `build_cottonwood_mdpf_pair`) already count the two Tax accounts? E2d lowers Client by the Tax dollars, so the Unsupervised leg, the complement, drops by them | this lane | a read of the pair's supervised population for the two accounts, before activation |
+| The registry's new per-firm row types the firm id `cottonwood` by hand (naming gate WARN, 1 graded) beside the three already there (`CLIENT_L1_RULE`) | the registry's LGIC migration (R19) | the registry reads its firm ids through `lookup()` |
 | aum-metrics `non_model_assets_detail` (W-6) is built before the Tax step, so its enterprise_total stays pre-Tax | this lane | the page is shown to read it; else leave |
 | Outside 49F's 17.03M: workbook row 9 (Traded=No, awaiting a transfer, 2.30M on 0833) and two 0833 accounts labelled Opal Tax SMA 145 with no workbook row (1.03M + 0.96M), UNCONFIRMED candidates | Yang (workbook rows) / Andrew | two rows added with Traded=Yes; the transfer settling |
 | STRATEGY_CONFLICT valued (workbook SMA 145 vs custodian SMA 200 on 2 accounts): `taxsma_assets.IDENTITY_STATUSES_VALUED` | Andrew (reverse by one tuple edit) | if he wants a label conflict to withhold value |
