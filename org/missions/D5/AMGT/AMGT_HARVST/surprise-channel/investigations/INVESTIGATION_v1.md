@@ -5311,6 +5311,29 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "notes": "Outside this order's reach: threading a monitor through PacedSession is a separate cell if the issuer wants solve()'s own stamp in collector records."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S53",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-01T13:10Z",
+      "one_line": "Round-33 disposition record (rows are append-only): the four round-33 rows the file still reads ARMED are disarmed by landed commits -- W90-S4, W91-S11, W91-S12, W92-S9.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Spine L10: the slug goes only after every BLOCKING or ARMED row of the round is dispositioned.",
+      "world_is": "W90-S4 (21 universe names absent from the gold securities file): gold universe widened 191 -> 212 under the CTO-signed ADDENDUM 1 (@78aac97ada, CTO @e24ca120a2), gold rebuilt @e0d3a13ef1, census re-run maps 89 of 89 (@8e5a41ed67, recorded W90-S5). W91-S11 (no challenged pass earned): af-2 AMENDMENT 1 @c6e376360e; the recut passed bbg's press-and-hold through the real collector path under InputSourceMonitor, hardware input 0 (@12fee81398). W91-S12 (solve raised on a detached frame): re-locate once, planted (@640483677d, merged @12fee81398). W92-S9 (sitemap-XML listing not parsed by the reach and listing silver): fixed @ce17235845 with a negative control.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "commits 78aac97ada, e24ca120a2, e0d3a13ef1, 8e5a41ed67, c6e376360e, 12fee81398, 640483677d, ce17235845",
+          "deliverables/0.9.0_WK_AMGT_HARVST~91/af2_challenged_pass.json",
+          "deliverables/0.9.0_WK_AMGT_HARVST~90/af3_census2.out"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Every disarm is by a landed commit; none is a ruling that limits a FWD claim."
     }
   ]
 ```
