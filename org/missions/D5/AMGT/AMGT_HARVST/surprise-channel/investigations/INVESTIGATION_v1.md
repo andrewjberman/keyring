@@ -4633,6 +4633,50 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "Round 32 grades the driver's depth on the collector's own silver keyed by discovered_for (ae-4 AC3). Which population and key FWD-14's census joins on (a crosswalk from universe key to gold key, or the gold securities file as the population) is an ENDPOINT-text question for 1.0.0_SA_CTO~Z."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~90",
+      "surfaced_at": "2026-10-01T05:45Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W90-S1",
+      "one_line": "HVST-ae-1 item 1 as written (bronze = the bare listing item) would give silver title None and a synthesised article_id: _extract_sa reads payload['data'] as ONE dict, and a bare item has no 'data'.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "HVST-ae-1 section 1 item 1: raw_bytes = json.dumps(item, ensure_ascii=True, sort_keys=True).encode('ascii') -- the bronze capture IS the listing item; silver is built from the bronze capture.",
+      "world_is": "lib/opal_data_harvest/silver_from_bronze.py:79-80 _extract_sa does data = payload.get('data') or {}. Run at 2026-10-01 ~05:3xZ on this worktree: article_rows('sa', bare_item_bytes, 'as_received', ...) -> article_id '8254c329a92850f6d539dd37' (a hash), title None, id None; the same item wrapped as {'data': item} -> article_id '123', title 'T', id '123'. silver_from_bronze.py is outside this order's <paths>. I stored {'data': item} (the JSON:API envelope the extractor reads; the item is inside it, whole and unchanged) so that silver reads the LISTED id and title. Plants (ii) assert bytes['data'] equals the listing item and a silver round-trip reads the listed id and title.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/silver_from_bronze.py:79-80 @43f34bae73",
+          "lib/opal_data_harvest/test_ae1_sa_listing_body.py::test_ii_silver_reads_the_stored_listing_item_as_the_listed_article"
+        ]
+      },
+      "notes": "If a bare item was intended, silver_from_bronze._extract_sa needs a listing-item branch (a cell outside this order's paths). The wrapped form needs none."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~90",
+      "surfaced_at": "2026-10-01T05:45Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W90-S2",
+      "one_line": "Four base tests assert the replaced sa behaviour (an article GET stored as the bronze capture; sa keys_fetched/keys_stored_join non-empty): the collector suite reads 4 failed, 367 passed, 1 skipped against 363 passed, 1 skipped at the cut. Their files are outside this order's paths.",
+      "class": "BLOCKING",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Order instruction: run python -m pytest lib/opal_data_harvest/ -q before committing and report the pass count against the base (363 passed, 1 skipped).",
+      "world_is": "2026-10-01 ~05:4xZ, this worktree: 4 failed, 367 passed, 1 skipped. FAILED: test_bronze_capture.py::test_article_raw_bytes_are_response_body_sa; test_n1_received_bytes_and_run_record.py::test_n1_received_bytes_stored_as_received_beside_rebuild[sa] and ::test_n1_run_record_counts_held_keys_skipped_and_a_planted_new_key_fetched (article_gets for sa now 0, keys_fetched empty); test_p2_fetched_and_stored_keys.py::test_p2b_every_fetched_key_of_every_publisher_joins_an_outbox_row[sa]. Each asserts the pre-repair mechanism (an /api/v3/articles/{id} GET whose response is the bronze capture, noted by _note_fetch). 0 of these 4 touch another publisher. Consequence beyond the tests: with no article request and no _note_fetch, an sa run record's keys_fetched is empty and keys_stored_join has no sa entries; the worker's fetched/stored ledger no longer counts sa articles as fetched. I did not edit those four tests (outside <paths>) and did not re-add _note_fetch (the order says it is no longer called).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "deliverables/0.9.0_WK_AMGT_HARVST~90/ae1_suite_A.out",
+          "lib/opal_data_harvest/publishers.py seeking_alpha @ this branch"
+        ]
+      },
+      "notes": "Disarm: an issuer amendment adding the four test files to <paths> (their sa arms to assert the listing-body behaviour), or a ruling on whether sa run records should still count the listing item as a fetched key."
     }
   ]
 ```
