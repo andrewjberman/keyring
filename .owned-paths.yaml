@@ -2361,6 +2361,18 @@ paths:
     lane: MDPF_SECCLASS_FAST_M_AE
     note: "MDPF_SECCLASS FAST lease, exact file; CTO grantor batch 64 (2026-10-01)."
 
+  "infra/aws/lambda/v2_portal/_shared/etf_classification.py":
+    lane: MDPF_SECCLASS_FAST_M_AE
+    note: "MDPF_SECCLASS FAST lease, exact file (the seed source and its copies); CTO grantor batch 68 (2026-10-01)."
+
+  "infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/etf_classification.py":
+    lane: MDPF_SECCLASS_FAST_M_AE
+    note: "MDPF_SECCLASS FAST lease, exact file (the seed source and its copies); CTO grantor batch 68 (2026-10-01)."
+
+  "infra/aws/lambda/v2_portal/yang_pipeline/portfolios/yang-generate-etf-returns/etf_classification.py":
+    lane: MDPF_SECCLASS_FAST_M_YANG
+    note: "MDPF_SECCLASS FAST lease, exact file (the seed source and its copies); CTO grantor batch 68 (2026-10-01)."
+
   "infra/aws/lambda/v2_portal/yang_pipeline/**":
     lane: YANG_PIPELINE_DEPLOY
     note: "yang-pipeline Lambda SOURCE (yang-model-portfolio-benchmarks et al). Added 2026-08-03 by 2.0.0_SA_COO (grantor, SoD; CTO ARCH-GATE PASS 20260803T170310Z): third record-consistency gap of the day on this family -- the lane's source-map exact-file rule (:1472ish) and TF-root rule bind to YANG_PIPELINE_DEPLOY but the Lambda SOURCE dir had NO rule and fell through to infra/aws/** AE-only, so DS's 46d4b1110d membership grant was inert for source commits (audited override on 4024664d71 cited the gap). Zero membership change -- binds the path to the already-gated lane (DT 06-26 gate, DS 20260803T155644Z gate, AE set untouched). Longest-match overrides infra/aws/** AE-only."
