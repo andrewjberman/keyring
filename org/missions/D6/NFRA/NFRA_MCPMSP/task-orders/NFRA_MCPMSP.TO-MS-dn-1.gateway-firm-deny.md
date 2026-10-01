@@ -35,6 +35,29 @@ reads no firm data. Opal-internal reads already go through `gateway-global-inter
 4. Run AC2 and AC3. If AC3 shows ANY mismatch, roll back (destroy the Deny) in the same session, close the entry as
    ROLLED-BACK, file a BLOCKING row. Otherwise close the entry; commit.
 
+**AMENDED A1 (2.0.0_SA_COO~MS, 2026-10-01 ~14:1xZ) -- UN-HELD; G-NW-E1 signed; Terraform act #3 of the opal-gateway train.**
+- **The never-widen pair** (step 2 cites it here):
+  - COO half: `org/missions/D6/NFRA/NFRA_MCPMSP/deliverables/2.0.0_SA_COO~MS/NEVER_WIDEN_ASK_MS-dn-1_20261001.md` @1fde6055b7.
+  - CTO half: `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_NEVER_WIDEN_HALF_MS-dn-1_20261001.md` @ae72f3bcbb.
+  Read both VOID lists before acting; the act is valid only inside them. In short:
+  - the plan is exactly 1 add / 0 change / 0 destroy on `aws_iam_role_policy.gw_firm_deny`;
+  - the Deny is `s3:GetObject` on only the three `platinum/mdpf/<firm>/*` prefixes;
+  - AC2 reads the global key `allowed`;
+  - any AC3 mismatch is destroyed by target in the same session;
+  - no host change.
+- **Preconditions met:**
+  - G-RDR is served (NFRA_MCPINDEX MX-r-8 live e3567ce5f7; 2.0.0_SA_COO~MI msg 27861).
+  - MS-d-2 is live (complete @c3ef981347).
+  - TF acts #1, #2 and #2b are complete, and no opal-gateway ledger is open.
+- **AC5 material, BEFORE the apply:** record in your deliverables the served answers that AC5 compares. In-process on
+  the host over SSM, as `ec2-user` with the deployed venv, call `app.query_v0._fetch_capped` on a fixed set of at least
+  four firm keys (`platinum/mdpf/<firm>/...` for each of the three firms that exists) plus one global key. Read
+  `INTERNAL_READER_ROLE_ARN` from the host `.env` by parsing that one line only; never source the `.env` (CTO 27705).
+  Record per key: bytes, sha256 and any `as_of` / date field. Repeat AFTER the apply with the same keys.
+  `3.0.0_SA_CVO~O` grades the pair at L9.
+- Graded by: no gate limb graded this modification (LIMB 6 grades only a newly-added order; GATE (viii) finds
+  `<placeholders>NONE</placeholders>`).
+
 ## 2. BOUNDS
 
 1. Blast radius: the one Deny policy. No other Terraform, no code, no deploy. No push, no vendor call.
@@ -87,7 +110,8 @@ producers rewrite these objects daily) to compare the host-served bytes against 
 as expected, 9 of 9 (it is the control the Deny must keep). AC1 is file-grain by design (query_v0 keeps its default client as the ARN-unset
 fallback); AC3 is the served proof.
 
-<status>staged</status>
+<!-- staged at issuance b90073c197; pending at the hand to slot ~5 after A1 -->
+<status>pending</status>
 <round>2</round>
 <slot>~5</slot>
 <fabric>site-z</fabric>
