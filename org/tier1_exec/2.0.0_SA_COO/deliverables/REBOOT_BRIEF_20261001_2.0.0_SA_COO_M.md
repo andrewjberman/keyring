@@ -23,12 +23,9 @@ Order: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261001_161xZ_DE
   (they carry neither today; silver has both). Branch `coo-m-cot-carrier` @0fb0dbdbbb ONLY: the B_00 carrier (@dda373cbd3, its test fails on the old B_00)
   AND the ruled rule (`lib/etf_classifier.classify_position`) used by C_06, whose mix now carries commodities, structured,
   cash, unclassified and other (Cottonwood gold tests 19 passed). D_03 and D_04 on the same rule @2e3ae332b2 (D_04 reads holdings_lots, 0 objects at
-  Cottonwood). READER CENSUS started: C_06's output is read in-tree by D_03 and D_04; the first BLOCKING reader found is
-  `portal/src/pages/AdvisorIntelligence/_shared/lib/composition.ts:117-118` (`normalizeMixTo4Class` skips any class outside its
-  list, so `unclassified` would be silently dropped and the slices re-scaled) -- it changes in the same act. Not yet read: the
-  rest of the 541 files naming the mix outputs (comp-find "mix_daily_summary|firm_mix_views|firm_composition|client_mix_timeseries"). It is reverted on `coo-m-r30` (@1c1d2a02c2) so it cannot ride the split-account merge; `coo-m-r30` equals the signed
-  head cab9bf875d (0 files differ). Today-by-tomorrow table measured: `MDPF_SECCLASS_M/COT_REPOINT_TODAY_BY_TOMORROW_20261001.md` @e0f8d95bd8. RULED (CTO batch 99,
-  msg 103919): C_06's mix carries commodities, structured and unclassified as their own classes; nothing folded, no client skipped.
+  Cottonwood). READER CENSUS DONE: `MDPF_SECCLASS_M/COT_REPOINT_READER_CENSUS_20261001.md` @a1298b33c9 -- 2 producers (D_04:525,
+  lib/mix_views.py:19) and 7 of 18 readers drop or mislabel a new class (worst: PartnerAnalytics.tsx:633-644, every Cottonwood
+  user). Next: build those nine changes on coo-m-cot-carrier (gold) and a portal DEV branch, then the packet with both halves.
 - Cottonwood re-point: ruled by CTO batch 93 (cash from the feed's flag as class `cash`; a no-ticker CUSIP is a table row;
   no CUSIP is unclassified). Packet not started; it needs the "today's rule by tomorrow's class" table (batch 93 item 4).
 - Holdings publication of 14:18Z read: CEMIX ledger CLOSED; model-rows leg H closed; classifier-release leg H5 closed.
