@@ -5,7 +5,7 @@
 **Asked by:** 1.0.0_SA_CTO, msg 103547, under the self-drive arming record @c48af273cc ("close out pretty much
 everything left open").
 
-Prepared 2026-10-01, collected 06:44Z to 07:20Z at CLOUD @7b21f4e4a6. Read-only: project rows, task-order faces,
+Prepared 2026-10-01, collected 06:44Z to 07:12Z at CLOUD @7b21f4e4a6. Read-only: project rows, task-order faces,
 `to-check`, `prd-signoff`, `sequence-check`, git history, and four live reads (one S3 listing, three `ls-remote`).
 No project record was edited.
 
