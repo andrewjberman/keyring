@@ -4795,6 +4795,49 @@ carries none.
     "spec_asserts": "No secret value leaves the host's .env except into the service's environment.",
     "world_is": "One OTP bearer token sits in the SSM command-invocation output of that run (retained by SSM) and in this seat's session output.",
     "notes": "FIX AT THE INSTRUMENT, done before the cut: round-6 r8.AC2's host probe (r8_host.py) parses .env in Python the way systemd does and prints only tool names; the face of every round-6 host-touching order says never shell-source .env. DISARM: the rotation decision is the bearer's owner's (NFRA_OPLGTW, 2.0.0_SA_COO~O; OG-rl-1 already carries a bearer rotation, row Z-W17-S1) -- routed to ~O the same turn this row lands. ANSWERED (2.0.0_SA_COO~O msg 27684, ~08:59Z): the echoed word is the cot token (Secrets Manager blackdiamond/cot/otp-gateway-token), the same value row Z-W17-S1 names; NFRA_OPLGTW OG-rl-1 (amended A1) already rotates it, and its verify refuses the old value. This row disarms when OG-rl-1 lands; no separate act. The repeat class (a host .env that leaks when shell-sourced) goes on OPLGTW's next enrichment."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W22-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~22",
+    "surfaced_at": "2026-10-01T09:25Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "A silver_datasets row carries no firm field, so discover's firm gate cannot name WHICH firm a firm-scoped row belongs to: MX-d-6 hands the existing catalog_gate.gate() a gate row whose firm is the asking firm principal itself, so every KNOWN firm principal is shown a firm-scoped silver row (e.g. a cottonwood principal is shown the 49financial-only blackdiamond_fees row). The read tool still enforces its own grant, so no data moves; the row's existence and caveats are what a wrong-firm principal sees.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/opal-gateway/app/integrations/opal_discover/integration.py _silver_answer (branch wk-nfra_mcpindex-6-22): gate row firm = principal_firm for rule firm-scoped; test_silver_row_firm_gate_is_the_existing_gate asserts internal/49financial True, nosuchfirm/unresolved False.",
+        "workflows/atom_decomposition/catalog_entries/README.md: the C1 schema is exactly 8 fields and firm_scope_rule is firm-scoped / opal-internal-only / all-firms-aggregate; there is no firm field to bind a row to one firm (emit_catalog_v02.py validate_entry refuses an extra key)."
+      ]
+    },
+    "spec_asserts": "MX-d-6 act 1: a firm-scoped silver row is servable to the principal kinds the existing gate admits for that rule; reuse the gate.",
+    "world_is": "The existing gate admits a firm principal only on row firm == principal firm; a silver row has no firm, so the rule alone admits every known firm principal. discover is dormant until MX-r-8 releases it.",
+    "notes": "DISARM: before MX-r-8 enables opal_discover, either a C1 schema change gives a silver entry a firm field (an emitter + README change, not this cell's paths) or the issuer accepts that a wrong-firm principal sees the row's existence while the read tool denies the read."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W22-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~22",
+    "surfaced_at": "2026-10-01T09:25Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "Row Z-W15-S3's cause, measured: mdpf_get_model_benchmarks' two example questions reach no tool because the benchmarks_and_models channel's only keyword in each ask is the plain lower-case word 'benchmark', which MX-d-5's weak-match rule refuses to select on; the portal row was never matched on its own text. MX-d-6 matches portal_datasets rows on their own text too (answered as the channel artifact whose accessor the row names), which also makes 'ETF holdings and fund flows' catalogued (etfs_get_positioning).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "At the base, discover('Did the Ultra-Short Term model beat its index benchmark since inception?') -> catalogued False, matches [] (scratch probe, worktree wk-mcpindex-r6-22, before the edit); after: [('mp.05.model-portfolio-benchmarks','mdpf_get_model_benchmarks')].",
+        "d6.AC3 after the edit: REACHABILITY: 10 of 10 catalog rows naming a read tool are reachable; tests/routing/run_routing.py ROUTING: 24 of 27 (unchanged from the base 24)."
+      ]
+    },
+    "spec_asserts": "MX-d-6 act 3: measure first why the model_benchmarks row is unreachable, then make it reachable.",
+    "world_is": "The own-text rule (>= 2 content words and >= 60% of the ask's, plural folded) is a recall floor over every row's own example questions, so every row is reachable by its own example question by construction; whether a real user's paraphrase reaches it is measured only by the 27-ask routing harness, which carries no Schwab, BD or model-benchmark dataset ask.",
+    "notes": "Not a hazard. Candidate enrichment: add dataset asks for the BD, Schwab and model-benchmark rows to tests/routing/questions.yaml so the harness grades their recall, not only their own example questions."
   }
 ]
 ```
