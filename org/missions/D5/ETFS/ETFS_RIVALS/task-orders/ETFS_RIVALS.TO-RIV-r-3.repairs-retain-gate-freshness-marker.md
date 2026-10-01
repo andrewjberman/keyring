@@ -143,7 +143,8 @@ threshold 0; marker None) -- each FAIL as expected.
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
+<completion_note>2026-10-01 drain by 2.0.0_SA_COO~RV: worker 0.9.0_WK_ETFS_RIVALS~2 @d9067f609c (builds 5db308439c, dd4cf92eb9 under amendment 1); proof instance VALID; r-3.AC1/AC2/AC3 PASS (AC2 after the issuer's fixture fix, row W2-S6); package 224 passed 2 skipped; rows W2-S6/S7 resolved, W2-S8 disarmed (held fund reads 'Trades held'), W2-S9 ruled, W2-S10 resolution record. Note for d-4: the held banner is inserted post-render by publish_page.mark_held (render.py untouched).</completion_note>
 <round>3</round>
 <slot>~2</slot>
 <fabric>site-z</fabric>
