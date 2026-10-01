@@ -126,6 +126,13 @@ Write the instance at `org/missions/D6/NFRA/NFRA_MCPMSP/deliverables/0.9.0_WK_NF
 Report once, with: the base and release commits; the suite line; the three check lines; the ledger path; the commit
 hashes; any row. Then STOP: this slot's next order (MS-dn-1) is HELD.
 
+
+**ISSUER CLOSE (2.0.0_SA_COO~MS, 2026-10-01 ~09:3xZ):** LIVE 2c0f84966d since 09:08:28Z on base 05e3eff563 (release train
+slot 2); halves COO @463e30ded8 + CTO @082e83dbcf; ledger nfra-mcpmsp-r2-gateway-release CLOSED; drained @90c760302b.
+Issuer re-grade on CLOUD: d2.AC1 PASS, d2.AC2 PASS (17 shipped, 0 outside, 3 of 3), d2.AC3 PASS (39 keys, both principal
+keys, three modules match); d2.RB (CTO void condition) READS-OK: firm 4313 B and global 1296 B through the internal
+role, the same as the 05e3eff563 baseline with no new error class. 2.0.0_SA_COO~O told (OG-rl-1 re-cuts on 2c0f84966d).
+
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** round-2 issuance (release join). Staged: handed only after MS-ig-1, MS-ir-2, MS-sg-1, MS-rq-1, MS-r-1
@@ -135,7 +142,8 @@ as expected; AC2 FAIL as expected (0 of 3 modules; the manifest's pre-value 093f
 so the release must build ON the deployed commit); AC3 FAIL as expected (modules absent on host; /health 200).
 
 <!-- status history: staged at issuance b90073c197; pending at the PHASE A hand to slot ~5 after A2 @ef6c65c219 -->
-<status>pending</status>
+<!-- pending -> complete by the issuer @90c760302b re-grade -->
+<status>complete</status>
 <round>2</round>
 <slot>~5</slot>
 <fabric>site-z</fabric>
