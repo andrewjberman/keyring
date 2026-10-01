@@ -5397,3 +5397,30 @@ name the one known failure instead of silently inheriting it.
   "notes": "Not blocking: the clause is met as written. If the structured form is wanted, it is an audit.py edit under its own order; the detail carrier then becomes redundant."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S6",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-01T02:50Z",
+  "one_line": "tx1.AC2 (and ml1.AC2) run `pytest tests/test_entitlement_admin.py` as a WHOLE FILE and demand rc 0, but test_ogz2_ac06 in that file already fails at HEAD~1 (4 puts vs 3), so AC2 reads FAIL although test_ogz2_ac08 passes after the +3 count bump.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/trnspt/checks/tx1.AC2.sh at 9fcd257fbd -> `REG 3 of 3; SCOPES same` then `pytest rc=1; named tests passed 0 of 1; failed/error lines 1`, RESULT: FAIL, exit=1.",
+      "python -m pytest tests/test_entitlement_admin.py -v at 9fcd257fbd -> `1 failed, 8 passed`; test_ogz2_ac08 PASSED, test_ogz2_ac06 FAILED (`expected profile + grant + operator_audit puts, got 4`; the fourth put is the POLICY#EMAILDENY# record of row W3-S22).",
+      "Same file extracted from git archive of HEAD~1 (the commit before this cell's change) with org/standards/NFRA_OPLGTW_CONTRACT.json: `1 failed, 8 passed`, the same test_ogz2_ac06 failure. The cell's change does not cause it.",
+      "_root.sh pytest_named runs the whole file (`python -m pytest <file> -v`), requires rc 0 and failed/error lines 0, and uses its second argument only to count a PASSED line; the check never selects the named test. ml1.AC2.sh line 15 has the same shape."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-OG-tx-1 AC2: `test_ogz2_ac08` passes after the three tools are added; expect `REG 3 of 3; SCOPES same ... RESULT: PASS ... exit=0`.",
+  "world_is": "The three tools are in both lists, the 17 scopes are unchanged and test_ogz2_ac08 passes (asserts 58). The check's rc=0 limb fails on an unrelated test in the same file; AC2 cannot be met as written from the order's own paths (test_ogz2_ac06 is in test_entitlement_admin.py, whose edit grant is the ac08 count bump).",
+  "notes": "Smallest remedies, issuer's choice: select the test in the check (`pytest <file>::<test>`), or update test_ogz2_ac06 to expect the fourth EMAILDENY put (a second edit to test_entitlement_admin.py, which this order's paths already name). The order is left OPEN; this worker did not edit the check or ac06."
+}
+```
