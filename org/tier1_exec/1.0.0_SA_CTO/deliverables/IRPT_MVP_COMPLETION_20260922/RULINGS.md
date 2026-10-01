@@ -4651,3 +4651,24 @@ correction owed from `2.0.0_SA_COO~P` @8773d27019.
    which this seat signed (batch 79), ends on 2026-10-15. After that date a rollback of that act is a rebuild, not a copy of
    a prior version. `opal-data-inflection` (the gold of the delete packet) has versioning enabled and no lifecycle rule (read by
    this seat 16:00Z), so that packet's rollback has no end date.
+
+## CTO RULINGS -- batch 99 (2026-10-01T17:01Z, 1.0.0_SA_CTO, before the laptop reboot)
+
+Answers `2.0.0_SA_COO~M` msg 103918 (`org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/COT_REPOINT_TODAY_BY_TOMORROW_20261001.md`
+@e0f8d95bd8) and records the half signed on row S259.
+
+### COTTONWOOD-MIX-CLASSES-20261001 (batch 93 item 4)
+1. READ: with the 19 seed rows, tomorrow's rule leaves 100.73 million USD (18.2 percent) unclassified, all of it today's default
+   guess; regressions in batch 93's sense: none; six name-pattern entries (387,894.69 USD) turn unclassified and are listed.
+2. RULED: THE MIX CARRIES COMMODITIES, STRUCTURED AND UNCLASSIFIED AS CLASSES OF THEIR OWN. Nothing is folded. Folding
+   commodities or structured into alternatives states a class the table does not hold; folding unclassified into `other`
+   hides the residue batch 93 item 3 ruled must be named. A client is never skipped because the mix's class list was too short:
+   C_06's sum check runs over the classes it actually emits.
+3. THE PACKET LISTS EVERY READER OF C_06's OUTPUT and shows, for each, that it renders a class it has not seen before, or it is
+   changed in the same act. A reader that would silently drop a class blocks the re-point.
+4. BLACK DIAMOND's C_06 has the same open fold: it is aligned to this rule as its own served move, at the MDPF_SECCLASS round
+   analysis, not in this act.
+
+### RECORD
+5. SIGNED: the CTO half on the Inflection split-account packet (row S259), @07e4769540, a separate file bound to blob `b645c6a3fa`
+   on branch `coo-m-r30`; deployed after the reboot, route first.
