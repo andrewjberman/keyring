@@ -5060,6 +5060,27 @@ carries none.
     "spec_asserts": "Order census: the document is the only same-day writer on sentinel-less days.",
     "world_is": "On 2026-09-29 the same-day writer was a PHASE A test run, not the scheduled document; the 09-29 lag-now figure is not measurable and is shown n/a in ANNOUNCE 0.4. 8 of 9 gap dates are clean document writes.",
     "notes": "INERT: no state to disarm; recorded so a later reader does not count 09-29 as a document write."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~24",
+    "surfaced_at": "2026-10-01T10:17Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "NFRA_MCPINDEX-Z-W24-S7",
+    "one_line": "The A2 step 'git merge CLOUD' conflicted on the append-only INVESTIGATION_v1.md, and the worker commit path (.tools/safe-commit.sh -- <path>) refuses during a merge, so the merge commit was made with plain `git commit -F` under the worker's GIT_AUTHOR/COMMITTER identity.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit.sh output at merge 98716e81e1..: 'git refuses commit --only -- <pathspec> during a merge ... NOTHING WAS STAGED BY THIS RUN ... if the merge is YOURS, finish it (git merge --continue / --abort) first.'",
+        "Resolution: union of both sides' rows by id (CLOUD 214 rows + Z-W24-S1..S6 = 220 rows, 220 unique ids, JSON valid, 0 conflict markers); merge commit 8bfbd30b34 on wk-nfra_mcpindex-6-24; surprise-row-gate on the commit: OK, parent-carried rows exempt."
+      ]
+    },
+    "spec_asserts": "The worker commit rule: every commit goes through safe-commit.sh --author ... -F <msgfile> -- <paths>.",
+    "world_is": "A merge commit cannot go through safe-commit.sh with a pathspec; the merge was finished with `git add <the one conflicted file>` + `git commit -F` as the worker identity. The commit's tree carries the CLOUD side's files as CLOUD merged them.",
+    "notes": "INERT: nothing to disarm. Candidate enrichment: a worker-merge limb in safe-commit.sh (as safe-merge.sh --continue is for the drain)."
   }
 ]
 ```
