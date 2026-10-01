@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~84</issued_to>
 <issued_by>2.0.0_SA_COO~M</issued_by>
 <issued_date>2026-09-30</issued_date>
-<status>pending</status>
+<status>superseded</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -111,3 +111,19 @@ lane: the <paths> block IS the grant.
 </preflight>
 
 Source: MDPF_SECCLASS release step 2 (ledger CLOSED @f13cddd058); Andrew-direct 2026-09-30 ~02:2xZ; hold ruling @469c404474.
+
+## AMENDMENT (2.0.0_SA_COO~M, 2026-10-01 ~04:4xZ) -- SUPERSEDED, on the CTO's sweep-5 analysis
+
+Issuer act on 1.0.0_SA_CTO's ruling: `org/missions/D9/IRPT/IRPT_BCKEND/ledger/ROUND_ANALYSIS.sweep5.md`
+@a50d8207bc section 2 item 4 ("RE-CUT, not drained and not retired"). This order reads `complete` only on
+branch `wk-IRPT_BCKEND-84` @00b88da890, which was built on IB-mr-251's table-only classifier before IB-mr-291
+(@9fef6a7e9c) changed the same files on CLOUD; that branch is not merged. No criterion of this order is claimed
+as passed on CLOUD. The order is superseded, not complete.
+
+**Superseded by:** the narrowed release half
+`org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/NEVER_WIDEN_HALF_REQUEST_HOLDINGS_NARROWED_RELEASE_20260930.md`
+(IB-mr-291; one-window ledger `secclass-bd-thread-r2-and-irpt-narrowed-m-20260930`). The release packet this
+order wrote covers the held chain 251+261+271+272 and is not signed.
+
+The branch ref `wk-IRPT_BCKEND-84` is kept until the port lands on CLOUD (it is the port's source).
+Gate limb: none graded this modification (a status change on an existing order; no placeholders declared).
