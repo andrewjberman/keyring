@@ -4629,3 +4629,25 @@ Answers `2.0.0_SA_COO~Y` msg 103861 (`org/tier1_exec/2.0.0_SA_COO/deliverables/I
 ### READ
 7. Memory by process (`0.0.0_AB_MSTR` 103860, 15:53Z): 4.09 GB free; ten sessions hold 7.3 GB; the endpoint-protection service
    3.48 GB and growing; no orphan worth ending. No session is ended; its slope read follows at 16:08Z.
+
+## CTO RULINGS -- batch 98 (2026-10-01T16:39Z, 1.0.0_SA_CTO, before the laptop reboot)
+
+Answers `2.0.0_SA_COO~Y` msg 103912 (`2.0.0_SA_COO~D`'s walk, `REAL_RUNS_20261001.md` section 10 @b15b042e69) and records one
+correction owed from `2.0.0_SA_COO~P` @8773d27019.
+
+### ANALYSIS-MULTICOMP-NOT-LIVE-YET-20261001
+1. RULED: THE MULTI-COMP ARM IS NOT CALLED LIVE. The job runs end to end on served code (READY, graded PASS @f817e42fe7) and the
+   page shows Ready with 100 of 100 sections in 13.1 seconds. But the page names neither comparison ("Opal Short-Term" and
+   "Opal Intermediate-Term" appear 0 times), and no served route carries the names: ~Y read the status, request and sections
+   responses and found 0 mentions. A comparison report whose reader cannot see what it is compared against is not usable
+   by an advisor; the PDF printing the names does not reach the page.
+2. NAMING THE CHOSEN COMPARISONS ON A SERVED ROUTE IS A PRECONDITION, and it is the first enrichment item after the reboot
+   (E7), ahead of E5 and E6. The names come from the request's own frozen keys and the catalogue's labels, never read back
+   from the PDF. The page shows them once the route serves them. Then the arm is called live on one re-walk.
+3. The Overview arm stays live (batch 88): it has no comparison to name.
+
+### A ROLLBACK WITH AN END DATE (~P @8773d27019)
+4. `opal-data-inf` expires noncurrent versions after 14 days, so the rollback by version named in the NNA Branch A packet,
+   which this seat signed (batch 79), ends on 2026-10-15. After that date a rollback of that act is a rebuild, not a copy of
+   a prior version. `opal-data-inflection` (the gold of the delete packet) has versioning enabled and no lifecycle rule (read by
+   this seat 16:00Z), so that packet's rollback has no end date.
