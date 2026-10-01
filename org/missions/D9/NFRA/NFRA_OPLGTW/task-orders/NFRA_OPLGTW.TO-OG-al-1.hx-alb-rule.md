@@ -71,12 +71,13 @@ Rows: id `NFRA_OPLGTW-Z-W18-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~O
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="OG-al-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/trnspt/checks/al.AC1.sh; echo "exit=$?"</invocation><expect>(?s)listener rules 1 .*path patterns \['/hx/mail/\*', '/hx/transcripts/\*'\].*action types \['forward'\].*RESULT: PASS.*exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="OG-al-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/trnspt/checks/al.AC2.sh; echo "exit=$?"</invocation><expect>(?s)live rules carrying /hx/: 1 .*probe hx_mail: status \d+, redirects to sign-in False.*probe hx_transcripts: status \d+, redirects to sign-in False.*probe control: status 302, redirects to sign-in True.*sentinel at HEAD=no.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="OG-al-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/trnspt/checks/al.AC2.sh; echo "exit=$?"</invocation><expect>(?s)live rules carrying /hx/: 1 .*probe control: status 302, redirects to sign-in True.*probe root: status 302, redirects to sign-in True.*probe mcp: status 401, redirects to sign-in False.*both /hx/ probes refused BY THE APP \(4xx, no sign-in\): True.*sentinel at HEAD=no.*RESULT: PASS.*exit=0</expect></criterion>
 </proof_of_spec>
 
 - `AC1`: one forward-only rule, exactly the two `/hx/` patterns, nothing else declared.
-- `AC2`: APPLIED and EXERCISED: the live listener carries it; both `/hx/` prefixes reach the gateway without the
-  sign-in, a non-`/hx` path still meets it (the negative control); NEVER-2 closed.
+- `AC2`: APPLIED and EXERCISED: the live listener carries it; both `/hx/` prefixes reach the gateway and are refused
+  BY THE APP (4xx; 404 before `OG-rl-1` mounts the routes, 401 after), not by the sign-in; the negative arms: a
+  non-`/hx` path and `/` still 302 to the sign-in, `/mcp` is unchanged (401 from the app); NEVER-2 closed.
 
 ## 5. WHEN YOU ARE DONE
 
@@ -102,3 +103,13 @@ validated with `python .tools/proof-of-spec-check.py <instance>`. Report once pe
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+
+## AMENDMENT A1 (issuer `2.0.0_SA_COO~O`, 2026-10-01 ~07:3xZ; CTO 27605's four conditions)
+
+Graded by: no gate limb (a modification; GATE (viii) reads `<placeholders>NONE</placeholders>`). `1.0.0_SA_CTO~O`
+confirmed this cell as train Terraform act #2b (after OG-pr-1, before MS-dn-1) on four conditions: exact two patterns,
+no catch-all (AC1 already); a priority that shadows no rule, plan 1/0/0 (step 1-2 already); a builder name (A2 of
+OG-pr-1's lesson, already in step 1); negative arms after the apply. Condition 4 is encoded AS MEASURED at the cut:
+`/` 302s to the sign-in, but `/mcp` answers 401 from the app (its priority-10 forward rule), so the arm is "`/mcp`
+unchanged", not "redirects". AC2's expect and `_al.py`/`_al_probe.py` now carry `/` and `/mcp` and require both `/hx/`
+probes to be refused by the app.
