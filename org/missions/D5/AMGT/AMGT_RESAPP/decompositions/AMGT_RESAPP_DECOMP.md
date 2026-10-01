@@ -7285,3 +7285,102 @@ fanout:
   egress: ae-1 only -- 12 Anthropic messages, on Andrew's per-use word; ae-2 none
   no_promote: true
 ```
+
+
+## 64. ROUND 56 -- THE FRIDAY DEMO FEED: THE MONTHLY CHATTER ROUTE, THE SERVED T-1 FALLBACK WITH BREAKOUT READING BREAKOUT, PERCENT BY NAME, THE PRICE RANKING OVER THE COVERED NAMES. Seven cells, four orders now (af-5 ordered at its predecessors' merge) and three direct acts
+
+**Cut by `2.0.0_SA_COO~Z`** on `1.0.0_SA_CTO~Z`'s PRD **ADDENDUM D** (v0.31 `18c3f9c496`, v0.32 `c505327bd7`; ratified half SIGNED by
+`3.0.0_SA_CVO~Z`, brief half accepted as the CRO's text: `prd-signoff.py status` read ADMITTED at 05:07Z), the shared CONTRACT
+(`org/tier1_exec/1.0.0_SA_CTO/deliverables/AMGT_FRIDAY_DEMO_20261001/CONTRACT.md` @`b8c93f6342`) and the placement
+(`CTO_PLACEMENT_20261001_043xZ_AMGT_FRIDAY_DEMO_RESTRUCTURE.md` @`e18d3a4e6a`, section 3: the monthly chatter route FIRST, then the date
+fallback, units and the price universe; fan-out cap 3). Round 55 is still open on `AMGT-ae-1` (GO sent 04:34Z, `0.7.0_AE_CloudOps~A`
+LIVE); the placement allows the Friday round to proceed beside it. CTO ruling msg 27527: an empty month is ABSENT (CONTRACT s.1).
+CTO msg 27433: the scoped-API redeploy carries CORPUS ab-3's case_rule (`c50db70fb0`); it is `af-5` here.
+
+### 64a. THE ITEMS
+
+| addendum D item | lands in |
+|---|---|
+| FWD-32 the monthly chatter route (critical path; DSGN's bubbles) | `af-0` the covered-universe loader (direct act, landed in this issuance) + `af-1` the route |
+| FWD-33 the served T-1 fallback, breakout reads breakout | `af-2` |
+| FWD-34 percent by name | `af-2` (same read functions; one build, three criteria) |
+| FWD-35 the price ranking over the covered names | `af-3` (producer); its cut-over merge IS the served act (the 07:00 ET scheduled task runs the site-Z working tree) |
+| the served acts (C-FRIDAY-NEVER-WIDEN) | `af-5` the one scoped-API redeploy (af-1 + af-2 + CORPUS ab-3), `af-6` the af-3 cut-over merge; each under its CTO+COO halves |
+| repairs | `af-4` direct act: Z-S73 (`test_harvest_prefixes` REGISTRY_HASH stale; the CORPUS row names this seat owner). The generator's fresh render differs from the committed module on the 2 hash lines only (4 diff lines; every prefix constant equal), so served prefixes move DELTA=0 |
+
+**NOT cells this round (Friday critical path first; each is enrichment for round 57):** C-NO-DEAD-INPUTS (the chatter ranking and
+header feed off the legacy article layout; one dossier prefix retired after its readers move), the chatter RANKING universe
+(C-PAGE-UNIVERSE-ONE-NAME for the chatter-axis Lambda), the Breakout x Chatter axis (placement R6: Trending only for Friday). None of
+FWD-32..35 needs them.
+
+### 64b. MEASUREMENTS THE CUT RESTS ON (04:4x-05:0xZ, live, read-only)
+
+1. **Covered universe.** `amgt/harvest/gold/research_dossier/` holds 95 `security_key=` folders (447 objects); the hyphen twin holds
+   the same 95 (846 objects). Two folders are slash-safe minted (`BP-SLASH-_LN_Equity`, `NG-SLASH-_LN_Equity`); decoded by
+   `crosswalk.security_key_from_slash_safe` they resolve (`BP/ LN`, `NG/ LN`). `af-0` returns decoded keys: 95.
+2. **Gold for FWD-32.** `chatter_daily` is a FULL snapshot per object (latest: 52,143 rows = 191 names x 273 days, 2026-01-01..09-30)
+   and carries NO per-publisher count. `article_security_mention` is also a full snapshot (latest: 379 distinct (article, name)
+   pairs, 71 names, publishers sa/wsj/bbg/barrons/ft). Of the 95 covered names, 51 appear in `chatter_daily` and 23 in the mention
+   table. On every 2026 name-month the two agree (147 of 147 with collected > 0); they differ only before 2026, where `chatter_daily`
+   has no days. Positive control: `BA_US_Equity` September = 20 in both.
+3. **The route today.** `GET .../lead-panel/timeseries/collected/chatter` returns 400 refused (`movement_gate.py:211-217`: movement must
+   be TRENDING or BREAKOUT). The template is mounted (`scoped_amgt_route_table()`, 18 routes; `test_scoped_amgt_mount.py:128`), so no
+   gateway or terraform change is needed. `pool_reader._gold_latest_snapshot_rows(table)` reads any gold table's newest snapshot. IAM
+   already grants both prefixes (`scoped-amgt-api.tf:203-205`).
+4. **FWD-33.** `read_rankings` already walks back (`_find_latest_served_pointer`, 14 calendar days): on 10-01 it served BREAKOUT/PRICE
+   and TRENDING/PRICE from 2026-09-29 (`dated: true`). `read_point_record` (`:821`) has NO fallback: the overlay's four per-name reads
+   ask for today's UTC date and read ABSENT (ASML NA, 10-01). The overlay's `price` is the TRENDING row (`:2165`); the page labels it
+   "Breakout (price)". `lib/trading_calendar.py` is not imported anywhere in `lib/research`; `prev_trading_day(10-01)` = 09-30.
+5. **FWD-34.** TRENDING/PRICE `score` is percent (`price/axis.py:36`, 992 HK 18.109); BREAKOUT/PRICE `score` and `pct_jump` are
+   fractions (ASML NA 0.0921396 / 0.09214, `movement_gate.py:386-400`). No unit field exists. The breakout rank series passes the
+   fraction (`read_rank_series`).
+6. **FWD-35.** The producer is `integrations/bloomberg/research/price_axis_pull.py` (07:00 ET step of `OPAL_BBGTML_daily_pull` on this
+   box); universe = the 34-name `0.9.0_WK_AMGT_RESAPP~4/universe.json` (`--universe` default, `:239`). Names with < 2 observations are
+   logged and dropped BEFORE `compute_price_axis`, so they are absent from the generation's own `excluded` record. The 30-day window
+   exists (`WINDOW_DAYS = 30`). The crosswalk resolves 95 of 95 decoded covered keys to a Bloomberg form.
+7. **Checks.** Every check below was run at the base (each FAILS on the clauses its cell moves) and on a simulated post-state (each
+   PASSES); af-1's also on two planted negatives (a zero month cell; 51 rows of 95), each FAILS.
+
+### 64c. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-af-0` | THE COVERED-UNIVERSE LOADER | issuer | direct act (in the issuance commit) | LOCAL | `lib/research/coverage/covered_universe.py` |
+| `AMGT-af-1` | THE MONTHLY CHATTER ROUTE | `~197` | worker | LOCAL (served by af-5) | `lib/research/api/monthly_chatter.py` (new), `scoped_amgt.py` handler timeseries-dispatch hunk only, its test |
+| `AMGT-af-2` | THE SERVED T-1 FALLBACK, BREAKOUT READS BREAKOUT, PERCENT BY NAME | `~198` | worker | LOCAL (served by af-5) | `scoped_amgt.py` read functions and serializers (NOT the handler), its test |
+| `AMGT-af-3` | THE PRICE RANKING OVER THE COVERED NAMES | `~199` | worker | LOCAL (served by af-6) | `price_axis_pull.py`, its test |
+| `AMGT-af-4` | REPAIR: Z-S73 | issuer | direct act (in the issuance commit; `gen_harvest_prefixes.py --write`, then `--check` rc 0 and `test_harvest_prefixes.py` 6 passed) | LOCAL | `lib/research/api/_harvest_prefixes.py` (hash lines only) |
+| `AMGT-af-5` | THE ONE SCOPED-API REDEPLOY (af-1 + af-2 + CORPUS ab-3) | `0.7.0_AE_CloudOps~A` | seat order, a pair | WORLD | the Lambda artifact, the deploy ledger (cut when af-1 and af-2 merge) |
+| `AMGT-af-6` | THE af-3 CUT-OVER (merge under its pair; FWD-35 graded on the scheduled generation, QUALIFIED WAIT) | issuer | direct act | WORLD | the merge, the halves, deliverables |
+
+af-5 is in this rectangle and is ORDERED when af-1 and af-2 land (its face names their merge SHAs, which do not exist yet). The
+rectangle is frozen here.
+
+### 64d. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain = addendum D's four outcomes, C-FRIDAY-NEVER-WIDEN's served acts and the one owned repair. FWD-33 and FWD-34
+  share one cell because both are serve-time transforms of the same read functions.
+- **(ii) Same grain.** One route; one family of read functions; one producer; one repair; one redeploy; one merge.
+- **(iii) Intent.** One axis: the page's figures are served, dated and in percent by the API, never computed by the page.
+- **(iv) What a cell does NOT move.** af-1 moves no ranking and no gate; af-2 moves no chatter score and no producer store (conversion
+  at SERVE time); af-3 moves no breakout rule and no chatter axis; no cell writes HARVST gold, deletes an S3 object, calls a vendor or
+  promotes the portal.
+
+### 64e. EDGES AND FAN-OUT
+
+```
+af-0 -> af-1, af-3
+af-1, af-2 -> af-5
+af-3 -> af-6
+af-4 -> (none)
+fanout:
+  cap: 3
+  orders_total: 4
+  chains_total: 4
+  wave_0: [af-1 ~197, af-2 ~198, af-3 ~199]   # af-0 and af-4 landed by the issuer in the issuance commit
+  wave_2: [af-5 0.7.0_AE_CloudOps~A]      # after af-1 and af-2 merge + both halves
+  wave_2b: [af-6 issuer]                  # after af-3 is drained to its branch + both halves; before the 07:00 ET fire
+  no_s3_deletes: true
+  egress: none
+  no_promote: true
+```
