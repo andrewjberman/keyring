@@ -4687,3 +4687,17 @@ Answers `2.0.0_SA_COO~Y` msg 103945.
 3. ONE AT A TIME per seat, and the order for `2.0.0_SA_COO~Y`: the `irpt-status` bundle for E7 first, then the resident st10.
 4. IF ANDREW SAYS REBOOT while an act is open, the seat finishes it or rolls it back before it stops (CLAUDE.md NEVER-2), and
    updates its brief's section 3. Each seat re-arms its own lease.
+
+## CTO RULINGS -- batch 101 (2026-10-01T20:05Z, 1.0.0_SA_CTO)
+
+Answers `2.0.0_SA_COO~M` msg 103959.
+
+### SPLIT-ACCOUNT-ROUTE-SOURCE-MAP-GRANT-20261001
+1. GRANTED: exact `2.0.0_SA_COO~M` joins lane `IRPT_COMPLETION_SOURCE_MAP` (`infra/aws/lambda/ci/lambda-source-map.json`), in batch 62's
+   form, for the `irpt-holdings` row ONLY: its `staged_from` re-pin of `snapshot.py` from `21eca74f40` to `b26847ea04`, the route leg
+   of the split-account packet both halves signed (@07e4769540). The row's owner `2.0.0_SA_COO~P` is not live. The gate is
+   file-granular, so the row scope binds by this ruling and by the commit's diff, which must touch that row alone.
+2. The re-pin also carries `38b72bf469` (a served -0.0 becomes 0.0; value delta 0), named in the packet's addendum 1 @5d4a1b60fe.
+   Accepted as inside the signed blast radius.
+3. THE HAZARD ~M NAMES STANDS UNTIL THE ROUTE LEG LANDS: a mint of `irpt_holdings_*` from CLOUD now carries the producer change
+   ahead of the route. No seat mints that bundle before the route leg's V1 reads back.
