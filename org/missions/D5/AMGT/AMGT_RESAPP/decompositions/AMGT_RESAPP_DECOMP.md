@@ -7404,3 +7404,79 @@ cell against named overlay fields).
      says "no research pack", so that sentence may be page text; the round-57 cell settles it).
 - `af-6` (the af-3 cut-over merge under its pair) stays a direct act of this round.
 - **Fan-out:** unchanged -- wave_0 [af-1 ~197, af-2 ~198, af-3 ~199]; orders_total 3.
+
+
+## 65. ROUND 57 -- THE ONE SCOPED-API REDEPLOY THAT SERVES THE FRIDAY FEED, EVERY SERVED REASON IN PLAIN WORDS, AND THE af-6 GRADE. Four cells, two orders and two direct acts
+
+**Cut by `2.0.0_SA_COO~Z`** on `1.0.0_SA_CTO~Z`'s **ROUND 56 ANALYSIS** (`ledger/ROUND_ANALYSIS.round56.md` @`5ca1a00f56`, msg 27566;
+round 56 CLOSED). Enrichment items 1-3 are this round's rectangle. Rulings carried:
+- round-55 ruling 2: served limbs compare a moving field against its printed pre-act value;
+- round-56 ruling 1: `by_publisher` omits zero publishers (the route stands);
+- round-56 ruling 3: the cut check lists every deploy act the FWDs need before serving (65a below).
+
+### 65a. THE DEPLOY ACTS FWD-32..34 NEED BEFORE THEY SERVE (round-56 ruling 3; measured at the cut, 06:4x-07:0xZ)
+
+| # | act | state at the cut | carrier |
+|---|---|---|---|
+| 1 | the code on CLOUD: af-1 (route), af-2 (fallback, breakout_price, percent) | MERGED (`cb1f56de68`, `78167bb8fc`) | done |
+| 2 | the cold-start import chain: `monthly_chatter` imported at REQUEST time (its chain reaches pyarrow, as the timeline loaders do) | FIXED: `--build-only` isolated-runtime arm FAILED before, rc=0 after | `ag-0` (`78235d722f`) |
+| 3 | `lib/trading_calendar.py` in the package: `CLOSURE_ROOTS` lacked it, and `from lib import trading_calendar` hid it from the AST walk | the import is FIXED in dotted form (`ag-0`); the CLOSURE_ROOTS line is AE-lane | `ag-1` item 0 |
+| 4 | the artifact built at the GO commit; `CONTENT-DIFF` names exactly the halves' file list | at the cut: files 347, IDENTICAL 336, CHANGED 8, ADDED 3 vs live `/QP4upEV...` | `ag-1` |
+| 5 | ONE `safe-apply`, code only (the function's source hash); plan printed; any destroy = STOP (MSTR~Z HOLD 27462) | -- | `ag-1` |
+| 6 | NO gateway or route change: the template `timeseries/{movement}/{subject}` is mounted (18 routes; `test_scoped_amgt_mount.py` passes) | verified | none |
+| 7 | NO IAM change: gold `chatter_daily` / `article_security_mention` reads and `research_dossier/` listing are already granted (`scoped-amgt-api.tf:203-226`); DynamoDB pointer reads unchanged | to be exercised live by AC1 | `ag-1` AC1 |
+
+**The riders the build carries (CONTENT-DIFF at the cut, every CHANGED file traced to its commit):**
+- `case_rule.py`: CORPUS ab-3 `c4d3e8dfa2` (named by CTO msg 27433).
+- `dossier.py`: CORPUS ab-1 `0c234ef97d` (slash-safe dossier paths).
+- `publication_gold.py`: HARVST ae-1 phase A `1b55276f0d` (quarantine; NON-INERT for the timeline routes).
+- `lib/opal_naming.py` + `infra/logic/registry/{systems,scopes}.json`: the VENDOR display_name changes (`70c4aa2e1a`, `b5dc2e63d1`,
+  NFRA_TRNSPT `8e9ed1b539`/`224058ea3f`).
+- `_harvest_prefixes.py`: af-4's hash, DELTA=0.
+- `scoped_amgt.py`: af-2 + ag-0. ADDED: `monthly_chatter.py`, `covered_universe.py`, `trading_calendar.py`.
+
+The halves name each, and `ag-2`'s files join the list when it drains.
+
+### 65b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-ag-0` | THE PACKAGE CLOSURE (scoped_amgt.py half) | issuer | direct act (landed `78235d722f`) | LOCAL | `lib/research/api/scoped_amgt.py` |
+| `AMGT-ag-2` | EVERY SERVED REASON IN PLAIN WORDS; BA'S RESEARCH-PACK CLAIMS AGREE | `~200` | worker | LOCAL (served by ag-1) | the producers of served reason strings under `lib/research/`, its test |
+| `AMGT-ag-1` | THE ONE SCOPED-API REDEPLOY (af-1 + af-2 + ag-0 + ag-2 + the riders) | `0.7.0_AE_CloudOps~A` | seat order, a pair | WORLD | the build script's CLOSURE_ROOTS line, the Lambda artifact, the deploy ledger |
+| `AMGT-ag-3` | THE af-6 GRADE (after the 11:00Z fire; branch A or B) | issuer | direct act | LOCAL read | deliverables, the af-6 ledger leg L2 |
+
+### 65c. MEASUREMENTS
+
+1. **Served-text base (live, the deployed function):** 1,105 served `*reason` strings across 3 names x 4 routes; 16 carry a status
+   token; ASML's posture (verdict `absent`) carries no `absent_reason`. No served BA string says "no research pack" (C2 base PASS:
+   the sentence may be page text, which ag-2 settles).
+2. **Redeploy check base (`round57/checks/ag_1_served.py`, the deployed function):** C0 FAIL (CodeSha256 `/QP4upEV...` unmoved);
+   FWD-32 C1 FAIL (400 refused); FWD-33 C1 FAIL (overlay price axes ABSENT); FWD-34 C1 FAIL (breakout score a fraction). The merged
+   local tree passes every grader YES (the positive arm).
+
+### 65d. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain = the analysis's three enrichment items plus the closure fix ruling 3 surfaced.
+- **(ii) Same grain.** One code fix; one text cell; one deploy; one grade.
+- **(iii) Intent.** One axis: what the page reads is served by the deployed function, in plain words.
+- **(iv) What a cell does NOT move.** ag-1 moves no route, no IAM, no store; ag-2 moves no figure, verdict or ranking; ag-3 writes
+  nothing to any store.
+
+### 65e. EDGES AND FAN-OUT
+
+```
+ag-0 -> ag-1
+ag-2 -> ag-1          # the issuer may GO ag-1 without ag-2 if ag-2 has not drained by the halves' signing; the GO says so
+ag-3 -> (none)        # after the 11:00Z fire
+fanout:
+  cap: 3
+  orders_total: 2
+  chains_total: 2
+  wave_0: [ag-2 ~200]
+  wave_1: [ag-1 0.7.0_AE_CloudOps~A]     # GO after ag-2 drains + both halves; the build commit named in the GO
+  direct: [ag-0 landed, ag-3 after 11:00Z]
+  no_s3_deletes: true
+  egress: none
+  no_promote: true
+```
