@@ -81,7 +81,7 @@ at base 9e201639c3: b-2.AC1 FAIL -- each FAIL as expected, each control PASS.
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>5</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
