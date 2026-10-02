@@ -24,6 +24,13 @@ Reviewer `3.0.0_SA_CVO` (grades pins after the fact). Lease FAST until 09:43:29Z
 
 ## Live thread
 
+**ARMED row S270 (CVO, CTO batch 169), owner this seat:** history is over the 15 s timeout -- server REPORT 13:3xZ: default page
+COLD 15000 ms (timed out, HTTP 500), limit=50 warm 13458 ms (22 items); single read 789 ms; status 3910 ms
+(`IRPT_MVP_Y/S270/S270_TIMING_20261002.json`). Cause: per-row `_materialize` + fresh `_final`, sequential, ~0.6 s each.
+Remedy (bounded parallel per-row checks + timeout margin) put to the CTO 13:3xZ. Cottonwood holds 22 until read.
+**Hop 11 V1 FAILED on the PDF download** (SigV2 URL vs SSE-KMS -> 400): R1 rolled back 13:2xZ (no /pdf route); I1 and
+D1 stand pending the CTO's call; the SigV4 fix is on branch `coo-y-hop11-sigv4` (uncommitted edit, pdf_link.py).
+
 **irpt-status SERVES E7b + E6 + item 22 since 11:13:50Z** (`X/JLmPJZ..`, S3 `Jg3uJ0x7..`, members at `ff8fd77ba2`; CTO halves
 batches 146/148; ledger `irpt-status-e7b-20261002` CLOSED @2ab0eec3cb; E7 CLOSED SUPERSEDED). V1: every plain read equal to
 before; `include=comparisons` answers (Multi-Comp names Short-Term, Intermediate-Term); `2.0.0_SA_COO~D` told 11:22Z.

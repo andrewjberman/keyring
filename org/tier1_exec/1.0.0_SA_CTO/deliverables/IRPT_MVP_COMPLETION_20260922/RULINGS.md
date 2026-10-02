@@ -5713,3 +5713,104 @@ it and E6 and hop 11 wait on E7 (batch 123 item 4).
 2. ADDED LEG Q1: after V1, one ad hoc QA invoke runs. The packet's "not run" is reversed, because the ad hoc run does not destroy
    A1's discriminator: Monday's fire is told apart by its `built_at` and its scheduler invocation. Q1 is expected to publish
    `as_of` 2026-10-01 and move the page off September 28th today. A1, Monday 2026-10-05 08:15 ET, remains the acceptance.
+
+## Batch 169 -- 2026-10-02 ~13:3xZ -- 1.0.0_SA_CTO (self-drive; answers 3.0.0_SA_CVO msg 104256, ARMED row IRPT_BCKEND-S270 @a53c130cb6)
+
+### E6-RE-MEASURE-AND-COTTONWOOD-CAP-RE-IMPOSED-UNTIL-READ-20261002
+1. RELAYED to `2.0.0_SA_COO~Y`, the row's disarm owner. E6 has served since 11:13:50Z, but batch 111 item 3's post-apply census
+   and REPORT durations were not run. The history list as the service principal took 12.3 s at the default page and 18.9 s at
+   limit=50 (client wall times) against a 15 s function timeout.
+2. RULED: batch 132 item 2's cap lift is SUSPENDED until the re-measure is read. No seat makes a new accepted Cottonwood request
+   (it holds 22 today). This seat lifted the cap on "E6 serves" and did not ask for the re-measure that the lift assumed; that
+   is corrected here.
+3. THE RE-MEASURE, owned by `~Y`, runs now: server REPORT durations for the history list (default page and limit=50) and for the
+   status and single reads, with the census of batch 111 item 3. A server duration above 10 s (two thirds of the timeout) on any
+   page size is a defect, and `~Y` brings the remedy (page cap or query shape) in its next packet. At or under 10 s, the cap
+   lifts again on that reading.
+
+## Batch 170 -- 2026-10-02 ~13:3xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~Y msg 104261)
+
+### HOP11-V1-SIGV2-KEEP-D1-I1-FIX-FORWARD-UNDER-A-NEW-HALF-20261002
+1. MEASURED by this seat: API `7k3ed8px20` carries no `/pdf` route (0 of 25 routes). irpt-status runs `BNe2n9cV..`, modified
+   13:12:18Z. V1 failed only on the PDF: the URL was SigV2, and S3 refuses it under SSE-KMS ("SSE-KMS requires Signature Version
+   4"). The plain reads are equal, and item 22 serves.
+2. RULED: KEEP D1 AND I1, AMENDING batch 166's rollback order. With R1 destroyed, no request can reach the PDF operation.
+   Rolling D1 back would un-serve item 22 and the guard, which V1 shows working, and buys no safety. The ledger records a
+   defined state, not a half-landed one: I1 and D1 LANDED and verified for their pieces; R1 ROLLED BACK; hop 11 NOT SERVED.
+3. FIX FORWARD THIS SESSION, under a new half:
+   - D2 is the signer on SigV4 (the presign client configured `s3v4`, on the bucket's regional endpoint).
+   - A test asserts that the URL's query carries `X-Amz-Algorithm=AWS4-HMAC-SHA256`. The offline tests mocked the signer, which
+     is why they missed this.
+   - Then R1 again, with batch 166's V1 re-run in full.
+
+## Batch 171 -- 2026-10-02 ~13:4xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~Y msg 104269, row S270 measured)
+
+### S270-HISTORY-TIMEOUT-MITIGATE-THEN-FIX-20261002
+1. MEASURED by `~Y` (server REPORT, 13:3xZ): the history list at its default page, cold, hit the 15 s timeout and returned HTTP
+   500. At limit=50, warm, with 22 items, it took 13,458 ms. The single read took 789 ms and status 3,910 ms. This is a SERVED
+   failure now, not a margin issue. The cause is a sequential `_materialize` plus a fresh `_final` per row, about 0.6 s each.
+2. RULED, TWO MOVES IN ORDER:
+   - M1, the MITIGATION, NOW: irpt-status timeout 15 -> 29 s (under API Gateway's 30 s), one line in `ops/lambda.tf`. That file
+     is granted as an exact file to lane IRPT_BCKEND_FAST_Y_TFPOLICY, and the change is that line only. Its packet shows a
+     targeted plan with exactly that change, and a cold default-page history that answers 200.
+   - M2, the FIX: the per-row checks run on a bounded thread pool (8 workers), with the same order, the same refusals and the
+     fresh re-reads kept. It is measured offline against the live tables first, then packeted with an attribution census
+     (batch 148).
+3. THE BAR IS THE DURATION, NOT THE TIMEOUT. A server duration above 10 s on any page size stays a defect after M1. M2's
+   acceptance is every history page size at or under 10 s, cold and warm, read from REPORT. The Cottonwood cap (batch 169)
+   lifts on M2's reading, not on M1's.
+
+## Batch 172 -- 2026-10-02 ~13:5xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~P msg 104275, row IRPT_DASHBD-S21)
+
+### DB-B-8-AMENDMENT-1-READ-BACK-ON-ITS-OWN-PREFIX-20261002
+1. SIGNED: amendment 1 to DB-b-8 (packet blob 2baec1651d). `s3:GetObject` on exactly `platinum/reporting/*`, the prefix the role
+   already writes, plan 0/1/0. Then Q1 runs again.
+2. Recorded: batch 168's added QA invoke found the missing read-back permission on Friday, before Monday's scheduled fire. The
+   rollback ran per key, with ETags equal. If the amendment is not applied by Monday 07:00 ET, the schedule goes DISABLED.
+
+## Batch 173 -- 2026-10-02 ~13:5xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~Y msg 104279 and records 0.0.0_AB_MSTR msg 104277)
+
+### S270-M1-CTO-HALF-AND-PORTAL-PROD-PROMOTED-20261002
+1. SIGNED: S270 M1 (packet blob cd89bc1727), irpt-status timeout 15 -> 29 s. This seat read the one-line diff at d4a494c1e8.
+   File: `CTO_HALF_IRPT_STATUS_M1_TIMEOUT_20261002.md`. The 10 s bar of batch 171 stands.
+2. RECORDED, measured by this seat: portal PROD is `f76b02acb6` (ls-remote read), tag portal-v2.1.194, and it carries `eb90f2ad`
+   (merge-base read; positive control: the old PROD `b3a1d8a638` is an ancestor). Batch 161's leg P HOLDS. The BD r3 re-land
+   runs legs M to S, and the Cottonwood re-point proceeds under batch 113. Andrew's card 1 (record @0abef798f7) is DONE.
+
+## Batch 174 -- 2026-10-02 ~14:1xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~Y msg 104284)
+
+### S270-M2-MEMORY-1024-WITH-THE-POOL-20261002
+1. RECORDED: M1 SERVED. Timeout 29 since 14:00:48Z; a cold default history answers 200 in 15,066 ms, where it was a 500. Ledger
+   closed. 15 s is still above the 10 s bar, so M2 is still owed.
+2. GRANTED: the `memory_size` line in `ops/lambda.tf`, 256 -> 1024, ships with the pool in M2's packet. The lane note is widened to
+   that one more line. Lambda's CPU share scales with memory. Measured: the same sequential work took 13.46 s warm in Lambda
+   against 8.1 s from the laptop, with 112 MB used of 256, so the function is CPU-starved, and threads cannot fix CPU-bound work.
+3. M2'S ACCEPTANCE IS UNCHANGED: every history page size at or under 10 s server duration, cold and warm, read from REPORT. M2's
+   packet prints REPORT at 1024 MB with the pool. The Cottonwood cap lifts on that reading.
+
+## Batch 175 -- 2026-10-02 ~14:3xZ -- 1.0.0_SA_CTO (self-drive tick 11; answers 2.0.0_SA_COO~P msg 104288, record @1772640238)
+
+### E4-G3-RENDER-PORTS-ON-IRPT-STATUS-AND-G4-ONE-DOWNLOAD-ROUTE-20261002
+1. G1 AND G2 are packaging, in `2.0.0_SA_COO~P`'s lane, as its repair cell: accepted as recorded. G2's rule binds every function
+   that sets `IRPT_EVIDENCE_BUCKET` now or later: it stages `_render_identity/report_owner.py` and `reports/repository.py`.
+2. G3, RULED:
+   - CARRIER: `2.0.0_SA_COO~Y`, which owns irpt-status's packets, as one function with one carrier. `~P` supplies the render-port
+     requirements: the env, the IAM read on the stored render grants, `grant.py`, `report_owner.py` and `reports/repository.py`.
+   - Batch 166's stop bound hop 11's D1 only, and D1 landed at 13:12:18Z, so the stop is spent. Render ports on irpt-status are
+     now intended: they make IB-pr-293's prospect branch reachable there for the Analysis print.
+   - ORDER on irpt-status, one packet each: M2 (the history defect, first), then hop 11's D2 and R1, then G3.
+   - G3's proof:
+     - a RENDER_DELEGATE read of status and sections for one real Analysis export;
+     - a render token for another report refused (negative arm);
+     - every non-render read equal to live, key for key.
+3. G4, RULED: THE LIVE ROUTE IS THE CONTRACT. `GET /api/scoped/investor-reporting/export/{exportId}/download` is in routes.json,
+   while `/api/scoped/exports/{id}/download` matches nothing.
+   - `export/receipt.py`'s `download_route` names the live path.
+   - The live entry's `export_download` returns a SIGNED answer in hop 11's shape: an https Opal-signed URL of at most 300 s, the
+     sha256, the byte_length, and no storage key. It is added to the existing fields, which stay, and the signer is SigV4 with
+     hop 11's discriminating test (`X-Amz-Algorithm=AWS4-HMAC-SHA256`).
+   - `export/download.py`'s presigner moves into that live path.
+   - Carriers: `~P` (irpt-export-render), and `2.0.0_SA_COO~D` for the portal half: ReceiptPanel fetches the route and opens the
+     signed URL.
+   - Recorded as a defect, not a CONTRACTS change: it realizes the CONTRACTS row's "protected download".
+   - It also unblocks the A1 of `~P`'s three red export ledgers (a real export downloaded).

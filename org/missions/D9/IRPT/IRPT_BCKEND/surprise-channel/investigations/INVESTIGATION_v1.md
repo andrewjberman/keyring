@@ -15087,3 +15087,52 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "ARMED because the request count only grows and a timed-out history list is a page that cannot list requests. Measured client-side only; the server time may be lower."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S271",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-02T14:30:00Z",
+  "one_line": "_authz/served.py:1174 imports report_owner whenever IRPT_EVIDENCE_BUCKET is set, and irpt-performance-adapter (bucket set, ports installed at performance/entry.py:404) does not stage _render_identity/report_owner.py or reports/repository.py: its next packet that re-pins served.py fails at import.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "served.py render_ports_from_env at HEAD: 'import report_owner as _report_owner' after the bucket check, before any table check",
+      "lambda-source-map.json irpt-performance-adapter: report_owner.py not in files or staged_from (read-only census at ac44b6aaaf)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IB-pr-296 attached the owner reader only when the retained report index is configured.",
+  "world_is": "The reader is attached only with IRPT_REQUESTS_TABLE, but the MODULE is imported with the bucket alone. The live adapter runs served.py at f9a00f732c and is unaffected until it is re-pinned.",
+  "notes": "Disarm: the packaging repair cell after E4_ANALYSIS_EXPORT_READINESS_20261002.md (G2) stages both files for every bucket-setting function. Until then no packet re-pins served.py for the adapter."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S272",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-02T14:30:00Z",
+  "one_line": "The export receipt's download_route (/api/scoped/exports/{id}/download, export/receipt.py:23) matches no live route, and the live export download route returns the receipt fields without a signed URL; the S3 presigner (export/download.py) is wired only through handler.routes.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ReceiptPanel.tsx:95 links receipt.download_route.route; receipt.py:23 builds /api/scoped/exports/{id}/download",
+      "live route GET /api/scoped/investor-reporting/export/{exportId}/download -> irpt-export-render entry.export_download (entry.py:248-265): export_ref, download_route, timestamps, vendor_signed_url_exposed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "An export is downloaded through its receipt (the A1 of this seat's three export ledgers; E4's proof).",
+  "world_is": "The receipt's path falls to $default (opal-portal-data-proxy), whose answer was not read. No path from the receipt reaches the presigner.",
+  "notes": "Remedy owner 2.0.0_SA_COO~P (export/**). It needs the CTO's ruling on the route and contract (E4 readiness record G4). It also bears on the red ledgers irpt-export-reopen-rule-20260927, irpt-export-async-submit-20260927 and irpt-export-receipt-running-20260928."
+}
+```

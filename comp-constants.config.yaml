@@ -292,16 +292,18 @@ constants:
 - name: MIX_ASSET_CLASSES
   lane: bd
   type: list
-  canonical_value: '[''equity'', ''fixed_income'', ''alternatives'']'
+  canonical_value: '[''equity'', ''fixed_income'', ''alternatives'', ''commodities'', ''structured'', ''cash'', ''unclassified'', ''other'']'
   sites:
   - file: data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py
-    line: 179
-    value: '[''equity'', ''fixed_income'', ''alternatives'']'
+    line: 182
+    value: '[''equity'', ''fixed_income'', ''alternatives'', ''commodities'', ''structured'', ''cash'', ''unclassified'', ''other'']'
   - file: data/black_diamond/scripts/gold/lib/mix_views.py
-    line: 19
-    value: '[''equity'', ''fixed_income'', ''alternatives'']'
-  notes: 'Canonical taxonomy allowlist for the 3-class BD asset mix classification (GLDPRE 4-class model produces equity/fixed_income/alternatives; cash handled separately). Single-site; controls which
-    ETFClassifier output classes appear in the mix timeseries. If BD adds a new asset class, this list must be updated to prevent silent exclusion.
+    line: 25
+    value: '[''equity'', ''fixed_income'', ''alternatives'', ''commodities'', ''structured'', ''cash'', ''unclassified'', ''other'']'
+  notes: 'Re-canonized 2026-10-02 by 2.0.0_SA_COO~M on CTO rulings batch 99 item 4 and batch 117 item 4: the BD mix carries every
+    class a position can get (the canonical table''s five, cash, unclassified, other) so no ticker leaves the mix -- the
+    three-class list dropped 445.7 M of 1,843.1 M on 2026-10-02 04:00Z. mix_views computes unclassified as the residual
+    rather than copying it. If BD adds a new asset class, this list must be updated to prevent silent exclusion.
 
     '
 - name: ALL_ROLES
