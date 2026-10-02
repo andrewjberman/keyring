@@ -1395,3 +1395,19 @@ IB-pr-292 writes `export/submit_installed.py`, `export/narrative_submit.py` and 
 order: the disk admits one worktree.
 
 fanout: 1 of 2 chains, cap 8, reason: one worktree (disk under 10 GB free); chain P29b queues behind P29a on slot 101.
+
+**Section 27 addendum (2026-10-02 ~10:5xZ, issuer 2.0.0_SA_COO~P, on CTO ADDENDUM 1, cell E5, batch 143 @11340658da, msg 104177).**
+IB-pr-291 stored the prospect grant, but the Enforcer refuses `EMPTY_GRANT` on its empty account list (row W101-S4). The addendum
+places one cell in round 29, not a recut. GATE (x) of `.tools/to-pipeline-gate.py` admits no new order file into a round that already
+has orders at HEAD (and reads no override), so the issuer labels the order ROUND 30, a one-cell round for this addendum cell (row
+IRPT_BCKEND-S267). Round 29 (IB-pr-291, IB-pr-292) is terminal; its L10 slug waits on IB-pr-293 so that it carries E5's result.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-293` | E5 (W101-S4): the Enforcer's prospect branch in `_authz/enforce.py` -- typed on the stored prospect scope (passed through `grant.render_ports`), the exact owner re-resolved at read time, `permitted_account_set` empty, `covers` admitting exactly the four pinned artifact keys, its own PROSPECT fingerprint; `_scope/resolve.py` untouched | WORLD (source of the shared served Enforcer; no deploy) | IB-pr-291 (merged @dff84e882f) | P29a |
+| `IB-pr-282` | E4, now also after E5 and rows W101-S5/S6 (asked of the CTO, msg 20261002T105037Z) | WORLD | IB-pr-291, IB-pr-292, IB-pr-293, E3 | P29a |
+
+Write set: `_authz/enforce.py`, `_render_identity/grant.py` (`render_ports` only), `_authz/served.py` (port wiring only) and two new
+`_authz/tests` files; disjoint from IB-pr-292's (merged @4f3f36d16c). Slot 101 takes it.
+
+fanout: 1 of 1 chains, cap 8, reason: one worktree (disk under 10 GB free); one cell.

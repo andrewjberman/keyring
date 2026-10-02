@@ -14827,3 +14827,27 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "The remedy is to republish the packaged _contracts copy (outside this order's paths) and confirm the irpt-common layer's copy."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S267",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-02T11:10:00Z",
+  "one_line": "GATE (x) of .tools/to-pipeline-gate.py refuses a CTO addendum cell that joins a round already issued: the ~P round-29 cell IB-pr-293 (CTO ADDENDUM 1, batch 143) was refused because round 29 has two orders at HEAD, and the limb reads no override.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit 2026-10-02 ~11:0xZ: '[to-pipeline-gate] REFUSED -- ... workstream ~P round 29 of IRPT_BCKEND already has an issuance at HEAD (2 order(s): IRPT_BCKEND.TO-IB-pr-291..., IRPT_BCKEND.TO-IB-pr-292...)'",
+      ".tools/to-pipeline-gate.py _round_issuer_violations (:2073-2110) refuses any NEWLY-ADDED tree order whose (workstream, round) key has an order at HEAD; no branch reads an addendum"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO_ROUND_ANALYSIS_IRPT_BCKEND_ROUND_28_P_20261002.md ADDENDUM 1: 'this addendum adds one cell to round 29. It is not a recut.'",
+  "world_is": "The gate admits the cell only under a new round number. The issuer labelled it round 30 (decomposition section 27 addendum note); the round-29 L10 slug waits on it so the slug still carries E5.",
+  "notes": "Remedy owner 1.0.0_SA_CTO (the gate limb): admit an addendum-cited cell into its round, or rule that an addendum cell takes the next round number."
+}
+```
