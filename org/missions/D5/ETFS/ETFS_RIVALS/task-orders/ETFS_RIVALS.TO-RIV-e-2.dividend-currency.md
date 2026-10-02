@@ -32,6 +32,7 @@ comp-adversary: DECLARED-NOT-APPLICABLE the validator-context composer profiles 
 - `enrichment_bloomberg`: FIELD 'DVD_HIST_ALL' (~77); plan mode returns `{fields, start, end, overrides, batches}` (~10-11, `handler_entry` ~506); `rows_from_responses(data, as_of, provenance)` (~160) leaves `currency` NULL today.
 - `gold_trade_schedule`: SUFFIX_CCY (~148), MIXED_UNIT_SUFFIX LN/SJ/IT (~159), the conversion at ~492 (`ccy = BASE_CCY if sfx in MIXED_UNIT_SUFFIX else SUFFIX_CCY.get(sfx)`).
 - This file is ALSO run by the terminal vehicle from the CLOUD tree (the 08:03 enrichment step): the daily pull must keep landing; never call Bloomberg.
+- AMENDMENT A1 (issuer, 2026-10-02 ~17:3xZ): the issuer's live DVD_CRNCY read (6 securities) returns Bloomberg MINOR units for some listings: BATS LN -> `GBp` (pence), NPN SJ -> `ZAr` (rand cents); SHEL LN and TEVA IT -> `USD`; ASML NA -> `EUR`; 8306 JP -> `JPY`. As built, a G3 `GBp` wins and has no `GBp Curncy` rate, so pence dividends read UNCONVERTED. Make G5's income conversion read a minor-unit code at its major currency's rate divided by 100: GBp and GBX -> GBP/100, ZAr and ZAc -> ZAR/100, ILs and ILa -> ILS/100. A major currency keeps its own rate. The label `dividend_ccy` returns may stay "g3". AC4 below uses test_g52's fixture.
 
 ## 3. SURFACES AND BOUNDS
 
@@ -53,11 +54,13 @@ org/missions/D5/ETFS/ETFS_RIVALS/surprise-channel/investigations/INVESTIGATION_v
 - **AC1** -- the offline plan's fields list DVD_CRNCY beside DVD_HIST_ALL (`org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round6/checks/e-2.AC1.py`)
 - **AC2** -- G3 currency comes from DVD_CRNCY; NULL without it (`org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round6/checks/e-2.AC2.py`)
 - **AC3** -- dividend_ccy: a G3 currency wins ('g3'), the suffix table answers labelled 'suffix_table', the LN/SJ/IT base rule kept (`org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round6/checks/e-2.AC3.py`)
+- **AC4** -- (a fourth criterion; reason: amendment A1, Bloomberg's minor-unit codes) GBp/GBX and ZAr/ZAc dividends convert at GBP/100 and ZAR/100; control: a major currency (USD, JPY) converts at its own rate (`org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round6/checks/e-2.AC4.py`)
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="RIV-e-2"><invocation>python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round6/checks/e-2.AC1.py</invocation><expect>AC1 RESULT: PASS 0 failures</expect></criterion>
   <criterion id="AC2" cell_refs="RIV-e-2"><invocation>python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round6/checks/e-2.AC2.py</invocation><expect>AC2 RESULT: PASS 0 failures</expect></criterion>
   <criterion id="AC3" cell_refs="RIV-e-2"><invocation>python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round6/checks/e-2.AC3.py</invocation><expect>AC3 RESULT: PASS 0 failures</expect></criterion>
+  <criterion id="AC4" cell_refs="RIV-e-2"><invocation>python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round6/checks/e-2.AC4.py</invocation><expect>AC4 RESULT: PASS 0 failures</expect></criterion>
 </proof_of_spec>
 
 ## 5. WHEN YOU ARE DONE
