@@ -73,3 +73,10 @@ hash, every criterion's output lines, the functions you changed, and any row. Th
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-02 ~16:1xZ):** ACCEPTED. Worker ~208 `10b667f446`, drained `eb6cfa6a3e`. The union of the
+drained branches failed this order's projected-read test once am-3 landed (it pinned the pre-am-3 row shape); repaired at the drain
+`f80b97ca36` to assert projected == full (mutant fails). Re-graded on the shared tree: AC1 in the union run 589 passed exit=0; AC2
+c5 local YES (fabricated key 404, BA 200). Rows Z-W208-S1 (page-side, reported per R3) and Z-W208-S2 (dispositioned). Served by am-6.
+
+<status>complete</status>

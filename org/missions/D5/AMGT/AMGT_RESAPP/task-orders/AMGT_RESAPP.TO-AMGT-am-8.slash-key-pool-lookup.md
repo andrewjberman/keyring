@@ -91,3 +91,10 @@ extended to the plan (an amendment) if build-time.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-02 ~16:1xZ):** ACCEPTED, AMENDMENT 1 included. Worker ~209 `a0f3f2d087` (drained
+`2e43f485b9`) and `c003078cd3` (drained `6899726ed8`). Re-graded on the shared tree: AC1 in the union run 589 passed exit=0; AC2
+3 passed. Plan `peers_slash_plan.json` frozen at sha256 `ccb09b8ab20a7caff35bdf19970444b423da5d5b9dbe302a17002a8b969fec22` (BP and NG, 26 served_field_changes each, new keys
+`2026-10-02T1543Z`). Served by am-7 (AMENDMENT 1).
+
+<status>complete</status>

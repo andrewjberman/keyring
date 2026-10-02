@@ -54,7 +54,7 @@ org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="AMGT-am-2"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python -m pytest -q -p no:cacheprovider lib/research/management/tests/ lib/research/api/tests/; echo "exit=$?"</invocation><expect>every test passes, your new tests included, and exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="AMGT-am-2"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round63/checks/r63_served.py --cell c2 --where local --pool org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~205/m1_pool; echo "exit=$?"</invocation><expect>C1 PASS (ASML_NA SERVED, BLOOMBERG_FALLBACK, officers > 0); C2 PASS for 6501_JP and 2317_TT (officers, or a stated reason); R63 C2 SERVED: YES -- and exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="AMGT-am-2"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round63/checks/r63_served.py --cell c2 --where local --pool org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~205/m1_pool; echo "exit=$?"</invocation><expect>C2 PASS for 6501_JP and 2317_TT (officers, or a stated reason); C1 (ASML_NA) is HELD on Andrew's per-use vendor word (row AMGT_RESAPP-Z-W205-S1) and reads FAIL ABSENT until a pull lands, so R63 C2 SERVED: NO and exit=1 come from C1 alone</expect></criterion>
 </proof_of_spec>
 
 ## 5. WHEN YOU ARE DONE
@@ -63,6 +63,15 @@ Commit in your worktree via `.tools/safe-commit.sh --author "0.9.0_WK_AMGT_RESAP
 written with the Write tool; confirm the commit with `git log -1`). Instance at
 `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~205/AMGT_RESAPP.TO-AMGT-am-2.officer-fallback-and-management-objects.proof_of_spec.json`. Report once: the commit
 hash, every criterion's output lines, the functions you changed, and any row. The `<status>` flip is the issuer's.
+
+## 6. AMENDMENT 1 (issuer `2.0.0_SA_COO~Z`, 2026-10-02 ~16:1xZ) -- C1 is held on a vendor word
+
+The worker measured that no Bloomberg `COMPANY_EXEC_OFFICERS` response has ever landed for ASML_NA, 6501_JP or 2317_TT (bronze
+`exec_officers` holds 6861_JP and CSL_AU only), so C1 cannot pass from stored input; one pull is a vendor call that needs Andrew's
+per-use word. Ruled: AC2's expectation now reads C2 PASS and C1 HELD (above); the word is asked as a RESERVED card to
+`0.0.0_AB_MSTR~Z` (broker file `20261002T160913Z_2.0.0_SA_COO_Z__RESERVED_for_Andrew__AMGT_RESAPP_r63__o.md`). With the word, a round-64 cell pulls once and re-runs `fwd7_plan`; without it ASML_NA stays
+ABSENT. FWD-7 is reported partial in the round's L10 slug. Gate limb that graded this modification: none (LIMB 6 fires only on a
+newly-added order; GATE (viii) does not apply, `<placeholders>NONE</placeholders>`).
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
@@ -74,3 +83,10 @@ hash, every criterion's output lines, the functions you changed, and any row. Th
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-02 ~16:1xZ):** ACCEPTED under AMENDMENT 1. Worker ~205 `ae0f93697b`, drained `293f95f5bd`.
+Re-graded on the shared tree: AC1 in the union run 589 passed exit=0 (peers + management + api, after the drain repair
+`f80b97ca36`); AC2 c2 local --pool: C1 FAIL ASML_NA ABSENT (held, Z-W205-S1), C2 PASS 6501_JP and 2317_TT (stated reasons),
+R63 C2 SERVED: NO from C1 alone, as amended. Plan `m1_fwd7_plan.json` frozen at sha256 `598950e3150bae6f975a5f47c56bb38657c354418f07706842a60b3d54a3a595`. Served by am-7 (AMENDMENT 2).
+
+<status>complete</status>

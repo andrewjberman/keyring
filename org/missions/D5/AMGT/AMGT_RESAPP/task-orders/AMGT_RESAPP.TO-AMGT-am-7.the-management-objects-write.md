@@ -48,7 +48,7 @@ org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v
 ## 4. PROOF OF SPEC (literal; timeout 900)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="AMGT-am-7"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round63/checks/r63_served.py --cell c2 --where deployed; echo "exit=$?"</invocation><expect>C1 PASS (ASML_NA SERVED, BLOOMBERG_FALLBACK, officers > 0); C2 PASS for 6501_JP and 2317_TT (officers, or a stated reason); R63 C2 SERVED: YES -- and exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="AMGT-am-7"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round63/checks/r63_served.py --cell c2 --where deployed; echo "exit=$?"</invocation><expect>C2 PASS for 6501_JP and 2317_TT (officers, or a stated reason); C1 (ASML_NA) is HELD on Andrew's per-use vendor word (row AMGT_RESAPP-Z-W205-S1) and reads FAIL ABSENT until a pull lands, so R63 C2 SERVED: NO and exit=1 come from C1 alone</expect></criterion>
 </proof_of_spec>
 
 ## 5. WHEN YOU ARE DONE
@@ -64,6 +64,14 @@ In the same act, under the same entry and pair (re-signed to include them), PUT 
 per-key sha256 check and record. Grade them with
 `r63_served.py --cell c6 --where deployed --plan <that plan>` (C1: every planned served field reads its `after`). It runs beside AC1
 and is reported; the issuer re-reads it.
+
+## 7. AMENDMENT 2 (issuer `2.0.0_SA_COO~Z`, 2026-10-02 ~16:1xZ) -- the management write is two keys, not three
+
+Of `m1_fwd7_plan.json` (sha256 `598950e3150bae6f975a5f47c56bb38657c354418f07706842a60b3d54a3a595`), PUT the entries for `6501_JP_Equity` and `2317_TT_Equity` only. The `ASML_NA_Equity` entry
+is NOT written: no officer pull exists for it (row AMGT_RESAPP-Z-W205-S1, held on Andrew's per-use vendor word), so its planned
+object would swap one ABSENT read for another. AC1's expectation is amended to match (C2 PASS, C1 HELD). The peers plan
+(AMENDMENT 1) is unchanged at sha256 `ccb09b8ab20a7caff35bdf19970444b423da5d5b9dbe302a17002a8b969fec22`. Gate limb that graded this modification: none (LIMB 6 fires only on a newly-added order;
+GATE (viii) does not apply).
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 

@@ -76,3 +76,9 @@ hash, every criterion's output lines, the functions you changed, and any row. Th
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-02 ~16:1xZ):** ACCEPTED, AMENDMENT 1 included. Worker ~206 `a1fcefa0e8`/`5e26cc7aae`,
+drained `514cdf5366`. Re-graded on the shared tree: AC1 in the union run 589 passed exit=0; AC2 c3 local YES (C1 95 of 95, C2 95
+of 95, C3 VLO overlay 13 == ranking 13, C4 ROG_SW_Equity places_moved None with a plain reason). Served by am-6.
+
+<status>complete</status>
