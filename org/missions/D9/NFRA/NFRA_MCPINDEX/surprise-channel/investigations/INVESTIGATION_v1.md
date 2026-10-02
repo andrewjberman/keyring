@@ -5416,6 +5416,52 @@ carries none.
     "world_is": "After the repoint, two documents stop reading scripts/, but the repo's own deploy script keeps writing a second merge script there, so scripts/merge-daily-incremental.py stays a live-looking, drifting second copy that force-txn/force-alloc still run.",
     "notes": "INERT to the two repointed documents. Not edited here (out of <paths>); the force-* documents and the deploy script are the census line the cell names plus one carrier the cell did not.",
     "id": "NFRA_MCPINDEX-Z-W24-S10"
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~24",
+    "surfaced_at": "2026-10-02T04:20Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "MX-s-18 PHASE A: the bd-49f-runner role has s3:PutObject but NOT s3:GetObject on bronze/*, so the order's required head_object read-back of bronze/<date>/_BRONZE_COMPLETE.json is an implicitDeny (403) on every day, healthy or not; as specified, PHASE B would print ERROR and fail the invocation nightly, and the function's default async retries would re-run the pull. The order's preflight said the role already reads bronze/.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws iam simulate-principal-policy (APPLIED plane), role bd-49f-runner-role, one resource per call: s3:GetObject bronze/2026-10-02/_BRONZE_COMPLETE.json -> implicitDeny; s3:PutObject same key -> allowed; s3:GetObject forwardfill_v2/transactions/_complete/2026-10-02.json -> allowed; s3:GetObject forwardfill_v2/transactions/TRANSACTIONS_DAILY_2026-10-02.xlsx -> allowed.",
+        "infra/aws/terraform/bd-pipeline/bd-49f-interim.tf:216-246 (DESIRED plane): statements ReadBdBronzeCodeAndTemplates (GetObject on code/bronze/*), LandBdForwardfill (Get+Put on forwardfill_v2/*), EmitBdBronzeSentinel (PutObject ONLY on bronze/*).",
+        "aws lambda get-function-event-invoke-config bd-49f-runner -> ResourceNotFoundException (no EventInvokeConfig, so async retry defaults apply); bd-49f-session-trigger invokes it with InvocationType Event (infra/aws/lambda/bd-pipeline/bd-49f-session-trigger/lambda_function.py:236); reserved concurrency 3.",
+        "infra/aws/lambda/bd-pipeline/bd-49f-runner/lambda_function.py _emit_sentinel (this worktree, uncommitted until the MX-s-18 PHASE A commit): the put is attempted first, then head_object; a failed head raises RuntimeError after the RESULT line."
+      ]
+    },
+    "spec_asserts": "MX-s-18 preflight comp-iam: 'the runner's role already reads and writes s3://opal-data-bd/bronze/ (it writes the sentinel today); a head_object on a key it writes needs no new grant. A refusal at the read-back is a BLOCKING row, never a policy edit.'",
+    "world_is": "The role writes bronze/* but does not read it: HeadObject is authorized by s3:GetObject, which the live role lacks on bronze/*. The read-back as written is refused every night. The offline tests cannot see this (stub S3). No policy was edited; PHASE B must not apply until the issuer rules on a one-statement grant (s3:GetObject on bronze/*/_BRONZE_COMPLETE.json) or an alternative read-back.",
+    "notes": "ARMED only if PHASE B is applied as specified. The sentinel put succeeds BEFORE the read-back, so silver still fires; the cost is a failed invocation plus up to 2 async retries per night, each of which re-pulls the transactions window from Black Diamond when transactions is a measured-empty day (_already_landed uses _table_complete, which reads has_data_rows==0 as not landed). The grant is in <paths> (bd-49f-interim.tf) if the issuer rules for it.",
+    "id": "NFRA_MCPINDEX-Z-W24-S11"
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~24",
+    "surfaced_at": "2026-10-02T04:21Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "MX-s-18 PHASE A: a saved targeted plan cut now reads 'No changes' because the yang-lambda module reads the zip's S3 version and content-sha256 at PLAN time; an applicable saved plan exists only after the artifact is uploaded, which the order places in PHASE B.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "terraform -chdir=infra/aws/terraform/bd-pipeline plan -target=module.bd_49f_runner (terraform v1.15.8): 'No changes. Your infrastructure matches the configuration.' rc=0; saved log deliverables/0.9.0_WK_NFRA_MCPINDEX~24/MX-s-18/terraform_plan_targeted_pre_upload.log.",
+        "infra/aws/terraform/modules/yang-lambda/main.tf: data.aws_s3_object.artifact; s3_object_version = data.aws_s3_object.artifact.version_id; source_code_hash = data.aws_s3_object.artifact.metadata[\"content-sha256\"]; its header: 'Upload a new zip BEFORE running terraform plan'.",
+        "live artifact s3://opal-313476888478-lambda-artifacts/bd-pipeline/bd-49f-runner.zip VersionId AVNCLX4FqgXkDQwMLgoYD86veMQzY8mQ, 5199 B, 2026-07-09, content-sha256 q37ovM/F07p39ObyY6bML9tmIEXDN1S/OhyJv1oDH00= equals the deployed CodeSha256."
+      ]
+    },
+    "spec_asserts": "Order PHASE A step 1: build the zip, run the tests, and cut a saved targeted plan for the runner module only; any destroy is a BLOCKING row.",
+    "world_is": "A plan cut before the upload cannot contain the change, and uploading in PHASE A would stage a new latest version at the live key that any other plan or apply on the bd-pipeline root would deploy without the never-widen halves. PHASE A therefore built the zip (6936 B, sha256 9PbO1/mVokBTWGNn8NjjTyjkhWvBdZ6pZk2zcCE0/eY=) and did NOT upload it.",
+    "notes": "INERT. The expected post-upload plan is one in-place update of module.bd_49f_runner.aws_lambda_function.this (s3_object_version, source_code_hash); that is inferred from the module's attributes, not a plan output. PHASE B step 4 should be: upload (verify size + content-sha256), cut the saved plan, read the plan line (a destroy is BLOCKING), then safe-apply it.",
+    "id": "NFRA_MCPINDEX-Z-W24-S12"
   }
 ]
 ```
