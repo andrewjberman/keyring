@@ -1,0 +1,38 @@
+operator head-object at 2026-10-02T07:18:29Z: Of7y6LTygJwlezKP0MuY3TBi5rmRM8XB	8705
+ssm d77df23a-012d-4c29-a4f8-24a137e7adf3 Success rc 0
+install script sha256 verified on the host at 2026-10-02T07:18:35Z
+before: active=active root=/opt/irpt-resident/b1db201025-st10 library=9511060e04f45b51
+package SHA256SUMS OK (243 members)
+host members 3670 manifest_sha c48bb8c97c7ed88585b7e017e0b3e870c37cfcbb5bb5589ee8fbaf599f52eab2
+queue visible/in-flight before the library swap: 0 0
+factory OK: ['assembly', 'queue_url', 'sqs'] enrolled 1276035
+queue visible/in-flight: 0 0
+resident service active; verify installed digests and the real browser-to-report trace
+install 4f68a17d3a-st11 rc=0
+active=active polls_30s=2 tracebacks_30s=0
+final active: active
+MainPID=412451
+NRestarts=0
+ExecStart={ path=/usr/bin/python3.12 ; argv[]=/usr/bin/python3.12 /opt/irpt-resident/4f68a17d3a-st11/ycharts/generate/resident_main.py --factory resident_installed:build_resident_runtime ; ignore_erro
+ActiveEnterTimestamp=Fri 2026-10-02 07:18:54 UTC
+2026-10-02T07:18:53+0000 ip-172-31-87-2.ec2.internal python3.12[404237]: IRPT_RESIDENT_POLL handled=0
+2026-10-02T07:18:53+0000 ip-172-31-87-2.ec2.internal systemd[1]: irpt-analysis-resident.service: Deactivated successfully.
+2026-10-02T07:18:53+0000 ip-172-31-87-2.ec2.internal systemd[1]: Stopped irpt-analysis-resident.service - IRPT resident Analysis worker.
+2026-10-02T07:18:53+0000 ip-172-31-87-2.ec2.internal systemd[1]: irpt-analysis-resident.service: Consumed 11.495s CPU time.
+2026-10-02T07:18:54+0000 ip-172-31-87-2.ec2.internal systemd[1]: Started irpt-analysis-resident.service - IRPT resident Analysis worker.
+2026-10-02T07:19:15+0000 ip-172-31-87-2.ec2.internal python3.12[412451]: IRPT_RESIDENT_POLL handled=0
+running root /opt/irpt-resident/4f68a17d3a-st11
+running current_authority 5291b3be7e0006ade14db553caa78aa74fc6c91f638e63077a1be15607f16dec allowedFirmIds mentions 6
+running worker 93e50f0f148960ed613eea89d3a074923e08a15c5789024f493dd09398aac0de PERMANENT_AUTHORITY_REFUSALS mentions 3
+running reader 0ec4a717f2aa2c127df62f5bf0f0f3f56164359875b992620b2006e3d4af9557 host library 9511060e04f45b51744f7eef68f4a1c4921367b3388fe9acee8b83d708ddcc90
+install script rc=0 at 2026-10-02T07:19:19Z
+V1 running root /opt/irpt-resident/4f68a17d3a-st11
+V1 resident_worker 93e50f0f148960ed READ_BACK_CALCULATING_VISIBILITY_S mentions 0 keep_vendor_requests mentions 2
+V1 broker 96f0e7782c106d49 durable_job b5192fa2a1d4d5c0 append_vendor_requests mentions 1
+V1 st11 resident_worker RESOLVE_BUSY_DEADLINE_S mentions 2 resolution_broker 29c86578a4e20d95 last_retry_after mentions 5 uploads fe3f13a8336cd08c
+V1 current_authority 5291b3be7e0006ad is_service mentions 2
+V1 host_capture 8288e724e843cb89 extract c4c4908338fdce62 resident_session 99ec0de4cb0c1bd7 recipe 80b9e3ff7fe47004 READ_BACK_POLLS line [1]
+V1 host library 9511060e04f45b51 reason tokens 20 wrapper 55ddb8f7947cba7c
+V1 unit active since Fri 2026-10-02 07:18:54 UTC
+V1 queue 0/0
+
