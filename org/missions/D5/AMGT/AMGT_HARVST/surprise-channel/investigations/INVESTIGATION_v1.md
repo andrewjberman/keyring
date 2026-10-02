@@ -6630,6 +6630,28 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "spec_asserts": "CTO msg 28792: each ARMED HARVST row is disarmed on evidence or placed in round 39.",
       "world_is": "Z-S11's hazard (agreement certified, never runnability) is closed in the checker. 664 legacy escaped records in 247 of 1,717 proof files stay VALID and are noted, never refused.",
       "notes": "The CTO accepted the other 8 dispositions (Z-S70..Z-S77) and W91-S10's round-39 placement (Z-S79). The census flip awaits the CVO's adjudication."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S81",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-02T23:50Z",
+      "one_line": "RESOLVED by its disarm_owner: AMGT_HARVST-Z-S68. 2.0.0_SA_COO~Z repaired the 3 stale timeline-day tests (they pinned the silver read path RESAPP am-1 removed) @949b24cadb; the research suite reads 334 passed, 0 failed.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "949b24cadb (2.0.0_SA_COO~Z): repair(AMGT_RESAPP round 63 am-1 regression): lib/research/harvest/tests/test_timeline_day_read_path.py",
+          "python -m pytest lib/research/harvest -q at CLOUD ~23:45Z: 334 passed in 1.79s"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Each round keeps the HARVST research suites green.",
+      "world_is": "Green: 0 failed across lib/research/harvest.",
+      "notes": "No round-39 cell needed; folded into decomposition section 52."
     }
   ]
 ```

@@ -2814,3 +2814,28 @@ Base checks before the cut: `round38/checks/ak-4.AC2.py` and `ak-4.AC3.py` both 
 - ak-1 is complete @23b1e6851d. FWD-16 is HELD: no `score` run, and no tone is served.
 - ak-2 is complete @f175fbeb99. FWD-17 is HELD: no window is served.
 - ak-3 is complete @b79d3781bd. The served event rebuild is HELD.
+
+## 52. ROUND 39 -- the round-38 analysis enrichment list (`ledger/ROUND_ANALYSIS.round38.md` @3da5563fd8), PRD v0.17, 2026-10-02 ~23:5xZ
+
+Round 38 is CLOSED (CVO slug 28797; ADJUDICATION_v50 @8f911c0199). The ft quarantine is served (gold rebuild #6 @a85ebb6161).
+ARMED went from 10 to 2; Z-S11 was fixed in the checker @9edfeae04d. FWD-16, FWD-17 and the event rebuild stay HELD on
+Andrew's publisher-terms card @8d20bc24c8, and no round-39 cell processes publisher text.
+
+| cell | order | what | class | slot |
+|---|---|---|---|---|
+| `HVST-al-1` | `al-1` | Z-W91-S10 (placed by Z-S79): a Dow Jones 200 listing with 0 parseable hits sets `listing_empty_200` (status-gated, reset per call); the job records the event and status; NOT a driver STOP status; planted pages only | LOCAL | `~91` |
+| `HVST-al-2` | `al-2` | FWD-16 v0.17: tone keyed to `content_key` = sha256 of the exact `article_text` scored (Z-S67); `sentiment_content_key` on the gold mention row; window join by it; 0 Lambda calls | SERVED (code LOCAL; served at a later rebuild under its own pair) | `~90` |
+
+**Fan-out: 2 of 2 chains, cap 8.** The write surfaces are disjoint: al-1 owns `publishers.py`; al-2 owns
+`finbert_sentiment.py`, `publication_gold.py` and `window_tone.py`.
+
+**Remediation folded, no cell:** Z-S68 (the 3 stale timeline-day tests) was repaired by `2.0.0_SA_COO~Z` @949b24cadb, as
+the RESAPP am-1 regression repair. The research suite reads 334 passed and 0 failed at the cut. Row Z-S81 resolves Z-S68.
+
+**Hygiene at the drain, not a TO criterion:** `round39/checks/suites_green.py` (both suites, 0 failed). At the cut it
+reads 334 passed (research) and 597 passed with 3 skipped (collector).
+
+**Checks dry-run at the base before the cut (all FAIL as expected):**
+- `round39/checks/al-1.AC2.py`: no `LISTING_EMPTY_200`, no flag;
+- `al-2.AC2.py`: `content_key` is absent;
+- `al-2.AC3.py`: `build_mention` has no `sentiment_by_key`.
