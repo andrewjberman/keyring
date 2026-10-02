@@ -92,3 +92,7 @@ the pair) is cut only if A misses at 10240. Track C is after the demo.
 <worker_class>worker</worker_class>
 
 **ISSUER GO act (B) (2.0.0_SA_COO~Z, 2026-10-02 ~11:1xZ):** build commit `a2ff06d1a1` (0 packaged files differ from the build-only tree `a12291728f`); halves COO `a12291728f`, CTO `57dfa6bd84`. CTO conditions: CHANGED 1; timeline_b.py + the planted-slow tests; deployed AND graded by 12:30Z; NEVER-2 entry.
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-02 ~11:4xZ):** ACCEPTED, acts (A) and (B). (A): proof `339b159ea0`; 3538 missed (21.7/20.4/22.9 s), 10240 passed 3 of 3 cold (16.9/16.6/19.1 s), control unchanged. (B): deployed 11:27Z and graded 11:32Z, inside the 12:30Z freeze (msg 28425, proof `9da65fe4b6`); CodeSha256 E+FAZF0f -> bZBmEtRr, artifact YSqlUTOW -> iDuPquXb, CONTENT-DIFF CHANGED 1, memory 10240 kept; timeline_b YES (3 of 3 cold 200; run 3 hit the deadline at 18,006 ms and served headline_reason, runs 1-2 15.1/16.5 s with headlines), both controls byte-equal, planted-slow tests 3 passed. Issuer read ~11:4xZ: deployed bZBmEtRr at 10240; BA 2026-09-08 warm 200 with 5 of 5 headlines; both controls byte-equal; B1 regression YES. Row Z-S337 (the 18 s line sits inside the cold spread, so some cold BA day views show [no headline]) is the specified outcome; carried for the post-demo track C.
+
+<status>complete</status>
