@@ -912,6 +912,27 @@
  "spec_asserts": "AV-zb-1 cell text: do NOT print a served reason on the page (visible text is one plain clause composed from the column label, the served reason stays in data-absent-column-reason); AC2 expects codeface.cjs '3 of 3 arms' (round 22's outcomes kept).",
  "world_is": "codeface.cjs arm 3 grades the opposite behaviour (the served plain reason printed verbatim). The page now prints '<label> is not available for these peers.' per the cell and peerwords, so codeface arm 3 fails; the check, not the cell, needs amending (the issuer amends its own criteria). No served value moved; the cell's own AC1 passes. The worker did not edit the issuer's checks (read-only).",
  "notes": "Worker row, not an adjudication. The order stays open: AC2 is FAIL by output."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W71-S2",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~71",
+ "surfaced_at": "2026-10-02T00:00Z",
+ "one_line": "Resolves DSGN_AMGTV1-Z-W71-S1: the issuer amended codeface.cjs arm 3 at ac72f32ba1 and AC2 re-run reads NO CODE ON THE EXEC, POSTURE OR PEERS FACE: 3 of 3 arms, ALL BOUND: 14 of 14 harnesses green, exit=0.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "Issuer ruling relayed to 0.9.0_WK_DSGN_AMGTV1~71: codeface.cjs arm 3 amended @ac72f32ba1 (a plain served absent-column reason is preserved on the face OR verbatim in data-absent-column-reason); merged into wk-DSGN_AMGTV1-71 at 975322e44a.",
+   "AC2 re-run from C:/tmp/wk-dsgn-amgtv1-71 at 975322e44a on portal build 925193f7: 'ARM PASS PLAIN SERVED WORDS STAY ... exec 1 of 1, peers 7 of 7'; 'NO CODE ON THE EXEC, POSTURE OR PEERS FACE: 3 of 3 arms'; 'ALL BOUND: 14 of 14 harnesses green'; exit=0 (deliverables/0.9.0_WK_DSGN_AMGTV1~71/ac2.out.txt)."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "AC2 expects codeface.cjs 3 of 3 arms (round 22 outcomes kept) alongside AC1's reader-words face.",
+ "world_is": "With codeface.cjs arm 3 amended by the issuer, the two checks no longer contradict; Z-W71-S1's blocking cause is gone and AC2 is PASS-by-output. The formal disposition of Z-W71-S1 is L9's to stamp.",
+ "notes": "Worker resolving row, not an adjudication."
 }
 ]
 ```
