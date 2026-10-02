@@ -2614,3 +2614,27 @@ in `.runtime/harvest-backfill/runtimes.json`. Round 36's windows are pinned for 
 - `aj-2.AC2.py` is the cell's own 10-minute proof, run after the cut.
 
 **Issuer acts aj-2 and aj-3** carry no task order: to-pipeline-gate refuses a TO addressed to a Tier-1 seat. Each act's proof is its check under `round37/checks/`, run by the issuer, with the output committed beside it (`round37/aj-2.AC2.output.txt`, `round37/aj-3.AC2.output.txt`). aj-2 is done (06:52:23Z, pid 22892); aj-3 runs inside window3.
+
+### 50.1 ROUND 37 AMENDMENT 1 -- cell 5: bbg failure capture + one bounded retry, and limb 2a PER RUN (CTO 28278; round-36 addendum ruling 8 @1c693565e7), 2026-10-02 ~07:4xZ
+
+Row Z-S64 (@a92996d1f0): a clean, unassisted bbg press-and-hold failed at 06:59:52Z inside window3 (0 hardware events),
+in run `20261002T065754Z-bbg-4f3bfa12bd`. The job ended `bot_check` with no solve event, and no capture exists. The
+run stays UNCLASSIFIED (ruling 8c).
+
+The CTO ruled YES to cell 5, folded with addendum ruling 8:
+- every bbg bot_check reaches the in-tab solve, with its challenge events recorded;
+- a failed solve writes a capture bundle before giving up, regardless of the hourly cap: DOM snapshot, screenshot,
+  and the HTTP status and response headers of the challenge exchange;
+- one bounded retry follows, 60-120 s later, recorded as a second challenge event;
+- the grader grades limb 2a PER RUN: MET when a run inside a monitor window has every presented challenge non-void
+  and passed. A failed run elsewhere does not void a passing one; it is printed as the window pass rate beside the
+  verdict.
+
+bbg restarts after the merge, under the monitor.
+
+| cell | order | class | slot |
+|---|---|---|---|
+| `HVST-aj-5` bbg failure capture + bounded retry + per-run grader | `aj-5` | SERVED (code LOCAL; it reaches the live bbg path at the next driver job) | `~90` |
+
+Base check `round37/checks/aj-5.AC2.py` before the cut: FAIL as expected (the grader has no `grain` and no per-run
+entries).
