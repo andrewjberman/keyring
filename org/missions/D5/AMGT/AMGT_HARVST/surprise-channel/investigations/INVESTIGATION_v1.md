@@ -6165,6 +6165,30 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "Not measured: whether the served gold was built before the barrons dict shape appeared, or whether silver_latest/the barrons silver writer changed. Issuer to rule where the unwrap lives (silver writer, or a verbatim-text rule in the builder)."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~92",
+      "surfaced_at": "2026-10-02T17:30Z",
+      "id": "AMGT_HARVST-Z-W92-S20",
+      "one_line": "aj-4: with the keep-alive firing every ~3.3 min (6 keepalive_page_load events, all logged_in, 200), the hand-solved ft session still died 24 min after sign-in (job ends 401 sign_in_refused), against the 120 min the order needs.",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Order aj-4 / round-36 ruling 5: a keep-alive article page load every session_keepalive_seconds (180 s) holds FTSession_s for >= 120 min with 0 renewals (the round-36 probe held 54 min with a load every 8 min).",
+      "world_is": "Sign-in by Andrew's hand: identity cookie FTSession_s set 17:00:37Z, vault saved 17:01:01Z (aj4_signin_hand.json). Collector job 20261002T170219Z-ft-969b227cd0 (ASML, --no-sign-in) started 17:02:19Z, fetched 65 keys, 1 stored. Run-record events: keepalive_page_load at 17:05:53, 17:09:14, 17:12:36, 17:16:07, 17:19:21, 17:22:33 (gaps 201/202/211/194/192 s; url_kind article, logged_in true on every one). events.jsonl shows the last ft /content 200 at 17:25:01Z; the job ended 17:25:05Z status sign_in_refused, detail '401 under --no-sign-in: no refresh'. Time from sign-in: 24m04s (24m28s from the cookie); the last keepalive_page_load before the death was 17:22:33Z, 21m32s after sign-in and 2m32s before the 401. auth_refreshes 0. Per order step 4 the run stopped and no second sign-in was made. The keep-alive fires and is recorded (the event half of AC2 is met) but did not hold the session: AC2 FAIL on status sign_in_refused and span 23 min < 120. Same collector, same account as the round-36 attempt (died at 74m45s with no keep-alive load); 3 of the 4 ft sessions measured so far lived 10-75 min.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~92/aj4_ft_keepalive.json",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~92/aj4_signin_hand.json",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~92/aj4_ac2_output.txt",
+          "lib/opal_data_harvest/contracts.json:48"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Not measured: whether the death is a server-side lifetime cap on an hCaptcha-solved session independent of activity, a bot-signal revocation, or tab-side (the keep-alive page load happens in the collector's tab, the vault cookie is not refreshed). Not tested: any other keep-alive shape. The issuer/CTO decide the next act."
     }
   ]
 ```
