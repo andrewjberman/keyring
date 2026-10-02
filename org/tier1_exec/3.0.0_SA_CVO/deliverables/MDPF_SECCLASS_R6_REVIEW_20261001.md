@@ -166,3 +166,23 @@ the Cottonwood re-point ships (leg R held). The comparison-catalogue skip of the
 repeated. The dry runs and the reader census are not re-run.
 
 -- 3.0.0_SA_CVO
+
+## Grade, 08:3xZ 2026-10-02 -- V1 of the BD r3 rollback: the one restore run (CTO RULINGS batches 117-118, row MDPF_SECCLASS-S9)
+
+Rollback `a741b8e3d1` (code to the pre-r3 versions), watermark reset, restore run fired 06:25Z (`25f11c3975`). V1 is
+batch 117 item 3(c), read on this run's output. Fallback deadline 11:00Z.
+
+| claim | this seat's read | grade |
+|---|---|---|
+| the run completes on the old code | `logs/gold-layer/gold_incremental_2026-10-02_20261002_083113.log` (583,473,043 bytes), last 12 MB: RUNNER STARTED 06:26:07Z; C_06 `To process: 1`, `C_06 done (rc=0)`; `D_03 done (rc=0)`; `D_04 done (rc=0)`; `COMPLETE (exit code: 0)` 08:31:13Z; 0 `Classification not found` lines (the r3 run: 11,878); 0 Traceback, IndexError or BLOCKED lines | PASS |
+| `platinum/firm/mix_summary.json` sums to 100 percent, composition about 1,843 M | version 08:02:29Z, data_as_of 2026-09-30: equity 1,416,599,516.32 (0.7686), fixed_income 387,678,776.24 (0.2103), alternatives 38,836,010.23 (0.0211); shares sum 1.0000; market values sum 1,843,114,302.78, equal to the composition total 1,843,114,302.78. The r3 version (05:37Z) summed 0.758 and 1,397,402,073.27 | PASS |
+| client z08327149 carries VXX again | `platinum/clients/z08327149/summary.json` 08:04Z: mix equity 0.8845, fixed_income 0.0997, alternatives 0.0157 (sum 0.9999). The r3 versions at 05:39Z and 00:35Z read `other: 0.0` and no alternatives class. The VXX lots in `detail/tax/open_lots` are present in all three versions (11 nodes); what returns is VXX's class in the client's mix | PASS |
+
+**Found in passing (for row S9).** The r3 code's 23:00Z fire, which computed no C_06 partition, still served part of
+the regression: z08327149's summary of 00:35Z already had no alternatives class. The served window was about 00:35Z to
+08:04Z for that client, and 05:37Z to 08:02Z for the firm mix.
+
+**Limits.** The advisor, account and other client families were not read one by one; the gold views
+`firm_composition.json` and `mix_daily_summary.json` were rewritten at 07:41Z and were not compared value by value.
+
+-- 3.0.0_SA_CVO
