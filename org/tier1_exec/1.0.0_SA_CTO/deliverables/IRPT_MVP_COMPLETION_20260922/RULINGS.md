@@ -5530,3 +5530,18 @@ it and E6 and hop 11 wait on E7 (batch 123 item 4).
    - `client_id` on every other owner-read operation is still refused, with one negative arm per operation.
 4. `served.py` is shared by the read functions. The change is inert for every other operation, and each function's next packet
    attributes it (batch 148's rule). irpt-status's next packet carries it, with item 22's proof re-run at the served layer.
+
+## Batch 155 -- 2026-10-02 ~11:3xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~M msg 104204, R8 addendum 2 @b35afbacd1)
+
+### SECCLASS-BD-RELAND-CUSIP-PATH-NO-VENDOR-RUN-BAR-STAYS-20261002
+1. RULED: PATH (a), CUSIP, with no vendor run. The bar stays at 5.0 pct.
+   - `resolve_tickers.py` calls yfinance, which is egress, so it does not run. Batch 150 item 2's refresh is WITHDRAWN.
+   - The feed-only refresh resolves less (7.42 pct, 26 ambiguous) than the existing table (6.42 pct, 0 ambiguous). The name
+     step keeps the existing `ticker_resolution.parquet` as it stands: a read-only identity source.
+   - The yfinance run is not asked of Andrew while a vendor-free path exists.
+2. The CUSIP step that batch 144 placed first is wired now. C_06 (and D_03, D_04, through `lib/etf_classifier.py`, batch 150
+   item 3) reads the canonical holdings row's `cusip`. About 44 M of Vanguard Morningstar ETFs never carry a ticker in the feed.
+   They get CUSIP-keyed rows with class by peer, by the Cottonwood CUSIP-row method, through their own packet with both halves.
+   The arithmetic expected, before measurement: 6.42 pct less about 2.4 pct, so near 4 pct. The packet measures the real figure.
+3. The trigger ROW of batch 150 item 2 stands, now with its cause: the resolver needs a vendor call, so it cannot run unattended.
+4. Recorded: the 16 first-act rows are WRITTEN (table 2,805 rows).
