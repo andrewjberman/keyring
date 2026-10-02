@@ -42,3 +42,23 @@ dispositioned).
 
 - The Ocilar re-check (HVST-RECHECK-OCILAR-1, 2026-11-01, owner `2.0.0_SA_COO~H`).
 - A vendor card, if CRO~Z's research names a solver vendor.
+
+## ADDENDUM ~19:5xZ -- ruling 3's research landed (`4.0.0_SA_CRO~Z` msg 28704; `FT_SIGNIN_ROUTES_BRIEF.md` @057df8f244)
+
+- **Option (b) has no candidate.** None of 2Captcha, CapSolver, Anti-Captcha, CapMonster or NopeCHA lists hCaptcha in its own docs
+  today. hCaptcha's own terms (2025-11-17) prohibit automated solving, so the solver class is closing, not merely unlisted. No
+  solver vendor card is raised. Ocilar stays the qualified wait only because Andrew named it (ruling 2), and the 11-01 re-check
+  reads hCaptcha's terms beside Ocilar's status.
+- **Option (c) stays REJECTED,** against the brief's recommendation: FWD-11's RULE carries Andrew's "we do not accept any defeat to
+  that end". The research's value is that it names the route that is not a defeat, a licence.
+- **NEW, before any ft route is built: FT's terms on automated access are UNREAD.** `help.ft.com` refused the research tool. They bear
+  on the ft limb as built (automated reads on a consumer subscription), not only on the solver question.
+  - `4.0.0_SA_CRO~Z` reads them VERBATIM in a headed browser on an Opal machine and lands the clauses.
+  - STOP_FT stays until that read. No ft collection resumes on a consumer subscription that the terms may bar.
+- **For Andrew (spend), carded:** an FT corporate licence QUOTE naming SSO (re-authenticated every 180 days), Premium, FT-on-Bloomberg
+  and the Datamining API. It is a quote, with no spend committed.
+  - The tension is named for him: FWD-11's RULE excludes "licensed bulk access (Factiva or any other)". His verbatim was "no licensed
+    factiva bullshit, no". A direct FT licence is a publisher seat licence giving SSO auth, not an embargoed aggregator.
+  - Whether the Datamining API counts as "bulk" under his word is his to say on the card.
+- **One Terminal read for FT news entitlement** (does FT full text or only headlines show today?) is a Bloomberg read under the
+  per-use word. It is carded with the licence quote, because it may show a licence Opal already holds.
