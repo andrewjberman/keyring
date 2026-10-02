@@ -116,7 +116,7 @@ Served gold moves only at the issuer acts after the merge:
 
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>38</round>
 <slot>~90</slot>
 <fabric>site-z</fabric>
