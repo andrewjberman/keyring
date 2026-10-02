@@ -142,3 +142,45 @@ Lambda wiring and a dedicated secret stay in round 6. The COO asks whether "toni
 6. **Served output.** The write to `research_hypotheses` is a literal key list the COO controls. Republishing the page is a
    move of served output and stays under the CLAUDE.md never-widen rule as it stands. This ruling adds no pair and removes
    none.
+
+## CALL 6 -- rk-1 implausible-valuation band 0.5 (2.0.0_SA_COO~RV msg 28308 and 1.0.0_SA_CTO~Z msg 28306, 08:10Z)
+
+**Call.** COO~RV's fix for CVO grade 2 at pin CLOUD fc80f776e4 (COO addendum half @e44181f7f1; CTO addendum half @67df1f7aa7
+signed on this ruling) ships two things:
+- (a) F1: a zero or absent valuation is NO PRICE, never a -100% day. This is within CALL 1 condition 2 and needs no ruling.
+- (b) a NEW guard, `contribution_implausible_move_band` 0.5 (PROVISIONAL): on UNCHANGED quantity, a holding-implied daily
+  move beyond the band is refused as `implausible_valuation`.
+
+(b) moves served YTD for SCHY from -1.83% to +5.85% and for BIDD from +11.49% to +12.51%. Both seats recommend ACCEPT,
+disclosed: COO~RV in the ranking caption, CTO~Z in the page's audit block.
+
+**Ruling: ACCEPTED, PROVISIONAL, with three conditions. The apply at fc80f776e4 does NOT wait for them.**
+
+1. **The band is symmetric in ratio, not in arithmetic move.** The pinned test is `|p_d / p_(d-1) - 1| > band`
+   (`gold_holding_contribution.py` `_implied`). A drop's move is bounded by 1 and a rise's is not, so the test keeps a drop
+   that its own recovery fails.
+   - Example: a bad valuation that falls 40% (ratio 0.60, move 0.40, KEPT) and recovers the next day (ratio 1.67, move
+     0.67, REFUSED) leaves the fault's -40% leg in the return and removes its recovery.
+   - The bias runs one way: toward losses, for every fault drop between 33% and 50%.
+   - Rule: a daily return is refused when `max(r, 1/r) > 1 + band`, with `r = p_d / p_(d-1)`. Band 0.5 refuses outside
+     [0.667, 1.5]. A fault and its recovery then fall on the same side of the test.
+   - **CALL 1 condition 3 is amended to the same form:** the split band 0.25 refuses outside [0.80, 1.25] when quantity
+     changed.
+2. **Disclosure, at row grain and on the page:**
+   - `holding_contribution` gains `n_days_refused` and `refused_reasons` (column-optional).
+   - The ranking caption states, per fund and period, how many holding-days were refused and why (`implausible_valuation`,
+     `corporate_action_suspected`).
+   - The audit block lists each refused (security, day, ratio, reason).
+
+   This satisfies both seats' conditions.
+3. **Evidence for the grade.** The post-act read of the condition 1-2 item prints SCHY's and BIDD's refused rows (security,
+   day, ratio, reason), so 3.0.0_SA_CVO~RV can grade them as faults or as real moves. This is evidence, not a gate.
+
+**Sequencing.** F1 is a P0: ETFT reads -188.51% on the served demo page. The apply at fc80f776e4 proceeds as signed, inside
+the 10:45Z window. Its arithmetic band is accepted as the interim for that one apply only, because it is strictly better than
+the served state. Conditions 1 and 2 are the next FAST item, redeployed as an addendum under the same pair. They should land
+before or with the 2026-10-02 page republish where the act window allows.
+
+**Basis of the threshold.** For the large-cap dividend holdings that drive SCHY and BIDD, a one-day move outside
+[0.667, 1.5] on an unchanged quantity is overwhelmingly a valuation fault. For concentrated growth funds a real move of that
+size is rare but possible. That is why the band stays PROVISIONAL and every refusal is shown.
