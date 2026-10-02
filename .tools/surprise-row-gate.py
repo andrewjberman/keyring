@@ -556,7 +556,7 @@ def _remediation_rows_for_project(root, code):
 
 
 def _coordinate_violations(rel, folder_kind, added, committer, c_in_schema, merging=False,
-                           parent_ids=None):
+                           parent_ids=None, published_ids=None):
     """PURE. THE ALLOCATOR DISCIPLINE on NEW rows (RULING 2 @9ef9a40aae; annex v3.2): a row committed by a worker
     0.9.0_WK_<CODE>~<n> carries W<n> with n EQUAL to the committer's slot (a bare S<k> from a worktree is the race the
     coordinate exists to remove; a wrong n is another worker's sequence); a seat's row carries no W; a C- row lives only
@@ -597,6 +597,10 @@ def _coordinate_violations(rel, folder_kind, added, committer, c_in_schema, merg
         # this merge is the committer's act and is graded against the COMMITTER, on a merge or off.
         _carried = bool(merging and parent_ids is not None
                         and str(r.get("id") or "").strip() in parent_ids)
+        # BATCH 112: a carried row the PUBLISHED trunk already holds is another device's landed row -- noted by
+        # check_file, not graded here. published_ids None (unreadable) exempts nothing.
+        if _carried and published_ids is not None and str(r.get("id") or "").strip() in published_ids:
+            continue
         allocator_raw = str(r.get("surfaced_by") or "").strip() if _carried else str(committer or "").strip()
         # SEAM (2026-09-10, 2.0.0_SA_COO~Z's stuck drain): `surfaced_by` legitimately carries
         # "<serial> (why it was surfaced)" -- every seat row in every channel already has that shape.
@@ -801,6 +805,31 @@ def _parent_row_ids(root, rel):
             if rid:
                 ids.add(rid)
     return ids, "; ".join(notes)
+
+
+# The ONE published trunk both devices commit to (LD-0613). Not a device fact: the ref name is the same on both.
+PUBLISHED_REF = "refs/remotes/origin/CLOUD"
+
+
+def _published_row_ids(root, rel):
+    """Every row id the PUBLISHED trunk carries in `rel`, or None if unreadable (the caller then exempts nothing).
+
+    WHY (1.0.0_SA_CTO, IRPT RULINGS batch 112, 0.0.0_AB_MSTR 104055): the coordinate limb grades a row a merge
+    parent carries by its own surfaced_by. That is right at a WORKER DRAIN -- the worker branch is unpublished and
+    its rows are graded once, there. But a row the published trunk ALREADY carries was landed by another device's
+    push: the merging device cannot re-mint it, and refusing it blocks every later integration of origin (row
+    NFRA_OPALAI-Z-S55, a worker row without W<n> landed on origin by site Z @9c392a7db9). Such a row is NOTED, not
+    refused. A worker's unpublished drain row is never on this ref, so drains are graded exactly as before.
+    COST: one git read per channel file per merge. NON-APPLICATION: off a merge; a row minted in the merge commit
+    (in neither parent); every limb other than the coordinate discipline.
+    """
+    st, text = _blob(root, PUBLISHED_REF, rel)
+    if st == "ERROR":
+        return None
+    if st == "ABSENT" or not text:
+        return set()
+    rows, _bad = _rows(text, rel.lower().endswith(".json"))
+    return {str((r or {}).get("id") or "").strip() for r in rows} - {""}
 
 
 def _row_is_other_fabric(row):
@@ -2236,8 +2265,15 @@ def check_file(root, rel):
     _mrg_now = _merge_in_progress(root)
     _pids, _pnote = _parent_row_ids(root, rel) if _mrg_now else (None, "")
     _c_in_schema = "C-" in str(((schema.get("properties") or {}).get("id") or {}).get("pattern", ""))
+    _pub = _published_row_ids(root, rel) if _mrg_now else None
     v.extend(_coordinate_violations(rel, folder_kind, added, _cmt, _c_in_schema,
-                                    merging=_mrg_now, parent_ids=_pids))
+                                    merging=_mrg_now, parent_ids=_pids, published_ids=_pub))
+    if _mrg_now and _pids is not None and _pub:
+        _onpub = sorted(str(r.get("id")) for r in added
+                        if str(r.get("id") or "").strip() in _pids and str(r.get("id") or "").strip() in _pub)
+        if _onpub:
+            notes.append("%s: MERGE -- coordinate discipline not applied to %d row(s) the published trunk (%s) already "
+                         "carries: %s (batch 112)" % (rel, len(_onpub), PUBLISHED_REF, ", ".join(_onpub)))
     # FOREIGN-ROW SWEEP: every new investigation row is the committer's own, or a co-worker's riding along.
     _cw = _seats_with_open_orders(root, folder_project)[0] if folder_project else set()
     _fv, _fn = _foreign_row_violations(rel, kind, added, _cmt, coworkers=_cw,
@@ -3061,6 +3097,15 @@ def _self_test(root):
          lambda: any("is not a worker" in x for x in _coordinate_violations("f", "INVESTIGATION", [{"id": "X_PRJ-W2-S1", "surfaced_by": "3.0.0_SA_CVO"}], "2.0.0_SA_COO~A", False, merging=True, parent_ids=_DRAIN_PIDS))),
         ("drain MUTANT: the same lawful W2 row graded NOT merging under the COO~A committer -> refused (the first drain's defect, kept as the negative control)",
          lambda: _coordinate_violations("f", "INVESTIGATION", [{"id": "X_PRJ-W2-S1", "surfaced_by": "0.9.0_WK_X_PRJ~2"}], "2.0.0_SA_COO~A", False, merging=False) != []),
+        # BATCH 112: a carried row the published trunk already holds is noted, not graded; a drain's row is still graded.
+        ("published: a bare S<k> worker row a parent carries AND origin/CLOUD carries, merged by MSTR -> admitted",
+         lambda: _coordinate_violations("f", "INVESTIGATION", [{"id": "X_PRJ-S40", "surfaced_by": "0.9.0_WK_X_PRJ~2"}], "0.0.0_AB_MSTR", False, merging=True, parent_ids={"X_PRJ-S40"}, published_ids={"X_PRJ-S40"}) == []),
+        ("published NEGATIVE: the same row carried by a parent but NOT on the published trunk (a worker drain) -> refused",
+         lambda: any("carries no W<n>" in x for x in _coordinate_violations("f", "INVESTIGATION", [{"id": "X_PRJ-S40", "surfaced_by": "0.9.0_WK_X_PRJ~2"}], "2.0.0_SA_COO~A", False, merging=True, parent_ids={"X_PRJ-S40"}, published_ids=set()))),
+        ("published FAIL-CLOSED: the trunk unreadable (published_ids None) exempts nothing",
+         lambda: any("carries no W<n>" in x for x in _coordinate_violations("f", "INVESTIGATION", [{"id": "X_PRJ-S40", "surfaced_by": "0.9.0_WK_X_PRJ~2"}], "0.0.0_AB_MSTR", False, merging=True, parent_ids={"X_PRJ-S40"}, published_ids=None))),
+        ("published NOT CARRIED: a row on the trunk but in NEITHER parent (minted in the merge) -> graded as the committer's",
+         lambda: any("is not a worker" in x for x in _coordinate_violations("f", "INVESTIGATION", [{"id": "X_PRJ-W2-S1", "surfaced_by": "0.9.0_WK_X_PRJ~2"}], "2.0.0_SA_COO", False, merging=True, parent_ids=set(), published_ids={"X_PRJ-W2-S1"}))),
         # THE REMEDIATION PLANE (2026-09-10): W is INHERITED there, so the arm must not grade it.
         # The three REFUSALS below are the point -- a fix that only proves the new case is half a test.
         ("remediation: the CVO files a W row in remediations/ (the id EQUALS the graduated worker id) -> ADMITTED",

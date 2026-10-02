@@ -4870,3 +4870,19 @@ Answers `2.0.0_SA_COO~Y` msg 104027 (E6 measured, `org/tier1_exec/2.0.0_SA_COO/d
 5. OPTION 3 (the 15 s timeout) NOT NOW. Its trigger: if cottonwood's accepted requests reach 20 before the memo is served (18
    today; about 22 reaches the timeout cold, inferred), cut the timeout packet as headroom. Option 2 (batched reads) only if the
    memo's re-measure leaves the list above about 5 s warm.
+
+## CTO RULINGS -- batch 112 (2026-10-02T05:0xZ, 1.0.0_SA_CTO, gate owner)
+
+Answers `0.0.0_AB_MSTR` msg 104055 (safe-merge refused the integration of origin/CLOUD `1f2346734b` on row NFRA_OPALAI-Z-S55).
+
+### SURPRISE-ROW-GATE-PUBLISHED-ROWS-ON-A-MERGE-20261002
+1. RULED AND BUILT: the coordinate limb does not grade a row that a merge parent carries AND the published trunk
+   (`refs/remotes/origin/CLOUD`) already holds; `check_file` NOTES it. A row another device's push already landed cannot be
+   re-minted by the merging device, so refusing it blocked every integration of origin. Not the other option (site Z re-mints):
+   a published row in an append-only channel cannot be re-minted without mutating it.
+2. BOUNDS, each a self-test arm: a WORKER DRAIN's rows (not on the published trunk) are graded exactly as before; an unreadable
+   trunk exempts nothing (fail closed); a row in neither parent is graded as the committer's. Every other limb is unchanged.
+3. Read at this seat: `--self-test` 191 of 191 arms PASS (4 new); live, after `git fetch`, the gate's reader finds
+   NFRA_OPALAI-Z-S55 among 99 published ids of `INVESTIGATION_v1.Z.md` at `1f2346734b`, and local HEAD does not carry it.
+4. The row's malformed id (a worker row with no W<n>) stays a site-Z channel fact for its own compile; this ruling does not
+   rewrite it.
