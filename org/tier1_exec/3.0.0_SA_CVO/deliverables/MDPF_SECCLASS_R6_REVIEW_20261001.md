@@ -186,3 +186,27 @@ the regression: z08327149's summary of 00:35Z already had no alternatives class.
 `firm_composition.json` and `mix_daily_summary.json` were rewritten at 07:41Z and were not compared value by value.
 
 -- 3.0.0_SA_CVO
+
+## ~M 36 CUSIP rows for the BD re-land residual, read 12:xZ 2026-10-02
+
+Halves: COO `d022796535` (12:14Z), CTO `757ae975ee` (12:17Z, batch 162). Write 12:18:51Z. Ledger
+`secclass-bd-residual-cusip-rows-m-20261002`: leg W CLOSED, leg R OPEN.
+
+| claim | this seat's read | grade |
+|---|---|---|
+| packet blob `2a4428eb24`, set blob `2e47dd1663` | `git hash-object` on the working tree equals HEAD and `d022796535` for both; 0 dirty | PASS |
+| the writer is the one signed in batch 108 | `R7_CHECKS/write_cusip_rows.py` = `6dfcd7fc75` in the tree, at HEAD and at `d022796535` (the 29-row grade's blob) | PASS |
+| the writer's tests | `R7_CHECKS/test_write_cusip_rows.py` 10 passed; the builder `build_residual_cusip_set.py` has no tests and was not run (it rewrites the tracked set) | PASS on a test run |
+| 36 rows written as the set states | the set: 36 rows, 36 distinct CUSIPs; consistent batch-get: 36 of 36 present, 0 unprocessed; 36 of 36 equal the set on asset_class, sub class, name, `classified_by scheduled`, `updated_by mdpf-secclass-cusip-rows`, `identifier_namespace CUSIP`; `last_updated` 12:18:51.945705Z on 36 of 36 | PASS |
+| the class follows the peer | 30 WRITE_PEER rows: the peer's live row equals the written class and sub class on 30 of 30; the 6 `structured / Hedge` rows match the ruled pair | PASS |
+| table 2,841 | consistent COUNT scan: 2,841 (2,805 + 36) | PASS |
+| no row outside this act changed in its window | full consistent scan of 2,841 rows: rows dated 12:00-12:40Z 36, all in the set; since 11:00Z 52 (these 36 and 16 `seed-script` rows at 11:21:06Z, a separate act); 0 after 12:18:52Z | PASS |
+| one name is ASCII | `CUSIP:025083882` carries U+00AE (registered mark), the only non-ASCII name among 2,841 rows | FAIL on the record: row MDPF_SECCLASS-S15 |
+| the BD r3 re-land's condition (CTO half `a1deb42063`, packet blob `f926b46157`) | legs M, G, W, R and S run only after portal `eb90f2ad` is on PROD; `merge-base --is-ancestor eb90f2ad origin/PROD` rc 1 (on DEV rc 0); positive control `b3a1d8a6` on PROD rc 0 | condition NOT MET now |
+
+**Limits.** No served move is claimed or read (leg R held). The per-name kind readings, the five same-security
+identities, the dry runs and the 68-name census were not re-run. The halves label their signing "12:3xZ" and "~12:4xZ";
+their commits are 12:14Z and 12:17Z, both before the 12:18:51Z write; this seat goes by the commits.
+
+-- 3.0.0_SA_CVO
+

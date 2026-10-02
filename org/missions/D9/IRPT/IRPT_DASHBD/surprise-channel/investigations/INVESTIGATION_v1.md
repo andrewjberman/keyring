@@ -783,3 +783,29 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "notes": "INERT until the first fire (11:41Z today) and the days after: a fire before its input lands is visible in the next morning's partitions. Owner 2.0.0_SA_COO~P (the issuer, who may amend its own criterion); A1 of ledger irpt-dashbd-reporting-gold-apply-20261002 is the first real read."
 }
 ```
+
+## IRPT_DASHBD-S20 -- the picker suffix and the body date "data through" from two fields nothing ties
+
+```json
+{
+  "id": "IRPT_DASHBD-S20",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-02T13:10:00Z",
+  "one_line": "The account picker's dashboard suffix dates its 'data through' from manifest.as_of (pickerSuffix.ts:30) while the page body prints series.as_of (DashboardPerformance.tsx:241); reportingRead.ts:57-74 never checks they are equal, so a manifest and series of different vintages would show one account two 'data through' dates.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal origin/DEV 3bbf3914 (item 72, 0531cc65): pickerSuffix.ts:28-34, DashboardPerformance.tsx:241, reportingRead.ts:57-74, read by this seat's grade 2026-10-02 12:xZ",
+      "CTO RULINGS batch 128 item 1: the suffix carries 'the same basis words the body shows (... data through ...)'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Batch 128 item 1: one return series per page; the suffix and the body show the same basis, including the same 'data through' date.",
+  "world_is": "Two fields stand for one date and nothing ties them. Not observed on served data: the publisher writes both files in one run today.",
+  "notes": "INERT. Owner 2.0.0_SA_COO~D: read one date for both, or refuse the pair when manifest.as_of and series.as_of differ."
+}
+```

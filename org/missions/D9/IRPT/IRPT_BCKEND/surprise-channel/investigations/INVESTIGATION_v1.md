@@ -14877,3 +14877,213 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Remedy owner 2.0.0_SA_COO~P at IB-pr-282 (E4) or a follow-on cell: pass report_owner=<retained-owner reader> to grant.render_ports in render_ports_from_env. Until then no prospect render is served; no account scope widens."
 }
 ```
+
+
+- IB-pr-294: the portal ExportBundle adapter reads wire.narrative_packet_ref.packet_id unconditionally, so an Analysis bundle (analysis_report_ref, no narrative_packet_ref) would throw there if it ever reached it.
+
+```json
+{
+  "id": "IRPT_BCKEND-W101-S8",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~101",
+  "surfaced_at": "2026-10-02T12:20:00Z",
+  "one_line": "IB-pr-294: the portal ExportBundle adapter reads wire.narrative_packet_ref.packet_id unconditionally, so an Analysis bundle (analysis_report_ref, no narrative_packet_ref) would throw there if it ever reached it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "comp-find 'narrative_packet_ref' --files --corpus default: 73 hit(s) across 52799 file(s); portal hits: contracts/adapt.ts, contracts/wire/ExportBundle.ts, contracts/wire/consumed.ts + 4 fixtures",
+      "portal/src/pages/InvestorReporting/contracts/adapt.ts:1186,1192 read at worktree HEAD"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IB-pr-294 refusal clause: 'A reader outside <paths> that would receive an Analysis bundle is a row naming it.' PRD v0.24 ruling 24: a bundle carries exactly one of the two references.",
+  "world_is": "portal/src/pages/InvestorReporting/contracts/adapt.ts :1186 (bundleRef) and :1192 (narrativePacketRef) dereference wire.narrative_packet_ref.packet_id with no guard; wire/ExportBundle.ts :20 types it readonly-required; wire/consumed.ts :78-79 lists it in reads and required. Whether the portal ever receives a server-frozen Analysis bundle (the F8 preview reads a bundle) is not shown by anything in this cell; the served bundle is stored under the evidence bucket and read by the render host, not returned by submit-export (the answer is QUEUED with no data).",
+  "notes": "Not edited (outside <paths>, portal submodule). Remedy owner: 2.0.0_SA_COO~P at the E4 served move or the FNTEND workstream: make the wire type a union (narrative_packet_ref | analysis_report_ref) and the adapter guard it before an Analysis bundle is previewed. Census: NARRATIVE_REF_READERS_R31.json outside_the_tree."
+}
+```
+
+
+- IB-pr-294: retained_export._is_analysis / print_query decide Analysis by REPORT SHAPE (request_ref present, no dates dict), not by the resolved kind the submit already holds.
+
+```json
+{
+  "id": "IRPT_BCKEND-W101-S9",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~101",
+  "surfaced_at": "2026-10-02T12:20:00Z",
+  "one_line": "IB-pr-294: retained_export._is_analysis / print_query decide Analysis by REPORT SHAPE (request_ref present, no dates dict), not by the resolved kind the submit already holds.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/retained_export.py:_is_analysis and print_query (read at worktree HEAD c7580dc18a); outside this order's <paths>",
+      "pytest run during the cell: ExportSubmitRefused 'the retained report carries no requested window' on an Analysis-kind record with dates"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IB-pr-294: 'for a resolved ANALYSIS report ... the cutoff is the report's own as-of, never dates.actual_end'; the resolved kind is authoritative (retained_export.resolve returns kind).",
+  "world_is": "retained_export.print_query(grant_record, report) calls _is_analysis(report), which is false for an Analysis report that carries a dates dict; it then demands dates.requested_start/requested_end and refuses. Measured while writing test_serve_submit_analysis.py: an Analysis-kind record with a spurious dates.actual_end reached 'the retained report carries no requested window'. The AnalysisReport schema forbids a dates property, so a schema-valid report never takes this path; the submit_service date and bundle reference in this cell key off resolved kind and are unaffected.",
+  "notes": "Not edited (retained_export.py is outside <paths>). Inert while the AnalysisReport schema forbids dates. Remedy owner 2.0.0_SA_COO~P: pass the resolved kind to print_query."
+}
+```
+
+
+- IB-pr-294: the AC2 check validates the stored fixture envelope, not its instance
+
+```json
+{
+  "id": "IRPT_BCKEND-W101-S10",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~101",
+  "surfaced_at": "2026-10-02T12:35:00Z",
+  "one_line": "IB-pr-294: the AC2 check validates the stored ExportBundle fixture ENVELOPE, not its instance, so it cannot pass for any schema; the worker read the instance instead (a one-line change to the check inside the granted checks/r31 path).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P/checks/r31/p31_1_ac2_bundle_exactly_one_ref.py step 2 read ExportBundle.valid.json whole: 'Additional properties are not allowed (_expect, _fixture, _source, instance)'",
+      "measured in python at HEAD c7580dc18a: the BASE packaged schema gives 8 errors on the valid fixture envelope and 0 on its `instance`; the invalid fixture's `instance` gives 1 error on both base and changed schema; the changed schema gives 0 and 1 respectively"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IB31-1-AC2: 'the stored client fixtures validate unchanged on the packaged schema'; check step 2: ExportBundle.valid.json validates and ExportBundle.invalid.json does not.",
+  "world_is": "Every stored fixture in _contracts/fixtures/ is an envelope with the document under `instance` (the existing tests read ['instance']). The check passed the envelope to the validator, which refuses it on the unknown envelope keys regardless of schema. Worker edit: the two json.loads calls in that check now take [\"instance\"]; the grading otherwise is unchanged (valid validates, invalid is refused). The fixtures and schema grading were not loosened. The COO should read the amendment.",
+  "notes": "Edit made under the order's <paths> grant (checks/r31/). Remedy owner 2.0.0_SA_COO~P: confirm or replace the amended check."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S268",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-02T12:33:00Z",
+  "one_line": "reports/tests/test_resident_installed.py::test_factory_returns_exactly_the_resident_shape_without_any_aws_call fails at CLOUD: ycharts/generate/resident_worker.py:18 raises ModuleNotFoundError: No module named 'extract'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest -q -p no:cacheprovider infra/aws/lambda/investor-reporting/reports/tests at CLOUD ~12:3xZ (after @271ff892cc): 1 failed, 88 passed; the test alone fails the same way",
+      "None of IB-pr-293/294/295 touched ycharts/ or reports/; the last reports/ commits are 2.0.0_SA_COO~Y's hop 11 (b13bc47603, edf5b77834)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The reports suite passes at CLOUD.",
+  "world_is": "One reports test fails on an import inside ycharts/generate (the resident worker imports a module named extract that is not on the test's path). IB-pr-296's AC3 lists it as a baseline failure so the regression guard grades only new failures.",
+  "notes": "Remedy owner 2.0.0_SA_COO~Y (ycharts/generate and the resident factory). Not chased by ~P."
+}
+```
+
+## IRPT_BCKEND-S269 -- the portal export client still reads narrative_packet_ref unconditionally after IB-pr-294
+
+```json
+{
+  "id": "IRPT_BCKEND-S269",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-02T13:10:00Z",
+  "one_line": "IB-pr-294 made ExportBundle take exactly one of narrative_packet_ref and analysis_report_ref (PRD v0.24), but the portal's export client still reads narrative_packet_ref unconditionally: the portal's own content-pin test fails with 'ExportBundle.narrative_packet_ref: no longer REQUIRED, and this client reads it unconditionally'. The reader census the cell was cut with did not reach the portal.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show HEAD:docs/contracts/investor-reporting/v1/ExportBundle.schema.json (this seat, 2026-10-02 13:0xZ): required no longer lists narrative_packet_ref; oneOf present; analysis_report_ref a property. IB-pr-294 drained 1572729cfd (worker 790a26be6a, 1dae563e21)",
+      "portal origin/DEV 3bbf3914 fe-s tests run against workspace CLOUD 10d2b1c445 contracts in a scratch worktree (this seat's portal grade of items 72-81): producer-fixtures.test.ts:260 fails 'ExportBundle.narrative_packet_ref: no longer REQUIRED, and this client reads it unconditionally', with and without ebceef5b",
+      "CTO RULINGS batch 149 item 3: IB-pr-294's second criterion is 'the schema takes exactly one reference, with a census of every reader'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD v0.24 / batch 149: exactly one reference, never null; every reader of the bundle is counted before the change.",
+  "world_is": "The portal reader that loads a bundle's narrative packet by reference will meet an Analysis bundle with no such field once an Analysis export reaches it. Not read: whether IB-pr-294's served submit is deployed, and whether any portal path reads an Analysis bundle today.",
+  "notes": "INERT until an Analysis bundle reaches the portal reader. Owners: 2.0.0_SA_COO~D (the portal reader: branch on the reference present) and 2.0.0_SA_COO~P (the census that missed it). The same content-pin run also flags 'comparison-catalogue: response envelope no longer declares unprojected_grant' (content-pins.test.ts:306), not graded here."
+}
+```
+
+- IB-pr-296: the retained-owner reader is attached only when IRPT_REQUESTS_TABLE is set, because an existing test pins the two-port s
+
+```json
+{
+  "id": "IRPT_BCKEND-W101-S11",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~101",
+  "surfaced_at": "2026-10-02T13:10:00Z",
+  "one_line": "IB-pr-296: the retained-owner reader is attached only when IRPT_REQUESTS_TABLE is set, because an existing test pins the two-port shape of render_ports_from_env.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_render_identity/tests/test_render_ports_installed.py::test_each_read_function_installs_the_grant_ports_with_the_bucket unpacks `load_bundle, load_identity = ports('cottonwood')` with only IRPT_EVIDENCE_BUCKET set; a reader attached unconditionally would return a 3-tuple and move it (order refusal clause: an existing test that moves is a defect)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IB-pr-296: render_ports_from_env passes report_owner= a read-only reader; an unset index refuses (fail closed).",
+  "world_is": "render_ports_from_env installs the reader only when the retained index is configured (IRPT_REQUESTS_TABLE set, or a table injected for offline controls). Unset, the ports stay the two-port pair and the Enforcer refuses a prospect render with 'no owner source is wired' (fail closed; proven through served.Entry in test_a_prospect_render_is_refused_when_the_index_is_unset). The existing test is unmoved (_render_identity 45 passed). Whether each installing function's role can read the table, and whether reports/repository.py is packaged beside it (report_owner.py imports it lazily and a failed import raises, so the Enforcer refuses), is E4's packet's question.",
+  "notes": "Remedy owner 2.0.0_SA_COO~P at IB-pr-282 (E4): set IRPT_REQUESTS_TABLE on every function that installs render ports and may serve a prospect render, grant dynamodb:GetItem on it, and confirm the reports package ships with the function."
+}
+```
+
+- IB-pr-296: print_query takes the resolved kind as an optional third argument; with no kind it still decides by report shape, becaus
+
+```json
+{
+  "id": "IRPT_BCKEND-W101-S12",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~101",
+  "surfaced_at": "2026-10-02T13:10:00Z",
+  "one_line": "IB-pr-296: print_query takes the resolved kind as an optional third argument; with no kind it still decides by report shape, because existing tests and the r28 check call it with two arguments.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/tests/test_retained_export.py:132,139 and test_retained_export_analysis.py:98,155 call print_query(stamped, report); org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P/checks/r28/build_analysis_export_r28.py:116 does too"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IB-pr-296: print_query takes the resolved kind (ANALYSIS | PERFORMANCE) from its caller; submit_service passes it; PERFORMANCE prints exactly as today.",
+  "world_is": "print_query(grant_record, report, kind=None): submit_service passes resolved.get('kind'), which resolve() always sets, so the served path never consults the shape. A caller that passes no kind keeps the shape rule so no existing test moves (export 158 passed, 0 baseline failures). The only residual shape-decided caller is the r28 check script, outside the order's paths.",
+  "notes": "Remedy owner 2.0.0_SA_COO~P: if the shape fallback should be retired, make kind required in a cell that also moves the two-argument callers."
+}
+```
+
+## IRPT_BCKEND-S270 -- E6 is served but not re-measured; the Cottonwood history list nears the 15 s timeout
+
+```json
+{
+  "id": "IRPT_BCKEND-S270",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-02T13:30:00Z",
+  "one_line": "E6 has served since 11:13:50Z but its acceptance, the call census and REPORT durations re-run after the apply (CTO batch 111 item 3), has not been run, while batch 132 lifted Cottonwood's cap of 20 on E6 serving and Cottonwood now holds 22 accepted requests. The history list as the service principal took 12,338 ms client wall time warm at the default page and 18,903 ms at limit=50; the function timeout is 15 s.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y (run batch 111 item 3's census and REPORT durations on the served E6; if the history list's server time is near the timeout, re-cap Cottonwood until it is not)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's irpt-status grade (2026-10-02 12:5xZ-13:1xZ): live CodeSha256 X/JLmPJZ.. at ff8fd77ba2, read_memo.py present; GET analysis/requests as svc-irpt-analysis: 22 items, 12,338 ms (default page) and 18,903 ms (limit=50), client wall times",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/E6_TIMING/: 6 files, newest 03:27Z (before the apply); E7B_STATUS/ holds no post-11:13Z timing",
+      "CTO RULINGS batch 111 item 3 (re-measure once E6 serves) and batch 132 (the Cottonwood cap lifts when E6 serves)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "E6 is accepted on a measured re-run after it serves; the cap is lifted because E6 bounds the history list's reads.",
+  "world_is": "The cap is lifted and the list keeps growing, but nobody has measured the served function's time since E6 went live. The client wall time is already within 3 s of the timeout at the default page. Not read: the function's own REPORT durations (server time) for these calls.",
+  "notes": "ARMED because the request count only grows and a timed-out history list is a page that cannot list requests. Measured client-side only; the server time may be lower."
+}
+```

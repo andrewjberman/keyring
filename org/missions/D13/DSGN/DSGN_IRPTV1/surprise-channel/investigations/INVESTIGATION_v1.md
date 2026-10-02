@@ -3323,3 +3323,150 @@
   "notes": "S44 stays filed as it is (append-only); this row is its disarm record. S44's premise that a served L0 node carries an excess was wrong: the 'excess' is the card's own rule."
 }
 ```
+
+
+## DSGN_IRPTV1-S49 -- disarm record for S40: the comparison catalogue is in the operation table, the battery derived (portal DEV ebceef5b)
+
+```json
+{
+  "id": "DSGN_IRPTV1-S49",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-10-02T12:15:00Z",
+  "one_line": "DISARM record for DSGN_IRPTV1-S40's API-layer half: GET /analysis/comparisons joined IR_ROUTE_TABLE and the fe-s-13/14/57 battery derives its route count from routes.json (portal DEV ebceef5b, FAST item 80, 1.0.0_SA_CTO RULINGS batches 151 and 158).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal ebceef5b (origin DEV by ls-remote 11:5xZ): 'comparison-catalogue' in IrDeclaredOperation and IR_ROUTE_TABLE; fixtures/wire/requests/comparison-catalogue.request.json captured from the page's own read on 5174",
+      "the battery's 17-file set: 7 failing at HEAD, 1 after ('the three routes no consumer operation names', stale against routes.json, its own row)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarms DSGN_IRPTV1-S40: the route the page reads is now in the operation table and every pin that counts routes reads routes.json's own denominator.",
+  "spec_asserts": "Every route routes.json declares is in the client's operation table, and the pins count what the contract declares.",
+  "world_is": "Both hold at portal DEV ebceef5b; one stale consumer-list pin remains on its own row.",
+  "notes": "S40 stays filed as it is (append-only); this row is its disarm record."
+}
+```
+
+
+## DSGN_IRPTV1-S50 -- disarm record for S45: Mix-chart cash is green, 36.4 dE00 from commodities (portal DEV bf38f6c9)
+
+```json
+{
+  "id": "DSGN_IRPTV1-S50",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-10-02T12:15:00Z",
+  "one_line": "DISARM record for DSGN_IRPTV1-S45 (3.0.0_SA_CVO): MIX_PIE.cash moved amber500 -> green300 under Andrew's call C1 (1.0.0_SA_CTO RULINGS batch 152), so commodities and cash sit 36.40 dE00 apart in the advisor Mix stack (portal DEV bf38f6c9, FAST item 78).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal bf38f6c9 (origin DEV): src/lib/chartColors.ts MIX_PIE.cash = PALETTE.green300",
+      "iv-e-46 IVE49-AC1 passes: dE00(MIX_PIE.commodities, MIX_PIE.cash) = 36.4025 (bar 20)",
+      "signed-in walk 20261002T113640Z: the Books page renders after the change; a cash slice was NOT seen (49 Financial's mix carries none)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarms DSGN_IRPTV1-S45: the floor holds for the pair with no exception minted, by the CTO's ruling.",
+  "spec_asserts": "Commodities and cash in one Mix stack clear dE00 >= 20.",
+  "world_is": "They measure 36.40 at portal DEV bf38f6c9; cash against fixed income measures 14.9, the same pair ASSET_CLASS carries under C1, graded by no failing test.",
+  "notes": "S45 stays filed as it is; this row is its disarm record. Not on PROD until the portal promote."
+}
+```
+
+
+## DSGN_IRPTV1-S51 -- disarm record for S46: the account picker numbers accounts that share a label (portal DEV ad5c6e06)
+
+```json
+{
+  "id": "DSGN_IRPTV1-S51",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-10-02T12:15:00Z",
+  "one_line": "DISARM record for DSGN_IRPTV1-S46: the Performance and Holdings account pickers number accounts that share a label as the Total Assets card does ('(2)', '(3)'), so the 18-account client's two '**** / No Account Type Assigned -- $200,000.00' entries read apart (portal DEV ad5c6e06, FAST item 77).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal ad5c6e06 (origin DEV): tabs/holdings/AccountFilter.tsx accountListLabels over the card's own uniqueLabel",
+      "walk 20261002T075255Z shot 014: the card already numbered the four account-less accounts '(2)', '(3)', '(4)' -- they are real, distinct accounts",
+      "fixture-plane run: two accounts labelled alike read 'Trust Account' and 'Trust Account (2)'"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarms DSGN_IRPTV1-S46: two entries can no longer read word for word alike.",
+  "spec_asserts": "Every picker entry names one account an advisor can tell from the others.",
+  "world_is": "Holds at portal DEV ad5c6e06. Not verified: that the picker's numbering lands on the same account as the card's when the two lists are ordered differently.",
+  "notes": "S46 stays filed as it is; this row is its disarm record."
+}
+```
+
+
+## DSGN_IRPTV1-S52 -- disarm record for S47: an Analysis print gates on its request's own status (portal DEV b618efc9)
+
+```json
+{
+  "id": "DSGN_IRPTV1-S52",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-10-02T12:15:00Z",
+  "one_line": "DISARM record for DSGN_IRPTV1-S47: an Analysis print reads its request's status (the status route the Analysis tab reads) and gates on it; a READY request prints, every other state is answered by name, no script error (portal DEV b618efc9, FAST item 76, 1.0.0_SA_CTO RULINGS batch 141).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal b618efc9 (origin DEV): render/PrintEntry.tsx analysisChromeFromStatus through carryAvailabilityFromStatus; render/analysis/AnalysisDocument.tsx reads the slice's absent members as 'not stated'",
+      "fixture-plane run (.runtmp/print-status-driver.mjs): READY printed after status + sections; RUNNING named with no sections fetched; no request refused by name; 0 script errors -- the batch-141 proof, delivered to 2.0.0_SA_COO~P (E4 unblocked)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarms DSGN_IRPTV1-S47: the print has a state to gate on, from the one status source per request.",
+  "spec_asserts": "The print page gates on the report's state (FE-s-31 ruling H).",
+  "world_is": "Holds at portal DEV b618efc9 for Analysis prints; the live route signed in is not run (the walker never presses an export).",
+  "notes": "S47 stays filed as it is; this row is its disarm record. Not on PROD until the portal promote."
+}
+```
+
+
+## DSGN_IRPTV1-S53 -- the routes pin "the three routes no consumer operation names" is stale against routes.json
+
+```json
+{
+  "id": "DSGN_IRPTV1-S53",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-10-02T12:30:00Z",
+  "one_line": "fe-s-13/routes.test.ts 'the three routes no consumer operation names are typed and recorded' hard-codes ['export-download', 'status-job', 'status-summary'], but routes.json now names a consumer operation for each of those three and the ONE route with consumer_operation null is comparison-catalogue -- the pin fails at HEAD and after item 80; 1.0.0_SA_CTO RULINGS batch 158 kept it on its own row, and no such row existed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/contracts/investor-reporting/v1/routes.json at HEAD: status-summary, status-job and export-download each carry consumer_operation equal to their own operation; comparison-catalogue carries null with consumer_operation_absent_reason 'the consumer's operation list is IRPT_FNTEND's to extend'",
+      "fe-s-13/routes.test.ts at portal ebceef5b: expect(uncalled ops).toEqual(['export-download', 'status-job', 'status-summary']) and toHaveLength(3); measured uncalled = ['comparison-catalogue']",
+      "the pin failed at HEAD before item 80 (the battery's 17-file baseline, 7 failing) and is the one failure left after it"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The pin names exactly the routes routes.json leaves without a consumer operation, each typed by the client.",
+  "world_is": "It names three routes the contract now gives consumers, and misses the one it does not (comparison-catalogue, typed by the client since item 80).",
+  "notes": "Two ways out, neither taken here (batch 158 kept the pin as it is): derive the expected list from routes.json, as item 80 did for the counts; or IRPT_FNTEND names a consumer operation for the catalogue in routes.json (2.0.0_SA_COO~Y's lease holds that file) and the pin's list becomes empty. 1.0.0_SA_CTO to place."
+}
+```

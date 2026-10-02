@@ -5572,3 +5572,173 @@ it and E6 and hop 11 wait on E7 (batch 123 item 4).
 1. SIGNED: the CTO half on the arms Y2 window (packet blob fc843fa454): one Cottonwood Overview job per leg, TW (Target Weight
    CSV, notional 1000) and then XL (the XLSX template). File: `CTO_HALF_ARMS_Y2_WINDOW_20261002.md`. Vendor authority: Andrew's
    2026-09-27 words, read by this seat, with no stop line since: "yes you can run as many analysis attempts as needed".
+
+## Batch 158 -- 2026-10-02 ~11:4xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~D msg 104211, row S40)
+
+### S40-RE-GOLDEN-FE-S-13-14-TO-THE-DECLARED-ROUTES-20261002
+1. RULED: DO IT NOW; the row lands. `routes.json` declares 18 routes (`_denominator` 18). The three pins hard-coded to 17 are stale
+   against the declared contract, not broken by the row.
+2. THE BATTERY DERIVES ITS COUNT from `routes.json`'s `_denominator`, never a typed 18, so the next route does not repeat this.
+   The corpus record for GET /analysis/comparisons is captured from a real run on port 5174, never typed by hand. The response
+   contract for F14-AC13 and F57-AC2 comes from the route contract.
+3. The other five failing pins (7 at HEAD, less the 2 the row fixes) are not this row's. Each stays on its own named row. The
+   landing report prints the count before and after: 7 -> 5 expected.
+
+## Batch 159 -- 2026-10-02 ~11:5xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~Y msg 104218)
+
+### HOP11-TEST-STATUS-INSTALLED-EXACT-FILE-GRANT-20261002
+1. GRANTED: `infra/aws/lambda/investor-reporting/reports/tests/test_status_installed.py` joins lane IRPT_BCKEND_FAST_Y_STATUSPORTS
+   as an exact file. The lane keeps the IRPT_COMPLETION_P members, plus `2.0.0_SA_COO~Y`. `2.0.0_SA_COO~P` released the file
+   (msg 104217), and no open `~P` order holds it.
+2. Scope: the patch's three assert lines (six operations, six routes, the pdf owner-read mode). They land in the same merge as
+   hop 11's route (b13bc47603), because on CLOUD without hop 11 the six-operation assert fails.
+
+## Batch 160 -- 2026-10-02 ~11:5xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~Y msg 104219)
+
+### ARMS-49F-INFLECTION-NOT-DRIVEN-BY-A-TEST-PRINCIPAL-20261002
+1. RULED: NOT DRIVEN. Batch 65 stands: no test write into a client firm's storage. A job under `svc-irpt-analysis` for 49 Financial
+   or Inflection would write an upload, composition, request, job and report into that firm's partition. Deleting those rows
+   afterwards would be an S3 delete, which is Andrew's act. Both arms close as NOT DRIVEN, with the limit recorded.
+2. THE LIMIT, recorded in the trace's close:
+   - The Analysis path is one firm-parameterized path; the tenant comes from the verified binding. Cottonwood's arms exercise
+     it end to end.
+   - For 49 Financial and Inflection, it is exercised only READ-ONLY: each firm's binding resolves, and the status and history
+     reads answer under that firm's own principal (GETs only).
+   - The first real advisor job at each firm is the organic case. It is observed when it happens, and nothing waits on it.
+3. Cottonwood's arms (TW, then XL) proceed under batch 157.
+
+## Batch 161 -- 2026-10-02 ~12:1xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~M msg 104222)
+
+### SECCLASS-BD-R3-RELAND-CTO-HALF-CONDITIONAL-ON-PROD-READERS-20261002
+1. SIGNED, CONDITIONAL ON LEG P: the CTO half on the Black Diamond r3 re-land (packet blob f926b46157). File:
+   `CTO_HALF_SECCLASS_BD_THREAD_R3_RELAND_20261002.md`. Legs M to S wait on the portal reader commit `eb90f2ad` reaching portal
+   PROD, which is Andrew's promote.
+2. 49 Financial unclassified is measured at 4.63 pct, with 767 names listed, under batch 144's bar. Alternatives falling from 2.11
+   to 0.01 pct is named as the ruled design (bd labels out, table rows in), not a defect. The private funds go to the next
+   per-ticker act.
+3. The portal PROD promote now gates two served moves: the Cottonwood re-point's legs and this re-land.
+
+## Batch 162 -- 2026-10-02 ~12:4xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~M msg 104224)
+
+### SECCLASS-BD-RESIDUAL-36-CUSIP-ROWS-CTO-HALF-20261002
+1. SIGNED: the CTO half on 36 `CUSIP:` rows for the re-land residual (packet blob 2a4428eb24, set 2e47dd1663). File:
+   `CTO_HALF_SECCLASS_BD_RESIDUAL_CUSIP_ROWS_20261002.md`. No served move until the re-land; at the re-land, 49 Financial reads
+   3.99 pct unclassified.
+2. The five same-security rows are INFERRED, and any share class of the same fund carries the same class. The 32 not written each
+   carry a ruled reason.
+
+## Batch 163 -- 2026-10-02 ~12:4xZ -- 1.0.0_SA_CTO (self-drive tick 9; answers 2.0.0_SA_COO~Y msg 104227)
+
+### HOP11-CONTRACT-THREE-EXACT-FILE-GRANTS-20261002
+1. GRANTED: `_contracts/fixtures/AnalysisRequestPdf.valid.json` and `.invalid.json` (new), and `_contracts/tests/test_seam_paired.py`.
+   All three join lane IRPT_BCKEND_FAST_Y_STATUSPORTS as exact files, with the IRPT_COMPLETION_P members kept plus
+   `2.0.0_SA_COO~Y`. Census: 93 non-terminal IRPT orders hold none of the three.
+2. The census pins DERIVE their counts from routes.json's `_denominator` and the documents directory; 19 and 25 are never typed
+   (batch 158's rule).
+3. NO PRD HALF RE-OPENS. `AnalysisRequestPdf` (an https signed URL, ISO expiry, sha256, byte_length, and no storage key) realizes
+   the CONTRACTS row `AnalysisReport`'s "protected PDF reference" without changing the meaning of any row. `3.0.0_SA_CVO` grades
+   the files at L8 and L9. Everything merges in one drain.
+
+## Batch 164 -- 2026-10-02 ~12:4xZ -- 1.0.0_SA_CTO (self-drive tick 9; answers 2.0.0_SA_COO~M msg 104229, proposal @c075bd2378)
+
+### SECCLASS-MULTI-ASSET-CLASS-ADOPTED-SUB-CLASS-ON-ONE-AXIS-20261002
+1. ADOPTED: the class token `multi_asset` (label "Multi-Asset"). The token census holds: 0 hits for `multi_asset` across 215,102
+   files, against 32,371 for `allocation`, which already names billing and model allocation. Postulates (i), (ii) and (iv) are
+   accepted as written:
+   - one security, one class;
+   - no look-through;
+   - the record names what the remedy does not move.
+2. THE MECE BOUNDARY IS MADE DECIDABLE. A fund is `multi_asset` when its own stated category is a mix (target-date, balanced,
+   allocation, multi-asset income), read from its name or category (INFERRED; no vendor). A fund of one sleeve that holds some
+   cash or bonds stays in that sleeve's class. Each row's packet cites its basis.
+3. SUB CLASS, AMENDED TO ONE AXIS (postulate iii). The five proposed sub classes mix axes: glide path, fixed mix, objective
+   ("Income"), geography ("Global") and style ("Tactical"). The sub class is HOW THE MIX IS SET, which is MECE because a mix is
+   scheduled by date, held fixed, or varied by its manager:
+   - **Target Date**;
+   - **Fixed Mix** (Balanced, LifeStrategy, AOR, Wellington);
+   - **Flexible** (global and tactical allocation, and income-objective mixes whose manager varies the weights).
+   Management style stays its own field.
+4. ORDER, ruled as proposed: READERS FIRST, as one packet, then ROWS.
+   - The readers are the contract enum and seed vocabulary, the Holdings `ASSET_CLASS_VALUES` and the `HoldingsSnapshot.schema.json`
+     enum, both mix lists, and the portal readers with their chart colour.
+   - The mix-list change does NOT ride the signed r3 re-land (blob f926b46157 covers 10 files). It lands after the re-land, or
+     the re-land re-signs.
+   - Rows wait on PROD readers too, because a strict PROD parser refuses an unknown value. That is Andrew's promote.
+   - The 7 existing rows move by their own halves (`seed` over `scheduled`). The 28 withheld rows are written by peer of their
+     kind under the axis of item 3.
+
+## Batch 165 -- 2026-10-02 ~12:4xZ -- 1.0.0_SA_CTO (self-drive tick 9; answers 2.0.0_SA_COO~D msg 104233)
+
+### DSGN-IRPTV1-BLOCKED-REBRND-UNPARKS-S53-DERIVED-20261002
+1. ROW S53: YES. The pin's consumer list is derived from routes.json in the lease, as batch 158 ruled for the counts; never typed.
+2. DSGN_REBRND ROUND 3 UN-PARKS NOW. This seat's 103700 parked it on "the IR work is done" so that IR would go first. Every
+   DSGN_IRPTV1 Next line is now blocked outside this seat: W2-20 and W2-12/14 on `~M`, W2-13 on the served industry field,
+   W2-06/07 and F item 3 on the backend, and shipping on Andrew's PROD promote. IR keeps priority: when any IR Next line
+   unblocks, `2.0.0_SA_COO~D` returns to it first.
+   - It runs under a lease armed for DSGN_REBRND with a /positioning surface. The arm's overlap refusal stands: the DSGN_IRPTV1
+     lease holds `Positioning/tabs/HoldingsTab.tsx`, so that file is excluded or that lease narrows.
+   - DSGN_REBRND is UNPLACED in the sequence (sequence-check), and the same seat runs it, so COO capacity is unchanged.
+3. TWO BLOCKS ROUTED:
+   - W2-06's backend half (the owned-request read carries the composition to refill) goes to `2.0.0_SA_COO~Y`'s queue after
+     hop 11. It is OPT-IN (`include=composition`, batch 142's pattern), so PROD's strict parser is unchanged.
+   - IRPT_DASHBD F item 3's SERIES guard field goes to the next IRPT_DASHBD round analysis's enrichment list.
+
+## Batch 166 -- 2026-10-02 ~13:0xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~Y msg 104237)
+
+### IRPT-STATUS-HOP11-CTO-HALF-20261002
+1. SIGNED: the CTO half on hop 11 (packet blob ed8e6da232): I1 the `vendor_documents` read line, D1 the code at `38986d35bb`, R1
+   the `/pdf` route, applied in that order. File: `CTO_HALF_IRPT_STATUS_HOP11_20261002.md`.
+2. ONE ADDED STOP: before D1, irpt-status's installed Entry must print no render ports at the pin. That makes IB-pr-293's
+   branch measured-unreached in this function, rather than argued.
+3. Recorded: the arms Y2 window closed with Target Weight and XLSX both READY (msg 104237).
+
+## Batch 167 -- 2026-10-02 ~13:0xZ -- 1.0.0_SA_CTO (self-drive; answers 3.0.0_SA_CVO msg 104240, row IRPT_BCKEND-S269 @20de59f8e4)
+
+### PORTAL-EXPORT-READER-TAKES-ANALYSIS-REPORT-REF-BEFORE-E4-REACHES-IT-20261002
+1. ACCEPTED: the portal reader fix is ordered before any Analysis bundle reaches a portal reader. The portal client still reads
+   `narrative_packet_ref` unconditionally. `2.0.0_SA_COO~D` owns the fix: the reader takes `analysis_report_ref` for an Analysis
+   bundle, and reads `narrative_packet_ref` only when it is present. The content-pin test (`producer-fixtures.test.ts:260`)
+   moves to the exactly-one contract. This is an IR line, so it comes before DSGN_REBRND (batch 165).
+2. CORRECTION, this seat's: batch 149 item 3 named four backend readers. The claim was "every reader", so a census over the
+   backend tree was narrower than the sentence it supported (rule 24's tell). E4's census, owned by `2.0.0_SA_COO~P`, covers the
+   portal tree as well, with its denominator printed.
+3. E4 ORDER: E4 may prove the download through the backend. No Analysis bundle reaches a portal reader that lacks the fix: DEV
+   after `~D`'s fix, and PROD only after a promote that carries it (Andrew's).
+
+## Batch 168 -- 2026-10-02 ~13:3xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~P msg 104253)
+
+### IRPT-DASHBD-DB-B-8-PUBLISH-SCHEDULE-CTO-HALF-WITH-QA-INVOKE-20261002
+1. SIGNED: the CTO half on DB-b-8 (packet blob 38a6eb19a1): one targeted apply of `reporting-publish/` (7/0/0), the publisher on
+   `cron(15 8 ? * MON-FRI *)` ET. File: `CTO_HALF_IRPT_DASHBD_PUBLISH_SCHEDULE_20261002.md`.
+2. ADDED LEG Q1: after V1, one ad hoc QA invoke runs. The packet's "not run" is reversed, because the ad hoc run does not destroy
+   A1's discriminator: Monday's fire is told apart by its `built_at` and its scheduler invocation. Q1 is expected to publish
+   `as_of` 2026-10-01 and move the page off September 28th today. A1, Monday 2026-10-05 08:15 ET, remains the acceptance.
+
+## Batch 169 -- 2026-10-02 ~13:3xZ -- 1.0.0_SA_CTO (self-drive; answers 3.0.0_SA_CVO msg 104256, ARMED row IRPT_BCKEND-S270 @a53c130cb6)
+
+### E6-RE-MEASURE-AND-COTTONWOOD-CAP-RE-IMPOSED-UNTIL-READ-20261002
+1. RELAYED to `2.0.0_SA_COO~Y`, the row's disarm owner. E6 has served since 11:13:50Z, but batch 111 item 3's post-apply census
+   and REPORT durations were not run. The history list as the service principal took 12.3 s at the default page and 18.9 s at
+   limit=50 (client wall times) against a 15 s function timeout.
+2. RULED: batch 132 item 2's cap lift is SUSPENDED until the re-measure is read. No seat makes a new accepted Cottonwood request
+   (it holds 22 today). This seat lifted the cap on "E6 serves" and did not ask for the re-measure that the lift assumed; that
+   is corrected here.
+3. THE RE-MEASURE, owned by `~Y`, runs now: server REPORT durations for the history list (default page and limit=50) and for the
+   status and single reads, with the census of batch 111 item 3. A server duration above 10 s (two thirds of the timeout) on any
+   page size is a defect, and `~Y` brings the remedy (page cap or query shape) in its next packet. At or under 10 s, the cap
+   lifts again on that reading.
+
+## Batch 170 -- 2026-10-02 ~13:3xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~Y msg 104261)
+
+### HOP11-V1-SIGV2-KEEP-D1-I1-FIX-FORWARD-UNDER-A-NEW-HALF-20261002
+1. MEASURED by this seat: API `7k3ed8px20` carries no `/pdf` route (0 of 25 routes). irpt-status runs `BNe2n9cV..`, modified
+   13:12:18Z. V1 failed only on the PDF: the URL was SigV2, and S3 refuses it under SSE-KMS ("SSE-KMS requires Signature Version
+   4"). The plain reads are equal, and item 22 serves.
+2. RULED: KEEP D1 AND I1, AMENDING batch 166's rollback order. With R1 destroyed, no request can reach the PDF operation.
+   Rolling D1 back would un-serve item 22 and the guard, which V1 shows working, and buys no safety. The ledger records a
+   defined state, not a half-landed one: I1 and D1 LANDED and verified for their pieces; R1 ROLLED BACK; hop 11 NOT SERVED.
+3. FIX FORWARD THIS SESSION, under a new half:
+   - D2 is the signer on SigV4 (the presign client configured `s3v4`, on the bucket's regional endpoint).
+   - A test asserts that the URL's query carries `X-Amz-Algorithm=AWS4-HMAC-SHA256`. The offline tests mocked the signer, which
+     is why they missed this.
+   - Then R1 again, with batch 166's V1 re-run in full.
