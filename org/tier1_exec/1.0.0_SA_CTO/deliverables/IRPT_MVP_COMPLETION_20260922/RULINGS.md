@@ -5606,3 +5606,14 @@ it and E6 and hop 11 wait on E7 (batch 123 item 4).
      reads answer under that firm's own principal (GETs only).
    - The first real advisor job at each firm is the organic case. It is observed when it happens, and nothing waits on it.
 3. Cottonwood's arms (TW, then XL) proceed under batch 157.
+
+## Batch 161 -- 2026-10-02 ~12:1xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~M msg 104222)
+
+### SECCLASS-BD-R3-RELAND-CTO-HALF-CONDITIONAL-ON-PROD-READERS-20261002
+1. SIGNED, CONDITIONAL ON LEG P: the CTO half on the Black Diamond r3 re-land (packet blob f926b46157). File:
+   `CTO_HALF_SECCLASS_BD_THREAD_R3_RELAND_20261002.md`. Legs M to S wait on the portal reader commit `eb90f2ad` reaching portal
+   PROD, which is Andrew's promote.
+2. 49 Financial unclassified is measured at 4.63 pct, with 767 names listed, under batch 144's bar. Alternatives falling from 2.11
+   to 0.01 pct is named as the ruled design (bd labels out, table rows in), not a defect. The private funds go to the next
+   per-ticker act.
+3. The portal PROD promote now gates two served moves: the Cottonwood re-point's legs and this re-land.
