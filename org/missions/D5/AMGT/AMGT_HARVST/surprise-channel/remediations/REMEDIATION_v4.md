@@ -50,15 +50,15 @@ Z-W29-S1 and Z-W30-S1 (order-writing defects s.14x does not yet cover).
     "owner": "2.0.0_SA_COO~Y",
     "round": "v10",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~Y",
       "round": "v10"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~Y",
-      "at": null
+      "at": "2026-10-02T23:19Z"
     }
   },
   {
@@ -76,15 +76,15 @@ Z-W29-S1 and Z-W30-S1 (order-writing defects s.14x does not yet cover).
     "owner": "2.0.0_SA_COO~Y",
     "round": "v10",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~Y",
       "round": "v10"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~Y",
-      "at": null
+      "at": "2026-10-02T23:19Z"
     }
   }
 ]
