@@ -86,7 +86,7 @@ at base 9e201639c3: l-1.AC1 FAIL -- each FAIL as expected, each control PASS.
 
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
-<status>staged</status>
+<status>pending</status>
 <round>5</round>
 <slot>~2</slot>
 <fabric>site-z</fabric>
