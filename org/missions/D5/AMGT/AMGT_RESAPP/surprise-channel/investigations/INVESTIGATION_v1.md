@@ -16788,6 +16788,74 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
  "world_is": "Both named files drifted but neither is packaged, and no packaged member drifted, so the HEAD build and the worktree build were byte-equivalent in package terms this round. The act was performed from the worktree as instructed and the independently graded CONTENT-DIFF is exactly the signed three files, so nothing about the deploy is in question. What is in question is the REASON: a later round that reasons 'those two files force a worktree build' would be reasoning from a false premise, and a round that reasons 'no HARVST drain touched the closure, so HEAD is fine' would be reasoning from a true premise that nobody measured. Not measured here: whether any PREVIOUS round's HEAD build packaged drifted peer files -- rounds 58 and 59 recorded 4-file and 2-file peer drift in their own CONTENT-DIFFs, which is the same class caught by a different instrument.",
  "notes": "disarm_owner 2.0.0_SA_COO~Z. DISMISSED_WITH_REASON rather than UNDER_INVESTIGATION on purpose: there is nothing left to investigate -- the premise is measured false, the act is unaffected, and an open row here would hold the round-61 slug for a finding that changes no act. The durable ask, if the issuer wants one, is one line in the build script or the cut: intersect the packaged arcname set with git diff --name-only <build-commit> HEAD and print the count, which answers the question the GO was trying to answer in every future round instead of naming files by hand. Surfaced by the executor, not adjudicated by it.",
  "dismissal_reason": "Nothing is left to investigate and no act changes. The premise is measured FALSE (neither named file is in the packaged closure; 0 of 350 packaged members differ between 63e78fe4f7 and HEAD), the build was cut from the worktree exactly as instructed, and the independently graded CONTENT-DIFF is exactly the three signed files -- so the deploy is sound and the record only needs to stop a FUTURE round reasoning from the same false premise. An UNDER_INVESTIGATION row here would hold the round-61 L10 slug for a finding that moves no act. The durable fix, if the issuer wants one, is one line at the cut or in the build script: intersect the packaged arcname set with `git diff --name-only <build-commit> HEAD` and print the count -- that answers in every future round the question this GO tried to answer by naming files by hand. Dismissed by the executor on measurement, not adjudicated by it; disarm_owner 2.0.0_SA_COO~Z may reopen it."
+},
+{
+ "id": "AMGT_RESAPP-Z-W201-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~201",
+ "surfaced_at": "2026-10-02T12:00Z",
+ "one_line": "ak-3 face says the peers absent-column reasons are built at SERVE time; they are STORED in peers/v1 objects, built by lib/research/peers/csc.py, outside the face's <paths>",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "lib/research/api/scoped_amgt.py:read_peer_set (~line 1666) returns dict(document) WHOLE from peers/v1/<key>/<as_of>.json; no serve-time registry join exists in lib/research/api or lib/research/metrics.",
+   "Live read: scoped_amgt.read_peer_set('BA_US_Equity') -> object_key peers/v1/BA_US_Equity/2026-09-24T2252Z.json carries csc_columns.absent[4].reason = \"cash_mv is 'Cash to Market Value', a ratio; no absolute cash level\".",
+   "The builder is lib/research/peers/csc.py:_CLAIMED_ABSENT and build_csc_map (engine.py calls it at 689/704/1258/1467); lib/research/peers/ is not in ak-3's <paths>.",
+   "Pool scan this worktree: 234 newest peers objects, 1170 coded absent reasons (5 columns x 234); the peers route will keep serving them until a store write (ak-6) lands, and the next peers run re-emits the codes while csc.py is unchanged."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "AMGT-ak-3 face section 1 item 2: 'The peers route serves csc_columns.absent[*].reason built at SERVE time from the factor registry'; rewrite 'at the builder'; plan entries route thesis only.",
+ "world_is": "The reasons are stored whole in each peers/v1 object by lib/research/peers/csc.py (outside <paths>), so no code in <paths> can change what the route serves, and a serve-time rewrite would be the post-filter the face forbids. What this worker did inside <paths>: lib/research/api/csc_plain_reasons.py is the one writer of the five plain sentences (registry labels looked up at call time) and the plan lists the 1170 peers entries (route peers) beside the 8 Lusha entries so AC2 grades the post-write state. NOT DONE: csc.py still emits the code-shaped reasons on the next peers run; adopting csc_plain_reasons.plain_absent_reason in csc.build_csc_map (one import, five dictionary entries) needs lib/research/peers/ granted in a recut or follow-on cell, and the plan's peers entries are applied only by ak-6's store write.",
+ "notes": "disarm_owner 2.0.0_SA_COO~Z: widen a cell's <paths> to lib/research/peers/ (csc.py and its tests test_csc_units.py/test_peers.py read _CLAIMED_ABSENT) and have the producer call csc_plain_reasons; ak-6 must apply the peers entries as well as the 8 thesis entries."
+},
+{
+ "id": "AMGT_RESAPP-Z-W201-S2",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~201",
+ "surfaced_at": "2026-10-02T12:10Z",
+ "one_line": "ak-3 AC1 cannot reach exit=0 in the worker worktree: portal is an empty gitlink dir, so 3 test_print_format_rich.py tests error on a missing portal fixture",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "AC1 literal run in C:/tmp/r61-201: 486 passed, 2 skipped, 3 errors, exit=1; all 3 errors are lib/research/api/tests/test_print_format_rich.py, FileNotFoundError: C:\tmp\r61-201\\portal\\src\\pages\\SecurityAnalysis\\__harness__\tabsFixture.BA_US_Equity.json.",
+   "git ls-tree HEAD portal -> 160000 commit 24646bcab9 (a gitlink); ls -A portal in the worktree -> 0 entries; the same fixture exists in the base checkout's portal submodule (tracked there).",
+   "None of the 3 tests touches a file ak-3 changed; the error is at fixture load, before any served-reason code runs."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "AMGT-ak-3 AC1 expects 'every test passes, your new tests included, and exit=0' from lib/research/api/tests/ lib/research/management/tests/ run in the worker worktree.",
+ "world_is": "The worktree was cut without the portal submodule populated, and the worker may not rebuild or extract a tree to make an order executable, so 3 pre-existing tests that read a portal fixture error here. Every other test passes, the new ak-3 tests included. INFERRED, not measured: that the same 3 tests pass in a tree with portal populated (the base checkout has the fixture; they were not re-run there under this worker's rules).",
+ "notes": "disarm_owner not required (INERT). The issuer can run AC1 at the shared tree or a portal-populated checkout of this branch to read exit=0 for the 3."
+},
+{
+ "id": "AMGT_RESAPP-Z-W201-S3",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~201",
+ "surfaced_at": "2026-10-02T12:40Z",
+ "one_line": "amendment 1 grants lib/research/peers/ in a spawn-side file only; the order file's <paths> at HEAD still omits it, so safe-commit refuses the 3 peers files and the amendment work cannot land",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "safe-commit in C:/tmp/r61-201 -> owned-paths lane violation (block mode) for lib/research/peers/csc.py, lib/research/peers/csc_plain_reasons.py and lib/research/peers/tests/test_peers_absent_reasons_plain.py, lane=BASE_EXEC; rc=1, HEAD stays 042ee0f7a8.",
+   ".tools/owned-paths-validate.py _owns_task_order_paths admits a worker to the <paths> block of its non-terminal order AT HEAD; org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-ak-3.plain-served-reasons.md in the worktree lists lib/research/management/, lib/research/api/, lib/research/metrics/, the deliverables dir and the channel file, not lib/research/peers/.",
+   "The amendment text (scratchpad AMENDMENT1_ak-3.md) is not a tracked file and carries no lane effect."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "AMGT-ak-3 amendment 1: 'Granted: lib/research/peers/ joins your <paths>'; commit on branch wk-AMGT_RESAPP-201 as before.",
+ "world_is": "The grant exists in the amendment message only. The lane gate reads the order file at HEAD, and editing that file is outside this worker's <paths>, so the worker did items 5 and 6 and ran AC1/AC2 in the worktree but could not commit the peers files; the work sits uncommitted in C:/tmp/r61-201 (csc.py, csc_plain_reasons.py moved to peers, test moved to peers/tests, regenerated plan, refreshed proof instance). AC1 amended: 525 passed, 2 skipped, 0 failed, 3 admitted test_print_format_rich.py errors. AC2: C0 C1 C2 PASS, B2 YES, exit=0. The GIT_COMMIT_AUTHOR_OVERRIDE escape was not used.",
+ "notes": "disarm_owner 2.0.0_SA_COO~Z: commit the order-file amendment (add lib/research/peers/ to <paths>, and the 3-directory AC1 invocation) on the worktree branch or issuer side, then tell the slot to re-run the safe-commit; the slot's uncommitted tree is intact."
 }
 ]
 ```
