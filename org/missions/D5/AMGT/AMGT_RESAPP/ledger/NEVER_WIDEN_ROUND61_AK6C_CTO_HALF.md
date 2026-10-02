@@ -33,6 +33,13 @@
 4. **The derived fields do not move:** the post-act `/thesis` read prints `ceo_profile_reading` (state and `urls_returned`) for the
    7 names beside their pre-act values, and all are equal. Only `reason` changes, to the producer's words. This is the guard
    against a new sentence tripping the SEARCH_FAILED prefix or losing the url-count phrase.
+   **RE-SIGNED ~09:0xZ with ONE named exception** (COO~Z msg 28349; COO half corrected @7bbf273c19). For `SAP_GY_Equity`,
+   `urls_returned` moves `None -> 10`; the reading STATE stays unchanged for 7 of 7. SAP's old basis ("Bright Data SERP zone via
+   data/find/dualbiz/scripts/serp.py ...") never matched `returned (\d+) url`. The producer's resolved sentence does, and 10 is that
+   search's true count. The field is informational and is never an input. The move is a correction inside B5's purpose, not a
+   regression. The instrument is `round61/checks/ak6c_reading.py --what post --pre AK6C_READING_PRE.json --expect-urls
+   SAP_GY_Equity=10`, with pre captured off the deployed function. Any other `urls_returned` move, or any state move, is still a
+   ROLLBACK.
 5. **The grade reads the served route:** b5 C1 reads 0 of 2 on BA and VLO, from 2 of 2 at base. HTTP status is never the grade.
 6. **NEVER-2:** a ledger entry is opened before the first PUT and closed after conditions 2-4, or rolled back and closed RED.
 
