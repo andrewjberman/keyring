@@ -2734,6 +2734,27 @@
     "spec_asserts": "RIV-h-6 face section 3: run the whole package suite before reporting; it must read 0 failed.",
     "world_is": "The suite cannot read 0 failed inside this order's write grant: the only way is an edit to test_r5h4_id_change_identifier_relation.py. The required edit is mechanical: change `_kinds` to zip action with key_resolution (or replace the expected 'UNRESOLVED' confidence with 'CLEAN' at the five lines). AC1 of RIV-h-6 passes; the failure is a stale expectation in a sibling test of the same worker slot.",
     "notes": "Disarm: add test_r5h4_* to the RIV-h-6 paths for a follow-up commit by the same slot, or apply the edit at the drain. A drain that merges as-is lands a red suite."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W3-S19",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~3",
+    "surfaced_at": "2026-10-02T03:10Z",
+    "one_line": "Resolves ETFS_RIVALS-Z-W3-S18: after the issuer's amendment a84ad1ad3b widened the RIV-h-6 paths, the 4 red RIV-h-4 tests are fixed and the package suite reads 325 passed, 2 skipped, 0 failed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/tests/test_r5h4_id_change_identifier_relation.py: the 5 expectations [('entry','UNRESOLVED'),('exit','UNRESOLVED')] now read [('entry','CLEAN'),('exit','CLEAN')]; each test keeps its meaning (equal value alone is an exit plus an entry, no ID-CHANGE; a relation is one ID-CHANGE row)",
+        "python -m pytest rivalfunds/tests -q after the edit: 325 passed, 2 skipped; h-6.AC1 PASS 0 failures"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Issuer ruling on S18: make the mechanical fix, suite 0 failed, supersede or resolve S18 in the channel.",
+    "world_is": "The schema has no `resolves` or supersede field and an existing row is never edited, so S18 stays in the file as written (BLOCKING/ARMED); this row is its resolution, and the issuer's disposition of S18 closes it.",
+    "notes": "S18 disarm_owner 2.0.0_SA_COO~RV: the condition S18 names (a red suite at the drain) no longer holds at the commit that carries this row."
   }
 ]
 ```
