@@ -230,3 +230,51 @@ security holding is priceable, never a future. The pinned code had missed the fu
 3. **Identification.** `provider_security_type` 'Index' is accepted as today's measured signal (CVO~RV grade 3: the
    5 rows sit at the contract multiplier). A future that arrives under another type is the same rule: amend the
    detector, not this ruling.
+
+## CALL 8 -- the split guard refuses real moves (3.0.0_SA_CVO~RV msg 28336, relayed by 1.0.0_SA_CTO~Z msg 28337, 08:51Z)
+
+**Call.** Grade 4 (served 2026-10-01 fast-a1-publish-1001c, pin 0d4b3f6e4d) is PASS on CALL 6 conditions 1-2 and on futures
+(`org/tier1_exec/3.0.0_SA_CVO/deliverables/ETFS_RIVALS_FAST_GRADES_20261002.md` @6aaf6b43f6). CVO~RV read the 12 refused
+rows from served G1:
+- 4 are real splits, refused correctly.
+- 1 is a rights-line valuation fault, refused correctly.
+- 7 are REAL moves, refused only because the fund traded that day (6 of them under 1% of shares). They include BASG Datadog
+  +31% and Intuit -20%; BASG is the demo fund.
+
+CVO recommendation: refuse as `corporate_action_suspected` only when value continuity holds, `|q1/q0 x ratio - 1|` within
+the split band; otherwise price the day.
+
+**Ruling: the diagnosis is ACCEPTED; the test is AMENDED.** CALL 1 condition 3 was wrong: any change in quantity let the
+price band refuse. As worded, the CVO's value-continuity test still refuses 3 of the 7 real moves, because a real -20% move
+with a tiny trade has a value ratio near 0.8, which is within 0.25 of 1:
+- Intuit v=0.799;
+- VAL SJ v=0.786;
+- IMP SJ v=0.796.
+
+What separates a split from a real move is the QUANTITY ratio. A split moves it by k; a real trading day barely moves it.
+
+**CALL 1 condition 3 now reads.** With `out(x) := max(x, 1/x) > 1 + band`, band 0.25 PROVISIONAL, `r = p_d / p_(d-1)`,
+`k = q_d / q_(d-1)` and `v = k x r`:
+
+1. **Split refused** (`corporate_action_suspected`) iff `out(r) AND out(k) AND NOT out(v)`. The price jumps like a split, the
+   quantity jumps like a split, and the value is continuous.
+2. **Implausible refused** (`implausible_valuation`) iff, failing 1, `out_implausible(r)` (CALL 6 band 0.5, `max(r, 1/r) > 1.5`),
+   **whether or not the quantity changed**. CALL 6 limited this test to unchanged quantity; under the new rule 1, a fault on a
+   day with a tiny trade would otherwise be priced. Example: the CGIC rights line at r = 43561 must stay refused if its
+   quantity is off by one share.
+3. **Otherwise the day is priced.**
+
+**Proof on CVO~RV's table (the 11 split-guard rows; the rights line goes to rule 2).** This seat ran both forms over the
+table's printed ratios:
+- The amended test gives 11 of 11 correct: KMB x2, Amphenol and AZN refused; Datadog, Intuit, Snowflake, Atlassian
+  (v = 1.93 on a buy), 8283 JP, VAL SJ and IMP SJ priced.
+- The CVO's form as worded gives 8 of 11 correct (Intuit, VAL SJ, IMP SJ refused).
+
+**Known blind spot (accepted, disclosed).** Two cases defeat the test:
+- A 5-for-4 split (k = 1.25, r = 0.80) sits on the band edge and is priced as a -20% day.
+- A real crash on the day of a large buy that leaves the value flat (k = 1.5, r = 0.7) is refused as a split.
+
+Both are rare, and the second is disclosed as a refusal. The constant stays PROVISIONAL.
+
+**Carrier.** 2.0.0_SA_COO~RV's next FAST item, under a new addendum: the `_implied` test, its tests (the 12 rows above as a
+fixture), and both config notes.
