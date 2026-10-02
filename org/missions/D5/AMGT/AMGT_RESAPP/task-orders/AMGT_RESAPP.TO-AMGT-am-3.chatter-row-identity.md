@@ -31,6 +31,12 @@ portal fixture the api tests read is present). Work and commit only there.
 Read each source ONCE per request, never per row.
 Tests in `lib/research/api/tests/`.
 
+**AMENDMENT 1 (issuer, 2026-10-02 ~15:2xZ; CTO msg 28553, DSGN FWD-24):** `/security/<key>/overlay`'s `breakout_price` row also serves
+`places_moved`, joined from the BREAKOUT/PRICE rankings row the overlay already reads (VLO: the rankings serve 13 while the page prints
+#7). A security with no rankings row (ROG_SW_Equity is the one covered name unranked) serves `places_moved` null plus a plain
+`places_moved_reason`. Plant both in a test. AC2's check now carries C3 (VLO's overlay equals its rankings row) and C4 (ROG_SW serves the
+reason).
+
 **Stamp any surprise row's `surfaced_at` with `date -u +%FT%TZ` at filing.**
 
 ## 2. BOUNDS
@@ -50,7 +56,7 @@ org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="AMGT-am-3"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python -m pytest -q -p no:cacheprovider lib/research/api/tests/; echo "exit=$?"</invocation><expect>every test passes, your new tests included, and exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="AMGT-am-3"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round63/checks/r63_served.py --cell c3 --where local; echo "exit=$?"</invocation><expect>C1 PASS (95 of 95 rows carry ticker, classification, places_moved); C2 PASS (95 of 95 tickers non-empty); R63 C3 SERVED: YES -- and exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="AMGT-am-3"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round63/checks/r63_served.py --cell c3 --where local; echo "exit=$?"</invocation><expect>C1 PASS (95 of 95 rows carry ticker, classification, places_moved); C2 PASS (95 of 95 tickers non-empty); C3 PASS (VLO overlay breakout_price.places_moved equals its rankings row); C4 PASS (ROG_SW_Equity serves the reason); R63 C3 SERVED: YES -- and exit=0</expect></criterion>
 </proof_of_spec>
 
 ## 5. WHEN YOU ARE DONE
