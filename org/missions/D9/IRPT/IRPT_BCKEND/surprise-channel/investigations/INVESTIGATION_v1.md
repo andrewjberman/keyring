@@ -15344,3 +15344,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Not claimed: the growth rate at much larger counts. A history page past about 10 s at a future count would be a new row."
 }
 ```
+
+## IRPT_BCKEND-W101-S16 -- IB-pr-298: a staging failure part-way through a function's members leaves already-written members on disk, tracked or not...
+
+```json
+{
+  "id": "IRPT_BCKEND-W101-S16",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~101",
+  "surfaced_at": "2026-10-02T18:10:00Z",
+  "one_line": "IB-pr-298: build-and-upload.sh sets STAGED_ABS_SOURCE/STAGED_NAMES only AFTER the staging script succeeds, so a hash mismatch on a later member leaves earlier members written and never cleaned up (a tracked one is left holding the pinned blob).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/build-and-upload.sh (this branch) staging block: 'if ! ... \"$JSON_TOOL\" \"$TMPJS_STAGE\"; then ... continue; fi' precedes 'STAGED_ABS_SOURCE=...; STAGED_NAMES=...'; the staging script writes member N before it checks member N+1 (it sets failed=true and continues the loop)",
+      "Read of the script only; the failure arm was not run (the order bars running build-and-upload.sh against a function)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IB-pr-298: cleanup restores a tracked staged path from HEAD and removes only an untracked one, for every staged name.",
+  "world_is": "That holds for every path that reaches the assignment. On the failure arm (a staged_from sha256 mismatch or a git show failure on one member) the members written before it are not recorded for cleanup. The new dirty-destination refusal still protects uncommitted work, and a tracked member differs from HEAD afterwards only if its pinned blob differs from HEAD.",
+  "notes": "Not repaired: outside the order's stated change. A one-line fix is to assign STAGED_ABS_SOURCE/STAGED_NAMES before running the staging script. Owner 2.0.0_SA_COO~P to cut or decline."
+}
+```
