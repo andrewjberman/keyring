@@ -50,7 +50,20 @@ ROOT="$(git rev-parse --show-toplevel 2>/dev/null)"
 # Every SUBMODULE query runs with the hook's repository variables removed. Inside a commit hook git exports
 # GIT_DIR (and friends) for the SUPERPROJECT, and they override `-C`, so a bare `git -C portal ...` silently
 # answers for ajb_workspace.git instead (row MSTRZ-GL-1, reopened by 0.0.0_AB_MSTR~Z msg 28085).
-sm_git() { env -u GIT_DIR -u GIT_WORK_TREE -u GIT_INDEX_FILE -u GIT_PREFIX -u GIT_COMMON_DIR git -C "$ROOT/$SMPATH" "$@"; }
+#
+# SM_GITDIR (row MSTRZ-GL-2): when the submodule is NOT initialized here (a linked worktree), its object queries
+# (fetch, cat-file, merge-base) are pointed at a repository that does hold its objects -- the common dir's
+# modules/<name>, else the MAIN worktree's own checkout of that submodule. Without it they ran in the
+# superproject (or nowhere), every head read untestable, and a published commit read NOT PUBLISHED.
+SM_GITDIR=""
+sm_git() {
+    if [ -n "$SM_GITDIR" ]; then
+        env -u GIT_DIR -u GIT_WORK_TREE -u GIT_INDEX_FILE -u GIT_PREFIX -u GIT_COMMON_DIR git --git-dir="$SM_GITDIR" "$@"
+    else
+        env -u GIT_DIR -u GIT_WORK_TREE -u GIT_INDEX_FILE -u GIT_PREFIX -u GIT_COMMON_DIR git -C "$ROOT/$SMPATH" "$@"
+    fi
+}
+plain_git() { env -u GIT_DIR -u GIT_WORK_TREE -u GIT_INDEX_FILE -u GIT_PREFIX -u GIT_COMMON_DIR git "$@"; }
 [ -n "$ROOT" ] || { echo "ERROR: gitlink-publication-check: not in a git repo." >&2; exit 1; }
 
 # ---------------------------------------------------------------------------
@@ -58,7 +71,7 @@ sm_git() { env -u GIT_DIR -u GIT_WORK_TREE -u GIT_INDEX_FILE -u GIT_PREFIX -u GI
 # field 2; 160000 is a gitlink. A DELETED submodule has a new sha of all zeros
 # and is not a publication question, so it is excluded and counted separately.
 # ---------------------------------------------------------------------------
-RAW="$(git diff --cached --raw 2>/dev/null || true)"
+RAW="$(git diff --cached --raw --no-abbrev 2>/dev/null || true)"
 GITLINKS="$(printf '%s\n' "$RAW" | awk '$2 == "160000" { print $4 "\t" substr($0, index($0, $5)) }' 2>/dev/null || true)"
 
 TOTAL=0
@@ -93,12 +106,34 @@ while IFS= read -r line; do
     # uninitialized submodule directory resolves upward to the SUPERPROJECT, whose
     # origin would test the gitlink against the wrong remote (row MSTRZ-GL-1).
     URL=""
+    SM_GITDIR=""
+    NO_STORE=0
     SM_TOP="$(sm_git rev-parse --show-toplevel 2>/dev/null || true)"
-    SUPER_TOP="$(env -u GIT_DIR -u GIT_WORK_TREE -u GIT_INDEX_FILE -u GIT_PREFIX -u GIT_COMMON_DIR git -C "$ROOT" rev-parse --show-toplevel 2>/dev/null || true)"
+    SUPER_TOP="$(plain_git -C "$ROOT" rev-parse --show-toplevel 2>/dev/null || true)"
     if [ -n "$SM_TOP" ] && [ "$SM_TOP" != "$SUPER_TOP" ]; then
         URL="$(sm_git config --get remote.origin.url 2>/dev/null || true)"
     else
         echo "SKIP: gitlink-publication-check: '$SMPATH' is not an initialized repository here; reading its URL from .gitmodules"
+        # Find an object store for the submodule (row MSTRZ-GL-2). The modules dir is keyed by NAME, not path.
+        SMNAME="$(git config -f "$ROOT/.gitmodules" --get-regexp '^submodule\..*\.path$' 2>/dev/null | awk -v p="$SMPATH" '$2 == p { n = $1; sub(/^submodule\./, "", n); sub(/\.path$/, "", n); print n; exit }')"
+        COMMON="$(git rev-parse --path-format=absolute --git-common-dir 2>/dev/null || true)"
+        MAIN_WT="$(plain_git -C "$ROOT" worktree list --porcelain 2>/dev/null | awk '/^worktree / { sub(/^worktree /, ""); print; exit }')"
+        CAND=""
+        if [ -n "$COMMON" ] && [ -n "$SMNAME" ] && plain_git --git-dir="$COMMON/modules/$SMNAME" rev-parse --git-dir >/dev/null 2>&1; then
+            CAND="$COMMON/modules/$SMNAME"
+        elif [ -n "$MAIN_WT" ] && [ "$MAIN_WT" != "$ROOT" ]; then
+            MAIN_SM_TOP="$(plain_git -C "$MAIN_WT/$SMPATH" rev-parse --show-toplevel 2>/dev/null || true)"
+            if [ -n "$MAIN_SM_TOP" ] && [ "$MAIN_SM_TOP" != "$(plain_git -C "$MAIN_WT" rev-parse --show-toplevel 2>/dev/null)" ]; then
+                CAND="$(plain_git -C "$MAIN_WT/$SMPATH" rev-parse --absolute-git-dir 2>/dev/null || true)"
+            fi
+        fi
+        if [ -n "$CAND" ]; then
+            SM_GITDIR="$CAND"
+            echo "  OBJECTS: read from $SM_GITDIR (the submodule's repository on this machine)."
+        else
+            NO_STORE=1
+            echo "  OBJECTS: no repository for '$SMPATH' on this machine (common dir modules/$SMNAME ABSENT; main worktree not initialized)."
+        fi
     fi
     if [ -z "$URL" ]; then
         URL="$(git config -f "$ROOT/.gitmodules" --get "submodule.$SMPATH.url" 2>/dev/null || true)"
@@ -136,6 +171,18 @@ while IFS= read -r line; do
     # remote-tracking ref (refinement 1). A failed fetch is not fatal on its
     # own -- a head may still be testable -- but it is printed.
     FETCH_RC=0
+    if [ "$NO_STORE" -eq 1 ]; then
+        # No object store: only an exact-tip match can be read. Never fetch or test in the superproject.
+        if printf '%s\n' "$HEADS" | awk -v s="$NEWSHA" '$1 == s { f = 1 } END { exit !f }'; then
+            echo "OK: gitlink-publication-check: '$SMPATH' -> $NEWSHA is published (exact tip; no local object store needed)."
+            continue
+        fi
+        echo "BLOCKED: gitlink-publication-check: '$SMPATH' -> $NEWSHA is UNTESTABLE here, not shown unpublished."
+        echo "  READING: ls-remote rc=$LS_RC, heads=$NHEADS, no exact-tip match, and no local repository holds '$SMPATH' objects."
+        echo "  REMEDY: initialize the submodule (git submodule update --init --reference <a clone> $SMPATH), then re-run."
+        REFUSALS=$((REFUSALS + 1))
+        continue
+    fi
     sm_git fetch --quiet origin 2>/dev/null || FETCH_RC=$?
 
     PUBLISHED=0
