@@ -11,7 +11,37 @@
   - grade 5 (PASS, CALL 8 served) @eeb5fb2c7a;
   - grade 6 (PASS; G6-1 trend-sector guard, P2) @bcac012fe7;
   - grade 7 (PASS; G6-1 closed) @3e93998f8e;
-  - grade 8 (10-02 page PASS on scope; P1 G8-1 BASG false FAILs, P1 G8-2 phantom 0->0 exits) @ab55da6a97.
+  - grade 8 (10-02 page PASS on scope; P1 G8-1 BASG false FAILs, P1 G8-2 phantom 0->0 exits) @ab55da6a97;
+  - grade 9 (PASS; G8-1 closed, CALL 11 re-grade verified) @33f6db4880.
+
+## Grade 10 -- served page 2026-10-02, batch fast-a1-publish-1002d, code pin 2d511b9058 (handoff msg 28446), read 2026-10-02 ~12:15-12:25Z
+
+**Verdict: PASS.** G8-2 is closed on the served page. One latent P2 (G10-1): the code does not implement CALL 12's last clause.
+
+- **Deployed bytes equal the pin.** `etfs-rivalfunds-daily-lambda` has 33 of 33 `rivalfunds/*.py|*.json` files byte-equal
+  to 2d511b9058. Positive control: the deployed `publish_page.py` differs from its b973c9fdb9 version.
+- **The pair was complete before the apply:** COO addendum-9 half ca27994d07 (12:02:49Z), CTO half bad3003a27
+  (12:04:20Z), apply 12:08Z. Ledger r10 CLOSED @897b17b83b.
+- **The change is page-only.** b973c9fdb9..2d511b9058 touches only `publish_page.py`, `render.py` and one test. G5 is
+  unchanged, as CALL 12 requires.
+- **Hidden rows are counted exactly.**
+  - The G5 objects the served manifest names hold 249 rows. Exactly 2 of them go 0 -> 0 (INEQ JAR_LN and TXUE ATD_CN,
+    both with null notional), and both are still in G5.
+  - The page carries 2 `data-no-move` notes, summing to 2 ("1 line(s) carried at zero shares and then dropped (0 -> 0)
+    moved no shares: not trades, not shown").
+  - 0 trade rows with shares 0 -> 0 are visible. 0 `<script>`.
+- **The page:** manifest `published`, 13 of 13, readback true. The AI accounts are unchanged from grade 9.
+
+### G10-1 (P2, latent) -- the hide rule ignores notional
+
+- CALL 12: "If a later row shows 0 -> 0 shares with a non-zero notional, that is a data fault, not this rule. It stays
+  visible."
+- `publish_page.no_shares_moved()` at 2d511b9058 tests only `shares_before == 0 and shares_after == 0`, so such a fault
+  row would be hidden.
+- Today 0 of the 2 rows carry a notional, so nothing served differs.
+- Remedy class: hide only when the notional is also null or zero.
+
+**Open:** G10-1 (P2), G8-3 (P2, money-market lines in the trade log and AI facts), F5's source identifiers in prose (P2).
 
 ## Grade 9 -- served page 2026-10-02, batch fast-a1-publish-1002c, code pin b973c9fdb9 (handoff msg 28438), read 2026-10-02 ~12:00-12:10Z
 
