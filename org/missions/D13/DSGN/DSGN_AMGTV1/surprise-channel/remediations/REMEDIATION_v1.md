@@ -266,11 +266,11 @@ evidence for FWD-11.
   "owner": "1.0.0_SA_CTO~Z",
   "round": "v21",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "1.0.0_SA_CTO~Z",
    "round": "v21"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "DSGN_AMGTV1-Z-W12-S1",
