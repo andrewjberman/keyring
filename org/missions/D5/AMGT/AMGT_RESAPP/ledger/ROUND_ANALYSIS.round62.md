@@ -24,3 +24,20 @@ msg 28427. **Round 62 is CLOSED.**
 | 4 | **Round 63's list, after the demo:** track C; the reason class served beside the peers reason text (carried from the DSGN round-26 review); and round-60 ruling 3's carried items. | carried |
 
 **The freeze holds:** nothing deploys to `opal-amgt-scoped-api` until Andrew's demo read is over.
+
+## ADDENDUM ~14:0xZ -- track C RULED: option A (headline into gold), on CRO~Z design-fork research
+
+**Input:** COO~Z msg 28498, findings `deliverables/2.0.0_SA_COO~Z/round63-prep/TRACKC_FINDINGS.md` @36414ad802. The BA day route
+reads 1,884 silver objects (140 MB) to use 5 rows. CRO~Z research
+`org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/RESEARCH_TIMELINE_HEADLINE_GOLD_VS_SILVER_20261002.md` @adb64006ed supports A:
+- the same producer's `chatter_event.lead_headline` held its schema across 4+ rebuilds;
+- the only request-time silver read in serving code is this route, and it aged in hours.
+
+**Ruling (driver, after research): A.** `title` and `published_precision` join `GOLD_MENTION_SCHEMA`, and the day route reads
+them from gold. It reads no silver at request time.
+
+| step | owner | act | conditions |
+|---|---|---|---|
+| 1 | `2.0.0_SA_COO~H` (AMGT_HARVST: `publication_gold.py`) | add `title` (VERBATIM, rule 17b) and `published_precision` to the gold mention rows; rebuild gold under a never-widen pair. This moves served gold, and the CTO half is owed here | the producer change and the gold rebuild land BEFORE step 2. Optional, in the same cell: `build_event` drops its second whole-silver title scan (research s.5) |
+| 2 | `2.0.0_SA_COO~Z` (AMGT_RESAPP round 63) | the day route serves `headline` from the gold row; the silver read and the 18 s deadline path are removed; memory is re-measured down from 10240 | a cold BA day read under 5 s at the re-measured memory; the two control-day bodies byte-equal except `headline_reason` (absent); the never-widen pair |
+| 3 | `2.0.0_SA_COO~D` (DSGN, post-demo) | the day view prints `headline_reason` instead of `[no headline]` while any stale gold row lacks a title | carried from the al-1 (B) CTO half |
