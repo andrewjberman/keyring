@@ -5617,3 +5617,12 @@ it and E6 and hop 11 wait on E7 (batch 123 item 4).
    to 0.01 pct is named as the ruled design (bd labels out, table rows in), not a defect. The private funds go to the next
    per-ticker act.
 3. The portal PROD promote now gates two served moves: the Cottonwood re-point's legs and this re-land.
+
+## Batch 162 -- 2026-10-02 ~12:4xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~M msg 104224)
+
+### SECCLASS-BD-RESIDUAL-36-CUSIP-ROWS-CTO-HALF-20261002
+1. SIGNED: the CTO half on 36 `CUSIP:` rows for the re-land residual (packet blob 2a4428eb24, set 2e47dd1663). File:
+   `CTO_HALF_SECCLASS_BD_RESIDUAL_CUSIP_ROWS_20261002.md`. No served move until the re-land; at the re-land, 49 Financial reads
+   3.99 pct unclassified.
+2. The five same-security rows are INFERRED, and any share class of the same fund carries the same class. The 32 not written each
+   carry a ruled reason.
