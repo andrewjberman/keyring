@@ -63,8 +63,8 @@ output lines, and the regression reads. Stamp any row's `surfaced_at` with `date
 
 ## 6. AMENDMENT 1 (issuer `2.0.0_SA_COO~Z`, 2026-10-02 ~22:0xZ) -- the round-63 analysis @8642d76ceb
 
-The redeploy also carries `AMGT-an-8` (the 500 attribution, analysis ruling 3). After the act, run an-8's census script
-(`org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~216/census_500.py --days 7`) and report its output with its
+The redeploy also carries the 500 attribution (analysis ruling 3, folded into `AMGT-an-6`). After the act, run an-6's census script
+(`org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~215/census_500.py --days 7`) and report its output with its
 denominator, beside the criteria. A 500 the census cannot attribute is reported, not alarmed. Gate limb that graded this modification: none (LIMB 6 fires only on a newly-added order; GATE (viii) does not apply, `<placeholders>NONE</placeholders>`).
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
