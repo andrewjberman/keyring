@@ -32,8 +32,16 @@ field, so grouping the rows by SOURCE keeps the row content.
    `(source, run_stamp)`. The object-name stamp for the batch is the greatest `run_stamp` in the batch. Each row keeps
    its own `run_stamp` value. The bronze put stays one object per article, unchanged. The outbox status updates and
    the result records stay per row, as now.
-2. When the batched call raises `store.SilverRowError`, fall back to one call per row for that source's rows. The good
-   rows land; the bad row stays pending with its error code, exactly as today.
+2. (AMENDED 05:5xZ, row Z-C-S57 + CTO 28240) Only a FAILING row may leave the batch. A whole-batch per-row fallback
+   is refused: the known bad bbg row is due again at 06:36:56Z and hourly after, and it would send every later pass
+   back to per-row. Before the batched call, isolate bad rows LOCALLY, with no S3 call:
+   - build each fetch-date group's table exactly as `silver_append` does (`pa.Table.from_pylist`);
+   - when a group fails, test each row alone; a row that fails alone is bad;
+   - when every row passes alone but the group still fails (a cross-row type conflict), bisect the group locally
+     until the conflicting rows are found.
+   Each bad row is marked pending with `error_code` `SilverRowError` and the usual `retry_at` backoff. It gets no
+   S3 call; its bronze put has already happened, as today. All remaining rows go in ONE batched append. If that
+   append still raises `SilverRowError`, mark the batch pending with that code; never loop back to per-row.
 3. Change nothing else: not `store.py`, not `silver_from_bronze.py`, not `LegacyUploader`, not `_run_listings`.
 4. Plants in `lib/opal_data_harvest/test_ai5_batched_silver_append.py`, on the stub S3 client the suite already uses
    (see `lib/opal_data_harvest/test_retrieval_provenance.py` section 13 for a HarvestUploader on a stub):
@@ -43,8 +51,11 @@ field, so grouping the rows by SOURCE keeps the row content.
      `run_stamp` included. The part layout may differ; the rows may not.
    - (ii) the batched pass reads the silver prefix ONCE per source (count the stub's `list_objects_v2` pages or the
      `silver_latest` calls), where the per-row path reads it once per row;
-   - (iii) one row whose nested field mixes int and str (the W91-S19 shape) does not stop the others: every other row
-     is `uploaded`, and that row is `pending` with `SilverRowError`;
+   - (iii) (AMENDED) one row whose nested field mixes int and str (the W91-S19 shape) does not stop the others: every
+     other row is `uploaded`, that row is `pending` with `SilverRowError`, and the pass still reads the silver prefix
+     exactly ONCE. A second case covers a cross-row conflict: two rows, each valid alone, with one nested field int in
+     one row and str in the other. The conflict is isolated locally (at least one of the two is marked pending with
+     SilverRowError), and every other row lands in one append;
    - (iv) a mutant that restores the per-row grouping fails (ii).
 5. The collector suite stays green: `python -m pytest lib/opal_data_harvest/ -q` (base 529 passed). That includes
    `test_retrieval_provenance.py::test_harvest_uploader_same_second_siblings_both_land`.
