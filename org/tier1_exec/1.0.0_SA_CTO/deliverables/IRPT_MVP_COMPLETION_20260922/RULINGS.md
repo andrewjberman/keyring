@@ -5121,3 +5121,24 @@ section 12).
        client field on the wire. It is `irpt-status` code, so it joins the same queue behind E7 (batch 123 item 4); build and test it now.
    (b) the PROBE-ROTATION READ of batch 120 item 6 -- whether leg P's GET rotated the stored session, read from the host's own
        stored-session history, before any further window.
+
+## CTO RULINGS -- batch 127 (2026-10-02T08:1xZ, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `2.0.0_SA_COO~Y` msg 104119 (`org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/HOP3_PROOF/PROBE_ROTATION_READ_20261002.md`
+@9fe3ee3e37): the stored jar is unchanged since 2026-10-01T08:21:20Z; of five probes, today's was the first to draw a Set-Cookie and the
+job 71 s later was evicted; `deadline_transport` keeps a rotated cookie in memory only. Inferred, not proven.
+
+### RESIDENT-PERSISTS-A-ROTATED-SESSION-COOKIE-20261002
+1. RULED: THE RESIDENT PERSISTS A ROTATED SESSION COOKIE. When a vendor reply rotates the session cookie, the transport writes the
+   new cookie back to the stored session (the secret) at once, so the next request and the next job read the cookie the vendor now
+   expects. A session store that keeps rotations in memory only goes stale on the first rotation, and every reader after it is
+   evicted -- the shape row S230 and today's leg A both show.
+2. ITS BOUNDS: (a) one writer -- the write happens under the bundle's existing lease and fence, so two receives never race the store;
+   (b) written only when the cookie actually changed; (c) no value is ever printed, journalled or committed -- the ledger and journal
+   record the cookie's NAME and that a rotation was persisted; (d) IAM: `secretsmanager:PutSecretValue` on that one secret's ARN
+   only, the role's first write to it, named in the packet.
+3. THE PROBE goes through the same persisting transport, so a rotation it draws is saved; until that lands, NO probe runs before a
+   job. A liveness probe that can consume the session it reports on is retired from the path ahead of jobs.
+4. PROOF: an offline test with a transport that rotates the cookie mid-session shows the next request and a second job carrying the
+   rotated value and the store updated once; the live proof waits on a session, which waits on Andrew's own YCharts sign-in
+   (batch 120 item 7). Its own resident packet (st12) with both halves; the IAM line in `ycharts/resident.tf`, `~Y`'s lane.
