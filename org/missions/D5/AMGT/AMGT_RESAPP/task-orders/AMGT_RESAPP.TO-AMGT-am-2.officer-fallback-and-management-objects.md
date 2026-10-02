@@ -118,3 +118,11 @@ R63 C2 SERVED: NO from C1 alone, as amended. Plan `m1_fwd7_plan.json` frozen at 
 (the vendor pull plus three new bronze keys).
 
 <status>pending</status>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-02 ~19:2xZ):** ACCEPTED under AMENDMENT 2. Worker ~205 `38fd6f1ed2`, drained `af6184d5b0`.
+The pulls were 3 of 3 OK: ASML_NA 7, 6501_JP 37 and 2317_TT 8 officers, landed at 3 new bronze keys (head-object read 860 / 4,131 / 918
+B). Re-graded on the shared tree: AC1 management tests 140 passed; AC2 c2 local --pool m1_pool_a2 YES, 3 of 3 (C1 ASML_NA SERVED
+BLOOMBERG_FALLBACK 7). Plan `m1_fwd7_plan_a2.json` frozen at sha256 `ca25158b...`; 3 of 3 object sha256 MATCH. Served by am-7
+AMENDMENT 3.
+
+<status>complete</status>

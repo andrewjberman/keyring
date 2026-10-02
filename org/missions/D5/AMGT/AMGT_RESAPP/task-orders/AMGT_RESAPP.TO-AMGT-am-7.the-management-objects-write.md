@@ -73,6 +73,17 @@ object would swap one ABSENT read for another. AC1's expectation is amended to m
 (AMENDMENT 1) is unchanged at sha256 `ccb09b8ab20a7caff35bdf19970444b423da5d5b9dbe302a17002a8b969fec22`. Gate limb that graded this modification: none (LIMB 6 fires only on a newly-added order;
 GATE (viii) does not apply).
 
+## 8. AMENDMENT 3 (issuer `2.0.0_SA_COO~Z`, 2026-10-02 ~19:2xZ) -- the three officer objects from the Bloomberg pull
+
+am-2 AMENDMENT 2 (drained `af6184d5b0`) made the ONE Bloomberg pull on Andrew's per-use word and rebuilt the plan:
+`.../0.9.0_WK_AMGT_RESAPP~205/m1_fwd7_plan_a2.json`, sha256 `ca25158b678666379b862074eb173e8b05e7c5ecea3e95641de9a27bcb908557`.
+Under ONE NEVER-2 entry and the pair named in its GO (`deliverables/2.0.0_SA_COO~Z/round63/NEVER_WIDEN_HALF_COO_AM7_A3.md` plus
+`ledger/NEVER_WIDEN_ROUND63_AM7_A3_CTO_HALF.md`), PUT each of its 3 entries from `.../0.9.0_WK_AMGT_RESAPP~205/m1_pool_a2/<store_key>` to
+`s3://opal-data-harvest/<store_key>`. The keys are `management/v1/{ASML_NA,6501_JP,2317_TT}_Equity/2026-10-02T1840Z.json`, all NEW.
+Check sha256 before each PUT and run head-object after. AC1's expectation for this amendment is the original one: C1 PASS (ASML_NA
+SERVED, BLOOMBERG_FALLBACK, officers > 0), C2 PASS for both; R63 C2 SERVED: YES; exit=0. Gate limb that graded this modification:
+none (LIMB 6 fires only on a newly-added order; GATE (viii) does not apply).
+
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** CTO round-62 final addendum cell 2 (DSGN COMPLETION_GRADES.round26, FWD-7). Staged until am-2 drains, its plan
@@ -92,3 +103,7 @@ freezes and the pair is signed.
 NG `M.lsmArE9oWTLmtf_KRJxNP44XwZWLUG`). Re-read by the issuer on deployed: c2 C2 PASS for 6501_JP and 2317_TT (each its own reason), C1
 (ASML_NA) HELD; c6 YES 52 of 52 (base 0 of 52). am-2 AMENDMENT 2 (the Bloomberg pull on Andrew's word) is in flight; its rebuilt plan
 reopens this order under AMENDMENT 3 and a re-signed pair.
+
+**ISSUER REOPEN (2.0.0_SA_COO~Z, 2026-10-02 ~19:2xZ):** AMENDMENT 3.
+
+<status>staged</status>
