@@ -520,3 +520,28 @@ behaviour; c4e0d744 has none. No page was looked at. The branch-filtered CI list
 (row ESTATE_GOVERNANCE-S36); every run above was read by id with its headSha.
 
 -- 3.0.0_SA_CVO
+
+## Grades, 12:xZ 2026-10-02 -- portal DEV items 72-81
+
+PROD: none of the 10 pins is an ancestor of origin/PROD `b3a1d8a6`. NEG = the pin's source diff reversed on origin/DEV
+`3bbf3914` with its test kept; MUT = a one-line planted mutant where the reversal broke only at import.
+
+| pin | claim | this seat's read | grade |
+|---|---|---|---|
+| 0531cc65 (72) | the picker shows a dashboard account's own YTD with basis words; mixed lists name each basis (RULINGS batch 128 item 1) | pickerSuffix.ts:28-34 the body's own YTD plus "total return, before advisory fees, data through"; :41 the other account's figure plus "price return, as of <end>"; :54 no served account returns undefined (picker unchanged); ReportingTab.tsx:571-574 background reads only once one account is served, 2 at a time. All three clauses present. iv-e-139 4/4, iv-e-40 1/1, iv-e-58 1/1; NEG 2/2 fail of 4 (arms c, d). CI 36990470109 success. The suffix's date source: row IRPT_DASHBD-S20 | PASS on a test run |
+| 06bc6f85 (73) | one date format on the Performance charts | PerformanceChart.tsx:55 dayWords via formatPageDate; :115 tickFormatter; DashboardPerformance.tsx:261. iv-e-140 3/3; NEG 1/2. CI 36991598167 success | PASS on a test run |
+| 243f17b1 (74) | the pie folds past the 9 largest into "Other accounts (n)" | CategoryViewTree.tsx:1202-1220 folds only past keep+1; chartColors.ts:406 slate400; DrillTree.tsx:894 foldAccountsPast={9}. iv-e-141 4/4; NEG fails at import only | PASS on a test run |
+| 7f9cf54a (75) | an Analysis print fetches by ?request= | PrintEntry.tsx:147-151 printReportRef; :209 refuses by name. iv-e-142 3/3; MUT 1/2. CI 36995066413 success | PASS on a test run |
+| b618efc9 (76) | an Analysis print gates on its request's status | PrintEntry.tsx:160-165, :220 getJobStatus first, :224 a non-answer status fetches no sections; AnalysisDocument.tsx:70-72. iv-e-143 3/3; fe-s-54 3/3; NEG fails at import only. CI 36997787741 success | PASS on a test run |
+| ad5c6e06 (77) | the picker numbers shared labels as the card does | AccountFilter.tsx:116-122 via uniqueLabel; :297. iv-e-144 2/2, iv-e-39 1/1; MUT 0/2. CI 36999982267 success | PASS on a test run |
+| bf38f6c9 (78, row S45) | Mix cash green, 36.4 dE00 from commodities | chartColors.ts:616 MIX_PIE.cash = PALETTE.green300 #86efac, the same token as ASSET_CLASS.cash :207 (Andrew's C1); commodities yellow500 :629; 3e2233de did not move cash, so no new hue is minted. IVE49-AC1 alone: 1 pass, dE00 36.4025 (bar 20); NEG (amber500) 9.8943, 0/1. iv-e-46 class-readers 2/2. CI 37002638845 success | PASS on a test run; row S45 remediated on a test run |
+| b46e6c36 (79) | the request read asks include=comparisons | investor-reporting.ts:1426; OwnedRequestHistory.tsx:49. iv-e-145 3/3; NEG 1/2. CI 37002252695 success | PASS on a test run |
+| ebceef5b (80, row S40) | the catalogue joins the operation table | investor-reporting.ts:185, :229. fe-s-13/14/57 (12 files): 52 pass / 5 fail at DEV; NEG 44/13 (the commit clears 8). Of the 5, "three routes no consumer" is the one named; the other 4 fail on both arms, two of them contract drift: row IRPT_BCKEND-S269. The commit's 84/85 on 17 files is not reproduced. CI 37004059688 success | PASS on a test run |
+| 3bbf3914 (81, row S48) | D1-inv-4 adds back the negative balances the card leaves off | CategoryViewTree.tsx:162-167; :1428-1429; :1447. iv-e-146 4/4; MUT 2/2. CI 37005333394 success | PASS on a test run |
+
+**Limits.** bun 1.3.9 in a detached scratch worktree of origin/DEV `3bbf3914`, removed after; `git -C portal status
+--porcelain` identical before and after. The fe-s tests read `../docs` and `../infra`; an archive of workspace CLOUD
+`10d2b1c445`'s contracts was placed beside the worktree (without it they fail on file-not-found, which plausibly
+explains item 68's unexplained 47/18). CI runs no unit tests. No page was looked at.
+
+-- 3.0.0_SA_CVO

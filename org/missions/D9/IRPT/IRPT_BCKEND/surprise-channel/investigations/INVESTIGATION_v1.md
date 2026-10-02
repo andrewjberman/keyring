@@ -14982,3 +14982,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Remedy owner 2.0.0_SA_COO~Y (ycharts/generate and the resident factory). Not chased by ~P."
 }
 ```
+
+## IRPT_BCKEND-S269 -- the portal export client still reads narrative_packet_ref unconditionally after IB-pr-294
+
+```json
+{
+  "id": "IRPT_BCKEND-S269",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-02T13:10:00Z",
+  "one_line": "IB-pr-294 made ExportBundle take exactly one of narrative_packet_ref and analysis_report_ref (PRD v0.24), but the portal's export client still reads narrative_packet_ref unconditionally: the portal's own content-pin test fails with 'ExportBundle.narrative_packet_ref: no longer REQUIRED, and this client reads it unconditionally'. The reader census the cell was cut with did not reach the portal.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show HEAD:docs/contracts/investor-reporting/v1/ExportBundle.schema.json (this seat, 2026-10-02 13:0xZ): required no longer lists narrative_packet_ref; oneOf present; analysis_report_ref a property. IB-pr-294 drained 1572729cfd (worker 790a26be6a, 1dae563e21)",
+      "portal origin/DEV 3bbf3914 fe-s tests run against workspace CLOUD 10d2b1c445 contracts in a scratch worktree (this seat's portal grade of items 72-81): producer-fixtures.test.ts:260 fails 'ExportBundle.narrative_packet_ref: no longer REQUIRED, and this client reads it unconditionally', with and without ebceef5b",
+      "CTO RULINGS batch 149 item 3: IB-pr-294's second criterion is 'the schema takes exactly one reference, with a census of every reader'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD v0.24 / batch 149: exactly one reference, never null; every reader of the bundle is counted before the change.",
+  "world_is": "The portal reader that loads a bundle's narrative packet by reference will meet an Analysis bundle with no such field once an Analysis export reaches it. Not read: whether IB-pr-294's served submit is deployed, and whether any portal path reads an Analysis bundle today.",
+  "notes": "INERT until an Analysis bundle reaches the portal reader. Owners: 2.0.0_SA_COO~D (the portal reader: branch on the reference present) and 2.0.0_SA_COO~P (the census that missed it). The same content-pin run also flags 'comparison-catalogue: response envelope no longer declares unprojected_grant' (content-pins.test.ts:306), not graded here."
+}
+```
