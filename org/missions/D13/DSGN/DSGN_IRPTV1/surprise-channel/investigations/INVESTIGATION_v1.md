@@ -3208,3 +3208,30 @@
   "notes": "Off item 70 (filed and kept working). The page renders what the view plane serves, so the remedy is most likely in the served category views, not in the card; 1.0.0_SA_CTO to place (the served holdings are 2.0.0_SA_COO~M's surface). Un-parks when an owner reads one L0 block of either client and names the node."
 }
 ```
+
+## DSGN_IRPTV1-S45 -- commodities and cash are told apart by dE00 9.89 (floor 20), now side by side in the advisor Mix stack
+
+```json
+{
+  "id": "DSGN_IRPTV1-S45",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-02T09:40:00Z",
+  "one_line": "The colour test that keeps commodities and cash apart (iv-e-46 IVE49-AC1, dE00 >= 20) has failed on DEV since the 2026-09-29 return to standard hues (3e2233de) and has been carried as 'pre-existing' by two commits since; with eb90f2ad the advisor Mix stack now draws commodities beside cash, so the two near-identical colours sit side by side on a served page.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun test iv-e-46.class-readers.test.ts in a scratch worktree of portal origin/DEV (this seat's grade, 2026-10-02 08:xZ-09:xZ): 7 pass, 1 fail (IVE49-AC1) at 2bb367ef, at 455ca18d and at 8df9e3d3; the failing assertion at :319 measures dE00(MIX_PIE.commodities, MIX_PIE.cash) = 9.89 against the floor 20; the file run alone fails the same way (not order-dependent, as 3ca6c53a's message says)",
+      "portal eb90f2ad (2.0.0_SA_COO~M): AdvisorAnalytics.tsx:669-724 render every served mix class through mixPieColor, commodities included, in the same stack as cash",
+      "portal 3e2233de (2026-09-29, Andrew-direct standard hues) is the first commit at which the assertion fails"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IVE49-AC1: two mix classes drawn together are told apart by colour (dE00 >= 20 between commodities and cash).",
+  "world_is": "dE00 is 9.89 on DEV. The test has been red for three days and is carried rather than fixed; since eb90f2ad the pair is adjacent in a chart a person reads. The standard-hues direction and the separation test cannot both hold for this pair as the palette stands.",
+  "notes": "INERT: a legibility defect, not a wrong figure. Owner 2.0.0_SA_COO~D. Which yields (a hue within the standard set that clears 20, or the test's floor) is a design call for 1.0.0_SA_CTO, with Andrew if it touches his standard-hues direction. Not on PROD yet (none of the pins is an ancestor of b3a1d8a6)."
+}
+```
