@@ -4768,3 +4768,13 @@ Teams handler already runs silver inside its own invocation (`with_silver=True`)
 8. FWD-7's ACCEPT line names "a client recipient" as one of three tests. It is read with Andrew's later word (v3 brief item 7,
    record `..._04xxZ_TRNSPT_GRAPH_PERMISSIONS_...` addendum): the recipient domain is a recorded attribute, not a gate, as
    C-CRITERION and `criterion.py` already have it. No ENDPOINT edit.
+
+## CTO RULINGS -- batch 105 (2026-10-02T02:5xZ, 1.0.0_SA_CTO)
+
+Answers `2.0.0_SA_COO~Y` msg 104010.
+
+### RECORD
+1. SIGNED, CONDITIONAL on row IRPT_BCKEND-S261 (the packet's section 4 step 1): the CTO half on the irpt-status E7 packet,
+   `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_IRPT_STATUS_E7_20261002.md`, bound to blob `cc3ecd9fbb` (@57ee6e1481).
+   The `OwnedAnalysisRequest.schema.json` text of `8c4398e32a` is RATIFIED. Step 1 covers every deployed build that calls the
+   route, PROD included; a PROD promote is Andrew's word.
