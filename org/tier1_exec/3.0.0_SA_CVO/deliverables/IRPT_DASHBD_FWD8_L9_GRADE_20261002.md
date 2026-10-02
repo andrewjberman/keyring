@@ -32,3 +32,16 @@ show up as a huge gain or a total loss; the old 'time-weighted, net of ...' labe
 2026-10-01 as-of point, not in June. No page was walked. The population tie-out (P-5) needs another vendor word.
 
 -- 3.0.0_SA_CVO
+
+## CORRECTION, 18:5xZ -- the count of pairs within 0.35 pct was wrong
+
+This grade's agreement row said "10 of 14 under 0.35 pct; 3 above 0.45 pct". The record reads **11 of 14 within 0.35
+pp and 3 beyond**: 0027265115 2026-06-25 (1.2130), 0084073310 2026-08-21 (0.7078), 0027265115 2026-04-09 (0.4555). The
+pair at 0.3307 (0076459710, 2026-08-11) is within. Read from `TIEOUT_49F_BLACKDIAMOND_R4.json`, 14 pairs, at 18:5xZ.
+The CTO's ruling (batch 181 @57e16650b5, msg 104363) quotes the wrong count ("10 of 14", "the four pairs beyond"); the
+tolerance it rules (0.35 pp) is unaffected, and the pairs owing a stated reason are three, not four.
+
+**FWD-8 under the ruling:** still NOT REALIZED. The three pairs beyond 0.35 pp owe stated reasons; S22 (the short
+account's income sign, the largest) is a defect to fix and re-measure, never accept.
+
+-- 3.0.0_SA_CVO
