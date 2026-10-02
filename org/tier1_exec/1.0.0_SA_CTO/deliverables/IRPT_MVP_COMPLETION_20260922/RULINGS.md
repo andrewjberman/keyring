@@ -5682,3 +5682,12 @@ it and E6 and hop 11 wait on E7 (batch 123 item 4).
    - W2-06's backend half (the owned-request read carries the composition to refill) goes to `2.0.0_SA_COO~Y`'s queue after
      hop 11. It is OPT-IN (`include=composition`, batch 142's pattern), so PROD's strict parser is unchanged.
    - IRPT_DASHBD F item 3's SERIES guard field goes to the next IRPT_DASHBD round analysis's enrichment list.
+
+## Batch 166 -- 2026-10-02 ~13:0xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~Y msg 104237)
+
+### IRPT-STATUS-HOP11-CTO-HALF-20261002
+1. SIGNED: the CTO half on hop 11 (packet blob ed8e6da232): I1 the `vendor_documents` read line, D1 the code at `38986d35bb`, R1
+   the `/pdf` route, applied in that order. File: `CTO_HALF_IRPT_STATUS_HOP11_20261002.md`.
+2. ONE ADDED STOP: before D1, irpt-status's installed Entry must print no render ports at the pin. That makes IB-pr-293's
+   branch measured-unreached in this function, rather than argued.
+3. Recorded: the arms Y2 window closed with Target Weight and XLSX both READY (msg 104237).
