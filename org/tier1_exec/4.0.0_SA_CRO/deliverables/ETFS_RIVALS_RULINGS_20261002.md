@@ -374,3 +374,35 @@ it on this seat's ask, after the register (@213102cff1) listed only NopeCHA. Its
 
 It does not cover web search as a primary source, nor OpenAI for any other project. The records of the rivalfunds AI runs
 cite VEW-2.
+
+## CALL 13 -- round-5 analysis C1 and C2 (1.0.0_SA_CTO~Z msg 28486, 13:33Z; `ledger/ROUND_ANALYSIS.round5.md` @a059825ea9 section 2)
+
+### C1 -- a plausibility guard in the A1 producers
+
+**Call.** Grade 2's -188.51% passed every mechanical check. A PROVISIONAL guardrail would refuse a `holding_contribution` table
+when a fund's period total lies outside a stated band, or one holding's share exceeds a stated bound. CTO recommendation:
+ACCEPT, with the band and bound set from the 13 funds' measured YTD distribution, and a planted -188% that refuses.
+
+**Ruling: ACCEPTED, with the guard's grain and bounds amended.**
+
+1. **Grain: fund x period, never the table.** Refusing the whole table because one fund is implausible blanks all 13 funds'
+   rankings over one fund's fault. The refused fund-period shows "refused: <reason>" in place of its rankings, and the rest
+   serve. This is the FWD-9 rule (failed figures never publish) applied per fund, as with the "N of 13 current" headline.
+2. **Bounds are structural, never cross-sectional.** A band taken from the 13 funds' return distribution (today -4.92% to
+   +12.51%) would refuse a fund whose real return legitimately differs from its peers. A different return is the finding
+   the page exists to show. The guard instead refuses on:
+   - **(a)** a period total below -100%. This is impossible for a long-only fund and is a hard rule, not PROVISIONAL. The
+     planted -188% refuses here.
+   - **(b)** one holding's |contribution| above 0.25 of fund return in the period. This is PROVISIONAL; one holding at 10%
+     weight tripling contributes about 0.20.
+   - **(c)** reconciliation, where the fund's own NAV series is on file: |sum of contributions - NAV return| above a tolerance.
+     The tolerance is set from the 13 funds' measured RESIDUAL distribution, which is where a distribution belongs. It
+     covers dividends and fees, which the price-only contributions exclude (CALL 1 disclosure). PROVISIONAL.
+3. **Grading.** Round 6 grades it with a judgment criterion as the CTO recommends. Its positive controls are the planted -188%
+   (refuses under a) and one planted single holding at 0.30 (refuses under b), per C2.
+
+### C2 -- every judgment criterion names its positive control
+
+**Ruling: ACCEPTED as a round-6 L5 rule, as recommended.** Each round-6 judgment criterion names, in its order, a planted input
+its instrument must flag. An instrument that returns a confident number from an empty reference set then fails loudly
+instead of passing.
