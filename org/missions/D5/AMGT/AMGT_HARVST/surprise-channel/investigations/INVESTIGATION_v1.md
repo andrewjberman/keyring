@@ -5916,6 +5916,29 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "spec_asserts": "An ARMED hazard disarms via its disarm_owner (CLAUDE.md section 2); AMGT_HARVST-Z-C-S57 names 2.0.0_SA_COO~H.",
       "world_is": "The amendment @58748baf51 replaced the whole-batch per-row fallback with local isolation; merged @6a0a2ebc79 with plant (iii) (a type-conflict row, exactly one silver prefix read). The per-row pass, pid 24652, was stopped at 05:57:34Z before the batched pass started at 05:58Z.",
       "notes": "Disarm record by the disarm_owner at /canonical-drive tick 3; not an adjudication."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S63",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-02T07:05Z",
+      "one_line": "Error text of the one stranded bbg article (row AMGT_HARVST-Z-W91-S19, packet item 5.3), recorded per round-36 analysis ruling 6: bbg:TD7VMGKGCTIZ00 -> pyarrow ArrowInvalid \"Could not convert '1150000' with type str: tried to convert to int64\" (store.silver_append raises SilverRowError). Recurrence measured: 1 of 830 bbg bodies.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "local probe 2026-10-02 06:0xZ: silver_from_bronze.article_rows('bbg', <.runtime/opal-data-harvest-bbg/harvest_raw/bbg_TD7VMGKGCTIZ00.html>) + pa.Table.from_pylist -> ArrowInvalid: Could not convert '1150000' with type str: tried to convert to int64",
+          "row AMGT_HARVST-Z-W91-S19: path body.content[].data.attachment.duration int (315840, 661320) vs str '1150000' in one body",
+          "bbg outbox 2026-10-02 06:02Z: 830 rows, 829 uploaded, 1 pending SilverRowError (round36/ai-5.AC2.issuer_grade.txt)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Round-36 analysis ruling 6: the issuer records the error text on the row; a cell repairs it only if the cause would recur on new rows.",
+      "world_is": "1 of 830 bbg bodies carries the mixed-type nested field; ai-5 isolates it locally so it strands no other row. No repair cell is cut. The issuer re-reads the bbg SilverRowError count at each round close: a second body with the same cause makes it recurring, and a coercion cell is then cut.",
+      "notes": "Ruling 6 record; cites AMGT_HARVST-Z-W91-S19 (not edited in place)."
     }
   ]
 ```

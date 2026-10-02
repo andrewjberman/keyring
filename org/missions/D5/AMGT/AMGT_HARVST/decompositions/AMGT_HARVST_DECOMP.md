@@ -2576,3 +2576,41 @@ renewal are unchanged. This seat amends the grader; `3.0.0_SA_CVO~Z` grades on i
 | `HVST-ai-6` per-challenge +/-2 min grader | `ai-6` | LOCAL, DIRECT-ACT (one cell, under 300 product lines) | `~90` |
 
 Base check `round36/checks/ai-6.AC2.py` before the cut: FAIL as expected (the grader emits the per-minute shape).
+
+## 50. ROUND 37 -- the round-36 analysis enrichment list (`ledger/ROUND_ANALYSIS.round36.md` @e38e50aa55), 2026-10-02 ~07:0xZ
+
+Round 36 is CLOSED and gold #4 is served. FWD-11 is NOT REALIZED. Three limbs hold it: ft limb (1); barrons limb 2a
+(NOT_EVALUATED, because no barrons request falls in a monitor window); and limb 2b on wsj, barrons, ft and sa (no
+challenge sampled). Ruling 4 says no cell provokes a challenge.
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-aj-1` | `aj-1` | grader: anchor each band on the challenge's presentation (bbg emits `challenge_presented`; until it does, the HTTP 403 that precedes each pass); `requests` counted inside the monitor windows only; NOT_EVALUATED at 0 windowed requests (ruling 1) | LOCAL | worker `~90` |
+| `HVST-aj-2` | issuer act (no TO: L7 orders go to Tier-2 seats only, LD-0521) | the load monitor back up now, and up for the life of FWD-11 (ruling 2) | LOCAL, issuer act | `2.0.0_SA_COO~H` |
+| `HVST-aj-3` | issuer act (no TO, as round 34's ag-3 driver runs) | one barrons collection inside a monitor window (ruling 3) | WORLD, issuer act | `2.0.0_SA_COO~H` |
+| `HVST-aj-4` | `aj-4` | the ft keep-alive run: 2 h from a sign-in Andrew solves by hand while present; one keep-alive event per page load (ruling 5) | WORLD, STAGED on Andrew | worker `~92` |
+
+Dependencies:
+- aj-3's grade reads aj-1's windowed `requests`, so aj-3 is GRADED after aj-1 merges; the run itself goes now.
+- aj-4 waits on Andrew's presence for the hand-solved hCaptcha. No solver vendor is used (CTO 28235).
+
+**Issuer amendments carried here (rulings 6 and 7, no cell):**
+- **W91-S19 error text:** row Z-S63 carries it. Recurrence is measured as 1 of 830 bbg bodies, so no repair cell.
+- **Worktree recipe (Z-W90-S11):** a sparse worktree for a HARVST cell is cut with this cone:
+  `lib .tools org/missions infra/logic/registry org/standards org/tier1_exec/4.0.0_SA_CRO/scripts integrations/seekingalpha org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_HARVST org/modules/graph org/surprise_channel org/projects`.
+  These are the paths the collector suite and the commit gates read, as measured by ~90 in ai-5.
+
+**Load-monitor window record:** window1 2026-10-01 to ~10:48Z; window2 14:49Z to 2026-10-02 04:03Z, preserved as
+`load_monitor.window2.json` before the restart; window3 opened 2026-10-02 06:52:23Z (pid 22892). All three are listed
+in `.runtime/harvest-backfill/runtimes.json`. Round 36's windows are pinned for aj-1's AC2 in
+`deliverables/2.0.0_SA_COO_H/round37/runtimes.round36_windows.json`.
+
+**Checks dry-run at the base before the cut:**
+- `round37/checks/aj-1.AC2.py` FAIL as expected (no `requests_counted`; barrons reads MET-BY-ABSENCE on 52 unwindowed
+  requests).
+- `aj-3.AC2.py` FAIL as expected (requests not windowed). The first draft PASSED at the base on the unwindowed count;
+  the `requests_counted` marker was added so the check cannot pass before aj-1.
+- `aj-4.AC2.py` FAIL as expected (no record).
+- `aj-2.AC2.py` is the cell's own 10-minute proof, run after the cut.
+
+**Issuer acts aj-2 and aj-3** carry no task order: to-pipeline-gate refuses a TO addressed to a Tier-1 seat. Each act's proof is its check under `round37/checks/`, run by the issuer, with the output committed beside it (`round37/aj-2.AC2.output.txt`, `round37/aj-3.AC2.output.txt`). aj-2 is done (06:52:23Z, pid 22892); aj-3 runs inside window3.
