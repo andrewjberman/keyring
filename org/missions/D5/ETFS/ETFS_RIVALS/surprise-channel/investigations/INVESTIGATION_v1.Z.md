@@ -3037,6 +3037,48 @@
       "spec_asserts": "Order amendment A1: change the three test_s4_security_market.py comparisons to the new list, then set row ETFS_RIVALS-Z-W3-S20's state to RESOLVED in the investigation file, citing the commit.",
       "world_is": "The three comparisons are changed (commit ab0a58eaa4) and the suite reads 0 failed, so S20's hazard (a red suite at the drain) no longer stands. RESOLVED is not a schema disposition and my rules forbid editing an existing row, so S20 still reads UNDER_INVESTIGATION/ARMED in its own text; this row cites it as disarmed. The issuer or the CVO sets S20's standing.",
       "notes": "Cites ETFS_RIVALS-Z-W3-S20. disarm_owner of S20 was 2.0.0_SA_COO~RV; the disarming edit is A1's grant."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S45",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-02T22:50Z",
+    "one_line": "RIV-sa-1: the one-run-per-page-day attempt record has no registered table of its own, so it is written at the publish-page state prefix as ai-run.attempt (a non-.json suffix, like a stage's .cursor); publish-page also READS it so a later plain publish keeps showing a failure.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/ai_stage.py attempt_uri() = homes.marker_prefix('publish-page', day) + '/ai-run.attempt' (address builder output; no address typed)",
+        "infra/aws/terraform/etfs-rivalfunds/policies/etfs-rivalfunds-daily-lambda.json: s3:PutObject+GetObject on opal-data-etfs/rivalfunds/etfs/state/publish_page/* -- the daily role can write it; markers.read_markers filters on .json so the record is never a batch marker (tests/test_r7sa1_sweep_ai_step.py::test_the_attempt_record_is_not_a_batch_marker_and_sits_at_the_builders_prefix)",
+        "sa-1.AC1/AC2/AC3: PASS 0 failures each at the branch HEAD"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cell RIV-sa-1: 'The cell records the attempt where the address builder says.' The order names no table or registry row for it.",
+    "world_is": "No ai_run/ai_attempt state table is registered (homes.STAGES holds stages only), and a registry row is outside this order's paths, so the carrier reuses the publish-page state prefix. A later round may register a table of its own and move it; the sweep and publish-page read it through ai_stage.read_attempt only."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S46",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-02T22:50Z",
+    "one_line": "RIV-sa-1: the AI step's deadline cannot interrupt a vendor call already in flight (no background thread is allowed), so a call started just inside the deadline ends at ai_client.TIMEOUT_S (120 s) and the republish then has MARGIN_MS less that, about 30 s.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/ai_client.py: TIMEOUT_S = 120 on requests.post; sweep.MARGIN_MS = 150_000; sweep._ai_deadline_s caps the step at remaining - MARGIN_MS",
+        "data/etfs/scripts/rivalfunds/ai_stage.py _DeadlineClient: a call is refused BEFORE it starts past the deadline and dropped AFTER it returns past it (Overrun, a BaseException, so run_day never reaches its write); tests/test_r7sa1_sweep_ai_step.py::test_a_deadline_overrun_writes_nothing_and_records_failed",
+        "AC2 offline: first reply delayed 3.0 s under ai_deadline_s 1.0 -> sweep took 3.5 s, FAILED recorded, no object after drain"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cell RIV-sa-1: 'The step never runs past the Lambda's remaining time minus MARGIN_MS.'",
+    "world_is": "Holds to within one vendor call's own timeout. ai_client.py is not in this order's paths; lowering its TIMEOUT_S (or making it deadline-aware) would close the gap, and a republish needing more than about 30 s would be tight. The default AI_DEADLINE_S is 600 s of a 900 s Lambda; the graph's own time is subtracted by the remaining-time cap."
   }
 ]
 ```
