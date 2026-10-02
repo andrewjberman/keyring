@@ -80,3 +80,17 @@ Binding from these turns: the system runs in the cloud; per-thread folders live 
 called with the API key held in AWS Secrets Manager, the way the estate pipeline does it (NOT Bedrock); the cloud
 side may hold a standing sign-in that reads and (on his 1 only) sends his Teams; 4.0.0_SA_CRO builds it, which
 widens this seat past its prompt.md "deploy -> CTO gates" line for this project only.
+
+## Addendum ~04:1xZ -- proceed through the wind-down, verbatim
+
+Asked whether the build resumes now or after the disk incident (0.0.0_AB_MSTR relay 104035, his site-Z word
+"i need all agents to log and wind down"), Andrew at this terminal:
+
+> i want the build to proceed
+
+And, the next turn, on the wind-down itself:
+
+> that is their device, not yours
+
+Binding: the build proceeds now. The 104035 wind-down was Andrew's word for SITE Z's device (its disk at 100%), not
+for this laptop: it does not bind 4.0.0_SA_CRO.
