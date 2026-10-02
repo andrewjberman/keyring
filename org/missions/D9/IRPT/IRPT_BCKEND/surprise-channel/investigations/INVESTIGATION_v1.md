@@ -15315,3 +15315,32 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Interim disarm: this seat checks git status for ' D' after every build-and-upload and restores tracked files from HEAD. Fix: cleanup restores a tracked path from HEAD instead of deleting it, and staging refuses a tracked dest with uncommitted edits -- in the next repair cell (IRPT_BCKEND owns IB-rte-4's staging)."
 }
 ```
+
+## IRPT_BCKEND-S277 -- DISARMS S270: the history list answers in at most 6.6 s server time after M2
+
+```json
+{
+  "id": "IRPT_BCKEND-S277",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-02T18:20:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARMS row IRPT_BCKEND-S270 (disarm owner 2.0.0_SA_COO~Y): irpt-status answers every history page size in at most 6.6 s of server REPORT time, cold and warm, at 22 Cottonwood requests, after M1 (timeout 29 s) and M2 (the 8-worker per-row pool, one boto3 Table per thread, 1024 MB) served.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/S270/NEVER_WIDEN_SIGNOFF_PACKET_IRPT_STATUS_M2_D2_R1_20261002.md (blob 5518903557; CTO half batch 177); D1 safe-apply 17:04Z read back CodeSha256 h7H7KgX1FsBu4XTLqqpcMOjMnwRdeL9xlGZPwzhibcg=, memory 1024, timeout 29 (S270/M2_APPLY_OUTPUT_20261002.txt)",
+      "V1-a, server REPORT from /aws/lambda/irpt-status (S270/V1A_TIMING_RUN1_20261002.json, RUN2): history default page cold 6567 ms (init 162 ms) and warm 3372 ms; limit=50 2570 and 2578 ms; single read 404 and 256 ms; status 1122 and 1133 ms; every call HTTP 200, 22 items",
+      "deploy ledger irpt-status-m2-d2-r1-20261002 CLOSED, 4 of 4 legs proven (org/critical_paths/change_management/20261002T1436Z_irpt-status-m2-d2-r1-20261002_deploy_completion.md)"
+    ]
+  },
+  "dismissal_reason": "S270's hazard was a history list near the function timeout while the request count grows. The bar the CTO set (batch 174: every page size at or under 10 s server time, cold and warm) is met with 3.4 s of headroom at the slowest call, and the timeout is 29 s. Cottonwood's hold at 22 requests lifts with this row (batch 177).",
+  "spec_asserts": "Row S270: the served history list's server time is measured after E6, and Cottonwood is re-capped while it nears the timeout.",
+  "world_is": "Measured after M2 served: the slowest history call is 6.6 s cold at 22 requests (was 15.0 s cold after M1). Each added request still costs per-row reads, now spread over 8 threads; the per-request growth on the pool is not separately measured.",
+  "notes": "Not claimed: the growth rate at much larger counts. A history page past about 10 s at a future count would be a new row."
+}
+```
