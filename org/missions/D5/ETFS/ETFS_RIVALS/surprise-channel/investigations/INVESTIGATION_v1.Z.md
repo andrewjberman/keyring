@@ -2711,6 +2711,29 @@
     "spec_asserts": "RIV-h-5 builds G5/G6 refusal; the ruling's page clause (the page shows a refused window as not inferred) is not in this cell's paths.",
     "world_is": "Nothing serves a refused window today (nothing deploys in round 5), but once G5/G6 are replayed the page will render a refused window with an empty trades table. Also: guardrails_config.json is now read by the gold stage (refusal_limits); this worker did not read the Lambda packaging, so whether the gold Lambdas ship that file is unverified here and a missing file would raise, not skip.",
     "notes": "For the round-5 analysis: a cell owning publish_page.py/render.py to read G6 `status`/`reason`, and a packaging check of guardrails_config.json in the gold Lambda zip before the replay deploy."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W3-S18",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~3",
+    "surfaced_at": "2026-10-02T01:50Z",
+    "one_line": "RIV-h-6 makes `confidence` stop reading UNRESOLVED, which turns 4 tests of my own RIV-h-4 file red (tests/test_r5h4_id_change_identifier_relation.py); that file is not in the RIV-h-6 <paths>, so I left it unedited and the package suite reads 4 failed, not 0.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m pytest rivalfunds/tests -q at the RIV-h-6 code commit: 4 failed, 321 passed, 2 skipped; the 4 are test_equal_value_alone_is_an_exit_plus_an_entry_with_real_share_counts, test_a_shared_isin_sedol_or_figi_is_a_relation_and_a_different_one_is_not, test_a_shared_cusip6_alone_is_two_securities_and_with_a_g3_identifier_event_it_is_one, test_a_g3_identifier_event_naming_both_pairs_them_and_one_naming_neither_does_not",
+        "data/etfs/scripts/rivalfunds/tests/test_r5h4_id_change_identifier_relation.py lines 55, 72, 77, 89, 91 assert the pair [('entry','UNRESOLVED'),('exit','UNRESOLVED')] via _kinds(); after RIV-h-6 the same trades read ('entry','CLEAN'),('exit','CLEAN') with key_resolution UNRESOLVED",
+        "org/missions/D5/ETFS/ETFS_RIVALS/task-orders/ETFS_RIVALS.TO-RIV-h-6.key-resolution-column.md <paths>: gold_trade_schedule.py, tests/test_r5h6_*.py, test_g2_trade_schedule.py, test_i1_trade_stable_key.py, the channel file; not test_r5h4_*"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-h-6 face section 3: run the whole package suite before reporting; it must read 0 failed.",
+    "world_is": "The suite cannot read 0 failed inside this order's write grant: the only way is an edit to test_r5h4_id_change_identifier_relation.py. The required edit is mechanical: change `_kinds` to zip action with key_resolution (or replace the expected 'UNRESOLVED' confidence with 'CLEAN' at the five lines). AC1 of RIV-h-6 passes; the failure is a stale expectation in a sibling test of the same worker slot.",
+    "notes": "Disarm: add test_r5h4_* to the RIV-h-6 paths for a follow-up commit by the same slot, or apply the edit at the drain. A drain that merges as-is lands a red suite."
   }
 ]
 ```
