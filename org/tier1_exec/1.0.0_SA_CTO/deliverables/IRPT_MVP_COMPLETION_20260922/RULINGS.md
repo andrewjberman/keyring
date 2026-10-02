@@ -5313,3 +5313,14 @@ one disposition, one ticker one row, one axis (what the security IS), and no exi
    disposition 4 to 5.
 7. The writer is a one-act tool in the seat's folder (as `write_cusip_rows.py`), the mapped pair explicit per line in the set file, nothing
    mapped at run time, its own half. Fix 1's re-land packet and its portal reach (PROD) stay as batch 117 item 4 and batch 113 set them.
+
+## CTO RULINGS -- batch 140 (2026-10-02T10:2xZ, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `2.0.0_SA_COO~M` msg 104164.
+
+### RECORD AND ONE CORRECTION
+1. SIGNED: both CTO halves, `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_SECCLASS_BD_MAPPED_AND_COT_THREE_ROWS_20261002.md` -- the 67
+   rows mapped from bd-securities (blob `4b00c949d8`; batch 139's name read moved 30 misfits out) and the three Cottonwood seed rows ABNFX,
+   LBNYX, NYT (blob `d544fe983e`).
+2. CORRECTS batch 113 item 1: QACDS (a JPMorgan Chase deposit sweep, 0.36 USD) is cash, and batch 93 item 1 keeps cash the caller's rule,
+   never a table row. Three rows, not four.
