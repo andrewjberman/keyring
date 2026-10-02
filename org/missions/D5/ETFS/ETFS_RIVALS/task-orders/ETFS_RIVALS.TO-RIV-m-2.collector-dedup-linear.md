@@ -69,7 +69,7 @@ at base 9e201639c3: m-2.AC1 FAIL -- each FAIL as expected, each control PASS.
 
 <risk>SERVED</risk>
 <worker_class>worker-light</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>5</round>
 <slot>~2</slot>
 <fabric>site-z</fabric>

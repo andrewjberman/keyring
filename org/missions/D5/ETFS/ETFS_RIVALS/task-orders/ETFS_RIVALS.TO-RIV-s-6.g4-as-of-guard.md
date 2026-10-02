@@ -53,8 +53,11 @@ data/etfs/scripts/rivalfunds/tests/test_r5s6_*.py
 data/etfs/scripts/rivalfunds/tests/test_s4_security_market.py
 data/etfs/scripts/rivalfunds/tests/test_e1_enrichment_bloomberg.py
 data/etfs/scripts/rivalfunds/tests/test_v2_enrichment_cli.py
+data/etfs/scripts/rivalfunds/tests/test_v2_revision_contract.py
 org/missions/D5/ETFS/ETFS_RIVALS/surprise-channel/investigations/INVESTIGATION_v1.Z.md
 </paths>
+
+**AMENDMENT 1 (issuer ruling on rows Z-W5-S29 and Z-W5-S30 (ARMED), 2026-10-02).** (a) `tests/test_v2_revision_contract.py::test_new_g4_objects_are_named_with_their_capture_time` runs a past-date `market` pull against a current-value stub -- the behaviour this cell retires: pin `eb._run_date_et` to the test's own date there (as in test_s4 and test_e1); no assertion changes. (b) S30: the vehicle's daily G4 targets the PREVIOUS trading day, so under refuse-unless-historical it becomes a historical request, and READ_HERE section 4 says that answers nothing for derived fields (GICS among them) -- the daily G4, and the served G1 GICS that reads it, would stop. CTO ruling 4 reads 'refuses OR LABELS'. Ruling: for a past-date pull, a security whose historical answer covers EVERY requested field lands as historical (`as_of` the past date, `as_of_source` historical); every other security lands from the current-value pull LABELLED with its true as-of -- `as_of` the RUN date (ET), `as_of_source` pull -- under the requested partition, never claiming the past date. A failed historical request falls to the same labelled current pull (no historical answer at all). The run-date path is unchanged. AC1 is unchanged and still holds under this ruling (no row under the past date claims that date from a current-value pull). Append resolution rows for S29 and S30.
 
 ## 4. PROOF OF SPEC (each invocation LITERAL, run from your worktree root)
 
@@ -75,7 +78,7 @@ at base 9e201639c3: s-6.AC1 FAIL -- each FAIL as expected, each control PASS.
 
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>5</round>
 <slot>~5</slot>
 <fabric>site-z</fabric>

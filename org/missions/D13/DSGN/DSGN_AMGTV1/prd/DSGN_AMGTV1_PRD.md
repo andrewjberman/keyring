@@ -5,7 +5,7 @@
  "project": "DSGN_AMGTV1",
  "directive": "D13",
  "fabric": "site-z",
- "prd_version": "v0.6",
+ "prd_version": "v0.8",
  "step": 4,
  "brief_ref": "docs/briefs/dsgn-amgtv1-security-analysis-frontend-brief-20260928.md@08eefaac9d",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21", "FWD-22", "FWD-23", "FWD-24"],
@@ -20,6 +20,16 @@ signed-in `/ui-walk` (record `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DI
 record @`3d7fc6695e` verbatim except FWD-3's ACCEPT, which dropped "The form is Andrew's call (fork F1)." because F1 was
 ruled @`ac5433b35b` before landing (`3.0.0_SA_CVO~Z` condition 1). **Endpoint** confirmed by Andrew's word of 2026-09-29 ~02:2xZ (record
 `ANDREW_DIRECT_20260929_022xZ_NOTHING_WAITS_ON_ANDREW_SELF_DRIVE_RESOLVES_CALLS.md`, call 2); forks F1-F5 ruled @`ac5433b35b`.
+**v0.7 ADDENDUM (2026-10-02, `1.0.0_SA_CTO~Z`, round-21 L10 on CVO~Z slug msg 28249):** this changes FWD-13's DONE WHEN only.
+The old text, "its tooltip carries the mnemonic and the full-precision value verbatim", contradicted FWD-11 ("no raw code, id or
+path") and the round-21 rulings 27914 and 27927. Those rulings moved the mnemonic from the tooltip's face to `data-mnemonic`. The
+new text keeps ACCEPT's "every figure traceable to its field" through the DOM attribute. This is an ENDPOINT change, so the
+ratified-text half is re-signed by `3.0.0_SA_CVO~Z`. Analysis: `ledger/ROUND_ANALYSIS.round21.md`.
+**v0.8 ADDENDUM (2026-10-02 ~07:4xZ, `1.0.0_SA_CTO~Z`, on CVO~Z msg RE 28287):** this changes FWD-11's ACCEPT only. It carries
+round-21 ruling 3a into the ratified text. The old text read "no raw code, id or storage path shows anywhere on the page", but
+GenerationCaption keeps its machine line (generation id, coverage vintage) behind a collapsed details block on purpose, as
+provenance. The new text names the surfaces graded: the visible face, tooltips, pop-ups and card windows. A closed,
+provenance-labelled details block is not the face. This is an ENDPOINT change, so `3.0.0_SA_CVO~Z` re-signs.
 
 ## ENDPOINT (step 2, /endpoint --forward)
 
@@ -136,7 +146,9 @@ Landed verbatim from `org/tier1_exec/1.0.0_SA_CTO/deliverables/DSGN_AMGTV1_ENDPO
          ACCEPT     Put beside the Market, Positioning and Philosophy pages, the cards,
                     windows, charts, empty states and footers are the same pieces;
                     every footer reads as a time and a source; and no raw code, id or
-                    storage path shows anywhere on the page.
+                    storage path shows on the visible face, in a tooltip, a pop-up
+                    or a card window. A closed, provenance-labelled details block
+                    the reader must open is not the face (v0.8).
          SOURCE     brief O11 (:119-124); M4, M13, M14
 
   ===== v0.4, 2026-09-30 -- FWD-12..FWD-20 RE-HOMED FROM AMGT_RESAPP ========
@@ -156,7 +168,9 @@ Landed verbatim from `org/tier1_exec/1.0.0_SA_CTO/deliverables/DSGN_AMGTV1_ENDPO
          figure
          DONE WHEN  EXERCISED -- every figure on the four header cards carries
                     its units and tabular numerals, its tooltip carries the
-                    mnemonic and the full-precision value verbatim, and price,
+                    figure's plain label and the full-precision value
+                    verbatim, the mnemonic travels in the DOM as
+                    data-mnemonic and never on the face (v0.7), and price,
                     market cap, net debt, enterprise value, beta and short
                     interest each sit on one named card
          ACCEPT     No 161867780096.00003 anywhere; every figure traceable to

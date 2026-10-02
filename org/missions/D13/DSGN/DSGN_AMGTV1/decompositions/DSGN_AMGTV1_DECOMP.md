@@ -1376,3 +1376,162 @@ carries the mnemonic" is kept by `data-mnemonic` in the markup; the CTO may amen
 `round21/checks/tipface.cjs` (issuer, with a DataTooltip stub that renders the real component's text): base portal DEV da0b3bd7 2 of 3.
 AC3 carries `tsc -b` and all 14 harnesses (ModelTab inherits the face; ModelTab.tsx itself is not edited). **Chain:** ~68 alone.
 **Deadline:** walk clean by 21:30Z, otherwise drop; da0b3bd7 stays the candidate. **Rule 24:** one order; no served value moves.
+
+
+## v22 -- ROUND 22 (issuer, 2026-10-02 ~06:5xZ), over PRD v0.7 @9ef3af2bee (ADMITTED)
+
+**Rectangle:** `1.0.0_SA_CTO~Z`'s `ledger/ROUND_ANALYSIS.round21.md` @e14de1769c section 3A, rows A1-A4 (rulings 1-5; msg 28252,
+which supersedes the hold ruling 28223). Deadline: drained by **11:30Z**, or the cell drops and PROD stays on `b3a1d8a6`.
+- **Cell ids:** `AV-z-1` (A1), `AV-z-2` (A2), `AV-z-3` (A3), `AV-z-4` (A4) (letter z; e-y are on disk).
+- **The issuer's placements:**
+  - (a) **A3 takes no order.** At the cut, `PriceBars.tsx:116-120` already labels a bar with the served `name` (or
+    `classification.name`), the ticker only when none is served, and `ChatterBubbles.tsx:96` prints the served `display_name`.
+    The 24 unnamed bars are a served gap (RESAPP round 61 cell B1). A3 is graded at the close as the issuer's real-run read after B1
+    deploys: 0 bars whose label equals a `security_key` when the served row carries a name. No cell is cut for coverage alone.
+  - (b) **"ABSENT" in Posture reason 2 is located: it is SERVED.** It is the thesis bundle's `posture.basis[1].claim` ("Both names' fit
+    scores are ABSENT rather than low ..."), printed verbatim by `PostureTab.tsx`. Its producer fix is not in RESAPP B2's list. It is
+    routed to `1.0.0_SA_CTO~Z` (one line), and A1's page guard covers it until the producer words it.
+  - (c) **Chains from write sets.** A1 and A2 both write `PeersTab.tsx` and may both re-anchor the peers harnesses, so they are ONE
+    chain on one worker: ~69 AV-z-1 -> AV-z-2. AV-z-4 writes only `errorEmpty.harness.cjs`: ~70 alone. A1 does not touch
+    `errorEmpty.harness.cjs`, and AV-z-4 touches nothing else.
+  - (d) **A4, issuer reading at the cut:** `unresolved_row_navigates`, `a_click_sent_a_ticker` and `error_claims_no_daily_row` read
+    the RankedList click tree and the failed_request render (`ranked_row_click_handlers_found` true), so they are exercised and stay.
+    The vacuous claim is the starred pair (`starred_successful_empty`, `starred_failed_request` ->
+    `starred_error_differs_from_starred_empty`), met by the ranking footers since StarredList left LeadPanel.
+  - (e) **Width:** M = 2 chains, N = 2, cap 3. The queued order on ~69 (AV-z-2) is handed by continuing the worker.
+- **Portal base:** origin DEV `3ca6c53a` (fetched 06:4xZ; it contains site-Z DEV `24646bca`, and `src/pages/SecurityAnalysis` is
+  identical between them). The checks' negative arms pin `24646bca`.
+- **Frozen at the cut.**
+
+| cell | row | what it builds | serves | writes | slot | risk |
+|---|---|---|---|---|---|---|
+| `AV-z-1` | A1 | one page guard: a served or page-written string carrying a code-shaped token prints a plain generic reason (the string rides a data- attribute); Exec Lusha line, Posture claims, Peers absent-column list and column-head tips, `cscTable.ts`'s own reason text | FWD-11 | `SA/tabs/{ExecManagement,Posture,Peers}Tab.tsx`, `SA/{cscTable,reasonWords,postureCites}.ts`, 9 harnesses (re-anchor) | ~69 | LOCAL |
+| `AV-z-2` | A2 | the Peers subject row's Price and EV read the header's served PX_LAST and CURR_ENTP_VAL, in the column's own format | FWD-8 | `SA/tabs/PeersTab.tsx`, peers harnesses (stub re-anchor) | ~69 (after z-1) | LOCAL |
+| `AV-z-3` | A3 | no order: the issuer's close read after RESAPP B1 deploys | FWD-2 | -- | issuer | -- |
+| `AV-z-4` | A4 | errorEmpty's starred pair retired, or re-pointed at the price face's starred state | instrument (Z-W56-S4) | `SA/__harness__/errorEmpty.harness.cjs` | ~70 | LOCAL |
+
+**Checks (`round22/checks/`, dry-run at base DEV 24646bca = 3ca6c53a for these paths):**
+
+| check | base (as expected) |
+|---|---|
+| codeface.cjs (AV-z-1) | FAIL 2 of 3: exec 2 tokens (`_Equity`, `.json`), posture 1 (`ABSENT`), peers 20 (`ey_ntm`, `cash_mv`, `ABSENT` ...) |
+| subjectrow.cjs (AV-z-2) | FAIL 2 of 3: Price "--" (want "204.80"), EV "--" (want "193,511") |
+| starredclaims.cjs (AV-z-4) | FAIL 2 of 3: the starred cases remain with no starred-face anchor |
+| round15 bound.cjs ALL 14 harnesses | PASS 14 of 14 (control) |
+
+**Cut rules applied:** at most three mechanical criteria per order; no check compares values against a base snapshot; harness
+changes are re-anchors only. **Battery:** comp-schedule and comp-iam DECLARED-NOT-APPLICABLE (static renders over fixtures). **The
+issuer's close:** the merged DEV served on 5174, a signed-in read of BA, VLO and AMD on the Exec, Posture and Peers faces (the
+analysis's census set), and the A3 read after B1.
+
+**Rule 24:** (i) the analysis's four rows by subtraction: 3 orders + A3 placed (a) + the Posture source located (b). (ii) One write
+set per chain. (iii) One intent per order. (iv) No order moves a served value: z-1 words, z-2 presents a served header value in a
+second place, z-4 an instrument.
+
+
+## v23 -- ROUND 23 (issuer, 2026-10-02 ~08:2xZ), over PRD v0.8 @7912f7aee2 (ADMITTED)
+
+**Rectangle:** `1.0.0_SA_CTO~Z`'s `ledger/ROUND_ANALYSIS.round22.md` @eee9380be7 section 3, rows 1-4 (rulings 1-6; msg 28303).
+Deadline: drained by **11:30Z** and merged onto remote DEV, like `419ef41d`, so ONE candidate goes to Andrew; otherwise `419ef41d`
+stays the candidate.
+- **Cell ids:** `AV-zb-1` (row 1), `AV-zb-2` (row 2), `AV-zb-3` (row 3), `AV-zb-4` (row 4).
+- **The issuer's placements:**
+  - (a) **Row 3 is SERVED, so `AV-zb-3` drops.** The sentence "no declared IR domain for this name: a SERP not scoped to the
+    company's own domain is not the contract's search" is written by `lib/research/management/enrich.py:536` (the CEO public
+    profile `basis`, AMGT_RESAPP's lane). It is routed to `1.0.0_SA_CTO~Z` for RESAPP round 61 on B2's terms (ruling 3).
+  - (b) **Row 1, the reader words are page-composed.** The absent reasons are served (`peers.csc_columns.absent[].reason`, R-1's
+    words); the page's own words are the state phrase and the counts line. Under ruling 1 and round-21 ruling 1 (no page-side
+    rewrite of a served string), the item reads one plain clause the PAGE composes from the column's label (e.g. "Shares
+    outstanding is not reported for these peers"). The served reason rides `data-absent-column-reason` (kept by AV-z-1). The
+    counts line and the column-head tips lose "comparison map", "registry" and "R-1" too.
+  - (c) **Row 2, the served form and date** are the thesis bundle's `drafting_provenance` {accession, form, filing_date}, used only
+    when its accession equals `management.source_accession`. Otherwise the page names the filing without a form or date it was
+    not served for that filing.
+  - (d) **Row 4:** `posture.harness.cjs` does its own read-only S3 fetch of the two posture objects (rl-7, Opal infra), so that
+    order's bounds admit exactly that read. The plant knob (`POSTURE_HARNESS_PLANT=1`) is the harness's own, so it "grades
+    something".
+  - (e) **Chains from write sets:** ~71 `AV-zb-1` (Peers files + peers harnesses); ~72 `AV-zb-2` (`ExecManagementTab.tsx` + exec
+    harnesses); ~73 `AV-zb-4` (`posture.harness.cjs`). They are file-disjoint. M = 3, N = 3, cap 3.
+- **Portal base:** `419ef41d` (the round-22 candidate on remote DEV c4e0d744; src/pages/SecurityAnalysis is identical to DEV a730d8ce,
+  where the checks were dry-run).
+- **Frozen at the cut.**
+
+| cell | row | what it builds | serves | writes | slot | risk |
+|---|---|---|---|---|---|---|
+| `AV-zb-1` | 1 | Peers absent-column items in reader words composed from the column label; the counts line and the tips without system terms | FWD-8 | `SA/tabs/PeersTab.tsx`, `SA/cscTable.ts`, peers harnesses (re-anchor) | ~71 | LOCAL |
+| `AV-zb-2` | 2 | the Exec filing line names the form and filing date; the accession only in a data- attribute | FWD-11 | `SA/tabs/ExecManagementTab.tsx`, exec harnesses (re-anchor) | ~72 | LOCAL |
+| `AV-zb-3` | 3 | dropped: served (placement a) | FWD-11 | -- | -- | -- |
+| `AV-zb-4` | 4 | posture.harness repaired (current hook stubs) plus the plant knob | instrument (Z-W69-S1) | `SA/__harness__/posture.harness.cjs` | ~73 | LOCAL |
+
+**Checks (`round23/checks/`, dry-run at DEV a730d8ce = 419ef41d for these paths):**
+
+| check | base (as expected) |
+|---|---|
+| peerwords.cjs (AV-zb-1) | FAIL 2 of 3: per fixture, 19 terms (comparison map, factor code, row field, registry); RATIOS and THREE in reasons |
+| accession.cjs (AV-zb-2) | FAIL 1 of 3: the accession is on the face; no 10-K or date; no attribute on the served branch |
+| postureharness.cjs (AV-zb-4) | FAIL 0 of 3: TypeError useCollectedChatter; no CHECK lines |
+| round15 bound.cjs ALL 14 + tsc | PASS (round-22 drain, and again on 419ef41d) |
+
+**Rule 24:** (i) four rows by subtraction: 3 orders + row 3 placed (a). (ii) One write set per chain. (iii) One intent per order.
+(iv) No order moves a served value: zb-1 and zb-2 are page words over served fields; zb-4 is an instrument.
+
+
+## v24 -- ROUND 24 (issuer, 2026-10-02 ~09:1xZ) -- ONE DIRECT ACT
+
+**Rectangle:** the CTO's ruling msg 28350 on row Z-S14 (review @dc22572ab2): "when the served Lusha reason is code-free, print it alone,
+as one sentence." It folds in only if it is re-merged and walked by 11:30Z, and then the new hash goes to the CTO. Otherwise
+41eeda55 ships as is. **Cell:** `AV-zc-1` (letter zc), DIRECT ACT, `<risk>LOCAL</risk>`, `ExecManagementTab.tsx` only: a code-free
+served SKIPPED reason prints alone; a coded one keeps AV-z-1's plain sentence; the reason rides `data-lusha-reason` either way.
+**Check:** `round24/checks/lushaline.cjs` (issuer): at base portal 41eeda55 it reads 2 of 3. **Chain:** ~74 alone, portal_ref 41eeda55.
+**Close:** the issuer's merge onto the candidate branch, the battery, and one walk of VLO Exec. **Rule 24:** one row, one order; no
+served value moves (the page prints a served string it already carries, without its own lead-in).
+
+
+## v25 -- ROUND 25 (issuer, 2026-10-02 ~09:2xZ) -- the round-23 analysis's enrichment list, rows 1 and 3
+
+**Rectangle:** `1.0.0_SA_CTO~Z`'s `ledger/ROUND_ANALYSIS.round23.md` @876dfcadb8 section 3 (msg 28356), rows 1-3. Row 2 (Z-S14) is
+`AV-zc-1`, issued as round 24 @1549ca8bcc before the analysis landed. ONE ISSUER PER ROUND is keyed to the round
+(to-pipeline-gate refused a second issuance into round 24), so rows 1 and 3 are round 25's one issuance. Deadline: re-merged onto the candidate and walked by 11:30Z, else the promote candidate stays `41eeda55`.
+- **Cells:** `AV-zc-2` (row 1), `AV-zc-3` (row 3). Ruling 4 (the `surfaced_at` placeholders on W71-S1/S2) is the issuer's
+  correction row Z-S16, because the row gate forbids an in-place edit. It carries no cell.
+- **Placement (a), row 1:** R-1's served absent reasons are ONE global map: 11 distinct reasons over 12 columns, identical in all
+  five fixtures. The page keeps a reader-words class table keyed by that reason (the column is a tie-break). Each item carries
+  `data-absent-reason-class`; an unknown served reason renders `unmapped` with a generic plain clause.
+- **Placement (b), row 3:** the "unfixed path" is the pre-AV-zb-4 predicate, which the harness keeps selectable
+  (`POSTURE_HARNESS_LEGACY_PREDICATE=1`). The zero plant is `POSTURE_HARNESS_PLANT=zero`.
+- **Chains:** ~75 `AV-zc-2` (PeersTab.tsx + peers harnesses); ~76 `AV-zc-3` (posture.harness.cjs). They are disjoint from each other
+  and from ~74 (ExecManagementTab.tsx). Width: M = 3, N = 3, cap 3; portal_ref `41eeda55`.
+
+| cell | row | what it builds | serves | writes | slot | risk |
+|---|---|---|---|---|---|---|
+| `AV-zc-2` | 1 | each absent column's reason in reader words, one clause per reason class, 0 unmapped | FWD-16, FWD-8 | `SA/tabs/PeersTab.tsx`, `SA/reasonWords.ts`, peers harnesses (re-anchor) | ~75 | LOCAL |
+| `AV-zc-3` | 3 | the BABA check renamed to what it grades; zero plant + legacy predicate | instrument (v21) | `SA/__harness__/posture.harness.cjs` | ~76 | LOCAL |
+
+**Checks (`round24/checks/`, written before the relabel; dry-run at base 41eeda55):** reasonclass.cjs FAIL 1 of 3 (the bare "not available" x60, no class
+attribute); posturezero.cjs FAIL 0 of 3 (the old name printed, no zero plant, no legacy predicate).
+
+
+## v26 -- ROUND 26 (issuer, 2026-10-02 ~09:5xZ) -- ONE DIRECT ACT
+
+**Rectangle:** the issuer's own round-25 close walk 20261002T094604Z (VLO Peers): 5 of 12 absent columns read the generic `unmapped`
+clause. RESAPP AMGT-ak-3 (B2, `lib/research/peers/csc_plain_reasons.py`) now SERVES the Cash, P/E 2027, Debt/Equity, 5-yr growth
+EBIT and 5-yr growth FCF reasons with registry labels in place of codes, and AV-zc-2's table keys the old strings. This is a defect
+in the round's own cell (the CTO's round-23 row 1 criterion is "0 classes left unmapped"), so the issuer repairs it inside its
+decomposition. **Cell:** `AV-zd-1` (letter zd), DIRECT ACT, `<risk>LOCAL</risk>`, `reasonWords.ts` only: the five live strings join
+the class table at their predecessors' classes. **Check:** `round26/checks/liveclass.cjs` (issuer): at base 7889655a it reads 1 of 3.
+**Chain:** ~77 alone, portal_ref 7889655a. **Close:** the re-merge onto remote DEV 06bc6f85 (CTO msg 28379), the battery, and one walk
+of VLO Peers. **Rule 24:** one row, one order; no served value moves.
+
+
+## v27 -- ROUND 27 (issuer, 2026-10-02 ~14:3xZ) -- ONE DIRECT ACT
+
+**Rectangle:** `1.0.0_SA_CTO~Z`'s `ledger/COMPLETION_GRADES.round26.json` @0c4c6d6368. FWD-2 is NOT_REALIZED, "A PAGE cell (DSGN)", on
+CVO~Z ADJUDICATION_v26 @07446385f1 (spine: a NOT_REALIZED is the CTO's own round-N analysis for the next drain). FWD-7's NOT_REALIZED
+is a PRODUCER cell (RESAPP management), not this decomposition's. The 11 NOT_EVALUATED rows are reads (CVO~Z v26 :40), not cells.
+**Cell:** `AV-ze-1` (letter ze), DIRECT ACT, `<risk>LOCAL</risk>`, `PriceBars.tsx` + `ChatterBubbles.tsx` (+ `types.ts` for optional
+chatter-row fields): every bar and bubble carries its SERVED identity one hover away (a native hover title). That means name, ticker,
+asset class, sub-asset class, sector, the period figure and places moved, with a field not served said in words, never invented.
+**Placement (a):** the served price rows carry every field. The served collected-chatter rows carry only `display_name`, so a
+bubble prints what its row serves and says the rest is not served. Serving ticker, classification and places_moved on chatter rows
+is a PRODUCER item (RESAPP), routed to the CTO. **Check:** `round27/checks/identity.cjs` (issuer): at base portal fa529337 (PROD's
+tree) it reads 1 of 3. **Chain:** ~78 alone. **Rule 24:** one row, one order; no served value moves.

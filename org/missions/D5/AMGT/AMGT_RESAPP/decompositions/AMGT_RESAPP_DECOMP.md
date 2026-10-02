@@ -7655,3 +7655,170 @@ fanout:
   egress: none
   no_promote: true
 ```
+
+## 69. ROUND 61 -- A COMPANY NAME ON EVERY BAR AND BUBBLE, PLAIN SERVED REASONS, THE FULL OFFICER TITLE, A MISSING SCORE IN WORDS. Six cells, five orders and one direct act
+
+**Cut by `2.0.0_SA_COO~Z`** on `1.0.0_SA_CTO~Z`'s **DSGN_AMGTV1 ROUND 21 ANALYSIS** (`org/missions/D13/DSGN/DSGN_AMGTV1/ledger/ROUND_ANALYSIS.round21.md`
+@`e14de1769c`, msg 28253; section 3B amended @`b74c090804`, msg 28264, which places cell B4). Its section 3B is this round's rectangle
+(cells B1-B4). It opens RESAPP round 61 under RESAPP round-60
+ruling 1 ("unless the DSGN close walk surfaces a served-field defect"). Rulings carried:
+- DSGN r21 s.1 rule: a served string is fixed at its producer, never by a page-side rewrite;
+- DSGN r21 s.1: each producer fix moves served output, so it carries the never-widen pair (`1.0.0_SA_CTO~Z` + `2.0.0_SA_COO~Z`), per cell,
+  naming its blast radius per key;
+- DSGN r21 3B: B1 lands before the 07:13 ET generation if it can, else the next one.
+
+**Issuer rulings at the cut (inside this decomposition):**
+- R1. **B1's name source is the model block's header `NAME`.** The 24 unnamed price rows (and 25 chatter rows) have no crosswalk
+  `identity` block: they entered from the one-pager universe, never through `registrations.json`. The analysis says "use the same
+  security reference that names the other 70". The 35 crosswalk names are Bloomberg `NAME` (a registration's reference_data call),
+  and every one of the 24 already serves Bloomberg `NAME` in its overlay's `header_figures` (check_face PASS; RMS FP "HERMES
+  INTERNATIONAL"). The serve-time chain gains that one step, before the ticker fallback, on all three readers (ranking, overlay, chatter
+  set), so round 60's overlay-equals-row property holds. No new registration and no Bloomberg call are made: a registration would be a
+  vendor call (CORPUS's add_security, released per use by Andrew).
+- R2. **B4 serves WITHOUT a model call.** "ABSENT" in Posture reason 2 is `posture.basis[*].claim`, text the posture judge drafted
+  through `lib/research/posture/judge.py:anthropic_call` and stored. Regenerating a posture is a vendor call (Anthropic), RESERVED to
+  Andrew per use. So B4 fixes the drafter in two places: its prompt and pack state a missing score in words, and a deterministic
+  normalizer `plain_claim` sits on the drafter's write path. The stored claims are then served by a field rewrite through that
+  normalizer (ak-6), with no model call. Until B4 serves, DSGN's AV-z-1 page guard stands (CTO msg 28264).
+- R3. **B2's census is the analysis's two strings**, not every `*reason` key: the Exec `management.lusha_enrichment.reason` and the
+  peers route's `absent[*].reason`. A first census over every `reason`/`_basis` key read 273 of 395 strings, most of them technical
+  records the page never prints. That is not this cell's scope.
+
+### 69a. THE DEPLOY AND STORE ACTS (round-56 ruling 3; measured at the cut ~07:0xZ)
+
+| # | act | state at the cut | carrier |
+|---|---|---|---|
+| 1 | B1 code: `_model_block_name(s)` + `_fill_names_from_model_block` (ranking), `_overlay_name` step, `monthly_chatter._display_names` step | LANDED in the issuance commit; suite green (see 69b) | `ak-1` |
+| 2 | B1 `--build-only` rc=0 (VERIFY missing [], isolated runtime 3 of 3); CONTENT-DIFF 350 / 347 / CHANGED 3 | verified | none |
+| 3 | B1 build + upload ONE artifact; ONE code-only `safe-apply` | -- | `ak-2` |
+| 4 | no IAM/route/gateway change: the model-block read (`derived/model_block/`) is already made by the overlay's `header_figures` | -- | none |
+| 5 | B2 serve-time code (peers absent-column reasons) + the Lusha reason at `enrich.domain_for`; B3 the officer parse; B4 the drafter + `plain_claim` | -- | `ak-3`, `ak-4`, `ak-5` |
+| 6 | B2/B3/B4 STORED fields: a rewrite of each M-1 / posture object the plans name, field by field, plus the redeploy carrying ak-3's serve-time code | -- | `ak-6` |
+
+**The rider ak-2's build carries:** `org/standards/NAMING_SCHEMA.json`, `4.0.0_SA_CRO` `aa2b5a42ff` (cadence token `1min` added to
+`cadence.values`; no served route reads that list).
+
+### 69b. MEASUREMENTS
+
+- **Deployed base** (CodeSha256 `UnSqZgCD...`, 2026-10-01T13:59:33Z): TRENDING/PRICE and BREAKOUT/PRICE serve 94 rows each, 70 named
+  (35 etf-classifications, 35 crosswalk), 24 unnamed (`display_name_source` ticker); the chatter set serves 95 rows, 25 by ticker.
+- **On the ak-1 tree, locally:** 0 of 94 unnamed on both rankings (24 `model_block_header`); chatter 0 of 95 by ticker (BABA "ALIBABA
+  GROUP HOLDING-SP ADR", COST "COSTCO WHOLESALE CORP", KPN "KONINKLIJKE KPN NV", NOVN "NOVARTIS AG-REG"); RMS overlay = row.
+  Ranking latency from this box 15.4 s (base tree 17.5 s); deployed base 7.6 s against a 29 s timeout.
+- **Suite:** `lib/research/api/tests` 345 passed + 11 (cone-dependent, re-run with infra/aws/terraform/harvest) + 3 print tests on the
+  main tree (portal fixture outside the cone) + `test_model_block_names.py` 4 passed.
+- **The checks:** `round61/checks/b1_names.py` -- deployed base FAIL C0-C3; local YES; local `--mutant` (the step removed) FAIL C1-C3.
+  `round61/checks/b_served_text.py --cell b2` base FAIL C1 (11 of 26: 10 peers absent reasons, 1 Lusha) and C2;
+  `--cell b3` base FAIL C1 ("Senior Vice") and C2 (5 of 5 roles end in an age), C3 PASS (BA 12); `--cell b4` base FAIL C1 (2 of 12
+  claims: BA basis[1], VLO basis[5]) and C2 (no normalizer).
+
+### 69c. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-ak-1` | B1 -- A COMPANY NAME ON EVERY BAR AND BUBBLE | issuer | direct act (in the issuance commit) | LOCAL (served by ak-2) | `lib/research/api/scoped_amgt.py`, `monthly_chatter.py`, a test |
+| `AMGT-ak-2` | B1's CODE-ONLY REDEPLOY | `0.7.0_AE_CloudOps~A` | seat order, a pair | WORLD | the Lambda artifact, the deploy ledger |
+| `AMGT-ak-3` | B2 -- PLAIN SERVED REASONS (producer code + the M-1 rewrite plan) | `0.9.0_WK_AMGT_RESAPP~201` | worker | LOCAL | `lib/research/`, its deliverables dir |
+| `AMGT-ak-4` | B3 -- THE M-1 OFFICER PARSE (producer code + the M-1 rewrite plan) | `0.9.0_WK_AMGT_RESAPP~202` | worker | LOCAL | `lib/research/management/`, its deliverables dir |
+| `AMGT-ak-5` | B4 -- A MISSING SCORE IN WORDS (the drafter + `plain_claim` + the posture rewrite plan) | `0.9.0_WK_AMGT_RESAPP~203` | worker | LOCAL | `lib/research/posture/`, its deliverables dir |
+| `AMGT-ak-6` | B2/B3/B4 SERVED: the stored-field rewrites the frozen plans name + the redeploy carrying ak-3 | `0.7.0_AE_CloudOps~A` | seat order, a pair | WORLD | the plans' literal key list, the Lambda artifact |
+
+### 69d. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain = section 3B's four cells; each served act carries named cells only (ak-2: B1; ak-6: B2+B3+B4).
+- **(ii) Same grain.** One served field set per cell; one deploy per carrier.
+- **(iii) Intent.** One axis: what the reader sees is a name or a sentence, never a code.
+- **(iv) What a cell does NOT move.** ak-1 moves no figure, rank, key or identity block; a row already named keeps its name and
+  source. ak-3, ak-4 and ak-5 write no store. ak-6 writes only the plans' fields on the plans' keys. No cell regenerates a posture or
+  calls a vendor (R2).
+
+### 69e. EDGES AND FAN-OUT
+
+```
+ak-1 -> ak-2
+ak-3 -+
+ak-4 -+-> ak-6
+ak-5 -+
+fanout:
+  cap: 8
+  orders_total: 5
+  chains_total: 2
+  wave_0: [ak-2 0.7.0_AE_CloudOps~A, ak-3 0.9.0_WK_AMGT_RESAPP~201, ak-4 0.9.0_WK_AMGT_RESAPP~202, ak-5 0.9.0_WK_AMGT_RESAPP~203]   # ak-2 GO after its CTO half
+  wave_1: [ak-6 0.7.0_AE_CloudOps~A]   # after ak-3, ak-4 and ak-5 drain, the plans frozen in both halves
+  no_s3_deletes: true
+  egress: none (the build pip-downloads its pinned wheels)
+  no_promote: true
+```
+
+## 70. ROUND 62 -- DEMO RISK: THE BA TIMELINE DAY ROUTE ANSWERS INSIDE THE GATEWAY CEILING (track A, memory). One cell, one order
+
+**Cut by `2.0.0_SA_COO~Z`** on `1.0.0_SA_CTO~Z`'s **ROUND 61 ANALYSIS ADDENDUM, ruling 5** (`ledger/ROUND_ANALYSIS.round61.md`
+@`f1d5dac151`, msg 28407), under round-60 ruling 1's exception (a served-route defect on the demo path). Due by 12:15Z.
+Source row: `3.0.0_SA_CVO~Z`'s `DSGN_AMGTV1-Z-C-S29` (ADJUDICATION_v23): every BA `/timeline/day` call since 10:14Z times out at 29 s,
+because a cold sandbox reads whole-publisher silver (bbg 85.0 MB, wsj 76.3 MB) for headlines. Max memory used is 408 of 1,769 MB, so
+the limit is CPU and network throughput, which this memory setting scales.
+
+### 70a. THE ACT (track A only; track B only if A misses at 10240; track C after the demo)
+
+| # | act | state at the cut (~10:5xZ) | carrier |
+|---|---|---|---|
+| 1 | `infra/aws/terraform/harvest/scoped-amgt-api.tf` `memory_size` 1769 -> 3538, ONE `safe-apply` (in-place config update only) | 1769; CodeSha256 `E+FAZF0f...` | `al-1` |
+| 2 | if 3538 misses C1: the same act at 10240, under the same entry | -- | `al-1` |
+
+### 70b. MEASUREMENTS (`round62/checks/timeline_day.py`)
+
+- Pre probe ~10:5xZ: BA `/timeline/day/2026-09-08` answered 200 in 27,194 ms WARM (no Init Duration), max memory 465 MB. That is
+  2 s under the 29 s ceiling, so a cold call times out (the CVO measured 5 timeouts at 10Z).
+- Control `/security/AMD_US_Equity/timeline` is deterministic: body sha256 `4df97114d5baf968...` on two calls.
+
+### 70c. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-al-1` | THE MEMORY RAISE (track A) | `0.7.0_AE_CloudOps~A` | seat order | WORLD | `scoped-amgt-api.tf` `memory_size`, the deploy ledger |
+
+### 70d. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain = ruling 5's track A, the one act to land before the demo.
+- **(ii) Same grain.** One config property.
+- **(iii) Intent.** One axis: the demo-path route answers.
+- **(iv) What it does NOT move.** No code, route, IAM or store. The control's body sha proves no output moved.
+
+### 70e. EDGES AND FAN-OUT
+
+```
+al-1
+fanout:
+  cap: 8
+  orders_total: 1
+  chains_total: 1
+  wave_0: [al-1 0.7.0_AE_CloudOps~A]   # GO in the issuance message; before 12:15Z
+  no_s3_deletes: true
+  egress: none
+  no_promote: true
+```
+
+### 70f. AMENDMENT 1 -- track B (CTO ruling 5a @e041af6102): the silver read's deadline, before the 12:30Z freeze
+
+Track A landed at 10240 MB (al-1, proof `339b159ea0`). The cold BA runs took 16,885, 16,552 and 19,105 ms; 3538 missed at 21.7, 20.4 and
+22.9 s. Max memory used was ~460 MB at every tier, so the job is not memory-bound, and 10240 is Lambda's maximum. Ruling 5a lands track
+B as the demo guard.
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-al-2` | THE SILVER READ UNDER AN 18 s DEADLINE FROM HANDLER START; on the deadline the mentions are served with `headline` null and ONE plain `headline_reason`, as a 200 | issuer | direct act (this commit) | LOCAL (served by al-1 act (B)) | `lib/research/api/scoped_amgt.py`, a test |
+| `AMGT-al-1` act (B) | al-2's code-only redeploy, under the never-widen pair | `0.7.0_AE_CloudOps~A` | seat order (AMENDMENT 1) | WORLD | the Lambda artifact, the deploy ledger |
+
+- `--build-only` rc=0: CONTENT-DIFF 350 / 349 / CHANGED 1 (`scoped_amgt.py`); VERIFY missing []; isolated runtime 3 of 3.
+- Suite: `lib/research/api/tests` 363 passed. The 3 errors are the print tests' portal fixture, which is outside the cone.
+  `test_timeline_silver_deadline.py` 3 passed: in time = headlines and no reason; a planted slow read = 200 at the deadline with null
+  headlines and the plain reason; a read failure is still classified.
+- Controls (`round62/AL2_CONTROLS_PRE.json`, the warm second call): BA 2026-09-30 sha `6c25fff80da9be93`, BA 2026-10-01 sha
+  `69ecb7a884a83585`; deterministic over two calls each.
+- (iv) What it does NOT move: a day whose read finishes inside 18 s serves the same bytes; no other route, field, store or IAM.
+
+```
+al-2 -> al-1 (B)
+fanout:
+  wave_1: [al-1(B) 0.7.0_AE_CloudOps~A]   # GO after the CTO half; deployed AND graded before 12:30Z or it waits for the demo read
+```

@@ -69,9 +69,14 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 **ISSUER NOTES:** CTO msg 28084 (YES, bounded). Carried as workstream `bbgsilver` of round 36 (its own scope: the silver parser; disjoint from ai-1..ai-3), so ONE ISSUER PER ROUND holds per workstream. Gold #4 runs only after this cell drains and its census shows 0 rows
 gone and 0 changed outside the new bbg rows; if it is not drained by 10:00Z, #4 runs without it, before 13:00Z.
 
+**COMPLETE 2026-10-02 ~06:0xZ (issuer):** AC1 PASS by the worker (6 passed). AC2 PASS, issuer-graded after the drain:
+`deliverables/2.0.0_SA_COO_H/round36/ai-4.AC2.issuer_grade.txt` (bbg outbox 830: 829 uploaded, 1 pending
+SilverRowError = W91-S19). The drain ran through ai-5's batched pass (merge @6a0a2ebc79). Instance VALID under
+proof-of-spec-check (surprises W91-S19 resolves to its channel row, disarmed INERT in this commit).
+
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
-<status>open</status>
+<status>complete</status>
 <round>36</round>
 <workstream>bbgsilver</workstream>
 <slot>~91</slot>

@@ -1,0 +1,120 @@
+# AMGT_RESAPP task order -- `AMGT-ak-6` -- B2/B3/B4 SERVED: THE STORED-FIELD REWRITES THE FROZEN PLANS NAME, AND THE REDEPLOY CARRYING ak-3
+
+<!-- ===================== WORKER FACE -- this is the WHOLE of the worker's context ===================== -->
+
+<decomp_ref>
+<decomp_doc>org/missions/D5/AMGT/AMGT_RESAPP/decompositions/AMGT_RESAPP_DECOMP.md</decomp_doc>
+<owned_cells>AMGT-ak-6</owned_cells>
+</decomp_ref>
+<issued_to>0.7.0_AE_CloudOps~A</issued_to>
+<issued_by>2.0.0_SA_COO~Z</issued_by>
+<placeholders>NONE</placeholders>
+<preflight>
+comp-schedule: DECLARED-NOT-APPLICABLE -- no cron, alarm, monitor or cadence; one rewrite and one redeploy by hand.
+comp-iam: RUN by the issuer at the halves -- the writes are PutObject on `opal-data-harvest` keys under `management/v1/` and `posture/v1/` by the executor's own credentials (not the function's); the function gains no permission. The halves name the executor's write grant as measured.
+comp-adversary: RUN by the issuer at the cut -- AC1-AC3 FAIL at the base against the deployed function (b2 C1 11 of 26; b3 C1/C2; b4 C1 2 of 12).
+EGRESS CLASS, declared: NONE for the acts; the build pip-downloads its pinned wheels. No vendor or model call.
+</preflight>
+
+## 1. THE ACT -- `AMGT-ak-6` (round 61, decomposition s.69)
+
+TWO acts under ONE NEVER-2 entry and ONE never-widen pair, in this order:
+- **(A) the stored-field rewrite.** For every entry of the three FROZEN plans
+  (`org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~201/m1_lusha_reason_plan.json`,
+  `.../0.9.0_WK_AMGT_RESAPP~202/m1_officer_plan.json`, `.../0.9.0_WK_AMGT_RESAPP~203/posture_claim_plan.json`, each at the sha256 the
+  halves name): read the object at `store_key`, confirm `store_field` equals `before`, set it to `after`, and PUT the whole object back
+  at the SAME key (the bucket is versioned). Record each key's prior VersionId. Two entries on one key are applied in ONE put.
+- **(B) the redeploy** of `opal-amgt-scoped-api` at the build commit the GO names, carrying ak-3's serve-time peers reasons.
+
+**Begin only when all of these hold:**
+- the GO names the build commit and the three plans' sha256;
+- both halves are committed: `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round61/NEVER_WIDEN_HALF_COO_AK6.md` and
+  `org/missions/D5/AMGT/AMGT_RESAPP/ledger/NEVER_WIDEN_ROUND61_AK6_CTO_HALF.md`;
+- each plan file's sha256 equals the halves'; any differing byte is a STOP and a re-sign.
+
+**The acts, in order, under the entry opened AND COMMITTED first:**
+1. `python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round61/checks/b1_names.py --what pre --out org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~A/ak6-pre.json`.
+2. (A) per key: GET, assert every `before`, PUT the patched body; write `ak6_store_writes.json` in your deliverables dir (key, prior
+   VersionId, new VersionId, fields set). An asserted `before` that differs is a STOP for that key and the act: write nothing more.
+3. (B) build and upload ONE artifact; save the `CONTENT-DIFF`; STOP if a CHANGED/ADDED/REMOVED file is not on the halves' list. ONE
+   code-only `safe-apply`, plan printed first; any destroy, IAM, route or gateway change is a STOP.
+4. AC1-AC3. Close the entry.
+
+A failing criterion after the act is the ROLLBACK trigger: for (A), copy each key's prior VersionId back over it (never an S3 delete);
+for (B), the prior artifact version through one code-only `safe-apply`.
+
+## 2. BOUNDS
+
+1. The plans' keys and fields and the one redeploy, nothing else. No S3 delete, no vendor or model call.
+2. Standing: no push of shared branches, no portal promote.
+
+## 3. SURFACES
+
+<paths>
+org/critical_paths/change_management/
+org/critical_paths/.open_deploys/
+org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~A/
+org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md
+</paths>
+
+## 4. PROOF OF SPEC (literal; timeout 1800)
+
+<proof_of_spec>
+  <criterion id="AC1" cell_refs="AMGT-ak-6"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round61/checks/b_served_text.py --cell b2 --where deployed; echo "exit=$?"</invocation><expect>C1 PASS (0 of the Lusha and peers absent reasons for BA and VLO carry a code-shaped token) and C2 PASS on the deployed function; B2 EVERY SERVED REASON IS WORDS: YES -- and exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="AMGT-ak-6"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round61/checks/b_served_text.py --cell b3 --where deployed; echo "exit=$?"</invocation><expect>C1, C2 and C3 PASS on the deployed function (VLO's officers carry person names and full titles with no trailing age; BA 12); B3 EVERY OFFICER CARRIES A FULL TITLE AND NO AGE: YES -- and exit=0</expect></criterion>
+  <criterion id="AC3" cell_refs="AMGT-ak-6"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round61/checks/b_served_text.py --cell b4 --where deployed; echo "exit=$?"</invocation><expect>C1 and C2 PASS on the deployed function (0 of BA's and VLO's posture claims carry a status token); B4 EVERY POSTURE CLAIM STATES A MISSING SCORE IN WORDS: YES -- and exit=0</expect></criterion>
+</proof_of_spec>
+
+## 5. WHEN YOU ARE DONE
+
+Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~A/AMGT_RESAPP.TO-AMGT-ak-6.the-stored-text-rewrite-and-redeploy.proof_of_spec.json`.
+Report once: the keys written with prior and new VersionIds, the prior and new CodeSha256 and artifact VersionId, the CONTENT-DIFF
+summary, the plan's resource count, and every criterion's output lines. Name any row. The `<status>` flip is the issuer's.
+
+## 6. AMENDMENT 1 (issuer `2.0.0_SA_COO~Z`, 2026-10-02 ~08:2xZ) -- act (B) is REMOVED
+
+Measured: 0 of the 350 packaged members of the deployed build (`E+FAZF0f...`, ak-2 at 63e78fe4f7) changed between that build and
+the merged round-61 tree. B2's peers reasons, B2's Lusha reason, B3's officers and B4's posture claims are all read from the
+STORED objects, and the producer code ak-3/ak-4/ak-5 changed is not packaged. A redeploy would rebuild identical code. So this
+order is the stored-field rewrite (A) ONLY: skip step 3 and its STOP; do not build, upload or apply. The NEVER-2 entry, the halves,
+AC1-AC3 and the rollback for (A) stand unchanged.
+
+## 7. AMENDMENT 2 (issuer `2.0.0_SA_COO~Z`, 2026-10-02 ~09:0xZ) -- act (C): cell B5's stored-field rewrite, its own pair
+
+CTO msg 28318 places B5 (the CEO search basis) as a separate stored-field act with its own pair. Act (C) is act (A)'s mechanism over
+ONE more frozen plan, run only after act (A) (accepted):
+- plan `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~201/m1_ceo_basis_plan.json`, sha256
+  `b0c9b6dd7b9df7b10feadf0cfc55a02c4d40cdd71b5179bc811688b1ee111401`, 7 entries on 7 `management/v1/` keys
+  (`ceo_public_profile.basis`);
+- base and rollback `deliverables/2.0.0_SA_COO~Z/round61/AK6C_BASE_VERSIONS.json` (7 keys, 0 mismatches; VLO's base is the
+  post-act-(A) version);
+- halves `deliverables/2.0.0_SA_COO~Z/round61/NEVER_WIDEN_HALF_COO_AK6C.md` and `ledger/NEVER_WIDEN_ROUND61_AK6C_CTO_HALF.md`;
+- its own NEVER-2 entry.
+Act (C) is graded by `round61/checks/ak6_verify.py --plan <the B5 plan> --base AK6C_BASE_VERSIONS.json --expect-sha <above>`
+(AK6 READ-BACK CLEAN: YES) and by `round61/checks/b_served_text.py --cell b5 --where deployed` (B5 THE CEO SEARCH BASIS IS WORDS: YES).
+The executor runs both and the issuer re-reads them. AC1-AC3 stay act (A)'s, and the order keeps three mechanical criteria.
+
+<!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
+
+**ISSUER NOTES:** DSGN r21 3B cells B2-B4 served (issuer rulings R2, R3). Staged until ak-3, ak-4 and ak-5 drain and the plans are
+frozen in both halves. The write set is a LITERAL key list the plans fix (NEVER-1 non-application does not apply: the keys are served
+output, so the pair stands).
+
+<status>staged</status>
+<round>61</round>
+<slot>0.7.0_AE_CloudOps~A</slot>
+<fabric>site-z</fabric>
+<risk>WORLD</risk>
+<worker_class>worker</worker_class>
+
+**ISSUER GO (2.0.0_SA_COO~Z, 2026-10-02 ~08:3xZ):** both halves committed (COO `fa9c914db9`, CTO `af95b2f1c0`); act (A) only (AMENDMENT 1). CTO conditions: (1) plan sha256 at act time equal the halves' table, B2 plan read from `25ac521b3d`; (2)+(3) `round61/checks/ak6_verify.py` reads YES after the puts (251/251 fields, 251/251 objects unchanged outside the planned fields); (4) grade on the served /thesis and /peers for BA and VLO (AC1-AC3); (5) NEVER-2 entry opened and closed.
+
+<status>pending</status>
+
+**ISSUER ACCEPT of act (A) (2.0.0_SA_COO~Z, 2026-10-02 ~08:5xZ):** executor report msg 28334, proof `4d12c64f00`: 251 of 251 keys, 1,188 of 1,188 entries, 0 failures, entry CLOSED. Issuer's independent read: `ak6_verify.py` AK6 READ-BACK CLEAN: YES (C1 frozen bytes; C2 1188/1188 fields; C3 251/251 unchanged outside the planned fields; C4 251/251 moved); deployed /thesis and /peers for BA and VLO: b2 YES (0 of 26, base 11), b3 YES (VLO 5 officers full titles, 0 aged, BA 12), b4 YES (0 of 12, base 2). The order stays OPEN for cell B5's stored-field act (CTO msg 28318: its own pair), to be added as AMENDMENT 2 when ak-3's B5 plan freezes.
+
+**ISSUER GO act (C) (2.0.0_SA_COO~Z, 2026-10-02 ~09:08Z):** halves COO `0b0c5eec8a` (correction `7bbf273c19`) and CTO `b49f4d2db3` (re-signed `bbbda2e848`: condition 4 carries ONE named exception, SAP_GY_Equity urls_returned None -> 10). Graded by ak6_verify (7/7), ak6c_reading --expect-urls SAP_GY_Equity=10, and b5 deployed.
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-02 ~09:3xZ):** ACCEPTED, acts (A) and (C). Act (C): executor msg 28360, proof `83158f6267`, 7/7 keys, entry CLOSED. Issuer read: ak6_verify CLEAN 7/7; ak6c_reading YES (states 7/7 unchanged; SAP_GY urls None -> 10, the named exception); b5 deployed YES (0 of 2, base 2). Final regression on the deployed function after the last write: b1-b5 all YES.
+
+<status>complete</status>

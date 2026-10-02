@@ -109,18 +109,27 @@ const CHECKS = () => {
   const trail = (el) => { const a = []; let e = el; for (let i = 0; e && e.tagName && i < 5; i++, e = e.parentElement) { let t = e.tagName.toLowerCase(); const ds = e.getAttribute('data-slot'); if (ds) t += `[data-slot=${ds}]`; else if (e.id) t += '#' + e.id; else if (e.getAttribute('role')) t += `[role=${e.getAttribute('role')}]`; a.unshift(t) } return a.join(' > ') }
   const box = (el) => { const r = el.getBoundingClientRect(); return [Math.round(r.x), Math.round(r.y), Math.round(r.width), Math.round(r.height)] }
   // 1. an open popover covered by another element (dropdowns behind nav bars)
+  // elementFromPoint skips pointer-events:none, so a tooltip (pointer-events-none) read covered at every point
+  // (DSGN_AMGTV1-Z-S11). Hit-test with pointer events on for this popover's subtree only, then restore
+  // (round21/checks/hoverprobe.mjs's method).
   for (const p of [...document.querySelectorAll('[role=listbox],[role=menu],[role=dialog],[role=tooltip],[data-radix-popper-content-wrapper]')].filter(vis)) {
     const r = p.getBoundingClientRect(); let covered = 0; let by = null
+    const pe = document.createElement('style')
+    pe.textContent = '[data-walk-hit], [data-walk-hit] * { pointer-events: auto !important; }'
+    p.setAttribute('data-walk-hit', ''); document.head.appendChild(pe)
     for (const fx of [0.2, 0.5, 0.8]) for (const fy of [0.1, 0.5, 0.9]) {
       const x = r.left + r.width * fx; const y = r.top + r.height * fy
       if (x < 0 || y < 0 || x >= vw || y >= vh) continue
       const top = document.elementFromPoint(x, y)
       if (top && !p.contains(top)) { covered++; by = by || top }
     }
+    pe.remove(); p.removeAttribute('data-walk-hit')
     if (covered) out.push({ check: 'occluded-popover', observed: `${covered} of 9 sample points of an open ${p.getAttribute('role') || 'popover'} are covered by another element`, selector: trail(p), covered_by: by ? trail(by) : null, covered_by_text: by ? (by.innerText || '').trim().slice(0, 60) : null, rect: box(p), rule: 'an open dropdown renders above every page element (z-order)' })
   }
   // 2. unconnected fields, placeholders, raw codes, sample content
-  const pats = [[/\bnot supplied\b/i, 'not-supplied'], [/\bunavailable\b/i, 'unavailable'], [/\bvalue pending\b/i, 'value-pending'], [/^\s*unknown\s*$/i, 'unknown'], [/\bwithheld\b/i, 'withheld'], [/\bn\/a\b/i, 'n-a'], [/illustrative sample/i, 'sample-content'], [/\b(?:[A-Z][A-Z0-9]{2,}_)+[A-Z0-9]{2,}\b/, 'raw-code']]
+  // raw-code: any underscore-joined identifier, either case. The old pattern took only upper-case segments of 3+ chars,
+  // so it read 0 on pages printing ey_ntm, cash_mv and VLO_US_Equity in prose (DSGN_AMGTV1 round-21 ruling 3).
+  const pats = [[/\bnot supplied\b/i, 'not-supplied'], [/\bunavailable\b/i, 'unavailable'], [/\bvalue pending\b/i, 'value-pending'], [/^\s*unknown\s*$/i, 'unknown'], [/\bwithheld\b/i, 'withheld'], [/\bn\/a\b/i, 'n-a'], [/illustrative sample/i, 'sample-content'], [/\b[A-Za-z][A-Za-z0-9]*(?:_[A-Za-z0-9]+)+\b/, 'raw-code']]
   const seen = new Map(); const tw = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT)
   while (tw.nextNode()) {
     const n = tw.currentNode; const t = n.nodeValue.trim(); const el = n.parentElement

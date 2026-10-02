@@ -2534,3 +2534,183 @@ new bbg rows. If the cell is not drained by 10:00Z, #4 runs without it, before 1
 | `HVST-ai-4` bbg HTML silver branch | `ai-4` | SERVED (code LOCAL; the drain is the live driver's upload) | `~91` |
 
 Base check `round36/checks/ai-4.AC2.py` before the cut: FAIL (772 stranded, 0 uploaded).
+
+### 49.2 ROUND 36 AMENDMENT 2 -- the bbg drain batching cell (CTO ruling msg 28222), 2026-10-02 ~05:2xZ
+
+Row Z-S58 (@18ee3ffbd5): after the ai-4 fix the bbg outbox drains at about 1 row per 90 s, and the rate falls as it
+runs. Each pending row is its own `(source, run_stamp)` group, and each `silver_append` re-reads every bbg silver part
+(576 parts, 69 MB). 288 rows left would take 7 h or more, past the 10:00Z bound for gold #4. The CTO ruled YES to ONE
+mid-round repair cell, bounded:
+- `uploads.py` `_run_articles` makes ONE `silver_append` per source per pass (`silver_append` already writes one part
+  per fetch-date partition);
+- it falls back to per-row appends on `SilverRowError`, so a W91-S19-class row cannot strand its batch;
+- paths are `uploads.py` and its test only; risk SERVED;
+- CONDITION: plant 1 proves the batched pass writes the SAME row set (keys plus values) as the per-row path on the same
+  fixture. The part layout may differ, the rows may not. A row difference is a served-output change and needs
+  never-widen sign-off.
+
+The one real run at close is the live drain reaching 0 pending with gold-readable silver. Gold #4 stays on ruling
+28084: it runs before 13:00Z, and without the rest of the drain if the drain has not finished by 10:00Z.
+
+| cell | order | class | slot |
+|---|---|---|---|
+| `HVST-ai-5` batched silver append per source | `ai-5` | SERVED (code LOCAL; the drain is the issuer's upload-harvest pass) | `~90` |
+
+Base check `round36/checks/ai-5.AC2.py` before the cut: FAIL (see the issuance commit).
+
+### 49.3 ROUND 36 AMENDMENT 3 -- the limb-2a grader per challenge (CTO ruling, self-drive tick 2 @bb3c328367), 2026-10-02 ~06:2xZ
+
+The CTO ruled that FWD-11 limb 2a is graded PER CHALLENGE, answering ADJUDICATION_v45 section 2:
+- a challenge is CLEAN when no hardware input occurs from 2 min before its presentation to 2 min after its
+  resolution;
+- a challenge with input in that band is VOID, and it voids only itself, never its hour or the run;
+- 2a is MET when every non-void challenge passed and each publisher that presents challenges has at least one
+  non-void challenge;
+- a publisher that presents none stays MET-BY-ABSENCE.
+
+The 24-clean-hour / 1,440-clean-minute count was the grader's own construction and is dropped. Limb 2b and session
+renewal are unchanged. This seat amends the grader; `3.0.0_SA_CVO~Z` grades on it. No PRD half re-opens.
+
+| cell | order | class | slot |
+|---|---|---|---|
+| `HVST-ai-6` per-challenge +/-2 min grader | `ai-6` | LOCAL, DIRECT-ACT (one cell, under 300 product lines) | `~90` |
+
+Base check `round36/checks/ai-6.AC2.py` before the cut: FAIL as expected (the grader emits the per-minute shape).
+
+## 50. ROUND 37 -- the round-36 analysis enrichment list (`ledger/ROUND_ANALYSIS.round36.md` @e38e50aa55), 2026-10-02 ~07:0xZ
+
+Round 36 is CLOSED and gold #4 is served. FWD-11 is NOT REALIZED. Three limbs hold it: ft limb (1); barrons limb 2a
+(NOT_EVALUATED, because no barrons request falls in a monitor window); and limb 2b on wsj, barrons, ft and sa (no
+challenge sampled). Ruling 4 says no cell provokes a challenge.
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-aj-1` | `aj-1` | grader: anchor each band on the challenge's presentation (bbg emits `challenge_presented`; until it does, the HTTP 403 that precedes each pass); `requests` counted inside the monitor windows only; NOT_EVALUATED at 0 windowed requests (ruling 1) | LOCAL | worker `~90` |
+| `HVST-aj-2` | issuer act (no TO: L7 orders go to Tier-2 seats only, LD-0521) | the load monitor back up now, and up for the life of FWD-11 (ruling 2) | LOCAL, issuer act | `2.0.0_SA_COO~H` |
+| `HVST-aj-3` | issuer act (no TO, as round 34's ag-3 driver runs) | one barrons collection inside a monitor window (ruling 3) | WORLD, issuer act | `2.0.0_SA_COO~H` |
+| `HVST-aj-4` | `aj-4` | the ft keep-alive run: 2 h from a sign-in Andrew solves by hand while present; one keep-alive event per page load (ruling 5) | WORLD, STAGED on Andrew | worker `~92` |
+
+Dependencies:
+- aj-3's grade reads aj-1's windowed `requests`, so aj-3 is GRADED after aj-1 merges; the run itself goes now.
+- aj-4 waits on Andrew's presence for the hand-solved hCaptcha. No solver vendor is used (CTO 28235).
+
+**Issuer amendments carried here (rulings 6 and 7, no cell):**
+- **W91-S19 error text:** row Z-S63 carries it. Recurrence is measured as 1 of 830 bbg bodies, so no repair cell.
+- **Worktree recipe (Z-W90-S11):** a sparse worktree for a HARVST cell is cut with this cone:
+  `lib .tools org/missions infra/logic/registry org/standards org/tier1_exec/4.0.0_SA_CRO/scripts integrations/seekingalpha org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_HARVST org/modules/graph org/surprise_channel org/projects`.
+  These are the paths the collector suite and the commit gates read, as measured by ~90 in ai-5.
+
+**Load-monitor window record:** window1 2026-10-01 to ~10:48Z; window2 14:49Z to 2026-10-02 04:03Z, preserved as
+`load_monitor.window2.json` before the restart; window3 opened 2026-10-02 06:52:23Z (pid 22892). All three are listed
+in `.runtime/harvest-backfill/runtimes.json`. Round 36's windows are pinned for aj-1's AC2 in
+`deliverables/2.0.0_SA_COO_H/round37/runtimes.round36_windows.json`.
+
+**Checks dry-run at the base before the cut:**
+- `round37/checks/aj-1.AC2.py` FAIL as expected (no `requests_counted`; barrons reads MET-BY-ABSENCE on 52 unwindowed
+  requests).
+- `aj-3.AC2.py` FAIL as expected (requests not windowed). The first draft PASSED at the base on the unwindowed count;
+  the `requests_counted` marker was added so the check cannot pass before aj-1.
+- `aj-4.AC2.py` FAIL as expected (no record).
+- `aj-2.AC2.py` is the cell's own 10-minute proof, run after the cut.
+
+**Issuer acts aj-2 and aj-3** carry no task order: to-pipeline-gate refuses a TO addressed to a Tier-1 seat. Each act's proof is its check under `round37/checks/`, run by the issuer, with the output committed beside it (`round37/aj-2.AC2.output.txt`, `round37/aj-3.AC2.output.txt`). aj-2 is done (06:52:23Z, pid 22892); aj-3 runs inside window3.
+
+### 50.1 ROUND 37 AMENDMENT 1 -- cell 5: bbg failure capture + one bounded retry, and limb 2a PER RUN (CTO 28278; round-36 addendum ruling 8 @1c693565e7), 2026-10-02 ~07:4xZ
+
+Row Z-S64 (@a92996d1f0): a clean, unassisted bbg press-and-hold failed at 06:59:52Z inside window3 (0 hardware events),
+in run `20261002T065754Z-bbg-4f3bfa12bd`. The job ended `bot_check` with no solve event, and no capture exists. The
+run stays UNCLASSIFIED (ruling 8c).
+
+The CTO ruled YES to cell 5, folded with addendum ruling 8:
+- every bbg bot_check reaches the in-tab solve, with its challenge events recorded;
+- a failed solve writes a capture bundle before giving up, regardless of the hourly cap: DOM snapshot, screenshot,
+  and the HTTP status and response headers of the challenge exchange;
+- one bounded retry follows, 60-120 s later, recorded as a second challenge event;
+- the grader grades limb 2a PER RUN: MET when a run inside a monitor window has every presented challenge non-void
+  and passed. A failed run elsewhere does not void a passing one; it is printed as the window pass rate beside the
+  verdict.
+
+bbg restarts after the merge, under the monitor.
+
+| cell | order | class | slot |
+|---|---|---|---|
+| `HVST-aj-5` bbg failure capture + bounded retry + per-run grader | `aj-5` | SERVED (code LOCAL; it reaches the live bbg path at the next driver job) | `~90` |
+
+Base check `round37/checks/aj-5.AC2.py` before the cut: FAIL as expected (the grader has no `grain` and no per-run
+entries).
+
+### 50.2 ROUND 37 AMENDMENT 2 -- cell 6: the ft sign-in via the NopeCHA browser extension (CTO 28484; VEW-1), 2026-10-02 ~13:3xZ
+
+Andrew permanently whitelisted NopeCHA for egress (~13:08Z, record @179990b502; `org/ref/VENDOR_EGRESS_WHITELIST.yaml`
+VEW-1). aj-4's unattended sign-in then failed (row Z-W92-S18, records @5d61b62795): `nopecha.Token.solve` returned
+error 19, "This API endpoint has been discontinued" (1 call, 0 Kimi). No session existed, so the 2 h run never started.
+
+The CTO ruled YES to cell 6 (WORLD, workstream ftsolver):
+- the NopeCHA browser extension is loaded into the ft Chrome profile with the key from Secrets;
+- the Recognition API is the fallback;
+- Kimi and vision stay out.
+
+Criteria: the extension loads; a planted hCaptcha is solved with 0 Token API calls; ONE real unattended ft sign-in,
+recorded with its challenge events (ruling 8b).
+
+Placement: the extension route is built in HARVST's own `lib/opal_data_harvest/`, and the ~92 sign-in harness calls
+it. The CRO's `org/tier1_exec/4.0.0_SA_CRO/scripts/nopecha_hcaptcha_lib.py` (the Token API caller, authored by
+4.0.0_SA_CRO~Z) is NOT in the write surface. If the collector's own renewal must route through it, that is a row and
+an ask to its owner.
+
+| cell | order | class | slot |
+|---|---|---|---|
+| `HVST-aj-6` ft sign-in via the NopeCHA extension | `aj-6` | WORLD | `~92` |
+
+Base check `round37/checks/aj-6.AC2.py` before the cut: FAIL as expected (no record).
+
+**50.2 AMENDED 2026-10-02 ~13:3xZ (Andrew-direct "bETTER IDEA, LETS USE A NEW SOLVER", record @9bc0e127be):** cell aj-6 is
+re-pointed from the NopeCHA browser extension to the Ocilar hCaptcha API (`POST https://api.ocilar.com/api/v1/solve/hcaptcha`).
+The key is in Secrets `ocilar/credentials` (us-east-1). The write set is `lib/opal_data_harvest/ocilar_hcaptcha.py` plus
+its plants and the ~92 deliverables. The criteria shape is unchanged: plants, then ONE real unattended ft sign-in with
+its challenge events, `solved_by` ocilar, and 0 NopeCHA Token / Kimi / vision calls.
+
+### 50.3 ROUND 37 AMENDMENT 3 -- cell 7: title + published_precision into the gold mention rows (CTO track-C ruling msg 28509; RESAPP r62 addendum @40e1d622aa), 2026-10-02 ~14:1xZ
+
+Track C was ruled A after 4.0.0_SA_CRO~Z's research (@adb64006ed). Step 1 is HARVST's: `title` (VERBATIM, rule 17b)
+and `published_precision` join `GOLD_MENTION_SCHEMA` and the gold mention rows. Then gold is rebuilt under a NEW
+never-widen pair, because the round-32 pair's 4 rebuilds are spent. The CTO half is owed. Step 2 (RESAPP round 63,
+2.0.0_SA_COO~Z: the day route reads the headline from gold) lands after it.
+
+| cell | order | class | slot |
+|---|---|---|---|
+| `HVST-aj-7` title + published_precision in gold mention rows | `aj-7` | SERVED (code LOCAL; served gold moves only at rebuild #5, under its own pair) | `~90` |
+
+**Issuer act after the merge: rebuild #5.**
+1. A round-37 signing dry run whose rule permits a served row to differ ONLY by gaining `title` and
+   `published_precision` (every pre-existing field equal), gone 0, and daily OTHER 0.
+2. The COO never-widen half names the blast radius: every served mention row gains two fields; nothing else moves; the
+   rollback is the BEFORE snapshot as a newer part. The CTO half is owed.
+3. The act, under the pair.
+
+Base check `round37/checks/aj-7.AC2.py` before the cut: FAIL as expected (the schema lacks both fields).
+
+### 50.4 ROUND 37 AMENDMENT 4 -- cell 8: barrons silver dict titles (CTO 28525; row Z-W90-S17), 2026-10-02 ~14:3xZ
+
+aj-7's AC2 surfaced it, and the BASE builder fails identically. Barrons silver holds 164 rows, and 149 of them carry
+`title` as `{'text': ...}`, all from today's 07:06Z+ aj-3 run. `publication_gold._match_counts` raises TypeError on
+them, so no gold rebuild can run. The cause is in `silver_from_bronze._extract_barrons`: it takes `headline` raw,
+while `_extract_wsj` unwraps a dict headline through `typed_text`.
+
+The CTO ruled YES (SERVED, workstream barronstitle), with three conditions:
+1. The re-derivation touches exactly the 149 dict-title rows (manifest 149 of 149), and the other 15 barrons rows
+   and every other publisher are untouched.
+2. Plants show a dict title unwraps, a string title passes unchanged, and the base builder no longer raises.
+3. Rebuild #5 carries the never-widen pair.
+
+| cell | order | class | slot |
+|---|---|---|---|
+| `HVST-aj-8` barrons dict title -> string | `aj-8` | SERVED (code LOCAL; silver is re-derived by the issuer) | `~90` |
+
+Issuer act after the merge:
+1. Snapshot the 15 others' record_hash and the 149 targets into `round37/aj8_rederive_manifest.json`.
+2. Re-pend exactly those 149 outbox rows in `.runtime/opal-data-harvest`.
+3. Run `upload-harvest` (the bronze put is skipped; silver is re-appended).
+4. Run AC2.
+
+Base check `round37/checks/aj-8.AC2.py`: FAIL as expected (no manifest).

@@ -188,7 +188,7 @@ if [ "$MODE" = "stream" ]; then
             echo "[INBOX] $base"
         done
         if [ "$_EXPIRY_SECS" -gt 0 ] && [ "$SECONDS" -ge "$_EXPIRY_SECS" ]; then
-            echo "[WATCHER-EXPIRED] inbox watcher for $SERIAL ENDED after ${SECONDS}s (Monitors die at 30 min). YOU ARE NOT RECEIVING MAIL. RE-ARM NOW, this turn, with ONE Monitor call and no skill load: command \"bash $SCRIPT_DIR/inbox-watch.sh $SERIAL stream\", timeout_ms 1800000. Run full /watcher only if events stop arriving."
+            echo "[WATCHER-EXPIRED] inbox watcher for $SERIAL ENDED after ${SECONDS}s (Monitors die at 30 min). YOU ARE NOT RECEIVING MAIL. RE-ARM NOW, this turn, with ONE Monitor call and no skill load: command 'bash \"$SCRIPT_DIR/inbox-watch.sh\" $SERIAL stream', timeout_ms 1800000. Run full /watcher only if events stop arriving."
             ts="$(date -u +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || echo unknown-ts)"
             echo "$ts  WATCHER-EXPIRY-EXIT  serial=$SERIAL  after=${SECONDS}s" >> "$SCRIPT_DIR/orphan-audit.log" 2>/dev/null || true
             exit 0

@@ -1,0 +1,191 @@
+{
+ "kind": "COMPLETION_GRADES",
+ "schema_version": "1.0",
+ "project": "DSGN_AMGTV1",
+ "round": 26,
+ "graded_by": "1.0.0_SA_CTO~Z",
+ "graded_utc": "2026-10-02T14:1xZ",
+ "report_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/ledger/COMPLETION_REPORT.round26.json@a8a6d7c217",
+ "slug_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v25.md@8c41d49b9d",
+ "analysis_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/ledger/ROUND_ANALYSIS.round23.md",
+ "served_ref": "portal PROD f76b02acb6 (portal-v2.1.194) = DEV fa529337, containing 0ab75973; Deploy to Production 37014885102 success; read by 1.0.0_SA_CTO~Z via ls-remote + merge-base",
+ "tally": {
+  "REALIZED": 16,
+  "NOT_REALIZED": 2,
+  "NOT_EVALUATED": 5,
+  "RETIRED": 1
+ },
+ "closed": false,
+ "rows": [
+  {
+   "fwd_id": "FWD-1",
+   "verdict": "NOT_EVALUATED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v25.md@8c41d49b9d",
+   "state_observed": "EXERCISED (DEV build, byte-equal SecurityAnalysis to PROD)",
+   "note": "All limbs but the DONE WHEN's 'on the live product' are read: Valero by name, four cards, Financials, Thesis, the machine-draft recommendation, cited 10-K. The PROD-URL signed-in walk is owed. The walker refuses non-localhost and no seat holds a PROD sign-in. A DEV walk plus the deploy run is NOT substituted: a PROD-only failure (domain auth, env config) is exactly what that limb exists to catch. Closes on Andrew's own signed-in read of /security-analysis on PROD (his login)."
+  },
+  {
+   "fwd_id": "FWD-2",
+   "verdict": "NOT_REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v26.md@07446385f1",
+   "state_observed": "EXERCISED (PROD tree fa529337)",
+   "note": "Re-graded 14:1xZ on CVO~Z v26 (msg 28517). PriceBars.tsx and ChatterBubbles.tsx at PROD's tree render only name and value: no ticker, asset class, sub-asset class, sector or places moved, and no hover surface, although the served rows carry classification and places_moved. A PAGE cell (DSGN)."
+  },
+  {
+   "fwd_id": "FWD-3",
+   "verdict": "RETIRED",
+   "artifact_ref": "PRD v0.6",
+   "state_observed": "--",
+   "note": "Retired at v0.6; not graded."
+  },
+  {
+   "fwd_id": "FWD-4",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/ledger/ROUND_ANALYSIS.round13.md + org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v25.md@8c41d49b9d",
+   "state_observed": "EXERCISED",
+   "note": "CTO REALIZED at rounds 11-13; standing, and PROD SecurityAnalysis is byte-equal to the walked build (v25)."
+  },
+  {
+   "fwd_id": "FWD-5",
+   "verdict": "NOT_EVALUATED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v25.md@8c41d49b9d",
+   "state_observed": "EXERCISED (BA dated line) / not read",
+   "note": "The word-cloud and 'own publications first' limbs are unread. A cold day reads '[no headline]' by design (RESAPP track B) until track C (RESAPP r62 addendum @40e1d622aa)."
+  },
+  {
+   "fwd_id": "FWD-6",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v25.md@8c41d49b9d",
+   "state_observed": "EXERCISED",
+   "note": "Three cards; sentences with evidence; citations in words; the recommendation labelled a machine draft."
+  },
+  {
+   "fwd_id": "FWD-7",
+   "verdict": "NOT_REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v26.md@07446385f1",
+   "state_observed": "EXERCISED (served M-1)",
+   "note": "Re-graded 14:1xZ on CVO~Z v26. ASML_NA, whose 20-F officer section is empty, is served 0 officers with no fallback; 6501_JP and 2317_TT have no management object. 6861_JP and CSL_AU show the Bloomberg fallback with its source. A PRODUCER cell (RESAPP management)."
+  },
+  {
+   "fwd_id": "FWD-8",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v25.md@8c41d49b9d",
+   "state_observed": "EXERCISED",
+   "note": "The Peers subject row equals the header; the absent reasons are in reader words, one clause per class (r24-26)."
+  },
+  {
+   "fwd_id": "FWD-9",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/ledger/ROUND_ANALYSIS.round13.md + org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v25.md@8c41d49b9d",
+   "state_observed": "EXERCISED",
+   "note": "CTO REALIZED; standing."
+  },
+  {
+   "fwd_id": "FWD-10",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/ledger/ROUND_ANALYSIS.round13.md + org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v25.md@8c41d49b9d",
+   "state_observed": "EXERCISED",
+   "note": "CTO REALIZED; standing."
+  },
+  {
+   "fwd_id": "FWD-11",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v27.md@d497632612",
+   "state_observed": "EXERCISED (visible face + reader surfaces)",
+   "note": "RULED 14:4xZ on CVO~Z's question. 'The same pieces' compares against the firm's FINISHED card family (/philosophy and the C3 target), not against dark panels C3 is retiring on /market and /positioning. A difference only where those pages still carry retired panels does not break FWD-11. CVO~Z: otherwise it supports REALIZED. No raw code is on the visible face (v0.8 + ruling 3a)."
+  },
+  {
+   "fwd_id": "FWD-12",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v27.md@d497632612",
+   "state_observed": "EXERCISED (render on PROD tree)",
+   "note": "CVO~Z built PROD's tree and ran the render instrument on it (74 PASS / 2 FAIL); this FWD passes."
+  },
+  {
+   "fwd_id": "FWD-13",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v27.md@d497632612",
+   "state_observed": "EXERCISED (render on PROD tree)",
+   "note": "Passes at the v0.7 text: plain label + full-precision value, mnemonic in data-mnemonic."
+  },
+  {
+   "fwd_id": "FWD-14",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v27.md@d497632612",
+   "state_observed": "EXERCISED (render on PROD tree)",
+   "note": "Passes on PROD's tree."
+  },
+  {
+   "fwd_id": "FWD-15",
+   "verdict": "NOT_EVALUATED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v27.md@d497632612",
+   "state_observed": "EXERCISED (render)",
+   "note": "The fixture holds no ABSENT row, so the limb is not exercised. The instrument needs a fixture with one."
+  },
+  {
+   "fwd_id": "FWD-18",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v27.md@d497632612",
+   "state_observed": "EXERCISED (render on PROD tree)",
+   "note": "Passes on PROD's tree."
+  },
+  {
+   "fwd_id": "FWD-16",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v25.md@8c41d49b9d",
+   "state_observed": "EXERCISED",
+   "note": "Present columns only; an 'Absent columns (N)' disclosure with each reason in reader words (FWD-16 stands, r23 ruling 1)."
+  },
+  {
+   "fwd_id": "FWD-17",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v25.md@8c41d49b9d",
+   "state_observed": "EXERCISED",
+   "note": "The comparable sits beside the verdict; cites are folded."
+  },
+  {
+   "fwd_id": "FWD-19",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v27.md@d497632612",
+   "state_observed": "EXERCISED (render on PROD tree)",
+   "note": "Passes on PROD's tree; r13's NOT REALIZED is superseded by this read."
+  },
+  {
+   "fwd_id": "FWD-20",
+   "verdict": "NOT_EVALUATED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v27.md@d497632612",
+   "state_observed": "EXERCISED (render: 2 stale FAILs)",
+   "note": "CVO~Z read NOT REALIZED. Both FAILs are STALE INSTRUMENT CLAUSES, not product defects: fwd15 counts the consensus th, and fwd16 demands the served reason on the face, which FWD-16 v0.8 and r23 ruling 1 replaced with reader words. A grade that rests on a stale assertion says nothing about the product, so this is NOT_EVALUATED until the two clauses are updated (DSGN instrument item) and the check re-runs."
+  },
+  {
+   "fwd_id": "FWD-21",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v25.md@8c41d49b9d",
+   "state_observed": "EXERCISED",
+   "note": "One bubble per name; the caption; the month cursor."
+  },
+  {
+   "fwd_id": "FWD-22",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v25.md@8c41d49b9d",
+   "state_observed": "EXERCISED",
+   "note": "Ranked horizontal bars, longest first, signed percent, 94 names."
+  },
+  {
+   "fwd_id": "FWD-23",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v25.md@8c41d49b9d",
+   "state_observed": "EXERCISED",
+   "note": "The card family matches /philosophy (v18 g-2, g-5)."
+  },
+  {
+   "fwd_id": "FWD-24",
+   "verdict": "NOT_EVALUATED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v27.md@d497632612",
+   "state_observed": "EXERCISED (2 of 3 names)",
+   "note": "The census ran on 2 of 3 names; the third is owed."
+  }
+ ],
+ "closed_reason": "NOT CLOSED: 2 NOT_REALIZED (FWD-2 page, FWD-7 producer), 5 NOT_EVALUATED; CLOSED requires every grade REALIZED",
+ "regraded_utc": "2026-10-02T14:4xZ (FWD-11..15, 18..20, 24 on v27); 14:1xZ (FWD-2, FWD-7 on v26)"
+}

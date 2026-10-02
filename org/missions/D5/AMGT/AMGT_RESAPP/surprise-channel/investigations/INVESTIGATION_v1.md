@@ -16672,6 +16672,289 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
  "spec_asserts": "CTO half @45e3aefae0 condition 3: 'It also confirms that AMD's and TSM's bars open their overlay (a 200 on /security/<key>/overlay).'",
  "world_is": "A 200 on that route is returned for any key, including a fabricated one, so the named test cannot distinguish 'the bar opens a covered security' from 'the route answered'. Read literally the condition is satisfiable by a key that does not exist, which makes it a weak guard for a DEMO-BLOCKING identity fix -- precisely the class where a green check should not be able to come from nothing. The deployed behaviour is correct on every other measure. INFERRED, not measured: whether other per-name routes (thesis, peers, coverage, print) behave the same way for an unresolved key -- only overlay was probed here, and that denominator is not established.",
  "notes": "disarm_owner 2.0.0_SA_COO~Z (the issuer). INERT: both criteria passed, the deploy stands, the round can close, and nothing is blocked. Surfaced, not adjudicated -- this seat does not amend another seat's half. Candidate repair for the issuer to weigh: state the condition as 'identity_status MEASURED on a populated overlay body' rather than 'a 200', which is a one-word change that makes the clause fail when it should. Sibling rows from this seat on the same class -- a check that passes for a reason other than the one it names: AMGT_RESAPP-Z-S324, AMGT_RESAPP-Z-S325, AMGT_RESAPP-Z-S330."
+},
+{
+ "id": "AMGT_RESAPP-Z-S333",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~Z",
+ "surfaced_at": "2026-10-02T07:25:00Z",
+ "one_line": "The seating lint (gate2) printed REFUSED on all 5 round-61 orders on two misreads: it counts a `withdrawn` status as OPEN, and it truncates 0.9.0_WK_AMGT_RESAPP~N to 0.9.0_WK_AMGT, pooling every AMGT worker into one seat. The commit landed (advisory path).",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "safe-commit of f234d5aa12, rc=0, commit landed with 12 files; gate2 printed 'REFUSED' for ak-2..ak-6.",
+   "ak-2/ak-6 (0.7.0_AE_CloudOps~A): the lint names AMGT_HARVST.TO-HVST-n-4 and TO-HVST-q-7 as open. Both read <status>withdrawn</status> as their only status tag (last-tag read), so ~A holds no open order.",
+   "ak-3..ak-5 (0.9.0_WK_AMGT_RESAPP~201..~203): the lint reports the serial as '0.9.0_WK_AMGT' holding 82 open AMGT_CORPUS orders plus AMGT_HARVST orders. Those belong to 0.9.0_WK_AMGT_CORPUS~* and 0.9.0_WK_AMGT_HARVST~*, distinct seats; the serial grammar's third segment stops at the first underscore of AMGT_RESAPP."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "The seating check enforces ONE PROJECT PER TIER-2 SEAT INSTANCE on the seat instance an order is addressed to, counting the orders that seat still owes.",
+ "world_is": "It counts a terminal-by-intent `withdrawn` face as owed, and it keys worker seats on a truncated serial, so every AMGT worker order reads as a collision. On the advisory path the commit lands, so a true collision would print the same REFUSED as these false ones and be equally ignored.",
+ "disarm_owner": "1.0.0_SA_CTO~Z",
+ "notes": "Owner of the lint (.tools/to-decomp-ref-lint.py seating check): 1.0.0_SA_CTO~Z. The two `withdrawn` faces are 2.0.0_SA_COO~H's (AMGT_HARVST issuer): `withdrawn` is not in org/XXX.md's status set (superseded/cancelled carry the pointer). Nothing in round 61 waits on this."
+},
+{
+ "id": "AMGT_RESAPP-Z-W203-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~203",
+ "surfaced_at": "2026-10-02T09:00:00Z",
+ "one_line": "AMGT-ak-5 AC1 cannot read exit=0 in the issued worktree: the portal gitlink (24646bcab9) is not materialised in C:/tmp/r61-203, so 3 tests in lib/research/api/tests/test_print_format_rich.py ERROR at setup on a missing portal fixture, independent of the ak-5 change (387 passed, 2 skipped, 3 errors).",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "AC1 literal invocation from C:/tmp/r61-203: '387 passed, 2 skipped, 186 warnings, 3 errors in 80.41s', exit=1. The 3 errors are test_default_and_fmt_pdf_are_byte_identical_to_build_pack_itself, test_format_rich_returns_200_markdown_non_empty and test_format_unknown_refuses_400_naming_both_legal_values, each FileNotFoundError at setup: 'C:\tmp\r61-203\\portal\\src\\pages\\SecurityAnalysis\\__harness__\tabsFixture.BA_US_Equity.json'.",
+   "ls -a C:/tmp/r61-203/portal lists only . and .. ; git ls-tree HEAD portal = 160000 commit 24646bcab959635e2a08076f3ab1ab6257ea9457 (a gitlink; the worktree add does not populate a submodule). The fixture lives inside that submodule, outside the order's <paths>, so the worker did not write it.",
+   "The three tests read only the portal fixture and the print builder; no file this order changed is on their path (posture package, tests and the plan only). The other 387 pass, the new tests among them."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "AMGT-ak-5 AC1 expects every test in lib/research/posture/ and lib/research/api/tests/ to pass and exit=0 from the issued worktree, a full checkout cut from f234d5aa12.",
+ "world_is": "The issued worktree's portal directory is empty (submodule not initialised), so a test whose setup reads portal/src/pages/SecurityAnalysis/__harness__/tabsFixture.BA_US_Equity.json errors before running; AC1 as written is FAIL (exit=1) in this tree on 3 environment errors and PASS on every test that can run. Not measured: whether the same 3 tests pass in a worktree with portal populated at 24646bcab9.",
+ "notes": "disarm_owner 2.0.0_SA_COO~Z: either populate portal in the worktree or re-run AC1 from a tree that carries it. Worker did not touch portal/ (outside <paths>)."
+},
+{
+ "id": "AMGT_RESAPP-Z-W202-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~202",
+ "surfaced_at": "2026-10-02T12:00:00Z",
+ "one_line": "AMGT-ak-4 item 1 asks to fix the roster parser, but the parser at the issuance commit already reads VLO's table into full names, full titles and a separate age; the defect lives only in the STORED M-1 object, written 2026-09-18 by an older parser.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "lib/research/management/roster.py@f234d5aa12 _parse_narrative + _split_trailing_age (landed by rk-46, 7e28fcb73d): roster.derive_roster on the stored source s3://opal-data-harvest/filings/v1/VLO_US_Equity/000162828026011499.source.json returns 5 officers, the CFO 'Harminder S. \"Homer\" Bhullar' | 'Senior Vice President and Chief Financial Officer' age 45, no role ends in a number.",
+   "The stored object s3://opal-data-harvest/management/v1/VLO_US_Equity/2026-09-18.json carries parser_version opal-management-roster/1.0.0 (not bumped by rk-46) and its officers have no `age` or `name_ascii` key, which the current parser always writes: it predates the fix. Census of 17 per-name M-1 objects: 1 defective (VLO), 0 unreparseable; BA, COST, HD re-parse to the same name/role/role_start as stored.",
+   "lib/research/management/tests/test_management.py TitleIsNeverANameTest and AgeInRoleTest already pin the VLO shape at the base."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "AMGT-ak-4 item 1: find the parser and fix it so a name is a person's name, the role is the full title and an age is never appended to the role.",
+ "world_is": "No parser code change was needed or made. The worker added lib/research/management/officer_plan.py (the read-only census + re-parse plan builder) and tests/test_officer_plan.py (VLO real-shape fixture, BA shape unchanged, plan builder). The served defect clears only when ak-6 writes the plan's `after` officers to the VLO M-1 object. PARSER_VERSION was left at 1.0.0, so a stored object cannot be told apart from a re-parsed one by that field.",
+ "notes": "disarm_owner 2.0.0_SA_COO~Z. INERT: the plan is emitted and AC2 passes against it; nothing is harmed by leaving this."
+},
+{
+ "id": "AMGT_RESAPP-Z-W202-S2",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~202",
+ "surfaced_at": "2026-10-02T12:10:00Z",
+ "one_line": "The `portal` submodule is an empty directory in the worker worktree C:/tmp/r61-202, so lib/research/api/tests/test_print_format_rich.py cannot read portal/src/pages/SecurityAnalysis/__harness__/tabsFixture.BA_US_Equity.json: AC1's literal invocation reads 3 errors and exit=1 in a freshly cut worktree.",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "In C:/tmp/r61-202 (branch wk-AMGT_RESAPP-202, cut from f234d5aa12): `git ls-tree HEAD portal` = 160000 commit 24646bcab959635e2a08076f3ab1ab6257ea9457; `ls portal` prints nothing.",
+   "AC1 invocation run from the worktree root: 476 passed, 2 skipped, 3 errors (the three test_print_format_rich.py tests, FileNotFoundError on C:\tmp\r61-202\\portal\\src\\pages\\SecurityAnalysis\\__harness__\tabsFixture.BA_US_Equity.json), exit=1. The same invocation run in the shared tree (portal populated at a730d8ce) read 478 passed, exit=0, but that run was against the shared tree and did not contain this worker's new tests.",
+   "Every worker whose AC1 includes lib/research/api/tests/ in a worktree with an unpopulated portal gitlink meets the same 3 errors; portal/ is outside this order's <paths>, so the worker did not populate it."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "AMGT-ak-4 AC1: every test passes, new tests included, and exit=0 (lib/research/management/tests/ plus lib/research/api/tests/).",
+ "world_is": "Every test under lib/research/management/tests/ (the new test_officer_plan.py included) passes; the only non-passing tests are the 3 fixture reads of the unpopulated portal submodule, which no change under this order's paths can fix. The 2 skipped tests were not examined.",
+ "notes": "disarm_owner 2.0.0_SA_COO~Z: populate portal in the worktree (sparse cone for src/pages/SecurityAnalysis/__harness__) or grade AC1 in a tree that carries it. Surfaced, not adjudicated."
+},
+{
+ "id": "AMGT_RESAPP-Z-S334",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.7.0_AE_CloudOps~A",
+ "surfaced_at": "2026-10-02T07:56:00Z",
+ "one_line": "The ak-2 GO required the build be cut from a worktree at 63e78fe4f7 rather than CLOUD HEAD because HARVST drain fdd7442696 'changed lib/opal_data_harvest/transport.py and load_window_grade.py after it, and a HEAD build may package them'. Measured: neither file is in this artifact's packaged closure, and 0 of the 350 packaged members differ between 63e78fe4f7 and HEAD -- so a HEAD build would have produced the same CHANGED 3. The worktree discipline is right and was followed; its stated reason is not the thing that makes it right.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "zipfile namelist of the artifact built at 63e78fe4f7 (C:/tmp/ak2-build-only.zip, the same bytes uploaded as VersionId YSqlUTOWHwV6H7LePjd1pr9DKomiDo5U): lib/opal_data_harvest/transport.py packaged=False, lib/opal_data_harvest/load_window_grade.py packaged=False. Packaged denominator 350 members.",
+   "git diff --stat 63e78fe4f7 HEAD over those two paths is non-empty (2 files, +34/-6), so they DID drift -- the premise's first half holds; only the 'may package them' half fails.",
+   "Intersection of the 350 packaged arcnames with the 32 repo paths changed 63e78fe4f7..HEAD: 0. That is the measurement the worktree decision actually turns on, and it is not the one the GO named.",
+   "The build script derives its package set as a transitive AST import closure from the handler seed (header, 'A TRANSITIVE IMPORT CLOSURE, NOT A DIRECTORY ENUMERATION'), so closure membership is a property of the code at build time and can change between rounds. A file being outside the closure today is not a standing guarantee."
+  ]
+ },
+ "disposition": "DISMISSED_WITH_REASON",
+ "spec_asserts": "GO msg 28272: 'Build from a worktree at 63e78fe4f7, not CLOUD HEAD. HARVST drain fdd7442696 changed lib/opal_data_harvest/transport.py and load_window_grade.py after it, and a HEAD build may package them; any CHANGED file beyond the halves' 3 is a STOP.'",
+ "world_is": "Both named files drifted but neither is packaged, and no packaged member drifted, so the HEAD build and the worktree build were byte-equivalent in package terms this round. The act was performed from the worktree as instructed and the independently graded CONTENT-DIFF is exactly the signed three files, so nothing about the deploy is in question. What is in question is the REASON: a later round that reasons 'those two files force a worktree build' would be reasoning from a false premise, and a round that reasons 'no HARVST drain touched the closure, so HEAD is fine' would be reasoning from a true premise that nobody measured. Not measured here: whether any PREVIOUS round's HEAD build packaged drifted peer files -- rounds 58 and 59 recorded 4-file and 2-file peer drift in their own CONTENT-DIFFs, which is the same class caught by a different instrument.",
+ "notes": "disarm_owner 2.0.0_SA_COO~Z. DISMISSED_WITH_REASON rather than UNDER_INVESTIGATION on purpose: there is nothing left to investigate -- the premise is measured false, the act is unaffected, and an open row here would hold the round-61 slug for a finding that changes no act. The durable ask, if the issuer wants one, is one line in the build script or the cut: intersect the packaged arcname set with git diff --name-only <build-commit> HEAD and print the count, which answers the question the GO was trying to answer in every future round instead of naming files by hand. Surfaced by the executor, not adjudicated by it.",
+ "dismissal_reason": "Nothing is left to investigate and no act changes. The premise is measured FALSE (neither named file is in the packaged closure; 0 of 350 packaged members differ between 63e78fe4f7 and HEAD), the build was cut from the worktree exactly as instructed, and the independently graded CONTENT-DIFF is exactly the three signed files -- so the deploy is sound and the record only needs to stop a FUTURE round reasoning from the same false premise. An UNDER_INVESTIGATION row here would hold the round-61 L10 slug for a finding that moves no act. The durable fix, if the issuer wants one, is one line at the cut or in the build script: intersect the packaged arcname set with `git diff --name-only <build-commit> HEAD` and print the count -- that answers in every future round the question this GO tried to answer by naming files by hand. Dismissed by the executor on measurement, not adjudicated by it; disarm_owner 2.0.0_SA_COO~Z may reopen it."
+},
+{
+ "id": "AMGT_RESAPP-Z-W201-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~201",
+ "surfaced_at": "2026-10-02T12:00Z",
+ "one_line": "ak-3 face says the peers absent-column reasons are built at SERVE time; they are STORED in peers/v1 objects, built by lib/research/peers/csc.py, outside the face's <paths>",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "lib/research/api/scoped_amgt.py:read_peer_set (~line 1666) returns dict(document) WHOLE from peers/v1/<key>/<as_of>.json; no serve-time registry join exists in lib/research/api or lib/research/metrics.",
+   "Live read: scoped_amgt.read_peer_set('BA_US_Equity') -> object_key peers/v1/BA_US_Equity/2026-09-24T2252Z.json carries csc_columns.absent[4].reason = \"cash_mv is 'Cash to Market Value', a ratio; no absolute cash level\".",
+   "The builder is lib/research/peers/csc.py:_CLAIMED_ABSENT and build_csc_map (engine.py calls it at 689/704/1258/1467); lib/research/peers/ is not in ak-3's <paths>.",
+   "Pool scan this worktree: 234 newest peers objects, 1170 coded absent reasons (5 columns x 234); the peers route will keep serving them until a store write (ak-6) lands, and the next peers run re-emits the codes while csc.py is unchanged."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "AMGT-ak-3 face section 1 item 2: 'The peers route serves csc_columns.absent[*].reason built at SERVE time from the factor registry'; rewrite 'at the builder'; plan entries route thesis only.",
+ "world_is": "The reasons are stored whole in each peers/v1 object by lib/research/peers/csc.py (outside <paths>), so no code in <paths> can change what the route serves, and a serve-time rewrite would be the post-filter the face forbids. What this worker did inside <paths>: lib/research/api/csc_plain_reasons.py is the one writer of the five plain sentences (registry labels looked up at call time) and the plan lists the 1170 peers entries (route peers) beside the 8 Lusha entries so AC2 grades the post-write state. NOT DONE: csc.py still emits the code-shaped reasons on the next peers run; adopting csc_plain_reasons.plain_absent_reason in csc.build_csc_map (one import, five dictionary entries) needs lib/research/peers/ granted in a recut or follow-on cell, and the plan's peers entries are applied only by ak-6's store write.",
+ "notes": "disarm_owner 2.0.0_SA_COO~Z: widen a cell's <paths> to lib/research/peers/ (csc.py and its tests test_csc_units.py/test_peers.py read _CLAIMED_ABSENT) and have the producer call csc_plain_reasons; ak-6 must apply the peers entries as well as the 8 thesis entries."
+},
+{
+ "id": "AMGT_RESAPP-Z-W201-S2",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~201",
+ "surfaced_at": "2026-10-02T12:10Z",
+ "one_line": "ak-3 AC1 cannot reach exit=0 in the worker worktree: portal is an empty gitlink dir, so 3 test_print_format_rich.py tests error on a missing portal fixture",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "AC1 literal run in C:/tmp/r61-201: 486 passed, 2 skipped, 3 errors, exit=1; all 3 errors are lib/research/api/tests/test_print_format_rich.py, FileNotFoundError: C:\tmp\r61-201\\portal\\src\\pages\\SecurityAnalysis\\__harness__\tabsFixture.BA_US_Equity.json.",
+   "git ls-tree HEAD portal -> 160000 commit 24646bcab9 (a gitlink); ls -A portal in the worktree -> 0 entries; the same fixture exists in the base checkout's portal submodule (tracked there).",
+   "None of the 3 tests touches a file ak-3 changed; the error is at fixture load, before any served-reason code runs."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "AMGT-ak-3 AC1 expects 'every test passes, your new tests included, and exit=0' from lib/research/api/tests/ lib/research/management/tests/ run in the worker worktree.",
+ "world_is": "The worktree was cut without the portal submodule populated, and the worker may not rebuild or extract a tree to make an order executable, so 3 pre-existing tests that read a portal fixture error here. Every other test passes, the new ak-3 tests included. INFERRED, not measured: that the same 3 tests pass in a tree with portal populated (the base checkout has the fixture; they were not re-run there under this worker's rules).",
+ "notes": "disarm_owner not required (INERT). The issuer can run AC1 at the shared tree or a portal-populated checkout of this branch to read exit=0 for the 3."
+},
+{
+ "id": "AMGT_RESAPP-Z-W201-S3",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~201",
+ "surfaced_at": "2026-10-02T12:40Z",
+ "one_line": "amendment 1 grants lib/research/peers/ in a spawn-side file only; the order file's <paths> at HEAD still omits it, so safe-commit refuses the 3 peers files and the amendment work cannot land",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "safe-commit in C:/tmp/r61-201 -> owned-paths lane violation (block mode) for lib/research/peers/csc.py, lib/research/peers/csc_plain_reasons.py and lib/research/peers/tests/test_peers_absent_reasons_plain.py, lane=BASE_EXEC; rc=1, HEAD stays 042ee0f7a8.",
+   ".tools/owned-paths-validate.py _owns_task_order_paths admits a worker to the <paths> block of its non-terminal order AT HEAD; org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-ak-3.plain-served-reasons.md in the worktree lists lib/research/management/, lib/research/api/, lib/research/metrics/, the deliverables dir and the channel file, not lib/research/peers/.",
+   "The amendment text (scratchpad AMENDMENT1_ak-3.md) is not a tracked file and carries no lane effect."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "AMGT-ak-3 amendment 1: 'Granted: lib/research/peers/ joins your <paths>'; commit on branch wk-AMGT_RESAPP-201 as before.",
+ "world_is": "The grant exists in the amendment message only. The lane gate reads the order file at HEAD, and editing that file is outside this worker's <paths>, so the worker did items 5 and 6 and ran AC1/AC2 in the worktree but could not commit the peers files; the work sits uncommitted in C:/tmp/r61-201 (csc.py, csc_plain_reasons.py moved to peers, test moved to peers/tests, regenerated plan, refreshed proof instance). AC1 amended: 525 passed, 2 skipped, 0 failed, 3 admitted test_print_format_rich.py errors. AC2: C0 C1 C2 PASS, B2 YES, exit=0. The GIT_COMMIT_AUTHOR_OVERRIDE escape was not used.",
+ "notes": "disarm_owner 2.0.0_SA_COO~Z: commit the order-file amendment (add lib/research/peers/ to <paths>, and the 3-directory AC1 invocation) on the worktree branch or issuer side, then tell the slot to re-run the safe-commit; the slot's uncommitted tree is intact."
+},
+{
+ "id": "AMGT_RESAPP-Z-W201-S4",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~201",
+ "surfaced_at": "2026-10-02T13:10Z",
+ "one_line": "AC2 C0 now reads FAIL 11 of 1178 because the live pool already carries ak-6's rewrite of the VLO Lusha reason and the BA and VLO peers absent reasons (objects modified 08:34Z); C1 and C2 still PASS",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "AC2 re-run in C:/tmp/r61-201 after the B5 work: 'plan entries 1178 from 1 file(s); stale or unlocatable 11', 'FAIL C0 ... 11 of 1178', 'PASS C1 ... 0 of 26 strings', 'PASS C2', 'B2 EVERY SERVED REASON IS WORDS: NO', exit=1.",
+   "s3 head_object LastModified: management/v1/VLO_US_Equity/2026-09-18.json 2026-10-02 08:34:15+00:00 and its stored lusha_enrichment.reason now reads the producer's new sentence; peers/v1/BA_US_Equity/2026-09-24T2252Z.json 08:34:18+00:00 and peers/v1/VLO_US_Equity/2026-09-24T2252Z.json 08:34:35+00:00 (5 plan entries each).",
+   "1 VLO thesis entry + 5 BA peers + 5 VLO peers = 11 = the stale count; the plan file m1_lusha_reason_plan.json is byte-unchanged (md5 375dfd6bed9f31c2c71bdebf1b4ab465 before and after this act)."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "AMGT-ak-3 AC2 expects 'C0 PASS (every plan entry's before equals what the route serves now)' and exit=0.",
+ "world_is": "C0 is a pre-write check: it passes only while the pool still holds the old text. ak-6's stored-field rewrite landed for BA and VLO at 08:34Z, so the same plan now reads stale on exactly the 11 rewritten entries and AC2 exits 1, with no change to ak-3 code. AC2 read exit=0 and B2 YES when graded at the merged tree before that write. INFERRED, not measured: that the other 1167 entries are still unwritten because they are not among the 5 served names.",
+ "notes": "disarm_owner 2.0.0_SA_COO~Z: grade B2 from the earlier exit=0 read, or amend AC2 to a post-write form (C1 and C2 only) before re-grading; ARMED because any later re-grade of AC2 on the live pool reads FAIL."
+},
+{
+ "id": "AMGT_RESAPP-Z-S335",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~Z",
+ "surfaced_at": "2026-10-02T08:58:00Z",
+ "one_line": "DISARM ACT by the issuer for AMGT_RESAPP-Z-W201-S4 (ak-3 AC2 C0 reads stale after ak-6 wrote the plan's fields) and AMGT_RESAPP-Z-W202-S2 (the empty portal fixture in worker worktrees): both are graded on the shared tree, and neither blocks.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "W201-S4: AC2's plan form asserts each entry's `before` equals the served value. ak-6 act (A) wrote those fields at 08:3x-08:4xZ (proof 4d12c64f00), so the `before` cannot match after the write. B2 was graded with the plan on the merged tree 5eb2a8c593 BEFORE the write (C0 0 of 1178, C1 0 of 26, exit=0). AFTER the write it was graded WITHOUT the plan, locally on 067df94e74 and on the deployed function: C1 0 of 26, C2 PASS, exit=0.",
+   "W202-S2 (and W201-S2, W203-S1, same cause): worker worktrees leave the portal gitlink empty, so the 3 test_print_format_rich.py setups error. Every AC1 was re-graded on the shared tree with the portal populated: ak-4 481 passed, ak-5 392 passed, ak-3 544 passed, all exit=0."
+  ]
+ },
+ "disposition": "DISMISSED_WITH_REASON",
+ "dismissal_reason": "Both are instrument-timing and worktree-shape effects. Each criterion they touch has a clean grade on the shared tree, and the served outcome is read on the deployed function.",
+ "spec_asserts": "An ARMED row is disarmed same-turn by its disarm_owner (CLAUDE.md section 2).",
+ "world_is": "Disarmed: ak-3 closes on the pre-write plan grade plus the post-write served grade; the AC1s close on the shared-tree re-grades.",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "notes": "Resolves AMGT_RESAPP-Z-W201-S4 and AMGT_RESAPP-Z-W202-S2. A worker worktree that needs the portal fixture wants it populated at the cut; carried as a cut-time practice, not a row."
+},
+{
+ "id": "AMGT_RESAPP-Z-S336",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.7.0_AE_CloudOps~A",
+ "surfaced_at": "2026-10-02T11:00:00Z",
+ "one_line": "al-1 bought the demo its margin and in doing so EXHAUSTED the lever: BA /timeline/day cold now answers in 16.9/16.6/19.1 s at 10240 MB, Lambda's ceiling, but max memory USED is ~460 MB and Init Duration is ~180 ms -- so this function was never memory-bound and never cold-start-bound, memory_size was only ever buying vCPU, and there is no larger number to reach for. The slowest of the three passing runs clears the 20 s AC target by 895 ms.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "AC1 at 1769 MB (issuer's pre probe, order preflight): cold calls time out at the 29 s gateway ceiling; CVO~Z measured 5 cold timeouts at 10Z (row Z-C-S29).",
+   "AC1 at 3538 MB, measured by this seat 10:52Z: 21726.76 / 20439.58 / 22913.08 ms, 0 of 3 under 20000 -- C1 FAIL. init_ms 160.22 / 186.95 / 203.78; max_mem 455 / 460 / 459 MB.",
+   "AC1 at 10240 MB, measured 10:55Z: 16885.18 / 16551.67 / 19105.13 ms, 3 of 3 under 20000 -- C1 PASS. init_ms 163.98 / 157.68 / 189.82; max_mem 460 / 462 / 463 MB.",
+   "Across a 5.8x memory raise (1769 -> 10240) max memory USED moved by 8 MB (455 -> 463). The resource the knob names is not the resource under pressure.",
+   "Init Duration is ~0.9 percent of the elapsed time at every tier, so the 16-23 s is handler work, not sandbox start. 'Cold' in AC1 means a fresh sandbox, not that the cost is start-up.",
+   "10240 MB is Lambda's per-function maximum, so no further raise exists on this axis."
+  ]
+ },
+ "disposition": "DISMISSED_WITH_REASON",
+ "dismissal_reason": "Nothing is owed on this row and no act changes: al-1's AC1 PASSES at 10240 and the demo path is inside target, which is what the order asked for. It is filed as an OBSERVATION because the RECORD needs the shape of the win, not just the verdict -- the next person who sees this route slow down must not reach for memory_size again, because there is nothing left to reach for. Ruling 5 already names the real remedies: track B (a deadline on _timeline_silver_articles so the route serves mentions with headline null and a reason rather than being killed) and track C (stop reading whole-publisher silver). The scheduled-for-after-the-demo track C is the one that addresses the cause. Dismissed by the executor on measurement; disarm_owner 2.0.0_SA_COO~Z may reopen it, and the CTO owns ruling 5's track selection.",
+ "spec_asserts": "AMGT-al-1 section 1: raise memory from 1769 to 3538 MB; if AC1's C1 still misses at 3538, raise to 10240 under the same entry and re-run AC1. Stop at 10240.",
+ "world_is": "Exactly that happened: 3538 missed at 21.7/20.4/22.9 s, 10240 passed at 16.9/16.6/19.1 s, and the act stopped at 10240 as instructed. The order's escalation ladder was correct and its stopping point was correct. What the order does not say, and what the measurements show, is WHY the ladder worked and that it is now finished: memory_size is a vCPU proxy for this function, memory itself is 95 percent unused at every tier, and the ceiling has been reached. Not measured here: whether the remaining 16-19 s is dominated by the S3 silver reads or by in-process work -- that is track C's question and this act had no license to profile it.",
+ "notes": "Margin, stated plainly because a PASS can read as comfort: the slowest passing run is 19105 ms against the 20000 ms AC target (895 ms of headroom) and against the hard 29000 ms gateway ceiling (9895 ms). The demo is safe on today's data volume. A route whose cost grows with the day's article count has no remaining config lever if that volume rises."
+},
+{
+ "id": "AMGT_RESAPP-Z-S337",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.7.0_AE_CloudOps~A",
+ "surfaced_at": "2026-10-02T11:32:00Z",
+ "one_line": "Track B works and FIRED IN PRODUCTION on 1 of 3 cold BA day invokes during its own acceptance run: run 3 crossed TIMELINE_SILVER_DEADLINE_S = 18.0 at 18006.03 ms -- 6 ms past it -- and served headline_reason, while runs 1 and 2 (16532.87 and 15135.96 ms) did not. The deadline sits inside the observed cold spread (15.1-18.0 s), so on today's data the degraded branch is roughly a coin-flip per cold load, not a rare safety net. Andrew's demo will show bracketed [no headline] placeholders on about a third of cold BA day views.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "timeline_b.py --what post, this seat 11:27Z, against the deployed bZBmEtRr build: run 1 200 16532.87 ms init 161.48 articles 5 headline_reason False; run 2 200 15135.96 ms init 146.07 articles 5 headline_reason False; run 3 200 18006.03 ms init 189.11 articles 5 headline_reason True. C1 PASS 3 of 3 cold 200; C2 PASS both control days byte-equal.",
+   "lib/research/api/scoped_amgt.py:4710 TIMELINE_SILVER_DEADLINE_S = 18.0, measured from handler start (:4729 remaining = TIMELINE_SILVER_DEADLINE_S - (time.monotonic() - started)).",
+   "al-1 act (A)'s AC1 at the same 10240 MB measured cold BA /timeline/day at 16885.18 / 16551.67 / 19105.13 ms. Two independent runs therefore put the cold distribution across the 18 s line.",
+   "CTO half @57dfa6bd84: at portal PROD b3a1d8a6, TimelinePanel.tsx:99 types headline as string | null and :354 renders row.headline ?? '[no headline]', so the degraded branch renders a bracketed placeholder rather than breaking the view. headline_reason is unread by that page.",
+   "pytest lib/research/api/tests/test_timeline_silver_deadline.py: 3 passed -- the branch is correct against a planted slow read, independently of how often it fires."
+  ]
+ },
+ "disposition": "DISMISSED_WITH_REASON",
+ "dismissal_reason": "Nothing is owed and no act changes: act (B) PASSES both graded conditions, the route no longer dies on the read, and serving a 200 with null headlines instead of a sandbox kill is exactly what ruling 5's track B specifies. This is filed because the RATE is new information that no criterion measures and that bears on what Andrew sees in 90 minutes: the acceptance run itself tripped the branch once in three, so 'the deadline protects us' and 'the deadline is routinely hit' are both true today and only the first is in the verdict. Two follow-ons already exist and neither is mine to cut: the CTO half carries a post-demo DSGN item to print headline_reason in place of [no headline], and ruling 5's track C (stop reading whole-publisher silver) is the fix that moves the distribution instead of capping it. If anyone wants the placeholder rate lowered before track C lands, the lever is the 18.0 constant, and that is a code change under the pair, not an act this order authorises. Dismissed by the executor on measurement; disarm_owner 2.0.0_SA_COO~Z may reopen.",
+ "spec_asserts": "al-1 AMENDMENT 1 / ruling 5a: the timeline day route's silver read runs under an 18 s deadline from handler start, and on the deadline the mentions are served with headline null and one plain headline_reason, as a 200, instead of a sandbox kill. Graded by 3 of 3 cold BA invokes answering 200 with both control days byte-equal.",
+ "world_is": "Exactly that, and the branch is not hypothetical: it fired on run 3 of the acceptance run itself, 200 at 18006.03 ms carrying headline_reason, 6 ms past the constant. So act (B) is better evidenced than a normal code deploy -- the new path was exercised against live data by its own grade rather than only by the planted test. What the grade does not say is that the 18 s line sits INSIDE the cold spread rather than above it: 15.1 / 16.5 / 18.0 s here and 16.6 / 16.9 / 19.1 s in act (A) an hour earlier. Not measured: the rate over a larger sample, whether it differs by name or by day's article count, and whether the first cold call after a deploy is systematically slower than later ones -- the three runs here are concurrent, so they share one post-deploy moment.",
+ "notes": "Reported to 2.0.0_SA_COO~Z in the act (B) close message rather than left to the channel, because it changes what the demo looks like and the demo is at 13:00Z. The degradation is graceful and the view does not break: PROD renders [no headline]. Nothing here is a rollback trigger -- C1 and C2 both passed, and a 200 on the deadline path is the specified outcome, not a failure."
 }
 ]
 ```

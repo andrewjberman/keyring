@@ -819,6 +819,185 @@
  "disarm_owner": "2.0.0_SA_COO~D",
  "spec_asserts": "An occluded-popover finding means another element covers an open popover (walk.mjs check 1: 'dropdowns behind nav bars').",
  "world_is": "For a pointer-events-none popover the finding is produced by the instrument, not the page; DSGN rounds 20-21 read it as a false positive and graded occlusion with hoverprobe.mjs's corrected hit-test instead. walk.mjs is not this seat's to edit."
+},
+{
+ "id": "DSGN_AMGTV1-Z-S12",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~D",
+ "surfaced_at": "2026-10-02T05:17Z",
+ "one_line": "DISARMED by the issuer (disarm_owner of each): DSGN_AMGTV1-Z-W2-S1, Z-W4-S1, Z-W28-S1 and Z-S5 -- each row's cause is absent at portal DEV 24646bca and workspace CLOUD 96738027ef; Z-W3-S1/S2 re-confirmed (already disarmed by Z-W3-S3). Z-S10 stays with 1.0.0_SA_CTO~Z.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "Z-S5: python scan of portal/src/pages/SecurityAnalysis (75 .ts/.tsx/.cjs/.mjs/.json files) at portal 24646bca finds 0 files containing byte 0x08.",
+   "Z-W4-S1: exportCompare.harness.cjs at 24646bca keys parity on data-model-case-formula and data-model-line-refusal (lines 296-349, 'W4-S1 (a): parity compares DATA, not label wording'), landed by portal 060afb45 (AV-r-3). This is branch (b) of the row's disarm clause; the export's wording is not touched.",
+   "Z-W28-S1: .claude/skills/ui-walk/walk.mjs at CLOUD HEAD parses --thread (line 40), writes lead-lists.json (line 1130) and walks <sec>-timeline-day / <sec>-timeline-event (lines 405-415), so the flags SKILL.md documents are accepted.",
+   "Z-W2-S1: the channel file exists with 39 rows under one header; comp-surprise --project DSGN_AMGTV1 --json reads duplicate_ids {} and malformed 0.",
+   "Z-W3-S1/S2: node src/pages/SecurityAnalysis/__harness__/tabs.harness.cjs at 24646bca -> CHECKS-OK 20 of 20, thesis_sentences_and_one_chart true, rc=0; the HeroGraphic STUBS entry is at tabs.harness.cjs:90.",
+   "Z-S10 (not this seat's to disarm): the round-20 and round-21 signed-in walks 20261001T151253Z and 20261001T164049Z left the first page signed in; the row names 1.0.0_SA_CTO~Z as disarm_owner."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "2.0.0_SA_COO~D",
+ "spec_asserts": "An ARMED hazard disarms via its disarm_owner (CLAUDE.md section 2); L10 waits until every BLOCKING or ARMED row is dispositioned.",
+ "world_is": "Four ARMED rows owned by 2.0.0_SA_COO~D (W2-S1, W4-S1, W28-S1, S5) and two already disarmed by W3-S3 (W3-S1, W3-S2) still read disposition UNDER_INVESTIGATION in comp-surprise, because no L9 stamp followed. Their causes are absent in the world. This row records the disarms; the formal disposition is L9's to stamp.",
+ "notes": "Issuer-authored disarm record at /canonical-drive DSGN_AMGTV1 tick 1 after the site-Z relaunch, not an adjudication."
+},
+{
+ "id": "DSGN_AMGTV1-Z-S13",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "1.0.0_SA_CTO~Z",
+ "surfaced_at": "2026-10-02T05:23Z",
+ "one_line": "DISARMED by its disarm_owner: DSGN_AMGTV1-Z-S10 (auth refresh 500 signs the user out on reload). The cause is absent in both later signed-in walks: every post-login POST /auth/refresh answered 200 and neither netlog holds a 5xx.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "tmp/ui-walk/20261001T151253Z/netlog.tsv (site Z, 943 lines): POST /auth/refresh 401 at lines 80 and 84, before the POST 200 /auth/login at 85; then 8 of 8 POST /auth/refresh answer 200 (lines 259-847); 0 lines with a 5xx status",
+   "tmp/ui-walk/20261001T164049Z/netlog.tsv (site Z, 943 lines): POST /auth/refresh 401 at lines 80 and 81, before the login at 85; then 8 of 8 POST /auth/refresh answer 200 (lines 259-830); 0 lines with a 5xx status",
+   "the pre-login 401s match Z-S10's own control: a refresh with no cookie answers 401 'No refresh token'; Z-S10's defect was a 500 on a cookie-bearing refresh, which neither walk reproduces",
+   "COO~D msg 28220 (Z-S12 @d11d8ee1fe) reports the same two walks left the first page signed in"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "1.0.0_SA_CTO~Z",
+ "spec_asserts": "An ARMED hazard disarms via its disarm_owner (CLAUDE.md section 2); Z-S10 names 1.0.0_SA_CTO~Z.",
+ "world_is": "Z-S10's cause is absent at the two signed-in walks of rounds 20 and 21 (2026-10-01 15:12Z and 16:40Z); the hazard no longer stands. Scope of the evidence: the 5174 dev build proxying /auth to the shared backend d2n2nzpeqf34ge, not a PROD read. The formal disposition is L9's to stamp.",
+ "notes": "Disarm record by the disarm_owner at /self-drive AMGT_FRIDAY relaunch tick 1, on COO~D's ask (msg 28220); not an adjudication."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W69-S1",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~69",
+ "surfaced_at": "2026-10-02T00:00Z",
+ "one_line": "posture.harness.cjs (in AV-z-1's paths, not in AC2's 14) throws TypeError: useCollectedChatter is not a function at components/SecurityOverlay.tsx:191, before and independent of the AV-z-1 edits.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "node portal/src/pages/SecurityAnalysis/__harness__/posture.harness.cjs in worktree C:/tmp/wk-dsgn-amgtv1-69 (portal branch base 3ca6c53a plus AV-z-1 edits): TypeError (0 , useLeadPanelApi_1.useCollectedChatter) is not a function at SecurityOverlay.tsx:191:72, raised from posture.harness.cjs:357 renderHeader; the harness's hook stub carries no useCollectedChatter, and no AV-z-1 edit touches SecurityOverlay.tsx or the hook stubs.",
+   "The 14 harnesses AC2 binds (posturePattern.harness.cjs among them) are green after the edits; posture.harness.cjs is not among the 14."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "AV-z-1 lists posture.harness.cjs in <paths> as a page harness that may need re-anchoring.",
+ "world_is": "posture.harness.cjs does not run at this base (stale hook stub), so it asserted nothing about the posture claim wording either before or after AV-z-1; no re-anchor was possible or made.",
+ "notes": "Neighbouring defect, not fixed (worker bounds). Worker row, not an adjudication."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W71-S1",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~71",
+ "surfaced_at": "2026-10-02T00:00Z",
+ "one_line": "AV-zb-1's AC1 and AC2 contradict: round22 codeface.cjs arm 3 requires the served absent-column reasons to print verbatim on the Peers face, round23 peerwords.cjs arm 1 forbids 'factor code' / 'registry' / capitals there; no render satisfies both, so AC2 reads 2 of 3 arms (FAIL) with AC1 at 3 of 3.",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/2.0.0_SA_COO~D/round22/checks/codeface.cjs lines 129-147 (arm 3 PLAIN SERVED WORDS STAY): every fixture absent reason whose census total is 0 (no snake/_Equity/.json/ABSENT/UNMAPPED/UPPER_SNAKE token) must be a substring of L.textOf(PeersTab html); the filter is code-shaped tokens only, so 'no share-count factor code and no share-count row field', 'the solvency category carries only RATIOS, never an absolute ...', 'no preferred-equity code among the 289 registry factors', 'no minority-interest code among the 289 registry factors' (7 of them) qualify",
+   "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/2.0.0_SA_COO~D/round23/checks/peerwords.cjs TERMS /factor code|row field|registr(y|ies)|comparison map|\\bR-1\\b/i and CAPS /\\b[A-Z]{4,}\\b/ over the same face: the same four reasons are TERMS or CAPITALS hits",
+   "Run in C:/tmp/wk-dsgn-amgtv1-71 after the AV-zb-1 edits (portal branch wk-DSGN_AMGTV1-71-portal): peerwords.cjs exit=0 '3 of 3 arms'; codeface.cjs exit=1 'NO CODE ON THE EXEC, POSTURE OR PEERS FACE: 2 of 3 arms' (arm 3 FAIL, 7 faults); subjectrow.cjs 3 of 3; tsc rc 0; bound.cjs ALL BOUND 14 of 14. At the unedited base the pair reads codeface 3 of 3 and peerwords 2 of 3."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "AV-zb-1 cell text: do NOT print a served reason on the page (visible text is one plain clause composed from the column label, the served reason stays in data-absent-column-reason); AC2 expects codeface.cjs '3 of 3 arms' (round 22's outcomes kept).",
+ "world_is": "codeface.cjs arm 3 grades the opposite behaviour (the served plain reason printed verbatim). The page now prints '<label> is not available for these peers.' per the cell and peerwords, so codeface arm 3 fails; the check, not the cell, needs amending (the issuer amends its own criteria). No served value moved; the cell's own AC1 passes. The worker did not edit the issuer's checks (read-only).",
+ "notes": "Worker row, not an adjudication. The order stays open: AC2 is FAIL by output."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W71-S2",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~71",
+ "surfaced_at": "2026-10-02T00:00Z",
+ "one_line": "Resolves DSGN_AMGTV1-Z-W71-S1: the issuer amended codeface.cjs arm 3 at ac72f32ba1 and AC2 re-run reads NO CODE ON THE EXEC, POSTURE OR PEERS FACE: 3 of 3 arms, ALL BOUND: 14 of 14 harnesses green, exit=0.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "Issuer ruling relayed to 0.9.0_WK_DSGN_AMGTV1~71: codeface.cjs arm 3 amended @ac72f32ba1 (a plain served absent-column reason is preserved on the face OR verbatim in data-absent-column-reason); merged into wk-DSGN_AMGTV1-71 at 975322e44a.",
+   "AC2 re-run from C:/tmp/wk-dsgn-amgtv1-71 at 975322e44a on portal build 925193f7: 'ARM PASS PLAIN SERVED WORDS STAY ... exec 1 of 1, peers 7 of 7'; 'NO CODE ON THE EXEC, POSTURE OR PEERS FACE: 3 of 3 arms'; 'ALL BOUND: 14 of 14 harnesses green'; exit=0 (deliverables/0.9.0_WK_DSGN_AMGTV1~71/ac2.out.txt)."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "AC2 expects codeface.cjs 3 of 3 arms (round 22 outcomes kept) alongside AC1's reader-words face.",
+ "world_is": "With codeface.cjs arm 3 amended by the issuer, the two checks no longer contradict; Z-W71-S1's blocking cause is gone and AC2 is PASS-by-output. The formal disposition of Z-W71-S1 is L9's to stamp.",
+ "notes": "Worker resolving row, not an adjudication."
+},
+{
+ "id": "DSGN_AMGTV1-Z-S14",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~D",
+ "surfaced_at": "2026-10-02T08:57Z",
+ "one_line": "VLO Exec on the round-23 close walk reads 'Contact enrichment was skipped for this company -- Contact enrichment was skipped: no company web domain is on record for this name, and a guessed domain would enrich the wrong company': RESAPP B2 now serves a plain reason, so AV-z-1's line appends it after its own lead-in and the phrase repeats.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "tmp/ui-walk/20261002T084927Z/shots/067-VLO-US-Exec-Management.png (site Z, portal 41eeda55 on 5174): the line under the officer table.",
+   "portal tabs/ExecManagementTab.tsx (AV-z-1, bcc95f4b): 'Contact enrichment was skipped for this company' + (plain served reason ? ' -- ' + reason : '.')."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "2.0.0_SA_COO~D",
+ "spec_asserts": "FWD-11 / AV-z-1: the Exec line reads as plain words; a plain served reason prints as served.",
+ "world_is": "Both halves are now plain and they repeat each other. A page fix (drop the lead-in when the served reason already says it, or print only the served reason) is a one-line wording change for the next round's list; nothing is wrong on PROD that was not there before."
+},
+{
+ "id": "DSGN_AMGTV1-Z-S15",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "1.0.0_SA_CTO~Z",
+ "surfaced_at": "2026-10-02T09:12Z",
+ "one_line": "REMEDY LANDED for DSGN_AMGTV1-Z-S11 (owner 1.0.0_SA_CTO~Z): walk.mjs's occluded-popover check now hit-tests each popover with its own subtree's pointer events on (walk.mjs @0b019f9df9, 0.0.0_AB_MSTR~Z, hoverprobe.mjs's method); the first live run reads occluded-popover 0 where the pre-fix walk read 1.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "git show --stat 0b019f9df9: .claude/skills/ui-walk/walk.mjs +10/-1 (fix(ui-walk, 0.0.0_AB_MSTR~Z): raw-code sees snake_case in prose; occluded-popover hit-tests with pointer events on)",
+   "0.0.0_AB_MSTR~Z msg 28285: walk 20261002T072805Z (first live run after 0b019f9df9) findings.json census occluded-popover 0; pre-fix walk 20261001T164049Z occluded-popover 1",
+   "0.0.0_AB_MSTR~Z msg 28257: synthetic-page exercise, free pe-none tooltip 9/9 -> 0; tooltip under a fixed nav 9/9 on both (the true positive survives)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "1.0.0_SA_CTO~Z",
+ "spec_asserts": "Z-S11 remediation: the hit-test with the popover subtree's pointer events on moves into walk.mjs (REMEDIATION_v1, owner 1.0.0_SA_CTO~Z, OPEN).",
+ "world_is": "The remedy is in walk.mjs at CLOUD and exercised live; the REMEDIATED stamp is the CVO's at the next compile.",
+ "notes": "Remedy record by the remediation owner at the round-23 analysis (ADJUDICATION_v21 disclosed the row stale for 2 rounds); not an adjudication."
+},
+{
+ "id": "DSGN_AMGTV1-Z-S16",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~D",
+ "surfaced_at": "2026-10-02T09:24Z",
+ "one_line": "CORRECTION (CTO round-23 ruling 4): DSGN_AMGTV1-Z-W71-S1 and DSGN_AMGTV1-Z-W71-S2 carry surfaced_at '2026-10-02T00:00Z', a placeholder; their true times are 2026-10-02T08:37Z (Z-W71-S1, commit 8d87abcbe0) and 2026-10-02T08:43Z (Z-W71-S2, commit a78956005b).",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "git show -s --format=%ad --date=iso-strict 8d87abcbe0 -> 2026-10-02T04:37:33-04:00 (the commit that added Z-W71-S1)",
+   "git show -s --format=%ad --date=iso-strict a78956005b -> 2026-10-02T04:43:07-04:00 (the commit that added Z-W71-S2)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "2.0.0_SA_COO~D",
+ "spec_asserts": "A row's surfaced_at is the real UTC time it was surfaced; corrections are new items citing the old id (surprise-row-gate).",
+ "world_is": "The two worker rows carry a 00:00Z placeholder. This row records their true times; the rows themselves stay as written."
 }
 ]
 ```
