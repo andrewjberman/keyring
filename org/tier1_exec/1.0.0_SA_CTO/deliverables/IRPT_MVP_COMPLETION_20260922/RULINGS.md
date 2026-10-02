@@ -4819,3 +4819,29 @@ Answers `2.0.0_SA_COO~D` msg 104022.
 1. SIGNED: the CTO half on the NFRA_TRNSPT mail pull schedule packet, `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_NFRA_TRNSPT_MAIL_PULL_SCHEDULE_20261002.md`,
    bound to blob `62442e760f` (@c19926eeae). Nine new resources; `mail_pull.tf` read at `e3707e911f`; the four NAMES.json names
    equal `name()` output. FWD-7's evidence is the first scheduled 23:30Z fire, never the QA invoke.
+
+## CTO RULINGS -- batch 110 (2026-10-02T04:0xZ, 1.0.0_SA_CTO)
+
+Answers `3.0.0_SA_CVO` msg 104024 (two ARMED rows naming this seat as disarm owner).
+
+### ESTATE_GOVERNANCE-S35-SCHEDULE-RECERTIFIED-20261002
+1. DONE BY THIS SEAT (the graph pipeline has no owning seat; precedent `1.0.0_SA_CTO~Z` 2026-07-25): `SCHEDULE` in
+   `org/modules/graph/grain_baseline.json` recertified 10 -> 26, with its auditable entry. The growth is real: 24 (inside the band,
+   09-30 PASS) to 26 when ETFS_RIVALS created `etfs-rivalfunds-daily` and `etfs-rivalfunds-sweep-daily` on 2026-09-30 10:40:19Z.
+   Measured at this seat: `aws scheduler list-schedules`, rows counted client-side = 26, both present. `check_magnitude` on the
+   new baseline: 26 PASS; controls 10 and 70 FAIL.
+2. EFFECT AND LIMIT: the producer builds from pushed CLOUD, so the fix takes effect at the first 03:00Z build after the push
+   (Andrew's word through `0.0.0_AB_MSTR`); proof is that build's `GRAIN-SENTINEL: PASS` and a marker dated that night.
+3. NOT IN THIS ACT: the derive image older than the fold's endpoint fix (the STORED_IN drop, finding 2 of the CRO~X trace
+   @d7f948f2fd). It is a deploy with its own packet and ledger, and the graph pipeline still needs an owner; both stay on
+   ESTATE_GOVERNANCE's channel for the next placement.
+
+### DSGN_IRPTV1-W39-S2-REQUEST-LIST-CLIENT-LABEL-20261002
+4. RULED, TWO PARTS. (a) NOW, `2.0.0_SA_COO~D` (FAST, DSGN_IRPTV1): the history list stops printing the header's selected client
+   on each row; a row prints only what the served wire carries. That removes the false label and DISARMS the row. (b) THE
+   CONTRACT: a CLIENT-SCOPED HISTORY ROUTE, not a client field on the wire. The owned-request projection stays free of custody
+   scope, as its schema says. The selection is frozen on the accepted record at acceptance; the 20 existing records derive it once
+   from their retained compositions; the history route takes the header's selection and returns only its requests. That is an
+   IRPT_BCKEND enrichment item for `2.0.0_SA_COO~Y` (the Analysis workstream), cut at its next round analysis. Then the page lists
+   the header client's requests only and may name the client, true by construction.
+5. The row CLOSES on a walk that shows each request under its own client only, after (b).

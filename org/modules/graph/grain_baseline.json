@@ -17,7 +17,7 @@
     "ECS_TASK_DEFINITION": 7,
     "S3_BUCKET": 30,
     "CW_ALARM": 35,
-    "SCHEDULE": 10,
+    "SCHEDULE": 26,
     "INSTANCE_PROFILE": 10,
     "PORTAL_BUNDLE": 1,
     "S3_DATA_KEY": 0,
@@ -230,6 +230,21 @@
         }
       ],
       "note": "THE GATE, VERBATIM: CTO gate GO 20260909T2305Z (NFRA_CLDGRPH W2-S60 ruling, PRD v0.13 S31): GOLD_SCRIPT, S3_DATA_KEY, PORTAL_COMPONENT, REACT_QUERY_KEY recertified to 0 (retired at the producer; the EXTERNAL_ENDPOINT precedent); PipelineScript, PipelineFunction, S3Key, Component, ReactQueryKey recertified at their first post-unification magnitudes, re-measured by 3.0.0_SA_CVO in this sign; COND-A resource-type count unmoved at 32. -- SCOPE: exactly these nine per_class keys; no other entry of this file moves, and the [0.4, 2.5]x band is UNCHANGED (widening a band to pass is 're-run it to fix it', which is how a guard gets removed; what moved is the reference point, onto the vocabulary the producer now emits). COND-A RESOURCE-TYPE COUNT UNMOVED AT 32: S3_DATA_KEY's members merged INTO S3Key, which was already a live type, and no aws resource type was created or destroyed. THE CVO'S SIGN IS PENDING ON ALL NINE: the five magnitudes are one worker's single measurement until 3.0.0_SA_CVO re-measures them, and the sign field says so rather than implying a certification that has not happened. The five entries also close a coverage gap this file's own render_coverage was already reporting -- all five sat in the UNCOVERED list (34 of 59 live types band-checked before this entry)."
+    },
+    {
+      "date": "2026-10-02",
+      "trigger": "ESTATE_GOVERNANCE-S35 (extends S17): the opal-stitch-produce builds of 2026-10-01T03:00:12Z and 2026-10-02T03:00:12Z both refused to emit on one AC-GRAIN.2 violation, '[AC-GRAIN.2] SCHEDULE: count 26 vs baseline 10 = 2.60x (outside [0.4, 2.5]x band)'. The refusal is deterministic, so the stitch layer ages one day per night until this class is recertified. Traced by 4.0.0_SA_CRO~X (GRAPH_STITCH_FAILURE_AND_STORED_IN_TRACE_BRIEF_20261001.md @d7f948f2fd).",
+      "classes": [
+        {
+          "class": "SCHEDULE",
+          "baseline_was": 10,
+          "recertified_to": 26,
+          "ratio": "2.60x -> 1.00x (new band 10.4 to 65)",
+          "verified_reason": "REAL estate growth, not a census error. The live count was 24 (2.4x, inside the band; the 2026-09-30 build read GRAIN-SENTINEL: PASS) until two EventBridge Scheduler schedules were created on 2026-09-30 at 10:40:19Z by ETFS_RIVALS: etfs-rivalfunds-daily and etfs-rivalfunds-sweep-daily, both ENABLED in group default. The baseline of 10 dates from the 2026-06-11 certification; the class grew through the band's upper edge one schedule at a time, so the step that tripped it is ordinary estate growth. The grain the sentinel guards (one node per schedule) is unchanged.",
+          "verified_by": "1.0.0_SA_CTO, 2026-10-02T04:0xZ, IRPT RULINGS batch 110. MEASURED AT THIS SEAT: `aws scheduler list-schedules` (auto-paginated, rows counted client-side) = 26, both etfs-rivalfunds schedules present; equals the producer's own sentinel count of both failed nights. Graded after the fact by 3.0.0_SA_CVO, who surfaced the row."
+        }
+      ],
+      "effect_and_limit": "The producer reads this file from the source it builds, so the recertification takes effect at the first nightly build after CLOUD is pushed; until then the stitch layer stays at its 2026-09-30 vintage. Proof: that build reads GRAIN-SENTINEL: PASS and writes a marker dated that night. Not part of this recertification: the derive image that predates the fold's endpoint fix (the STORED_IN drop, the same trace's finding 2), which is its own deploy."
     }
   ],
   "_naming_fragility_note": "DORMANT HAZARD, recorded where the next person changing a node_type will see it: grain_sentinel.check_magnitude (:127) iterates THESE baseline keys and looks up each exact key in the node stream, and :120-121 SKIPS classes absent from the baseline. The keys here are SCREAMING_SNAKE and the stitch stream currently uses SCREAMING_SNAKE, so they agree and nothing fires. But the canonical comp-kuzu DB uses CamelCase for the same concept (`ReactQueryKey` vs `REACT_QUERY_KEY`) -- so if a future change points the sentinel at a differently-named stream, or renames a node_type on either side, the lookup yields 0, the ratio renders 0.00x, and it is BYTE-IDENTICAL TO A REAL COLLAPSE. A hazard that is currently dormant because two conventions happen to agree is still a hazard. Surfaced 2026-07-25 by 0.8.0_AE_CloudComp; ruled not-firing-today by 1.0.0_SA_CTO~Z."
