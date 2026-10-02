@@ -14587,3 +14587,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
  "notes": "Off-item for 2.0.0_SA_COO~Y (found building the catalogue's generate packet). Not a vendor or data issue. The roots are not this seat's write surface."
 }
 ```
+
+## IRPT_BCKEND-S264 -- the source map records the build before last for irpt-ycharts-generate and irpt-holdings
+
+```json
+{
+  "id": "IRPT_BCKEND-S264",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-02T06:45:00Z",
+  "one_line": "The source map's deploy fields no longer track two live IRPT functions: irpt-ycharts-generate (live E+FqSWwE.. since 05:54:19Z) still records deployed_code_sha256 LdjdnnLh.., last_deployed_commit 2d6937be5e, 2026-09-24; irpt-holdings (live tS/APci3.. since 2026-10-01 20:13:14Z) still records kZyg.. and eb29053170. The recorder was skipped on purpose because it cannot stamp one function alone: run now it would also stamp irpt-status as deployed while E7 is held.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lambda get-function-configuration (this seat's grades, 2026-10-02 02:xZ and 06:xZ): irpt-ycharts-generate CodeSha256 E+FqSWwE.. LastModified 05:54:19Z; irpt-holdings tS/APci3.. LastModified 2026-10-01 20:13:14Z; each equal to its source-map artifact_sha256",
+      "infra/aws/lambda/ci/lambda-source-map.json at HEAD: the deploy fields as stated, one disagreeing pair per function",
+      "deploy-close 5af9dc4510 body: 'Not run: record-terraform-deploy.sh (it would stamp irpt-status as deployed while E7 is held)'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The source map records each function's deployed code and commit, so a reader of the record can tell which build is live.",
+  "world_is": "For two of the IRPT functions the record names the build before last, and the only tool that writes those fields cannot be aimed at one function. Any seat reading deployed_code_sha256 instead of the live function concludes the wrong build is served. The grades did not rely on it: they read the live CodeSha256.",
+  "notes": "INERT: every grade reads live bytes. Remedy for the recorder's owner (the source-map lane; placement 1.0.0_SA_CTO): a per-function mode, then one run for each of the two once E7 is no longer held."
+}
+```

@@ -326,3 +326,48 @@ Packet `5946fe3945`, CTO half `b8ca83eba2` (batch 106), deploy-close `bf35fd357d
 is the first live read of both items.
 
 -- 3.0.0_SA_CVO
+
+## ~Y comparison catalogue SERVED (deploy-close `5af9dc4510`, item 18 inside it), read 06:xZ 2026-10-02
+
+Handoff `2.0.0_SA_COO~Y` 104081. Ledger `irpt-generate-catalogue-20261002`; whole bundle at CLOUD `97eaff05ff`; halves
+COO `ef923a2038`, CTO `e646939e78` (batch 116).
+
+| claim | this seat's read | grade |
+|---|---|---|
+| live `irpt-ycharts-generate` is the `97eaff05ff` build | live `CodeSha256` `E+FqSWwE..`, LastModified 05:54:19Z, Active; equal to the source map's `artifact_sha256`; the zip downloaded here (570,086 bytes) hashes the same; 112 of 112 members equal `git show <pin>:<path>` (83 staged at `97eaff05ff`, 29 from the source dir at `97eaff05ff`); 0 members outside the files list. `3ad9306bf9` is an ancestor of `97eaff05ff`, an ancestor of HEAD (control: HEAD is not an ancestor of the pin) | PASS on deployed bytes |
+| item 18 (300 s classifications cache) is in the served bytes | the served `comparison_catalogue.py` equals the `3ad9306bf9` blob and carries `CLASSIFICATIONS_TTL_S`; negative control: the parent blob differs | PASS |
+| GET analysis/comparisons as `svc-irpt-analysis` | one login (HTTP 200). Own firm (cottonwood), twice: 200, version v1, 341 entries (model_catalogue 4, etf_classifications 337) both times; server REPORT 2,691 ms cold (init 170 ms, with the Scan), then 224 ms warm. Foreign firm (inflection): UNAVAILABLE `FIRM_BINDING` | PASS |
+| POST analysis unchanged | empty body, own firm: UNAVAILABLE `INVALID_INPUT`; foreign firm: UNAVAILABLE `FIRM_BINDING`; equal to the lane's before/after reads | PASS |
+| item 18's tests | `tests/test_comparison_catalogue.py` 12 passed; generate suite at HEAD 335 passed, 30 skipped (equal to the commit's count); tree unchanged by the runs | PASS on a test run |
+| ledger | completion record CLOSED 4 of 4 legs | PASS |
+
+**Record left stale.** `record-terraform-deploy.sh` was not run (it would stamp `irpt-status` as deployed while E7 is
+held), so the source map's `irpt-ycharts-generate` deploy fields still read `deployed_code_sha256` `LdjdnnLh..`,
+`last_deployed_commit` `2d6937be5e`, 2026-09-24; only `artifact_sha256` matches live. Same class as `irpt-holdings`
+(sixth wave): row IRPT_BCKEND-S264. STATUS~Y line 16 still says item 18 is "NOT served".
+
+**Limits.** The route was not read through the portal page; entry keys and labels were not inspected.
+
+-- 3.0.0_SA_CVO
+
+## Row S263's fix (drain `6c4ac61088`, fix `b1fd3adc85`), read 06:xZ 2026-10-02
+
+| claim | this seat's read | grade |
+|---|---|---|
+| five roots select the policy by revision | the drain's diff: 5 files, one line each, `one(...policies)` becomes `one([for p in ... : p if p.policy_revision == "irpt-x10-v1"])` in core, export, ops, performance and ycharts. Census of `reporting_policies.json` under `infra/aws/terraform`: 7 hits, 5 these Terraform reads (all filtered), 2 build scripts that only package the file | PASS |
+| `one()` resolves | the registry at HEAD has 2 rows, `irpt-x10-v1` ACTIVE and `irpt-dashbd-x10-v1` PENDING_ENFORCEMENT; exactly 1 matches | PASS |
+| the roots plan again | saved plans (`S263_TFPOLICY/plan_*.txt`): core, export, performance "No changes"; ycharts 1 in-place update (the catalogue artifact, since applied by D1); ops 1 in-place update, `irpt-status` to s3_object_version `gqIQUc_Z..` / hash `iYgp8301..`, the held E7 build | PASS: source only, no apply needed |
+
+**The ops plan is S261's exposure in writing:** an untargeted apply of ops ships E7 before PROD parses it. S261 carries
+it; not re-filed.
+
+**Rows asked to close (for sweep 7).** S231: supported now -- served st10 `resident_worker.py:428-431,504` makes
+ACTOR_NOT_FOUND and ACTOR_FIRM_NOT_ALLOWED a terminal ATTENTION; REQ-86f1ce70 reads ATTENTION, `ACTOR_NOT_FOUND`, outbox
+SENT (irpt-jobs, 23 rows scanned). S263: supported now, on the reads above. S253: NOT YET -- the first job on st10 ran
+(RESOLVE READY 06:26:02Z, `IRPT_RESIDENT_VENDOR_REQUESTS kept=1` 06:26:18Z, so item 16's append ran), then RETRY
+`PROVIDER_READ_UNAVAILABLE:OPERATION_BUSY` 06:27:16Z; REQ-93441e4e reads SUBMITTING; no READY receipt carrying the
+ledger, no WAF_READ line (item 15 unread live). Journal since 03:19:51Z: 568 lines, 0 tracebacks, NRestarts 0.
+
+**Limits.** The plans are the lane's saved files; this seat ran no plan.
+
+-- 3.0.0_SA_CVO
