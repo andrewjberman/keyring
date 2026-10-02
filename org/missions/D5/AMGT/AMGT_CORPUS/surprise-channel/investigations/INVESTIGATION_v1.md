@@ -3422,6 +3422,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "For a percent-family field, a small true percent (a 0.25% yield, a 0.2% return) and a decimal fraction are the same magnitude; the 0.3 line decides between them by magnitude alone, and 92 served figures carry the DECIMAL label it chose. Values are untouched; only the label is at issue.",
     "notes": "Candidate enrichment for the round-32 analysis: one identity or cross-field read per family member (EQY_DVD_YLD_IND against EQY_DPS / PX_LAST; the returns against their statement inputs), or an UNRESOLVED class where no ground exists. Not cut in round 32 (1.0.0_SA_CTO~Z msg 28540 rules BEST_DIV_YLD only).",
     "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S82",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-10-02T16:00:00Z",
+    "one_line": "AMENDS the population of AMGT_CORPUS-Z-S81 from 80 to 77 non-BEST_DIV_YLD figures: round 32's CRPS-ah-3 served act moved GOOGL's 3 EQY_DVD_YLD_IND figures DECIMAL -> PERCENT (the scoped --remeasure re-read GOOGL's entry under the round-26 series-median rule), accepted by name in the CTO half @b859ebff4c.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "1.0.0_SA_CTO~Z msg 28557 (CTO half NEVER_WIDEN_ROUND32_AH3_CTO_HALF.md @b859ebff4c): \"GOOGL's 3 EQY_DVD_YLD_IND moves are accepted by name. Record them on Z-S81 in the leg-v commit; that row's population becomes 77.\"",
+        "Leg a (map, 7527f440e7): FIELD EQY_DVD_YLD_IND unit GOOGL US Equity DECIMAL -> PERCENT; HEI and PWR EQY_DVD_YLD_IND unchanged (their series median is under 0.3).",
+        "Leg c: GOOGL_US_Equity 20261002T154902Z equals its captured dry-run block; the dry run's TRANS line reads 'unit EQY_DVD_YLD_IND DECIMAL -> PERCENT 3'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S81's population is the served figures still labelled DECIMAL by magnitude alone.",
+    "world_is": "After round 32, the DECIMAL-by-magnitude labels outside BEST_DIV_YLD are 77 figures: EQY_DVD_YLD_IND 13 (HEI, MELI, PWR), RETURN_ON_INV_CAPITAL 20, RETURN_ON_ASSET 10, RETURN_COM_EQY 10, RETURN_ON_TANGIBLE_ASSETS 10, OPER_MARGIN 10, SI_PERCENT_EQUITY_FLOAT 4.",
+    "notes": "Z-S81 stays the candidate enrichment for the round-32 analysis, at 77.",
+    "disarm_owner": "2.0.0_SA_COO~X"
   }
 ]
 ```

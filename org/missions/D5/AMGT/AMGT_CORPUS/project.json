@@ -9,7 +9,7 @@
   "dep_stage": "EXECUTING",
   "created": "2026-09-22",
   "registered_under_tree": "2026-09-22",
-  "last_updated": "2026-10-02T15:05:00Z",
+  "last_updated": "2026-10-02T16:12:00Z",
   "pods": [
     "1.0.0",
     "2.0.0",
@@ -55,8 +55,8 @@
     "THE BACKLOG POPULATION IS HIS, SEPARATELY. Andrew-direct ~18:3xZ, VERBATIM: 'all of the Research folders in the Opal Sharepoint Shared Asset Management/Research/ subfolder will be the basis for our backfill and initial pool.' Record ANDREW_DIRECT_20260922_183xZ_RESEARCH_FOLDERS_ARE_THE_BACKFILL_BASIS_AND_INITIAL_POOL.md. The folder list is a MEASURED DENOMINATOR (93 at the 2026-09-22 scan), never a transcribed list, and an unresolved folder is printed, never dropped.",
     "SENDING BLOOMBERG MODEL-BLOCK FIGURES TO THE CLAUDE API IS ALLOWED (same record, '3.) That is allowed.') -- this closes the CRO's card 1 for both this project and the addendum."
   ],
-  "phase": "L6 ISSUED (round 32) on 1.0.0_SA_CTO~Z RULED msg 28540: decomposition v32.0 -- CRPS-ah-1 (Z-S74) and CRPS-ah-2 (BEST_DIV_YLD by its DPS / PX_LAST identity), both the issuer's LOCAL direct acts; CRPS-ah-3 the paired SERVED map rebuild + re-derive after ah-2 (COO half here, CTO half owed by 1.0.0_SA_CTO~Z). 0 worker chains.",
-  "blocking": "ah-3 waits on ah-2's drain and on the CTO half of its never-widen pair. Carried on Andrew's word: FWD-20's 49 rows (V3 pull) and FWD-22's re-pull. Z-W4-S6's Peers lookup is RESAPP's (2.0.0_SA_COO~Z, CTO ruling 2 of msg 28540). Row Z-S81 (92 DECIMAL-by-magnitude labels on 8 mnemonics) is for the round-32 analysis.",
+  "phase": "L8 PACKET (round 32) at 3.0.0_SA_CVO~Z: ROUND32_DRAIN_END_PACKET.md. ah-1 (Z-S74) 75ea254ddc and ah-2 (BEST_DIV_YLD identity) b2aee0c0f2 done as direct acts; ah-3 SERVED ledger amgt-corpus-r32-ah3 CLOSED (5 legs): map 7527f440e7, 4 blocks 20261002T1549Z equal to their captures, 4 dossiers, census BEST_DIV_YLD DECIMAL 12 -> 0, values 0 moved.",
+  "blocking": "None for round 32 after the CVO's compile. Carried on Andrew's word: FWD-20's 49 rows (V3 pull) and FWD-22's re-pull. Candidate for the round-32 analysis: row Z-S81/Z-S82 (77 DECIMAL-by-magnitude labels on 7 mnemonics). Z-W4-S6's Peers lookup is RESAPP's (CTO ruling 2 of msg 28540).",
   "threads": [],
   "thread_counter": 0
 }
