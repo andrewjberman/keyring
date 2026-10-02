@@ -6,7 +6,7 @@ Mode FAST: lease `IRPT_BCKEND~Y` re-armed 04:33Z until 08:33Z after the withdraw
 terms, under Andrew-direct 2026-10-01 ~04:2xZ).
 Loop `/canonical-drive IRPT_BCKEND` 10m (LIVE_ARMS RELAUNCH row). Way forward: CTO rulings batches 61, 62, 65, 70, 72,
 76, 83, 88, 89, 93, 97, 98, 100 and 105 in `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md`.
-Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-02T05:4xZ.
+Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-02T06:0xZ.
 
 ## Pins
 
@@ -16,8 +16,9 @@ Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-02T05:4xZ.
 | Items 1 to 17 on CLOUD | 1 to 14 as before (st9 carries them); 15 `3921492913` (the 900 s calculating release, the WAF header token); 16 `7122afefc1` (row S253, the job row's `vendor_requests` ledger); 17 `8c4398e32a` (E7, the request read names the chosen comparisons); 18 `3ad9306bf9` (the catalogue reads `etf-classifications` once per 300 s warm window, not per request; condition 11 of the whole-bundle packet), merge `87f9b3afab`, NOT served |
 | SERVED: the resident | `/opt/irpt-resident/b1db201025-st10` since 2026-10-02T03:19:51Z (ledger `irpt-resident-st10-20261002` CLOSED; both halves, CTO batch 106): items 1 to 17. Rollback root `481166a8f2-st9` on the host |
 | SERVED: `irpt-status` | `2V7xV1+zII4+g6tV..` since 2026-10-01T06:59:55Z (read 2026-10-02 ~02:2xZ) |
-| SERVED: `irpt-ycharts-generate` | `arC65KbDPPssn2UX..` since 2026-10-01T06:51:12Z |
-| UPLOADED, NOT APPLIED | `irpt-status.zip` version `gqIQUc_Z..` (sha `iYgp8301..`, E7) and `irpt-ycharts-generate.zip` version `rtq1e9oT..` (sha `E+FqSWwE..`, the catalogue, built at `97eaff05ff`) are their keys' LATEST versions |
+| SERVED: `irpt-ycharts-generate` | `E+FqSWwETrwJ9Gd1..` since 2026-10-02T05:54:19Z (whole bundle at `97eaff05ff`, item 18; ledger `irpt-generate-catalogue-20261002` CLOSED). Rollback: S3 version `J52XmUEj..` (code `arC65KbD..`) |
+| SERVED: catalogue route | `GET /api/scoped/investor-reporting/analysis/comparisons`, route `bh7ynom` on `7k3ed8px20` behind `naqxlm`, since ~06:00Z. V1: 341 entries for cottonwood, `FIRM_BINDING` outside reach, 720 ms with the Scan then 221-260 ms |
+| UPLOADED, NOT APPLIED | `irpt-status.zip` version `gqIQUc_Z..` (sha `iYgp8301..`, E7) is its key's LATEST version. CTO batch 115 item 3: no untargeted apply of the ops or ycharts roots while it is held |
 | Stored YCharts session | the version of 2026-10-01T08:21:20Z (fence 21) |
 | Push state | LOCAL @5946fe3945; origin/CLOUD `0257976705` (ls-remote read 02:5xZ). CLOUD is pushed by `0.0.0_AB_MSTR` only |
 
@@ -50,10 +51,10 @@ made (CTO half item 1).
    listed request, timeout 15 s). The CTO's call on the change was asked 03:54Z (recommended: a per-request read memo
    that keeps the deliberate `_final` re-reads, as a new irpt-status packet).
 4. E5 (row S230 at its next natural failure; no session is displaced on purpose).
-5. **The catalogue (batch 61 item 8):** packet `IRPT_MVP_Y/CATALOGUE/NEVER_WIDEN_SIGNOFF_PACKET_GENERATE_CATALOGUE_20261002.md`
-   (blob `49517c7d7b`, @ef923a2038), COO half signed, CTO half asked 05:41Z. D1 the generate whole bundle at `97eaff05ff`
-   (12 of 112 members change; only `comparison_catalogue` changes behaviour on the handler's import graph); D2 the route (one
-   targeted add). On the half: D1, the reads between, D2, V1 as svc-irpt-analysis; then `2.0.0_SA_COO~D` wires the composer.
+5. **The catalogue is SERVED** (above). `2.0.0_SA_COO~D` wires the composer (interface sent 06:05Z).
+   Next on batch 61's list: **hop 3, the resolve concurrency fix.** Batch 72 item 12's remedy (the upload's ticker
+   lookup without the session) shipped in st7 and runs on st10; what is owed is the trace's proof, two uploads 10 s
+   apart both NORMALIZED, as a window under Andrew's standing word for Analysis attempts with both halves (no job).
 6. Batch 61's order after that: one job per remaining arm (Target Weight, 49 Financial, Inflection), each under a window
    packet; the resolve concurrency fix; the vendor PDF link; the Analysis export; the email lane. E6's memo follows E7's
    apply (CTO batch 111). A client-scoped history route is an enrichment item at the next round analysis (CTO batch 110 item 4).
@@ -75,7 +76,6 @@ made (CTO half item 1).
 ## Ledgers this seat holds open
 
 - `irpt-status-e7-20261001`: U1 closed; HELD (external gate: row S261 and the PROD promote). Nothing applied.
-- `irpt-generate-catalogue-20261002`: U1 closed; D1, D2, V1 wait on the CTO half. Nothing applied.
 
 ## Enrichment candidates (the measured list is `IRPT_MVP_Y/ENRICHMENT_CANDIDATES_20261001.md`)
 
@@ -97,6 +97,12 @@ this file; `deliverables/2.0.0_SA_COO~Y/**`; `org/tier1_exec/2.0.0_SA_COO/delive
 `infra/aws/terraform/investor-reporting/**`, `reports/**`, `_contracts/tests/**`, `portal/**`.
 
 ## Parked, each with its owner and the condition that un-parks it
+
+- The api root's `CHANGELOG.json` entry for route `bh7ynom`: outside this seat's write surface (no lane names the
+  api directory; earlier entries are `2.0.0_SA_COO~P`'s). The closed ledger entry holds the record. Un-parks with an
+  exact-file grant or that lane's next entry.
+- `record-terraform-deploy.sh investor-reporting` is not run while E7 is held: it stamps every function of the pipeline
+  as deployed at HEAD, `irpt-status` included.
 
 - The two source-map rows' `last_deployed_*` fields. Owner this seat; un-parks with the pipeline's next recorded deploy
   (E7's D1 for `irpt-status`).
