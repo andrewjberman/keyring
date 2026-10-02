@@ -100,7 +100,7 @@ Report once: what changed and where, the output line of every criterion, the por
 
 **ISSUER NOTES:** DIRECT ACT (LOCAL). CTO round-23 analysis @876dfcadb8 row 1. Chain ~75 alone. Base reasonclass 1 of 3 on 41eeda55.
 
-<status>pending</status>
+<status>complete</status>
 <round>25</round>
 <slot>~75</slot>
 <fabric>site-z</fabric>
