@@ -5,7 +5,7 @@
   "project": "AMGT_RESAPP",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.34",
+  "prd_version": "v0.35",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-security-analysis-20260910.md@19ce7d5b4d",
   "endpoint_outcomes": [
@@ -65,6 +65,11 @@
 **v0.34 (~19:1xZ):** FWD-37 only, on `3.0.0_SA_CVO~Z`'s non-blocking note (`org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_RATIFIED_TEXT_REVIEW_20261002_DSGN_v0.9_HARVST_v0.14_RESAPP_v0.33_Z.md@afd31a71b8` section 2).
 - The earnings path is a QUALIFIED WAIT on Andrew's vendor word.
 - The interim branch's grade is never read as exercising the earnings path.
+**v0.35 (~20:4xZ):** FWD-36 only, on `2.0.0_SA_COO~Z` msg 28738.
+- The price ranking's 90/365-day windows are a QUALIFIED WAIT on Andrew's vendor word for a longer PX_LAST history pull.
+- The chatter windows are buildable now.
+- Tone stays null with its reason while HARVST FWD-16/17 are held on the publisher-terms card.
+- This is an ENDPOINT change, so the CVO re-signs.
 
 
 
@@ -977,7 +982,16 @@ disputable, by rule, and carry no technical language.*
                     tone from HARVST gold (HARVST FWD-17), never computed at
                     request time; each response serves its window start and,
                     where the store is shorter, says so; the calendar-month
-                    route stays served until the page no longer reads it
+                    route stays served until the page no longer reads it.
+                    QUALIFIED WAIT (v0.35): the PRICE ranking's 90- and 365-day
+                    windows need a longer PX_LAST history pull (the price axis
+                    is generated at 30 days only, axis.py:23; no generation on
+                    or before 2026-09-01), which waits on Andrew's vendor word;
+                    until then the ranking serves 30 and answers 90/365 with
+                    the reason "not produced yet", and that answer is NOT a
+                    read of the 90/365 price path. The chatter windows (counts
+                    re-aggregated from chatter_daily) are not waited on; tone
+                    serves null with its reason while HARVST FWD-16/17 are held
          ACCEPT     The page draws any of the three windows from one request and
                     never computes a window itself.
          SOURCE     SAUX-19 (serving half), SAUX-28; DSGN FWD-21, 22, 26
