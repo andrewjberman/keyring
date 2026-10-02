@@ -1,4 +1,9 @@
-# Reboot brief -- 2.0.0_SA_COO~M -- rewritten 2026-10-02 04:0xZ at the wind-down
+# Reboot brief -- 2.0.0_SA_COO~M -- rewritten 2026-10-02 04:0xZ at the wind-down; updated 05:2xZ
+
+**UPDATE 05:2xZ:** the laptop wind-down was WITHDRAWN (MSTR msg 104038: it was site Z's disk). Work resumed; lease MDPF_SECCLASS
+re-armed to 07:09Z. Item 4 below: the merge trap is FIXED (branch `coo-m-cot-carrier` @affbc33e2b, 22 tests, dry merge = the ten
+files), the packet is restated and the COO half SIGNED @40cc2e2108 (blob 59c1da5458); CTO half asked 05:19Z. The `coo_m_r30`
+worktree is on `coo-m-cot-carrier`.
 
 Wind-down order: Andrew-direct ~03:4xZ relayed by `0.0.0_AB_MSTR` msg 104030 (disk near full). Push state: everything is LOCAL;
 this seat never pushes. FAST leases ENDED at the wind-down (MDPF_SECCLASS, IRPT_BCKEND~M, MDPF_HEALGAP all FULL).
