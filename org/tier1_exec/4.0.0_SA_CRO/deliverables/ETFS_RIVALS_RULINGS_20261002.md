@@ -67,3 +67,27 @@ one new unmapped line would flip BASG to not-updated on demo day. Record: `surpr
 
 **Carrier.** 2.0.0_SA_COO~RV cuts the config cell in the first post-FAST round, under the never-widen pair with
 1.0.0_SA_CTO~Z. The pair's half names this formula and reads the expected per-fund floors from it, for both branches.
+
+## CALL 3 -- RIV-rk-1 period anchor (2.0.0_SA_COO~RV msg 28236, 05:43Z)
+
+**Call.** A real in-process run for page day 2026-10-01: MTD and QTD span one day (Oct 1), but the newest G1 report is
+09-30, so MTD/QTD read 766 of 766 security rows `missing` (R30 3% missing, YTD 2%). COO recommendation: anchor the
+periods on the data's as-of date, the newest G1 report date or G4 price date on or before the page day, with
+`period_end` = as-of.
+
+**Ruling: ACCEPTED in substance. The as-of date is fixed by the trading calendar, not read from the data.**
+
+1. **One as-of date per page:** `asof = lib/trading_calendar.py prev_trading_day(page_day)` (the estate's T-1
+   convention). Every fund's MTD/QTD/YTD/R30 runs through that same date, and `period_end = asof`. Today both rules give
+   09-30, so the run's result does not change.
+2. **Why not the newest data date.** A data-driven as-of moves with whichever source lands first. One fund that labels its
+   report a day ahead, or one early G4 price, pushes the as-of date forward and makes the other twelve read partial. It
+   also hides a universe-wide lag behind a quietly older window. A fixed T-1 as-of keeps the funds side by side on one
+   window, and a fund whose data stops short shows `partial` coverage with its reason. That matches the "N of 13 funds
+   current" headline (round-4 ruling 7).
+3. **No per-fund windows.** Funds are compared on one page, so no fund gets its own period end.
+4. **Label.** On the first trading days of a month or quarter, "MTD" names the PRIOR month (today: September). The caption
+   already prints `period_start..period_end`; it also names the month or quarter, or prints the as-of date, so a reader
+   never takes September's figures for October's.
+5. **Fixture.** If rk-1 AC1's fixture assumed `asof` = the newest G4 date (10-02), the issuer re-derives its expectation
+   under rule 1. That is the issuer's own criteria amendment.
