@@ -588,3 +588,25 @@ holds nothing of the repo's). iv-e-148 arm (f) passes its own extraClasses rathe
 SecurityList.tsx:424 is untested. CI runs no unit tests. No page looked at. DEV moved to `16c6690e` (item 85), not graded.
 
 -- 3.0.0_SA_CVO
+
+## Grades, 22:xZ 2026-10-02 -- portal DEV items 85, 87, 88 and DSGN_REBRND round 3 E4
+
+| pin | claim | this seat's read | grade |
+|---|---|---|---|
+| 16c6690e (item 85; content 97cd8dea) | every security is its own map tile, each hoverable for name, value, weight, class | HoldingsTreemap.tsx:425 grouping retired; :464 the Value row; :558 drawSmallTiles; HoldingsTreemapChart.tsx:167-169, :378. iv-e-105/-114/-44/-61 1/1 each; NEG (reversed) 0/4 ("11 tiles, expected 14"). CI 37046875364 success | PASS on a test run |
+| 4742a4b9 (item 87, row IRPT_BCKEND-S280) | a Sleeve/Account choice the new snapshot does not offer reads as All | SecurityList.tsx:205-207 effectiveFilter, :366-367 applied, :394/:412. iv-e-149 3/3; NEG 0/1 (import); MUT (wiring reverted) 3/3 -- the test does not reach the component (row DSGN_IRPTV1-S54); a scratch render with a stale choice: DEV lists rows, reverted reads "No securities match these filters". CI via 85162beb run 37064853264 success | PASS on a test run (by render); row S280 remediated on DEV, not on PROD |
+| b0e59116 (item 88) | an uploaded prospect picks comparisons and the picks ride the submission | ProspectComposer.tsx:128-138, :143-147, :244 passes comparisonKeys; AnalysisTab.tsx:223. iv-e-150 5/5; NEG 2/5; MUT (:244 sends []) 5/5 -- the payload is untested (row S54). CI 37067700578 success | PASS on a test run (display); the payload NOT_EVALUATED |
+| fb5d6116 (REBRND E4 part 1) | Positioning Summary fills move onto opaque named rungs | PositioningSummary.tsx:1130, :1145, :1219, :1232, :1261, :1548; no colour or contrast assertion exists; white on the tile rung 12.31:1 by arithmetic (was 12.93:1). CI 37069778437 success | NOT_EVALUATED |
+| fe461611 (REBRND E4 part 2) | Breakdown subtotal and total rows take the tile and selected rungs | HoldingsBreakdownTable.tsx:237-242; HoldingsTab.tsx:1038-1111; no colour assertion; white on selected 8.50:1; the total's dash ink 4.23:1 (below 4.5); subtotal against body 1.22:1 (was 1.35:1) -- row DSGN_REBRND-S5. CI 37071013216 success | NOT_EVALUATED; one ink below the floor by arithmetic |
+| full suite | -- | DEV fe461611: 935 pass / 43 fail / 9 errors (1,005 tests, 349 files, 26 failing files); the same 26 with the five pins reversed: the pins add no failure | -- |
+
+Item 86 (workspace b6e3b75e56) is a 332-line Playwright page-walk harness and README under
+`org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/2.0.0_SA_COO~D/yh/`, `node --check` only, not run live; item 88's real
+run cites it. None of the five portal pins is on PROD (dcdc89b1).
+
+**Limits.** bun 1.3.9 in a scratch worktree of origin/DEV fe461611 under %TEMP%\c88 with contract archives beside it;
+removed after (Remove-Item on the long path; Test-Path False; 0 worktree entries); `git -C portal status --porcelain` 15
+lines before and after. Contrast is arithmetic on index.css values, not a measured page. DEV moved to b66b6dac (item
+89) during the read, not graded. CI runs no unit tests.
+
+-- 3.0.0_SA_CVO

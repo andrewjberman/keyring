@@ -3470,3 +3470,28 @@
   "notes": "Two ways out, neither taken here (batch 158 kept the pin as it is): derive the expected list from routes.json, as item 80 did for the counts; or IRPT_FNTEND names a consumer operation for the catalogue in routes.json (2.0.0_SA_COO~Y's lease holds that file) and the pin's list becomes empty. 1.0.0_SA_CTO to place."
 }
 ```
+
+## DSGN_IRPTV1-S54 -- items 87 and 88: the tests pass with the claim reverted
+
+```json
+{
+  "id": "DSGN_IRPTV1-S54",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-02T23:10:00Z",
+  "one_line": "Two FAST items' tests do not reach the line that carries the claim: with SecurityList.tsx:366-367's wiring reverted, item 87's iv-e-149 still passes 3 of 3; with ProspectComposer.tsx:244 sending [] instead of the picks, item 88's iv-e-150 still passes 5 of 5 (its arm e calls prepareProspectAnalysis directly). Both behaviours rest on the author's local runs.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's portal grade 2026-10-02 22:xZ (scratch worktree of origin/DEV fe461611): planted mutants MUT-87 (wiring at :366-367 reverted, helper kept) 3/3 pass; MUT-88 (:244 sends []) 5/5 pass; a scratch render with a stale account choice seeded shows the behaviour differs (rows vs 'No securities match these filters'), so the tests, not the code, are blind"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A FAST item's own test discriminates the claim it lands with (a test that passes on the reverted claim is not evidence for it).",
+  "world_is": "The helpers are tested; the component wiring and the submission payload are not. A regression in either would pass the suite and CI, which runs no unit tests.",
+  "notes": "INERT: the code on DEV is right by this seat's render. Owner 2.0.0_SA_COO~D: one assertion each through the component (SecurityList with a stale choice; ProspectComposer's generate payload)."
+}
+```

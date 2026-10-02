@@ -1510,6 +1510,27 @@
     "spec_asserts": "TO-RB-s-15 Amendment 1: render both sets with the same three routes, at 1440 wide, with NO fixtures, so that the pair is equal; ui-smoke.mjs is the capture.",
     "world_is": "On the BEFORE tree the /market MULTI-ASSET tab body depends on capture timing: 1 of 2 captures showed a spinner and 1 of 2 showed the settled error line. Both printed the same canvas and rc=0. The pack pairs the settled BEFORE capture with the AFTER capture and keeps the spinner capture beside it, disclosed on the pack's own page. Neither tree was changed. The other two BEFORE routes were captured once each.",
     "notes": "Filed on form, not significance: the order's equal-inputs rule was followed and still gave two BEFORE states. Which capture is the fairer BEFORE for the /market tab body is L9's reading."
+  },
+  {
+    "id": "DSGN_REBRND-S5",
+    "project": "DSGN_REBRND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-02T23:10:00Z",
+    "one_line": "Round 3 E4 (fe461611) moves the Holdings Breakdown's grand-total row onto the selected rung; its dash ink (text-white/60) then computes to 4.23:1 against that rung, below the 4.5:1 text minimum, and the subtotal row's separation from the body drops from 1.35:1 to 1.22:1. No test asserts colour or contrast for either E4 pin.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal origin/DEV fe461611: HoldingsBreakdownTable.tsx:237-242 (tile and selected rungs), HoldingsTab.tsx:1038-1111; the rung values in index.css:367-370; this seat's contrast arithmetic (WCAG relative luminance) on those values, 2026-10-02 22:xZ",
+        "no test file names a --layer-* rung; the four tests that render the table give the same result with fb5d6116 and fe461611 reversed"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The design law: text on a dark panel meets 4.5:1; named layers separate visibly.",
+    "world_is": "One ink falls just under the floor on the new rung and the subtotal band is harder to see than before. Measured by arithmetic on the CSS values, not on a rendered page.",
+    "notes": "INERT: DEV only (PROD dcdc89b1 does not carry the pins). Owner 2.0.0_SA_COO~D: raise the dash ink (white/70 clears 4.5 by the same arithmetic, to be measured) and add one contrast assertion for the E4 rungs."
   }
 ]
 ```
