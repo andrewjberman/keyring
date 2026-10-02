@@ -5939,6 +5939,28 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "spec_asserts": "Round-36 analysis ruling 6: the issuer records the error text on the row; a cell repairs it only if the cause would recur on new rows.",
       "world_is": "1 of 830 bbg bodies carries the mixed-type nested field; ai-5 isolates it locally so it strands no other row. No repair cell is cut. The issuer re-reads the bbg SilverRowError count at each round close: a second body with the same cause makes it recurring, and a coercion cell is then cut.",
       "notes": "Ruling 6 record; cites AMGT_HARVST-Z-W91-S19 (not edited in place)."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W90-S12",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~90",
+      "surfaced_at": "2026-10-02T09:00Z",
+      "one_line": "HVST-aj-1: a run-record request attempt carries no timestamp, so the 403 anchor reads the publisher's http event with status 403 inside the run's [started_at, finished_at]; an attempt's own `at` is used when present.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/transport.py PacedSession.get: the attempts row has publisher/request_kind/path/attempt/status/wait_seconds/class/signature, no time",
+          "lib/opal_data_harvest/worker.py record(): every event, http included, gets `at`; the http event carries status"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Order aj-1 s1.2: the presentation is the timestamp of the preceding bot_check/403 request attempt read from the run record's request attempts.",
+      "world_is": "The run record's attempts have no time. The grader anchors on the http-ledger 403 events within the run (plus an attempt `at` if a record ever carries one). AC2 against real windows is left to the issuer at the base; if the ledger 403 times differ from the CVO's 9/9, that is a row, not a re-pin.",
+      "notes": "Worker row; no live-path change beyond the one challenge_presented record."
     }
   ]
 ```
