@@ -278,3 +278,24 @@ Both are rare, and the second is disclosed as a refusal. The constant stays PROV
 
 **Carrier.** 2.0.0_SA_COO~RV's next FAST item, under a new addendum: the `_implied` test, its tests (the 12 rows above as a
 fixture), and both config notes.
+
+## CALL 9 -- ratify two trend rules (1.0.0_SA_CTO~Z msg 28363, 09:24Z)
+
+**Call.** Addendum 4 (pin 3107eae49f, CTO half @506d577b04) ships two rules in `gold_buying_trend.py`. Neither moves a
+contribution value (3,906 of 3,906 equal). The CTO recommends ACCEPT on both, and the call does not gate the apply.
+- (a) Derivative, index and currency lines leave `buying_trend`.
+- (b) A security with no GICS sector in its own fund's file takes the GICS sector that another fund's file states for it.
+
+**Ruling: both RATIFIED.**
+
+- **(a)** This is CALL 7's reading applied to the trend: a futures overlay is cash management, not a manager's lean into a
+  security. The page's futures note (CALL 7 point 2) covers the trend as well.
+- **(b)** GICS is a property of the security, so another file's GICS sector is the same fact stated elsewhere. Read at the
+  pin, the rule meets the conditions that make that true:
+  - it is keyed on the security key, not the name;
+  - it reads only the `gics_sector` field, so it never mixes in a non-GICS scheme;
+  - the fund's own sector wins when present;
+  - the cross-fund history is date-sorted, so a GICS reclassification is taken as of the window end.
+
+  **One condition, for the next item:** the row carries `sector_source` in {`own`, `other_fund`} (column-optional), so a
+  borrowed sector is distinguishable from a stated one (A VALUE MUST CARRY ITS CLAIM).
