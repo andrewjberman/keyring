@@ -1,0 +1,1218 @@
+{
+ "har": "page.har",
+ "clock_offset_ms": 1972,
+ "dated_responses": 40,
+ "window": [
+  "2026-10-02T23:24:15.913Z",
+  "2026-10-02T23:26:54.669Z"
+ ],
+ "handlers": [
+  "irpt-directory-search",
+  "irpt-holdings",
+  "irpt-status",
+  "irpt-ycharts-generate"
+ ],
+ "hops": [
+  {
+   "method": "POST",
+   "path": "/api/scoped/investor-reporting/directory/resolve",
+   "route_key": "POST /api/scoped/investor-reporting/directory/resolve",
+   "handler": "irpt-directory-search",
+   "tenant": null,
+   "status": 200,
+   "start_ms": 1790983458941.0,
+   "page_ms": 8467.0,
+   "ids": [],
+   "invocation": {
+    "request_id": "a512c8bf-ea31-4de9-81f5-46fa48b364ee",
+    "stream": "2026/10/02/[$LATEST]b508feb0ebc14b3aafc5566c7a9f2356",
+    "start_ms": 1790983465622.0,
+    "duration_ms": 249.42,
+    "billed_ms": 250.0,
+    "init_ms": null,
+    "max_mem_mb": 146.0,
+    "start": "2026-10-02T23:24:25.622Z",
+    "queue_ms": 4709
+   },
+   "start": "2026-10-02T23:24:18.941Z"
+  },
+  {
+   "method": "POST",
+   "path": "/api/scoped/investor-reporting/directory/resolve",
+   "route_key": "POST /api/scoped/investor-reporting/directory/resolve",
+   "handler": "irpt-directory-search",
+   "tenant": null,
+   "status": 200,
+   "start_ms": 1790983458942.0,
+   "page_ms": 9873.6,
+   "ids": [],
+   "invocation": {
+    "request_id": "a0439397-8933-4e1c-a799-31e0c90eb9f2",
+    "stream": "2026/10/02/[$LATEST]b508feb0ebc14b3aafc5566c7a9f2356",
+    "start_ms": 1790983466299.0,
+    "duration_ms": 200.79,
+    "billed_ms": 201.0,
+    "init_ms": null,
+    "max_mem_mb": 146.0,
+    "start": "2026-10-02T23:24:26.299Z",
+    "queue_ms": 5385
+   },
+   "start": "2026-10-02T23:24:18.942Z"
+  },
+  {
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/directory/browse",
+   "route_key": "GET /api/scoped/investor-reporting/directory/browse",
+   "handler": "irpt-directory-search",
+   "tenant": "49financial",
+   "status": 200,
+   "start_ms": 1790983468836.0,
+   "page_ms": 10040.6,
+   "ids": [],
+   "invocation": {
+    "request_id": "09b5c24c-8b69-4855-9f4f-ed173680196b",
+    "stream": "2026/10/02/[$LATEST]b508feb0ebc14b3aafc5566c7a9f2356",
+    "start_ms": 1790983477393.0,
+    "duration_ms": 295.28,
+    "billed_ms": 296.0,
+    "init_ms": null,
+    "max_mem_mb": 146.0,
+    "start": "2026-10-02T23:24:37.393Z",
+    "queue_ms": 6585
+   },
+   "start": "2026-10-02T23:24:28.836Z"
+  },
+  {
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/directory/browse",
+   "route_key": "GET /api/scoped/investor-reporting/directory/browse",
+   "handler": "irpt-directory-search",
+   "tenant": "cottonwood",
+   "status": 200,
+   "start_ms": 1790983468836.0,
+   "page_ms": 9843.2,
+   "ids": [],
+   "invocation": {
+    "request_id": "a95e5673-9b14-449f-9063-d4f50dc28a33",
+    "stream": "2026/10/02/[$LATEST]8d52718ceb794e4ea20f6f26de195c30",
+    "start_ms": 1790983477469.0,
+    "duration_ms": 152.31,
+    "billed_ms": 153.0,
+    "init_ms": null,
+    "max_mem_mb": 144.0,
+    "start": "2026-10-02T23:24:37.469Z",
+    "queue_ms": 6661
+   },
+   "start": "2026-10-02T23:24:28.836Z"
+  },
+  {
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/directory/browse",
+   "route_key": "GET /api/scoped/investor-reporting/directory/browse",
+   "handler": "irpt-directory-search",
+   "tenant": "inflection",
+   "status": 200,
+   "start_ms": 1790983468836.0,
+   "page_ms": 10620.1,
+   "ids": [],
+   "invocation": {
+    "request_id": "004c8be3-3e61-4621-b9ed-1f2f1546b435",
+    "stream": "2026/10/02/[$LATEST]b2162dd8351443538e158451cdc9782e",
+    "start_ms": 1790983477543.0,
+    "duration_ms": 251.3,
+    "billed_ms": 252.0,
+    "init_ms": null,
+    "max_mem_mb": 132.0,
+    "start": "2026-10-02T23:24:37.543Z",
+    "queue_ms": 6735
+   },
+   "start": "2026-10-02T23:24:28.836Z"
+  },
+  {
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/directory/browse",
+   "route_key": "GET /api/scoped/investor-reporting/directory/browse",
+   "handler": "irpt-directory-search",
+   "tenant": "49financial",
+   "status": 200,
+   "start_ms": 1790983469202.0,
+   "page_ms": 6042.7,
+   "ids": [],
+   "invocation": {
+    "request_id": "91955288-ce0d-420f-8e83-3ab06f17c4f4",
+    "stream": "2026/10/02/[$LATEST]b2162dd8351443538e158451cdc9782e",
+    "start_ms": 1790983480408.0,
+    "duration_ms": 183.6,
+    "billed_ms": 184.0,
+    "init_ms": null,
+    "max_mem_mb": 132.0,
+    "start": "2026-10-02T23:24:40.408Z",
+    "queue_ms": 9234
+   },
+   "start": "2026-10-02T23:24:29.202Z"
+  },
+  {
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/directory/browse",
+   "route_key": "GET /api/scoped/investor-reporting/directory/browse",
+   "handler": "irpt-directory-search",
+   "tenant": "cottonwood",
+   "status": 200,
+   "start_ms": 1790983469203.0,
+   "page_ms": 6076.7,
+   "ids": [],
+   "invocation": {
+    "request_id": "fdcff72d-889f-4639-b0ce-74a645e1946f",
+    "stream": "2026/10/02/[$LATEST]b508feb0ebc14b3aafc5566c7a9f2356",
+    "start_ms": 1790983480421.0,
+    "duration_ms": 113.23,
+    "billed_ms": 114.0,
+    "init_ms": null,
+    "max_mem_mb": 146.0,
+    "start": "2026-10-02T23:24:40.421Z",
+    "queue_ms": 9246
+   },
+   "start": "2026-10-02T23:24:29.203Z"
+  },
+  {
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/directory/browse",
+   "route_key": "GET /api/scoped/investor-reporting/directory/browse",
+   "handler": "irpt-directory-search",
+   "tenant": "inflection",
+   "status": 200,
+   "start_ms": 1790983469203.0,
+   "page_ms": 5953.3,
+   "ids": [],
+   "invocation": {
+    "request_id": "71380aec-3cef-4217-8a50-4a3a07fb7cf8",
+    "stream": "2026/10/02/[$LATEST]8d52718ceb794e4ea20f6f26de195c30",
+    "start_ms": 1790983480471.0,
+    "duration_ms": 300.44,
+    "billed_ms": 301.0,
+    "init_ms": null,
+    "max_mem_mb": 144.0,
+    "start": "2026-10-02T23:24:40.471Z",
+    "queue_ms": 9296
+   },
+   "start": "2026-10-02T23:24:29.203Z"
+  },
+  {
+   "method": "POST",
+   "path": "/api/scoped/investor-reporting/selections",
+   "route_key": "POST /api/scoped/investor-reporting/selections",
+   "handler": "irpt-directory-search",
+   "tenant": "cottonwood",
+   "status": 200,
+   "start_ms": 1790983475437.0,
+   "page_ms": 5183.8,
+   "ids": [],
+   "invocation": {
+    "request_id": "c586eb76-4e04-4b86-a9d3-2ffe06ba5f69",
+    "stream": "2026/10/02/[$LATEST]8d52718ceb794e4ea20f6f26de195c30",
+    "start_ms": 1790983482749.0,
+    "duration_ms": 240.11,
+    "billed_ms": 241.0,
+    "init_ms": null,
+    "max_mem_mb": 144.0,
+    "start": "2026-10-02T23:24:42.749Z",
+    "queue_ms": 5340
+   },
+   "start": "2026-10-02T23:24:35.437Z"
+  },
+  {
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/holdings/sel_1ddc3825cd16c78cc8dea24482e351a7501bbe6669d9f7c86d1ead06fb97fbbc",
+   "route_key": "GET /api/scoped/investor-reporting/holdings/{accountSetId}",
+   "handler": "irpt-holdings",
+   "tenant": "cottonwood",
+   "status": 200,
+   "start_ms": 1790983480628.0,
+   "page_ms": 30480.4,
+   "ids": [],
+   "invocation": {
+    "request_id": "4c03f389-14f7-4d5b-89bb-795c8e8e9534",
+    "stream": "2026/10/02/[$LATEST]95ad9268257949f9ba0d9038e1bdf6b4",
+    "start_ms": 1790983492384.0,
+    "duration_ms": 3391.93,
+    "billed_ms": 3550.0,
+    "init_ms": 157.27,
+    "max_mem_mb": 121.0,
+    "start": "2026-10-02T23:24:52.384Z",
+    "queue_ms": 9784
+   },
+   "start": "2026-10-02T23:24:40.628Z"
+  },
+  {
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/analysis/comparisons",
+   "route_key": "GET /api/scoped/investor-reporting/analysis/comparisons",
+   "handler": "irpt-ycharts-generate",
+   "tenant": "cottonwood",
+   "status": 200,
+   "start_ms": 1790983482688.0,
+   "page_ms": 7546.7,
+   "ids": [],
+   "invocation": {
+    "request_id": "ae72cc66-c7f7-4f10-b82c-57e368a35d28",
+    "stream": "2026/10/02/[$LATEST]c08af204b9fe424a97011c2729b609c2",
+    "start_ms": 1790983489993.0,
+    "duration_ms": 2388.27,
+    "billed_ms": 2540.0,
+    "init_ms": 150.99,
+    "max_mem_mb": 116.0,
+    "start": "2026-10-02T23:24:49.993Z",
+    "queue_ms": 5333
+   },
+   "start": "2026-10-02T23:24:42.688Z"
+  },
+  {
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/analysis/comparisons",
+   "route_key": "GET /api/scoped/investor-reporting/analysis/comparisons",
+   "handler": "irpt-ycharts-generate",
+   "tenant": "cottonwood",
+   "status": 200,
+   "start_ms": 1790983482688.0,
+   "page_ms": 9868.1,
+   "ids": [],
+   "invocation": {
+    "request_id": "57dff84c-f042-4475-a463-738b505c3aa8",
+    "stream": "2026/10/02/[$LATEST]c6d11e2260744aac8337fd65b6cc24f1",
+    "start_ms": 1790983492220.0,
+    "duration_ms": 2574.91,
+    "billed_ms": 2712.0,
+    "init_ms": 137.09,
+    "max_mem_mb": 116.0,
+    "start": "2026-10-02T23:24:52.220Z",
+    "queue_ms": 7560
+   },
+   "start": "2026-10-02T23:24:42.688Z"
+  },
+  {
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/directory/search",
+   "route_key": "GET /api/scoped/investor-reporting/directory/search",
+   "handler": "irpt-directory-search",
+   "tenant": "cottonwood",
+   "status": 200,
+   "start_ms": 1790983482688.0,
+   "page_ms": 7354.0,
+   "ids": [],
+   "invocation": {
+    "request_id": "fcef5c76-c839-4f03-90a7-a65daf898da0",
+    "stream": "2026/10/02/[$LATEST]8d52718ceb794e4ea20f6f26de195c30",
+    "start_ms": 1790983491980.0,
+    "duration_ms": 191.32,
+    "billed_ms": 192.0,
+    "init_ms": null,
+    "max_mem_mb": 144.0,
+    "start": "2026-10-02T23:24:51.980Z",
+    "queue_ms": 7320
+   },
+   "start": "2026-10-02T23:24:42.688Z"
+  },
+  {
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/analysis/requests",
+   "route_key": "GET /api/scoped/investor-reporting/analysis/requests",
+   "handler": "irpt-status",
+   "tenant": "cottonwood",
+   "status": 200,
+   "start_ms": 1790983482688.0,
+   "page_ms": 14844.6,
+   "ids": [
+    "REQ-2119def4de9e8fea43abb6fe",
+    "REQ-3971fc2d5421c12412367e0b",
+    "REQ-3a1b73a8dead02a17a09043b",
+    "REQ-4b2d437450499dde471c2f98",
+    "REQ-51f1413b9d84d26a66aaa71c",
+    "REQ-59b42fab4293260d6d439c39",
+    "REQ-602834fd3317160722ab489d",
+    "REQ-67e12718b0ba7c0c70ebb45b",
+    "REQ-717c91a59228070704e81cba",
+    "REQ-742fc48185221dc5dec14e65",
+    "REQ-7c7a9e45eb496564f635754a",
+    "REQ-7ea49c2d9b27957d0ea8888f",
+    "REQ-86f1ce7062356bc5c109ce12",
+    "REQ-93441e4e201b40e3b119c46b",
+    "REQ-a1d9abc0bc037ea3d9e4a7ed",
+    "REQ-a69e5751d42c374f1d2354f9",
+    "REQ-a6fa96020798aa2f3276d4d0",
+    "REQ-a8e81b8eccc800b2f3a00c8c",
+    "REQ-abec171d60e0aa1f359c18ed",
+    "REQ-c07e64ca6c74b8e5310f56e0",
+    "REQ-e2fc5dd5dc2e050cc82a57e4",
+    "REQ-e4b7f5aba7fb218c37f28002"
+   ],
+   "invocation": {
+    "request_id": "e697f984-2bf8-42d7-a28f-62edf82882ca",
+    "stream": "2026/10/02/[$LATEST]9af114e1edcf489f83b3e87bfc81f0b5",
+    "start_ms": 1790983492464.0,
+    "duration_ms": 7265.67,
+    "billed_ms": 7401.0,
+    "init_ms": 134.79,
+    "max_mem_mb": 205.0,
+    "start": "2026-10-02T23:24:52.464Z",
+    "queue_ms": 7804
+   },
+   "start": "2026-10-02T23:24:42.688Z"
+  },
+  {
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/holdings/sel_1ddc3825cd16c78cc8dea24482e351a7501bbe6669d9f7c86d1ead06fb97fbbc",
+   "route_key": "GET /api/scoped/investor-reporting/holdings/{accountSetId}",
+   "handler": "irpt-holdings",
+   "tenant": "cottonwood",
+   "status": 200,
+   "start_ms": 1790983482688.0,
+   "page_ms": 14735.2,
+   "ids": [],
+   "invocation": {
+    "request_id": "a9dd78de-fca5-4eec-937d-017ad92a2836",
+    "stream": "2026/10/02/[$LATEST]95ad9268257949f9ba0d9038e1bdf6b4",
+    "start_ms": 1790983500417.0,
+    "duration_ms": 1943.02,
+    "billed_ms": 1944.0,
+    "init_ms": null,
+    "max_mem_mb": 121.0,
+    "start": "2026-10-02T23:25:00.417Z",
+    "queue_ms": 15757
+   },
+   "start": "2026-10-02T23:24:42.688Z"
+  },
+  {
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/analysis/comparisons",
+   "route_key": "GET /api/scoped/investor-reporting/analysis/comparisons",
+   "handler": "irpt-ycharts-generate",
+   "tenant": "cottonwood",
+   "status": 200,
+   "start_ms": 1790983482688.0,
+   "page_ms": 11833.5,
+   "ids": [],
+   "invocation": {
+    "request_id": "776acd91-2173-4f53-a9d6-c459c2c4ed72",
+    "stream": "2026/10/02/[$LATEST]c6d11e2260744aac8337fd65b6cc24f1",
+    "start_ms": 1790983496451.0,
+    "duration_ms": 142.86,
+    "billed_ms": 143.0,
+    "init_ms": null,
+    "max_mem_mb": 116.0,
+    "start": "2026-10-02T23:24:56.451Z",
+    "queue_ms": 11791
+   },
+   "start": "2026-10-02T23:24:42.688Z"
+  },
+  {
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/analysis/comparisons",
+   "route_key": "GET /api/scoped/investor-reporting/analysis/comparisons",
+   "handler": "irpt-ycharts-generate",
+   "tenant": "cottonwood",
+   "status": 200,
+   "start_ms": 1790983482688.0,
+   "page_ms": 12004.1,
+   "ids": [],
+   "invocation": {
+    "request_id": "8ce92a3f-5ed1-4b31-b445-ac1f975c69fe",
+    "stream": "2026/10/02/[$LATEST]c08af204b9fe424a97011c2729b609c2",
+    "start_ms": 1790983496588.0,
+    "duration_ms": 150.75,
+    "billed_ms": 151.0,
+    "init_ms": null,
+    "max_mem_mb": 116.0,
+    "start": "2026-10-02T23:24:56.588Z",
+    "queue_ms": 11928
+   },
+   "start": "2026-10-02T23:24:42.688Z"
+  },
+  {
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/directory/search",
+   "route_key": "GET /api/scoped/investor-reporting/directory/search",
+   "handler": "irpt-directory-search",
+   "tenant": "cottonwood",
+   "status": 200,
+   "start_ms": 1790983482688.0,
+   "page_ms": 14819.3,
+   "ids": [],
+   "invocation": {
+    "request_id": "f7256f4c-36f8-4d8a-8f16-6e37128552cb",
+    "stream": "2026/10/02/[$LATEST]8d52718ceb794e4ea20f6f26de195c30",
+    "start_ms": 1790983499522.0,
+    "duration_ms": 169.55,
+    "billed_ms": 170.0,
+    "init_ms": null,
+    "max_mem_mb": 144.0,
+    "start": "2026-10-02T23:24:59.522Z",
+    "queue_ms": 14862
+   },
+   "start": "2026-10-02T23:24:42.688Z"
+  },
+  {
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/analysis/requests",
+   "route_key": "GET /api/scoped/investor-reporting/analysis/requests",
+   "handler": "irpt-status",
+   "tenant": "cottonwood",
+   "status": 200,
+   "start_ms": 1790983482688.0,
+   "page_ms": 19371.2,
+   "ids": [
+    "REQ-2119def4de9e8fea43abb6fe",
+    "REQ-3971fc2d5421c12412367e0b",
+    "REQ-3a1b73a8dead02a17a09043b",
+    "REQ-4b2d437450499dde471c2f98",
+    "REQ-51f1413b9d84d26a66aaa71c",
+    "REQ-59b42fab4293260d6d439c39",
+    "REQ-602834fd3317160722ab489d",
+    "REQ-67e12718b0ba7c0c70ebb45b",
+    "REQ-717c91a59228070704e81cba",
+    "REQ-742fc48185221dc5dec14e65",
+    "REQ-7c7a9e45eb496564f635754a",
+    "REQ-7ea49c2d9b27957d0ea8888f",
+    "REQ-86f1ce7062356bc5c109ce12",
+    "REQ-93441e4e201b40e3b119c46b",
+    "REQ-a1d9abc0bc037ea3d9e4a7ed",
+    "REQ-a69e5751d42c374f1d2354f9",
+    "REQ-a6fa96020798aa2f3276d4d0",
+    "REQ-a8e81b8eccc800b2f3a00c8c",
+    "REQ-abec171d60e0aa1f359c18ed",
+    "REQ-c07e64ca6c74b8e5310f56e0",
+    "REQ-e2fc5dd5dc2e050cc82a57e4",
+    "REQ-e4b7f5aba7fb218c37f28002"
+   ],
+   "invocation": {
+    "request_id": "e35a8abe-83c8-40bb-a93e-eb5f2e39d936",
+    "stream": "2026/10/02/[$LATEST]9af114e1edcf489f83b3e87bfc81f0b5",
+    "start_ms": 1790983501553.0,
+    "duration_ms": 2881.1,
+    "billed_ms": 2882.0,
+    "init_ms": null,
+    "max_mem_mb": 206.0,
+    "start": "2026-10-02T23:25:01.553Z",
+    "queue_ms": 16893
+   },
+   "start": "2026-10-02T23:24:42.688Z"
+  },
+  {
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/holdings/sel_1ddc3825cd16c78cc8dea24482e351a7501bbe6669d9f7c86d1ead06fb97fbbc",
+   "route_key": "GET /api/scoped/investor-reporting/holdings/{accountSetId}",
+   "handler": "irpt-holdings",
+   "tenant": "cottonwood",
+   "status": 200,
+   "start_ms": 1790983482688.0,
+   "page_ms": 27494.3,
+   "ids": [],
+   "invocation": {
+    "request_id": "e063eae5-6c19-472a-8506-f1c450ed1e61",
+    "stream": "2026/10/02/[$LATEST]95ad9268257949f9ba0d9038e1bdf6b4",
+    "start_ms": 1790983505131.0,
+    "duration_ms": 1351.55,
+    "billed_ms": 1352.0,
+    "init_ms": null,
+    "max_mem_mb": 121.0,
+    "start": "2026-10-02T23:25:05.131Z",
+    "queue_ms": 20471
+   },
+   "start": "2026-10-02T23:24:42.688Z"
+  },
+  {
+   "method": "POST",
+   "path": "/api/scoped/investor-reporting/analysis/inputs",
+   "route_key": "POST /api/scoped/investor-reporting/analysis/inputs",
+   "handler": "irpt-ycharts-generate",
+   "tenant": "cottonwood",
+   "status": 200,
+   "start_ms": 1790983484639.0,
+   "page_ms": 20749.5,
+   "ids": [
+    "UP-f0d8aead77a30d934d1ea80a84d5ff5f000a07e12cee45c2161878d5335a3547"
+   ],
+   "invocation": {
+    "request_id": "b72653a9-753a-4e55-9b49-0c5fdb0ad5d3",
+    "stream": "2026/10/02/[$LATEST]c08af204b9fe424a97011c2729b609c2",
+    "start_ms": 1790983506848.0,
+    "duration_ms": 708.19,
+    "billed_ms": 709.0,
+    "init_ms": null,
+    "max_mem_mb": 117.0,
+    "start": "2026-10-02T23:25:06.848Z",
+    "queue_ms": 20237
+   },
+   "start": "2026-10-02T23:24:44.639Z"
+  },
+  {
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/status/REQ-2119def4de9e8fea43abb6fe",
+   "route_key": "GET /api/scoped/investor-reporting/status/{jobId}",
+   "handler": "irpt-status",
+   "tenant": "cottonwood",
+   "status": 200,
+   "start_ms": 1790983502058.0,
+   "page_ms": 6510.1,
+   "ids": [
+    "REQ-2119def4de9e8fea43abb6fe"
+   ],
+   "invocation": {
+    "request_id": "95cccfb5-efbb-4136-9808-ae5c07a7c793",
+    "stream": "2026/10/02/[$LATEST]9af114e1edcf489f83b3e87bfc81f0b5",
+    "start_ms": 1790983509287.0,
+    "duration_ms": 469.54,
+    "billed_ms": 470.0,
+    "init_ms": null,
+    "max_mem_mb": 212.0,
+    "start": "2026-10-02T23:25:09.287Z",
+    "queue_ms": 5257
+   },
+   "start": "2026-10-02T23:25:02.058Z"
+  },
+  {
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/status/REQ-3971fc2d5421c12412367e0b",
+   "route_key": "GET /api/scoped/investor-reporting/status/{jobId}",
+   "handler": "irpt-status",
+   "tenant": "cottonwood",
+   "status": 200,
+   "start_ms": 1790983502059.0,
+   "page_ms": 5741.7,
+   "ids": [
+    "REQ-3971fc2d5421c12412367e0b"
+   ],
+   "invocation": {
+    "request_id": "6e5dad14-0750-4bcc-bf29-68aa2a6102ca",
+    "stream": "2026/10/02/[$LATEST]993a3fa8a2064afcbad33409ce1bf36a",
+    "start_ms": 1790983509554.0,
+    "duration_ms": 1231.16,
+    "billed_ms": 1372.0,
+    "init_ms": 140.29,
+    "max_mem_mb": 119.0,
+    "start": "2026-10-02T23:25:09.554Z",
+    "queue_ms": 5523
+   },
+   "start": "2026-10-02T23:25:02.059Z"
+  },
+  {
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/status/REQ-3a1b73a8dead02a17a09043b",
+   "route_key": "GET /api/scoped/investor-reporting/status/{jobId}",
+   "handler": "irpt-status",
+   "tenant": "cottonwood",
+   "status": 200,
+   "start_ms": 1790983502059.0,
+   "page_ms": 5510.9,
+   "ids": [
+    "REQ-3a1b73a8dead02a17a09043b"
+   ],
+   "invocation": {
+    "request_id": "83a0945e-363f-4319-9083-558461e257f2",
+    "stream": "2026/10/02/[$LATEST]9af114e1edcf489f83b3e87bfc81f0b5",
+    "start_ms": 1790983509761.0,
+    "duration_ms": 148.93,
+    "billed_ms": 149.0,
+    "init_ms": null,
+    "max_mem_mb": 212.0,
+    "start": "2026-10-02T23:25:09.761Z",
+    "queue_ms": 5730
+   },
+   "start": "2026-10-02T23:25:02.059Z"
+  },
+  {
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/status/REQ-4b2d437450499dde471c2f98",
+   "route_key": "GET /api/scoped/investor-reporting/status/{jobId}",
+   "handler": "irpt-status",
+   "tenant": "cottonwood",
+   "status": 200,
+   "start_ms": 1790983507569.0,
+   "page_ms": 10868.8,
+   "ids": [
+    "REQ-4b2d437450499dde471c2f98"
+   ],
+   "invocation": {
+    "request_id": "a4608d37-6e3c-4a59-956a-48fee3f4984e",
+    "stream": "2026/10/02/[$LATEST]993a3fa8a2064afcbad33409ce1bf36a",
+    "start_ms": 1790983514505.0,
+    "duration_ms": 141.22,
+    "billed_ms": 142.0,
+    "init_ms": null,
+    "max_mem_mb": 119.0,
+    "start": "2026-10-02T23:25:14.505Z",
+    "queue_ms": 4964
+   },
+   "start": "2026-10-02T23:25:07.569Z"
+  },
+  {
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/status/REQ-51f1413b9d84d26a66aaa71c",
+   "route_key": "GET /api/scoped/investor-reporting/status/{jobId}",
+   "handler": "irpt-status",
+   "tenant": "cottonwood",
+   "status": 200,
+   "start_ms": 1790983507797.0,
+   "page_ms": 4388.8,
+   "ids": [
+    "REQ-51f1413b9d84d26a66aaa71c"
+   ],
+   "invocation": {
+    "request_id": "ced1c143-736e-4345-8e07-3333d8160076",
+    "stream": "2026/10/02/[$LATEST]993a3fa8a2064afcbad33409ce1bf36a",
+    "start_ms": 1790983515518.0,
+    "duration_ms": 1134.72,
+    "billed_ms": 1135.0,
+    "init_ms": null,
+    "max_mem_mb": 119.0,
+    "start": "2026-10-02T23:25:15.518Z",
+    "queue_ms": 5749
+   },
+   "start": "2026-10-02T23:25:07.797Z"
+  },
+  {
+   "method": "POST",
+   "path": "/api/scoped/investor-reporting/analysis/inputs",
+   "route_key": "POST /api/scoped/investor-reporting/analysis/inputs",
+   "handler": "irpt-ycharts-generate",
+   "tenant": "cottonwood",
+   "status": 200,
+   "start_ms": 1790983508403.0,
+   "page_ms": 10654.3,
+   "ids": [
+    "UP-f0d8aead77a30d934d1ea80a84d5ff5f000a07e12cee45c2161878d5335a3547"
+   ],
+   "invocation": {
+    "request_id": "798a5064-5968-4eb7-83e1-fee74b58390c",
+    "stream": "2026/10/02/[$LATEST]c08af204b9fe424a97011c2729b609c2",
+    "start_ms": 1790983516172.0,
+    "duration_ms": 191.38,
+    "billed_ms": 192.0,
+    "init_ms": null,
+    "max_mem_mb": 117.0,
+    "start": "2026-10-02T23:25:16.172Z",
+    "queue_ms": 5797
+   },
+   "start": "2026-10-02T23:25:08.403Z"
+  },
+  {
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/status/REQ-59b42fab4293260d6d439c39",
+   "route_key": "GET /api/scoped/investor-reporting/status/{jobId}",
+   "handler": "irpt-status",
+   "tenant": "cottonwood",
+   "status": 200,
+   "start_ms": 1790983508565.0,
+   "page_ms": 5957.5,
+   "ids": [
+    "REQ-59b42fab4293260d6d439c39"
+   ],
+   "invocation": {
+    "request_id": "4d77950b-b5e4-4ed6-b165-8348d45e63fc",
+    "stream": "2026/10/02/[$LATEST]9af114e1edcf489f83b3e87bfc81f0b5",
+    "start_ms": 1790983516117.0,
+    "duration_ms": 1319.56,
+    "billed_ms": 1320.0,
+    "init_ms": null,
+    "max_mem_mb": 213.0,
+    "start": "2026-10-02T23:25:16.117Z",
+    "queue_ms": 5580
+   },
+   "start": "2026-10-02T23:25:08.565Z"
+  },
+  {
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/status/REQ-602834fd3317160722ab489d",
+   "route_key": "GET /api/scoped/investor-reporting/status/{jobId}",
+   "handler": "irpt-status",
+   "tenant": "cottonwood",
+   "status": 200,
+   "start_ms": 1790983512189.0,
+   "page_ms": 2927.2,
+   "ids": [
+    "REQ-602834fd3317160722ab489d"
+   ],
+   "invocation": {
+    "request_id": "0de9157c-50c6-46a3-b2f8-245d89be1c33",
+    "stream": "2026/10/02/[$LATEST]993a3fa8a2064afcbad33409ce1bf36a",
+    "start_ms": 1790983516932.0,
+    "duration_ms": 141.41,
+    "billed_ms": 142.0,
+    "init_ms": null,
+    "max_mem_mb": 119.0,
+    "start": "2026-10-02T23:25:16.932Z",
+    "queue_ms": 2771
+   },
+   "start": "2026-10-02T23:25:12.189Z"
+  },
+  {
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/status/REQ-67e12718b0ba7c0c70ebb45b",
+   "route_key": "GET /api/scoped/investor-reporting/status/{jobId}",
+   "handler": "irpt-status",
+   "tenant": "cottonwood",
+   "status": 200,
+   "start_ms": 1790983514522.0,
+   "page_ms": 5762.4,
+   "ids": [
+    "REQ-67e12718b0ba7c0c70ebb45b"
+   ],
+   "invocation": {
+    "request_id": "480bf772-71ed-499c-9d78-722b802eb8f6",
+    "stream": "2026/10/02/[$LATEST]9af114e1edcf489f83b3e87bfc81f0b5",
+    "start_ms": 1790983521691.0,
+    "duration_ms": 987.13,
+    "billed_ms": 988.0,
+    "init_ms": null,
+    "max_mem_mb": 213.0,
+    "start": "2026-10-02T23:25:21.691Z",
+    "queue_ms": 5197
+   },
+   "start": "2026-10-02T23:25:14.522Z"
+  },
+  {
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/status/REQ-717c91a59228070704e81cba",
+   "route_key": "GET /api/scoped/investor-reporting/status/{jobId}",
+   "handler": "irpt-status",
+   "tenant": "cottonwood",
+   "status": 200,
+   "start_ms": 1790983515112.0,
+   "page_ms": 5057.4,
+   "ids": [
+    "REQ-717c91a59228070704e81cba"
+   ],
+   "invocation": {
+    "request_id": "a0404c1a-5d0a-4dd6-b677-24526268cf23",
+    "stream": "2026/10/02/[$LATEST]993a3fa8a2064afcbad33409ce1bf36a",
+    "start_ms": 1790983522310.0,
+    "duration_ms": 182.14,
+    "billed_ms": 183.0,
+    "init_ms": null,
+    "max_mem_mb": 119.0,
+    "start": "2026-10-02T23:25:22.310Z",
+    "queue_ms": 5226
+   },
+   "start": "2026-10-02T23:25:15.112Z"
+  },
+  {
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/status/REQ-742fc48185221dc5dec14e65",
+   "route_key": "GET /api/scoped/investor-reporting/status/{jobId}",
+   "handler": "irpt-status",
+   "tenant": "cottonwood",
+   "status": 200,
+   "start_ms": 1790983518435.0,
+   "page_ms": 4193.6,
+   "ids": [
+    "REQ-742fc48185221dc5dec14e65"
+   ],
+   "invocation": {
+    "request_id": "525c3d1a-5ec2-4c0e-8c19-1625581081f2",
+    "stream": "2026/10/02/[$LATEST]9af114e1edcf489f83b3e87bfc81f0b5",
+    "start_ms": 1790983524676.0,
+    "duration_ms": 159.81,
+    "billed_ms": 160.0,
+    "init_ms": null,
+    "max_mem_mb": 213.0,
+    "start": "2026-10-02T23:25:24.676Z",
+    "queue_ms": 4269
+   },
+   "start": "2026-10-02T23:25:18.435Z"
+  },
+  {
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/status/REQ-7c7a9e45eb496564f635754a",
+   "route_key": "GET /api/scoped/investor-reporting/status/{jobId}",
+   "handler": "irpt-status",
+   "tenant": "cottonwood",
+   "status": 200,
+   "start_ms": 1790983520169.0,
+   "page_ms": 12269.6,
+   "ids": [
+    "REQ-7c7a9e45eb496564f635754a"
+   ],
+   "invocation": {
+    "request_id": "8ce3a35f-c5ec-49aa-97e9-c8c602b5b81c",
+    "stream": "2026/10/02/[$LATEST]9af114e1edcf489f83b3e87bfc81f0b5",
+    "start_ms": 1790983530646.0,
+    "duration_ms": 163.74,
+    "billed_ms": 164.0,
+    "init_ms": null,
+    "max_mem_mb": 213.0,
+    "start": "2026-10-02T23:25:30.646Z",
+    "queue_ms": 8505
+   },
+   "start": "2026-10-02T23:25:20.169Z"
+  },
+  {
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/status/REQ-7ea49c2d9b27957d0ea8888f",
+   "route_key": "GET /api/scoped/investor-reporting/status/{jobId}",
+   "handler": "irpt-status",
+   "tenant": "cottonwood",
+   "status": 200,
+   "start_ms": 1790983520284.0,
+   "page_ms": 13124.0,
+   "ids": [
+    "REQ-7ea49c2d9b27957d0ea8888f"
+   ],
+   "invocation": {
+    "request_id": "9e771943-6a0b-486e-96af-397071f99df6",
+    "stream": "2026/10/02/[$LATEST]9af114e1edcf489f83b3e87bfc81f0b5",
+    "start_ms": 1790983534470.0,
+    "duration_ms": 188.74,
+    "billed_ms": 189.0,
+    "init_ms": null,
+    "max_mem_mb": 213.0,
+    "start": "2026-10-02T23:25:34.470Z",
+    "queue_ms": 12214
+   },
+   "start": "2026-10-02T23:25:20.284Z"
+  },
+  {
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/status/REQ-86f1ce7062356bc5c109ce12",
+   "route_key": "GET /api/scoped/investor-reporting/status/{jobId}",
+   "handler": "irpt-status",
+   "tenant": "cottonwood",
+   "status": 200,
+   "start_ms": 1790983522629.0,
+   "page_ms": 6180.9,
+   "ids": [
+    "REQ-86f1ce7062356bc5c109ce12"
+   ],
+   "invocation": {
+    "request_id": "8a043000-2dd7-4f6f-8452-e7e561d23aee",
+    "stream": "2026/10/02/[$LATEST]993a3fa8a2064afcbad33409ce1bf36a",
+    "start_ms": 1790983534530.0,
+    "duration_ms": 1124.63,
+    "billed_ms": 1125.0,
+    "init_ms": null,
+    "max_mem_mb": 119.0,
+    "start": "2026-10-02T23:25:34.530Z",
+    "queue_ms": 9929
+   },
+   "start": "2026-10-02T23:25:22.629Z"
+  },
+  {
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/status/REQ-93441e4e201b40e3b119c46b",
+   "route_key": "GET /api/scoped/investor-reporting/status/{jobId}",
+   "handler": "irpt-status",
+   "tenant": "cottonwood",
+   "status": 200,
+   "start_ms": 1790983528808.0,
+   "page_ms": 4690.0,
+   "ids": [
+    "REQ-93441e4e201b40e3b119c46b"
+   ],
+   "invocation": {
+    "request_id": "a44b9743-d07a-4a09-9057-c599e38235f7",
+    "stream": "2026/10/02/[$LATEST]9af114e1edcf489f83b3e87bfc81f0b5",
+    "start_ms": 1790983535598.0,
+    "duration_ms": 154.23,
+    "billed_ms": 155.0,
+    "init_ms": null,
+    "max_mem_mb": 213.0,
+    "start": "2026-10-02T23:25:35.598Z",
+    "queue_ms": 4818
+   },
+   "start": "2026-10-02T23:25:28.808Z"
+  },
+  {
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/status/REQ-a1d9abc0bc037ea3d9e4a7ed",
+   "route_key": "GET /api/scoped/investor-reporting/status/{jobId}",
+   "handler": "irpt-status",
+   "tenant": "cottonwood",
+   "status": 200,
+   "start_ms": 1790983532439.0,
+   "page_ms": 11276.4,
+   "ids": [
+    "REQ-a1d9abc0bc037ea3d9e4a7ed"
+   ],
+   "invocation": {
+    "request_id": "876376dd-5921-4044-8a2c-041e043945c7",
+    "stream": "2026/10/02/[$LATEST]9af114e1edcf489f83b3e87bfc81f0b5",
+    "start_ms": 1790983543955.0,
+    "duration_ms": 1138.81,
+    "billed_ms": 1139.0,
+    "init_ms": null,
+    "max_mem_mb": 213.0,
+    "start": "2026-10-02T23:25:43.955Z",
+    "queue_ms": 9544
+   },
+   "start": "2026-10-02T23:25:32.439Z"
+  },
+  {
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/status/REQ-a69e5751d42c374f1d2354f9",
+   "route_key": "GET /api/scoped/investor-reporting/status/{jobId}",
+   "handler": "irpt-status",
+   "tenant": "cottonwood",
+   "status": 200,
+   "start_ms": 1790983533409.0,
+   "page_ms": 9202.2,
+   "ids": [
+    "REQ-a69e5751d42c374f1d2354f9"
+   ],
+   "invocation": {
+    "request_id": "797494d4-c2f3-4339-84f6-758f071ccf63",
+    "stream": "2026/10/02/[$LATEST]993a3fa8a2064afcbad33409ce1bf36a",
+    "start_ms": 1790983545049.0,
+    "duration_ms": 1075.22,
+    "billed_ms": 1076.0,
+    "init_ms": null,
+    "max_mem_mb": 119.0,
+    "start": "2026-10-02T23:25:45.049Z",
+    "queue_ms": 9668
+   },
+   "start": "2026-10-02T23:25:33.409Z"
+  },
+  {
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/status/REQ-a6fa96020798aa2f3276d4d0",
+   "route_key": "GET /api/scoped/investor-reporting/status/{jobId}",
+   "handler": "irpt-status",
+   "tenant": "cottonwood",
+   "status": 200,
+   "start_ms": 1790983533497.0,
+   "page_ms": 11579.4,
+   "ids": [
+    "REQ-a6fa96020798aa2f3276d4d0"
+   ],
+   "invocation": {
+    "request_id": "661ea804-a1a0-4a9e-8bf1-375fe03f1a02",
+    "stream": "2026/10/02/[$LATEST]78b71fc5103f422aa024ebd274b38471",
+    "start_ms": 1790983545083.0,
+    "duration_ms": 2249.65,
+    "billed_ms": 2418.0,
+    "init_ms": 168.0,
+    "max_mem_mb": 119.0,
+    "start": "2026-10-02T23:25:45.083Z",
+    "queue_ms": 9614
+   },
+   "start": "2026-10-02T23:25:33.497Z"
+  },
+  {
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/status/REQ-a8e81b8eccc800b2f3a00c8c",
+   "route_key": "GET /api/scoped/investor-reporting/status/{jobId}",
+   "handler": "irpt-status",
+   "tenant": "cottonwood",
+   "status": -1,
+   "start_ms": 1790983542609.0,
+   "page_ms": -1.0,
+   "ids": [
+    "REQ-a8e81b8eccc800b2f3a00c8c"
+   ],
+   "invocation": null,
+   "start": "2026-10-02T23:25:42.609Z"
+  },
+  {
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/status/REQ-abec171d60e0aa1f359c18ed",
+   "route_key": "GET /api/scoped/investor-reporting/status/{jobId}",
+   "handler": "irpt-status",
+   "tenant": "cottonwood",
+   "status": 200,
+   "start_ms": 1790983543714.0,
+   "page_ms": 4983.6,
+   "ids": [
+    "REQ-abec171d60e0aa1f359c18ed"
+   ],
+   "invocation": {
+    "request_id": "d8be553d-f5d8-45d2-b71a-4e4607b0f144",
+    "stream": "2026/10/02/[$LATEST]78b71fc5103f422aa024ebd274b38471",
+    "start_ms": 1790983549933.0,
+    "duration_ms": 1029.61,
+    "billed_ms": 1030.0,
+    "init_ms": null,
+    "max_mem_mb": 119.0,
+    "start": "2026-10-02T23:25:49.933Z",
+    "queue_ms": 4247
+   },
+   "start": "2026-10-02T23:25:43.714Z"
+  },
+  {
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/status/REQ-c07e64ca6c74b8e5310f56e0",
+   "route_key": "GET /api/scoped/investor-reporting/status/{jobId}",
+   "handler": "irpt-status",
+   "tenant": "cottonwood",
+   "status": -1,
+   "start_ms": 1790983545076.0,
+   "page_ms": -1.0,
+   "ids": [
+    "REQ-c07e64ca6c74b8e5310f56e0"
+   ],
+   "invocation": {
+    "request_id": "81eb1e6e-6136-4fab-a5c7-95a52c342e05",
+    "stream": "2026/10/02/[$LATEST]993a3fa8a2064afcbad33409ce1bf36a",
+    "start_ms": 1790983550787.0,
+    "duration_ms": 959.23,
+    "billed_ms": 960.0,
+    "init_ms": null,
+    "max_mem_mb": 119.0,
+    "start": "2026-10-02T23:25:50.787Z",
+    "queue_ms": 3739
+   },
+   "start": "2026-10-02T23:25:45.076Z"
+  },
+  {
+   "method": "GET",
+   "path": "/api/scoped/investor-reporting/status/REQ-e2fc5dd5dc2e050cc82a57e4",
+   "route_key": "GET /api/scoped/investor-reporting/status/{jobId}",
+   "handler": "irpt-status",
+   "tenant": "cottonwood",
+   "status": -1,
+   "start_ms": 1790983548697.0,
+   "page_ms": -1.0,
+   "ids": [
+    "REQ-e2fc5dd5dc2e050cc82a57e4"
+   ],
+   "invocation": {
+    "request_id": "68a2e71e-b408-43ff-a2a0-4f4871e50548",
+    "stream": "2026/10/02/[$LATEST]993a3fa8a2064afcbad33409ce1bf36a",
+    "start_ms": 1790983553219.0,
+    "duration_ms": 148.5,
+    "billed_ms": 149.0,
+    "init_ms": null,
+    "max_mem_mb": 119.0,
+    "start": "2026-10-02T23:25:53.219Z",
+    "queue_ms": 2550
+   },
+   "start": "2026-10-02T23:25:48.697Z"
+  }
+ ],
+ "unclaimed_invocations": [
+  {
+   "request_id": "b8b02611-9162-4a14-8185-ad4b06af89e6",
+   "stream": "2026/10/02/[$LATEST]8d52718ceb794e4ea20f6f26de195c30",
+   "start_ms": 1790983606560.0,
+   "duration_ms": 502.35,
+   "billed_ms": 503.0,
+   "init_ms": null,
+   "max_mem_mb": 144.0,
+   "handler": "irpt-directory-search"
+  },
+  {
+   "request_id": "967b5ed8-1b34-4e29-bd8c-ecd3e59a1864",
+   "stream": "2026/10/02/[$LATEST]b2162dd8351443538e158451cdc9782e",
+   "start_ms": 1790983606570.0,
+   "duration_ms": 502.71,
+   "billed_ms": 503.0,
+   "init_ms": null,
+   "max_mem_mb": 133.0,
+   "handler": "irpt-directory-search"
+  },
+  {
+   "request_id": "42d56b3c-7bd7-4057-bcf6-718cecf122e7",
+   "stream": "2026/10/02/[$LATEST]b508feb0ebc14b3aafc5566c7a9f2356",
+   "start_ms": 1790983606570.0,
+   "duration_ms": 501.98,
+   "billed_ms": 502.0,
+   "init_ms": null,
+   "max_mem_mb": 146.0,
+   "handler": "irpt-directory-search"
+  }
+ ],
+ "ids": [
+  "REQ-2119def4de9e8fea43abb6fe",
+  "REQ-3971fc2d5421c12412367e0b",
+  "REQ-3a1b73a8dead02a17a09043b",
+  "REQ-4b2d437450499dde471c2f98",
+  "REQ-51f1413b9d84d26a66aaa71c",
+  "REQ-59b42fab4293260d6d439c39",
+  "REQ-602834fd3317160722ab489d",
+  "REQ-67e12718b0ba7c0c70ebb45b",
+  "REQ-717c91a59228070704e81cba",
+  "REQ-742fc48185221dc5dec14e65",
+  "REQ-7c7a9e45eb496564f635754a",
+  "REQ-7ea49c2d9b27957d0ea8888f",
+  "REQ-86f1ce7062356bc5c109ce12",
+  "REQ-93441e4e201b40e3b119c46b",
+  "REQ-a1d9abc0bc037ea3d9e4a7ed",
+  "REQ-a69e5751d42c374f1d2354f9",
+  "REQ-a6fa96020798aa2f3276d4d0",
+  "REQ-a8e81b8eccc800b2f3a00c8c",
+  "REQ-abec171d60e0aa1f359c18ed",
+  "REQ-c07e64ca6c74b8e5310f56e0",
+  "REQ-e2fc5dd5dc2e050cc82a57e4",
+  "REQ-e4b7f5aba7fb218c37f28002",
+  "UP-f0d8aead77a30d934d1ea80a84d5ff5f000a07e12cee45c2161878d5335a3547"
+ ],
+ "jobs": {
+  "REQ-2119def4de9e8fea43abb6fe": {
+   "state": "ATTENTION"
+  },
+  "REQ-3971fc2d5421c12412367e0b": {
+   "state": "ATTENTION"
+  },
+  "REQ-3a1b73a8dead02a17a09043b": {
+   "state": "ATTENTION"
+  },
+  "REQ-4b2d437450499dde471c2f98": {
+   "state": "READY"
+  },
+  "REQ-51f1413b9d84d26a66aaa71c": {
+   "state": "ATTENTION"
+  },
+  "REQ-59b42fab4293260d6d439c39": {
+   "state": "READY"
+  },
+  "REQ-602834fd3317160722ab489d": {
+   "state": "ATTENTION"
+  },
+  "REQ-67e12718b0ba7c0c70ebb45b": {
+   "state": "READY"
+  },
+  "REQ-717c91a59228070704e81cba": {
+   "state": "ATTENTION"
+  },
+  "REQ-742fc48185221dc5dec14e65": {
+   "state": "ATTENTION"
+  },
+  "REQ-7c7a9e45eb496564f635754a": {
+   "state": "ATTENTION"
+  },
+  "REQ-7ea49c2d9b27957d0ea8888f": {
+   "state": "READY"
+  },
+  "REQ-86f1ce7062356bc5c109ce12": {
+   "state": "ATTENTION"
+  },
+  "REQ-93441e4e201b40e3b119c46b": {
+   "state": "ATTENTION"
+  },
+  "REQ-a1d9abc0bc037ea3d9e4a7ed": {
+   "state": "READY"
+  },
+  "REQ-a69e5751d42c374f1d2354f9": {
+   "state": "READY"
+  },
+  "REQ-a6fa96020798aa2f3276d4d0": {
+   "state": "READY"
+  },
+  "REQ-a8e81b8eccc800b2f3a00c8c": {
+   "state": "ATTENTION"
+  },
+  "REQ-abec171d60e0aa1f359c18ed": {
+   "state": "READY"
+  },
+  "REQ-c07e64ca6c74b8e5310f56e0": {
+   "state": "READY"
+  },
+  "REQ-e2fc5dd5dc2e050cc82a57e4": {
+   "state": "ATTENTION"
+  },
+  "REQ-e4b7f5aba7fb218c37f28002": {
+   "state": "READY"
+  }
+ },
+ "journal": {
+  "command_id": "e36c8ee8-9b68-4f8f-9aa5-28a12271da0a",
+  "status": "Success",
+  "lines": []
+ }
+}

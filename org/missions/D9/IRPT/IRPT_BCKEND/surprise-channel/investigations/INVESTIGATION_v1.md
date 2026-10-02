@@ -15504,3 +15504,57 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Not a regression of any served path; a test pin. The combined pytest run of reports/tests with other suites also errors at collection on this file."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S283",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-02T23:35:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARMS row IRPT_BCKEND-S279 (disarm owner 2.0.0_SA_COO~Y): with st14 served (resident 22:13Z, generate 22:18Z), Case A's 99-row file holding TIMXX resolves on ONE read in about 2 s, 98 rows accepted, and the one unusable row is NAMED (row 100) -- no whole-file RESOLVE_RETRY_EXHAUSTED.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/ST14/V1_CASE_A_RUN3/OUTCOME_V1_CASE_A_RUN3_20261002.md",
+      "resident journal 23:25:09Z: IRPT_RESIDENT_RESOLVE_FUNDS matched=1 refused=0 causes=-; RESOLVE state=READY (one read, no WAF challenge)",
+      "irpt-requests NORMALIZATION#UP-f0d8aead..: NEEDS_CORRECTION, one finding TICKER_CHECK_UNAVAILABLE row 100 (TIMXX) col A"
+    ]
+  },
+  "dismissal_reason": "S279's hazard was a fund ticker sinking the whole upload before any row was named. The run measures the file resolving and the fund row attributed and named; what remains is that row's own usability (next row), not the whole-file failure.",
+  "spec_asserts": "Row S279 / CTO batch 186: a bad fund row refuses THAT row by name, never the whole file.",
+  "world_is": "Measured: one read, one named row, no retry. The row is unusable for a different reason (next row).",
+  "notes": "V1's packet criterion (NORMALIZED with M:TIMXX, then READY) is NOT met; see the next row."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S284",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-02T23:35:00Z",
+  "one_line": "TIMXX (a money-market fund YCharts keys M:TIMXX) is attributed and verified but unusable on Opal's YCharts account: the freeze names it TICKER_CHECK_UNAVAILABLE. Inferred cause: the provider row needs a data feature (features_needed non-empty -> PROVIDER_ENTITLEMENT_UNVERIFIED), the shape the CRO capture shows for M:BREIT.S. Case A cannot reach READY with TIMXX in it.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y (measure the feature on the next run via a gated= journal count in the Y-3 packet; the user's remedy is Y-5's user-named proxy; an account entitlement is Andrew's vendor-account call)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/ST14/V1_CASE_A_RUN3/OUTCOME_V1_CASE_A_RUN3_20261002.md",
+      "resident journal 23:25:09Z: IRPT_RESIDENT_RESOLVE_FUNDS matched=1 refused=0 causes=-; RESOLVE state=READY (one read, no WAF challenge)",
+      "irpt-requests NORMALIZATION#UP-f0d8aead..: NEEDS_CORRECTION, one finding TICKER_CHECK_UNAVAILABLE row 100 (TIMXX) col A",
+      "intake/security_resolution.py classify_batch: an attributed, verified row with non-empty features_needed is UNAVAILABLE / PROVIDER_ENTITLEMENT_UNVERIFIED; intake/portfolio.py names any non-FOUND, non-NOT_FOUND, non-AMBIGUOUS row TICKER_CHECK_UNAVAILABLE"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Brief 2 Y-1: the easy file reaches a READY Overview from the page.",
+  "world_is": "The file's fund row is not priced for this account (inferred); the finding's words (REPLACE_FILE) do not tell the user it is a real security needing a proxy or an entitlement.",
+  "notes": "Not retried (batch 188: a different row shape is recorded, not retried). Which feature is not determinable without another vendor read; st14's journal counts a gated row as matched."
+}
+```
