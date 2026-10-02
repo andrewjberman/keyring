@@ -567,3 +567,31 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
  "notes": "Not this project's to fix; carried here because this order tripped it. The order stands as cut."
 }
 ```
+
+## IRPT_DASHBD-S17 -- Row S16 is NOT fixed at HEAD: the seating lint's SERIAL_RE fix @453c6430ec (the name class admits an underscore) is an ancestor of HEAD, and the round-3 issuance @c75ddc5d61 still printed 'addressed to 0.9.0_WK_IRPT' for both new orders, so the truncation happens on another path than SERIAL_RE.
+
+```json
+{
+ "id": "IRPT_DASHBD-S17",
+ "project": "IRPT_DASHBD",
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~P",
+ "surfaced_at": "2026-10-02T07:00:00Z",
+ "disposition": "UNDER_INVESTIGATION",
+ "one_line": "Row S16 is NOT fixed at HEAD: the seating lint's SERIAL_RE fix @453c6430ec (the name class admits an underscore) is an ancestor of HEAD, and the round-3 issuance @c75ddc5d61 still printed 'addressed to 0.9.0_WK_IRPT' for both new orders, so the truncation happens on another path than SERIAL_RE.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "1.0.0_SA_CTO (the gate's owner; the CTO's round-2 analysis section 3 answered S16 as fixed)",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "git merge-base --is-ancestor 453c6430ec HEAD -> true at CLOUD c75ddc5d61; git show 453c6430ec -- .tools/to-decomp-ref-lint.py: SERIAL_RE's name class changed from [A-Za-z0-9]* to [A-Za-z0-9_]*.",
+   "safe-commit output of the round-3 issuance @c75ddc5d61, 2026-10-02 ~06:5xZ: '[gate2]   REFUSED: ...IRPT_DASHBD.TO-DB-b-7...' and '...TO-DB-b-9...', each with 'SEATING: this NEW task order for IRPT_DASHBD is addressed to 0.9.0_WK_IRPT, which already holds open TOs on 1 OTHER pipeline project(s): IRPT_BCKEND (3 open ...)'; ANNOUNCE mode, not blocking.",
+   "both orders carry <issued_to>0.9.0_WK_IRPT_DASHBD~1</issued_to> (line 5)."
+  ]
+ },
+ "spec_asserts": "CTO_ROUND_ANALYSIS_IRPT_DASHBD_ROUND_2_B_20261002.md section 3: 'S16 ... fixed @453c6430ec (SERIAL_RE admits an underscore) and on origin since the 2026-10-01 push. Answered.'",
+ "world_is": "MEASURED: with the fix at HEAD, the lint's seating frame still keys the two new orders on '0.9.0_WK_IRPT'. Not measured: which function truncates (the issued_to parse or the holdings index).",
+ "notes": "ANNOUNCE only; the orders stand as cut. S16 stays open under this correction."
+}
+```
