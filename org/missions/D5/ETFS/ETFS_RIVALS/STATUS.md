@@ -36,7 +36,9 @@ None open. No served change before Andrew's 13:00Z read (CTO~Z msg 28450).
 
 1. Andrew's read of the 10-02 page (1002e, grade 11 PASS); any finding is the next item.
 2. The next rivalfunds Lambda deploy carries, beside the bronze-read grant (a policy change) and F5: round 5's universe.py,
-   collector and G4 changes (drained 13:0xZ). Its pair measures them through the handlers.
+   collector and G4 changes (drained 13:0xZ). Its pair measures them through the handlers. Pre-measured 13:1xZ: an overlay
+   publish of 2026-10-02 at CLOUD 213540f408 differs from the served 1002e in ONE line, the G0 map date (10-01 -> 10-02: a
+   newer map object, data any republish reads); page code delta 0. Still to measure: the A1 tables (served_delta_a1.py).
 3. F5 (P2): prompt a1-chain/4 (readings named by label, no source/name keys) BUILT @0839079a9c, 397 passed, drained @7dbe861883;
    proven only by the next AI run; its Lambda copy rides the next pair.
 4. The publish-page Lambda's missing bronze read: grant BUILT on rv-fast @fd0d285da3 (publish-page GET on the issuer-site and
@@ -54,18 +56,18 @@ rivalfunds suite on combined CLOUD 213540f408: 410 passed, 2 skipped. The vehicl
 next trading morning (07:00 ET 2026-10-05). The two worktrees stay: each holds an untracked `.scratch/`, so removal needs
 `--force` (a recursive delete, human-confirmed).
 
-## Parked
+## Round-6 cut list (FAST -> FULL at 17:08:53Z; cut straight from here, thread-first, repairs batched)
 
-| Question (off-thread) | Owner | Un-parks when |
-|---|---|---|
-| Lambda wiring of the AI chain + a dedicated OpenAI secret (round 6, CALL 5 rule 3) | `2.0.0_SA_COO~RV` | the FAST lease ends (cut round 6 from this list) |
-| Per-fund issuer floors with the 2-line tolerance (CALL 2) | `2.0.0_SA_COO~RV` + `1.0.0_SA_CTO~Z` pair | first round after FAST |
-| G4 carries no price field (row Z-S14); rankings run on holding-implied prices | round-6 G4 history cell | px_close lands |
-| PCLG / WCMG +1 historical windows stay INFERRED (round-4 t-5) until a control replay reads them | `2.0.0_SA_COO~RV` | a G5/G6 history replay is cut |
-| The publish-page Lambda has no GetObject on `issuer-site/etfs/bronze/holdings/*` and `bloomberg/etfs/bronze/holdings/*` (the daily Lambda has it): marker-driven pages show "source URL unavailable (bronze sidecar unreadable)" x108 until the 09:00 ET sweep republishes through the daily Lambda | `2.0.0_SA_COO~RV` | its own addendum (a plan with a policy change), after the demo |
-| The census lists every missing G4 price and GICS line (766 each): honest, long | `2.0.0_SA_COO~RV` | after the demo |
-| The concentration cell (ACWI top-10 share) | `2.0.0_SA_COO~RV` | ACWI lands daily (v0.8 leg) |
-| CTO~Z msg 28395 items 1-2 BUILT on rv-fast @688c4a7c59 (one `_sectors_hidden` function; `_e` prints NaN empty); overlay render of 10-01 byte-identical to served 1001g; drained to CLOUD @2bf0e85772; not deployed | `2.0.0_SA_COO~RV` | deploy rides the next pair after the demo |
+| # | Cell | Risk | Grounding | Gate |
+|---|---|---|---|---|
+| 1 | The next Lambda pair if FAST does not land it: publish-page bronze-read grant (policy) + F5 prompt a1-chain/4 + round 5's universe/collector/G4 code | WORLD | grant @fd0d285da3, F5 @0839079a9c, drains e4e9eedfa9 / 213540f408; overlay page delta = G0 map date only | Andrew's word that served changes resume (next-calls CALL 1) |
+| 2 | The 2026-10-05 seat AI run (one run, CALL 5 terms), then one republish: the only proof of F5 and of G8-3's fact-pack change | WORLD | CTO~Z msg 28437 (next AI run free); `org/ref/VENDOR_EGRESS_WHITELIST.yaml` @213102cff1 lists no OpenAI word | Andrew's per-use word (next-calls CALL 2) |
+| 3 | AI chain wired into the Lambda + a dedicated OpenAI secret (CALL 5 rule 3): the scheduled run replaces the seat run | WORLD | parked since 2026-10-02 06:xxZ | a standing OpenAI word on the whitelist |
+| 4 | Per-fund issuer floors with the 2-line tolerance (CALL 2) | SERVED | CRO~RV rulings CALL 2 | the CTO~Z pair |
+| 5 | G4 carries a price field (row Z-S14), so rankings stop leaning on holding-implied prices (1849 implied / 1498 missing on 10-02) | SERVED | a1_produced detail, 2026-10-02 manifest | px_close lands in G4 |
+| 6 | Repairs, ONE cell: PFOE home-producer "source URL unavailable" x26; the census's 766-line length; the AI placeholder "No AI account. the ..." capital; trending-topic headline digits read as figures; the AI prose's Bloomberg ticker forms (CALL 10: style for the next prompt) | LOCAL/SERVED | 2026-10-02 audit reads in this file | none |
+| 7 | PCLG / WCMG +1 historical windows read by a control replay (round-4 t-5) | SERVED | INFERRED since round 4 | a G5/G6 history replay is cut |
+| 8 | The concentration cell (ACWI top-10 share) | SERVED | v0.8 leg built inert (l-1) | ACWI lands daily |
 
 ## Limits
 
