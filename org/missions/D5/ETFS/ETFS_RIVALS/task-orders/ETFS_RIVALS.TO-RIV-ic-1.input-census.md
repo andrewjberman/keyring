@@ -174,7 +174,8 @@ expected (the module or behaviour is absent at base).
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>superseded</status>
+<superseded_by>FAST lease: org/mcp/drive-mode.log line 56 (2026-10-02T05:08:53Z ARM ETFS_RIVALS seat=2.0.0_SA_COO~RV, on Andrew-direct ~04:59Z). No worker was ever spawned on this order; the lease seat builds the cell directly under /closer-drive and runs this order's AC check as the item test.</superseded_by>
 <round>5</round>
 <workstream>ADDENDUM_B</workstream>
 <slot>~7</slot>
