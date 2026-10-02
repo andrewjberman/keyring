@@ -28,7 +28,7 @@ whitelist:
     since: 2026-10-02T13:08Z
     landed_by: 1.0.0_SA_CTO~Z
     supersedes: "1.0.0_SA_CTO~Z ruling msg 28235's clause 'does not spend the 04:57Z egress word on a captcha solver', for NopeCHA only"
-    not_covered: "Kimi, the vision-API fallback, and every other solver or vendor (they still need his word)"
+    not_covered: "the vision-API fallback and every other solver or vendor (they still need his word); Kimi is now VEW-3"
 
   - id: VEW-2
     vendor: OpenAI
@@ -44,5 +44,17 @@ whitelist:
     landed_by: 1.0.0_SA_CTO~Z
     asked_by: 4.0.0_SA_CRO~RV (these words predate the register; operating basis CRO~RV CALL 5 @528f030bdb)
     not_covered: "web search as a primary source (his words: internal news scanner and harvest first); OpenAI for any project other than ETFS_RIVALS"
+
+  - id: VEW-3
+    vendor: Kimi (Moonshot AI)
+    what: "Moonshot API, endpoint api.moonshot.ai, key in Secrets astn/kimi/api-key"
+    scope: any -- "can be called freely"; no project, seat or volume bound is named
+    granted: "Yes Kimi can be called freely"
+    record: org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261002_020xZ_EOD_UPDATE_AUTOMATION.md (last addendum) @59df408d14
+    record_verified: "NO at landing -- the record is LOCAL on the laptop until its next push; landed on the relay (laptop 4.0.0_SA_CRO msg 104254 -> laptop 0.0.0_AB_MSTR bus 191848a8 -> 0.0.0_AB_MSTR~Z msg 28475). Re-read the bytes at the path once 59df408d14 is on origin; a mismatch strikes this row."
+    since: 2026-10-02T13:1xZ
+    landed_by: 1.0.0_SA_CTO~Z
+    supersedes: "VEW-1's not_covered note for Kimi"
+    not_covered: "the vision-API fallback and every other vendor (they still need his word)"
 
 struck: []
