@@ -17045,6 +17045,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
  "spec_asserts": "enrich.validate() accepts the object enrich.build_document produces (batch.run_one validates before any write).",
  "world_is": "It did not: the schema had not been widened when rk-110 added the field, so a fresh build was refused at validate. The stored objects written by the last live runs predate rk-110 or were re-projected in place, which is why no stored object shows the field. Fixed inside this order's lib/research/management/ path; not measured: whether any scheduled batch run since rk-110 hit BLOCKED-INVALID.",
  "notes": "Widening a closed schema is a one-line change under this order's paths; the CTO reads it at the round-N analysis."
+},
+{
+ "id": "AMGT_RESAPP-Z-S338",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~Z",
+ "surfaced_at": "2026-10-02T16:17:31Z",
+ "one_line": "Issuer evidence for the two round-63 rows that need a disposition: AMGT_RESAPP-Z-W208-S2 (ARMED, disarm owner 2.0.0_SA_COO~Z) is disarmed on the shared tree, and AMGT_RESAPP-Z-W205-S1 (BLOCKING) is moved to its carrier, so nothing in round 63 waits on it. Both are proposed DISMISSED_WITH_REASON for the CVO's L9.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "spec_asserts": "Z-W208-S2: an am-3 test stub of pool_reader._gold_latest_snapshot_rows taking only `table` fails at the drain once am-5's columns= lands. Z-W205-S1: am-2 AC2 C1 (ASML_NA served BLOOMBERG_FALLBACK with officers) is reachable from stored input.",
+ "world_is": "Z-W208-S2: after all four drains (514cdf5366 am-3, 6899726ed8 am-8, eb6cfa6a3e am-5, 293f95f5bd am-2) the named stub shape did not fire (am-3's tests pass), but a second shape did: am-5's own projected-read test pinned the pre-am-3 chatter row literal and failed 1 of 589. Repaired at f80b97ca36 to assert projected == full (same stub with columns=None) plus the key/name/by_month content; a mutant dropping articles_total from DAILY_COLUMNS fails it; union peers + management + api 589 passed exit=0. Z-W205-S1: re-graded on the shared tree, c2 local --pool reads C1 FAIL ASML_NA ABSENT, C2 PASS 6501_JP and 2317_TT; the cause is the missing stored pull, as the row grounds. am-2 AMENDMENT 1 (28ec01f59b) holds C1 on Andrew's per-use Bloomberg word, asked as a RESERVED card to 0.0.0_AB_MSTR~Z (broker file 20261002T160913Z_2.0.0_SA_COO_Z__RESERVED_for_Andrew__AMGT_RESAPP_r63__o.md); am-7 AMENDMENT 2 writes only the 6501_JP and 2317_TT objects; FWD-7 is reported partial in the L10 slug.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "python -m pytest -q lib/research/peers/tests/ lib/research/management/tests/ lib/research/api/tests/ on CLOUD at 293f95f5bd: 1 failed (test_the_projected_read_serves_the_same_bytes_as_the_full_read), 588 passed; at f80b97ca36: 589 passed, exit=0.",
+   "r63_served.py --cell c2 --where local --pool .../0.9.0_WK_AMGT_RESAPP~205/m1_pool on CLOUD: FAIL C1 ASML_NA status ABSENT source None officers 0; PASS C2 6501_JP_Equity; PASS C2 2317_TT_Equity; R63 C2 SERVED: NO.",
+   "Task orders AMGT_RESAPP.TO-AMGT-am-2 (AMENDMENT 1, ISSUER CLOSE) and AMGT_RESAPP.TO-AMGT-am-7 (AMENDMENT 2) at 28ec01f59b."
+  ]
+ },
+ "disposition": "DISMISSED_WITH_REASON",
+ "dismissal_reason": "This row carries evidence, not a new hazard: it proposes that Z-W208-S2 and Z-W205-S1 be dismissed with the reasons in world_is at the CVO's L9. Nothing is owed on this row itself."
 }
 ]
 ```
