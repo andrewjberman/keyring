@@ -6,7 +6,32 @@
 - This file is overwritten per grade:
   - grade 1 (NOT_EVALUATED) @f751aac898;
   - grade 2 (FAIL, ETFT YTD -188.51%) @9cca47a6cd;
-  - grade 3 (PASS on F1-F4) @ea29c625e9.
+  - grade 3 (PASS on F1-F4) @ea29c625e9;
+  - grade 4 (PASS on CALL 6 c1-c2; G4-1 split guard refusing 7 real moves, ruled CALL 8) @6aaf6b43f6.
+
+## Grade 5 -- served page 2026-10-01, batch fast-a1-publish-1001d, code pin 2a9a11a025 (handoff msgs 28354/28355), read 2026-10-02 ~09:12-09:20Z
+
+**Verdict: PASS.** CRO~RV CALL 8 (@4c4fe9daf7) is served as ruled. Grade 4's G4-1 is closed.
+
+- **Deployed bytes equal the pin.** `etfs-rivalfunds-daily-lambda` has 33 of 33 `rivalfunds/*.py|*.json` files byte-equal
+  to 2a9a11a025. Positive control: the deployed `gold_holding_contribution.py` differs from its 0d4b3f6e4d version.
+- **The never-widen pair was complete before the apply:** COO addendum-3 half 3a1a5ebd05 (09:00:05Z), CTO half 372c538349
+  (09:03:03Z), apply 09:06:22Z. Ledger `20261002T0905Z_etfs-rivalfunds-fast-a1-r4` was committed before the apply and
+  closed at 09:09:43Z.
+- **The rule at the pin** (`gold_holding_contribution.py` `_implied`): a split is refused iff `out(r) AND out(k) AND NOT
+  out(v)`; else an implausible move is refused iff `out(r, 0.5)`; else the day is priced. This is CALL 8 verbatim. On
+  grade 4's 12-row table this seat's own replay classifies all 12 correctly. This seat's earlier value-continuity-only
+  recommendation got 3 wrong (Intuit, VAL SJ, IMP SJ), and CALL 8 corrected it.
+- **The served table** (`holding_contribution-20261002T090746Z-371779fe0d1c`):
+  - exactly 5 YTD refused rows, each a split or a fault: KMB IN 01-13 / 01-14, Amphenol 09-02, AZN LN 02-02 and IBE/D
+    07-07 implausible;
+  - the 7 real moves are priced: BASG Datadog +2.09% is BASG YTD #2 behind Marvell +3.17%, BASG Intuit -1.95%, and
+    Snowflake and Atlassian have 0 refused days;
+  - max |holding contribution| is 3.62%, and fund YTD totals sit in -4.92..+12.51.
+- **The page:** the `id="refused-days"` table lists the same 5 rows. 0 `<script>`. Manifest `published`, 12 of 13,
+  readback true.
+
+**Still open:** F5 at the next AI run; the trend-sector Unclassified residual (P2).
 
 ## Grade 4 -- served page 2026-10-01, batch fast-a1-publish-1001c, code pin 0d4b3f6e4d (handoff msg 28333), read 2026-10-02 ~08:50-09:05Z
 
