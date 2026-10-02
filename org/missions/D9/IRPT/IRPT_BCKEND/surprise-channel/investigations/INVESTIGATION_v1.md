@@ -15162,3 +15162,81 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "INERT. Owners: 2.0.0_SA_COO~D (the portal's route table) with 2.0.0_SA_COO~Y (hop 11). Same class as S269: a contract change whose reader census stops short of the portal."
 }
 ```
+
+## IRPT_BCKEND-W101-S13 -- IB-pr-297: the signed download answer carries fields the published export-download response schema d...
+
+```json
+{
+  "id": "IRPT_BCKEND-W101-S13",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~101",
+  "surfaced_at": "2026-10-02T15:40:00Z",
+  "one_line": "IB-pr-297: the signed download answer carries fields the published export-download response schema does not admit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/contracts/investor-reporting/v1/responses/export-download.response.schema.json: data is additionalProperties:false over export_ref, download_route, timestamps, vendor_signed_url_exposed; ExportReceipt.schema.json properties.download_route is additionalProperties:false over route, requires_reauthorization",
+      "infra/aws/lambda/investor-reporting/export/entry.py export_download (c4fedd31c5): answers download_route.{route,requires_reauthorization,url,expires_at} plus data.sha256 and data.byte_length (hop 11's shape per 5bc562f689:infra/aws/lambda/investor-reporting/ops/pdf_link.py)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IB-pr-297: the live entry answers a signed answer in hop 11's shape carrying sha256 and byte_length; 'the ExportReceipt schema's download_route.route is a free string, so no contract file changes'.",
+  "world_is": "The order's premise covers the route string only. The signed answer's url, expires_at, sha256 and byte_length are four fields the published response schema (and the ExportReceipt download_route it references) reject, so a consumer that validates the live answer against export-download.response.schema.json would refuse it. Nothing validates the served answer at runtime (served.py has no response validation) and no contract file is in this order's paths, so the answer was shipped in hop 11's shape as ordered.",
+  "notes": "Remedy owner 1.0.0_SA_CTO / 3.0.0_SA_CVO: publish the signed-answer fields in export-download.response.schema.json (and decide whether url/expires_at belong in ExportReceipt.download_route or only in the response). Reader census for 2.0.0_SA_COO~D's portal half: ReceiptPanel.tsx:95 follows download_route.route; the answer's download_route.url is new."
+}
+```
+
+## IRPT_BCKEND-W101-S14 -- IB-pr-297: a receipt already persisted keeps the old download route in its stored JSON; only receipt...
+
+```json
+{
+  "id": "IRPT_BCKEND-W101-S14",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~101",
+  "surfaced_at": "2026-10-02T15:40:00Z",
+  "one_line": "IB-pr-297: a receipt already persisted keeps the old download route in its stored JSON; only receipts written after the next export build name the live route.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/handler.py finalize_export persists receipt_mod.build(...) output (download_route.route is written into receipt.json at finalize time); receipt.py DOWNLOAD_ROUTE now names the live route (c4fedd31c5)",
+      "infra/aws/lambda/investor-reporting/export/entry.py export_download rebuilds download_route.route from receipt.DOWNLOAD_ROUTE and the receipt's export_id, so the download answer is live-route regardless of the stored text"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IB-pr-297: point receipt.py's route at the live route so the portal's link (ReceiptPanel.tsx:95, download_route.route of the receipt) matches a live route.",
+  "world_is": "receipt.py now writes the live route for every receipt built from the next export build on. A receipt.json already in the evidence bucket (including the three red export ledgers' exports) still carries /api/scoped/exports/{id}/download, and export_receipt returns the stored JSON unchanged, so the portal's receipt link for those exports stays on the dead route. The download route's own answer is correct for every receipt.",
+  "notes": "Remedy owner 2.0.0_SA_COO~P (E4 packet): either re-render the receipts or have export_receipt rewrite download_route.route on read the way export_download now does. Not in this order's paths beyond entry.py, and the order says receipt.py only."
+}
+```
+
+## IRPT_BCKEND-W101-S15 -- IB-pr-297: byte_length comes from a HeadObject on the export artifact, an S3 call the export role is...
+
+```json
+{
+  "id": "IRPT_BCKEND-W101-S15",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~101",
+  "surfaced_at": "2026-10-02T15:40:00Z",
+  "one_line": "IB-pr-297: byte_length comes from a HeadObject on the export artifact, an S3 call the export role is not shown to hold for an SSE-KMS object.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/download.py signed_answer (c4fedd31c5): client.head_object(Bucket, Key)['ContentLength'] for byte_length; the receipt carries sha256 and no length (ExportReceipt.schema.json artifact has sha256, storage_bucket, storage_key, server_only)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-297.export-packaging-and-download.md preflight: 'the presigned GET's s3:GetObject on the export artifacts is read by E4's packet against the export role'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IB-pr-297: the signed answer carries byte_length; the order does not say where the length comes from.",
+  "world_is": "The receipt holds no length, so the length is read from the object (HeadObject, authorized by s3:GetObject; for an SSE-KMS object S3 may also require kms:Decrypt on the key). This was not run against AWS. If the export role cannot HeadObject the artifact, export_download fails closed with an unexpected error and signs nothing.",
+  "notes": "Owner 2.0.0_SA_COO~P: E4's packet reads the export role for s3:GetObject and kms:Decrypt on the artifact key family before the deploy; the alternative is to add byte_length to the receipt sidecar at finalize."
+}
+```
