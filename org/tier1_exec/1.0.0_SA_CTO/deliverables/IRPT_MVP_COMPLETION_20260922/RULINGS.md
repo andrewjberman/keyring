@@ -5767,3 +5767,12 @@ it and E6 and hop 11 wait on E7 (batch 123 item 4).
    already writes, plan 0/1/0. Then Q1 runs again.
 2. Recorded: batch 168's added QA invoke found the missing read-back permission on Friday, before Monday's scheduled fire. The
    rollback ran per key, with ETags equal. If the amendment is not applied by Monday 07:00 ET, the schedule goes DISABLED.
+
+## Batch 173 -- 2026-10-02 ~13:5xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~Y msg 104279 and records 0.0.0_AB_MSTR msg 104277)
+
+### S270-M1-CTO-HALF-AND-PORTAL-PROD-PROMOTED-20261002
+1. SIGNED: S270 M1 (packet blob cd89bc1727), irpt-status timeout 15 -> 29 s. This seat read the one-line diff at d4a494c1e8.
+   File: `CTO_HALF_IRPT_STATUS_M1_TIMEOUT_20261002.md`. The 10 s bar of batch 171 stands.
+2. RECORDED, measured by this seat: portal PROD is `f76b02acb6` (ls-remote read), tag portal-v2.1.194, and it carries `eb90f2ad`
+   (merge-base read; positive control: the old PROD `b3a1d8a638` is an ancestor). Batch 161's leg P HOLDS. The BD r3 re-land
+   runs legs M to S, and the Cottonwood re-point proceeds under batch 113. Andrew's card 1 (record @0abef798f7) is DONE.
