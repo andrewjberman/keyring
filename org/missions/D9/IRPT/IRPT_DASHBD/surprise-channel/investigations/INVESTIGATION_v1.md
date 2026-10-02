@@ -426,3 +426,32 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
  "notes": "Two remedies the register owner can choose between: admit a gzip JSON content format, or admit a second reporting table (for example reporting_series) so the series takes its own family. Either is a register edit plus the validator's admitted set; neither is an IRPT_DASHBD build cell."
 }
 ```
+
+## IRPT_DASHBD-S13 -- Nothing refreshes the reporting gold the publisher reads: account_return_daily ends at date=2026-09-28 (559 partitions) and no schedule, runner or Lambda runs account_return_daily.py, so on 2026-10-02 the gold is three trading days behind T-1 and E1's 08:15 ET publisher schedule would republish the 2026-09-28 series every weekday.
+
+```json
+{
+ "id": "IRPT_DASHBD-S13",
+ "project": "IRPT_DASHBD",
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~P",
+ "surfaced_at": "2026-10-02T05:20:00Z",
+ "disposition": "UNDER_INVESTIGATION",
+ "one_line": "Nothing refreshes the reporting gold the publisher reads: account_return_daily ends at date=2026-09-28 (559 partitions) and no schedule, runner or Lambda runs account_return_daily.py, so on 2026-10-02 the gold is three trading days behind T-1 and E1's 08:15 ET publisher schedule would republish the 2026-09-28 series every weekday.",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "disarm_owner": "1.0.0_SA_CTO (an addendum to the round-1 analysis: the adapter's scheduled fire as a round-2 cell, and its order against E1's publisher schedule)",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "aws s3api list-objects-v2 --bucket opal-data-49financial --prefix irpt/49financial/gold/account_return_daily/ --delimiter / (2026-10-02 ~05:1xZ): 559 date= partitions, newest date=2026-09-28.",
+   "comp-find 'irpt_reporting|account_return_daily' infra/ data/assets/scripts/: 118 hits across 12,647 files; band CONFIG 11 of 11 are sources.json and the two new lambda-source-map.json entries (publisher, read route); no schedule, EventBridge rule, runner script or Lambda packages or invokes account_return_daily.py.",
+   "decompositions/IRPT_DASHBD_DECOMP.md section 1, 'Carried, not cut': 'the scheduled fire of the adapter (round 2, its own ledger, as IB-er-203 was to IB-er-202)'; section 1 also: the adapter is 'run ad hoc for the round-1 sample (a QA run)'.",
+   "lib/trading_calendar.py: 2026-10-02 is a Friday; the T-1 trading day is 2026-10-01; 2026-09-29, 09-30 and 10-01 are absent from the gold."
+  ]
+ },
+ "spec_asserts": "CTO round-1 analysis @57304c750b section 3 E1: 'The 08:15 ET schedule is the production trigger (a success-of-upstream trigger would be a defect); the gold it reads is T-1.'",
+ "world_is": "MEASURED: the gold is frozen at 2026-09-28 and nothing in the estate moves it; the 08:15 ET publisher would serve an as_of of 2026-09-28 on every weekday until the adapter runs on its own clock. CLAUDE.md: production pipelines MUST be scheduled; an ad-hoc gold run is QA evidence, never production.",
+ "notes": "Recommended: add the adapter's scheduled fire as round-2 cell DB-b-7 (a scheduled Lambda packaging account_return_daily.py unedited, the holdings-performance pattern, its own root and ledger, firing before 08:15 ET), apply E1's read root now, and apply the publisher's schedule in the same packet only once the adapter's schedule is applied. The read route serves the 2026-09-28 series honestly meanwhile (its manifest carries as_of)."
+}
+```
