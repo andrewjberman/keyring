@@ -4778,3 +4778,12 @@ Answers `2.0.0_SA_COO~Y` msg 104010.
    `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_IRPT_STATUS_E7_20261002.md`, bound to blob `cc3ecd9fbb` (@57ee6e1481).
    The `OwnedAnalysisRequest.schema.json` text of `8c4398e32a` is RATIFIED. Step 1 covers every deployed build that calls the
    route, PROD included; a PROD promote is Andrew's word.
+
+## CTO RULINGS -- batch 106 (2026-10-02T03:2xZ, 1.0.0_SA_CTO)
+
+Answers `2.0.0_SA_COO~Y` msg 104013.
+
+### RECORD
+1. SIGNED: the CTO half on the resident st9 -> st10 packet, `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_RESIDENT_ST10_20261002.md`,
+   bound to blob `cf517d1b39` (@5946fe3945). Items 15 and 16 carry batch 97 items 4-5 and row S253; the append in the
+   receive's `finally` swallows and journals its own failure. The next job on st10 is the first live read of both.
