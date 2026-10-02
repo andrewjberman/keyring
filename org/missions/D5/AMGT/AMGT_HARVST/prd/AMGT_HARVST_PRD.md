@@ -5,7 +5,7 @@
   "project": "AMGT_HARVST",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.13",
+  "prd_version": "v0.14",
   "step": 4,
   "brief_ref": "org/missions/D5/AMGT/AMGT_HARVST/brief/BRIEF_AMGT_PUBLICATIONS_BRONZE_SILVER_GOLD_20260922.md@5b90a0b839",
   "endpoint_outcomes": [
@@ -23,11 +23,24 @@
     "FWD-12",
     "FWD-13",
     "FWD-14",
-    "FWD-15"
+    "FWD-15",
+    "FWD-16",
+    "FWD-17"
   ],
   "status": "RATIFIED"
 }
 ```
+
+**v0.14 ADDENDUM (2026-10-02 ~18:4xZ, `1.0.0_SA_CTO~Z`)**, on Andrew-direct ~17:33Z (record `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/ANDREW_DIRECT_20261002_173xZ_SECURITY_ANALYSIS_UIUX_WALK_BRIEFS_TO_CTO_Z.md`; "backend news scanner tie in
+feature work should go to COO~H. CTO~Z should receive everything first to filter and properly fold in").
+- **New:** FWD-16 (FinBERT tone per article version, in gold) and FWD-17 (per-name rolling-window tone and voters, in gold).
+- **Restated without a new outcome:** FWD-6's density (HARVST brief O5) is enrichment. Earnings dates are NOT harvest data.
+- **The producer/serving split:** HARVST writes gold, and AMGT_RESAPP's route serves it (its FWD-36). One project's loop never
+  writes another project's route.
+- **Rule 30:** a new gold table's name and address are builder output.
+- **Fold record:** `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_FOLD_SECURITY_ANALYSIS_UIUX_20261002.md`.
+- This is an ENDPOINT change, so the CVO re-signs the ratified half.
+
 
 **author** `1.0.0_SA_CTO~Z` (L2 endpoint and L4 PRD). **driver** `2.0.0_SA_COO~H` (L5, L6, to completion;
 seated by the CTO placement of 2026-10-01, which follows `2.0.0_SA_COO~Y`).
@@ -330,6 +343,44 @@ act a seat can take on demand; none is a wait.
                     companies be a local, sitez Box process"); brief IV.4 (no
                     driver exists; scheduled task Disabled; uploads off),
                     VII.2 COO~H items 3, 5 and 6
+
+  ===== v0.14, 2026-10-02 -- NEWS-SCANNER SENTIMENT AND WINDOWS (FWD-16..17) ==
+  Andrew 2026-10-02 ~17:33Z (record ANDREW_DIRECT_20261002_173xZ_SECURITY_
+  ANALYSIS_UIUX_WALK_BRIEFS_TO_CTO_Z.md); HARVST brief
+  docs/briefs/amgt-harvst-news-sentiment-and-windows-brief-20261002.md
+  @3d25203d5a O1-O4; register row SAUX-19. HARVST owns the PRODUCER half
+  (scores and aggregates in gold); AMGT_RESAPP serves them (its FWD-36).
+
+  FWD-16 Every harvested article carries its FinBERT tone, scored once per
+         version of the article
+         DONE WHEN  EXERCISED -- the gold mention rows carry, for every row,
+                    sentiment_finbert (label and score) and the scorer named
+                    (opal-news-ai-sentiment, the existing FinBERT Lambda; no new
+                    model), keyed to the article's record_hash so a re-silvered
+                    article is re-scored and an unchanged one never is; a
+                    census prints scored / unscorable / total over the newest
+                    gold part with its denominator, and the one-time scoring of
+                    the existing corpus prints its count
+         ACCEPT     An analyst opening a day sees each article's tone beside its
+                    headline, and the tone is the same every time it is read.
+         SOURCE     Andrew N8; HARVST brief O2
+
+  FWD-17 Each covered name's tone and article count are in gold for rolling
+         30, 90 and 365-day windows, where FinBERT not being sure is not a vote
+         DONE WHEN  EXERCISED -- gold carries, per name per window ending at the
+                    as-of date: articles_total, voters (articles whose FinBERT
+                    label is not neutral and whose confidence clears the stated
+                    threshold), and a tone aggregate over the voters only; the
+                    served window start is stored where the store is shorter
+                    than the window (no history before 2026-01-01 is pulled for
+                    it); a planted all-neutral name reads voters 0 and tone null,
+                    never 0.0
+         ACCEPT     A PM reads whether a name's coverage this window reads
+                    positive or negative, and a name nobody voted on reads
+                    "no clear tone", not neutral.
+         SOURCE     Andrew N8, N10; Andrew-direct 2026-09-16 ("finbert not being
+                    sure is not a vote", NEWS_SCANNER_DEEP_DIVE_20260916.md s.6);
+                    HARVST brief O1, O3, O4
 ```
 
 ---

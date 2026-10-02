@@ -5,10 +5,10 @@
  "project": "DSGN_AMGTV1",
  "directive": "D13",
  "fabric": "site-z",
- "prd_version": "v0.8",
+ "prd_version": "v0.9",
  "step": 4,
  "brief_ref": "docs/briefs/dsgn-amgtv1-security-analysis-frontend-brief-20260928.md@08eefaac9d",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21", "FWD-22", "FWD-23", "FWD-24"],
+ "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21", "FWD-22", "FWD-23", "FWD-24", "FWD-25", "FWD-26", "FWD-27"],
  "status": "DRAFT"
 }
 ```
@@ -30,6 +30,15 @@ round-21 ruling 3a into the ratified text. The old text read "no raw code, id or
 GenerationCaption keeps its machine line (generation id, coverage vintage) behind a collapsed details block on purpose, as
 provenance. The new text names the surfaces graded: the visible face, tooltips, pop-ups and card windows. A closed,
 provenance-labelled details block is not the face. This is an ENDPOINT change, so `3.0.0_SA_CVO~Z` re-signs.
+**v0.9 ADDENDUM (2026-10-02 ~18:4xZ, `1.0.0_SA_CTO~Z`), on Andrew-direct ~17:33Z.** Record
+`org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/ANDREW_DIRECT_20261002_173xZ_SECURITY_ANALYSIS_UIUX_WALK_BRIEFS_TO_CTO_Z.md`:
+a /ui-walk of Security Analysis, with briefs to COO~D and COO~H, and "CTO~Z should receive everything first to filter and
+properly fold in". The brief is `docs/briefs/dsgn-amgtv1-security-analysis-uiux-brief-20261002.md` @3d25203d5a, with
+register `docs/briefs/amgt-security-analysis-ui-findings-20261002.json` (36 SAUX findings). The fold record is
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_FOLD_SECURITY_ANALYSIS_UIUX_20261002.md`.
+- **Changed:** FWD-5, FWD-12, FWD-20 (the band clause), FWD-21 and FWD-22.
+- **New:** FWD-25 (what changed), FWD-26 (rolling windows) and FWD-27 (plain words, agreeing figures).
+- This is an ENDPOINT change, so `3.0.0_SA_CVO~Z` re-signs the ratified-text half.
 
 ## ENDPOINT (step 2, /endpoint --forward)
 
@@ -98,7 +107,22 @@ Landed verbatim from `org/tier1_exec/1.0.0_SA_CTO/deliverables/DSGN_AMGTV1_ENDPO
                     and headlines, with a word cloud from its own coverage; the
                     firm's own harvested publications come first. A company that has
                     coverage never reads "none".
-         SOURCE     brief O5 (:84-88); M8, M15
+         v0.9       DONE WHEN, enriched (Andrew 2026-10-02 ~17:33Z N2-N6):
+                    - the timeline is a recharts chart at a readable height, with
+                      a labelled y-axis (articles per day) and dated ticks;
+                    - bars use one data-family hue, and no status colour paints a
+                      bar (search state is a non-status cue or a tooltip line);
+                    - hovering a day shows its articles, distinct publishers,
+                      mention count and strongest headline in the shared tooltip;
+                    - coverage events and earnings releases are markers ON the
+                      chart at their dates, each opening that day;
+                    - recent news is its own card ABOVE the timeline;
+                    - the selected day opens in the page's shared HeroDialog,
+                      never inline under the chart;
+                    - article rows read headline, publisher and time at rest.
+                    Earnings markers render the served marker, or its designed
+                    empty state while the producer has none (the fold record).
+         SOURCE     brief O5 (:84-88); M8, M15; UI/UX brief O2, O3 (SAUX-06..15)
 
   FWD-6  A PM reads the Thesis as three cards and can trust where each line
          came from
@@ -156,14 +180,22 @@ Landed verbatim from `org/tier1_exec/1.0.0_SA_CTO/deliverables/DSGN_AMGTV1_ENDPO
   forms this endpoint replaces. Where the two differ, this endpoint's form
   (FWD-4's four cards, FWD-6's three cards, FWD-10's verdict card) wins.
 
-  FWD-12 The page has ONE dark band and every other container is a white
-         hairline panel
-         DONE WHEN  EXERCISED -- the rendered Security state reads
-                    bandContainersTopLevel == 1, the identity header is that
-                    band, and the tab panels are white hairline panels
-         ACCEPT     A PM reads the thesis without scrolling past more dark bands.
-         SOURCE     AMGT_RESAPP FWD-21; Andrew's F1 word (Security mode: the
-                    identity header is the ONE band)
+  FWD-12 The page reads in ONE card style -- the light family -- with at most
+         one dark band, and no light card ever sits on a dark container
+         DONE WHEN  EXERCISED -- the rendered Security and Universe states read
+                    bandContainersTopLevel <= 1 and lightOnDark == 0 (no white
+                    panel, strip or card inside a dark container); the Lead
+                    Panel and the identity header are white hairline panels with
+                    navy ink, the /philosophy GraphicCard face; the header region
+                    follows the /advisor-intelligence /book L0 order (a key-figure
+                    row, then the main chart, then the detail row)
+         ACCEPT     Put beside /philosophy, a reviewer cannot point to a card that
+                    belongs to the other family (v0.9).
+         SOURCE     AMGT_RESAPP FWD-21; Andrew's F1 word; v0.9: Andrew 2026-10-02
+                    ~17:33Z N1 ("stick to the light style unilaterally, e.g. the
+                    header section in /philosophy, or ... the standard darker
+                    style"). The CTO picked LIGHT: it is the C3 direction, and it is
+                    FWD-23's /philosophy family he asked to "keep going with".
   FWD-13 A PM never parses a raw float and can still dispute any headline
          figure
          DONE WHEN  EXERCISED -- every figure on the four header cards carries
@@ -230,7 +262,8 @@ Landed verbatim from `org/tier1_exec/1.0.0_SA_CTO/deliverables/DSGN_AMGTV1_ENDPO
   FWD-20 The contract's render check PASSES, and CAN FAIL
          DONE WHEN  EXERCISED -- portal/scripts/ui-smoke.mjs writes, for each of
                     the six states, a PNG at 1440 and a DOM JSON reading
-                    bandContainersTopLevel == 1, fonts == {Lato}, weights within
+                    bandContainersTopLevel <= 1 and lightOnDark == 0 (v0.9),
+                    fonts == {Lato}, weights within
                     {400,700}, no size below 11, radii within {2,3,4,pill},
                     shadows == 0 outside the focus ring, lowContrastChars == 0,
                     purpleFills per FWD-18 and the four states present; the
@@ -253,13 +286,23 @@ Landed verbatim from `org/tier1_exec/1.0.0_SA_CTO/deliverables/DSGN_AMGTV1_ENDPO
   CONTRACT.md.
 
   FWD-21 A PM sees what is being talked about, by period, as bubbles
-         DONE WHEN  EXERCISED -- one live walk on the portal build: the chatter
-                    view renders ONE bubble per security, its area sized by the
-                    collected count for that security in the selected calendar
-                    month, read from the served monthly route (CONTRACT section
-                    1); a cursor steps this month, M-1, M-2 and back, and at least
-                    one bubble's size changes between two steps on served data;
-                    the size is labelled "collected", never "market chatter"
+         DONE WHEN  EXERCISED (v0.9 restatement) -- one live walk on the portal
+                    build:
+                    - the chatter view renders ONE bubble per security, its area
+                      sized by the collected count in the selected ROLLING window
+                      (30D, 90D or 365D; FWD-26), read from the served route;
+                    - the bubbles form a collage, largest at the centre and
+                      smaller outward, by a deterministic spiral placement with
+                      no new dependency;
+                    - every name of the window is visible in one panel at
+                      1440x900 without scrolling, and no label clips or overlaps;
+                    - each bubble's fill is its served coverage tone on the Topic
+                      Cloud scale, through ONE shared sentiment-colour module, with
+                      a legend; a name with no scored articles is neutral and says
+                      so on hover;
+                    - at least one bubble's size changes between two windows on
+                      served data;
+                    - the size is labelled "collected", never "market chatter"
          ACCEPT     The PM says which names were collected most this month, steps
                     back two months and says what changed. Chatter has this ONE
                     form: no list, line or toggle to another chatter view exists
@@ -269,9 +312,13 @@ Landed verbatim from `org/tier1_exec/1.0.0_SA_CTO/deliverables/DSGN_AMGTV1_ENDPO
   FWD-22 A PM sees what moved in price, ranked, as horizontal bars
          DONE WHEN  EXERCISED -- the price view renders horizontal bars, longest
                     first and descending vertically, one per security, the
-                    measure the 30-day return, signed, in percent, printed as
-                    served (the page never rescales a served unit); a DOM census
-                    of the price view reads 0 line charts and 0 view toggles
+                    measure the return over the selected window (FWD-26), signed,
+                    in percent, printed as served (the page never rescales a
+                    served unit); a DOM census of the price view reads 0 line
+                    charts and 0 view toggles; v0.9: at rest it shows the 10
+                    largest gainers and the 10 largest losers, the full list
+                    opens on demand in the same panel, the face states its window
+                    in words, and no name is clipped without a hover revealing it
          ACCEPT     The PM reads the biggest mover first and the sign of each
                     move. Price has this ONE form.
          SOURCE     brief O2; CTO~Z rulings R3, R5
@@ -303,6 +350,51 @@ Landed verbatim from `org/tier1_exec/1.0.0_SA_CTO/deliverables/DSGN_AMGTV1_ENDPO
          ACCEPT     No cell on the demo thread reads empty because of a date,
                     label or unit convention.
          SOURCE     brief O4, IV.3; CONTRACT sections 2-3
+
+  ===== v0.9, 2026-10-02 -- THE UI/UX WALK (FWD-25..FWD-27) ===============
+  Andrew 2026-10-02 ~17:33Z (record ANDREW_DIRECT_20261002_173xZ_SECURITY_
+  ANALYSIS_UIUX_WALK_BRIEFS_TO_CTO_Z.md). UI/UX brief @3d25203d5a O6-O8.
+
+  FWD-25 A PM sees what changed in the model as the moment of the Model tab
+         DONE WHEN  EXERCISED -- walked on a name with two differing versions:
+                    "What changed" is a panel with a header at the TOP of the
+                    Model tab: count tiles (added, changed), then a table of the
+                    changed figures with before, after, signed change and percent
+                    change, then per-line detail on demand; it defaults to the
+                    latest two versions that differ; the version list collapses
+                    into the picker; every version time prints in ET
+         ACCEPT     A PM says in one sentence what moved in the model and by how
+                    much, without opening a list of timestamps.
+         SOURCE     Andrew N9; UI/UX brief O6 (SAUX-23, 24, 26)
+
+  FWD-26 A PM picks the last 30, 90 or 365 days on every period-bound face, and
+         reads which window is shown
+         DONE WHEN  EXERCISED -- Chatter and Price each offer 30D / 90D / 365D
+                    presets in the shared Segmented control (the in-pattern
+                    IndexPerformanceModal labels), default 30D, replacing
+                    "Earlier month" / "Later month"; each face's caption names its
+                    window ending at the served as-of date; where the store is
+                    shorter than the window, the face states the served window
+                    start ("since <date>") and never extrapolates
+         ACCEPT     No face shows a period it does not name.
+         SOURCE     Andrew N10; UI/UX brief O7 (SAUX-21, 27, 28)
+
+  FWD-27 A PM reads plain words and figures that agree with each other
+         DONE WHEN  EXERCISED -- a walk of every tab on 3 names reads:
+                    - 0 strings from the register's system-wording list;
+                    - one display name per security;
+                    - one money format and one time zone (ET);
+                    - every figure with its as-of date;
+                    - no two figures for one thing disagree without a label
+                      naming each measure and window;
+                    - officers list the chief executive first, then the chief
+                      financial officer;
+                    - an unconnected field prints no line (a panel with nothing
+                      to show renders one C12 empty state);
+                    - Escape closes the account menu.
+         ACCEPT     No figure on the page needs a second figure to be understood.
+         SOURCE     Andrew N6 ("easy to read text"); UI/UX brief O8 (SAUX-03, 04,
+                    14, 22, 24, 26, 29-36)
 ```
 
 ## CONTRACTS
@@ -390,6 +482,56 @@ reasons), FWD-10 (posture verdict card / empty state), FWD-11 (the side-by-side 
 graded against its own acceptance line. FWD-12..FWD-20 (v0.4) enter at round 12; FWD-20 is the instrument
 the others are graded by, so it leads.
 
+### v0.9 -- the 2026-10-02 Security Analysis UI/UX walk: 36 SAUX findings, folded (CTO fold record `CTO_FOLD_SECURITY_ANALYSIS_UIUX_20261002.md`)
+
+The table is generated from `docs/briefs/amgt-security-analysis-ui-findings-20261002.json` (@3d25203d5a). The register and brief
+are authoritative for each finding's full observation, cause and design rule.
+- Each row names the ENDPOINT outcome it serves.
+- 29 rows are COO~D's.
+- 6 are AMGT_RESAPP serving cells and 1 is an AMGT_HARVST producer cell. Those are folded into their own PRDs and cited here so
+  the page's dependence is visible.
+- **Coverage gate:** `python docs/briefs/irpt-ui-review-coverage-check.py --register docs/briefs/amgt-security-analysis-ui-findings-20261002.json org/missions/D13/DSGN/DSGN_AMGTV1/prd/DSGN_AMGTV1_PRD.md`
+  exits 0 only at 36/36.
+
+| id | FWD | owner | observed (first sentence) | acceptance |
+|---|---|---|---|---|
+| SAUX-01 | FWD-12 | COO~D (this PRD) | The Lead Panel is a dark container that holds a white control strip (Chatter/Price, All names/Starred only, the ticker search) under its own dark g... | A screenshot of the Lead Panel shows one style throughout: either white panels with navy ink and at most one band on the page (the C3 direction, the /philosophy header style) or an all-dark panel with no white strip or white card inside it. |
+| SAUX-02 | FWD-12 | COO~D (this PRD) | The per-name header puts white-bodied cards with dark gradient tops (the 'BA US' identity card and the four PRICE / FINANCIALS / MARKET FEATURES / ... | The name header renders in the same single style chosen for the Lead Panel (SAUX-01): no white card sits on a dark container. |
+| SAUX-03 | FWD-27 | COO~D (this PRD) | Each of the four header cards shows one figure at rest and opens a modal of two or three rows; one of those rows repeats a figure already on the fa... | The header shows one key-figures card with every figure at rest (price, market cap, enterprise value, net debt, beta, average volume, short interest), or each opened modal adds only figures that are not on the face; no figure appears twice. |
+| SAUX-04 | FWD-27 | COO~D (this PRD) | Hovering Enterprise value in the Financials modal shows a purple tooltip with the raw value '187187.819936', unit 'MILLIONS' and source 'bloomberg-... | The tooltip shows the formatted value and the source in words ('Bloomberg'), in the standard tooltip style; no unformatted number and no system source id appears. |
+| SAUX-05 | FWD-12 | COO~D (this PRD) | The filled purple Refresh button sits on the dark overlay container. | No #5F3BE3 filled button renders on a dark container; Refresh is a secondary control or sits on a white panel. |
+| SAUX-06 | FWD-5 | COO~D (this PRD) | The mention timeline is a hand-drawn bar strip: the y-axis runs 0 to 7.6 with no unit, the x-axis prints only the first and last dates, and the cap... | The timeline renders through the portal's in-pattern chart library with a labelled y-axis (articles per day) and month ticks on the x-axis; the 'rendered (no gap)' caption is gone. |
+| SAUX-07 | FWD-5 | COO~D (this PRD) | Almost every bar is red, the legend's colour for NOT SEARCHED (legend: COMPLETE purple, PARTIAL orange, NOT SEARCHED red), so the chart reads as a ... | Bars are drawn in one data-family hue; search completeness is carried by a non-status cue (pattern or opacity, with a legend) or in the tooltip; no status colour paints a bar. |
+| SAUX-08 | FWD-5 | COO~D (this PRD) | Hovering a day shows only its search state ('October 2nd, 2026: partial day -- not the whole story for that day. | Hovering any day shows the date, article count, distinct publishers, mention count and the strongest headline, in the chart library's tooltip. |
+| SAUX-09 | FWD-5 | COO~D (this PRD) | Coverage events are a text list under the chart ('COVERAGE EVENTS -- PRESS ONE TO OPEN ITS FIRST DAY' and one underlined line); nothing marks a spi... | Each event appears as a marker on the timeline at its date with a short headline label, chronologically, and pressing the marker opens that day. |
+| SAUX-10 | FWD-5 | COO~Z: AMGT_RESAPP r64 serving cell (fold record) | The timeline has no earnings-release layer and VLO has no events at all, so a spike with no multi-publisher burst carries no explanation. | The timeline route serves, per name, dated markers of two kinds -- coverage events with their lead headline and earnings releases with their date -- and a name with no burst still carries its earnings markers. |
+| SAUX-11 | FWD-5 | COO~D (this PRD) | The selected day's articles ('SEPTEMBER 8TH, 2026'S ARTICLES, STRONGEST FIRST') and the recent news ('NEWS -- NEWEST FIRST ...') run together in on... | Recent news is its own card above the timeline; the selected day opens in its own card or modal, visually distinct from recent news, and the two never share one column. |
+| SAUX-12 | FWD-27 | COO~Z: AMGT_RESAPP r64 serving cell (fold record) | The recent-news block for September 3rd to October 2nd shows one article (WSJ, September 3rd) while the opened day of September 8th, inside that wi... | The recent-news card lists the newest harvested articles for the name across all publishers in its window; every article the day view shows inside that window also appears there. |
+| SAUX-13 | FWD-5 | COO~D (this PRD) | Each article row carries dense system metadata in small text ('named 15 times', 'in headline: yes', 'in lead: yes', coloured tier letters A/B/C). | Each article row shows headline, publisher and time at rest; mention count, headline and lead flags and tier open in the same modal pattern as the Market Overview topic analysis modal. |
+| SAUX-14 | FWD-27 | COO~D (this PRD) | 'NOT SEARCHED FOR THIS COMPANY DIRECTLY -- 6 ARTICLES FOUND IN OTHER SEARCHES' and 'NOT SEARCHED ON THIS DAY' are red #BE2D36 text on the dark cont... | No status-coloured text renders below 4.5:1; a search-state note is navy or band ink beside a status icon. |
+| SAUX-15 | FWD-12 | COO~D (this PRD) | The overlay stacks the company description, the posture line, a fund line, the timeline, the event list, the day's articles, the news, a social lin... | At rest the overlay shows the identity, the key figures and the timeline; description, posture, social and chatter/breakout open from tiles or details; at 1440x900 the active tab's first panel starts inside the first viewport. |
+| SAUX-16 | FWD-21 | COO~D (this PRD) | Chatter draws one bubble per name in a 4-column grid ordered by ticker; September's 57 names take 15 rows (a 4,153px page), bubble sizes are hard t... | The Chatter face draws a packed collage centred on the largest bubble with sizes falling outward (the Topic Cloud layout), every name of the period visible in one panel at 1440x900 without scrolling. |
+| SAUX-17 | FWD-21 | COO~D (this PRD) | Bubble labels clip at the panel edge and run into neighbours (a left-edge label loses its first letters; two adjacent labels print as one run-on li... | No bubble label is clipped or overlaps another; a long name wraps or shows in full on hover. |
+| SAUX-18 | FWD-21 | COO~D (this PRD) | Every bubble is the same blue; the face carries no sentiment. | Each bubble's fill encodes the name's article sentiment for the period on the Topic Cloud sentiment scale, with a legend; a name with no score shows a neutral fill and says so in its tooltip. |
+| SAUX-19 | FWD-21 | COO~H: AMGT_HARVST producer cell (fold record) | No sentiment value is served for harvested articles or per name, so the page has nothing to colour by. | Every harvested article carries a FinBERT sentiment score with the scorer named, and the chatter route answers per name and period an article count plus a sentiment aggregate built from those scores. |
+| SAUX-20 | FWD-22 | COO~D (this PRD) | The Price face draws all 94 names as bars (a 2,618px page) and clips ten names with no visible full form (for example the Taiwan Semiconductor ADR ... | At rest the Price face shows the top movers each side (gainers and losers) with the full list on demand; no name is clipped without a title or hover revealing it. |
+| SAUX-21 | FWD-26 | COO~D (this PRD) | The Price face prints moves such as +34.0% and -18.0% with the caption 'Showing the Trending x Price list (movement is measured)' but never states ... | The Price face states its window in words ('change over the last N days to <date>'), and the window follows the period preset (SAUX-27). |
+| SAUX-22 | FWD-27 | COO~Z: AMGT_RESAPP r64 serving cell (fold record) | The Lead Panel lists The Boeing Co at -6.5% (row 41 of 94 on Trending x Price), while the name's overlay reads 'BREAKOUT (PRICE) #72 / -4.71%, up 1... | The overlay shows the same measure and window as the face the name was opened from, or labels each measure and window; one name never shows two unlabelled moves. |
+| SAUX-23 | FWD-25 | COO~D (this PRD) | 'WHAT MOVED BETWEEN TWO VERSIONS' sits at the bottom of the Model tab, under a 19-line plain list of version timestamps; it is plain text lines ('E... | 'What changed' is its own card near the top of the Model tab: a summary line (added, changed), then a table of changed figures with before, after, signed change and percentage change, defaulting to the latest two versions that differ; the version list collapses into the picker. |
+| SAUX-24 | FWD-27 | COO~D (this PRD) | Version times print in UTC ('The version of October 2nd, 2026, 15:49 UTC') while the rest of the page prints ET. | Every time on the page prints in ET in one format. |
+| SAUX-25 | FWD-27 | COO~Z: AMGT_RESAPP r64 serving cell (fold record) | 'WHERE EACH INPUT CAME FROM' says '1 of 6 inputs have run' and that Filings, News, Social and Web have 'no source set up yet', while the same page ... | The provenance block names each input that fed the page (filings, harvested news, Bloomberg) with its last run, consistent with what the page shows, behind a details toggle. |
+| SAUX-26 | FWD-27 | COO~D (this PRD) | The Model tab prints system facts on its face: 'Showing 147 fiscal figures from the model block', 'No year-on-year growth rows: the model block ser... | None of these sentences renders at rest; any that remains sits behind a details toggle in reader words. |
+| SAUX-27 | FWD-26 | COO~D (this PRD) | Chatter's period is a calendar month stepped with 'Earlier month' / 'Later month' (October reads 'partial month: still being collected'); the Price... | Both faces offer rolling 30D / 90D / 365D presets in the in-pattern segmented control, default 30D, and each caption names the window. |
+| SAUX-28 | FWD-26 | COO~Z: AMGT_RESAPP r64 serving cell (fold record) | The chatter counts are served per calendar month, so a rolling window cannot be drawn. | The lead-panel routes answer chatter counts (and the SAUX-19 sentiment aggregate) and price moves for rolling 30, 90 and 365-day windows ending at the last trading day. |
+| SAUX-29 | FWD-27 | COO~Z: AMGT_RESAPP r64 serving cell (fold record) | Names print in three formats: vendor capitals with share-class codes ('ALPHABET INC-CL A', 'ROCHE HOLDING AG-GENUSSCHEIN'), title case ('The Boeing... | Every face prints one display name per security, in title case, with no share-class code. |
+| SAUX-30 | FWD-27 | COO~D (this PRD) | System wording on the face: the page subtitle 'Universe discovery, ranked server-side, above a per-name ...', 'Back to universe', '275 of 275 day(s... | None of the listed strings renders; each is replaced by reader words or moved behind a details toggle. |
+| SAUX-31 | FWD-27 | COO~D (this PRD) | Fields with no source print as lines: 'Social: no source measured', 'MOST-DISCUSSED: NOT MEASURED', 'Trend is not in the data yet', and 'No profile... | A field with no source is not printed as a line; a panel with nothing to show renders one C12 empty state. |
+| SAUX-32 | FWD-27 | COO~D (this PRD) | Officers are listed alphabetically by surname, so the chief executive sits in row 7 of 12. | Officers list the chief executive first, then the chief financial officer, then the rest by role rank. |
+| SAUX-33 | FWD-27 | COO~D (this PRD) | Money prints as 'USD 1,234' and '$1,234' on one page. | Every money figure on the page uses one format. |
+| SAUX-34 | FWD-27 | COO~D (this PRD) | Three market caps for one name show on one page with no reconciliation: USD 156B (Price modal), 159,623 (USD mm, Peers, as of September 24th) and '... | Each market-cap figure prints its as-of date beside it, or the page reads one vintage. |
+| SAUX-35 | FWD-27 | COO~D (this PRD) | The avatar's Settings / Log Out menu stays open after Escape and across later steps; while it was open the walker's tab presses failed. | Escape closes the account menu, and with the menu open a click on a tab still switches the tab. |
+| SAUX-36 | FWD-27 | COO~D (this PRD) | The Price face's Details disclosure prints 'generation 20261002T111010Z-a89fcf3c5f42 / state COMPLETE / 94 row(s) committed / coverage vintage bloo... | The Details disclosure states the price list's date and source in words, with no generation id or system state token. |
+
 ## PATHS (the write surface)
 
 **Owned:** `portal/src/pages/SecurityAnalysis/**` and its tests. **Extended by a cell naming every other reader:** new
@@ -407,6 +549,14 @@ hits on the touched surfaces; every extraction ships before/after renders of its
 criteria at L9 on the PNGs, citing the contract clause.
 
 ## PROVENANCE AND AMENDMENT HISTORY
+
+- v0.9 (2026-10-02 ~18:4xZ, `1.0.0_SA_CTO~Z`), on Andrew-direct ~17:33Z (the Security Analysis UI/UX walk; CRO~Z brief
+  @3d25203d5a; fold record `CTO_FOLD_SECURITY_ANALYSIS_UIUX_20261002.md`):
+  - FWD-5, 12, 20, 21 and 22 are amended, and FWD-25, 26 and 27 are new.
+  - The light card family is picked for FWD-12, so FWD-20's band clause becomes <= 1 plus lightOnDark == 0.
+  - FWD-22 rests at the top 10 movers each way.
+  - The ENRICHMENT BACKLOG gains the 36-row SAUX register (coverage 36/36).
+  - ENDPOINT change: `3.0.0_SA_CVO~Z` re-signs the ratified-text half.
 
 - v0.6 (2026-10-01, `1.0.0_SA_CTO~Z`): the Friday demo. Andrew 2026-10-01 03:4xZ (CRO~Z order + brief @1391c2f70a) and the
   CTO~Z placement `CTO_PLACEMENT_20261001_043xZ_AMGT_FRIDAY_DEMO_RESTRUCTURE.md` @e18d3a4e6a, rulings R3-R6 and R10.

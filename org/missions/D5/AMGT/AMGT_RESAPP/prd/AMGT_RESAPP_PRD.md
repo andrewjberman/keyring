@@ -5,7 +5,7 @@
   "project": "AMGT_RESAPP",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.32",
+  "prd_version": "v0.33",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-security-analysis-20260910.md@19ce7d5b4d",
   "endpoint_outcomes": [
@@ -43,11 +43,26 @@
     "FWD-32",
     "FWD-33",
     "FWD-34",
-    "FWD-35"
+    "FWD-35",
+    "FWD-36",
+    "FWD-37",
+    "FWD-38"
   ],
   "status": "RATIFIED"
 }
 ```
+
+**v0.33 ADDENDUM (2026-10-02 ~18:4xZ, `1.0.0_SA_CTO~Z`)**, on Andrew-direct ~17:33Z (record `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/ANDREW_DIRECT_20261002_173xZ_SECURITY_ANALYSIS_UIUX_WALK_BRIEFS_TO_CTO_Z.md`).
+- **New:** FWD-36 (rolling windows and tone served), FWD-37 (timeline markers: coverage events and earnings releases) and FWD-38
+  (served data agrees with itself). They are the serving halves of the UI/UX walk's register rows SAUX-10, 12, 19, 22, 25, 28 and
+  29.
+- **Earnings dates:**
+  - the PRODUCER is AMGT_CORPUS, as Bloomberg fields in the Model-block pull;
+  - the pull itself waits on Andrew's vendor word (CORPUS FWD-22 / FWD-20);
+  - until then FWD-37 serves the marker kind with its reason.
+- **Fold record:** `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_FOLD_SECURITY_ANALYSIS_UIUX_20261002.md`.
+- This is an ENDPOINT change, so the CVO re-signs the ratified half.
+
 
 
 **archetype:** SCRIBE (spec) · **author** `1.0.0_SA_CTO~Z` (L4 owner: CTO, no COO, no CVO)
@@ -944,6 +959,56 @@ disputable, by rule, and carry no technical language.*
                     not the 29 of 95 the old name list happened to hold.
          SOURCE     brief O2, O7; IV.2 (34-name list; 29 of 95 covered names);
                     Part VII.2 row COO~Z item 3
+
+  ===== v0.33, 2026-10-02 -- THE UI/UX WALK'S SERVING CELLS (FWD-36..38) ====
+  Andrew 2026-10-02 ~17:33Z (record ANDREW_DIRECT_20261002_173xZ_SECURITY_
+  ANALYSIS_UIUX_WALK_BRIEFS_TO_CTO_Z.md); register rows SAUX-10, 12, 19
+  (serving half), 22, 25, 28, 29. The page halves are DSGN FWD-5, 21, 22,
+  26 and 27.
+
+  FWD-36 The lead-panel routes answer rolling 30, 90 and 365-day windows, with
+         each name's tone
+         DONE WHEN  EXERCISED -- collected/chatter and the price ranking take
+                    ?days=30|90|365 (default 30), each window ending at the last
+                    trading day; chatter rows serve articles_total, voters and
+                    tone from HARVST gold (HARVST FWD-17), never computed at
+                    request time; each response serves its window start and,
+                    where the store is shorter, says so; the calendar-month
+                    route stays served until the page no longer reads it
+         ACCEPT     The page draws any of the three windows from one request and
+                    never computes a window itself.
+         SOURCE     SAUX-19 (serving half), SAUX-28; DSGN FWD-21, 22, 26
+
+  FWD-37 The timeline route serves dated markers of two kinds: coverage events
+         and earnings releases
+         DONE WHEN  EXERCISED -- per name, the timeline route serves markers
+                    {date, kind: coverage_event | earnings_release, label}: a
+                    coverage event carries its lead headline from gold, and an
+                    earnings release its date from the CORPUS Bloomberg block
+                    (the producer named in the fold record); while no earnings
+                    date is served for a name, the route serves the kind with
+                    its reason ("no earnings dates are pulled yet"), and a name
+                    with no burst still carries its earnings markers once pulled
+         ACCEPT     A spike with no multi-publisher burst still has an
+                    explanation on the chart.
+         SOURCE     SAUX-10; DSGN FWD-5
+
+  FWD-38 The served data on one page agrees with itself
+         DONE WHEN  EXERCISED -- on 3 names:
+                    - the recent-news list holds the newest harvested articles
+                      across all publishers in its window, and every article
+                      the day view shows inside that window is in it (SAUX-12);
+                    - every route serves ONE display name per security, in title
+                      case, with no share-class code (SAUX-29);
+                    - each served move names its measure and window, so the
+                      overlay's breakout move and the list's move are told
+                      apart or equal (SAUX-22);
+                    - the provenance block names each input that fed the page
+                      (filings, harvested news, Bloomberg) with its last run,
+                      consistent with what the page shows (SAUX-25)
+         ACCEPT     No two served figures for one thing disagree without a
+                    label.
+         SOURCE     SAUX-12, 22, 25, 29; DSGN FWD-27
 ```
 
 **BAR DISTRIBUTION: 19 of 20 are `EXERCISED`; only `FWD-9` is `APPLIED`.**
