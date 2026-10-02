@@ -1256,3 +1256,29 @@ through the ALB; `/mcp` 401 unchanged; `.env` 48 keys, capability ON), `tr.AC2.s
 
 **Blindness stated:** the identity is confirmed from the broker's account records by username; the Part D record
 (`PART_D_RECORD_20260930.md`) is the second source for the same mapping.
+
+## ADDENDUM R3-T.6 (2.0.0_SA_COO~O, 2026-10-02 ~17:5xZ) -- the /hx/teams gateway release, ONE order (Andrew-direct, today)
+
+**Source.** Andrew-direct (laptop `0.0.0_AB_MSTR` bus d38d682f, 17:17Z, relayed by `0.0.0_AB_MSTR~Z` msg 28592):
+"release the gateway /hx/teams route TODAY ... (20:30-21:30Z) depends on it." Request: laptop `4.0.0_SA_CRO`
+`org/tier1_exec/4.0.0_SA_CRO/deliverables/SITEZ_GATEWAY_RELEASE_REQUEST_HX_TEAMS_20261002.md` @a53c8452b4. Spec and
+the CTO half of the never-widen sign-off: `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_20261002_NFRA_OPLGTW_HX_TEAMS_RELEASE.md`
+(msg 28599). Label `<round>13</round>`, ONE issuance, ONE cell, ONE chain; fanout: 1 of 1 chains, cap 8. The id
+`OG-rl-3` is the CTO's: the unissued round-13 draft that also used it (`deliverables/2.0.0_SA_COO~O/r13/drafts_not_issued/`,
+draft addendum R3-T.5) is renumbered when that round issues; nothing of that draft rides this release.
+
+| cell | what | risk | slot |
+|---|---|---|---|
+| `OG-rl-3` | (1) TERRAFORM: `gateway-read-secrets.tf` gains a fourth data source + ARN for `gateway/teams/bearer` (same statement, same action, no wildcard), and `hx-capability.tf`'s value from 8e6872f265 (rule 35 gains `/hx/teams/*`) -- ONE targeted `safe-apply`, exactly two in-place changes. (2) NARROW APP RELEASE on live `3a7d6a7dc8`: db92656c72's five files (`app/teams_route.py`, `tests/test_teams_route.py` new; only its hunks in `app/config.py`, `app/server.py`, `app/taxsma_workbook.py` = Z-S41) merged onto the live bytes, plus `deploy-to-ec2.sh` reading `gateway/teams/bearer` host-side (refused when the read fails or is empty) into `TEAMS_BEARER=` and `TEAMS_BEARER_LABELS=teamsassist`. `.env` 48 -> 50. CTO + COO halves; NEVER-2 ledgers `nfra-oplgtw-hx-teams-infra` and `nfra-oplgtw-hx-teams-release`. | WORLD | ~15 |
+
+**Acceptance** (the ruling's AC1-AC4, checks under `deliverables/2.0.0_SA_COO~O/hxteams/checks/`): `ht.AC1.sh` (IAM
+allowed on the bearer / implicitDeny on a synthetic `gateway/teams/` sibling / policy exactly 4 ARNs / rule 35 three
+values), `ht.AC2.sh` (host module sha256, `.env` 50 keys, `/hx/teams/x` refused by the app, `/` 302), `ht.AC3.sh`
+(with the bearer `/hx/teams/me` and `/hx/teams/chats` 200; a 502 with `graph_status` 403 is a BLOCKING row to Andrew),
+`ht.AC4.sh` (floor: `/hx/mail/x` and `/hx/transcripts/x` 404 as measured on live, the Tax route's own refusal and Z-S41
+bytes, NEVER-2 closed, narrow census). Pre-cut controls 17:5xZ: AC1 1 of 4, AC2 1 of 4, AC3 0 of 2 (302), AC4 0 of 4.
+
+**Blindness stated:** the two POST verbs are not graded here (the CTO's ruling: Andrew's first EOD post is their
+exercise). The ruling's "401" for `/hx/mail/x` was re-measured as 404 on live and AC4 grades "unchanged from live".
+No real ungranted `gateway/*` secret remains after this release (5 exist: 4 in this policy, 1 in the Tax policy), so the
+negative IAM arm is a synthetic sibling ARN.
