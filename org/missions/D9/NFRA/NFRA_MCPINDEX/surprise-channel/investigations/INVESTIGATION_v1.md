@@ -5372,6 +5372,50 @@ carries none.
     "spec_asserts": "Z-S72 notes: retire unrealized's document merge only when bd-silver-merge processes the 6 files or they are ruled out with evidence.",
     "world_is": "bd-silver-merge processed all 6 as recorded empty stubs with failures=0 on its first scheduled run after the fix.",
     "notes": "MX-s-16 completes on unrealized + allocations (A3). Transactions and realized stay 2-writer by the A2 HOLD, carried in REMEDIATION_v5 with the cot sentinel fix."
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~24",
+    "surfaced_at": "2026-10-02T03:30Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "MX-s-17 PHASE A: code/silver/merge-daily-incremental.py reads and writes S3 only through boto3 and, if boto3 fails to import, every S3 helper returns empty/False, so the SSM document would print 'No new files to process' and exit 0 having written nothing; the old scripts/ copy shelled out to the aws CLI and had no boto3 dependency.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "code/silver/merge-daily-incremental.py (S3 ETag 59820 bytes, LastModified 2026-10-01 17:27:57): lines 39-42 'try: import boto3 / except ImportError: boto3 = None'; _s3c() returns None when boto3 is None; _s3_list_names() returns [] in that case; incremental_merge() then prints 'No new or re-landed files to process' and returns, rc 0.",
+        "infra/aws/ec2/bd-exporter/terraform/scripts/uploader_user_data.sh lines 4, 9, 62-64: user-data DECLARES 'python3 -m pip install --target=/usr/lib/python3.9/site-packages/ boto3 pandas pyarrow openpyxl' -- a declared install, not a measurement of the live instance the two documents target."
+      ]
+    },
+    "spec_asserts": "Order step 1: confirm code/silver/ carries every module the script imports. It does (the script imports no lib/ module; stdlib + boto3 + pandas only).",
+    "world_is": "The script's third-party import set is boto3 + pandas (pandas self-installs by pip on first run, boto3 does not). The documents run on the bd-exporter EC2, whose boto3 install is declared in user-data and unmeasured here (the instance is stopped between runs; PHASE A is no-publish and starts nothing). A missing boto3 would read as a clean empty run, not an error.",
+    "notes": "ARMED only if boto3 is absent on the instance; INERT if present. Disarm at PHASE B before the publish: one read of 'python3 -c import boto3' on the instance image (or a first document run read back for 'SKIP-unchanged' lines, which only boto3 can print). A 'No new ... files' line with no 'SKIP-unchanged' lines on a day with 198/147 known bronze files is the tell.",
+    "id": "NFRA_MCPINDEX-Z-W24-S9"
+  },
+  {
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~24",
+    "surfaced_at": "2026-10-02T03:31Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "MX-s-17 PHASE A: infra/aws/ec2/bd-exporter/deploy-merge-daily-incremental.sh (outside this cell's paths) still publishes data/black_diamond/scripts/silver/merge-daily-incremental.py to s3://opal-data-bd/scripts/merge-daily-incremental.py, and its header says the SSM documents pick that key up -- true until this cell's repoint lands, a stale distribution path after it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/bd-exporter/deploy-merge-daily-incremental.sh lines 3-9, 18-19: DST_KEY=\"scripts/merge-daily-incremental.py\"; header 'the SSM documents each do aws s3 cp s3://opal-data-bd/scripts/merge-daily-incremental.py'.",
+        "infra/aws/ssm/force-txn-download.json:17, force-alloc-download.json:17 (cell census line, not in MX-s-17): 'aws s3 cp s3://opal-data-bd/scripts/merge-daily-incremental.py .'; opal-bd-fees-download.json:28 and force-*:12 sync scripts/src/.",
+        "served diff, this PHASE A: scripts/merge-daily-incremental.py (43492 bytes, 2026-06-29) vs code/silver/merge-daily-incremental.py (59820 bytes, 2026-10-01): 840 diff lines, all in the I/O layer, the ETag skip, and run()/lambda_handler()."
+      ]
+    },
+    "spec_asserts": "Cell: disarm read is 'both documents' Default content names no scripts/ path'.",
+    "world_is": "After the repoint, two documents stop reading scripts/, but the repo's own deploy script keeps writing a second merge script there, so scripts/merge-daily-incremental.py stays a live-looking, drifting second copy that force-txn/force-alloc still run.",
+    "notes": "INERT to the two repointed documents. Not edited here (out of <paths>); the force-* documents and the deploy script are the census line the cell names plus one carrier the cell did not.",
+    "id": "NFRA_MCPINDEX-Z-W24-S10"
   }
 ]
 ```
