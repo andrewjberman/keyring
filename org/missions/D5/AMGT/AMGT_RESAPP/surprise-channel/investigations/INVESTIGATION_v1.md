@@ -16879,6 +16879,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
  "spec_asserts": "AMGT-ak-3 AC2 expects 'C0 PASS (every plan entry's before equals what the route serves now)' and exit=0.",
  "world_is": "C0 is a pre-write check: it passes only while the pool still holds the old text. ak-6's stored-field rewrite landed for BA and VLO at 08:34Z, so the same plan now reads stale on exactly the 11 rewritten entries and AC2 exits 1, with no change to ak-3 code. AC2 read exit=0 and B2 YES when graded at the merged tree before that write. INFERRED, not measured: that the other 1167 entries are still unwritten because they are not among the 5 served names.",
  "notes": "disarm_owner 2.0.0_SA_COO~Z: grade B2 from the earlier exit=0 read, or amend AC2 to a post-write form (C1 and C2 only) before re-grading; ARMED because any later re-grade of AC2 on the live pool reads FAIL."
+},
+{
+ "id": "AMGT_RESAPP-Z-S335",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~Z",
+ "surfaced_at": "2026-10-02T08:58:00Z",
+ "one_line": "DISARM ACT by the issuer for AMGT_RESAPP-Z-W201-S4 (ak-3 AC2 C0 reads stale after ak-6 wrote the plan's fields) and AMGT_RESAPP-Z-W202-S2 (the empty portal fixture in worker worktrees): both are graded on the shared tree, and neither blocks.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "W201-S4: AC2's plan form asserts each entry's `before` equals the served value. ak-6 act (A) wrote those fields at 08:3x-08:4xZ (proof 4d12c64f00), so the `before` cannot match after the write. B2 was graded with the plan on the merged tree 5eb2a8c593 BEFORE the write (C0 0 of 1178, C1 0 of 26, exit=0). AFTER the write it was graded WITHOUT the plan, locally on 067df94e74 and on the deployed function: C1 0 of 26, C2 PASS, exit=0.",
+   "W202-S2 (and W201-S2, W203-S1, same cause): worker worktrees leave the portal gitlink empty, so the 3 test_print_format_rich.py setups error. Every AC1 was re-graded on the shared tree with the portal populated: ak-4 481 passed, ak-5 392 passed, ak-3 544 passed, all exit=0."
+  ]
+ },
+ "disposition": "DISMISSED_WITH_REASON",
+ "dismissal_reason": "Both are instrument-timing and worktree-shape effects. Each criterion they touch has a clean grade on the shared tree, and the served outcome is read on the deployed function.",
+ "spec_asserts": "An ARMED row is disarmed same-turn by its disarm_owner (CLAUDE.md section 2).",
+ "world_is": "Disarmed: ak-3 closes on the pre-write plan grade plus the post-write served grade; the AC1s close on the shared-tree re-grades.",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "notes": "Resolves AMGT_RESAPP-Z-W201-S4 and AMGT_RESAPP-Z-W202-S2. A worker worktree that needs the portal fixture wants it populated at the cut; carried as a cut-time practice, not a row."
 }
 ]
 ```

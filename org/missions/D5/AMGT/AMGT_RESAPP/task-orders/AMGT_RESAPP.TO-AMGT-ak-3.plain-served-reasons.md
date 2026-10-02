@@ -115,3 +115,7 @@ reasons through the frozen plan; the peers code through the redeploy). The base 
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-02 ~08:5xZ):** ACCEPTED (B2 + B5). Worker ~201 commits `042ee0f7a8`, `25ac521b3d` (AMENDMENT 1), `48661ef1f5`/`78b7325369` (AMENDMENT 2); drained `5eb2a8c593`, `067df94e74`. Re-graded on the shared tree: AC1 544 passed exit=0; AC2 graded with the plan pre-write on `5eb2a8c593` (0 of 1178 stale, 0 of 26, exit=0) and without it post-write (local `067df94e74` and deployed: 0 of 26, exit=0) -- its plan-form C0 reads stale after ak-6 wrote the fields, by design (row AMGT_RESAPP-Z-S335 disarms W201-S4); AC3 YES (0 of 7 stale, 0 of 2 bases, C2 PASS). Served: B2 by ak-6 act (A) (accepted `9115f4594b`); B5 by ak-6 act (C) (AMENDMENT 2, its own pair). `ceo_profile_reading` keys its state on fields (status/query/absence_class/url) plus the SEARCH_FAILED prefix; `_SERP_URL_COUNT_RE` ("returned (\d+) url") matches the new sentences, so B5's rewrite moves basis/reason text only.
+
+<status>complete</status>

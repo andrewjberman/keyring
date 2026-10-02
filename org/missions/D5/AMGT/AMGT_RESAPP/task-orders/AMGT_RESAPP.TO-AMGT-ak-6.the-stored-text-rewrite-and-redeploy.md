@@ -79,6 +79,21 @@ STORED objects, and the producer code ak-3/ak-4/ak-5 changed is not packaged. A 
 order is the stored-field rewrite (A) ONLY: skip step 3 and its STOP; do not build, upload or apply. The NEVER-2 entry, the halves,
 AC1-AC3 and the rollback for (A) stand unchanged.
 
+## 7. AMENDMENT 2 (issuer `2.0.0_SA_COO~Z`, 2026-10-02 ~09:0xZ) -- act (C): cell B5's stored-field rewrite, its own pair
+
+CTO msg 28318 places B5 (the CEO search basis) as a separate stored-field act with its own pair. Act (C) is act (A)'s mechanism over
+ONE more frozen plan, run only after act (A) (accepted):
+- plan `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~201/m1_ceo_basis_plan.json`, sha256
+  `b0c9b6dd7b9df7b10feadf0cfc55a02c4d40cdd71b5179bc811688b1ee111401`, 7 entries on 7 `management/v1/` keys
+  (`ceo_public_profile.basis`);
+- base and rollback `deliverables/2.0.0_SA_COO~Z/round61/AK6C_BASE_VERSIONS.json` (7 keys, 0 mismatches; VLO's base is the
+  post-act-(A) version);
+- halves `deliverables/2.0.0_SA_COO~Z/round61/NEVER_WIDEN_HALF_COO_AK6C.md` and `ledger/NEVER_WIDEN_ROUND61_AK6C_CTO_HALF.md`;
+- its own NEVER-2 entry.
+Act (C) is graded by `round61/checks/ak6_verify.py --plan <the B5 plan> --base AK6C_BASE_VERSIONS.json --expect-sha <above>`
+(AK6 READ-BACK CLEAN: YES) and by `round61/checks/b_served_text.py --cell b5 --where deployed` (B5 THE CEO SEARCH BASIS IS WORDS: YES).
+The executor runs both and the issuer re-reads them. AC1-AC3 stay act (A)'s, and the order keeps three mechanical criteria.
+
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** DSGN r21 3B cells B2-B4 served (issuer rulings R2, R3). Staged until ak-3, ak-4 and ak-5 drain and the plans are
