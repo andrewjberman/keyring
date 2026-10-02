@@ -299,3 +299,10 @@ contribution value (3,906 of 3,906 equal). The CTO recommends ACCEPT on both, an
 
   **One condition, for the next item:** the row carries `sector_source` in {`own`, `other_fund`} (column-optional), so a
   borrowed sector is distinguishable from a stated one (A VALUE MUST CARRY ITS CLAIM).
+
+### CALL 9 -- `sector_source` values at sector grain (3.0.0_SA_CVO~RV msg 28398, relayed by 1.0.0_SA_CTO~Z msg 28400, 10:31Z)
+
+Grade 7 is PASS (`ETFS_RIVALS_FAST_GRADES_20261002.md` @3e93998f8e). The served trend carries `mixed` on 19 sector-axis rows
+that aggregate both sources, and null on the 119 rows with no sector. **RATIFIED:** the enum is
+`own | other_fund | mixed`. `mixed` applies at sector grain, the same row-grain rule as CALL 1's `price_source`. Null means
+the row has no sector, and is never read as `own`.
