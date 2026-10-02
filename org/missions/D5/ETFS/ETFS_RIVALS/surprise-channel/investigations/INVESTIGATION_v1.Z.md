@@ -3079,6 +3079,27 @@
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "Cell RIV-sa-1: 'The step never runs past the Lambda's remaining time minus MARGIN_MS.'",
     "world_is": "Holds to within one vendor call's own timeout. ai_client.py is not in this order's paths; lowering its TIMEOUT_S (or making it deadline-aware) would close the gap, and a republish needing more than about 30 s would be tight. The default AI_DEADLINE_S is 600 s of a 900 s Lambda; the graph's own time is subtracted by the remaining-time cap."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S47",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-02T23:10Z",
+    "one_line": "RIV-pv-1: the required behaviour (an event without run_path stamps ad_hoc) falsifies one existing assertion in tests/test_r7sa1_sweep_ai_step.py, which sits outside this order's paths, so 2 parametrised cases of test_a_ran_step_republishes_under_a_new_batch_with_the_result fail until the issuer adds run_path to its event.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/tests/test_r7sa1_sweep_ai_step.py:95 calls sweep.run_ai_step(dict(_ev7(spec), ai_deadline_s=7.0), ...) with _ev7 = {date, mode, sink, batch_id} (no run_path) and asserts run_for_day got run_path 'scheduled' (line 96) and ai_run run_path 'scheduled' (line 98)",
+        "python -m pytest rivalfunds -q from data/etfs/scripts: 2 failed (both [OK] and [FAILED] cases of that one test), 565 passed, 2 skipped; every other test, sa-1.AC1/AC2/AC3 and pv-1.AC1 pass",
+        "one-line fix: line 95 becomes sweep.run_ai_step(dict(_ev7(spec), ai_deadline_s=7.0, run_path='scheduled'), None, _runners(calls)); other run_ai_step calls in that file make no run_path assertion"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order RIV-pv-1: 'the sweep stamps scheduled only for an event carrying that value and no only; every other event stamps ad_hoc' and 'sa-1 ... tests/test_r7sa1_sweep_ai_step.py must still pass when you report'.",
+    "world_is": "The two cannot both hold: that test passed a hand-made event with no run_path and expected scheduled, the exact claim ruling 3 retires. sweep.run_ai_step now reads the run_path handler_entry stamped (sweep.stamped_run_path); defaulting an absent key to scheduled inside run_ai_step would restore the test but reinstate the unearned claim for any direct caller, so it was not done. The test file is not in this order's paths."
   }
 ]
 ```
