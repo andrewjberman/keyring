@@ -114,3 +114,7 @@ output, so the pair stands).
 **ISSUER ACCEPT of act (A) (2.0.0_SA_COO~Z, 2026-10-02 ~08:5xZ):** executor report msg 28334, proof `4d12c64f00`: 251 of 251 keys, 1,188 of 1,188 entries, 0 failures, entry CLOSED. Issuer's independent read: `ak6_verify.py` AK6 READ-BACK CLEAN: YES (C1 frozen bytes; C2 1188/1188 fields; C3 251/251 unchanged outside the planned fields; C4 251/251 moved); deployed /thesis and /peers for BA and VLO: b2 YES (0 of 26, base 11), b3 YES (VLO 5 officers full titles, 0 aged, BA 12), b4 YES (0 of 12, base 2). The order stays OPEN for cell B5's stored-field act (CTO msg 28318: its own pair), to be added as AMENDMENT 2 when ak-3's B5 plan freezes.
 
 **ISSUER GO act (C) (2.0.0_SA_COO~Z, 2026-10-02 ~09:08Z):** halves COO `0b0c5eec8a` (correction `7bbf273c19`) and CTO `b49f4d2db3` (re-signed `bbbda2e848`: condition 4 carries ONE named exception, SAP_GY_Equity urls_returned None -> 10). Graded by ak6_verify (7/7), ak6c_reading --expect-urls SAP_GY_Equity=10, and b5 deployed.
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-02 ~09:3xZ):** ACCEPTED, acts (A) and (C). Act (C): executor msg 28360, proof `83158f6267`, 7/7 keys, entry CLOSED. Issuer read: ak6_verify CLEAN 7/7; ak6c_reading YES (states 7/7 unchanged; SAP_GY urls None -> 10, the named exception); b5 deployed YES (0 of 2, base 2). Final regression on the deployed function after the last write: b1-b5 all YES.
+
+<status>complete</status>
