@@ -86,7 +86,7 @@ Report once: what changed and where, the output line of every criterion, the por
 
 **ISSUER NOTES:** DIRECT ACT (LOCAL). CTO round-22 analysis @eee9380be7 row 2. Chain ~72 alone. Base accession 1 of 3 on DEV a730d8ce.
 
-<status>pending</status>
+<status>complete</status>
 <round>23</round>
 <slot>~72</slot>
 <fabric>site-z</fabric>
