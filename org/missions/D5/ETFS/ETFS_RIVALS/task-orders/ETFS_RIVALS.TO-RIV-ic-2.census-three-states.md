@@ -28,7 +28,8 @@ comp-adversary: DECLARED-NOT-APPLICABLE the validator-context composer profiles 
 ## 2. WHAT YOU NEED TO KNOW (measured at the cut, base CLOUD bdbd7a257b (rv-fast; package unchanged since 722f0db291, the deployed pin))
 
 - Today the enum is arrived | missing | stale; the served census lists 765 securities 'missing, no G4 row ...' though the rankings price them (RFW-D14).
-- `fallback` is NULL where none applies. A GICS present in the fund's own file but absent from G4 is not prescribed and not graded.
+- `fallback` is NULL where none applies.
+- AMENDMENT A1 (issuer, 2026-10-02 ~16:4xZ; CRO~RV GICS census @308f982bb8, section 3 "Also": the census should read the fund's own G1 sector before calling a security missing, which turns 763 "missing" into 118): a GICS input whose sector is present in the fund's OWN G1 file reads `arrived` (fallback NULL) even with no G4 row. Your build already passes limbs (b) and (c) of AC4; limb (a) is the change. Keep AC1-AC3 passing.
 
 ## 3. SURFACES AND BOUNDS
 
@@ -48,11 +49,13 @@ org/missions/D5/ETFS/ETFS_RIVALS/surprise-channel/investigations/INVESTIGATION_v
 - **AC1** -- a price with no G4 row, covered by the holding-implied price, reads covered_by_fallback / holding_implied (`org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round6/checks/ic-2.AC1.py`)
 - **AC2** -- a GICS sector from another fund's file reads covered_by_fallback / other_fund; absent everywhere reads missing (`org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round6/checks/ic-2.AC2.py`)
 - **AC3** -- control: an arrived input stays arrived (`org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round6/checks/ic-2.AC3.py`)
+- **AC4** -- (a fourth criterion; reason: the CRO census amendment A1 above) a GICS sector in the fund's own G1 file with no G4 row reads arrived; control: no own sector, no G4, no other file stays missing; another fund's file reads covered_by_fallback / other_fund (`org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round6/checks/ic-2.AC4.py`)
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="RIV-ic-2"><invocation>python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round6/checks/ic-2.AC1.py</invocation><expect>AC1 RESULT: PASS 0 failures</expect></criterion>
   <criterion id="AC2" cell_refs="RIV-ic-2"><invocation>python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round6/checks/ic-2.AC2.py</invocation><expect>AC2 RESULT: PASS 0 failures</expect></criterion>
   <criterion id="AC3" cell_refs="RIV-ic-2"><invocation>python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round6/checks/ic-2.AC3.py</invocation><expect>AC3 RESULT: PASS 0 failures</expect></criterion>
+  <criterion id="AC4" cell_refs="RIV-ic-2"><invocation>python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round6/checks/ic-2.AC4.py</invocation><expect>AC4 RESULT: PASS 0 failures</expect></criterion>
 </proof_of_spec>
 
 ## 5. WHEN YOU ARE DONE
