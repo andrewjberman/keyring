@@ -688,3 +688,28 @@ Accounts are matched across dates by `acc_` id. Dollars across OBSERVED and ASSI
 are quoted as node counts.
 
 -- 3.0.0_SA_CVO
+
+## irpt-status M2 + D2 + the /pdf route served, read 19:xZ 2026-10-02 (handoff 104367; S270 disarmed)
+
+| claim | this seat's read | grade |
+|---|---|---|
+| live is the `0f70e6156e` build, 1024 MB | CodeSha256 `h7H7KgX1..` (337,059 B), MemorySize 1024, Timeout 29, LastModified 17:04:07Z; zip = live = map `artifact_sha256`; 47 of 47 members equal `git show 0f70e6156e:<path>`. Control: hop 11's `pdf_link.py` and `read_memo.py` differ | PASS on deployed bytes |
+| M2: one boto3 Table per thread | `read_memo.py:33-42` `threading.local()` with one lock; `status_installed.py:91` a Session().resource per thread; `owned_requests.py:26` 8 workers, one long-lived pool | PASS on bytes |
+| D2: the signer | `pdf_link.py:53-54` regional endpoint, `s3v4`, virtual addressing | PASS on bytes |
+| /pdf route present | API `7k3ed8px20`: 111 routes; `ihirb2s` GET `.../analysis/requests/{requestId}/pdf` to irpt-status (AWS_PROXY 2.0) under the same CUSTOM authorizer as the history route | PASS |
+| owned GET, REQ-c07e64ca | 200, `analysis-request-pdf`: byte_length 581,489, sha256 `db27de07..` (equal to the retained PDF graded in window C), a URL on `opal-data-irpt.s3.us-east-1.amazonaws.com`, X-Amz-Algorithm `AWS4-HMAC-SHA256`, X-Amz-Expires 300; server 1,428.74 ms. The URL was not fetched or printed | PASS |
+| foreign-firm control | inflection: UNAVAILABLE `FIRM_BINDING` (REPORT 75.28 ms, it reached the function) | PASS |
+| S270's bar: this seat's history calls | cold 7,414.05 ms (Init 140.61); warm 3,134.67 ms; 22 items, `next_cursor` null | PASS, 2 of 2 under 10 s |
+| every REPORT since M2 (17:04Z-19:22Z) | 28 lines at 1024 MB, 0 timeouts, 0 over 10 s, 5 cold, maximum 7,428.12 ms (a history call, 18:13:09Z) | PASS against the 10 s bar |
+| CTO half | SIGNED `0b29df2e35` (16:40Z) on blob `5518903557` = HEAD's packet; applied 17:04Z, after the signature | PASS |
+| row S277 (S270's disarm) | written by S270's disarm owner; the bar is met. Its "at most 6.6 s" and "3.4 s of headroom" are wrong: ~Y's own cold read at 18:13:09Z took 7,428.12 ms, before S277's 18:20Z; the headroom is 2.57 s, and the growth per request is unmeasured | PASS on the bar; FAIL on the figure |
+| ledger | CLOSED 4 of 4 at 18:16:04Z; sentinel absent at HEAD; still OPEN in 3 of 11 worktrees whose heads predate the close (the known worktree-lag shape; its window ends 20:36Z) | PASS at HEAD |
+
+**S270: disarmed in the world** -- 0 timeouts and 8 of 8 history calls under 10 s since M2. **S273: still true** --
+`IR_ROUTE_TABLE` has 18 rows on portal DEV `f2d69887` and PROD `dcdc89b1`, 0 for `pdf`; the API part of the row no
+longer holds (the route now answers 200), so the route is served and unconsumed.
+
+**Limits.** REPORT lines carry no route (attribution by call order); no signed URL fetched; the laptop clock runs
+about 3 s behind AWS; history time beyond 22 requests not measured.
+
+-- 3.0.0_SA_CVO
