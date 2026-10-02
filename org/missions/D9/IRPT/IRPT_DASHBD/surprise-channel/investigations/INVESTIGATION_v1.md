@@ -887,3 +887,81 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "notes": "INERT for the served page until the dashboard figure reaches clients through the read route. Owner 2.0.0_SA_COO~P (the tie-out's reasons; the income treatment of short positions in the producer). The tolerance itself is 1.0.0_SA_CTO's to rule (PRD Q2)."
 }
 ```
+
+## IRPT_DASHBD-W1-S12 -- TO-DB-b-11: 885 of the 7,570 population accounts carry no positive value on the newest day, so the producer emits 6,686 rows and the publisher (which publishes the newest gold partition's accounts) would give them no manifest
+
+```json
+{
+  "id": "IRPT_DASHBD-W1-S12",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1",
+  "surfaced_at": "2026-10-02T20:10:00Z",
+  "one_line": "TO-DB-b-11: the holdings population at date=2026-10-01 is 7,570 accounts, but 885 of them have no positive whole-account value on that day, the producer yields 6,686 rows for it, and reporting-publish takes its account set from the newest GOLD partition, so those 885 accounts (875 NO-PRIOR-HOLDINGS) get no manifest or series; P-1 says every 49 Financial client.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order and the fold-in P-2: every 49 Financial account in the holdings population gets a published manifest and series; the account set is never fewer than the newest reporting partition's.",
+  "world_is": "MEASURED 2026-10-02: population 7,570 (holdings_performance_daily date=2026-10-01, 7,570 distinct ids); dim_balance net_mv_plus_cash sums positive for 6,685 of them and not for 885 (0 absent from dim_balance; holdings status NO-PRIOR-HOLDINGS 875, NON-POSITIVE-BASE 6, ALL-HOLDINGS-EXCLUDED 3, OK 1); the producer over all 7,570 yields 6,686 rows on that day (compute is by design: an account with no positive value has no return). The gold account set (this build) is the full population, but a zero-value account has no row, and the publisher reads wanted = newest gold partition's accounts, so a closed or unfunded account that HAS earlier history gets no refreshed series. Whether the page must show those clients is the issuer's and CVO's call.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1/P2_SCALE_R5.json population + producer blocks",
+      "infra/aws/lambda/investor-reporting/reporting-publish/handler.py _newest_accounts (the publisher's account rule, unchanged by this build)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No action taken. A candidate for the packet: publish the union of every account in any gold partition (history), not only the newest. Owner: 2.0.0_SA_COO~P."
+}
+```
+
+## IRPT_DASHBD-W1-S13 -- TO-DB-b-11: the deployed reporting-publish Lambda is timeout 300 s / 1024 MB (the order's limit is 900), and the shard fan-out needs lambda:InvokeFunction on itself, which the role was not shown to hold
+
+```json
+{
+  "id": "IRPT_DASHBD-W1-S13",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1",
+  "surfaced_at": "2026-10-02T20:10:00Z",
+  "one_line": "TO-DB-b-11: reporting-publish is deployed at timeout 300 s and 1024 MB (reporting-publish/lambda.tf:44-45), not the 900 s of the order and AC1; the one-invoke publish at 7,570 accounts needs 1,582 MB peak and ~450 s, so the build shards it (8 invokes of ~947 accounts, ~67 s and ~392 MB each) and a scheduled fire self-invokes once per shard, which needs lambda:InvokeFunction on the function's own ARN.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order: 'lambda_timeout_s 900, and how the publisher stays under it'; BOUNDS: no Terraform and no IAM change in this cell.",
+  "world_is": "MEASURED: reporting-publish/lambda.tf timeout 300, memory 1024 (held); the live publish fire 2026-10-02 used 241 MB and 14.5 s at 6 accounts; the local whole-population in-memory run peaked at 1,582 MB. The fan-out raises on a refused self-invoke (it never half-lands silently), so a missing permission fails the daily fire LOUDLY, not silently. The shard split is a stable crc32 hash of the account id, so each account is in exactly one shard whatever the population is when the shard runs.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/reporting-publish/lambda.tf:44-45 timeout 300, memory_size 1024",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1/P2_SCALE_R5.json publisher block; p2_publisher_measure_r5.py output"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer's packet: grant the publish role lambda:InvokeFunction on its own function (or replace the self-invoke with 8 EventBridge targets carrying {shard, shards}); no timeout or memory change is needed at the measured numbers. Owner: 2.0.0_SA_COO~P."
+}
+```
+
+## IRPT_DASHBD-W1-S14 -- TO-DB-b-11: the reporting-gold handler's resume rule only extends past the newest landed day, so the backfill of the new accounts into the 562 landed partitions is not an act this function can perform
+
+```json
+{
+  "id": "IRPT_DASHBD-W1-S14",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1",
+  "surfaced_at": "2026-10-02T20:10:00Z",
+  "one_line": "TO-DB-b-11: after the account-set widening deploys, the daily fire adds the population from the NEXT day only; the 562 landed partitions (2024-07-08..2026-10-01) hold 6 accounts, and handler.run() computes only days after the newest landed one, so history for the other ~7,560 accounts needs a separate rewrite of 562 served partitions (a never-widen act).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order: the backfill and the deploy are the issuer's packet; this cell records a plan that respects the Lambda limit.",
+  "world_is": "MEASURED: account_return_daily holds 562 partitions of 6 rows each at date<=2026-10-01; reporting-gold/handler.py run() takes days from select_days(newest_landed, today) and refuses when the gold holds no partition; its CLI is --local only. The plan recorded in P2_SCALE_R5.json backfill.plan is a driver composing handler.compute() with the producer's emit_day over the explicit population in 23 chunks of <=25 days, in-region (laptop link measured ~35 KB/s, ~12 h), ~1.1 h upper bound, under a ledger and a sign-off with DELTA=0 on the 6 served accounts.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py run() and select_days (resume rule)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1/P2_SCALE_R5.json backfill block"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No handler change made for it (outside the order). Also recorded: the laptop could not run the 561-partition inception scan (single 578 KB GET 2.7-50 s), so the producer's laptop seconds are a scaled measurement; the Lambda numbers are projected from the live fire's CloudWatch REPORT lines. Owner: 2.0.0_SA_COO~P."
+}
+```
