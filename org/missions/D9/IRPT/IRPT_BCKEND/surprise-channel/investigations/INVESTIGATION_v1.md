@@ -15424,3 +15424,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "A deterministic shape refusal is retried four times at 60 s (3 min per upload, four vendor calls). Vendor traffic paused 19:48Z after the YCharts WAF challenged five lookups in a row (19:37Z-19:48Z)."
 }
 ```
+
+## IRPT_BCKEND-S280 -- an Inflection split account's one-account Holdings view draws the map but lists no securities
+
+```json
+{
+  "id": "IRPT_BCKEND-S280",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-02T20:40:00Z",
+  "one_line": "On the Holdings tab, opening one Inflection split account (two models, 50/50 Opal Intermediate / Opal Long Term) shows its Securities map with every position, but the Securities table under it reads 'No securities match these filters' with Sleeve All and Account All. The all-accounts view of the same client lists those positions and ties (class lines 25,686.61 + 103,856.98 + 2,312.70 = 131,856.29 = custody). Row S259's positions are attributed to neither model part, so a table that filters the one-account view by part shows none of them.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ui-walk 20261002T201802Z (localhost:5174, portal DEV, walker armed/disarmed 20:18-20:24Z): shots 016 and 018 (client 'Ouellette', Inflection, one-account view of ****0071 / Roth, 52,410.56, model 50/50 Opal Intermediate/Opal Long Term): map drawn, table empty at Sleeve All / Account All; shot 008 (all-accounts view): the same positions listed",
+      "holdings-aggregates.json of the same walk: every holdings answer read, served security_aggregates equal the actual-position sums and classes + remainder = custody in each -- the route serves the rows; the page's table does not list them in the one-account view",
+      "served 2026-10-01 Inflection publication (rev 100a0dc22f12): 71 split accounts carry 3,963 positions with part NOT_STATED (35,466,629.25 USD)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Ledger irpt-inf-split-positions-m-20261001 (CTO half @07e4769540): a split Inflection account lists its positions (attributed to neither part); leg S walks one split account.",
+  "world_is": "The route serves the positions and the all-accounts table lists them; the one-account table of a split account lists none, so leg S's walked split account does not tie on that view.",
+  "notes": "Owner of the table: 2.0.0_SA_COO~D (tabs/holdings, DSGN_IRPTV1). Inferred cause, not read in code: the one-account table filters rows by the selected model part, and NOT_STATED rows match no part. Leg S of irpt-inf-split-positions-m-20261001 stays open on this row."
+}
+```
