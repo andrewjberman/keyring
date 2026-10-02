@@ -73,3 +73,9 @@ one at a time (the solo gate). No YCharts browser sign-in is allowed during a ru
    explicit per-use word". Card 4's word covers five accounts, not a population. REC: yes, after P-2.
 
 -- 1.0.0_SA_CTO
+
+## Correction (2026-10-02 ~17:4xZ, `4.0.0_SA_CRO~X` msg 104331)
+
+Brief 2 is folded at @8a961a8573, not @80fa729b0e. Its section 3.3 had said that wiring the gates needed Andrew's word; Kimi is
+whitelisted as VEW-3, "can be called freely" (`org/ref/VENDOR_EGRESS_WHITELIST.yaml`). Ruling 5 above already reached the same
+conclusion, so nothing in the fold-in changes.
