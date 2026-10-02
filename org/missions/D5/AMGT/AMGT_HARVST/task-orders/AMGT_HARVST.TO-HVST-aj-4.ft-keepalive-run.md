@@ -11,7 +11,7 @@
 <placeholders>NONE</placeholders>
 <preflight>
 comp-schedule: RUN at L5 (--drift) -- no schedule touched.
-comp-iam: RUN at L5 -- WORLD: ft traffic from the box's own egress through the ft profile in the main tree's runtime; the sign-in is ONE headed sign-in whose hCaptcha Andrew solves by hand while present; credentials only through the existing Secrets path, never printed; NO solver vendor (Kimi, NopeCHA) -- 0 calls; no Secrets write; no gold write.
+comp-iam: RUN at L5 (AMENDED 13:1xZ) -- WORLD: ft traffic from the box's own egress through the ft profile in the main tree's runtime; the sign-in's hCaptcha is solved through the existing NopeCHA path, which Andrew permanently whitelisted for egress at 2026-10-02 ~13:08Z (record org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261002_130xZ_VENDOR_EGRESS_WHITELIST_NOPECHA_PERMANENT.md); Kimi and the vision fallback stay barred (0 calls); credentials and the NopeCHA key only through the existing Secrets path, never printed; no Secrets write; no gold write.
 comp-adversary: RUN at L5 -- the adversary is a "2-hour session" that renews silently, a keep-alive that is configured but never fires (round 36: no keep-alive load appears in any run record), or a span padded by cooldown. AC2 requires one keepalive_page_load event per load at the contract cadence, 0 renewals and no auth-failure status across >= 120 min.
 </preflight>
 
@@ -29,8 +29,9 @@ Round 36, ai-2 attempt 3 (records `deliverables/0.9.0_WK_AMGT_HARVST~92/ai2_atte
    `{"event": "keepalive_page_load", "publisher": "ft", "at": <utc iso>, "url_kind": <home|article>, "logged_in": <bool>}`
    into the job's run record `events`. Plant it in `lib/opal_data_harvest/test_aj4_keepalive_event.py` with a stub
    tab and no network. A mutant that skips the record fails the plant.
-2. **Sign-in:** ONE headed ft sign-in through the existing path, with Andrew watching. He solves the hCaptcha by
-   hand; no solver vendor is called, which the run records show as 0 calls.
+2. **Sign-in (AMENDED 13:1xZ, Andrew-direct ~13:08Z):** ONE ft sign-in through the existing path, UNATTENDED. Its
+   hCaptcha is solved through the existing NopeCHA path, which is permanently whitelisted. Kimi and the vision
+   fallback stay barred. Record the NopeCHA call count and the challenge outcome in the sign-in record.
 3. **Run at least 120 minutes:** the real collector on ft names in driver order, from your worktree, with
    `--runtime-root "C:/Users/Opal Bloomberg/Desktop/ajb_workspace/.runtime/opal-data-harvest"`, mirroring the driver's
    job invocation. Use Bash `run_in_background` per job and commit progress at least every 30 minutes. Write
@@ -63,11 +64,12 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 **ISSUER NOTES:** Ruling 5 and CTO 28235. This cell is a qualified wait: Andrew's own hand on the hCaptcha (analysis
 section 4, act 1). A solver is a vendor use, and no word of Andrew's names one. The card goes to 0.0.0_AB_MSTR~Z for
 Andrew. The instrument step (1) may be cut to a worker ahead of the GO; the sign-in and run wait on the GO.
-Status: `staged` until Andrew is present.
+Status: `staged` until Andrew is present. AMENDED 13:1xZ: Andrew permanently whitelisted NopeCHA for egress (record
+above), so the sign-in no longer waits on his hand. The order goes `pending` and runs now.
 
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>staged</status>
+<status>pending</status>
 <round>37</round>
 <slot>~92</slot>
 <fabric>site-z</fabric>
