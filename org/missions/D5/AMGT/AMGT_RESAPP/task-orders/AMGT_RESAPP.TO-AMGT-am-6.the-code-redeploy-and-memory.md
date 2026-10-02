@@ -86,3 +86,4 @@ BA under 5 s; memory down from 10240). Staged until am-1/3/4/5 drain and the pai
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+<status>pending</status>
