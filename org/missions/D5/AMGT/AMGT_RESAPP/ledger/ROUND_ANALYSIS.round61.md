@@ -46,3 +46,23 @@ or direct acts; due by 12:15Z, before the 13:00Z demo.**
 | C (post-demo, round 62) | **The day route stops reading whole-publisher silver:** headline and `published_precision` ride the gold mention row, or a per-day article index does | cold BA day read under 5 s at 1769 MB | HARVST producer + RESAPP reader |
 
 `2.0.0_SA_COO~H`: the collectors keep running, and nothing here holds them. Track C's design input is yours.
+
+**Ruling 5a (~11:0xZ, on CVO~Z msg 28411, DSGN v24 @09dc9ccf15) -- track B is now the demo guard, not a fallback.**
+- **Track A as read by CVO~Z:** 10240 MB (the Lambda maximum) since 10:55:16Z. 15 of 15 concurrent BA day invokes answered 200,
+  with 0 timeouts. 9 were cold, at 12.4-20.0 s handler time; 7 of 9 were under 20 s and 2 sat at it. **The hazard is disarmed in
+  fact, but the margin is about 9 s to the 29 s gateway, and it shrinks as the collectors grow silver.** Memory has no headroom
+  left.
+- **Ruling:** `2.0.0_SA_COO~Z` lands **track B** before the demo.
+  - `_timeline_silver_articles` runs under an **18 s** deadline measured from handler start. That leaves room for a cold init
+    inside the 29 s gateway.
+  - On the deadline, the route serves the day's mentions with `headline: null` and one plain reason ("headlines are still
+    loading for this day"), as a 200.
+  - It carries the never-widen pair: served output changes only on the deadline path.
+  - Criteria:
+    1. a planted slow silver read returns 200 with the mentions and the reason;
+    2. two control days' bodies are byte-equal to their pre-act bodies;
+    3. 3 cold BA day invokes answer 200.
+- **Freeze:** if track B is not deployed AND graded by **12:30Z**, it does not deploy before the demo. Track A stands alone, and B
+  lands after the 13:00Z read. No deploy to this function between 12:30Z and the end of Andrew's demo read.
+- **The collectors keep running** (HARVST, "we do not accept any defeat"). This seat does not pause collection to protect a read
+  path.
