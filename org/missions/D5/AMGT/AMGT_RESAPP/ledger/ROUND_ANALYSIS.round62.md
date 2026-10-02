@@ -63,3 +63,24 @@ and the promote landed (portal PROD f76b02acb6, ~13:5xZ). Deploys to `opal-amgt-
 - Plant: VLO's breakout_price row carries places_moved = the rankings value. A security with no rankings row carries the reason
   instead.
 - If round 63 is already issued, this is an issuer amendment; otherwise it is part of cell 3.
+
+**Round 63 repair cells (~18:5xZ, issuer amendment; DSGN FWD-2 on `3.0.0_SA_CVO~Z` v30 @ae0d4e7082):**
+
+**R1 -- Z-C-S36, ARMED, a false served reason on PROD.**
+- The defect: `scoped_amgt.read_ranking` joins `security_key` onto every row BEFORE `_join_places_moved`. That function matches
+  security_key-or-ticker against prior rows that carry no key. So 62 of 94 bars and 10 of 18 bubbles serve "not ranked in the
+  previous generation (2026-09-30)" for names that WERE ranked.
+- The fix: the match reads one key form on both sides.
+- Plants:
+  - a name ranked in both generations serves its places_moved;
+  - a name truly new serves the reason;
+  - the served census of the 94 reads the false-reason count 0.
+
+**R2 -- Z-C-S37, sector served.**
+- RULED (a), applied at the SERVING side. For an equity (asset_class equity), `classification.sector` is Opal's `sub_asset_class`
+  when that value is one of the 11 GICS sectors, served with `sector_source: "opal_classification.sub_asset_class"`.
+- Otherwise the route serves `sector` null with its reason.
+- The page never derives a sector.
+- Plants: AMD serves Information Technology; a non-equity or a non-GICS value serves null with the reason.
+
+Both are served changes under one never-widen pair, after am-6 leg 2. Leg 2's content diff stays the one file it was signed for.

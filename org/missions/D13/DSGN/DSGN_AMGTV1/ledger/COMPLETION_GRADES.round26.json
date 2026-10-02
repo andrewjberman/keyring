@@ -10,8 +10,8 @@
  "analysis_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/ledger/ROUND_ANALYSIS.round23.md",
  "served_ref": "portal PROD f76b02acb6 (portal-v2.1.194) = DEV fa529337, containing 0ab75973; Deploy to Production 37014885102 success; read by 1.0.0_SA_CTO~Z via ls-remote + merge-base",
  "tally": {
-  "REALIZED": 18,
-  "NOT_REALIZED": 3,
+  "REALIZED": 19,
+  "NOT_REALIZED": 2,
   "NOT_EVALUATED": 2,
   "RETIRED": 1
  },
@@ -27,9 +27,9 @@
   {
    "fwd_id": "FWD-2",
    "verdict": "NOT_REALIZED",
-   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v26.md@07446385f1",
-   "state_observed": "EXERCISED (PROD tree fa529337)",
-   "note": "Re-graded 14:1xZ on CVO~Z v26 (msg 28517). PriceBars.tsx and ChatterBubbles.tsx at PROD's tree render only name and value: no ticker, asset class, sub-asset class, sector or places moved, and no hover surface, although the served rows carry classification and places_moved. A PAGE cell (DSGN)."
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v30.md@ae0d4e7082",
+   "state_observed": "EXERCISED (PROD portal-v2.1.195 + RESAPP am-6 leg 1 served)",
+   "note": "Every bar and bubble has a hover, but (1) Z-C-S36 (ARMED): 62 of 94 bars and 10 of 18 bubbles print a FALSE served reason 'not ranked in the previous generation' for names that were ranked, because read_ranking joins security_key before the places-moved match; (2) Z-C-S37: no mark is served a sector. ROUTED 18:5xZ to RESAPP as two round-63 repair cells: fix the join order, and serve classification.sector for an equity from Opal's sub_asset_class when it is one of the 11 GICS sectors (ruling (a), applied at the serving side; the page never derives it)."
   },
   {
    "fwd_id": "FWD-3",
@@ -180,12 +180,12 @@
   },
   {
    "fwd_id": "FWD-24",
-   "verdict": "NOT_REALIZED",
-   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v28.md@17da4156e3",
-   "state_observed": "EXERCISED (PROD-header walk of AMD 20261002T145316Z + BA, VLO)",
-   "note": "Met on 3 of 3 names: latest served day, breakout row, units as served, and 0 unconnected fields beside a designed-empty positive control. NOT met: 'places moved prints wherever served'. The rankings serve it (32 of 94 rows; VLO 13, BA 16), but the overlay route's breakout_price row carries no places_moved key, so SecurityOverlay.tsx:365 prints '#7 | +5.79%' for VLO with nothing more. ROUTED 15:0xZ to the PRODUCER: the overlay route joins places_moved into breakout_price (RESAPP round 63, beside cell 3), and the page prints it the day it is served. The page does not join it from the rankings payload (the FWD-2 served-identity rule)."
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v30.md@ae0d4e7082",
+   "state_observed": "EXERCISED (PROD portal-v2.1.195 + RESAPP am-6 leg 1 served)",
+   "note": "Places moved prints wherever served: the walked headers read AMD down 3, BA up 16, VLO up 13, all correct against the rankings. The other FWD-24 limbs were met on v28."
   }
  ],
- "closed_reason": "NOT CLOSED: 3 NOT_REALIZED (FWD-2, FWD-7, FWD-24: producer cells RESAPP r63 2-3), 2 NOT_EVALUATED (FWD-1 Andrew's signed-in PROD read; FWD-5 track C); CLOSED requires every grade REALIZED",
- "regraded_utc": "2026-10-02T16:2xZ (FWD-15, FWD-20 on v29); 15:0xZ (FWD-24 on v28); 14:4xZ (v27); 14:1xZ (v26)"
+ "closed_reason": "NOT CLOSED: 2 NOT_REALIZED (FWD-2 served reason + sector, RESAPP repair cells; FWD-7 am-7 + Andrew's ASML word), 2 NOT_EVALUATED (FWD-1 Andrew's read; FWD-5 track C leg 2); CLOSED requires every grade REALIZED",
+ "regraded_utc": "2026-10-02T18:5xZ (FWD-2, FWD-24 on v30); earlier 16:2xZ (v29), 15:0xZ (v28), 14:4xZ (v27), 14:1xZ (v26)"
 }
