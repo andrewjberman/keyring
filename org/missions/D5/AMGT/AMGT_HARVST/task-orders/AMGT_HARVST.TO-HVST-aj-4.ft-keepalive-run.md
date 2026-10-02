@@ -68,9 +68,20 @@ Andrew. The instrument step (1) may be cut to a worker ahead of the GO; the sign
 Status: `staged` until Andrew is present. AMENDED 13:1xZ: Andrew permanently whitelisted NopeCHA for egress (record
 above), so the sign-in no longer waits on his hand. The order goes `pending` and runs now.
 
+**CANCELLED 2026-10-02 ~18:1xZ (issuer flip; precedent ai-2):** step 2 was re-amended to Andrew's hand-solved sign-in
+(option B, Andrew-direct ~16:47Z). FTSession_s was saved 17:01Z and the run started 17:02Z.
+- AC1 PASS.
+- AC2 FAIL: the session got a 401 (sign_in_refused) at 17:25:05Z, 24m04s after the sign-in, despite 6 keepalive_page_load
+  events about 3.3 min apart, all logged_in.
+Row Z-W92-S20 carries it; the records were merged @1e6610290e.
+
+The keep-alive does NOT hold an ft session: two hand-solved sessions died at about 75 min and at 24 min. FWD-11's ft
+limb therefore needs an unattended re-sign-in, which depends on a working hCaptcha solver (aj-6 stage 2; row Z-S66). The
+round-37 drain-end packet carries it. ft stays OFF (STOP_FT).
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>cancelled</status>
 <round>37</round>
 <slot>~92</slot>
 <fabric>site-z</fabric>
