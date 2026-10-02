@@ -14,7 +14,27 @@
   - grade 8 (10-02 page PASS on scope; P1 G8-1 BASG false FAILs, P1 G8-2 phantom 0->0 exits) @ab55da6a97;
   - grade 9 (PASS; G8-1 closed, CALL 11 re-grade verified) @33f6db4880;
   - grade 10 (PASS; G8-2 closed; G10-1 latent P2) @c3050c9b94;
-  - grade 11 (PASS, the page for the 13:00Z read) @5488015d8f.
+  - grade 11 (PASS, the page for the 13:00Z read) @5488015d8f;
+  - grade 12 (r12 deploy PASS on the APPLIED plane) @d2c6208cf0.
+
+## Grade 13 -- served page 2026-10-02, batch fast-a1-publish-1002f, code pin 722f0db291 (r13; handoff msg 28521), read 2026-10-02 ~14:20-14:30Z
+
+**Verdict: PASS.** PFOE's false "bronze sidecar unreadable" is gone. The handoff's r12 ask is grade 12.
+
+- **Deployed bytes equal the pin.** `etfs-rivalfunds-daily-lambda` has 33 of 33 `rivalfunds/*.py|*.json` files byte-equal to
+  722f0db291. Positive control: the deployed `publish_page.py` differs from its 8075f97ffb version. 8075f97ffb..722f0db291
+  touches only `publish_page.py`, `render.py` and one test.
+- **The pair was complete before the apply:** COO addendum-12 half b66ec623ff (14:09:42Z), CTO half 82b371b3f3 (14:11:21Z).
+  Ledger r13 opened 14:13Z and closed 14:18:15Z.
+- **The claim, measured on the served bytes:**
+  - 1002e carried 26 "bronze sidecar unreadable" and 0 "Opal home producer file";
+  - 1002f carries 0 and 26.
+  - Manifest `published`, 13 of 13, readback true, 0 `<script>`.
+- **Everything else:** split into 91 fund segments, 89 are byte-identical to 1002e. The 2 that differ are:
+  - PFOE's article (the claim);
+  - the page-tail audit line, not named in the handoff. Its G0 input moved from `peer_group_map/date=2026-10-01/map-1` to
+    `date=2026-10-02/map-1`. The 10-02 map was written by the 13:00Z sweep and is content-identical to 10-01's: 13 of 13 rows
+    equal, with only `revision` and `produced_at` differing. This is the right map for a 10-02 page, and harmless.
 
 ## Grade 12 -- r12 (addendum 11) at code pin 8075f97ffb, applied ~13:4xZ (no handoff; read by this seat 2026-10-02 ~14:10Z)
 
