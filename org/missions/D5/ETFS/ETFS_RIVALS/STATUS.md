@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~RV` (CLAUDE). Lease: FAST to 2026-10-02T17:08:53Z, surface `d
 (`org/mcp/drive-mode.log` line 56). Goal (Andrew ~04:59Z): "i want mcp.opalinvest.dev/rivalfunds demoable Today".
 Team: reviewer `3.0.0_SA_CVO~RV` (grades pins after the fact: `org/tier1_exec/3.0.0_SA_CVO/deliverables/ETFS_RIVALS_FAST_GRADES_20261002.md`),
 open calls `4.0.0_SA_CRO~RV` (`org/tier1_exec/4.0.0_SA_CRO/deliverables/ETFS_RIVALS_RULINGS_20261002.md`: CALLs 1-9 ruled).
-As of 2026-10-02T12:2xZ.
+As of 2026-10-02T13:0xZ.
 
 ## Pins
 
@@ -34,23 +34,25 @@ None open. No served change before Andrew's 13:00Z read (CTO~Z msg 28450).
 
 ## Next proof
 
-1. Andrew's 13:00Z read of the 10-02 page (1002e, grade 11 PASS).
-2. Drain the held round-5 vehicle chains after the 13:00Z sweep (below): each touches rivalfunds code
-   (universe.py, the collector, G4), so the next deploy's pair covers them.
+1. Andrew's read of the 10-02 page (1002e, grade 11 PASS); any finding is the next item.
+2. The next rivalfunds Lambda deploy carries, beside the bronze-read grant (a policy change) and F5: round 5's universe.py,
+   collector and G4 changes (drained 13:0xZ). Its pair measures them through the handlers.
 3. F5 (P2): prompt a1-chain/4 (readings named by label, no source/name keys) BUILT @0839079a9c, 397 passed, drained @7dbe861883;
    proven only by the next AI run; its Lambda copy rides the next pair.
 4. The publish-page Lambda's missing bronze read: grant BUILT on rv-fast @fd0d285da3 (publish-page GET on the issuer-site and
    Bloomberg bronze holdings; policy JSON regenerated); its own pair (a plan with a policy change) after the demo.
 
-## Held from round 5 (vehicle-run drains, SERVED; unchanged by FAST)
+## Round 5 drains (DONE 13:0xZ)
 
-`wk-rivals5-2` (m-2, l-1 @86ddb6cec0) and `wk-rivals5-5` (s-6 @ca98d691f8) drain after the morning read, in order: the
-07:00 ET issuer fetch markers, the 08:03 vehicle exit lines, then the 09:00 sweep.
-Morning read 2026-10-02, legs 1-2 READ 12:4xZ: (1) issuer fetch marker `fetch_holdings/date=2026-10-02/096abf8e..` status OK, days
-2026-10-01 OK and GQGU:2026-10-01 OK; (2) vehicle log `%USERPROFILE%/opal_bbg_logs/bbg_tplus1_20261002_070002.log`: RIVALFUNDS
-BLOOMBERG LEG EXIT CODE 90 (landed, batch whole; marker `fetch_bloomberg/date=2026-10-01/batch-20261002T111011Z` OK) and
-ENRICHMENT EXIT CODE 94 (landed: `pull_enrichment` markers OK, G3 160 rows, G4 market 32 rows). Leg 3 (the 13:00Z sweep's
-waiting / unresolved) pending; the drains follow it.
+Morning read 2026-10-02, all three legs OK: (1) issuer fetch marker `fetch_holdings/date=2026-10-02/096abf8e..` OK (2026-10-01 +
+GQGU); (2) vehicle log `bbg_tplus1_20261002_070002.log`: Bloomberg leg 90 (whole), enrichment 94 (landed G3 160 / G4 32 rows);
+(3) the 13:00Z sweep (RequestId de6abfaa.., 8.5 s): its graph for 2026-10-02 read with stub runners over an overlay sink is
+complete -- ran [], waiting [], unresolved {} -- and the served page stayed fast-a1-publish-1002e.
+Drained: `wk-rivals5-2` (m-2 collector dedup, l-1 v0.8 Bloomberg leg inert) @e4e9eedfa9; `wk-rivals5-5` (s-6 G4 as-of guard)
+@213540f408, the surprise-channel conflict resolved as the union of disjoint appended rows (133 = 129 + 126 - 122; JSON parses).
+rivalfunds suite on combined CLOUD 213540f408: 410 passed, 2 skipped. The vehicle runs this code from the CLOUD tree at the
+next trading morning (07:00 ET 2026-10-05). The two worktrees stay: each holds an untracked `.scratch/`, so removal needs
+`--force` (a recursive delete, human-confirmed).
 
 ## Parked
 
