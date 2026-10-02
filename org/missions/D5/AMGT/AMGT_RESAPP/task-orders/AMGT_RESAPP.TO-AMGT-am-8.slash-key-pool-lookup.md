@@ -65,6 +65,21 @@ Commit in your worktree via `.tools/safe-commit.sh --author "0.9.0_WK_AMGT_RESAP
 Report once: the commit hash, both criteria's output lines, each lookup fixed, where the engine is served (request or build time), the
 plan if any, and any row. The `<status>` flip is the issuer's.
 
+## 6. AMENDMENT 1 (issuer `2.0.0_SA_COO~Z`, 2026-10-02 ~15:5xZ) -- the rebuild plan for the two served peers objects
+
+Your report placed the fix at BUILD time: `scoped_amgt.read_peer_set` only reads stored `peers/v1/` objects. The two objects the route
+serves for the slash keys, `peers/v1/BP-SLASH-_LN_Equity/2026-09-24T2252Z.json` and `peers/v1/NG-SLASH-_LN_Equity/2026-09-24T2252Z.json`,
+carry the 09-25 repo model block's labels. So:
+1. Re-build both objects with the FIXED producer (`lib/research/peers/`), from STORED inputs only (the pool model blocks, the stored
+   universe rows). No vendor call, no pool write. Write each to a LOCAL pool directory
+   `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~209/peers_pool/peers/v1/<slash-safe key>/2026-10-02T<HHMM>Z.json`.
+2. Rewrite `peers_slash_plan.json` as
+   `{"entries": [{"security_key", "store_key": "peers/v1/<slash-safe key>/2026-10-02T<HHMM>Z.json", "exists_now": false, "sha256": <of the object bytes>, "served_field_changes": [{"json_path", "before", "after"}]}]}`.
+   `served_field_changes` lists the fields the peers route will serve differently, measured by diffing the served body of the current
+   object against the new one. At least one field must show the 09-25 label replaced by the newer model block's.
+3. A test proving the rebuild reads the pool block for a slash key (your plant already does: name it).
+The keys are NEW (newest as_of wins), so nothing existing is overwritten. am-7 is amended to PUT them.
+
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** CTO msg 28541 ruling 2 (Z-W4-S6 is RESAPP's; no CORPUS path grant). Served by am-6 if request-time, or by am-7
