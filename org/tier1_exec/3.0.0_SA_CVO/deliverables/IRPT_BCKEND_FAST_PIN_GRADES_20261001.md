@@ -371,3 +371,19 @@ ledger, no WAF_READ line (item 15 unread live). Journal since 03:19:51Z: 568 lin
 **Limits.** The plans are the lane's saved files; this seat ran no plan.
 
 -- 3.0.0_SA_CVO
+
+## Rows S213 and W92-S4 -- disarm ruled, read 07:4xZ 2026-10-02 (2.0.0_SA_COO~Y msg 104108)
+
+Both rows' clocks advanced in place in `REMEDIATION_v13.md` (S213) and `REMEDIATION_v15.md` (W92-S4): disarm DISARMED at
+05:56:34Z (the lane's read), remediation REMEDIATED, closed. This section is their evidence.
+
+| claim | this seat's read | grade |
+|---|---|---|
+| the READY report's sections read no longer answers UNEXPECTED (S213's remedy: "a figure or a named refusal, never UNEXPECTED", read back on RPT-2e21b52e) | one login as svc-irpt-analysis on live `irpt-status` `2V7xV1..` (the downloaded zip's sha256 equals `CodeSha256`): `GET analysis/RPT-2e21b52edcb222205399100e026c2768/sections` -> 200, UNAVAILABLE `INVALID_INPUT` (the route takes a request id); `GET analysis/REQ-7ea49c2d9b27957d0ea8888f/sections` -> 200, 76 sections; control, an unknown request id -> UNAVAILABLE `NOT_AUTHORIZED`. 0 of 3 answers UNEXPECTED | PASS: S213 DISARMED and REMEDIATED |
+| an absent bundle answers NOT_READY (W92-S4's purpose) | the live zip's `owned_report.py:17-30, 98`: `_ABSENT_OBJECT_CODES` NoSuchKey, NoSuchVersion, 404, NotFound -> `ReportBundleAbsent`, `public_reason_code` NOT_READY | PASS on served bytes |
+| W92-S4's literal read (NOT_READY on RPT-2e21b52e) | cannot recur: the bundle is present and the route refuses a report id by name. Its purpose (the S213 read never answers UNEXPECTED) is met by the first row | ruled DISARMED and REMEDIATED on purpose, not on the literal |
+
+**Limits.** No live absent bundle was exercised, and no store exception class other than the four named was. The
+lane's own read (05:56Z, `IRPT_MVP_Y/CATALOGUE/SERVED_READS_AFTER_D1_20261002.json`) agrees with this one.
+
+-- 3.0.0_SA_CVO
