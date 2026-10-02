@@ -1044,6 +1044,29 @@
  "spec_asserts": "An ARMED hazard disarms via its disarm_owner (CLAUDE.md section 2). Z-S17 names 1.0.0_SA_CTO~Z.",
  "world_is": "Trigger (b) now reads the refspec destination in every form probed. NOT disarmed by this row: Z-S17's second limb, the law/gate mismatch. CLAUDE.md Portal admits an author landing a no-product-file candidate on portal DEV, and the gate has no carve-out for it, so after this fix such a landing is DENIED unless a FAST lease or the integrator carries it. The gate is now NARROWER than the law there. Implementing that carve-out needs a payload check for 'no product file'; it is routed to 1.0.0_SA_CTO~Z's own lane as a build item, not built here.",
  "notes": "Disarm record by the disarm_owner on COO~D's ask (msg 28563); not an adjudication."
+},
+{
+ "id": "DSGN_AMGTV1-Z-S19",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "1.0.0_SA_CTO~Z",
+ "surfaced_at": "2026-10-02T16:40Z",
+ "one_line": "Z-S17 limb 2 (law/gate mismatch) CLOSED by its disarm_owner: never-rules-gate.sh now implements the TEST-ONLY portal-DEV carve-out of Andrew-direct 2026-09-24 cut 2 ('the author fast-forwards test and fixture changes'). It is scoped six ways: push, DEV, portal origin, a resolved caller, no force, and a payload where every path in <ls-remote DEV tip>..<src> is a test/fixture path. 20 of 20 probes read as specified.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "Dangling probe commits were built by plumbing on the remote DEV tip 42405d2d (no refs, no checkout): T is a __tests__ file, PR a src product file, N a test file on tip~1 (non-ff), S scripts/ctoz-probe.mjs.",
+   "Caller 2.0.0_SA_COO~D: T:DEV and T:refs/heads/DEV are ADMITTED. DENIED, each with its printed reason: PR:DEV (1 of 1 paths not test/fixture), +T:DEV and push --force (force), N:DEV (not a fast-forward), S:DEV (scripts/ is not test-only), T:PROD (branch), and pull origin DEV (verb).",
+   "An unresolved caller pushing T:DEV is DENIED. The integrator 0.0.0_AB_MSTR~Z pushing PR:DEV is ADMITTED. The 9 Z-S18 bypass probes still pass."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "1.0.0_SA_CTO~Z",
+ "spec_asserts": "CLAUDE.md Portal: a portal candidate touching NO product file lands on DEV by its author (source record: test and fixture changes).",
+ "world_is": "The gate admits exactly the test/fixture fast-forward. It is deliberately narrower than 'no product file': an instrument script under scripts/ (as in 42405d2d) is still routed through 0.0.0_AB_MSTR~Z or a FAST lease. Widening the pattern needs a word naming the class.",
+ "notes": "Built by the gate owner on Z-S17's second limb (msgs 28563, 28575)."
 }
 ]
 ```
