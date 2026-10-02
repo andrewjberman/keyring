@@ -6143,6 +6143,28 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "Ocilar-side availability, not a defect in lib/opal_data_harvest/ocilar_hcaptcha.py (request shape, header and body pinned offline by plant (i)). Whether the hcaptcha service is live for this key/plan is a vendor-side fact the issuer can read from the services listing; whether to call it is the issuer's/Andrew's word. The solve call cost no credit that the record can show (503, no credits_used)."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~90",
+      "surfaced_at": "2026-10-02T14:10Z",
+      "id": "AMGT_HARVST-Z-W90-S17",
+      "one_line": "aj-7: live silver barrons article rows carry title as a dict {'text': ...} (149 of 9098 latest articles), so the real builder raises TypeError in _match_counts and AC2 cannot pass.",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Order aj-7: silver article rows carry `title` as a string; build_mention over live silver builds rows and AC2 compares gold title to silver title byte-for-byte.",
+      "world_is": "Reading live silver through publication_gold._iter_latest_articles in the worktree (9098 articles) gives 149 rows whose title is a dict, e.g. barrons:WP-BAR-0001909169 title={'text': 'Micron Stock Slips ...'}. publication_gold._security_mentions line 176 (`title = article_row.get('title') or ''`, unchanged by this cell) passes it to _match_counts, which raises TypeError: expected string or bytes-like object, got 'dict'. AC2 (aj-7.AC2.py) aborts there before any put; the same line is unchanged from base cedca01272, so the base builder fails identically on this silver. The cell's code and plants (6 passed) are complete; a title that is a dict cannot be a pa.string() either. Normalising the barrons title (take ['text']) is a change to matching input and to what 'verbatim' means, outside this order's write grant of 'change nothing else'.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/research/harvest/publication_gold.py@cedca01272:176",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_H/round37/checks/aj-7.AC2.py"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Not measured: whether the served gold was built before the barrons dict shape appeared, or whether silver_latest/the barrons silver writer changed. Issuer to rule where the unwrap lives (silver writer, or a verbatim-text rule in the builder)."
     }
   ]
 ```
