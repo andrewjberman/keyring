@@ -1,0 +1,1 @@
+ReadRetainedAnalysisFamiliesUnderThePolicyPrefixesOnly ['arn:aws:s3:::opal-data-irpt/irpt/inflection/state/vendor_documents/*', 'arn:aws:s3:::opal-data-irpt/irpt/cottonwood/state/vendor_documents/*', 'arn:aws:s3:::opal-data-irpt/irpt/49financial/state/vendor_documents/*']
