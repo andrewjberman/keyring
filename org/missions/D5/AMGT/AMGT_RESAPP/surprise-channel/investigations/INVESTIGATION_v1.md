@@ -16763,6 +16763,31 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
  "spec_asserts": "AMGT-ak-4 AC1: every test passes, new tests included, and exit=0 (lib/research/management/tests/ plus lib/research/api/tests/).",
  "world_is": "Every test under lib/research/management/tests/ (the new test_officer_plan.py included) passes; the only non-passing tests are the 3 fixture reads of the unpopulated portal submodule, which no change under this order's paths can fix. The 2 skipped tests were not examined.",
  "notes": "disarm_owner 2.0.0_SA_COO~Z: populate portal in the worktree (sparse cone for src/pages/SecurityAnalysis/__harness__) or grade AC1 in a tree that carries it. Surfaced, not adjudicated."
+},
+{
+ "id": "AMGT_RESAPP-Z-S334",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.7.0_AE_CloudOps~A",
+ "surfaced_at": "2026-10-02T07:56:00Z",
+ "one_line": "The ak-2 GO required the build be cut from a worktree at 63e78fe4f7 rather than CLOUD HEAD because HARVST drain fdd7442696 'changed lib/opal_data_harvest/transport.py and load_window_grade.py after it, and a HEAD build may package them'. Measured: neither file is in this artifact's packaged closure, and 0 of the 350 packaged members differ between 63e78fe4f7 and HEAD -- so a HEAD build would have produced the same CHANGED 3. The worktree discipline is right and was followed; its stated reason is not the thing that makes it right.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "zipfile namelist of the artifact built at 63e78fe4f7 (C:/tmp/ak2-build-only.zip, the same bytes uploaded as VersionId YSqlUTOWHwV6H7LePjd1pr9DKomiDo5U): lib/opal_data_harvest/transport.py packaged=False, lib/opal_data_harvest/load_window_grade.py packaged=False. Packaged denominator 350 members.",
+   "git diff --stat 63e78fe4f7 HEAD over those two paths is non-empty (2 files, +34/-6), so they DID drift -- the premise's first half holds; only the 'may package them' half fails.",
+   "Intersection of the 350 packaged arcnames with the 32 repo paths changed 63e78fe4f7..HEAD: 0. That is the measurement the worktree decision actually turns on, and it is not the one the GO named.",
+   "The build script derives its package set as a transitive AST import closure from the handler seed (header, 'A TRANSITIVE IMPORT CLOSURE, NOT A DIRECTORY ENUMERATION'), so closure membership is a property of the code at build time and can change between rounds. A file being outside the closure today is not a standing guarantee."
+  ]
+ },
+ "disposition": "DISMISSED_WITH_REASON",
+ "spec_asserts": "GO msg 28272: 'Build from a worktree at 63e78fe4f7, not CLOUD HEAD. HARVST drain fdd7442696 changed lib/opal_data_harvest/transport.py and load_window_grade.py after it, and a HEAD build may package them; any CHANGED file beyond the halves' 3 is a STOP.'",
+ "world_is": "Both named files drifted but neither is packaged, and no packaged member drifted, so the HEAD build and the worktree build were byte-equivalent in package terms this round. The act was performed from the worktree as instructed and the independently graded CONTENT-DIFF is exactly the signed three files, so nothing about the deploy is in question. What is in question is the REASON: a later round that reasons 'those two files force a worktree build' would be reasoning from a false premise, and a round that reasons 'no HARVST drain touched the closure, so HEAD is fine' would be reasoning from a true premise that nobody measured. Not measured here: whether any PREVIOUS round's HEAD build packaged drifted peer files -- rounds 58 and 59 recorded 4-file and 2-file peer drift in their own CONTENT-DIFFs, which is the same class caught by a different instrument.",
+ "notes": "disarm_owner 2.0.0_SA_COO~Z. DISMISSED_WITH_REASON rather than UNDER_INVESTIGATION on purpose: there is nothing left to investigate -- the premise is measured false, the act is unaffected, and an open row here would hold the round-61 slug for a finding that changes no act. The durable ask, if the issuer wants one, is one line in the build script or the cut: intersect the packaged arcname set with git diff --name-only <build-commit> HEAD and print the count, which answers the question the GO was trying to answer in every future round instead of naming files by hand. Surfaced by the executor, not adjudicated by it.",
+ "dismissal_reason": "Nothing is left to investigate and no act changes. The premise is measured FALSE (neither named file is in the packaged closure; 0 of 350 packaged members differ between 63e78fe4f7 and HEAD), the build was cut from the worktree exactly as instructed, and the independently graded CONTENT-DIFF is exactly the three signed files -- so the deploy is sound and the record only needs to stop a FUTURE round reasoning from the same false premise. An UNDER_INVESTIGATION row here would hold the round-61 L10 slug for a finding that moves no act. The durable fix, if the issuer wants one, is one line at the cut or in the build script: intersect the packaged arcname set with `git diff --name-only <build-commit> HEAD` and print the count -- that answers in every future round the question this GO tried to answer by naming files by hand. Dismissed by the executor on measurement, not adjudicated by it; disarm_owner 2.0.0_SA_COO~Z may reopen it."
 }
 ]
 ```
