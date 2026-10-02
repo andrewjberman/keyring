@@ -6,15 +6,15 @@ Mode FAST: lease `IRPT_BCKEND~Y` re-armed 04:33Z until 08:33Z after the withdraw
 terms, under Andrew-direct 2026-10-01 ~04:2xZ).
 Loop `/canonical-drive IRPT_BCKEND` 10m (LIVE_ARMS RELAUNCH row). Way forward: CTO rulings batches 61, 62, 65, 70, 72,
 76, 83, 88, 89, 93, 97, 98, 100 and 105 in `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md`.
-Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-02T07:1xZ (st11 packet with the CTO).
+Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-02T07:2xZ.
 
 ## Pins
 
 | What | Value |
 |---|---|
 | Worktree | branch `coo-y-r30` at `C:/Users/AndrewBerman/Desktop/coo-y-r30`, head `3ad9306bf9`, merged into CLOUD at `87f9b3afab` |
-| Items 1 to 17 on CLOUD | 1 to 14 as before (st9 carries them); 15 `3921492913` (the 900 s calculating release, the WAF header token); 16 `7122afefc1` (row S253, the job row's `vendor_requests` ledger); 17 `8c4398e32a` (E7, the request read names the chosen comparisons); 19 `951afdf4e6` (st11, merge `4f68a17d3a`, NOT served); 18 `3ad9306bf9` (the catalogue reads `etf-classifications` once per 300 s warm window, not per request; condition 11 of the whole-bundle packet), merge `87f9b3afab`, NOT served |
-| SERVED: the resident | `/opt/irpt-resident/b1db201025-st10` since 2026-10-02T03:19:51Z (ledger `irpt-resident-st10-20261002` CLOSED; both halves, CTO batch 106): items 1 to 17. Rollback root `481166a8f2-st9` on the host |
+| Items 1 to 17 on CLOUD | 1 to 14 as before (st9 carries them); 15 `3921492913` (the 900 s calculating release, the WAF header token); 16 `7122afefc1` (row S253, the job row's `vendor_requests` ledger); 17 `8c4398e32a` (E7, the request read names the chosen comparisons); 19 `951afdf4e6` (st11, merge `4f68a17d3a`, SERVED in the resident; its words ride the next generate and irpt-status bundles); 18 `3ad9306bf9` (the catalogue reads `etf-classifications` once per 300 s warm window, not per request; condition 11 of the whole-bundle packet), merge `87f9b3afab`, NOT served |
+| SERVED: the resident | `/opt/irpt-resident/4f68a17d3a-st11` since 2026-10-02T07:18:54Z (ledger `irpt-resident-st11-20261002` CLOSED; both halves, CTO batch 122): items 1 to 19, and `irpt-ycharts-runner-role` holds `sqs:SendMessage` on `irpt-generation`. Rollback root `b1db201025-st10` on the host |
 | SERVED: `irpt-status` | `2V7xV1+zII4+g6tV..` since 2026-10-01T06:59:55Z (read 2026-10-02 ~02:2xZ) |
 | SERVED: `irpt-ycharts-generate` | `E+FqSWwETrwJ9Gd1..` since 2026-10-02T05:54:19Z (whole bundle at `97eaff05ff`, item 18; ledger `irpt-generate-catalogue-20261002` CLOSED). Rollback: S3 version `J52XmUEj..` (code `arC65KbD..`) |
 | SERVED: catalogue route | `GET /api/scoped/investor-reporting/analysis/comparisons`, route `bh7ynom` on `7k3ed8px20` behind `naqxlm`, since ~06:00Z. V1: 341 entries for cottonwood, `FIRM_BINDING` outside reach, 720 ms with the Scan then 221-260 ms |
@@ -59,10 +59,11 @@ made (CTO half item 1).
    `REPLACE_FILE`. **st11's code is BUILT and MERGED** (item 19 `951afdf4e6`, IAM `85240e4c82`, merge `4f68a17d3a`): the
    re-send, the deadline from the row's `requested_at`, `RESOLVE_PROVIDER_BUSY` with action `CORRECT` and its words; 3 new tests
    (one proves a resolve busy for its whole deadline never reaches the dead-letter queue), negative control, every suite green.
-   The IAM line (`sqs:SendMessage` on `irpt-generation`, CTO batch 121) plans as the ycharts root's only change. **st11 packet**
-   `IRPT_MVP_Y/ST11/NEVER_WIDEN_SIGNOFF_PACKET_RESIDENT_ST11_20261002.md` (blob `d0243e9bb1`, @2e0cbd5c36): I1 the IAM line, then
-   D1 the resident at `4f68a17d3a` (gate PASS, 8 of 243 changed); U1 proven; COO half signed; CTO half asked 07:10Z. Ledger
-   `irpt-resident-st11-20261002` OPEN. Its live proof needs a working session (Andrew's sign-in).
+   **st11 is SERVED** (07:18:54Z; ledger CLOSED @861b9bf176). Its live proof (an upload during another job's generation reads
+   NORMALIZED after it) is the next window's, after Andrew's YCharts sign-in. The `RESOLVE_PROVIDER_BUSY` words ride the next
+   generate and irpt-status bundles (until then the code shows with action `CORRECT`; CTO half item 1).
+   **Hop 11 (the vendor PDF link):** design note `IRPT_MVP_Y/HOP11_PDF_LINK_DESIGN_NOTE_20261002.md` @c1faa8f035 (route on
+   irpt-status returning an Opal-signed 300 s URL, as the export download does; irpt-status needs `vendor_documents` read).
 6. Batch 61's order after that: one job per remaining arm (Target Weight, 49 Financial, Inflection), each under a window
    packet; the resolve concurrency fix; the vendor PDF link; the Analysis export; the email lane. E6's memo follows E7's
    apply (CTO batch 111). A client-scoped history route is an enrichment item at the next round analysis (CTO batch 110 item 4).
@@ -91,7 +92,6 @@ Batch 120 item 6 (the probe's cookie rotation) is read at the next window, which
 ## Ledgers this seat holds open
 
 - `irpt-status-e7-20261001`: U1 closed; HELD (external gate: row S261 and the PROD promote). Nothing applied.
-- `irpt-resident-st11-20261002`: U1 closed; I1, D1, V1 wait on the CTO half.
 
 ## Enrichment candidates (the measured list is `IRPT_MVP_Y/ENRICHMENT_CANDIDATES_20261001.md`)
 
