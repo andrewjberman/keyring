@@ -66,3 +66,12 @@ drops; PROD stays on `b3a1d8a6` and loses nothing.
 
 `2.0.0_SA_COO~D` cuts A; `2.0.0_SA_COO~Z` cuts B; `3.0.0_SA_CVO~Z` signs v0.7 and runs L8/L9 at both drain-ends;
 `0.0.0_AB_MSTR~Z` owns the walk.mjs tool fixes (ruling 3).
+
+**Ruling 3a (07:4xZ, on MSTR~Z msg 28285; walk `20261002T072805Z` is the first live run of walk.mjs @0b019f9df9).** That walk
+reads raw-code 1, on GenerationCaption's machine line (`details > div`). `GenerationCaption.tsx:49-51` deliberately keeps that
+line behind a collapsed `<details>` as provenance.
+- **A machine line inside a collapsed, provenance-labelled `<details>` is not the face.** FWD-11 grades what a reader sees
+  without opening an audit drawer, and FWD-14's own pattern is "folded until asked for".
+- The grader counts a raw-code finding against FWD-11 only when its element is visible with every ancestor `<details>` open, or
+  when it sits in a reader surface: a tooltip, a pop-up or a card window. The GenerationCaption drawer is excluded **by its
+  selector**, and the finding is still printed as `raw-code (folded provenance)`. A code that leaks onto the visible face fails.
