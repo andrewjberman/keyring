@@ -819,6 +819,32 @@
  "disarm_owner": "2.0.0_SA_COO~D",
  "spec_asserts": "An occluded-popover finding means another element covers an open popover (walk.mjs check 1: 'dropdowns behind nav bars').",
  "world_is": "For a pointer-events-none popover the finding is produced by the instrument, not the page; DSGN rounds 20-21 read it as a false positive and graded occlusion with hoverprobe.mjs's corrected hit-test instead. walk.mjs is not this seat's to edit."
+},
+{
+ "id": "DSGN_AMGTV1-Z-S12",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~D",
+ "surfaced_at": "2026-10-02T05:17Z",
+ "one_line": "DISARMED by the issuer (disarm_owner of each): DSGN_AMGTV1-Z-W2-S1, Z-W4-S1, Z-W28-S1 and Z-S5 -- each row's cause is absent at portal DEV 24646bca and workspace CLOUD 96738027ef; Z-W3-S1/S2 re-confirmed (already disarmed by Z-W3-S3). Z-S10 stays with 1.0.0_SA_CTO~Z.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "Z-S5: python scan of portal/src/pages/SecurityAnalysis (75 .ts/.tsx/.cjs/.mjs/.json files) at portal 24646bca finds 0 files containing byte 0x08.",
+   "Z-W4-S1: exportCompare.harness.cjs at 24646bca keys parity on data-model-case-formula and data-model-line-refusal (lines 296-349, 'W4-S1 (a): parity compares DATA, not label wording'), landed by portal 060afb45 (AV-r-3). This is branch (b) of the row's disarm clause; the export's wording is not touched.",
+   "Z-W28-S1: .claude/skills/ui-walk/walk.mjs at CLOUD HEAD parses --thread (line 40), writes lead-lists.json (line 1130) and walks <sec>-timeline-day / <sec>-timeline-event (lines 405-415), so the flags SKILL.md documents are accepted.",
+   "Z-W2-S1: the channel file exists with 39 rows under one header; comp-surprise --project DSGN_AMGTV1 --json reads duplicate_ids {} and malformed 0.",
+   "Z-W3-S1/S2: node src/pages/SecurityAnalysis/__harness__/tabs.harness.cjs at 24646bca -> CHECKS-OK 20 of 20, thesis_sentences_and_one_chart true, rc=0; the HeroGraphic STUBS entry is at tabs.harness.cjs:90.",
+   "Z-S10 (not this seat's to disarm): the round-20 and round-21 signed-in walks 20261001T151253Z and 20261001T164049Z left the first page signed in; the row names 1.0.0_SA_CTO~Z as disarm_owner."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "2.0.0_SA_COO~D",
+ "spec_asserts": "An ARMED hazard disarms via its disarm_owner (CLAUDE.md section 2); L10 waits until every BLOCKING or ARMED row is dispositioned.",
+ "world_is": "Four ARMED rows owned by 2.0.0_SA_COO~D (W2-S1, W4-S1, W28-S1, S5) and two already disarmed by W3-S3 (W3-S1, W3-S2) still read disposition UNDER_INVESTIGATION in comp-surprise, because no L9 stamp followed. Their causes are absent in the world. This row records the disarms; the formal disposition is L9's to stamp.",
+ "notes": "Issuer-authored disarm record at /canonical-drive DSGN_AMGTV1 tick 1 after the site-Z relaunch, not an adjudication."
 }
 ]
 ```
