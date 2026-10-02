@@ -1,5 +1,19 @@
 # Reboot brief -- 2.0.0_SA_COO~M -- rewritten 2026-10-02 04:0xZ at the wind-down; updated 05:2xZ
 
+**UPDATE 12:2xZ -- STATE (supersedes the 10:3xZ line where they differ):**
+- Table `etf-classifications` 2,841 rows. Written today under both halves: 19 Cottonwood seed (02:12Z), 29 Cottonwood CUSIP CDs
+  (03:40Z), 67 bd-mapped (10:26Z), 3 seed ABNFX/LBNYX/NYT (10:30Z), 16 per-ticker first act (11:21Z), 36 residual CUSIP rows (12:18Z).
+- BD r3 RE-LAND: branch `coo-m-bd-mix-classes` @29747a2ecb (worktree `coo_m_r30`): fix 1 (eight-class mix) + the identity read (batch
+  156). Real run on 09-30: 49F unclassified 4.63 pct (3.99 with the 36 rows). Half `NEVER_WIDEN_HALF_REQUEST_BD_THREAD_R3_RELAND_20261002.md`
+  SIGNED both (CTO batch 161) CONDITIONAL on portal PROD carrying eb90f2ad (Andrew's promote). CLOUD's four r3 files are serve-held
+  @056e9f0a74 (row S13); the re-land's merge releases them under SERVE-RELEASE-ACK.
+- Cottonwood RE-POINT: both halves (CTO conditional, batch 113): legs G, R, S wait on the same PROD promote; leg P (DEV eb90f2ad) closed.
+- Open ledgers owing leg S at the 14:15Z Holdings publication: `irpt-inf-split-positions-m-20261001`, `secclass-cot-seed-rows-m-20261001`
+  (also G at 23:00Z), `secclass-bd-mapped-rows-m-20261002`, `secclass-cot-name-pattern-rows-m-20261002`, `secclass-bd-first-act-seed-m-20261002`.
+- Tonight (batch 129): 22:10Z silver (bd_assets_dim classes as the old library) and 23:00Z gold (49F firm mix 100 pct).
+- Next authoring work: the allocation-class proposal (batch 145 C, mine); the residual's later acts and the per-ticker group's rest.
+- Surprise rows filed today: S10-S14 (S13 ARMED->disarmed same commit).
+
 **UPDATE 10:3xZ -- BD FORWARD FIX (CTO tick 6, msg 104138):** fix 1 (BD mix carries every class) BUILT on branch
 `coo-m-bd-mix-classes` @0ce0ad6efd in worktree `coo_m_r30` (lane grant batch 135; BD tests 72; not merged, no packet yet). Fix 2
 (67 bd-mapped rows, batch 139/140) WRITTEN 10:26Z, ledger `secclass-bd-mapped-rows-m-20261002` W closed. Fix 3 (ABNFX, LBNYX,
