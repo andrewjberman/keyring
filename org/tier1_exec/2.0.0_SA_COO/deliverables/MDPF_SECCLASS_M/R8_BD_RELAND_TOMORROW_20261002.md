@@ -43,3 +43,27 @@ name as evidence of CLASS; whether a name may resolve a TICKER (an exact match o
 seed module's `ASSET_NAME_TO_TICKER`, or E_18's resolution table) is not ruled. Measured gap, not decided here.
 
 Not measured: Inflection; the per-advisor split; which share of the 1,956 names an exact-name resolution would cover.
+
+## ADDENDUM 1 (10:5xZ) -- batch 144's identity resolution, measured before it is built
+
+Batch 144: a blank ticker resolves by identity only -- CUSIP first, then an exact normalized name through E_18's resolution table
+(`s3://opal-data-bd/gold/dimensions/ticker_resolution.parquet`, 4,424 names, last written 2026-04-07), `ASSET_NAME_TO_TICKER`
+second; never bd-securities NAME:: aliases; an ambiguous match resolves nothing; the resolution lives in the classifier's read.
+Measured on the same 09-30 positions (normalization `' '.join(name.lower().split())`, as E_18's `_normalize_asset_name`):
+
+| outcome | USD |
+|---|---|
+| name resolves in the table to ONE ticker that has a canonical row | 324,054,999.20 |
+| name resolves to more than one ticker (ambiguous) | 0.00 |
+| name resolves only through `ASSET_NAME_TO_TICKER` | 0.00 |
+| name resolves to a ticker with no canonical row | 3,797,653.15 |
+| no resolution | 110,835,132.38 |
+
+49 Financial's unclassified: **23.78 pct -> 6.42 pct** (443.79 M -> 119.74 M of 1,866.38 M), before the rows written today (fix 2's
+67 and fix 3's 3 were written after this file's first measure). CUSIP-first has no input in C_06: Black Diamond's canonical holdings
+carry no `cusip` column (D_03 and D_04 read `holdings_lots`, which does). **The 5.0 pct bar is not met by name resolution alone.**
+Largest unresolved names: VANGUARD MORNINGSTAR GROWTH ETF 35,784,713; SCHWAB CHARLES FAMILY FUND PRIME ADV ULTRA 10,000,000 (a money
+market fund); WALDROP DONOR ADVISED FUND 5,842,785; EXXONMOBIL HOLDINGS CORP COM SHS 3,354,779; JPMORGAN CHASE FINL CO LLC 0%
+02/14/2029 3,060,000 (a structured note); VANGUARD MORNINGSTAR TOTAL STOCK MARKET ETF 2,926,219; VANGUARD MORNINGSTAR VALUE ETF
+2,691,122; CLIFFWATER CORPORATE LENDING I 2,608,883; VANGUARD MORN TOTAL STK MKT IDX ADMIRAL 2,444,559; 6 YEAR SHIELD 25 S&P 500
+INDEX 2,341,992. The resolution table is six months old: the Vanguard Morningstar funds (about 44 M) are newer than it.
