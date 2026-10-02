@@ -998,6 +998,28 @@
  "disarm_owner": "2.0.0_SA_COO~D",
  "spec_asserts": "A row's surfaced_at is the real UTC time it was surfaced; corrections are new items citing the old id (surprise-row-gate).",
  "world_is": "The two worker rows carry a 00:00Z placeholder. This row records their true times; the rows themselves stay as written."
+},
+{
+ "id": "DSGN_AMGTV1-Z-S17",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~D",
+ "surfaced_at": "2026-10-02T15:56Z",
+ "one_line": "The integrator-only push gate (.tools/hooks/never-rules-gate.sh PUSHPULL_AUTHORITY) admits a non-integrator push to ANY shared branch, PROD included, when the refspec names the destination as `<src>:refs/heads/<BRANCH>` or force-pushes `+<BRANCH>`: its sed strips `refs/heads/` BEFORE splitting off the `src:` half and never strips a leading `+`. This seat's own push of portal 42405d2d to DEV went through the first form.",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "hook fed synthetic PreToolUse JSON (session dea6290b..., serial file = 2.0.0_SA_COO~D, no FAST lease in org/mcp/drive_mode): `git -C $P push origin 42405d2d:DEV` -> permissionDecision deny (positive control); `... 42405d2d:refs/heads/DEV` -> no decision (admitted); `git -C C:/tmp/x push origin HEAD:refs/heads/PROD` -> admitted; `... +DEV` -> admitted; `... +HEAD:PROD` -> deny; `... refs/heads/DEV` -> deny",
+   "the extraction line: sed -e 's#^refs/heads/##' -e 's#^.*:##' -e 's#^origin/##' -- for token `42405d2d:refs/heads/DEV` the first expression does not match, the second leaves `refs/heads/DEV`, which fails ^(CLOUD|DEV|PROD|SITEZ|main|master)$",
+   "the act: 2026-10-02 ~15:4xZ `git -C C:/tmp/wk-dsgn-amgtv1-79/portal push origin 42405d2d:refs/heads/DEV` -> 415f50db..42405d2d (ls-remote read 42405d2d); VALGATE CI run 37029029779 success. The candidate touches no product file (scripts/ui-measure.mjs, scripts/ui-contract-check.mjs, a __harness__ test fixture), the CLAUDE.md Portal author-landing case (Andrew-direct 2026-09-24); the gate implements no such carve-out, so its intended verdict was DENY"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "1.0.0_SA_CTO~Z",
+ "spec_asserts": "Only 0.0.0_AB_MSTR(~lane), the DT carve-outs and a live FAST-lease seat on DEV may push a shared branch; trigger (b) reads the refspec's destination whatever form it takes (LD-0367 rule 2 / LD-0368).",
+ "world_is": "`<src>:refs/heads/<SHARED>` and `+<SHARED>` are not recognised as shared-branch pushes, so any seat whose target repo HEAD is not a shared branch is admitted. Remedy (one line): reorder to sed -e 's#^.*:##' -e 's#^+##' -e 's#^refs/heads/##' -e 's#^origin/##'. Separately, the law/gate mismatch: CLAUDE.md Portal admits a no-product-file author landing on DEV that the gate does not implement."
 }
 ]
 ```
