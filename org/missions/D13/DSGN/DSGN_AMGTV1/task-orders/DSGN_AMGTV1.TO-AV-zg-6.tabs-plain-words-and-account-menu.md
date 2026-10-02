@@ -122,7 +122,7 @@ clauses with their planted-failure runs, and any row.
 - **Producer gap for the CTO at close:** R-1 serves no currency for a member's price or EV (only `cap_currency`); that is an AMGT_RESAPP
   ask. No filing-sourced driver chart has been served on a QA name, so that branch is planted.
 
-<status>pending</status>
+<status>complete</status>
 <round>29</round>
 <slot>~85</slot>
 <fabric>site-z</fabric>
