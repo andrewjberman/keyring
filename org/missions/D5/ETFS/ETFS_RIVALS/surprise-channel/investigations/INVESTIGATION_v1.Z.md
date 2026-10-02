@@ -2908,6 +2908,29 @@
     "spec_asserts": "Row Z-W5-S30 ARMED, disarm_owner 2.0.0_SA_COO~RV: the vehicle's daily G4 (target T-1) would land nothing under refuse-unless-historical.",
     "world_is": "Disarmed in code: a past-date pull never lands nothing for lack of a historical answer; it lands labelled current values. Not measured against a live Bloomberg answer (no vendor call in this order): which securities the live historical request answers in full is the first live run's read; the detail carries as_of_source_counts {historical, pull} and historical_request_failures for that read. A consumer reading as_of for a GICS-only need now sees the run date on a past partition.",
     "notes": "disarm_owner was 2.0.0_SA_COO~RV; the as_of_source_counts figures are in the market marker detail and the object's input_manifest."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W3-S20",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~3",
+    "surfaced_at": "2026-10-02T16:10Z",
+    "one_line": "RIV-e-2 puts DVD_CRNCY in the daily dividend request, which turns 2 tests in test_s4_security_market.py red (lines 153, 160, 171 pin fields == [\"DVD_HIST_ALL\"]); that file is outside my <paths>, so the package suite reads 2 failed, not 0.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/tests/test_s4_security_market.py:153,160,171@wk-ETFS_RIVALS-3 -- the stub tests `fields == [\"DVD_HIST_ALL\"]` (daily lands G3 then G4; market failure is PARTIAL) and the daily call now sends plan[\"fields\"] = [\"DVD_HIST_ALL\", \"DVD_CRNCY\"], so the stub falls through to the market branch",
+        "python -m pytest rivalfunds -q from data/etfs/scripts: 2 failed (test_daily_lands_g3_then_g4_under_distinct_markers, test_daily_market_failure_is_partial_not_silent), 416 passed, 2 skipped; the third stale test, test_e1's, is in my paths and is fixed",
+        "e-2.AC1/AC2/AC3: PASS 0 failures each"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order section 3: run the whole package suite before reporting; it must read 0 failed. Cell RIV-e-2: DVD_CRNCY joins the dividend request.",
+    "world_is": "Both can hold only if test_s4_security_market.py's three `[\"DVD_HIST_ALL\"]` field comparisons read [\"DVD_HIST_ALL\", \"DVD_CRNCY\"] (a mechanical, meaning-preserving edit); that path is not in this order's <paths>, so it is NOT edited here. Suite is red at the drain until the issuer widens the paths or makes the edit.",
+    "notes": "Same class as Z-W5-S29/S32 and Z-W3-S18/S19 (a stale pin outside the order's paths); disarm_owner 2.0.0_SA_COO~RV."
   }
 ]
 ```
