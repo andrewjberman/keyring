@@ -5,7 +5,7 @@ Seat `2.0.0_SA_COO~Y` (CLAUDE), relaunched 2026-10-02 ~01:5xZ on Andrew's word (
 Mode FAST: lease `IRPT_BCKEND~Y` re-armed 02:25Z until 06:25Z (CTO 103946, under Andrew-direct 2026-10-01 ~04:2xZ).
 Loop `/canonical-drive IRPT_BCKEND` 10m (LIVE_ARMS RELAUNCH row). Way forward: CTO rulings batches 61, 62, 65, 70, 72,
 76, 83, 88, 89, 93, 97, 98, 100 and 105 in `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md`.
-Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-02T03:2xZ.
+Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-02T03:5xZ.
 
 ## Pins
 
@@ -44,7 +44,10 @@ made (CTO half item 1).
 1. The next job on st10 (natural or under its own window packet): read items 15 and 16 live (CTO batch 106 item 1).
 2. On Andrew's PROD promote of `281b03c6` (named by `2.0.0_SA_COO~D`): E7's D1 (one targeted apply) and V1; then
    `2.0.0_SA_COO~D` shows the names and re-walks; the CTO calls the Multi-Comp arm live.
-3. E6 (batch 93 item 8): the status list's 15.7 s and a status read's 2.3 to 13.6 s, timed by hop before any change.
+3. E6 MEASURED (@3fdf23d545, `IRPT_MVP_Y/E6_TIMING/OUTCOME_E6_20261002.md`): the page's status read is 193 AWS calls for 22
+   distinct keys (5.7 s warm, 9.8 s cold in region); the list 280 for 129 (8.9-9.3 s at 18 items, about 0.5 s per
+   listed request, timeout 15 s). The CTO's call on the change was asked 03:54Z (recommended: a per-request read memo
+   that keeps the deliberate `_final` re-reads, as a new irpt-status packet).
 4. E5 (row S230 at its next natural failure; no session is displaced on purpose).
 5. Batch 61's order after that: one job per remaining arm (Target Weight, 49 Financial, Inflection), each under a window
    packet; the catalogue route from a read that is not a full-table Scan per request; the resolve concurrency fix; the
@@ -70,6 +73,8 @@ made (CTO half item 1).
 ## Enrichment candidates (the measured list is `IRPT_MVP_Y/ENRICHMENT_CANDIDATES_20261001.md`)
 
 - The read challenge after a job's first receive: item 15's journal token names the header's action at the next one.
+- The request history list grows about 0.5 s in region per listed request against a 15 s timeout; a cold first page
+  reaches it at about 22 Cottonwood requests (inferred, E6). Each Analysis attempt adds one.
 - The words a user reads for `RESOLVE_RETRY_EXHAUSTED` say other work was in flight (`2.0.0_SA_COO~D`, batch 72 item 13).
 - A name with no request id is accepted by the cut-name rule on its three-quarter prefix alone (st8 half, item 1).
 - A producer that adds `comparisons` only when the caller asks would remove E7's wait on a PROD promote (CTO half item 1);
