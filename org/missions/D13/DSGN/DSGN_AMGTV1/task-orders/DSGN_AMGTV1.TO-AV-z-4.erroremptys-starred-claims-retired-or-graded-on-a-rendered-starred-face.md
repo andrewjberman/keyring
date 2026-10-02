@@ -71,7 +71,7 @@ Report once: what changed and where, the output line of every criterion, the por
 **ISSUER NOTES:** DIRECT ACT (LOCAL), instrument repair. CTO round-21 analysis @e14de1769c ruling 4 / row A4 (Z-W56-S4). Chain ~70
 alone. Base starredclaims 2 of 3 on DEV 24646bca.
 
-<status>pending</status>
+<status>complete</status>
 <round>22</round>
 <slot>~70</slot>
 <fabric>site-z</fabric>
