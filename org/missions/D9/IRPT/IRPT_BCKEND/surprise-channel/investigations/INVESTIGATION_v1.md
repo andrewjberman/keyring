@@ -14774,3 +14774,56 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Outside this order's paths (_authz/enforce.py, the analysis report route). The remedy is an Enforcer arm that, for a grant carrying prospect_scope, admits an OWNED_RECORD read of exactly those keys for the exact delegator owner."
 }
 ```
+
+## IRPT_BCKEND-W101-S5 -- IB-pr-292: the Analysis branch is built and graded in submit_installed/narrative_submit, b
+
+```json
+{
+  "id": "IRPT_BCKEND-W101-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~101",
+  "surfaced_at": "2026-10-02T11:05:00Z",
+  "one_line": "IB-pr-292: the Analysis branch is built and graded in submit_installed/narrative_submit, but export/submit_service.serve_submit (outside this order's paths) still builds the narrative packet for any kind and reads dates.actual_end, so a served Analysis submit is not yet routed through it.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/submit_service.py:50-52: _narrative.build_and_bind(resolved['report'], ...) runs for every resolved kind; narrative_submit.build_and_bind calls cutoff_for(report) with the PERFORMANCE default, which refuses 'no actual window end' on an Analysis report (closed refusal, nothing written)",
+      "infra/aws/lambda/investor-reporting/export/submit_service.py:81: status source_dates business_date = resolved['report']['dates']['actual_end'], a KeyError for an Analysis report",
+      "infra/aws/lambda/investor-reporting/export/narrative_submit.py: cutoff_for(report, kind), narrative_step(kind), template_for(kind) and submit_installed.submission_plan(kind, report) are the new seam; 8 tests pass"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The cell: 'narrative_submit cutoff_for and serve_submit read dates.actual_end ... Give the submit path an Analysis branch'; the order's paths name submit_installed.py and narrative_submit.py only.",
+  "world_is": "The branch decisions (cutoff, template, no narrative step) exist and validate the real READY report, but serve_submit does not consult them: it needs to skip build_and_bind and pass a null/absent narrative_packet_ref for kind ANALYSIS (ExportBundle requires narrative_packet_ref, so that contract question is also open), and take source_dates from analysis_as_of(report). Not run: any served submit.",
+  "notes": "The remedy is an edit to submit_service.py (and the ExportBundle narrative_packet_ref rule for an Analysis bundle), outside this order's paths."
+}
+```
+
+## IRPT_BCKEND-W101-S6 -- IB-pr-292: the packaged export/_contracts/AnalysisReport.schema.json is older than the pub
+
+```json
+{
+  "id": "IRPT_BCKEND-W101-S6",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~101",
+  "surfaced_at": "2026-10-02T11:06:00Z",
+  "one_line": "IB-pr-292: the packaged export/_contracts/AnalysisReport.schema.json is older than the published docs copy and refuses the real retained READY Analysis report (extraction_coverage, undated_sections).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bundle.validate(report, 'AnalysisReport.schema.json') with the default contracts dir (infra/aws/lambda/investor-reporting/_contracts) raised: Additional properties are not allowed ('extraction_coverage', 'undated_sections' were unexpected) on RPT-1f49504f501a6633b1f9cccc5f37ecf6",
+      "The same call with IRPT_CONTRACTS_DIR=docs/contracts/investor-reporting/v1 returned True; the two files differ by contract_version, undated_sections and extraction_coverage (git log: beecb3395a, b894019c95 touched the docs copy only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "'docs/contracts/investor-reporting/v1/AnalysisReport.schema.json' is the contract the order names; the function validates against the packaged copy or the irpt-common layer.",
+  "world_is": "SUBMIT_ANALYSIS_R29.json was produced with IRPT_CONTRACTS_DIR pointing at the published docs copy. A function resolving the stale packaged copy (or an older layer) would refuse the same report with a closed ValidationError. Not run: the deployed layer's copy.",
+  "notes": "The remedy is to republish the packaged _contracts copy (outside this order's paths) and confirm the irpt-common layer's copy."
+}
+```
