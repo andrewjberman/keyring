@@ -631,6 +631,24 @@ lanes:
       - 2.0.0_SA_COO~Y
     description: "CTO grantor, IRPT RULINGS batch 114, 2026-10-02 (msg 104065, row IRPT_BCKEND-S263): the CLOUD_OPS_OR_ETL members preserved verbatim plus exact COO~Y, for the five IRPT Terraform files whose one() over reporting_policies.json stopped planning when a second policy row landed. Code only: the selector change lands with a no-change plan per root; no apply grant. Struck when IRPT_BCKEND closes."
 
+  IRPT_BCKEND_FAST_Y_LIVESCOPE:
+    permitted_agents:
+      - 0.5.0_AE_OpalETL
+      - 0.5.0_AE_OpalETL~B
+      - 0.6.0_AE_PartnerETL
+      - 0.6.1_AE_PartnerETL
+      - 0.6.2_AE_PartnerETL
+      - 0.7.0_AE_CloudOps
+      - 0.7.0_AE_CloudOps~A
+      - 0.7.0_AE_CloudOps~B
+      - 0.7.0_AE_CloudOps~C
+      - 0.8.0_AE_CloudComp
+      - 4.0.0_SA_CRO~SWEEP
+      - 2.0.0_SA_COO~M
+      - 2.0.0_SA_COO~P
+      - 2.0.0_SA_COO~Y
+    description: "CTO grantor, IRPT RULINGS batch 189, 2026-10-02 (msg 104437): the IRPT_LIVE_SCOPE_P members preserved verbatim plus exact COO~Y, for ONE file, _scope/maintained_sources.py -- Y-3's second admission path (a ticker the etf-classifications table names, batch 178 ruling 4). Code only; no deploy grant. Struck when IRPT_BCKEND closes."
+
   IRPT_BCKEND_FAST_Y_STATUSPORTS:
     permitted_agents:
       - 0.5.0_AE_OpalETL
@@ -2528,6 +2546,18 @@ paths:
   "infra/aws/terraform/investor-reporting/ycharts/resident.tf":
     lane: IRPT_BCKEND_FAST_Y_TFPOLICY
     note: "IRPT_BCKEND~Y FAST lease, exact file (the reporting-policy selector); CTO grantor batch 114 (2026-10-02)."
+
+  "infra/aws/lambda/investor-reporting/_scope/maintained_sources.py":
+    lane: IRPT_BCKEND_FAST_Y_LIVESCOPE
+    note: "Y-3 second admission path (ETF ticker as a comparison key), exact file; IRPT_LIVE_SCOPE_P members kept plus COO~Y; CTO grantor batch 189 (2026-10-02)."
+
+  "infra/aws/lambda/investor-reporting/reports/request_composition.py":
+    lane: IRPT_BCKEND_FAST_Y_STATUSPORTS
+    note: "Y-3: accept the ETF source as MAINTAINED_RECORD (already in the enum), exact file; IRPT_COMPLETION_P members kept plus COO~Y; CTO grantor batch 189 (2026-10-02)."
+
+  "infra/aws/lambda/investor-reporting/reports/generate_installed.py":
+    lane: IRPT_BCKEND_FAST_Y_STATUSPORTS
+    note: "Y-3: wire the composed read_classifications port into the submission, exact file; IRPT_COMPLETION_P members kept plus COO~Y; CTO grantor batch 189 (2026-10-02). Pending order IB-yr-261 also names this file: COO~Y closes or supersedes it first."
 
   "infra/aws/lambda/investor-reporting/reports/status_installed.py":
     lane: IRPT_BCKEND_FAST_Y_STATUSPORTS

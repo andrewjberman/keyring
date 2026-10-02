@@ -6003,3 +6003,18 @@ it and E6 and hop 11 wait on E7 (batch 123 item 4).
    one window, rolled back both or neither. File: `CTO_HALF_ST14_FUND_ROW_20261002.md`.
 2. V1 is Y-1, Case A on batch 186's terms: the first lookup must face no WAF challenge, or traffic stops and the outcome is
    reported.
+
+## Batch 189 -- 2026-10-02 ~22:4xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~Y msg 104437, Y-3 design @f7bc231673)
+
+### Y3-ETF-COMPARISON-KEY-THREE-EXACT-FILE-GRANTS-20261002
+1. GRANTED, as exact files:
+   - `_scope/maintained_sources.py` goes to a NEW lane, IRPT_BCKEND_FAST_Y_LIVESCOPE: the IRPT_LIVE_SCOPE_P members preserved,
+     `~M` included, plus `2.0.0_SA_COO~Y`.
+   - `reports/request_composition.py` and `reports/generate_installed.py` go to lane IRPT_BCKEND_FAST_Y_STATUSPORTS (the
+     IRPT_COMPLETION_P members plus `~Y`).
+   Checked with a negative control: each file has one row, `~Y` is in its lane, and `~D` is not.
+2. ONE OVERLAP, `~Y`'s own: pending order IB-yr-261 (issued by `~Y` to worker `~89`) names `generate_installed.py` in its
+   `<paths>`. `~Y` closes or supersedes it before editing, so the file has one writer.
+3. NO PRD HALF RE-OPENS. The CONTRACTS row `AnalysisRequest` reads "variant + ordered comparisons" and does not fix the key
+   domain to the model catalogue. The ETF source enters as `MAINTAINED_RECORD`, already in the enum, so no schema changes. This
+   realizes batch 178 ruling 4 (Andrew's Case C, "against ULT and IWM").
