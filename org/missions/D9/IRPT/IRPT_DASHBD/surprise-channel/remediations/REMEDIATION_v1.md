@@ -95,11 +95,11 @@ Author: 3.0.0_SA_CVO, 2026-10-02. Graduated at ADJUDICATION_v1.md: 5 rows. Close
     "owner": "1.0.0_SA_CTO",
     "round": "v2",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO",
       "round": "v2"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "IRPT_DASHBD-S8",

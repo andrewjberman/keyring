@@ -576,3 +576,56 @@ the shared tree's `served.py` and both new test files equal its blobs.
 served move rides the next irpt-status packet.
 
 -- 3.0.0_SA_CVO
+
+## irpt-status E7b + E6 + item 22 SERVED, read 12:5xZ-13:1xZ 2026-10-02 (deploy-close `2ab0eec3cb`)
+
+| claim | this seat's read | grade |
+|---|---|---|
+| live is the `ff8fd77ba2` build | CodeSha256 `X/JLmPJZ..`, LastModified 11:13:50Z, 330,611 B; the downloaded zip and S3 `Jg3uJ0x7..` by version hash the same; 46 of 46 members equal `git show <pin>:<path>`; the pin an ancestor of HEAD, not the reverse | PASS on deployed bytes |
+| E6 in the zip | `read_memo.py` present (76 lines, absent before `4c23ef5d98`); `status_installed.py:87,155` installs the memo per invocation | PASS on bytes |
+| E7b live | plain read: exactly `{accepted_at, identity}` for REQ-a1d9abc0 and REQ-a69e5751, 2 of 2 equal to the before-reads; with `include=comparisons` the Multi-Comp names `opal_short_term`, `opal_intermediate_term`, the Overview `[]`; `include=sections` refused `INVALID_INPUT` | PASS |
+| PROD `b3a1d8a6`'s two-key parser still reads it (row S261) | `readOwnedRequest`'s rule applied: plain reads 2 of 2 pass, history items 22 of 22 pass, the include read fails (expected) | PASS |
+| item 22 live | `client_id` refused `INVALID_INPUT` by the owner-read guard (`served.py:812-815`) before the reader; 22 of 22 Cottonwood compositions carry `client_id` null | FAIL on the record only: the close's title says item 22 is served; its body and CTO batch 154 say it is not (IB-pr-295 is source only) |
+| foreign-firm control | history, read+include and sections with inflection: 3 of 3 `FIRM_BINDING` | PASS |
+| ledger | CLOSED 3 of 3; sentinel absent at HEAD and in 11 of 11 worktrees | PASS |
+
+**E6 not re-measured after serving:** row IRPT_BCKEND-S270 (ARMED). **Record:** the irpt-status source map names an
+un-applied artifact (`BNe2n9cV..`; the key's latest S3 version `9S5jAZLr..` is hop 11, not live) and deploy fields from
+2026-09-24: row S264's class.
+
+-- 3.0.0_SA_CVO
+
+## ~Y arms Y2 -- Target Weight and XLSX READY on st13, read 12:xZ-13:xZ 2026-10-02 (deploy-close `541bec2205`)
+
+| claim | this seat's read | grade |
+|---|---|---|
+| terminal state | TW and XL: READY, revision 1, outbox SENT, 5 of 5 checkpoints, read-back 7 of 7 (1 tolerated); owner svc-irpt-analysis OPAL_GLOBAL | PASS |
+| upload echo | TW 600.0 / 400.0 of 1000 (shares 0.6 / 0.4); XL 10.01 / 2.02 of 12.03; sent = echoed 2 of 2 each | PASS |
+| retained PDFs | TW `pkorf41h..` 556,822 B, sha `263cfa7a..`; XL `KIurNsRP..` 583,261 B, sha `406abefa..`; each equal to its checkpoint, vendor artifact and index ref | PASS |
+| certified reports | TW `RPT-895c92ef` sha `d15e043e..`; XL `RPT-e1e3c6d0` sha `3760f285..`; each binds request, PDF and evidence; 46 of 46 scalars each re-read with PyMuPDF; perturbed control 0 of 46; 0 hits for other firms | PASS |
+| sections route | 51 of 51 each equal to the report; inflection `FIRM_BINDING` | PASS |
+| on st13 | SSM `98f324f9`: the st13 unit (start 10:18:27Z, 0 restarts); 25 of 25 job lines from its PID | PASS |
+| item 15 (WAF_READ), first live | 1 line 12:00:37Z `header=CHALLENGE job=REQ-abec171d`; the job released `WAF_CHALLENGE`, next receive 904 s later; XL's first vendor record status 202 `waf_action challenge` (1 of 19 records, 19 of 19 in the ten-key shape) | PASS |
+| item 19 (OPERATION_BUSY) | 0 BUSY/RETRY lines | NOT_EVALUATED |
+| st12 write-back | 6 `IRPT_SESSION_ROTATION kept=1` lines read (the SSM output capped at 24 KB at 12:30:51Z; the lane records 8) | PASS on the journal read |
+| ledger | CLOSED 4 of 4; sentinel absent at HEAD | PASS |
+
+**Limits.** The journal after 12:30:51Z was not read; the secret metadata and upload rows were not read.
+
+-- 3.0.0_SA_CVO
+
+## IRPT_DASHBD E3 leg (a) -- the foreign-tax override retired, read 12:xZ-13:xZ 2026-10-02 (ledger close `bef89249f7`)
+
+| claim | this seat's read | grade |
+|---|---|---|
+| live is the re-pinned build | `irpt-49f-reporting-gold-lambda` CodeSha256 `RLOFPe0l..`, LastModified 12:17:04Z; equal to the map's `artifact_sha256`, to S3 `Q49yaWRJ..` (latest) and the zip; 16 of 16 members equal their pins | PASS |
+| only the producer and the table moved | against the prior `7eCQtWhs..` (the named rollback): 2 of 16 members differ, `account_return_daily.py` and the code table, both equal to the `4ad4008907` blobs | PASS |
+| what "retired" means | one executable line removed (`crosses = crosses & ~wh`, which took withholding rows out of the external-flow mask); the code table moves row 66 (FTP/FC/WD, 2,449 rows) and row 114 (FTR/FC/WD, 4 rows) from EXTERNAL to INTERNAL | PASS |
+| output neutral | the served `date=2026-10-01` partition still holds 1 version per object (11:42:08Z); the next fire is the first served output on the new table | NOT_EVALUATED |
+| ledger | CLOSED 5 of 5 at 12:18:21Z; sentinel absent in 11 of 11 worktrees | PASS |
+
+**Row IRPT_DASHBD-S6 (limb e) closed by clock** in `REMEDIATION_v1.md`: the two codes the row named are INTERNAL in the
+table the served producer packages, and the adapter's override is gone (CTO analysis addendum A4). Limit: no output of
+the corrected table has been read yet. S8 stays open.
+
+-- 3.0.0_SA_CVO

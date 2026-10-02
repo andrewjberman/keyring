@@ -15059,3 +15059,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Remedy owner 2.0.0_SA_COO~P: if the shape fallback should be retired, make kind required in a cell that also moves the two-argument callers."
 }
 ```
+
+## IRPT_BCKEND-S270 -- E6 is served but not re-measured; the Cottonwood history list nears the 15 s timeout
+
+```json
+{
+  "id": "IRPT_BCKEND-S270",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-02T13:30:00Z",
+  "one_line": "E6 has served since 11:13:50Z but its acceptance, the call census and REPORT durations re-run after the apply (CTO batch 111 item 3), has not been run, while batch 132 lifted Cottonwood's cap of 20 on E6 serving and Cottonwood now holds 22 accepted requests. The history list as the service principal took 12,338 ms client wall time warm at the default page and 18,903 ms at limit=50; the function timeout is 15 s.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y (run batch 111 item 3's census and REPORT durations on the served E6; if the history list's server time is near the timeout, re-cap Cottonwood until it is not)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's irpt-status grade (2026-10-02 12:5xZ-13:1xZ): live CodeSha256 X/JLmPJZ.. at ff8fd77ba2, read_memo.py present; GET analysis/requests as svc-irpt-analysis: 22 items, 12,338 ms (default page) and 18,903 ms (limit=50), client wall times",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/E6_TIMING/: 6 files, newest 03:27Z (before the apply); E7B_STATUS/ holds no post-11:13Z timing",
+      "CTO RULINGS batch 111 item 3 (re-measure once E6 serves) and batch 132 (the Cottonwood cap lifts when E6 serves)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "E6 is accepted on a measured re-run after it serves; the cap is lifted because E6 bounds the history list's reads.",
+  "world_is": "The cap is lifted and the list keeps growing, but nobody has measured the served function's time since E6 went live. The client wall time is already within 3 s of the timeout at the default page. Not read: the function's own REPORT durations (server time) for these calls.",
+  "notes": "ARMED because the request count only grows and a timed-out history list is a page that cannot list requests. Measured client-side only; the server time may be lower."
+}
+```
