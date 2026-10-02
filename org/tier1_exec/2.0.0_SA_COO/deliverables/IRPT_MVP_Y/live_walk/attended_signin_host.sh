@@ -2,8 +2,10 @@
 #
 # Sent verbatim to the resident host by host_read.py (Systems Manager, root, HOST_READ_TIMEOUT_S=1080). THIS IS A LIVE
 # VENDOR CALL: one sign-in. It is leg S (live_walk/leg_s_host.sh) with a display a person can reach:
-#   - a virtual display, Xvnc :1, bound to 127.0.0.1:5901 only (-localhost, -nolisten tcp), no password because nothing
-#     but a Systems Manager port forward can reach the loopback port; started as the resident's user, torn down after;
+#   - a virtual display, Xvnc :1, bound to 127.0.0.1:5901 only (-localhost, -nolisten tcp), with a ONE-RUN VNC password
+#     (the CTO half's follow-up: the laptop's forward listens on localhost:5901 while open). The password is written
+#     only to Xvnc's obfuscated password file and to /root/irpt-attended/vnc_password_current (0600, root); it is NEVER
+#     printed here. Andrew reads it in his own Systems Manager shell. Both files are deleted at teardown;
 #   - the wrapper run ONCE, headed on that display, with YC_ATTENDED=1: at a CAPTCHA the library HOLDS up to 600 s
 #     for the person (Andrew, on his laptop: a Systems Manager port forward of 5901 and a VNC viewer on localhost:5901)
 #     and then publishes through its own fenced path, exactly as leg S does;
@@ -23,6 +25,7 @@ import json
 import os
 import pwd
 import re
+import secrets
 import signal
 import subprocess
 import sys
@@ -89,7 +92,28 @@ def session_changed():
               "--output", "text", "--region", REGION)
 
 
-display = subprocess.Popen(["Xvnc", DISPLAY, "-localhost", "-nolisten", "tcp", "-SecurityTypes", "None",
+# ONE-RUN password: 8 characters (VNC authentication reads 8), never printed. Xvnc reads the obfuscated file as the
+# resident's user; Andrew reads the plain file as root in his own session.
+secret_dir = os.path.join(owner.pw_dir, ".irpt-attended")
+os.makedirs(secret_dir, mode=0o700, exist_ok=True)
+os.chown(secret_dir, owner.pw_uid, owner.pw_gid)
+os.chmod(secret_dir, 0o700)
+password = secrets.token_urlsafe(9)[:8]
+passwd_file = os.path.join(secret_dir, "vnc.passwd")
+plain_file = os.path.join(D, "vnc_password_current")
+obfuscated = subprocess.run(["vncpasswd", "-f"], input=(password + "\n").encode(), capture_output=True).stdout
+if len(obfuscated) != 8:
+    print("REFUSED: vncpasswd did not produce a password file; nothing run")
+    print("LEG_A_VERDICT=NOT_RUN:NO_VNC_PASSWORD")
+    sys.exit(9)
+for path, data, uid, gid in ((passwd_file, obfuscated, owner.pw_uid, owner.pw_gid), (plain_file, (password + "\n").encode(), 0, 0)):
+    fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
+    os.write(fd, data)
+    os.close(fd)
+    os.chown(path, uid, gid)
+del password
+display = subprocess.Popen(["Xvnc", DISPLAY, "-localhost", "-nolisten", "tcp", "-SecurityTypes", "VncAuth",
+                            "-PasswordFile", passwd_file,
                             "-rfbport", str(PORT), "-geometry", "1366x900", "-depth", "24"],
                            stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
                            start_new_session=True, user=owner.pw_name, group=owner.pw_gid, extra_groups=groups,
@@ -102,9 +126,12 @@ bound = listeners()
 print("display %s pid %d listening on %s" % (DISPLAY, display.pid, bound))
 if not bound or any(not b.startswith(("127.0.0.1:", "[::1]:")) for b in bound):
     os.killpg(display.pid, signal.SIGKILL)
+    for path in (passwd_file, plain_file):
+        os.remove(path)
     print("REFUSED: the display did not bind to loopback only; torn down; nothing run")
     print("LEG_A_VERDICT=NOT_RUN:DISPLAY_BINDING")
     sys.exit(8)
+print("VNC password for this run: in %s (0600, root), never printed here; deleted at teardown" % plain_file)
 print("ATTENDED_READY %s: port-forward 5901 and open localhost:5901; the hold waits up to 600 s at a CAPTCHA"
       % time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()))
 env.update(DISPLAY=DISPLAY, YC_HEADLESS="0", YC_ATTENDED="1", YC_ATTENDED_WAIT_S="600")
@@ -134,7 +161,13 @@ finally:
     except ProcessLookupError:
         pass
     display.wait()
-print("display torn down; listening on %d now: %s" % (PORT, listeners()))
+    for path in (passwd_file, plain_file):
+        try:
+            os.remove(path)
+        except FileNotFoundError:
+            pass
+print("display torn down; listening on %d now: %s; password files left: %d" % (
+    PORT, listeners(), sum(os.path.exists(path) for path in (passwd_file, plain_file))))
 data = open(out_path, "rb").read()
 print("rc %s seconds %.1f stdout bytes %d stderr bytes %d" % (rc, time.time() - start, len(data), os.path.getsize(err_path)))
 receipts = []
