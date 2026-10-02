@@ -15162,3 +15162,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "INERT. Owners: 2.0.0_SA_COO~D (the portal's route table) with 2.0.0_SA_COO~Y (hop 11). Same class as S269: a contract change whose reader census stops short of the portal."
 }
 ```
+
+## IRPT_BCKEND-S274 -- the leg S reader pairs by date and reads the pre-fix publication
+
+```json
+{
+  "id": "IRPT_BCKEND-S274",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-02T16:40:00Z",
+  "one_line": "The lane reader for split-account leg S (split_qa_read.py) cannot see the publication the leg is about: it pairs the newest QA file (business date 2026-09-30) with the served file of the same date, which is the pre-fix revision b29682b06ab6, so a clean run prints the old 91 accounts not summing and 182 withheld while the 14:15Z publication (2026-10-01, revision 100a0dc22f12) reads 0 and 0.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/R30_CHECKS/split_qa_read.py:113-114 (served_manifest(bucket, firm, date) with the QA file's date)",
+      "this seat's read 2026-10-02 15:04Z-16:30Z of irpt/inflection/platinum/holdings/current/manifest.json: the 2026-10-01 entry is revision 100a0dc22f12 (written 14:19:00Z): 857 accounts, 0 not summing, 0 DRILL WITHHELD of 36,048 nodes; the 2026-09-30 entry is still b29682b06ab6"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Leg S of irpt-inf-split-positions-m-20261001 is read on the 14:15Z publication by the lane's reader.",
+  "world_is": "The reader would grade the wrong file and report a failure the publication does not have; or, if it is fixed to read 10-01, it has no same-date QA file to compare with.",
+  "notes": "INERT. Owner 2.0.0_SA_COO~M: read leg S on the 2026-10-01 entry directly (the counts above), not through the QA pairing. This seat's grade of the publication is in IRPT_BCKEND_FAST_PIN_GRADES_20261001.md."
+}
+```
