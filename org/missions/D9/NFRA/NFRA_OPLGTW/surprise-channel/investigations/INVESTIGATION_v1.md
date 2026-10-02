@@ -6766,3 +6766,26 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S27",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-02T19:15Z",
+  "one_line": "The PHASE A saved targeted plan (.scratch/rl3_targeted.tfplan in /c/tmp/og-tf8) was not on disk at GO; the same two -target resources were re-planned from the same worktree and read 0 to add, 2 to change, 0 to destroy before the apply.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: ls /c/tmp/og-tf8/.scratch -> no such directory; no rl3_targeted.tfplan anywhere under /c/tmp. RUN: terraform plan -target=aws_iam_role_policy.gw_gateway_read_secrets -target=aws_lb_listener_rule.hx_capability -out=/c/tmp/og-tf8/rl3_targeted_b.tfplan: 'Plan: 0 to add, 2 to change, 0 to destroy.' (deliverables/0.9.0_WK_NFRA_OPLGTW~15/rl3_phaseB_replan.txt); safe-apply of that plan: 'Apply complete! Resources: 0 added, 2 changed, 0 destroyed.' (rl3_phaseB_apply.txt)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 10: safe-apply the saved targeted plan; if it is stale or missing, re-plan the same two targets and confirm 0/2/0.",
+  "world_is": "The saved plan file did not survive PHASE A (cause not investigated); the re-plan was equal in shape and the apply touched exactly the two named resources, not the grant-writer Lambda of row S25.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
