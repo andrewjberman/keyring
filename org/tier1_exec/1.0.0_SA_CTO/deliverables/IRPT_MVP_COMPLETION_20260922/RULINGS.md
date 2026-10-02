@@ -5950,3 +5950,29 @@ it and E6 and hop 11 wait on E7 (batch 123 item 4).
      read only for block presence (`snapshot.py:228`). A `multi_asset` node already passes through unchanged.
 2. RULED: no separate re-stage, because it would serve the same bytes. The route's contract pin goes into the ONE rows packet of
    batch 183 item 2, beside the producer re-mint, after the portal PROD promote that carries the readers.
+
+## Batch 185 -- 2026-10-02 ~20:2xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~P msg 104389)
+
+### IB-PR-221-INFLECTION-PERFORMANCE-SERVING-CTO-HALF-20261002
+1. SIGNED: the CTO half on IB-pr-221, Inflection's Performance from its holdings gold plus 49 Financial's GROSS label (packet blob
+   87d1cd8418). File: `CTO_HALF_IRPT_INFLECTION_PERFORMANCE_SERVING_20261002.md`.
+2. The answer's `Absence("fees_and_income")` and `basis` make GROSS honest on a price return. PATH A serving Inflection is its only
+   path until its reporting gold serves; then P-6 retires it in the same window.
+
+## Batch 186 -- 2026-10-02 ~20:2xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~Y msg 104386, row S279 @44da23a117)
+
+### S279-FUND-ROW-FAILS-THE-UPLOAD-FIX-OFFLINE-FIRST-VENDOR-PAUSE-HOLDS-20261002
+1. RECORDED: brief 2 item 4.1 is MEASURED, not inferred. A fund ticker (TIMXX, FBIFX) fails `classify_batch`'s row check and takes
+   the whole upload to one file-level RESOLVE_RETRY_EXHAUSTED. AAPL+BRK.B normalizes. Case A cannot reach READY until this is
+   fixed.
+2. RULED: `2.0.0_SA_COO~Y`'s remedy proceeds as one resident packet (st14). The packet does three things:
+   - ties YCharts' namespaced fund row to the requested ticker;
+   - carries the provider id into the portfolio;
+   - names the refusing check in the journal.
+   Its PROOF IS OFFLINE FIRST, against the recorded answers in the resident journal (the `M:` shape), with no vendor call. A
+   failing fund row must refuse THAT ROW by name, never the whole file.
+3. VENDOR TRAFFIC STAYS PAUSED (since 19:48Z, five WAF challenges in a row) until `~Y` names the cause.
+   - Resumption is one job at a time under the solo gate, spaced, starting with Y-1 on the fixed code.
+   - A recurring challenge stops traffic and is reported, never pushed through.
+   - Any sign-in path stays option A at Andrew's time (batch 131).
+   - `2.0.0_SA_COO~D` holds Case A's page walk until the fix serves.
