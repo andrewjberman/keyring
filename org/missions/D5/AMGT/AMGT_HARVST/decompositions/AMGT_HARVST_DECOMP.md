@@ -2534,3 +2534,45 @@ new bbg rows. If the cell is not drained by 10:00Z, #4 runs without it, before 1
 | `HVST-ai-4` bbg HTML silver branch | `ai-4` | SERVED (code LOCAL; the drain is the live driver's upload) | `~91` |
 
 Base check `round36/checks/ai-4.AC2.py` before the cut: FAIL (772 stranded, 0 uploaded).
+
+### 49.2 ROUND 36 AMENDMENT 2 -- the bbg drain batching cell (CTO ruling msg 28222), 2026-10-02 ~05:2xZ
+
+Row Z-S58 (@18ee3ffbd5): after the ai-4 fix the bbg outbox drains at about 1 row per 90 s, and the rate falls as it
+runs. Each pending row is its own `(source, run_stamp)` group, and each `silver_append` re-reads every bbg silver part
+(576 parts, 69 MB). 288 rows left would take 7 h or more, past the 10:00Z bound for gold #4. The CTO ruled YES to ONE
+mid-round repair cell, bounded:
+- `uploads.py` `_run_articles` makes ONE `silver_append` per source per pass (`silver_append` already writes one part
+  per fetch-date partition);
+- it falls back to per-row appends on `SilverRowError`, so a W91-S19-class row cannot strand its batch;
+- paths are `uploads.py` and its test only; risk SERVED;
+- CONDITION: plant 1 proves the batched pass writes the SAME row set (keys plus values) as the per-row path on the same
+  fixture. The part layout may differ, the rows may not. A row difference is a served-output change and needs
+  never-widen sign-off.
+
+The one real run at close is the live drain reaching 0 pending with gold-readable silver. Gold #4 stays on ruling
+28084: it runs before 13:00Z, and without the rest of the drain if the drain has not finished by 10:00Z.
+
+| cell | order | class | slot |
+|---|---|---|---|
+| `HVST-ai-5` batched silver append per source | `ai-5` | SERVED (code LOCAL; the drain is the issuer's upload-harvest pass) | `~90` |
+
+Base check `round36/checks/ai-5.AC2.py` before the cut: FAIL (see the issuance commit).
+
+### 49.3 ROUND 36 AMENDMENT 3 -- the limb-2a grader per challenge (CTO ruling, self-drive tick 2 @bb3c328367), 2026-10-02 ~06:2xZ
+
+The CTO ruled that FWD-11 limb 2a is graded PER CHALLENGE, answering ADJUDICATION_v45 section 2:
+- a challenge is CLEAN when no hardware input occurs from 2 min before its presentation to 2 min after its
+  resolution;
+- a challenge with input in that band is VOID, and it voids only itself, never its hour or the run;
+- 2a is MET when every non-void challenge passed and each publisher that presents challenges has at least one
+  non-void challenge;
+- a publisher that presents none stays MET-BY-ABSENCE.
+
+The 24-clean-hour / 1,440-clean-minute count was the grader's own construction and is dropped. Limb 2b and session
+renewal are unchanged. This seat amends the grader; `3.0.0_SA_CVO~Z` grades on it. No PRD half re-opens.
+
+| cell | order | class | slot |
+|---|---|---|---|
+| `HVST-ai-6` per-challenge +/-2 min grader | `ai-6` | LOCAL, DIRECT-ACT (one cell, under 300 product lines) | `~90` |
+
+Base check `round36/checks/ai-6.AC2.py` before the cut: FAIL as expected (the grader emits the per-minute shape).

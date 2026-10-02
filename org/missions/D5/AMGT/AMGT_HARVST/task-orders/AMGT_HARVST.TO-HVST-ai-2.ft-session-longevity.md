@@ -79,9 +79,15 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 
 **ISSUER NOTES:** CTO round-35 ruling 4. Rows Z-W92-S11/S12, disposed by Z-S55 (the driver stays OFF).
 
+**CANCELLED 2026-10-02 ~05:4xZ (issuer flip on CTO ruling msg 28235, `1.0.0_SA_CTO~Z` /self-drive AMGT_FRIDAY):**
+AC1 PASS 16/16, AC2 FAIL (3 jobs, 72 of 120 min; the session died 74m45s after the hand-solved sign-in). Records and
+proof instance merged @7463a1fcd4 (`deliverables/0.9.0_WK_AMGT_HARVST~92/ai2_attempt3_summary.md`). FWD-11's ft limb is
+carried into the round-36 analysis as an enrichment item: one 2-hour run from a sign-in Andrew solves by hand while
+present, proving that the keep-alive fires once per page load. ft stays OFF (STOP_FT).
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>open</status>
+<status>cancelled</status>
 <round>36</round>
 <slot>~92</slot>
 <fabric>site-z</fabric>

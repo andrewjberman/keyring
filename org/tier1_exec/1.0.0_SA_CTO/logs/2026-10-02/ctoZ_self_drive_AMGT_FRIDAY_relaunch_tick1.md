@@ -29,13 +29,38 @@
 
 ## Calls this tick
 
-- **COO~H item (5), "env-var credentials change offered to Andrew, unanswered":** the content is not in any file. This
-  driver asked COO~H for the card so it can rule it (msg to ~H, 05:12Z). It does not gate gold #4.
+- **COO~H item (5), "env-var credentials change offered to Andrew, unanswered": RULED WITHDRAW** (05:14Z). COO~H sent
+  its card in msg 28215. The offer was to let the ft sign-in read credentials from an environment variable instead of
+  Secrets; COO~H infers this from context and has not measured it. COO~H's rec was WITHDRAW, and the ruling follows
+  it. Secrets-by-name is the ratified contract (`lib/opal_data_harvest/credentials.py`, HVST-ab-1 C-HV-TRUST-TOKEN).
+  The rotated value is already in `astn/ft/credentials` v e7cace73. A second credential source would need a contract
+  change that serves no outcome. The ruling went to ~H by message, and the item is closed.
 - **ETFS_RIVALS:** routed to `4.0.0_SA_CRO~RV`, whose summary reads 0 open calls at HEAD 983e7540cb.
 - **Tick 26's open item 1 is CLOSED:** the CLOUD commit `8b4ad05c38` (portal gitlink 24646bca) is an ancestor of
   origin/CLOUD (`merge-base --is-ancestor`).
 - **Standing ruling 28084, unchanged:** AMGT_HARVST gold #4 runs after the bbg drain (323 pending at wind-down), or
   without it from 10:00Z, and before 13:00Z in either case. Owner: COO~H.
+
+### Calls after the tick (05:15-05:25Z)
+
+- **AMGT_HARVST, ai-5 repair cell (COO~H msg 28221, row Z-S58 @18ee3ffbd5): RULED YES.** The bbg drain is O(n^2):
+  every row's silver_append re-reads 576 parts. The cell batches to one silver_append per source per pass, with a
+  per-row fallback on SilverRowError. Paths are `uploads.py` and its test; risk class SERVED.
+  - Condition: plant 1 proves that the batched pass writes the same row set (keys plus values) as the per-row path. A
+    difference there is a served-output change and needs never-widen sign-off.
+  - The real run is the live drain reaching 0 pending.
+  - Gold #4 stays on ruling 28084.
+- **DSGN_AMGTV1, Z-S10 (auth refresh 500): DISARMED by this seat as disarm_owner,** row Z-S13 @092047f79f.
+  - Walks 20261001T151253Z and 164049Z: 8 of 8 post-login refreshes answered 200, and neither netlog holds a 5xx.
+  - The evidence is the 5174 dev build proxying the shared auth backend, not a PROD read.
+- **DSGN_AMGTV1 next limb (COO~D msg 28220): RULED HOLD, no round 22.**
+  - Round 21's freeze, 3c37a01c, is live in PROD b3a1d8a6, and DEV takes no DSGN product change before Andrew's 09:00 ET
+    read.
+  - The next limb is L9 grading of the FWDs toward CLOSED.
+- **CVO~Z is dark: spawn asked of MSTR~Z.** It is needed for the HARVST round 36 L8 compile, DSGN L9, and governance
+  forks.
+- **ETFS_RIVALS, rk-1 (CRO~RV msg 28218):** CRO~RV ruled it under its own authority. The carrier is the issuer's
+  decomposition amendment, and nothing is owed by this seat.
 
 ## Acts only Andrew can do
 

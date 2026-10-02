@@ -5711,6 +5711,211 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "One row of 811 stays pending after the drain unless the issuer rules a nested-type coercion (a cell on the vendor body, not on the parse) or accepts the single stranded row for gold #4."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S58",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-02T05:22Z",
+      "one_line": "The bbg outbox drain after the ai-4 fix runs at about 1 row per 90 s and slows as it goes: every pending row is its own (source, run_stamp) group, and each group's silver_append re-reads every bbg silver part to dedupe (576 parts, 69 MB per row). 288 rows left means 7 h or more, past the 10:00Z bound for gold rebuild #4.",
+      "class": "BLOCKING",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "CTO ruling 28084 and the ai-4 issuer notes: the stranded bbg outbox drains on the next upload, and gold #4 (the last of 4 rebuilds) picks it up before 13:00Z, after the drain or from 10:00Z without it.",
+      "world_is": "upload-harvest (the driver's own verb, cap 291) started on .runtime/opal-data-harvest-bbg at about 05:08Z with 291 rows due (retry_at <= now for all). Uploaded went 539 -> 542 by 05:16:31Z, and 541 -> 542 over a measured 90 s. lib/opal_data_harvest/uploads.py HarvestUploader._run_articles groups by (source, run_stamp), and a bbg run_stamp is per-second fetched_at, so each group holds one row. lib/research/harvest/store.py silver_append calls silver_latest, which lists and reads every part under bloomberg/harvest/silver/article/ (576 parquet parts, 69,097,325 bytes at 05:2xZ). Each uploaded row adds one more part, so the drain is O(n^2). silver_append already writes one part per fetch-date partition, so grouping a pass by source alone keeps the layout. Trap for a batch: row Z-W91-S19 shows that one row with a nested type conflict fails pa.Table.from_pylist for its whole group.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          ".runtime/opal-data-harvest-bbg/progress.sqlite3 harvest_raw_outbox (counts 05:14Z, 05:15:01Z, 05:16:31Z)",
+          "S3 list bloomberg/harvest/silver/article/: 576 parquet, 69,097,325 bytes",
+          "lib/opal_data_harvest/uploads.py _run_articles (groups by (source, run_stamp))",
+          "lib/research/harvest/store.py silver_append -> silver_latest (full prefix read per call)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Disarm: a repair cell that groups a pass's article rows by source, with one silver_append per source, and falls back to per-row on SilverRowError so a W91-S19-class row cannot strand its batch. The SERVED-class mid-round cell is put to the CTO, as for ai-4 (28084). Meanwhile the running upload keeps draining; gold #4 takes whatever has drained by its run."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~92",
+      "surfaced_at": "2026-10-02T02:55Z",
+      "id": "AMGT_HARVST-Z-W92-S15",
+      "one_line": "ai-2: a job run from a worktree used the worktree's own ft profile, not the main runtime's (profile root follows the checkout, not --runtime-root).",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Order step 3: run the collector with cwd = the worktree and --runtime-root = the main tree's runtime; the session in that runtime is what the job uses.",
+      "world_is": "tab_transport.default_profile_root derives the browser-profiles directory from the checkout (Path(__file__).parents[2]), so the worktree job opened <worktree>/.runtime/.../browser-profiles/ft. OPAL_HARVEST_PROFILE_ROOT now names the directory explicitly; unset it changes nothing (2 plants in test_ai2_ft_session.py).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/tab_transport.py default_profile_root",
+          "lib/opal_data_harvest/test_ai2_ft_session.py::test_the_profile_root_follows_the_override_when_one_is_set"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Filed here because ai2_diagnosis.md cites it as Z-W92-S15 and no row of that id existed in the file."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~92",
+      "surfaced_at": "2026-10-02T02:55Z",
+      "id": "AMGT_HARVST-Z-W92-S16",
+      "one_line": "ai-2 attempt 3: the freshly signed-in ft bundle held a __Host-GAPS cookie that Chrome refuses with a domain; the whole seed batch failed and the job ended status=error at its first request, in 14 s.",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "spec_asserts": "A signed-in ft session saved to the vault is seeded into the ft profile by TabSession.seed and the job then fetches with it.",
+      "world_is": "Job 20261002T024110Z-ft-01050eb895 (ASML, 02:41:10Z, 3 minutes after the 02:38Z sign-in): fetched 0, status error, error_type Error, cooldown 900 s (transport_or_runtime_error). Reproduced offline of any fetch: context.add_cookies(57 seed cookies) raises 'Storage.setCookies: Invalid cookie fields'; one cookie at a time, 56 are accepted and the one refused is __Host-GAPS (a __Host- cookie may carry no domain; seed_cookies gives every flat-bundle cookie domain .ft.com). Fix: seed retries a refused batch one cookie at a time and keeps the refused names on seed_refused (2 plants). The job was relaunched after the fix; its record is in ai2_ft_longevity.json. The worker's job record names only the exception class, so the cause took three probes; the message is not recorded anywhere.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~92/ai2_attempt3_signin.json",
+          "lib/opal_data_harvest/tab_transport.py seed",
+          "lib/opal_data_harvest/test_ai2_ft_session.py::test_one_refused_cookie_does_not_fail_the_seed_and_the_rest_are_added"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "notes": "A bundle cookie the browser refuses will recur on any renewal that captures a third-party __Host- cookie; the fallback makes it harmless. Not claimed: that the 02:41 job would have lived."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~92",
+      "surfaced_at": "2026-10-02T02:55Z",
+      "id": "AMGT_HARVST-Z-W92-S17",
+      "one_line": "ai-2 attempt 3: the headed ft sign-in met an hCaptcha; the identity cookie appeared 10 s after the wait began.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Issuer ruling 02:2xZ: one headed sign-in; Kimi and NopeCHA barred; a human solves any challenge in the visible window.",
+      "world_is": "02:37:59Z-02:38:37Z: email and password submitted, an hCaptcha frame present (frame=challenge or checkbox), the driver waited; FTSession_s was set by accounts.ft.com/login 10 s later (network auth event 1, corroborated true); 0 Kimi calls, 0 NopeCHA calls, 0 blocked HTTP. Whether a person clicked it or the widget passed on its own cannot be told from the page state; the driver records 'solved by hand' only as 'the challenge cleared within 10 s'.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~92/ai2_attempt3_signin.json",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~92/ai2_attempt3_signin_log.txt"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W90-S11",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~90",
+      "surfaced_at": "2026-10-02T06:00Z",
+      "one_line": "HVST-ai-5: the sparse cone named for this worktree cannot run the collector suite; six tracked paths outside it are read by lib/ at import or by tests.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "The face: run python -m pytest lib/opal_data_harvest/ -q (base 529 passed) in a sparse cone of lib, .tools, org/missions/D5/AMGT/AMGT_HARVST.",
+      "world_is": "In that cone collection fails at lib/research/harvest/store.py import (infra/logic/registry/systems.json absent) and then org/standards/NAMING_SCHEMA.json, org/tier1_exec/4.0.0_SA_CRO/scripts, integrations/seekingalpha/rest_fetch.py, org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~3/universe.json and org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_HARVST/SA_SYMBOLS_MERGED_89_20260927.json (test fixtures). I ran git sparse-checkout add for those six paths in this worktree only (a local setting, no tracked file changed); the suite then read 533 passed, 3 skipped (529 base + 4 new).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "pytest lib/opal_data_harvest/ in wk-hvst-r36-90, four FileNotFoundError / ModuleNotFoundError collections and failures, then 533 passed"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "A later worker cut on this face needs the same six paths in its cone."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S59",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-02T06:08Z",
+      "one_line": "DISARMED by its disarm_owner: AMGT_HARVST-Z-S57. The stranded bbg backfill reached silver: 0 bbg rows pending on JSONDecodeError, 829 of 830 uploaded.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "drain merge 3319bb1c60 (ai-4 bbg HTML branch)",
+          "deliverables/2.0.0_SA_COO_H/round36/ai-4.AC2.issuer_grade.txt and ai-5.AC2.issuer_grade.txt (06:0xZ): bbg outbox 830 rows, 829 uploaded, 1 pending SilverRowError",
+          "deliverables/2.0.0_SA_COO_H/round36/bbg_drain_fast_20261002T0558Z.receipt.jsonl: 243 uploaded in 1 silver part (date=2026-10-01/part-20261001T230342Z.parquet), 1 held on a cross-row conflict",
+          "merge 6a0a2ebc79 (ai-5, with amendment 58748baf51)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "An ARMED hazard disarms via its disarm_owner (CLAUDE.md section 2); AMGT_HARVST-Z-S57 names 2.0.0_SA_COO~H.",
+      "world_is": "The ai-4 bbg HTML branch (@3319bb1c60) parsed the stranded bodies. The ai-5 batched pass (05:58-06:00Z) drained them. Gold rebuild #4 reads this silver.",
+      "notes": "Disarm record by the disarm_owner at /canonical-drive tick 3; not an adjudication. Disarmed is not remediated."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S60",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-02T06:08Z",
+      "one_line": "DISARMED by its disarm_owner: AMGT_HARVST-Z-S58. The bbg drain is no longer O(n^2): one silver_append per source per pass took 244 due rows to 0 in about 2 minutes.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          ".runtime/harvest-backfill/bbg_drain_fast_20261002T0558Z.out (launched 05:58Z, finished by 06:00:12Z)",
+          "deliverables/2.0.0_SA_COO_H/round36/ai-4.AC2.issuer_grade.txt and ai-5.AC2.issuer_grade.txt (06:0xZ): bbg outbox 830 rows, 829 uploaded, 1 pending SilverRowError",
+          "deliverables/2.0.0_SA_COO_H/round36/bbg_drain_fast_20261002T0558Z.receipt.jsonl: 243 uploaded in 1 silver part (date=2026-10-01/part-20261001T230342Z.parquet), 1 held on a cross-row conflict",
+          "merge 6a0a2ebc79 (ai-5, with amendment 58748baf51)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "An ARMED hazard disarms via its disarm_owner (CLAUDE.md section 2); AMGT_HARVST-Z-S58 names 2.0.0_SA_COO~H.",
+      "world_is": "Before: about 90 s per row (one full prefix read of 576 parts, 69 MB, per row). After ai-5: one prefix read per source per pass; 243 rows landed in one part; the held row landed alone at 06:01Z.",
+      "notes": "Disarm record by the disarm_owner at /canonical-drive tick 3; not an adjudication."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S61",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-02T06:08Z",
+      "one_line": "DISARMED by its disarm_owner: AMGT_HARVST-Z-W91-S19. The one type-conflict bbg row can no longer strand any other row: ai-5 isolates it locally before the one batched append.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "local probe 06:0xZ: article_rows + pa.Table.from_pylist on bbg:TD7VMGKGCTIZ00 -> ArrowInvalid",
+          "deliverables/2.0.0_SA_COO_H/round36/ai-4.AC2.issuer_grade.txt and ai-5.AC2.issuer_grade.txt (06:0xZ): bbg outbox 830 rows, 829 uploaded, 1 pending SilverRowError",
+          "deliverables/2.0.0_SA_COO_H/round36/bbg_drain_fast_20261002T0558Z.receipt.jsonl: 243 uploaded in 1 silver part (date=2026-10-01/part-20261001T230342Z.parquet), 1 held on a cross-row conflict",
+          "merge 6a0a2ebc79 (ai-5, with amendment 58748baf51)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "An ARMED hazard disarms via its disarm_owner (CLAUDE.md section 2); AMGT_HARVST-Z-W91-S19 names 2.0.0_SA_COO~H.",
+      "world_is": "bbg:TD7VMGKGCTIZ00 still fails pa.Table.from_pylist alone ('1150000' str vs int64, re-verified 06:0xZ) and stays pending on SilverRowError, so 1 of 830 bbg articles is out of silver and gold #4. No nested-type coercion cell is cut now (issuer ruling); the row is read at the round-36 analysis.",
+      "notes": "Disarm record by the disarm_owner at /canonical-drive tick 3; the defect itself stands (disarmed is not remediated)."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S62",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-02T06:08Z",
+      "one_line": "DISARMED by its disarm_owner: AMGT_HARVST-Z-C-S57. Both routes the row names are met: (a) the batched drain ran before 06:36:56Z, and (b) bad rows are isolated locally before ONE append, with no per-row loop.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "amendment 58748baf51 (TO-HVST-ai-5 item 2 and plant (iii))",
+          "surprise-channel/adjudications/ADJUDICATION_v46.md row AMGT_HARVST-Z-C-S57 (3.0.0_SA_CVO~Z)",
+          "deliverables/2.0.0_SA_COO_H/round36/ai-4.AC2.issuer_grade.txt and ai-5.AC2.issuer_grade.txt (06:0xZ): bbg outbox 830 rows, 829 uploaded, 1 pending SilverRowError",
+          "deliverables/2.0.0_SA_COO_H/round36/bbg_drain_fast_20261002T0558Z.receipt.jsonl: 243 uploaded in 1 silver part (date=2026-10-01/part-20261001T230342Z.parquet), 1 held on a cross-row conflict",
+          "merge 6a0a2ebc79 (ai-5, with amendment 58748baf51)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "An ARMED hazard disarms via its disarm_owner (CLAUDE.md section 2); AMGT_HARVST-Z-C-S57 names 2.0.0_SA_COO~H.",
+      "world_is": "The amendment @58748baf51 replaced the whole-batch per-row fallback with local isolation; merged @6a0a2ebc79 with plant (iii) (a type-conflict row, exactly one silver prefix read). The per-row pass, pid 24652, was stopped at 05:57:34Z before the batched pass started at 05:58Z.",
+      "notes": "Disarm record by the disarm_owner at /canonical-drive tick 3; not an adjudication."
     }
   ]
 ```

@@ -2798,6 +2798,28 @@
     "spec_asserts": "RIV-b-2: PARTIAL returns a cursor in `detail`, and the same event re-invoked continues from the cursor; no storage location for the cursor is stated.",
     "world_is": "The event carries no cursor, so a continuation needs persisted state; the cursor is one new object kind under state/build_canonical_shape/date=<D>/ in the served S3 estate on the first real PARTIAL. Not exercised on S3 in this round (nothing deploys); IAM write to that prefix is the marker write's own. Also: run_gold_chain bounds its re-invocation by RIVALFUNDS_CHAIN_BUDGET_S (default 750 s = 900 s Lambda minus MARGIN_MS), because the handler drops the Lambda context.",
     "notes": "Deploy-time reader should confirm the Lambda role may PutObject on state/build_canonical_shape/ keys with a .cursor suffix and that no S3 lifecycle or notification rule matches that prefix."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S14",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-02T05:57Z",
+    "one_line": "Served G4 security_market for 2026-09-29 (the only date it holds) carries px_close and total_return_index on 0 of 172 rows (gics_sector on 95%), so no G4 price exists anywhere; the A1 rankings run on the CRO CALL 1 holding-implied price and the census reports every G4 price missing.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3://opal-data-etfs/rivalfunds/etfs/gold/security_market/date=2026-09-29/ newest object: notna fraction px_close 0.0, total_return_index 0.0, currency 0.0, gics_sector 0.95 (172 rows), read 2026-10-02T05:56Z",
+        "round5/checks/ic-1.AC2.py run 05:55Z: 'price rows 764 (arrived 0) | gics rows 764 (arrived 86)' -> FAIL on 'some prices arrived'",
+        "in-process rk-1 run page 2026-10-01: 3440 of 3518 security-period rows priced holding_implied, 0 g4_*"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A1 ruling 1 and the ic-1 AC2 check: G4 holds 2026-09-29 prices ('at least one price arrived (G4 holds 2026-09-29)'); rk-1's first sources are g4_tri and g4_close.",
+    "world_is": "G4 holds GICS but no price field for its one date; the Bloomberg price leg (round 6 G4 history backfill) has not delivered a price yet. The issuer amends ic-1 AC2's price clause to 'price and gics rows match and are non-zero; at least one gics arrived' (the census reporting 0 of 764 prices is the truth, not a defect).",
+    "notes": "Un-parks with the round-6 G4 history cell: when px_close lands, rk-1 takes g4_close first automatically and re-ranks (CALL 1, 'what this does not settle')."
   }
 ]
 ```
