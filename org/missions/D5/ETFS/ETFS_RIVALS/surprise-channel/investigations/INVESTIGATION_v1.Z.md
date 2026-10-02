@@ -2714,6 +2714,48 @@
     "spec_asserts": "Order cell: past date -> historical request; empty answer -> nothing written; the run-date pull keeps landing (the 08:03 vehicle step).",
     "world_is": "The code does what the cell says. The vehicle's default date is yesterday (past), so which fields BDH answers for it is the first live run's measurement; a security answered for any field lands (absent fields NULL), a security answered for none gets no row and the result detail counts it (`unanswered`); a fully empty answer returns SKIPPED. A future date (after the run date) is unchanged: it takes the current-value pull, as_of_source pull.",
     "notes": "Not widened: the cell names run date = a pull, past = historical; whether the vehicle should pass today's date, or the GICS fields be pulled by reference data into a separate as-of, is the issuer's/CTO's call."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W5-S31",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~5",
+    "surfaced_at": "2026-10-02T01:54Z",
+    "one_line": "Resolves ETFS_RIVALS-Z-W5-S29: test_v2_revision_contract.py is now in the order's <paths> (amendment 1 @808c737c28) and its past-date market test pins eb._run_date_et to its own date; no assertion changed; package suite 316 passed, 0 failed, 2 skipped.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m pytest rivalfunds/tests -q from data/etfs/scripts at wk-rivals5-5: 316 passed, 2 skipped",
+        "org/missions/D5/ETFS/ETFS_RIVALS/task-orders/ETFS_RIVALS.TO-RIV-s-6.g4-as-of-guard.md AMENDMENT 1 (a)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Row Z-W5-S29 BLOCKING/INERT, disarm_owner 2.0.0_SA_COO~RV: the suite cannot read 0 failed while the stale test is outside <paths>.",
+    "world_is": "The stale test is pinned; the suite reads 0 failed. An existing row is never edited, so S29 stays as filed and this row resolves it.",
+    "notes": "disarm_owner was 2.0.0_SA_COO~RV."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W5-S32",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~5",
+    "surfaced_at": "2026-10-02T01:54Z",
+    "one_line": "Resolves ETFS_RIVALS-Z-W5-S30 (ARMED) per amendment 1 (b): a past-date pull lands a security as historical only when its historical answer covers every requested field; every other security, and every security when the historical request fails, lands from the current-value pull labelled as_of = the run date (ET), as_of_source pull, under the requested partition, so the vehicle's daily T-1 G4 keeps landing and never claims the past date.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/enrichment_bloomberg.py _market_pull + market_rows(labels=...); tests/test_r5s6_as_of_guard.py 11 tests: empty answer, partial answer, request failure, mixed, full answer, off-date answer, run date, daily mode",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round5/checks/s-6.AC1.py: AC1 RESULT: PASS 0 failures"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Row Z-W5-S30 ARMED, disarm_owner 2.0.0_SA_COO~RV: the vehicle's daily G4 (target T-1) would land nothing under refuse-unless-historical.",
+    "world_is": "Disarmed in code: a past-date pull never lands nothing for lack of a historical answer; it lands labelled current values. Not measured against a live Bloomberg answer (no vendor call in this order): which securities the live historical request answers in full is the first live run's read; the detail carries as_of_source_counts {historical, pull} and historical_request_failures for that read. A consumer reading as_of for a GICS-only need now sees the run date on a past partition.",
+    "notes": "disarm_owner was 2.0.0_SA_COO~RV; the as_of_source_counts figures are in the market marker detail and the object's input_manifest."
   }
 ]
 ```
