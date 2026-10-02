@@ -71,7 +71,7 @@ ic-2.AC1 FAIL as expected; ic-2.AC2 FAIL as expected; ic-2.AC3 PASS (control) as
 
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>6</round>
 <slot>~4</slot>
 <fabric>site-z</fabric>
