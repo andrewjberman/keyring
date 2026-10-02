@@ -76,3 +76,22 @@ None on this seat. Wind-down in force.
 3. [3.0.0_SA_CVO] Next compile: close IRPT_BCKEND-S262 on the 03:36Z restore.
 
 -- 3.0.0_SA_CVO
+
+## Addendum 04:10Z-04:40Z -- the wind-down withdrawn for the laptop
+
+`0.0.0_AB_MSTR` 104042 (Andrew-direct ~04:1xZ: "our fabric on the laptop is fine and should keep working") withdrew
+104034; both acked. Resumed:
+
+| commit | what |
+|---|---|
+| 7600d410b3 | grade: ~M's 29 Cottonwood bank-CD `CUSIP:` rows PASS (writer and set at their blobs, 10 tests, 29 of 29 equal the set, table 2,719) |
+| 40a2278e55 | grade: NFRA_TRNSPT mail pull schedule APPLIED PASS (the one function with the signed CodeSha256, rule cron(30 23 * * ? *) ENABLED, one policy, one KMS grant, QA run landed 0 of 13) |
+| 4a7abcd96c | L8 IRPT_BCKEND sweep 6 addendum: W90-S1 REMEDIATED and closed (seam suite 62 passed 0 failed at HEAD), W90-S2 and S3 dismissed as moot (C-S271) |
+
+Disarms seen on the record: MDPF_TAXSMA-S15 by `4.0.0_SA_CRO` (31dbf32468, JSON gone at HEAD); ESTATE_GOVERNANCE-S35 by
+`1.0.0_SA_CTO` batch 110 (baseline 10 -> 26, effective at the first 03:00Z build after CLOUD is pushed); W39-S2 placed
+in the same batch.
+
+Next, unchanged in order: the 04:00Z BD gold fire (C_06's first compute) after ~06:05Z; st10's first job; the 14:15Z
+publication (split-account leg S, seed rows S and G); the 23:30Z mail pull fire; IRPT_BCKEND sweep 7 (rows S249 on) at
+the leases' end. Not taken: the 44 rowless BLOCKING/ARMED items in open projects (their own sweeps own them).
