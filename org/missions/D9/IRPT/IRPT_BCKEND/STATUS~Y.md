@@ -6,7 +6,7 @@ Mode FAST: lease `IRPT_BCKEND~Y` re-armed 04:33Z until 08:33Z after the withdraw
 terms, under Andrew-direct 2026-10-01 ~04:2xZ).
 Loop `/canonical-drive IRPT_BCKEND` 10m (LIVE_ARMS RELAUNCH row). Way forward: CTO rulings batches 61, 62, 65, 70, 72,
 76, 83, 88, 89, 93, 97, 98, 100 and 105 in `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md`.
-Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-02T07:2xZ.
+Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-02T07:3xZ.
 
 ## Pins
 
@@ -62,8 +62,13 @@ made (CTO half item 1).
    **st11 is SERVED** (07:18:54Z; ledger CLOSED @861b9bf176). Its live proof (an upload during another job's generation reads
    NORMALIZED after it) is the next window's, after Andrew's YCharts sign-in. The `RESOLVE_PROVIDER_BUSY` words ride the next
    generate and irpt-status bundles (until then the code shows with action `CORRECT`; CTO half item 1).
-   **Hop 11 (the vendor PDF link):** design note `IRPT_MVP_Y/HOP11_PDF_LINK_DESIGN_NOTE_20261002.md` @c1faa8f035 (route on
-   irpt-status returning an Opal-signed 300 s URL, as the export download does; irpt-status needs `vendor_documents` read).
+   **Hop 11 RULED as recommended** (CTO batch 123): `GET analysis/requests/{requestId}/pdf` on irpt-status, an Opal-signed 300 s
+   URL plus sha256; `irpt-status-policy` gains `vendor_documents` in `ops/iam.tf` (this seat's lane).
+   **THE irpt-status QUEUE (batch 123 item 4):** every irpt-status bundle now carries E7, so E7, then E6's memo, then hop 11 land
+   in that order, one packet each, once the tolerant parser is on every deployed build incl. PROD (row S261). Build now, apply
+   none before the gate, and upload no new irpt-status artifact before E7 applies (E7's step 2 stops on a replaced key).
+   **E6 memo:** design `IRPT_MVP_Y/E6_TIMING/E6_MEMO_DESIGN_20261002.md` @8e128269d0; two of its lines are in
+   `reports/status_installed.py` (`2.0.0_SA_COO~P`'s lane); placement asked of the CTO 07:28Z.
 6. Batch 61's order after that: one job per remaining arm (Target Weight, 49 Financial, Inflection), each under a window
    packet; the resolve concurrency fix; the vendor PDF link; the Analysis export; the email lane. E6's memo follows E7's
    apply (CTO batch 111). A client-scoped history route is an enrichment item at the next round analysis (CTO batch 110 item 4).
@@ -87,7 +92,7 @@ Batch 120 item 6 (the probe's cookie rotation) is read at the next window, which
 | W88-S2 | reader served in the generate bundle; grant applied; the route is not published |
 | W94-S2, W91-S1, W92-S1 | repaired or read; for the CVO to close |
 | W91-S2 | NOT repaired: `_contracts/tests/test_seam_paired.py` is held by the open order IRPT_DASHBD TO-DB-b-4 |
-| W92-S4 | one read of a report whose blob is absent is still owed |
+| W92-S4 | READ 05:5xZ: S213's path answers INVALID_INPUT (named; the route takes a request id), the same report by request serves 76 sections, served `owned_report.py` carries ReportBundleAbsent. Disarm proposed to the CVO 07:28Z (also S213) |
 
 ## Ledgers this seat holds open
 
