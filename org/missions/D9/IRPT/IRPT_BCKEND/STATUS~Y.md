@@ -5,7 +5,7 @@ Seat `2.0.0_SA_COO~Y` (CLAUDE), relaunched 2026-10-02 ~01:5xZ on Andrew's word (
 Mode FAST: lease `IRPT_BCKEND~Y` re-armed 02:25Z until 06:25Z (CTO 103946, under Andrew-direct 2026-10-01 ~04:2xZ).
 Loop `/canonical-drive IRPT_BCKEND` 10m (LIVE_ARMS RELAUNCH row). Way forward: CTO rulings batches 61, 62, 65, 70, 72,
 76, 83, 88, 89, 93, 97, 98, 100 and 105 in `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md`.
-Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-02T03:1xZ.
+Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-02T03:2xZ.
 
 ## Pins
 
@@ -13,10 +13,10 @@ Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-02T03:1xZ.
 |---|---|
 | Worktree | branch `coo-y-r30` at `C:/Users/AndrewBerman/Desktop/coo-y-r30`, head `9ada3e8b02`, merged into CLOUD |
 | Items 1 to 17 on CLOUD | 1 to 14 as before (st9 carries them); 15 `3921492913` (the 900 s calculating release, the WAF header token); 16 `7122afefc1` (row S253, the job row's `vendor_requests` ledger); 17 `8c4398e32a` (E7, the request read names the chosen comparisons). One pin for both releases: `b1db201025` |
-| SERVED: the resident | `/opt/irpt-resident/481166a8f2-st9` since 2026-10-01T14:59:17Z. Rollback root `9ac9b56d3c-st8` on the host |
+| SERVED: the resident | `/opt/irpt-resident/b1db201025-st10` since 2026-10-02T03:19:51Z (ledger `irpt-resident-st10-20261002` CLOSED; both halves, CTO batch 106): items 1 to 17. Rollback root `481166a8f2-st9` on the host |
 | SERVED: `irpt-status` | `2V7xV1+zII4+g6tV..` since 2026-10-01T06:59:55Z (read 2026-10-02 ~02:2xZ) |
 | SERVED: `irpt-ycharts-generate` | `arC65KbDPPssn2UX..` since 2026-10-01T06:51:12Z |
-| UPLOADED, NOT APPLIED | `irpt-status.zip` version `gqIQUc_Z..` (sha `iYgp8301..`, E7) is the key's LATEST version; resident st10 tar `oawr7YMK..` and script `sKNqaKlp..` on new keys |
+| UPLOADED, NOT APPLIED | `irpt-status.zip` version `gqIQUc_Z..` (sha `iYgp8301..`, E7) is the key's LATEST version |
 | Stored YCharts session | the version of 2026-10-01T08:21:20Z (fence 21) |
 | Push state | LOCAL @5946fe3945; origin/CLOUD `0257976705` (ls-remote read 02:5xZ). CLOUD is pushed by `0.0.0_AB_MSTR` only |
 
@@ -33,12 +33,15 @@ opens. `2.0.0_SA_COO~D` landed a tolerant parser on portal DEV `281b03c6` (msg 1
 the route is PROD `b3a1d8a638`, still strict. **The apply waits on a portal PROD promote, which is Andrew's word**
 (`2.0.0_SA_COO~D` is putting it to him). Census: 20 of 20 accepted requests derive (16 `[]`, 4 name one or two), 0 refuse.
 
-**st10 -- packet written, CTO half asked 03:12Z.** Packet `IRPT_MVP_Y/ST10/NEVER_WIDEN_SIGNOFF_PACKET_RESIDENT_ST10_20261002.md`
-(blob `cf517d1b39`): 7 of 243 members change; gate PASS; U1 proven. Ledger `irpt-resident-st10-20261002` OPEN.
+**st10 -- SERVED 03:19:51Z.** Packet `IRPT_MVP_Y/ST10/NEVER_WIDEN_SIGNOFF_PACKET_RESIDENT_ST10_20261002.md` (blob
+`cf517d1b39`), CTO half batch 106. V1: every digest equals the packet's; unit active and polling; queue 0/0
+(`ST10/INSTALL_OUTPUT_20261002.txt`). Items 15 and 16 are offline-proven only until the next job: its journal is read for
+`IRPT_RESIDENT_VENDOR_REQUESTS` and, if challenged, `WAF_READ`, and the ledger's records are compared with the requests
+made (CTO half item 1).
 
 ## Next
 
-1. On the CTO half for st10: before-read, install through Systems Manager, V1, close the ledger.
+1. The next job on st10 (natural or under its own window packet): read items 15 and 16 live (CTO batch 106 item 1).
 2. On Andrew's PROD promote of `281b03c6` (named by `2.0.0_SA_COO~D`): E7's D1 (one targeted apply) and V1; then
    `2.0.0_SA_COO~D` shows the names and re-walks; the CTO calls the Multi-Comp arm live.
 3. E6 (batch 93 item 8): the status list's 15.7 s and a status read's 2.3 to 13.6 s, timed by hop before any change.
@@ -53,7 +56,7 @@ the route is PROD `b3a1d8a638`, still strict. **The apply waits on a portal PROD
 |---|---|
 | S261 | OPEN, BLOCKING (2026-10-02 02:41Z): the page parser rejects E7's third key. Disarm owner `2.0.0_SA_COO~D` (parser on DEV `281b03c6`; PROD promote on Andrew's word); this seat holds E7's D1 |
 | S230 | OPEN. The resident's OWN sign-in fails `AUTH_FAILED` 4 of 4 and is unnamed; an operator sign-in as the resident's user works. st7's reason token names the step at its next occurrence |
-| S253 | Built and merged (item 16); served with st10; first live read is the first job on st10 |
+| S253 | SERVED on st10 (03:19:51Z); first live read is the next job; for the CVO to close after it |
 | S231 | DONE on served code; for the CVO to close |
 | W88-S2 | reader served in the generate bundle; grant applied; the route is not published |
 | W94-S2, W91-S1, W92-S1 | repaired or read; for the CVO to close |
@@ -63,7 +66,6 @@ the route is PROD `b3a1d8a638`, still strict. **The apply waits on a portal PROD
 ## Ledgers this seat holds open
 
 - `irpt-status-e7-20261001`: U1 closed; HELD (external gate: row S261 and the PROD promote). Nothing applied.
-- `irpt-resident-st10-20261002`: U1 closed; D1 and V1 wait on the CTO half. Nothing installed.
 
 ## Enrichment candidates (the measured list is `IRPT_MVP_Y/ENRICHMENT_CANDIDATES_20261001.md`)
 
