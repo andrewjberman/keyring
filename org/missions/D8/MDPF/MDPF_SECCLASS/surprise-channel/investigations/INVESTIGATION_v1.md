@@ -1005,3 +1005,34 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Not measured: who holds REET and for how much. A census of scheduled rows whose fund kind has a seed peer in another class would bound the whole set; this row names the one pair found."
 }
 ```
+
+
+## MDPF_SECCLASS-S9 -- BD thread r3 served a 49financial firm mix missing about 24 pct of the firm (tickers only bd-securities knew)
+
+```json
+{
+  "id": "MDPF_SECCLASS-S9",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-02T06:30:00Z",
+  "one_line": "BD thread r3's first real compute (the 2026-10-02 04:00Z gold fire) served a 49financial firm mix that is missing about 24 pct of the firm: platinum/firm/mix_summary.json now reads equity 60.12 pct, fixed_income 15.69 pct, alternatives 0.00 pct (sum 75.8 pct), composition total 1,397,402,073 against 1,840,926,643 the run before. Tickers absent from etf-classifications but held in bd-securities (IYR, ITB, FBALX ...) now log 'Classification not found' and leave the mix; 290 distinct tickers, 11,878 lines in the run, against 0 lines in the 2026-10-01 04:00Z run on the old library.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M (ledger secclass-bd-thread-r3-m-20261001, held for exactly this read): the half's rollback per key (code objects to the prior VersionIds, served keys to the versions read before the act) or a forward fix that keeps the bd-securities fallback behind the canonical table, under the never-widen pair; 1.0.0_SA_CTO rules which",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3 opal-data-bd logs/gold-layer/gold_incremental_2026-10-02_20261002_060640.log, last 12 MB (this seat, 2026-10-02 06:1xZ): RUNNER STARTED 04:00:39Z; C_06 'Watermark: 2026-09-29', 'To process: 1', 'Written: 3,189 relationship JSONs (0 errors)', 'Watermark -> 2026-09-30', 'C_06 done (rc=0)'; D_03 and D_04 rc=0; 'Mix snapshot (C_06): 3 classes, date=2026-09-30, total_mv=$1,843,114,282'; COMPLETE exit 0 06:06:40Z; 0 IndexError, 0 BLOCKED, 0 Traceback lines",
+      "the same window: 149 'Classification not found for ticker' lines inside C_06's block, 11,878 in the run, 290 distinct tickers. The 2026-10-01 04:00Z run (logs/gold-layer/gold_incremental_2026-10-01_20261001_060534.log, last 12 MB, old library): C_06 'To process: 1' and 0 such lines in C_06 and in the run",
+      "platinum/firm/mix_summary.json versions (s3api, this seat): 2026-10-02 05:37Z data_as_of 2026-09-30, mix equity 1,108,088,148.64 (0.6012), fixed_income 289,244,356.38 (0.1569), alternatives 69,568.26 (0.0), composition total_market_value 1,397,402,073.27; 2026-10-02 00:33Z and 2026-10-01 08:05Z, data_as_of 2026-09-29: equity 1,416,358,259.48 (0.7694), fixed_income 386,051,912.98 (0.2097), alternatives 38,516,471.14 (0.0209), total 1,840,926,643.60",
+      "get-item, ConsistentRead: IYR canonical ABSENT, bd-securities equity; ITB canonical ABSENT, bd-securities equity; FBALX canonical ABSENT, bd-securities alternatives; PHDG absent in both; control IEFA canonical equity",
+      "NEVER_WIDEN_HALF_REQUEST_SECCLASS_BD_THREAD_R3_20260930.md:158-166: the blast radius names 'the one coarse number that moves (mix_daily_summary.json, by the formerly-guessed-to-equity population), and the three-ticker move table'; :186-193 the restore targets per served key"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The r3 never-widen half: one coarse number moves (the formerly-guessed-to-equity population in mix_daily_summary) plus a three-ticker table; CTO rulings batch 99: nothing is folded and no client is skipped for a missing class.",
+  "world_is": "The served 49financial firm mix lost about 443.5 M USD of 1,840.9 M across all three classes; its shares sum to 75.8 pct; alternatives fell from 38.5 M to 69.6 K. The holdings are not re-classed as unclassified, they are absent. The move is far outside the signed blast radius and is served now. Not read: the advisor, client and account families D_03 and D_04 also wrote in this run (they read the same classifier); the portal page; whether the 23:00Z fire (0 partitions) already served any of this.",
+  "notes": "Found by reading the clock the r3 ledger is held on (C_06's first new compute). Leg A1's acceptance (rc 0, no IndexError, no BLOCKED) is met and is not the test of this act: the served values are. Same family as row S7 (the fallback serves model rows) seen from the other side: this library dropped the fallback, so tickers only bd-securities knew vanish."
+}
+```
