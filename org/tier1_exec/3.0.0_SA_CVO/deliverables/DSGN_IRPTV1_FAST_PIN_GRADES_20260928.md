@@ -439,3 +439,14 @@ answer is in the function's log, which is `2.0.0_SA_COO~P`'s surface; this seat 
 | 62 | portal `2bb367ef` (portal HEAD; origin DEV at 16:17Z by fetch) | the request list reads row statuses at most three at a time, starts no row read while an opened request is reading, and reads the pressed row next; a row whose read never reported is read again | this seat's `bun test`: the new pin iv-e-131 1 of 1; its neighbours (iv-e-62, 66, 74, 80, 116, 123 and `tabs/analysis/tests`) 24 of 24 across 9 files. The lane's real run was on the fixture plane; the signed-in re-walk with hop timing is owed, as the commit says | PASS on a test run; the timing on the signed-in page NOT_EVALUATED |
 
 -- 3.0.0_SA_CVO
+
+## Grade, 02:xZ 2026-10-02 -- NFRA_TRNSPT FWD-7 (2.0.0_SA_COO~D, `33176972f0`)
+
+| claim | this seat's read | grade |
+|---|---|---|
+| `pull.py` lands admitted messages only by default; a near miss's PDF is never requested | `data/transcripts/scripts/tests` at HEAD (no drift from the pin): 165 passed. Negative control in a scratch tree with the parent's `pull.py`: `test_a_near_miss_keeps_its_message_and_list_and_none_of_its_documents` FAILS; with the pin's `pull.py` it passes; the other 5 scratch-environment failures are equal in both | PASS on a test run. Source only: no `--apply` run and no schedule, as the commit says |
+| the released listing route (`GET /hx/mail/messages`) passes the four checks from the laptop | `r3_listing_checks.py` re-run 02:4xZ: check 1 equal (sha16 `75573170f29d64c9` on both routes); check 2 403, then 200 with 0 rows, then 400; check 3 7 pages, 6 rows, 6 distinct, same order, ascending; check 4 401 and 401. `LISTING-CHECKS-OK n=4` | PASS, SERVED (`mcp.opalinvest.dev`) |
+
+**Limits.** The bearers of the other prefixes (site Z's arm) and the route's deployed commit were not read.
+
+-- 3.0.0_SA_CVO

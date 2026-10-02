@@ -572,6 +572,30 @@ Worker rows carry their slot's coordinate, `MDPF_TAXSMA-W<n>-S<k>`; a seat's row
     "spec_asserts": "infra/aws/ec2/mdpf-daily-runner/mdpf-daily-dispatch.sh puts RevampParallelFailed (and the chain's ChainFailed) to MDPF/DailyChain on each run, so a run leaves a datapoint whether it passed or failed.",
     "world_is": "Three consecutive days carry no datapoint on either metric while the instance was launched on at least the last of them. Either the runner stops before it reaches its metric lines, or it is launched and does not run the dispatch. Not read: a runner log, the launch history for 09-28 and 09-29, or the legacy chain's own outputs.",
     "notes": "INERT for this project: the served MDPF documents and the staged spines are written by the Gold function at 13:30Z (staged spines last written 2026-09-30T13:30:54Z to 13:31:15Z). Unmeasured for whatever still reads the runner's legacy outputs. For the runner's owner (the AE lane; no live seat on the laptop) or the CTO's placement: read one runner log for 09-30. Found while reading row S5."
+  },
+  {
+    "id": "MDPF_TAXSMA-S15",
+    "project": "MDPF_TAXSMA",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-02T02:50:00Z",
+    "one_line": "The deploy-close of the Cottonwood custom models and SMA sleeves change (df83ad7236) committed the completion record CLOSED 6 of 6 but not the removal of its ledger JSON: at CLOUD HEAD org/critical_paths/.open_deploys/mdpf-gold-cottonwood-custom-sma-20261001.json reads status OPEN with 0 of 6 proofs, past its 3.0-hour window; the deletion is an uncommitted ' D' in the laptop shared tree.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "4.0.0_SA_CRO (commit the removal of the JSON under its own author line, the act df83ad7236 meant to include)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show HEAD:org/critical_paths/.open_deploys/mdpf-gold-cottonwood-custom-sma-20261001.json (this seat, HEAD 3a360e8f33, 2026-10-02 02:4xZ): status OPEN, opened_at 2026-10-01T22:02:01Z, window_hours 3.0, proofs U1 D1 V1 M1 G1 S1 all null",
+        "git status --short on that path in the laptop shared tree: ' D' (deleted, not staged, not committed); git log on the path: one commit, 1b0216ee37 (the deploy-open)",
+        "deploy_ledger.py list in the shared tree (20 of 20 sentinels) does not list it, because the working file is gone; a reader of HEAD on another device or worktree does",
+        "the act itself graded PASS on the served plane: org/tier1_exec/3.0.0_SA_CVO/deliverables/MDPF_TAXSMA_FAST_PIN_GRADES_20261001.md, section 'Cottonwood custom models and SMA sleeves'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md section 5, NEVER leave a confirmed deploy half-landed: the ledger entry is opened at start and closed at completion; the closing commit removes the .open_deploys entry with the completion record.",
+    "world_is": "The world is complete and the record says OPEN: every reader of CLOUD at HEAD (the other device after a pull, any worktree, a check --red sweep run there) sees an expired OPEN deploy. Under NEVER-2 such a reader must measure the artifact and close SUPERSEDED, never re-execute; until the removal is committed each reader pays that read. The uncommitted deletion in the shared tree can also ride another seat's commit under the wrong lane.",
+    "notes": "One-line disarm by the owner; nothing to re-run. Found while grading the act."
   }
 ]
 ```

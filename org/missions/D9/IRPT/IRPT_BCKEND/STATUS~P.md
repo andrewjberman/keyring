@@ -1,11 +1,13 @@
 # IRPT_BCKEND~P (Performance, shared auth/routes/IaC/packaging) -- status
 
-Seat `2.0.0_SA_COO~P` (CLAUDE). **Mode FAST** until 2026-10-01T19:45Z: lease `IRPT_BCKEND~P` re-armed 16:0xZ on `1.0.0_SA_CTO`
-RULINGS batch 95 item 2 (the nine paths plus `holdings-performance/locals.tf` and `schedule.tf`); lease `IRPT_DASHBD~P` until
-18:01Z (the producer directory). Andrew's word of ~04:2xZ:
-`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261001_042xZ_SELF_DRIVE_60M_LAPTOP_FABRIC_FINAL_SAY_CLOSER_DRIVE_IRPT_FIRST.md`.
-Loop: `/canonical-drive 10m` (LIVE_ARMS RELAUNCH row). IRPT_DASHBD workstream B stays FULL. As of 2026-10-01 ~16:1xZ. Earlier forms
-are in git (the 13:2xZ form @776d8975ea).
+Seat `2.0.0_SA_COO~P` (CLAUDE). **Relaunched 2026-10-02 ~01:5xZ** on `ANDREW_DIRECT_20261002_014xZ_BRING_EVERYONE_BACK_ONLINE_PER_REBOOT_RECORDS.md`.
+**Mode FULL**: both FAST leases lapsed (`drive-mode.py read` 01:5xZ: `IRPT_BCKEND` FULL, `IRPT_DASHBD` FULL); a re-arm cites a CTO
+ruling (batch 95 item 2 form). Loop: `/canonical-drive IRPT_BCKEND` 10m re-armed 01:5xZ from the LIVE_ARMS RELAUNCH row (stop:
+IRPT_BCKEND closed or Andrew's stand-down). The 16:1xZ form of this file is @b57885d3bb.
+
+**Since the brief:** `0.0.0_AB_MSTR` @a3866c3dfb put a DEPLOY-SERVE-HELD sentinel line on
+`data/assets/scripts/gold/irpt_holdings_performance/holdings_performance.py` (batch 102 item 2(c)) so the CLOUD push did not
+upload it. The serving packet's producer leg removes that line in its own commit carrying `SERVE-RELEASE-ACK: <reason>`.
 
 ## Standing Andrew words that govern this workstream (read first)
 
@@ -65,9 +67,11 @@ first fire), S258 (the holdings-performance root did not plan; fixed in source @
 
 IRPT_DASHBD workstream B (this seat issues): DB-b-1 complete; DB-b-3 measured with both criteria passing, its flip is
 `0.4.0_DS_ClientPlatform~S`'s now that the method contract 0.2.0 is landed (@9ff75db8f2); rows S10/S11 recommend against the 3.70
-percent tolerance (judgment for the round analysis). DB-b-2 worker `0.9.0_WK_IRPT_DASHBD~1` SPAWNED 16:1xZ in DIR
-`C:\Users\AndrewBerman\Desktop\wk-irpt-dashbd-1` (amendments 3 and 4 @25c6d2607d, @8ff819062e); DB-b-4 queues on the same slot.
-L10 slug to the CTO when all four are terminal.
+percent tolerance (judgment for the round analysis). DB-b-2 worker `0.9.0_WK_IRPT_DASHBD~1` first
+spawned 16:1xZ and stopped before its first write for the reboot; RE-SPAWNED 2026-10-02 ~01:5xZ in DIR
+`C:\Users\AndrewBerman\Desktop\wk-irpt-dashbd-1` (fast-forwarded to CLOUD @3eac28eae3; amendments 3 and 4 @25c6d2607d, @8ff819062e);
+DB-b-4 queues on the same slot. PRD v0.6 (@aabc054e89, rulings 22-25: no tie-out tolerance, agreement only on like day sets) changes
+no DB-b-2 or DB-b-4 criterion. L10 slug to the CTO when all four are terminal.
 
 ## Parked (owner; condition that un-parks it)
 

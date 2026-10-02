@@ -5,26 +5,27 @@ Seat `2.0.0_SA_COO~D` (CLAUDE), holding this round in place of the project's own
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md`; the round's content is
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_NFRA_TRNSPT_ROUND_2_20261001.md` section 2. Contract: PRD
 `org/missions/D9/NFRA/NFRA_TRNSPT/prd/NFRA_TRNSPT_PRD.md` v0.1 (ENDPOINT unchanged). Reviewer `3.0.0_SA_CVO` (grades each
-landed pin after the fact). **As of 2026-10-01T13:3xZ.** An Investor Reporting item that becomes ready INTERRUPTS this round
+landed pin after the fact). **As of 2026-10-02T02:2xZ.** An Investor Reporting item that becomes ready INTERRUPTS this round
 (batch 82 item 3); DSGN_REBRND's round 3 stays behind both (item 6).
 
 ## Pins
 
 | What | Value |
 |---|---|
-| Lease | FAST `NFRA_TRNSPT` until 2026-10-01T15:40:09Z, seat 2.0.0_SA_COO~D, surface `data/transcripts`, `org/missions/D9/NFRA/NFRA_TRNSPT`; armed by this seat 11:40Z (`org/mcp/drive-mode.log`) |
+| Lease | FAST `NFRA_TRNSPT`, seat 2.0.0_SA_COO~D, surface `data/transcripts`, `org/missions/D9/NFRA/NFRA_TRNSPT`; armed by this seat 11:40Z and 15:02Z (`org/mcp/drive-mode.log`), presence-extended (read FAST to 2026-10-02T02:24:11Z at 01:59Z) |
 | FULL -> FAST boundary | 17 of 17 task orders read `complete` at 11:25Z (rounds 1 and 2); no worker was running, nothing superseded, nothing new cut |
-| Code pin | workspace CLOUD `a6c1d22d46` (the unattended pull over the listing) on `e4b89bcfb4` (the wipe's limits inside the silver parquet) on `2b003f0b99` (the caller and the lander) on `bcadf2fd94` (row S14). LOCAL; the push is 0.0.0_AB_MSTR's |
+| Code pin | workspace CLOUD `33176972f0` (admitted-only landing; the listing checks) on `a6c1d22d46` (the unattended pull over the listing) on `e4b89bcfb4` (the wipe's limits inside the silver parquet) on `2b003f0b99` (the caller and the lander) on `bcadf2fd94` (row S14). LOCAL; the push is 0.0.0_AB_MSTR's |
 | Suite | `python -m pytest data/transcripts/scripts/tests -q`: 164 passed at a6c1d22d46; no tracked record modified after it. Deployed layout: `r2_bundle_import_check.py` BUNDLE-IMPORT-OK files=32. Transcripts: `r2_silver_census_check.py` SILVER-CENSUS bronze=30 silver=30 missing=0 empty=0 at 13:18Z (and `r2_suite_check.py` SUITE-GREEN passed=156 at e4b89bcfb4) |
 | The real run | `deliverables/2.0.0_SA_COO~D/R3_REAL_RUN_20261001.md`: one admitted message, route to silver, 12:2xZ-12:4xZ |
+| The positive arm | `deliverables/2.0.0_SA_COO~D/R3_APPLY_RUN_20261002.md`: `pull.py --gateway --days 7 --apply` at 02:07Z, 13 listed, 1 admitted, 4 bronze objects (hashes equal the sidecar's), silver 1 row NOT held out (0 residual flags) |
 | The route | `https://mcp.opalinvest.dev/hx/mail`, exercised from the laptop: 401 with no bearer, the bearer read by name under IAM user Andrew_Berman, three GETs answered 200 for a table sender's message |
 
 ## Live thread
 
-State: LIVE BY HAND for the communications workstream, for ONE message. A real admitted message went route -> recorded
-directory -> precision scan -> bronze (4 objects, byte for byte, the PDF's hash equal to the route's and to site Z's
-read) -> silver (1 row, held out) -> read back by a named reader. It is NOT live as FWD-7 asks: a seat fetched it by id;
-the ordinary daily run cannot enumerate mail without a listing route.
+State: LIVE BY A SEAT'S COMMAND over the listing. 2026-10-02T02:07Z: the ordinary pull, given no message id, listed a
+table sender's last 7 days through the released listing route, admitted one message by the project's criterion, and
+landed it route -> bronze (4 objects) -> silver (1 row, not held out) -> read back by a named reader. It is NOT live as
+FWD-7 asks: a seat started the run; the daily run with no person starting it needs the schedule (Next item 2).
 
 ## Landed this round
 
@@ -36,6 +37,8 @@ the ordinary daily run cannot enumerate mail without a listing route.
 | 4 | `af6b7dd60c` | THE ORDER for a headless listing route (CTO batch 85 items 7-8, msg 103743), relayed to site Z 12:52Z. ACCEPTED 13:00Z-13:05Z (0.0.0_AB_MSTR 103761, 103766): NFRA_OPLGTW PRD v1.4 @dabb8e1e9f (site-Z LOCAL), the asked parameters, rows and refusals, plus site Z's terms -- a window of at most 31 days, `page_size` default 25 and cap 50, each row's sender re-checked, the page token bound to its sender and window. Release slot 5 after MX-r-8 | site Z's word; nothing is released yet |
 | 5 | `e4b89bcfb4` | REVIEW Q2 / ROW W4-S8's REMEDY: the wipe's claim, what it does not claim and its three stated limits are in the silver parquet's own schema and column notes, from one text the gate record is pinned to. The served file for 2026-07-06 was rebuilt | suite 156 passed; read back from S3 at 13:17Z: table notes and four column notes present, 19 columns, the row unchanged (held_out true), 2 versions of the key |
 | 6 | `a6c1d22d46` | THE UNATTENDED PULL over the listing, built before the release: `pull.py --gateway [--days 7]` lists each table sender's window (spans of at most 31 days, paged), skips rows whose sidecar is in bronze, fetches and lands the rest; a refused sender is recorded by position, never by address; a gateway that refuses every listing is a refusal, not an empty day. A recorded directory's sidecar label reads `replay:hx-mail` | 40 tests in the two touched files, suite 164 passed; bundle import OK; commit-gate 4 of 4. NEGATIVE ARM on the real gateway at 13:28Z: `--gateway --days 7 --dry-run` -> `OUTLOOK-DRY-REFUSED ... (404 None)`, rc=3. (That commit's message says 13:5xZ; the clock read 13:28Z. The message is not rewritten; this line is the correction.) |
+| 7 | `33176972f0` | THE LISTING ROUTE'S FOUR CHECKS from the laptop (site Z's release, deployed_commit 0a1d9079c6, 1.0.0_SA_CTO 103880) and ADMITTED-ONLY landing: a near miss's PDF is never asked for and nothing of it is written (`--land-near-misses` restores the old behaviour) | `R3_CHECKS/r3_listing_checks.py` LISTING-CHECKS-OK n=4 at 16:09Z; suite 165 passed; bundle import OK; dry run 16:20Z 13 listed / 1 admitted / 12 near misses |
+| 8 | record `R3_APPLY_RUN_20261002.md` | THE POSITIVE ARM: one `pull.py --gateway --days 7 --apply` (02:07Z) and `silver.py --date 2026-10-01 --apply` (02:16Z) | read back from S3: 4 bronze objects, sidecar hashes equal the objects', `tool_versions` hx-mail; silver 1 row, 19 columns, 0 residual flags, `held_out` false. Held-out rate over real rows: 1 of 2 |
 
 ## Rows, as this seat reads them (the grading is 3.0.0_SA_CVO's)
 
@@ -51,22 +54,26 @@ the ordinary daily run cannot enumerate mail without a listing route.
 
 ## Write claims
 
-- None open at 13:3xZ.
+- OPEN 2026-10-02T03:2xZ (CTO batch 104, the mail pull's schedule): `infra/aws/terraform/transcripts/mail_pull.tf`,
+  `infra/aws/lambda/transcripts-pull/{mail_handler.py,build.sh}`, `data/transcripts/scripts/tests/test_mail_pull_handler.py`
+  on disk, uncommitted: safe-commit refused the three infra files (lane CLOUD_OPS_OR_ETL, 03:14:50Z); the exact-file
+  grant is asked of 1.0.0_SA_CTO (03:19Z). In-lane half committed @84a59c91e6. Packet
+  `deliverables/2.0.0_SA_COO~D/MAIL_PULL_SCHEDULE_PACKET_20261002.md` (COO half signed; CTO half owed).
 
 ## Next (in order)
 
-1. **The order's four checks on the released listing**, then `pull.py --gateway --apply` once by hand as the
-   positive arm. Waits on site Z's release (parked below).
-2. **The pull's schedule and its Lambda entry** -- the handler in `infra/aws/lambda/transcripts-pull` runs the
-   Teams pull only; the mail pull's own clock is a Terraform act under its own ledger and a principal that may
-   read the bearer. Outside this lease's surface: a CTO placement, after item 1.
+1. ~~The order's four checks, then `--apply` once by hand~~ DONE (items 7 and 8).
+2. **The pull's schedule** -- PLACED by 1.0.0_SA_CTO RULINGS batch 104 @bf7d5a5061: one daily clock (23:30 UTC) runs
+   pull then silver; its own function and writer role beside `pull.tf`; builder names; a targeted apply with the Teams
+   resources left DESIRED. BUILT (claims above): targeted plan 9 to add / 0 / 0. Next: the grant, the infra commit,
+   the CTO half, then the protocol in the packet's section 4 (ledger, safe-apply, read-back, one ad hoc QA invoke).
+   FWD-7's DONE WHEN is the first scheduled fire that lands a real admitted email.
 3. The transcripts thread trace re-run (FWD-1). The census (13:18Z) and the suite are in the pins.
 
 ## Parked (one line each, owner + the condition that un-parks it)
 
-- **The listing route's RELEASE**: owner site Z's 2.0.0_SA_COO~O (slot 5 after MX-r-8); it sends the release's
-  deployed commit by relay. Un-parks the order's four checks, then FWD-7's DONE WHEN (the ordinary daily run, no
-  person starting it) -- which also needs the pull's schedule, a later act under its own ledger.
+- ~~The listing route's RELEASE~~ released by site Z 15:34:29Z (deployed_commit 0a1d9079c6); checked 4 of 4 (item 7).
+  FWD-7's DONE WHEN (the ordinary daily run, no person starting it) still needs the schedule (Next item 2).
 - **The 14 flagged words of the first real row**: allowlist vocabulary or names? Owner: a named reader (Andrew), or
   1.0.0_SA_CTO to say whether this seat, which runs as a named reader, may list them to itself. Until then the row
   stays held out, which is the safe side. This seat counted them by shape and did not print them.
