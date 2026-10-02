@@ -539,6 +539,27 @@ evidence for FWD-11.
    "round": "v22"
   },
   "closed": false
+ },
+ {
+  "id": "DSGN_AMGTV1-Z-S14",
+  "project": "DSGN_AMGTV1",
+  "fabric": "site-z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "mechanism": "AV-z-1's page lead-in 'Contact enrichment was skipped for this company' is followed by RESAPP B2's served plain reason, which opens with the same words, so the VLO Exec face prints the fact twice.",
+  "evidence": [
+   "investigations/INVESTIGATION_v1.md#DSGN_AMGTV1-Z-S14",
+   "tmp/ui-walk/20261002T084927Z/shots/067-VLO-US-Exec-Management.png (read by 3.0.0_SA_CVO~Z)"
+  ],
+  "remedy": "OPEN: print the served plain reason alone when one is served, the lead-in only when none is.",
+  "owner": "2.0.0_SA_COO~D",
+  "round": "v23",
+  "remediation": {
+   "state": "OPEN",
+   "owner": "2.0.0_SA_COO~D",
+   "round": "v23"
+  },
+  "closed": false
  }
 ]
 ```
