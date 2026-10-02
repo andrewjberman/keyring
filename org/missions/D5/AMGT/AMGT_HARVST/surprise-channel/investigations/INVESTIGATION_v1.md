@@ -6652,6 +6652,47 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "spec_asserts": "Each round keeps the HARVST research suites green.",
       "world_is": "Green: 0 failed across lib/research/harvest.",
       "notes": "No round-39 cell needed; folded into decomposition section 52."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W91-S20",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~91",
+      "surfaced_at": "2026-10-02T21:05Z",
+      "one_line": "HVST-al-1 job status listing_empty_200 reaches the run record's job row only if worker.py maps it; worker.py is outside the order's paths, so the built status stops at the client attribute publishers.Publisher.job_status.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "spec_asserts": "TO HVST-al-1 build item 3: a job whose page-1 listing is an empty 200 records the event and that job's status is listing_empty_200, not no_new_articles.",
+      "world_is": "The job status is assigned in lib/opal_data_harvest/worker.py (result['status'] = ... 'no_new_articles' near line 655, and SUCCESSFUL_JOB_STATUSES at line 46), which the order's <paths> do not grant. The listing loop in publishers.py now records the listing_empty_200 event (publisher, query, page) and sets Publisher.job_status = 'listing_empty_200'; nothing in worker.py reads it, so a live job over a soft-blocked page still reads no_new_articles in its job row until worker.py folds job_status in (and decides whether the status joins SUCCESSFUL_JOB_STATUSES for reach). backfill_driver.STOP_STATUSES is unchanged.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/publishers.py (Publisher.dow_jones, DowJones.discover) on branch wk-AMGT_HARVST-91-r39a",
+          "lib/opal_data_harvest/worker.py:46,655 at fccd14a587"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W91-S21",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~91",
+      "surfaced_at": "2026-10-02T21:05Z",
+      "one_line": "The sparse cone lacks integrations/bloomberg, so 2 of 334 lib/research/harvest tests fail in this worktree at base and after (test_m1_move and test_m2_move test_import_identity_no_bare_vs_qualified_split: FileNotFoundError), against the order's 334 passed at the cut.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "TO HVST-al-1 build item 5: the research suite reads 334 passed.",
+      "world_is": "In worktree wk-hvst-r39-91 (sparse cone) python -m pytest lib/research/harvest -q reads 332 passed, 2 failed at base (before any edit) and 332 passed, 2 failed after; both failures open integrations/bloom... which the cone does not check out. The same suite is green at the full tree (Z-S81 @949b24cadb). Not caused by this cell; opal_data_harvest read 597 passed 3 skipped before and 610 passed 3 skipped after (+13 plants).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "python -m pytest lib/research/harvest -q in wk-hvst-r39-91: 2 failed, 332 passed, before and after",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/suite_research_harvest_after.txt"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
     }
   ]
 ```
