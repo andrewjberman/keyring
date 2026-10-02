@@ -2553,6 +2553,10 @@ paths:
     lane: MDPF_SECCLASS_FAST_M_BD_MIX
     note: "Black Diamond forward fix, exact file; POD4 members kept plus COO~M; CTO grantor batch 135 (2026-10-02)."
 
+  "data/black_diamond/scripts/gold/lib/etf_classifier.py":
+    lane: MDPF_SECCLASS_FAST_M_BD_MIX
+    note: "Blank-ticker identity resolution (batch 144), exact file, ADDITIVE: C_06, D_03 and D_04 call it explicitly; E_25 and the silver build_bd_assets_dim read exactly as today; CTO grantor batch 150 (2026-10-02)."
+
   "infra/aws/terraform/cot-pipeline/iam.tf":
     lane: IRPT_BCKEND_FAST_M_COT_IAM
     note: "IRPT_BCKEND~M FAST lease, exact file, ONE statement; CTO grantor batch 87 (2026-10-01)."
