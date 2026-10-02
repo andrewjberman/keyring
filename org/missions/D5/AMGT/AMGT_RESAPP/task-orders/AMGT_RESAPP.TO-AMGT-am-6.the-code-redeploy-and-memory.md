@@ -108,3 +108,15 @@ Act (B): cold BA 2026-09-08 averaged 12.8 s at 1769, 12.1 s at 3538 and 11.5 s a
 memory, and memory was restored to 10240. CTO ruling `4d0f049203` (msg 28685): c1 is recorded NOT MET for round 63 and the 5 s bound is
 kept. ONE memory-only act 10240 -> 1769 is signed, with condition 3 re-read at 1769 (GO sent ~19:2xZ). The cold-read cut is a round-64
 cell. Leg 3 (am-3 AMENDMENT 2, R1 + R2) is owed under its own pair.
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-02 ~20:2xZ):** CLOSED: three legs plus the memory act. AC1 is recorded NOT MET per the CTO ruling `4d0f049203`.
+- **Leg 1:** `JVMY1ZDA`, c3/c4/c5 YES.
+- **Leg 2:** `wIpMasw`, headlines from gold. c1 ran 11.5-12.8 s cold against the 5 s bound; NOT MET, and the bound is kept.
+- **Memory act:** 10240 -> 1769, condition 3 clean (AE~A `c80ace9ee3`).
+- **Leg 3:** AE~A `a8637f3501`, CodeSha256 `31UL+7/shJz1oKH1fc/5lb3vGLqlIDk+HgjLoGxe05w=`, 1769 MB. Re-read by the issuer on deployed:
+  - c7 YES: 0 false of 94, 94 correct.
+  - c8 YES: 92 served, 2 null with a reason.
+  - c2, c3, c4, c5 YES.
+- **Carried to round 64:** the cold-read cut (c1 against 5 s), row Z-S339, and the as_of tie.
+
+<status>complete</status>
