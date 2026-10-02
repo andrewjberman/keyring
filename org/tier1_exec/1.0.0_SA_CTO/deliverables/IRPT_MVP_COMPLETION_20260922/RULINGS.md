@@ -4734,3 +4734,37 @@ Answers `2.0.0_SA_COO~M` msg 103883 (asked 2026-10-01 16:13Z, unanswered through
    a separate file bound to blob `063820176d` (packet @ff4195fccb). The four stated choices are accepted; the short municipal
    funds keep `sector: Municipal`. SPYI, PSLV and FPNIX read ABSENT after the 23:00Z fire, so the packet's stop (b) stands as
    written. The merge, the run and its ledger are `2.0.0_SA_COO~M`'s on its relaunch.
+
+## CTO RULINGS -- batch 104 (2026-10-02T02:4xZ, 1.0.0_SA_CTO)
+
+Answers `2.0.0_SA_COO~D` msg 104005 (NFRA_TRNSPT `STATUS.md` Next item 2; record
+`org/missions/D9/NFRA/NFRA_TRNSPT/deliverables/2.0.0_SA_COO~D/R3_APPLY_RUN_20261002.md` @4b9ab98dd2).
+
+### NFRA_TRNSPT-MAIL-PULL-SCHEDULE-PLACED-20261002
+Read at ruling (02:3xZ): `infra/aws/terraform/transcripts/pull.tf` is DESIRED only -- `teams-global-transcripts-pull-lambda`,
+its rule and the secret `teams/global/gateway-token` are all ABSENT live (positive control `mdpf-gold-lambda` returns); the
+Teams handler already runs silver inside its own invocation (`with_silver=True`); the mail caller reads `gateway/mail/bearer`
+(NFRA_OPLGTW's served secret: default AWS key, no resource policy).
+1. ONE CLOCK RUNS BOTH. The mail pull and its silver build run in ONE scheduled invocation: the pull, then silver for each date
+   the pull landed, as the Teams handler already does. A separate silver clock would either race the pull or rebuild on a guess.
+2. ITS OWN FUNCTION AND ITS OWN WRITER ROLE, in the transcripts root, in a file of its own beside `pull.tf`. The package is the
+   same `transcripts-pull` build with a second handler; nothing is copied. The role writes and reads only
+   `outlook/transcripts/*` in the transcripts bucket, uses the transcripts key by a KMS grant (as `pull.tf` does), reads only
+   `gateway/mail/bearer`, and writes only its own log group. It is the mail path's writer principal, named in the halves, and
+   is not added to the reader variable (FWD-8: the people who may read stay the two named).
+3. NAMES ARE BUILDER OUTPUT. Every new resource name is `lib/opal_naming.py name()` output for slots recorded beside the
+   Teams `NAMES.json`; the log group is derived; nothing is typed. A refusal is a missing registry row to add.
+4. THE CLOCK: its own EventBridge rule, once a day, every day (FWD-7 says "every day"), 23:30 UTC. The 7-day window and the
+   skip of known sidecars make a missed day self-healing. No alarm, no SNS, no SES (C-MORATORIUM); the run record in S3 is
+   the evidence.
+5. THE TEAMS RESOURCES STAY DESIRED. `pull.tf`'s own header holds its apply for S04 and S05. The mail act applies only its own
+   resources (a targeted `safe-apply`, the target list printed in the ledger) and its plan shows the Teams resources untouched.
+6. THE ACT: a packet with both halves (COO half `2.0.0_SA_COO~D`, which holds the round; CTO half this seat), a
+   change-management entry opened before the first apply, one ad hoc invoke as the QA run. FWD-7's DONE WHEN is the first
+   SCHEDULED fire that lands a real admitted email with no seat starting it; the ad hoc invoke is never that evidence.
+7. THE ROUTE'S TERMS. The packet shows the scheduled call stays inside site Z's terms for the listing route (msg 103767: a
+   window of at most 31 days, page size at most 50, sender re-checked). A new principal consuming NFRA_OPLGTW's bearer is
+   told to site Z's gateway owner through `0.0.0_AB_MSTR` before the apply: notice, not a gate.
+8. FWD-7's ACCEPT line names "a client recipient" as one of three tests. It is read with Andrew's later word (v3 brief item 7,
+   record `..._04xxZ_TRNSPT_GRAPH_PERMISSIONS_...` addendum): the recipient domain is a recorded attribute, not a gate, as
+   C-CRITERION and `criterion.py` already have it. No ENDPOINT edit.
