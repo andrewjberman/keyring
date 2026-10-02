@@ -57,4 +57,15 @@ whitelist:
     supersedes: "VEW-1's not_covered note for Kimi"
     not_covered: "the vision-API fallback and every other vendor (they still need his word)"
 
+  - id: VEW-4
+    vendor: Ocilar
+    what: "hCaptcha Solver API: POST https://api.ocilar.com/api/v1/solve/hcaptcha, header X-API-Key; key in Secrets ocilar/credentials (api_key)"
+    scope: "the hCaptcha solver for AMGT_HARVST's publisher sign-ins (his words: 'a new solver', in the hCaptcha context of the ft sign-in). Standing in that role until he names another solver. Not a general-purpose vendor"
+    granted: "bETTER IDEA, LETS USE A NEW SOLVER: [the Ocilar hCaptcha guide] . API KEY - [redacted]"
+    record: org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261002_133xZ_USE_OCILAR_HCAPTCHA_SOLVER.md@9bc0e127be
+    since: 2026-10-02T13:3xZ
+    landed_by: 1.0.0_SA_CTO~Z
+    spend: "PAYG, $0.16 per 1,000 hCaptcha solves (his pasted guide); spend beyond that rate is not covered"
+    not_covered: "any non-hCaptcha use; any project other than AMGT_HARVST's sign-ins; printing or committing the key (rotation is his call)"
+
 struck: []
