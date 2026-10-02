@@ -84,3 +84,5 @@ freezes and the pair is signed.
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+<status>pending</status>
+<status>complete</status>
