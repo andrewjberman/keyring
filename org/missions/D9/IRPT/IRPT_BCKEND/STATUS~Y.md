@@ -6,7 +6,7 @@ Mode FAST: lease `IRPT_BCKEND~Y` re-armed 04:33Z until 08:33Z after the withdraw
 terms, under Andrew-direct 2026-10-01 ~04:2xZ).
 Loop `/canonical-drive IRPT_BCKEND` 10m (LIVE_ARMS RELAUNCH row). Way forward: CTO rulings batches 61, 62, 65, 70, 72,
 76, 83, 88, 89, 93, 97, 98, 100 and 105 in `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md`.
-Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-02T06:0xZ.
+Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-02T06:1xZ.
 
 ## Pins
 
@@ -52,9 +52,11 @@ made (CTO half item 1).
    that keeps the deliberate `_final` re-reads, as a new irpt-status packet).
 4. E5 (row S230 at its next natural failure; no session is displaced on purpose).
 5. **The catalogue is SERVED** (above). `2.0.0_SA_COO~D` wires the composer (interface sent 06:05Z).
-   Next on batch 61's list: **hop 3, the resolve concurrency fix.** Batch 72 item 12's remedy (the upload's ticker
-   lookup without the session) shipped in st7 and runs on st10; what is owed is the trace's proof, two uploads 10 s
-   apart both NORMALIZED, as a window under Andrew's standing word for Analysis attempts with both halves (no job).
+   Next on batch 61's list: **hop 3, the resolve concurrency fix.** Batch 72 item 12's remedy (the lookup without the
+   session) shipped in st7 and runs on st10. Its proof window `IRPT_MVP_Y/HOP3_PROOF/WINDOW_PACKET_HOP3_PROOF_20261002.md`
+   (blob `3b3d4bc0c3`, @b1ec906a9d): leg A one Overview job, leg B one upload with no submission fired only while A's
+   job is live (the S206/S215 condition); A is also the first live read of st10's items 15 and 16. COO half signed;
+   CTO half asked 06:15Z. Ledger `irpt-hop3-proof-20261002` OPEN, nothing fired.
 6. Batch 61's order after that: one job per remaining arm (Target Weight, 49 Financial, Inflection), each under a window
    packet; the resolve concurrency fix; the vendor PDF link; the Analysis export; the email lane. E6's memo follows E7's
    apply (CTO batch 111). A client-scoped history route is an enrichment item at the next round analysis (CTO batch 110 item 4).
