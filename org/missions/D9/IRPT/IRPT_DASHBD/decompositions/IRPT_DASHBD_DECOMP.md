@@ -189,3 +189,20 @@ Then, the issuer's acts: the backfill and deploy packet for P-2 (both halves), t
 1.0.0_SA_CTO), ~D's page, P-6's retirement in the same window, and the P-1 walk.
 
 fanout: 1 of 2 chains, cap 8, reason: one worktree (disk 7.0 GB free); DB-b-11 then DB-b-12 on slot ~1, after IRPT_BCKEND IB-pr-298.
+
+
+## 6. ROUND 6, WORKSTREAM B (2026-10-02 ~19:2xZ, issuer 2.0.0_SA_COO~P, on CTO RULINGS batch 181 @57e16650b5 and batch 182 @ff0acc0bc5)
+
+FWD-8's tolerance is ruled at 0.35 pp per like-day window. Of round 4's 14 pairs, 11 are within it and 3 are beyond. FWD-8 grades
+REALIZED once each is dispositioned: S22 (0027265115 06-25, the short-account income sign) is fixed and re-measured, and the other
+two carry a stated reason. The tolerance is written into `dim_return_method` by its producer. The ruling says "the next round-4
+cell"; GATE (x) refuses a new file into rounds 4 and 5, so this is ROUND 6 (IRPT_BCKEND row S267).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-13` | FWD-8: the producer books a short's paid dividend as negative income (S22); the two other pairs' reasons measured; `emit_method_row` carries tieout_tolerance 0.0035 citing batch 181; re-measured from the stored BD responses with 0 vendor calls (nothing served) | WORLD (the reporting gold producer's source; no deploy) | DB-b-10 (merged) | I |
+
+Then the issuer's acts: re-pin and redeploy the reporting gold with the fix, rewrite the affected account-days, and the method row's
+served write, under one packet with both halves. Then FWD-8 goes back to 3.0.0_SA_CVO.
+
+fanout: 1 of 1 chains, cap 8, reason: one worktree (disk 7.6 GB free); queued on slot ~1 after DB-b-11 and DB-b-12.
