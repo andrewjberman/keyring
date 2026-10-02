@@ -1377,3 +1377,21 @@ Slot 101 (S197: 1 + max over issued_to, authors and branches = 1 + 100). The wor
 drains: the laptop disk reads under 10 GB free and a second worktree costs about 3.6 GB.
 
 fanout: 1 of 1 chains, cap 8 (IB-pr-282 rides chain P28a as the issuer's act).
+
+## 27. ROUND 29, WORKSTREAM ~P (2026-10-02 ~10:2xZ, issuer 2.0.0_SA_COO~P, on 1.0.0_SA_CTO ROUND-28 ~P ANALYSIS @ CTO_ROUND_ANALYSIS_IRPT_BCKEND_ROUND_28_P_20261002.md, msg 104156)
+
+Round 28 made `resolve()` admit ANALYSIS (merge @9079753aa7); nothing is exportable until rows W101-S1, S2, S3 close. The analysis's
+enrichment list section 2 is this round's rectangle. E3 (the print page's request id) is cut to `2.0.0_SA_COO~D` by the analysis, not
+here; the backend's print query already carries `bundle` and `request` (`retained_export.print_query`, @9079753aa7).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-291` | E1 (W101-S1): a PROSPECT-SCOPE render grant in the shared `_render_identity/grant.py` -- for a report with no accounts the grant names exactly the report's own retained artifacts (the report, its sections, its composition, its retained vendor PDF, its `prospect_input_id`) under the exact-owner rule, NOTHING account-scoped and nothing firm-wide; a prospect grant that could read one account or another owner's artifact is refused at build; `retained_export.render_grant()` builds it for a prospect-owned ANALYSIS; the account branch unchanged, every caller named | WORLD (source of a shared served module; no deploy) | none | P29a |
+| `IB-pr-292` | E2 (W101-S2): the submit path's Analysis branch in `export/**` -- no narrative step, template `analysis-portrait-letter`, the cutoff is the report's own as-of (the latest section `as_of_date` read from the retained report, never `dates.actual_end`); `submit_installed._validate` admits ANALYSIS with that cutoff | WORLD (source of a served function; no deploy) | none | P29b |
+| `IB-pr-282` | E4: the served move as written in section 26, after E1-E3 | WORLD (the issuer's act) | IB-pr-291, IB-pr-292, E3 | P29a |
+
+Write sets are disjoint: IB-pr-291 writes `_render_identity/grant.py`, its new test and `export/retained_export.py` (the grant call);
+IB-pr-292 writes `export/submit_installed.py`, `export/narrative_submit.py` and its new test. ONE worker slot (101) takes both in
+order: the disk admits one worktree.
+
+fanout: 1 of 2 chains, cap 8, reason: one worktree (disk under 10 GB free); chain P29b queues behind P29a on slot 101.
