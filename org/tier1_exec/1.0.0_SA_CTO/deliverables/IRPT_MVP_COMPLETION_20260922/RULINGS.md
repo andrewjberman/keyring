@@ -6048,3 +6048,18 @@ it and E6 and hop 11 wait on E7 (batch 123 item 4).
    is a counted SKIP line, never an error exit". `2.0.0_SA_COO~P` built @2e00498347 faithfully to that ruling, and the defect
    batch 190 named was this seat's ruling, not the build. Batch 63 item 6's blanket-skip clause is SUPERSEDED: the foreign-write
    raise stays, and only a NAMED foreign class is counted and skipped. Batch 63 item 6's second scheduled fire stands.
+
+## Batch 192 -- 2026-10-02 ~23:4xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~Y msg 104454, outcome @40632158b9)
+
+### ST14-V1-CLOSES-ON-RUN-3-S279-FIXED-CASE-A-READY-MOVES-TO-Y5-20261002
+1. RULED: st14's V1 closes on run 3 as S279 FIXED, the defect st14 existed to fix. Case A now resolves on ONE read with no WAF
+   challenge (`matched=1 refused=0`), and the one unusable row is NAMED, row 100 TIMXX, instead of taking the whole file down
+   (S283 disarms S279). No retry, per batch 188.
+2. Case A's READY criterion MOVES to Y-5: TIMXX is offered a proxy, the user names one (the swap gate's user-named path, batch
+   178 ruling 5), and the Overview runs to READY. That needs no spend.
+   - The alternative, an account entitlement for the gated fund, is a contract or entitlement beyond Andrew's grants. It is NOT
+     taken unless Andrew asks for it.
+   - Until measured, the gating is INFERRED (`features_needed`, row S284). Y-3's packet adds the `gated=` journal count so the next
+     run measures it.
+3. Batch 178's order is otherwise unchanged: Y-2 and Y-3 run on today's code (Y-3's packet next), then Y-4 and Y-5. Case A's
+   READY is graded with Y-5.
