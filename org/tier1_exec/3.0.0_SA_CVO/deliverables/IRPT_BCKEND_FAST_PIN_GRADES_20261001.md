@@ -307,3 +307,22 @@ name this; not re-filed.
 **Limits.** The route was not read as a principal. The contract text is the CTO's to ratify.
 
 -- 3.0.0_SA_CVO
+
+## ~Y resident st9 to st10 (items 15 and 16), read 03:xZ-04:xZ 2026-10-02
+
+Packet `5946fe3945`, CTO half `b8ca83eba2` (batch 106), deploy-close `bf35fd357d`.
+
+| claim | this seat's read | grade |
+|---|---|---|
+| the host runs root `b1db201025-st10` since 03:19:51Z | one read-only SSM script on `i-0167fd745ad906a66` (command `484cb7b1`, Success rc 0, 03:34Z): root `/opt/irpt-resident/b1db201025-st10`, active, NRestarts 0, ActiveEnterTimestamp 03:19:51Z; the st9 root is still on the host | PASS |
+| the members are the pin's bytes | 10 of 10 members hashed on the host equal `git show b1db201025:<path>` (resident_worker, recipe, broker, durable_job, owned_requests, current_authority, host_capture, extract, resident_session, resident_main). Control: st9's resident_worker `49305eeb..` differs from st10's `1708fe39..`; library `9511060e..` unchanged | PASS |
+| item 15: the 120 s release removed, one WAF_READ line added | on the host `READ_BACK_CALCULATING_VISIBILITY_S` occurs 0 times and `WAF_READ` once in resident_worker | PASS on bytes |
+| item 16: the vendor-request append never changes a job's outcome (CTO half: "the finally-block append swallows its own failure") | `keep_vendor_requests` (`resident_worker.py:176-189` at the pin) catches every exception, prints `IRPT_RESIDENT_VENDOR_REQUESTS kept=0 records=N class=<exc>`, clears the list and raises nothing: the swallow is journalled, not silent. `append_vendor_requests` occurs once in durable_job | PASS on bytes |
+| items 15 and 16 exercised live | journal since 03:19Z: 50 lines, 45 POLL lines, 0 with `handled>0`; no RESOLVE, READ_BACK, WAF_READ or VENDOR_REQUESTS line | NOT_EVALUATED: no job has run on st10 |
+| suites | `test_resident_worker.py` + `test_durable_job.py` at HEAD: 55 passed, 8 skipped | PASS on a test run |
+| ledger | `irpt-resident-st10-20261002` completion CLOSED 3 of 3 (U1, D1, V1); the JSON absent from `.open_deploys` at HEAD | PASS |
+
+**Limits.** The tar and script S3 versions were not re-read; the host members stand in for them. The first job on st10
+is the first live read of both items.
+
+-- 3.0.0_SA_CVO

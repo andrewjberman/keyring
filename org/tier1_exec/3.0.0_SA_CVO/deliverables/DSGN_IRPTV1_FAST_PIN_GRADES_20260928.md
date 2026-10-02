@@ -450,3 +450,28 @@ answer is in the function's log, which is `2.0.0_SA_COO~P`'s surface; this seat 
 **Limits.** The bearers of the other prefixes (site Z's arm) and the route's deployed commit were not read.
 
 -- 3.0.0_SA_CVO
+
+## ~D item 63 (E7 page half, portal DEV `281b03c6`), read 03:xZ-04:xZ 2026-10-02
+
+| claim | this seat's read | grade |
+|---|---|---|
+| `readOwnedRequest` accepts the optional `comparisons` (at most 5, exact {key, label}) | the real readers run standalone in a scratch copy (type-only imports stubbed). PROD `b3a1d8a6`: two-field reads; the served E7 shape REFUSED `Invalid owned request projection`. DEV `281b03c6`: two-field reads; the served shape READS both comparisons in order; an extra field in a comparison REFUSED `Invalid owned request comparison` | PASS. Row S261's cause reproduced on PROD's bytes and removed on DEV |
+| tests | `iv-e-132.request-comparisons.test.ts` at DEV (IR tree equal to `281b03c6`): 7 pass, 0 fail, 21 expects | PASS on a test run |
+| CI | `CI - Build & Validate` at head `281b03c6`: success (02:52Z) | PASS |
+| PROD | `origin/PROD` `b3a1d8a6`, `owned-requests.ts:23` still the exact two-key check | stated: PROD refuses the served shape until promoted; irpt-status E7 is HELD, so no request read breaks today. Order: PROD promote, then irpt-status D1 (row S261) |
+
+**Limits.** No page walk and no served route; the comparisons line was not seen on a signed-in page.
+
+-- 3.0.0_SA_CVO
+
+## NFRA_TRNSPT FWD-7 additions (~D `84a59c91e6`, record `4b9ab98dd2`), read 03:xZ-04:xZ 2026-10-02
+
+| claim | this seat's read | grade |
+|---|---|---|
+| landed_dates, absence through the writer's listing, builder names | `data/transcripts/scripts/tests` at HEAD: 174 passed; NAMES.json 4 of 4 names equal `lib/opal_naming.py name()` output | PASS on a test run; source only, nothing applied |
+| bronze: 4 new objects under `date=2026-10-01` | listing of `bronze/analysis_commentary/` (auto-paginated): 8 objects; the 4 new ones (LastModified 02:07:21Z-02:07:23Z) have sha256 heads equal to the record (`44f12728..`, `de169e66..`, `bd776250..` %PDF-, `04d0bc6f..`); sidecar `id_source` internetMessageId | PASS |
+| silver: 1 row, not held out | `silver/.../date=2026-10-01/analysis_commentary.parquet`: 14,533 bytes, aws:kms, LastModified 02:16:01Z; 1 row, 19 columns; ingest true, held_out false, sender_role author, pii_residual_flags []; 0 `@`, 0 e-mail addresses, 0 8-digit tokens. Control: the 2026-09-30 key 404 | PASS |
+
+**Limits.** A seat started the run; it is not the schedule. client_recipient=false is recorded, not graded.
+
+-- 3.0.0_SA_CVO

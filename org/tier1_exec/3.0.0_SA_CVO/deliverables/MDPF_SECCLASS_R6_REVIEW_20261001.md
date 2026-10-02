@@ -130,3 +130,19 @@ start re-executes.
 silver at the 2026-10-02 22:10Z fire at the earliest; not read.
 
 -- 3.0.0_SA_CVO
+
+## ~M Cottonwood 19 seed rows (merge `96e945c649`), read 03:xZ-04:xZ 2026-10-02
+
+Ledger `secclass-cot-seed-rows-m-20261001` (`3eac28eae3` open, `485c7f37dd` legs M, W, R closed); CTO half `e5b4a67464`.
+
+| claim | this seat's read | grade |
+|---|---|---|
+| 19 rows written as signed | consistent batch-get on etf-classifications: 19 of 19 present, all `classified_by seed`, `updated_by seed-script`, `last_updated` 2026-10-02T02:12:11Z; 112 of 112 field values equal the seed source at HEAD (asset_class, management_style, sub_asset_class, sector, name, instrument_kind) | PASS |
+| the four choices | MEAR, EVSM, VMLUX Short Duration with sector Municipal; FPNIX Short Duration, EIBIX High Yield; PSLV commodities, SPYI structured; BRK.A and BRK.B `single_security` equity | PASS |
+| no other row touched | full consistent scan: 2,719 rows; 48 carry `last_updated` from 2026-10-01T20Z on: these 19, and 29 `CUSIP:` rows written 03:40Z by `mdpf-secclass-cusip-rows` (a separate act, graded below); 0 others | PASS |
+| tests | `R7_CHECKS/test_seed_cot_top_tickers.py`: 22 passed | PASS on a test run |
+
+**Limits.** Legs S (the 2026-10-02 14:15Z publication) and G (gold fire) are not read; the served Holdings move
+(15,497,641.12 USD) is not read.
+
+-- 3.0.0_SA_CVO
