@@ -1143,3 +1143,31 @@ MX-r-8 also waits on the train (slot 4 after OG-rl-1; train R1).
 the MX-d-5 assertion retirement rides MX-d-6. Z-S57's channel resolver was issuer scratch and is fixed.
 Z-W21-S19 and Z-W19-S13 are NFRA_OPLGTW's. `platinum/advi` waits on Andrew's R20 word (G-W). FWD-6..FWD-10 enter no
 earlier than round 7.
+
+# ROUND 7 -- THE ENRICHMENT CUT (L5/L6, 2.0.0_SA_COO~MI, 2026-10-02)
+
+Source: `ROUND_ANALYSIS.round6.md` @361b186c92 (1.0.0_SA_CTO~O's L10 on round 6, msg 28126), section 5's enrichment
+list, cut in ONE issuance into this D9 tree: the CTO's msg 28146 lifted the hold and deferred the D6 move (section 6 superseded).
+
+| Cell | Source | What | Risk |
+|---|---|---|---|
+| `MX-s-17` | item 1(a) (Z-W24-S3) | disarm first: the realized and transactions documents' merge step repointed from `scripts/` to `code/silver/` (+ `code/silver/lib/`), the script bd-silver-merge runs; PHASE A diff + ANNOUNCE, PHASE B under never-widen halves; worker `0.9.0_WK_NFRA_MCPINDEX~24` | WORLD |
+| `MX-s-18` | item 1(b) (Z-W24-S4, S5) + issuer-found hazard | the BD runner's OWN sentinel check: a measured `has_data_rows=0` transactions sidecar completes the day, a 0-row snapshot withholds, `OK` only after a `head_object` read-back; `data/cot/` byte-unchanged; the gold runner deploy's `s3 sync --delete` to `code/bronze/` excludes `cot_bronze_ingest.py`; zip + `safe-apply`; worker ~24 after MX-s-17 | WORLD |
+| `MX-s-19` | item 1(c), criteria (iv)-(v) (Z-W24-S3, S8; Z-S69) | retire both documents' merge step (no-op version + trigger rule disabled, MX-s-16 pattern); census 4 of 4; acceptance on the scheduled runs of 2026-10-05 and 2026-10-06 (the first Mon/Tue empty window); worker ~24 after MX-s-18 | WORLD |
+| `MX-f-1` | item 2 (Z-S74) | READ: the gold chain's freshness skip path with its code line and one scheduled run's log; RULE: weekly trading-day basis for `bd_silver_allocations` and `bd_silver_unrealized` in `comp-freshness` + `lib/trading_calendar.py`, proven by offline fixtures (never `COMP_FRESHNESS_PIPELINE`); no change to whether the gate blocks; worker `0.9.0_WK_NFRA_MCPINDEX~25` | LOCAL |
+| `MX-m-2` | item 4 (FWD-4) | measure before build: Orion, Eclipse and SmartX served silver census (keys, newest partition, as-of, rows, catalog row; denominator per platform); worker `0.9.0_WK_NFRA_MCPINDEX~26` | LOCAL |
+| `MX-x-5` | item 5 (Z-W23-S2; packet 6.5; Z-S75) | the batch repair: the halt-gate scoping fixture off `.agent_context`; proof-of-spec-check WARNs on a re-committed instance still carrying PENDING rows; both aws shims export UTF-8; worker `0.9.0_WK_NFRA_MCPINDEX~27` (worker-light) | LOCAL |
+
+**Chains (fan-out 4 of 4 chains, cap 8):** [MX-s-17 -> MX-s-18 -> MX-s-19] ~24 (s-17 and s-19 write the same two
+documents; s-19 consumes s-18's live sentinel; the CTO sequenced the disarm first); [MX-f-1] ~25; [MX-m-2] ~26;
+[MX-x-5] ~27.
+
+**Not cells:**
+- Item 3, r6.J1 (Alyssa's cold run), is the one essential wait: graded at L9 by 3.0.0_SA_CVO~O against A5, booked
+  through 0.0.0_AB_MSTR~Z. It rides MX-v-7's J2.
+- Z-W21-S15's two MCPINDEX tests, ruled by the issuer: `test_mx_s15_dataset_registered` failed only in a sparse
+  worktree (the issuer's drain re-runs it in the full tree); `test_schwab_host_inputs.py` exists only on the gateway
+  release lineage, so it is carried to this project's next gateway release cut, with Z-W21-S12.
+- Z-W22-S1 and Z-W21-S12 are DEFERRED as ruled. Z-W21-S19, Z-W19-S13 and ETFS_RIVALS-W5-S3 are NFRA_OPLGTW's.
+  `platinum/advi` waits on G-W. FWD-6..FWD-10 enter after MX-m-2 measures.
+- No gateway release this round (analysis section 4).

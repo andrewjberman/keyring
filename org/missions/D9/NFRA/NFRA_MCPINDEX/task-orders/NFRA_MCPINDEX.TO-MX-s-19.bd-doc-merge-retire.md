@@ -1,0 +1,105 @@
+# NFRA_MCPINDEX task order -- `MX-s-19` -- retire the realized and transactions documents' merge step: one writer on all four Black Diamond silver tables
+
+<!-- ===================== WORKER FACE -- this is the WHOLE of the worker's context ===================== -->
+
+<decomp_ref>
+<decomp_doc>org/missions/D9/NFRA/NFRA_MCPINDEX/decompositions/NFRA_MCPINDEX_DECOMP.md</decomp_doc>
+<owned_cells>MX-s-19</owned_cells>
+</decomp_ref>
+<issued_to>0.9.0_WK_NFRA_MCPINDEX~24</issued_to>
+<issued_by>2.0.0_SA_COO~MI</issued_by>
+<placeholders>NONE</placeholders>
+<preflight>
+comp-schedule: RUN at PHASE A by the worker -- bd-realized-pipeline-trigger 21:45Z, bd-transaction-pipeline-trigger 21:53Z (weekdays); bd-silver-merge on bronze/<date>/_BRONZE_COMPLETE.json (~00:10Z); no act inside 21:30-22:15Z or 23:45-00:45Z.
+comp-iam: DECLARED-NOT-APPLICABLE -- no role or policy change; two trigger rules and two document versions.
+comp-adversary: DECLARED-NOT-APPLICABLE -- a writer retirement under never-widen halves (CTO + COO), sequenced after MX-s-18's sentinel fix is live.
+EGRESS CLASS, declared: NONE beyond Opal's own AWS.
+</preflight>
+
+## 1. THE CELL -- `MX-s-19` (round 7; `ROUND_ANALYSIS.round6.md` @361b186c92 section 3b rows Z-W24-S3 and Z-W24-S8, section 5 item 1(c) and criteria (iv)-(v))
+
+**The CTO's ruling:** retire both documents' merge step with the sentinel fix, so a writer census reads 1 writer per BD
+silver table, 4 of 4. Z-W24-S8's hold (the freshness-gate premise) is replaced: transactions retires on the sentinel
+fix. Acceptance is the next scheduled `bd-silver-merge` run after a Mon/Tue empty window, reading failures=0 with the
+partition landing the same evening.
+
+**Precondition (do not start PHASE B without it):** MX-s-18 is applied and its ledger closed. You will hold that
+order's report; quote its ledger close line in the ANNOUNCE.
+
+**How round 6 retired the other two tables (MX-s-16, the pattern to follow):** a no-op document version (the merge
+step removed, the download already gone) published with `aws ssm update-document`, set DEFAULT and read back; the
+trigger rule disabled through Terraform (`infra/aws/terraform/bd-pipeline/`) with a saved targeted plan and
+`safe-apply`. Nothing is deleted; documents and functions stay for rollback.
+
+**Measured at the round-7 base:**
+- Sentinel-less run dates in 09-03..10-02: 9, every Monday and Tuesday (09-07, 08, 09, 14, 15, 21, 22, 28, 29).
+- On a normal day, `bd-silver-merge` logs `Incremental Merge [transactions]` then
+  `SUMMARY: ... | failures=0 | ...` and writes `silver/transactions/*.parquet` between 00:00 and 03:00Z (10-01: 5 files;
+  10-02: 2 files).
+- The writer census (`s16.AC1.sh`, round 6) reads 2 of 4 tables with 1 writer (transactions, realized: 2 each).
+
+### PHASE A -- no publish, no apply
+1. Write both no-op document versions and cut the saved targeted plan disabling `bd-realized-pipeline-trigger` and
+   `bd-transaction-pipeline-trigger` (any destroy is a BLOCKING row).
+2. Write `ANNOUNCE_MX-s-19.md`: the plan, the expected served DELTA (0 on a normal day; on a Mon/Tue the partitions now
+   land from `bd-silver-merge` at ~00:10Z instead of the document at ~21:50Z), and the rollback per table (re-set the
+   prior document version DEFAULT and re-enable its rule; version numbers read). Report and STOP.
+
+### PHASE B -- only on the issuer's GO
+3. Open the NEVER-2 ledger `nfra-mcpindex-r7-bd-doc-retire`, naming BOTH the entry under
+   `org/critical_paths/change_management/` AND `org/critical_paths/.open_deploys/nfra-mcpindex-r7-bd-doc-retire.json`.
+4. Publish, apply, read back, run s19.AC1. Leave the ledger OPEN until the acceptance: s19.AC2 reads the scheduled runs
+   of 2026-10-05 and 2026-10-06. On 2 of 2 close it; on a failure roll back that table per the ANNOUNCE and report.
+
+## 2. BOUNDS
+
+1. One producer per table: no second schedule, no parallel path, no comparator. Served silver must not lose a
+   partition it has today.
+2. Nothing under `data/cot/`. No push. Never bare `terraform apply`; never `update-function-code`.
+3. REFUSE a criterion you cannot meet as written, and report it with its measurement.
+
+## 3. SURFACES
+
+<paths>
+infra/aws/ssm/opal-bd-transaction-download.json
+infra/aws/ssm/opal-bd-realized-download.json
+infra/aws/terraform/bd-pipeline/
+org/critical_paths/change_management/
+org/critical_paths/.open_deploys/nfra-mcpindex-r7-bd-doc-retire.json
+org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~24/**
+org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/INVESTIGATION_v1.md
+</paths>
+
+Rows go to `org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/INVESTIGATION_v1.md`:
+- id `NFRA_MCPINDEX-Z-W24-S<k>`; re-read the file for the next free k at commit time;
+- fabric `site-z`;
+- `disarm_owner` `2.0.0_SA_COO~MI`.
+
+## 4. PROOF OF SPEC (literal; run from your worktree root)
+
+<proof_of_spec>
+  <expected_criteria>AC1,AC2,AC3</expected_criteria>
+  <criterion id="AC1" cell_refs="MX-s-19" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round7/checks/s19.AC1.sh; echo "exit=$?"</invocation><expect>WRITER CENSUS: 4 of 4 BD silver tables have exactly 1 writer -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="MX-s-19" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round7/checks/s19.AC2.sh; echo "exit=$?"</invocation><expect>2026-10-05 and 2026-10-06 each: sentinel present, transactions SUMMARY failures=0, partitions written 00:00-03:00Z >=1; empty-window acceptance dates passing 2 of 2 -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC3" cell_refs="MX-s-19" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round7/checks/s19.AC3.sh; echo "exit=$?"</invocation><expect>entry files at HEAD>=1; sentinel at HEAD=no; listed OPEN/HELD=0; SCAN DENOMINATOR printed -- RESULT: PASS -- exit=0</expect></criterion>
+  <instance_path>org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~24/NFRA_MCPINDEX.TO-MX-s-19.bd-doc-merge-retire.proof_of_spec.json</instance_path>
+</proof_of_spec>
+
+## 5. WHEN YOU ARE DONE
+
+PHASE A ends at the ANNOUNCE: report and stop. After PHASE B's apply, report; the issuer re-grades AC2 on the
+acceptance dates. Write the proof instance when AC2 has read.
+
+<!-- ===================== RECORD FACE ===================== -->
+
+**ISSUER NOTES (2.0.0_SA_COO~MI).** Round-7 item 1(c), criteria (iv) and (v). AC2 is the CTO's named acceptance: the
+first empty-window run dates after the retirement are 2026-10-05 and 2026-10-06; the scheduled run is the
+discriminator (an ad-hoc runner invocation pulls from Black Diamond, a vendor call). Battery dry-run at base: s19.AC1
+FAIL as expected (2 of 4); s19.AC2 FAIL as expected (dates not yet run; the instrument's positive control on
+2026-10-01 + 10-02 reads 2 of 2 PASS, and the gap day 2026-09-29 reads sentinel ABSENT); s19.AC3 FAIL as expected.
+
+<status>issued</status>
+<round>7</round>
+<fabric>site-z</fabric>
+<risk>WORLD</risk>
+<worker_class>worker</worker_class>
