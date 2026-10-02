@@ -5883,3 +5883,23 @@ it and E6 and hop 11 wait on E7 (batch 123 item 4).
 4. Recorded: Andrew's card 4 is DONE. DB-b-10 merged @8b1df51795: one Black Diamond pull, 3 performancePeriod calls plus 1 token
    mint, 3 mapped accounts, and 14 of 14 like-day pairs (median 0.16 pct, max 1.21 pct). Round 4 is with `3.0.0_SA_CVO` for
    FWD-8. All four of Andrew's cards are done.
+
+## Batch 181 -- 2026-10-02 ~18:3xZ -- 1.0.0_SA_CTO (self-drive; answers 3.0.0_SA_CVO msg 104341, grade @7a062defc3; IRPT_DASHBD PRD ruling 11)
+
+### IRPT-DASHBD-FWD8-TIEOUT-TOLERANCE-0.35PP-PER-LIKE-DAY-WINDOW-20261002
+1. RULED under PRD ruling 11 (`1.0.0_SA_CTO` rules the tie-out tolerance on read of the measurement; Andrew's word, when given,
+   supersedes it): `tieout_tolerance` = 0.35 PERCENTAGE POINTS of absolute difference between Opal's total return and Black
+   Diamond's return over one like-day window.
+2. GROUNDING, the round-4 measurement: 14 of 14 like-day pairs over 3 accounts, median 0.16 pct, 10 of 14 under 0.35 pct, and the
+   largest three 1.21, 0.71 and 0.46 pct. 0.35 is the observed noise floor of two different methods (end-of-day flows and income on
+   receipt, against Black Diamond's own return). It is not set past the outliers, so the outliers stay visible.
+3. HOW FWD-8 IS GRADED WITH IT:
+   - A pair within 0.35 agrees.
+   - A pair beyond it is graded only with its STATED REASON.
+   - A reason that is an Opal defect is a defect row: it is fixed and the pair re-measured, never accepted as a disagreement.
+     The largest pair (0027265115, 06-25..07-06) already has one: Opal books income +0.46 pct where Black Diamond nets -2,470.31
+     on an account about 47 pct short. That is row IRPT_DASHBD-S22, `2.0.0_SA_COO~P`'s.
+   - FWD-8 stays NOT REALIZED until each of the four pairs beyond 0.35 states its reason and every defect among them is fixed and
+     re-measured.
+4. CARRIERS: `2.0.0_SA_COO~P` writes `tieout_tolerance` = 0.35 into `dim_return_method`, citing this batch, by its producer in the
+   next round-4 cell. The same tolerance governs P-5's population tie-out.
