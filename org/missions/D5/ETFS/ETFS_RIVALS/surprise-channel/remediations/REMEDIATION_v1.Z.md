@@ -135,11 +135,11 @@ Author: 3.0.0_SA_CVO~RV, 2026-10-01. Graduated at round 1's L9 (`adjudications/A
     "owner": "1.0.0_SA_CTO~Z",
     "round": "v1",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~Z",
       "round": "v1"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "ETFS_RIVALS-Z-W5-S14",
@@ -180,11 +180,11 @@ Author: 3.0.0_SA_CVO~RV, 2026-10-01. Graduated at round 1's L9 (`adjudications/A
     "owner": "1.0.0_SA_CTO~Z",
     "round": "v1",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~Z",
       "round": "v1"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```
