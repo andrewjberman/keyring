@@ -5986,6 +5986,94 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "spec_asserts": "FWD-11 limb 2a (CTO ruling 28245 / round-36 analysis): every non-void challenge passed. The bbg acceptance solves the press-and-hold in-tab (verification.solve).",
       "world_is": "One non-void bbg challenge in the live monitored window was not passed, and its job shows no solve attempt in its records. Whether the 403 took a path that never reaches solve() (a non-tab fetch keeps the base VerificationRequired behaviour) or solve ran and failed unrecorded is NOT established. The bbg driver is stopped (its own bot_check hard stop) and STOP_BBG is set so nothing restarts it.",
       "notes": "Disarm (issuer): bbg stays stopped until a repair cell establishes why this 403 was not solved and fixes it, with a capture of the next challenge regardless of the hourly cap. Put to the CTO (SERVED/WORLD, FWD-11). Not claimed: that the challenge was solvable."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W90-S13",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~90",
+      "surfaced_at": "2026-10-02T07:55Z",
+      "one_line": "HVST-aj-5: the order's premise that the bbg article 403 'reached no verification.solve()' does not hold in the code at CLOUD 4720f6975a -- a tab-transport bbg leg in the driver's per-name shape routes it into solve(); the missing record is a recording gap.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~90/aj5_path_finding.md: file:line chain backfill_driver.py:178 -> publishers.py:357,732 -> transport.py:292-303 -> verification.py:342,393-399",
+          "git show ed10da285e: committed 2026-10-02T03:14:41-04:00 (07:14:41Z), after the job's 06:57:54Z start; the run record and events hold no solve event because a failed solve emitted none (transport.py:308 recorded passes only)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Order aj-5 s1.1: establish why the 403 reached no solve().",
+      "world_is": "The driver spawns run --no-sign-in per name; bbg is transport tab (contracts.json); PacedSession.get routes a bot_check on a TabSession to route_bot_check -> solve(). A solve that did not pass raised ChallengeFailed with no event, its attempts row identical to an unrouted one's, and the ah-1 capture is control-bound and hour-capped; challenge_presented (aj-1, 07:14:41Z) postdates the 06:57:54Z job. Why the solve did not pass is NOT established by any record.",
+      "notes": "Worker row; aj-5 records every solve outcome (challenge_passed / challenge_failed), writes a failure bundle regardless of the cap, and retries once. The real cause of the unpassed solve waits for the next live challenge's bundle."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W90-S14",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~90",
+      "surfaced_at": "2026-10-02T07:55Z",
+      "one_line": "HVST-aj-5: request_kind labels a bbg ARTICLE fetch 'listing' because transport.request_kind matches the substring '/news' and every bbg article path is /news/articles/...",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/transport.py:153-161 request_kind; lib/opal_data_harvest/publishers.py:732 the article fetch by URL",
+          "test_aj5_bbg_failure_capture_retry.py::test_i_bbg_article_403_reaches_solve_and_records_presented_then_passed asserts the 'listing' label on an article URL"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Order aj-5 reads the run record's request_kind 'listing' as a listing request.",
+      "world_is": "transport.py:153-161 returns 'listing' for any path containing '/news', 'search', 'page=' or '/symbol'; the sitemap-path article GET (publishers.py:732) is /news/articles/<date>/<slug>, so it reads 'listing'. Not changed here (outside the cell); no consumer of request_kind was checked.",
+      "notes": "Worker row; label only, no behaviour depends on it in the code read."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W90-S15",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~90",
+      "surfaced_at": "2026-10-02T07:55Z",
+      "one_line": "HVST-aj-5: the one retry runs only after a solve that did NOT pass; a solve that passed whose re-sent request met the challenge again is bundled and recorded but not retried, to keep test_ae5_hookup's 'a second bot check after the solve ends the leg'.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/test_ae5_hookup.py:73-80 pins the ae-5 rule; first run of the suite with an ungated retry: 1 failed, 203 passed (-x)",
+          "test_aj5...::test_iii_a_solve_that_passed_but_met_the_challenge_again_is_not_retried pins the gated behaviour"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Order aj-5 s1.3-1.4: a failed solve writes a bundle; ONE retry 60-120 s after the failure.",
+      "world_is": "The order does not say whether 'failure' includes ChallengeFailed raised by route_bot_check's re-send after a passed solve. Retrying it too makes test_ae5_hookup.py::test_a_second_bot_check_after_the_solve_ends_the_leg fail (DID NOT RAISE), and that file is outside the order's paths. The retry is therefore gated on the solve outcome's passed flag (transport.py _solve_challenge). The issuer may widen it in a later cut together with that test.",
+      "notes": "Worker row; narrower than the order's wording, never wider."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W90-S16",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~90",
+      "surfaced_at": "2026-10-02T07:55Z",
+      "one_line": "HVST-aj-5: the order leaves open what 'in window' means for a run and for a challenge no run record holds; the grader defines both, retires INSUFFICIENT, and counts publisher challenges over in-window runs only.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/load_window_grade.py per_run / grade; AC2 aj-5 expected() applies the same four-way rule from the printed runs",
+          "superseded assertions named in the commit message: test_ah2 (6 tests), test_ai6 (3 tests), test_aj1 (1 test)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Order aj-5 s1.5: per-run entries with in_window; verdicts NOT_EVALUATED / MET-BY-ABSENCE / MET / NOT-MET.",
+      "world_is": "A run record is in window when its [started_at, finished_at] overlaps a monitor window (minute-floored); a challenge in no run record is its own run 'unattributed:<minute>', in window when its presentation or resolution minute is covered. Publisher challenge counters and window_pass_rate sum the in-window runs. Ten existing assertions moved: INSUFFICIENT -> NOT-MET (all-void run), challenge-only arms now need a windowed http event to leave NOT_EVALUATED, and an unmonitored-minute challenge no longer counts.",
+      "notes": "Worker row; AC2 against the real windows is the issuer's re-run at the base."
     }
   ]
 ```
