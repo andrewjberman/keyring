@@ -58,6 +58,26 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~A/A
 Report once: the MemorySize landed (3538 or 10240), the plan's resource count, each of the 3 runs' Duration and Init Duration, the
 control sha, and AC1's verdict. Name any row. The `<status>` flip is the issuer's.
 
+## 6. AMENDMENT 1 (issuer `2.0.0_SA_COO~Z`, 2026-10-02 ~11:3xZ) -- act (B): al-2's code-only redeploy (CTO ruling 5a @e041af6102)
+
+Act (A), the memory raise, is done: 10240 MB, proof `339b159ea0`. Act (B) redeploys `opal-amgt-scoped-api` at the commit the GO names,
+carrying al-2: the timeline day route's silver read runs under an 18 s deadline from handler start, and on the deadline the mentions
+are served with `headline` null and one plain `headline_reason`, as a 200. It runs under its OWN NEVER-2 entry and the never-widen pair:
+- `deliverables/2.0.0_SA_COO~Z/round62/NEVER_WIDEN_HALF_COO_AL1B.md`
+- `ledger/NEVER_WIDEN_ROUND62_AL1B_CTO_HALF.md`
+
+**The acts, in order:**
+1. `timeline_b.py --what pre`: if `round62/AL2_CONTROLS_PRE.json` still matches CodeSha256 `E+FAZF0f...`, it is the pre; otherwise re-run.
+2. Build and upload ONE artifact at the GO commit. STOP on any CHANGED/ADDED/REMOVED file other than `lib/research/api/scoped_amgt.py`.
+3. ONE code-only `safe-apply`; `memory_size` stays 10240. Any other attribute in the plan is a STOP.
+4. Grade act (B) by running both:
+   - `round62/checks/timeline_b.py --what post --pre <the pre>`: 3 of 3 concurrent cold BA invokes answer 200, and both control days
+     are byte-equal to the pre.
+   - `pytest lib/research/api/tests/test_timeline_silver_deadline.py`: the planted slow read.
+   Then close the entry.
+**FREEZE (ruling 5a):** act (B) is deployed AND graded by 12:30Z, or it waits until after Andrew's demo read. Nothing deploys to this
+function between 12:30Z and the end of the demo. Rollback: the prior artifact version through one code-only `safe-apply`.
+
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** CTO round-61 addendum ruling 5 (track A). There is no never-widen pair: ruling 5 names one for track B, not for A. A
