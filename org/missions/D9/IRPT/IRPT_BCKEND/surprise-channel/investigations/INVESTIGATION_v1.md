@@ -14530,3 +14530,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
  "notes": "Nothing is applied: the ledger's D1 leg waits on both halves and on this row. One exposure while the row stands: the artifact key's LATEST version is the E7 bundle, so an untargeted apply of the investor-reporting ops root by any seat would ship it; the prior applies of this root are targeted with a fresh plan. History items are unaffected (the history route serves no names). Remedy order: the parser first (accept the field, validate it), then the served apply, then the page shows the names."
 }
 ```
+
+## IRPT_BCKEND-S262 -- ten tracked irpt-holdings sources are deleted, uncommitted, in the laptop shared tree
+
+```json
+{
+  "id": "IRPT_BCKEND-S262",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-02T03:45:00Z",
+  "one_line": "Ten tracked irpt-holdings source files are deleted in the laptop shared tree and not committed (snapshot.py, entry.py, handler.py, publication.py, resolve.py, stage.py, errors.py, the two manifests and the contract schema); a path-wide add or a holdings test run in the shared tree would act on the deletion.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M (the irpt-holdings build of 2026-10-01 16:09Z, 9c25f4e86a, ran from this tree): restore the ten paths from HEAD in the shared tree, after confirming no build of that bundle is in flight",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git status --short -- infra/aws/lambda/investor-reporting/holdings/ (this seat, 2026-10-02 03:4xZ): 10 of 10 lines ' D' (deleted, unstaged): BUILD_MANIFEST.json, STAGE_MANIFEST.json, contracts/HoldingsSnapshot.schema.json, entry.py, errors.py, handler.py, publication.py, resolve.py, snapshot.py, stage.py; the same ten appear in the session-start status of this seat at 01:5xZ",
+      "live irpt-holdings CodeSha256 tS/APci3.. equals the source map's artifact and its 35 members equal their pins; snapshot.py at HEAD equals b26847ea04 (this seat's grade, IRPT_BCKEND_FAST_PIN_GRADES_20261001.md, sixth wave): the deployed function is not affected",
+      "2.0.0_SA_COO~Y 9ada3e8b02 describes the same builder removing tracked members it staged and restoring them by hand"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A build leaves the tracked sources it stages in place (CLAUDE.md rule 14a: commits name their paths; nothing else in the tree should carry a stray change).",
+  "world_is": "The shared tree has carried the deletion for about eleven hours. Any seat that stages broadly (an add of the directory, a commit -a, a merge that adds the working state) would delete the deployed function's source from CLOUD under its own lane, and a test of the holdings bundle run in the shared tree reads nothing.",
+  "notes": "Found while grading row S259's route. The same shape, one uncommitted ' D' left after an act, is row MDPF_TAXSMA-S15 for a ledger file. Disarm is one restore from HEAD; nothing is lost because HEAD holds the deployed bytes."
+}
+```
