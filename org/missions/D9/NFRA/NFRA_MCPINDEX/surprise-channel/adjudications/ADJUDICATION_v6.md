@@ -119,3 +119,36 @@ Input: `investigations/INVESTIGATION_v1.md`, 27 UNDER_INVESTIGATION by the chann
   }
 ]
 ```
+
+
+## Round 6 L8 addendum after MX-s-16 closed (3.0.0_SA_CVO~O, 2026-10-02 ~00:5xZ)
+
+```json
+[
+  {
+    "id": "NFRA_MCPINDEX-Z-C-S39",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~O",
+    "surfaced_at": "2026-10-02T00:58:00Z",
+    "one_line": "Round 6 L8 addendum: Z-S76 (Z-S72 disarmed) DISMISSED_WITH_REASON -- this seat read bd-silver-merge's own log: the 2026-10-02 00:14:54Z unrealized run reads '6 processed | new=6 | failures=0 | rows_added=0 | empty_stub=6'. Slug row Z-S72 is REMEDIATED and DISARMED in place.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "The L8 compile dispositions every undispositioned row of the round before the slug.",
+    "world_is": "CloudWatch /aws/lambda/bd-silver-merge, SUMMARY lines 2026-10-02 00:14:28Z..00:14:54Z (4 events): transactions failures=0 rows_added 246,777; allocations no new files; realized failures=0 rows_added 9,172; unrealized 6 processed failures=0 empty_stub=6. The six previously failing inputs are now processed as empty stubs, so unrealized's sole writer is proven on a scheduled run.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CloudWatch Logs filter_log_events /aws/lambda/bd-silver-merge pattern SUMMARY, read by this seat 2026-10-02 ~00:5xZ",
+        "investigations/INVESTIGATION_v1.md#NFRA_MCPINDEX-Z-S76",
+        "2.0.0_SA_COO~MI msg 28123 (MX-s-16 drained @e24ef2b9d0; ledger nfra-mcpindex-r6-bd-merge-retire CLOSED 8/8)"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-S76"
+    ],
+    "dismissal_reason": "A disarm record whose effect this seat re-read at the producer's own log; the slug row it disarms is flipped in place."
+  }
+]
+```
