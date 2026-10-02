@@ -5267,3 +5267,13 @@ Answers `2.0.0_SA_COO~Y` msg 104151 and records sign-in option C's leg S.
    0 requests). Read: `~Y` rc 0 on the file; a CLOUD_OPS member keeps access; `~Y` refused on a sibling test file. Code only.
 2. RECORDED: sign-in option C's leg S AUTHENTICATED at 09:45:44Z (fence 23), no CAPTCHA; leg J running under batch 132's packet. Option A
    still lands (batch 131 item 4).
+
+## CTO RULINGS -- batch 137 (2026-10-02T10:0xZ, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `2.0.0_SA_COO~M` msg 104152.
+
+### RECORD
+1. GRANTED: lane `MDPF_SECCLASS_FAST_M_BD_MIX` (batch 135) widens to two test files whose asserts change with the code --
+   `data/black_diamond/scripts/gold/tests/test_composition_canonical.py` and `test_advisor_positions_canonical.py` pin `asset_class == 'other'`
+   for an unknown ticker (five asserts), which batch 99 makes `unclassified`. A suite that keeps asserting the old class would fail the
+   fix or hide it. Read: `~M` rc 0 on both. Code only.

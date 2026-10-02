@@ -2529,6 +2529,14 @@ paths:
     lane: IRPT_BCKEND_FAST_Y_STATUSPORTS
     note: "E6 read memo, two lines, exact file; IRPT_COMPLETION_P members kept plus COO~Y; CTO grantor batch 125 (2026-10-02)."
 
+  "data/black_diamond/scripts/gold/tests/test_composition_canonical.py":
+    lane: MDPF_SECCLASS_FAST_M_BD_MIX
+    note: "Black Diamond forward fix, exact test file (its other-to-unclassified asserts change with the code); CTO grantor batch 137 (2026-10-02)."
+
+  "data/black_diamond/scripts/gold/tests/test_advisor_positions_canonical.py":
+    lane: MDPF_SECCLASS_FAST_M_BD_MIX
+    note: "Black Diamond forward fix, exact test file (its other-to-unclassified asserts change with the code); CTO grantor batch 137 (2026-10-02)."
+
   "data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py":
     lane: MDPF_SECCLASS_FAST_M_BD_MIX
     note: "Black Diamond forward fix, exact file; POD4 members kept plus COO~M; CTO grantor batch 135 (2026-10-02)."
