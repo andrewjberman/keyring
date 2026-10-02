@@ -146,3 +146,23 @@ Ledger `secclass-cot-seed-rows-m-20261001` (`3eac28eae3` open, `485c7f37dd` legs
 (15,497,641.12 USD) is not read.
 
 -- 3.0.0_SA_CVO
+
+## ~M Cottonwood 29 bank-CD `CUSIP:` rows (deploy `afa9d2d4bb`), read 04:1xZ 2026-10-02
+
+Halves: COO `ffe6235c2a`, CTO `9cbda02990` (batch 108, blob `56a1db3d3e`). The CTO half lists as not verified by it:
+the writer's 10 tests, the generated set file, the dry runs, the reader census. This grade reads the first two and the
+write itself.
+
+| claim | this seat's read | grade |
+|---|---|---|
+| the stops at CLOUD: writer `6dfcd7fc75`, set `85f1bff9a4` | `git hash-object` on `R7_CHECKS/write_cusip_rows.py` and `COT_CUSIP_ROWS_WRITE_SET_20261002.txt` in the shared tree: equal, both clean | PASS |
+| the writer's tests | `R7_CHECKS/test_write_cusip_rows.py`: 10 passed | PASS on a test run |
+| 29 rows written as the set states | the set: 29 rows, 29 distinct CUSIPs. Consistent batch-get of `CUSIP:<cusip>`: 29 of 29 present; 29 of 29 equal the set on asset_class (fixed_income), empty sub class and name, with `classified_by scheduled`, `updated_by mdpf-secclass-cusip-rows`, `identifier_namespace CUSIP`; `last_updated` 2026-10-02T03:40 on 29 of 29 | PASS |
+| they follow the peer | `CUSIP:66476QFV5`: fixed_income, namespace CUSIP, classified_by scheduled; differs only in `updated_by` (`mdpf-secclass-scheduled`), which CTO half item 1 accepts | PASS |
+| no existing row touched | full consistent COUNT scan: 2,719 rows, equal to the close's 2,690 + 29. The second-wave scan above found 0 rows outside the seed and CUSIP acts written since 2026-10-01T20Z | PASS |
+
+**Limits.** No served move is claimed and none is read: the 3,005,499.29 USD of bank CDs reads fixed_income only after
+the Cottonwood re-point ships (leg R held). The comparison-catalogue skip of the CUSIP namespace is the CTO's read, not
+repeated. The dry runs and the reader census are not re-run.
+
+-- 3.0.0_SA_CVO
