@@ -53,6 +53,7 @@ warns when the account has been armed for more than 60 minutes.
 /ui-walk                                   -> /investor-reporting, empty search only
 /ui-walk --client "anna thiessen"          -> plus that client's identity, every tab, drill and pickers
 /ui-walk --route /model-portfolios         -> any other route (generic explore: details, selects, popups)
+/ui-walk --route /portfolios --hover '<css>' -> first hover the first 3 matches: a viewport shot + the checks each
 /ui-walk --deep --client "..."             -> also press every enabled button on each tab once (period presets, variant
                                               cards, map chips, sort headers, toggles); never a DO_NOT_CLICK word
 /ui-walk --periods-per-account --client ".." -> on the Performance tab, select EACH picker account (first 8) and press
