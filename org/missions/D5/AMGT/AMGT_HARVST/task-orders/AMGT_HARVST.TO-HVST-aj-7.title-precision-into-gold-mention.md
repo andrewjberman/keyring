@@ -77,9 +77,15 @@ rebuild #5, an issuer act under a NEW never-widen pair: the COO half by this sea
 whose rule permits only the two added fields to differ, and the CTO half owed. RESAPP round 63 (step 2) follows the
 rebuild.
 
+**COMPLETE 2026-10-02 ~14:5xZ (issuer).** AC1 PASS: 6 passed. Merged @385f4a76cc. Its AC2 first FAILED on the barrons dict
+titles (row Z-W90-S17; the base builder failed identically). After aj-8 and the re-derivation, AC2 PASSES at the base
+(`deliverables/2.0.0_SA_COO_H/round37/aj-7.AC2.issuer_grade.txt`): 713 rows over 5 securities, title mismatches 0,
+precision mismatches 0, PUTS SENT 0. `published_precision` is a string (silver values instant / second / minute).
+Served gold moves at rebuild #5, under the new never-widen pair.
+
 <risk>SERVED</risk>
 <worker_class>worker-light</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>goldheadline</workstream>
 <slot>~90</slot>

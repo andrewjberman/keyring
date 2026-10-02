@@ -67,9 +67,16 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 **ISSUER NOTES:** CTO 28525 (YES, conditions 1-3). The issuer re-derives exactly the 149 rows (manifest), then grades
 AC2, then re-runs aj-7 AC2, then prepares rebuild #5's never-widen pair. The CTO half is owed.
 
+**COMPLETE 2026-10-02 ~14:5xZ (issuer).** AC1 PASS: 5 passed. Suite 582. Merged @2268853761. Re-derivation (CTO 28525
+condition 1): the before-manifest `round37/aj8_rederive_manifest.json` listed 149 targets and the 15 others' record_hash.
+Exactly the 149 outbox rows were re-pended (nothing else was pending in the runtime). upload-harvest ran
+14:43:09-14:43:50Z: 149 uploaded into `barrons/.../date=2026-10-02/part-20261002T113110Z-r1.parquet`. AC2 PASS
+(`round37/aj-8.AC2.issuer_grade.txt`): 149 of 149 string titles, 0 dicts left, others moved 0 of 15, matcher TypeError
+0 of 164.
+
 <risk>SERVED</risk>
 <worker_class>worker-light</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>barronstitle</workstream>
 <slot>~90</slot>
