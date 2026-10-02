@@ -54,15 +54,20 @@ FWD-7 asks: a seat started the run; the daily run with no person starting it nee
 
 ## Write claims
 
-- None open at 13:3xZ.
+- OPEN 2026-10-02T03:2xZ (CTO batch 104, the mail pull's schedule): `infra/aws/terraform/transcripts/mail_pull.tf`,
+  `infra/aws/lambda/transcripts-pull/{mail_handler.py,build.sh}`, `data/transcripts/scripts/tests/test_mail_pull_handler.py`
+  on disk, uncommitted: safe-commit refused the three infra files (lane CLOUD_OPS_OR_ETL, 03:14:50Z); the exact-file
+  grant is asked of 1.0.0_SA_CTO (03:19Z). In-lane half committed @84a59c91e6. Packet
+  `deliverables/2.0.0_SA_COO~D/MAIL_PULL_SCHEDULE_PACKET_20261002.md` (COO half signed; CTO half owed).
 
 ## Next (in order)
 
 1. ~~The order's four checks, then `--apply` once by hand~~ DONE (items 7 and 8).
-2. **The pull's schedule and its Lambda entry** -- the handler in `infra/aws/lambda/transcripts-pull` runs the
-   Teams pull only; the mail pull's own clock is a Terraform act under its own ledger and a principal that may
-   read the bearer. The silver build is a separate command today; the placement says whether one clock runs both.
-   Outside this lease's surface: a 1.0.0_SA_CTO placement, asked 2026-10-02.
+2. **The pull's schedule** -- PLACED by 1.0.0_SA_CTO RULINGS batch 104 @bf7d5a5061: one daily clock (23:30 UTC) runs
+   pull then silver; its own function and writer role beside `pull.tf`; builder names; a targeted apply with the Teams
+   resources left DESIRED. BUILT (claims above): targeted plan 9 to add / 0 / 0. Next: the grant, the infra commit,
+   the CTO half, then the protocol in the packet's section 4 (ledger, safe-apply, read-back, one ad hoc QA invoke).
+   FWD-7's DONE WHEN is the first scheduled fire that lands a real admitted email.
 3. The transcripts thread trace re-run (FWD-1). The census (13:18Z) and the suite are in the pins.
 
 ## Parked (one line each, owner + the condition that un-parks it)
