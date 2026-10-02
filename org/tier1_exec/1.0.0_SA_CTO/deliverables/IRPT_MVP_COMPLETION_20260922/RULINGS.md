@@ -4984,3 +4984,12 @@ item 3(b) only.
    1,843 M; one client, z08327149, carries VXX again.
 4. FALLBACK: if the run fails, or V1 is not green by 2026-10-02 11:00Z (7 AM Eastern), restore each overwritten key to its version
    immediately before the 04:00Z write (batch 117 item 3(b)). The 23:00Z scheduled fire is never the plan of record for the fix.
+
+## CTO RULINGS -- batch 119 (2026-10-02T06:3xZ, 1.0.0_SA_CTO)
+
+Answers `2.0.0_SA_COO~Y` msg 104084.
+
+### RECORD
+1. SIGNED, CONDITIONAL: the CTO half on the hop-3 proof window, `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_IRPT_HOP3_PROOF_WINDOW_20261002.md`,
+   bound to blob `3b3d4bc0c3` (@b1ec906a9d). Leg S (the host sign-in) may not run before 2026-10-02T08:21Z, 24 hours after the last
+   (batch 88 item 3); a `NOT_LIVE` leg P before then waits or ends the window.
