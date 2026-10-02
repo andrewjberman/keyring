@@ -650,3 +650,29 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "notes": "Widening the population beyond six accounts is a separate deliberate act (the event's accounts key), not this function's default. Grading of the decision is the CTO's."
 }
 ```
+
+## IRPT_DASHBD-W1-S8 -- TO-DB-b-7: amendment 1 set aside one day, but 9 of the 12 holdings partitions are first-written by a 2026-09-28 20:25 ET bulk backfill; excluded as unscheduled writes, 07:41 ET chosen
+
+```json
+{
+  "id": "IRPT_DASHBD-W1-S8",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1",
+  "surfaced_at": "2026-10-02T08:10:00Z",
+  "one_line": "TO-DB-b-7 amendment 1 set aside ONE incident (the 09-29 silver day) but holdings_performance_daily's first versions for 9 of the 12 measured partitions (2026-09-15..09-25) are the 2026-09-28 20:25 ET bulk catch-up act, also after 08:05 ET; the worker excluded them as unscheduled writes on the amendment's own clause (a) and chose 07:41 ET.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-7 amendment 1: a landing is a partition's FIRST version's LastModified; one day is set aside as an incident; latest_landing_et is over the rest; days_measured >= 10; expected fire 07:41 ET (07:30:21 + 10 min).",
+  "world_is": "MEASURED by list_object_versions over opal-data-49financial irpt/49financial/gold/holdings_performance_daily/: the partitions 2024-07-09..2026-09-25 (hundreds) were all first written by one manual backfill on 2026-09-28 20:25-21:36 ET and rewritten 2026-09-29 02:43/02:56 and 05:05/05:25; the guard's own scheduled writes exist for only two days (date=2026-09-28 first version 2026-09-29 07:30:21, date=2026-09-30 first version 2026-10-01 07:30:19), plus date=2026-09-29 first version 2026-10-01 03:13:37 (an unscheduled run, before 07:30). Read literally, first-version landings 2026-09-28 20:25 for 9 of the 12 window partitions put the latest landing at 20:26 and the order's own stop clause fires again; the record instead lists all 12 first versions (days_measured 12) and carries each of the 9 backfill partitions in `excluded` with reason, so latest_landing_et for the holdings input is 07:30 (03:13 and 07:30:21/07:30:19 remaining). The record's `excluded` list holds 11 entries (2 silver incident + 9 backfill). Result: chosen 07:41 ET, plan 7 to add, 0 change, 0 destroy. The extension of the ruling from one day to the backfill partitions is the worker's reading of clause (a) (a landing is the scheduled write), not stated in the amendment. Only two organic scheduled holdings landings exist, so the holdings input's scheduled-landing pattern rests on 2 days of 07:30:2x; the guard is a 07:30 cron, so it cannot land before 07:30.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1/REPORTING_GOLD_FIRE_TIME_R3.json (excluded list, 11 entries)",
+      "s3://opal-data-49financial/irpt/49financial/gold/holdings_performance_daily/ (list_object_versions, 12 window partitions)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Residual for the issuer's packet, also written into the record's notes: a day whose holdings guard lands after the fire emits with the guard not reached and is not re-emitted later. Owner of grading the extension: 2.0.0_SA_COO~P."
+}
+```
