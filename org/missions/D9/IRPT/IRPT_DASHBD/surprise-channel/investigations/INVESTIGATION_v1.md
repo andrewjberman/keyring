@@ -1019,3 +1019,112 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "notes": "If the issuer wants a window linked across a stated gap instead (a figure with a gap count), that is a rule change here and in the page. Owner: 2.0.0_SA_COO~P."
 }
 ```
+
+## IRPT_DASHBD-W1-S17 -- TO-DB-b-13: the S22 income fix admits the debit leg of QDV, NDV and PDV only; the plain DIV key is left out because one of its 39 debit rows in 2026 is a long fund with zero shares, and the column that would separate them is not declared
+
+```json
+{
+  "id": "IRPT_DASHBD-W1-S17",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1",
+  "surfaced_at": "2026-10-02T23:20:00Z",
+  "one_line": "TO-DB-b-13: the S22 income fix admits the debit leg of QDV, NDV and PDV only; the plain DIV key is left out because one of its 39 debit rows in 2026 is a long fund with zero shares, and the column that would separate them is not declared",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order: 'Fix the treatment by the code, not by account. Long positions' income does not move'; refusal clause: a fix that moves any account without a short position is a defect.",
+  "world_is": "MEASURED over the 188 fact_trn partitions 2026-01-02..2026-10-01 (SHORT_INCOME_INVARIANCE_R6.json and a scratch census): debit rows on FC/DV by key: QDV 592 and NDV 22, every one with a negative dividend_interest_share_quantity (a short position's dividend); DIV 38 with negative shares and 1 with zero shares (0.37, a long fund, account-day with no short market value); adjustment keys (DIVAJ, DFRAJ, NDVAJ, NDRAJ ...) are debits too, 5,000+ rows, which REVERSE an earlier credit and stay out. Admitting DIV by key alone would move that one no-short account-day by -0.37, which the refusal clause forbids; admitting it by share quantity needs dividend_interest_share_quantity declared as a read column, and sources.json is outside this order's paths. Short-account DIV debits (38 rows, 822.51 absolute in 2026) therefore stay unbooked as income.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1/SHORT_INCOME_INVARIANCE_R6.json",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py SHORT_PAID_DIVIDEND_KEYS",
+      "data/assets/scripts/gold/irpt_reporting/sources.json (transaction_columns derives the read set from this file)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner: 2.0.0_SA_COO~P. To admit DIV: declare the share-quantity column in sources.json and require it negative on the debit leg. Income is not an input of total_return_daily, so no served return moves either way."
+}
+```
+
+## IRPT_DASHBD-W1-S18 -- TO-DB-b-13: Opal's account value (net_mv_plus_cash) leaves out the Schwab margin_balance that Black Diamond's value includes; with it added the three pairs beyond 0.35 pp fall to 0.0044, 0.0264 and 0.0493 pp. A ruling on the value basis is owed
+
+```json
+{
+  "id": "IRPT_DASHBD-W1-S18",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1",
+  "surfaced_at": "2026-10-02T23:20:00Z",
+  "one_line": "TO-DB-b-13: Opal's account value (net_mv_plus_cash) leaves out the Schwab margin_balance that Black Diamond's value includes; with it added the three pairs beyond 0.35 pp fall to 0.0044, 0.0264 and 0.0493 pp. A ruling on the value basis is owed",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "spec_asserts": "C-VALUE (ratified): V_t is the custodian's own whole-account value, declared as dim_balance.net_mv_plus_cash; the order expected each pair beyond 0.35 pp to carry a stated reason and a code defect among them to be fixed and re-measured.",
+  "world_is": "MEASURED at all 6 window endpoints of the 3 pairs (DECOMPOSE_THREE_PAIRS_R6.json): Black Diamond's beginning and ending value = Opal's net_mv_plus_cash + dim_balance.margin_balance + Black Diamond's own accrual, difference 0.00 at 6 of 6. Schwab's own equity field (eqty_excl_option / eqty_incl_option) = net_mv_positions + margin_balance, so for a margin account net_mv_plus_cash is not the equity: e.g. 0084073310 on 2026-10-01 net_mv_plus_cash 1,009,937.16, margin_balance 5,579.04, equity 1,015,516.20 = Black Diamond's ending value to the cent. Replaying the windows with V + margin_balance (counterfactual, written nowhere): 0084073310 0.7078 -> 0.0264 pp; 0027265115 04-09..04-30 0.4555 -> 0.0493 pp; 0027265115 06-25..07-06 1.2130 -> 0.4738 pp (and -> 0.0044 pp with row S20's flow). The declaration's identity check (net_mv_plus_cash - net_mv_positions = money_mkt_funds + net_credit_debit, 92,407 of 92,407) tests the column against itself and cannot see margin_balance. The fix is a change of the ratified value basis in sources.json (outside this order's paths) and moves every margin account's served series, so it is not made here. Pairs 2 and 3 are recorded as defect=false (a basis difference against the ratified text, ruling owed), a classification the CTO may overturn.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1/DECOMPOSE_THREE_PAIRS_R6.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1/TIEOUT_49F_BLACKDIAMOND_R6.json",
+      "data/assets/scripts/gold/irpt_reporting/sources.json account_value_column"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ARMED: the reporting gold is scheduled (DB-b-7) and the dashboard figure reaches clients through the read route, so every margin account's return is off Schwab's equity by up to the margin_balance share of value (0.55 pct of value on these accounts) until ruled. Owner of the ruling: 1.0.0_SA_CTO; owner of the packet: 2.0.0_SA_COO~P (a value-basis change is a new method_version and a recomputation, per the method-row contract). FWD-8 should not be graded REALIZED on defect=false alone before this is answered."
+}
+```
+
+## IRPT_DASHBD-W1-S19 -- TO-DB-b-13: the method row now writes tieout_tolerance and tieout_tolerance_ruling, two columns the dim_return_method contract (0.2.0) does not declare, so its schema_hash is stale for the next write
+
+```json
+{
+  "id": "IRPT_DASHBD-W1-S19",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1",
+  "surfaced_at": "2026-10-02T23:20:00Z",
+  "one_line": "TO-DB-b-13: the method row now writes tieout_tolerance and tieout_tolerance_ruling, two columns the dim_return_method contract (0.2.0) does not declare, so its schema_hash is stale for the next write",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order: emit_method_row writes tieout_tolerance = 0.0035 and tieout_tolerance_ruling = '1.0.0_SA_CTO RULINGS batch 181'; tieout_tolerance_proposed is kept (null) unless the row's contract says otherwise.",
+  "world_is": "org/standards/IRPT_DASHBD_DIM_RETURN_METHOD_CONTRACT.json declares 18 columns and neither new one; its landed row carries tieout_tolerance_proposed = 0.037 (written by DB-b-3 with --tieout), so a re-run without --tieout would write null there, a producer default the contract does not call for. Adding two columns changes the table's parquet schema and therefore its schema_hash; the contract file is outside this order's paths. The handler does not call emit_method_row (reporting-gold/handler.py), so nothing is written until the issuer's packet runs the producer with --method-row-only --tieout 0.037.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_DIM_RETURN_METHOD_CONTRACT.json columns, landed_row",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py emit_method_row",
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py (docstring: omits the emit_method_row call)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner: 2.0.0_SA_COO~P: contract bump (0.3.0, new schema_hash, rule24 record for the two columns) lands with the method-row packet, with --tieout 0.037 so the landed proposal is kept."
+}
+```
+
+## IRPT_DASHBD-W1-S20 -- TO-DB-b-13: Schwab's INTRA/FC/IN 'MARGIN INT ADJ' credit (4,429.53 on 2026-06-25) is return in Opal and a net addition in Black Diamond, and margin interest charged (INTR/FC/IN debit, 3,106.83 on 06-29) is in neither Opal's income term nor its flow
+
+```json
+{
+  "id": "IRPT_DASHBD-W1-S20",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1",
+  "surfaced_at": "2026-10-02T23:20:00Z",
+  "one_line": "TO-DB-b-13: Schwab's INTRA/FC/IN 'MARGIN INT ADJ' credit (4,429.53 on 2026-06-25) is return in Opal and a net addition in Black Diamond, and margin interest charged (INTR/FC/IN debit, 3,106.83 on 06-29) is in neither Opal's income term nor its flow",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Income is recognised on cash receipt from the CRO's classification table; the pair's reason must be measured.",
+  "world_is": "MEASURED for 0027265115: fact_trn 2026-06-25 carries INTRA/FC/IN CREDIT 4,429.53 'MARGIN INT ADJ', classed INTERNAL / 'Dividends and Interest' by SCHWAB_TRANSACTION_CODE_CLASSIFICATION_20260811.json, so it is not an external flow and stays inside the return; Black Diamond's window point 06-25..07-06 shows netAdditions 4,402.22. Treating the 4,429.53 as a flow on that day moves the pair from 0.4738 to 0.0044 pp (counterfactual, after the margin_balance addition of row S18). Separately, INTR/FC/IN DEBIT 3,106.83 on 06-29 ('INTEREST 05/28 THRU 06/28') is a debit outside the fixed income term by design (only QDV/NDV/PDV debits are admitted), so Opal's signed window income is 4,312.61 against Black Diamond's -2,470.31; the remainder is not measured here (Black Diamond's accrual source is not in the stored response). Whether a margin-interest adjustment is return or a contribution is not decidable from the Schwab bytes alone.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Schwab silver fact_trn date=2026-06-25 and date=2026-06-29, account 0027265115",
+      "org/tier1_exec/4.0.0_SA_CRO/deliverables/SCHWAB_TRANSACTION_CODE_CLASSIFICATION_20260811.json (INTRA, INTR on FC/IN)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1/RAW_BD_PERIOD_0027265115.sanitised.json.gz dateRangePoints[3]"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner: 2.0.0_SA_COO~P (the classification table is 4.0.0_SA_CRO's file, not edited). One day, one account in the sample."
+}
+```
