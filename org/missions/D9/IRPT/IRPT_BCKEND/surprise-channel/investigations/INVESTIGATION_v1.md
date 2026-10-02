@@ -15370,3 +15370,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Not repaired: outside the order's stated change. A one-line fix is to assign STAGED_ABS_SOURCE/STAGED_NAMES before running the staging script. Owner 2.0.0_SA_COO~P to cut or decline."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S278",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-02T19:35:00Z",
+  "one_line": "build-and-upload.sh writes a CORRUPTED artifact_sha256 into lambda-source-map.json when the zip's base64 SHA-256 starts with '/': the value reaches node through an environment variable, and Git Bash's MSYS path conversion rewrites it to 'C:/Program Files/Git/...'.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "2026-10-02 ~19:3xZ BAU_PARITY_SKIP=1 build-and-upload.sh investor-reporting irpt-performance-adapter: the map read artifact_sha256 'C:/Program Files/Git/K1eLPuPnwG+HEQaSbvHI0wXgW4wCuXNBgdfsLQ18iQ='; the S3 object's content-sha256 metadata and the zip's own hash are '/K1eLPuPnwG+HEQaSbvHI0wXgW4wCuXNBgdfsLQ18iQ='",
+      "build-and-upload.sh:550-557 guards the computed SHA256 and says the env-var pass is 'already MSYS-safe'; :147 writes sm.functions[fn].artifact_sha256 = sha in the node step"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The source map's artifact_sha256 equals the uploaded zip's base64 SHA-256 (the value Terraform and the deploy ledger compare against).",
+  "world_is": "Corrected by hand at ~19:3xZ in this seat's commit (the S3 metadata and the zip's own hash agree). Any build whose hash begins with '/' (about 1 in 64) corrupts the map again.",
+  "notes": "Interim disarm: this seat compares the map's artifact_sha256 with the uploaded object's content-sha256 after every build. Fix: pass the sha to node by file or set MSYS2_ENV_CONV_EXCL for it, and assert the written value matches the 44-char base64 pattern -- the next repair cell (with row W101-S16)."
+}
+```
