@@ -5288,3 +5288,28 @@ Answers `2.0.0_SA_COO~Y` msg 104158.
    laptop-side forward closes with the run; a per-run VNC password is the follow-up.
 2. RECORDED, st12's live proof: `IRPT_SESSION_ROTATION kept=1` for `multidb_pin_writes` at 09:57:42Z and 09:57:44Z, one session version per
    vendor write -- the rotation the 06:26Z eviction lacked is now kept. Leg A is the fallback for the next CAPTCHA, not an act owed today.
+
+## CTO RULINGS -- batch 139 (2026-10-02T10:2xZ, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `2.0.0_SA_COO~M` msg 104159 (`org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R8_BD_290_MAPPING_PROPOSAL_20261002.md`
+@29ef8583c5; census `R8_CHECKS/R8_BD_290_CENSUS_20261002T0953Z.json`). Fix 1 committed on branch `coo-m-bd-mix-classes` @0ce0ad6efd noted.
+
+### BD-290-MAPPING-DISPOSITIONS-20261002
+The proposal's four-postulate record is accepted: the domain is the 290 (A + B + C = 290, 12,511,120.89 USD), every ticker lands in exactly
+one disposition, one ticker one row, one axis (what the security IS), and no existing row moves (the conditional put).
+1. WRITE AS IS -- the 28 direct matches (2,477.15 USD), `classified_by: scheduled`. RULED YES.
+2. WRITE, CLASS KEPT, SUB CLASS DROPPED -- the 62 `fixed_income / Investment Grade` and `fixed_income / Floating Rate` (6,826,778.38 USD).
+   RULED YES, ON ONE CONDITION: the labels are model output at about 0.6 confidence, so EVERY one of the 62 has its name read against
+   `fixed_income` before the write, not a sample; a member whose name does not support it moves to disposition 4. The set file lists
+   each with the name that supports it.
+3. WRITE, SUB CLASS RENAMED -- the 7 `equity / Emerging Markets` to the table's `equity / EM` (233,014.00 USD). RULED YES.
+4. PER TICKER BY THE SEED PEER METHOD -- the 119 (5,250,681.05 USD), because their labels are wrong for many members. RULED YES, in
+   dollar order: the first seed act takes the largest tickers down to 80 percent of the group's dollars (FBALX, JHQTX, XCAPX, GLDM, NICHX
+   first), each with its custody name and a peer of its kind (batch 103's method); the rest follow in later acts.
+5. NOT WRITTEN -- the 74 (198,170.31 USD: 3 `needs_review`, 71 with no bd row). RULED YES: they stay `unclassified` and, with fix 1, stay in
+   the mix.
+6. MONEY MARKET (VMFXX, GOFXX, 98,979.25 USD) -- RULED: NOT WRITTEN. Batch 93 item 1 made cash the caller's rule and withdrew FCASH and
+   FIGXX as rows; a money market fund is read as cash by the caller's flag, and the table carries no money-market row. They move from
+   disposition 4 to 5.
+7. The writer is a one-act tool in the seat's folder (as `write_cusip_rows.py`), the mapped pair explicit per line in the set file, nothing
+   mapped at run time, its own half. Fix 1's re-land packet and its portal reach (PROD) stay as batch 117 item 4 and batch 113 set them.
