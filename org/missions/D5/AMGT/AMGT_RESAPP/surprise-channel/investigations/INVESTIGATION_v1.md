@@ -16718,6 +16718,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
  "spec_asserts": "AMGT-ak-3 AC1 expects 'every test passes, your new tests included, and exit=0' from lib/research/api/tests/ lib/research/management/tests/ run in the worker worktree.",
  "world_is": "The worktree was cut without the portal submodule populated, and the worker may not rebuild or extract a tree to make an order executable, so 3 pre-existing tests that read a portal fixture error here. Every other test passes, the new ak-3 tests included. INFERRED, not measured: that the same 3 tests pass in a tree with portal populated (the base checkout has the fixture; they were not re-run there under this worker's rules).",
  "notes": "disarm_owner not required (INERT). The issuer can run AC1 at the shared tree or a portal-populated checkout of this branch to read exit=0 for the 3."
+},
+{
+ "id": "AMGT_RESAPP-Z-W201-S3",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~201",
+ "surfaced_at": "2026-10-02T12:40Z",
+ "one_line": "amendment 1 grants lib/research/peers/ in a spawn-side file only; the order file's <paths> at HEAD still omits it, so safe-commit refuses the 3 peers files and the amendment work cannot land",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "safe-commit in C:/tmp/r61-201 -> owned-paths lane violation (block mode) for lib/research/peers/csc.py, lib/research/peers/csc_plain_reasons.py and lib/research/peers/tests/test_peers_absent_reasons_plain.py, lane=BASE_EXEC; rc=1, HEAD stays 042ee0f7a8.",
+   ".tools/owned-paths-validate.py _owns_task_order_paths admits a worker to the <paths> block of its non-terminal order AT HEAD; org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-ak-3.plain-served-reasons.md in the worktree lists lib/research/management/, lib/research/api/, lib/research/metrics/, the deliverables dir and the channel file, not lib/research/peers/.",
+   "The amendment text (scratchpad AMENDMENT1_ak-3.md) is not a tracked file and carries no lane effect."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "AMGT-ak-3 amendment 1: 'Granted: lib/research/peers/ joins your <paths>'; commit on branch wk-AMGT_RESAPP-201 as before.",
+ "world_is": "The grant exists in the amendment message only. The lane gate reads the order file at HEAD, and editing that file is outside this worker's <paths>, so the worker did items 5 and 6 and ran AC1/AC2 in the worktree but could not commit the peers files; the work sits uncommitted in C:/tmp/r61-201 (csc.py, csc_plain_reasons.py moved to peers, test moved to peers/tests, regenerated plan, refreshed proof instance). AC1 amended: 525 passed, 2 skipped, 0 failed, 3 admitted test_print_format_rich.py errors. AC2: C0 C1 C2 PASS, B2 YES, exit=0. The GIT_COMMIT_AUTHOR_OVERRIDE escape was not used.",
+ "notes": "disarm_owner 2.0.0_SA_COO~Z: commit the order-file amendment (add lib/research/peers/ to <paths>, and the 3-directory AC1 invocation) on the worktree branch or issuer side, then tell the slot to re-run the safe-commit; the slot's uncommitted tree is intact."
 }
 ]
 ```
