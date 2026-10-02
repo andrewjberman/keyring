@@ -39,3 +39,21 @@ you see that?" / "There is a messager thread attached to this where everyone pos
 - Weight: "very, very light, very easy."
 
 This instruction does not change another seat's work; no line to 1.0.0_SA_CTO is owed.
+
+## Addendum ~03:3xZ -- scope widened, same channel, verbatim
+
+> lets expand on this first. theres a couple details i want to cover additionally + broader scope. first, in order
+> for it to work, i need for it to know when the daily sprint file is ready; maybe when the file lands somewhere is
+> when it gets pinged. i also want to workshop the "voice" for you. Additionally, I'd like to set something up where
+> we create a folder for every person i have teams messages with and establish the context of our discussion, the
+> tone, and more. the agent can handle all my teams threads this way. What I'd like it to do is never send fully
+> automatically; must have human in loop. My idea on how to manage this is to have it text me the message it
+> received and the message it intends to send. then if i want it to send i can hit 1. If i want to edit it i send
+> comments back, if i want it to disregard i can send 0. i think the way it could work is either using our SES number
+> to text either the QUO line or my number at [cell redacted, ends 7679]. could also use the quo line to text me at
+> [cell redacted, ends 7679]. lets discuss
+
+(The only change to the quote is the redaction of Andrew's cell number, twice: personal data stays out of the repo.)
+
+Binding from this turn: NOTHING sends to Teams without Andrew's reply of 1 (human in the loop, every message,
+the End of Day post included). The rest is under discussion; nothing built on it yet.
