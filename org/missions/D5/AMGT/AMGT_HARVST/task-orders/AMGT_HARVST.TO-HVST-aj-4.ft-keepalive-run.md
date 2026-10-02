@@ -29,9 +29,10 @@ Round 36, ai-2 attempt 3 (records `deliverables/0.9.0_WK_AMGT_HARVST~92/ai2_atte
    `{"event": "keepalive_page_load", "publisher": "ft", "at": <utc iso>, "url_kind": <home|article>, "logged_in": <bool>}`
    into the job's run record `events`. Plant it in `lib/opal_data_harvest/test_aj4_keepalive_event.py` with a stub
    tab and no network. A mutant that skips the record fails the plant.
-2. **Sign-in (AMENDED 13:1xZ, Andrew-direct ~13:08Z):** ONE ft sign-in through the existing path, UNATTENDED. Its
-   hCaptcha is solved through the existing NopeCHA path, which is permanently whitelisted. Kimi and the vision
-   fallback stay barred. Record the NopeCHA call count and the challenge outcome in the sign-in record.
+2. **Sign-in (RE-AMENDED 16:4xZ, Andrew-direct ~16:47Z, option B):** ONE HEADED ft sign-in through the existing
+   path, with ANDREW at the site-Z terminal solving the hCaptcha BY HAND. The NopeCHA Token API is discontinued (row
+   Z-W92-S18), so there are 0 solver calls of any vendor. Wait up to 15 min for his solve, and record it as human-hand
+   in the sign-in record (`solved_by` "andrew_hand"). The unattended route is option A, cell aj-6.
 3. **Run at least 120 minutes:** the real collector on ft names in driver order, from your worktree, with
    `--runtime-root "C:/Users/Opal Bloomberg/Desktop/ajb_workspace/.runtime/opal-data-harvest"`, mirroring the driver's
    job invocation. Use Bash `run_in_background` per job and commit progress at least every 30 minutes. Write
