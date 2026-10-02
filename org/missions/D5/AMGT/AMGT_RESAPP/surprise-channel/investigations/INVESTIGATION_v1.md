@@ -17089,6 +17089,27 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   ]
  },
  "disposition": "UNDER_INVESTIGATION"
+},
+{
+ "id": "AMGT_RESAPP-Z-W211-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~211",
+ "surfaced_at": "2026-10-02T22:32:26Z",
+ "one_line": "AC1 of AMGT-an-2 cannot read exit=0: 7 tests in lib/research/harvest/tests fail identically at the issuance-descended base with and without the an-2 change (4 != 5 enabled publishers in the daily-row fixtures; timeline-day read-path fixtures).",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "AC1 expects every test in lib/research/api/tests/ and lib/research/harvest/tests/ to pass and exit=0.",
+ "world_is": "Full AC1 run in the worker worktree: 7 failed, 684 passed, exit=1. The same 7 fail in a detached worktree of the branch HEAD before the an-2 edit (47 passed, 7 failed over the three files): test_o1_run_record_coverage.py (2: searched/complete reads 4 where 5 expected), test_publication_gold_daily.py (2: publishers_covered 4 == 5; publishers_covered_codes order), test_timeline_day_read_path.py (3: byte-equal body, publishers read, warm-process reads). The four new an-2 tests and every timeline_api test pass. None of the 7 touches get_timeline; the worker fixed none (outside the cell's act).",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "pytest -q lib/research/api/tests/ lib/research/harvest/tests/ in C:/tmp/r64-211: 7 failed, 684 passed.",
+   "pytest on the three files in a detached worktree of the pre-edit HEAD: 7 failed, 47 passed."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
 }
 ]
 ```
