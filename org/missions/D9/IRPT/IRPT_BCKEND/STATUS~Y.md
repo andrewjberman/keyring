@@ -6,7 +6,7 @@ Mode FAST: lease `IRPT_BCKEND~Y` re-armed 04:33Z until 08:33Z after the withdraw
 terms, under Andrew-direct 2026-10-01 ~04:2xZ).
 Loop `/canonical-drive IRPT_BCKEND` 10m (LIVE_ARMS RELAUNCH row). Way forward: CTO rulings batches 61, 62, 65, 70, 72,
 76, 83, 88, 89, 93, 97, 98, 100 and 105 in `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md`.
-Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-02T05:0xZ.
+Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-02T05:4xZ.
 
 ## Pins
 
@@ -17,7 +17,7 @@ Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-02T05:0xZ.
 | SERVED: the resident | `/opt/irpt-resident/b1db201025-st10` since 2026-10-02T03:19:51Z (ledger `irpt-resident-st10-20261002` CLOSED; both halves, CTO batch 106): items 1 to 17. Rollback root `481166a8f2-st9` on the host |
 | SERVED: `irpt-status` | `2V7xV1+zII4+g6tV..` since 2026-10-01T06:59:55Z (read 2026-10-02 ~02:2xZ) |
 | SERVED: `irpt-ycharts-generate` | `arC65KbDPPssn2UX..` since 2026-10-01T06:51:12Z |
-| UPLOADED, NOT APPLIED | `irpt-status.zip` version `gqIQUc_Z..` (sha `iYgp8301..`, E7) is the key's LATEST version |
+| UPLOADED, NOT APPLIED | `irpt-status.zip` version `gqIQUc_Z..` (sha `iYgp8301..`, E7) and `irpt-ycharts-generate.zip` version `rtq1e9oT..` (sha `E+FqSWwE..`, the catalogue, built at `97eaff05ff`) are their keys' LATEST versions |
 | Stored YCharts session | the version of 2026-10-01T08:21:20Z (fence 21) |
 | Push state | LOCAL @5946fe3945; origin/CLOUD `0257976705` (ls-remote read 02:5xZ). CLOUD is pushed by `0.0.0_AB_MSTR` only |
 
@@ -50,10 +50,10 @@ made (CTO half item 1).
    listed request, timeout 15 s). The CTO's call on the change was asked 03:54Z (recommended: a per-request read memo
    that keeps the deliberate `_final` re-reads, as a new irpt-status packet).
 4. E5 (row S230 at its next natural failure; no session is displaced on purpose).
-5. **The catalogue (batch 61 item 8, first after the thread):** item 18 is built and merged. Next: the
-   `irpt-ycharts-generate` whole bundle at `87f9b3afab` (12 of 112 members change; `served.py`'s closure identical to live;
-   two other-seat registry rows ride it, both read inert), then the route: its `routes.json` row is already DECLARED, so it is one
-   targeted apply of the api root, each under its own packet with both halves.
+5. **The catalogue (batch 61 item 8):** packet `IRPT_MVP_Y/CATALOGUE/NEVER_WIDEN_SIGNOFF_PACKET_GENERATE_CATALOGUE_20261002.md`
+   (blob `49517c7d7b`, @ef923a2038), COO half signed, CTO half asked 05:41Z. D1 the generate whole bundle at `97eaff05ff`
+   (12 of 112 members change; only `comparison_catalogue` changes behaviour on the handler's import graph); D2 the route (one
+   targeted add). On the half: D1, the reads between, D2, V1 as svc-irpt-analysis; then `2.0.0_SA_COO~D` wires the composer.
 6. Batch 61's order after that: one job per remaining arm (Target Weight, 49 Financial, Inflection), each under a window
    packet; the resolve concurrency fix; the vendor PDF link; the Analysis export; the email lane. E6's memo follows E7's
    apply (CTO batch 111). A client-scoped history route is an enrichment item at the next round analysis (CTO batch 110 item 4).
@@ -62,6 +62,7 @@ made (CTO half item 1).
 
 | Row | State |
 |---|---|
+| S263 | FIXED on CLOUD @6c4ac61088 (CTO batch 114, this seat's lane IRPT_BCKEND_FAST_Y_TFPOLICY): five roots select the policy by revision; core, export, performance plan no changes, ops and ycharts one held Lambda code move each. For the CVO to close |
 | S261 | OPEN, BLOCKING (2026-10-02 02:41Z): the page parser rejects E7's third key. Disarm owner `2.0.0_SA_COO~D` (parser on DEV `281b03c6`; PROD promote on Andrew's word); this seat holds E7's D1 |
 | S230 | OPEN. The resident's OWN sign-in fails `AUTH_FAILED` 4 of 4 and is unnamed; an operator sign-in as the resident's user works. st7's reason token names the step at its next occurrence |
 | S253 | SERVED on st10 (03:19:51Z); first live read is the next job; for the CVO to close after it |
@@ -74,6 +75,7 @@ made (CTO half item 1).
 ## Ledgers this seat holds open
 
 - `irpt-status-e7-20261001`: U1 closed; HELD (external gate: row S261 and the PROD promote). Nothing applied.
+- `irpt-generate-catalogue-20261002`: U1 closed; D1, D2, V1 wait on the CTO half. Nothing applied.
 
 ## Enrichment candidates (the measured list is `IRPT_MVP_Y/ENRICHMENT_CANDIDATES_20261001.md`)
 
