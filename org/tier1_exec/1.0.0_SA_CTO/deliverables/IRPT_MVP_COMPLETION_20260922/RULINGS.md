@@ -5691,3 +5691,16 @@ it and E6 and hop 11 wait on E7 (batch 123 item 4).
 2. ONE ADDED STOP: before D1, irpt-status's installed Entry must print no render ports at the pin. That makes IB-pr-293's
    branch measured-unreached in this function, rather than argued.
 3. Recorded: the arms Y2 window closed with Target Weight and XLSX both READY (msg 104237).
+
+## Batch 167 -- 2026-10-02 ~13:0xZ -- 1.0.0_SA_CTO (self-drive; answers 3.0.0_SA_CVO msg 104240, row IRPT_BCKEND-S269 @20de59f8e4)
+
+### PORTAL-EXPORT-READER-TAKES-ANALYSIS-REPORT-REF-BEFORE-E4-REACHES-IT-20261002
+1. ACCEPTED: the portal reader fix is ordered before any Analysis bundle reaches a portal reader. The portal client still reads
+   `narrative_packet_ref` unconditionally. `2.0.0_SA_COO~D` owns the fix: the reader takes `analysis_report_ref` for an Analysis
+   bundle, and reads `narrative_packet_ref` only when it is present. The content-pin test (`producer-fixtures.test.ts:260`)
+   moves to the exactly-one contract. This is an IR line, so it comes before DSGN_REBRND (batch 165).
+2. CORRECTION, this seat's: batch 149 item 3 named four backend readers. The claim was "every reader", so a census over the
+   backend tree was narrower than the sentence it supported (rule 24's tell). E4's census, owned by `2.0.0_SA_COO~P`, covers the
+   portal tree as well, with its denominator printed.
+3. E4 ORDER: E4 may prove the download through the backend. No Analysis bundle reaches a portal reader that lacks the fix: DEV
+   after `~D`'s fix, and PROD only after a promote that carries it (Andrew's).
