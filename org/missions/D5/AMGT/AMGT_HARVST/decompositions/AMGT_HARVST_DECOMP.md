@@ -2534,3 +2534,26 @@ new bbg rows. If the cell is not drained by 10:00Z, #4 runs without it, before 1
 | `HVST-ai-4` bbg HTML silver branch | `ai-4` | SERVED (code LOCAL; the drain is the live driver's upload) | `~91` |
 
 Base check `round36/checks/ai-4.AC2.py` before the cut: FAIL (772 stranded, 0 uploaded).
+
+### 49.2 ROUND 36 AMENDMENT 2 -- the bbg drain batching cell (CTO ruling msg 28222), 2026-10-02 ~05:2xZ
+
+Row Z-S58 (@18ee3ffbd5): after the ai-4 fix the bbg outbox drains at about 1 row per 90 s, and the rate falls as it
+runs. Each pending row is its own `(source, run_stamp)` group, and each `silver_append` re-reads every bbg silver part
+(576 parts, 69 MB). 288 rows left would take 7 h or more, past the 10:00Z bound for gold #4. The CTO ruled YES to ONE
+mid-round repair cell, bounded:
+- `uploads.py` `_run_articles` makes ONE `silver_append` per source per pass (`silver_append` already writes one part
+  per fetch-date partition);
+- it falls back to per-row appends on `SilverRowError`, so a W91-S19-class row cannot strand its batch;
+- paths are `uploads.py` and its test only; risk SERVED;
+- CONDITION: plant 1 proves the batched pass writes the SAME row set (keys plus values) as the per-row path on the same
+  fixture. The part layout may differ, the rows may not. A row difference is a served-output change and needs
+  never-widen sign-off.
+
+The one real run at close is the live drain reaching 0 pending with gold-readable silver. Gold #4 stays on ruling
+28084: it runs before 13:00Z, and without the rest of the drain if the drain has not finished by 10:00Z.
+
+| cell | order | class | slot |
+|---|---|---|---|
+| `HVST-ai-5` batched silver append per source | `ai-5` | SERVED (code LOCAL; the drain is the issuer's upload-harvest pass) | `~90` |
+
+Base check `round36/checks/ai-5.AC2.py` before the cut: FAIL (see the issuance commit).
