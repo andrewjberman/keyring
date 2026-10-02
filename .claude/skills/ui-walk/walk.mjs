@@ -48,6 +48,9 @@ for (let i = 0; i < argv.length; i++) {
   else if (a === '--open-request') opt.openRequest = argv[++i]
   else if (a === '--composer-picker') opt.composerPicker = true
   else if (a === '--dashboard-window') opt.dashboardWindow = true
+  // --press "<label>" (repeatable, plain routes only): press that tab/radio/button by its exact label after the load, wait
+  // for the page to settle (PRESS_SETTLE_MS), shoot and check; a DO_NOT_CLICK word is refused. For a chart behind a tab.
+  else if (a === '--press') (opt.presses = opt.presses || []).push(String(argv[++i] || ''))
   else if (a === '--holdings-aggregates') opt.holdingsAggregates = true
   else if (a === '--performance-state') opt.performanceState = true
   else if (a === '--expect-text') opt.expectTexts.push(String(argv[++i] || ''))
@@ -970,6 +973,7 @@ async function composerPicker(page, label) {
 // computed in the browser, so the expected count is 0). Counts, times, sizes and the as-of words only: no figure.
 const dashboardWindows = []
 const DASHBOARD_PAINT_CEILING_MS = 60000
+const PRESS_SETTLE_MS = 12000
 // The recorder starts at the Performance tab's own press, so the tab's default account (the picker has no "All accounts"
 // entry) is timed from the press; every other account is timed from its select, and the default one again last (warm).
 let dashRec = null
@@ -1362,6 +1366,14 @@ try {
     } else if (route.startsWith('/security-analysis')) {
       await walkSecurityAnalysis(page, route)
     } else {
+      for (const label of opt.presses || []) {
+        if (DO_NOT_CLICK.test(label)) { findings.push({ step: `press ${label}`, check: 'walker:press-refused', claim: 'measured', observed: `--press "${label}" names a write word; not pressed` }); continue }
+        const pressed = await clickLabel(page, label)
+        await page.waitForTimeout(PRESS_SETTLE_MS)
+        await settle(page, 2500)
+        log('PRESS', label, pressed ? 'pressed' : 'NOT FOUND')
+        await checks(page, `${route}-press-${label}`)
+      }
       await exploreScope(page, 'body', route)
     }
   }

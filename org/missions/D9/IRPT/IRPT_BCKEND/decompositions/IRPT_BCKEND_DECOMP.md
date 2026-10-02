@@ -1452,3 +1452,28 @@ ROUND 33 (GATE (x), row IRPT_BCKEND-S267).
 | `IB-pr-282` | E4, after IB-pr-296 | WORLD | IB-pr-291..296, E3 | P29a |
 
 fanout: 1 of 1 chains, cap 8, reason: one worktree (disk under 10 GB free); one cell.
+
+**Section 27 addendum, fifth cell (2026-10-02 ~15:0xZ, issuer 2.0.0_SA_COO~P, on CTO RULINGS batch 175 @6621e009c6, msg 104290).**
+E4's readiness record (`deliverables/2.0.0_SA_COO~P/E4_ANALYSIS_EXPORT_READINESS_20261002.md`, @1772640238) found four gaps. G1
+(export packaging) and G2 (every grant-staging function packages the owner reader; row S271 ARMED) are this seat's, as is G4 (the
+receipt's route; row S272): one repair cell, ROUND 34 (GATE (x), row S267). G3 (irpt-status render ports) is 2.0.0_SA_COO~Y's after
+M2 and hop 11 (requirements sent 14:41Z).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-297` | G1 + G2 + G4: the export stages AnalysisReport and ExportBundle at HEAD; every function staging grant.py stages report_owner.py and reports/repository.py, with a packaging test; the receipt names the live download route, and the live entry answers a SigV4 signed GET in hop 11's shape | WORLD (build map + a served function's source; no deploy) | IB-pr-296 (merged) | P29a |
+| `IB-pr-282` | E4, after IB-pr-297 and ~Y's G3 | WORLD | IB-pr-291..297, E3, G3 | P29a |
+
+fanout: 1 of 1 chains, cap 8, reason: one worktree (disk 7.3 GB free); one cell.
+
+**Section 27 addendum, sixth cell (2026-10-02 ~17:4xZ, issuer 2.0.0_SA_COO~P, on CTO RULINGS batch 178 @2a537cbad4, msg 104324 --
+Andrew's IR fold-in, Performance P-1..P-7 to this workstream).** P-4 first: the served holdings-gold path labels a gross figure NET
+(row S275). Batched with row S276 (ARMED): build-and-upload.sh deleted 19 tracked performance/ files during this seat's adapter build
+(restored from HEAD). ROUND 35 (GATE (x), row S267). P-2, P-3 and P-6 are IRPT_DASHBD cells (its decomposition); P-5 waits on
+Andrew's population vendor word; P-1 is the acceptance.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-298` | P-4 (holdings_gold.py fee_basis GROSS) + S276 (cleanup_staged restores tracked paths; staging refuses a dirty tracked destination) | WORLD (a served function's source and the shared build tool; no deploy) | none | P35 |
+
+fanout: 1 of 1 chains, cap 8, reason: one worktree (disk 7.0 GB free); queued behind IRPT_DASHBD DB-b-10 on the shared DIR.

@@ -1,0 +1,92 @@
+data.aws_lambda_function.handler["performance"]: Reading...
+data.aws_region.current: Reading...
+data.aws_lambda_function.handler["directory"]: Reading...
+data.aws_lambda_function.handler["export"]: Reading...
+data.aws_lambda_function.handler["analysis"]: Reading...
+data.aws_lambda_function.handler["holdings"]: Reading...
+data.aws_lambda_function.handler["narrative"]: Reading...
+data.aws_caller_identity.current: Reading...
+data.aws_lambda_function.handler["status"]: Reading...
+data.aws_region.current: Read complete after 0s [id=us-east-1]
+data.aws_caller_identity.current: Read complete after 4s [id=313476888478]
+data.aws_lambda_function.handler["directory"]: Still reading... [10s elapsed]
+data.aws_lambda_function.handler["performance"]: Still reading... [10s elapsed]
+data.aws_lambda_function.handler["export"]: Still reading... [10s elapsed]
+data.aws_lambda_function.handler["analysis"]: Still reading... [10s elapsed]
+data.aws_lambda_function.handler["status"]: Still reading... [10s elapsed]
+data.aws_lambda_function.handler["holdings"]: Still reading... [10s elapsed]
+data.aws_lambda_function.handler["narrative"]: Still reading... [10s elapsed]
+data.aws_lambda_function.handler["export"]: Read complete after 14s [id=irpt-export-render]
+data.aws_lambda_function.handler["status"]: Read complete after 14s [id=irpt-status]
+data.aws_lambda_function.handler["analysis"]: Read complete after 14s [id=irpt-ycharts-generate]
+data.aws_lambda_function.handler["narrative"]: Read complete after 17s [id=irpt-narrative]
+data.aws_lambda_function.handler["holdings"]: Read complete after 17s [id=irpt-holdings]
+data.aws_lambda_function.handler["performance"]: Read complete after 17s [id=irpt-performance-adapter]
+data.aws_lambda_function.handler["directory"]: Read complete after 17s [id=irpt-directory-search]
+aws_lambda_permission.apigw_invoke["export"]: Refreshing state... [id=AllowPortalApiInvoke-irpt-export]
+aws_apigatewayv2_integration.handler["export"]: Refreshing state... [id=61aupci]
+aws_lambda_permission.apigw_invoke["performance"]: Refreshing state... [id=AllowPortalApiInvoke-irpt-performance]
+aws_lambda_permission.apigw_invoke["holdings"]: Refreshing state... [id=AllowPortalApiInvoke-irpt-holdings]
+aws_lambda_permission.apigw_invoke["status"]: Refreshing state... [id=AllowPortalApiInvoke-irpt-status]
+aws_apigatewayv2_integration.handler["analysis"]: Refreshing state... [id=wtho3v4]
+aws_lambda_permission.apigw_invoke["directory"]: Refreshing state... [id=AllowPortalApiInvoke-irpt-directory]
+aws_lambda_permission.apigw_invoke["narrative"]: Refreshing state... [id=AllowPortalApiInvoke-irpt-narrative]
+aws_lambda_permission.apigw_invoke["analysis"]: Refreshing state... [id=AllowPortalApiInvoke-irpt-analysis]
+aws_apigatewayv2_integration.handler["directory"]: Refreshing state... [id=g9302sp]
+aws_apigatewayv2_integration.handler["holdings"]: Refreshing state... [id=6ouz1v4]
+aws_apigatewayv2_integration.handler["narrative"]: Refreshing state... [id=284dqhp]
+aws_apigatewayv2_integration.handler["performance"]: Refreshing state... [id=uhybxbt]
+aws_apigatewayv2_integration.handler["status"]: Refreshing state... [id=8ogp332]
+aws_apigatewayv2_route.irpt["POST /api/scoped/investor-reporting/export"]: Refreshing state... [id=91ez5td]
+aws_apigatewayv2_route.irpt["GET /api/scoped/investor-reporting/analysis/requests"]: Refreshing state... [id=7yo12g5]
+aws_apigatewayv2_route.irpt["POST /api/scoped/investor-reporting/analysis"]: Refreshing state... [id=wjqvqwi]
+aws_apigatewayv2_route.irpt["POST /api/scoped/investor-reporting/analysis/inputs"]: Refreshing state... [id=0sp6wva]
+aws_apigatewayv2_route.irpt["GET /api/scoped/investor-reporting/status"]: Refreshing state... [id=zy61idb]
+aws_apigatewayv2_route.irpt["GET /api/scoped/investor-reporting/analysis/requests/{requestId}"]: Refreshing state... [id=jjidb6b]
+aws_apigatewayv2_route.irpt["GET /api/scoped/investor-reporting/performance/{accountSetId}"]: Refreshing state... [id=2mzt7qb]
+aws_apigatewayv2_route.irpt["GET /api/scoped/investor-reporting/status/{jobId}"]: Refreshing state... [id=s33c8gj]
+aws_apigatewayv2_route.irpt["GET /api/scoped/investor-reporting/analysis/comparisons"]: Refreshing state... [id=bh7ynom]
+aws_apigatewayv2_route.irpt["GET /api/scoped/investor-reporting/holdings/{accountSetId}"]: Refreshing state... [id=w87k2ir]
+aws_apigatewayv2_route.irpt["POST /api/scoped/investor-reporting/selections"]: Refreshing state... [id=k8em63s]
+aws_apigatewayv2_route.irpt["GET /api/scoped/investor-reporting/export/{exportId}"]: Refreshing state... [id=5dhfd74]
+aws_apigatewayv2_route.irpt["GET /api/scoped/investor-reporting/directory/search"]: Refreshing state... [id=cnsc63q]
+aws_apigatewayv2_route.irpt["GET /api/scoped/investor-reporting/narrative/{reportId}"]: Refreshing state... [id=sdpsyzs]
+aws_apigatewayv2_route.irpt["GET /api/scoped/investor-reporting/analysis/{jobId}/sections"]: Refreshing state... [id=rfk7h09]
+aws_apigatewayv2_route.irpt["GET /api/scoped/investor-reporting/export/{exportId}/download"]: Refreshing state... [id=rfs36m7]
+aws_apigatewayv2_route.irpt["GET /api/scoped/investor-reporting/directory/browse"]: Refreshing state... [id=4ybqnt2]
+aws_apigatewayv2_route.irpt["POST /api/scoped/investor-reporting/directory/resolve"]: Refreshing state... [id=7sa9hm9]
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # aws_apigatewayv2_route.irpt["GET /api/scoped/investor-reporting/analysis/requests/{requestId}/pdf"] will be created
+  + resource "aws_apigatewayv2_route" "irpt" {
+      + api_id             = "7k3ed8px20"
+      + api_key_required   = false
+      + authorization_type = "CUSTOM"
+      + authorizer_id      = "naqxlm"
+      + id                 = (known after apply)
+      + route_key          = "GET /api/scoped/investor-reporting/analysis/requests/{requestId}/pdf"
+      + target             = "integrations/8ogp332"
+    }
+
+Plan: 1 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  ~ route_count          = 17 -> 19
+  ~ route_keys           = [
+      + "GET /api/scoped/investor-reporting/analysis/comparisons",
+        "GET /api/scoped/investor-reporting/analysis/requests",
+        "GET /api/scoped/investor-reporting/analysis/requests/{requestId}",
+      + "GET /api/scoped/investor-reporting/analysis/requests/{requestId}/pdf",
+        "GET /api/scoped/investor-reporting/analysis/{jobId}/sections",
+        # (14 unchanged elements hidden)
+    ]
+
+─────────────────────────────────────────────────────────────────────────────
+
+Note: You didn't use the -out option to save this plan, so Terraform can't
+guarantee to take exactly these actions if you run "terraform apply" now.

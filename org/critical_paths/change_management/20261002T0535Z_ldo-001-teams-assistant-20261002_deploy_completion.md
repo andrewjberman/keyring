@@ -27,3 +27,10 @@
 - 20261002T055448Z LEG L5 closed: CLOUD commits 54d3748545 (tenant), d3bd7d3980 (client fix), 8e6872f265 (infra); LOCAL at close-leg time
 - 20261002T141526Z LEG L4 closed: 2026-10-02 14:11:43Z: Andrew's text '0' from the owner number (ending 6346) -> SNS -> ingress -> mailbox -> handler: ten
 - 20261002T141526Z CLOSED -- all 5 legs proven
+
+## Post-close change (recorded so no apply goes unledgered)
+
+- 2026-10-02 ~14:3xZ, 4.0.0_SA_CRO: targeted safe-apply of module.ldo_001, 0 added / 2 changed / 0 destroyed (the
+  handler and ingress code: teams.backfill accepts messages in its payload). Proof: "Apply complete! Resources: 0
+  added, 2 changed, 0 destroyed."; naming-plan-gate PASS 17 graded. Then the seed (seed_from_session.py, Andrew-direct
+  ~14:2xZ "Go ahead"): 49 teams.backfill events; handler results 28 context / 21 no-andrew-messages / 0 failed.

@@ -24,12 +24,18 @@ Reviewer `3.0.0_SA_CVO` (grades pins after the fact). Lease FAST until 09:43:29Z
 
 ## Live thread
 
-**ARMED row S270 (CVO, CTO batch 169), owner this seat:** history is over the 15 s timeout -- server REPORT 13:3xZ: default page
-COLD 15000 ms (timed out, HTTP 500), limit=50 warm 13458 ms (22 items); single read 789 ms; status 3910 ms
-(`IRPT_MVP_Y/S270/S270_TIMING_20261002.json`). Cause: per-row `_materialize` + fresh `_final`, sequential, ~0.6 s each.
-Remedy (bounded parallel per-row checks + timeout margin) put to the CTO 13:3xZ. Cottonwood holds 22 until read.
-**Hop 11 V1 FAILED on the PDF download** (SigV2 URL vs SSE-KMS -> 400): R1 rolled back 13:2xZ (no /pdf route); I1 and
-D1 stand pending the CTO's call; the SigV4 fix is on branch `coo-y-hop11-sigv4` (uncommitted edit, pdf_link.py).
+**irpt-status queue after M2+D2+R1 (packet blob `b8c06f4e26`, CTO half owed):** (1) W2-06 -- the single read's
+`include=composition` (opt-in, the frozen AnalysisSubmissionRequest; CTO batch 165); (2) G3 -- render ports for the
+Analysis print (CTO batch 175, `~P` msg 104292): env IRPT_EVIDENCE_BUCKET, IAM GetObject on the stored render grants,
+staged `_render_identity/grant.py`, `_render_identity/report_owner.py`, `reports/repository.py`
+(record `deliverables/2.0.0_SA_COO~P/E4_ANALYSIS_EXPORT_READINESS_20261002.md` G3).
+
+**ARMED row S270 (CVO, CTO batch 169), owner this seat:** M1 SERVED 14:00:48Z (timeout 29 s; cold default history 200,
+15066 ms; ledger CLOSED @4d586f64d8). M2 (8-worker pool + 1024 MB) refused once (batch 176: one boto3 resource Table
+shared by threads) and RE-CUT: one Table per thread (`cee32dcf47`), bundle at `0f70e6156e` (`wXzz3_..`, `h7H7KgX1..`),
+packet blob `5518903557` @0d4325a83c with D2 (SigV4, `5bc562f689`) and R1 (the /pdf route); CTO half asked 16:25Z.
+Acceptance: every history page size <= 10 s server REPORT, cold and warm. Cottonwood holds 22 until then. The laptop's
+network read 8-16 s per AWS call at 15:3xZ (live re-measure not possible then).
 
 **irpt-status SERVES E7b + E6 + item 22 since 11:13:50Z** (`X/JLmPJZ..`, S3 `Jg3uJ0x7..`, members at `ff8fd77ba2`; CTO halves
 batches 146/148; ledger `irpt-status-e7b-20261002` CLOSED @2ab0eec3cb; E7 CLOSED SUPERSEDED). V1: every plain read equal to
