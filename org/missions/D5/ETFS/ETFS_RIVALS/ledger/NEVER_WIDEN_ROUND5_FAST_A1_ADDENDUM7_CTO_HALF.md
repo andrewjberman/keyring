@@ -35,3 +35,9 @@
    CALL 9 were. Any amendment is a new addendum.
 
 **CTO HALF: SIGNED** for plan 0/5/0 at CLOUD 7ab3b9382f, blast radius H1-H3, both branches.
+
+**Condition 4 (added ~11:2xZ, on CRO~RV CALL 10 @d7ddc352d9).** CALL 10 ratified the identifier rule, but found that an invented
+ticker ("1234 JP Equity") passes unchecked as shipped. The addendum-7 apply stays ungated, because only TXUE's STORED row moves and
+no new AI text is graded by it. **No AI seat run (CALL 5's next page day, F5) executes until the `unknown_identifier` check ships:**
+a ticker-form token passes only if it matches a security key in that fund's facts for the run; otherwise it FAILs. That check is
+its own addendum, with a planted invented ticker that reads FAIL.
