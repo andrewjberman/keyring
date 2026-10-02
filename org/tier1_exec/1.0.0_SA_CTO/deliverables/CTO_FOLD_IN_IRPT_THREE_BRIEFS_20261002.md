@@ -79,3 +79,14 @@ one at a time (the solo gate). No YCharts browser sign-in is allowed during a ru
 Brief 2 is folded at @8a961a8573, not @80fa729b0e. Its section 3.3 had said that wiring the gates needed Andrew's word; Kimi is
 whitelisted as VEW-3, "can be called freely" (`org/ref/VENDOR_EGRESS_WHITELIST.yaml`). Ruling 5 above already reached the same
 conclusion, so nothing in the fold-in changes.
+
+## Andrew ruled, ~18:1xZ (relayed by `4.0.0_SA_CRO~X` msg 104339; record addendum 3 @7f197bcde6)
+
+His three rulings agree with batch 178, and they now carry his word:
+- **R1:** widen the precomputed path to every 49 Financial account now, then each firm (P-1 to P-3; batch 178 ruling 2).
+- **R2:** YCharts calls for cases A, B, C, D and the typo file are APPROVED, run one at a time with the queue empty (Y-1 to Y-6;
+  batch 178 ruling 5).
+- **R3:** gross for now. Net-fee operations are assessed later, per custodian or vendor (Orion, Cottonwood raw, Black Diamond).
+  This keeps batch 178 ruling 1 and adds the future scope.
+
+Named for later, NOT this round: Analysis end to end toward about 90 s. No fold-in item changes.
