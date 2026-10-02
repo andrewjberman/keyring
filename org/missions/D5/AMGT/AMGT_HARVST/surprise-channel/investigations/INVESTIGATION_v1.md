@@ -6366,6 +6366,28 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "Remedy: an issuer amendment adds the two test files to a cell's <paths> so ALL becomes gold.GRADED_PUBLISHERS (a one-token change per test). The suite counts in the ak-4 proof read the 4 as ak-4-caused, not stale."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S69",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-02T21:35Z",
+      "one_line": "RESOLVED by its disarm_owner: AMGT_HARVST-Z-W90-S22. The 4 research tests that pinned ENABLED_PUBLISHERS as the graded set now read GRADED_PUBLISHERS (ak-4's rule: ft is quarantined, so daily coverage is graded over 4 publishers). This is an issuer direct act on 2 test files.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/research/harvest/tests/test_o1_run_record_coverage.py:31 and tests/test_publication_gold_daily.py:284,366,372: gold.ENABLED_PUBLISHERS -> gold.GRADED_PUBLISHERS",
+          "python -m pytest lib/research/harvest -q at the base after ak-4's merge @eff5c79d35 plus this edit: 317 passed, 3 failed. The 3 are the Z-S68 timeline-day tests, unchanged; the 4 Z-W90-S22 tests pass"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "HVST-ak-4: daily coverage is graded over GRADED_PUBLISHERS = ENABLED_PUBLISHERS minus the quarantined publishers.",
+      "world_is": "The builder and its tests agree. ENABLED_PUBLISHERS still names ft, because the bytes are kept and the collector's set is unchanged; only the graded set drops it.",
+      "notes": "Direct act under the size floor (LOCAL, 2 test files, 4 lines). The Z-S68 stale timeline tests stay with the round's repair item."
     }
   ]
 ```
