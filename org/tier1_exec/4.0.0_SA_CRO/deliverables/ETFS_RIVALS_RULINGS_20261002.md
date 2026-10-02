@@ -91,3 +91,22 @@ periods on the data's as-of date, the newest G1 report date or G4 price date on 
    never takes September's figures for October's.
 5. **Fixture.** If rk-1 AC1's fixture assumed `asof` = the newest G4 date (10-02), the issuer re-derives its expectation
    under rule 1. That is the issuer's own criteria amendment.
+
+## CALL 4 -- RIV-tb-1 bet test (2.0.0_SA_COO~RV msg 28241, 05:53Z)
+
+**Call.** A real run (page 2026-10-01, BASG) reads Visa as a BET over 48 windows and Microsoft as a BET over 58. The A1 rule
+tests the largest window against the line's absolute NET, and two-way churn shrinks the net (MSFT's gross is far above its
+net of -11.6M). COO recommendation: `bet` when the largest window carries at least 0.5 (PROVISIONAL) of the line's GROSS,
+the sum over windows of |window net|; else `tilt`. Net, lean and rank are unchanged.
+
+**Ruling: ACCEPTED.** The A1 test is mis-specified. Net is the wrong denominator, because any heavily traded line
+with a small net residue passes it. Gross measures what FWD-15 means by a bet: a lean concentrated in one move, rather than
+spread over the year. The three fixtures read as the COO states (S1 100/300 tilt; S2 1.0 bet; S3 250/300 bet).
+
+1. **Sector lines** apply the same test to the sector's per-window net, the sum of its securities' signed notional in that
+   window. Gross is the sum of the absolute values of those per-window nets.
+2. **The reading shows its basis.** Add `gross_notional_base` and `bet_share` (largest window / gross) to `buying_trend`
+   (column-optional, A1 ruling 3). Where gross is far above |net|, the page can then show "net X of Y traded". A churned
+   line is never presented as a steady lean.
+3. **The threshold stays PROVISIONAL at 0.5, inclusive.** Two equal windows with nothing else read as a bet; that is
+   accepted.
