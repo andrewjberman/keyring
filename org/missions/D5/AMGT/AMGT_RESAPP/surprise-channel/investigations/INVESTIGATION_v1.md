@@ -17153,6 +17153,48 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   ]
  },
  "disposition": "UNDER_INVESTIGATION"
+},
+{
+ "id": "AMGT_RESAPP-Z-W212-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~212",
+ "surfaced_at": "2026-10-02T22:45:29Z",
+ "one_line": "The one display-name rule strips share-class codes but does not re-case: a name served from the model-block fallback stays all-caps (pinned by test_model_block_names 'HERMES INTERNATIONAL'), so 'not all-caps' holds only where the classifications table or crosswalk holds a cased name.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "AMGT-an-3 item 2: the served name is not all-caps and carries no share-class code, stripped by one rule.",
+ "world_is": "scoped_amgt._clean_display_name strips ADR/GDR/ADS and a trailing class marker only. The chain (monthly_chatter._display_names) is classification -> crosswalk -> model block -> ticker. For BA, AMD and VLO the classifications table holds a cased name, so r64_served c12 C2 passes on all 3. A key reaching the model-block step with an all-caps header NAME is served all-caps on every route alike (one name, not cased); test_model_block_names.py asserts 'HERMES INTERNATIONAL' as the overlay and row display_name. A re-casing rule would change that pinned test and is not in the cell's text.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "lib/research/api/tests/test_model_block_names.py:44 asserts overlay name == display_name == row display_name == 'HERMES INTERNATIONAL'.",
+   "r64_served.py --cell c12 --where local: PASS C2 for BA_US_Equity, AMD_US_Equity, VLO_US_Equity at the an-3 worktree commit."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+},
+{
+ "id": "AMGT_RESAPP-Z-W212-S2",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~212",
+ "surfaced_at": "2026-10-02T22:45:29Z",
+ "one_line": "Gold article_security_mention holds no url column, so the overlay feed items now serve url null; the feed moved from P-1 pool bodies (which carried a url) to the day view's gold source.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "AMGT-an-3 item 1: keep the item fields the page reads (article_key, url where gold has it, title/headline, publisher, published_at).",
+ "world_is": "GOLD_MENTION_SCHEMA (publication_gold.py:64-95) has no url field. read_feed items carry url from row.get('url'), which is None for every gold row; the portal's FeedItemRow links an item by url. The cell bars new processing of publisher article text, so no url is derived. Whether the page degrades to unlinked headlines is the portal's, not read here.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "lib/research/harvest/publication_gold.py GOLD_MENTION_SCHEMA field list, 29 fields, none named url.",
+   "Local gold article_security_mention first row read via _timeline_snapshot_rows: keys include title, published_utc, article_key, publisher; no url."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
 }
 ]
 ```
