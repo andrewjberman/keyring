@@ -76,7 +76,7 @@ e-2.AC1 FAIL (control DVD_HIST_ALL OK) as expected; e-2.AC2 FAIL (control NULL O
 
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>6</round>
 <slot>~3</slot>
 <fabric>site-z</fabric>
