@@ -1,0 +1,39 @@
+data.terraform_remote_state.core: Reading...
+data.aws_iam_role.render_host: Reading...
+data.aws_lambda_layer_version.irpt_common: Reading...
+data.aws_dynamodb_table.service_profile_users: Reading...
+data.aws_secretsmanager_secret.irpt_render_private_key: Reading...
+data.aws_caller_identity.current: Reading...
+aws_ssm_document.export_render_run: Refreshing state... [id=irpt-export-render-run]
+aws_iam_role.export_render: Refreshing state... [id=irpt-export-render-role]
+data.aws_caller_identity.current: Read complete after 1s [id=313476888478]
+data.aws_s3_object.irpt_render_deps: Reading...
+data.aws_secretsmanager_secret.irpt_render_private_key: Read complete after 1s [id=arn:aws:secretsmanager:us-east-1:313476888478:secret:opal/auth/irpt-render-jwt-private-key-Rm6oGY]
+data.aws_iam_role.render_host: Read complete after 1s [id=irpt-ycharts-runner-role]
+aws_iam_role_policy.render_host_token_read: Refreshing state... [id=irpt-ycharts-runner-role:irpt-export-render-host-token-policy]
+aws_iam_role_policy.render_host_export_evidence: Refreshing state... [id=irpt-ycharts-runner-role:irpt-export-render-host-evidence]
+aws_iam_role_policy.render_host_parameter_fence: Refreshing state... [id=irpt-ycharts-runner-role:irpt-export-render-host-parameter-fence-policy]
+data.aws_lambda_layer_version.irpt_common: Read complete after 1s [id=arn:aws:lambda:us-east-1:313476888478:layer:irpt-common:5]
+data.aws_s3_object.irpt_render_deps: Read complete after 0s [id=opal-313476888478-lambda-layers/irpt-render-deps-layer.zip]
+aws_lambda_layer_version.irpt_render_deps: Refreshing state... [id=arn:aws:lambda:us-east-1:313476888478:layer:irpt-render-deps-layer:1]
+data.terraform_remote_state.core: Read complete after 1s
+data.aws_dynamodb_table.service_profile_users: Read complete after 1s [id=opal-users-v2]
+aws_iam_role_policy.export_render_submit: Refreshing state... [id=irpt-export-render-role:irpt-export-render-submit-policy]
+aws_iam_role_policy.export_render_directory_read: Refreshing state... [id=irpt-export-render-role:irpt-export-render-directory-read-policy]
+aws_iam_role_policy.export_render_dispatch: Refreshing state... [id=irpt-export-render-role:irpt-export-render-dispatch]
+aws_iam_role_policy.export_render_ownership_map: Refreshing state... [id=irpt-export-render-role:irpt-export-render-ownership-map-read-policy]
+aws_iam_role_policy.export_render_receipt: Refreshing state... [id=irpt-export-render-role:irpt-export-render-receipt-policy]
+aws_iam_role_policy.export_render_evidence: Refreshing state... [id=irpt-export-render-role:irpt-export-render-evidence]
+aws_iam_role_policy.export_render_service_profile_read: Refreshing state... [id=irpt-export-render-role:irpt-export-render-service-profile-read-policy]
+aws_iam_role_policy.export_render_logs: Refreshing state... [id=irpt-export-render-role:irpt-export-render-logs]
+aws_iam_role_policy.export_render_token_carriage: Refreshing state... [id=irpt-export-render-role:irpt-export-render-token-carriage-policy]
+module.irpt_export_render.data.aws_s3_object.artifact: Reading...
+module.irpt_export_render.aws_cloudwatch_log_group.lambda: Refreshing state... [id=/aws/lambda/irpt-export-render]
+module.irpt_export_render.data.aws_s3_object.artifact: Read complete after 0s [id=opal-313476888478-lambda-artifacts/investor-reporting/irpt-export-render.zip]
+module.irpt_export_render.aws_lambda_function.this: Refreshing state... [id=irpt-export-render]
+aws_lambda_function_event_invoke_config.export_render_async: Refreshing state... [id=irpt-export-render]
+
+No changes. Your infrastructure matches the configuration.
+
+Terraform has compared your real infrastructure against your configuration
+and found no differences, so no changes are needed.

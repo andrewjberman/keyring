@@ -1,0 +1,10 @@
+ssm 8b81f162-fb30-4d87-8d43-e448fb91b6d7 Success rc 0
+headed-deps-read 2026-10-02T09:53:17Z
+/home/ec2-user/.cache/ms-playwright/chromium-1228/chrome-linux64/chrome: missing []
+/root/.cache/ms-playwright/chromium-1187/chrome-linux/chrome: missing []
+/root/.cache/ms-playwright/chromium-1228/chrome-linux64/chrome: missing []
+which playwright the library loads: /opt/investor-reporting-ycharts/node_modules/playwright/index.js
+its chromium revision: /root/.cache/ms-playwright/chromium-1228/chrome-linux64/chrome
+dnf would install for the display: 
+fonts present: 10
+

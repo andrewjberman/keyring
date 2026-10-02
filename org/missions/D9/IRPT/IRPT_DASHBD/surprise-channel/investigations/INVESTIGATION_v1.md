@@ -346,3 +346,466 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "notes": "ALSO CORRECTED IN THE SAME TURN, and found by the same check: the one-page md's first table row carried the 2026-04-08 period's returns against the 2026-03-16..2026-06-30 label, with invented day counts (69/73 and 4 gaps instead of the record's 65/73 and 8). I caught both by printing every cell of the table from the record before committing the md rather than trusting what I had typed. The JSON record was correct throughout -- only my prose copies were wrong, which is the argument for the record being the artifact and the md being a view of it. NO ACT IS OWED BY ANOTHER SEAT on this row."
 }
 ```
+
+## IRPT_DASHBD-W1-S1 -- series.json.gz has no X10 family: the validator refuses both the extension and a second family on the table; manifest family registered alone
+
+```json
+{
+  "id": "IRPT_DASHBD-W1-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1",
+  "surfaced_at": "2026-10-02T02:45:00Z",
+  "one_line": "TO-DB-b-2 amendment 1 asks for a platinum/reporting policy family PER served file; the X10 validator refuses series.json.gz (extension) and refuses two families on one table, so only the MANIFEST family is registered, as the amendment's own fallback says.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-2 ISSUER AMENDMENT 1 (PRD v0.3 ruling 16): add, for firm 49financial, the families the X10 register admits for the two served files, tier platinum, table reporting, one family per file; if the validator refuses series.json.gz as an extension, record the refusal text verbatim in a row and register the manifest family alone.",
+  "world_is": "lib/opal_naming.py:_validate_reporting_policies, probed against the live registry with a candidate policy (probe script .scratch/pol_probe.py in the worker worktree, not committed): (A) a SERIES family with extension 'json.gz' -> ValueError 'reporting content format is not admitted' (the admitted set is csv/json/pdf, line 1822); (B) the same with a MANIFEST family beside it -> the same refusal; (C) SERIES with extension 'json' plus MANIFEST with extension 'json', both table 'reporting' -> ValueError 'reporting families must have distinct tables' (line 1819); (D) the MANIFEST family alone -> accepted. Registered: infra/logic/registry/reporting_policies.json policy irpt-dashbd-served-reporting, revision irpt-dashbd-x10-v1, firms [49financial], family SERVED_MANIFEST (platinum, reporting, json, unreferenced_days null, accepted_ceiling_days 2555), state PENDING_ENFORCEMENT with enforcement_ref null (an ACTIVE state requires an accepted enforcement commit this cell does not hold; nothing here calls reporting_destination, the publisher addresses the files with address()). lib.opal_naming.load_registry() loads; DB-2-AC1's policy limb reads 1 platinum/reporting family for 49financial.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py lines 1814-1825 @11bf813387",
+      "infra/logic/registry/reporting_policies.json @11bf813387"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The series.json.gz file therefore has NO X10 family: its retention/disposal class is unregistered. Whether the registry should admit a gzip JSON format or two families per table is the registry owner's call; nothing in this cell depends on it."
+}
+```
+
+## IRPT_DASHBD-W1-S2 -- the naming gate refuses the firm-tokened source-map key the order names; the artifact is keyed by the scope-less builder name
+
+```json
+{
+  "id": "IRPT_DASHBD-W1-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1",
+  "surfaced_at": "2026-10-02T02:50:00Z",
+  "one_line": "TO-DB-b-2 names the source-map entry and the build invocation irpt-49f-reporting-publish-lambda; the commit-time naming gate REFUSES a new hand-kept firm token ('49f') in lambda-source-map.json, so the entry is keyed irpt-reporting-publish-lambda (scope-less builder name) and the artifact is investor-reporting/irpt-reporting-publish-lambda.zip.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-2 WORKER FACE: 'Register the function in lambda-source-map.json (a new entry shaped like irpt-holdings-performance-lambda) and run build-and-upload.sh investor-reporting irpt-49f-reporting-publish-lambda'; the Terraform artifact_key is investor-reporting/<name>.zip.",
+  "world_is": "safe-commit.sh's naming limb (.tools/naming-gate.py, ENFORCE) refused the commit with NAMING REFUSE infra/aws/lambda/ci/lambda-source-map.json irpt-49f-reporting-publish-lambda ('CONFORMANT as LAMBDA, but a NEW hand-kept carrier of 49f outside every permitted context: read it through lookup(49financial)') on the map key and on its iam_role value, and on the same name typed in two Terraform output descriptions. The existing firm-token keys in that map (bd-49f-*) predate the gate. Done instead: the map key is the scope-less builder name name('irpt', None, 'reporting-publish', 'lambda') = irpt-reporting-publish-lambda, derived in Terraform by an opal_name module with no scope; the Lambda FUNCTION is still the firm-scoped builder name (irpt-49f-reporting-publish-lambda, scope = the registry-derived firm) and its role irpt-49f-reporting-publish-role; the entry carries no iam_role (no tool reads it). The build invocation is build-and-upload.sh investor-reporting irpt-reporting-publish-lambda. The issuer's apply plans against artifact key investor-reporting/irpt-reporting-publish-lambda.zip.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "naming-gate output on the first safe-commit attempt of this worker's second commit, 2026-10-02 ~02:40Z",
+      "infra/aws/terraform/investor-reporting/reporting-publish/lambda.tf module irpt_reporting_publish_artifact_name"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-S12 -- The served platinum file series.json.gz has NO retention family in the X10 register: the validator admits only csv/json/pdf and one family per table, so round 1 registered the manifest family alone (row W1-S1). Whether the register admits gzip JSON or a second reporting table is the register owner's question (CTO round-1 analysis E2); the served file is not blocked on it.
+
+```json
+{
+ "id": "IRPT_DASHBD-S12",
+ "project": "IRPT_DASHBD",
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~P",
+ "surfaced_at": "2026-10-02T05:05:00Z",
+ "disposition": "UNDER_INVESTIGATION",
+ "one_line": "The served platinum file series.json.gz has NO retention family in the X10 register: the validator admits only csv/json/pdf and one family per table, so round 1 registered the manifest family alone (row W1-S1). Whether the register admits gzip JSON or a second reporting table is the register owner's question (CTO round-1 analysis E2); the served file is not blocked on it.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "4.0.0_SA_CRO (incumbent of lane IRPT_COMPLETION_REGISTRY, the X10 policy in infra/logic/registry/reporting_policies.json; naming-owner review per the lane note)",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "row IRPT_DASHBD-W1-S1 (worker 0.9.0_WK_IRPT_DASHBD~1, merged @9000ce5a08): lib/opal_naming.py:_validate_reporting_policies refused a SERIES family with extension 'json.gz' ('reporting content format is not admitted', admitted set csv/json/pdf) and refused two families on table 'reporting' ('reporting families must have distinct tables'); the MANIFEST family alone was accepted.",
+   "infra/logic/registry/reporting_policies.json at CLOUD @9000ce5a08: policy irpt-dashbd-served-reporting, revision irpt-dashbd-x10-v1, firms [49financial], one family SERVED_MANIFEST (platinum, reporting, json), state PENDING_ENFORCEMENT.",
+   "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_ROUND_1_B_20261002.md section 3 item E2: 'as a registry question to the registry's owner (infra/logic/registry/), carried as one row; not a build cell in this round. The served file is not blocked on it.'",
+   "git show HEAD:.owned-paths.yaml: lane IRPT_COMPLETION_REGISTRY permitted_agents 4.0.0_SA_CRO, ~A, ~B, ~C, ~D, 2.0.0_SA_COO~M ('X10 twelve-family policy')."
+  ]
+ },
+ "spec_asserts": "TO-DB-b-2 issuer amendment 1 on PRD v0.3 ruling 16: round-1 policy rows cover the platinum served files, one family per file (series.json.gz and manifest.json).",
+ "world_is": "MEASURED: one of the two served files has a family; series.json.gz, the file the page reads, has none, so its retention and disposal class is unregistered.",
+ "notes": "Two remedies the register owner can choose between: admit a gzip JSON content format, or admit a second reporting table (for example reporting_series) so the series takes its own family. Either is a register edit plus the validator's admitted set; neither is an IRPT_DASHBD build cell."
+}
+```
+
+## IRPT_DASHBD-S13 -- Nothing refreshes the reporting gold the publisher reads: account_return_daily ends at date=2026-09-28 (559 partitions) and no schedule, runner or Lambda runs account_return_daily.py, so on 2026-10-02 the gold is three trading days behind T-1 and E1's 08:15 ET publisher schedule would republish the 2026-09-28 series every weekday.
+
+```json
+{
+ "id": "IRPT_DASHBD-S13",
+ "project": "IRPT_DASHBD",
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~P",
+ "surfaced_at": "2026-10-02T05:20:00Z",
+ "disposition": "UNDER_INVESTIGATION",
+ "one_line": "Nothing refreshes the reporting gold the publisher reads: account_return_daily ends at date=2026-09-28 (559 partitions) and no schedule, runner or Lambda runs account_return_daily.py, so on 2026-10-02 the gold is three trading days behind T-1 and E1's 08:15 ET publisher schedule would republish the 2026-09-28 series every weekday.",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "disarm_owner": "1.0.0_SA_CTO (an addendum to the round-1 analysis: the adapter's scheduled fire as a round-2 cell, and its order against E1's publisher schedule)",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "aws s3api list-objects-v2 --bucket opal-data-49financial --prefix irpt/49financial/gold/account_return_daily/ --delimiter / (2026-10-02 ~05:1xZ): 559 date= partitions, newest date=2026-09-28.",
+   "comp-find 'irpt_reporting|account_return_daily' infra/ data/assets/scripts/: 118 hits across 12,647 files; band CONFIG 11 of 11 are sources.json and the two new lambda-source-map.json entries (publisher, read route); no schedule, EventBridge rule, runner script or Lambda packages or invokes account_return_daily.py.",
+   "decompositions/IRPT_DASHBD_DECOMP.md section 1, 'Carried, not cut': 'the scheduled fire of the adapter (round 2, its own ledger, as IB-er-203 was to IB-er-202)'; section 1 also: the adapter is 'run ad hoc for the round-1 sample (a QA run)'.",
+   "lib/trading_calendar.py: 2026-10-02 is a Friday; the T-1 trading day is 2026-10-01; 2026-09-29, 09-30 and 10-01 are absent from the gold."
+  ]
+ },
+ "spec_asserts": "CTO round-1 analysis @57304c750b section 3 E1: 'The 08:15 ET schedule is the production trigger (a success-of-upstream trigger would be a defect); the gold it reads is T-1.'",
+ "world_is": "MEASURED: the gold is frozen at 2026-09-28 and nothing in the estate moves it; the 08:15 ET publisher would serve an as_of of 2026-09-28 on every weekday until the adapter runs on its own clock. CLAUDE.md: production pipelines MUST be scheduled; an ad-hoc gold run is QA evidence, never production.",
+ "notes": "Recommended: add the adapter's scheduled fire as round-2 cell DB-b-7 (a scheduled Lambda packaging account_return_daily.py unedited, the holdings-performance pattern, its own root and ledger, firing before 08:15 ET), apply E1's read root now, and apply the publisher's schedule in the same packet only once the adapter's schedule is applied. The read route serves the 2026-09-28 series honestly meanwhile (its manifest carries as_of)."
+}
+```
+
+## IRPT_DASHBD-S14 -- The reporting-read role reads more than the order's 'ONLY the platinum prefix': it also reads the directory pointer + artifact and the ownership map (the scope dependencies the shared boundary re-reads per request) and the service-profile row in opal-users-v2; the code cites row W1-S3 for this, which was never filed (the stopped worker's comment).
+
+```json
+{
+ "id": "IRPT_DASHBD-S14",
+ "project": "IRPT_DASHBD",
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~P",
+ "surfaced_at": "2026-10-02T05:30:00Z",
+ "disposition": "UNDER_INVESTIGATION",
+ "one_line": "The reporting-read role reads more than the order's 'ONLY the platinum prefix': it also reads the directory pointer + artifact and the ownership map (the scope dependencies the shared boundary re-reads per request) and the service-profile row in opal-users-v2; the code cites row W1-S3 for this, which was never filed (the stopped worker's comment).",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~P (named in the E1 never-widen packet's blast radius; the CTO half reads it)",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "infra/aws/terraform/investor-reporting/reporting-read/iam.tf:3-7 and statements ReadCurrentScopeDependencies (local.irpt_rr_scope_dependency_arns) and the service-profile policy :99-138 (dynamodb:Query on opal-users-v2/index/email-index, dynamodb:GetItem on opal-users-v2, kms:Decrypt via DynamoDB only) at CLOUD @76a5e50ed3.",
+   "TO-DB-b-4 worker face: 'a role reading ONLY the platinum prefix of the firm bucket'.",
+   "the channel at @76a5e50ed3 holds W1-S1 and W1-S2 only; iam.tf:7 cites 'row IRPT_DASHBD-W1-S3', which no channel file carries."
+  ]
+ },
+ "spec_asserts": "TO-DB-b-4: the read function's role reads ONLY the platinum prefix of the firm bucket.",
+ "world_is": "MEASURED: the role also carries the Holdings function's scope-dependency grants (directory + ownership map, object-scoped) and the service-profile read; without them the shared boundary cannot resolve a viewer's scope or a service principal's allowed firms. A product read beyond platinum: none. Write: none.",
+ "notes": "Accepted as the boundary's own dependency, not a widening of the product read: the E1 packet lists every statement. iam.tf:7 is re-pointed from W1-S3 to this row."
+}
+```
+
+## IRPT_DASHBD-S15 -- The read route is created in its own root against the existing portal API and is NOT in docs/contracts/investor-reporting/v1/routes.json, the file routetable.py calls the ONE carrier of the route table; so the unguarded-route census and the api root do not see it. The code cites row W1-S4 for this, which was never filed.
+
+```json
+{
+ "id": "IRPT_DASHBD-S15",
+ "project": "IRPT_DASHBD",
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~P",
+ "surfaced_at": "2026-10-02T05:30:00Z",
+ "disposition": "UNDER_INVESTIGATION",
+ "one_line": "The read route is created in its own root against the existing portal API and is NOT in docs/contracts/investor-reporting/v1/routes.json, the file routetable.py calls the ONE carrier of the route table; so the unguarded-route census and the api root do not see it. The code cites row W1-S4 for this, which was never filed.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "1.0.0_SA_CTO (whether the route joins routes.json and the api root's function map, or stays in its own root with a census entry)",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "infra/aws/terraform/investor-reporting/reporting-read/api.tf:1-11, :24-30 (aws_apigatewayv2_route under the EXISTING CUSTOM authorizer, local.portal_authorizer) at CLOUD @76a5e50ed3.",
+   "infra/aws/lambda/investor-reporting/_authz/routetable.py:12-15: routes.json is 'the ONE carrier of the route table ... A route that is not here is not reachable, and a route that is here is.'",
+   "TO-DB-b-4: 'adding a route to ANOTHER function's ROUTES or to the deployed boundary's route table raised EntryError' (IRPT_BCKEND-W88-S1), which is why the route was declared in its own root."
+  ]
+ },
+ "spec_asserts": "routetable.py:12-15: every reachable route is in routes.json.",
+ "world_is": "MEASURED BY CODE READ, NOT EXERCISED: once E1 applies, one reachable route exists outside routes.json, so routetable.py's census population omits it (its guardedness is then asserted by DB-4-AC1's local refusal arm only).",
+ "notes": "Not a runtime refusal: API Gateway serves the route from this root's resources; the authorizer is the existing portal one. api.tf:11 is re-pointed from W1-S4 to this row."
+}
+```
+
+## IRPT_DASHBD-W1-S5 -- the 1,498.38 USD residual on 0027265115 is a whole-window net of four offsetting classes, not one leg on 2026-07-07
+
+```json
+{
+  "id": "IRPT_DASHBD-W1-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1",
+  "surfaced_at": "2026-10-02T06:10:00Z",
+  "one_line": "TO-DB-b-6: the 1,498.38 USD residual on 0027265115 is not on 2026-07-07 and not one leg; it is the whole-window net of four offsetting classes (in-kind -7,252.16, margin interest +10,724.31, per-asset trade/merger -3,277.48, cash +1,303.71), and DB-6-AC1 sums is_residual legs by absolute value so a signed net can only pass through a derived net leg.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-6 cell: the residual sits on a flow day after a 925.02 fee leg and is made by ONE leg (in-kind valued differently, internal-here/external-at-vendor, or other); DB-6-AC1 sums the is_residual legs in absolute value to the residual.",
+  "world_is": "MEASURED: Opal gold external_flow over 2026-03-16..2026-08-28 = 1,043,100.5277 and Black Diamond account netAdditions for the same range = 1,044,598.9077, difference 1,498.38; the 2026-07-07 fee leg matches to the cent (Schwab TPFEE 2,423.40 = vendor fees 2,423.40). The difference decomposes across 8 in-kind legs, 1 margin-interest asset, 532 per-asset trade differences and the CASH asset with mixed signs; the record carries one derived net leg flagged is_residual and the components unflagged because the check adds absolute values.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1/FLOW_RESIDUAL_0027265115_R2.json",
+      "s3://opal-data-assets/blackdiamond/49f/bronze/reporting_performance/2026-08-30/reporting_performance_22596361_2026-08-28.json",
+      "s3://opal-data-assets/schwab/08335338/silver/fact_trn/date=2026-07-07/data.parquet",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~P/checks/r2/p2_6_ac1_flow_residual_record.py line 'resid_sum += abs(amount)'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The Black Diamond transactions/activity family is not landed (bronze holds reporting_performance, allocation, costbasis, fees, roster); per-day vendor flow detail would live there. Grading of the net-versus-leg framing is the CTO's ruling."
+}
+```
+
+## IRPT_DASHBD-S16 -- The seating lint (.tools/to-decomp-ref-lint.py, gate2, ANNOUNCE) read TO-DB-b-6's <issued_to> 0.9.0_WK_IRPT_DASHBD~1 as '0.9.0_WK_IRPT' and reported it as holding three open IRPT_BCKEND orders (IB-rth-3, IB-yr-242, IB-yr-261), which belong to 0.9.0_WK_IRPT_BCKEND~<n> slots: two projects' worker slots collapse to one seat. Armed (pipeline-gate2.enforce), it would refuse a correct issuance.
+
+```json
+{
+ "id": "IRPT_DASHBD-S16",
+ "project": "IRPT_DASHBD",
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~P",
+ "surfaced_at": "2026-10-02T05:45:00Z",
+ "disposition": "UNDER_INVESTIGATION",
+ "one_line": "The seating lint (.tools/to-decomp-ref-lint.py, gate2, ANNOUNCE) read TO-DB-b-6's <issued_to> 0.9.0_WK_IRPT_DASHBD~1 as '0.9.0_WK_IRPT' and reported it as holding three open IRPT_BCKEND orders (IB-rth-3, IB-yr-242, IB-yr-261), which belong to 0.9.0_WK_IRPT_BCKEND~<n> slots: two projects' worker slots collapse to one seat. Armed (pipeline-gate2.enforce), it would refuse a correct issuance.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "1.0.0_SA_CTO (the gate's owner: the seating frame's serial parse, before pipeline-gate2.enforce is ever created)",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "safe-commit output of the issuance @97eaff05ff, 2026-10-02 ~04:58Z: '[gate2] SEATING: this NEW task order for IRPT_DASHBD is addressed to 0.9.0_WK_IRPT, which already holds open TOs on 1 OTHER pipeline project(s): IRPT_BCKEND (3 open: IRPT_BCKEND.TO-IB-rth-3..., IRPT_BCKEND.TO-IB-yr-242..., IRPT_BCKEND.TO-IB-yr-261...)' then '[gate2] ANNOUNCE mode -- NOT blocking this commit.'",
+   "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-6.flow-residual-0027265115.md:5 <issued_to>0.9.0_WK_IRPT_DASHBD~1</issued_to>; the three IRPT_BCKEND orders are issued to 0.9.0_WK_IRPT_BCKEND~<n> slots (to-check census at session start).",
+   "CLAUDE.md rule 27: the seating rule is ONE PROJECT PER TIER-2 SEAT INSTANCE; a worker is a subagent slot, 0.9.0_WK_<CODE>~<n>, whose CODE is the project."
+  ]
+ },
+ "spec_asserts": "to-decomp-ref-lint seating frame: one project per seat instance, keyed by the full serial.",
+ "world_is": "MEASURED: the frame keys on a truncated serial, so every 0.9.0_WK_IRPT_* slot of every IRPT project is one 'seat'. ANNOUNCE today; the false refusal is reachable the moment the enforce file exists.",
+ "notes": "Not this project's to fix; carried here because this order tripped it. The order stands as cut."
+}
+```
+
+## IRPT_DASHBD-S17 -- Row S16 is NOT fixed at HEAD: the seating lint's SERIAL_RE fix @453c6430ec (the name class admits an underscore) is an ancestor of HEAD, and the round-3 issuance @c75ddc5d61 still printed 'addressed to 0.9.0_WK_IRPT' for both new orders, so the truncation happens on another path than SERIAL_RE.
+
+```json
+{
+ "id": "IRPT_DASHBD-S17",
+ "project": "IRPT_DASHBD",
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~P",
+ "surfaced_at": "2026-10-02T07:00:00Z",
+ "disposition": "UNDER_INVESTIGATION",
+ "one_line": "Row S16 is NOT fixed at HEAD: the seating lint's SERIAL_RE fix @453c6430ec (the name class admits an underscore) is an ancestor of HEAD, and the round-3 issuance @c75ddc5d61 still printed 'addressed to 0.9.0_WK_IRPT' for both new orders, so the truncation happens on another path than SERIAL_RE.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "1.0.0_SA_CTO (the gate's owner; the CTO's round-2 analysis section 3 answered S16 as fixed)",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "git merge-base --is-ancestor 453c6430ec HEAD -> true at CLOUD c75ddc5d61; git show 453c6430ec -- .tools/to-decomp-ref-lint.py: SERIAL_RE's name class changed from [A-Za-z0-9]* to [A-Za-z0-9_]*.",
+   "safe-commit output of the round-3 issuance @c75ddc5d61, 2026-10-02 ~06:5xZ: '[gate2]   REFUSED: ...IRPT_DASHBD.TO-DB-b-7...' and '...TO-DB-b-9...', each with 'SEATING: this NEW task order for IRPT_DASHBD is addressed to 0.9.0_WK_IRPT, which already holds open TOs on 1 OTHER pipeline project(s): IRPT_BCKEND (3 open ...)'; ANNOUNCE mode, not blocking.",
+   "both orders carry <issued_to>0.9.0_WK_IRPT_DASHBD~1</issued_to> (line 5)."
+  ]
+ },
+ "spec_asserts": "CTO_ROUND_ANALYSIS_IRPT_DASHBD_ROUND_2_B_20261002.md section 3: 'S16 ... fixed @453c6430ec (SERIAL_RE admits an underscore) and on origin since the 2026-10-01 push. Answered.'",
+ "world_is": "MEASURED: with the fix at HEAD, the lint's seating frame still keys the two new orders on '0.9.0_WK_IRPT'. Not measured: which function truncates (the issued_to parse or the holdings index).",
+ "notes": "ANNOUNCE only; the orders stand as cut. S16 stays open under this correction."
+}
+```
+
+## IRPT_DASHBD-W1-S6 -- TO-DB-b-7: no fire minute exists under the order's rule -- schwab dim_position and dim_balance for date=2026-09-29 landed 2026-09-30 17:46:40 ET (single object version, 12 hours after the 05:46 ET pat
+
+```json
+{
+  "id": "IRPT_DASHBD-W1-S6",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1",
+  "surfaced_at": "2026-10-02T07:40:00Z",
+  "one_line": "TO-DB-b-7: no fire minute exists under the order's rule -- schwab dim_position and dim_balance for date=2026-09-29 landed 2026-09-30 17:46:40 ET (single object version, 12 hours after the 05:46 ET pattern every other measured day holds), and holdings_performance_daily date=2026-09-28's current object was rewritten 2026-09-29 10:45:04 ET; the fire-time limb is STOPPED and no time is chosen.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-7: choose the earliest whole minute at or after the latest landing seen plus >= 10 minutes, strictly before the publisher's 08:15 ET; 'If no such minute exists (an input lands after 08:05 ET on any measured day), STOP that limb: it is a row naming the input and the days, never a later publisher time chosen here.' DB-7-AC1 and DB-7-AC3 grade a chosen time and a plan carrying the schedule at it.",
+  "world_is": "MEASURED over the last 12 date= partitions (2026-09-15..2026-09-30) of each of the four inputs, America/New_York: fact_trn latest 05:46; dim_position and dim_balance latest 17:46 (date=2026-09-29 -> LastModified 2026-09-30 17:46:40 EDT, list_object_versions shows ONE version, so it is the first landing, not a rewrite; the other 11 days land 05:46); holdings_performance_daily latest 10:45 (date=2026-09-28 current version 2026-09-29 10:45:04, first version 2026-09-29 07:30:21 = the scheduled 07:30 fire; its other partitions are manual rewrites at 05:25 on 09-29, its organic scheduled landings so far are 09-28 at 07:30:21 and 09-30 at 2026-10-01 07:30:19). No chosen minute exists, so REPORTING_GOLD_FIRE_TIME_R3.json carries chosen_et and chosen_cron null with status STOPPED, DB-7-AC1 FAILs (not an HH:MM time) and DB-7-AC3 FAILs (no schedule at the recorded cron). The Terraform root reads the cron from the record and plans no schedule while it is null. INFORMATION, NOT A CHOICE: with the one 17:46 silver day set aside, the silver pattern is 05:46:44 and the holdings guard fires 07:30 and writes by 07:30:21, which would admit a minute in 07:41..08:14; setting it aside is the issuer's or the CTO's ruling. A fixed clock cannot cover a 12-hour-late silver day in either case: that day's partition is absent when a 07:xx fire runs.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1/REPORTING_GOLD_FIRE_TIME_R3.json",
+      "s3://opal-data-assets/schwab/08335338/silver/dim_balance/date=2026-09-29/data.parquet (list_object_versions: 1 version, LastModified 2026-09-30T17:46:40-04:00)",
+      "s3://opal-data-assets/schwab/08335338/silver/dim_position/date=2026-09-29/data.parquet (list_object_versions: 1 version, LastModified 2026-09-30T17:46:40-04:00)",
+      "s3://opal-data-49financial/irpt/49financial/gold/holdings_performance_daily/date=2026-09-28/data.parquet (2 versions: 2026-09-29T07:30:21-04:00, 2026-09-29T10:45:04-04:00)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner of the ruling: 2.0.0_SA_COO~P (the order) / 1.0.0_SA_CTO. Once a chosen_cron is written into the record, re-running terraform plan in infra/aws/terraform/investor-reporting/reporting-gold/ adds the schedule and its scheduler role with no other edit."
+}
+```
+
+## IRPT_DASHBD-W1-S7 -- TO-DB-b-7: the order is silent on two facts the handler had to decide -- the served gold holds SIX accounts per partition (not the ~7,800 the silver carries), and the producer's main() --upload also r
+
+```json
+{
+  "id": "IRPT_DASHBD-W1-S7",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1",
+  "surfaced_at": "2026-10-02T07:41:00Z",
+  "one_line": "TO-DB-b-7: the order is silent on two facts the handler had to decide -- the served gold holds SIX accounts per partition (not the ~7,800 the silver carries), and the producer's main() --upload also rewrites dim_return_method (tieout null, measured_at now) which the role may not write; the handler takes the newest partition's account set and omits that one call.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-7: 'run the producer for EVERY trading day after it through T-1 ... upload' and DB-7-AC2 'reproduces the served partition row for row'; the role writes ONLY the account_return_daily gold prefix.",
+  "world_is": "MEASURED: s3://opal-data-49financial/irpt/49financial/gold/account_return_daily/date=2026-09-28/ holds 6 rows (accounts 0010783709, 0027265115, 0035940058, 0076459710, 0084073310, 0091939812; manifest rows=6), so a scheduled run with no --accounts restriction would write ~7,800 accounts into a partition family of six. READ at account_return_daily.py main() (lines 1851-1856): every --upload ends with emit_method_row(..., tieout=args.tieout) -- a write to the dim_return_method prefix outside the role's grant, with tieout_tolerance_proposed null unless --tieout is passed. Handler decision (infra/aws/lambda/investor-reporting/reporting-gold/handler.py): accounts = account_ids of the gold's newest landed partition (event 'accounts' overrides); the producer's own load_declaration/firm_scope/first_data_dates/prefetch/compute_range/emit_day are composed as main() does, and emit_method_row is not called. The producer is unedited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py main() lines ~1820-1858 @e1b160d340",
+      "s3://opal-data-49financial/irpt/49financial/gold/account_return_daily/date=2026-09-28/manifest.json (rows 6; first_data_date keys: 6)",
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py compute()/run()"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Widening the population beyond six accounts is a separate deliberate act (the event's accounts key), not this function's default. Grading of the decision is the CTO's."
+}
+```
+
+## IRPT_DASHBD-W1-S8 -- TO-DB-b-7: amendment 1 set aside one day, but 9 of the 12 holdings partitions are first-written by a 2026-09-28 20:25 ET bulk backfill; excluded as unscheduled writes, 07:41 ET chosen
+
+```json
+{
+  "id": "IRPT_DASHBD-W1-S8",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1",
+  "surfaced_at": "2026-10-02T08:10:00Z",
+  "one_line": "TO-DB-b-7 amendment 1 set aside ONE incident (the 09-29 silver day) but holdings_performance_daily's first versions for 9 of the 12 measured partitions (2026-09-15..09-25) are the 2026-09-28 20:25 ET bulk catch-up act, also after 08:05 ET; the worker excluded them as unscheduled writes on the amendment's own clause (a) and chose 07:41 ET.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-7 amendment 1: a landing is a partition's FIRST version's LastModified; one day is set aside as an incident; latest_landing_et is over the rest; days_measured >= 10; expected fire 07:41 ET (07:30:21 + 10 min).",
+  "world_is": "MEASURED by list_object_versions over opal-data-49financial irpt/49financial/gold/holdings_performance_daily/: the partitions 2024-07-09..2026-09-25 (hundreds) were all first written by one manual backfill on 2026-09-28 20:25-21:36 ET and rewritten 2026-09-29 02:43/02:56 and 05:05/05:25; the guard's own scheduled writes exist for only two days (date=2026-09-28 first version 2026-09-29 07:30:21, date=2026-09-30 first version 2026-10-01 07:30:19), plus date=2026-09-29 first version 2026-10-01 03:13:37 (an unscheduled run, before 07:30). Read literally, first-version landings 2026-09-28 20:25 for 9 of the 12 window partitions put the latest landing at 20:26 and the order's own stop clause fires again; the record instead lists all 12 first versions (days_measured 12) and carries each of the 9 backfill partitions in `excluded` with reason, so latest_landing_et for the holdings input is 07:30 (03:13 and 07:30:21/07:30:19 remaining). The record's `excluded` list holds 11 entries (2 silver incident + 9 backfill). Result: chosen 07:41 ET, plan 7 to add, 0 change, 0 destroy. The extension of the ruling from one day to the backfill partitions is the worker's reading of clause (a) (a landing is the scheduled write), not stated in the amendment. Only two organic scheduled holdings landings exist, so the holdings input's scheduled-landing pattern rests on 2 days of 07:30:2x; the guard is a 07:30 cron, so it cannot land before 07:30.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1/REPORTING_GOLD_FIRE_TIME_R3.json (excluded list, 11 entries)",
+      "s3://opal-data-49financial/irpt/49financial/gold/holdings_performance_daily/ (list_object_versions, 12 window partitions)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Residual for the issuer's packet, also written into the record's notes: a day whose holdings guard lands after the fire emits with the guard not reached and is not re-emitted later. Owner of grading the extension: 2.0.0_SA_COO~P."
+}
+```
+
+## IRPT_DASHBD-W1-S9 -- TO-DB-b-9: the served 49F engine reads a vendored COPY of the table from its deployed bundle (s3 _code/ref/), and the reporting-gold Lambda a pinned one -- the table edit alone moves neither
+
+```json
+{
+  "id": "IRPT_DASHBD-W1-S9",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1",
+  "surfaced_at": "2026-10-02T08:50:00Z",
+  "one_line": "TO-DB-b-9: the order names the CRO's repo file as THE table, but the served 49F engine does not read it -- it reads a vendored byte-identical COPY in its deployed bundle at s3://opal-data-49financial/_code/ref/, so the table edit reaches the served engine only if the packet's deploy leg also lands that copy; the census also finds the reporting-gold Lambda packages its own pinned table.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-9: 'every served engine that reads the table moves under ONE packet with both halves' and the cell's pointer to the served 49F engine's reader a05_ref_txn_classification.py, whose SOURCE_JSON resolves the repo path org/tier1_exec/4.0.0_SA_CRO/deliverables/SCHWAB_TRANSACTION_CODE_CLASSIFICATION_20260811.json.",
+  "world_is": "MEASURED: a05_ref_txn_classification.py:40-45 tries the repo path first and otherwise reads _HERE/ref/SCHWAB_TRANSACTION_CODE_CLASSIFICATION_20260811.json (its own comment: the bundle layout reads a script-adjacent vendored copy that the deploy leg ships). The deployed bundle holds s3://opal-data-49financial/_code/a05_ref_txn_classification.py (2026-08-19 15:01, 6,278 bytes) and s3://opal-data-49financial/_code/ref/SCHWAB_TRANSACTION_CODE_CLASSIFICATION_20260811.json (2026-08-19 12:05, 64,794 bytes, sha256 d83ef318ed44... == the repo file's bytes today). So an edit of the CRO's file alone leaves the served 49F engine (gold/advi/reference/ref_txn_classification and canonical/flow_ledger, 562 partitions to 2026-09-30) classing FTP/FTR as EXTERNAL until that S3 copy is replaced. Two other homes of the table were found: infra/aws/lambda/ci/lambda-source-map.json entry irpt-reporting-gold-lambda packages a PINNED table (pin 5bb3b2626d, blob sha256 0f34bef7c850...) with a pinned producer (pin e1b160d340), and data/assets/scripts/gold/irpt_reporting/sources.json carries withholding_override_comment text describing the override the patch retires.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/runners_49f/a05_ref_txn_classification.py lines 40-45 @b7a512991b",
+      "aws s3 ls s3://opal-data-49financial/_code/ (2026-10-02 08:3xZ): the two keys above; aws s3 cp of the ref copy hashed sha256 d83ef318ed443b71a96ba95a4930cc04c7ce3a42756a5927418aecaee531df08 == sha256sum of the repo file (CRLF working bytes; git blob form 0f34bef7c850...)",
+      "infra/aws/lambda/ci/lambda-source-map.json entry irpt-reporting-gold-lambda staged_from[] @b7a512991b",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1/FTP_INTERNAL_BLAST_R3.json (the reader census)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Nothing moves in this cell. For the packet: the 49F half needs the vendored copy replaced in the same act (and a05 re-run so ref_txn_classification's table_version changes), the IRPT half needs the pinned table and producer re-staged together (the retirement alone, on the old table, would let FTP/FTR enter F_t). Owner of the packet: 2.0.0_SA_COO~P."
+}
+```
+
+## IRPT_DASHBD-W1-S10 -- TO-DB-b-9: the code table is generated and the two foreign-tax cells read EXTERNAL because of rule ORDER in the builder, so the CRO's edit is two files
+
+```json
+{
+  "id": "IRPT_DASHBD-W1-S10",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1",
+  "surfaced_at": "2026-10-02T09:05:00Z",
+  "one_line": "TO-DB-b-9: the CRO's table is GENERATED, and the cause of FTP/FC/WD and FTR/FC/WD reading EXTERNAL is rule ORDER in its builder (wd-generic precedes foreign-tax in a first-match list); a hand edit of the JSON that the builder is later re-run over would silently revert, so the CRO's edit is two files.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-9: 'both codes move to INTERNAL (tax) in the table's owner's edit (4.0.0_SA_CRO)' -- the cell treats the table as a file to edit.",
+  "world_is": "MEASURED by reading org/tier1_exec/4.0.0_SA_CRO/scripts/build_schwab_txn_classification.py @b7a512991b: RULES is a first-match list (classify() returns the first predicate that holds). Line 65 'wd-generic' R(sb={'WD','WI'}) -> EXTERNAL sits before line 74 'foreign-tax' R(code={'FTP','FTR'}) -> INTERNAL, so the cell (tran_srcde FTP, tr_cd FC, sb_cd WD) lands on wd-generic and the 'foreign-tax' rule only ever reaches the FC/FC cells (FTP/FC/FC 9 rows, FTR/FC/FC 12 rows, both INTERNAL in the table today). The BW* withholding codes on sb_cd WD are INTERNAL only because their 'withholding' rule (line 53) precedes wd-generic. The edited table copy used for the equivalence run therefore sets rule foreign-tax and partition INTERNAL on exactly the two cells, which is what moving foreign-tax ahead of wd-generic in the builder would regenerate.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/4.0.0_SA_CRO/scripts/build_schwab_txn_classification.py lines 53, 65, 74 and classify() @b7a512991b",
+      "org/tier1_exec/4.0.0_SA_CRO/deliverables/SCHWAB_TRANSACTION_CODE_CLASSIFICATION_20260811.json: FTP/FC/WD rule wd-generic EXTERNAL; FTP/FC/FC rule foreign-tax INTERNAL; FTR/FC/WD wd-generic EXTERNAL; FTR/FC/FC foreign-tax INTERNAL"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Nothing is edited here. For the CRO's edit: move the foreign-tax rule ahead of wd-generic in the builder (or hand-edit the two JSON rows and leave the builder note), and keep the two files agreeing. Owner: 4.0.0_SA_CRO / the packet's issuer."
+}
+```
+
+## IRPT_DASHBD-S18 -- the PRD names a function that does not exist and none of the seven reporting-gold resources
+
+```json
+{
+  "id": "IRPT_DASHBD-S18",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-02T09:50:00Z",
+  "one_line": "The PRD cites none of the seven reporting-gold resource names now live (DB-b-7, applied 08:03Z), and the one function name it does print, irpt-49f-reporting-adapter-lambda (PRD v0.6 line 152, C-NAMES), does not exist.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's DB-b-7 grade (2026-10-02 08:xZ-09:xZ): 7 of 7 live names equal lib/opal_naming.py name() output and the gold prefix equals address() output",
+      "org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md:152 (C-NAMES) prints irpt-49f-reporting-adapter-lambda; lambda get-function on it: ResourceNotFound; positive control, get-function on the live reporting-gold function: OK; 0 of 7 live names occur in the PRD"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md rule 30: the L4 PRD cites builder output for every new address and name, and the CTO refuses a PRD that types one.",
+  "world_is": "The live names are right (builder output) but the PRD that is supposed to carry them names a function that was never made and omits the seven that were. A reader of the PRD cannot find the deployed resources.",
+  "notes": "INERT: the names are correct; the record is behind. Owner 1.0.0_SA_CTO (the PRD's author): a header-level addendum printing the seven builder outputs."
+}
+```
+
+## IRPT_DASHBD-S19 -- DB-7-AC1 counts 12 landings for the binding input; 3 are kept after exclusions
+
+```json
+{
+  "id": "IRPT_DASHBD-S19",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-02T09:50:00Z",
+  "one_line": "DB-7-AC1 requires each input of the fire-time rule to have at least 10 measured landings; for holdings_performance_daily, the input that sets the 07:41 schedule, 9 of its 12 landings are excluded and 3 are kept (2 of them organic 07:30 fires), and AC1 counts all 12.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1/REPORTING_GOLD_FIRE_TIME_R3.json, inputs entry for holdings_performance_daily: 12 landings, 'excluded' lists 9, 3 kept",
+      "DB-7-AC1 re-run by this seat: PASS as worded (the count reads 12)",
+      "the schedule live: cron(41 7 ? * MON-FRI *) America/New_York (this seat's DB-b-7 grade)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "DB-7-AC1: each input with at least 10 measured landings, so the fire time rests on a measured distribution.",
+  "world_is": "The binding input's fire time rests on 3 kept landings, 2 of them organic. The criterion passes because it counts landings before the exclusions it then applies. Whether 07:41 is late enough is untested on the days that were excluded.",
+  "notes": "INERT until the first fire (11:41Z today) and the days after: a fire before its input lands is visible in the next morning's partitions. Owner 2.0.0_SA_COO~P (the issuer, who may amend its own criterion); A1 of ledger irpt-dashbd-reporting-gold-apply-20261002 is the first real read."
+}
+```
+
+## IRPT_DASHBD-S20 -- the picker suffix and the body date "data through" from two fields nothing ties
+
+```json
+{
+  "id": "IRPT_DASHBD-S20",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-02T13:10:00Z",
+  "one_line": "The account picker's dashboard suffix dates its 'data through' from manifest.as_of (pickerSuffix.ts:30) while the page body prints series.as_of (DashboardPerformance.tsx:241); reportingRead.ts:57-74 never checks they are equal, so a manifest and series of different vintages would show one account two 'data through' dates.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal origin/DEV 3bbf3914 (item 72, 0531cc65): pickerSuffix.ts:28-34, DashboardPerformance.tsx:241, reportingRead.ts:57-74, read by this seat's grade 2026-10-02 12:xZ",
+      "CTO RULINGS batch 128 item 1: the suffix carries 'the same basis words the body shows (... data through ...)'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Batch 128 item 1: one return series per page; the suffix and the body show the same basis, including the same 'data through' date.",
+  "world_is": "Two fields stand for one date and nothing ties them. Not observed on served data: the publisher writes both files in one run today.",
+  "notes": "INERT. Owner 2.0.0_SA_COO~D: read one date for both, or refuse the pair when manifest.as_of and series.as_of differ."
+}
+```

@@ -493,3 +493,55 @@ log group's retention and the Lambda permission's source condition (the rule's t
 acceptance and is not read.
 
 -- 3.0.0_SA_CVO
+
+## Grades, 08:xZ-09:xZ 2026-10-02 -- portal DEV items 64-71, IRPT_DASHBD hop 5 item 5, and the Cottonwood re-point reader
+
+PROD: none of the 10 pins is an ancestor of origin/PROD `b3a1d8a6`. NEG = the pin's test file run against the parent
+commit's source.
+
+| pin | claim | this seat's read | grade |
+|---|---|---|---|
+| b188be1f (64) | rows stop printing the header's client | OwnedRequestHistory.tsx:370 the row starts "Requested <date>"; the client slot and the useHeaderSelection import removed. iv-e-74 1/1, iv-e-80 1/1; NEG 0/1 each. CI 36963864012 success | PASS on a test run |
+| 455ca18d (65) | the account drill is not a reload | HoldingsTab.tsx:161 focusDisplay keeps the all-accounts view while an account is "opening"; :379 "Opening"; :413 DrillTree keyed on shownAccountKey; accountPrefetch.ts:30. iv-e-133 6/6; NEG fails only at import. CI 36968044167 success | PASS on a test run |
+| ed6fa7b2 (66) | the ticker stays in its column | HoldingsBreakdownTable.tsx:426 `truncate block` only when the ticker has no whitespace; title holds the full code. iv-e-134 1/1; NEG 0/1. Covered by run 36971124369 (2511f762), success | PASS on a test run |
+| 3ca6c53a (67) | unclassified gets its own colour, lime900 | chartColors.ts:86 lime900 #365314; :626 MIX_PIE.unclassified; mixPieColor :630 also resolves "Unclassified". iv-e-136 1/1, iv-e-70 4/4; NEG 0/1. CI 36974686323 success. Its "IVE49-AC1 order-dependent" note is wrong: row DSGN_IRPTV1-S45 | PASS on a test run |
+| 24e9032e (68) | resolved before it is added; rows named | GenerateComposer.tsx:344 resolveComparison runs before :351 addComparison. iv-e-137 6/6; NEG 4 pass / 2 fail (arms d, f) | PASS on a test run |
+| 49cc08a3 (68) | the envelope parser adapts the catalogue | envelope.ts:170 the 'comparison-catalogue' adapter. FE-s-47 8/8; NEG 7/1 (F47-AC7). fe-s-13/14/47/57: the same 18 failing names at 3ca6c53a and at DEV (47 pass / 18 fail here; the commit says 55/10, difference not explained). CI 36977672706 success | PASS on a test run |
+| c4e0d744 (69) | the card opens the picker; no loose input | VariantCards.tsx:110 directSelect; GenerateComposer.tsx:400 directSelect={catalogueRead==='ok'}; :478-488 Done sets the card; the input only in the non-live branch. iv-e-138 7/7 at DEV; no NEG run | PASS on a test run |
+| 8df9e3d3 (71) | three picker faults fixed | GenerateComposer.tsx:320 heading "Compare with (n of 1 or 5)"; row remove gated `live ? null`; picker footer border-t px-6 py-4. iv-e-138 7/7; NEG 6/1 (arm g). CI 36982259587 success | PASS on a test run |
+| item 70 | the signed-in walk of c4e0d744 | no portal commit; a walk record only (workspace 963baa82bb) | NOT_EVALUATED |
+| 39b7a0fc (IRPT_DASHBD hop 5) | a served manifest shows the dashboard figure, as-of on the face | ReportingTab.tsx:444 dashboardFor binds the answer to the focused account; :746 period controls off; :754 DashboardPerformance replaces the report body; reportingRead.ts:44-47 a refusal reads "absent"; DashboardPerformance.tsx:241 "Data through". iv-e-135 8/8; NEG fails only at import. CI 36973315959 success. The FWD-1 signed-in run has not happened | PASS on a test run |
+| eb90f2ad (~M) | no reader drops a served class | every served class mapped in PartnerAnalytics and AdvisorAnalytics; composition.ts CANONICAL_CLASSES includes unclassified; AdvisorAnalytics.tsx:669, :724 mixPieColor; ConsolidatedOverviewPanel.tsx:391. cot-unclassified 1/1; NEG 0/1. iv-e-46 1 pass, 1 fail (IVE49-AC1), the same at 2bb367ef and at the parent | PASS on a test run |
+
+**Limits.** bun 1.3.9 in a detached scratch worktree of origin/DEV `8df9e3d3` under %TEMP%, removed after;
+`git -C portal status --porcelain` equal before and after. CI runs lint, the provenance guard, typecheck and build, no
+unit tests, so a CI success is not test evidence. The NEG runs for 455ca18d and 39b7a0fc fail at import, not on
+behaviour; c4e0d744 has none. No page was looked at. The branch-filtered CI listing answered stale on 3 of 7 calls
+(row ESTATE_GOVERNANCE-S36); every run above was read by id with its headSha.
+
+-- 3.0.0_SA_CVO
+
+## Grades, 12:xZ 2026-10-02 -- portal DEV items 72-81
+
+PROD: none of the 10 pins is an ancestor of origin/PROD `b3a1d8a6`. NEG = the pin's source diff reversed on origin/DEV
+`3bbf3914` with its test kept; MUT = a one-line planted mutant where the reversal broke only at import.
+
+| pin | claim | this seat's read | grade |
+|---|---|---|---|
+| 0531cc65 (72) | the picker shows a dashboard account's own YTD with basis words; mixed lists name each basis (RULINGS batch 128 item 1) | pickerSuffix.ts:28-34 the body's own YTD plus "total return, before advisory fees, data through"; :41 the other account's figure plus "price return, as of <end>"; :54 no served account returns undefined (picker unchanged); ReportingTab.tsx:571-574 background reads only once one account is served, 2 at a time. All three clauses present. iv-e-139 4/4, iv-e-40 1/1, iv-e-58 1/1; NEG 2/2 fail of 4 (arms c, d). CI 36990470109 success. The suffix's date source: row IRPT_DASHBD-S20 | PASS on a test run |
+| 06bc6f85 (73) | one date format on the Performance charts | PerformanceChart.tsx:55 dayWords via formatPageDate; :115 tickFormatter; DashboardPerformance.tsx:261. iv-e-140 3/3; NEG 1/2. CI 36991598167 success | PASS on a test run |
+| 243f17b1 (74) | the pie folds past the 9 largest into "Other accounts (n)" | CategoryViewTree.tsx:1202-1220 folds only past keep+1; chartColors.ts:406 slate400; DrillTree.tsx:894 foldAccountsPast={9}. iv-e-141 4/4; NEG fails at import only | PASS on a test run |
+| 7f9cf54a (75) | an Analysis print fetches by ?request= | PrintEntry.tsx:147-151 printReportRef; :209 refuses by name. iv-e-142 3/3; MUT 1/2. CI 36995066413 success | PASS on a test run |
+| b618efc9 (76) | an Analysis print gates on its request's status | PrintEntry.tsx:160-165, :220 getJobStatus first, :224 a non-answer status fetches no sections; AnalysisDocument.tsx:70-72. iv-e-143 3/3; fe-s-54 3/3; NEG fails at import only. CI 36997787741 success | PASS on a test run |
+| ad5c6e06 (77) | the picker numbers shared labels as the card does | AccountFilter.tsx:116-122 via uniqueLabel; :297. iv-e-144 2/2, iv-e-39 1/1; MUT 0/2. CI 36999982267 success | PASS on a test run |
+| bf38f6c9 (78, row S45) | Mix cash green, 36.4 dE00 from commodities | chartColors.ts:616 MIX_PIE.cash = PALETTE.green300 #86efac, the same token as ASSET_CLASS.cash :207 (Andrew's C1); commodities yellow500 :629; 3e2233de did not move cash, so no new hue is minted. IVE49-AC1 alone: 1 pass, dE00 36.4025 (bar 20); NEG (amber500) 9.8943, 0/1. iv-e-46 class-readers 2/2. CI 37002638845 success | PASS on a test run; row S45 remediated on a test run |
+| b46e6c36 (79) | the request read asks include=comparisons | investor-reporting.ts:1426; OwnedRequestHistory.tsx:49. iv-e-145 3/3; NEG 1/2. CI 37002252695 success | PASS on a test run |
+| ebceef5b (80, row S40) | the catalogue joins the operation table | investor-reporting.ts:185, :229. fe-s-13/14/57 (12 files): 52 pass / 5 fail at DEV; NEG 44/13 (the commit clears 8). Of the 5, "three routes no consumer" is the one named; the other 4 fail on both arms, two of them contract drift: row IRPT_BCKEND-S269. The commit's 84/85 on 17 files is not reproduced. CI 37004059688 success | PASS on a test run |
+| 3bbf3914 (81, row S48) | D1-inv-4 adds back the negative balances the card leaves off | CategoryViewTree.tsx:162-167; :1428-1429; :1447. iv-e-146 4/4; MUT 2/2. CI 37005333394 success | PASS on a test run |
+
+**Limits.** bun 1.3.9 in a detached scratch worktree of origin/DEV `3bbf3914`, removed after; `git -C portal status
+--porcelain` identical before and after. The fe-s tests read `../docs` and `../infra`; an archive of workspace CLOUD
+`10d2b1c445`'s contracts was placed beside the worktree (without it they fail on file-not-found, which plausibly
+explains item 68's unexplained 47/18). CI runs no unit tests. No page was looked at.
+
+-- 3.0.0_SA_CVO

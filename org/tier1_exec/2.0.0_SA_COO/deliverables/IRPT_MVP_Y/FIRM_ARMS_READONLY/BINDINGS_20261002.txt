@@ -1,0 +1,4 @@
+policy irpt-x10-v1: firms ['49financial', 'cottonwood', 'inflection'] | families 13 ['ANALYSIS', 'EXPORT_BUNDLE', 'EXPORT_PDF', 'EXPORT_RECEIPT', 'EXTRACTION_EVIDENCE', 'NORMALIZED_PORTFOLIO', 'ORIGINAL_CSV', 'ORIGINAL_HOLDINGS', 'ORIGINAL_VENDOR_PDF', 'PERFORMANCE', 'PERFORMANCE_SOURCE_EVIDENCE', 'REQUEST_COMPOSITION', 'SELECTED_ACCOUNTS']
+cottonwood   13 of 13 families resolve through reporting_destination; refused none
+49financial  13 of 13 families resolve through reporting_destination; refused none
+inflection   13 of 13 families resolve through reporting_destination; refused none

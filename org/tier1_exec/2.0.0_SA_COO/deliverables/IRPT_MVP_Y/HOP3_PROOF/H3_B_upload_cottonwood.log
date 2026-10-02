@@ -1,0 +1,5 @@
+06:27:13Z LOGGED_IN login status 200
+06:27:13Z PASSWORD_RETAINED /irpt/svc-irpt-analysis/password (the packet deletes it at its last arm)
+06:27:14Z K4 POST 200 state RESOLVING | upload_id UP-d3b01928077e9addf56ff67111539ffabbc9b1c63f1d800f2aac9f8b27b5fe92
+06:30:20Z K4 resolved NEEDS_CORRECTION | input_id None
+06:30:20Z K4 ONLY: no K5 by construction

@@ -1,0 +1,21 @@
+ssm 191c7ca0-fb78-46da-ac76-9398d39d3dc9 Success rc 0
+session-probe start 20261002T062456Z resident pid 404237 root /opt/irpt-resident/b1db201025-st10
+stored session read: state OK fence 21 generation d56deb6f persisted_at 2026-10-01T08:21:20.010Z
+probe route: /custom_pdf_reports/generate/14141822
+  one request made; the lease is released
+  info.body_complete = True
+  info.bytes = 2065
+  info.content_type = 'application/json'
+  info.final_url_path = '/custom_pdf_reports/generate/14141822'
+  info.login_destination = False
+  info.method = 'GET'
+  info.path = '/custom_pdf_reports/generate/14141822'
+  info.set_cookie_count = 1
+  info.status = 200
+  info.waf_action = None
+  body: 2065 bytes; html page False; mentions login False; mentions captcha False
+  body JSON: dict with keys advanced_options, allow_section_ordering, create_date, data_source, disable_internal_use_only_watermark, id, include_benchmark_default, language, modify_date, name, num_required_securities, owner_id, performance_disclosure_footnote, permissions, preview_image_url, remove_report_title_header, report_description, report_footer, report_id, report_name, report_orientation, 
+PROBE_VERDICT=LIVE
+python rc 0
+session-probe end 20261002T062458Z
+

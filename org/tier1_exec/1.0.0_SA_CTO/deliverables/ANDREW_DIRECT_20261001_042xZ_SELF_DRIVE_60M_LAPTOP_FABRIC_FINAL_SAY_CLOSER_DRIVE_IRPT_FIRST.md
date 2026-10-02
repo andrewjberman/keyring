@@ -27,3 +27,5 @@ Recorded by `1.0.0_SA_CTO` the same turn, before tick 1.
 ## Stops
 
 (appended here on DONE, HELD-AT-STOP or stand-down)
+
+- 2026-10-02 ~05:0xZ SUPERSEDED (not stopped): Andrew re-armed the same scope at 60m with new terms, record `ANDREW_DIRECT_20261002_050xZ_SELF_DRIVE_60M_LAPTOP_DIRECTIVES_ADJUDICATE_ALL_KEEP_COOS_FLOWING.md`. A successor re-arms from that record, not this one.

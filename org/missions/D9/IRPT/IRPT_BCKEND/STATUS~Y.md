@@ -2,25 +2,34 @@
 
 Seat `2.0.0_SA_COO~Y` (CLAUDE), relaunched 2026-10-02 ~01:5xZ on Andrew's word (record
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261002_014xZ_BRING_EVERYONE_BACK_ONLINE_PER_REBOOT_RECORDS.md`).
-Mode FAST: lease `IRPT_BCKEND~Y` re-armed 02:25Z until 06:25Z (CTO 103946, under Andrew-direct 2026-10-01 ~04:2xZ).
+Mode FAST: lease `IRPT_BCKEND~Y` re-armed 04:33Z until 08:33Z after the withdrawn wind-down (MSTR 104039; CTO 103946
+terms, under Andrew-direct 2026-10-01 ~04:2xZ).
 Loop `/canonical-drive IRPT_BCKEND` 10m (LIVE_ARMS RELAUNCH row). Way forward: CTO rulings batches 61, 62, 65, 70, 72,
 76, 83, 88, 89, 93, 97, 98, 100 and 105 in `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md`.
-Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-02T03:5xZ.
+Reviewer `3.0.0_SA_CVO` (grades pins after the fact). Lease FAST until 09:43:29Z (read 09:14Z). As of 2026-10-02T11:2xZ.
 
 ## Pins
 
 | What | Value |
 |---|---|
-| Worktree | branch `coo-y-r30` at `C:/Users/AndrewBerman/Desktop/coo-y-r30`, head `9ada3e8b02`, merged into CLOUD |
-| Items 1 to 17 on CLOUD | 1 to 14 as before (st9 carries them); 15 `3921492913` (the 900 s calculating release, the WAF header token); 16 `7122afefc1` (row S253, the job row's `vendor_requests` ledger); 17 `8c4398e32a` (E7, the request read names the chosen comparisons). One pin for both releases: `b1db201025` |
-| SERVED: the resident | `/opt/irpt-resident/b1db201025-st10` since 2026-10-02T03:19:51Z (ledger `irpt-resident-st10-20261002` CLOSED; both halves, CTO batch 106): items 1 to 17. Rollback root `481166a8f2-st9` on the host |
-| SERVED: `irpt-status` | `2V7xV1+zII4+g6tV..` since 2026-10-01T06:59:55Z (read 2026-10-02 ~02:2xZ) |
-| SERVED: `irpt-ycharts-generate` | `arC65KbDPPssn2UX..` since 2026-10-01T06:51:12Z |
-| UPLOADED, NOT APPLIED | `irpt-status.zip` version `gqIQUc_Z..` (sha `iYgp8301..`, E7) is the key's LATEST version |
+| Worktree | branch `coo-y-r30` at `C:/Users/AndrewBerman/Desktop/coo-y-r30`, head `cf3ae52aee` (st12 `9718ac5c87`, merged into CLOUD at `cf3ae52aee`) |
+| Items 1 to 17 on CLOUD | 1 to 14 as before (st9 carries them); 15 `3921492913` (the 900 s calculating release, the WAF header token); 16 `7122afefc1` (row S253, the job row's `vendor_requests` ledger); 17 `8c4398e32a` (E7, the request read names the chosen comparisons); 19 `951afdf4e6` (st11, merge `4f68a17d3a`, SERVED in the resident; its words ride the next generate and irpt-status bundles); 21 E6 memo (merge `7a9f76389b`, not served); 20 hop 11 (branch `coo-y-hop11`, not merged); 18 `3ad9306bf9` (the catalogue reads `etf-classifications` once per 300 s warm window, not per request; condition 11 of the whole-bundle packet), merge `87f9b3afab`, NOT served |
+| SERVED: the resident | `/opt/irpt-resident/c657a5966d-st13` since 2026-10-02T10:18:27Z (ledger `irpt-resident-st13-20261002` CLOSED @f74a5c2a76; CTO batches 131 and 138): items 1 to 19, st12 (rotated cookies written back, PROVEN LIVE) and st13 (the capture library's attended hold `857d90b8`, OFF unless `YC_ATTENDED=1`; Xvnc installed, nothing listening). Rollback root `cf3ae52aee-st12` on the host |
+| SERVED: `irpt-status` | `X/JLmPJZ..` since 2026-10-02T11:13:50Z: E7b + E6 + item 22 at `ff8fd77ba2` (rollback S3 `m1LolBKF..`, code `2V7xV1..`) |
+| SERVED: `irpt-ycharts-generate` | `E+FqSWwETrwJ9Gd1..` since 2026-10-02T05:54:19Z (whole bundle at `97eaff05ff`, item 18; ledger `irpt-generate-catalogue-20261002` CLOSED). Rollback: S3 version `J52XmUEj..` (code `arC65KbD..`) |
+| SERVED: catalogue route | `GET /api/scoped/investor-reporting/analysis/comparisons`, route `bh7ynom` on `7k3ed8px20` behind `naqxlm`, since ~06:00Z. V1: 341 entries for cottonwood, `FIRM_BINDING` outside reach, 720 ms with the Scan then 221-260 ms |
+| UPLOADED, NOT APPLIED | `irpt-status.zip` version `gqIQUc_Z..` (sha `iYgp8301..`, E7) is its key's LATEST version. CTO batch 115 item 3: no untargeted apply of the ops or ycharts roots while it is held |
 | Stored YCharts session | the version of 2026-10-01T08:21:20Z (fence 21) |
-| Push state | LOCAL @5946fe3945; origin/CLOUD `0257976705` (ls-remote read 02:5xZ). CLOUD is pushed by `0.0.0_AB_MSTR` only |
+| Push state | LOCAL @56457904ed; origin/CLOUD `1f2346734b` (ls-remote read 09:1xZ). CLOUD is pushed by `0.0.0_AB_MSTR` only |
 
 ## Live thread
+
+**irpt-status SERVES E7b + E6 + item 22 since 11:13:50Z** (`X/JLmPJZ..`, S3 `Jg3uJ0x7..`, members at `ff8fd77ba2`; CTO halves
+batches 146/148; ledger `irpt-status-e7b-20261002` CLOSED @2ab0eec3cb; E7 CLOSED SUPERSEDED). V1: every plain read equal to
+before; `include=comparisons` answers (Multi-Comp names Short-Term, Intermediate-Term); `2.0.0_SA_COO~D` told 11:22Z.
+Rollback S3 `m1LolBKF..` (code `2V7xV1..`). **E6 serves -> Cottonwood's 20-request cap lifts.** FINDING: history `client_id`
+is refused by `_authz/served.py:812-815` (fabricated-scope guard) -- item 22 unusable as named; ruling asked 11:22Z.
+Hop 11 integrated on branch `coo-y-hop11-int` (merge clean, ops 220 passed); its packet needs `~P`'s test line.
 
 **The Analysis thread is LIVE** (CTO batch 88) on the Overview `REQ-a69e5751d42c374f1d2354f9`. The Multi-Comp
 `REQ-a1d9abc0bc037ea3d9e4a7ed` is READY, graded PASS and walked, and is NOT live until E7 is served (batch 98).
@@ -49,22 +58,82 @@ made (CTO half item 1).
    listed request, timeout 15 s). The CTO's call on the change was asked 03:54Z (recommended: a per-request read memo
    that keeps the deliberate `_final` re-reads, as a new irpt-status packet).
 4. E5 (row S230 at its next natural failure; no session is displaced on purpose).
-5. Batch 61's order after that: one job per remaining arm (Target Weight, 49 Financial, Inflection), each under a window
-   packet; the catalogue route from a read that is not a full-table Scan per request; the resolve concurrency fix; the
-   vendor PDF link; the Analysis export; the email lane.
+5. **The catalogue is SERVED** (above). `2.0.0_SA_COO~D` wires the composer (interface sent 06:05Z).
+   **Hop 3 -- window CLOSED, NOT fixed on st10** (`IRPT_MVP_Y/HOP3_PROOF/OUTCOME_HOP3_PROOF_20261002.md` @3743f5a084): an
+   upload during another job's generation is refused `PROVIDER_READ_UNAVAILABLE:OPERATION_BUSY` and exhausts. CTO batch 120
+   ruled the remedy as **st11**: a BUSY receive re-sends a fresh message delayed by the lease's retry-after (<= 900 s) and
+   deletes the received one; a 60-minute wall deadline; a busy end reads a busy code with a retry action, never
+   `REPLACE_FILE`. **st11's code is BUILT and MERGED** (item 19 `951afdf4e6`, IAM `85240e4c82`, merge `4f68a17d3a`): the
+   re-send, the deadline from the row's `requested_at`, `RESOLVE_PROVIDER_BUSY` with action `CORRECT` and its words; 3 new tests
+   (one proves a resolve busy for its whole deadline never reaches the dead-letter queue), negative control, every suite green.
+   **st11 is SERVED** (07:18:54Z; ledger CLOSED @861b9bf176). Its live proof (an upload during another job's generation reads
+   NORMALIZED after it) is the next window's, after Andrew's YCharts sign-in. The `RESOLVE_PROVIDER_BUSY` words ride the next
+   generate and irpt-status bundles (until then the code shows with action `CORRECT`; CTO half item 1).
+   **Hop 11 RULED as recommended** (CTO batch 123): `GET analysis/requests/{requestId}/pdf` on irpt-status, an Opal-signed 300 s
+   URL plus sha256; `irpt-status-policy` gains `vendor_documents` in `ops/iam.tf` (this seat's lane).
+   **THE irpt-status QUEUE (batch 123 item 4):** every irpt-status bundle now carries E7, so E7, then E6's memo, then hop 11 land
+   in that order, one packet each, once the tolerant parser is on every deployed build incl. PROD (row S261). Build now, apply
+   none before the gate, and upload no new irpt-status artifact before E7 applies (E7's step 2 stops on a replaced key).
+   **E6 memo BUILT and MERGED** (item 21, `4c23ef5d98` + `0d6ec02cd0` under CTO batch 125's grant, merge `7a9f76389b`): ReadMemo
+   over the table port, one scope per invocation, the final re-reads fresh; 6 tests with two negative controls; ops 193 passed.
+   **Hop 11 BUILT, on branch `coo-y-hop11` only** (item 20 `a41a349c8b`, IAM `dd6de6ced2`; NOT merged): the route, the signer bound
+   to the builder's address, 12 tests. It merges when its packet is cut (after E7 and E6), with the one line
+   `reports/tests/test_status_installed.py` needs (its five-operation set gains `analysis-request-pdf`; `2.0.0_SA_COO~P`'s file).
+   At each packet, `read_memo.py` (E6) and `pdf_link.py` (hop 11) join irpt-status's source-map `files`.
+   **Client-scoped history route BUILT and MERGED** (item 22 `f27418381d`, merge `408b8186ec`; CTO batch 110 item 4(b), batch 126):
+   optional `client_id` on the history route, read from each request's frozen composition selection; no backfill (all 21
+   requests are upload-lane, measured). Joins the irpt-status queue behind E7. `2.0.0_SA_COO~D` sends the header's client once served.
+   **Probe-rotation read DONE** (`HOP3_PROOF/PROBE_ROTATION_READ_20261002.md` @9fe3ee3e37): very likely yes, and wider -- no path
+   persists a rotated cookie. **CTO batch 127: st12** writes a rotated session cookie back to the secret under the bundle's lease
+   and fence, only when changed, names only in logs; `secretsmanager:PutSecretValue` on that one secret in `ycharts/resident.tf`;
+   the probe uses the same transport; offline rotation test; live proof after Andrew's sign-in.
+   **st12 SERVED 09:21:39Z** (code `9718ac5c87`, merge `cf3ae52aee`; packet `IRPT_MVP_Y/ST12/NEVER_WIDEN_SIGNOFF_PACKET_RESIDENT_ST12_20261002.md`
+   blob `fb132fd0d6`; CTO half batch 130, CONDITIONAL; ledger `irpt-resident-st12-20261002` CLOSED @56457904ed). A rotated or
+   added cookie is written back through the fenced `persist()`; a write never removes a cookie; a failed write is journaled and
+   retried at the next request. **Live proof, the CTO half's condition:** Andrew's CAPTCHA sign-in is taken with the generation
+   queue 0/0 and no non-terminal job; the first job runs after the new session reads back with its higher fence; then read the
+   journal for `IRPT_SESSION_ROTATION` and the secret's version list (fence unchanged), and the next operation is not evicted.
+   **Hop 12** is `2.0.0_SA_COO~P`'s (CTO batch 126 item 1).
+6. Batch 61's order after that: one job per remaining arm (Target Weight, 49 Financial, Inflection), each under a window
+   packet; the resolve concurrency fix; the vendor PDF link; the Analysis export; the email lane. E6's memo follows E7's
+   apply (CTO batch 111). A client-scoped history route is an enrichment item at the next round analysis (CTO batch 110 item 4).
+
+## The YCharts session -- LIVE (fence 23, restored 09:45:44Z by sign-in option C)
+
+Window C CLOSED (`IRPT_MVP_Y/SIGNIN_C/OUTCOME_SIGNIN_C_20261002.md` @2cd3e2ce23): leg S AUTHENTICATED with no challenge; leg J
+`REQ-c07e64ca6c74b8e5310f56e0` READY 10:14:06Z (`RPT-819429e0bd7084a11cdc74f023a9c48c`) on st12 -- the Analysis thread re-ran.
+st12 wrote back `multidb_pin_writes` 4 times, fence unchanged (churn finding at the CTO). FINDING: the fence-21 session was
+taken by a concurrent sign-in (403 EVICTED_HARD) -- row S233. Cottonwood holds 20 accepted requests: any further test job
+uses another firm until E6 serves (CTO half). **Option A SERVED as st13**; leg A (the attended run: Xvnc on loopback 5901,
+Andrew over a Systems Manager port forward and TigerVNC) is the fallback for the next `CHALLENGE_CAPTCHA_UNSUPPORTED`, at
+his time, queue 0/0 (`IRPT_MVP_Y/SIGNIN_A/NEVER_WIDEN_SIGNOFF_PACKET_SIGNIN_A_20261002.md` section 4).
+
+### Before the restore
+
+Leg A of the hop-3 window (06:26Z) read EVICTED 71 s after a probe read LIVE; the resident's refresh met
+`CHALLENGE_CAPTCHA_UNSUPPORTED` (row S230's cause, named). CTO batch 120 item 7: a sign-in that answers a CAPTCHA is a
+person's act on Andrew's YCharts login; no seat attempts one. Until he signs in, no Analysis attempt can produce a report.
+Batch 120 item 6 (the probe's cookie rotation) is read at the next window, which waits on that sign-in.
+
+**No path exists for that sign-in today** (`IRPT_MVP_Y/SIGNIN_PATH/SIGNIN_PATH_READ_20261002.md` @154286ecac): the library refuses
+any CAPTCHA (`ycharts_session.js:546`) and the host has no display. Asked the CTO 09:32Z to rule C (one more scripted leg S in a
+window packet, queue 0/0 first), A (an attended sign-in on the host: Xvnc plus a bounded wait mode; Andrew answers over a Systems
+Manager port forward), both or neither. Recommended: C now, A in parallel. Nothing is built for A before the ruling: it reverses
+the library's FAIL_EXPLICIT design.
 
 ## Rows this lane holds
 
 | Row | State |
 |---|---|
+| S263 | FIXED on CLOUD @6c4ac61088 (CTO batch 114, this seat's lane IRPT_BCKEND_FAST_Y_TFPOLICY): five roots select the policy by revision; core, export, performance plan no changes, ops and ycharts one held Lambda code move each. For the CVO to close |
 | S261 | OPEN, BLOCKING (2026-10-02 02:41Z): the page parser rejects E7's third key. Disarm owner `2.0.0_SA_COO~D` (parser on DEV `281b03c6`; PROD promote on Andrew's word); this seat holds E7's D1 |
-| S230 | OPEN. The resident's OWN sign-in fails `AUTH_FAILED` 4 of 4 and is unnamed; an operator sign-in as the resident's user works. st7's reason token names the step at its next occurrence |
-| S253 | SERVED on st10 (03:19:51Z); first live read is the next job; for the CVO to close after it |
+| S230 | OPEN, CAUSE NAMED 2026-10-02T06:26:18Z: the resident's own sign-in meets a CAPTCHA (`CAPTURE_FAILED:UNEXPECTED_CHALLENGE:CHALLENGE_CAPTCHA_UNSUPPORTED`). Only Andrew's own sign-in restores the session (CTO batch 120 item 7) |
+| S253 | SERVED on st10 and READ LIVE: job `REQ-93441e4e..` carries 2 `vendor_requests` records, one per receive (hop-3 outcome). For the CVO to close |
 | S231 | DONE on served code; for the CVO to close |
 | W88-S2 | reader served in the generate bundle; grant applied; the route is not published |
 | W94-S2, W91-S1, W92-S1 | repaired or read; for the CVO to close |
 | W91-S2 | NOT repaired: `_contracts/tests/test_seam_paired.py` is held by the open order IRPT_DASHBD TO-DB-b-4 |
-| W92-S4 | one read of a report whose blob is absent is still owed |
+| W92-S4 | READ 05:5xZ: S213's path answers INVALID_INPUT (named; the route takes a request id), the same report by request serves 76 sections, served `owned_report.py` carries ReportBundleAbsent. Disarm proposed to the CVO 07:28Z (also S213) |
 
 ## Ledgers this seat holds open
 
@@ -90,6 +159,19 @@ this file; `deliverables/2.0.0_SA_COO~Y/**`; `org/tier1_exec/2.0.0_SA_COO/delive
 `infra/aws/terraform/investor-reporting/**`, `reports/**`, `_contracts/tests/**`, `portal/**`.
 
 ## Parked, each with its owner and the condition that un-parks it
+
+- A per-run one-time VNC password for leg A (the CTO half of the A packet, item 1: the laptop's forward listens on
+  `localhost:5901` unauthenticated while open). Owner this seat; un-parks before the first leg-A run. The password
+  must reach Andrew alone: never into a host-read output an agent reads.
+
+- Hop 11's test line: `reports/tests/test_status_installed.py`'s five-operation set gains `analysis-request-pdf`. Owner
+  `2.0.0_SA_COO~P` (or an exact-file grant to this seat); un-parks when hop 11's packet is cut, after E7 and E6.
+
+- The api root's `CHANGELOG.json` entry for route `bh7ynom`: outside this seat's write surface (no lane names the
+  api directory; earlier entries are `2.0.0_SA_COO~P`'s). The closed ledger entry holds the record. Un-parks with an
+  exact-file grant or that lane's next entry.
+- `record-terraform-deploy.sh investor-reporting` is not run while E7 is held: it stamps every function of the pipeline
+  as deployed at HEAD, `irpt-status` included.
 
 - The two source-map rows' `last_deployed_*` fields. Owner this seat; un-parks with the pipeline's next recorded deploy
   (E7's D1 for `irpt-status`).

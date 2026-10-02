@@ -114,3 +114,52 @@ resources and no code yet. Untracked files from earlier sessions are left as the
    Andrew with a `#tag`; two-way SMS on the toll-free number into SNS, then SQS, then a reply function (1 / 0 / edit);
    a one-time backfill; the End of Day post moved onto the same loop, triggered by the sprint page landing.
 4. **[4.0.0_SA_CRO]** Retire the laptop "Opal EOD Update" job once the cloud loop serves the End of Day post.
+
+## Addendum ~04:10Z to ~05:00Z -- the build resumed, then held for the LDO design
+
+**archetype:** IMPLEMENT
+
+Andrew: "i want the build to proceed"; "that is their device, not yours" (104035 was site Z's only; 0.0.0_AB_MSTR
+withdrew it, 104043). Record addenda @89a3385908.
+
+- **Gateway half** (a fork of this seat): db92656c72 -- `/hx/teams` (six routes, own bearer TEAMS_BEARER) plus the
+  Z-S41 fix; 14 new tests pass, the whole gateway suite unchanged against baseline (397 passed; the same 3 failures
+  and 15 moto-missing errors as before). Release request a53c8452b4, relayed to site Z by 0.0.0_AB_MSTR (104052);
+  site Z's disk incident delays the release. Committed under the audited CLOUD_OPS_OR_ETL override.
+- **Naming:** cadence "1min" added to NAMING_SCHEMA.json (aa2b5a42ff); NAMES.json from name(); every S3 key from
+  address() at run time (the naming gate refused full s3:// URIs in NAMES.json and a typed scope token; both fixed;
+  the change grades WARN, 0 REFUSE).
+- **Cloud half:** 84eb66e824 (assist.py, tests 29 passed, post_format.py shared with the laptop job; eod_update.py
+  is ASCII again) and 8b1eb0b88b (handlers, build, chat_assist.tf; audited override). Targeted plan read: 23 to add,
+  0 to change, 0 to destroy. NOT APPLIED.
+- **Held:** Andrew ~04:4xZ: a forked session is building the Lambda Durable Object (LDO) and "i think that design is
+  how we should try this out". The deploy ledger entry opened at 04:35Z was withdrawn uncommitted (nothing applied);
+  the fork was sent the inventory of what exists. No AWS resource was created this session.
+- Push state (fetch + is-ancestor, positive control 0257976705): through aa2b5a42ff on origin; db92656c72,
+  a53c8452b4, 84eb66e824, 8b1eb0b88b LOCAL; origin/CLOUD 1f2346734b.
+
+**Next:** the LDO fork names the interface; the assistant plugs into it; site Z releases `/hx/teams`; then the
+secrets, two-way SMS and a targeted apply under a new ledger entry.
+
+## Addendum ~05:00Z to ~06:55Z -- LDO-001 built on the fork's LDO and DEPLOYED
+
+**archetype:** DEPLOY
+
+- The fork delivered the LDO module + runtime (044c3e0c6d; README section 9 the tenant contract). Ported: tenant.py
+  (handler + ingress), assist.py reduced to the shared library (the superseded table/poll/worker orchestration
+  removed), chat_assist.tf = one `module.ldo_001` call (54d3748545, 8e6872f265).
+- Ledger `ldo-001-teams-assistant-20261002` opened before the apply. Targeted safe-apply: 25 added; re-plan 0-diff;
+  two secret values put (never printed); two-way SMS enabled on the toll-free number -> the ingress topic. Legs
+  L1 L2 L3 L5 closed with proof (3ad5c95ff9); L4 (Andrew's reply round trip) OPEN.
+- Found live and fixed (each test-first, rebuilt, re-applied): (1) the gateway client followed the ALB's 302 to
+  the Microsoft sign-in and read the page as an empty answer (d3bd7d3980); the ALB forward rule for /hx/teams/* is
+  REQUIRED, added to hx-capability.tf for site Z to apply, and the release request says so; (2) Kimi needs ~116-130 s
+  for an End of Day draft: KIMI_TIMEOUT_S 120 -> 240, handler 600 s (0e2d238ce3, f483b4270e); (3) a gateway refusal
+  of a send, a post or the already-posted read texts Andrew why and keeps the draft open.
+- Measured end to end: test events produced texts E0930 (06:09:23Z, handler 129,702 ms) and E1001 (06:27:51Z, 2 parts,
+  115,675 ms); a duplicate event for the same object returned "exists" (no second text). Inbound texts so far: 0.
+- Tests: 46 passed. Commit-message note: d3bd7d3980's message file was written by a shell heredoc, not a non-shell
+  writer (CLAUDE.md 14a); its bytes matched (msg-verify MATCH) and every later message used the Write tool.
+
+**Open:** L4 (Andrew replies to E0930/E1001); site Z's gateway release + ALB rule (and the Graph scopes check);
+the laptop draft-only job (retire on his word); the local commits' push (his word).

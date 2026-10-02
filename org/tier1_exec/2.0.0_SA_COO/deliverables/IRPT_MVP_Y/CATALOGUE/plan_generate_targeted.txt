@@ -1,0 +1,11 @@
+
+Error: Invalid function argument
+
+  on resident.tf line 29, in locals:
+  29:   resident_reporting_policy = one(jsondecode(file("${path.module}/../../../../logic/registry/reporting_policies.json")).policies)
+    ├────────────────
+    │ while calling one(list)
+    │ path.module is "."
+
+Invalid value for "list" parameter: must be a list, set, or tuple value with
+either zero or one elements.

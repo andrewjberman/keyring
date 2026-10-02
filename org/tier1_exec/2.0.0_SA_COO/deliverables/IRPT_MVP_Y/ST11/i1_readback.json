@@ -1,0 +1,14 @@
+[
+    {
+        "a": [
+            "sqs:ReceiveMessage",
+            "sqs:DeleteMessage",
+            "sqs:ChangeMessageVisibility",
+            "sqs:GetQueueAttributes",
+            "sqs:SendMessage"
+        ],
+        "r": [
+            "arn:aws:sqs:us-east-1:313476888478:irpt-generation"
+        ]
+    }
+]

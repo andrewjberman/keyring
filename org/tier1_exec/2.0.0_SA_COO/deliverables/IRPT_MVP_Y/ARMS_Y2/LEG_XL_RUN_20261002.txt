@@ -1,0 +1,22 @@
+=== hop 7: ONE attempt, one login, the durable identity ===
+  principal : svc-irpt-analysis@opalinvest.com
+  pw source : Secrets Manager irpt/svc-irpt-analysis/password -> WALK_PW in this process only; never printed
+  tenant    : cottonwood   comparison keys: [] (none = overview)
+  upload    : aapl-vnq-12.03.csv sha256 bb079cbf53aaa2be
+  SOLO GATE: non-terminal jobs [] | queue visible/in-flight 0/0
+  deadline  : 2026-10-02T13:00:13+00:00
+=== fire at 2026-10-02T12:00:15Z ===
+12:00:20Z LOGGED_IN login status 200
+12:00:20Z PASSWORD_RETAINED /irpt/svc-irpt-analysis/password (the packet deletes it at its last arm)
+12:00:27Z K4 POST 200 state RESOLVING | upload_id UP-287a334be91cc35941dde21da130e258c81296b95984d62de83d8b4ed215c52f
+12:00:29Z K4 resolved NORMALIZED | input_id portfolio_a6a29e12741ec8cd37619c99d98364f251db5c43fd25ac81e0335528bc016c82
+12:00:33Z K5 POST 200 | state QUEUED | identity {"tenant_firm_id": "cottonwood", "request_id": "REQ-abec171d60e0aa1f359c18ed", "revision": 1, "immutable": true, "ingestion_gate_revision": "schemas-c1c43c6df0b7e2b511f7aacab53262843b54eab71e0589fceba28404676b0a42", "destination_policy_revision": "e0046398e23951451498c0fcfec29154db5b26d4c70d80c4121f
+  REQ = REQ-abec171d60e0aa1f359c18ed
+12:00:35Z state RECEIVED | outbox SENT 
+12:15:54Z state SUBMITTING | outbox SENT | detail {"operation":"portfolio_create"}
+12:31:05Z state DOWNLOADING | outbox SENT | detail {"phase":"vendor_pdf"}
+12:31:23Z state CERTIFYING | outbox SENT | detail {"phase":"retained_pdf_publication"}
+12:32:13Z state READY | outbox SENT | detail {"certification_sha256":"df00ede15e88b7c6a4d40f4bf0a7822838127850d654954b01d7fd869b563c0e","report_id":"RPT-e1e3c6d0e61d4237a8a94e6436e0191f","revision":"3760f2853bcfe5b6eb7861b21a9ffcabb0930eeb29015963c930db38954039c1"}
+12:32:13Z TERMINAL READY -- holding the 20 s floor before the next body
+12:32:33Z floor held; next body may start
+=== the attempt is over. No second POST is made by this script. ===

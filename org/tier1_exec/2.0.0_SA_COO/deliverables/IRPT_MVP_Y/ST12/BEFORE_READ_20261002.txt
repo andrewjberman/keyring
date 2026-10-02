@@ -1,0 +1,11 @@
+ssm bf7c831d-8f59-4b85-b3da-ef0af02a46fc Success rc 0
+before-read 2026-10-02T09:20:48Z
+unit active since Fri 2026-10-02 07:18:54 UTC
+running root /opt/irpt-resident/4f68a17d3a-st11
+roots on host: 36dfa80058-st6 481166a8f2-st9 4f68a17d3a-st11 9ac9b56d3c-st8 RESIDENT_CUTOVER_EVIDENCE_20260924.json a3b35fd376-st7 ab2e088b5b b1db201025-st10 cutover_receipt.36dfa80058-st6.json cutover_receipt.481166a8f2-st9.json cutover_receipt.9ac9b56d3c-st8.json cutover_receipt.a3b35fd376-st7.json cutover_receipt.b1db201025-st10.json cutover_receipt.f624e8a72f.json cutover_receipt.fe64236bbb-cw.json cutover_receipt.fe64236bbb-dx.json cutover_receipt.fe64236bbb-h7.json cutover_receipt.fe64236bbb-lt.json cutover_receipt.fe64236bbb-rb.json cutover_receipt.fe64236bbb-rr.json cutover_receipt.fe64236bbb-rs.json cutover_receipt.fe64236bbb-st.json cutover_receipt.fe64236bbb-st2.json cutover_receipt.fe64236bbb-st3.json cutover_receipt.fe64236bbb-st4.json cutover_receipt.fe64236bbb-st5.json cutover_receipt.fe64236bbb-wf.json cutover_receipt.fe64236bbb-xv.json cutover_receipt.fe64236bbb.json cutover_receipt.json f624e8a72f fe64236bbb fe64236bbb-cw fe64236bbb-dx fe64236bbb-h7 fe64236bbb-lt fe64236bbb-rb fe64236bbb-rr fe64236bbb-rs fe64236bbb-st fe64236bbb-st2 fe64236bbb-st3 fe64236bbb-st4 fe64236bbb-st5 fe64236bbb-wf fe64236bbb-xv 
+queue irpt-generation 0/0
+queue irpt-generation-dlq 
+An/error/occurred/(AccessDenied)/when/calling/the/GetQueueAttributes/operation:/User:/arn:aws:sts::313476888478:assumed-role/irpt-ycharts-runner-role/i-0167fd745ad906a66/is/not/authorized/to/perform:/sqs:getqueueattributes/on/resource:/arn:aws:sqs:us-east-1:313476888478:irpt-generation-dlq/because/no/identity-based/policy/allows/the/sqs:getqueueattributes/action
+provider lease: holder '' session_fence 21 state None expires_in -1790932851 s
+journal, last 15 min, job lines: 0
+

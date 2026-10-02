@@ -1,0 +1,21 @@
+  leg J on: leg P read LIVE
+  ROOT GATE: running root [/opt/irpt-resident/b1db201025-st10]
+=== hop 7: ONE attempt, one login, the durable identity ===
+  principal : svc-irpt-analysis@opalinvest.com
+  pw source : Secrets Manager irpt/svc-irpt-analysis/password -> WALK_PW in this process only; never printed
+  tenant    : cottonwood   comparison keys: [] (none = overview)
+  upload    : aapl-vnq-12.03.csv sha256 bb079cbf53aaa2be
+  SOLO GATE: non-terminal jobs [] | queue visible/in-flight 0/0
+  deadline  : 2026-10-02T07:25:52+00:00
+=== fire at 2026-10-02T06:25:55Z ===
+06:25:58Z LOGGED_IN login status 200
+06:25:58Z PASSWORD_RETAINED /irpt/svc-irpt-analysis/password (the packet deletes it at its last arm)
+06:26:00Z K4 POST 200 state RESOLVING | upload_id UP-7b1406fdc162fbe4b1024115f6057f44bf7754cb7f12f99a0071fdb5f751ab9e
+06:26:01Z K4 resolved NORMALIZED | input_id portfolio_144d3bbf3fa56e03387e9d44c78ad2002f7b3bb720fdd8dff9f24690a17f9e08
+06:26:06Z K5 POST 200 | state QUEUED | identity {"tenant_firm_id": "cottonwood", "request_id": "REQ-93441e4e201b40e3b119c46b", "revision": 1, "immutable": true, "ingestion_gate_revision": "schemas-c1c43c6df0b7e2b511f7aacab53262843b54eab71e0589fceba28404676b0a42", "destination_policy_revision": "e0046398e23951451498c0fcfec29154db5b26d4c70d80c4121f
+  REQ = REQ-93441e4e201b40e3b119c46b
+06:26:08Z state SUBMITTING | outbox SENT | detail {"operation":"session_refresh"}
+06:41:13Z state ATTENTION | outbox SENT | detail {"code":"SESSION_REFRESH_ALREADY_USED"}
+06:41:13Z TERMINAL ATTENTION -- holding the 20 s floor before the next body
+06:41:33Z floor held; next body may start
+=== the attempt is over. No second POST is made by this script. ===

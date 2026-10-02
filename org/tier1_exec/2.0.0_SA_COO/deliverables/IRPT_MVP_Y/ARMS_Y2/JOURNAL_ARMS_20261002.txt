@@ -1,0 +1,32 @@
+ssm a1bd094f-c54e-42f3-81d1-407b7197d30c Success rc 0
+2026-10-02T11:41:48+0000 ip-172-31-87-2.ec2.internal python3.12[443927]: IRPT_RESIDENT_RESOLVE state=READY code=-
+2026-10-02T11:41:48+0000 ip-172-31-87-2.ec2.internal python3.12[443927]: IRPT_RESIDENT_POLL handled=1
+2026-10-02T11:42:00+0000 ip-172-31-87-2.ec2.internal python3.12[443927]: IRPT_SESSION_ROTATION kept=1 names=multidb_pin_writes version=b8c9786c
+2026-10-02T11:42:01+0000 ip-172-31-87-2.ec2.internal python3.12[443927]: IRPT_SESSION_ROTATION kept=1 names=multidb_pin_writes version=aeacf838
+2026-10-02T11:42:03+0000 ip-172-31-87-2.ec2.internal python3.12[443927]: IRPT_RESIDENT_READ_BACK_RELEASE step=read_back status=200 portfolio_status=calculating source=status polls=1 wall_s=0.7 drifted=benchmark=null,level_as_of_ty
+2026-10-02T11:42:03+0000 ip-172-31-87-2.ec2.internal python3.12[443927]: IRPT_RESIDENT_VENDOR_REQUESTS kept=4
+2026-10-02T11:42:03+0000 ip-172-31-87-2.ec2.internal python3.12[443927]: IRPT_RESIDENT_POLL retained_for_retry class=ReadBackPending code=READ_BACK_PENDING:CALCULATING
+2026-10-02T11:57:09+0000 ip-172-31-87-2.ec2.internal python3.12[443927]: IRPT_RESIDENT_READ_BACK_DONE step=read_back status=200 portfolio_status=available source=saved_portfolio polls=1 wall_s=3.7 drifted=- absent=- tolerated=leve
+2026-10-02T11:57:11+0000 ip-172-31-87-2.ec2.internal python3.12[443927]: IRPT_SESSION_ROTATION kept=1 names=multidb_pin_writes version=2a983ab1
+2026-10-02T11:57:21+0000 ip-172-31-87-2.ec2.internal python3.12[443927]: IRPT_SESSION_ROTATION kept=1 names=multidb_pin_writes version=9612d0ec
+2026-10-02T11:57:31+0000 ip-172-31-87-2.ec2.internal python3.12[443927]: IRPT_RESIDENT_TOLERANCE_TYPE type=Static as_of=Custom name=cut
+2026-10-02T11:58:20+0000 ip-172-31-87-2.ec2.internal python3.12[443927]: IRPT_RESIDENT_VENDOR_REQUESTS kept=5
+2026-10-02T11:58:20+0000 ip-172-31-87-2.ec2.internal python3.12[443927]: IRPT_RESIDENT_POLL handled=1
+2026-10-02T12:00:29+0000 ip-172-31-87-2.ec2.internal python3.12[443927]: IRPT_RESIDENT_RESOLVE state=READY code=-
+2026-10-02T12:00:29+0000 ip-172-31-87-2.ec2.internal python3.12[443927]: IRPT_RESIDENT_POLL handled=1
+2026-10-02T12:00:37+0000 ip-172-31-87-2.ec2.internal python3.12[443927]: IRPT_RESIDENT_WAF_READ header=CHALLENGE job=REQ-abec171d60e0aa1f359c18ed
+2026-10-02T12:00:37+0000 ip-172-31-87-2.ec2.internal python3.12[443927]: IRPT_RESIDENT_READ_BACK_RELEASE step=template status=202 portfolio_status=- source=- polls=- wall_s=- drifted=- absent=- tolerated=-
+2026-10-02T12:00:37+0000 ip-172-31-87-2.ec2.internal python3.12[443927]: IRPT_RESIDENT_VENDOR_REQUESTS kept=1
+2026-10-02T12:00:37+0000 ip-172-31-87-2.ec2.internal python3.12[443927]: IRPT_RESIDENT_POLL retained_for_retry class=ReadBackPending code=READ_BACK_PENDING:WAF_CHALLENGE
+2026-10-02T12:15:41+0000 ip-172-31-87-2.ec2.internal python3.12[443927]: IRPT_SESSION_ROTATION kept=1 names=multidb_pin_writes version=67a7f376
+2026-10-02T12:15:43+0000 ip-172-31-87-2.ec2.internal python3.12[443927]: IRPT_SESSION_ROTATION kept=1 names=multidb_pin_writes version=b1aaf72f
+2026-10-02T12:15:45+0000 ip-172-31-87-2.ec2.internal python3.12[443927]: IRPT_RESIDENT_READ_BACK_RELEASE step=read_back status=200 portfolio_status=calculating source=status polls=1 wall_s=1.3 drifted=benchmark=null,level_as_of_ty
+2026-10-02T12:15:45+0000 ip-172-31-87-2.ec2.internal python3.12[443927]: IRPT_RESIDENT_VENDOR_REQUESTS kept=4
+2026-10-02T12:15:45+0000 ip-172-31-87-2.ec2.internal python3.12[443927]: IRPT_RESIDENT_POLL retained_for_retry class=ReadBackPending code=READ_BACK_PENDING:CALCULATING
+2026-10-02T12:30:51+0000 ip-172-31-87-2.ec2.internal python3.12[443927]: IRPT_RESIDENT_READ_BACK_DONE step=read_back status=200 portfolio_status=available source=saved_portfolio polls=1 wall_s=3.7 drifted=- absent=- tolerated=leve
+2026-10-02T12:30:53+0000 ip-172-31-87-2.ec2.internal python3.12[443927]: IRPT_SESSION_ROTATION kept=1 names=multidb_pin_writes version=8c3a6665
+2026-10-02T12:31:03+0000 ip-172-31-87-2.ec2.internal python3.12[443927]: IRPT_SESSION_ROTATION kept=1 names=multidb_pin_writes version=00601475
+2026-10-02T12:31:13+0000 ip-172-31-87-2.ec2.internal python3.12[443927]: IRPT_RESIDENT_TOLERANCE_TYPE type=Static as_of=Custom name=cut
+2026-10-02T12:32:04+0000 ip-172-31-87-2.ec2.internal python3.12[443927]: IRPT_RESIDENT_VENDOR_REQUESTS kept=5
+2026-10-02T12:32:04+0000 ip-172-31-87-2.ec2.internal python3.12[443927]: IRPT_RESIDENT_POLL handled=1
+

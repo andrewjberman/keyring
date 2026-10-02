@@ -3149,3 +3149,324 @@
   "notes": "Candidate cause, not measured: a second Vite process started from the main portal checkout (a build, a preview, a smoke script or another seat's dev server) re-optimizing into the same cacheDir. The 34 deps_temp_* directories were left in place (a recursive delete is Andrew's call). Remedy when it recurs: restart 5174. Found answering Andrew's 2026-09-30 report of the Market Performance import error."
 }
 ```
+
+
+## DSGN_IRPTV1-S43 -- disarm record for W39-S2: the request history stops printing the header's client (portal DEV b188be1f)
+
+```json
+{
+  "id": "DSGN_IRPTV1-S43",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-10-02T04:20:00Z",
+  "one_line": "DISARM record for DSGN_IRPTV1-W39-S2 (disarm owner 1.0.0_SA_CTO, act placed on 2.0.0_SA_COO~D by RULINGS batch 110 item 4(a)): the request history no longer prints the header's selected client on any row, so a request of another client is never labelled with the selected one (portal origin DEV b188be1f, FAST item 64).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal b188be1f (origin DEV by ls-remote 2026-10-02T04:2xZ): tabs/analysis/OwnedRequestHistory.tsx carries no owned-request-client slot and no header read; a row is 'Requested <date>', Open, the state in words",
+      "iv-e-74 ARM (c) and iv-e-80 re-goldened to the ruling: with a header client selected no row carries its name; a planted mutant restoring the label fails both; 40 of 40 across 13 neighbouring files",
+      "real run on 5174 fixture plane (.runtmp/request-list-client-driver.mjs), Cottonwood Trust selected: 2 rows, 0 client slots, no client name on a row -- VERDICT REQUEST-LIST-NO-CLIENT-REAL-OK; shot deliverables/2.0.0_SA_COO~D/item64/request-list-no-client.fast-run.png"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarms DSGN_IRPTV1-W39-S2: the false label is gone from the page (batch 110 item 4(a)). The row itself CLOSES only on a walk that shows each request under its own client, after the client-scoped history route of item 4(b) (IRPT_BCKEND, 2.0.0_SA_COO~Y).",
+  "spec_asserts": "Each history row names its client (UIC-23), true for the request it labels.",
+  "world_is": "No row names a client; the history route is not client-scoped, so the list still shows every request of the viewer under any selected client, unlabelled. Row S32's premise (the history mounts only under a selected client, so the header name is sound) was false in the world: the route is not scoped by that selection (REAL_RUNS_20261001.md section 2).",
+  "notes": "Rows W39-S2 and S32 stay filed as they are (append-only); this row is the disarm record. The client name returns on the page the tick a client-scoped history route is served."
+}
+```
+
+
+## DSGN_IRPTV1-S44 -- the Total Assets card's tiles add up to more than the client's total (CategoryViewTree D1-inv-4 fires on the signed-in page)
+
+```json
+{
+  "id": "DSGN_IRPTV1-S44",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-10-02T07:55:00Z",
+  "one_line": "On the signed-in Holdings tab the Total Assets card's top-level tiles add up to more than total_aua minus insurance: the page's own D1-inv-4 check (components/CategoryViewTree.tsx:1385-1394) logs VIEW-PLANE SUM DOES NOT CLOSE for two Cottonwood clients in every walk since 2026-10-01 06:32Z.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "walker console_errors (tmp/ui-walk/<stamp>/findings.json, gitignored): one client reads displayed L0 total 20121016.4717 vs total_aua - insurance_excluded 18810267.81 (over by 1,310,748.66, 7.0 percent) in walks 20261001T144503Z, 20261002T052515Z and 20261002T074315Z; another reads 9403597.122 vs 8823925.51 (over by 579,671.61, 6.6 percent) in walks 20261001T063244Z, T064300Z, T065700Z, T070802Z and T074316Z",
+      "the identity card's HOW MUCH reads $18,810,267.81 for the first client (walk 20261002T074315Z shot 039), equal to the check's expected side, so the header and the card's tiles disagree by the measured amount",
+      "the check sums the rendered L0 nodes' presentAum over the served block and compares with block.sums.total_aua - block.sums.insurance_excluded (CategoryViewTree.tsx:1370-1372); the page adds or drops no node (comment at :1396-1398)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The Total Assets card's top-level tiles partition the client's total: their sum equals total_aua minus insurance (D1_CATVIEWS invariant D1-inv-4), so the tiles and the identity card's HOW MUCH agree.",
+  "world_is": "For two Cottonwood clients the served L0 nodes sum 6.6 to 7.0 percent above total_aua minus insurance. Not measured: which L0 node carries the excess (a model sleeve counted at target beside its actual positions is one candidate, not a finding) and whether any 49 Financial client shows it.",
+  "notes": "Off item 70 (filed and kept working). The page renders what the view plane serves, so the remedy is most likely in the served category views, not in the card; 1.0.0_SA_CTO to place (the served holdings are 2.0.0_SA_COO~M's surface). Un-parks when an owner reads one L0 block of either client and names the node."
+}
+```
+
+## DSGN_IRPTV1-S45 -- commodities and cash are told apart by dE00 9.89 (floor 20), now side by side in the advisor Mix stack
+
+```json
+{
+  "id": "DSGN_IRPTV1-S45",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-02T09:40:00Z",
+  "one_line": "The colour test that keeps commodities and cash apart (iv-e-46 IVE49-AC1, dE00 >= 20) has failed on DEV since the 2026-09-29 return to standard hues (3e2233de) and has been carried as 'pre-existing' by two commits since; with eb90f2ad the advisor Mix stack now draws commodities beside cash, so the two near-identical colours sit side by side on a served page.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun test iv-e-46.class-readers.test.ts in a scratch worktree of portal origin/DEV (this seat's grade, 2026-10-02 08:xZ-09:xZ): 7 pass, 1 fail (IVE49-AC1) at 2bb367ef, at 455ca18d and at 8df9e3d3; the failing assertion at :319 measures dE00(MIX_PIE.commodities, MIX_PIE.cash) = 9.89 against the floor 20; the file run alone fails the same way (not order-dependent, as 3ca6c53a's message says)",
+      "portal eb90f2ad (2.0.0_SA_COO~M): AdvisorAnalytics.tsx:669-724 render every served mix class through mixPieColor, commodities included, in the same stack as cash",
+      "portal 3e2233de (2026-09-29, Andrew-direct standard hues) is the first commit at which the assertion fails"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IVE49-AC1: two mix classes drawn together are told apart by colour (dE00 >= 20 between commodities and cash).",
+  "world_is": "dE00 is 9.89 on DEV. The test has been red for three days and is carried rather than fixed; since eb90f2ad the pair is adjacent in a chart a person reads. The standard-hues direction and the separation test cannot both hold for this pair as the palette stands.",
+  "notes": "INERT: a legibility defect, not a wrong figure. Owner 2.0.0_SA_COO~D. Which yields (a hue within the standard set that clears 20, or the test's floor) is a design call for 1.0.0_SA_CTO, with Andrew if it touches his standard-hues direction. Not on PROD yet (none of the pins is an ancestor of b3a1d8a6)."
+}
+```
+
+
+## DSGN_IRPTV1-S46 -- two Performance-picker entries of one client read identically ("**** / No Account Type Assigned -- $200,000.00")
+
+```json
+{
+  "id": "DSGN_IRPTV1-S46",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-10-02T09:55:00Z",
+  "one_line": "On the signed-in Performance tab an 18-account Cottonwood client's account picker lists two entries with the same words: '**** / No Account Type Assigned -- $200,000.00 -- YTD <state>' -- an advisor cannot tell them apart.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "walker check `duplicate-options` in walk 20261002T074315Z (local, gitignored): the option text '**** / No Account Type Assigned -- $200,000.00 -- YTD pending' x2, and again with 'YTD unavailable' x2, on 4-5 Performance steps",
+      "the picker composes '<label> -- <value> -- <period figure>' (tabs/holdings/AccountFilter.tsx, performanceMode); the label is the account's masked number and type, so two accounts with no number, no type and the same value read alike (CTO 101845 E3 added the value precisely so two accounts sharing a label are told apart)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Every entry of the account picker names one account an advisor can tell from the others (UIR-15 / E3: label, then value, then the period figure).",
+  "world_is": "Two entries print identical words. Not measured: whether they are two accounts (each with no number, no type and $200,000.00) or one account listed twice in the client's account list; the walker reads option text, not the account ids behind the options.",
+  "notes": "Off item 73, filed and kept working. If the list carries one account twice, the remedy is the directory's (2.0.0_SA_COO~P); if two real accounts lack a number and a type, the page needs a third distinguishing fact and the source the missing number. Un-parks when an owner reads the client's account list ids."
+}
+```
+
+
+## DSGN_IRPTV1-S47 -- an Analysis print has no report state to gate on: the sections route answers a slice with no availability and no status
+
+```json
+{
+  "id": "DSGN_IRPTV1-S47",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-10-02T10:30:00Z",
+  "one_line": "With W101-S3 fixed (portal DEV 7f9cf54a) the Analysis print fetches the right report and then still refuses: the print gate (FE-s-31 ruling H) reads `report.availability`, but the analysis-report route is adapted to a slice view that carries no availability and its envelope carries no status, so the page shows 'Cannot read properties of undefined (reading 'producerState')' instead of a document.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "real run on 5174 fixture plane (.runtmp/print-request-driver.mjs, portal working tree = 7f9cf54a): print?bundle=...&request=REQ-0001&kind=analysis asked GET .../analysis/REQ-0001/sections, answered with the v1 envelope fixtures/smoke/default.json carries for that route, and rendered data-print-state='refused' with the text above",
+      "contracts/envelope.ts:160 parses 'analysis-report' through adaptAnalysisReportSlice (contracts/adapt.ts:1291-1306): requestId, attemptRef, sections, extraction verdicts -- no availability; carryAvailabilityFromStatus (adapt.ts:305-311) returns a view with no availability unchanged",
+      "the route's v1 envelope fixture carries no `status` key (contract_version, operation, firm_id, data, unprojected_grant)",
+      "render/PrintEntry.tsx: `isAnswerBearing(report.availability)` then `reportStateChrome(report)` reads `availability.producerState` (render/Page.tsx:168-170)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The print page gates on the REPORT's state (FE-s-31 ruling H): an answer-bearing report renders the document, a no-answer one is refused with its state and reason.",
+  "world_is": "For an Analysis report the page receives no state at all, so it can neither render nor refuse in words; the refusal shows a JavaScript error. Not run: the live route signed in (the walker never presses an export).",
+  "notes": "Off item 75, filed and kept working. Blocks IRPT_BCKEND E4 (IB-pr-282, 2.0.0_SA_COO~P): one Analysis export downloaded for a READY request. The remedy is a design call asked of 1.0.0_SA_CTO: the Analysis print reads its request's own status (the status route the Analysis tab already reads), or the sections envelope carries a status that the slice adapter keeps."
+}
+```
+
+
+## DSGN_IRPTV1-S48 -- disarm record for S44: the tiles' excess over the total is exactly the negative balances the card leaves off by design
+
+```json
+{
+  "id": "DSGN_IRPTV1-S48",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-10-02T11:05:00Z",
+  "one_line": "DSGN_IRPTV1-S44 is explained, measured on both clients: the Total Assets card draws only balances above zero and footnotes each negative one ('a negative balance, not drawn on the card'), so its tiles exceed the client total by exactly the footnoted negatives -- no served figure is wrong; the engineer-plane check D1-inv-4 does not know the card's own exclusion and fires on every client with a negative account.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "walk 20261002T075255Z shot 014 (local): the card footnote '****2237 / Joint: -$1,310,748.66 (a negative balance, not drawn on the card)'; S44's measured excess 20,121,016.47 - 18,810,267.81 = 1,310,748.66, equal",
+      "walk 20261001T064300Z shot 014 (local): four footnoted negatives 5,150.61 + 21,521.00 + 544,000.00 + 9,000.00 = 579,671.61; S44's measured excess 9,403,597.12 - 8,823,925.51 = 579,671.61, equal",
+      "the card's headline and the identity card's HOW MUCH agree on both clients ($18,810,267.81; $8,823,925.51); only the tiles' sum differs, by the excluded negatives"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarms DSGN_IRPTV1-S44: not a served defect. The card's exclusion of negative balances is designed and stated on the face; the excess is that exclusion to the cent on both measured clients. What remains is the check's own blindness to it, which this seat fixes in its lease (D1-inv-4 accounts for the balances the card leaves off).",
+  "spec_asserts": "D1-inv-4: the displayed L0 tiles plus whatever the card leaves off by rule equal total_aua minus insurance.",
+  "world_is": "The check compares the displayed tiles with the total and ignores the negative balances the card leaves off, so it fires a false VIEW-PLANE SUM DOES NOT CLOSE for every client with a negative account.",
+  "notes": "S44 stays filed as it is (append-only); this row is its disarm record. S44's premise that a served L0 node carries an excess was wrong: the 'excess' is the card's own rule."
+}
+```
+
+
+## DSGN_IRPTV1-S49 -- disarm record for S40: the comparison catalogue is in the operation table, the battery derived (portal DEV ebceef5b)
+
+```json
+{
+  "id": "DSGN_IRPTV1-S49",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-10-02T12:15:00Z",
+  "one_line": "DISARM record for DSGN_IRPTV1-S40's API-layer half: GET /analysis/comparisons joined IR_ROUTE_TABLE and the fe-s-13/14/57 battery derives its route count from routes.json (portal DEV ebceef5b, FAST item 80, 1.0.0_SA_CTO RULINGS batches 151 and 158).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal ebceef5b (origin DEV by ls-remote 11:5xZ): 'comparison-catalogue' in IrDeclaredOperation and IR_ROUTE_TABLE; fixtures/wire/requests/comparison-catalogue.request.json captured from the page's own read on 5174",
+      "the battery's 17-file set: 7 failing at HEAD, 1 after ('the three routes no consumer operation names', stale against routes.json, its own row)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarms DSGN_IRPTV1-S40: the route the page reads is now in the operation table and every pin that counts routes reads routes.json's own denominator.",
+  "spec_asserts": "Every route routes.json declares is in the client's operation table, and the pins count what the contract declares.",
+  "world_is": "Both hold at portal DEV ebceef5b; one stale consumer-list pin remains on its own row.",
+  "notes": "S40 stays filed as it is (append-only); this row is its disarm record."
+}
+```
+
+
+## DSGN_IRPTV1-S50 -- disarm record for S45: Mix-chart cash is green, 36.4 dE00 from commodities (portal DEV bf38f6c9)
+
+```json
+{
+  "id": "DSGN_IRPTV1-S50",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-10-02T12:15:00Z",
+  "one_line": "DISARM record for DSGN_IRPTV1-S45 (3.0.0_SA_CVO): MIX_PIE.cash moved amber500 -> green300 under Andrew's call C1 (1.0.0_SA_CTO RULINGS batch 152), so commodities and cash sit 36.40 dE00 apart in the advisor Mix stack (portal DEV bf38f6c9, FAST item 78).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal bf38f6c9 (origin DEV): src/lib/chartColors.ts MIX_PIE.cash = PALETTE.green300",
+      "iv-e-46 IVE49-AC1 passes: dE00(MIX_PIE.commodities, MIX_PIE.cash) = 36.4025 (bar 20)",
+      "signed-in walk 20261002T113640Z: the Books page renders after the change; a cash slice was NOT seen (49 Financial's mix carries none)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarms DSGN_IRPTV1-S45: the floor holds for the pair with no exception minted, by the CTO's ruling.",
+  "spec_asserts": "Commodities and cash in one Mix stack clear dE00 >= 20.",
+  "world_is": "They measure 36.40 at portal DEV bf38f6c9; cash against fixed income measures 14.9, the same pair ASSET_CLASS carries under C1, graded by no failing test.",
+  "notes": "S45 stays filed as it is; this row is its disarm record. Not on PROD until the portal promote."
+}
+```
+
+
+## DSGN_IRPTV1-S51 -- disarm record for S46: the account picker numbers accounts that share a label (portal DEV ad5c6e06)
+
+```json
+{
+  "id": "DSGN_IRPTV1-S51",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-10-02T12:15:00Z",
+  "one_line": "DISARM record for DSGN_IRPTV1-S46: the Performance and Holdings account pickers number accounts that share a label as the Total Assets card does ('(2)', '(3)'), so the 18-account client's two '**** / No Account Type Assigned -- $200,000.00' entries read apart (portal DEV ad5c6e06, FAST item 77).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal ad5c6e06 (origin DEV): tabs/holdings/AccountFilter.tsx accountListLabels over the card's own uniqueLabel",
+      "walk 20261002T075255Z shot 014: the card already numbered the four account-less accounts '(2)', '(3)', '(4)' -- they are real, distinct accounts",
+      "fixture-plane run: two accounts labelled alike read 'Trust Account' and 'Trust Account (2)'"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarms DSGN_IRPTV1-S46: two entries can no longer read word for word alike.",
+  "spec_asserts": "Every picker entry names one account an advisor can tell from the others.",
+  "world_is": "Holds at portal DEV ad5c6e06. Not verified: that the picker's numbering lands on the same account as the card's when the two lists are ordered differently.",
+  "notes": "S46 stays filed as it is; this row is its disarm record."
+}
+```
+
+
+## DSGN_IRPTV1-S52 -- disarm record for S47: an Analysis print gates on its request's own status (portal DEV b618efc9)
+
+```json
+{
+  "id": "DSGN_IRPTV1-S52",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-10-02T12:15:00Z",
+  "one_line": "DISARM record for DSGN_IRPTV1-S47: an Analysis print reads its request's status (the status route the Analysis tab reads) and gates on it; a READY request prints, every other state is answered by name, no script error (portal DEV b618efc9, FAST item 76, 1.0.0_SA_CTO RULINGS batch 141).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal b618efc9 (origin DEV): render/PrintEntry.tsx analysisChromeFromStatus through carryAvailabilityFromStatus; render/analysis/AnalysisDocument.tsx reads the slice's absent members as 'not stated'",
+      "fixture-plane run (.runtmp/print-status-driver.mjs): READY printed after status + sections; RUNNING named with no sections fetched; no request refused by name; 0 script errors -- the batch-141 proof, delivered to 2.0.0_SA_COO~P (E4 unblocked)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarms DSGN_IRPTV1-S47: the print has a state to gate on, from the one status source per request.",
+  "spec_asserts": "The print page gates on the report's state (FE-s-31 ruling H).",
+  "world_is": "Holds at portal DEV b618efc9 for Analysis prints; the live route signed in is not run (the walker never presses an export).",
+  "notes": "S47 stays filed as it is; this row is its disarm record. Not on PROD until the portal promote."
+}
+```
+
+
+## DSGN_IRPTV1-S53 -- the routes pin "the three routes no consumer operation names" is stale against routes.json
+
+```json
+{
+  "id": "DSGN_IRPTV1-S53",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-10-02T12:30:00Z",
+  "one_line": "fe-s-13/routes.test.ts 'the three routes no consumer operation names are typed and recorded' hard-codes ['export-download', 'status-job', 'status-summary'], but routes.json now names a consumer operation for each of those three and the ONE route with consumer_operation null is comparison-catalogue -- the pin fails at HEAD and after item 80; 1.0.0_SA_CTO RULINGS batch 158 kept it on its own row, and no such row existed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/contracts/investor-reporting/v1/routes.json at HEAD: status-summary, status-job and export-download each carry consumer_operation equal to their own operation; comparison-catalogue carries null with consumer_operation_absent_reason 'the consumer's operation list is IRPT_FNTEND's to extend'",
+      "fe-s-13/routes.test.ts at portal ebceef5b: expect(uncalled ops).toEqual(['export-download', 'status-job', 'status-summary']) and toHaveLength(3); measured uncalled = ['comparison-catalogue']",
+      "the pin failed at HEAD before item 80 (the battery's 17-file baseline, 7 failing) and is the one failure left after it"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The pin names exactly the routes routes.json leaves without a consumer operation, each typed by the client.",
+  "world_is": "It names three routes the contract now gives consumers, and misses the one it does not (comparison-catalogue, typed by the client since item 80).",
+  "notes": "Two ways out, neither taken here (batch 158 kept the pin as it is): derive the expected list from routes.json, as item 80 did for the counts; or IRPT_FNTEND names a consumer operation for the catalogue in routes.json (2.0.0_SA_COO~Y's lease holds that file) and the pin's list becomes empty. 1.0.0_SA_CTO to place."
+}
+```

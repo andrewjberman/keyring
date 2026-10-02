@@ -1,0 +1,24 @@
+  leg J on: leg S read AUTHENTICATED, 680 seconds ago
+  ROOT GATE: running root [/opt/irpt-resident/cf3ae52aee-st12]
+=== hop 7: ONE attempt, one login, the durable identity ===
+  principal : svc-irpt-analysis@opalinvest.com
+  pw source : Secrets Manager irpt/svc-irpt-analysis/password -> WALK_PW in this process only; never printed
+  tenant    : cottonwood   comparison keys: [] (none = overview)
+  upload    : aapl-vnq-12.03.csv sha256 bb079cbf53aaa2be
+  SOLO GATE: non-terminal jobs [] | queue visible/in-flight 0/0
+  deadline  : 2026-10-02T10:57:20+00:00
+=== fire at 2026-10-02T09:57:22Z ===
+09:57:25Z LOGGED_IN login status 200
+09:57:25Z PASSWORD_RETAINED /irpt/svc-irpt-analysis/password (the packet deletes it at its last arm)
+09:57:30Z K4 POST 200 state RESOLVING | upload_id UP-bb72ac618321f80c7ee734c643f109040af464f226543391cb89ab3d7b7177c4
+09:57:32Z K4 resolved NORMALIZED | input_id portfolio_15c38a0d8f4ae3930cf984ee9b8375a1c4039cd1afae7ce7205f1558e2a73299
+09:57:37Z K5 POST 200 | state QUEUED | identity {"tenant_firm_id": "cottonwood", "request_id": "REQ-c07e64ca6c74b8e5310f56e0", "revision": 1, "immutable": true, "ingestion_gate_revision": "schemas-c1c43c6df0b7e2b511f7aacab53262843b54eab71e0589fceba28404676b0a42", "destination_policy_revision": "e0046398e23951451498c0fcfec29154db5b26d4c70d80c4121f
+  REQ = REQ-c07e64ca6c74b8e5310f56e0
+09:57:39Z state RECEIVED | outbox SENT 
+09:57:56Z state SUBMITTING | outbox SENT | detail {"operation":"portfolio_create"}
+10:13:15Z state DOWNLOADING | outbox SENT | detail {"phase":"vendor_pdf"}
+10:13:33Z state CERTIFYING | outbox SENT | detail {"phase":"retained_pdf_publication"}
+10:14:06Z state READY | outbox SENT | detail {"certification_sha256":"2226e093b240fdeb283e68bc66c03e735564754aa864090169023ae2aaa87d6c","report_id":"RPT-819429e0bd7084a11cdc74f023a9c48c","revision":"96e86f751361ff40df3185e89936f0a70c5b0127b7569b7ad81f7cffa2cd390a"}
+10:14:06Z TERMINAL READY -- holding the 20 s floor before the next body
+10:14:26Z floor held; next body may start
+=== the attempt is over. No second POST is made by this script. ===

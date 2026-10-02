@@ -1,0 +1,24 @@
+diff --git a/infra/aws/lambda/investor-reporting/reports/tests/test_status_installed.py b/infra/aws/lambda/investor-reporting/reports/tests/test_status_installed.py
+index 78a1327eeb..e7731697b4 100644
+--- a/infra/aws/lambda/investor-reporting/reports/tests/test_status_installed.py
++++ b/infra/aws/lambda/investor-reporting/reports/tests/test_status_installed.py
+@@ -92,16 +92,16 @@ def test_the_boundary_installs_the_five_operations_with_the_history_routes():
+     boundary = si.build_boundary(ports)
+     assert boundary.function_name == "irpt-status"
+     assert set(boundary.operations) == {"status-summary", "analysis-report", "status-job",
+-                                        "analysis-request-history", "analysis-request-read"}
++                                        "analysis-request-history", "analysis-request-read", "analysis-request-pdf"}
+     for route_key, operation in si.HISTORY_ROUTES.items():
+         assert boundary.routes[route_key] == operation
+-    assert len(boundary.routes) == 5
++    assert len(boundary.routes) == 6
+     # The installed handler's declaration is the built Entry's table (served.installed_entry
+     # refuses the first call otherwise), and the census reads it before any call.
+     assert boundary.routes == si.declared_routes() == si.lambda_handler.__irpt_routes__
+     assert si.lambda_handler.__irpt_guarded__ is True
+     assert boundary.owner_read_modes == {"analysis-request-history": "CURRENT_OWNER_HISTORY",
+-                                         "analysis-request-read": "OWNED_RECORD",
++                                         "analysis-request-read": "OWNED_RECORD", "analysis-request-pdf": "OWNED_RECORD",
+                                          "analysis-report": "OWNED_RECORD", "status-job": "OWNED_RECORD"}
+ 
+ 

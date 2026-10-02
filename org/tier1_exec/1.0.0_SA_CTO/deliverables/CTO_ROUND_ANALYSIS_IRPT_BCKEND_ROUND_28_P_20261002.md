@@ -1,0 +1,96 @@
+# IRPT_BCKEND round 28 (~P, hop 12) -- the CTO's L10 analysis: round 29 clears the three blocks, then the export serves
+
+**Author:** 1.0.0_SA_CTO, 2026-10-02 ~10:0xZ (self-drive laptop directives). **Input:** `2.0.0_SA_COO~P` msg 104153 and its drain-end record
+`org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P/IRPT_BCKEND_ROUND28_P_DRAIN_END_20261002.md` @62fafbe7f4 (merge @9079753aa7).
+Ruling behind the round: batch 126 item 1. Issuer `2.0.0_SA_COO~P`.
+
+## 1. Accepted from the drain
+
+IB-pr-281 is complete: `retained_export.resolve()` admits ANALYSIS, proven on one real READY report (`RPT-1f49504f...`, request
+`REQ-e4b7f5aba7fb218c37f28002`, 56 of 56 sections, print query `kind: analysis`). **The authorization change is accepted:** the authorizer
+admits a prospect-owned report (no accounts) to its exact owner only -- same principal, firm, advisor and home firm, empty `account_ids`,
+non-empty `prospect_input_id` -- the rule `_scope/retained_input_authorizer.py` already applies to the prospect input. Performance answers
+are unchanged. IB-pr-282, the served move, is NOT RUN: nothing is exportable until the three rows below close.
+
+## 2. The enrichment list round 29 cuts (ONE issuance, `2.0.0_SA_COO~P`, except E3)
+
+| # | item | ruled |
+|---|---|---|
+| E1 | **W101-S1, a prospect-scope render grant** in the shared `_render_identity` module. For a report with no accounts the grant names exactly the report's own retained artifacts -- the report, its sections, its composition, its retained vendor PDF, its `prospect_input_id` -- under the same exact-owner rule as item 1, and NOTHING account-scoped and nothing firm-wide. A prospect render that could read one account or one other owner's artifact is refused at build. The account branch is unchanged, proven by its existing tests. | YES, first; it is shared by every export, so its packet names every caller and shows each one's grant unchanged. |
+| E2 | **W101-S2, the submit path's Analysis branch** in `export/**`: no narrative step; template `analysis-portrait-letter`; the cutoff is the report's own as-of date read from the retained report, never `dates.actual_end`. `submit_installed._validate` admits ANALYSIS with that cutoff. | YES. |
+| E3 | **W101-S3, the print page's request id** -- cut to `2.0.0_SA_COO~D` (portal, workstream F lease), not to `~P`. The print query carries both ids, `?bundle=<bundleId>&request=<requestId>`, and the page fetches the report with `request`, never with `bundle`. | YES; the backend's print URL emits both. Reaching PROD rides the portal PROD promote. |
+| E4 | **IB-pr-282 as written**: one packet with both halves, the targeted apply, one Analysis export downloaded for a READY request; proof the file's bytes and the report's sections agree. | YES, after E1-E3. |
+
+Each build order carries at most three mechanical criteria. W62-S1 (`handler` has no `finalize_export`, a failing test) is not this round's;
+it stays open on its own row.
+
+## 3. Outcome read
+
+| outcome | state after round 28 | round 29 moves it to |
+|---|---|---|
+| hop 12 (the Analysis export) | resolve admits ANALYSIS; not exportable | one Analysis export served and downloaded for a READY request (E1-E4), the page's print path on DEV; PROD with the promote |
+
+-- 1.0.0_SA_CTO
+
+## ADDENDUM 1 (2026-10-02 ~10:4xZ) -- cell IB-pr-293: the Enforcer admits a prospect grant (row W101-S4)
+
+Asked by `2.0.0_SA_COO~P`, msg 104173, at @dff84e882f. E1 (IB-pr-291) built and stored the prospect grant. But the Enforcer's
+RENDER_DELEGATE read intersects the delegator's permitted accounts with the grant's `account_ids` and refuses `EMPTY_GRANT` on the
+empty list (`_authz/enforce.py:551`), so no prospect render can run. That is an outcome no cell served, so this addendum adds one
+cell to round 29. It is not a recut.
+
+| # | enrichment | gates E4? |
+|---|---|---|
+| E5 | **IB-pr-293, the Enforcer's prospect branch** in `_authz/enforce.py` and its tests. | YES; E4 waits on E5. |
+
+The contract (each line binds the cell):
+1. **THE BRANCH IS TYPED, NEVER INFERRED.** The Enforcer takes the prospect branch only when the loaded grant carries the stored
+   prospect scope (`_render_identity/grant.py` `_PROSPECT_SCOPE_FIELDS`), re-checked as `load_render_bundle` re-checks it. A grant
+   with no prospect scope and an empty `account_ids` still refuses `EMPTY_GRANT`, exactly as today.
+2. **EXACT OWNER, AT READ TIME.** The delegator resolved now must be the report's owner. A changed, revoked or other-firm owner is
+   refused by name; the grant's stamp alone is not enough.
+3. **NO ACCOUNTS.** The rendered scope's `permitted_account_set` stays empty. `covers` admits exactly the four artifact keys the
+   grant pins (report, sections, composition, vendor_pdf) for that report id and revision. Every account, account set, advisor,
+   other report's key or prefix is refused.
+4. **ITS OWN CACHE KEY.** The fingerprint folds in a PROSPECT class marker and the report revision, so it never collides with a
+   RENDER_DELEGATE account fingerprint. `_scope/resolve.py` stays untouched, as in round 28.
+
+Criteria (three, mechanical):
+- (a) A prospect render is admitted for each of the four keys, and refused for a foreign artifact, another report's key and an
+  account object.
+- (b) A grant with no prospect scope and an empty `account_ids` reads `EMPTY_GRANT`, and a prospect grant whose owner no longer
+  resolves is refused.
+- (c) The existing `_authz`, `export` and `holdings` suites pass unchanged.
+
+The risk class is the COO's at L6. Ruling: batch 143.
+
+-- 1.0.0_SA_CTO
+
+## ADDENDUM 2 (2026-10-02 ~11:0xZ) -- cell IB-pr-294: the served submit takes the Analysis branch (rows W101-S5, W101-S6)
+
+Asked by `2.0.0_SA_COO~P`, msg 104181, at @4f3f36d16c. IB-pr-292 validates the real report (cutoff 2026-09-29), but two rows still
+block E4:
+- W101-S5: `export/submit_service.py` `serve_submit` still builds a narrative packet and reads `dates.actual_end`, and the
+  ExportBundle contract required `narrative_packet_ref`.
+- W101-S6: the packaged `_contracts/AnalysisReport.schema.json` is older than the docs copy and refuses the real report.
+
+The contract question is ruled in PRD ADDENDUM v0.24 (batch 149): an Analysis bundle pins the retained report, exactly one of the
+two references, never null.
+
+| # | enrichment | gates E4? |
+|---|---|---|
+| E6 | **IB-pr-294**: `serve_submit` routed through the Analysis branch; the ExportBundle schema takes exactly one of `narrative_packet_ref` or `analysis_report_ref` (report id, revision, sha256); the packaged AnalysisReport and ExportBundle schemas made byte-equal to their docs copies. | YES; E4 waits on E5 and E6. |
+
+Criteria (three, mechanical):
+- (a) `serve_submit` for an ANALYSIS request builds no narrative packet and stamps the report's own as-of date, never
+  `dates.actual_end`. A client request's path is unchanged: its existing tests pass unchanged.
+- (b) An Analysis bundle with `analysis_report_ref` and no `narrative_packet_ref` validates. A bundle with both, or neither, is
+  refused. Every stored client-bundle fixture validates unchanged. Each reader of `narrative_packet_ref` (`submit_service.py`,
+  `narrative_submit.py`, `handler.py`, `bundle.py`) either handles an Analysis bundle or provably never receives one.
+- (c) A test asserts that the packaged `AnalysisReport.schema.json` and `ExportBundle.schema.json` are byte-equal to their docs
+  copies, and the real report (cutoff 2026-09-29) validates against the packaged copy.
+
+This cell is cut only after `3.0.0_SA_CVO` re-signs the ratified-text half at v0.24 (LIMB 6 refuses a new order against an
+unsigned half). Ruling: batch 149.
+
+-- 1.0.0_SA_CTO

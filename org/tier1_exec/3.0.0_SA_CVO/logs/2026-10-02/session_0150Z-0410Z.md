@@ -76,3 +76,44 @@ None on this seat. Wind-down in force.
 3. [3.0.0_SA_CVO] Next compile: close IRPT_BCKEND-S262 on the 03:36Z restore.
 
 -- 3.0.0_SA_CVO
+
+## Addendum 04:10Z-04:40Z -- the wind-down withdrawn for the laptop
+
+`0.0.0_AB_MSTR` 104042 (Andrew-direct ~04:1xZ: "our fabric on the laptop is fine and should keep working") withdrew
+104034; both acked. Resumed:
+
+| commit | what |
+|---|---|
+| 7600d410b3 | grade: ~M's 29 Cottonwood bank-CD `CUSIP:` rows PASS (writer and set at their blobs, 10 tests, 29 of 29 equal the set, table 2,719) |
+| 40a2278e55 | grade: NFRA_TRNSPT mail pull schedule APPLIED PASS (the one function with the signed CodeSha256, rule cron(30 23 * * ? *) ENABLED, one policy, one KMS grant, QA run landed 0 of 13) |
+| 4a7abcd96c | L8 IRPT_BCKEND sweep 6 addendum: W90-S1 REMEDIATED and closed (seam suite 62 passed 0 failed at HEAD), W90-S2 and S3 dismissed as moot (C-S271) |
+
+Disarms seen on the record: MDPF_TAXSMA-S15 by `4.0.0_SA_CRO` (31dbf32468, JSON gone at HEAD); ESTATE_GOVERNANCE-S35 by
+`1.0.0_SA_CTO` batch 110 (baseline 10 -> 26, effective at the first 03:00Z build after CLOUD is pushed); W39-S2 placed
+in the same batch.
+
+Next, unchanged in order: the 04:00Z BD gold fire (C_06's first compute) after ~06:05Z; st10's first job; the 14:15Z
+publication (split-account leg S, seed rows S and G); the 23:30Z mail pull fire; IRPT_BCKEND sweep 7 (rows S249 on) at
+the leases' end. Not taken: the 44 rowless BLOCKING/ARMED items in open projects (their own sweeps own them).
+
+## Addendum 04:40Z-09:55Z
+
+| commit | what |
+|---|---|
+| 662953e505 | L8 IRPT_DASHBD round 1 (CTO 104054): 13 of 13; S6 limb (e) and S8 in no round-2 cell, placed by the CTO as analysis addendum A4-A5 @7a888d7675 |
+| 35dcfcf988 | row MDPF_SECCLASS-S9 ARMED: BD r3's first real compute (04:00Z fire) served a 49financial firm mix missing about 24 pct (sum 75.8 pct, 1,397.4 M of 1,840.9 M); 290 tickers only bd-securities knew; CTO ruled rollback (batches 117-118) |
+| 143d8bf8c2 | ~Y catalogue SERVED PASS; S263 fix PASS source-only; row IRPT_BCKEND-S264 (source map deploy fields stale) |
+| 18b1f02b36 | IRPT_BCKEND S213 and W92-S4 closed (clocks only in place; evidence in the grade file after the gate refused an in-place evidence edit) |
+| 9d295634e5 | ~Y st11 PASS on bytes; row S265 (23 resident roots kept) |
+| b8221c113f | BD r3 restore V1 GREEN at 08:31Z: firm mix 1.0000 / 1,843.1 M, z08327149 alternatives back; CTO closed the rollback (batch 129) |
+| c497d2ed9e | portal DEV items 64-71, IRPT_DASHBD hop 5, Cottonwood reader: 10 PASS on a test run; rows DSGN_IRPTV1-S45, ESTATE_GOVERNANCE-S36 |
+| 4d6139b2ec | IRPT_DASHBD DB-b-7 PASS live, PRD record FAIL; ~Y items 21-22 and st12 source PASS; rows IRPT_DASHBD-S18, S19, IRPT_BCKEND-S266 |
+| d565f1a9f7 | ~Y st12 PASS on the host; S266 sharpened (sign-in takes its own lease); S265 measured (2.9G free of 8.0G) |
+
+MCP out to `1.0.0_SA_CTO`: the IRPT_DASHBD addendum ask (05:11Z), the S9 decision ask (06:15Z), V1 green (08:35Z). In:
+104054, 104061, 104081, 104088, 104104, 104108, 104127, 104136, all acked. Grading evidence for most pins was gathered by
+read-only forks and fresh agents of this seat; the S9, V1, S213 and CUSIP reads were made here.
+
+Next: DB-b-7 A1 at the 11:41Z fire; the 14:15Z publication (split-account leg S, seed rows S and G); the first jobs on
+st11/st12 after Andrew's sign-in (S253, item 19, the write-back); the FWD-1 grade of IRPT_DASHBD when asked (read
+~P's gap composition first, batch 128 item 2); IRPT_BCKEND sweep 7 at the leases' end.

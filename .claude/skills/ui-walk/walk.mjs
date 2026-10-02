@@ -44,7 +44,10 @@ for (let i = 0; i < argv.length; i++) {
   else if (a === '--headed') opt.headed = true
   else if (a === '--deep') opt.deep = true
   else if (a === '--model-scope') opt.modelScope = true
+  else if (a === '--account-drill') opt.accountDrill = true
   else if (a === '--open-request') opt.openRequest = argv[++i]
+  else if (a === '--composer-picker') opt.composerPicker = true
+  else if (a === '--dashboard-window') opt.dashboardWindow = true
   else if (a === '--holdings-aggregates') opt.holdingsAggregates = true
   else if (a === '--performance-state') opt.performanceState = true
   else if (a === '--expect-text') opt.expectTexts.push(String(argv[++i] || ''))
@@ -822,6 +825,244 @@ async function openRequest(page, label, requestId, afterReload = false) {
 
 const SEARCH_ANSWER_CEILING_MS = 30000
 const searchTimings = []
+// ---- --account-drill (DSGN_IRPTV1 FAST item 65; Andrew-direct 2026-10-02 ~04:3xZ: an account drill on the Total Assets
+// card must not be a full page refresh). On the Holdings tab's default view: wait until the tab's background one-account
+// reads are done (no holdings read out for 2.5 s, up to ACCOUNT_DRILL_WARM_CEILING_MS), press the card's first tile, and
+// poll every 40 ms until the one-account view is shown ("Back to all accounts" present, no "Opening" line). Counts and
+// times only: no client name and no figure is written. Then it returns to every account.
+const accountDrills = []
+const ACCOUNT_DRILL_WARM_CEILING_MS = 60000
+async function accountDrill(page, label) {
+  const reads = []          // { kind, sent, answered }
+  const byReq = new Map()
+  const onRequest = (req) => {
+    const p = pathOnly(req.url())
+    const kind = /\/investor-reporting\/holdings\//.test(p) ? 'holdings' : (req.method() === 'POST' && /\/investor-reporting\/selections$/.test(p)) ? 'selection' : null
+    if (!kind) return
+    const r = { kind, sent: Date.now(), answered: null, status: null }
+    reads.push(r); byReq.set(req, r)
+  }
+  const onDone = (req, status) => { const r = byReq.get(req); if (r && r.answered === null) { r.answered = Date.now(); r.status = status } }
+  const onResponse = (res) => onDone(res.request(), res.status())
+  const onFailed = (req) => onDone(req, 'failed')
+  page.on('request', onRequest); page.on('response', onResponse); page.on('requestfailed', onFailed)
+  const t0 = Date.now()
+  let quietSince = Date.now()
+  while (Date.now() - t0 < ACCOUNT_DRILL_WARM_CEILING_MS) {
+    if (reads.some((r) => r.answered === null)) quietSince = Date.now()
+    else if (Date.now() - quietSince >= 2500) break
+    await page.waitForTimeout(100)
+  }
+  const warmMs = Date.now() - t0
+  const background = reads.filter((r) => r.kind === 'holdings').map((r) => (r.answered === null ? null : r.answered - r.sent))
+  const tiles = page.locator('[data-slot="holdings-drill-tree"] [aria-haspopup="dialog"]')
+  const tileCount = await tiles.count()
+  const rec = { label, tiles: tileCount, warm_wait_ms: warmMs, background_holdings_reads: background.length,
+    background_selection_posts: reads.filter((r) => r.kind === 'selection').length,
+    background_holdings_took_ms: background, drill: null }
+  if (tileCount > 0) {
+    const pressAt = Date.now(); const before = reads.length
+    await tiles.first().click().catch(() => {})
+    let tabGone = false; let opening = false; let shownMs = null
+    while (Date.now() - pressAt < 30000 && shownMs === null) {
+      const s = await page.evaluate(() => ({
+        tab: !!document.querySelector('[data-slot="holdings-tab"]'),
+        opening: !!document.querySelector('[data-slot="holdings-account-opening"]'),
+        back: !!document.querySelector('[data-slot="holdings-all-accounts"]'),
+      })).catch(() => ({ tab: false, opening: false, back: false }))
+      if (!s.tab) tabGone = true
+      if (s.opening) opening = true
+      if (s.tab && s.back && !s.opening) shownMs = Date.now() - pressAt
+      else await page.waitForTimeout(40)
+    }
+    const after = reads.slice(before)
+    rec.drill = { ms_to_account_view: shownMs, tab_body_left_the_page: tabGone, opening_line_shown: opening,
+      reads_after_press: after.map((r) => ({ kind: r.kind, sent_ms: r.sent - pressAt, took_ms: r.answered === null ? null : r.answered - r.sent })),
+      account_view_offered: shownMs !== null }
+    await page.keyboard.press('Escape').catch(() => {})
+    await shot(page, `${label}-account-drill`)
+    await checks(page, `${label}-account-drill`)
+    await page.locator('[data-slot="holdings-all-accounts"]').first().click().catch(() => {})
+    await page.waitForTimeout(800)
+  }
+  page.off('request', onRequest); page.off('response', onResponse); page.off('requestfailed', onFailed)
+  accountDrills.push(rec)
+  if (rec.drill && rec.drill.tab_body_left_the_page) findings.push({ step: `${label}-account-drill`, check: 'account-drill:page-reload', claim: 'measured', observed: 'the Holdings tab body left the page during an account drill', rule: 'an account drill on the Total Assets card is not a page reload (Andrew-direct 2026-10-02)' })
+}
+
+// ---- --composer-picker (DSGN_IRPTV1 FAST item 70; walk-2 W2-04 / W2-05): on the Analysis tab, take the composer to its
+// analysis-type step (the Client portfolio card), then press the Multi-Comp card (the picker must open at once, Done closed
+// at 0 picks), pick the first two Opal models, Done; press the Comparison card, search 'spy', pick the first ETF, Done;
+// press Overview. Records the served catalogue read (status, took, entry counts by kind), the loose input box count at rest
+// and at the end, and the names the composer prints. Page state only: the catalogue read is a GET and Generate is never
+// pressed. Opal model and ETF names are the firm's catalogue, not client data.
+const composerPickers = []
+async function composerPicker(page, label) {
+  const reads = []
+  const onResponse = async (res) => {
+    if (!/\/analysis\/comparisons$/.test(pathOnly(res.url()))) return
+    const r = { status: res.status(), took_ms: null, entries: null, models: null, etfs: null }
+    try { const t = res.request().timing(); r.took_ms = t.responseEnd > 0 ? Math.round(t.responseEnd) : null } catch { /* timing unread */ }
+    try { const body = await res.json(); const e = (body && body.data && body.data.entries) || []; r.entries = e.length; r.models = e.filter((x) => x.name_source === 'model_catalogue').length; r.etfs = r.entries - r.models } catch { /* not JSON */ }
+    reads.push(r)
+  }
+  page.on('response', onResponse)
+  const rec = { label, reached_type_step: false, catalogue_reads: reads, loose_input_at_rest: null }
+  const names = () => page.evaluate(() => [...document.querySelectorAll('[data-slot="comparison-name"]')].map((e) => (e.textContent || '').trim()))
+  const looseInput = async () => (await page.getByRole('textbox', { name: 'Compare with an Opal model' }).count().catch(() => 0)) + (await page.locator('[data-slot="add-comparison"]').count().catch(() => 0))
+  const pickerOpen = async () => (await page.locator('[data-slot="comparison-picker"]').count().catch(() => 0)) > 0
+  const variant = () => page.locator('[data-slot="variant-resolved"]').first().textContent({ timeout: 2000 }).catch(() => null)
+  const card = (word) => page.locator('[data-slot="variant-card"]').filter({ hasText: word }).first()
+  try {
+    // the Client card IS the step to the analysis-type page (AnalysisTab choosePortfolio -> page 2); Next would leave it
+    await page.locator('[data-slot="analysis-portfolio-card"][data-portfolio="client"]').first().click({ timeout: 5000 })
+    await page.locator('[data-slot="variant-card"]').first().waitFor({ state: 'visible', timeout: 10000 })
+    rec.reached_type_step = true
+    // the catalogue is read when the composer mounts; give a slow answer up to 15 s before the cards are pressed
+    const tw = Date.now()
+    while (Date.now() - tw < 15000 && !reads.length) await page.waitForTimeout(100)
+    rec.entry_words = ((await page.locator('[data-slot="composer-picker-entry"]').first().textContent({ timeout: 1000 }).catch(() => null)) || '').trim().slice(0, 160) || null
+    rec.loose_input_at_rest = await looseInput()
+    await card('Multi-Comp').click(); await page.waitForTimeout(600)
+    const multi = { picker_opened: await pickerOpen() }
+    if (multi.picker_opened) {
+      multi.done_disabled_at_0 = await page.locator('[data-slot="picker-done"]').isDisabled().catch(() => null)
+      multi.models_offered = await page.locator('[data-slot="picker-model"]').count()
+      await shot(page, `${label}-picker-multicomp`)
+      await checks(page, `${label}-picker-multicomp`)
+      for (let i = 0; i < Math.min(2, multi.models_offered); i++) await page.locator('[data-slot="picker-model"]').nth(i).click()
+      multi.done_disabled_after = await page.locator('[data-slot="picker-done"]').isDisabled().catch(() => null)
+      if (multi.done_disabled_after === false) { await page.locator('[data-slot="picker-done"]').click(); await page.waitForTimeout(500) }
+      else { await page.locator('[data-slot="picker-cancel"]').click().catch(() => {}); await page.waitForTimeout(300) }
+      multi.names = await names(); multi.variant = await variant(); multi.picker_open_after = await pickerOpen()
+    }
+    rec.multicomp = multi
+    await card('Comparison').click(); await page.waitForTimeout(600)
+    const one = { picker_opened: await pickerOpen() }
+    if (one.picker_opened) {
+      await page.locator('[data-slot="picker-search"]').fill('spy'); await page.waitForTimeout(300)
+      one.search_matches = await page.locator('[data-slot="picker-etf"]').count()
+      await shot(page, `${label}-picker-comparison`)
+      if (one.search_matches > 0) { await page.locator('[data-slot="picker-etf"]').first().click(); await page.locator('[data-slot="picker-done"]').click(); await page.waitForTimeout(500) }
+      else { await page.locator('[data-slot="picker-cancel"]').click().catch(() => {}); await page.waitForTimeout(300) }
+      one.names = await names(); one.variant = await variant()
+    }
+    rec.comparison = one
+    await page.locator('[data-slot="composer-comparisons"]').first().scrollIntoViewIfNeeded().catch(() => {})
+    await shot(page, `${label}-picker-named`)
+    await checks(page, `${label}-picker-named`)
+    await card('Overview').click(); await page.waitForTimeout(500)
+    rec.overview = { names: await names(), variant: await variant(), picker_open: await pickerOpen() }
+    rec.loose_input_at_end = await looseInput()
+  } catch (e) { rec.error = String(e.message || e).split('\n')[0].slice(0, 200) }
+  await page.keyboard.press('Escape').catch(() => {})
+  page.off('response', onResponse)
+  composerPickers.push(rec)
+  if (rec.loose_input_at_rest > 0 || rec.loose_input_at_end > 0) findings.push({ step: `${label}-picker`, check: 'composer:loose-input', claim: 'measured', observed: 'the composer shows a comparison input box outside the picker on the live client', rule: 'W2-05: no input box outside the picker' })
+  if (rec.multicomp && rec.multicomp.picker_opened === false) findings.push({ step: `${label}-picker`, check: 'composer:no-picker', claim: 'measured', observed: 'the Multi-Comp card did not open the comparison picker', rule: 'W2-05: the card opens the picker' })
+}
+
+// ---- --dashboard-window (IRPT_DASHBD FWD-1, plan section 4; DSGN_IRPTV1 FAST item 72): on the Performance tab, select
+// each account of the picker (first 8) and time, from the select, the dashboard's manifest and series reads (status, ms,
+// the series' transfer size in bytes) and the painted chart (a drawn recharts area inside the dashboard chart slot), up to
+// DASHBOARD_PAINT_CEILING_MS; an account with no dashboard records where the tab's own body showed instead. On a dashboard
+// it presses each window preset once and counts EVERY /api/ request sent in the 1.5 s after the press (the window is
+// computed in the browser, so the expected count is 0). Counts, times, sizes and the as-of words only: no figure.
+const dashboardWindows = []
+const DASHBOARD_PAINT_CEILING_MS = 60000
+// The recorder starts at the Performance tab's own press, so the tab's default account (the picker has no "All accounts"
+// entry) is timed from the press; every other account is timed from its select, and the default one again last (warm).
+let dashRec = null
+function startDashboardRecorder(page) {
+  const reads = []
+  const byReq = new Map()
+  const onRequest = (req) => {
+    const p = pathOnly(req.url())
+    if (!/^\/api\//.test(p)) return
+    const m = p.match(/\/investor-reporting\/reporting\/[^/]+\/(manifest|series)$/)
+    const r = { kind: m ? m[1] : 'other', sent: Date.now(), answered: null, status: null, transfer_bytes: null }
+    reads.push(r); byReq.set(req, r)
+  }
+  const onResponse = async (res) => {
+    const r = byReq.get(res.request()); if (!r || r.answered !== null) return
+    r.answered = Date.now(); r.status = res.status()
+    if (r.kind === 'series') { try { r.transfer_bytes = (await res.request().sizes()).responseBodySize } catch { /* size unread */ } }
+  }
+  const onFailed = (req) => { const r = byReq.get(req); if (r && r.answered === null) { r.answered = Date.now(); r.status = 'failed' } }
+  page.on('request', onRequest); page.on('response', onResponse); page.on('requestfailed', onFailed)
+  dashRec = { reads, t0: Date.now(), stop: () => { page.off('request', onRequest); page.off('response', onResponse); page.off('requestfailed', onFailed) } }
+}
+async function dashboardWindow(page, label) {
+  const tab = '[data-slot="reporting-tab"]'
+  if (!dashRec) startDashboardRecorder(page)
+  const reads = dashRec.reads
+  const picker = page.locator('[data-slot="performance-account-picker"] select').first()
+  // the account list can answer after the tab's settle: wait for the picker's options (up to the ceiling)
+  await picker.locator('option').first().waitFor({ state: 'attached', timeout: DASHBOARD_PAINT_CEILING_MS }).catch(() => {})
+  const options = await picker.locator('option').evaluateAll((os) => os.map((o) => o.value)).catch(() => [])
+  const current = await picker.inputValue().catch(() => null)
+  const others = options.filter((v) => v !== current).slice(0, 7)
+  // [value or null for the default view, the clock's start, warm?]
+  const plan = [[null, dashRec.t0, false], ...others.map((v) => [v, null, false]), ...(current !== null && others.length ? [[current, null, true]] : [])]
+  const rec = { label, accounts_in_picker: options.length, accounts: [] }
+  for (let i = 0; i < plan.length && timeLeft(); i++) {
+    const [value, start, warm] = plan[i]
+    const from = value === null ? 0 : reads.length
+    const t0 = start === null ? Date.now() : start
+    if (value !== null) await picker.selectOption(value).catch(() => {})
+    let paintedMs = null; let bodyMs = null
+    while (Date.now() - t0 < DASHBOARD_PAINT_CEILING_MS) {
+      const s = await page.evaluate((tabSel) => ({
+        painted: !!document.querySelector(`${tabSel} [data-slot="dashboard-performance-chart"] .recharts-area-area[d]`),
+        refused: !!document.querySelector(`${tabSel} [data-slot="dashboard-performance-refusal"]`),
+        body: !!document.querySelector(`${tabSel} [data-slot="reporting-body"]`),
+        dashboard: !!document.querySelector(`${tabSel} [data-slot="reporting-dashboard"]`),
+      }), tab).catch(() => ({ painted: false, refused: false, body: false, dashboard: false }))
+      const mine = reads.slice(from)
+      if (s.painted || s.refused) { paintedMs = s.painted ? Date.now() - t0 : null; break }
+      // The tab's own body counts only for an account with no series read at all: a covered account shows its own body
+      // until the dashboard answers, and an account read in the background earlier sends no manifest on its select.
+      const manifests = mine.filter((r) => r.kind === 'manifest')
+      const settledNoSeries = !mine.some((r) => r.kind === 'series') && manifests.every((r) => r.answered !== null)
+        && (value !== null || manifests.length > 0)
+      if (s.body && !s.dashboard && settledNoSeries) { bodyMs = Date.now() - t0; break }
+      await page.waitForTimeout(50)
+    }
+    const mine = reads.slice(from)
+    const one = (kind) => mine.filter((r) => r.kind === kind).map((r) => ({ status: r.status, sent_ms: r.sent - t0, took_ms: r.answered === null ? null : r.answered - r.sent, transfer_bytes: r.transfer_bytes }))
+    const acct = { step: i + 1, clock_from: value === null ? 'tab press' : 'select', warm_return: warm,
+      manifest: one('manifest'), series: one('series'), other_api_requests: mine.filter((r) => r.kind === 'other').length,
+      ms_to_painted_chart: paintedMs, ms_to_tab_body: bodyMs,
+      dashboard_refused: await page.locator(`${tab} [data-slot="dashboard-performance-refusal"]`).count().catch(() => 0) > 0,
+      data_through: ((await page.locator(`${tab} [data-slot="dashboard-data-through"]`).first().innerText({ timeout: 500 }).catch(() => '')) || '').trim() || null,
+      chart_days: await page.locator(`${tab} [data-slot="dashboard-performance-chart"]`).first().getAttribute('data-days', { timeout: 500 }).catch(() => null),
+      presets: [] }
+    if (paintedMs !== null && !warm) {
+      await shot(page, `${label}-dashboard-${i + 1}`)
+      const presets = await page.locator(`${tab} [data-slot="dashboard-window-controls"] button[data-preset]`).evaluateAll((bs) => bs.map((b) => b.getAttribute('data-preset'))).catch(() => [])
+      for (const id of presets) {
+        const before = reads.length
+        await page.locator(`${tab} [data-slot="dashboard-window-controls"] button[data-preset="${id}"]`).first().click({ timeout: 3000 }).catch(() => {})
+        await page.waitForTimeout(1500)
+        acct.presets.push({ preset: id, requests_after_press: reads.length - before,
+          pressed: await page.locator(`${tab} button[data-preset="${id}"][aria-pressed="true"]`).count().catch(() => 0) > 0,
+          measured_days: await page.locator(`${tab} [data-field="window.measuredDays"]`).first().innerText({ timeout: 500 }).catch(() => null) })
+      }
+      await checks(page, `${label}-dashboard-${i + 1}-presets`)
+    }
+    rec.accounts.push(acct)
+  }
+  // The picker's entries after the reads, every digit masked: the basis words a suffix carries, never a figure or a number.
+  await page.waitForTimeout(1500)
+  rec.picker_entries_masked = await picker.locator('option').evaluateAll((os) => os.map((o) => (o.textContent || '').replace(/\d/g, '#').trim())).catch(() => [])
+  dashRec.stop(); dashRec = null
+  dashboardWindows.push(rec)
+  for (const a of rec.accounts) {
+    const extra = a.presets.filter((p) => p.requests_after_press > 0)
+    if (extra.length) findings.push({ step: `${label}-dashboard-${a.step}`, check: 'dashboard:window-request', claim: 'measured', observed: `a dashboard window press sent ${extra.map((p) => `${p.preset}:${p.requests_after_press}`).join(', ')} request(s)`, rule: 'IRPT_DASHBD plan section 4: a window change is computed in the browser' })
+  }
+}
+
 async function modelScope(page, label, maxPresses = 10) {
   const read = () => page.evaluate(() => {
     const scope = document.querySelector('[data-slot="holdings-model-scope"]')
@@ -1069,6 +1310,7 @@ try {
             await page.keyboard.press('Escape').catch(() => {})   // no dialog may stand over the tab strip
             await page.waitForTimeout(300)
             if (opt.openRequest && /analysis/.test(name)) requestHops = { t0: Date.now(), rows: [] }
+            if (opt.dashboardWindow && /performance/.test(name)) startDashboardRecorder(page)
             await tabs.nth(i).click().catch(() => {})
             await settle(page, 2500)
             await checks(page, `${client}-${name}`)
@@ -1080,6 +1322,11 @@ try {
             }
             // Drill FIRST, on the tab's default view: the explore step below changes selects and opens popups.
             if (/holdings/.test(name)) {
+              // --account-drill runs on the tab's default view, BEFORE the generic drill below presses a tile itself.
+              if (opt.accountDrill) {
+                await accountDrill(page, `${client}-holdings`)
+                log('ACCOUNT DRILL', JSON.stringify(accountDrills[accountDrills.length - 1]).slice(0, 900))
+              }
               const p = await drill(page, '[data-slot="holdings-tab"]', `${client}-holdings`)
               drillPaths.push({ client, paths: p })
               log('DRILL PATHS', JSON.stringify(p).slice(0, 400))
@@ -1087,6 +1334,16 @@ try {
                 await modelScope(page, `${client}-holdings`)
                 log('MODEL SCOPE', JSON.stringify(modelScopes[modelScopes.length - 1]).slice(0, 900))
               }
+            }
+            // --dashboard-window runs on the tab's default view, BEFORE the explore step below changes selects.
+            if (opt.dashboardWindow && /performance/.test(name)) {
+              await dashboardWindow(page, `${client}-performance`)
+              log('DASHBOARD WINDOW', JSON.stringify(dashboardWindows[dashboardWindows.length - 1]).slice(0, 1500))
+            }
+            // --composer-picker runs on the tab's default view, BEFORE the explore step below changes selects.
+            if (opt.composerPicker && /analysis/.test(name)) {
+              await composerPicker(page, `${client}-analysis`)
+              log('COMPOSER PICKER', JSON.stringify(composerPickers[composerPickers.length - 1]).slice(0, 1200))
             }
             await exploreScope(page, '[data-slot="tabs"]', `${client}-${name}`)
             if (opt.periodsPerAccount && /performance/.test(name)) await periodsPerAccount(page, '[data-slot="tabs"]', `${client}-${name}`)
@@ -1132,6 +1389,9 @@ try {
   if (loadStates.length) writeFileSync(path.join(OUT, 'load-states.json'), JSON.stringify(loadStates, null, 1))
   if (timelineDays.length) writeFileSync(path.join(OUT, 'timeline-days.json'), JSON.stringify(timelineDays, null, 1))
   if (modelScopes.length) writeFileSync(path.join(OUT, 'model-scope.json'), JSON.stringify(modelScopes, null, 1))
+  if (accountDrills.length) writeFileSync(path.join(OUT, 'account-drill.json'), JSON.stringify(accountDrills, null, 1))
+  if (composerPickers.length) writeFileSync(path.join(OUT, 'composer-picker.json'), JSON.stringify(composerPickers, null, 1))
+  if (dashboardWindows.length) writeFileSync(path.join(OUT, 'dashboard-window.json'), JSON.stringify(dashboardWindows, null, 1))
   if (searchTimings.length) writeFileSync(path.join(OUT, 'search-timings.json'), JSON.stringify(searchTimings, null, 1))
   if (openedRequests.length) writeFileSync(path.join(OUT, 'analysis-request.json'), JSON.stringify(openedRequests, null, 1))
   if (holdingsAggregates.length) writeFileSync(path.join(OUT, 'holdings-aggregates.json'), JSON.stringify(holdingsAggregates, null, 1))

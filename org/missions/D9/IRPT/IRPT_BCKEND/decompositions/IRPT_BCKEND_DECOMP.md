@@ -1353,3 +1353,102 @@ Slots 98, 99, 100 (S197: 1 + max(author lines 97, issued_to 97, branches 84) = 9
 is the issuer's.
 
 fanout: 3 of 4 chains, cap 8 (chain P27d is parked on a dark AE seat; IB-pr-275 rides chain P27a as the issuer's act).
+
+## 26. ROUND 28, WORKSTREAM ~P (2026-10-02 ~08:2xZ, issuer 2.0.0_SA_COO~P, on 1.0.0_SA_CTO RULINGS batch 126 item 1, msg 104117)
+
+Hop 12 of the Analysis trace (`org/tier1_exec/4.0.0_SA_CRO~X/deliverables/ANALYSIS_END_TO_END_GAP_BRIEF_20261001.md` section 12): an
+Analysis report exports as an Opal-branded PDF. Batch 126 rules it this workstream's (it owns `export/**`, lane IRPT_COMPLETION_P,
+and the export render host). Round 27 stays open on its parked AE order (IB-pr-274); this round is independent of it.
+
+**The reading at the cut:** the gap is in the export Lambda's own resolver -- `export/retained_export.py:71-72` refuses anything but
+`report_kind == "PERFORMANCE"` with a server-issued `account_set_id`; `render_grant()` pins `accountSetId`; `print_query()` hard-codes
+`kind: "performance"` and the requested window. The rest already speaks Analysis: `export/handler.py:257` chooses
+`analysis-portrait-letter` for `report_kind != "performance"` and `:315` forbids "Narrative" text in an analysis PDF; the portal print
+page reads `?kind=performance|analysis` and renders `AnalysisDocument` (`portal/src/pages/InvestorReporting/render/PrintEntry.tsx:17-36,
+:99-100`). `ops/owned_report.py:90` already builds an ANALYSIS authorization row.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-281` | FWD-9 enrichment (batch 126): `resolve()` admits a retained ANALYSIS report under the current principal with its own identity (no account set), `render_grant()` pins the analysis ids, `print_query()` emits `kind: analysis` with the report's own ids; tests for both kinds; one REAL retained READY Analysis report built locally into a contract-valid bundle and print query (reads only; nothing submitted, rendered or written) | WORLD (source of a served function; no deploy) | none | P28a |
+| `IB-pr-282` | the served move of IB-pr-281: build, a never-widen packet with both halves, the targeted apply under a ledger, then ONE Analysis export downloaded for a READY request (batch 126's proof) | WORLD (served; the issuer's act, no worker face) | IB-pr-281 | P28a |
+
+Slot 101 (S197: 1 + max over issued_to, authors and branches = 1 + 100). The worker shares the one worktree DIR
+`C:\Users\AndrewBerman\Desktop\wk-irpt-dashbd-1` on its own branch `wk-IRPT_BCKEND-101`, after that DIR's current IRPT_DASHBD order
+drains: the laptop disk reads under 10 GB free and a second worktree costs about 3.6 GB.
+
+fanout: 1 of 1 chains, cap 8 (IB-pr-282 rides chain P28a as the issuer's act).
+
+## 27. ROUND 29, WORKSTREAM ~P (2026-10-02 ~10:2xZ, issuer 2.0.0_SA_COO~P, on 1.0.0_SA_CTO ROUND-28 ~P ANALYSIS @ CTO_ROUND_ANALYSIS_IRPT_BCKEND_ROUND_28_P_20261002.md, msg 104156)
+
+Round 28 made `resolve()` admit ANALYSIS (merge @9079753aa7); nothing is exportable until rows W101-S1, S2, S3 close. The analysis's
+enrichment list section 2 is this round's rectangle. E3 (the print page's request id) is cut to `2.0.0_SA_COO~D` by the analysis, not
+here; the backend's print query already carries `bundle` and `request` (`retained_export.print_query`, @9079753aa7).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-291` | E1 (W101-S1): a PROSPECT-SCOPE render grant in the shared `_render_identity/grant.py` -- for a report with no accounts the grant names exactly the report's own retained artifacts (the report, its sections, its composition, its retained vendor PDF, its `prospect_input_id`) under the exact-owner rule, NOTHING account-scoped and nothing firm-wide; a prospect grant that could read one account or another owner's artifact is refused at build; `retained_export.render_grant()` builds it for a prospect-owned ANALYSIS; the account branch unchanged, every caller named | WORLD (source of a shared served module; no deploy) | none | P29a |
+| `IB-pr-292` | E2 (W101-S2): the submit path's Analysis branch in `export/**` -- no narrative step, template `analysis-portrait-letter`, the cutoff is the report's own as-of (the latest section `as_of_date` read from the retained report, never `dates.actual_end`); `submit_installed._validate` admits ANALYSIS with that cutoff | WORLD (source of a served function; no deploy) | none | P29b |
+| `IB-pr-282` | E4: the served move as written in section 26, after E1-E3 | WORLD (the issuer's act) | IB-pr-291, IB-pr-292, E3 | P29a |
+
+Write sets are disjoint: IB-pr-291 writes `_render_identity/grant.py`, its new test and `export/retained_export.py` (the grant call);
+IB-pr-292 writes `export/submit_installed.py`, `export/narrative_submit.py` and its new test. ONE worker slot (101) takes both in
+order: the disk admits one worktree.
+
+fanout: 1 of 2 chains, cap 8, reason: one worktree (disk under 10 GB free); chain P29b queues behind P29a on slot 101.
+
+**Section 27 addendum (2026-10-02 ~10:5xZ, issuer 2.0.0_SA_COO~P, on CTO ADDENDUM 1, cell E5, batch 143 @11340658da, msg 104177).**
+IB-pr-291 stored the prospect grant, but the Enforcer refuses `EMPTY_GRANT` on its empty account list (row W101-S4). The addendum
+places one cell in round 29, not a recut. GATE (x) of `.tools/to-pipeline-gate.py` admits no new order file into a round that already
+has orders at HEAD (and reads no override), so the issuer labels the order ROUND 30, a one-cell round for this addendum cell (row
+IRPT_BCKEND-S267). Round 29 (IB-pr-291, IB-pr-292) is terminal; its L10 slug waits on IB-pr-293 so that it carries E5's result.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-293` | E5 (W101-S4): the Enforcer's prospect branch in `_authz/enforce.py` -- typed on the stored prospect scope (passed through `grant.render_ports`), the exact owner re-resolved at read time, `permitted_account_set` empty, `covers` admitting exactly the four pinned artifact keys, its own PROSPECT fingerprint; `_scope/resolve.py` untouched | WORLD (source of the shared served Enforcer; no deploy) | IB-pr-291 (merged @dff84e882f) | P29a |
+| `IB-pr-282` | E4, now also after E5 and rows W101-S5/S6 (asked of the CTO, msg 20261002T105037Z) | WORLD | IB-pr-291, IB-pr-292, IB-pr-293, E3 | P29a |
+
+Write set: `_authz/enforce.py`, `_render_identity/grant.py` (`render_ports` only), `_authz/served.py` (port wiring only) and two new
+`_authz/tests` files; disjoint from IB-pr-292's (merged @4f3f36d16c). Slot 101 takes it.
+
+fanout: 1 of 1 chains, cap 8, reason: one worktree (disk under 10 GB free); one cell.
+
+**Section 27 addendum, second cell (2026-10-02 ~11:2xZ, issuer 2.0.0_SA_COO~P, on CTO ADDENDUM 2, cell E6, and PRD ADDENDUM v0.24,
+batch 149 @11e1413e28; ratified-text half re-signed @e978d1f839, msg 104196).** Rows W101-S5 (serve_submit not routed; ExportBundle
+required `narrative_packet_ref`) and W101-S6 (the packaged AnalysisReport contract stale). GATE (x) admits no second new file into
+round 30 either, so this cell is ROUND 31 (row IRPT_BCKEND-S267).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-294` | E6 (W101-S5, S6): `serve_submit` through the Analysis branch (no narrative, the report's own as-of); the ExportBundle takes exactly one of `narrative_packet_ref` or `analysis_report_ref`, docs copy and CONTRACT.md `:330` first, packaged copy byte-equal; the packaged AnalysisReport byte-equal to its docs copy; every reader of `narrative_packet_ref` named | WORLD (the published v1 contract and a served function's source; no deploy) | IB-pr-292 (merged @4f3f36d16c) | P29b |
+| `IB-pr-282` | E4, after E5 (IB-pr-293) and E6 (IB-pr-294) | WORLD | IB-pr-291, IB-pr-292, IB-pr-293, IB-pr-294, E3 | P29a |
+
+Write set: `export/{submit_service,narrative_submit,handler,bundle}.py`, the two packaged schemas, the docs ExportBundle schema and
+CONTRACT.md, three new `export/tests` files; disjoint from IB-pr-293's (`_authz/`, `_render_identity/grant.py`). It queues on slot
+101 behind IB-pr-293: the disk (9.1 GB free) admits one worktree.
+
+fanout: 1 of 2 chains, cap 8, reason: one worktree (disk under 10 GB free); chain P29b queues behind IB-pr-293 on slot 101.
+
+**Section 27 addendum, third cell (2026-10-02 ~11:3xZ, issuer 2.0.0_SA_COO~P, on CTO RULINGS batch 154 @4b3e51674c, msg 104203: the
+guard's owner amends it).** Item 22 (the request history filtered by client) is refused by `_authz/served.py`'s owner-read guard,
+which ~P holds. One cell, ROUND 32 (GATE (x), row IRPT_BCKEND-S267).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-295` | batch 154: `client_id` admitted on `analysis-request-history` only, by an allowlist keyed by operation in `served.py`; proven through `served.Entry` (history(client) a subset of history(), an unknown client `items: []`, one refusal arm per other owner read) | WORLD (the shared served layer's source; the served move is irpt-status's next packet, 2.0.0_SA_COO~Y) | IB-pr-293 (merged @88480ab9d8) | P32 |
+
+Write set: `_authz/served.py` and two new `_authz/tests` files; disjoint from IB-pr-294's. It queues on slot 101 behind IB-pr-294.
+
+fanout: 1 of 1 chains, cap 8, reason: one worktree (disk under 10 GB free); one cell, queued behind IB-pr-294 on slot 101.
+
+**Section 27 addendum, fourth cell (2026-10-02 ~12:3xZ, issuer 2.0.0_SA_COO~P, inside its own decomposition).** Rows W101-S7 (no
+production reader feeds the Enforcer's owner port, so every served prospect render refuses) and W101-S9 (print_query decides Analysis
+by shape, not kind); remedy owner ~P; batched into ONE cell. Row W101-S8 (portal adapt.ts) needs no cell: 2.0.0_SA_COO~D msg 104228
+showed no portal path reads a server-frozen ExportBundle (previewExportBundle rejects NoDeclaredRoute; the portal composes its own).
+ROUND 33 (GATE (x), row IRPT_BCKEND-S267).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-296` | W101-S7 + S9: `render_ports_from_env` passes a read-only retained-owner reader (the report index the function already reads, the writer's key); `print_query` takes the resolved kind | WORLD (the shared served layer's source; the served move is E4) | IB-pr-293, IB-pr-294 (merged) | P29a |
+| `IB-pr-282` | E4, after IB-pr-296 | WORLD | IB-pr-291..296, E3 | P29a |
+
+fanout: 1 of 1 chains, cap 8, reason: one worktree (disk under 10 GB free); one cell.
