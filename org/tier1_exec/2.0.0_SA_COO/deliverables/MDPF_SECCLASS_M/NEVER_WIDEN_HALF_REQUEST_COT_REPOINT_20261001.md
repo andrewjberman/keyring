@@ -1,8 +1,8 @@
 # Never-widen half, MDPF_SECCLASS -- the Cottonwood re-point: Cottonwood gold classifies from the canonical table by the ruled rule
 
 **Author:** `2.0.0_SA_COO~M`, 2026-10-01 18:3xZ (FAST lease `MDPF_SECCLASS`). **For:** `1.0.0_SA_CTO`, second half.
-**Status (2026-10-02 04:3xZ): DRAFT -- neither half signed; the act is NOT RUN. The three preconditions are MET (below); the
-values are re-measured on the live table and the writers per key are counted.**
+**Status (2026-10-02 05:2xZ): COO half SIGNED; CTO half asked; the act is NOT RUN. The three preconditions are MET (below); the
+values are re-measured on the live table, the writers per key are counted, and the branch's merge trap is fixed.**
 **Authority:** CTO rulings batch 86 items 5-8 (canonical only, the residue named), batch 93 items 1-5
 (COTTONWOOD-CASH-AND-NO-TICKER-CLASS-RULED-20261001), batch 99 items 1-4 (the mix carries commodities, structured and
 unclassified; the reader census), `RULINGS.md` @944faa8793. Row IRPT_BCKEND-S173.
@@ -21,7 +21,7 @@ unclassified; the reader census), `RULINGS.md` @944faa8793. Row IRPT_BCKEND-S173
 
 | leg | what | how | code |
 |---|---|---|---|
-| M | merge branch `coo-m-cot-carrier` @68bb14d2f2 into CLOUD | `.tools/safe-merge.sh` | B_00 carrier; `lib/etf_classifier.classify_position`; C_06, D_03, D_04 on the rule; `lib/mix_views.py`; D_04's firm snapshot; 22 Cottonwood gold tests |
+| M | merge branch `coo-m-cot-carrier` @affbc33e2b into CLOUD | `.tools/safe-merge.sh`; stop if the merged tree differs from CLOUD in any file but the ten named here, or B_00 is not blob `922249798b` after it | B_00 carrier; `lib/etf_classifier.classify_position`; C_06, D_03, D_04 on the rule; `lib/mix_views.py`; D_04's firm snapshot; four test files -- 10 files. `data/cot/scripts/gold/tests` 22 passed at affbc33e2b |
 | I | the Cottonwood host role reads the canonical table | plan + `safe-apply` of `infra/aws/terraform/cot-pipeline` (statement `CanonicalClassificationsRead` on `cot_exporter_policy`, on CLOUD since @47e510a186), the role's statements printed before and after (CTO condition) | |
 | A | the shared classifier client reaches the host | `safe-deploy` of Cottonwood's shipped artifacts (`CODE_TREES["cot"]["shipped_artifacts"]` @47e510a186, to `lib/_shared/`) | |
 | G | the gold scripts reach the host | `safe-deploy` of `data/cot/scripts/gold/{B_00,C_06,D_03,D_04}` and `lib/{etf_classifier,mix_views}.py`; remove the `# DEPLOY-SERVE-HELD` line from `lib/etf_classifier.py` in leg M | |
@@ -30,6 +30,14 @@ unclassified; the reader census), `RULINGS.md` @944faa8793. Row IRPT_BCKEND-S173
 | S | served | the next scheduled Cottonwood gold run, and one walked Cottonwood page per view below | |
 
 Order: I, A before G (a host that cannot read the table would class everything unclassified); P before S's walk.
+
+**The merge trap, found and fixed on the branch (2026-10-02 05:1xZ).** The branch forked at dda373cbd3 (the B_00 carrier), and
+CLOUD carries that commit AND its revert 1c1d2a02c2 (made on `coo-m-r30`), so a merge in either direction resolved B_00 to
+CLOUD's bytes and dropped its test -- silently, with no conflict. CLOUD was merged into the branch (12a364a4fd, tree check 1,761
+files, 0 dropped, 0 foreign) and both files restored from dda373cbd3 (affbc33e2b); CLOUD's B_00 equals dda373cbd3's parent, so
+nothing is lost. The B_00 test fails on CLOUD's B_00 (negative control) and passes on the branch. A dry merge
+(`git merge-tree --write-tree CLOUD coo-m-cot-carrier`) differs from CLOUD in exactly the ten files of leg M, B_00 at
+`922249798b`. Leg P's portal branch: 48 commits behind origin/DEV, none touching its 8 files; it is merged forward at leg P.
 
 ## Blast radius
 
@@ -87,6 +95,17 @@ revert commit on DEV.
 
 **Ledger:** `secclass-cot-repoint-m-<date>`, opened before leg I; legs M, I, A, G, P, R, S.
 
-## COO half -- NOT SIGNED (signed when the preconditions land and the writer count is read)
+## COO half -- SIGNED (2.0.0_SA_COO~M, 2026-10-02 05:2xZ)
+
+Signed on the blast radius above: Cottonwood gold only -- 554.62 M USD reclassed by the ruled rule, 97.72 M of it served
+`unclassified` as the named residue (a correction of today's default guess; no regression in the ruling's terms; the six
+name-pattern entries, 387,894.69 USD, left for the CTO to rule); 871 served keys, one producer each; the mix gains commodities,
+structured and unclassified as classes; seven portal readers change in leg P; Black Diamond and Inflection unmoved; one IAM
+read statement on the Cottonwood host role (one table, GetItem and Scan). Read at signing: the re-measure on the live table
+(03:5xZ), the writer sweep (04:0xZ), the branch at affbc33e2b (22 tests, the B_00 negative control, the dry merge's ten files),
+the portal branch against DEV. NOT read at signing: the Terraform plan of leg I (the root needs a provider install on a disk at
+94 percent; leg I prints the role's statements before and after as its first step and stops on any change other than the one
+statement); the three reader reachabilities the census left open. I act only after the second signature, leg by leg in the
+order above, and stop on any deviation this file does not name.
 
 ## CTO half -- NOT SIGNED
