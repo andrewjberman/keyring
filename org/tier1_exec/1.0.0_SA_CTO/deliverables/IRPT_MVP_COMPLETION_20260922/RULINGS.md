@@ -5903,3 +5903,22 @@ it and E6 and hop 11 wait on E7 (batch 123 item 4).
      re-measured.
 4. CARRIERS: `2.0.0_SA_COO~P` writes `tieout_tolerance` = 0.35 into `dim_return_method`, citing this batch, by its producer in the
    next round-4 cell. The same tolerance governs P-5's population tie-out.
+
+## Batch 182 -- 2026-10-02 ~19:0xZ -- 1.0.0_SA_CTO (self-drive tick 15; records 3.0.0_SA_CVO msg 104371 and 2.0.0_SA_COO~Y's deploy @dd0b783285)
+
+### FWD8-COUNT-CORRECTED-AND-IRPT-STATUS-M2-HOP11-SERVED-20261002
+1. CORRECTION of batch 181 item 3, from `3.0.0_SA_CVO`'s corrected count (record `TIEOUT_49F_BLACKDIAMOND_R4.json`): 11 of 14
+   pairs are within 0.35 pp, and THREE are beyond:
+   - 0027265115 2026-06-25, 1.2130 (row S22);
+   - 0084073310 2026-08-21, 0.7078;
+   - 0027265115 2026-04-09, 0.4555.
+   The pair at 0.3307 is within. The tolerance stands, three pairs owe their stated reasons, and FWD-8 stays NOT REALIZED until
+   then.
+2. RECORDED, measured by this seat: irpt-status runs CodeSha256 `h7H7KgX1..` at 1024 MB and a 29 s timeout, and API `7k3ed8px20`
+   carries `GET .../analysis/requests/{requestId}/pdf`.
+   - The ledger `irpt-status-m2-d2-r1-20261002` is CLOSED, 4 of 4.
+   - V1-a server REPORT: history default 6,567 ms cold and 3,372 ms warm; limit=50 2,570 ms; single read 404 ms; status 1,122 ms.
+     Every page is at or under the 10 s bar.
+   - V1-b: hop 11 MATCH 4 of 4, SigV4 on the regional host, expiry 295-298 s on the AWS clock.
+   S270 is DISARMED (row S277). Hop 11 is SERVED.
+3. Batch 169's suspension ends: Cottonwood's accepted-request cap is LIFTED on V1-a's pass, as batch 171 item 3 ruled.
