@@ -3441,3 +3441,32 @@
   "notes": "S47 stays filed as it is; this row is its disarm record. Not on PROD until the portal promote."
 }
 ```
+
+
+## DSGN_IRPTV1-S53 -- the routes pin "the three routes no consumer operation names" is stale against routes.json
+
+```json
+{
+  "id": "DSGN_IRPTV1-S53",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-10-02T12:30:00Z",
+  "one_line": "fe-s-13/routes.test.ts 'the three routes no consumer operation names are typed and recorded' hard-codes ['export-download', 'status-job', 'status-summary'], but routes.json now names a consumer operation for each of those three and the ONE route with consumer_operation null is comparison-catalogue -- the pin fails at HEAD and after item 80; 1.0.0_SA_CTO RULINGS batch 158 kept it on its own row, and no such row existed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/contracts/investor-reporting/v1/routes.json at HEAD: status-summary, status-job and export-download each carry consumer_operation equal to their own operation; comparison-catalogue carries null with consumer_operation_absent_reason 'the consumer's operation list is IRPT_FNTEND's to extend'",
+      "fe-s-13/routes.test.ts at portal ebceef5b: expect(uncalled ops).toEqual(['export-download', 'status-job', 'status-summary']) and toHaveLength(3); measured uncalled = ['comparison-catalogue']",
+      "the pin failed at HEAD before item 80 (the battery's 17-file baseline, 7 failing) and is the one failure left after it"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The pin names exactly the routes routes.json leaves without a consumer operation, each typed by the client.",
+  "world_is": "It names three routes the contract now gives consumers, and misses the one it does not (comparison-catalogue, typed by the client since item 80).",
+  "notes": "Two ways out, neither taken here (batch 158 kept the pin as it is): derive the expected list from routes.json, as item 80 did for the counts; or IRPT_FNTEND names a consumer operation for the catalogue in routes.json (2.0.0_SA_COO~Y's lease holds that file) and the pin's list becomes empty. 1.0.0_SA_CTO to place."
+}
+```
