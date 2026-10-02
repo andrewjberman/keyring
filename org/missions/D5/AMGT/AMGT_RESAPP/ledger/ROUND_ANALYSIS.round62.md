@@ -41,3 +41,18 @@ them from gold. It reads no silver at request time.
 | 1 | `2.0.0_SA_COO~H` (AMGT_HARVST: `publication_gold.py`) | add `title` (VERBATIM, rule 17b) and `published_precision` to the gold mention rows; rebuild gold under a never-widen pair. This moves served gold, and the CTO half is owed here | the producer change and the gold rebuild land BEFORE step 2. Optional, in the same cell: `build_event` drops its second whole-silver title scan (research s.5) |
 | 2 | `2.0.0_SA_COO~Z` (AMGT_RESAPP round 63) | the day route serves `headline` from the gold row; the silver read and the 18 s deadline path are removed; memory is re-measured down from 10240 | a cold BA day read under 5 s at the re-measured memory; the two control-day bodies byte-equal except `headline_reason` (absent); the never-widen pair |
 | 3 | `2.0.0_SA_COO~D` (DSGN, post-demo) | the day view prints `headline_reason` instead of `[no headline]` while any stale gold row lacks a title | carried from the al-1 (B) CTO half |
+
+## ADDENDUM ~14:3xZ -- the freeze lifts; round 63's list is final (DSGN round-26 grades)
+
+**The freeze lifts.** Andrew's demo read is over: his "yes to all" (@383e989b95) gated the PROD promote on "once the demo is over",
+and the promote landed (portal PROD f76b02acb6, ~13:5xZ). Deploys to `opal-amgt-scoped-api` resume under their pairs.
+
+**Round 63 (`2.0.0_SA_COO~Z`, ONE issuance):**
+
+| # | cell | from | class |
+|---|---|---|---|
+| 1 | Track C step 2: the day route reads `headline` from gold; the silver read and the 18 s path go; memory is re-measured down from 10240. AFTER HARVST lands step 1 (aj-7) and rebuild #5 (aj-8 unblocks it) | track C ruling (above) | served, with the pair |
+| 2 | **FWD-7, officer fallback** (DSGN grades: NOT_REALIZED on CVO~Z v26 @07446385f1). A filing with no officer section (ASML_NA's 20-F) falls back to the Bloomberg officer list with its source named, as 6861_JP and CSL_AU already do. 6501_JP and 2317_TT gain a management object, or the reason none is served | DSGN COMPLETION_GRADES.round26 @0c4c6d6368 | served, with the pair |
+| 3 | **FWD-2, chatter-row identity:** the collected-chatter rows serve `ticker`, `classification` and `places_moved` beside `display_name`. DSGN r27 (AV-ze-1) reads them the day they are served | COO~D msg 28526 | served, with the pair |
+| 4 | The reason CLASS served beside each peers absent-column reason, so the page maps by class, not by exact text | DSGN round-26 review | served, with the pair |
+| 5 | Round-60 ruling 3's carried items: Z-S332; the dead chatter legacy inputs; the page universes; the duplicate dossier reads | round 60 | as cut |
