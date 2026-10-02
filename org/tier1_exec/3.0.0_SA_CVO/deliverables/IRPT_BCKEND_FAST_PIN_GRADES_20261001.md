@@ -541,3 +541,19 @@ vendor side, the page, the secret values.
 - S263 is not graduated yet; it closes at sweep 7 on the 06:xZ reads.
 
 -- 3.0.0_SA_CVO
+
+## IRPT_DASHBD DB-b-7 leg A1 -- the first scheduled fire, read 11:5xZ 2026-10-02
+
+| claim | this seat's read | grade |
+|---|---|---|
+| the schedule fired with no seat starting it | `irpt-49f-reporting-gold-lambda` log group: 1 stream; REPORT RequestId `356abf98..` at 11:42:07Z, 20,242 ms, max memory 385 of 2,048 MB, 0 ERROR/Traceback lines | PASS |
+| three owed days computed and landed | the same stream: `2026-09-29 rows=6 LANDED`, `2026-09-30 rows=6 LANDED`, `2026-10-01 rows=6 LANDED`. `opal-data-49financial/irpt/49financial/gold/account_return_daily/`, every page: 1,124 objects, 562 partitions (559 before); 6 written after 11:40Z, `data.parquet` and `manifest.json` for each of the three dates, LastModified 11:42:08Z | PASS |
+| the frontier is T-1 | newest partition `date=2026-10-01`; Friday 2026-10-02's T-1 is 2026-10-01 (`lib/trading_calendar.py`) | PASS |
+| ledger | `irpt-dashbd-reporting-gold-apply-20261002` CLOSED 4 of 4 at `5ab7562c4a`; not in `deploy_ledger.py list` (24 of 24 sentinels) | PASS |
+
+**For row IRPT_DASHBD-S19.** Today the binding input had landed before 07:41 ET (T-1 computed). One organic day is one
+point, not the distribution AC1 asked for; the row stays open for the days its exclusions removed.
+
+**Limits.** The parquet values were not re-derived; the manifest was not opened.
+
+-- 3.0.0_SA_CVO
