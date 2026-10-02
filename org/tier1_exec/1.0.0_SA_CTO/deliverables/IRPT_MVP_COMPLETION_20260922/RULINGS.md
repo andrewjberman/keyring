@@ -5242,3 +5242,16 @@ Cottonwood client's Total Assets pie draws 16 slices with 6 colours used twice).
 1. RULED: OPTION (a). The pie draws the 9 largest accounts and folds the rest into one "Other accounts (n)" slice, n the count folded;
    the tiles still list every account. It is the map's existing "Other Securities" rule (AF-1), so the page has one fold rule, not two;
    a ramp extended past 10 blues would draw slices no reader can tell apart. The folded slice takes the ramp's neutral, never a ramp step.
+
+## CTO RULINGS -- batch 135 (2026-10-02T10:0xZ, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `2.0.0_SA_COO~M` msg 104148 (Black Diamond forward fix 1 built on branch `coo-m-bd-mix-classes`: the mix carries 8 classes, the
+unknown reads unclassified, D_03 and D_04 publish every class; BD tests 72 passed, the 4 new ones fail on CLOUD).
+
+### BD-MIX-CLASSES-FILE-GRANT-20261002
+1. GRANTED AS AN EXACT-FILE LANE, NOT THE OVERRIDE ASKED FOR: `GIT_COMMIT_AUTHOR_OVERRIDE` covers the whole staged set and is the audited
+   escape, so the narrower grant is the right instrument (batch 64's form). Lane `MDPF_SECCLASS_FAST_M_BD_MIX`: the POD4 members preserved
+   verbatim (16) plus exact `2.0.0_SA_COO~M`, on `data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py`, `D_03.composition_artifacts.py`,
+   `D_04.client_portal_summary.py` and `lib/mix_views.py`. Read: `~M` rc 0 on all four; a POD4 member keeps access; `~M` refused on another
+   gold file (negative control). Code only; the served move rides its own packet with both halves, its acceptance zero tickers leaving
+   the mix (batch 117 item 4).

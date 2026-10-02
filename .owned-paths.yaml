@@ -648,6 +648,27 @@ lanes:
       - 2.0.0_SA_COO~Y
     description: "CTO grantor, IRPT RULINGS batch 125, 2026-10-02 (msg 104107): the IRPT_COMPLETION_P members preserved verbatim plus exact COO~Y, for ONE file, reports/status_installed.py: two lines that wrap the irpt-requests table port in the per-request read memo and open one memo scope per invocation (E6, batch 111). Code only; no deploy grant; the irpt-status bundle waits on E7 (batch 123). Struck when IRPT_BCKEND closes."
 
+  MDPF_SECCLASS_FAST_M_BD_MIX:
+    permitted_agents:
+      - 0.4.0_DE_ClientPlatform
+      - 0.4.0_DE_ClientPlatform~A
+      - 0.4.0_DE_ClientPlatform~B
+      - 0.4.0_DS_ClientPlatform
+      - 0.4.0_DS_ClientPlatform~A
+      - 0.4.0_DS_ClientPlatform~B
+      - 0.4.0_DS_ClientPlatform~C
+      - 0.4.0_DS_ClientPlatform~D
+      - 0.4.0_DS_ClientPlatform~E
+      - 0.4.0_DT_ClientPlatform
+      - 0.4.2_RD_AdvisorIntelligence
+      - 0.4.2_RD_AdvisorIntelligence~A
+      - 0.4.2_RD_AdvisorIntelligence~B
+      - 0.4.2_RD_AdvisorIntelligence~C
+      - 0.4.2_RD_AdvisorIntelligence~D
+      - 4.0.0_SA_CRO~SWEEP
+      - 2.0.0_SA_COO~M
+    description: "CTO grantor, IRPT RULINGS batch 135, 2026-10-02 (msg 104148): the POD4 members preserved verbatim plus exact COO~M, for four exact files of the Black Diamond forward fix (batch 117 item 4 (i), batch 99 item 4): C_06, D_03, D_04 and lib/mix_views.py -- the mix carries unclassified, commodities and structured as classes. Code only: no deploy grant; the served move rides its own packet with both halves. Struck when MDPF_SECCLASS closes."
+
   IRPT_BCKEND_FAST_P_INF_NNA:
     permitted_agents:
       - 0.4.0_DE_ClientPlatform
@@ -2503,6 +2524,22 @@ paths:
   "infra/aws/lambda/investor-reporting/reports/status_installed.py":
     lane: IRPT_BCKEND_FAST_Y_STATUSPORTS
     note: "E6 read memo, two lines, exact file; IRPT_COMPLETION_P members kept plus COO~Y; CTO grantor batch 125 (2026-10-02)."
+
+  "data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py":
+    lane: MDPF_SECCLASS_FAST_M_BD_MIX
+    note: "Black Diamond forward fix, exact file; POD4 members kept plus COO~M; CTO grantor batch 135 (2026-10-02)."
+
+  "data/black_diamond/scripts/gold/D_03.composition_artifacts.py":
+    lane: MDPF_SECCLASS_FAST_M_BD_MIX
+    note: "Black Diamond forward fix, exact file; POD4 members kept plus COO~M; CTO grantor batch 135 (2026-10-02)."
+
+  "data/black_diamond/scripts/gold/D_04.client_portal_summary.py":
+    lane: MDPF_SECCLASS_FAST_M_BD_MIX
+    note: "Black Diamond forward fix, exact file; POD4 members kept plus COO~M; CTO grantor batch 135 (2026-10-02)."
+
+  "data/black_diamond/scripts/gold/lib/mix_views.py":
+    lane: MDPF_SECCLASS_FAST_M_BD_MIX
+    note: "Black Diamond forward fix, exact file; POD4 members kept plus COO~M; CTO grantor batch 135 (2026-10-02)."
 
   "infra/aws/terraform/cot-pipeline/iam.tf":
     lane: IRPT_BCKEND_FAST_M_COT_IAM
