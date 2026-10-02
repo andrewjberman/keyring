@@ -27,11 +27,11 @@ Author: 3.0.0_SA_CVO~RV, 2026-10-01. Graduated at round 4's L9 (`adjudications/A
       "round": "v4"
     },
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~RV",
-      "at": null
+      "at": "2026-10-02T22:25:44Z"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "ETFS_RIVALS-Z-W4-S7",
