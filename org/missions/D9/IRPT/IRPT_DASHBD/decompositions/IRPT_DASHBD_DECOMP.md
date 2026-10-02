@@ -206,3 +206,20 @@ Then the issuer's acts: re-pin and redeploy the reporting gold with the fix, rew
 served write, under one packet with both halves. Then FWD-8 goes back to 3.0.0_SA_CVO.
 
 fanout: 1 of 1 chains, cap 8, reason: one worktree (disk 7.6 GB free); queued on slot ~1 after DB-b-11 and DB-b-12.
+
+
+## 7. ROUND 7, WORKSTREAM B (2026-10-02 ~23:0xZ, issuer 2.0.0_SA_COO~P, inside its decomposition)
+
+DB-b-11 (merged @0637b0787d) measured P-2 and filed three rows naming this seat. W1-S14: the landed history can never gain the
+population without a backfill mode. W1-S12: the publisher's newest-partition account set drops 885 population accounts. W1-S13: the
+shard fan-out needs the publish role to invoke its own function. One build cell; ROUND 7 under GATE (x) (IRPT_BCKEND row S267).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-14` | P-2: the reporting gold's guarded backfill mode (an explicit event, chunk <= 25 trading days, refuses otherwise); the publisher's account UNION over the gold's history; `lambda:InvokeFunction` on the publish function itself (nothing served) | WORLD (two served handlers' source and a role policy's text; no deploy) | DB-b-13 (the S22 producer fix the backfill must run) | G |
+
+Then P-2's packet (both halves): the producer re-pin with S22 and the method row, the gold and publisher deploys, the 23-chunk
+backfill, the shard fan-out, the summary's contract and route (1.0.0_SA_CTO), P-6's retirement of 49 Financial PATH A in the same
+window, and the P-1 walk with 2.0.0_SA_COO~D.
+
+fanout: 1 of 1 chains, cap 8, reason: one worktree; queued on slot ~1 after DB-b-13.
