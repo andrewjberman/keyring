@@ -1,0 +1,104 @@
+{
+ "at": "2026-10-02T11:55:29.421772Z",
+ "principal": "svc-irpt-analysis@opalinvest.com",
+ "tenant": "inflection",
+ "request_ids": [
+  "REQ-697da25f70f24d8517fe9c4e"
+ ],
+ "rows": [
+  {
+   "call": "history",
+   "http": 200,
+   "ok": false,
+   "operation": "analysis-request-history",
+   "state": "UNAVAILABLE",
+   "reason": "FIRM_BINDING",
+   "business_date": null,
+   "actions": [
+    "NONE"
+   ],
+   "top_keys": [
+    "contract_version",
+    "ok",
+    "operation",
+    "status"
+   ],
+   "data": null
+  },
+  {
+   "call": "history+client",
+   "http": 200,
+   "ok": false,
+   "operation": "analysis-request-history",
+   "state": "UNAVAILABLE",
+   "reason": "FIRM_BINDING",
+   "business_date": null,
+   "actions": [
+    "NONE"
+   ],
+   "top_keys": [
+    "contract_version",
+    "ok",
+    "operation",
+    "status"
+   ],
+   "data": null
+  },
+  {
+   "call": "read REQ-697da25f70f24d8517fe9c4e",
+   "http": 200,
+   "ok": false,
+   "operation": "analysis-request-read",
+   "state": "UNAVAILABLE",
+   "reason": "FIRM_BINDING",
+   "business_date": null,
+   "actions": [
+    "NONE"
+   ],
+   "top_keys": [
+    "contract_version",
+    "ok",
+    "operation",
+    "status"
+   ],
+   "data": null
+  },
+  {
+   "call": "read+include REQ-697da25f70f24d8517fe9c4e",
+   "http": 200,
+   "ok": false,
+   "operation": "analysis-request-read",
+   "state": "UNAVAILABLE",
+   "reason": "FIRM_BINDING",
+   "business_date": null,
+   "actions": [
+    "NONE"
+   ],
+   "top_keys": [
+    "contract_version",
+    "ok",
+    "operation",
+    "status"
+   ],
+   "data": null
+  },
+  {
+   "call": "status REQ-697da25f70f24d8517fe9c4e",
+   "http": 200,
+   "ok": false,
+   "operation": "status-job",
+   "state": "UNAVAILABLE",
+   "reason": "FIRM_BINDING",
+   "business_date": null,
+   "actions": [
+    "NONE"
+   ],
+   "top_keys": [
+    "contract_version",
+    "ok",
+    "operation",
+    "status"
+   ]
+  }
+ ]
+}
