@@ -15009,3 +15009,53 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "INERT until an Analysis bundle reaches the portal reader. Owners: 2.0.0_SA_COO~D (the portal reader: branch on the reference present) and 2.0.0_SA_COO~P (the census that missed it). The same content-pin run also flags 'comparison-catalogue: response envelope no longer declares unprojected_grant' (content-pins.test.ts:306), not graded here."
 }
 ```
+
+- IB-pr-296: the retained-owner reader is attached only when IRPT_REQUESTS_TABLE is set, because an existing test pins the two-port s
+
+```json
+{
+  "id": "IRPT_BCKEND-W101-S11",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~101",
+  "surfaced_at": "2026-10-02T13:10:00Z",
+  "one_line": "IB-pr-296: the retained-owner reader is attached only when IRPT_REQUESTS_TABLE is set, because an existing test pins the two-port shape of render_ports_from_env.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_render_identity/tests/test_render_ports_installed.py::test_each_read_function_installs_the_grant_ports_with_the_bucket unpacks `load_bundle, load_identity = ports('cottonwood')` with only IRPT_EVIDENCE_BUCKET set; a reader attached unconditionally would return a 3-tuple and move it (order refusal clause: an existing test that moves is a defect)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IB-pr-296: render_ports_from_env passes report_owner= a read-only reader; an unset index refuses (fail closed).",
+  "world_is": "render_ports_from_env installs the reader only when the retained index is configured (IRPT_REQUESTS_TABLE set, or a table injected for offline controls). Unset, the ports stay the two-port pair and the Enforcer refuses a prospect render with 'no owner source is wired' (fail closed; proven through served.Entry in test_a_prospect_render_is_refused_when_the_index_is_unset). The existing test is unmoved (_render_identity 45 passed). Whether each installing function's role can read the table, and whether reports/repository.py is packaged beside it (report_owner.py imports it lazily and a failed import raises, so the Enforcer refuses), is E4's packet's question.",
+  "notes": "Remedy owner 2.0.0_SA_COO~P at IB-pr-282 (E4): set IRPT_REQUESTS_TABLE on every function that installs render ports and may serve a prospect render, grant dynamodb:GetItem on it, and confirm the reports package ships with the function."
+}
+```
+
+- IB-pr-296: print_query takes the resolved kind as an optional third argument; with no kind it still decides by report shape, becaus
+
+```json
+{
+  "id": "IRPT_BCKEND-W101-S12",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~101",
+  "surfaced_at": "2026-10-02T13:10:00Z",
+  "one_line": "IB-pr-296: print_query takes the resolved kind as an optional third argument; with no kind it still decides by report shape, because existing tests and the r28 check call it with two arguments.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/tests/test_retained_export.py:132,139 and test_retained_export_analysis.py:98,155 call print_query(stamped, report); org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P/checks/r28/build_analysis_export_r28.py:116 does too"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IB-pr-296: print_query takes the resolved kind (ANALYSIS | PERFORMANCE) from its caller; submit_service passes it; PERFORMANCE prints exactly as today.",
+  "world_is": "print_query(grant_record, report, kind=None): submit_service passes resolved.get('kind'), which resolve() always sets, so the served path never consults the shape. A caller that passes no kind keeps the shape rule so no existing test moves (export 158 passed, 0 baseline failures). The only residual shape-decided caller is the r28 check script, outside the order's paths.",
+  "notes": "Remedy owner 2.0.0_SA_COO~P: if the shape fallback should be retired, make kind required in a cell that also moves the two-argument callers."
+}
+```
