@@ -14640,3 +14640,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "INERT today (the unit runs; nothing reads the old roots). Owner of the install path: 2.0.0_SA_COO~Y. Remedy: keep the running root and one previous, remove the rest by name, after a df read."
 }
 ```
+
+## IRPT_BCKEND-S266 -- the st12 write-back fences an unconditional put; a sign-in inside the window would be overwritten
+
+```json
+{
+  "id": "IRPT_BCKEND-S266",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-02T09:50:00Z",
+  "one_line": "st12's rotated-cookie write-back guards the session secret with a fence read before and after an unconditional PutSecretValue; a sign-in that writes ycharts/session/current between the two reads would be overwritten and the post-check would read back the job's own write and pass. Whether sign-in takes the same operation lease is not established.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "9718ac5c87 at HEAD (this seat's source grade, 2026-10-02 08:xZ-09:xZ): _keep_rotation() runs after lease.complete; persist() checks the fence before and after the write; the write is secretsmanager PutSecretValue, which has no condition",
+      "deploy-close 56457904ed: st12 served since 09:21:39Z; its record shows 0 IRPT_SESSION_ROTATION lines (the write-back has not run live)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The operation lease and fence keep the session secret single-writer: a rotation never replaces a newer session.",
+  "world_is": "The fence narrows the window but cannot close it with an unconditional put. The window matters exactly when Andrew signs in (the session is dead and only his CAPTCHA sign-in revives it) while a job is rotating. Not read: the sign-in path's lease use.",
+  "notes": "INERT: no rotation has run live. Owner 2.0.0_SA_COO~Y. If sign-in holds the same lease, this row dismisses; if not, the remedy is the lease on sign-in or a version-stage check on the put."
+}
+```
