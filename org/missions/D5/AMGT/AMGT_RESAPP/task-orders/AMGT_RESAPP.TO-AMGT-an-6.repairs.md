@@ -134,3 +134,7 @@ Gate limb that graded this modification: none (LIMB 6 fires only on a newly-adde
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-02 ~23:3xZ):** ACCEPTED. Worker ~215 `f9245a8404`/`fdcfc16dea`, drained `130c3be101` (one hunk in the timeline branch resolved: an-5's identity timing kept with an-6's key decode + attribution). Re-graded on the shared tree with the amended checks (the worker branch held the pre-amendment script, row Z-W215-S1): union (peers + management + api + harvest + coverage) 1012 passed exit=0 after the drain repairs `949b24cadb` (the am-1 day-route tests) and the an-3 fake; c14 YES (BP Energy confirmed; NG null with a true reason; ASML reader text carries no raw code; source stamps 3 of 3; the encoded key reaches 4 of 4 routes); c16 YES (the planted fault answers 500 with one AMGT_500 line). Census (7 days, read-only): 5 500s of 22,415 invocations, 1 signature, unattributed timeouts from before the line existed. Package 96.8%. Served by an-7.
+
+<status>complete</status>

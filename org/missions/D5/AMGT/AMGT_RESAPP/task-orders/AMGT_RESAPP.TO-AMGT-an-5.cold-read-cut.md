@@ -82,3 +82,7 @@ Gate limb that graded this modification: none (LIMB 6 fires only on a newly-adde
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-02 ~23:3xZ):** ACCEPTED. Worker ~214 `b685a06564`, drained `f5a29aef96`. Re-graded on the shared tree: union (peers + management + api + harvest + coverage) 1012 passed exit=0 after the drain repairs `949b24cadb` (the am-1 day-route tests) and the an-3 fake; r63 c1 local YES. Local cold first call 3.5-3.9 s -> 2.2-2.9 s, body byte-identical. Identity resolution ~0.9 s is the largest stage left (row Z-W214-S2). AC1's 3 failures were the am-1 day-route tests, repaired at `949b24cadb` (row Z-W214-S1). Package 96.8%. The deployed 5 s grade is c15 at an-7. Served by an-7.
+
+<status>complete</status>

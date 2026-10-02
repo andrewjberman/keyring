@@ -83,3 +83,7 @@ Gate limb that graded this modification: none (LIMB 6 fires only on a newly-adde
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-02 ~23:3xZ):** ACCEPTED. Worker ~211 `a966df15bf`/`361859ed33`, drained `f43c05b00e`. Re-graded on the shared tree: union (peers + management + api + harvest + coverage) 1012 passed exit=0 after the drain repairs `949b24cadb` (the am-1 day-route tests) and the an-3 fake; c11 YES (BA 1 event = 1 coverage marker; the earnings kind absent with its reason on 3 of 3). AC1's 7 failures were pre-existing: 4 HARVST tests already fixed on CLOUD, and 3 am-1 day-route tests repaired at `949b24cadb` (row Z-W211-S1). Package 96.8%. Served by an-7.
+
+<status>complete</status>

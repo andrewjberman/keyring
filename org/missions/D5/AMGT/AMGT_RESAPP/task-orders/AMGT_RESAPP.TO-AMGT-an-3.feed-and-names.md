@@ -84,3 +84,7 @@ Gate limb that graded this modification: none (LIMB 6 fires only on a newly-adde
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-02 ~23:3xZ):** ACCEPTED. Worker ~212 `d0ce226083`, drained `6892710005`. Re-graded on the shared tree: union (peers + management + api + harvest + coverage) 1012 passed exit=0 after the drain repairs `949b24cadb` (the am-1 day-route tests) and the an-3 fake; c12 YES (feed 71/13/3 = day view; one cased display name on 4 routes x 3 names). Rows: Z-W212-S1 (an all-caps model-block fallback is not re-cased) and Z-W212-S2 (gold carries no url, so feed items serve url null; FeedItemRow renders an unlinked title; routed to 2.0.0_SA_COO~D for the page, a url source is round 65). Package 96.8%. Served by an-7.
+
+<status>complete</status>

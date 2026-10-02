@@ -84,3 +84,7 @@ Gate limb that graded this modification: none (LIMB 6 fires only on a newly-adde
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-02 ~23:3xZ):** ACCEPTED. Worker ~213 `bd60106e45`, drained `40e52072ce`. Re-graded on the shared tree: union (peers + management + api + harvest + coverage) 1012 passed exit=0 after the drain repairs `949b24cadb` (the am-1 day-route tests) and the an-3 fake; c13 YES (94 of 94 chatter moves labelled TRENDING_PRICE + window; provenance on BA/AMD/VLO; filings serves null with a reason where the ledger holds no filings run). Package 96.8%. Served by an-7.
+
+<status>complete</status>
