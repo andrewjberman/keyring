@@ -1411,3 +1411,19 @@ Write set: `_authz/enforce.py`, `_render_identity/grant.py` (`render_ports` only
 `_authz/tests` files; disjoint from IB-pr-292's (merged @4f3f36d16c). Slot 101 takes it.
 
 fanout: 1 of 1 chains, cap 8, reason: one worktree (disk under 10 GB free); one cell.
+
+**Section 27 addendum, second cell (2026-10-02 ~11:2xZ, issuer 2.0.0_SA_COO~P, on CTO ADDENDUM 2, cell E6, and PRD ADDENDUM v0.24,
+batch 149 @11e1413e28; ratified-text half re-signed @e978d1f839, msg 104196).** Rows W101-S5 (serve_submit not routed; ExportBundle
+required `narrative_packet_ref`) and W101-S6 (the packaged AnalysisReport contract stale). GATE (x) admits no second new file into
+round 30 either, so this cell is ROUND 31 (row IRPT_BCKEND-S267).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-294` | E6 (W101-S5, S6): `serve_submit` through the Analysis branch (no narrative, the report's own as-of); the ExportBundle takes exactly one of `narrative_packet_ref` or `analysis_report_ref`, docs copy and CONTRACT.md `:330` first, packaged copy byte-equal; the packaged AnalysisReport byte-equal to its docs copy; every reader of `narrative_packet_ref` named | WORLD (the published v1 contract and a served function's source; no deploy) | IB-pr-292 (merged @4f3f36d16c) | P29b |
+| `IB-pr-282` | E4, after E5 (IB-pr-293) and E6 (IB-pr-294) | WORLD | IB-pr-291, IB-pr-292, IB-pr-293, IB-pr-294, E3 | P29a |
+
+Write set: `export/{submit_service,narrative_submit,handler,bundle}.py`, the two packaged schemas, the docs ExportBundle schema and
+CONTRACT.md, three new `export/tests` files; disjoint from IB-pr-293's (`_authz/`, `_render_identity/grant.py`). It queues on slot
+101 behind IB-pr-293: the disk (9.1 GB free) admits one worktree.
+
+fanout: 1 of 2 chains, cap 8, reason: one worktree (disk under 10 GB free); chain P29b queues behind IB-pr-293 on slot 101.
