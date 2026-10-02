@@ -2560,6 +2560,114 @@
       ]
     },
     "notes": "Resolves ETFS_RIVALS-Z-W4-S12 (an existing row is never edited; this row carries the resolution). The deploy of gold_holdings_coverage to the QA Lambda is the issuer's act and is due before the 07:00 ET fetch; this worker deployed nothing and touched no S3. disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W4-S15",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~4",
+    "surfaced_at": "2026-10-01T22:25Z",
+    "one_line": "Resolution of ETFS_RIVALS-Z-W4-S12: with the RIV-q-1 G2 fix deployed (addendum 1, A1) a full-window G2 replay serves 307 GQGU coverage days and the 2026-10-01 page shows GQGU's calendar (status ok, 20 days).",
+    "spec_asserts": "Row Z-W4-S12 (BLOCKING): G2 has no GQGU path; 0 GQGU rows in 307 days; the served GQGU block read 'the history calendar is unavailable'.",
+    "world_is": "After A1 (safe-apply 21:54Z, 0 added 5 changed 0 destroyed) and A2 (request e83248aa-b484-401c-a48d-a8cdbfed971e, d5-g2-a1-full, 354.5 s, written_new 307): the 502 coverage objects hold 307 GQGU rows (one per report day, 305 naming a gqgu- capture) and every other fund equals the addendum table's rows (BASG 645, BIDD 471, CGIC 502, ETFT 208, IDVZ 28, INEQ 502, PCLG 240, PFOE 27, SCHY 502, TSEL 438, TXUE 420, WCMG 111; evidence/g2_readback_a1.txt). Page d5-publish-a1 (request 8a6012e1-a017-40d4-a673-5fc06dec76e4): GQGU block data-calendar status ok, data-days 20, data-source issuer; d-5.AC1 reads PASS 0 failures.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~4/evidence/g2_readback_a1.txt and d-5.AC1.a1.output.txt (this worktree)",
+        "s3://opal-data-etfs/rivalfunds/etfs/state/publish_page/date=2026-10-01/d5-publish-a1.json"
+      ]
+    },
+    "notes": "Resolves ETFS_RIVALS-Z-W4-S12 (an existing row is never edited; this row carries the resolution). disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W4-S16",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~4",
+    "surfaced_at": "2026-10-01T22:26Z",
+    "one_line": "Resolution of ETFS_RIVALS-Z-W4-S13 on the deployed bytes: the five Lambdas carry the G2 own-capture fix before the 2026-10-02 07:00 ET fetch, and the served G2 reads each fund from its own capture (0 of 645 BASG rows name a gqgu- capture); the live both-funds fetch is still the acceptance test.",
+    "spec_asserts": "Row Z-W4-S13 (BLOCKING, ARMED): G2's issuer reader attributes every issuer sidecar to BASG, so the next GQGU capture can displace BASG's observation.",
+    "world_is": "A1 deployed the package at CLOUD 25f4ac5418 + the ledger commit to all five functions (CodeSha256 after in evidence/lambda_after_apply_a1.txt; each zip carries gold_holdings_coverage.py with the fix and the d-5 floors). The G2 replay A2 rebuilt every day under it: BASG's 645 rows name 0 gqgu- captures; GQGU's 307 rows name 305 gqgu- captures (2 rows have no capture). The served-delta instrument (served_delta_g2_act.json) showed 0 issuer rows reading another fund's capture under the fix. NOT yet observed: the 07:00 ET 2026-10-02 fetch landing BASG then GQGU 5 s apart and the next G2 daily; the issuer reads that at the acceptance.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~4/evidence/lambda_after_apply_a1.txt, g2_readback_a1.txt and served_delta_g2_act.json (this worktree)"
+      ]
+    },
+    "notes": "Resolves ETFS_RIVALS-Z-W4-S13 (an existing row is never edited; this row carries the resolution). disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV; the hazard is disarmed on the deployed bytes, the acceptance read confirms it live."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S11",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-01T22:40Z",
+    "one_line": "Disarm of ETFS_RIVALS-Z-W2-S11 (a GQGU silver object displacing BASG in G1): RIV-v-2 reads issuer silver per fund; v-2.AC2 holds BASG 35 and GQGU 35 in one G1, and the served round-4 G1 carries GQGU's 10798 rows beside BASG's unchanged 11306.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "round4/checks/v-2.AC2.py PASS at 46033207f4 and 7bc86da43a (issuer re-runs)",
+        "round4/served_delta_r4_pin.json: BASG g1 rows 11306 -> 11306, GQGU 0 -> 10798",
+        "served page 2026-10-01 (d5-publish-a1): BASG updated, source issuer"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Row Z-W2-S11 ARMED until RIV-v-2 lands (guarded by d-5's dependency on v-2).",
+    "world_is": "v-2 landed (cfc1b0dcf8 and amendments) before d-5's apply; BASG is not displaced in served G1.",
+    "notes": "Resolves ETFS_RIVALS-Z-W2-S11 (an existing row is never edited). disarm_owner was 2.0.0_SA_COO~RV."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S12",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-01T22:40Z",
+    "one_line": "Bound of ETFS_RIVALS-Z-W4-S9 (the silver-triggered G1 replay exceeds the 900 s ceiling): it bites only on a BULK silver batch (d-5's 60-date GQGU import); the daily silver batch carries 1-2 report dates (BASG + GQGU) and runs well inside the ceiling. The code fix is round-5 remediation; until then a bulk import drives G1 by explicit windowed replays (the d-5 ruling).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CloudWatch rivalfunds-build-canonical-shape-lambda: Status timeout 18:31:57Z / 18:47:02Z / 19:03:04Z during the bulk import; windowed replays 19:15Z+ ok",
+        "d-5 worker report: G1 for 307 dates driven by explicit windows (row S9)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Row Z-W4-S9 BLOCKING/ARMED, disarm_owner 2.0.0_SA_COO~RV.",
+    "world_is": "No bulk silver batch is scheduled; the daily path is bounded. Carried to the round-4 analysis as remediation.",
+    "notes": "Disarm by procedure (no bulk import without windowed G1); the code fix is a round-5 cell."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S13",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-01T22:55Z",
+    "one_line": "The issuer identity floor is one value for every issuer fund, set by its weakest fund: GQGU's newest report resolves 0.2368, so the committed issuer floor is 0.23 and BASG (1.000 today) is held only to 0.23 -- a BASG regression to 24% would serve as updated.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/guardrails_config.json@550af8d320 thresholds.min_resolved_fraction.value = {issuer 0.23, bloomberg 0.99, home_producer 0.0, home_funds {IDVZ 0.0, PFOE 0.0}}",
+        "data/etfs/scripts/rivalfunds/guardrails.py resolved_floor(): per-fund entries exist only for home_producer (home_funds); an issuer fund takes the source floor",
+        "round4/served_delta_r4_pin.json: newest resolved fraction GQGU 0.2368 (2026-09-28), BASG 1.0 (2026-09-30)",
+        "round4/NEVER_WIDEN_HALF_COO_D5.md key 3 disclosure; CTO half @a8913dccef signed key 3 as written"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Analysis ruling 3 (round 3) and the round-4 floors rule: each source's floor is the minimum newest-date resolved fraction of that source's funds.",
+    "world_is": "Nothing serves wrong today (BASG 1.0, GQGU 0.2368 both pass). The floor cannot detect a BASG identity regression down to 0.23.",
+    "notes": "Carrier row for the round-4 analysis ruling 3 (@6dcb0074e4): resolved_floor() gains per-fund entries under `issuer`, BASG's floor set from BASG's own resolution. Round-5 cell (enrichment item 6)."
   }
 ]
 ```

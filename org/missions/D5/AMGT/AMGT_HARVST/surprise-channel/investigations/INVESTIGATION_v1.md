@@ -5642,6 +5642,75 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "No hazard; recorded so a reader of limb_2b does not look for ft/sa/wsj captures under the per-publisher runtime dir."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S56",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-01T22:50Z",
+      "one_line": "HVST-ai-2 left OPEN: the ft session-death cause is found (no page load in the tab for ~10-40 min) but both keep-alive attempts died and 4 renewals then failed; the issuer stopped the worker to protect the ft account and holds ft sign-ins until 06:00Z.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "CTO r35 ruling 4: the ft driver returns only after a 2-hour run shows no logout.",
+      "world_is": "Merged @7a153720bc: diagnosis (FTSession_s never re-issued; a tab loading a page every <=8 min held 54 min; fetch-only died 24 min after the last load) and TabSession.keepalive (ft contract session_keepalive_seconds 300). Attempt 1 (home-page load) died at 13 min; attempt 2 (article load) died 90 s after the sign-in; then 4 renewals failed after the solver token. Repeated failed sign-ins risk an ft account lock, so the worker was stopped at 22:4xZ; no ft process or chrome remains. The ft backfill driver stays OFF.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "commits 7a153720bc (merge of 1c1093375f, 2e7a42aff4, 8a7c4aeb23, f474b6d2c9)",
+          "deliverables/0.9.0_WK_AMGT_HARVST~92/ai2_diagnosis.md"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Next: no ft sign-in before 06:00Z; then ONE re-seated attempt with a single renewal budget. If the session still dies, the CTO reads it at the round-36 analysis."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S57",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-01T23:25Z",
+      "one_line": "bbg backfill never reaches silver/gold: 772 of 779 stored bbg articles sit pending in the upload outbox with JSONDecodeError (0 uploaded) -- the in-tab path stores bbg bodies as HTML pages, and silver_from_bronze.article_rows parses bbg as JSON.",
+      "class": "BLOCKING",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "FWD-14 depth: every stored article reaches gold through upload-harvest (bronze put + silver row from the same bytes).",
+      "world_is": ".runtime/opal-data-harvest-bbg/progress.sqlite3 harvest_raw_outbox at 23:2xZ: pending/JSONDecodeError 772, pending/None 7, uploaded 0; the driver's UPLOAD lines read rc=2 on 55 of 57 bbg uploads since the first job (13:35Z). Reproduced offline: article_rows('bbg', <a stored .html payload starting '<!DOCTYPE html>'>) raises JSONDecodeError at char 0. The same reproduction on a pending wsj html item builds rows OK; wsj is 301 uploaded / 6 SilverRowError / 1 ArrowNotImplementedError. Gold rebuild #3 (20:00Z) therefore carries no bbg backfill article.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          ".runtime/opal-data-harvest-bbg/progress.sqlite3 (harvest_raw_outbox)",
+          ".runtime/opal-data-harvest-bbg/last-harvest-upload.json",
+          ".runtime/harvest-backfill/bbg_full_run.out (UPLOAD rc=2 x55)",
+          "lib/opal_data_harvest/uploads.py:186-235"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Disarm: a bbg HTML branch in silver_from_bronze (same parse the bbg acceptance used), then the pending outbox drains on the next upload and gold rebuild #4 picks it up. The driver keeps collecting meanwhile (bronze lands; rows wait)."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W91-S19",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~91",
+      "surfaced_at": "2026-10-01T23:55Z",
+      "one_line": "1 of 811 pending bbg bodies parses cleanly through the new HTML branch but cannot be written to parquet: bbg:TD7VMGKGCTIZ00 carries body.content[].data.attachment.duration as int in two nodes and as the string '1150000' in a third, so pa.Table.from_pylist raises ArrowInvalid and silver_append raises SilverRowError.",
+      "class": "BLOCKING",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "TO HVST-ai-4 AC2: the pending bbg outbox drains to silver (the face names the parse; it does not name nested type conflicts).",
+      "world_is": "Offline over all 811 pending bbg bodies (outbox opened read-only; the pending count grew from 807 to 811 while I worked, the driver being live): article_rows parsed 811 of 811 with 0 empty titles, 0 without a 2026 published date, 0 empty text blocks, article_id equal to the outbox id on 811. pa.Table.from_pylist over each (source, run_stamp) group of the real fetched_at stamps: 810 groups OK, 1 group (this one row) fails: path body.content[].data.attachment.duration int (315840, 661320) vs str ('1150000'). store.silver_append (lib/research/harvest/store.py:455-460) turns that into SilverRowError, so the row stays pending with an error code and the same fault would hit any other row of the same run_stamp group. The same struct comes through the as-received JSON route, so this is a property of the vendor body, not of the branch. The branch does not coerce it: that is outside the face's bounded parse.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/silver_from_bronze.py _extract_bbg_html @ branch wk-AMGT_HARVST-91-r36b",
+          "lib/research/harvest/store.py:455-460",
+          "bbg_TD7VMGKGCTIZ00.html in .runtime/opal-data-harvest-bbg/harvest_raw/"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "One row of 811 stays pending after the drain unless the issuer rules a nested-type coercion (a cell on the vendor body, not on the parse) or accepts the single stranded row for gold #4."
     }
   ]
 ```

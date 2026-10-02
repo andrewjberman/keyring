@@ -46,6 +46,11 @@
 set -u
 
 ROOT="$(git rev-parse --show-toplevel 2>/dev/null)"
+
+# Every SUBMODULE query runs with the hook's repository variables removed. Inside a commit hook git exports
+# GIT_DIR (and friends) for the SUPERPROJECT, and they override `-C`, so a bare `git -C portal ...` silently
+# answers for ajb_workspace.git instead (row MSTRZ-GL-1, reopened by 0.0.0_AB_MSTR~Z msg 28085).
+sm_git() { env -u GIT_DIR -u GIT_WORK_TREE -u GIT_INDEX_FILE -u GIT_PREFIX -u GIT_COMMON_DIR git -C "$ROOT/$SMPATH" "$@"; }
 [ -n "$ROOT" ] || { echo "ERROR: gitlink-publication-check: not in a git repo." >&2; exit 1; }
 
 # ---------------------------------------------------------------------------
@@ -84,7 +89,17 @@ while IFS= read -r line; do
     # The remote URL. Prefer the submodule's own origin (what a push there
     # actually targets); fall back to .gitmodules.
     # -----------------------------------------------------------------------
-    URL="$(git -C "$ROOT/$SMPATH" config --get remote.origin.url 2>/dev/null || true)"
+    # Only ask the submodule for its origin when it IS its own repository. An
+    # uninitialized submodule directory resolves upward to the SUPERPROJECT, whose
+    # origin would test the gitlink against the wrong remote (row MSTRZ-GL-1).
+    URL=""
+    SM_TOP="$(sm_git rev-parse --show-toplevel 2>/dev/null || true)"
+    SUPER_TOP="$(env -u GIT_DIR -u GIT_WORK_TREE -u GIT_INDEX_FILE -u GIT_PREFIX -u GIT_COMMON_DIR git -C "$ROOT" rev-parse --show-toplevel 2>/dev/null || true)"
+    if [ -n "$SM_TOP" ] && [ "$SM_TOP" != "$SUPER_TOP" ]; then
+        URL="$(sm_git config --get remote.origin.url 2>/dev/null || true)"
+    else
+        echo "SKIP: gitlink-publication-check: '$SMPATH' is not an initialized repository here; reading its URL from .gitmodules"
+    fi
     if [ -z "$URL" ]; then
         URL="$(git config -f "$ROOT/.gitmodules" --get "submodule.$SMPATH.url" 2>/dev/null || true)"
     fi
@@ -121,7 +136,7 @@ while IFS= read -r line; do
     # remote-tracking ref (refinement 1). A failed fetch is not fatal on its
     # own -- a head may still be testable -- but it is printed.
     FETCH_RC=0
-    git -C "$ROOT/$SMPATH" fetch --quiet origin 2>/dev/null || FETCH_RC=$?
+    sm_git fetch --quiet origin 2>/dev/null || FETCH_RC=$?
 
     PUBLISHED=0
     UNTESTABLE=0
@@ -133,11 +148,11 @@ while IFS= read -r line; do
         if [ "$HSHA" = "$NEWSHA" ]; then
             PUBLISHED=1; MATCHED_REF="$HREF (exact tip)"; break
         fi
-        if ! git -C "$ROOT/$SMPATH" cat-file -e "${HSHA}^{commit}" 2>/dev/null; then
+        if ! sm_git cat-file -e "${HSHA}^{commit}" 2>/dev/null; then
             UNTESTABLE=$((UNTESTABLE + 1))
             continue
         fi
-        if git -C "$ROOT/$SMPATH" merge-base --is-ancestor "$NEWSHA" "$HSHA" 2>/dev/null; then
+        if sm_git merge-base --is-ancestor "$NEWSHA" "$HSHA" 2>/dev/null; then
             PUBLISHED=1; MATCHED_REF="$HREF"; break
         fi
     done <<EOF

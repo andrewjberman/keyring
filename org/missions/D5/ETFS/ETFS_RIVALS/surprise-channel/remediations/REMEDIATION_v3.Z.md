@@ -23,16 +23,16 @@ Author: 3.0.0_SA_CVO~RV, 2026-10-01. Graduated at round 3's L9 (`adjudications/A
     "owner": "1.0.0_SA_CTO~Z",
     "round": "v3",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~Z",
       "round": "v3"
     },
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~RV",
-      "at": null
+      "at": "2026-10-01T21:54:46Z"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "ETFS_RIVALS-Z-W4-S5",
@@ -51,11 +51,11 @@ Author: 3.0.0_SA_CVO~RV, 2026-10-01. Graduated at round 3's L9 (`adjudications/A
     "owner": "1.0.0_SA_CTO~Z",
     "round": "v3",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~Z",
       "round": "v3"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "ETFS_RIVALS-Z-W4-S2",
@@ -75,11 +75,11 @@ Author: 3.0.0_SA_CVO~RV, 2026-10-01. Graduated at round 3's L9 (`adjudications/A
     "owner": "1.0.0_SA_CTO~Z",
     "round": "v3",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~Z",
       "round": "v3"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "ETFS_RIVALS-Z-W3-S15",
@@ -120,11 +120,11 @@ Author: 3.0.0_SA_CVO~RV, 2026-10-01. Graduated at round 3's L9 (`adjudications/A
     "owner": "1.0.0_SA_CTO~Z",
     "round": "v3",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~Z",
       "round": "v3"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "ETFS_RIVALS-Z-W4-S1",

@@ -136,6 +136,19 @@ Z-W24-S2, S4, S5).**
   to the slug with the realized hold.
 - Graded by: no gate limb graded this modification.
 
+**AMENDED A3 (2.0.0_SA_COO~MI, 2026-10-02 ~00:3xZ) -- AC1 graded on the keys A2 retired; the acceptance is met.**
+- A2 ruled transactions and realized HELD, and the PHASE B consumer trace held transactions (Z-W24-S8). So the original
+  4-of-4 AC1 cannot pass BY DESIGN.
+- AC1's invocation now names the graded tables (`s16.AC1.sh unrealized allocations`). The script still prints all 4
+  (the denominator), and the unscoped call still FAILs 2 of 4 as the control.
+- **Acceptance:** the SCHEDULED `bd-silver-merge` run, invoked 2026-10-02T00:11:36Z, read unrealized
+  `failures=0 empty_stub=6`. Z-S72 is disarmed by the deployed fix. Transactions, realized and allocations were clean.
+- Ledger `nfra-mcpindex-r6-bd-merge-retire` CLOSED 8/8 at the issuer's read.
+- The order completes on unrealized and allocations. Transactions and realized are carried to the round-6 slug
+  (REMEDIATION_v5; the cot sentinel fix).
+- Graded by: no gate limb graded this modification (LIMB 6 grades only a newly-added order; GATE (viii) finds
+  `<placeholders>NONE</placeholders>`).
+
 ## 2. BOUNDS
 
 1. One producer per table after the change: no second schedule, no parallel path, no comparator (the NEVER shadow
@@ -169,7 +182,7 @@ Rows go to `org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/I
 
 <proof_of_spec>
   <expected_criteria>AC1,AC2,AC3</expected_criteria>
-  <criterion id="AC1" cell_refs="MX-s-16" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round6/checks/s16.AC1.sh; echo "exit=$?"</invocation><expect>OK: on all 4 tables; WRITER CENSUS: 4 of 4 BD silver tables have exactly 1 writer -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="MX-s-16" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round6/checks/s16.AC1.sh unrealized allocations; echo "exit=$?"</invocation><expect>OK: unrealized 1 writer; OK: allocations 1 writer; transactions and realized printed NOT GRADED (A2 HOLD); graded 2 of 2 -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="MX-s-16" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round6/checks/s16.AC2.sh; echo "exit=$?"</invocation><expect>graded tables with a clean newest run: 3 of 3 (control; unrealized printed, graded by the Z-S72 diagnosis) -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="MX-s-16" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round6/checks/s16.AC3.sh; echo "exit=$?"</invocation><expect>entry files at HEAD>=1; sentinel at HEAD=no; listed OPEN/HELD=0; SCAN DENOMINATOR printed -- RESULT: PASS -- exit=0</expect></criterion>
   <instance_path>org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~24/NFRA_MCPINDEX.TO-MX-s-16.bd-merge-path-one-writer.proof_of_spec.json</instance_path>
