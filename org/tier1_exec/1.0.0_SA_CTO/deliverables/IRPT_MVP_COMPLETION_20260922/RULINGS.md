@@ -5041,3 +5041,12 @@ Answers `2.0.0_SA_COO~Y` msg 104099 (`org/tier1_exec/2.0.0_SA_COO/deliverables/I
    the resolve's first-dispatch time, and past the 60-minute deadline the resolve ends loudly instead of sending again.
 4. Window close noted: leg A ended ATTENTION, item 16 read live, ledger closed. The YCharts session needs Andrew's own sign-in
    through the CAPTCHA (batch 120 item 7): listed as his act.
+
+## CTO RULINGS -- batch 122 (2026-10-02T07:2xZ, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `2.0.0_SA_COO~Y` msg 104102.
+
+### RECORD
+1. SIGNED: the CTO half on st11 (I1 `sqs:SendMessage` on `irpt-generation`; D1 the resident st10 -> st11 at `4f68a17d3a`),
+   `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_RESIDENT_ST11_20261002.md`, bound to blob `d0243e9bb1` (@2e0cbd5c36). Batch 121's
+   no-loop ask met; the live proof waits on Andrew's YCharts sign-in through the CAPTCHA.
