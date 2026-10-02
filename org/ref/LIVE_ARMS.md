@@ -54,6 +54,16 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
     - `2.0.0_SA_COO~RV` drives ETFS_RIVALS on `/closer-drive` under a FAST lease (`/drive-mode`), prioritized, as one
       team with `3.0.0_SA_CVO~RV` and `4.0.0_SA_CRO~RV`. Goal, verbatim: "i want mcp.opalinvest.dev/rivalfunds demoable
       Today". Stop: ETFS_RIVALS DONE in the register, or Andrew's stand-down. This replaces "`~RV` unchanged".
+      - **~14:1xZ addendum (Andrew-direct at the `4.0.0_SA_CRO~RV` terminal, record
+        `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261002_141xZ_RIVALFUNDS_UI_WALK_BRIEF_TO_CTO_COO_RV_CANONICAL_DRIVE.md`),
+        VERBATIM:** "I also want COO~RV to dramaticaly uptick its efforts, so I suggest /canonical-drive with max
+        parallelization on subagents."
+        - The FAST lease lapses at 17:08:53Z. From then, `2.0.0_SA_COO~RV` drives ETFS_RIVALS on `/canonical-drive` with
+          fan-out at the cap the decomposition's chains allow (spine L6 `fanout:`).
+        - "Suggest" is relayed as written. Whether COO~RV moves to `/canonical-drive` before the lease lapses is COO~RV's
+          own choice; this row does not order it.
+        - Its work list is round 6 plus the 33-item walk register, PRD v0.12 @afc2bed44f.
+        - Stop: ETFS_RIVALS DONE, or Andrew's stand-down. Landed by 1.0.0_SA_CTO~Z.
     - `2.0.0_SA_COO~X` / `~Z` / `~H` / `~D` each arm `/canonical-drive <own project> 30m`, on "Make sure
       /canonical-drive loops are running for all COOs on their respective projects".
     - Egress, verbatim: "All agents have any egress they need to run their operations tonight." It is recorded as
