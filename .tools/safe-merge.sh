@@ -445,7 +445,15 @@ if [ -n "$_LATE" ]; then
   printf '%s\n' "$_LATE" | sed 's/^/              /' >&2
   while IFS= read -r _p; do [ -n "$_p" ] && git restore --staged -- "$_p" 2>/dev/null; done <<< "$_LATE"
 fi
-echo "safe-merge: committing the merge as ${OPAL_AGENT_SERIAL}"
+# COMMIT FROM A PRIVATE INDEX (row NFRA_OPLGTW-Z-S23, 0.0.0_AB_MSTR~Z 2026-10-02). The sweep above runs BEFORE
+# `git commit`, but the commit's own hooks take 15-45 min and git writes the tree from the index AFTER them, so a
+# peer that stages into the SHARED index inside that window rides into this merge (Z-S23: 0a5cc3c093 carried
+# 1.0.0_SA_CTO~O's project.json line). The commit therefore runs on a COPY of the index taken now: the hooks grade
+# exactly what lands, and a peer's later `git add` stays staged in the shared index for its owner. Proven in a
+# scratch repo with a hook that stages a peer path mid-commit: shared index -> commit carried it; private -> not.
+_PRIV_IDX="$(git rev-parse --git-path index).safe-merge.$$"
+cp "$(git rev-parse --git-path index)" "$_PRIV_IDX" || { echo "safe-merge: REFUSED -- could not snapshot the index for the commit; aborting the merge" >&2; git merge --abort 2>/dev/null || true; exit 1; }
+echo "safe-merge: committing the merge as ${OPAL_AGENT_SERIAL} (from a private index snapshot; a peer's later staging cannot enter it)"
 # HOOK-HANG RETRY (1.0.0_SA_CTO msg 103165, 2026-09-30). The pre-commit hook can stall at PROCESS START
 # (env.exe at 0 CPU, no child; captures in org/mcp/hook-hang-capture.log). Killing it failed the commit, and the abort
 # below then threw away a fully graded merge (1,933 paths, 04:49Z). A watchdog that kills a hung hook first writes the
@@ -457,7 +465,7 @@ _try=0
 while :; do
   _try=$((_try + 1))
   _t0=$(date +%s)
-  if git commit --no-edit --author "$_AUTH" -m "$SUBJECT"; then break; fi
+  if GIT_INDEX_FILE="$_PRIV_IDX" git commit --no-edit --author "$_AUTH" -m "$SUBJECT"; then break; fi
   if [ -f "$_HANG_MARK" ] && [ "$(date -r "$_HANG_MARK" +%s 2>/dev/null || echo 0)" -ge "$_t0" ] && [ "$_try" -lt 3 ]; then
     echo "safe-merge: commit attempt $_try failed on a KILLED HUNG HOOK ($(cat "$_HANG_MARK" 2>/dev/null)); the merge is intact -- retrying git commit only" >&2
     rm -f "$_HANG_MARK"
@@ -467,10 +475,11 @@ while :; do
   echo "            That is a defect in THIS script's grade, not only in the branch: a hook" >&2
   echo "            saw something the merged-index grade above did not. Aborting the merge so" >&2
   echo "            nothing is left staged, and REPORT the discrepancy." >&2
+  rm -f "$_PRIV_IDX" 2>/dev/null || true
   git merge --abort 2>/dev/null || true
   exit 1
 done
-rm -f "$STATE" "$STATE.branch" 2>/dev/null || true
+rm -f "$_PRIV_IDX" "$STATE" "$STATE.branch" 2>/dev/null || true
 # The commit's hooks are the longest window a peer has to reset the shared index under this merge.
 # Read the TREE now, before reporting anything (see _verify_merge_tree).
 _vrc=0; _verify_merge_tree HEAD || _vrc=$?
