@@ -397,3 +397,32 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-S12 -- The served platinum file series.json.gz has NO retention family in the X10 register: the validator admits only csv/json/pdf and one family per table, so round 1 registered the manifest family alone (row W1-S1). Whether the register admits gzip JSON or a second reporting table is the register owner's question (CTO round-1 analysis E2); the served file is not blocked on it.
+
+```json
+{
+ "id": "IRPT_DASHBD-S12",
+ "project": "IRPT_DASHBD",
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~P",
+ "surfaced_at": "2026-10-02T05:05:00Z",
+ "disposition": "UNDER_INVESTIGATION",
+ "one_line": "The served platinum file series.json.gz has NO retention family in the X10 register: the validator admits only csv/json/pdf and one family per table, so round 1 registered the manifest family alone (row W1-S1). Whether the register admits gzip JSON or a second reporting table is the register owner's question (CTO round-1 analysis E2); the served file is not blocked on it.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "4.0.0_SA_CRO (incumbent of lane IRPT_COMPLETION_REGISTRY, the X10 policy in infra/logic/registry/reporting_policies.json; naming-owner review per the lane note)",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "row IRPT_DASHBD-W1-S1 (worker 0.9.0_WK_IRPT_DASHBD~1, merged @9000ce5a08): lib/opal_naming.py:_validate_reporting_policies refused a SERIES family with extension 'json.gz' ('reporting content format is not admitted', admitted set csv/json/pdf) and refused two families on table 'reporting' ('reporting families must have distinct tables'); the MANIFEST family alone was accepted.",
+   "infra/logic/registry/reporting_policies.json at CLOUD @9000ce5a08: policy irpt-dashbd-served-reporting, revision irpt-dashbd-x10-v1, firms [49financial], one family SERVED_MANIFEST (platinum, reporting, json), state PENDING_ENFORCEMENT.",
+   "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_ROUND_1_B_20261002.md section 3 item E2: 'as a registry question to the registry's owner (infra/logic/registry/), carried as one row; not a build cell in this round. The served file is not blocked on it.'",
+   "git show HEAD:.owned-paths.yaml: lane IRPT_COMPLETION_REGISTRY permitted_agents 4.0.0_SA_CRO, ~A, ~B, ~C, ~D, 2.0.0_SA_COO~M ('X10 twelve-family policy')."
+  ]
+ },
+ "spec_asserts": "TO-DB-b-2 issuer amendment 1 on PRD v0.3 ruling 16: round-1 policy rows cover the platinum served files, one family per file (series.json.gz and manifest.json).",
+ "world_is": "MEASURED: one of the two served files has a family; series.json.gz, the file the page reads, has none, so its retention and disposal class is unregistered.",
+ "notes": "Two remedies the register owner can choose between: admit a gzip JSON content format, or admit a second reporting table (for example reporting_series) so the series takes its own family. Either is a register edit plus the validator's admitted set; neither is an IRPT_DASHBD build cell."
+}
+```
