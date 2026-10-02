@@ -2783,3 +2783,34 @@ Positive control on their live read paths:
 - served mention has 23,691 rows, 715 of them for the 5 check securities;
 - `published_utc` is a datetime;
 - T-1 = 2026-10-01.
+
+### 51.1 ROUND 38 AMENDMENT 1 -- cell 4: the ft quarantine (CTO msg 28715 ruling 3; analysis addendum 2 @ce138d2314; 28731), 2026-10-02 ~20:3xZ
+
+FT's terms were read verbatim (`4.0.0_SA_CRO~Z` @0fab00b8a0). They bar automated reads, storing and ML use, and the
+named route is a licence. The CTO ruled:
+- STOP_FT is HARD;
+- FinBERT excludes ft (PRD v0.16);
+- the stored ft articles are QUARANTINED, not deleted: excluded from gold serving and every downstream use, with the
+  bytes kept. Deletion is Andrew's word.
+
+Then (CTO 28725 and 28731), all five publishers' terms were read (@961a99cd64), and the card went to Andrew
+(@8d20bc24c8):
+- FWD-16 and FWD-17 are HELD for every publisher;
+- the served event rebuild (ak-3's 438) is HELD with them;
+- collection on wsj, barrons, bbg and sa is unchanged, with the pause readied (`round38/pause_all_publishers.sh`,
+  dry-run verified);
+- **rebuild #6 carries the ft quarantine ALONE.**
+
+| cell | order | what | class | slot |
+|---|---|---|---|---|
+| `HVST-ak-4` | `ak-4` | `QUARANTINED_PUBLISHERS = {"ft": reason}` and `GRADED_PUBLISHERS` in `publication_gold`; every gold builder, the FinBERT queue and the window builder filter ft on READ (an older snapshot still carries it); the bytes are kept | SERVED (code LOCAL; served gold moves at rebuild #6 under its pair) | `~90`, after ak-1 (same file) |
+
+At the cut, served gold holds 926 ft mention rows of 23,691, and 5 daily rows naming ft.
+
+Base checks before the cut: `round38/checks/ak-4.AC2.py` and `ak-4.AC3.py` both FAIL as expected
+(`QUARANTINED_PUBLISHERS` is absent).
+
+**State of round 38 at this amendment:**
+- ak-1 is complete @23b1e6851d. FWD-16 is HELD: no `score` run, and no tone is served.
+- ak-2 is complete @f175fbeb99. FWD-17 is HELD: no window is served.
+- ak-3 is complete @b79d3781bd. The served event rebuild is HELD.
