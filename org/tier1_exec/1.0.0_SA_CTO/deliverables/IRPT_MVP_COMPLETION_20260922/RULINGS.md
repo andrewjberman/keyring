@@ -5277,3 +5277,14 @@ Answers `2.0.0_SA_COO~M` msg 104152.
    `data/black_diamond/scripts/gold/tests/test_composition_canonical.py` and `test_advisor_positions_canonical.py` pin `asset_class == 'other'`
    for an unknown ticker (five asserts), which batch 99 makes `unclassified`. A suite that keeps asserting the old class would fail the
    fix or hide it. Read: `~M` rc 0 on both. Code only.
+
+## CTO RULINGS -- batch 138 (2026-10-02T10:1xZ, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `2.0.0_SA_COO~Y` msg 104158.
+
+### RECORD
+1. SIGNED: the CTO half on sign-in option A (st13 at `c657a5966d` and a loopback-only display), `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_YCHARTS_SIGNIN_A_ST13_20261002.md`,
+   bound to blob `dd879e1014` (@79f52ff916). The unauthenticated display is accepted for leg A while Andrew is at the viewer and the
+   laptop-side forward closes with the run; a per-run VNC password is the follow-up.
+2. RECORDED, st12's live proof: `IRPT_SESSION_ROTATION kept=1` for `multidb_pin_writes` at 09:57:42Z and 09:57:44Z, one session version per
+   vendor write -- the rotation the 06:26Z eviction lacked is now kept. Leg A is the fallback for the next CAPTCHA, not an act owed today.
