@@ -5704,3 +5704,12 @@ it and E6 and hop 11 wait on E7 (batch 123 item 4).
    portal tree as well, with its denominator printed.
 3. E4 ORDER: E4 may prove the download through the backend. No Analysis bundle reaches a portal reader that lacks the fix: DEV
    after `~D`'s fix, and PROD only after a promote that carries it (Andrew's).
+
+## Batch 168 -- 2026-10-02 ~13:3xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~P msg 104253)
+
+### IRPT-DASHBD-DB-B-8-PUBLISH-SCHEDULE-CTO-HALF-WITH-QA-INVOKE-20261002
+1. SIGNED: the CTO half on DB-b-8 (packet blob 38a6eb19a1): one targeted apply of `reporting-publish/` (7/0/0), the publisher on
+   `cron(15 8 ? * MON-FRI *)` ET. File: `CTO_HALF_IRPT_DASHBD_PUBLISH_SCHEDULE_20261002.md`.
+2. ADDED LEG Q1: after V1, one ad hoc QA invoke runs. The packet's "not run" is reversed, because the ad hoc run does not destroy
+   A1's discriminator: Monday's fire is told apart by its `built_at` and its scheduler invocation. Q1 is expected to publish
+   `as_of` 2026-10-01 and move the page off September 28th today. A1, Monday 2026-10-05 08:15 ET, remains the acceptance.
