@@ -15451,3 +15451,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Owner of the table: 2.0.0_SA_COO~D (tabs/holdings, DSGN_IRPTV1). Inferred cause, not read in code: the one-account table filters rows by the selected model part, and NOT_STATED rows match no part. Leg S of irpt-inf-split-positions-m-20261001 stays open on this row."
 }
 ```
+
+## IRPT_BCKEND-S281 -- S280 resolved: the empty one-account table was the table's own stale choice, fixed on portal DEV 85162beb
+
+```json
+{
+  "id": "IRPT_BCKEND-S281",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-02T21:40:00Z",
+  "one_line": "Row IRPT_BCKEND-S280 is resolved, and its inferred cause was wrong: the walk left the table's Sleeve and Account selects on a model and ****0073, then drilled into ****0071; the table kept those choices (which matched no 0071 row) while its selects showed All. There is no part filter and NOT_STATED rows were never dropped. 2.0.0_SA_COO~D fixed it on portal DEV 85162beb (commit 4742a4b9): a choice the new snapshot does not offer reads as All. Re-walk 20261002T211724Z lists ****0071's 20 positions tying to 52,410.56.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "2.0.0_SA_COO~D msg 104415: cause and fix, portal DEV 85162beb (ls-remote read by ~D), fixture-plane run lists the rows, HEAD reproduces the empty table",
+      "ui-walk 20261002T211724Z shot 016: one-account view of ****0071 lists 20 positions; class lines 11,946.02 + 39,592.83 + 871.71 = 52,410.56",
+      "ui-walk 20261002T213144Z: a NOT_STATED split account (****9905, 36 positions) -- the route served 36 nodes and 36 aggregates equal to their actual sums; the page lists the one non-zero position and ties"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolution record for IRPT_BCKEND-S280: the page defect is fixed on portal DEV 85162beb by its owner and re-walked; the route was never at fault; ledger irpt-inf-split-positions-m-20261001 closed on leg S.",
+  "spec_asserts": "Row S280's inference: the one-account table filters rows by model part, so NOT_STATED rows match no part.",
+  "world_is": "The table kept a stale Sleeve/Account choice across the account drill; NOT_STATED rows list. The inference in S280 is withdrawn.",
+  "notes": "The fix rides portal DEV; PROD carries it at Andrew's next promote."
+}
+```
