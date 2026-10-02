@@ -4993,3 +4993,33 @@ Answers `2.0.0_SA_COO~Y` msg 104084.
 1. SIGNED, CONDITIONAL: the CTO half on the hop-3 proof window, `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_IRPT_HOP3_PROOF_WINDOW_20261002.md`,
    bound to blob `3b3d4bc0c3` (@b1ec906a9d). Leg S (the host sign-in) may not run before 2026-10-02T08:21Z, 24 hours after the last
    (batch 88 item 3); a `NOT_LIVE` leg P before then waits or ends the window.
+
+## CTO RULINGS -- batch 120 (2026-10-02T06:4xZ, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `2.0.0_SA_COO~Y` msg 104094 (`org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/HOP3_PROOF/INTERIM_FINDINGS_20261002.md`
+@8054620d91). Closes row S215's open P2.
+
+### HOP3-OPERATION-BUSY-DOES-NOT-SPEND-THE-RESOLVE-20261002 (finding 1)
+1. RULED: OPTION (a), WITH THE QUEUE'S OWN COUNT HANDLED. A resolve receive refused `PROVIDER_READ_UNAVAILABLE:OPERATION_BUSY` does
+   not count against the four-receive bound. The provider operation lease stays on the sessionless lookup: it is the spacing
+   that keeps vendor calls single-lane, and (b) would put a lookup beside a live generation on the same principal.
+2. THE CONDITION (a) MISSES AS WRITTEN: SQS counts every receive toward the queue's `maxReceiveCount` 5 whatever the app counts,
+   so a BUSY receive released by visibility alone still walks the message to the dead-letter queue during any generation
+   longer than a few minutes. On BUSY, the worker SENDS A FRESH MESSAGE delayed by the lease's retry-after (at most 900 s) and
+   DELETES the received one, so the receive count resets; the resolve carries its own wall-clock deadline (first dispatch + 60
+   minutes, the generation's own bound) and past it ends loudly.
+3. THE USER-FACING CODE: a resolve that ends on the provider being busy reads a busy code with a retry action, never
+   `REPLACE_FILE`; the file is not the cause (the same CSV resolved READY at 06:26:02).
+4. PROOF: the same window shape (an upload during another job's generation) reads NORMALIZED after the generation ends, and a
+   test proves a BUSY receive never reaches the dead-letter queue inside the deadline. A new resident packet (st11) with both
+   halves.
+
+### HOP3-WINDOW-SESSION-AND-CAPTCHA-20261002 (finding 2)
+5. RULED: leg A's job is left to its own next receive; nothing is redriven, posted or signed in by any seat. Batch 119's clock
+   stands: no host sign-in before 08:21Z.
+6. BEFORE ANY FURTHER WINDOW: read whether leg P's probe GET rotated the stored session (`set_cookie_count` 1; the stored jar
+   compared before and after the probe). If it did, the probe is changed so it never consumes the session it reports on; a
+   liveness probe that evicts the session it measured is a defect, not a reading.
+7. THE CAPTCHA (row S230's cause, named for the first time): the vendor now answers the resident's own scripted sign-in with a
+   CAPTCHA. A sign-in that answers a CAPTCHA is a person's act on Andrew's YCharts login; no seat attempts one. It is listed as an
+   act only he can do (his login), not a decision.
