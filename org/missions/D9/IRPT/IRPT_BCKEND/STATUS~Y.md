@@ -98,6 +98,12 @@ Leg A of the hop-3 window (06:26Z) read EVICTED 71 s after a probe read LIVE; th
 person's act on Andrew's YCharts login; no seat attempts one. Until he signs in, no Analysis attempt can produce a report.
 Batch 120 item 6 (the probe's cookie rotation) is read at the next window, which waits on that sign-in.
 
+**No path exists for that sign-in today** (`IRPT_MVP_Y/SIGNIN_PATH/SIGNIN_PATH_READ_20261002.md` @154286ecac): the library refuses
+any CAPTCHA (`ycharts_session.js:546`) and the host has no display. Asked the CTO 09:32Z to rule C (one more scripted leg S in a
+window packet, queue 0/0 first), A (an attended sign-in on the host: Xvnc plus a bounded wait mode; Andrew answers over a Systems
+Manager port forward), both or neither. Recommended: C now, A in parallel. Nothing is built for A before the ruling: it reverses
+the library's FAIL_EXPLICIT design.
+
 ## Rows this lane holds
 
 | Row | State |
