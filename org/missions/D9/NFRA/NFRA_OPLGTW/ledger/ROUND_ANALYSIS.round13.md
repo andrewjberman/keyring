@@ -67,6 +67,12 @@ Round 12's section 5 list stands, with these changes. The R3-T.5 drafts in
    - **Z-S41 leaves the payload,** because it has shipped.
    - **The `.env` read-back** carries 50 keys, not 48.
    - **The CVO half is REQUIRED,** per ruling 4.
+   - **The payload gains the symmetric shared-value refusal** (addendum 20:4xZ, on `3.0.0_SA_CVO~O`'s post-hoc half
+     @e13f0910d4, msg 28743). `mail_route` and `transcript_route` compare only their own bearer, so the refusal is
+     one-sided.
+     - Until OG-rl-4 ships the symmetric refusal, the CVO's guard N1 binds every rotation of the three `gateway/*/bearer`
+       secrets.
+     - The CVO's file states the acceptance arm.
 3. **Item 3, TF root hygiene,** adds Z-W15-S25.
 4. **Items 4 to 7** are unchanged.
 
