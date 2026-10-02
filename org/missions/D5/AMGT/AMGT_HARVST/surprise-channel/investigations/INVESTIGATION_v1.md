@@ -5735,6 +5735,70 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "Disarm: a repair cell that groups a pass's article rows by source, with one silver_append per source, and falls back to per-row on SilverRowError so a W91-S19-class row cannot strand its batch. The SERVED-class mid-round cell is put to the CTO, as for ai-4 (28084). Meanwhile the running upload keeps draining; gold #4 takes whatever has drained by its run."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~92",
+      "surfaced_at": "2026-10-02T02:55Z",
+      "id": "AMGT_HARVST-Z-W92-S15",
+      "one_line": "ai-2: a job run from a worktree used the worktree's own ft profile, not the main runtime's (profile root follows the checkout, not --runtime-root).",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Order step 3: run the collector with cwd = the worktree and --runtime-root = the main tree's runtime; the session in that runtime is what the job uses.",
+      "world_is": "tab_transport.default_profile_root derives the browser-profiles directory from the checkout (Path(__file__).parents[2]), so the worktree job opened <worktree>/.runtime/.../browser-profiles/ft. OPAL_HARVEST_PROFILE_ROOT now names the directory explicitly; unset it changes nothing (2 plants in test_ai2_ft_session.py).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/tab_transport.py default_profile_root",
+          "lib/opal_data_harvest/test_ai2_ft_session.py::test_the_profile_root_follows_the_override_when_one_is_set"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Filed here because ai2_diagnosis.md cites it as Z-W92-S15 and no row of that id existed in the file."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~92",
+      "surfaced_at": "2026-10-02T02:55Z",
+      "id": "AMGT_HARVST-Z-W92-S16",
+      "one_line": "ai-2 attempt 3: the freshly signed-in ft bundle held a __Host-GAPS cookie that Chrome refuses with a domain; the whole seed batch failed and the job ended status=error at its first request, in 14 s.",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "spec_asserts": "A signed-in ft session saved to the vault is seeded into the ft profile by TabSession.seed and the job then fetches with it.",
+      "world_is": "Job 20261002T024110Z-ft-01050eb895 (ASML, 02:41:10Z, 3 minutes after the 02:38Z sign-in): fetched 0, status error, error_type Error, cooldown 900 s (transport_or_runtime_error). Reproduced offline of any fetch: context.add_cookies(57 seed cookies) raises 'Storage.setCookies: Invalid cookie fields'; one cookie at a time, 56 are accepted and the one refused is __Host-GAPS (a __Host- cookie may carry no domain; seed_cookies gives every flat-bundle cookie domain .ft.com). Fix: seed retries a refused batch one cookie at a time and keeps the refused names on seed_refused (2 plants). The job was relaunched after the fix; its record is in ai2_ft_longevity.json. The worker's job record names only the exception class, so the cause took three probes; the message is not recorded anywhere.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~92/ai2_attempt3_signin.json",
+          "lib/opal_data_harvest/tab_transport.py seed",
+          "lib/opal_data_harvest/test_ai2_ft_session.py::test_one_refused_cookie_does_not_fail_the_seed_and_the_rest_are_added"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "notes": "A bundle cookie the browser refuses will recur on any renewal that captures a third-party __Host- cookie; the fallback makes it harmless. Not claimed: that the 02:41 job would have lived."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~92",
+      "surfaced_at": "2026-10-02T02:55Z",
+      "id": "AMGT_HARVST-Z-W92-S17",
+      "one_line": "ai-2 attempt 3: the headed ft sign-in met an hCaptcha; the identity cookie appeared 10 s after the wait began.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Issuer ruling 02:2xZ: one headed sign-in; Kimi and NopeCHA barred; a human solves any challenge in the visible window.",
+      "world_is": "02:37:59Z-02:38:37Z: email and password submitted, an hCaptcha frame present (frame=challenge or checkbox), the driver waited; FTSession_s was set by accounts.ft.com/login 10 s later (network auth event 1, corroborated true); 0 Kimi calls, 0 NopeCHA calls, 0 blocked HTTP. Whether a person clicked it or the widget passed on its own cannot be told from the page state; the driver records 'solved by hand' only as 'the challenge cleared within 10 s'.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~92/ai2_attempt3_signin.json",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~92/ai2_attempt3_signin_log.txt"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
     }
   ]
 ```
