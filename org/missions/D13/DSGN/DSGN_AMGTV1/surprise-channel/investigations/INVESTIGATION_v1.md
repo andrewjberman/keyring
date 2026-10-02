@@ -977,6 +977,27 @@
  "spec_asserts": "Z-S11 remediation: the hit-test with the popover subtree's pointer events on moves into walk.mjs (REMEDIATION_v1, owner 1.0.0_SA_CTO~Z, OPEN).",
  "world_is": "The remedy is in walk.mjs at CLOUD and exercised live; the REMEDIATED stamp is the CVO's at the next compile.",
  "notes": "Remedy record by the remediation owner at the round-23 analysis (ADJUDICATION_v21 disclosed the row stale for 2 rounds); not an adjudication."
+},
+{
+ "id": "DSGN_AMGTV1-Z-S16",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~D",
+ "surfaced_at": "2026-10-02T09:24Z",
+ "one_line": "CORRECTION (CTO round-23 ruling 4): DSGN_AMGTV1-Z-W71-S1 and DSGN_AMGTV1-Z-W71-S2 carry surfaced_at '2026-10-02T00:00Z', a placeholder; their true times are 2026-10-02T08:37Z (Z-W71-S1, commit 8d87abcbe0) and 2026-10-02T08:43Z (Z-W71-S2, commit a78956005b).",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "git show -s --format=%ad --date=iso-strict 8d87abcbe0 -> 2026-10-02T04:37:33-04:00 (the commit that added Z-W71-S1)",
+   "git show -s --format=%ad --date=iso-strict a78956005b -> 2026-10-02T04:43:07-04:00 (the commit that added Z-W71-S2)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "2.0.0_SA_COO~D",
+ "spec_asserts": "A row's surfaced_at is the real UTC time it was surfaced; corrections are new items citing the old id (surprise-row-gate).",
+ "world_is": "The two worker rows carry a 00:00Z placeholder. This row records their true times; the rows themselves stay as written."
 }
 ]
 ```

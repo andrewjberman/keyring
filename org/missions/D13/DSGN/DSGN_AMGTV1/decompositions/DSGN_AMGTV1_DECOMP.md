@@ -1485,3 +1485,27 @@ served SKIPPED reason prints alone; a coded one keeps AV-z-1's plain sentence; t
 **Check:** `round24/checks/lushaline.cjs` (issuer): at base portal 41eeda55 it reads 2 of 3. **Chain:** ~74 alone, portal_ref 41eeda55.
 **Close:** the issuer's merge onto the candidate branch, the battery, and one walk of VLO Exec. **Rule 24:** one row, one order; no
 served value moves (the page prints a served string it already carries, without its own lead-in).
+
+
+## v25 -- ROUND 25 (issuer, 2026-10-02 ~09:2xZ) -- the round-23 analysis's enrichment list, rows 1 and 3
+
+**Rectangle:** `1.0.0_SA_CTO~Z`'s `ledger/ROUND_ANALYSIS.round23.md` @876dfcadb8 section 3 (msg 28356), rows 1-3. Row 2 (Z-S14) is
+`AV-zc-1`, issued as round 24 @1549ca8bcc before the analysis landed. ONE ISSUER PER ROUND is keyed to the round
+(to-pipeline-gate refused a second issuance into round 24), so rows 1 and 3 are round 25's one issuance. Deadline: re-merged onto the candidate and walked by 11:30Z, else the promote candidate stays `41eeda55`.
+- **Cells:** `AV-zc-2` (row 1), `AV-zc-3` (row 3). Ruling 4 (the `surfaced_at` placeholders on W71-S1/S2) is the issuer's
+  correction row Z-S16, because the row gate forbids an in-place edit. It carries no cell.
+- **Placement (a), row 1:** R-1's served absent reasons are ONE global map: 11 distinct reasons over 12 columns, identical in all
+  five fixtures. The page keeps a reader-words class table keyed by that reason (the column is a tie-break). Each item carries
+  `data-absent-reason-class`; an unknown served reason renders `unmapped` with a generic plain clause.
+- **Placement (b), row 3:** the "unfixed path" is the pre-AV-zb-4 predicate, which the harness keeps selectable
+  (`POSTURE_HARNESS_LEGACY_PREDICATE=1`). The zero plant is `POSTURE_HARNESS_PLANT=zero`.
+- **Chains:** ~75 `AV-zc-2` (PeersTab.tsx + peers harnesses); ~76 `AV-zc-3` (posture.harness.cjs). They are disjoint from each other
+  and from ~74 (ExecManagementTab.tsx). Width: M = 3, N = 3, cap 3; portal_ref `41eeda55`.
+
+| cell | row | what it builds | serves | writes | slot | risk |
+|---|---|---|---|---|---|---|
+| `AV-zc-2` | 1 | each absent column's reason in reader words, one clause per reason class, 0 unmapped | FWD-16, FWD-8 | `SA/tabs/PeersTab.tsx`, `SA/reasonWords.ts`, peers harnesses (re-anchor) | ~75 | LOCAL |
+| `AV-zc-3` | 3 | the BABA check renamed to what it grades; zero plant + legacy predicate | instrument (v21) | `SA/__harness__/posture.harness.cjs` | ~76 | LOCAL |
+
+**Checks (`round24/checks/`, written before the relabel; dry-run at base 41eeda55):** reasonclass.cjs FAIL 1 of 3 (the bare "not available" x60, no class
+attribute); posturezero.cjs FAIL 0 of 3 (the old name printed, no zero plant, no legacy predicate).
