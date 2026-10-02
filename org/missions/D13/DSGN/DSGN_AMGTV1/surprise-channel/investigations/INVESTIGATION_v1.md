@@ -1239,6 +1239,27 @@
  "disarm_owner": "2.0.0_SA_COO~D",
  "spec_asserts": "The shared index holds only what a seat is committing this moment; a staged change to another seat's committed records is never left behind.",
  "world_is": "An unknown writer left a staged revert of my drained records in the shared index; a broad commit by any seat would have deleted them. Unstaged per path; cause not found. My drain wrapper now prints foreign files, and every drain re-reads its own records at HEAD after the merge."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W85-S1",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~85",
+ "surfaced_at": "2026-10-02T19:10Z",
+ "one_line": "AV-zg-6: the slot inherited uncommitted portal files from a stopped session that still held two temporary plants of the OLD wording (ExecManagementTab ProfileCell 'No profile (no match found)', ThesisTab ABSENT_ON_OBJECT 'held back uncited'); both were removed before the build was graded, and the Bloomberg-fallback caption default 'the filing' (null source_item) was also made source-named.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "git -C portal diff ec65c5d6 on the 7 inherited files showed both plants in the working tree before any edit by this session; ExecManagementTab.tsx and ThesisTab.tsx now carry the new wording at portal commit cff0ff2c.",
+   "Two planted-failure runs this session: with the old wording put back, execPattern.harness.cjs absent_profile_cells reads false (clean_cells=0) and drafting.harness.cjs held_uncited_line_present reads false, both rc=1; both plants were reverted before the portal commit."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "TO-AV-zg-6 section 1: the Exec and Thesis tabs print no 'No profile', 'no match found' or 'held back uncited' on the face; a Bloomberg-fallback roster never says 'filing' in the management caption.",
+ "world_is": "The inherited working tree did not meet that rule on two strings until this session finished the build. The face also bids the fallback caption to append ', the company's filing' while saying a fallback roster never says 'filing'; the build follows the second clause (the caption names only the served source).",
+ "notes": "Worker-authored record; form only, no significance judged."
 }
 ]
 ```
