@@ -134,7 +134,7 @@ with its planted-failure run, and any row.
   earnings shape is planted from the FWD-37 wording and arm 3 may need a re-cut if the served shape differs; for 992 HK 2026-09-23 the
   series serves 2 articles and the captured day route 0 (a SAUX-12 kind of disagreement, RESAPP's).
 
-<status>pending</status>
+<status>complete</status>
 <round>29</round>
 <slot>~80</slot>
 <fabric>site-z</fabric>

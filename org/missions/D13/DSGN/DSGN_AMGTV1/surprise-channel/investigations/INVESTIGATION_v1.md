@@ -1131,6 +1131,70 @@
  "spec_asserts": "AV-zg-2 cell text item 3 and AV-zg-1's HeaderBrief change; this cell's paths exclude HeaderBrief.tsx and renderCheck.tsx.",
  "world_is": "In the merged tree of AV-zg-1 and AV-zg-2 the timeline mounts once; in this worktree alone it mounts twice (the checks stub both). renderCheck.tsx's string test is a stale lexical match owned by no cell of this round.",
  "notes": "Worker row, not an adjudication; nothing edited outside <paths>."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W80-S1",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~80",
+ "surfaced_at": "2026-10-02T21:25Z",
+ "one_line": "AV-zg-1: the header's posture line no longer renders (HeaderBrief ignores postureLine, as the face orders), so posture.harness.cjs reds on header_line_present and absent_arm_explicit, which turns two battery29 items red (round24 posturezero.cjs, round23 postureharness.cjs) that the order does not skip.",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "battery29.sh with --skip tabs,namecard on portal ec65c5d6 + this cell's edits: 'THE ZERO-RESOLVED PATH IS NAMED AND PLANTED: 1 of 3 arms [rc=1]' and 'POSTURE.HARNESS RUNS GREEN AND GRADES SOMETHING: 2 of 3 arms [rc=1]'; every other line rc=0 (ALL BOUND 13 of 13 harnesses green; tsc -b --noEmit rc=0).",
+   "node portal/src/pages/SecurityAnalysis/__harness__/posture.harness.cjs prints CHECKS-WRONG-WAY no_object_arm_absent_explicit, BABA_US_Equity:absent_arm_explicit, BABA_US_Equity:header_line_present, BA_US_Equity:absent_arm_explicit, BA_US_Equity:header_line_present (the header-side checks only; the tab-side checks are green).",
+   "Positive control: with HeaderBrief.tsx temporarily rendering {postureLine} between the description and the feed, the same harness prints 'ABSENT no_object HD_US_Equity tab true header true' and 'CHECKS-OK 32 of 32'. The edit was reverted; HeaderBrief.tsx in the commit does not render postureLine.",
+   "The harness renders IdentityHeader from components/SecurityOverlay.tsx (posture.harness.cjs lines 372-380), which passes postureLine into HeaderBrief (SecurityOverlay.tsx line ~443); that file is AV-zg-2's and the posture-line re-anchor is named for AV-zg-3 in this order's AC3 note."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "The order's AC3 expects 'BATTERY29: ALL PASS (2 skipped)' with only tabs and namecard skipped; HeaderBrief keeps postureLine optional and ignored.",
+ "world_is": "BATTERY29: FAIL (2 skipped) by exactly two items, both reading posture.harness.cjs, which looks for [data-header-posture] in the header band that HeaderBrief used to draw from postureLine. The cause is the ordered removal of the posture slot, not a defect in either file. posture.harness.cjs is not in this cell's paths, so it is left unedited. The posture line's new home and the harness's re-anchor belong to the cells that own SecurityOverlay.tsx (AV-zg-2) and the header posture line (AV-zg-3).",
+ "notes": "AC1 and AC2 pass 4 of 4 arms each; AC3 is the only red criterion."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W80-S2",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~80",
+ "surfaced_at": "2026-10-02T21:25Z",
+ "one_line": "AV-zg-1: timelineFourStates.harness.cjs cannot load the rebuilt TimelinePanel.tsx without stubs for its new imports, so the edit went beyond the order's 'only the fill clause changes'.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "Before the stubs, node portal/src/pages/SecurityAnalysis/__harness__/timelineFourStates.harness.cjs threw \"Cannot find module '@/components/DataTooltip'\" (MODULE_NOT_FOUND) from TimelinePanel.tsx, whose build items 1 and 4 require DataTooltip and HeroDialog imports.",
+   "Added three stubs to the harness's STUBS map (@/components/DataTooltip, @/ui/components/graphic/HeroGraphic, recharts ReferenceDot), none of which is the fill clause. After that and the fill re-anchor the harness prints result PASS; with BAR_FILL planted to hsl(var(--status-danger)) it exits 1 on four named checks; reverted, PASS again."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Bounds item 2: in the harness file only the fill clause changes.",
+ "world_is": "The harness also needed the import stubs and an extraction of fill-opacity, which carries the day's search state now that the hatches are gone. No other predicate (error banner, retry, zero day-bars on a failed call, pairwise distinctness) was altered.",
+ "notes": "Smallest change that lets the order's own 'show one planted run' happen."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W80-S3",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~80",
+ "surfaced_at": "2026-10-02T21:50Z",
+ "one_line": "AV-zg-1: row Z-W80-S1 (AC3 red on the two posture harness lines) is resolved by the issuer's Amendment 1 @77abd61a20; amended AC3 reads BATTERY29: ALL PASS (4 skipped), exit=0.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "Amendment 1 (shared-tree commit 77abd61a20) skips postureharness and posturezero in AC3; merged into wk-DSGN_AMGTV1-80 and re-run at portal be4e019d: 'BATTERY29: ALL PASS (4 skipped)' and exit=0; ALL BOUND 13 of 13 harnesses green; tsc -b --noEmit rc=0. AC1 and AC2 re-run 4 of 4 each, exit=0."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Row Z-W80-S1 stood BLOCKING: AC3 expected 'BATTERY29: ALL PASS (2 skipped)' and read FAIL on two posture.harness lines.",
+ "world_is": "The issuer ruled on S1 in Amendment 1 @77abd61a20: the two posture lines return when AV-zg-2 renders the single [data-header-posture] and are read on the merged candidate. S1 is not edited; this row is the correction.",
+ "notes": "Correction row per the append-only rule."
 }
 ]
 ```
