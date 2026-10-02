@@ -82,6 +82,7 @@ one merely READ or explicitly EXCLUDED, so it ANNOUNCES rather than asserting.
 """
 from __future__ import annotations
 
+import html
 import json
 import os
 import re
@@ -1388,6 +1389,17 @@ PLACEHOLDERS_TAG_RE = re.compile(r"^[ \t]*<placeholders>(.*?)</placeholders>[ \t
 PLACEHOLDER_TOKEN_RE = re.compile(r"<([A-Z][A-Z0-9_]*)>")
 
 
+# Task orders are XML-shaped, so an author escapes `&&` as `&amp;&amp;` and `2>&1` as `2&gt;&amp;1`. The RUNNABLE
+# form of an invocation is the DECODED one (row AMGT_HARVST-Z-S11). Only the five XML entities and numeric
+# references WITH their semicolon are decoded: `html.unescape` alone would also turn a bare `&copy` or `&lt` inside a
+# URL query (`?a=1&copy=2`) into a symbol and corrupt a real command.
+_MARKUP_ENTITY_RE = re.compile(r"&(?:#[0-9]+|#[xX][0-9a-fA-F]+|amp|lt|gt|quot|apos);")
+
+
+def _decode_markup(s: str) -> str:
+    return _MARKUP_ENTITY_RE.sub(lambda m: html.unescape(m.group(0)), s)
+
+
 def _to_invocations(text: str) -> dict:
     """{criterion_id: invocation string or None}. None = the criterion carries no
     <invocation> (a judgment criterion, or a prose-only clause) and is NOT comparable."""
@@ -1401,7 +1413,7 @@ def _to_invocations(text: str) -> dict:
         if not cid:
             continue
         i = INVOCATION_TAG_RE.search(m.group(2))
-        out[cid] = i.group(1).strip() if i else None
+        out[cid] = _decode_markup(i.group(1).strip()) if i else None
     return out
 
 
@@ -1459,12 +1471,20 @@ def invocation_alignment_check(inst: dict, to_text: str | None = None,
     enforce = declared is not None
     rows = inst.get("acceptance", []) or []
     n_cmp = n_ok = n_nocrit = n_noinv = 0
+    n_ent = 0
     defects: list[str] = []
     for r in rows:
         if not isinstance(r, dict):
             continue
         rid = str(r.get("criterion_id", "") or "").strip()
-        rec = str(r.get("invocation", "") or "").strip()
+        rec_raw = str(r.get("invocation", "") or "").strip()
+        # Z-S11: compare the RUNNABLE forms. A record that mirrors the order's escaped text and a record of the command
+        # as actually run decode to the same string and both align, so a worker is never pushed to copy an unrunnable
+        # string to make the comparison pass. A record still carrying entities is NOTED, never refused (664 such
+        # records existed at the fix, 2026-10-02; refusing them would be new friction, not a correction).
+        rec = _decode_markup(rec_raw)
+        if rec != rec_raw:
+            n_ent += 1
         if rid not in to_inv:
             n_nocrit += 1          # coverage_check owns "this id is not in the TO"
             continue
@@ -1495,11 +1515,16 @@ def invocation_alignment_check(inst: dict, to_text: str | None = None,
            else "UNDECLARED -> ANNOUNCE (the <UPPER> heuristic is a guess, and a guess must not "
                 "refuse; declare <placeholders>WS, PORT</placeholders> in the TO to enforce)"))
     frames.append(
-        "invocation-alignment (recorded invocation -> criterion text): %d/%d comparable row(s) "
+        "invocation-alignment (recorded invocation -> criterion text, both DECODED to the runnable form): %d/%d comparable row(s) "
         "match modulo placeholder expansion; %d diverge. NOT COMPARABLE: %d row(s) name no "
         "criterion in the TO (coverage_check owns that), %d row(s) whose criterion carries no "
         "<invocation> (judgment/prose). Rows in instance: %d."
         % (n_ok, n_cmp, len(defects), n_nocrit, n_noinv, len(rows)))
+    if n_ent:
+        frames.append(
+            "invocation-alignment: %d recorded invocation(s) carried markup entities (&amp; &gt; ...) and were "
+            "compared DECODED, i.e. as a shell would run them. Record the command as RUN; a copied escape is "
+            "not runnable as written (row AMGT_HARVST-Z-S11). Noted, not refused." % n_ent)
     if enforce:
         v.extend(defects)
     else:
@@ -2163,6 +2188,18 @@ def _self_test() -> int:
          "expansions of <WS> in one invocation -> 1 violation",
          _to_fixture("cd <WS>/portal && node s.mjs <WS>/out.png", placeholders="WS"),
          "cd /c/tmp/ws-7/portal && node s.mjs /c/tmp/ws-9/out.png", 1)
+    _inv("S invocation limb (Z-S11): the ORDER escapes its operators (&amp;&amp;, 2&gt;&amp;1) and the record is "
+         "the command AS RUN -> 0 violations (both decode to the runnable form)",
+         _to_fixture("cd <WS>/x &amp;&amp; run 2&gt;&amp;1", placeholders="WS"),
+         "cd /c/tmp/ws-7/x && run 2>&1", 0)
+    _inv("T invocation limb (Z-S11): a record that MIRRORS the escape still aligns but is NOTED as not "
+         "runnable as written -> 0 violations + the entity note",
+         _to_fixture("cd <WS>/x &amp;&amp; run", placeholders="WS"),
+         "cd /c/tmp/ws-7/x &amp;&amp; run", 0, "carried markup entities")
+    _inv("U invocation limb (Z-S11): a bare `&copy` inside a URL query is NOT an entity (no semicolon) and is "
+         "never decoded -> the literal command aligns with itself",
+         _to_fixture("curl 'https://h/q?a=1&copy=2'", placeholders="NONE"),
+         "curl 'https://h/q?a=1&copy=2'", 0)
 
     # ---- FE-s-29 limb 2: the COUNT-BAR limb (RULING M(ii), row S56). Pure: the mode is injected; the
     # real-bytes arms (a real bun summary, F17-AC8's committed evidence, the derived boundary) live in
