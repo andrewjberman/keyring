@@ -12,7 +12,7 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| a | activation | build_unit_map --securities BA/GOOGL/HEI/PWR US Equity --remeasure on field_map.json | m32 vs HEAD: fields_unit 2, unit_evidence 146, raw_stamp 31, derived_by 31, value_sampled 7, status_moves 0, other_securities 0 |  | OPEN |
+| a | activation | build_unit_map --securities BA/GOOGL/HEI/PWR US Equity --remeasure on field_map.json | m32 vs HEAD: fields_unit 2, unit_evidence 146, raw_stamp 31, derived_by 31, value_sampled 7, status_moves 0, other_securities 0 | build_unit_map --securities BA/GOOGL/HEI/PWR US Equity --remeasure at 44baa06d07, rc 0, 4 x 66 field entries; m32 vs HEAD: fields_unit 2 (BEST_DIV_YLD x4 names, EQY_DVD_YLD_IND GOOGL; all DECIMAL -> PERCENT), unit_evidence 146, raw_stamp 31, derived_by 31, value_sampled 7, status_moves 0, other_keys 0, other_securities 0 -- equal to the signed table (evidence/r32_ah3_leg_a.txt) | CLOSED 20261002T154518Z |
 | b | git | field_map.json commit on CLOUD | commit hash |  | OPEN |
 | c | activation | model_block_pull derive --no-sa-fallback over the 4 names | each block == its captured dry-run block (vintage stripped); 0 value moves; exactly 4 new block objects |  | OPEN |
 | d | activation | dossier write_one over the 4 | at most one new object per name; inputs_equal_now 4/4 |  | OPEN |
@@ -21,3 +21,4 @@
 ## Log
 
 - 20261002T154217Z OPENED by 2.0.0_SA_COO~X with 5 leg(s)
+- 20261002T154518Z LEG a closed: build_unit_map --securities BA/GOOGL/HEI/PWR US Equity --remeasure at 44baa06d07, rc 0, 4 x 66 field entries; m32 vs HEA
