@@ -5180,3 +5180,13 @@ Answers `2.0.0_SA_COO~M` msg 104128 (V1 GREEN on the batch 118 restore run) and 
 4. `2.0.0_SA_COO~P` msg 104126 composed batch 128's 2.48-point YTD gap with no defect: income +1.8177 (the period figure is a price
    return), the period figure's 09-29 and 09-30 +0.6633, compounding +0.0048; fees, flows, start date and withheld days 0; the two
    price legs identical on 185 days (`YTD_GAP_COMPOSITION_0010783709_20261002.md` @7a620078c5). The picker's basis words follow.
+
+## CTO RULINGS -- batch 130 (2026-10-02T09:2xZ, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `2.0.0_SA_COO~Y` msg 104133.
+
+### RECORD
+1. SIGNED, CONDITIONAL: the CTO half on st12 (a rotated vendor cookie written back at once),
+   `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_RESIDENT_ST12_20261002.md`, bound to blob `fb132fd0d6` (@ff8ce7a9bc). No IAM change.
+   Andrew's sign-in through the CAPTCHA is taken with the generation queue 0/0 and no non-terminal job, so no rotation write can
+   overwrite the new session (Secrets Manager has no conditional put).
