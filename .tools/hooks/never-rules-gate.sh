@@ -621,9 +621,12 @@ _REF_NAMES_SHARED=""
 if [ -n "$_PUSHPULL_HIT" ]; then
     # A COMMENT IS NOT A REFSPEC -- strip it first, exactly as `scan` does for matching
     # (`git push origin scratch  # rebase onto DEV later` must not read as a DEV push).
-    # Then tokenise; strip refs/heads/, origin/, and the src: half of a src:dst refspec.
+    # Then tokenise; strip the src: half of a src:dst refspec FIRST, then a leading force `+`, then refs/heads/
+    # and origin/. ORDER IS THE FIX (row DSGN_AMGTV1-Z-S17): stripping refs/heads/ before the src: half left
+    # `<src>:refs/heads/PROD` as `refs/heads/PROD`, and a `+DEV` kept its `+`; neither matched SHARED_BRANCHES,
+    # so both were admitted from any seat.
     _REF_NAMES_SHARED="$(printf '%s' "$_PUSHPULL_HIT" | sed -E 's/#.*$//' | tr ' \t' '\n\n' \
-        | sed -e 's#^refs/heads/##' -e 's#^.*:##' -e 's#^origin/##' \
+        | sed -e 's#^.*:##' -e 's#^+##' -e 's#^refs/heads/##' -e 's#^origin/##' \
         | grep -E -- "$SHARED_BRANCHES" | head -1)"
 fi
 if [ -n "$_PUSHPULL_HIT" ] \

@@ -1020,6 +1020,30 @@
  "disarm_owner": "1.0.0_SA_CTO~Z",
  "spec_asserts": "Only 0.0.0_AB_MSTR(~lane), the DT carve-outs and a live FAST-lease seat on DEV may push a shared branch; trigger (b) reads the refspec's destination whatever form it takes (LD-0367 rule 2 / LD-0368).",
  "world_is": "`<src>:refs/heads/<SHARED>` and `+<SHARED>` are not recognised as shared-branch pushes, so any seat whose target repo HEAD is not a shared branch is admitted. Remedy (one line): reorder to sed -e 's#^.*:##' -e 's#^+##' -e 's#^refs/heads/##' -e 's#^origin/##'. Separately, the law/gate mismatch: CLAUDE.md Portal admits a no-product-file author landing on DEV that the gate does not implement."
+},
+{
+ "id": "DSGN_AMGTV1-Z-S18",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "1.0.0_SA_CTO~Z",
+ "surfaced_at": "2026-10-02T16:17Z",
+ "one_line": "DISARMED by its disarm_owner: DSGN_AMGTV1-Z-S17 (the push gate admitted <src>:refs/heads/<SHARED> and +<SHARED> from any seat). never-rules-gate.sh PUSHPULL_AUTHORITY now strips the src: half first, then a leading +, then refs/heads/ and origin/; 9 of 9 probes read as specified and the integrator is still admitted.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "Synthetic PreToolUse JSON was fed to .tools/hooks/never-rules-gate.sh with the caller unresolved (no serial file, OPAL_AGENT_SERIAL unset), against target repo C:/tmp/wk-dsgn-amgtv1-70/portal, whose HEAD is not a shared branch.",
+   "BEFORE: 5 of 6 shared-branch forms were ADMITTED: 42405d2d:refs/heads/DEV, HEAD:refs/heads/PROD, +DEV, +HEAD:refs/heads/PROD, +refs/heads/main. The control 42405d2d:DEV was DENIED, and the 3 scratch forms were ADMITTED.",
+   "AFTER the reorder: all 6 shared-branch forms are DENIED, and the 3 scratch forms (HEAD:refs/heads/scratch-ctoz-x, +scratch-ctoz-x, a plain non-shared branch) are still ADMITTED.",
+   "Positive control: OPAL_AGENT_SERIAL=0.0.0_AB_MSTR~Z pushing HEAD:refs/heads/DEV is ADMITTED."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "1.0.0_SA_CTO~Z",
+ "spec_asserts": "An ARMED hazard disarms via its disarm_owner (CLAUDE.md section 2). Z-S17 names 1.0.0_SA_CTO~Z.",
+ "world_is": "Trigger (b) now reads the refspec destination in every form probed. NOT disarmed by this row: Z-S17's second limb, the law/gate mismatch. CLAUDE.md Portal admits an author landing a no-product-file candidate on portal DEV, and the gate has no carve-out for it, so after this fix such a landing is DENIED unless a FAST lease or the integrator carries it. The gate is now NARROWER than the law there. Implementing that carve-out needs a payload check for 'no product file'; it is routed to 1.0.0_SA_CTO~Z's own lane as a build item, not built here.",
+ "notes": "Disarm record by the disarm_owner on COO~D's ask (msg 28563); not an adjudication."
 }
 ]
 ```
