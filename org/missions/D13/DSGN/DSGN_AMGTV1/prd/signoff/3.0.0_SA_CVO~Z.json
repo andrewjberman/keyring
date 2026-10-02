@@ -1,12 +1,12 @@
 {
   "prd": "DSGN_AMGTV1_PRD.md",
-  "prd_version": "v0.6",
-  "prd_pin": "b8c93f6342eb6c7a3e4c2fe9b77e27ed289ed019",
+  "prd_version": "v0.7",
+  "prd_pin": "e14de1769c1f1dbe9c8d9cc492ed7988d7f665d0",
   "half": "ratified-text",
-  "half_hash": "cf69f765260df2648215fdf6b5350d8e876e9a957234d3efa2c8e64d6291bc8d",
-  "endpoint_hash": "6eda1250fe58a96e8985c64dc27e4279dd575a2b4bf2c06ab45e817aa81f40f9",
+  "half_hash": "23d90cbea1a753a302b9296bf8b562105ce9ca7eee199fa0a1448de58da499b0",
+  "endpoint_hash": "99b3dddcac4a4fdfde09279a8012ab1bbd4b923bb37200411614037774a8566e",
   "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_DSGN_AMGTV1_v0.6_RATIFIED_TEXT_20261001_Z.md@0a41d21713",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/DSGN_AMGTV1_L4R_RATIFIED_TEXT_REVIEW_20261002_v07_Z_SIGN.md@9f8ed31a8c",
   "signed_by": "3.0.0_SA_CVO~Z",
-  "signed_at": "2026-10-01T04:34:40Z"
+  "signed_at": "2026-10-02T06:36:50Z"
 }
