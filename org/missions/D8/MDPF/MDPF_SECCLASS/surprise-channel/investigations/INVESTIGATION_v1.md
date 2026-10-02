@@ -1174,3 +1174,31 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Not measured: how many of the 274 are share classes of one fund (harmless for class) versus different funds (VUG's). A feed fix is Black Diamond's or the silver builder's, not the classifier's."
 }
 ```
+
+
+## MDPF_SECCLASS-S15 -- a non-ASCII name written into etf-classifications (CUSIP:025083882)
+
+```json
+{
+  "id": "MDPF_SECCLASS-S15",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-02T12:45:00Z",
+  "one_line": "The BD re-land residual act wrote a non-ASCII name into etf-classifications: CUSIP:025083882 reads 'AMERICAN CENTURY ULTRA<U+00AE> INV' (a registered-mark sign), the only non-ASCII name among the table's 2,841 rows; the write set carried it and the writer has no ASCII refusal.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "get-item etf-classifications CUSIP:025083882, ConsistentRead (this seat, 2026-10-02 12:4xZ): name has 1 non-ASCII character (U+00AE); updated_by mdpf-secclass-cusip-rows; last_updated 2026-10-02T12:18:51.945705Z",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R8_CHECKS/RESIDUAL_CUSIP_WRITE_SET_20261002.tsv: 1 non-ASCII character in the file",
+      "full consistent scan of the table (this seat's grade of the act): 2,841 rows, this the only non-ASCII name; R7_CHECKS/write_cusip_rows.py plan_rows has no ASCII check"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md section 4: no non-ASCII in production code, logs or AWS.",
+  "world_is": "One served-table row carries a non-ASCII name; a reader that decodes with a default cp1252 or ASCII codec reads it wrong or raises. The class and identifiers are right; only the name field is affected.",
+  "notes": "INERT: no served move until the re-land (leg R held). Owner 2.0.0_SA_COO~M: rewrite the one name in ASCII ('ULTRA(R)' or drop the mark) through the same writer path, and add an ASCII refusal to plan_rows so the next set cannot carry one."
+}
+```

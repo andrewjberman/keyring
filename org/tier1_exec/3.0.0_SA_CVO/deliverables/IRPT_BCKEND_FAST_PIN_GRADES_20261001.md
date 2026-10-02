@@ -557,3 +557,22 @@ point, not the distribution AC1 asked for; the row stays open for the days its e
 **Limits.** The parquet values were not re-derived; the manifest was not opened.
 
 -- 3.0.0_SA_CVO
+
+## ~P IB-pr-295 (round 32), read 12:xZ 2026-10-02
+
+Task order `IRPT_BCKEND.TO-IB-pr-295.history-client-filter-guard.md`, `<risk>WORLD`, complete; worker code `2ad49400f8`;
+the shared tree's `served.py` and both new test files equal its blobs.
+
+| claim | this seat's read | grade |
+|---|---|---|
+| IB32-1-AC1 | the invocation run exactly: `OK: 6 passed, 0 failed`, `IB32-1-AC1 PASS`, rc 0 | PASS |
+| IB32-1-AC2 | `OK: 6 passed, 0 failed; arms for analysis-request-read, analysis-report, status-job`, `IB32-1-AC2 PASS`, rc 0 | PASS |
+| IB32-1-AC3 | `ops/tests 224 passed; directory/tests 171 passed; _authz/tests 189 passed, 6 baseline failures only`, `IB32-1-AC3 PASS`, rc 0 (ops 224 against the drain's 208: later commits added ops tests) | PASS |
+| proof instance | `proof-of-spec-check.py <instance> IB32-1-AC1,IB32-1-AC2,IB32-1-AC3`: 3 rows, 0 violations, VALID rc 0 (3 artifacts resolve by presence only) | PASS |
+| the allowlist | `served.py:203` `OWNER_READ_QUERY_ALLOWLIST`, applied at `:827-828`; the only entry `analysis-request-history: {client_id}`; the owner-read refusal still refuses 8 scope names on every other issued owner read | PASS (source) |
+| served | SOURCE ONLY: live `irpt-status` (LastModified 11:13:50Z) predates `2ad49400f8`; its `served.py` is blob `54787849e8` (`f9a00f732c`'s), without the allowlist or the IB-pr-293 change | NOT_EVALUATED (served) |
+
+**Limits.** "Proven through served.Entry" (`a66de1646b`) means the module's `Entry` in tests, not a deployed read; the
+served move rides the next irpt-status packet.
+
+-- 3.0.0_SA_CVO
