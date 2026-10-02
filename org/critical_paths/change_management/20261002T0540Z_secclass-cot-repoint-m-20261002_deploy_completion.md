@@ -12,7 +12,7 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| P | git | portal readers on DEV: coo-m-cot-mix-readers rebased onto origin/DEV and pushed HEAD:DEV | push range + ls-remote + CI conclusion |  | OPEN |
+| P | git | portal readers on DEV: coo-m-cot-mix-readers rebased onto origin/DEV and pushed HEAD:DEV | push range + ls-remote + CI conclusion | Portal branch coo-m-cot-mix-readers (commit 35cd4be5 rebased onto origin/DEV 455ca18d as eb90f2ad; DEV changed no package file and none of the branch's 8 files in its 48 commits). Checks at eb90f2ad: tsc --noEmit rc 0; eslint on the 8 files 0 errors (1 warning, react-refresh/only-export-components); bun test on the two reader tests 2 pass 1 fail, the failure IVE49-AC1 (dE00 commodities vs cash) failing identically with DEV's own sources (chartColors.ts, 2.0.0_SA_COO~D's). Pushed HEAD:DEV 05:3xZ under the FAST lease MDPF_SECCLASS (455ca18d..eb90f2ad); git ls-remote origin DEV = eb90f2ad90; CI - Build & Validate run 36969983074 on eb90f2ad completed success (gh run watch --exit-status rc 0). No served data carries the new classes yet, so DEV renders as before; the page acceptance is leg S. | CLOSED 20261002T054339Z |
 | PROD | verify | the same reader commit on portal PROD (Andrew's promote) -- the CTO condition for G, R, S | ls-remote PROD contains the commit |  | OPEN |
 | M | git | merge coo-m-cot-carrier @affbc33e2b into CLOUD, just before G (deferred: on CLOUD unheld, C_06/D_03/D_04 would ship without the held library); merged tree = the ten files, B_00 922249798b | merge hash + tree diff |  | OPEN |
 | I | activation | plan + safe-apply of cot-pipeline adding exactly CanonicalClassificationsRead, role statements printed before and after; run just before G | plan diff + live statements |  | OPEN |
@@ -24,3 +24,4 @@
 ## Log
 
 - 20261002T054050Z OPENED by 2.0.0_SA_COO~M with 8 leg(s)
+- 20261002T054339Z LEG P closed: Portal branch coo-m-cot-mix-readers (commit 35cd4be5 rebased onto origin/DEV 455ca18d as eb90f2ad; DEV changed no packag
