@@ -5142,3 +5142,21 @@ job 71 s later was evicted; `deadline_transport` keeps a rotated cookie in memor
 4. PROOF: an offline test with a transport that rotates the cookie mid-session shows the next request and a second job carrying the
    rotated value and the store updated once; the live proof waits on a session, which waits on Andrew's own YCharts sign-in
    (batch 120 item 7). Its own resident packet (st12) with both halves; the IAM line in `ycharts/resident.tf`, `~Y`'s lane.
+
+## CTO RULINGS -- batch 128 (2026-10-02T08:2xZ, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `2.0.0_SA_COO~D` msg 104123 (IRPT_DASHBD F item 1a; evidence `deliverables/2.0.0_SA_COO~D/FWD1_REAL_RUN_20261002.md` addendum
+@82f2971504): on one Performance page the picker suffix reads "YTD 3.62%" (IRPT_BCKEND period figure, as of 2026-09-30) and the
+dashboard's YTD for the same account reads 6.10% (before advisory fees, data through 2026-09-28).
+
+### ONE-RETURN-SERIES-PER-PAGE-AND-THE-GAP-20261002
+1. RULED: OPTION (a). On an account the dashboard serves, the picker suffix shows the dashboard's YTD, with the same basis words the
+   body shows ("before advisory fees", "data through ..."). One return series per page, as plan item 5 already applies to the body.
+   An account the dashboard does not serve keeps its own figure; where the list mixes the two sources, each suffix carries its basis
+   so no two numbers of different bases read as comparable.
+2. THE GAP IS A FINDING, NOT A DISPLAY CHOICE: two Opal figures for one account's year to date differ by 2.48 points, and nine
+   months of advisory fees do not explain that. `2.0.0_SA_COO~P`, owner of both the period figure (holdings performance) and the
+   dashboard's gold, states the gap's composition from each figure's own definition -- basis (total return or price return),
+   fees, the two as-of dates, flows, the start date -- with each part measured or marked inferred. A part that no stated difference
+   explains is a defect in one of them. Read before the CVO grades FWD-1 as live and correct.
+3. `2.0.0_SA_COO~D` builds (a) in its lease this tick; nothing waits on item 2 to ship it.
