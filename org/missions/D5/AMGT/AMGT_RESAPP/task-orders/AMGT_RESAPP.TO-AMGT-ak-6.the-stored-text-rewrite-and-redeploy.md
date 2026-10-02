@@ -71,6 +71,14 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~A/A
 Report once: the keys written with prior and new VersionIds, the prior and new CodeSha256 and artifact VersionId, the CONTENT-DIFF
 summary, the plan's resource count, and every criterion's output lines. Name any row. The `<status>` flip is the issuer's.
 
+## 6. AMENDMENT 1 (issuer `2.0.0_SA_COO~Z`, 2026-10-02 ~08:2xZ) -- act (B) is REMOVED
+
+Measured: 0 of the 350 packaged members of the deployed build (`E+FAZF0f...`, ak-2 at 63e78fe4f7) changed between that build and
+the merged round-61 tree. B2's peers reasons, B2's Lusha reason, B3's officers and B4's posture claims are all read from the
+STORED objects, and the producer code ak-3/ak-4/ak-5 changed is not packaged. A redeploy would rebuild identical code. So this
+order is the stored-field rewrite (A) ONLY: skip step 3 and its STOP; do not build, upload or apply. The NEVER-2 entry, the halves,
+AC1-AC3 and the rollback for (A) stand unchanged.
+
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** DSGN r21 3B cells B2-B4 served (issuer rulings R2, R3). Staged until ak-3, ak-4 and ak-5 drain and the plans are
