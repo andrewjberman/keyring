@@ -98,7 +98,7 @@ and `-Plan` rc=0.
 
 fanout: 1 of 1 chains, cap 8.
 
-<status>pending</status>
+<status>complete</status>
 <direct_act>true</direct_act>
 <slot>~28</slot>
 <fabric>site-z</fabric>

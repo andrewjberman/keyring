@@ -2268,6 +2268,25 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "CUTOVER_PLAN_20261001.md step 2: 'Runtime pull: no separate act. The launcher fast-forwards checkout_dir to prod_ref on every launch.'",
     "world_is": "True only once the launcher ON DISK is the post-f-9 one. A launcher replaces its own file mid-run but keeps executing the bytes it started with, so the first launch after a launcher change runs the OLD logic. Remedy taken: the issuer pre-pulled the runtime to origin PROD (a fast-forward, the act the launcher itself performs). Standing rule for the cutover: after any push that changes launcher.ps1, pre-pull the runtime before the next launch.",
     "notes": "Was ARMED against the item-0 close run until the pre-pull; disarmed by the issuer 2.0.0_SA_COO~AI before filing."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W28-S1",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~28",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "one_line": "safe-commit refuses the parent-side files of OA-f-13 in the sparse worktree: org/projects/NFRA_OPALAI.json (index) is absent from the cone, so missions-tree-check fails INDEX-MISSING.",
+    "surfaced_at": "2026-10-02T15:38Z",
+    "spec_asserts": "TO OA-f-13 section 2 bound 3: commit the parent-side files with safe-commit.sh and flip status complete.",
+    "world_is": "safe-commit REFUSES: missions-tree-check INDEX-MISSING 'org/missions/D6/NFRA/NFRA_OPALAI: no org/projects/NFRA_OPALAI.json (remedy: derive --write)'. The sparse cone carries no org/projects, so the index validator cannot pass in this worktree; slot ~27's proof was likewise carried by the issuer (456653b3f8). Proof instance and the status flip are in the worktree, uncommitted; the nested opal_ai commit e34ba403c3 landed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit rc=1 from /c/tmp/oa-28; proof-of-spec-check rc=0 VALID on the instance."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
