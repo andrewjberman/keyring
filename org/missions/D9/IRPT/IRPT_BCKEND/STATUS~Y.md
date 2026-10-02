@@ -6,14 +6,14 @@ Mode FAST: lease `IRPT_BCKEND~Y` re-armed 04:33Z until 08:33Z after the withdraw
 terms, under Andrew-direct 2026-10-01 ~04:2xZ).
 Loop `/canonical-drive IRPT_BCKEND` 10m (LIVE_ARMS RELAUNCH row). Way forward: CTO rulings batches 61, 62, 65, 70, 72,
 76, 83, 88, 89, 93, 97, 98, 100 and 105 in `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md`.
-Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-02T07:3xZ.
+Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-02T07:5xZ.
 
 ## Pins
 
 | What | Value |
 |---|---|
 | Worktree | branch `coo-y-r30` at `C:/Users/AndrewBerman/Desktop/coo-y-r30`, head `3ad9306bf9`, merged into CLOUD at `87f9b3afab` |
-| Items 1 to 17 on CLOUD | 1 to 14 as before (st9 carries them); 15 `3921492913` (the 900 s calculating release, the WAF header token); 16 `7122afefc1` (row S253, the job row's `vendor_requests` ledger); 17 `8c4398e32a` (E7, the request read names the chosen comparisons); 19 `951afdf4e6` (st11, merge `4f68a17d3a`, SERVED in the resident; its words ride the next generate and irpt-status bundles); 18 `3ad9306bf9` (the catalogue reads `etf-classifications` once per 300 s warm window, not per request; condition 11 of the whole-bundle packet), merge `87f9b3afab`, NOT served |
+| Items 1 to 17 on CLOUD | 1 to 14 as before (st9 carries them); 15 `3921492913` (the 900 s calculating release, the WAF header token); 16 `7122afefc1` (row S253, the job row's `vendor_requests` ledger); 17 `8c4398e32a` (E7, the request read names the chosen comparisons); 19 `951afdf4e6` (st11, merge `4f68a17d3a`, SERVED in the resident; its words ride the next generate and irpt-status bundles); 21 E6 memo (merge `7a9f76389b`, not served); 20 hop 11 (branch `coo-y-hop11`, not merged); 18 `3ad9306bf9` (the catalogue reads `etf-classifications` once per 300 s warm window, not per request; condition 11 of the whole-bundle packet), merge `87f9b3afab`, NOT served |
 | SERVED: the resident | `/opt/irpt-resident/4f68a17d3a-st11` since 2026-10-02T07:18:54Z (ledger `irpt-resident-st11-20261002` CLOSED; both halves, CTO batch 122): items 1 to 19, and `irpt-ycharts-runner-role` holds `sqs:SendMessage` on `irpt-generation`. Rollback root `b1db201025-st10` on the host |
 | SERVED: `irpt-status` | `2V7xV1+zII4+g6tV..` since 2026-10-01T06:59:55Z (read 2026-10-02 ~02:2xZ) |
 | SERVED: `irpt-ycharts-generate` | `E+FqSWwETrwJ9Gd1..` since 2026-10-02T05:54:19Z (whole bundle at `97eaff05ff`, item 18; ledger `irpt-generate-catalogue-20261002` CLOSED). Rollback: S3 version `J52XmUEj..` (code `arC65KbD..`) |
@@ -67,8 +67,12 @@ made (CTO half item 1).
    **THE irpt-status QUEUE (batch 123 item 4):** every irpt-status bundle now carries E7, so E7, then E6's memo, then hop 11 land
    in that order, one packet each, once the tolerant parser is on every deployed build incl. PROD (row S261). Build now, apply
    none before the gate, and upload no new irpt-status artifact before E7 applies (E7's step 2 stops on a replaced key).
-   **E6 memo:** design `IRPT_MVP_Y/E6_TIMING/E6_MEMO_DESIGN_20261002.md` @8e128269d0; two of its lines are in
-   `reports/status_installed.py` (`2.0.0_SA_COO~P`'s lane); placement asked of the CTO 07:28Z.
+   **E6 memo BUILT and MERGED** (item 21, `4c23ef5d98` + `0d6ec02cd0` under CTO batch 125's grant, merge `7a9f76389b`): ReadMemo
+   over the table port, one scope per invocation, the final re-reads fresh; 6 tests with two negative controls; ops 193 passed.
+   **Hop 11 BUILT, on branch `coo-y-hop11` only** (item 20 `a41a349c8b`, IAM `dd6de6ced2`; NOT merged): the route, the signer bound
+   to the builder's address, 12 tests. It merges when its packet is cut (after E7 and E6), with the one line
+   `reports/tests/test_status_installed.py` needs (its five-operation set gains `analysis-request-pdf`; `2.0.0_SA_COO~P`'s file).
+   At each packet, `read_memo.py` (E6) and `pdf_link.py` (hop 11) join irpt-status's source-map `files`.
 6. Batch 61's order after that: one job per remaining arm (Target Weight, 49 Financial, Inflection), each under a window
    packet; the resolve concurrency fix; the vendor PDF link; the Analysis export; the email lane. E6's memo follows E7's
    apply (CTO batch 111). A client-scoped history route is an enrichment item at the next round analysis (CTO batch 110 item 4).
@@ -118,6 +122,9 @@ this file; `deliverables/2.0.0_SA_COO~Y/**`; `org/tier1_exec/2.0.0_SA_COO/delive
 `infra/aws/terraform/investor-reporting/**`, `reports/**`, `_contracts/tests/**`, `portal/**`.
 
 ## Parked, each with its owner and the condition that un-parks it
+
+- Hop 11's test line: `reports/tests/test_status_installed.py`'s five-operation set gains `analysis-request-pdf`. Owner
+  `2.0.0_SA_COO~P` (or an exact-file grant to this seat); un-parks when hop 11's packet is cut, after E7 and E6.
 
 - The api root's `CHANGELOG.json` entry for route `bh7ynom`: outside this seat's write surface (no lane names the
   api directory; earlier entries are `2.0.0_SA_COO~P`'s). The closed ledger entry holds the record. Un-parks with an
