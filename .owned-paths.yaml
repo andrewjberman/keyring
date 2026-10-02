@@ -2485,6 +2485,10 @@ paths:
     lane: POD1_OR_AE
     note: "Semantic news-pipeline Lambdas (currently inactive but kept in lane) — POD1 DS authors, AE deploys."
 
+  "infra/aws/ec2/investor-reporting-ycharts/tests/run_offline_suite.js":
+    lane: IRPT_BCKEND_FAST_Y_HOST
+    note: "IRPT_BCKEND~Y FAST lease, exact file (option A test arm b2, the attended sign-in); CTO grantor batch 136 (2026-10-02)."
+
   "infra/aws/ec2/investor-reporting-ycharts/ycharts_session.js":
     lane: IRPT_BCKEND_FAST_Y_HOST
     note: "IRPT_BCKEND~Y FAST lease, exact file; CTO grantor batch 74 (2026-10-01)."
@@ -2524,6 +2528,14 @@ paths:
   "infra/aws/lambda/investor-reporting/reports/status_installed.py":
     lane: IRPT_BCKEND_FAST_Y_STATUSPORTS
     note: "E6 read memo, two lines, exact file; IRPT_COMPLETION_P members kept plus COO~Y; CTO grantor batch 125 (2026-10-02)."
+
+  "data/black_diamond/scripts/gold/tests/test_composition_canonical.py":
+    lane: MDPF_SECCLASS_FAST_M_BD_MIX
+    note: "Black Diamond forward fix, exact test file (its other-to-unclassified asserts change with the code); CTO grantor batch 137 (2026-10-02)."
+
+  "data/black_diamond/scripts/gold/tests/test_advisor_positions_canonical.py":
+    lane: MDPF_SECCLASS_FAST_M_BD_MIX
+    note: "Black Diamond forward fix, exact test file (its other-to-unclassified asserts change with the code); CTO grantor batch 137 (2026-10-02)."
 
   "data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py":
     lane: MDPF_SECCLASS_FAST_M_BD_MIX
