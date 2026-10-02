@@ -52,3 +52,28 @@
 - **A6** A service agent walks the test on the frontend and tracks backend network operations.
 - **H1** Holdings (`COO~M`): virtually complete.
 - **H2** The "Smaller holdings" logic in the tree charts is not necessary.
+
+## Addendum 1 -- Andrew-direct 2026-10-02 ~15:5xZ to ~16:0xZ, same channel: the test files for cases A-D
+
+Verbatim, three messages in order:
+
+> I actually have the "easy" spreadsheet case from Alyssa here, which is what we should use for Cases A B and C. She
+> will send the "hard" one shortly.
+
+> "C:\Users\AndrewBerman\Downloads\Holdings Y-Charts - Bridgeman Welath Front_Nick Skudlarick.xlsx"
+
+> THen, for Case D, we can use this one: "C:\Users\AndrewBerman\Downloads\Stevens Stress Test_Andrew Stafford.xlsx".
+> For additional commentary, I have copied her teams messages below for context: [< This is a good one, A14-A17 are
+> not YChart compatible so I had to sub in a proxy myself / Stevens Stress Test_Andrew Stafford.xlsx / I used SGOV
+> instead >]
+
+(The bracketed text is Alyssa Keith's Teams message as Andrew pasted it; the slashes mark her line breaks.)
+
+- **A4 as amended:** Cases A, B and C use Alyssa's easy file in place of the generated 10-ETF portfolio; Case D uses
+  the Stevens file. The variant per case is unchanged (A: variant 1; B: variant 2 against ULT; C: variant 3 against ULT
+  and IWM; D: variant 1).
+- Files as read by this seat at 16:0xZ (laptop paths; prospect data, so the files are NOT copied into git):
+  - Easy: sha256 `500837992a3b9caa846162441287fc5565b8c262894f8ee290189254160e1841`, 29,584 bytes, sheet
+    `holdings_template`, B1 = `Dollars`, 99 holdings, total 465,144.47.
+  - Stevens: sha256 `f0d344fa967504bd878a5e09e6b9b633bc11ef4299ae29ba76687f643b850809`, 28,061 bytes, sheet
+    `holdings_template`, B1 = `Dollars`, 20 holdings rows; A14-A17 are `QKZAQ`, `QBNYQ`, `QUSBQ`, `QBOKQ`.
