@@ -7,7 +7,55 @@
   - grade 1 (NOT_EVALUATED) @f751aac898;
   - grade 2 (FAIL, ETFT YTD -188.51%) @9cca47a6cd;
   - grade 3 (PASS on F1-F4) @ea29c625e9;
-  - grade 4 (PASS on CALL 6 c1-c2; G4-1 split guard refusing 7 real moves, ruled CALL 8) @6aaf6b43f6.
+  - grade 4 (PASS on CALL 6 c1-c2; G4-1 split guard refusing 7 real moves, ruled CALL 8) @6aaf6b43f6;
+  - grade 5 (PASS, CALL 8 served) @eeb5fb2c7a.
+
+## Grade 6 -- served page 2026-10-01, batch fast-a1-publish-1001f, code pin c2b9023fc6 (handoff msg 28375), read 2026-10-02 ~09:50-10:05Z
+
+**Verdict: PASS on what was built** (trend derivatives out, CALL 7 missing_reason, cross-fund GICS fallback, contribution
+values unchanged). One P2 residual is restated with numbers (G6-1).
+
+- **Deployed bytes equal the pin.** `etfs-rivalfunds-daily-lambda` has 33 of 33 `rivalfunds/*.py|*.json` files byte-equal
+  to c2b9023fc6. Positive control: the deployed `gold_buying_trend.py` differs from its 2a9a11a025 version.
+- **Two applies, each after its pair:**
+  - addendum 4: COO cd8e96ee5a 09:22:00Z, CTO 506d577b04 09:23:41Z, apply at 3107eae49f 09:27:23Z;
+  - addendum 5 (the tb-1 handler column fix): COO 8fe72138a3 09:36:21Z, CTO a278d2187f 09:39:03Z, apply at c2b9023fc6
+    09:43:02Z.
+  - Ledgers r5 and r6 CLOSED @0905b21b49.
+  - The r5 apply served the trend without its type columns for about 16 minutes. That is disclosed in the handoff and
+    repaired by r6.
+- **The served trend** (`buying_trend-20261002T094504Z-9648a7ce233b`): 319 rows, and 0 lines named `* Index|Comdty|Curncy`.
+  SCHY's first sector lean-away is Energy -$27.2M (bet, 17 windows), where it was a -$1.05B futures "Unclassified" line,
+  which no earlier grade caught.
+- **The served contribution** (`holding_contribution-20261002T092848Z-0c1d3c4aa2eb`): 3,906 rows that join 3,906 of grade
+  5's table one to one. **0 contribution values changed** (this seat's join), which is the CTO half's claim, verified.
+  `missing_reason`: 70 no_price, 13 derivative_not_priced.
+- **The page:** 0 `<script>`. Manifest `published`, 12 of 13, readback true. 12 "No GICS sector in the source" labels.
+
+### G6-1 (P2) -- the trend's sector panels have no guard for an unknown-sector majority; the contribution panels do
+
+The "No GICS sector in the source" share of each fund's gross sector notional in the served trend:
+
+| fund | share |
+|---|---|
+| IDVZ | 100% |
+| ETFT | 70% |
+| GQGU | 65% |
+| PCLG | 62% |
+| WCMG | 49% |
+| TSEL | 48% |
+| PFOE | 32% |
+| BASG | 25% |
+
+- The label is now honest.
+- The contribution panels apply "Sectors not shown" when the unknown bucket dominates (grade 3, F4). The trend panels
+  apply no such rule, so IDVZ's only sector line, and GQGU's first lean-away line (-$176M), is "No GICS sector in the
+  source".
+- The cross-fund fallback leaves GQGU at 65% though its holdings are US large caps other funds hold. Whether its key
+  misses (issuer rows versus Bloomberg rows) is unread here.
+- **Recommendation:** one rule for both components.
+
+**Still open:** F5 at the next AI run.
 
 ## Grade 5 -- served page 2026-10-01, batch fast-a1-publish-1001d, code pin 2a9a11a025 (handoff msgs 28354/28355), read 2026-10-02 ~09:12-09:20Z
 
