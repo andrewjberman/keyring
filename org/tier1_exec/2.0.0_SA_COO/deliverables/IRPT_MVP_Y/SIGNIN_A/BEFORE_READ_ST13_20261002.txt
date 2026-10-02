@@ -1,0 +1,8 @@
+ssm 1bfc8667-6698-476c-9b61-779c7e911d99 Success rc 0
+before-read 2026-10-02T10:17:32Z
+unit active since Fri 2026-10-02 09:21:39 UTC
+running root /opt/irpt-resident/cf3ae52aee-st12
+queue irpt-generation 0/0
+provider lease: holder '' session_fence 23 state None expires_in -1790936254 s
+journal, last 15 min, job lines: 2
+
