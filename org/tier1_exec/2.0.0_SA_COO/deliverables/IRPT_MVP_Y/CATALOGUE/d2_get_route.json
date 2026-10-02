@@ -1,0 +1,6 @@
+{
+    "key": "GET /api/scoped/investor-reporting/analysis/comparisons",
+    "auth": "CUSTOM",
+    "authorizer": "naqxlm",
+    "target": "integrations/wtho3v4"
+}

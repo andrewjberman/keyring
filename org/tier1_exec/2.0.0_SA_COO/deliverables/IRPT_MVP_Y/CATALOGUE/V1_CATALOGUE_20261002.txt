@@ -1,0 +1,5 @@
+login HTTP 200 token True
+own firm #1   HTTP 200 state None        reason None           version v1  entries 341  {'model_catalogue': 4, 'etf_classifications': 337} client  2235 ms server  None ms init None
+own firm #2   HTTP 200 state None        reason None           version v1  entries 341  {'model_catalogue': 4, 'etf_classifications': 337} client   471 ms server  None ms init None
+own firm #3   HTTP 200 state None        reason None           version v1  entries 341  {'model_catalogue': 4, 'etf_classifications': 337} client   600 ms server  None ms init None
+foreign firm  HTTP 200 state UNAVAILABLE reason FIRM_BINDING   version None entries None None client   354 ms server  None ms init None

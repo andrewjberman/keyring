@@ -1,0 +1,76 @@
+{
+ "at": "2026-10-02T06:02:15.428551Z",
+ "principal": "svc-irpt-analysis@opalinvest.com",
+ "calls": [
+  {
+   "call": "own firm #1",
+   "http": 200,
+   "state": null,
+   "reason": null,
+   "catalogue_version": "v1",
+   "entries": 341,
+   "by_source": {
+    "model_catalogue": 4,
+    "etf_classifications": 337
+   },
+   "start": 1790920901.8422086,
+   "end": 1790920904.0768442,
+   "client_ms": 2235,
+   "invocations_in_window": 0,
+   "server_ms": 719.63,
+   "server_start_utc": "06:01:44.935"
+  },
+  {
+   "call": "own firm #2",
+   "http": 200,
+   "state": null,
+   "reason": null,
+   "catalogue_version": "v1",
+   "entries": 341,
+   "by_source": {
+    "model_catalogue": 4,
+    "etf_classifications": 337
+   },
+   "start": 1790920907.07814,
+   "end": 1790920907.5495892,
+   "client_ms": 471,
+   "invocations_in_window": 0,
+   "server_ms": 220.64,
+   "server_start_utc": "06:01:48.932"
+  },
+  {
+   "call": "own firm #3",
+   "http": 200,
+   "state": null,
+   "reason": null,
+   "catalogue_version": "v1",
+   "entries": 341,
+   "by_source": {
+    "model_catalogue": 4,
+    "etf_classifications": 337
+   },
+   "start": 1790920910.5539317,
+   "end": 1790920911.1539776,
+   "client_ms": 600,
+   "invocations_in_window": 0,
+   "server_ms": 259.61,
+   "server_start_utc": "06:01:52.514"
+  },
+  {
+   "call": "foreign firm",
+   "http": 200,
+   "state": "UNAVAILABLE",
+   "reason": "FIRM_BINDING",
+   "catalogue_version": null,
+   "entries": null,
+   "by_source": null,
+   "start": 1790920914.1544018,
+   "end": 1790920914.5088522,
+   "client_ms": 354,
+   "invocations_in_window": 0,
+   "server_ms": 90.84,
+   "server_start_utc": "06:01:56.055"
+  }
+ ],
+ "server_match": "matched BY ORDER from /aws/lambda/irpt-ycharts-generate REPORT lines re-read after log delivery: 4 calls, 4 invocations, each START 1.9 to 3.1 s after its client window (this laptop's clock is behind AWS); no Init Duration on any, so the container was warm from the D1 served-reads check"
+}
