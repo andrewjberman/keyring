@@ -4,16 +4,16 @@ Seat `2.0.0_SA_COO~RV` (CLAUDE). Lease: FAST to 2026-10-02T17:08:53Z, surface `d
 (`org/mcp/drive-mode.log` line 56). Goal (Andrew ~04:59Z): "i want mcp.opalinvest.dev/rivalfunds demoable Today".
 Team: reviewer `3.0.0_SA_CVO~RV` (grades pins after the fact: `org/tier1_exec/3.0.0_SA_CVO/deliverables/ETFS_RIVALS_FAST_GRADES_20261002.md`),
 open calls `4.0.0_SA_CRO~RV` (`org/tier1_exec/4.0.0_SA_CRO/deliverables/ETFS_RIVALS_RULINGS_20261002.md`: CALLs 1-9 ruled).
-As of 2026-10-02T10:2xZ.
+As of 2026-10-02T11:3xZ.
 
 ## Pins
 
 | What | Value |
 |---|---|
 | Working branch / worktree | `rv-fast` at `/c/tmp/rv-fast` (drained to CLOUD at 93227704b7); apply tree removed 10:23Z (MSTR disk ask) -- re-add detached at CLOUD HEAD for the next apply |
-| Deployed artifact pin | CLOUD **93227704b7** in the five etfs-rivalfunds Lambdas (ledgers fast-a1, -r2 .. -r7 all CLOSED; latest @04fb5c283c) |
-| Served page | `platinum/page/date=2026-10-01/index.html`, publish_page/3, batch fast-a1-publish-1001g (rebuilt with refresh_a1; buying_trend carries sector_source) |
-| AI run objects | `research_hypotheses` date=2026-10-01 run 20261002T062229Z-ai (seat-adhoc, 23 PASS / 1 FAIL) |
+| Deployed artifact pin | CLOUD **7ab3b9382f** in the five etfs-rivalfunds Lambdas (ledgers fast-a1, -r2 .. -r8 all CLOSED; latest @1fe73c0b31) |
+| Served page | `platinum/page/date=2026-10-02/index.html` (newest; the gateway serves it), batch fast-a1-publish-1002b 11:28Z: 13 of 13, AI accounts, reports through 2026-10-01; 1,620,342 B |
+| AI run objects | `research_hypotheses` date=2026-10-01 run 20261002T062229Z-ai (23 PASS / 1 FAIL); date=2026-10-02 run 20261002T110438Z-ai (a1-chain/3, 20 PASS / 4 FAIL, seat-adhoc) |
 | Push state | LOCAL @04fb5c283c: origin CLOUD 1f2346734b (ls-remote 10:24Z); MSTR~Z asked to carry it (msg 07:43Z) |
 
 ## Live thread
@@ -26,20 +26,21 @@ State: LIVE END TO END on the A1 page. The served 2026-10-01 page is the Lambda'
 
 | Cell | State | Evidence |
 |---|---|---|
-| pt-1, pg-1, rk-1, tb-1, ic-1, ai-1, ai-2 | LIVE; grade 2 FAIL (F1 P0) -> fixed; grade 3 PASS F1-F4; grade 4 PASS CALL 6 + futures; grade 5 PASS CALL 8; grade 6 PASS (futures out, cross-fund GICS, missing_reason); G6-1 + CALL 9 sector_source live at 93227704b7, graded next | `org/tier1_exec/3.0.0_SA_CVO/deliverables/ETFS_RIVALS_FAST_GRADES_20261002.md` |
+| pt-1, pg-1, rk-1, tb-1, ic-1, ai-1, ai-2 | LIVE; 10-02 page + AI run (20 PASS / 4 FAIL) handed to CVO~RV for grade 8 (F5); grade 2 FAIL (F1 P0) -> fixed; grade 3 PASS F1-F4; grade 4 PASS CALL 6 + futures; grade 5 PASS CALL 8; grade 6 PASS; grade 7 PASS @3e93998f8e (G6-1 closed; sector_source own/other_fund/mixed + null ratified by CRO~RV @87fb953c86) | `org/tier1_exec/3.0.0_SA_CVO/deliverables/ETFS_RIVALS_FAST_GRADES_20261002.md` |
 
 ## Write claims
 
-None open.
+- CTO~Z condition 4 / CRO~RV CALL 10: `unknown_identifier` -- a ticker-form token passes only when it matches a security key
+  in the fund's facts (run time) or its G1 keys (publish recheck); plant: an invented ticker reads FAIL. Its own addendum.
+  GATES the next AI seat run (the next page day), not today's page.
 
 ## Next proof
 
-1. **Page day 2026-10-02.** The 07:00 ET (11:00Z) fetch lands the 2026-10-01 reports; the chain publishes the 10-02 page
-   with the three producer tables. Then the seat AI run for 10-02 (CALL 5; prompt a1-chain/3, grader grounding_check/2, on CLOUD) and ONE
-   republish via `daily-lambda {"only": ["publish-page"]}` (never-widen key K7), read back on the moved fields (CTO
-   condition 3: the 10-02 headline count, the three A1 components, the reason on any REFUSED new window).
+1. **unknown_identifier (CALL 10 condition / CTO~Z condition 4)** -- build, plant an invented ticker, measure the recheck over
+   every stored row (10-01, 10-02), addendum 8 pair, deploy outside 12:50-13:15Z. Gates the next page day's AI run.
+   Page day 2026-10-02 is DONE: the scheduled 11:04Z publish, the AI run 20261002T110438Z-ai, and the republish 1002b (r8).
 2. Drain the held round-5 vehicle chains after the morning read (below).
-3. rv-fast holds 0 commits not on CLOUD; drain each new pin in a gap of the shared index.
+3. rv-fast = CLOUD 7ab3b9382f (the r8 plan tree); drain each new pin in a gap of the shared index.
 
 ## Held from round 5 (vehicle-run drains, SERVED; unchanged by FAST)
 
@@ -56,8 +57,7 @@ None open.
 | PCLG / WCMG +1 historical windows stay INFERRED (round-4 t-5) until a control replay reads them | `2.0.0_SA_COO~RV` | a G5/G6 history replay is cut |
 | The census lists every missing G4 price and GICS line (766 each): honest, long | `2.0.0_SA_COO~RV` | after the demo |
 | The concentration cell (ACWI top-10 share) | `2.0.0_SA_COO~RV` | ACWI lands daily (v0.8 leg) |
-| ONE function for "Sectors not shown" (render.py `_rank_panel` :538-540 and `_trend_card` :606-611 hold one predicate twice), CTO~Z msg 28395 item 1 | `2.0.0_SA_COO~RV` | after the demo (rides the next deploy) |
-| `_nan` guard on the audit holdings "Asset class" cell: pandas 3 prints "nan" in 751 cells (the r7 page-byte gap; the Lambda layer prints empty) | `2.0.0_SA_COO~RV` | rides with the item above |
+| CTO~Z msg 28395 items 1-2 BUILT on rv-fast @688c4a7c59 (one `_sectors_hidden` function; `_e` prints NaN empty); overlay render of 10-01 byte-identical to served 1001g; drained to CLOUD @2bf0e85772; not deployed | `2.0.0_SA_COO~RV` | deploy rides the next pair after the demo |
 
 ## Limits
 
