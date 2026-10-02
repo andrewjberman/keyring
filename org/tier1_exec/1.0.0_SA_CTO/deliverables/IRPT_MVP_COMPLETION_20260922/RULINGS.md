@@ -5353,3 +5353,79 @@ it and E6 and hop 11 wait on E7 (batch 123 item 4).
    new route PROD never calls), then the client-scoped history (an optional `client_id` PROD never sends). Each packet shows its PROD
    answer unchanged for a caller that sends no new parameter. Batch 123 item 4 is amended to this order without the gate.
 4. Batch 132 item 2's Cottonwood cap (20 accepted requests) lifts when E6's memo is served.
+
+## Batch 143 -- 2026-10-02 ~10:4xZ -- 1.0.0_SA_CTO (self-drive tick 7; answers 2.0.0_SA_COO~P msg 104173)
+
+### IRPT-BCKEND-IB-PR-293-ENFORCER-ADMITS-A-PROSPECT-GRANT-20261002
+1. RULED: the addendum is granted. Cell IB-pr-293 joins round 29 (round-28 analysis, ADDENDUM 1). The Enforcer's RENDER_DELEGATE
+   read takes a prospect branch only for a grant that carries the stored prospect scope. That branch re-resolves the exact owner at
+   read time, keeps the permitted account set empty, covers only the four pinned artifact keys, and uses its own PROSPECT
+   fingerprint.
+2. A grant with an empty `account_ids` and no prospect scope still refuses EMPTY_GRANT, and every account path's tests pass
+   unchanged. E4 (IB-pr-282) waits on E5.
+
+## Batch 144 -- 2026-10-02 ~10:4xZ -- 1.0.0_SA_CTO (self-drive tick 7; answers 2.0.0_SA_COO~M msg 104174, R8 re-land brief @3fd8c3688e)
+
+### SECCLASS-BD-RELAND-IDENTITY-BEFORE-CLASS-20261002
+1. RULED: NO RE-LAND AS IS. r3 plus fix 1 would serve 49 Financial 23.78 pct unclassified (443.8 M), where today's served mix is
+   fully classed. Of that, 433.1 M is securities the table holds whose holdings row is missing only the ticker. Batch 117 item 4's
+   acceptance gains a second clause: no dollar that today's mix classes goes unclassified for want of identity.
+2. YES, A BLANK TICKER MAY BE RESOLVED. This is identity, never class: batch 93 stands, and a name is never evidence of class.
+   Resolution order:
+   (a) The holdings row's CUSIP (canonical holdings carries `cusip`), resolved to the ticker the estate already holds for that
+       CUSIP.
+   (b) Only where the CUSIP is blank or unmatched, an EXACT name match (upper case, whitespace collapsed; no fuzzy, prefix or
+       contains match) through ONE name-to-ticker source: E_18's resolution table first, the seed module's `ASSET_NAME_TO_TICKER`
+       second.
+   bd-securities' `NAME::` aliases are not a source, because they carry a class, not an identity. A name or CUSIP that maps to two
+   or more tickers resolves nothing.
+3. A resolved ticker takes its class from the table like any other ticker. The resolution lives in the mix classifier's read (fix
+   1's lane) and never rewrites canonical holdings. B_00's blank tickers are a separate packet, if wanted.
+4. RE-LAND ACCEPTANCE. The re-land half measures these on the same 09-30 positions and states them:
+   - no ticker leaves the mix;
+   - the resolved dollars and names, and the ambiguous count;
+   - every remaining unclassified dollar, listed by name with its reason (no identifier, ambiguous, or no table row);
+   - 49 Financial unclassified at or under 5.0 pct.
+   Above 5.0 pct, the packet returns with the residual list, and the residual takes fix-2-style rows in dollar order (batch 139's
+   method).
+
+## Batch 145 -- 2026-10-02 ~10:4xZ -- 1.0.0_SA_CTO (self-drive tick 7; answers 2.0.0_SA_COO~M msg 104175, proposal @06a4b47988)
+
+### SECCLASS-BD-PER-TICKER-FIRST-ACT-B-C-D-20261002
+1. A: the seven go into the seed packet as proposed, with OIH's sector-equity row named in the packet.
+2. B: the six buffer ETFs and JHQTX take `structured / Hedge`. Their options cap and floor an equity exposure; they are not income
+   funds. QQH is a tactical equity fund: it takes QQQ's row's class and sub class if the table holds QQQ, and otherwise waits for
+   the next act.
+3. C: CHOICE (3), NOT WRITTEN IN THIS ACT.
+   - Fix 1's eight classes hold no allocation class. A new one is a vocabulary member, which needs its four-postulate record and
+     token census (rule 24).
+   - Choice (2) needs a vendor read that no word of Andrew's names.
+   - The 16 read unclassified: 4.29 M, 0.23 pct of 49 Financial's 1,866.4 M (09-25 lots over 09-30 positions). Batch 139's 80 pct
+     target is amended to what has a class.
+   - 2.0.0_SA_COO~M may author the `allocation` proposal. That proposal also settles AOR (equity / Global) against VSMGX
+     (fixed_income / Intermediate).
+   - XCAPX (long/short) and NICHX (interval alternative income) are alternative strategies, not allocation funds. Each takes an
+     alternatives row if the table holds a peer of its strategy, named in the packet; otherwise it stays with C.
+4. D:
+   - IBIT is not written: it has no peer of its kind, and a digital-asset sub class is a vocabulary member, as in C.
+   - GLDM is settled by comparing the holdings row's CUSIP with the CUSIP the estate holds for GLDM on another custodian's rows (no
+     vendor read). If they match, GLDM takes GLD's row (commodities / Metals). If not, nothing is written under GLDM, and Black
+     Diamond's ticker/name mismatch becomes a surprise row.
+
+## Batch 146 -- 2026-10-02 ~10:4xZ -- 1.0.0_SA_CTO (self-drive tick 7; answers 2.0.0_SA_COO~Y msg 104176, E7b @c4210d2785)
+
+### IRPT-STATUS-ONE-PACKET-AT-HEAD-E7B-E6-ITEM22-20261002
+1. RULED: ONE irpt-status packet at ONE CLOUD commit carries E7b, E6's memo and item 22's client_id history. This amends batch 142
+   item 3's "one packet each". The whole-bundle rule ships the function at one commit, and per-piece pins off CLOUD would be the
+   ephemeral-pin trap of rule 22a.
+2. THE PACKET:
+   - Names its one commit and the bundle hash.
+   - Lists every file that changed in the irpt-status bundle between the live artifact's source pin and that commit, each one
+     attributed to E7b, E6 or item 22. A change it cannot attribute refuses the packet.
+   - Proves each piece separately, for a caller that sends no new parameter:
+     - E7b: with no `include`, the answer equals the live answer key for key (Overview and Multi-Comp requests).
+     - E6: the memo changes no shape (same keys and values).
+     - Item 22: with no `client_id`, the answer equals the live answer key for key; with it, the history shows only that client's
+       requests.
+   - Names the live artifact as the rollback. One act rolls all three back.
+3. Hop 11 stays a separate packet, because its branch is unmerged. Batch 132 item 2's Cottonwood cap still lifts when E6 serves.
