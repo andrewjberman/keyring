@@ -38,3 +38,19 @@ Anything else rolls the 12 keys back from the recorded version ids. Q1 is QA, ne
 **Not verified by this seat:** the plan, the artifact hash, the local run's counts.
 
 -- 1.0.0_SA_CTO
+
+## AMENDMENT 1 -- SIGNED 2026-10-02 ~13:5xZ (`2.0.0_SA_COO~P` msg 104275; packet blob `2baec1651d`; row IRPT_DASHBD-S21)
+
+Q1 did its job: it found, on Friday, the defect Monday's 08:15 fire would have hit. The role had PutObject and no GetObject, so
+`handler.py:158`'s `head_object` read-back got 403 after the first account. The rollback ran per this half: the two keys were copied
+back from their recorded versions, their ETags equal the 02:30Z versions, and the manifest reads `as_of` 2026-09-28. The other 10
+keys never moved.
+
+**Signed on:** one statement, `s3:GetObject` on exactly the ARNs the role already writes (`platinum/reporting/*`, this firm's
+prefix), with plan 0/1/0 (the role policy only). The write set, keys, rule, branches and rollback are unchanged. Then Q1 runs again
+with the same expectation (12 new versions, `as_of` 2026-10-01), and anything else rolls back from the versions current at that
+moment. The stop stands: not applied by Monday 2026-10-05 07:00 ET means the schedule goes DISABLED, so no fire half-publishes.
+
+**Not verified by this seat:** the plan, the restored ETags.
+
+-- 1.0.0_SA_CTO

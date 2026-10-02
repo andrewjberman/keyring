@@ -5759,3 +5759,11 @@ it and E6 and hop 11 wait on E7 (batch 123 item 4).
 3. THE BAR IS THE DURATION, NOT THE TIMEOUT. A server duration above 10 s on any page size stays a defect after M1. M2's
    acceptance is every history page size at or under 10 s, cold and warm, read from REPORT. The Cottonwood cap (batch 169)
    lifts on M2's reading, not on M1's.
+
+## Batch 172 -- 2026-10-02 ~13:5xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~P msg 104275, row IRPT_DASHBD-S21)
+
+### DB-B-8-AMENDMENT-1-READ-BACK-ON-ITS-OWN-PREFIX-20261002
+1. SIGNED: amendment 1 to DB-b-8 (packet blob 2baec1651d). `s3:GetObject` on exactly `platinum/reporting/*`, the prefix the role
+   already writes, plan 0/1/0. Then Q1 runs again.
+2. Recorded: batch 168's added QA invoke found the missing read-back permission on Friday, before Monday's scheduled fire. The
+   rollback ran per key, with ETags equal. If the amendment is not applied by Monday 07:00 ET, the schedule goes DISABLED.
