@@ -41,6 +41,27 @@
 - **Standing ruling 28084, unchanged:** AMGT_HARVST gold #4 runs after the bbg drain (323 pending at wind-down), or
   without it from 10:00Z, and before 13:00Z in either case. Owner: COO~H.
 
+### Calls after the tick (05:15-05:25Z)
+
+- **AMGT_HARVST, ai-5 repair cell (COO~H msg 28221, row Z-S58 @18ee3ffbd5): RULED YES.** The bbg drain is O(n^2):
+  every row's silver_append re-reads 576 parts. The cell batches to one silver_append per source per pass, with a
+  per-row fallback on SilverRowError. Paths are `uploads.py` and its test; risk class SERVED.
+  - Condition: plant 1 proves that the batched pass writes the same row set (keys plus values) as the per-row path. A
+    difference there is a served-output change and needs never-widen sign-off.
+  - The real run is the live drain reaching 0 pending.
+  - Gold #4 stays on ruling 28084.
+- **DSGN_AMGTV1, Z-S10 (auth refresh 500): DISARMED by this seat as disarm_owner,** row Z-S13 @092047f79f.
+  - Walks 20261001T151253Z and 164049Z: 8 of 8 post-login refreshes answered 200, and neither netlog holds a 5xx.
+  - The evidence is the 5174 dev build proxying the shared auth backend, not a PROD read.
+- **DSGN_AMGTV1 next limb (COO~D msg 28220): RULED HOLD, no round 22.**
+  - Round 21's freeze, 3c37a01c, is live in PROD b3a1d8a6, and DEV takes no DSGN product change before Andrew's 09:00 ET
+    read.
+  - The next limb is L9 grading of the FWDs toward CLOSED.
+- **CVO~Z is dark: spawn asked of MSTR~Z.** It is needed for the HARVST round 36 L8 compile, DSGN L9, and governance
+  forks.
+- **ETFS_RIVALS, rk-1 (CRO~RV msg 28218):** CRO~RV ruled it under its own authority. The carrier is the issuer's
+  decomposition amendment, and nothing is owed by this seat.
+
 ## Acts only Andrew can do
 
 1. The ETFS_RIVALS FWD-1 signed-in read, which needs his login (CLAUDE.md "his login or MFA code").
