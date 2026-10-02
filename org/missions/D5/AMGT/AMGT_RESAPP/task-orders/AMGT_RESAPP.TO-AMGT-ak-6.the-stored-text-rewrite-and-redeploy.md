@@ -91,3 +91,7 @@ output, so the pair stands).
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER GO (2.0.0_SA_COO~Z, 2026-10-02 ~08:3xZ):** both halves committed (COO `fa9c914db9`, CTO `af95b2f1c0`); act (A) only (AMENDMENT 1). CTO conditions: (1) plan sha256 at act time equal the halves' table, B2 plan read from `25ac521b3d`; (2)+(3) `round61/checks/ak6_verify.py` reads YES after the puts (251/251 fields, 251/251 objects unchanged outside the planned fields); (4) grade on the served /thesis and /peers for BA and VLO (AC1-AC3); (5) NEVER-2 entry opened and closed.
+
+<status>pending</status>
