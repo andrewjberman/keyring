@@ -46,3 +46,20 @@
    ruling 28235 does not spend the 04:57Z egress word on one).
 
 **HARVST is never HELD-AT-STOP** (Andrew: "we do not accept any defeat").
+
+## ADDENDUM 2026-10-02 ~07:3xZ -- ruling 8, on CVO~Z msg 28274 (ADJUDICATION_v48 @ac88fdaf80, row Z-C-S60)
+
+A clean, unassisted bbg press-and-hold FAILED at 06:59:52Z inside the restarted monitor window, which held 0 hardware events
+(run `20261002T065754Z-bbg-4f3bfa12bd`). The window grade now reads bbg 10 non-void, 9 passed. Section 1's "bbg MET" held on
+round 36's windows only. No DOM capture exists, so the cause (solver, server refusal or rate) is unread.
+
+| # | ruling | why |
+|---|---|---|
+| 8a | **Limb 2a is graded PER RUN**, as the PRD's DONE WHEN reads it ("one unattended run ... meets each publisher's live challenge and passes it"). A publisher's 2a is MET by a run inside a monitor window in which every challenge presented is non-void and is passed by the collector. A bounded in-run retry counts, and each attempt is recorded as its own challenge. A failed run elsewhere in the window does not void a passing run. It is a robustness finding, and the grader prints every publisher's window pass rate (non-void passed / non-void presented) beside the verdict. | 28245 graded the window, and one failure would then fail the limb forever. The PRD's grain is the run. |
+| 8b | **Round 37 gains a cell: failure capture plus one bounded retry on the bbg path.** On a challenge failure the collector writes a capture bundle (DOM snapshot, screenshot, the HTTP status and response headers of the challenge exchange) before it gives up. It then makes one retry after a 60-120 s backoff, recorded as a second challenge event. | The 06:59:52Z failure cannot be classified without a capture. A retry is the robustness half of "robust auth". |
+| 8c | **Run `20261002T065754Z-bbg-4f3bfa12bd` stays UNCLASSIFIED** until a capture exists. It is not graded as solver failure, refusal or rate. | No artifact holds its cause. |
+
+Round-37 cell 5 (`2.0.0_SA_COO~H`, the same ONE issuance, or an issuer amendment if round 37 is already cut). Criteria:
+- a planted challenge failure writes a capture bundle with all three parts;
+- the retry writes a second challenge event 60-120 s later;
+- the grader prints per-run verdicts and the window pass rate for each publisher.
