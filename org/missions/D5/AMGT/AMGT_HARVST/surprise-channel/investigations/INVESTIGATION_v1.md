@@ -6297,6 +6297,29 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
           "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~90/aj6_ac2_output.txt"
         ]
       }
+    },
+    {
+      "id": "AMGT_HARVST-Z-S67",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-02T19:52Z",
+      "one_line": "Silver record_hash is not a pure content version: it hashes every column except bronze_key, fetched_at and record_hash, and run_stamp (set from fetched_at) is one of them. So FWD-16's 'scored once per version, keyed to record_hash' re-scores a re-fetched article whose text did not change.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/research/harvest/store.py:38,330-334 (record_hash = sha256 over all columns but bronze_key, fetched_at, record_hash)",
+          "lib/opal_data_harvest/silver_from_bronze.py:289 (run_stamp is a silver column)",
+          "lib/opal_data_harvest/uploads.py:250,526 (run_stamp set from fetched_at)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "PRD v0.15 FWD-16: scores 'keyed to the article's record_hash so a re-silvered article is re-scored and an unchanged one never is'.",
+      "world_is": "Every re-fetch writes a new silver row with a new run_stamp, so a new record_hash, even when title and text_blocks are byte-identical. ak-1 follows the letter and keys the score store on record_hash. FinBERT is deterministic, so the tone read is unchanged; only the Lambda call is spent.",
+      "notes": "Not a defect in FWD-16's reading: a re-silvered article IS re-scored. Measure the cost at the corpus scoring as the share of record_hashes whose text_sha256 was already scored. If it is material, an issuer amendment reuses a score by text_sha256 and records reused_from."
     }
   ]
 ```

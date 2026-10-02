@@ -2714,3 +2714,72 @@ Issuer act after the merge:
 4. Run AC2.
 
 Base check `round37/checks/aj-8.AC2.py`: FAIL as expected (no manifest).
+
+## 51. ROUND 38 -- the round-37 analysis enrichment list (`ledger/ROUND_ANALYSIS.round37.md` @29fbb123e0), PRD v0.15, 2026-10-02 ~19:5xZ
+
+Round 37 is CLOSED (CVO slug 28694; ADJUDICATION_v49 @76f4381bce). FWD-11 is NOT REALIZED:
+- ft limb (1) is a QUALIFIED WAIT on HVST-RECHECK-OCILAR-1 (2026-11-01);
+- CRO~Z researches alternatives, and no ft cell is cut until that research lands;
+- (2b) is organic only.
+
+This round cuts the enrichment list's items 1 to 3 in ONE issuance. Item 4 (ft) is not cut, per ruling 3.
+
+| cell | order | what | class | slot |
+|---|---|---|---|---|
+| `HVST-ak-1` | `ak-1` | FWD-16: `finbert_sentiment.py` (the scorer client over `opal-news-ai-sentiment`, the append-only `article_sentiment` score store keyed by `record_hash`, a `score`/`census` CLI); the 3 tone fields on every gold mention row | SERVED (code LOCAL; 3 live Lambda calls in AC2, no write) | `~90` |
+| `HVST-ak-2` | `ak-2` | FWD-17: `window_tone.py`; `chatter_window` per name per 30/90/365-day window ending at T-1; articles_total, scored, voters (non-neutral, no threshold), tone over voters (null at 0 voters); a stated served start | SERVED (code LOCAL) | `~92` |
+| `HVST-ak-3` | `ak-3` | FWD-6 density: a read-only census of spikes against dry-built and served events; the spike definition is fixed at the cut at 2x and 3x | LOCAL | `~91` |
+
+**Fan-out: 3 of 3 chains, cap 8.**
+- Chain A (ak-1) and chain B (ak-2) share ONE interface, fixed here: `finbert_sentiment.latest_scores(client=None)`
+  returns `{record_hash: {"label", "score", "scorer"}}`, with the score signed (+conf / -conf / 0.0 for neutral).
+  ak-2 imports it lazily and injects it in tests, so the two chains run in parallel.
+- The write surfaces are disjoint: ak-1 owns `publication_gold.py`; ak-2 owns a new module only; ak-3 owns its
+  deliverables only.
+
+**The IAM invoke-grant cell (analysis item 1) is NOT cut.** The identity that runs HARVST gold builds on site-Z (IAM
+user `Andrew_Berman`) DryRun-invoked `opal-news-ai-sentiment` at 19:4xZ and got StatusCode 204. The grant act would
+move nothing: a ZERO with its cause named. A scheduled gold producer's role, when one exists, will need the grant.
+That is carried, not cut.
+
+**Rule 30:** both new gold tables, `article_sentiment` and `chatter_window`, are addressed through `store.address_of`,
+which wraps `opal_naming.address()`. The scope `harvest` and the systems `amgt` and `harvest` are registered. The
+table is a free snake_case segment, so no registry row is owed (`opal_naming.py:1570-1574`).
+
+**Substrate card (rule 28): `opal-news-ai-sentiment`.**
+- PROCESS: FinBERT, one text per synchronous call. The news pipeline drives it 14x a day through
+  `finbert-batch-processor`; HARVST calls it on demand.
+- ARTIFACT: no persistence of its own. HARVST persists to gold `article_sentiment` at
+  `amgt/harvest/gold/article_sentiment/`.
+- TRUST:
+  - coverage: every silver article with a title or text;
+  - key: `record_hash`;
+  - failure mode: a non-200 or exception is an ERROR row, never a neutral;
+  - its contract is INFERRED from the caller (the container source is not in the repo), so ak-1's AC2 measures it.
+  - owner: the news pipeline (`infra/aws/terraform/news-pipeline/lambdas.tf:246-268`).
+
+**Observation for ak-1** (row filed at the cut): `record_hash` hashes every silver column except
+bronze_key/fetched_at/record_hash, `run_stamp` included (`store.py:330-334`; `silver_from_bronze.py:289`). A re-fetch
+of unchanged text is therefore a new version, and FWD-16's letter re-scores it. FinBERT is deterministic, so the tone
+read is unchanged and only the call is spent.
+
+**Issuer acts after the merges (no TO):**
+1. **The corpus scoring:** `finbert_sentiment score` live, on a measured sample first for throughput, then the corpus.
+2. **Gold rebuild #6** under a NEW never-widen pair (COO half by this seat after a signing dry run; CTO half owed):
+   - every served mention row gains the 3 tone fields and nothing else moves;
+   - the first `chatter_window` snapshot;
+   - the served `chatter_event` rebuild, if ak-3's census shows the dry-built events cover spikes materially better.
+3. **The real run at close:** the `census` subcommand (scored / unscorable / total) and the window rows for the
+   validation security (Lenovo) read from served gold.
+
+**Checks dry-run at the base before the cut** (all FAIL as expected):
+- `round38/checks/ak-1.AC2.py`: the module is absent;
+- `ak-1.AC3.py`: the schema lacks the 3 fields;
+- `ak-2.AC2.py`: the module is absent;
+- `ak-3.AC2.py`: there is no census.
+
+Positive control on their live read paths:
+- served `chatter_event` has 8 rows;
+- served mention has 23,691 rows, 715 of them for the 5 check securities;
+- `published_utc` is a datetime;
+- T-1 = 2026-10-01.
