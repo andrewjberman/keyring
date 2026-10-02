@@ -3037,6 +3037,27 @@
       "spec_asserts": "Order amendment A1: change the three test_s4_security_market.py comparisons to the new list, then set row ETFS_RIVALS-Z-W3-S20's state to RESOLVED in the investigation file, citing the commit.",
       "world_is": "The three comparisons are changed (commit ab0a58eaa4) and the suite reads 0 failed, so S20's hazard (a red suite at the drain) no longer stands. RESOLVED is not a schema disposition and my rules forbid editing an existing row, so S20 still reads UNDER_INVESTIGATION/ARMED in its own text; this row cites it as disarmed. The issuer or the CVO sets S20's standing.",
       "notes": "Cites ETFS_RIVALS-Z-W3-S20. disarm_owner of S20 was 2.0.0_SA_COO~RV; the disarming edit is A1's grant."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W2-S12",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~2",
+    "surfaced_at": "2026-10-02T22:00Z",
+    "one_line": "Renaming the shadowed _render_page body is not enough for U14: _collect_names broke a frequency tie alphabetically, and capitals sort before lower case, so 'INTUIT INC' (issuer-file name) beat 'Intuit Inc'; _name_rank now ranks an all-capitals name below a mixed-case one.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/render.py _collect_names/_name_rank@wk-ETFS_RIVALS-2: a fixture with one 'INTUIT INC' holdings row and one 'Intuit Inc' trend row rendered 'INTUIT INC' on the page after the rename (tie on count, alphabetical first); test_r7rd1_page_walk_remainder.py::test_render_page_fills_the_name_map_and_the_holdings_row_reads_the_face_name failed until _name_rank changed",
+        "python -m pytest rivalfunds/tests -q from data/etfs/scripts: 542 passed, 2 skipped, 0 failed; rd-1.AC3.py PASS 0 failures"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order cell RIV-rd-1: rename the body and keep the wrapper; the holdings name then reads through the page's one name map with no case-only clashes.",
+    "world_is": "The rename alone fills the map, but the map's tie-break (readable beats raw, then most frequent, then alphabetical) lets an all-capitals issuer-file name win a tie because uppercase sorts first, and a security held by several funds counts its holdings name once per fund. I added one clause to _name_rank (an all-capitals name of 2+ characters ranks with the raw names, below a mixed-case name for the same key); a key with only an all-capitals name keeps it. In render.py, inside the order's paths; the issuer may want the same read at the L8 packet.",
+    "notes": "A name that is genuinely capitals (IBM) loses only to a mixed-case alternative for the same key."
   }
 ]
 ```
