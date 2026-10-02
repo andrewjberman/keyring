@@ -81,3 +81,11 @@ hash, every criterion's output lines, the functions you changed, and any row. Th
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-02 ~22:3xZ):** ACCEPTED. Worker ~210 `2f11a291cb`/`6cb0deceb5`, drained `37da943651`. Re-graded on
+the shared tree: union (peers + management + api) 610 passed exit=0; c9 YES (default/30/90/365, the 365-day window reads the store start
+2026-01-01 with its note); c10 YES (30 serves 94 rows; 90/365 serve 0 with "not produced yet"). Package delta, measured by the issuer at
+the drain (an-1 was spawned before AMENDMENT 1): 253,690,058 B, 96.8% of the ceiling (+20,026 B against leg 3's 253,670,032 B; the
+build also carries HARVST's `finbert_sentiment.py` and `publication_gold.py`, foreign carriers that an-7's half must account for). Served by an-7.
+
+<status>complete</status>
