@@ -51,8 +51,9 @@ has no row, 23 ticker carries several CUSIPs, 13 name carries several CUSIPs.
 **Served keys and writers:** the r3 half's families unchanged (`gold/views/mix_daily_summary.json`, `gold/artifacts/firm_mix_views*`,
 `platinum/firm/mix_summary.json`, `platinum/clients/{rid}/composition.json`, the advisor and account summaries). Live lineage
 (`comp-clobber --sweep opal-data-bd`): gold/views/ 10 keys, gold/artifacts/firm_mix 2, platinum/firm/ 15 -- 0 interleaved. The
-dormant fleet emitter `runners_49f/d06_firm_mix_summary.py` declares the firm mix key (as d08 does for Cottonwood) and reads its
-own A_07 table, which this act does not touch.
+fleet emitter `data/assets/scripts/gold/runners_49f/d06_firm_mix_summary.py` names the firm mix family (:44) but is not a writer of
+the served key: it reads it from S3 (:243) and writes a local file (`--out`, :293), classing from its own A_07 table (:60), which
+this act does not touch.
 
 **Not moved:** the Holdings tab (its producer classes by its own canonical-first rule); Cottonwood; Inflection; E_18, the silver
 builder, `lib/_shared`, SSM v5 (on r3 since 10-01, batch 129). D_04's advisor-positions list groups lots by ticker string, so every
