@@ -16929,6 +16929,32 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
  "spec_asserts": "AMGT-al-1 section 1: raise memory from 1769 to 3538 MB; if AC1's C1 still misses at 3538, raise to 10240 under the same entry and re-run AC1. Stop at 10240.",
  "world_is": "Exactly that happened: 3538 missed at 21.7/20.4/22.9 s, 10240 passed at 16.9/16.6/19.1 s, and the act stopped at 10240 as instructed. The order's escalation ladder was correct and its stopping point was correct. What the order does not say, and what the measurements show, is WHY the ladder worked and that it is now finished: memory_size is a vCPU proxy for this function, memory itself is 95 percent unused at every tier, and the ceiling has been reached. Not measured here: whether the remaining 16-19 s is dominated by the S3 silver reads or by in-process work -- that is track C's question and this act had no license to profile it.",
  "notes": "Margin, stated plainly because a PASS can read as comfort: the slowest passing run is 19105 ms against the 20000 ms AC target (895 ms of headroom) and against the hard 29000 ms gateway ceiling (9895 ms). The demo is safe on today's data volume. A route whose cost grows with the day's article count has no remaining config lever if that volume rises."
+},
+{
+ "id": "AMGT_RESAPP-Z-S337",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.7.0_AE_CloudOps~A",
+ "surfaced_at": "2026-10-02T11:32:00Z",
+ "one_line": "Track B works and FIRED IN PRODUCTION on 1 of 3 cold BA day invokes during its own acceptance run: run 3 crossed TIMELINE_SILVER_DEADLINE_S = 18.0 at 18006.03 ms -- 6 ms past it -- and served headline_reason, while runs 1 and 2 (16532.87 and 15135.96 ms) did not. The deadline sits inside the observed cold spread (15.1-18.0 s), so on today's data the degraded branch is roughly a coin-flip per cold load, not a rare safety net. Andrew's demo will show bracketed [no headline] placeholders on about a third of cold BA day views.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "timeline_b.py --what post, this seat 11:27Z, against the deployed bZBmEtRr build: run 1 200 16532.87 ms init 161.48 articles 5 headline_reason False; run 2 200 15135.96 ms init 146.07 articles 5 headline_reason False; run 3 200 18006.03 ms init 189.11 articles 5 headline_reason True. C1 PASS 3 of 3 cold 200; C2 PASS both control days byte-equal.",
+   "lib/research/api/scoped_amgt.py:4710 TIMELINE_SILVER_DEADLINE_S = 18.0, measured from handler start (:4729 remaining = TIMELINE_SILVER_DEADLINE_S - (time.monotonic() - started)).",
+   "al-1 act (A)'s AC1 at the same 10240 MB measured cold BA /timeline/day at 16885.18 / 16551.67 / 19105.13 ms. Two independent runs therefore put the cold distribution across the 18 s line.",
+   "CTO half @57dfa6bd84: at portal PROD b3a1d8a6, TimelinePanel.tsx:99 types headline as string | null and :354 renders row.headline ?? '[no headline]', so the degraded branch renders a bracketed placeholder rather than breaking the view. headline_reason is unread by that page.",
+   "pytest lib/research/api/tests/test_timeline_silver_deadline.py: 3 passed -- the branch is correct against a planted slow read, independently of how often it fires."
+  ]
+ },
+ "disposition": "DISMISSED_WITH_REASON",
+ "dismissal_reason": "Nothing is owed and no act changes: act (B) PASSES both graded conditions, the route no longer dies on the read, and serving a 200 with null headlines instead of a sandbox kill is exactly what ruling 5's track B specifies. This is filed because the RATE is new information that no criterion measures and that bears on what Andrew sees in 90 minutes: the acceptance run itself tripped the branch once in three, so 'the deadline protects us' and 'the deadline is routinely hit' are both true today and only the first is in the verdict. Two follow-ons already exist and neither is mine to cut: the CTO half carries a post-demo DSGN item to print headline_reason in place of [no headline], and ruling 5's track C (stop reading whole-publisher silver) is the fix that moves the distribution instead of capping it. If anyone wants the placeholder rate lowered before track C lands, the lever is the 18.0 constant, and that is a code change under the pair, not an act this order authorises. Dismissed by the executor on measurement; disarm_owner 2.0.0_SA_COO~Z may reopen.",
+ "spec_asserts": "al-1 AMENDMENT 1 / ruling 5a: the timeline day route's silver read runs under an 18 s deadline from handler start, and on the deadline the mentions are served with headline null and one plain headline_reason, as a 200, instead of a sandbox kill. Graded by 3 of 3 cold BA invokes answering 200 with both control days byte-equal.",
+ "world_is": "Exactly that, and the branch is not hypothetical: it fired on run 3 of the acceptance run itself, 200 at 18006.03 ms carrying headline_reason, 6 ms past the constant. So act (B) is better evidenced than a normal code deploy -- the new path was exercised against live data by its own grade rather than only by the planted test. What the grade does not say is that the 18 s line sits INSIDE the cold spread rather than above it: 15.1 / 16.5 / 18.0 s here and 16.6 / 16.9 / 19.1 s in act (A) an hour earlier. Not measured: the rate over a larger sample, whether it differs by name or by day's article count, and whether the first cold call after a deploy is systematically slower than later ones -- the three runs here are concurrent, so they share one post-deploy moment.",
+ "notes": "Reported to 2.0.0_SA_COO~Z in the act (B) close message rather than left to the channel, because it changes what the demo looks like and the demo is at 13:00Z. The degradation is graceful and the view does not break: PROD renders [no headline]. Nothing here is a rollback trigger -- C1 and C2 both passed, and a 200 on the deadline path is the specified outcome, not a failure."
 }
 ]
 ```
