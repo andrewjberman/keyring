@@ -77,3 +77,15 @@ Verbatim, three messages in order:
     `holdings_template`, B1 = `Dollars`, 99 holdings, total 465,144.47.
   - Stevens: sha256 `f0d344fa967504bd878a5e09e6b9b633bc11ef4299ae29ba76687f643b850809`, 28,061 bytes, sheet
     `holdings_template`, B1 = `Dollars`, 20 holdings rows; A14-A17 are `QKZAQ`, `QBNYQ`, `QUSBQ`, `QBOKQ`.
+
+## Addendum 2 -- Andrew-direct 2026-10-02 ~16:1xZ, same channel: the typo case
+
+Verbatim:
+
+> just make a variant of the easy file and make a typo on one of the tickers, thats how we get the typo case.
+
+- Made by this seat 16:1xZ: `C:\Users\AndrewBerman\Downloads\Holdings Y-Charts - Bridgeman Welath Front_Nick Skudlarick - TYPO CASE (AAPL as APPL).xlsx`,
+  sha256 `87afdc7db1c58b38cf48da046b184f0cd6855bbfa014b66de8cf59ef50e22706`, 23,670 bytes. One shared-string edit in the
+  zip; an openpyxl cell diff against the easy file prints exactly one difference, `A2 AAPL -> APPL`. `APPL` is the
+  common misspelling of Apple's ticker and is not a listed ticker, so the typo gate has one correct answer. Andrew named no
+  variant for this case; the Analysis brief proposes variant 1, as for Case D.
