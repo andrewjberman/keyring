@@ -3445,6 +3445,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "After round 32, the DECIMAL-by-magnitude labels outside BEST_DIV_YLD are 77 figures: EQY_DVD_YLD_IND 13 (HEI, MELI, PWR), RETURN_ON_INV_CAPITAL 20, RETURN_ON_ASSET 10, RETURN_COM_EQY 10, RETURN_ON_TANGIBLE_ASSETS 10, OPER_MARGIN 10, SI_PERCENT_EQUITY_FLOAT 4.",
     "notes": "Z-S81 stays the candidate enrichment for the round-32 analysis, at 77.",
     "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S83",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-10-02T19:08:00Z",
+    "one_line": "DECIDES the population of AMGT_CORPUS-Z-S81 (via Z-S82's 77): round 33 CRPS-ai-2 served 69 of the 77 as PERCENT (60 by the round-26 series rule, 9 by ai-1's row identity) and 8 as UNRESOLVED (no ground); 0 DECIMAL-by-magnitude labels remain over 100 keys. Ledger amgt-corpus-r33-ai2 CLOSED (pair COO e748581d10 / CTO 45a11d1ea8).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "1.0.0_SA_CTO~Z msg 28595 (CTO half @45a11d1ea8): \"Record on Z-S81: 69 PERCENT and 8 UNRESOLVED, so the population is decided.\"",
+        "Leg v census (evidence/r33_ai2_leg_v_census.txt, 19:05Z, 100 keys, 37746 figures): decimal 0, unresolved_before 11, unresolved_after 19, moved_keys 11, value_moves 0.",
+        "PERCENT 69 = RETURN_ON_INV_CAPITAL 20 (ORA, RWE) + RETURN_COM_EQY 10 + RETURN_ON_ASSET 10 + RETURN_ON_TANGIBLE_ASSETS 10 (BP/ LN) + OPER_MARGIN 10 (JD) + EQY_DVD_YLD_IND 9 (PWR). UNRESOLVED 8 = EQY_DVD_YLD_IND 4 (HEI 1, MELI 3) + SI_PERCENT_EQUITY_FLOAT 4 (AZN, RKT, TTE, ULVR)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A figure's unit is decided by a ground, never by magnitude alone where magnitude cannot discriminate.",
+    "world_is": "No served figure over 100 keys carries a DECIMAL label chosen by magnitude. 8 figures with no ground now say so (UNRESOLVED-ON-<security>: ...), with their signs UNRESOLVED by the standing classification split.",
+    "notes": "For the CVO's plausibility read (packet s.3): ORA's FY2025 RETURN_ON_INV_CAPITAL serves 0.2237 PERCENT (0.22%) against its own FY2016-2024 history of 3.7 .. 7.3 -- the unit is the key's by the series rule; whether FY2025's magnitude is a real low year is a value question this round did not touch.",
+    "disarm_owner": "2.0.0_SA_COO~X"
   }
 ]
 ```
