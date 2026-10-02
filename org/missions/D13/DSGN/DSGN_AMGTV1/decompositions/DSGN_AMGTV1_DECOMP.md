@@ -1521,3 +1521,17 @@ decomposition. **Cell:** `AV-zd-1` (letter zd), DIRECT ACT, `<risk>LOCAL</risk>`
 the class table at their predecessors' classes. **Check:** `round26/checks/liveclass.cjs` (issuer): at base 7889655a it reads 1 of 3.
 **Chain:** ~77 alone, portal_ref 7889655a. **Close:** the re-merge onto remote DEV 06bc6f85 (CTO msg 28379), the battery, and one walk
 of VLO Peers. **Rule 24:** one row, one order; no served value moves.
+
+
+## v27 -- ROUND 27 (issuer, 2026-10-02 ~14:3xZ) -- ONE DIRECT ACT
+
+**Rectangle:** `1.0.0_SA_CTO~Z`'s `ledger/COMPLETION_GRADES.round26.json` @0c4c6d6368. FWD-2 is NOT_REALIZED, "A PAGE cell (DSGN)", on
+CVO~Z ADJUDICATION_v26 @07446385f1 (spine: a NOT_REALIZED is the CTO's own round-N analysis for the next drain). FWD-7's NOT_REALIZED
+is a PRODUCER cell (RESAPP management), not this decomposition's. The 11 NOT_EVALUATED rows are reads (CVO~Z v26 :40), not cells.
+**Cell:** `AV-ze-1` (letter ze), DIRECT ACT, `<risk>LOCAL</risk>`, `PriceBars.tsx` + `ChatterBubbles.tsx` (+ `types.ts` for optional
+chatter-row fields): every bar and bubble carries its SERVED identity one hover away (a native hover title). That means name, ticker,
+asset class, sub-asset class, sector, the period figure and places moved, with a field not served said in words, never invented.
+**Placement (a):** the served price rows carry every field. The served collected-chatter rows carry only `display_name`, so a
+bubble prints what its row serves and says the rest is not served. Serving ticker, classification and places_moved on chatter rows
+is a PRODUCER item (RESAPP), routed to the CTO. **Check:** `round27/checks/identity.cjs` (issuer): at base portal fa529337 (PROD's
+tree) it reads 1 of 3. **Chain:** ~78 alone. **Rule 24:** one row, one order; no served value moves.
