@@ -1,0 +1,13 @@
+{
+  "prd": "ETFS_RIVALS_PRD.md",
+  "prd_version": "v0.11",
+  "prd_pin": "3807b0da2c05a45a256e2cf297cfe437160a02ed",
+  "half": "ratified-text",
+  "half_hash": "9633c88754577a91998b8ea8c71fc066fd692c9d3d14439adf7f2ff88967d8de",
+  "endpoint_hash": "1bcf1914c58127c371ae0fe80b40d345ea4d2963aa5f9ab198128fb0a262ae90",
+  "verdict": "REFUSED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/ETFS_RIVALS_PRD_v0.11_L4R_REVIEW_20261002.md@27b9bf2ed0",
+  "signed_by": "3.0.0_SA_CVO~RV",
+  "signed_at": "2026-10-02T14:05:28Z",
+  "reason": "C-FAST-RULINGS plausibility guard bound (b): '0.25 of fund return' has no unit; CALL 13 means an absolute contribution (its 0.20 example and 0.30 control); as written it would refuse ETFT's correct YTD rankings"
+}
