@@ -5,7 +5,7 @@
  "project": "ETFS_RIVALS",
  "directive": "D5",
  "fabric": "site-z",
- "prd_version": "v0.11",
+ "prd_version": "v0.12",
  "step": 4,
  "brief_ref": "docs/briefs/etf-holdings-research-20260929.md@77c891c869",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20"],
@@ -716,6 +716,59 @@ enrichment list.
 - The guardrail thresholds from the first days of real data.
 - The unattended-Excel validation for the Bloomberg leg, run as day-over-day tests (Andrew, answer 3).
 
+### v0.12 -- the 2026-10-02 /rivalfunds UI and data walk: 33 issues, folded into `2.0.0_SA_COO~RV`'s work
+
+**Andrew-direct ~14:1xZ**, at the `4.0.0_SA_CRO~RV` terminal, VERBATIM:
+"...write a brief for listing out each issue, send to CTO with instruction that issue list must be included in their PRD and fold
+it into COO~RVs existing work on ETFS_RIVALS."
+- Record: `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261002_141xZ_RIVALFUNDS_UI_WALK_BRIEF_TO_CTO_COO_RV_CANONICAL_DRIVE.md`.
+- Brief: `docs/briefs/rivalfunds-ui-data-walk-20261002.md`. Register: `docs/briefs/rivalfunds-ui-data-findings-20261002.json`.
+  Both are authoritative for each finding's full observation, cause and design rule. The table below is generated from the register.
+- Every item serves an existing FWD, so this is enrichment work, not an ENDPOINT change. The owner of every item is `2.0.0_SA_COO~RV`.
+- **Coverage gate:** `python docs/briefs/irpt-ui-review-coverage-check.py --register docs/briefs/rivalfunds-ui-data-findings-20261002.json org/missions/D5/ETFS/ETFS_RIVALS/prd/ETFS_RIVALS_PRD.md`
+  exits 0 only at 33/33.
+- **Order:**
+  1. **RFW-D01 leads.** The A1 tables on today's served page were built before the G1 refresh.
+  2. Then the data items (D), because the UI items on the same panels (U02, U03 on D03; U16 on D06) read their fixed data.
+  3. Then the UI items.
+- **Every acceptance below is graded on the SERVED page.** Each round-6 judgment criterion names its positive control (CALL 13 C2).
+
+| id | side | FWD | observed (first sentence; the register holds the rest) | acceptance | status |
+|---|---|---|---|---|---|
+| RFW-D01 | data | FWD-20, FWD-14, FWD-9 | The 2026-10-02 page (republished 14:17:10Z, batch fast-a1-publish-1002f) serves A1 tables built at 11:03-11:04Z. | When a G1 or G4 object newer than an A1 table's newest input lands, the next publish rebuilds that A1 table, or refuses to show it as current. A planted newer G1 object forces the rebuild. | new |
+| RFW-D02 | data | FWD-20, FWD-2 | The page contradicts itself. | On one page the fund-current headline and the census's holdings line agree (same G1 vintage), or the page names the vintage gap. | new |
+| RFW-D03 | data | FWD-14 | Month to date and quarter to date rank 0 holdings for 12 of 13 funds (every fund but BASG, which ranks 32). | After RFW-D01 lands, MTD ranks at least one holding for every fund whose 09-30 and 10-01 reports are both in G1; a fund-period with no priced day shows ONE line, not four empty tables (RFW-U03). | new |
+| RFW-D04 | data | FWD-20, FWD-14, FWD-6 | Inputs that did not arrive: 'Security prices: 0 of 765 arrived' and 'GICS sectors: 0 of 765 arrived'. | G4 for the as-of date carries px_close and gics_sector for at least 95% of the universe's priced holdings, and the census reads that share. | known |
+| RFW-D05 | data | FWD-14, FWD-15, FWD-5, FWD-18 | For all 9 Bloomberg-sourced funds (TXUE, BIDD, CGIC, INEQ, SCHY, WCMG, TSEL, ETFT, PCLG), holdings show raw Bloomberg tickers instead of names: '8306 JP Equity', 'TTE ... | Every holding on the face shows a security name. A raw ticker appears only as secondary text, and the count of nameless holdings is 0, or each is listed in the census. | new |
+| RFW-D06 | data | FWD-6, FWD-14, FWD-15 | 'Unclassified' is ranked as a sector in the YTD sector tables of 10 funds, and is the single largest sector in 6: ETFT -6.59%, BASG -3.00%, TSEL -2.93%, BIDD -2.28%, T... | Unclassified carries at most 10% of any fund's absolute YTD contribution, with the share printed; until then it is never ranked as a sector (RFW-U16). | new |
+| RFW-D07 | data | FWD-3 | At the 14:17Z publish, 4 funds' latest report is 2026-09-30 against an expected 2026-10-01: IDVZ (home producer), BIDD, CGIC and SCHY (Bloomberg). | By the 09:00 ET sweep, every fund's report for the prior trading day is in G1, or the page names the fund as late with its reason. | new |
+| RFW-D08 | data | FWD-16, FWD-17 | Every AI account reads 'Demo read: written by a seat ad-hoc run (2.0.0_SA_COO~RV, 2026-10-02T11:04:45Z), a QA-class read, not the scheduled pipeline's output.' No sche... | The scheduled chain writes research_hypotheses for the page day with no seat act, and the footer reads the scheduled run. | known |
+| RFW-D09 | data | FWD-16, FWD-17, FWD-9 | 2 of 24 accounts are served as 'Grounding FAIL' (IDVZ 'The last 30 days': '$1.6 million, $1.3 million' not in any cited row; CGIC 1). | 0 accounts FAIL at the scheduled run, or each FAIL is collapsed with its reason (RFW-U10). | new |
+| RFW-D10 | data | FWD-5 | A full exit shows 'n/a' for est. | A full exit is priced from the prior report's valuation (or G4), with the source shown; 0 'n/a' notional on exits. | new |
+| RFW-D11 | data | FWD-14, FWD-15 | IDVZ's home-producer names are cut at 30 characters: 'Kimberly-Clark de Mexico SAB d', 'International Container Termin', 'BB Seguridade Participacoes SA' (4 on the YTD... | No holding name on the page is a 30-character cut; a full name comes from G1/G4/the crosswalk. | new |
+| RFW-D12 | data | FWD-15, FWD-2 | IDVZ's buying trend runs from 2026-08-21 (30 trading days) and PFOE's from 2026-08-24. | IDVZ and PFOE trend windows start at their inception or 2026-01-02; a line with 1 window reads 'single trade', not BET. | known |
+| RFW-D13 | data | FWD-11 | The only benchmark on the page is SCHY (IDVZ peers). | ACWI and IWM appear as benchmarks with their own rankings and trend. | known |
+| RFW-D14 | data | FWD-20 | The census lists all 765 securities as 'missing, no G4 row ... | The census reads three states (arrived / covered by fallback, naming the fallback / missing), each with its count. | new |
+| RFW-U01 | ui | FWD-18 | '13 of 13 funds current' is printed twice: the stat tile and the sentence under it. | The current-funds count appears once; the sentence names only lagging funds, and is absent when none lag. | new |
+| RFW-U02 | ui | FWD-18, FWD-14 | The page opens on Month to date, which is empty for 12 of 13 funds (RFW-D03). | The default period is the shortest one that ranks at least one holding for the selected fund; an empty period's switch shows its state (for example, greyed with a tooltip). | new |
+| RFW-U03 | ui | FWD-18 | An empty period renders four table shells, each saying 'No holding added to the return' or 'No sector took from the return'. | A fund-period with 0 ranked renders ONE empty-state line with the reason and the count without a price. | new |
+| RFW-U04 | ui | FWD-18 | Every ranking block repeats a two-line method sentence ('Ranks N holding(s) by their contribution ... | Each block shows a one-line count chip ('39 ranked; 1 refused day'). The method text sits once behind an info icon or modal ('How this is computed'). | new |
+| RFW-U05 | ui | FWD-15, FWD-19 | The month trend is ASCII marks ('0 0 0 0 + + + + + 0', '. | The month trend is a small bar or sparkline with month ticks, no legend sentence, and 0 overlap between the two tables at 1280-1920 px. | new |
+| RFW-U06 | ui | FWD-15, FWD-19 | Net notional is printed to the dollar ('+22,973,442'), and holding names wrap to 3 lines in the narrow holding column ('SPACE EXPLORATION TECHN-CL A'). | Notional reads in $ millions with one decimal; names wrap to at most 2 lines. | new |
+| RFW-U07 | ui | FWD-15, FWD-18 | The BET/TILT definition is a sentence in every trend block ('a BET is one window carrying at least half of everything traded in the line, a TILT is built across window... | The definition sits behind the pill's tooltip; the block caption carries dates and trading days only. | new |
+| RFW-U08 | ui | FWD-16, FWD-17, FWD-18 | Each account carries, inline: a 'Cited rows' dump of system keys ('holding_contribution IDVZ/R30/71654V408 = 0.00340522; trade_schedule IDVZ/47215P106/2026-09-14 = -2.... | An account shows its text, Observed and Inferred, and 'What would prove this wrong'. Cited rows, grade history, inputs and run provenance open from one 'Sources and checks' control. | new |
+| RFW-U09 | ui | FWD-16, FWD-17, FWD-19 | The AI text reads 'fear_greed/fear_greed_index sat at 28.09, with fear_greed/stock_price_strength at 0.4 and fear_greed/stock_price_breadth at 0.2'. | A reading shows a display label ('Fear & Greed index 28.09; stock price strength 0.4'), with the stored name kept as the label's tooltip so the claim survives; 0 raw-code hits in account text. | new |
+| RFW-U10 | ui | FWD-16, FWD-9 | A Grounding FAIL account is rendered in full as normal prose. | The account's grade is a badge at its top. A FAIL account is collapsed by default with the reason in its summary line. | new |
+| RFW-U11 | ui | FWD-20, FWD-18 | The three detail lists repeat one sentence per item: 765 x 'missing, no G4 row for 2026-10-01; the rankings price it from the fund's own reported valuation' and 765 fo... | Each list is grouped by reason with a count and a fund breakdown; the per-security list opens on demand (with RFW-D14's three states). | new |
+| RFW-U12 | ui | FWD-18, FWD-5 | With the audit trail open, the page is 39,194 px tall with 13,473 visible words and 243 disclosures. | Consecutive empty windows collapse into one line ('6 windows, no trades'). The G6 exclusions show once per fund, as totals, with per-window detail on demand. | new |
+| RFW-U13 | ui | FWD-18, FWD-19, FWD-1 | The trade log shows system words: 'CLEAN', 'key RESOLVED', '(security_id)', 'G6', 'canonical_shape', 'flow factor 1.0000', and bronze keys and SHA256 as wrapped columns. | Confidence and key resolution read in plain words with the code in a tooltip. Bronze key and SHA256 sit behind a copy control; the FWD-1 trace keeps both reachable. | new |
+| RFW-U14 | ui | FWD-19, FWD-4 | The same security is cased differently across sections: 'INTUIT INC' in BASG's rankings and 'Intuit Inc' in its trend; issuer sources are ALL CAPS, others title case. | One display name per security across the page (G1 canonical name). | new |
+| RFW-U15 | ui | FWD-19 | The console logs 'Error: <rect> attribute width: A negative value is not valid.' twice (-0.5, -0.4): a bar drawn with a negative width. | 0 console errors on load. | new |
+| RFW-U16 | ui | FWD-14, FWD-6 | 'Unclassified' is ranked as if it were a sector ('1 Unclassified +3.83%' at the top of GQGU's Strongest sectors). | The no-sector bucket is never ranked. It shows as a footnote under the sector tables ('x% of this period's contribution has no sector'). | new |
+| RFW-U17 | ui | FWD-2, FWD-19 | The freshness tag reads 'Latest report 2026-09-30 HOME; current' (a source chip mid-sentence and a semicolon). | The header reads 'Latest report 30 Sep' with a source chip and a separate current/late chip. | new |
+| RFW-U18 | ui | FWD-16, FWD-17, FWD-18 | Each fund carries two accounts of about 120-180 words plus 5-7 Observed and 4-5 Inferred bullets each, all open. | Each account opens to its first two sentences; the rest and the Observed/Inferred lists expand on demand. | new |
+| RFW-U19 | ui | FWD-1 | Walked: the platinum page bytes of 2026-10-02 (sha256 97162f5192bf..., served at 14:17:10Z), served locally. | A signed-in walk of the gateway route (the FWD-1 read) confirms the wrapper adds no further defect. | new |
+
 ## PATHS (the write surface)
 
 **Owned:**
@@ -740,6 +793,11 @@ the `/sprint` precedent files.
 - The CVO grades JUDGMENT criteria at L9, citing the contract clause.
 
 ## PROVENANCE AND AMENDMENT HISTORY
+
+- v0.12 (2026-10-02, `1.0.0_SA_CTO~Z`), on Andrew-direct ~14:1xZ (record `ANDREW_DIRECT_20261002_141xZ_RIVALFUNDS_UI_WALK_BRIEF_TO_CTO_COO_RV_CANONICAL_DRIVE.md`):
+  - The ENRICHMENT BACKLOG gains the 33-item /rivalfunds UI and data walk register (RFW-D01..D14, RFW-U01..U19), owned by
+    `2.0.0_SA_COO~RV`.
+  - ENDPOINT and CONTRACTS are unchanged (every item serves an existing FWD), so no L4-R half re-opens. Coverage gate 33/33.
 
 - v0.11 (2026-10-02, `1.0.0_SA_CTO~Z`), on CVO~RV's round-5 review P2 (`ETFS_RIVALS_R5_REVIEW_20261002.md`; round-5 analysis
   @a059825ea9 section 3):
