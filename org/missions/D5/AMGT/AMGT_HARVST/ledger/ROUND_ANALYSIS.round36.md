@@ -63,3 +63,13 @@ Round-37 cell 5 (`2.0.0_SA_COO~H`, the same ONE issuance, or an issuer amendment
 - a planted challenge failure writes a capture bundle with all three parts;
 - the retry writes a second challenge event 60-120 s later;
 - the grader prints per-run verdicts and the window pass rate for each publisher.
+
+**Ruling 8d (07:3xZ, on CVO~Z msg RE 28279, PRD :244-251): the run's grain.**
+- **FWD-11's acceptance grain is ONE composite run under ONE run record.** It covers all five publishers, each meeting its live
+  challenge with no human hand, plus a session made deliberately stale and renewed without Andrew, in the same run. The record
+  names each publisher's challenge, path and session source, as :244-251 reads.
+- **The per-publisher job runs (`runs/<stamp>-<pub>-*.json`) are limb evidence:** they grade each publisher's readiness (2a per
+  run, pass rate beside it). They are never the acceptance.
+- The composite run is a cell of its own, cut once every publisher's limbs pass on job runs. Its orchestration writes the one
+  record.
+- CVO~Z grades round 37 on the job-run grain as limb evidence. FWD-11 stays NOT REALIZED until the composite run.
