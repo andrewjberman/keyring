@@ -2689,3 +2689,28 @@ never-widen pair, because the round-32 pair's 4 rebuilds are spent. The CTO half
 3. The act, under the pair.
 
 Base check `round37/checks/aj-7.AC2.py` before the cut: FAIL as expected (the schema lacks both fields).
+
+### 50.4 ROUND 37 AMENDMENT 4 -- cell 8: barrons silver dict titles (CTO 28525; row Z-W90-S17), 2026-10-02 ~14:3xZ
+
+aj-7's AC2 surfaced it, and the BASE builder fails identically. Barrons silver holds 164 rows, and 149 of them carry
+`title` as `{'text': ...}`, all from today's 07:06Z+ aj-3 run. `publication_gold._match_counts` raises TypeError on
+them, so no gold rebuild can run. The cause is in `silver_from_bronze._extract_barrons`: it takes `headline` raw,
+while `_extract_wsj` unwraps a dict headline through `typed_text`.
+
+The CTO ruled YES (SERVED, workstream barronstitle), with three conditions:
+1. The re-derivation touches exactly the 149 dict-title rows (manifest 149 of 149), and the other 15 barrons rows
+   and every other publisher are untouched.
+2. Plants show a dict title unwraps, a string title passes unchanged, and the base builder no longer raises.
+3. Rebuild #5 carries the never-widen pair.
+
+| cell | order | class | slot |
+|---|---|---|---|
+| `HVST-aj-8` barrons dict title -> string | `aj-8` | SERVED (code LOCAL; silver is re-derived by the issuer) | `~90` |
+
+Issuer act after the merge:
+1. Snapshot the 15 others' record_hash and the 149 targets into `round37/aj8_rederive_manifest.json`.
+2. Re-pend exactly those 149 outbox rows in `.runtime/opal-data-harvest`.
+3. Run `upload-harvest` (the bronze put is skipped; silver is re-appended).
+4. Run AC2.
+
+Base check `round37/checks/aj-8.AC2.py`: FAIL as expected (no manifest).
