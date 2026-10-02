@@ -6388,6 +6388,226 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "spec_asserts": "HVST-ak-4: daily coverage is graded over GRADED_PUBLISHERS = ENABLED_PUBLISHERS minus the quarantined publishers.",
       "world_is": "The builder and its tests agree. ENABLED_PUBLISHERS still names ft, because the bytes are kept and the collector's set is unchanged; only the graded set drops it.",
       "notes": "Direct act under the size floor (LOCAL, 2 test files, 4 lines). The Z-S68 stale timeline tests stay with the round's repair item."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S70",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-02T23:05Z",
+      "one_line": "DISARMED by its disarm_owner: AMGT_HARVST-Z-W9-S1. Both HarvestUploader silver_append call sites now go through the suffix-retry wrapper, so a second-precision run_stamp collision no longer loses a part.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "listings: adc9d85b92, lib/opal_data_harvest/uploads.py:337-385 via _silver_append_retrying_object_name",
+          "articles: d5ef6e6371 (HVST-ai-5), uploads.py:277-309, same wrapper; LegacyUploader covered at :540"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "CTO msg 28792: the 10 ARMED HARVST rows left after 3.0.0_SA_CVO~Z's REMEDIATION_v5 (@41be202aa5) are this seat's to disarm on evidence or place in round 39; none is carried a third time.",
+      "world_is": "Read at CLOUD HEAD 56eaa6d500 against the cited code; every cited fix commit is an ancestor of HEAD.",
+      "notes": "Disposition per CTO 28792 by the issuer. The read-only assessment was run 2026-10-02 ~22:4xZ."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S71",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-02T23:05Z",
+      "one_line": "DISARMED by its disarm_owner: AMGT_HARVST-Z-W11-S1. The tool owner fixed it: missions-tree-index reads the project rows outside a sparse cone from the git index, so a sparse worker cone no longer produces false orphans.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "651f750a5a (1.0.0_SA_CTO~Z, 2026-09-27): .tools/missions-tree-index.py:191,194-219 _index_only_projects (git ls-files)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "CTO msg 28792: the 10 ARMED HARVST rows left after 3.0.0_SA_CVO~Z's REMEDIATION_v5 (@41be202aa5) are this seat's to disarm on evidence or place in round 39; none is carried a third time.",
+      "world_is": "Read at CLOUD HEAD 56eaa6d500 against the cited code; every cited fix commit is an ancestor of HEAD.",
+      "notes": "Disposition per CTO 28792 by the issuer. The read-only assessment was run 2026-10-02 ~22:4xZ."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S72",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-02T23:05Z",
+      "one_line": "DISARMED by its disarm_owner: AMGT_HARVST-Z-S23. The resolver that counts reads REMEDIATION rows by id plus a structured disarm state. The prose cited-by-a-later-row census this row proposed is retired, so its self-contamination has no reader.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          ".tools/surprise-row-gate.py:440 _latest_dispositions (id match, not prose)",
+          "Z-S26 retired the proposed remedy; REMEDIATION_v5 @41be202aa5 carries a structured disarm.state per row"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "CTO msg 28792: the 10 ARMED HARVST rows left after 3.0.0_SA_CVO~Z's REMEDIATION_v5 (@41be202aa5) are this seat's to disarm on evidence or place in round 39; none is carried a third time.",
+      "world_is": "Read at CLOUD HEAD 56eaa6d500 against the cited code; every cited fix commit is an ancestor of HEAD.",
+      "notes": "Disposition per CTO 28792 by the issuer. The read-only assessment was run 2026-10-02 ~22:4xZ."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S73",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-02T23:05Z",
+      "one_line": "DISARMED by its disarm_owner: AMGT_HARVST-Z-W22-S2. On the row's own option (a): the live paths run one job per invocation, and a dropped connection or timeout is retried twice, so one slow body no longer cools the publisher for a whole batch.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "3669bd0f0a: lib/opal_data_harvest/transport.py:137,382-392 (two retries on a dropped connection or timeout)",
+          "4901fd709b: backfill_driver.py:179 --max-jobs 1 and :299 waits out the cooldown; run-local.ps1 and install-schedule.ps1 default MaxJobs=1",
+          "Residual only for a manual --max-jobs N>1 (worker.py:466-474,757), which no live path uses"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "CTO msg 28792: the 10 ARMED HARVST rows left after 3.0.0_SA_CVO~Z's REMEDIATION_v5 (@41be202aa5) are this seat's to disarm on evidence or place in round 39; none is carried a third time.",
+      "world_is": "Read at CLOUD HEAD 56eaa6d500 against the cited code; every cited fix commit is an ancestor of HEAD.",
+      "notes": "Disposition per CTO 28792 by the issuer. The read-only assessment was run 2026-10-02 ~22:4xZ."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S74",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-02T23:05Z",
+      "one_line": "DISARMED by its disarm_owner: AMGT_HARVST-Z-W26-S1. All string patch targets in the harvest tests moved to patch.object, so no test silently patches a module copy that is not the one under test.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "58135da029 (drained 03e86f2909): 8 string patch targets -> patch.object",
+          "CLOUD HEAD 56eaa6d500: 0 patch(\"lib.opal_data_harvest...\") strings; the 3 lib.research string patches import lib.* absolutely (the same module object, Z-W34-S1)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "CTO msg 28792: the 10 ARMED HARVST rows left after 3.0.0_SA_CVO~Z's REMEDIATION_v5 (@41be202aa5) are this seat's to disarm on evidence or place in round 39; none is carried a third time.",
+      "world_is": "Read at CLOUD HEAD 56eaa6d500 against the cited code; every cited fix commit is an ancestor of HEAD.",
+      "notes": "Disposition per CTO 28792 by the issuer. The read-only assessment was run 2026-10-02 ~22:4xZ."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S75",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-02T23:05Z",
+      "one_line": "DISARMED by its disarm_owner: AMGT_HARVST-Z-W29-S1. On the row's second option: one pinned, committed universe file is the cited --securities-json source, and the ~4 file is historical only.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "78aac97ada: deliverables/2.0.0_SA_COO_H/round33/securities.universe.r33.json (212 names), used by rebuilds #5 and #6 (round38/gold_rebuild6.act.py UNIVERSE_R33)",
+          "lib/research/harvest/publication_gold.py:1598 requires an explicit --securities-json"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "CTO msg 28792: the 10 ARMED HARVST rows left after 3.0.0_SA_CVO~Z's REMEDIATION_v5 (@41be202aa5) are this seat's to disarm on evidence or place in round 39; none is carried a third time.",
+      "world_is": "Read at CLOUD HEAD 56eaa6d500 against the cited code; every cited fix commit is an ancestor of HEAD.",
+      "notes": "Disposition per CTO 28792 by the issuer. The read-only assessment was run 2026-10-02 ~22:4xZ."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S76",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-02T23:05Z",
+      "one_line": "DISARMED by its disarm_owner: AMGT_HARVST-Z-W8-S2. INERT-HISTORICAL: the mechanical-only ids invocation lived only in h-8, which is complete. The completion gate passes no ids, and the worker agent definition requires the full criterion set.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          ".tools/proof-of-spec-check.py:530-541 coverage_check is unchanged and works as designed",
+          ".tools/to-pipeline-gate.py:3041 calls the checker without an ids list; .claude/agents/worker.md:62-63 requires the full <expected_criteria>",
+          "No HARVST order since round aa passes an ids list"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "CTO msg 28792: the 10 ARMED HARVST rows left after 3.0.0_SA_CVO~Z's REMEDIATION_v5 (@41be202aa5) are this seat's to disarm on evidence or place in round 39; none is carried a third time.",
+      "world_is": "Read at CLOUD HEAD 56eaa6d500 against the cited code; every cited fix commit is an ancestor of HEAD.",
+      "notes": "Disposition per CTO 28792 by the issuer. The read-only assessment was run 2026-10-02 ~22:4xZ."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S77",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-02T23:05Z",
+      "one_line": "DISARMED by its disarm_owner: AMGT_HARVST-Z-W30-S1. INERT-HISTORICAL: the only `git -C . diff -- portal/...` criterion is in HVST-y-3, which is complete. Any future portal criterion is written `git -C portal diff -- <rel>` with a positive control.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "No other HARVST order diffs a portal path at CLOUD HEAD 56eaa6d500"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "CTO msg 28792: the 10 ARMED HARVST rows left after 3.0.0_SA_CVO~Z's REMEDIATION_v5 (@41be202aa5) are this seat's to disarm on evidence or place in round 39; none is carried a third time.",
+      "world_is": "Read at CLOUD HEAD 56eaa6d500 against the cited code; every cited fix commit is an ancestor of HEAD.",
+      "notes": "Disposition per CTO 28792 by the issuer. The read-only assessment was run 2026-10-02 ~22:4xZ."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S78",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-02T23:05Z",
+      "one_line": "ROUTED: AMGT_HARVST-Z-S11. LIVE in another seat's tool: proof-of-spec-check's invocation-alignment limb still compares the recorded string to the order's string and never parses the recorded command. It is routed to the checker's owner, 1.0.0_SA_CTO: a limb that parses each recorded invocation (shlex / bash -n) and refuses &amp;-type entities. The COO keeps its one-writer discipline on criteria meanwhile.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          ".tools/proof-of-spec-check.py:1441-1484 invocation_alignment_check (string compare only); the only shlex use is _bun_test_call :1771",
+          "Owner inferred from authorship (76ee261895 and most commits are 1.0.0_SA_CTO); the file header names no owner"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "CTO msg 28792: the 10 ARMED HARVST rows left after 3.0.0_SA_CVO~Z's REMEDIATION_v5 (@41be202aa5) are this seat's to disarm on evidence or place in round 39; none is carried a third time.",
+      "world_is": "Read at CLOUD HEAD 56eaa6d500 against the cited code; every cited fix commit is an ancestor of HEAD.",
+      "notes": "Disposition per CTO 28792 by the issuer. The read-only assessment was run 2026-10-02 ~22:4xZ."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S79",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-02T23:05Z",
+      "one_line": "PLACED: AMGT_HARVST-Z-W91-S10. PLACED as a round-39 LOCAL cell (no collection): record a 200 listing with 0 parseable hits as a distinct status (listing_empty_200) instead of 'no articles', proved with a planted page. Live proof against a real barrons soft-block waits on the publisher-terms card (barrons collection is held).",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/publishers.py:1155-1164 discover and :1008-1016 still read a 200 with no hits as no articles; barrons still uses /search (discovery.py covers wsj and bbg only)",
+          "Z-S52 ruled it INERT; REMEDIATION_v5 holds it OPEN"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "CTO msg 28792: the 10 ARMED HARVST rows left after 3.0.0_SA_CVO~Z's REMEDIATION_v5 (@41be202aa5) are this seat's to disarm on evidence or place in round 39; none is carried a third time.",
+      "world_is": "Read at CLOUD HEAD 56eaa6d500 against the cited code; every cited fix commit is an ancestor of HEAD.",
+      "notes": "Disposition per CTO 28792 by the issuer. The read-only assessment was run 2026-10-02 ~22:4xZ."
     }
   ]
 ```
