@@ -124,3 +124,36 @@ no existing route is modified. `comp-cache` -- DECLARED-NOT-APPLICABLE (no Cloud
 is re-based on CLOUD at the spawn). `DB-b-5` is `2.0.0_SA_COO~P`'s own act.
 
 fanout: 1 of 2 chains, cap 8, reason: chain C is the issuer's served act, so one worker covers the only worker chain.
+
+## 3. ROUND 3, WORKSTREAM B (2026-10-02 ~06:5xZ, issuer 2.0.0_SA_COO~P, on the CTO's round-2 analysis @f5fbeaa543)
+
+**Source:** `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_ROUND_2_B_20261002.md` (msg 104097), section 2 read
+as this round's rectangle: FWD-1 is live as of 2026-09-28; round 3 makes it current every trading day. Margin interest is RULED no
+change (Opal's internal class stands; a stated methodology difference). Round 2's drain-end record @fde5518653.
+
+**Builder output at the cut (rule 30, `lib/opal_naming.py` at HEAD, no refusal):** `name("irpt","49financial","reporting-gold",<kind>)`
+-> `irpt-49f-reporting-gold-lambda`, `irpt-49f-reporting-gold-role`, `irpt-49f-reporting-gold-policy`, `irpt-49f-reporting-gold-daily`;
+the scope-less source-map key `name("irpt", None, "reporting-gold", "lambda")` -> `irpt-reporting-gold-lambda` (row W1-S2's form).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-7` | E1, FWD-1 current: the adapter `data/assets/scripts/gold/irpt_reporting/account_return_daily.py` packaged UNEDITED as a scheduled function on the holdings-performance pattern (own source dir `infra/aws/lambda/investor-reporting/reporting-gold/`, own root `infra/aws/terraform/investor-reporting/reporting-gold/`, `staged_from` pins). Each fire emits every trading day after the newest landed partition through T-1 by `lib/trading_calendar.py` (bounded), and no-ops on a non-trading day. The fire time is READ from the inputs' measured landing times (three Schwab silver prefixes + the holdings-performance gold the guard reads, whose producer fires 07:30 ET), before the publisher's 08:15 ET. Built, run locally once against the real inputs (no write), planned; NOT applied. | WORLD (a new scheduled function planned; artifact upload) | none | D |
+| `DB-b-8` | E2, FWD-1 current: apply the planned `reporting-publish` root with its 08:15 ET schedule, re-planned at a tree carrying the policy-selector fix (row IRPT_BCKEND-S263), under its own packet with both halves. THE ISSUER'S SERVED ACT, not a worker order. Acceptance: the next morning the page reads "Data through" the new T-1 date with no seat starting either run. | WORLD | DB-b-7 SERVED | D |
+| `DB-b-9` | E3 (ADDENDUM 1 A4): foreign tax paid (FTP/FC/WD, FTR/FC/WD) to internal. THIS CELL MEASURES AND PREPARES; nothing in it is served: (a) every reader of the CRO's code table and each served reader's delta if the two codes move; (b) the adapter's override retirement as a PATCH (never applied in the cell: retiring it before the table moves would put foreign tax back into F_t); (c) the adapter's output shown unchanged with the patch and the edited table together. The table edit is `4.0.0_SA_CRO`'s; the served move (table + engine read + patch) is ONE issuer packet with both halves after the drain. | SERVED (prep only) | none | E |
+
+**Chain read.** M = 2: chain D = `DB-b-7` -> `DB-b-8` (the publisher waits on a served adapter clock); chain E = `DB-b-9`. N = 1 worker:
+the laptop disk reads 96 percent used (11 GB free, `df` 06:5xZ), so no second worktree is provisioned; `DB-b-9` queues behind `DB-b-7`
+on slot `~1`. Write sets are disjoint: `DB-b-7` writes `infra/aws/lambda/investor-reporting/reporting-gold/`,
+`infra/aws/terraform/investor-reporting/reporting-gold/` and the source map's new entry; `DB-b-9` writes records and one `.patch` under
+its deliverables folder only.
+
+**Battery:** `comp-blast` -- `DB-b-7` creates new resources and writes NEW gold partitions only through its later apply; no existing
+reader moves at the cut. `comp-schedule` -- the new schedule is read from measured landings and placed between the 07:30 ET producer
+and the 08:15 ET publisher; the publisher's schedule stays planned and unapplied until `DB-b-7` is served. `comp-routes`,
+`comp-cache` -- DECLARED-NOT-APPLICABLE (no route or cache surface). `DB-b-9` -- a census over the code table's readers (49F,
+Inflection and Cottonwood each carry an `a05_ref_txn_classification.py`), read-only.
+
+**Seating.** `DB-b-7`, then `DB-b-9` -> `0.9.0_WK_IRPT_DASHBD~1` (worktree DIR `C:\Users\AndrewBerman\Desktop\wk-irpt-dashbd-1`,
+fast-forwarded to CLOUD at the spawn). `DB-b-8` is `2.0.0_SA_COO~P`'s own act.
+
+fanout: 1 of 2 chains, cap 8, reason: disk at 96 percent (11 GB free) admits no second worktree; chain E queues behind chain D on slot ~1.
