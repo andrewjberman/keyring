@@ -6226,6 +6226,28 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
           "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~92/aj6_signin_ext.py"
         ]
       }
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~90",
+      "surfaced_at": "2026-10-02T18:12Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W90-S21",
+      "one_line": "aj-6 stage 2: the NopeCHA extension (0.6.1, loaded and running) did NOT clear the ft hCaptcha in 150 s; no identity cookie, nothing saved; the sign-in was not input-quiet (7042 hardware events).",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Order aj-6 / AC2: one unattended ft sign-in whose hCaptcha the NopeCHA browser extension solves (challenge_presented then challenge_passed, FTSession_s saved, hardware_input none, 0 Token API, 0 Kimi).",
+      "world_is": "Attempt 1 of at most 2 (attempt 2 not taken: it failed after a challenge was presented, not at launch), 2026-10-02 18:06:57Z-18:09:48Z, headed, ft profile free beforehand (0 chrome on it, no SingletonLock). Extension id dknlfmja... loaded via CDP loadUnpacked, service worker seen, persisted in the ft profile's Secure Preferences (location 4, path <runtime>/extensions/nopecha/prepared); Preferences holds no extensions entry. Email and credentials submitted, hCaptcha frame presented at 18:07:12Z, still present at 150 s (challenge_failed); END identity=False, 71 cookies, none FTSession/FTSession_s, rc=1, nothing saved to the vault. nopecha_token_api_calls 0, kimi_vision_calls 0, python-side calls to NopeCHA/Kimi 0. Whether the extension made any solve request to nopecha.com from inside the browser is NOT OBSERVED (the harness has no browser-network capture). hardware_input read detected:7042 (0 injected) so the machine was not input-quiet and the run could not have claimed unattended even if solved. Consistent with row Z-S66 (NopeCHA's current API documents no hCaptcha). AC2 literal: rc 1, FAIL (4 failures: solved_by nopecha_extension_failed, hardware_input detected:7042, no FTSession_s saved, no presented-then-passed). Record: deliverables/0.9.0_WK_AMGT_HARVST~92/aj6_signin_ext.json.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~92/aj6_signin_ext.json",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~90/aj6_ext_run1_log.txt",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~90/aj6_ac2_output.txt"
+        ]
+      }
     }
   ]
 ```
