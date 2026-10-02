@@ -5961,6 +5961,31 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "spec_asserts": "Order aj-1 s1.2: the presentation is the timestamp of the preceding bot_check/403 request attempt read from the run record's request attempts.",
       "world_is": "The run record's attempts have no time. The grader anchors on the http-ledger 403 events within the run (plus an attempt `at` if a record ever carries one). AC2 against real windows is left to the issuer at the base; if the ledger 403 times differ from the CVO's 9/9, that is a row, not a re-pin.",
       "notes": "Worker row; no live-path change beyond the one challenge_presented record."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S64",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-02T07:30Z",
+      "one_line": "FWD-11 limb 2a for bbg reads NOT-MET on live monitored traffic: a clean (no hardware input) bbg challenge in window3 was not passed. Job 20261002T065754Z-bbg-4f3bfa12bd hit a 403 bloomberg_press_and_hold on an article fetch at ~06:59Z and ended bot_check with no solve event recorded; the bbg driver hard-stopped on it.",
+      "class": "BLOCKING",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          ".runtime/opal-data-harvest-bbg/run_records/20261002T065754Z-run-80de98bd.json: 3 request_attempts (2 sitemap listings 200; /news/articles/2026-09-22/roche-obesity-shot-... 403 class bot_check signature bloomberg_press_and_hold); job status bot_check; signed_in false; token saved_session_file (2026-09-26); keys_fetched_not_stored 1 (no_outcome_recorded)",
+          ".runtime/opal-data-harvest-bbg/events.jsonl: for this job only job_finished/run_record events; no challenge_presented/solve/challenge_passed/challenge_failed event (the aj-1 challenge_presented emission merged at ~07:16Z, after this job)",
+          "python -m lib.opal_data_harvest.load_window_grade at 07:2xZ: window3 06:52:23Z.. hardware=0; bbg NOT-MET, 27 presented, 17 void, 10 non-void, 9 passed (round 36's windows alone: 9/9)",
+          ".runtime/harvest-backfill/bbg_full_run2.out: STOP bbg: bot_check after job 3",
+          "python -m lib.opal_data_harvest.challenge_capture --status: bbg captures=8, newest 20261002T063824Z (the ah-1 hook captures at most once per publisher per hour, so this challenge was not captured)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "FWD-11 limb 2a (CTO ruling 28245 / round-36 analysis): every non-void challenge passed. The bbg acceptance solves the press-and-hold in-tab (verification.solve).",
+      "world_is": "One non-void bbg challenge in the live monitored window was not passed, and its job shows no solve attempt in its records. Whether the 403 took a path that never reaches solve() (a non-tab fetch keeps the base VerificationRequired behaviour) or solve ran and failed unrecorded is NOT established. The bbg driver is stopped (its own bot_check hard stop) and STOP_BBG is set so nothing restarts it.",
+      "notes": "Disarm (issuer): bbg stays stopped until a repair cell establishes why this 403 was not solved and fixes it, with a capture of the next challenge regardless of the hourly cap. Put to the CTO (SERVED/WORLD, FWD-11). Not claimed: that the challenge was solvable."
     }
   ]
 ```
