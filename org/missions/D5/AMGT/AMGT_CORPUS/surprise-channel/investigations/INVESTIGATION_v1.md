@@ -3307,6 +3307,98 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "BEST_DIV_YLD values are on the percent scale while the block labels the unit DECIMAL. The page prints them correctly as percent; a reader of the unit label alone would be misled.",
     "notes": "Ruled at the round-29 drain: no page change. The label is the producer's (build_unit_map / model_block_pull forecast units) -- a candidate enrichment item for the round-29 analysis; FWD-22 untouched.",
     "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S77",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-10-02T13:26:19Z",
+    "one_line": "DISARMS AMGT_CORPUS-Z-W1-S18 (by its owner): integrations/bloomberg/research/price_axis_pull.py no longer inserts a hard-coded main-workspace path into sys.path; it derives the root from its own __file__ (REPO = Path(__file__).resolve().parents[3]), so a pytest session in a worker worktree imports lib.* from that worktree.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "price_axis_pull.py:100-102 at CLOUD 30cdd53a55: '# THE TREE THIS FILE LIVES IN is the root: derived from __file__, no device path, no env override.' then REPO = str(Path(__file__).resolve().parents[3]); sys.path.insert(0, REPO) only when absent.",
+        "The change landed at 480ef9128e (AMGT-zz-2, 0.9.0_WK_AMGT_RESAPP~181, 2026-09-29: 'price_axis_pull derives its root from __file__ ... test asserts no outside sys.path entry'); git merge-base --is-ancestor 480ef9128e HEAD -> true."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A test run in a worktree grades that worktree's bytes.",
+    "world_is": "The cause the row names is gone at HEAD: the inserted path is the file's own tree, never the main workspace.",
+    "notes": "Owner's evidence for the CVO's clock; no CORPUS act owed.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S78",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-10-02T13:26:19Z",
+    "one_line": "DISARMS AMGT_CORPUS-Z-W1-S22 (by its owner): every _figure_currency call in model_block_pull.py now passes security=, so the round-25 currency-label rule is live in the served derive, not inert.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "comp-read integrations/bloomberg/research/model_block_pull.py --enumerate '_figure_currency\\(' at CLOUD 30cdd53a55: 5 hits = 1 DEF (:926) + 4 CODE (:1148, :1229, :1388, :1430), and all 4 CODE calls read _figure_currency(mnemonic, quote_ccy, reporting_ccy, security=security).",
+        "Wired at 528da11fe2 (CRPS-aa-1 AMENDMENT 1, 0.9.0_WK_AMGT_CORPUS~1, 2026-09-30: 'all four _figure_currency calls in model_block_pull.py pass security=...'); the aa-1 proof_of_spec records the row 'resolved by AMENDMENT 1 (four call sites wired)'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A rule the order lands is exercised on the served path.",
+    "world_is": "0 of 4 derive call sites omit security= at HEAD.",
+    "notes": "Owner's evidence for the CVO's clock; no CORPUS act owed.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S79",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-10-02T13:26:19Z",
+    "one_line": "NARROWS AMGT_CORPUS-Z-W4-S6, which STAYS ARMED: the dossier half is fixed, but the Peers half is live and measured. lib/research/peers/engine.py:165 looks up the RAW security key in model_block_pool_index(), which universe.py:318 keys by the STORED segment, so for BP/_LN_Equity and NG/_LN_Equity Peers reads the 09-25 legacy raw-path block, not the 09-30 slash-safe one. Values are equal; the unit, sign and currency labels are not.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Dossier half fixed: lib/research/corpus/dossier.py:928 and :968 build the base as MODEL_BLOCK_POOL_PREFIX + slash_safe_key(security_key) (CRPS-ab-1 @0c234ef97d, in HEAD).",
+        "Peers half: engine.py:164-166 'pool_index = universe_module.model_block_pool_index(); if security_key in pool_index: ... read_model_block_from_pool(security_key, ...)' -- no slash_safe_key on that path (the repo fallback at :169 does call it).",
+        "Pool read 2026-10-02 13:2xZ, s3://opal-data-harvest/derived/model_block/: 102 index keys; 4 carry a slash or the -SLASH- token: BP/_LN_Equity -> 20260925T200039Z, BP-SLASH-_LN_Equity -> 20260930T231718Z, NG/_LN_Equity -> 20260925T200133Z, NG-SLASH-_LN_Equity -> 20260930T190147Z. The raw key hits the 09-25 object.",
+        "Field diff, raw-path block vs encoded block: BP 419 figures -- value 0, unit 211, sign 24, currency 2 (+currency_basis 2), vintage 419; NG 367 figures -- value 0, unit 174, sign 4, vintage 367. Top-level 'cases' also differs on both."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Every reader of derived/model_block/ resolves a security through slash_safe_key (round 25's one key form).",
+    "world_is": "One reader (the Peers engine's pool path) still looks up the raw key. For the two raw-slash names the pool carries, it serves the pre-sign-fix, pre-unit-map block: the same values with stale unit, sign and currency labels. Slash-free keys are unaffected.",
+    "notes": "The remedy is one lookup through slash_safe_key at engine.py:165-166, with a test arm on a -SLASH- key. It is a candidate cell for the next CORPUS round, behind the round-31 analysis's after-Friday hold. No S3 delete of the legacy raw-path objects (Z-S4: no S3 delete of any kind). Z-W4-S6 keeps its ARMED standing until that cell drains.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S80",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-10-02T13:26:19Z",
+    "one_line": "ARMED CENSUS of AMGT_CORPUS by the disarm owner, read through the gate's own fold (surprise-row-gate._latest_dispositions): of 45 rows filed ARMED, 36 already resolve GRADUATED and 9 resolve UNDER_INVESTIGATION. 1 is the fabric's (Z-S3, held by 1.0.0_SA_CTO~Z). 7 carry an owner's disarm and await the CVO's clock: Z-S6/S7/S8/S9 (Z-S12), Z-W2-S11 (Z-S48), Z-W1-S18 (Z-S77), Z-W1-S22 (Z-S78). 1 is LIVE: Z-W4-S6 (Z-S79).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "_latest_dispositions('.', 'AMGT_CORPUS') at CLOUD 30cdd53a55: 38 files read, 150 ids, 0 unknown -- UNDER_INVESTIGATION 56, GRADUATED 93, DISMISSED_WITH_REASON 1. Joined with comp-surprise's 45 ARMED: GRADUATED 36, UNDER_INVESTIGATION 9.",
+        "Positive control: Z-W1-S28 (disarmed by Z-S76) resolves GRADUATED in the fold.",
+        "Z-S12's disarm re-verified: its closing candidate dc2c0193ef and CLOUD b4a8638eeb are both ancestors of HEAD.",
+        "Z-S48's disarm re-verified: comp-find 'CASE_EVIDENCE_ROUND7' over lib, integrations and portal/src = 0 hits across 1839 files (763 ephemeral-floor and 5 binary not searched), so no producer, reader or page consumes the 61 selections."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "An ARMED hazard is disarmed by its owner with evidence, and the CVO writes the clock.",
+    "world_is": "The in-file hazard_standing count reads 45 ARMED; the fold reads 9 open. 7 of those 9 have had their owner's evidence on file, one since 2026-09-24 (Z-S12), with no adjudication.",
+    "notes": "Ask of 3.0.0_SA_CVO~Z at the next CORPUS compile: adjudicate Z-S12, Z-S48, Z-S77 and Z-S78 and their seven targets. Z-W4-S6 stays open on Z-S79. Z-S3 stays with 1.0.0_SA_CTO~Z. The 47 other UNDER_INVESTIGATION rows (unarmed, non-BLOCKING) are outside this census.",
+    "disarm_owner": "2.0.0_SA_COO~X"
   }
 ]
 ```
