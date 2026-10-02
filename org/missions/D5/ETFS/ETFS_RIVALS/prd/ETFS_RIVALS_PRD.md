@@ -5,7 +5,7 @@
  "project": "ETFS_RIVALS",
  "directive": "D5",
  "fabric": "site-z",
- "prd_version": "v0.9",
+ "prd_version": "v0.10",
  "step": 4,
  "brief_ref": "docs/briefs/etf-holdings-research-20260929.md@77c891c869",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20"],
@@ -248,7 +248,9 @@ approved it.
   From docs/briefs/rivalfunds-backend-data-ai-synthesis-20261001.md and
   docs/briefs/rivalfunds-frontend-mcp-page-20261001.md (4.0.0_SA_CRO~RV, midstream,
   on Andrew-direct @52eb8a5dc7, his two dictated transcripts verbatim).
-  STATUS: PROPOSED -- awaiting Andrew's confirmation, as FWD-1..12 were.
+  STATUS: CONFIRMED by Andrew 2026-10-02 ~02:2xZ ("release the hold on the Rivalfunds
+  outcomes ... we need that work driving now"), record
+  ANDREW_DIRECT_20261002_022xZ_RIVALFUNDS_ADDENDUM_B_RELEASED_DRIVE_NOW.md.
   FWD-1..12 stand. FWD-1's trace stays reachable, and FWD-13 is this workstream's
   thread.
 
@@ -280,16 +282,11 @@ approved it.
                     no price shows as missing, never dropped
          SOURCE     backend brief O2; transcript 1 point one; transcript 2
                     component 1
-         OPEN FOR ANDREW, two measures (CVO~Z msg 28052): (a) CONTRIBUTION:
-                    how much each holding added to or took from the fund's
-                    return over the period, weighted day by day by how much of
-                    it the fund held (those holdings rebuilt from its reports);
-                    this works for the benchmarks too. (b) TRADING RESULT: how
-                    the manager's buys and sells in that holding or sector
-                    worked out over the period ("by reverse engineering
-                    trading", transcript 1); a benchmark's result reads as
-                    index rebalancing. CTO recommendation: (a), with (b) kept
-                    in FWD-6.
+         RULED (v0.10, CTO on Andrew's release): CONTRIBUTION -- how much each
+                    holding added to or took from the fund's return over the
+                    period, weighted day by day by how much of it the fund held
+                    (holdings rebuilt from its reports); this works for the
+                    benchmarks too. The trading result stays in FWD-6.
 
   FWD-15 (NEW) Andrew reads each fund's tilts and bets: where its buying has
          trended this year, by holding and by sector
@@ -377,8 +374,9 @@ approved it.
   - The period and fund switches are built so that the page keeps working with
     no scripts, as it does today. The page's no-script rule stands.
   - The AI reads Opal's own data only. Web search needs Andrew's word.
-  - "Concentration of the market" is not one of the stored fear-and-greed
-    measures and is put to Andrew as a question.
+  - "Concentration of the market" is read as the stored strength measure (52-week
+    highs vs lows) and "breadth" as the breadth measure. The AI names each by its
+    stored name, so Andrew can correct the mapping from one output (v0.10).
 ```
 
 ## CONTRACTS
@@ -680,6 +678,13 @@ the `/sprint` precedent files.
 - The CVO grades JUDGMENT criteria at L9, citing the contract clause.
 
 ## PROVENANCE AND AMENDMENT HISTORY
+
+- v0.10 (2026-10-02, `1.0.0_SA_CTO~Z`), on Andrew's release (record `ANDREW_DIRECT_20261002_022xZ_RIVALFUNDS_ADDENDUM_B_RELEASED_DRIVE_NOW.md`):
+  - Addendum B (FWD-13..20) is CONFIRMED.
+  - FWD-14 is ruled CONTRIBUTION.
+  - "Concentration" is mapped to the stored strength measure.
+  - Web search stays off.
+  - This is an ENDPOINT change, so the ratified half re-opens to `3.0.0_SA_CVO~Z`.
 
 - v0.9 (2026-10-01, `1.0.0_SA_CTO~Z`), `/endpoint --forward` on `4.0.0_SA_CRO~RV`'s two briefs (msg 28050, record @`52eb8a5dc7`):
   - The ENDPOINT gains **Addendum B, FWD-13..20, PROPOSED** and awaiting Andrew's confirmation.
