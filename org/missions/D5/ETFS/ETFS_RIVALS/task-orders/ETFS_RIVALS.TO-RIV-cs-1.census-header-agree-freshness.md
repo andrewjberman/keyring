@@ -66,7 +66,7 @@ cs-1.AC1 FAIL (2; control OK) as expected; PASSES under an in-memory fix.
 
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>7</round>
 <slot>~4</slot>
 <fabric>site-z</fabric>

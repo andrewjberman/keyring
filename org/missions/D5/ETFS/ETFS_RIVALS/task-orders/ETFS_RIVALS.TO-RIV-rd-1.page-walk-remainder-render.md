@@ -84,7 +84,7 @@ rd-1.AC1 FAIL (3; control OK) as expected; rd-1.AC2 FAIL (3; control OK) as expe
 
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>7</round>
 <slot>~2</slot>
 <fabric>site-z</fabric>
