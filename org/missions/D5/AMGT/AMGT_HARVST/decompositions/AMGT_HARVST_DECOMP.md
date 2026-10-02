@@ -2663,3 +2663,9 @@ an ask to its owner.
 | `HVST-aj-6` ft sign-in via the NopeCHA extension | `aj-6` | WORLD | `~92` |
 
 Base check `round37/checks/aj-6.AC2.py` before the cut: FAIL as expected (no record).
+
+**50.2 AMENDED 2026-10-02 ~13:3xZ (Andrew-direct "bETTER IDEA, LETS USE A NEW SOLVER", record @9bc0e127be):** cell aj-6 is
+re-pointed from the NopeCHA browser extension to the Ocilar hCaptcha API (`POST https://api.ocilar.com/api/v1/solve/hcaptcha`).
+The key is in Secrets `ocilar/credentials` (us-east-1). The write set is `lib/opal_data_harvest/ocilar_hcaptcha.py` plus
+its plants and the ~92 deliverables. The criteria shape is unchanged: plants, then ONE real unattended ft sign-in with
+its challenge events, `solved_by` ocilar, and 0 NopeCHA Token / Kimi / vision calls.
