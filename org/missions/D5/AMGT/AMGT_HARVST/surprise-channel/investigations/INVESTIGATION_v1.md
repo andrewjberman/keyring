@@ -6120,6 +6120,29 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "The estate's other users of nopecha.Token (anything built on the same 2.0.x v1-compat Token.solve) would fail the same way; not measured here. The account itself answered HTTP 200 on 2026-09-15 (nopecha-barrons-compatibility.json: Starter, 1970/2000 credit)."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~92",
+      "surfaced_at": "2026-10-02T13:50Z",
+      "id": "AMGT_HARVST-Z-W92-S19",
+      "one_line": "aj-6: the Ocilar API answered HTTP 503 \"Service 'hcaptcha' is not available yet\" to the one sign-in solve call; no token, the ft sign-in did not complete, order left open.",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Order aj-6 (amended on Andrew-direct ~13:3xZ, VEW-4): POST https://api.ocilar.com/api/v1/solve/hcaptcha with X-API-Key returns {token, latency_ms, credits_used}; if Ocilar fails, record the exact HTTP status and message (never the key), file a row, stop, report.",
+      "world_is": "ONE sign-in, 13:45:20Z-13:45:47Z, headed, hardware_input none (input-source hooks: 0 hardware, 0 injected). hCaptcha frame present after the password submit; sitekey extracted; key read from Secrets ocilar/credentials (not printed); ONE POST to the Ocilar endpoint at 13:45:40Z returned HTTP 503 with body {\"detail\":\"Service 'hcaptcha' is not available yet. Check api.ocilar.com/api/v1/services for available services.\",\"status\":503,\"title\":\"Service Unavai[lable]\"}. ocilar_calls 1, ocilar_ok 0, no token, nothing injected, no retry (an HTTP failure is not retried: a retry is for a rejected token). Page did not clear: no FTSession/FTSession_s, harvest_rc 1, nothing saved to the vault. nopecha_token_api_calls 0, kimi_vision_calls 0. The services listing (GET api.ocilar.com/api/v1/services) the 503 names was NOT called: the order names no such call. AC1 PASS (16 passed); AC2 FAIL (record present, solved_by ocilar_failed). The ft driver stays off (STOP_FT); aj-4 step 3 did not start.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~92/aj6_signin.json",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~92/aj6_signin_log.txt",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~92/aj6_ac2_output.txt"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Ocilar-side availability, not a defect in lib/opal_data_harvest/ocilar_hcaptcha.py (request shape, header and body pinned offline by plant (i)). Whether the hcaptcha service is live for this key/plan is a vendor-side fact the issuer can read from the services listing; whether to call it is the issuer's/Andrew's word. The solve call cost no credit that the record can show (503, no credits_used)."
     }
   ]
 ```
