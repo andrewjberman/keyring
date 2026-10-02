@@ -16955,6 +16955,52 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
  "spec_asserts": "al-1 AMENDMENT 1 / ruling 5a: the timeline day route's silver read runs under an 18 s deadline from handler start, and on the deadline the mentions are served with headline null and one plain headline_reason, as a 200, instead of a sandbox kill. Graded by 3 of 3 cold BA invokes answering 200 with both control days byte-equal.",
  "world_is": "Exactly that, and the branch is not hypothetical: it fired on run 3 of the acceptance run itself, 200 at 18006.03 ms carrying headline_reason, 6 ms past the constant. So act (B) is better evidenced than a normal code deploy -- the new path was exercised against live data by its own grade rather than only by the planted test. What the grade does not say is that the 18 s line sits INSIDE the cold spread rather than above it: 15.1 / 16.5 / 18.0 s here and 16.6 / 16.9 / 19.1 s in act (A) an hour earlier. Not measured: the rate over a larger sample, whether it differs by name or by day's article count, and whether the first cold call after a deploy is systematically slower than later ones -- the three runs here are concurrent, so they share one post-deploy moment.",
  "notes": "Reported to 2.0.0_SA_COO~Z in the act (B) close message rather than left to the channel, because it changes what the demo looks like and the demo is at 13:00Z. The degradation is graceful and the view does not break: PROD renders [no headline]. Nothing here is a rollback trigger -- C1 and C2 both passed, and a 200 on the deadline path is the specified outcome, not a failure."
+},
+{
+ "id": "AMGT_RESAPP-Z-W205-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~205",
+ "surfaced_at": "2026-10-02T15:32:00Z",
+ "one_line": "AMGT-am-2 AC2 clause C1 (ASML_NA served BLOOMBERG_FALLBACK with officers > 0) cannot be met from stored input: no Bloomberg COMPANY_EXEC_OFFICERS response has ever landed for ASML_NA, 6501_JP or 2317_TT -- the pull was only ever run for 6861_JP and CSL_AU -- so the officers need one fresh Bloomberg pull, which the order forbids.",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "aws s3 ls s3://opal-data-harvest/bloomberg/harvest/bronze/exec_officers/ -> 2 prefixes only: security_key=6861_JP_Equity/ and security_key=CSL_AU_Equity/. security_key=ASML_NA_Equity/, 6501_JP_Equity/ and 2317_TT_Equity/ each list 0 objects; raw/bloomberg/<key>/ for the three holds refdata/histdata/identity only, no exec_officers.json.",
+   "The later bronze refdata for the three (ASML 20260925T042151Z, 6501 20260929T232729Z, 2317 20260925T042147Z) carries NAME, CIE_DES, price and size fields and no COMPANY_EXEC_OFFICERS.",
+   "enrich.apply_bloomberg_fallback (enrich.py:619) fires on ANY roster_status other than RESOLVED and has no form exclusion; the stored ASML object management/v1/ASML_NA_Equity/2026-09-18.json is simply older than the fallback (generated_at 2026-09-18T14:00:20Z, no roster_source, no fallback block). So the rule did not need fixing for a 20-F; the input was never pulled.",
+   "The batch driver lib/research/management/batch.py main() builds only partitions['real_filing']; 2317_TT is placeholder_only and 6501_JP is no_object, so the batch would never produce an object for either even with a pull.",
+   "Local result: python r63_served.py --cell c2 --where local --pool .../0.9.0_WK_AMGT_RESAPP~205/m1_pool -> FAIL C1 ASML_NA (status ABSENT officers 0), PASS C2 6501_JP, PASS C2 2317_TT, R63 C2 SERVED: NO, exit=1."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "AMGT-am-2: 'the stored Bloomberg officer input it reads (for example the harvest bronze exec_officers table)' holds the officers for ASML_NA, and the producer path can fall back to them with no vendor call; AC2 expects C1 PASS (ASML_NA SERVED, BLOOMBERG_FALLBACK, officers > 0).",
+ "world_is": "The stored input holds officers for no one of the three. Built: bloomberg_fallback.StoredBloombergInput (reads the newest landed exec_officers bronze object, names its key and pull time in the fallback block, and returns FAILED 'the officer pull was never made' when none exists, never EMPTY) and lib/research/management/fwd7_plan.py, which runs enrich.build_document for the three keys with that reader, a refused Lusha client and no SERP key. Given a landed response the 20-F path serves SERVED / BLOOMBERG_FALLBACK (test_a_twenty_f_with_an_empty_officer_section_takes_the_fallback; test_plan_writes_local_objects_the_route_reads). With none landed the three objects carry officers [] and a plain reason, so 6501_JP and 2317_TT satisfy C2 and ASML_NA fails C1. What closes C1: one Bloomberg COMPANY_EXEC_OFFICERS pull for the three names landed at the bronze grammar via enrich.apply_bloomberg_fallback(write_raw=True) -- a vendor call needing Andrew's per-use word -- then rerun fwd7_plan; and, for 6501_JP and 2317_TT to be produced by the batch rather than by this plan, batch.main's WOULD-BUILD would need to include placeholder_only and no_object (not changed here: it would put Lusha spend on names the batch has never built). Not measured: whether Bloomberg returns officers for these three.",
+ "notes": "The m1_fwd7_plan.json entries for ASML_NA is a reason-only object (officers 0, fallback FAILED); the issuer may drop that entry from am-6 until the pull lands, since writing it replaces an ABSENT/ZERO_OFFICERS read with another ABSENT/ZERO_OFFICERS read."
+},
+{
+ "id": "AMGT_RESAPP-Z-W205-S2",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~205",
+ "surfaced_at": "2026-10-02T15:33:00Z",
+ "one_line": "management.schema.json (additionalProperties false) refused lusha_enrichment.domain_source, a field enrich.build_document has emitted since AMGT-rk-110, so enrich.validate() failed EVERY freshly built object and batch.run_one would have returned BLOCKED-INVALID for every name.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "First fwd7_plan run: ValueError 'ASML_NA_Equity: the produced object fails its schema: lusha_enrichment: Additional properties are not allowed (domain_source was unexpected)'.",
+   "enrich.py:683 sets domain_source in lusha_meta; management.schema.json definitions.lusha_meta listed status, domain, credits_used, results_returned, results_total, matched, contact_keys_removed, reason, absence_reason_class and no domain_source.",
+   "Fixed in this commit: domain_source added to lusha_meta as enum domains.json | verified_site | null (matches enrich.domain_source_for); test_schema_admits_the_domain_source_the_producer_emits builds a document and validates it."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "enrich.validate() accepts the object enrich.build_document produces (batch.run_one validates before any write).",
+ "world_is": "It did not: the schema had not been widened when rk-110 added the field, so a fresh build was refused at validate. The stored objects written by the last live runs predate rk-110 or were re-projected in place, which is why no stored object shows the field. Fixed inside this order's lib/research/management/ path; not measured: whether any scheduled batch run since rk-110 hit BLOCKED-INVALID.",
+ "notes": "Widening a closed schema is a one-line change under this order's paths; the CTO reads it at the round-N analysis."
 }
 ]
 ```
