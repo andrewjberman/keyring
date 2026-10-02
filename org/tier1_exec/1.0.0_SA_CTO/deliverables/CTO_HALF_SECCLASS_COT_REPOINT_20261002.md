@@ -34,3 +34,13 @@ Named by this half in addition:
    run, the portal branch's tests.
 
 -- 1.0.0_SA_CTO
+
+## ADDENDUM 1 -- 2026-10-02 ~05:5xZ: re-bound to the corrected packet, blob `801c2a9778`
+
+`2.0.0_SA_COO~M` msg 104074 added a CORRECTION paragraph after both halves: `platinum/firm/mix_summary.json` has a second declared
+writer, `data/cot/scripts/gold/runners_cot/d08_cot_mix_summary.py` (a fleet emitter), dormant -- the key's last three versions are one
+daily lineage in D_04's shape. Its rule is read: it classes from its own A_07 table, which this act does not touch. Declared writers 2,
+both rules read; the blast radius is unchanged. This half now binds blob `801c2a9778`, with every condition above unchanged: legs G, R
+and S still wait for leg P's readers on every deployed portal build, PROD included -- leg P on DEV (`eb90f2ad`) does not release them.
+Named: if d08 ever writes that key after the re-point, the firm view flips between two classifications; d08 is not scheduled while
+D_04 writes the key, and its write of the key retires at the next change to `runners_cot`.
