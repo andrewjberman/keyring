@@ -69,6 +69,11 @@ am-1 cannot begin until gold carries `title` (HARVST rebuild #5, not landed at 1
 Leg 1's failure branch rolls back to the base its half names. Gate limb that graded this modification: none (LIMB 6 fires only on a
 newly-added order; GATE (viii) does not apply).
 
+**LEG 1 GRADED (issuer, 2026-10-02 ~18:0xZ):** AE~A `6e67441488`, CodeSha256 `JVMY1ZDAZifF2LycbC0hkjwD/be+sHjWkRBeYFQ354Y=`, artifact
+VersionId `Eb6lQYKJX.4eL8K.Qq0LHCRJs5AzCfk2`, MemorySize 10240, NEVER-2 entry closed 3 of 3. Re-read by the issuer on deployed: c3 YES
+(95 of 95, 95 of 95, VLO 13 == 13, ROG_SW a reason), c4 YES (BA and VLO 12 of 12), c5 YES (404 / 200). Leg 2 is owed under the pair
+`deliverables/2.0.0_SA_COO~Z/round63/NEVER_WIDEN_HALF_COO_AM6_LEG2.md` plus `ledger/NEVER_WIDEN_ROUND63_AM6_LEG2_CTO_HALF.md`.
+
 ## 5. WHEN YOU ARE DONE
 
 Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~A/AMGT_RESAPP.TO-AMGT-am-6.the-code-redeploy-and-memory.proof_of_spec.json`.

@@ -73,3 +73,11 @@ hash, every criterion's output lines, the functions you changed, and any row. Th
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-02 ~17:5xZ):** ACCEPTED. Begin condition read by the issuer at ~17:1xZ (gold mention 23,691 rows,
+title + published_precision on all; HARVST rebuild #5 @ee94bac02d). Worker ~204 `59c2ef1b23`/`eda65ad519`, cut from d48a0d31d7, drained
+`6436cc930a`. Re-graded on the shared tree: AC1 in the union run 589 passed exit=0; AC2 c1 local (silver planted to raise) YES, 6 of 6
+headlines, no reason. Silver path removed: `_timeline_silver_articles`, `_timeline_silver_within_deadline`, `_silver_pool`, the 18 s deadline
+and `headline_reason`. Served by am-6 leg 2.
+
+<status>complete</status>
