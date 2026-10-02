@@ -6,7 +6,7 @@ Mode FAST: lease `IRPT_BCKEND~Y` re-armed 04:33Z until 08:33Z after the withdraw
 terms, under Andrew-direct 2026-10-01 ~04:2xZ).
 Loop `/canonical-drive IRPT_BCKEND` 10m (LIVE_ARMS RELAUNCH row). Way forward: CTO rulings batches 61, 62, 65, 70, 72,
 76, 83, 88, 89, 93, 97, 98, 100 and 105 in `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md`.
-Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-02T07:5xZ.
+Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-02T08:2xZ.
 
 ## Pins
 
@@ -73,6 +73,14 @@ made (CTO half item 1).
    to the builder's address, 12 tests. It merges when its packet is cut (after E7 and E6), with the one line
    `reports/tests/test_status_installed.py` needs (its five-operation set gains `analysis-request-pdf`; `2.0.0_SA_COO~P`'s file).
    At each packet, `read_memo.py` (E6) and `pdf_link.py` (hop 11) join irpt-status's source-map `files`.
+   **Client-scoped history route BUILT and MERGED** (item 22 `f27418381d`, merge `408b8186ec`; CTO batch 110 item 4(b), batch 126):
+   optional `client_id` on the history route, read from each request's frozen composition selection; no backfill (all 21
+   requests are upload-lane, measured). Joins the irpt-status queue behind E7. `2.0.0_SA_COO~D` sends the header's client once served.
+   **Probe-rotation read DONE** (`HOP3_PROOF/PROBE_ROTATION_READ_20261002.md` @9fe3ee3e37): very likely yes, and wider -- no path
+   persists a rotated cookie. **CTO batch 127: st12** writes a rotated session cookie back to the secret under the bundle's lease
+   and fence, only when changed, names only in logs; `secretsmanager:PutSecretValue` on that one secret in `ycharts/resident.tf`;
+   the probe uses the same transport; offline rotation test; live proof after Andrew's sign-in. NEXT for this seat.
+   **Hop 12** is `2.0.0_SA_COO~P`'s (CTO batch 126 item 1).
 6. Batch 61's order after that: one job per remaining arm (Target Weight, 49 Financial, Inflection), each under a window
    packet; the resolve concurrency fix; the vendor PDF link; the Analysis export; the email lane. E6's memo follows E7's
    apply (CTO batch 111). A client-scoped history route is an enrichment item at the next round analysis (CTO batch 110 item 4).
