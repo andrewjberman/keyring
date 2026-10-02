@@ -2638,3 +2638,28 @@ bbg restarts after the merge, under the monitor.
 
 Base check `round37/checks/aj-5.AC2.py` before the cut: FAIL as expected (the grader has no `grain` and no per-run
 entries).
+
+### 50.2 ROUND 37 AMENDMENT 2 -- cell 6: the ft sign-in via the NopeCHA browser extension (CTO 28484; VEW-1), 2026-10-02 ~13:3xZ
+
+Andrew permanently whitelisted NopeCHA for egress (~13:08Z, record @179990b502; `org/ref/VENDOR_EGRESS_WHITELIST.yaml`
+VEW-1). aj-4's unattended sign-in then failed (row Z-W92-S18, records @5d61b62795): `nopecha.Token.solve` returned
+error 19, "This API endpoint has been discontinued" (1 call, 0 Kimi). No session existed, so the 2 h run never started.
+
+The CTO ruled YES to cell 6 (WORLD, workstream ftsolver):
+- the NopeCHA browser extension is loaded into the ft Chrome profile with the key from Secrets;
+- the Recognition API is the fallback;
+- Kimi and vision stay out.
+
+Criteria: the extension loads; a planted hCaptcha is solved with 0 Token API calls; ONE real unattended ft sign-in,
+recorded with its challenge events (ruling 8b).
+
+Placement: the extension route is built in HARVST's own `lib/opal_data_harvest/`, and the ~92 sign-in harness calls
+it. The CRO's `org/tier1_exec/4.0.0_SA_CRO/scripts/nopecha_hcaptcha_lib.py` (the Token API caller, authored by
+4.0.0_SA_CRO~Z) is NOT in the write surface. If the collector's own renewal must route through it, that is a row and
+an ask to its owner.
+
+| cell | order | class | slot |
+|---|---|---|---|
+| `HVST-aj-6` ft sign-in via the NopeCHA extension | `aj-6` | WORLD | `~92` |
+
+Base check `round37/checks/aj-6.AC2.py` before the cut: FAIL as expected (no record).
