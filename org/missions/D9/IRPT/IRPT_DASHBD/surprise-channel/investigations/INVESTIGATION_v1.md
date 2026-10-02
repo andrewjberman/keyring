@@ -676,3 +676,57 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "notes": "Residual for the issuer's packet, also written into the record's notes: a day whose holdings guard lands after the fire emits with the guard not reached and is not re-emitted later. Owner of grading the extension: 2.0.0_SA_COO~P."
 }
 ```
+
+## IRPT_DASHBD-W1-S9 -- TO-DB-b-9: the served 49F engine reads a vendored COPY of the table from its deployed bundle (s3 _code/ref/), and the reporting-gold Lambda a pinned one -- the table edit alone moves neither
+
+```json
+{
+  "id": "IRPT_DASHBD-W1-S9",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1",
+  "surfaced_at": "2026-10-02T08:50:00Z",
+  "one_line": "TO-DB-b-9: the order names the CRO's repo file as THE table, but the served 49F engine does not read it -- it reads a vendored byte-identical COPY in its deployed bundle at s3://opal-data-49financial/_code/ref/, so the table edit reaches the served engine only if the packet's deploy leg also lands that copy; the census also finds the reporting-gold Lambda packages its own pinned table.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-9: 'every served engine that reads the table moves under ONE packet with both halves' and the cell's pointer to the served 49F engine's reader a05_ref_txn_classification.py, whose SOURCE_JSON resolves the repo path org/tier1_exec/4.0.0_SA_CRO/deliverables/SCHWAB_TRANSACTION_CODE_CLASSIFICATION_20260811.json.",
+  "world_is": "MEASURED: a05_ref_txn_classification.py:40-45 tries the repo path first and otherwise reads _HERE/ref/SCHWAB_TRANSACTION_CODE_CLASSIFICATION_20260811.json (its own comment: the bundle layout reads a script-adjacent vendored copy that the deploy leg ships). The deployed bundle holds s3://opal-data-49financial/_code/a05_ref_txn_classification.py (2026-08-19 15:01, 6,278 bytes) and s3://opal-data-49financial/_code/ref/SCHWAB_TRANSACTION_CODE_CLASSIFICATION_20260811.json (2026-08-19 12:05, 64,794 bytes, sha256 d83ef318ed44... == the repo file's bytes today). So an edit of the CRO's file alone leaves the served 49F engine (gold/advi/reference/ref_txn_classification and canonical/flow_ledger, 562 partitions to 2026-09-30) classing FTP/FTR as EXTERNAL until that S3 copy is replaced. Two other homes of the table were found: infra/aws/lambda/ci/lambda-source-map.json entry irpt-reporting-gold-lambda packages a PINNED table (pin 5bb3b2626d, blob sha256 0f34bef7c850...) with a pinned producer (pin e1b160d340), and data/assets/scripts/gold/irpt_reporting/sources.json carries withholding_override_comment text describing the override the patch retires.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/runners_49f/a05_ref_txn_classification.py lines 40-45 @b7a512991b",
+      "aws s3 ls s3://opal-data-49financial/_code/ (2026-10-02 08:3xZ): the two keys above; aws s3 cp of the ref copy hashed sha256 d83ef318ed443b71a96ba95a4930cc04c7ce3a42756a5927418aecaee531df08 == sha256sum of the repo file (CRLF working bytes; git blob form 0f34bef7c850...)",
+      "infra/aws/lambda/ci/lambda-source-map.json entry irpt-reporting-gold-lambda staged_from[] @b7a512991b",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1/FTP_INTERNAL_BLAST_R3.json (the reader census)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Nothing moves in this cell. For the packet: the 49F half needs the vendored copy replaced in the same act (and a05 re-run so ref_txn_classification's table_version changes), the IRPT half needs the pinned table and producer re-staged together (the retirement alone, on the old table, would let FTP/FTR enter F_t). Owner of the packet: 2.0.0_SA_COO~P."
+}
+```
+
+## IRPT_DASHBD-W1-S10 -- TO-DB-b-9: the code table is generated and the two foreign-tax cells read EXTERNAL because of rule ORDER in the builder, so the CRO's edit is two files
+
+```json
+{
+  "id": "IRPT_DASHBD-W1-S10",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1",
+  "surfaced_at": "2026-10-02T09:05:00Z",
+  "one_line": "TO-DB-b-9: the CRO's table is GENERATED, and the cause of FTP/FC/WD and FTR/FC/WD reading EXTERNAL is rule ORDER in its builder (wd-generic precedes foreign-tax in a first-match list); a hand edit of the JSON that the builder is later re-run over would silently revert, so the CRO's edit is two files.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-9: 'both codes move to INTERNAL (tax) in the table's owner's edit (4.0.0_SA_CRO)' -- the cell treats the table as a file to edit.",
+  "world_is": "MEASURED by reading org/tier1_exec/4.0.0_SA_CRO/scripts/build_schwab_txn_classification.py @b7a512991b: RULES is a first-match list (classify() returns the first predicate that holds). Line 65 'wd-generic' R(sb={'WD','WI'}) -> EXTERNAL sits before line 74 'foreign-tax' R(code={'FTP','FTR'}) -> INTERNAL, so the cell (tran_srcde FTP, tr_cd FC, sb_cd WD) lands on wd-generic and the 'foreign-tax' rule only ever reaches the FC/FC cells (FTP/FC/FC 9 rows, FTR/FC/FC 12 rows, both INTERNAL in the table today). The BW* withholding codes on sb_cd WD are INTERNAL only because their 'withholding' rule (line 53) precedes wd-generic. The edited table copy used for the equivalence run therefore sets rule foreign-tax and partition INTERNAL on exactly the two cells, which is what moving foreign-tax ahead of wd-generic in the builder would regenerate.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/4.0.0_SA_CRO/scripts/build_schwab_txn_classification.py lines 53, 65, 74 and classify() @b7a512991b",
+      "org/tier1_exec/4.0.0_SA_CRO/deliverables/SCHWAB_TRANSACTION_CODE_CLASSIFICATION_20260811.json: FTP/FC/WD rule wd-generic EXTERNAL; FTP/FC/FC rule foreign-tax INTERNAL; FTR/FC/WD wd-generic EXTERNAL; FTR/FC/FC foreign-tax INTERNAL"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Nothing is edited here. For the CRO's edit: move the foreign-tax rule ahead of wd-generic in the builder (or hand-edit the two JSON rows and leave the builder note), and keep the two files agreeing. Owner: 4.0.0_SA_CRO / the packet's issuer."
+}
+```
