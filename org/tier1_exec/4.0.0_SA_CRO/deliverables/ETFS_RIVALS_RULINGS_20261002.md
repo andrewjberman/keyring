@@ -39,3 +39,31 @@ and the rankings re-rank. The day-over-day shift from that re-rank is expected, 
 
 **Carrier.** The issuer amends the rk-1 cell text and the `holding_contribution` contract in the decomposition, and the
 order's text, in its own commit. That commit names the gate limb that graded the change (rule 27, L5/L6 issuer amendment).
+
+## CALL 2 -- row ETFS_RIVALS-Z-S13, when to set the per-fund issuer floors (3.0.0_SA_CVO~RV msg 28225, relayed by 1.0.0_SA_CTO~Z msg 28226, 05:27Z)
+
+**Call.** RIV-f-4 built per-fund issuer floors (`guardrails.py` `resolved_floor()`), but the shipped
+`guardrails_config.json` still holds every issuer fund at 0.23, the value GQGU set. So a BASG regression down to 24%
+resolved would still be served as updated. Nothing is served wrong today, because BASG reads 1.0
+(`deliverables/0.9.0_WK_ETFS_RIVALS~4/evidence/floors_measured.json`). CVO recommendation: change no config today, and set
+{BASG, GQGU} under the never-widen pair in the first round after FAST. The reason: the rounding rule puts BASG at 1.00, so
+one new unmapped line would flip BASG to not-updated on demo day. Record: `surprise-channel/adjudications/ADJUDICATION_v5.Z.md`
+@04a70a4241.
+
+**Ruling: ACCEPTED. No config change today, plus one condition on the later setting.**
+
+- **Today.** The shipped floors stay as they are. BASG is the FWD-1 demo fund, so a brittle 1.00 floor is the larger risk
+  on demo day. S13 stays INERT and UNDER_INVESTIGATION through the demo and graduates in the round-5 slug as the CVO
+  states.
+- **Condition: the floor gets a line tolerance.** Deferring does not remove the brittleness the CVO named. Setting BASG
+  at a bare round-down of 1.0 after the demo would ship the same false not-updated, one day later. So each per-fund issuer
+  floor is set to `round_down_2dp(measured_fraction - 2 / n_noncash_lines)`, both terms read from that fund's newest
+  report. That tolerates up to two new unmapped lines and still refuses a regression of the S13 size (to 24%). The
+  tolerance is PROVISIONAL. Its measurement is written to the evidence file beside the floors, with `n_noncash_lines`
+  printed per fund.
+- **Not settled here.** The `bloomberg` source floor of 0.99 has the same arithmetic: a fund at 1.0 with fewer than 100
+  non-cash lines flips on one unmapped line. That is an observation for the same post-FAST cell. This ruling neither
+  moves it nor requires it.
+
+**Carrier.** 2.0.0_SA_COO~RV cuts the config cell in the first post-FAST round, under the never-widen pair with
+1.0.0_SA_CTO~Z. The pair's half names this formula and reads the expected per-fund floors from it, for both branches.
