@@ -1427,3 +1427,50 @@ analysis's census set), and the A3 read after B1.
 **Rule 24:** (i) the analysis's four rows by subtraction: 3 orders + A3 placed (a) + the Posture source located (b). (ii) One write
 set per chain. (iii) One intent per order. (iv) No order moves a served value: z-1 words, z-2 presents a served header value in a
 second place, z-4 an instrument.
+
+
+## v23 -- ROUND 23 (issuer, 2026-10-02 ~08:2xZ), over PRD v0.8 @7912f7aee2 (ADMITTED)
+
+**Rectangle:** `1.0.0_SA_CTO~Z`'s `ledger/ROUND_ANALYSIS.round22.md` @eee9380be7 section 3, rows 1-4 (rulings 1-6; msg 28303).
+Deadline: drained by **11:30Z** and merged onto remote DEV, like `419ef41d`, so ONE candidate goes to Andrew; otherwise `419ef41d`
+stays the candidate.
+- **Cell ids:** `AV-zb-1` (row 1), `AV-zb-2` (row 2), `AV-zb-3` (row 3), `AV-zb-4` (row 4).
+- **The issuer's placements:**
+  - (a) **Row 3 is SERVED, so `AV-zb-3` drops.** The sentence "no declared IR domain for this name: a SERP not scoped to the
+    company's own domain is not the contract's search" is written by `lib/research/management/enrich.py:536` (the CEO public
+    profile `basis`, AMGT_RESAPP's lane). It is routed to `1.0.0_SA_CTO~Z` for RESAPP round 61 on B2's terms (ruling 3).
+  - (b) **Row 1, the reader words are page-composed.** The absent reasons are served (`peers.csc_columns.absent[].reason`, R-1's
+    words); the page's own words are the state phrase and the counts line. Under ruling 1 and round-21 ruling 1 (no page-side
+    rewrite of a served string), the item reads one plain clause the PAGE composes from the column's label (e.g. "Shares
+    outstanding is not reported for these peers"). The served reason rides `data-absent-column-reason` (kept by AV-z-1). The
+    counts line and the column-head tips lose "comparison map", "registry" and "R-1" too.
+  - (c) **Row 2, the served form and date** are the thesis bundle's `drafting_provenance` {accession, form, filing_date}, used only
+    when its accession equals `management.source_accession`. Otherwise the page names the filing without a form or date it was
+    not served for that filing.
+  - (d) **Row 4:** `posture.harness.cjs` does its own read-only S3 fetch of the two posture objects (rl-7, Opal infra), so that
+    order's bounds admit exactly that read. The plant knob (`POSTURE_HARNESS_PLANT=1`) is the harness's own, so it "grades
+    something".
+  - (e) **Chains from write sets:** ~71 `AV-zb-1` (Peers files + peers harnesses); ~72 `AV-zb-2` (`ExecManagementTab.tsx` + exec
+    harnesses); ~73 `AV-zb-4` (`posture.harness.cjs`). They are file-disjoint. M = 3, N = 3, cap 3.
+- **Portal base:** `419ef41d` (the round-22 candidate on remote DEV c4e0d744; src/pages/SecurityAnalysis is identical to DEV a730d8ce,
+  where the checks were dry-run).
+- **Frozen at the cut.**
+
+| cell | row | what it builds | serves | writes | slot | risk |
+|---|---|---|---|---|---|---|
+| `AV-zb-1` | 1 | Peers absent-column items in reader words composed from the column label; the counts line and the tips without system terms | FWD-8 | `SA/tabs/PeersTab.tsx`, `SA/cscTable.ts`, peers harnesses (re-anchor) | ~71 | LOCAL |
+| `AV-zb-2` | 2 | the Exec filing line names the form and filing date; the accession only in a data- attribute | FWD-11 | `SA/tabs/ExecManagementTab.tsx`, exec harnesses (re-anchor) | ~72 | LOCAL |
+| `AV-zb-3` | 3 | dropped: served (placement a) | FWD-11 | -- | -- | -- |
+| `AV-zb-4` | 4 | posture.harness repaired (current hook stubs) plus the plant knob | instrument (Z-W69-S1) | `SA/__harness__/posture.harness.cjs` | ~73 | LOCAL |
+
+**Checks (`round23/checks/`, dry-run at DEV a730d8ce = 419ef41d for these paths):**
+
+| check | base (as expected) |
+|---|---|
+| peerwords.cjs (AV-zb-1) | FAIL 2 of 3: per fixture, 19 terms (comparison map, factor code, row field, registry); RATIOS and THREE in reasons |
+| accession.cjs (AV-zb-2) | FAIL 1 of 3: the accession is on the face; no 10-K or date; no attribute on the served branch |
+| postureharness.cjs (AV-zb-4) | FAIL 0 of 3: TypeError useCollectedChatter; no CHECK lines |
+| round15 bound.cjs ALL 14 + tsc | PASS (round-22 drain, and again on 419ef41d) |
+
+**Rule 24:** (i) four rows by subtraction: 3 orders + row 3 placed (a). (ii) One write set per chain. (iii) One intent per order.
+(iv) No order moves a served value: zb-1 and zb-2 are page words over served fields; zb-4 is an instrument.
