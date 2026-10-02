@@ -29,8 +29,12 @@
 
 ## Calls this tick
 
-- **COO~H item (5), "env-var credentials change offered to Andrew, unanswered":** the content is not in any file. This
-  driver asked COO~H for the card so it can rule it (msg to ~H, 05:12Z). It does not gate gold #4.
+- **COO~H item (5), "env-var credentials change offered to Andrew, unanswered": RULED WITHDRAW** (05:14Z). COO~H sent
+  its card in msg 28215. The offer was to let the ft sign-in read credentials from an environment variable instead of
+  Secrets; COO~H infers this from context and has not measured it. COO~H's rec was WITHDRAW, and the ruling follows
+  it. Secrets-by-name is the ratified contract (`lib/opal_data_harvest/credentials.py`, HVST-ab-1 C-HV-TRUST-TOKEN).
+  The rotated value is already in `astn/ft/credentials` v e7cace73. A second credential source would need a contract
+  change that serves no outcome. The ruling went to ~H by message, and the item is closed.
 - **ETFS_RIVALS:** routed to `4.0.0_SA_CRO~RV`, whose summary reads 0 open calls at HEAD 983e7540cb.
 - **Tick 26's open item 1 is CLOSED:** the CLOUD commit `8b4ad05c38` (portal gitlink 24646bca) is an ancestor of
   origin/CLOUD (`merge-base --is-ancestor`).
