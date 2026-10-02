@@ -17195,6 +17195,27 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   ]
  },
  "disposition": "UNDER_INVESTIGATION"
+},
+{
+ "id": "AMGT_RESAPP-Z-W215-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~215",
+ "surfaced_at": "2026-10-02T22:56:00Z",
+ "one_line": "The r64_served.py on the worker branch (cut from 34e9d1be75) is the PRE-amendment check: it has no c16 and no c14 C4, and its c14 C3 grades object_as_of == '2026-10-02T1840Z'; the amended check lives on CLOUD at 13dc3f05ba, so AC2 and AC3 as written could not run from the branch.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "AC2 and AC3 run org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round64/checks/r64_served.py --cell c14 / --cell c16 from the worktree; the order says c14 gains C4 and c16 exists.",
+ "world_is": "On branch wk-AMGT_RESAPP-215 at 34e9d1be75 the file's --cell choices end at c15 and its c14 C3 reads object_as_of == '2026-10-02T1840Z' (the pre-ruling-6 form). git show 13dc3f05ba:<same path> carries c16 and C4, with C3 reading source_stamp or object_as_of distinct from as_of. The worker wrote nothing into the issuer's checks directory (outside the order's paths); it saved the CLOUD @13dc3f05ba copy unchanged at .scratch/r64_served_amended.py and ran that from the worktree root, so ROOT-relative paths resolve in the worktree. The criteria outputs reported are from that copy. The branch's own file needs the issuer's re-sync before a drain-time re-grade reads the amended clauses.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "diff of the branch's r64_served.py against git show 13dc3f05ba:org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round64/checks/r64_served.py: c16 branch, C4 loop and the C3 source-stamp form present only in the CLOUD copy.",
+   "git log --oneline -3 -- <path> on the worktree: 2c3cc4aed2 as the newest commit touching it."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
 }
 ]
 ```
