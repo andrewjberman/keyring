@@ -1111,6 +1111,26 @@
  "spec_asserts": "Bounds item 2: in the harness file only the fill clause changes.",
  "world_is": "The harness also needed the import stubs and an extraction of fill-opacity, which carries the day's search state now that the hatches are gone. No other predicate (error banner, retry, zero day-bars on a failed call, pairwise distinctness) was altered.",
  "notes": "Smallest change that lets the order's own 'show one planted run' happen."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W80-S3",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~80",
+ "surfaced_at": "2026-10-02T21:50Z",
+ "one_line": "AV-zg-1: row Z-W80-S1 (AC3 red on the two posture harness lines) is resolved by the issuer's Amendment 1 @77abd61a20; amended AC3 reads BATTERY29: ALL PASS (4 skipped), exit=0.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "Amendment 1 (shared-tree commit 77abd61a20) skips postureharness and posturezero in AC3; merged into wk-DSGN_AMGTV1-80 and re-run at portal be4e019d: 'BATTERY29: ALL PASS (4 skipped)' and exit=0; ALL BOUND 13 of 13 harnesses green; tsc -b --noEmit rc=0. AC1 and AC2 re-run 4 of 4 each, exit=0."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Row Z-W80-S1 stood BLOCKING: AC3 expected 'BATTERY29: ALL PASS (2 skipped)' and read FAIL on two posture.harness lines.",
+ "world_is": "The issuer ruled on S1 in Amendment 1 @77abd61a20: the two posture lines return when AV-zg-2 renders the single [data-header-posture] and are read on the merged candidate. S1 is not edited; this row is the correction.",
+ "notes": "Correction row per the append-only rule."
 }
 ]
 ```
