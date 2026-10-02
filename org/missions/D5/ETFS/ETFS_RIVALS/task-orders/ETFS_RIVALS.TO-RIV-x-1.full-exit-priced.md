@@ -33,6 +33,7 @@ comp-adversary: DECLARED-NOT-APPLICABLE the validator-context composer profiles 
 
 - Measured at the cut: an ABSENT-line exit is already priced (-50,000 / 50.0) and lacks only the label; a line KEPT AT 0 reads `trim` with no price or notional (served TXUE ATD_CN_Equity 138,182 -> 0, the 'n/a' cells).
 - Add `est_price_source` to `SCHEMA` and `COLUMNS` (do not reuse `est_price_band_reason`).
+- AMENDMENT A1 (issuer, 2026-10-02 ~16:3xZ): first, disarm row ETFS_RIVALS-Z-W3-S20. RIV-e-2 (this slot's previous order) changed the daily dividend request to `["DVD_HIST_ALL", "DVD_CRNCY"]`, and `tests/test_s4_security_market.py` still pins `fields == ["DVD_HIST_ALL"]` at lines ~153, ~160 and ~171 (2 tests fail). Change those three comparisons to the new list and nothing else; the file is granted below. Then set the row's state to RESOLVED in the investigation file, citing your commit.
 
 ## 3. SURFACES AND BOUNDS
 
@@ -45,6 +46,7 @@ data/etfs/scripts/rivalfunds/gold_trade_schedule.py
 data/etfs/scripts/rivalfunds/tests/test_r6x1_*.py
 data/etfs/scripts/rivalfunds/tests/test_g2_trade_schedule.py
 data/etfs/scripts/rivalfunds/tests/test_g52_trade_schedule_v2.py
+data/etfs/scripts/rivalfunds/tests/test_s4_security_market.py
 org/missions/D5/ETFS/ETFS_RIVALS/surprise-channel/investigations/INVESTIGATION_v1.Z.md
 </paths>
 
