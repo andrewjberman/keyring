@@ -1,76 +1,68 @@
-# AMGT_CORPUS -- L5 decomposition v32.0 -- ROUND 32 (the round-31 carried list: two LOCAL direct acts and one paired SERVED act)
+# AMGT_CORPUS -- L5 decomposition v33.0 -- ROUND 33 (Z-S81: the percent family decided by a ground, never by magnitude)
 
-**Issuer:** `2.0.0_SA_COO~X`, 2026-10-02 ~15:0xZ.
+**Issuer:** `2.0.0_SA_COO~X`, 2026-10-02 ~16:5xZ.
 
-**Source:**
-- `1.0.0_SA_CTO~Z` RULED msg 28540 (READ-acked 14:49Z). Ruling 1: round-31 ruling 1's "until after Friday" ended with the demo,
-  so cut round 32 this tick: (1) Z-S74, LOCAL; (2) the BEST_DIV_YLD label DECIMAL -> PERCENT, SERVED, which brings its
-  never-widen half to this seat. FWD-20 and FWD-22 stay on Andrew's word. Ruling 2: Z-W4-S6's Peers lookup is RESAPP's
-  (2.0.0_SA_COO~Z, round 63/64); there is no CORPUS path grant.
-- The rectangle is round-31 analysis `ledger/ROUND_ANALYSIS.round31.md` @`85df450e8d` s.3, less the two items held on Andrew's
-  word.
-- Round 31's decomposition is kept as `AMGT_CORPUS_DECOMP.round31.md`. Base: CLOUD `1c50edaa81`.
+**Source:** `1.0.0_SA_CTO~Z` round-32 analysis `ledger/ROUND_ANALYSIS.round32.md` @`ac45eeeef8`, which closes round 32.
+- **Enrichment list:** 1 item, Z-S81 per rulings 1 and 2.
+- **Ruling 1:** each mnemonic is decided by a GROUND. EQY_DVD_YLD_IND reads against EQY_DPS / PX_LAST. The returns and the margin
+  read their statement inputs, or the series-median rule where a series exists. Where no ground exists, the label becomes
+  UNRESOLVED, not DECIMAL.
+- **Ruling 2:** the act shape copies ah-3 -- a dry run over every key, the per-key map diff, a scoped remeasure, negative arms,
+  and the reach named in the COO half.
+- **Ruling 3:** the disarm owner is this seat; the CTO half is owed on the dry run.
+
+Round 32's decomposition is kept as `AMGT_CORPUS_DECOMP.round32.md`. Base: CLOUD `a0a7214220`.
 
 ## 0. What this round IS
 
 | # | item | cell | path | risk |
 |---|---|---|---|---|
-| 1 | Z-S74: the provenance validator and print renderer read `UNRESOLVED-ON-` and `ZERO-DOMINATED` unit/sign texts as NOT measured | `CRPS-ah-1` | **DIRECT ACT** | LOCAL |
-| 2 | BEST_DIV_YLD under 0.3 is decided by the same-name identity `BEST_DPS / PX_LAST x 100`, not by magnitude | `CRPS-ah-2` | **DIRECT ACT** | LOCAL |
-| 3 | The map rebuild carrying ah-2, and ONE re-derive of each block whose BEST_DIV_YLD unit moves (dry run first) | `CRPS-ah-3` | the issuer's paired act after ah-2 | SERVED |
+| 1 | The ground reads in `build_unit_map` for a percent-family value under the 0.3 line | `CRPS-ai-1` | **DIRECT ACT** | LOCAL |
+| 2 | A scoped remeasure of the 11 DECIMAL-labelled names, ONE re-derive each, and their dossiers | `CRPS-ai-2` | the issuer's paired act after ai-1 | SERVED |
 
-Chains: `ah-1` (alone) and `ah-2 -> ah-3` (ah-3 consumes ah-2's map). Write sets are disjoint:
-- ah-1: `lib/research/provenance/`;
-- ah-2: `integrations/bloomberg/research/build_unit_map.py` and its test;
-- ah-3: `field_map.json`, the served blocks and the dossiers.
+There is one chain, `ai-1 -> ai-2`: ai-2's map reads ai-1's code.
 
-## 1. The cells
+## 1. Measured at the cut (`build_unit_map.load_raw_for_key` per name, `series_median_abs`, the map entries; read 16:4xZ)
 
-**CRPS-ah-1 (Z-S74).**
-- The defect: `lib/research/provenance/validate.py:32` (`derive_unit_status`), `:39` (`derive_sign_status`) and
-  `render_print.py:208` / `:289` mark a unit unmeasured only when it is empty or starts with the retired pointer `SEE
-  field_map.json`.
-- Measured over the 100 served blocks (37,746 figures), read 14:5xZ: 11 units (10 `ZERO-DOMINATED: ...`, 1
-  `UNRESOLVED-ON-...`) and 11 signs (`UNRESOLVED-ON-...`) read MEASURED.
-- After the act, all four predicates read those prefixes as not measured. The 37,735 other units stay MEASURED.
-- Check: `checks/round32/ah1_check.py`. At base: build 0/4, control 5/5 (as expected). The act must reach build 4/4, control 5/5.
-- Off the served path: `scoped_amgt.py` imports only the overlay functions from `render_print`, per the round-27 pair.
+| figures | names | the ground | expected label |
+|---|---|---|---|
+| 30 | BP/ LN: RETURN_ON_ASSET, RETURN_COM_EQY, RETURN_ON_TANGIBLE_ASSETS | **the series-median rule (round 26)**. Series medians are 1.33, 3.78 and 1.48. The map entries are single samples from 09-16 (0.0196, 0.0962, 0.0212) that a clean MEASURED entry never re-reads. | PERCENT |
+| 10 | JD_US: OPER_MARGIN | the series median: 1.06 (the entry sampled 0.2119) | PERCENT |
+| 20 | ORA_FP and RWE_GR: RETURN_ON_INV_CAPITAL | the series median: ORA 4.47; RWE's series reads -18.2 .. 4.0 | PERCENT |
+| 13 | HEI, MELI and PWR: EQY_DVD_YLD_IND | **NEW in ai-1:** each fiscal row's own identity, EQY_DPS / PX_LAST, both carried per row. Series medians are 0.13, 0.19 and about 0.3, under the line. | decided by the rows |
+| 4 | AZN, RKT, TTE and ULVR: SI_PERCENT_EQUITY_FLOAT (header only, 0.006 .. 0.020) | **none.** SHORT_INT_RATIO x VOLUME_AVG_30D over the free float gives AZN 4.15% (0.0415) against the served 0.0101, so it reconciles neither way. | **UNRESOLVED** (ruling 1) |
 
-**CRPS-ah-2 (the BEST_DIV_YLD label).**
-- The defect: `build_unit_map.classify_unit`'s percent family labels any |value| < 0.3 `DECIMAL (differs from CRO's PERCENT
-  reading on SAP)`. Measured: 12 BEST_DIV_YLD figures on BA, GOOGL, HEI and PWR, against 270 PERCENT. Z-S76 showed BA's values
-  ARE percent: 0.005 / 196.8 x 100 reproduces them.
-- The rule, BEST_DIV_YLD only, |value| < 0.3:
-  - The same name's 1FY `BEST_DPS` and `PX_LAST` decide, on a same-currency read (`CRNCY == EQY_FUND_CRNCY`, both stated).
-  - `|v| ~= DPS / PX x 100` within `RECONCILE_TOLERANCE` -> PERCENT. `|v| ~= DPS / PX` -> DECIMAL (the existing label).
-  - Anything else -> UNRESOLVED with the cause named.
-  - An exact zero stays with `unit_from_basis_zero`. |value| >= 0.3 is unchanged. No other mnemonic moves.
-- Check: `checks/round32/ah2_check.py`. At base: build 0/4, control 4/4 (as expected). The act must reach build 4/4, control 4/4,
-  with the build_unit_map test files green.
+So 60 of the 77 need no new rule: they need the remeasure the series rule already implies.
 
-**CRPS-ah-3 (the paired SERVED act).** After ah-2 lands:
-1. A serializing dry run over every served key: a TEMP map plus `stage_derive` with a write-capturing client, printing every
-   moved map entry and every (from, to) transition.
-2. The COO half, signed here, and the CTO half, owed by `1.0.0_SA_CTO~Z`.
-3. One NEVER-2 entry, slug `amgt-corpus-r32-ah3`, with the sentinel committed after every leg close.
-4. Legs: gate -> map -> blocks -> dossiers -> verify.
+## 2. The cells
 
-The expected reach is 4 blocks (BA, GOOGL, HEI and PWR) and 0 value moves. The dry run, never this line, is the number signed.
+**CRPS-ai-1 (the ground reads).**
+- `classify_unit` gains an optional `hist_rows`, which `build_entries` passes.
+- In the percent branch, for 0 < |v| < 0.3:
+  - BEST_DIV_YLD keeps ah-2's identity.
+  - EQY_DVD_YLD_IND reads its fiscal rows. Each row carrying a non-zero yield, a positive EQY_DPS and a positive PX_LAST is tested
+    against `EQY_DPS / PX_LAST x 100` (PERCENT) and `EQY_DPS / PX_LAST` (DECIMAL) within `RECONCILE_TOLERANCE`, on the same-currency
+    gate.
+  - The label is the hypothesis every computable row agrees on. No computable row, or a split, gives UNRESOLVED with the cause.
+  - Every other percent field under the line gives **UNRESOLVED** ("magnitude under 0.3 does not discriminate percent vs decimal;
+    no ground is defined for <mnemonic>").
+- |v| >= 0.3, an exact zero and the series-median input are unchanged.
+- Check: `checks/round33/ai1_check.py`. At base: build 0/4 + control 4/4 (as expected). The act must reach build 4/4 + control 4/4,
+  with the build_unit_map tests green.
 
-## 2. Found at the cut (rows, not cells)
+**CRPS-ai-2 (the paired SERVED act).** After ai-1:
+1. A serializing dry run over every key with `--securities <the 11> --remeasure`: HEI, MELI, PWR, JD, ORA, RWE, BP/ LN, AZN, RKT,
+   TTE, ULVR.
+2. The COO half names the dry run's whole reach, every mnemonic of those 11 names, as ah-3 named GOOGL.
+3. The CTO half, owed by `1.0.0_SA_CTO~Z` (ruling 3).
+4. One NEVER-2 entry, `amgt-corpus-r33-ai2`, with the legs ah-3 used: gate, a, b, c, d, v.
 
-- **The same magnitude rule labels 92 served figures DECIMAL across 8 percent-family mnemonics.**
-  - BEST_DIV_YLD (12) is this round's item.
-  - The others are outside the CTO's ruling: EQY_DVD_YLD_IND (16, on GOOGL, HEI, MELI and PWR), RETURN_ON_INV_CAPITAL (20),
-    RETURN_ON_ASSET, RETURN_COM_EQY, RETURN_ON_TANGIBLE_ASSETS and OPER_MARGIN (10 each), and SI_PERCENT_EQUITY_FLOAT (4).
-  - Filed as a row for the round-32 analysis; nothing is cut for them here.
-- **Z-W4-S6:** routed to RESAPP by ruling 2 (row Z-S79 carries the measurement).
+The negative arms include a figure whose ground confirms DECIMAL staying DECIMAL. One is printed if the dry run finds one;
+otherwise the arm is named as having no member, with its count.
 
 ## 5. Close
 
-- `fanout: 0 worker chains of 2, cap 3, reason: ah-1 and ah-2 are each one LOCAL cell under the size floor (the issuer's direct acts); ah-3 is the issuer's paired act and spawns no worker.`
-- `checks: ah1 base: build FAIL 0/4 + control PASS 5/5 as expected; ah2 base: build FAIL 0/4 + control PASS 4/4 as expected.`
-- **Real run:**
-  - ah-1: its census over the 100 served blocks (the 11 + 11 move to UNRESOLVED; the other 37,735 units stay MEASURED).
-  - ah-3: the served blocks re-read, and BA's Model tab on 5174.
-- The L8 packet then goes to `3.0.0_SA_CVO~Z`.
+- `fanout: 0 worker chains of 1, cap 3, reason: ai-1 is one LOCAL cell under the size floor (the issuer's direct act); ai-2 is the issuer's paired act and spawns no worker.`
+- `checks: ai1 base: build FAIL 0/4 + control PASS 4/4 as expected (checks/round33/ai1_check.py).`
+- **Real run:** ai-2's served census over 100 keys. DECIMAL-by-magnitude must reach 0 for the 77, beside the negative arms. The
+  L8 packet then goes to `3.0.0_SA_CVO~Z`.
