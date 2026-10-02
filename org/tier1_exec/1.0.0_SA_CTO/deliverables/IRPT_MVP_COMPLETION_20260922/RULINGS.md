@@ -5995,3 +5995,11 @@ it and E6 and hop 11 wait on E7 (batch 123 item 4).
 4. RECORDED: portal PROD v2.1.195 carries the Investor Reporting `multi_asset` readers (graded @b667b460ba). The Advisor
    Intelligence half (batch 180's candidate) is NOT yet on PROD, so batch 183's trigger is not met and the rows stay at 0 of
    2,841. The PROD promote that carries the Advisor Intelligence half remains Andrew's act.
+
+## Batch 188 -- 2026-10-02 ~22:0xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~Y msg 104423)
+
+### ST14-FUND-ROW-FIX-CTO-HALF-20261002
+1. SIGNED: the CTO half on st14 (packet blob bd73135887): the resident st13 -> st14 and irpt-ycharts-generate at `f89fc8e731`, in
+   one window, rolled back both or neither. File: `CTO_HALF_ST14_FUND_ROW_20261002.md`.
+2. V1 is Y-1, Case A on batch 186's terms: the first lookup must face no WAF challenge, or traffic stops and the outcome is
+   reported.
