@@ -1,0 +1,16 @@
+ssm d9ca3517-42fd-4ec2-bab6-9b9fff4ce1fa Success rc 0
+I1 start 2026-10-02T10:11:43Z
+before: Xvnc absent; rpm package tigervnc-server-minimal is not installed package tigervnc-server is not installed 
+installing tigervnc-server-minimal
+  tigervnc-license-1.14.1-3.amzn2023.0.6.noarch                                 
+  tigervnc-server-minimal-1.14.1-3.amzn2023.0.6.x86_64                          
+  xkbcomp-1.4.7-1.amzn2023.0.1.x86_64                                           
+
+Complete!
+dnf rc 0; transaction:      6 | -y install tigervnc-serv | 2026-10-02 10:11 | Install        |   16   
+after: Xvnc /usr/bin/Xvnc 
+enabled vnc units: [0] (0 expected)
+listening on 5900-5910: [0] (0 expected)
+resident unit active since Fri 2026-10-02 09:21:39 UTC (unchanged)
+I1 end 2026-10-02T10:11:48Z
+
