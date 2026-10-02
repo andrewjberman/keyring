@@ -231,6 +231,16 @@ function Invoke-PoolOrphanedDirs {
         if (-not (Test-Path $root)) { continue }
         Get-ChildItem -LiteralPath $root -Force -Directory -ErrorAction SilentlyContinue | ForEach-Object {
             $n = $_.FullName.Replace('\', '/').TrimEnd('/').ToLowerInvariant()
+            # A directory carrying its OWN .git (a file or a dir) is a checkout of SOME repository -- a portal
+            # worktree, the opal_ai tree, a standalone clone. Absence from THIS repo's worktree list says
+            # nothing about it. Measured 2026-10-02 (0.0.0_AB_MSTR~Z): a dry run listed 12 such checkouts
+            # for deletion, 10 of them registered portal worktrees incl. the live 5174 dev-server tree.
+            if (Test-Path -LiteralPath (Join-Path $_.FullName '.git')) {
+                if ($registeredNorm -notcontains $n) {
+                    Write-Output ("[orphaned-worktree-dirs] OTHER-REPO CHECKOUT (own .git) -- untouched: {0}" -f $_.FullName)
+                }
+                return
+            }
             if (($registeredNorm -notcontains $n) -and -not (Test-Excluded $_.FullName)) {
                 # The live window binds THIS pool too. Measured 2026-09-18: a dry run listed
                 # .worktrees\verify-lt-3-1 for deletion 30 minutes after its last write -- an
@@ -317,8 +327,12 @@ function Invoke-PoolWorktreeSplit([bool]$RunMerged, [bool]$RunUnmerged) {
                 # No --force: git itself refuses a worktree that turned dirty after the census above.
                 & git worktree remove $row.Path 2>&1 | Out-Null
                 if ($LASTEXITCODE -ne 0) { Write-Output ("  SKIP: git refused removal (dirty or locked): {0}" -f $row.Path); continue }
-                $branchName = $row.Branch -replace '^refs/heads/', ''
-                & git branch -D $branchName 2>&1 | Out-Null
+                # A detached worktree has no branch to delete; `git branch -D "(detached)"` errors and, under
+                # the native-command error preference, ended the whole run (2026-10-02, 0.0.0_AB_MSTR~Z).
+                if (-not $row.Detached -and $row.Branch -ne '(detached)') {
+                    $branchName = $row.Branch -replace '^refs/heads/', ''
+                    & git branch -D $branchName 2>&1 | Out-Null
+                }
             }
         }
         if ($DryRun -and $merged.Count -gt 0) { Write-Output "[merged-worktrees] DRY RUN -- would remove all of the above + delete their branches" }
