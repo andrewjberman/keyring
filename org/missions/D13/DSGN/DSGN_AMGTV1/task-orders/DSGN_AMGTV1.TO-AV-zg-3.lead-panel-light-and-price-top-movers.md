@@ -120,7 +120,7 @@ clauses with their planted-failure runs, and any row.
 - **Fixture:** the portal's `uiContractFixtures.json` holds a 32-row round-7 price set, so the live 94-row capture is the issuer's
   fixture.
 
-<status>pending</status>
+<status>complete</status>
 <round>29</round>
 <slot>~82</slot>
 <fabric>site-z</fabric>
