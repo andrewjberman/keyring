@@ -5,7 +5,7 @@
   "project": "AMGT_RESAPP",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.33",
+  "prd_version": "v0.34",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-security-analysis-20260910.md@19ce7d5b4d",
   "endpoint_outcomes": [
@@ -62,6 +62,9 @@
   - until then FWD-37 serves the marker kind with its reason.
 - **Fold record:** `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_FOLD_SECURITY_ANALYSIS_UIUX_20261002.md`.
 - This is an ENDPOINT change, so the CVO re-signs the ratified half.
+**v0.34 (~19:1xZ):** FWD-37 only, on `3.0.0_SA_CVO~Z`'s non-blocking note (`org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_RATIFIED_TEXT_REVIEW_20261002_DSGN_v0.9_HARVST_v0.14_RESAPP_v0.33_Z.md@afd31a71b8` section 2).
+- The earnings path is a QUALIFIED WAIT on Andrew's vendor word.
+- The interim branch's grade is never read as exercising the earnings path.
 
 
 
@@ -988,7 +991,13 @@ disputable, by rule, and carry no technical language.*
                     (the producer named in the fold record); while no earnings
                     date is served for a name, the route serves the kind with
                     its reason ("no earnings dates are pulled yet"), and a name
-                    with no burst still carries its earnings markers once pulled
+                    with no burst still carries its earnings markers once pulled.
+                    QUALIFIED WAIT (v0.34): the earnings path is gradeable only
+                    after the CORPUS Model-block pull that carries the dates, which
+                    waits on Andrew's vendor word (CORPUS FWD-22 / B.2; carded
+                    /open-calls 2026-10-02 ~17:3xZ). Until then the interim branch
+                    (the kind with its reason) is graded, and that grade is NOT a
+                    read of the earnings path (ABSENT != EXERCISED)
          ACCEPT     A spike with no multi-publisher burst still has an
                     explanation on the chart.
          SOURCE     SAUX-10; DSGN FWD-5

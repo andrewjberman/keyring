@@ -5,7 +5,7 @@
   "project": "AMGT_HARVST",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.14",
+  "prd_version": "v0.15",
   "step": 4,
   "brief_ref": "org/missions/D5/AMGT/AMGT_HARVST/brief/BRIEF_AMGT_PUBLICATIONS_BRONZE_SILVER_GOLD_20260922.md@5b90a0b839",
   "endpoint_outcomes": [
@@ -40,6 +40,11 @@ feature work should go to COO~H. CTO~Z should receive everything first to filter
 - **Rule 30:** a new gold table's name and address are builder output.
 - **Fold record:** `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_FOLD_SECURITY_ANALYSIS_UIUX_20261002.md`.
 - This is an ENDPOINT change, so the CVO re-signs the ratified half.
+**v0.15 (~19:1xZ):** FWD-17 only, on `3.0.0_SA_CVO~Z`'s two non-blocking notes (`org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_RATIFIED_TEXT_REVIEW_20261002_DSGN_v0.9_HARVST_v0.14_RESAPP_v0.33_Z.md@afd31a71b8` section 1).
+- A voter is a non-neutral FinBERT label, with no confidence threshold. That is Andrew's 09-16 rule as he gave it; the v0.14
+  threshold was an addition with no number.
+- The window ends at the last trading day (T-1), the same end RESAPP FWD-36 serves.
+- This is an ENDPOINT change, so the CVO re-signs.
 
 
 **author** `1.0.0_SA_CTO~Z` (L2 endpoint and L4 PRD). **driver** `2.0.0_SA_COO~H` (L5, L6, to completion;
@@ -368,9 +373,10 @@ act a seat can take on demand; none is a wait.
   FWD-17 Each covered name's tone and article count are in gold for rolling
          30, 90 and 365-day windows, where FinBERT not being sure is not a vote
          DONE WHEN  EXERCISED -- gold carries, per name per window ending at the
-                    as-of date: articles_total, voters (articles whose FinBERT
-                    label is not neutral and whose confidence clears the stated
-                    threshold), and a tone aggregate over the voters only; the
+                    last trading day (T-1, lib/trading_calendar.py; v0.15):
+                    articles_total, voters (articles whose FinBERT label is not
+                    neutral -- Andrew's rule, with NO confidence threshold added;
+                    v0.15), and a tone aggregate over the voters only; the
                     served window start is stored where the store is shorter
                     than the window (no history before 2026-01-01 is pulled for
                     it); a planted all-neutral name reads voters 0 and tone null,

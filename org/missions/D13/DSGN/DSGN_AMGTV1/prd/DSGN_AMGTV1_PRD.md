@@ -5,7 +5,7 @@
  "project": "DSGN_AMGTV1",
  "directive": "D13",
  "fabric": "site-z",
- "prd_version": "v0.9",
+ "prd_version": "v0.10",
  "step": 4,
  "brief_ref": "docs/briefs/dsgn-amgtv1-security-analysis-frontend-brief-20260928.md@08eefaac9d",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21", "FWD-22", "FWD-23", "FWD-24", "FWD-25", "FWD-26", "FWD-27"],
@@ -39,6 +39,9 @@ register `docs/briefs/amgt-security-analysis-ui-findings-20261002.json` (36 SAUX
 - **Changed:** FWD-5, FWD-12, FWD-20 (the band clause), FWD-21 and FWD-22.
 - **New:** FWD-25 (what changed), FWD-26 (rolling windows) and FWD-27 (plain words, agreeing figures).
 - This is an ENDPOINT change, so `3.0.0_SA_CVO~Z` re-signs the ratified-text half.
+**v0.10 (~19:1xZ):** FWD-21 only, on `3.0.0_SA_CVO~Z`'s REFUSE (`org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_RATIFIED_TEXT_REVIEW_20261002_DSGN_v0.9_HARVST_v0.14_RESAPP_v0.33_Z.md@afd31a71b8` section 3).
+- The ACCEPT is restated for the windows: "switches 30D to 90D" replaces "steps back two months".
+- A null served tone reads "no clear tone", apart from the neutral centre, which agrees with HARVST FWD-17.
 
 ## ENDPOINT (step 2, /endpoint --forward)
 
@@ -298,16 +301,18 @@ Landed verbatim from `org/tier1_exec/1.0.0_SA_CTO/deliverables/DSGN_AMGTV1_ENDPO
                       1440x900 without scrolling, and no label clips or overlaps;
                     - each bubble's fill is its served coverage tone on the Topic
                       Cloud scale, through ONE shared sentiment-colour module, with
-                      a legend; a name with no scored articles is neutral and says
-                      so on hover;
+                      a legend; a name whose served tone is null (no voters) is
+                      filled apart from the ramp's neutral centre and reads "no
+                      clear tone" on hover (v0.10);
                     - at least one bubble's size changes between two windows on
                       served data;
                     - the size is labelled "collected", never "market chatter"
-         ACCEPT     The PM says which names were collected most this month, steps
-                    back two months and says what changed. Chatter has this ONE
-                    form: no list, line or toggle to another chatter view exists
-                    on the page.
-         SOURCE     brief O1; CTO~Z rulings R4, R5
+         ACCEPT     The PM says which names were collected most in the window,
+                    switches 30D to 90D and says what changed (v0.10). Chatter has
+                    this ONE form: no list, line or toggle to another chatter view
+                    exists on the page.
+         SOURCE     brief O1; CTO~Z rulings R4, R5; v0.9-v0.10: Andrew N7, N8, N10
+                    (2026-10-02 ~17:33Z)
 
   FWD-22 A PM sees what moved in price, ranked, as horizontal bars
          DONE WHEN  EXERCISED -- the price view renders horizontal bars, longest
