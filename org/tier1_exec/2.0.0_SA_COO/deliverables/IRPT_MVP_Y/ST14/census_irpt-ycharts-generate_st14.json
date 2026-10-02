@@ -1,0 +1,361 @@
+{
+ "function": "irpt-ycharts-generate",
+ "pin": "f89fc8e731ca68c37e4d8c9dbe5bcf3683aa054d",
+ "live_code_sha256": "E+FqSWwETrwJ9Gd1JZwvB/VY7xZNSpjt6WUPRt/clmE=",
+ "live_zip_hashes_to_it": true,
+ "live_members": 112,
+ "pin_members": 113,
+ "identical": 99,
+ "eol_only": [
+  "fixtures/har/FIXTURE_MANIFEST.json",
+  "fixtures/har/collection.json",
+  "fixtures/har/create_201.json",
+  "fixtures/har/create_422_fee.json",
+  "fixtures/har/dashboard.json",
+  "fixtures/har/decision_branches.json",
+  "fixtures/har/generate_201.json",
+  "fixtures/har/generate_404_minimal.json",
+  "fixtures/har/status_drifted.json",
+  "fixtures/har/status_ok.json",
+  "fixtures/har/templates.json",
+  "fixtures/har/upload_ok.json",
+  "fixtures/har/validate_200.json",
+  "templates.json"
+ ],
+ "changed": [
+  "contracts/ExportBundle.schema.json",
+  "contracts/HoldingsSnapshot.schema.json",
+  "enforce.py",
+  "fixtures/har/report.pdf",
+  "grant.py",
+  "normalized_input.py",
+  "owned_requests.py",
+  "portfolio.py",
+  "resident_worker.py",
+  "security_resolution.py",
+  "served.py",
+  "transport.py",
+  "uploads.py"
+ ],
+ "added": [
+  "report_owner.py"
+ ],
+ "removed": [],
+ "history": [
+  {
+   "member": "contracts/ExportBundle.schema.json",
+   "source": "docs/contracts/investor-reporting/v1/ExportBundle.schema.json",
+   "live_equals": "173349a652",
+   "ahead": [
+    [
+     "1dae563e21",
+     "IRPT_BCKEND IB-pr-294 (0.9.0_WK_IRPT_BCKEND~101): the served submit takes the Analysis branch -- ana"
+    ]
+   ]
+  },
+  {
+   "member": "contracts/HoldingsSnapshot.schema.json",
+   "source": "docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json",
+   "live_equals": "cc99dea562",
+   "ahead": [
+    [
+     "4cc72587d6",
+     "feat(MDPF_SECCLASS readers packet, 2.0.0_SA_COO~M): the Holdings producer and its published contract"
+    ]
+   ]
+  },
+  {
+   "member": "enforce.py",
+   "source": "infra/aws/lambda/investor-reporting/_authz/enforce.py",
+   "live_equals": "755c13bc19",
+   "ahead": [
+    [
+     "7605bbf5ab",
+     "build(IRPT_BCKEND IB-pr-293, 0.9.0_WK_IRPT_BCKEND~101): the Enforcer's prospect branch -- a stored p"
+    ]
+   ]
+  },
+  {
+   "member": "fixtures/har/report.pdf",
+   "source": "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/report.pdf",
+   "live_equals": null,
+   "ahead": [
+    [
+     "5e4a92380b",
+     "IB-s-9: the YCharts generation chain as Opal's own async job -- source"
+    ]
+   ]
+  },
+  {
+   "member": "grant.py",
+   "source": "infra/aws/lambda/investor-reporting/_render_identity/grant.py",
+   "live_equals": "755c13bc19",
+   "ahead": [
+    [
+     "7605bbf5ab",
+     "build(IRPT_BCKEND IB-pr-293, 0.9.0_WK_IRPT_BCKEND~101): the Enforcer's prospect branch -- a stored p"
+    ],
+    [
+     "23d839c618",
+     "build(IRPT_BCKEND IB-pr-291, 0.9.0_WK_IRPT_BCKEND~101): a prospect scope for the shared render grant"
+    ]
+   ]
+  },
+  {
+   "member": "normalized_input.py",
+   "source": "infra/aws/lambda/investor-reporting/ycharts/generate/normalized_input.py",
+   "live_equals": "b3fc529601",
+   "ahead": [
+    [
+     "de5e0c6878",
+     "fix(IRPT_BCKEND ~Y st14, 2.0.0_SA_COO~Y): row S279 -- a fund ticker no longer fails the whole upload"
+    ]
+   ]
+  },
+  {
+   "member": "owned_requests.py",
+   "source": "infra/aws/lambda/investor-reporting/ops/owned_requests.py",
+   "live_equals": "8c4398e32a",
+   "ahead": [
+    [
+     "cee32dcf47",
+     "fix(IRPT_BCKEND ~Y S270 M2, 2.0.0_SA_COO~Y): one boto3 Table PER THREAD in the read memo (each from "
+    ],
+    [
+     "f4be46173f",
+     "fix(IRPT_BCKEND ~Y S270 M2, 2.0.0_SA_COO~Y): history's per-row checks (_materialize or the client fi"
+    ],
+    [
+     "c4210d2785",
+     "feat(IRPT_BCKEND ~Y E7b, 2.0.0_SA_COO~Y): the single-request read adds `comparisons` ONLY when the c"
+    ],
+    [
+     "f27418381d",
+     "feat(IRPT_BCKEND ~Y item 22, 2.0.0_SA_COO~Y): the request history can be scoped to the header's clie"
+    ],
+    [
+     "4c23ef5d98",
+     "feat(IRPT_BCKEND ~Y item 21, 2.0.0_SA_COO~Y): E6 -- one request's repeated irpt-requests table reads"
+    ]
+   ]
+  },
+  {
+   "member": "portfolio.py",
+   "source": "infra/aws/lambda/investor-reporting/intake/portfolio.py",
+   "live_equals": "d3f612d94d",
+   "ahead": [
+    [
+     "de5e0c6878",
+     "fix(IRPT_BCKEND ~Y st14, 2.0.0_SA_COO~Y): row S279 -- a fund ticker no longer fails the whole upload"
+    ]
+   ]
+  },
+  {
+   "member": "resident_worker.py",
+   "source": "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py",
+   "live_equals": "7122afefc1",
+   "ahead": [
+    [
+     "de5e0c6878",
+     "fix(IRPT_BCKEND ~Y st14, 2.0.0_SA_COO~Y): row S279 -- a fund ticker no longer fails the whole upload"
+    ],
+    [
+     "951afdf4e6",
+     "fix(IRPT_BCKEND ~Y item 19, 2.0.0_SA_COO~Y): st11 -- a resolve refused OPERATION_BUSY no longer spen"
+    ]
+   ]
+  },
+  {
+   "member": "security_resolution.py",
+   "source": "infra/aws/lambda/investor-reporting/intake/security_resolution.py",
+   "live_equals": "d3f612d94d",
+   "ahead": [
+    [
+     "de5e0c6878",
+     "fix(IRPT_BCKEND ~Y st14, 2.0.0_SA_COO~Y): row S279 -- a fund ticker no longer fails the whole upload"
+    ]
+   ]
+  },
+  {
+   "member": "served.py",
+   "source": "infra/aws/lambda/investor-reporting/_authz/served.py",
+   "live_equals": "f9a00f732c",
+   "ahead": [
+    [
+     "acce364286",
+     "build(IRPT_BCKEND IB-pr-296, 0.9.0_WK_IRPT_BCKEND~101): the installed render ports carry the retaine"
+    ],
+    [
+     "2ad49400f8",
+     "IRPT_BCKEND IB-pr-295 (0.9.0_WK_IRPT_BCKEND~101): the owner-read guard admits client_id on analysis-"
+    ],
+    [
+     "7605bbf5ab",
+     "build(IRPT_BCKEND IB-pr-293, 0.9.0_WK_IRPT_BCKEND~101): the Enforcer's prospect branch -- a stored p"
+    ]
+   ]
+  },
+  {
+   "member": "transport.py",
+   "source": "infra/aws/lambda/investor-reporting/ycharts/generate/transport.py",
+   "live_equals": "b21aacec70",
+   "ahead": [
+    [
+     "9718ac5c87",
+     "feat(IRPT_BCKEND ~Y st12, 2.0.0_SA_COO~Y): a cookie the vendor rotates is written back to ycharts/se"
+    ]
+   ]
+  },
+  {
+   "member": "uploads.py",
+   "source": "infra/aws/lambda/investor-reporting/intake/uploads.py",
+   "live_equals": "6b96d460f6",
+   "ahead": [
+    [
+     "951afdf4e6",
+     "fix(IRPT_BCKEND ~Y item 19, 2.0.0_SA_COO~Y): st11 -- a resolve refused OPERATION_BUSY no longer spen"
+    ]
+   ]
+  }
+ ],
+ "served_closure": [
+  {
+   "member": "served.py",
+   "pin_sha256": "4a9d374c9806daa9",
+   "live_sha256": "455cd77ea46e71ca",
+   "state": "CHANGED vs live"
+  },
+  {
+   "member": "enforce.py",
+   "pin_sha256": "7d7196406f0a0737",
+   "live_sha256": "4245b5f8aded61b6",
+   "state": "CHANGED vs live"
+  },
+  {
+   "member": "errors.py",
+   "pin_sha256": "b60f25ccaa706b7a",
+   "live_sha256": "b60f25ccaa706b7a",
+   "state": "identical to live"
+  },
+  {
+   "member": "resolve.py",
+   "pin_sha256": "24b407fa00ff0fc3",
+   "live_sha256": "24b407fa00ff0fc3",
+   "state": "identical to live"
+  },
+  {
+   "member": "grant.py",
+   "pin_sha256": "51785ed4b834b806",
+   "live_sha256": "2756be537b165b18",
+   "state": "CHANGED vs live"
+  },
+  {
+   "member": "report_owner.py",
+   "pin_sha256": "610982ce5bddd38d",
+   "live_sha256": null,
+   "state": "ADDED"
+  },
+  {
+   "member": "owner_reads.py",
+   "pin_sha256": "f21d26dcce7c46bf",
+   "live_sha256": "f21d26dcce7c46bf",
+   "state": "identical to live"
+  },
+  {
+   "member": "prospect.py",
+   "pin_sha256": "f556b0997dfa7310",
+   "live_sha256": "f556b0997dfa7310",
+   "state": "identical to live"
+  },
+  {
+   "member": "ids.py",
+   "pin_sha256": "f1659861d469c25d",
+   "live_sha256": "f1659861d469c25d",
+   "state": "identical to live"
+  },
+  {
+   "member": "loaders.py",
+   "pin_sha256": "763f0a0d4445481c",
+   "live_sha256": "763f0a0d4445481c",
+   "state": "identical to live"
+  },
+  {
+   "member": "routetable.py",
+   "pin_sha256": "fbd20fb97a64c84c",
+   "live_sha256": "fbd20fb97a64c84c",
+   "state": "identical to live"
+  },
+  {
+   "member": "interactive_access.py",
+   "pin_sha256": "bba07a3f4eeb947b",
+   "live_sha256": "bba07a3f4eeb947b",
+   "state": "identical to live"
+  },
+  {
+   "member": "canonical_profile_reads.py",
+   "pin_sha256": "0ec4a717f2aa2c12",
+   "live_sha256": "0ec4a717f2aa2c12",
+   "state": "identical to live"
+  },
+  {
+   "member": "keys.py",
+   "pin_sha256": "56ee3cc22e802579",
+   "live_sha256": "56ee3cc22e802579",
+   "state": "identical to live"
+  },
+  {
+   "member": "repository.py",
+   "pin_sha256": "f255335beb26f239",
+   "live_sha256": "f255335beb26f239",
+   "state": "identical to live"
+  },
+  {
+   "member": "maintained_sources.py",
+   "pin_sha256": "774eca9bde60a1dd",
+   "live_sha256": "774eca9bde60a1dd",
+   "state": "identical to live"
+  },
+  {
+   "member": "custody.py",
+   "pin_sha256": "23cda6b0e3dd88df",
+   "live_sha256": "23cda6b0e3dd88df",
+   "state": "identical to live"
+  },
+  {
+   "member": "selection.py",
+   "pin_sha256": "7ba910b85e2fce4f",
+   "live_sha256": "7ba910b85e2fce4f",
+   "state": "identical to live"
+  },
+  {
+   "member": "selection_store.py",
+   "pin_sha256": "583507a70e3a0074",
+   "live_sha256": "583507a70e3a0074",
+   "state": "identical to live"
+  }
+ ],
+ "built": {
+  "members": 113,
+  "differ_from_pin": [
+   "fixtures/har/report.pdf"
+  ],
+  "closure_stale": [],
+  "crlf_members": [
+   "fixtures/har/FIXTURE_MANIFEST.json",
+   "fixtures/har/collection.json",
+   "fixtures/har/create_201.json",
+   "fixtures/har/create_422_fee.json",
+   "fixtures/har/dashboard.json",
+   "fixtures/har/decision_branches.json",
+   "fixtures/har/generate_201.json",
+   "fixtures/har/generate_404_minimal.json",
+   "fixtures/har/status_drifted.json",
+   "fixtures/har/status_ok.json",
+   "fixtures/har/templates.json",
+   "fixtures/har/upload_ok.json",
+   "fixtures/har/validate_200.json",
+   "templates.json"
+  ],
+  "zip_sha256_b64": "wjSX3zZoFu2EUintXwZVESW+ac8F+bdRHSWm+YfpmgA="
+ }
+}
