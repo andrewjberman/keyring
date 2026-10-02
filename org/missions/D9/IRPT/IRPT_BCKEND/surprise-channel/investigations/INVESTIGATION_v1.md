@@ -14877,3 +14877,84 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Remedy owner 2.0.0_SA_COO~P at IB-pr-282 (E4) or a follow-on cell: pass report_owner=<retained-owner reader> to grant.render_ports in render_ports_from_env. Until then no prospect render is served; no account scope widens."
 }
 ```
+
+
+- IB-pr-294: the portal ExportBundle adapter reads wire.narrative_packet_ref.packet_id unconditionally, so an Analysis bundle (analysis_report_ref, no narrative_packet_ref) would throw there if it ever reached it.
+
+```json
+{
+  "id": "IRPT_BCKEND-W101-S8",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~101",
+  "surfaced_at": "2026-10-02T12:20:00Z",
+  "one_line": "IB-pr-294: the portal ExportBundle adapter reads wire.narrative_packet_ref.packet_id unconditionally, so an Analysis bundle (analysis_report_ref, no narrative_packet_ref) would throw there if it ever reached it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "comp-find 'narrative_packet_ref' --files --corpus default: 73 hit(s) across 52799 file(s); portal hits: contracts/adapt.ts, contracts/wire/ExportBundle.ts, contracts/wire/consumed.ts + 4 fixtures",
+      "portal/src/pages/InvestorReporting/contracts/adapt.ts:1186,1192 read at worktree HEAD"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IB-pr-294 refusal clause: 'A reader outside <paths> that would receive an Analysis bundle is a row naming it.' PRD v0.24 ruling 24: a bundle carries exactly one of the two references.",
+  "world_is": "portal/src/pages/InvestorReporting/contracts/adapt.ts :1186 (bundleRef) and :1192 (narrativePacketRef) dereference wire.narrative_packet_ref.packet_id with no guard; wire/ExportBundle.ts :20 types it readonly-required; wire/consumed.ts :78-79 lists it in reads and required. Whether the portal ever receives a server-frozen Analysis bundle (the F8 preview reads a bundle) is not shown by anything in this cell; the served bundle is stored under the evidence bucket and read by the render host, not returned by submit-export (the answer is QUEUED with no data).",
+  "notes": "Not edited (outside <paths>, portal submodule). Remedy owner: 2.0.0_SA_COO~P at the E4 served move or the FNTEND workstream: make the wire type a union (narrative_packet_ref | analysis_report_ref) and the adapter guard it before an Analysis bundle is previewed. Census: NARRATIVE_REF_READERS_R31.json outside_the_tree."
+}
+```
+
+
+- IB-pr-294: retained_export._is_analysis / print_query decide Analysis by REPORT SHAPE (request_ref present, no dates dict), not by the resolved kind the submit already holds.
+
+```json
+{
+  "id": "IRPT_BCKEND-W101-S9",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~101",
+  "surfaced_at": "2026-10-02T12:20:00Z",
+  "one_line": "IB-pr-294: retained_export._is_analysis / print_query decide Analysis by REPORT SHAPE (request_ref present, no dates dict), not by the resolved kind the submit already holds.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/retained_export.py:_is_analysis and print_query (read at worktree HEAD c7580dc18a); outside this order's <paths>",
+      "pytest run during the cell: ExportSubmitRefused 'the retained report carries no requested window' on an Analysis-kind record with dates"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IB-pr-294: 'for a resolved ANALYSIS report ... the cutoff is the report's own as-of, never dates.actual_end'; the resolved kind is authoritative (retained_export.resolve returns kind).",
+  "world_is": "retained_export.print_query(grant_record, report) calls _is_analysis(report), which is false for an Analysis report that carries a dates dict; it then demands dates.requested_start/requested_end and refuses. Measured while writing test_serve_submit_analysis.py: an Analysis-kind record with a spurious dates.actual_end reached 'the retained report carries no requested window'. The AnalysisReport schema forbids a dates property, so a schema-valid report never takes this path; the submit_service date and bundle reference in this cell key off resolved kind and are unaffected.",
+  "notes": "Not edited (retained_export.py is outside <paths>). Inert while the AnalysisReport schema forbids dates. Remedy owner 2.0.0_SA_COO~P: pass the resolved kind to print_query."
+}
+```
+
+
+- IB-pr-294: the AC2 check validates the stored fixture envelope, not its instance
+
+```json
+{
+  "id": "IRPT_BCKEND-W101-S10",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~101",
+  "surfaced_at": "2026-10-02T12:35:00Z",
+  "one_line": "IB-pr-294: the AC2 check validates the stored ExportBundle fixture ENVELOPE, not its instance, so it cannot pass for any schema; the worker read the instance instead (a one-line change to the check inside the granted checks/r31 path).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P/checks/r31/p31_1_ac2_bundle_exactly_one_ref.py step 2 read ExportBundle.valid.json whole: 'Additional properties are not allowed (_expect, _fixture, _source, instance)'",
+      "measured in python at HEAD c7580dc18a: the BASE packaged schema gives 8 errors on the valid fixture envelope and 0 on its `instance`; the invalid fixture's `instance` gives 1 error on both base and changed schema; the changed schema gives 0 and 1 respectively"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IB31-1-AC2: 'the stored client fixtures validate unchanged on the packaged schema'; check step 2: ExportBundle.valid.json validates and ExportBundle.invalid.json does not.",
+  "world_is": "Every stored fixture in _contracts/fixtures/ is an envelope with the document under `instance` (the existing tests read ['instance']). The check passed the envelope to the validator, which refuses it on the unknown envelope keys regardless of schema. Worker edit: the two json.loads calls in that check now take [\"instance\"]; the grading otherwise is unchanged (valid validates, invalid is refused). The fixtures and schema grading were not loosened. The COO should read the amendment.",
+  "notes": "Edit made under the order's <paths> grant (checks/r31/). Remedy owner 2.0.0_SA_COO~P: confirm or replace the amended check."
+}
+```
