@@ -2232,6 +2232,20 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "OA-f-11 face item 4(c): read back the sublayer and both filters by key, printing VERIFY OK when correct.",
     "world_is": "The sublayer read-back is correct in name and flags but compares weight to the REQUESTED 0xFFFF, not to what the engine assigned. Fix (LOCAL, next cut): compare to the read-back weight and print it, or accept any weight when the filters resolve inside the key. Until then a re-run on this box exits 4 before removing R1-class rules. Also: an EDR holds the top 29 sublayer slots here, so 'highest priority' is not available to us -- AC3 shows the block still wins arbitration against the loopback permits."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S55",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~27",
+    "surfaced_at": "2026-10-02T04:12Z",
+    "one_line": "In the sparse worktree /c/tmp/oa-27 .tools/safe-commit.sh refuses every commit: commit-gate fails on ModuleNotFoundError comp_constants_cli (commit_gate_runner.py line 96) and comp_pulse.py is absent, both outside the sparse cone.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {"status": "GROUNDED", "evidence": ["safe-commit output in /c/tmp/oa-27: 'No module named comp_constants_cli'; 'org/modules/graph/comp_pulse.py: No such file'; ERROR: BLOCKED -- commit-gate failed, files unstaged."]},
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The face: commit the parent-side files via .tools/safe-commit.sh from a sparse checkout holding .tools, lib, org/ref, org/standards and the NFRA_OPALAI cone.",
+    "world_is": "The commit gate imports modules not on disk in the cone, so the parent-side commit (instance, status flip, this row) did not land. AC1 PASS, nested commit bd7cd5d and proof instance (check rc=0) are done and sit uncommitted in the worktree. No bypass used."
   }
 ]
 ```

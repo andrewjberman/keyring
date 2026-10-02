@@ -102,7 +102,7 @@ Dry-run at base (OA_F12_REF=0fb3fcb694): f12.AC1 FAIL as expected:
 - seam `none` rc=1 with access-denied text 1 (the defect);
 - miss and found arms already correct (the controls hold at base).
 
-<status>pending</status>
+<status>complete</status>
 <direct_act>true</direct_act>
 <slot>~27</slot>
 <fabric>site-z</fabric>
