@@ -2931,6 +2931,28 @@
     "spec_asserts": "Order section 3: run the whole package suite before reporting; it must read 0 failed. Cell RIV-e-2: DVD_CRNCY joins the dividend request.",
     "world_is": "Both can hold only if test_s4_security_market.py's three `[\"DVD_HIST_ALL\"]` field comparisons read [\"DVD_HIST_ALL\", \"DVD_CRNCY\"] (a mechanical, meaning-preserving edit); that path is not in this order's <paths>, so it is NOT edited here. Suite is red at the drain until the issuer widens the paths or makes the edit.",
     "notes": "Same class as Z-W5-S29/S32 and Z-W3-S18/S19 (a stale pin outside the order's paths); disarm_owner 2.0.0_SA_COO~RV."
+  },
+  {
+      "id": "ETFS_RIVALS-Z-W3-S21",
+      "project": "ETFS_RIVALS",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_ETFS_RIVALS~3",
+      "surfaced_at": "2026-10-02T17:00Z",
+      "one_line": "Row Z-W3-S20 is DISARMED at ab0a58eaa4 (the three test_s4 pins now read the DVD_CRNCY list); the order says set its state to RESOLVED, but the schema has no such disposition and an existing row is never edited, so this row carries the state.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+              "data/etfs/scripts/rivalfunds/tests/test_s4_security_market.py:153,160,171@ab0a58eaa4 -- the three comparisons read [\"DVD_HIST_ALL\", \"DVD_CRNCY\"] and nothing else changed in the file",
+              "python -m pytest rivalfunds -q from data/etfs/scripts at ab0a58eaa4: 422 passed, 2 skipped, 0 failed (the two Z-W3-S20 tests, test_daily_lands_g3_then_g4_under_distinct_markers and test_daily_market_failure_is_partial_not_silent, pass)",
+              "org/surprise_channel/schemas/investigation_item.schema.json disposition enum: UNDER_INVESTIGATION, GRADUATED, DISMISSED_WITH_REASON, DECOMP_INVALIDATING -- no RESOLVED value; the row S20 is left as written"
+          ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "Order amendment A1: change the three test_s4_security_market.py comparisons to the new list, then set row ETFS_RIVALS-Z-W3-S20's state to RESOLVED in the investigation file, citing the commit.",
+      "world_is": "The three comparisons are changed (commit ab0a58eaa4) and the suite reads 0 failed, so S20's hazard (a red suite at the drain) no longer stands. RESOLVED is not a schema disposition and my rules forbid editing an existing row, so S20 still reads UNDER_INVESTIGATION/ARMED in its own text; this row cites it as disarmed. The issuer or the CVO sets S20's standing.",
+      "notes": "Cites ETFS_RIVALS-Z-W3-S20. disarm_owner of S20 was 2.0.0_SA_COO~RV; the disarming edit is A1's grant."
   }
 ]
 ```
