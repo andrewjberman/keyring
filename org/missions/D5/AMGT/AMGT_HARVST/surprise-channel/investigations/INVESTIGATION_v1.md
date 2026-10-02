@@ -6214,6 +6214,89 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "Not measured: whether the death is a server-side lifetime cap on an hCaptcha-solved session independent of activity, a bot-signal revocation, or tab-side (the keep-alive page load happens in the collector's tab, the vault cookie is not refreshed). Not tested: any other keep-alive shape. The issuer/CTO decide the next act."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~90",
+      "surfaced_at": "2026-10-02T17:28Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W90-S18",
+      "one_line": "aj-6: Chrome 154 ignores --load-extension and --disable-extensions-except blocks the extension, so the order's launch-argument route loads nothing; the build loads it through CDP Extensions.loadUnpacked instead.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Order aj-6 item 2: the module returns the Chrome launch arguments that load the extension (--load-extension, --disable-extensions-except).",
+      "world_is": "Installed Chrome is 154.0.8037.97 (branded). Measured in a scratch profile with the prepared extension: with --load-extension + --disable-extensions-except + --disable-features=DisableLoadExtensionCommandLineSwitch, headed and headless, context.service_workers stayed empty and chrome://extensions showed no extension. With only --enable-unsafe-extension-debugging, CDP Extensions.loadUnpacked (via ctx.browser.new_browser_cdp_session()) returned id dknlfmjaanfblgfdfebhijalfmhmjjjo, chrome-extension://<id>/manifest.json answered 200 and the service worker ran; adding --disable-extensions-except made the same URL answer ERR_BLOCKED_BY_CLIENT. nopecha_extension.launch_args() still returns the three requested flags (plant (i) pins them, plus the debugging switch); cdp_launch_args() + load_unpacked() is the route the stage-2 harness uses. A stage-2 run on launch_args() alone would show an unsolved challenge and extension.id null in aj6_signin_ext.json, not a silent pass.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/nopecha_extension.py (launch_args, cdp_launch_args, load_unpacked)",
+          "lib/opal_data_harvest/test_aj6_nopecha_extension.py::test_i_cdp_launch_args_never_carry_the_disable_except_flag"
+        ]
+      },
+      "notes": "Not measured: whether a CDP-loaded unpacked extension leaves an entry in the ft profile's Preferences that a later keepalive launch (no extension) sees disabled. The issuer should read that before stage 2 shares the profile with aj-4's collector."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~90",
+      "surfaced_at": "2026-10-02T17:28Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W90-S19",
+      "one_line": "aj-6: NopeCHA's official extension release is NopeCHALLC/nopecha-extension (the nopecha.com/github/release redirect target), not the NopeCHA/NopeCHA org repo; 0.6.1 (stable) was taken over the newer 0.6.2-rc.2 prerelease.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Order aj-6 item 1: the extension comes from NopeCHA's own official GitHub release or the Chrome Web Store CRX.",
+      "world_is": "https://nopecha.com/github/release answers 302 to https://github.com/NopeCHALLC/nopecha-extension/releases. The org repo NopeCHA/NopeCHA is listed under the NopeCHA org but its releases API and release page answer 404. Releases: 0.6.2-rc.2 (prerelease, 2026-08-20), 0.6.1 (2026-06-11), 0.6.0, 0.5.6. Taken: 0.6.1 chromium_automation.zip, sha256 92ebe154bd34433b4a36e6b2df33006fa6acb19a1b81031a0acb5b72be5e025a, equal to GitHub's own asset digest. The automation build has no popup and takes its settings, including the key, from the nopecha object in manifest.json (developers.nopecha.com/guides/extension_advanced). Full record: deliverables/0.9.0_WK_AMGT_HARVST~90/aj6_extension_source.md.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~90/aj6_extension_source.md"
+        ]
+      }
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~90",
+      "surfaced_at": "2026-10-02T17:28Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W90-S20",
+      "one_line": "aj-6: stage 1 ran a key-bearing extension in a SCRATCH Chrome profile (no ft request) to measure the loader; the extension's own solve behaviour on a live hCaptcha is unproven until stage 2.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Order aj-6 stage 1: build and plant; no ft request and no live sign-in.",
+      "world_is": "To learn which loader works on Chrome 154 (row S18) the worker launched Chrome 154 three times on a throwaway profile under .scratch, with the prepared extension (the real key read from Secrets nopecha/api-key, in the prepared manifest in the runtime cache only) and navigated only to about:blank, chrome://extensions and the extension's own manifest.json. No ft.com, hcaptcha.com or Bloomberg page was loaded, no Python-side call to NopeCHA was made, and nopecha.Token was never imported. The extension itself may have contacted NopeCHA's servers at start-up (VEW-1 covers NopeCHA egress); that traffic was not captured. What is NOT shown: that the extension clears a live FT hCaptcha. Plants and the smoke prove loading, key placement and no Token API use only.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/nopecha_extension.py",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~92/aj6_signin_ext.py"
+        ]
+      }
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~90",
+      "surfaced_at": "2026-10-02T18:12Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W90-S21",
+      "one_line": "aj-6 stage 2: the NopeCHA extension (0.6.1, loaded and running) did NOT clear the ft hCaptcha in 150 s; no identity cookie, nothing saved; the sign-in was not input-quiet (7042 hardware events).",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Order aj-6 / AC2: one unattended ft sign-in whose hCaptcha the NopeCHA browser extension solves (challenge_presented then challenge_passed, FTSession_s saved, hardware_input none, 0 Token API, 0 Kimi).",
+      "world_is": "Attempt 1 of at most 2 (attempt 2 not taken: it failed after a challenge was presented, not at launch), 2026-10-02 18:06:57Z-18:09:48Z, headed, ft profile free beforehand (0 chrome on it, no SingletonLock). Extension id dknlfmja... loaded via CDP loadUnpacked, service worker seen, persisted in the ft profile's Secure Preferences (location 4, path <runtime>/extensions/nopecha/prepared); Preferences holds no extensions entry. Email and credentials submitted, hCaptcha frame presented at 18:07:12Z, still present at 150 s (challenge_failed); END identity=False, 71 cookies, none FTSession/FTSession_s, rc=1, nothing saved to the vault. nopecha_token_api_calls 0, kimi_vision_calls 0, python-side calls to NopeCHA/Kimi 0. Whether the extension made any solve request to nopecha.com from inside the browser is NOT OBSERVED (the harness has no browser-network capture). hardware_input read detected:7042 (0 injected) so the machine was not input-quiet and the run could not have claimed unattended even if solved. Consistent with row Z-S66 (NopeCHA's current API documents no hCaptcha). AC2 literal: rc 1, FAIL (4 failures: solved_by nopecha_extension_failed, hardware_input detected:7042, no FTSession_s saved, no presented-then-passed). Record: deliverables/0.9.0_WK_AMGT_HARVST~92/aj6_signin_ext.json.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~92/aj6_signin_ext.json",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~90/aj6_ext_run1_log.txt",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~90/aj6_ac2_output.txt"
+        ]
+      }
     }
   ]
 ```
