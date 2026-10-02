@@ -1,0 +1,6 @@
+rows 1228 {'ARTIFACT': 214, 'INPUT': 26, 'NORMALIZATION': 31, 'PERFORMANCE_ACCEPTED': 115, 'PERFORMANCE_USE': 6, 'REPORT': 122, 'RETENTION': 493, 'SELECTION': 170, 'UPLOAD': 31, 'analysis': 20}
+rows with composition_ref 20
+outcomes {'OK_0': 16, 'OK_2': 2, 'OK_1': 2}
+labels {'Opal Short-Term': 2, 'Opal Intermediate-Term': 2, 'Opal Long-Term': 2}
+revisions {'1': 20}
+tenants {'cottonwood': 18, 'inflection': 1, '49financial': 1}
