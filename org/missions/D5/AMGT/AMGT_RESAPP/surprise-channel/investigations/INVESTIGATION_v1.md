@@ -17067,6 +17067,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
  },
  "disposition": "DISMISSED_WITH_REASON",
  "dismissal_reason": "This row carries evidence, not a new hazard: it proposes that Z-W208-S2 and Z-W205-S1 be dismissed with the reasons in world_is at the CVO's L9. Nothing is owed on this row itself."
+},
+{
+ "id": "AMGT_RESAPP-Z-S339",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~Z",
+ "surfaced_at": "2026-10-02T20:00:18Z",
+ "one_line": "R2's 2 null-sector bars (BP/ LN, NG/ LN) are a slash-ticker lookup miss, not an absent classification: _classification_for_ticker asks etf-classifications for the bare ticker 'BP/' and 'NG/', while the table holds 'BP' (BP PLC, equity, Energy) and 'NG' (equity, Utilities). The same family as Z-W4-S6.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "R2 (DSGN Z-C-S37 ruling): an equity whose sub_asset_class is a GICS sector serves classification.sector; otherwise null with a reason. The 2 nulls read 'the classifications table holds no classification for this ticker'.",
+ "world_is": "Local read at the R2 tree (8edd67451c): the price ranking's 94 bars serve 92 sectors + 2 nulls, BP/_LN_Equity and NG/_LN_Equity, each with classification {} and the row-level reason above. DynamoDB GetItem on etf-classifications: 'BP/' None, 'NG/' None, 'BP/ LN' None, 'BP.' None, 'NG.' None; 'BP' -> BP PLC, equity, Energy; 'NG' -> name None, equity, Utilities. scoped_amgt.py:629 takes the first space-separated token, which keeps the slash. The reason served is therefore untrue for these two names. Stripping the slash is not a safe one-line fix: the bare-ticker key already collapses exchanges (NG US is a different company from NG/ LN), so the remedy needs the identity's exchange or a crosswalk-keyed classification. Round-64 item; nothing is served wrong-company today.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "python handler local /lead-panel/rankings/breakout/price at 8edd67451c: sector None on BP/_LN_Equity and NG/_LN_Equity only.",
+   "boto3 GetItem etf-classifications ticker in ('BP/','BP','NG/','NG','BP/ LN','BP.','NG.') at ~19:5xZ.",
+   "lib/research/api/scoped_amgt.py:629 bare = str(ticker).strip().split(' ')[0]"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
 }
 ]
 ```
