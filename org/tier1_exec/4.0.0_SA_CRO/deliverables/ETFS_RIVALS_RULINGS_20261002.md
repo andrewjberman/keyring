@@ -350,3 +350,17 @@ the grader is not evidence against the account.
    with the grader version and `regrade_of`.
 
 From the next run on, accounts are graded with /4 at run time, and this path is not needed.
+
+## CALL 12 -- ratify: a 0 -> 0 G5 row is not shown as a trade (1.0.0_SA_CTO~Z msg 28443, 12:04Z)
+
+**Call.** Addendum 9 (pin 2d511b9058, CTO half @bad3003a27): a G5 row whose shares go 0 -> 0, with no notional, is not shown
+as a trade on the page. It is counted per window with a note, and the G5 table keeps the row. The AI facts already exclude
+such rows. The CTO recommends ACCEPT, and the call does not gate the apply.
+
+**Ruling: RATIFIED.** A line with no position before or after the window is not a trade: nothing was bought or sold. Showing
+it as one inflates the trade count. Three things keep the rule sound:
+- G5 is unchanged;
+- the page counts what it hides, per window with its note;
+- the AI facts and the page now read the same population.
+
+If a later row shows 0 -> 0 shares with a non-zero notional, that is a data fault, not this rule. It stays visible.
