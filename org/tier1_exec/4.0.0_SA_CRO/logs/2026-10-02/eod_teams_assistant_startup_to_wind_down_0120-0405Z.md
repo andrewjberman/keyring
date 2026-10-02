@@ -114,3 +114,29 @@ resources and no code yet. Untracked files from earlier sessions are left as the
    Andrew with a `#tag`; two-way SMS on the toll-free number into SNS, then SQS, then a reply function (1 / 0 / edit);
    a one-time backfill; the End of Day post moved onto the same loop, triggered by the sprint page landing.
 4. **[4.0.0_SA_CRO]** Retire the laptop "Opal EOD Update" job once the cloud loop serves the End of Day post.
+
+## Addendum ~04:10Z to ~05:00Z -- the build resumed, then held for the LDO design
+
+**archetype:** IMPLEMENT
+
+Andrew: "i want the build to proceed"; "that is their device, not yours" (104035 was site Z's only; 0.0.0_AB_MSTR
+withdrew it, 104043). Record addenda @89a3385908.
+
+- **Gateway half** (a fork of this seat): db92656c72 -- `/hx/teams` (six routes, own bearer TEAMS_BEARER) plus the
+  Z-S41 fix; 14 new tests pass, the whole gateway suite unchanged against baseline (397 passed; the same 3 failures
+  and 15 moto-missing errors as before). Release request a53c8452b4, relayed to site Z by 0.0.0_AB_MSTR (104052);
+  site Z's disk incident delays the release. Committed under the audited CLOUD_OPS_OR_ETL override.
+- **Naming:** cadence "1min" added to NAMING_SCHEMA.json (aa2b5a42ff); NAMES.json from name(); every S3 key from
+  address() at run time (the naming gate refused full s3:// URIs in NAMES.json and a typed scope token; both fixed;
+  the change grades WARN, 0 REFUSE).
+- **Cloud half:** 84eb66e824 (assist.py, tests 29 passed, post_format.py shared with the laptop job; eod_update.py
+  is ASCII again) and 8b1eb0b88b (handlers, build, chat_assist.tf; audited override). Targeted plan read: 23 to add,
+  0 to change, 0 to destroy. NOT APPLIED.
+- **Held:** Andrew ~04:4xZ: a forked session is building the Lambda Durable Object (LDO) and "i think that design is
+  how we should try this out". The deploy ledger entry opened at 04:35Z was withdrawn uncommitted (nothing applied);
+  the fork was sent the inventory of what exists. No AWS resource was created this session.
+- Push state (fetch + is-ancestor, positive control 0257976705): through aa2b5a42ff on origin; db92656c72,
+  a53c8452b4, 84eb66e824, 8b1eb0b88b LOCAL; origin/CLOUD 1f2346734b.
+
+**Next:** the LDO fork names the interface; the assistant plugs into it; site Z releases `/hx/teams`; then the
+secrets, two-way SMS and a targeted apply under a new ledger entry.
