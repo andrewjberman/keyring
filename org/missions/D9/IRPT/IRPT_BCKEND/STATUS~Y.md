@@ -2,17 +2,18 @@
 
 Seat `2.0.0_SA_COO~Y` (CLAUDE), relaunched 2026-10-02 ~01:5xZ on Andrew's word (record
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261002_014xZ_BRING_EVERYONE_BACK_ONLINE_PER_REBOOT_RECORDS.md`).
-Mode FAST: lease `IRPT_BCKEND~Y` re-armed 02:25Z until 06:25Z (CTO 103946, under Andrew-direct 2026-10-01 ~04:2xZ).
+Mode FAST: lease `IRPT_BCKEND~Y` re-armed 04:33Z until 08:33Z after the withdrawn wind-down (MSTR 104039; CTO 103946
+terms, under Andrew-direct 2026-10-01 ~04:2xZ).
 Loop `/canonical-drive IRPT_BCKEND` 10m (LIVE_ARMS RELAUNCH row). Way forward: CTO rulings batches 61, 62, 65, 70, 72,
 76, 83, 88, 89, 93, 97, 98, 100 and 105 in `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md`.
-Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-02T03:5xZ.
+Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-02T05:0xZ.
 
 ## Pins
 
 | What | Value |
 |---|---|
-| Worktree | branch `coo-y-r30` at `C:/Users/AndrewBerman/Desktop/coo-y-r30`, head `9ada3e8b02`, merged into CLOUD |
-| Items 1 to 17 on CLOUD | 1 to 14 as before (st9 carries them); 15 `3921492913` (the 900 s calculating release, the WAF header token); 16 `7122afefc1` (row S253, the job row's `vendor_requests` ledger); 17 `8c4398e32a` (E7, the request read names the chosen comparisons). One pin for both releases: `b1db201025` |
+| Worktree | branch `coo-y-r30` at `C:/Users/AndrewBerman/Desktop/coo-y-r30`, head `3ad9306bf9`, merged into CLOUD at `87f9b3afab` |
+| Items 1 to 17 on CLOUD | 1 to 14 as before (st9 carries them); 15 `3921492913` (the 900 s calculating release, the WAF header token); 16 `7122afefc1` (row S253, the job row's `vendor_requests` ledger); 17 `8c4398e32a` (E7, the request read names the chosen comparisons); 18 `3ad9306bf9` (the catalogue reads `etf-classifications` once per 300 s warm window, not per request; condition 11 of the whole-bundle packet), merge `87f9b3afab`, NOT served |
 | SERVED: the resident | `/opt/irpt-resident/b1db201025-st10` since 2026-10-02T03:19:51Z (ledger `irpt-resident-st10-20261002` CLOSED; both halves, CTO batch 106): items 1 to 17. Rollback root `481166a8f2-st9` on the host |
 | SERVED: `irpt-status` | `2V7xV1+zII4+g6tV..` since 2026-10-01T06:59:55Z (read 2026-10-02 ~02:2xZ) |
 | SERVED: `irpt-ycharts-generate` | `arC65KbDPPssn2UX..` since 2026-10-01T06:51:12Z |
@@ -49,9 +50,13 @@ made (CTO half item 1).
    listed request, timeout 15 s). The CTO's call on the change was asked 03:54Z (recommended: a per-request read memo
    that keeps the deliberate `_final` re-reads, as a new irpt-status packet).
 4. E5 (row S230 at its next natural failure; no session is displaced on purpose).
-5. Batch 61's order after that: one job per remaining arm (Target Weight, 49 Financial, Inflection), each under a window
-   packet; the catalogue route from a read that is not a full-table Scan per request; the resolve concurrency fix; the
-   vendor PDF link; the Analysis export; the email lane.
+5. **The catalogue (batch 61 item 8, first after the thread):** item 18 is built and merged. Next: the
+   `irpt-ycharts-generate` whole bundle at `87f9b3afab` (12 of 112 members change; `served.py`'s closure identical to live;
+   two other-seat registry rows ride it, both read inert), then the route: its `routes.json` row is already DECLARED, so it is one
+   targeted apply of the api root, each under its own packet with both halves.
+6. Batch 61's order after that: one job per remaining arm (Target Weight, 49 Financial, Inflection), each under a window
+   packet; the resolve concurrency fix; the vendor PDF link; the Analysis export; the email lane. E6's memo follows E7's
+   apply (CTO batch 111). A client-scoped history route is an enrichment item at the next round analysis (CTO batch 110 item 4).
 
 ## Rows this lane holds
 
