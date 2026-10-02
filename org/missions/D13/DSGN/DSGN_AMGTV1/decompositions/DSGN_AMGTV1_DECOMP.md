@@ -1376,3 +1376,54 @@ carries the mnemonic" is kept by `data-mnemonic` in the markup; the CTO may amen
 `round21/checks/tipface.cjs` (issuer, with a DataTooltip stub that renders the real component's text): base portal DEV da0b3bd7 2 of 3.
 AC3 carries `tsc -b` and all 14 harnesses (ModelTab inherits the face; ModelTab.tsx itself is not edited). **Chain:** ~68 alone.
 **Deadline:** walk clean by 21:30Z, otherwise drop; da0b3bd7 stays the candidate. **Rule 24:** one order; no served value moves.
+
+
+## v22 -- ROUND 22 (issuer, 2026-10-02 ~06:5xZ), over PRD v0.7 @9ef3af2bee (ADMITTED)
+
+**Rectangle:** `1.0.0_SA_CTO~Z`'s `ledger/ROUND_ANALYSIS.round21.md` @e14de1769c section 3A, rows A1-A4 (rulings 1-5; msg 28252,
+which supersedes the hold ruling 28223). Deadline: drained by **11:30Z**, or the cell drops and PROD stays on `b3a1d8a6`.
+- **Cell ids:** `AV-z-1` (A1), `AV-z-2` (A2), `AV-z-3` (A3), `AV-z-4` (A4) (letter z; e-y are on disk).
+- **The issuer's placements:**
+  - (a) **A3 takes no order.** At the cut, `PriceBars.tsx:116-120` already labels a bar with the served `name` (or
+    `classification.name`), the ticker only when none is served, and `ChatterBubbles.tsx:96` prints the served `display_name`.
+    The 24 unnamed bars are a served gap (RESAPP round 61 cell B1). A3 is graded at the close as the issuer's real-run read after B1
+    deploys: 0 bars whose label equals a `security_key` when the served row carries a name. No cell is cut for coverage alone.
+  - (b) **"ABSENT" in Posture reason 2 is located: it is SERVED.** It is the thesis bundle's `posture.basis[1].claim` ("Both names' fit
+    scores are ABSENT rather than low ..."), printed verbatim by `PostureTab.tsx`. Its producer fix is not in RESAPP B2's list. It is
+    routed to `1.0.0_SA_CTO~Z` (one line), and A1's page guard covers it until the producer words it.
+  - (c) **Chains from write sets.** A1 and A2 both write `PeersTab.tsx` and may both re-anchor the peers harnesses, so they are ONE
+    chain on one worker: ~69 AV-z-1 -> AV-z-2. AV-z-4 writes only `errorEmpty.harness.cjs`: ~70 alone. A1 does not touch
+    `errorEmpty.harness.cjs`, and AV-z-4 touches nothing else.
+  - (d) **A4, issuer reading at the cut:** `unresolved_row_navigates`, `a_click_sent_a_ticker` and `error_claims_no_daily_row` read
+    the RankedList click tree and the failed_request render (`ranked_row_click_handlers_found` true), so they are exercised and stay.
+    The vacuous claim is the starred pair (`starred_successful_empty`, `starred_failed_request` ->
+    `starred_error_differs_from_starred_empty`), met by the ranking footers since StarredList left LeadPanel.
+  - (e) **Width:** M = 2 chains, N = 2, cap 3. The queued order on ~69 (AV-z-2) is handed by continuing the worker.
+- **Portal base:** origin DEV `3ca6c53a` (fetched 06:4xZ; it contains site-Z DEV `24646bca`, and `src/pages/SecurityAnalysis` is
+  identical between them). The checks' negative arms pin `24646bca`.
+- **Frozen at the cut.**
+
+| cell | row | what it builds | serves | writes | slot | risk |
+|---|---|---|---|---|---|---|
+| `AV-z-1` | A1 | one page guard: a served or page-written string carrying a code-shaped token prints a plain generic reason (the string rides a data- attribute); Exec Lusha line, Posture claims, Peers absent-column list and column-head tips, `cscTable.ts`'s own reason text | FWD-11 | `SA/tabs/{ExecManagement,Posture,Peers}Tab.tsx`, `SA/{cscTable,reasonWords,postureCites}.ts`, 9 harnesses (re-anchor) | ~69 | LOCAL |
+| `AV-z-2` | A2 | the Peers subject row's Price and EV read the header's served PX_LAST and CURR_ENTP_VAL, in the column's own format | FWD-8 | `SA/tabs/PeersTab.tsx`, peers harnesses (stub re-anchor) | ~69 (after z-1) | LOCAL |
+| `AV-z-3` | A3 | no order: the issuer's close read after RESAPP B1 deploys | FWD-2 | -- | issuer | -- |
+| `AV-z-4` | A4 | errorEmpty's starred pair retired, or re-pointed at the price face's starred state | instrument (Z-W56-S4) | `SA/__harness__/errorEmpty.harness.cjs` | ~70 | LOCAL |
+
+**Checks (`round22/checks/`, dry-run at base DEV 24646bca = 3ca6c53a for these paths):**
+
+| check | base (as expected) |
+|---|---|
+| codeface.cjs (AV-z-1) | FAIL 2 of 3: exec 2 tokens (`_Equity`, `.json`), posture 1 (`ABSENT`), peers 20 (`ey_ntm`, `cash_mv`, `ABSENT` ...) |
+| subjectrow.cjs (AV-z-2) | FAIL 2 of 3: Price "--" (want "204.80"), EV "--" (want "193,511") |
+| starredclaims.cjs (AV-z-4) | FAIL 2 of 3: the starred cases remain with no starred-face anchor |
+| round15 bound.cjs ALL 14 harnesses | PASS 14 of 14 (control) |
+
+**Cut rules applied:** at most three mechanical criteria per order; no check compares values against a base snapshot; harness
+changes are re-anchors only. **Battery:** comp-schedule and comp-iam DECLARED-NOT-APPLICABLE (static renders over fixtures). **The
+issuer's close:** the merged DEV served on 5174, a signed-in read of BA, VLO and AMD on the Exec, Posture and Peers faces (the
+analysis's census set), and the A3 read after B1.
+
+**Rule 24:** (i) the analysis's four rows by subtraction: 3 orders + A3 placed (a) + the Posture source located (b). (ii) One write
+set per chain. (iii) One intent per order. (iv) No order moves a served value: z-1 words, z-2 presents a served header value in a
+second place, z-4 an instrument.
