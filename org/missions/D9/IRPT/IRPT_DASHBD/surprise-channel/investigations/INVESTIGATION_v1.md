@@ -730,3 +730,56 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "notes": "Nothing is edited here. For the CRO's edit: move the foreign-tax rule ahead of wd-generic in the builder (or hand-edit the two JSON rows and leave the builder note), and keep the two files agreeing. Owner: 4.0.0_SA_CRO / the packet's issuer."
 }
 ```
+
+## IRPT_DASHBD-S18 -- the PRD names a function that does not exist and none of the seven reporting-gold resources
+
+```json
+{
+  "id": "IRPT_DASHBD-S18",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-02T09:50:00Z",
+  "one_line": "The PRD cites none of the seven reporting-gold resource names now live (DB-b-7, applied 08:03Z), and the one function name it does print, irpt-49f-reporting-adapter-lambda (PRD v0.6 line 152, C-NAMES), does not exist.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's DB-b-7 grade (2026-10-02 08:xZ-09:xZ): 7 of 7 live names equal lib/opal_naming.py name() output and the gold prefix equals address() output",
+      "org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md:152 (C-NAMES) prints irpt-49f-reporting-adapter-lambda; lambda get-function on it: ResourceNotFound; positive control, get-function on the live reporting-gold function: OK; 0 of 7 live names occur in the PRD"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md rule 30: the L4 PRD cites builder output for every new address and name, and the CTO refuses a PRD that types one.",
+  "world_is": "The live names are right (builder output) but the PRD that is supposed to carry them names a function that was never made and omits the seven that were. A reader of the PRD cannot find the deployed resources.",
+  "notes": "INERT: the names are correct; the record is behind. Owner 1.0.0_SA_CTO (the PRD's author): a header-level addendum printing the seven builder outputs."
+}
+```
+
+## IRPT_DASHBD-S19 -- DB-7-AC1 counts 12 landings for the binding input; 3 are kept after exclusions
+
+```json
+{
+  "id": "IRPT_DASHBD-S19",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-02T09:50:00Z",
+  "one_line": "DB-7-AC1 requires each input of the fire-time rule to have at least 10 measured landings; for holdings_performance_daily, the input that sets the 07:41 schedule, 9 of its 12 landings are excluded and 3 are kept (2 of them organic 07:30 fires), and AC1 counts all 12.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1/REPORTING_GOLD_FIRE_TIME_R3.json, inputs entry for holdings_performance_daily: 12 landings, 'excluded' lists 9, 3 kept",
+      "DB-7-AC1 re-run by this seat: PASS as worded (the count reads 12)",
+      "the schedule live: cron(41 7 ? * MON-FRI *) America/New_York (this seat's DB-b-7 grade)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "DB-7-AC1: each input with at least 10 measured landings, so the fire time rests on a measured distribution.",
+  "world_is": "The binding input's fire time rests on 3 kept landings, 2 of them organic. The criterion passes because it counts landings before the exclusions it then applies. Whether 07:41 is late enough is untested on the days that were excluded.",
+  "notes": "INERT until the first fire (11:41Z today) and the days after: a fire before its input lands is visible in the next morning's partitions. Owner 2.0.0_SA_COO~P (the issuer, who may amend its own criterion); A1 of ledger irpt-dashbd-reporting-gold-apply-20261002 is the first real read."
+}
+```

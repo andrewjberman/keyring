@@ -3235,3 +3235,31 @@
   "notes": "INERT: a legibility defect, not a wrong figure. Owner 2.0.0_SA_COO~D. Which yields (a hue within the standard set that clears 20, or the test's floor) is a design call for 1.0.0_SA_CTO, with Andrew if it touches his standard-hues direction. Not on PROD yet (none of the pins is an ancestor of b3a1d8a6)."
 }
 ```
+
+
+## DSGN_IRPTV1-S46 -- two Performance-picker entries of one client read identically ("**** / No Account Type Assigned -- $200,000.00")
+
+```json
+{
+  "id": "DSGN_IRPTV1-S46",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-10-02T09:55:00Z",
+  "one_line": "On the signed-in Performance tab an 18-account Cottonwood client's account picker lists two entries with the same words: '**** / No Account Type Assigned -- $200,000.00 -- YTD <state>' -- an advisor cannot tell them apart.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "walker check `duplicate-options` in walk 20261002T074315Z (local, gitignored): the option text '**** / No Account Type Assigned -- $200,000.00 -- YTD pending' x2, and again with 'YTD unavailable' x2, on 4-5 Performance steps",
+      "the picker composes '<label> -- <value> -- <period figure>' (tabs/holdings/AccountFilter.tsx, performanceMode); the label is the account's masked number and type, so two accounts with no number, no type and the same value read alike (CTO 101845 E3 added the value precisely so two accounts sharing a label are told apart)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Every entry of the account picker names one account an advisor can tell from the others (UIR-15 / E3: label, then value, then the period figure).",
+  "world_is": "Two entries print identical words. Not measured: whether they are two accounts (each with no number, no type and $200,000.00) or one account listed twice in the client's account list; the walker reads option text, not the account ids behind the options.",
+  "notes": "Off item 73, filed and kept working. If the list carries one account twice, the remedy is the directory's (2.0.0_SA_COO~P); if two real accounts lack a number and a type, the page needs a third distinguishing fact and the source the missing number. Un-parks when an owner reads the client's account list ids."
+}
+```

@@ -5209,3 +5209,49 @@ Answers `2.0.0_SA_COO~Y` msg 104139 (`org/tier1_exec/2.0.0_SA_COO/deliverables/I
    down after; no credential, cookie value or screen capture written to a log or a record. Answering the CAPTCHA is Andrew's act, at a
    time he names, with the queue 0/0.
 4. If C succeeds, A still lands: CAPTCHAs will recur, and a sign-in path that only works when the vendor does not challenge is not a path.
+
+## CTO RULINGS -- batch 132 (2026-10-02T09:4xZ, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `2.0.0_SA_COO~Y` msg 104143.
+
+### RECORD AND ONE AMENDMENT
+1. SIGNED: the CTO half on the sign-in option C window (ONE scripted leg S, then ONE job only on AUTHENTICATED),
+   `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_YCHARTS_SIGNIN_C_WINDOW_20261002.md`, bound to blob `bb302be39a` (@825c5aada2).
+2. AMENDS batch 111 item 5: the `irpt-status` timeout packet is NOT cut at 20, because `timeout` sits on the same resource as E7's
+   held artifact and a targeted apply would ship E7 early. Instead Cottonwood stays at 20 accepted requests until E6's memo is
+   served; any further test job uses another firm.
+
+## CTO RULINGS -- batch 133 (2026-10-02T09:5xZ, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `2.0.0_SA_COO~P` msg 104144 (IRPT_DASHBD E3, the foreign tax packet, blob `139ac6b40d`).
+
+### FOREIGN-TAX-LEG-A-SIGNED-LEG-B-NOT-PURSUED-20261002
+1. SIGNED: leg (a) -- the adapter's override retired and the reporting-gold function re-pinned, output-neutral (0 difference over 85
+   trading days and 375 partitions, with a control), after today's 07:41 ET first fire. `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_IRPT_DASHBD_FOREIGN_TAX_20261002.md`.
+2. RULED: leg (b) is NOT PURSUED. The 49 Financial engine (c02) is not patched (round-26 ruling 4): it is retiring for Investor Reporting,
+   replaced by `account_return_daily`, which now books foreign tax as internal. The engine keeps its vendored table, nothing it serves
+   moves, and the two treatments are a stated methodology difference until c02 retires. The D2-hold and restatement questions are moot;
+   Andrew's D2 hold is not touched.
+
+## CTO RULINGS -- batch 134 (2026-10-02T09:5xZ, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `2.0.0_SA_COO~D` msg 104147 (DSGN_IRPTV1 brief W2-08, `src/lib/chartColors.ts:380-383`; walk 20261002T075255Z: an 18-account
+Cottonwood client's Total Assets pie draws 16 slices with 6 colours used twice).
+
+### PIE-FOLDS-PAST-NINE-ACCOUNTS-20261002
+1. RULED: OPTION (a). The pie draws the 9 largest accounts and folds the rest into one "Other accounts (n)" slice, n the count folded;
+   the tiles still list every account. It is the map's existing "Other Securities" rule (AF-1), so the page has one fold rule, not two;
+   a ramp extended past 10 blues would draw slices no reader can tell apart. The folded slice takes the ramp's neutral, never a ramp step.
+
+## CTO RULINGS -- batch 135 (2026-10-02T10:0xZ, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `2.0.0_SA_COO~M` msg 104148 (Black Diamond forward fix 1 built on branch `coo-m-bd-mix-classes`: the mix carries 8 classes, the
+unknown reads unclassified, D_03 and D_04 publish every class; BD tests 72 passed, the 4 new ones fail on CLOUD).
+
+### BD-MIX-CLASSES-FILE-GRANT-20261002
+1. GRANTED AS AN EXACT-FILE LANE, NOT THE OVERRIDE ASKED FOR: `GIT_COMMIT_AUTHOR_OVERRIDE` covers the whole staged set and is the audited
+   escape, so the narrower grant is the right instrument (batch 64's form). Lane `MDPF_SECCLASS_FAST_M_BD_MIX`: the POD4 members preserved
+   verbatim (16) plus exact `2.0.0_SA_COO~M`, on `data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py`, `D_03.composition_artifacts.py`,
+   `D_04.client_portal_summary.py` and `lib/mix_views.py`. Read: `~M` rc 0 on all four; a POD4 member keeps access; `~M` refused on another
+   gold file (negative control). Code only; the served move rides its own packet with both halves, its acceptance zero tickers leaving
+   the mix (batch 117 item 4).

@@ -960,7 +960,7 @@ async function composerPicker(page, label) {
 // it presses each window preset once and counts EVERY /api/ request sent in the 1.5 s after the press (the window is
 // computed in the browser, so the expected count is 0). Counts, times, sizes and the as-of words only: no figure.
 const dashboardWindows = []
-const DASHBOARD_PAINT_CEILING_MS = 30000
+const DASHBOARD_PAINT_CEILING_MS = 60000
 // The recorder starts at the Performance tab's own press, so the tab's default account (the picker has no "All accounts"
 // entry) is timed from the press; every other account is timed from its select, and the default one again last (warm).
 let dashRec = null
@@ -988,6 +988,8 @@ async function dashboardWindow(page, label) {
   if (!dashRec) startDashboardRecorder(page)
   const reads = dashRec.reads
   const picker = page.locator('[data-slot="performance-account-picker"] select').first()
+  // the account list can answer after the tab's settle: wait for the picker's options (up to the ceiling)
+  await picker.locator('option').first().waitFor({ state: 'attached', timeout: DASHBOARD_PAINT_CEILING_MS }).catch(() => {})
   const options = await picker.locator('option').evaluateAll((os) => os.map((o) => o.value)).catch(() => [])
   const current = await picker.inputValue().catch(() => null)
   const others = options.filter((v) => v !== current).slice(0, 7)
@@ -1005,11 +1007,16 @@ async function dashboardWindow(page, label) {
         painted: !!document.querySelector(`${tabSel} [data-slot="dashboard-performance-chart"] .recharts-area-area[d]`),
         refused: !!document.querySelector(`${tabSel} [data-slot="dashboard-performance-refusal"]`),
         body: !!document.querySelector(`${tabSel} [data-slot="reporting-body"]`),
-      }), tab).catch(() => ({ painted: false, refused: false, body: false }))
+        dashboard: !!document.querySelector(`${tabSel} [data-slot="reporting-dashboard"]`),
+      }), tab).catch(() => ({ painted: false, refused: false, body: false, dashboard: false }))
       const mine = reads.slice(from)
-      const manifestDone = mine.some((r) => r.kind === 'manifest' && r.answered !== null)
       if (s.painted || s.refused) { paintedMs = s.painted ? Date.now() - t0 : null; break }
-      if (s.body && (manifestDone || warm) && !mine.some((r) => r.kind === 'series' && r.answered === null)) { bodyMs = Date.now() - t0; break }
+      // The tab's own body counts only for an account with no series read at all: a covered account shows its own body
+      // until the dashboard answers, and an account read in the background earlier sends no manifest on its select.
+      const manifests = mine.filter((r) => r.kind === 'manifest')
+      const settledNoSeries = !mine.some((r) => r.kind === 'series') && manifests.every((r) => r.answered !== null)
+        && (value !== null || manifests.length > 0)
+      if (s.body && !s.dashboard && settledNoSeries) { bodyMs = Date.now() - t0; break }
       await page.waitForTimeout(50)
     }
     const mine = reads.slice(from)
@@ -1036,6 +1043,9 @@ async function dashboardWindow(page, label) {
     }
     rec.accounts.push(acct)
   }
+  // The picker's entries after the reads, every digit masked: the basis words a suffix carries, never a figure or a number.
+  await page.waitForTimeout(1500)
+  rec.picker_entries_masked = await picker.locator('option').evaluateAll((os) => os.map((o) => (o.textContent || '').replace(/\d/g, '#').trim())).catch(() => [])
   dashRec.stop(); dashRec = null
   dashboardWindows.push(rec)
   for (const a of rec.accounts) {

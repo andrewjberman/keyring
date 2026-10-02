@@ -1001,8 +1001,8 @@
   "last_date": 1785888000000,
   "category": "Dividends and Interest",
   "desc": "FOREIGN TAX PAID",
-  "rule": "wd-generic",
-  "partition": "EXTERNAL"
+  "rule": "foreign-tax",
+  "partition": "INTERNAL"
  },
  {
   "tran_srcde": "NDST",
@@ -1721,8 +1721,8 @@
   "last_date": 1778025600000,
   "category": "Dividends and Interest",
   "desc": "FOREIGN TX RECLAIM",
-  "rule": "wd-generic",
-  "partition": "EXTERNAL"
+  "rule": "foreign-tax",
+  "partition": "INTERNAL"
  },
  {
   "tran_srcde": "DIV",
