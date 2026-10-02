@@ -86,7 +86,7 @@ nm-1.AC1 FAIL (3; controls OK) as expected; nm-1.AC2 FAIL (no rivalfunds.names) 
 
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>6</round>
 <slot>~5</slot>
 <fabric>site-z</fabric>
