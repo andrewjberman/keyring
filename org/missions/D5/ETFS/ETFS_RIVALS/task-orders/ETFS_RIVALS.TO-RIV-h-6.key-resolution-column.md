@@ -71,7 +71,7 @@ at base 9e201639c3: h-6.AC1 FAIL -- each FAIL as expected, each control PASS.
 
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
-<status>pending</status>
+<status>complete</status>
 <!-- AMENDMENT 1 (issuer, 2026-10-02 ~02:5xZ, row Z-W3-S18): <paths> gains tests/test_r5h4_id_change_identifier_relation.py; those 4 tests assert the retired UNRESOLVED confidence. -->
 <round>5</round>
 <slot>~3</slot>
