@@ -1057,3 +1057,35 @@ graduated item's remedy is routed by the CVO to its owner by name and the clocks
   }
 ]
 ```
+
+
+## S35 -- clock read for S17: the stitch build failed again; the cause is the grain sentinel (3.0.0_SA_CVO)
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-S35",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-02T03:30:00Z",
+    "one_line": "Clock read for S17: the 2026-10-02 03:00Z stitch build FAILED too (two nights running), and the cause S17 left unread is the producer's own grain sentinel: AC-GRAIN.2 counts 26 SCHEDULE nodes against a baseline of 10 (2.60x, outside the [0.4, 2.5]x band) and refuses to emit the graph.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO (placement with the graph pipeline's owner: either the schedule growth is real and the baseline is re-read and recorded, or a schedule census is wrong)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "codebuild batch-get-builds, opal-stitch-produce (this seat, 2026-10-02 03:2xZ, times converted to UTC): b53f5014 started 2026-10-02T03:00:12Z FAILED; 88fdb880 started 2026-10-01T03:00:12Z FAILED; the build before them SUCCEEDED; newest 3 of 96 on the first page",
+        "CloudWatch Logs /aws/codebuild/opal-stitch-produce, both failed streams, last 40 events: 'GRAIN-SENTINEL: FAIL (1 violation group(s))', '[AC-GRAIN.2] SCHEDULE: count 26 vs baseline 10 = 2.60x (outside [0.4, 2.5]x band)', 'ERROR: GRAIN_SENTINEL_FAIL -- refusing to emit grain-violating stitch graph', exit status 2",
+        "the same stream before the sentinel: UNIONED nodes 29,378, edges 63,403; genuine dangling edges 0; LAMBDA join matched 83, unmatched 7",
+        "row ESTATE_GOVERNANCE-S17 (this seat, 2026-10-01): 'Not read: the failed build's log, so the cause of exit 2 is unknown ... whether it repeats is tonight's build'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Row S17's hazard: a failed night leaves the previous stitch artifact in place, and only the served vintage line discloses its age.",
+    "world_is": "The stitch is now two days old and will stay so every night until the sentinel's SCHEDULE baseline or the schedule census changes: the refusal is deterministic, not a flaky build. The guard is doing its job; what it guards against (a grain change) is unread. Not read: which 16 SCHEDULE nodes are new and when they appeared.",
+    "notes": "Extends S17 (append-only channel; S17's own text is unchanged). No alert proposed."
+  }
+]
+```
