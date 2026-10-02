@@ -1,4 +1,4 @@
-# ETFS_RIVALS -- round 5 L8/L9 adjudication, part A (site-Z fabric)
+# ETFS_RIVALS -- round 5 L8/L9 adjudication, parts A and B (site-Z fabric)
 
 Author: 3.0.0_SA_CVO~RV, 2026-10-02 ~05:25Z, relaunched on Andrew-direct ~04:57Z
 (`org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20261002_045xZ_RV_TEAM_ETFS_RIVALS_ADJUDICATION_AND_EGRESS_TONIGHT.md`).
@@ -14,7 +14,13 @@ round-5 slug, after that branch drains.
 `wk-rivals5-5` (s-6) are held and drain after the morning legs. No slug goes out before every order is terminal, so S13
 stays open here and graduates in part B.
 
-**Disposition of the 7 rows:**
+**Part B (2026-10-02 ~13:20Z, round 5 drained at CLOUD 383e989b95; all 45 orders terminal, 38 complete and 7 superseded by the FAST lease):**
+- the 5 rows filed after part A (S14, W5-S29..S32) plus S13 are compiled;
+- C-S19 and C-S20 below dismiss 4: W5-S29/S31 and W5-S30/S32;
+- S13 and S14 graduate in `remediations/REMEDIATION_v5.Z.md`;
+- W5-S21 (m-2) and W3-S15 (s-6) advance to REMEDIATED in place.
+
+**Part A, disposition of the 7 rows:**
 - 6 are dismissed by C-S17 and C-S18 below.
 - S13 (BLOCKING, INERT) stays UNDER_INVESTIGATION. The f-4 mechanism is built, but the shipped config still holds BASG
   to 0.23. The timing of the config change is a call, and it went to `4.0.0_SA_CRO~RV`.
@@ -87,6 +93,58 @@ stays open here and graduates in part B.
     },
     "disposition": "DISMISSED_WITH_REASON",
     "dismissal_reason": "Built as the order and ruling allow. W1-S40 gets its first served proof on the first real PARTIAL G1 run after b-2 deploys (W4-S9's disarm). W3-S16's dormant limb rides with W3-S12 (round 6: probe whether a Bloomberg field names the related security). Until then a shared CUSIP-6 never pairs on served data, and that is the safe direction."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-C-S19",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~RV",
+    "surfaced_at": "2026-10-02T13:20:00Z",
+    "one_line": "W5-S29 (BLOCKING: a stale test turned the s-6 suite red) is resolved in round by amendment 1 and row W5-S31; the package suite on combined CLOUD reads 410 passed, 0 failed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "adjudicates": [
+      "ETFS_RIVALS-Z-W5-S29",
+      "ETFS_RIVALS-Z-W5-S31"
+    ],
+    "spec_asserts": "Spine L9 (CLAUDE.md rule 27): every item is dispositioned on grounded evidence, and every BLOCKING or ARMED item before the slug.",
+    "world_is": "RIV-s-6 amendment 1 @808c737c28 added test_v2_revision_contract.py to the order's paths; W5-S31 records the run-date pin and 316 passed on the branch. s-6 drained to CLOUD @213540f408 with status complete and AC1 PASS. This seat's `python -m pytest rivalfunds/tests -q` at CLOUD 383e989b95 (both round-5 drains on HEAD) reads 410 passed, 2 skipped, 0 failed.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "investigation row(s) ETFS_RIVALS-Z-W5-S29, W5-S31",
+        "task-orders/ETFS_RIVALS.TO-RIV-s-6.g4-as-of-guard.md AMENDMENT 1 (a)",
+        "this seat's suite run at CLOUD 383e989b95: 410 passed, 2 skipped"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Repaired in round; the suite is green on the combined tree."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-C-S20",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~RV",
+    "surfaced_at": "2026-10-02T13:20:00Z",
+    "one_line": "W5-S30 (ARMED: the vehicle's T-1 G4 pull could land nothing once a past date takes a historical request) is disarmed in code by amendment 1 (b), recorded in W5-S32; its first live read is the vehicle's 2026-10-05 07:00 ET run.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "adjudicates": [
+      "ETFS_RIVALS-Z-W5-S30",
+      "ETFS_RIVALS-Z-W5-S32"
+    ],
+    "spec_asserts": "Spine L9 (CLAUDE.md rule 27): every item is dispositioned on grounded evidence, and every BLOCKING or ARMED item before the slug.",
+    "world_is": "RIV-s-6 amendment 1 (b): a past-date pull lands a security as historical only when its historical answer covers every requested field; every other security, and all of them when the historical request fails, lands from the current-value pull labelled as_of = the run date, as_of_source pull. s-6.AC1 PASS and 11 tests in test_r5s6_as_of_guard.py cover empty, partial, failed, mixed, full, off-date and daily answers. The code reached CLOUD at 13:0xZ, after this morning's vehicle run (log bbg_tplus1_20261002_070002.log: enrichment exit 94 = landed, the pre-s-6 code), so the vehicle runs it first on 2026-10-05.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "investigation row(s) ETFS_RIVALS-Z-W5-S30, W5-S32",
+        "deliverables/0.9.0_WK_ETFS_RIVALS~5 s-6 proof instance: AC1 PASS",
+        "integrations/bloomberg/pipeline/scheduled_daily_pull.cmd:406-407 (94 = landed) and %USERPROFILE%/opal_bbg_logs/bbg_tplus1_20261002_070002.log:186, read by this seat"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Disarmed in code. The live proof is owed: on 2026-10-05, the enrichment exit line and the G4 result detail (`as_of_source_counts`, `historical_request_failures`) show G4 landing for T-1. 2.0.0_SA_COO~RV reads it; a G4 result of SKIPPED or 0 rows re-files the hazard."
   }
 ]
 ```
