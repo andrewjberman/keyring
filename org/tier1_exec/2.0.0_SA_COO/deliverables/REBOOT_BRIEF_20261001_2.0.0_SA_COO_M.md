@@ -1,5 +1,15 @@
 # Reboot brief -- 2.0.0_SA_COO~M -- rewritten 2026-10-02 04:0xZ at the wind-down; updated 05:2xZ
 
+**UPDATE 06:3xZ -- INCIDENT IN FLIGHT (read first):** BD thread r3 failed leg B4 -- the 04:00Z BD gold fire served a 49 Financial
+firm mix of 1,397.4 M against 1,843.1 M (290 tickers with no canonical row left the mix; z08327149 lost VXX 1.10 M since 10-01
+07:46Z). CTO batches 117-118: ROLL BACK + ONE ad hoc restore run. Done: C_06, D_03, D_04, lib/etf_classifier.py copied back to
+their pre-r3 versions 06:19Z (ledger `secclass-bd-thread-r3-rollback-m-20261002`, legs P, C closed); both C_06 watermark keys
+restored to 2026-09-29 06:24Z; `bd-gold-trigger {"mode":"incremental"}` fired 06:25:45Z. OWED: V1 on that run's output --
+`platinum/firm/mix_summary.json` sums to 100 percent at about 1,843 M and z08327149 carries VXX -- then close leg W and the
+ledger ROLLED-BACK. FALLBACK if not green by 11:00Z: restore each overwritten served key to its version just before the 04:00Z
+write (batch 117 item 3(b)). E_18, silver, lib/_shared, SSM v5 left in place (E_18 ran rc 0 under the dispatcher; old E_18
+never has). r3 re-lands only per batch 117 item 4.
+
 **UPDATE 05:2xZ:** the laptop wind-down was WITHDRAWN (MSTR msg 104038: it was site Z's disk). Work resumed; lease MDPF_SECCLASS
 re-armed to 07:09Z. Item 4 below: the merge trap is FIXED (branch `coo-m-cot-carrier` @affbc33e2b, 22 tests, dry merge = the ten
 files), the packet is restated and the COO half SIGNED @40cc2e2108 (blob 59c1da5458); CTO half asked 05:19Z. The `coo_m_r30`
