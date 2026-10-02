@@ -662,3 +662,29 @@ limit=50 page; the default page reads 10,077.87 ms, so a single warm reading can
 route. The 22 is what this principal can read.
 
 -- 3.0.0_SA_CVO
+
+## The 14:15Z holdings publication -- split-account leg S and the Cottonwood seed rows' legs S and G, read 15:0xZ-16:3xZ 2026-10-02
+
+| claim | this seat's read | grade |
+|---|---|---|
+| the 14:15Z run published at all three firms | 3 of 3 current manifests written 14:18:01Z-14:20:44Z, newest date 2026-10-01 (Inflection `100a0dc22f12`, Cottonwood `a3751a6acff2`, 49 Financial `3413e2b5a3bd`) | PASS |
+| Inflection 2026-10-01: every account's securities sum to it | 857 accounts = 205,702,112.40; 33,645 security rows = 205,702,112.40; 0 of 857 fail to sum (served 09-30 had 91 of 884) | PASS |
+| no DRILL WITHHELD | 0 of 36,048 nodes (served 09-30: 182) | PASS |
+| split accounts list their positions | 3,963 `part=NOT_STATED` positions on 71 of 857 accounts (35,466,629.25 USD). Of QA's 91 split accounts: 53 still split, 36 in the first branch, 2 neither, 0 absent (the date moved) | PASS |
+| CTO condition 2: accounts per branch and one walked account | split 71, first branch 61, neither 725, total 857, overlap 0. Walked `acc_015d15b45d7a8ac71f951a67` (****3282 IRA): 52 positions sum to 771,891.63, equal to the account, each `part=NOT_STATED` | PASS |
+| the lane's reader | `split_qa_read.py` pairs QA 09-30 with served 09-30 (the pre-fix revision) and never reads the 10-01 publication; 0 of 3 runs here completed (S3 timeouts) | row IRPT_BCKEND-S274 |
+| seed leg S, Cottonwood | 19 of 19 tickers found, 19 of 19 classes equal to the seed, 747 of 747 nodes basis TABLE (EVSM fixed_income/Short Duration; PSLV commodities/Metals, 9 nodes; SPYI structured/Options Income, 20; FPNIX fixed_income/Short Duration, 71; MEAR, VMLUX Short Duration; EIBIX High Yield; BRK.A and BRK.B equity/US Large Cap) | PASS |
+| seed leg S, the other firms | Inflection: 5 of 19 present, each equal to the seed; 49 Financial (PSLV, SPYI) not read; no page walked | NOT_EVALUATED |
+| seed leg G | the named fire (2026-10-02 23:00Z) has not run; it runs on the BD r4 re-land code deployed 14:15-14:16Z (ledger `secclass-bd-thread-r4-reland-m-20261002`), so it grades the seed rows and r4 together | NOT_EVALUATED |
+
+**Clock this seat holds.** The first real Black Diamond gold compute on the r4 code (the 2026-10-03 04:00Z fire; the
+23:00Z fire may compute nothing in C_06, as on 10-01) is read against row S9's measure: the 49financial firm mix sums
+to 1.0 and no ticker leaves it.
+
+**Limits.** Reads ran at about 1 MB per 15-20 s from S3; the figures come from a scratch copy importing the reader's
+`census()` unchanged on the 10-01 publication. Split is counted by `part=NOT_STATED` on SECURITY nodes; the first
+branch by the producer's "does not tie to custody" fact (`holdings_inf.py:446-447`; positive control 43 in QA).
+Accounts are matched across dates by `acc_` id. Dollars across OBSERVED and ASSIGNED views would double count; seed rows
+are quoted as node counts.
+
+-- 3.0.0_SA_CVO
