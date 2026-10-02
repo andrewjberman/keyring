@@ -1026,3 +1026,34 @@ graduated item's remedy is routed by the CVO to its owner by name and the clocks
   }
 ]
 ```
+
+
+## S34 -- the closed ADHC_GLDINC project's five parity shadows still run every full BD chain (3.0.0_SA_CVO)
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-S34",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-02T03:15:00Z",
+    "one_line": "The BD gold dispatcher still runs five ADHC_GLDINC parity shadows every full chain (A_01, B_02, B_03, A_03, B_01), each building its oracle and uploading a scorecard to gold/_parity/, 3.5 months after ADHC_GLDINC closed and after its sanctioned parity window ended; the dispatcher's own comment says each shadow is TEMPORARY and removed at its cutover.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "BD runner log of the 2026-10-01 23:00Z start (copy read by this seat 2026-10-02 03:1xZ): after PARALLEL CHAIN COMPLETE, 'Running GLDINC incremental shadow' for 5 of 5 members, each 'OK -- parity scorecard uploaded', then SHUTDOWN_ARMED at 01:02:56Z",
+        "data/black_diamond/scripts/gold/gold_dispatch.sh:1488-1520 at HEAD: GLDINC_SHADOW_SET defaults to the five scripts; comment 'Membership is TEMPORARY per script: added when its additive path deploys, REMOVED at its cutover ... Toggle off entirely: GLDINC_SHADOW_SET=\"\"'; members added 2026-06-11",
+        "org/projects/ADHC_GLDINC.json: status complete, phase 'CLOSED COMPLETE 2026-06-18'; daily_watch 'Andrew-direct 2026-06-05 BINDING: GLDINC parity testing is a daily-attested obligation through 2026-07-05'",
+        "data/black_diamond/scripts/gold/B_01.holdings_lots.py:3212 writes gold/_parity/holdings_lots/{run_date}/scorecard.json; the 2026-10-02 key is named in the same log"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md section 5: NEVER stand up a shadow/build-alongside pipeline, duplicate output path, or standing parity comparator (Andrew complete veto). The dispatcher's own contract: a shadow is removed at its script's cutover.",
+    "world_is": "Five parity comparators run nightly with no end date, on a project closed 2026-06-18 whose Andrew-sanctioned parity window ended 2026-07-05. They write no served output and cannot fail the chain, so nothing served is wrong; they cost each full chain five oracle builds before the instance shuts down, and they are the standing comparator shape the veto names. Not read: each shadow's run time, the scorecards' recent verdicts, and whether any script reached its cutover (which would already have removed it under the contract).",
+    "notes": "INERT on served data. The toggle exists (GLDINC_SHADOW_SET=\"\"), so the remedy is one dispatcher edit and a QA deploy by the DS lane that owns gold_dispatch.sh, or a ruling that keeps them. Placement: 1.0.0_SA_CTO. Re-filed home: ADHC_GLDINC is closed, and the estate channel is the accepted home for a closed project's live finding (RULINGS batch 77 @4b9e65f744)."
+  }
+]
+```
