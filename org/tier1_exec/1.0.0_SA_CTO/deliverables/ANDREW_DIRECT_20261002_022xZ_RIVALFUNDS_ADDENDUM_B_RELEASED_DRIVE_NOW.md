@@ -24,3 +24,16 @@
 - **Drive now:** `2.0.0_SA_COO~RV` cuts Addendum B into the decomposition immediately and issues every cell that does not
   depend on a round-5 precondition as a round-5 amendment. The fan-out cap is raised to 12 for this round, on Andrew's
   "immediately".
+
+## Verbatim, ~02:2xZ (answering the three /open-calls cards)
+
+> 1.) Push to PROD, 2.) Confirm all outcomes for etf rivals. 3.) Web search is ok, but shouldnt really be necessary. We have all the news material in news scanner and harvest databases internally, i think it would be more efficient to just check there.
+
+## What it settles (supersedes the web-search line above)
+
+1. **PROD:** the Security Analysis demo promotes to PROD. This is Andrew's word for the promote of portal DEV `24646bca` (CI
+   green). It is relayed to `0.0.0_AB_MSTR~Z`, who routes it to the `/prod-deploy` owner.
+2. **ETFS_RIVALS outcomes:** all are CONFIRMED (FWD-13..20 and the rulings above).
+3. **Web search is AUTHORISED as a fallback.** It is his standing word for the rivalfunds AI. The AI reads the news scanner
+   and Data Harvest FIRST, and reaches for the web only where those hold nothing for the question. Each web read is labelled
+   as such.

@@ -373,7 +373,10 @@ approved it.
     opens on IDVZ.
   - The period and fund switches are built so that the page keeps working with
     no scripts, as it does today. The page's no-script rule stands.
-  - The AI reads Opal's own data only. Web search needs Andrew's word.
+  - The AI reads Opal's own data FIRST: the news scanner and Data Harvest, then the
+    sentiment measures. Web search is AUTHORISED as a fallback (Andrew 2026-10-02 ~02:2xZ:
+    "Web search is ok, but shouldnt really be necessary"), used only where the internal
+    sources hold nothing for the question, and every web read is labelled as such.
   - "Concentration of the market" is read as the stored strength measure (52-week
     highs vs lows) and "breadth" as the breadth measure. The AI names each by its
     stored name, so Andrew can correct the mapping from one output (v0.10).
@@ -683,7 +686,7 @@ the `/sprint` precedent files.
   - Addendum B (FWD-13..20) is CONFIRMED.
   - FWD-14 is ruled CONTRIBUTION.
   - "Concentration" is mapped to the stored strength measure.
-  - Web search stays off.
+  - Web search is authorised as a labelled fallback, after the news scanner and Data Harvest.
   - This is an ENDPOINT change, so the ratified half re-opens to `3.0.0_SA_CVO~Z`.
 
 - v0.9 (2026-10-01, `1.0.0_SA_CTO~Z`), `/endpoint --forward` on `4.0.0_SA_CRO~RV`'s two briefs (msg 28050, record @`52eb8a5dc7`):
