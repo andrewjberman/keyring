@@ -30,4 +30,19 @@ whitelist:
     supersedes: "1.0.0_SA_CTO~Z ruling msg 28235's clause 'does not spend the 04:57Z egress word on a captcha solver', for NopeCHA only"
     not_covered: "Kimi, the vision-API fallback, and every other solver or vendor (they still need his word)"
 
+  - id: VEW-2
+    vendor: OpenAI
+    what: "chat completions for the rivalfunds AI accounts; web_search_preview as a labelled fallback only"
+    scope: "ETFS_RIVALS -- the rivalfunds AI chain only (etfs-rivalfunds); not any other project's use of OpenAI"
+    granted:
+      - "We definitely can use OpenAI on this; OpenAI relationship with BBG is entirely out of our scope."
+      - "Web search is ok, but shouldnt really be necessary. We have all the news material in news scanner and harvest databases internally, i think it would be more efficient to just check there."
+    record:
+      - org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/AMGT_RECONN_SOURCES_20260929/ANDREW_DIRECT.md:83@2bc18b60a5 (2026-09-29, the /rivalfunds gap-pass rulings)
+      - org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261002_022xZ_RIVALFUNDS_ADDENDUM_B_RELEASED_DRIVE_NOW.md:30 (2026-10-02 ~02:2xZ)
+    since: 2026-09-29 (OpenAI); 2026-10-02T02:2xZ (web search as fallback)
+    landed_by: 1.0.0_SA_CTO~Z
+    asked_by: 4.0.0_SA_CRO~RV (these words predate the register; operating basis CRO~RV CALL 5 @528f030bdb)
+    not_covered: "web search as a primary source (his words: internal news scanner and harvest first); OpenAI for any project other than ETFS_RIVALS"
+
 struck: []
