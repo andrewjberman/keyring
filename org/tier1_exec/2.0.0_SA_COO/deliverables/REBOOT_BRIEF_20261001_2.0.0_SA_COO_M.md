@@ -1,6 +1,14 @@
 # Reboot brief -- 2.0.0_SA_COO~M -- rewritten 2026-10-02 04:0xZ at the wind-down; updated 05:2xZ
 
-**UPDATE 06:3xZ -- INCIDENT IN FLIGHT (read first):** BD thread r3 failed leg B4 -- the 04:00Z BD gold fire served a 49 Financial
+**UPDATE 08:4xZ -- INCIDENT CLOSED ROLLED-BACK (CTO batch 129, msg 104131):** V1 green 08:2xZ (49F firm mix 1.000000 at
+1,843,114,302.78; z08327149 VXX 1,111,544.96 in alternatives, gap 0.00); restore run exit 0 08:31:13Z; ledger
+`secclass-bd-thread-r3-rollback-m-20261002` CLOSED. E_18, silver builder, lib/_shared, SSM v5 STAY on r3 (batch 129). OWED
+TONIGHT: read the 22:10Z silver fire (`silver/bd_assets_dim.parquet` classes as the old library) and the 23:00Z gold fire (firm
+mix sums to 100 percent); if either moves, roll the r3 silver builder back (its prior VersionId is in r3 leg P). Same 23:00Z fire:
+seed-rows leg G. Forward fix for r3: batch 117 item 4 (BD C_06 carries unclassified and the batch 99 classes; the 290 tickers get
+rows through a mapped writer under its own half). r3 entry: B4 open, HELD on the CTO.
+
+**UPDATE 06:3xZ -- INCIDENT IN FLIGHT (superseded by the line above):** BD thread r3 failed leg B4 -- the 04:00Z BD gold fire served a 49 Financial
 firm mix of 1,397.4 M against 1,843.1 M (290 tickers with no canonical row left the mix; z08327149 lost VXX 1.10 M since 10-01
 07:46Z). CTO batches 117-118: ROLL BACK + ONE ad hoc restore run. Done: C_06, D_03, D_04, lib/etf_classifier.py copied back to
 their pre-r3 versions 06:19Z (ledger `secclass-bd-thread-r3-rollback-m-20261002`, legs P, C closed); both C_06 watermark keys
