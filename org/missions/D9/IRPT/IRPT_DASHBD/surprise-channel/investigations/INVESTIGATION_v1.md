@@ -539,3 +539,31 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "notes": "The Black Diamond transactions/activity family is not landed (bronze holds reporting_performance, allocation, costbasis, fees, roster); per-day vendor flow detail would live there. Grading of the net-versus-leg framing is the CTO's ruling."
 }
 ```
+
+## IRPT_DASHBD-S16 -- The seating lint (.tools/to-decomp-ref-lint.py, gate2, ANNOUNCE) read TO-DB-b-6's <issued_to> 0.9.0_WK_IRPT_DASHBD~1 as '0.9.0_WK_IRPT' and reported it as holding three open IRPT_BCKEND orders (IB-rth-3, IB-yr-242, IB-yr-261), which belong to 0.9.0_WK_IRPT_BCKEND~<n> slots: two projects' worker slots collapse to one seat. Armed (pipeline-gate2.enforce), it would refuse a correct issuance.
+
+```json
+{
+ "id": "IRPT_DASHBD-S16",
+ "project": "IRPT_DASHBD",
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~P",
+ "surfaced_at": "2026-10-02T05:45:00Z",
+ "disposition": "UNDER_INVESTIGATION",
+ "one_line": "The seating lint (.tools/to-decomp-ref-lint.py, gate2, ANNOUNCE) read TO-DB-b-6's <issued_to> 0.9.0_WK_IRPT_DASHBD~1 as '0.9.0_WK_IRPT' and reported it as holding three open IRPT_BCKEND orders (IB-rth-3, IB-yr-242, IB-yr-261), which belong to 0.9.0_WK_IRPT_BCKEND~<n> slots: two projects' worker slots collapse to one seat. Armed (pipeline-gate2.enforce), it would refuse a correct issuance.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "1.0.0_SA_CTO (the gate's owner: the seating frame's serial parse, before pipeline-gate2.enforce is ever created)",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "safe-commit output of the issuance @97eaff05ff, 2026-10-02 ~04:58Z: '[gate2] SEATING: this NEW task order for IRPT_DASHBD is addressed to 0.9.0_WK_IRPT, which already holds open TOs on 1 OTHER pipeline project(s): IRPT_BCKEND (3 open: IRPT_BCKEND.TO-IB-rth-3..., IRPT_BCKEND.TO-IB-yr-242..., IRPT_BCKEND.TO-IB-yr-261...)' then '[gate2] ANNOUNCE mode -- NOT blocking this commit.'",
+   "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-6.flow-residual-0027265115.md:5 <issued_to>0.9.0_WK_IRPT_DASHBD~1</issued_to>; the three IRPT_BCKEND orders are issued to 0.9.0_WK_IRPT_BCKEND~<n> slots (to-check census at session start).",
+   "CLAUDE.md rule 27: the seating rule is ONE PROJECT PER TIER-2 SEAT INSTANCE; a worker is a subagent slot, 0.9.0_WK_<CODE>~<n>, whose CODE is the project."
+  ]
+ },
+ "spec_asserts": "to-decomp-ref-lint seating frame: one project per seat instance, keyed by the full serial.",
+ "world_is": "MEASURED: the frame keys on a truncated serial, so every 0.9.0_WK_IRPT_* slot of every IRPT project is one 'seat'. ANNOUNCE today; the false refusal is reachable the moment the enforce file exists.",
+ "notes": "Not this project's to fix; carried here because this order tripped it. The order stands as cut."
+}
+```
