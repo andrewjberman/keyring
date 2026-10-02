@@ -36,6 +36,7 @@ comp-adversary: DECLARED-NOT-APPLICABLE the validator-context composer profiles 
 - Interface (the check reads it): an OPEN cursor = a `markers.cursor_uri(G1, D, B)` object with no `homes.marker_uri` beside it (a cursor WITH its marker is closed -- the real G1 leaves the cursor in place when it finishes); find cursors by listing `homes.address("rivalfunds","etfs","state","build_canonical_shape","date=")`; lookback `sweep.CURSOR_LOOKBACK_DAYS = 10` NYSE trading days before the sweep's day via `prev_trading_day` (the sweep's own day is excluded -- its own DAG continues it); continuation = `run_gold_chain({"date": D, "mode": "daily", "batch_id": B, "sink": ...}, <runners>)` so G1 resumes from its cursor, then G2 and the gated G5 run (nothing else for that day; no publish -- the G5 marker's own rule publishes it); G1's event carries budget_s <= 450 when 600 s remain (never start a window that cannot finish: the W4-S9 timeout); report in `result["detail"]["open_cursors"]`, one entry per open cursor `{date, batch_id, action: continued|beyond_lookback|out_of_time, status}`.
 - This slot's previous orders (sa-1, pv-1) changed sweep.handler_entry for the AI step; build on them and keep their checks passing (round7/checks/sa-1.AC*.py, pv-1.AC1.py).
 - Organic trigger: the 09:00 ET sweep schedule; a PARTIAL batch completes on the next scheduled sweep.
+- AMENDMENT 1 (issuer ruling on row ETFS_RIVALS-Z-W1-S47, 2026-10-02 ~23:2xZ): pv-1 (24e5ec6555) retired the claim that an event without `run_path` is "scheduled", and `tests/test_r7sa1_sweep_ai_step.py` still asserts it: `test_a_ran_step_republishes_under_a_new_batch_with_the_result` fails its `[OK]` and `[FAILED]` cases at 3b89b0a51a (suite 565 passed, 2 failed). Fix the TEST, never the code: that test's event becomes `dict(_ev7(spec), ai_deadline_s=7.0, run_path='scheduled')`. Never default an absent `run_path` to "scheduled" inside `run_ai_step`. The file is granted below for that one fix; after it the package suite must read 0 failed.
 
 ## 3. SURFACES AND BOUNDS
 
@@ -48,6 +49,7 @@ data/etfs/scripts/rivalfunds/sweep.py
 data/etfs/scripts/rivalfunds/tests/test_r7cu1_*.py
 data/etfs/scripts/rivalfunds/tests/test_d1_sweep.py
 data/etfs/scripts/rivalfunds/tests/test_r5b1_g1_windowed.py
+data/etfs/scripts/rivalfunds/tests/test_r7sa1_sweep_ai_step.py
 org/missions/D5/ETFS/ETFS_RIVALS/surprise-channel/investigations/INVESTIGATION_v1.Z.md
 </paths>
 
