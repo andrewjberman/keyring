@@ -1535,3 +1535,22 @@ asset class, sub-asset class, sector, the period figure and places moved, with a
 bubble prints what its row serves and says the rest is not served. Serving ticker, classification and places_moved on chatter rows
 is a PRODUCER item (RESAPP), routed to the CTO. **Check:** `round27/checks/identity.cjs` (issuer): at base portal fa529337 (PROD's
 tree) it reads 1 of 3. **Chain:** ~78 alone. **Rule 24:** one row, one order; no served value moves.
+
+
+## v28 -- ROUND 28 (issuer, 2026-10-02 ~15:2xZ) -- ONE INSTRUMENT REPAIR CELL
+
+**Rectangle:** `1.0.0_SA_CTO~Z` msg 28537 and the re-grade @6fe6735934 (16 REALIZED / 2 NOT_REALIZED / 5 NOT_EVALUATED / 1 RETIRED). It
+names three instrument items: (i) the two stale clauses CVO~Z ADJUDICATION_v27 section 2 tables (fwd15 counts the consensus `th`;
+fwd16 demands the served reason verbatim on the face); (ii) a contract fixture with an ABSENT model row, so FWD-15's footnote half
+is read; (iii) the contract fixture's collected-chatter names (72 of 95 raw keys, the list.png rejection). The CTO asked for these as
+an amendment to round 27. They are cut as round 28 because round 27 is issued, drained and closed (@8fba1b2e33), and
+to-pipeline-gate refuses a second issuance into a round. The substance is unchanged.
+**Cell:** `AV-zf-1`, DIRECT ACT, `<risk>LOCAL</risk>`, batch repair (`worker-light`). Files: `portal/scripts/ui-measure.mjs`,
+`portal/scripts/ui-contract-check.mjs`, and the fixture `portal/src/pages/SecurityAnalysis/__harness__/tests/uiContractFixtures.json`.
+It touches no product file.
+**Served input:** `round28/fixtures/served-names.collected-chatter.json`, made by the issuer with the served route's own resolver
+(`monthly_chatter._display_names`), 95 of 95 resolved: 48 crosswalk, 25 model block header, 12 classification, 10 ticker; 0 raw keys.
+**Checks (issuer), dry-run at portal 415f50db:** `round28/checks/render.cjs` 0 of 3 (fwd15 FAIL on spans with footnotes 0; fwd16
+FAIL "12 listed column(s) carry no reason"; the planted predicate flags a healthy column) and `round28/checks/fixture.cjs` 1 of 3.
+**Chain:** ~79 alone; base portal 415f50db (remote DEV), independent of round 27's df019dba. **Rule 24:** one row, one order.
+FWD-20's PASS limb and FWD-15 are graded by CVO~Z at L9 on the amended instrument.
