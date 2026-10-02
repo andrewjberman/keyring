@@ -1,0 +1,121 @@
+compose_ports + build_boundary: 87 ms, 0 AWS calls
+
+status read, dates capability #1: http=None ok=True state=READY reason=ANALYSIS_READY wall=17443 ms aws=193 calls 15261 ms items=None bytes=4599
+    10787 ms  x174  table:irpt-requests get_item table:irpt-requests
+     2838 ms  x3    s3 get_object opal-data-irpt:irpt/<firm>/state/request_compositions
+     1004 ms  x9    dynamodb get_item irpt-requests
+      435 ms  x4    dynamodb get_item irpt-jobs
+       71 ms  x1    s3 get_object opal-data-irpt:irpt/<firm>/state/normalized_portfolios
+       67 ms  x1    s3 get_object opal-data-irpt:irpt/<firm>/state/original_holdings
+       59 ms  x1    s3 get_object opal-data-irpt:irpt/<firm>/platinum/analysis_reports
+    fn  17442 ms x1     served.py:955 handle
+    fn  16717 ms x1     served.py:828 _handle_owner_read
+    fn  16707 ms x1     owner_reads.py:22 guarded
+    fn  16022 ms x1     served.py:845 owned_compute
+    fn  16022 ms x1     entry.py:186 job_status
+    fn  16021 ms x1     owned_status.py:31 read
+    fn  10804 ms x174   repository.py:415 get
+    fn   9986 ms x81    retention.py:96 require_live
+
+status read, dates capability #2: http=None ok=True state=READY reason=ANALYSIS_READY wall=14747 ms aws=193 calls 11857 ms items=None bytes=4599
+     8496 ms  x174  table:irpt-requests get_item table:irpt-requests
+     2478 ms  x3    s3 get_object opal-data-irpt:irpt/<firm>/state/request_compositions
+      404 ms  x9    dynamodb get_item irpt-requests
+      235 ms  x4    dynamodb get_item irpt-jobs
+      106 ms  x1    s3 get_object opal-data-irpt:irpt/<firm>/state/normalized_portfolios
+       74 ms  x1    s3 get_object opal-data-irpt:irpt/<firm>/platinum/analysis_reports
+       64 ms  x1    s3 get_object opal-data-irpt:irpt/<firm>/state/original_holdings
+    fn  14747 ms x1     served.py:955 handle
+    fn  13069 ms x1     served.py:828 _handle_owner_read
+    fn  13067 ms x1     owner_reads.py:22 guarded
+    fn  12988 ms x1     served.py:845 owned_compute
+    fn  12988 ms x1     entry.py:186 job_status
+    fn  12988 ms x1     owned_status.py:31 read
+    fn   8602 ms x81    retention.py:96 require_live
+    fn   8551 ms x174   repository.py:415 get
+
+status read, no capability #1: http=None ok=True state=UNAVAILABLE reason=ANALYSIS_STATUS_DATE_BASIS_UNAVAILABLE wall=11034 ms aws=136 calls 7910 ms items=None bytes=414
+     4868 ms  x121  table:irpt-requests get_item table:irpt-requests
+     2432 ms  x2    s3 get_object opal-data-irpt:irpt/<firm>/state/request_compositions
+      337 ms  x8    dynamodb get_item irpt-requests
+      201 ms  x4    dynamodb get_item irpt-jobs
+       71 ms  x1    s3 get_object opal-data-irpt:irpt/<firm>/platinum/analysis_reports
+    fn  11034 ms x1     served.py:955 handle
+    fn   8621 ms x1     served.py:828 _handle_owner_read
+    fn   8620 ms x1     owner_reads.py:22 guarded
+    fn   8529 ms x1     served.py:845 owned_compute
+    fn   8529 ms x1     entry.py:186 job_status
+    fn   8529 ms x1     owned_status.py:31 read
+    fn   5287 ms x60    retention.py:96 require_live
+    fn   4882 ms x121   repository.py:415 get
+
+status read, no capability #2: http=None ok=True state=UNAVAILABLE reason=ANALYSIS_STATUS_DATE_BASIS_UNAVAILABLE wall=10027 ms aws=136 calls 6495 ms items=None bytes=414
+     5667 ms  x121  table:irpt-requests get_item table:irpt-requests
+      360 ms  x8    dynamodb get_item irpt-requests
+      258 ms  x4    dynamodb get_item irpt-jobs
+      146 ms  x2    s3 get_object opal-data-irpt:irpt/<firm>/state/request_compositions
+       64 ms  x1    s3 get_object opal-data-irpt:irpt/<firm>/platinum/analysis_reports
+    fn  10027 ms x1     served.py:955 handle
+    fn   7740 ms x1     served.py:828 _handle_owner_read
+    fn   7738 ms x1     owner_reads.py:22 guarded
+    fn   7652 ms x1     served.py:845 owned_compute
+    fn   7652 ms x1     entry.py:186 job_status
+    fn   7651 ms x1     owned_status.py:31 read
+    fn   6568 ms x60    retention.py:96 require_live
+    fn   5940 ms x1     owned_report.py:71 read
+
+request history list #1: http=None ok=True state=None reason=None wall=23145 ms aws=280 calls 16678 ms items=18 bytes=6644
+    13188 ms  x243  table:irpt-requests get_item table:irpt-requests
+     2088 ms  x18   s3 get_object opal-data-irpt:irpt/<firm>/state/request_compositions
+     1271 ms  x18   dynamodb get_item irpt-requests
+      131 ms  x1    dynamodb query irpt-requests
+    fn  23145 ms x1     served.py:955 handle
+    fn  21205 ms x1     served.py:828 _handle_owner_read
+    fn  21197 ms x1     owner_reads.py:22 guarded
+    fn  21196 ms x1     served.py:845 owned_compute
+    fn  21196 ms x1     entry.py:168 history
+    fn  21196 ms x1     owned_requests.py:152 history
+    fn  15900 ms x162   retention.py:96 require_live
+    fn  13721 ms x18    owned_requests.py:102 _materialize
+
+request history list #2: http=None ok=True state=None reason=None wall=19115 ms aws=280 calls 15075 ms items=18 bytes=6644
+    11059 ms  x243  table:irpt-requests get_item table:irpt-requests
+     3070 ms  x18   s3 get_object opal-data-irpt:irpt/<firm>/state/request_compositions
+      832 ms  x18   dynamodb get_item irpt-requests
+      115 ms  x1    dynamodb query irpt-requests
+    fn  19114 ms x1     served.py:955 handle
+    fn  17612 ms x1     served.py:828 _handle_owner_read
+    fn  17611 ms x1     owner_reads.py:22 guarded
+    fn  17610 ms x1     served.py:845 owned_compute
+    fn  17610 ms x1     entry.py:168 history
+    fn  17610 ms x1     owned_requests.py:152 history
+    fn  12317 ms x162   retention.py:96 require_live
+    fn  11978 ms x18    owned_requests.py:102 _materialize
+
+request read #1: http=None ok=True state=None reason=None wall=4918 ms aws=24 calls 3128 ms items=None bytes=538
+     2145 ms  x1    s3 get_object opal-data-irpt:irpt/<firm>/state/request_compositions
+      831 ms  x19   table:irpt-requests get_item table:irpt-requests
+      151 ms  x4    dynamodb get_item irpt-requests
+    fn   4918 ms x1     served.py:955 handle
+    fn   3243 ms x1     served.py:828 _handle_owner_read
+    fn   3242 ms x1     owner_reads.py:22 guarded
+    fn   3161 ms x1     served.py:845 owned_compute
+    fn   3161 ms x1     entry.py:178 read
+    fn   3161 ms x1     owned_requests.py:123 read
+    fn   2798 ms x1     owned_requests.py:102 _materialize
+    fn   2798 ms x1     repository.py:402 head
+
+request read #2: http=None ok=True state=None reason=None wall=3070 ms aws=24 calls 1104 ms items=None bytes=538
+      831 ms  x19   table:irpt-requests get_item table:irpt-requests
+      199 ms  x4    dynamodb get_item irpt-requests
+       74 ms  x1    s3 get_object opal-data-irpt:irpt/<firm>/state/request_compositions
+    fn   3070 ms x1     served.py:955 handle
+    fn   1762 ms x1     served.py:920 _service_allowed_firms
+    fn   1715 ms x1     canonical_profile_reads.py:70 get_user
+    fn   1307 ms x1     served.py:828 _handle_owner_read
+    fn   1288 ms x1     owner_reads.py:22 guarded
+    fn   1176 ms x1     served.py:845 owned_compute
+    fn   1176 ms x1     entry.py:178 read
+    fn   1176 ms x1     owned_requests.py:123 read
+
+wrote org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/E6_TIMING/e6_overview_20261002.json

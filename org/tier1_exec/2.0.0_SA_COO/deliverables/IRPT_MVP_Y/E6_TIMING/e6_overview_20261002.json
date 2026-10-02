@@ -1,0 +1,875 @@
+{
+ "zip": "irpt-status-live.zip",
+ "tenant": "cottonwood",
+ "request_id": "REQ-a69e5751d42c374f1d2354f9",
+ "compose": {
+  "ms": 88,
+  "aws_calls": 0
+ },
+ "routes": [
+  {
+   "route": "status read, dates capability",
+   "attempt": 1,
+   "http": null,
+   "ok": true,
+   "state": "READY",
+   "reason": "ANALYSIS_READY",
+   "wall_ms": 17443,
+   "response_bytes": 4599,
+   "items": null,
+   "aws_calls": 193,
+   "aws_ms": 15261,
+   "distinct_keys": 22,
+   "keyed_calls": 193,
+   "by_shape": {
+    "dynamodb get_item irpt-requests": {
+     "count": 9,
+     "ms": 1004
+    },
+    "table:irpt-requests get_item table:irpt-requests": {
+     "count": 174,
+     "ms": 10787
+    },
+    "s3 get_object opal-data-irpt:irpt/<firm>/state/request_compositions": {
+     "count": 3,
+     "ms": 2838
+    },
+    "dynamodb get_item irpt-jobs": {
+     "count": 4,
+     "ms": 435
+    },
+    "s3 get_object opal-data-irpt:irpt/<firm>/state/normalized_portfolios": {
+     "count": 1,
+     "ms": 71
+    },
+    "s3 get_object opal-data-irpt:irpt/<firm>/state/original_holdings": {
+     "count": 1,
+     "ms": 67
+    },
+    "s3 get_object opal-data-irpt:irpt/<firm>/platinum/analysis_reports": {
+     "count": 1,
+     "ms": 59
+    }
+   },
+   "top_functions": [
+    {
+     "cum_ms": 17442,
+     "calls": 1,
+     "fn": "served.py:955 handle"
+    },
+    {
+     "cum_ms": 16717,
+     "calls": 1,
+     "fn": "served.py:828 _handle_owner_read"
+    },
+    {
+     "cum_ms": 16707,
+     "calls": 1,
+     "fn": "owner_reads.py:22 guarded"
+    },
+    {
+     "cum_ms": 16022,
+     "calls": 1,
+     "fn": "served.py:845 owned_compute"
+    },
+    {
+     "cum_ms": 16022,
+     "calls": 1,
+     "fn": "entry.py:186 job_status"
+    },
+    {
+     "cum_ms": 16021,
+     "calls": 1,
+     "fn": "owned_status.py:31 read"
+    },
+    {
+     "cum_ms": 10804,
+     "calls": 174,
+     "fn": "repository.py:415 get"
+    },
+    {
+     "cum_ms": 9986,
+     "calls": 81,
+     "fn": "retention.py:96 require_live"
+    },
+    {
+     "cum_ms": 8952,
+     "calls": 158,
+     "fn": "retention.py:267 get"
+    },
+    {
+     "cum_ms": 7355,
+     "calls": 5,
+     "fn": "repository.py:374 get"
+    },
+    {
+     "cum_ms": 6069,
+     "calls": 1,
+     "fn": "owned_report.py:71 read"
+    },
+    {
+     "cum_ms": 5442,
+     "calls": 2,
+     "fn": "owned_requests.py:102 _materialize"
+    },
+    {
+     "cum_ms": 5442,
+     "calls": 2,
+     "fn": "repository.py:402 head"
+    },
+    {
+     "cum_ms": 4579,
+     "calls": 12,
+     "fn": "repository.py:99 _check_retention"
+    }
+   ]
+  },
+  {
+   "route": "status read, dates capability",
+   "attempt": 2,
+   "http": null,
+   "ok": true,
+   "state": "READY",
+   "reason": "ANALYSIS_READY",
+   "wall_ms": 14747,
+   "response_bytes": 4599,
+   "items": null,
+   "aws_calls": 193,
+   "aws_ms": 11857,
+   "distinct_keys": 22,
+   "keyed_calls": 193,
+   "by_shape": {
+    "dynamodb get_item irpt-requests": {
+     "count": 9,
+     "ms": 404
+    },
+    "table:irpt-requests get_item table:irpt-requests": {
+     "count": 174,
+     "ms": 8496
+    },
+    "s3 get_object opal-data-irpt:irpt/<firm>/state/request_compositions": {
+     "count": 3,
+     "ms": 2478
+    },
+    "dynamodb get_item irpt-jobs": {
+     "count": 4,
+     "ms": 235
+    },
+    "s3 get_object opal-data-irpt:irpt/<firm>/state/normalized_portfolios": {
+     "count": 1,
+     "ms": 106
+    },
+    "s3 get_object opal-data-irpt:irpt/<firm>/state/original_holdings": {
+     "count": 1,
+     "ms": 64
+    },
+    "s3 get_object opal-data-irpt:irpt/<firm>/platinum/analysis_reports": {
+     "count": 1,
+     "ms": 74
+    }
+   },
+   "top_functions": [
+    {
+     "cum_ms": 14747,
+     "calls": 1,
+     "fn": "served.py:955 handle"
+    },
+    {
+     "cum_ms": 13069,
+     "calls": 1,
+     "fn": "served.py:828 _handle_owner_read"
+    },
+    {
+     "cum_ms": 13067,
+     "calls": 1,
+     "fn": "owner_reads.py:22 guarded"
+    },
+    {
+     "cum_ms": 12988,
+     "calls": 1,
+     "fn": "served.py:845 owned_compute"
+    },
+    {
+     "cum_ms": 12988,
+     "calls": 1,
+     "fn": "entry.py:186 job_status"
+    },
+    {
+     "cum_ms": 12988,
+     "calls": 1,
+     "fn": "owned_status.py:31 read"
+    },
+    {
+     "cum_ms": 8602,
+     "calls": 81,
+     "fn": "retention.py:96 require_live"
+    },
+    {
+     "cum_ms": 8551,
+     "calls": 174,
+     "fn": "repository.py:415 get"
+    },
+    {
+     "cum_ms": 7752,
+     "calls": 158,
+     "fn": "retention.py:267 get"
+    },
+    {
+     "cum_ms": 6160,
+     "calls": 1,
+     "fn": "owned_report.py:71 read"
+    },
+    {
+     "cum_ms": 5423,
+     "calls": 5,
+     "fn": "repository.py:374 get"
+    },
+    {
+     "cum_ms": 4538,
+     "calls": 12,
+     "fn": "repository.py:99 _check_retention"
+    },
+    {
+     "cum_ms": 3841,
+     "calls": 2,
+     "fn": "owned_requests.py:102 _materialize"
+    },
+    {
+     "cum_ms": 3841,
+     "calls": 2,
+     "fn": "repository.py:402 head"
+    }
+   ]
+  },
+  {
+   "route": "status read, no capability",
+   "attempt": 1,
+   "http": null,
+   "ok": true,
+   "state": "UNAVAILABLE",
+   "reason": "ANALYSIS_STATUS_DATE_BASIS_UNAVAILABLE",
+   "wall_ms": 11034,
+   "response_bytes": 414,
+   "items": null,
+   "aws_calls": 136,
+   "aws_ms": 7910,
+   "distinct_keys": 17,
+   "keyed_calls": 136,
+   "by_shape": {
+    "dynamodb get_item irpt-requests": {
+     "count": 8,
+     "ms": 337
+    },
+    "table:irpt-requests get_item table:irpt-requests": {
+     "count": 121,
+     "ms": 4868
+    },
+    "s3 get_object opal-data-irpt:irpt/<firm>/state/request_compositions": {
+     "count": 2,
+     "ms": 2432
+    },
+    "dynamodb get_item irpt-jobs": {
+     "count": 4,
+     "ms": 201
+    },
+    "s3 get_object opal-data-irpt:irpt/<firm>/platinum/analysis_reports": {
+     "count": 1,
+     "ms": 71
+    }
+   },
+   "top_functions": [
+    {
+     "cum_ms": 11034,
+     "calls": 1,
+     "fn": "served.py:955 handle"
+    },
+    {
+     "cum_ms": 8621,
+     "calls": 1,
+     "fn": "served.py:828 _handle_owner_read"
+    },
+    {
+     "cum_ms": 8620,
+     "calls": 1,
+     "fn": "owner_reads.py:22 guarded"
+    },
+    {
+     "cum_ms": 8529,
+     "calls": 1,
+     "fn": "served.py:845 owned_compute"
+    },
+    {
+     "cum_ms": 8529,
+     "calls": 1,
+     "fn": "entry.py:186 job_status"
+    },
+    {
+     "cum_ms": 8529,
+     "calls": 1,
+     "fn": "owned_status.py:31 read"
+    },
+    {
+     "cum_ms": 5287,
+     "calls": 60,
+     "fn": "retention.py:96 require_live"
+    },
+    {
+     "cum_ms": 4882,
+     "calls": 121,
+     "fn": "repository.py:415 get"
+    },
+    {
+     "cum_ms": 4743,
+     "calls": 1,
+     "fn": "owned_report.py:71 read"
+    },
+    {
+     "cum_ms": 4688,
+     "calls": 116,
+     "fn": "retention.py:267 get"
+    },
+    {
+     "cum_ms": 3672,
+     "calls": 2,
+     "fn": "owned_requests.py:102 _materialize"
+    },
+    {
+     "cum_ms": 3672,
+     "calls": 2,
+     "fn": "repository.py:402 head"
+    },
+    {
+     "cum_ms": 3672,
+     "calls": 2,
+     "fn": "repository.py:374 get"
+    },
+    {
+     "cum_ms": 2650,
+     "calls": 6,
+     "fn": "repository.py:99 _check_retention"
+    }
+   ]
+  },
+  {
+   "route": "status read, no capability",
+   "attempt": 2,
+   "http": null,
+   "ok": true,
+   "state": "UNAVAILABLE",
+   "reason": "ANALYSIS_STATUS_DATE_BASIS_UNAVAILABLE",
+   "wall_ms": 10027,
+   "response_bytes": 414,
+   "items": null,
+   "aws_calls": 136,
+   "aws_ms": 6495,
+   "distinct_keys": 17,
+   "keyed_calls": 136,
+   "by_shape": {
+    "dynamodb get_item irpt-requests": {
+     "count": 8,
+     "ms": 360
+    },
+    "table:irpt-requests get_item table:irpt-requests": {
+     "count": 121,
+     "ms": 5667
+    },
+    "s3 get_object opal-data-irpt:irpt/<firm>/state/request_compositions": {
+     "count": 2,
+     "ms": 146
+    },
+    "dynamodb get_item irpt-jobs": {
+     "count": 4,
+     "ms": 258
+    },
+    "s3 get_object opal-data-irpt:irpt/<firm>/platinum/analysis_reports": {
+     "count": 1,
+     "ms": 64
+    }
+   },
+   "top_functions": [
+    {
+     "cum_ms": 10027,
+     "calls": 1,
+     "fn": "served.py:955 handle"
+    },
+    {
+     "cum_ms": 7740,
+     "calls": 1,
+     "fn": "served.py:828 _handle_owner_read"
+    },
+    {
+     "cum_ms": 7738,
+     "calls": 1,
+     "fn": "owner_reads.py:22 guarded"
+    },
+    {
+     "cum_ms": 7652,
+     "calls": 1,
+     "fn": "served.py:845 owned_compute"
+    },
+    {
+     "cum_ms": 7652,
+     "calls": 1,
+     "fn": "entry.py:186 job_status"
+    },
+    {
+     "cum_ms": 7651,
+     "calls": 1,
+     "fn": "owned_status.py:31 read"
+    },
+    {
+     "cum_ms": 6568,
+     "calls": 60,
+     "fn": "retention.py:96 require_live"
+    },
+    {
+     "cum_ms": 5940,
+     "calls": 1,
+     "fn": "owned_report.py:71 read"
+    },
+    {
+     "cum_ms": 5680,
+     "calls": 121,
+     "fn": "repository.py:415 get"
+    },
+    {
+     "cum_ms": 5444,
+     "calls": 116,
+     "fn": "retention.py:267 get"
+    },
+    {
+     "cum_ms": 3365,
+     "calls": 6,
+     "fn": "repository.py:99 _check_retention"
+    },
+    {
+     "cum_ms": 2287,
+     "calls": 1,
+     "fn": "served.py:920 _service_allowed_firms"
+    },
+    {
+     "cum_ms": 2277,
+     "calls": 1,
+     "fn": "canonical_profile_reads.py:70 get_user"
+    },
+    {
+     "cum_ms": 2053,
+     "calls": 2,
+     "fn": "owned_requests.py:102 _materialize"
+    }
+   ]
+  },
+  {
+   "route": "request history list",
+   "attempt": 1,
+   "http": null,
+   "ok": true,
+   "state": null,
+   "reason": null,
+   "wall_ms": 23145,
+   "response_bytes": 6644,
+   "items": 18,
+   "aws_calls": 280,
+   "aws_ms": 16678,
+   "distinct_keys": 129,
+   "keyed_calls": 279,
+   "by_shape": {
+    "dynamodb query irpt-requests": {
+     "count": 1,
+     "ms": 131
+    },
+    "table:irpt-requests get_item table:irpt-requests": {
+     "count": 243,
+     "ms": 13188
+    },
+    "s3 get_object opal-data-irpt:irpt/<firm>/state/request_compositions": {
+     "count": 18,
+     "ms": 2088
+    },
+    "dynamodb get_item irpt-requests": {
+     "count": 18,
+     "ms": 1271
+    }
+   },
+   "top_functions": [
+    {
+     "cum_ms": 23145,
+     "calls": 1,
+     "fn": "served.py:955 handle"
+    },
+    {
+     "cum_ms": 21205,
+     "calls": 1,
+     "fn": "served.py:828 _handle_owner_read"
+    },
+    {
+     "cum_ms": 21197,
+     "calls": 1,
+     "fn": "owner_reads.py:22 guarded"
+    },
+    {
+     "cum_ms": 21196,
+     "calls": 1,
+     "fn": "served.py:845 owned_compute"
+    },
+    {
+     "cum_ms": 21196,
+     "calls": 1,
+     "fn": "entry.py:168 history"
+    },
+    {
+     "cum_ms": 21196,
+     "calls": 1,
+     "fn": "owned_requests.py:152 history"
+    },
+    {
+     "cum_ms": 15900,
+     "calls": 162,
+     "fn": "retention.py:96 require_live"
+    },
+    {
+     "cum_ms": 13721,
+     "calls": 18,
+     "fn": "owned_requests.py:102 _materialize"
+    },
+    {
+     "cum_ms": 13720,
+     "calls": 18,
+     "fn": "repository.py:402 head"
+    },
+    {
+     "cum_ms": 13720,
+     "calls": 18,
+     "fn": "repository.py:374 get"
+    },
+    {
+     "cum_ms": 13220,
+     "calls": 243,
+     "fn": "repository.py:415 get"
+    },
+    {
+     "cum_ms": 12295,
+     "calls": 225,
+     "fn": "retention.py:267 get"
+    },
+    {
+     "cum_ms": 9865,
+     "calls": 36,
+     "fn": "repository.py:99 _check_retention"
+    },
+    {
+     "cum_ms": 7314,
+     "calls": 18,
+     "fn": "owned_requests.py:108 _final"
+    }
+   ]
+  },
+  {
+   "route": "request history list",
+   "attempt": 2,
+   "http": null,
+   "ok": true,
+   "state": null,
+   "reason": null,
+   "wall_ms": 19115,
+   "response_bytes": 6644,
+   "items": 18,
+   "aws_calls": 280,
+   "aws_ms": 15075,
+   "distinct_keys": 129,
+   "keyed_calls": 279,
+   "by_shape": {
+    "dynamodb query irpt-requests": {
+     "count": 1,
+     "ms": 115
+    },
+    "table:irpt-requests get_item table:irpt-requests": {
+     "count": 243,
+     "ms": 11059
+    },
+    "s3 get_object opal-data-irpt:irpt/<firm>/state/request_compositions": {
+     "count": 18,
+     "ms": 3070
+    },
+    "dynamodb get_item irpt-requests": {
+     "count": 18,
+     "ms": 832
+    }
+   },
+   "top_functions": [
+    {
+     "cum_ms": 19114,
+     "calls": 1,
+     "fn": "served.py:955 handle"
+    },
+    {
+     "cum_ms": 17612,
+     "calls": 1,
+     "fn": "served.py:828 _handle_owner_read"
+    },
+    {
+     "cum_ms": 17611,
+     "calls": 1,
+     "fn": "owner_reads.py:22 guarded"
+    },
+    {
+     "cum_ms": 17610,
+     "calls": 1,
+     "fn": "served.py:845 owned_compute"
+    },
+    {
+     "cum_ms": 17610,
+     "calls": 1,
+     "fn": "entry.py:168 history"
+    },
+    {
+     "cum_ms": 17610,
+     "calls": 1,
+     "fn": "owned_requests.py:152 history"
+    },
+    {
+     "cum_ms": 12317,
+     "calls": 162,
+     "fn": "retention.py:96 require_live"
+    },
+    {
+     "cum_ms": 11978,
+     "calls": 18,
+     "fn": "owned_requests.py:102 _materialize"
+    },
+    {
+     "cum_ms": 11978,
+     "calls": 18,
+     "fn": "repository.py:402 head"
+    },
+    {
+     "cum_ms": 11977,
+     "calls": 18,
+     "fn": "repository.py:374 get"
+    },
+    {
+     "cum_ms": 11096,
+     "calls": 243,
+     "fn": "repository.py:415 get"
+    },
+    {
+     "cum_ms": 10292,
+     "calls": 225,
+     "fn": "retention.py:267 get"
+    },
+    {
+     "cum_ms": 7644,
+     "calls": 36,
+     "fn": "repository.py:99 _check_retention"
+    },
+    {
+     "cum_ms": 5515,
+     "calls": 18,
+     "fn": "owned_requests.py:108 _final"
+    }
+   ]
+  },
+  {
+   "route": "request read",
+   "attempt": 1,
+   "http": null,
+   "ok": true,
+   "state": null,
+   "reason": null,
+   "wall_ms": 4918,
+   "response_bytes": 538,
+   "items": null,
+   "aws_calls": 24,
+   "aws_ms": 3128,
+   "distinct_keys": 9,
+   "keyed_calls": 24,
+   "by_shape": {
+    "dynamodb get_item irpt-requests": {
+     "count": 4,
+     "ms": 151
+    },
+    "table:irpt-requests get_item table:irpt-requests": {
+     "count": 19,
+     "ms": 831
+    },
+    "s3 get_object opal-data-irpt:irpt/<firm>/state/request_compositions": {
+     "count": 1,
+     "ms": 2145
+    }
+   },
+   "top_functions": [
+    {
+     "cum_ms": 4918,
+     "calls": 1,
+     "fn": "served.py:955 handle"
+    },
+    {
+     "cum_ms": 3243,
+     "calls": 1,
+     "fn": "served.py:828 _handle_owner_read"
+    },
+    {
+     "cum_ms": 3242,
+     "calls": 1,
+     "fn": "owner_reads.py:22 guarded"
+    },
+    {
+     "cum_ms": 3161,
+     "calls": 1,
+     "fn": "served.py:845 owned_compute"
+    },
+    {
+     "cum_ms": 3161,
+     "calls": 1,
+     "fn": "entry.py:178 read"
+    },
+    {
+     "cum_ms": 3161,
+     "calls": 1,
+     "fn": "owned_requests.py:123 read"
+    },
+    {
+     "cum_ms": 2798,
+     "calls": 1,
+     "fn": "owned_requests.py:102 _materialize"
+    },
+    {
+     "cum_ms": 2798,
+     "calls": 1,
+     "fn": "repository.py:402 head"
+    },
+    {
+     "cum_ms": 2798,
+     "calls": 1,
+     "fn": "repository.py:374 get"
+    },
+    {
+     "cum_ms": 2158,
+     "calls": 1,
+     "fn": "repository.py:469 get"
+    },
+    {
+     "cum_ms": 1675,
+     "calls": 1,
+     "fn": "served.py:920 _service_allowed_firms"
+    },
+    {
+     "cum_ms": 1619,
+     "calls": 1,
+     "fn": "canonical_profile_reads.py:70 get_user"
+    },
+    {
+     "cum_ms": 893,
+     "calls": 9,
+     "fn": "retention.py:96 require_live"
+    },
+    {
+     "cum_ms": 833,
+     "calls": 19,
+     "fn": "repository.py:415 get"
+    }
+   ]
+  },
+  {
+   "route": "request read",
+   "attempt": 2,
+   "http": null,
+   "ok": true,
+   "state": null,
+   "reason": null,
+   "wall_ms": 3070,
+   "response_bytes": 538,
+   "items": null,
+   "aws_calls": 24,
+   "aws_ms": 1104,
+   "distinct_keys": 9,
+   "keyed_calls": 24,
+   "by_shape": {
+    "dynamodb get_item irpt-requests": {
+     "count": 4,
+     "ms": 199
+    },
+    "table:irpt-requests get_item table:irpt-requests": {
+     "count": 19,
+     "ms": 831
+    },
+    "s3 get_object opal-data-irpt:irpt/<firm>/state/request_compositions": {
+     "count": 1,
+     "ms": 74
+    }
+   },
+   "top_functions": [
+    {
+     "cum_ms": 3070,
+     "calls": 1,
+     "fn": "served.py:955 handle"
+    },
+    {
+     "cum_ms": 1762,
+     "calls": 1,
+     "fn": "served.py:920 _service_allowed_firms"
+    },
+    {
+     "cum_ms": 1715,
+     "calls": 1,
+     "fn": "canonical_profile_reads.py:70 get_user"
+    },
+    {
+     "cum_ms": 1307,
+     "calls": 1,
+     "fn": "served.py:828 _handle_owner_read"
+    },
+    {
+     "cum_ms": 1288,
+     "calls": 1,
+     "fn": "owner_reads.py:22 guarded"
+    },
+    {
+     "cum_ms": 1176,
+     "calls": 1,
+     "fn": "served.py:845 owned_compute"
+    },
+    {
+     "cum_ms": 1176,
+     "calls": 1,
+     "fn": "entry.py:178 read"
+    },
+    {
+     "cum_ms": 1176,
+     "calls": 1,
+     "fn": "owned_requests.py:123 read"
+    },
+    {
+     "cum_ms": 883,
+     "calls": 9,
+     "fn": "retention.py:96 require_live"
+    },
+    {
+     "cum_ms": 839,
+     "calls": 19,
+     "fn": "repository.py:415 get"
+    },
+    {
+     "cum_ms": 775,
+     "calls": 18,
+     "fn": "retention.py:267 get"
+    },
+    {
+     "cum_ms": 739,
+     "calls": 1,
+     "fn": "owned_requests.py:102 _materialize"
+    },
+    {
+     "cum_ms": 739,
+     "calls": 1,
+     "fn": "repository.py:402 head"
+    },
+    {
+     "cum_ms": 739,
+     "calls": 1,
+     "fn": "repository.py:374 get"
+    }
+   ]
+  }
+ ]
+}
