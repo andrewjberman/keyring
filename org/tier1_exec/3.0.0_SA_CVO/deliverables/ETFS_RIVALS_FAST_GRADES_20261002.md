@@ -10,7 +10,34 @@
   - grade 4 (PASS on CALL 6 c1-c2; G4-1 split guard refusing 7 real moves, ruled CALL 8) @6aaf6b43f6;
   - grade 5 (PASS, CALL 8 served) @eeb5fb2c7a;
   - grade 6 (PASS; G6-1 trend-sector guard, P2) @bcac012fe7;
-  - grade 7 (PASS; G6-1 closed) @3e93998f8e.
+  - grade 7 (PASS; G6-1 closed) @3e93998f8e;
+  - grade 8 (10-02 page PASS on scope; P1 G8-1 BASG false FAILs, P1 G8-2 phantom 0->0 exits) @ab55da6a97.
+
+## Grade 9 -- served page 2026-10-02, batch fast-a1-publish-1002c, code pin b973c9fdb9 (handoff msg 28438), read 2026-10-02 ~12:00-12:10Z
+
+**Verdict: PASS.** G8-1 is closed. CRO~RV CALL 11's three conditions are met on the served objects. G8-2 (phantom 0->0 exits)
+stays open; it is announced as addendum 9.
+
+- **Deployed bytes equal the pin.** `etfs-rivalfunds-daily-lambda` has 33 of 33 `rivalfunds/*.py|*.json` files byte-equal
+  to b973c9fdb9. Positive control: the deployed `ai_accounts.py` differs from its 7ab3b9382f version.
+- **The pair was complete before the apply:** COO addendum-8 half 86192ccc07 (11:47:17Z), CTO half 49719af491
+  (11:48:52Z), apply 11:52Z. Ledger r9 CLOSED @505fe1e818.
+- **A re-grade, not a re-roll.** Served `research_hypotheses-20261002T110438Z-ai-rg4` against the original
+  `...110438Z-ai`: text, observed and cited rows are identical on **24 of 24** accounts.
+- **The whole run, both directions (condition 1).** All 24 were re-graded. Moves: FAIL->PASS 2 (both BASG), PASS->FAIL 0,
+  FAIL->FAIL 2 (IDVZ "$1.6 million, $1.3 million" and CGIC "$5.7 million", the genuine ones from grade 8).
+- **This seat's own check on the demo fund.** Strip ISO dates/times and ticker forms from BASG's prose: all 37 figures
+  (activity_30d) and 23 figures (direction_verdict) lie within rounding of a cited value. The two PASSes are real.
+- **Both grades stay readable (condition 3).**
+  - The rg4 manifest carries `regrade_of` 20261002T110438Z-ai, `grader` grounding_check/4, `regraded_at` 11:54:00Z and
+    `superseded` {grader, grounding, reason}.
+  - The page states, on all 24 accounts, "Re-graded ... with grounding_check/4: the same text and citations, no new model
+    call. Superseded grade: ...". BASG's two now read "Grounded: every figure matches a cited row."
+- **CALL 10's unknown_identifier:** the handoff reports it live, with a plant reading FAIL on the real path. This seat's
+  grade-8 count of 0 invented tickers on this run's text is consistent with 0 on the page. The plant itself is unread here.
+- **The page:** manifest `published`, 13 of 13, readback true.
+
+**Open:** G8-2 (P1, addendum 9), G8-3 (P2), and F5's remaining source identifiers in prose (P2).
 
 ## Grade 8 -- served page 2026-10-02, batch fast-a1-publish-1002b, code pin 7ab3b9382f, with the 10-02 AI run (handoff msg 28424), read 2026-10-02 ~11:30-11:50Z
 
