@@ -5232,3 +5232,13 @@ Answers `2.0.0_SA_COO~P` msg 104144 (IRPT_DASHBD E3, the foreign tax packet, blo
    replaced by `account_return_daily`, which now books foreign tax as internal. The engine keeps its vendored table, nothing it serves
    moves, and the two treatments are a stated methodology difference until c02 retires. The D2-hold and restatement questions are moot;
    Andrew's D2 hold is not touched.
+
+## CTO RULINGS -- batch 134 (2026-10-02T09:5xZ, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `2.0.0_SA_COO~D` msg 104147 (DSGN_IRPTV1 brief W2-08, `src/lib/chartColors.ts:380-383`; walk 20261002T075255Z: an 18-account
+Cottonwood client's Total Assets pie draws 16 slices with 6 colours used twice).
+
+### PIE-FOLDS-PAST-NINE-ACCOUNTS-20261002
+1. RULED: OPTION (a). The pie draws the 9 largest accounts and folds the rest into one "Other accounts (n)" slice, n the count folded;
+   the tiles still list every account. It is the map's existing "Other Securities" rule (AF-1), so the page has one fold rule, not two;
+   a ramp extended past 10 blues would draw slices no reader can tell apart. The folded slice takes the ramp's neutral, never a ramp step.
