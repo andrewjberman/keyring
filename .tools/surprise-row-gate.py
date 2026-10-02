@@ -47,6 +47,7 @@ import inspect
 import json
 import os
 import re
+import copy
 import subprocess
 import sys
 
@@ -2293,6 +2294,19 @@ def check_file(root, rel):
                                        merging=_mrg_now, parent_ids=_pids)
     v.extend(_fv)
     notes.extend(_fn)
+    # PER-FILE MEMO (CVO~Z msg 28783, 2026-10-02): the project-wide reads below are invariant across the rows of ONE
+    # file in ONE gate run (same index, same HEAD), but the loop re-ran them for every new row -- ~25 s per row, so a
+    # 100-row remediation file ran past 60 min and held the shared index. Each is computed once per file here and
+    # handed out as a deep copy, so no row can see another row's mutation. Scope is this call only: nothing is
+    # cached across files, commits or the self-test's fixtures.
+    _pc_store = {}
+
+    def _pc(fn, *a, **k):
+        key = (fn.__name__, a, tuple(sorted(k.items())))
+        if key not in _pc_store:
+            _pc_store[key] = fn(*a, **k)
+        return copy.deepcopy(_pc_store[key])
+
     for row in added:
         rid = row.get("id")
         if not rid or not ID_RE.match(str(rid)):
@@ -2318,7 +2332,7 @@ def check_file(root, rel):
         elif kind == "INVESTIGATION" and folder_kind in ("INVESTIGATION", "ADJUDICATION") and row.get("disposition") == "DECOMP_INVALIDATING":
             _route_word = "disposition=DECOMP_INVALIDATING (carried in the slug)"
         if folder_project and _route_word is not None:
-            _mrg = _merge_in_progress(root)
+            _mrg = _pc(_merge_in_progress, root)
             # PROVENANCE COMES FROM THE `_pids` READ ALREADY TAKEN ABOVE for the coordinate limb and
             # the foreign-row sweep -- one read of the merge's parents per channel file, now shared by
             # four limbs instead of two. No second read, and no way for the two answers to disagree.
@@ -2327,18 +2341,18 @@ def check_file(root, rel):
             pre = _route_precondition_violations(root, rel, row, folder_project, route_word=_route_word,
                                                  merging=_mrg, parent_ids=_pids, watermark=_wm)
             pre.extend(_investigations_precondition_violations(rel, row, folder_project, _route_word,
-                                                               _latest_dispositions(root, folder_project),
+                                                               _pc(_latest_dispositions, root, folder_project),
                                                                merging=_mrg, parent_ids=_pids,
-                                                               gating=_gating_item_ids(root, folder_project),
+                                                               gating=_pc(_gating_item_ids, root, folder_project),
                                                                watermark=_wm,
-                                                               surfaced_at=(_item_surfaced_at(root, folder_project)
+                                                               surfaced_at=(_pc(_item_surfaced_at, root, folder_project)
                                                                             if _wm is not None else None)))
             # EN-g-37 / S74: rowlessness only -- a GRADUATED item under this project with no
             # remediation row bearing its id. Staleness (a row that EXISTS but has not moved) is a
             # DIFFERENT question this limb cannot see and does not attempt (EN-k-38).
             pre.extend(_graduated_without_row_violations(rel, row, folder_project, _route_word,
-                                                         _latest_dispositions(root, folder_project),
-                                                         _remediation_ids_for_project(root, folder_project),
+                                                         _pc(_latest_dispositions, root, folder_project),
+                                                         _pc(_remediation_ids_for_project, root, folder_project),
                                                          merging=_mrg, parent_ids=_pids))
             # EN-k-38 / S75: staleness only -- an EXISTING remediation row under this project that is
             # OPEN, owned and has not moved for STALE_OPEN_ROW_N_ROUNDS or more rounds against THIS
@@ -2348,7 +2362,7 @@ def check_file(root, rel):
             # at all and is not this limb's question.
             if kind == "REMEDIATION" and folder_kind == "REMEDIATION":
                 _kv, _kn = _stale_open_row_violations(rel, row, folder_project, _route_word,
-                                                      _remediation_rows_for_project(root, folder_project),
+                                                      _pc(_remediation_rows_for_project, root, folder_project),
                                                       merging=_mrg, parent_ids=_pids)
                 pre.extend(_kv)
                 notes.extend(_kn)
@@ -2366,12 +2380,15 @@ def check_file(root, rel):
                                  else "EVALUATED -- the merge's parents could not be read, fail-closed")))
             elif not pre:
                 _o, _t, _n = _open_tos_for_project(root, folder_project)
-                _l, _u, _nf, _ = _latest_dispositions(root, folder_project)
+                _l, _u, _nf, _ = _pc(_latest_dispositions, root, folder_project)
                 # THE ACCEPTANCE SWEEP (S169, AMGT-rk-57): a NOTE beside the census note, never a
                 # violation -- a slug is not refused on a FAIL (the rule at ~:991). The round is the
                 # NEW remediation row's own `round`, the same field `_stale_open_row_violations` reads.
                 _acc_round = _round_num(row.get("round"))
-                _acc_sweep = _acceptance_sweep(root, folder_project, round_n=_acc_round, merging=_mrg)
+                _ak = ("_acceptance_sweep", folder_project, _acc_round, _mrg)
+                if _ak not in _pc_store:
+                    _pc_store[_ak] = _acceptance_sweep(root, folder_project, round_n=_acc_round, merging=_mrg)
+                _acc_sweep = copy.deepcopy(_pc_store[_ak])
                 _acc_fails = _flagged_rows(_acc_sweep, "FAIL")
                 _acc_unv = _flagged_rows(_acc_sweep, "UNVERIFIABLE")
                 notes.append("%s: ACCEPTANCE (round %s, the slug's own): PASS %d / FAIL %d / "
