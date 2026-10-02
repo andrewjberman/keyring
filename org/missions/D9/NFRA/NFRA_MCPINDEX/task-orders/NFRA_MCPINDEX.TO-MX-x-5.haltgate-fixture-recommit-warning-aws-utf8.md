@@ -91,7 +91,7 @@ you checked.
 base: x5.AC1 FAIL as expected (2 passed, 6 failed; 1 `.agent_context` reference); x5.AC2 FAIL as expected (test
 absent); x5.AC3 FAIL as expected (test absent).
 
-<status>issued</status>
+<status>complete</status>
 <round>7</round>
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
