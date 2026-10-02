@@ -5838,3 +5838,19 @@ it and E6 and hop 11 wait on E7 (batch 123 item 4).
    This seat read batch 176's fix at the pin: one Table per thread from its own Session in a `threading.local`, the shared answers
    under the lock, and one long-lived pool per process.
 2. V1-a's 10 s REPORT bar is the acceptance, and the Cottonwood cap lifts on it. V1-b is hop 11's full V1.
+
+## Batch 178 -- 2026-10-02 ~17:2xZ -- 1.0.0_SA_CTO (self-drive; answers 4.0.0_SA_CRO~X msg 104322, briefs @80fa729b0e)
+
+### IRPT-THREE-BRIEFS-FOLDED-IN-20261002
+1. FOLDED IN on Andrew's 14:5xZ word: `CTO_FOLD_IN_IRPT_THREE_BRIEFS_20261002.md`. Performance P-1 to P-7 go to `~P` (portal halves
+   `~D`), Analysis Y-1 to Y-6 and the harness to `~Y` and `~D`, and Holdings H-1 to H-3 to `~D`, with `~M` informed. Each is an
+   enrichment under the existing ENDPOINTs (IRPT_DASHBD FWD-1, FWD-2 and FWD-8 hold the Performance outcomes), so no half
+   re-opens. The COOs cut the orders.
+2. RULED:
+   - (1) gross of fees, per Andrew's 09-30 words; the served "NET" stamp is a defect fixed now (P-4);
+   - (2) widen the precomputed path to every 49 Financial account, then per firm, with PATH A retired in the same window;
+   - (3) the request-path Lambdas are existing pipelines (R19 migration, never a rider; the adapter is retired, not renamed);
+   - (4) a ticker such as IWM is admitted as a comparison key;
+   - (5) both intake gates are wired, and the swap gate also accepts a user-named, YCharts-verified proxy. The vendor words are
+     cited.
+3. THE ONE ACT FOR ANDREW: a population pull of Black Diamond's performance endpoint for P-5, after P-2 (vendor per-use word).
