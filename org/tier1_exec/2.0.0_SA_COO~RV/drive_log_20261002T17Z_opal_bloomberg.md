@@ -1,0 +1,12 @@
+# Drive log -- 2.0.0_SA_COO~RV -- 2026-10-02 16Z-18Z (opal_bloomberg)
+
+Project ETFS_RIVALS, FULL (`/canonical-drive`, `/dispatch`), round 6 L7 -> drain -> deploy pair.
+
+| tick | limb | outcome | act |
+|---|---|---|---|
+| 16:1x-16:4xZ | L7 | DRIVE FORWARD | Workers ~4 (ic-2), ~5 (nm-1), ~2 (rk-2), ~1 (st-1) and ~6 (ui-1) reported. The issuer re-ran every check in each worktree. Finished seats cannot be resumed, so each slot was re-seated with its next order and the prior commits named as inherited state. |
+| 16:3x-16:5xZ | rule | DRIVE FORWARD | CRO census msg 28561: Fix 1 -> sx-1 amendment; WITHDRAWN on CRO~RV's 16:25Z message, when Andrew gave fixes 1-3 to CRO~RV ("Can you just make the edits necessary? i dont think we need to involve COO and CTO in this one"). sx-1.AC4 stays as an issuer drain check, and it PASSes on the combined branch. ic-2 A1 (own G1 sector reads arrived), committed at cfe39a9d64. x-1 A1 (the S20 path grant), committed at dd0ded6ea3. |
+| 16:4x-17:1xZ | L7 + probes | DRIVE FORWARD | Live probe 1 (BIDD, local only): silver refuses nm-1's real two-field BQL header ("header lacks ORIG_IDS"), and the response fills A-P exactly. nm-1 A1 + AC4 cut from the real header (13b53aa918). Chains ~2 (10730a6cdd) and ~4 (3b5ef430c4) drained. I-4 read: BIDD, CGIC and SCHY are Bloomberg T-2 at 07:10 ET (class a); IDVZ's TrueShares page layout broke the net-assets scraper (class d). |
+| 17:1x-17:3xZ | L7 + probes | DRIVE FORWARD | Live DVD_CRNCY read: BATS LN GBp, NPN SJ ZAr, SHEL LN USD, TEVA IT USD. e-2 A1 + AC4: minor units convert at major/100 (d48a0d31d7). Chain ~1 drained (913d82f4a1), with the rg4 test pin made to follow GRADER_VERSION (3a91036c27). |
+| 17:3x-17:5xZ | drain | DRIVE FORWARD | Live probe 2 (9 funds): 683/683 rows named and typed through nm-1 A1. Chain ~5 drained (b088541093). CRO msg 28602: st-1 shadowed A1_TABLES, which would have served "No AI account" on all 12 funds. Fixed before any deploy (215a07b015, regression test). Hookups committed at 215a07b015; lambdas.tf at 651d3bfda7 (audited CLOUD_OPS_OR_ETL). Chain ~3 drained (c7798eae52). DEFECT, mine: the retry loop held its own conflicted merge open 17:28-17:5xZ (COO~H msg 28606); resolved byte-preserving, and the loop now aborts on conflict. |
+| 17:5x-18:2xZ | drain + L8 prep | DRIVE FORWARD | Combined branch: suite 527 passed, 43/43 checks. Chain ~6 + hookups drained (b6b63ee22b). All 14 orders flipped complete (f1bd440feb). Probe plan 0/6/0 at 0fe2cd1556. COO half drafted. The served-delta measurement is running. |
