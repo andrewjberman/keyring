@@ -652,7 +652,10 @@ never silently.
   "refused: <reason>", and the rest serve.
   - The bounds are structural:
     - (a) a period total below -100% is refused. This is a hard rule.
-    - (b) one holding's |contribution| above 0.25 of fund return is refused. PROVISIONAL.
+    - (b) one holding's absolute contribution |c| above 0.25 is refused. **The unit is contribution units: a fraction of fund NAV
+      (0.25 = 25 percentage points of return), NOT a share of the fund's period total.** A fund total near zero must not refuse
+      its correct rankings; for example ETFT, with TXN at +2.92% against a fund total of +0.56%. For scale: one holding at 10%
+      weight tripling contributes about 0.20. Positive control: a planted single holding at 0.30 refuses. PROVISIONAL.
     - (c) where the NAV series is on file, |sum of contributions - NAV return| above a tolerance from the residual distribution
       is refused. PROVISIONAL.
   - The bounds are never drawn from the peer return distribution.
