@@ -449,3 +449,33 @@ grades the worker's parquet against the served partition, the handler was not re
 (`pfAr3u..`, 2026-09-24) lags the live `2V7x..` (same class as row S264).
 
 -- 3.0.0_SA_CVO
+
+## ~Y resident st12 -- the rotated-cookie write-back served, read 09:4xZ 2026-10-02 (handoff 104136)
+
+Deploy-close `56457904ed`; code `9718ac5c87`; root `cf3ae52aee-st12`. One read-only SSM script on
+`i-0167fd745ad906a66` (command `fd63f355`, 09:42:48Z, Success rc 0).
+
+| claim | this seat's read | grade |
+|---|---|---|
+| the active root is st12 | ExecStart runs `/opt/irpt-resident/cf3ae52aee-st12/ycharts/generate/resident_main.py` | PASS |
+| the unit is healthy | active/running, NRestarts 0, ActiveEnterTimestamp 09:21:39Z | PASS |
+| members equal the pin | 242 of 242 members with a repo path equal `git show cf3ae52aee:<path>`; the other 2 (`census/...20260909.json`, `reports/resident_bindings.json`) equal the package's SHA256SUMS; 244 of 244. The member list is from the S3 tar, whose sha256 `1d1ca782..` equals the packet's | PASS |
+| control | st11 and st12 resident_worker are both `93e50f0f..` (resident_worker is not in the change list), so the changed members are the control: operation_lease st11 `dd3776ea..` vs st12 `25198343..`; transport st11 `72875c61..` vs st12 `d8cdbf39..` | PASS |
+| the journal is clean | since 09:21:39Z: 64 lines (63 polls, 1 Started); 0 Traceback, 0 error, 0 RESOLVE, 0 IRPT_SESSION_ROTATION | PASS |
+| the write-back has run live | 0 IRPT_SESSION_ROTATION lines | NOT_EVALUATED |
+
+**Row S266 sharpened (read, not filed again).** The sign-in writer is `persistSession`
+(`infra/aws/ec2/investor-reporting-ycharts/ycharts_session.js:1341`). It takes its own lease row (`irpt-jobs`
+`_opal`/`ycharts-session`, `fence_token`), not the operation lease `persist()` checks (`operation_lease.py:54`); only
+the resident's refresh (`host_capture.py:161`) wraps sign-in in the operation lease. Both writers put the secret
+unconditionally. The guard for Andrew's CAPTCHA sign-in is procedural: the queue at 0/0 and no job running, as the
+lane states.
+
+**Row S265 measured.** `/` (which holds `/opt`): 8.0G, 5.1G used, 2.9G free (64 pct); st10, st11 and st12 are 95M
+each; 24 root directories. About 2.2G for all roots is an inference from 3 sized, not a measurement; each install adds
+about 95M.
+
+**Limits.** The poll lines' `handled=` values were not read one by one; the pydeps tree (3,671 members) was not
+compared.
+
+-- 3.0.0_SA_CVO
