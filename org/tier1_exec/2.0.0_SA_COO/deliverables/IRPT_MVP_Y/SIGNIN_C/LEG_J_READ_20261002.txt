@@ -1,0 +1,20 @@
+ssm 8de26008-dfc8-47d2-93db-b3e66e04bd96 Success rc 0
+leg J read 2026-10-02T10:15:18Z
+--- journal since 09:45Z (POLL handled=0 lines dropped)
+2026-10-02T09:57:33+0000 ip-172-31-87-2.ec2.internal python3.12[416818]: IRPT_RESIDENT_RESOLVE state=READY code=-
+2026-10-02T09:57:33+0000 ip-172-31-87-2.ec2.internal python3.12[416818]: IRPT_RESIDENT_POLL handled=1
+2026-10-02T09:57:42+0000 ip-172-31-87-2.ec2.internal python3.12[416818]: IRPT_SESSION_ROTATION kept=1 names=multidb_pin_writes version=1660f46e
+2026-10-02T09:57:44+0000 ip-172-31-87-2.ec2.internal python3.12[416818]: IRPT_SESSION_ROTATION kept=1 names=multidb_pin_writes version=2bd4a067
+2026-10-02T09:57:46+0000 ip-172-31-87-2.ec2.internal python3.12[416818]: IRPT_RESIDENT_READ_BACK_RELEASE step=read_back status=200 portfolio_status=calculating source=status polls=1 wall_s=1.4 drifted=benchmark=null,level_as_of_type=null,ma
+2026-10-02T09:57:46+0000 ip-172-31-87-2.ec2.internal python3.12[416818]: IRPT_RESIDENT_VENDOR_REQUESTS kept=4
+2026-10-02T09:57:46+0000 ip-172-31-87-2.ec2.internal python3.12[416818]: IRPT_RESIDENT_POLL retained_for_retry class=ReadBackPending code=READ_BACK_PENDING:CALCULATING
+2026-10-02T10:12:52+0000 ip-172-31-87-2.ec2.internal python3.12[416818]: IRPT_RESIDENT_READ_BACK_DONE step=read_back status=200 portfolio_status=available source=saved_portfolio polls=1 wall_s=3.6 drifted=- absent=- tolerated=level_as_of_ty
+2026-10-02T10:12:54+0000 ip-172-31-87-2.ec2.internal python3.12[416818]: IRPT_SESSION_ROTATION kept=1 names=multidb_pin_writes version=77c5f704
+2026-10-02T10:13:05+0000 ip-172-31-87-2.ec2.internal python3.12[416818]: IRPT_SESSION_ROTATION kept=1 names=multidb_pin_writes version=8441111a
+2026-10-02T10:13:16+0000 ip-172-31-87-2.ec2.internal python3.12[416818]: IRPT_RESIDENT_TOLERANCE_TYPE type=Static as_of=Custom name=cut
+2026-10-02T10:14:06+0000 ip-172-31-87-2.ec2.internal python3.12[416818]: IRPT_RESIDENT_VENDOR_REQUESTS kept=5
+2026-10-02T10:14:06+0000 ip-172-31-87-2.ec2.internal python3.12[416818]: IRPT_RESIDENT_POLL handled=1
+--- rotation lines: 4; eviction/refresh lines: 0
+stored session: state OK fence 23 generation 6ce12b3c persisted_at 2026-10-02T09:45:43.965Z transport_updated_at 2026-10-02T10:13:05.740996+00:00 cookie names ['__cf_bm', '__cf_bm', '__cf_bm', '__cf_bm', '__cf_bm', '_ga', '_ga_29JVRYKWPW', 
+queue irpt-generation 0/0
+
