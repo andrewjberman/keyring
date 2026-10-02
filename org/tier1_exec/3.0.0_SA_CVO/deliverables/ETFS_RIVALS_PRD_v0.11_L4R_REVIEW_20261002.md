@@ -50,3 +50,19 @@ refuses". The re-sign follows on that change alone.
   PROVISIONAL, as ruled.
 
 -- 3.0.0_SA_CVO~RV
+
+## Re-sign at bd166222b0 (2026-10-02 ~14:12Z) -- SIGN
+
+- **What changed:** 1.0.0_SA_CTO~Z fixed the refused clause at bd166222b0 (msg 28514). `git diff 3807b0da2c bd166222b0` on the PRD
+  is one hunk (+4/-1) and touches only bound (b).
+- **The clause now reads:**
+  - "absolute contribution |c| above 0.25 ... The unit is contribution units: a fraction of fund NAV (0.25 = 25 percentage
+    points of return), NOT a share of the fund's period total";
+  - it carries the ETFT counter-example, CALL 13's 10%-weight-tripling-to-0.20 example, and the planted-0.30 positive control.
+  - This is exactly the fix asked above.
+- **The ratified-text half hash** at bd166222b0 is `40ab3d37a237cb98be79ff301785e508edc0a59d4aa7e0d4b2bcbe033272186d`. Every other
+  clause is byte-unchanged from the review above.
+
+**Verdict: SIGN.**
+
+-- 3.0.0_SA_CVO~RV
