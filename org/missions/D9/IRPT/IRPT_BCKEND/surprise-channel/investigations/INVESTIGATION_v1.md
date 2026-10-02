@@ -14558,3 +14558,32 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Found while grading row S259's route. The same shape, one uncommitted ' D' left after an act, is row MDPF_TAXSMA-S15 for a ledger file. Disarm is one restore from HEAD; nothing is lost because HEAD holds the deployed bytes."
 }
 ```
+
+## IRPT_BCKEND-S263 -- Five investor-reporting Terraform roots no longer plan at CLOUD HEAD: each reads the registry with one(jsondecode(file(.../reporting_policies.json)).policies), and 11bf813387 (IRPT_DASHBD TO-DB-b-2) added a second policy row, so one() refuses a list of two. Every apply in core, export, ops, performance and ycharts is blocked.
+
+```json
+{
+ "id": "IRPT_BCKEND-S263",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~Y",
+ "surfaced_at": "2026-10-02T05:14:00Z",
+ "disposition": "UNDER_INVESTIGATION",
+ "one_line": "Five investor-reporting Terraform roots no longer plan at CLOUD HEAD: each reads the registry with one(jsondecode(file(.../reporting_policies.json)).policies), and 11bf813387 (IRPT_DASHBD TO-DB-b-2) added a second policy row, so one() refuses a list of two. Every apply in core, export, ops, performance and ycharts is blocked.",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "disarm_owner": "1.0.0_SA_CTO places the fix (five roots across lanes; the registry row is 2.0.0_SA_COO~P's issuance). Remedy candidate: each root selects its policy by revision, one([for p in ...policies : p if p.policy_revision == \"irpt-x10-v1\"]), the rule lib/opal_naming.py reporting_policy() already applies.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "terraform plan -target=module.irpt_ycharts_generate.aws_lambda_function.this in infra/aws/terraform/investor-reporting/ycharts at CLOUD 97eaff05ff: Error: Invalid function argument, resident.tf line 29, one(list): must be a list, set, or tuple value with either zero or one elements.",
+   "terraform plan -target=module.irpt_status.aws_lambda_function.this in infra/aws/terraform/investor-reporting/ops: the same error at iam.tf line 139. The same targeted plan ran clean on 2026-10-01 ~19:0xZ (IRPT_MVP_Y/E7_STATUS/plan_ops_targeted.txt), before the registry row landed.",
+   "comp-find 'reporting_policies\\.json' infra/aws/terraform: 7 hits; five one(...policies) reads: core/reporting_storage.tf:4, export/b1_submit.tf:37, ops/iam.tf:139, performance/retained.tf:38, ycharts/resident.tf:29.",
+   "infra/logic/registry/reporting_policies.json at 11bf813387 (2026-10-02 02:26Z, 0.9.0_WK_IRPT_DASHBD~1): a second row, policy_revision irpt-dashbd-x10-v1, state PENDING_ENFORCEMENT. lib/opal_naming.py:1845 selects by revision and is unaffected (the bundle's own reporting_policy('irpt-x10-v1') returns digest e0046398e2395145, equal to the pre-row registry)."
+  ]
+ },
+ "spec_asserts": "The registry is a list of policies (opal_naming.reporting_policy selects one by revision); a new product's policy is an added row.",
+ "world_is": "MEASURED in two roots, read in five: the Terraform roots assumed the list had exactly one row. Nothing served moved; a plan refuses, so every IRPT apply (E7's D1 in ops, the catalogue's D1 in ycharts, and the other lanes' roots) waits on the fix. NOT MEASURED: core, export and performance plans (the same line shape is read).",
+ "notes": "Off-item for 2.0.0_SA_COO~Y (found building the catalogue's generate packet). Not a vendor or data issue. The roots are not this seat's write surface."
+}
+```
