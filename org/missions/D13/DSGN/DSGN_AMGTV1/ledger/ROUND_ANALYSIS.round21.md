@@ -55,6 +55,7 @@ drops; PROD stays on `b3a1d8a6` and loses nothing.
 | B1 | A company name on every row of the price ranking and the chatter set (FWD-2). Use the same security reference that names the other 70 | served ranking: 0 of 94 rows lack a name, with a positive control on one of the 24 (e.g. `RMS FP`). It lands before the 07:13 ET generation if it can; otherwise the next one |
 | B2 | Plain served reasons (FWD-8, 11): the Lusha skip reason and the registry's absent-column reasons in words, never a key, field code or file name | served Exec and Peers payloads for BA and VLO: 0 code-shaped tokens; a mutant restoring the old string fails |
 | B3 | M-1 officer parse (FWD-7): the full title, and no trailing age in the role | VLO served officers: no title equals "Senior Vice"; 0 roles ending in a number |
+| B4 | Posture basis claims in words (FWD-11). Added 07:0xZ on COO~D msg 28263: the cut located "ABSENT" as SERVED, in the thesis bundle's `posture.basis[1].claim` ("Both names' fit scores are ABSENT rather than low ..."), which is drafted by `lib/research/posture/`. The drafter states a missing score in words and never writes a status token | the served posture basis for BA and VLO: 0 tokens matching `\b[A-Z]{4,}\b` that are status values (`ABSENT`, `NULL`, `MISSING`); a mutant restoring the token fails |
 
 ## 4. ACTS ONLY ANDREW CAN DO (cited)
 
