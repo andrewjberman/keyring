@@ -5,7 +5,7 @@
  "project": "ETFS_RIVALS",
  "directive": "D5",
  "fabric": "site-z",
- "prd_version": "v0.10",
+ "prd_version": "v0.11",
  "step": 4,
  "brief_ref": "docs/briefs/etf-holdings-research-20260929.md@77c891c869",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20"],
@@ -623,6 +623,62 @@ builder at v0.3. Every table:
   `performance_rankings`, `manager_behavior`) are NOT built until a served insight names them (C-ONE-SIGNAL). `trade_outcomes`,
   `style_read` and `trend_projection` are this model's narrower versions of `decision_evaluation` and `manager_behavior`.
 
+**C-FAST-RULINGS (v0.11).** These are the contract-level rules ruled by `4.0.0_SA_CRO~RV` during the 2026-10-02 FAST interval and
+served under the A1 never-widen pair and addenda 1-11. The authoritative text of each is the ruling cited, in
+`org/tier1_exec/4.0.0_SA_CRO/deliverables/ETFS_RIVALS_RULINGS_20261002.md`; this block lifts them into the ratified text, so the
+L4-R signer reads the contract the code follows. Each value marked PROVISIONAL is a starting value that a named cell re-sets,
+never silently.
+
+- **Holding contribution: price source and priceability (CALL 1, as amended by CALLs 6, 7 and 8).**
+  - **Source order:** per (security, day), the order is `g4_tri`, then `g4_close`, then `holding_implied`, else `missing`. A daily
+    return uses ONE source at both endpoints.
+  - **Priceable positions:** only a security holding with `quantity > 0` and a non-null `market_value` on both days is priced.
+    Cash, derivatives, swaps, futures, options and forwards are `missing` with a reason. A future counts as
+    `derivative_not_priced`. A zero or absent valuation is no price, never a -100% day.
+  - **The guard,** with `out(x) := max(x, 1/x) > 1 + band`, `r` the price ratio, `k` the quantity ratio and `v = k x r`:
+    - a day is refused `corporate_action_suspected` iff `out(r) AND out(k) AND NOT out(v)`, with band 0.25, PROVISIONAL;
+    - otherwise it is refused `implausible_valuation` iff `max(r, 1/r) > 1.5` (band 0.5, PROVISIONAL), whether or not the quantity
+      changed;
+    - otherwise the day is priced.
+  - **No gap filling.**
+  - **`price_source` at row grain:** `g4_tri | g4_close | holding_implied | mixed | missing`.
+  - **Disclosure:** implied returns are price-only, and the caption says so.
+- **One as-of date per page (CALL 3).** `asof = prev_trading_day(page_day)` (`lib/trading_calendar.py`). There are no per-fund
+  windows, and a fund short of `asof` reads `partial` with its reason. On early-month pages the caption names the prior month.
+- **Refusal disclosure (CALL 6, condition 2).** `holding_contribution` carries `n_days_refused` and `refused_reasons`. The ranking
+  caption states, per fund and period, the count and the reasons. The audit block lists each refused (security, day, ratio,
+  reason).
+- **Plausibility guard (CALL 13, C1).** A refusal is per fund x period, never the table. The refused fund-period reads
+  "refused: <reason>", and the rest serve.
+  - The bounds are structural:
+    - (a) a period total below -100% is refused. This is a hard rule.
+    - (b) one holding's |contribution| above 0.25 of fund return is refused. PROVISIONAL.
+    - (c) where the NAV series is on file, |sum of contributions - NAV return| above a tolerance from the residual distribution
+      is refused. PROVISIONAL.
+  - The bounds are never drawn from the peer return distribution.
+- **Bet versus tilt (CALL 4).** A line is a `bet` when its largest window carries at least 0.5 of its GROSS (the sum of
+  |window net|), PROVISIONAL and inclusive. Otherwise it is a `tilt`. Sector lines apply the test to per-window sector nets.
+  `buying_trend` carries `gross_notional_base` and `bet_share`.
+- **Trend population (CALL 9; grade 6 G6-1).**
+  - Derivative lines leave the trend.
+  - A security's sector falls back to its GICS sector in any fund's file: security-keyed, `gics_sector` only, own sector first,
+    date-sorted.
+  - The trend row carries `sector_source` `own | other_fund | mixed`, with `mixed` at sector grain. A null means no sector,
+    never `own`.
+  - The ranking and the trend sector panels share ONE "Sectors not shown" rule: a panel is hidden when Unclassified exceeds 0.5 of
+    its absolute sector measure.
+- **Display population (CALL 12; the cash-equivalent rule of grade 2 F2).**
+  - A G5 row whose shares go 0 -> 0 with no notional is not shown as a trade. It is counted per window with a note, and G5 keeps the
+    row. A 0 -> 0 row with a non-zero notional is a data fault and stays visible.
+  - Money-market lines leave the rankings, the trend, the trade log and the AI facts, each counted where it is hidden.
+- **AI grounding (CALLs 10 and 11; extends C-AI-GROUNDING).**
+  - A digit run written as a Bloomberg ticker (`6501 JP Equity`) is an identifier, not a figure. It passes only if it matches a
+    security key in that fund's facts for the run; otherwise it FAILs as `unknown_identifier`.
+  - A quoted ISO timestamp is a time, not figures.
+  - A corrected grader **re-grades** the whole stored run, in both directions, once per grader defect. The superseded grade
+    stays readable beside the new one, and no account is re-rolled.
+  - A grounding FAIL is shown, not re-rolled (CALL 5).
+
 ## THE THREAD (FWD-1) -- round 1 builds it end to end, for BASG
 
 One person: Andrew. One journey, live, for **BASG** (the brief's O1 candidate; its issuer archive has daily history since
@@ -681,6 +737,15 @@ the `/sprint` precedent files.
 - The CVO grades JUDGMENT criteria at L9, citing the contract clause.
 
 ## PROVENANCE AND AMENDMENT HISTORY
+
+- v0.11 (2026-10-02, `1.0.0_SA_CTO~Z`), on CVO~RV's round-5 review P2 (`ETFS_RIVALS_R5_REVIEW_20261002.md`; round-5 analysis
+  @a059825ea9 section 3):
+  - **CONTRACTS gains C-FAST-RULINGS.** It lifts the contract-level rulings of CRO~RV CALLs 1-13 (rulings file @6e3c94774a and
+    earlier) into the ratified text, as served on 2026-10-02 under the A1 pair and addenda 1-11.
+  - **The ENDPOINT is unchanged.** Only the CONTRACTS change, and that half's ratified-text sign-off re-opens to
+    `3.0.0_SA_CVO~RV`.
+  - **Nothing is ruled anew here.** Each clause cites its CALL, and where this text and a ruling differ, the ruling governs until
+    the text is corrected.
 
 - v0.10 (2026-10-02, `1.0.0_SA_CTO~Z`), on Andrew's release (record `ANDREW_DIRECT_20261002_022xZ_RIVALFUNDS_ADDENDUM_B_RELEASED_DRIVE_NOW.md`):
   - Addendum B (FWD-13..20) is CONFIRMED.
