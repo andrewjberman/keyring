@@ -6,7 +6,7 @@ Mode FAST: lease `IRPT_BCKEND~Y` re-armed 04:33Z until 08:33Z after the withdraw
 terms, under Andrew-direct 2026-10-01 ~04:2xZ).
 Loop `/canonical-drive IRPT_BCKEND` 10m (LIVE_ARMS RELAUNCH row). Way forward: CTO rulings batches 61, 62, 65, 70, 72,
 76, 83, 88, 89, 93, 97, 98, 100 and 105 in `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md`.
-Reviewer `3.0.0_SA_CVO` (grades pins after the fact). Lease FAST until 09:43:29Z (read 09:14Z). As of 2026-10-02T10:2xZ.
+Reviewer `3.0.0_SA_CVO` (grades pins after the fact). Lease FAST until 09:43:29Z (read 09:14Z). As of 2026-10-02T11:0xZ.
 
 ## Pins
 
@@ -23,6 +23,14 @@ Reviewer `3.0.0_SA_CVO` (grades pins after the fact). Lease FAST until 09:43:29Z
 | Push state | LOCAL @56457904ed; origin/CLOUD `1f2346734b` (ls-remote read 09:1xZ). CLOUD is pushed by `0.0.0_AB_MSTR` only |
 
 ## Live thread
+
+**THE irpt-status QUEUE (CTO batches 142, 146): E7b + E6 + item 22 in ONE packet, no PROD-promote gate.** E7b built
+`c4210d2785` (comparisons only on `include=comparisons`; the plain read is the pre-E7 path). Bundle at ONE commit `ff8fd77ba2`
+(repin `d3a8136304`), uploaded `Jg3uJ0x7..` sha `X/JLmPJZ..`; packet `IRPT_MVP_Y/E7B_STATUS/NEVER_WIDEN_SIGNOFF_PACKET_IRPT_STATUS_E7B_20261002.md`
+blob `d56354f274` @25c4a80e23, ledger `irpt-status-e7b-20261002` U1 closed; CTO half asked 11:03Z (4 members outside the
+three -- durable_job, status.py, two registry files -- named with signed origins, ruling owed). Targeted plan: 1 change.
+Live before-reads recorded; V1 compares. `2.0.0_SA_COO~D` adds `include=comparisons` ONLY after V1. E7 is superseded (its
+legs close at E7b's V1). Hop 11 stays separate (branch `coo-y-hop11`).
 
 **The Analysis thread is LIVE** (CTO batch 88) on the Overview `REQ-a69e5751d42c374f1d2354f9`. The Multi-Comp
 `REQ-a1d9abc0bc037ea3d9e4a7ed` is READY, graded PASS and walked, and is NOT live until E7 is served (batch 98).
