@@ -6,7 +6,7 @@ Mode FAST: lease `IRPT_BCKEND~Y` re-armed 04:33Z until 08:33Z after the withdraw
 terms, under Andrew-direct 2026-10-01 ~04:2xZ).
 Loop `/canonical-drive IRPT_BCKEND` 10m (LIVE_ARMS RELAUNCH row). Way forward: CTO rulings batches 61, 62, 65, 70, 72,
 76, 83, 88, 89, 93, 97, 98, 100 and 105 in `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md`.
-Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-02T07:1xZ.
+Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-02T07:1xZ (st11 packet with the CTO).
 
 ## Pins
 
@@ -59,8 +59,10 @@ made (CTO half item 1).
    `REPLACE_FILE`. **st11's code is BUILT and MERGED** (item 19 `951afdf4e6`, IAM `85240e4c82`, merge `4f68a17d3a`): the
    re-send, the deadline from the row's `requested_at`, `RESOLVE_PROVIDER_BUSY` with action `CORRECT` and its words; 3 new tests
    (one proves a resolve busy for its whole deadline never reaches the dead-letter queue), negative control, every suite green.
-   The IAM line (`sqs:SendMessage` on `irpt-generation`, CTO batch 121) plans as the ycharts root's only change. NEXT: the st11
-   packet (resident build + the targeted IAM apply), both halves. Its live proof needs a working session (Andrew's sign-in).
+   The IAM line (`sqs:SendMessage` on `irpt-generation`, CTO batch 121) plans as the ycharts root's only change. **st11 packet**
+   `IRPT_MVP_Y/ST11/NEVER_WIDEN_SIGNOFF_PACKET_RESIDENT_ST11_20261002.md` (blob `d0243e9bb1`, @2e0cbd5c36): I1 the IAM line, then
+   D1 the resident at `4f68a17d3a` (gate PASS, 8 of 243 changed); U1 proven; COO half signed; CTO half asked 07:10Z. Ledger
+   `irpt-resident-st11-20261002` OPEN. Its live proof needs a working session (Andrew's sign-in).
 6. Batch 61's order after that: one job per remaining arm (Target Weight, 49 Financial, Inflection), each under a window
    packet; the resolve concurrency fix; the vendor PDF link; the Analysis export; the email lane. E6's memo follows E7's
    apply (CTO batch 111). A client-scoped history route is an enrichment item at the next round analysis (CTO batch 110 item 4).
@@ -89,6 +91,7 @@ Batch 120 item 6 (the probe's cookie rotation) is read at the next window, which
 ## Ledgers this seat holds open
 
 - `irpt-status-e7-20261001`: U1 closed; HELD (external gate: row S261 and the PROD promote). Nothing applied.
+- `irpt-resident-st11-20261002`: U1 closed; I1, D1, V1 wait on the CTO half.
 
 ## Enrichment candidates (the measured list is `IRPT_MVP_Y/ENRICHMENT_CANDIDATES_20261001.md`)
 
