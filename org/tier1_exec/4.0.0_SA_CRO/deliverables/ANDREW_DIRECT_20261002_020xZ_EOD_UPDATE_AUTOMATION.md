@@ -94,3 +94,14 @@ And, the next turn, on the wind-down itself:
 
 Binding: the build proceeds now. The 104035 wind-down was Andrew's word for SITE Z's device (its disk at 100%), not
 for this laptop: it does not bind 4.0.0_SA_CRO.
+
+## Addendum ~13:1xZ -- Kimi on the vendor whitelist, verbatim
+
+Context: the site-Z vendor-call whitelist (org/ref/VENDOR_EGRESS_WHITELIST.yaml @213102cff1, site-Z LOCAL; relay msg
+104251) lists only VEW-1 NopeCHA; any other vendor needs his per-use word. The CRO asked whether LDO-001's unattended
+Kimi calls should be added. Andrew, at this terminal:
+
+> Yes Kimi can be called freely
+
+Binding: Kimi (Moonshot, api.moonshot.ai, key astn/kimi/api-key) may be called without a per-use word. As stated it
+carries no scope limit. The whitelist row is site Z's file; 0.0.0_AB_MSTR relays this record to its owner.
