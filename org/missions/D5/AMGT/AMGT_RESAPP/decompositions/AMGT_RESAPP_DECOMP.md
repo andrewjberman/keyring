@@ -7973,3 +7973,23 @@ fanout:
   egress: none
   portal_ref: a730d8ce
 ```
+
+### 72f. AMENDMENT 1 -- reconciled with the CTO's round-63 analysis @8642d76ceb (msg 28771)
+
+The analysis landed after the issuance (`59aabebf87`). Its seven-item enrichment list maps onto this rectangle as follows:
+
+| analysis item | cell |
+|---|---|
+| 1 cold read | an-5 |
+| 2 FWD-36 | an-1 |
+| 3 FWD-37 (events already in gold only) | an-2 |
+| 4 FWD-38 + the officer face | an-3, an-4, an-6 item 2 |
+| 5 slash keys (ruling 1) | an-6 item 1, RE-RULED: `slash_safe_key` in the classification read + the encoded key in the route template |
+| 6 the 500 attribution (ruling 3) | **NEW cell `AMGT-an-8` on `0.9.0_WK_AMGT_RESAPP~216`**: one AMGT_500 line per 500, a 7-day census by signature, a planted fault, no alarm |
+| 7 the as_of source stamp (ruling 6) | an-6 item 3, RE-RULED: the body's `source_stamp`, with the key's `object_as_of` for older bodies |
+
+Every unspawned cell (an-2 to an-6, an-8) also measures its package delta (`--build-only` SIZE line). an-1 was already running, so the
+issuer measures its delta at the drain. No cell adds new processing of publisher article text (the HARVST terms card). an-7 carries an-8
+and reads its census after the act. r64_served gains c14 C4 (the encoded key reaches every route) and c16 (the planted fault). Both
+were dry-run at the base: C4 serves 200 with security_key null on 4 of 4 routes (the normal-key control serves it), and c16's fault
+escapes with 0 AMGT_500 lines. The orders total 8, under the cap of 8.

@@ -1067,6 +1067,70 @@
  "spec_asserts": "CLAUDE.md Portal: a portal candidate touching NO product file lands on DEV by its author (source record: test and fixture changes).",
  "world_is": "The gate admits exactly the test/fixture fast-forward. It is deliberately narrower than 'no product file': an instrument script under scripts/ (as in 42405d2d) is still routed through 0.0.0_AB_MSTR~Z or a FAST lease. Widening the pattern needs a word naming the class.",
  "notes": "Built by the gate owner on Z-S17's second limb (msgs 28563, 28575)."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W81-S1",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~81",
+ "surfaced_at": "2026-10-02T21:35Z",
+ "one_line": "AV-zg-2's cell allows Refresh as 'primary on the white panel', but round29 face.cjs arm 1 counts the estate's own canvas primary button (text-white on the purple fill) as lightInk, so the cell's primary option can only pass with the ink written as an hsl value, not as the text-white / palette-white token.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "Run in C:/tmp/wk-dsgn-amgtv1-81 with Refresh = buttonClass('primary','canvas','sm'): face.cjs 'LIGHT FACE ... 1 fault(s): loaded: bands 0, lightOnDark 0, lightInk 1, primaryOnDark 0 (lightInk: <button inline-flex items-center justify-center gap-2 rounded-[3px] > \"Refresh\")', 3 of 4 arms.",
+   "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/2.0.0_SA_COO~D/round29/checks/header/face.cjs lines 29-30 and 100-101: INK_TOK = text-white | palette-white | palette-mediumGray, PRIMARY_TOK is not a ground token, so a primary fill is read as the white canvas under white ink. portal/src/ui/components/Controls.tsx BUTTON_KIND.canvas.primary carries 'text-white'.",
+   "The same Refresh must stay the ONE purple fill: PRD FWD-18 'purpleFills == 1 (Refresh) in Security mode' (DSGN_AMGTV1_PRD.md line 252) and shell.harness.cjs primary_actions_security == 1 (not one of the five re-anchored clauses). A secondary Refresh would turn that clause red and break FWD-18."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "AV-zg-2 cell text item 2: 'Buttons use buttonClass(kind, canvas, ...); Refresh is secondary, or primary on the white panel'; face.cjs arm 1: lightInk 0 in all four states.",
+ "world_is": "Refresh is kept primary (buttonClass('primary','canvas','sm','text-[hsl(0_0%_100%)]') in SecurityOverlay.tsx): the same white ink on the same purple fill, written as an hsl value so face.cjs does not read it as white-on-white. The check, not the page, is imprecise (it has no primary ground); the issuer amends its own checks. No served value moved.",
+ "notes": "Worker row, not an adjudication. Both AC1 and AC3 pass with this choice; the alternative (secondary Refresh) passes AC1 and fails the shell harness's primary_actions_security."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W81-S2",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~81",
+ "surfaced_at": "2026-10-02T21:35Z",
+ "one_line": "To print 'identity as of' once (SAUX-15) IdentityLine now renders no 'identity as of <date>' text at all, so every tab that mounts IdentityLine (outside this cell's files) loses that visible line; the vintage stays in data-identity-vintage.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "portal/src/pages/SecurityAnalysis/components/IdentityLine.tsx: the resolved span now holds '' when crosswalk_vintage is served (data-identity-basis and data-identity-vintage kept), 'identity confirmed' when none is.",
+   "face.cjs arm 2 counts 'identity as of' over the header plus IdentityLine's own render of the same identity (want at most 1); the header's identity card prints it once. battery29.sh BATTERY29: ALL PASS (0 skipped) at this tree, so no harness in the battery reads the old IdentityLine text."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "AV-zg-2 cell text item 3: 'identity as of prints at most once across the header and IdentityLine (e.g. IdentityLine keeps only its data attributes)'.",
+ "world_is": "IdentityLine is mounted by other surfaces than the overlay header; those surfaces now show the ticker without the vintage line. The cell's own text names this option, so it is done as written; the other surfaces' wording is not this cell's to widen.",
+ "notes": "Worker row, not an adjudication."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W81-S3",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~81",
+ "surfaced_at": "2026-10-02T21:35Z",
+ "one_line": "Until AV-zg-1 merges, the overlay renders the timeline twice (SecurityOverlay.tsx's new TimelinePanel mount after HeaderBrief, and HeaderBrief.tsx's own unchanged mount), and __rendercheck__/renderCheck.tsx still tests html.includes('Back to universe').",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "portal/src/pages/SecurityAnalysis/components/HeaderBrief.tsx lines 196-198 at ec65c5d6 still mount <TimelinePanel securityKey={bundle.security_key} /> inside HeaderBrief; this cell's order is identity, key figures, <HeaderBrief bundle={bundle} />, <TimelinePanel />, the cell text says AV-zg-1 owns both components and stops HeaderBrief mounting a timeline of its own.",
+   "portal/src/pages/SecurityAnalysis/__rendercheck__/renderCheck.tsx line 439 at ec65c5d6: persistentPanelPresent: html.includes('Lead Panel') || html.includes('Back to universe'); the back control now reads 'Back to all names'. Neither file is in this cell's paths."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "AV-zg-2 cell text item 3 and AV-zg-1's HeaderBrief change; this cell's paths exclude HeaderBrief.tsx and renderCheck.tsx.",
+ "world_is": "In the merged tree of AV-zg-1 and AV-zg-2 the timeline mounts once; in this worktree alone it mounts twice (the checks stub both). renderCheck.tsx's string test is a stale lexical match owned by no cell of this round.",
+ "notes": "Worker row, not an adjudication; nothing edited outside <paths>."
 }
 ]
 ```

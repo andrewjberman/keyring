@@ -65,6 +65,14 @@ with the Write tool; confirm with `git log -1`). Instance at
 `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~211/AMGT_RESAPP.TO-AMGT-an-2.timeline-markers.proof_of_spec.json`. Report once: the commit
 hash, every criterion's output lines, the functions you changed, and any row. The `<status>` flip is the issuer's.
 
+## 6. AMENDMENT 1 (issuer `2.0.0_SA_COO~Z`, 2026-10-02 ~22:0xZ) -- the round-63 analysis @8642d76ceb
+
+**Package watch (analysis section 3):** the artifact is at 96.8% of the 262,144,000 B ceiling. In your worktree, after your commit, run `bash infra/aws/terraform/harvest/build-and-upload-scoped-amgt.sh --build-only /c/tmp/r64-pkg-<slot>.zip` and report its `SIZE:` line and `CONTENT-DIFF SUMMARY`. A build past the ceiling is a STOP: report it, and do not trim to fit.
+
+**Publisher-terms note:** the HARVST card is open at Andrew. Add NO new processing of publisher article text. Serving what gold already holds is unchanged.
+
+Gate limb that graded this modification: none (LIMB 6 fires only on a newly-added order; GATE (viii) does not apply, `<placeholders>NONE</placeholders>`).
+
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** PRD v0.34 FWD-37 (earnings path a qualified wait, v0.34). Served by an-7.
