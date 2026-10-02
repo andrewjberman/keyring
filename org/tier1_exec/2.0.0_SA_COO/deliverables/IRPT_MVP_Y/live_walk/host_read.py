@@ -29,14 +29,17 @@ def main(argv):
     with open(argv[1], "r", encoding="utf-8") as fh:
         script = fh.read()
     comment = (argv[2] if len(argv) > 2 else "2.0.0_SA_COO~Y host read")[:100]
+    # The command's own bound on the host, and this tool's wait for it (600 s unless HOST_READ_TIMEOUT_S names
+    # another, 60 to 3600): an attended sign-in holds for a person for up to 600 s on top of the sign-in.
+    timeout = min(max(int(os.environ.get("HOST_READ_TIMEOUT_S") or 600), 60), 3600)
     with tempfile.TemporaryDirectory() as tmp:
         params = os.path.join(tmp, "params.json")
         with open(params, "w", encoding="utf-8") as fh:  # a file keeps cmd.exe from parsing the shell pipes
-            json.dump({"commands": [script], "executionTimeout": ["600"]}, fh)
+            json.dump({"commands": [script], "executionTimeout": [str(timeout)]}, fh)
         sent = aws("ssm", "send-command", "--instance-ids", INSTANCE, "--document-name", "AWS-RunShellScript",
                    "--comment", comment, "--parameters", "file://" + params.replace("\\", "/"))
     cid = sent["Command"]["CommandId"]
-    for _ in range(150):
+    for _ in range(timeout // 2 + 30):
         time.sleep(2)
         try:
             inv = aws("ssm", "get-command-invocation", "--command-id", cid, "--instance-id", INSTANCE)

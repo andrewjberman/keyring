@@ -6,7 +6,7 @@ Mode FAST: lease `IRPT_BCKEND~Y` re-armed 04:33Z until 08:33Z after the withdraw
 terms, under Andrew-direct 2026-10-01 ~04:2xZ).
 Loop `/canonical-drive IRPT_BCKEND` 10m (LIVE_ARMS RELAUNCH row). Way forward: CTO rulings batches 61, 62, 65, 70, 72,
 76, 83, 88, 89, 93, 97, 98, 100 and 105 in `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md`.
-Reviewer `3.0.0_SA_CVO` (grades pins after the fact). Lease FAST until 09:43:29Z (read 09:14Z). As of 2026-10-02T09:2xZ.
+Reviewer `3.0.0_SA_CVO` (grades pins after the fact). Lease FAST until 09:43:29Z (read 09:14Z). As of 2026-10-02T11:2xZ.
 
 ## Pins
 
@@ -14,8 +14,8 @@ Reviewer `3.0.0_SA_CVO` (grades pins after the fact). Lease FAST until 09:43:29Z
 |---|---|
 | Worktree | branch `coo-y-r30` at `C:/Users/AndrewBerman/Desktop/coo-y-r30`, head `cf3ae52aee` (st12 `9718ac5c87`, merged into CLOUD at `cf3ae52aee`) |
 | Items 1 to 17 on CLOUD | 1 to 14 as before (st9 carries them); 15 `3921492913` (the 900 s calculating release, the WAF header token); 16 `7122afefc1` (row S253, the job row's `vendor_requests` ledger); 17 `8c4398e32a` (E7, the request read names the chosen comparisons); 19 `951afdf4e6` (st11, merge `4f68a17d3a`, SERVED in the resident; its words ride the next generate and irpt-status bundles); 21 E6 memo (merge `7a9f76389b`, not served); 20 hop 11 (branch `coo-y-hop11`, not merged); 18 `3ad9306bf9` (the catalogue reads `etf-classifications` once per 300 s warm window, not per request; condition 11 of the whole-bundle packet), merge `87f9b3afab`, NOT served |
-| SERVED: the resident | `/opt/irpt-resident/cf3ae52aee-st12` since 2026-10-02T09:21:39Z (ledger `irpt-resident-st12-20261002` CLOSED @56457904ed; both halves, CTO batches 127 and 130): items 1 to 19 and st12 (a rotated session cookie is written back). `irpt-ycharts-runner-role` holds `sqs:SendMessage` on `irpt-generation` and `PutSecretValue` on `ycharts/session/current-*`. Rollback root `4f68a17d3a-st11` on the host |
-| SERVED: `irpt-status` | `2V7xV1+zII4+g6tV..` since 2026-10-01T06:59:55Z (read 2026-10-02 ~02:2xZ) |
+| SERVED: the resident | `/opt/irpt-resident/c657a5966d-st13` since 2026-10-02T10:18:27Z (ledger `irpt-resident-st13-20261002` CLOSED @f74a5c2a76; CTO batches 131 and 138): items 1 to 19, st12 (rotated cookies written back, PROVEN LIVE) and st13 (the capture library's attended hold `857d90b8`, OFF unless `YC_ATTENDED=1`; Xvnc installed, nothing listening). Rollback root `cf3ae52aee-st12` on the host |
+| SERVED: `irpt-status` | `X/JLmPJZ..` since 2026-10-02T11:13:50Z: E7b + E6 + item 22 at `ff8fd77ba2` (rollback S3 `m1LolBKF..`, code `2V7xV1..`) |
 | SERVED: `irpt-ycharts-generate` | `E+FqSWwETrwJ9Gd1..` since 2026-10-02T05:54:19Z (whole bundle at `97eaff05ff`, item 18; ledger `irpt-generate-catalogue-20261002` CLOSED). Rollback: S3 version `J52XmUEj..` (code `arC65KbD..`) |
 | SERVED: catalogue route | `GET /api/scoped/investor-reporting/analysis/comparisons`, route `bh7ynom` on `7k3ed8px20` behind `naqxlm`, since ~06:00Z. V1: 341 entries for cottonwood, `FIRM_BINDING` outside reach, 720 ms with the Scan then 221-260 ms |
 | UPLOADED, NOT APPLIED | `irpt-status.zip` version `gqIQUc_Z..` (sha `iYgp8301..`, E7) is its key's LATEST version. CTO batch 115 item 3: no untargeted apply of the ops or ycharts roots while it is held |
@@ -23,6 +23,13 @@ Reviewer `3.0.0_SA_CVO` (grades pins after the fact). Lease FAST until 09:43:29Z
 | Push state | LOCAL @56457904ed; origin/CLOUD `1f2346734b` (ls-remote read 09:1xZ). CLOUD is pushed by `0.0.0_AB_MSTR` only |
 
 ## Live thread
+
+**irpt-status SERVES E7b + E6 + item 22 since 11:13:50Z** (`X/JLmPJZ..`, S3 `Jg3uJ0x7..`, members at `ff8fd77ba2`; CTO halves
+batches 146/148; ledger `irpt-status-e7b-20261002` CLOSED @2ab0eec3cb; E7 CLOSED SUPERSEDED). V1: every plain read equal to
+before; `include=comparisons` answers (Multi-Comp names Short-Term, Intermediate-Term); `2.0.0_SA_COO~D` told 11:22Z.
+Rollback S3 `m1LolBKF..` (code `2V7xV1..`). **E6 serves -> Cottonwood's 20-request cap lifts.** FINDING: history `client_id`
+is refused by `_authz/served.py:812-815` (fabricated-scope guard) -- item 22 unusable as named; ruling asked 11:22Z.
+Hop 11 integrated on branch `coo-y-hop11-int` (merge clean, ops 220 passed); its packet needs `~P`'s test line.
 
 **The Analysis thread is LIVE** (CTO batch 88) on the Overview `REQ-a69e5751d42c374f1d2354f9`. The Multi-Comp
 `REQ-a1d9abc0bc037ea3d9e4a7ed` is READY, graded PASS and walked, and is NOT live until E7 is served (batch 98).
@@ -91,7 +98,17 @@ made (CTO half item 1).
    packet; the resolve concurrency fix; the vendor PDF link; the Analysis export; the email lane. E6's memo follows E7's
    apply (CTO batch 111). A client-scoped history route is an enrichment item at the next round analysis (CTO batch 110 item 4).
 
-## The YCharts session -- DEAD; only Andrew can restore it
+## The YCharts session -- LIVE (fence 23, restored 09:45:44Z by sign-in option C)
+
+Window C CLOSED (`IRPT_MVP_Y/SIGNIN_C/OUTCOME_SIGNIN_C_20261002.md` @2cd3e2ce23): leg S AUTHENTICATED with no challenge; leg J
+`REQ-c07e64ca6c74b8e5310f56e0` READY 10:14:06Z (`RPT-819429e0bd7084a11cdc74f023a9c48c`) on st12 -- the Analysis thread re-ran.
+st12 wrote back `multidb_pin_writes` 4 times, fence unchanged (churn finding at the CTO). FINDING: the fence-21 session was
+taken by a concurrent sign-in (403 EVICTED_HARD) -- row S233. Cottonwood holds 20 accepted requests: any further test job
+uses another firm until E6 serves (CTO half). **Option A SERVED as st13**; leg A (the attended run: Xvnc on loopback 5901,
+Andrew over a Systems Manager port forward and TigerVNC) is the fallback for the next `CHALLENGE_CAPTCHA_UNSUPPORTED`, at
+his time, queue 0/0 (`IRPT_MVP_Y/SIGNIN_A/NEVER_WIDEN_SIGNOFF_PACKET_SIGNIN_A_20261002.md` section 4).
+
+### Before the restore
 
 Leg A of the hop-3 window (06:26Z) read EVICTED 71 s after a probe read LIVE; the resident's refresh met
 `CHALLENGE_CAPTCHA_UNSUPPORTED` (row S230's cause, named). CTO batch 120 item 7: a sign-in that answers a CAPTCHA is a
@@ -142,6 +159,10 @@ this file; `deliverables/2.0.0_SA_COO~Y/**`; `org/tier1_exec/2.0.0_SA_COO/delive
 `infra/aws/terraform/investor-reporting/**`, `reports/**`, `_contracts/tests/**`, `portal/**`.
 
 ## Parked, each with its owner and the condition that un-parks it
+
+- A per-run one-time VNC password for leg A (the CTO half of the A packet, item 1: the laptop's forward listens on
+  `localhost:5901` unauthenticated while open). Owner this seat; un-parks before the first leg-A run. The password
+  must reach Andrew alone: never into a host-read output an agent reads.
 
 - Hop 11's test line: `reports/tests/test_status_installed.py`'s five-operation set gains `analysis-request-pdf`. Owner
   `2.0.0_SA_COO~P` (or an exact-file grant to this seat); un-parks when hop 11's packet is cut, after E7 and E6.

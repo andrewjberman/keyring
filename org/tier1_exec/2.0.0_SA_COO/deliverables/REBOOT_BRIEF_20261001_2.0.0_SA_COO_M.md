@@ -1,5 +1,14 @@
 # Reboot brief -- 2.0.0_SA_COO~M -- rewritten 2026-10-02 04:0xZ at the wind-down; updated 05:2xZ
 
+**UPDATE 10:3xZ -- BD FORWARD FIX (CTO tick 6, msg 104138):** fix 1 (BD mix carries every class) BUILT on branch
+`coo-m-bd-mix-classes` @0ce0ad6efd in worktree `coo_m_r30` (lane grant batch 135; BD tests 72; not merged, no packet yet). Fix 2
+(67 bd-mapped rows, batch 139/140) WRITTEN 10:26Z, ledger `secclass-bd-mapped-rows-m-20261002` W closed. Fix 3 (ABNFX, LBNYX,
+NYT seed rows; QACDS stays cash) WRITTEN 10:30Z, ledger `secclass-cot-name-pattern-rows-m-20261002` M, W closed. Table 2,789.
+The 119 + 30 per-ticker rows (batch 139: by peer, dollar order, first act to 80 pct) NOT started. OPEN RULE ASK 10:32Z: r3 + fix 1
+would serve 49F 23.78 pct unclassified (433.1 M = ETFs with a blank ticker on the holdings row) -- may a name resolve a ticker?
+(`R8_BD_RELAND_TOMORROW_20261002.md` @3fd8c3688e). Leg S of BOTH new ledgers, the 19 seed rows and the split accounts: the
+14:15Z Holdings publication.
+
 **UPDATE 08:4xZ -- INCIDENT CLOSED ROLLED-BACK (CTO batch 129, msg 104131):** V1 green 08:2xZ (49F firm mix 1.000000 at
 1,843,114,302.78; z08327149 VXX 1,111,544.96 in alternatives, gap 0.00); restore run exit 0 08:31:13Z; ledger
 `secclass-bd-thread-r3-rollback-m-20261002` CLOSED. E_18, silver builder, lib/_shared, SSM v5 STAY on r3 (batch 129). OWED

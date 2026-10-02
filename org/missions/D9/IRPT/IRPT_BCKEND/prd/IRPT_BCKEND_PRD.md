@@ -5,7 +5,7 @@
  "project": "IRPT_BCKEND",
  "directive": "D9",
  "fabric": "laptop",
- "prd_version": "v0.23",
+ "prd_version": "v0.24",
  "step": 4,
  "brief_ref": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md@2acf23d8fd",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13"],
@@ -159,7 +159,7 @@ Source: brief II.3, eleven contracts, proposed canonical, versioned. BK owns ide
 | `AnalysisReport` | BCKEND B9/B10 | FNTEND | B9, B10 | request/attempt + vendor artifact hash; effective inputs/settings; typed sections with units/dates/source coordinates; disclosures; extraction validation; released revision + protected PDF reference |
 | `HoldingsSnapshot` | BCKEND B12 | FNTEND | B12 | scope + source-set revision; business/as-of clocks; unique custody totals; node hierarchy; namespaced model/security ids; observed/assigned/target basis; amount + denominator; parent/total percentages; provenance; coverage/remainders; drill refs |
 | `NarrativePacket` | BCKEND B13 | FNTEND, B14 | B13 | performance revision; event policy/version; dated peak/trough/recovery/movement events; cited historical evidence with cutoffs; validated prose; coverage; generation/model/prompt versions |
-| `ExportBundle` | BCKEND B14 | B14 render; FNTEND F8 (preview -- a preview never calls the vendor again) | B14 | immutable authorized report revisions + selected sections; narrative packet; approved asset hashes; template/renderer/disclosure versions; render options; no live vendor request during render |
+| `ExportBundle` | BCKEND B14 | B14 render; FNTEND F8 (preview -- a preview never calls the vendor again) | B14 | immutable authorized report revisions + selected sections; a narrative packet for a client report, or the retained Analysis report revision for an Analysis export (exactly one, never null; ADDENDUM v0.24); approved asset hashes; template/renderer/disclosure versions; render options; no live vendor request during render |
 | `ExportReceipt` | BCKEND B14 | FNTEND | B14 | export/bundle hash; artifact hash/location server-side; page/validation facts; created/released timestamps; job state; authorized download route; no vendor signed URL in FE |
 | `StatusEnvelope` | BCKEND B16 | FNTEND | B16 | operation + revision; queued/running/ready/partial/stale/unavailable/needs-correction/uncertain/failed; source dates -- the business date is REQUIRED on an ANSWER-BEARING state (ready, partial, stale, needs-correction, uncertain) and MAY BE ABSENT, never null, on a NO-ANSWER state (queued, running, unavailable, failed) where no source read has occurred; safe retry/recovery actions; public reason code; internal correlation id |
 | `RenderPackage` | FNTEND | BCKEND B14 | B14 (consumer) | supported contract/template versions; deterministic screen/print components; fonts/assets requirements; print entry point; visual fixtures -- BK packages and executes the compatible version |
@@ -614,3 +614,17 @@ batch 80 item 7 promised with the rebuild's served move. It changes how FWD-3 is
     (RULINGS batch 80 item 5) is not lowered to rescue a day. Scope: sources that declare `link_across_gaps` in `sources.json`
     (Inflection today); 49 Financial's gold keeps its skipped-and-disclosed form until the round analysis puts the two firms
     on one rule.
+
+## ADDENDUM v0.24 -- an Analysis export pins its report, not a narrative packet (L4; CONTRACTS changed: the ratified-text half re-opens)
+
+**Source.** `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md` batch 149, on `2.0.0_SA_COO~P` msg
+104181 (rows W101-S5, W101-S6; IB-pr-292 merged @4f3f36d16c). Written by `1.0.0_SA_CTO` 2026-10-02 ~11:0xZ under the self-drive
+arming record `ANDREW_DIRECT_20261002_050xZ_SELF_DRIVE_60M_LAPTOP_DIRECTIVES_ADJUDICATE_ALL_KEEP_COOS_FLOWING.md` @d4050ac185.
+
+24. **An Analysis export pins the retained Analysis report revision in place of a narrative packet (FWD-4).** The round-28
+    analysis ruled that an Analysis export has no narrative step (E2). The CONTRACTS row `ExportBundle` required a narrative
+    packet in every bundle, so an Analysis bundle could not be valid. The row now reads: a narrative packet for a client report,
+    OR the retained Analysis report revision for an Analysis export. A bundle carries exactly one of the two. Neither is null,
+    because a null in a required field cannot tell "none by design" from "missing". A bundle with both, or with neither, is
+    refused. Every client-report bundle is validated exactly as before. The reference names the report id, its revision and the
+    sha256 of the retained report, so the bundle stays reproducible. No other CONTRACTS row changes. ENDPOINT is not edited.

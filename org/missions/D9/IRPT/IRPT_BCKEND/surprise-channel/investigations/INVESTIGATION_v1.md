@@ -14747,3 +14747,133 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Portal files are read only for this order; the field is the page's use of ?bundle= as the Analysis request id. The remedy is the portal owner's (read ?request= for kind=analysis) or the grant owner's."
 }
 ```
+
+## IRPT_BCKEND-W101-S4 -- a prospect render grant is built but the Enforcer's render read still refuses an empty account list
+
+```json
+{
+  "id": "IRPT_BCKEND-W101-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~101",
+  "surfaced_at": "2026-10-02T10:23:00Z",
+  "one_line": "IB-pr-291: a prospect render grant now builds, stores and reads back, but the Enforcer's RENDER_DELEGATE read intersects the grant's account_ids with the delegator's scope and refuses EMPTY_GRANT on an empty list, so the grant is not yet served by a render.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/enforce.py: bundle_ids = set(bundle.get('account_ids') or []); intersection = sorted(delegator_permitted & bundle_ids); if not intersection: Refusal('EMPTY_GRANT', ...)",
+      "infra/aws/lambda/investor-reporting/_render_identity/grant.py render_ports(): load_render_bundle returns account_ids = list(grant['account_ids']) = [] for a prospect grant",
+      "infra/aws/lambda/investor-reporting/export/submit_async.py:128 account_ids = [str(a) for a in checked['account_ids']] feeds write_pointer; [] for a prospect grant (not run)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IB-pr-291 gives the grant a prospect scope; the Enforcer rule that reads it was named in W101-S1 as the render-identity owner's, outside this order's paths.",
+  "world_is": "grant.build, write, read and render_ports now carry a prospect grant (account_ids = [], prospect_scope with the report's four artifact keys). The Enforcer still resolves a RENDER_DELEGATE read as delegator_permitted intersect bundle account_ids, so an empty list serves nothing: EMPTY_GRANT. Also, the artifact keys are named in the retained index's grammar (REPORT#id#rev, ARTIFACT#ART-id; sections = the report key with a #sections suffix, since sections are served from the report record) but no reader consumes prospect_scope yet. Not run: any live render.",
+  "notes": "Outside this order's paths (_authz/enforce.py, the analysis report route). The remedy is an Enforcer arm that, for a grant carrying prospect_scope, admits an OWNED_RECORD read of exactly those keys for the exact delegator owner."
+}
+```
+
+## IRPT_BCKEND-W101-S5 -- IB-pr-292: the Analysis branch is built and graded in submit_installed/narrative_submit, b
+
+```json
+{
+  "id": "IRPT_BCKEND-W101-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~101",
+  "surfaced_at": "2026-10-02T11:05:00Z",
+  "one_line": "IB-pr-292: the Analysis branch is built and graded in submit_installed/narrative_submit, but export/submit_service.serve_submit (outside this order's paths) still builds the narrative packet for any kind and reads dates.actual_end, so a served Analysis submit is not yet routed through it.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/submit_service.py:50-52: _narrative.build_and_bind(resolved['report'], ...) runs for every resolved kind; narrative_submit.build_and_bind calls cutoff_for(report) with the PERFORMANCE default, which refuses 'no actual window end' on an Analysis report (closed refusal, nothing written)",
+      "infra/aws/lambda/investor-reporting/export/submit_service.py:81: status source_dates business_date = resolved['report']['dates']['actual_end'], a KeyError for an Analysis report",
+      "infra/aws/lambda/investor-reporting/export/narrative_submit.py: cutoff_for(report, kind), narrative_step(kind), template_for(kind) and submit_installed.submission_plan(kind, report) are the new seam; 8 tests pass"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The cell: 'narrative_submit cutoff_for and serve_submit read dates.actual_end ... Give the submit path an Analysis branch'; the order's paths name submit_installed.py and narrative_submit.py only.",
+  "world_is": "The branch decisions (cutoff, template, no narrative step) exist and validate the real READY report, but serve_submit does not consult them: it needs to skip build_and_bind and pass a null/absent narrative_packet_ref for kind ANALYSIS (ExportBundle requires narrative_packet_ref, so that contract question is also open), and take source_dates from analysis_as_of(report). Not run: any served submit.",
+  "notes": "The remedy is an edit to submit_service.py (and the ExportBundle narrative_packet_ref rule for an Analysis bundle), outside this order's paths."
+}
+```
+
+## IRPT_BCKEND-W101-S6 -- IB-pr-292: the packaged export/_contracts/AnalysisReport.schema.json is older than the pub
+
+```json
+{
+  "id": "IRPT_BCKEND-W101-S6",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~101",
+  "surfaced_at": "2026-10-02T11:06:00Z",
+  "one_line": "IB-pr-292: the packaged export/_contracts/AnalysisReport.schema.json is older than the published docs copy and refuses the real retained READY Analysis report (extraction_coverage, undated_sections).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bundle.validate(report, 'AnalysisReport.schema.json') with the default contracts dir (infra/aws/lambda/investor-reporting/_contracts) raised: Additional properties are not allowed ('extraction_coverage', 'undated_sections' were unexpected) on RPT-1f49504f501a6633b1f9cccc5f37ecf6",
+      "The same call with IRPT_CONTRACTS_DIR=docs/contracts/investor-reporting/v1 returned True; the two files differ by contract_version, undated_sections and extraction_coverage (git log: beecb3395a, b894019c95 touched the docs copy only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "'docs/contracts/investor-reporting/v1/AnalysisReport.schema.json' is the contract the order names; the function validates against the packaged copy or the irpt-common layer.",
+  "world_is": "SUBMIT_ANALYSIS_R29.json was produced with IRPT_CONTRACTS_DIR pointing at the published docs copy. A function resolving the stale packaged copy (or an older layer) would refuse the same report with a closed ValidationError. Not run: the deployed layer's copy.",
+  "notes": "The remedy is to republish the packaged _contracts copy (outside this order's paths) and confirm the irpt-common layer's copy."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S267",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-02T11:10:00Z",
+  "one_line": "GATE (x) of .tools/to-pipeline-gate.py refuses a CTO addendum cell that joins a round already issued: the ~P round-29 cell IB-pr-293 (CTO ADDENDUM 1, batch 143) was refused because round 29 has two orders at HEAD, and the limb reads no override.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit 2026-10-02 ~11:0xZ: '[to-pipeline-gate] REFUSED -- ... workstream ~P round 29 of IRPT_BCKEND already has an issuance at HEAD (2 order(s): IRPT_BCKEND.TO-IB-pr-291..., IRPT_BCKEND.TO-IB-pr-292...)'",
+      ".tools/to-pipeline-gate.py _round_issuer_violations (:2073-2110) refuses any NEWLY-ADDED tree order whose (workstream, round) key has an order at HEAD; no branch reads an addendum"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO_ROUND_ANALYSIS_IRPT_BCKEND_ROUND_28_P_20261002.md ADDENDUM 1: 'this addendum adds one cell to round 29. It is not a recut.'",
+  "world_is": "The gate admits the cell only under a new round number. The issuer labelled it round 30 (decomposition section 27 addendum note); the round-29 L10 slug waits on it so the slug still carries E5.",
+  "notes": "Remedy owner 1.0.0_SA_CTO (the gate limb): admit an addendum-cited cell into its round, or rule that an addendum cell takes the next round number."
+}
+```
+
+## IRPT_BCKEND-W101-S7 -- IB-pr-293: the prospect branch's owner source is a new port no production caller wires yet
+
+```json
+{
+  "id": "IRPT_BCKEND-W101-S7",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~101",
+  "surfaced_at": "2026-10-02T11:40:00Z",
+  "one_line": "IB-pr-293: the prospect branch re-resolves the owner from a new Enforcer port (load_report_owner) that no production caller wires yet, so a served prospect render refuses fail-closed until E4/served supplies a retained-owner reader.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/enforce.py _resolve_prospect_render: load_report_owner None -> Refusal OBJECT_NOT_COVERED 'no owner source is wired' (tests: _authz/tests/test_enforce_prospect_refuse.py::test_an_owner_source_that_is_not_wired_or_cannot_be_read_refuses_fail_closed)",
+      "infra/aws/lambda/investor-reporting/_render_identity/grant.py render_ports(report_owner=None) returns the 2-tuple as before; with a reader it returns a 3-tuple and _authz/served.py reads ports[2] as load_report_owner. served.py:1154 render_ports_from_env() passes no reader."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IB-pr-293 contract line 2: 'The delegator resolved NOW must be the report's owner ... An owner source the Enforcer cannot read refuses (fail closed).' The order names no existing owner source for the Enforcer; the stored prospect scope carries no owner, and the grant's own delegator stamp is expressly not enough.",
+  "world_is": "The only retained owner of a prospect report lives behind reports/repository.py (outside this order's paths). The cell adds the optional port and the exact comparison (firm, principal, class, advisor, home firm, prospect input id) and proves them with fixture loaders; the production reader is not built. Two narrower facts: an OPAL_GLOBAL delegator is refused on a prospect grant (resolve_prospect_owner admits FIRM_ADVISOR and FIRM_OPERATIONS only), and a FIRM_OPERATIONS delegator's revocation is visible only through the owner record, since the ownership map lists advisors, not operations users.",
+  "notes": "Remedy owner 2.0.0_SA_COO~P at IB-pr-282 (E4) or a follow-on cell: pass report_owner=<retained-owner reader> to grant.render_ports in render_ports_from_env. Until then no prospect render is served; no account scope widens."
+}
+```

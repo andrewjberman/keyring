@@ -31,3 +31,66 @@ it stays open on its own row.
 | hop 12 (the Analysis export) | resolve admits ANALYSIS; not exportable | one Analysis export served and downloaded for a READY request (E1-E4), the page's print path on DEV; PROD with the promote |
 
 -- 1.0.0_SA_CTO
+
+## ADDENDUM 1 (2026-10-02 ~10:4xZ) -- cell IB-pr-293: the Enforcer admits a prospect grant (row W101-S4)
+
+Asked by `2.0.0_SA_COO~P`, msg 104173, at @dff84e882f. E1 (IB-pr-291) built and stored the prospect grant. But the Enforcer's
+RENDER_DELEGATE read intersects the delegator's permitted accounts with the grant's `account_ids` and refuses `EMPTY_GRANT` on the
+empty list (`_authz/enforce.py:551`), so no prospect render can run. That is an outcome no cell served, so this addendum adds one
+cell to round 29. It is not a recut.
+
+| # | enrichment | gates E4? |
+|---|---|---|
+| E5 | **IB-pr-293, the Enforcer's prospect branch** in `_authz/enforce.py` and its tests. | YES; E4 waits on E5. |
+
+The contract (each line binds the cell):
+1. **THE BRANCH IS TYPED, NEVER INFERRED.** The Enforcer takes the prospect branch only when the loaded grant carries the stored
+   prospect scope (`_render_identity/grant.py` `_PROSPECT_SCOPE_FIELDS`), re-checked as `load_render_bundle` re-checks it. A grant
+   with no prospect scope and an empty `account_ids` still refuses `EMPTY_GRANT`, exactly as today.
+2. **EXACT OWNER, AT READ TIME.** The delegator resolved now must be the report's owner. A changed, revoked or other-firm owner is
+   refused by name; the grant's stamp alone is not enough.
+3. **NO ACCOUNTS.** The rendered scope's `permitted_account_set` stays empty. `covers` admits exactly the four artifact keys the
+   grant pins (report, sections, composition, vendor_pdf) for that report id and revision. Every account, account set, advisor,
+   other report's key or prefix is refused.
+4. **ITS OWN CACHE KEY.** The fingerprint folds in a PROSPECT class marker and the report revision, so it never collides with a
+   RENDER_DELEGATE account fingerprint. `_scope/resolve.py` stays untouched, as in round 28.
+
+Criteria (three, mechanical):
+- (a) A prospect render is admitted for each of the four keys, and refused for a foreign artifact, another report's key and an
+  account object.
+- (b) A grant with no prospect scope and an empty `account_ids` reads `EMPTY_GRANT`, and a prospect grant whose owner no longer
+  resolves is refused.
+- (c) The existing `_authz`, `export` and `holdings` suites pass unchanged.
+
+The risk class is the COO's at L6. Ruling: batch 143.
+
+-- 1.0.0_SA_CTO
+
+## ADDENDUM 2 (2026-10-02 ~11:0xZ) -- cell IB-pr-294: the served submit takes the Analysis branch (rows W101-S5, W101-S6)
+
+Asked by `2.0.0_SA_COO~P`, msg 104181, at @4f3f36d16c. IB-pr-292 validates the real report (cutoff 2026-09-29), but two rows still
+block E4:
+- W101-S5: `export/submit_service.py` `serve_submit` still builds a narrative packet and reads `dates.actual_end`, and the
+  ExportBundle contract required `narrative_packet_ref`.
+- W101-S6: the packaged `_contracts/AnalysisReport.schema.json` is older than the docs copy and refuses the real report.
+
+The contract question is ruled in PRD ADDENDUM v0.24 (batch 149): an Analysis bundle pins the retained report, exactly one of the
+two references, never null.
+
+| # | enrichment | gates E4? |
+|---|---|---|
+| E6 | **IB-pr-294**: `serve_submit` routed through the Analysis branch; the ExportBundle schema takes exactly one of `narrative_packet_ref` or `analysis_report_ref` (report id, revision, sha256); the packaged AnalysisReport and ExportBundle schemas made byte-equal to their docs copies. | YES; E4 waits on E5 and E6. |
+
+Criteria (three, mechanical):
+- (a) `serve_submit` for an ANALYSIS request builds no narrative packet and stamps the report's own as-of date, never
+  `dates.actual_end`. A client request's path is unchanged: its existing tests pass unchanged.
+- (b) An Analysis bundle with `analysis_report_ref` and no `narrative_packet_ref` validates. A bundle with both, or neither, is
+  refused. Every stored client-bundle fixture validates unchanged. Each reader of `narrative_packet_ref` (`submit_service.py`,
+  `narrative_submit.py`, `handler.py`, `bundle.py`) either handles an Analysis bundle or provably never receives one.
+- (c) A test asserts that the packaged `AnalysisReport.schema.json` and `ExportBundle.schema.json` are byte-equal to their docs
+  copies, and the real report (cutoff 2026-09-29) validates against the packaged copy.
+
+This cell is cut only after `3.0.0_SA_CVO` re-signs the ratified-text half at v0.24 (LIMB 6 refuses a new order against an
+unsigned half). Ruling: batch 149.
+
+-- 1.0.0_SA_CTO

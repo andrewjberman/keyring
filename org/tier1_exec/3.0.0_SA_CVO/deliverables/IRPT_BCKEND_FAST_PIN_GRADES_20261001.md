@@ -479,3 +479,65 @@ about 95M.
 compared.
 
 -- 3.0.0_SA_CVO
+
+## Grade on the artifact, 10:xZ 2026-10-02 -- window C, request REQ-c07e64ca (the first READY after the sign-in)
+
+Handoff `2.0.0_SA_COO~Y` 104163; outcome @2cd3e2ce23. Every limb is this seat's own read. Host: SSM `9731c2c0`,
+Success rc 0, 10:30:19Z.
+
+| limb or claim | this seat's read | result |
+|---|---|---|
+| terminal state | consistent GetItem `irpt-jobs` | READY, outbox SENT, revision 1; 5 of 5 checkpoints; read-back 7 of 7, 1 tolerated (`level_as_of_type`); job fence 2 (two receives) -- PASS |
+| made by the service principal | the `analysis#<id>#1` record | owner svc-irpt-analysis, OPAL_GLOBAL, cottonwood; accepted 09:57:38Z; overview, 0 comparison keys; composition by version equals its ref -- PASS |
+| on the served root | journal 09:44:00-10:18:30Z: 116 lines (98 idle polls, 13 job lines, 5 systemd) | 13 of 13 job lines from the st12 unit's PID (start 09:21:39Z, stop 10:18:26Z); 0 tracebacks since 09:21:39Z -- PASS |
+| retained PDF | get-object by version `thOiDusy..` | 581,489 B, 23 pages, sha256 `db27de07..` equal to the checkpoint, the vendor-artifact record and the index ref -- PASS |
+| certified report | `RPT-819429e0..` by version: sha256 `96e86f75..` equals both refs; binds request, PDF, evidence (`2226e093..`) and composition; scalars re-read with PyMuPDF | 46 of 46 equal (pages 2, 7, 8); 5 charts not re-read; control 46 of 46 perturbed MISS; 0 hits for the other two firms -- PASS |
+| sections route | one login, GET | 200; 51 sections, the same 51 ids, 51 of 51 values equal; inflection selected -> UNAVAILABLE `FIRM_BINDING` -- PASS |
+| status route with the dates header | GET | 200, READY `ANALYSIS_READY`; report id and revision equal; 51 section dates; inflection -> `FIRM_BINDING` -- PASS |
+| item 15 (WAF_READ) | journal; ledger | 0 lines; 0 of 9 records carry a waf_action -- NOT_EVALUATED |
+| item 16 (the vendor-request ledger) | journal; row | kept=4 (09:57:46Z) and kept=5 (10:14:06Z); the row's `vendor_requests` holds 9 records (5 GET, 4 POST), 9 of 9 in job.py's ten-key shape; `job_detail` still 3 keys -- PASS on the row |
+| item 19 (OPERATION_BUSY re-send) | journal | 0 BUSY/RETRY lines -- NOT_EVALUATED |
+| st12 rotation | journal; secret version metadata (never the value) | 4 IRPT_SESSION_ROTATION lines, kept=1; the 4 named versions are the 4 created 09:57:42Z-10:13:05Z (4 of 4, within 1 s); 4 of 4 POSTs carry set_cookie_count 1, 0 of 5 GETs do; AWSCURRENT `8441111a`, AWSPREVIOUS `77c5f704`; the sign-in version `6327be01` holds no stage -- PASS |
+| no eviction or refresh | journal | 0 lines -- PASS |
+| outcome: "first live use of st8's cut-name repair" | this file's 2026-10-01 13:0xZ grade quotes `name=cut` at 12:30:22Z on REQ-a69e5751 (st8) | FAIL on the record only |
+
+**Row S266 in this window.** The sign-in wrote at 09:45:44.606Z; the journal 09:44:00-09:57:33Z holds idle polls only;
+the first rotation came 11 min 58 s after the sign-in. The procedural guard (queue 0/0, no job) held; the race was not
+exercised; the row stays open.
+
+**Limits.** The st12 members were graded at 09:42Z and not re-hashed. Not read: the upload hops, the chart sections, the
+vendor side, the page, the secret values.
+
+-- 3.0.0_SA_CVO
+
+## ~Y resident st13 (the attended hold), read 10:xZ 2026-10-02
+
+| limb or claim | this seat's read | result |
+|---|---|---|
+| active root | `c657a5966d-st13`, active/running, NRestarts 0, since 10:18:27Z | PASS |
+| members | tar by version `0j0S_Qjp..` (sha256 `7c503923..` = census); 242 of 242 with a repo path equal `git show c657a5966d:<path>`, 2 equal SHA256SUMS; the host listing hash equals this seat's: 244 of 244 | PASS |
+| control | 2 of 244 changed against st12 (library, bindings); worker `93e50f0f`, durable_job `b5192fa2`, operation_lease `25198343` unchanged; the pin is an ancestor of HEAD, not the reverse | PASS |
+| library `857d90b8` | host file = pin = HEAD; the prior kept as `.before-c657a5966d-st13` (`9511060e`); wrapper `55ddb8f7` unchanged | PASS |
+| what changed | `8e385c08b2` (+54/-0): the hold is OFF unless `YC_ATTENDED=1` with a display (else `ATTENDED_REQUIRES_DISPLAY`, before any secret read); holds only at SIG-CAPTCHA, polls every 2 s up to 600 s, at most 2 holds and 1 re-fill, times out `CHALLENGE_ATTENDED_TIMEOUT`; 0 setters of `YC_ATTENDED` under `infra/aws`, so the resident's own refresh cannot hold | PASS on source |
+| tests | offline suite at HEAD: 6 of 6 arms | PASS on a test run |
+| journal since 10:18Z | 42 lines (37 idle polls, 5 systemd), 0 tracebacks, 0 job lines; queue and DLQ 0/0/0 at 10:41:59Z; 22 of 22 jobs terminal | PASS |
+| the hold exercised live | no attended sign-in yet | NOT_EVALUATED |
+| ledger | st13 CLOSED 4 of 4 (10:19:33Z); its JSON absent at HEAD and in 14 of 14 worktrees. The sign-in C JSON is absent at HEAD and present in 1 of 14 (`coo_m_r30`, forked between its open and close), unchanged -- the known worktree-lag shape | PASS |
+| row S265 | `/` 2.9G free of 8.0G (64 pct); 25 root directories | measured |
+
+**Limits.** The pydeps files (3,427) were not compared; listeners on 5901 were not read; the hold has run only offline.
+
+-- 3.0.0_SA_CVO
+
+## Rows S231 and S253 closed (clocks advanced in place, 10:5xZ 2026-10-02)
+
+- **S231** (`REMEDIATION_v15.md`, ARMED): DISARMED and REMEDIATED. The served worker (`93e50f0f`, st11 to st13) ends
+  `ACTOR_NOT_FOUND` and `ACTOR_FIRM_NOT_ALLOWED` as a terminal ATTENTION (`resident_worker.py:428-431, 475-477, 508` at
+  `c657a5966d`); REQ-86f1ce70 reads ATTENTION, `ACTOR_NOT_FOUND`, outbox SENT (read 06:xZ). Disarm time stamped at that
+  read.
+- **S253** (`REMEDIATION_v16.md`): REMEDIATED. The READY job above records all 9 vendor requests, 9 of 9 in the ten-key
+  shape. They sit on the row's `vendor_requests` list, not in `job_detail`: the remedy's second branch; TO-IB-yr-291's
+  wording ("the receipt carries") is the older one.
+- S263 is not graduated yet; it closes at sweep 7 on the 06:xZ reads.
+
+-- 3.0.0_SA_CVO
