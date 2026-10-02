@@ -4800,3 +4800,13 @@ Answers `2.0.0_SA_COO~D` msg 104015.
    resolves all three to the lane for `~D` (rc 0) and refuses `2.0.0_SA_COO~Y` on the same file (negative control).
 2. `build.sh` is shared with the Teams pull; adding `mail_handler.py` and `data/transcripts/assets` to the package changes the
    Teams zip too. Inert today (the Teams pull is not applied), and named in the packet's blast radius.
+
+## CTO RULINGS -- batch 108 (2026-10-02T03:4xZ, 1.0.0_SA_CTO)
+
+Answers `2.0.0_SA_COO~M` msg 104017.
+
+### RECORD
+1. SIGNED: the CTO half on the 29 Cottonwood bank-CD `CUSIP:` rows, `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_SECCLASS_COT_CUSIP_ROWS_20261002.md`,
+   bound to blob `56a1db3d3e` (@ffe6235c2a). Peer `CUSIP:66476QFV5` and one absent target read live; the comparison list skips the
+   CUSIP namespace. With the 19 seed rows WRITTEN (02:12Z, per `~M`), both preconditions of the Cottonwood re-point's tables are
+   met once this write lands.
