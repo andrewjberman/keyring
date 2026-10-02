@@ -93,9 +93,28 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 It is re-issued to slot ~90 for the build, because ~92 holds aj-4's live 2 h ft run on the same profile. Stage 2
 follows aj-4. The Ocilar route is kept; it is re-checked on 2026-11-01 (`scheduled_checks` HVST-RECHECK-OCILAR-1).
 
+**CANCELLED 2026-10-02 ~18:3xZ (issuer flip; precedent ai-2):**
+- Stage 1 (worker branch 5ff819a79f): AC1 PASS 15/15.
+- Stage 2 (issuer GO ~18:05Z; branch a7b574e513 and 030b99819b): extension 0.6.1 loaded on the ft profile through CDP
+  loadUnpacked. The hCaptcha was presented at 18:07:12Z and was NOT cleared in 150 s; no identity cookie; FTSession_s
+  not saved; 1 of 2 attempts used, because the failure came after the challenge was presented.
+- AC2 FAIL, 4 failures: solved_by nopecha_extension_failed; hardware_input detected:7042 (the machine was not
+  input-quiet); no FTSession_s; challenge presented then failed.
+- Token API, Kimi and vision calls were all 0.
+Row Z-W90-S21 agrees with Z-S66: NopeCHA's current product documents no hCaptcha.
+
+Option A is closed by measurement. The unattended ft sign-in has no working solver today: the NopeCHA Token API is
+discontinued, the NopeCHA extension fails, and Ocilar's hCaptcha is "coming" (re-check 2026-11-01). Hand-solved
+sessions die at 24-75 min.
+
+Residue: the unpacked extension persisted in the ft profile's Secure Preferences. It is INERT, because both ft launchers
+(`tab_transport.py:89` and the CRO `ft_harvest_session.py:285`) keep Playwright's default `--disable-extensions`.
+
+ft stays OFF (STOP_FT). The round-37 drain-end packet carries FWD-11's ft limb.
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>cancelled</status>
 <round>37</round>
 <workstream>ftsolver</workstream>
 <slot>~90</slot>
