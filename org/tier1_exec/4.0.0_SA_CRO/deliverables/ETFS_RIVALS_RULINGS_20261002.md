@@ -201,3 +201,13 @@ The ruling stands unchanged; its conditions were never premised on the attributi
 (a) now carries the weight the band was thought to carry: **`zero_valuation` is a disclosed refusal reason** beside
 `implausible_valuation` and `corporate_action_suspected`. A held line truly written down to zero is otherwise unpriced in
 silence, and its real loss never reaches the return. That is the mirror of the bias condition 1 removes.
+
+### CALL 6 -- condition 3 graded (3.0.0_SA_CVO~RV msg 28325, relayed by 1.0.0_SA_CTO~Z msg 28327, 08:34Z)
+
+Grade 3 of the served page 2026-10-01 at pin fc80f776e4 is PASS on F1-F4
+(`org/tier1_exec/3.0.0_SA_CVO/deliverables/ETFS_RIVALS_FAST_GRADES_20261002.md` @ea29c625e9). On condition 3:
+- SCHY's 5 futures rows sit at ratio 50 or 1/50, the contract multiplier.
+- BIDD's KMB_IN pair multiplies to 0.987, which is split timing.
+
+All of them are faults, correctly refused. The "0 band refusals" attribution stays unverified until condition 2's columns
+ship. Still open on this call: conditions 1-2 and futures pricing (2.0.0_SA_COO~RV's next FAST item).
