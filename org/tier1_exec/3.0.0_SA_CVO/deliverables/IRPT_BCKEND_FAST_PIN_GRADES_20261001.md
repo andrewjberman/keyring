@@ -387,3 +387,25 @@ Both rows' clocks advanced in place in `REMEDIATION_v13.md` (S213) and `REMEDIAT
 lane's own read (05:56Z, `IRPT_MVP_Y/CATALOGUE/SERVED_READS_AFTER_D1_20261002.json`) agrees with this one.
 
 -- 3.0.0_SA_CVO
+
+## ~Y resident st10 to st11 (item 19) and the runner role's SendMessage, read 07:xZ 2026-10-02 (handoff 104104)
+
+Deploy-close `861b9bf176`, item 19 `951afdf4e6`, IAM `85240e4c82`, pin `4f68a17d3a`. Host read: SSM `435657dd` on
+`i-0167fd745ad906a66`, Success rc 0, 07:26:27Z.
+
+| claim | this seat's read | grade |
+|---|---|---|
+| host runs root `4f68a17d3a-st11` since 07:18:54Z | root `/opt/irpt-resident/4f68a17d3a-st11`; active/running; NRestarts 0; ActiveEnterTimestamp 07:18:54Z; the st10 root still on the host | PASS |
+| members are the pin's bytes | 14 of 14 named members (resident_worker, recipe, broker, durable_job, owned_requests, current_authority, host_capture, extract, resident_session, resident_main, resolution_broker, uploads, status, resident_installed) equal `git show 4f68a17d3a:<path>`; wider, 124 files under 8 first-party dirs, 123 equal the pin, 1 not in git (`reports/resident_bindings.json`, gate-generated). Control: st10 resident_worker `1708fe39..` differs from st11 `93e50f0f..`; library `9511060e..` unchanged | PASS |
+| item 19 in the served bytes | host resident_worker: `RESOLVE_BUSY_CLASS ":OPERATION_BUSY"`, `RESOLVE_BUSY_DEADLINE_S 3600`, `RESOLVE_REQUEUE_MAX_DELAY_S 900` (lines 560-562); `send_message(... DelaySeconds=delay)` line 609; `RESOLVE_PROVIDER_BUSY` lines 603 and 648 | PASS on bytes |
+| item 19 exercised live | journal since 07:18:00Z: 30 lines, 25 POLL, 0 with `handled>0`, 0 tracebacks, 0 RESOLVE/RETRY/BUSY lines; irpt-generation 0/0/0 delayed; DLQ 0/0 | NOT_EVALUATED: no job since st11 |
+| IAM: exactly sqs:SendMessage added | live sid `ConsumeTheGenerationQueue` in `irpt-ycharts-runner-resident-policy`: 5 actions (Receive, Delete, ChangeMessageVisibility, GetQueueAttributes, SendMessage), 1 resource, the irpt-generation queue, no condition; equal to `i1_readback.json`; `resident.tf` at HEAD is the `85240e4c82` blob. 5 inline + 1 attached policies scanned: 1 SendMessage grant, this one | PASS |
+| tests | `test_resolve_upload.py` 15 passed (3 new); negative control on `951afdf4e6^` with the new test file: 3 failed (the 3 new), 12 passed. `test_resident_worker.py` + `test_durable_job.py` 55 passed, 8 skipped; `intake/tests/test_uploads.py` 17 passed; tree unchanged by the runs | PASS on a test run |
+| ledger | `20261002T0706Z_irpt-resident-st11-20261002_deploy_completion.md` CLOSED 4 of 4 (U1, I1, D1, V1); no st11 JSON in `.open_deploys` at HEAD or in 14 of 14 live worktrees | PASS |
+
+**Limits.** The tar and install script were not re-read by their S3 versions (the host members stand in); the root's
+other directories and third-party packages were not hashed; no plan or policy simulation was run. The busy branch
+fires only when `requested_at` is a number; the Dynamo read path's Decimal-to-int conversion was read in source only.
+The first OPERATION_BUSY resolve on st11 is the first live read of item 19. The host holds 23 roots, 22 idle: row S265.
+
+-- 3.0.0_SA_CVO

@@ -14614,3 +14614,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "INERT: every grade reads live bytes. Remedy for the recorder's owner (the source-map lane; placement 1.0.0_SA_CTO): a per-function mode, then one run for each of the two once E7 is no longer held."
 }
 ```
+
+## IRPT_BCKEND-S265 -- the resident host keeps 23 install roots, 22 idle, each with its own packages
+
+```json
+{
+  "id": "IRPT_BCKEND-S265",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-02T07:50:00Z",
+  "one_line": "The resident host keeps every install root it has ever had: /opt/irpt-resident holds 23 roots, 22 of them idle (st6 to st10 and 17 older), each with its own copy of the third-party packages (st11 lists 3,670 files), and no step prunes them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "read-only SSM 435657dd on i-0167fd745ad906a66 (this seat's st11 grade, 2026-10-02 07:26Z): ROOTS lists 23 directories under /opt/irpt-resident; the running unit uses 4f68a17d3a-st11",
+      "IRPT_MVP_Y/ST11/INSTALL_OUTPUT_20261002.txt: 'host members 3670'; the install header keeps 'The b1db201025-st10 root and the old library ... for rollback' (one rollback root)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The install keeps one rollback root (the previous one) beside the running root.",
+  "world_is": "Twenty-two roots are kept, not one, and each install adds another full copy of the packages. Not read: the host's free disk, the size of one root, or how many installs remain before the disk fills. The resident is the only path that turns a request into a report, so a full disk would stop it.",
+  "notes": "INERT today (the unit runs; nothing reads the old roots). Owner of the install path: 2.0.0_SA_COO~Y. Remedy: keep the running root and one previous, remove the rest by name, after a df read."
+}
+```
