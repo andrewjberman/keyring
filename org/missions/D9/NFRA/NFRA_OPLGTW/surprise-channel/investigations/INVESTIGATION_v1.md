@@ -6695,3 +6695,97 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S24",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-02T19:05Z",
+  "one_line": "OG-rl-3 step 8 names row 'W15-S18' for the PHASE A verify script, but W15-S18 is long taken (OG-rl-2) and this cell's next unused coordinate is S24; the verify script is filed under this row.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "DOC: INVESTIGATION_v1.md @9c0dd7be13: NFRA_OPLGTW-Z-W15-S18 exists; W15-S19..S23 are used (S19/S20/S21 OG-tr-1 PHASE A, S22/S23 OG-tr-1 PHASE B); S24 was unused.",
+      "RUN: deliverables/0.9.0_WK_NFRA_OPLGTW~15/rl3_verify.py + rl3_verify.sh + rl3_release_md5.txt (94 files, the release HEAD 4231bd2ddc's app/**, deploy/**, requirements.txt, identity_tool_allowlist.txt). 'before' on the live un-deployed host (SSM 1d2433a0-3fb2-4c9d-ad15-a22a898563bf): env keys 48, tools 65, teams module present False, /ms/taxsma-workbook 401, /hx/teams/me 404, /health 200. NEGATIVE CONTROL 'after' on the same host (SSM c39ffdfd-9bd1-45e8-97d7-91a836082478): VERIFY FAIL 5 of 9, the failing checks exactly the four release files (app/config.py, app/server.py, app/taxsma_workbook.py, app/teams_route.py), the 48 -> 50 keys, the TEAMS_BEARER pair, and the /hx/teams/me route refusal; the 4 unchanged checks (health, tool list, integrations, 9 probes) and the Tax-route check PASS."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 8: the verify script is written now under row W15-S18.",
+  "world_is": "The script is written, exercised on the live host in both modes and carried in the deliverables folder under S24, not under the id the order names.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S25",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-02T19:05Z",
+  "one_line": "The UNTARGETED opal-gateway plan shows a third in-place change besides the two this order applies: aws_lambda_function.mcportal_grant_writer source_code_hash (a rebuilt staged package differs from the deployed one). NOT applied by this cell.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: terraform plan -input=false -lock=false, fresh sparse worktree /c/tmp/og-tf8 @302d4eb0d5, fed per Z-S27 (owner-key variables from the live grant-writer Lambda, build_package.py staged build, deps-layer zip copied from the main tree): 'Plan: 0 to add, 3 to change, 0 to destroy.' The three: aws_iam_role_policy.gw_gateway_read_secrets (fourth ARN gateway/teams/bearer), aws_lb_listener_rule.hx_capability (+ /hx/teams/*), aws_lambda_function.mcportal_grant_writer (last_modified known-after-apply; source_code_hash nhz+dwJs... -> um5f7/Jw...). Text: deliverables/0.9.0_WK_NFRA_OPLGTW~15/rl3_untargeted_plan.txt.",
+      "RUN: the targeted plan (-target the two resources) reads 'Plan: 0 to add, 2 to change, 0 to destroy.' and does not include the Lambda; the saved plan is .scratch/rl3_targeted.tfplan."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 5: any other diff in the untargeted plan is NOT applied; file a row for it.",
+  "world_is": "One other diff exists, on the grant-writer Lambda's code hash. It is inert only while no untargeted apply is run on the opal-gateway root: that apply would redeploy the Lambda from this tree's staged build. Cause not investigated (the staged import closure reads the gateway tree at the building checkout).",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S26",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-02T19:05Z",
+  "one_line": "The two spec files the order names first are not in the issuance commit's tree: the CTO ruling is absent at 9c0dd7be13 (read from the shared base tree), so a worker on a branch cut at the issuance cannot read the spec it is told to read first.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: git ls-tree -r --name-only HEAD | grep -c CTO_RULING_20261002_NFRA_OPLGTW_HX = 0 at 9c0dd7be13 (worktree wk-NFRA_OPLGTW-15-r13); the same path is in the shared base tree's index (git ls-files) and was read there. The CRO request file IS in the worktree."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Section 1: read org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_20261002_NFRA_OPLGTW_HX_TEAMS_RELEASE.md whole.",
+  "world_is": "The file exists in the shared base checkout but not at the commit the worktree was cut from; read there. Content as the order's Section 1 and AC list describe.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S27",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-02T19:15Z",
+  "one_line": "The PHASE A saved targeted plan (.scratch/rl3_targeted.tfplan in /c/tmp/og-tf8) was not on disk at GO; the same two -target resources were re-planned from the same worktree and read 0 to add, 2 to change, 0 to destroy before the apply.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: ls /c/tmp/og-tf8/.scratch -> no such directory; no rl3_targeted.tfplan anywhere under /c/tmp. RUN: terraform plan -target=aws_iam_role_policy.gw_gateway_read_secrets -target=aws_lb_listener_rule.hx_capability -out=/c/tmp/og-tf8/rl3_targeted_b.tfplan: 'Plan: 0 to add, 2 to change, 0 to destroy.' (deliverables/0.9.0_WK_NFRA_OPLGTW~15/rl3_phaseB_replan.txt); safe-apply of that plan: 'Apply complete! Resources: 0 added, 2 changed, 0 destroyed.' (rl3_phaseB_apply.txt)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 10: safe-apply the saved targeted plan; if it is stale or missing, re-plan the same two targets and confirm 0/2/0.",
+  "world_is": "The saved plan file did not survive PHASE A (cause not investigated); the re-plan was equal in shape and the apply touched exactly the two named resources, not the grant-writer Lambda of row S25.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
