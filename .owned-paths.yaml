@@ -615,6 +615,22 @@ lanes:
       - 2.0.0_SA_COO~D
     description: "CTO grantor, IRPT RULINGS batch 107, 2026-10-02 (msg 104015): the CLOUD_OPS_OR_ETL members preserved verbatim plus exact COO~D, for the exact files of the NFRA_TRNSPT mail pull placed by batch 104 (the mail Terraform file, its handler, the shared build script). Code only: no deploy or apply grant; the apply keeps both never-widen halves and its ledger. Struck when NFRA_TRNSPT closes."
 
+  IRPT_BCKEND_FAST_Y_TFPOLICY:
+    permitted_agents:
+      - 0.5.0_AE_OpalETL
+      - 0.5.0_AE_OpalETL~B
+      - 0.6.0_AE_PartnerETL
+      - 0.6.1_AE_PartnerETL
+      - 0.6.2_AE_PartnerETL
+      - 0.7.0_AE_CloudOps
+      - 0.7.0_AE_CloudOps~A
+      - 0.7.0_AE_CloudOps~B
+      - 0.7.0_AE_CloudOps~C
+      - 0.8.0_AE_CloudComp
+      - 4.0.0_SA_CRO~SWEEP   # sweep-executor, gate-constrained (ruling CTOB-RCG-001)
+      - 2.0.0_SA_COO~Y
+    description: "CTO grantor, IRPT RULINGS batch 114, 2026-10-02 (msg 104065, row IRPT_BCKEND-S263): the CLOUD_OPS_OR_ETL members preserved verbatim plus exact COO~Y, for the five IRPT Terraform files whose one() over reporting_policies.json stopped planning when a second policy row landed. Code only: the selector change lands with a no-change plan per root; no apply grant. Struck when IRPT_BCKEND closes."
+
   IRPT_BCKEND_FAST_P_INF_NNA:
     permitted_agents:
       - 0.4.0_DE_ClientPlatform
@@ -2446,6 +2462,26 @@ paths:
   "infra/aws/lambda/transcripts-pull/build.sh":
     lane: NFRA_TRNSPT_FAST_D_MAIL
     note: "NFRA_TRNSPT~D FAST lease, exact file; CTO grantor batch 107 (2026-10-02)."
+
+  "infra/aws/terraform/investor-reporting/core/reporting_storage.tf":
+    lane: IRPT_BCKEND_FAST_Y_TFPOLICY
+    note: "IRPT_BCKEND~Y FAST lease, exact file (the reporting-policy selector); CTO grantor batch 114 (2026-10-02)."
+
+  "infra/aws/terraform/investor-reporting/export/b1_submit.tf":
+    lane: IRPT_BCKEND_FAST_Y_TFPOLICY
+    note: "IRPT_BCKEND~Y FAST lease, exact file (the reporting-policy selector); CTO grantor batch 114 (2026-10-02)."
+
+  "infra/aws/terraform/investor-reporting/ops/iam.tf":
+    lane: IRPT_BCKEND_FAST_Y_TFPOLICY
+    note: "IRPT_BCKEND~Y FAST lease, exact file (the reporting-policy selector); CTO grantor batch 114 (2026-10-02)."
+
+  "infra/aws/terraform/investor-reporting/performance/retained.tf":
+    lane: IRPT_BCKEND_FAST_Y_TFPOLICY
+    note: "IRPT_BCKEND~Y FAST lease, exact file (the reporting-policy selector); CTO grantor batch 114 (2026-10-02)."
+
+  "infra/aws/terraform/investor-reporting/ycharts/resident.tf":
+    lane: IRPT_BCKEND_FAST_Y_TFPOLICY
+    note: "IRPT_BCKEND~Y FAST lease, exact file (the reporting-policy selector); CTO grantor batch 114 (2026-10-02)."
 
   "infra/aws/terraform/cot-pipeline/iam.tf":
     lane: IRPT_BCKEND_FAST_M_COT_IAM

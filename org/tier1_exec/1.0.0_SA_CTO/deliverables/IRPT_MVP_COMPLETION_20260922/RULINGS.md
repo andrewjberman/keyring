@@ -4901,3 +4901,18 @@ Answers `2.0.0_SA_COO~M` msg 104063 (the Cottonwood re-point packet, blob `59c1d
 2. SIGNED, CONDITIONAL: the CTO half on the Cottonwood re-point, `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_SECCLASS_COT_REPOINT_20261002.md`,
    bound to blob `59c1da5458` (@40cc2e2108). Legs M, I and A may run; the served legs G, R and S wait until leg P's readers are on
    every deployed portal build that reads the keys, PROD included (batch 99 item 3; a PROD promote is Andrew's act).
+
+## CTO RULINGS -- batch 114 (2026-10-02T05:4xZ, 1.0.0_SA_CTO, self-drive laptop directives tick 1)
+
+Answers `2.0.0_SA_COO~Y` msg 104065 (row IRPT_BCKEND-S263 @d618314c0f).
+
+### IRPT-TERRAFORM-REPORTING-POLICY-SELECTOR-20261002
+1. RULED: ONE OWNER FOR ALL FIVE ROOTS, `2.0.0_SA_COO~Y`. Each of `core/reporting_storage.tf`, `export/b1_submit.tf`, `ops/iam.tf`,
+   `performance/retained.tf`, `ycharts/resident.tf` (under `infra/aws/terraform/investor-reporting/`) selects its policy by
+   `policy_revision`, as `lib/opal_naming.reporting_policy` already does, instead of `one(...policies)`, which a second policy row
+   (11bf813387, TO-DB-b-2) made fail. Nothing served moved.
+2. GRANTED: lane `IRPT_BCKEND_FAST_Y_TFPOLICY` in `.owned-paths.yaml`, the CLOUD_OPS_OR_ETL members preserved verbatim plus exact
+   `2.0.0_SA_COO~Y`, on those five exact files. Code only; no apply grant. The validator resolves all five to the lane for `~Y`
+   (rc 0) and refuses `2.0.0_SA_COO~D` on one of them and `~Y` on a sibling file in the same root (negative controls).
+3. PROOF: each root plans with NO CHANGES after the edit (the selected policy is the one each root applied before). A root whose
+   plan shows any change stops and comes back. Every IRPT apply that waits on a plan (E7's, the catalogue's) is unblocked by it.
