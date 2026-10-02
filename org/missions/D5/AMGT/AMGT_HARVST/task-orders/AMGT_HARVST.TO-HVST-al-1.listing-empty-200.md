@@ -47,8 +47,19 @@ So the run record cannot tell a soft-blocked page from a genuinely empty search.
 Worktree: `C:/Users/Opal Bloomberg/Desktop/wk-hvst-r39-91`, branch `wk-AMGT_HARVST-91-r39a`, cut from CLOUD at the issuance
 commit (sparse cone per decomposition section 50). Do not touch any `.runtime` directory.
 
+**AMENDMENT 1 (issuer, 2026-10-03 ~00:0xZ; row Z-W91-S20):**
+- The job status is assigned in `lib/opal_data_harvest/worker.py`: `result["status"]` around line 655, and
+  `SUCCESSFUL_JOB_STATUSES` at line 46. So `listing_empty_200` stopped at the client attribute and never reached the job
+  row.
+- `worker.py` is GRANTED. Map the client's `listing_empty_200` into the job row's status: `result["status"]` is
+  `listing_empty_200` where it would otherwise read `no_new_articles`.
+- Treat it like `no_new_articles` for the driver (the pair moves on). Do NOT add it to `backfill_driver.STOP_STATUSES`.
+- Add plant (vii): through the worker's own job path with a stub client, an empty-200 page-1 listing yields a job row
+  whose status is `listing_empty_200`.
+
 <paths>
 lib/opal_data_harvest/publishers.py
+lib/opal_data_harvest/worker.py
 lib/opal_data_harvest/test_al1_listing_empty_200.py
 org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/
 org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v1.md
