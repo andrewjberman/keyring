@@ -5,7 +5,7 @@ Seat `2.0.0_SA_COO~D` (CLAUDE). Contract: PRD `org/missions/D13/DSGN/DSGN_REBRND
 `org/tier1_exec/3.0.0_SA_CVO/deliverables/DSGN_REBRND_ROUND2_GRADE_20261001.md` @599d33a722). Authority: 1.0.0_SA_CTO RULINGS
 batch 80 items 8-12 (the round-2 analysis; round 3 owed, this seat's, FAST, after the Investor Reporting work) and batch 165
 @10d2b1c445 (msg 104234: round 3 un-parks now, every IR line being blocked outside this seat; its own `/positioning` lease;
-IR keeps priority -- return to DSGN_IRPTV1 the tick any of its Next lines unblocks). **As of 2026-10-02T12:5xZ.**
+IR keeps priority -- return to DSGN_IRPTV1 the tick any of its Next lines unblocks). **As of 2026-10-02T22:1xZ** (E4's surface half landed on portal DEV fe461611, while every DSGN_IRPTV1 line is held or parked).
 
 ## Pins
 
@@ -18,11 +18,19 @@ IR keeps priority -- return to DSGN_IRPTV1 the tick any of its Next lines unbloc
 
 ## Write claims
 
-- `2.0.0_SA_COO~D`: the `/positioning` page surface above. No claim open at 12:5xZ; first claim below.
+- `2.0.0_SA_COO~D`: the `/positioning` page surface above. No claim open at 22:1xZ.
 
 ## Next (round 3's enrichment list, batch 80 item 9, in the ruled order; E4 started first by batch 165)
 
-1. **E4 -- the page pass for FWD-12 and FWD-13 on `/positioning`** (first by batch 165): every surface on the page resolves to a
+1. **E4 -- the page pass for FWD-12 and FWD-13 on `/positioning`** (first by batch 165). SURFACE HALF (FWD-12) LANDED:
+   - portal fb5d6116: the Positioning Summary's six translucent fills on opaque rungs (bar tracks, placeholder and
+     inputs: tile; the blend strip: body; the Collapse button: tile, hover rung on hover);
+   - portal fe461611: the Holdings Breakdown's subtotal rows on the tile rung and grand-total rows on the selected rung,
+     in the shared table and HoldingsTab's extra cells.
+   Origin DEV fe461611, ls-remote 22:1xZ. After-walks: `tmp/ui-walk/20261002T214636Z` and `20261002T220333Z` against
+   baseline `20261002T130259Z` (local). Hairlines are enumerated in fb5d6116's message and left as the band's light rule
+   idiom. OWED next: the FWD-13 half, the contrast table of every interactive role's (ground, ink) state pairs on the page,
+   and the two contrast rulings (rows W2-S8, W1-S11) made with it in hand. The original text follows: every surface on the page resolves to a
    role of the one named-layer table (page, section strip, panel body, tile, inset, hover, selected, tooltip) with an opaque
    rung in both worlds; every interactive role's (ground, ink) state pairs clear the contrast bar in the state it is actually
    in. Measure first (the page rendered on 5174 and read), then fix in the surface. The two contrast rulings that bound
