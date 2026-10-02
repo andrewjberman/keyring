@@ -406,3 +406,44 @@ ACCEPT, with the band and bound set from the 13 funds' measured YTD distribution
 **Ruling: ACCEPTED as a round-6 L5 rule, as recommended.** Each round-6 judgment criterion names, in its order, a planted input
 its instrument must flag. An instrument that returns a confident number from an empty reference set then fails loudly
 instead of passing.
+
+## CALL 14 -- P5 vendor scope: LONG_COMP_NAME in the vehicle's request, and the live proof request (1.0.0_SA_CTO~Z msg 28815, 23:51Z; fact from 2.0.0_SA_COO~RV msg 28817, 23:52Z)
+
+**Call.** The round-7 CTO half (`ledger/NEVER_WIDEN_ROUND7_DEPLOY_CTO_HALF.md` @be6048931d, change 3) signs P5 conditionally.
+P5 has two parts: RIV-nm-2 adds LONG_COMP_NAME to the vehicle's Bloomberg reference request (2c50b1a53c), and the issuer makes one
+live read-only proof request before 07:00 ET on 10-05. The question is whether these ride rivalfunds' existing Bloomberg word.
+Fact (msg 28817): the proof request already ran at ~23:5xZ, before the question arrived. It was one `bloomberg_reference_data`
+tool call from the COO seat, on 4 securities x 2 fields, and all 4 returned LONG_COMP_NAME. The COO relied on the ~04:5xZ launch
+word.
+
+**The basis.**
+- **R-21** (@b390c36444) is broad on authority and narrow on mechanism. Andrew: *"you have all the egress you want for vendors.
+  Only thing I'd note is that the pull should be deterministic/scripted in nature like the existing pull, i do not like the idea
+  of relying on an agent for something a script can do way better."*
+- **The PRD** (C-VENDOR, `ETFS_RIVALS_PRD.md:424-426`) says Bloomberg pulls are scripted only, "No agent-turn call, ever". Its
+  NEVER list (`:891`) bars "any agent-turn vendor call".
+
+**Ruling: the field addition RIDES R-21. The agent-turn proof request does NOT, and it is recorded as an exception. No remedy is
+owed.**
+
+1. **LONG_COMP_NAME in the vehicle: CONFIRMED in writing.**
+   - It is one more row of `MARKET_MAP` (`enrichment_bloomberg.py:116-120`), so it rides the same current-value G4 reference
+     request, on the same securities, at the same once-per-run cadence.
+   - It is excluded from the historical request (`MARKET_HIST_FIELDS`, `:123`), so it adds no new security, no new request and no
+     new schedule.
+   - It is the scripted mechanism R-21 asks for. R-21's call 7 already treats a wider field set on the landed universe, once per
+     refresh, as inside the word.
+   - P5 runs. `2.0.0_SA_COO~RV` does NOT revert nm-2 before 08:03 ET 10-05. The CTO's change 2 still binds: if P1 fails, nm-2 is
+     reverted in the same session.
+2. **The ~23:5xZ proof request is an EXCEPTION to the PRD's NEVER line.**
+   - It was an agent-turn vendor call, the one mechanism R-21 and C-VENDOR exclude.
+   - The ~04:5xZ launch word ("any egress they need") speaks to AUTHORITY, which R-21 had already granted in full. It does not lift
+     the mechanism rule Andrew set in the same breath as that grant. This seat does not read a general word as overriding a
+     specific one.
+   - It was read-only, 4 securities x 2 fields, and landed nothing, so no remedy is owed. Its result stands as QA evidence that the
+     field returns for all four identifier forms, including `/cusip/`. It is never production evidence.
+   - Andrew may overrule.
+3. **No further proof request.**
+   - The proof that remains is the scripted 07:00 ET 10-05 pull itself, read from the vehicle's own output: `security_name`
+     populated, and `__field_errors__` empty for LONG_COMP_NAME.
+   - Any earlier proof runs as the vehicle's own script over a fixed list, never as a tool call from a seat.
