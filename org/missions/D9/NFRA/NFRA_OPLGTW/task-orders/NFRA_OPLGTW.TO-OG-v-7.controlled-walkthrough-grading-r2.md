@@ -156,7 +156,7 @@ Report once, in your final message. You cannot send or receive messages.
 After this cell drains, the COO removes `%LOCALAPPDATA%/opal/og-salt/v2/` and `actual_v2/`. The SSM parameters under
 `/opal/nfra_oplgtw/ogv6/` stay as the copy of record until the round closes.
 
-<status>staged</status>
+<status>superseded -- folded into OG-v-8 by 1.0.0_SA_CTO~O ruling 28152 (no controlled identity; the walkthrough runs on the pilot principal)</status>
 <round>3</round>
 <slot>~10</slot>
 <fabric>site-z</fabric>

@@ -6618,3 +6618,80 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S44",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-02T03:45Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The record decision S63 asks of the issuer is made: phase 1's seal of record is the 18:06Z working seal, and OGV4-AC8 is a MUTATING probe (OG-v-4 amendment by 2.0.0_SA_COO~O 2026-09-26 ~19:4xZ; re-seal landed d5af54a90a, an ancestor of CLOUD). OG-v-7, which retired OGV4-AC8, is superseded into OG-v-8 (CTO 28152); OG-v-8 grades the walkthrough record against OG-v-6's seal v2 and runs no og_v4.py AC8. No further AC8 invocation exists in any open order.",
+  "adjudicates": [
+    "NFRA_OPLGTW-S63"
+  ],
+  "one_line": "The issuer closes S63: the seal of record is named and AC8 is marked MUTATING; no open order runs it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "task-orders/NFRA_OPLGTW.TO-OG-v-4.controlled-walkthrough-grading.md:101-106 (amendment); git merge-base --is-ancestor d5af54a90a CLOUD = yes; TO-OG-v-7 superseded in this issuance (round 13)."
+    ]
+  },
+  "spec_asserts": "S63: before OG-v-7 runs, record which seal is phase 1's of record and mark AC8's probe MUTATING.",
+  "world_is": "Both are recorded, and OG-v-7 no longer runs."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S45",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-02T03:45Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Fixed by the tool's owner 0.0.0_AB_MSTR~Z @490526897d (msg 28133), routed through the site-Z tool-owner register per analysis round 12 s.3a: safe-merge.sh now commits the drain from a private index snapshot taken after its foreign-path sweep, so a peer's staging during the 15-45 min hooks stays in the shared index for its owner. Exercised by a scratch repo with a mid-commit staging hook (shared: carried; private: not), --self-test PASS, and the real drain f3c4380a68 (1 needed, 0 dropped, 0 foreign).",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-S23"
+  ],
+  "one_line": "Z-S23 (a drain carried a peer's uncommitted edit) is closed by MSTR's private-index safe-merge @490526897d.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "0.0.0_AB_MSTR~Z msg 28133; TOOL_OWNER_ROUTING_REGISTER_SITEZ.md @e94897809a"
+    ]
+  },
+  "spec_asserts": "Z-S23: safe-merge.sh drains only the branch's own paths.",
+  "world_is": "It does since @490526897d."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S46",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-02T04:15Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Round 13 was NOT issued: safe-commit gate2's seating lint (to-decomp-ref-lint, printed mode=ANNOUNCE) refused all 9 new OPLGTW orders, reading worker serial 0.9.0_WK_NFRA_OPLGTW~<n> as a seat named 0.9.0_WK_NFRA that holds open orders on 6 other NFRA projects; the refused commit (rc=128) also left 36 paths staged in the shared index although its message said files unstaged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit output 2026-10-02 ~04:1xZ: '[gate2] to-decomp-ref-lint | mode=ANNOUNCE ... findings=9' then 'REFUSED ... SEATING: this NEW task order for NFRA_OPLGTW is addressed to 0.9.0_WK_NFRA, which already holds open TOs on 6 OTHER pipeline project(s)'; round 12's orders to 0.9.0_WK_NFRA_OPLGTW~15 and ~18 were admitted @c7d51bb5b5-era issuance.",
+      "0.0.0_AB_MSTR~Z msg 28193: 36 staged paths held the shared index; unstaged by the issuer (git restore --staged), cached diff 0 of this project's paths."
+    ]
+  },
+  "spec_asserts": "CLAUDE.md rule 27: worker lanes are 0.9.0_WK_<CODE>~<n>; the seating check binds Tier-2 seat instances, one project each.",
+  "world_is": "The lint truncates <CODE> at its first underscore for NFRA_* codes, so every NFRA worker lane reads as one shared seat. The drafts are kept at deliverables/2.0.0_SA_COO~O/r13/drafts_not_issued/ (9 orders + addendum R3-T.5); the next session issues them once the lint reads the full code or its owner rules.",
+  "notes": "Committed under Andrew-direct ~03:4xZ wind-down (msg 28180). Lint owner: the to-decomp-ref-lint maintainer via 1.0.0_SA_CTO~O. Two staged-index holds from one refused commit is a second defect: safe-commit's 'files unstaged' message did not match the index.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```

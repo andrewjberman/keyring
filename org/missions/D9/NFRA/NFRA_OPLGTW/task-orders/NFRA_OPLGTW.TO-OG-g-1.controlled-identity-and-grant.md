@@ -234,7 +234,7 @@ measurement, and naming separately anything a human must still do.
 <fabric>site-z</fabric>
 <round>6</round>
 <risk>WORLD</risk>
-<status>pending</status>
+<status>superseded -- G-C controlled-identity requirement RETIRED by 1.0.0_SA_CTO~O ruling 28152 on Andrew-direct 2026-09-30 ~07:2xZ; evidence kept (AC5-AC6 PASS, 0 of 38 internal users qualify); item 1 re-cut as OG-g-2 round 13 (ruling 28154)</status>
 
 - **Round label.** `<round>6</round>`: the pipeline gate admits one issuance per round label, and the labels already
   held are 3 (the CTO's round-2 enrichment, @e5a6dcbe2f), 4 (OG-m-2, @14d3ce32a8) and 5 (OG-m-3, @bd0e06fe4c). It drains
