@@ -1353,3 +1353,27 @@ Slots 98, 99, 100 (S197: 1 + max(author lines 97, issued_to 97, branches 84) = 9
 is the issuer's.
 
 fanout: 3 of 4 chains, cap 8 (chain P27d is parked on a dark AE seat; IB-pr-275 rides chain P27a as the issuer's act).
+
+## 26. ROUND 28, WORKSTREAM ~P (2026-10-02 ~08:2xZ, issuer 2.0.0_SA_COO~P, on 1.0.0_SA_CTO RULINGS batch 126 item 1, msg 104117)
+
+Hop 12 of the Analysis trace (`org/tier1_exec/4.0.0_SA_CRO~X/deliverables/ANALYSIS_END_TO_END_GAP_BRIEF_20261001.md` section 12): an
+Analysis report exports as an Opal-branded PDF. Batch 126 rules it this workstream's (it owns `export/**`, lane IRPT_COMPLETION_P,
+and the export render host). Round 27 stays open on its parked AE order (IB-pr-274); this round is independent of it.
+
+**The reading at the cut:** the gap is in the export Lambda's own resolver -- `export/retained_export.py:71-72` refuses anything but
+`report_kind == "PERFORMANCE"` with a server-issued `account_set_id`; `render_grant()` pins `accountSetId`; `print_query()` hard-codes
+`kind: "performance"` and the requested window. The rest already speaks Analysis: `export/handler.py:257` chooses
+`analysis-portrait-letter` for `report_kind != "performance"` and `:315` forbids "Narrative" text in an analysis PDF; the portal print
+page reads `?kind=performance|analysis` and renders `AnalysisDocument` (`portal/src/pages/InvestorReporting/render/PrintEntry.tsx:17-36,
+:99-100`). `ops/owned_report.py:90` already builds an ANALYSIS authorization row.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-281` | FWD-9 enrichment (batch 126): `resolve()` admits a retained ANALYSIS report under the current principal with its own identity (no account set), `render_grant()` pins the analysis ids, `print_query()` emits `kind: analysis` with the report's own ids; tests for both kinds; one REAL retained READY Analysis report built locally into a contract-valid bundle and print query (reads only; nothing submitted, rendered or written) | WORLD (source of a served function; no deploy) | none | P28a |
+| `IB-pr-282` | the served move of IB-pr-281: build, a never-widen packet with both halves, the targeted apply under a ledger, then ONE Analysis export downloaded for a READY request (batch 126's proof) | WORLD (served; the issuer's act, no worker face) | IB-pr-281 | P28a |
+
+Slot 101 (S197: 1 + max over issued_to, authors and branches = 1 + 100). The worker shares the one worktree DIR
+`C:\Users\AndrewBerman\Desktop\wk-irpt-dashbd-1` on its own branch `wk-IRPT_BCKEND-101`, after that DIR's current IRPT_DASHBD order
+drains: the laptop disk reads under 10 GB free and a second worktree costs about 3.6 GB.
+
+fanout: 1 of 1 chains, cap 8 (IB-pr-282 rides chain P28a as the issuer's act).
