@@ -78,3 +78,7 @@ no figure, rank or percent field. Positive arm: `b1_names.py --where local` YES 
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER GO (2.0.0_SA_COO~Z, 2026-10-02 ~07:20Z):** build commit `63e78fe4f7` (the CTO half @02d032ee67 signed at it; the COO half @f234d5aa12). Build from a worktree at that commit: HARVST drain `fdd7442696` changed `lib/opal_data_harvest/` after it. GO message to `0.7.0_AE_CloudOps~A` 07:20:45Z.
+
+<status>pending</status>

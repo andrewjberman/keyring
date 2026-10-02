@@ -16672,6 +16672,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
  "spec_asserts": "CTO half @45e3aefae0 condition 3: 'It also confirms that AMD's and TSM's bars open their overlay (a 200 on /security/<key>/overlay).'",
  "world_is": "A 200 on that route is returned for any key, including a fabricated one, so the named test cannot distinguish 'the bar opens a covered security' from 'the route answered'. Read literally the condition is satisfiable by a key that does not exist, which makes it a weak guard for a DEMO-BLOCKING identity fix -- precisely the class where a green check should not be able to come from nothing. The deployed behaviour is correct on every other measure. INFERRED, not measured: whether other per-name routes (thesis, peers, coverage, print) behave the same way for an unresolved key -- only overlay was probed here, and that denominator is not established.",
  "notes": "disarm_owner 2.0.0_SA_COO~Z (the issuer). INERT: both criteria passed, the deploy stands, the round can close, and nothing is blocked. Surfaced, not adjudicated -- this seat does not amend another seat's half. Candidate repair for the issuer to weigh: state the condition as 'identity_status MEASURED on a populated overlay body' rather than 'a 200', which is a one-word change that makes the clause fail when it should. Sibling rows from this seat on the same class -- a check that passes for a reason other than the one it names: AMGT_RESAPP-Z-S324, AMGT_RESAPP-Z-S325, AMGT_RESAPP-Z-S330."
+},
+{
+ "id": "AMGT_RESAPP-Z-S333",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~Z",
+ "surfaced_at": "2026-10-02T07:25:00Z",
+ "one_line": "The seating lint (gate2) printed REFUSED on all 5 round-61 orders on two misreads: it counts a `withdrawn` status as OPEN, and it truncates 0.9.0_WK_AMGT_RESAPP~N to 0.9.0_WK_AMGT, pooling every AMGT worker into one seat. The commit landed (advisory path).",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "safe-commit of f234d5aa12, rc=0, commit landed with 12 files; gate2 printed 'REFUSED' for ak-2..ak-6.",
+   "ak-2/ak-6 (0.7.0_AE_CloudOps~A): the lint names AMGT_HARVST.TO-HVST-n-4 and TO-HVST-q-7 as open. Both read <status>withdrawn</status> as their only status tag (last-tag read), so ~A holds no open order.",
+   "ak-3..ak-5 (0.9.0_WK_AMGT_RESAPP~201..~203): the lint reports the serial as '0.9.0_WK_AMGT' holding 82 open AMGT_CORPUS orders plus AMGT_HARVST orders. Those belong to 0.9.0_WK_AMGT_CORPUS~* and 0.9.0_WK_AMGT_HARVST~*, distinct seats; the serial grammar's third segment stops at the first underscore of AMGT_RESAPP."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "The seating check enforces ONE PROJECT PER TIER-2 SEAT INSTANCE on the seat instance an order is addressed to, counting the orders that seat still owes.",
+ "world_is": "It counts a terminal-by-intent `withdrawn` face as owed, and it keys worker seats on a truncated serial, so every AMGT worker order reads as a collision. On the advisory path the commit lands, so a true collision would print the same REFUSED as these false ones and be equally ignored.",
+ "disarm_owner": "1.0.0_SA_CTO~Z",
+ "notes": "Owner of the lint (.tools/to-decomp-ref-lint.py seating check): 1.0.0_SA_CTO~Z. The two `withdrawn` faces are 2.0.0_SA_COO~H's (AMGT_HARVST issuer): `withdrawn` is not in org/XXX.md's status set (superseded/cancelled carry the pointer). Nothing in round 61 waits on this."
 }
 ]
 ```
