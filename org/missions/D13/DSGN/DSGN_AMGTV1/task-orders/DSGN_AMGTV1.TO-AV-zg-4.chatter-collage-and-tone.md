@@ -103,7 +103,7 @@ check grades a 520px proxy), legibility and ink contrast on each fill, real brow
 another bubble, the legend's wording and placement, how Topic-Cloud-like the packing reads, and the month-step animation. Surprise:
 tone is per window, so under the month cursor every month shows the same colour until RESAPP FWD-36 serves `?days=`.
 
-<status>pending</status>
+<status>complete</status>
 <round>29</round>
 <slot>~83</slot>
 <fabric>site-z</fabric>
