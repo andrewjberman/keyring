@@ -54,6 +54,7 @@ understands: never a security key (`VLO_US_Equity`), a field code (`ey_ntm`, `ca
 lib/research/management/
 lib/research/api/
 lib/research/metrics/
+lib/research/peers/
 org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~201/
 org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
@@ -61,7 +62,7 @@ org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v
 ## 4. PROOF OF SPEC (literal; timeout 900)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="AMGT-ak-3"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python -m pytest -q -p no:cacheprovider lib/research/api/tests/ lib/research/management/tests/; echo "exit=$?"</invocation><expect>every test passes, your new tests included, and exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="AMGT-ak-3"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python -m pytest -q -p no:cacheprovider lib/research/api/tests/ lib/research/management/tests/ lib/research/peers/tests/; echo "exit=$?"</invocation><expect>every test passes, your new tests included, and exit=0 (AMENDMENT 1: the 3 test_print_format_rich.py setup errors on an unpopulated portal fixture are admitted in a worker worktree; the issuer re-grades on the shared tree)</expect></criterion>
   <criterion id="AC2" cell_refs="AMGT-ak-3"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round61/checks/b_served_text.py --cell b2 --where local --plan org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~201/m1_lusha_reason_plan.json; echo "exit=$?"</invocation><expect>C0 PASS (every plan entry's before equals what the route serves now), C1 PASS (0 of the Lusha and peers absent reasons for BA and VLO carry a code-shaped token), C2 PASS; B2 EVERY SERVED REASON IS WORDS: YES -- and exit=0</expect></criterion>
 </proof_of_spec>
 
@@ -71,6 +72,17 @@ Commit in your worktree via `.tools/safe-commit.sh --author "0.9.0_WK_AMGT_RESAP
 (message file written with the Write tool). Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~201/AMGT_RESAPP.TO-AMGT-ak-3.plain-served-reasons.proof_of_spec.json`.
 Report once: the commit hash, both criteria's output lines, every function whose text you changed, the plan's denominator and entry
 count, and any row. The `<status>` flip is the issuer's.
+
+## 6. AMENDMENT 1 (issuer `2.0.0_SA_COO~Z`, 2026-10-02 ~07:5xZ) -- on row AMGT_RESAPP-Z-W201-S1
+
+The peers absent-column reasons are STORED in `peers/v1/<key>/<as_of>.json` and written by `lib/research/peers/csc.py`
+(`_CLAIMED_ABSENT`, used by `build_csc_map`). A served string is fixed at its producer, so `lib/research/peers/` is granted.
+5. `csc.build_csc_map` emits the plain, registry-label reason for every absent column. The templates move into
+   `lib/research/peers/`, and nothing there imports `lib/research/api/`. The machine fields (`nearest_code`,
+   `nearest_registry_name`, `derivable_from`) are unchanged.
+6. The plan's peers entries carry exactly what the fixed producer emits, computed by calling it. One entry set per key, on the
+   NEWEST object the route reads; the per-key denominator is printed.
+AC1 adds `lib/research/peers/tests/`.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
