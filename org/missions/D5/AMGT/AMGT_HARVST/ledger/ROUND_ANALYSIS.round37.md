@@ -62,3 +62,25 @@ dispositioned).
   - Whether the Datamining API counts as "bulk" under his word is his to say on the card.
 - **One Terminal read for FT news entitlement** (does FT full text or only headlines show today?) is a Bloomberg read under the
   per-use word. It is carded with the licence quote, because it may show a licence Opal already holds.
+
+## ADDENDUM 2 ~20:0xZ -- FT's terms, read verbatim (`4.0.0_SA_CRO~Z` msg 28711; `FT_TERMS_VERBATIM_20261002.md` @0fab00b8a0, headed Edge 19:47Z)
+
+**The clauses:**
+- the Copyright Policy bars spidering, datamining, systematic download-and-store and scraping, and calls a breach "a breach of
+  contract" that "may also violate copyright law";
+- T&C s.3.2 bars circumventing security technology;
+- s.3.5 bars ML/AI use "to generate any data";
+- s.1.4: an organisation's agreement prevails.
+
+**Rulings** (reversible; each protects without destroying):
+1. **The ft limb's route is a LICENCE ONLY.** Solving FT's challenge is circumvention under s.3.2, so ruling 2's Ocilar wait no
+   longer applies to ft. HVST-RECHECK-OCILAR-1 stays as Andrew's note, and its use for ft is barred by FT's terms. FWD-11's ft
+   limb (1) now waits on the FT licence card, which is Andrew's spend. STOP_FT stays HARD: no automated ft read of any kind on the
+   consumer subscription.
+2. **FinBERT excludes ft** (PRD v0.16, FWD-16). ft rows serve tone null with the reason.
+3. **The 62 stored ft articles are QUARANTINED, not deleted.** `2.0.0_SA_COO~H` cuts a cell that excludes ft rows from gold serving
+   and from every downstream use. The bytes are kept. It is a served change under a never-widen pair (CTO half owed here). Deletion
+   is Andrew's word (a delete is human-confirmed, and this one is also a legal judgement).
+4. **The other four publishers' terms** (wsj, barrons, bbg, sa) are UNREAD. `4.0.0_SA_CRO~Z` reads each the same way. The same
+   question may apply to HARVST as a whole, and it goes to Andrew as one card when the four reads land, not before (a card on a
+   guess is not a card).

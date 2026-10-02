@@ -5,7 +5,7 @@
   "project": "AMGT_HARVST",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.15",
+  "prd_version": "v0.16",
   "step": 4,
   "brief_ref": "org/missions/D5/AMGT/AMGT_HARVST/brief/BRIEF_AMGT_PUBLICATIONS_BRONZE_SILVER_GOLD_20260922.md@5b90a0b839",
   "endpoint_outcomes": [
@@ -44,6 +44,10 @@ feature work should go to COO~H. CTO~Z should receive everything first to filter
 - A voter is a non-neutral FinBERT label, with no confidence threshold. That is Andrew's 09-16 rule as he gave it; the v0.14
   threshold was an addition with no number.
 - The window ends at the last trading day (T-1), the same end RESAPP FWD-36 serves.
+- This is an ENDPOINT change, so the CVO re-signs.
+**v0.16 (~20:0xZ):** FWD-16 only, on FT's terms read verbatim by `4.0.0_SA_CRO~Z` (`FT_TERMS_VERBATIM_20261002.md` @0fab00b8a0).
+- T&C s.3.5 bars ML/AI use of FT content "to generate any data", so ft rows are excluded from FinBERT scoring and serve tone null
+  with the reason.
 - This is an ENDPOINT change, so the CVO re-signs.
 
 
@@ -358,7 +362,11 @@ act a seat can take on demand; none is a wait.
 
   FWD-16 Every harvested article carries its FinBERT tone, scored once per
          version of the article
-         DONE WHEN  EXERCISED -- the gold mention rows carry, for every row,
+         DONE WHEN  EXERCISED -- the gold mention rows carry, for every row
+                    whose publisher's terms permit machine scoring (v0.16: ft is
+                    EXCLUDED -- FT T&C s.3.5 bars any ML/AI use of its content
+                    "to generate any data"; ft rows serve tone null with that
+                    reason until an FT licence permits),
                     sentiment_finbert (label and score) and the scorer named
                     (opal-news-ai-sentiment, the existing FinBERT Lambda; no new
                     model), keyed to the article's record_hash so a re-silvered
