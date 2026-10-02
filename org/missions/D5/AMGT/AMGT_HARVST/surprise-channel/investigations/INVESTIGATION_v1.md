@@ -6098,6 +6098,28 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "spec_asserts": "An ARMED hazard disarms via its disarm_owner (CLAUDE.md section 2); Z-S64 names 2.0.0_SA_COO~H.",
       "world_is": "Run 20261002T065754Z-bbg-4f3bfa12bd stays UNCLASSIFIED (ruling 8c). Z-S64's 'no solve event' stands. Its cause hypothesis 'a path that never reaches solve()' is refuted by the path finding (row Z-W90-S13). The next real bbg challenge either passes or leaves a bundle.",
       "notes": "Disarm record at /canonical-drive tick 8; not an adjudication. Disarmed is not remediated: the 06:59 failure's cause is still unread."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~92",
+      "surfaced_at": "2026-10-02T13:16Z",
+      "id": "AMGT_HARVST-Z-W92-S18",
+      "one_line": "aj-4 step 2: the NopeCHA Token API the ft sign-in uses is DISCONTINUED (error 19); the unattended sign-in failed at the hCaptcha and the run did not start.",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Order amended 13:1xZ (Andrew-direct ~13:08Z, NopeCHA permanently whitelisted): the ft sign-in's hCaptcha is solved through the existing NopeCHA path, unattended; on a NopeCHA failure STOP, file a row with the exact error, report; at most 2 sign-in attempts.",
+      "world_is": "ONE attempt, 13:15:15Z-13:15:42Z, headed, no human input: hCaptcha frame present after the password submit; org/tier1_exec/4.0.0_SA_CRO/scripts/ft_harvest_session.py solve_hcaptcha_if_present extracted the sitekey and called nopecha.Token.solve (nopecha 2.0.1, key read through the script's _secret path); the call returned RuntimeError: Server returned error: {'error': 19, 'message': 'This API endpoint has been discontinued. For assistance, contact support@nopecha.com.'}. nopecha_calls 1, kimi_vision_calls 0, blocked_http 0. The page did not clear: no identity cookie (FTSession/FTSession_s absent), harvest_rc 1, nothing saved to the vault. The attempt was not repeated: the same call hits the same discontinued endpoint, and a different NopeCHA API route is a build the order does not name. Steps 3-4 did not run: no aj4_ft_keepalive.json exists, AC2 reads FAIL (record absent). The ft driver stays off (STOP_FT).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~92/aj4_signin.json",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~92/aj4_signin_log.txt",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~92/aj4_ac2_output.txt"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "The estate's other users of nopecha.Token (anything built on the same 2.0.x v1-compat Token.solve) would fail the same way; not measured here. The account itself answered HTTP 200 on 2026-09-15 (nopecha-barrons-compatibility.json: Starter, 1970/2000 credit)."
     }
   ]
 ```
