@@ -1427,3 +1427,15 @@ CONTRACT.md, three new `export/tests` files; disjoint from IB-pr-293's (`_authz/
 101 behind IB-pr-293: the disk (9.1 GB free) admits one worktree.
 
 fanout: 1 of 2 chains, cap 8, reason: one worktree (disk under 10 GB free); chain P29b queues behind IB-pr-293 on slot 101.
+
+**Section 27 addendum, third cell (2026-10-02 ~11:3xZ, issuer 2.0.0_SA_COO~P, on CTO RULINGS batch 154 @4b3e51674c, msg 104203: the
+guard's owner amends it).** Item 22 (the request history filtered by client) is refused by `_authz/served.py`'s owner-read guard,
+which ~P holds. One cell, ROUND 32 (GATE (x), row IRPT_BCKEND-S267).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-295` | batch 154: `client_id` admitted on `analysis-request-history` only, by an allowlist keyed by operation in `served.py`; proven through `served.Entry` (history(client) a subset of history(), an unknown client `items: []`, one refusal arm per other owner read) | WORLD (the shared served layer's source; the served move is irpt-status's next packet, 2.0.0_SA_COO~Y) | IB-pr-293 (merged @88480ab9d8) | P32 |
+
+Write set: `_authz/served.py` and two new `_authz/tests` files; disjoint from IB-pr-294's. It queues on slot 101 behind IB-pr-294.
+
+fanout: 1 of 1 chains, cap 8, reason: one worktree (disk under 10 GB free); one cell, queued behind IB-pr-294 on slot 101.
