@@ -75,7 +75,7 @@ ui-2.AC1 FAIL (3; ranked-panel control PASS) as expected; ui-2.AC2 FAIL (2; sx-1
 
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>6</round>
 <slot>~6</slot>
 <fabric>site-z</fabric>

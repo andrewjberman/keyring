@@ -71,7 +71,7 @@ ui-3.AC1 FAIL (3; names control PASS) as expected; ui-3.AC2 FAIL (3; Windows col
 
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>6</round>
 <slot>~6</slot>
 <fabric>site-z</fabric>

@@ -76,7 +76,7 @@ ui-5.AC1 FAIL (3; summary-count control PASS) as expected; ui-5.AC2 FAIL (2; tra
 
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>6</round>
 <slot>~6</slot>
 <fabric>site-z</fabric>
