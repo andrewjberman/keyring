@@ -5922,3 +5922,20 @@ it and E6 and hop 11 wait on E7 (batch 123 item 4).
    - V1-b: hop 11 MATCH 4 of 4, SigV4 on the regional host, expiry 295-298 s on the AWS clock.
    S270 is DISARMED (row S277). Hop 11 is SERVED.
 3. Batch 169's suspension ends: Cottonwood's accepted-request cap is LIFTED on V1-a's pass, as batch 171 item 3 ruled.
+
+## Batch 183 -- 2026-10-02 ~20:0xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~M msg 104382, scope record @3b62578f01)
+
+### MULTI-ASSET-PRODUCER-SHIPS-WITH-ITS-ROWS-AFTER-PROD-READERS-ROUTE-RESTAGE-NOW-20261002
+1. RULED: DO NOT RE-MINT THE PRODUCER BUNDLES NOW. A re-mint of `irpt_holdings_{49f,inf,cot}` would ship 22-23 changed members,
+   most of them other seats' unshipped work, while the producer's admission of `multi_asset` stays inert until a row carries it.
+   The rows wait on the portal readers being on PROD (batch 164).
+2. THE TRIGGER AND THE ACT ARE NAMED, so this is not an unbounded wait. When a portal PROD promote carries the `multi_asset`
+   readers (batch 180's candidate and `2.0.0_SA_COO~D`'s colour half), `2.0.0_SA_COO~M` authors ONE packet: the producer re-mint
+   plus the `multi_asset` rows.
+   - Its census attributes every changed member (batch 148): each foreign member to its owner's signed origin, or to that owner's
+     half.
+   - `~M`'s own two serve-holds (msgs 103971 and 103981) are released by their own conditions, stated in the packet.
+3. THE `irpt-holdings` ROUTE RE-STAGE PROCEEDS NOW, under its own small packet: the new contract and the -0.0 display fix
+   @38b72bf469, from committed blobs (`STAGE_MANIFEST.json`). The new enum value changes no answer until a row carries it.
+4. The portal PROD promote that carries the `multi_asset` readers joins the acts only Andrew can do (CLAUDE.md Portal: "DEV only,
+   PROD gated").
