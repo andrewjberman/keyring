@@ -17110,6 +17110,49 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   ]
  },
  "disposition": "UNDER_INVESTIGATION"
+},
+{
+ "id": "AMGT_RESAPP-Z-W214-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~214",
+ "surfaced_at": "2026-10-02T22:44:32Z",
+ "one_line": "AC1's named test directories carry 3 failing tests in lib/research/harvest/tests/test_timeline_day_read_path.py that fail identically at the issuance descendant with this cell's edits absent; they pin the silver join am-1 removed.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "AMGT-an-5 AC1: pytest over lib/research/api/tests/ lib/research/harvest/tests/ lib/research/coverage/ passes every test and exits 0.",
+ "world_is": "With this cell's edits, 753 passed and 3 failed, exit=1. The 3 are test_timeline_day_body_byte_equal_before_and_after_the_read_path_change, test_timeline_day_new_path_reads_only_the_publishers_the_day_names and test_timeline_day_warm_process_reads_no_object_twice_and_still_lists. The same file on a clean worktree of e0f5c4fd65 (this branch's HEAD before any edit, sparse lib + infra/logic + org/standards) gives 3 failed, 1 passed. Cause: 59c2ef1b23 (AMGT-am-1) made the day route serve headline and published_precision from the gold mention row's title and removed the request-time silver read; these three tests still compare against the OLD silver-joined read (_iter_latest_articles) and still expect silver parts to be listed. Not fixed here: editing them is a neighbouring defect outside the order's act. AC1 therefore cannot read exit=0 until the issuer amends AC1 or the three tests are rewritten for the gold-title read.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "pytest AC1 invocation in C:/tmp/r64-214 (wk-AMGT_RESAPP-214): 3 failed, 753 passed, exit=1",
+   "pytest lib/research/harvest/tests/test_timeline_day_read_path.py in a clean e0f5c4fd65 worktree: 3 failed, 1 passed",
+   "git log 59c2ef1b23: lib/research/api/scoped_amgt.py _timeline_article_loader now reads row.get('title'), no silver"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+},
+{
+ "id": "AMGT_RESAPP-Z-W214-S2",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~214",
+ "surfaced_at": "2026-10-02T22:44:32Z",
+ "one_line": "After the projection cut, the largest remaining cold stages of BA /timeline/day are the identity resolution (~0.85-0.93 s) and the 2.6 MB mention snapshot GET (~0.55-0.8 s locally); neither is in this cell.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "AMGT-an-5 reports the local cold profile before and after, per stage.",
+ "world_is": "Fresh process, first call, local: before = chatter_daily 1246-1331 ms + article_security_mention 1393-1738 ms of a 3551-3895 ms handler; after = identity 847-931, import 1-110, gold_chatter_daily 667-775 (list 138-142, get 168-206, decode 316-342), gold_article_security_mention 691-1222 (list 134-148, get 552-826, decode 5-6), assembly 1-2, serve_total 1369-1998, handler 2244-2870. The mention GET moves 2.63 MB of which ~0.85 MB are served columns (bronze_key 735 KB and record_hash 690 KB are the largest unserved chunks); a ranged column-chunk GET would cut it, and the files are one row group so row-group statistics prune nothing. Not done: it changes the GET call shape for the in-memory fakes and is not what the deployed AMGT_SEGMENT lines have yet shown to matter. identity is resolve_identity, in the handler's timeline branch, and is not the gold read.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "python .scratch/prof.py (fresh process) before at e0f5c4fd65 and after this cell's edits, 2 runs each, response bytes identical (cmp)",
+   "pq.ParquetFile(...).metadata column chunk sizes of amgt/harvest/gold/article_security_mention/date=2026-10-02/part-20261002T165144Z.parquet (2,634,520 B, 1 row group, security_key unsorted, 205 distinct keys)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
 }
 ]
 ```
