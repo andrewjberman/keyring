@@ -39,3 +39,23 @@
 1. **The DEV push of the merged candidate.** `0.0.0_AB_MSTR` pushes trunks on his word.
 2. **The PROD promote, and its payload.** Either the merge-forward of DEV (Security Analysis + the 40 other files above), or a
    Security-Analysis-only payload he names (CVO verdict 27503). Rollback is `b3a1d8a6`.
+
+## ROUND 23 -- candidate `41eeda55` (supersedes `419ef41d`), reviewed 2026-10-02 ~09:0xZ on COO~D msg 28345
+
+- **Ancestry,** read by this seat: remote DEV `8df9e3d3` (ls-remote 09:0xZ) and `419ef41d` are both ancestors of `41eeda55`, so the DEV
+  push is a fast-forward. `8df9e3d3..41eeda55` is 10 files, +152/-54, and **0 outside `src/pages/SecurityAnalysis/`**.
+- **The code** (`419ef41d..41eeda55`, 6 SecurityAnalysis files):
+  - `cscTable.ts` / `PeersTab.tsx`: the absent-column reasons are now reader sentences ("This column is not reported for each of
+    these peers."), with no "registry" and no "R-1".
+  - `ExecManagementTab.tsx`: `filingWords()` names the filing by form and date ONLY when the served provenance carries the SAME
+    accession; otherwise it reads "the company's filing". The accession rides `data-exec-source-accession`.
+  - `posture.harness.cjs`: the stub is repaired (Z-W69-S1).
+- **Battery,** per COO~D: 8 checks 3/3, 14 of 14 harnesses, `tsc` 0. Walk 20261002T084927Z: VLO Exec reads "the 10-K filed
+  February 25th, 2026", and A3 is REALIZED (0 of 94 bars by ticker, with B1 live).
+- **Verdict: APPROVED as the one DEV candidate.**
+- **Z-S14:** VLO's Lusha line repeats itself, because AV-z-1's lead-in precedes B2's plain served reason. **Ruling:** when the served
+  reason is code-free, print it alone, as one sentence. This is a one-line direct act folded into the candidate if it can be
+  re-merged and walked by 11:30Z. Otherwise `41eeda55` ships as is, because the repetition is cosmetic.
+- **PROD payload, updated:** PROD `b3a1d8a6` -> `41eeda55` is 50 files. 10 are SecurityAnalysis, and **40 are outside it**, from 11
+  FAST commits on DEV (DSGN_IRPTV1 items 63-71, IRPT_DASHBD, MDPF_SECCLASS). Under CVO verdict 27503 that payload is Andrew's to
+  name.
