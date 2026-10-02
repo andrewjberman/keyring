@@ -3179,3 +3179,32 @@
   "notes": "Rows W39-S2 and S32 stay filed as they are (append-only); this row is the disarm record. The client name returns on the page the tick a client-scoped history route is served."
 }
 ```
+
+
+## DSGN_IRPTV1-S44 -- the Total Assets card's tiles add up to more than the client's total (CategoryViewTree D1-inv-4 fires on the signed-in page)
+
+```json
+{
+  "id": "DSGN_IRPTV1-S44",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-10-02T07:55:00Z",
+  "one_line": "On the signed-in Holdings tab the Total Assets card's top-level tiles add up to more than total_aua minus insurance: the page's own D1-inv-4 check (components/CategoryViewTree.tsx:1385-1394) logs VIEW-PLANE SUM DOES NOT CLOSE for two Cottonwood clients in every walk since 2026-10-01 06:32Z.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "walker console_errors (tmp/ui-walk/<stamp>/findings.json, gitignored): one client reads displayed L0 total 20121016.4717 vs total_aua - insurance_excluded 18810267.81 (over by 1,310,748.66, 7.0 percent) in walks 20261001T144503Z, 20261002T052515Z and 20261002T074315Z; another reads 9403597.122 vs 8823925.51 (over by 579,671.61, 6.6 percent) in walks 20261001T063244Z, T064300Z, T065700Z, T070802Z and T074316Z",
+      "the identity card's HOW MUCH reads $18,810,267.81 for the first client (walk 20261002T074315Z shot 039), equal to the check's expected side, so the header and the card's tiles disagree by the measured amount",
+      "the check sums the rendered L0 nodes' presentAum over the served block and compares with block.sums.total_aua - block.sums.insurance_excluded (CategoryViewTree.tsx:1370-1372); the page adds or drops no node (comment at :1396-1398)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The Total Assets card's top-level tiles partition the client's total: their sum equals total_aua minus insurance (D1_CATVIEWS invariant D1-inv-4), so the tiles and the identity card's HOW MUCH agree.",
+  "world_is": "For two Cottonwood clients the served L0 nodes sum 6.6 to 7.0 percent above total_aua minus insurance. Not measured: which L0 node carries the excess (a model sleeve counted at target beside its actual positions is one candidate, not a finding) and whether any 49 Financial client shows it.",
+  "notes": "Off item 70 (filed and kept working). The page renders what the view plane serves, so the remedy is most likely in the served category views, not in the card; 1.0.0_SA_CTO to place (the served holdings are 2.0.0_SA_COO~M's surface). Un-parks when an owner reads one L0 block of either client and names the node."
+}
+```
