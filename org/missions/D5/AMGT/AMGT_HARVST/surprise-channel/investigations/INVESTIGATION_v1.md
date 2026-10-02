@@ -6320,6 +6320,29 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "spec_asserts": "PRD v0.15 FWD-16: scores 'keyed to the article's record_hash so a re-silvered article is re-scored and an unchanged one never is'.",
       "world_is": "Every re-fetch writes a new silver row with a new run_stamp, so a new record_hash, even when title and text_blocks are byte-identical. ak-1 follows the letter and keys the score store on record_hash. FinBERT is deterministic, so the tone read is unchanged; only the Lambda call is spent.",
       "notes": "Not a defect in FWD-16's reading: a re-silvered article IS re-scored. Measure the cost at the corpus scoring as the share of record_hashes whose text_sha256 was already scored. If it is material, an issuer amendment reuses a score by text_sha256 and records reused_from."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S68",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-02T20:12Z",
+      "one_line": "3 HARVST tests in lib/research/harvest/tests/test_timeline_day_read_path.py fail at CLOUD HEAD. They pin the /timeline/day SILVER read path (HVST-n-6) that RESAPP am-1 removed by design @59c2ef1b23, when the headline moved to gold. The tests are stale, and the route is not broken.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "python -m pytest lib/research/harvest -q at CLOUD @f175fbeb99: 294 passed, 3 failed, all 3 in tests/test_timeline_day_read_path.py (body byte-equal across the read-path change; new path reads only the day's publishers; warm process reads no object twice)",
+          "ak-2 worker (~92) measured the same failures before its change (5 failed, 283 passed at its base), so ak-2 did not cause them",
+          "59c2ef1b23 (0.9.0_WK_AMGT_RESAPP~204): the day route serves headline and published_precision from the GOLD mention row; the request-time silver read is removed (CTO track-C ruling msg 28509)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Each round keeps the HARVST research suites green, and a red suite reads as a defect.",
+      "world_is": "The suite is red on 3 tests whose subject (the silver read at request time) no longer exists by ruling. Every round-38 cell reports a 3-failure baseline.",
+      "notes": "Remedy: retire or rewrite the 3 tests against the gold read path. They are HARVST's file over a RESAPP route, so the write surface is HARVST's tests and RESAPP's route is untouched. Batched into the round's repair cell; not a new outcome."
     }
   ]
 ```

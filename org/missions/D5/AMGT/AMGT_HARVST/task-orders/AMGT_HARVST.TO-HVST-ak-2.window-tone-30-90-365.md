@@ -116,9 +116,20 @@ issuer's real run.
 
 The first served write is at the issuer's rebuild #6, after ak-1's corpus scoring.
 
+**COMPLETE 2026-10-02 ~20:1xZ (issuer):**
+- AC1 PASS: 9 passed. A mutant that counts neutrals as voters fails plants (i) and (vii).
+- Merged @f175fbeb99.
+- AC2 re-run at the base PASSES (`deliverables/2.0.0_SA_COO_H/round38/ak-2.AC2.issuer_grade.txt`): 715 mention rows over
+  5 securities, window_end 2026-10-01, 15 of 15 rows equal the independent recompute. The all-neutral `2317_TT_Equity`
+  reads voters 0 and tone None at 30d (3 articles), 90d (10) and 365d (37).
+- The research suite at the base reads 294 passed and 3 failed. All 3 failures are in
+  `tests/test_timeline_day_read_path.py`, which pins the silver read path that RESAPP am-1 removed by design
+  (@59c2ef1b23); row Z-S68. None was caused by this cell.
+- The CLI was not run: `finbert_sentiment` lands with ak-1.
+
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>38</round>
 <slot>~92</slot>
 <fabric>site-z</fabric>
