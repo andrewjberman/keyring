@@ -6165,6 +6165,31 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "Not measured: whether the served gold was built before the barrons dict shape appeared, or whether silver_latest/the barrons silver writer changed. Issuer to rule where the unwrap lives (silver writer, or a verbatim-text rule in the builder)."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S66",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-02T17:25Z",
+      "one_line": "NopeCHA no longer offers hCaptcha solving in any measured form, so the approved option A (NopeCHA browser extension for the unattended ft sign-in) is very unlikely to work. The Token API is discontinued (error 19), the hCaptcha recognition endpoint rejects requests as an 'outdated format', and NopeCHA's current API reference names no hCaptcha at all.",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "2026-10-02 17:19:03Z GET api.nopecha.com/status and /v1/status (VEW-1, key from Secrets nopecha/api-key): 200, plan Starter, status Active, credit 2000 / quota 2000, subscribed, current_period_end 1791774195 (2026-10-31); no solver-type list",
+          "2026-10-02 17:19:59Z POST api.nopecha.com/v1/recognition/hcaptcha (3 NopeCHA demo images): 400 {error 10, 'Invalid request', 'You are using an outdated format for hCaptcha. Please refer to the API documentation (https://nopecha.com/api-reference/#postPopularcaptcha)'}",
+          "nopecha.com/api-reference read 17:2xZ: types covered are AWS CAPTCHA, FunCAPTCHA, GeeTest, Lemin, reCAPTCHA (v2/v3), Text CAPTCHA, Cloudflare Turnstile; no hCaptcha; no 'popularcaptcha' section exists",
+          "row AMGT_HARVST-Z-W92-S18: nopecha.Token.solve error 19 'This API endpoint has been discontinued' (13:15Z)",
+          "org/tier1_exec/4.0.0_SA_CRO/scripts/ft_harvest_session.py:181-192 (2026-09-11): the NopeCHA browser-extension route 'never demonstrably activated' against a live hCaptcha (empty service_workers/background_pages)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Andrew-direct ~16:47Z approved open-calls option A+B: (A) the NopeCHA browser extension for the unattended ft sign-in; aj-6 re-pointed to it (@bd232ecca9).",
+      "world_is": "The NopeCHA account is live (Starter, 2000 credits, renews 2026-10-31), but hCaptcha is absent from its product. aj-6's stage-1 build (~90) makes no ft request; stage 2 (live sign-in) is NOT started. Option B (Andrew's hand-solved sign-in) is live: FTSession_s saved 17:01Z, and the aj-4 2 h keep-alive run started 17:02Z.",
+      "notes": "Put to Andrew in-session 17:2xZ: the unattended route needs another vendor (to be verified from public docs first; each is a new vendor needing his word), hand-solved sessions, or Ocilar (re-check due 2026-11-01, comp-schedule C6). Whether to cancel the NopeCHA renewal is his call. The issuer's recommendation of A rested on an unverified assumption that the extension still worked."
     }
   ]
 ```
