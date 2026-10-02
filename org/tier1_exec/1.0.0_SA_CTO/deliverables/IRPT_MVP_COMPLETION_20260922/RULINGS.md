@@ -5572,3 +5572,14 @@ it and E6 and hop 11 wait on E7 (batch 123 item 4).
 1. SIGNED: the CTO half on the arms Y2 window (packet blob fc843fa454): one Cottonwood Overview job per leg, TW (Target Weight
    CSV, notional 1000) and then XL (the XLSX template). File: `CTO_HALF_ARMS_Y2_WINDOW_20261002.md`. Vendor authority: Andrew's
    2026-09-27 words, read by this seat, with no stop line since: "yes you can run as many analysis attempts as needed".
+
+## Batch 158 -- 2026-10-02 ~11:4xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~D msg 104211, row S40)
+
+### S40-RE-GOLDEN-FE-S-13-14-TO-THE-DECLARED-ROUTES-20261002
+1. RULED: DO IT NOW; the row lands. `routes.json` declares 18 routes (`_denominator` 18). The three pins hard-coded to 17 are stale
+   against the declared contract, not broken by the row.
+2. THE BATTERY DERIVES ITS COUNT from `routes.json`'s `_denominator`, never a typed 18, so the next route does not repeat this.
+   The corpus record for GET /analysis/comparisons is captured from a real run on port 5174, never typed by hand. The response
+   contract for F14-AC13 and F57-AC2 comes from the route contract.
+3. The other five failing pins (7 at HEAD, less the 2 the row fixes) are not this row's. Each stays on its own named row. The
+   landing report prints the count before and after: 7 -> 5 expected.
