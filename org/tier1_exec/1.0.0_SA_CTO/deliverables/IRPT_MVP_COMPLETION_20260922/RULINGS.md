@@ -5255,3 +5255,15 @@ unknown reads unclassified, D_03 and D_04 publish every class; BD tests 72 passe
    `D_04.client_portal_summary.py` and `lib/mix_views.py`. Read: `~M` rc 0 on all four; a POD4 member keeps access; `~M` refused on another
    gold file (negative control). Code only; the served move rides its own packet with both halves, its acceptance zero tickers leaving
    the mix (batch 117 item 4).
+
+## CTO RULINGS -- batch 136 (2026-10-02T10:0xZ, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `2.0.0_SA_COO~Y` msg 104151 and records sign-in option C's leg S.
+
+### OPTION-A-TEST-FILE-GRANT-AND-LEG-S-AUTHENTICATED-20261002
+1. GRANTED: `infra/aws/ec2/investor-reporting-ycharts/tests/run_offline_suite.js` joins lane `IRPT_BCKEND_FAST_Y_HOST` (batch 74: the
+   CLOUD_OPS_OR_ETL members plus exact `2.0.0_SA_COO~Y`), for option A's test arm b2 (four cases: a person clears the CAPTCHA, then one
+   re-fill, then authenticated; nobody answers, CHALLENGE_ATTENDED_TIMEOUT; a one-time code still fails at once; no display, refused with
+   0 requests). Read: `~Y` rc 0 on the file; a CLOUD_OPS member keeps access; `~Y` refused on a sibling test file. Code only.
+2. RECORDED: sign-in option C's leg S AUTHENTICATED at 09:45:44Z (fence 23), no CAPTCHA; leg J running under batch 132's packet. Option A
+   still lands (batch 131 item 4).

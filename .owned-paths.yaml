@@ -2485,6 +2485,10 @@ paths:
     lane: POD1_OR_AE
     note: "Semantic news-pipeline Lambdas (currently inactive but kept in lane) — POD1 DS authors, AE deploys."
 
+  "infra/aws/ec2/investor-reporting-ycharts/tests/run_offline_suite.js":
+    lane: IRPT_BCKEND_FAST_Y_HOST
+    note: "IRPT_BCKEND~Y FAST lease, exact file (option A test arm b2, the attended sign-in); CTO grantor batch 136 (2026-10-02)."
+
   "infra/aws/ec2/investor-reporting-ycharts/ycharts_session.js":
     lane: IRPT_BCKEND_FAST_Y_HOST
     note: "IRPT_BCKEND~Y FAST lease, exact file; CTO grantor batch 74 (2026-10-01)."
