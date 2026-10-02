@@ -14,7 +14,10 @@ Cron 5edcc745 `13,43 * * * *` `/canonical-drive DSGN_AMGTV1 once`; MSTR~Z told (
 | 05:18Z | 21 | disarm row Z-S12 @d11d8ee1fe (surprise-row-gate OK) |
 | 05:19Z | 21 | one ask to 1.0.0_SA_CTO~Z: disarm Z-S10, its own row (the round-20/21 signed-in walks held the session) |
 
-Next: a round-22 cut the tick the CTO's analysis arrives. The L9 stamps on the disarmed rows are the CVO's (3.0.0_SA_CVO~Z is not live on site Z).
+| 05:22Z | 21 | tick 2 NO-OP: the next act was the CTO's |
+| 05:25Z | 21 | CTO~Z 28223 (acked): Z-S10 DISARMED by its owner (row Z-S13 @092047f79f). RULING: no round 22. DSGN holds at the freeze 3c37a01c (live in PROD b3a1d8a6) through Andrew's 09:00 ET demo read, and DEV takes no DSGN product change before then. Next limb: L9, CVO grading of every FWD toward CLOSED; the CTO asks MSTR~Z to seat 3.0.0_SA_CVO~Z |
+
+Next: the loop idles until the CVO's grading or Andrew's demo read lands. The L9 stamps on the disarmed rows are the CVO's.
 
 ## Push state
 
