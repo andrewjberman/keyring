@@ -1,10 +1,11 @@
-# ETFS_RIVALS (rivalfunds) -- FAST status
+# ETFS_RIVALS (rivalfunds) -- status (FULL since 14:40:14Z; was FAST)
 
-Seat `2.0.0_SA_COO~RV` (CLAUDE). Lease: FAST to 2026-10-02T17:08:53Z, surface `data/etfs/scripts/rivalfunds`
+Seat `2.0.0_SA_COO~RV` (CLAUDE). Lease: ENDED 14:40:14Z on Andrew's word ("yes you can move to /canonical-drive for the remainder";
+relayed ~14:1xZ: "max parallelization on subagents"; record @ next commit); was FAST, surface `data/etfs/scripts/rivalfunds`
 (`org/mcp/drive-mode.log` line 56). Goal (Andrew ~04:59Z): "i want mcp.opalinvest.dev/rivalfunds demoable Today".
 Team: reviewer `3.0.0_SA_CVO~RV` (grades pins after the fact: `org/tier1_exec/3.0.0_SA_CVO/deliverables/ETFS_RIVALS_FAST_GRADES_20261002.md`),
 open calls `4.0.0_SA_CRO~RV` (`org/tier1_exec/4.0.0_SA_CRO/deliverables/ETFS_RIVALS_RULINGS_20261002.md`: CALLs 1-9 ruled).
-As of 2026-10-02T14:2xZ.
+As of 2026-10-02T14:4xZ.
 
 ## Pins
 
@@ -35,15 +36,13 @@ the round-5 worktrees removed, FAST lapses at 17:08:53Z (not extended).
 
 ## Next proof
 
-1. **17:08:53Z FAST -> FULL** (Andrew: lapse, not extend). At the first tick after it: if the lease still reads FAST (presence),
-   end it with `python .tools/drive-mode.py full ETFS_RIVALS`; then commit what builds, overwrite this file, and cut round 6 as
-   ONE issuance from the rectangle below. L4 is in hand: PRD v0.11 @3807b0da2c (CTO~Z notifier msg 28506) reads ADMITTED
-   (`prd-signoff.py status`: ratified-text half SIGNED by 3.0.0_SA_CVO~Z, current by ENDPOINT hash; brief half admitted, CRO-written),
-   so L5 decomp + battery and the L6 issuance are this seat's at the boundary (re-landed @f62abbafc5, msg 28519; status
-   ADMITTED at @bd166222b0: ratified-text half SIGNED by 3.0.0_SA_CVO~RV, current).
-2. **2026-10-05 07:00 ET marker page read** (CTO~Z addendum-11 condition 4): "source URL unavailable" only on PFOE's 26 lines.
-3. **2026-10-05 AI accounts:** round-6 cell 1 if it lands before the 07:00 ET publish; otherwise ONE seat run after it (VEW-2
-   covers OpenAI for this chain; Andrew's yes 13:33Z), prompt a1-chain/4, grader grounding_check/4. It proves F5 and G8-3.
+1. **Round 6 ONE issuance NOW** (FULL, /dispatch): ap-1, rk-2, e-2 spawned at once (3 of 3 chains, cap 8); r-6 joins after
+   ap-1 + rk-2; issuer acts I-1..I-3. Decomposition from the DRAFT + battery (14 checks, every one FAIL at base).
+2. **RFW-D01/D02 on the demo page** (issuer act, parallel): `refresh_a1` republish of 2026-10-02 under a never-widen pair; the
+   A1 tables predate the 11:11Z G1 refresh (header 13 of 13 vs census 2 of 13).
+3. **The 33-finding walk register** (`docs/briefs/rivalfunds-ui-data-findings-20261002.json`) joins as cells when 1.0.0_SA_CTO~Z's
+   PRD carries every id (Andrew); an amendment issuance adds them.
+4. **2026-10-05:** the 07:00 ET marker page read ("source URL unavailable" 0 -- PFOE's now name their file); the 10-05 AI accounts.
 
 ## Round 5 drains (DONE 13:0xZ)
 
