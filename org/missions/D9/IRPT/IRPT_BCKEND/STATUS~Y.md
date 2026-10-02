@@ -6,14 +6,14 @@ Mode FAST: lease `IRPT_BCKEND~Y` re-armed 04:33Z until 08:33Z after the withdraw
 terms, under Andrew-direct 2026-10-01 ~04:2xZ).
 Loop `/canonical-drive IRPT_BCKEND` 10m (LIVE_ARMS RELAUNCH row). Way forward: CTO rulings batches 61, 62, 65, 70, 72,
 76, 83, 88, 89, 93, 97, 98, 100 and 105 in `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md`.
-Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-02T06:5xZ.
+Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-02T07:1xZ.
 
 ## Pins
 
 | What | Value |
 |---|---|
 | Worktree | branch `coo-y-r30` at `C:/Users/AndrewBerman/Desktop/coo-y-r30`, head `3ad9306bf9`, merged into CLOUD at `87f9b3afab` |
-| Items 1 to 17 on CLOUD | 1 to 14 as before (st9 carries them); 15 `3921492913` (the 900 s calculating release, the WAF header token); 16 `7122afefc1` (row S253, the job row's `vendor_requests` ledger); 17 `8c4398e32a` (E7, the request read names the chosen comparisons); 18 `3ad9306bf9` (the catalogue reads `etf-classifications` once per 300 s warm window, not per request; condition 11 of the whole-bundle packet), merge `87f9b3afab`, NOT served |
+| Items 1 to 17 on CLOUD | 1 to 14 as before (st9 carries them); 15 `3921492913` (the 900 s calculating release, the WAF header token); 16 `7122afefc1` (row S253, the job row's `vendor_requests` ledger); 17 `8c4398e32a` (E7, the request read names the chosen comparisons); 19 `951afdf4e6` (st11, merge `4f68a17d3a`, NOT served); 18 `3ad9306bf9` (the catalogue reads `etf-classifications` once per 300 s warm window, not per request; condition 11 of the whole-bundle packet), merge `87f9b3afab`, NOT served |
 | SERVED: the resident | `/opt/irpt-resident/b1db201025-st10` since 2026-10-02T03:19:51Z (ledger `irpt-resident-st10-20261002` CLOSED; both halves, CTO batch 106): items 1 to 17. Rollback root `481166a8f2-st9` on the host |
 | SERVED: `irpt-status` | `2V7xV1+zII4+g6tV..` since 2026-10-01T06:59:55Z (read 2026-10-02 ~02:2xZ) |
 | SERVED: `irpt-ycharts-generate` | `E+FqSWwETrwJ9Gd1..` since 2026-10-02T05:54:19Z (whole bundle at `97eaff05ff`, item 18; ledger `irpt-generate-catalogue-20261002` CLOSED). Rollback: S3 version `J52XmUEj..` (code `arC65KbD..`) |
@@ -56,8 +56,11 @@ made (CTO half item 1).
    upload during another job's generation is refused `PROVIDER_READ_UNAVAILABLE:OPERATION_BUSY` and exhausts. CTO batch 120
    ruled the remedy as **st11**: a BUSY receive re-sends a fresh message delayed by the lease's retry-after (<= 900 s) and
    deletes the received one; a 60-minute wall deadline; a busy end reads a busy code with a retry action, never
-   `REPLACE_FILE`; a test proves a BUSY resolve never reaches the dead-letter queue. PRECONDITION: the resident's role has no
-   `sqs:SendMessage` on `irpt-generation`; the grant's placement was asked of the CTO at 06:44Z.
+   `REPLACE_FILE`. **st11's code is BUILT and MERGED** (item 19 `951afdf4e6`, IAM `85240e4c82`, merge `4f68a17d3a`): the
+   re-send, the deadline from the row's `requested_at`, `RESOLVE_PROVIDER_BUSY` with action `CORRECT` and its words; 3 new tests
+   (one proves a resolve busy for its whole deadline never reaches the dead-letter queue), negative control, every suite green.
+   The IAM line (`sqs:SendMessage` on `irpt-generation`, CTO batch 121) plans as the ycharts root's only change. NEXT: the st11
+   packet (resident build + the targeted IAM apply), both halves. Its live proof needs a working session (Andrew's sign-in).
 6. Batch 61's order after that: one job per remaining arm (Target Weight, 49 Financial, Inflection), each under a window
    packet; the resolve concurrency fix; the vendor PDF link; the Analysis export; the email lane. E6's memo follows E7's
    apply (CTO batch 111). A client-scoped history route is an enrichment item at the next round analysis (CTO batch 110 item 4).
