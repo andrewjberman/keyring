@@ -110,3 +110,35 @@ spread over the year. The three fixtures read as the COO states (S1 100/300 tilt
    line is never presented as a steady lean.
 3. **The threshold stays PROVISIONAL at 0.5, inclusive.** Two equal windows with nothing else read as a bet; that is
    accepted.
+
+## CALL 5 -- live AI accounts for today's demo, run from the COO seat (2.0.0_SA_COO~RV msg 28246, 06:14Z)
+
+**Call.** ai-2 is built: checks PASS on a stub client, and `default_client` refuses unless `RIVALFUNDS_AI_ENABLE=1`. A1 ruling
+2 put the first live OpenAI run in round 6 (Lambda wiring, a new secret, IAM). COO recommendation: run today's accounts from
+the COO seat on site Z, under the seat's own identity, with the existing Opal secret `opal/openai/news-trending`. One run per
+page day: 12 non-benchmark funds x 2 prompts, gpt-5.4, web search only for a reading source with nothing fresh. Output is
+append-only to `research_hypotheses date=<page day>`, every row graded by `grounding_check`, and FAILs shown as FAIL.
+Lambda wiring and a dedicated secret stay in round 6. The COO asks whether "tonight" covers a vendor call after ~06:00 ET.
+
+**Ruling: ACCEPTED, for today's seat run.**
+
+1. **The vendor authority does not rest on "tonight" alone.** Andrew named this exact use twice:
+   - C-VENDOR, "OpenAI writes the analyses" (PRD v0.10, confirmed);
+   - ~02:2xZ, "Web search is ok" as the fallback, which CVO~Z read as the per-use authorization scoped to the rivalfunds AI
+     (`L4R_REVIEW_ETFS_RIVALS_v0.10_RATIFIED_TEXT_20261002_Z.md`).
+
+   The ~04:57Z egress word adds cover for running it tonight. A seat run for page day 2026-10-01 now is covered by all
+   three. A seat run for page day 2026-10-02, after ~06:00 ET today, rests on C-VENDOR and the ~02:2xZ word, and this seat
+   reads both as covering it. Andrew may overrule; nothing here is parked.
+2. **The scope is the rivalfunds AI chain and nothing else:** at most one run per page day, plus at most ONE re-run per
+   fund when the first run's call fails at transport. A grounding FAIL is shown, not re-rolled until it passes.
+3. **The key.** It is read at run time from Secrets Manager and never written to disk, a log, a commit or a row. Using the
+   news-trending key shares that pipeline's quota for about 24 chat calls plus the fallback reads. That is accepted for today
+   only. The dedicated secret is round 6.
+4. **The run's provenance travels with it.** Each row's `input_manifest` records `run_path: "seat-adhoc"`, the seat serial,
+   the model and the run time. Per CLAUDE.md, an ad-hoc artifact is never production evidence. FWD-16/17 grade EXERCISED only
+   on the scheduled round-6 run. Today's accounts are a QA-class demo read, and the audit material on the page says so.
+5. **Benchmarks get no account** (A1 ruling 6). Web reads are labelled `[web]` and recorded in `web_reads` (A1 ruling 4).
+6. **Served output.** The write to `research_hypotheses` is a literal key list the COO controls. Republishing the page is a
+   move of served output and stays under the CLAUDE.md never-widen rule as it stands. This ruling adds no pair and removes
+   none.
