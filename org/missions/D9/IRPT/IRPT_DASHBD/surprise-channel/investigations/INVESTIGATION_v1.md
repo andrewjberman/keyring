@@ -455,3 +455,59 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
  "notes": "Recommended: add the adapter's scheduled fire as round-2 cell DB-b-7 (a scheduled Lambda packaging account_return_daily.py unedited, the holdings-performance pattern, its own root and ledger, firing before 08:15 ET), apply E1's read root now, and apply the publisher's schedule in the same packet only once the adapter's schedule is applied. The read route serves the 2026-09-28 series honestly meanwhile (its manifest carries as_of)."
 }
 ```
+
+## IRPT_DASHBD-S14 -- The reporting-read role reads more than the order's 'ONLY the platinum prefix': it also reads the directory pointer + artifact and the ownership map (the scope dependencies the shared boundary re-reads per request) and the service-profile row in opal-users-v2; the code cites row W1-S3 for this, which was never filed (the stopped worker's comment).
+
+```json
+{
+ "id": "IRPT_DASHBD-S14",
+ "project": "IRPT_DASHBD",
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~P",
+ "surfaced_at": "2026-10-02T05:30:00Z",
+ "disposition": "UNDER_INVESTIGATION",
+ "one_line": "The reporting-read role reads more than the order's 'ONLY the platinum prefix': it also reads the directory pointer + artifact and the ownership map (the scope dependencies the shared boundary re-reads per request) and the service-profile row in opal-users-v2; the code cites row W1-S3 for this, which was never filed (the stopped worker's comment).",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~P (named in the E1 never-widen packet's blast radius; the CTO half reads it)",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "infra/aws/terraform/investor-reporting/reporting-read/iam.tf:3-7 and statements ReadCurrentScopeDependencies (local.irpt_rr_scope_dependency_arns) and the service-profile policy :99-138 (dynamodb:Query on opal-users-v2/index/email-index, dynamodb:GetItem on opal-users-v2, kms:Decrypt via DynamoDB only) at CLOUD @76a5e50ed3.",
+   "TO-DB-b-4 worker face: 'a role reading ONLY the platinum prefix of the firm bucket'.",
+   "the channel at @76a5e50ed3 holds W1-S1 and W1-S2 only; iam.tf:7 cites 'row IRPT_DASHBD-W1-S3', which no channel file carries."
+  ]
+ },
+ "spec_asserts": "TO-DB-b-4: the read function's role reads ONLY the platinum prefix of the firm bucket.",
+ "world_is": "MEASURED: the role also carries the Holdings function's scope-dependency grants (directory + ownership map, object-scoped) and the service-profile read; without them the shared boundary cannot resolve a viewer's scope or a service principal's allowed firms. A product read beyond platinum: none. Write: none.",
+ "notes": "Accepted as the boundary's own dependency, not a widening of the product read: the E1 packet lists every statement. iam.tf:7 is re-pointed from W1-S3 to this row."
+}
+```
+
+## IRPT_DASHBD-S15 -- The read route is created in its own root against the existing portal API and is NOT in docs/contracts/investor-reporting/v1/routes.json, the file routetable.py calls the ONE carrier of the route table; so the unguarded-route census and the api root do not see it. The code cites row W1-S4 for this, which was never filed.
+
+```json
+{
+ "id": "IRPT_DASHBD-S15",
+ "project": "IRPT_DASHBD",
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~P",
+ "surfaced_at": "2026-10-02T05:30:00Z",
+ "disposition": "UNDER_INVESTIGATION",
+ "one_line": "The read route is created in its own root against the existing portal API and is NOT in docs/contracts/investor-reporting/v1/routes.json, the file routetable.py calls the ONE carrier of the route table; so the unguarded-route census and the api root do not see it. The code cites row W1-S4 for this, which was never filed.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "1.0.0_SA_CTO (whether the route joins routes.json and the api root's function map, or stays in its own root with a census entry)",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "infra/aws/terraform/investor-reporting/reporting-read/api.tf:1-11, :24-30 (aws_apigatewayv2_route under the EXISTING CUSTOM authorizer, local.portal_authorizer) at CLOUD @76a5e50ed3.",
+   "infra/aws/lambda/investor-reporting/_authz/routetable.py:12-15: routes.json is 'the ONE carrier of the route table ... A route that is not here is not reachable, and a route that is here is.'",
+   "TO-DB-b-4: 'adding a route to ANOTHER function's ROUTES or to the deployed boundary's route table raised EntryError' (IRPT_BCKEND-W88-S1), which is why the route was declared in its own root."
+  ]
+ },
+ "spec_asserts": "routetable.py:12-15: every reachable route is in routes.json.",
+ "world_is": "MEASURED BY CODE READ, NOT EXERCISED: once E1 applies, one reachable route exists outside routes.json, so routetable.py's census population omits it (its guardedness is then asserted by DB-4-AC1's local refusal arm only).",
+ "notes": "Not a runtime refusal: API Gateway serves the route from this root's resources; the authorizer is the existing portal one. api.tf:11 is re-pointed from W1-S4 to this row."
+}
+```
