@@ -1,0 +1,866 @@
+{
+ "schema_version": "1.0",
+ "claim_field": "Each finding carries cause.claim = measured | inferred. 'measured' = seen in the screenshot and, where cited, a walker check or source line; 'inferred' = the named cause is not yet checked in code.",
+ "source": {
+  "reviewer": "Andrew Berman (Andrew-direct 2026-10-02 ~17:33Z, the 4.0.0_SA_CRO~Z terminal; record org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/ANDREW_DIRECT_20261002_173xZ_SECURITY_ANALYSIS_UIUX_WALK_BRIEFS_TO_CTO_Z.md)",
+  "compiled_by": "4.0.0_SA_CRO~Z (walk fork)",
+  "build_observed": "localhost:5174 dev build; the shared portal working copy read DEV a730d8ce at 17:35Z; the running bundle's commit was not recorded.",
+  "walks": [
+   "tmp/ui-walk/20261002T174112Z (this fork; /security-analysis --deep with BA US and VLO US, plus /philosophy, /advisor-intelligence, /market; 212 screenshots; DISARM refused the walk password)",
+   "tmp/ui-walk/20261002T180024Z (a second walk on the same build, not run by this fork: AMD US, BA US, VLO US, every tab reached; cited as 'walk 2')"
+  ],
+  "screenshots_note": "Local and gitignored; never committed or sent. Findings quote them in words."
+ },
+ "outcomes": {
+  "O1": "Security Analysis uses one card style throughout: no light card on a dark container, at most one band (C3).",
+  "O2": "The timeline is a real chart: in-pattern library, labelled axes, data colours, a hover tooltip with the day's metrics, and an event and earnings layer marked on the chart.",
+  "O3": "Every fact sits in a clear pocket: recent news above the spine in its own card, the selected day in its own card or modal, details in the existing modal pattern, tab content inside the first viewport.",
+  "O4": "The lead faces fit one screen: a Topic-Cloud-style collage for Chatter, top movers for Price, no clipped labels.",
+  "O5": "Each harvested article carries a FinBERT sentiment score, served per name and period for the news scanner.",
+  "O6": "'What changed' in the Model is a designed moment: a summary, a signed-change table, sensible default versions.",
+  "O7": "Every period-bound face offers rolling 30D / 90D / 365D presets and states its window.",
+  "O8": "Plain words and honest figures: no system wording or raw codes, one name, money and time format, every figure with its as-of, and no two figures that disagree unlabelled."
+ },
+ "references": {
+  "/philosophy": "Light page; pillar cards (dark gradient head, white body) sit on the light canvas, not on a dark container; one dark chart panel below (walk 1 screenshot 201).",
+  "/advisor-intelligence": "All-dark panels with no white card inside; segmented Mode / Interval / Window controls (1Y 3Y Max; QTD YTD Max) (walk 1 screenshot 207).",
+  "/market": "Rolling period presets '90D 1Y 3Y' on the Global RSI and U.S. Regime cards; the Daily Cloud prints topics in a sentiment colour scale; Trending Topics expand (walk 1 screenshot 212).",
+  "contract_note": "DESIGN.md C3 makes the light page with white panels and one band the law and names dark panels a known divergence, so of Andrew's two options for N1 the light style is the conformant one."
+ },
+ "dropped": [
+  {
+   "check": "design:contrast (modal eyebrows 'OPAL CAPITAL / SECURITY ANALYSIS', 2.87:1 against white)",
+   "reason": "In the screenshots the eyebrow sits on the modal's dark gradient head; the check read the wrong backdrop."
+  },
+  {
+   "check": "walker:control-missing (Exec Management, Peers, Model, Posture)",
+   "reason": "Walker side: the deep press opened the account menu, which stayed open (kept as SAUX-35); walk 2 reached every tab."
+  },
+  {
+   "check": "thread:name-not-found ('Boeing', 0 rows)",
+   "reason": "Walker side: walkThread reads the Price rows without waiting for the bars (walk.mjs has waitPriceBars only in walkSecurityAnalysis); the face lists 'The Boeing Co' at row 41."
+  },
+  {
+   "check": "reference routes (/philosophy, /advisor-intelligence, /market: bands, contrast, 'N/A', two 403s on cohort_a_summary.json)",
+   "reason": "Out of scope: those routes were walked as design references only."
+  }
+ ],
+ "coverage": {
+  "finding_count": 36,
+  "by_andrew_item": {
+   "N1": [
+    "SAUX-01",
+    "SAUX-02"
+   ],
+   "N10": [
+    "SAUX-27",
+    "SAUX-28"
+   ],
+   "N2": [
+    "SAUX-06",
+    "SAUX-07"
+   ],
+   "N3": [
+    "SAUX-08"
+   ],
+   "N4": [
+    "SAUX-09",
+    "SAUX-10"
+   ],
+   "N5": [
+    "SAUX-11"
+   ],
+   "N6": [
+    "SAUX-13",
+    "SAUX-15"
+   ],
+   "N7": [
+    "SAUX-16"
+   ],
+   "N8": [
+    "SAUX-18",
+    "SAUX-19"
+   ],
+   "N9": [
+    "SAUX-23"
+   ],
+   "inferred": [
+    "SAUX-03",
+    "SAUX-04",
+    "SAUX-05",
+    "SAUX-12",
+    "SAUX-14",
+    "SAUX-17",
+    "SAUX-20",
+    "SAUX-21",
+    "SAUX-22",
+    "SAUX-24",
+    "SAUX-25",
+    "SAUX-26",
+    "SAUX-29",
+    "SAUX-30",
+    "SAUX-31",
+    "SAUX-32",
+    "SAUX-33",
+    "SAUX-34",
+    "SAUX-35",
+    "SAUX-36"
+   ]
+  },
+  "by_outcome": {
+   "O1": [
+    "SAUX-01",
+    "SAUX-02",
+    "SAUX-05"
+   ],
+   "O2": [
+    "SAUX-06",
+    "SAUX-07",
+    "SAUX-08",
+    "SAUX-09",
+    "SAUX-10"
+   ],
+   "O3": [
+    "SAUX-03",
+    "SAUX-11",
+    "SAUX-13",
+    "SAUX-15"
+   ],
+   "O4": [
+    "SAUX-16",
+    "SAUX-17",
+    "SAUX-18",
+    "SAUX-20"
+   ],
+   "O5": [
+    "SAUX-19"
+   ],
+   "O6": [
+    "SAUX-23"
+   ],
+   "O7": [
+    "SAUX-21",
+    "SAUX-27",
+    "SAUX-28"
+   ],
+   "O8": [
+    "SAUX-04",
+    "SAUX-12",
+    "SAUX-14",
+    "SAUX-22",
+    "SAUX-24",
+    "SAUX-25",
+    "SAUX-26",
+    "SAUX-29",
+    "SAUX-30",
+    "SAUX-31",
+    "SAUX-32",
+    "SAUX-33",
+    "SAUX-34",
+    "SAUX-35",
+    "SAUX-36"
+   ]
+  },
+  "by_owner_seat": {
+   "2.0.0_SA_COO~D": 29,
+   "2.0.0_SA_COO~Z": 6,
+   "2.0.0_SA_COO~H": 1
+  },
+  "by_owner_project": {
+   "DSGN_AMGTV1": 29,
+   "AMGT_RESAPP": 6,
+   "AMGT_HARVST": 1
+  },
+  "by_claim": {
+   "measured": 28,
+   "inferred": 8
+  }
+ },
+ "coverage_rule": "Every SAUX id must appear in the brief and in the CTO's fold-in with its owner and criterion. Check: python docs/briefs/irpt-ui-review-coverage-check.py --register docs/briefs/amgt-security-analysis-ui-findings-20261002.json <file>",
+ "findings": [
+  {
+   "id": "SAUX-01",
+   "andrew_item": "N1",
+   "screenshot": "tmp/ui-walk/20261002T174112Z/shots/001--security-analysis-load.png",
+   "surface": "lead-panel",
+   "observed": "The Lead Panel is a dark container that holds a white control strip (Chatter/Price, All names/Starred only, the ticker search) under its own dark gradient 'What is moving' header, which repeats the page title's 'SECURITY ANALYSIS' as an eyebrow: a light strip superimposed on a dark card, and a band inside a band.",
+   "outcome": "O1",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "C3 (one band per page; a dark panel is never the default container); portal/CLAUDE.md colour law",
+   "cause": {
+    "claim": "measured",
+    "text": "The panel renders on a band-valued container (portal/CLAUDE.md names Panel variant chart/mixed resolving to the band as the known divergence) with a white strip inside it.",
+    "evidence": "screenshot 001; portal/CLAUDE.md 'Known divergence' paragraph"
+   },
+   "acceptance": "A screenshot of the Lead Panel shows one style throughout: either white panels with navy ink and at most one band on the page (the C3 direction, the /philosophy header style) or an all-dark panel with no white strip or white card inside it."
+  },
+  {
+   "id": "SAUX-02",
+   "andrew_item": "N1",
+   "screenshot": "tmp/ui-walk/20261002T174112Z/shots/005-BA-US-overlay.png",
+   "surface": "name-overlay",
+   "observed": "The per-name header puts white-bodied cards with dark gradient tops (the 'BA US' identity card and the four PRICE / FINANCIALS / MARKET FEATURES / TRADING TECHNICALS cards) on the dark overlay container, the same light-on-dark mix as the Lead Panel.",
+   "outcome": "O1",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "C3",
+   "cause": {
+    "claim": "measured",
+    "text": "Card components with a dark gradient head and white body are nested inside a band-valued container.",
+    "evidence": "screenshots 005, 062, 073"
+   },
+   "acceptance": "The name header renders in the same single style chosen for the Lead Panel (SAUX-01): no white card sits on a dark container."
+  },
+  {
+   "id": "SAUX-03",
+   "andrew_item": "inferred",
+   "screenshot": "tmp/ui-walk/20261002T174112Z/shots/009-BA-US-Thesis-open-PRICE-Price-USD-196-80.png",
+   "surface": "name-overlay key figures",
+   "observed": "Each of the four header cards shows one figure at rest and opens a modal of two or three rows; one of those rows repeats a figure already on the face (Average volume is on the Price modal and on the Trading Technicals card). Four modals for nine figures is an unnecessary layer.",
+   "outcome": "O3",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "C14 (progressive disclosure: open on demand what is not on the face, never repeat it)",
+   "cause": {
+    "claim": "measured",
+    "text": null,
+    "evidence": "screenshots 009, 010, 012"
+   },
+   "acceptance": "The header shows one key-figures card with every figure at rest (price, market cap, enterprise value, net debt, beta, average volume, short interest), or each opened modal adds only figures that are not on the face; no figure appears twice."
+  },
+  {
+   "id": "SAUX-04",
+   "andrew_item": "inferred",
+   "screenshot": "tmp/ui-walk/20261002T174112Z/shots/010-BA-US-Thesis-open-FINANCIALS-Enterprise-va.png",
+   "surface": "financials modal",
+   "observed": "Hovering Enterprise value in the Financials modal shows a purple tooltip with the raw value '187187.819936', unit 'MILLIONS' and source 'bloomberg-dapi'.",
+   "outcome": "O8",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "C8 (indigo is not a tooltip fill); raw codes off the face (FWD-15)",
+   "cause": {
+    "claim": "measured",
+    "text": null,
+    "evidence": "screenshot 010"
+   },
+   "acceptance": "The tooltip shows the formatted value and the source in words ('Bloomberg'), in the standard tooltip style; no unformatted number and no system source id appears."
+  },
+  {
+   "id": "SAUX-05",
+   "andrew_item": "inferred",
+   "screenshot": "tmp/ui-walk/20261002T174112Z/shots/005-BA-US-overlay.png",
+   "surface": "name-overlay",
+   "observed": "The filled purple Refresh button sits on the dark overlay container.",
+   "outcome": "O1",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "C8 (the band carries no primary action: #5F3BE3 on #0A1733 measures 2.72:1)",
+   "cause": {
+    "claim": "measured",
+    "text": null,
+    "evidence": "screenshot 005"
+   },
+   "acceptance": "No #5F3BE3 filled button renders on a dark container; Refresh is a secondary control or sits on a white panel."
+  },
+  {
+   "id": "SAUX-06",
+   "andrew_item": "N2",
+   "screenshot": "tmp/ui-walk/20261002T174112Z/shots/005-BA-US-overlay.png",
+   "surface": "mention timeline",
+   "observed": "The mention timeline is a hand-drawn bar strip: the y-axis runs 0 to 7.6 with no unit, the x-axis prints only the first and last dates, and the caption reads '275 of 275 day(s) rendered (no gap)'.",
+   "outcome": "O2",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "in-pattern chart library; C14",
+   "cause": {
+    "claim": "measured",
+    "text": null,
+    "evidence": "screenshots 005, 110"
+   },
+   "acceptance": "The timeline renders through the portal's in-pattern chart library with a labelled y-axis (articles per day) and month ticks on the x-axis; the 'rendered (no gap)' caption is gone."
+  },
+  {
+   "id": "SAUX-07",
+   "andrew_item": "N2",
+   "screenshot": "tmp/ui-walk/20261002T174112Z/shots/005-BA-US-overlay.png",
+   "surface": "mention timeline",
+   "observed": "Almost every bar is red, the legend's colour for NOT SEARCHED (legend: COMPLETE purple, PARTIAL orange, NOT SEARCHED red), so the chart reads as a failure and the colour encodes search state, not mentions.",
+   "outcome": "O2",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "C6 (no series in a status colour)",
+   "cause": {
+    "claim": "measured",
+    "text": "Bar fill is keyed to the day's search state rather than to the data.",
+    "evidence": "screenshots 005, 007"
+   },
+   "acceptance": "Bars are drawn in one data-family hue; search completeness is carried by a non-status cue (pattern or opacity, with a legend) or in the tooltip; no status colour paints a bar."
+  },
+  {
+   "id": "SAUX-08",
+   "andrew_item": "N3",
+   "screenshot": "tmp/ui-walk/20261002T174112Z/shots/006-BA-US-timeline-day.png",
+   "surface": "mention timeline tooltip",
+   "observed": "Hovering a day shows only its search state ('October 2nd, 2026: partial day -- not the whole story for that day. Searched: Barron's.'): no article count, sources or mention count.",
+   "outcome": "O2",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "C14 (helpText / tooltip as the disclosure vehicle)",
+   "cause": {
+    "claim": "measured",
+    "text": null,
+    "evidence": "screenshot 006"
+   },
+   "acceptance": "Hovering any day shows the date, article count, distinct publishers, mention count and the strongest headline, in the chart library's tooltip."
+  },
+  {
+   "id": "SAUX-09",
+   "andrew_item": "N4",
+   "screenshot": "tmp/ui-walk/20261002T174112Z/shots/005-BA-US-overlay.png",
+   "surface": "mention timeline events",
+   "observed": "Coverage events are a text list under the chart ('COVERAGE EVENTS -- PRESS ONE TO OPEN ITS FIRST DAY' and one underlined line); nothing marks a spike on the chart itself, and VLO's timeline has no event element at all (walker check timeline:no-event-element).",
+   "outcome": "O2",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "in-pattern chart annotations",
+   "cause": {
+    "claim": "measured",
+    "text": null,
+    "evidence": "screenshots 005, 110; findings.json UIW-20261002T174112Z-013"
+   },
+   "acceptance": "Each event appears as a marker on the timeline at its date with a short headline label, chronologically, and pressing the marker opens that day."
+  },
+  {
+   "id": "SAUX-10",
+   "andrew_item": "N4",
+   "screenshot": "tmp/ui-walk/20261002T174112Z/shots/110-VLO-US-timeline-day.png",
+   "surface": "timeline route data",
+   "observed": "The timeline has no earnings-release layer and VLO has no events at all, so a spike with no multi-publisher burst carries no explanation.",
+   "outcome": "O2",
+   "owner_project": "AMGT_RESAPP",
+   "owner_seat": "2.0.0_SA_COO~Z",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "inferred",
+    "text": "The served timeline carries chatter_event bursts (a lead headline per burst) and no earnings dates; a name with no qualifying burst gets no marker.",
+    "evidence": "lib/research/harvest/publication_gold.py GOLD_EVENT_SCHEMA (lead_headline per event); screenshot 110"
+   },
+   "acceptance": "The timeline route serves, per name, dated markers of two kinds -- coverage events with their lead headline and earnings releases with their date -- and a name with no burst still carries its earnings markers."
+  },
+  {
+   "id": "SAUX-11",
+   "andrew_item": "N5",
+   "screenshot": "tmp/ui-walk/20261002T174112Z/shots/007-BA-US-timeline-event.png",
+   "surface": "selected-day and recent news",
+   "observed": "The selected day's articles ('SEPTEMBER 8TH, 2026'S ARTICLES, STRONGEST FIRST') and the recent news ('NEWS -- NEWEST FIRST ...') run together in one column with the same type, rules and colour; recent news sits below the day list and below the spine.",
+   "outcome": "O3",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "C10, C14",
+   "cause": {
+    "claim": "measured",
+    "text": null,
+    "evidence": "screenshot 007"
+   },
+   "acceptance": "Recent news is its own card above the timeline; the selected day opens in its own card or modal, visually distinct from recent news, and the two never share one column."
+  },
+  {
+   "id": "SAUX-12",
+   "andrew_item": "inferred",
+   "screenshot": "tmp/ui-walk/20261002T174112Z/shots/007-BA-US-timeline-event.png",
+   "surface": "recent news data",
+   "observed": "The recent-news block for September 3rd to October 2nd shows one article (WSJ, September 3rd) while the opened day of September 8th, inside that window, lists 6 articles: the two lists disagree on what news exists.",
+   "outcome": "O8",
+   "owner_project": "AMGT_RESAPP",
+   "owner_seat": "2.0.0_SA_COO~Z",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "inferred",
+    "text": "The news block reads a different source or filter from the harvest day dissection.",
+    "evidence": "screenshot 007 (both lists on one screen)"
+   },
+   "acceptance": "The recent-news card lists the newest harvested articles for the name across all publishers in its window; every article the day view shows inside that window also appears there."
+  },
+  {
+   "id": "SAUX-13",
+   "andrew_item": "N6",
+   "screenshot": "tmp/ui-walk/20261002T174112Z/shots/007-BA-US-timeline-event.png",
+   "surface": "day article rows",
+   "observed": "Each article row carries dense system metadata in small text ('named 15 times', 'in headline: yes', 'in lead: yes', coloured tier letters A/B/C).",
+   "outcome": "O3",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "C14",
+   "cause": {
+    "claim": "measured",
+    "text": null,
+    "evidence": "screenshot 007"
+   },
+   "acceptance": "Each article row shows headline, publisher and time at rest; mention count, headline and lead flags and tier open in the same modal pattern as the Market Overview topic analysis modal."
+  },
+  {
+   "id": "SAUX-14",
+   "andrew_item": "inferred",
+   "screenshot": "tmp/ui-walk/20261002T174112Z/shots/007-BA-US-timeline-event.png",
+   "surface": "day status text",
+   "observed": "'NOT SEARCHED FOR THIS COMPANY DIRECTLY -- 6 ARTICLES FOUND IN OTHER SEARCHES' and 'NOT SEARCHED ON THIS DAY' are red #BE2D36 text on the dark container, measured 2.59:1; 'PARTIAL DAY -- NOT THE WHOLE STORY FOR THAT DAY' is orange warning-colour text.",
+   "outcome": "O8",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "C9 (4.5:1 text), C6 (status red is never text without a cue)",
+   "cause": {
+    "claim": "measured",
+    "text": null,
+    "evidence": "findings.json UIW-20261002T174112Z-005/-012 (ratio 2.59, color rgb(190,45,54) on rgb(25,38,67)); screenshots 006, 007, 110"
+   },
+   "acceptance": "No status-coloured text renders below 4.5:1; a search-state note is navy or band ink beside a status icon."
+  },
+  {
+   "id": "SAUX-15",
+   "andrew_item": "N6",
+   "screenshot": "tmp/ui-walk/20261002T180024Z/shots/062-BA-US-Exec-Management.png",
+   "surface": "name-overlay layout",
+   "observed": "The overlay stacks the company description, the posture line, a fund line, the timeline, the event list, the day's articles, the news, a social line and the chatter and breakout figures, all at rest above the tabs (about 1,100px), so every tab's content starts below the fold; the posture line and 'identity as of September 29th, 2026' repeat on the tabs.",
+   "outcome": "O3",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "C14 (one main picture at rest), C10",
+   "cause": {
+    "claim": "measured",
+    "text": null,
+    "evidence": "screenshots 029, 062, 067, 073, 094 (walk 2)"
+   },
+   "acceptance": "At rest the overlay shows the identity, the key figures and the timeline; description, posture, social and chatter/breakout open from tiles or details; at 1440x900 the active tab's first panel starts inside the first viewport."
+  },
+  {
+   "id": "SAUX-16",
+   "andrew_item": "N7",
+   "screenshot": "tmp/ui-walk/20261002T174112Z/shots/003-lead-Trending-Chatter-cursor.png",
+   "surface": "chatter bubbles",
+   "observed": "Chatter draws one bubble per name in a 4-column grid ordered by ticker; September's 57 names take 15 rows (a 4,153px page), bubble sizes are hard to compare, and each label is larger than its bubble.",
+   "outcome": "O4",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "C10 (density), C14",
+   "cause": {
+    "claim": "measured",
+    "text": null,
+    "evidence": "screenshots 002, 003"
+   },
+   "acceptance": "The Chatter face draws a packed collage centred on the largest bubble with sizes falling outward (the Topic Cloud layout), every name of the period visible in one panel at 1440x900 without scrolling."
+  },
+  {
+   "id": "SAUX-17",
+   "andrew_item": "inferred",
+   "screenshot": "tmp/ui-walk/20261002T174112Z/shots/003-lead-Trending-Chatter-cursor.png",
+   "surface": "chatter bubble labels",
+   "observed": "Bubble labels clip at the panel edge and run into neighbours (a left-edge label loses its first letters; two adjacent labels print as one run-on line).",
+   "outcome": "O4",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "C13 (no clip without a recovery path)",
+   "cause": {
+    "claim": "measured",
+    "text": null,
+    "evidence": "screenshot 003"
+   },
+   "acceptance": "No bubble label is clipped or overlaps another; a long name wraps or shows in full on hover."
+  },
+  {
+   "id": "SAUX-18",
+   "andrew_item": "N8",
+   "screenshot": "tmp/ui-walk/20261002T174112Z/shots/002-lead-Trending-Chatter.png",
+   "surface": "chatter bubbles colour",
+   "observed": "Every bubble is the same blue; the face carries no sentiment.",
+   "outcome": "O4",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "C7 (an ordered or diverging scale from the data family)",
+   "cause": {
+    "claim": "measured",
+    "text": null,
+    "evidence": "screenshots 002, 003"
+   },
+   "acceptance": "Each bubble's fill encodes the name's article sentiment for the period on the Topic Cloud sentiment scale, with a legend; a name with no score shows a neutral fill and says so in its tooltip."
+  },
+  {
+   "id": "SAUX-19",
+   "andrew_item": "N8",
+   "screenshot": "tmp/ui-walk/20261002T174112Z/shots/002-lead-Trending-Chatter.png",
+   "surface": "news-scanner sentiment data",
+   "observed": "No sentiment value is served for harvested articles or per name, so the page has nothing to colour by.",
+   "outcome": "O5",
+   "owner_project": "AMGT_HARVST",
+   "owner_seat": "2.0.0_SA_COO~H",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "inferred",
+    "text": "The harvest gold carries article mentions and events with no sentiment column; FinBERT scoring exists for Topic Cloud and not for the harvest (to be confirmed by the sentiment fork's census).",
+    "evidence": "lib/research/harvest/publication_gold.py GOLD_MENTION_SCHEMA and GOLD_EVENT_SCHEMA (no sentiment field)"
+   },
+   "acceptance": "Every harvested article carries a FinBERT sentiment score with the scorer named, and the chatter route answers per name and period an article count plus a sentiment aggregate built from those scores."
+  },
+  {
+   "id": "SAUX-20",
+   "andrew_item": "inferred",
+   "screenshot": "tmp/ui-walk/20261002T174112Z/shots/004-lead-Trending-Price.png",
+   "surface": "price bars",
+   "observed": "The Price face draws all 94 names as bars (a 2,618px page) and clips ten names with no visible full form (for example the Taiwan Semiconductor ADR and International Container Terminal Services).",
+   "outcome": "O4",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "C13, C14",
+   "cause": {
+    "claim": "measured",
+    "text": null,
+    "evidence": "screenshot 004; findings.json UIW-20261002T174112Z-002"
+   },
+   "acceptance": "At rest the Price face shows the top movers each side (gainers and losers) with the full list on demand; no name is clipped without a title or hover revealing it."
+  },
+  {
+   "id": "SAUX-21",
+   "andrew_item": "inferred",
+   "screenshot": "tmp/ui-walk/20261002T174112Z/shots/004-lead-Trending-Price.png",
+   "surface": "price bars window",
+   "observed": "The Price face prints moves such as +34.0% and -18.0% with the caption 'Showing the Trending x Price list (movement is measured)' but never states the window the move is measured over.",
+   "outcome": "O7",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "a percentage carries its base and window",
+   "cause": {
+    "claim": "measured",
+    "text": null,
+    "evidence": "screenshot 004"
+   },
+   "acceptance": "The Price face states its window in words ('change over the last N days to <date>'), and the window follows the period preset (SAUX-27)."
+  },
+  {
+   "id": "SAUX-22",
+   "andrew_item": "inferred",
+   "screenshot": "tmp/ui-walk/20261002T174112Z/shots/005-BA-US-overlay.png",
+   "surface": "price move disagreement",
+   "observed": "The Lead Panel lists The Boeing Co at -6.5% (row 41 of 94 on Trending x Price), while the name's overlay reads 'BREAKOUT (PRICE) #72 | -4.71%, up 16 places'; both say ranked October 1st, 2026.",
+   "outcome": "O8",
+   "owner_project": "AMGT_RESAPP",
+   "owner_seat": "2.0.0_SA_COO~Z",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "inferred",
+    "text": "The face shows the Trending measure and the overlay the Breakout measure, and neither labels its measure or window.",
+    "evidence": "screenshots 004, 005; lead-lists.json row 41 'The Boeing Co -6.5%'"
+   },
+   "acceptance": "The overlay shows the same measure and window as the face the name was opened from, or labels each measure and window; one name never shows two unlabelled moves."
+  },
+  {
+   "id": "SAUX-23",
+   "andrew_item": "N9",
+   "screenshot": "tmp/ui-walk/20261002T180024Z/shots/073-BA-US-Model.png",
+   "surface": "model what-changed",
+   "observed": "'WHAT MOVED BETWEEN TWO VERSIONS' sits at the bottom of the Model tab, under a 19-line plain list of version timestamps; it is plain text lines ('Enterprise value: USD 194B to USD 187B') with no signed change, no percentage and no emphasis; it defaults to the oldest against the newest version, and other pairs often read '0 changed'.",
+   "outcome": "O6",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "C2 (a sign on every change value), C14",
+   "cause": {
+    "claim": "measured",
+    "text": null,
+    "evidence": "walk 2 screenshots 073, 083"
+   },
+   "acceptance": "'What changed' is its own card near the top of the Model tab: a summary line (added, changed), then a table of changed figures with before, after, signed change and percentage change, defaulting to the latest two versions that differ; the version list collapses into the picker."
+  },
+  {
+   "id": "SAUX-24",
+   "andrew_item": "inferred",
+   "screenshot": "tmp/ui-walk/20261002T180024Z/shots/073-BA-US-Model.png",
+   "surface": "model version times",
+   "observed": "Version times print in UTC ('The version of October 2nd, 2026, 15:49 UTC') while the rest of the page prints ET.",
+   "outcome": "O8",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "one date and time format per page; times to Andrew in ET",
+   "cause": {
+    "claim": "measured",
+    "text": null,
+    "evidence": "walk 2 screenshot 073"
+   },
+   "acceptance": "Every time on the page prints in ET in one format."
+  },
+  {
+   "id": "SAUX-25",
+   "andrew_item": "inferred",
+   "screenshot": "tmp/ui-walk/20261002T180024Z/shots/073-BA-US-Model.png",
+   "surface": "model provenance",
+   "observed": "'WHERE EACH INPUT CAME FROM' says '1 of 6 inputs have run' and that Filings, News, Social and Web have 'no source set up yet', while the same page shows a thesis read from the 10-K and harvested news.",
+   "outcome": "O8",
+   "owner_project": "AMGT_RESAPP",
+   "owner_seat": "2.0.0_SA_COO~Z",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "inferred",
+    "text": "The provenance block reads a per-name input registry that the filing and harvest paths do not update.",
+    "evidence": "walk 2 screenshot 073"
+   },
+   "acceptance": "The provenance block names each input that fed the page (filings, harvested news, Bloomberg) with its last run, consistent with what the page shows, behind a details toggle."
+  },
+  {
+   "id": "SAUX-26",
+   "andrew_item": "inferred",
+   "screenshot": "tmp/ui-walk/20261002T180024Z/shots/073-BA-US-Model.png",
+   "surface": "model system facts",
+   "observed": "The Model tab prints system facts on its face: 'Showing 147 fiscal figures from the model block', 'No year-on-year growth rows: the model block serves none and this page computes none', '19 versions have landed; a refresh adds a version and never overwrites an earlier one', 'Re-running one input on its own is not available on this page yet'.",
+   "outcome": "O8",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "C14 (system facts one click away)",
+   "cause": {
+    "claim": "measured",
+    "text": null,
+    "evidence": "walk 2 screenshot 073"
+   },
+   "acceptance": "None of these sentences renders at rest; any that remains sits behind a details toggle in reader words."
+  },
+  {
+   "id": "SAUX-27",
+   "andrew_item": "N10",
+   "screenshot": "tmp/ui-walk/20261002T174112Z/shots/002-lead-Trending-Chatter.png",
+   "surface": "lead-panel period",
+   "observed": "Chatter's period is a calendar month stepped with 'Earlier month' / 'Later month' (October reads 'partial month: still being collected'); the Price face has no period control at all.",
+   "outcome": "O7",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "in-pattern period presets (Market Overview '90D 1Y 3Y'; Advisor Intelligence 'Window 1Y 3Y Max')",
+   "cause": {
+    "claim": "measured",
+    "text": null,
+    "evidence": "screenshots 002, 004; reference screenshots 207, 212"
+   },
+   "acceptance": "Both faces offer rolling 30D / 90D / 365D presets in the in-pattern segmented control, default 30D, and each caption names the window."
+  },
+  {
+   "id": "SAUX-28",
+   "andrew_item": "N10",
+   "screenshot": "tmp/ui-walk/20261002T174112Z/shots/002-lead-Trending-Chatter.png",
+   "surface": "lead-panel period data",
+   "observed": "The chatter counts are served per calendar month, so a rolling window cannot be drawn.",
+   "outcome": "O7",
+   "owner_project": "AMGT_RESAPP",
+   "owner_seat": "2.0.0_SA_COO~Z",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "inferred",
+    "text": "The lead-panel chatter route aggregates the harvest gold by calendar month.",
+    "evidence": "screenshot 002 caption 'Articles collected per month'"
+   },
+   "acceptance": "The lead-panel routes answer chatter counts (and the SAUX-19 sentiment aggregate) and price moves for rolling 30, 90 and 365-day windows ending at the last trading day."
+  },
+  {
+   "id": "SAUX-29",
+   "andrew_item": "inferred",
+   "screenshot": "tmp/ui-walk/20261002T174112Z/shots/002-lead-Trending-Chatter.png",
+   "surface": "security names",
+   "observed": "Names print in three formats: vendor capitals with share-class codes ('ALPHABET INC-CL A', 'ROCHE HOLDING AG-GENUSSCHEIN'), title case ('The Boeing Co'), and 'BOEING CO/THE (subject)' on Peers.",
+   "outcome": "O8",
+   "owner_project": "AMGT_RESAPP",
+   "owner_seat": "2.0.0_SA_COO~Z",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": null,
+   "cause": {
+    "claim": "inferred",
+    "text": "Each face prints the vendor name field it read, with no single display name served.",
+    "evidence": "screenshots 002, 004, 067 (walk 2)"
+   },
+   "acceptance": "Every face prints one display name per security, in title case, with no share-class code."
+  },
+  {
+   "id": "SAUX-30",
+   "andrew_item": "inferred",
+   "screenshot": "tmp/ui-walk/20261002T174112Z/shots/001--security-analysis-load.png",
+   "surface": "page wording",
+   "observed": "System wording on the face: the page subtitle 'Universe discovery, ranked server-side, above a per-name ...', 'Back to universe', '275 of 275 day(s) rendered (no gap)', 'no served drafted sentence carries this passage on this bundle', 'The drafted document does not say how many claims were held back uncited', 'tenure against the pool ... in a union of 250', 'Export rich text (.md)'.",
+   "outcome": "O8",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "C14; reader words",
+   "cause": {
+    "claim": "measured",
+    "text": null,
+    "evidence": "screenshots 001, 005, 023; walk 2 062"
+   },
+   "acceptance": "None of the listed strings renders; each is replaced by reader words or moved behind a details toggle."
+  },
+  {
+   "id": "SAUX-31",
+   "andrew_item": "inferred",
+   "screenshot": "tmp/ui-walk/20261002T174112Z/shots/005-BA-US-overlay.png",
+   "surface": "unconnected fields",
+   "observed": "Fields with no source print as lines: 'Social: no source measured', 'MOST-DISCUSSED: NOT MEASURED', 'Trend is not in the data yet', and 'No profile (no match found)' on 8 of 12 officers.",
+   "outcome": "O8",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "C12 (one designed empty state per panel)",
+   "cause": {
+    "claim": "measured",
+    "text": null,
+    "evidence": "screenshots 005, 012; walk 2 062"
+   },
+   "acceptance": "A field with no source is not printed as a line; a panel with nothing to show renders one C12 empty state."
+  },
+  {
+   "id": "SAUX-32",
+   "andrew_item": "inferred",
+   "screenshot": "tmp/ui-walk/20261002T180024Z/shots/062-BA-US-Exec-Management.png",
+   "surface": "exec management order",
+   "observed": "Officers are listed alphabetically by surname, so the chief executive sits in row 7 of 12.",
+   "outcome": "O8",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "rank by importance, not alphabet",
+   "cause": {
+    "claim": "measured",
+    "text": null,
+    "evidence": "walk 2 screenshot 062"
+   },
+   "acceptance": "Officers list the chief executive first, then the chief financial officer, then the rest by role rank."
+  },
+  {
+   "id": "SAUX-33",
+   "andrew_item": "inferred",
+   "screenshot": "tmp/ui-walk/20261002T174112Z/shots/005-BA-US-overlay.png",
+   "surface": "money format",
+   "observed": "Money prints as 'USD 1,234' and '$1,234' on one page.",
+   "outcome": "O8",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "one money format per page",
+   "cause": {
+    "claim": "measured",
+    "text": null,
+    "evidence": "findings.json UIW-20261002T174112Z-004 (196 steps)"
+   },
+   "acceptance": "Every money figure on the page uses one format."
+  },
+  {
+   "id": "SAUX-34",
+   "andrew_item": "inferred",
+   "screenshot": "tmp/ui-walk/20261002T174112Z/shots/009-BA-US-Thesis-open-PRICE-Price-USD-196-80.png",
+   "surface": "market cap vintages",
+   "observed": "Three market caps for one name show on one page with no reconciliation: USD 156B (Price modal), 159,623 (USD mm, Peers, as of September 24th) and 'USD 162B to USD 156B' (Model what-changed).",
+   "outcome": "O8",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "every figure carries its as-of",
+   "cause": {
+    "claim": "measured",
+    "text": "Different vintages of the same field, labelled unevenly.",
+    "evidence": "screenshot 009; walk 2 screenshots 067, 073"
+   },
+   "acceptance": "Each market-cap figure prints its as-of date beside it, or the page reads one vintage."
+  },
+  {
+   "id": "SAUX-35",
+   "andrew_item": "inferred",
+   "screenshot": "tmp/ui-walk/20261002T174112Z/shots/029-BA-US-Exec-Management.png",
+   "surface": "account menu",
+   "observed": "The avatar's Settings / Log Out menu stays open after Escape and across later steps; while it was open the walker's tab presses failed.",
+   "outcome": "O8",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "C11 (keyboard dismissal)",
+   "cause": {
+    "claim": "inferred",
+    "text": "The menu does not close on Escape; that it blocks the tab bar is inferred from the failed presses (walk 2 reached every tab with the menu never opened).",
+    "evidence": "screenshots 023, 029, 069 (menu open after Escape); findings.json UIW-20261002T174112Z-008..011"
+   },
+   "acceptance": "Escape closes the account menu, and with the menu open a click on a tab still switches the tab."
+  },
+  {
+   "id": "SAUX-36",
+   "andrew_item": "inferred",
+   "screenshot": "tmp/ui-walk/20261002T174112Z/shots/004-lead-Trending-Price.png",
+   "surface": "price details raw code",
+   "observed": "The Price face's Details disclosure prints 'generation 20261002T111010Z-a89fcf3c5f42 | state COMPLETE | 94 row(s) committed | coverage vintage bloomberg-dapi-boxsid'.",
+   "outcome": "O8",
+   "owner_project": "DSGN_AMGTV1",
+   "owner_seat": "2.0.0_SA_COO~D",
+   "status": "new",
+   "known_ref": null,
+   "design_rule": "raw codes off the face (FWD-15); C14 permits the details vehicle, not the code",
+   "cause": {
+    "claim": "measured",
+    "text": null,
+    "evidence": "findings.json UIW-20261002T174112Z-001"
+   },
+   "acceptance": "The Details disclosure states the price list's date and source in words, with no generation id or system state token."
+  }
+ ]
+}
