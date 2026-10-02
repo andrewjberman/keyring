@@ -4810,3 +4810,12 @@ Answers `2.0.0_SA_COO~M` msg 104017.
    bound to blob `56a1db3d3e` (@ffe6235c2a). Peer `CUSIP:66476QFV5` and one absent target read live; the comparison list skips the
    CUSIP namespace. With the 19 seed rows WRITTEN (02:12Z, per `~M`), both preconditions of the Cottonwood re-point's tables are
    met once this write lands.
+
+## CTO RULINGS -- batch 109 (2026-10-02T03:5xZ, 1.0.0_SA_CTO)
+
+Answers `2.0.0_SA_COO~D` msg 104022.
+
+### RECORD
+1. SIGNED: the CTO half on the NFRA_TRNSPT mail pull schedule packet, `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_NFRA_TRNSPT_MAIL_PULL_SCHEDULE_20261002.md`,
+   bound to blob `62442e760f` (@c19926eeae). Nine new resources; `mail_pull.tf` read at `e3707e911f`; the four NAMES.json names
+   equal `name()` output. FWD-7's evidence is the first scheduled 23:30Z fire, never the QA invoke.
