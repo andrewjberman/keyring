@@ -16718,6 +16718,51 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
  "spec_asserts": "AMGT-ak-5 AC1 expects every test in lib/research/posture/ and lib/research/api/tests/ to pass and exit=0 from the issued worktree, a full checkout cut from f234d5aa12.",
  "world_is": "The issued worktree's portal directory is empty (submodule not initialised), so a test whose setup reads portal/src/pages/SecurityAnalysis/__harness__/tabsFixture.BA_US_Equity.json errors before running; AC1 as written is FAIL (exit=1) in this tree on 3 environment errors and PASS on every test that can run. Not measured: whether the same 3 tests pass in a worktree with portal populated at 24646bcab9.",
  "notes": "disarm_owner 2.0.0_SA_COO~Z: either populate portal in the worktree or re-run AC1 from a tree that carries it. Worker did not touch portal/ (outside <paths>)."
+},
+{
+ "id": "AMGT_RESAPP-Z-W202-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~202",
+ "surfaced_at": "2026-10-02T12:00:00Z",
+ "one_line": "AMGT-ak-4 item 1 asks to fix the roster parser, but the parser at the issuance commit already reads VLO's table into full names, full titles and a separate age; the defect lives only in the STORED M-1 object, written 2026-09-18 by an older parser.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "lib/research/management/roster.py@f234d5aa12 _parse_narrative + _split_trailing_age (landed by rk-46, 7e28fcb73d): roster.derive_roster on the stored source s3://opal-data-harvest/filings/v1/VLO_US_Equity/000162828026011499.source.json returns 5 officers, the CFO 'Harminder S. \"Homer\" Bhullar' | 'Senior Vice President and Chief Financial Officer' age 45, no role ends in a number.",
+   "The stored object s3://opal-data-harvest/management/v1/VLO_US_Equity/2026-09-18.json carries parser_version opal-management-roster/1.0.0 (not bumped by rk-46) and its officers have no `age` or `name_ascii` key, which the current parser always writes: it predates the fix. Census of 17 per-name M-1 objects: 1 defective (VLO), 0 unreparseable; BA, COST, HD re-parse to the same name/role/role_start as stored.",
+   "lib/research/management/tests/test_management.py TitleIsNeverANameTest and AgeInRoleTest already pin the VLO shape at the base."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "AMGT-ak-4 item 1: find the parser and fix it so a name is a person's name, the role is the full title and an age is never appended to the role.",
+ "world_is": "No parser code change was needed or made. The worker added lib/research/management/officer_plan.py (the read-only census + re-parse plan builder) and tests/test_officer_plan.py (VLO real-shape fixture, BA shape unchanged, plan builder). The served defect clears only when ak-6 writes the plan's `after` officers to the VLO M-1 object. PARSER_VERSION was left at 1.0.0, so a stored object cannot be told apart from a re-parsed one by that field.",
+ "notes": "disarm_owner 2.0.0_SA_COO~Z. INERT: the plan is emitted and AC2 passes against it; nothing is harmed by leaving this."
+},
+{
+ "id": "AMGT_RESAPP-Z-W202-S2",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~202",
+ "surfaced_at": "2026-10-02T12:10:00Z",
+ "one_line": "The `portal` submodule is an empty directory in the worker worktree C:/tmp/r61-202, so lib/research/api/tests/test_print_format_rich.py cannot read portal/src/pages/SecurityAnalysis/__harness__/tabsFixture.BA_US_Equity.json: AC1's literal invocation reads 3 errors and exit=1 in a freshly cut worktree.",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "In C:/tmp/r61-202 (branch wk-AMGT_RESAPP-202, cut from f234d5aa12): `git ls-tree HEAD portal` = 160000 commit 24646bcab959635e2a08076f3ab1ab6257ea9457; `ls portal` prints nothing.",
+   "AC1 invocation run from the worktree root: 476 passed, 2 skipped, 3 errors (the three test_print_format_rich.py tests, FileNotFoundError on C:\tmp\r61-202\\portal\\src\\pages\\SecurityAnalysis\\__harness__\tabsFixture.BA_US_Equity.json), exit=1. The same invocation run in the shared tree (portal populated at a730d8ce) read 478 passed, exit=0, but that run was against the shared tree and did not contain this worker's new tests.",
+   "Every worker whose AC1 includes lib/research/api/tests/ in a worktree with an unpopulated portal gitlink meets the same 3 errors; portal/ is outside this order's <paths>, so the worker did not populate it."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "AMGT-ak-4 AC1: every test passes, new tests included, and exit=0 (lib/research/management/tests/ plus lib/research/api/tests/).",
+ "world_is": "Every test under lib/research/management/tests/ (the new test_officer_plan.py included) passes; the only non-passing tests are the 3 fixture reads of the unpopulated portal submodule, which no change under this order's paths can fix. The 2 skipped tests were not examined.",
+ "notes": "disarm_owner 2.0.0_SA_COO~Z: populate portal in the worktree (sparse cone for src/pages/SecurityAnalysis/__harness__) or grade AC1 in a tree that carries it. Surfaced, not adjudicated."
 }
 ]
 ```
