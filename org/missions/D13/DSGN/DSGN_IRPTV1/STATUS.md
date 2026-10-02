@@ -96,20 +96,7 @@ live press stays Andrew's (walk-2 write guard).
 00000. ~~Item 70 (signed-in walk of the picker)~~ DONE; its three faults LANDED as item 71.
 0000. ~~Item 68 (W2-04)~~ LANDED; ~~W2-05 (item 69)~~ LANDED. Item 68's read: **the composer's comparison list from the live catalogue** (2.0.0_SA_COO~Y 104080: `GET /api/scoped/investor-reporting/analysis/comparisons?selected_tenant=`, data {catalogue_version, entries [{key, label, ticker, name_source}]}; contract `_contracts/ComparisonCatalogue.schema.json`); un-parks W2-04 / W2-05 and row S40's portal half; then its walk.
 
-0. **IRPT_DASHBD workstream F, round-1 cell = FWD-1 hop 5, CUT HERE as a closer-drive item** (CTO 103252 + 103261: L4-R ADMITTED, CVO half @9914eab4f4, review `org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_IRPT_DASHBD_v0.1_20260930.md`; PRD v0.1 @2cb022f549, C-LEASE + ruling 6.7). Review condition carried: today's lease surface covers the whole `portal/src/pages/InvestorReporting` tree, so the NEXT DSGN_IRPTV1 lease arm (the CTO's) excludes `tabs/reporting/` + `dashboard/` or holds; under FAST this seat builds F's items itself either way. Under this live FAST
-   lease the Performance chart reading `series` (honest label "Total return, before advisory fees" + method version, C-HONESTY
-   coverage sentences) is built HERE as a closer-drive item reading FWD-1 and C-SEAM. PARKED until workstream B
-   (`2.0.0_SA_COO~P`) lands `org/standards/IRPT_DASHBD_SERIES_CONTRACT.json` and a served `series.json.gz` (measured 14:1xZ:
-   no contract file, no `dashboard/` dir, no IRPT_DASHBD task order, CVO half of the PRD unsigned); "any hop fed by a fixture
-   fails the outcome", so nothing is built against an invented shape. Write surface when it un-parks:
-   `tabs/reporting/` and the new `dashboard/` only.
-   **Pre-staged (item 44, 18:3xZ):** the build plan `deliverables/2.0.0_SA_COO~D/item44/IRPT_DASHBD_HOP5_BUILD_PLAN.md`
-   (five files, their tests, the real-run bar). Un-parks on three pieces of B's chain: the SERIES contract and the thread
-   account's files (DB-b-2, worker spawns after DB-b-1's gold) and the read route (DB-b-4). Items 1-3 of the plan start the tick
-   the contract file lands.
-   **Items 3, 2, 1 and 4 LANDED (items 47, 48, 51, 52).** Item 5 (the per-account switch in `ReportingTab.tsx`) and the one
-   real signed-in run wait on the served `series.json.gz` + `manifest.json` (TO-DB-b-2) and the read route (TO-DB-b-4), both
-   `pending` at 2.0.0_SA_COO~P's chain. F's own next-list: `org/missions/D9/IRPT/IRPT_DASHBD/STATUS~D.md`.
+0. ~~IRPT_DASHBD workstream F, FWD-1 hop 5~~ BUILT AND RUN: plan items 1-5 landed (items 47, 48, 51, 52; item 5 at 39b7a0fc), the signed-in runs 06:26Z and 08:13Z, CTO batch 128's picker as item 72. F's remaining line (a SERIES contract guard field) is in `org/missions/D9/IRPT/IRPT_DASHBD/STATUS~D.md`.
 0a. ~~The client search answers slowly~~ page side LANDED (item 56). If a typed search is slow again, the remaining time is
    the directory function's: one row for 2.0.0_SA_COO~P (batch 67 item 7), never a page workaround.
 0b. **Analysis thread, hop 10 -- DONE 07:11Z and 07:15Z** (`REAL_RUNS_20261001.md` section 2: the named request opened Ready
@@ -135,8 +122,8 @@ Blocked on another seat (not cut here): W2-13 industry
 sub-line (served field); W2-12 / W2-14 (the narrowed class release under CTO 103168, `2.0.0_SA_COO~M`); W2-15 class
 totals LANDED on the page (item 53; the served half is 2.0.0_SA_COO~M's release); W2-06's words half LANDED
 (item 50); W2-06's one-press resubmit ("offers the one action") is not built: the words name the act, the composer is on the
-same tab; W2-07's other half (why a job needs attention, IRPT_BCKEND); row S40's API-layer half (the operation table in `src/api/endpoints/investor-reporting.ts`, outside the lease; parked at
-the CTO).
+same tab; W2-07's other half (why a job needs attention, IRPT_BCKEND); ~~row S40's API-layer half~~ LANDED (item 80). All blocks sent to
+1.0.0_SA_CTO at 12:38Z (RE 104232), with two asks: derive row S53's pin list here, and un-park DSGN_REBRND round 3.
 
 ## Open at Andrew
 
