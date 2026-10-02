@@ -1,0 +1,190 @@
+{
+ "kind": "COMPLETION_GRADES",
+ "schema_version": "1.0",
+ "project": "DSGN_AMGTV1",
+ "round": 26,
+ "graded_by": "1.0.0_SA_CTO~Z",
+ "graded_utc": "2026-10-02T14:1xZ",
+ "report_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/ledger/COMPLETION_REPORT.round26.json@a8a6d7c217",
+ "slug_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v25.md@8c41d49b9d",
+ "analysis_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/ledger/ROUND_ANALYSIS.round23.md",
+ "served_ref": "portal PROD f76b02acb6 (portal-v2.1.194) = DEV fa529337, containing 0ab75973; Deploy to Production 37014885102 success; read by 1.0.0_SA_CTO~Z via ls-remote + merge-base",
+ "tally": {
+  "REALIZED": 10,
+  "NOT_REALIZED": 0,
+  "NOT_EVALUATED": 13,
+  "RETIRED": 1
+ },
+ "closed": false,
+ "rows": [
+  {
+   "fwd_id": "FWD-1",
+   "verdict": "NOT_EVALUATED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v25.md@8c41d49b9d",
+   "state_observed": "EXERCISED (DEV build, byte-equal SecurityAnalysis to PROD)",
+   "note": "All limbs but the DONE WHEN's 'on the live product' are read: Valero by name, four cards, Financials, Thesis, the machine-draft recommendation, cited 10-K. The PROD-URL signed-in walk is owed. The walker refuses non-localhost and no seat holds a PROD sign-in. A DEV walk plus the deploy run is NOT substituted: a PROD-only failure (domain auth, env config) is exactly what that limb exists to catch. Closes on Andrew's own signed-in read of /security-analysis on PROD (his login)."
+  },
+  {
+   "fwd_id": "FWD-2",
+   "verdict": "NOT_EVALUATED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v25.md@8c41d49b9d",
+   "state_observed": "EXERCISED (bars) / not read (hover)",
+   "note": "0 of 94 bars by ticker on PROD (RESAPP B1 served; DSGN r23 A3). The hover-identity limb is unread."
+  },
+  {
+   "fwd_id": "FWD-3",
+   "verdict": "RETIRED",
+   "artifact_ref": "PRD v0.6",
+   "state_observed": "--",
+   "note": "Retired at v0.6; not graded."
+  },
+  {
+   "fwd_id": "FWD-4",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/ledger/ROUND_ANALYSIS.round13.md + org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v25.md@8c41d49b9d",
+   "state_observed": "EXERCISED",
+   "note": "CTO REALIZED at rounds 11-13; standing, and PROD SecurityAnalysis is byte-equal to the walked build (v25)."
+  },
+  {
+   "fwd_id": "FWD-5",
+   "verdict": "NOT_EVALUATED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v25.md@8c41d49b9d",
+   "state_observed": "EXERCISED (BA dated line) / not read",
+   "note": "The word-cloud and 'own publications first' limbs are unread. A cold day reads '[no headline]' by design (RESAPP track B) until track C (RESAPP r62 addendum @40e1d622aa)."
+  },
+  {
+   "fwd_id": "FWD-6",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v25.md@8c41d49b9d",
+   "state_observed": "EXERCISED",
+   "note": "Three cards; sentences with evidence; citations in words; the recommendation labelled a machine draft."
+  },
+  {
+   "fwd_id": "FWD-7",
+   "verdict": "NOT_EVALUATED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v25.md@8c41d49b9d",
+   "state_observed": "EXERCISED (BA, VLO after B3)",
+   "note": "The VLO officer parse is fixed (B3 served). The DONE WHEN's own case, a filing with NO officers, is unread."
+  },
+  {
+   "fwd_id": "FWD-8",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v25.md@8c41d49b9d",
+   "state_observed": "EXERCISED",
+   "note": "The Peers subject row equals the header; the absent reasons are in reader words, one clause per class (r24-26)."
+  },
+  {
+   "fwd_id": "FWD-9",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/ledger/ROUND_ANALYSIS.round13.md + org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v25.md@8c41d49b9d",
+   "state_observed": "EXERCISED",
+   "note": "CTO REALIZED; standing."
+  },
+  {
+   "fwd_id": "FWD-10",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/ledger/ROUND_ANALYSIS.round13.md + org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v25.md@8c41d49b9d",
+   "state_observed": "EXERCISED",
+   "note": "CTO REALIZED; standing."
+  },
+  {
+   "fwd_id": "FWD-11",
+   "verdict": "NOT_EVALUATED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v25.md@8c41d49b9d",
+   "state_observed": "EXERCISED (no code on the face; ruling 3a)",
+   "note": "No raw code, id or path on the visible face (FWD-11 v0.8). The side-by-side person read against Market, Positioning and Philosophy is in no artifact."
+  },
+  {
+   "fwd_id": "FWD-12",
+   "verdict": "NOT_EVALUATED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/ledger/ROUND_ANALYSIS.round13.md",
+   "state_observed": "APPLIED (DEV) -> promoted",
+   "note": "CTO r13 graded it 'MET on DEV, NOT REALIZED until the portal promotion'. The promotion is done (PROD f76b02acb6), but no seat has re-read the served artifact since, so the limb is uncovered. FWD-13 reads at v0.7 (mnemonic in data-mnemonic)."
+  },
+  {
+   "fwd_id": "FWD-13",
+   "verdict": "NOT_EVALUATED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/ledger/ROUND_ANALYSIS.round13.md",
+   "state_observed": "APPLIED (DEV) -> promoted",
+   "note": "CTO r13 graded it 'MET on DEV, NOT REALIZED until the portal promotion'. The promotion is done (PROD f76b02acb6), but no seat has re-read the served artifact since, so the limb is uncovered. FWD-13 reads at v0.7 (mnemonic in data-mnemonic)."
+  },
+  {
+   "fwd_id": "FWD-14",
+   "verdict": "NOT_EVALUATED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/ledger/ROUND_ANALYSIS.round13.md",
+   "state_observed": "APPLIED (DEV) -> promoted",
+   "note": "CTO r13 graded it 'MET on DEV, NOT REALIZED until the portal promotion'. The promotion is done (PROD f76b02acb6), but no seat has re-read the served artifact since, so the limb is uncovered. FWD-13 reads at v0.7 (mnemonic in data-mnemonic)."
+  },
+  {
+   "fwd_id": "FWD-15",
+   "verdict": "NOT_EVALUATED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/ledger/ROUND_ANALYSIS.round13.md",
+   "state_observed": "APPLIED (DEV) -> promoted",
+   "note": "CTO r13 graded it 'MET on DEV, NOT REALIZED until the portal promotion'. The promotion is done (PROD f76b02acb6), but no seat has re-read the served artifact since, so the limb is uncovered. FWD-13 reads at v0.7 (mnemonic in data-mnemonic)."
+  },
+  {
+   "fwd_id": "FWD-18",
+   "verdict": "NOT_EVALUATED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/ledger/ROUND_ANALYSIS.round13.md",
+   "state_observed": "APPLIED (DEV) -> promoted",
+   "note": "CTO r13 graded it 'MET on DEV, NOT REALIZED until the portal promotion'. The promotion is done (PROD f76b02acb6), but no seat has re-read the served artifact since, so the limb is uncovered. FWD-13 reads at v0.7 (mnemonic in data-mnemonic)."
+  },
+  {
+   "fwd_id": "FWD-16",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v25.md@8c41d49b9d",
+   "state_observed": "EXERCISED",
+   "note": "Present columns only; an 'Absent columns (N)' disclosure with each reason in reader words (FWD-16 stands, r23 ruling 1)."
+  },
+  {
+   "fwd_id": "FWD-17",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v25.md@8c41d49b9d",
+   "state_observed": "EXERCISED",
+   "note": "The comparable sits beside the verdict; cites are folded."
+  },
+  {
+   "fwd_id": "FWD-19",
+   "verdict": "NOT_EVALUATED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/ledger/ROUND_ANALYSIS.round13.md",
+   "state_observed": "--",
+   "note": "CTO r13 graded it NOT REALIZED. It has not been re-read since, so it is NOT_EVALUATED rather than carried forward as a verdict."
+  },
+  {
+   "fwd_id": "FWD-20",
+   "verdict": "NOT_EVALUATED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/ledger/ROUND_ANALYSIS.round13.md",
+   "state_observed": "--",
+   "note": "CTO r13 graded it NOT REALIZED. It has not been re-read since, so it is NOT_EVALUATED rather than carried forward as a verdict."
+  },
+  {
+   "fwd_id": "FWD-21",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v25.md@8c41d49b9d",
+   "state_observed": "EXERCISED",
+   "note": "One bubble per name; the caption; the month cursor."
+  },
+  {
+   "fwd_id": "FWD-22",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v25.md@8c41d49b9d",
+   "state_observed": "EXERCISED",
+   "note": "Ranked horizontal bars, longest first, signed percent, 94 names."
+  },
+  {
+   "fwd_id": "FWD-23",
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v25.md@8c41d49b9d",
+   "state_observed": "EXERCISED",
+   "note": "The card family matches /philosophy (v18 g-2, g-5)."
+  },
+  {
+   "fwd_id": "FWD-24",
+   "verdict": "NOT_EVALUATED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v25.md@8c41d49b9d",
+   "state_observed": "EXERCISED (header cells)",
+   "note": "The '0 not served beside a positive control' census is unread."
+  }
+ ],
+ "closed_reason": "NOT CLOSED: 13 NOT_EVALUATED; CLOSED requires every grade REALIZED"
+}
