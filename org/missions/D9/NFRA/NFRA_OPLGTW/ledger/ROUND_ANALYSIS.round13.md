@@ -40,7 +40,7 @@ OG-rl-3 serves no OPLGTW FWD. It serves the laptop's LDO-001 and is graded by it
   post, inside his 20:30-21:30Z window. It exercises ChannelMessage.Send.
 - **The chat-message POST stays DEFERRED.** No `sent_id` record exists on `/hx/teams/chats/{id}/messages`, so
   Chat.ReadWrite's send remains UNEXERCISED until the first chat send.
-- **The GET verbs** hold across 141 `chats` reads, 15 chat message-list reads and 1 channel-replies read, all `ok`. The 10 `denied`
+- **The GET verbs** hold across 141 `chats` reads, 15 chat message-list reads and 1 channel-replies read, all `ok`. The 9 `denied`
   records are probes with no bearer or a wrong bearer, or synthetic ids.
 
 **The FWD grades are unchanged from round 12:** 0 REALIZED, 3 NOT_REALIZED, 5 HELD, 0 DEFERRED. Nothing in this
