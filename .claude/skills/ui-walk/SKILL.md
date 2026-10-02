@@ -106,6 +106,15 @@ carrying a DO_NOT_CLICK word is refused and recorded as `walker:press-refused`. 
 
 `--open-request <REQ-id>` (with `--client`) opens ONE listed analysis request on the Analysis tab, by `data-request-id`, else the first row whose state reads Ready, and writes `analysis-request.json` with what the dialog shows (status words, section blocks, the correction sentence) and the wait in ms, up to `REQUEST_DETAIL_CEILING_MS` (90,000). Opening a request issues GETs only. The record counts the dialog by the page's own markers -- `section_cards` (`[data-row="native-section"]`) and `section_value_rows` -- beside `coverage_gap_items` (the `<li>` rows of the extraction-coverage panel behind Technical details); the older `section_items` counts that gap list plus its panel and never a card. It also carries `marks` (ms from the press to the dialog, to the status words, to the sections block) and `hops`: each analysis or status request the page made after the press, with `sent_ms`, `answered_ms`, `took_ms`, `queued_ms` (waiting for a connection) and `server_ms` (to the first byte) from the browser's own timing, the HTTP status, on a status read whether `X-IRPT-Status-Dates` was sent (beside an Authorization control) and, for the sections answer, the served `sections` and `undated_sections` counts. The hops run from the Analysis tab's own click (`press_ms` places the press), so the list read and the per-row status reads are in them; `row_states_at_press` and `hops_sent_by_kind` say what the list showed and what was still unanswered. Counts and times only.
 
+`--contrast-table` (plain routes) grades every visible interactive control's (ground, ink) pair against WCAG 2.1 SC
+1.4.3, after each `--press` (or once after the load):
+- states: at rest, on hover, and as selected where the control says so (aria-pressed / aria-selected / aria-current);
+- the pair is the text the control actually shows: every text-holding element inside it, its ink composited over its
+  own ground by the ink's alpha, and the control reports its weakest text;
+- colours are read through a 1x1 canvas, so `oklab`, `color-mix` and any other syntax grade like `rgb`;
+- the bar is 4.5:1, or 3:1 for large text.
+It writes `contrast-table.json` (control labels are page copy). DSGN_REBRND round 3 E4 (FWD-13).
+
 `--map-tiles` (with `--client`) runs one step on the Holdings tab's default view, before the drill. It counts the Securities
 map's drawn tile rects (`[data-slot="treemap-chart"]`, the small text-less ones included) against the distinct map-eligible
 securities in the served snapshot that view shows. The snapshot is the holdings answer with the most of them; the tab's

@@ -51,6 +51,10 @@ for (let i = 0; i < argv.length; i++) {
   // --press "<label>" (repeatable, plain routes only): press that tab/radio/button by its exact label after the load, wait
   // for the page to settle (PRESS_SETTLE_MS), shoot and check; a DO_NOT_CLICK word is refused. For a chart behind a tab.
   else if (a === '--press') (opt.presses = opt.presses || []).push(String(argv[++i] || ''))
+  // --contrast-table (plain routes): every visible interactive control's (ground, ink) pair at rest, on hover and, where
+  // the control says so (aria-pressed / aria-selected / aria-current), selected -- graded against SC 1.4.3. Run after the
+  // presses, before the explore step. Writes contrast-table.json. DSGN_REBRND round 3 E4 (FWD-13).
+  else if (a === '--contrast-table') opt.contrastTable = true
   else if (a === '--holdings-aggregates') opt.holdingsAggregates = true
   // --map-tiles (with --client): on the Holdings tab's default view, count the Securities map's drawn tiles against the
   // distinct securities in the served snapshot it shows (CTO batch 178 H-1 proof). Counts only.
@@ -607,6 +611,54 @@ const holdingsAggregates = []
 // compares them with the answer that view shows: the one with the most distinct securities (the all-accounts selection;
 // the tab's background one-account reads are subsets). Counts only; no name and no figure of any client is written.
 const mapTileAnswers = new Map()
+// ---- --contrast-table: interactive (ground, ink) pairs by state (DSGN_REBRND round 3 E4, FWD-13) ---------------------
+// The ground is the nearest ancestor background with alpha > 0.5, the same reading as the design:contrast check (a
+// translucent layer is skipped, so a page with translucent fills reads its rung under them). The bar is 4.5:1, or 3:1
+// for large text (>= 24 px, or >= 18.66 px at weight 700+). Labels are the controls' own words (page copy).
+const contrastRows = []
+const CONTRAST_CAP = 80
+async function contrastTable(page, label) {
+  const measure = (el) => {
+    // Any CSS colour (rgb, oklab, color-mix ...) is read through a 1x1 canvas, so the parser never decides a pair.
+    const cv = document.createElement('canvas'); cv.width = 1; cv.height = 1
+    const cx = cv.getContext('2d', { willReadFrequently: true })
+    const rgba = (c) => { cx.clearRect(0, 0, 1, 1); cx.fillStyle = 'rgba(0,0,0,0)'; cx.fillStyle = c; cx.fillRect(0, 0, 1, 1); const d = cx.getImageData(0, 0, 1, 1).data; return [d[0], d[1], d[2], d[3] / 255] }
+    const lin = (v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4) }
+    const L = ([r, g, b]) => 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b)
+    const groundOf = (node) => { for (let e = node; e; e = e.parentElement) { const c = rgba(getComputedStyle(e).backgroundColor); if (c[3] > 0.5) return c } return [244, 246, 250, 1] }
+    // The pair is the TEXT the control shows: every element inside it (itself included) that holds visible text,
+    // its ink composited over its own ground by the ink's alpha. The control reports its weakest text.
+    const holders = [el, ...el.querySelectorAll('*')].filter((n) => [...n.childNodes].some((t) => t.nodeType === 3 && t.nodeValue.trim()) && n.getClientRects().length)
+    let worst = null
+    for (const h of holders.length ? holders : [el]) {
+      const s = getComputedStyle(h); const g = groundOf(h); const k = rgba(s.color)
+      const ink = [0, 1, 2].map((i) => Math.round(k[3] * k[i] + (1 - k[3]) * g[i]))
+      const a = L(ink); const b = L(g)
+      const ratio = (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05)
+      const px = parseFloat(s.fontSize); const large = px >= 24 || (px >= 18.66 && Number(s.fontWeight) >= 700)
+      const bar = large ? 3 : 4.5
+      if (!worst || ratio / bar < worst.ratio / worst.bar) worst = { ink: `rgb(${ink.join(', ')})`, ground: `rgb(${g.slice(0, 3).join(', ')})`, ratio: +ratio.toFixed(2), bar }
+    }
+    const selected = ['aria-pressed', 'aria-selected', 'aria-current'].some((x) => { const v = el.getAttribute(x); return v && v !== 'false' })
+    return { label: (el.getAttribute('aria-label') || el.innerText || el.value || '').trim().replace(/\s+/g, ' ').slice(0, 40), tag: el.tagName.toLowerCase(), ...worst, selected, disabled: el.disabled === true }
+  }
+  const controls = page.locator('button:visible, a[href]:visible, [role=tab]:visible, [role=button]:visible, input:not([type=hidden]):visible, select:visible')
+  const n = Math.min(await controls.count().catch(() => 0), CONTRAST_CAP)
+  for (let i = 0; i < n; i++) {
+    const el = controls.nth(i)
+    const rest = await el.evaluate(measure).catch(() => null)
+    if (!rest || !rest.label) continue
+    contrastRows.push({ step: label, state: rest.selected ? 'selected' : 'rest', ...rest, pass: rest.ratio !== null && rest.ratio >= rest.bar })
+    if (rest.disabled) continue
+    await el.hover({ timeout: 1500 }).catch(() => {})
+    await page.waitForTimeout(150)
+    const hover = await el.evaluate(measure).catch(() => null)
+    if (hover) contrastRows.push({ step: label, state: 'hover', ...hover, pass: hover.ratio !== null && hover.ratio >= hover.bar })
+  }
+  await page.mouse.move(2, 2).catch(() => {})
+  const failing = contrastRows.filter((r) => r.step === label && !r.pass)
+  log('CONTRAST TABLE', label, `${contrastRows.filter((r) => r.step === label).length} pairs, ${failing.length} under their bar`)
+}
 const mapTiles = []
 function readMapTileAnswer(p, j) {
   const d = j && j.data
@@ -1417,7 +1469,9 @@ try {
         await settle(page, 2500)
         log('PRESS', label, pressed ? 'pressed' : 'NOT FOUND')
         await checks(page, `${route}-press-${label}`)
+        if (opt.contrastTable) await contrastTable(page, `${route}-press-${label}`)
       }
+      if (opt.contrastTable && !(opt.presses || []).length) await contrastTable(page, `${route}-load`)
       await exploreScope(page, 'body', route)
     }
   }
@@ -1452,6 +1506,7 @@ try {
   if (openedRequests.length) writeFileSync(path.join(OUT, 'analysis-request.json'), JSON.stringify(openedRequests, null, 1))
   if (holdingsAggregates.length) writeFileSync(path.join(OUT, 'holdings-aggregates.json'), JSON.stringify(holdingsAggregates, null, 1))
   if (mapTiles.length) writeFileSync(path.join(OUT, 'map-tiles.json'), JSON.stringify(mapTiles, null, 1))
+  if (contrastRows.length) writeFileSync(path.join(OUT, 'contrast-table.json'), JSON.stringify(contrastRows, null, 1))
   if (performanceStates.length) writeFileSync(path.join(OUT, 'performance-state.json'), JSON.stringify(performanceStates, null, 1))
   writeFileSync(path.join(OUT, 'lead-lists.json'), JSON.stringify({ schema_version: '1.0', tool: 'ui-walk', stamp, lists: leadLists }, null, 1))
   writeFileSync(path.join(OUT, 'netlog.tsv'), netlog.join('\n') + '\n')
