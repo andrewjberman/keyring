@@ -2223,6 +2223,19 @@ def check_file(root, rel):
     # RC2: grade what happened to the rows that ALREADY EXISTED, before grading the new ones.
     v.extend(_mutation_violations(rel, head, staged))
     added = [r for r in new_rows if r.get("id") not in old_ids]
+    # FUTURE-DATED STAMP DISCLOSURE (2026-10-02, 1.0.0_SA_CTO~Z on 3.0.0_SA_CVO~Z msg 28369): a NEW row whose surfaced_at is
+    # more than 10 min after the commit time is a typed or projected stamp, and it moves every watermark and cursor that
+    # reads it. WARN only: it refuses nothing, and arming it as a refusal is announced first. COST: one parse per new row.
+    # NON-APPLICATION: rows already at HEAD; a row with no parseable surfaced_at (the schema limb grades that).
+    import datetime as _dtm
+    _now_utc = _dtm.datetime.now(_dtm.timezone.utc)
+    for _r in added:
+        _sa = _parse_utc(_r.get("surfaced_at"))
+        if _sa is not None and _sa > _now_utc + _dtm.timedelta(minutes=10):
+            notes.append("WARN: %s: NEW row %s carries surfaced_at %s, %d min after the commit time %s -- a future "
+                         "stamp moves every watermark that reads it; write the time the row is surfaced"
+                         % (rel, _r.get("id"), _r.get("surfaced_at"), int((_sa - _now_utc).total_seconds() // 60),
+                            _now_utc.strftime("%Y-%m-%dT%H:%MZ")))
     # UNIQUENESS ACROSS DOCUMENTS (94007): every NEW id is unused in every OTHER document of its plane at the index.
     if folder_project and added:
         _pd, _pn = _plane_docs(root, folder_project, kind, rel)
