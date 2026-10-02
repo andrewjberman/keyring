@@ -92,3 +92,10 @@ BA under 5 s; memory down from 10240). Staged until am-1/3/4/5 drain and the pai
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
 <status>pending</status>
+
+**LEG 2 GRADED (issuer, 2026-10-02 ~19:2xZ):** AE~A `fe399411c4`. Act (A) LIVE, CodeSha256 `wIpMaswMhfNvJaz7WXTyBhN5C3Bb7Qego6+u+aOslfI=`,
+diff 353/352/1/0/0 (scoped_amgt.py only). 9 of 9 invokes served 6 of 6 headlines from gold with no reason; 7 of 7 routes byte-equal to leg 1.
+Act (B): cold BA 2026-09-08 averaged 12.8 s at 1769, 12.1 s at 3538 and 11.5 s at 10240 (it was 15-19 s). AC1 (under 5 s) MISSED at every
+memory, and memory was restored to 10240. CTO ruling `4d0f049203` (msg 28685): c1 is recorded NOT MET for round 63 and the 5 s bound is
+kept. ONE memory-only act 10240 -> 1769 is signed, with condition 3 re-read at 1769 (GO sent ~19:2xZ). The cold-read cut is a round-64
+cell. Leg 3 (am-3 AMENDMENT 2, R1 + R2) is owed under its own pair.
