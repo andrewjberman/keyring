@@ -346,3 +346,54 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "notes": "ALSO CORRECTED IN THE SAME TURN, and found by the same check: the one-page md's first table row carried the 2026-04-08 period's returns against the 2026-03-16..2026-06-30 label, with invented day counts (69/73 and 4 gaps instead of the record's 65/73 and 8). I caught both by printing every cell of the table from the record before committing the md rather than trusting what I had typed. The JSON record was correct throughout -- only my prose copies were wrong, which is the argument for the record being the artifact and the md being a view of it. NO ACT IS OWED BY ANOTHER SEAT on this row."
 }
 ```
+
+## IRPT_DASHBD-W1-S1 -- series.json.gz has no X10 family: the validator refuses both the extension and a second family on the table; manifest family registered alone
+
+```json
+{
+  "id": "IRPT_DASHBD-W1-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1",
+  "surfaced_at": "2026-10-02T02:45:00Z",
+  "one_line": "TO-DB-b-2 amendment 1 asks for a platinum/reporting policy family PER served file; the X10 validator refuses series.json.gz (extension) and refuses two families on one table, so only the MANIFEST family is registered, as the amendment's own fallback says.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-2 ISSUER AMENDMENT 1 (PRD v0.3 ruling 16): add, for firm 49financial, the families the X10 register admits for the two served files, tier platinum, table reporting, one family per file; if the validator refuses series.json.gz as an extension, record the refusal text verbatim in a row and register the manifest family alone.",
+  "world_is": "lib/opal_naming.py:_validate_reporting_policies, probed against the live registry with a candidate policy (probe script .scratch/pol_probe.py in the worker worktree, not committed): (A) a SERIES family with extension 'json.gz' -> ValueError 'reporting content format is not admitted' (the admitted set is csv/json/pdf, line 1822); (B) the same with a MANIFEST family beside it -> the same refusal; (C) SERIES with extension 'json' plus MANIFEST with extension 'json', both table 'reporting' -> ValueError 'reporting families must have distinct tables' (line 1819); (D) the MANIFEST family alone -> accepted. Registered: infra/logic/registry/reporting_policies.json policy irpt-dashbd-served-reporting, revision irpt-dashbd-x10-v1, firms [49financial], family SERVED_MANIFEST (platinum, reporting, json, unreferenced_days null, accepted_ceiling_days 2555), state PENDING_ENFORCEMENT with enforcement_ref null (an ACTIVE state requires an accepted enforcement commit this cell does not hold; nothing here calls reporting_destination, the publisher addresses the files with address()). lib.opal_naming.load_registry() loads; DB-2-AC1's policy limb reads 1 platinum/reporting family for 49financial.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py lines 1814-1825 @11bf813387",
+      "infra/logic/registry/reporting_policies.json @11bf813387"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The series.json.gz file therefore has NO X10 family: its retention/disposal class is unregistered. Whether the registry should admit a gzip JSON format or two families per table is the registry owner's call; nothing in this cell depends on it."
+}
+```
+
+## IRPT_DASHBD-W1-S2 -- the naming gate refuses the firm-tokened source-map key the order names; the artifact is keyed by the scope-less builder name
+
+```json
+{
+  "id": "IRPT_DASHBD-W1-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1",
+  "surfaced_at": "2026-10-02T02:50:00Z",
+  "one_line": "TO-DB-b-2 names the source-map entry and the build invocation irpt-49f-reporting-publish-lambda; the commit-time naming gate REFUSES a new hand-kept firm token ('49f') in lambda-source-map.json, so the entry is keyed irpt-reporting-publish-lambda (scope-less builder name) and the artifact is investor-reporting/irpt-reporting-publish-lambda.zip.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-2 WORKER FACE: 'Register the function in lambda-source-map.json (a new entry shaped like irpt-holdings-performance-lambda) and run build-and-upload.sh investor-reporting irpt-49f-reporting-publish-lambda'; the Terraform artifact_key is investor-reporting/<name>.zip.",
+  "world_is": "safe-commit.sh's naming limb (.tools/naming-gate.py, ENFORCE) refused the commit with NAMING REFUSE infra/aws/lambda/ci/lambda-source-map.json irpt-49f-reporting-publish-lambda ('CONFORMANT as LAMBDA, but a NEW hand-kept carrier of 49f outside every permitted context: read it through lookup(49financial)') on the map key and on its iam_role value, and on the same name typed in two Terraform output descriptions. The existing firm-token keys in that map (bd-49f-*) predate the gate. Done instead: the map key is the scope-less builder name name('irpt', None, 'reporting-publish', 'lambda') = irpt-reporting-publish-lambda, derived in Terraform by an opal_name module with no scope; the Lambda FUNCTION is still the firm-scoped builder name (irpt-49f-reporting-publish-lambda, scope = the registry-derived firm) and its role irpt-49f-reporting-publish-role; the entry carries no iam_role (no tool reads it). The build invocation is build-and-upload.sh investor-reporting irpt-reporting-publish-lambda. The issuer's apply plans against artifact key investor-reporting/irpt-reporting-publish-lambda.zip.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "naming-gate output on the first safe-commit attempt of this worker's second commit, 2026-10-02 ~02:40Z",
+      "infra/aws/terraform/investor-reporting/reporting-publish/lambda.tf module irpt_reporting_publish_artifact_name"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
