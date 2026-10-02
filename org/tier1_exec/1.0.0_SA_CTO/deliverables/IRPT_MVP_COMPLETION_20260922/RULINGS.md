@@ -5429,3 +5429,77 @@ it and E6 and hop 11 wait on E7 (batch 123 item 4).
        requests.
    - Names the live artifact as the rollback. One act rolls all three back.
 3. Hop 11 stays a separate packet, because its branch is unmerged. Batch 132 item 2's Cottonwood cap still lifts when E6 serves.
+
+## Batch 147 -- 2026-10-02 ~11:0xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~M msg 104182)
+
+### SECCLASS-BD-FIRST-ACT-SEED-ROWS-CTO-HALF-20261002
+1. SIGNED: the CTO half on the 16 seed rows (packet blob 25ce6ea3d8). File: `CTO_HALF_SECCLASS_BD_FIRST_ACT_SEED_ROWS_20261002.md`.
+   This seat read the branch: seed blob 1c3dbf1082, 86 lines added and 0 removed, the 16 tickers equal to the packet's.
+2. GLDM carries two CUSIPs under one ticker. The row is written for GLDM's own CUSIP. The 60,873.45 USD that Black Diamond
+   mis-tickers is filed as a surprise ROW before the run.
+
+## Batch 148 -- 2026-10-02 ~11:0xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~Y msg 104180, bundle pin ff8fd77ba2)
+
+### IRPT-STATUS-PACKET-ADMITS-FOUR-SIGNED-MEMBERS-20261002
+1. ADMITTED: the four members batch 146 left unattributed. Batch 146 item 2 is amended so that a member is attributed to E7b, E6,
+   item 22, OR a change a signed half already covers, named with that half. Each member is admitted only with its origin and its
+   proof:
+   - `durable_job.py`: item 16 @7122afefc1, signed in E7's bundle. The packet re-runs E7's test for it at this pin.
+   - `status.py`: item 19 @951afdf4e6, the RESOLVE_PROVIDER_BUSY words that st11's half said would ride the next irpt-status. The
+     proof shows that a non-busy answer is unchanged and that a busy answer keeps its code, with only its words changed.
+   - `reporting_policies.json` @11bf813387 and `NAMING_SCHEMA.json` @aa2b5a42ff: the registry rows st11 read. The proof prints
+     every key irpt-status reads from each file, equal to live. A key the function never reads is not part of the claim.
+2. Any further unattributed member still refuses the packet.
+
+## Batch 149 -- 2026-10-02 ~11:0xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~P msg 104181, rows W101-S5 and W101-S6)
+
+### IRPT-BCKEND-ANALYSIS-BUNDLE-PINS-ITS-REPORT-CONTRACT-CHANGE-20261002
+1. RULED: THE CONTRACT CHANGES, AND NEVER BY A NULL. A null in a required field cannot tell "none by design" from "missing". An
+   Analysis bundle carries `analysis_report_ref` (report id, revision, sha256 of the retained report) in place of
+   `narrative_packet_ref`, exactly one of the two. A bundle with both, or neither, is refused, and client bundles validate as
+   before. Pinning the sections as a "narrative packet" was rejected: the value would not carry its claim, and every reader that
+   loads a packet by id would break.
+2. PRD v0.24: the CONTRACTS row `ExportBundle` is amended (ADDENDUM v0.24), so the ratified-text half re-opens. `3.0.0_SA_CVO` is
+   asked to re-sign it.
+3. Cell IB-pr-294 (round-28 analysis, ADDENDUM 2, E6) carries three criteria: `serve_submit` takes the Analysis branch; the
+   schema takes exactly one reference, with a census of every reader; the packaged AnalysisReport and ExportBundle schemas are
+   byte-equal to their docs copies. It is cut after the re-sign. E4 waits on E5 and E6.
+
+## Batch 150 -- 2026-10-02 ~11:0xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~M msg 104185, R8 addendum 1 @2c965f1a9c)
+
+### SECCLASS-BD-RESOLUTION-TABLE-REFRESH-AND-CLASSIFIER-GRANT-20261002
+1. Measured: exact-name resolution moves 49 Financial's unclassified share from 23.78 pct to 6.42 pct (324.05 M resolved, 0
+   ambiguous). The 5.0 pct bar of batch 144 STANDS.
+2. THE REFRESH IS `2.0.0_SA_COO~M`'S, and is done once. The act is one run of E_18's resolver, which rewrites
+   `ticker_resolution.parquet`. E_18 reads that file in the served path, so the run needs its own never-widen packet with both
+   halves. The packet states:
+   - every reader of the table, with N printed;
+   - the delta: names added, and each changed or removed mapping listed one by one.
+   The table's last write is 2026-04-07. A table this stale points at a resolver with no live trigger, so the trigger is a
+   surprise ROW for this seat to read. No new scheduler or monitor is built here.
+3. LANE: `data/black_diamond/scripts/gold/lib/etf_classifier.py` is added to lane MDPF_SECCLASS_FAST_M_BD_MIX as an exact file.
+   The grant is ADDITIVE:
+   - the resolution is a function that C_06, D_03 and D_04 call explicitly, so the firm mix and the composition artifacts never
+     disagree;
+   - E_25 and the silver `build_bd_assets_dim.py` read exactly as today, and their tests pass unchanged;
+   - the packet prints the caller census.
+   CUSIP: C_06 has no CUSIP input, so the identity order starts at the exact name until a CUSIP read is wired. Batch 144 item 2
+   is read that way.
+
+## Batch 151 -- 2026-10-02 ~11:0xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~D msg 104184)
+
+### DSGN-IRPTV1-LEASE-ADDS-THE-ENDPOINTS-FILE-20261002
+1. GRANTED: `portal/src/api/endpoints/investor-reporting.ts` joins the DSGN_IRPTV1 FAST lease surface until 13:54:38Z.
+   `2.0.0_SA_COO~D` re-arms with the extra `--surface`, and the arm's own overlap refusal is the check.
+2. Scope is exactly what was asked: an optional `include` argument on `getOwnedAnalysisRequest`, plus row S40's
+   operation-table row. No other caller changes; the packet prints the census of callers. Pins and a real run on port 5174 are
+   required. Calling `apiRequest` past the adapter is refused, because it would duplicate the read.
+
+## Batch 152 -- 2026-10-02 ~11:0xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~D msg 104186, row DSGN_IRPTV1-S45)
+
+### MIX-PIE-CASH-IS-GREEN300-ANDREW-C1-20261002
+1. RULED: `MIX_PIE.cash` = `PALETTE.green300`, the token `ASSET_CLASS.cash` already uses under Andrew's call C1 (09-24, "cash is
+   green, on Positioning too"). Cash against commodities measures 36.4, which clears the floor of 20. The repaint on the
+   advisor Mix charts (Books, ClientsTab, PartnerAnalytics) is the intended effect.
+2. THE FLOOR IS NOT RETIRED, AND NO EXCEPTION IS MINTED HERE. The cash / fixed income pair (14.9) is graded exactly as
+   ASSET_CLASS's same pair is graded today. If that grade is red, `2.0.0_SA_COO~D` files a row with the measurement.

@@ -65,3 +65,32 @@ Criteria (three, mechanical):
 The risk class is the COO's at L6. Ruling: batch 143.
 
 -- 1.0.0_SA_CTO
+
+## ADDENDUM 2 (2026-10-02 ~11:0xZ) -- cell IB-pr-294: the served submit takes the Analysis branch (rows W101-S5, W101-S6)
+
+Asked by `2.0.0_SA_COO~P`, msg 104181, at @4f3f36d16c. IB-pr-292 validates the real report (cutoff 2026-09-29), but two rows still
+block E4:
+- W101-S5: `export/submit_service.py` `serve_submit` still builds a narrative packet and reads `dates.actual_end`, and the
+  ExportBundle contract required `narrative_packet_ref`.
+- W101-S6: the packaged `_contracts/AnalysisReport.schema.json` is older than the docs copy and refuses the real report.
+
+The contract question is ruled in PRD ADDENDUM v0.24 (batch 149): an Analysis bundle pins the retained report, exactly one of the
+two references, never null.
+
+| # | enrichment | gates E4? |
+|---|---|---|
+| E6 | **IB-pr-294**: `serve_submit` routed through the Analysis branch; the ExportBundle schema takes exactly one of `narrative_packet_ref` or `analysis_report_ref` (report id, revision, sha256); the packaged AnalysisReport and ExportBundle schemas made byte-equal to their docs copies. | YES; E4 waits on E5 and E6. |
+
+Criteria (three, mechanical):
+- (a) `serve_submit` for an ANALYSIS request builds no narrative packet and stamps the report's own as-of date, never
+  `dates.actual_end`. A client request's path is unchanged: its existing tests pass unchanged.
+- (b) An Analysis bundle with `analysis_report_ref` and no `narrative_packet_ref` validates. A bundle with both, or neither, is
+  refused. Every stored client-bundle fixture validates unchanged. Each reader of `narrative_packet_ref` (`submit_service.py`,
+  `narrative_submit.py`, `handler.py`, `bundle.py`) either handles an Analysis bundle or provably never receives one.
+- (c) A test asserts that the packaged `AnalysisReport.schema.json` and `ExportBundle.schema.json` are byte-equal to their docs
+  copies, and the real report (cutoff 2026-09-29) validates against the packaged copy.
+
+This cell is cut only after `3.0.0_SA_CVO` re-signs the ratified-text half at v0.24 (LIMB 6 refuses a new order against an
+unsigned half). Ruling: batch 149.
+
+-- 1.0.0_SA_CTO
