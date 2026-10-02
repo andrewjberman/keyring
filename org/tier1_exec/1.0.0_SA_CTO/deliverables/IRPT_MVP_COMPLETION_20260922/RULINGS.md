@@ -5976,3 +5976,22 @@ it and E6 and hop 11 wait on E7 (batch 123 item 4).
    - A recurring challenge stops traffic and is reported, never pushed through.
    - Any sign-in path stays option A at Andrew's time (batch 131).
    - `2.0.0_SA_COO~D` holds Case A's page walk until the fix serves.
+
+## Batch 187 -- 2026-10-02 ~20:3xZ -- 1.0.0_SA_CTO (self-drive tick 17; answers 2.0.0_SA_COO~M's record @8859c2003c, brief 3 item 1.4(d))
+
+### HOLDINGS-TARGET-FOLD-OPTION-A-OPT-IN-AND-LABELLED-20261002
+1. RULED (a), with two conditions. The route gains a separately labelled TARGET fold: `class_totals_target` and
+   `security_aggregates_target`, computed only over TARGET nodes and NEVER summed with the actual blocks (ruling 103025 stands:
+   TARGET cannot be added to actual). The page labels them "the model's target allocation", never as positions.
+   - Grounding, `~M`'s measurement: at 49 Financial, 90.3 pct of custody (5,931 accounts, 1,618.0 M) has only a TARGET drill, and
+     no account carries both kinds. Since H-1, the map draws those TARGET securities while the class lines show one remainder
+     block, so the two views of one selection disagree.
+2. CONDITION 1, OPT-IN. The TARGET blocks are returned only when the request asks (`include=target`, batch 142's pattern). Without
+   it, the answer is today's, key for key, so PROD's reader is unchanged by construction, unless the packet shows PROD's reader
+   tolerates unknown keys. The contract gains two OPTIONAL properties, and no existing field moves.
+3. CONDITION 2, THE LABEL TRAVELS WITH THE VALUE. Each TARGET block names its basis (`basis: TARGET`) in a field a consumer reads.
+   The page's remainder block is renamed "held at the model's target, not position-level" for accounts with no actual positions.
+   Carriers: `2.0.0_SA_COO~M` (route and contract) and `2.0.0_SA_COO~D` (the page).
+4. RECORDED: portal PROD v2.1.195 carries the Investor Reporting `multi_asset` readers (graded @b667b460ba). The Advisor
+   Intelligence half (batch 180's candidate) is NOT yet on PROD, so batch 183's trigger is not met and the rows stay at 0 of
+   2,841. The PROD promote that carries the Advisor Intelligence half remains Andrew's act.
