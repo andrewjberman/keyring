@@ -184,3 +184,20 @@ before or with the 2026-10-02 page republish where the act window allows.
 **Basis of the threshold.** For the large-cap dividend holdings that drive SCHY and BIDD, a one-day move outside
 [0.667, 1.5] on an unchanged quantity is overwhelmingly a valuation fault. For concentrated growth funds a real move of that
 size is rare but possible. That is why the band stays PROVISIONAL and every refusal is shown.
+
+### CALL 6 -- correction of the call's attribution (2.0.0_SA_COO~RV msg 28322, 08:28Z)
+
+The call text, quoted above, attributed SCHY's -1.83% -> +5.85% and BIDD's +11.49% -> +12.51% to the 0.5 band (b). That
+attribution was wrong; the measurement after the apply shows otherwise
+(`org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round5/call6_c3_refused_rows_20261001.json`, served table
+`holding_contribution-20261002T082435Z-76623c994bb7`):
+- Both moves come from F1 (a). The zero-valued holding-days are now unpriced: SCHY has 2-7 such lines on most trading
+  days, BIDD 1-4.
+- The 0.5 band refused **0** SCHY or BIDD holding-days in YTD.
+- The 7 refused rows are CALL 1's split guard. Five of them are SCHY futures lines (`provider_security_type` 'Index':
+  MESM6, MFSM6, MFSU6). CALL 1 condition 2 already excludes these from pricing, and the COO's next FAST item does it.
+
+The ruling stands unchanged; its conditions were never premised on the attribution. One addition to condition 2, because F1
+(a) now carries the weight the band was thought to carry: **`zero_valuation` is a disclosed refusal reason** beside
+`implausible_valuation` and `corporate_action_suspected`. A held line truly written down to zero is otherwise unpriced in
+silence, and its real loss never reaches the return. That is the mirror of the bias condition 1 removes.
