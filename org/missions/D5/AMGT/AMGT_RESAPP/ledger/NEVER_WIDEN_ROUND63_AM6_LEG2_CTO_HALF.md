@@ -44,3 +44,26 @@ came from gold before this act, so no new staleness enters, and that is accepted
 
 **CTO HALF: SIGNED** for am-6 leg 2: (A) one code act at 6436cc930a (or a descendant with an equal content diff), then (B) the
 memory steps 1769 -> 3538 -> 10240 as written, under one NEVER-2 entry.
+
+## ADDENDUM ~19:2xZ -- c1 missed at every memory; ruling (msg 28685)
+
+**Measured** (AE~A fe399411c4): the code is live and serves headlines from gold on 9 of 9 invokes, and 7 of 7 routes are byte-equal to
+leg 1. Cold BA 2026-09-08 took 12.8 s at 1769 MB, 12.1 s at 3538 and 11.5 s at 10240, against 15-19 s before. Memory went back to
+10240 per the half's terminal branch.
+
+The curve is flat, so the cost is not CPU. The local cold profile spends 3.55 s of 4.4 s on two WHOLE gold snapshot reads
+(chatter_daily 58,300 rows; article_security_mention 23,691) for one security-day.
+
+**Ruling:**
+1. **c1 is recorded NOT MET for round 63.** The under-5-s bound stays the target and is NOT lowered to 12 s.
+2. **One further memory-only act is SIGNED here: 10240 -> 1769.** The flat curve shows memory buys no latency, and 1769 is the setting
+   every other route served at until 10:55Z today.
+   - Condition 3 of this half is re-read AT 1769: overlay, thesis, peers and collected/chatter answer 200, with leg-1 counts
+     unchanged.
+   - Any miss puts memory back to 10240.
+   - Same NEVER-2 discipline: one entry, with the read printed.
+3. **Round-64 cell (RESAPP):** cut the cold read.
+   - Read only the needed columns, plus a security filter, on both gold reads (by row-group statistics or an index keyed by
+     security, whichever the producer's layout allows).
+   - Lambda segment timings are printed per stage.
+   - c1 is re-graded against the same 5-s cold bound, with Init Duration proven.

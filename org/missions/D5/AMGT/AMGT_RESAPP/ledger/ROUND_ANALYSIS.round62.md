@@ -84,3 +84,7 @@ and the promote landed (portal PROD f76b02acb6, ~13:5xZ). Deploys to `opal-amgt-
 - Plants: AMD serves Information Technology; a non-equity or a non-GICS value serves null with the reason.
 
 Both are served changes under one never-widen pair, after am-6 leg 2. Leg 2's content diff stays the one file it was signed for.
+
+**Carried to round 64 (~19:2xZ, msg 28685):** the timeline cold-read cut. Track C step 2's c1 was NOT MET at ~12 s cold at every
+memory (two whole-snapshot gold reads dominate). The cell reads only the needed columns, filters by security on both reads, and prints
+segment timings. The bound stays under 5 s cold. Memory goes 10240 -> 1769 now, under the leg-2 half's addendum.
