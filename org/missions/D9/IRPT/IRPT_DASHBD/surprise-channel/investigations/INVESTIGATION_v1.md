@@ -860,3 +860,30 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "notes": "For the L9 reader: a future per-use word should name the session-token GET as part of the pull. Also recorded, no action taken: 0084073310's first segment 2026-03-20..2026-08-04 (94 days, Opal +24.23%, BD +23.97%) precedes the roster trade_start_date 2026-08-05, and BD agrees with the gold over it. Owner: 2.0.0_SA_COO~P."
 }
 ```
+
+## IRPT_DASHBD-S22 -- the tie-out's largest disagreement has no stated reason; the income signs differ
+
+```json
+{
+  "id": "IRPT_DASHBD-S22",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-02T18:45:00Z",
+  "one_line": "The round-4 tie-out's largest disagreement (0027265115, 2026-06-25..07-06, Opal +3.4935% against Black Diamond +2.2806%, 1.21 points over 7 like days) carries no stated reason, and its cause is findable: Opal books income +0.4627% on 06-25 alone, while Black Diamond reports the window's income as -2,470.31 on an account that is about 47 pct short. None of the 14 pairs carries a reason field.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's re-derivation (2026-10-02 18:3xZ): served gold opal-data-49financial/irpt/49financial/gold/account_return_daily, 7 of 7 trading days 06-25..07-06 for 0027265115, total_return_daily linked = +3.4935% (equal to the record); income_return 06-25 = 0.004627, other days 0.000001-0.000153; return_basis TWR on 7 of 7",
+      "RAW_BD_PERIOD_0027265115.sanitised.json.gz (deliverables/0.9.0_WK_IRPT_DASHBD~1), dateRangePoints[3] 2026-06-25..07-06: timeWeightedReturns.return 0.022805706 (equal to the record), daysHeld 7, income -2,470.31, netAdditions 4,402.22, fees 0.0; the as-of point (2026-10-01) shortAllocation 0.4729",
+      "TIEOUT_49F_BLACKDIAMOND_R4.json: 14 pairs, keys account..abs_diff; no reason field on any pair"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-8 ACCEPT: the two returns agree within a tolerance Andrew accepts and every day they disagree carries a stated reason (C-TIEOUT: flow timing, missing price, income date).",
+  "world_is": "Agreement is good on most windows (median 0.16 pct) but the disagreeing windows are unexplained, and the largest has an income-sign difference: positive income in Opal where Black Diamond nets income negative, as a short book paying dividends would (inferred: the short allocation was read at 10-01, not in June). If Opal counts dividends received but not dividends paid on shorts, the method overstates income for short-heavy accounts.",
+  "notes": "INERT for the served page until the dashboard figure reaches clients through the read route. Owner 2.0.0_SA_COO~P (the tie-out's reasons; the income treatment of short positions in the producer). The tolerance itself is 1.0.0_SA_CTO's to rule (PRD Q2)."
+}
+```
