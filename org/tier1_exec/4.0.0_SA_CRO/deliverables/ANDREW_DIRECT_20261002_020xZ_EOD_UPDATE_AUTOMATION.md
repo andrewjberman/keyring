@@ -117,6 +117,28 @@ carries no scope limit. The whitelist row is site Z's file; 0.0.0_AB_MSTR relays
 
 (The only change to the quotes is the redaction of the phone number: personal data stays out of the repo.)
 
+## Addendum ~20:0xZ to ~20:2xZ -- texting ops: the hybrid (commands vs natural language), verbatim
+
+> I want to workshop the texting ops. technically isnt it just kimi reading the response, so i can respond in natural
+> language?
+
+> I like the hybrid framework, we should workshop that concept. however, no need on faster kimi, i want the draft
+> responses to not be retarded.
+
+> commands should always have some command key in front, that is how we will identify commands versus natural
+> language. e.g. #1 #0 #on #off. if i want to say "disregard all" or something, then that is fine to go on slow path.
+> Only thing that is not super clear is how to handle scenarios when there are multiple items in queue, responding to
+> multiple items at once.
+
+The CRO proposed: every command carries `#` (`#1`, `#0`, `#on`, `#off`, `#dev`, `#close`, new `#list`); text without
+`#` goes to Kimi with the open items; an untagged `#1`/`#0` acts on the newest text (the race guard stands); several
+items take tags (`C279 #1, C608 #0`); natural language applies drops and redrafts at once and echoes any send or job
+back as one confirmation (`K14 ... Reply #1`); bare `1`/`0` stop being commands. Andrew:
+
+> yes build it
+
+Binding: as proposed. Kimi stays kimi-k3 for every call (drafts and reading his texts).
+
 ## Addendum ~16:2xZ to ~17:0xZ -- the switch, several tags, ad hoc dev jobs, /remote-drive, and six rulings, verbatim
 
 > Before sending to sitez, i want to make sure that i can have an on and off switch set up (#on and #off would be good
