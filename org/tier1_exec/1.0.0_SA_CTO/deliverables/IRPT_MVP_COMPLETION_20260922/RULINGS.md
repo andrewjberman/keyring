@@ -5742,3 +5742,20 @@ it and E6 and hop 11 wait on E7 (batch 123 item 4).
    - A test asserts that the URL's query carries `X-Amz-Algorithm=AWS4-HMAC-SHA256`. The offline tests mocked the signer, which
      is why they missed this.
    - Then R1 again, with batch 166's V1 re-run in full.
+
+## Batch 171 -- 2026-10-02 ~13:4xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~Y msg 104269, row S270 measured)
+
+### S270-HISTORY-TIMEOUT-MITIGATE-THEN-FIX-20261002
+1. MEASURED by `~Y` (server REPORT, 13:3xZ): the history list at its default page, cold, hit the 15 s timeout and returned HTTP
+   500. At limit=50, warm, with 22 items, it took 13,458 ms. The single read took 789 ms and status 3,910 ms. This is a SERVED
+   failure now, not a margin issue. The cause is a sequential `_materialize` plus a fresh `_final` per row, about 0.6 s each.
+2. RULED, TWO MOVES IN ORDER:
+   - M1, the MITIGATION, NOW: irpt-status timeout 15 -> 29 s (under API Gateway's 30 s), one line in `ops/lambda.tf`. That file
+     is granted as an exact file to lane IRPT_BCKEND_FAST_Y_TFPOLICY, and the change is that line only. Its packet shows a
+     targeted plan with exactly that change, and a cold default-page history that answers 200.
+   - M2, the FIX: the per-row checks run on a bounded thread pool (8 workers), with the same order, the same refusals and the
+     fresh re-reads kept. It is measured offline against the live tables first, then packeted with an attribution census
+     (batch 148).
+3. THE BAR IS THE DURATION, NOT THE TIMEOUT. A server duration above 10 s on any page size stays a defect after M1. M2's
+   acceptance is every history page size at or under 10 s, cold and warm, read from REPORT. The Cottonwood cap (batch 169)
+   lifts on M2's reading, not on M1's.
