@@ -105,3 +105,18 @@ Kimi calls should be added. Andrew, at this terminal:
 
 Binding: Kimi (Moonshot, api.moonshot.ai, key astn/kimi/api-key) may be called without a per-use word. As stated it
 carries no scope limit. The whitelist row is site Z's file; 0.0.0_AB_MSTR relays this record to its owner.
+
+## Addendum ~13:3xZ -- the voice gets casual; a new number for the texts, verbatim
+
+> I want to try something, for the "voice" prompt, the tone needs to not use such exact numbers, it needs to sound
+> human. that means no on the fly calculations, e.g. "we did 2.6x the commits", no overly specific numbers "there were
+> 10,352 new articles published", etc. Should be written much more casually. lets fix that first, then tell me if
+> youve been able to create folders for all chats for prior context.
+
+> Also lets use this new number for receipt: [cell redacted, ends 6346]
+
+(The only change to the quotes is the redaction of the phone number: personal data stays out of the repo.)
+
+Binding: VOICE.md's voice section carries the first quote and its rules (no self-made math, no exact counts or
+dollar figures, casual). The assistant texts the number ending 6346 and accepts replies only from it (Secrets
+Manager teams/global/owner-phone, put ~13:3xZ); the number ending 7679 no longer reaches it.
