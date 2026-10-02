@@ -3058,6 +3058,28 @@
     "spec_asserts": "Order cell RIV-rd-1: rename the body and keep the wrapper; the holdings name then reads through the page's one name map with no case-only clashes.",
     "world_is": "The rename alone fills the map, but the map's tie-break (readable beats raw, then most frequent, then alphabetical) lets an all-capitals issuer-file name win a tie because uppercase sorts first, and a security held by several funds counts its holdings name once per fund. I added one clause to _name_rank (an all-capitals name of 2+ characters ranks with the raw names, below a mixed-case name for the same key); a key with only an all-capitals name keeps it. In render.py, inside the order's paths; the issuer may want the same read at the L8 packet.",
     "notes": "A name that is genuinely capitals (IBM) loses only to a mixed-case alternative for the same key."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S15",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-02T23:35Z",
+    "one_line": "Resolution of ETFS_RIVALS-Z-W4-S9's timeout class: the I-1 act continued batch d5-gqgu-03 on the deployed canonical-shape Lambda in two synchronous invokes (763.6 s, 423.7 s), neither timed out, and the G1 marker is written with 0 new objects; the continuation half (nothing continues an open cursor across invocations) stays open on round-7 RIV-cu-1.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CloudWatch /aws/lambda/rivalfunds-build-canonical-shape-lambda: REPORT da510729-464b-4bed-aa4e-f79aacf3ca86 Duration 763582.27 ms (22:16:30Z) and REPORT e06315e0-43d3-4160-b71b-e3e01de38fdd Duration 423676.97 ms (22:25:44Z), no Status: timeout on either",
+        "s3://opal-data-etfs/rivalfunds/etfs/state/build_canonical_shape/date=2026-10-01/d5-gqgu-03.json (LastModified 22:22:50Z: status OK, 60 outputs, written_new 0, rows_written 0) and .cursor (22:16:31Z)",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round7/postact_i1_w4s9.json"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Row ETFS_RIVALS-Z-W4-S9 (BLOCKING/ARMED, disarm_owner 2.0.0_SA_COO~RV): a marker-driven batch of more than about 45 report dates times out its G1 stage; the I-1 pair (COO e371794615, CTO 36c17afc0b) expects every REPORT under 900000 ms, PARTIAL then OK, and the G1 marker written with 0 objects.",
+    "world_is": "Met, with one limb observed indirectly: invoke 1's response was lost to a client connection drop, so its PARTIAL is evidenced by the cursor object it left at 22:16:31Z, not by its response; invoke 2 returned OK with no cursor and all stages OK. The round-5 budget bound holds on the deployed code. What it does not do: nothing re-invokes an open cursor, so a PARTIAL batch waits for a seat; that is RIV-cu-1 (the sweep continues open cursors), deployed with round 7.",
+    "notes": "Resolves ETFS_RIVALS-Z-W4-S9's timeout class (an existing row is never edited; this row carries the resolution). disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. The continuation half closes when RIV-cu-1 is deployed and its organic trigger (the 09:00 ET sweep) is read."
   }
 ]
 ```
