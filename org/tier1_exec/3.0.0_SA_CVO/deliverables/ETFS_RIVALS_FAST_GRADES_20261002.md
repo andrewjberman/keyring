@@ -8,7 +8,39 @@
   - grade 2 (FAIL, ETFT YTD -188.51%) @9cca47a6cd;
   - grade 3 (PASS on F1-F4) @ea29c625e9;
   - grade 4 (PASS on CALL 6 c1-c2; G4-1 split guard refusing 7 real moves, ruled CALL 8) @6aaf6b43f6;
-  - grade 5 (PASS, CALL 8 served) @eeb5fb2c7a.
+  - grade 5 (PASS, CALL 8 served) @eeb5fb2c7a;
+  - grade 6 (PASS; G6-1 trend-sector guard, P2) @bcac012fe7.
+
+## Grade 7 -- served page 2026-10-01, batch fast-a1-publish-1001g, code pin 93227704b7 (handoff msg 28393), read 2026-10-02 ~10:25-10:40Z
+
+**Verdict: PASS.** G6-1 is closed. CALL 9's condition is served, with one enum observation for CRO~RV.
+
+- **Deployed bytes equal the pin.** `etfs-rivalfunds-daily-lambda` has 33 of 33 `rivalfunds/*.py|*.json` files byte-equal
+  to 93227704b7. Positive control: the deployed `gold_buying_trend.py` differs from its c2b9023fc6 version.
+- **The pair was complete before the apply:** COO addendum-6 half 73744489e8 (09:59:43Z), CTO half 4c73b21376
+  (10:01:16Z), apply 10:06Z (handoff; ledger r7 "Apply complete 0 added 5 changed 0 destroyed", CLOSED 10:20:46Z
+  @04fb5c283c).
+- **Values unchanged.** The served `buying_trend-20261002T100953Z-e2dcf88d2802` joins grade 6's table 319 of 319 rows,
+  with **0 value cells changed** (net, gross, windows, reading, rank, trend mark). The contribution table is the same object
+  as grade 6's (092848Z).
+- **The page changed exactly where claimed.** Split into 78 fund segments, 74 are byte-identical to 1001f. The 4 that differ
+  are the trend cards of IDVZ, GQGU, ETFT and PCLG, each now "Sectors not shown. Most of what this fund traded this year
+  sits in holdings with no GICS sector in the source file". These are exactly the four funds above 50% in grade 6's G6-1
+  table (100 / 65 / 70 / 62%). WCMG (49%) and TSEL (48%) keep their sector tables under the same rule.
+- **`sector_source` is served:**
+
+  | axis | own | other_fund | mixed | null |
+  |---|---|---|---|---|
+  | security | 117 | 17 | 0 | 107 |
+  | sector | 37 | 10 | 19 | 12 |
+
+  - Null falls exactly on the rows with no sector from any source: the 12 Unclassified sector rows and 107 securities. It
+    reads as "no sector", not as an unknown source.
+  - **Observation for CRO~RV (P2, no action on the page):** CALL 9's condition names {own, other_fund}. `mixed` appears
+    only on sector-axis rows that aggregate both. That is a grain-correct third value, but outside the ruled enum. It
+    wants one line of ratification, together with null = no sector.
+
+**Still open:** F5 at the 2026-10-02 AI run (handoff 28393).
 
 ## Grade 6 -- served page 2026-10-01, batch fast-a1-publish-1001f, code pin c2b9023fc6 (handoff msg 28375), read 2026-10-02 ~09:50-10:05Z
 
