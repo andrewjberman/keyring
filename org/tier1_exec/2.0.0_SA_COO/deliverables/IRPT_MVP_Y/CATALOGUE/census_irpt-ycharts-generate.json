@@ -1,0 +1,339 @@
+{
+ "function": "irpt-ycharts-generate",
+ "pin": "97eaff05ff3f268d55175d4175fe73989f3c36f2",
+ "live_code_sha256": "arC65KbDPPssn2UXFzAP/U+zzXgIiS/fIddCFR28a6M=",
+ "live_zip_hashes_to_it": true,
+ "live_members": 112,
+ "pin_members": 112,
+ "identical": 100,
+ "eol_only": [
+  "fixtures/har/FIXTURE_MANIFEST.json",
+  "fixtures/har/collection.json",
+  "fixtures/har/create_201.json",
+  "fixtures/har/create_422_fee.json",
+  "fixtures/har/dashboard.json",
+  "fixtures/har/decision_branches.json",
+  "fixtures/har/generate_201.json",
+  "fixtures/har/generate_404_minimal.json",
+  "fixtures/har/status_drifted.json",
+  "fixtures/har/status_ok.json",
+  "fixtures/har/templates.json",
+  "fixtures/har/upload_ok.json",
+  "fixtures/har/validate_200.json",
+  "templates.json"
+ ],
+ "changed": [
+  "broker.py",
+  "comparison_catalogue.py",
+  "contracts/OwnedAnalysisRequest.schema.json",
+  "current_authority.py",
+  "durable_job.py",
+  "extract.py",
+  "fixtures/har/report.pdf",
+  "infra/logic/registry/reporting_policies.json",
+  "org/standards/NAMING_SCHEMA.json",
+  "owned_requests.py",
+  "recipe.py",
+  "resident_worker.py"
+ ],
+ "added": [],
+ "removed": [],
+ "history": [
+  {
+   "member": "broker.py",
+   "source": "infra/aws/lambda/investor-reporting/ycharts/session/broker.py",
+   "live_equals": "e2fdd01015",
+   "ahead": [
+    [
+     "7122afefc1",
+     "fix(IRPT_BCKEND ~Y item 16, 2.0.0_SA_COO~Y): row S253 -- the resident job row keeps an append-only v"
+    ],
+    [
+     "3921492913",
+     "fix(IRPT_BCKEND ~Y item 15, 2.0.0_SA_COO~Y): the 120-second calculating release is withdrawn -- the "
+    ]
+   ]
+  },
+  {
+   "member": "comparison_catalogue.py",
+   "source": "infra/aws/lambda/investor-reporting/ycharts/generate/comparison_catalogue.py",
+   "live_equals": "efde229443",
+   "ahead": [
+    [
+     "3ad9306bf9",
+     "fix(IRPT_BCKEND ~Y item 18, 2.0.0_SA_COO~Y): the comparison catalogue reads etf-classifications once"
+    ],
+    [
+     "e118089403",
+     "fast(IRPT_BCKEND ~Y item 6, 2.0.0_SA_COO~Y): a model-written classifications row is never listed in "
+    ]
+   ]
+  },
+  {
+   "member": "contracts/OwnedAnalysisRequest.schema.json",
+   "source": "docs/contracts/investor-reporting/v1/OwnedAnalysisRequest.schema.json",
+   "live_equals": "47472824b6",
+   "ahead": [
+    [
+     "8c4398e32a",
+     "fix(IRPT_BCKEND ~Y item 17, 2.0.0_SA_COO~Y): E7 -- the owned request read serves the chosen comparis"
+    ]
+   ]
+  },
+  {
+   "member": "current_authority.py",
+   "source": "infra/aws/lambda/investor-reporting/ycharts/generate/current_authority.py",
+   "live_equals": "2704705672",
+   "ahead": [
+    [
+     "ffb94090dc",
+     "fix(IRPT_BCKEND ~Y FAST items 7 and 9, 2.0.0_SA_COO~Y): a SERVICE actor with no allowedFirmIds is re"
+    ]
+   ]
+  },
+  {
+   "member": "durable_job.py",
+   "source": "infra/aws/lambda/investor-reporting/ycharts/generate/durable_job.py",
+   "live_equals": "b3fc529601",
+   "ahead": [
+    [
+     "7122afefc1",
+     "fix(IRPT_BCKEND ~Y item 16, 2.0.0_SA_COO~Y): row S253 -- the resident job row keeps an append-only v"
+    ]
+   ]
+  },
+  {
+   "member": "extract.py",
+   "source": "infra/aws/lambda/investor-reporting/ycharts/extract/extract.py",
+   "live_equals": "12a67ed5ee",
+   "ahead": [
+    [
+     "82cdfe9802",
+     "fix(IRPT_BCKEND ~Y FAST item 13, 2.0.0_SA_COO~Y): the settings-row reader accepts the portfolio name"
+    ],
+    [
+     "2775cae84b",
+     "fix(IRPT_BCKEND ~Y FAST items 11 and 12, 2.0.0_SA_COO~Y): a refusal at the printed-type check says w"
+    ]
+   ]
+  },
+  {
+   "member": "fixtures/har/report.pdf",
+   "source": "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/report.pdf",
+   "live_equals": null,
+   "ahead": [
+    [
+     "5e4a92380b",
+     "IB-s-9: the YCharts generation chain as Opal's own async job -- source"
+    ]
+   ]
+  },
+  {
+   "member": "infra/logic/registry/reporting_policies.json",
+   "source": "infra/logic/registry/reporting_policies.json",
+   "live_equals": "7262571e4c",
+   "ahead": [
+    [
+     "11bf813387",
+     "feat(IRPT_DASHBD.TO-DB-b-2, 0.9.0_WK_IRPT_DASHBD~1): platinum publisher (pure functions + handler + "
+    ]
+   ]
+  },
+  {
+   "member": "org/standards/NAMING_SCHEMA.json",
+   "source": "org/standards/NAMING_SCHEMA.json",
+   "live_equals": "4eae414dd4",
+   "ahead": [
+    [
+     "aa2b5a42ff",
+     "naming(4.0.0_SA_CRO): cadence token \"1min\" joins NAMING_SCHEMA.json cadence.values (the Teams assist"
+    ]
+   ]
+  },
+  {
+   "member": "owned_requests.py",
+   "source": "infra/aws/lambda/investor-reporting/ops/owned_requests.py",
+   "live_equals": "03de809d50",
+   "ahead": [
+    [
+     "8c4398e32a",
+     "fix(IRPT_BCKEND ~Y item 17, 2.0.0_SA_COO~Y): E7 -- the owned request read serves the chosen comparis"
+    ]
+   ]
+  },
+  {
+   "member": "recipe.py",
+   "source": "infra/aws/lambda/investor-reporting/ycharts/generate/recipe.py",
+   "live_equals": "da519f31b4",
+   "ahead": [
+    [
+     "3921492913",
+     "fix(IRPT_BCKEND ~Y item 15, 2.0.0_SA_COO~Y): the 120-second calculating release is withdrawn -- the "
+    ],
+    [
+     "8c8f3e8fa4",
+     "fix(IRPT_BCKEND ~Y FAST item 14, 2.0.0_SA_COO~Y): one status read per receive -- a still-calculating"
+    ]
+   ]
+  },
+  {
+   "member": "resident_worker.py",
+   "source": "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py",
+   "live_equals": "62535e0fdc",
+   "ahead": [
+    [
+     "7122afefc1",
+     "fix(IRPT_BCKEND ~Y item 16, 2.0.0_SA_COO~Y): row S253 -- the resident job row keeps an append-only v"
+    ],
+    [
+     "3921492913",
+     "fix(IRPT_BCKEND ~Y item 15, 2.0.0_SA_COO~Y): the 120-second calculating release is withdrawn -- the "
+    ],
+    [
+     "8c8f3e8fa4",
+     "fix(IRPT_BCKEND ~Y FAST item 14, 2.0.0_SA_COO~Y): one status read per receive -- a still-calculating"
+    ],
+    [
+     "82cdfe9802",
+     "fix(IRPT_BCKEND ~Y FAST item 13, 2.0.0_SA_COO~Y): the settings-row reader accepts the portfolio name"
+    ],
+    [
+     "2775cae84b",
+     "fix(IRPT_BCKEND ~Y FAST items 11 and 12, 2.0.0_SA_COO~Y): a refusal at the printed-type check says w"
+    ],
+    [
+     "ffb94090dc",
+     "fix(IRPT_BCKEND ~Y FAST items 7 and 9, 2.0.0_SA_COO~Y): a SERVICE actor with no allowedFirmIds is re"
+    ]
+   ]
+  }
+ ],
+ "served_closure": [
+  {
+   "member": "served.py",
+   "pin_sha256": "455cd77ea46e71ca",
+   "live_sha256": "455cd77ea46e71ca",
+   "state": "identical to live"
+  },
+  {
+   "member": "enforce.py",
+   "pin_sha256": "4245b5f8aded61b6",
+   "live_sha256": "4245b5f8aded61b6",
+   "state": "identical to live"
+  },
+  {
+   "member": "errors.py",
+   "pin_sha256": "b60f25ccaa706b7a",
+   "live_sha256": "b60f25ccaa706b7a",
+   "state": "identical to live"
+  },
+  {
+   "member": "resolve.py",
+   "pin_sha256": "24b407fa00ff0fc3",
+   "live_sha256": "24b407fa00ff0fc3",
+   "state": "identical to live"
+  },
+  {
+   "member": "grant.py",
+   "pin_sha256": "2756be537b165b18",
+   "live_sha256": "2756be537b165b18",
+   "state": "identical to live"
+  },
+  {
+   "member": "owner_reads.py",
+   "pin_sha256": "f21d26dcce7c46bf",
+   "live_sha256": "f21d26dcce7c46bf",
+   "state": "identical to live"
+  },
+  {
+   "member": "prospect.py",
+   "pin_sha256": "f556b0997dfa7310",
+   "live_sha256": "f556b0997dfa7310",
+   "state": "identical to live"
+  },
+  {
+   "member": "ids.py",
+   "pin_sha256": "f1659861d469c25d",
+   "live_sha256": "f1659861d469c25d",
+   "state": "identical to live"
+  },
+  {
+   "member": "loaders.py",
+   "pin_sha256": "763f0a0d4445481c",
+   "live_sha256": "763f0a0d4445481c",
+   "state": "identical to live"
+  },
+  {
+   "member": "routetable.py",
+   "pin_sha256": "fbd20fb97a64c84c",
+   "live_sha256": "fbd20fb97a64c84c",
+   "state": "identical to live"
+  },
+  {
+   "member": "interactive_access.py",
+   "pin_sha256": "bba07a3f4eeb947b",
+   "live_sha256": "bba07a3f4eeb947b",
+   "state": "identical to live"
+  },
+  {
+   "member": "canonical_profile_reads.py",
+   "pin_sha256": "0ec4a717f2aa2c12",
+   "live_sha256": "0ec4a717f2aa2c12",
+   "state": "identical to live"
+  },
+  {
+   "member": "keys.py",
+   "pin_sha256": "56ee3cc22e802579",
+   "live_sha256": "56ee3cc22e802579",
+   "state": "identical to live"
+  },
+  {
+   "member": "maintained_sources.py",
+   "pin_sha256": "774eca9bde60a1dd",
+   "live_sha256": "774eca9bde60a1dd",
+   "state": "identical to live"
+  },
+  {
+   "member": "custody.py",
+   "pin_sha256": "23cda6b0e3dd88df",
+   "live_sha256": "23cda6b0e3dd88df",
+   "state": "identical to live"
+  },
+  {
+   "member": "selection.py",
+   "pin_sha256": "7ba910b85e2fce4f",
+   "live_sha256": "7ba910b85e2fce4f",
+   "state": "identical to live"
+  },
+  {
+   "member": "selection_store.py",
+   "pin_sha256": "583507a70e3a0074",
+   "live_sha256": "583507a70e3a0074",
+   "state": "identical to live"
+  }
+ ],
+ "built": {
+  "members": 112,
+  "differ_from_pin": [
+   "fixtures/har/report.pdf"
+  ],
+  "closure_stale": [],
+  "crlf_members": [
+   "fixtures/har/FIXTURE_MANIFEST.json",
+   "fixtures/har/collection.json",
+   "fixtures/har/create_201.json",
+   "fixtures/har/create_422_fee.json",
+   "fixtures/har/dashboard.json",
+   "fixtures/har/decision_branches.json",
+   "fixtures/har/generate_201.json",
+   "fixtures/har/generate_404_minimal.json",
+   "fixtures/har/status_drifted.json",
+   "fixtures/har/status_ok.json",
+   "fixtures/har/templates.json",
+   "fixtures/har/upload_ok.json",
+   "fixtures/har/validate_200.json",
+   "templates.json"
+  ],
+  "zip_sha256_b64": "E+FqSWwETrwJ9Gd1JZwvB/VY7xZNSpjt6WUPRt/clmE="
+ }
+}

@@ -12,7 +12,7 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| U1 | verify | re-pin the irpt-ycharts-generate source-map row to the pin, build-and-upload, read the uploaded object back by version, member census against the live function | artifact sha256 and S3 version; downloaded by version, hash equal; census |  | OPEN |
+| U1 | verify | re-pin the irpt-ycharts-generate source-map row to the pin, build-and-upload, read the uploaded object back by version, member census against the live function | artifact sha256 and S3 version; downloaded by version, hash equal; census | re-pinned at 97eaff05ff (@02626fa6fb, 83 staged entries); built at 775a387b4c: sha256 E+FqSWwETrwJ9Gd1JZwvB/VY7xZNSpjt6WUPRt/clmE=, 570086 bytes, S3 version rtq1e9oTWYgCvsz8F0wgjoeEOw7dcTZr downloaded BY VERSION, hash equal; census vs live arC65KbDPPss: 112 members, 100 identical, 12 changed, 0 added/removed; built members equal the pin except fixtures/har/report.pdf (read by no reachable module); reach from generate_installed: of 8 changed .py only comparison_catalogue and recipe reachable, recipe's change unreachable (step_read_back has no reachable caller) (CATALOGUE/census_irpt-ycharts-generate.json) | CLOSED 20261002T052555Z |
 | D1 | verify | ONE targeted safe-apply of the generate function after both halves | apply output; CodeSha256 equals the built hash; a re-plan of the same target reads no changes |  | OPEN |
 | D2 | verify | ONE targeted safe-apply of aws_apigatewayv2_route.irpt for GET /api/scoped/investor-reporting/analysis/comparisons after both halves | apply output; get-routes shows the route on the portal API with the authorizer; a re-plan reads no changes |  | OPEN |
 | V1 | verify | served read-back as svc-irpt-analysis: GET analysis/comparisons lists the model entries and named tickers; POST analysis (empty body) and the upload route answer as before | the route outputs, read for values before commit |  | OPEN |
@@ -20,3 +20,4 @@
 ## Log
 
 - 20261002T050256Z OPENED by 2.0.0_SA_COO~Y with 4 leg(s)
+- 20261002T052555Z LEG U1 closed: re-pinned at 97eaff05ff (@02626fa6fb, 83 staged entries); built at 775a387b4c: sha256 E+FqSWwETrwJ9Gd1JZwvB/VY7xZNSpjt6W
