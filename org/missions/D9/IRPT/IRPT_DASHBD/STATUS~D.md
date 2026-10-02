@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~D` (CLAUDE). Contract: PRD `org/missions/D9/IRPT/IRPT_DASHBD/
 (ENDPOINT unchanged since @2cb022f549; C-LEASE and ruling 6.7 place F's items on this seat). Reviewer `3.0.0_SA_CVO`
 (grades each landed pin after the fact, as DSGN_IRPTV1 pins). Authority: Andrew-direct 2026-10-01 ~04:2xZ, record
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261001_042xZ_SELF_DRIVE_60M_LAPTOP_FABRIC_FINAL_SAY_CLOSER_DRIVE_IRPT_FIRST.md`
-@c48af273cc (CTO 103442). **As of 2026-10-02T08:2xZ.** This file holds F's claims and next-list; the pins, the landed
+@c48af273cc (CTO 103442). **As of 2026-10-02T09:3xZ.** This file holds F's claims and next-list; the pins, the landed
 table and the screen are in `org/missions/D13/DSGN/DSGN_IRPTV1/STATUS.md` (one seat, one portal checkout).
 
 ## Pins
@@ -40,9 +40,10 @@ account 0 reads, 85 ms. FWD-1's ACCEPT (Andrew's pick the next morning) and the 
    "Data through <as-of>" on the face. Pin iv-e-135 (8 arms, mutant fails), 18 of 18 neighbours, typecheck rc=0, eslint 0
    errors; fixture-plane run both branches. Its signed-in runs are DONE (06:26Z; 08:13Z with the paint time and 0 requests on a
    window change; Live thread above).
-1a. UN-PARKED 08:13Z, ASKED of 1.0.0_SA_CTO (a design call): the thread account is now served by BOTH sources and they
-   disagree on one page -- the picker's suffix 'YTD 3.62%' (IRPT_BCKEND's period figure) beside the dashboard's YTD 6.10%
-   (data through September 28th). Built here the tick it is ruled (the picker's suffix is `tabs/reporting`, this lease).
+1a. ~~Two YTD figures on one page~~ LANDED portal `0531cc65` (DSGN_IRPTV1 STATUS row 72) on 1.0.0_SA_CTO RULINGS batch 128
+   (a) with the words of 104129: a dashboard account's picker suffix is the body's YTD, 'total return, before advisory fees,
+   data through <date>'; a mixed list names the other figure 'price return, as of <date>'. The gap's composition is
+   2.0.0_SA_COO~P's (@7a620078c5: a basis difference, no defect).
 1b. Open for a ruling only if asked: opening the account takes about 5.3 s because the series is read after the manifest
    answers (2.9 s of route time first). Reading both at once would save about 1.7 s at the cost of one refused series read
    per uncovered account; the manifest route's own time is 2.0.0_SA_COO~P's. Not built.

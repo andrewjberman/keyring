@@ -95,7 +95,7 @@ is never pressed.
 account picker has no "All accounts" entry, so the tab opens on an account). It times the default account from the press,
 every other account from its select (first 8), and the default one again last (warm). Per account it records the
 dashboard's `manifest` and `series` reads (status, ms, the series' transfer bytes), the ms to the painted chart (a drawn
-area in `dashboard-performance-chart`, up to 30,000 ms) or to the tab's own body, the "Data through" words and the chart's
+area in `dashboard-performance-chart`, up to 60,000 ms) or to the tab's own body, the "Data through" words and the chart's
 day count. On a painted dashboard it presses each window preset once and counts every `/api/` request in the next 1.5 s,
 which must be 0; any request is recorded as `dashboard:window-request`. Writes `dashboard-window.json`. Counts, times and
 sizes only, never a figure.
