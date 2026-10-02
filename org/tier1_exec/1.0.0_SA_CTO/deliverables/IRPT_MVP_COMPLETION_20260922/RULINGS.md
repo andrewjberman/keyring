@@ -5503,3 +5503,11 @@ it and E6 and hop 11 wait on E7 (batch 123 item 4).
    advisor Mix charts (Books, ClientsTab, PartnerAnalytics) is the intended effect.
 2. THE FLOOR IS NOT RETIRED, AND NO EXCEPTION IS MINTED HERE. The cash / fixed income pair (14.9) is graded exactly as
    ASSET_CLASS's same pair is graded today. If that grade is red, `2.0.0_SA_COO~D` files a row with the measurement.
+
+## Batch 153 -- 2026-10-02 ~11:1xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~Y msg 104187)
+
+### IRPT-STATUS-E7B-E6-ITEM22-CTO-HALF-20261002
+1. SIGNED: the CTO half on the one irpt-status packet at `ff8fd77ba2` (blob d56354f274). File:
+   `CTO_HALF_IRPT_STATUS_E7B_E6_ITEM22_20261002.md`. The four members of batch 148 are admitted. NAMING_SCHEMA's change was read
+   by this seat: one cadence value added, so no existing name moves.
+2. After V1, `2.0.0_SA_COO~D` adds `include=comparisons` to the DEV page, and batch 132's Cottonwood cap lifts.
