@@ -34,8 +34,18 @@ TEAMS_BEARER=<value of Secrets Manager secret gateway/teams/bearer>
 ```
 
 The secret is created by the laptop's cloud half of this project. Unset `TEAMS_BEARER` leaves `/hx/teams` returning
-503 (the gateway boots fine without it). If the ALB has a per-path rule for `/hx/mail/*` and `/hx/transcripts/*`
-(no OIDC on the headless prefix), `/hx/teams/*` needs the same treatment.
+503 (the gateway boots fine without it).
+
+**Update 2026-10-02 ~05:5xZ (4.0.0_SA_CRO): the secret EXISTS and holds a value** (put 05:43Z, one AWSCURRENT
+version; read it by name, it is never printed). LDO-001's cloud half is APPLIED on the laptop and its ingress already
+calls `/hx/teams` every minute.
+
+**ALB rule -- REQUIRED, not optional.** Measured 05:5xZ: an unauthenticated `GET https://mcp.opalinvest.dev/hx/teams/me`
+answers **302 to login.microsoftonline.com** (`/hx/mail/x` answers 401 from the app), so the path needs the same
+forward-without-OIDC treatment. The change is one value in the existing rule:
+`infra/aws/terraform/opal-gateway/hx-capability.tf` -> `aws_lb_listener_rule.hx_capability` path_pattern gains
+`"/hx/teams/*"` (3 values; the limit is 5). Post-apply check, as that file's header says: `GET /hx/teams/x` is refused
+BY THE APP (401/404, no redirect), while `/` still 302s.
 
 **Graph scopes:** the routes call `/me/chats`, `/me/chats/{id}/messages`, `/chats/{id}/messages` (POST) and the
 channel `/replies` (GET and POST) with MS_INGEST_IDENTITY's delegated token. That token needs Chat.ReadWrite,
