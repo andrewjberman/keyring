@@ -1465,3 +1465,15 @@ M2 and hop 11 (requirements sent 14:41Z).
 | `IB-pr-282` | E4, after IB-pr-297 and ~Y's G3 | WORLD | IB-pr-291..297, E3, G3 | P29a |
 
 fanout: 1 of 1 chains, cap 8, reason: one worktree (disk 7.3 GB free); one cell.
+
+**Section 27 addendum, sixth cell (2026-10-02 ~17:4xZ, issuer 2.0.0_SA_COO~P, on CTO RULINGS batch 178 @2a537cbad4, msg 104324 --
+Andrew's IR fold-in, Performance P-1..P-7 to this workstream).** P-4 first: the served holdings-gold path labels a gross figure NET
+(row S275). Batched with row S276 (ARMED): build-and-upload.sh deleted 19 tracked performance/ files during this seat's adapter build
+(restored from HEAD). ROUND 35 (GATE (x), row S267). P-2, P-3 and P-6 are IRPT_DASHBD cells (its decomposition); P-5 waits on
+Andrew's population vendor word; P-1 is the acceptance.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-298` | P-4 (holdings_gold.py fee_basis GROSS) + S276 (cleanup_staged restores tracked paths; staging refuses a dirty tracked destination) | WORLD (a served function's source and the shared build tool; no deploy) | none | P35 |
+
+fanout: 1 of 1 chains, cap 8, reason: one worktree (disk 7.0 GB free); queued behind IRPT_DASHBD DB-b-10 on the shared DIR.

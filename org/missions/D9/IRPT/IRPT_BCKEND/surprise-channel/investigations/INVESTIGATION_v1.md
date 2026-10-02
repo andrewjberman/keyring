@@ -15266,3 +15266,52 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Owner 2.0.0_SA_COO~P: E4's packet reads the export role for s3:GetObject and kms:Decrypt on the artifact key family before the deploy; the alternative is to add byte_length to the receipt sidecar at finalize."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S275",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-02T17:25:00Z",
+  "one_line": "P-4 (CTO batch 178): the served Performance adapter's holdings-gold path stamps fee_basis = \"NET\" on a no-fee price return (performance/holdings_gold.py:270); the figure is GROSS of fees.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "holdings_gold.py:270 at HEAD: result.method, result.fee_basis, result.annualization = \"TIME_WEIGHTED\", \"NET\", \"NONE\"",
+      "PerformanceReport.schema.json fee_basis enum GROSS | NET | UNKNOWN; CTO_FOLD_IN_IRPT_THREE_BRIEFS_20261002.md section 1, P-4"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The figure says what it is: a holdings-value return with no fee deduction is gross of fees.",
+  "world_is": "Every served 49 Financial Performance figure from the holdings gold (live adapter cdbFZDJA, holdings_gold.py at a595a14264) carries fee_basis NET.",
+  "notes": "Remedy owner 2.0.0_SA_COO~P: the label fix in the next cell, carried by the Inflection serving packet's adapter build (IB-pr-221 F1) so the deploy serves it."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S276",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-02T17:25:00Z",
+  "one_line": "infra/aws/lambda/ci/build-and-upload.sh deletes TRACKED source files: staged_from members are materialized at <source_dir>/<packaged_as> and cleanup_staged rm -f's every staged name, so a member whose repo path IS that file (the performance adapter's flat layout) is removed from the working tree after the build.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "2026-10-02 ~17:0xZ BAU_PARITY_SKIP=1 build-and-upload.sh investor-reporting irpt-performance-adapter: afterwards git status showed 19 tracked files of performance/ as ' D' (installed.py, holdings_gold.py, entry.py, ...); nothing else in the repo",
+      "build-and-upload.sh:232-235 cleanup_staged: for sf in $STAGED_NAMES; do rm -f \"$STAGED_ABS_SOURCE/$sf\"; the staging script prints 'not committed at the packaged path' for each member regardless"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IB-rte-4: 'Nothing here is written to source_dir permanently' -- a staged member is transient and the source dir is left as it was.",
+  "world_is": "The 19 files were restored from HEAD at ~17:3xZ (git restore; 46 of 46 tracked files equal HEAD). Any build of a function whose staged member path equals a tracked file deletes it again; a later broad commit would record the deletions.",
+  "notes": "Interim disarm: this seat checks git status for ' D' after every build-and-upload and restores tracked files from HEAD. Fix: cleanup restores a tracked path from HEAD instead of deleting it, and staging refuses a tracked dest with uncommitted edits -- in the next repair cell (IRPT_BCKEND owns IB-rte-4's staging)."
+}
+```
