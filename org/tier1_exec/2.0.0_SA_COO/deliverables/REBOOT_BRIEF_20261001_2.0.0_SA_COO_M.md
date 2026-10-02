@@ -1,5 +1,26 @@
 # Reboot brief -- 2.0.0_SA_COO~M -- rewritten 2026-10-02 04:0xZ at the wind-down; updated 05:2xZ
 
+**UPDATE 19:4xZ -- STATE (supersedes every line below where they differ):**
+- Portal PROD f76b02acb6 carries eb90f2ad (Andrew's promote; read 13:56:40Z). Both re-land acts RAN.
+- BD r3 RE-LAND (ledger `secclass-bd-thread-r4-reland-m-20261002`): P, M (drain ac44b6aaaf, release b3442d6ea1), G (five files
+  14:16Z), W (watermarks to 09-29), R (QA run green: unclassified 4.14 pct, every class, identity hops in the log) CLOSED. OWED:
+  leg S at tonight's 23:00Z gold fire (firm mix, every class, <= 5.0 pct) + one walked 49F page on PROD readers; and the 22:10Z
+  silver read (batch 129). Rollback: copy-object of the prior VersionIds in leg G's proof; watermarks per leg W.
+- Cottonwood RE-POINT (ledger `secclass-cot-repoint-m-20261002`): PROD, M (bf165606a2; release 917fd2ff02), I (role +1 statement),
+  A + G (17:28-17:30Z), W (CTO addendum 2, batch 179) and R (QA green, 17.37 pct unclassified, 219 of 219 clients sum) CLOSED.
+  OWED: leg S at the 2026-10-03 scheduled Cottonwood gold run (~11:35Z) + walks (firm Mix chart, Books donut, one advisor Mix).
+- Holdings 14:15Z publication read: three row ledgers CLOSED (7421b39e62). Still open: `irpt-inf-split-positions-m-20261001` leg S
+  (branch count read: 71 split / 786 single; the WALK of acc_015d15b45d7a8ac71f951a67 owed) and `secclass-cot-seed-rows-m-20261001`
+  leg S (data read 19 of 19; the Cottonwood selection WALK owed) + leg G at 23:00Z. Walker account is shared with 2.0.0_SA_COO~D.
+- multi_asset readers packet (batch 164): producer + three schema copies on CLOUD (daaef69b9d, ~P 16a3fcfd6a); Advisor
+  Intelligence readers on portal DEV 90a31d7d (CTO PASS 104340, MSTR landed); ~D's colour + IR readers on DEV 7bcedf1b. NEXT: the
+  packet's deploy halves (producer deploy, irpt-holdings re-stage) and PROD readers (Andrew's promote); rows only after.
+- CTO batch 178: STATUS~M.md current (dbc5e1a5c7); item 2 (after ~D's H-1, landed DEV 16c6690e): 49F largest client
+  cli_8499bbbd... expects 17 tiles by the map rule (sent to ~D 104378); bring brief 3 item 1.4(d) TARGET fold back as its own ask.
+- Row S15 code half done (writer refuses non-ASCII names, 821bb7b891); the one row's ASCII rewrite rides the next CUSIP-row act.
+- Row S16 filed (BD gold deploy re-ships lib/_shared; DISMISSED_WITH_REASON). FAST lease MDPF_SECCLASS LAPSED 13:54Z (not re-armed).
+- Push state: every commit of this seat LOCAL; origin CLOUD is the integrator's.
+
 **UPDATE 12:2xZ -- STATE (supersedes the 10:3xZ line where they differ):**
 - Table `etf-classifications` 2,841 rows. Written today under both halves: 19 Cottonwood seed (02:12Z), 29 Cottonwood CUSIP CDs
   (03:40Z), 67 bd-mapped (10:26Z), 3 seed ABNFX/LBNYX/NYT (10:30Z), 16 per-ticker first act (11:21Z), 36 residual CUSIP rows (12:18Z).
