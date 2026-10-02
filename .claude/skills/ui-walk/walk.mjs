@@ -52,6 +52,9 @@ for (let i = 0; i < argv.length; i++) {
   // for the page to settle (PRESS_SETTLE_MS), shoot and check; a DO_NOT_CLICK word is refused. For a chart behind a tab.
   else if (a === '--press') (opt.presses = opt.presses || []).push(String(argv[++i] || ''))
   else if (a === '--holdings-aggregates') opt.holdingsAggregates = true
+  // --map-tiles (with --client): on the Holdings tab's default view, count the Securities map's drawn tiles against the
+  // distinct securities in the served snapshot it shows (CTO batch 178 H-1 proof). Counts only.
+  else if (a === '--map-tiles') opt.mapTiles = true
   else if (a === '--performance-state') opt.performanceState = true
   else if (a === '--expect-text') opt.expectTexts.push(String(argv[++i] || ''))
   else if (a === '--reload-reopen') opt.reloadReopen = true
@@ -597,6 +600,42 @@ const modelScopes = []
 // nodes included. Counts only; no name and no figure of any client is written. `class_totals` plus the remainder is
 // checked against the custody total. One record per distinct selection path.
 const holdingsAggregates = []
+// ---- --map-tiles: the Securities map's tile count against the served snapshot (DSGN_IRPTV1 item 85, CTO batch 178) ----
+// Every holdings answer the walk receives is reduced to its count of distinct map-eligible securities: SECURITY or CASH
+// nodes with a served of_total and a non-zero amount, one per security_id (else per node id) -- the page's own map rule
+// (treemapLeavesFrom). The step reads the tile rects drawn in [data-slot="treemap-chart"] on the tab's default view and
+// compares them with the answer that view shows: the one with the most distinct securities (the all-accounts selection;
+// the tab's background one-account reads are subsets). Counts only; no name and no figure of any client is written.
+const mapTileAnswers = new Map()
+const mapTiles = []
+function readMapTileAnswer(p, j) {
+  const d = j && j.data
+  if (!d || !Array.isArray(d.nodes)) return
+  const ids = new Set()
+  for (const n of d.nodes) {
+    if (n.node_kind !== 'SECURITY' && n.node_kind !== 'CASH') continue
+    const pct = n.percentages ? n.percentages.of_total : null
+    const amount = n.amount ? n.amount.value : null
+    if (pct === null || pct === undefined || amount === 0) continue
+    ids.add(n.security_id ? `${n.security_id.namespace}:${n.security_id.value}` : `node:${n.node_id}`)
+  }
+  mapTileAnswers.set(p, { selection: p.split('/').pop().slice(0, 16), distinct_securities: ids.size })
+}
+async function mapTilesStep(page, label) {
+  await page.locator('[data-slot="treemap-chart"]').first().scrollIntoViewIfNeeded().catch(() => {})
+  await page.waitForTimeout(1500)
+  const drawn = await page.evaluate(() => {
+    const root = document.querySelector('[data-slot="treemap-chart"]')
+    const rects = root ? [...root.querySelectorAll('svg g > rect')] : []
+    return { tiles: rects.length, small_tiles: rects.filter((r) => r.getAttribute('data-small-tile') === 'true').length,
+      grouped_words: /Other Securities|Smaller Holdings/.test(document.body.innerText) }
+  })
+  const answers = [...mapTileAnswers.values()].sort((a, b) => b.distinct_securities - a.distinct_securities)
+  const shown = answers[0] || null
+  mapTiles.push({ label, ...drawn, served_distinct_securities: shown ? shown.distinct_securities : null,
+    equal: shown ? shown.distinct_securities === drawn.tiles : null, holdings_answers_read: answers.length })
+  await shot(page, `${label}-map-tiles`)
+}
 // ---- --performance-state: the Performance tab's STATE, not a fixed sleep (DSGN_IRPTV1 FAST item 57) ----------------
 // A performance answer can land after the 2,500 ms settle, so the tab's first shot reads "Loading" (walk
 // 20261001T083028Z: three of three). The tab marks its two finished states: `[data-slot=reporting-refusal-words]` (a
@@ -1202,6 +1241,7 @@ try {
     try {
       const j = await res.json(); body = j; ok = j.ok ?? null; state = j.status?.state ?? null; reason = j.status?.public_reason_code ?? null
       if (opt.holdingsAggregates && /\/investor-reporting\/holdings\//.test(p)) readHoldingsAggregates(p, j)
+      if (opt.mapTiles && /\/investor-reporting\/holdings\//.test(p)) readMapTileAnswer(p, j)
     } catch { /* not json */ }
     if (requestHops && hopStart.has(req)) noteHopResponse(req, res, body, await req.allHeaders().catch(() => req.headers()))
     if (res.status() >= 400 || ok === false || (reason && !/READY$/.test(reason))) apiIssues.push({ step, method: req.method(), path: p, http: res.status(), ok, state, reason })
@@ -1327,6 +1367,10 @@ try {
             // Drill FIRST, on the tab's default view: the explore step below changes selects and opens popups.
             if (/holdings/.test(name)) {
               // --account-drill runs on the tab's default view, BEFORE the generic drill below presses a tile itself.
+              if (opt.mapTiles) {
+                await mapTilesStep(page, `${client}-holdings`)
+                log('MAP TILES', JSON.stringify(mapTiles[mapTiles.length - 1]).slice(0, 600))
+              }
               if (opt.accountDrill) {
                 await accountDrill(page, `${client}-holdings`)
                 log('ACCOUNT DRILL', JSON.stringify(accountDrills[accountDrills.length - 1]).slice(0, 900))
@@ -1407,6 +1451,7 @@ try {
   if (searchTimings.length) writeFileSync(path.join(OUT, 'search-timings.json'), JSON.stringify(searchTimings, null, 1))
   if (openedRequests.length) writeFileSync(path.join(OUT, 'analysis-request.json'), JSON.stringify(openedRequests, null, 1))
   if (holdingsAggregates.length) writeFileSync(path.join(OUT, 'holdings-aggregates.json'), JSON.stringify(holdingsAggregates, null, 1))
+  if (mapTiles.length) writeFileSync(path.join(OUT, 'map-tiles.json'), JSON.stringify(mapTiles, null, 1))
   if (performanceStates.length) writeFileSync(path.join(OUT, 'performance-state.json'), JSON.stringify(performanceStates, null, 1))
   writeFileSync(path.join(OUT, 'lead-lists.json'), JSON.stringify({ schema_version: '1.0', tool: 'ui-walk', stamp, lists: leadLists }, null, 1))
   writeFileSync(path.join(OUT, 'netlog.tsv'), netlog.join('\n') + '\n')
