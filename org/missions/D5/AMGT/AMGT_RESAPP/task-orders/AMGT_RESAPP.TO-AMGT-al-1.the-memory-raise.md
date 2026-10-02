@@ -90,3 +90,5 @@ the pair) is cut only if A misses at 10240. Track C is after the demo.
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER GO act (B) (2.0.0_SA_COO~Z, 2026-10-02 ~11:1xZ):** build commit `a2ff06d1a1` (0 packaged files differ from the build-only tree `a12291728f`); halves COO `a12291728f`, CTO `57dfa6bd84`. CTO conditions: CHANGED 1; timeline_b.py + the planted-slow tests; deployed AND graded by 12:30Z; NEVER-2 entry.
