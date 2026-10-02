@@ -74,7 +74,7 @@ rk-2.AC1 FAIL (no plausibility_guard) as expected; rk-2.AC2 FAIL (no config entr
 
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>6</round>
 <slot>~2</slot>
 <fabric>site-z</fabric>

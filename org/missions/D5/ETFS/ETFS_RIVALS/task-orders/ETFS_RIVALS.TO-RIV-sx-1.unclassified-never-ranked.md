@@ -69,7 +69,7 @@ sx-1.AC1 FAIL (Unclassified ranked 1st) as expected; sx-1.AC2 FAIL as expected; 
 
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>6</round>
 <slot>~2</slot>
 <fabric>site-z</fabric>
