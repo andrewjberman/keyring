@@ -163,6 +163,11 @@ Doctrine `infra/logic/02_DOCTRINE.md`; builder `lib/opal_naming.py` `address()` 
 
 ## 7. Calls for Andrew (each with a recommendation)
 
+**RULED 2026-10-02 ~18:1xZ** (record addendum 3): call 1 = gross for now, net-fee operations assessed per
+custodian/vendor firm by firm (Orion for Inflection, possibly raw custodial data from Cottonwood, Black Diamond
+otherwise); call 2 = APPROVED, widen to every 49 Financial account now, then each firm. Call 3 (naming) was not put to
+Andrew: it is the CTO's unless the exception route is chosen.
+
 1. **Net as well as gross?** The 09-30 word is gross only, with a fee rail for later. Recommendation: keep gross; label it;
    build the fee rail when a fee field exists.
 2. **Widen the precomputed path to the whole population.** Today's "has to be designed in a manner that it is

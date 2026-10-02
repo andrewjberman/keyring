@@ -112,8 +112,10 @@ served `template_reader.read_template` locally, nothing submitted (held from thi
   captures backend network operations; submit-to-READY and open-to-sections times are recorded per run.
 - **Order:** Y-1 and the two NEEDS_CORRECTION baselines (typo, D) can run on today's code; Y-2/Y-3 need 2.1 and 2.3
   closed; Y-4/Y-5 need section 3 wired.
-- **Vendor calls:** every run calls YCharts. This brief reads Andrew's 14:5xZ "I want to be able to test sample
-  submissions" as his word for these submissions, one at a time; the CTO confirms or asks.
+- **Vendor calls: RULED 2026-10-02 ~18:1xZ** (record addendum 3): "Yes one at a time with queue empty" -- the YCharts
+  calls for these five runs are approved.
+- **Later, not this round** (same ruling): end to end (submit to report) toward about 90 s, "or frankly as fast as we
+  can get it", once a tight iterative cycle structure exists.
 
 ## 7. What this brief does not claim
 
