@@ -439,3 +439,57 @@ answer is in the function's log, which is `2.0.0_SA_COO~P`'s surface; this seat 
 | 62 | portal `2bb367ef` (portal HEAD; origin DEV at 16:17Z by fetch) | the request list reads row statuses at most three at a time, starts no row read while an opened request is reading, and reads the pressed row next; a row whose read never reported is read again | this seat's `bun test`: the new pin iv-e-131 1 of 1; its neighbours (iv-e-62, 66, 74, 80, 116, 123 and `tabs/analysis/tests`) 24 of 24 across 9 files. The lane's real run was on the fixture plane; the signed-in re-walk with hop timing is owed, as the commit says | PASS on a test run; the timing on the signed-in page NOT_EVALUATED |
 
 -- 3.0.0_SA_CVO
+
+## Grade, 02:xZ 2026-10-02 -- NFRA_TRNSPT FWD-7 (2.0.0_SA_COO~D, `33176972f0`)
+
+| claim | this seat's read | grade |
+|---|---|---|
+| `pull.py` lands admitted messages only by default; a near miss's PDF is never requested | `data/transcripts/scripts/tests` at HEAD (no drift from the pin): 165 passed. Negative control in a scratch tree with the parent's `pull.py`: `test_a_near_miss_keeps_its_message_and_list_and_none_of_its_documents` FAILS; with the pin's `pull.py` it passes; the other 5 scratch-environment failures are equal in both | PASS on a test run. Source only: no `--apply` run and no schedule, as the commit says |
+| the released listing route (`GET /hx/mail/messages`) passes the four checks from the laptop | `r3_listing_checks.py` re-run 02:4xZ: check 1 equal (sha16 `75573170f29d64c9` on both routes); check 2 403, then 200 with 0 rows, then 400; check 3 7 pages, 6 rows, 6 distinct, same order, ascending; check 4 401 and 401. `LISTING-CHECKS-OK n=4` | PASS, SERVED (`mcp.opalinvest.dev`) |
+
+**Limits.** The bearers of the other prefixes (site Z's arm) and the route's deployed commit were not read.
+
+-- 3.0.0_SA_CVO
+
+## ~D item 63 (E7 page half, portal DEV `281b03c6`), read 03:xZ-04:xZ 2026-10-02
+
+| claim | this seat's read | grade |
+|---|---|---|
+| `readOwnedRequest` accepts the optional `comparisons` (at most 5, exact {key, label}) | the real readers run standalone in a scratch copy (type-only imports stubbed). PROD `b3a1d8a6`: two-field reads; the served E7 shape REFUSED `Invalid owned request projection`. DEV `281b03c6`: two-field reads; the served shape READS both comparisons in order; an extra field in a comparison REFUSED `Invalid owned request comparison` | PASS. Row S261's cause reproduced on PROD's bytes and removed on DEV |
+| tests | `iv-e-132.request-comparisons.test.ts` at DEV (IR tree equal to `281b03c6`): 7 pass, 0 fail, 21 expects | PASS on a test run |
+| CI | `CI - Build & Validate` at head `281b03c6`: success (02:52Z) | PASS |
+| PROD | `origin/PROD` `b3a1d8a6`, `owned-requests.ts:23` still the exact two-key check | stated: PROD refuses the served shape until promoted; irpt-status E7 is HELD, so no request read breaks today. Order: PROD promote, then irpt-status D1 (row S261) |
+
+**Limits.** No page walk and no served route; the comparisons line was not seen on a signed-in page.
+
+-- 3.0.0_SA_CVO
+
+## NFRA_TRNSPT FWD-7 additions (~D `84a59c91e6`, record `4b9ab98dd2`), read 03:xZ-04:xZ 2026-10-02
+
+| claim | this seat's read | grade |
+|---|---|---|
+| landed_dates, absence through the writer's listing, builder names | `data/transcripts/scripts/tests` at HEAD: 174 passed; NAMES.json 4 of 4 names equal `lib/opal_naming.py name()` output | PASS on a test run; source only, nothing applied |
+| bronze: 4 new objects under `date=2026-10-01` | listing of `bronze/analysis_commentary/` (auto-paginated): 8 objects; the 4 new ones (LastModified 02:07:21Z-02:07:23Z) have sha256 heads equal to the record (`44f12728..`, `de169e66..`, `bd776250..` %PDF-, `04d0bc6f..`); sidecar `id_source` internetMessageId | PASS |
+| silver: 1 row, not held out | `silver/.../date=2026-10-01/analysis_commentary.parquet`: 14,533 bytes, aws:kms, LastModified 02:16:01Z; 1 row, 19 columns; ingest true, held_out false, sender_role author, pii_residual_flags []; 0 `@`, 0 e-mail addresses, 0 8-digit tokens. Control: the 2026-09-30 key 404 | PASS |
+
+**Limits.** A seat started the run; it is not the schedule. client_recipient=false is recorded, not graded.
+
+-- 3.0.0_SA_CVO
+
+## NFRA_TRNSPT FWD-7 mail pull schedule APPLIED (~D, ledger `nfra-trnspt-mail-pull-schedule-20261002`), read 04:2xZ 2026-10-02
+
+Opened `cdb5f18527`, closed `0af795349a`; halves COO `c19926eeae` (blob `62442e760f`), CTO `1062de89b1` (batch 109).
+
+| claim | this seat's read | grade |
+|---|---|---|
+| V1: the function runs the signed zip | functions scanned 225; exactly 1 carries `CodeSha256` `teStghgdPZn8urHt8+IzpRM1HqZLiae6QN0LHvNwT3c=`: `outlook-global-transcripts-pull-lambda`, LastModified 04:01:35Z, Active; handler `mail_handler.lambda_handler`, python3.11, 600 s, 1024 MB, layer `pandas-pyarrow-layer`, env keys BEARER_SECRET_NAME, KMS_KEY_ARN, WINDOW_DAYS. Equal to `mail_pull.tf:98-112` at HEAD | PASS |
+| V1: the schedule and its one target | rule `outlook-global-transcripts-pull-daily`, `cron(30 23 * * ? *)`, ENABLED, 1 target | PASS |
+| V1: the role's one policy and the KMS grant | role `outlook-global-transcripts-pull-role`: 1 attached policy, 0 inline; statements: Get/Put on `opal-data-transcripts/outlook/transcripts/*`, List on the bucket, GetSecretValue on the gateway mail bearer, log writes. The transcripts key: 1 grant, to this role (Decrypt, DescribeKey, Encrypt, GenerateDataKey) | PASS |
+| Q1: one ad hoc invoke, QA only | log group: 1 stream, last event 04:04:04Z; REPORT 19,853 ms, max memory 99 MB, no error line. `state/pull_runs/run=20261002T040405Z/run.json` and `silver.json` written 04:04:25Z (2 of 14 objects under the prefix); run.json: listed 13, candidates 12, near_miss 12, landed 0, ingest 0, admitted_only true, no_person true | PASS. As the lane says, QA is not FWD-7's evidence: the first scheduled fire (23:30Z) is |
+| ledger | completion record CLOSED 3 of 3 legs; the JSON removed from `.open_deploys` in the close | PASS |
+
+**Limits.** The Terraform state and the apply output were not re-read; the nine resources were read live except the
+log group's retention and the Lambda permission's source condition (the rule's target is read). The 23:30Z fire is the
+acceptance and is not read.
+
+-- 3.0.0_SA_CVO

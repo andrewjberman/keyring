@@ -110,3 +110,59 @@ The mistake was this seat's: a read taken at one HEAD was written into a row com
 re-read.
 
 -- 3.0.0_SA_CVO
+
+## Grade, 02:xZ 2026-10-02 -- MDPF_SECCLASS BD thread r3 legs A2, A1 and item 4
+
+| claim | this seat's read | grade |
+|---|---|---|
+| A2: the 22:10Z silver fire ran document v5 and `silver/bd_assets_dim.parquet` advanced | SSM command `0da1ded9` at `$LATEST` (default 5, latest 5, hash `d3a38c7b..3f407`), requested 22:11:06Z on `i-0e6f6dc014fdcf1cd`, Success 1 of 1. The key advanced at 22:11:40Z (979,746 bytes; prior 2026-09-30 22:11:33Z); rows 12,148 to 12,176, the same 22 columns | PASS |
+| A1: at the 23:00Z gold fire C_06, D_03 and D_04 exit 0 and the served keys advance | `gold_incremental_2026-10-02_20261002_010256.log` from 23:00:45Z: `C_06 done (rc=0)`, `D_03 done (rc=0)`, `D_04 done (rc=0)`, `PARALLEL CHAIN COMPLETE`, `COMPLETE (exit code: 0)` at 01:02:56Z. Of the half's five named keys 3 advanced (`firm_composition` 00:13Z, `platinum/clients/z08327149/summary` 00:35Z, `platinum/firm/mix_summary` 00:33Z); 2 did not (`mix_daily_summary`, `client_timeseries/z08327149`, last version 2026-10-01 05:1xZ) | PASS as worded. **Limit:** C_06 read `To process: 0 ... No new partitions` (watermark 2026-09-29): it imported the shared client and computed nothing. Its first compute under the new client is the 2026-10-02 04:00Z fire, and its two keys advance only then |
+| item 4 (ledger `secclass-e18-trigger-dispatcher-m-20261001`, leg A): PHASE_B3b runs E_18 rc 0, 0 CALGUARD lines, the chain exits 0 with B4 onward | `E_18 done (rc=0)`, `PHASE_B3b complete (7s)`; 0 CALGUARD lines; PHASE_B4 to D5 complete; written/refused `0 / 0` with 1 candidate unresolved; a table scan finds `updated_by = e18-scheduled` on 0 of 2,690 rows | PASS as worded. Vacuous on the write branch: 0 rows written, so CTO addition (3) (the first branch-B row against the fallback's class) is NOT_EVALUATED |
+| CTO `e5b4a67464`: SPYI, PSLV, FPNIX absent after the 23:00Z fire, stop (b) stands | E_18 wrote 0 rows, which agrees. Now all three are PRESENT (consistent get-item): SPYI structured / Options Income, PSLV commodities, FPNIX fixed_income, each `classified_by seed`, `updated_by seed-script`, `last_updated` 02:12:11Z: `2.0.0_SA_COO~M`'s seed act (ledger `secclass-cot-seed-rows-m-20261001`), not the detector. Control WMT. Served BD silver of 22:11Z predates the seed (SPYI equity/bd, PSLV alternatives/etf_classifier_fallback, FPNIX fixed_income/bd) | PASS: the detector did not take them first |
+| ledger state | `deploy_ledger.py list` in the shared tree (this seat, 02:5xZ), 20 of 20 sentinels: `secclass-bd-thread-r3-m-20261001` OPEN, age 20.7h, window 20.0h, PAST-WINDOW, stranded A1 and B4; `secclass-e18-trigger-dispatcher-m-20261001` OPEN, in window, stranded A. Nothing is half-landed: code and document are deployed and verified; what remains is reads | Owed by `2.0.0_SA_COO~M`: close A1 and E18 leg A on this log; B4 (the page read) remains |
+
+**Two runner findings from the same log**, filed as rows (not grades): the runner prints `WARN: comp-freshness not
+found in PATH -- freshness gate skipped.` on every start read (2 of 2 in the prior log's tail, 1 of 1 in the 23:00Z
+run); and three starts on 2026-10-01 (09:47Z, 12:45Z, 21:47Z) end in silver prep with no COMPLETE line before the next
+start re-executes.
+
+**Limits.** The log tail was read, not the whole object. B4 (the page) is not read. The seed rows reach served BD
+silver at the 2026-10-02 22:10Z fire at the earliest; not read.
+
+-- 3.0.0_SA_CVO
+
+## ~M Cottonwood 19 seed rows (merge `96e945c649`), read 03:xZ-04:xZ 2026-10-02
+
+Ledger `secclass-cot-seed-rows-m-20261001` (`3eac28eae3` open, `485c7f37dd` legs M, W, R closed); CTO half `e5b4a67464`.
+
+| claim | this seat's read | grade |
+|---|---|---|
+| 19 rows written as signed | consistent batch-get on etf-classifications: 19 of 19 present, all `classified_by seed`, `updated_by seed-script`, `last_updated` 2026-10-02T02:12:11Z; 112 of 112 field values equal the seed source at HEAD (asset_class, management_style, sub_asset_class, sector, name, instrument_kind) | PASS |
+| the four choices | MEAR, EVSM, VMLUX Short Duration with sector Municipal; FPNIX Short Duration, EIBIX High Yield; PSLV commodities, SPYI structured; BRK.A and BRK.B `single_security` equity | PASS |
+| no other row touched | full consistent scan: 2,719 rows; 48 carry `last_updated` from 2026-10-01T20Z on: these 19, and 29 `CUSIP:` rows written 03:40Z by `mdpf-secclass-cusip-rows` (a separate act, graded below); 0 others | PASS |
+| tests | `R7_CHECKS/test_seed_cot_top_tickers.py`: 22 passed | PASS on a test run |
+
+**Limits.** Legs S (the 2026-10-02 14:15Z publication) and G (gold fire) are not read; the served Holdings move
+(15,497,641.12 USD) is not read.
+
+-- 3.0.0_SA_CVO
+
+## ~M Cottonwood 29 bank-CD `CUSIP:` rows (deploy `afa9d2d4bb`), read 04:1xZ 2026-10-02
+
+Halves: COO `ffe6235c2a`, CTO `9cbda02990` (batch 108, blob `56a1db3d3e`). The CTO half lists as not verified by it:
+the writer's 10 tests, the generated set file, the dry runs, the reader census. This grade reads the first two and the
+write itself.
+
+| claim | this seat's read | grade |
+|---|---|---|
+| the stops at CLOUD: writer `6dfcd7fc75`, set `85f1bff9a4` | `git hash-object` on `R7_CHECKS/write_cusip_rows.py` and `COT_CUSIP_ROWS_WRITE_SET_20261002.txt` in the shared tree: equal, both clean | PASS |
+| the writer's tests | `R7_CHECKS/test_write_cusip_rows.py`: 10 passed | PASS on a test run |
+| 29 rows written as the set states | the set: 29 rows, 29 distinct CUSIPs. Consistent batch-get of `CUSIP:<cusip>`: 29 of 29 present; 29 of 29 equal the set on asset_class (fixed_income), empty sub class and name, with `classified_by scheduled`, `updated_by mdpf-secclass-cusip-rows`, `identifier_namespace CUSIP`; `last_updated` 2026-10-02T03:40 on 29 of 29 | PASS |
+| they follow the peer | `CUSIP:66476QFV5`: fixed_income, namespace CUSIP, classified_by scheduled; differs only in `updated_by` (`mdpf-secclass-scheduled`), which CTO half item 1 accepts | PASS |
+| no existing row touched | full consistent COUNT scan: 2,719 rows, equal to the close's 2,690 + 29. The second-wave scan above found 0 rows outside the seed and CUSIP acts written since 2026-10-01T20Z | PASS |
+
+**Limits.** No served move is claimed and none is read: the 3,005,499.29 USD of bank CDs reads fixed_income only after
+the Cottonwood re-point ships (leg R held). The comparison-catalogue skip of the CUSIP namespace is the CTO's read, not
+repeated. The dry runs and the reader census are not re-run.
+
+-- 3.0.0_SA_CVO

@@ -974,3 +974,118 @@ graduated item's remedy is routed by the CVO to its owner by name and the clocks
   }
 ]
 ```
+
+
+## S32, S33 -- two BD gold runner findings from the grade of MDPF_SECCLASS BD thread r3 (3.0.0_SA_CVO)
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-S32",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-02T03:05:00Z",
+    "one_line": "The firm gold runners' freshness gate never runs: the BD runner prints 'WARN: comp-freshness not found in PATH -- freshness gate skipped.' on every start read, and the same skip line is coded in the cot and inf dispatchers; a change record noted the tool absent on the runner on 2026-07-15 and no channel row carries it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "BD gold runner log copy (gold_incremental object read by this seat's grade of MDPF_SECCLASS BD thread r3, 2026-10-02 02:xZ): the WARN line on 2 of 2 starts in the prior log's last 9 MB and on 1 of 1 in the 2026-10-01 23:00Z run",
+        "comp-find 'freshness gate skipped', corpus all, 10 hits across 214,365 files: the echo at data/black_diamond/scripts/gold/gold_dispatch.sh:1350, data/cot/scripts/gold/gold_dispatch.sh:1139, data/inf/scripts/gold/orion-gold-dispatch.sh:1794; org/critical_paths/change_management/GLDRNS_B1_AOR_RELEASE_WINDOW_20260715.md:104 'the tool is ABSENT on the runner'",
+        "comp-find over org/surprise_channel and org/missions for the line: 0 hits across 12,712 files (no channel row)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The three dispatchers call a freshness gate before the gold build; a gate that cannot find its tool is meant to be the exception, since the dispatch code prints the skip as a WARN and continues.",
+    "world_is": "On the BD runner the exception is the rule: no start read has run the gate, and the code path is the same in two other firms' dispatchers. Inputs are not refused for staleness on these runners. Not read: the cot and inf runner logs, and whether anything downstream is meant to rely on this gate.",
+    "notes": "INERT: nothing reads the gate's verdict today, and the runs proceed. No monitor or alert is proposed (standing moratorium). For 1.0.0_SA_CTO's placement: provision the tool on the runner image, or remove the call and its WARN so the dispatch code stops claiming a gate it does not run. Owner of the runners: the DS and AE lanes."
+  },
+  {
+    "id": "ESTATE_GOVERNANCE-S33",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-02T03:05:00Z",
+    "one_line": "Four BD gold runner starts in two days end with no COMPLETE line: the runner's next start ('Runner updated from S3 -- re-executing new version') follows mid-step. The 21:47Z starts on 2026-09-30 and 2026-10-01 both stop inside the 345,000-pair expansion (ProcessPoolExecutor, 12 workers), and the 2026-10-01 09:47Z start stops in RPS injection.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "BD gold runner log copy, last 9 MB (this seat, 2026-10-02 03:0xZ): RUNNER STARTED at 2026-09-30 21:47:09Z, 23:00:44Z; 2026-10-01 04:00:41Z, 06:33:22Z, 09:47:03Z, 12:45:31Z, 21:47:07Z, 23:00:45Z; COMPLETE (exit code: 0) at 2026-10-01 01:02:24Z, 06:05:34Z, 08:34:33Z and 2026-10-02 01:02:56Z. Starts with no COMPLETE before the next start: 09-30 21:47Z, 10-01 09:47Z, 12:45Z, 21:47Z (4 of 8)",
+        "the last line before each following start: 'Expanding 345,025 pairs with ProcessPoolExecutor (fork, 12 workers)' (09-30 21:47Z run), '[RPS injection] Loading latest RPS partition...' (10-01 09:47Z), 'Expanding 345,227 pairs ...' (10-01 21:47Z)",
+        "the scheduled 23:00Z starts complete with exit 0 and arm the instance shutdown ('SHUTDOWN_ARMED chain=chain:full grace=2m')"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A runner start ends in a COMPLETE line with its exit code, so a failed or interrupted run is visible in its own log.",
+    "world_is": "Half of the starts in the window leave no end line, and the log cannot tell a killed run from an overlapped one: the next start begins while the earlier one was mid-step. Twice the stop is in the same memory-heavy step at the same hour. Not read: what triggers the 21:47Z and daytime starts, the instance's state changes, kernel OOM records, or whether two runs ever overlapped and wrote the same keys.",
+    "notes": "INERT on what was graded: the scheduled 23:00Z run completes and the BD thread's served keys advanced. For 1.0.0_SA_CTO's placement with the runner's owner. No monitor proposed."
+  }
+]
+```
+
+
+## S34 -- the closed ADHC_GLDINC project's five parity shadows still run every full BD chain (3.0.0_SA_CVO)
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-S34",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-02T03:15:00Z",
+    "one_line": "The BD gold dispatcher still runs five ADHC_GLDINC parity shadows every full chain (A_01, B_02, B_03, A_03, B_01), each building its oracle and uploading a scorecard to gold/_parity/, 3.5 months after ADHC_GLDINC closed and after its sanctioned parity window ended; the dispatcher's own comment says each shadow is TEMPORARY and removed at its cutover.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "BD runner log of the 2026-10-01 23:00Z start (copy read by this seat 2026-10-02 03:1xZ): after PARALLEL CHAIN COMPLETE, 'Running GLDINC incremental shadow' for 5 of 5 members, each 'OK -- parity scorecard uploaded', then SHUTDOWN_ARMED at 01:02:56Z",
+        "data/black_diamond/scripts/gold/gold_dispatch.sh:1488-1520 at HEAD: GLDINC_SHADOW_SET defaults to the five scripts; comment 'Membership is TEMPORARY per script: added when its additive path deploys, REMOVED at its cutover ... Toggle off entirely: GLDINC_SHADOW_SET=\"\"'; members added 2026-06-11",
+        "org/projects/ADHC_GLDINC.json: status complete, phase 'CLOSED COMPLETE 2026-06-18'; daily_watch 'Andrew-direct 2026-06-05 BINDING: GLDINC parity testing is a daily-attested obligation through 2026-07-05'",
+        "data/black_diamond/scripts/gold/B_01.holdings_lots.py:3212 writes gold/_parity/holdings_lots/{run_date}/scorecard.json; the 2026-10-02 key is named in the same log"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md section 5: NEVER stand up a shadow/build-alongside pipeline, duplicate output path, or standing parity comparator (Andrew complete veto). The dispatcher's own contract: a shadow is removed at its script's cutover.",
+    "world_is": "Five parity comparators run nightly with no end date, on a project closed 2026-06-18 whose Andrew-sanctioned parity window ended 2026-07-05. They write no served output and cannot fail the chain, so nothing served is wrong; they cost each full chain five oracle builds before the instance shuts down, and they are the standing comparator shape the veto names. Not read: each shadow's run time, the scorecards' recent verdicts, and whether any script reached its cutover (which would already have removed it under the contract).",
+    "notes": "INERT on served data. The toggle exists (GLDINC_SHADOW_SET=\"\"), so the remedy is one dispatcher edit and a QA deploy by the DS lane that owns gold_dispatch.sh, or a ruling that keeps them. Placement: 1.0.0_SA_CTO. Re-filed home: ADHC_GLDINC is closed, and the estate channel is the accepted home for a closed project's live finding (RULINGS batch 77 @4b9e65f744)."
+  }
+]
+```
+
+
+## S35 -- clock read for S17: the stitch build failed again; the cause is the grain sentinel (3.0.0_SA_CVO)
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-S35",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-02T03:30:00Z",
+    "one_line": "Clock read for S17: the 2026-10-02 03:00Z stitch build FAILED too (two nights running), and the cause S17 left unread is the producer's own grain sentinel: AC-GRAIN.2 counts 26 SCHEDULE nodes against a baseline of 10 (2.60x, outside the [0.4, 2.5]x band) and refuses to emit the graph.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO (placement with the graph pipeline's owner: either the schedule growth is real and the baseline is re-read and recorded, or a schedule census is wrong)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "codebuild batch-get-builds, opal-stitch-produce (this seat, 2026-10-02 03:2xZ, times converted to UTC): b53f5014 started 2026-10-02T03:00:12Z FAILED; 88fdb880 started 2026-10-01T03:00:12Z FAILED; the build before them SUCCEEDED; newest 3 of 96 on the first page",
+        "CloudWatch Logs /aws/codebuild/opal-stitch-produce, both failed streams, last 40 events: 'GRAIN-SENTINEL: FAIL (1 violation group(s))', '[AC-GRAIN.2] SCHEDULE: count 26 vs baseline 10 = 2.60x (outside [0.4, 2.5]x band)', 'ERROR: GRAIN_SENTINEL_FAIL -- refusing to emit grain-violating stitch graph', exit status 2",
+        "the same stream before the sentinel: UNIONED nodes 29,378, edges 63,403; genuine dangling edges 0; LAMBDA join matched 83, unmatched 7",
+        "row ESTATE_GOVERNANCE-S17 (this seat, 2026-10-01): 'Not read: the failed build's log, so the cause of exit 2 is unknown ... whether it repeats is tonight's build'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Row S17's hazard: a failed night leaves the previous stitch artifact in place, and only the served vintage line discloses its age.",
+    "world_is": "The stitch is now two days old and will stay so every night until the sentinel's SCHEDULE baseline or the schedule census changes: the refusal is deterministic, not a flaky build. The guard is doing its job; what it guards against (a grain change) is unread. Not read: which 16 SCHEDULE nodes are new and when they appeared.",
+    "notes": "Extends S17 (append-only channel; S17's own text is unchanged). No alert proposed."
+  }
+]
+```

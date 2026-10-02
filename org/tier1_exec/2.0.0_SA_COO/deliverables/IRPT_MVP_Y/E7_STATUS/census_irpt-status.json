@@ -1,0 +1,139 @@
+{
+ "function": "irpt-status",
+ "pin": "9ada3e8b024b52b4fee71ccf4aed7e44fee4bc3a",
+ "live_code_sha256": "2V7xV1+zII4+g6tV722Tk5M9LWJFMzLShyjq6Q+v/J4=",
+ "live_zip_hashes_to_it": true,
+ "live_members": 45,
+ "pin_members": 45,
+ "identical": 43,
+ "eol_only": [],
+ "changed": [
+  "durable_job.py",
+  "owned_requests.py"
+ ],
+ "added": [],
+ "removed": [],
+ "history": [
+  {
+   "member": "durable_job.py",
+   "source": "infra/aws/lambda/investor-reporting/ycharts/generate/durable_job.py",
+   "live_equals": "b3fc529601",
+   "ahead": [
+    [
+     "7122afefc1",
+     "fix(IRPT_BCKEND ~Y item 16, 2.0.0_SA_COO~Y): row S253 -- the resident job row keeps an append-only v"
+    ]
+   ]
+  },
+  {
+   "member": "owned_requests.py",
+   "source": "infra/aws/lambda/investor-reporting/ops/owned_requests.py",
+   "live_equals": "03de809d50",
+   "ahead": [
+    [
+     "8c4398e32a",
+     "fix(IRPT_BCKEND ~Y item 17, 2.0.0_SA_COO~Y): E7 -- the owned request read serves the chosen comparis"
+    ]
+   ]
+  }
+ ],
+ "served_closure": [
+  {
+   "member": "served.py",
+   "pin_sha256": "455cd77ea46e71ca",
+   "live_sha256": "455cd77ea46e71ca",
+   "state": "identical to live"
+  },
+  {
+   "member": "enforce.py",
+   "pin_sha256": "4245b5f8aded61b6",
+   "live_sha256": "4245b5f8aded61b6",
+   "state": "identical to live"
+  },
+  {
+   "member": "errors.py",
+   "pin_sha256": "b60f25ccaa706b7a",
+   "live_sha256": "b60f25ccaa706b7a",
+   "state": "identical to live"
+  },
+  {
+   "member": "resolve.py",
+   "pin_sha256": "24b407fa00ff0fc3",
+   "live_sha256": "24b407fa00ff0fc3",
+   "state": "identical to live"
+  },
+  {
+   "member": "owner_reads.py",
+   "pin_sha256": "f21d26dcce7c46bf",
+   "live_sha256": "f21d26dcce7c46bf",
+   "state": "identical to live"
+  },
+  {
+   "member": "prospect.py",
+   "pin_sha256": "f556b0997dfa7310",
+   "live_sha256": "f556b0997dfa7310",
+   "state": "identical to live"
+  },
+  {
+   "member": "ids.py",
+   "pin_sha256": "f1659861d469c25d",
+   "live_sha256": "f1659861d469c25d",
+   "state": "identical to live"
+  },
+  {
+   "member": "loaders.py",
+   "pin_sha256": "763f0a0d4445481c",
+   "live_sha256": "763f0a0d4445481c",
+   "state": "identical to live"
+  },
+  {
+   "member": "interactive_access.py",
+   "pin_sha256": "bba07a3f4eeb947b",
+   "live_sha256": "bba07a3f4eeb947b",
+   "state": "identical to live"
+  },
+  {
+   "member": "canonical_profile_reads.py",
+   "pin_sha256": "0ec4a717f2aa2c12",
+   "live_sha256": "0ec4a717f2aa2c12",
+   "state": "identical to live"
+  },
+  {
+   "member": "keys.py",
+   "pin_sha256": "56ee3cc22e802579",
+   "live_sha256": "56ee3cc22e802579",
+   "state": "identical to live"
+  },
+  {
+   "member": "maintained_sources.py",
+   "pin_sha256": "774eca9bde60a1dd",
+   "live_sha256": "774eca9bde60a1dd",
+   "state": "identical to live"
+  },
+  {
+   "member": "custody.py",
+   "pin_sha256": "23cda6b0e3dd88df",
+   "live_sha256": "23cda6b0e3dd88df",
+   "state": "identical to live"
+  },
+  {
+   "member": "selection.py",
+   "pin_sha256": "7ba910b85e2fce4f",
+   "live_sha256": "7ba910b85e2fce4f",
+   "state": "identical to live"
+  },
+  {
+   "member": "selection_store.py",
+   "pin_sha256": "583507a70e3a0074",
+   "live_sha256": "583507a70e3a0074",
+   "state": "identical to live"
+  }
+ ],
+ "built": {
+  "members": 45,
+  "differ_from_pin": [],
+  "closure_stale": [],
+  "crlf_members": [],
+  "zip_sha256_b64": "iYgp83014ZjXiXxdgcBnvme/QooX4aIlUh8C5C7LTVI="
+ }
+}

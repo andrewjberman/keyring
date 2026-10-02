@@ -268,3 +268,61 @@ minutes between the first read-back and the second; READY, not in one pass, as o
 the page. The comparison check is by printed name, not by the figures of the comparison portfolios.
 
 -- 3.0.0_SA_CVO
+
+## Sixth wave, read 02:xZ 2026-10-02 -- ~M's split-account route (row S259)
+
+Ledger `irpt-inf-split-positions-m-20261001`: merge `b4d4548d5a`; halves `cab9bf875d` / `5d4a1b60fe`, CTO `07e4769540`;
+re-pin and build `ef1e79bed9`, `9c25f4e86a`; legs R and P `98960b37ce`, Q `b53bf39896`.
+
+| claim | this seat's read | grade |
+|---|---|---|
+| A1: live `irpt-holdings` is the `b26847ea04` build | live `CodeSha256` `tS/APci3..`, LastModified 2026-10-01 20:13:14Z, Successful; equal to the source map's `artifact_sha256` and to the S3 key's latest version `3oF3cwwG..`; the zip downloaded here hashes the same; 35 of 35 members equal `git show <pin>:<path>` for their staged pins; `snapshot.py` equals `b26847ea04`, `b4d4548d5a` and HEAD, and differs from the prior pin `21eca74f40` | PASS on deployed bytes |
+| A2: a split account lists its positions, attributed to neither part, and is counted once | no HTTP login; the live zip's own `load_snapshot` and `project` run over the Inflection QA publication `b4567fc977ab`, one account at a time. Split account `..c71f951a67`: 52 securities directly under the account, 52 of 52 `NOT_STATED`, bases OBSERVED and ASSIGNED, total 774,067.89 before and after, reconciles. Of the 91 two-view accounts, 91 reconcile singly (after/before 1.0). **Control:** the prior zip `TG8b/SEHC..` (by version) on the same accounts: 0 of 91, ratio 2.0 (774,067.89 to 1,548,135.78). A single-view account `..134019d60f` reads equal under both zips | PASS on the deployed code over the QA publication |
+| A3: three bundles minted | head-object at 3 of 3 firms: VersionId and ETag equal leg P (49f `JSR5ofM0..`/`67d2e60f..`, inf `dDJb5jlh..`/`203113eb..`, cot `o4k8Idb5..`/`d652756e..`); in the Inflection bundle (45 files) `holdings_inf.py` and `holdings_snapshot.py` equal the `b4d4548d5a` blobs; HEAD differs by one `DEPLOY-SERVE-HELD` comment line | PASS |
+| A3: the QA reconciliation (Inflection) | the lane's `split_qa_read.py` re-run here: QA 884 accounts, 206,098,981.92; securities 34,402 / 206,098,981.92; 0 accounts not summing; 5,074 NOT_STATED positions on 91 accounts (49,977,077.07); 0 DRILL WITHHELD. Served `b29682b06ab6`: 91 accounts not summing, 182 withheld; descendant signatures differ on exactly 91 accounts. Equal to leg Q's figures | PASS (Inflection only) |
+| A4: ledger | OPEN, only leg S pending (the 2026-10-02 14:15Z publication); window 30h from 19:48Z, not past due | correctly open |
+
+**Limits.** No HTTP read as a principal, so the guard and firm-binding limbs are not exercised. Leg Q's figures for 49
+Financial and Cottonwood are not re-read. The served route reads the new producer only from 14:15Z. Record drift, not
+a fault in the bytes: the source map's `deployed_code_sha256` (`kZyg..`) and `last_deployed_commit` (`eb29053170`,
+2026-09-24) were not moved by the leg R apply. Ten tracked `holdings/` sources are deleted, uncommitted, in the shared
+tree: row IRPT_BCKEND-S262 (ARMED, disarm owner `2.0.0_SA_COO~M`).
+
+-- 3.0.0_SA_CVO
+
+## ~Y item 17 (E7), read 02:xZ 2026-10-02 -- source only, and its ledger
+
+| claim | this seat's read | grade |
+|---|---|---|
+| B1: E7 is tested | `test_owned_requests.py` + `test_owned_entry.py`: 47 passed; the ops directory 187 passed, 22 skipped, equal to the commit's count | PASS on a test run |
+| B2: nothing applied | live `irpt-status` `2V7xV1..`, LastModified 2026-10-01 06:59:55Z; in the live zip `owned_requests.py` equals `21eca74f40` and has no `_chosen_comparisons`; 39 of 40 staged members equal `b1db201025`, only `durable_job.py` differs | PASS: nothing applied |
+| B2: the ledger | re-stamped 02:45Z by `57ee6e1481`: `HELD-SOVEREIGN-GATED`, U1 closed by version (`gqIQUc_Z..`, `iYgp8301..`), D1 and V1 held on row S261; COO half signed with a condition, CTO half signed conditional on S261 (`4f59537bd3`, batch 105). No apply leg ran: an entry opened before its first apply, NOT half-landed under the NEVER rule. It was past its 3h window from 21:56Z to 02:45Z | not half-landed; RED for about 5h |
+| B3: the grant on the composition blob | live `irpt-status-policy` allows `s3:GetObject` and `s3:GetObjectVersion` on `state/request_compositions/*` for 3 of 3 firms | PASS: live |
+
+**One exposure, already carried.** The artifact key's latest version is now the E7 build, and
+`infra/aws/terraform/modules/yang-lambda/main.tf` deploys `data.aws_s3_object.artifact.version_id` (latest), so an
+untargeted apply of the investor-reporting ops root would ship E7 before the page accepts its field. Row S261's notes
+name this; not re-filed.
+
+**Limits.** The route was not read as a principal. The contract text is the CTO's to ratify.
+
+-- 3.0.0_SA_CVO
+
+## ~Y resident st9 to st10 (items 15 and 16), read 03:xZ-04:xZ 2026-10-02
+
+Packet `5946fe3945`, CTO half `b8ca83eba2` (batch 106), deploy-close `bf35fd357d`.
+
+| claim | this seat's read | grade |
+|---|---|---|
+| the host runs root `b1db201025-st10` since 03:19:51Z | one read-only SSM script on `i-0167fd745ad906a66` (command `484cb7b1`, Success rc 0, 03:34Z): root `/opt/irpt-resident/b1db201025-st10`, active, NRestarts 0, ActiveEnterTimestamp 03:19:51Z; the st9 root is still on the host | PASS |
+| the members are the pin's bytes | 10 of 10 members hashed on the host equal `git show b1db201025:<path>` (resident_worker, recipe, broker, durable_job, owned_requests, current_authority, host_capture, extract, resident_session, resident_main). Control: st9's resident_worker `49305eeb..` differs from st10's `1708fe39..`; library `9511060e..` unchanged | PASS |
+| item 15: the 120 s release removed, one WAF_READ line added | on the host `READ_BACK_CALCULATING_VISIBILITY_S` occurs 0 times and `WAF_READ` once in resident_worker | PASS on bytes |
+| item 16: the vendor-request append never changes a job's outcome (CTO half: "the finally-block append swallows its own failure") | `keep_vendor_requests` (`resident_worker.py:176-189` at the pin) catches every exception, prints `IRPT_RESIDENT_VENDOR_REQUESTS kept=0 records=N class=<exc>`, clears the list and raises nothing: the swallow is journalled, not silent. `append_vendor_requests` occurs once in durable_job | PASS on bytes |
+| items 15 and 16 exercised live | journal since 03:19Z: 50 lines, 45 POLL lines, 0 with `handled>0`; no RESOLVE, READ_BACK, WAF_READ or VENDOR_REQUESTS line | NOT_EVALUATED: no job has run on st10 |
+| suites | `test_resident_worker.py` + `test_durable_job.py` at HEAD: 55 passed, 8 skipped | PASS on a test run |
+| ledger | `irpt-resident-st10-20261002` completion CLOSED 3 of 3 (U1, D1, V1); the JSON absent from `.open_deploys` at HEAD | PASS |
+
+**Limits.** The tar and script S3 versions were not re-read; the host members stand in for them. The first job on st10
+is the first live read of both items.
+
+-- 3.0.0_SA_CVO

@@ -1,0 +1,9 @@
+login HTTP 200 token True
+status read, dates capability  #1 HTTP 200 state READY        reason ANALYSIS_READY                           items None client  12777 ms server   9822 ms init  186 in-window 1
+status read, dates capability  #2 HTTP 200 state READY        reason ANALYSIS_READY                           items None client   5899 ms server   5684 ms init    0 in-window 1
+status read, no capability     #1 HTTP 200 state UNAVAILABLE  reason ANALYSIS_STATUS_DATE_BASIS_UNAVAILABLE   items None client   4173 ms server   3903 ms init    0 in-window 1
+status read, no capability     #2 HTTP 200 state UNAVAILABLE  reason ANALYSIS_STATUS_DATE_BASIS_UNAVAILABLE   items None client   4159 ms server   3916 ms init    0 in-window 1
+request history list           #1 HTTP 200 state None         reason None                                     items 18   client   9527 ms server   9262 ms init    0 in-window 1
+request history list           #2 HTTP 200 state None         reason None                                     items 18   client   9172 ms server   8899 ms init    0 in-window 1
+request read                   #1 HTTP 200 state None         reason None                                     items None client   1536 ms server   None ms init None in-window 0
+request read                   #2 HTTP 200 state None         reason None                                     items None client   1237 ms server   None ms init None in-window 0

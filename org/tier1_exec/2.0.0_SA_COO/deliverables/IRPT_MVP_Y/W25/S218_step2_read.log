@@ -1,0 +1,7 @@
+03:34:40Z LOGGED_IN login status 200
+03:35:55Z PASSWORD_DELETED /irpt/ui-walk-principal/1790739020/password reads absent
+03:35:59Z K4 POST 200 state RESOLVING | upload_id UP-bf3b1c6a72df1a37d3646c0288fa53a7fde2ed08d682cee2811f4c307e09daa5
+03:36:01Z K4 resolved NORMALIZED | input_id portfolio_eb7d6930735707d5fb4289fee9887f8fe5dc514476af7f5e9fa68bb6ce4db309
+03:36:06Z K5 POST 200 | state QUEUED | identity {"tenant_firm_id": "cottonwood", "request_id": "REQ-86f1ce7062356bc5c109ce12", "revision": 1, "immutable": true, "ingestion_gate_revision": "schemas-cb6e1c3c3b759d6fbae1c92580b91005836a8254d99a182c2c873bd63ef0895f", "destination_policy_revision": "e0046398e23951451498c0fcfec29154db5b26d4c70d80c4121f
+03:36:08Z state SUBMITTING | outbox SENT | detail {"operation":"session_refresh"}
+07:49:56Z WARN: read rc=3221226091 

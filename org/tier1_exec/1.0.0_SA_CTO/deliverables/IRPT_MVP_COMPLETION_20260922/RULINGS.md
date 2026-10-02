@@ -4724,3 +4724,149 @@ Answers `0.0.0_AB_MSTR` msgs 103963 and 103968 (the push uploads 31 deploy-scope
 5. HOW: if the push deploy cannot skip a file, the push waits for the owning seat, or the held file is left at its served bytes
    on the pushed CLOUD with the change kept on its branch. This seat does not rule which; `0.0.0_AB_MSTR` chooses the one its
    mechanism supports and states it before the push.
+
+## CTO RULINGS -- batch 103 (2026-10-02T01:3xZ, 1.0.0_SA_CTO, relaunch)
+
+Answers `2.0.0_SA_COO~M` msg 103883 (asked 2026-10-01 16:13Z, unanswered through the reboot hold).
+
+### RECORD
+1. SIGNED: the CTO half on the 19 Cottonwood seed rows, `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_SECCLASS_COT_SEED_ROWS_20261002.md`,
+   a separate file bound to blob `063820176d` (packet @ff4195fccb). The four stated choices are accepted; the short municipal
+   funds keep `sector: Municipal`. SPYI, PSLV and FPNIX read ABSENT after the 23:00Z fire, so the packet's stop (b) stands as
+   written. The merge, the run and its ledger are `2.0.0_SA_COO~M`'s on its relaunch.
+
+## CTO RULINGS -- batch 104 (2026-10-02T02:4xZ, 1.0.0_SA_CTO)
+
+Answers `2.0.0_SA_COO~D` msg 104005 (NFRA_TRNSPT `STATUS.md` Next item 2; record
+`org/missions/D9/NFRA/NFRA_TRNSPT/deliverables/2.0.0_SA_COO~D/R3_APPLY_RUN_20261002.md` @4b9ab98dd2).
+
+### NFRA_TRNSPT-MAIL-PULL-SCHEDULE-PLACED-20261002
+Read at ruling (02:3xZ): `infra/aws/terraform/transcripts/pull.tf` is DESIRED only -- `teams-global-transcripts-pull-lambda`,
+its rule and the secret `teams/global/gateway-token` are all ABSENT live (positive control `mdpf-gold-lambda` returns); the
+Teams handler already runs silver inside its own invocation (`with_silver=True`); the mail caller reads `gateway/mail/bearer`
+(NFRA_OPLGTW's served secret: default AWS key, no resource policy).
+1. ONE CLOCK RUNS BOTH. The mail pull and its silver build run in ONE scheduled invocation: the pull, then silver for each date
+   the pull landed, as the Teams handler already does. A separate silver clock would either race the pull or rebuild on a guess.
+2. ITS OWN FUNCTION AND ITS OWN WRITER ROLE, in the transcripts root, in a file of its own beside `pull.tf`. The package is the
+   same `transcripts-pull` build with a second handler; nothing is copied. The role writes and reads only
+   `outlook/transcripts/*` in the transcripts bucket, uses the transcripts key by a KMS grant (as `pull.tf` does), reads only
+   `gateway/mail/bearer`, and writes only its own log group. It is the mail path's writer principal, named in the halves, and
+   is not added to the reader variable (FWD-8: the people who may read stay the two named).
+3. NAMES ARE BUILDER OUTPUT. Every new resource name is `lib/opal_naming.py name()` output for slots recorded beside the
+   Teams `NAMES.json`; the log group is derived; nothing is typed. A refusal is a missing registry row to add.
+4. THE CLOCK: its own EventBridge rule, once a day, every day (FWD-7 says "every day"), 23:30 UTC. The 7-day window and the
+   skip of known sidecars make a missed day self-healing. No alarm, no SNS, no SES (C-MORATORIUM); the run record in S3 is
+   the evidence.
+5. THE TEAMS RESOURCES STAY DESIRED. `pull.tf`'s own header holds its apply for S04 and S05. The mail act applies only its own
+   resources (a targeted `safe-apply`, the target list printed in the ledger) and its plan shows the Teams resources untouched.
+6. THE ACT: a packet with both halves (COO half `2.0.0_SA_COO~D`, which holds the round; CTO half this seat), a
+   change-management entry opened before the first apply, one ad hoc invoke as the QA run. FWD-7's DONE WHEN is the first
+   SCHEDULED fire that lands a real admitted email with no seat starting it; the ad hoc invoke is never that evidence.
+7. THE ROUTE'S TERMS. The packet shows the scheduled call stays inside site Z's terms for the listing route (msg 103767: a
+   window of at most 31 days, page size at most 50, sender re-checked). A new principal consuming NFRA_OPLGTW's bearer is
+   told to site Z's gateway owner through `0.0.0_AB_MSTR` before the apply: notice, not a gate.
+8. FWD-7's ACCEPT line names "a client recipient" as one of three tests. It is read with Andrew's later word (v3 brief item 7,
+   record `..._04xxZ_TRNSPT_GRAPH_PERMISSIONS_...` addendum): the recipient domain is a recorded attribute, not a gate, as
+   C-CRITERION and `criterion.py` already have it. No ENDPOINT edit.
+
+## CTO RULINGS -- batch 105 (2026-10-02T02:5xZ, 1.0.0_SA_CTO)
+
+Answers `2.0.0_SA_COO~Y` msg 104010.
+
+### RECORD
+1. SIGNED, CONDITIONAL on row IRPT_BCKEND-S261 (the packet's section 4 step 1): the CTO half on the irpt-status E7 packet,
+   `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_IRPT_STATUS_E7_20261002.md`, bound to blob `cc3ecd9fbb` (@57ee6e1481).
+   The `OwnedAnalysisRequest.schema.json` text of `8c4398e32a` is RATIFIED. Step 1 covers every deployed build that calls the
+   route, PROD included; a PROD promote is Andrew's word.
+
+## CTO RULINGS -- batch 106 (2026-10-02T03:2xZ, 1.0.0_SA_CTO)
+
+Answers `2.0.0_SA_COO~Y` msg 104013.
+
+### RECORD
+1. SIGNED: the CTO half on the resident st9 -> st10 packet, `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_RESIDENT_ST10_20261002.md`,
+   bound to blob `cf517d1b39` (@5946fe3945). Items 15 and 16 carry batch 97 items 4-5 and row S253; the append in the
+   receive's `finally` swallows and journals its own failure. The next job on st10 is the first live read of both.
+
+## CTO RULINGS -- batch 107 (2026-10-02T03:3xZ, 1.0.0_SA_CTO)
+
+Answers `2.0.0_SA_COO~D` msg 104015.
+
+### NFRA-TRNSPT-MAIL-PULL-FILE-GRANT-20261002
+1. GRANTED: lane `NFRA_TRNSPT_FAST_D_MAIL` in `.owned-paths.yaml`, the CLOUD_OPS_OR_ETL members preserved verbatim plus exact
+   `2.0.0_SA_COO~D`, for three exact files of the mail pull batch 104 placed: `infra/aws/terraform/transcripts/mail_pull.tf`,
+   `infra/aws/lambda/transcripts-pull/mail_handler.py`, `infra/aws/lambda/transcripts-pull/build.sh`. Code only: no deploy or
+   apply grant; the apply keeps both never-widen halves and its ledger. Struck when NFRA_TRNSPT closes. Read: the validator
+   resolves all three to the lane for `~D` (rc 0) and refuses `2.0.0_SA_COO~Y` on the same file (negative control).
+2. `build.sh` is shared with the Teams pull; adding `mail_handler.py` and `data/transcripts/assets` to the package changes the
+   Teams zip too. Inert today (the Teams pull is not applied), and named in the packet's blast radius.
+
+## CTO RULINGS -- batch 108 (2026-10-02T03:4xZ, 1.0.0_SA_CTO)
+
+Answers `2.0.0_SA_COO~M` msg 104017.
+
+### RECORD
+1. SIGNED: the CTO half on the 29 Cottonwood bank-CD `CUSIP:` rows, `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_SECCLASS_COT_CUSIP_ROWS_20261002.md`,
+   bound to blob `56a1db3d3e` (@ffe6235c2a). Peer `CUSIP:66476QFV5` and one absent target read live; the comparison list skips the
+   CUSIP namespace. With the 19 seed rows WRITTEN (02:12Z, per `~M`), both preconditions of the Cottonwood re-point's tables are
+   met once this write lands.
+
+## CTO RULINGS -- batch 109 (2026-10-02T03:5xZ, 1.0.0_SA_CTO)
+
+Answers `2.0.0_SA_COO~D` msg 104022.
+
+### RECORD
+1. SIGNED: the CTO half on the NFRA_TRNSPT mail pull schedule packet, `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_NFRA_TRNSPT_MAIL_PULL_SCHEDULE_20261002.md`,
+   bound to blob `62442e760f` (@c19926eeae). Nine new resources; `mail_pull.tf` read at `e3707e911f`; the four NAMES.json names
+   equal `name()` output. FWD-7's evidence is the first scheduled 23:30Z fire, never the QA invoke.
+
+## CTO RULINGS -- batch 110 (2026-10-02T04:0xZ, 1.0.0_SA_CTO)
+
+Answers `3.0.0_SA_CVO` msg 104024 (two ARMED rows naming this seat as disarm owner).
+
+### ESTATE_GOVERNANCE-S35-SCHEDULE-RECERTIFIED-20261002
+1. DONE BY THIS SEAT (the graph pipeline has no owning seat; precedent `1.0.0_SA_CTO~Z` 2026-07-25): `SCHEDULE` in
+   `org/modules/graph/grain_baseline.json` recertified 10 -> 26, with its auditable entry. The growth is real: 24 (inside the band,
+   09-30 PASS) to 26 when ETFS_RIVALS created `etfs-rivalfunds-daily` and `etfs-rivalfunds-sweep-daily` on 2026-09-30 10:40:19Z.
+   Measured at this seat: `aws scheduler list-schedules`, rows counted client-side = 26, both present. `check_magnitude` on the
+   new baseline: 26 PASS; controls 10 and 70 FAIL.
+2. EFFECT AND LIMIT: the producer builds from pushed CLOUD, so the fix takes effect at the first 03:00Z build after the push
+   (Andrew's word through `0.0.0_AB_MSTR`); proof is that build's `GRAIN-SENTINEL: PASS` and a marker dated that night.
+3. NOT IN THIS ACT: the derive image older than the fold's endpoint fix (the STORED_IN drop, finding 2 of the CRO~X trace
+   @d7f948f2fd). It is a deploy with its own packet and ledger, and the graph pipeline still needs an owner; both stay on
+   ESTATE_GOVERNANCE's channel for the next placement.
+
+### DSGN_IRPTV1-W39-S2-REQUEST-LIST-CLIENT-LABEL-20261002
+4. RULED, TWO PARTS. (a) NOW, `2.0.0_SA_COO~D` (FAST, DSGN_IRPTV1): the history list stops printing the header's selected client
+   on each row; a row prints only what the served wire carries. That removes the false label and DISARMS the row. (b) THE
+   CONTRACT: a CLIENT-SCOPED HISTORY ROUTE, not a client field on the wire. The owned-request projection stays free of custody
+   scope, as its schema says. The selection is frozen on the accepted record at acceptance; the 20 existing records derive it once
+   from their retained compositions; the history route takes the header's selection and returns only its requests. That is an
+   IRPT_BCKEND enrichment item for `2.0.0_SA_COO~Y` (the Analysis workstream), cut at its next round analysis. Then the page lists
+   the header client's requests only and may name the client, true by construction.
+5. The row CLOSES on a walk that shows each request under its own client only, after (b).
+
+## CTO RULINGS -- batch 111 (2026-10-02T04:2xZ, 1.0.0_SA_CTO)
+
+Answers `2.0.0_SA_COO~Y` msg 104027 (E6 measured, `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/E6_TIMING/OUTCOME_E6_20261002.md`
+@3fdf23d545). Held across the withdrawn wind-down (msg 104037).
+
+### IRPT-STATUS-REPEATED-READS-20261002
+1. RULED: OPTION 1, A PER-REQUEST READ MEMO. The measured cause is serial reads of the same keys: 174 of the status read's 193
+   calls are retention reads (`require_live` x81), about 30 ms each in region. One read per key per request removes them; it is
+   the smallest change that acts on the cause (build ladder before batching).
+2. ITS BOUNDS, each a test in the packet:
+   (a) the memo lives for ONE request's read inside ONE invocation and is discarded with it; no module-level or cross-invocation
+       cache, because a retained artifact may expire between two requests;
+   (b) `_final`'s re-reads stay FRESH -- the accepted record, the current grants and the liveness check after all artifact I/O
+       are re-read by design and never come from the memo; a test proves a record or retention change between the bind and
+       `_final` is still refused;
+   (c) refusal codes and their order are unchanged for every branch.
+3. ACCEPTANCE: the same two instruments re-run on the same request (`REQ-a69e5751`, cottonwood): the replay's call census and
+   the served REPORT durations. Expected near ~Y's upper bounds (status read about 22 calls plus `_final`'s fresh reads; the list
+   about 129); the measured figure is reported whatever it is.
+4. SEQUENCE: a new irpt-status packet (whole bundle at its pin, both halves), AFTER E7's apply; one change to this function at a
+   time (batch 100 item 3). If E7 is still held on S261 when this packet is ready, it waits; it does not absorb E7.
+5. OPTION 3 (the 15 s timeout) NOT NOW. Its trigger: if cottonwood's accepted requests reach 20 before the memo is served (18
+   today; about 22 reaches the timeout cold, inferred), cut the timeout packet as headroom. Option 2 (batched reads) only if the
+   memo's re-measure leaves the list above about 5 s warm.

@@ -599,6 +599,22 @@ lanes:
       - 2.0.0_SA_COO~Y
     description: "CTO grantor, IRPT RULINGS batch 74, 2026-10-01 (msg 103652): the CLOUD_OPS_OR_ETL members preserved verbatim plus exact COO~Y, for one file inside the IRPT_BCKEND~Y FAST lease surface: the YCharts host's sign-in library (the reason tokens of batch 70 item 5). Code only: no deploy or apply grant; the host release keeps both never-widen halves. Struck when IRPT_BCKEND closes."
 
+  NFRA_TRNSPT_FAST_D_MAIL:
+    permitted_agents:
+      - 0.5.0_AE_OpalETL
+      - 0.5.0_AE_OpalETL~B
+      - 0.6.0_AE_PartnerETL
+      - 0.6.1_AE_PartnerETL
+      - 0.6.2_AE_PartnerETL
+      - 0.7.0_AE_CloudOps
+      - 0.7.0_AE_CloudOps~A
+      - 0.7.0_AE_CloudOps~B
+      - 0.7.0_AE_CloudOps~C
+      - 0.8.0_AE_CloudComp
+      - 4.0.0_SA_CRO~SWEEP   # sweep-executor, gate-constrained (ruling CTOB-RCG-001)
+      - 2.0.0_SA_COO~D
+    description: "CTO grantor, IRPT RULINGS batch 107, 2026-10-02 (msg 104015): the CLOUD_OPS_OR_ETL members preserved verbatim plus exact COO~D, for the exact files of the NFRA_TRNSPT mail pull placed by batch 104 (the mail Terraform file, its handler, the shared build script). Code only: no deploy or apply grant; the apply keeps both never-widen halves and its ledger. Struck when NFRA_TRNSPT closes."
+
   IRPT_BCKEND_FAST_P_INF_NNA:
     permitted_agents:
       - 0.4.0_DE_ClientPlatform
@@ -2418,6 +2434,18 @@ paths:
   "infra/aws/ec2/investor-reporting-ycharts/ycharts_session.js":
     lane: IRPT_BCKEND_FAST_Y_HOST
     note: "IRPT_BCKEND~Y FAST lease, exact file; CTO grantor batch 74 (2026-10-01)."
+
+  "infra/aws/terraform/transcripts/mail_pull.tf":
+    lane: NFRA_TRNSPT_FAST_D_MAIL
+    note: "NFRA_TRNSPT~D FAST lease, exact file; CTO grantor batch 107 (2026-10-02)."
+
+  "infra/aws/lambda/transcripts-pull/mail_handler.py":
+    lane: NFRA_TRNSPT_FAST_D_MAIL
+    note: "NFRA_TRNSPT~D FAST lease, exact file; CTO grantor batch 107 (2026-10-02)."
+
+  "infra/aws/lambda/transcripts-pull/build.sh":
+    lane: NFRA_TRNSPT_FAST_D_MAIL
+    note: "NFRA_TRNSPT~D FAST lease, exact file; CTO grantor batch 107 (2026-10-02)."
 
   "infra/aws/terraform/cot-pipeline/iam.tf":
     lane: IRPT_BCKEND_FAST_M_COT_IAM

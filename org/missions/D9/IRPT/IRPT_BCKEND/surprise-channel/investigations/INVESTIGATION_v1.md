@@ -14474,3 +14474,87 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Nothing was deployed to the producer between the two publications by this lane. The fix is a served rule, not a repair: a split account could list its positions under the account without saying which part each sits in. Asked of 1.0.0_SA_CTO as one call."
 }
 ```
+
+## IRPT_BCKEND-S260 -- A directory request for a firm the function cannot map is answered UNEXPECTED, not a named refusal: BucketUnmapped carries no public_reason_code, its class name is in neither the estate's type map nor the directory function's own reasons, so both classifiers fall to the residual.
+
+```json
+{
+ "id": "IRPT_BCKEND-S260",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~P",
+ "surfaced_at": "2026-10-02T02:33:44Z",
+ "disposition": "UNDER_INVESTIGATION",
+ "one_line": "A directory request for a firm the function cannot map is answered UNEXPECTED, not a named refusal: BucketUnmapped carries no public_reason_code, its class name is in neither the estate's type map nor the directory function's own reasons, so both classifiers fall to the residual.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~P (a named refusal for BucketUnmapped and its served release; STATUS~P Next item 3)",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "infra/aws/lambda/investor-reporting/_authz/loaders.py:43-44 at CLOUD 66b79a30a6: class BucketUnmapped(ValueError) with a docstring only, no public_reason_code; :53-60 bucket_for raises it for a tenant absent from the DIRECTORY_BUCKET_ENV mapping; :209 opaque_firm_for raises it when the directory artifact declares no firm_id_opaque.",
+   "infra/aws/lambda/investor-reporting/_authz/errors.py:116-143 reason_for: a declared public_reason_code first, then by_type keyed on the EXACT class name (exc.__class__.__name__); 'ValueError' maps to INVALID_INPUT but 'BucketUnmapped' is not a key, so it returns the default UNEXPECTED.",
+   "infra/aws/lambda/investor-reporting/_authz/served.py:762-775 public_reason_for: on UNEXPECTED it walks the MRO against the function's own reasons; infra/aws/lambda/investor-reporting/directory/entry.py:420 declares reasons={'SelectionRefused': 'OBJECT_NOT_COVERED'} only, so neither BucketUnmapped nor ValueError matches and the answer stays UNEXPECTED."
+  ]
+ },
+ "spec_asserts": "_authz/errors.py:44 and its PUBLIC_REASONS: UNEXPECTED is the residual for a failure the code did not anticipate; a refusal the code raises on purpose (loaders.py:44 'Refused, never defaulted') is a named reason.",
+ "world_is": "MEASURED BY CODE READ AT HEAD, NOT EXERCISED: a deliberate refusal (no bucket declared for the firm, or no firm_id_opaque in its directory) reaches the caller and the public log as UNEXPECTED, the outage label. NOT MEASURED: a served request that takes this path; the earlier session's note of it (STATUS~P Next item 3, REBOOT_BRIEF section 2) cites no request id.",
+ "notes": "Remedy candidate: a public_reason_code on BucketUnmapped (or a by_type entry) naming a declared reason; choosing the reason is a StatusEnvelope vocabulary question (errors.py:100-102), so it is ruled before it is built. Served release is its own packet. Filed so the item is carried by a row rather than by status prose."
+}
+```
+
+## IRPT_BCKEND-S261 -- The page's owned-request parser accepts exactly two keys, so E7's served field breaks every request read on the page: readOwnedRequest requires Object.keys(value).length == 2 (identity, accepted_at), and the irpt-status bundle at b1db201025 returns a third key, comparisons, on every single-request read.
+
+```json
+{
+ "id": "IRPT_BCKEND-S261",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~Y",
+ "surfaced_at": "2026-10-02T02:41:38Z",
+ "disposition": "UNDER_INVESTIGATION",
+ "one_line": "The page's owned-request parser accepts exactly two keys, so E7's served field breaks every request read on the page: readOwnedRequest requires Object.keys(value).length == 2 (identity, accepted_at), and the irpt-status bundle at b1db201025 returns a third key, comparisons, on every single-request read.",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~D (the page's parser accepts an optional, validated comparisons array and is deployed wherever the page calls this route); 2.0.0_SA_COO~Y holds the irpt-status apply (ledger irpt-status-e7-20261001 leg D1) until then",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "portal/src/pages/InvestorReporting/contracts/owned-requests.ts:6-8 exact(): Object.keys(value).length === fields.length && every field present; :23 readOwnedRequest calls exact(value, ['identity', 'accepted_at']) and throws 'Invalid owned request projection' otherwise. Same bytes at portal HEAD 24646bca, origin/DEV 24646bca and origin/PROD f2731ad3 (fetched 2026-10-02 ~02:3xZ); no branch changed the file since 2026-09-22 (last commit 29c729dd).",
+   "portal/src/pages/InvestorReporting/contracts/envelope.ts:149 routes analysis-request-read through readOwnedRequest; portal/src/api/endpoints/investor-reporting.ts:1063 and :1464 call it for the page's request read.",
+   "infra/aws/lambda/investor-reporting/ops/owned_requests.py at b1db201025 (item 17, 8c4398e32a): read() returns dict(self._public(record), comparisons=comparisons) for every request, [] for an Overview. The built artifact s3://opal-313476888478-lambda-artifacts/investor-reporting/irpt-status.zip version gqIQUc_Z0srcda_A1CGybmGZSXzTowjW (sha256 iYgp83014ZjX..) carries it, re-hashed by version 2026-10-02 ~02:3xZ; the live function is still 2V7xV1+zII4+g6tV.. (get-function-configuration, LastModified 2026-10-01T06:59:55Z)."
+  ]
+ },
+ "spec_asserts": "E7_DESIGN_NOTE_20261001.md and OwnedAnalysisRequest.schema.json at b1db201025: the names are ONE OPTIONAL property on the single-request read, so the change is additive for the consumer IRPT_FNTEND.",
+ "world_is": "MEASURED BY CODE READ, NOT EXERCISED: the consumer rejects any third key, so the property is not optional on the wire. If the irpt-status function moves to the built bundle before the page accepts the key, every request the page opens (the live Overview REQ-a69e5751 included) fails to parse. NOT MEASURED: which deployed page builds call this route (a DEV and a PROD build carry the same parser).",
+ "notes": "Nothing is applied: the ledger's D1 leg waits on both halves and on this row. One exposure while the row stands: the artifact key's LATEST version is the E7 bundle, so an untargeted apply of the investor-reporting ops root by any seat would ship it; the prior applies of this root are targeted with a fresh plan. History items are unaffected (the history route serves no names). Remedy order: the parser first (accept the field, validate it), then the served apply, then the page shows the names."
+}
+```
+
+## IRPT_BCKEND-S262 -- ten tracked irpt-holdings sources are deleted, uncommitted, in the laptop shared tree
+
+```json
+{
+  "id": "IRPT_BCKEND-S262",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-02T03:45:00Z",
+  "one_line": "Ten tracked irpt-holdings source files are deleted in the laptop shared tree and not committed (snapshot.py, entry.py, handler.py, publication.py, resolve.py, stage.py, errors.py, the two manifests and the contract schema); a path-wide add or a holdings test run in the shared tree would act on the deletion.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M (the irpt-holdings build of 2026-10-01 16:09Z, 9c25f4e86a, ran from this tree): restore the ten paths from HEAD in the shared tree, after confirming no build of that bundle is in flight",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git status --short -- infra/aws/lambda/investor-reporting/holdings/ (this seat, 2026-10-02 03:4xZ): 10 of 10 lines ' D' (deleted, unstaged): BUILD_MANIFEST.json, STAGE_MANIFEST.json, contracts/HoldingsSnapshot.schema.json, entry.py, errors.py, handler.py, publication.py, resolve.py, snapshot.py, stage.py; the same ten appear in the session-start status of this seat at 01:5xZ",
+      "live irpt-holdings CodeSha256 tS/APci3.. equals the source map's artifact and its 35 members equal their pins; snapshot.py at HEAD equals b26847ea04 (this seat's grade, IRPT_BCKEND_FAST_PIN_GRADES_20261001.md, sixth wave): the deployed function is not affected",
+      "2.0.0_SA_COO~Y 9ada3e8b02 describes the same builder removing tracked members it staged and restoring them by hand"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A build leaves the tracked sources it stages in place (CLAUDE.md rule 14a: commits name their paths; nothing else in the tree should carry a stray change).",
+  "world_is": "The shared tree has carried the deletion for about eleven hours. Any seat that stages broadly (an add of the directory, a commit -a, a merge that adds the working state) would delete the deployed function's source from CLOUD under its own lane, and a test of the holdings bundle run in the shared tree reads nothing.",
+  "notes": "Found while grading row S259's route. The same shape, one uncommitted ' D' left after an act, is row MDPF_TAXSMA-S15 for a ledger file. Disarm is one restore from HEAD; nothing is lost because HEAD holds the deployed bytes."
+}
+```
