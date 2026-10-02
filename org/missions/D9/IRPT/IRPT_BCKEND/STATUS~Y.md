@@ -6,7 +6,7 @@ Mode FAST: lease `IRPT_BCKEND~Y` re-armed 04:33Z until 08:33Z after the withdraw
 terms, under Andrew-direct 2026-10-01 ~04:2xZ).
 Loop `/canonical-drive IRPT_BCKEND` 10m (LIVE_ARMS RELAUNCH row). Way forward: CTO rulings batches 61, 62, 65, 70, 72,
 76, 83, 88, 89, 93, 97, 98, 100 and 105 in `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md`.
-Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-02T06:1xZ.
+Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-02T06:5xZ.
 
 ## Pins
 
@@ -52,14 +52,22 @@ made (CTO half item 1).
    that keeps the deliberate `_final` re-reads, as a new irpt-status packet).
 4. E5 (row S230 at its next natural failure; no session is displaced on purpose).
 5. **The catalogue is SERVED** (above). `2.0.0_SA_COO~D` wires the composer (interface sent 06:05Z).
-   Next on batch 61's list: **hop 3, the resolve concurrency fix.** Batch 72 item 12's remedy (the lookup without the
-   session) shipped in st7 and runs on st10. Its proof window `IRPT_MVP_Y/HOP3_PROOF/WINDOW_PACKET_HOP3_PROOF_20261002.md`
-   (blob `3b3d4bc0c3`, @b1ec906a9d): leg A one Overview job, leg B one upload with no submission fired only while A's
-   job is live (the S206/S215 condition); A is also the first live read of st10's items 15 and 16. COO half signed;
-   CTO half asked 06:15Z. Ledger `irpt-hop3-proof-20261002` OPEN, nothing fired.
+   **Hop 3 -- window CLOSED, NOT fixed on st10** (`IRPT_MVP_Y/HOP3_PROOF/OUTCOME_HOP3_PROOF_20261002.md` @3743f5a084): an
+   upload during another job's generation is refused `PROVIDER_READ_UNAVAILABLE:OPERATION_BUSY` and exhausts. CTO batch 120
+   ruled the remedy as **st11**: a BUSY receive re-sends a fresh message delayed by the lease's retry-after (<= 900 s) and
+   deletes the received one; a 60-minute wall deadline; a busy end reads a busy code with a retry action, never
+   `REPLACE_FILE`; a test proves a BUSY resolve never reaches the dead-letter queue. PRECONDITION: the resident's role has no
+   `sqs:SendMessage` on `irpt-generation`; the grant's placement was asked of the CTO at 06:44Z.
 6. Batch 61's order after that: one job per remaining arm (Target Weight, 49 Financial, Inflection), each under a window
    packet; the resolve concurrency fix; the vendor PDF link; the Analysis export; the email lane. E6's memo follows E7's
    apply (CTO batch 111). A client-scoped history route is an enrichment item at the next round analysis (CTO batch 110 item 4).
+
+## The YCharts session -- DEAD; only Andrew can restore it
+
+Leg A of the hop-3 window (06:26Z) read EVICTED 71 s after a probe read LIVE; the resident's refresh met
+`CHALLENGE_CAPTCHA_UNSUPPORTED` (row S230's cause, named). CTO batch 120 item 7: a sign-in that answers a CAPTCHA is a
+person's act on Andrew's YCharts login; no seat attempts one. Until he signs in, no Analysis attempt can produce a report.
+Batch 120 item 6 (the probe's cookie rotation) is read at the next window, which waits on that sign-in.
 
 ## Rows this lane holds
 
@@ -67,8 +75,8 @@ made (CTO half item 1).
 |---|---|
 | S263 | FIXED on CLOUD @6c4ac61088 (CTO batch 114, this seat's lane IRPT_BCKEND_FAST_Y_TFPOLICY): five roots select the policy by revision; core, export, performance plan no changes, ops and ycharts one held Lambda code move each. For the CVO to close |
 | S261 | OPEN, BLOCKING (2026-10-02 02:41Z): the page parser rejects E7's third key. Disarm owner `2.0.0_SA_COO~D` (parser on DEV `281b03c6`; PROD promote on Andrew's word); this seat holds E7's D1 |
-| S230 | OPEN. The resident's OWN sign-in fails `AUTH_FAILED` 4 of 4 and is unnamed; an operator sign-in as the resident's user works. st7's reason token names the step at its next occurrence |
-| S253 | SERVED on st10 (03:19:51Z); first live read is the next job; for the CVO to close after it |
+| S230 | OPEN, CAUSE NAMED 2026-10-02T06:26:18Z: the resident's own sign-in meets a CAPTCHA (`CAPTURE_FAILED:UNEXPECTED_CHALLENGE:CHALLENGE_CAPTCHA_UNSUPPORTED`). Only Andrew's own sign-in restores the session (CTO batch 120 item 7) |
+| S253 | SERVED on st10 and READ LIVE: job `REQ-93441e4e..` carries 2 `vendor_requests` records, one per receive (hop-3 outcome). For the CVO to close |
 | S231 | DONE on served code; for the CVO to close |
 | W88-S2 | reader served in the generate bundle; grant applied; the route is not published |
 | W94-S2, W91-S1, W92-S1 | repaired or read; for the CVO to close |
