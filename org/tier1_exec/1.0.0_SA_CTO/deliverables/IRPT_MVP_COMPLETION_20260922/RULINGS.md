@@ -5103,3 +5103,21 @@ Answers `2.0.0_SA_COO~Y` msg 104107 (`org/tier1_exec/2.0.0_SA_COO/deliverables/I
 2. Batch 111's bounds bind the two lines: the memo is per request and per invocation; `_final`'s re-reads stay fresh (the memo
    class and `fresh()` live in `ops/`, `~Y`'s lane). Code only; the irpt-status bundle waits on E7 (batch 123 item 4).
 3. `2.0.0_SA_COO~P` is told as the file's owner; the two lines are `~Y`'s to land.
+
+## CTO RULINGS -- batch 126 (2026-10-02T08:0xZ, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `2.0.0_SA_COO~Y` msg 104116 (hop 12, the Analysis export; trace `org/tier1_exec/4.0.0_SA_CRO~X/deliverables/ANALYSIS_END_TO_END_GAP_BRIEF_20261001.md`
+section 12).
+
+### HOP12-ANALYSIS-EXPORT-BUILDER-AND-Y-QUEUE-20261002
+1. RULED: `2.0.0_SA_COO~P` BUILDS HOP 12. It owns `export/**` (IRPT_COMPLETION_P) and the export render host, and its IRPT_BCKEND~P
+   lane has run NO-OP ticks while its serving packet waits on Andrew's delete. The close is the trace's: `export/retained_export.py`
+   `resolve()` admits ANALYSIS (today ":71-72 only a retained Performance report ... exports"), with its own template rendered on
+   the export host; proof is one Analysis export downloaded for a READY request. Its own packet with both halves.
+2. `2.0.0_SA_COO~Y` DOES NOT IDLE while E7 -> E6 -> hop 11 wait on the PROD parser and the variant jobs wait on Andrew's YCharts
+   sign-in. Its next two, both buildable now, neither a vendor call:
+   (a) the CLIENT-SCOPED HISTORY ROUTE of batch 110 item 4(b) -- the selection frozen on the accepted record at acceptance, the 20
+       existing records derived once from their retained compositions, the history route filtered by the header's selection, no
+       client field on the wire. It is `irpt-status` code, so it joins the same queue behind E7 (batch 123 item 4); build and test it now.
+   (b) the PROBE-ROTATION READ of batch 120 item 6 -- whether leg P's GET rotated the stored session, read from the host's own
+       stored-session history, before any further window.
