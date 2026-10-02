@@ -5711,6 +5711,30 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "One row of 811 stays pending after the drain unless the issuer rules a nested-type coercion (a cell on the vendor body, not on the parse) or accepts the single stranded row for gold #4."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S58",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-02T05:22Z",
+      "one_line": "The bbg outbox drain after the ai-4 fix runs at about 1 row per 90 s and slows as it goes: every pending row is its own (source, run_stamp) group, and each group's silver_append re-reads every bbg silver part to dedupe (576 parts, 69 MB per row). 288 rows left means 7 h or more, past the 10:00Z bound for gold rebuild #4.",
+      "class": "BLOCKING",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "CTO ruling 28084 and the ai-4 issuer notes: the stranded bbg outbox drains on the next upload, and gold #4 (the last of 4 rebuilds) picks it up before 13:00Z, after the drain or from 10:00Z without it.",
+      "world_is": "upload-harvest (the driver's own verb, cap 291) started on .runtime/opal-data-harvest-bbg at about 05:08Z with 291 rows due (retry_at <= now for all). Uploaded went 539 -> 542 by 05:16:31Z, and 541 -> 542 over a measured 90 s. lib/opal_data_harvest/uploads.py HarvestUploader._run_articles groups by (source, run_stamp), and a bbg run_stamp is per-second fetched_at, so each group holds one row. lib/research/harvest/store.py silver_append calls silver_latest, which lists and reads every part under bloomberg/harvest/silver/article/ (576 parquet parts, 69,097,325 bytes at 05:2xZ). Each uploaded row adds one more part, so the drain is O(n^2). silver_append already writes one part per fetch-date partition, so grouping a pass by source alone keeps the layout. Trap for a batch: row Z-W91-S19 shows that one row with a nested type conflict fails pa.Table.from_pylist for its whole group.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          ".runtime/opal-data-harvest-bbg/progress.sqlite3 harvest_raw_outbox (counts 05:14Z, 05:15:01Z, 05:16:31Z)",
+          "S3 list bloomberg/harvest/silver/article/: 576 parquet, 69,097,325 bytes",
+          "lib/opal_data_harvest/uploads.py _run_articles (groups by (source, run_stamp))",
+          "lib/research/harvest/store.py silver_append -> silver_latest (full prefix read per call)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Disarm: a repair cell that groups a pass's article rows by source, with one silver_append per source, and falls back to per-row on SilverRowError so a W91-S19-class row cannot strand its batch. The SERVED-class mid-round cell is put to the CTO, as for ai-4 (28084). Meanwhile the running upload keeps draining; gold #4 takes whatever has drained by its run."
     }
   ]
 ```
