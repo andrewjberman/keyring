@@ -4,17 +4,17 @@ Seat `2.0.0_SA_COO~RV` (CLAUDE). Lease: FAST to 2026-10-02T17:08:53Z, surface `d
 (`org/mcp/drive-mode.log` line 56). Goal (Andrew ~04:59Z): "i want mcp.opalinvest.dev/rivalfunds demoable Today".
 Team: reviewer `3.0.0_SA_CVO~RV` (grades pins after the fact: `org/tier1_exec/3.0.0_SA_CVO/deliverables/ETFS_RIVALS_FAST_GRADES_20261002.md`),
 open calls `4.0.0_SA_CRO~RV` (`org/tier1_exec/4.0.0_SA_CRO/deliverables/ETFS_RIVALS_RULINGS_20261002.md`: CALLs 1-5 ruled).
-As of 2026-10-02T07:5xZ.
+As of 2026-10-02T08:4xZ.
 
 ## Pins
 
 | What | Value |
 |---|---|
-| Working branch / worktree | `rv-fast` at `/c/tmp/rv-fast` (holds prompt a1-chain/2 @38ec58bc5a, not yet drained: the shared index was busy) |
-| Deployed artifact pin | CLOUD **7aa0186d45** in the five etfs-rivalfunds Lambdas (ledger `20261002T0734Z_etfs-rivalfunds-fast-a1`, CLOSED @43ae0a558b) |
-| Served page | `platinum/page/date=2026-10-01/index.html`, publish_page/3, batch fast-a1-publish-1001 (daily-lambda request 2acebec1-...) |
+| Working branch / worktree | `rv-fast` at `/c/tmp/rv-fast` (drained to CLOUD at 0d4b3f6e4d); apply tree `/c/tmp/rv-apply` (detached) |
+| Deployed artifact pin | CLOUD **0d4b3f6e4d** in the five etfs-rivalfunds Lambdas (ledgers fast-a1 @43ae0a558b, -r2 @720974ce5f, -r3 @a92dff4229, all CLOSED) |
+| Served page | `platinum/page/date=2026-10-01/index.html`, publish_page/3, batch fast-a1-publish-1001c (rebuilt with refresh_a1) |
 | AI run objects | `research_hypotheses` date=2026-10-01 run 20261002T062229Z-ai (seat-adhoc, 23 PASS / 1 FAIL) |
-| Push state | LOCAL: origin CLOUD 1f2346734b (ls-remote 07:4xZ); MSTR~Z asked to carry it |
+| Push state | LOCAL: origin CLOUD 1f2346734b (ls-remote 08:47Z); MSTR~Z asked to carry it (msg 07:43Z) |
 
 ## Live thread
 
@@ -26,7 +26,7 @@ State: LIVE END TO END on the A1 page. The served 2026-10-01 page is the Lambda'
 
 | Cell | State | Evidence |
 |---|---|---|
-| pt-1, pg-1, rk-1, tb-1, ic-1, ai-1, ai-2 | LIVE (CVO grade pending on the served artifact) | ledger legs A1-A4; CVO grade 1 NOT_EVALUATED was read before the deploy |
+| pt-1, pg-1, rk-1, tb-1, ic-1, ai-1, ai-2 | LIVE; CVO grade 2 FAIL (F1 P0 ETFT -188.51%) -> fixed; grade 3 PASS on F1-F4 | `org/tier1_exec/3.0.0_SA_CVO/deliverables/ETFS_RIVALS_FAST_GRADES_20261002.md`; CALL 6 conditions 1-2 + futures (CALL 7) live at 0d4b3f6e4d, graded next |
 
 ## Write claims
 
@@ -54,6 +54,8 @@ None open.
 | Per-fund issuer floors with the 2-line tolerance (CALL 2) | `2.0.0_SA_COO~RV` + `1.0.0_SA_CTO~Z` pair | first round after FAST |
 | G4 carries no price field (row Z-S14); rankings run on holding-implied prices | round-6 G4 history cell | px_close lands |
 | PCLG / WCMG +1 historical windows stay INFERRED (round-4 t-5) until a control replay reads them | `2.0.0_SA_COO~RV` | a G5/G6 history replay is cut |
+| A future's missing row carries reason `derivative_not_priced` (CALL 7) | `2.0.0_SA_COO~RV` | after the demo (needs a contract column + a deploy) |
+| Trend-sector Unclassified residual (CVO grade 3, P2) | `2.0.0_SA_COO~RV` | after the demo |
 | The census lists every missing G4 price and GICS line (766 each): honest, long | `2.0.0_SA_COO~RV` | after the demo |
 | The concentration cell (ACWI top-10 share) | `2.0.0_SA_COO~RV` | ACWI lands daily (v0.8 leg) |
 
