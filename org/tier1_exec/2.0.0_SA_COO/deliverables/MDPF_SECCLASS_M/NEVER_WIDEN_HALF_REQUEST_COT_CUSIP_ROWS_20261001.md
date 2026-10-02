@@ -1,8 +1,9 @@
 # Never-widen half, MDPF_SECCLASS -- the Cottonwood CUSIP rows (CTO rulings batch 93 item 2): 29 bank CDs as `CUSIP:` rows
 
 **Author:** `2.0.0_SA_COO~M`, 2026-10-01 18:4xZ (FAST lease `MDPF_SECCLASS`). **For:** `1.0.0_SA_CTO`, second half.
-**Status (2026-10-02 03:1xZ): COO half SIGNED; CTO half asked; the act is NOT RUN. The writer is BUILT (below), its dry run
-read against the live table.** A precondition of the Cottonwood re-point (`NEVER_WIDEN_HALF_REQUEST_COT_REPOINT_20261001.md`
+**Status (2026-10-02 03:4xZ): BOTH HALVES SIGNED (CTO `CTO_HALF_SECCLASS_COT_CUSIP_ROWS_20261002.md`, batch 108, on blob
+`56a1db3d3e`); WRITTEN 03:40:18Z, 29 of 29 read back, table 2,719; ledger `secclass-cot-cusip-rows-m-20261002` leg W closed, leg R
+held on the re-point's served leg.** (Body below is the signed text.) A precondition of the Cottonwood re-point (`NEVER_WIDEN_HALF_REQUEST_COT_REPOINT_20261001.md`
 @1ffbf6a639). The other precondition, the 19 seed rows, is WRITTEN (2026-10-02 02:12Z, ledger `secclass-cot-seed-rows-m-20261001`).
 
 ## What item 2 covers, measured (2026-09-30, read-only; script scratch `cot_cusip_gap.py`)
