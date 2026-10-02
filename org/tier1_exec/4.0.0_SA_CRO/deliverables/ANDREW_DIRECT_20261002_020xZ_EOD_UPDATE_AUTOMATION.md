@@ -117,6 +117,50 @@ carries no scope limit. The whitelist row is site Z's file; 0.0.0_AB_MSTR relays
 
 (The only change to the quotes is the redaction of the phone number: personal data stays out of the repo.)
 
+## Addendum ~16:2xZ to ~17:0xZ -- the switch, several tags, ad hoc dev jobs, /remote-drive, and six rulings, verbatim
+
+> Before sending to sitez, i want to make sure that i can have an on and off switch set up (#on and #off would be good
+> commands). Also if i get multiple messages at once, i want to be able to tag them, e.g. E34 1, K27 0, etc. Let's
+> make sure that functionality is threaded in before alerting CTO/MSTR on this box to get sitez deploy and etc. via
+> Option 1. Once that is done, we can go on to the rest of these items.
+
+> I also want this device to have access to the SQS channel with the MSTR agents. The reason I ask, is because
+> sometimes over teams I will get requests for ad hoc work. This usually is a bug repair or similarly small scale,
+> sometimes need to redeploy a lambda with new code, etc. Accordingly however, I want a system designed for this kind
+> of thing, where if i write a response back to Kimi that we need to proceed development, it then writes to the SQS,
+> and there is a tuple process for which device gets the work. First it's availability, second its cpu/memory factor.
+> If THere is only one MSTR agent online, it goes to that one. If there are multiple, then they check their boxes,
+> write back to sqs their stats, and the one with the lowest cpu/memory usage gets the job. Once that happens, the
+> Kimi agent writes back to whoever wrote in with the bug report that "I'm on it"
+
+The CRO's /open-calls at ~16:4xZ put six cards: (1) trigger = an explicit `#dev` command; (2) the winning MSTR hands
+the job to a seat; (3) "online" = an MSTR session with its bus listener running; (4) Tax SMA first-day rule: accept
+the one-day lag; (5) Tax SMA label conflict: keep counting the value; (6) Tax SMA traded row with no account number:
+stays invalid. Andrew:
+
+> All recs approved. The one comment I'd make on "who" is dispatched, is that we send off a COO~{N} specifically with
+> some explicit task structure in the launcher. I would call it "/remote-drive", where one COO basically runs
+> /closer-drive doing all steps itself. I.e., it does the research/analysis that CRO would've done in L1 of Canonical
+> Drive, then skips to L5 atom-decomp and just runs the process and validation itself. Once it has completed the
+> project, which should be small in nature so no need to register, it writes back to MSTR that its complete/deployed/
+> etc, MSTR writes back to Kimi, and Kimi manages comms with the user. If the user confirms it works, Kimi alerts MSTR
+> that its done, and that COO writes a /log with a "adhoc-remote-job" tag, and MSTR reaps that agent.
+
+And, the next two turns:
+
+> It can actually be even simpler, I'd call it a "/closer trace" operation where it assess what function the user is
+> talking about and runs closer trace to get the flow of functions involved, then runs atom-decomp on the relevant
+> surfaces, then just gets to work and validates.
+
+> THat may be a lighter way to run "/remote-drive"
+
+Binding: the six recs as written; the dispatched worker is a `2.0.0_SA_COO~{N}` launched with `/remote-drive`, whose
+light form is: identify the function the requester means, `/closer trace` it for the flow of functions involved,
+`/atom-decomp` the relevant surfaces, then do the work and validate it (small jobs, not registered), which
+reports complete to 0.0.0_AB_MSTR; MSTR relays to LDO-001; LDO-001 handles the requester; on the requester's
+confirmation LDO-001 tells MSTR; the COO writes a /log tagged `adhoc-remote-job`; MSTR reaps it. LDO-001 gains the
+agent-bus channel to the MSTR agents.
+
 ## Addendum ~14:2xZ -- folders now, the push, the laptop job retired, verbatim
 
 Asked (1) build the chat folders now from this session's Teams access (each chat's newest 50 messages), (2) push the
