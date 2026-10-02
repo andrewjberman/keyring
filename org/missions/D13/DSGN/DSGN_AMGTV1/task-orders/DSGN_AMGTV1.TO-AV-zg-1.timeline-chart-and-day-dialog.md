@@ -101,12 +101,16 @@ Read-only: the whole repository; in particular the issuer's checks and fixtures 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="AV-zg-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; node "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/2.0.0_SA_COO~D/round29/checks/timeline/chart.cjs"; echo "exit=$?"</invocation><expect>THE TIMELINE IS A RECHARTS CHART OF ARTICLES PER DAY WITH THE SHARED TOOLTIP AND MARKERS ON IT: 4 of 4 arms -- and exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="AV-zg-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; node "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/2.0.0_SA_COO~D/round29/checks/timeline/dayopen.cjs"; echo "exit=$?"</invocation><expect>THE DAY OPENS IN THE HERO DIALOG AND THE HEADER BRIEF IS THE NEWS CARD ABOVE THE ONE TIMELINE: 4 of 4 arms -- and exit=0</expect></criterion>
-  <criterion id="AC3" cell_refs="AV-zg-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; bash "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/2.0.0_SA_COO~D/round29/checks/battery29.sh" "$(git rev-parse --show-toplevel)" --skip tabs,namecard; echo "exit=$?"</invocation><expect>BATTERY29: ALL PASS (2 skipped) -- and exit=0</expect></criterion>
+  <criterion id="AC3" cell_refs="AV-zg-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; bash "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/2.0.0_SA_COO~D/round29/checks/battery29.sh" "$(git rev-parse --show-toplevel)" --skip tabs,namecard,postureharness,posturezero; echo "exit=$?"</invocation><expect>BATTERY29: ALL PASS (4 skipped) -- and exit=0</expect></criterion>
 </proof_of_spec>
 
 AC3 skips two items whose re-anchor belongs elsewhere:
 - `tabs`: its `header_posture_line_matches_payload` clause is re-anchored by cell `AV-zg-3`.
 - `namecard`: the issuer's round-20 check finds the ticker inside the posture line you remove. The issuer re-reads it on the merged
+  candidate.
+- `postureharness` and `posturezero` (AMENDMENT 1, issuer, 2026-10-02 ~21:3xZ, on row Z-W80-S1): both run `posture.harness.cjs`, which reads
+  the posture line `IdentityHeader` renders. With HeaderBrief's posture slot gone, that line returns only when cell `AV-zg-2` renders its
+  single `[data-header-posture]` inside its details control. The two cells land together, so these items are read on the merged
   candidate.
 The issuer runs the full battery, with no skip, on the merged candidate.
 
