@@ -5799,6 +5799,26 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W90-S11",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~90",
+      "surfaced_at": "2026-10-02T06:00Z",
+      "one_line": "HVST-ai-5: the sparse cone named for this worktree cannot run the collector suite; six tracked paths outside it are read by lib/ at import or by tests.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "The face: run python -m pytest lib/opal_data_harvest/ -q (base 529 passed) in a sparse cone of lib, .tools, org/missions/D5/AMGT/AMGT_HARVST.",
+      "world_is": "In that cone collection fails at lib/research/harvest/store.py import (infra/logic/registry/systems.json absent) and then org/standards/NAMING_SCHEMA.json, org/tier1_exec/4.0.0_SA_CRO/scripts, integrations/seekingalpha/rest_fetch.py, org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~3/universe.json and org/tier1_exec/2.0.0_SA_COO/deliverables/AMGT_HARVST/SA_SYMBOLS_MERGED_89_20260927.json (test fixtures). I ran git sparse-checkout add for those six paths in this worktree only (a local setting, no tracked file changed); the suite then read 533 passed, 3 skipped (529 base + 4 new).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "pytest lib/opal_data_harvest/ in wk-hvst-r36-90, four FileNotFoundError / ModuleNotFoundError collections and failures, then 533 passed"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "A later worker cut on this face needs the same six paths in its cone."
     }
   ]
 ```
