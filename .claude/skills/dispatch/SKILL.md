@@ -212,12 +212,8 @@ refusal that never happened.
 
 ## Step 4 — Spawn: the spawn IS the GO
 
-⛔ **DO NOT USE THE HARNESS'S `isolation: "worktree"` HERE. IT BASES THE WORKTREE ON `origin/main`, NOT
-ON `CLOUD`, AND THE WORKER LANDS IN AN ESTATE THAT DOES NOT EXIST.** Measured 2026-09-04 on the first
-exercised spawn and re-measured at this seat: `origin/HEAD` -> `refs/remotes/origin/main`, tip
-`af88fcdd01` dated **2026-01-19**, which `CLOUD` is **32,776 commits** ahead of, and whose tree carries
-**neither `org/` nor `.tools/`**. The worker finds no task order, no gate, no compiler tool. Three
-worktrees sit on that base already, so it is the harness's fixed behaviour here, not a one-off.
+⛔ **DO NOT USE THE HARNESS'S `isolation: "worktree"` HERE: it bases on `origin/main` (a January tree with
+neither `org/` nor `.tools/`), so the worker finds no task order, no gate, no compiler tool.**
 
 **Make the worktree yourself, from THE BRANCH YOU ARE ON, with `.tools/wk-provision.sh provision <CODE> <n>
 --path <path>`; for a PORTAL cell add `--portal-ref <ref>`, where `<ref>` is the value the issuance commit's
@@ -230,22 +226,23 @@ portal worktree down with `.tools/wk-provision.sh remove <path>` so the nested r
 git worktree add -b wk-<CODE>-<n> <path> HEAD
 ```
 
-⛔ **DERIVE THE BASE; DO NOT HARDCODE A BRANCH NAME.** This step said `CLOUD` until 2026-09-10, which is
-device-blind: on site Z the working branch is `SITEZ`, measured **242 commits AHEAD of `origin/CLOUD`**
-(and `CLOUD` 0 ahead of it). A worker based on `CLOUD` there is not in a ruined estate, so nothing
-announces the problem -- it silently misses the most recent work, which on a mid-round drain is exactly
-the work the order depends on. `HEAD` is correct on both fabrics and needs no per-device clause.
+⛔ **DERIVE THE BASE (`HEAD`); NEVER HARDCODE A BRANCH NAME:** a fixed name silently misses the newest work on
+another device, which on a mid-round drain is exactly the work the order depends on.
 
 Then the subagent call with **`subagent_type:` the face's `<worker_class>`** (`"worker"`, or `"worker-light"` on the
 report 2 C7 trial) and **no `isolation`**, its prompt **the worker
 face of that slot's FIRST task order, verbatim**, plus the L7 identity line naming its serial **and the
 worktree path it must work in**.
 
-⚠ The worker's own first act now prints `git rev-parse --abbrev-ref HEAD` and tests for `org/` and
-`.tools/`, and **stops with a BLOCKING row** if they are absent — so a wrong base fails loudly at the
-worker instead of producing an hour of work against a January tree. **That guard is the second line of
-defence, not the first; the first is this step.** Whether the repository's default branch should become
-`CLOUD` is Andrew's call and is with him.
+⚠ The worker's first act tests for `org/` and `.tools/` and **stops with a BLOCKING row** if absent: the
+second line of defence; the first is this step. Whether the default branch becomes `CLOUD` is Andrew's call.
+
+⛔ **MID-ROUND, THE ORDER FILE ON THE WORKER'S BRANCH IS THE GRANT:** the lane gate reads `<paths>` there, never
+a message. Commit the amendment into the order, put that file on the branch (`git show <c>:<order> >
+<wt>/<order>`, then `safe-commit` that path alone; `git stash` is hook-blocked). A finished worker cannot be
+resumed: re-seat the slot, naming its prior commits as inherited state. Every face also says: `surfaced_at` =
+`date -u +%FT%TZ` at filing; and a cell whose AC1 runs `lib/research/api/tests` needs `--portal-ref` (the
+print tests read the portal fixture) or the issuer re-grades AC1 on the shared tree.
 
 ⛔ **NO BROKER MESSAGE CARRIES A GO, AND NO INBOX RECEIVES ONE.** A worker cannot register, send or
 receive. If you find yourself composing a message to a worker, the thing you are trying to say belonged
