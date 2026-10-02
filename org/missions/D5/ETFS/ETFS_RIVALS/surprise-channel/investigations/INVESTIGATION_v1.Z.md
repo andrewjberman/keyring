@@ -2668,6 +2668,28 @@
     "spec_asserts": "Analysis ruling 3 (round 3) and the round-4 floors rule: each source's floor is the minimum newest-date resolved fraction of that source's funds.",
     "world_is": "Nothing serves wrong today (BASG 1.0, GQGU 0.2368 both pass). The floor cannot detect a BASG identity regression down to 0.23.",
     "notes": "Carrier row for the round-4 analysis ruling 3 (@6dcb0074e4): resolved_floor() gains per-fund entries under `issuer`, BASG's floor set from BASG's own resolution. Round-5 cell (enrichment item 6)."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S40",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-01T23:50Z",
+    "one_line": "RIV-b-2 needed a place for the G1 cursor the order does not name: it is a `<batch_id>.cursor` object (not .json) beside the build_canonical_shape marker, so read_markers/has_marker never see it; it is written only when G1 stops early or a resumed run is still incomplete.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/markers.py cursor_uri/write_cursor/read_cursor (worktree wk-rivals5-1, uncommitted at filing)",
+        "data/etfs/scripts/rivalfunds/homes.py state_table(): only the 8 STAGES have a state prefix, and homes.py is outside this cell's <paths>, so the cursor reuses the build-canonical-shape state prefix",
+        "markers.read_markers filters uri.endswith('.json'): the .cursor suffix keeps the cursor out of every marker read; EventBridge rules bind only state/build_silver/ and state/build_bloomberg_silver/"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-b-2: PARTIAL returns a cursor in `detail`, and the same event re-invoked continues from the cursor; no storage location for the cursor is stated.",
+    "world_is": "The event carries no cursor, so a continuation needs persisted state; the cursor is one new object kind under state/build_canonical_shape/date=<D>/ in the served S3 estate on the first real PARTIAL. Not exercised on S3 in this round (nothing deploys); IAM write to that prefix is the marker write's own. Also: run_gold_chain bounds its re-invocation by RIVALFUNDS_CHAIN_BUDGET_S (default 750 s = 900 s Lambda minus MARGIN_MS), because the handler drops the Lambda context.",
+    "notes": "Deploy-time reader should confirm the Lambda role may PutObject on state/build_canonical_shape/ keys with a .cursor suffix and that no S3 lifecycle or notification rule matches that prefix."
   }
 ]
 ```
