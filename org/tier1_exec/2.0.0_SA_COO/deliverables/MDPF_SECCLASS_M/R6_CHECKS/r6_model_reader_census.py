@@ -474,6 +474,20 @@ def ex_bd_classifier():
         return "%d model rows through classify()/get_sub_asset_class() verbatim; a miss still reads unknown" % len(MODEL)
 
 
+def ex_cot_classifier():
+    # MDPF_SECCLASS batch 164 scope: Cottonwood's library (the re-point, serve-held) reads the table through the one client.
+    rel = "data/cot/scripts/gold/lib/etf_classifier.py"
+    with World(), isolated([SHARED, ROOT / "data/cot/scripts/gold"]):
+        mod = load(rel, "ex_cot_etf_classifier")
+        clf = mod.ETFClassifier(table_name=TABLE)
+        for r in MODEL:
+            t = r["ticker"]
+            expect(clf.classify(t, r["name"]) == r["asset_class"], "%s: classify" % t)
+            expect(clf.get_sub_asset_class(t, r["name"]) == r.get("sub_asset_class", ""), "%s: sub" % t)
+        expect(clf.classify("NOSUCHTKR", "no such") == clf.UNKNOWN, "miss did not read as unknown")
+        return "%d model rows through classify()/get_sub_asset_class() verbatim; a miss still reads unknown" % len(MODEL)
+
+
 def _bd_clf():
     from lib.etf_classifier import ETFClassifier  # the BD library, `lib` = gold/lib (gold is first on sys.path)
     return ETFClassifier(table_name=TABLE)
@@ -945,6 +959,7 @@ READERS = [
     ("data/assets/scripts/gold/build_satellites_registry.py", "load_classifier/classify", ex_satellites_registry),
     ("data/assets/scripts/gold/build_satellites_characteristics.py", "load_identity", ex_satellites_characteristics),
     ("data/black_diamond/scripts/gold/lib/etf_classifier.py", "ETFClassifier.classify/get_sub_asset_class (BD library)", ex_bd_classifier),
+    ("data/cot/scripts/gold/lib/etf_classifier.py", "ETFClassifier.classify/get_sub_asset_class (Cottonwood library)", ex_cot_classifier),
     ("data/black_diamond/scripts/silver/build_bd_assets_dim.py", "apply_blend (BD assets dim)", ex_bd_assets_dim),
     ("data/black_diamond/scripts/gold/D_04.client_portal_summary.py", "_classify_with_canonical", ex_bd_d04),
     ("data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py", "BD library consumer (classify/get_sub_asset_class)",
