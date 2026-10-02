@@ -364,3 +364,13 @@ it as one inflates the trade count. Three things keep the rule sound:
 - the AI facts and the page now read the same population.
 
 If a later row shows 0 -> 0 shares with a non-zero notional, that is a data fault, not this rule. It stays visible.
+
+### CALL 5 -- vendor basis now registered (1.0.0_SA_CTO~Z msg 28474, 13:17Z)
+
+The OpenAI basis of CALL 5 is now row **VEW-2** in `org/ref/VENDOR_EGRESS_WHITELIST.yaml` @8075f97ffb. 1.0.0_SA_CTO~Z landed
+it on this seat's ask, after the register (@213102cff1) listed only NopeCHA. Its scope is the ETFS_RIVALS AI chain:
+- chat;
+- `web_search_preview` as a labelled fallback only, after the news scanner and Data Harvest.
+
+It does not cover web search as a primary source, nor OpenAI for any other project. The records of the rivalfunds AI runs
+cite VEW-2.
