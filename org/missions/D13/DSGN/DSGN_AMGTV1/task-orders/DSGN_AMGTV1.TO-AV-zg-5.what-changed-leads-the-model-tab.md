@@ -113,7 +113,7 @@ Report once: what changed and where, the output line of every criterion, the por
 sign and the percent are graded); the opened detail's content; behaviour after a user picks another pair; the no-differing-pair state;
 the no-model state. Fixture is older than the walk (16 versions, 137 figures vs 19 / 147): no effect on the checks.
 
-<status>pending</status>
+<status>complete</status>
 <round>29</round>
 <slot>~84</slot>
 <fabric>site-z</fabric>
