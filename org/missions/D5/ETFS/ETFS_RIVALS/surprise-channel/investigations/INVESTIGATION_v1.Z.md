@@ -2668,6 +2668,27 @@
     "spec_asserts": "Analysis ruling 3 (round 3) and the round-4 floors rule: each source's floor is the minimum newest-date resolved fraction of that source's funds.",
     "world_is": "Nothing serves wrong today (BASG 1.0, GQGU 0.2368 both pass). The floor cannot detect a BASG identity regression down to 0.23.",
     "notes": "Carrier row for the round-4 analysis ruling 3 (@6dcb0074e4): resolved_floor() gains per-fund entries under `issuer`, BASG's floor set from BASG's own resolution. Round-5 cell (enrichment item 6)."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W3-S16",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~3",
+    "surfaced_at": "2026-10-02T00:20Z",
+    "one_line": "The ruling's first relation (a G3 or issuer identifier event naming both) has no data source today: G3 carries only dividend and corporate-action event types with no counterpart-identifier column, and the issuer feed has no identifier event, so only the crosswalk and CUSIP-equality limbs can fire on served data.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/enrichment_bloomberg.py G3 schema (~84-85) and map_event_type (~119): event_type maps Bloomberg Dividend Type; no identifier-change type and no counterpart security column",
+        "data/etfs/scripts/rivalfunds/gold_trade_schedule.py identifier_events(): built to the ruling, reads event_type in IDENTIFIER_EVENT_TYPES plus an optional `counterpart_security_id` column; returns no pair for a G3 object without them (tests/test_r5h4_id_change_identifier_relation.py exercises it with a synthetic frame only)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-h-4 / CTO hop-9 ruling (a): an exit and an entry pair as ID-CHANGE when a G3 or issuer-published identifier event names both.",
+    "world_is": "No G3 or issuer object names an identifier event, so that limb is built and dormant; the names IDENTIFIER_EVENT_TYPES and `counterpart_security_id` are this worker's, not a contract. Also: the CUSIP-6 limb needs such an event, so a shared CUSIP-6 never pairs on served data today. Both ACs pass without it.",
+    "notes": "For the round-5 analysis: either name the producer of identifier events (and its columns) or retire that limb. A real ID-CHANGE on served data now needs a shared ISIN/SEDOL/FIGI or CUSIPs equal after zero-padding."
   }
 ]
 ```
