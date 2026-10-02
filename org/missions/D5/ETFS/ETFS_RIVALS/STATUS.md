@@ -4,14 +4,14 @@ Seat `2.0.0_SA_COO~RV` (CLAUDE). Lease: FAST to 2026-10-02T17:08:53Z, surface `d
 (`org/mcp/drive-mode.log` line 56). Goal (Andrew ~04:59Z): "i want mcp.opalinvest.dev/rivalfunds demoable Today".
 Team: reviewer `3.0.0_SA_CVO~RV` (grades pins after the fact: `org/tier1_exec/3.0.0_SA_CVO/deliverables/ETFS_RIVALS_FAST_GRADES_20261002.md`),
 open calls `4.0.0_SA_CRO~RV` (`org/tier1_exec/4.0.0_SA_CRO/deliverables/ETFS_RIVALS_RULINGS_20261002.md`: CALLs 1-9 ruled).
-As of 2026-10-02T13:0xZ.
+As of 2026-10-02T13:5xZ.
 
 ## Pins
 
 | What | Value |
 |---|---|
 | Working branch / worktree | `rv-fast` at `/c/tmp/rv-fast` (drained to CLOUD at 93227704b7); apply tree removed 10:23Z (MSTR disk ask) -- re-add detached at CLOUD HEAD for the next apply |
-| Deployed artifact pin | CLOUD **f122e4476b** in the five etfs-rivalfunds Lambdas (ledgers fast-a1, -r2 .. -r11 all CLOSED; latest @7af008a129) |
+| Deployed artifact pin | CLOUD **8075f97ffb** in the five etfs-rivalfunds Lambdas + the publish-page bronze-read grant (ledgers fast-a1, -r2 .. -r12 all CLOSED; latest @516d1d2919) |
 | Served page | `platinum/page/date=2026-10-02/index.html` (newest; the gateway serves it), batch fast-a1-publish-1002e 12:24Z: 13 of 13, 213 trades, AI 22/2 (re-graded, CALL 11), money-market trades counted not shown; the last served change before Andrew's 13:00Z read |
 | AI run objects | `research_hypotheses` date=2026-10-01 run 20261002T062229Z-ai; date=2026-10-02 run 20261002T110438Z-ai (20/4, unchanged) + its re-grade -rg4 (grounding_check/4, 22/2) |
 | Push state | LOCAL @04fb5c283c: origin CLOUD 1f2346734b (ls-remote 10:24Z); MSTR~Z asked to carry it (msg 07:43Z) |
@@ -30,19 +30,17 @@ State: LIVE END TO END on the A1 page. The served 2026-10-01 page is the Lambda'
 
 ## Write claims
 
-None open. No served change before Andrew's 13:00Z read (CTO~Z msg 28450).
+None open. Andrew-direct 13:33Z "RECS APPROVED GO AHEAD" (@74e6e01a5b, CALL 2 corrected @a555e1301b): addendum 11 APPLIED (r12),
+the round-5 worktrees removed, FAST lapses at 17:08:53Z (not extended).
 
 ## Next proof
 
-1. Andrew's read of the 10-02 page (1002e, grade 11 PASS); any finding is the next item.
-2. The next rivalfunds Lambda deploy carries, beside the bronze-read grant (a policy change) and F5: round 5's universe.py,
-   collector and G4 changes (drained 13:0xZ). Its pair measures them through the handlers. Pre-measured 13:1xZ: an overlay
-   publish of 2026-10-02 at CLOUD 213540f408 differs from the served 1002e in ONE line, the G0 map date (10-01 -> 10-02: a
-   newer map object, data any republish reads); page code delta 0. Still to measure: the A1 tables (served_delta_a1.py).
-3. F5 (P2): prompt a1-chain/4 (readings named by label, no source/name keys) BUILT @0839079a9c, 397 passed, drained @7dbe861883;
-   proven only by the next AI run; its Lambda copy rides the next pair.
-4. The publish-page Lambda's missing bronze read: grant BUILT on rv-fast @fd0d285da3 (publish-page GET on the issuer-site and
-   Bloomberg bronze holdings; policy JSON regenerated); its own pair (a plan with a policy change) after the demo.
+1. **17:08:53Z FAST -> FULL** (Andrew: lapse, not extend). At the first tick after it: if the lease still reads FAST (presence),
+   end it with `python .tools/drive-mode.py full ETFS_RIVALS`; then commit what builds, overwrite this file, and cut round 6 as
+   ONE issuance from the rectangle below.
+2. **2026-10-05 07:00 ET marker page read** (CTO~Z addendum-11 condition 4): "source URL unavailable" only on PFOE's 26 lines.
+3. **2026-10-05 AI accounts:** round-6 cell 1 if it lands before the 07:00 ET publish; otherwise ONE seat run after it (VEW-2
+   covers OpenAI for this chain; Andrew's yes 13:33Z), prompt a1-chain/4, grader grounding_check/4. It proves F5 and G8-3.
 
 ## Round 5 drains (DONE 13:0xZ)
 
@@ -56,18 +54,25 @@ rivalfunds suite on combined CLOUD 213540f408: 410 passed, 2 skipped. The vehicl
 next trading morning (07:00 ET 2026-10-05). The two worktrees stay: each holds an untracked `.scratch/`, so removal needs
 `--force` (a recursive delete, human-confirmed).
 
-## Round-6 cut list (FAST -> FULL at 17:08:53Z; cut straight from here, thread-first, repairs batched)
+## Round 6 rectangle (ONE issuance at FAST -> FULL)
 
-| # | Cell | Risk | Grounding | Gate |
-|---|---|---|---|---|
-| 1 | The next Lambda pair if FAST does not land it: publish-page bronze-read grant (policy) + F5 prompt a1-chain/4 + round 5's universe/collector/G4 code | WORLD | grant @fd0d285da3, F5 @0839079a9c, drains e4e9eedfa9 / 213540f408; overlay page delta = G0 map date only | Andrew's word that served changes resume (next-calls CALL 1) |
-| 2 | The 2026-10-05 seat AI run (one run, CALL 5 terms), then one republish: the only proof of F5 and of G8-3's fact-pack change | WORLD | CTO~Z msg 28437 (next AI run free); `org/ref/VENDOR_EGRESS_WHITELIST.yaml` @213102cff1 lists no OpenAI word | Andrew's per-use word (next-calls CALL 2) |
-| 3 | AI chain wired into the Lambda + a dedicated OpenAI secret (CALL 5 rule 3): the scheduled run replaces the seat run | WORLD | parked since 2026-10-02 06:xxZ | a standing OpenAI word on the whitelist |
-| 4 | Per-fund issuer floors with the 2-line tolerance (CALL 2) | SERVED | CRO~RV rulings CALL 2 | the CTO~Z pair |
-| 5 | G4 carries a price field (row Z-S14), so rankings stop leaning on holding-implied prices (1849 implied / 1498 missing on 10-02) | SERVED | a1_produced detail, 2026-10-02 manifest | px_close lands in G4 |
-| 6 | Repairs, ONE cell: PFOE home-producer "source URL unavailable" x26; the census's 766-line length; the AI placeholder "No AI account. the ..." capital; trending-topic headline digits read as figures; the AI prose's Bloomberg ticker forms (CALL 10: style for the next prompt) | LOCAL/SERVED | 2026-10-02 audit reads in this file | none |
-| 7 | PCLG / WCMG +1 historical windows read by a control replay (round-4 t-5) | SERVED | INFERRED since round 4 | a G5/G6 history replay is cut |
-| 8 | The concentration cell (ACWI top-10 share) | SERVED | v0.8 leg built inert (l-1) | ACWI lands daily |
+Cells 1-7 = `ledger/ROUND_ANALYSIS.round5.md` section 4 @56c99763bb, authoritative:
+1. the AI chain as a production act (scheduled Lambda path + its dedicated secret; VEW-2);
+2. the A1 plausibility guard on CRO~RV CALL 13's amended terms (@6e3c94774a: per fund x period; total < -100% hard, the
+   planted -188% refuses; one holding |c| > 0.25 PROVISIONAL; NAV reconciliation where on file);
+3. W4-S9's disarm by one deliberate run above 45 dates;
+4. the backfills (IDVZ, PFOE, ACWI, IWM) and the G5/G6 replay under its own pair;
+5. W3-S11 and W3-S12 (a probe first);
+6. PFOE's 26 home-producer lines without a source URL -- diagnosed 13:2xZ: a home row has no bronze file by design
+   (`source_used` home_producer, `source_channel` positioning-landing:constituents_issuer_fill, `silver_uri`
+   opal-data-etfs/bbg/<d>/constituents/..., sha256, captured_at); `render._source` falls through to the "bronze sidecar
+   unreadable" text. Fix: `_fund_files` carries source_channel + silver_uri, and `_source` names the home producer's file;
+7. the S14 G4 price cell.
+L5 rule for the round: CALL 13 C2 (every judgment criterion names its positive control).
+Remediations, batched into ONE repair cell: the AI placeholder "No AI account. the ..." capital; trending-topic headline digits
+read as figures; the census's 766-line length; the AI prose's Bloomberg ticker forms (CALL 10: style for the next prompt).
+Carried, not cells: CALL 2 issuer floors (deferred post-FAST, CTO~Z pair); the ACWI concentration cell (ACWI lands daily);
+CGIC's stored 10-02 CMQXX narration and F5's stored ids (fixed for future runs; never re-rolled).
 
 ## Limits
 
