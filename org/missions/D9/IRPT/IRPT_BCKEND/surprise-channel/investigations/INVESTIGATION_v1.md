@@ -14747,3 +14747,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Portal files are read only for this order; the field is the page's use of ?bundle= as the Analysis request id. The remedy is the portal owner's (read ?request= for kind=analysis) or the grant owner's."
 }
 ```
+
+## IRPT_BCKEND-W101-S4 -- a prospect render grant is built but the Enforcer's render read still refuses an empty account list
+
+```json
+{
+  "id": "IRPT_BCKEND-W101-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~101",
+  "surfaced_at": "2026-10-02T10:23:00Z",
+  "one_line": "IB-pr-291: a prospect render grant now builds, stores and reads back, but the Enforcer's RENDER_DELEGATE read intersects the grant's account_ids with the delegator's scope and refuses EMPTY_GRANT on an empty list, so the grant is not yet served by a render.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/enforce.py: bundle_ids = set(bundle.get('account_ids') or []); intersection = sorted(delegator_permitted & bundle_ids); if not intersection: Refusal('EMPTY_GRANT', ...)",
+      "infra/aws/lambda/investor-reporting/_render_identity/grant.py render_ports(): load_render_bundle returns account_ids = list(grant['account_ids']) = [] for a prospect grant",
+      "infra/aws/lambda/investor-reporting/export/submit_async.py:128 account_ids = [str(a) for a in checked['account_ids']] feeds write_pointer; [] for a prospect grant (not run)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IB-pr-291 gives the grant a prospect scope; the Enforcer rule that reads it was named in W101-S1 as the render-identity owner's, outside this order's paths.",
+  "world_is": "grant.build, write, read and render_ports now carry a prospect grant (account_ids = [], prospect_scope with the report's four artifact keys). The Enforcer still resolves a RENDER_DELEGATE read as delegator_permitted intersect bundle account_ids, so an empty list serves nothing: EMPTY_GRANT. Also, the artifact keys are named in the retained index's grammar (REPORT#id#rev, ARTIFACT#ART-id; sections = the report key with a #sections suffix, since sections are served from the report record) but no reader consumes prospect_scope yet. Not run: any live render.",
+  "notes": "Outside this order's paths (_authz/enforce.py, the analysis report route). The remedy is an Enforcer arm that, for a grant carrying prospect_scope, admits an OWNED_RECORD read of exactly those keys for the exact delegator owner."
+}
+```
