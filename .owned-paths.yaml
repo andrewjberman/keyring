@@ -2533,6 +2533,18 @@ paths:
     lane: IRPT_BCKEND_FAST_Y_STATUSPORTS
     note: "Hop 11's three assert lines (six operations, the pdf owner-read mode), same merge as hop 11's route; released by COO~P (msg 104217); IRPT_COMPLETION_P members kept plus COO~Y; CTO grantor batch 159 (2026-10-02)."
 
+  "infra/aws/lambda/investor-reporting/_contracts/fixtures/AnalysisRequestPdf.valid.json":
+    lane: IRPT_BCKEND_FAST_Y_STATUSPORTS
+    note: "Hop 11 contract fixture (new), exact file; no non-terminal order holds it; IRPT_COMPLETION_P members kept plus COO~Y; CTO grantor batch 163 (2026-10-02)."
+
+  "infra/aws/lambda/investor-reporting/_contracts/fixtures/AnalysisRequestPdf.invalid.json":
+    lane: IRPT_BCKEND_FAST_Y_STATUSPORTS
+    note: "Hop 11 contract fixture (new), exact file; no non-terminal order holds it; IRPT_COMPLETION_P members kept plus COO~Y; CTO grantor batch 163 (2026-10-02)."
+
+  "infra/aws/lambda/investor-reporting/_contracts/tests/test_seam_paired.py":
+    lane: IRPT_BCKEND_FAST_Y_STATUSPORTS
+    note: "Hop 11's census pins, DERIVED from routes.json _denominator and the documents directory, never typed (batch 158's rule); IRPT_COMPLETION_P members kept plus COO~Y; CTO grantor batch 163 (2026-10-02)."
+
   "data/black_diamond/scripts/gold/tests/test_composition_canonical.py":
     lane: MDPF_SECCLASS_FAST_M_BD_MIX
     note: "Black Diamond forward fix, exact test file (its other-to-unclassified asserts change with the code); CTO grantor batch 137 (2026-10-02)."

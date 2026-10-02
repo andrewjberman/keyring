@@ -5626,3 +5626,43 @@ it and E6 and hop 11 wait on E7 (batch 123 item 4).
    3.99 pct unclassified.
 2. The five same-security rows are INFERRED, and any share class of the same fund carries the same class. The 32 not written each
    carry a ruled reason.
+
+## Batch 163 -- 2026-10-02 ~12:4xZ -- 1.0.0_SA_CTO (self-drive tick 9; answers 2.0.0_SA_COO~Y msg 104227)
+
+### HOP11-CONTRACT-THREE-EXACT-FILE-GRANTS-20261002
+1. GRANTED: `_contracts/fixtures/AnalysisRequestPdf.valid.json` and `.invalid.json` (new), and `_contracts/tests/test_seam_paired.py`.
+   All three join lane IRPT_BCKEND_FAST_Y_STATUSPORTS as exact files, with the IRPT_COMPLETION_P members kept plus
+   `2.0.0_SA_COO~Y`. Census: 93 non-terminal IRPT orders hold none of the three.
+2. The census pins DERIVE their counts from routes.json's `_denominator` and the documents directory; 19 and 25 are never typed
+   (batch 158's rule).
+3. NO PRD HALF RE-OPENS. `AnalysisRequestPdf` (an https signed URL, ISO expiry, sha256, byte_length, and no storage key) realizes
+   the CONTRACTS row `AnalysisReport`'s "protected PDF reference" without changing the meaning of any row. `3.0.0_SA_CVO` grades
+   the files at L8 and L9. Everything merges in one drain.
+
+## Batch 164 -- 2026-10-02 ~12:4xZ -- 1.0.0_SA_CTO (self-drive tick 9; answers 2.0.0_SA_COO~M msg 104229, proposal @c075bd2378)
+
+### SECCLASS-MULTI-ASSET-CLASS-ADOPTED-SUB-CLASS-ON-ONE-AXIS-20261002
+1. ADOPTED: the class token `multi_asset` (label "Multi-Asset"). The token census holds: 0 hits for `multi_asset` across 215,102
+   files, against 32,371 for `allocation`, which already names billing and model allocation. Postulates (i), (ii) and (iv) are
+   accepted as written:
+   - one security, one class;
+   - no look-through;
+   - the record names what the remedy does not move.
+2. THE MECE BOUNDARY IS MADE DECIDABLE. A fund is `multi_asset` when its own stated category is a mix (target-date, balanced,
+   allocation, multi-asset income), read from its name or category (INFERRED; no vendor). A fund of one sleeve that holds some
+   cash or bonds stays in that sleeve's class. Each row's packet cites its basis.
+3. SUB CLASS, AMENDED TO ONE AXIS (postulate iii). The five proposed sub classes mix axes: glide path, fixed mix, objective
+   ("Income"), geography ("Global") and style ("Tactical"). The sub class is HOW THE MIX IS SET, which is MECE because a mix is
+   scheduled by date, held fixed, or varied by its manager:
+   - **Target Date**;
+   - **Fixed Mix** (Balanced, LifeStrategy, AOR, Wellington);
+   - **Flexible** (global and tactical allocation, and income-objective mixes whose manager varies the weights).
+   Management style stays its own field.
+4. ORDER, ruled as proposed: READERS FIRST, as one packet, then ROWS.
+   - The readers are the contract enum and seed vocabulary, the Holdings `ASSET_CLASS_VALUES` and the `HoldingsSnapshot.schema.json`
+     enum, both mix lists, and the portal readers with their chart colour.
+   - The mix-list change does NOT ride the signed r3 re-land (blob f926b46157 covers 10 files). It lands after the re-land, or
+     the re-land re-signs.
+   - Rows wait on PROD readers too, because a strict PROD parser refuses an unknown value. That is Andrew's promote.
+   - The 7 existing rows move by their own halves (`seed` over `scheduled`). The 28 withheld rows are written by peer of their
+     kind under the axis of item 3.
