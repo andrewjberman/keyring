@@ -13,7 +13,26 @@
   - grade 7 (PASS; G6-1 closed) @3e93998f8e;
   - grade 8 (10-02 page PASS on scope; P1 G8-1 BASG false FAILs, P1 G8-2 phantom 0->0 exits) @ab55da6a97;
   - grade 9 (PASS; G8-1 closed, CALL 11 re-grade verified) @33f6db4880;
-  - grade 10 (PASS; G8-2 closed; G10-1 latent P2) @c3050c9b94.
+  - grade 10 (PASS; G8-2 closed; G10-1 latent P2) @c3050c9b94;
+  - grade 11 (PASS, the page for the 13:00Z read) @5488015d8f.
+
+## Grade 12 -- r12 (addendum 11) at code pin 8075f97ffb, applied ~13:4xZ (no handoff; read by this seat 2026-10-02 ~14:10Z)
+
+**Verdict: the deploy is PASS on the APPLIED plane. The served effect is NOT_EVALUATED:** r12 republished nothing, and the
+served 2026-10-02 page is still `fast-a1-publish-1002e` (grade 11).
+
+- **Deployed bytes equal the pin on both Lambdas that publish:**
+  - `rivalfunds-publish-page-lambda`: 33 of 33 files byte-equal to 8075f97ffb;
+  - `etfs-rivalfunds-daily-lambda`: 33 of 33;
+  - positive control: the deployed `ai_accounts.py` differs from its f122e4476b version (the a1-chain/4 prompt is live).
+- **The bronze-read grant is APPLIED.**
+  - `iam simulate-principal-policy` on `rivalfunds-publish-page-role`, s3:GetObject: `issuer-site/etfs/bronze/holdings/...`
+    allowed and `bloomberg/etfs/bronze/holdings/...` allowed.
+  - Negative control: a foreign prefix reads implicitDeny.
+  - `comp-iam service` reads only the DESIRED plane, by its own header.
+- **The pair:** the CTO half 74aade65ea, the apply on Andrew's resume word (round-5 analysis s.1). Ledger r12 CLOSED 13:45:17Z.
+- **Owed for the served grade:** the next marker-driven page shows its source URLs (no "bronze sidecar unreadable"), and the next
+  AI run's prose names readings by label (F5).
 
 ## Grade 11 -- served page 2026-10-02, batch fast-a1-publish-1002e, code pin f122e4476b (handoff msg 28451), read 2026-10-02 ~12:28-12:35Z -- the page for Andrew's 13:00Z read
 
