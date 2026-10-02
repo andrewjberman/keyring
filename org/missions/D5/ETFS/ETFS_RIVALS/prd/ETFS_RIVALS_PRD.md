@@ -5,7 +5,7 @@
  "project": "ETFS_RIVALS",
  "directive": "D5",
  "fabric": "site-z",
- "prd_version": "v0.12",
+ "prd_version": "v0.13",
  "step": 4,
  "brief_ref": "docs/briefs/etf-holdings-research-20260929.md@77c891c869",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20"],
@@ -740,7 +740,7 @@ it into COO~RVs existing work on ETFS_RIVALS."
 | RFW-D03 | data | FWD-14 | Month to date and quarter to date rank 0 holdings for 12 of 13 funds (every fund but BASG, which ranks 32). | After RFW-D01 lands, MTD ranks at least one holding for every fund whose 09-30 and 10-01 reports are both in G1; a fund-period with no priced day shows ONE line, not four empty tables (RFW-U03). | new |
 | RFW-D04 | data | FWD-20, FWD-14, FWD-6 | Inputs that did not arrive: 'Security prices: 0 of 765 arrived' and 'GICS sectors: 0 of 765 arrived'. | G4 for the as-of date carries px_close and gics_sector for at least 95% of the universe's priced holdings, and the census reads that share. | known |
 | RFW-D05 | data | FWD-14, FWD-15, FWD-5, FWD-18 | For all 9 Bloomberg-sourced funds (TXUE, BIDD, CGIC, INEQ, SCHY, WCMG, TSEL, ETFT, PCLG), holdings show raw Bloomberg tickers instead of names: '8306 JP Equity', 'TTE ... | Every holding on the face shows a security name. A raw ticker appears only as secondary text, and the count of nameless holdings is 0, or each is listed in the census. | new |
-| RFW-D06 | data | FWD-6, FWD-14, FWD-15 | 'Unclassified' is ranked as a sector in the YTD sector tables of 10 funds, and is the single largest sector in 6: ETFT -6.59%, BASG -3.00%, TSEL -2.93%, BIDD -2.28%, T... | Unclassified carries at most 10% of any fund's absolute YTD contribution, with the share printed; until then it is never ranked as a sector (RFW-U16). | new |
+| RFW-D06 | data | FWD-6, FWD-14, FWD-15 | 'Unclassified' is ranked as a sector in the YTD sector tables of 10 funds, and is the single largest sector in 6: ETFT -6.59%, BASG -3.00%, TSEL -2.93%, BIDD -2.28%, T... | MEASURED (CRO~RV GICS census @308f982bb8, sections 2-4; replaces the walk's unmeasured 10%). Unclassified is never ranked as a sector (RFW-U16), and each fund's unclassified share is printed by weight of its latest report. After fix 1 (the CALL 9 cross-fund fallback in the rankings or in G1, with `gics_source` naming the other fund's file): INEQ >= 99% and TXUE >= 89% classified, and every other fund's unclassified share is at or below its section-4 level (IDVZ 78%, WCMG 58%, ETFT 42%, GQGU 38%, PFOE 27%, TSEL 15%, PCLG 13%). After fix 2 (CUSIP-keyed GICS in the scripted G4 pull) and fix 3 (G4 at universe scale): only the 7 not-eligible lines stay unclassified. Each level is graded on the served page beside its census denominator. | new |
 | RFW-D07 | data | FWD-3 | At the 14:17Z publish, 4 funds' latest report is 2026-09-30 against an expected 2026-10-01: IDVZ (home producer), BIDD, CGIC and SCHY (Bloomberg). | By the 09:00 ET sweep, every fund's report for the prior trading day is in G1, or the page names the fund as late with its reason. | new |
 | RFW-D08 | data | FWD-16, FWD-17 | Every AI account reads 'Demo read: written by a seat ad-hoc run (2.0.0_SA_COO~RV, 2026-10-02T11:04:45Z), a QA-class read, not the scheduled pipeline's output.' No sche... | The scheduled chain writes research_hypotheses for the page day with no seat act, and the footer reads the scheduled run. | known |
 | RFW-D09 | data | FWD-16, FWD-17, FWD-9 | 2 of 24 accounts are served as 'Grounding FAIL' (IDVZ 'The last 30 days': '$1.6 million, $1.3 million' not in any cited row; CGIC 1). | 0 accounts FAIL at the scheduled run, or each FAIL is collapsed with its reason (RFW-U10). | new |
@@ -793,6 +793,10 @@ the `/sprint` precedent files.
 - The CVO grades JUDGMENT criteria at L9, citing the contract clause.
 
 ## PROVENANCE AND AMENDMENT HISTORY
+
+- v0.13 (2026-10-02 ~16:2xZ, `1.0.0_SA_CTO~Z`), on `4.0.0_SA_CRO~RV` msg 28560 (GICS census `docs/briefs/rivalfunds-gics-census-20261002.md` @308f982bb8, Andrew-direct ~15:4xZ "Do it now"):
+  - RFW-D06's acceptance takes the census's measured levels in place of the walk's unmeasured 10%.
+  - ENDPOINT and CONTRACTS are unchanged; coverage stays 33/33.
 
 - v0.12 (2026-10-02, `1.0.0_SA_CTO~Z`), on Andrew-direct ~14:1xZ (record `ANDREW_DIRECT_20261002_141xZ_RIVALFUNDS_UI_WALK_BRIEF_TO_CTO_COO_RV_CANONICAL_DRIVE.md`):
   - The ENRICHMENT BACKLOG gains the 33-item /rivalfunds UI and data walk register (RFW-D01..D14, RFW-U01..U19), owned by
