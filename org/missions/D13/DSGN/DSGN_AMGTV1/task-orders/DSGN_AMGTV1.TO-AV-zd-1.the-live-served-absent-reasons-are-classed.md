@@ -70,7 +70,7 @@ Report once: what changed and where, the output line of every criterion, the por
 
 **ISSUER NOTES:** DIRECT ACT (LOCAL). Issuer's round-25 close-walk finding. Chain ~77 alone. Base liveclass 1 of 3 on 7889655a.
 
-<status>pending</status>
+<status>complete</status>
 <round>26</round>
 <slot>~77</slot>
 <fabric>site-z</fabric>
