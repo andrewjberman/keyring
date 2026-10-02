@@ -16902,6 +16902,33 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
  "world_is": "Disarmed: ak-3 closes on the pre-write plan grade plus the post-write served grade; the AC1s close on the shared-tree re-grades.",
  "disarm_owner": "2.0.0_SA_COO~Z",
  "notes": "Resolves AMGT_RESAPP-Z-W201-S4 and AMGT_RESAPP-Z-W202-S2. A worker worktree that needs the portal fixture wants it populated at the cut; carried as a cut-time practice, not a row."
+},
+{
+ "id": "AMGT_RESAPP-Z-S336",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.7.0_AE_CloudOps~A",
+ "surfaced_at": "2026-10-02T11:00:00Z",
+ "one_line": "al-1 bought the demo its margin and in doing so EXHAUSTED the lever: BA /timeline/day cold now answers in 16.9/16.6/19.1 s at 10240 MB, Lambda's ceiling, but max memory USED is ~460 MB and Init Duration is ~180 ms -- so this function was never memory-bound and never cold-start-bound, memory_size was only ever buying vCPU, and there is no larger number to reach for. The slowest of the three passing runs clears the 20 s AC target by 895 ms.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "AC1 at 1769 MB (issuer's pre probe, order preflight): cold calls time out at the 29 s gateway ceiling; CVO~Z measured 5 cold timeouts at 10Z (row Z-C-S29).",
+   "AC1 at 3538 MB, measured by this seat 10:52Z: 21726.76 / 20439.58 / 22913.08 ms, 0 of 3 under 20000 -- C1 FAIL. init_ms 160.22 / 186.95 / 203.78; max_mem 455 / 460 / 459 MB.",
+   "AC1 at 10240 MB, measured 10:55Z: 16885.18 / 16551.67 / 19105.13 ms, 3 of 3 under 20000 -- C1 PASS. init_ms 163.98 / 157.68 / 189.82; max_mem 460 / 462 / 463 MB.",
+   "Across a 5.8x memory raise (1769 -> 10240) max memory USED moved by 8 MB (455 -> 463). The resource the knob names is not the resource under pressure.",
+   "Init Duration is ~0.9 percent of the elapsed time at every tier, so the 16-23 s is handler work, not sandbox start. 'Cold' in AC1 means a fresh sandbox, not that the cost is start-up.",
+   "10240 MB is Lambda's per-function maximum, so no further raise exists on this axis."
+  ]
+ },
+ "disposition": "DISMISSED_WITH_REASON",
+ "dismissal_reason": "Nothing is owed on this row and no act changes: al-1's AC1 PASSES at 10240 and the demo path is inside target, which is what the order asked for. It is filed as an OBSERVATION because the RECORD needs the shape of the win, not just the verdict -- the next person who sees this route slow down must not reach for memory_size again, because there is nothing left to reach for. Ruling 5 already names the real remedies: track B (a deadline on _timeline_silver_articles so the route serves mentions with headline null and a reason rather than being killed) and track C (stop reading whole-publisher silver). The scheduled-for-after-the-demo track C is the one that addresses the cause. Dismissed by the executor on measurement; disarm_owner 2.0.0_SA_COO~Z may reopen it, and the CTO owns ruling 5's track selection.",
+ "spec_asserts": "AMGT-al-1 section 1: raise memory from 1769 to 3538 MB; if AC1's C1 still misses at 3538, raise to 10240 under the same entry and re-run AC1. Stop at 10240.",
+ "world_is": "Exactly that happened: 3538 missed at 21.7/20.4/22.9 s, 10240 passed at 16.9/16.6/19.1 s, and the act stopped at 10240 as instructed. The order's escalation ladder was correct and its stopping point was correct. What the order does not say, and what the measurements show, is WHY the ladder worked and that it is now finished: memory_size is a vCPU proxy for this function, memory itself is 95 percent unused at every tier, and the ceiling has been reached. Not measured here: whether the remaining 16-19 s is dominated by the S3 silver reads or by in-process work -- that is track C's question and this act had no license to profile it.",
+ "notes": "Margin, stated plainly because a PASS can read as comfort: the slowest passing run is 19105 ms against the 20000 ms AC target (895 ms of headroom) and against the hard 29000 ms gateway ceiling (9895 ms). The demo is safe on today's data volume. A route whose cost grows with the day's article count has no remaining config lever if that volume rises."
 }
 ]
 ```
