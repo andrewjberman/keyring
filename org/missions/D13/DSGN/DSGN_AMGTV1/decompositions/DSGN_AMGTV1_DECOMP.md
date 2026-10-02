@@ -1474,3 +1474,14 @@ stays the candidate.
 
 **Rule 24:** (i) four rows by subtraction: 3 orders + row 3 placed (a). (ii) One write set per chain. (iii) One intent per order.
 (iv) No order moves a served value: zb-1 and zb-2 are page words over served fields; zb-4 is an instrument.
+
+
+## v24 -- ROUND 24 (issuer, 2026-10-02 ~09:1xZ) -- ONE DIRECT ACT
+
+**Rectangle:** the CTO's ruling msg 28350 on row Z-S14 (review @dc22572ab2): "when the served Lusha reason is code-free, print it alone,
+as one sentence." It folds in only if it is re-merged and walked by 11:30Z, and then the new hash goes to the CTO. Otherwise
+41eeda55 ships as is. **Cell:** `AV-zc-1` (letter zc), DIRECT ACT, `<risk>LOCAL</risk>`, `ExecManagementTab.tsx` only: a code-free
+served SKIPPED reason prints alone; a coded one keeps AV-z-1's plain sentence; the reason rides `data-lusha-reason` either way.
+**Check:** `round24/checks/lushaline.cjs` (issuer): at base portal 41eeda55 it reads 2 of 3. **Chain:** ~74 alone, portal_ref 41eeda55.
+**Close:** the issuer's merge onto the candidate branch, the battery, and one walk of VLO Exec. **Rule 24:** one row, one order; no
+served value moves (the page prints a served string it already carries, without its own lead-in).
