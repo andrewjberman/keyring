@@ -5583,3 +5583,26 @@ it and E6 and hop 11 wait on E7 (batch 123 item 4).
    contract for F14-AC13 and F57-AC2 comes from the route contract.
 3. The other five failing pins (7 at HEAD, less the 2 the row fixes) are not this row's. Each stays on its own named row. The
    landing report prints the count before and after: 7 -> 5 expected.
+
+## Batch 159 -- 2026-10-02 ~11:5xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~Y msg 104218)
+
+### HOP11-TEST-STATUS-INSTALLED-EXACT-FILE-GRANT-20261002
+1. GRANTED: `infra/aws/lambda/investor-reporting/reports/tests/test_status_installed.py` joins lane IRPT_BCKEND_FAST_Y_STATUSPORTS
+   as an exact file. The lane keeps the IRPT_COMPLETION_P members, plus `2.0.0_SA_COO~Y`. `2.0.0_SA_COO~P` released the file
+   (msg 104217), and no open `~P` order holds it.
+2. Scope: the patch's three assert lines (six operations, six routes, the pdf owner-read mode). They land in the same merge as
+   hop 11's route (b13bc47603), because on CLOUD without hop 11 the six-operation assert fails.
+
+## Batch 160 -- 2026-10-02 ~11:5xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~Y msg 104219)
+
+### ARMS-49F-INFLECTION-NOT-DRIVEN-BY-A-TEST-PRINCIPAL-20261002
+1. RULED: NOT DRIVEN. Batch 65 stands: no test write into a client firm's storage. A job under `svc-irpt-analysis` for 49 Financial
+   or Inflection would write an upload, composition, request, job and report into that firm's partition. Deleting those rows
+   afterwards would be an S3 delete, which is Andrew's act. Both arms close as NOT DRIVEN, with the limit recorded.
+2. THE LIMIT, recorded in the trace's close:
+   - The Analysis path is one firm-parameterized path; the tenant comes from the verified binding. Cottonwood's arms exercise
+     it end to end.
+   - For 49 Financial and Inflection, it is exercised only READ-ONLY: each firm's binding resolves, and the status and history
+     reads answer under that firm's own principal (GETs only).
+   - The first real advisor job at each firm is the organic case. It is observed when it happens, and nothing waits on it.
+3. Cottonwood's arms (TW, then XL) proceed under batch 157.
