@@ -1,0 +1,25 @@
+MATCH     request        the composition's bytes hash to the request's composition_ref | {"sha256": "f6ff16d25d08c182", "request_id": "REQ-59b42fab4293260d6d439c39", "variant": "overview"}
+MATCH     request        the composition binds the browser's input_id to that input's own artifact | {"input_id": "portfolio_d01ce1cc64298baa"}
+MATCH     request        the variant is the recipe's for the comparison count, and every recipe source names one template | {"keys": [], "variant": "OVERVIEW", "template_id": ["14141822"]}
+MATCH     request        each chosen key's frozen identity is the maintained catalogue's (security id, label, model portfolio) | {"frozen": {}, "catalogue_sha": "54656584"}
+MATCH     input          the normalized artifact hashes to its content-addressed input id | {"sha256": "d01ce1cc64298baa"}
+MATCH     upload         the retained original upload hashes to its recorded content_sha256, and the input cites it | {"filename": "aapl-vnq-target-weight.csv", "lane": "TEMPLATE_UPLOAD", "sha256": "6227594d4b44aeb3"}
+MATCH     normalize      every uploaded weight reaches the normalized holdings as its share of the total, and the total reconciles | {"upload": {"AAPL": "0.6000", "VNQ": "0.4000"}, "shares": {"AAPL": "0.6000", "VNQ": "0.4000"}, "total": "1000"}
+MATCH     normalize      the upload's normalization row reads NORMALIZED and names this input | {"rows": 1, "state": "NORMALIZED"}
+MATCH     vendor         the vendor's upload echo equals the normalized holdings (rows sent = rows echoed) | {"echoed": {"AAPL": "600.00", "VNQ": "400.00"}, "upload_record_id": 783326, "weight_unit": "Dollars"}
+MATCH     vendor         the saved portfolio's settings read back: every row matches or is a tolerated, recorded row | {"matched": "7/7", "tolerated": ["level_as_of_type=custom_date"], "portfolio": 2375591}
+MATCH     job            the job is READY for this request revision | {"state": "READY"}
+MATCH     pdf            the retained PDF hashes to its checkpoint, and the checkpoint binds this request | {"sha256": "263cfa7a6b1347ac", "bytes": 556822, "retrieved_at": "2026-10-02T11:57:32Z"}
+MATCH     pdf            the PDF's settings table prints a row for THIS job's portfolio name (the vendor document is ours) | {"name": "IRPT REQ-59b42fab4293260d6d439c39 r1 5f40e4cbc24f", "printed": {"type": "Static", "as_of": "Custom", "name_cut": true}}
+MATCH     pdf            the effective settings the report records are the read-back's actual values | {"effective": {"benchmark": "^SPXTR", "level_as_of_type": "custom_date", "management_fee": 0.003, "rebalance_frequency": "quarterly", "reinvest_dividends": false, "start_of_series": "oldest", "tax_status": "non_qualified
+MATCH     pdf            of the catalogue's portfolios, the PDF prints exactly the chosen comparisons (the vendor compared what was asked) | {"printed": {}}
+MATCH     pdf            the served foreign-firm name check passes the PDF for its own firm | {"foreign": []}
+MATCH     extract        the extraction evidence hashes to the certification sha the publication recorded | {"sha256": "9046099e38dc0334"}
+MATCH     report         the report hashes to its REPORT# ref, and binds this request, PDF, composition and evidence | {"report_id": "RPT-895c92ef10fdefd6a0509c492deabf7a", "sha256": "d15e043e93998cf3"}
+MATCH     report         the report's owner cites the original upload | {"prospect_input_id": "UP-7ba7d86dc6ed424e1"}
+MATCH     sections       every scalar section's value is printed at its own page and coordinates in the retained PDF | {"reread": "46/46", "sections": 51, "charts": 5, "misses": [], "as_of_dates": {"2026-10-02": 5, "2026-10-01": 7, "2026-09-30": 39}}
+NOT_EVAL  screen         the portal renders these sections for this report revision, and a reload keeps them | 2.0.0_SA_COO~D's K10 walk on RPT-895c92ef10fdefd6a0509c492deabf7a
+NOT_EVAL  export         the same-revision export carries these sections | window 16 (K7 + K8 export), 2.0.0_SA_COO~P
+
+RESULT: {"tenant": "cottonwood", "request_id": "REQ-59b42fab4293260d6d439c39", "revision": 1, "report_id": "RPT-895c92ef10fdefd6a0509c492deabf7a", "links": 22, "match": 20, "mismatch": 0, "not_evaluated": 2}
+WROTE ../ARMS_Y2/TRACE_TW_20261002.json

@@ -1,0 +1,1 @@
+root /opt/irpt-resident/c657a5966d-st13 active active
