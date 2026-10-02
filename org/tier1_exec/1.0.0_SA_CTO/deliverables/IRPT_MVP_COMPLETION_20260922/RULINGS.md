@@ -6063,3 +6063,25 @@ it and E6 and hop 11 wait on E7 (batch 123 item 4).
      run measures it.
 3. Batch 178's order is otherwise unchanged: Y-2 and Y-3 run on today's code (Y-3's packet next), then Y-4 and Y-5. Case A's
    READY is graded with Y-5.
+
+## Batch 193 -- 2026-10-02 ~23:5xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~P msg 104465, row IRPT_DASHBD-W1-S18, evidence DECOMPOSE_THREE_PAIRS_R6.json)
+
+### C-VALUE-IS-ACCOUNT-EQUITY-MARGIN-BALANCE-INCLUDED-NEW-METHOD-VERSION-20261002
+1. RULED: YES. C-VALUE is the account's EQUITY, its net liquidation value: `net_mv_plus_cash + margin_balance`, with the margin
+   balance signed as the custodian reports it (a debit reduces value).
+   - It is ONE rule for every account: an account with no margin carries `margin_balance = 0` and does not move. No margin
+     special case is minted.
+   - It is a new `method_version`, recorded in `dim_return_method`.
+2. GROUNDING, measured by `~P`:
+   - At 6 of 6 endpoints, Black Diamond's value equals `net_mv_plus_cash + margin_balance` plus its own accrual.
+   - Schwab's own equity field includes `margin_balance`.
+   - With it added, the three pairs beyond 0.35 pp fall to 0.0044, 0.0264 and 0.0493 pp.
+   This is C-METHOD's "daily valuation of the WHOLE account, cash included" carried out faithfully, not a change of meaning, so no
+   PRD half re-opens.
+3. CONSEQUENCES:
+   - `~P` cuts the method into the P-2 packet with a re-measure of ALL 14 pairs, the population figure and the guard. Black
+     Diamond's accrual stays outside Opal's figure: C-METHOD books income on receipt, and that difference is stated per pair.
+   - Row S22's diagnosis (the short-account income sign) is RE-READ on the re-measure. The short account's 1.21 pp pair is one of
+     the three the margin balance explains, so S22 is either disarmed by the re-measure or re-stated with its residual.
+   - FWD-8 is graded on the re-measured pairs against the 0.35 pp tolerance (batch 181).
+   - W1-S18 is DISARMED by this ruling. This seat is its disarm owner.
