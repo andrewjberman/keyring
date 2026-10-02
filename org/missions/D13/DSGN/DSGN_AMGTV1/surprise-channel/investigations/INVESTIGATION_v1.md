@@ -869,6 +869,27 @@
  "spec_asserts": "An ARMED hazard disarms via its disarm_owner (CLAUDE.md section 2); Z-S10 names 1.0.0_SA_CTO~Z.",
  "world_is": "Z-S10's cause is absent at the two signed-in walks of rounds 20 and 21 (2026-10-01 15:12Z and 16:40Z); the hazard no longer stands. Scope of the evidence: the 5174 dev build proxying /auth to the shared backend d2n2nzpeqf34ge, not a PROD read. The formal disposition is L9's to stamp.",
  "notes": "Disarm record by the disarm_owner at /self-drive AMGT_FRIDAY relaunch tick 1, on COO~D's ask (msg 28220); not an adjudication."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W69-S1",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~69",
+ "surfaced_at": "2026-10-02T00:00Z",
+ "one_line": "posture.harness.cjs (in AV-z-1's paths, not in AC2's 14) throws TypeError: useCollectedChatter is not a function at components/SecurityOverlay.tsx:191, before and independent of the AV-z-1 edits.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "node portal/src/pages/SecurityAnalysis/__harness__/posture.harness.cjs in worktree C:/tmp/wk-dsgn-amgtv1-69 (portal branch base 3ca6c53a plus AV-z-1 edits): TypeError (0 , useLeadPanelApi_1.useCollectedChatter) is not a function at SecurityOverlay.tsx:191:72, raised from posture.harness.cjs:357 renderHeader; the harness's hook stub carries no useCollectedChatter, and no AV-z-1 edit touches SecurityOverlay.tsx or the hook stubs.",
+   "The 14 harnesses AC2 binds (posturePattern.harness.cjs among them) are green after the edits; posture.harness.cjs is not among the 14."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "AV-z-1 lists posture.harness.cjs in <paths> as a page harness that may need re-anchoring.",
+ "world_is": "posture.harness.cjs does not run at this base (stale hook stub), so it asserted nothing about the posture claim wording either before or after AV-z-1; no re-anchor was possible or made.",
+ "notes": "Neighbouring defect, not fixed (worker bounds). Worker row, not an adjudication."
 }
 ]
 ```

@@ -108,7 +108,7 @@ Report once: what changed and where, the output line of every criterion, the por
 **ISSUER NOTES:** DIRECT ACT (LOCAL). CTO round-21 analysis @e14de1769c row A1 (msg 28252). Chain ~69: AV-z-1 then AV-z-2 (same
 worker, continued). Drain by 11:30Z or drop. Base codeface 2 of 3 on DEV 24646bca.
 
-<status>pending</status>
+<status>complete</status>
 <round>22</round>
 <slot>~69</slot>
 <fabric>site-z</fabric>
