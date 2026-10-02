@@ -7797,3 +7797,28 @@ fanout:
   egress: none
   no_promote: true
 ```
+
+### 70f. AMENDMENT 1 -- track B (CTO ruling 5a @e041af6102): the silver read's deadline, before the 12:30Z freeze
+
+Track A landed at 10240 MB (al-1, proof `339b159ea0`). The cold BA runs took 16,885, 16,552 and 19,105 ms; 3538 missed at 21.7, 20.4 and
+22.9 s. Max memory used was ~460 MB at every tier, so the job is not memory-bound, and 10240 is Lambda's maximum. Ruling 5a lands track
+B as the demo guard.
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-al-2` | THE SILVER READ UNDER AN 18 s DEADLINE FROM HANDLER START; on the deadline the mentions are served with `headline` null and ONE plain `headline_reason`, as a 200 | issuer | direct act (this commit) | LOCAL (served by al-1 act (B)) | `lib/research/api/scoped_amgt.py`, a test |
+| `AMGT-al-1` act (B) | al-2's code-only redeploy, under the never-widen pair | `0.7.0_AE_CloudOps~A` | seat order (AMENDMENT 1) | WORLD | the Lambda artifact, the deploy ledger |
+
+- `--build-only` rc=0: CONTENT-DIFF 350 / 349 / CHANGED 1 (`scoped_amgt.py`); VERIFY missing []; isolated runtime 3 of 3.
+- Suite: `lib/research/api/tests` 363 passed. The 3 errors are the print tests' portal fixture, which is outside the cone.
+  `test_timeline_silver_deadline.py` 3 passed: in time = headlines and no reason; a planted slow read = 200 at the deadline with null
+  headlines and the plain reason; a read failure is still classified.
+- Controls (`round62/AL2_CONTROLS_PRE.json`, the warm second call): BA 2026-09-30 sha `6c25fff80da9be93`, BA 2026-10-01 sha
+  `69ecb7a884a83585`; deterministic over two calls each.
+- (iv) What it does NOT move: a day whose read finishes inside 18 s serves the same bytes; no other route, field, store or IAM.
+
+```
+al-2 -> al-1 (B)
+fanout:
+  wave_1: [al-1(B) 0.7.0_AE_CloudOps~A]   # GO after the CTO half; deployed AND graded before 12:30Z or it waits for the demo read
+```
