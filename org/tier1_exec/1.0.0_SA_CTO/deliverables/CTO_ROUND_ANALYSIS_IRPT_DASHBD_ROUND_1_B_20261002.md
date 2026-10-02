@@ -42,3 +42,27 @@ Each build order carries at most three mechanical criteria; E1's acceptance is t
 | FWD-8 | not graded on agreement | unchanged; waits on Andrew's vendor word |
 
 -- 1.0.0_SA_CTO
+
+## ADDENDUM 1 -- 2026-10-02 ~05:2xZ (self-drive tick 1): the gold has no clock; two compile findings placed
+
+**Input:** `2.0.0_SA_COO~P` msg 104057 (row IRPT_DASHBD-S13 @76a5e50ed3); `3.0.0_SA_CVO` msg 104058 (compile 13 of 13 @662953e505,
+ADJUDICATION_v1, REMEDIATION_v1). Round 2 is issued (@97eaff05ff: DB-b-5 the issuer's served act, DB-b-6 the residual read).
+
+A1. **CORRECTION.** Section 3's "the gold it reads is T-1" is WRONG. `account_return_daily` ends at 2026-09-28 (559 partitions) and no
+    clock fires its producer (row S13). An 08:15 ET publisher over it would republish the same 09-28 series every weekday: a
+    scheduled job over an unscheduled input.
+A2. **ROUND 2, RULED: DB-b-5 applies the READ root only** (8 resources, read-only on the platinum prefix). The publisher root stays
+    planned and unapplied. FWD-1's real run is workstream F's signed-in fetch of the platinum series already served (as of
+    2026-09-28), its as-of date shown with it. The issuer narrows its own act's packet; the decomposition is not re-cut.
+A3. **ROUND 3, FIRST: DB-b-7, the adapter's scheduled fire** on the holdings-performance pattern (its own root, its own ledger,
+    firing before the publisher), **then the publisher root with its 08:15 ET schedule**, in that order. Not added to round 2:
+    mid-round the decomposition is frozen (Rule 27). Production pipelines are scheduled (CLAUDE.md section 5); ad hoc gold is QA.
+A4. **IRPT_DASHBD-S6 limb (e), PLACED.** Foreign tax paid is not an external flow. The shared classification
+    (`org/tier1_exec/4.0.0_SA_CRO/deliverables/SCHWAB_TRANSACTION_CODE_CLASSIFICATION_20260811.json`) puts FTP/FC/WD (2,449 rows) and
+    FTR/FC/WD (4 rows) in EXTERNAL, and the served 49F engine reads it through `a05_ref_txn_classification.py`. The two codes move to
+    internal (tax) in the file's owner's edit (`4.0.0_SA_CRO`), the served engine's read moves with it under its own packet with both
+    halves (a served NNA change, about 15 USD a row), and the IRPT adapter's own override retires in the same act. A round-3
+    enrichment line the issuer cuts with the CRO. INERT until then.
+A5. **IRPT_DASHBD-S8, CARRIED.** `fact_trn` has no per-event key; the remedy is upstream in the Schwab ingest silver. The
+    1,099-row upper bound on duplicates (0.034 percent) stays disclosed where it is. PARKED: owner the Schwab silver lane
+    (`0.5.0_AE_OpalETL`, the 49-schwab-conv lane, not live); un-parks when that silver next changes, which then adds a per-event key.
