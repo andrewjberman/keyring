@@ -73,7 +73,7 @@ Report once: what changed and where, the output line of every criterion, the por
 
 **ISSUER NOTES:** DIRECT ACT (LOCAL). CTO ruling 28350 on Z-S14; fold in only if re-merged and walked by 11:30Z. Chain ~74 alone.
 
-<status>pending</status>
+<status>complete</status>
 <round>24</round>
 <slot>~74</slot>
 <fabric>site-z</fabric>
