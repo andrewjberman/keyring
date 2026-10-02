@@ -2669,3 +2669,23 @@ re-pointed from the NopeCHA browser extension to the Ocilar hCaptcha API (`POST 
 The key is in Secrets `ocilar/credentials` (us-east-1). The write set is `lib/opal_data_harvest/ocilar_hcaptcha.py` plus
 its plants and the ~92 deliverables. The criteria shape is unchanged: plants, then ONE real unattended ft sign-in with
 its challenge events, `solved_by` ocilar, and 0 NopeCHA Token / Kimi / vision calls.
+
+### 50.3 ROUND 37 AMENDMENT 3 -- cell 7: title + published_precision into the gold mention rows (CTO track-C ruling msg 28509; RESAPP r62 addendum @40e1d622aa), 2026-10-02 ~14:1xZ
+
+Track C was ruled A after 4.0.0_SA_CRO~Z's research (@adb64006ed). Step 1 is HARVST's: `title` (VERBATIM, rule 17b)
+and `published_precision` join `GOLD_MENTION_SCHEMA` and the gold mention rows. Then gold is rebuilt under a NEW
+never-widen pair, because the round-32 pair's 4 rebuilds are spent. The CTO half is owed. Step 2 (RESAPP round 63,
+2.0.0_SA_COO~Z: the day route reads the headline from gold) lands after it.
+
+| cell | order | class | slot |
+|---|---|---|---|
+| `HVST-aj-7` title + published_precision in gold mention rows | `aj-7` | SERVED (code LOCAL; served gold moves only at rebuild #5, under its own pair) | `~90` |
+
+**Issuer act after the merge: rebuild #5.**
+1. A round-37 signing dry run whose rule permits a served row to differ ONLY by gaining `title` and
+   `published_precision` (every pre-existing field equal), gone 0, and daily OTHER 0.
+2. The COO never-widen half names the blast radius: every served mention row gains two fields; nothing else moves; the
+   rollback is the BEFORE snapshot as a newer part. The CTO half is owed.
+3. The act, under the pair.
+
+Base check `round37/checks/aj-7.AC2.py` before the cut: FAIL as expected (the schema lacks both fields).
