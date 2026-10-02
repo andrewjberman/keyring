@@ -14474,3 +14474,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Nothing was deployed to the producer between the two publications by this lane. The fix is a served rule, not a repair: a split account could list its positions under the account without saying which part each sits in. Asked of 1.0.0_SA_CTO as one call."
 }
 ```
+
+## IRPT_BCKEND-S260 -- A directory request for a firm the function cannot map is answered UNEXPECTED, not a named refusal: BucketUnmapped carries no public_reason_code, its class name is in neither the estate's type map nor the directory function's own reasons, so both classifiers fall to the residual.
+
+```json
+{
+ "id": "IRPT_BCKEND-S260",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~P",
+ "surfaced_at": "2026-10-02T02:33:44Z",
+ "disposition": "UNDER_INVESTIGATION",
+ "one_line": "A directory request for a firm the function cannot map is answered UNEXPECTED, not a named refusal: BucketUnmapped carries no public_reason_code, its class name is in neither the estate's type map nor the directory function's own reasons, so both classifiers fall to the residual.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~P (a named refusal for BucketUnmapped and its served release; STATUS~P Next item 3)",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "infra/aws/lambda/investor-reporting/_authz/loaders.py:43-44 at CLOUD 66b79a30a6: class BucketUnmapped(ValueError) with a docstring only, no public_reason_code; :53-60 bucket_for raises it for a tenant absent from the DIRECTORY_BUCKET_ENV mapping; :209 opaque_firm_for raises it when the directory artifact declares no firm_id_opaque.",
+   "infra/aws/lambda/investor-reporting/_authz/errors.py:116-143 reason_for: a declared public_reason_code first, then by_type keyed on the EXACT class name (exc.__class__.__name__); 'ValueError' maps to INVALID_INPUT but 'BucketUnmapped' is not a key, so it returns the default UNEXPECTED.",
+   "infra/aws/lambda/investor-reporting/_authz/served.py:762-775 public_reason_for: on UNEXPECTED it walks the MRO against the function's own reasons; infra/aws/lambda/investor-reporting/directory/entry.py:420 declares reasons={'SelectionRefused': 'OBJECT_NOT_COVERED'} only, so neither BucketUnmapped nor ValueError matches and the answer stays UNEXPECTED."
+  ]
+ },
+ "spec_asserts": "_authz/errors.py:44 and its PUBLIC_REASONS: UNEXPECTED is the residual for a failure the code did not anticipate; a refusal the code raises on purpose (loaders.py:44 'Refused, never defaulted') is a named reason.",
+ "world_is": "MEASURED BY CODE READ AT HEAD, NOT EXERCISED: a deliberate refusal (no bucket declared for the firm, or no firm_id_opaque in its directory) reaches the caller and the public log as UNEXPECTED, the outage label. NOT MEASURED: a served request that takes this path; the earlier session's note of it (STATUS~P Next item 3, REBOOT_BRIEF section 2) cites no request id.",
+ "notes": "Remedy candidate: a public_reason_code on BucketUnmapped (or a by_type entry) naming a declared reason; choosing the reason is a StatusEnvelope vocabulary question (errors.py:100-102), so it is ruled before it is built. Served release is its own packet. Filed so the item is carried by a row rather than by status prose."
+}
+```
