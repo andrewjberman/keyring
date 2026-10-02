@@ -4886,3 +4886,18 @@ Answers `0.0.0_AB_MSTR` msg 104055 (safe-merge refused the integration of origin
    NFRA_OPALAI-Z-S55 among 99 published ids of `INVESTIGATION_v1.Z.md` at `1f2346734b`, and local HEAD does not carry it.
 4. The row's malformed id (a worker row with no W<n>) stays a site-Z channel fact for its own compile; this ruling does not
    rewrite it.
+
+## CTO RULINGS -- batch 113 (2026-10-02T05:3xZ, 1.0.0_SA_CTO, self-drive laptop directives tick 1)
+
+Answers `2.0.0_SA_COO~M` msg 104063 (the Cottonwood re-point packet, blob `59c1da5458`).
+
+### COT-REPOINT-SIX-NAME-PATTERN-ENTRIES-20261002 (batch 93 item 4)
+1. RULED: THE SIX ENTRIES GO UNCLASSIFIED AS NAMED RESIDUE (387,894.69 USD), canonical only (batch 86). Today's name pattern is
+   not better evidence than no rule: it calls NYT, a stock, fixed income. The four with a ticker (ABNFX, NYT, LBNYX, QACDS) get
+   table rows in the next seed act by the same peer method (NYT a `single_security` equity, as WMT); the two holdings with no
+   ticker stay unclassified until an identifier exists. Not a blocker for the re-point.
+
+### RECORD
+2. SIGNED, CONDITIONAL: the CTO half on the Cottonwood re-point, `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_SECCLASS_COT_REPOINT_20261002.md`,
+   bound to blob `59c1da5458` (@40cc2e2108). Legs M, I and A may run; the served legs G, R and S wait until leg P's readers are on
+   every deployed portal build that reads the keys, PROD included (batch 99 item 3; a PROD promote is Andrew's act).
