@@ -11,8 +11,8 @@
  "served_ref": "portal PROD f76b02acb6 (portal-v2.1.194) = DEV fa529337, containing 0ab75973; Deploy to Production 37014885102 success; read by 1.0.0_SA_CTO~Z via ls-remote + merge-base",
  "tally": {
   "REALIZED": 16,
-  "NOT_REALIZED": 2,
-  "NOT_EVALUATED": 5,
+  "NOT_REALIZED": 3,
+  "NOT_EVALUATED": 4,
   "RETIRED": 1
  },
  "closed": false,
@@ -180,12 +180,12 @@
   },
   {
    "fwd_id": "FWD-24",
-   "verdict": "NOT_EVALUATED",
-   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v27.md@d497632612",
-   "state_observed": "EXERCISED (2 of 3 names)",
-   "note": "The census ran on 2 of 3 names; the third is owed."
+   "verdict": "NOT_REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v28.md@17da4156e3",
+   "state_observed": "EXERCISED (PROD-header walk of AMD 20261002T145316Z + BA, VLO)",
+   "note": "Met on 3 of 3 names: latest served day, breakout row, units as served, and 0 unconnected fields beside a designed-empty positive control. NOT met: 'places moved prints wherever served'. The rankings serve it (32 of 94 rows; VLO 13, BA 16), but the overlay route's breakout_price row carries no places_moved key, so SecurityOverlay.tsx:365 prints '#7 | +5.79%' for VLO with nothing more. ROUTED 15:0xZ to the PRODUCER: the overlay route joins places_moved into breakout_price (RESAPP round 63, beside cell 3), and the page prints it the day it is served. The page does not join it from the rankings payload (the FWD-2 served-identity rule)."
   }
  ],
- "closed_reason": "NOT CLOSED: 2 NOT_REALIZED (FWD-2 page, FWD-7 producer), 5 NOT_EVALUATED; CLOSED requires every grade REALIZED",
- "regraded_utc": "2026-10-02T14:4xZ (FWD-11..15, 18..20, 24 on v27); 14:1xZ (FWD-2, FWD-7 on v26)"
+ "closed_reason": "NOT CLOSED: 3 NOT_REALIZED (FWD-2 page, FWD-7 producer, FWD-24 overlay places_moved), 4 NOT_EVALUATED; CLOSED requires every grade REALIZED",
+ "regraded_utc": "2026-10-02T15:0xZ (FWD-24 on v28); 14:4xZ (FWD-11..15, 18..20 on v27); 14:1xZ (FWD-2, FWD-7 on v26)"
 }

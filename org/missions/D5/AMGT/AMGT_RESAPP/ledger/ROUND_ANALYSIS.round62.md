@@ -56,3 +56,10 @@ and the promote landed (portal PROD f76b02acb6, ~13:5xZ). Deploys to `opal-amgt-
 | 3 | **FWD-2, chatter-row identity:** the collected-chatter rows serve `ticker`, `classification` and `places_moved` beside `display_name`. DSGN r27 (AV-ze-1) reads them the day they are served | COO~D msg 28526 | served, with the pair |
 | 4 | The reason CLASS served beside each peers absent-column reason, so the page maps by class, not by exact text | DSGN round-26 review | served, with the pair |
 | 5 | Round-60 ruling 3's carried items: Z-S332; the dead chatter legacy inputs; the page universes; the duplicate dossier reads | round 60 | as cut |
+
+**Round 63, cell 3 widened (~15:0xZ, DSGN FWD-24 on `3.0.0_SA_CVO~Z` v28 @17da4156e3):**
+- The overlay route's `breakout_price` row also serves `places_moved` from the same rankings row the route already reads.
+- Today the header prints "#7 | +5.79%" for VLO with no places moved, while the rankings serve 13.
+- Plant: VLO's breakout_price row carries places_moved = the rankings value. A security with no rankings row carries the reason
+  instead.
+- If round 63 is already issued, this is an issuer amendment; otherwise it is part of cell 3.
