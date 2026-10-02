@@ -5776,3 +5776,14 @@ it and E6 and hop 11 wait on E7 (batch 123 item 4).
 2. RECORDED, measured by this seat: portal PROD is `f76b02acb6` (ls-remote read), tag portal-v2.1.194, and it carries `eb90f2ad`
    (merge-base read; positive control: the old PROD `b3a1d8a638` is an ancestor). Batch 161's leg P HOLDS. The BD r3 re-land
    runs legs M to S, and the Cottonwood re-point proceeds under batch 113. Andrew's card 1 (record @0abef798f7) is DONE.
+
+## Batch 174 -- 2026-10-02 ~14:1xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~Y msg 104284)
+
+### S270-M2-MEMORY-1024-WITH-THE-POOL-20261002
+1. RECORDED: M1 SERVED. Timeout 29 since 14:00:48Z; a cold default history answers 200 in 15,066 ms, where it was a 500. Ledger
+   closed. 15 s is still above the 10 s bar, so M2 is still owed.
+2. GRANTED: the `memory_size` line in `ops/lambda.tf`, 256 -> 1024, ships with the pool in M2's packet. The lane note is widened to
+   that one more line. Lambda's CPU share scales with memory. Measured: the same sequential work took 13.46 s warm in Lambda
+   against 8.1 s from the laptop, with 112 MB used of 256, so the function is CPU-starved, and threads cannot fix CPU-bound work.
+3. M2'S ACCEPTANCE IS UNCHANGED: every history page size at or under 10 s server duration, cold and warm, read from REPORT. M2's
+   packet prints REPORT at 1024 MB with the pool. The Cottonwood cap lifts on that reading.

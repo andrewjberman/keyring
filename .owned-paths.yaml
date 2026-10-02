@@ -2519,7 +2519,7 @@ paths:
 
   "infra/aws/terraform/investor-reporting/ops/lambda.tf":
     lane: IRPT_BCKEND_FAST_Y_TFPOLICY
-    note: "IRPT_BCKEND~Y FAST lease, exact file: irpt-status timeout 15 -> 29 s only (row S270 mitigation); CTO grantor batch 171 (2026-10-02)."
+    note: "IRPT_BCKEND~Y FAST lease, exact file: irpt-status timeout 15 -> 29 s (row S270 M1, batch 171) and memory_size 256 -> 1024 (M2, batch 174) only; CTO grantor batches 171 and 174 (2026-10-02)."
 
   "infra/aws/terraform/investor-reporting/performance/retained.tf":
     lane: IRPT_BCKEND_FAST_Y_TFPOLICY
