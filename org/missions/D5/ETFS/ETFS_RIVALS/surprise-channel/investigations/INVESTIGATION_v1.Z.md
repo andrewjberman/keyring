@@ -2668,6 +2668,52 @@
     "spec_asserts": "Analysis ruling 3 (round 3) and the round-4 floors rule: each source's floor is the minimum newest-date resolved fraction of that source's funds.",
     "world_is": "Nothing serves wrong today (BASG 1.0, GQGU 0.2368 both pass). The floor cannot detect a BASG identity regression down to 0.23.",
     "notes": "Carrier row for the round-4 analysis ruling 3 (@6dcb0074e4): resolved_floor() gains per-fund entries under `issuer`, BASG's floor set from BASG's own resolution. Round-5 cell (enrichment item 6)."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W5-S29",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~5",
+    "surfaced_at": "2026-10-02T01:31Z",
+    "one_line": "RIV-s-6 makes a past-date market pull historical-only, so data/etfs/scripts/rivalfunds/tests/test_v2_revision_contract.py::test_new_g4_objects_are_named_with_their_capture_time (past date 2026-09-29, current-value stub) now fails; the file is outside this order's <paths>, so the package suite cannot read 0 failed.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m pytest rivalfunds/tests -q from data/etfs/scripts at wk-rivals5-5: 1 failed, 305 passed, 2 skipped; the failure is test_v2_revision_contract.py:147 IndexError (r2['outputs'] empty: status SKIPPED/FAILED)",
+        "Same suite at cd11d6edea before the edit: 306 passed, 2 skipped",
+        "test_v2_revision_contract.py lines 143-148: handler_entry mode market date D0=2026-09-29 with a _blp_reference_data stub and no run-date pin"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order: run the whole package suite before reporting; it must read 0 failed; <paths> lists test_s4_*, test_e1_*, test_v2_enrichment_cli.py but not test_v2_revision_contract.py.",
+    "world_is": "One test asserts the retired behaviour (a current-value pull landing under a past date). Fix is two lines in that file: monkeypatch eb._run_date_et to date(2026,9,29) before the market call (same pin used in test_s4/test_e1). The producer is correct; the test is stale.",
+    "notes": "The three in-paths tests that hit the same path (test_e1 daily, test_s4 market/daily) were pinned to the run date with `_run_date_et`; no assertion changed."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W5-S30",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~5",
+    "surfaced_at": "2026-10-02T01:31Z",
+    "one_line": "The vehicle's CLI default date is the previous trading day ET, so the vehicle's daily G4 pull is now a past-date pull answered by a HistoricalDataRequest; READ_HERE section 4 says that request returns zero rows for derived fields, so the daily G4 may land nothing until the first live run is read.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "grounding": {
+      "status": "INFERRED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/enrichment_bloomberg.py main(): ev[\"date\"] = tc.prev_trading_day(now ET date) when --date is absent (modes daily/market/plan-market)",
+        "integrations/bloomberg/READ_HERE.md section 4 (as cited by the order): HistoricalDataRequest returns zero rows for DERIVED fields",
+        "No live historical request was made (no Bloomberg call in this order); the MARKET_FIELDS mix static GICS fields, PX_LAST, CRNCY and DAY_TO_DAY_TOT_RETURN_GROSS_DVDS"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order cell: past date -> historical request; empty answer -> nothing written; the run-date pull keeps landing (the 08:03 vehicle step).",
+    "world_is": "The code does what the cell says. The vehicle's default date is yesterday (past), so which fields BDH answers for it is the first live run's measurement; a security answered for any field lands (absent fields NULL), a security answered for none gets no row and the result detail counts it (`unanswered`); a fully empty answer returns SKIPPED. A future date (after the run date) is unchanged: it takes the current-value pull, as_of_source pull.",
+    "notes": "Not widened: the cell names run date = a pull, past = historical; whether the vehicle should pass today's date, or the GICS fields be pulled by reference data into a separate as-of, is the issuer's/CTO's call."
   }
 ]
 ```
