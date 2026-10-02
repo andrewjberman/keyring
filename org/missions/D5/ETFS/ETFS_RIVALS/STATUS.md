@@ -3,16 +3,16 @@
 Seat `2.0.0_SA_COO~RV` (CLAUDE). Lease: FAST to 2026-10-02T17:08:53Z, surface `data/etfs/scripts/rivalfunds`
 (`org/mcp/drive-mode.log` line 56). Goal (Andrew ~04:59Z): "i want mcp.opalinvest.dev/rivalfunds demoable Today".
 Team: reviewer `3.0.0_SA_CVO~RV` (grades pins after the fact: `org/tier1_exec/3.0.0_SA_CVO/deliverables/ETFS_RIVALS_FAST_GRADES_20261002.md`),
-open calls `4.0.0_SA_CRO~RV` (`org/tier1_exec/4.0.0_SA_CRO/deliverables/ETFS_RIVALS_RULINGS_20261002.md`: CALLs 1-5 ruled).
-As of 2026-10-02T08:4xZ.
+open calls `4.0.0_SA_CRO~RV` (`org/tier1_exec/4.0.0_SA_CRO/deliverables/ETFS_RIVALS_RULINGS_20261002.md`: CALLs 1-8 ruled).
+As of 2026-10-02T09:1xZ.
 
 ## Pins
 
 | What | Value |
 |---|---|
-| Working branch / worktree | `rv-fast` at `/c/tmp/rv-fast` (drained to CLOUD at 0d4b3f6e4d); apply tree `/c/tmp/rv-apply` (detached) |
-| Deployed artifact pin | CLOUD **0d4b3f6e4d** in the five etfs-rivalfunds Lambdas (ledgers fast-a1 @43ae0a558b, -r2 @720974ce5f, -r3 @a92dff4229, all CLOSED) |
-| Served page | `platinum/page/date=2026-10-01/index.html`, publish_page/3, batch fast-a1-publish-1001c (rebuilt with refresh_a1) |
+| Working branch / worktree | `rv-fast` at `/c/tmp/rv-fast` (drained to CLOUD at 2a9a11a025); apply tree `/c/tmp/rv-apply` (detached) |
+| Deployed artifact pin | CLOUD **2a9a11a025** in the five etfs-rivalfunds Lambdas (ledgers fast-a1 @43ae0a558b, -r2 @720974ce5f, -r3 @a92dff4229, -r4 @9663936d79, all CLOSED) |
+| Served page | `platinum/page/date=2026-10-01/index.html`, publish_page/3, batch fast-a1-publish-1001d (rebuilt with refresh_a1) |
 | AI run objects | `research_hypotheses` date=2026-10-01 run 20261002T062229Z-ai (seat-adhoc, 23 PASS / 1 FAIL) |
 | Push state | LOCAL: origin CLOUD 1f2346734b (ls-remote 08:47Z); MSTR~Z asked to carry it (msg 07:43Z) |
 
@@ -26,7 +26,7 @@ State: LIVE END TO END on the A1 page. The served 2026-10-01 page is the Lambda'
 
 | Cell | State | Evidence |
 |---|---|---|
-| pt-1, pg-1, rk-1, tb-1, ic-1, ai-1, ai-2 | LIVE; CVO grade 2 FAIL (F1 P0 ETFT -188.51%) -> fixed; grade 3 PASS on F1-F4 | `org/tier1_exec/3.0.0_SA_CVO/deliverables/ETFS_RIVALS_FAST_GRADES_20261002.md`; CALL 6 conditions 1-2 + futures (CALL 7) live at 0d4b3f6e4d, graded next |
+| pt-1, pg-1, rk-1, tb-1, ic-1, ai-1, ai-2 | LIVE; grade 2 FAIL (F1 P0) -> fixed; grade 3 PASS F1-F4; grade 4 PASS CALL 6 + futures; CALL 8 split guard live at 2a9a11a025, graded next | `org/tier1_exec/3.0.0_SA_CVO/deliverables/ETFS_RIVALS_FAST_GRADES_20261002.md` |
 
 ## Write claims
 
