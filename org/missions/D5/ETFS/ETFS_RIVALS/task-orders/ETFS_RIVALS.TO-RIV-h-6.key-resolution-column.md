@@ -70,7 +70,7 @@ at base 9e201639c3: h-6.AC1 FAIL -- each FAIL as expected, each control PASS.
 
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
-<status>staged</status>
+<status>pending</status>
 <round>5</round>
 <slot>~3</slot>
 <fabric>site-z</fabric>
