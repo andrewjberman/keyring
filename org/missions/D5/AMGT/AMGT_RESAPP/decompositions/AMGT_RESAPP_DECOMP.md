@@ -7822,3 +7822,70 @@ al-2 -> al-1 (B)
 fanout:
   wave_1: [al-1(B) 0.7.0_AE_CloudOps~A]   # GO after the CTO half; deployed AND graded before 12:30Z or it waits for the demo read
 ```
+
+## 71. ROUND 63 -- TRACK C STEP 2, THE OFFICER FALLBACK, CHATTER-ROW IDENTITY, THE REASON CLASS, ROUND 60'S CARRIED ITEMS, THE SLASH-KEY POOL LOOKUP. Eight cells, eight orders
+
+**Cut by `2.0.0_SA_COO~Z`** on `1.0.0_SA_CTO~Z`'s round-62 analysis final addendum (`ledger/ROUND_ANALYSIS.round62.md` @`0ce76710dc`,
+msg 28527). The freeze is lifted (Andrew's demo read is over; PROD promote f76b02acb6). Its five-item list is this round's rectangle.
+Two served carriers close it: one code redeploy and one stored write. Every served move carries the never-widen pair.
+
+**Issuer rulings at the cut:**
+- R1. **Cell 4's reason class is served from ONE map** in `lib/research/peers/csc_plain_reasons.py` (column -> class). Two places read
+  it: the producer writes it on new peers objects, and the peers route fills it at serve time where a stored object lacks it. This is
+  a field, not a rewritten string, so the 234 stored objects are not rewritten; the code redeploy serves it.
+- R2. **Cell 1 begins only after HARVST step 1 lands** (aj-7: `title` and `published_precision` in the gold mention rows) AND gold
+  rebuild #5 completes. The worker's begin-condition checks the newest gold `article_security_mention` snapshot for a `title` column.
+- R3. **Cell 5's items that are page-side** (the portal's own universes) are reported with the page component named, never edited
+  here (DSGN's lane). The served parts are fixed here.
+
+### 71a. MEASUREMENTS (`round63/checks/r63_served.py`, deployed base ~14:4xZ)
+
+- c1: deployed warm 5 of 5 headlines (a warm sandbox, so it does not discriminate; am-6 grades it COLD under 5 s). Local, with the silver
+  read planted to raise: 502 (gold carries no title yet). Base FAIL.
+- c2: ASML_NA ABSENT, ZERO_OFFICERS (its 20-F's officer section is empty); 6501_JP and 2317_TT have NO_OBJECT; 6861_JP serves the
+  BLOOMBERG_FALLBACK as the model. FAIL 3 of 3.
+- c3: 95 chatter rows; 0 carry ticker, classification or places_moved. FAIL.
+- c4: BA and VLO each have 12 absent entries, 0 with reason_class. FAIL.
+- c5: the fabricated key's overlay answers 200 (Z-S332); BA's answers 200. FAIL C1.
+
+### 71b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-am-1` | track C step 2: the day route reads headline from gold; the silver read + 18 s path removed | `0.9.0_WK_AMGT_RESAPP~204` | worker | LOCAL | `lib/research/api/` |
+| `AMGT-am-2` | FWD-7 officer fallback (ASML_NA) + management objects for 6501_JP / 2317_TT (producer + plan) | `0.9.0_WK_AMGT_RESAPP~205` | worker | LOCAL | `lib/research/management/` |
+| `AMGT-am-3` | FWD-2 chatter rows serve ticker, classification, places_moved | `0.9.0_WK_AMGT_RESAPP~206` | worker | LOCAL | `lib/research/api/` |
+| `AMGT-am-4` | the peers reason class (R1) | `0.9.0_WK_AMGT_RESAPP~207` | worker | LOCAL | `lib/research/peers/`, `lib/research/api/` |
+| `AMGT-am-5` | round-60 carried: Z-S332 404, dead chatter legacy inputs, duplicate dossier reads (+ page universes reported, R3) | `0.9.0_WK_AMGT_RESAPP~208` | worker | LOCAL | `lib/research/api/`, `lib/research/coverage/` |
+| `AMGT-am-8` | Z-W4-S6: the peers engine's pool lookup takes the slash-safe key (BP, NG stale 09-25 labels) + the plant (CTO msg 28541 ruling 2) | `0.9.0_WK_AMGT_RESAPP~209` | worker | LOCAL | `lib/research/peers/` |
+| `AMGT-am-6` | the code redeploy carrying am-1/3/4/5 + memory re-measured down from 10240 | `0.7.0_AE_CloudOps~A` | seat order, a pair | WORLD | Lambda artifact + `memory_size`, ledger |
+| `AMGT-am-7` | the stored write of am-2's frozen plan (new/rewritten `management/v1/` objects) | `0.7.0_AE_CloudOps~A` | seat order, a pair | WORLD | the plan's literal key list |
+
+### 71c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain = the addendum's five items; each worker cell is one item; am-6/am-7 are the two served carriers.
+- **(ii) Same grain.** One served field set per cell.
+- **(iii) Intent.** One axis per cell, as the addendum names it.
+- **(iv) What a cell does NOT move.** am-1 moves only how the day route finds a headline (bytes equal where gold carries the title).
+  am-3 and am-4 ADD fields. am-5 changes only the unknown-key status and removes dead reads. am-2 writes no store (am-7 writes). No cell
+  moves a figure, rank or identity.
+
+### 71d. EDGES AND FAN-OUT
+
+```
+am-1 (after HARVST aj-7 + rebuild #5) -+
+am-3 ----------------------------------+-> am-6
+am-4 ----------------------------------+
+am-5 ----------------------------------+
+am-8 ---------------------------------(+)  # served by am-6 if request-time, by am-7 (amended) if build-time
+am-2 ------------------------------------> am-7
+fanout:
+  cap: 8
+  orders_total: 8
+  chains_total: 2
+  wave_0: [am-2 ~205, am-3 ~206, am-4 ~207, am-5 ~208, am-8 ~209]   # am-1 ~204 begins on R2's condition
+  wave_1: [am-6 0.7.0_AE_CloudOps~A, am-7 0.7.0_AE_CloudOps~A]   # each after its drains and its pair
+  no_s3_deletes: true
+  egress: none
+  portal_ref: a730d8ce   # worker AC1 reads the portal fixture (dispatch Step 4)
+```
