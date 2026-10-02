@@ -3293,3 +3293,33 @@
   "notes": "Off item 75, filed and kept working. Blocks IRPT_BCKEND E4 (IB-pr-282, 2.0.0_SA_COO~P): one Analysis export downloaded for a READY request. The remedy is a design call asked of 1.0.0_SA_CTO: the Analysis print reads its request's own status (the status route the Analysis tab already reads), or the sections envelope carries a status that the slice adapter keeps."
 }
 ```
+
+
+## DSGN_IRPTV1-S48 -- disarm record for S44: the tiles' excess over the total is exactly the negative balances the card leaves off by design
+
+```json
+{
+  "id": "DSGN_IRPTV1-S48",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-10-02T11:05:00Z",
+  "one_line": "DSGN_IRPTV1-S44 is explained, measured on both clients: the Total Assets card draws only balances above zero and footnotes each negative one ('a negative balance, not drawn on the card'), so its tiles exceed the client total by exactly the footnoted negatives -- no served figure is wrong; the engineer-plane check D1-inv-4 does not know the card's own exclusion and fires on every client with a negative account.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "walk 20261002T075255Z shot 014 (local): the card footnote '****2237 / Joint: -$1,310,748.66 (a negative balance, not drawn on the card)'; S44's measured excess 20,121,016.47 - 18,810,267.81 = 1,310,748.66, equal",
+      "walk 20261001T064300Z shot 014 (local): four footnoted negatives 5,150.61 + 21,521.00 + 544,000.00 + 9,000.00 = 579,671.61; S44's measured excess 9,403,597.12 - 8,823,925.51 = 579,671.61, equal",
+      "the card's headline and the identity card's HOW MUCH agree on both clients ($18,810,267.81; $8,823,925.51); only the tiles' sum differs, by the excluded negatives"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarms DSGN_IRPTV1-S44: not a served defect. The card's exclusion of negative balances is designed and stated on the face; the excess is that exclusion to the cent on both measured clients. What remains is the check's own blindness to it, which this seat fixes in its lease (D1-inv-4 accounts for the balances the card leaves off).",
+  "spec_asserts": "D1-inv-4: the displayed L0 tiles plus whatever the card leaves off by rule equal total_aua minus insurance.",
+  "world_is": "The check compares the displayed tiles with the total and ignores the negative balances the card leaves off, so it fires a false VIEW-PLANE SUM DOES NOT CLOSE for every client with a negative account.",
+  "notes": "S44 stays filed as it is (append-only); this row is its disarm record. S44's premise that a served L0 node carries an excess was wrong: the 'excess' is the card's own rule."
+}
+```
