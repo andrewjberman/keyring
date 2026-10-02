@@ -1,0 +1,1846 @@
+{
+ "bd-first-act-16": [
+  {
+   "agrees": true,
+   "firms": {
+    "49financial": {
+     "nodes": 2,
+     "served": [
+      [
+       "equity",
+       "US Large Cap",
+       "TABLE"
+      ]
+     ],
+     "value": 551983.21
+    },
+    "inflection": {
+     "nodes": 3,
+     "served": [
+      [
+       "equity",
+       "US Large Cap",
+       "TABLE"
+      ]
+     ],
+     "value": 0.0
+    }
+   },
+   "held": true,
+   "row": [
+    "equity",
+    "US Large Cap"
+   ],
+   "ticker": "AWSHX"
+  },
+  {
+   "held": false,
+   "row": [
+    "structured",
+    "Hedge"
+   ],
+   "ticker": "BMAR"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "49financial": {
+     "nodes": 1,
+     "served": [
+      [
+       "commodities",
+       "Oil",
+       "TABLE"
+      ]
+     ],
+     "value": 66689.0
+    }
+   },
+   "held": true,
+   "row": [
+    "commodities",
+    "Oil"
+   ],
+   "ticker": "DBO"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "49financial": {
+     "nodes": 1,
+     "served": [
+      [
+       "structured",
+       "Hedge",
+       "TABLE"
+      ]
+     ],
+     "value": 25367.03
+    }
+   },
+   "held": true,
+   "row": [
+    "structured",
+    "Hedge"
+   ],
+   "ticker": "DECZ"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "inflection": {
+     "nodes": 1,
+     "served": [
+      [
+       "structured",
+       "Hedge",
+       "TABLE"
+      ]
+     ],
+     "value": 0.0
+    }
+   },
+   "held": true,
+   "row": [
+    "structured",
+    "Hedge"
+   ],
+   "ticker": "FMAR"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "49financial": {
+     "nodes": 1,
+     "served": [
+      [
+       "commodities",
+       "Metals",
+       "TABLE"
+      ]
+     ],
+     "value": 82.61
+    }
+   },
+   "held": true,
+   "row": [
+    "commodities",
+    "Metals"
+   ],
+   "ticker": "GLDM"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "49financial": {
+     "nodes": 1,
+     "served": [
+      [
+       "structured",
+       "Hedge",
+       "TABLE"
+      ]
+     ],
+     "value": 87641.19
+    }
+   },
+   "held": true,
+   "row": [
+    "structured",
+    "Hedge"
+   ],
+   "ticker": "JANW"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "49financial": {
+     "nodes": 2,
+     "served": [
+      [
+       "structured",
+       "Hedge",
+       "TABLE"
+      ]
+     ],
+     "value": 31589.52
+    }
+   },
+   "held": true,
+   "row": [
+    "structured",
+    "Hedge"
+   ],
+   "ticker": "JHQTX"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "49financial": {
+     "nodes": 1,
+     "served": [
+      [
+       "equity",
+       "US Small Cap",
+       "TABLE"
+      ]
+     ],
+     "value": 102502.03
+    }
+   },
+   "held": true,
+   "row": [
+    "equity",
+    "US Small Cap"
+   ],
+   "ticker": "MSSGX"
+  },
+  {
+   "held": false,
+   "row": [
+    "equity",
+    "US Large Cap"
+   ],
+   "ticker": "OIH"
+  },
+  {
+   "held": false,
+   "row": [
+    "structured",
+    "Hedge"
+   ],
+   "ticker": "QMAR"
+  },
+  {
+   "held": false,
+   "row": [
+    "equity",
+    "US Large Cap"
+   ],
+   "ticker": "QQH"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "inflection": {
+     "nodes": 3,
+     "served": [
+      [
+       "alternatives",
+       "Real Estate",
+       "TABLE"
+      ]
+     ],
+     "value": 0.0
+    }
+   },
+   "held": true,
+   "row": [
+    "alternatives",
+    "Real Estate"
+   ],
+   "ticker": "SCHH"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "49financial": {
+     "nodes": 1,
+     "served": [
+      [
+       "structured",
+       "Hedge",
+       "TABLE"
+      ]
+     ],
+     "value": 64707.54
+    }
+   },
+   "held": true,
+   "row": [
+    "structured",
+    "Hedge"
+   ],
+   "ticker": "SIXO"
+  },
+  {
+   "held": false,
+   "row": [
+    "alternatives",
+    "Real Estate"
+   ],
+   "ticker": "SMA"
+  },
+  {
+   "held": false,
+   "row": [
+    "alternatives",
+    "Real Estate"
+   ],
+   "ticker": "TRREX"
+  }
+ ],
+ "bd-mapped-67": [
+  {
+   "held": false,
+   "row": [
+    "equity",
+    "International"
+   ],
+   "ticker": "ABB"
+  },
+  {
+   "held": false,
+   "row": [
+    "equity",
+    "US Small Cap"
+   ],
+   "ticker": "AEO"
+  },
+  {
+   "held": false,
+   "row": [
+    "equity",
+    "US Small Cap"
+   ],
+   "ticker": "ANF"
+  },
+  {
+   "held": false,
+   "row": [
+    "fixed_income",
+    null
+   ],
+   "ticker": "CADUX"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "inflection": {
+     "nodes": 1,
+     "served": [
+      [
+       "equity",
+       "International",
+       "TABLE"
+      ]
+     ],
+     "value": 0.0
+    }
+   },
+   "held": true,
+   "row": [
+    "equity",
+    "International"
+   ],
+   "ticker": "CCEP"
+  },
+  {
+   "held": false,
+   "row": [
+    "equity",
+    "International"
+   ],
+   "ticker": "CGEMY"
+  },
+  {
+   "held": false,
+   "row": [
+    "fixed_income",
+    null
+   ],
+   "ticker": "CMBKX"
+  },
+  {
+   "held": false,
+   "row": [
+    "fixed_income",
+    null
+   ],
+   "ticker": "COBAX"
+  },
+  {
+   "held": false,
+   "row": [
+    "fixed_income",
+    null
+   ],
+   "ticker": "COSIX"
+  },
+  {
+   "held": false,
+   "row": [
+    "equity",
+    "International"
+   ],
+   "ticker": "DSCLX"
+  },
+  {
+   "held": false,
+   "row": [
+    "fixed_income",
+    null
+   ],
+   "ticker": "DSL"
+  },
+  {
+   "held": false,
+   "row": [
+    "equity",
+    "International"
+   ],
+   "ticker": "EQNR"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "49financial": {
+     "nodes": 1,
+     "served": [
+      [
+       "fixed_income",
+       null,
+       "TABLE"
+      ]
+     ],
+     "value": 56088.14
+    }
+   },
+   "held": true,
+   "row": [
+    "fixed_income",
+    null
+   ],
+   "ticker": "ETIRX"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "49financial": {
+     "nodes": 1,
+     "served": [
+      [
+       "equity",
+       "EM",
+       "TABLE"
+      ]
+     ],
+     "value": 6101.4
+    },
+    "inflection": {
+     "nodes": 1,
+     "served": [
+      [
+       "equity",
+       "EM",
+       "TABLE"
+      ]
+     ],
+     "value": 0.0
+    }
+   },
+   "held": true,
+   "row": [
+    "equity",
+    "EM"
+   ],
+   "ticker": "FIMKX"
+  },
+  {
+   "held": false,
+   "row": [
+    "fixed_income",
+    null
+   ],
+   "ticker": "FLRN"
+  },
+  {
+   "held": false,
+   "row": [
+    "equity",
+    "International"
+   ],
+   "ticker": "FM"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "49financial": {
+     "nodes": 1,
+     "served": [
+      [
+       "fixed_income",
+       null,
+       "TABLE"
+      ]
+     ],
+     "value": 7863.38
+    },
+    "inflection": {
+     "nodes": 1,
+     "served": [
+      [
+       "fixed_income",
+       null,
+       "TABLE"
+      ]
+     ],
+     "value": 0.0
+    }
+   },
+   "held": true,
+   "row": [
+    "fixed_income",
+    null
+   ],
+   "ticker": "GIBIX"
+  },
+  {
+   "held": false,
+   "row": [
+    "fixed_income",
+    null
+   ],
+   "ticker": "GIGB"
+  },
+  {
+   "held": false,
+   "row": [
+    "equity",
+    "US Large Cap"
+   ],
+   "ticker": "HES"
+  },
+  {
+   "held": false,
+   "row": [
+    "equity",
+    "EM"
+   ],
+   "ticker": "HHHFX"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "49financial": {
+     "nodes": 1,
+     "served": [
+      [
+       "fixed_income",
+       null,
+       "TABLE"
+      ]
+     ],
+     "value": 22210.5
+    },
+    "cottonwood": {
+     "nodes": 1,
+     "served": [
+      [
+       "fixed_income",
+       null,
+       "TABLE"
+      ]
+     ],
+     "value": 22160.25
+    }
+   },
+   "held": true,
+   "row": [
+    "fixed_income",
+    null
+   ],
+   "ticker": "IGIB"
+  },
+  {
+   "held": false,
+   "row": [
+    "fixed_income",
+    null
+   ],
+   "ticker": "IGLB"
+  },
+  {
+   "held": false,
+   "row": [
+    "equity",
+    "US Large Cap"
+   ],
+   "ticker": "IPG"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "49financial": {
+     "nodes": 1,
+     "served": [
+      [
+       "fixed_income",
+       null,
+       "TABLE"
+      ]
+     ],
+     "value": 6296.29
+    }
+   },
+   "held": true,
+   "row": [
+    "fixed_income",
+    null
+   ],
+   "ticker": "IUSB"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "49financial": {
+     "nodes": 1,
+     "served": [
+      [
+       "fixed_income",
+       null,
+       "TABLE"
+      ]
+     ],
+     "value": 2238.35
+    }
+   },
+   "held": true,
+   "row": [
+    "fixed_income",
+    null
+   ],
+   "ticker": "JHBSX"
+  },
+  {
+   "held": false,
+   "row": [
+    "fixed_income",
+    null
+   ],
+   "ticker": "JMSIX"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "49financial": {
+     "nodes": 1,
+     "served": [
+      [
+       "fixed_income",
+       null,
+       "TABLE"
+      ]
+     ],
+     "value": 25397.47
+    }
+   },
+   "held": true,
+   "row": [
+    "fixed_income",
+    null
+   ],
+   "ticker": "JPIE"
+  },
+  {
+   "held": false,
+   "row": [
+    "equity",
+    "US Small Cap"
+   ],
+   "ticker": "KOS"
+  },
+  {
+   "held": false,
+   "row": [
+    "equity",
+    "EM"
+   ],
+   "ticker": "MADCX"
+  },
+  {
+   "held": false,
+   "row": [
+    "equity",
+    "US Small Cap"
+   ],
+   "ticker": "MMS"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "49financial": {
+     "nodes": 3,
+     "served": [
+      [
+       "fixed_income",
+       null,
+       "TABLE"
+      ]
+     ],
+     "value": 17888.26
+    }
+   },
+   "held": true,
+   "row": [
+    "fixed_income",
+    null
+   ],
+   "ticker": "MRBFX"
+  },
+  {
+   "held": false,
+   "row": [
+    "equity",
+    "US Large Cap"
+   ],
+   "ticker": "MRU"
+  },
+  {
+   "held": false,
+   "row": [
+    "fixed_income",
+    null
+   ],
+   "ticker": "MSTRX"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "inflection": {
+     "nodes": 1,
+     "served": [
+      [
+       "equity",
+       "US Large Cap",
+       "TABLE"
+      ]
+     ],
+     "value": 0.0
+    }
+   },
+   "held": true,
+   "row": [
+    "equity",
+    "US Large Cap"
+   ],
+   "ticker": "MTB"
+  },
+  {
+   "held": false,
+   "row": [
+    "fixed_income",
+    null
+   ],
+   "ticker": "MUOIX"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "49financial": {
+     "nodes": 1,
+     "served": [
+      [
+       "fixed_income",
+       null,
+       "TABLE"
+      ]
+     ],
+     "value": 5294.05
+    }
+   },
+   "held": true,
+   "row": [
+    "fixed_income",
+    null
+   ],
+   "ticker": "NEFZX"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "49financial": {
+     "nodes": 4,
+     "served": [
+      [
+       "equity",
+       "EM",
+       "TABLE"
+      ]
+     ],
+     "value": 61972.83
+    },
+    "cottonwood": {
+     "nodes": 1,
+     "served": [
+      [
+       "equity",
+       "EM",
+       "TABLE"
+      ]
+     ],
+     "value": 32374.14
+    }
+   },
+   "held": true,
+   "row": [
+    "equity",
+    "EM"
+   ],
+   "ticker": "NEWFX"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "49financial": {
+     "nodes": 1,
+     "served": [
+      [
+       "equity",
+       "EM",
+       "TABLE"
+      ]
+     ],
+     "value": 3069.35
+    },
+    "cottonwood": {
+     "nodes": 2,
+     "served": [
+      [
+       "equity",
+       "EM",
+       "TABLE"
+      ]
+     ],
+     "value": 56370.77
+    }
+   },
+   "held": true,
+   "row": [
+    "equity",
+    "EM"
+   ],
+   "ticker": "NFFFX"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "inflection": {
+     "nodes": 1,
+     "served": [
+      [
+       "equity",
+       "International",
+       "TABLE"
+      ]
+     ],
+     "value": 0.0
+    }
+   },
+   "held": true,
+   "row": [
+    "equity",
+    "International"
+   ],
+   "ticker": "NGG"
+  },
+  {
+   "held": false,
+   "row": [
+    "equity",
+    "International"
+   ],
+   "ticker": "NRSRX"
+  },
+  {
+   "held": false,
+   "row": [
+    "equity",
+    "US Large Cap"
+   ],
+   "ticker": "NULG"
+  },
+  {
+   "held": false,
+   "row": [
+    "equity",
+    "US Large Cap"
+   ],
+   "ticker": "NULV"
+  },
+  {
+   "held": false,
+   "row": [
+    "equity",
+    "EM"
+   ],
+   "ticker": "ODVIX"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "49financial": {
+     "nodes": 3,
+     "served": [
+      [
+       "fixed_income",
+       null,
+       "TABLE"
+      ]
+     ],
+     "value": 10906.15
+    }
+   },
+   "held": true,
+   "row": [
+    "fixed_income",
+    null
+   ],
+   "ticker": "ONIAX"
+  },
+  {
+   "held": false,
+   "row": [
+    "equity",
+    "US Small Cap"
+   ],
+   "ticker": "OSK"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "inflection": {
+     "nodes": 2,
+     "served": [
+      [
+       "fixed_income",
+       null,
+       "TABLE"
+      ]
+     ],
+     "value": 375828.41
+    }
+   },
+   "held": true,
+   "row": [
+    "fixed_income",
+    null
+   ],
+   "ticker": "PCOFX"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "49financial": {
+     "nodes": 3,
+     "served": [
+      [
+       "fixed_income",
+       null,
+       "TABLE"
+      ]
+     ],
+     "value": 12904.91
+    }
+   },
+   "held": true,
+   "row": [
+    "fixed_income",
+    null
+   ],
+   "ticker": "PGBOX"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "49financial": {
+     "nodes": 4,
+     "served": [
+      [
+       "fixed_income",
+       null,
+       "TABLE"
+      ]
+     ],
+     "value": 31996.75
+    },
+    "inflection": {
+     "nodes": 4,
+     "served": [
+      [
+       "fixed_income",
+       null,
+       "TABLE"
+      ]
+     ],
+     "value": 0.0
+    }
+   },
+   "held": true,
+   "row": [
+    "fixed_income",
+    null
+   ],
+   "ticker": "PIMIX"
+  },
+  {
+   "held": false,
+   "row": [
+    "fixed_income",
+    null
+   ],
+   "ticker": "PIPNX"
+  },
+  {
+   "held": false,
+   "row": [
+    "fixed_income",
+    null
+   ],
+   "ticker": "PLFDX"
+  },
+  {
+   "held": false,
+   "row": [
+    "fixed_income",
+    null
+   ],
+   "ticker": "PONAX"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "49financial": {
+     "nodes": 1,
+     "served": [
+      [
+       "fixed_income",
+       null,
+       "TABLE"
+      ]
+     ],
+     "value": 2863.77
+    },
+    "cottonwood": {
+     "nodes": 1,
+     "served": [
+      [
+       "fixed_income",
+       null,
+       "TABLE"
+      ]
+     ],
+     "value": 7629.27
+    },
+    "inflection": {
+     "nodes": 1,
+     "served": [
+      [
+       "fixed_income",
+       null,
+       "TABLE"
+      ]
+     ],
+     "value": 0.0
+    }
+   },
+   "held": true,
+   "row": [
+    "fixed_income",
+    null
+   ],
+   "ticker": "PONPX"
+  },
+  {
+   "held": false,
+   "row": [
+    "equity",
+    "International"
+   ],
+   "ticker": "PPHPF"
+  },
+  {
+   "held": false,
+   "row": [
+    "equity",
+    "International"
+   ],
+   "ticker": "RBGLY"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "inflection": {
+     "nodes": 1,
+     "served": [
+      [
+       "equity",
+       "US Small Cap",
+       "TABLE"
+      ]
+     ],
+     "value": 0.0
+    }
+   },
+   "held": true,
+   "row": [
+    "equity",
+    "US Small Cap"
+   ],
+   "ticker": "RRX"
+  },
+  {
+   "held": false,
+   "row": [
+    "equity",
+    "US Small Cap"
+   ],
+   "ticker": "SNAP"
+  },
+  {
+   "held": false,
+   "row": [
+    "fixed_income",
+    null
+   ],
+   "ticker": "SOFIX"
+  },
+  {
+   "held": false,
+   "row": [
+    "fixed_income",
+    null
+   ],
+   "ticker": "SPAB"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "49financial": {
+     "nodes": 1,
+     "served": [
+      [
+       "fixed_income",
+       null,
+       "TABLE"
+      ]
+     ],
+     "value": 7375.93
+    }
+   },
+   "held": true,
+   "row": [
+    "fixed_income",
+    null
+   ],
+   "ticker": "SWAGX"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "inflection": {
+     "nodes": 1,
+     "served": [
+      [
+       "equity",
+       "International",
+       "TABLE"
+      ]
+     ],
+     "value": 0.0
+    }
+   },
+   "held": true,
+   "row": [
+    "equity",
+    "International"
+   ],
+   "ticker": "TOELY"
+  },
+  {
+   "held": false,
+   "row": [
+    "fixed_income",
+    null
+   ],
+   "ticker": "TSBRX"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "inflection": {
+     "nodes": 2,
+     "served": [
+      [
+       "equity",
+       "EM",
+       "TABLE"
+      ]
+     ],
+     "value": 0.0
+    }
+   },
+   "held": true,
+   "row": [
+    "equity",
+    "EM"
+   ],
+   "ticker": "VALE"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "cottonwood": {
+     "nodes": 1,
+     "served": [
+      [
+       "fixed_income",
+       null,
+       "TABLE"
+      ]
+     ],
+     "value": 5370.9
+    }
+   },
+   "held": true,
+   "row": [
+    "fixed_income",
+    null
+   ],
+   "ticker": "VBTIX"
+  },
+  {
+   "held": false,
+   "row": [
+    "equity",
+    "International"
+   ],
+   "ticker": "VWAGY"
+  },
+  {
+   "held": false,
+   "row": [
+    "equity",
+    "International"
+   ],
+   "ticker": "WDS"
+  },
+  {
+   "held": false,
+   "row": [
+    "equity",
+    "US Large Cap"
+   ],
+   "ticker": "WMG"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "inflection": {
+     "nodes": 1,
+     "served": [
+      [
+       "equity",
+       "International",
+       "TABLE"
+      ]
+     ],
+     "value": 0.0
+    }
+   },
+   "held": true,
+   "row": [
+    "equity",
+    "International"
+   ],
+   "ticker": "WTW"
+  }
+ ],
+ "cot-pattern-3": [
+  {
+   "agrees": true,
+   "firms": {
+    "cottonwood": {
+     "nodes": 1,
+     "served": [
+      [
+       "fixed_income",
+       "Intermediate",
+       "TABLE"
+      ]
+     ],
+     "value": 18716.77
+    },
+    "inflection": {
+     "nodes": 1,
+     "served": [
+      [
+       "fixed_income",
+       "Intermediate",
+       "TABLE"
+      ]
+     ],
+     "value": 0.0
+    }
+   },
+   "held": true,
+   "row": [
+    "fixed_income",
+    "Intermediate"
+   ],
+   "ticker": "ABNFX"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "49financial": {
+     "nodes": 1,
+     "served": [
+      [
+       "fixed_income",
+       "High Yield",
+       "TABLE"
+      ]
+     ],
+     "value": 677.18
+    },
+    "cottonwood": {
+     "nodes": 1,
+     "served": [
+      [
+       "fixed_income",
+       "High Yield",
+       "TABLE"
+      ]
+     ],
+     "value": 4830.75
+    }
+   },
+   "held": true,
+   "row": [
+    "fixed_income",
+    "High Yield"
+   ],
+   "ticker": "LBNYX"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "49financial": {
+     "nodes": 8,
+     "served": [
+      [
+       "equity",
+       "US Mid Cap",
+       "TABLE"
+      ]
+     ],
+     "value": 22871.89
+    },
+    "cottonwood": {
+     "nodes": 2,
+     "served": [
+      [
+       "equity",
+       "US Mid Cap",
+       "TABLE"
+      ]
+     ],
+     "value": 11722.64
+    }
+   },
+   "held": true,
+   "row": [
+    "equity",
+    "US Mid Cap"
+   ],
+   "ticker": "NYT"
+  }
+ ],
+ "cot-seed-19": [
+  {
+   "agrees": true,
+   "firms": {
+    "cottonwood": {
+     "nodes": 1,
+     "served": [
+      [
+       "equity",
+       "US Large Cap",
+       "TABLE"
+      ]
+     ],
+     "value": 751745.0
+    }
+   },
+   "held": true,
+   "row": [
+    "equity",
+    "US Large Cap"
+   ],
+   "ticker": "BRK.A"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "cottonwood": {
+     "nodes": 9,
+     "served": [
+      [
+       "equity",
+       "US Large Cap",
+       "TABLE"
+      ]
+     ],
+     "value": 1179098.95
+    }
+   },
+   "held": true,
+   "row": [
+    "equity",
+    "US Large Cap"
+   ],
+   "ticker": "BRK.B"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "cottonwood": {
+     "nodes": 69,
+     "served": [
+      [
+       "fixed_income",
+       "Short Duration",
+       "TABLE"
+      ]
+     ],
+     "value": 1622659.27
+    }
+   },
+   "held": true,
+   "row": [
+    "fixed_income",
+    "Short Duration"
+   ],
+   "ticker": "CDSIX"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "cottonwood": {
+     "nodes": 71,
+     "served": [
+      [
+       "fixed_income",
+       "High Yield",
+       "TABLE"
+      ]
+     ],
+     "value": 1136382.68
+    },
+    "inflection": {
+     "nodes": 1,
+     "served": [
+      [
+       "fixed_income",
+       "High Yield",
+       "TABLE"
+      ]
+     ],
+     "value": 0.0
+    }
+   },
+   "held": true,
+   "row": [
+    "fixed_income",
+    "High Yield"
+   ],
+   "ticker": "EIBIX"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "cottonwood": {
+     "nodes": 21,
+     "served": [
+      [
+       "fixed_income",
+       "Municipal",
+       "TABLE"
+      ]
+     ],
+     "value": 2211470.6
+    }
+   },
+   "held": true,
+   "row": [
+    "fixed_income",
+    "Municipal"
+   ],
+   "ticker": "EIHYX"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "cottonwood": {
+     "nodes": 1,
+     "served": [
+      [
+       "fixed_income",
+       "Short Duration",
+       "TABLE"
+      ]
+     ],
+     "value": 10245684.42
+    }
+   },
+   "held": true,
+   "row": [
+    "fixed_income",
+    "Short Duration"
+   ],
+   "ticker": "EVSM"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "cottonwood": {
+     "nodes": 112,
+     "served": [
+      [
+       "equity",
+       "US Large Cap",
+       "TABLE"
+      ]
+     ],
+     "value": 7718271.47
+    }
+   },
+   "held": true,
+   "row": [
+    "equity",
+    "US Large Cap"
+   ],
+   "ticker": "FLCOX"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "cottonwood": {
+     "nodes": 71,
+     "served": [
+      [
+       "fixed_income",
+       "Short Duration",
+       "TABLE"
+      ]
+     ],
+     "value": 2110923.31
+    },
+    "inflection": {
+     "nodes": 1,
+     "served": [
+      [
+       "fixed_income",
+       "Short Duration",
+       "TABLE"
+      ]
+     ],
+     "value": 0.0
+    }
+   },
+   "held": true,
+   "row": [
+    "fixed_income",
+    "Short Duration"
+   ],
+   "ticker": "FPNIX"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "cottonwood": {
+     "nodes": 112,
+     "served": [
+      [
+       "equity",
+       "US Large Cap",
+       "TABLE"
+      ]
+     ],
+     "value": 7650408.12
+    }
+   },
+   "held": true,
+   "row": [
+    "equity",
+    "US Large Cap"
+   ],
+   "ticker": "FSPGX"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "cottonwood": {
+     "nodes": 84,
+     "served": [
+      [
+       "equity",
+       "US Small Cap",
+       "TABLE"
+      ]
+     ],
+     "value": 1713712.78
+    }
+   },
+   "held": true,
+   "row": [
+    "equity",
+    "US Small Cap"
+   ],
+   "ticker": "FSSZX"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "cottonwood": {
+     "nodes": 15,
+     "served": [
+      [
+       "equity",
+       "US Small Cap",
+       "TABLE"
+      ]
+     ],
+     "value": 337276.74
+    }
+   },
+   "held": true,
+   "row": [
+    "equity",
+    "US Small Cap"
+   ],
+   "ticker": "FTHSX"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "cottonwood": {
+     "nodes": 2,
+     "served": [
+      [
+       "fixed_income",
+       "Short Duration",
+       "TABLE"
+      ]
+     ],
+     "value": 10416281.81
+    },
+    "inflection": {
+     "nodes": 1,
+     "served": [
+      [
+       "fixed_income",
+       "Short Duration",
+       "TABLE"
+      ]
+     ],
+     "value": 0.0
+    }
+   },
+   "held": true,
+   "row": [
+    "fixed_income",
+    "Short Duration"
+   ],
+   "ticker": "MEAR"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "cottonwood": {
+     "nodes": 98,
+     "served": [
+      [
+       "equity",
+       "US Large Cap",
+       "TABLE"
+      ]
+     ],
+     "value": 10530355.59
+    }
+   },
+   "held": true,
+   "row": [
+    "equity",
+    "US Large Cap"
+   ],
+   "ticker": "MFEIX"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "cottonwood": {
+     "nodes": 15,
+     "served": [
+      [
+       "fixed_income",
+       "Structured Credit",
+       "TABLE"
+      ]
+     ],
+     "value": 1807875.77
+    }
+   },
+   "held": true,
+   "row": [
+    "fixed_income",
+    "Structured Credit"
+   ],
+   "ticker": "PAAA"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "cottonwood": {
+     "nodes": 11,
+     "served": [
+      [
+       "fixed_income",
+       "Municipal",
+       "TABLE"
+      ]
+     ],
+     "value": 1099822.01
+    },
+    "inflection": {
+     "nodes": 1,
+     "served": [
+      [
+       "fixed_income",
+       "Municipal",
+       "TABLE"
+      ]
+     ],
+     "value": 0.0
+    }
+   },
+   "held": true,
+   "row": [
+    "fixed_income",
+    "Municipal"
+   ],
+   "ticker": "PFMIX"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "cottonwood": {
+     "nodes": 14,
+     "served": [
+      [
+       "fixed_income",
+       "Municipal",
+       "TABLE"
+      ]
+     ],
+     "value": 1881279.04
+    }
+   },
+   "held": true,
+   "row": [
+    "fixed_income",
+    "Municipal"
+   ],
+   "ticker": "PRTMX"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "49financial": {
+     "nodes": 1,
+     "served": [
+      [
+       "commodities",
+       "Metals",
+       "TABLE"
+      ]
+     ],
+     "value": 67600.4
+    },
+    "cottonwood": {
+     "nodes": 9,
+     "served": [
+      [
+       "commodities",
+       "Metals",
+       "TABLE"
+      ]
+     ],
+     "value": 2418385.2
+    }
+   },
+   "held": true,
+   "row": [
+    "commodities",
+    "Metals"
+   ],
+   "ticker": "PSLV"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "49financial": {
+     "nodes": 4,
+     "served": [
+      [
+       "structured",
+       "Options Income",
+       "TABLE"
+      ]
+     ],
+     "value": 100456.37
+    },
+    "cottonwood": {
+     "nodes": 20,
+     "served": [
+      [
+       "structured",
+       "Options Income",
+       "TABLE"
+      ]
+     ],
+     "value": 2806822.39
+    }
+   },
+   "held": true,
+   "row": [
+    "structured",
+    "Options Income"
+   ],
+   "ticker": "SPYI"
+  },
+  {
+   "agrees": true,
+   "firms": {
+    "cottonwood": {
+     "nodes": 12,
+     "served": [
+      [
+       "fixed_income",
+       "Short Duration",
+       "TABLE"
+      ]
+     ],
+     "value": 1467727.31
+    }
+   },
+   "held": true,
+   "row": [
+    "fixed_income",
+    "Short Duration"
+   ],
+   "ticker": "VMLUX"
+  }
+ ]
+}

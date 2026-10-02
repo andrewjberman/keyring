@@ -1,12 +1,10 @@
 # IRPT_BCKEND~M -- Holdings with the snapshot model overlay -- status
 
 Seat `2.0.0_SA_COO~M` (CLAUDE). Contract
-`org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md`. Reviewer `3.0.0_SA_CVO` (not seated
-at this write). As of 2026-10-01T06:5xZ.
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md`. Reviewer `3.0.0_SA_CVO`.
+As of 2026-10-02T18:1xZ. Brought current on CTO batch 178 item (1) (msg 104327); the 10-01 pins below are replaced.
 
-Mode: FAST. Lease `IRPT_BCKEND~M`, `org/mcp/drive-mode.log` lines 30 and 35, until 2026-10-01T12:52Z, on Andrew-direct
-2026-10-01 ~04:2xZ (record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261001_042xZ_SELF_DRIVE_60M_LAPTOP_FABRIC_FINAL_SAY_CLOSER_DRIVE_IRPT_FIRST.md`
-@c48af273cc; CTO 103440). The FULL -> FAST boundary ran at 04:3xZ (@ad8e18d5f8).
+Mode: FULL (no live lease for this seat; `.tools/drive-mode.py status`). The BD r3 re-land stays first (batch 178).
 
 Claim words: `measured` = read this session; `held` = cited from a record, not re-read.
 
@@ -14,35 +12,22 @@ Claim words: `measured` = read this session; `held` = cited from a record, not r
 
 | What | Value | Claim |
 |---|---|---|
-| Working branch / worktree | `coo-m-r30` at `../coo_m_r30` | measured |
-| Workspace candidate pin (route code) | 30b141e19e -- `holdings/snapshot.py`, sha256 270b57c4...3871 (the fold as signed at 4e2feb5a32, plus PRD v0.22 ruling 22: 13 lines) | measured |
-| Workspace candidate pin (contract) | cc99dea562 -- docs `HoldingsSnapshot.schema.json`, sha256 5805bd5e...d8c4 | measured |
-| Deployed `irpt-holdings` | LIVE since 2026-10-01T06:31:21Z (applied by 2.0.0_SA_COO~P, packet 2): CodeSha256 TG8b/SEHC..., `snapshot.py` at 30b141e19e, the contract at cc99dea562. After-read PASS: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/HOLDINGS_ROUTE_AFTER_READ_20261001.md` @eea9f2844e | measured |
-| Ahead of the deployed function on CLOUD | 38b72bf469: a zero remainder is served as 0.0, never -0.0 (cosmetic; found by the after-read). It rides the next move of `irpt-holdings` and must be named in that move's half | measured |
-| Producer `holdings_snapshot.py` | byte-identical to its base 900da8bbb7 (IB-mr-291 classifier) | measured (`git diff` empty) |
-| CLOUD (local) / origin/CLOUD | read at the merge that carries this file / 0abf99fcd4 (ls-remote read 04:07Z) | measured |
-| Port source | branch `wk-IRPT_BCKEND-84` @00b88da890, NOT merged; no longer needed once this file is on CLOUD | measured |
+| Deployed `irpt-holdings` | CodeSha256 `tS/APci3Mz/YRDP7pJboAVqKabShek9jYUqvQDIYwwE=`, LastModified 2026-10-01T20:13:14Z (ledger `irpt-inf-split-positions-m-20261001` leg R: split accounts list their positions, a two-view account counts once) | measured (get-function-configuration 2026-10-02 17:5xZ) |
+| Producer `holdings_snapshot.py` at CLOUD | daaef69b9d: `ASSET_CLASS_VALUES` admits `multi_asset` (CTO batch 164, readers first); NOT deployed; no row carries the class | measured |
+| Published contract at CLOUD | `docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json` admits `multi_asset` at nodes[], security_aggregates[], class_totals[] (daaef69b9d); `holdings/contracts` copy the same; `_contracts` copy by 2.0.0_SA_COO~P @16a3fcfd6a. The `irpt-holdings` package re-stages from committed blobs at its next move (STAGE_MANIFEST pins) | measured |
+| Served publication read | 2026-10-01 business date, built 14:16-14:17Z: 49financial rev 3413e2b5a3bd (153,345 nodes), inflection 100a0dc22f12 (36,048), cottonwood a3751a6acff2 (17,872) | measured (gold parquet per manifest, sha256 checked) |
+| CLOUD (local) / origin/CLOUD | 7421b39e62 / 92a12727600d (ls-remote read 18:1xZ); this seat's commits are LOCAL and travel on the integrator's push | measured |
 
 ## Live thread
 
-State: LIVE END TO END for the Holdings tab at three firms (goal criterion 1), held from the 09-27 walk HARs; not
-re-walked this session. Next unproven hop: the 14:15Z scheduled publication carrying the narrowed classes (item 4).
+LIVE END TO END for the Holdings tab at three firms (held from the 09-27 walks). Read this session on the served
+2026-10-01 publication (`MDPF_SECCLASS_M/R8_CHECKS/HOLDINGS_PUBLICATION_ROW_READ_20261002.json`): every written
+classification row a firm holds is served with that row's class and sub class (cot seed 19 of 19, name-pattern 3 of 3,
+BD first act 10 of 10 held, BD mapped 25 of 25 held); three row ledgers closed on it (7421b39e62).
 
-## What this session built (items 1-3 of the earlier next-list, re-shaped by the real run)
-
-The Holdings route, not the producer, serves the fold. `snapshot.project()` (the one function every Holdings
-response passes through) now adds, over the viewer's selected accounts:
-- `security_aggregates` -- one row per security among actual positions (basis OBSERVED or ASSIGNED);
-- `class_totals` -- one row per class among those positions;
-- `class_totals_remainder` -- custody value with no actual position under it (never a class);
-- `source_vendor_keys` -- carried from the publication (the projection used to drop it, so W2-19 could not arrive).
-
-Why the shape changed: a producer-level fold covers the whole firm and the route drops it; TARGET nodes cannot be
-summed with actual ones (at 49 Financial they exceed custody in 3,891 of 7,565 accounts). Detail and census:
-`org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/NEVER_WIDEN_HALF_REQUEST_HOLDINGS_ROUTE_AGGREGATES_20261001.md`.
-
-Checks (measured): `holdings/tests/test_aggregates.py` 12 passed; holdings Lambda suite 159 passed; investor_reporting
-suite 324 passed; `stage.py --check` 4 of 4; the real run over 9,295 slices of three real builds, 0 not tied, 0 invalid.
+Inflection split accounts (row S259) on the served publication: 857 accounts, 0 whose securities fail to sum; 71 split
+accounts list 3,963 positions as part NOT_STATED (35,466,629.25 USD); 786 single-view accounts. The walked split account
+is owed (below).
 
 ## Acceptance IDs (goal record `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_M_GOAL_HOLDINGS_SNAPSHOT_MODEL_OVERLAY_LOOP_20M.md`)
 
@@ -50,60 +35,52 @@ suite 324 passed; `stage.py --check` 4 of 4; the real run over 9,295 slices of t
 |---|---|---|
 | (1) signed-in journey 49F / INF / COT | MET | held: ~D HARs w8 + w9 (09-27) |
 | (2) every active 49F/INF account resolvable or refused explicitly | MET on the then-current directories | held: census @f247a922a5 |
-| (3) COT soundness, window disclosed | In today's real local build at CLOUD code, all 886 Cottonwood nodes with symbol CASH and description CASH read `cash` (basis NAME_PATTERN), of 15,354 SECURITY nodes. The SERVED read is still owed | measured on the build; re-verify at the 14:15Z publication (item 2) |
-| W2-11, W2-15, W2-19 served | SERVED since 06:31:21Z; after-read PASS on deployed bytes at three firms and on the page for 49 Financial and Cottonwood; CVO grade owed | the half above; `R30_SELECTION_CENSUS_20261001.json` |
-| FWD-2 unclassified by name, on the narrowed classifier | tests on CLOUD with this merge | `tests/test_holdings_unclassified.py`, 5 passed |
+| (3) COT soundness, window disclosed | built and served; page re-read owed with the walks below | held (10-01 build read) |
+| W2-11, W2-15, W2-19 served | SERVED since 2026-10-01 06:31:21Z; CVO grade owed | held |
+| S259 split accounts list positions | SERVED (route 20:13:14Z; publication above, 71 / 786 branch count) | measured; walk owed |
 
 ## Write claims
 
-None open.
+None open on IRPT_BCKEND paths. (MDPF_SECCLASS act ledgers are tracked in that project's records.)
 
 ## Next proof
 
-H5: the 14:15Z scheduled Holdings publication carries the narrowed classes (PHYS commodities / Metals on the
-page) and Cottonwood's cash line reads cash on the served page.
+The two walks the open ledgers still owe on the served 2026-10-01 publication: one Inflection split account
+(`acc_015d15b45d7a8ac71f951a67`, ****3282, 771,891.63 USD) ties on the page (ledger `irpt-inf-split-positions-m-20261001`
+leg S), and one Cottonwood selection holding SPYI / PSLV ties (ledger `secclass-cot-seed-rows-m-20261001` leg S).
 
 ## Next-list, in order
 
-1. **Release the candidate: DONE.** Applied 06:31:21Z inside 2.0.0_SA_COO~P's whole-bundle packet 2; this seat's
-   after-read passed and went to the CTO (msg 103551). Left over: the -0.0 fix @38b72bf469 at the function's next
-   move. The Inflection selection on the page is READ (local walk 2026-10-01 12:11Z-12:19Z, one Inflection client, 0
-   guard aborts): 29 of 29 served security aggregates equal the actual sums and the page's own fold, the 4 class
-   lines (cash, fixed income, equity, alternatives) sum to the selection's total to the cent, classes plus remainder
-   equal custody, remainder weight 0. On that page VXX still reads Alternatives / Volatility: the publication on
-   screen is 2026-09-29's, so H5 reads the same selection after 14:15Z (expected Structured / Hedge).
-   Off the item, parked: the Performance tab answered UNAVAILABLE / OBJECT_NOT_COVERED for this selection (owner
-   `2.0.0_SA_COO~P`; un-parks when that seat reads its coverage for Inflection).
-2. **H5** at the 2026-10-01 14:15Z `irpt-holdings-snapshot` fire: PHYS reads commodities / Metals on the Holdings
-   page, and each firm's served CATEGORY names; then close the IRPT legs of ledger
-   `secclass-bd-thread-r2-and-irpt-narrowed-m-20260930`. Goal criterion 3 is re-read on the same publication.
-3. Carried from the pre-freeze list, not re-measured this session: the S173 re-point, the BD C_06 sealed-date
-   reprocess (W41-S2), the COT cash-line act, COT-new Part 2, the COT B_01b deploy. Each is re-measured before it is
-   claimed.
+1. **BD r3 re-land first** (batch 178): legs S of `secclass-bd-thread-r4-reland-m-20261002` at tonight's 22:10Z silver
+   and 23:00Z gold fires; Cottonwood re-point leg R (QA run fired 17:59:30Z) and leg S (the 10-02 scheduled run).
+2. **The two walks above**, then close both ledgers' legs S.
+3. **Batch 178 item (2):** once 2.0.0_SA_COO~D's H-1 (dropping the "Smaller holdings" tile) lands, read the distinct-
+   security count for the proof snapshots (49 Financial's largest client and one Cottonwood client), and bring brief 3
+   item 1.4(d), the TARGET fold, back as its own ask with that measurement.
+4. **multi_asset readers packet** (batch 164): producer + contract on CLOUD; Advisor Intelligence readers portal
+   6245e92d at CTO review (msg 18:07Z); ~D's half on DEV 7bcedf1b. Then the packet's deploy halves (producer, the
+   `irpt-holdings` re-stage), PROD readers, and only then the rows.
+5. The -0.0 fix @38b72bf469 rides the next `irpt-holdings` move and is named in that move's half (held).
 
 ## Dependencies
 
 | Needs | From (owner) | Interface / pin | State |
 |---|---|---|---|
-| CTO half on the release | `1.0.0_SA_CTO` | the half file | CONSUMED: SIGNED @d43c3b0a2a, ADDENDUM 1 SIGNED @21eca74f40; applied inside packet 2 |
-| The whole-bundle `irpt-holdings` release | `2.0.0_SA_COO~P` | packet 2, member census in ~P 103519 | CONSUMED: applied 06:31:21Z (~P 103540) |
-| The page consumes the three blocks (W2-11 rows, W2-15 totals) | `2.0.0_SA_COO~D` | docs contract @cc99dea562 | PUBLISHED with this merge |
-| `infra/aws/lambda/investor-reporting/_contracts/HoldingsSnapshot.schema.json` gains the three properties | `2.0.0_SA_COO~P` (issuer of open order IRPT_DASHBD.TO-DB-b-4, whose `<paths>` hold `_contracts/`) | docs contract @cc99dea562 | AWAITED; no reader of the route's response validates against that copy |
+| H-1 (the treemap's "Smaller holdings" tile dropped) | `2.0.0_SA_COO~D` | brief 3 H-1..H-3 | AWAITED (batch 178 routed it there) |
+| CTO review of the portal candidate | `1.0.0_SA_CTO` | portal 6245e92d | ASKED 18:07Z |
+| multi_asset colour and IR readers | `2.0.0_SA_COO~D` | portal 262be0a4 | CONSUMED: on DEV 7bcedf1b |
 
 ## Parked
 
 | Question (off-thread) | Owner | Un-parks when |
 |---|---|---|
-| "FAST from 2026-10-01T04:31Z; pins graded after the fact" (the boundary's one line to the CVO). Pins to grade: 4e2feb5a32, cc99dea562 | `3.0.0_SA_CVO` | a CVO is seated; it reads this row |
-| Cottonwood serves `CEMIX` (Causeway Emerging Markets, an equity fund) as fixed_income / International on 67 nodes, 2,039,120.10 USD, through a bd-securities name alias; 4 nodes read equity by ticker shape. One row in the canonical table fixes all 71 | `2.0.0_SA_COO~M` (MDPF_SECCLASS issuer) | MDPF_SECCLASS round 7 is cut (needs both halves: a served class moves) |
-| 49 Financial: 90.3 percent of custody (1,626,351,326.21 USD) has only a TARGET drill, so the remainder block is most of the page. Serve a second, separately labelled TARGET fold? | `1.0.0_SA_CTO` with `2.0.0_SA_COO~D` | the CTO rules (asked in the half) |
-| The declared fallback still classes an unknown 1-5 letter ticker `equity` by its shape (pinned in `tests/test_holdings_unclassified.py`) | `2.0.0_SA_COO~M` | MDPF_SECCLASS E8 and E9 land (the fallback's sunset) |
-| MDPF_SECCLASS BD_THREAD_R3: both halves signed (@8769ffe8d5); the window is three live-read invariants | `2.0.0_SA_COO~M` | the 04:00Z BD gold run ends and the runner stops (running at 05:18Z); it must close before the 22:10Z silver fire and the 23:00Z gold fire |
-| PRD v0.22 ruling 22 says an account outside the viewer's permitted set answers NOT_FOUND. The projection now does (pin 30b141e19e). The guard and the entry's reasons map still answer `OBJECT_NOT_COVERED` for an uncovered object (`_authz`, `holdings/entry.py`); 10 refusal assertions in the holdings tests pin that code | `2.0.0_SA_COO~P` (shared auth surface; `entry.py` is in open order IRPT_DASHBD.TO-DB-b-4's paths) | ~P or the CTO says whether ruling 22 moves that code too |
+| Cottonwood serves JABAX (Janus Henderson Balanced, a balanced fund) as alternatives / Structured Notes by name alias on the fallback -- a multi_asset member by batch 164's boundary | `2.0.0_SA_COO~M` (MDPF_SECCLASS) | the multi_asset rows act (after PROD readers) |
+| 49 Financial: most custody has only a TARGET drill (the remainder block); brief 3 item 1.4(d) | `1.0.0_SA_CTO` | item 3 above brings it back with its measurement |
+| The declared fallback still classes an unknown 1-5 letter ticker `equity` by its shape | `2.0.0_SA_COO~M` | MDPF_SECCLASS E8 and E9 land (the fallback's sunset) |
+| PRD v0.22 ruling 22 (NOT_FOUND vs `OBJECT_NOT_COVERED` in `_authz` / `holdings/entry.py`) | `2.0.0_SA_COO~P` | ~P or the CTO says whether ruling 22 moves that code |
 
 ## Limits
 
-Nothing here is deployed. The census ran the route's own function over real built snapshots on this device; the
-deployed function, a multi-account selection other than the whole firm, and the page have not been exercised. The
-portal reader was read, not run. No product ID is PASS until the CVO grades a pinned candidate. HOLD 103137 on a
-table-only class source is unchanged.
+The publication reads use each manifest's gold parquet (the same revision's nodes, sha256 checked), not the platinum
+partitions, because the network read the 188 partitions too slowly to finish; the page has not been walked this session.
+No product ID is PASS until the CVO grades a pinned candidate.

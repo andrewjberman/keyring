@@ -1,0 +1,77 @@
+owned_requests from infra\aws\lambda\investor-reporting\ops\owned_requests.py | HISTORY_WORKERS 8
+Traceback (most recent call last):
+  File "C:\Users\AndrewBerman\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\response.py", line 903, in _error_catcher
+    yield
+  File "C:\Users\AndrewBerman\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\response.py", line 1028, in _raw_read
+    data = self._fp_read(amt, read1=read1) if not fp_closed else b""
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AndrewBerman\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\response.py", line 1011, in _fp_read
+    return self._fp.read(amt) if amt is not None else self._fp.read()
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AndrewBerman\AppData\Local\Programs\Python\Python312\Lib\http\client.py", line 479, in read
+    s = self.fp.read(amt)
+        ^^^^^^^^^^^^^^^^^
+  File "C:\Users\AndrewBerman\AppData\Local\Programs\Python\Python312\Lib\socket.py", line 720, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AndrewBerman\AppData\Local\Programs\Python\Python312\Lib\ssl.py", line 1251, in recv_into
+    return self.read(nbytes, buffer)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AndrewBerman\AppData\Local\Programs\Python\Python312\Lib\ssl.py", line 1103, in read
+    return self._sslobj.read(len, buffer)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TimeoutError: The read operation timed out
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\AndrewBerman\AppData\Local\Programs\Python\Python312\Lib\site-packages\botocore\response.py", line 98, in read
+    chunk = self._raw_stream.read(amt)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AndrewBerman\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\response.py", line 1112, in read
+    data = self._raw_read(amt)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AndrewBerman\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\response.py", line 1027, in _raw_read
+    with self._error_catcher():
+         ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AndrewBerman\AppData\Local\Programs\Python\Python312\Lib\contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "C:\Users\AndrewBerman\AppData\Local\Programs\Python\Python312\Lib\site-packages\urllib3\response.py", line 908, in _error_catcher
+    raise ReadTimeoutError(self._pool, None, "Read timed out.") from e  # type: ignore[arg-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+urllib3.exceptions.ReadTimeoutError: AWSHTTPSConnectionPool(host='opal-data-irpt.s3.amazonaws.com', port=443): Read timed out.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\AndrewBerman\Desktop\ajb_workspace\org\tier1_exec\2.0.0_SA_COO\deliverables\IRPT_MVP_Y\live_walk\m2_history_timing.py", line 62, in <module>
+    sys.exit(main(sys.argv))
+             ^^^^^^^^^^^^^^
+  File "C:\Users\AndrewBerman\Desktop\ajb_workspace\org\tier1_exec\2.0.0_SA_COO\deliverables\IRPT_MVP_Y\live_walk\m2_history_timing.py", line 43, in main
+    reader.history(principal, limit=50, data_firm="cottonwood")  # warm-up
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users/AndrewBerman/Desktop/coo-y-r30/infra/aws/lambda/investor-reporting\ops\owned_requests.py", line 292, in history
+    raise kept
+  File "C:\Users/AndrewBerman/Desktop/coo-y-r30/infra/aws/lambda/investor-reporting\ops\owned_requests.py", line 55, in one
+    return ("ok", check(*row))
+                  ^^^^^^^^^^^
+  File "C:\Users/AndrewBerman/Desktop/coo-y-r30/infra/aws/lambda/investor-reporting\ops\owned_requests.py", line 287, in screen
+    self._materialize(principal, request_id, record, data_firm=firm)
+  File "C:\Users/AndrewBerman/Desktop/coo-y-r30/infra/aws/lambda/investor-reporting\ops\owned_requests.py", line 174, in _materialize
+    if self.artifacts.head(principal, ref.get("artifact_id"),
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AndrewBerman\Desktop\coo-y-r30\infra\aws\lambda\investor-reporting\reports\repository.py", line 406, in head
+    return self.get(principal, artifact_id, **placement)["ref"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AndrewBerman\Desktop\coo-y-r30\infra\aws\lambda\investor-reporting\reports\repository.py", line 393, in get
+    data = self.blobs.get(item["blob"])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AndrewBerman\Desktop\coo-y-r30\infra\aws\lambda\investor-reporting\reports\repository.py", line 476, in get
+    data = stream.read(MAX_BYTES + 1)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AndrewBerman\AppData\Local\Programs\Python\Python312\Lib\site-packages\botocore\httpchecksum.py", line 289, in read
+    chunk = super().read(amt=amt)
+            ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\AndrewBerman\AppData\Local\Programs\Python\Python312\Lib\site-packages\botocore\response.py", line 101, in read
+    raise ReadTimeoutError(endpoint_url=e.url, error=e)
+botocore.exceptions.ReadTimeoutError: Read timeout on endpoint URL: "None"

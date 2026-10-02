@@ -834,3 +834,29 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "notes": "Remedy (this seat, inside its decomposition; the served change goes under the packet's amendment with both halves): iam.tf adds s3:GetObject on the same platinum/reporting/* ARNs (plan 0/1/0, the role policy only). Disarm owner 2.0.0_SA_COO~P; if the amendment is not applied before Monday 2026-10-05 07:00 ET, the schedule goes DISABLED (the packet's stop path)."
 }
 ```
+
+## IRPT_DASHBD-W1-S11 -- TO-DB-b-10: the estate's BD client needs a session-token GET before the performancePeriod POST, so 'no other vendor call' has one unavoidable companion
+
+```json
+{
+  "id": "IRPT_DASHBD-W1-S11",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1",
+  "surfaced_at": "2026-10-02T13:45:00Z",
+  "one_line": "TO-DB-b-10: the estate's Black Diamond client cannot POST performancePeriod without first minting the ClientView bearer with GET /session/token, so the one pull made 3 performancePeriod requests plus 1 session-token GET, and 'no other vendor call' read literally has no executable form.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-10 BOUNDS: the vendor call is the one pull and NO other call; vendor_calls equals the performancePeriod requests (AC1) and is at most 5.",
+  "world_is": "MEASURED from infra/aws/lambda/opal-assets/opal-assets-bd49f-reporting-pull/lambda_function.py get_clientview_token() (lines 144-152): the bearer is minted by GET /session/token on the .bd.identity cookie, and the POST needs it. The run made 1 session-token GET and 3 performancePeriod POSTs (0027265115, 0076459710, 0084073310), all HTTP 200, 0 retries, 0 performanceSeries, and no call for the 2 unmapped accounts. BD_LIKEDAY_PULL_R4.json counts vendor_calls = 3 (the requests, as AC1 grades) and records session_token_mints = 1 beside it, so the extra request is on the record. No credential, cookie or token was written or printed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/opal-assets/opal-assets-bd49f-reporting-pull/lambda_function.py:144-152 get_clientview_token (read-only)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1/BD_LIKEDAY_PULL_R4.json: vendor_calls 3, session_token_mints 1, transport_retries 0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the L9 reader: a future per-use word should name the session-token GET as part of the pull. Also recorded, no action taken: 0084073310's first segment 2026-03-20..2026-08-04 (94 days, Opal +24.23%, BD +23.97%) precedes the roster trade_start_date 2026-08-05, and BD agrees with the gold over it. Owner: 2.0.0_SA_COO~P."
+}
+```

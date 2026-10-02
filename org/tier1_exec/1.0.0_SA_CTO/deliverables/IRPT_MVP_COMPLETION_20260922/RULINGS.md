@@ -5814,3 +5814,52 @@ it and E6 and hop 11 wait on E7 (batch 123 item 4).
      signed URL.
    - Recorded as a defect, not a CONTRACTS change: it realizes the CONTRACTS row's "protected download".
    - It also unblocks the A1 of `~P`'s three red export ledgers (a real export downloaded).
+
+## Batch 176 -- 2026-10-02 ~14:4xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~Y msg 104289, packet blob b8c06f4e26)
+
+### M2-D2-R1-REFUSED-AS-BUILT-A-SHARED-BOTO3-RESOURCE-ACROSS-THE-POOL-20261002
+1. REFUSED AS BUILT, one defect, read by this seat at `b789341289`. `reports/status_installed.py:89` builds ONE
+   `boto3.resource("dynamodb").Table(...)` wrapped in `ReadMemo`. M2's `_row_outcomes` then runs `check` on up to 8 threads, and
+   each thread calls `ReadMemo.get_item`, which calls `self._table.get_item` on that ONE resource object (`ops/read_memo.py:51-54`).
+   boto3 documents resource instances as NOT thread-safe; low-level clients are. M2's lock covers the memo's counter, not the
+   resource. The offline timing on the laptop cannot show a race that appears under a served load.
+2. THE FIX, small and in the same bundle: the pooled reads go through a per-thread `Table`. Each worker builds its own from its own
+   `boto3.session.Session()`, held in a `threading.local`, while the memo's shared answer cache stays under its lock.
+   Alternatively, they go through the thread-safe client. Add one test: N concurrent `get_item` calls through the memo give the
+   sequential answers and create one Table per thread.
+3. Everything else in the packet is accepted as written and carries into the re-cut: D2's SigV4 with its negative control,
+   IB-pr-296 measured unreached (render ports NONE at the pin), V1-a's 10 s bar before R1, V1-b hop 11's full V1, and the
+   rollback. The re-cut is one new bundle and a new packet blob, and this seat signs it on the same terms.
+
+## Batch 177 -- 2026-10-02 ~16:3xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~Y msg 104313)
+
+### M2-D2-R1-RE-CUT-SIGNED-PER-THREAD-TABLES-20261002
+1. SIGNED: the re-cut irpt-status packet (blob 5518903557, bundle pin 0f70e6156e). File: `CTO_HALF_IRPT_STATUS_M2_D2_R1_20261002.md`.
+   This seat read batch 176's fix at the pin: one Table per thread from its own Session in a `threading.local`, the shared answers
+   under the lock, and one long-lived pool per process.
+2. V1-a's 10 s REPORT bar is the acceptance, and the Cottonwood cap lifts on it. V1-b is hop 11's full V1.
+
+## Batch 178 -- 2026-10-02 ~17:2xZ -- 1.0.0_SA_CTO (self-drive; answers 4.0.0_SA_CRO~X msg 104322, briefs @80fa729b0e)
+
+### IRPT-THREE-BRIEFS-FOLDED-IN-20261002
+1. FOLDED IN on Andrew's 14:5xZ word: `CTO_FOLD_IN_IRPT_THREE_BRIEFS_20261002.md`. Performance P-1 to P-7 go to `~P` (portal halves
+   `~D`), Analysis Y-1 to Y-6 and the harness to `~Y` and `~D`, and Holdings H-1 to H-3 to `~D`, with `~M` informed. Each is an
+   enrichment under the existing ENDPOINTs (IRPT_DASHBD FWD-1, FWD-2 and FWD-8 hold the Performance outcomes), so no half
+   re-opens. The COOs cut the orders.
+2. RULED:
+   - (1) gross of fees, per Andrew's 09-30 words; the served "NET" stamp is a defect fixed now (P-4);
+   - (2) widen the precomputed path to every 49 Financial account, then per firm, with PATH A retired in the same window;
+   - (3) the request-path Lambdas are existing pipelines (R19 migration, never a rider; the adapter is retired, not renamed);
+   - (4) a ticker such as IWM is admitted as a comparison key;
+   - (5) both intake gates are wired, and the swap gate also accepts a user-named, YCharts-verified proxy. The vendor words are
+     cited.
+3. THE ONE ACT FOR ANDREW: a population pull of Black Diamond's performance endpoint for P-5, after P-2 (vendor per-use word).
+
+## Batch 179 -- 2026-10-02 ~17:5xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~M msg 104332)
+
+### COT-REPOINT-LEG-W-WATERMARK-BEFORE-THE-QA-RUN-20261002
+1. SIGNED (Cottonwood re-point half, ADDENDUM 2): leg W before leg R. Record both watermark keys' current VersionIds, copy each back
+   from its `data_as_of` 2026-09-30 version, then run leg R's one QA run on the new code. Rollback: the recorded versions. This is
+   the Black Diamond re-land's leg W path.
+2. The ad hoc QA run is preferred over skipping to leg S: it tests the new code before the scheduled fire, and it does not destroy
+   leg S's discriminator, because the 10-02 fire computes 10-02.

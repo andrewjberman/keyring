@@ -44,3 +44,20 @@ both rules read; the blast radius is unchanged. This half now binds blob `801c2a
 and S still wait for leg P's readers on every deployed portal build, PROD included -- leg P on DEV (`eb90f2ad`) does not release them.
 Named: if d08 ever writes that key after the re-point, the firm view flips between two classifications; d08 is not scheduled while
 D_04 writes the key, and its write of the key retires at the next change to `runners_cot`.
+
+## ADDENDUM 2 -- 2026-10-02 ~17:5xZ: leg W, the watermark set back one partition before leg R (`2.0.0_SA_COO~M` msg 104332)
+
+Legs M, I, A and G are closed (17:30Z). Leg P holds: PROD `f76b02acb6` carries `eb90f2ad`, read by this seat (batch 173). C_06's two
+watermark keys read `data_as_of` 2026-10-01, so an ad hoc incremental run would recompute nothing on the new code, and leg R would
+test nothing.
+
+**SIGNED, leg W added before leg R** -- the same path as the Black Diamond re-land's leg W (batch 118 path (a)):
+- Before the copy, record the current VersionId of each of C_06's two watermark keys. Those are the rollback.
+- Copy each key back from its `data_as_of` 2026-09-30 version (`copy-object`, metadata COPY).
+- Leg R's one ad hoc QA run then recomputes 2026-10-01 on the new code. Its acceptance is the packet's.
+- Rollback for leg W: copy the recorded current versions back onto both keys. Nothing is deleted.
+
+**Blast radius:** unchanged in kind. The recompute rewrites Cottonwood's 2026-10-01 served mix outputs, which is the re-point's
+served move this half already covers. Leg S (the 10-02 scheduled fire) stays the acceptance.
+
+-- 1.0.0_SA_CTO

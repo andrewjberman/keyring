@@ -15136,3 +15136,182 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Remedy owner 2.0.0_SA_COO~P (export/**). It needs the CTO's ruling on the route and contract (E4 readiness record G4). It also bears on the red ledgers irpt-export-reopen-rule-20260927, irpt-export-async-submit-20260927 and irpt-export-receipt-running-20260928."
 }
 ```
+
+## IRPT_BCKEND-S273 -- the contract declares the hop 11 /pdf route; neither the API nor any portal build carries it
+
+```json
+{
+  "id": "IRPT_BCKEND-S273",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-02T15:10:00Z",
+  "one_line": "The workspace contract declares a 19th IRPT route, GET analysis/requests/{requestId}/pdf (hop 11, landed d517ba686e 12:47:28Z), but no portal build carries it: it has no IR_ROUTE_TABLE entry and no consumer on DEV 415f50db or PROD f76b02ac, and the API serves no /pdf route either (404). Against CLOUD HEAD contracts the portal's routes.test reads 5 of 9, and F14-AC13, F57-AC2 and producer-fixtures fail on it; CI runs no unit tests, so nothing red is visible.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's portal grade 2026-10-02 14:xZ: routes.test 9/9 against the contracts at d517ba686e^1, 5/9 against CLOUD HEAD 18f6d3388a; the 4 failures are the PDF route; 0 INVESTIGATION hits for it before this row (positive control: S269 found)",
+      "this seat's irpt-status grade 14:xZ: API 7k3ed8px20 has 0 /pdf routes of 110; the owned GET answered 404 Route not found"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The portal's operation table is routes.json: every declared route is typed and either consumed or named as uncalled (row S53's derived pin).",
+  "world_is": "The contract is one route ahead of both the API and the portal. Harmless while the route is unserved; when hop 11 serves, the portal has no reader for it and its own tests are already red on it.",
+  "notes": "INERT. Owners: 2.0.0_SA_COO~D (the portal's route table) with 2.0.0_SA_COO~Y (hop 11). Same class as S269: a contract change whose reader census stops short of the portal."
+}
+```
+
+## IRPT_BCKEND-S274 -- the leg S reader pairs by date and reads the pre-fix publication
+
+```json
+{
+  "id": "IRPT_BCKEND-S274",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-02T16:40:00Z",
+  "one_line": "The lane reader for split-account leg S (split_qa_read.py) cannot see the publication the leg is about: it pairs the newest QA file (business date 2026-09-30) with the served file of the same date, which is the pre-fix revision b29682b06ab6, so a clean run prints the old 91 accounts not summing and 182 withheld while the 14:15Z publication (2026-10-01, revision 100a0dc22f12) reads 0 and 0.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/R30_CHECKS/split_qa_read.py:113-114 (served_manifest(bucket, firm, date) with the QA file's date)",
+      "this seat's read 2026-10-02 15:04Z-16:30Z of irpt/inflection/platinum/holdings/current/manifest.json: the 2026-10-01 entry is revision 100a0dc22f12 (written 14:19:00Z): 857 accounts, 0 not summing, 0 DRILL WITHHELD of 36,048 nodes; the 2026-09-30 entry is still b29682b06ab6"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Leg S of irpt-inf-split-positions-m-20261001 is read on the 14:15Z publication by the lane's reader.",
+  "world_is": "The reader would grade the wrong file and report a failure the publication does not have; or, if it is fixed to read 10-01, it has no same-date QA file to compare with.",
+  "notes": "INERT. Owner 2.0.0_SA_COO~M: read leg S on the 2026-10-01 entry directly (the counts above), not through the QA pairing. This seat's grade of the publication is in IRPT_BCKEND_FAST_PIN_GRADES_20261001.md."
+}
+```
+
+## IRPT_BCKEND-W101-S13 -- IB-pr-297: the signed download answer carries fields the published export-download response schema d...
+
+```json
+{
+  "id": "IRPT_BCKEND-W101-S13",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~101",
+  "surfaced_at": "2026-10-02T15:40:00Z",
+  "one_line": "IB-pr-297: the signed download answer carries fields the published export-download response schema does not admit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/contracts/investor-reporting/v1/responses/export-download.response.schema.json: data is additionalProperties:false over export_ref, download_route, timestamps, vendor_signed_url_exposed; ExportReceipt.schema.json properties.download_route is additionalProperties:false over route, requires_reauthorization",
+      "infra/aws/lambda/investor-reporting/export/entry.py export_download (c4fedd31c5): answers download_route.{route,requires_reauthorization,url,expires_at} plus data.sha256 and data.byte_length (hop 11's shape per 5bc562f689:infra/aws/lambda/investor-reporting/ops/pdf_link.py)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IB-pr-297: the live entry answers a signed answer in hop 11's shape carrying sha256 and byte_length; 'the ExportReceipt schema's download_route.route is a free string, so no contract file changes'.",
+  "world_is": "The order's premise covers the route string only. The signed answer's url, expires_at, sha256 and byte_length are four fields the published response schema (and the ExportReceipt download_route it references) reject, so a consumer that validates the live answer against export-download.response.schema.json would refuse it. Nothing validates the served answer at runtime (served.py has no response validation) and no contract file is in this order's paths, so the answer was shipped in hop 11's shape as ordered.",
+  "notes": "Remedy owner 1.0.0_SA_CTO / 3.0.0_SA_CVO: publish the signed-answer fields in export-download.response.schema.json (and decide whether url/expires_at belong in ExportReceipt.download_route or only in the response). Reader census for 2.0.0_SA_COO~D's portal half: ReceiptPanel.tsx:95 follows download_route.route; the answer's download_route.url is new."
+}
+```
+
+## IRPT_BCKEND-W101-S14 -- IB-pr-297: a receipt already persisted keeps the old download route in its stored JSON; only receipt...
+
+```json
+{
+  "id": "IRPT_BCKEND-W101-S14",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~101",
+  "surfaced_at": "2026-10-02T15:40:00Z",
+  "one_line": "IB-pr-297: a receipt already persisted keeps the old download route in its stored JSON; only receipts written after the next export build name the live route.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/handler.py finalize_export persists receipt_mod.build(...) output (download_route.route is written into receipt.json at finalize time); receipt.py DOWNLOAD_ROUTE now names the live route (c4fedd31c5)",
+      "infra/aws/lambda/investor-reporting/export/entry.py export_download rebuilds download_route.route from receipt.DOWNLOAD_ROUTE and the receipt's export_id, so the download answer is live-route regardless of the stored text"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IB-pr-297: point receipt.py's route at the live route so the portal's link (ReceiptPanel.tsx:95, download_route.route of the receipt) matches a live route.",
+  "world_is": "receipt.py now writes the live route for every receipt built from the next export build on. A receipt.json already in the evidence bucket (including the three red export ledgers' exports) still carries /api/scoped/exports/{id}/download, and export_receipt returns the stored JSON unchanged, so the portal's receipt link for those exports stays on the dead route. The download route's own answer is correct for every receipt.",
+  "notes": "Remedy owner 2.0.0_SA_COO~P (E4 packet): either re-render the receipts or have export_receipt rewrite download_route.route on read the way export_download now does. Not in this order's paths beyond entry.py, and the order says receipt.py only."
+}
+```
+
+## IRPT_BCKEND-W101-S15 -- IB-pr-297: byte_length comes from a HeadObject on the export artifact, an S3 call the export role is...
+
+```json
+{
+  "id": "IRPT_BCKEND-W101-S15",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~101",
+  "surfaced_at": "2026-10-02T15:40:00Z",
+  "one_line": "IB-pr-297: byte_length comes from a HeadObject on the export artifact, an S3 call the export role is not shown to hold for an SSE-KMS object.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/download.py signed_answer (c4fedd31c5): client.head_object(Bucket, Key)['ContentLength'] for byte_length; the receipt carries sha256 and no length (ExportReceipt.schema.json artifact has sha256, storage_bucket, storage_key, server_only)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-297.export-packaging-and-download.md preflight: 'the presigned GET's s3:GetObject on the export artifacts is read by E4's packet against the export role'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IB-pr-297: the signed answer carries byte_length; the order does not say where the length comes from.",
+  "world_is": "The receipt holds no length, so the length is read from the object (HeadObject, authorized by s3:GetObject; for an SSE-KMS object S3 may also require kms:Decrypt on the key). This was not run against AWS. If the export role cannot HeadObject the artifact, export_download fails closed with an unexpected error and signs nothing.",
+  "notes": "Owner 2.0.0_SA_COO~P: E4's packet reads the export role for s3:GetObject and kms:Decrypt on the artifact key family before the deploy; the alternative is to add byte_length to the receipt sidecar at finalize."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S275",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-02T17:25:00Z",
+  "one_line": "P-4 (CTO batch 178): the served Performance adapter's holdings-gold path stamps fee_basis = \"NET\" on a no-fee price return (performance/holdings_gold.py:270); the figure is GROSS of fees.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "holdings_gold.py:270 at HEAD: result.method, result.fee_basis, result.annualization = \"TIME_WEIGHTED\", \"NET\", \"NONE\"",
+      "PerformanceReport.schema.json fee_basis enum GROSS | NET | UNKNOWN; CTO_FOLD_IN_IRPT_THREE_BRIEFS_20261002.md section 1, P-4"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The figure says what it is: a holdings-value return with no fee deduction is gross of fees.",
+  "world_is": "Every served 49 Financial Performance figure from the holdings gold (live adapter cdbFZDJA, holdings_gold.py at a595a14264) carries fee_basis NET.",
+  "notes": "Remedy owner 2.0.0_SA_COO~P: the label fix in the next cell, carried by the Inflection serving packet's adapter build (IB-pr-221 F1) so the deploy serves it."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S276",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-02T17:25:00Z",
+  "one_line": "infra/aws/lambda/ci/build-and-upload.sh deletes TRACKED source files: staged_from members are materialized at <source_dir>/<packaged_as> and cleanup_staged rm -f's every staged name, so a member whose repo path IS that file (the performance adapter's flat layout) is removed from the working tree after the build.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "2026-10-02 ~17:0xZ BAU_PARITY_SKIP=1 build-and-upload.sh investor-reporting irpt-performance-adapter: afterwards git status showed 19 tracked files of performance/ as ' D' (installed.py, holdings_gold.py, entry.py, ...); nothing else in the repo",
+      "build-and-upload.sh:232-235 cleanup_staged: for sf in $STAGED_NAMES; do rm -f \"$STAGED_ABS_SOURCE/$sf\"; the staging script prints 'not committed at the packaged path' for each member regardless"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IB-rte-4: 'Nothing here is written to source_dir permanently' -- a staged member is transient and the source dir is left as it was.",
+  "world_is": "The 19 files were restored from HEAD at ~17:3xZ (git restore; 46 of 46 tracked files equal HEAD). Any build of a function whose staged member path equals a tracked file deletes it again; a later broad commit would record the deletions.",
+  "notes": "Interim disarm: this seat checks git status for ' D' after every build-and-upload and restores tracked files from HEAD. Fix: cleanup restores a tracked path from HEAD instead of deleting it, and staging refuses a tracked dest with uncommitted edits -- in the next repair cell (IRPT_BCKEND owns IB-rte-4's staging)."
+}
+```
