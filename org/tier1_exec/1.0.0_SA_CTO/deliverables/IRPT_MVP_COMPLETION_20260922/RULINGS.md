@@ -5939,3 +5939,14 @@ it and E6 and hop 11 wait on E7 (batch 123 item 4).
    @38b72bf469, from committed blobs (`STAGE_MANIFEST.json`). The new enum value changes no answer until a row carries it.
 4. The portal PROD promote that carries the `multi_asset` readers joins the acts only Andrew can do (CLAUDE.md Portal: "DEV only,
    PROD gated").
+
+## Batch 184 -- 2026-10-02 ~20:1xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~M msg 104385)
+
+### ROUTE-RESTAGE-FOLDS-INTO-THE-ROWS-PACKET-20261002
+1. CORRECTION of batch 183 item 3. Both of its premises were wrong, as measured by `2.0.0_SA_COO~M`:
+   - The -0.0 fix @38b72bf469 is already live: the deployed `tS/APci3..` carries it, from leg R on 10-01 at 20:13Z. This seat took
+     brief 3 item 1.4(b), held from a stale STATUS~M, as unshipped.
+   - `irpt-holdings` does not validate enums while serving: `validate_slice` is called only by tests, and the staged contract is
+     read only for block presence (`snapshot.py:228`). A `multi_asset` node already passes through unchanged.
+2. RULED: no separate re-stage, because it would serve the same bytes. The route's contract pin goes into the ONE rows packet of
+   batch 183 item 2, beside the producer re-mint, after the portal PROD promote that carries the readers.
