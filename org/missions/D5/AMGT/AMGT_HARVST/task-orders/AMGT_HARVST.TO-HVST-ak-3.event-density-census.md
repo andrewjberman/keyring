@@ -86,9 +86,26 @@ If the dry-built events cover the spikes materially better than the 8 served eve
 rebuild #6 under its pair. If they do not, the next round cuts the rule change with the census's uncovered spikes as
 its held-out set.
 
+**COMPLETE 2026-10-02 ~20:2xZ (issuer):** AC1 PASS ("DENSITY CENSUS: DONE"). Merged @b79d3781bd. AC2 re-run at the base
+PASSES (`deliverables/2.0.0_SA_COO_H/round38/ak-3.AC2.issuer_grade.txt`; served snapshot 8 rows, read by the check
+itself). The census, read-only with puts_sent 0, covers 205 securities and 23,691 mention rows:
+- events: served 8, dry-built on current gold 438;
+- spike days: 634 at 2x and 564 at 3x;
+- covered by the dry-built events: 315 at 2x (49.7%) and 281 at 3x;
+- covered by the served events: 8 at 2x (1.3%) and 7 at 3x.
+Uncovered at 2x is 319, measured from `event_rows`' own rules with no code change:
+- fewer than 2 tier-A publishers that day: 133;
+- fewer than 2 tier-A/B articles: 55;
+- no tier-A/B mention: 54;
+- all tier-A/B rows guarded as roundups: 52;
+- thresholds met but no event (story split or headline link, approximated): 25.
+**Decision per the rule fixed at the cut:** the dry-built events cover spikes materially better (49.7% against 1.3%),
+so the served `chatter_event` rebuild joins rebuild #6 under its pair. The uncovered 319 are the held-out set for any
+later rule change.
+
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>38</round>
 <slot>~91</slot>
 <fabric>site-z</fabric>
