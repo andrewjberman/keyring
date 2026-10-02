@@ -57,8 +57,10 @@ Comparison = exactly 1; variant 3 Multi-Comp = 2 to 5 (held; mapping to Andrew's
     `NEEDS_CORRECTION`. A typo and a real untracked asset get the SAME code; the page shows "Review required ... Correct
     the file ... and review again" with raw codes. The user's only move is to fix the file and upload again (inferred
     from code).
-3.3 **Vendor note.** The swap gate calls kimi-k3 web search and refuses until that search is pinned
-    (`KIMI_WEB_SEARCH_UNVERIFIED`). Wiring either gate adds a vendor call that needs Andrew's word.
+3.3 **Vendor note (corrected 17:3xZ).** Both gates call Kimi (Moonshot); the swap gate's web search refuses until it is
+    pinned (`KIMI_WEB_SEARCH_UNVERIFIED`). Kimi needs NO further word: it is whitelisted as VEW-3, "Yes Kimi can be called
+    freely", any scope (`org/ref/VENDOR_EGRESS_WHITELIST.yaml`, since 2026-10-02T13:1xZ). The first version of this
+    paragraph said wiring needed Andrew's word; that was wrong and is struck.
 
 ## 4. The test files and what each case does today (A3, A4; addenda 1-2)
 
