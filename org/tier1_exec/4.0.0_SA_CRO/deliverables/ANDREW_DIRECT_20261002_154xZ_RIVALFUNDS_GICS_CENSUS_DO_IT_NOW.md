@@ -33,3 +33,11 @@ arrive per fund"
 Andrew: "that is the fastest way to troubleshoot and identify the most material/high-leverage patterns that we neeed to fix"
 
 The census therefore starts from the page's "Inputs that did not arrive" component (the `input_census` table behind it).
+
+## Verbatim, after the census (~16:1xZ)
+
+Andrew: "Can  you just make the edits necessary? i dont think we need to involve COO and CTO in this one"
+
+Read by this seat: `4.0.0_SA_CRO~RV` makes the census's code edits itself, without routing them through 1.0.0_SA_CTO~Z or
+2.0.0_SA_COO~RV. Moving served output (a Lambda deploy or a page republish) is a separate act. This seat asks Andrew before
+doing it rather than reading this word as covering it.
