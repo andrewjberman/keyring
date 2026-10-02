@@ -101,9 +101,28 @@ amendment. The ONE REAL RUN at close: the bbg driver restarts after the merge, u
 challenge either passes or leaves a capture bundle. Run 065754Z stays UNCLASSIFIED (8c). STOP_BBG is set until the
 merge.
 
+**COMPLETE 2026-10-02 ~08:0xZ (issuer).** AC1 PASS: 13 passed. Suite 561 at the base. Merged @7b3800219d. AC2 PASS at
+the base over live windows 1-3 (`deliverables/2.0.0_SA_COO_H/round37/aj-5.AC2.output.txt`):
+- `grain` per_run;
+- bbg **MET** per run, with **window_pass_rate 0.9** (9 of 10 non-void; 63 of 157 runs in a window);
+- wsj, barrons, ft and sa MET-BY-ABSENCE.
+
+ONE REAL RUN: the bbg driver restarted at 08:06:20Z with `--clear-stop bbg` under monitor window3 (pid 37260). Its next
+real challenge either passes or writes a capture bundle with one retry.
+
+Issuer rulings on the worker's rows:
+- **Z-W90-S13:** the path finding shows the 06:59 job DID reach `verification.solve()`. The failed solve emitted no
+  event, and its capture is hour-capped and fires only once the control is located. Z-S64's "no solve event" stands;
+  "reached no solve" was never claimed as established.
+- **Z-W90-S15 ACCEPTED as narrowed:** the retry fires after a solve that did not pass. A solve that passed but whose
+  re-sent request was challenged again gets the bundle and events but no retry, because retrying it breaks
+  `test_ae5_hookup.py`, which is outside this cell's paths. That branch is carried to the round-37 analysis.
+- **Z-W90-S16:** the grader's definitions (in-window = run span overlaps a window; unattributed challenges become their
+  own run; counters over in-window runs only) are accepted.
+
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <workstream>bbgcapture</workstream>
 <slot>~90</slot>

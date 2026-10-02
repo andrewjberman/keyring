@@ -6074,6 +6074,30 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "spec_asserts": "Order aj-5 s1.5: per-run entries with in_window; verdicts NOT_EVALUATED / MET-BY-ABSENCE / MET / NOT-MET.",
       "world_is": "A run record is in window when its [started_at, finished_at] overlaps a monitor window (minute-floored); a challenge in no run record is its own run 'unattributed:<minute>', in window when its presentation or resolution minute is covered. Publisher challenge counters and window_pass_rate sum the in-window runs. Ten existing assertions moved: INSUFFICIENT -> NOT-MET (all-void run), challenge-only arms now need a windowed http event to leave NOT_EVALUATED, and an unmonitored-minute challenge no longer counts.",
       "notes": "Worker row; AC2 against the real windows is the issuer's re-run at the base."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S65",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-02T08:08Z",
+      "one_line": "DISARMED by its disarm_owner: AMGT_HARVST-Z-S64. The hazard was that running bbg on the old path produces unrecorded, uncaptured failed challenges. After aj-5 (merged @7b3800219d), every bbg solve outcome is recorded as an event; a failed solve writes a capture bundle (DOM, screenshot, status and headers) with no hourly cap; and it retries once after 60-120 s. bbg restarted under the monitor at 08:06:20Z.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "merge 7b3800219d (HVST-aj-5 @1dbd1581f2): AC1 13 passed; suite 561 passed at the base",
+          "deliverables/2.0.0_SA_COO_H/round37/aj-5.AC2.output.txt (08:03:58Z): grain per_run; bbg MET, window_pass_rate 0.9",
+          "deliverables/0.9.0_WK_AMGT_HARVST~90/aj5_path_finding.md: the 06:59 job reached verification.solve(); the failed solve emitted no event; the capture was hour-capped and fires only after the control is located",
+          ".runtime/harvest-backfill/bbg_full_run3.out: driver restarted 08:06:20Z with --clear-stop bbg (pid 37260); monitor window3 open"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "An ARMED hazard disarms via its disarm_owner (CLAUDE.md section 2); Z-S64 names 2.0.0_SA_COO~H.",
+      "world_is": "Run 20261002T065754Z-bbg-4f3bfa12bd stays UNCLASSIFIED (ruling 8c). Z-S64's 'no solve event' stands. Its cause hypothesis 'a path that never reaches solve()' is refuted by the path finding (row Z-W90-S13). The next real bbg challenge either passes or leaves a bundle.",
+      "notes": "Disarm record at /canonical-drive tick 8; not an adjudication. Disarmed is not remediated: the 06:59 failure's cause is still unread."
     }
   ]
 ```
