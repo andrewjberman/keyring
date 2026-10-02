@@ -9,7 +9,72 @@
   - grade 3 (PASS on F1-F4) @ea29c625e9;
   - grade 4 (PASS on CALL 6 c1-c2; G4-1 split guard refusing 7 real moves, ruled CALL 8) @6aaf6b43f6;
   - grade 5 (PASS, CALL 8 served) @eeb5fb2c7a;
-  - grade 6 (PASS; G6-1 trend-sector guard, P2) @bcac012fe7.
+  - grade 6 (PASS; G6-1 trend-sector guard, P2) @bcac012fe7;
+  - grade 7 (PASS; G6-1 closed) @3e93998f8e.
+
+## Grade 8 -- served page 2026-10-02, batch fast-a1-publish-1002b, code pin 7ab3b9382f, with the 10-02 AI run (handoff msg 28424), read 2026-10-02 ~11:30-11:50Z
+
+**Verdict: PASS on the pin's scope** (grounding_check/3, TXUE's false recheck FAIL fixed, 13 of 13 current). **Two P1s for
+the next items before the demo** (G8-1, G8-2). F5 is half closed.
+
+### What PASSES (this seat's reads)
+
+- **Deployed bytes equal the pin.** `etfs-rivalfunds-daily-lambda` has 33 of 33 `rivalfunds/*.py|*.json` files byte-equal
+  to 7ab3b9382f. Positive control: the deployed `ai_accounts.py` differs from its 93227704b7 version.
+- **The pair was complete before the apply:** COO addendum-7 half 4c1db289db (11:21Z), CTO half f6c76a45a1 (11:22Z),
+  apply 11:27Z. Ledger r8 CLOSED 11:29:46Z.
+- **The SCHEDULED chain published today's page by itself (first production evidence for the A1 tables):**
+  - issuer fetch marker `096abf8e-...` at 11:00:34Z;
+  - `state/build_trade_schedule/date=2026-10-02/096abf8e...` at 11:02:58Z;
+  - `state/publish_page/date=2026-10-02/096abf8e...` at 11:04:10Z, status OK, writing index.html and manifest;
+  - its `produce_a1()` wrote holding_contribution (11:03:25Z), buying_trend (11:04:03Z) and input_census (11:04:06Z).
+  - The two later revisions (1002a with the AI run, 1002b after r8) are seat republishes. The AI run is a seat act by
+    ruling (CALL 5).
+- **The page:** manifest `published`, 13 of 13 updated. report_date_freshness, content_repeat and completeness are all
+  PASS. Readback true.
+- **CALL 10's open gap is not exploited on this page.**
+  - 83 distinct ticker-form tokens across the 24 accounts' prose; 0 are absent from that fund's own G1 keys
+    (`security_bloomberg`, 43 G1 objects Aug-Oct, 786 keys).
+  - Positive control: "ORA FP Equity" is in TXUE's keys.
+  - A first attempt against the AI table's own manifest had no G1 list, so it read 82 of 82 "absent" with a key set of 0.
+    It was discarded as a zero-denominator read.
+- **Grounding FAILs shown as FAIL:** 4 of 24 accounts (a1-chain/3, gpt-5.4), each rendered "Grounding FAIL" in the FAIL
+  style, never as a pass. IDVZ's "$1.6 million, $1.3 million" and CGIC's "$5.7 million" are genuine: none of their 18 / 20
+  cited values rounds to them.
+
+### G8-1 (P1, demo fund) -- BASG's two AI accounts are FALSE grounding FAILs
+
+- `grounding_reason`: "figures not in any cited row: 10, 13, 15" (activity_30d) and "13, 15" (direction_verdict).
+- Every hit sits in the model's sentence "fear_greed/fear_greed_index was 28.09 as of 2026-10-01T21:13:15+00:00". The
+  check reads the timestamp's month and time fields as uncited figures.
+- BASG is the FWD-1 demo fund, and both of its accounts read "Grounding FAIL" today.
+- **Remedy class (not drafted here):** an ISO date or time the text quotes from a cited row's as-of is not a figure; or the
+  prompt writes dates in display form without a time.
+- A re-run waits on CTO condition 4 (the unknown_identifier check ships first, @314d02e516), so the two can ship together.
+
+### G8-2 (P1, visible on today's page) -- phantom "exit" rows with shares 0 -> 0
+
+- In served G5, Sep-Oct (the newest object per date, 22 dates), **27 of 910 trade rows are `exit` with shares_before 0 and
+  shares_after 0** (est_notional null): CGIC 2331 HK, INEQ SHEL LN / 1929 HK / 2282 HK / 2502 JP / 4528 JP and more.
+- Today's page shows two: TXUE ATD_CN (its first trade row, as the handoff noted) and INEQ JAR_LN.
+- They predate the FAST lease (trade inference). A line at 0 shares on both sides is no trade.
+
+### G8-3 (P2) -- money-market lines remain in the trade log and the AI facts
+
+- Grade 2's F2 took them out of the rankings and trend only.
+- Today's trade table carries IJGXX (ETFT) and DGCXX (PCLG, TSEL, WCMG) "add" rows.
+- CGIC's 30-day account leads with flows "through CMQXX_US_Equity", which narrates cash management as the fund's most
+  unusual activity.
+
+### F5 -- half closed
+
+- **Closed:** the 24 accounts' prose (text, observed, inferred) carries **0** float artifacts (6+ decimals) and **0** raw
+  CUSIPs.
+- **Open:**
+  - 106 source identifiers in prose (`fear_greed/fear_greed_index`, `fear_greed/market_volatility_vix`, and more), so
+    "names over identifiers" is not met for the market readings;
+  - 268 Bloomberg ticker forms ("ORA FP Equity"), which CRO~RV CALL 10 ruled are style for the next prompt version, not a
+    FAIL.
 
 ## Grade 7 -- served page 2026-10-01, batch fast-a1-publish-1001g, code pin 93227704b7 (handoff msg 28393), read 2026-10-02 ~10:25-10:40Z
 
