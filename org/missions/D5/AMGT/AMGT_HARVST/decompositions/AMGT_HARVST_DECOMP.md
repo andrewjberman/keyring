@@ -2557,3 +2557,22 @@ The one real run at close is the live drain reaching 0 pending with gold-readabl
 | `HVST-ai-5` batched silver append per source | `ai-5` | SERVED (code LOCAL; the drain is the issuer's upload-harvest pass) | `~90` |
 
 Base check `round36/checks/ai-5.AC2.py` before the cut: FAIL (see the issuance commit).
+
+### 49.3 ROUND 36 AMENDMENT 3 -- the limb-2a grader per challenge (CTO ruling, self-drive tick 2 @bb3c328367), 2026-10-02 ~06:2xZ
+
+The CTO ruled that FWD-11 limb 2a is graded PER CHALLENGE, answering ADJUDICATION_v45 section 2:
+- a challenge is CLEAN when no hardware input occurs from 2 min before its presentation to 2 min after its
+  resolution;
+- a challenge with input in that band is VOID, and it voids only itself, never its hour or the run;
+- 2a is MET when every non-void challenge passed and each publisher that presents challenges has at least one
+  non-void challenge;
+- a publisher that presents none stays MET-BY-ABSENCE.
+
+The 24-clean-hour / 1,440-clean-minute count was the grader's own construction and is dropped. Limb 2b and session
+renewal are unchanged. This seat amends the grader; `3.0.0_SA_CVO~Z` grades on it. No PRD half re-opens.
+
+| cell | order | class | slot |
+|---|---|---|---|
+| `HVST-ai-6` per-challenge +/-2 min grader | `ai-6` | LOCAL, DIRECT-ACT (one cell, under 300 product lines) | `~90` |
+
+Base check `round36/checks/ai-6.AC2.py` before the cut: FAIL as expected (the grader emits the per-minute shape).
