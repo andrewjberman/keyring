@@ -1,0 +1,21 @@
+{
+ "runs": 2,
+ "configs": {
+  "1": {
+   "walls_s": [
+    7.85,
+    8.12
+   ],
+   "items": 22
+  },
+  "8": {
+   "walls_s": [
+    7.09,
+    2.96
+   ],
+   "items": 22
+  }
+ },
+ "same_answer_in_same_order": true,
+ "speedup": 2.65
+}

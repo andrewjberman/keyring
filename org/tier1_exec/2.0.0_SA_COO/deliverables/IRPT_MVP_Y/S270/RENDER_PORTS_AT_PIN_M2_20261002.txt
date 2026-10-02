@@ -1,0 +1,11 @@
+zip sha256 6SbSkFNz9PzOO80sQqTQlBrW3zaQx1HO2QHXU55UHuw=
+from the extract: status_installed True
+from the extract: opal_naming True
+from the extract: served True
+from the extract: entry True
+from the extract: owned_requests True
+from the extract: pdf_link True
+operations: ['analysis-report', 'analysis-request-history', 'analysis-request-pdf', 'analysis-request-read', 'status-job', 'status-summary']
+render_ports: None | prospect_modes: {} | load_prospect_owner: None
+HISTORY_WORKERS: 8
+RENDER_PORTS_VERDICT=NONE

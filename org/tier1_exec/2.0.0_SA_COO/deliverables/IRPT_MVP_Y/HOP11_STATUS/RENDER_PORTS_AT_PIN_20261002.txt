@@ -1,0 +1,8 @@
+zip sha256 BNe2n9cV2tgsXE7pNy295NEhbiQsFM0VRE8OXeaolZU=
+modules from the extract: False
+operations: ['analysis-report', 'analysis-request-history', 'analysis-request-pdf', 'analysis-request-read', 'status-job', 'status-summary']
+render_ports: None
+prospect_modes: {}
+load_prospect_owner: None
+RENDER_PORTS_VERDICT=NONE
+note: 'modules from the extract: False' was the prefix check comparing the 8.3 short temp path with the long one; the modules' files, read separately: status_installed <extract>\status_installed.py, served <extract>\served.py, entry <extract>\entry.py, opal_naming <extract>\lib\opal_naming.py (the long form of the same extract). All four are the built zip's (sha256 BNe2n9cV).

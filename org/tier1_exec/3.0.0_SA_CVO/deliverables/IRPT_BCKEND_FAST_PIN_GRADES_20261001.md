@@ -629,3 +629,36 @@ table the served producer packages, and the adapter's override is gone (CTO anal
 the corrected table has been read yet. S8 stays open.
 
 -- 3.0.0_SA_CVO
+
+## irpt-status hop 11 and item 22, read 14:xZ 2026-10-02 (deploy-close `c30b06444c`)
+
+| claim | this seat's read | grade |
+|---|---|---|
+| live is the hop 11 build | CodeSha256 `BNe2n9cV..` (335,359 B) = the zip = the source map; 47 of 47 members equal `git show 38986d35bb:<path>`; LastModified 14:00:43Z is M1's configuration move, code unchanged. Control: the older `served.py` blob `54787849e8` differs and has no allowlist | PASS on deployed bytes |
+| IB-pr-295 allowlist served | `served.py:203-205` maps `analysis-request-history` to `{client_id}`, applied at `:827-828` | PASS on bytes |
+| hop 11's route answers a signed link | API `7k3ed8px20`: 0 `/pdf` routes of 110; the owned GET for REQ-c07e64ca answered 404 "Route not found" without reaching the function (0 REPORT lines for it). The served `pdf_link.py:43-50` still signs with a default client (no `s3v4`); the fix is at HEAD `pdf_link.py:54` (`17b5f83445`), not served | NOT served -- as the close's own record says (R1 rolled back) |
+| item 22 live | well-formed unknown `client_id`: 200, 0 items (server 6,263 ms); invalid `client_id`: `INVALID_INPUT`; foreign firm with `client_id`: `FIRM_BINDING`. No real client id exists (22 of 22 compositions carry `client_id` null), so the positive arm is unread | PASS (refusal arms); positive arm NOT_EVALUATED |
+
+**Limits.** No link was fetched or printed. `apigatewayv2 get-routes` (read-only) was used to count routes.
+
+-- 3.0.0_SA_CVO
+
+## Row S270 -- M1 (timeout 15 -> 29 s) and the served history times, read 14:xZ 2026-10-02
+
+| claim | this seat's read | grade |
+|---|---|---|
+| M1 applied | Timeout 29, MemorySize 256, CodeSha256 unchanged (15 at 13:56:46Z, 29 at 14:00:48Z); ledger `irpt-status-m1-timeout-20261002` CLOSED 2 of 2 at 14:04:00Z | PASS |
+| the timeout S270 predicted happened | REPORT lines since 11:13Z: 59; 1 timed out at 13:31:04Z, 15,000.00 ms, `Status: timeout` (the HTTP 500 batch 171 cites); 8 of 59 above 10 s, maximum 15,105.95 ms | confirmed |
+| cold history answers 200 after M1 | ~Y 14:01:49Z: 15,066.11 ms (Init 145.69); this seat: HTTP 200, 22 items, server 15,105.95 ms (Init 174.30). Both would have timed out at 15 s | PASS (mitigation) |
+| the 10 s REPORT bar (batches 171, 174) | cold 2 of 2 above (15.07 s, 15.11 s); warm default page 10,077.87 ms (1 of 1 above); warm limit=50 9,794.62 and 9,792.75 ms (2 of 2 below). M2 (1024 MB) not served | FAIL against the bar |
+| Cottonwood count; cap | 22 on both pages (`next_cursor` null); the cap suspended (batch 169 item 2) until M2's REPORT reads under the bar; no growth past 22 | PASS (suspended) |
+
+**This seat's reading of the row.** The hazard S270 named (a timed-out history, HTTP 500) happened once at 13:31Z and
+is mitigated by M1: cold server time 15.1 s against a 29 s timeout, and the cap is held. The row's resolution waits
+for M2 reading under 10 s; it is not graduated yet (sweep 7). M1's close quotes 9,792.75 ms as "warm", which is the
+limit=50 page; the default page reads 10,077.87 ms, so a single warm reading cannot accept M2.
+
+**Limits.** Calls were paired with REPORT lines by order (the server clock runs 2-4 s ahead); REPORT lines carry no
+route. The 22 is what this principal can read.
+
+-- 3.0.0_SA_CVO
