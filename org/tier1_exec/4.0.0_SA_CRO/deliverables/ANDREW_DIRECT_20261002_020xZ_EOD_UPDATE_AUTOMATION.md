@@ -57,3 +57,26 @@ This instruction does not change another seat's work; no line to 1.0.0_SA_CTO is
 
 Binding from this turn: NOTHING sends to Teams without Andrew's reply of 1 (human in the loop, every message,
 the End of Day post included). The rest is under discussion; nothing built on it yet.
+
+## Addendum ~03:5xZ -- the cloud design, and "you just build it", verbatim (three turns)
+
+> paste the draft text in this chat. also i might recommend rendering this a cloud process. have the folders and
+> information be in opal-data-transcripts somewhere with some job that backfills and has all the relevant info. then
+> when a new message comes in on teams, it gets added to the respective thread, that addition triggers a lambda with
+> kimi API, kimi addresses the thread based on its id which gives it a differnet prompt as well as context by reading
+> the descending from present ordinal messages/historical chats from the given channel. The lambda then runs the SES
+> back and forth and handles my replies and so on.
+
+> im wondering if some kind of sqs may be faster for this versus using a bucket, i guess if i just text back the
+> lambda just gets polled by the new message returning
+
+Answers to the three calls the CRO put (stored cloud sign-in that can read his Teams unattended, every send still
+gated on his 1 / Kimi through AWS Bedrock vs Moonshot's API / who builds it):
+
+> 1.) im fine with that. 2) use kimi api key from aws secrets manager, set up like how we do it on estate pipeline;
+> we dont have bedrock. 3.) you just build it.
+
+Binding from these turns: the system runs in the cloud; per-thread folders live in opal-data-transcripts; Kimi is
+called with the API key held in AWS Secrets Manager, the way the estate pipeline does it (NOT Bedrock); the cloud
+side may hold a standing sign-in that reads and (on his 1 only) sends his Teams; 4.0.0_SA_CRO builds it, which
+widens this seat past its prompt.md "deploy -> CTO gates" line for this project only.
