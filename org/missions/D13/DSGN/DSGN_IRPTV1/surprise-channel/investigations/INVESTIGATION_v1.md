@@ -3149,3 +3149,33 @@
   "notes": "Candidate cause, not measured: a second Vite process started from the main portal checkout (a build, a preview, a smoke script or another seat's dev server) re-optimizing into the same cacheDir. The 34 deps_temp_* directories were left in place (a recursive delete is Andrew's call). Remedy when it recurs: restart 5174. Found answering Andrew's 2026-09-30 report of the Market Performance import error."
 }
 ```
+
+
+## DSGN_IRPTV1-S43 -- disarm record for W39-S2: the request history stops printing the header's client (portal DEV b188be1f)
+
+```json
+{
+  "id": "DSGN_IRPTV1-S43",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-10-02T04:20:00Z",
+  "one_line": "DISARM record for DSGN_IRPTV1-W39-S2 (disarm owner 1.0.0_SA_CTO, act placed on 2.0.0_SA_COO~D by RULINGS batch 110 item 4(a)): the request history no longer prints the header's selected client on any row, so a request of another client is never labelled with the selected one (portal origin DEV b188be1f, FAST item 64).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal b188be1f (origin DEV by ls-remote 2026-10-02T04:2xZ): tabs/analysis/OwnedRequestHistory.tsx carries no owned-request-client slot and no header read; a row is 'Requested <date>', Open, the state in words",
+      "iv-e-74 ARM (c) and iv-e-80 re-goldened to the ruling: with a header client selected no row carries its name; a planted mutant restoring the label fails both; 40 of 40 across 13 neighbouring files",
+      "real run on 5174 fixture plane (.runtmp/request-list-client-driver.mjs), Cottonwood Trust selected: 2 rows, 0 client slots, no client name on a row -- VERDICT REQUEST-LIST-NO-CLIENT-REAL-OK; shot deliverables/2.0.0_SA_COO~D/item64/request-list-no-client.fast-run.png"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarms DSGN_IRPTV1-W39-S2: the false label is gone from the page (batch 110 item 4(a)). The row itself CLOSES only on a walk that shows each request under its own client, after the client-scoped history route of item 4(b) (IRPT_BCKEND, 2.0.0_SA_COO~Y).",
+  "spec_asserts": "Each history row names its client (UIC-23), true for the request it labels.",
+  "world_is": "No row names a client; the history route is not client-scoped, so the list still shows every request of the viewer under any selected client, unlabelled. Row S32's premise (the history mounts only under a selected client, so the header name is sound) was false in the world: the route is not scoped by that selection (REAL_RUNS_20261001.md section 2).",
+  "notes": "Rows W39-S2 and S32 stay filed as they are (append-only); this row is the disarm record. The client name returns on the page the tick a client-scoped history route is served."
+}
+```
