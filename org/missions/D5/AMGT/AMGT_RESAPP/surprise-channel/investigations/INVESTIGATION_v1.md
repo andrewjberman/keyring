@@ -16695,6 +16695,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
  "world_is": "It counts a terminal-by-intent `withdrawn` face as owed, and it keys worker seats on a truncated serial, so every AMGT worker order reads as a collision. On the advisory path the commit lands, so a true collision would print the same REFUSED as these false ones and be equally ignored.",
  "disarm_owner": "1.0.0_SA_CTO~Z",
  "notes": "Owner of the lint (.tools/to-decomp-ref-lint.py seating check): 1.0.0_SA_CTO~Z. The two `withdrawn` faces are 2.0.0_SA_COO~H's (AMGT_HARVST issuer): `withdrawn` is not in org/XXX.md's status set (superseded/cancelled carry the pointer). Nothing in round 61 waits on this."
+},
+{
+ "id": "AMGT_RESAPP-Z-W203-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~203",
+ "surfaced_at": "2026-10-02T09:00:00Z",
+ "one_line": "AMGT-ak-5 AC1 cannot read exit=0 in the issued worktree: the portal gitlink (24646bcab9) is not materialised in C:/tmp/r61-203, so 3 tests in lib/research/api/tests/test_print_format_rich.py ERROR at setup on a missing portal fixture, independent of the ak-5 change (387 passed, 2 skipped, 3 errors).",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "AC1 literal invocation from C:/tmp/r61-203: '387 passed, 2 skipped, 186 warnings, 3 errors in 80.41s', exit=1. The 3 errors are test_default_and_fmt_pdf_are_byte_identical_to_build_pack_itself, test_format_rich_returns_200_markdown_non_empty and test_format_unknown_refuses_400_naming_both_legal_values, each FileNotFoundError at setup: 'C:\tmp\r61-203\\portal\\src\\pages\\SecurityAnalysis\\__harness__\tabsFixture.BA_US_Equity.json'.",
+   "ls -a C:/tmp/r61-203/portal lists only . and .. ; git ls-tree HEAD portal = 160000 commit 24646bcab959635e2a08076f3ab1ab6257ea9457 (a gitlink; the worktree add does not populate a submodule). The fixture lives inside that submodule, outside the order's <paths>, so the worker did not write it.",
+   "The three tests read only the portal fixture and the print builder; no file this order changed is on their path (posture package, tests and the plan only). The other 387 pass, the new tests among them."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "AMGT-ak-5 AC1 expects every test in lib/research/posture/ and lib/research/api/tests/ to pass and exit=0 from the issued worktree, a full checkout cut from f234d5aa12.",
+ "world_is": "The issued worktree's portal directory is empty (submodule not initialised), so a test whose setup reads portal/src/pages/SecurityAnalysis/__harness__/tabsFixture.BA_US_Equity.json errors before running; AC1 as written is FAIL (exit=1) in this tree on 3 environment errors and PASS on every test that can run. Not measured: whether the same 3 tests pass in a worktree with portal populated at 24646bcab9.",
+ "notes": "disarm_owner 2.0.0_SA_COO~Z: either populate portal in the worktree or re-run AC1 from a tree that carries it. Worker did not touch portal/ (outside <paths>)."
 }
 ]
 ```
