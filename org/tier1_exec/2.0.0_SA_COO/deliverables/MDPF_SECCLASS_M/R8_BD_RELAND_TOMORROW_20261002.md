@@ -86,3 +86,18 @@ INDEX 2,341,992. The resolution table is six months old: the Vanguard Morningsta
   44 M) can be identified only by CUSIP (the lots carry `cusip`) or by a vendor. Batch 150: the identity order starts at the exact
   name until a CUSIP read exists -- a CUSIP read in C_06 needs Black Diamond's canonical holdings to carry `cusip` (they do not;
   Cottonwood's B_00 carrier is the precedent) and `CUSIP:` rows for those securities.
+
+## ADDENDUM 3 (11:4xZ) -- the CUSIP step, measured (batch 155, path a)
+
+After the existing resolution table (49 Financial at 6.42 pct), the names still unresolved carry, in `gold/holdings_lots/2026-09-25`:
+a CUSIP with an existing `CUSIP:` row 4,478,208.75 USD; a CUSIP with no row 85,764,387.15; more than one CUSIP per name
+8,968,451.46; no CUSIP 15,421,738.17. Existing `CUSIP:` rows take it to 6.18 pct.
+
+**The Vanguard "Morningstar" ETFs are VUG, VTI, VTV and VTSAX, by Black Diamond's own feed.** CUSIP 922908736 sits on 673 lots named
+VANGUARD MORNINGSTAR GROWTH ETF with a blank ticker AND on 8,781 lots with ticker VUG (VANGUARD GROWTH ETF); 922908769 on VTI, 922908744
+on VTV, 922908728 on VTSAX. All four tickers have rows (equity / US Large Cap; VUG, VTI, VTV seed, VTSAX scheduled).
+
+**CUSIP -> ticker from the feed** (a CUSIP that some lot carries with exactly one ticker; 0 ambiguous among the CUSIPs needing it):
+66,473,906.73 USD resolve to a ticker with a row, 2,821,043.98 to a ticker without one (e.g. JPM_STRUCT_0029, a Black Diamond
+synthetic ticker). 49 Financial unclassified: names 6.42 -> existing `CUSIP:` rows 6.18 -> **CUSIP -> ticker from the feed 2.62
+pct** -- under the 5.0 bar with no new row written, against about 4 pct for CUSIP-keyed rows for the four Vanguard ETFs alone.
