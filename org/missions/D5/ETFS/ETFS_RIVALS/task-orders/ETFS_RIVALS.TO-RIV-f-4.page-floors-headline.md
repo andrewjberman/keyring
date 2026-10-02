@@ -93,7 +93,7 @@ at base 9e201639c3: f-4.AC1 FAIL, f-4.AC2 FAIL, f-4.AC3 FAIL -- each FAIL as exp
 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>5</round>
 <slot>~4</slot>
 <fabric>site-z</fabric>

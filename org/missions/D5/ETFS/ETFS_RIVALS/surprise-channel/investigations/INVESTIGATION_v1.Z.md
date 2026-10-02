@@ -2670,6 +2670,27 @@
     "notes": "Carrier row for the round-4 analysis ruling 3 (@6dcb0074e4): resolved_floor() gains per-fund entries under `issuer`, BASG's floor set from BASG's own resolution. Round-5 cell (enrichment item 6)."
   },
   {
+    "id": "ETFS_RIVALS-Z-W4-S17",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~4",
+    "surfaced_at": "2026-10-01T23:40Z",
+    "one_line": "RIV-f-4 says the manifest's top-level status means 'page published' but not the case of a page with NO fund updated; I read it as 'not-updated' there (nothing published), 'published' whenever at least one fund is current, and changed test_p2's single assertion on the planted-failure page.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/publish_page.py manifest: status = published if ctx n_updated else not-updated (was: not-updated if any check failed)",
+        "data/etfs/scripts/rivalfunds/tests/test_p1_page_and_guardrails.py:124 (stale all-funds page, 0 updated) still asserts man status not-updated and passes; test_p2_page_grouped_by_fund.py:226 now asserts published (one fund failed, one updated)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cell RIV-f-4: 'The manifest's top-level status means page published'; silent on a page where every fund is not-updated (the page then carries a 'No fund updated' lead and no trades or holdings).",
+    "world_is": "Nothing consumes the word beyond tests today; the zero-updated reading keeps the old word for the page that publishes no figures. If the issuer wants 'published' for every written page, one expression changes and test_p1:124 flips.",
+    "notes": "Judgment placed, not resolved."
+  },
+  {
     "id": "ETFS_RIVALS-Z-W3-S16",
     "project": "ETFS_RIVALS",
     "fabric": "site-z",
