@@ -3263,3 +3263,33 @@
   "notes": "Off item 73, filed and kept working. If the list carries one account twice, the remedy is the directory's (2.0.0_SA_COO~P); if two real accounts lack a number and a type, the page needs a third distinguishing fact and the source the missing number. Un-parks when an owner reads the client's account list ids."
 }
 ```
+
+
+## DSGN_IRPTV1-S47 -- an Analysis print has no report state to gate on: the sections route answers a slice with no availability and no status
+
+```json
+{
+  "id": "DSGN_IRPTV1-S47",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-10-02T10:30:00Z",
+  "one_line": "With W101-S3 fixed (portal DEV 7f9cf54a) the Analysis print fetches the right report and then still refuses: the print gate (FE-s-31 ruling H) reads `report.availability`, but the analysis-report route is adapted to a slice view that carries no availability and its envelope carries no status, so the page shows 'Cannot read properties of undefined (reading 'producerState')' instead of a document.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "real run on 5174 fixture plane (.runtmp/print-request-driver.mjs, portal working tree = 7f9cf54a): print?bundle=...&request=REQ-0001&kind=analysis asked GET .../analysis/REQ-0001/sections, answered with the v1 envelope fixtures/smoke/default.json carries for that route, and rendered data-print-state='refused' with the text above",
+      "contracts/envelope.ts:160 parses 'analysis-report' through adaptAnalysisReportSlice (contracts/adapt.ts:1291-1306): requestId, attemptRef, sections, extraction verdicts -- no availability; carryAvailabilityFromStatus (adapt.ts:305-311) returns a view with no availability unchanged",
+      "the route's v1 envelope fixture carries no `status` key (contract_version, operation, firm_id, data, unprojected_grant)",
+      "render/PrintEntry.tsx: `isAnswerBearing(report.availability)` then `reportStateChrome(report)` reads `availability.producerState` (render/Page.tsx:168-170)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The print page gates on the REPORT's state (FE-s-31 ruling H): an answer-bearing report renders the document, a no-answer one is refused with its state and reason.",
+  "world_is": "For an Analysis report the page receives no state at all, so it can neither render nor refuse in words; the refusal shows a JavaScript error. Not run: the live route signed in (the walker never presses an export).",
+  "notes": "Off item 75, filed and kept working. Blocks IRPT_BCKEND E4 (IB-pr-282, 2.0.0_SA_COO~P): one Analysis export downloaded for a READY request. The remedy is a design call asked of 1.0.0_SA_CTO: the Analysis print reads its request's own status (the status route the Analysis tab already reads), or the sections envelope carries a status that the slice adapter keeps."
+}
+```
