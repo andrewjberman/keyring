@@ -59,3 +59,25 @@
 - **PROD payload, updated:** PROD `b3a1d8a6` -> `41eeda55` is 50 files. 10 are SecurityAnalysis, and **40 are outside it**, from 11
   FAST commits on DEV (DSGN_IRPTV1 items 63-71, IRPT_DASHBD, MDPF_SECCLASS). Under CVO verdict 27503 that payload is Andrew's to
   name.
+
+## ROUNDS 24-26 -- candidate `0ab75973` (supersedes `41eeda55`), reviewed 2026-10-02 ~10:2xZ on COO~D msg 28389
+
+- **Content** (`41eeda55..0ab75973`, SecurityAnalysis only):
+  - `reasonWords.ts` maps each served absent reason (exact text) to a CLASS, and each class to ONE reader clause. An unknown
+    reason reads `unmapped`, with a generic clause, so it never prints a code. The served text rides `data-absent-column-reason`.
+  - The Exec Lusha line is printed once (Z-S14).
+  - The posture check is renamed, and a zero-resolved plant is added.
+- **Battery,** per COO~D: 12 checks 3/3, 14 of 14 harnesses, `tsc` 0. Walk 20261002T101105Z: VLO Peers 12 of 12 reasons classed,
+  0 generic; the Exec Lusha line said once; the SERP sentence gone (B5 live).
+- **Verdict: APPROVED, the SecurityAnalysis content of `0ab75973`.**
+- **A brittleness, carried, not blocking:** the class map keys on the producer's exact sentence, so a reworded served reason
+  falls to `unmapped` (generic clause, never a code). The durable form is a reason CLASS served by RESAPP beside the text. It
+  goes to the RESAPP round-62 list.
+- **Remote DEV keeps moving.** `ls-remote` 10:2xZ reads `243f17b1` (one more laptop FAST commit, 0 SecurityAnalysis files), so
+  `0ab75973` is not a fast-forward. **Ruling: stop chasing DEV.** The DEV landing is done AT PUSH TIME, on Andrew's word:
+  - merge the approved candidate onto the CURRENT remote DEV head;
+  - confirm the merge brings 0 SecurityAnalysis changes from the DEV side, and that the candidate side's diff equals this
+    reviewed content;
+  - re-run `tsc` and the 14 harnesses;
+  - fast-forward push.
+  The content approval carries; only the base moves.
