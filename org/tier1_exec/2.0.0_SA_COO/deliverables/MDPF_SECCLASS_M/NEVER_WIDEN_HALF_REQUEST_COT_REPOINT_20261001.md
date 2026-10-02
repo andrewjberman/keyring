@@ -62,6 +62,15 @@ gold/entities/advisors/ 2, platinum/advisors/ 3, gold/entities/clients/ 410, pla
 lineages (no second producer writes between the gold runs); `mix_daily_summary.json` shows one daily writer at ~11:35Z over its
 last 10 versions (one off-cycle write 2026-09-27 18:48Z, a Saturday, not interleaved -- an ad-hoc run of the same chain by its size step). The static scan of `data/cot` names D_04 as the sole
 writer of each literal `platinum/firm/*` key. LIMIT: lineage sees only producers that wrote inside the retained versions.
+**CORRECTION (2026-10-02 05:4xZ, after both halves):** `platinum/firm/mix_summary.json` has a SECOND DECLARED writer the static
+scan missed (it holds the key in a constant, `SERVED_KEY` :35, and writes it through a helper, `fc.emit_and_verify` :211, into
+its `--output-root`): `data/cot/scripts/gold/runners_cot/d08_cot_mix_summary.py`, a fleet emitter.
+It is not live -- the key's last three versions (2026-09-29 11:58Z, 09-30 11:35Z, 10-01 11:37Z) are one daily lineage at the
+chain's time and carry D_04's shape (`composition`, `concentration`, `mix_periods`, `mix`). Its rule, read: it classes from its
+own `dim_asset_classification` (A_07) table, imports no classifier library (no file in `runners_cot` names `etf_classifier`),
+and raises `CLASS-DOMAIN FAIL` on any class outside {equity, fixed_income, alternatives, UNCLASSIFIED-LOUD} of THAT table. This
+act changes neither A_07 nor `runners_cot`, so the d08 branch is unchanged by it: if d08 ever runs, it writes what it would have
+written without this act. Declared writers of that key: 2 (D_04 live, d08 dormant); both rules read.
 
 **Shape changes:** the mix carries `commodities`, `structured`, `unclassified` as classes (batch 99); the period views publish
 `cash`, `commodities`, `structured`, `other` as themselves where they read `unclassified` before; the firm snapshot keeps every
