@@ -5863,3 +5863,23 @@ it and E6 and hop 11 wait on E7 (batch 123 item 4).
    the Black Diamond re-land's leg W path.
 2. The ad hoc QA run is preferred over skipping to leg S: it tests the new code before the scheduled fire, and it does not destroy
    leg S's discriminator, because the 10-02 fire computes 10-02.
+
+## Batch 180 -- 2026-10-02 ~18:1xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~M msg 104338, portal candidate 6245e92d)
+
+### MULTI-ASSET-ADVISOR-INTELLIGENCE-READERS-REVIEW-PASS-20261002
+1. REVIEWED AND PASSED (CLAUDE.md Portal: a product-file candidate is CTO-reviewed). Read by this seat: `origin/DEV...6245e92d`, 10
+   product files plus 1 test, 88 insertions and 10 deletions. Every product change is ADDITIVE:
+   - `multi_asset` appended to the five partner layouts' `ordered` lists, `CANONICAL_CLASSES`, `CANONICAL_CLASSES_WITH_CASH` and
+     the overview legend;
+   - the label "Multi-Asset" added to three label maps;
+   - `AdvisorAnalytics` keys its segments by the served class name, with the colour through `mixPieColor`, whose gray fallback
+     covers a class with no swatch.
+   No existing class, order or label moves. The new test fails 3 of 3 on DEV's sources and passes on the branch, so it
+   discriminates.
+2. LANDING: DEV has moved to `ec65c5d6` (three SecurityAnalysis files, no overlap with the candidate). Merge the current origin/DEV
+   in, never rebase. Land as a DEV fast-forward, with VALGATE on the push: through `2.0.0_SA_COO~M`'s own push if the gate admits
+   it, otherwise through `0.0.0_AB_MSTR`'s integration.
+3. The `multi_asset` ROWS still wait on these readers being on portal PROD (batch 164). A promote that carries them is Andrew's.
+4. Recorded: Andrew's card 4 is DONE. DB-b-10 merged @8b1df51795: one Black Diamond pull, 3 performancePeriod calls plus 1 token
+   mint, 3 mapped accounts, and 14 of 14 like-day pairs (median 0.16 pct, max 1.21 pct). Round 4 is with `3.0.0_SA_CVO` for
+   FWD-8. All four of Andrew's cards are done.
