@@ -30,6 +30,11 @@
 # untracked/invisible-to-git is how a prior version of this exact shim broke silently.
 set -uo pipefail
 
+# Z-S75: the AWS CLI is Python; under cp1252 non-ASCII in a response (e.g. SSM systemctl bullet) raises
+# 'charmap' codec can't encode and the read comes back empty. Mirrored in aws.cmd (both or neither).
+export PYTHONUTF8=1
+export PYTHONIOENCODING=utf-8
+
 # ---- resolve the REAL aws entry (first `aws` on PATH that is not this shim) ----------------
 # NFRA_TOOLARCH.PATHFIX regression (CVO~Z, 2026-07-25, verifying b519fb1c2e): ~/bin holds this
 # workspace's own bootstrap forwarder (.tools/provision-path-shims.sh), a BASH script that

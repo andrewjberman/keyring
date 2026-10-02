@@ -21,10 +21,11 @@ trap 'rm -rf "$SBX"' EXIT
 # Running agent for this fixture: a base serial (the scatter victim class).
 SERIAL="0.1.0_DS_MarketIntelligence"
 INBOX="$SBX/inbox"
-CTX="$SBX/.agent_context"
+CTX="$SBX/no-such-context-file"
 AUDIT="$SBX/halt-gate-override-audit.log"
 mkdir -p "$INBOX/$SERIAL/read"
-printf 'SERIAL=%s\nTO_ID=TEST\n' "$SERIAL" > "$CTX"
+# Serial declared the session-resolved way (MX-x-4): an exported OPAL_AGENT_SERIAL.
+export OPAL_AGENT_SERIAL="$SERIAL"
 
 # mkmsg <file> <sender> <to> <subject>
 mkmsg() {
