@@ -6343,6 +6343,51 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "spec_asserts": "Each round keeps the HARVST research suites green, and a red suite reads as a defect.",
       "world_is": "The suite is red on 3 tests whose subject (the silver read at request time) no longer exists by ruling. Every round-38 cell reports a 3-failure baseline.",
       "notes": "Remedy: retire or rewrite the 3 tests against the gold read path. They are HARVST's file over a RESAPP route, so the write surface is HARVST's tests and RESAPP's route is untouched. Batched into the round's repair cell; not a new outcome."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W90-S22",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~90",
+      "surfaced_at": "2026-10-02T21:08Z",
+      "one_line": "ak-4's rule (daily coverage graded over GRADED_PUBLISHERS, ft excluded) turns 4 existing research tests red: they assert the graded set is ENABLED_PUBLISHERS (5 codes incl. ft). The 4 sit in tests/ files outside ak-4's <paths>, so the worker could not update them.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Order HVST-ak-4 section 1 item 5: the research suites stay green except the 3 known stale tests (row Z-S68). Item 1: every place that grades daily coverage or writes publishers_enabled uses GRADED_PUBLISHERS = ENABLED_PUBLISHERS minus the quarantined ones.",
+      "world_is": "python -m pytest lib/research/harvest -q: BEFORE the change 5 failed, 304 passed (m1_move, m2_move: FileNotFoundError on integrations/bloom... in the sparse cone; plus the 3 Z-S68 timeline tests). AFTER: 9 failed, 311 passed (304 - 4 + 11 new plants). The 4 new failures follow directly from item 1 and each pins ft as a graded publisher: tests/test_o1_run_record_coverage.py::test_a_successful_zero_article_job_reads_searched_on_its_reached_days (publishers_enabled 4 != len(ALL)=5), ::test_every_publisher_reaching_a_day_reads_complete (covered codes no longer list ft, ALL = gold.ENABLED_PUBLISHERS), tests/test_publication_gold_daily.py::test_row_carries_its_coverage_denominator (4 == 5), ::test_daily_row_carries_publishers_covered_codes_in_enabled_order (ft missing from the expected order). Those files are not in the order's <paths>; the worker left them untouched. The 5 pre-existing failures are unchanged.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/research/harvest/publication_gold.py daily_rows: covered and publishers_enabled now read GRADED_PUBLISHERS",
+          "lib/research/harvest/tests/test_o1_run_record_coverage.py line ~33 (ALL = gold.ENABLED_PUBLISHERS) and the publishers_enabled == len(ALL) asserts",
+          "deliverables/0.9.0_WK_AMGT_HARVST~90/research-suite.before.txt and research-suite.after.txt"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Remedy: an issuer amendment adds the two test files to a cell's <paths> so ALL becomes gold.GRADED_PUBLISHERS (a one-token change per test). The suite counts in the ak-4 proof read the 4 as ak-4-caused, not stale."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S69",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-02T21:35Z",
+      "one_line": "RESOLVED by its disarm_owner: AMGT_HARVST-Z-W90-S22. The 4 research tests that pinned ENABLED_PUBLISHERS as the graded set now read GRADED_PUBLISHERS (ak-4's rule: ft is quarantined, so daily coverage is graded over 4 publishers). This is an issuer direct act on 2 test files.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/research/harvest/tests/test_o1_run_record_coverage.py:31 and tests/test_publication_gold_daily.py:284,366,372: gold.ENABLED_PUBLISHERS -> gold.GRADED_PUBLISHERS",
+          "python -m pytest lib/research/harvest -q at the base after ak-4's merge @eff5c79d35 plus this edit: 317 passed, 3 failed. The 3 are the Z-S68 timeline-day tests, unchanged; the 4 Z-W90-S22 tests pass"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "HVST-ak-4: daily coverage is graded over GRADED_PUBLISHERS = ENABLED_PUBLISHERS minus the quarantined publishers.",
+      "world_is": "The builder and its tests agree. ENABLED_PUBLISHERS still names ft, because the bytes are kept and the collector's set is unchanged; only the graded set drops it.",
+      "notes": "Direct act under the size floor (LOCAL, 2 test files, 4 lines). The Z-S68 stale timeline tests stay with the round's repair item."
     }
   ]
 ```

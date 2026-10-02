@@ -5,7 +5,7 @@
  "project": "DSGN_AMGTV1",
  "directive": "D13",
  "fabric": "site-z",
- "prd_version": "v0.10",
+ "prd_version": "v0.11",
  "step": 4,
  "brief_ref": "docs/briefs/dsgn-amgtv1-security-analysis-frontend-brief-20260928.md@08eefaac9d",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21", "FWD-22", "FWD-23", "FWD-24", "FWD-25", "FWD-26", "FWD-27"],
@@ -42,6 +42,8 @@ register `docs/briefs/amgt-security-analysis-ui-findings-20261002.json` (36 SAUX
 **v0.10 (~19:1xZ):** FWD-21 only, on `3.0.0_SA_CVO~Z`'s REFUSE (`org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_RATIFIED_TEXT_REVIEW_20261002_DSGN_v0.9_HARVST_v0.14_RESAPP_v0.33_Z.md@afd31a71b8` section 3).
 - The ACCEPT is restated for the windows: "switches 30D to 90D" replaces "steps back two months".
 - A null served tone reads "no clear tone", apart from the neutral centre, which agrees with HARVST FWD-17.
+**v0.11 (~20:5xZ):** FWD-26 only, on `3.0.0_SA_CVO~Z`'s note (msg 28745), to keep DSGN in step with RESAPP v0.35. Price's 90D/365D
+render the served "not produced yet" reason while that price path waits on Andrew's vendor word.
 
 ## ENDPOINT (step 2, /endpoint --forward)
 
@@ -380,7 +382,11 @@ Landed verbatim from `org/tier1_exec/1.0.0_SA_CTO/deliverables/DSGN_AMGTV1_ENDPO
                     "Earlier month" / "Later month"; each face's caption names its
                     window ending at the served as-of date; where the store is
                     shorter than the window, the face states the served window
-                    start ("since <date>") and never extrapolates
+                    start ("since <date>") and never extrapolates. v0.11: Price's
+                    90D/365D render the served "not produced yet" reason as a
+                    designed empty state while RESAPP FWD-36's price windows are a
+                    QUALIFIED WAIT on Andrew's vendor word; that render is NOT a
+                    read of the 90/365 price face
          ACCEPT     No face shows a period it does not name.
          SOURCE     Andrew N10; UI/UX brief O7 (SAUX-21, 27, 28)
 
