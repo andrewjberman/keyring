@@ -92,9 +92,19 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 that is a row, not a re-pin. The transport emission is the live-path half: the bbg, wsj and sa drivers spawn a fresh
 collector per job, so the merge reaches them at their next job.
 
+**COMPLETE 2026-10-02 ~07:1xZ (issuer).** AC1 PASS (5 passed; suite 546). Merged @fdd7442696. AC2 PASS at the base over
+round 36's pinned windows (`deliverables/2.0.0_SA_COO_H/round37/aj-1.AC2.output.txt`):
+- `requests_counted` is inside_monitor_windows;
+- bbg MET, 27 presented, 18 void, **9 non-void, 9 passed**, reproducing the CVO's true-band 9/9 on the 403 anchor;
+- barrons **NOT_EVALUATED, 0 windowed requests**;
+- wsj, ft and sa MET-BY-ABSENCE.
+
+The worker's row Z-W90-S12: run-record attempts carry no timestamp, so the anchor is the http-ledger 403 inside the
+run span. Only test_ai6's `test_all_four_verdicts` changed.
+
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <slot>~90</slot>
 <fabric>site-z</fabric>
