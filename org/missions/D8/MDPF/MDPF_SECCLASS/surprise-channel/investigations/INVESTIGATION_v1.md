@@ -1036,3 +1036,86 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Found by reading the clock the r3 ledger is held on (C_06's first new compute). Leg A1's acceptance (rc 0, no IndexError, no BLOCKED) is met and is not the test of this act: the served values are. Same family as row S7 (the fallback serves model rows) seen from the other side: this library dropped the fallback, so tickers only bd-securities knew vanish."
 }
 ```
+
+
+## MDPF_SECCLASS-S10 -- Black Diamond carries two different securities under ticker GLDM: SPDR Gold MiniShares and a gold-miners fund
+
+```json
+{
+  "id": "MDPF_SECCLASS-S10",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-02T11:15:00Z",
+  "one_line": "In gold/holdings_lots/2026-09-25.parquet the ticker GLDM sits on two CUSIPs: 98149E303 (SPDR GOLD MINISHARES TRUST, 18 lots, 188,264.35 USD) and 911478105 (US GLOBAL INVESTORS GLD & PREC MTLS, 6 lots, 60,873.45 USD). The canonical row is keyed by ticker, so after the BD first-act seed row (GLDM commodities / Metals, CTO batch 145 D: settled by CUSIP 98149E303) the 60,873.45 USD of the gold-miners fund reads commodities / Metals too.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pandas read of s3://opal-data-bd/gold/holdings_lots/2026-09-25.parquet, 2026-10-02 10:4xZ: rows with ticker GLDM grouped by (cusip, asset_name): 911478105 US GLOBAL INVESTORS GLD & PREC MTLS 60,873.45 (6); 98149E303 SPDR GOLD MINISHARES TRUST OF BENEFICIAL INTEREST 188,264.35 (18)",
+      "NEVER_WIDEN_HALF_REQUEST_BD_FIRST_ACT_SEED_ROWS_20261002.md (blob 25ce6ea3d8) names it as residue; CTO half condition (msg 104193): file it as a surprise row before the run"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A ticker identifies one security; the canonical table classes a security by its ticker.",
+  "world_is": "Black Diamond's feed puts the wrong ticker on six lots of a different fund. The canonical row cannot tell them apart; the fix is in the feed (or a CUSIP read in the classifier, which batch 150 says does not exist yet).",
+  "notes": "Not measured: whether other tickers carry more than one CUSIP in the lots. A census (ticker -> distinct CUSIPs > 1) would bound the class."
+}
+```
+
+
+## MDPF_SECCLASS-S11 -- E_18's ticker resolution table has not been written since 2026-04-07
+
+```json
+{
+  "id": "MDPF_SECCLASS-S11",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-02T11:15:00Z",
+  "one_line": "s3://opal-data-bd/gold/dimensions/ticker_resolution.parquet (4,424 normalized names, read by E_18 and, under CTO batch 144, by the classifier's blank-ticker read) was last modified 2026-04-07 21:54:55Z. Names newer than it -- the Vanguard Morningstar ETFs, about 44 M USD of 49 Financial's tickerless positions on 2026-09-30 -- are absent, which keeps the r3 re-land above the 5.0 pct unclassified bar (6.42 pct with exact-name resolution).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3api head-object, 2026-10-02 10:4xZ: LastModified Tue, 07 Apr 2026 21:54:55 GMT, ContentLength 181,478",
+      "data/black_diamond/scripts/gold/E_18.detect_new_securities.py:45 RESOLUTION_KEY = 'gold/dimensions/ticker_resolution.parquet'; :132-146 loads it read-only",
+      "R8_BD_RELAND_TOMORROW_20261002.md addendum 1 @2c965f1a9c: exact-name resolution recovers 324,054,999.20 USD, 110,835,132.38 unresolved; top unresolved VANGUARD MORNINGSTAR GROWTH ETF 35,784,713"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "E_18's docstring: the resolution table carries every resolved name (resolve_tickers); a production table is refreshed by a scheduled producer.",
+  "world_is": "The table has no live writer on any schedule: its producer (resolve_tickers) has not run in six months. CTO batch 150: one run of the resolver under its own never-widen packet, no scheduler built.",
+  "notes": "Not read: which process last wrote it, and whether resolve_tickers calls an outside service (that would need Andrew's word)."
+}
+```
+
+
+## MDPF_SECCLASS-S12 -- S9 disarmed: the BD r3 mix producers were rolled back and the 49 Financial mix restored
+
+```json
+{
+  "id": "MDPF_SECCLASS-S12",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-02T11:15:00Z",
+  "one_line": "Row MDPF_SECCLASS-S9 (ARMED, disarm_owner 2.0.0_SA_COO~M) is disarmed: C_06, D_03, D_04 and lib/etf_classifier.py were copied back to their pre-r3 versions at 06:19Z, both C_06 watermark keys reset to 2026-09-29, and one ad hoc run (CTO batches 117-118) recomputed 09-30; V1 read green 08:2xZ (platinum/firm/mix_summary.json sums to 1.000000 at 1,843,114,302.78; z08327149 carries VXX 1,111,544.96). Ledger secclass-bd-thread-r3-rollback-m-20261002 CLOSED ROLLED-BACK (batch 129).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ledger org/critical_paths/change_management/20261002T0618Z_secclass-bd-thread-r3-rollback-m-20261002_deploy_completion.md, legs P, C, W with proof, CLOSED (commit d3760cc1c0)",
+      "run log gold_incremental_2026-10-02_20261002_083113.log: COMPLETE exit 0, 29 done rc=0, 0 'Classification not found' lines"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "A disarm record for MDPF_SECCLASS-S9: the r3 rollback (ledger secclass-bd-thread-r3-rollback-m-20261002, CLOSED ROLLED-BACK, CTO batch 129) removed the hazard S9 names; nothing further is owed on this row.",
+  "spec_asserts": "CLAUDE.md NEVER-2: a confirmed deploy whose read fails is rolled back in the same window.",
+  "world_is": "49 Financial's served mix is back on the pre-r3 library; r3 re-lands only per batches 117 item 4 and 144 (unclassified at or under 5.0 pct).",
+  "notes": "This row records the disarm of MDPF_SECCLASS-S9 by its disarm_owner; dismissed with that reason, nothing further owed here. E_18, the silver builder, lib/_shared and SSM v5 stay on r3 (batch 129)."
+}
+```
