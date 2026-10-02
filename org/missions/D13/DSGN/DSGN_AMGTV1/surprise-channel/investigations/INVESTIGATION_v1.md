@@ -933,6 +933,27 @@
  "spec_asserts": "AC2 expects codeface.cjs 3 of 3 arms (round 22 outcomes kept) alongside AC1's reader-words face.",
  "world_is": "With codeface.cjs arm 3 amended by the issuer, the two checks no longer contradict; Z-W71-S1's blocking cause is gone and AC2 is PASS-by-output. The formal disposition of Z-W71-S1 is L9's to stamp.",
  "notes": "Worker resolving row, not an adjudication."
+},
+{
+ "id": "DSGN_AMGTV1-Z-S14",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~D",
+ "surfaced_at": "2026-10-02T08:57Z",
+ "one_line": "VLO Exec on the round-23 close walk reads 'Contact enrichment was skipped for this company -- Contact enrichment was skipped: no company web domain is on record for this name, and a guessed domain would enrich the wrong company': RESAPP B2 now serves a plain reason, so AV-z-1's line appends it after its own lead-in and the phrase repeats.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "tmp/ui-walk/20261002T084927Z/shots/067-VLO-US-Exec-Management.png (site Z, portal 41eeda55 on 5174): the line under the officer table.",
+   "portal tabs/ExecManagementTab.tsx (AV-z-1, bcc95f4b): 'Contact enrichment was skipped for this company' + (plain served reason ? ' -- ' + reason : '.')."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "2.0.0_SA_COO~D",
+ "spec_asserts": "FWD-11 / AV-z-1: the Exec line reads as plain words; a plain served reason prints as served.",
+ "world_is": "Both halves are now plain and they repeat each other. A page fix (drop the lead-in when the served reason already says it, or print only the served reason) is a one-line wording change for the next round's list; nothing is wrong on PROD that was not there before."
 }
 ]
 ```
