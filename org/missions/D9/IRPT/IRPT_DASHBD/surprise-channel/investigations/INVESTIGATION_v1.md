@@ -511,3 +511,31 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
  "notes": "Not a runtime refusal: API Gateway serves the route from this root's resources; the authorizer is the existing portal one. api.tf:11 is re-pointed from W1-S4 to this row."
 }
 ```
+
+## IRPT_DASHBD-W1-S5 -- the 1,498.38 USD residual on 0027265115 is a whole-window net of four offsetting classes, not one leg on 2026-07-07
+
+```json
+{
+  "id": "IRPT_DASHBD-W1-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1",
+  "surfaced_at": "2026-10-02T06:10:00Z",
+  "one_line": "TO-DB-b-6: the 1,498.38 USD residual on 0027265115 is not on 2026-07-07 and not one leg; it is the whole-window net of four offsetting classes (in-kind -7,252.16, margin interest +10,724.31, per-asset trade/merger -3,277.48, cash +1,303.71), and DB-6-AC1 sums is_residual legs by absolute value so a signed net can only pass through a derived net leg.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-6 cell: the residual sits on a flow day after a 925.02 fee leg and is made by ONE leg (in-kind valued differently, internal-here/external-at-vendor, or other); DB-6-AC1 sums the is_residual legs in absolute value to the residual.",
+  "world_is": "MEASURED: Opal gold external_flow over 2026-03-16..2026-08-28 = 1,043,100.5277 and Black Diamond account netAdditions for the same range = 1,044,598.9077, difference 1,498.38; the 2026-07-07 fee leg matches to the cent (Schwab TPFEE 2,423.40 = vendor fees 2,423.40). The difference decomposes across 8 in-kind legs, 1 margin-interest asset, 532 per-asset trade differences and the CASH asset with mixed signs; the record carries one derived net leg flagged is_residual and the components unflagged because the check adds absolute values.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1/FLOW_RESIDUAL_0027265115_R2.json",
+      "s3://opal-data-assets/blackdiamond/49f/bronze/reporting_performance/2026-08-30/reporting_performance_22596361_2026-08-28.json",
+      "s3://opal-data-assets/schwab/08335338/silver/fact_trn/date=2026-07-07/data.parquet",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~P/checks/r2/p2_6_ac1_flow_residual_record.py line 'resid_sum += abs(amount)'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The Black Diamond transactions/activity family is not landed (bronze holds reporting_performance, allocation, costbasis, fees, roster); per-day vendor flow detail would live there. Grading of the net-versus-leg framing is the CTO's ruling."
+}
+```
