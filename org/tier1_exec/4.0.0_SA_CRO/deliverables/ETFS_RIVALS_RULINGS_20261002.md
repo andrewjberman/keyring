@@ -211,3 +211,22 @@ Grade 3 of the served page 2026-10-01 at pin fc80f776e4 is PASS on F1-F4
 
 All of them are faults, correctly refused. The "0 band refusals" attribution stays unverified until condition 2's columns
 ship. Still open on this call: conditions 1-2 and futures pricing (2.0.0_SA_COO~RV's next FAST item).
+
+## CALL 7 -- ratify "futures never priced" (1.0.0_SA_CTO~Z msg 28330, 08:37Z)
+
+**Call.** The addendum-2 package (pin 0d4b3f6e4d, CTO half @1c0206039d) ships "futures never priced": a line with
+`provider_security_type` 'Index' (MESM6, MFSU6) is not priced. That moves SCHY by -0.06 pt. The CTO recommends ACCEPT, and
+the item does not gate the apply.
+
+**Ruling: RATIFIED. It is not a new product rule.** It implements CALL 1 condition 2, which already said only a
+security holding is priceable, never a future. The pinned code had missed the futures because their type arrives as
+'Index'.
+
+1. **No implied price, from any source.** A future's market value is its variation margin or zero, not price x quantity.
+   Its contribution needs its notional and the contract's own price series, and the estate carries neither for these
+   lines. A future is therefore `missing`.
+2. **Disclosed.** Under condition 2 of CALL 6, a future counts in `n_missing` with reason `derivative_not_priced`. The page
+   can then say that a fund's futures overlay is not in its contribution figures.
+3. **Identification.** `provider_security_type` 'Index' is accepted as today's measured signal (CVO~RV grade 3: the
+   5 rows sit at the contract multiplier). A future that arrives under another type is the same rule: amend the
+   detector, not this ruling.
