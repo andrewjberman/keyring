@@ -119,10 +119,10 @@
    "design_rule": null,
    "cause": {
     "claim": "measured",
-    "text": "G4 GICS is absent (RFW-D04). Issuer files carry GICS for few lines, and the cross-fund fallback (CALL 9) cannot fill a security no fund's file classifies.",
+    "text": "G4 requested only securities with a Bloomberg id in G1's date=<D> partition, so CUSIP-only lines and funds without a report for <D> were never requested; Bloomberg-channel files carry GICS intermittently; the rankings had no cross-fund fallback (measured: census and replay).",
     "evidence": "YTD sector tables per fund; 8 'No GICS sector in the source' rows"
    },
-   "acceptance": "Unclassified carries at most 10% of any fund's absolute YTD contribution, with the share printed; until then it is never ranked as a sector (RFW-U16)."
+   "acceptance": "Per the GICS census (docs/briefs/rivalfunds-gics-census-20261002.md section 6, measured): each fund's YTD Unclassified share of absolute contribution is printed. After fix 1 (cross-fund GICS in the rankings), the replay shares hold (INEQ 22.2%, ETFT 30.0%, BIDD 3.1%, SCHY 6.0%, TXUE 1.9% on page day 2026-10-02). After fixes 2-3 (G4 requests every fund's latest report, CUSIP lines by CUSIP), no GICS-eligible security in a fund's latest report is Unclassified unless Bloomberg returned no sector for it, each such security listed. The earlier unmeasured 10% is withdrawn."
   },
   {
    "id": "RFW-D07",

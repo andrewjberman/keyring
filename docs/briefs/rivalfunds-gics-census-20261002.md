@@ -91,3 +91,40 @@ fund's absolute YTD contribution". That number was this seat's, and was not meas
 - The weights are the fund's reported weights in its latest report, not contribution shares.
 - G1 history older than 8 partitions was not read for cross-fund GICS, so a longer read could cover a few more lines.
 - Whether Bloomberg returns GICS for every one of the 118 lines is not known until the scripted pull runs.
+
+## 6. CORRECTION after the fixes were coded (2026-10-02 ~16:5xZ) -- fix 1 is smaller than section 3 said; fixes 2-3 carry the weight
+
+Section 3 measured "covered elsewhere" against each fund's LATEST report only. The rankings already look back through every
+earlier report of the fund itself (`gold_holding_contribution.build`, the own-history loop), so many of those 220 lines were
+already classified on the page. Example: WCMG's GLEN_LN_Equity carries Materials in WCMG's own 09-29 and 09-30 reports but
+not in its 10-01 report.
+
+**A new pattern this exposes: a Bloomberg-channel fund's file carries GICS on some days and not on others.** The latest report
+alone understates coverage, and the census component (which reads the latest report) overstates the gap.
+
+The section-3 claims "INEQ to 99%, TXUE to 89%" were an overstatement and are withdrawn. **Measured instead:** a read-only
+replay of `holding_contribution` for page day 2026-10-02, old code against new, gives each fund's YTD share of absolute
+contribution in the Unclassified bucket:
+
+| fund | before fix 1 | after fix 1 |
+|---|---|---|
+| INEQ | 59.2% | 22.2% |
+| ETFT | 41.8% | 30.0% |
+| BIDD | 9.2% | 3.1% |
+| SCHY | 10.0% | 6.0% |
+| TXUE | 5.6% | 1.9% |
+| BASG, GQGU, IDVZ, PCLG, PFOE, TSEL, WCMG | unchanged | unchanged |
+
+(CGIC moves from 4.2% to 5.6%: its classified buckets shrink, so the residual's share of the total rises.)
+
+What remains unclassified after fix 1 is mostly securities that no file states GICS for and that G4 never received. Examples:
+- PCLG: 30 of its 41 YTD securities have no own sector; 13 take G4, 1 another fund's file, 16 none. They are US large caps:
+  ABT, ACN, ADBE, AON, ASML, BSX, ...
+- IDVZ 96%, PFOE 75%, GQGU 48%: CUSIP lines that were never requested.
+
+**Fixes 2 and 3 are the lever.** The offline G4 plan for date 2026-10-01 (mode plan-market, no vendor call): the old code would
+request **267** securities; the new code requests **601**, of which **87** are CUSIP-keyed (home-producer and issuer lines),
+in 13 batches.
+
+Cross-fund matching on a bare `security_ticker` alone (25 IDVZ, PFOE and GQGU lines in section 3) is NOT coded. A bare
+ticker can name different companies on different exchanges.
