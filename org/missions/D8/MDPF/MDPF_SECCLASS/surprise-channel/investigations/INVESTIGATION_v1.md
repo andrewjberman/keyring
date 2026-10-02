@@ -1202,3 +1202,31 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "INERT: no served move until the re-land (leg R held). Owner 2.0.0_SA_COO~M: rewrite the one name in ASCII ('ULTRA(R)' or drop the mark) through the same writer path, and add an ASCII refusal to plan_rows so the next set cannot carry one."
 }
 ```
+
+## MDPF_SECCLASS-S16 -- a Black Diamond gold deploy re-ships lib/_shared: the re-land half said "not moved" and three keys changed bytes
+
+```json
+{
+  "id": "MDPF_SECCLASS-S16",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-02T14:50:00Z",
+  "one_line": "Leg G of secclass-bd-thread-r4-reland-m-20261002 (safe-deploy of five BD gold files, 14:15-14:16Z) also uploaded the three CODE_TREES shipped artifacts to opal-data-bd code/gold/lib/_shared/, and each changed bytes versus its 2026-10-01 06:11Z version, while the half lists lib/_shared under 'Not moved'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-deploy output 14:15Z: '[shipped] infra/aws/lambda/v2_portal/_shared/<3 files> -> s3://opal-data-bd/code/gold/lib/_shared/ (declared shipped artifact, CODE_TREES)', DEPLOYED-SHIPPED x3",
+      "list-object-versions: etf_classifications_dynamodb.py 181e1902 -> 4cc11d3e, etf_classification_scheduled.py 6957dcc9 -> 617015f8, etf_classification.py 58bfdb97 -> 4d63e303 (prior VersionIds YM_emTRl.., pxHIiBNg.., 14g9k2TX..)",
+      "diff of each prior S3 version against HEAD: the client's classify_holdings sums any class instead of raising KeyError (a96e00c279; the reader census: no call site); the scheduled writer's key list gains classification_confidence and low_confidence (2c2358e104; write() copies only keys a row has, so a scheduled item is unchanged); the seed module gains dict entries only (32acc85d2e, 15a9717715, 3e10c3d4e2, 23c8e4c798), imported by neither runtime client"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "None of the three byte changes moves what Black Diamond gold computes: the changed client function has no call site, the scheduled write of an E_18 row is unchanged, and the seed module is not imported at runtime; the half's blast radius (the branch run on the live table with these same repo bytes) stands.",
+  "spec_asserts": "The re-land half (blob f926b46157): 'Not moved: ... E_18, the silver builder, lib/_shared, SSM v5'.",
+  "world_is": "safe-deploy ships the declared shared artifacts with every Black Diamond gold deploy, so lib/_shared moves to CLOUD's bytes whenever any gold file ships; a half cannot hold lib/_shared still while shipping gold files.",
+  "notes": "For the next Black Diamond or Cottonwood gold half: name the shipped artifacts in the act and diff them against their live versions before signing, instead of listing lib/_shared as not moved."
+}
+```
