@@ -16955,6 +16955,50 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
  "spec_asserts": "al-1 AMENDMENT 1 / ruling 5a: the timeline day route's silver read runs under an 18 s deadline from handler start, and on the deadline the mentions are served with headline null and one plain headline_reason, as a 200, instead of a sandbox kill. Graded by 3 of 3 cold BA invokes answering 200 with both control days byte-equal.",
  "world_is": "Exactly that, and the branch is not hypothetical: it fired on run 3 of the acceptance run itself, 200 at 18006.03 ms carrying headline_reason, 6 ms past the constant. So act (B) is better evidenced than a normal code deploy -- the new path was exercised against live data by its own grade rather than only by the planted test. What the grade does not say is that the 18 s line sits INSIDE the cold spread rather than above it: 15.1 / 16.5 / 18.0 s here and 16.6 / 16.9 / 19.1 s in act (A) an hour earlier. Not measured: the rate over a larger sample, whether it differs by name or by day's article count, and whether the first cold call after a deploy is systematically slower than later ones -- the three runs here are concurrent, so they share one post-deploy moment.",
  "notes": "Reported to 2.0.0_SA_COO~Z in the act (B) close message rather than left to the channel, because it changes what the demo looks like and the demo is at 13:00Z. The degradation is graceful and the view does not break: PROD renders [no headline]. Nothing here is a rollback trigger -- C1 and C2 both passed, and a 200 on the deadline path is the specified outcome, not a failure."
+},
+{
+ "id": "AMGT_RESAPP-Z-W208-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~208",
+ "surfaced_at": "2026-10-02T15:41:42Z",
+ "one_line": "PAGE-SIDE (DSGN lane, not edited): portal LeadPanel.tsx holds three universes in one component -- the price ranking (94 names), the monthly collected chatter (95 covered names) and the chatter ranking (1 name, read only to join starred names); the one served universe it should read is the covered universe, which /lead-panel/timeseries/collected/chatter already serves. No served route serves more than one universe now.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "am-5 item 4 / R3: if collapsing the page's universes to one is portal code, file ONE row naming the page component, the universes it holds and the one served universe it should read; if a served route serves more than one universe, fix the served part.",
+ "world_is": "portal/src/pages/SecurityAnalysis/components/LeadPanel.tsx (portal fixture a730d8ce) issues three reads: useLeadPanelRankings(movement, subject) (:419; price list), useCollectedChatter(subject === 'CHATTER') (:432; covered universe) and the same useLeadPanelRankings rows reused at :440-442 to join starred tickers to security keys for the Chatter face. Measured live, read-only, 2026-10-02: rankings/trending/price 94 rows (all 94 keyed, 94 of 94 inside the covered universe, 1 covered name absent); rankings/breakout/price 94; rankings/trending/chatter 1 row (BA_US_Equity); rankings/breakout/chatter 0 (EMPTY); collected/chatter 95 rows. So on the served side every ranking universe is already a subset of the 95-name covered universe; the page still reads three lists. The collapse (one covered-universe read, the starred join taken from it) is LeadPanel.tsx and its hooks, which are DSGN's lane.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "portal/src/pages/SecurityAnalysis/components/LeadPanel.tsx:419,432,440-442 at portal a730d8ce",
+   "live handler reads 2026-10-02 (scratch .scratch/univ.py in worktree C:/tmp/r63-208): price 94 rows, 94 in covered, covered-not-in-price 1; collected 95 rows as_of 2026-10-02; trending chatter 1 row; breakout chatter EMPTY"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+},
+{
+ "id": "AMGT_RESAPP-Z-W208-S2",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~208",
+ "surfaced_at": "2026-10-02T15:41:42Z",
+ "one_line": "am-5 items 2 and 3 measured against the face's premise: the chatter path reads NO legacy article layout (0 reads of the articles table, the social prefix or the hyphen research-dossier/), and NO served request reads one dossier object or listing twice; the dead inputs found are unread parquet columns (20 of 23 chatter_daily, 21 of 25 article_security_mention), now not decoded. Also a merge hazard with am-3: monthly_chatter's gold read now takes columns=.",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "am-5 items 2-3: the chatter path still loads inputs no served field reads (legacy), found by tracing read_monthly_chatter and the lead-panel chatter routes; one request reads the same research_dossier/ object or prefix listing more than once.",
+ "world_is": "Traced by wrapping BaseClient._make_api_call and calling the handler on the live pool, read-only, 2026-10-02. collected/chatter: 1 research_dossier/ listing, 2 listings each of chatter_daily/ and article_security_mention/ (one by _gold_latest_snapshot_rows, one by monthly_chatter._newest_snapshot_key for the vintage), 1 GET each of the two snapshots, 32 etf-classifications GetItems, 25 model-block lists+GETs for names, no legacy-layout read. The snapshots carry 23 and 25 columns; the route reads 3 (security_key, day, articles_total) and 4 (article_key, security_key, publisher, published_utc); pool_reader._gold_latest_snapshot_rows now takes columns= (default None, unchanged for its other callers) and monthly_chatter passes DAILY_COLUMNS/MENTION_COLUMNS. Dossier: /thesis and print?format=rich each list the name's prefix once and GET each of its 7 objects once (corpus/dossier.py:1296-1316 reads ALL stored objects to find the current-method one, then serves one: read amplification, not a duplicate; outside this order's paths); rankings and collected/chatter list research_dossier/ once. Test-stub hazard: a test written against the base that stubs pool_reader._gold_latest_snapshot_rows with a one-argument function (the base test_monthly_chatter.py fixture does; I moved it to accept columns) fails if an am-3 version of that fixture merges over mine; the duplicate vintage listing (_newest_snapshot_key) is left in place for the same reason.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "lib/research/api/monthly_chatter.py:30-47,105-107,152 (listing x2 per table) and lib/research/coverage/pool_reader.py:645 at base 1c50edaa81",
+   "gold parquet schemas read 2026-10-02: chatter_daily/date=2026-10-02/part-20261002T062124Z.parquet 23 columns; article_security_mention/date=2026-10-02/part-20261002T061326Z.parquet 25 columns",
+   "lib/research/corpus/dossier.py:1296-1316 (_read_dossier_detail: one listing, each object fetched once, all N fetched to pick one)",
+   "lib/research/api/tests/test_am5_unknown_key_and_chatter_inputs.py: 18 passed; the thesis and covered-listing single-read tests pin 1 read / 1 listing"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
 }
 ]
 ```
