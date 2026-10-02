@@ -63,3 +63,14 @@ places each call with CRO~RV. It adjudicates none of them. The PRD addendum is t
 
 1. **The FWD-1 signed-in read of /rivalfunds** (his login; PRD FWD-1).
 2. **The resume word for served changes after his demo read.** Addendum 11's apply waits on it (next-calls CALL 1).
+
+**CRO~RV CALL 13 (@6e3c94774a, msg 28491) on section 2.**
+- **C1 ACCEPTED, amended:**
+  - refusal is per fund x period, never the whole table;
+  - the bounds are STRUCTURAL, not drawn from the peer return distribution:
+    - (a) a period total below -100% is a hard refuse, and the planted -188% refuses;
+    - (b) a single holding with |c| > 0.25 refuses (PROVISIONAL);
+    - (c) NAV reconciliation where on file, with the tolerance from the residual distribution.
+  - This seat's REC (bounds from the 13 funds' distribution) is superseded by the ruling. Round-6 cell 2 is cut on the amended
+    terms.
+- **C2 ACCEPTED** as the round-6 L5 rule.
