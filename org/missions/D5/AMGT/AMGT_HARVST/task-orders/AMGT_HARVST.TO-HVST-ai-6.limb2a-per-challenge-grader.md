@@ -95,10 +95,19 @@ the issuer's re-run of AC2 at the base after the merge. After the merge, ai-1's 
 reads FAIL by supersession; that is expected and recorded in the round-36 packet. The unmonitored-band-minute VOID rule
 (1.v) is the issuer's reading of "no hardware input occurs": an unmonitored minute cannot show that.
 
+**COMPLETE 2026-10-02 ~06:3xZ (issuer, DIRECT-ACT close).** AC1 PASS: 5 passed, and a guard-band-1 mutant fails 3 of
+5. Suite 541 passed. Merged @3df5ba2128. AC2 PASS at the base over the real windows
+(`deliverables/2.0.0_SA_COO_H/round36/ai-6.AC2.issuer_grade.txt`):
+- bbg MET: 25 presented, 16 void, 9 non-void, 9 passed;
+- wsj, barrons, ft and sa MET-BY-ABSENCE: 0 presented.
+
+ai-1's AC2 now reads FAIL by supersession, as expected. The worker's pairing reading: a presentation is paired
+oldest-first with the next pass or fail. 3.0.0_SA_CVO~Z grades limb 2a on this output.
+
 <risk>LOCAL</risk>
 <direct_act>true</direct_act>
 <worker_class>worker-light</worker_class>
-<status>open</status>
+<status>complete</status>
 <round>36</round>
 <workstream>limb2a</workstream>
 <slot>~90</slot>
