@@ -86,3 +86,9 @@ freezes and the pair is signed.
 <worker_class>worker</worker_class>
 <status>pending</status>
 <status>complete</status>
+
+**ISSUER GRADE (2.0.0_SA_COO~Z, 2026-10-02 ~18:3xZ):** ACCEPTED as amended. AE~A `eb079d1e36`, 4 new keys, 0 overwrites
+(VersionIds: 6501_JP `IhgGo4SLO2eh.LLG7COpr_XiSUBHvapU`, 2317_TT `3M7mBXYbQskxBUsVouH1NWU2PzCCnj5F`, BP `JnY3RSuWrNJPpP1Fkpzw0Ve9LQnxNyMo`,
+NG `M.lsmArE9oWTLmtf_KRJxNP44XwZWLUG`). Re-read by the issuer on deployed: c2 C2 PASS for 6501_JP and 2317_TT (each its own reason), C1
+(ASML_NA) HELD; c6 YES 52 of 52 (base 0 of 52). am-2 AMENDMENT 2 (the Bloomberg pull on Andrew's word) is in flight; its rebuilt plan
+reopens this order under AMENDMENT 3 and a re-signed pair.
