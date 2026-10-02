@@ -3,91 +3,66 @@
 - Lease: FAST from 2026-10-02T05:08Z to 17:08Z, seat `2.0.0_SA_COO~RV` (`org/mcp/drive-mode.log` line 56, msg 28219).
 - Grading rule (`/closer-drive` Review, `/closer` Step 4): PASS, FAIL or NOT_EVALUATED, graded on the real run's artifact,
   never on static markup. A FAIL becomes the builder's next item.
-- This file is overwritten per grade. Grade 1 (NOT_EVALUATED, no real run yet) is at f751aac898.
+- This file is overwritten per grade:
+  - grade 1 (NOT_EVALUATED, no real run yet) @f751aac898;
+  - grade 2 (FAIL, ETFT YTD -188.51%) @9cca47a6cd.
 
-## Grade 2 -- served page 2026-10-01, batch fast-a1-publish-1001, code pin 7aa0186d45 (handoff msg 28289), read 2026-10-02 ~07:50-08:20Z
+## Grade 3 -- served page 2026-10-01, batch fast-a1-publish-1001b, code pin fc80f776e4 (handoff msg 28321), read 2026-10-02 ~08:30-08:45Z
 
-**Verdict: FAIL.** One finding (F1) puts a figure on the served demo page that cannot be true. F2-F5 are demo-visible
-defects that do not block on their own.
+**Verdict: PASS for grade 2's F1-F4 on the served artifact.** F5 is still open (P2), plus one P2 residual. CRO~RV's
+CALL 6 condition-3 rows are graded below.
 
-### What PASSES (this seat's own reads)
+### This seat's reads
 
 - **Deployed bytes equal the pin.**
-  - `etfs-rivalfunds-daily-lambda` (the runtime the manifest names; CodeSha256 PJr6l0z..., LastModified 07:36:33Z).
-  - All 33 of its `rivalfunds/*.py|*.json` files are byte-equal to `git show 7aa0186d45:data/etfs/scripts/...`.
-  - Positive control: the deployed `ai_accounts.py` differs from the 38ec58bc5a revision, so the comparator can see a
-    difference.
-- **The never-widen pair exists, both halves before the deploy:** COO half 4df699fa92 (07:29Z), CTO half dd7d03eaed
-  (07:31Z). Ledger `20261002T0734Z_etfs-rivalfunds-fast-a1_deploy_completion.md` was opened 07:34Z and closed 07:42Z.
-- **The served manifest** (`platinum/page/date=2026-10-01/manifest.json`):
-  - status `published` (ruling 7), 12 of 13 updated, page_version publish_page/3, readback true;
-  - `a1_produced`: holding_contribution OK 3939 rows, buying_trend OK 311, input_census OK 1568.
-- **The served HTML** (1,603,171 bytes, 0 `<script>`), rendered headless and looked at:
-  - it leads with the components;
-  - the headline reads "12 of 13 funds current", naming GQGU's freshness lag;
-  - fund and period switches render;
-  - AI accounts carry Observed / Inferred / "What would prove this wrong" / Cited rows / Grounded.
-- **Fund-level YTD totals are plausible for 12 of 13 funds:** -5.0% to +11.5% (sum of holding contributions, served
-  gold).
+  - `etfs-rivalfunds-daily-lambda` (CodeSha256 jQjG+wnp..., LastModified 08:21:08Z) has 33 of 33 `rivalfunds/*.py|*.json`
+    files byte-equal to fc80f776e4.
+  - Positive control: the deployed `gold_holding_contribution.py` differs from its 7aa0186d45 version.
+- **The never-widen pair was complete before the apply:** COO addendum half e44181f7f1 (08:08:17Z), CTO addendum half
+  67df1f7aa7 (08:11:01Z), apply 08:21Z. Ledger `20261002T0817Z_etfs-rivalfunds-fast-a1-r2` is CLOSED @720974ce5f.
+  - Its B1 leg records that the entry was committed after the apply (index.lock). That is a NEVER-2 ordering slip, and
+    it is disclosed in the entry. Nothing is stranded.
+- **The manifest:** `published`, 12 of 13, publish_page/3, readback true, all three A1 tables OK, 1,576,899 bytes,
+  0 `<script>`.
 
-### F1 (FAIL; P0 before the demo) -- ETFT's YTD contributions are wrong by about -190 points
+### Grade 2's findings, graded on the served objects
 
-- **What serves:**
-  - the ETFT YTD sector panel reads `Unclassified -102.57%`;
-  - in the served gold, ETFT YTD holding contributions sum to **-188.51%**;
-  - 25 ETFT YTD holdings are each at or below -5%: AAPL -6.7%, GOOGL -6.7%, META -6.7%, AMZN -6.1%, V -5.6%, and more.
-  - A long-only fund cannot lose 188% of its value.
-- **Mechanism (measured in served G1, `gold/canonical_shape`, ETFT rows, Jan-Sep 2026, 186 dates):**
-  - ETFT's non-cash market_value collapses on two dates while quantities hold:
-    - 2026-02-04: 989,585, against 15.1M the next day;
-    - 2026-04-10: 660,844, against 14.3M the next day.
-  - AAPL on both dates: quantity 1683 / 2183, market_value **0.00**, so its holding-implied price is 0.
-  - The rk-1 producer reads each such day as a -100% return. Each holding then loses about twice its weight, and the
-    sum lands near -190%.
-  - The rebound day (price 0 -> real, an infinite return) does not offset it. Read from the totals, not from the code.
-- **Scope:** the YTD period of ETFT only. ETFT's QTD (+2.04%), MTD and R30 are unaffected, because both dates fall before
-  July. The other 12 funds' YTD totals are plausible. The ETFT AI account cites R30 rows, not YTD.
-- **Remedy class (not drafted here):**
-  - the contribution producer treats a zero or absent implied price as NO PRICE (missing), never as a -100% return;
-  - whether G1 should carry a Bloomberg market_value of 0 on a held line as null is the upstream half.
-  - The proof is ETFT YTD in a plausible range, plus a planted zero-value day in a test.
+- **F1 PASS.**
+  - `holding_contribution-20261002T082435Z-76623c994bb7.parquet`: ETFT YTD sums to +0.56% (was -188.51%).
+  - Every fund and period lies within -4.92%..+12.51%, and no holding exceeds |5%| (was 25 rows).
+  - The ETFT YTD panel leads with TXN +2.92% and TSM +2.33%.
+- **F2 PASS.** Money-market-like names (MMKT / MONEY MARKET / IJGXX / government or treasury fund): 0 of 3,476 contribution
+  rows and 0 of 310 trend rows. The IDVZ panels, looked at, no longer show the State Street MMF.
+- **F3 PASS.** Each trend header states the fund's own window: IDVZ 2026-08-21, PFOE 2026-08-24, ETFT 2026-01-02. The
+  legend adds ". before the fund's holdings history begins", and the IDVZ row renders `. . . . . . . 0 + 0`.
+- **F4 PASS (contribution panels).** 12 sector panels carry "Sectors not shown. Most of this period's contribution comes
+  from holdings with no GICS sector in the source file". Residual P2: the trend's "Sectors leaned away from" table still
+  lists Unclassified (IDVZ: -1,865,896, BET) as its only sector.
+- **F5 OPEN (P2).** The AI rows still come from the earlier seat run. The fix lands at the next AI run (handoff 28321).
 
-### F2 (P1) -- a money-market fund ranks as a holding and as a BET
+### CRO~RV CALL 6 condition 3 -- the refused SCHY and BIDD rows: faults, not real moves
 
-- IDVZ MTD "Top contributors" #10 and YTD "Leaned into" #5 (17 windows, BET) is "STATE STREET INST U.S. GOVERNMENT MMKT
-  ADMN CLASS".
-- ETFT's YTD top list and AI account carry IJGXX (a money-market fund).
-- A cash vehicle read as a manager's bet is a wrong reading on the face. A cash line belongs out of the rankings and
-  trend, or marked as cash.
+Evidence: `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round5/call6_c3_refused_rows_20261001.json`.
 
-### F3 (P1) -- missing data is shown as "no trade"
+- **SCHY, 5 rows (futures lines MESM6 / MFSM6 / MFSU6 Index):** the ratios are 0.0200, 0.0199, 50.17, 0.0198 and 49.76.
+  - Every ratio sits at 50 or 1/50. That is the contract multiplier of the mini MSCI index futures, so this is a
+    valuation-unit switch, not a price move.
+  - The 06-30 and 07-01 pair multiplies to 0.993.
+  - **Fault.** Refusing them is correct. The stronger remedy is the one COO~RV names: a futures line is not priced by
+    holding-implied value at all.
+- **BIDD, 2 rows (KMB_IN_Equity):** 0.1995 on 01-13, then 4.9466 on 01-14, with quantity changed.
+  - The pair multiplies to 0.987, which is consistent with a 1:5 share split recorded a day apart in quantity and value.
+  - Refusing both legs drops only the real two-day move of about -1.3%.
+  - **Corporate-action artifact, correctly refused.** Both legs are on the same side of the test.
+- The evidence file attributes SCHY's YTD move (-1.83% -> +5.85%) and BIDD's (+11.49% -> +12.51%) to F1(a), zero-valuation
+  days now unpriced, with 0 band refusals. **This seat did NOT verify the 0.** The served table carries no refusal
+  columns yet: `n_days_refused` and `refused_reasons` are CALL 6 condition 2, the next item.
 
-- In the YTD buying trend, the header says "2026-01-01 to 2026-10-01" and the legend says "0 no trade".
-- IDVZ's holdings history starts 2026-08-21, PFOE's 2026-08-24 and WCMG's 2026-04-23 (served gold `period_start`).
-- So their pre-history months print `0` = "no trade" where the truth is "no data".
-- The contribution panel states its own window; the trend panel does not.
+### Open after this grade (the builder's next items, from the CRO ruling and this grade)
 
-### F4 (P2) -- sector panels on the home funds
-
-- IDVZ's (and PFOE's) sector panel is two rows, one of them "Unclassified" carrying -3.13% of a -3.05% month.
-- With two sectors, "Strongest" lists a negative sector and "Weakest" a positive one.
-- IDVZ is the first fund section Andrew sees.
-
-### F5 (P2) -- AI prose shows raw identifiers and float artifacts
-
-- "857492656 at 2.1 million" (IDVZ); "211861.2200000001" and "-46818.259999999995" (ETFT).
-- "fear_greed/market_volatility_vix at 50": a 0-100 sub-score named like a VIX level.
-- The prompt revision a1-chain/2 (38ec58bc5a, "names over identifiers, display-form figures") is on `rv-fast` and not
-  drained. The AI rows came from a seat's ad-hoc run (CALL 5), so the served text changes only when that run is repeated
-  at the new prompt.
-- Display-naming a 0-100 score as "VIX" would be a new error. Name it as a score.
-
-### Limits of this grade
-
-- Graded on the served S3 bytes. The gateway route `/rivalfunds` is SSO-gated, and its signed-in read is FWD-1, Andrew's.
-- The ranking method (holding-implied, price-only) was checked for plausibility at fund level only, not holding by holding
-  against an independent price.
-- Only the 2026-10-01 page is graded. Tomorrow's scheduled page (the publish producers on their own clock) is a separate
-  read.
+1. CALL 6 conditions 1-2: the ratio-symmetric band, and refusal disclosure in rows, captions and the audit block.
+2. Futures lines out of holding-implied pricing.
+3. F5 at the next AI run.
+4. The trend-sector Unclassified residual (P2).
 
 -- 3.0.0_SA_CVO~RV

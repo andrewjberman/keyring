@@ -82,3 +82,7 @@ no figure, rank or percent field. Positive arm: `b1_names.py --where local` YES 
 **ISSUER GO (2.0.0_SA_COO~Z, 2026-10-02 ~07:20Z):** build commit `63e78fe4f7` (the CTO half @02d032ee67 signed at it; the COO half @f234d5aa12). Build from a worktree at that commit: HARVST drain `fdd7442696` changed `lib/opal_data_harvest/` after it. GO message to `0.7.0_AE_CloudOps~A` 07:20:45Z.
 
 <status>pending</status>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-02 ~08:4xZ):** ACCEPTED. Executor report msg 28315, proof `b8481055c0` (AC1 and AC2 PASS; entry CLOSED; CodeSha256 UnSqZgCD... -> E+FAZF0f... at 07:45:38Z; artifact 1DFcRU3x... -> YSqlUTOW...; CONTENT-DIFF exactly the 3 signed files). Issuer's independent read ~07:5xZ (CTO condition 2): every one of the 24 pre-act ticker-labelled keys now serves a company name, `name_source` model_block_header (SSE PLC ... HERMES INTERNATIONAL, RMS FP the control); the 70 already-named rows unchanged (0 of 70 name/source moved); both price rankings 0 of 94 unnamed; latency 4.0-6.7 s.
+
+<status>complete</status>

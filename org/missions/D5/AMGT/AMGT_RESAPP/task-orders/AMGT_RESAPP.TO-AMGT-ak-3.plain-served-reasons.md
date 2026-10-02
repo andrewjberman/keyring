@@ -64,6 +64,7 @@ org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v
 <proof_of_spec>
   <criterion id="AC1" cell_refs="AMGT-ak-3"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python -m pytest -q -p no:cacheprovider lib/research/api/tests/ lib/research/management/tests/ lib/research/peers/tests/; echo "exit=$?"</invocation><expect>every test passes, your new tests included, and exit=0 (AMENDMENT 1: the 3 test_print_format_rich.py setup errors on an unpopulated portal fixture are admitted in a worker worktree; the issuer re-grades on the shared tree)</expect></criterion>
   <criterion id="AC2" cell_refs="AMGT-ak-3"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round61/checks/b_served_text.py --cell b2 --where local --plan org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~201/m1_lusha_reason_plan.json; echo "exit=$?"</invocation><expect>C0 PASS (every plan entry's before equals what the route serves now), C1 PASS (0 of the Lusha and peers absent reasons for BA and VLO carry a code-shaped token), C2 PASS; B2 EVERY SERVED REASON IS WORDS: YES -- and exit=0</expect></criterion>
+  <criterion id="AC3" cell_refs="AMGT-ak-3"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round61/checks/b_served_text.py --cell b5 --where local --plan org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~201/m1_ceo_basis_plan.json; echo "exit=$?"</invocation><expect>C0 PASS (every plan entry's before equals what the route serves now), C1 PASS (BA's and VLO's served CEO-search basis says neither SERP nor contract's search), C2 PASS; B5 THE CEO SEARCH BASIS IS WORDS: YES -- and exit=0 (AMENDMENT 2)</expect></criterion>
 </proof_of_spec>
 
 ## 5. WHEN YOU ARE DONE
@@ -83,6 +84,25 @@ The peers absent-column reasons are STORED in `peers/v1/<key>/<as_of>.json` and 
 6. The plan's peers entries carry exactly what the fixed producer emits, computed by calling it. One entry set per key, on the
    NEWEST object the route reads; the per-key denominator is printed.
 AC1 adds `lib/research/peers/tests/`.
+
+## 7. AMENDMENT 2 (issuer `2.0.0_SA_COO~Z`, 2026-10-02 ~08:4xZ) -- cell B5 (CTO msg 28318, analysis @2b1e921054), on B2's terms
+
+`lib/research/management/enrich.py:ceo_public_profile` (lines ~536-566) writes the CEO search's `basis` into the STORED M-1 object, and
+the Exec tab prints it. Today VLO reads "no declared IR domain for this name: a SERP not scoped to the company's own domain is not the
+contract's search", and BA reads "the SERP returned 2 url(s) and none on boeing.com -- ABSENT is the honest result, never a page from
+another host". The words "SERP" and "contract's search" are not a reader's words.
+7. Rewrite EVERY `basis` sentence `ceo_public_profile` writes as words a reader understands. The no-domain case, for example: "No company
+   web domain is on file, so the CEO search was not run (a search outside the company's own site could find the wrong person)". Never
+   write "SERP", "contract's search", a status token or a code. Keep `status`, `absence_class`, `query` and `ir_domain` as they are.
+8. A SEPARATE plan, `deliverables/0.9.0_WK_AMGT_RESAPP~201/m1_ceo_basis_plan.json` (ak-6's three frozen plans are NOT touched). It
+   lists every M-1 object whose newest `ceo_public_profile.basis` matches `SERP|contract's search`, with `json_path`
+   `.management.ceo_public_profile.basis`, `store_field` `ceo_public_profile.basis`, and `after` computed by the FIXED producer's
+   sentence for that object's case (read the case from the stored fields: `ir_domain`, `query`, url counts). An object whose case
+   cannot be read from its stored fields is listed under `"unreparseable"` with its key, never hand-typed. BA_US_Equity and
+   VLO_US_Equity must be entries. Print the denominator. Also REPORT, not a criterion, whether the served
+   `ceo_profile_reading.reason` (built at serve time by `scoped_amgt.ceo_profile_reading`) follows the stored basis or composes its
+   own text.
+AC3 (section 4) grades B5. B5's served act is a later stored-field act with its own pair.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 

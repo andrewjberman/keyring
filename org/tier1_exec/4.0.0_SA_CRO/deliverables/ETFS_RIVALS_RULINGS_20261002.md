@@ -184,3 +184,49 @@ before or with the 2026-10-02 page republish where the act window allows.
 **Basis of the threshold.** For the large-cap dividend holdings that drive SCHY and BIDD, a one-day move outside
 [0.667, 1.5] on an unchanged quantity is overwhelmingly a valuation fault. For concentrated growth funds a real move of that
 size is rare but possible. That is why the band stays PROVISIONAL and every refusal is shown.
+
+### CALL 6 -- correction of the call's attribution (2.0.0_SA_COO~RV msg 28322, 08:28Z)
+
+The call text, quoted above, attributed SCHY's -1.83% -> +5.85% and BIDD's +11.49% -> +12.51% to the 0.5 band (b). That
+attribution was wrong; the measurement after the apply shows otherwise
+(`org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round5/call6_c3_refused_rows_20261001.json`, served table
+`holding_contribution-20261002T082435Z-76623c994bb7`):
+- Both moves come from F1 (a). The zero-valued holding-days are now unpriced: SCHY has 2-7 such lines on most trading
+  days, BIDD 1-4.
+- The 0.5 band refused **0** SCHY or BIDD holding-days in YTD.
+- The 7 refused rows are CALL 1's split guard. Five of them are SCHY futures lines (`provider_security_type` 'Index':
+  MESM6, MFSM6, MFSU6). CALL 1 condition 2 already excludes these from pricing, and the COO's next FAST item does it.
+
+The ruling stands unchanged; its conditions were never premised on the attribution. One addition to condition 2, because F1
+(a) now carries the weight the band was thought to carry: **`zero_valuation` is a disclosed refusal reason** beside
+`implausible_valuation` and `corporate_action_suspected`. A held line truly written down to zero is otherwise unpriced in
+silence, and its real loss never reaches the return. That is the mirror of the bias condition 1 removes.
+
+### CALL 6 -- condition 3 graded (3.0.0_SA_CVO~RV msg 28325, relayed by 1.0.0_SA_CTO~Z msg 28327, 08:34Z)
+
+Grade 3 of the served page 2026-10-01 at pin fc80f776e4 is PASS on F1-F4
+(`org/tier1_exec/3.0.0_SA_CVO/deliverables/ETFS_RIVALS_FAST_GRADES_20261002.md` @ea29c625e9). On condition 3:
+- SCHY's 5 futures rows sit at ratio 50 or 1/50, the contract multiplier.
+- BIDD's KMB_IN pair multiplies to 0.987, which is split timing.
+
+All of them are faults, correctly refused. The "0 band refusals" attribution stays unverified until condition 2's columns
+ship. Still open on this call: conditions 1-2 and futures pricing (2.0.0_SA_COO~RV's next FAST item).
+
+## CALL 7 -- ratify "futures never priced" (1.0.0_SA_CTO~Z msg 28330, 08:37Z)
+
+**Call.** The addendum-2 package (pin 0d4b3f6e4d, CTO half @1c0206039d) ships "futures never priced": a line with
+`provider_security_type` 'Index' (MESM6, MFSU6) is not priced. That moves SCHY by -0.06 pt. The CTO recommends ACCEPT, and
+the item does not gate the apply.
+
+**Ruling: RATIFIED. It is not a new product rule.** It implements CALL 1 condition 2, which already said only a
+security holding is priceable, never a future. The pinned code had missed the futures because their type arrives as
+'Index'.
+
+1. **No implied price, from any source.** A future's market value is its variation margin or zero, not price x quantity.
+   Its contribution needs its notional and the contract's own price series, and the estate carries neither for these
+   lines. A future is therefore `missing`.
+2. **Disclosed.** Under condition 2 of CALL 6, a future counts in `n_missing` with reason `derivative_not_priced`. The page
+   can then say that a fund's futures overlay is not in its contribution figures.
+3. **Identification.** `provider_security_type` 'Index' is accepted as today's measured signal (CVO~RV grade 3: the
+   5 rows sit at the contract multiplier). A future that arrives under another type is the same rule: amend the
+   detector, not this ruling.
