@@ -2668,6 +2668,136 @@
     "spec_asserts": "Analysis ruling 3 (round 3) and the round-4 floors rule: each source's floor is the minimum newest-date resolved fraction of that source's funds.",
     "world_is": "Nothing serves wrong today (BASG 1.0, GQGU 0.2368 both pass). The floor cannot detect a BASG identity regression down to 0.23.",
     "notes": "Carrier row for the round-4 analysis ruling 3 (@6dcb0074e4): resolved_floor() gains per-fund entries under `issuer`, BASG's floor set from BASG's own resolution. Round-5 cell (enrichment item 6)."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W3-S16",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~3",
+    "surfaced_at": "2026-10-02T00:20Z",
+    "one_line": "The ruling's first relation (a G3 or issuer identifier event naming both) has no data source today: G3 carries only dividend and corporate-action event types with no counterpart-identifier column, and the issuer feed has no identifier event, so only the crosswalk and CUSIP-equality limbs can fire on served data.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/enrichment_bloomberg.py G3 schema (~84-85) and map_event_type (~119): event_type maps Bloomberg Dividend Type; no identifier-change type and no counterpart security column",
+        "data/etfs/scripts/rivalfunds/gold_trade_schedule.py identifier_events(): built to the ruling, reads event_type in IDENTIFIER_EVENT_TYPES plus an optional `counterpart_security_id` column; returns no pair for a G3 object without them (tests/test_r5h4_id_change_identifier_relation.py exercises it with a synthetic frame only)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-h-4 / CTO hop-9 ruling (a): an exit and an entry pair as ID-CHANGE when a G3 or issuer-published identifier event names both.",
+    "world_is": "No G3 or issuer object names an identifier event, so that limb is built and dormant; the names IDENTIFIER_EVENT_TYPES and `counterpart_security_id` are this worker's, not a contract. Also: the CUSIP-6 limb needs such an event, so a shared CUSIP-6 never pairs on served data today. Both ACs pass without it.",
+    "notes": "For the round-5 analysis: either name the producer of identifier events (and its columns) or retire that limb. A real ID-CHANGE on served data now needs a shared ISIN/SEDOL/FIGI or CUSIPs equal after zero-padding."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W3-S17",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~3",
+    "surfaced_at": "2026-10-02T01:10Z",
+    "one_line": "G5/G6 now refuse an implausible window (G6 status REFUSED + reason, zero trades), but publish_page and render are outside this cell's paths and do not read the new G6 columns: a refused window serves as a window with no trades, which the ruling says the page must never show.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/gold_trade_schedule.py window_refusal()/_pair_rows: a refused window returns rows [] and recon status REFUSED; the zero-row G5 object is the same shape as 'no trades'",
+        "data/etfs/scripts/rivalfunds/publish_page.py (~8, ~194-220) reads the G6 row of a window but names no `status`/`reason`; this cell's <paths> exclude publish_page.py and render.py",
+        "CTO ruling @ledger/CTO_RULING_20261001_HOP9_METHOD_DEFECTS.md (b): 'The page shows the window as not inferred. It never shows an empty window as no trades.'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-h-5 builds G5/G6 refusal; the ruling's page clause (the page shows a refused window as not inferred) is not in this cell's paths.",
+    "world_is": "Nothing serves a refused window today (nothing deploys in round 5), but once G5/G6 are replayed the page will render a refused window with an empty trades table. Also: guardrails_config.json is now read by the gold stage (refusal_limits); this worker did not read the Lambda packaging, so whether the gold Lambdas ship that file is unverified here and a missing file would raise, not skip.",
+    "notes": "For the round-5 analysis: a cell owning publish_page.py/render.py to read G6 `status`/`reason`, and a packaging check of guardrails_config.json in the gold Lambda zip before the replay deploy."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W3-S18",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~3",
+    "surfaced_at": "2026-10-02T01:50Z",
+    "one_line": "RIV-h-6 makes `confidence` stop reading UNRESOLVED, which turns 4 tests of my own RIV-h-4 file red (tests/test_r5h4_id_change_identifier_relation.py); that file is not in the RIV-h-6 <paths>, so I left it unedited and the package suite reads 4 failed, not 0.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m pytest rivalfunds/tests -q at the RIV-h-6 code commit: 4 failed, 321 passed, 2 skipped; the 4 are test_equal_value_alone_is_an_exit_plus_an_entry_with_real_share_counts, test_a_shared_isin_sedol_or_figi_is_a_relation_and_a_different_one_is_not, test_a_shared_cusip6_alone_is_two_securities_and_with_a_g3_identifier_event_it_is_one, test_a_g3_identifier_event_naming_both_pairs_them_and_one_naming_neither_does_not",
+        "data/etfs/scripts/rivalfunds/tests/test_r5h4_id_change_identifier_relation.py lines 55, 72, 77, 89, 91 assert the pair [('entry','UNRESOLVED'),('exit','UNRESOLVED')] via _kinds(); after RIV-h-6 the same trades read ('entry','CLEAN'),('exit','CLEAN') with key_resolution UNRESOLVED",
+        "org/missions/D5/ETFS/ETFS_RIVALS/task-orders/ETFS_RIVALS.TO-RIV-h-6.key-resolution-column.md <paths>: gold_trade_schedule.py, tests/test_r5h6_*.py, test_g2_trade_schedule.py, test_i1_trade_stable_key.py, the channel file; not test_r5h4_*"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-h-6 face section 3: run the whole package suite before reporting; it must read 0 failed.",
+    "world_is": "The suite cannot read 0 failed inside this order's write grant: the only way is an edit to test_r5h4_id_change_identifier_relation.py. The required edit is mechanical: change `_kinds` to zip action with key_resolution (or replace the expected 'UNRESOLVED' confidence with 'CLEAN' at the five lines). AC1 of RIV-h-6 passes; the failure is a stale expectation in a sibling test of the same worker slot.",
+    "notes": "Disarm: add test_r5h4_* to the RIV-h-6 paths for a follow-up commit by the same slot, or apply the edit at the drain. A drain that merges as-is lands a red suite."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W3-S19",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~3",
+    "surfaced_at": "2026-10-02T03:10Z",
+    "one_line": "Resolves ETFS_RIVALS-Z-W3-S18: after the issuer's amendment a84ad1ad3b widened the RIV-h-6 paths, the 4 red RIV-h-4 tests are fixed and the package suite reads 325 passed, 2 skipped, 0 failed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/tests/test_r5h4_id_change_identifier_relation.py: the 5 expectations [('entry','UNRESOLVED'),('exit','UNRESOLVED')] now read [('entry','CLEAN'),('exit','CLEAN')]; each test keeps its meaning (equal value alone is an exit plus an entry, no ID-CHANGE; a relation is one ID-CHANGE row)",
+        "python -m pytest rivalfunds/tests -q after the edit: 325 passed, 2 skipped; h-6.AC1 PASS 0 failures"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Issuer ruling on S18: make the mechanical fix, suite 0 failed, supersede or resolve S18 in the channel.",
+    "world_is": "The schema has no `resolves` or supersede field and an existing row is never edited, so S18 stays in the file as written (BLOCKING/ARMED); this row is its resolution, and the issuer's disposition of S18 closes it.",
+    "notes": "S18 disarm_owner 2.0.0_SA_COO~RV: the condition S18 names (a red suite at the drain) no longer holds at the commit that carries this row."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W4-S17",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~4",
+    "surfaced_at": "2026-10-01T23:40Z",
+    "one_line": "RIV-f-4 says the manifest's top-level status means 'page published' but not the case of a page with NO fund updated; I read it as 'not-updated' there (nothing published), 'published' whenever at least one fund is current, and changed test_p2's single assertion on the planted-failure page.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/publish_page.py manifest: status = published if ctx n_updated else not-updated (was: not-updated if any check failed)",
+        "data/etfs/scripts/rivalfunds/tests/test_p1_page_and_guardrails.py:124 (stale all-funds page, 0 updated) still asserts man status not-updated and passes; test_p2_page_grouped_by_fund.py:226 now asserts published (one fund failed, one updated)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cell RIV-f-4: 'The manifest's top-level status means page published'; silent on a page where every fund is not-updated (the page then carries a 'No fund updated' lead and no trades or holdings).",
+    "world_is": "Nothing consumes the word beyond tests today; the zero-updated reading keeps the old word for the page that publishes no figures. If the issuer wants 'published' for every written page, one expression changes and test_p1:124 flips.",
+    "notes": "Judgment placed, not resolved."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S40",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-01T23:50Z",
+    "one_line": "RIV-b-2 needed a place for the G1 cursor the order does not name: it is a `<batch_id>.cursor` object (not .json) beside the build_canonical_shape marker, so read_markers/has_marker never see it; it is written only when G1 stops early or a resumed run is still incomplete.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/markers.py cursor_uri/write_cursor/read_cursor (worktree wk-rivals5-1, uncommitted at filing)",
+        "data/etfs/scripts/rivalfunds/homes.py state_table(): only the 8 STAGES have a state prefix, and homes.py is outside this cell's <paths>, so the cursor reuses the build-canonical-shape state prefix",
+        "markers.read_markers filters uri.endswith('.json'): the .cursor suffix keeps the cursor out of every marker read; EventBridge rules bind only state/build_silver/ and state/build_bloomberg_silver/"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-b-2: PARTIAL returns a cursor in `detail`, and the same event re-invoked continues from the cursor; no storage location for the cursor is stated.",
+    "world_is": "The event carries no cursor, so a continuation needs persisted state; the cursor is one new object kind under state/build_canonical_shape/date=<D>/ in the served S3 estate on the first real PARTIAL. Not exercised on S3 in this round (nothing deploys); IAM write to that prefix is the marker write's own. Also: run_gold_chain bounds its re-invocation by RIVALFUNDS_CHAIN_BUDGET_S (default 750 s = 900 s Lambda minus MARGIN_MS), because the handler drops the Lambda context.",
+    "notes": "Deploy-time reader should confirm the Lambda role may PutObject on state/build_canonical_shape/ keys with a .cursor suffix and that no S3 lifecycle or notification rule matches that prefix."
   }
 ]
 ```

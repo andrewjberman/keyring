@@ -50,3 +50,14 @@ This record is the carrier. The `org/ref/LIVE_ARMS.md` row is landed when the lo
 | paired_with | `/canonical-drive <own project> 30m` at 2.0.0_SA_COO~X (CORPUS), ~Z (RESAPP), ~D (DSGN_AMGTV1), ~H (HARVST); ~RV (ETFS_RIVALS) unchanged |
 | placement | `CTO_PLACEMENT_20261001_043xZ_AMGT_FRIDAY_DEMO_RESTRUCTURE.md` @e18d3a4e6a |
 | stop | DONE read from the register; HELD-AT-STOP (never for AMGT_HARVST, whose closing condition is Andrew's "we do not accept any defeat"); or Andrew's stand-down |
+
+## STOPPED-BY-OPERATOR -- 2026-10-02 ~03:5xZ
+
+Andrew-direct ~03:4xZ at the site-Z MSTR terminal, relayed by `0.0.0_AB_MSTR~Z` msg 28176, VERBATIM: "we are at 100% disk and we may be headed for a freeze/crash, i need all agents to log and wind down send the message now".
+
+- Cron `100fd3c2` (hourly at :43) is CronDeleted at ~03:5xZ.
+- The final log is `ctoZ_self_drive_AMGT_FRIDAY_tick26.md`.
+- **The loop's purpose was met before the stop:** the AMGT Security Analysis demo is on portal PROD `b3a1d8a6` (portal-v2.1.193;
+  deploy run 36956494108 SUCCESS) ahead of 09:00 ET Fri.
+- 0 of 5 projects are `complete`. Each continues under its own analysis when the fabric resumes.
+- **Re-arm only on Andrew's word** (or a successor reading this record together with a newer ARMED log, of which there is none).

@@ -13842,3 +13842,39 @@
 2026-10-01T03:26:35.394538+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=1.0.0_SA_CTO~O pid=22688
 2026-10-01T03:28:12.092606+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=4.0.0_SA_CRO~Z pid=3768
 2026-10-01T03:28:17.221881+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=4.0.0_SA_CRO~O pid=12056
+2026-10-01T03:45:51.709839+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~RV pid=17892
+2026-10-01T03:46:47.106541+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=3.0.0_SA_CVO~RV pid=5172
+2026-10-01T03:59:09.218085+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=3.0.0_SA_CVO~Z pid=16596
+2026-10-01T03:59:35.614211+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=3.0.0_SA_CVO~O pid=25632
+2026-10-01T04:08:13Z  SPAWN  2.0.0_SA_COO~MI  by 0.0.0_AB_MSTR~Z  pid=28776  host_pid=10820
+2026-10-01T04:08:15Z  SPAWN  2.0.0_SA_COO~O  by 0.0.0_AB_MSTR~Z  pid=30632  host_pid=2136
+2026-10-01T04:08:18Z  SPAWN  2.0.0_SA_COO~AI  by 0.0.0_AB_MSTR~Z  pid=14820  host_pid=7748
+2026-10-01T04:09:11.722804+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~MI pid=27748
+2026-10-01T04:09:15.494930+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~AI pid=21668
+2026-10-01T04:09:15.706288+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~O pid=31520
+2026-10-01T04:22:55Z  SPAWN  2.0.0_SA_COO~X  by 0.0.0_AB_MSTR~Z  pid=32904  host_pid=20208
+2026-10-01T04:22:58Z  SPAWN  2.0.0_SA_COO~Z  by 0.0.0_AB_MSTR~Z  pid=27908  host_pid=34524
+2026-10-01T04:23:01Z  SPAWN  2.0.0_SA_COO~D  by 0.0.0_AB_MSTR~Z  pid=30644  host_pid=33876
+2026-10-01T04:24:11.869227+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~X pid=31116
+2026-10-01T04:24:19.163523+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~D pid=26784
+2026-10-01T04:24:20.378080+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~Z pid=32104
+2026-10-01T04:25:09Z  SPAWN  2.0.0_SA_COO~H  by 0.0.0_AB_MSTR~Z  pid=35452  host_pid=35492
+2026-10-01T04:25:56.419269+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~H pid=35172
+2026-10-01T04:35:14Z  SPAWN  0.7.0_AE_CloudOps~A  by 2.0.0_SA_COO~Z  pid=30092  host_pid=35904
+2026-10-01T04:35:49.370507+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~A pid=35112
+2026-10-01T04:37:47Z  SPAWN  2.0.0_SA_COO~MS  by 0.0.0_AB_MSTR~Z  pid=28240  host_pid=35464
+2026-10-01T04:39:02.999305+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~MS pid=31748
+2026-10-01T04:47:17.121027+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=2.0.0_SA_COO~Z pid=32104 reason='to=1.0.0_SA_CTO~Z' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 154 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-01T05:44:50.664349+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=2.0.0_SA_COO~Z pid=32104 reason='to=1.0.0_SA_CTO~Z' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 154 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-01T05:45:05.146899+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=2.0.0_SA_COO~Z pid=32104 reason='to=1.0.0_SA_CTO~Z' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 151 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-01T06:34:33.638092+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.7.0_AE_CloudOps~A pid=35112 reason='to=2.0.0_SA_COO~Z' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 154 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-01T10:20:11.572614+00:00 IDENTITY_SEND_CVO_WORKER_REFUSED guard=GA-3 serial=3.0.0_SA_CVO~O pid=25632 reason='to=2.0.0_SA_COO~O,1.0.0_SA_CTO~O' conflict="SEND REFUSED (spine v3.1 L8: the CVO's one send of a round is the slug to the CTO): 3.0.0_SA_CVO~O -> 2.0.0_SA_COO~O. The CVO sends to 1.0.0_SA_CTO, in the slug at L10 (spine v3.1 L8: the CVO's one se"
+2026-10-01T12:49:49.663333+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.7.0_AE_CloudOps~A pid=35112 reason='to=2.0.0_SA_COO~Z' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 158 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-01T14:25:55.805870+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.7.0_AE_CloudOps~A pid=35112 reason='to=2.0.0_SA_COO~Z' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 155 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-01T15:51:05.677367+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=4.0.0_SA_CRO~RV pid=48856
+2026-10-01T16:02:36Z  SPAWN  2.0.0_SA_COO~MP  by 0.0.0_AB_MSTR~Z  pid=36088  host_pid=46168
+2026-10-01T16:04:23.352395+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~MP pid=53324
+2026-10-01T22:29:15Z  KILL  2.0.0_SA_COO~MS  by 0.0.0_AB_MSTR~Z  pid=28240  reason=parked on CTO~O ruling 28068 (G-MSPID); parking line @66f7167c39
+2026-10-01T22:30:00Z  KILL-NOOP  2.0.0_SA_COO~MS  by 0.0.0_AB_MSTR~Z  reason=verify-after  found=0  watchers_reaped=0
+2026-10-01T22:30:45Z  KILL  2.0.0_SA_COO~MP  by 0.0.0_AB_MSTR~Z  pid=36088  reason=parked on CTO~O ruling 28068 (Alyssa sitting G-CLOSE); parking line @fb46b85bd8
+2026-10-01T22:30:53Z  KILL-NOOP  2.0.0_SA_COO~MP  by 0.0.0_AB_MSTR~Z  reason=verify-after  found=0  watchers_reaped=0

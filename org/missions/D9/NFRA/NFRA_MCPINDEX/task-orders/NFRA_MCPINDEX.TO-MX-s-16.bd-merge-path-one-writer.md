@@ -201,7 +201,7 @@ report once.
   row Z-S72);
 - s16.AC3 FAIL as expected (no entry).
 
-<status>pending</status>
+<status>complete</status> <!-- A3: AC1 graded on unrealized+allocations; acceptance run bd-silver-merge 2026-10-02T00:11:36Z unrealized failures=0 empty_stub=6; ledger CLOSED 8/8 -->
 <round>6</round>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>

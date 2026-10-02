@@ -389,6 +389,14 @@ def artifact_resolution_check(inst: dict, inst_path=None) -> tuple[list[str], li
             # if staged, and the hook run refuses if it is not. The CCX refusal (already at HEAD, not staged) stands in
             # both, because that artifact cannot ride this commit whatever gets staged.
             dry_run = not staged_inst
+            # MX-x-5(b): re-committing an instance already at HEAD re-dates PENDING rows (reads INVALID/CCX later).
+            if tracked_inst and _git_ok("cat-file", "-e", f"HEAD:{inst_rel}"):
+                _pend = [str(a.get("path_or_key", "")) for a in rows
+                         if isinstance(a, dict) and a.get("kind") != "s3_object"
+                         and str(a.get("commit_or_etag", "") or "") == PENDING_SENTINEL]
+                for _p in _pend:
+                    print(f"WARN: {inst_rel} already exists at HEAD; row {_p!r} is still PENDING-THIS-COMMIT -- "
+                          "re-committing re-dates it and the instance will read INVALID (CCX); pin it to its commit first")
         else:
             inst_commit = _git_out("log", "-1", "--format=%H", "--", inst_rel).strip() or None
             ctx = "POST-COMMIT" if inst_commit else "UNKNOWN"

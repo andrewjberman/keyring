@@ -3,7 +3,7 @@
   "project": "NFRA_OPLGTW",
   "directive": "D9",
   "fabric": "site-z",
-  "prd_version": "v1.4",
+  "prd_version": "v1.5",
   "step": 4,
   "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_1511ET_NFRA_OPLGTW_D9_REGISTRATION_AND_PRD.md@45ce4e5b73",
   "endpoint_outcomes": [
@@ -209,15 +209,20 @@ builds them because it owns the gateway, and it grades only each order's own cri
     distinct.
   - There is no fallback to an unattributed transcript.
   - Transcript text is untrusted content. The audit record carries meeting and transcript ids, never text.
-- **Mail tools (O4):** `read_email`'s `$select` gains `ccRecipients`, `internetMessageId`, `conversationId` and
-  `sentDateTime`. A filtered, paged list filters on sender, received window and has-attachment; its page token is
+- **Mail tools (O4):** `read_email`'s `$select` gains `ccRecipients`, `bccRecipients`, `internetMessageId`,
+  `conversationId`, `hasAttachments` and `sentDateTime` (v1.5: the six fields shipped since OG-rl-1, read at
+  `3a7d6a7dc8` `app/tools.py`; `bccRecipients` is populated only on the sender's own copy). A filtered, paged list filters on sender, received window and has-attachment; its page token is
   opaque, and a Graph URL is never returned or accepted.
 - **Attachments on MCP:** the attachment tool on MCP stays INSPECT-only. It returns metadata, sha256, magic bytes,
   and for a PDF the page count and at most 1500 characters of page-1 text. No MCP tool returns attachment bytes.
 
 **Headless content routes (orders O2, O5).**
 - **A new capability, never a widening of `/ms/*`.** The `/ms/*` route's contract is structure-only and it "can NEVER
-  echo file content, a body/preview, or any comms field" (`app/ms_ingest.py`). That stays true. Transcripts, mail
+  echo file content, a body/preview, or any comms field" (`app/ms_ingest.py`). That stays true for the generic `/ms/*`
+  routes. The one exception is `GET /ms/taxsma-workbook` (v1.5; Andrew-direct 2026-10-01 ~17:2xZ-17:4xZ, released
+  OG-tr-1 `3a7d6a7dc8`). It is a separately guarded route, with its own bearer and its own guard, registered ahead of the
+  generic `/ms/*` guard and edge-exposed by its own exact-path ALB rule. It is not a widening of `/ms/*`, and its spec
+  is MDPF_TAXSMA's. Transcripts, mail
   bodies and attachment bytes are served ONLY on two new prefixes, one for transcripts and one for mail: the fixed
   literals `/hx/transcripts` and `/hx/mail` (v1.3). A route path is not a `lib/opal_naming.py` kind (`name()` refuses
   `route`; NAMING_SCHEMA marks API_ROUTE NOT GRADED), so these two are graded only for distinctness: neither is under

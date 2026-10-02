@@ -21,6 +21,9 @@
 @rem a TRACKED, CROSS-DEVICE file is the defect class; resolve, do not assume.
 @rem The laptop path stays FIRST, so its behavior is byte-unchanged.
 setlocal
+@rem Z-S75: UTF-8 for the Python-based CLI (mirrored in .tools/aws).
+set "PYTHONUTF8=1"
+set "PYTHONIOENCODING=utf-8"
 set "_OPAL_AWS=%LOCALAPPDATA%\Programs\Python\Python312\Scripts\aws.cmd"
 if not exist "%_OPAL_AWS%" set "_OPAL_AWS=%LOCALAPPDATA%\Programs\AWSCLIV2\Amazon\AWSCLIV2\aws.exe"
 if not exist "%_OPAL_AWS%" set "_OPAL_AWS=%ProgramFiles%\Amazon\AWSCLIV2\aws.exe"

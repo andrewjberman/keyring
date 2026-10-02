@@ -116,7 +116,7 @@ same elevated sitting as the WFP install. The mechanism goes back to the CTO: a 
 `4.0.0_SA_CRO~O` research. On that ruling the issuer cuts ONE new cell (the installer, a -Plan, and the same AC3). This
 order stays open until then. The item-0 close run stays HELD, and the interim (no DAPI client in the runtime) holds.
 
-<status>` IN PLACE, by replacing the existing tag. Never append a second tag; the row gate
+the `<status>` tag IN PLACE, by replacing the existing tag. Never append a second tag; the row gate
    reads the FIRST tag. Standing rules also apply: no push, no install, no vendor call. REFUSE a criterion you cannot
    meet as written, and report the refusal with its measurement.
 
@@ -187,7 +187,7 @@ Dry-run at base (main tree CLOUD, `OA_F10_REF=e69acf7` for AC2):
 - f10.AC3 base: FAIL as expected (`live 8194 block rules matching an account SID: 0 of 2; F10_ACCEPTANCE.json absent`).
   The live-firewall read ran clean and returned 0.
 
-<status>pending</status>
+<status>superseded -- the mechanism moved to OA-f-11 (CTO ruling R5): the R1 per-user Firewall rules were measured LOOPBACK-EXEMPT (rows Z-W25-S3, Z-S52) and REMOVED by Andrew 2026-10-02 ~02:4xZ; the 8194 wall is met by OA-f-11 AC3 PASS (2026-10-02). Was: pending.</status>
 <direct_act>true</direct_act>
 <slot>~25</slot>
 <fabric>site-z</fabric>

@@ -559,3 +559,12 @@ The CTO's interim ruling (msg 27792) holds until AC3 passes: no DAPI client, blp
 
 Chain: alone, slot `~26`, nested base r2-dev @eeca5ca7d1. It supersedes OA-f-10's mechanism (R1 Firewall rules measured
 loopback-exempt: rows Z-W25-S3, Z-S52). It is a precondition of the item-0 close run (R3).
+
+## ADDENDUM R2-A10 -- the claude resolver vs. a non-elevated operator (issuer ruling, obligation 7)
+
+| Cell | Builds | Risk |
+|---|---|---|
+| `OA-f-12` | `opal_ai/opal/runtime/resolve-claude.ps1`: a configured `claude_exe` the non-elevated operator gets ACCESS-DENIED on is trusted (`CLAUDE_EXE: <path>`, exit 0) instead of throwing; the missing-and-readable and PATH paths are unchanged | LOCAL (direct act) |
+
+Chain: alone, slot `~27` (sparse worktree), nested base r2-dev @0fb3fcb694. It is the seam between OA-f-8 (the resolver
+tests the path as the operator) and OA-f-9 (the launcher refuses an elevated parent). It precedes the item-0 close run.
