@@ -14851,3 +14851,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Remedy owner 1.0.0_SA_CTO (the gate limb): admit an addendum-cited cell into its round, or rule that an addendum cell takes the next round number."
 }
 ```
+
+## IRPT_BCKEND-W101-S7 -- IB-pr-293: the prospect branch's owner source is a new port no production caller wires yet
+
+```json
+{
+  "id": "IRPT_BCKEND-W101-S7",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~101",
+  "surfaced_at": "2026-10-02T11:40:00Z",
+  "one_line": "IB-pr-293: the prospect branch re-resolves the owner from a new Enforcer port (load_report_owner) that no production caller wires yet, so a served prospect render refuses fail-closed until E4/served supplies a retained-owner reader.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/enforce.py _resolve_prospect_render: load_report_owner None -> Refusal OBJECT_NOT_COVERED 'no owner source is wired' (tests: _authz/tests/test_enforce_prospect_refuse.py::test_an_owner_source_that_is_not_wired_or_cannot_be_read_refuses_fail_closed)",
+      "infra/aws/lambda/investor-reporting/_render_identity/grant.py render_ports(report_owner=None) returns the 2-tuple as before; with a reader it returns a 3-tuple and _authz/served.py reads ports[2] as load_report_owner. served.py:1154 render_ports_from_env() passes no reader."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IB-pr-293 contract line 2: 'The delegator resolved NOW must be the report's owner ... An owner source the Enforcer cannot read refuses (fail closed).' The order names no existing owner source for the Enforcer; the stored prospect scope carries no owner, and the grant's own delegator stamp is expressly not enough.",
+  "world_is": "The only retained owner of a prospect report lives behind reports/repository.py (outside this order's paths). The cell adds the optional port and the exact comparison (firm, principal, class, advisor, home firm, prospect input id) and proves them with fixture loaders; the production reader is not built. Two narrower facts: an OPAL_GLOBAL delegator is refused on a prospect grant (resolve_prospect_owner admits FIRM_ADVISOR and FIRM_OPERATIONS only), and a FIRM_OPERATIONS delegator's revocation is visible only through the owner record, since the ownership map lists advisors, not operations users.",
+  "notes": "Remedy owner 2.0.0_SA_COO~P at IB-pr-282 (E4) or a follow-on cell: pass report_owner=<retained-owner reader> to grant.render_ports in render_ports_from_env. Until then no prospect render is served; no account scope widens."
+}
+```
