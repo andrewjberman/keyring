@@ -1,1 +1,3 @@
 CAP-TRUNCATED arm 4 (Overview inflection): 18 min remained at 18:00:20Z; not started
+CAP-TRUNCATED arm 3 (Overview 49financial): 0 min remained at 18:18:39Z; not started
+CAP-TRUNCATED arm 4 (Overview inflection): 0 min remained at 18:18:43Z; not started

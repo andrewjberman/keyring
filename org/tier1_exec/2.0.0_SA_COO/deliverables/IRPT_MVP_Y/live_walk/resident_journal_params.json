@@ -1,0 +1,1 @@
+{"commands": ["journalctl -u irpt-analysis-resident.service --since '2026-10-01 08:00:00 UTC' --no-pager -o short-iso | grep -E 'status=202|waf|WAF' | cut -c1-400 | tail -80; echo \"lines_total=$(journalctl -u irpt-analysis-resident.service --since '2026-10-01 08:00:00 UTC' --no-pager | wc -l)\"; systemctl is-active irpt-analysis-resident.service"]}

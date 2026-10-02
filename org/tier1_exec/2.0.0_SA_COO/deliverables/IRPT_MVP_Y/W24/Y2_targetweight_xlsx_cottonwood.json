@@ -7,6 +7,8 @@
  "reference_notional": "1000",
  "k4_status": 200,
  "upload_id": "UP-2fe40e2970ce72e5f4a5207f6987427c0a2f2b7cc2ee9cebd776d7a440df48b9",
+ "k4_state": null,
+ "input_id": null,
  "calls": [
   {
    "at": "2026-09-29T17:26:31.780064Z",
