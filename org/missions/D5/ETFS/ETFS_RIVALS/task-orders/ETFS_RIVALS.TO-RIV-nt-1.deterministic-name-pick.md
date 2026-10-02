@@ -68,7 +68,7 @@ nt-1.AC1 FAIL (3; the different-dates control PASSes) as expected; PASSES under 
 
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>7</round>
 <slot>~3</slot>
 <fabric>site-z</fabric>
