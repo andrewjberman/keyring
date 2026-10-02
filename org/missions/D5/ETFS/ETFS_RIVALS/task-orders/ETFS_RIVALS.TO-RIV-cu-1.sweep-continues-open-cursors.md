@@ -73,7 +73,7 @@ cu-1.AC1 FAIL (8; controls b1-b3 and c1 PASS) as expected; PASSES under the chec
 
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>7</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>

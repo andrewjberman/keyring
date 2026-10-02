@@ -71,7 +71,7 @@ pv-1.AC1 FAIL (4; arm 2's row limb PASSes) as expected; PASSES under the in-memo
 
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>7</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>

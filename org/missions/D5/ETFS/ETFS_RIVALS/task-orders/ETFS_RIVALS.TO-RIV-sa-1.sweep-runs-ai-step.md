@@ -90,7 +90,7 @@ sa-1.AC1 FAIL (3) as expected; sa-1.AC2 FAIL (3; no-late-writer and CALL 5 limbs
 
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>7</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>

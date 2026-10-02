@@ -3080,6 +3080,69 @@
     "spec_asserts": "Row ETFS_RIVALS-Z-W4-S9 (BLOCKING/ARMED, disarm_owner 2.0.0_SA_COO~RV): a marker-driven batch of more than about 45 report dates times out its G1 stage; the I-1 pair (COO e371794615, CTO 36c17afc0b) expects every REPORT under 900000 ms, PARTIAL then OK, and the G1 marker written with 0 objects.",
     "world_is": "Met, with one limb observed indirectly: invoke 1's response was lost to a client connection drop, so its PARTIAL is evidenced by the cursor object it left at 22:16:31Z, not by its response; invoke 2 returned OK with no cursor and all stages OK. The round-5 budget bound holds on the deployed code. What it does not do: nothing re-invokes an open cursor, so a PARTIAL batch waits for a seat; that is RIV-cu-1 (the sweep continues open cursors), deployed with round 7.",
     "notes": "Resolves ETFS_RIVALS-Z-W4-S9's timeout class (an existing row is never edited; this row carries the resolution). disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. The continuation half closes when RIV-cu-1 is deployed and its organic trigger (the 09:00 ET sweep) is read."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S45",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-02T22:50Z",
+    "one_line": "RIV-sa-1: the one-run-per-page-day attempt record has no registered table of its own, so it is written at the publish-page state prefix as ai-run.attempt (a non-.json suffix, like a stage's .cursor); publish-page also READS it so a later plain publish keeps showing a failure.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/ai_stage.py attempt_uri() = homes.marker_prefix('publish-page', day) + '/ai-run.attempt' (address builder output; no address typed)",
+        "infra/aws/terraform/etfs-rivalfunds/policies/etfs-rivalfunds-daily-lambda.json: s3:PutObject+GetObject on opal-data-etfs/rivalfunds/etfs/state/publish_page/* -- the daily role can write it; markers.read_markers filters on .json so the record is never a batch marker (tests/test_r7sa1_sweep_ai_step.py::test_the_attempt_record_is_not_a_batch_marker_and_sits_at_the_builders_prefix)",
+        "sa-1.AC1/AC2/AC3: PASS 0 failures each at the branch HEAD"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cell RIV-sa-1: 'The cell records the attempt where the address builder says.' The order names no table or registry row for it.",
+    "world_is": "No ai_run/ai_attempt state table is registered (homes.STAGES holds stages only), and a registry row is outside this order's paths, so the carrier reuses the publish-page state prefix. A later round may register a table of its own and move it; the sweep and publish-page read it through ai_stage.read_attempt only."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S46",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-02T22:50Z",
+    "one_line": "RIV-sa-1: the AI step's deadline cannot interrupt a vendor call already in flight (no background thread is allowed), so a call started just inside the deadline ends at ai_client.TIMEOUT_S (120 s) and the republish then has MARGIN_MS less that, about 30 s.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/ai_client.py: TIMEOUT_S = 120 on requests.post; sweep.MARGIN_MS = 150_000; sweep._ai_deadline_s caps the step at remaining - MARGIN_MS",
+        "data/etfs/scripts/rivalfunds/ai_stage.py _DeadlineClient: a call is refused BEFORE it starts past the deadline and dropped AFTER it returns past it (Overrun, a BaseException, so run_day never reaches its write); tests/test_r7sa1_sweep_ai_step.py::test_a_deadline_overrun_writes_nothing_and_records_failed",
+        "AC2 offline: first reply delayed 3.0 s under ai_deadline_s 1.0 -> sweep took 3.5 s, FAILED recorded, no object after drain"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cell RIV-sa-1: 'The step never runs past the Lambda's remaining time minus MARGIN_MS.'",
+    "world_is": "Holds to within one vendor call's own timeout. ai_client.py is not in this order's paths; lowering its TIMEOUT_S (or making it deadline-aware) would close the gap, and a republish needing more than about 30 s would be tight. The default AI_DEADLINE_S is 600 s of a 900 s Lambda; the graph's own time is subtracted by the remaining-time cap."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S47",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-02T23:10Z",
+    "one_line": "RIV-pv-1: the required behaviour (an event without run_path stamps ad_hoc) falsifies one existing assertion in tests/test_r7sa1_sweep_ai_step.py, which sits outside this order's paths, so 2 parametrised cases of test_a_ran_step_republishes_under_a_new_batch_with_the_result fail until the issuer adds run_path to its event.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/tests/test_r7sa1_sweep_ai_step.py:95 calls sweep.run_ai_step(dict(_ev7(spec), ai_deadline_s=7.0), ...) with _ev7 = {date, mode, sink, batch_id} (no run_path) and asserts run_for_day got run_path 'scheduled' (line 96) and ai_run run_path 'scheduled' (line 98)",
+        "python -m pytest rivalfunds -q from data/etfs/scripts: 2 failed (both [OK] and [FAILED] cases of that one test), 565 passed, 2 skipped; every other test, sa-1.AC1/AC2/AC3 and pv-1.AC1 pass",
+        "one-line fix: line 95 becomes sweep.run_ai_step(dict(_ev7(spec), ai_deadline_s=7.0, run_path='scheduled'), None, _runners(calls)); other run_ai_step calls in that file make no run_path assertion"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order RIV-pv-1: 'the sweep stamps scheduled only for an event carrying that value and no only; every other event stamps ad_hoc' and 'sa-1 ... tests/test_r7sa1_sweep_ai_step.py must still pass when you report'.",
+    "world_is": "The two cannot both hold: that test passed a hand-made event with no run_path and expected scheduled, the exact claim ruling 3 retires. sweep.run_ai_step now reads the run_path handler_entry stamped (sweep.stamped_run_path); defaulting an absent key to scheduled inside run_ai_step would restore the test but reinstate the unearned claim for any direct caller, so it was not done. The test file is not in this order's paths."
   }
 ]
 ```
