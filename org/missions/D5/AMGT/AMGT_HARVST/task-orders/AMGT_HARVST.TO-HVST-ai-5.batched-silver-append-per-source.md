@@ -91,9 +91,17 @@ silver_from_bronze.py). The one real run at close is the live drain reaching 0 p
 gold-readable silver. Gold #4 stays on ruling 28084: before 13:00Z, and without the rest of the drain from 10:00Z.
 Row Z-S58 is disarmed at the merge.
 
+**COMPLETE 2026-10-02 ~06:0xZ (issuer):** AC1 PASS (5 passed; issuer re-run identical, suite 534 passed). Merged
+@6a0a2ebc79 with the Z-C-S57 amendment (@58748baf51: local isolation of bad rows, one append). ONE REAL RUN: the live
+bbg drain went from 244 due to 0 due in one batched pass, 05:58-06:00Z. That pass uploaded 243 rows in 1 silver part,
+`date=2026-10-01/part-20261001T230342Z.parquet` (receipt `deliverables/2.0.0_SA_COO_H/round36/bbg_drain_fast_20261002T0558Z.receipt.jsonl`).
+It held back 1 row, bbg:TIVYPZRKV2TJ00, on a cross-row conflict; that row builds alone and was uploaded alone at
+06:01Z. AC2 PASS: `deliverables/2.0.0_SA_COO_H/round36/ai-5.AC2.issuer_grade.txt` (829 uploaded, 1 pending =
+W91-S19). The previous path drained 1 row per ~90 s. Gold-readable silver is proven by gold rebuild #4 reading it.
+
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
-<status>open</status>
+<status>complete</status>
 <round>36</round>
 <workstream>bbgdrain</workstream>
 <slot>~90</slot>

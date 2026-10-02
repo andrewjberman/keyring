@@ -5819,6 +5819,103 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "A later worker cut on this face needs the same six paths in its cone."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S59",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-02T06:08Z",
+      "one_line": "DISARMED by its disarm_owner: AMGT_HARVST-Z-S57. The stranded bbg backfill reached silver: 0 bbg rows pending on JSONDecodeError, 829 of 830 uploaded.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "drain merge 3319bb1c60 (ai-4 bbg HTML branch)",
+          "deliverables/2.0.0_SA_COO_H/round36/ai-4.AC2.issuer_grade.txt and ai-5.AC2.issuer_grade.txt (06:0xZ): bbg outbox 830 rows, 829 uploaded, 1 pending SilverRowError",
+          "deliverables/2.0.0_SA_COO_H/round36/bbg_drain_fast_20261002T0558Z.receipt.jsonl: 243 uploaded in 1 silver part (date=2026-10-01/part-20261001T230342Z.parquet), 1 held on a cross-row conflict",
+          "merge 6a0a2ebc79 (ai-5, with amendment 58748baf51)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "An ARMED hazard disarms via its disarm_owner (CLAUDE.md section 2); AMGT_HARVST-Z-S57 names 2.0.0_SA_COO~H.",
+      "world_is": "The ai-4 bbg HTML branch (@3319bb1c60) parsed the stranded bodies. The ai-5 batched pass (05:58-06:00Z) drained them. Gold rebuild #4 reads this silver.",
+      "notes": "Disarm record by the disarm_owner at /canonical-drive tick 3; not an adjudication. Disarmed is not remediated."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S60",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-02T06:08Z",
+      "one_line": "DISARMED by its disarm_owner: AMGT_HARVST-Z-S58. The bbg drain is no longer O(n^2): one silver_append per source per pass took 244 due rows to 0 in about 2 minutes.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          ".runtime/harvest-backfill/bbg_drain_fast_20261002T0558Z.out (launched 05:58Z, finished by 06:00:12Z)",
+          "deliverables/2.0.0_SA_COO_H/round36/ai-4.AC2.issuer_grade.txt and ai-5.AC2.issuer_grade.txt (06:0xZ): bbg outbox 830 rows, 829 uploaded, 1 pending SilverRowError",
+          "deliverables/2.0.0_SA_COO_H/round36/bbg_drain_fast_20261002T0558Z.receipt.jsonl: 243 uploaded in 1 silver part (date=2026-10-01/part-20261001T230342Z.parquet), 1 held on a cross-row conflict",
+          "merge 6a0a2ebc79 (ai-5, with amendment 58748baf51)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "An ARMED hazard disarms via its disarm_owner (CLAUDE.md section 2); AMGT_HARVST-Z-S58 names 2.0.0_SA_COO~H.",
+      "world_is": "Before: about 90 s per row (one full prefix read of 576 parts, 69 MB, per row). After ai-5: one prefix read per source per pass; 243 rows landed in one part; the held row landed alone at 06:01Z.",
+      "notes": "Disarm record by the disarm_owner at /canonical-drive tick 3; not an adjudication."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S61",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-02T06:08Z",
+      "one_line": "DISARMED by its disarm_owner: AMGT_HARVST-Z-W91-S19. The one type-conflict bbg row can no longer strand any other row: ai-5 isolates it locally before the one batched append.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "local probe 06:0xZ: article_rows + pa.Table.from_pylist on bbg:TD7VMGKGCTIZ00 -> ArrowInvalid",
+          "deliverables/2.0.0_SA_COO_H/round36/ai-4.AC2.issuer_grade.txt and ai-5.AC2.issuer_grade.txt (06:0xZ): bbg outbox 830 rows, 829 uploaded, 1 pending SilverRowError",
+          "deliverables/2.0.0_SA_COO_H/round36/bbg_drain_fast_20261002T0558Z.receipt.jsonl: 243 uploaded in 1 silver part (date=2026-10-01/part-20261001T230342Z.parquet), 1 held on a cross-row conflict",
+          "merge 6a0a2ebc79 (ai-5, with amendment 58748baf51)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "An ARMED hazard disarms via its disarm_owner (CLAUDE.md section 2); AMGT_HARVST-Z-W91-S19 names 2.0.0_SA_COO~H.",
+      "world_is": "bbg:TD7VMGKGCTIZ00 still fails pa.Table.from_pylist alone ('1150000' str vs int64, re-verified 06:0xZ) and stays pending on SilverRowError, so 1 of 830 bbg articles is out of silver and gold #4. No nested-type coercion cell is cut now (issuer ruling); the row is read at the round-36 analysis.",
+      "notes": "Disarm record by the disarm_owner at /canonical-drive tick 3; the defect itself stands (disarmed is not remediated)."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S62",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-02T06:08Z",
+      "one_line": "DISARMED by its disarm_owner: AMGT_HARVST-Z-C-S57. Both routes the row names are met: (a) the batched drain ran before 06:36:56Z, and (b) bad rows are isolated locally before ONE append, with no per-row loop.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "amendment 58748baf51 (TO-HVST-ai-5 item 2 and plant (iii))",
+          "surprise-channel/adjudications/ADJUDICATION_v46.md row AMGT_HARVST-Z-C-S57 (3.0.0_SA_CVO~Z)",
+          "deliverables/2.0.0_SA_COO_H/round36/ai-4.AC2.issuer_grade.txt and ai-5.AC2.issuer_grade.txt (06:0xZ): bbg outbox 830 rows, 829 uploaded, 1 pending SilverRowError",
+          "deliverables/2.0.0_SA_COO_H/round36/bbg_drain_fast_20261002T0558Z.receipt.jsonl: 243 uploaded in 1 silver part (date=2026-10-01/part-20261001T230342Z.parquet), 1 held on a cross-row conflict",
+          "merge 6a0a2ebc79 (ai-5, with amendment 58748baf51)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "An ARMED hazard disarms via its disarm_owner (CLAUDE.md section 2); AMGT_HARVST-Z-C-S57 names 2.0.0_SA_COO~H.",
+      "world_is": "The amendment @58748baf51 replaced the whole-batch per-row fallback with local isolation; merged @6a0a2ebc79 with plant (iii) (a type-conflict row, exactly one silver prefix read). The per-row pass, pid 24652, was stopped at 05:57:34Z before the batched pass started at 05:58Z.",
+      "notes": "Disarm record by the disarm_owner at /canonical-drive tick 3; not an adjudication."
     }
   ]
 ```
