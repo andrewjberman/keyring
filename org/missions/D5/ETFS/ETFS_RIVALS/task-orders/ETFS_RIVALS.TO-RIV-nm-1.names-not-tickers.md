@@ -40,6 +40,7 @@ comp-adversary: DECLARED-NOT-APPLICABLE the validator-context composer profiles 
 - `excel_fetch` is tested with fake COM modules installed before the call (pywin32 is installed on this machine; never start Excel or a Bloomberg session). It reads columns A-P only.
 - These files are ALSO run by the terminal vehicle from the CLOUD tree; the issuer proves the live response shape after the drain.
 - Applying `display_name` in the producers is the issuer's merge hookup, not yours.
+- AMENDMENT A1 (issuer, 2026-10-02 ~17:0xZ): the issuer's LIVE probe (BIDD, dates=2026-10-01, through your own excel_fetch, local file only) shows the real two-field response. Bloomberg PREFIXES every metadata column by its field: `ID, id().SOURCE, id().POSITION, id().POSITION_CHANGE, id().WEIGHTS, id().CURRENCY, id().REPORTED_MKT_VAL, id().DATE, id().REPORT_DATE, id().ORIG_IDS, id().POSITION_TYPE, id(), name().SOURCE, name().POSITION_TYPE, name().ID_DATE, name()` -- exactly 16 columns, so the A-P read is full. `silver_bloomberg.parse_capture` refuses it ("header lacks ORIG_IDS"), so as built the vehicle's Bloomberg leg would stop. The order's earlier fixture (an unprefixed `name()` column) was wrong. Make silver map the `id().` metadata to today's column names, keep `name()` as `name` (the `name().` metadata may be dropped or kept under non-colliding names), keep today's single-field capture working, and make excel_fetch read past column P. AC4 below uses the probe's real header and rows.
 
 ## 3. SURFACES AND BOUNDS
 
@@ -63,11 +64,13 @@ org/missions/D5/ETFS/ETFS_RIVALS/surprise-channel/investigations/INVESTIGATION_v
 - **AC1** -- the offline plan and excel_fetch both ask for name(); silver stores it; canonical_shape security_name carries it; a row with no name stays NULL (`org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round6/checks/nm-1.AC1.py`)
 - **AC2** -- display_name prefers the uncut name over a 30-character cut and a name over a raw ticker, consistently cased (`org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round6/checks/nm-1.AC2.py`)
 - **AC3** -- control: a single good name passes unchanged; display_name([None, None]) is None (`org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round6/checks/nm-1.AC3.py`)
+- **AC4** -- (a fourth criterion; reason: amendment A1, the live response shape) the real two-field capture imports and types, silver keeps today's id() column names plus `name`, G1 carries the names, excel_fetch reads past column P; control: today's single-field capture still lands (`org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round6/checks/nm-1.AC4.py`)
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="RIV-nm-1"><invocation>python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round6/checks/nm-1.AC1.py</invocation><expect>AC1 RESULT: PASS 0 failures</expect></criterion>
   <criterion id="AC2" cell_refs="RIV-nm-1"><invocation>python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round6/checks/nm-1.AC2.py</invocation><expect>AC2 RESULT: PASS 0 failures</expect></criterion>
   <criterion id="AC3" cell_refs="RIV-nm-1"><invocation>python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round6/checks/nm-1.AC3.py</invocation><expect>AC3 RESULT: PASS 0 failures</expect></criterion>
+  <criterion id="AC4" cell_refs="RIV-nm-1"><invocation>python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round6/checks/nm-1.AC4.py</invocation><expect>AC4 RESULT: PASS 0 failures</expect></criterion>
 </proof_of_spec>
 
 ## 5. WHEN YOU ARE DONE
