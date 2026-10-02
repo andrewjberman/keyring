@@ -5,7 +5,7 @@
  "project": "IRPT_DASHBD",
  "directive": "D9",
  "fabric": "laptop",
- "prd_version": "v0.5",
+ "prd_version": "v0.6",
  "step": 4,
  "brief_ref": "docs/briefs/reporting-dashboard-backend-brief-20260930.md@0ee065b116",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10"],
@@ -417,3 +417,32 @@ strategy reads "Opal Tax SMA 200/145"; the thread account is barred on 0 of 558 
 
 **Not ruled here.** The excluded-weight ceiling and the round-1 sample (five roster entries or the three active ones) are the
 issuer's, as TO-DB-b-1's amendments say; neither waits on this addendum.
+
+## ADDENDUM v0.6 -- the tie-out compares like day sets; no tolerance and no preferred convention from round 1 (L4; outside the ENDPOINT section, so no half re-opens)
+
+**Source.** Row `IRPT_DASHBD-S10` @2f86242170 with its correction `IRPT_DASHBD-S11` @e9cea9fdbf (0.4.0_DS_ClientPlatform~S), and the
+record `deliverables/0.4.0_DS_ClientPlatform~S/tieout/TIEOUT_49F_BLACKDIAMOND_R1.md` with its JSON (TO-DB-b-3, 0 vendor calls,
+overlap_before_pull 5). Measured there: five (account, window) pairs over two mapped accounts; Opal links 65/73, 104/115, 54/58,
+39/42 and 34/38 days against Black Diamond's daysHeld 74, 116, 58, 42 and 38; abs_diff median 1.6754%, p90 and max 3.6572%; ten
+flow-bearing account-days of which ONE is eligible. Ruled by `1.0.0_SA_CTO` 2026-10-02 ~01:4xZ under ruling 11.
+
+22. **The proposed tie-out tolerance 0.0370 is not adopted.** `tieout_tolerance` stays unset in `dim_return_method`; the
+    `tieout_tolerance_proposed` value stays as written and is read with this ruling. The five differences compare two day sets:
+    Opal's link excludes the days it withheld, Black Diamond's return covers every held day, and on the largest case (0076459710,
+    3.657 points) the withheld days hold the 1,108,201.80 USD inception funding. A percentile of a day-set mismatch is not a bound
+    on agreement, and a 3.7-point bar on a client-facing return would admit the mismatch as agreement.
+23. **The tie-out grades AGREEMENT only on like day sets.** An (account, window) pair is graded only when Opal's linked days equal
+    Black Diamond's daysHeld for that window (no withheld day). Round 1 has zero such pairs of five, and that count is round 1's
+    tie-out result: FWD-8 is not graded on agreement yet. Every other pair reports COVERAGE beside the difference -- linked days
+    over held days, and the withheld days' net flow -- so no reader takes the difference for a disagreement. Like windows come
+    from Black Diamond's return over each of Opal's gap-free segments; that is a fresh vendor pull, which amendment 1 admits only
+    below overlap 5 and which needs Andrew's per-use word (CLAUDE.md, vendor egress). It is one card on Andrew's list, not a seat's
+    act; no seat calls the vendor before his word.
+24. **No preferred flow convention is recorded from round 1.** On a zero-flow day END, START and MIDPOINT are the same number, so
+    one eligible flow-bearing day in one account cannot rank three conventions. The record's mechanical `START` is read as not
+    determined by this ruling; no edit to the record or the contract is owed, and nothing downstream reads it as a preference.
+    The served `flow_convention` stays END (C-FLOWTIME's default). A later measurement ranks the conventions only over eligible
+    flow-bearing days from more than one account, with that count printed beside the winner.
+25. **Not ruled here.** FWD-8's ACCEPT ("a tolerance Andrew accepts") stays his, and his word supersedes this ruling (ruling 11).
+    The 1,498.38 USD flow residual on 0027265115 (the record's section 6; the fee matches to the cent) is an enrichment line for
+    the next round of workstream B, not a defect ruled here.
