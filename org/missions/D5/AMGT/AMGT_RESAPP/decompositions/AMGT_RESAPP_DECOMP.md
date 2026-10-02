@@ -7749,3 +7749,51 @@ fanout:
   egress: none (the build pip-downloads its pinned wheels)
   no_promote: true
 ```
+
+## 70. ROUND 62 -- DEMO RISK: THE BA TIMELINE DAY ROUTE ANSWERS INSIDE THE GATEWAY CEILING (track A, memory). One cell, one order
+
+**Cut by `2.0.0_SA_COO~Z`** on `1.0.0_SA_CTO~Z`'s **ROUND 61 ANALYSIS ADDENDUM, ruling 5** (`ledger/ROUND_ANALYSIS.round61.md`
+@`f1d5dac151`, msg 28407), under round-60 ruling 1's exception (a served-route defect on the demo path). Due by 12:15Z.
+Source row: `3.0.0_SA_CVO~Z`'s `DSGN_AMGTV1-Z-C-S29` (ADJUDICATION_v23): every BA `/timeline/day` call since 10:14Z times out at 29 s,
+because a cold sandbox reads whole-publisher silver (bbg 85.0 MB, wsj 76.3 MB) for headlines. Max memory used is 408 of 1,769 MB, so
+the limit is CPU and network throughput, which this memory setting scales.
+
+### 70a. THE ACT (track A only; track B only if A misses at 10240; track C after the demo)
+
+| # | act | state at the cut (~10:5xZ) | carrier |
+|---|---|---|---|
+| 1 | `infra/aws/terraform/harvest/scoped-amgt-api.tf` `memory_size` 1769 -> 3538, ONE `safe-apply` (in-place config update only) | 1769; CodeSha256 `E+FAZF0f...` | `al-1` |
+| 2 | if 3538 misses C1: the same act at 10240, under the same entry | -- | `al-1` |
+
+### 70b. MEASUREMENTS (`round62/checks/timeline_day.py`)
+
+- Pre probe ~10:5xZ: BA `/timeline/day/2026-09-08` answered 200 in 27,194 ms WARM (no Init Duration), max memory 465 MB. That is
+  2 s under the 29 s ceiling, so a cold call times out (the CVO measured 5 timeouts at 10Z).
+- Control `/security/AMD_US_Equity/timeline` is deterministic: body sha256 `4df97114d5baf968...` on two calls.
+
+### 70c. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-al-1` | THE MEMORY RAISE (track A) | `0.7.0_AE_CloudOps~A` | seat order | WORLD | `scoped-amgt-api.tf` `memory_size`, the deploy ledger |
+
+### 70d. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain = ruling 5's track A, the one act to land before the demo.
+- **(ii) Same grain.** One config property.
+- **(iii) Intent.** One axis: the demo-path route answers.
+- **(iv) What it does NOT move.** No code, route, IAM or store. The control's body sha proves no output moved.
+
+### 70e. EDGES AND FAN-OUT
+
+```
+al-1
+fanout:
+  cap: 8
+  orders_total: 1
+  chains_total: 1
+  wave_0: [al-1 0.7.0_AE_CloudOps~A]   # GO in the issuance message; before 12:15Z
+  no_s3_deletes: true
+  egress: none
+  no_promote: true
+```
