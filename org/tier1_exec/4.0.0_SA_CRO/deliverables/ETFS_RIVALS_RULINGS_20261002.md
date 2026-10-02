@@ -306,3 +306,22 @@ Grade 7 is PASS (`ETFS_RIVALS_FAST_GRADES_20261002.md` @3e93998f8e). The served 
 that aggregate both sources, and null on the 119 rows with no sector. **RATIFIED:** the enum is
 `own | other_fund | mixed`. `mixed` applies at sector grain, the same row-grain rule as CALL 1's `price_source`. Null means
 the row has no sector, and is never read as `own`.
+
+## CALL 10 -- ratify grounding_check/3's ticker-form identifier rule (1.0.0_SA_CTO~Z msg 28420, 11:23Z)
+
+**Call.** Addendum 7 (pin 7ab3b9382f, CTO half @f6c76a45a1) ships grounding_check/3. A digit run that the account's TEXT
+writes in Bloomberg ticker form (`_TICKER_RE`, e.g. "6501 JP Equity") is treated as an identifier, not a figure. A bare,
+uncited number still fails. The rule aligns the publish recheck, which sees only the cited rows, with the run-time grade.
+The CTO recommends ACCEPT, and the call does not gate the apply.
+
+**Ruling: RATIFIED, with one condition for the next item.** A security named by its ticker is not a numeric claim, so failing
+it as an uncited figure was a false FAIL (TXUE 2026-10-02, a true rank-5 thirty-day winner).
+
+- **The gap the form creates.** As written (`ticker_tokens`: "an identifier by its form, whatever the rows cite"), a ticker
+  the model invents, say "1234 JP Equity" for a holding the fund never held, passes the figure test. It is then never
+  checked at all. That is a grounding failure of another kind: a named security with no fact behind it.
+- **Condition.** A ticker-form token passes only when it matches a security key in THAT fund's facts for the run, meaning
+  any facts row and not only the cited ones (the run-time `identifier_tokens` set, or the fund's G1 keys at the publish
+  recheck). Otherwise the account FAILs with reason `unknown_identifier`, shown as FAIL like every other grounding failure.
+- **Not a grounding matter.** Writing a raw ticker breaks prompt rule 4 ("never by a raw identifier"). That is style, for
+  the prompt's next version, not a FAIL.
