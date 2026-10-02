@@ -44,6 +44,7 @@ for (let i = 0; i < argv.length; i++) {
   else if (a === '--headed') opt.headed = true
   else if (a === '--deep') opt.deep = true
   else if (a === '--model-scope') opt.modelScope = true
+  else if (a === '--account-drill') opt.accountDrill = true
   else if (a === '--open-request') opt.openRequest = argv[++i]
   else if (a === '--holdings-aggregates') opt.holdingsAggregates = true
   else if (a === '--performance-state') opt.performanceState = true
@@ -813,6 +814,71 @@ async function openRequest(page, label, requestId, afterReload = false) {
 
 const SEARCH_ANSWER_CEILING_MS = 30000
 const searchTimings = []
+// ---- --account-drill (DSGN_IRPTV1 FAST item 65; Andrew-direct 2026-10-02 ~04:3xZ: an account drill on the Total Assets
+// card must not be a full page refresh). On the Holdings tab's default view: wait until the tab's background one-account
+// reads are done (no holdings read out for 2.5 s, up to ACCOUNT_DRILL_WARM_CEILING_MS), press the card's first tile, and
+// poll every 40 ms until the one-account view is shown ("Back to all accounts" present, no "Opening" line). Counts and
+// times only: no client name and no figure is written. Then it returns to every account.
+const accountDrills = []
+const ACCOUNT_DRILL_WARM_CEILING_MS = 60000
+async function accountDrill(page, label) {
+  const reads = []          // { kind, sent, answered }
+  const byReq = new Map()
+  const onRequest = (req) => {
+    const p = pathOnly(req.url())
+    const kind = /\/investor-reporting\/holdings\//.test(p) ? 'holdings' : (req.method() === 'POST' && /\/investor-reporting\/selections$/.test(p)) ? 'selection' : null
+    if (!kind) return
+    const r = { kind, sent: Date.now(), answered: null, status: null }
+    reads.push(r); byReq.set(req, r)
+  }
+  const onDone = (req, status) => { const r = byReq.get(req); if (r && r.answered === null) { r.answered = Date.now(); r.status = status } }
+  const onResponse = (res) => onDone(res.request(), res.status())
+  const onFailed = (req) => onDone(req, 'failed')
+  page.on('request', onRequest); page.on('response', onResponse); page.on('requestfailed', onFailed)
+  const t0 = Date.now()
+  let quietSince = Date.now()
+  while (Date.now() - t0 < ACCOUNT_DRILL_WARM_CEILING_MS) {
+    if (reads.some((r) => r.answered === null)) quietSince = Date.now()
+    else if (Date.now() - quietSince >= 2500) break
+    await page.waitForTimeout(100)
+  }
+  const warmMs = Date.now() - t0
+  const background = reads.filter((r) => r.kind === 'holdings').map((r) => (r.answered === null ? null : r.answered - r.sent))
+  const tiles = page.locator('[data-slot="holdings-drill-tree"] [aria-haspopup="dialog"]')
+  const tileCount = await tiles.count()
+  const rec = { label, tiles: tileCount, warm_wait_ms: warmMs, background_holdings_reads: background.length,
+    background_selection_posts: reads.filter((r) => r.kind === 'selection').length,
+    background_holdings_took_ms: background, drill: null }
+  if (tileCount > 0) {
+    const pressAt = Date.now(); const before = reads.length
+    await tiles.first().click().catch(() => {})
+    let tabGone = false; let opening = false; let shownMs = null
+    while (Date.now() - pressAt < 30000 && shownMs === null) {
+      const s = await page.evaluate(() => ({
+        tab: !!document.querySelector('[data-slot="holdings-tab"]'),
+        opening: !!document.querySelector('[data-slot="holdings-account-opening"]'),
+        back: !!document.querySelector('[data-slot="holdings-all-accounts"]'),
+      })).catch(() => ({ tab: false, opening: false, back: false }))
+      if (!s.tab) tabGone = true
+      if (s.opening) opening = true
+      if (s.tab && s.back && !s.opening) shownMs = Date.now() - pressAt
+      else await page.waitForTimeout(40)
+    }
+    const after = reads.slice(before)
+    rec.drill = { ms_to_account_view: shownMs, tab_body_left_the_page: tabGone, opening_line_shown: opening,
+      reads_after_press: after.map((r) => ({ kind: r.kind, sent_ms: r.sent - pressAt, took_ms: r.answered === null ? null : r.answered - r.sent })),
+      account_view_offered: shownMs !== null }
+    await page.keyboard.press('Escape').catch(() => {})
+    await shot(page, `${label}-account-drill`)
+    await checks(page, `${label}-account-drill`)
+    await page.locator('[data-slot="holdings-all-accounts"]').first().click().catch(() => {})
+    await page.waitForTimeout(800)
+  }
+  page.off('request', onRequest); page.off('response', onResponse); page.off('requestfailed', onFailed)
+  accountDrills.push(rec)
+  if (rec.drill && rec.drill.tab_body_left_the_page) findings.push({ step: `${label}-account-drill`, check: 'account-drill:page-reload', claim: 'measured', observed: 'the Holdings tab body left the page during an account drill', rule: 'an account drill on the Total Assets card is not a page reload (Andrew-direct 2026-10-02)' })
+}
+
 async function modelScope(page, label, maxPresses = 10) {
   const read = () => page.evaluate(() => {
     const scope = document.querySelector('[data-slot="holdings-model-scope"]')
@@ -1071,6 +1137,11 @@ try {
             }
             // Drill FIRST, on the tab's default view: the explore step below changes selects and opens popups.
             if (/holdings/.test(name)) {
+              // --account-drill runs on the tab's default view, BEFORE the generic drill below presses a tile itself.
+              if (opt.accountDrill) {
+                await accountDrill(page, `${client}-holdings`)
+                log('ACCOUNT DRILL', JSON.stringify(accountDrills[accountDrills.length - 1]).slice(0, 900))
+              }
               const p = await drill(page, '[data-slot="holdings-tab"]', `${client}-holdings`)
               drillPaths.push({ client, paths: p })
               log('DRILL PATHS', JSON.stringify(p).slice(0, 400))
@@ -1123,6 +1194,7 @@ try {
   if (loadStates.length) writeFileSync(path.join(OUT, 'load-states.json'), JSON.stringify(loadStates, null, 1))
   if (timelineDays.length) writeFileSync(path.join(OUT, 'timeline-days.json'), JSON.stringify(timelineDays, null, 1))
   if (modelScopes.length) writeFileSync(path.join(OUT, 'model-scope.json'), JSON.stringify(modelScopes, null, 1))
+  if (accountDrills.length) writeFileSync(path.join(OUT, 'account-drill.json'), JSON.stringify(accountDrills, null, 1))
   if (searchTimings.length) writeFileSync(path.join(OUT, 'search-timings.json'), JSON.stringify(searchTimings, null, 1))
   if (openedRequests.length) writeFileSync(path.join(OUT, 'analysis-request.json'), JSON.stringify(openedRequests, null, 1))
   if (holdingsAggregates.length) writeFileSync(path.join(OUT, 'holdings-aggregates.json'), JSON.stringify(holdingsAggregates, null, 1))
