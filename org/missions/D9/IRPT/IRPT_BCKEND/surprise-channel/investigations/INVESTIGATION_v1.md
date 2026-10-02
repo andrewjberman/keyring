@@ -14640,3 +14640,84 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "INERT today (the unit runs; nothing reads the old roots). Owner of the install path: 2.0.0_SA_COO~Y. Remedy: keep the running root and one previous, remove the rest by name, after a df read."
 }
 ```
+
+## IRPT_BCKEND-W101-S1 -- every retained Analysis report is prospect-owned, and a render grant cannot pin a prospect
+
+```json
+{
+  "id": "IRPT_BCKEND-W101-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~101",
+  "surfaced_at": "2026-10-02T09:48:46Z",
+  "one_line": "IB-pr-281: all 7 retained ANALYSIS reports in cottonwood (irpt-requests, REPORT# items) are prospect-owned (account_ids = [], prospect_input_id set); _render_identity/grant.build requires non-empty account_ids, so render_grant refuses every real Analysis export by name after the resolver admits it.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .scratch probe (this worker, 2026-10-02): irpt-requests tenant=cottonwood begins_with REPORT# -> 9 items, 7 ANALYSIS, each owner.account_ids length 0 and prospect_input_id set; 2 PERFORMANCE each length 1",
+      "infra/aws/lambda/investor-reporting/_render_identity/grant.py build(): missing = sorted(k for k, v in values.items() if not v) includes account_ids",
+      "infra/aws/lambda/investor-reporting/export/tests/test_retained_export_analysis.py::test_a_prospect_owned_analysis_report_has_no_accounts_for_a_render_grant_to_pin"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The TO face assumes an Analysis report resolves, grants and prints with 'the analysis request's own identity in place of an account set'; the resolver arm and print query need no accounts.",
+  "world_is": "The resolver now admits a prospect-owned Analysis report to its own owner (retained_export.authorizer), and print_query needs only the pins. But grant.build treats an empty account_ids as a missing field, and the Enforcer's render read intersects the bundle's account_ids with the delegator's scope; a prospect has none. So a served submit-export of a real Analysis report stops at render_grant (ExportSubmitRefused 'a prospect-owned Analysis report has no accounts for a render grant to pin'). Not read: whether the render read path would serve an OWNED_RECORD analysis read with an empty account list; that is the Enforcer's rule, outside this order's paths.",
+  "notes": "The decision is the render-identity owner's: a grant shape that admits a prospect (owner-bound, no accounts) and the Enforcer rule that reads it. This order's print query for the real report was built over the pins the grant would carry (retained_export.analysis_pins), from a grant-shaped record; no grant was built or written."
+}
+```
+
+## IRPT_BCKEND-W101-S2 -- the submit path's narrative step and status date read a Performance window an Analysis report does not have
+
+```json
+{
+  "id": "IRPT_BCKEND-W101-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~101",
+  "surfaced_at": "2026-10-02T09:48:46Z",
+  "one_line": "IB-pr-281: export/narrative_submit.cutoff_for and export/submit_service.serve_submit read report['dates']['actual_end'], which an AnalysisReport does not carry; the bundle built here binds a locally derived narrative_packet_ref, not a built packet.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/narrative_submit.py cutoff_for (dates.actual_end required)",
+      "infra/aws/lambda/investor-reporting/export/submit_service.py serve_submit status source_dates uses resolved['report']['dates']['actual_end']",
+      "infra/aws/lambda/investor-reporting/export/submit_installed.py _validate: kind != PERFORMANCE raises"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The resolver, grant and print query are the retained-export path's Analysis gap; the rest of the submit is kind-agnostic.",
+  "world_is": "narrative_submit.cutoff_for raises NarrativeSubmitRefused('the retained report carries no actual window end') for an Analysis report, and serve_submit's status uses resolved['report']['dates']['actual_end']; submit_installed._validate also raises 'only a Performance report exports'. So a served submit stops there even after the resolver admits the report. The local bundle's narrative_packet_ref is a deterministic reference over the report id and revision (sha256 of a fixed statement), not a built packet.",
+  "notes": "Outside this order's paths (narrative_submit.py, submit_service.py, submit_installed.py). The ExportBundle contract requires narrative_packet_ref; the PDF check forbids the text 'Narrative' in an analysis export, so the right shape of that ref for Analysis is a decision for the issuer."
+}
+```
+
+## IRPT_BCKEND-W101-S3 -- the print page reads an Analysis report by the bundle id, the render grant pins it by the request id
+
+```json
+{
+  "id": "IRPT_BCKEND-W101-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~101",
+  "surfaced_at": "2026-10-02T09:48:46Z",
+  "one_line": "IB-pr-281: PrintEntry/resolveBundle fetch analysis-report with requestId = the ?bundle= value, but the render host's X-Render-Bundle must equal the grant's bundle_id (a sha256) while the route's jobId pin is the request id; the two cannot both hold with one query value.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/render/PrintEntry.tsx: reportRefs: [bundleId]",
+      "portal/src/pages/InvestorReporting/export/resolveBundle.ts: getAnalysisReport({ ..., requestId: ref.reportRef })",
+      "infra/aws/lambda/investor-reporting/_authz/enforce.py: unpinned = sorted(k for k, v in request.path_ids.items() if str(pins.get(k)) != v)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "'The print page ... reads ?kind=performance|analysis and renders AnalysisDocument from the bundle'; the query carries the report's ids.",
+  "world_is": "portal/src/pages/InvestorReporting/render/PrintEntry.tsx composes reportRefs [bundleId], and export/resolveBundle.ts calls getAnalysisReport({requestId: ref.reportRef}) with that value; the route is GET .../analysis/{jobId}/sections and _authz/enforce.py refuses a path id the grant does not pin. The query built here carries bundle (the grant bundle id), report and request, but the page reads only bundle for the Analysis fetch, so it would ask for jobId = the bundle sha, which the grant (jobId = the request id) does not pin. Not read: a live render of the page.",
+  "notes": "Portal files are read only for this order; the field is the page's use of ?bundle= as the Analysis request id. The remedy is the portal owner's (read ?request= for kind=analysis) or the grant owner's."
+}
+```
