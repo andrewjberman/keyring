@@ -123,7 +123,7 @@ a figure inside a closed dialog not rendered through `HeaderCardDetail`; money f
 fixture carries one). In this worker's own tree HeaderBrief still mounts a timeline, so two timelines render until `AV-zg-1` merges; the
 checks stub HeaderBrief.
 
-<status>pending</status>
+<status>complete</status>
 <round>29</round>
 <slot>~81</slot>
 <fabric>site-z</fabric>
