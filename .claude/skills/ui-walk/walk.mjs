@@ -46,6 +46,7 @@ for (let i = 0; i < argv.length; i++) {
   else if (a === '--model-scope') opt.modelScope = true
   else if (a === '--account-drill') opt.accountDrill = true
   else if (a === '--open-request') opt.openRequest = argv[++i]
+  else if (a === '--composer-picker') opt.composerPicker = true
   else if (a === '--holdings-aggregates') opt.holdingsAggregates = true
   else if (a === '--performance-state') opt.performanceState = true
   else if (a === '--expect-text') opt.expectTexts.push(String(argv[++i] || ''))
@@ -879,6 +880,78 @@ async function accountDrill(page, label) {
   if (rec.drill && rec.drill.tab_body_left_the_page) findings.push({ step: `${label}-account-drill`, check: 'account-drill:page-reload', claim: 'measured', observed: 'the Holdings tab body left the page during an account drill', rule: 'an account drill on the Total Assets card is not a page reload (Andrew-direct 2026-10-02)' })
 }
 
+// ---- --composer-picker (DSGN_IRPTV1 FAST item 70; walk-2 W2-04 / W2-05): on the Analysis tab, take the composer to its
+// analysis-type step (the Client portfolio card), then press the Multi-Comp card (the picker must open at once, Done closed
+// at 0 picks), pick the first two Opal models, Done; press the Comparison card, search 'spy', pick the first ETF, Done;
+// press Overview. Records the served catalogue read (status, took, entry counts by kind), the loose input box count at rest
+// and at the end, and the names the composer prints. Page state only: the catalogue read is a GET and Generate is never
+// pressed. Opal model and ETF names are the firm's catalogue, not client data.
+const composerPickers = []
+async function composerPicker(page, label) {
+  const reads = []
+  const onResponse = async (res) => {
+    if (!/\/analysis\/comparisons$/.test(pathOnly(res.url()))) return
+    const r = { status: res.status(), took_ms: null, entries: null, models: null, etfs: null }
+    try { const t = res.request().timing(); r.took_ms = t.responseEnd > 0 ? Math.round(t.responseEnd) : null } catch { /* timing unread */ }
+    try { const body = await res.json(); const e = (body && body.data && body.data.entries) || []; r.entries = e.length; r.models = e.filter((x) => x.name_source === 'model_catalogue').length; r.etfs = r.entries - r.models } catch { /* not JSON */ }
+    reads.push(r)
+  }
+  page.on('response', onResponse)
+  const rec = { label, reached_type_step: false, catalogue_reads: reads, loose_input_at_rest: null }
+  const names = () => page.evaluate(() => [...document.querySelectorAll('[data-slot="comparison-name"]')].map((e) => (e.textContent || '').trim()))
+  const looseInput = async () => (await page.getByRole('textbox', { name: 'Compare with an Opal model' }).count().catch(() => 0)) + (await page.locator('[data-slot="add-comparison"]').count().catch(() => 0))
+  const pickerOpen = async () => (await page.locator('[data-slot="comparison-picker"]').count().catch(() => 0)) > 0
+  const variant = () => page.locator('[data-slot="variant-resolved"]').first().textContent({ timeout: 2000 }).catch(() => null)
+  const card = (word) => page.locator('[data-slot="variant-card"]').filter({ hasText: word }).first()
+  try {
+    // the Client card IS the step to the analysis-type page (AnalysisTab choosePortfolio -> page 2); Next would leave it
+    await page.locator('[data-slot="analysis-portfolio-card"][data-portfolio="client"]').first().click({ timeout: 5000 })
+    await page.locator('[data-slot="variant-card"]').first().waitFor({ state: 'visible', timeout: 10000 })
+    rec.reached_type_step = true
+    // the catalogue is read when the composer mounts; give a slow answer up to 15 s before the cards are pressed
+    const tw = Date.now()
+    while (Date.now() - tw < 15000 && !reads.length) await page.waitForTimeout(100)
+    rec.entry_words = ((await page.locator('[data-slot="composer-picker-entry"]').first().textContent({ timeout: 1000 }).catch(() => null)) || '').trim().slice(0, 160) || null
+    rec.loose_input_at_rest = await looseInput()
+    await card('Multi-Comp').click(); await page.waitForTimeout(600)
+    const multi = { picker_opened: await pickerOpen() }
+    if (multi.picker_opened) {
+      multi.done_disabled_at_0 = await page.locator('[data-slot="picker-done"]').isDisabled().catch(() => null)
+      multi.models_offered = await page.locator('[data-slot="picker-model"]').count()
+      await shot(page, `${label}-picker-multicomp`)
+      await checks(page, `${label}-picker-multicomp`)
+      for (let i = 0; i < Math.min(2, multi.models_offered); i++) await page.locator('[data-slot="picker-model"]').nth(i).click()
+      multi.done_disabled_after = await page.locator('[data-slot="picker-done"]').isDisabled().catch(() => null)
+      if (multi.done_disabled_after === false) { await page.locator('[data-slot="picker-done"]').click(); await page.waitForTimeout(500) }
+      else { await page.locator('[data-slot="picker-cancel"]').click().catch(() => {}); await page.waitForTimeout(300) }
+      multi.names = await names(); multi.variant = await variant(); multi.picker_open_after = await pickerOpen()
+    }
+    rec.multicomp = multi
+    await card('Comparison').click(); await page.waitForTimeout(600)
+    const one = { picker_opened: await pickerOpen() }
+    if (one.picker_opened) {
+      await page.locator('[data-slot="picker-search"]').fill('spy'); await page.waitForTimeout(300)
+      one.search_matches = await page.locator('[data-slot="picker-etf"]').count()
+      await shot(page, `${label}-picker-comparison`)
+      if (one.search_matches > 0) { await page.locator('[data-slot="picker-etf"]').first().click(); await page.locator('[data-slot="picker-done"]').click(); await page.waitForTimeout(500) }
+      else { await page.locator('[data-slot="picker-cancel"]').click().catch(() => {}); await page.waitForTimeout(300) }
+      one.names = await names(); one.variant = await variant()
+    }
+    rec.comparison = one
+    await page.locator('[data-slot="composer-comparisons"]').first().scrollIntoViewIfNeeded().catch(() => {})
+    await shot(page, `${label}-picker-named`)
+    await checks(page, `${label}-picker-named`)
+    await card('Overview').click(); await page.waitForTimeout(500)
+    rec.overview = { names: await names(), variant: await variant(), picker_open: await pickerOpen() }
+    rec.loose_input_at_end = await looseInput()
+  } catch (e) { rec.error = String(e.message || e).split('\n')[0].slice(0, 200) }
+  await page.keyboard.press('Escape').catch(() => {})
+  page.off('response', onResponse)
+  composerPickers.push(rec)
+  if (rec.loose_input_at_rest > 0 || rec.loose_input_at_end > 0) findings.push({ step: `${label}-picker`, check: 'composer:loose-input', claim: 'measured', observed: 'the composer shows a comparison input box outside the picker on the live client', rule: 'W2-05: no input box outside the picker' })
+  if (rec.multicomp && rec.multicomp.picker_opened === false) findings.push({ step: `${label}-picker`, check: 'composer:no-picker', claim: 'measured', observed: 'the Multi-Comp card did not open the comparison picker', rule: 'W2-05: the card opens the picker' })
+}
+
 async function modelScope(page, label, maxPresses = 10) {
   const read = () => page.evaluate(() => {
     const scope = document.querySelector('[data-slot="holdings-model-scope"]')
@@ -1150,6 +1223,11 @@ try {
                 log('MODEL SCOPE', JSON.stringify(modelScopes[modelScopes.length - 1]).slice(0, 900))
               }
             }
+            // --composer-picker runs on the tab's default view, BEFORE the explore step below changes selects.
+            if (opt.composerPicker && /analysis/.test(name)) {
+              await composerPicker(page, `${client}-analysis`)
+              log('COMPOSER PICKER', JSON.stringify(composerPickers[composerPickers.length - 1]).slice(0, 1200))
+            }
             await exploreScope(page, '[data-slot="tabs"]', `${client}-${name}`)
             if (opt.periodsPerAccount && /performance/.test(name)) await periodsPerAccount(page, '[data-slot="tabs"]', `${client}-${name}`)
             if (opt.openRequest && /analysis/.test(name)) {
@@ -1195,6 +1273,7 @@ try {
   if (timelineDays.length) writeFileSync(path.join(OUT, 'timeline-days.json'), JSON.stringify(timelineDays, null, 1))
   if (modelScopes.length) writeFileSync(path.join(OUT, 'model-scope.json'), JSON.stringify(modelScopes, null, 1))
   if (accountDrills.length) writeFileSync(path.join(OUT, 'account-drill.json'), JSON.stringify(accountDrills, null, 1))
+  if (composerPickers.length) writeFileSync(path.join(OUT, 'composer-picker.json'), JSON.stringify(composerPickers, null, 1))
   if (searchTimings.length) writeFileSync(path.join(OUT, 'search-timings.json'), JSON.stringify(searchTimings, null, 1))
   if (openedRequests.length) writeFileSync(path.join(OUT, 'analysis-request.json'), JSON.stringify(openedRequests, null, 1))
   if (holdingsAggregates.length) writeFileSync(path.join(OUT, 'holdings-aggregates.json'), JSON.stringify(holdingsAggregates, null, 1))
