@@ -6608,6 +6608,28 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "spec_asserts": "CTO msg 28792: the 10 ARMED HARVST rows left after 3.0.0_SA_CVO~Z's REMEDIATION_v5 (@41be202aa5) are this seat's to disarm on evidence or place in round 39; none is carried a third time.",
       "world_is": "Read at CLOUD HEAD 56eaa6d500 against the cited code; every cited fix commit is an ancestor of HEAD.",
       "notes": "Disposition per CTO 28792 by the issuer. The read-only assessment was run 2026-10-02 ~22:4xZ."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S80",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-02T23:25Z",
+      "one_line": "DISARMED by its disarm_owner: AMGT_HARVST-Z-S11. The checker's owner fixed it: proof-of-spec-check now compares invocations in their runnable (decoded) form, so an escaped invocation aligns and is NOTED as not runnable as written.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "9edfeae04d (1.0.0_SA_CTO~Z): .tools/proof-of-spec-check.py decodes the order's markup and the record (the five XML entities plus numeric references, semicolon required) before the invocation-alignment compare; self-test 48/48; 8 real entity-carrying instances read VALID before and after (CTO msg 28796)",
+          "routed by row AMGT_HARVST-Z-S78"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "CTO msg 28792: each ARMED HARVST row is disarmed on evidence or placed in round 39.",
+      "world_is": "Z-S11's hazard (agreement certified, never runnability) is closed in the checker. 664 legacy escaped records in 247 of 1,717 proof files stay VALID and are noted, never refused.",
+      "notes": "The CTO accepted the other 8 dispositions (Z-S70..Z-S77) and W91-S10's round-39 placement (Z-S79). The census flip awaits the CVO's adjudication."
     }
   ]
 ```
