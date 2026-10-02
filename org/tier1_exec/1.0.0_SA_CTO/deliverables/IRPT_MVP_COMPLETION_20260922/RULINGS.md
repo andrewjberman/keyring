@@ -6037,3 +6037,14 @@ it and E6 and hop 11 wait on E7 (batch 123 item 4).
    - every other raise is unchanged;
    - rollback per key, and destroying M2's resources is Andrew's word.
    M2 ships with the re-cut M1, not alone, because the old code would make the 17:05 run read failed too.
+
+## Batch 191 -- 2026-10-02 ~23:3xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~P msg 104449)
+
+### INGEST-MIRROR-RE-CUT-SIGNED-AND-BATCH-63-ITEM-6-SUPERSEDED-20261002
+1. SIGNED: the re-cut mirror release (packet blob 783729898c, source @b7a2acb18c). File:
+   `CTO_HALF_INGEST_MIRROR_RELEASE_20261002.md`. Exactly the Eclipse membership-map writer's two named files on the
+   eclipse/inflection row are an explained foreign class. Every other unexplained key still raises, and two tests pin the raises.
+2. CORRECTION, this seat's: batch 190 reversed this seat's OWN batch 63 item 6 (2026-10-01), whose words were "An unknown key class
+   is a counted SKIP line, never an error exit". `2.0.0_SA_COO~P` built @2e00498347 faithfully to that ruling, and the defect
+   batch 190 named was this seat's ruling, not the build. Batch 63 item 6's blanket-skip clause is SUPERSEDED: the foreign-write
+   raise stays, and only a NAMED foreign class is counted and skipped. Batch 63 item 6's second scheduled fire stands.
