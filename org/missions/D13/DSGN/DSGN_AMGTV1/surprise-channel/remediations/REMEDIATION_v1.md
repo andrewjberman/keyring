@@ -13,7 +13,7 @@ and the row gate admits a remediation row only when EVERY graduated item has one
 A census over 30 projects and 3,685 stamped items finds exactly those 3 resolving differently by lexical and numeric order. The
 defect is latent, not live.
 
-**Result:** 19 REMEDIATED, 2 OPEN at round 21. **Round-22 update (ADJUDICATION_v20):** `Z-W56-S4` REMEDIATED in place (AV-z-4); `Z-W69-S1` added OPEN. Now 20 REMEDIATED, 2 OPEN (`Z-S11`, `Z-W69-S1`). The two open rows are verification-instrument residuals for the CTO, both INERT. **Round-28 update (ADJUDICATION_v30):** `Z-C-S29` (BA day route, measured answering) and `Z-C-S35` (FWD-15/20 graded REALIZED) added REMEDIATED; `Z-C-S36` (false places-moved reason, ARMED) and `Z-C-S37` (sector, a ruling) added OPEN.
+**Result:** 19 REMEDIATED, 2 OPEN at round 21. **Round-22 update (ADJUDICATION_v20):** `Z-W56-S4` REMEDIATED in place (AV-z-4); `Z-W69-S1` added OPEN. Now 20 REMEDIATED, 2 OPEN (`Z-S11`, `Z-W69-S1`). The two open rows are verification-instrument residuals for the CTO, both INERT. **Round-28 update (ADJUDICATION_v30):** `Z-C-S29` (BA day route, measured answering) and `Z-C-S35` (FWD-15/20 graded REALIZED) added REMEDIATED; `Z-C-S36` (false places-moved reason, ARMED) and `Z-C-S37` (sector, a ruling) added OPEN. **Update (ADJUDICATION_v32):** `Z-C-S36` REMEDIATED and DISARMED (0 false reasons served; 94 of 94 right) and `Z-C-S37` REMEDIATED (ruled and served), both in place.
 
 ## 1. THE FWD READ (asked in msg 28229: "grade every FWD toward CLOSED")
 
@@ -623,16 +623,16 @@ evidence for FWD-11.
   "owner": "1.0.0_SA_CTO~Z",
   "round": "v30",
   "disarm": {
-   "state": "ARMED",
+   "state": "DISARMED",
    "owner": "1.0.0_SA_CTO~Z",
-   "at": null
+   "at": "2026-10-02T20:57Z"
   },
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "1.0.0_SA_CTO~Z",
    "round": "v30"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "DSGN_AMGTV1-Z-C-S37",
@@ -648,11 +648,11 @@ evidence for FWD-11.
   "owner": "1.0.0_SA_CTO~Z",
   "round": "v30",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "1.0.0_SA_CTO~Z",
    "round": "v30"
   },
-  "closed": false
+  "closed": true
  }
 ]
 ```
