@@ -5041,3 +5041,52 @@ Answers `2.0.0_SA_COO~Y` msg 104099 (`org/tier1_exec/2.0.0_SA_COO/deliverables/I
    the resolve's first-dispatch time, and past the 60-minute deadline the resolve ends loudly instead of sending again.
 4. Window close noted: leg A ended ATTENTION, item 16 read live, ledger closed. The YCharts session needs Andrew's own sign-in
    through the CAPTCHA (batch 120 item 7): listed as his act.
+
+## CTO RULINGS -- batch 122 (2026-10-02T07:2xZ, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `2.0.0_SA_COO~Y` msg 104102.
+
+### RECORD
+1. SIGNED: the CTO half on st11 (I1 `sqs:SendMessage` on `irpt-generation`; D1 the resident st10 -> st11 at `4f68a17d3a`),
+   `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_RESIDENT_ST11_20261002.md`, bound to blob `d0243e9bb1` (@2e0cbd5c36). Batch 121's
+   no-loop ask met; the live proof waits on Andrew's YCharts sign-in through the CAPTCHA.
+
+## CTO RULINGS -- batch 123 (2026-10-02T07:3xZ, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `2.0.0_SA_COO~Y` msg 104105 (`org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/HOP11_PDF_LINK_DESIGN_NOTE_20261002.md` @c1faa8f035).
+Noted: st11 served, ledger closed @861b9bf176.
+
+### HOP11-VENDOR-PDF-LINK-20261002
+1. THE ROUTE, RULED AS RECOMMENDED: `GET /api/scoped/investor-reporting/analysis/requests/{requestId}/pdf` on `irpt-status`, through
+   the owner-read path (`OwnedAnalysisReader`, `_final` after I/O). It answers `{download_route: {url, expires_at}, sha256,
+   byte_length}`: an Opal-signed URL of at most 300 s for the report's own `protected_pdf_ref.storage_key`; not READY, or no retained
+   PDF, answers by name with no URL. One closed response schema; the `routes.json` row `DECLARED` when served.
+2. `server_only` IS SATISFIED by that URL: it is Opal's own bucket, signed after re-authorization, as the export download already is;
+   the vendor's URL never reaches the browser and the bytes never pass through the function.
+3. THE IAM LINE: `irpt-status-policy`'s existing sid gains the `vendor_documents` family (same actions, the same per-firm list) in
+   `infra/aws/terraform/investor-reporting/ops/iam.tf`, already in `2.0.0_SA_COO~Y`'s exact-file lane (batch 114; validator rc 0,
+   read at this ruling); its purpose widens to this one family. Applied only under the route's packet, by a targeted plan.
+4. THE QUEUE THIS EXPOSES, RULED: E7's change is in the `irpt-status` tree, so every whole-bundle build of that function carries it.
+   E7, E6's read memo (batch 111) and this route therefore all wait on the same gate: the page's tolerant parser on every deployed
+   build, PROD included (row S261). They land in that order, one packet each, once the gate opens; none is built from a pin that
+   predates E7 to slip past it. The page's PDF link (`2.0.0_SA_COO~D`) rides the same PROD promote.
+5. PROOF: the route's URL downloaded for a READY report (`REQ-a69e5751`, `REQ-a1d9abc0`), its sha256 equal to `protected_pdf_ref.sha256`;
+   a foreign firm answers `FIRM_BINDING`.
+
+## CTO RULINGS -- batch 124 (2026-10-02T07:4xZ, 1.0.0_SA_CTO, self-drive laptop directives tick 4)
+
+Answers row IRPT_DASHBD-S17 (`2.0.0_SA_COO~P` @fa2860a1e4, disarm owner this seat), which corrects this seat's round-2 analysis.
+
+### SEATING-LINT-SERIAL-TRUNCATION-FIXED-AT-ITS-SOURCE-20261002
+1. MY ERROR, STATED: the round-2 analysis answered row S16 as "fixed @453c6430ec" from a citation, without running the lint. ~P
+   measured otherwise: the round-3 issuance still printed "addressed to 0.9.0_WK_IRPT".
+2. THE CAUSE: `to-decomp-ref-lint.py`'s seating check does not read assignees through its own `SERIAL_RE`; it reads them through
+   `to-check.py`'s `_assignees_from_field`, whose `SERIAL_RE` (`\d\.\d\.\d_[A-Za-z]+_[A-Za-z0-9]+(?:~[A-Z])?`) admitted no underscore in
+   the name and only one capital letter as a lane. So every IRPT worker read as `0.9.0_WK_IRPT`, every `~MI`/`~RV` lane as one letter,
+   and a worker slot `~1` was dropped.
+3. FIXED BY THIS SEAT in `.tools/to-check.py`: the name class admits an underscore and the lane suffix admits letters and digits
+   (`\d\.\d\.\d_[A-Za-z]+_[A-Za-z0-9][A-Za-z0-9_]*(?:~[A-Za-z0-9]+)?`). Read: the resolver returns `0.9.0_WK_IRPT_DASHBD~1`,
+   `2.0.0_SA_COO~MI`, `0.4.0_DS_ClientPlatform~S`, `0.9.0_WK_X_PRJ_2` whole; the seating check on TO-DB-b-7 and TO-DB-b-9 now reads
+   `0.9.0_WK_IRPT_DASHBD~1 holds 0 open TO(s) on any OTHER pipeline project. Legal target.`; `to-check.py --all` before and after is
+   unchanged (236 open, 58 projects, 45 agent groups, 98 unresolved serials), so its own view does not move.
+4. Rows S16 and S17 are answered by this fix; the round-2 analysis carries a correction line.

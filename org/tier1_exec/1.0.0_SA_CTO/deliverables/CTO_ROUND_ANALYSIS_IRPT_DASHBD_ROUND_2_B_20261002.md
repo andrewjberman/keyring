@@ -42,3 +42,5 @@ Each build order carries at most three mechanical criteria.
 Acts only Andrew can do, for this project: the like-day vendor pull; the recursive delete of `wk-irpt-dashbd-1` and its merged branch.
 
 -- 1.0.0_SA_CTO
+
+**CORRECTION (2026-10-02 ~07:4xZ):** section 3's "S16 ... fixed @453c6430ec ... Answered" was WRONG, stated from a citation without running the lint (row S17 @fa2860a1e4 measured it). The truncation was in `to-check.py`'s resolver, which the seating check reads; fixed by RULINGS batch 124.

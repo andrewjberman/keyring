@@ -6,15 +6,15 @@ Mode FAST: lease `IRPT_BCKEND~Y` re-armed 04:33Z until 08:33Z after the withdraw
 terms, under Andrew-direct 2026-10-01 ~04:2xZ).
 Loop `/canonical-drive IRPT_BCKEND` 10m (LIVE_ARMS RELAUNCH row). Way forward: CTO rulings batches 61, 62, 65, 70, 72,
 76, 83, 88, 89, 93, 97, 98, 100 and 105 in `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md`.
-Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-02T06:5xZ.
+Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-02T07:3xZ.
 
 ## Pins
 
 | What | Value |
 |---|---|
 | Worktree | branch `coo-y-r30` at `C:/Users/AndrewBerman/Desktop/coo-y-r30`, head `3ad9306bf9`, merged into CLOUD at `87f9b3afab` |
-| Items 1 to 17 on CLOUD | 1 to 14 as before (st9 carries them); 15 `3921492913` (the 900 s calculating release, the WAF header token); 16 `7122afefc1` (row S253, the job row's `vendor_requests` ledger); 17 `8c4398e32a` (E7, the request read names the chosen comparisons); 18 `3ad9306bf9` (the catalogue reads `etf-classifications` once per 300 s warm window, not per request; condition 11 of the whole-bundle packet), merge `87f9b3afab`, NOT served |
-| SERVED: the resident | `/opt/irpt-resident/b1db201025-st10` since 2026-10-02T03:19:51Z (ledger `irpt-resident-st10-20261002` CLOSED; both halves, CTO batch 106): items 1 to 17. Rollback root `481166a8f2-st9` on the host |
+| Items 1 to 17 on CLOUD | 1 to 14 as before (st9 carries them); 15 `3921492913` (the 900 s calculating release, the WAF header token); 16 `7122afefc1` (row S253, the job row's `vendor_requests` ledger); 17 `8c4398e32a` (E7, the request read names the chosen comparisons); 19 `951afdf4e6` (st11, merge `4f68a17d3a`, SERVED in the resident; its words ride the next generate and irpt-status bundles); 18 `3ad9306bf9` (the catalogue reads `etf-classifications` once per 300 s warm window, not per request; condition 11 of the whole-bundle packet), merge `87f9b3afab`, NOT served |
+| SERVED: the resident | `/opt/irpt-resident/4f68a17d3a-st11` since 2026-10-02T07:18:54Z (ledger `irpt-resident-st11-20261002` CLOSED; both halves, CTO batch 122): items 1 to 19, and `irpt-ycharts-runner-role` holds `sqs:SendMessage` on `irpt-generation`. Rollback root `b1db201025-st10` on the host |
 | SERVED: `irpt-status` | `2V7xV1+zII4+g6tV..` since 2026-10-01T06:59:55Z (read 2026-10-02 ~02:2xZ) |
 | SERVED: `irpt-ycharts-generate` | `E+FqSWwETrwJ9Gd1..` since 2026-10-02T05:54:19Z (whole bundle at `97eaff05ff`, item 18; ledger `irpt-generate-catalogue-20261002` CLOSED). Rollback: S3 version `J52XmUEj..` (code `arC65KbD..`) |
 | SERVED: catalogue route | `GET /api/scoped/investor-reporting/analysis/comparisons`, route `bh7ynom` on `7k3ed8px20` behind `naqxlm`, since ~06:00Z. V1: 341 entries for cottonwood, `FIRM_BINDING` outside reach, 720 ms with the Scan then 221-260 ms |
@@ -56,8 +56,19 @@ made (CTO half item 1).
    upload during another job's generation is refused `PROVIDER_READ_UNAVAILABLE:OPERATION_BUSY` and exhausts. CTO batch 120
    ruled the remedy as **st11**: a BUSY receive re-sends a fresh message delayed by the lease's retry-after (<= 900 s) and
    deletes the received one; a 60-minute wall deadline; a busy end reads a busy code with a retry action, never
-   `REPLACE_FILE`; a test proves a BUSY resolve never reaches the dead-letter queue. PRECONDITION: the resident's role has no
-   `sqs:SendMessage` on `irpt-generation`; the grant's placement was asked of the CTO at 06:44Z.
+   `REPLACE_FILE`. **st11's code is BUILT and MERGED** (item 19 `951afdf4e6`, IAM `85240e4c82`, merge `4f68a17d3a`): the
+   re-send, the deadline from the row's `requested_at`, `RESOLVE_PROVIDER_BUSY` with action `CORRECT` and its words; 3 new tests
+   (one proves a resolve busy for its whole deadline never reaches the dead-letter queue), negative control, every suite green.
+   **st11 is SERVED** (07:18:54Z; ledger CLOSED @861b9bf176). Its live proof (an upload during another job's generation reads
+   NORMALIZED after it) is the next window's, after Andrew's YCharts sign-in. The `RESOLVE_PROVIDER_BUSY` words ride the next
+   generate and irpt-status bundles (until then the code shows with action `CORRECT`; CTO half item 1).
+   **Hop 11 RULED as recommended** (CTO batch 123): `GET analysis/requests/{requestId}/pdf` on irpt-status, an Opal-signed 300 s
+   URL plus sha256; `irpt-status-policy` gains `vendor_documents` in `ops/iam.tf` (this seat's lane).
+   **THE irpt-status QUEUE (batch 123 item 4):** every irpt-status bundle now carries E7, so E7, then E6's memo, then hop 11 land
+   in that order, one packet each, once the tolerant parser is on every deployed build incl. PROD (row S261). Build now, apply
+   none before the gate, and upload no new irpt-status artifact before E7 applies (E7's step 2 stops on a replaced key).
+   **E6 memo:** design `IRPT_MVP_Y/E6_TIMING/E6_MEMO_DESIGN_20261002.md` @8e128269d0; two of its lines are in
+   `reports/status_installed.py` (`2.0.0_SA_COO~P`'s lane); placement asked of the CTO 07:28Z.
 6. Batch 61's order after that: one job per remaining arm (Target Weight, 49 Financial, Inflection), each under a window
    packet; the resolve concurrency fix; the vendor PDF link; the Analysis export; the email lane. E6's memo follows E7's
    apply (CTO batch 111). A client-scoped history route is an enrichment item at the next round analysis (CTO batch 110 item 4).
@@ -81,7 +92,7 @@ Batch 120 item 6 (the probe's cookie rotation) is read at the next window, which
 | W88-S2 | reader served in the generate bundle; grant applied; the route is not published |
 | W94-S2, W91-S1, W92-S1 | repaired or read; for the CVO to close |
 | W91-S2 | NOT repaired: `_contracts/tests/test_seam_paired.py` is held by the open order IRPT_DASHBD TO-DB-b-4 |
-| W92-S4 | one read of a report whose blob is absent is still owed |
+| W92-S4 | READ 05:5xZ: S213's path answers INVALID_INPUT (named; the route takes a request id), the same report by request serves 76 sections, served `owned_report.py` carries ReportBundleAbsent. Disarm proposed to the CVO 07:28Z (also S213) |
 
 ## Ledgers this seat holds open
 

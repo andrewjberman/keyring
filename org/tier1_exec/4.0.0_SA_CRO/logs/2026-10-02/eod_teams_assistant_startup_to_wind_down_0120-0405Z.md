@@ -140,3 +140,26 @@ withdrew it, 104043). Record addenda @89a3385908.
 
 **Next:** the LDO fork names the interface; the assistant plugs into it; site Z releases `/hx/teams`; then the
 secrets, two-way SMS and a targeted apply under a new ledger entry.
+
+## Addendum ~05:00Z to ~06:55Z -- LDO-001 built on the fork's LDO and DEPLOYED
+
+**archetype:** DEPLOY
+
+- The fork delivered the LDO module + runtime (044c3e0c6d; README section 9 the tenant contract). Ported: tenant.py
+  (handler + ingress), assist.py reduced to the shared library (the superseded table/poll/worker orchestration
+  removed), chat_assist.tf = one `module.ldo_001` call (54d3748545, 8e6872f265).
+- Ledger `ldo-001-teams-assistant-20261002` opened before the apply. Targeted safe-apply: 25 added; re-plan 0-diff;
+  two secret values put (never printed); two-way SMS enabled on the toll-free number -> the ingress topic. Legs
+  L1 L2 L3 L5 closed with proof (3ad5c95ff9); L4 (Andrew's reply round trip) OPEN.
+- Found live and fixed (each test-first, rebuilt, re-applied): (1) the gateway client followed the ALB's 302 to
+  the Microsoft sign-in and read the page as an empty answer (d3bd7d3980); the ALB forward rule for /hx/teams/* is
+  REQUIRED, added to hx-capability.tf for site Z to apply, and the release request says so; (2) Kimi needs ~116-130 s
+  for an End of Day draft: KIMI_TIMEOUT_S 120 -> 240, handler 600 s (0e2d238ce3, f483b4270e); (3) a gateway refusal
+  of a send, a post or the already-posted read texts Andrew why and keeps the draft open.
+- Measured end to end: test events produced texts E0930 (06:09:23Z, handler 129,702 ms) and E1001 (06:27:51Z, 2 parts,
+  115,675 ms); a duplicate event for the same object returned "exists" (no second text). Inbound texts so far: 0.
+- Tests: 46 passed. Commit-message note: d3bd7d3980's message file was written by a shell heredoc, not a non-shell
+  writer (CLAUDE.md 14a); its bytes matched (msg-verify MATCH) and every later message used the Write tool.
+
+**Open:** L4 (Andrew replies to E0930/E1001); site Z's gateway release + ALB rule (and the Graph scopes check);
+the laptop draft-only job (retire on his word); the local commits' push (his word).

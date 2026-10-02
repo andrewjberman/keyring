@@ -68,6 +68,15 @@ derived in Terraform through `opal_name`, never typed); source-map key and artif
   "timezone": "America/New_York", "chosen_et": "HH:MM", "chosen_cron": "cron(M H ? * MON-FRI *)", "margin_minutes": n,
   "publisher_et": "08:15"}`. If no such minute exists (an input lands after 08:05 ET on any measured day), STOP that limb: it is a row
   naming the input and the days, never a later publisher time chosen here.
+- ISSUER AMENDMENT 1 (2026-10-02 ~07:4xZ, ruling row IRPT_DASHBD-W1-S6). The stop fired as written and was right to. Ruled: (a) a
+  partition's landing is the FIRST version's `LastModified` (its scheduled write); a later rewrite (the 2026-09-28
+  `holdings_performance_daily` rewritten 2026-09-29 10:45 ET by a catch-up act, first version 07:30:21) is not a landing; (b) ONE
+  day is set aside as a known incident, cited in the record: Schwab silver `dim_position` and `dim_balance` for 2026-09-29, landed
+  2026-09-30 17:46 ET (the late 09-29 silver landing: IRPT_BCKEND row S235, parked order TO-IB-pr-274); (c) the handler's no-gap
+  stop makes such a day safe -- it emits nothing and the next fire catches up -- so the schedule is set by the normal pattern. Write
+  the record with an `excluded` list (input, partition, landed, reason) and `latest_landing_et` over the rest, choose by the order's
+  own rule (expected 07:41 ET: 07:30:21 plus the 10-minute margin, the next whole minute), write `chosen_cron`, re-plan (the
+  schedule and its role join the plan), re-run the three criteria. No criterion changes.
 - **The one local run:** the handler's `--local --date 2026-09-28 --out
   org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1/reporting_gold_local_20260928.parquet` against the REAL inputs
   (reads only; no upload).
