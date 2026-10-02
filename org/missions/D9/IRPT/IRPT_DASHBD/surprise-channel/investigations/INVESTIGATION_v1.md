@@ -595,3 +595,84 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
  "notes": "ANNOUNCE only; the orders stand as cut. S16 stays open under this correction."
 }
 ```
+
+## IRPT_DASHBD-W1-S6 -- TO-DB-b-7: no fire minute exists under the order's rule -- schwab dim_position and dim_balance for date=2026-09-29 landed 2026-09-30 17:46:40 ET (single object version, 12 hours after the 05:46 ET pat
+
+```json
+{
+  "id": "IRPT_DASHBD-W1-S6",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1",
+  "surfaced_at": "2026-10-02T07:40:00Z",
+  "one_line": "TO-DB-b-7: no fire minute exists under the order's rule -- schwab dim_position and dim_balance for date=2026-09-29 landed 2026-09-30 17:46:40 ET (single object version, 12 hours after the 05:46 ET pattern every other measured day holds), and holdings_performance_daily date=2026-09-28's current object was rewritten 2026-09-29 10:45:04 ET; the fire-time limb is STOPPED and no time is chosen.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-7: choose the earliest whole minute at or after the latest landing seen plus >= 10 minutes, strictly before the publisher's 08:15 ET; 'If no such minute exists (an input lands after 08:05 ET on any measured day), STOP that limb: it is a row naming the input and the days, never a later publisher time chosen here.' DB-7-AC1 and DB-7-AC3 grade a chosen time and a plan carrying the schedule at it.",
+  "world_is": "MEASURED over the last 12 date= partitions (2026-09-15..2026-09-30) of each of the four inputs, America/New_York: fact_trn latest 05:46; dim_position and dim_balance latest 17:46 (date=2026-09-29 -> LastModified 2026-09-30 17:46:40 EDT, list_object_versions shows ONE version, so it is the first landing, not a rewrite; the other 11 days land 05:46); holdings_performance_daily latest 10:45 (date=2026-09-28 current version 2026-09-29 10:45:04, first version 2026-09-29 07:30:21 = the scheduled 07:30 fire; its other partitions are manual rewrites at 05:25 on 09-29, its organic scheduled landings so far are 09-28 at 07:30:21 and 09-30 at 2026-10-01 07:30:19). No chosen minute exists, so REPORTING_GOLD_FIRE_TIME_R3.json carries chosen_et and chosen_cron null with status STOPPED, DB-7-AC1 FAILs (not an HH:MM time) and DB-7-AC3 FAILs (no schedule at the recorded cron). The Terraform root reads the cron from the record and plans no schedule while it is null. INFORMATION, NOT A CHOICE: with the one 17:46 silver day set aside, the silver pattern is 05:46:44 and the holdings guard fires 07:30 and writes by 07:30:21, which would admit a minute in 07:41..08:14; setting it aside is the issuer's or the CTO's ruling. A fixed clock cannot cover a 12-hour-late silver day in either case: that day's partition is absent when a 07:xx fire runs.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1/REPORTING_GOLD_FIRE_TIME_R3.json",
+      "s3://opal-data-assets/schwab/08335338/silver/dim_balance/date=2026-09-29/data.parquet (list_object_versions: 1 version, LastModified 2026-09-30T17:46:40-04:00)",
+      "s3://opal-data-assets/schwab/08335338/silver/dim_position/date=2026-09-29/data.parquet (list_object_versions: 1 version, LastModified 2026-09-30T17:46:40-04:00)",
+      "s3://opal-data-49financial/irpt/49financial/gold/holdings_performance_daily/date=2026-09-28/data.parquet (2 versions: 2026-09-29T07:30:21-04:00, 2026-09-29T10:45:04-04:00)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner of the ruling: 2.0.0_SA_COO~P (the order) / 1.0.0_SA_CTO. Once a chosen_cron is written into the record, re-running terraform plan in infra/aws/terraform/investor-reporting/reporting-gold/ adds the schedule and its scheduler role with no other edit."
+}
+```
+
+## IRPT_DASHBD-W1-S7 -- TO-DB-b-7: the order is silent on two facts the handler had to decide -- the served gold holds SIX accounts per partition (not the ~7,800 the silver carries), and the producer's main() --upload also r
+
+```json
+{
+  "id": "IRPT_DASHBD-W1-S7",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1",
+  "surfaced_at": "2026-10-02T07:41:00Z",
+  "one_line": "TO-DB-b-7: the order is silent on two facts the handler had to decide -- the served gold holds SIX accounts per partition (not the ~7,800 the silver carries), and the producer's main() --upload also rewrites dim_return_method (tieout null, measured_at now) which the role may not write; the handler takes the newest partition's account set and omits that one call.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-7: 'run the producer for EVERY trading day after it through T-1 ... upload' and DB-7-AC2 'reproduces the served partition row for row'; the role writes ONLY the account_return_daily gold prefix.",
+  "world_is": "MEASURED: s3://opal-data-49financial/irpt/49financial/gold/account_return_daily/date=2026-09-28/ holds 6 rows (accounts 0010783709, 0027265115, 0035940058, 0076459710, 0084073310, 0091939812; manifest rows=6), so a scheduled run with no --accounts restriction would write ~7,800 accounts into a partition family of six. READ at account_return_daily.py main() (lines 1851-1856): every --upload ends with emit_method_row(..., tieout=args.tieout) -- a write to the dim_return_method prefix outside the role's grant, with tieout_tolerance_proposed null unless --tieout is passed. Handler decision (infra/aws/lambda/investor-reporting/reporting-gold/handler.py): accounts = account_ids of the gold's newest landed partition (event 'accounts' overrides); the producer's own load_declaration/firm_scope/first_data_dates/prefetch/compute_range/emit_day are composed as main() does, and emit_method_row is not called. The producer is unedited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py main() lines ~1820-1858 @e1b160d340",
+      "s3://opal-data-49financial/irpt/49financial/gold/account_return_daily/date=2026-09-28/manifest.json (rows 6; first_data_date keys: 6)",
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py compute()/run()"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Widening the population beyond six accounts is a separate deliberate act (the event's accounts key), not this function's default. Grading of the decision is the CTO's."
+}
+```
+
+## IRPT_DASHBD-W1-S8 -- TO-DB-b-7: amendment 1 set aside one day, but 9 of the 12 holdings partitions are first-written by a 2026-09-28 20:25 ET bulk backfill; excluded as unscheduled writes, 07:41 ET chosen
+
+```json
+{
+  "id": "IRPT_DASHBD-W1-S8",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1",
+  "surfaced_at": "2026-10-02T08:10:00Z",
+  "one_line": "TO-DB-b-7 amendment 1 set aside ONE incident (the 09-29 silver day) but holdings_performance_daily's first versions for 9 of the 12 measured partitions (2026-09-15..09-25) are the 2026-09-28 20:25 ET bulk catch-up act, also after 08:05 ET; the worker excluded them as unscheduled writes on the amendment's own clause (a) and chose 07:41 ET.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-7 amendment 1: a landing is a partition's FIRST version's LastModified; one day is set aside as an incident; latest_landing_et is over the rest; days_measured >= 10; expected fire 07:41 ET (07:30:21 + 10 min).",
+  "world_is": "MEASURED by list_object_versions over opal-data-49financial irpt/49financial/gold/holdings_performance_daily/: the partitions 2024-07-09..2026-09-25 (hundreds) were all first written by one manual backfill on 2026-09-28 20:25-21:36 ET and rewritten 2026-09-29 02:43/02:56 and 05:05/05:25; the guard's own scheduled writes exist for only two days (date=2026-09-28 first version 2026-09-29 07:30:21, date=2026-09-30 first version 2026-10-01 07:30:19), plus date=2026-09-29 first version 2026-10-01 03:13:37 (an unscheduled run, before 07:30). Read literally, first-version landings 2026-09-28 20:25 for 9 of the 12 window partitions put the latest landing at 20:26 and the order's own stop clause fires again; the record instead lists all 12 first versions (days_measured 12) and carries each of the 9 backfill partitions in `excluded` with reason, so latest_landing_et for the holdings input is 07:30 (03:13 and 07:30:21/07:30:19 remaining). The record's `excluded` list holds 11 entries (2 silver incident + 9 backfill). Result: chosen 07:41 ET, plan 7 to add, 0 change, 0 destroy. The extension of the ruling from one day to the backfill partitions is the worker's reading of clause (a) (a landing is the scheduled write), not stated in the amendment. Only two organic scheduled holdings landings exist, so the holdings input's scheduled-landing pattern rests on 2 days of 07:30:2x; the guard is a 07:30 cron, so it cannot land before 07:30.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1/REPORTING_GOLD_FIRE_TIME_R3.json (excluded list, 11 entries)",
+      "s3://opal-data-49financial/irpt/49financial/gold/holdings_performance_daily/ (list_object_versions, 12 window partitions)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Residual for the issuer's packet, also written into the record's notes: a day whose holdings guard lands after the fire emits with the guard not reached and is not re-emitted later. Owner of grading the extension: 2.0.0_SA_COO~P."
+}
+```
