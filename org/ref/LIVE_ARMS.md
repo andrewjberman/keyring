@@ -58,10 +58,11 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
         `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261002_141xZ_RIVALFUNDS_UI_WALK_BRIEF_TO_CTO_COO_RV_CANONICAL_DRIVE.md`),
         VERBATIM:** "I also want COO~RV to dramaticaly uptick its efforts, so I suggest /canonical-drive with max
         parallelization on subagents."
-        - The FAST lease lapses at 17:08:53Z. From then, `2.0.0_SA_COO~RV` drives ETFS_RIVALS on `/canonical-drive` with
-          fan-out at the cap the decomposition's chains allow (spine L6 `fanout:`).
-        - "Suggest" is relayed as written. Whether COO~RV moves to `/canonical-drive` before the lease lapses is COO~RV's
-          own choice; this row does not order it.
+        - The FAST lease ENDED at 14:40:14Z, ended by `2.0.0_SA_COO~RV` (`org/mcp/drive-mode.log` END line; `drive-mode.py
+          status` reads 0 live leases at 15:01Z), not at its 17:08:53Z expiry. From then, `2.0.0_SA_COO~RV` drives
+          ETFS_RIVALS on `/canonical-drive` FULL, with fan-out at the cap the decomposition's chains allow (spine L6
+          `fanout:`).
+        - "Suggest" is relayed as written; this row does not convert it into an order.
         - Its work list is round 6 plus the 33-item walk register, PRD v0.12 @afc2bed44f.
         - Stop: ETFS_RIVALS DONE, or Andrew's stand-down. Landed by 1.0.0_SA_CTO~Z.
     - `2.0.0_SA_COO~X` / `~Z` / `~H` / `~D` each arm `/canonical-drive <own project> 30m`, on "Make sure
