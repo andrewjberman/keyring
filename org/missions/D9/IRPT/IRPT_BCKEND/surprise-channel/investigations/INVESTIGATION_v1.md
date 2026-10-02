@@ -15479,3 +15479,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "The fix rides portal DEV; PROD carries it at Andrew's next promote."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S282",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-02T23:05:00Z",
+  "one_line": "reports/tests/test_generate_installed.py::test_the_two_revisions_are_derived_never_typed fails on CLOUD: it pins `len(rows) == 24` packaged schemas (line 71), and there are 25 since 31999d12d4 added docs/contracts/investor-reporting/v1/AnalysisRequestPdf.schema.json (hop 11's contract, this seat's).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P (the test's lane, IRPT_COMPLETION_P / STATUSPORTS); the count should be derived from the schemas directory, not typed",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest reports/tests/test_generate_installed.py at CLOUD (2026-10-02 ~23:0xZ): 1 failed, 12 passed -- AssertionError: assert 25 == 24 at line 71; the same on the Y-3 branch",
+      "git log 31999d12d4: the AnalysisRequestPdf contract added one *.schema.json to the v1 directory the ingestion revision hashes"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The ingestion revision is derived, never typed (the test's own name).",
+  "world_is": "The revision itself is derived; the test also types the schema COUNT, so any new contract file fails it. The served code is unaffected (the digest stamps new requests and is only checked for presence).",
+  "notes": "Not a regression of any served path; a test pin. The combined pytest run of reports/tests with other suites also errors at collection on this file."
+}
+```
