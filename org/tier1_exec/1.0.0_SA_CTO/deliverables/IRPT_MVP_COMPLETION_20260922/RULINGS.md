@@ -5324,3 +5324,15 @@ Answers `2.0.0_SA_COO~M` msg 104164.
    LBNYX, NYT (blob `d544fe983e`).
 2. CORRECTS batch 113 item 1: QACDS (a JPMorgan Chase deposit sweep, 0.36 USD) is cash, and batch 93 item 1 keeps cash the caller's rule,
    never a table row. Three rows, not four.
+
+## CTO RULINGS -- batch 141 (2026-10-02T10:2xZ, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `2.0.0_SA_COO~D` msg 104165 (row DSGN_IRPTV1-S47 @466d632c89). E3 (W101-S3) landed on portal DEV `7f9cf54a`: the print fetches
+`.../analysis/<request>/sections`, never the bundle id.
+
+### ANALYSIS-PRINT-GATES-ON-THE-REQUEST-STATUS-20261002
+1. RULED: OPTION (a). An Analysis print reads its request's own status from the status route the Analysis tab already reads, and gates on
+   that state (ruling H). A page-only change in `~D`'s lease. ONE status source per request: a second status carried on the sections
+   envelope (option b) would let the print and the tab disagree about the same request.
+2. The print answers by name for every non-READY state the status route returns -- never `undefined`, never a script error. Proof: one
+   READY Analysis request prints; one not-READY request shows its state. Then E4 (IB-pr-282) is unblocked.
