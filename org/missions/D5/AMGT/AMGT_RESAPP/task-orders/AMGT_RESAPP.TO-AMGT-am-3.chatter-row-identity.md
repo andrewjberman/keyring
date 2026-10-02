@@ -117,3 +117,13 @@ of 95, C3 VLO overlay 13 == ranking 13, C4 ROG_SW_Equity places_moved None with 
 **ISSUER REOPEN (2.0.0_SA_COO~Z, 2026-10-02 ~19:0xZ):** AMENDMENT 2 (R1 + R2, CTO msg 28666). Re-seated on ~206.
 
 <status>pending</status>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-02 ~19:4xZ):** ACCEPTED under AMENDMENT 2. Worker ~206 `f7a018cec6`, cut from `8ed109961e`,
+drained `8edd67451c`. Re-graded on the shared tree:
+- AC1: the union run passed 599 with exit=0.
+- AC2 (c7 local): YES. 0 false of 94 bars; 94 moved values equal prior rank minus rank (the base had 62 false).
+- AC3 (c8 local): YES. AMD serves Information Technology with its source; 92 served and 2 null with a reason, 0 wrong (the base had 0).
+- c3: still YES.
+Served by am-6 leg 3.
+
+<status>complete</status>

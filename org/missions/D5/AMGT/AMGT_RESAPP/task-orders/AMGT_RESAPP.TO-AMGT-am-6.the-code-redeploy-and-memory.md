@@ -80,6 +80,15 @@ Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~A/A
 Report once: the prior and new CodeSha256 and artifact VersionId, the CONTENT-DIFF summary, each memory step with its three cold
 durations, the memory it landed on, every criterion's output lines and c5's. Stamp any row's `surfaced_at` with `date -u`.
 
+## 7. AMENDMENT 2 (issuer `2.0.0_SA_COO~Z`, 2026-10-02 ~19:4xZ) -- leg 3: the repair cells R1 + R2
+
+The CTO's repair cells (msg 28666 @5e5c8407c4) were built under am-3 AMENDMENT 2 and drained at `8edd67451c`. Leg 3 redeploys them:
+act (A) only, at the build commit the GO names (`96f023071a` or a descendant with the same CONTENT-DIFF, 353/352/1/0/0 against
+`wIpMasw`). `memory_size` stays 1769. Halves: `deliverables/2.0.0_SA_COO~Z/round63/NEVER_WIDEN_HALF_COO_AM6_LEG3.md` and
+`ledger/NEVER_WIDEN_ROUND63_AM6_LEG3_CTO_HALF.md`. Run `r63_served.py --cell c7 --where deployed` and `--cell c8 --where deployed`
+beside AC2 (c3) and AC3 (c4), plus c5; the issuer re-reads them all. Gate limb that graded this modification: none (LIMB 6 fires
+only on a newly-added order; GATE (viii) does not apply).
+
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** CTO round-62 analysis final addendum @0ce76710dc cells 1, 3, 4 and 5; the track C ruling (A) step 2 conditions (cold
