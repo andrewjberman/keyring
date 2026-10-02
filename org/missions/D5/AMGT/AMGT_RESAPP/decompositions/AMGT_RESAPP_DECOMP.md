@@ -7889,3 +7889,87 @@ fanout:
   egress: none
   portal_ref: a730d8ce   # worker AC1 reads the portal fixture (dispatch Step 4)
 ```
+
+## 72. ROUND 64 -- FWD-36/37/38 (THE UI/UX WALK'S SERVING CELLS), THE COLD READ, THE REPAIRS. Seven cells, seven orders
+
+**Cut by `2.0.0_SA_COO~Z`**. Inputs:
+- PRD v0.34/v0.35: FWD-36, 37 and 38 (CTO fold @82d1cb21e2; "cut FWD-36, 37 and 38", msg 28690). FWD-36's price half is a QUALIFIED
+  WAIT (CTO ruling msg 28740 @ed61068340).
+- The CTO's round-63 rulings: ruling 3 of the leg-2 addendum @4d0f049203 (the cold-read cell) and msg 28730 (the officer face).
+- Issuer rows Z-S339 (the slash-ticker classification miss) and the date-only as_of tie (am-7 A3 close).
+**Issuance gate:** LIMB 6 refuses a newly added order while the ratified-text half is STALE at v0.35. The orders issue in ONE commit when
+`3.0.0_SA_CVO~Z` re-signs.
+
+**Issuer rulings at the cut:**
+- R1. **FWD-36:** the chatter windows are re-aggregated from gold `chatter_daily` at request time (counts only). Tone and voters are
+  served null with `tone_reason`, because HARVST FWD-16/17 are HELD on the publisher-terms card. The price ranking accepts `?days`,
+  serves 30, and answers 90/365 with "not produced yet" (qualified wait). That answer is never read as the 90/365 path.
+- R2. **FWD-37:** coverage-event markers come from gold `chatter_event` (its `lead_headline`). The earnings kind is served in
+  `marker_kinds_absent` with the reason "no earnings dates are pulled yet" until the CORPUS Model-block pull carries the dates (a
+  qualified wait on Andrew's word).
+- R3. **FWD-38 (a):** the overlay's recent-news feed reads the harvested gold articles (the day view's own source), so containment
+  holds by construction. The publication-pool read stays only where another field needs it.
+- R4. **The repairs batch into ONE cell:** Z-S339, the officer face's raw codes, and `object_as_of` from the served key.
+
+### 72a. MEASUREMENTS (`round64/checks/r64_served.py`, local at CLOUD ~20:4xZ; every cell FAILS at the base)
+
+- c9: collected/chatter serves no window fields; 0 of 95 rows carry articles_total, tone or voters.
+- c10: `?days` is ignored; 90 and 365 serve the 30-day rows.
+- c11: the timeline serves no `markers` (BA: 1 event, 0 markers).
+- c12:
+  - The feed holds 1 / 0 / 0 articles against 71 / 13 / 3 day-view articles in its window (BA / AMD / VLO).
+  - Display names disagree on all 3 (peers 'BOEING CO/THE'; chatter 'ADVANCED MICRO DEVICES'; peers 'VALERO ENERGY CORP').
+- c13: 0 of 94 chatter `places_moved` name an axis or window; no route serves a provenance block.
+- c14:
+  - BP/ LN and NG/ LN serve an untrue "holds no classification".
+  - ASML_NA `source_item`, `pool_read.reason` and `fallback.label` carry COMPANY_EXEC_OFFICERS, ABSENT and RESOLVED.
+  - `object_as_of` is absent on 3 of 3.
+- c15 (deployed): cold BA 2026-09-08 takes 11.5-12.8 s at 1769 (round 63); no AMGT_SEGMENT lines.
+
+### 72b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-an-1` | FWD-36: chatter windows ?days=30/90/365 (counts; tone null + reason) + the price ranking's ?days (30 served, 90/365 "not produced yet") | `0.9.0_WK_AMGT_RESAPP~210` | worker | LOCAL | `lib/research/api/` |
+| `AMGT-an-2` | FWD-37: timeline markers (coverage events from gold; the earnings kind with its reason) | `0.9.0_WK_AMGT_RESAPP~211` | worker | LOCAL | `lib/research/api/`, `lib/research/harvest/timeline_api.py` |
+| `AMGT-an-3` | FWD-38 a + b: the feed holds the day view's articles (R3); ONE display name per security, cased, no share-class code | `0.9.0_WK_AMGT_RESAPP~212` | worker | LOCAL | `lib/research/api/`, `lib/research/coverage/` |
+| `AMGT-an-4` | FWD-38 c + d: every move names its axis + window; the overlay's provenance block (filings, harvested news, Bloomberg, last run) | `0.9.0_WK_AMGT_RESAPP~213` | worker | LOCAL | `lib/research/api/` |
+| `AMGT-an-5` | the cold read: column projection + security filter on both gold reads, AMGT_SEGMENT timings | `0.9.0_WK_AMGT_RESAPP~214` | worker | LOCAL | `lib/research/harvest/`, `lib/research/api/`, `lib/research/coverage/` |
+| `AMGT-an-6` | repairs (R4): Z-S339 slash-ticker classification, officer-face reader words, object_as_of | `0.9.0_WK_AMGT_RESAPP~215` | worker | LOCAL | `lib/research/api/` |
+| `AMGT-an-7` | the code redeploy carrying an-1..an-6 (graded c9-c15 on deployed) | `0.7.0_AE_CloudOps~A` | seat order, a pair | WORLD | Lambda artifact, ledger |
+
+### 72c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** The domain is FWD-36, 37 and 38's DONE WHEN clauses, plus the two CTO-ruled items and the issuer rows. FWD-38's four
+  clauses split into two cells by surface (a+b: what is listed and named; c+d: what is labelled).
+- **(ii) Same grain.** One served surface family per cell.
+- **(iii) Intent.** One axis per cell.
+- **(iv) What a cell does NOT move:**
+  - an-1 changes no rank and no score.
+  - an-2 adds markers only.
+  - an-3 changes the feed's source and the name a route serves; no figure.
+  - an-4 adds labels and a block.
+  - an-5 changes how gold is read; the served bytes are equal.
+  - an-6 changes reader text, one lookup and one added field.
+
+### 72d. EDGES AND FAN-OUT
+
+All six worker cells write `lib/research/api/scoped_amgt.py`. They are drained one at a time, with the union suite re-run after each
+drain (round 63's drain-repair lesson).
+```
+an-1 --+
+an-2 --+
+an-3 --+--> an-7 (one redeploy, one pair, graded c9-c15 on deployed)
+an-4 --+
+an-5 --+
+an-6 --+
+fanout:
+  cap: 8
+  orders_total: 7
+  chains_total: 1
+  wave_0: [an-1 ~210, an-2 ~211, an-3 ~212, an-4 ~213, an-5 ~214, an-6 ~215]
+  wave_1: [an-7 0.7.0_AE_CloudOps~A]   # after the six drains and its pair
+  no_s3_deletes: true
+  egress: none
+  portal_ref: a730d8ce
+```
