@@ -56,6 +56,15 @@ org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v
 Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~A/AMGT_RESAPP.TO-AMGT-am-7.the-management-objects-write.proof_of_spec.json`.
 Report once: each key written (existed or new, new VersionId) and AC1's output lines. Stamp any row's `surfaced_at` with `date -u`.
 
+## 6. AMENDMENT 1 (issuer `2.0.0_SA_COO~Z`, 2026-10-02 ~15:5xZ) -- also the two rebuilt peers objects (am-8, Z-W4-S6)
+
+In the same act, under the same entry and pair (re-signed to include them), PUT each entry of the FROZEN plan
+`org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~209/peers_slash_plan.json` (at the sha256 the halves name) from
+`.../0.9.0_WK_AMGT_RESAPP~209/peers_pool/<store_key>` to `s3://opal-data-harvest/<store_key>`. These are new keys, with the same
+per-key sha256 check and record. Grade them with
+`r63_served.py --cell c6 --where deployed --plan <that plan>` (C1: every planned served field reads its `after`). It runs beside AC1
+and is reported; the issuer re-reads it.
+
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** CTO round-62 final addendum cell 2 (DSGN COMPLETION_GRADES.round26, FWD-7). Staged until am-2 drains, its plan

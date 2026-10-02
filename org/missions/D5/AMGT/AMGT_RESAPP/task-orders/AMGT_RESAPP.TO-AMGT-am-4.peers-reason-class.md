@@ -71,3 +71,7 @@ hash, every criterion's output lines, the functions you changed, and any row. Th
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-02 ~15:5xZ):** ACCEPTED. Worker ~207 `b4b8ebfc4d`/`972a08bed9`, drained `e0f84f8a23`. Re-graded on the shared tree: AC1 425 passed exit=0 (api + peers); AC2 c4 YES (BA and VLO 12 of 12, classes DEFINITION_MISMATCH / HORIZON_LIMIT / NOT_REPORTED / RATIO_ONLY / WINDOW_LIMIT; UNCLASSIFIED for an unmapped column). Served by am-6.
+
+<status>complete</status>
