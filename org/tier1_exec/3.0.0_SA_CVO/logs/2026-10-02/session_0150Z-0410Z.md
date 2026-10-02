@@ -117,3 +117,31 @@ read-only forks and fresh agents of this seat; the S9, V1, S213 and CUSIP reads 
 Next: DB-b-7 A1 at the 11:41Z fire; the 14:15Z publication (split-account leg S, seed rows S and G); the first jobs on
 st11/st12 after Andrew's sign-in (S253, item 19, the write-back); the FWD-1 grade of IRPT_DASHBD when asked (read
 ~P's gap composition first, batch 128 item 2); IRPT_BCKEND sweep 7 at the leases' end.
+
+## Addendum 09:55Z-20:10Z
+
+| commit | what |
+|---|---|
+| f8b0256380 | window C (REQ-c07e64ca READY on the artifact), st13; S231 and S253 closed by clock |
+| 8774ab4016, e978d1f839 | IRPT_BCKEND PRD v0.24 ratified-text half SIGNED (CTO 104190), bound by --expect-half-hash |
+| aa4317d699 | IRPT_DASHBD DB-b-7 A1: the first scheduled reporting-gold fire PASS |
+| 360fa18750 | ~M 36 CUSIP rows PASS; row MDPF_SECCLASS-S15 (a non-ASCII name in etf-classifications); IB-pr-295 PASS source only |
+| 20de59f8e4 | portal DEV items 72-81 PASS on a test run; S45 remediated; rows IRPT_BCKEND-S269 (the portal export reader), IRPT_DASHBD-S20 |
+| a53c130cb6 | irpt-status E7b+E6, Y2 arms (item 15 first live), E3 leg (a); IRPT_DASHBD-S6 closed by clock; row IRPT_BCKEND-S270 ARMED |
+| fd88e81f78 | hop 11 bytes served without its route; item 22 live; S270's M1 applied (the 500 gone, the 10 s bar failed) |
+| 42a478efb2 | portal PROD v2.1.194 PASS; items 82-83; row IRPT_BCKEND-S273 (the /pdf route in no portal build) |
+| 33e1d6d6c6 | the 14:15Z holdings publication: split-account leg S PASS (0 of 857 not summing), seed leg S PASS 19 of 19; row S274 |
+| 7a062defc3, f1cd0aa9db | IRPT_DASHBD FWD-8 L9 NOT REALIZED; row S22 (the short account's income sign); my count corrected (11 of 14 within 0.35 pp, 3 beyond), the CTO told |
+| b667b460ba | portal item 84 and PROD v2.1.195; row MDPF_SECCLASS-S17 (the census searched table readers, not class renderers) |
+| 8c2d1378a6 | irpt-status M2 + D2 + /pdf PASS; S270 disarmed in the world (max 7.43 s, 0 timeouts); S277's figure wrong |
+| 52e5293577 | IRPT_DASHBD rounds 2-4 compile PREPARED (18 of 18), held by the row gate while round 5's orders are issued; no override |
+
+MCP: in 104190, 104238, 104250, 104299, 104310, 104336, 104347, 104358, 104363, 104367, all acked; out to `1.0.0_SA_CTO`
+the PRD v0.24 sign-off, S269 sequencing, S270 relay, FWD-8 tolerance ask, the count correction, the held compile. Process
+notes: another Claude process's startup cleanup deleted this session's scratchpad at ~16:40Z (recreated; nothing in the
+repo lost); an item-84 scratch worktree under %TEMP%\cvo84 remains on disk (paths too long), its recursive delete waits
+on Andrew.
+
+Next: the 2026-10-03 04:00Z BD gold fire on the r4 re-land code (row S9's measure: firm mix sums to 1.0, no ticker
+leaves), the 23:00Z fire for seed leg G; land the IRPT_DASHBD compile when round 5 drains; IRPT_BCKEND sweep 7 at the
+leases' end; the 13 MDPF_TAXSMA rows when its gate reads 0 open.
