@@ -56,6 +56,11 @@ re-planned the same two targets (0/2/0).
 - Built the release as the CTO's ONE order (IAM + ALB + app), id OG-rl-3; the unissued round-13 draft's OG-rl-3
   renumbers when that round issues.
 - Halves CTO + COO per CLAUDE.md NEVER-1; no CVO half asked (not required by the law, and it would have cost the window).
+  **CORRECTION 20:1xZ:** WRONG. Round 12's list (item 2) REQUIRES a CVO never-widen half for a capability change, and
+  OG-rl-1, rl-2 and tr-1 all carried one ("Halves owed" in their NEVER_WIDEN_ASK files). The CTO's round-13 analysis
+  @fea5fbcdbf disclosed the gap; PRD v1.6 C7 records the write exception; `3.0.0_SA_CVO~O` grades the live release
+  post hoc, and a REFUSED half routes the ruling's per-key rollback. The CVO~O seat was live and IDLE at the cut, so
+  asking in parallel would have cost nothing.
 - AC1's negative IAM arm is a synthetic `gateway/teams/` sibling ARN: after this release every real `gateway/*` secret
   is granted (4 here, 1 by the Tax policy).
 
