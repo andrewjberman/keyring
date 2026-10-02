@@ -5350,6 +5350,28 @@ carries none.
     ]
   },
   "notes": "INERT: the served MCP wrapper path itself was exercised by the issuer's principal-session call (round6/R7_J1_PRINCIPAL_SESSION_ROUND6_20261001.md), whose figures equal this probe's."
-}
+},
+  {
+    "id": "NFRA_MCPINDEX-Z-S76",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-02T00:29Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "DISARMS NFRA_MCPINDEX-Z-S72. The scheduled bd-silver-merge run of 2026-10-02T00:11:36Z read unrealized 'SUMMARY: 6 processed | new=6 | failures=0 | rows_added=0 | empty_stub=6' (was failures=6 on 09-30 and 10-01): the empty-stub fix deployed by MX-s-16 (code/silver/merge-daily-incremental.py ETag 91eaf248) now records the 6 empty templates and counts no failure. Unrealized's sole writer is bd-silver-merge and it is clean; ledger nfra-mcpindex-r6-bd-merge-retire CLOSED 8/8.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "/aws/lambda/bd-silver-merge 2026-10-02T00:11:36Z..00:14:48Z: transactions failures=0 (246,777 rows), allocations new=0 skip=131, realized failures=0 (9,172 rows), unrealized failures=0 empty_stub=6.",
+        "s16.AC1 scoped (unrealized allocations): graded 2 of 2 PASS; unscoped control 2 of 4 FAIL (transactions, realized HELD by A2).",
+        "SSM list-commands since 2026-10-01T21:00Z: unrealized and allocation documents did not fire (rules DISABLED); transaction 21:53Z and realized 21:46Z Success."
+      ]
+    },
+    "spec_asserts": "Z-S72 notes: retire unrealized's document merge only when bd-silver-merge processes the 6 files or they are ruled out with evidence.",
+    "world_is": "bd-silver-merge processed all 6 as recorded empty stubs with failures=0 on its first scheduled run after the fix.",
+    "notes": "MX-s-16 completes on unrealized + allocations (A3). Transactions and realized stay 2-writer by the A2 HOLD, carried in REMEDIATION_v5 with the cot sentinel fix."
+  }
 ]
 ```
