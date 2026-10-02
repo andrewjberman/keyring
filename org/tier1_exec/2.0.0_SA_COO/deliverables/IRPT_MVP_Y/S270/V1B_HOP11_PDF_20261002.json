@@ -1,0 +1,151 @@
+{
+ "at": "2026-10-02T18:09:48.078805Z",
+ "principal": "svc-irpt-analysis@opalinvest.com",
+ "tenant": "cottonwood",
+ "rows": [
+  {
+   "request_id": "REQ-c07e64ca6c74b8e5310f56e0",
+   "http": 200,
+   "ok": null,
+   "operation": "analysis-request-pdf",
+   "state": null,
+   "reason": null,
+   "business_date": null,
+   "actions": [],
+   "top_keys": [
+    "contract_version",
+    "data",
+    "firm_id",
+    "operation",
+    "unprojected_grant"
+   ],
+   "data_keys": [
+    "byte_length",
+    "download_route",
+    "sha256"
+   ],
+   "url_host": "opal-data-irpt.s3.us-east-1.amazonaws.com",
+   "url_scheme": "https",
+   "claimed_sha256": "db27de07ba8c6d2486aadc0bbed4a165a35039207a3fa4db98db7e1457726bed",
+   "claimed_bytes": 581489,
+   "expires_at": "2026-10-02T18:13:47Z",
+   "x_amz_expires": 300,
+   "expires_in_s_laptop": 302,
+   "download_http": 200,
+   "download_type": "application/pdf",
+   "expires_in_s": 298,
+   "download_bytes": 581489,
+   "download_sha256": "db27de07ba8c6d2486aadc0bbed4a165a35039207a3fa4db98db7e1457726bed",
+   "pdf_magic": true,
+   "verdict": "MATCH"
+  },
+  {
+   "request_id": "REQ-59b42fab4293260d6d439c39",
+   "http": 200,
+   "ok": null,
+   "operation": "analysis-request-pdf",
+   "state": null,
+   "reason": null,
+   "business_date": null,
+   "actions": [],
+   "top_keys": [
+    "contract_version",
+    "data",
+    "firm_id",
+    "operation",
+    "unprojected_grant"
+   ],
+   "data_keys": [
+    "byte_length",
+    "download_route",
+    "sha256"
+   ],
+   "url_host": "opal-data-irpt.s3.us-east-1.amazonaws.com",
+   "url_scheme": "https",
+   "claimed_sha256": "263cfa7a6b1347acd4be565cf830824239d260ac6e44e3171c5044b716c18b1b",
+   "claimed_bytes": 556822,
+   "expires_at": "2026-10-02T18:14:03Z",
+   "x_amz_expires": 300,
+   "expires_in_s_laptop": 301,
+   "download_http": 200,
+   "download_type": "application/pdf",
+   "expires_in_s": 297,
+   "download_bytes": 556822,
+   "download_sha256": "263cfa7a6b1347acd4be565cf830824239d260ac6e44e3171c5044b716c18b1b",
+   "pdf_magic": true,
+   "verdict": "MATCH"
+  },
+  {
+   "request_id": "REQ-abec171d60e0aa1f359c18ed",
+   "http": 200,
+   "ok": null,
+   "operation": "analysis-request-pdf",
+   "state": null,
+   "reason": null,
+   "business_date": null,
+   "actions": [],
+   "top_keys": [
+    "contract_version",
+    "data",
+    "firm_id",
+    "operation",
+    "unprojected_grant"
+   ],
+   "data_keys": [
+    "byte_length",
+    "download_route",
+    "sha256"
+   ],
+   "url_host": "opal-data-irpt.s3.us-east-1.amazonaws.com",
+   "url_scheme": "https",
+   "claimed_sha256": "406abefaa6d65d559c7017997bb5149d6b3b4f154307aa9346f5d4de9e3bbbdb",
+   "claimed_bytes": 583261,
+   "expires_at": "2026-10-02T18:14:13Z",
+   "x_amz_expires": 300,
+   "expires_in_s_laptop": 302,
+   "download_http": 200,
+   "download_type": "application/pdf",
+   "expires_in_s": 295,
+   "download_bytes": 583261,
+   "download_sha256": "406abefaa6d65d559c7017997bb5149d6b3b4f154307aa9346f5d4de9e3bbbdb",
+   "pdf_magic": true,
+   "verdict": "MATCH"
+  },
+  {
+   "request_id": "REQ-a69e5751d42c374f1d2354f9",
+   "http": 200,
+   "ok": null,
+   "operation": "analysis-request-pdf",
+   "state": null,
+   "reason": null,
+   "business_date": null,
+   "actions": [],
+   "top_keys": [
+    "contract_version",
+    "data",
+    "firm_id",
+    "operation",
+    "unprojected_grant"
+   ],
+   "data_keys": [
+    "byte_length",
+    "download_route",
+    "sha256"
+   ],
+   "url_host": "opal-data-irpt.s3.us-east-1.amazonaws.com",
+   "url_scheme": "https",
+   "claimed_sha256": "126f9ad41290b464d5411741d0d317805ecac0c9adc6a069350ea8d9ec7cf28c",
+   "claimed_bytes": 583235,
+   "expires_at": "2026-10-02T18:14:28Z",
+   "x_amz_expires": 300,
+   "expires_in_s_laptop": 301,
+   "download_http": 200,
+   "download_type": "application/pdf",
+   "expires_in_s": 295,
+   "download_bytes": 583235,
+   "download_sha256": "126f9ad41290b464d5411741d0d317805ecac0c9adc6a069350ea8d9ec7cf28c",
+   "pdf_magic": true,
+   "verdict": "MATCH"
+  }
+ ]
+}

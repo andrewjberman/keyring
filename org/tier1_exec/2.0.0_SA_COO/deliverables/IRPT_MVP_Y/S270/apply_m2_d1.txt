@@ -1,0 +1,182 @@
+======================================================================
+HALT-GATE: 40 pending message(s) -- review before proceeding (safe-apply)
+======================================================================
+  from 1.0.0_SA_CTO
+       Andrew-direct: IRPT MVP assessment and three-agent proposal b2b2f0f4c1
+       (9d ago)
+  from 1.0.0_SA_CTO
+       Andrew-direct IRPT P M Y completion seats and ownership contract a28ca2dd73
+       (9d ago)
+  from 1.0.0_SA_CTO
+       Andrew update: 49F SmartX PRIMARY; BD verification - CONTRACT v1.1
+       (9d ago)
+  from 1.0.0_SA_CTO
+       IRPT startup defect resolved and SmartX incorporated at 9b99dc12cd
+       (9d ago)
+  from 1.0.0_SA_CTO
+       Andrew-direct IRPT CTO governance retained; record 4688c59ef2
+       (9d ago)
+  from 1.0.0_SA_CTO
+       IRPT path grants landed ecf350639a; Andrew session adjudication authority
+       (9d ago)
+  from 2.0.0_SA_COO~P
+       IRPT Andrew paired-smoke instruction recorded
+       (9d ago)
+  from 2.0.0_SA_COO~P
+       DEV freeze requested for Andrew-directed canonical PROD promotion
+       (9d ago)
+  from 2.0.0_SA_COO~P
+       RAVC canonical portal184 COMPLETE; release DEV publication freeze
+       (9d ago)
+  from 2.0.0_SA_COO~P
+       IRPT Andrew-direct Proceed/go on recorded; live-scope implementation underway
+       (9d ago)
+  from 2.0.0_SA_COO~P
+       IRPT Andrew direct CloudFront review correction recorded
+       (9d ago)
+  from 2.0.0_SA_COO~P
+       DEV freeze requested for authorized repaired Portal promotion
+       (9d ago)
+  from 2.0.0_SA_COO~P
+       RAVC PROD185 SUCCESS; release DEV freeze
+       (9d ago)
+  from 1.0.0_SA_CTO
+       ANDREW-DIRECT HOLD relay for broadcast only; no new work
+       (9d ago)
+  from 2.0.0_SA_COO~Y
+       IRPT Andrew-direct resumption85a61d56c5 exact record
+       (9d ago)
+  from 2.0.0_SA_COO~Y
+       IRPT Andrew-direct Global firm client account selection
+       (9d ago)
+  from 2.0.0_SA_COO~M
+       IRPT Holdings Andrew-direct restart: firm journeys and implementation
+       (8d ago)
+  from 2.0.0_SA_COO~M
+       Andrew Holdings drive 600s instruction recorded
+       (8d ago)
+  from 2.0.0_SA_COO~M
+       Andrew Go continuation recorded206b; Holdings actual source implementation
+       (8d ago)
+  from 2.0.0_SA_COO~M
+       Andrew-direct continuation and Holdings implementation ce2fd95103
+       (8d ago)
+  from 2.0.0_SA_COO~M
+       Andrew Tax workbook decision consumed b120823a64; exact source dependency
+       (8d ago)
+  from 2.0.0_SA_COO~P
+       Andrew-direct P Claude handoff; approved Holdings apply preserved
+       (8d ago)
+  from 4.0.0_SA_CRO~B
+       ANDREW-DIRECT recorded: CRO~B process-architecture brief (RCN-0016)
+       (8d ago)
+  from 1.0.0_SA_CTO
+       ANDREW-DIRECT ~15:31Z: IRPT portal frontend candidates hand to 2.0.0_SA_COO~D to land on DEV
+       (8d ago)
+  from 1.0.0_SA_CTO
+       ANDREW-DIRECT ~16:0xZ at the CTO terminal: CLAUDE.md first point -- standard technical English
+       (8d ago)
+  from 1.0.0_SA_CTO
+       Spine v3.19 LANDED @6158fc41c4 (LOCAL): reports 2+3 built on Andrew's word -- issuers read before the next cut
+       (7d ago)
+  from 1.0.0_SA_CTO
+       LAW EDIT @facb0dc2da (LOCAL): CLAUDE.md rule 0 -- standard technical English, prose under 150 words
+       (7d ago)
+  from 1.0.0_SA_CTO
+       LAW EDITS @a9a9d9925e (LOCAL): CLAUDE.md, XXX.md, RAVC, budgets, memory guard, spine v3.20
+       (7d ago)
+  from deploy_ledger.py (HELD-STALE nudge, on behalf of 1.0.0_SA_CTO~Z)
+       HELD-STALE: sovereign/external-gated deploy hold 'd12-sms-origination-identity-activation' held 26.9d -- NUDGE THE GATE OR RECONSIDER (NOT a half-landed deploy)
+       (3d ago)
+  from deploy_ledger.py (HELD-STALE nudge, on behalf of 0.7.0_AE_CloudOps)
+       HELD-STALE: sovereign/external-gated deploy hold 'freshguard-leg4-writer-wiring-finish' held 82.0d -- NUDGE THE GATE OR RECONSIDER (NOT a half-landed deploy)
+       (3d ago)
+  from deploy_ledger.py (on behalf of 2.0.0_SA_COO~P)
+       RED: deploy-completion ledger 'irpt-adapter-render-grant-kms-20260927' OPEN 39.3h (window 4.0h) -- POSSIBLE HALF-LANDED DEPLOY
+       (3d ago)
+  from deploy_ledger.py (on behalf of 2.0.0_SA_COO~P)
+       RED: deploy-completion ledger 'irpt-adapter-render-selection-20260927' OPEN 37.3h (window 4.0h) -- POSSIBLE HALF-LANDED DEPLOY
+       (3d ago)
+  from deploy_ledger.py (on behalf of 2.0.0_SA_COO~P)
+       RED: deploy-completion ledger 'irpt-export-async-submit-20260927' OPEN 41.5h (window 4.0h) -- POSSIBLE HALF-LANDED DEPLOY
+       (3d ago)
+  from deploy_ledger.py (on behalf of 2.0.0_SA_COO~P)
+       RED: deploy-completion ledger 'irpt-export-receipt-running-20260928' OPEN 36.7h (window 4.0h) -- POSSIBLE HALF-LANDED DEPLOY
+       (3d ago)
+  from deploy_ledger.py (on behalf of 2.0.0_SA_COO~P)
+       RED: deploy-completion ledger 'irpt-export-reopen-rule-20260927' OPEN 43.4h (window 4.0h) -- POSSIBLE HALF-LANDED DEPLOY
+       (3d ago)
+  from deploy_ledger.py (on behalf of 0.9.0_WK_IRPT_BCKEND~43)
+       RED: deploy-completion ledger 'irpt-holdings-schedule-enable-m-20260929' OPEN 11.7h (window 4.0h) -- POSSIBLE HALF-LANDED DEPLOY
+       (3d ago)
+  from deploy_ledger.py (on behalf of 2.0.0_SA_COO~P)
+       RED: deploy-completion ledger 'irpt-ui-walk-principal-w21-20260929' OPEN 9.7h (window 4.0h) -- POSSIBLE HALF-LANDED DEPLOY
+       (3d ago)
+  from deploy_ledger.py (on behalf of 0.0.3_BG_BBGTerminal)
+       RED: deploy-completion ledger 'leadpanel-price-producer-schedule' OPEN 123.0h (window 3.0h) -- POSSIBLE HALF-LANDED DEPLOY
+       (3d ago)
+  from deploy_ledger.py (on behalf of 0.0.3_BG_BBGTerminal)
+       WARN: ledger 'leadpanel-price-producer-schedule' entry reads TERMINAL while leg(s) L3, L4 carry NO proof -- the record disagrees with the gate
+       (3d ago)
+  from 1.0.0_SA_CTO
+       RE 103053: route (a) -- MDPF_TAXSMA TX-c-2 must land or narrow
+       (2d ago)
+HALT-GATE: HALT_ACK set -- messages acknowledged. Proceeding.
+  [naming-apply-gate] NAMING CONFORMANT iam.tf:34 irpt-status-role -> irpt-status-role
+  [naming-apply-gate]   why: aws_iam_role.irpt_status name: CONFORMANT as IAM_ROLE
+  [naming-apply-gate] NAMING CONFORMANT iam.tf:110 irpt-status-policy -> irpt-status-policy
+  [naming-apply-gate]   why: aws_iam_role_policy.irpt_status name: CONFORMANT as IAM_POLICY
+  [naming-apply-gate] NAMING CONFORMANT iam.tf:157 irpt-status-ownership-map-read-policy -> irpt-status-ownership-map-read-policy
+  [naming-apply-gate]   why: aws_iam_role_policy.irpt_status_ownership_map name: CONFORMANT as IAM_POLICY
+  [naming-apply-gate] NAMING CONFORMANT service_profile_read.tf:22 irpt-status-service-profile-read-policy -> irpt-status-service-profile-read-policy
+  [naming-apply-gate]   why: aws_iam_role_policy.irpt_status_service_profile_read name: CONFORMANT as IAM_POLICY
+  [naming-apply-gate] NAMING-APPLY: .: 4 .tf file(s), 4 resource-name attribute(s): 4 graded, 0 expressions deferred to plan (0 module-produced)
+  [naming-apply-gate] NAMING-GATE: PASS 4 graded
+  [naming-plan-gate] NAMING CONFORMANT aws_iam_role.irpt_status irpt-status-role -> irpt-status-role
+  [naming-plan-gate]   why: aws_iam_role.irpt_status (existing): CONFORMANT as IAM_ROLE
+  [naming-plan-gate] NAMING WARN module.irpt_status.aws_lambda_function.this irpt-status -> irpt-status-lambda
+  [naming-plan-gate]   why: module.irpt_status.aws_lambda_function.this (existing): OUT-OF-PATTERN as LAMBDA: the module would not produce this name; an apply has no diff and runs this stage before any plan, so the name is read as the tree states it -- not confirmed as an addition here, so this only WARNs
+  [naming-plan-gate] NAMING-PLAN-DENOM: C:/Users/ANDREW~1/AppData/Local/Temp/tmp.mE2DyP36L8.json: 2 resource-name(s) graded
+  [naming-plan-gate] NAMING-PLAN: WARN 2 graded
+safe-apply: . sets default_tags -- running the comp-tagauthz pre-apply authorization gate.
+------------------------------------------------------------------------------
+SWEPT (derived from the account, one call: iam get-account-authorization-details):
+  roles 284   local+attached policies 61   users 7   groups 1
+  SCPs: NOT APPLICABLE -- account is not in an AWS Organization (AWSOrganizationsNotInUseException). Stated, not implied.
+NOT SWEPT (named, not implied): S3 bucket policies, KMS key policies,
+  permission boundaries, session policies, resource policies generally.
+tag-conditioned statements found: 9 (4 ours, 5 AWS service-linked)
+------------------------------------------------------------------------------
+
+default_tags keys in .: ['ManagedBy', 'Project', 'System']
+  *** KEY COLLISION: ['Project', 'System'] are BOTH default_tags keys AND authorization keys.
+
+MODE: GATE. Scoped to 0 candidate resource(s) this tree would manage.
+
+RESULT: none of the 0 candidate(s) carries a tag that .'s default_tags ['ManagedBy', 'Project', 'System'] would overwrite.
+safe-apply: comp-tagauthz gate PASSED -- no plan resource overwrites an access-granting tag.
+[tombstone-gate] checked 0 create(s) in this plan against 7 tombstone(s)
+[tombstone-gate] CLEAN: no planned create matches a tombstoned resource.
+module.irpt_status.aws_lambda_function.this: Modifying... [id=irpt-status]
+module.irpt_status.aws_lambda_function.this: Still modifying... [id=irpt-status, 10s elapsed]
+module.irpt_status.aws_lambda_function.this: Modifications complete after 16s [id=irpt-status]
+
+Warning: Applied changes may be incomplete
+
+The plan was created with the -target option in effect, so some changes
+requested in the configuration may have been ignored and the output values
+may not be fully updated. Run the following command to verify that no other
+changes are pending:
+    terraform plan
+
+Note that the -target option is not suitable for routine use, and is provided
+only for exceptional situations such as recovering from errors or mistakes,
+or when Terraform specifically suggests to use it as part of an error
+message.
+
+Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
+
+Outputs:
+
+function_name = "irpt-status"
+role_arn = "arn:aws:iam::313476888478:role/irpt-status-role"
