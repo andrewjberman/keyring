@@ -67,3 +67,22 @@ market fund); WALDROP DONOR ADVISED FUND 5,842,785; EXXONMOBIL HOLDINGS CORP COM
 02/14/2029 3,060,000 (a structured note); VANGUARD MORNINGSTAR TOTAL STOCK MARKET ETF 2,926,219; VANGUARD MORNINGSTAR VALUE ETF
 2,691,122; CLIFFWATER CORPORATE LENDING I 2,608,883; VANGUARD MORN TOTAL STK MKT IDX ADMIRAL 2,444,559; 6 YEAR SHIELD 25 S&P 500
 INDEX 2,341,992. The resolution table is six months old: the Vanguard Morningstar funds (about 44 M) are newer than it.
+
+## ADDENDUM 2 (11:3xZ) -- the refresh, measured before a packet
+
+- **The resolver calls a vendor.** `data/black_diamond/scripts/classification/resolve_tickers.py` imports `yfinance` (:44) and calls
+  it in method 5 (`yf.Ticker`, :313-342) and in `sync_to_ticker_lookup` (`yf.download`, :496). Running it as written is egress
+  off Opal infrastructure: it needs Andrew's per-use word (CLAUDE.md Agent Autonomy). Not run. It also reads
+  `gold/timeseries/holdings_lots/` (:53), not the `gold/holdings_lots/` prefix the chain writes today.
+- **What the stale table's 324 M rests on:** by `resolution_method`, 324,010,294.08 USD came from `bd_feed` (the name carries a
+  ticker elsewhere in Black Diamond's own lots, confidence 1.0); 43,161.60 from `individual_stock_pattern`; 1,543.53 from
+  `mutual_fund_pattern`.
+- **A vendor-free refresh -- the `bd_feed` method alone, on today's lots** (`gold/holdings_lots/2026-09-25.parquet`, one ticker per
+  exact normalized name): 4,456 names map uniquely, 26 map to more than one ticker (ambiguous, resolve nothing). On the 09-30
+  positions: 305,262,370.74 USD resolve to a ticker with a row; 2,258,039.24 to a ticker with none; 29,273,718.38 ambiguous;
+  101,893,656.38 never carry a ticker in the feed. 49 Financial unclassified **23.78 -> 7.42 pct** -- worse than the stale table
+  (6.42), because today's lots put two tickers on some names (the GLDM shape, row S10).
+- **Neither reaches 5.0 pct.** The names the feed never tickers (VANGUARD MORNINGSTAR GROWTH ETF 35.8 M and its siblings, about
+  44 M) can be identified only by CUSIP (the lots carry `cusip`) or by a vendor. Batch 150: the identity order starts at the exact
+  name until a CUSIP read exists -- a CUSIP read in C_06 needs Black Diamond's canonical holdings to carry `cusip` (they do not;
+  Cottonwood's B_00 carrier is the precedent) and `CUSIP:` rows for those securities.
