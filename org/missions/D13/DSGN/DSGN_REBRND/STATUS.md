@@ -5,7 +5,7 @@ Seat `2.0.0_SA_COO~D` (CLAUDE). Contract: PRD `org/missions/D13/DSGN/DSGN_REBRND
 `org/tier1_exec/3.0.0_SA_CVO/deliverables/DSGN_REBRND_ROUND2_GRADE_20261001.md` @599d33a722). Authority: 1.0.0_SA_CTO RULINGS
 batch 80 items 8-12 (the round-2 analysis; round 3 owed, this seat's, FAST, after the Investor Reporting work) and batch 165
 @10d2b1c445 (msg 104234: round 3 un-parks now, every IR line being blocked outside this seat; its own `/positioning` lease;
-IR keeps priority -- return to DSGN_IRPTV1 the tick any of its Next lines unblocks). **As of 2026-10-02T22:1xZ** (E4's surface half landed on portal DEV fe461611, while every DSGN_IRPTV1 line is held or parked).
+IR keeps priority -- return to DSGN_IRPTV1 the tick any of its Next lines unblocks). **As of 2026-10-02T23:5xZ** (E4: surface half on DEV fe461611; FWD-13 Models view clean on DEV 661e49b3; ETF and Satellite views owed).
 
 ## Pins
 
@@ -29,8 +29,23 @@ IR keeps priority -- return to DSGN_IRPTV1 the tick any of its Next lines unbloc
      in the shared table and HoldingsTab's extra cells.
    Origin DEV fe461611, ls-remote 22:1xZ. After-walks: `tmp/ui-walk/20261002T214636Z` and `20261002T220333Z` against
    baseline `20261002T130259Z` (local). Hairlines are enumerated in fb5d6116's message and left as the band's light rule
-   idiom. OWED next: the FWD-13 half, the contrast table of every interactive role's (ground, ink) state pairs on the page,
-   and the two contrast rulings (rows W2-S8, W1-S11) made with it in hand. The original text follows: every surface on the page resolves to a
+   idiom.
+   FWD-13 HALF, IN PROGRESS:
+   - The instrument is the walker's `--contrast-table`: every interactive control's text-vs-ground pair at rest, on hover
+     and selected (CLOUD 30fa63f31e; checked offline on known pairs).
+   - The Models view (Portfolio, Benchmark, Relative, Custom) is CLEAN on portal DEV 661e49b3. Walk 20261002T233417Z
+     found 3 pairs under their bar; walk 20261002T234643Z found 0 of 168.
+   - The AGG chip takes indigo400.
+   - RULING on row W2-S8 (this seat): a locked canon hex is never the ink of small text. The model-name hover stays
+     white, and the hex stays on the bars. Putting the hex on the trigger's arrow (a graphic, 3:1) needs the shared
+     `src/components/ModelPortfolioModal.tsx`, outside this lease: parked.
+   - OWED next, measured in that walk:
+     - the ETF view: 1 pair (a fund header link's hover takes the book colour as ink, 4.08);
+     - the Satellite view: 5 pairs (`--book-accent` hovers at 3.26-4.23, and the Satellite 80 chip label at 3.86
+       on the band);
+     - then row W1-S11 (the dark-mode accent: fill and ink cannot share one value), which is a portal-wide token
+       call to rule and route.
+   The original text follows: every surface on the page resolves to a
    role of the one named-layer table (page, section strip, panel body, tile, inset, hover, selected, tooltip) with an opaque
    rung in both worlds; every interactive role's (ground, ink) state pairs clear the contrast bar in the state it is actually
    in. Measure first (the page rendered on 5174 and read), then fix in the surface. The two contrast rulings that bound
