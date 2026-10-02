@@ -1195,6 +1195,28 @@
  "spec_asserts": "Row Z-W80-S1 stood BLOCKING: AC3 expected 'BATTERY29: ALL PASS (2 skipped)' and read FAIL on two posture.harness lines.",
  "world_is": "The issuer ruled on S1 in Amendment 1 @77abd61a20: the two posture lines return when AV-zg-2 renders the single [data-header-posture] and are read on the merged candidate. S1 is not edited; this row is the correction.",
  "notes": "Correction row per the append-only rule."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W83-S1",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~83",
+ "surfaced_at": "2026-10-02T21:55Z",
+ "one_line": "AV-zg-4: ChatterBubbles imports the shared ramp by a RELATIVE path, not the face's '@/lib/sentimentColor', because three battery harnesses cannot resolve '@/'.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "With `import { getSentimentColor } from '@/lib/sentimentColor'` in ChatterBubbles.tsx, battery29.sh read BATTERY29: FAIL: leadPanelPattern, tabs and shell harnesses exit rc=1 with MODULE_NOT_FOUND (their own source() loaders resolve only specifiers that start with '.'), and posturezero.cjs and postureharness.cjs went red with them (ALL BOUND 11 of 14).",
+   "With `from '../../../lib/sentimentColor'` (the form ChatterBubbles already used for lib/chartColors) the same battery reads BATTERY29: ALL PASS (0 skipped), ALL BOUND 14 of 14, and tone.cjs arm 1 (IMPORT_RE accepts either form) reads 4 of 4. TopicCloud.tsx keeps the face's '@/lib/sentimentColor' line, which no harness loads.",
+   "Portal commit 74347456 on wk-DSGN_AMGTV1-83-portal."
+  ]
+ },
+ "spec_asserts": "Face item 3 of AV-zg-4: ChatterBubbles.tsx 'Import getSentimentColor the same way' (the '@/lib/sentimentColor' line TopicCloud takes).",
+ "world_is": "The __harness__ loaders (leadPanelPattern, tabs, shell and the harnesses that load ChatterBubbles through them) resolve relative specifiers only; an '@/' import in a page file they load throws MODULE_NOT_FOUND. A later cell that adds an '@/' import to any page component those harnesses load meets the same wall.",
+ "disposition": "UNDER_INVESTIGATION",
+ "notes": "Deviation is the specifier form only; the module, its export and the single import are as ordered."
 }
 ]
 ```
