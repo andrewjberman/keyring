@@ -2211,6 +2211,27 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "The codex_sandbox_offline_block_loopback_* rules block loopback traffic for the Codex offline sandbox identity.",
     "world_is": "By the same mechanism F10 measured, they do not: per-user Firewall blocks are loopback-exempt here. Filed on the CTO's instruction (msg 28059). Owner of the box's Codex sandbox posture: 0.0.0_AB_MSTR~Z (box operator); not chased by NFRA_OPALAI."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S54",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~AI",
+    "surfaced_at": "2026-10-02T03:13Z",
+    "one_line": "wall-dapi-8194-wfp.ps1 (opal_ai r2-dev 0fb3fcb694) reports 'VERIFY: opal_runtime_dapi_8194_wall FAIL' on this box although the sublayer is installed: its Verify() requires weight == 0xFFFF exactly, and the engine holds our sublayer at 0xFFE2 because SentinelOne/WebProtectionDriver sublayers occupy 0xFFFF..0xFFE3. A FAIL then also skips step (d) (R1 rule removal).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:\\opal-elev\\wfp_8194_run.txt (Andrew, elevated, ~02:25Z): VERIFY sublayer FAIL, block_v4 OK, block_v6 OK; exit 4.",
+        "F11_SUBLAYER_EVIDENCE.json from Andrew's elevated netsh wfp show state dump: sublayer opal_runtime_dapi_8194_wall present, FWPM_SUBLAYER_FLAG_PERSISTENT, weight 65506 (0xFFE2); 29 higher-weight sublayers (SentinelOne, WebProtectionDriver); filters 157756/157757 inside it.",
+        "F11_ACCEPTANCE.json @52640d92c7: the wall works (agent and MSP 8194 REFUSED, 8790 OPEN; operator 8194 OPEN)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "OA-f-11 face item 4(c): read back the sublayer and both filters by key, printing VERIFY OK when correct.",
+    "world_is": "The sublayer read-back is correct in name and flags but compares weight to the REQUESTED 0xFFFF, not to what the engine assigned. Fix (LOCAL, next cut): compare to the read-back weight and print it, or accept any weight when the filters resolve inside the key. Until then a re-run on this box exits 4 before removing R1-class rules. Also: an EDR holds the top 29 sublayer slots here, so 'highest priority' is not available to us -- AC3 shows the block still wins arbitration against the loopback permits."
   }
 ]
 ```

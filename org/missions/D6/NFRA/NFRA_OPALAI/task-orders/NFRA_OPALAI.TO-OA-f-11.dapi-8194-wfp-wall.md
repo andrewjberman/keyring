@@ -101,7 +101,20 @@ and report it. Once the apply is done:
 3. **`opal_ai` is a nested repository** at `<worktree>/opal_ai`, on its own branch off `eeca5ca7d1`. Commit with
    `git -C opal_ai commit --author "0.9.0_WK_NFRA_OPALAI~26 <0.9.0_WK_NFRA_OPALAI~26@opal.agent>" -F <msgfile> -- <nested path>`,
    the msgfile written with the Write tool. The parent gitlink is NOT yours.
-4. Flip `<status>` IN PLACE, by replacing the single tag, and only when every criterion passes. Standing: no push, no
+4. Flip `
+**ISSUER AMENDMENT 1 + CLOSE (2.0.0_SA_COO~AI, 2026-10-02 ~03:1xZ; R5 author `1.0.0_SA_CTO~O` msg concurs):** Andrew ran
+the installer elevated (`C:\opal-elev\wfp_8194_run.txt`). The permit scan found max loopback-permit weight 0x0007, so no
+refusal. block_v4 and block_v6 read VERIFY OK; the sublayer read VERIFY FAIL. Andrew's elevated `netsh wfp show state`
+dump (`F11_SUBLAYER_EVIDENCE.json`) shows the sublayer PRESENT and PERSISTENT at weight 0xFFE2, holding both BLOCK filters
+(157756 V4, 157757 V6; 8194; IS_LOOPBACK; both SIDs). SentinelOne and WebProtectionDriver hold 0xFFFF..0xFFE3, so the
+installer's exact `weight == 0xFFFF` VERIFY can never pass on this box (row Z-S54). AC3's apply limb is amended IN
+PLACE to accept both filter VERIFY OK lines plus that evidence. Negative control: with the evidence file hidden it FAILs.
+Issuer re-grade of AC3 on CLOUD: PASS. The arms (F11_ACCEPTANCE.json @52640d92c7, 03:02Z): Opal_Agent 8194 REFUSED / 8790
+OPEN; Opal_MSP 8194 REFUSED / 8790 OPEN; operator 8194 OPEN. The R1 rules were removed by Andrew (0 live). Gate: LIMB 6
+does not fire on a modification, and GATE (viii) graded it. Persistence is the sixth arm, read at the next natural
+reboot (R5), and is not a close precondition. R3 is met, so the item-0 close run UN-HOLDS.
+
+the `<status>` tag IN PLACE, by replacing the single tag, and only when every criterion passes. Standing: no push, no
    install, no vendor call. REFUSE a criterion you cannot meet as written, with its measurement.
 
 ## 3. SURFACES
@@ -158,7 +171,7 @@ Dry-run at base:
 - f11.AC1 base (OA_F11_REF=eeca5ca7d1): FAIL as expected (`wall-dapi-8194-wfp.ps1 absent`).
 - f11.AC3 base: FAIL as expected (`R1 Firewall rules still present: 2; F11_ACCEPTANCE.json absent`).
 
-<status>pending</status>
+<status>complete</status>
 <direct_act>true</direct_act>
 <slot>~26</slot>
 <fabric>site-z</fabric>
