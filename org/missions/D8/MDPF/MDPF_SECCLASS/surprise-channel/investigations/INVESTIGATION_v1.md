@@ -1230,3 +1230,31 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "For the next Black Diamond or Cottonwood gold half: name the shipped artifacts in the act and diff them against their live versions before signing, instead of listing lib/_shared as not moved."
 }
 ```
+
+
+## MDPF_SECCLASS-S17 -- the multi_asset reader census searches table readers, not class renderers
+
+```json
+{
+  "id": "MDPF_SECCLASS-S17",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-02T19:10:00Z",
+  "one_line": "The multi_asset reader census (37fd00f133) says 'uncensused none', but its search domain is the readers of the classification table (tokens etf-classifications, classified_by, etf_classifications_dynamodb), narrower than the claim: it names 2 portal readers while portal item 84 had to change 7 Investor Reporting files the census never names, and Positioning (HoldingsBreakdownTable.tsx:345, HoldingsTreemapChart.tsx:41, grouped by ASSET_CLASS_ORDER without multi_asset) is not in it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's grade of portal item 84 (262be0a4, 2026-10-02 17:xZ-19:xZ): the census names composition.ts and wire HoldingsSnapshot.ts; item 84 changes chartColors.ts, adapt.ts, index.ts, assetClass.ts, SecurityList.tsx, HoldingsTreemap.tsx, HoldingsTreemapChart.tsx plus the wire",
+      "portal origin/DEV ec65c5d6: multi_asset absent from composition.ts:40/:54, PartnerAnalytics.tsx:75, AdvisorAnalytics.tsx:668, ConsolidatedOverviewPanel.tsx:391, TenantLayoutConfig.ts:369 (the Advisor Intelligence half, candidate 6245e92d / ed40c8ee, reviewed in CTO batch 180, not yet on DEV or PROD); Positioning groups by ASSET_CLASS_ORDER, unchanged",
+      "etf-classifications full scan 2026-10-02 19:0xZ: 0 of 2,841 rows carry asset_class multi_asset (no served move yet)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO batches 164 and 180: the multi_asset rows land only after every reader of the served class is on portal PROD; the census is the list of those readers.",
+  "world_is": "The gate is right, but the list it is checked against is short: a reader outside the census (Positioning today) would meet a multi_asset row without handling it. The census searched where classifications are READ FROM, not where a served class is RENDERED.",
+  "notes": "INERT: no multi_asset row exists. Owner 2.0.0_SA_COO~M: widen the census to every renderer of an asset class (the class-name readers in the portal, not the table readers) and add Positioning's reading before the rows act."
+}
+```

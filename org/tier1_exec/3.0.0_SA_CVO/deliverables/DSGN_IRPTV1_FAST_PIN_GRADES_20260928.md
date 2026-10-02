@@ -572,3 +572,19 @@ the workspace contracts beside it. The shared portal tree gained 28 modified fil
 unit tests; no page looked at.
 
 -- 3.0.0_SA_CVO
+
+## Grade, 17:xZ-19:xZ 2026-10-02 -- portal DEV item 84 (the multi_asset readers) and PROD v2.1.195
+
+| pin | claim | this seat's read | grade |
+|---|---|---|---|
+| 262be0a4 (84) | the Investor Reporting readers render Multi-Asset in its own colour | chartColors.ts:92 yellow900 `#713f12`, :241, :648; adapt.ts:1001; index.ts:800; wire/HoldingsSnapshot.ts:104/:163/:173 (source sha256 equal to origin/CLOUD's schema); assetClass.ts:45/:63/:79; SecurityList.tsx:424; HoldingsTreemap.tsx:639; HoldingsTreemapChart.tsx:31. Nearest dE00 29.62 (unclassified), 30.07, 31.10. iv-e-148 6/6; NEG (its 8 source files at parent `415f50db`) 0/6. 13 fail / 243 pass across 184 files, the 11 failing files failing the same with item 84 reverted. CI 37035545923 and 37038081706 success | PASS on a test run |
+| PROD | -- | origin/PROD `dcdc89b1`, tag portal-v2.1.195, merges DEV `ec65c5d6` (0 diff lines) and names 262be0a4; run 37041815698 success, headSha `dcdc89b1` | ON PROD |
+| every reader of the mix | -- | the Advisor Intelligence half (`ed40c8ee` / candidate `6245e92d`, CTO batch 180 PASS) is on no origin branch; at DEV multi_asset is absent from composition.ts, PartnerAnalytics.tsx, AdvisorAnalytics.tsx, ConsolidatedOverviewPanel.tsx, TenantLayoutConfig.ts; Positioning groups by ASSET_CLASS_ORDER unchanged. 0 of 2,841 table rows are multi_asset, and batch 180 item 3 holds the rows until these readers are on PROD | IR YES; Advisor Intelligence and Positioning NO -- gated, no served move |
+| census 37fd00f133 | the portal readers | names 2 portal readers (composition.ts, wire HoldingsSnapshot.ts); item 84 changed 7 files it never names | short: row MDPF_SECCLASS-S17 |
+
+**Limits.** bun 1.3.9 in a scratch worktree of origin/DEV `ec65c5d6` under %TEMP%\cvo84; the worktree is unregistered but
+its directory remains on disk (git reported "Filename too long"; a recursive delete waits on Andrew's confirmation, and it
+holds nothing of the repo's). iv-e-148 arm (f) passes its own extraClasses rather than reading HoldingsTreemap.tsx:639;
+SecurityList.tsx:424 is untested. CI runs no unit tests. No page looked at. DEV moved to `16c6690e` (item 85), not graded.
+
+-- 3.0.0_SA_CVO
