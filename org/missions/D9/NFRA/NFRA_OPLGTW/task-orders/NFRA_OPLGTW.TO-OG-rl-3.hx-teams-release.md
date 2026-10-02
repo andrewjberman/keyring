@@ -138,6 +138,7 @@ validated with `python .tools/proof-of-spec-check.py <instance>`. Report once pe
   `/hx/mail/x` and `/hx/transcripts/x`; AC4 grades "unchanged from live".
 
 <status>pending</status>
+<status>complete</status>
 <round>13</round>
 <slot>~15</slot>
 <fabric>site-z</fabric>
