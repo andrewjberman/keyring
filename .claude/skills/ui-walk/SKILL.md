@@ -91,6 +91,15 @@ entries by kind), the input boxes outside the picker at rest and at the end (`co
 opened the picker (`composer:no-picker`), and the names and variant line the composer prints. Page state only; Generate
 is never pressed.
 
+`--dashboard-window` (with `--client`) runs one step on the Performance tab. Its clock starts at the tab's own press (the
+account picker has no "All accounts" entry, so the tab opens on an account). It times the default account from the press,
+every other account from its select (first 8), and the default one again last (warm). Per account it records the
+dashboard's `manifest` and `series` reads (status, ms, the series' transfer bytes), the ms to the painted chart (a drawn
+area in `dashboard-performance-chart`, up to 30,000 ms) or to the tab's own body, the "Data through" words and the chart's
+day count. On a painted dashboard it presses each window preset once and counts every `/api/` request in the next 1.5 s,
+which must be 0; any request is recorded as `dashboard:window-request`. Writes `dashboard-window.json`. Counts, times and
+sizes only, never a figure.
+
 `--open-request <REQ-id>` (with `--client`) opens ONE listed analysis request on the Analysis tab, by `data-request-id`, else the first row whose state reads Ready, and writes `analysis-request.json` with what the dialog shows (status words, section blocks, the correction sentence) and the wait in ms, up to `REQUEST_DETAIL_CEILING_MS` (90,000). Opening a request issues GETs only. The record counts the dialog by the page's own markers -- `section_cards` (`[data-row="native-section"]`) and `section_value_rows` -- beside `coverage_gap_items` (the `<li>` rows of the extraction-coverage panel behind Technical details); the older `section_items` counts that gap list plus its panel and never a card. It also carries `marks` (ms from the press to the dialog, to the status words, to the sections block) and `hops`: each analysis or status request the page made after the press, with `sent_ms`, `answered_ms`, `took_ms`, `queued_ms` (waiting for a connection) and `server_ms` (to the first byte) from the browser's own timing, the HTTP status, on a status read whether `X-IRPT-Status-Dates` was sent (beside an Authorization control) and, for the sections answer, the served `sections` and `undated_sections` counts. The hops run from the Analysis tab's own click (`press_ms` places the press), so the list read and the per-row status reads are in them; `row_states_at_press` and `hops_sent_by_kind` say what the list showed and what was still unanswered. Counts and times only.
 
 `--holdings-aggregates` reads every holdings answer the walk receives and writes `holdings-aggregates.json`: per selection, how many served `security_aggregates` items equal the sum of their ACTUAL member nodes (basis OBSERVED or ASSIGNED), how many equal the page's own fold (every security node of that id, a model's TARGET nodes included), how many page identities have no served aggregate, and whether `class_totals` plus the remainder equals the custody total. Counts only: no client name and no figure is written.

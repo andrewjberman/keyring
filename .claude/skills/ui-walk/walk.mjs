@@ -47,6 +47,7 @@ for (let i = 0; i < argv.length; i++) {
   else if (a === '--account-drill') opt.accountDrill = true
   else if (a === '--open-request') opt.openRequest = argv[++i]
   else if (a === '--composer-picker') opt.composerPicker = true
+  else if (a === '--dashboard-window') opt.dashboardWindow = true
   else if (a === '--holdings-aggregates') opt.holdingsAggregates = true
   else if (a === '--performance-state') opt.performanceState = true
   else if (a === '--expect-text') opt.expectTexts.push(String(argv[++i] || ''))
@@ -952,6 +953,97 @@ async function composerPicker(page, label) {
   if (rec.multicomp && rec.multicomp.picker_opened === false) findings.push({ step: `${label}-picker`, check: 'composer:no-picker', claim: 'measured', observed: 'the Multi-Comp card did not open the comparison picker', rule: 'W2-05: the card opens the picker' })
 }
 
+// ---- --dashboard-window (IRPT_DASHBD FWD-1, plan section 4; DSGN_IRPTV1 FAST item 72): on the Performance tab, select
+// each account of the picker (first 8) and time, from the select, the dashboard's manifest and series reads (status, ms,
+// the series' transfer size in bytes) and the painted chart (a drawn recharts area inside the dashboard chart slot), up to
+// DASHBOARD_PAINT_CEILING_MS; an account with no dashboard records where the tab's own body showed instead. On a dashboard
+// it presses each window preset once and counts EVERY /api/ request sent in the 1.5 s after the press (the window is
+// computed in the browser, so the expected count is 0). Counts, times, sizes and the as-of words only: no figure.
+const dashboardWindows = []
+const DASHBOARD_PAINT_CEILING_MS = 30000
+// The recorder starts at the Performance tab's own press, so the tab's default account (the picker has no "All accounts"
+// entry) is timed from the press; every other account is timed from its select, and the default one again last (warm).
+let dashRec = null
+function startDashboardRecorder(page) {
+  const reads = []
+  const byReq = new Map()
+  const onRequest = (req) => {
+    const p = pathOnly(req.url())
+    if (!/^\/api\//.test(p)) return
+    const m = p.match(/\/investor-reporting\/reporting\/[^/]+\/(manifest|series)$/)
+    const r = { kind: m ? m[1] : 'other', sent: Date.now(), answered: null, status: null, transfer_bytes: null }
+    reads.push(r); byReq.set(req, r)
+  }
+  const onResponse = async (res) => {
+    const r = byReq.get(res.request()); if (!r || r.answered !== null) return
+    r.answered = Date.now(); r.status = res.status()
+    if (r.kind === 'series') { try { r.transfer_bytes = (await res.request().sizes()).responseBodySize } catch { /* size unread */ } }
+  }
+  const onFailed = (req) => { const r = byReq.get(req); if (r && r.answered === null) { r.answered = Date.now(); r.status = 'failed' } }
+  page.on('request', onRequest); page.on('response', onResponse); page.on('requestfailed', onFailed)
+  dashRec = { reads, t0: Date.now(), stop: () => { page.off('request', onRequest); page.off('response', onResponse); page.off('requestfailed', onFailed) } }
+}
+async function dashboardWindow(page, label) {
+  const tab = '[data-slot="reporting-tab"]'
+  if (!dashRec) startDashboardRecorder(page)
+  const reads = dashRec.reads
+  const picker = page.locator('[data-slot="performance-account-picker"] select').first()
+  const options = await picker.locator('option').evaluateAll((os) => os.map((o) => o.value)).catch(() => [])
+  const current = await picker.inputValue().catch(() => null)
+  const others = options.filter((v) => v !== current).slice(0, 7)
+  // [value or null for the default view, the clock's start, warm?]
+  const plan = [[null, dashRec.t0, false], ...others.map((v) => [v, null, false]), ...(current !== null && others.length ? [[current, null, true]] : [])]
+  const rec = { label, accounts_in_picker: options.length, accounts: [] }
+  for (let i = 0; i < plan.length && timeLeft(); i++) {
+    const [value, start, warm] = plan[i]
+    const from = value === null ? 0 : reads.length
+    const t0 = start === null ? Date.now() : start
+    if (value !== null) await picker.selectOption(value).catch(() => {})
+    let paintedMs = null; let bodyMs = null
+    while (Date.now() - t0 < DASHBOARD_PAINT_CEILING_MS) {
+      const s = await page.evaluate((tabSel) => ({
+        painted: !!document.querySelector(`${tabSel} [data-slot="dashboard-performance-chart"] .recharts-area-area[d]`),
+        refused: !!document.querySelector(`${tabSel} [data-slot="dashboard-performance-refusal"]`),
+        body: !!document.querySelector(`${tabSel} [data-slot="reporting-body"]`),
+      }), tab).catch(() => ({ painted: false, refused: false, body: false }))
+      const mine = reads.slice(from)
+      const manifestDone = mine.some((r) => r.kind === 'manifest' && r.answered !== null)
+      if (s.painted || s.refused) { paintedMs = s.painted ? Date.now() - t0 : null; break }
+      if (s.body && (manifestDone || warm) && !mine.some((r) => r.kind === 'series' && r.answered === null)) { bodyMs = Date.now() - t0; break }
+      await page.waitForTimeout(50)
+    }
+    const mine = reads.slice(from)
+    const one = (kind) => mine.filter((r) => r.kind === kind).map((r) => ({ status: r.status, sent_ms: r.sent - t0, took_ms: r.answered === null ? null : r.answered - r.sent, transfer_bytes: r.transfer_bytes }))
+    const acct = { step: i + 1, clock_from: value === null ? 'tab press' : 'select', warm_return: warm,
+      manifest: one('manifest'), series: one('series'), other_api_requests: mine.filter((r) => r.kind === 'other').length,
+      ms_to_painted_chart: paintedMs, ms_to_tab_body: bodyMs,
+      dashboard_refused: await page.locator(`${tab} [data-slot="dashboard-performance-refusal"]`).count().catch(() => 0) > 0,
+      data_through: ((await page.locator(`${tab} [data-slot="dashboard-data-through"]`).first().innerText({ timeout: 500 }).catch(() => '')) || '').trim() || null,
+      chart_days: await page.locator(`${tab} [data-slot="dashboard-performance-chart"]`).first().getAttribute('data-days', { timeout: 500 }).catch(() => null),
+      presets: [] }
+    if (paintedMs !== null && !warm) {
+      await shot(page, `${label}-dashboard-${i + 1}`)
+      const presets = await page.locator(`${tab} [data-slot="dashboard-window-controls"] button[data-preset]`).evaluateAll((bs) => bs.map((b) => b.getAttribute('data-preset'))).catch(() => [])
+      for (const id of presets) {
+        const before = reads.length
+        await page.locator(`${tab} [data-slot="dashboard-window-controls"] button[data-preset="${id}"]`).first().click({ timeout: 3000 }).catch(() => {})
+        await page.waitForTimeout(1500)
+        acct.presets.push({ preset: id, requests_after_press: reads.length - before,
+          pressed: await page.locator(`${tab} button[data-preset="${id}"][aria-pressed="true"]`).count().catch(() => 0) > 0,
+          measured_days: await page.locator(`${tab} [data-field="window.measuredDays"]`).first().innerText({ timeout: 500 }).catch(() => null) })
+      }
+      await checks(page, `${label}-dashboard-${i + 1}-presets`)
+    }
+    rec.accounts.push(acct)
+  }
+  dashRec.stop(); dashRec = null
+  dashboardWindows.push(rec)
+  for (const a of rec.accounts) {
+    const extra = a.presets.filter((p) => p.requests_after_press > 0)
+    if (extra.length) findings.push({ step: `${label}-dashboard-${a.step}`, check: 'dashboard:window-request', claim: 'measured', observed: `a dashboard window press sent ${extra.map((p) => `${p.preset}:${p.requests_after_press}`).join(', ')} request(s)`, rule: 'IRPT_DASHBD plan section 4: a window change is computed in the browser' })
+  }
+}
+
 async function modelScope(page, label, maxPresses = 10) {
   const read = () => page.evaluate(() => {
     const scope = document.querySelector('[data-slot="holdings-model-scope"]')
@@ -1199,6 +1291,7 @@ try {
             await page.keyboard.press('Escape').catch(() => {})   // no dialog may stand over the tab strip
             await page.waitForTimeout(300)
             if (opt.openRequest && /analysis/.test(name)) requestHops = { t0: Date.now(), rows: [] }
+            if (opt.dashboardWindow && /performance/.test(name)) startDashboardRecorder(page)
             await tabs.nth(i).click().catch(() => {})
             await settle(page, 2500)
             await checks(page, `${client}-${name}`)
@@ -1222,6 +1315,11 @@ try {
                 await modelScope(page, `${client}-holdings`)
                 log('MODEL SCOPE', JSON.stringify(modelScopes[modelScopes.length - 1]).slice(0, 900))
               }
+            }
+            // --dashboard-window runs on the tab's default view, BEFORE the explore step below changes selects.
+            if (opt.dashboardWindow && /performance/.test(name)) {
+              await dashboardWindow(page, `${client}-performance`)
+              log('DASHBOARD WINDOW', JSON.stringify(dashboardWindows[dashboardWindows.length - 1]).slice(0, 1500))
             }
             // --composer-picker runs on the tab's default view, BEFORE the explore step below changes selects.
             if (opt.composerPicker && /analysis/.test(name)) {
@@ -1274,6 +1372,7 @@ try {
   if (modelScopes.length) writeFileSync(path.join(OUT, 'model-scope.json'), JSON.stringify(modelScopes, null, 1))
   if (accountDrills.length) writeFileSync(path.join(OUT, 'account-drill.json'), JSON.stringify(accountDrills, null, 1))
   if (composerPickers.length) writeFileSync(path.join(OUT, 'composer-picker.json'), JSON.stringify(composerPickers, null, 1))
+  if (dashboardWindows.length) writeFileSync(path.join(OUT, 'dashboard-window.json'), JSON.stringify(dashboardWindows, null, 1))
   if (searchTimings.length) writeFileSync(path.join(OUT, 'search-timings.json'), JSON.stringify(searchTimings, null, 1))
   if (openedRequests.length) writeFileSync(path.join(OUT, 'analysis-request.json'), JSON.stringify(openedRequests, null, 1))
   if (holdingsAggregates.length) writeFileSync(path.join(OUT, 'holdings-aggregates.json'), JSON.stringify(holdingsAggregates, null, 1))
