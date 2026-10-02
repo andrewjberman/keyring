@@ -1,8 +1,9 @@
 # Never-widen half, MDPF_SECCLASS -- the Cottonwood CUSIP rows (CTO rulings batch 93 item 2): 29 bank CDs as `CUSIP:` rows
 
 **Author:** `2.0.0_SA_COO~M`, 2026-10-01 18:4xZ (FAST lease `MDPF_SECCLASS`). **For:** `1.0.0_SA_CTO`, second half.
-**Status: DRAFT -- neither half signed; the act is NOT RUN; the writer is NOT BUILT.** A precondition of the Cottonwood re-point
-(`NEVER_WIDEN_HALF_REQUEST_COT_REPOINT_20261001.md` @1ffbf6a639).
+**Status (2026-10-02 03:1xZ): COO half SIGNED; CTO half asked; the act is NOT RUN. The writer is BUILT (below), its dry run
+read against the live table.** A precondition of the Cottonwood re-point (`NEVER_WIDEN_HALF_REQUEST_COT_REPOINT_20261001.md`
+@1ffbf6a639). The other precondition, the 19 seed rows, is WRITTEN (2026-10-02 02:12Z, ledger `secclass-cot-seed-rows-m-20261001`).
 
 ## What item 2 covers, measured (2026-09-30, read-only; script scratch `cot_cusip_gap.py`)
 
@@ -63,23 +64,65 @@ Not written (no peer row of its kind; the table holds 0 mortgage-backed `CUSIP:`
 | 76114BAG3 | RESIDENTIAL ASSET 2006-A14CB 20361225 6.00000 | 11,002.22 | NOT WRITTEN: no peer row of its kind |
 | 02147XAJ6 | CWALT INC 2006-32CB 20361125 6.00000 | 5,101.15 | NOT WRITTEN: no peer row of its kind |
 
-## The writer (to build before signing)
+## The writer -- BUILT
 
-Neither existing path writes these: the seed script skips `CUSIP:` rows, and Cottonwood's `E_18` plans real tickers only. The
-writer is the conditional put Black Diamond's `E_18` uses for its own `CUSIP:` rows (`etf_classification_scheduled.write`,
-`attribute_not_exists(ticker)`, so no existing row is touched), driven by a dry-run-first script on the `write-model-rows.py`
-pattern, with `classified_by: scheduled` as the peers carry. Stops: the dry run must plan exactly these 29 keys, 0 present.
+Neither existing path writes these: the seed script skips `CUSIP:` rows, and Cottonwood's `E_18` plans real tickers only.
 
-## Served effect
+- **Script:** `MDPF_SECCLASS_M/R7_CHECKS/write_cusip_rows.py` (blob `6dfcd7fc75`), on the `write-model-rows.py` pattern, kept
+  in this seat's own folder as the 2026-09-30 CUSIP act's script was (`R5_CHECKS/r5_cusip_rows_act.py`); `yang_pipeline/` is not
+  this lane's to commit. It reads an
+  operator-named set file and never derives a plan; DRY RUN by default; `--write` lands the plan through
+  `etf_classification_scheduled.write()`, the conditional put Black Diamond's `E_18` uses for its own `CUSIP:` rows
+  (`attribute_not_exists(ticker)`); it issues no PutItem of its own and has no overwrite and no delete path. Each row:
+  `ticker: CUSIP:<cusip>`, `identifier_namespace: CUSIP`, the line's class (no empty sub class written), the custody name,
+  `classified_by: scheduled` (as the 8 peers carry), `updated_by: mdpf-secclass-cusip-rows` (the peers carry
+  `mdpf-secclass-scheduled`; the distinct value names this writer path). Any refused line stops `--write` before the first put.
+- **Test:** `MDPF_SECCLASS_M/R7_CHECKS/test_write_cusip_rows.py` (blob `e3bccd5c47`), 10 passed: an 8-character Black Diamond
+  identifier, a masked CUSIP, a lower-case and an 8-character value are each refused; class and sub class outside the
+  vocabulary, a duplicate, no name and a malformed line are refused; a present key is left alone; one refusal writes nothing;
+  the put carries `attribute_not_exists(ticker)` and no `sub_asset_class` when the line has none.
+- **Set file:** `MDPF_SECCLASS_M/COT_CUSIP_ROWS_WRITE_SET_20261002.txt`, generated from this file's table (no CUSIP typed by
+  hand): 29 rows, 29 distinct, 3,005,499.29 USD.
+- **Dry run against the live table, 2026-10-02 03:09Z and again 03:20Z from the script's final place:** `CUSIP-ROWS named=29 plan=29 already_present=0 refused=0 (table
+  rows=2690)`, the 29 keys of the table above, each `fixed_income`, no sub class. **Stops before the write:** the pre-run dry run
+  reads anything other than `named=29 plan=29 already_present=0 refused=0`, or at CLOUD the writer is not blob `6dfcd7fc75`,
+  the set file not blob `85f1bff9a4`, or the shared put `etf_classification_scheduled.py` not blob `3e6e081e3b`.
 
-Cottonwood gold: none until the re-point ships (its host reads no table today). After it: 3,005,499.29 USD of bank CDs read
-fixed_income instead of unclassified. Holdings tab and Black Diamond gold: a point lookup by these keys only; neither keys a
-Cottonwood position by CUSIP today -- to be measured before signing.
+## Served effect -- measured 2026-10-02 03:1xZ
+
+- **Cottonwood gold:** none until the re-point ships (its host reads no table today). After it: 3,005,499.29 USD of bank CDs read
+  fixed_income instead of unclassified.
+- **Readers that build a `CUSIP:` key at CLOUD HEAD:** none. Repo census of the `CUSIP:` prefix over `*.py, *.ts, *.tsx, *.sh`
+  (7 files): the two seed scripts and `seed_bd_securities.py` skip or guard such keys; `etf_classification_scheduled.py` and this
+  writer write them; two scratch checks. `holdings_snapshot.classify_security` looks up by ticker only, and a CD has none, so the
+  **Holdings tab** does not move. **Black Diamond gold** builds no `CUSIP:` key either; it holds one of the 29 (06051X3R1, one
+  closed lot, 0.00 USD, `gold/holdings_lots/2026-09-25.parquet`; control: 112 of the 348 existing `CUSIP:` keys are in those lots).
+- **The comparison list** (`comparison_catalogue.py:94`) drops every row whose `identifier_namespace` is `CUSIP`: it gains nothing.
+- **Every other reader:** the table already holds 348 `CUSIP:` rows of this shape (written 2026-09-30), so 29 more meet no new
+  shape.
+- **Writers of these 29 keys:** this writer, and Black Diamond's `E_18` only if Black Diamond held one with no row (both the same
+  conditional put; the first to land wins and the other is refused). The seed script skips `CUSIP:` keys.
 
 ## Rollback
 
 A corrected row by the same writer path; removing a row is a delete-item, which needs Andrew's word.
 
-## COO half -- NOT SIGNED (the writer, its dry run and the served-effect read come first)
+## Acceptance
+
+1. Right after the run: `get-item` returns each of the 29 keys with `classified_by: scheduled`, `identifier_namespace: CUSIP`,
+   `fixed_income`, no sub class; the table counts 2,719 (2,690 + 29); a second dry run reads `plan=0 already_present=29`.
+2. Served: the Cottonwood re-point's own acceptance (its page walk), since no reader keys these rows before it ships.
+
+**Ledger:** one new entry, `secclass-cot-cusip-rows-m-20261002`, opened before the write; legs W (the write and its readback)
+and R (read with the re-point's served leg).
+
+## COO half -- SIGNED (2.0.0_SA_COO~M, 2026-10-02 03:1xZ)
+
+Signed on the blast radius above: 29 new `CUSIP:` items, no existing row touched; no served move today (no reader keys these
+rows; the comparison list drops them); after the re-point, 3,005,499.29 USD of Cottonwood bank CDs read fixed_income. Read at
+signing: the writer and its 10 tests, the generated set (29 rows, 3,005,499.29 USD), the 03:09Z dry run (29 planned, 0 present,
+0 refused), the `CUSIP:` reader census, the comparison list's drop rule, Black Diamond's holding of the 29. The two
+mortgage-backed bonds and the 43 vendor identifiers are not written. I run only after the second signature, and stop on any
+deviation this file does not name.
 
 ## CTO half -- NOT SIGNED
