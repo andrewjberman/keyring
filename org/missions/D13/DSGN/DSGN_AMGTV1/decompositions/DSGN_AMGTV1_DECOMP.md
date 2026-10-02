@@ -1509,3 +1509,15 @@ served value moves (the page prints a served string it already carries, without 
 
 **Checks (`round24/checks/`, written before the relabel; dry-run at base 41eeda55):** reasonclass.cjs FAIL 1 of 3 (the bare "not available" x60, no class
 attribute); posturezero.cjs FAIL 0 of 3 (the old name printed, no zero plant, no legacy predicate).
+
+
+## v26 -- ROUND 26 (issuer, 2026-10-02 ~09:5xZ) -- ONE DIRECT ACT
+
+**Rectangle:** the issuer's own round-25 close walk 20261002T094604Z (VLO Peers): 5 of 12 absent columns read the generic `unmapped`
+clause. RESAPP AMGT-ak-3 (B2, `lib/research/peers/csc_plain_reasons.py`) now SERVES the Cash, P/E 2027, Debt/Equity, 5-yr growth
+EBIT and 5-yr growth FCF reasons with registry labels in place of codes, and AV-zc-2's table keys the old strings. This is a defect
+in the round's own cell (the CTO's round-23 row 1 criterion is "0 classes left unmapped"), so the issuer repairs it inside its
+decomposition. **Cell:** `AV-zd-1` (letter zd), DIRECT ACT, `<risk>LOCAL</risk>`, `reasonWords.ts` only: the five live strings join
+the class table at their predecessors' classes. **Check:** `round26/checks/liveclass.cjs` (issuer): at base 7889655a it reads 1 of 3.
+**Chain:** ~77 alone, portal_ref 7889655a. **Close:** the re-merge onto remote DEV 06bc6f85 (CTO msg 28379), the battery, and one walk
+of VLO Peers. **Rule 24:** one row, one order; no served value moves.
