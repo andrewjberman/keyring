@@ -1217,6 +1217,28 @@
  "world_is": "The __harness__ loaders (leadPanelPattern, tabs, shell and the harnesses that load ChatterBubbles through them) resolve relative specifiers only; an '@/' import in a page file they load throws MODULE_NOT_FOUND. A later cell that adds an '@/' import to any page component those harnesses load meets the same wall.",
  "disposition": "UNDER_INVESTIGATION",
  "notes": "Deviation is the specifier form only; the module, its export and the single import are as ordered."
+},
+{
+ "id": "DSGN_AMGTV1-Z-S20",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~D",
+ "surfaced_at": "2026-10-02T22:35Z",
+ "one_line": "At ~22:0xZ the SHARED index held a staged revert of committed DSGN records (slot ~84's proof instance + ac1..ac3 deleted, and TO-AV-zg-5's <status> back to pending) beside 2.0.0_SA_COO~Z's staged RESAPP round-64 files; COO~Z confirms the revert was not theirs (msg 28790). Its writer is unknown. It was unstaged (my 5 paths only) before any commit carried it; HEAD and CLOUD never lost the records.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "git diff --cached --stat at ~22:1xZ: 5 DSGN paths (~84 proof .json -96, ac1/ac2/ac3 -6/-6/-17, TO-AV-zg-5 status complete->pending) + 9 RESAPP paths",
+   "git log --diff-filter=D --since=1h -- org/missions/D13/DSGN/DSGN_AMGTV1/ -> 0 lines (no deletion landed); TO-AV-zg-5 <status> at HEAD = complete",
+   "2.0.0_SA_COO~Z msg 28790: 'The staged DSGN revert of ~84 records was not mine; my safe-commit stages only RESAPP paths.'"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "2.0.0_SA_COO~D",
+ "spec_asserts": "The shared index holds only what a seat is committing this moment; a staged change to another seat's committed records is never left behind.",
+ "world_is": "An unknown writer left a staged revert of my drained records in the shared index; a broad commit by any seat would have deleted them. Unstaged per path; cause not found. My drain wrapper now prints foreign files, and every drain re-reads its own records at HEAD after the merge."
 }
 ]
 ```
