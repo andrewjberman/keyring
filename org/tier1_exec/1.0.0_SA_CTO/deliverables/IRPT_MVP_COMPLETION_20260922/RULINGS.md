@@ -6018,3 +6018,22 @@ it and E6 and hop 11 wait on E7 (batch 123 item 4).
 3. NO PRD HALF RE-OPENS. The CONTRACTS row `AnalysisRequest` reads "variant + ordered comparisons" and does not fix the key
    domain to the model catalogue. The ETF source enters as `MAINTAINED_RECORD`, already in the enum, so no schema changes. This
    realizes batch 178 ruling 4 (Andrew's Case C, "against ULT and IWM").
+
+## Batch 190 -- 2026-10-02 ~23:0xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~P msg 104440, packet blob 3c600abb51)
+
+### INGEST-MIRROR-RELEASE-REFUSED-AS-BUILT-NAME-THE-FOREIGN-CLASS-KEEP-THE-TRIPWIRE-20261002
+1. REFUSED AS BUILT, one defect. @2e00498347 turns EVERY unexpected key that no class explains into a counted SKIP. The ALIEN
+   SURPLUS raise is the only tripwire for another writer putting keys into a firm's bronze destination (`eclipse/inflection/bronze/`).
+   That is the cross-firm and foreign-write class the NEVER rules guard, and under the standing no-alerts moratorium a raise is the
+   gate. A counted skip nobody reads would silently absorb a real contamination.
+2. THE FIX, small, then the same packet re-cut. Name the one legitimate foreign writer's key class (the Eclipse membership-map
+   writer's `eclipse_membership_map/date=.../manifest.json`) as an EXPLAINED foreign class: counted and skipped, never copied, never
+   deleted. EVERY key that no class explains STILL RAISES. The test pins both: the named class is skipped and counted, and an
+   unnamed foreign key raises.
+3. Accepted as written and carried into the re-cut:
+   - the conservation check counts the row's own failures;
+   - a failed copy is reported at cycle end, naming the key;
+   - M2's 17:05 UTC Inflection poll, idempotent, with the Cottonwood rule and the 13:05Z rule unmoved;
+   - every other raise is unchanged;
+   - rollback per key, and destroying M2's resources is Andrew's word.
+   M2 ships with the re-cut M1, not alone, because the old code would make the 17:05 run read failed too.
