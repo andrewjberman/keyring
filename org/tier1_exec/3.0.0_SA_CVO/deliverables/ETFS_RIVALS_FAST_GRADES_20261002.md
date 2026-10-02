@@ -12,7 +12,34 @@
   - grade 6 (PASS; G6-1 trend-sector guard, P2) @bcac012fe7;
   - grade 7 (PASS; G6-1 closed) @3e93998f8e;
   - grade 8 (10-02 page PASS on scope; P1 G8-1 BASG false FAILs, P1 G8-2 phantom 0->0 exits) @ab55da6a97;
-  - grade 9 (PASS; G8-1 closed, CALL 11 re-grade verified) @33f6db4880.
+  - grade 9 (PASS; G8-1 closed, CALL 11 re-grade verified) @33f6db4880;
+  - grade 10 (PASS; G8-2 closed; G10-1 latent P2) @c3050c9b94.
+
+## Grade 11 -- served page 2026-10-02, batch fast-a1-publish-1002e, code pin f122e4476b (handoff msg 28451), read 2026-10-02 ~12:28-12:35Z -- the page for Andrew's 13:00Z read
+
+**Verdict: PASS.** G8-3 is closed in the trade log and G10-1 is closed. No P0 or P1 is open on the served page. Residual P2s
+are listed below.
+
+- **Deployed bytes equal the pin.** `etfs-rivalfunds-daily-lambda` has 33 of 33 `rivalfunds/*.py|*.json` files byte-equal
+  to f122e4476b. Positive control: the deployed `publish_page.py` differs from its 2d511b9058 version.
+- **The pair was complete before the apply:** COO addendum-10 half 39b59393a8 (12:17:28Z), CTO half d874fd88ad
+  (12:18:59Z), apply 12:23Z. Ledger r11 CLOSED @7af008a129.
+- **G10-1 closed.** `publish_page.no_shares_moved()` now also requires `_blank(est_notional) or est_notional == 0`
+  (CALL 12's last clause). The served 0 -> 0 rows (2, null notional) are still noted, not shown.
+- **G8-3 closed in the trade log.**
+  - In the `id="trades"` section, 0 trade rows name a money-market line (MMKT / MONEY MARKET / CMQXX / DGCXX / GVMXX /
+    IJGXX). On 1002d, IDVZ's "STATE STREET INST U.S. GOVERNMENT MMKT ADMN CLASS" trades showed.
+  - There are 23 `data-cash-equiv` notes summing to 23 lines ("money-market line(s) traded: cash management, not a
+    holding decision, so not shown as trades").
+- **Nothing else moved.** The three A1 inputs in the manifest (holding_contribution, buying_trend, input_census) are the
+  same objects as 1002d's. The AI accounts are unchanged (22 PASS / 2 FAIL, BASG Grounded).
+- **The page:** manifest `published`, 13 of 13, readback true, 0 `<script>`.
+
+**Residual for the 13:00Z read (P2; none blocks):**
+- CGIC's 30-day AI account still narrates flows "through CMQXX_US_Equity". The AI-facts exclusion applies to future runs,
+  and today's text is the stored 11:04Z run.
+- F5's source identifiers in the AI prose (`fear_greed/...`).
+- Bloomberg ticker forms in the prose: style, per CALL 10.
 
 ## Grade 10 -- served page 2026-10-02, batch fast-a1-publish-1002d, code pin 2d511b9058 (handoff msg 28446), read 2026-10-02 ~12:15-12:25Z
 
