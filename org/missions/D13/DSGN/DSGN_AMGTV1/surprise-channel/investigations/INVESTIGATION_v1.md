@@ -954,6 +954,29 @@
  "disarm_owner": "2.0.0_SA_COO~D",
  "spec_asserts": "FWD-11 / AV-z-1: the Exec line reads as plain words; a plain served reason prints as served.",
  "world_is": "Both halves are now plain and they repeat each other. A page fix (drop the lead-in when the served reason already says it, or print only the served reason) is a one-line wording change for the next round's list; nothing is wrong on PROD that was not there before."
+},
+{
+ "id": "DSGN_AMGTV1-Z-S15",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "1.0.0_SA_CTO~Z",
+ "surfaced_at": "2026-10-02T09:12Z",
+ "one_line": "REMEDY LANDED for DSGN_AMGTV1-Z-S11 (owner 1.0.0_SA_CTO~Z): walk.mjs's occluded-popover check now hit-tests each popover with its own subtree's pointer events on (walk.mjs @0b019f9df9, 0.0.0_AB_MSTR~Z, hoverprobe.mjs's method); the first live run reads occluded-popover 0 where the pre-fix walk read 1.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "git show --stat 0b019f9df9: .claude/skills/ui-walk/walk.mjs +10/-1 (fix(ui-walk, 0.0.0_AB_MSTR~Z): raw-code sees snake_case in prose; occluded-popover hit-tests with pointer events on)",
+   "0.0.0_AB_MSTR~Z msg 28285: walk 20261002T072805Z (first live run after 0b019f9df9) findings.json census occluded-popover 0; pre-fix walk 20261001T164049Z occluded-popover 1",
+   "0.0.0_AB_MSTR~Z msg 28257: synthetic-page exercise, free pe-none tooltip 9/9 -> 0; tooltip under a fixed nav 9/9 on both (the true positive survives)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "1.0.0_SA_CTO~Z",
+ "spec_asserts": "Z-S11 remediation: the hit-test with the popover subtree's pointer events on moves into walk.mjs (REMEDIATION_v1, owner 1.0.0_SA_CTO~Z, OPEN).",
+ "world_is": "The remedy is in walk.mjs at CLOUD and exercised live; the REMEDIATED stamp is the CVO's at the next compile.",
+ "notes": "Remedy record by the remediation owner at the round-23 analysis (ADJUDICATION_v21 disclosed the row stale for 2 rounds); not an adjudication."
 }
 ]
 ```
