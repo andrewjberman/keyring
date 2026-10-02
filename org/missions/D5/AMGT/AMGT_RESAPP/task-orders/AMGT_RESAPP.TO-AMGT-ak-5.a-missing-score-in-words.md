@@ -84,3 +84,7 @@ entries, and any row. The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-02 ~07:4xZ):** ACCEPTED. Worker ~203 `3b7c56774e`, drained `7672553ecc`. Re-graded on the shared tree: AC1 392 passed exit=0; AC2 YES (C0 0 of 9 stale, 0 of 12 claims carry a token, plain_claim answers words). The model reads a missing score in words (judge PROMPT, packs.pack_text, fit.summary_line); `plain_claim` sits in validate_cites before the write; stored status values unchanged. Plan `posture_claim_plan.json` (9 entries of 35 documents) is served by ak-6. Row Z-W203-S1 (portal fixture) disarmed by this issuer re-grade.
+
+<status>complete</status>

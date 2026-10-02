@@ -79,3 +79,7 @@ Report once: the commit hash, both criteria's output lines, the parser function 
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-02 ~08:0xZ):** ACCEPTED. Worker ~202 `c58ef63415`, drained `a846f71d22`. Re-graded on the shared tree (portal populated): AC1 481 passed exit=0; AC2 YES (C0 0 of 1 stale, VLO 5 officers with full names and titles, 0 aged roles, BA 12). No parser change was owed: `roster.py` (rk-46 `7e28fcb73d`) already parses VLO's stored filing; only the stored object `management/v1/VLO_US_Equity/2026-09-18.json` (older parser) is defective -- census 17, defective 1, unreparseable 0. Plan `m1_officer_plan.json` (1 entry) is served by ak-6. Rows Z-W202-S1 (INERT), Z-W202-S2 (the empty portal in worker worktrees; disarmed by this issuer re-grade).
+
+<status>complete</status>
