@@ -2908,6 +2908,90 @@
     "spec_asserts": "Row Z-W5-S30 ARMED, disarm_owner 2.0.0_SA_COO~RV: the vehicle's daily G4 (target T-1) would land nothing under refuse-unless-historical.",
     "world_is": "Disarmed in code: a past-date pull never lands nothing for lack of a historical answer; it lands labelled current values. Not measured against a live Bloomberg answer (no vendor call in this order): which securities the live historical request answers in full is the first live run's read; the detail carries as_of_source_counts {historical, pull} and historical_request_failures for that read. A consumer reading as_of for a GICS-only need now sees the run date on a past partition.",
     "notes": "disarm_owner was 2.0.0_SA_COO~RV; the as_of_source_counts figures are in the market marker detail and the object's input_manifest."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S41",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-02T15:40Z",
+    "one_line": "RIV-ap-1 asks main.tf to pass the daily Lambda's `environment` through, but the aws_lambda_function resource is in lambdas.tf, which is outside this order's <paths>: main.tf's variable now accepts `environment` (optional), generated.auto.tfvars.json carries it, and nothing reads it, so the gate and the secret name never reach the Lambda until lambdas.tf gains a dynamic environment block.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/etfs-rivalfunds/lambdas.tf lines 54-75 (aws_lambda_function.stage: function_name .. layers .. tags, no environment)",
+        "infra/aws/terraform/etfs-rivalfunds/main.tf variable lambdas (environment = optional(map(string), {}))"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-ap-1 cell: \"main.tf passes it through\" (the lambdas map's environment onto the daily Lambda).",
+    "world_is": "infra/aws/terraform/etfs-rivalfunds/lambdas.tf aws_lambda_function.stage (for_each var.lambdas) has no environment block; main.tf holds only the variable. The inert state: RIVALFUNDS_AI_ENABLE is unset in the deployed daily Lambda, so ai_stage.run_for_day is a no-op there (the safe direction). Issuer hookup, one block inside the resource: dynamic \"environment\" { for_each = length(each.value.environment) > 0 ? [each.value.environment] : [] content { variables = environment.value } }. Not terraform-validated in this order (no terraform run).",
+    "notes": "disarm_owner is the issuer: the order's AC3 reads the generated map only, so it passes without this block."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S42",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-02T15:40Z",
+    "one_line": "The dedicated OpenAI secret is rivalfunds/openai-api-key: lib/opal_naming.py name() has no SECRET kind (it refuses kind 'secret'), so gen_policies composes {system}/{purpose} from the registry system key and grades it SECRET = CONFORMANT; no registry row was needed. No stack resource creates the secret container (the order sets the value at the deploy), and the policy ARN is the name plus the 6-character random suffix pattern, region and account read from main.tf's layer ARN.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -c grade('rivalfunds/openai-api-key','SECRET') -> ('CONFORMANT', 'rivalfunds/openai-api-key')",
+        "lib/opal_naming.py name(): kind must be a NAMING_SCHEMA.json kind or a cadence; 'secret' is neither"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-ap-1 cell: \"The dedicated secret is named by name() (add an LGIC registry row if the builder refuses).\"",
+    "world_is": "name() raises for kind 'secret' (the slash-path secret grammar is outside its grammar); grade('rivalfunds/openai-api-key','SECRET') returns CONFORMANT, so the builder did not refuse the name and no infra/logic/registry row was added. Whether the secret container exists in AWS, or is created by this stack, was not read (no AWS call): the deploy must create it before the first scheduled run, or GetSecretValue returns ResourceNotFound and run_for_day raises in the daily Lambda.",
+    "notes": "A deploy-time reader should create the secret ({\"api_key\": ...}) and confirm the ARN pattern matches it."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S43",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-02T15:40Z",
+    "one_line": "The scheduled AI run needs the daily (sweep) role to PutObject under gold/research_hypotheses/, which the order does not name (it names only GetSecretValue); gen_policies now grants it to the sweep role alone (the publish-page role keeps its read-only grant), since without it the daily Lambda's account write is AccessDenied.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/etfs-rivalfunds/policies/etfs-rivalfunds-daily-lambda.json PutGetOwnPrefixes now lists gold/research_hypotheses/* (was in GetUpstreamPrefixes)",
+        "test_r6ap1_ai_stage.py::test_policy_and_environment_split_and_committed_copy_is_current: no role but the daily role may put it"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-ap-1 cell: gen_policies grants `secretsmanager:GetSecretValue` on one ARN to the daily role; no S3 write grant is mentioned.",
+    "world_is": "ai_accounts.write_rows puts research_hypotheses-<run_id>.parquet under the page day's partition; the sweep role held only GetObject on that prefix (publish-page's read-only list unioned). One more PutObject resource on one role, no DeleteObject. It is an IAM widening on a served prefix the deploy applies: the issuer's never-widen sign-off should cover it.",
+    "notes": "Also: RestClient.web_search returns a text saying web search is unavailable and no URLs (VEW-2), so a source with no fresh internal reading carries that sentence as its [web] line; it is labelled, never invented."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S44",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-02T16:10Z",
+    "one_line": "Bumping GRADER_VERSION to grounding_check/5 (RIV-r-6) fails tests/test_regrade_call11.py, which asserts the re-grade run id 'R1-ai-rg4'; that test is outside this order's paths so it is left failing.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/tests/test_regrade_call11.py:25 asserts {r['run_id']} == {'R1-ai-rg4'}; ai_accounts.regrade_rows builds the id from GRADER_VERSION's suffix"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-r-6 section 3: run the whole package suite before reporting; it must read 0 failed.",
+    "world_is": "Suite reads 1 failed, 434 passed, 2 skipped after the required bump; the single failure is the stale rg4 literal. The fix is changing the literal to rg5 (one line) by an owner of test_regrade_call11.py or the issuer.",
+    "notes": "No behaviour defect: the id suffix correctly follows the grader version."
   }
 ]
 ```

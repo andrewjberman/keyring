@@ -47,6 +47,15 @@ So 60 of the 77 need no new rule: they need the remeasure the series rule alread
   - Every other percent field under the line gives **UNRESOLVED** ("magnitude under 0.3 does not discriminate percent vs decimal;
     no ground is defined for <mnemonic>").
 - |v| >= 0.3, an exact zero and the series-median input are unchanged.
+- **AMENDMENT 1 (the issuer, at the act; no gate limb grades a decomposition edit):** the row read is a BAND on the ratio, not
+  `RECONCILE_TOLERANCE`, and it decides by a 2/3 majority with zero votes for the other hypothesis.
+  - Measured on real rows: indicated yield / (FY dividend / FY-end price x 100) reads PWR 1.07 .. 1.18, BA 1.00 .. 1.14 and
+    GOOGL 1.01 .. 1.33, because the indicated yield annualises the current dividend. Against the decimal hypothesis it reads about
+    0.01.
+  - The band is `ROW_YIELD_BAND = (0.5, 2.0)`, which spans 4x against a 100x gap.
+  - IS_DIV_PER_SHR is the second dividend field (FIELD_BASIS "Dividend per share").
+  - HEI and MELI carry no per-share dividend in any row, so they read UNRESOLVED. PWR reads PERCENT on 5 of its 6 computable
+    rows.
 - Check: `checks/round33/ai1_check.py`. At base: build 0/4 + control 4/4 (as expected). The act must reach build 4/4 + control 4/4,
   with the build_unit_map tests green.
 
