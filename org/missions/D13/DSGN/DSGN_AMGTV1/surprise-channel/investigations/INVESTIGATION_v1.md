@@ -890,6 +890,28 @@
  "spec_asserts": "AV-z-1 lists posture.harness.cjs in <paths> as a page harness that may need re-anchoring.",
  "world_is": "posture.harness.cjs does not run at this base (stale hook stub), so it asserted nothing about the posture claim wording either before or after AV-z-1; no re-anchor was possible or made.",
  "notes": "Neighbouring defect, not fixed (worker bounds). Worker row, not an adjudication."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W71-S1",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~71",
+ "surfaced_at": "2026-10-02T00:00Z",
+ "one_line": "AV-zb-1's AC1 and AC2 contradict: round22 codeface.cjs arm 3 requires the served absent-column reasons to print verbatim on the Peers face, round23 peerwords.cjs arm 1 forbids 'factor code' / 'registry' / capitals there; no render satisfies both, so AC2 reads 2 of 3 arms (FAIL) with AC1 at 3 of 3.",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/2.0.0_SA_COO~D/round22/checks/codeface.cjs lines 129-147 (arm 3 PLAIN SERVED WORDS STAY): every fixture absent reason whose census total is 0 (no snake/_Equity/.json/ABSENT/UNMAPPED/UPPER_SNAKE token) must be a substring of L.textOf(PeersTab html); the filter is code-shaped tokens only, so 'no share-count factor code and no share-count row field', 'the solvency category carries only RATIOS, never an absolute ...', 'no preferred-equity code among the 289 registry factors', 'no minority-interest code among the 289 registry factors' (7 of them) qualify",
+   "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/2.0.0_SA_COO~D/round23/checks/peerwords.cjs TERMS /factor code|row field|registr(y|ies)|comparison map|\\bR-1\\b/i and CAPS /\\b[A-Z]{4,}\\b/ over the same face: the same four reasons are TERMS or CAPITALS hits",
+   "Run in C:/tmp/wk-dsgn-amgtv1-71 after the AV-zb-1 edits (portal branch wk-DSGN_AMGTV1-71-portal): peerwords.cjs exit=0 '3 of 3 arms'; codeface.cjs exit=1 'NO CODE ON THE EXEC, POSTURE OR PEERS FACE: 2 of 3 arms' (arm 3 FAIL, 7 faults); subjectrow.cjs 3 of 3; tsc rc 0; bound.cjs ALL BOUND 14 of 14. At the unedited base the pair reads codeface 3 of 3 and peerwords 2 of 3."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "AV-zb-1 cell text: do NOT print a served reason on the page (visible text is one plain clause composed from the column label, the served reason stays in data-absent-column-reason); AC2 expects codeface.cjs '3 of 3 arms' (round 22's outcomes kept).",
+ "world_is": "codeface.cjs arm 3 grades the opposite behaviour (the served plain reason printed verbatim). The page now prints '<label> is not available for these peers.' per the cell and peerwords, so codeface arm 3 fails; the check, not the cell, needs amending (the issuer amends its own criteria). No served value moved; the cell's own AC1 passes. The worker did not edit the issuer's checks (read-only).",
+ "notes": "Worker row, not an adjudication. The order stays open: AC2 is FAIL by output."
 }
 ]
 ```
