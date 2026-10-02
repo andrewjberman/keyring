@@ -86,7 +86,7 @@ ap-1.AC1 FAIL (ImportError ai_client/ai_stage) as expected; ap-1.AC2 FAIL (Impor
 
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>6</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>

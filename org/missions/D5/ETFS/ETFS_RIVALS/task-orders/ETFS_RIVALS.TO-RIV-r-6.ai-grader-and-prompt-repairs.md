@@ -73,7 +73,7 @@ r-6.AC2 FAIL (recheck and run-time both fail the quoted headline; control: bare 
 
 <risk>SERVED</risk>
 <worker_class>worker-light</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>6</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>

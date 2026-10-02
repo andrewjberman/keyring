@@ -76,7 +76,7 @@ st-1.AC1 FAIL (2: no new object, manifest SKIPPED) as expected; st-1.AC2 PASS (c
 
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>6</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
