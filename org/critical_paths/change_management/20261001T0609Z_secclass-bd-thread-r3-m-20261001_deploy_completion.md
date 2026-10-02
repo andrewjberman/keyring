@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-01T06:09:35.109060+00:00
-**Status:** OPEN
+**Status:** HELD-SOVEREIGN-GATED -- gate: external / C_06 has had 0 new positions_cube partitions on both post-deploy runs (06:33Z exercise, 23:00Z scheduled; watermark 2026-09-29), so gold/views/mix_daily_summary.json last advanced 2026-10-01 05:16Z, before step 1; D_03 firm_mix_views advanced 00:15Z and D_04 platinum/firm/mix_summary 00:33Z on the 23:00Z fire, all three rc=0. New BD positions arrive with the 04:00Z bd-canonical-prices-daily gold run. A1 closes and B4 (page read, z08327149) is walked on that run. (held since 2026-10-02T03:00:06.053580+00:00)
 **Deploy:** MDPF_SECCLASS BD_THREAD_R3: redeploy the BD thread with the shared classifier client inside code/gold (six files + three shipped modules, then the silver staging document v5); halves COO+CTO SIGNED @8769ffe8d5; supersedes the BD legs B3/B4 of secclass-bd-thread-r2-and-irpt-narrowed-m-20260930, which stays HELD for its IRPT leg H5 only
 **Authored by:** 2.0.0_SA_COO~M
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -28,3 +28,4 @@
 - 20261001T061650Z LEG L0 closed: After S1 completed (order: step 1 first, CTO condition 1). 06:14:57Z ssm update-document --content file://doc_v5.json (g
 - 20261001T083835Z LEG X closed: Exercise run fired 06:33:00Z (bd-gold-trigger, incremental), chain full 06:35:55Z-08:31:04Z, runner stopped 08:35:51Z. R
 - 20261001T221744Z LEG A2 closed: First silver fire after Leg 0: SSM command 0da1ded9-2fc6-4e7f-a03b-367daf8adef9 (document opal-bd-asset-dim-download, Do
+- 20261002T030006Z HELD-SOVEREIGN-GATED gate=external/C_06 has had 0 new positions_cube partitions on both post-deploy runs (06:33Z ex
