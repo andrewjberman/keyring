@@ -809,3 +809,28 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "notes": "INERT. Owner 2.0.0_SA_COO~D: read one date for both, or refuse the pair when manifest.as_of and series.as_of differ."
 }
 ```
+
+```json
+{
+  "id": "IRPT_DASHBD-S21",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-02T13:36:00Z",
+  "one_line": "DB-b-8 Q1: the deployed publisher writes an account's two platinum keys, then heads the series object, and its role has PutObject but no GetObject on platinum/reporting, so HeadObject answers 403 and the run aborts after the FIRST account.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lambda invoke irpt-49f-reporting-publish-lambda payload {} at 13:35:40Z: StatusCode 200, FunctionError Unhandled, ClientError (403) HeadObject at handler.py:158 (requestId a4019573-aaa5-4a52-91f8-d54dfe249a99)",
+      "list-object-versions platinum/reporting/: only account=0010783709/{series.json.gz,manifest.json} gained versions (o_ptRn2R..., CGN8oqs2..., 13:36:00Z); the other 10 keys unchanged",
+      "infra/aws/terraform/investor-reporting/reporting-publish/iam.tf (dd3d644cd6): 'PutObject only -- no GetObject, no delete' on platinum/reporting/*"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The packet (blob 38a6eb19a1) expected Q1 to write 12 new versions as_of 2026-10-01; the role policy was planned without the read the handler's read-back needs.",
+  "world_is": "Two keys were written, then the run failed. Rolled back per the signed half: copy-object from the recorded versions at 13:3xZ, new current versions qvtMQgRd (series) and S4JjNhUe (manifest), ETags equal to the 02:30Z versions, manifest as_of 2026-09-28. All 12 served keys equal the pre-act state. Monday's scheduled fire would fail the same way.",
+  "notes": "Remedy (this seat, inside its decomposition; the served change goes under the packet's amendment with both halves): iam.tf adds s3:GetObject on the same platinum/reporting/* ARNs (plan 0/1/0, the role policy only). Disarm owner 2.0.0_SA_COO~P; if the amendment is not applied before Monday 2026-10-05 07:00 ET, the schedule goes DISABLED (the packet's stop path)."
+}
+```
