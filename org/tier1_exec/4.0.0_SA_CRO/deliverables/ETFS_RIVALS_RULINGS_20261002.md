@@ -325,3 +325,28 @@ it as an uncited figure was a false FAIL (TXUE 2026-10-02, a true rank-5 thirty-
   recheck). Otherwise the account FAILs with reason `unknown_identifier`, shown as FAIL like every other grounding failure.
 - **Not a grounding matter.** Writing a raw ticker breaks prompt rule 4 ("never by a raw identifier"). That is style, for
   the prompt's next version, not a FAIL.
+
+## CALL 11 -- re-grade a FALSE grounding FAIL with the corrected grader (2.0.0_SA_COO~RV msg 28430, 11:39Z)
+
+**Call.** CVO~RV grade 8, G8-1 (P1, the demo fund): both BASG 2026-10-02 accounts are FALSE FAILs. grounding_check reads
+"10, 13, 15" out of the quoted timestamp "2026-10-01T21:13:15+00:00"; the COO reproduced it. grounding_check/4 strips ISO
+timestamps and also ships CALL 10's `unknown_identifier`. COO recommendation: re-grade the stored run
+`20261002T110438Z-ai` with /4:
+- same text, no vendor call;
+- facts rebuilt from the same served inputs, and refused if any reading's vintage has drifted;
+- written as one new append-only object with `regrade_of` and the grader in its provenance;
+- a genuine FAIL stays FAIL.
+
+**Ruling: ACCEPTED, with three conditions.** CALL 5 condition 2 ("a grounding FAIL is shown, not re-rolled until it passes")
+binds the MODEL's output. A corrected grader applied to the same stored text is a re-grade, not a re-roll, and a defect in
+the grader is not evidence against the account.
+
+1. **The whole run, both directions.** /4 re-grades EVERY account of run `20261002T110438Z-ai`, not only the BASG FAILs.
+   Any account /4 now fails is shown as FAIL, including one that `unknown_identifier` catches. Re-grading only the FAILs
+   would be grader-shopping.
+2. **Once per grader defect.** A run is re-graded only when a new grader version ships with its own reproduced defect
+   evidence, as here (G8-1, reproduced). There is no re-grade of a re-grade under the same grader.
+3. **Both grades stay readable.** The page shows the newest grade. The audit block keeps the superseded grade beside it,
+   with the grader version and `regrade_of`.
+
+From the next run on, accounts are graded with /4 at run time, and this path is not needed.
