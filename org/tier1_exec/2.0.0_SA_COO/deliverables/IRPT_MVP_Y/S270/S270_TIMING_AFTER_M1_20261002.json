@@ -1,0 +1,132 @@
+{
+ "at": "2026-10-02T14:02:32.035851Z",
+ "tenant": "cottonwood",
+ "request_id": "REQ-a69e5751d42c374f1d2354f9",
+ "calls": [
+  {
+   "call": "history default",
+   "http": 200,
+   "client_wall_s": 19.88,
+   "ok": null,
+   "operation": "analysis-request-history",
+   "state": null,
+   "reason": null,
+   "business_date": null,
+   "actions": [],
+   "top_keys": [
+    "contract_version",
+    "data",
+    "firm_id",
+    "operation",
+    "unprojected_grant"
+   ],
+   "data_keys": [
+    "items",
+    "next_cursor"
+   ],
+   "count_items": 22,
+   "items": 22
+  },
+  {
+   "call": "history limit=50",
+   "http": 200,
+   "client_wall_s": 16.6,
+   "ok": null,
+   "operation": "analysis-request-history",
+   "state": null,
+   "reason": null,
+   "business_date": null,
+   "actions": [],
+   "top_keys": [
+    "contract_version",
+    "data",
+    "firm_id",
+    "operation",
+    "unprojected_grant"
+   ],
+   "data_keys": [
+    "items",
+    "next_cursor"
+   ],
+   "count_items": 22,
+   "items": 22
+  },
+  {
+   "call": "single read",
+   "http": 200,
+   "client_wall_s": 1.32,
+   "ok": null,
+   "operation": "analysis-request-read",
+   "state": null,
+   "reason": null,
+   "business_date": null,
+   "actions": [],
+   "top_keys": [
+    "contract_version",
+    "data",
+    "firm_id",
+    "operation",
+    "unprojected_grant"
+   ],
+   "data_keys": [
+    "accepted_at",
+    "identity"
+   ]
+  },
+  {
+   "call": "status (dates)",
+   "http": 200,
+   "client_wall_s": 4.26,
+   "ok": null,
+   "operation": "status-job",
+   "state": "READY",
+   "reason": "ANALYSIS_READY",
+   "business_date": null,
+   "actions": [],
+   "top_keys": [
+    "contract_version",
+    "data",
+    "firm_id",
+    "operation",
+    "unprojected_grant"
+   ],
+   "data_keys": [
+    "actions",
+    "operation",
+    "public_reason_code",
+    "source_dates",
+    "state"
+   ]
+  }
+ ],
+ "reports": [
+  {
+   "at_ms": 1790949709532,
+   "duration": "15066.11 ms",
+   "billed": "15212 ms",
+   "max_memory": "112 MB",
+   "init": "145.69 ms"
+  },
+  {
+   "at_ms": 1790949727792,
+   "duration": "9792.75 ms",
+   "billed": "9793 ms",
+   "max_memory": "112 MB",
+   "init": null
+  },
+  {
+   "at_ms": 1790949730213,
+   "duration": "732.27 ms",
+   "billed": "733 ms",
+   "max_memory": "112 MB",
+   "init": null
+  },
+  {
+   "at_ms": 1790949735334,
+   "duration": "3920.14 ms",
+   "billed": "3921 ms",
+   "max_memory": "112 MB",
+   "init": null
+  }
+ ]
+}
