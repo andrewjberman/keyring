@@ -39,8 +39,10 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
   placement `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20261001_043xZ_AMGT_FRIDAY_DEMO_RESTRUCTURE.md`.
   Stop: DONE read from the register, HELD-AT-STOP (never for AMGT_HARVST), or Andrew's stand-down.
   - RELAUNCH 2026-10-02: the ~04:0xZ disk wind-down stopped this loop (cron `100fd3c2` deleted). Andrew re-armed it with
-    "go" at ~04:55Z, answering a question that named this row. Two more words followed at ~04:57Z and ~04:59Z. Records
-    are in `org/tier0_exec/0.0.0_AB_MSTR/deliverables/`:
+    "go" at ~04:55Z. That word answered a relaunch question whose context named this row. Two more words followed at
+    ~04:57Z and ~04:59Z. Re-arm record:
+    `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261002_045xZ_SELF_DRIVE_60M_AMGT_FRIDAY_RELAUNCH.md`.
+    Source records are in `org/tier0_exec/0.0.0_AB_MSTR/deliverables/`:
     `ANDREW_DIRECT_20261002_045xZ_GO_RELAUNCH_SITEZ_AMGT_DEMO_FLEET.md`,
     `ANDREW_DIRECT_20261002_045xZ_RV_TEAM_ETFS_RIVALS_ADJUDICATION_AND_EGRESS_TONIGHT.md` and
     `ANDREW_DIRECT_20261002_045xZ_CANONICAL_DRIVE_ALL_COOS_RV_CLOSER_DRIVE_RIVALFUNDS_DEMOABLE_TODAY.md`. Relay: MSTR~Z
