@@ -10,9 +10,9 @@
  "analysis_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/ledger/ROUND_ANALYSIS.round23.md",
  "served_ref": "portal PROD f76b02acb6 (portal-v2.1.194) = DEV fa529337, containing 0ab75973; Deploy to Production 37014885102 success; read by 1.0.0_SA_CTO~Z via ls-remote + merge-base",
  "tally": {
-  "REALIZED": 16,
+  "REALIZED": 18,
   "NOT_REALIZED": 3,
-  "NOT_EVALUATED": 4,
+  "NOT_EVALUATED": 2,
   "RETIRED": 1
  },
  "closed": false,
@@ -117,10 +117,10 @@
   },
   {
    "fwd_id": "FWD-15",
-   "verdict": "NOT_EVALUATED",
-   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v27.md@d497632612",
-   "state_observed": "EXERCISED (render)",
-   "note": "The fixture holds no ABSENT row, so the limb is not exercised. The instrument needs a fixture with one."
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v29.md@a7f92ef8aa",
+   "state_observed": "EXERCISED (round-28 instrument on CVO~Z build of PROD fa529337)",
+   "note": "76 PASS / 0 FAIL / 0 NOT_EXERCISED. fwd15 passes with BOTH the REFUSED and ABSENT halves exercised (round-28 fixture); the ui-measure self-test is OK on the fwd15 negatives."
   },
   {
    "fwd_id": "FWD-18",
@@ -152,10 +152,10 @@
   },
   {
    "fwd_id": "FWD-20",
-   "verdict": "NOT_EVALUATED",
-   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v27.md@d497632612",
-   "state_observed": "EXERCISED (render: 2 stale FAILs)",
-   "note": "CVO~Z read NOT REALIZED. Both FAILs are STALE INSTRUMENT CLAUSES, not product defects: fwd15 counts the consensus th, and fwd16 demands the served reason on the face, which FWD-16 v0.8 and r23 ruling 1 replaced with reader words. A grade that rests on a stale assertion says nothing about the product, so this is NOT_EVALUATED until the two clauses are updated (DSGN instrument item) and the check re-runs."
+   "verdict": "REALIZED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v29.md@a7f92ef8aa",
+   "state_observed": "EXERCISED (amended instrument, can-fail arms)",
+   "note": "The two v27 FAILs were stale instrument clauses; round 28 (42405d2d, differing from PROD's tree only in the instrument and its fixture) amends fwd15/fwd16. render.cjs reads 3/3 including the planted fwd16 negative. With v27's can-fail arms and green harnesses, all FWD-20 limbs are met. list.png is now named."
   },
   {
    "fwd_id": "FWD-21",
@@ -186,6 +186,6 @@
    "note": "Met on 3 of 3 names: latest served day, breakout row, units as served, and 0 unconnected fields beside a designed-empty positive control. NOT met: 'places moved prints wherever served'. The rankings serve it (32 of 94 rows; VLO 13, BA 16), but the overlay route's breakout_price row carries no places_moved key, so SecurityOverlay.tsx:365 prints '#7 | +5.79%' for VLO with nothing more. ROUTED 15:0xZ to the PRODUCER: the overlay route joins places_moved into breakout_price (RESAPP round 63, beside cell 3), and the page prints it the day it is served. The page does not join it from the rankings payload (the FWD-2 served-identity rule)."
   }
  ],
- "closed_reason": "NOT CLOSED: 3 NOT_REALIZED (FWD-2 page, FWD-7 producer, FWD-24 overlay places_moved), 4 NOT_EVALUATED; CLOSED requires every grade REALIZED",
- "regraded_utc": "2026-10-02T15:0xZ (FWD-24 on v28); 14:4xZ (FWD-11..15, 18..20 on v27); 14:1xZ (FWD-2, FWD-7 on v26)"
+ "closed_reason": "NOT CLOSED: 3 NOT_REALIZED (FWD-2, FWD-7, FWD-24: producer cells RESAPP r63 2-3), 2 NOT_EVALUATED (FWD-1 Andrew's signed-in PROD read; FWD-5 track C); CLOSED requires every grade REALIZED",
+ "regraded_utc": "2026-10-02T16:2xZ (FWD-15, FWD-20 on v29); 15:0xZ (FWD-24 on v28); 14:4xZ (v27); 14:1xZ (v26)"
 }
