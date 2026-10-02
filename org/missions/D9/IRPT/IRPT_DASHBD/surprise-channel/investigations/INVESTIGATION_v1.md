@@ -965,3 +965,57 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "notes": "No handler change made for it (outside the order). Also recorded: the laptop could not run the 561-partition inception scan (single 578 KB GET 2.7-50 s), so the producer's laptop seconds are a scaled measurement; the Lambda numbers are projected from the live fire's CloudWatch REPORT lines. Owner: 2.0.0_SA_COO~P."
 }
 ```
+
+## IRPT_DASHBD-W1-S15 -- TO-DB-b-12: the directory carries OPAQUE ids (cli_/acc_) while the platinum series are keyed by the custodian number, so the summary joins them through the one normalizer and is keyed by the opaque client id
+
+```json
+{
+  "id": "IRPT_DASHBD-W1-S15",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1",
+  "surfaced_at": "2026-10-02T22:45:00Z",
+  "one_line": "TO-DB-b-12: the order says `client` is 'its id and its account ids, from the 49 Financial directory'; the directory's account ids are opaque (acc_<24 hex>) and the published series sit under account=<10-digit custodian number>, so the summary cannot be built from the directory and the series alone without minting each published account's opaque id (_ids/ids.py opaque_account, the same join reporting/entry.py raw_account_for makes). The summary therefore carries the directory's opaque ids, its address is client=<cli_ id>, and the custodian number is never written.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order: build_client_summary(client, accounts); accounts holds each account's built series and manifest; no key-space statement.",
+  "world_is": "MEASURED: directory 2026-09-24 (4,620 entries, 4,620 client ids, 7,576 account ids, all opaque); the 6 published raw keys mint to 6 opaque ids and all 6 are in the directory (published_accounts_not_in_directory = 0 in CLIENT_SUMMARY_R5.json). The caller keys `accounts` by the client's account id; the dry run does the mint. The directory pointer's own vintage is 2026-09-24 (latest.json written 2026-09-25).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting/entry.py:188-196 raw_account_for",
+      "infra/aws/lambda/investor-reporting/_ids/raw_keys.json 49financial.account",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1/client_summary_dryrun_r5.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer's packet: the publisher's deployed path must do the same raw->opaque mint when it writes summaries (publisher.py stays pure and takes the already-joined map). The summary's contract file should name the key space. Owner: 2.0.0_SA_COO~P."
+}
+```
+
+## IRPT_DASHBD-W1-S16 -- TO-DB-b-12: a window holding a NOT_MEASURABLE (null-return) day is null with status BREAK, so 5 of the 6 published accounts have a null SI today; the order only said 'null when the series does not span it'
+
+```json
+{
+  "id": "IRPT_DASHBD-W1-S16",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1",
+  "surfaced_at": "2026-10-02T22:45:00Z",
+  "one_line": "TO-DB-b-12: the order defines null only for a window the series does not span. Five of the six published series carry null-return days after the inception day (3 to 11 each), and a link across one is not a geometric link of the series. The worker's rule: such a window is null with window_status BREAK (never bridged, never zero-filled), and each account carries window_status {MEASURED|NOT_SPANNED|BREAK} per window so a consumer can reject on the reason; the client also lists unpublished_account_ids so a partial client never reads as whole. These three keys are additions to the order's list.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order: 'A window is null when the series does not span it, never a partial'; the series contract: a null total_return_daily 'breaks the link with a stated gap'.",
+  "world_is": "MEASURED on the 6 published series (.scratch pull 2026-10-02): null-return days after day 0 = 0, 10, 8, 5, 2, 4 for the six accounts; in the dry run, an account whose gap lies inside the window answers BREAK (example in CLIENT_SUMMARY_R5.json shape: SI BREAK, QTD MEASURED). The tests pin: spans -> MEASURED equals the geometric link; not spanned -> NOT_SPANNED; a gap -> BREAK in every window that contains it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-publish/publisher.py window_return",
+      "infra/aws/lambda/investor-reporting/reporting-publish/tests/test_client_summary.py",
+      "org/standards/IRPT_DASHBD_SERIES_CONTRACT.json (null rule)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "If the issuer wants a window linked across a stated gap instead (a figure with a gap count), that is a rule change here and in the page. Owner: 2.0.0_SA_COO~P."
+}
+```
