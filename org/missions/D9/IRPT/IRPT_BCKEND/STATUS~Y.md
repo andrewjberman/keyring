@@ -6,13 +6,13 @@ Mode FAST: lease `IRPT_BCKEND~Y` re-armed 04:33Z until 08:33Z after the withdraw
 terms, under Andrew-direct 2026-10-01 ~04:2xZ).
 Loop `/canonical-drive IRPT_BCKEND` 10m (LIVE_ARMS RELAUNCH row). Way forward: CTO rulings batches 61, 62, 65, 70, 72,
 76, 83, 88, 89, 93, 97, 98, 100 and 105 in `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md`.
-Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-02T08:2xZ.
+Reviewer `3.0.0_SA_CVO` (grades pins after the fact). Lease FAST until 09:43:29Z (read 09:14Z). As of 2026-10-02T09:1xZ.
 
 ## Pins
 
 | What | Value |
 |---|---|
-| Worktree | branch `coo-y-r30` at `C:/Users/AndrewBerman/Desktop/coo-y-r30`, head `3ad9306bf9`, merged into CLOUD at `87f9b3afab` |
+| Worktree | branch `coo-y-r30` at `C:/Users/AndrewBerman/Desktop/coo-y-r30`, head `cf3ae52aee` (st12 `9718ac5c87`, merged into CLOUD at `cf3ae52aee`) |
 | Items 1 to 17 on CLOUD | 1 to 14 as before (st9 carries them); 15 `3921492913` (the 900 s calculating release, the WAF header token); 16 `7122afefc1` (row S253, the job row's `vendor_requests` ledger); 17 `8c4398e32a` (E7, the request read names the chosen comparisons); 19 `951afdf4e6` (st11, merge `4f68a17d3a`, SERVED in the resident; its words ride the next generate and irpt-status bundles); 21 E6 memo (merge `7a9f76389b`, not served); 20 hop 11 (branch `coo-y-hop11`, not merged); 18 `3ad9306bf9` (the catalogue reads `etf-classifications` once per 300 s warm window, not per request; condition 11 of the whole-bundle packet), merge `87f9b3afab`, NOT served |
 | SERVED: the resident | `/opt/irpt-resident/4f68a17d3a-st11` since 2026-10-02T07:18:54Z (ledger `irpt-resident-st11-20261002` CLOSED; both halves, CTO batch 122): items 1 to 19, and `irpt-ycharts-runner-role` holds `sqs:SendMessage` on `irpt-generation`. Rollback root `b1db201025-st10` on the host |
 | SERVED: `irpt-status` | `2V7xV1+zII4+g6tV..` since 2026-10-01T06:59:55Z (read 2026-10-02 ~02:2xZ) |
@@ -20,7 +20,7 @@ Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-02T08:2xZ.
 | SERVED: catalogue route | `GET /api/scoped/investor-reporting/analysis/comparisons`, route `bh7ynom` on `7k3ed8px20` behind `naqxlm`, since ~06:00Z. V1: 341 entries for cottonwood, `FIRM_BINDING` outside reach, 720 ms with the Scan then 221-260 ms |
 | UPLOADED, NOT APPLIED | `irpt-status.zip` version `gqIQUc_Z..` (sha `iYgp8301..`, E7) is its key's LATEST version. CTO batch 115 item 3: no untargeted apply of the ops or ycharts roots while it is held |
 | Stored YCharts session | the version of 2026-10-01T08:21:20Z (fence 21) |
-| Push state | LOCAL @5946fe3945; origin/CLOUD `0257976705` (ls-remote read 02:5xZ). CLOUD is pushed by `0.0.0_AB_MSTR` only |
+| Push state | LOCAL @ff8ce7a9bc; origin/CLOUD `1f2346734b` (ls-remote read 09:1xZ). CLOUD is pushed by `0.0.0_AB_MSTR` only |
 
 ## Live thread
 
@@ -79,7 +79,14 @@ made (CTO half item 1).
    **Probe-rotation read DONE** (`HOP3_PROOF/PROBE_ROTATION_READ_20261002.md` @9fe3ee3e37): very likely yes, and wider -- no path
    persists a rotated cookie. **CTO batch 127: st12** writes a rotated session cookie back to the secret under the bundle's lease
    and fence, only when changed, names only in logs; `secretsmanager:PutSecretValue` on that one secret in `ycharts/resident.tf`;
-   the probe uses the same transport; offline rotation test; live proof after Andrew's sign-in. NEXT for this seat.
+   the probe uses the same transport; offline rotation test; live proof after Andrew's sign-in.
+   **st12 BUILT, MERGED, PACKET CUT** (code `9718ac5c87`, merge `cf3ae52aee`; packet
+   `IRPT_MVP_Y/ST12/NEVER_WIDEN_SIGNOFF_PACKET_RESIDENT_ST12_20261002.md` blob `fb132fd0d6` @ff8ce7a9bc; COO half signed, CTO
+   half asked 09:13Z). `OperationTransport.request` writes a rotated or added cookie back through the fenced `persist()`;
+   a write never removes a cookie; a failed write is journaled and retried at the next request; 7 offline tests with a
+   negative control. No IAM change: `WriteFreshSessionOnly` (`ycharts/iam.tf:104-107`) is applied on the host's role. Gate
+   PASS (244 members; against st11 added 1, changed 8, 2 live); tar `1d1ca782..` and script `9c2b2be6..` uploaded and read
+   back. D1 and V1 on the CTO half. Until st12 serves, no probe precedes a job.
    **Hop 12** is `2.0.0_SA_COO~P`'s (CTO batch 126 item 1).
 6. Batch 61's order after that: one job per remaining arm (Target Weight, 49 Financial, Inflection), each under a window
    packet; the resolve concurrency fix; the vendor PDF link; the Analysis export; the email lane. E6's memo follows E7's
@@ -109,6 +116,7 @@ Batch 120 item 6 (the probe's cookie rotation) is read at the next window, which
 ## Ledgers this seat holds open
 
 - `irpt-status-e7-20261001`: U1 closed; HELD (external gate: row S261 and the PROD promote). Nothing applied.
+- `irpt-resident-st12-20261002`: U1 closed; D1 and V1 wait on the CTO half of the st12 packet.
 
 ## Enrichment candidates (the measured list is `IRPT_MVP_Y/ENRICHMENT_CANDIDATES_20261001.md`)
 
