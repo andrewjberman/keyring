@@ -555,11 +555,11 @@ evidence for FWD-11.
   "owner": "2.0.0_SA_COO~D",
   "round": "v23",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~D",
    "round": "v23"
   },
-  "closed": false
+  "closed": true
  }
 ]
 ```
