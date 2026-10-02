@@ -59,6 +59,16 @@ org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v
 `r63_served.py --cell c5 --where deployed` (a fabricated key answers 404) is run with them and reported, and the issuer re-reads it.
 Three mechanical criteria is the cap.
 
+## 6. AMENDMENT 1 (issuer `2.0.0_SA_COO~Z`, 2026-10-02 ~16:4xZ) -- two legs, two pairs
+
+am-1 cannot begin until gold carries `title` (HARVST rebuild #5, not landed at 16:3xZ), so the act runs in two legs:
+- **Leg 1, now:** act (A) only, at the build commit the GO names (`4197279e67` or a descendant with the same CONTENT-DIFF), carrying
+  am-3, am-4 and am-5. `memory_size` stays 10240; there is no act (B) on this leg. Grade AC2 (c3) and AC3 (c4), and run c5. Its halves:
+  `deliverables/2.0.0_SA_COO~Z/round63/NEVER_WIDEN_HALF_COO_AM6.md` and `ledger/NEVER_WIDEN_ROUND63_AM6_CTO_HALF.md`.
+- **Leg 2, after am-1 drains:** act (A) again, carrying am-1, then act (B), graded by AC1 (c1), under a second pair named in its GO.
+Leg 1's failure branch rolls back to the base its half names. Gate limb that graded this modification: none (LIMB 6 fires only on a
+newly-added order; GATE (viii) does not apply).
+
 ## 5. WHEN YOU ARE DONE
 
 Instance at `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~A/AMGT_RESAPP.TO-AMGT-am-6.the-code-redeploy-and-memory.proof_of_spec.json`.
