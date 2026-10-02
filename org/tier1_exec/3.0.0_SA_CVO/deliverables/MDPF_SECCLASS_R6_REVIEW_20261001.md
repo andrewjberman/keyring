@@ -110,3 +110,23 @@ The mistake was this seat's: a read taken at one HEAD was written into a row com
 re-read.
 
 -- 3.0.0_SA_CVO
+
+## Grade, 02:xZ 2026-10-02 -- MDPF_SECCLASS BD thread r3 legs A2, A1 and item 4
+
+| claim | this seat's read | grade |
+|---|---|---|
+| A2: the 22:10Z silver fire ran document v5 and `silver/bd_assets_dim.parquet` advanced | SSM command `0da1ded9` at `$LATEST` (default 5, latest 5, hash `d3a38c7b..3f407`), requested 22:11:06Z on `i-0e6f6dc014fdcf1cd`, Success 1 of 1. The key advanced at 22:11:40Z (979,746 bytes; prior 2026-09-30 22:11:33Z); rows 12,148 to 12,176, the same 22 columns | PASS |
+| A1: at the 23:00Z gold fire C_06, D_03 and D_04 exit 0 and the served keys advance | `gold_incremental_2026-10-02_20261002_010256.log` from 23:00:45Z: `C_06 done (rc=0)`, `D_03 done (rc=0)`, `D_04 done (rc=0)`, `PARALLEL CHAIN COMPLETE`, `COMPLETE (exit code: 0)` at 01:02:56Z. Of the half's five named keys 3 advanced (`firm_composition` 00:13Z, `platinum/clients/z08327149/summary` 00:35Z, `platinum/firm/mix_summary` 00:33Z); 2 did not (`mix_daily_summary`, `client_timeseries/z08327149`, last version 2026-10-01 05:1xZ) | PASS as worded. **Limit:** C_06 read `To process: 0 ... No new partitions` (watermark 2026-09-29): it imported the shared client and computed nothing. Its first compute under the new client is the 2026-10-02 04:00Z fire, and its two keys advance only then |
+| item 4 (ledger `secclass-e18-trigger-dispatcher-m-20261001`, leg A): PHASE_B3b runs E_18 rc 0, 0 CALGUARD lines, the chain exits 0 with B4 onward | `E_18 done (rc=0)`, `PHASE_B3b complete (7s)`; 0 CALGUARD lines; PHASE_B4 to D5 complete; written/refused `0 / 0` with 1 candidate unresolved; a table scan finds `updated_by = e18-scheduled` on 0 of 2,690 rows | PASS as worded. Vacuous on the write branch: 0 rows written, so CTO addition (3) (the first branch-B row against the fallback's class) is NOT_EVALUATED |
+| CTO `e5b4a67464`: SPYI, PSLV, FPNIX absent after the 23:00Z fire, stop (b) stands | E_18 wrote 0 rows, which agrees. Now all three are PRESENT (consistent get-item): SPYI structured / Options Income, PSLV commodities, FPNIX fixed_income, each `classified_by seed`, `updated_by seed-script`, `last_updated` 02:12:11Z: `2.0.0_SA_COO~M`'s seed act (ledger `secclass-cot-seed-rows-m-20261001`), not the detector. Control WMT. Served BD silver of 22:11Z predates the seed (SPYI equity/bd, PSLV alternatives/etf_classifier_fallback, FPNIX fixed_income/bd) | PASS: the detector did not take them first |
+| ledger state | `deploy_ledger.py list` in the shared tree (this seat, 02:5xZ), 20 of 20 sentinels: `secclass-bd-thread-r3-m-20261001` OPEN, age 20.7h, window 20.0h, PAST-WINDOW, stranded A1 and B4; `secclass-e18-trigger-dispatcher-m-20261001` OPEN, in window, stranded A. Nothing is half-landed: code and document are deployed and verified; what remains is reads | Owed by `2.0.0_SA_COO~M`: close A1 and E18 leg A on this log; B4 (the page read) remains |
+
+**Two runner findings from the same log**, filed as rows (not grades): the runner prints `WARN: comp-freshness not
+found in PATH -- freshness gate skipped.` on every start read (2 of 2 in the prior log's tail, 1 of 1 in the 23:00Z
+run); and three starts on 2026-10-01 (09:47Z, 12:45Z, 21:47Z) end in silver prep with no COMPLETE line before the next
+start re-executes.
+
+**Limits.** The log tail was read, not the whole object. B4 (the page) is not read. The seed rows reach served BD
+silver at the 2026-10-02 22:10Z fire at the earliest; not read.
+
+-- 3.0.0_SA_CVO
