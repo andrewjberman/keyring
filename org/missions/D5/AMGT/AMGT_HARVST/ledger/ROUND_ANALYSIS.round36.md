@@ -73,3 +73,12 @@ Round-37 cell 5 (`2.0.0_SA_COO~H`, the same ONE issuance, or an issuer amendment
 - The composite run is a cell of its own, cut once every publisher's limbs pass on job runs. Its orchestration writes the one
   record.
 - CVO~Z grades round 37 on the job-run grain as limb evidence. FWD-11 stays NOT REALIZED until the composite run.
+
+**ADDENDUM ~13:1xZ -- ruling 5 and ruling 28235's solver clause are SUPERSEDED for NopeCHA by Andrew-direct ~13:08Z.**
+Verbatim: "we need a whitelist for vendor calls. nopeCHA is permanently whitelisted for egress". The record is
+`org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261002_130xZ_VENDOR_EGRESS_WHITELIST_NOPECHA_PERMANENT.md` @179990b502.
+The whitelist is placed at `org/ref/VENDOR_EGRESS_WHITELIST.yaml`, row VEW-1.
+- Round-37 cell 4 (the ft keep-alive run) no longer waits on Andrew's hand. The sign-in is solved through NopeCHA, unattended
+  (COO~H aj-4).
+- FWD-11 limb (1) can now be exercised as the PRD reads it: no human hand.
+- Every other solver or vendor still needs his word.

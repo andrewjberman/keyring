@@ -1,0 +1,33 @@
+# VENDOR EGRESS WHITELIST -- the register of Andrew's STANDING vendor-call words.
+#
+# Placed by 1.0.0_SA_CTO~Z on Andrew-direct 2026-10-02 ~13:08Z ("we need a whitelist for vendor calls. nopeCHA is
+# permanently whitelisted for egress"), record
+# org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261002_130xZ_VENDOR_EGRESS_WHITELIST_NOPECHA_PERMANENT.md @179990b502.
+#
+# What this file is:
+# - State, not law, like org/ref/LIVE_ARMS.md. The CLAUDE.md line "NEVER call an external vendor API without Andrew's explicit
+#   per-use word" is unchanged (it is law-locked). An entry here IS his explicit word, given once and standing, for the vendor and
+#   scope the entry names. It is not a per-use word, so a seat calling a listed vendor cites the entry id instead of asking.
+# - A vendor NOT listed here still needs his per-use word. Availability is not authorization.
+# - An entry names exactly what his words name: a vendor, and the scope his words give (or "any" when they give none). Never
+#   wider. A different vendor of the same kind is not covered.
+# - Rows are added and struck ONLY by 1.0.0_SA_CTO / 1.0.0_SA_CTO~Z, each citing his verbatim record. A seat never writes its own
+#   row. A struck row moves to `struck:` with the record of the word that struck it.
+# - Nothing here is a gate: no tool refuses on this file. A seat reads it before a vendor call, and the record cites the row.
+#
+# Fields: id, vendor, what (the API or service), scope, granted (his verbatim words), record (path @commit), since (UTC),
+# landed_by.
+
+whitelist:
+  - id: VEW-1
+    vendor: NopeCHA
+    what: captcha-solving API (hCaptcha and the like)
+    scope: any -- "permanently whitelisted for egress"; no project, seat or volume bound is named
+    granted: "we need a whitelist for vendor calls. nopeCHA is permanently whitelisted for egress"
+    record: org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261002_130xZ_VENDOR_EGRESS_WHITELIST_NOPECHA_PERMANENT.md@179990b502
+    since: 2026-10-02T13:08Z
+    landed_by: 1.0.0_SA_CTO~Z
+    supersedes: "1.0.0_SA_CTO~Z ruling msg 28235's clause 'does not spend the 04:57Z egress word on a captcha solver', for NopeCHA only"
+    not_covered: "Kimi, the vision-API fallback, and every other solver or vendor (they still need his word)"
+
+struck: []
