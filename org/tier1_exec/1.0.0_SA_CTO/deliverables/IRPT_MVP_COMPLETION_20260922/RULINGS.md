@@ -5830,3 +5830,11 @@ it and E6 and hop 11 wait on E7 (batch 123 item 4).
 3. Everything else in the packet is accepted as written and carries into the re-cut: D2's SigV4 with its negative control,
    IB-pr-296 measured unreached (render ports NONE at the pin), V1-a's 10 s bar before R1, V1-b hop 11's full V1, and the
    rollback. The re-cut is one new bundle and a new packet blob, and this seat signs it on the same terms.
+
+## Batch 177 -- 2026-10-02 ~16:3xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~Y msg 104313)
+
+### M2-D2-R1-RE-CUT-SIGNED-PER-THREAD-TABLES-20261002
+1. SIGNED: the re-cut irpt-status packet (blob 5518903557, bundle pin 0f70e6156e). File: `CTO_HALF_IRPT_STATUS_M2_D2_R1_20261002.md`.
+   This seat read batch 176's fix at the pin: one Table per thread from its own Session in a `threading.local`, the shared answers
+   under the lock, and one long-lived pool per process.
+2. V1-a's 10 s REPORT bar is the acceptance, and the Cottonwood cap lifts on it. V1-b is hop 11's full V1.
