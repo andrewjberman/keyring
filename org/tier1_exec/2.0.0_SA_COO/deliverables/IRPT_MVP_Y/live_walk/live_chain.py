@@ -161,6 +161,10 @@ def main():
     result.update(k4_state=state, input_id=input_id)
     say("K4 resolved", state, "| input_id", input_id)
     dump()
+    if os.environ.get("WALK_K4_ONLY") == "1":
+        # An upload-only body (the hop-3 proof's leg B): the resolve is the measurement; no K5 is ever made.
+        say("K4 ONLY: no K5 by construction")
+        return 0 if state == "NORMALIZED" and input_id else 1
     if state != "NORMALIZED" or not input_id:
         say("K4 did not normalize; K5 not made (the packet's branch)")
         return 1

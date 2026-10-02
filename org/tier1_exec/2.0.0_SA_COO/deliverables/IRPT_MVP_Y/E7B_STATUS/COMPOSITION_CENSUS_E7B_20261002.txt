@@ -1,0 +1,8 @@
+rows 1304 {'ARTIFACT': 227, 'INPUT': 28, 'NORMALIZATION': 34, 'PERFORMANCE_ACCEPTED': 118, 'PERFORMANCE_USE': 6, 'REPORT': 126, 'RETENTION': 519, 'SELECTION': 190, 'UPLOAD': 34, 'analysis': 22}
+rows with composition_ref 22
+named REQ-a1d9abc0bc037ea3d9e4a7ed [{"key": "opal_short_term", "label": "Opal Short-Term"}, {"key": "opal_intermediate_term", "label": "Opal Intermediate-Term"}]
+named REQ-a69e5751d42c374f1d2354f9 []
+outcomes {'OK_0': 18, 'OK_2': 2, 'OK_1': 2}
+labels {'Opal Short-Term': 2, 'Opal Intermediate-Term': 2, 'Opal Long-Term': 2}
+revisions {'1': 22}
+tenants {'cottonwood': 20, 'inflection': 1, '49financial': 1}

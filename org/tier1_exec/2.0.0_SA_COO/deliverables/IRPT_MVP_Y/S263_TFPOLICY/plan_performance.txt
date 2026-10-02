@@ -1,0 +1,29 @@
+data.terraform_remote_state.core: Reading...
+data.aws_caller_identity.current: Reading...
+data.aws_dynamodb_table.service_profile_users: Reading...
+data.aws_s3_object.irpt_common_layer: Reading...
+aws_iam_role.performance_adapter: Refreshing state... [id=irpt-performance-adapter-role]
+data.aws_caller_identity.current: Read complete after 1s [id=313476888478]
+data.aws_s3_object.performance_native: Reading...
+data.terraform_remote_state.core: Read complete after 1s
+data.aws_s3_object.irpt_common_layer: Read complete after 1s [id=opal-313476888478-lambda-layers/irpt-common.zip]
+aws_lambda_layer_version.irpt_common: Refreshing state... [id=arn:aws:lambda:us-east-1:313476888478:layer:irpt-common:5]
+data.aws_dynamodb_table.service_profile_users: Read complete after 1s [id=opal-users-v2]
+data.aws_s3_object.performance_native: Read complete after 0s [id=opal-313476888478-lambda-layers/irpt-performance-native-layer.zip]
+aws_lambda_layer_version.performance_native: Refreshing state... [id=arn:aws:lambda:us-east-1:313476888478:layer:irpt-performance-native-layer:1]
+aws_iam_role_policy.performance_adapter_ownership_map: Refreshing state... [id=irpt-performance-adapter-role:irpt-performance-adapter-ownership-map-read-policy]
+aws_iam_role_policy.performance_retained: Refreshing state... [id=irpt-performance-adapter-role:irpt-performance-retained-policy]
+aws_iam_role_policy.performance_adapter_directory_read: Refreshing state... [id=irpt-performance-adapter-role:irpt-performance-adapter-directory-read-policy]
+aws_iam_role_policy.performance_adapter_selection_read: Refreshing state... [id=irpt-performance-adapter-role:irpt-performance-adapter-selection-read-policy]
+aws_iam_role_policy.performance_adapter_logs: Refreshing state... [id=irpt-performance-adapter-role:irpt-performance-adapter-logs]
+aws_iam_role_policy.performance_adapter_service_profile_read: Refreshing state... [id=irpt-performance-adapter-role:irpt-performance-adapter-service-profile-read-policy]
+aws_iam_role_policy.performance_render_grant_read: Refreshing state... [id=irpt-performance-adapter-role:irpt-performance-render-grant-read-policy]
+module.irpt_performance_adapter.data.aws_s3_object.artifact: Reading...
+module.irpt_performance_adapter.aws_cloudwatch_log_group.lambda: Refreshing state... [id=/aws/lambda/irpt-performance-adapter]
+module.irpt_performance_adapter.data.aws_s3_object.artifact: Read complete after 0s [id=opal-313476888478-lambda-artifacts/investor-reporting/irpt-performance-adapter.zip]
+module.irpt_performance_adapter.aws_lambda_function.this: Refreshing state... [id=irpt-performance-adapter]
+
+No changes. Your infrastructure matches the configuration.
+
+Terraform has compared your real infrastructure against your configuration
+and found no differences, so no changes are needed.

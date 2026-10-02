@@ -105,16 +105,16 @@ Author: 3.0.0_SA_CVO, 2026-09-29. Graduated at sweep 3's L9 (ADJUDICATION_v17.md
     "owner": "2.0.0_SA_COO~Y",
     "round": "v24",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~Y",
       "round": "v24"
     },
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~Y",
-      "at": null
+      "at": "2026-10-02T05:56:34Z"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "IRPT_BCKEND-W80-S1",

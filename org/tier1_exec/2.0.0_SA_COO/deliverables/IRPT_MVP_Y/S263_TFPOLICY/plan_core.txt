@@ -1,0 +1,50 @@
+data.aws_iam_policy_document.lambda_trust: Reading...
+aws_kms_key.irpt: Refreshing state... [id=7f4d3042-10d8-49a7-b55e-3c963cea8111]
+aws_s3_bucket.ycharts: Refreshing state... [id=opal-data-ycharts]
+aws_s3_bucket.reporting: Refreshing state... [id=opal-data-irpt]
+data.aws_iam_policy_document.lambda_trust: Read complete after 0s [id=3143001717]
+aws_iam_role.quarantine_execution: Refreshing state... [id=irpt-core-quarantine]
+aws_kms_alias.irpt: Refreshing state... [id=alias/investor-reporting]
+aws_dynamodb_table.jobs: Refreshing state... [id=irpt-jobs]
+aws_sqs_queue.dlq["intake"]: Refreshing state... [id=https://sqs.us-east-1.amazonaws.com/313476888478/irpt-intake-dlq]
+aws_dynamodb_table.checkpoints: Refreshing state... [id=irpt-checkpoints]
+aws_sqs_queue.dlq["export"]: Refreshing state... [id=https://sqs.us-east-1.amazonaws.com/313476888478/irpt-export-dlq]
+aws_sqs_queue.dlq["generation"]: Refreshing state... [id=https://sqs.us-east-1.amazonaws.com/313476888478/irpt-generation-dlq]
+aws_dynamodb_table.outbox: Refreshing state... [id=irpt-outbox]
+aws_dynamodb_table.requests: Refreshing state... [id=irpt-requests]
+aws_sqs_queue.main["intake"]: Refreshing state... [id=https://sqs.us-east-1.amazonaws.com/313476888478/irpt-intake]
+aws_sqs_queue.main["generation"]: Refreshing state... [id=https://sqs.us-east-1.amazonaws.com/313476888478/irpt-generation]
+aws_sqs_queue.main["export"]: Refreshing state... [id=https://sqs.us-east-1.amazonaws.com/313476888478/irpt-export]
+aws_s3_bucket_server_side_encryption_configuration.ycharts: Refreshing state... [id=opal-data-ycharts]
+data.aws_iam_policy_document.firm_prefix["cottonwood"]: Reading...
+data.aws_iam_policy_document.quarantine_prefix: Reading...
+local_file.firm_destination_policy: Refreshing state... [id=db1205718b842ac034f8eecb2061d89b0dc60185]
+data.aws_iam_policy_document.firm_prefix["49financial"]: Reading...
+aws_s3_bucket_public_access_block.ycharts: Refreshing state... [id=opal-data-ycharts]
+local_file.layout: Refreshing state... [id=00f649e2cf619115753f7447400b779479bc3e55]
+data.aws_iam_policy_document.firm_prefix["inflection"]: Reading...
+data.aws_iam_policy_document.firm_prefix["cottonwood"]: Read complete after 0s [id=2214124086]
+data.aws_iam_policy_document.firm_prefix["49financial"]: Read complete after 0s [id=833228264]
+data.aws_iam_policy_document.quarantine_prefix: Read complete after 0s [id=2799350645]
+aws_iam_role.firm_execution["49financial"]: Refreshing state... [id=irpt-core-firm-49financial]
+aws_iam_role.firm_execution["inflection"]: Refreshing state... [id=irpt-core-firm-inflection]
+data.aws_iam_policy_document.firm_prefix["inflection"]: Read complete after 0s [id=2874034008]
+aws_iam_role.firm_execution["cottonwood"]: Refreshing state... [id=irpt-core-firm-cottonwood]
+aws_s3_bucket_versioning.ycharts: Refreshing state... [id=opal-data-ycharts]
+aws_iam_policy.quarantine_prefix: Refreshing state... [id=arn:aws:iam::313476888478:policy/irpt-core-quarantine-prefix]
+aws_iam_policy.firm_prefix["inflection"]: Refreshing state... [id=arn:aws:iam::313476888478:policy/irpt-core-firm-inflection-prefix]
+aws_iam_policy.firm_prefix["49financial"]: Refreshing state... [id=arn:aws:iam::313476888478:policy/irpt-core-firm-49financial-prefix]
+aws_iam_policy.firm_prefix["cottonwood"]: Refreshing state... [id=arn:aws:iam::313476888478:policy/irpt-core-firm-cottonwood-prefix]
+aws_s3_bucket_public_access_block.reporting: Refreshing state... [id=opal-data-irpt]
+aws_s3_bucket_versioning.reporting: Refreshing state... [id=opal-data-irpt]
+aws_s3_bucket_server_side_encryption_configuration.reporting: Refreshing state... [id=opal-data-irpt]
+aws_s3_bucket_policy.reporting_tls: Refreshing state... [id=opal-data-irpt]
+aws_iam_role_policy_attachment.quarantine_prefix: Refreshing state... [id=irpt-core-quarantine-20260910235354256900000001]
+aws_iam_role_policy_attachment.firm_prefix["cottonwood"]: Refreshing state... [id=irpt-core-firm-cottonwood-20260910235354325300000004]
+aws_iam_role_policy_attachment.firm_prefix["49financial"]: Refreshing state... [id=irpt-core-firm-49financial-20260910235354275600000002]
+aws_iam_role_policy_attachment.firm_prefix["inflection"]: Refreshing state... [id=irpt-core-firm-inflection-20260910235354302900000003]
+
+No changes. Your infrastructure matches the configuration.
+
+Terraform has compared your real infrastructure against your configuration
+and found no differences, so no changes are needed.

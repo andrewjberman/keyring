@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~D` (CLAUDE). Contract: PRD `org/missions/D9/IRPT/IRPT_DASHBD/
 (ENDPOINT unchanged since @2cb022f549; C-LEASE and ruling 6.7 place F's items on this seat). Reviewer `3.0.0_SA_CVO`
 (grades each landed pin after the fact, as DSGN_IRPTV1 pins). Authority: Andrew-direct 2026-10-01 ~04:2xZ, record
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261001_042xZ_SELF_DRIVE_60M_LAPTOP_FABRIC_FINAL_SAY_CLOSER_DRIVE_IRPT_FIRST.md`
-@c48af273cc (CTO 103442). **As of 2026-10-01T10:4xZ.** This file holds F's claims and next-list; the pins, the landed
+@c48af273cc (CTO 103442). **As of 2026-10-02T09:3xZ.** This file holds F's claims and next-list; the pins, the landed
 table and the screen are in `org/missions/D13/DSGN/DSGN_IRPTV1/STATUS.md` (one seat, one portal checkout).
 
 ## Pins
@@ -19,20 +19,34 @@ table and the screen are in `org/missions/D13/DSGN/DSGN_IRPTV1/STATUS.md` (one s
 
 ## Live thread
 
-State: NOT LIVE. FWD-1 hop 5 (the page) has no served file and no read route to read; "any hop fed by a fixture fails
-the outcome", so no page is mounted against an invented shape.
+State: FWD-1's hop 5 RAN SIGNED IN on the real backend, no fixture on any hop: 06:26Z (portal `39b7a0fc`; the dashboard figure,
+"Data through September 28th, 2026") and 08:13Z (portal `8df9e3d3`; plan section 4's two numbers). Record
+`deliverables/2.0.0_SA_COO~D/FWD1_REAL_RUN_20261002.md` (@74df2f62dd + the addendum): tab press to painted chart 5,288 ms
+(manifest 2,858 ms, then series 1,698 ms, 17,665 bytes transferred); 0 requests after each of five window presses; back to the
+account 0 reads, 85 ms. FWD-1's ACCEPT (Andrew's pick the next morning) and the CVO's grade are the others'.
 
 ## Write claims
 
 - `2.0.0_SA_COO~D`: `portal/src/pages/InvestorReporting/dashboard/*`, `portal/src/pages/InvestorReporting/tabs/reporting/*`.
-- Next claim: plan item 5 (`tabs/reporting/ReportingTab.tsx`, the per-account switch).
+- No claim is open at 08:2xZ. Plan item 5 and both signed-in runs are done; the walker's `--dashboard-window` step is the
+  instrument for a re-measure.
 
 ## Next (in order)
 
-1. Plan item 5, the per-account switch in `tabs/reporting/ReportingTab.tsx` (C-SHADOW, ruling 6.9: this figure INSTEAD of
-   IRPT_BCKEND's for an account whose manifest serves, never both), plus the one real signed-in run that prints the time
-   to the painted chart beside the file's size. Waits on a served `series.json.gz` and `manifest.json` (TO-DB-b-2) and the
-   read route (TO-DB-b-4), both `pending`.
+1. ~~Plan item 5~~ LANDED `39b7a0fc`: `dashboard/reportingRead.ts` (GET .../reporting/{acc}/{manifest|series} + selected_tenant;
+   refusal or unreadable manifest -> the current figure; a served manifest -> the series, its refusal on the face if
+   unreadable); `ReportingTab.tsx` `dashboardFor` + the switch (the dashboard figure INSTEAD of the report body, one return
+   series on the page); `PerformanceControls` `periodControls` (picker alone while the dashboard shows); `DashboardPerformance`
+   "Data through <as-of>" on the face. Pin iv-e-135 (8 arms, mutant fails), 18 of 18 neighbours, typecheck rc=0, eslint 0
+   errors; fixture-plane run both branches. Its signed-in runs are DONE (06:26Z; 08:13Z with the paint time and 0 requests on a
+   window change; Live thread above).
+1a. ~~Two YTD figures on one page~~ LANDED portal `0531cc65` (DSGN_IRPTV1 STATUS row 72) on 1.0.0_SA_CTO RULINGS batch 128
+   (a) with the words of 104129: a dashboard account's picker suffix is the body's YTD, 'total return, before advisory fees,
+   data through <date>'; a mixed list names the other figure 'price return, as of <date>'. The gap's composition is
+   2.0.0_SA_COO~P's (@7a620078c5: a basis difference, no defect).
+1b. Open for a ruling only if asked: opening the account takes about 5.3 s because the series is read after the manifest
+   answers (2.9 s of route time first). Reading both at once would save about 1.7 s at the cost of one refused series read
+   per uncovered account; the manifest route's own time is 2.0.0_SA_COO~P's. Not built.
 2. ~~Gold contract 0.2.0~~ LANDED (portal `2879d65b`): the member dropped, the `guard_state` words added.
 3. When the SERIES contract carries a guard field (today 0.1.0 @b80543a03c, blob 542fc836b3, none), `dashboard/seriesContract.ts` and
    `DashboardPerformance.tsx` read it and say the `guard_state` sentence beside the day; pin iv-e-124 fails the tick

@@ -326,3 +326,306 @@ Packet `5946fe3945`, CTO half `b8ca83eba2` (batch 106), deploy-close `bf35fd357d
 is the first live read of both items.
 
 -- 3.0.0_SA_CVO
+
+## ~Y comparison catalogue SERVED (deploy-close `5af9dc4510`, item 18 inside it), read 06:xZ 2026-10-02
+
+Handoff `2.0.0_SA_COO~Y` 104081. Ledger `irpt-generate-catalogue-20261002`; whole bundle at CLOUD `97eaff05ff`; halves
+COO `ef923a2038`, CTO `e646939e78` (batch 116).
+
+| claim | this seat's read | grade |
+|---|---|---|
+| live `irpt-ycharts-generate` is the `97eaff05ff` build | live `CodeSha256` `E+FqSWwE..`, LastModified 05:54:19Z, Active; equal to the source map's `artifact_sha256`; the zip downloaded here (570,086 bytes) hashes the same; 112 of 112 members equal `git show <pin>:<path>` (83 staged at `97eaff05ff`, 29 from the source dir at `97eaff05ff`); 0 members outside the files list. `3ad9306bf9` is an ancestor of `97eaff05ff`, an ancestor of HEAD (control: HEAD is not an ancestor of the pin) | PASS on deployed bytes |
+| item 18 (300 s classifications cache) is in the served bytes | the served `comparison_catalogue.py` equals the `3ad9306bf9` blob and carries `CLASSIFICATIONS_TTL_S`; negative control: the parent blob differs | PASS |
+| GET analysis/comparisons as `svc-irpt-analysis` | one login (HTTP 200). Own firm (cottonwood), twice: 200, version v1, 341 entries (model_catalogue 4, etf_classifications 337) both times; server REPORT 2,691 ms cold (init 170 ms, with the Scan), then 224 ms warm. Foreign firm (inflection): UNAVAILABLE `FIRM_BINDING` | PASS |
+| POST analysis unchanged | empty body, own firm: UNAVAILABLE `INVALID_INPUT`; foreign firm: UNAVAILABLE `FIRM_BINDING`; equal to the lane's before/after reads | PASS |
+| item 18's tests | `tests/test_comparison_catalogue.py` 12 passed; generate suite at HEAD 335 passed, 30 skipped (equal to the commit's count); tree unchanged by the runs | PASS on a test run |
+| ledger | completion record CLOSED 4 of 4 legs | PASS |
+
+**Record left stale.** `record-terraform-deploy.sh` was not run (it would stamp `irpt-status` as deployed while E7 is
+held), so the source map's `irpt-ycharts-generate` deploy fields still read `deployed_code_sha256` `LdjdnnLh..`,
+`last_deployed_commit` `2d6937be5e`, 2026-09-24; only `artifact_sha256` matches live. Same class as `irpt-holdings`
+(sixth wave): row IRPT_BCKEND-S264. STATUS~Y line 16 still says item 18 is "NOT served".
+
+**Limits.** The route was not read through the portal page; entry keys and labels were not inspected.
+
+-- 3.0.0_SA_CVO
+
+## Row S263's fix (drain `6c4ac61088`, fix `b1fd3adc85`), read 06:xZ 2026-10-02
+
+| claim | this seat's read | grade |
+|---|---|---|
+| five roots select the policy by revision | the drain's diff: 5 files, one line each, `one(...policies)` becomes `one([for p in ... : p if p.policy_revision == "irpt-x10-v1"])` in core, export, ops, performance and ycharts. Census of `reporting_policies.json` under `infra/aws/terraform`: 7 hits, 5 these Terraform reads (all filtered), 2 build scripts that only package the file | PASS |
+| `one()` resolves | the registry at HEAD has 2 rows, `irpt-x10-v1` ACTIVE and `irpt-dashbd-x10-v1` PENDING_ENFORCEMENT; exactly 1 matches | PASS |
+| the roots plan again | saved plans (`S263_TFPOLICY/plan_*.txt`): core, export, performance "No changes"; ycharts 1 in-place update (the catalogue artifact, since applied by D1); ops 1 in-place update, `irpt-status` to s3_object_version `gqIQUc_Z..` / hash `iYgp8301..`, the held E7 build | PASS: source only, no apply needed |
+
+**The ops plan is S261's exposure in writing:** an untargeted apply of ops ships E7 before PROD parses it. S261 carries
+it; not re-filed.
+
+**Rows asked to close (for sweep 7).** S231: supported now -- served st10 `resident_worker.py:428-431,504` makes
+ACTOR_NOT_FOUND and ACTOR_FIRM_NOT_ALLOWED a terminal ATTENTION; REQ-86f1ce70 reads ATTENTION, `ACTOR_NOT_FOUND`, outbox
+SENT (irpt-jobs, 23 rows scanned). S263: supported now, on the reads above. S253: NOT YET -- the first job on st10 ran
+(RESOLVE READY 06:26:02Z, `IRPT_RESIDENT_VENDOR_REQUESTS kept=1` 06:26:18Z, so item 16's append ran), then RETRY
+`PROVIDER_READ_UNAVAILABLE:OPERATION_BUSY` 06:27:16Z; REQ-93441e4e reads SUBMITTING; no READY receipt carrying the
+ledger, no WAF_READ line (item 15 unread live). Journal since 03:19:51Z: 568 lines, 0 tracebacks, NRestarts 0.
+
+**Limits.** The plans are the lane's saved files; this seat ran no plan.
+
+-- 3.0.0_SA_CVO
+
+## Rows S213 and W92-S4 -- disarm ruled, read 07:4xZ 2026-10-02 (2.0.0_SA_COO~Y msg 104108)
+
+Both rows' clocks advanced in place in `REMEDIATION_v13.md` (S213) and `REMEDIATION_v15.md` (W92-S4): disarm DISARMED at
+05:56:34Z (the lane's read), remediation REMEDIATED, closed. This section is their evidence.
+
+| claim | this seat's read | grade |
+|---|---|---|
+| the READY report's sections read no longer answers UNEXPECTED (S213's remedy: "a figure or a named refusal, never UNEXPECTED", read back on RPT-2e21b52e) | one login as svc-irpt-analysis on live `irpt-status` `2V7xV1..` (the downloaded zip's sha256 equals `CodeSha256`): `GET analysis/RPT-2e21b52edcb222205399100e026c2768/sections` -> 200, UNAVAILABLE `INVALID_INPUT` (the route takes a request id); `GET analysis/REQ-7ea49c2d9b27957d0ea8888f/sections` -> 200, 76 sections; control, an unknown request id -> UNAVAILABLE `NOT_AUTHORIZED`. 0 of 3 answers UNEXPECTED | PASS: S213 DISARMED and REMEDIATED |
+| an absent bundle answers NOT_READY (W92-S4's purpose) | the live zip's `owned_report.py:17-30, 98`: `_ABSENT_OBJECT_CODES` NoSuchKey, NoSuchVersion, 404, NotFound -> `ReportBundleAbsent`, `public_reason_code` NOT_READY | PASS on served bytes |
+| W92-S4's literal read (NOT_READY on RPT-2e21b52e) | cannot recur: the bundle is present and the route refuses a report id by name. Its purpose (the S213 read never answers UNEXPECTED) is met by the first row | ruled DISARMED and REMEDIATED on purpose, not on the literal |
+
+**Limits.** No live absent bundle was exercised, and no store exception class other than the four named was. The
+lane's own read (05:56Z, `IRPT_MVP_Y/CATALOGUE/SERVED_READS_AFTER_D1_20261002.json`) agrees with this one.
+
+-- 3.0.0_SA_CVO
+
+## ~Y resident st10 to st11 (item 19) and the runner role's SendMessage, read 07:xZ 2026-10-02 (handoff 104104)
+
+Deploy-close `861b9bf176`, item 19 `951afdf4e6`, IAM `85240e4c82`, pin `4f68a17d3a`. Host read: SSM `435657dd` on
+`i-0167fd745ad906a66`, Success rc 0, 07:26:27Z.
+
+| claim | this seat's read | grade |
+|---|---|---|
+| host runs root `4f68a17d3a-st11` since 07:18:54Z | root `/opt/irpt-resident/4f68a17d3a-st11`; active/running; NRestarts 0; ActiveEnterTimestamp 07:18:54Z; the st10 root still on the host | PASS |
+| members are the pin's bytes | 14 of 14 named members (resident_worker, recipe, broker, durable_job, owned_requests, current_authority, host_capture, extract, resident_session, resident_main, resolution_broker, uploads, status, resident_installed) equal `git show 4f68a17d3a:<path>`; wider, 124 files under 8 first-party dirs, 123 equal the pin, 1 not in git (`reports/resident_bindings.json`, gate-generated). Control: st10 resident_worker `1708fe39..` differs from st11 `93e50f0f..`; library `9511060e..` unchanged | PASS |
+| item 19 in the served bytes | host resident_worker: `RESOLVE_BUSY_CLASS ":OPERATION_BUSY"`, `RESOLVE_BUSY_DEADLINE_S 3600`, `RESOLVE_REQUEUE_MAX_DELAY_S 900` (lines 560-562); `send_message(... DelaySeconds=delay)` line 609; `RESOLVE_PROVIDER_BUSY` lines 603 and 648 | PASS on bytes |
+| item 19 exercised live | journal since 07:18:00Z: 30 lines, 25 POLL, 0 with `handled>0`, 0 tracebacks, 0 RESOLVE/RETRY/BUSY lines; irpt-generation 0/0/0 delayed; DLQ 0/0 | NOT_EVALUATED: no job since st11 |
+| IAM: exactly sqs:SendMessage added | live sid `ConsumeTheGenerationQueue` in `irpt-ycharts-runner-resident-policy`: 5 actions (Receive, Delete, ChangeMessageVisibility, GetQueueAttributes, SendMessage), 1 resource, the irpt-generation queue, no condition; equal to `i1_readback.json`; `resident.tf` at HEAD is the `85240e4c82` blob. 5 inline + 1 attached policies scanned: 1 SendMessage grant, this one | PASS |
+| tests | `test_resolve_upload.py` 15 passed (3 new); negative control on `951afdf4e6^` with the new test file: 3 failed (the 3 new), 12 passed. `test_resident_worker.py` + `test_durable_job.py` 55 passed, 8 skipped; `intake/tests/test_uploads.py` 17 passed; tree unchanged by the runs | PASS on a test run |
+| ledger | `20261002T0706Z_irpt-resident-st11-20261002_deploy_completion.md` CLOSED 4 of 4 (U1, I1, D1, V1); no st11 JSON in `.open_deploys` at HEAD or in 14 of 14 live worktrees | PASS |
+
+**Limits.** The tar and install script were not re-read by their S3 versions (the host members stand in); the root's
+other directories and third-party packages were not hashed; no plan or policy simulation was run. The busy branch
+fires only when `requested_at` is a number; the Dynamo read path's Decimal-to-int conversion was read in source only.
+The first OPERATION_BUSY resolve on st11 is the first live read of item 19. The host holds 23 roots, 22 idle: row S265.
+
+-- 3.0.0_SA_CVO
+
+## IRPT_DASHBD DB-b-7 -- the reporting-gold root applied (2.0.0_SA_COO~P), read 08:xZ-09:xZ 2026-10-02
+
+Drain `ce942dd8d1`, ledger `irpt-dashbd-reporting-gold-apply-20261002` (open `92b74ef4bc`, apply `b7a512991b`).
+
+| claim | this seat's read | grade |
+|---|---|---|
+| 7 added | 7 of 7 live, created 08:03:13-08:03:29Z: the function, its log group, the execution role and inline policy, the scheduler role and inline policy, the schedule | PASS |
+| CodeSha256 equals the source map | live `7eCQtWhs..` = map `artifact_sha256`; the downloaded zip (156,022 B) hashes the same; 16 of 16 members accounted for (handler.py = HEAD bytes; 15 of 15 staged members = map sha256 = the blob at the pin); 0 unmapped | PASS |
+| the role writes only account_return_daily | execution policy, 6 statements: List/Get on 3 silver prefixes (`opal-data-assets/schwab/08335338/silver/{dim_position,dim_balance,fact_trn}`) and 2 gold prefixes; PutObject on 1 (`account_return_daily/*`); 0 delete; logs on its own group; 0 managed attachments. Scheduler policy: InvokeFunction on the one function ARN | PASS |
+| schedule | ENABLED, `cron(41 7 ? * MON-FRI *)` America/New_York, flexible window OFF, target the function | PASS |
+| no seat has started it | log group retention 14 days; 0 streams and 0 bytes at 09:02Z and 09:34Z | PASS |
+| names are builder output (rule 30) | 7 of 7 names = `name()` output; the gold prefix = `address()` output | PASS |
+| the PRD cites the new names | PRD v0.6 :152 prints `irpt-49f-reporting-adapter-lambda`, ABSENT live (control: the live function reads OK); 0 of 7 live names in the PRD | FAIL on the record: row IRPT_DASHBD-S18 |
+| A1 legitimately open | the fire is 11:41Z (Friday, a trading day; T-1 = 2026-10-01 per `lib/trading_calendar.py`); newest gold partition 2026-09-28, so 3 days owed; the ledger window ends 12:01:06Z; P1, D1, V1 carry proof: nothing half-landed | PASS |
+| DB-7-AC1/AC2/AC3 | re-run 3 of 3 PASS (AC2 6 of 6 rows on 7 columns against the live served partition); proof-of-spec VALID rc 0; unit tests 9 of 9. AC1 counts landings before its own exclusions: row IRPT_DASHBD-S19 | PASS on a test run |
+| unchanged since the drain | `git diff ce942dd8d1..HEAD` over both roots, the fire-time record, sources.json and scopes.json: 0 files | PASS |
+
+**Limits.** No terraform plan was run; A1 cannot be graded before 11:41Z; bucket policies and CloudTrail not read; AC2
+grades the worker's parquet against the served partition, the handler was not re-run.
+
+-- 3.0.0_SA_CVO
+
+## ~Y items 21, 22 and the st12 cookie write-back -- source pins, read 08:xZ-09:xZ 2026-10-02
+
+| claim | this seat's read | grade |
+|---|---|---|
+| item 21: the installed table port is wrapped | `ReadMemo(...Table(requests_table))`; the handler is `per_request(served.installed_entry(...))`; `get_item` memoized on its kwargs and returned deep-copied; any write clears the memo; `fresh()` bypasses it; `_final` runs inside `_fresh_reads` | PASS |
+| item 21 tests | test_read_memo 6 of 6; reports test_status_installed 4 of 4; _authz 32 of 32; _contracts 3 of 3 | PASS on a test run |
+| item 22: history scoped by client_id | entry.py admits `client_id`; `INVALID_HISTORY_CLIENT` checks the pattern and length (<= 200) before any query; with the filter set, `_selected_client` (validate, get, reference check, schema_version check) stands in for `_materialize` | PASS |
+| item 22 tests and negative control | 10 of 10 at HEAD; the new test file on `f27418381d^` source: 10 of 10 FAIL; on the pin's source: 10 of 10 pass | PASS on a test run |
+| suite counts | ops 203 passed / 22 skipped; intake 253 / 1; generate 338 / 30; session 118 / 1, each equal to the commit's claim; tree unchanged by the runs | PASS on a test run |
+| items 21-22 not served on irpt-status | live `2V7xV1..` (2026-10-01 06:59:55Z): 45 members, no read_memo.py; status_installed.py = the `4c23ef5d98^` blob; owned_requests.py has no `INVALID_HISTORY_CLIENT`. By the st12 record, the resident bundle carries owned_requests at the `f27418381d` blob and read_memo | PASS |
+| st12: the write-back under the lease | `_keep_rotation()` runs after `lease.complete`; `persist()` checks the fence before and after the write; a failed write journals `IRPT_SESSION_ROTATION kept=0` and does not fail the request; the sessionless transport does nothing; `rotated_cookies` replaces or adds and never drops. The put is unconditional: row IRPT_BCKEND-S266 | PASS |
+| st12 tests | 7 of 7 | PASS on a test run |
+
+**Limits.** The resident host is read in the next section. The irpt-status source map's `deployed_code_sha256`
+(`pfAr3u..`, 2026-09-24) lags the live `2V7x..` (same class as row S264).
+
+-- 3.0.0_SA_CVO
+
+## ~Y resident st12 -- the rotated-cookie write-back served, read 09:4xZ 2026-10-02 (handoff 104136)
+
+Deploy-close `56457904ed`; code `9718ac5c87`; root `cf3ae52aee-st12`. One read-only SSM script on
+`i-0167fd745ad906a66` (command `fd63f355`, 09:42:48Z, Success rc 0).
+
+| claim | this seat's read | grade |
+|---|---|---|
+| the active root is st12 | ExecStart runs `/opt/irpt-resident/cf3ae52aee-st12/ycharts/generate/resident_main.py` | PASS |
+| the unit is healthy | active/running, NRestarts 0, ActiveEnterTimestamp 09:21:39Z | PASS |
+| members equal the pin | 242 of 242 members with a repo path equal `git show cf3ae52aee:<path>`; the other 2 (`census/...20260909.json`, `reports/resident_bindings.json`) equal the package's SHA256SUMS; 244 of 244. The member list is from the S3 tar, whose sha256 `1d1ca782..` equals the packet's | PASS |
+| control | st11 and st12 resident_worker are both `93e50f0f..` (resident_worker is not in the change list), so the changed members are the control: operation_lease st11 `dd3776ea..` vs st12 `25198343..`; transport st11 `72875c61..` vs st12 `d8cdbf39..` | PASS |
+| the journal is clean | since 09:21:39Z: 64 lines (63 polls, 1 Started); 0 Traceback, 0 error, 0 RESOLVE, 0 IRPT_SESSION_ROTATION | PASS |
+| the write-back has run live | 0 IRPT_SESSION_ROTATION lines | NOT_EVALUATED |
+
+**Row S266 sharpened (read, not filed again).** The sign-in writer is `persistSession`
+(`infra/aws/ec2/investor-reporting-ycharts/ycharts_session.js:1341`). It takes its own lease row (`irpt-jobs`
+`_opal`/`ycharts-session`, `fence_token`), not the operation lease `persist()` checks (`operation_lease.py:54`); only
+the resident's refresh (`host_capture.py:161`) wraps sign-in in the operation lease. Both writers put the secret
+unconditionally. The guard for Andrew's CAPTCHA sign-in is procedural: the queue at 0/0 and no job running, as the
+lane states.
+
+**Row S265 measured.** `/` (which holds `/opt`): 8.0G, 5.1G used, 2.9G free (64 pct); st10, st11 and st12 are 95M
+each; 24 root directories. About 2.2G for all roots is an inference from 3 sized, not a measurement; each install adds
+about 95M.
+
+**Limits.** The poll lines' `handled=` values were not read one by one; the pydeps tree (3,671 members) was not
+compared.
+
+-- 3.0.0_SA_CVO
+
+## Grade on the artifact, 10:xZ 2026-10-02 -- window C, request REQ-c07e64ca (the first READY after the sign-in)
+
+Handoff `2.0.0_SA_COO~Y` 104163; outcome @2cd3e2ce23. Every limb is this seat's own read. Host: SSM `9731c2c0`,
+Success rc 0, 10:30:19Z.
+
+| limb or claim | this seat's read | result |
+|---|---|---|
+| terminal state | consistent GetItem `irpt-jobs` | READY, outbox SENT, revision 1; 5 of 5 checkpoints; read-back 7 of 7, 1 tolerated (`level_as_of_type`); job fence 2 (two receives) -- PASS |
+| made by the service principal | the `analysis#<id>#1` record | owner svc-irpt-analysis, OPAL_GLOBAL, cottonwood; accepted 09:57:38Z; overview, 0 comparison keys; composition by version equals its ref -- PASS |
+| on the served root | journal 09:44:00-10:18:30Z: 116 lines (98 idle polls, 13 job lines, 5 systemd) | 13 of 13 job lines from the st12 unit's PID (start 09:21:39Z, stop 10:18:26Z); 0 tracebacks since 09:21:39Z -- PASS |
+| retained PDF | get-object by version `thOiDusy..` | 581,489 B, 23 pages, sha256 `db27de07..` equal to the checkpoint, the vendor-artifact record and the index ref -- PASS |
+| certified report | `RPT-819429e0..` by version: sha256 `96e86f75..` equals both refs; binds request, PDF, evidence (`2226e093..`) and composition; scalars re-read with PyMuPDF | 46 of 46 equal (pages 2, 7, 8); 5 charts not re-read; control 46 of 46 perturbed MISS; 0 hits for the other two firms -- PASS |
+| sections route | one login, GET | 200; 51 sections, the same 51 ids, 51 of 51 values equal; inflection selected -> UNAVAILABLE `FIRM_BINDING` -- PASS |
+| status route with the dates header | GET | 200, READY `ANALYSIS_READY`; report id and revision equal; 51 section dates; inflection -> `FIRM_BINDING` -- PASS |
+| item 15 (WAF_READ) | journal; ledger | 0 lines; 0 of 9 records carry a waf_action -- NOT_EVALUATED |
+| item 16 (the vendor-request ledger) | journal; row | kept=4 (09:57:46Z) and kept=5 (10:14:06Z); the row's `vendor_requests` holds 9 records (5 GET, 4 POST), 9 of 9 in job.py's ten-key shape; `job_detail` still 3 keys -- PASS on the row |
+| item 19 (OPERATION_BUSY re-send) | journal | 0 BUSY/RETRY lines -- NOT_EVALUATED |
+| st12 rotation | journal; secret version metadata (never the value) | 4 IRPT_SESSION_ROTATION lines, kept=1; the 4 named versions are the 4 created 09:57:42Z-10:13:05Z (4 of 4, within 1 s); 4 of 4 POSTs carry set_cookie_count 1, 0 of 5 GETs do; AWSCURRENT `8441111a`, AWSPREVIOUS `77c5f704`; the sign-in version `6327be01` holds no stage -- PASS |
+| no eviction or refresh | journal | 0 lines -- PASS |
+| outcome: "first live use of st8's cut-name repair" | this file's 2026-10-01 13:0xZ grade quotes `name=cut` at 12:30:22Z on REQ-a69e5751 (st8) | FAIL on the record only |
+
+**Row S266 in this window.** The sign-in wrote at 09:45:44.606Z; the journal 09:44:00-09:57:33Z holds idle polls only;
+the first rotation came 11 min 58 s after the sign-in. The procedural guard (queue 0/0, no job) held; the race was not
+exercised; the row stays open.
+
+**Limits.** The st12 members were graded at 09:42Z and not re-hashed. Not read: the upload hops, the chart sections, the
+vendor side, the page, the secret values.
+
+-- 3.0.0_SA_CVO
+
+## ~Y resident st13 (the attended hold), read 10:xZ 2026-10-02
+
+| limb or claim | this seat's read | result |
+|---|---|---|
+| active root | `c657a5966d-st13`, active/running, NRestarts 0, since 10:18:27Z | PASS |
+| members | tar by version `0j0S_Qjp..` (sha256 `7c503923..` = census); 242 of 242 with a repo path equal `git show c657a5966d:<path>`, 2 equal SHA256SUMS; the host listing hash equals this seat's: 244 of 244 | PASS |
+| control | 2 of 244 changed against st12 (library, bindings); worker `93e50f0f`, durable_job `b5192fa2`, operation_lease `25198343` unchanged; the pin is an ancestor of HEAD, not the reverse | PASS |
+| library `857d90b8` | host file = pin = HEAD; the prior kept as `.before-c657a5966d-st13` (`9511060e`); wrapper `55ddb8f7` unchanged | PASS |
+| what changed | `8e385c08b2` (+54/-0): the hold is OFF unless `YC_ATTENDED=1` with a display (else `ATTENDED_REQUIRES_DISPLAY`, before any secret read); holds only at SIG-CAPTCHA, polls every 2 s up to 600 s, at most 2 holds and 1 re-fill, times out `CHALLENGE_ATTENDED_TIMEOUT`; 0 setters of `YC_ATTENDED` under `infra/aws`, so the resident's own refresh cannot hold | PASS on source |
+| tests | offline suite at HEAD: 6 of 6 arms | PASS on a test run |
+| journal since 10:18Z | 42 lines (37 idle polls, 5 systemd), 0 tracebacks, 0 job lines; queue and DLQ 0/0/0 at 10:41:59Z; 22 of 22 jobs terminal | PASS |
+| the hold exercised live | no attended sign-in yet | NOT_EVALUATED |
+| ledger | st13 CLOSED 4 of 4 (10:19:33Z); its JSON absent at HEAD and in 14 of 14 worktrees. The sign-in C JSON is absent at HEAD and present in 1 of 14 (`coo_m_r30`, forked between its open and close), unchanged -- the known worktree-lag shape | PASS |
+| row S265 | `/` 2.9G free of 8.0G (64 pct); 25 root directories | measured |
+
+**Limits.** The pydeps files (3,427) were not compared; listeners on 5901 were not read; the hold has run only offline.
+
+-- 3.0.0_SA_CVO
+
+## Rows S231 and S253 closed (clocks advanced in place, 10:5xZ 2026-10-02)
+
+- **S231** (`REMEDIATION_v15.md`, ARMED): DISARMED and REMEDIATED. The served worker (`93e50f0f`, st11 to st13) ends
+  `ACTOR_NOT_FOUND` and `ACTOR_FIRM_NOT_ALLOWED` as a terminal ATTENTION (`resident_worker.py:428-431, 475-477, 508` at
+  `c657a5966d`); REQ-86f1ce70 reads ATTENTION, `ACTOR_NOT_FOUND`, outbox SENT (read 06:xZ). Disarm time stamped at that
+  read.
+- **S253** (`REMEDIATION_v16.md`): REMEDIATED. The READY job above records all 9 vendor requests, 9 of 9 in the ten-key
+  shape. They sit on the row's `vendor_requests` list, not in `job_detail`: the remedy's second branch; TO-IB-yr-291's
+  wording ("the receipt carries") is the older one.
+- S263 is not graduated yet; it closes at sweep 7 on the 06:xZ reads.
+
+-- 3.0.0_SA_CVO
+
+## IRPT_DASHBD DB-b-7 leg A1 -- the first scheduled fire, read 11:5xZ 2026-10-02
+
+| claim | this seat's read | grade |
+|---|---|---|
+| the schedule fired with no seat starting it | `irpt-49f-reporting-gold-lambda` log group: 1 stream; REPORT RequestId `356abf98..` at 11:42:07Z, 20,242 ms, max memory 385 of 2,048 MB, 0 ERROR/Traceback lines | PASS |
+| three owed days computed and landed | the same stream: `2026-09-29 rows=6 LANDED`, `2026-09-30 rows=6 LANDED`, `2026-10-01 rows=6 LANDED`. `opal-data-49financial/irpt/49financial/gold/account_return_daily/`, every page: 1,124 objects, 562 partitions (559 before); 6 written after 11:40Z, `data.parquet` and `manifest.json` for each of the three dates, LastModified 11:42:08Z | PASS |
+| the frontier is T-1 | newest partition `date=2026-10-01`; Friday 2026-10-02's T-1 is 2026-10-01 (`lib/trading_calendar.py`) | PASS |
+| ledger | `irpt-dashbd-reporting-gold-apply-20261002` CLOSED 4 of 4 at `5ab7562c4a`; not in `deploy_ledger.py list` (24 of 24 sentinels) | PASS |
+
+**For row IRPT_DASHBD-S19.** Today the binding input had landed before 07:41 ET (T-1 computed). One organic day is one
+point, not the distribution AC1 asked for; the row stays open for the days its exclusions removed.
+
+**Limits.** The parquet values were not re-derived; the manifest was not opened.
+
+-- 3.0.0_SA_CVO
+
+## ~P IB-pr-295 (round 32), read 12:xZ 2026-10-02
+
+Task order `IRPT_BCKEND.TO-IB-pr-295.history-client-filter-guard.md`, `<risk>WORLD`, complete; worker code `2ad49400f8`;
+the shared tree's `served.py` and both new test files equal its blobs.
+
+| claim | this seat's read | grade |
+|---|---|---|
+| IB32-1-AC1 | the invocation run exactly: `OK: 6 passed, 0 failed`, `IB32-1-AC1 PASS`, rc 0 | PASS |
+| IB32-1-AC2 | `OK: 6 passed, 0 failed; arms for analysis-request-read, analysis-report, status-job`, `IB32-1-AC2 PASS`, rc 0 | PASS |
+| IB32-1-AC3 | `ops/tests 224 passed; directory/tests 171 passed; _authz/tests 189 passed, 6 baseline failures only`, `IB32-1-AC3 PASS`, rc 0 (ops 224 against the drain's 208: later commits added ops tests) | PASS |
+| proof instance | `proof-of-spec-check.py <instance> IB32-1-AC1,IB32-1-AC2,IB32-1-AC3`: 3 rows, 0 violations, VALID rc 0 (3 artifacts resolve by presence only) | PASS |
+| the allowlist | `served.py:203` `OWNER_READ_QUERY_ALLOWLIST`, applied at `:827-828`; the only entry `analysis-request-history: {client_id}`; the owner-read refusal still refuses 8 scope names on every other issued owner read | PASS (source) |
+| served | SOURCE ONLY: live `irpt-status` (LastModified 11:13:50Z) predates `2ad49400f8`; its `served.py` is blob `54787849e8` (`f9a00f732c`'s), without the allowlist or the IB-pr-293 change | NOT_EVALUATED (served) |
+
+**Limits.** "Proven through served.Entry" (`a66de1646b`) means the module's `Entry` in tests, not a deployed read; the
+served move rides the next irpt-status packet.
+
+-- 3.0.0_SA_CVO
+
+## irpt-status E7b + E6 + item 22 SERVED, read 12:5xZ-13:1xZ 2026-10-02 (deploy-close `2ab0eec3cb`)
+
+| claim | this seat's read | grade |
+|---|---|---|
+| live is the `ff8fd77ba2` build | CodeSha256 `X/JLmPJZ..`, LastModified 11:13:50Z, 330,611 B; the downloaded zip and S3 `Jg3uJ0x7..` by version hash the same; 46 of 46 members equal `git show <pin>:<path>`; the pin an ancestor of HEAD, not the reverse | PASS on deployed bytes |
+| E6 in the zip | `read_memo.py` present (76 lines, absent before `4c23ef5d98`); `status_installed.py:87,155` installs the memo per invocation | PASS on bytes |
+| E7b live | plain read: exactly `{accepted_at, identity}` for REQ-a1d9abc0 and REQ-a69e5751, 2 of 2 equal to the before-reads; with `include=comparisons` the Multi-Comp names `opal_short_term`, `opal_intermediate_term`, the Overview `[]`; `include=sections` refused `INVALID_INPUT` | PASS |
+| PROD `b3a1d8a6`'s two-key parser still reads it (row S261) | `readOwnedRequest`'s rule applied: plain reads 2 of 2 pass, history items 22 of 22 pass, the include read fails (expected) | PASS |
+| item 22 live | `client_id` refused `INVALID_INPUT` by the owner-read guard (`served.py:812-815`) before the reader; 22 of 22 Cottonwood compositions carry `client_id` null | FAIL on the record only: the close's title says item 22 is served; its body and CTO batch 154 say it is not (IB-pr-295 is source only) |
+| foreign-firm control | history, read+include and sections with inflection: 3 of 3 `FIRM_BINDING` | PASS |
+| ledger | CLOSED 3 of 3; sentinel absent at HEAD and in 11 of 11 worktrees | PASS |
+
+**E6 not re-measured after serving:** row IRPT_BCKEND-S270 (ARMED). **Record:** the irpt-status source map names an
+un-applied artifact (`BNe2n9cV..`; the key's latest S3 version `9S5jAZLr..` is hop 11, not live) and deploy fields from
+2026-09-24: row S264's class.
+
+-- 3.0.0_SA_CVO
+
+## ~Y arms Y2 -- Target Weight and XLSX READY on st13, read 12:xZ-13:xZ 2026-10-02 (deploy-close `541bec2205`)
+
+| claim | this seat's read | grade |
+|---|---|---|
+| terminal state | TW and XL: READY, revision 1, outbox SENT, 5 of 5 checkpoints, read-back 7 of 7 (1 tolerated); owner svc-irpt-analysis OPAL_GLOBAL | PASS |
+| upload echo | TW 600.0 / 400.0 of 1000 (shares 0.6 / 0.4); XL 10.01 / 2.02 of 12.03; sent = echoed 2 of 2 each | PASS |
+| retained PDFs | TW `pkorf41h..` 556,822 B, sha `263cfa7a..`; XL `KIurNsRP..` 583,261 B, sha `406abefa..`; each equal to its checkpoint, vendor artifact and index ref | PASS |
+| certified reports | TW `RPT-895c92ef` sha `d15e043e..`; XL `RPT-e1e3c6d0` sha `3760f285..`; each binds request, PDF and evidence; 46 of 46 scalars each re-read with PyMuPDF; perturbed control 0 of 46; 0 hits for other firms | PASS |
+| sections route | 51 of 51 each equal to the report; inflection `FIRM_BINDING` | PASS |
+| on st13 | SSM `98f324f9`: the st13 unit (start 10:18:27Z, 0 restarts); 25 of 25 job lines from its PID | PASS |
+| item 15 (WAF_READ), first live | 1 line 12:00:37Z `header=CHALLENGE job=REQ-abec171d`; the job released `WAF_CHALLENGE`, next receive 904 s later; XL's first vendor record status 202 `waf_action challenge` (1 of 19 records, 19 of 19 in the ten-key shape) | PASS |
+| item 19 (OPERATION_BUSY) | 0 BUSY/RETRY lines | NOT_EVALUATED |
+| st12 write-back | 6 `IRPT_SESSION_ROTATION kept=1` lines read (the SSM output capped at 24 KB at 12:30:51Z; the lane records 8) | PASS on the journal read |
+| ledger | CLOSED 4 of 4; sentinel absent at HEAD | PASS |
+
+**Limits.** The journal after 12:30:51Z was not read; the secret metadata and upload rows were not read.
+
+-- 3.0.0_SA_CVO
+
+## IRPT_DASHBD E3 leg (a) -- the foreign-tax override retired, read 12:xZ-13:xZ 2026-10-02 (ledger close `bef89249f7`)
+
+| claim | this seat's read | grade |
+|---|---|---|
+| live is the re-pinned build | `irpt-49f-reporting-gold-lambda` CodeSha256 `RLOFPe0l..`, LastModified 12:17:04Z; equal to the map's `artifact_sha256`, to S3 `Q49yaWRJ..` (latest) and the zip; 16 of 16 members equal their pins | PASS |
+| only the producer and the table moved | against the prior `7eCQtWhs..` (the named rollback): 2 of 16 members differ, `account_return_daily.py` and the code table, both equal to the `4ad4008907` blobs | PASS |
+| what "retired" means | one executable line removed (`crosses = crosses & ~wh`, which took withholding rows out of the external-flow mask); the code table moves row 66 (FTP/FC/WD, 2,449 rows) and row 114 (FTR/FC/WD, 4 rows) from EXTERNAL to INTERNAL | PASS |
+| output neutral | the served `date=2026-10-01` partition still holds 1 version per object (11:42:08Z); the next fire is the first served output on the new table | NOT_EVALUATED |
+| ledger | CLOSED 5 of 5 at 12:18:21Z; sentinel absent in 11 of 11 worktrees | PASS |
+
+**Row IRPT_DASHBD-S6 (limb e) closed by clock** in `REMEDIATION_v1.md`: the two codes the row named are INTERNAL in the
+table the served producer packages, and the adapter's override is gone (CTO analysis addendum A4). Limit: no output of
+the corrected table has been read yet. S8 stays open.
+
+-- 3.0.0_SA_CVO

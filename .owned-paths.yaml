@@ -615,6 +615,60 @@ lanes:
       - 2.0.0_SA_COO~D
     description: "CTO grantor, IRPT RULINGS batch 107, 2026-10-02 (msg 104015): the CLOUD_OPS_OR_ETL members preserved verbatim plus exact COO~D, for the exact files of the NFRA_TRNSPT mail pull placed by batch 104 (the mail Terraform file, its handler, the shared build script). Code only: no deploy or apply grant; the apply keeps both never-widen halves and its ledger. Struck when NFRA_TRNSPT closes."
 
+  IRPT_BCKEND_FAST_Y_TFPOLICY:
+    permitted_agents:
+      - 0.5.0_AE_OpalETL
+      - 0.5.0_AE_OpalETL~B
+      - 0.6.0_AE_PartnerETL
+      - 0.6.1_AE_PartnerETL
+      - 0.6.2_AE_PartnerETL
+      - 0.7.0_AE_CloudOps
+      - 0.7.0_AE_CloudOps~A
+      - 0.7.0_AE_CloudOps~B
+      - 0.7.0_AE_CloudOps~C
+      - 0.8.0_AE_CloudComp
+      - 4.0.0_SA_CRO~SWEEP   # sweep-executor, gate-constrained (ruling CTOB-RCG-001)
+      - 2.0.0_SA_COO~Y
+    description: "CTO grantor, IRPT RULINGS batch 114, 2026-10-02 (msg 104065, row IRPT_BCKEND-S263): the CLOUD_OPS_OR_ETL members preserved verbatim plus exact COO~Y, for the five IRPT Terraform files whose one() over reporting_policies.json stopped planning when a second policy row landed. Code only: the selector change lands with a no-change plan per root; no apply grant. Struck when IRPT_BCKEND closes."
+
+  IRPT_BCKEND_FAST_Y_STATUSPORTS:
+    permitted_agents:
+      - 0.5.0_AE_OpalETL
+      - 0.5.0_AE_OpalETL~B
+      - 0.6.0_AE_PartnerETL
+      - 0.6.1_AE_PartnerETL
+      - 0.6.2_AE_PartnerETL
+      - 0.7.0_AE_CloudOps
+      - 0.7.0_AE_CloudOps~A
+      - 0.7.0_AE_CloudOps~B
+      - 0.7.0_AE_CloudOps~C
+      - 0.8.0_AE_CloudComp
+      - 4.0.0_SA_CRO~SWEEP
+      - 2.0.0_SA_COO~P
+      - 2.0.0_SA_COO~Y
+    description: "CTO grantor, IRPT RULINGS batch 125, 2026-10-02 (msg 104107): the IRPT_COMPLETION_P members preserved verbatim plus exact COO~Y, for ONE file, reports/status_installed.py: two lines that wrap the irpt-requests table port in the per-request read memo and open one memo scope per invocation (E6, batch 111). Code only; no deploy grant; the irpt-status bundle waits on E7 (batch 123). Struck when IRPT_BCKEND closes."
+
+  MDPF_SECCLASS_FAST_M_BD_MIX:
+    permitted_agents:
+      - 0.4.0_DE_ClientPlatform
+      - 0.4.0_DE_ClientPlatform~A
+      - 0.4.0_DE_ClientPlatform~B
+      - 0.4.0_DS_ClientPlatform
+      - 0.4.0_DS_ClientPlatform~A
+      - 0.4.0_DS_ClientPlatform~B
+      - 0.4.0_DS_ClientPlatform~C
+      - 0.4.0_DS_ClientPlatform~D
+      - 0.4.0_DS_ClientPlatform~E
+      - 0.4.0_DT_ClientPlatform
+      - 0.4.2_RD_AdvisorIntelligence
+      - 0.4.2_RD_AdvisorIntelligence~A
+      - 0.4.2_RD_AdvisorIntelligence~B
+      - 0.4.2_RD_AdvisorIntelligence~C
+      - 0.4.2_RD_AdvisorIntelligence~D
+      - 4.0.0_SA_CRO~SWEEP
+      - 2.0.0_SA_COO~M
+    description: "CTO grantor, IRPT RULINGS batch 135, 2026-10-02 (msg 104148): the POD4 members preserved verbatim plus exact COO~M, for four exact files of the Black Diamond forward fix (batch 117 item 4 (i), batch 99 item 4): C_06, D_03, D_04 and lib/mix_views.py -- the mix carries unclassified, commodities and structured as classes. Code only: no deploy grant; the served move rides its own packet with both halves. Struck when MDPF_SECCLASS closes."
+
   IRPT_BCKEND_FAST_P_INF_NNA:
     permitted_agents:
       - 0.4.0_DE_ClientPlatform
@@ -2431,6 +2485,10 @@ paths:
     lane: POD1_OR_AE
     note: "Semantic news-pipeline Lambdas (currently inactive but kept in lane) — POD1 DS authors, AE deploys."
 
+  "infra/aws/ec2/investor-reporting-ycharts/tests/run_offline_suite.js":
+    lane: IRPT_BCKEND_FAST_Y_HOST
+    note: "IRPT_BCKEND~Y FAST lease, exact file (option A test arm b2, the attended sign-in); CTO grantor batch 136 (2026-10-02)."
+
   "infra/aws/ec2/investor-reporting-ycharts/ycharts_session.js":
     lane: IRPT_BCKEND_FAST_Y_HOST
     note: "IRPT_BCKEND~Y FAST lease, exact file; CTO grantor batch 74 (2026-10-01)."
@@ -2446,6 +2504,74 @@ paths:
   "infra/aws/lambda/transcripts-pull/build.sh":
     lane: NFRA_TRNSPT_FAST_D_MAIL
     note: "NFRA_TRNSPT~D FAST lease, exact file; CTO grantor batch 107 (2026-10-02)."
+
+  "infra/aws/terraform/investor-reporting/core/reporting_storage.tf":
+    lane: IRPT_BCKEND_FAST_Y_TFPOLICY
+    note: "IRPT_BCKEND~Y FAST lease, exact file (the reporting-policy selector); CTO grantor batch 114 (2026-10-02)."
+
+  "infra/aws/terraform/investor-reporting/export/b1_submit.tf":
+    lane: IRPT_BCKEND_FAST_Y_TFPOLICY
+    note: "IRPT_BCKEND~Y FAST lease, exact file (the reporting-policy selector); CTO grantor batch 114 (2026-10-02)."
+
+  "infra/aws/terraform/investor-reporting/ops/iam.tf":
+    lane: IRPT_BCKEND_FAST_Y_TFPOLICY
+    note: "IRPT_BCKEND~Y FAST lease, exact file (the reporting-policy selector); CTO grantor batch 114 (2026-10-02)."
+
+  "infra/aws/terraform/investor-reporting/performance/retained.tf":
+    lane: IRPT_BCKEND_FAST_Y_TFPOLICY
+    note: "IRPT_BCKEND~Y FAST lease, exact file (the reporting-policy selector); CTO grantor batch 114 (2026-10-02)."
+
+  "infra/aws/terraform/investor-reporting/ycharts/resident.tf":
+    lane: IRPT_BCKEND_FAST_Y_TFPOLICY
+    note: "IRPT_BCKEND~Y FAST lease, exact file (the reporting-policy selector); CTO grantor batch 114 (2026-10-02)."
+
+  "infra/aws/lambda/investor-reporting/reports/status_installed.py":
+    lane: IRPT_BCKEND_FAST_Y_STATUSPORTS
+    note: "E6 read memo, two lines, exact file; IRPT_COMPLETION_P members kept plus COO~Y; CTO grantor batch 125 (2026-10-02)."
+
+  "infra/aws/lambda/investor-reporting/reports/tests/test_status_installed.py":
+    lane: IRPT_BCKEND_FAST_Y_STATUSPORTS
+    note: "Hop 11's three assert lines (six operations, the pdf owner-read mode), same merge as hop 11's route; released by COO~P (msg 104217); IRPT_COMPLETION_P members kept plus COO~Y; CTO grantor batch 159 (2026-10-02)."
+
+  "infra/aws/lambda/investor-reporting/_contracts/fixtures/AnalysisRequestPdf.valid.json":
+    lane: IRPT_BCKEND_FAST_Y_STATUSPORTS
+    note: "Hop 11 contract fixture (new), exact file; no non-terminal order holds it; IRPT_COMPLETION_P members kept plus COO~Y; CTO grantor batch 163 (2026-10-02)."
+
+  "infra/aws/lambda/investor-reporting/_contracts/fixtures/AnalysisRequestPdf.invalid.json":
+    lane: IRPT_BCKEND_FAST_Y_STATUSPORTS
+    note: "Hop 11 contract fixture (new), exact file; no non-terminal order holds it; IRPT_COMPLETION_P members kept plus COO~Y; CTO grantor batch 163 (2026-10-02)."
+
+  "infra/aws/lambda/investor-reporting/_contracts/tests/test_seam_paired.py":
+    lane: IRPT_BCKEND_FAST_Y_STATUSPORTS
+    note: "Hop 11's census pins, DERIVED from routes.json _denominator and the documents directory, never typed (batch 158's rule); IRPT_COMPLETION_P members kept plus COO~Y; CTO grantor batch 163 (2026-10-02)."
+
+  "data/black_diamond/scripts/gold/tests/test_composition_canonical.py":
+    lane: MDPF_SECCLASS_FAST_M_BD_MIX
+    note: "Black Diamond forward fix, exact test file (its other-to-unclassified asserts change with the code); CTO grantor batch 137 (2026-10-02)."
+
+  "data/black_diamond/scripts/gold/tests/test_advisor_positions_canonical.py":
+    lane: MDPF_SECCLASS_FAST_M_BD_MIX
+    note: "Black Diamond forward fix, exact test file (its other-to-unclassified asserts change with the code); CTO grantor batch 137 (2026-10-02)."
+
+  "data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py":
+    lane: MDPF_SECCLASS_FAST_M_BD_MIX
+    note: "Black Diamond forward fix, exact file; POD4 members kept plus COO~M; CTO grantor batch 135 (2026-10-02)."
+
+  "data/black_diamond/scripts/gold/D_03.composition_artifacts.py":
+    lane: MDPF_SECCLASS_FAST_M_BD_MIX
+    note: "Black Diamond forward fix, exact file; POD4 members kept plus COO~M; CTO grantor batch 135 (2026-10-02)."
+
+  "data/black_diamond/scripts/gold/D_04.client_portal_summary.py":
+    lane: MDPF_SECCLASS_FAST_M_BD_MIX
+    note: "Black Diamond forward fix, exact file; POD4 members kept plus COO~M; CTO grantor batch 135 (2026-10-02)."
+
+  "data/black_diamond/scripts/gold/lib/mix_views.py":
+    lane: MDPF_SECCLASS_FAST_M_BD_MIX
+    note: "Black Diamond forward fix, exact file; POD4 members kept plus COO~M; CTO grantor batch 135 (2026-10-02)."
+
+  "data/black_diamond/scripts/gold/lib/etf_classifier.py":
+    lane: MDPF_SECCLASS_FAST_M_BD_MIX
+    note: "Blank-ticker identity resolution (batch 144), exact file, ADDITIVE: C_06, D_03 and D_04 call it explicitly; E_25 and the silver build_bd_assets_dim read exactly as today; CTO grantor batch 150 (2026-10-02)."
 
   "infra/aws/terraform/cot-pipeline/iam.tf":
     lane: IRPT_BCKEND_FAST_M_COT_IAM

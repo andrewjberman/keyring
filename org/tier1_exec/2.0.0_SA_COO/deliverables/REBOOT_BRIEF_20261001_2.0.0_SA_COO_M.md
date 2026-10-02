@@ -1,4 +1,50 @@
-# Reboot brief -- 2.0.0_SA_COO~M -- rewritten 2026-10-02 04:0xZ at the wind-down
+# Reboot brief -- 2.0.0_SA_COO~M -- rewritten 2026-10-02 04:0xZ at the wind-down; updated 05:2xZ
+
+**UPDATE 12:2xZ -- STATE (supersedes the 10:3xZ line where they differ):**
+- Table `etf-classifications` 2,841 rows. Written today under both halves: 19 Cottonwood seed (02:12Z), 29 Cottonwood CUSIP CDs
+  (03:40Z), 67 bd-mapped (10:26Z), 3 seed ABNFX/LBNYX/NYT (10:30Z), 16 per-ticker first act (11:21Z), 36 residual CUSIP rows (12:18Z).
+- BD r3 RE-LAND: branch `coo-m-bd-mix-classes` @29747a2ecb (worktree `coo_m_r30`): fix 1 (eight-class mix) + the identity read (batch
+  156). Real run on 09-30: 49F unclassified 4.63 pct (3.99 with the 36 rows). Half `NEVER_WIDEN_HALF_REQUEST_BD_THREAD_R3_RELAND_20261002.md`
+  SIGNED both (CTO batch 161) CONDITIONAL on portal PROD carrying eb90f2ad (Andrew's promote). CLOUD's four r3 files are serve-held
+  @056e9f0a74 (row S13); the re-land's merge releases them under SERVE-RELEASE-ACK.
+- Cottonwood RE-POINT: both halves (CTO conditional, batch 113): legs G, R, S wait on the same PROD promote; leg P (DEV eb90f2ad) closed.
+- Open ledgers owing leg S at the 14:15Z Holdings publication: `irpt-inf-split-positions-m-20261001`, `secclass-cot-seed-rows-m-20261001`
+  (also G at 23:00Z), `secclass-bd-mapped-rows-m-20261002`, `secclass-cot-name-pattern-rows-m-20261002`, `secclass-bd-first-act-seed-m-20261002`.
+- Tonight (batch 129): 22:10Z silver (bd_assets_dim classes as the old library) and 23:00Z gold (49F firm mix 100 pct).
+- Next authoring work: the allocation-class proposal (batch 145 C, mine); the residual's later acts and the per-ticker group's rest.
+- Surprise rows filed today: S10-S14 (S13 ARMED->disarmed same commit).
+
+**UPDATE 10:3xZ -- BD FORWARD FIX (CTO tick 6, msg 104138):** fix 1 (BD mix carries every class) BUILT on branch
+`coo-m-bd-mix-classes` @0ce0ad6efd in worktree `coo_m_r30` (lane grant batch 135; BD tests 72; not merged, no packet yet). Fix 2
+(67 bd-mapped rows, batch 139/140) WRITTEN 10:26Z, ledger `secclass-bd-mapped-rows-m-20261002` W closed. Fix 3 (ABNFX, LBNYX,
+NYT seed rows; QACDS stays cash) WRITTEN 10:30Z, ledger `secclass-cot-name-pattern-rows-m-20261002` M, W closed. Table 2,789.
+The 119 + 30 per-ticker rows (batch 139: by peer, dollar order, first act to 80 pct) NOT started. OPEN RULE ASK 10:32Z: r3 + fix 1
+would serve 49F 23.78 pct unclassified (433.1 M = ETFs with a blank ticker on the holdings row) -- may a name resolve a ticker?
+(`R8_BD_RELAND_TOMORROW_20261002.md` @3fd8c3688e). Leg S of BOTH new ledgers, the 19 seed rows and the split accounts: the
+14:15Z Holdings publication.
+
+**UPDATE 08:4xZ -- INCIDENT CLOSED ROLLED-BACK (CTO batch 129, msg 104131):** V1 green 08:2xZ (49F firm mix 1.000000 at
+1,843,114,302.78; z08327149 VXX 1,111,544.96 in alternatives, gap 0.00); restore run exit 0 08:31:13Z; ledger
+`secclass-bd-thread-r3-rollback-m-20261002` CLOSED. E_18, silver builder, lib/_shared, SSM v5 STAY on r3 (batch 129). OWED
+TONIGHT: read the 22:10Z silver fire (`silver/bd_assets_dim.parquet` classes as the old library) and the 23:00Z gold fire (firm
+mix sums to 100 percent); if either moves, roll the r3 silver builder back (its prior VersionId is in r3 leg P). Same 23:00Z fire:
+seed-rows leg G. Forward fix for r3: batch 117 item 4 (BD C_06 carries unclassified and the batch 99 classes; the 290 tickers get
+rows through a mapped writer under its own half). r3 entry: B4 open, HELD on the CTO.
+
+**UPDATE 06:3xZ -- INCIDENT IN FLIGHT (superseded by the line above):** BD thread r3 failed leg B4 -- the 04:00Z BD gold fire served a 49 Financial
+firm mix of 1,397.4 M against 1,843.1 M (290 tickers with no canonical row left the mix; z08327149 lost VXX 1.10 M since 10-01
+07:46Z). CTO batches 117-118: ROLL BACK + ONE ad hoc restore run. Done: C_06, D_03, D_04, lib/etf_classifier.py copied back to
+their pre-r3 versions 06:19Z (ledger `secclass-bd-thread-r3-rollback-m-20261002`, legs P, C closed); both C_06 watermark keys
+restored to 2026-09-29 06:24Z; `bd-gold-trigger {"mode":"incremental"}` fired 06:25:45Z. OWED: V1 on that run's output --
+`platinum/firm/mix_summary.json` sums to 100 percent at about 1,843 M and z08327149 carries VXX -- then close leg W and the
+ledger ROLLED-BACK. FALLBACK if not green by 11:00Z: restore each overwritten served key to its version just before the 04:00Z
+write (batch 117 item 3(b)). E_18, silver, lib/_shared, SSM v5 left in place (E_18 ran rc 0 under the dispatcher; old E_18
+never has). r3 re-lands only per batch 117 item 4.
+
+**UPDATE 05:2xZ:** the laptop wind-down was WITHDRAWN (MSTR msg 104038: it was site Z's disk). Work resumed; lease MDPF_SECCLASS
+re-armed to 07:09Z. Item 4 below: the merge trap is FIXED (branch `coo-m-cot-carrier` @affbc33e2b, 22 tests, dry merge = the ten
+files), the packet is restated and the COO half SIGNED @40cc2e2108 (blob 59c1da5458); CTO half asked 05:19Z. The `coo_m_r30`
+worktree is on `coo-m-cot-carrier`.
 
 Wind-down order: Andrew-direct ~03:4xZ relayed by `0.0.0_AB_MSTR` msg 104030 (disk near full). Push state: everything is LOCAL;
 this seat never pushes. FAST leases ENDED at the wind-down (MDPF_SECCLASS, IRPT_BCKEND~M, MDPF_HEALGAP all FULL).

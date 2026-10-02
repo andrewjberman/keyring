@@ -1089,3 +1089,30 @@ graduated item's remedy is routed by the CVO to its owner by name and the clocks
   }
 ]
 ```
+
+## S36 -- the branch-filtered CI listing can answer three weeks stale with no error (3.0.0_SA_CVO)
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-S36",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-02T09:40:00Z",
+    "one_line": "gh run list --branch DEV on the portal repo intermittently returns a stale page with no error: 3 of 7 calls on 2026-10-02 answered with newest run 5b959f63 (2026-09-11T04:28Z) while runs up to 8df9e3d3 (2026-10-02T08:07Z) exist; the same query minutes later, and the unfiltered list, returned fresh results.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "this seat's portal grade 2026-10-02 08:xZ-09:xZ: gh run list --repo Opal-Capital/portal --branch DEV returned the 2026-09-11 page with --limit 30 (twice) and --limit 10; fresh with --limit 3, 5 and 20; the CI run ids graded (36963864012 to 36982259587) were read by gh run view, each with its headSha"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md 22a RETRIEVAL: a failed retrieval returns a value; a CI read names its run by id and checks its headSha.",
+    "world_is": "The branch-filtered listing can silently answer three weeks old, which reads as 'no CI run for this commit' to any seat that takes the list's newest row. Reading by run id with headSha is unaffected.",
+    "notes": "INERT for the grades already written (each read its run by id). The trap's owner is whoever maintains the CI-reading instruments; placement 1.0.0_SA_CTO. Cause not read (a GitHub API cache is the likely class, not proven)."
+  }
+]
+```

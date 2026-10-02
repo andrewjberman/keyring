@@ -97,7 +97,9 @@ def uploaded_holdings(data, file_type):
     """
     if file_type != "xlsx":
         rows = [r for r in csv.reader(io.StringIO(data.decode("utf-8-sig"))) if r]
-        return {r[0].strip(): money(r[1]) for r in rows[1:]}, "dollars"
+        # The header's second column names the basis (Dollars / Shares / Target Weight), as in the XLSX template.
+        basis = rows[0][1].strip().lower() if rows and len(rows[0]) > 1 and rows[0][1].strip() else "dollars"
+        return {r[0].strip(): Decimal(r[1].strip()) for r in rows[1:]}, basis
     import openpyxl
     sheet = openpyxl.load_workbook(io.BytesIO(data), read_only=True, data_only=True).worksheets[0]
     rows = list(sheet.iter_rows(min_col=1, max_col=2, values_only=True))
@@ -217,6 +219,16 @@ def main(argv=None):
         t.link("normalize", "every uploaded row reaches the normalized holdings at the same dollars, and the total reconciles",
                csv_holdings == norm_holdings and sum(norm_holdings.values()) == money(norm["holdings"]["total_dollars"]),
                upload={k: str(v) for k, v in csv_holdings.items()}, total=norm["holdings"]["total_dollars"])
+    elif basis == "target weight":
+        # Arms Y2 leg TW: the uploaded weights scale by the reference notional, so each normalized row's share of the
+        # total equals its uploaded weight (to 4 places) and the shares sum to 1; no notional is assumed here.
+        total = money(norm["holdings"]["total_dollars"])
+        shares = {k: (v / total).quantize(Decimal("0.0001")) for k, v in norm_holdings.items()} if total else {}
+        weights = {k: v.quantize(Decimal("0.0001")) for k, v in csv_holdings.items()}
+        t.link("normalize", "every uploaded weight reaches the normalized holdings as its share of the total, and the total reconciles",
+               weights == shares and sum(norm_holdings.values()) == total,
+               upload={k: str(v) for k, v in weights.items()}, shares={k: str(v) for k, v in shares.items()},
+               total=norm["holdings"]["total_dollars"])
     else:
         t.link("normalize", "every uploaded symbol reaches the normalized holdings (basis %s: dollars are derived)" % basis,
                set(csv_holdings) == set(norm_holdings) and sum(norm_holdings.values()) == money(norm["holdings"]["total_dollars"]),

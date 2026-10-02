@@ -14558,3 +14558,532 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Found while grading row S259's route. The same shape, one uncommitted ' D' left after an act, is row MDPF_TAXSMA-S15 for a ledger file. Disarm is one restore from HEAD; nothing is lost because HEAD holds the deployed bytes."
 }
 ```
+
+## IRPT_BCKEND-S263 -- Five investor-reporting Terraform roots no longer plan at CLOUD HEAD: each reads the registry with one(jsondecode(file(.../reporting_policies.json)).policies), and 11bf813387 (IRPT_DASHBD TO-DB-b-2) added a second policy row, so one() refuses a list of two. Every apply in core, export, ops, performance and ycharts is blocked.
+
+```json
+{
+ "id": "IRPT_BCKEND-S263",
+ "project": "IRPT_BCKEND",
+ "fabric": "laptop",
+ "surfaced_by": "2.0.0_SA_COO~Y",
+ "surfaced_at": "2026-10-02T05:14:00Z",
+ "disposition": "UNDER_INVESTIGATION",
+ "one_line": "Five investor-reporting Terraform roots no longer plan at CLOUD HEAD: each reads the registry with one(jsondecode(file(.../reporting_policies.json)).policies), and 11bf813387 (IRPT_DASHBD TO-DB-b-2) added a second policy row, so one() refuses a list of two. Every apply in core, export, ops, performance and ycharts is blocked.",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "disarm_owner": "1.0.0_SA_CTO places the fix (five roots across lanes; the registry row is 2.0.0_SA_COO~P's issuance). Remedy candidate: each root selects its policy by revision, one([for p in ...policies : p if p.policy_revision == \"irpt-x10-v1\"]), the rule lib/opal_naming.py reporting_policy() already applies.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "terraform plan -target=module.irpt_ycharts_generate.aws_lambda_function.this in infra/aws/terraform/investor-reporting/ycharts at CLOUD 97eaff05ff: Error: Invalid function argument, resident.tf line 29, one(list): must be a list, set, or tuple value with either zero or one elements.",
+   "terraform plan -target=module.irpt_status.aws_lambda_function.this in infra/aws/terraform/investor-reporting/ops: the same error at iam.tf line 139. The same targeted plan ran clean on 2026-10-01 ~19:0xZ (IRPT_MVP_Y/E7_STATUS/plan_ops_targeted.txt), before the registry row landed.",
+   "comp-find 'reporting_policies\\.json' infra/aws/terraform: 7 hits; five one(...policies) reads: core/reporting_storage.tf:4, export/b1_submit.tf:37, ops/iam.tf:139, performance/retained.tf:38, ycharts/resident.tf:29.",
+   "infra/logic/registry/reporting_policies.json at 11bf813387 (2026-10-02 02:26Z, 0.9.0_WK_IRPT_DASHBD~1): a second row, policy_revision irpt-dashbd-x10-v1, state PENDING_ENFORCEMENT. lib/opal_naming.py:1845 selects by revision and is unaffected (the bundle's own reporting_policy('irpt-x10-v1') returns digest e0046398e2395145, equal to the pre-row registry)."
+  ]
+ },
+ "spec_asserts": "The registry is a list of policies (opal_naming.reporting_policy selects one by revision); a new product's policy is an added row.",
+ "world_is": "MEASURED in two roots, read in five: the Terraform roots assumed the list had exactly one row. Nothing served moved; a plan refuses, so every IRPT apply (E7's D1 in ops, the catalogue's D1 in ycharts, and the other lanes' roots) waits on the fix. NOT MEASURED: core, export and performance plans (the same line shape is read).",
+ "notes": "Off-item for 2.0.0_SA_COO~Y (found building the catalogue's generate packet). Not a vendor or data issue. The roots are not this seat's write surface."
+}
+```
+
+## IRPT_BCKEND-S264 -- the source map records the build before last for irpt-ycharts-generate and irpt-holdings
+
+```json
+{
+  "id": "IRPT_BCKEND-S264",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-02T06:45:00Z",
+  "one_line": "The source map's deploy fields no longer track two live IRPT functions: irpt-ycharts-generate (live E+FqSWwE.. since 05:54:19Z) still records deployed_code_sha256 LdjdnnLh.., last_deployed_commit 2d6937be5e, 2026-09-24; irpt-holdings (live tS/APci3.. since 2026-10-01 20:13:14Z) still records kZyg.. and eb29053170. The recorder was skipped on purpose because it cannot stamp one function alone: run now it would also stamp irpt-status as deployed while E7 is held.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lambda get-function-configuration (this seat's grades, 2026-10-02 02:xZ and 06:xZ): irpt-ycharts-generate CodeSha256 E+FqSWwE.. LastModified 05:54:19Z; irpt-holdings tS/APci3.. LastModified 2026-10-01 20:13:14Z; each equal to its source-map artifact_sha256",
+      "infra/aws/lambda/ci/lambda-source-map.json at HEAD: the deploy fields as stated, one disagreeing pair per function",
+      "deploy-close 5af9dc4510 body: 'Not run: record-terraform-deploy.sh (it would stamp irpt-status as deployed while E7 is held)'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The source map records each function's deployed code and commit, so a reader of the record can tell which build is live.",
+  "world_is": "For two of the IRPT functions the record names the build before last, and the only tool that writes those fields cannot be aimed at one function. Any seat reading deployed_code_sha256 instead of the live function concludes the wrong build is served. The grades did not rely on it: they read the live CodeSha256.",
+  "notes": "INERT: every grade reads live bytes. Remedy for the recorder's owner (the source-map lane; placement 1.0.0_SA_CTO): a per-function mode, then one run for each of the two once E7 is no longer held."
+}
+```
+
+## IRPT_BCKEND-S265 -- the resident host keeps 23 install roots, 22 idle, each with its own packages
+
+```json
+{
+  "id": "IRPT_BCKEND-S265",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-02T07:50:00Z",
+  "one_line": "The resident host keeps every install root it has ever had: /opt/irpt-resident holds 23 roots, 22 of them idle (st6 to st10 and 17 older), each with its own copy of the third-party packages (st11 lists 3,670 files), and no step prunes them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "read-only SSM 435657dd on i-0167fd745ad906a66 (this seat's st11 grade, 2026-10-02 07:26Z): ROOTS lists 23 directories under /opt/irpt-resident; the running unit uses 4f68a17d3a-st11",
+      "IRPT_MVP_Y/ST11/INSTALL_OUTPUT_20261002.txt: 'host members 3670'; the install header keeps 'The b1db201025-st10 root and the old library ... for rollback' (one rollback root)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The install keeps one rollback root (the previous one) beside the running root.",
+  "world_is": "Twenty-two roots are kept, not one, and each install adds another full copy of the packages. Not read: the host's free disk, the size of one root, or how many installs remain before the disk fills. The resident is the only path that turns a request into a report, so a full disk would stop it.",
+  "notes": "INERT today (the unit runs; nothing reads the old roots). Owner of the install path: 2.0.0_SA_COO~Y. Remedy: keep the running root and one previous, remove the rest by name, after a df read."
+}
+```
+
+## IRPT_BCKEND-S266 -- the st12 write-back fences an unconditional put; a sign-in inside the window would be overwritten
+
+```json
+{
+  "id": "IRPT_BCKEND-S266",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-02T09:50:00Z",
+  "one_line": "st12's rotated-cookie write-back guards the session secret with a fence read before and after an unconditional PutSecretValue; a sign-in that writes ycharts/session/current between the two reads would be overwritten and the post-check would read back the job's own write and pass. Whether sign-in takes the same operation lease is not established.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "9718ac5c87 at HEAD (this seat's source grade, 2026-10-02 08:xZ-09:xZ): _keep_rotation() runs after lease.complete; persist() checks the fence before and after the write; the write is secretsmanager PutSecretValue, which has no condition",
+      "deploy-close 56457904ed: st12 served since 09:21:39Z; its record shows 0 IRPT_SESSION_ROTATION lines (the write-back has not run live)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The operation lease and fence keep the session secret single-writer: a rotation never replaces a newer session.",
+  "world_is": "The fence narrows the window but cannot close it with an unconditional put. The window matters exactly when Andrew signs in (the session is dead and only his CAPTCHA sign-in revives it) while a job is rotating. Not read: the sign-in path's lease use.",
+  "notes": "INERT: no rotation has run live. Owner 2.0.0_SA_COO~Y. If sign-in holds the same lease, this row dismisses; if not, the remedy is the lease on sign-in or a version-stage check on the put."
+}
+```
+
+## IRPT_BCKEND-W101-S1 -- every retained Analysis report is prospect-owned, and a render grant cannot pin a prospect
+
+```json
+{
+  "id": "IRPT_BCKEND-W101-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~101",
+  "surfaced_at": "2026-10-02T09:48:46Z",
+  "one_line": "IB-pr-281: all 7 retained ANALYSIS reports in cottonwood (irpt-requests, REPORT# items) are prospect-owned (account_ids = [], prospect_input_id set); _render_identity/grant.build requires non-empty account_ids, so render_grant refuses every real Analysis export by name after the resolver admits it.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .scratch probe (this worker, 2026-10-02): irpt-requests tenant=cottonwood begins_with REPORT# -> 9 items, 7 ANALYSIS, each owner.account_ids length 0 and prospect_input_id set; 2 PERFORMANCE each length 1",
+      "infra/aws/lambda/investor-reporting/_render_identity/grant.py build(): missing = sorted(k for k, v in values.items() if not v) includes account_ids",
+      "infra/aws/lambda/investor-reporting/export/tests/test_retained_export_analysis.py::test_a_prospect_owned_analysis_report_has_no_accounts_for_a_render_grant_to_pin"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The TO face assumes an Analysis report resolves, grants and prints with 'the analysis request's own identity in place of an account set'; the resolver arm and print query need no accounts.",
+  "world_is": "The resolver now admits a prospect-owned Analysis report to its own owner (retained_export.authorizer), and print_query needs only the pins. But grant.build treats an empty account_ids as a missing field, and the Enforcer's render read intersects the bundle's account_ids with the delegator's scope; a prospect has none. So a served submit-export of a real Analysis report stops at render_grant (ExportSubmitRefused 'a prospect-owned Analysis report has no accounts for a render grant to pin'). Not read: whether the render read path would serve an OWNED_RECORD analysis read with an empty account list; that is the Enforcer's rule, outside this order's paths.",
+  "notes": "The decision is the render-identity owner's: a grant shape that admits a prospect (owner-bound, no accounts) and the Enforcer rule that reads it. This order's print query for the real report was built over the pins the grant would carry (retained_export.analysis_pins), from a grant-shaped record; no grant was built or written."
+}
+```
+
+## IRPT_BCKEND-W101-S2 -- the submit path's narrative step and status date read a Performance window an Analysis report does not have
+
+```json
+{
+  "id": "IRPT_BCKEND-W101-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~101",
+  "surfaced_at": "2026-10-02T09:48:46Z",
+  "one_line": "IB-pr-281: export/narrative_submit.cutoff_for and export/submit_service.serve_submit read report['dates']['actual_end'], which an AnalysisReport does not carry; the bundle built here binds a locally derived narrative_packet_ref, not a built packet.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/narrative_submit.py cutoff_for (dates.actual_end required)",
+      "infra/aws/lambda/investor-reporting/export/submit_service.py serve_submit status source_dates uses resolved['report']['dates']['actual_end']",
+      "infra/aws/lambda/investor-reporting/export/submit_installed.py _validate: kind != PERFORMANCE raises"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The resolver, grant and print query are the retained-export path's Analysis gap; the rest of the submit is kind-agnostic.",
+  "world_is": "narrative_submit.cutoff_for raises NarrativeSubmitRefused('the retained report carries no actual window end') for an Analysis report, and serve_submit's status uses resolved['report']['dates']['actual_end']; submit_installed._validate also raises 'only a Performance report exports'. So a served submit stops there even after the resolver admits the report. The local bundle's narrative_packet_ref is a deterministic reference over the report id and revision (sha256 of a fixed statement), not a built packet.",
+  "notes": "Outside this order's paths (narrative_submit.py, submit_service.py, submit_installed.py). The ExportBundle contract requires narrative_packet_ref; the PDF check forbids the text 'Narrative' in an analysis export, so the right shape of that ref for Analysis is a decision for the issuer."
+}
+```
+
+## IRPT_BCKEND-W101-S3 -- the print page reads an Analysis report by the bundle id, the render grant pins it by the request id
+
+```json
+{
+  "id": "IRPT_BCKEND-W101-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~101",
+  "surfaced_at": "2026-10-02T09:48:46Z",
+  "one_line": "IB-pr-281: PrintEntry/resolveBundle fetch analysis-report with requestId = the ?bundle= value, but the render host's X-Render-Bundle must equal the grant's bundle_id (a sha256) while the route's jobId pin is the request id; the two cannot both hold with one query value.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/render/PrintEntry.tsx: reportRefs: [bundleId]",
+      "portal/src/pages/InvestorReporting/export/resolveBundle.ts: getAnalysisReport({ ..., requestId: ref.reportRef })",
+      "infra/aws/lambda/investor-reporting/_authz/enforce.py: unpinned = sorted(k for k, v in request.path_ids.items() if str(pins.get(k)) != v)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "'The print page ... reads ?kind=performance|analysis and renders AnalysisDocument from the bundle'; the query carries the report's ids.",
+  "world_is": "portal/src/pages/InvestorReporting/render/PrintEntry.tsx composes reportRefs [bundleId], and export/resolveBundle.ts calls getAnalysisReport({requestId: ref.reportRef}) with that value; the route is GET .../analysis/{jobId}/sections and _authz/enforce.py refuses a path id the grant does not pin. The query built here carries bundle (the grant bundle id), report and request, but the page reads only bundle for the Analysis fetch, so it would ask for jobId = the bundle sha, which the grant (jobId = the request id) does not pin. Not read: a live render of the page.",
+  "notes": "Portal files are read only for this order; the field is the page's use of ?bundle= as the Analysis request id. The remedy is the portal owner's (read ?request= for kind=analysis) or the grant owner's."
+}
+```
+
+## IRPT_BCKEND-W101-S4 -- a prospect render grant is built but the Enforcer's render read still refuses an empty account list
+
+```json
+{
+  "id": "IRPT_BCKEND-W101-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~101",
+  "surfaced_at": "2026-10-02T10:23:00Z",
+  "one_line": "IB-pr-291: a prospect render grant now builds, stores and reads back, but the Enforcer's RENDER_DELEGATE read intersects the grant's account_ids with the delegator's scope and refuses EMPTY_GRANT on an empty list, so the grant is not yet served by a render.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/enforce.py: bundle_ids = set(bundle.get('account_ids') or []); intersection = sorted(delegator_permitted & bundle_ids); if not intersection: Refusal('EMPTY_GRANT', ...)",
+      "infra/aws/lambda/investor-reporting/_render_identity/grant.py render_ports(): load_render_bundle returns account_ids = list(grant['account_ids']) = [] for a prospect grant",
+      "infra/aws/lambda/investor-reporting/export/submit_async.py:128 account_ids = [str(a) for a in checked['account_ids']] feeds write_pointer; [] for a prospect grant (not run)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IB-pr-291 gives the grant a prospect scope; the Enforcer rule that reads it was named in W101-S1 as the render-identity owner's, outside this order's paths.",
+  "world_is": "grant.build, write, read and render_ports now carry a prospect grant (account_ids = [], prospect_scope with the report's four artifact keys). The Enforcer still resolves a RENDER_DELEGATE read as delegator_permitted intersect bundle account_ids, so an empty list serves nothing: EMPTY_GRANT. Also, the artifact keys are named in the retained index's grammar (REPORT#id#rev, ARTIFACT#ART-id; sections = the report key with a #sections suffix, since sections are served from the report record) but no reader consumes prospect_scope yet. Not run: any live render.",
+  "notes": "Outside this order's paths (_authz/enforce.py, the analysis report route). The remedy is an Enforcer arm that, for a grant carrying prospect_scope, admits an OWNED_RECORD read of exactly those keys for the exact delegator owner."
+}
+```
+
+## IRPT_BCKEND-W101-S5 -- IB-pr-292: the Analysis branch is built and graded in submit_installed/narrative_submit, b
+
+```json
+{
+  "id": "IRPT_BCKEND-W101-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~101",
+  "surfaced_at": "2026-10-02T11:05:00Z",
+  "one_line": "IB-pr-292: the Analysis branch is built and graded in submit_installed/narrative_submit, but export/submit_service.serve_submit (outside this order's paths) still builds the narrative packet for any kind and reads dates.actual_end, so a served Analysis submit is not yet routed through it.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/submit_service.py:50-52: _narrative.build_and_bind(resolved['report'], ...) runs for every resolved kind; narrative_submit.build_and_bind calls cutoff_for(report) with the PERFORMANCE default, which refuses 'no actual window end' on an Analysis report (closed refusal, nothing written)",
+      "infra/aws/lambda/investor-reporting/export/submit_service.py:81: status source_dates business_date = resolved['report']['dates']['actual_end'], a KeyError for an Analysis report",
+      "infra/aws/lambda/investor-reporting/export/narrative_submit.py: cutoff_for(report, kind), narrative_step(kind), template_for(kind) and submit_installed.submission_plan(kind, report) are the new seam; 8 tests pass"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The cell: 'narrative_submit cutoff_for and serve_submit read dates.actual_end ... Give the submit path an Analysis branch'; the order's paths name submit_installed.py and narrative_submit.py only.",
+  "world_is": "The branch decisions (cutoff, template, no narrative step) exist and validate the real READY report, but serve_submit does not consult them: it needs to skip build_and_bind and pass a null/absent narrative_packet_ref for kind ANALYSIS (ExportBundle requires narrative_packet_ref, so that contract question is also open), and take source_dates from analysis_as_of(report). Not run: any served submit.",
+  "notes": "The remedy is an edit to submit_service.py (and the ExportBundle narrative_packet_ref rule for an Analysis bundle), outside this order's paths."
+}
+```
+
+## IRPT_BCKEND-W101-S6 -- IB-pr-292: the packaged export/_contracts/AnalysisReport.schema.json is older than the pub
+
+```json
+{
+  "id": "IRPT_BCKEND-W101-S6",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~101",
+  "surfaced_at": "2026-10-02T11:06:00Z",
+  "one_line": "IB-pr-292: the packaged export/_contracts/AnalysisReport.schema.json is older than the published docs copy and refuses the real retained READY Analysis report (extraction_coverage, undated_sections).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bundle.validate(report, 'AnalysisReport.schema.json') with the default contracts dir (infra/aws/lambda/investor-reporting/_contracts) raised: Additional properties are not allowed ('extraction_coverage', 'undated_sections' were unexpected) on RPT-1f49504f501a6633b1f9cccc5f37ecf6",
+      "The same call with IRPT_CONTRACTS_DIR=docs/contracts/investor-reporting/v1 returned True; the two files differ by contract_version, undated_sections and extraction_coverage (git log: beecb3395a, b894019c95 touched the docs copy only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "'docs/contracts/investor-reporting/v1/AnalysisReport.schema.json' is the contract the order names; the function validates against the packaged copy or the irpt-common layer.",
+  "world_is": "SUBMIT_ANALYSIS_R29.json was produced with IRPT_CONTRACTS_DIR pointing at the published docs copy. A function resolving the stale packaged copy (or an older layer) would refuse the same report with a closed ValidationError. Not run: the deployed layer's copy.",
+  "notes": "The remedy is to republish the packaged _contracts copy (outside this order's paths) and confirm the irpt-common layer's copy."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S267",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-02T11:10:00Z",
+  "one_line": "GATE (x) of .tools/to-pipeline-gate.py refuses a CTO addendum cell that joins a round already issued: the ~P round-29 cell IB-pr-293 (CTO ADDENDUM 1, batch 143) was refused because round 29 has two orders at HEAD, and the limb reads no override.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit 2026-10-02 ~11:0xZ: '[to-pipeline-gate] REFUSED -- ... workstream ~P round 29 of IRPT_BCKEND already has an issuance at HEAD (2 order(s): IRPT_BCKEND.TO-IB-pr-291..., IRPT_BCKEND.TO-IB-pr-292...)'",
+      ".tools/to-pipeline-gate.py _round_issuer_violations (:2073-2110) refuses any NEWLY-ADDED tree order whose (workstream, round) key has an order at HEAD; no branch reads an addendum"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO_ROUND_ANALYSIS_IRPT_BCKEND_ROUND_28_P_20261002.md ADDENDUM 1: 'this addendum adds one cell to round 29. It is not a recut.'",
+  "world_is": "The gate admits the cell only under a new round number. The issuer labelled it round 30 (decomposition section 27 addendum note); the round-29 L10 slug waits on it so the slug still carries E5.",
+  "notes": "Remedy owner 1.0.0_SA_CTO (the gate limb): admit an addendum-cited cell into its round, or rule that an addendum cell takes the next round number."
+}
+```
+
+## IRPT_BCKEND-W101-S7 -- IB-pr-293: the prospect branch's owner source is a new port no production caller wires yet
+
+```json
+{
+  "id": "IRPT_BCKEND-W101-S7",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~101",
+  "surfaced_at": "2026-10-02T11:40:00Z",
+  "one_line": "IB-pr-293: the prospect branch re-resolves the owner from a new Enforcer port (load_report_owner) that no production caller wires yet, so a served prospect render refuses fail-closed until E4/served supplies a retained-owner reader.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/enforce.py _resolve_prospect_render: load_report_owner None -> Refusal OBJECT_NOT_COVERED 'no owner source is wired' (tests: _authz/tests/test_enforce_prospect_refuse.py::test_an_owner_source_that_is_not_wired_or_cannot_be_read_refuses_fail_closed)",
+      "infra/aws/lambda/investor-reporting/_render_identity/grant.py render_ports(report_owner=None) returns the 2-tuple as before; with a reader it returns a 3-tuple and _authz/served.py reads ports[2] as load_report_owner. served.py:1154 render_ports_from_env() passes no reader."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IB-pr-293 contract line 2: 'The delegator resolved NOW must be the report's owner ... An owner source the Enforcer cannot read refuses (fail closed).' The order names no existing owner source for the Enforcer; the stored prospect scope carries no owner, and the grant's own delegator stamp is expressly not enough.",
+  "world_is": "The only retained owner of a prospect report lives behind reports/repository.py (outside this order's paths). The cell adds the optional port and the exact comparison (firm, principal, class, advisor, home firm, prospect input id) and proves them with fixture loaders; the production reader is not built. Two narrower facts: an OPAL_GLOBAL delegator is refused on a prospect grant (resolve_prospect_owner admits FIRM_ADVISOR and FIRM_OPERATIONS only), and a FIRM_OPERATIONS delegator's revocation is visible only through the owner record, since the ownership map lists advisors, not operations users.",
+  "notes": "Remedy owner 2.0.0_SA_COO~P at IB-pr-282 (E4) or a follow-on cell: pass report_owner=<retained-owner reader> to grant.render_ports in render_ports_from_env. Until then no prospect render is served; no account scope widens."
+}
+```
+
+
+- IB-pr-294: the portal ExportBundle adapter reads wire.narrative_packet_ref.packet_id unconditionally, so an Analysis bundle (analysis_report_ref, no narrative_packet_ref) would throw there if it ever reached it.
+
+```json
+{
+  "id": "IRPT_BCKEND-W101-S8",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~101",
+  "surfaced_at": "2026-10-02T12:20:00Z",
+  "one_line": "IB-pr-294: the portal ExportBundle adapter reads wire.narrative_packet_ref.packet_id unconditionally, so an Analysis bundle (analysis_report_ref, no narrative_packet_ref) would throw there if it ever reached it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "comp-find 'narrative_packet_ref' --files --corpus default: 73 hit(s) across 52799 file(s); portal hits: contracts/adapt.ts, contracts/wire/ExportBundle.ts, contracts/wire/consumed.ts + 4 fixtures",
+      "portal/src/pages/InvestorReporting/contracts/adapt.ts:1186,1192 read at worktree HEAD"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IB-pr-294 refusal clause: 'A reader outside <paths> that would receive an Analysis bundle is a row naming it.' PRD v0.24 ruling 24: a bundle carries exactly one of the two references.",
+  "world_is": "portal/src/pages/InvestorReporting/contracts/adapt.ts :1186 (bundleRef) and :1192 (narrativePacketRef) dereference wire.narrative_packet_ref.packet_id with no guard; wire/ExportBundle.ts :20 types it readonly-required; wire/consumed.ts :78-79 lists it in reads and required. Whether the portal ever receives a server-frozen Analysis bundle (the F8 preview reads a bundle) is not shown by anything in this cell; the served bundle is stored under the evidence bucket and read by the render host, not returned by submit-export (the answer is QUEUED with no data).",
+  "notes": "Not edited (outside <paths>, portal submodule). Remedy owner: 2.0.0_SA_COO~P at the E4 served move or the FNTEND workstream: make the wire type a union (narrative_packet_ref | analysis_report_ref) and the adapter guard it before an Analysis bundle is previewed. Census: NARRATIVE_REF_READERS_R31.json outside_the_tree."
+}
+```
+
+
+- IB-pr-294: retained_export._is_analysis / print_query decide Analysis by REPORT SHAPE (request_ref present, no dates dict), not by the resolved kind the submit already holds.
+
+```json
+{
+  "id": "IRPT_BCKEND-W101-S9",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~101",
+  "surfaced_at": "2026-10-02T12:20:00Z",
+  "one_line": "IB-pr-294: retained_export._is_analysis / print_query decide Analysis by REPORT SHAPE (request_ref present, no dates dict), not by the resolved kind the submit already holds.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/retained_export.py:_is_analysis and print_query (read at worktree HEAD c7580dc18a); outside this order's <paths>",
+      "pytest run during the cell: ExportSubmitRefused 'the retained report carries no requested window' on an Analysis-kind record with dates"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IB-pr-294: 'for a resolved ANALYSIS report ... the cutoff is the report's own as-of, never dates.actual_end'; the resolved kind is authoritative (retained_export.resolve returns kind).",
+  "world_is": "retained_export.print_query(grant_record, report) calls _is_analysis(report), which is false for an Analysis report that carries a dates dict; it then demands dates.requested_start/requested_end and refuses. Measured while writing test_serve_submit_analysis.py: an Analysis-kind record with a spurious dates.actual_end reached 'the retained report carries no requested window'. The AnalysisReport schema forbids a dates property, so a schema-valid report never takes this path; the submit_service date and bundle reference in this cell key off resolved kind and are unaffected.",
+  "notes": "Not edited (retained_export.py is outside <paths>). Inert while the AnalysisReport schema forbids dates. Remedy owner 2.0.0_SA_COO~P: pass the resolved kind to print_query."
+}
+```
+
+
+- IB-pr-294: the AC2 check validates the stored fixture envelope, not its instance
+
+```json
+{
+  "id": "IRPT_BCKEND-W101-S10",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~101",
+  "surfaced_at": "2026-10-02T12:35:00Z",
+  "one_line": "IB-pr-294: the AC2 check validates the stored ExportBundle fixture ENVELOPE, not its instance, so it cannot pass for any schema; the worker read the instance instead (a one-line change to the check inside the granted checks/r31 path).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P/checks/r31/p31_1_ac2_bundle_exactly_one_ref.py step 2 read ExportBundle.valid.json whole: 'Additional properties are not allowed (_expect, _fixture, _source, instance)'",
+      "measured in python at HEAD c7580dc18a: the BASE packaged schema gives 8 errors on the valid fixture envelope and 0 on its `instance`; the invalid fixture's `instance` gives 1 error on both base and changed schema; the changed schema gives 0 and 1 respectively"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IB31-1-AC2: 'the stored client fixtures validate unchanged on the packaged schema'; check step 2: ExportBundle.valid.json validates and ExportBundle.invalid.json does not.",
+  "world_is": "Every stored fixture in _contracts/fixtures/ is an envelope with the document under `instance` (the existing tests read ['instance']). The check passed the envelope to the validator, which refuses it on the unknown envelope keys regardless of schema. Worker edit: the two json.loads calls in that check now take [\"instance\"]; the grading otherwise is unchanged (valid validates, invalid is refused). The fixtures and schema grading were not loosened. The COO should read the amendment.",
+  "notes": "Edit made under the order's <paths> grant (checks/r31/). Remedy owner 2.0.0_SA_COO~P: confirm or replace the amended check."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S268",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-02T12:33:00Z",
+  "one_line": "reports/tests/test_resident_installed.py::test_factory_returns_exactly_the_resident_shape_without_any_aws_call fails at CLOUD: ycharts/generate/resident_worker.py:18 raises ModuleNotFoundError: No module named 'extract'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest -q -p no:cacheprovider infra/aws/lambda/investor-reporting/reports/tests at CLOUD ~12:3xZ (after @271ff892cc): 1 failed, 88 passed; the test alone fails the same way",
+      "None of IB-pr-293/294/295 touched ycharts/ or reports/; the last reports/ commits are 2.0.0_SA_COO~Y's hop 11 (b13bc47603, edf5b77834)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The reports suite passes at CLOUD.",
+  "world_is": "One reports test fails on an import inside ycharts/generate (the resident worker imports a module named extract that is not on the test's path). IB-pr-296's AC3 lists it as a baseline failure so the regression guard grades only new failures.",
+  "notes": "Remedy owner 2.0.0_SA_COO~Y (ycharts/generate and the resident factory). Not chased by ~P."
+}
+```
+
+## IRPT_BCKEND-S269 -- the portal export client still reads narrative_packet_ref unconditionally after IB-pr-294
+
+```json
+{
+  "id": "IRPT_BCKEND-S269",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-02T13:10:00Z",
+  "one_line": "IB-pr-294 made ExportBundle take exactly one of narrative_packet_ref and analysis_report_ref (PRD v0.24), but the portal's export client still reads narrative_packet_ref unconditionally: the portal's own content-pin test fails with 'ExportBundle.narrative_packet_ref: no longer REQUIRED, and this client reads it unconditionally'. The reader census the cell was cut with did not reach the portal.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show HEAD:docs/contracts/investor-reporting/v1/ExportBundle.schema.json (this seat, 2026-10-02 13:0xZ): required no longer lists narrative_packet_ref; oneOf present; analysis_report_ref a property. IB-pr-294 drained 1572729cfd (worker 790a26be6a, 1dae563e21)",
+      "portal origin/DEV 3bbf3914 fe-s tests run against workspace CLOUD 10d2b1c445 contracts in a scratch worktree (this seat's portal grade of items 72-81): producer-fixtures.test.ts:260 fails 'ExportBundle.narrative_packet_ref: no longer REQUIRED, and this client reads it unconditionally', with and without ebceef5b",
+      "CTO RULINGS batch 149 item 3: IB-pr-294's second criterion is 'the schema takes exactly one reference, with a census of every reader'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD v0.24 / batch 149: exactly one reference, never null; every reader of the bundle is counted before the change.",
+  "world_is": "The portal reader that loads a bundle's narrative packet by reference will meet an Analysis bundle with no such field once an Analysis export reaches it. Not read: whether IB-pr-294's served submit is deployed, and whether any portal path reads an Analysis bundle today.",
+  "notes": "INERT until an Analysis bundle reaches the portal reader. Owners: 2.0.0_SA_COO~D (the portal reader: branch on the reference present) and 2.0.0_SA_COO~P (the census that missed it). The same content-pin run also flags 'comparison-catalogue: response envelope no longer declares unprojected_grant' (content-pins.test.ts:306), not graded here."
+}
+```
+
+- IB-pr-296: the retained-owner reader is attached only when IRPT_REQUESTS_TABLE is set, because an existing test pins the two-port s
+
+```json
+{
+  "id": "IRPT_BCKEND-W101-S11",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~101",
+  "surfaced_at": "2026-10-02T13:10:00Z",
+  "one_line": "IB-pr-296: the retained-owner reader is attached only when IRPT_REQUESTS_TABLE is set, because an existing test pins the two-port shape of render_ports_from_env.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_render_identity/tests/test_render_ports_installed.py::test_each_read_function_installs_the_grant_ports_with_the_bucket unpacks `load_bundle, load_identity = ports('cottonwood')` with only IRPT_EVIDENCE_BUCKET set; a reader attached unconditionally would return a 3-tuple and move it (order refusal clause: an existing test that moves is a defect)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IB-pr-296: render_ports_from_env passes report_owner= a read-only reader; an unset index refuses (fail closed).",
+  "world_is": "render_ports_from_env installs the reader only when the retained index is configured (IRPT_REQUESTS_TABLE set, or a table injected for offline controls). Unset, the ports stay the two-port pair and the Enforcer refuses a prospect render with 'no owner source is wired' (fail closed; proven through served.Entry in test_a_prospect_render_is_refused_when_the_index_is_unset). The existing test is unmoved (_render_identity 45 passed). Whether each installing function's role can read the table, and whether reports/repository.py is packaged beside it (report_owner.py imports it lazily and a failed import raises, so the Enforcer refuses), is E4's packet's question.",
+  "notes": "Remedy owner 2.0.0_SA_COO~P at IB-pr-282 (E4): set IRPT_REQUESTS_TABLE on every function that installs render ports and may serve a prospect render, grant dynamodb:GetItem on it, and confirm the reports package ships with the function."
+}
+```
+
+- IB-pr-296: print_query takes the resolved kind as an optional third argument; with no kind it still decides by report shape, becaus
+
+```json
+{
+  "id": "IRPT_BCKEND-W101-S12",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~101",
+  "surfaced_at": "2026-10-02T13:10:00Z",
+  "one_line": "IB-pr-296: print_query takes the resolved kind as an optional third argument; with no kind it still decides by report shape, because existing tests and the r28 check call it with two arguments.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/tests/test_retained_export.py:132,139 and test_retained_export_analysis.py:98,155 call print_query(stamped, report); org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P/checks/r28/build_analysis_export_r28.py:116 does too"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IB-pr-296: print_query takes the resolved kind (ANALYSIS | PERFORMANCE) from its caller; submit_service passes it; PERFORMANCE prints exactly as today.",
+  "world_is": "print_query(grant_record, report, kind=None): submit_service passes resolved.get('kind'), which resolve() always sets, so the served path never consults the shape. A caller that passes no kind keeps the shape rule so no existing test moves (export 158 passed, 0 baseline failures). The only residual shape-decided caller is the r28 check script, outside the order's paths.",
+  "notes": "Remedy owner 2.0.0_SA_COO~P: if the shape fallback should be retired, make kind required in a cell that also moves the two-argument callers."
+}
+```
+
+## IRPT_BCKEND-S270 -- E6 is served but not re-measured; the Cottonwood history list nears the 15 s timeout
+
+```json
+{
+  "id": "IRPT_BCKEND-S270",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-02T13:30:00Z",
+  "one_line": "E6 has served since 11:13:50Z but its acceptance, the call census and REPORT durations re-run after the apply (CTO batch 111 item 3), has not been run, while batch 132 lifted Cottonwood's cap of 20 on E6 serving and Cottonwood now holds 22 accepted requests. The history list as the service principal took 12,338 ms client wall time warm at the default page and 18,903 ms at limit=50; the function timeout is 15 s.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y (run batch 111 item 3's census and REPORT durations on the served E6; if the history list's server time is near the timeout, re-cap Cottonwood until it is not)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's irpt-status grade (2026-10-02 12:5xZ-13:1xZ): live CodeSha256 X/JLmPJZ.. at ff8fd77ba2, read_memo.py present; GET analysis/requests as svc-irpt-analysis: 22 items, 12,338 ms (default page) and 18,903 ms (limit=50), client wall times",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/E6_TIMING/: 6 files, newest 03:27Z (before the apply); E7B_STATUS/ holds no post-11:13Z timing",
+      "CTO RULINGS batch 111 item 3 (re-measure once E6 serves) and batch 132 (the Cottonwood cap lifts when E6 serves)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "E6 is accepted on a measured re-run after it serves; the cap is lifted because E6 bounds the history list's reads.",
+  "world_is": "The cap is lifted and the list keeps growing, but nobody has measured the served function's time since E6 went live. The client wall time is already within 3 s of the timeout at the default page. Not read: the function's own REPORT durations (server time) for these calls.",
+  "notes": "ARMED because the request count only grows and a timed-out history list is a page that cannot list requests. Measured client-side only; the server time may be lower."
+}
+```

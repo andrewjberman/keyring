@@ -9,6 +9,18 @@ IRPT_BCKEND closed or Andrew's stand-down). The 16:1xZ form of this file is @b57
 `data/assets/scripts/gold/irpt_holdings_performance/holdings_performance.py` (batch 102 item 2(c)) so the CLOUD push did not
 upload it. The serving packet's producer leg removes that line in its own commit carrying `SERVE-RELEASE-ACK: <reason>`.
 
+## 2026-10-02 ~13:3xZ -- the Analysis export (hop 12, FWD-9) and IRPT_DASHBD
+
+**Export path, source on CLOUD (no deploy yet):** rounds 29-33 drained. IB-pr-291 prospect grant @dff84e882f; IB-pr-292 submit
+Analysis branch @4f3f36d16c; IB-pr-293 Enforcer prospect branch @88480ab9d8; IB-pr-294 analysis_report_ref + packaged contracts
+@1572729cfd (PRD v0.24); IB-pr-295 history client_id guard (batch 154) @271ff892cc; IB-pr-296 owner reader + print kind @2a4a9f823f.
+GATE (x) refuses a second new order in a round, so the addendum cells carry rounds 30-33 (row S267, remedy owner the CTO).
+**Open for E4 (IB-pr-282, the issuer's served act):** the packet (build, both halves, targeted apply under a ledger, one Analysis export
+downloaded); row W101-S11 (IAM GetItem on irpt-requests + reports/ packaging per installing function); the portal census across the
+tree (CTO batch 167, row S269; ~D msg 104228: no portal path reads a server-frozen bundle); a served-move census is running.
+**IRPT_DASHBD:** reporting gold first scheduled fire landed 09-29..10-01 (ledger closed @5ab7562c4a); E3 leg (a) deployed,
+output-neutral on the real run (ledger closed @bef89249f7); DB-b-8 publisher packet @7eb0f96e87 (COO half signed, CTO half asked).
+
 ## Standing Andrew words that govern this workstream (read first)
 
 - **2026-09-28 ~22:2xZ call 3 and ~22:4xZ:** performance is end-of-day holdings only, every firm in ONE consolidated gold shape.

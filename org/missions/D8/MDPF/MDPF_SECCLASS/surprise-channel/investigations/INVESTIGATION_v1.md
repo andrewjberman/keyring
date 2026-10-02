@@ -1005,3 +1005,200 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Not measured: who holds REET and for how much. A census of scheduled rows whose fund kind has a seed peer in another class would bound the whole set; this row names the one pair found."
 }
 ```
+
+
+## MDPF_SECCLASS-S9 -- BD thread r3 served a 49financial firm mix missing about 24 pct of the firm (tickers only bd-securities knew)
+
+```json
+{
+  "id": "MDPF_SECCLASS-S9",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-02T06:30:00Z",
+  "one_line": "BD thread r3's first real compute (the 2026-10-02 04:00Z gold fire) served a 49financial firm mix that is missing about 24 pct of the firm: platinum/firm/mix_summary.json now reads equity 60.12 pct, fixed_income 15.69 pct, alternatives 0.00 pct (sum 75.8 pct), composition total 1,397,402,073 against 1,840,926,643 the run before. Tickers absent from etf-classifications but held in bd-securities (IYR, ITB, FBALX ...) now log 'Classification not found' and leave the mix; 290 distinct tickers, 11,878 lines in the run, against 0 lines in the 2026-10-01 04:00Z run on the old library.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M (ledger secclass-bd-thread-r3-m-20261001, held for exactly this read): the half's rollback per key (code objects to the prior VersionIds, served keys to the versions read before the act) or a forward fix that keeps the bd-securities fallback behind the canonical table, under the never-widen pair; 1.0.0_SA_CTO rules which",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3 opal-data-bd logs/gold-layer/gold_incremental_2026-10-02_20261002_060640.log, last 12 MB (this seat, 2026-10-02 06:1xZ): RUNNER STARTED 04:00:39Z; C_06 'Watermark: 2026-09-29', 'To process: 1', 'Written: 3,189 relationship JSONs (0 errors)', 'Watermark -> 2026-09-30', 'C_06 done (rc=0)'; D_03 and D_04 rc=0; 'Mix snapshot (C_06): 3 classes, date=2026-09-30, total_mv=$1,843,114,282'; COMPLETE exit 0 06:06:40Z; 0 IndexError, 0 BLOCKED, 0 Traceback lines",
+      "the same window: 149 'Classification not found for ticker' lines inside C_06's block, 11,878 in the run, 290 distinct tickers. The 2026-10-01 04:00Z run (logs/gold-layer/gold_incremental_2026-10-01_20261001_060534.log, last 12 MB, old library): C_06 'To process: 1' and 0 such lines in C_06 and in the run",
+      "platinum/firm/mix_summary.json versions (s3api, this seat): 2026-10-02 05:37Z data_as_of 2026-09-30, mix equity 1,108,088,148.64 (0.6012), fixed_income 289,244,356.38 (0.1569), alternatives 69,568.26 (0.0), composition total_market_value 1,397,402,073.27; 2026-10-02 00:33Z and 2026-10-01 08:05Z, data_as_of 2026-09-29: equity 1,416,358,259.48 (0.7694), fixed_income 386,051,912.98 (0.2097), alternatives 38,516,471.14 (0.0209), total 1,840,926,643.60",
+      "get-item, ConsistentRead: IYR canonical ABSENT, bd-securities equity; ITB canonical ABSENT, bd-securities equity; FBALX canonical ABSENT, bd-securities alternatives; PHDG absent in both; control IEFA canonical equity",
+      "NEVER_WIDEN_HALF_REQUEST_SECCLASS_BD_THREAD_R3_20260930.md:158-166: the blast radius names 'the one coarse number that moves (mix_daily_summary.json, by the formerly-guessed-to-equity population), and the three-ticker move table'; :186-193 the restore targets per served key"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The r3 never-widen half: one coarse number moves (the formerly-guessed-to-equity population in mix_daily_summary) plus a three-ticker table; CTO rulings batch 99: nothing is folded and no client is skipped for a missing class.",
+  "world_is": "The served 49financial firm mix lost about 443.5 M USD of 1,840.9 M across all three classes; its shares sum to 75.8 pct; alternatives fell from 38.5 M to 69.6 K. The holdings are not re-classed as unclassified, they are absent. The move is far outside the signed blast radius and is served now. Not read: the advisor, client and account families D_03 and D_04 also wrote in this run (they read the same classifier); the portal page; whether the 23:00Z fire (0 partitions) already served any of this.",
+  "notes": "Found by reading the clock the r3 ledger is held on (C_06's first new compute). Leg A1's acceptance (rc 0, no IndexError, no BLOCKED) is met and is not the test of this act: the served values are. Same family as row S7 (the fallback serves model rows) seen from the other side: this library dropped the fallback, so tickers only bd-securities knew vanish."
+}
+```
+
+
+## MDPF_SECCLASS-S10 -- Black Diamond carries two different securities under ticker GLDM: SPDR Gold MiniShares and a gold-miners fund
+
+```json
+{
+  "id": "MDPF_SECCLASS-S10",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-02T11:15:00Z",
+  "one_line": "In gold/holdings_lots/2026-09-25.parquet the ticker GLDM sits on two CUSIPs: 98149E303 (SPDR GOLD MINISHARES TRUST, 18 lots, 188,264.35 USD) and 911478105 (US GLOBAL INVESTORS GLD & PREC MTLS, 6 lots, 60,873.45 USD). The canonical row is keyed by ticker, so after the BD first-act seed row (GLDM commodities / Metals, CTO batch 145 D: settled by CUSIP 98149E303) the 60,873.45 USD of the gold-miners fund reads commodities / Metals too.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pandas read of s3://opal-data-bd/gold/holdings_lots/2026-09-25.parquet, 2026-10-02 10:4xZ: rows with ticker GLDM grouped by (cusip, asset_name): 911478105 US GLOBAL INVESTORS GLD & PREC MTLS 60,873.45 (6); 98149E303 SPDR GOLD MINISHARES TRUST OF BENEFICIAL INTEREST 188,264.35 (18)",
+      "NEVER_WIDEN_HALF_REQUEST_BD_FIRST_ACT_SEED_ROWS_20261002.md (blob 25ce6ea3d8) names it as residue; CTO half condition (msg 104193): file it as a surprise row before the run"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A ticker identifies one security; the canonical table classes a security by its ticker.",
+  "world_is": "Black Diamond's feed puts the wrong ticker on six lots of a different fund. The canonical row cannot tell them apart; the fix is in the feed (or a CUSIP read in the classifier, which batch 150 says does not exist yet).",
+  "notes": "Not measured: whether other tickers carry more than one CUSIP in the lots. A census (ticker -> distinct CUSIPs > 1) would bound the class."
+}
+```
+
+
+## MDPF_SECCLASS-S11 -- E_18's ticker resolution table has not been written since 2026-04-07
+
+```json
+{
+  "id": "MDPF_SECCLASS-S11",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-02T11:15:00Z",
+  "one_line": "s3://opal-data-bd/gold/dimensions/ticker_resolution.parquet (4,424 normalized names, read by E_18 and, under CTO batch 144, by the classifier's blank-ticker read) was last modified 2026-04-07 21:54:55Z. Names newer than it -- the Vanguard Morningstar ETFs, about 44 M USD of 49 Financial's tickerless positions on 2026-09-30 -- are absent, which keeps the r3 re-land above the 5.0 pct unclassified bar (6.42 pct with exact-name resolution).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3api head-object, 2026-10-02 10:4xZ: LastModified Tue, 07 Apr 2026 21:54:55 GMT, ContentLength 181,478",
+      "data/black_diamond/scripts/gold/E_18.detect_new_securities.py:45 RESOLUTION_KEY = 'gold/dimensions/ticker_resolution.parquet'; :132-146 loads it read-only",
+      "R8_BD_RELAND_TOMORROW_20261002.md addendum 1 @2c965f1a9c: exact-name resolution recovers 324,054,999.20 USD, 110,835,132.38 unresolved; top unresolved VANGUARD MORNINGSTAR GROWTH ETF 35,784,713"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "E_18's docstring: the resolution table carries every resolved name (resolve_tickers); a production table is refreshed by a scheduled producer.",
+  "world_is": "The table has no live writer on any schedule: its producer (resolve_tickers) has not run in six months. CTO batch 150: one run of the resolver under its own never-widen packet, no scheduler built.",
+  "notes": "Not read: which process last wrote it, and whether resolve_tickers calls an outside service (that would need Andrew's word)."
+}
+```
+
+
+## MDPF_SECCLASS-S12 -- S9 disarmed: the BD r3 mix producers were rolled back and the 49 Financial mix restored
+
+```json
+{
+  "id": "MDPF_SECCLASS-S12",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-02T11:15:00Z",
+  "one_line": "Row MDPF_SECCLASS-S9 (ARMED, disarm_owner 2.0.0_SA_COO~M) is disarmed: C_06, D_03, D_04 and lib/etf_classifier.py were copied back to their pre-r3 versions at 06:19Z, both C_06 watermark keys reset to 2026-09-29, and one ad hoc run (CTO batches 117-118) recomputed 09-30; V1 read green 08:2xZ (platinum/firm/mix_summary.json sums to 1.000000 at 1,843,114,302.78; z08327149 carries VXX 1,111,544.96). Ledger secclass-bd-thread-r3-rollback-m-20261002 CLOSED ROLLED-BACK (batch 129).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ledger org/critical_paths/change_management/20261002T0618Z_secclass-bd-thread-r3-rollback-m-20261002_deploy_completion.md, legs P, C, W with proof, CLOSED (commit d3760cc1c0)",
+      "run log gold_incremental_2026-10-02_20261002_083113.log: COMPLETE exit 0, 29 done rc=0, 0 'Classification not found' lines"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "A disarm record for MDPF_SECCLASS-S9: the r3 rollback (ledger secclass-bd-thread-r3-rollback-m-20261002, CLOSED ROLLED-BACK, CTO batch 129) removed the hazard S9 names; nothing further is owed on this row.",
+  "spec_asserts": "CLAUDE.md NEVER-2: a confirmed deploy whose read fails is rolled back in the same window.",
+  "world_is": "49 Financial's served mix is back on the pre-r3 library; r3 re-lands only per batches 117 item 4 and 144 (unclassified at or under 5.0 pct).",
+  "notes": "This row records the disarm of MDPF_SECCLASS-S9 by its disarm_owner; dismissed with that reason, nothing further owed here. E_18, the silver builder, lib/_shared and SSM v5 stay on r3 (batch 129)."
+}
+```
+
+
+## MDPF_SECCLASS-S13 -- CLOUD carries the rolled-back r3 bytes of four Black Diamond gold files, unheld -- a routine deploy would re-ship the regression
+
+```json
+{
+  "id": "MDPF_SECCLASS-S13",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-02T12:05:00Z",
+  "one_line": "After the 06:19Z rollback, s3://opal-data-bd/code/gold/ serves the pre-r3 C_06, D_03, D_04 and lib/etf_classifier.py, but CLOUD still carries the r3 bytes of all four with no DEPLOY-SERVE-HELD line: git show HEAD md5 e84817dc / 705adba8 / ffcdc362 / 96ad9dde equal the r3 ETags, S3 reads 8b1f012c / 346e7b0f / a4b867d4 / 884889c0. Any seat's safe-deploy of the Black Diamond gold tree from CLOUD would re-ship the code that served 49 Financial a mix missing 445.7 M (row S9).",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M: a DEPLOY-SERVE-HELD line on the four files at CLOUD (safe_deploy_core skips a held file), committed the same turn; released only by the re-land packet's own commit under SERVE-RELEASE-ACK",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show HEAD:<file> | md5sum vs s3api head-object ETag, 2026-10-02 12:0xZ, the four files as above; lib/mix_views.py equal on both (d4467d4a)",
+      ".tools/safe_deploy_core.py:1556-1571: a deploy-scope file whose current content carries DEPLOY-SERVE-HELD is not uploaded"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md NEVER-2 and the r3 rollback (batch 117): the next scheduled fire computes as before r3.",
+  "world_is": "The S3 code is pre-r3, so the scheduled fires compute as before r3; but the repo HEAD is r3 and unheld, so the rollback holds only until someone deploys the BD gold tree from CLOUD.",
+  "notes": "Disarmed in the same commit as this row: the four files carry a DEPLOY-SERVE-HELD line naming this row."
+}
+```
+
+
+## MDPF_SECCLASS-S14 -- 274 tickers carry more than one CUSIP in Black Diamond's lots (the GLDM shape is a class, not one case)
+
+```json
+{
+  "id": "MDPF_SECCLASS-S14",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-02T12:05:00Z",
+  "one_line": "In gold/holdings_lots/2026-09-25.parquet, 274 of the 4,034 tickers that carry a 9-character CUSIP carry more than one (661,883,085.13 USD open): IEFA 2 (205.5 M), DIVZ 2 (199.4 M), BIV 2, VEA 2, VUG 3 (922908736 Vanguard Growth ETF plus 921910105 and 921910600, Vanguard US Growth Investor and Admiral -- different funds), QQQ 4, VGSH 3 ... Row S10's open census, now measured. The batch 156 identity read refuses any blank-ticker resolution through such a ticker, which leaves VANGUARD MORNINGSTAR GROWTH ETF (35.78 M) unclassified at the re-land.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pandas read of the lots file, 2026-10-02 11:5xZ: groupby(ticker).cusip.nunique() > 1 over rows with a 9-character CUSIP; open market value of those tickers",
+      "the identity read's real run on 09-30 (branch coo-m-bd-mix-classes @29747a2ecb): 'ticker-carries-several-cusips' refused 23 distinct names"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A ticker identifies one security.",
+  "world_is": "Black Diamond's feed puts one ticker on several securities (share classes and different funds) for 274 tickers. Positions WITH a ticker are classed by it regardless (a share-class mix-up moves no class for most); only the blank-ticker CUSIP hop is affected, and it refuses.",
+  "notes": "Not measured: how many of the 274 are share classes of one fund (harmless for class) versus different funds (VUG's). A feed fix is Black Diamond's or the silver builder's, not the classifier's."
+}
+```
+
+
+## MDPF_SECCLASS-S15 -- a non-ASCII name written into etf-classifications (CUSIP:025083882)
+
+```json
+{
+  "id": "MDPF_SECCLASS-S15",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-02T12:45:00Z",
+  "one_line": "The BD re-land residual act wrote a non-ASCII name into etf-classifications: CUSIP:025083882 reads 'AMERICAN CENTURY ULTRA<U+00AE> INV' (a registered-mark sign), the only non-ASCII name among the table's 2,841 rows; the write set carried it and the writer has no ASCII refusal.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "get-item etf-classifications CUSIP:025083882, ConsistentRead (this seat, 2026-10-02 12:4xZ): name has 1 non-ASCII character (U+00AE); updated_by mdpf-secclass-cusip-rows; last_updated 2026-10-02T12:18:51.945705Z",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R8_CHECKS/RESIDUAL_CUSIP_WRITE_SET_20261002.tsv: 1 non-ASCII character in the file",
+      "full consistent scan of the table (this seat's grade of the act): 2,841 rows, this the only non-ASCII name; R7_CHECKS/write_cusip_rows.py plan_rows has no ASCII check"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md section 4: no non-ASCII in production code, logs or AWS.",
+  "world_is": "One served-table row carries a non-ASCII name; a reader that decodes with a default cp1252 or ASCII codec reads it wrong or raises. The class and identifiers are right; only the name field is affected.",
+  "notes": "INERT: no served move until the re-land (leg R held). Owner 2.0.0_SA_COO~M: rewrite the one name in ASCII ('ULTRA(R)' or drop the mark) through the same writer path, and add an ASCII refusal to plan_rows so the next set cannot carry one."
+}
+```

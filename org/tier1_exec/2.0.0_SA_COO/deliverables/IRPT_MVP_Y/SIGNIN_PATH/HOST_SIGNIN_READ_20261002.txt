@@ -1,0 +1,22 @@
+ssm 9055904d-7fbf-4ed1-8895-3ee54c69e472 Success rc 0
+signin-read 2026-10-02T09:29:51Z Amazon Linux 2023.12.20260909 x86_64
+Xvfb=absent x11vnc=absent vncserver=absent Xvnc=absent websockify=absent novnc_proxy=absent node=present npx=present chromium=absent chromium-browser=absent google-chrome=absent 
+playwright browsers: chromium-1228 chromium_headless_shell-1228 ffmpeg-1011 chromium-1187 chromium-1228 chromium_headless_shell-1187 chromium_headless_shell-1228 ffmpeg-1011 
+dnf candidates: tigervnc-server.x86_64 xorg-x11-server-Xvfb.x86_64 
+ssm agent: active
+capture outcomes by reason token, all journal history of the session runner and the resident:
+      4 CAPTURE_FAILED:AUTH_FAILED
+      2 CAPTURE_FAILED:UNEXPECTED_CHALLENGE:CHALLENGE_CAPTCHA_UNSUPPORTED
+      1 CAPTURE_FAILED:UNEXPECTED_CHALLENGE
+      1 CAPTURE_FAILED:LEASE_NOT_HELD
+capture lines with dates (last 12):
+2026-09-27T13:01:02+0000 ip-172-31-87-2.ec2.internal python3.12[173870]: IRPT_RESIDENT_POLL retained_for_retry class=OperationRefused code=CAPTURE_FAILED:LEASE_
+2026-09-27T14:16:02+0000 ip-172-31-87-2.ec2.internal python3.12[189222]: IRPT_RESIDENT_POLL retained_for_retry class=OperationRefused code=CAPTURE_FAILED:UNEXPE
+2026-09-29T14:15:34+0000 ip-172-31-87-2.ec2.internal python3.12[280258]: IRPT_RESIDENT_POLL retained_for_retry class=OperationRefused code=CAPTURE_FAILED:AUTH_F
+2026-09-29T17:26:49+0000 ip-172-31-87-2.ec2.internal python3.12[280258]: IRPT_RESIDENT_POLL retained_for_retry class=OperationRefused code=CAPTURE_FAILED:AUTH_F
+2026-09-29T17:45:08+0000 ip-172-31-87-2.ec2.internal python3.12[280258]: IRPT_RESIDENT_POLL retained_for_retry class=OperationRefused code=CAPTURE_FAILED:UNEXPE
+2026-09-30T03:36:28+0000 ip-172-31-87-2.ec2.internal python3.12[307882]: IRPT_RESIDENT_POLL retained_for_retry class=OperationRefused code=CAPTURE_FAILED:AUTH_F
+2026-10-01T07:33:52+0000 ip-172-31-87-2.ec2.internal python3.12[360874]: IRPT_RESIDENT_POLL retained_for_retry class=OperationRefused code=CAPTURE_FAILED:AUTH_F
+2026-10-02T06:26:18+0000 ip-172-31-87-2.ec2.internal python3.12[404237]: IRPT_RESIDENT_POLL retained_for_retry class=OperationRefused code=CAPTURE_FAILED:UNEXPE
+runner logs on disk: 
+

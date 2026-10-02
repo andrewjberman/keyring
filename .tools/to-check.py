@@ -146,7 +146,12 @@ def _extract_md_field(text: str, *labels: str) -> str | None:
     return None
 
 
-SERIAL_RE = re.compile(r"\d\.\d\.\d_[A-Za-z]+_[A-Za-z0-9]+(?:~[A-Z])?")
+# The name class holds an underscore and the lane suffix holds digits and more than one letter (row IRPT_DASHBD-S17,
+# CTO rulings batch 124): a worker is 0.9.0_WK_<MACRO>_<CODE>~<n> and a lane may be ~MI or ~RV, so the old
+# [A-Za-z0-9]+ / ~[A-Z] form read every IRPT worker as "0.9.0_WK_IRPT" and every ~MI lane as ~M -- and
+# to-decomp-ref-lint.py's seating check reads assignees through this resolver, so its own SERIAL_RE fix
+# (@453c6430ec) never reached the seating frame.
+SERIAL_RE = re.compile(r"\d\.\d\.\d_[A-Za-z]+_[A-Za-z0-9][A-Za-z0-9_]*(?:~[A-Za-z0-9]+)?")
 
 # ---------------------------------------------------------------------------------------------
 # FIX A -- SCHEMA BLINDNESS. _extract_tag reads CHILD ELEMENTS only, so on an attribute-form TO
