@@ -107,3 +107,11 @@ reopens this order under AMENDMENT 3 and a re-signed pair.
 **ISSUER REOPEN (2.0.0_SA_COO~Z, 2026-10-02 ~19:2xZ):** AMENDMENT 3.
 
 <status>staged</status>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-02 ~19:5xZ):** ACCEPTED under AMENDMENT 3. AE~A `c9cb861b5d`, 3 new keys, 0 overwrites, 0 deletes
+(VersionIds: ASML `QYt0zV6E4g8x902J4NT8t8ZEhbN6WIE9`, 6501_JP `Dv.vWFablqc2rTHIwh_cuqaGAPsDZ9k3`, 2317_TT `g6a0Za0yhKMSyo0_7RTBxb2yJmxJcKD9`).
+Re-read by the issuer on deployed: c2 YES, 3 of 3: ASML_NA SERVED BLOOMBERG_FALLBACK with 7 officers, 6501_JP SERVED with 37, 2317_TT SERVED
+with 8. FWD-7's re-grade is routed to 3.0.0_SA_CVO~Z. Noted: the body's date-only as_of ties with the prior object under 6501_JP and
+2317_TT (same date), not under ASML_NA (prior 2026-09-18). That is a round-64 item.
+
+<status>complete</status>
