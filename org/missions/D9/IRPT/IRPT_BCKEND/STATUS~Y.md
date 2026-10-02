@@ -6,7 +6,7 @@ Mode FAST: lease `IRPT_BCKEND~Y` re-armed 04:33Z until 08:33Z after the withdraw
 terms, under Andrew-direct 2026-10-01 ~04:2xZ).
 Loop `/canonical-drive IRPT_BCKEND` 10m (LIVE_ARMS RELAUNCH row). Way forward: CTO rulings batches 61, 62, 65, 70, 72,
 76, 83, 88, 89, 93, 97, 98, 100 and 105 in `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md`.
-Reviewer `3.0.0_SA_CVO` (grades pins after the fact). Lease FAST until 09:43:29Z (read 09:14Z). As of 2026-10-02T11:0xZ.
+Reviewer `3.0.0_SA_CVO` (grades pins after the fact). Lease FAST until 09:43:29Z (read 09:14Z). As of 2026-10-02T11:2xZ.
 
 ## Pins
 
@@ -15,7 +15,7 @@ Reviewer `3.0.0_SA_CVO` (grades pins after the fact). Lease FAST until 09:43:29Z
 | Worktree | branch `coo-y-r30` at `C:/Users/AndrewBerman/Desktop/coo-y-r30`, head `cf3ae52aee` (st12 `9718ac5c87`, merged into CLOUD at `cf3ae52aee`) |
 | Items 1 to 17 on CLOUD | 1 to 14 as before (st9 carries them); 15 `3921492913` (the 900 s calculating release, the WAF header token); 16 `7122afefc1` (row S253, the job row's `vendor_requests` ledger); 17 `8c4398e32a` (E7, the request read names the chosen comparisons); 19 `951afdf4e6` (st11, merge `4f68a17d3a`, SERVED in the resident; its words ride the next generate and irpt-status bundles); 21 E6 memo (merge `7a9f76389b`, not served); 20 hop 11 (branch `coo-y-hop11`, not merged); 18 `3ad9306bf9` (the catalogue reads `etf-classifications` once per 300 s warm window, not per request; condition 11 of the whole-bundle packet), merge `87f9b3afab`, NOT served |
 | SERVED: the resident | `/opt/irpt-resident/c657a5966d-st13` since 2026-10-02T10:18:27Z (ledger `irpt-resident-st13-20261002` CLOSED @f74a5c2a76; CTO batches 131 and 138): items 1 to 19, st12 (rotated cookies written back, PROVEN LIVE) and st13 (the capture library's attended hold `857d90b8`, OFF unless `YC_ATTENDED=1`; Xvnc installed, nothing listening). Rollback root `cf3ae52aee-st12` on the host |
-| SERVED: `irpt-status` | `2V7xV1+zII4+g6tV..` since 2026-10-01T06:59:55Z (read 2026-10-02 ~02:2xZ) |
+| SERVED: `irpt-status` | `X/JLmPJZ..` since 2026-10-02T11:13:50Z: E7b + E6 + item 22 at `ff8fd77ba2` (rollback S3 `m1LolBKF..`, code `2V7xV1..`) |
 | SERVED: `irpt-ycharts-generate` | `E+FqSWwETrwJ9Gd1..` since 2026-10-02T05:54:19Z (whole bundle at `97eaff05ff`, item 18; ledger `irpt-generate-catalogue-20261002` CLOSED). Rollback: S3 version `J52XmUEj..` (code `arC65KbD..`) |
 | SERVED: catalogue route | `GET /api/scoped/investor-reporting/analysis/comparisons`, route `bh7ynom` on `7k3ed8px20` behind `naqxlm`, since ~06:00Z. V1: 341 entries for cottonwood, `FIRM_BINDING` outside reach, 720 ms with the Scan then 221-260 ms |
 | UPLOADED, NOT APPLIED | `irpt-status.zip` version `gqIQUc_Z..` (sha `iYgp8301..`, E7) is its key's LATEST version. CTO batch 115 item 3: no untargeted apply of the ops or ycharts roots while it is held |
@@ -24,13 +24,12 @@ Reviewer `3.0.0_SA_CVO` (grades pins after the fact). Lease FAST until 09:43:29Z
 
 ## Live thread
 
-**THE irpt-status QUEUE (CTO batches 142, 146): E7b + E6 + item 22 in ONE packet, no PROD-promote gate.** E7b built
-`c4210d2785` (comparisons only on `include=comparisons`; the plain read is the pre-E7 path). Bundle at ONE commit `ff8fd77ba2`
-(repin `d3a8136304`), uploaded `Jg3uJ0x7..` sha `X/JLmPJZ..`; packet `IRPT_MVP_Y/E7B_STATUS/NEVER_WIDEN_SIGNOFF_PACKET_IRPT_STATUS_E7B_20261002.md`
-blob `d56354f274` @25c4a80e23, ledger `irpt-status-e7b-20261002` U1 closed; CTO half asked 11:03Z (4 members outside the
-three -- durable_job, status.py, two registry files -- named with signed origins, ruling owed). Targeted plan: 1 change.
-Live before-reads recorded; V1 compares. `2.0.0_SA_COO~D` adds `include=comparisons` ONLY after V1. E7 is superseded (its
-legs close at E7b's V1). Hop 11 stays separate (branch `coo-y-hop11`).
+**irpt-status SERVES E7b + E6 + item 22 since 11:13:50Z** (`X/JLmPJZ..`, S3 `Jg3uJ0x7..`, members at `ff8fd77ba2`; CTO halves
+batches 146/148; ledger `irpt-status-e7b-20261002` CLOSED @2ab0eec3cb; E7 CLOSED SUPERSEDED). V1: every plain read equal to
+before; `include=comparisons` answers (Multi-Comp names Short-Term, Intermediate-Term); `2.0.0_SA_COO~D` told 11:22Z.
+Rollback S3 `m1LolBKF..` (code `2V7xV1..`). **E6 serves -> Cottonwood's 20-request cap lifts.** FINDING: history `client_id`
+is refused by `_authz/served.py:812-815` (fabricated-scope guard) -- item 22 unusable as named; ruling asked 11:22Z.
+Hop 11 integrated on branch `coo-y-hop11-int` (merge clean, ops 220 passed); its packet needs `~P`'s test line.
 
 **The Analysis thread is LIVE** (CTO batch 88) on the Overview `REQ-a69e5751d42c374f1d2354f9`. The Multi-Comp
 `REQ-a1d9abc0bc037ea3d9e4a7ed` is READY, graded PASS and walked, and is NOT live until E7 is served (batch 98).
