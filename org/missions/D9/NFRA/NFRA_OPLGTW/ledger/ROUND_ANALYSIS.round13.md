@@ -32,6 +32,17 @@ OG-rl-3 serves no OPLGTW FWD. It serves the laptop's LDO-001 and is graded by it
 | OG-rl-3 GET verbs | REALIZED | `/hx/teams/me` and `/hx/teams/chats` returned 200 with the bearer (ht.AC3), and the floor is unchanged (AC4). |
 | OG-rl-3 POST verbs | DEFERRED | Only a real send proves Chat.ReadWrite and ChannelMessage.Send. Andrew's first End of Day post (20:30-21:30Z) is that send. |
 
+**Re-grade 21:4xZ (this seat's read of the audit lake).**
+- **Read:** `s3://opal-mcp-audit/audit/dt=2026-10-02/`, objects keyed at or after 19:23:40Z. 183 objects, 183 records,
+  all `hx_teams`, 0 `error`, 0 `needs_login`.
+- **The channel-reply POST is REALIZED.** Exactly ONE POST-shaped record: `2026-10-02T20:31:23.910011Z`, a channel thread
+  `.../replies`, outcome `ok`, label `teamsassist`, `bytes=1727`, with a `sent_id`. That is Andrew's first End of Day
+  post, inside his 20:30-21:30Z window. It exercises ChannelMessage.Send.
+- **The chat-message POST stays DEFERRED.** No `sent_id` record exists on `/hx/teams/chats/{id}/messages`, so
+  Chat.ReadWrite's send remains UNEXERCISED until the first chat send.
+- **The GET verbs** hold across 141 `chats` reads, 15 chat message-list reads and 1 channel-replies read, all `ok`. The 10 `denied`
+  records are probes with no bearer or a wrong bearer, or synthetic ids.
+
 **The FWD grades are unchanged from round 12:** 0 REALIZED, 3 NOT_REALIZED, 5 HELD, 0 DEFERRED. Nothing in this
 round measured them.
 
