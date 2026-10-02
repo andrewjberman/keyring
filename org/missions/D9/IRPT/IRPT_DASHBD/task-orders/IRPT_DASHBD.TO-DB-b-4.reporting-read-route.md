@@ -52,6 +52,16 @@ this cell adds ONE route under its OWN function only.
   NO APPLY: the apply is the issuer's under both never-widen halves (a new served function) after your drain.
 - Record in your report the exact route path the page will call and the response headers, for workstream F (the seam is the FILE; the
   route's shape is what F's fetch needs to know).
+- ISSUER AMENDMENT 1 (2026-10-02 ~03:2xZ, at the hand-over from DB-b-2; rows IRPT_DASHBD-W1-S1 and W1-S2 on branch wk-IRPT_DASHBD-1).
+  The commit-time naming gate (`.tools/naming-gate.py`, ENFORCE) refuses a NEW hand-kept `49f` token in `lambda-source-map.json` and in
+  typed Terraform text. So: (a) the source-map key and the build invocation are the SCOPE-LESS builder name
+  `name("irpt", None, "reporting-read", "lambda")` = `irpt-reporting-read-lambda`, and the artifact is
+  `investor-reporting/irpt-reporting-read-lambda.zip` (this REPLACES the artifact key in BOUNDS; it is the only AWS write admitted);
+  (b) the FUNCTION and its role stay the firm-scoped builder names, derived in Terraform the way DB-b-2's `reporting-publish` root
+  derives them (its `opal_name` use and registry-derived firm), never typed; (c) `entry.py`'s `FUNCTION_NAME` must still EQUAL
+  `irpt-49f-reporting-read-lambda` (DB-4-AC1 reads the value): derive it through `lib.opal_naming` if the gate refuses the literal.
+  No criterion changes. Read DB-b-2's root (`infra/aws/terraform/investor-reporting/reporting-publish/`) as the nearer pattern for the
+  naming; the holdings root stays the pattern for the API wiring.
 
 <criterion id="DB-4-AC1" cell_refs="DB-b-4"><invocation>python "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~P/checks/r1/p1_4_ac1_read_route_local.py" .</invocation><expect>DB-4-AC1 PASS</expect></criterion>
 `DB-4-AC1` -- the module imports, registers ONE route under `irpt-49f-reporting-read-lambda`; `serve_series` returns the REAL series and
