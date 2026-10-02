@@ -4,15 +4,15 @@ Seat `2.0.0_SA_COO~RV` (CLAUDE). Lease: FAST to 2026-10-02T17:08:53Z, surface `d
 (`org/mcp/drive-mode.log` line 56). Goal (Andrew ~04:59Z): "i want mcp.opalinvest.dev/rivalfunds demoable Today".
 Team: reviewer `3.0.0_SA_CVO~RV` (grades pins after the fact: `org/tier1_exec/3.0.0_SA_CVO/deliverables/ETFS_RIVALS_FAST_GRADES_20261002.md`),
 open calls `4.0.0_SA_CRO~RV` (`org/tier1_exec/4.0.0_SA_CRO/deliverables/ETFS_RIVALS_RULINGS_20261002.md`: CALLs 1-9 ruled).
-As of 2026-10-02T12:1xZ.
+As of 2026-10-02T12:2xZ.
 
 ## Pins
 
 | What | Value |
 |---|---|
 | Working branch / worktree | `rv-fast` at `/c/tmp/rv-fast` (drained to CLOUD at 93227704b7); apply tree removed 10:23Z (MSTR disk ask) -- re-add detached at CLOUD HEAD for the next apply |
-| Deployed artifact pin | CLOUD **2d511b9058** in the five etfs-rivalfunds Lambdas (ledgers fast-a1, -r2 .. -r10 all CLOSED; latest @897b17b83b) |
-| Served page | `platinum/page/date=2026-10-02/index.html` (newest; the gateway serves it), batch fast-a1-publish-1002d 12:09Z: 13 of 13, 236 trades, AI 22/2 (re-graded, CALL 11); grade 10 PASS |
+| Deployed artifact pin | CLOUD **f122e4476b** in the five etfs-rivalfunds Lambdas (ledgers fast-a1, -r2 .. -r11 all CLOSED; latest @7af008a129) |
+| Served page | `platinum/page/date=2026-10-02/index.html` (newest; the gateway serves it), batch fast-a1-publish-1002e 12:24Z: 13 of 13, 213 trades, AI 22/2 (re-graded, CALL 11), money-market trades counted not shown; the last served change before Andrew's 13:00Z read |
 | AI run objects | `research_hypotheses` date=2026-10-01 run 20261002T062229Z-ai; date=2026-10-02 run 20261002T110438Z-ai (20/4, unchanged) + its re-grade -rg4 (grounding_check/4, 22/2) |
 | Push state | LOCAL @04fb5c283c: origin CLOUD 1f2346734b (ls-remote 10:24Z); MSTR~Z asked to carry it (msg 07:43Z) |
 
@@ -26,25 +26,31 @@ State: LIVE END TO END on the A1 page. The served 2026-10-01 page is the Lambda'
 
 | Cell | State | Evidence |
 |---|---|---|
-| pt-1, pg-1, rk-1, tb-1, ic-1, ai-1, ai-2 | LIVE; grades 8-10 PASS (G8-1 closed @33f6db4880, G8-2 closed @c3050c9b94; G8-3 + G10-1 = addendum 10; F5 source ids P2 open); grade 2 FAIL (F1 P0) -> fixed; grade 3 PASS F1-F4; grade 4 PASS CALL 6 + futures; grade 5 PASS CALL 8; grade 6 PASS; grade 7 PASS @3e93998f8e (G6-1 closed; sector_source own/other_fund/mixed + null ratified by CRO~RV @87fb953c86) | `org/tier1_exec/3.0.0_SA_CVO/deliverables/ETFS_RIVALS_FAST_GRADES_20261002.md` |
+| pt-1, pg-1, rk-1, tb-1, ic-1, ai-1, ai-2 | LIVE; grades 8-11 PASS (G8-1, G8-2, G8-3, G10-1 closed; no P0/P1 open for 13:00Z @5488015d8f); residual P2s: CGIC's stored text narrates CMQXX and F5 ids remain in today's stored prose (both fixed for the next run); grade 2 FAIL (F1 P0) -> fixed; grade 3 PASS F1-F4; grade 4 PASS CALL 6 + futures; grade 5 PASS CALL 8; grade 6 PASS; grade 7 PASS @3e93998f8e (G6-1 closed; sector_source own/other_fund/mixed + null ratified by CRO~RV @87fb953c86) | `org/tier1_exec/3.0.0_SA_CVO/deliverables/ETFS_RIVALS_FAST_GRADES_20261002.md` |
 
 ## Write claims
 
-- Addendum 10 (G8-3 money-market trades off the trade log + AI facts; CALL 12 notional condition, G10-1): code @3a937fbbe3,
-  drained f122e4476b; plan 0/5/0 `/c/tmp/rv_apply11.tfplan` from `/c/tmp/rv-fast` (HEAD = f122e4476b; do not commit there until
-  applied); COO half @39b59393a8; CTO~Z half asked 12:17Z. Then ledger r11 && apply outside 12:50-13:15Z, republish 1002e.
+None open. No served change before Andrew's 13:00Z read (CTO~Z msg 28450).
 
 ## Next proof
 
-1. Addendum 10 applied and republished (1002e); CVO grade 11.
-2. Drain the held round-5 vehicle chains after the 13:00Z sweep (below).
-3. F5 (P2): 106 `fear_greed/...` source ids in AI prose -- prompt a1-chain/4 naming readings by label; proven only by the next AI run.
-4. The publish-page Lambda's missing bronze read (parked below) as its own addendum with a policy change.
+1. Andrew's 13:00Z read of the 10-02 page (1002e, grade 11 PASS).
+2. Drain the held round-5 vehicle chains after the 13:00Z sweep (below): each touches rivalfunds code
+   (universe.py, the collector, G4), so the next deploy's pair covers them.
+3. F5 (P2): prompt a1-chain/4 (readings named by label, no source/name keys) BUILT @0839079a9c, 397 passed, drained @7dbe861883;
+   proven only by the next AI run; its Lambda copy rides the next pair.
+4. The publish-page Lambda's missing bronze read: grant BUILT on rv-fast @fd0d285da3 (publish-page GET on the issuer-site and
+   Bloomberg bronze holdings; policy JSON regenerated); its own pair (a plan with a policy change) after the demo.
 
 ## Held from round 5 (vehicle-run drains, SERVED; unchanged by FAST)
 
 `wk-rivals5-2` (m-2, l-1 @86ddb6cec0) and `wk-rivals5-5` (s-6 @ca98d691f8) drain after the morning read, in order: the
 07:00 ET issuer fetch markers, the 08:03 vehicle exit lines, then the 09:00 sweep.
+Morning read 2026-10-02, legs 1-2 READ 12:4xZ: (1) issuer fetch marker `fetch_holdings/date=2026-10-02/096abf8e..` status OK, days
+2026-10-01 OK and GQGU:2026-10-01 OK; (2) vehicle log `%USERPROFILE%/opal_bbg_logs/bbg_tplus1_20261002_070002.log`: RIVALFUNDS
+BLOOMBERG LEG EXIT CODE 90 (landed, batch whole; marker `fetch_bloomberg/date=2026-10-01/batch-20261002T111011Z` OK) and
+ENRICHMENT EXIT CODE 94 (landed: `pull_enrichment` markers OK, G3 160 rows, G4 market 32 rows). Leg 3 (the 13:00Z sweep's
+waiting / unresolved) pending; the drains follow it.
 
 ## Parked
 
