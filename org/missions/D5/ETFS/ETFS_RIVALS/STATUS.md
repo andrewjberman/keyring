@@ -4,15 +4,15 @@ Seat `2.0.0_SA_COO~RV` (CLAUDE). Lease: FAST to 2026-10-02T17:08:53Z, surface `d
 (`org/mcp/drive-mode.log` line 56). Goal (Andrew ~04:59Z): "i want mcp.opalinvest.dev/rivalfunds demoable Today".
 Team: reviewer `3.0.0_SA_CVO~RV` (grades pins after the fact: `org/tier1_exec/3.0.0_SA_CVO/deliverables/ETFS_RIVALS_FAST_GRADES_20261002.md`),
 open calls `4.0.0_SA_CRO~RV` (`org/tier1_exec/4.0.0_SA_CRO/deliverables/ETFS_RIVALS_RULINGS_20261002.md`: CALLs 1-9 ruled).
-As of 2026-10-02T13:5xZ.
+As of 2026-10-02T14:2xZ.
 
 ## Pins
 
 | What | Value |
 |---|---|
 | Working branch / worktree | `rv-fast` at `/c/tmp/rv-fast` (drained to CLOUD at 93227704b7); apply tree removed 10:23Z (MSTR disk ask) -- re-add detached at CLOUD HEAD for the next apply |
-| Deployed artifact pin | CLOUD **8075f97ffb** in the five etfs-rivalfunds Lambdas + the publish-page bronze-read grant (ledgers fast-a1, -r2 .. -r12 all CLOSED; latest @516d1d2919) |
-| Served page | `platinum/page/date=2026-10-02/index.html` (newest; the gateway serves it), batch fast-a1-publish-1002e 12:24Z: 13 of 13, 213 trades, AI 22/2 (re-graded, CALL 11), money-market trades counted not shown; the last served change before Andrew's 13:00Z read |
+| Deployed artifact pin | CLOUD **722f0db291** in the five etfs-rivalfunds Lambdas + the publish-page bronze-read grant (ledgers fast-a1, -r2 .. -r13 all CLOSED; latest @747a314b2d) |
+| Served page | `platinum/page/date=2026-10-02/index.html` (newest; the gateway serves it), batch fast-a1-publish-1002f 14:17Z: 13 of 13, 213 trades, AI 22/2, PFOE's 26 trace cells name the home producer's file; 1,575,052 B |
 | AI run objects | `research_hypotheses` date=2026-10-01 run 20261002T062229Z-ai; date=2026-10-02 run 20261002T110438Z-ai (20/4, unchanged) + its re-grade -rg4 (grounding_check/4, 22/2) |
 | Push state | LOCAL @04fb5c283c: origin CLOUD 1f2346734b (ls-remote 10:24Z); MSTR~Z asked to carry it (msg 07:43Z) |
 
@@ -37,7 +37,10 @@ the round-5 worktrees removed, FAST lapses at 17:08:53Z (not extended).
 
 1. **17:08:53Z FAST -> FULL** (Andrew: lapse, not extend). At the first tick after it: if the lease still reads FAST (presence),
    end it with `python .tools/drive-mode.py full ETFS_RIVALS`; then commit what builds, overwrite this file, and cut round 6 as
-   ONE issuance from the rectangle below.
+   ONE issuance from the rectangle below. L4 is in hand: PRD v0.11 @3807b0da2c (CTO~Z notifier msg 28506) reads ADMITTED
+   (`prd-signoff.py status`: ratified-text half SIGNED by 3.0.0_SA_CVO~Z, current by ENDPOINT hash; brief half admitted, CRO-written),
+   so L5 decomp + battery and the L6 issuance are this seat's at the boundary (re-landed @f62abbafc5, msg 28519; status
+   ADMITTED at @bd166222b0: ratified-text half SIGNED by 3.0.0_SA_CVO~RV, current).
 2. **2026-10-05 07:00 ET marker page read** (CTO~Z addendum-11 condition 4): "source URL unavailable" only on PFOE's 26 lines.
 3. **2026-10-05 AI accounts:** round-6 cell 1 if it lands before the 07:00 ET publish; otherwise ONE seat run after it (VEW-2
    covers OpenAI for this chain; Andrew's yes 13:33Z), prompt a1-chain/4, grader grounding_check/4. It proves F5 and G8-3.
@@ -56,6 +59,10 @@ next trading morning (07:00 ET 2026-10-05). The two worktrees stay: each holds a
 
 ## Round 6 rectangle (ONE issuance at FAST -> FULL)
 
+DRAFT decomposition: `deliverables/2.0.0_SA_COO~RV/round6/ETFS_RIVALS_DECOMP.round6.DRAFT.md` (5 cells: ap-1, rk-2, e-2 on
+three chains; px-1 and r-6 joins; issuer acts I-1..I-3). Cell 7's premise measured 14:2xZ: G4 carries px_close now (09-29
+newer object 430/434, 10-01 32/32); the gap is HISTORY (rk-1 read one G4 date). Battery still to write and dry-run.
+
 Cells 1-7 = `ledger/ROUND_ANALYSIS.round5.md` section 4 @56c99763bb, authoritative:
 1. the AI chain as a production act (scheduled Lambda path + its dedicated secret; VEW-2);
 2. the A1 plausibility guard on CRO~RV CALL 13's amended terms (@6e3c94774a: per fund x period; total < -100% hard, the
@@ -63,10 +70,8 @@ Cells 1-7 = `ledger/ROUND_ANALYSIS.round5.md` section 4 @56c99763bb, authoritati
 3. W4-S9's disarm by one deliberate run above 45 dates;
 4. the backfills (IDVZ, PFOE, ACWI, IWM) and the G5/G6 replay under its own pair;
 5. W3-S11 and W3-S12 (a probe first);
-6. PFOE's 26 home-producer lines without a source URL -- diagnosed 13:2xZ: a home row has no bronze file by design
-   (`source_used` home_producer, `source_channel` positioning-landing:constituents_issuer_fill, `silver_uri`
-   opal-data-etfs/bbg/<d>/constituents/..., sha256, captured_at); `render._source` falls through to the "bronze sidecar
-   unreadable" text. Fix: `_fund_files` carries source_channel + silver_uri, and `_source` names the home producer's file;
+6. ~~PFOE's 26 home-producer lines without a source URL~~ -- DONE under FAST: addendum 12, r13 CLOSED @747a314b2d (CTO~Z: round 6 drops
+   cell 6);
 7. the S14 G4 price cell.
 L5 rule for the round: CALL 13 C2 (every judgment criterion names its positive control).
 Remediations, batched into ONE repair cell: the AI placeholder "No AI account. the ..." capital; trending-topic headline digits
