@@ -48,6 +48,7 @@ data/etfs/scripts/rivalfunds/gold_trade_schedule.py
 data/etfs/scripts/rivalfunds/tests/test_r5h6_*.py
 data/etfs/scripts/rivalfunds/tests/test_g2_trade_schedule.py
 data/etfs/scripts/rivalfunds/tests/test_i1_trade_stable_key.py
+data/etfs/scripts/rivalfunds/tests/test_r5h4_id_change_identifier_relation.py
 org/missions/D5/ETFS/ETFS_RIVALS/surprise-channel/investigations/INVESTIGATION_v1.Z.md
 </paths>
 
@@ -71,6 +72,7 @@ at base 9e201639c3: h-6.AC1 FAIL -- each FAIL as expected, each control PASS.
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
 <status>pending</status>
+<!-- AMENDMENT 1 (issuer, 2026-10-02 ~02:5xZ, row Z-W3-S18): <paths> gains tests/test_r5h4_id_change_identifier_relation.py; those 4 tests assert the retired UNRESOLVED confidence. -->
 <round>5</round>
 <slot>~3</slot>
 <fabric>site-z</fabric>
