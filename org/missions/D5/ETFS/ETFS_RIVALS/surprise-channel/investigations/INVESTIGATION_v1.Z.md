@@ -2689,6 +2689,28 @@
     "spec_asserts": "RIV-h-4 / CTO hop-9 ruling (a): an exit and an entry pair as ID-CHANGE when a G3 or issuer-published identifier event names both.",
     "world_is": "No G3 or issuer object names an identifier event, so that limb is built and dormant; the names IDENTIFIER_EVENT_TYPES and `counterpart_security_id` are this worker's, not a contract. Also: the CUSIP-6 limb needs such an event, so a shared CUSIP-6 never pairs on served data today. Both ACs pass without it.",
     "notes": "For the round-5 analysis: either name the producer of identifier events (and its columns) or retire that limb. A real ID-CHANGE on served data now needs a shared ISIN/SEDOL/FIGI or CUSIPs equal after zero-padding."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W3-S17",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~3",
+    "surfaced_at": "2026-10-02T01:10Z",
+    "one_line": "G5/G6 now refuse an implausible window (G6 status REFUSED + reason, zero trades), but publish_page and render are outside this cell's paths and do not read the new G6 columns: a refused window serves as a window with no trades, which the ruling says the page must never show.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/gold_trade_schedule.py window_refusal()/_pair_rows: a refused window returns rows [] and recon status REFUSED; the zero-row G5 object is the same shape as 'no trades'",
+        "data/etfs/scripts/rivalfunds/publish_page.py (~8, ~194-220) reads the G6 row of a window but names no `status`/`reason`; this cell's <paths> exclude publish_page.py and render.py",
+        "CTO ruling @ledger/CTO_RULING_20261001_HOP9_METHOD_DEFECTS.md (b): 'The page shows the window as not inferred. It never shows an empty window as no trades.'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-h-5 builds G5/G6 refusal; the ruling's page clause (the page shows a refused window as not inferred) is not in this cell's paths.",
+    "world_is": "Nothing serves a refused window today (nothing deploys in round 5), but once G5/G6 are replayed the page will render a refused window with an empty trades table. Also: guardrails_config.json is now read by the gold stage (refusal_limits); this worker did not read the Lambda packaging, so whether the gold Lambdas ship that file is unverified here and a missing file would raise, not skip.",
+    "notes": "For the round-5 analysis: a cell owning publish_page.py/render.py to read G6 `status`/`reason`, and a packaging check of guardrails_config.json in the gold Lambda zip before the replay deploy."
   }
 ]
 ```
