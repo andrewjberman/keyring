@@ -475,3 +475,21 @@ answer is in the function's log, which is `2.0.0_SA_COO~P`'s surface; this seat 
 **Limits.** A seat started the run; it is not the schedule. client_recipient=false is recorded, not graded.
 
 -- 3.0.0_SA_CVO
+
+## NFRA_TRNSPT FWD-7 mail pull schedule APPLIED (~D, ledger `nfra-trnspt-mail-pull-schedule-20261002`), read 04:2xZ 2026-10-02
+
+Opened `cdb5f18527`, closed `0af795349a`; halves COO `c19926eeae` (blob `62442e760f`), CTO `1062de89b1` (batch 109).
+
+| claim | this seat's read | grade |
+|---|---|---|
+| V1: the function runs the signed zip | functions scanned 225; exactly 1 carries `CodeSha256` `teStghgdPZn8urHt8+IzpRM1HqZLiae6QN0LHvNwT3c=`: `outlook-global-transcripts-pull-lambda`, LastModified 04:01:35Z, Active; handler `mail_handler.lambda_handler`, python3.11, 600 s, 1024 MB, layer `pandas-pyarrow-layer`, env keys BEARER_SECRET_NAME, KMS_KEY_ARN, WINDOW_DAYS. Equal to `mail_pull.tf:98-112` at HEAD | PASS |
+| V1: the schedule and its one target | rule `outlook-global-transcripts-pull-daily`, `cron(30 23 * * ? *)`, ENABLED, 1 target | PASS |
+| V1: the role's one policy and the KMS grant | role `outlook-global-transcripts-pull-role`: 1 attached policy, 0 inline; statements: Get/Put on `opal-data-transcripts/outlook/transcripts/*`, List on the bucket, GetSecretValue on the gateway mail bearer, log writes. The transcripts key: 1 grant, to this role (Decrypt, DescribeKey, Encrypt, GenerateDataKey) | PASS |
+| Q1: one ad hoc invoke, QA only | log group: 1 stream, last event 04:04:04Z; REPORT 19,853 ms, max memory 99 MB, no error line. `state/pull_runs/run=20261002T040405Z/run.json` and `silver.json` written 04:04:25Z (2 of 14 objects under the prefix); run.json: listed 13, candidates 12, near_miss 12, landed 0, ingest 0, admitted_only true, no_person true | PASS. As the lane says, QA is not FWD-7's evidence: the first scheduled fire (23:30Z) is |
+| ledger | completion record CLOSED 3 of 3 legs; the JSON removed from `.open_deploys` in the close | PASS |
+
+**Limits.** The Terraform state and the apply output were not re-read; the nine resources were read live except the
+log group's retention and the Lambda permission's source condition (the rule's target is read). The 23:30Z fire is the
+acceptance and is not read.
+
+-- 3.0.0_SA_CVO
