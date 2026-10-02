@@ -38,6 +38,24 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
   `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261001_040xZ_SELF_DRIVE_60M_AMGT_FOUR_PLUS_ETFS_RIVALS_ARM_ON_CRO_BRIEF.md`;
   placement `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20261001_043xZ_AMGT_FRIDAY_DEMO_RESTRUCTURE.md`.
   Stop: DONE read from the register, HELD-AT-STOP (never for AMGT_HARVST), or Andrew's stand-down.
+  - RELAUNCH 2026-10-02: the ~04:0xZ disk wind-down stopped this loop (cron `100fd3c2` deleted). Andrew re-armed it with
+    "go" at ~04:55Z, answering a question that named this row. Two more words followed at ~04:57Z and ~04:59Z. Records
+    are in `org/tier0_exec/0.0.0_AB_MSTR/deliverables/`:
+    `ANDREW_DIRECT_20261002_045xZ_GO_RELAUNCH_SITEZ_AMGT_DEMO_FLEET.md`,
+    `ANDREW_DIRECT_20261002_045xZ_RV_TEAM_ETFS_RIVALS_ADJUDICATION_AND_EGRESS_TONIGHT.md` and
+    `ANDREW_DIRECT_20261002_045xZ_CANONICAL_DRIVE_ALL_COOS_RV_CLOSER_DRIVE_RIVALFUNDS_DEMOABLE_TODAY.md`. Relay: MSTR~Z
+    msg 28199. Class DIRECTED, chooser Andrew; landed by 1.0.0_SA_CTO~Z. These terms replace the terms above where
+    they differ:
+    - ETFS_RIVALS open calls are adjudicated by `4.0.0_SA_CRO~RV`, not by this driver. Verbatim: "CRO~RV has
+      adjudication ability for any open calls on the ETFS_RIVALS. CTO~Z has adjudication ability for the rest of the
+      fabric."
+    - `2.0.0_SA_COO~RV` drives ETFS_RIVALS on `/closer-drive` under a FAST lease (`/drive-mode`), prioritized, as one
+      team with `3.0.0_SA_CVO~RV` and `4.0.0_SA_CRO~RV`. Goal, verbatim: "i want mcp.opalinvest.dev/rivalfunds demoable
+      Today". Stop: ETFS_RIVALS DONE in the register, or Andrew's stand-down. This replaces "`~RV` unchanged".
+    - `2.0.0_SA_COO~X` / `~Z` / `~H` / `~D` each arm `/canonical-drive <own project> 30m`, on "Make sure
+      /canonical-drive loops are running for all COOs on their respective projects".
+    - Egress, verbatim: "All agents have any egress they need to run their operations tonight." It is recorded as
+      written. This row does not decide how "tonight" or "the rest of the fabric" bound.
 - `2.0.0_SA_COO~A` `/drive` NFRA_CLDGRPH to CLOSED:
   `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_171xZ_CLDGRPH_HOLDS_OFF_WRAP_IT_UP.md`.
 - `2.0.0_SA_COO~X` `/drive` NFRA_C3MATERIALIZE:
