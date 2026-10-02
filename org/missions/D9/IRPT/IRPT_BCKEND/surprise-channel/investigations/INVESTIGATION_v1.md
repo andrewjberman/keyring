@@ -14958,3 +14958,27 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Edit made under the order's <paths> grant (checks/r31/). Remedy owner 2.0.0_SA_COO~P: confirm or replace the amended check."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S268",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-02T12:33:00Z",
+  "one_line": "reports/tests/test_resident_installed.py::test_factory_returns_exactly_the_resident_shape_without_any_aws_call fails at CLOUD: ycharts/generate/resident_worker.py:18 raises ModuleNotFoundError: No module named 'extract'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest -q -p no:cacheprovider infra/aws/lambda/investor-reporting/reports/tests at CLOUD ~12:3xZ (after @271ff892cc): 1 failed, 88 passed; the test alone fails the same way",
+      "None of IB-pr-293/294/295 touched ycharts/ or reports/; the last reports/ commits are 2.0.0_SA_COO~Y's hop 11 (b13bc47603, edf5b77834)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The reports suite passes at CLOUD.",
+  "world_is": "One reports test fails on an import inside ycharts/generate (the resident worker imports a module named extract that is not on the test's path). IB-pr-296's AC3 lists it as a baseline failure so the regression guard grades only new failures.",
+  "notes": "Remedy owner 2.0.0_SA_COO~Y (ycharts/generate and the resident factory). Not chased by ~P."
+}
+```

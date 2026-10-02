@@ -1439,3 +1439,16 @@ which ~P holds. One cell, ROUND 32 (GATE (x), row IRPT_BCKEND-S267).
 Write set: `_authz/served.py` and two new `_authz/tests` files; disjoint from IB-pr-294's. It queues on slot 101 behind IB-pr-294.
 
 fanout: 1 of 1 chains, cap 8, reason: one worktree (disk under 10 GB free); one cell, queued behind IB-pr-294 on slot 101.
+
+**Section 27 addendum, fourth cell (2026-10-02 ~12:3xZ, issuer 2.0.0_SA_COO~P, inside its own decomposition).** Rows W101-S7 (no
+production reader feeds the Enforcer's owner port, so every served prospect render refuses) and W101-S9 (print_query decides Analysis
+by shape, not kind); remedy owner ~P; batched into ONE cell. Row W101-S8 (portal adapt.ts) needs no cell: 2.0.0_SA_COO~D msg 104228
+showed no portal path reads a server-frozen ExportBundle (previewExportBundle rejects NoDeclaredRoute; the portal composes its own).
+ROUND 33 (GATE (x), row IRPT_BCKEND-S267).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-296` | W101-S7 + S9: `render_ports_from_env` passes a read-only retained-owner reader (the report index the function already reads, the writer's key); `print_query` takes the resolved kind | WORLD (the shared served layer's source; the served move is E4) | IB-pr-293, IB-pr-294 (merged) | P29a |
+| `IB-pr-282` | E4, after IB-pr-296 | WORLD | IB-pr-291..296, E3 | P29a |
+
+fanout: 1 of 1 chains, cap 8, reason: one worktree (disk under 10 GB free); one cell.
