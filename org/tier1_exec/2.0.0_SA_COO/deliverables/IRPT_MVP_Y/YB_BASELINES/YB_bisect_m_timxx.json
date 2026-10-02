@@ -1,0 +1,78 @@
+{
+ "principal": "svc-irpt-analysis@opalinvest.com",
+ "tenant": "cottonwood",
+ "authority": "Y-B bisect M:TIMXX; Andrew-direct 2026-09-27 124xZ analysis attempts; 2026-10-02 181xZ",
+ "upload_file": "bisect-m-timxx.csv",
+ "upload_sha256": "bd8fd2e13fdb5581038a634918cf5ff26e3b3c23fca6092f3f975f7c6cc44b0e",
+ "reference_notional": null,
+ "k4_status": 200,
+ "upload_id": "UP-defb76095cd2995c9a7aa80ce035293ade9a17f6101562df486bfa97ca6e123f",
+ "k4_state": "NEEDS_CORRECTION",
+ "input_id": null,
+ "calls": [
+  {
+   "at": "2026-10-02T19:44:58.872472Z",
+   "method": "POST",
+   "url": "https://d2n2nzpeqf34ge.cloudfront.net/auth/login",
+   "request_headers": {
+    "Content-Type": "application/json"
+   },
+   "request_body": {
+    "email": "svc-irpt-analysis@opalinvest.com",
+    "password": "<redacted>"
+   },
+   "status": 200,
+   "response_headers": {
+    "Content-Type": "application/json",
+    "Apigw-Requestid": "EoZ2Hh2HoAMEc1g=",
+    "set-cookie": "<redacted>"
+   },
+   "response_body": {
+    "accessToken": "<redacted>",
+    "user": {
+     "email": "svc-irpt-analysis@opalinvest.com",
+     "name": "IRPT Analysis Service",
+     "role": "admin",
+     "mustChangePassword": false
+    }
+   }
+  },
+  {
+   "at": "2026-10-02T19:45:05.628393Z",
+   "method": "POST",
+   "url": "https://d2n2nzpeqf34ge.cloudfront.net/api/scoped/investor-reporting/analysis/inputs?selected_tenant=cottonwood",
+   "request_headers": {
+    "Content-Type": "application/json",
+    "Authorization": "<redacted>",
+    "X-Contract-Version": "v1"
+   },
+   "request_body": {
+    "upload_token": "y-live-1203-20261002T194505",
+    "filename": "bisect-m-timxx.csv",
+    "file_base64": "<39 bytes base64>",
+    "file_type": "csv",
+    "declared_currency": "USD"
+   },
+   "status": 200,
+   "response_headers": {
+    "Content-Type": "application/json",
+    "Apigw-Requestid": "EoZ3Whw3oAMEJCg="
+   },
+   "response_body": {
+    "contract_version": "v1",
+    "operation": "analysis-input-upload",
+    "firm_id": "fir_0fe2a06331f1b4a68133fcb2",
+    "data": {
+     "upload_id": "UP-defb76095cd2995c9a7aa80ce035293ade9a17f6101562df486bfa97ca6e123f",
+     "input_id": null,
+     "state": "RESOLVING"
+    },
+    "unprojected_grant": {
+     "count": 0,
+     "denominator": 0,
+     "kinds": {}
+    }
+   }
+  }
+ ]
+}

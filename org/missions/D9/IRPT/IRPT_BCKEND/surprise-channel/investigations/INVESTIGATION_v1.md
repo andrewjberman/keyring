@@ -15395,3 +15395,32 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Interim disarm: this seat compares the map's artifact_sha256 with the uploaded object's content-sha256 after every build. Fix: pass the sha to node by file or set MSYS2_ENV_CONV_EXCL for it, and assert the written value matches the 44-char base64 pattern -- the next repair cell (with row W101-S16)."
 }
 ```
+
+## IRPT_BCKEND-S279 -- a fund ticker fails the whole upload (brief 2 item 4.1 is real)
+
+```json
+{
+  "id": "IRPT_BCKEND-S279",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-02T19:55:00Z",
+  "one_line": "Any upload holding a mutual or money-market fund ticker (TIMXX, FBIFX) fails AS A WHOLE FILE: the resident's securities_info answer fails security_resolution.classify_batch's row-shape check, every symbol reads UNAVAILABLE (PROVIDER_READ_UNAVAILABLE:ROWS_UNVERIFIED), four 60 s retries, then NEEDS_CORRECTION with one file-level RESOLVE_RETRY_EXHAUSTED and action REPLACE_FILE. Brief 2's Case A (the easy file holds TIMXX), the typo file and Case D (FBIFX, FDGFX, FHTKX, SPAXX) all hit it, so Y-1 cannot reach READY on today's code.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y (an intake fix that attributes the provider's namespaced fund row to the requested ticker and carries the provider id into the portfolio, plus a resident journal token naming which classify check refused; served as a resident packet)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/YB_BASELINES/: Y-B uploads as svc-irpt-analysis on cottonwood, one K4 each, no K5: typo file (sha256 87afdc7db1c58b38) and Case D (f0d344fa967504bd) both NEEDS_CORRECTION, findings [RESOLVE_RETRY_EXHAUSTED, row null], 182-184 s",
+      "bisect, two-row synthetic CSVs: AAPL+TIMXX and AAPL+FBIFX ROWS_UNVERIFIED x4 then RESOLVE_RETRY_EXHAUSTED; AAPL+BRK.B NORMALIZED (positive control, the session serves); AAPL+M:TIMXX WAF_CHALLENGE x4 (inconclusive)",
+      "YB_BASELINES/RESIDENT_RESOLVE_JOURNAL_20261002.txt: the resident's IRPT_RESIDENT_RESOLVE lines 19:04Z-19:48Z",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py:540-542: ROWS_UNVERIFIED is named by subtraction (the port served the call, the batch still read unavailable); intake/security_resolution.py classify_batch returns all-UNAVAILABLE when any returned row's id is not a requested symbol, or security_id != id, or a field shape differs"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Brief 2 section 4 (inferred): the typo file and Case D reach NEEDS_CORRECTION naming rows (row 2 APPL; rows 14-17 TICKER_NOT_FOUND); section 4.1 names the M: fund form as the highest risk, with no evidence either way.",
+  "world_is": "4.1 is REAL, measured: one fund ticker sinks the whole file before any row is named, so neither baseline shows the brief's per-row codes and the easy file cannot normalize. The exact shape of the provider's fund row is NOT observed: the resident keeps no rejected receipt and its journal names only ROWS_UNVERIFIED.",
+  "notes": "A deterministic shape refusal is retried four times at 60 s (3 min per upload, four vendor calls). Vendor traffic paused 19:48Z after the YCharts WAF challenged five lookups in a row (19:37Z-19:48Z)."
+}
+```

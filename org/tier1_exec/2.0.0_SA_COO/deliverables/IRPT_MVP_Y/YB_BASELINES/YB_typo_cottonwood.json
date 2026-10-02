@@ -1,0 +1,78 @@
+{
+ "principal": "svc-irpt-analysis@opalinvest.com",
+ "tenant": "cottonwood",
+ "authority": "YB_typo_cottonwood; fold-in Y-B; CTO batch 178 and msg 104351; Andrew-direct 2026-10-02 181xZ addendum 3 @7f197bcde6",
+ "upload_file": "case-typo.xlsx",
+ "upload_sha256": "87afdc7db1c58b38cf48da046b184f0cd6855bbfa014b66de8cf59ef50e22706",
+ "reference_notional": null,
+ "k4_status": 200,
+ "upload_id": "UP-2679bceb5a7343ede6c90502dc1853b62ffb0a01e9c6d2e974d194066820e7d3",
+ "k4_state": "NEEDS_CORRECTION",
+ "input_id": null,
+ "calls": [
+  {
+   "at": "2026-10-02T19:04:28.621082Z",
+   "method": "POST",
+   "url": "https://d2n2nzpeqf34ge.cloudfront.net/auth/login",
+   "request_headers": {
+    "Content-Type": "application/json"
+   },
+   "request_body": {
+    "email": "svc-irpt-analysis@opalinvest.com",
+    "password": "<redacted>"
+   },
+   "status": 200,
+   "response_headers": {
+    "Content-Type": "application/json",
+    "Apigw-Requestid": "EoT6_ggaoAMEZHQ=",
+    "set-cookie": "<redacted>"
+   },
+   "response_body": {
+    "accessToken": "<redacted>",
+    "user": {
+     "email": "svc-irpt-analysis@opalinvest.com",
+     "name": "IRPT Analysis Service",
+     "role": "admin",
+     "mustChangePassword": false
+    }
+   }
+  },
+  {
+   "at": "2026-10-02T19:04:38.843199Z",
+   "method": "POST",
+   "url": "https://d2n2nzpeqf34ge.cloudfront.net/api/scoped/investor-reporting/analysis/inputs?selected_tenant=cottonwood",
+   "request_headers": {
+    "Content-Type": "application/json",
+    "Authorization": "<redacted>",
+    "X-Contract-Version": "v1"
+   },
+   "request_body": {
+    "upload_token": "y-live-1203-20261002T190438",
+    "filename": "case-typo.xlsx",
+    "file_base64": "<23670 bytes base64>",
+    "file_type": "xlsx",
+    "declared_currency": "USD"
+   },
+   "status": 200,
+   "response_headers": {
+    "Content-Type": "application/json",
+    "Apigw-Requestid": "EoT8riaioAMEZMQ="
+   },
+   "response_body": {
+    "contract_version": "v1",
+    "operation": "analysis-input-upload",
+    "firm_id": "fir_0fe2a06331f1b4a68133fcb2",
+    "data": {
+     "upload_id": "UP-2679bceb5a7343ede6c90502dc1853b62ffb0a01e9c6d2e974d194066820e7d3",
+     "input_id": null,
+     "state": "RESOLVING"
+    },
+    "unprojected_grant": {
+     "count": 0,
+     "denominator": 0,
+     "kinds": {}
+    }
+   }
+  }
+ ]
+}
