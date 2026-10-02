@@ -97,7 +97,7 @@ Report once: what changed and where, the output line of every criterion, the por
 why). No product file, so the candidate can land on DEV by its author as a fast-forward (CLAUDE.md Portal). Chain ~79 alone. Base:
 render 0 of 3, fixture 1 of 3.
 
-<status>pending</status>
+<status>complete</status>
 <round>28</round>
 <slot>~79</slot>
 <fabric>site-z</fabric>
