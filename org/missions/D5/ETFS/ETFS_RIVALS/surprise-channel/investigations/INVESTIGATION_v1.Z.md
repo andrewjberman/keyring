@@ -2972,6 +2972,26 @@
     "spec_asserts": "RIV-ap-1 cell: gen_policies grants `secretsmanager:GetSecretValue` on one ARN to the daily role; no S3 write grant is mentioned.",
     "world_is": "ai_accounts.write_rows puts research_hypotheses-<run_id>.parquet under the page day's partition; the sweep role held only GetObject on that prefix (publish-page's read-only list unioned). One more PutObject resource on one role, no DeleteObject. It is an IAM widening on a served prefix the deploy applies: the issuer's never-widen sign-off should cover it.",
     "notes": "Also: RestClient.web_search returns a text saying web search is unavailable and no URLs (VEW-2), so a source with no fresh internal reading carries that sentence as its [web] line; it is labelled, never invented."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S44",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-02T16:10Z",
+    "one_line": "Bumping GRADER_VERSION to grounding_check/5 (RIV-r-6) fails tests/test_regrade_call11.py, which asserts the re-grade run id 'R1-ai-rg4'; that test is outside this order's paths so it is left failing.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/tests/test_regrade_call11.py:25 asserts {r['run_id']} == {'R1-ai-rg4'}; ai_accounts.regrade_rows builds the id from GRADER_VERSION's suffix"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-r-6 section 3: run the whole package suite before reporting; it must read 0 failed.",
+    "world_is": "Suite reads 1 failed, 434 passed, 2 skipped after the required bump; the single failure is the stale rg4 literal. The fix is changing the literal to rg5 (one line) by an owner of test_regrade_call11.py or the issuer.",
+    "notes": "No behaviour defect: the id suffix correctly follows the grader version."
   }
 ]
 ```
