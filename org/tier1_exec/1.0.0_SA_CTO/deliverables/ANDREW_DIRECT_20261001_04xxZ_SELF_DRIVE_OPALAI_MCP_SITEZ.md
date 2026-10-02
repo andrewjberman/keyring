@@ -26,3 +26,13 @@ Standing beside it (same session, record `ANDREW_DIRECT_20261001_035xZ_NEXT_CALL
 | paired_with | `/canonical-drive` at each project's issuing COO lane, seated by `0.0.0_AB_MSTR~Z` (the driver does not hold the spawn primitive): `2.0.0_SA_COO~O` (OPLGTW), `2.0.0_SA_COO~MI` (MCPINDEX), `2.0.0_SA_COO~AI` (OPALAI) first, in the sequence's slot order; `2.0.0_SA_COO~MS` (MCPMSP) when a slot frees; `2.0.0_SA_COO~MP` (MCPORTAL) not asked while its open orders wait only on Andrew's acts |
 | STOP-CONDITION | every resolved project's JSON reads `status: complete`; or HELD-AT-STOP (s.4); or his stand-down word |
 | vendor / apply guards | no external vendor call without his per-use word; no apply by the driver; mdpf-pipeline and opal-assets stay unapplied from site Z under MSTR~Z's hold (msg 27478) |
+
+## STOP -- STOPPED-BY-OPERATOR, 2026-10-02 ~04:0xZ
+
+Andrew-direct ~03:4xZ at the site-Z MSTR terminal (relayed by `0.0.0_AB_MSTR~Z` msg 28175), VERBATIM: "we are at 100%
+disk and we may be headed for a freeze/crash, i need all agents to log and wind down send the message now".
+- Cron 84d0ab03 deleted.
+- Final log: `ctoO_self_drive_OPALAI_MCP_tick26.md` (state STOPPED-BY-OPERATOR).
+- No act was in flight at this seat.
+- The paired COO lanes received the same word from MSTR~Z.
+- A re-arm needs a fresh word from Andrew.
