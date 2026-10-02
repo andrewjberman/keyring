@@ -545,3 +545,30 @@ PROD: none of the 10 pins is an ancestor of origin/PROD `b3a1d8a6`. NEG = the pi
 explains item 68's unexplained 47/18). CI runs no unit tests. No page was looked at.
 
 -- 3.0.0_SA_CVO
+
+## Portal PROD promote portal-v2.1.194, read 14:xZ 2026-10-02
+
+| pin | claim | this seat's read | grade |
+|---|---|---|---|
+| f76b02ac (head, tag) | PROD carries the promote | origin/PROD `f76b02ac` (ls-remote) tagged portal-v2.1.194 (13:46:09Z); parents `b3a1d8a6` (v2.1.193) and DEV `fa529337`; its tree equals `fa529337` (0 diff lines); `b3a1d8a6` has 0 non-merge commits outside `fa529337` | PROMOTED |
+| merge message | Andrew-direct card 1, "at the DEV head after VALGATE" | names eb90f2ad, DEV `fa529337`, rollback `b3a1d8a6`, 0.0.0_AB_MSTR on "all recs approved" (CTO 104260); VALGATE run 37013653214 success, headSha `fa529337` | MATCHES the word |
+| commit set | items 64-83 plus eb90f2ad | 48 commits (32 non-merge): 21 by ~D (items 63-69, 71-82, hop 5), `eb90f2ad`, 10 DSGN_AMGTV1. Items 64-82 are ancestors of PROD; `a134adb1` (item 83) is NOT (committed 13:39Z, pushed via `415f50db` 13:52Z). Controls: `2bb367ef` in PROD; origin/DEV not an ancestor of PROD | 64-82 YES; 83 NO |
+| CI | Deploy to Production | run 37014885102 success, headSha `f76b02ac`; Build, Deploy to S3 + CloudFront, Tag all success | PASS |
+| CTO `7c7bd9b4c9` | "PROD f76b02acb6 carries eb90f2ad" | `eb90f2ad` is an ancestor of `f76b02ac`: the BD r3 re-land's condition (CTO half `a1deb42063`) now holds | TRUE |
+| submodule pointer | bumped on CLOUD | the gitlink is still `24646bca` on origin/CLOUD and on local HEAD; the /prod-deploy step is owed (the integrator's; pushes held per 0.0.0_AB_MSTR 104299) | NOT BUMPED |
+
+-- 3.0.0_SA_CVO
+
+## Grades, 14:xZ 2026-10-02 -- portal DEV items 82-83
+
+| pin | claim | this seat's read | grade |
+|---|---|---|---|
+| a134adb1 (83, row S269) | the export reader takes exactly one reference | adapt.ts:1188 reads `narrative_packet_ref` only when present, else `analysis_report_ref.report_id`; :1195 adds analysisReportRef; :1413 the write side emits exactly one; wire/ExportBundle.ts an exactly-one union whose source sha256 equals the CLOUD HEAD schema. iv-e-147 4/4; NEG 0/4 (arm a throws the original TypeError at adapt.ts:1186). The content pin's "no longer REQUIRED ... unconditionally" is gone at DEV and returns under NEG. CI 37016314237 success | PASS on a test run; row S269 remediated on DEV, NOT on PROD |
+| 18d18464 (82, row S53) | the consumer-uncalled pin derives from routes.json | routes.test.ts:126-142; the S53 test 1/1 at DEV; NEG (parent's test) 0/1; MUT (catalogue row removed) 0/1. routes.test 9/9 against the pre-PDF-route contracts, 5/9 against CLOUD HEAD (the 4 failures are the PDF route: row S273). The header at :28-33 still says "CONSUMER-UNCALLED ROUTES: 3". CI 37009030133 success | PASS on a test run |
+
+**Limits.** bun 1.3.9 in a scratch worktree of origin/DEV `415f50db` under %TEMP%, removed after, with archives of
+the workspace contracts beside it. The shared portal tree gained 28 modified files and an untracked test during the run
+(mtimes 14:08Z-14:50Z): another seat's uncommitted multi_asset work; every write of this read ran in %TEMP%. CI runs no
+unit tests; no page looked at.
+
+-- 3.0.0_SA_CVO

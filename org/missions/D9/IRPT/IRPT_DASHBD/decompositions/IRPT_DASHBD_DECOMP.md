@@ -157,3 +157,17 @@ Inflection and Cottonwood each carry an `a05_ref_txn_classification.py`), read-o
 fast-forwarded to CLOUD at the spawn). `DB-b-8` is `2.0.0_SA_COO~P`'s own act.
 
 fanout: 1 of 2 chains, cap 8, reason: disk at 96 percent (11 GB free) admits no second worktree; chain E queues behind chain D on slot ~1.
+
+
+## 4. ROUND 4, WORKSTREAM B (2026-10-02 ~15:2xZ, issuer 2.0.0_SA_COO~P, on ANDREW-DIRECT ~13:2xZ card 4, record @0abef798f7)
+
+Andrew approved ONE Black Diamond pull for the like-day windows of the five round-1 accounts (relayed by 1.0.0_SA_CTO msg 104263:
+"cut it as an IRPT_DASHBD cell under Rule 27, with no seat calling the vendor outside it"). FWD-8 is then graded on agreement over the
+like-day pairs (PRD v0.6 ruling 23).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-10` | FWD-8: Opal's gap-free segments from the served reporting gold; ONE performancePeriod request per mapped account (at most 5) carrying those segments; the tie-out on like day sets | WORLD (one vendor read on Andrew's per-use word; 0 served bytes) | none | F |
+
+fanout: 1 of 1 chains, cap 8, reason: one worktree (disk 7.3 GB free); DB-b-10 queues on the shared worktree DIR behind
+IRPT_BCKEND TO-IB-pr-297 (slot 101), then runs on slot ~1.

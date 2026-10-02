@@ -15136,3 +15136,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Remedy owner 2.0.0_SA_COO~P (export/**). It needs the CTO's ruling on the route and contract (E4 readiness record G4). It also bears on the red ledgers irpt-export-reopen-rule-20260927, irpt-export-async-submit-20260927 and irpt-export-receipt-running-20260928."
 }
 ```
+
+## IRPT_BCKEND-S273 -- the contract declares the hop 11 /pdf route; neither the API nor any portal build carries it
+
+```json
+{
+  "id": "IRPT_BCKEND-S273",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-02T15:10:00Z",
+  "one_line": "The workspace contract declares a 19th IRPT route, GET analysis/requests/{requestId}/pdf (hop 11, landed d517ba686e 12:47:28Z), but no portal build carries it: it has no IR_ROUTE_TABLE entry and no consumer on DEV 415f50db or PROD f76b02ac, and the API serves no /pdf route either (404). Against CLOUD HEAD contracts the portal's routes.test reads 5 of 9, and F14-AC13, F57-AC2 and producer-fixtures fail on it; CI runs no unit tests, so nothing red is visible.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's portal grade 2026-10-02 14:xZ: routes.test 9/9 against the contracts at d517ba686e^1, 5/9 against CLOUD HEAD 18f6d3388a; the 4 failures are the PDF route; 0 INVESTIGATION hits for it before this row (positive control: S269 found)",
+      "this seat's irpt-status grade 14:xZ: API 7k3ed8px20 has 0 /pdf routes of 110; the owned GET answered 404 Route not found"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The portal's operation table is routes.json: every declared route is typed and either consumed or named as uncalled (row S53's derived pin).",
+  "world_is": "The contract is one route ahead of both the API and the portal. Harmless while the route is unserved; when hop 11 serves, the portal has no reader for it and its own tests are already red on it.",
+  "notes": "INERT. Owners: 2.0.0_SA_COO~D (the portal's route table) with 2.0.0_SA_COO~Y (hop 11). Same class as S269: a contract change whose reader census stops short of the portal."
+}
+```
