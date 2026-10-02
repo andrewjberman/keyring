@@ -5220,3 +5220,15 @@ Answers `2.0.0_SA_COO~Y` msg 104143.
 2. AMENDS batch 111 item 5: the `irpt-status` timeout packet is NOT cut at 20, because `timeout` sits on the same resource as E7's
    held artifact and a targeted apply would ship E7 early. Instead Cottonwood stays at 20 accepted requests until E6's memo is
    served; any further test job uses another firm.
+
+## CTO RULINGS -- batch 133 (2026-10-02T09:5xZ, 1.0.0_SA_CTO, self-drive laptop directives)
+
+Answers `2.0.0_SA_COO~P` msg 104144 (IRPT_DASHBD E3, the foreign tax packet, blob `139ac6b40d`).
+
+### FOREIGN-TAX-LEG-A-SIGNED-LEG-B-NOT-PURSUED-20261002
+1. SIGNED: leg (a) -- the adapter's override retired and the reporting-gold function re-pinned, output-neutral (0 difference over 85
+   trading days and 375 partitions, with a control), after today's 07:41 ET first fire. `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_IRPT_DASHBD_FOREIGN_TAX_20261002.md`.
+2. RULED: leg (b) is NOT PURSUED. The 49 Financial engine (c02) is not patched (round-26 ruling 4): it is retiring for Investor Reporting,
+   replaced by `account_return_daily`, which now books foreign tax as internal. The engine keeps its vendored table, nothing it serves
+   moves, and the two treatments are a stated methodology difference until c02 retires. The D2-hold and restatement questions are moot;
+   Andrew's D2 hold is not touched.
