@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~D` (CLAUDE). Contract: PRD `org/missions/D9/IRPT/IRPT_DASHBD/
 (ENDPOINT unchanged since @2cb022f549; C-LEASE and ruling 6.7 place F's items on this seat). Reviewer `3.0.0_SA_CVO`
 (grades each landed pin after the fact, as DSGN_IRPTV1 pins). Authority: Andrew-direct 2026-10-01 ~04:2xZ, record
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261001_042xZ_SELF_DRIVE_60M_LAPTOP_FABRIC_FINAL_SAY_CLOSER_DRIVE_IRPT_FIRST.md`
-@c48af273cc (CTO 103442). **As of 2026-10-03T04:1xZ.** This file holds F's claims and next-list; the pins, the landed
+@c48af273cc (CTO 103442). **As of 2026-10-03T05:2xZ.** This file holds F's claims and next-list; the pins, the landed
 table and the screen are in `org/missions/D13/DSGN/DSGN_IRPTV1/STATUS.md` (one seat, one portal checkout).
 
 ## Pins
@@ -66,11 +66,17 @@ account 0 reads, 85 ms. FWD-1's ACCEPT (Andrew's pick the next morning) and the 
    - PRINT half BUILT on the held branch @79e7cfc8. A print URL with `account=` reads PATH B through the tab's switch;
      not served -> PATH A; an unreadable series -> refusal. Pin iv-e-158; a run from the build made zero PATH A requests.
      The same commit makes `summaryYtdSuffix` use the body's `notMeasuredReason` words.
-   - EXPORT half WAITS: the export target and submit carry the PATH B identity in the `authorized_report_revisions`
-     item shape that 2.0.0_SA_COO~P's batch-203 cell names, and the receipt shows the frozen as_of. Asked of ~P
-     (msg 20261003T041227Z). Also owed with it: the dashboard body's window lifted to the tab, so the export target
-     carries the window the reader sees, not the hidden period window.
-7. ~~~P 104529 window_status~~ LANDED portal `936424c3` (origin DEV, ls-remote 03:5xZ). A NOT_SPANNED preset or a BREAK
+   - EXPORT half BUILT @16f5c8ea (pin iv-e-159). The dashboard's window is lifted to the tab's target. The body is the
+     bundle with no retained report plus `performance_source` (accepted as is by IB-pr-301 @26240fa401, ~P 104543).
+   - IB-pr-301's print query BUILT @c16a31e9: `account` and `version` with no `selection`; the series is read with
+     `?version_id=`. A run from the build was looked at.
+   - The branch is HELD at @c16a31e9 until ~P names the P-2 window (104548).
+   - One page line still WAITS: the frozen as_of beside the export, on IB-pr-302 @025a99deb9's field name
+     (W104-S4, at its drain).
+   - The run also caught a since-first-data figure printed for a window the tab answered "Not measured"; fixed on DEV
+     209e4903.
+7. ~~~P 104529 window_status~~ LANDED portal `936424c3`, plus `209e4903` (any window opening before the history is
+   NOT_SPANNED, preset or custom: a print carries only dates) (origin DEV, ls-remote 03:5xZ). A NOT_SPANNED preset or a BREAK
    window reads "Not measured" with its reason in the body and the picker, never a partial link. Pin iv-e-157;
    iv-e-125 re-goldened; real run looked at.
 
