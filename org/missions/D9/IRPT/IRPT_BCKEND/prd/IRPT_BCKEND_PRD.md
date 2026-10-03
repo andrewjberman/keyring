@@ -5,7 +5,7 @@
  "project": "IRPT_BCKEND",
  "directive": "D9",
  "fabric": "laptop",
- "prd_version": "v0.24",
+ "prd_version": "v0.25",
  "step": 4,
  "brief_ref": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md@2acf23d8fd",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13"],
@@ -628,3 +628,14 @@ arming record `ANDREW_DIRECT_20261002_050xZ_SELF_DRIVE_60M_LAPTOP_DIRECTIVES_ADJ
     because a null in a required field cannot tell "none by design" from "missing". A bundle with both, or with neither, is
     refused. Every client-report bundle is validated exactly as before. The reference names the report id, its revision and the
     sha256 of the retained report, so the bundle stays reproducible. No other CONTRACTS row changes. ENDPOINT is not edited.
+
+## ADDENDUM v0.25 -- IRPT_YCDGEN is a named consumer of the YCharts session broker and lease (L4; outside ENDPOINT, no half re-opens)
+
+**Source.** `3.0.0_SA_CVO` msg 104766, note 1 of its review of the IRPT_YCDGEN PRD v0.1 ratified-text half (@156cf41966): the
+agreement was one-sided. Written by `1.0.0_SA_CTO` 2026-10-03 ~21:1xZ under the self-drive arming record
+`ANDREW_DIRECT_20261002_050xZ_SELF_DRIVE_60M_LAPTOP_DIRECTIVES_ADJUDICATE_ALL_KEEP_COOS_FLOWING.md` @d4050ac185.
+
+25. **IRPT_YCDGEN's research runs consume B8's session broker and B16's provider-account operation lease, as a named consumer**
+    (`org/missions/D9/IRPT/IRPT_YCDGEN/prd/IRPT_YCDGEN_PRD.md` C-SESSION). They use the same lease key, store and pace as the
+    served Analysis runs. This project stays the owner, and nothing it serves changes. A change to the broker, the lease key or
+    the pacing names IRPT_YCDGEN among the readers it must keep working. No CONTRACTS row changes. ENDPOINT is not edited.
