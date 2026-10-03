@@ -91,6 +91,7 @@ commits and rows.
 - Pre-cut 00:1xZ: `sr.AC1` FAIL (named tests 0 of 1 in each file; both suites rc 0); `sr.AC2` FAIL (0 files).
 
 <status>pending</status>
+<status>complete</status>
 <round>14</round>
 <slot>~24</slot>
 <fabric>site-z</fabric>
