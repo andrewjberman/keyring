@@ -15610,3 +15610,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "INERT on what was read (the four S279 members equal the pin). Owner 2.0.0_SA_COO~Y (the build path): stage members from `git show <pin>:<path>` or set core.autocrlf=false for the build, and diff every member against the pin before upload, as the catalogue build did."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S287",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-03T00:22:00Z",
+  "one_line": "S284 MEASURED (was inferred): YCharts answers TIMXX with its M:TIMXX fund row needing the feature mutualFundDataUSA, which Opal's account lacks -- the st15 resolve line reads matched=0 gated=1 features=mutualFundDataUSA=1 on an AAPL+TIMXX upload (Y-3 V1-b, 00:20:39Z). Every US mutual or money-market fund is likely gated the same way (not measured beyond TIMXX).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Y (S284 stays the ARMED carrier for Case A until Y-5's user-named proxy serves; an account entitlement is Andrew's vendor-account call, no spend unless he asks -- CTO batch 192)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "resident journal 2026-10-03T00:20:39Z: IRPT_RESIDENT_RESOLVE_FUNDS matched=0 gated=1 features=mutualFundDataUSA=1 refused=0 causes=-; RESOLVE state=READY",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/Y3/V1B/V1B_aapl_timxx_cottonwood.json: UP-fbd4732c.. NEEDS_CORRECTION, K4 only, no submission"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row S284: TIMXX is entitlement-gated (INFERRED).",
+  "world_is": "Measured: the feature is mutualFundDataUSA. The inference was right.",
+  "notes": "The fund-family extent is not measured (one fund read)."
+}
+```
