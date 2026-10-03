@@ -57,8 +57,17 @@ If a seat is not live at its time, its first live session reads before any other
 - **G5 replay (D10): ruled NOT owed** (round-8 draft ruling 4). A rebuild at the deployed code would clear the 6 n/a
   cells (measured locally at `C:/tmp/r7measure/g5pin/`). But no deployed route rebuilds G5, a local gold write is QA-only,
   and the cells roll off around 10-08. If Monday's grades raise it, a replay-route cell joins the repair chain.
-- **I-2:** IDVZ/PFOE trend from inception (D12); ACWI/IWM benchmarks (D13, the v0.8 leg: +4 names on the same 1 query,
-  measured offline; its row cost needs the scripted vehicle). Each runs under its own pair once scoped.
+- **I-2: PARKED pending Andrew's explicit directive.**
+  - What it is: IDVZ/PFOE trend from inception (D12); ACWI/IWM benchmarks (D13, the v0.8 leg: +4 names on the same 1
+    query, measured offline).
+  - Andrew-direct ~17:3xZ 2026-10-03 (MSTR broadcast msg 28913; record
+    `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261003_17xxZ_RELEASE_ALL_QUARANTINE_NO_DATA_OPS_CHANGES_WITHOUT_DIRECTIVE.md`):
+    "it is inappropriate for agents to adjust our data engineering operations without my explicit directive ... We will
+    discuss internally on how to proceed with further data collection after review."
+  - Both acts are new data collection, so neither runs until his directive names them. Owner: 2.0.0_SA_COO~RV. Un-park
+    condition: Andrew's explicit word on D12 and/or D13.
+  - No ETFS_RIVALS quarantine exists to release: "quarantin" has 0 hits in the mission tree, the rivalfunds package, and
+    3,996 rivalfunds/etfs S3 keys.
 
 ## Open findings (rows, owner named)
 
