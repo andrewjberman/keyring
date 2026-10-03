@@ -3,6 +3,7 @@
 | Time | Project | Limb | Act | Outcome |
 |---|---|---|---|---|
 | 08:4xZ-09:1xZ | DSGN_REBRND (FAST, batch 165; IR lines all blocked: P-3/P-6 wait ~P's P-2 window, Case A waits ~Y) | round 3, row S10 | S10 built, checked, landed: portal `d8d236a0` on origin DEV (ls-remote 09:11Z) | DRIVE FORWARD |
+| 09:2xZ-09:4xZ | DSGN_REBRND (FAST; IR still blocked on ~P) | round 3, Next 4b | probed and fixed the widened limb's four groups: portal `71a946e3` on origin DEV (ls-remote 09:48Z) | DRIVE FORWARD |
 
 ## S10 -- the Positioning Summary's class percentage labels
 
@@ -18,6 +19,22 @@
   at rest, grouped by (ink, ground, bar), hint only. Its first read found 4 more groups under their bar on /positioning
   (STATUS Next 4b; one is likely the instrument's own blind spot, to be probed).
 - Row S12 disarms S10.
+
+## Next 4b -- the widened limb's four groups
+
+- Probe walk `20261003T092442Z`, with location hints added to the limb (tag and class names only, plus where the ground
+  was read). It also skipped 200 text elements clipped inside collapsed panels. Placed:
+  - the panel footer's source words (TEXT.metadata, white/40, 3.78:1) and its "|" (white/30, 2.65:1) on the band;
+  - the page's white/40 labels, 3.63:1 on the body rung;
+  - 46 treemap tile labels at "1.18:1": an instrument fault. The labels sit in an SVG foreignObject over a `rect` tile,
+    so the ancestor walk read the panel behind the chart. The walker now reads the sibling rect's fill: gray900 on
+    blue500 4.82:1, on pink500 5.03:1.
+- Fix: the band secondary ink `--palette-mediumGray` (#A8B0C0). PanelFooter.tsx (every page's footer; 8.14:1 on its
+  own band ground) and the eight white/40 sites on /positioning (6.87:1 body, 5.65:1 tile). Pin `secondary-ink.test.tsx`
+  with a negative control against the HEAD footer.
+- After-walk `20261003T094015Z`: 105 pairs, 0 under their bar. Screenshot looked at.
+- Lease re-armed to 11:35Z with PanelFooter.tsx; AdvisorBookView.tsx dropped from the surface (the MDPF_SECCLASS lease
+  of 2.0.0_SA_COO~M holds it; the arm refused the overlap).
 
 ## Housekeeping
 

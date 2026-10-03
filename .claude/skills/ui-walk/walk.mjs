@@ -667,14 +667,42 @@ async function contrastTable(page, label) {
     const rgba = (c) => { cx.clearRect(0, 0, 1, 1); cx.fillStyle = 'rgba(0,0,0,0)'; cx.fillStyle = c; cx.fillRect(0, 0, 1, 1); const d = cx.getImageData(0, 0, 1, 1).data; return [d[0], d[1], d[2], d[3] / 255] }
     const lin = (v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4) }
     const L = ([r, g, b]) => 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b)
-    const groundOf = (node) => { for (let e = node; e; e = e.parentElement) { const c = rgba(getComputedStyle(e).backgroundColor); if (c[3] > 0.5) return c } return [244, 246, 250, 1] }
+    // HTML text inside an SVG foreignObject (the treemap's tile labels) sits on the tile's <rect> fill, a sibling, not an
+    // ancestor: walking up from the label would read the panel behind the chart (row S12's probe: 46 labels at 1.18:1).
+    const groundElOf = (node) => {
+      for (let e = node; e; e = e.parentElement) {
+        if (rgba(getComputedStyle(e).backgroundColor)[3] > 0.5) return e
+        if (e.tagName === 'foreignObject') { const r = [...(e.parentElement ? e.parentElement.children : [])].find((c) => c.tagName === 'rect'); if (r && rgba(getComputedStyle(r).fill)[3] > 0.5) return r }
+      }
+      return null
+    }
+    const groundOf = (node) => { const e = groundElOf(node); return e ? rgba(e.tagName === 'rect' ? getComputedStyle(e).fill : getComputedStyle(e).backgroundColor) : [244, 246, 250, 1] }
     const CONTROL = 'button, a[href], [role=tab], [role=button], input, select, textarea, option'
+    // Where a group sits, in code vocabulary only: tag plus its first four class names.
+    const cls = (e) => (e ? `${e.tagName.toLowerCase()}${typeof e.className === 'string' && e.className.trim() ? `.${e.className.trim().split(/\s+/).slice(0, 4).join('.')}` : ''}` : 'none')
+    // Text a person cannot see is not graded: clipped to nothing by an ancestor whose overflow is not visible (a
+    // collapsed panel), or drawn at zero opacity anywhere up the chain.
+    const unseen = (node) => {
+      let r = node.getBoundingClientRect()
+      for (let e = node.parentElement; e && e !== document.body; e = e.parentElement) {
+        const st = getComputedStyle(e)
+        if (Number(st.opacity) === 0) return true
+        if (st.overflowX !== 'visible' || st.overflowY !== 'visible') {
+          const b = e.getBoundingClientRect()
+          r = { left: Math.max(r.left, b.left), right: Math.min(r.right, b.right), top: Math.max(r.top, b.top), bottom: Math.min(r.bottom, b.bottom) }
+          if (r.right - r.left < 1 || r.bottom - r.top < 1) return true
+        }
+      }
+      return false
+    }
     const groups = new Map()
+    let skippedUnseen = 0
     for (const h of document.body.querySelectorAll('*')) {
       if (['SCRIPT', 'STYLE', 'NOSCRIPT', 'TITLE'].includes(h.tagName) || h.closest(CONTROL)) continue
       if (![...h.childNodes].some((t) => t.nodeType === 3 && t.nodeValue.trim()) || !h.getClientRects().length) continue
       const s = getComputedStyle(h)
       if (s.visibility === 'hidden' || Number(s.opacity) === 0) continue
+      if (unseen(h)) { skippedUnseen++; continue }
       const g = groundOf(h); const k = rgba(s.color)
       const ink = [0, 1, 2].map((i) => Math.round(k[3] * k[i] + (1 - k[3]) * g[i]))
       const a = L(ink); const b = L(g)
@@ -686,13 +714,14 @@ async function contrastTable(page, label) {
       const names = [...h.attributes].map((x) => x.name).filter((n) => n.startsWith('data-') && n !== 'data-slot')
       const slot = h.getAttribute('data-slot')
       const hint = `${h.tagName.toLowerCase()}${slot ? `[data-slot=${slot}]` : ''}${names.length ? `[${names.join(',')}]` : ''} ${px}px/${s.fontWeight}`
-      groups.set(key, { label: hint, tag: h.tagName.toLowerCase(), ink: `rgb(${ink.join(', ')})`, ground: `rgb(${g.slice(0, 3).join(', ')})`, ratio, bar, count: 1 })
+      groups.set(key, { label: hint, tag: h.tagName.toLowerCase(), ink: `rgb(${ink.join(', ')})`, ground: `rgb(${g.slice(0, 3).join(', ')})`, ratio, bar, count: 1,
+        where: `${cls(h.parentElement)} > ${cls(h)}`, ground_from: cls(groundElOf(h)) })
     }
-    return [...groups.values()]
-  }).catch(() => [])
-  for (const r of textRows) contrastRows.push({ step: label, state: 'text', ...r, selected: false, disabled: false, pass: r.ratio >= r.bar })
+    return { rows: [...groups.values()], skippedUnseen }
+  }).catch(() => ({ rows: [], skippedUnseen: null }))
+  for (const r of textRows.rows) contrastRows.push({ step: label, state: 'text', ...r, selected: false, disabled: false, pass: r.ratio >= r.bar })
   const failing = contrastRows.filter((r) => r.step === label && !r.pass)
-  log('CONTRAST TABLE', label, `${contrastRows.filter((r) => r.step === label).length} pairs (${textRows.length} non-interactive text groups), ${failing.length} under their bar`)
+  log('CONTRAST TABLE', label, `${contrastRows.filter((r) => r.step === label).length} pairs (${textRows.rows.length} non-interactive text groups; ${textRows.skippedUnseen} clipped or transparent text elements not graded), ${failing.length} under their bar`)
 }
 const mapTiles = []
 function readMapTileAnswer(p, j) {
