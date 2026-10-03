@@ -3602,3 +3602,32 @@
   "notes": "The SecurityList fixture carries one account, so the control proves the seed reaches the component (the offered account shows chosen) rather than a narrowing."
 }
 ```
+
+## DSGN_IRPTV1-S59 -- items 89 and 90 tested through the components (disarms S55)
+
+```json
+{
+  "id": "DSGN_IRPTV1-S59",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-10-03T15:56:00Z",
+  "one_line": "Items 89 and 90 now have a test through the components that fails on each mutant the row named: the composer's tenant on upload and on submit, AnalysisTab handing the composer the selected scope's tenant, and the proxy re-post carrying the corrections (s55.component-wiring).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal 525c9404 (origin DEV, ls-remote 15:56Z): s55.component-wiring.test.tsx renders ProspectComposer and AnalysisTab; the JSX runtime (button handlers, the composer's props) and React's useState (the earlier attempt and the typed proxy, seeded by call position behind an initial-value guard) wrapped by bun mock.module and restored in afterAll",
+      "negative controls, applied and restored (git diff empty after): uploadAnalysisInput(body) fails arm (a); submitAnalysisRequest(body) fails arm (b); scopeRef.selectedTenant at both AnalysisTab sites fails arm (c); the re-post sending uploadAttempt fails arm (d)",
+      "dsgn-irptv1 + mvp-upload suites: 278 pass / 9 fail with the file, 277 / 9 without it, the same nine VERDICT failures"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarms DSGN_IRPTV1-S55: the composer's tenant on upload and submit, the selected scope's tenant from AnalysisTab, and the re-post payload each have an assertion through the component, measured by the mutant the row named.",
+  "spec_asserts": "Row S55: a FAST item's own test discriminates the claim it lands with.",
+  "world_is": "Holds at DEV 525c9404. b66b6dac's third site, the catalogue read's tenant, is not covered: it runs in a useEffect, which a static render does not run.",
+  "notes": "The nine pre-existing failures in those two directories are not this row's: ModelPortfolios ARM3/ARM4 diff arms (four suites), GENERATE-JOURNEY, WIRE-REGEN, BRIDGE-DROPPED, COLOUR-BY-CODE and PERFORMANCE-FINISHED-ANSWER; the shared portal tree also carries uncommitted wire-contract edits that are not this seat's."
+}
+```
