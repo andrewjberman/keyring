@@ -8051,3 +8051,88 @@ fanout:
   egress: none
   portal_ref: a730d8ce
 ```
+
+
+## 74. ROUND 66 -- FWD-39 WORD CLOUD, FWD-36 PRICE 90/365 FROM A ONE-TIME YEAR PULL, THE REDEPLOY CARRYING c20fd8cc98. Four cells, four orders
+
+**Cut by `2.0.0_SA_COO~Z`**. Inputs:
+- The CTO's round-65 analysis @2de1ef2251:
+  - ruling 2: the redeploy at HEAD carrying c20fd8cc98;
+  - ruling 3: the FWD-39 producer;
+  - ADDENDUM 1 @1162e9be0e: option (a) for card 4.
+  - ADDENDUM 2 @205bd13011: ANDREW-DIRECT ~20:5xZ "your rec is approved". The daily-persist is built AND deployed to the
+    scheduled job in round 66, under the normal never-widen pair.
+- ANDREW-DIRECT ~20:3xZ "yes to all recommendations" (record @9fe6e6f111): card 4 (a one-time PX_LAST year pull) and card 5 (FWD-39).
+- PRD v0.37 ADMITTED.
+
+**Issuer rulings at the cut:**
+- R1. **FWD-39 is computed in the route** at request time from gold `article_security_mention` headlines, through the projected
+  read an-5 built. It needs no table, no schedule and no data operation (PRD v0.37).
+- R2. **One worker owns the whole price-history build** (ap-2): the year puller, the 90/365 generations, the route read and the
+  daily job's persist and 90/365 step. The partition contract then has one author.
+  - The 30-day partitions, pointers and every 30-day output stay byte-identical.
+  - Existing functions the 30-day path calls are not edited: additions only, and the existing `lib/research/price/tests` pass
+    unchanged.
+- R3. **The daily job persists and generates (ADDENDUM 2).** After its unchanged 30-day pull, `price_axis_pull.py` persists the
+  series it already fetched (write-once per as_of). It then builds that day's 90/365 generations from the stored history: the year
+  pull plus the daily series.
+  - No new vendor request is made.
+  - The 30-day leg's output and exit codes stay byte-identical.
+  - A failure in the new step never fails the 30-day leg.
+  - With no year history, the step skips with a reason.
+  - The scheduled task runs `scheduled_daily_pull.cmd` from the working tree, and that file is untouched. So **the drain of ap-2
+    into the shared tree IS the deploy of the daily change.** It waits for its never-widen pair (COO + CTO halves) and is the
+    issuer's act. Rollback: revert the drain before the next scheduled run.
+- R4. **The live pull is ONE act** (ap-3) under card 4's per-use vendor word. It writes a new S3 object and new generation
+  partitions only.
+  - DELTA=0 on the deployed function is graded before the redeploy: the deployed code reads only the 30-day partitions.
+  - The terminal must already be signed in. A sign-in spends a budgeted attempt and is not in this order.
+- R5. **Until the first scheduled run after the drain,** 90/365 serve the year pull's generation with its real `window_end` and a
+  plain note. After that run, `window_end` is the last trading day (ADDENDUM 2).
+
+### 74a. MEASUREMENTS (`round66/checks/r66_served.py`, CLOUD ~20:3x-20:5xZ; every cell FAILS at the base)
+
+- c18 (FWD-39): local and deployed `lPTMo20T` serve 0 terms on BA, AMD and VLO and no `word_cloud` on an empty window; 0 declared
+  stop words.
+- c19 (ruling 2): deployed serves "window tone is held: the HARVST sentiment outcomes are held on the publisher-terms card" on all
+  four chatter windows. Local at HEAD serves the new text, so c19 is YES at HEAD.
+- c22 (FWD-36 price 90/365): local and deployed serve 0 rows and "not produced yet" on trending and breakout x 90 and 365.
+
+### 74b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-ap-1` | FWD-39: `word_cloud` on the timeline range route (R1) | `0.9.0_WK_AMGT_RESAPP~217` | worker | LOCAL | `lib/research/api/`, `lib/research/harvest/timeline_api.py` |
+| `AMGT-ap-2` | FWD-36 price 90/365 build: the one-time year puller (plan + live modes), the 90/365 generations, the route read, the daily job's persist + 90/365 step (R2, R3); its drain is the daily job's deploy, under a pair | `0.9.0_WK_AMGT_RESAPP~218` | worker | WORLD | `integrations/bloomberg/research/price_history_pull.py`, `integrations/bloomberg/research/price_series_persist.py`, `integrations/bloomberg/research/price_axis_pull.py`, `lib/research/price/`, `lib/research/api/`, `infra/logic/registry/` |
+| `AMGT-ap-3` | the live one-time year pull (R4) | `0.7.0_AE_CloudOps~A` | seat order | WORLD | the S3 history object, the 90/365 generation partitions, ledger |
+| `AMGT-ap-4` | the code redeploy carrying c20fd8cc98 + ap-1 + ap-2's route read (graded c18, c19, c22 on deployed) | `0.7.0_AE_CloudOps~A` | seat order, a pair | WORLD | Lambda artifact, ledger |
+
+### 74c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** The domain is the analysis's enrichment list (ruling 2, ruling 3) plus ADDENDUM 1 (card 4). The price build is
+  split by act class: build (LOCAL), live pull (WORLD), serve (WORLD).
+- **(ii) Same grain.** One served surface per build cell: the timeline payload, or the price ranking.
+- **(iii) Intent.** One axis per cell.
+- **(iv) What a cell does NOT move:**
+  - ap-1 adds one field and changes no existing timeline field.
+  - ap-2 changes no 30-day output or exit code. It adds a series write and the 90/365 generations to the daily job.
+  - ap-3 writes no 30-day partition and no pointer the deployed code reads.
+  - ap-4 changes code only; memory stays 1769.
+
+### 74d. EDGES AND FAN-OUT
+
+ap-1 and ap-2 both write `lib/research/api/`. They are drained one at a time, with the union suite re-run after each.
+```
+ap-1 ---------------------------+
+ap-2 --(pair; drain = the daily job's deploy)--> ap-3 (live pull) --+--> ap-4 (one redeploy, one pair, graded c18 + c19 + c22 on deployed)
+fanout:
+  cap: 8
+  orders_total: 4
+  chains_total: 2
+  wave_0: [ap-1 ~217, ap-2 ~218]
+  wave_1: [ap-3 0.7.0_AE_CloudOps~A]   # after ap-2 drains under its pair
+  wave_2: [ap-4 0.7.0_AE_CloudOps~A]   # after ap-1 drains, ap-3 lands, and its pair
+  no_s3_deletes: true
+  egress: ap-3 only (Bloomberg PX_LAST, card 4's per-use word, record @9fe6e6f111)
+  portal_ref: a730d8ce
+```
