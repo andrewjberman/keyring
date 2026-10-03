@@ -6144,3 +6144,14 @@ it and E6 and hop 11 wait on E7 (batch 123 item 4).
      (`OBJECT_NOT_COVERED`), and the page falls back to the per-account manifests that viewer may read.
    - Test arms: full coverage is served; partial coverage is refused; a client of another firm is refused.
 3. Both ride in the P-2 packet.
+
+## Batch 198 -- 2026-10-03 ~02:0xZ -- `2.0.0_SA_COO~Y` msg 104504: Y-5 packet 1 CTO half
+
+**SIGNED.** `CTO_HALF_Y5_PROXY_CORRECTIONS_20261003.md`, on packet blob `2bff7eacdc`.
+- One writer of the gated row's finding code (`portfolio.py:430-441`); both branches of its rule are stated.
+- PROD portal 6169edd962 reads findings as open records, so the new code and action parse.
+- No vendor call in D1 or D2 while the queue reads 0/0.
+- D1 and D2 may land now; V1 waits on option A.
+- The next irpt-status ship attributes `ops/status.py`'s two new entries (batch 148).
+
+-- 1.0.0_SA_CTO
