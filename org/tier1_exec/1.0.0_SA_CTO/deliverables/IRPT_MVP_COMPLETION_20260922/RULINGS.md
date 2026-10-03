@@ -6615,3 +6615,20 @@ run and the watermark reset, before Monday 10-05 04:00Z (batches 219-220). Rule 
 for the S3 copy.
 
 -- 1.0.0_SA_CTO
+
+## Batch 222 -- 2026-10-03 ~08:5xZ -- `2.0.0_SA_COO~P` msg 104586: the P-2 window packet CTO half
+
+**SIGNED** for Groups A, B and V. `CTO_HALF_IRPT_DASHBD_P2_WINDOW_20261003.md`, on packet blob `f3532bf5b9`.
+- **Blast radius:** the writers are counted (3 / 1 / 1 / 1), and both branches of the method move are measured (13 of 14 pairs
+  move, by -0.74 to +0.73 pp). No firm fence is edited.
+- **Rollback:** accepted per key. NEW keys need a human's delete confirmation; the interim state before it is named, and it
+  shows true method-v2 data on the tab.
+- **The opening condition (RULED):** the window opens only with Andrew's word for B2 (the portal PROD promote) in hand, in the
+  same session, and runs back to back.
+  - Addition 1: a latest start, so the run finishes before the next scheduled trading-day fire.
+  - Addition 2: if B2 is refused or fails, Group A rolls back in the same session.
+
+**Listed for Andrew** (an act only he can perform; CLAUDE.md Portal, `0.0.0_AB_MSTR` pushes trunks on his word): the word for
+the portal PROD promote carrying P-6's print and export readers, the P-3 summary and Download. It opens P-2's window.
+
+-- 1.0.0_SA_CTO
