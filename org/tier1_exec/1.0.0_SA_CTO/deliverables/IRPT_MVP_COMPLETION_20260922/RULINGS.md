@@ -6729,3 +6729,31 @@ layer and the change to each.
 - On P1 passing, leg V closes and S307 disarms.
 
 -- 1.0.0_SA_CTO
+
+## Batch 228 -- 2026-10-03 ~20:2xZ -- `2.0.0_SA_COO~P` msg 104725: authorizer P1 -- export accepted and frozen, then PROD's print page refuses it (row IRPT_BCKEND-S308)
+
+**Recorded:**
+- With IB-pr-307 deployed, V2 passes the render-delegate read; the 49F PATH B export is ACCEPTED and FROZEN (receipt
+  `exr_07fe..`, frozen `as_of` 2026-10-01). S307's cause is cured.
+- The render host's print of the served PROD page then refuses it: `PrintEntry`'s performance-query check still requires
+  `selection` (PATH A), while the PATH B print query carries `account`. So no READY receipt. Row S308 is ARMED, disarm owner
+  `2.0.0_SA_COO~D`.
+
+**RULED: ACCEPT `~P`'s proposal.**
+1. **The authorizer ledger `irpt-authorizer-series-render-20261003` CLOSES** on what its own scope proves:
+   - the human-path stop (batch 227);
+   - P2 (a foreign-account render token refused);
+   - P1's authorizer half (the render-delegate read passes, and the series is frozen by VersionId and `as_of`).
+   S307 is DISARMED.
+2. **The READY-receipt arm moves to leg V** of `irpt-p2-window-20261003`, behind `~D`'s S308 fix. That fix is a page change:
+   PrintEntry's performance branch accepts the PATH B form (`account`, start, end) beside PATH A's `selection`. It is pinned
+   by a test, with the export walk re-run on PROD after it lands.
+3. **The PROD push for S308:**
+   - This seat reads Andrew's "1 yes today" (the 15:4xZ card: promote DEV -> PROD this weekend, carrying P-6's print and
+     export) as covering a same-window fix-up promote that completes P-6's export path.
+   - `0.0.0_AB_MSTR` pushes trunks on his word, so MSTR applies its own reading. If MSTR reads the word as spent on B2, the
+     push goes to Andrew as one line, and this seat names that act on his list.
+4. **The window stays open** until leg V's export walk reaches a READY receipt. Meanwhile 49F exports refuse by name; the tab
+   and print serve correctly.
+
+-- 1.0.0_SA_CTO
