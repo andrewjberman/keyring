@@ -6884,3 +6884,27 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W18-S6",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~18",
+  "surfaced_at": "2026-10-03T00:55Z",
+  "one_line": "OG-tb-1: test_ogx4_ac03's 'ServiceError: memory' is the engine's 256 MiB per-job RSS cap against a ~229 MiB Windows child baseline, not host memory exhaustion (31228 of 64978 MiB free); the 11-column 100k export reads 256.6 MiB.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: python .scratch/rss_probe.py (worktree wk-NFRA_OPLGTW-18-r14, real ExecutionEngine via tests/test_schwab_export_stream.py helpers): narrow 200/10k/100k rows -> child peak 228.5/246.6/238.6 MiB OK; 11 columns 200/10k rows -> 249.8/249.3 MiB OK; 11 columns 100000 rows -> ServiceError memory, sampled max 256.6 MiB, job.reason 'memory', peak_child_rss_bytes 269082624. Cap: app/integrations/schwab/engine.py:180 job_memory_bytes = 268435456; kill at :1306 when rss > cap. GlobalMemoryStatusEx: 31228 MiB of 64978 MiB physical available.",
+      "RUN: pytest tests/test_schwab_export_stream.py -> 1 failed (test_ogx4_ac03), 2 passed (test_ogx2_ac01, test_ogx2_ac02)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Section 1 table: test_ogx4_ac03 fails with 'ServiceError: memory', likely class 'environment (memory)'; section 1 item 2: where the environment cannot run it, name it with the measurement.",
+  "world_is": "Named with the measurement in RED_TESTS_R13.json. The cause is the engine's deliberate 256 MiB job cap vs this Windows device's child working-set baseline (~229 MiB), not low host memory; no product file edited. The 1.2x flatness claim at full width is ungraded here and needs a Linux Gateway-host run.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
