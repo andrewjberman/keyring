@@ -6693,6 +6693,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W91-S22",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~91",
+      "surfaced_at": "2026-10-02T22:10Z",
+      "one_line": "DISARMED by its disarm_owner: AMGT_HARVST-Z-W91-S20. AMENDMENT 1 granted worker.py; the commit carrying this row (on top of 37947dc42f) maps the client's listing_empty_200 into the job row status, and plant (vii) drives the worker's own job path for wsj and barrons.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "AMENDMENT 1 of TO HVST-al-1: an empty-200 page-1 listing yields a job row whose status is listing_empty_200, not no_new_articles, and the status is not a backfill_driver STOP status.",
+      "world_is": "worker.py result['status'] now reads listing_empty_200 where it would read no_new_articles when the client's job_status is listing_empty_200; SUCCESSFUL_JOB_STATUSES does NOT include it (test_o1 pins that set to the gold reader's set, outside the paths), so reach is recorded but covers nothing for such a job; STOP_STATUSES is unchanged. Plant (vii) fails 2 of 2 against the pre-amendment worker.py (status no_new_articles) and passes against the amended one.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/worker.py and test_al1_listing_empty_200.py::test_vii on branch wk-AMGT_HARVST-91-r39a (commit carrying this row, parent 37947dc42f)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H"
     }
+
   ]
 ```
