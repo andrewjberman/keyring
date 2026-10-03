@@ -6789,3 +6789,51 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W16-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~16",
+  "surfaced_at": "2026-10-03T00:36Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Step 2 of OG-r-4 says copy onhost_bench.py alone to the host scratch dir; run as written it fails at the contract read (rc=1, 10 s, ContractUnavailable), so I also copied org/standards/NFRA_OPLGTW_CONTRACT.json into the same scratch dir and passed --contract; both removed after.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN (SSM f9001644-8a9f-47ed-9870-0ef36b512541, 2026-10-03T00:31:09Z..00:31:19Z): onhost_bench.py --scale full --out ... without --contract: rc=1, error 'cannot read the contract at NFRA_OPLGTW_CONTRACT.json (FileNotFoundError)'; no state store written (ctx.state_store_written false); the failed raw JSON is not used.",
+      "RUN (SSM 23310e7d-9a59-42fa-8c2a-85b33173fcba, 00:35:11Z..00:35:50Z): same command with --contract /tmp/og-r4-bench/NFRA_OPLGTW_CONTRACT.json (9,189 bytes, the worktree's org/standards copy, unchanged between 4231bd2ddc and the cut): rc=0, SUFFICIENT. SSM 875613bf-5015-4f34-85de-e43f19c89cbf then removed /tmp/og-r4-bench (ls: no such file)."
+    ]
+  },
+  "spec_asserts": "Order step 2: copy onhost_bench.py to the host scratch dir and run --scale full with the venv python, exactly as OG-x-4 did, then remove the copy.",
+  "world_is": "The harness's host fallback default is a bare relative path (onhost_bench.py:241), so a scratch-dir run needs the contract file beside it or a --contract path; the order does not say so. Host read-only bound otherwise held: only the scratch dir was written; engine md5 11 of 11 equal before and after; service unrestarted since 19:23:25Z.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W16-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~16",
+  "surfaced_at": "2026-10-03T00:40Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "CAPACITY_R4.json ac4: the post-4231bd2ddc p95 over 2026-10-02T19:30Z..2026-10-03T00:30Z (5 h, 546 requests, 0 5xx) is 0.955 s, +72.5 percent against OG-p-1's 0.5535 s reference, above the 20 percent cap the OG-r-3 form uses; no OG-r-4 criterion grades ac4.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: probes/assemble_capacity_r4.py (CloudWatch GetMetricStatistics, TargetResponseTime p95, one 18000 s period): window_p95_seconds 0.9546750220078912, baseline_p95_regression_fraction 0.7247892769633654, baseline_p95_within_cap false; hourly p95 1.034 / 0.969 / 1.000 / 0.841 / 1.043 with 99 / 73 / 60 / 227 / 87 requests; 5xx sum 0.0 in every hour (deliverables/0.9.0_WK_NFRA_OPLGTW~16/CAPACITY_R4.json ac4).",
+      "The window is hours long and off-hours (546 requests against 19,473 in OG-x-4's 7 days), so its mix differs from the reference; cause of the 1 s p95 not investigated."
+    ]
+  },
+  "spec_asserts": "Order step 3: the ac4 regression window is a post-4231bd2ddc window (the order sets no cap or criterion on it).",
+  "world_is": "Only about 5 h had elapsed since the 19:23:40Z deploy at the run. Flag-only; the bench verdict (memory, deadlines, admission) is SUFFICIENT and does not read ac4.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
