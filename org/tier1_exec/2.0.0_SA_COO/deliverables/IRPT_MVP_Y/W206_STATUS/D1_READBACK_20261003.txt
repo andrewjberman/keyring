@@ -1,0 +1,2 @@
+W2-06 D1 read-back irpt-status | CodeSha256 6VQejBfsI/P3mfAVSFjLt/ythlcxXxi12cy9hxXhKNg= | LastModified 2026-10-03T04:28:06 | LastUpdateStatus Successful | invoke StatusCode 200 FunctionError None | errorMessage False | reason CONTRACT_VERSION | keys ['contract_version', 'ok', 'operation', 'status']
+rc=0
