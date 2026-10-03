@@ -1705,3 +1705,21 @@ v0.14 names FWD-5's word-cloud input: `word_cloud` on the timeline payload, from
 served count, and an empty served list renders its served reason. The page counts nothing. **Ruling: no cell is cut this step.**
 RESAPP FWD-39 is a QUALIFIED WAIT on Andrew's explicit word (CTO msg 28991), so no route serves `word_cloud` yet, and round 33 stays
 held on the f9c6fa73 landing (@5cd2d798d8). The cell is cut, against the served shape, when a route serves the field (v32-A).
+
+## v33 -- ROUND 33 (issuer, 2026-10-03 20:51Z) -- ONE DIRECT ACT: DEV CI GREEN AGAIN (PRD v0.14 @548a6971fe)
+
+**Rectangle:** portal DEV 49c6e94a0f, the rounds 29-32 landing, is RED in CI ("Build & Validate" 37152260084, step "Run ESLint", 1
+error: WhatChangedPanel.tsx:395 `@typescript-eslint/no-empty-object-type` on `export interface WhatChangedPanelProps extends
+PairContext {}`, from round 29 AV-zg-5, MSTR~Z msg 29015). The CTO asks for the fix as a candidate (msg 29017). A red DEV blocks the
+next PROD promote, and the round-32 grades wait for a green deploy.
+**Base:** portal DEV 49c6e94a0f.
+
+| cell | serves | owned files | worker |
+|---|---|---|---|
+| `AV-zk-1` ESLINT GREEN (direct act) | CI green on DEV; FWD-25 (What changed) unchanged in behaviour | `components/model/WhatChangedPanel.tsx` (one line) | ~91 |
+
+**Check:** `round29/checks/battery29.sh` AMENDMENT 1 (this issuance) adds the CI's ESLint step, errors only, over this project's
+paths. It reads FAIL at base 49c6e94a0f (eslint rc=1, 1 error). Green arm: the one-line fix piped to eslint --stdin reads rc=0.
+AC2 = round29 model/whatchanged.cjs and model/etwords.cjs (they read WhatChangedPanel.tsx).
+**Gate fix (MSTR~Z msg 29018, the issuer's call: adopted):** battery29 now runs ESLint, so "ALL PASS" includes the CI lint gate.
+**Fan-out:** 1 of 1. **Risk:** LOCAL. **Direct act.**
