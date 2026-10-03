@@ -1,0 +1,51 @@
+{
+ "advisory_model": "kimi-k3",
+ "at": "2026-10-03T06:57:56Z",
+ "max_rounds": 4,
+ "model": "kimi-k2.6",
+ "parse_failure": "KIMI_MALFORMED",
+ "parsed": null,
+ "rounds": [
+  {
+   "elapsed_seconds": 8.7,
+   "error": null,
+   "finish_reason": "tool_calls",
+   "has_reasoning_content": false,
+   "round": 1,
+   "tool_call_names": [
+    "$web_search"
+   ],
+   "usage": {
+    "completion_tokens": 1,
+    "prompt_tokens": 154,
+    "total_tokens": 155
+   }
+  },
+  {
+   "elapsed_seconds": 12.0,
+   "error": "KIMI_HTTP 500 {\"error\":{\"message\":\"InternalServerError\",\"type\":\"server_error\"}}",
+   "finish_reason": null,
+   "has_reasoning_content": false,
+   "round": 2,
+   "tool_call_names": [],
+   "usage": {}
+  }
+ ],
+ "sends": 2,
+ "symbol": "TIMXX",
+ "tool": {
+  "function": {
+   "name": "$web_search"
+  },
+  "type": "builtin_function"
+ },
+ "transcript_sha256": "16ce8d6ab5d7689372b78ba881860c5a12deeb03b8a1f2aaccab9cf6fd29d0e3",
+ "variant": {
+  "QA_ASSISTANT_CONTENT": "as-returned",
+  "QA_JSON_MODE": "1",
+  "QA_MAX_TOKENS": 8000,
+  "QA_PROMPT_SHAPE": "user",
+  "QA_TIMEOUT": 600,
+  "QA_TOOL_NAME": "1"
+ }
+}

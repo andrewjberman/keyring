@@ -210,3 +210,140 @@ their commits are 12:14Z and 12:17Z, both before the 12:18:51Z write; this seat 
 
 -- 3.0.0_SA_CVO
 
+## Grade, 00:5xZ 2026-10-03 -- BD r3 re-land (r4) served, read against row S9's measure
+
+Half `NEVER_WIDEN_HALF_REQUEST_BD_THREAD_R3_RELAND_20261002.md` (leg R acceptance at :75); ledger
+`secclass-bd-thread-r4-reland-m-20261002`, leg R closed green by `2.0.0_SA_COO~M` (821bb7b891).
+
+| claim | this seat's read | grade |
+|---|---|---|
+| the firm mix lists every class and sums to 100 pct (S9's measure) | `platinum/firm/mix_summary.json` 2026-10-02 16:14Z (as of 2026-09-30) and its 00:37Z rewrite: 8 classes (alternatives, cash, commodities, equity, fixed_income, other, structured, unclassified); shares sum 1.0000; market values 1,843,114,311.70 = the composition total, within 8.92 of the restored 08:02Z figure (1,843,114,302.78). No class dropped, nothing missing | PASS |
+| unclassified at or under 5.0 pct (leg R) | 76,259,973.86 = 4.14 pct (the half predicted 4.63 pct, 86,480,584.86) | PASS |
+| the move matches the signed blast radius | equity 73.77 pct (restore 76.86), fixed_income 20.40 (21.03), structured 1.43 (half 1.22), alternatives 0.09 (half 0.01; restore 2.11), commodities 0.08 (half 0.07), cash 0.11, other 0.00. The gap to the half's figures is plausibly the 36 CUSIP rows written at 12:18Z (12.05 M), after the half was signed (not attributed row by row) | PASS within the half; difference inferred |
+| client z08327149 carries VXX under structured / Hedge (leg R) | not re-read here | NOT_EVALUATED |
+
+**Row S9's clock.** The regression S9 recorded (classes absent from the mix, 24 pct of the firm missing) does not recur on
+the re-land: unclassified is carried as its own class, as the CTO's batch 117-118 condition required.
+
+-- 3.0.0_SA_CVO
+
+## Grade, 01:2xZ 2026-10-03 -- the 2026-10-02 23:00Z BD gold fire on r4 (seed rows' leg G, partly)
+
+| claim | this seat's read | grade |
+|---|---|---|
+| the fire completes on the r4 code | `logs/gold-layer/gold_incremental_2026-10-03_20261003_010843.log` (590,267,203 B), last 12 MB: RUNNER STARTED 23:00:46Z; E_18, C_06, D_03, D_04 rc 0; `COMPLETE (exit code: 0)` 01:08:43Z; 0 Traceback/IndexError/BLOCKED | PASS |
+| the firm mix stays whole | `Mix snapshot (C_06): 8 classes, date=2026-09-30, total_mv=$1,843,114,215`; C_06 `To process: 0` (no new partition: the 04:00Z fire is the next compute) | PASS |
+| the seeded tickers resolve (leg G) | `Classification not found` lines: 33,463, over 145 distinct tickers (the S9 run: 290 distinct); 0 of 9 seeded tickers among them (SPYI, PSLV, FPNIX, MEAR, EVSM, VMLUX, EIBIX, BRK.A, BRK.B); IYR and ITB still not found, now counted under unclassified | PASS on the classifier read; the lots' served classes NOT_EVALUATED |
+
+Under r4 a not-found ticker is carried as `unclassified` (the mix lists it), so the 33,463 lines are expected and are the
+residual the half names, not S9's loss.
+
+-- 3.0.0_SA_CVO
+
+## BD gold 2026-10-02 23:00Z fire, the second scheduled run on the r4 re-land code (read 04:4xZ 2026-10-03)
+
+Trigger `bd-gold-nightly-fallback` `cron(0 23 ? * MON-SAT *)` ENABLED. Log
+`s3://opal-data-bd/logs/gold-layer/gold_incremental_2026-10-03_20261003_010843.log` (590,267,203 B, cumulative; this
+run's section read from the last `RUNNER STARTED`, 23:00:46Z to 01:08:43Z).
+
+| check | this seat's read | result |
+|---|---|---|
+| run | `=== COMPLETE (exit code: 0) ===` 01:08:43Z; validation `PASS=0 WARN=0 FAIL=0 SKIP=1 ERROR=0` (00:13:46Z) | PASS |
+| C_06 computed | PHASE_C5 `C_06 done (rc=0)`, 16.5 s, checkpoint `gold/.checkpoints/2026-10-02/C_06.done`; 3,197 of 3,197 client C_06 timeseries read by the publisher | PASS |
+| firm mix served | `platinum/firm/mix_summary.json` version `wma_kZ0XFi..` written 00:37:50Z, `data_as_of` 2026-09-30 | -- |
+| every class listed | 8 keys (equity, fixed_income, alternatives, commodities, structured, cash, unclassified, other), 7 nonzero, `other` 0 | PASS |
+| sums to 1.0 | pct sum 1.000000; MV sum $1,843,114,311.70 = composition `total_market_value` | PASS |
+| nothing dropped | identical to the r4 re-land served at 16:14:37Z (version `0Pwq0AY3..`): same MV to the cent, same 8 classes, unclassified 4.1376% (bar 5%); the S9 regression version (05:37:54Z, pct sum 0.758174) is not repeated | PASS |
+| row S9's measure on a scheduled run | the scheduled recompute on r4 code reproduces the re-land exactly | PASS |
+
+**Noted, not a row.** The run's classification stage and its C_06 line print a total of $1,843,114,215, which is
+$96.70 below the served mix (5.2e-8 of the total). It is a stage-level figure, and the served file sums to its own
+total.
+
+**Not yet read.** The Saturday run launched at 04:00:25Z (instance running at 04:50Z); its log is expected around
+06:05Z and carries the next `data_as_of`.
+
+-- 3.0.0_SA_CVO
+
+## BD gold 2026-10-03 04:00Z run (Saturday; the first r4-code run at data_as_of 2026-10-01), read 06:0xZ-06:4xZ
+
+Log `gold_incremental_2026-10-03_20261003_060352.log` (section 04:00:41Z to 06:03:52Z).
+
+| check | this seat's read | result |
+|---|---|---|
+| run | exit 0; validation `PASS=0 WARN=0 FAIL=0 SKIP=1 ERROR=0`; C_06 rc 0; 3,193 of 3,193 client timeseries read | PASS |
+| every class listed | mix version `HvABa_JI45..` (05:35:25Z), `data_as_of` 2026-10-01: 8 keys, 7 nonzero | PASS |
+| sums to 1.0 | pct 1.000000; MV $1,764,886,987.32 = composition total; unclassified 4.0566% | PASS |
+| nothing dropped | total down $78,227,324.38 (4.24%) from 09-30; 335 OPEN accounts ($78,634,159.20 on 09-30) absent from the 10-01 positions cube with no transaction, zeroed in their served AUA by `synthetic_correction` (sum -$78,504,236.80) | FAIL: row MDPF_SECCLASS-S18, BLOCKING, ARMED |
+
+Fixed income fell 5.6% and cash 10.6%, which is not a one-day market move. Population counts: classification rows
+532,932 -> 526,676 and clients 3,197 -> 3,193, while A_03 read 6,528 accounts (11,220 in the 23:00Z run).
+
+**Limits.**
+- Cause not determined.
+- The 335 accounts' source is not traced: they appear in none of the daily transaction files read (09-30 to 10-03).
+- Whether Saturday's 23:00Z fire repeats the drop is not known.
+- Nothing was written; no served object was touched.
+
+-- 3.0.0_SA_CVO
+
+## MDPF_SECCLASS-S18 restore graded (ledger `secclass-s18-restore-0930-m-20261003`; CTO half batch 219 `5ec7db4eea`), read 08:2xZ 2026-10-03
+
+| leg or claim | this seat's read | result |
+|---|---|---|
+| 0, H: no fire during or after the act | runner `i-01003b035d2988dfb` stopped; `bd-gold-nightly-fallback` and `bd-canonical-prices-daily` DISABLED (describe-rule) | PASS |
+| C: 23,541 keys restored | the ledger: 23,578 rows -> 23,541 RESTORED, 36 SKIP-CREATED, 0 refused; 1 ETag mismatch (`client_tax_liability.parquet`, multipart source) resolved by a content sha256 match | accepted on the ledger's per-key log; this seat re-read the served results below |
+| V: firm mix | `platinum/firm/mix_summary.json` version `5ACI.iHP..` (07:58:18Z): `data_as_of` 2026-09-30, 8 classes, MV sum $1,843,114,311.70, pct 1.000000 = the pre-run version | PASS |
+| V: the 335 accounts | served `platinum/accounts/<id>/summary.json` for 335 of 335: 317 end at 2026-09-30 with value (sum $77,876,945.70), 12 have never had a summary (0 versions), 6 end on earlier dates that predate the run; 0 end at 10-01 | PASS |
+
+**S18 is disarmed in the world.** The served BD platinum reads as of 09-30 again, and no fire can run until leg R.
+
+**Still open:**
+- The cause: why the 10-01 build dropped 335 open accounts, and why trade date 10-01 was partly delivered.
+- Leg R: watermarks back to 09-30 and the rules re-enabled before Mon 10-05 04:00Z, under the class cell.
+
+**Left as is, under the half:**
+- 36 run-created keys remain served at the run's vintage: 28 under `platinum/clients`, 5 under `platinum/accounts`, 3
+  under `platinum/advisors`. Deleting them needs human confirmation.
+- gold intermediates outside the restore set (`gold/entities/accounts/*/aua_timeseries.json`) still carry the 10-01
+  zeros; this seat did not find a served route reading `gold/entities`.
+
+-- 3.0.0_SA_CVO
+
+## MDPF_SECCLASS-S18 class cell (ledger `secclass-s18-cell-m-20261003`), independent read of leg V, 12:5xZ 2026-10-03
+
+Legs P, G, W, Q, V and R are closed (R at 12:44Z: both rules ENABLED). Leg S, the first scheduled fire after R, is
+this seat's (CTO batch 224 condition 2). The production run booted at 12:45:15Z; its log is awaited.
+
+| acceptance (half, Branch A) | this seat's read | result |
+|---|---|---|
+| 2: mix as_of 10-01, every class, pct 1.0, MV within 2.0% of $1,843,114,311.70 | `platinum/firm/mix_summary.json` version `bKrQZIB6..` (11:39:59Z): data_as_of 2026-10-01, 8 classes (7 nonzero), pct 1.000000, MV $1,843,207,824.50 (+0.0051%), unclassified 4.1213% | PASS |
+| the 335 return | the S18 run's 10-01 cube (version `E8dXQImv..`, 04:13:24Z) against 09-30 gives the 335; the cube now (`R9SpLSJ.T6..`, 10:15:44Z) holds 332 of them; still absent: z0818919951, z0821124151, z0822808251, the three the half names as traded out | PASS |
+| 3: z0812888131 non-zero at 10-01, near 27,904.62 | gold 27,814.59 and platinum `summary.json` last point 2026-10-01 at 27,814.59 | PASS |
+| 4: the 335's 10-01 synthetic_correction about 0 | gold `aua_timeseries` for 335 of 335: 09-30 $78,634,159.20, 10-01 $78,460,457.73 (-0.22%), synthetic_correction -$10,143.16 (the S18 run: -$78,504,236.80) | PASS (about 0 against the drop; not exactly 0) |
+| served platinum for the 335 | 321 end at 10-01 (sum $77,770,557.05), 12 have never had a summary, 2 end on earlier dates that predate S18 | PASS |
+
+**Not yet read.** Leg S, the 12:45:15Z production run (A_03 'Liveness ... 6,710 carry forward' and 'frontier whole' in
+its own log; the served state after it). This seat records it when the log lands.
+
+-- 3.0.0_SA_CVO
+
+## MDPF_SECCLASS-S18 cell, leg S: the 12:45:15Z run is not the fire that closes it (read 14:5xZ 2026-10-03)
+
+~M's ask (msg 104611) names the 12:45:15Z production floor as the first scheduled BD gold fire after R.
+
+| read | result |
+|---|---|
+| CloudTrail StartInstances i-01003b035d2988dfb at 12:45:16Z by `advi-49f-gold-dispatch` | the floor started the runner |
+| `/aws/lambda/advi-49f-gold-dispatch` 12:45:15-12:48:12Z: event `{"run_class": "production", "source": "advi.49f.scheduled-floor"}`; dispatched SSM document `advi-49f-chain-dispatch` (command 63f7686c..); "chain completed within the poll window", 177 s | a 3-minute advisor-intelligence chain |
+| writes after 12:44Z in opal-data-bd: checkpoints S_00, A_00, A_02 (12:48:06-15Z); `gold/meta/fee_rate_history_watermark.json`; their telemetry. No A_03, C_06 or D_04 checkpoint; no gold_incremental log after 12:10Z; the served mix unchanged (`bKrQZIB6..`, 11:39:59Z) | A_03 did not run |
+
+**Verdict.** Leg S is NOT CLOSED by this run. The 12:45Z chain did not execute A_03, the step the cell changed, so it
+cannot show 'Liveness ... carry forward' or 'frontier whole'. The first scheduled fire that runs the fixed A_03 is
+`bd-gold-nightly-fallback` at 23:00Z today (cron(0 23 ? * MON-SAT *), ENABLED). This seat reads that one.
+
+**Open question for the cell's owner.** Today's checkpoint DIR already holds the QA run's A_03 to D_04 marks
+(10:15-12:06Z). Whether the 23:00Z fire recomputes or skips steps carrying a same-day checkpoint is not read here; if it
+skips, the first full fire is 04:00Z Sunday.
+
+-- 3.0.0_SA_CVO

@@ -572,3 +572,294 @@ the workspace contracts beside it. The shared portal tree gained 28 modified fil
 unit tests; no page looked at.
 
 -- 3.0.0_SA_CVO
+
+## Grade, 17:xZ-19:xZ 2026-10-02 -- portal DEV item 84 (the multi_asset readers) and PROD v2.1.195
+
+| pin | claim | this seat's read | grade |
+|---|---|---|---|
+| 262be0a4 (84) | the Investor Reporting readers render Multi-Asset in its own colour | chartColors.ts:92 yellow900 `#713f12`, :241, :648; adapt.ts:1001; index.ts:800; wire/HoldingsSnapshot.ts:104/:163/:173 (source sha256 equal to origin/CLOUD's schema); assetClass.ts:45/:63/:79; SecurityList.tsx:424; HoldingsTreemap.tsx:639; HoldingsTreemapChart.tsx:31. Nearest dE00 29.62 (unclassified), 30.07, 31.10. iv-e-148 6/6; NEG (its 8 source files at parent `415f50db`) 0/6. 13 fail / 243 pass across 184 files, the 11 failing files failing the same with item 84 reverted. CI 37035545923 and 37038081706 success | PASS on a test run |
+| PROD | -- | origin/PROD `dcdc89b1`, tag portal-v2.1.195, merges DEV `ec65c5d6` (0 diff lines) and names 262be0a4; run 37041815698 success, headSha `dcdc89b1` | ON PROD |
+| every reader of the mix | -- | the Advisor Intelligence half (`ed40c8ee` / candidate `6245e92d`, CTO batch 180 PASS) is on no origin branch; at DEV multi_asset is absent from composition.ts, PartnerAnalytics.tsx, AdvisorAnalytics.tsx, ConsolidatedOverviewPanel.tsx, TenantLayoutConfig.ts; Positioning groups by ASSET_CLASS_ORDER unchanged. 0 of 2,841 table rows are multi_asset, and batch 180 item 3 holds the rows until these readers are on PROD | IR YES; Advisor Intelligence and Positioning NO -- gated, no served move |
+| census 37fd00f133 | the portal readers | names 2 portal readers (composition.ts, wire HoldingsSnapshot.ts); item 84 changed 7 files it never names | short: row MDPF_SECCLASS-S17 |
+
+**Limits.** bun 1.3.9 in a scratch worktree of origin/DEV `ec65c5d6` under %TEMP%\cvo84; the worktree is unregistered but
+its directory remains on disk (git reported "Filename too long"; a recursive delete waits on Andrew's confirmation, and it
+holds nothing of the repo's). iv-e-148 arm (f) passes its own extraClasses rather than reading HoldingsTreemap.tsx:639;
+SecurityList.tsx:424 is untested. CI runs no unit tests. No page looked at. DEV moved to `16c6690e` (item 85), not graded.
+
+-- 3.0.0_SA_CVO
+
+## Grades, 22:xZ 2026-10-02 -- portal DEV items 85, 87, 88 and DSGN_REBRND round 3 E4
+
+| pin | claim | this seat's read | grade |
+|---|---|---|---|
+| 16c6690e (item 85; content 97cd8dea) | every security is its own map tile, each hoverable for name, value, weight, class | HoldingsTreemap.tsx:425 grouping retired; :464 the Value row; :558 drawSmallTiles; HoldingsTreemapChart.tsx:167-169, :378. iv-e-105/-114/-44/-61 1/1 each; NEG (reversed) 0/4 ("11 tiles, expected 14"). CI 37046875364 success | PASS on a test run |
+| 4742a4b9 (item 87, row IRPT_BCKEND-S280) | a Sleeve/Account choice the new snapshot does not offer reads as All | SecurityList.tsx:205-207 effectiveFilter, :366-367 applied, :394/:412. iv-e-149 3/3; NEG 0/1 (import); MUT (wiring reverted) 3/3 -- the test does not reach the component (row DSGN_IRPTV1-S54); a scratch render with a stale choice: DEV lists rows, reverted reads "No securities match these filters". CI via 85162beb run 37064853264 success | PASS on a test run (by render); row S280 remediated on DEV, not on PROD |
+| b0e59116 (item 88) | an uploaded prospect picks comparisons and the picks ride the submission | ProspectComposer.tsx:128-138, :143-147, :244 passes comparisonKeys; AnalysisTab.tsx:223. iv-e-150 5/5; NEG 2/5; MUT (:244 sends []) 5/5 -- the payload is untested (row S54). CI 37067700578 success | PASS on a test run (display); the payload NOT_EVALUATED |
+| fb5d6116 (REBRND E4 part 1) | Positioning Summary fills move onto opaque named rungs | PositioningSummary.tsx:1130, :1145, :1219, :1232, :1261, :1548; no colour or contrast assertion exists; white on the tile rung 12.31:1 by arithmetic (was 12.93:1). CI 37069778437 success | NOT_EVALUATED |
+| fe461611 (REBRND E4 part 2) | Breakdown subtotal and total rows take the tile and selected rungs | HoldingsBreakdownTable.tsx:237-242; HoldingsTab.tsx:1038-1111; no colour assertion; white on selected 8.50:1; the total's dash ink 4.23:1 (below 4.5); subtotal against body 1.22:1 (was 1.35:1) -- row DSGN_REBRND-S5. CI 37071013216 success | NOT_EVALUATED; one ink below the floor by arithmetic |
+| full suite | -- | DEV fe461611: 935 pass / 43 fail / 9 errors (1,005 tests, 349 files, 26 failing files); the same 26 with the five pins reversed: the pins add no failure | -- |
+
+Item 86 (workspace b6e3b75e56) is a 332-line Playwright page-walk harness and README under
+`org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/2.0.0_SA_COO~D/yh/`, `node --check` only, not run live; item 88's real
+run cites it. None of the five portal pins is on PROD (dcdc89b1).
+
+**Limits.** bun 1.3.9 in a scratch worktree of origin/DEV fe461611 under %TEMP%\c88 with contract archives beside it;
+removed after (Remove-Item on the long path; Test-Path False; 0 worktree entries); `git -C portal status --porcelain` 15
+lines before and after. Contrast is arithmetic on index.css values, not a measured page. DEV moved to b66b6dac (item
+89) during the read, not graded. CI runs no unit tests.
+
+-- 3.0.0_SA_CVO
+
+## Grades, 00:xZ-01:xZ 2026-10-03 -- DSGN_REBRND round 3 E4 (5 pins) and rows S5-S8 (handoff 104479)
+
+PROD: all five E4 pins are on PROD 6169edd9 (Deploy run 37084775165 success; is-ancestor rc 0 for 5 of 5; content
+control: the PROD dash is white/70 and toOklab present).
+
+| pin / row | claim | this seat's read | grade |
+|---|---|---|---|
+| 661e49b3 | the Models view's interactive text clears 4.5:1 | HoldingsTab.tsx:80 AGG chip indigo400 #818cf8 on band 5.94 (was 4.22) by arithmetic; no test. CI 37079617916 success | NOT_EVALUATED by test; the ink PASS by arithmetic |
+| 44d6a215 | a highlighted name keeps its colour on a band ground; OKLab ramp | PositioningSummary.tsx:42-46, :1462-1466; bookColors.ts:57-85. Canon on band: UST 6.33, ST 8.26, INT 6.99, LT 4.82, ULT 4.71; #a775a5 4.84 (was 3.86). No test. CI 37080785301 success | PASS on the walk's computed styles; NOT_EVALUATED by test |
+| b23917f7 (S5's remedy) | dash white/70, pinned by iv-e-152 | HoldingsBreakdownTable.tsx:240; iv-e-152 3/3; NEG (white/60, test kept) 2/3, arm (a) fails at 4.23. Arithmetic: selected rung L 0.07350, white/70 composite L 0.58302: 5.13:1; tile rung 6.91:1. CI 37081937697 success | PASS on a test run; S5 REMEDIATED (arithmetic, not pixels) |
+| E4 re-grade (fb5d6116, fe461611) | the rungs carry their text | iv-e-152 hardcodes subtotal = tile and total = selected and never reads subRow/totRow or PositioningSummary; MUT (both pins' rung classes reversed, white/70 kept): still 3/3 | fe461611: inks PASS by arithmetic, rung choice unpinned; fb5d6116 NOT_EVALUATED |
+| full suite | -- | DEV b23917f7 877 pass / 67 fail / 18 errors (969 tests); the three pins reversed: same counts; the pins add no failure | -- |
+| S6 (W2-S8 on /positioning) | every canon mark on the band, 316 pairs, 0 under | W2-S8 asked about canon hexes under 3:1 on WHITE grounds; Positioning has 0 white or light grounds; the walk (getComputedStyle, interactive controls only, 316 rows, min 4.72, bar 4.5) has 48 canon-ink rows, all on the band; bars on the tile rung clear 3:1 (UST 4.39 ... ULT 3.27) | supports the disarm for /positioning; the walk covers text controls only (row S10) |
+| S7 (W1-S11 latent) | no code selects dark mode | `dark-mode`: 8 hits in 3 files, 0 setters | latent CONFIRMED for html.dark-mode; a second, OS-driven dark path exists (row S9) |
+
+**Limits.** bun 1.3.9 in a scratch worktree of origin/DEV b23917f7 at %TEMP%\c90, removed after (Test-Path False);
+`git -C portal status --porcelain` 15 lines before, 19 after -- the 4 new are the live lease's E2 work (DESIGN.md,
+Positioning.tsx, PageEnd.tsx and its test), not this read. Contrast is arithmetic and computed styles, not pixels. DEV
+moved to c9d303db during the read, not graded.
+
+-- 3.0.0_SA_CVO
+
+## Grades, 03:5xZ-04:4xZ 2026-10-03 -- portal DEV items 89, 89 follow-up, 90, 91, DSGN_REBRND E2, IRPT_DASHBD S20 fix
+
+Graded at origin/DEV `84f2424f` in a scratch worktree (removed after; Test-Path False). CI ("Build & Validate") runs
+lint, provenance, typecheck and build, and no unit tests.
+
+| pin | claim | this seat's read | grade |
+|---|---|---|---|
+| b66b6dac (item 89) | the prospect upload and submission carry `selected_tenant` | `investor-reporting.ts:1085`; iv-e-151 3/3; NEG (client half) fails; NEG (composer call sites) 16/16 still pass; CI 37074525848 success; on PROD | PASS on a test run (client half only); row S55 |
+| 39aa21c2 (89 follow-up) | the composer takes the tenant from the selected scope | `AnalysisTab.tsx:225`; no test; scratch render `data-tenant-known` yes, reverted no; CI 37076948990 success; on PROD | PASS by render; row S55 |
+| c9d303db (REBRND E2 contract) | DESIGN.md C10 gains the PAGE END | `DESIGN.md:387-401`; no test reaches it; CI 37085750211 success; not on PROD | NOT_EVALUATED |
+| 8526dacb (REBRND E2) | /positioning ends on its PAGE END | `PageEnd.test.tsx` 2/2; mutants on the date format and `data-page-end` fail; NEG (page wiring) still 2/2, so the render carries the wiring: scratch render ends "End of Positioning.", reverted does not; CI 37086651757 success; not on PROD | PASS on a test run + PASS by render |
+| c32ef52a (item 90) | a NAME_PROXY finding is answered by re-posting with corrections | iv-e-153 4/4; NEG 2 fail; mutants on the gate and the 20-item cap fail; MUT on the re-post line passes 4/4; CI 37088374567 success; not on PROD | PASS on a test run; the re-post NOT_EVALUATED (row S55) |
+| de3eca94 (item 91) | holdings asks for the TARGET fold, shown apart, never summed | iv-e-154 and 5 re-goldened files 22/27, the 5 reds also red with the pin reverted (routes.json 19 vs client table 18); NEG and 4 mutants fail; CI 37090356749 success; not on PROD | PASS on a test run |
+| 84f2424f (IRPT_DASHBD S20) | the picker and the body read one date, `series.as_of` | iv-e-156/139 and fe-s-30 13/13; NEG 2 fail; MUT (picker reads `manifest.as_of`) fails; no `manifest.as_of` read left in `src`; CI 37092338048 success; not on PROD | PASS on a test run; S20's remedy landed on DEV: remediation state OPEN -> REMEDIATED in REMEDIATION_v2, closed stays false until PROD carries it |
+| full suite | -- | DEV head 1052 pass / 34 fail / 2 errors (1113 tests); the 7 pins' non-test changes reverted: 1037 / 45 / 6; 0 tests fail at head and pass reverted; the pins add no failure | -- |
+
+**Known classes, not new rows:**
+- A full `bun test` rewrites tracked wire files through iv-e-26 (row W41-S2).
+- A CRLF checkout fails iv-e-116's source check: 66 fail / 18 errors, against 34 / 2 on the committed LF bytes (rows W4-S3,
+  W26-S2).
+
+**Limits.**
+- Static render only; no clicks and no live page.
+- The workspace contracts are CLOUD HEAD's committed bytes.
+- DEV moved to 936424c3 / 209e4903 during the read, not graded.
+- `git -C portal status --porcelain`: 19 lines before, 15 after. The difference is ~D's own two commits; the reflog shows
+  no write by this seat.
+- Read by a delegate of this seat.
+
+-- 3.0.0_SA_CVO
+
+## Grades, 08:5xZ-10:3xZ 2026-10-03 -- portal DEV 936424c3 through 46aeea17 (12 pins; ~D msgs 104593, 104602, 104604)
+
+Graded in a scratch worktree of origin/DEV (a sparse workspace copy with the portal nested, so the tests' workspace paths
+resolve), removed after. None of these pins is on PROD (6169edd9). Every CI run concluded success; CI runs no unit tests.
+
+| pin | claim | this seat's read | grade |
+|---|---|---|---|
+| 936424c3 (IRPT_DASHBD) | NOT_SPANNED/BREAK say "Not measured" in body and picker | `DashboardPerformance.tsx:247`, `pickerSuffix.ts:39`; 2/2; NEG and 3 MUTs fail; CI 37094927372 | PASS on a test run |
+| 209e4903 (IRPT_DASHBD) | a custom range opening before the history is NOT_SPANNED | `:79`; 2/2; NEG fails; CI 37097260187; leaves the "shortened" note branch unreachable | PASS on a test run |
+| 102c15e0 (item 92) | a needs-attention request offers the refill | `OwnedRequestHistory.tsx:49,226`; 2/2; NEG fails; 3 MUTs survive (the Generate gate, the new request id, the client seed); a render probe shows the client seed | PASS on a test run + by render; the refill submit NOT_EVALUATED |
+| 25b7a59d / f4bad219 | land and revert | `git diff 25b7a59d^ f4bad219` is 0 bytes | nets to zero |
+| 9bd6517d + 3ff86a54 (item 93) | Download opens the signed URL; the parser reads the pdf envelope | `ReceiptPanel.tsx:102`, `adapt.ts:1359`, `download.ts:68`, `envelope.ts:165`; iv-e-161 1/1; NEGs and 3 MUTs fail; a MUT at `investor-reporting.ts:1087` survives the test but fails a LiveClient probe; CI 37108254305 | PASS on a test run + by probe |
+| 201bfe69 (REBRND E6) | comments only | 23 of 28 files have identical comment-stripped ASTs, 2 are non-code, and 3 change string literals only (one demo file undisclosed); readers 34/34 | NOT_EVALUATED (no logic change) |
+| d7141e5a (REBRND E3) | a NO-PERMISSION panel instead of a bounce | `ProtectedRoute.tsx:121`; 1/1; NEG and 2 MUTs fail; F49-AC4 32/32 at the parent, 31/32 from this pin on | PASS on a test run; adds 1 failure (row DSGN_REBRND-S13) |
+| d8d236a0 (REBRND S10) | Equity blue400 5.89:1, Structured pink400 5.65:1 | `chartColors.ts:545-549`; 4/4; NEG and both hex MUTs fail; this seat's WCAG on #192643: 5.886 and 5.650 (old #3b82f6 4.069) | PASS on a test run; row S10 remedied on DEV |
+| 71a946e3 (REBRND 4b) | secondary ink 8.14:1 footer, 6.87:1 body | `PanelFooter.tsx:102`; 1/1; NEG and 2 MUTs fail; the served token is #A8B1C2 (`design/themes/opal-capital.css:28`), not the cited #A8B0C0: 8.19 strip, 6.91 body, 5.69 tile; white/40 0 times in Positioning's 15 source files | PASS on a test run |
+| 46aeea17 (REBRND 4c) | Satellites footers use the footer date format | `formatPanelTimestamp` (`dateUtils.ts:527`), as Models and ETFs already did; 1/1; NEG fails; MUT `formatPanelTimestamp(null, null)` at `HoldingsTab.tsx:307` survives (arm (a) is a source regex) | PASS on a test run (the formatter); footer render NOT_EVALUATED |
+| full suite | -- | DEV 46aeea17 1077 pass / 31 fail / 0 errors (1135 tests); all pins' non-test changes reverted: 1065 / 43 / 3; 0 tests fail at head and pass reverted. The revert cannot see the committed-blob tests, so d7141e5a was checked against its parent separately | -- |
+
+**Other observations.**
+- Untested legs, row S55's class: item 92's refill submit, item 93's live-client read, and the value 46aeea17 passes to
+  the formatter.
+- fe-s-90 CONTROL 3 failed once and passed at three later heads (flaky).
+
+**Limits.**
+- Tests, static renders and probes only; no clicks.
+- The workspace contracts are CLOUD HEAD 2cc72c270e's.
+- DEV moved to fb5534f8 during the read, not graded.
+- `git -C portal status` reads 15 lines before and 15 after.
+- Read by a delegate of this seat.
+
+-- 3.0.0_SA_CVO
+
+## Grades, 10:5xZ-12:3xZ 2026-10-03 -- portal DEV fb5534f8 through b0b3c524 (6 pins; ~D msgs 104605-104610)
+
+Graded in scratch worktrees (a sparse workspace copy with the portal nested), removed after. None of these pins is on PROD
+(6169edd9). Every CI run concluded success; CI runs no unit tests.
+
+| pin | claim | this seat's read | grade |
+|---|---|---|---|
+| fb5534f8 | with 6+ books the percentage labels sit beside the bar; the five-book layout is byte-identical | `PositioningSummary.tsx:1188,1380`; 1/1; NEG fails both arms; render probe: 5- and 4-book markup byte-identical at parent, pin and tip, 8-book differs in exactly 16 elements; CI 37116673391 | PASS |
+| cbfbb77a | daylight saving decided for New York, not the viewer's zone | `dateUtils.ts:333-344`; 1/1 under UTC, Los Angeles, New York, Tokyo; NEG fails; 3 MUTs killed; 17 dates across the March and November changeovers (2026, 2027) against an independent New York check: 0 wrong at the pin, 4-9 wrong at the parent; CI 37117501484 | PASS; the message's "US-zone viewer unchanged" is false on changeover days, where the change corrects them |
+| 55560835 | RSI and Fear & Greed show ERROR; the endpoint no longer fabricates 50 | 1/1; NEG fails; MUT "endpoint returns 50" killed; MUT on the gauge's `: 50` survives; CI 37118751941 | PASS on the claim; its process-wide `mock.module` of React Query errored 4 tests in 4 files (iv-e-101, -16, -38, -57) until b0b3c524 |
+| a7b16628 | Daily Cloud, Trending, Performers show ERROR; the keyword endpoint no longer returns [] | arms a-f pass; NEG fails d-f; 4 MUTs killed; page wiring `failed={false}` survives; CI 37119845342 | PASS |
+| 564a8f95 | the RSI hook no longer invents 50 | no committed test; probe through RSIBars and the real hook: a missing class gives ERROR at the pin, 50 drawn (and a TypeError on a missing segment) at the parent; a full summary draws 3 bars at both; CI 37120582863 | PASS by probe; unpinned |
+| b0b3c524 | a failed Models load is ERROR in all three /positioning panels; the market mocks are restored | 1/1; NEG fails; 2 MUTs killed; the market arms are unchanged; both pin files pass in both orders; CI 37122027543 | PASS; ends the 55560835 leak |
+| full suite | -- | b0b3c524: 1079 pass / 33 fail / 0 errors (1139); six pins' non-test files reverted: 1074 / 38; at 46aeea17: 1074 / 34; every failure at head also fails at the parent (one FE-s-90 timing flake) | -- |
+
+**Rows and notes.**
+- DSGN_IRPTV1-S56: F47-AC6 has failed since b618efc9 (on PROD).
+- W3-S4's remaining sites at the tip: 20 `?? 50` / `|| 50` sites.
+  - Values: `MarketRegimeIndicator.tsx:182-184,202-204,267`, `RSIModal.tsx:192,1002,1004,1015`, `RSIBars.tsx:52-53`.
+  - Colour or label only: `MarketRegimeModal.tsx`, `FearGreedModal.tsx`.
+  - `getAAIILatest` (`sentiment.ts:819`) fabricates 33.3/33.3/33.3 but has no live caller.
+- Untested wiring, row S55's class: `MarketPerformance.tsx` `failed`, `Positioning.tsx` `loadFailed`, and HoldingsTab.
+
+**Limits.**
+- Server-side markup probes only; no viewport or pixels.
+- bun on Windows ignores TZ, so the zones were set through a preload.
+- Process note: the delegate's `git config` wrote `core.autocrlf=false` into the shared workspace `.git/config` at
+  10:51:47Z and removed it about two minutes later. This seat re-read it at ~12:3xZ: no local value; the system true
+  applies; 0 commits landed in 10:49-10:57Z.
+- Read by a delegate of this seat.
+
+-- 3.0.0_SA_CVO
+
+## Grades, 16:5xZ-18:2xZ 2026-10-03 -- portal DEV b0b3c524..e862b0c4 (15 pins; ~D msgs 104612-104630)
+
+Graded in scratch worktrees, removed after. The shared portal status reads 35 lines before and after; no git config was
+written. None of the pins is on PROD (6169edd9). Every CI run concluded success; CI runs no unit tests.
+
+| pin | claim | this seat's read | grade |
+|---|---|---|---|
+| 94c055e8 | /attribution ERROR and LOADING | `StylePolicyComparison.tsx:161`; 1/1; NEG and MUT fail; probe: failed -> ERROR, pending -> LOADING (parent EMPTY both) | PASS |
+| c3e1d7b9 | /portfolio-management placeholders, one ERROR | 1/1; NEG fails (0.00 x28); MUT fails; the wiring `PortfolioManagement.tsx:433` is unpinned (`serviceFailed={false}` passes), the probe shows it right | PASS; pin gap |
+| 3d8cce99 | /ticket-center one ERROR, Try again, no raw JSON | no pin; probe at pin and parent; MUT caught | PASS by probe |
+| 30f7fca1 | /data-refresh History and Rollback ERROR | no pin; probe of the hook and both tabs; MUT caught; no rollback hunk | PASS by probe |
+| 075d33fa | Advisors one ERROR | probe; a no-data control is EMPTY; MUT caught | PASS by probe |
+| 10fca02d | "Connected" only once data arrives | probe on 4 partner pages; the with-data arm rendered on Cottonwood only | PASS by probe |
+| 1754d9c1 | RSI: no marker, "not published" for a missing period change | probe; the Fixed Income control still drawn | PASS by probe |
+| 4a40a0ff | RSI modal "Not published"; a real 0 stays 0 | probe: null -> "Not published", 0 -> "Oversold" (parent "Neutral" both); MUT caught | PASS by probe |
+| 6e31c220 | /positioning notices are PanelError / PanelEmpty | probe on 2 of 6 notices | PASS by probe (2 of 6) |
+| 1b8fccfd | Assets Overview ERROR | probe on 4 arms; MUT caught | PASS by probe |
+| e2563c17 | F49-AC4 counts the NO-PERMISSION panel | fe-s-49 10/10 at the pin, 9/10 at its parent; MUT 6/10 | PASS; row DSGN_REBRND-S13 answered |
+| 2da1eaaf | F47-AC6 classifies PrintEntry :83, :162 | fe-s-47 8/8 at the pin, 7/8 at its parent; MUT fails | PASS; row DSGN_IRPTV1-S56 answered |
+| 7e7f9aa2 | component tests for items 87 and 88 | 10/10; this seat's two S54 mutants (accountFilter = ownAccountFilter; sending []) both fail | PASS; row S54 answered |
+| 525c9404 | S55 four arms | 1/1; each named mutant fails its arm; the catalogue-read mutant passes (disclosed) | PASS; row S55 answered for the four arms |
+| e862b0c4 | Holdings card follows the /portfolios canon | 2/2; NEG and MUT fail; the `undrawnCardRows` rename (`DrillTree.tsx:600`) untested | PASS |
+| full suite | -- | 1145 tests: head 1088 pass / 30 fail; the pins reverted 1084 / 34 (the 4 extra are the pins' own); the same 30 fail in both | -- |
+
+**Rows.**
+- Answered in code on DEV: DSGN_REBRND-S13, and DSGN_IRPTV1-S54, S55 (four arms; the catalogue tenant still blind) and S56.
+- W3-S4 holds on every route this range touched.
+- All of these are recorded at the next compile of each channel.
+
+**Notes.**
+- iv-e-26 regenerates `contracts/wire/ExportBundle.ts` and `ExportReceipt.ts` from the workspace contract, which now
+  carries `frozen_as_of`, so the committed wire types lag the contract. This is row W41-S2's class, and the likely source
+  of the "uncommitted wire-contract edits" row S59 attributes elsewhere.
+- Ticket Center shows "No open tickets." on its first render, before the load starts.
+
+**Limits.**
+- Server-render probes only.
+- The /attribution empty-data case (0.00 weights) was not re-measured.
+- Read by a delegate of this seat.
+
+-- 3.0.0_SA_CVO
+
+## Grades, 18:4xZ-19:2xZ 2026-10-03 -- the B2 PROD promote (98a98e70, portal-v2.1.197) and DEV to 7b265fc4
+
+PROD 98a98e70 (merged 18:33:53Z by 0.0.0_AB_MSTR on Andrew's word) has a tree equal to 2f326afc. Deploy to Production run
+37144813955 succeeded; the site's index.html was rewritten at 18:38:19Z; the shipped JS carries the summary route,
+`performance_source`, `frozen_as_of`, `version_id` and "Sleeve: ".
+
+| pin | claim | this seat's read | grade |
+|---|---|---|---|
+| 19796bc0 (B1 merge) | lands the P-3/P-6 branch unchanged | a scratch re-merge gives an identical tree; 8 clean auto-merges; 24 files = the 6 commits' files; on PROD | PASS |
+| 0410f358 (P-3) | the picker reads the client summary, falling back to the account manifests | iv-e-155 1/1; NEG 0/1; MUTs at `pickerSuffix.ts:94` and on the fallback killed | PASS |
+| 79e7cfc8 (P-6 print) | a print naming its account reads PATH B | iv-e-158 2/2; NEG fails; MUT on the dispatch killed | PASS |
+| 16f5c8ea (P-6 export) | the export sends `performance_source`, naming no retained report | iv-e-159 1/1; NEG fails only as an import error; MUT dropping the field killed | PASS (the MUT carries it) |
+| c16a31e9 | the export's print reads the frozen version | NEG 0/2; MUT killed | PASS |
+| b847c9f0 | the receipt shows the frozen as_of | iv-e-162 1/1; NEG and MUT fail | PASS |
+| 426761e4 | iv-e-162 typecheck | test-only; CI success | PASS |
+| 2f326afc (Andrew-direct) | chips read "Sleeve:", plus "Sleeve: Client" | 3/3; NEG and MUT 0/3; on PROD | PASS |
+| 3a842221, a6a77e31, 6cb31b54, cc1d7cc6, 7b265fc4 (DEV only) | regime no-reading; wiring tests (this seat's untested-wiring note); auth error state; /factor-tilts one state; merge | each 1/1 or 2/2 with NEG and MUT failing; clean re-merge | PASS |
+| full suite | -- | DEV head 991 pass / 35 fail / 7 errors (partial checkout); the code changes reverted 981 / 45 / 9; 0 regressions | -- |
+
+**What a PROD viewer gets (read via read-only AWS, no signed-in walk).**
+- The summary route (`entry.py:92`, `:373`) is live on the gateway behind irpt-49f-reporting-read-lambda, whose deployed
+  hash equals the workspace's. S3 holds 4,241 client summaries.
+- The account route, with `version_id` on the series read, is live.
+- The export submit, receipt and download routes are live on irpt-export-render, which handles `performance_source` and
+  `frozen_as_of`.
+- No UI path calls an undeployed route.
+- B3 (PATH A retired for 49F) is not deployed: irpt-performance-adapter still runs the old code, so PATH A remains a
+  fallback.
+
+**Rows and notes.**
+- IRPT_DASHBD-S23: routes.json omits both live reporting routes.
+- cc1d7cc6 converts `FactorTilts.tsx` CRLF to LF, so a 41-line fix diffs as 507 lines.
+- The wire-regeneration class is row W41-S2's.
+
+**Limits.**
+- No signed-in walk; the edge validator :22 and the render grant come from the ledger.
+- Some NEGs ran at the commit, because the revert did not apply at head.
+- Read by a delegate of this seat.
+
+-- 3.0.0_SA_CVO
+
+**Correction (19:2xZ).** Row IRPT_DASHBD-S23's `surfaced_at` reads 2026-10-03T19:25:00Z, ahead of the clock: the row was
+committed at about 19:18Z (d040623b6e). Nothing in the row changes.
+
+-- 3.0.0_SA_CVO
+
+## Grades, 19:5xZ-20:1xZ 2026-10-03 -- portal DEV after 7b265fc4 (fb9f1fb6, 2c01795e, 557862f1; ~D msgs 104705, 104710)
+
+None of these is on PROD (98a98e70). CI Build & Validate succeeded on each (runs 37147584848, 37148602158, 37149541927); CI
+runs no unit tests.
+
+| pin | claim | this seat's read | grade |
+|---|---|---|---|
+| fb9f1fb6 | a refused export names itself | `ExportButton.tsx:284-288`, `submit.ts:358-362`; pin 1/1; the 25 export test files 55/55; NEG fails; MUT (null for the error) fails | PASS |
+| 2c01795e | the export preview carries the print stylesheet | `Preview.tsx:58`; pin 1/1 (a source check); bundle probe (`bun build` of Preview): at the pin 54 modules plus a 6.5 KB stylesheet carrying `.ir-endpoint-label`, `.ir-h3`, `@page`; at the parent 53 modules and no stylesheet; MUT (the import commented out) passes the pin but drops the stylesheet | PASS, measured by the bundle; the pin alone does not discriminate |
+| 557862f1 | the Performance tab skips the PATH A read when PATH B serves | `ReportingTab.tsx:490-497,692,745`; pin 1/1; NEG fails; MUT and both-inverted pass everything | holds by reading; row IRPT_DASHBD-S24 |
+
+**Context.**
+- The export refusal on PROD that the leg-V walk found (`DEPENDENCY_UNAVAILABLE`) is ~P's row IRPT_BCKEND-S307 (BLOCKING,
+  ARMED: the authorizer has no reporting-series entry in RENDER_ROUTE_CLAIMS). fb9f1fb6 makes it visible on DEV only.
+- iv-e-69 (UIC-08) fails at DEV head independent of these pins.
+
+**Limits.**
+- No signed-in walk.
+- The bundle probe used bun build, not Vite.
+- Read by a delegate of this seat.
+
+-- 3.0.0_SA_CVO
+
+## Grades, 20:4xZ-21:1xZ 2026-10-03 -- portal DEV after 557862f1 (head 49c6e94a; ~D msgs 104723, 104744)
+
+| pin | claim | this seat's read | grade |
+|---|---|---|---|
+| 49d0a98a | the receipt poll counts every read | `submit.ts:288,319,324`, `ExportButton.tsx:269`; pin 1/1; export set 14 pass / 2 skip / 0 fail; NEGs fail; MUT (in-loop onAttempt dropped) fails; MUT `stillBuildingReason(0)` survives (arm (c) is a source regex); CI 37150638360 success | PASS |
+| f2d2f17c (row S24's remedy) | the PATH A skip fires only on the account's own served dashboard | `ReportingTab.tsx:747` (the picker at :692 keeps the summary); pins 2/2; 45 ReportingTab files 107 pass / 1 fail (iv-e-69, pre-existing) / 1 skip. Planted by this seat's delegate: inverted fails a, b, c; pre-S24 code fails c; no-skip fails b, so all three author claims reproduce; S24's original `!pathBServes` mutant fails a and b; CI 37152051398 success | PASS; row IRPT_DASHBD-S24 answered (the Loading-hang removal is established by reading: the pin counts requests, it does not render the body) |
+| 0e595418, 49c6e94a | merges | each tree equals git's own merge result | integrity PASS |
+| DEV head 49c6e94a CI | -- | run 37152260084 FAILURE: ESLint `no-empty-object-type` at `WhatChangedPanel.tsx:395`, from 7598a3b2 (DSGN_AMGTV1 AV-zg-5, worker ~84, 10-02), first reaching CI through 0.0.0_AB_MSTR~Z's push of DSGN_AMGTV1 rounds 29-32; reproduced locally; the IRPT pins did not cause it | DEV CI RED |
+
+None of these is on PROD (98a98e70).
+
+**Notes.**
+- DEV CI is red on a site-Z project's commit. VALGATE runs on every push, so the next PROD promote fails until it is fixed.
+  Told to 1.0.0_SA_CTO for routing to site Z; this seat files no row in the Z-namespaced DSGN_AMGTV1 channel.
+- About 27 DSGN_AMGTV1 commits (rounds 29-32, be4e019d..945d5db6) were checked for merge integrity and CI only, not graded
+  on content: they are site Z's.
+- Shared git config: `extensions.worktreeConfig=true` is now set in both the workspace and the portal git config (the
+  workspace config was last written 20:35Z, during this seat's delegate's sparse worktree setup, so the delegate most
+  likely added it). No worktree carries a `config.worktree` file, so git behaves as before. Left as is and disclosed here;
+  later delegates of this seat will not run `sparse-checkout init` in the shared repo.
+
+-- 3.0.0_SA_CVO

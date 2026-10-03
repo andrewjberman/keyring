@@ -1,0 +1,43 @@
+ssm 06b57985-4b88-4298-a519-f261c0d1400b Success rc 0
+install script sha256 verified on the host at 2026-10-03T03:04:23Z
+before: active=active root=/opt/irpt-resident/34088050e0-st16 library=857d90b81960d69a
+package SHA256SUMS OK (251 members)
+host members 3678 manifest_sha 31f49d18d0ff3b28f466d57b99fef2b212cfe16d66202bdcc63d023311d61be2
+queue visible/in-flight before the library swap: 0 0
+factory OK: ['assembly', 'queue_url', 'sqs'] enrolled 1276035
+queue visible/in-flight: 0 0
+resident service active; verify installed digests and the real browser-to-report trace
+install 828c37c6f7-st17 rc=0
+active=active polls_30s=2 tracebacks_30s=0
+final active: active
+MainPID=479288
+NRestarts=0
+ExecStart={ path=/usr/bin/python3.12 ; argv[]=/usr/bin/python3.12 /opt/irpt-resident/828c37c6f7-st17/ycharts/generate/resident_main.py --factory resident_installed:build_resident_runtime ; ignore_erro
+ActiveEnterTimestamp=Sat 2026-10-03 03:04:34 UTC
+2026-10-03T03:04:33+0000 ip-172-31-87-2.ec2.internal python3.12[476763]: IRPT_RESIDENT_POLL handled=0
+2026-10-03T03:04:33+0000 ip-172-31-87-2.ec2.internal systemd[1]: irpt-analysis-resident.service: Deactivated successfully.
+2026-10-03T03:04:33+0000 ip-172-31-87-2.ec2.internal systemd[1]: Stopped irpt-analysis-resident.service - IRPT resident Analysis worker.
+2026-10-03T03:04:33+0000 ip-172-31-87-2.ec2.internal systemd[1]: irpt-analysis-resident.service: Consumed 1.221s CPU time.
+2026-10-03T03:04:34+0000 ip-172-31-87-2.ec2.internal systemd[1]: Started irpt-analysis-resident.service - IRPT resident Analysis worker.
+2026-10-03T03:04:55+0000 ip-172-31-87-2.ec2.internal python3.12[479288]: IRPT_RESIDENT_POLL handled=0
+running root /opt/irpt-resident/828c37c6f7-st17
+running current_authority 5291b3be7e0006ade14db553caa78aa74fc6c91f638e63077a1be15607f16dec allowedFirmIds mentions 6
+running worker f2b22b672543d5a4e2dc18357ea1cd1a383ceb0517b400282a1a1aba2bf5286c PERMANENT_AUTHORITY_REFUSALS mentions 3
+running reader 0ec4a717f2aa2c127df62f5bf0f0f3f56164359875b992620b2006e3d4af9557 host library 857d90b81960d69a7a6700be6fffe33d86628694aef95f8cfb64aca7a82cb839
+install script rc=0 at 2026-10-03T03:04:59Z
+V1 running root /opt/irpt-resident/828c37c6f7-st17
+V1 resident_worker f2b22b672543d5a4 READ_BACK_CALCULATING_VISIBILITY_S mentions 0 keep_vendor_requests mentions 2
+V1 broker 96f0e7782c106d49 durable_job b5192fa2a1d4d5c0 append_vendor_requests mentions 1
+V1 st11 resident_worker RESOLVE_BUSY_DEADLINE_S mentions 2 resolution_broker 29c86578a4e20d95 last_retry_after mentions 5 uploads f88bdb9027896207
+V1 st12 operation_lease 2519834356b2d7a4 _keep_rotation mentions 3 transport d8cdbf3907a7d149 rotated_cookies mentions 3 owned_requests e7a36ceaac945629 read_memo f6117f2d9c02207d
+V1 st13 host library 857d90b81960d69a YC_ATTENDED mentions 3 holdForPerson mentions 2; Xvnc /usr/bin/Xvnc; listening on 5901: [0]
+V1 st14 security_resolution 7dfec008950c39ec FUND_NAMESPACE mentions 2 portfolio d81c071e2ba3213e normalized_input b760f67e60f40e8f resident_worker f2b22b672543d5a4 IRPT_RESIDENT_RESOLVE_FUNDS mentions 1
+V1 st15 maintained_sources 585950a53879574d CLASSIFIED_ETF mentions 5 request_composition 15b622b7a5f373a0 recipe ba4c213134b40ecc step_comparison_identity mentions 1 resident_worker f2b22b672543d5a4 gated= mentions 1 security_resolution 7dfec008950c39ec
+V1 st16 portfolio d81c071e2ba3213e TICKER_DATA_NOT_ENTITLED mentions 2 uploads f88bdb9027896207 template_corrections mentions 2 status cb3b2ea620f83090
+V1 st17 kimi_port 03b6c102cab12e98 upload_suggestions ca6fc141bba564fa resident_worker f2b22b672543d5a4 _check_gate mentions 2 resident_session ea9d7ea9c21794d1 uploads f88bdb9027896207
+V1 current_authority 5291b3be7e0006ad is_service mentions 2
+V1 host_capture 8288e724e843cb89 extract c4c4908338fdce62 resident_session ea9d7ea9c21794d1 recipe ba4c213134b40ecc READ_BACK_POLLS line [1]
+V1 host library 857d90b81960d69a reason tokens 22 wrapper 55ddb8f7947cba7c
+V1 unit active since Sat 2026-10-03 03:04:34 UTC
+V1 queue 0/0
+

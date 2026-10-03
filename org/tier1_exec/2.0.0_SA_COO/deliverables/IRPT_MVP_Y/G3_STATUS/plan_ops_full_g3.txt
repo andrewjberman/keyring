@@ -1,0 +1,94 @@
+data.terraform_remote_state.core: Reading...
+data.aws_caller_identity.current: Reading...
+module.irpt_status.data.aws_s3_object.artifact: Reading...
+data.aws_iam_policy_document.assume: Reading...
+data.aws_dynamodb_table.service_profile_users: Reading...
+data.aws_iam_policy_document.irpt_status_ownership_map: Reading...
+module.irpt_status.aws_cloudwatch_log_group.lambda: Refreshing state... [id=/aws/lambda/irpt-status]
+data.aws_iam_policy_document.irpt_status_ownership_map: Read complete after 0s [id=2300614572]
+data.aws_iam_policy_document.assume: Read complete after 0s [id=2690255455]
+aws_iam_role.irpt_status: Refreshing state... [id=irpt-status-role]
+data.aws_caller_identity.current: Read complete after 1s [id=313476888478]
+module.irpt_status.data.aws_s3_object.artifact: Read complete after 5s [id=opal-313476888478-lambda-artifacts/investor-reporting/irpt-status.zip]
+data.terraform_remote_state.core: Still reading... [10s elapsed]
+aws_iam_role_policy.irpt_status_ownership_map: Refreshing state... [id=irpt-status-role:irpt-status-ownership-map-read-policy]
+data.aws_dynamodb_table.service_profile_users: Read complete after 8s [id=opal-users-v2]
+aws_iam_role_policy.irpt_status_service_profile_read: Refreshing state... [id=irpt-status-role:irpt-status-service-profile-read-policy]
+data.terraform_remote_state.core: Read complete after 11s
+data.aws_iam_policy_document.irpt_status_render_grant: Reading...
+data.aws_iam_policy_document.irpt_status: Reading...
+data.aws_iam_policy_document.irpt_status_render_grant: Read complete after 0s [id=513108702]
+module.irpt_status.aws_lambda_function.this: Refreshing state... [id=irpt-status]
+data.aws_iam_policy_document.irpt_status: Read complete after 0s [id=3702286412]
+aws_iam_role_policy.irpt_status: Refreshing state... [id=irpt-status-role:irpt-status-policy]
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+  ~ update in-place
+
+Terraform will perform the following actions:
+
+  # aws_iam_role_policy.irpt_status_render_grant_read will be created
+  + resource "aws_iam_role_policy" "irpt_status_render_grant_read" {
+      + id          = (known after apply)
+      + name        = "irpt-status-render-grant-read-policy"
+      + name_prefix = (known after apply)
+      + policy      = jsonencode(
+            {
+              + Statement = [
+                  + {
+                      + Action   = "s3:GetObject"
+                      + Effect   = "Allow"
+                      + Resource = "arn:aws:s3:::opal-data-ycharts/firms/*/generations/exr_*/render_grant.json"
+                      + Sid      = "ReadOnlyRenderGrants"
+                    },
+                  + {
+                      + Action    = "s3:ListBucket"
+                      + Condition = {
+                          + StringLike = {
+                              + "s3:prefix" = "firms/*/generations/exr_*/render_grant.json"
+                            }
+                        }
+                      + Effect    = "Allow"
+                      + Resource  = "arn:aws:s3:::opal-data-ycharts"
+                      + Sid       = "ListOnlyRenderGrantShapes"
+                    },
+                ]
+              + Version   = "2012-10-17"
+            }
+        )
+      + role        = "irpt-status-role"
+    }
+
+  # module.irpt_status.aws_lambda_function.this will be updated in-place
+  ~ resource "aws_lambda_function" "this" {
+        id                             = "irpt-status"
+      ~ last_modified                  = "2026-10-03T04:28:06.000+0000" -> (known after apply)
+      ~ s3_object_version              = "4CQOSM.R8WDlZQ.ts0HCSiH2JkA6jqQ8" -> "In5BnMbPSWafGWf16g4CasBPJRhM.Ykl"
+      ~ source_code_hash               = "6VQejBfsI/P3mfAVSFjLt/ythlcxXxi12cy9hxXhKNg=" -> "hC6PramtsshP40jo3OJ91k4qxlHndylJWxHLIjIdw/E="
+        tags                           = {
+            "Cell"      = "IB-s-16"
+            "ManagedBy" = "Terraform"
+            "Module"    = "yang-lambda"
+            "Project"   = "IRPT_BCKEND"
+            "System"    = "InvestorReporting"
+        }
+        # (28 unchanged attributes hidden)
+
+      ~ environment {
+          ~ variables = {
+              + "IRPT_EVIDENCE_BUCKET"      = "opal-data-ycharts"
+                # (4 unchanged elements hidden)
+            }
+        }
+
+        # (3 unchanged blocks hidden)
+    }
+
+Plan: 1 to add, 1 to change, 0 to destroy.
+
+─────────────────────────────────────────────────────────────────────────────
+
+Note: You didn't use the -out option to save this plan, so Terraform can't
+guarantee to take exactly these actions if you run "terraform apply" now.

@@ -57,10 +57,11 @@ leg S), and one Cottonwood selection holding SPYI / PSLV ties (ledger `secclass-
 3. **Batch 178 item (2):** once 2.0.0_SA_COO~D's H-1 (dropping the "Smaller holdings" tile) lands, read the distinct-
    security count for the proof snapshots (49 Financial's largest client and one Cottonwood client), and bring brief 3
    item 1.4(d), the TARGET fold, back as its own ask with that measurement.
-4. **multi_asset readers packet** (batch 164): producer + contract on CLOUD; Advisor Intelligence readers portal
-   6245e92d at CTO review (msg 18:07Z); ~D's half on DEV 7bcedf1b. Then the packet's deploy halves (producer, the
-   `irpt-holdings` re-stage), PROD readers, and only then the rows.
-5. The -0.0 fix @38b72bf469 rides the next `irpt-holdings` move and is named in that move's half (held).
+4. **multi_asset readers packet** (batch 164): producer + contract on CLOUD; Advisor Intelligence readers on portal DEV
+   90a31d7d; ~D's half on DEV 7bcedf1b. CTO batch 183: no producer re-mint now; when a portal PROD promote carries the
+   readers, ONE packet ships the producer re-mint (every changed member attributed to its owner) WITH the rows, and this
+   seat's holds 103971 and 103981 are released by their own conditions.
+5. The -0.0 fix @38b72bf469 is LIVE: the deployed `irpt-holdings` (tS/APci3...) carries it (ledger `irpt-inf-split-positions-m-20261001` leg R, 2026-10-01 20:13Z; measured from that leg's proof). The route reads its staged contract only for block presence (`snapshot.py:228`), never to validate a served enum, so the contract pin rides the rows packet (asked of the CTO, 20:1xZ).
 
 ## Dependencies
 

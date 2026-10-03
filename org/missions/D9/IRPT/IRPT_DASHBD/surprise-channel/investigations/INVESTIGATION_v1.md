@@ -860,3 +860,567 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "notes": "For the L9 reader: a future per-use word should name the session-token GET as part of the pull. Also recorded, no action taken: 0084073310's first segment 2026-03-20..2026-08-04 (94 days, Opal +24.23%, BD +23.97%) precedes the roster trade_start_date 2026-08-05, and BD agrees with the gold over it. Owner: 2.0.0_SA_COO~P."
 }
 ```
+
+## IRPT_DASHBD-S22 -- the tie-out's largest disagreement has no stated reason; the income signs differ
+
+```json
+{
+  "id": "IRPT_DASHBD-S22",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-02T18:45:00Z",
+  "one_line": "The round-4 tie-out's largest disagreement (0027265115, 2026-06-25..07-06, Opal +3.4935% against Black Diamond +2.2806%, 1.21 points over 7 like days) carries no stated reason, and its cause is findable: Opal books income +0.4627% on 06-25 alone, while Black Diamond reports the window's income as -2,470.31 on an account that is about 47 pct short. None of the 14 pairs carries a reason field.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's re-derivation (2026-10-02 18:3xZ): served gold opal-data-49financial/irpt/49financial/gold/account_return_daily, 7 of 7 trading days 06-25..07-06 for 0027265115, total_return_daily linked = +3.4935% (equal to the record); income_return 06-25 = 0.004627, other days 0.000001-0.000153; return_basis TWR on 7 of 7",
+      "RAW_BD_PERIOD_0027265115.sanitised.json.gz (deliverables/0.9.0_WK_IRPT_DASHBD~1), dateRangePoints[3] 2026-06-25..07-06: timeWeightedReturns.return 0.022805706 (equal to the record), daysHeld 7, income -2,470.31, netAdditions 4,402.22, fees 0.0; the as-of point (2026-10-01) shortAllocation 0.4729",
+      "TIEOUT_49F_BLACKDIAMOND_R4.json: 14 pairs, keys account..abs_diff; no reason field on any pair"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-8 ACCEPT: the two returns agree within a tolerance Andrew accepts and every day they disagree carries a stated reason (C-TIEOUT: flow timing, missing price, income date).",
+  "world_is": "Agreement is good on most windows (median 0.16 pct) but the disagreeing windows are unexplained, and the largest has an income-sign difference: positive income in Opal where Black Diamond nets income negative, as a short book paying dividends would (inferred: the short allocation was read at 10-01, not in June). If Opal counts dividends received but not dividends paid on shorts, the method overstates income for short-heavy accounts.",
+  "notes": "INERT for the served page until the dashboard figure reaches clients through the read route. Owner 2.0.0_SA_COO~P (the tie-out's reasons; the income treatment of short positions in the producer). The tolerance itself is 1.0.0_SA_CTO's to rule (PRD Q2)."
+}
+```
+
+## IRPT_DASHBD-W1-S12 -- TO-DB-b-11: 885 of the 7,570 population accounts carry no positive value on the newest day, so the producer emits 6,686 rows and the publisher (which publishes the newest gold partition's accounts) would give them no manifest
+
+```json
+{
+  "id": "IRPT_DASHBD-W1-S12",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1",
+  "surfaced_at": "2026-10-02T20:10:00Z",
+  "one_line": "TO-DB-b-11: the holdings population at date=2026-10-01 is 7,570 accounts, but 885 of them have no positive whole-account value on that day, the producer yields 6,686 rows for it, and reporting-publish takes its account set from the newest GOLD partition, so those 885 accounts (875 NO-PRIOR-HOLDINGS) get no manifest or series; P-1 says every 49 Financial client.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order and the fold-in P-2: every 49 Financial account in the holdings population gets a published manifest and series; the account set is never fewer than the newest reporting partition's.",
+  "world_is": "MEASURED 2026-10-02: population 7,570 (holdings_performance_daily date=2026-10-01, 7,570 distinct ids); dim_balance net_mv_plus_cash sums positive for 6,685 of them and not for 885 (0 absent from dim_balance; holdings status NO-PRIOR-HOLDINGS 875, NON-POSITIVE-BASE 6, ALL-HOLDINGS-EXCLUDED 3, OK 1); the producer over all 7,570 yields 6,686 rows on that day (compute is by design: an account with no positive value has no return). The gold account set (this build) is the full population, but a zero-value account has no row, and the publisher reads wanted = newest gold partition's accounts, so a closed or unfunded account that HAS earlier history gets no refreshed series. Whether the page must show those clients is the issuer's and CVO's call.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1/P2_SCALE_R5.json population + producer blocks",
+      "infra/aws/lambda/investor-reporting/reporting-publish/handler.py _newest_accounts (the publisher's account rule, unchanged by this build)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No action taken. A candidate for the packet: publish the union of every account in any gold partition (history), not only the newest. Owner: 2.0.0_SA_COO~P."
+}
+```
+
+## IRPT_DASHBD-W1-S13 -- TO-DB-b-11: the deployed reporting-publish Lambda is timeout 300 s / 1024 MB (the order's limit is 900), and the shard fan-out needs lambda:InvokeFunction on itself, which the role was not shown to hold
+
+```json
+{
+  "id": "IRPT_DASHBD-W1-S13",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1",
+  "surfaced_at": "2026-10-02T20:10:00Z",
+  "one_line": "TO-DB-b-11: reporting-publish is deployed at timeout 300 s and 1024 MB (reporting-publish/lambda.tf:44-45), not the 900 s of the order and AC1; the one-invoke publish at 7,570 accounts needs 1,582 MB peak and ~450 s, so the build shards it (8 invokes of ~947 accounts, ~67 s and ~392 MB each) and a scheduled fire self-invokes once per shard, which needs lambda:InvokeFunction on the function's own ARN.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order: 'lambda_timeout_s 900, and how the publisher stays under it'; BOUNDS: no Terraform and no IAM change in this cell.",
+  "world_is": "MEASURED: reporting-publish/lambda.tf timeout 300, memory 1024 (held); the live publish fire 2026-10-02 used 241 MB and 14.5 s at 6 accounts; the local whole-population in-memory run peaked at 1,582 MB. The fan-out raises on a refused self-invoke (it never half-lands silently), so a missing permission fails the daily fire LOUDLY, not silently. The shard split is a stable crc32 hash of the account id, so each account is in exactly one shard whatever the population is when the shard runs.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/reporting-publish/lambda.tf:44-45 timeout 300, memory_size 1024",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1/P2_SCALE_R5.json publisher block; p2_publisher_measure_r5.py output"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer's packet: grant the publish role lambda:InvokeFunction on its own function (or replace the self-invoke with 8 EventBridge targets carrying {shard, shards}); no timeout or memory change is needed at the measured numbers. Owner: 2.0.0_SA_COO~P."
+}
+```
+
+## IRPT_DASHBD-W1-S14 -- TO-DB-b-11: the reporting-gold handler's resume rule only extends past the newest landed day, so the backfill of the new accounts into the 562 landed partitions is not an act this function can perform
+
+```json
+{
+  "id": "IRPT_DASHBD-W1-S14",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1",
+  "surfaced_at": "2026-10-02T20:10:00Z",
+  "one_line": "TO-DB-b-11: after the account-set widening deploys, the daily fire adds the population from the NEXT day only; the 562 landed partitions (2024-07-08..2026-10-01) hold 6 accounts, and handler.run() computes only days after the newest landed one, so history for the other ~7,560 accounts needs a separate rewrite of 562 served partitions (a never-widen act).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order: the backfill and the deploy are the issuer's packet; this cell records a plan that respects the Lambda limit.",
+  "world_is": "MEASURED: account_return_daily holds 562 partitions of 6 rows each at date<=2026-10-01; reporting-gold/handler.py run() takes days from select_days(newest_landed, today) and refuses when the gold holds no partition; its CLI is --local only. The plan recorded in P2_SCALE_R5.json backfill.plan is a driver composing handler.compute() with the producer's emit_day over the explicit population in 23 chunks of <=25 days, in-region (laptop link measured ~35 KB/s, ~12 h), ~1.1 h upper bound, under a ledger and a sign-off with DELTA=0 on the 6 served accounts.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py run() and select_days (resume rule)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1/P2_SCALE_R5.json backfill block"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No handler change made for it (outside the order). Also recorded: the laptop could not run the 561-partition inception scan (single 578 KB GET 2.7-50 s), so the producer's laptop seconds are a scaled measurement; the Lambda numbers are projected from the live fire's CloudWatch REPORT lines. Owner: 2.0.0_SA_COO~P."
+}
+```
+
+## IRPT_DASHBD-W1-S15 -- TO-DB-b-12: the directory carries OPAQUE ids (cli_/acc_) while the platinum series are keyed by the custodian number, so the summary joins them through the one normalizer and is keyed by the opaque client id
+
+```json
+{
+  "id": "IRPT_DASHBD-W1-S15",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1",
+  "surfaced_at": "2026-10-02T22:45:00Z",
+  "one_line": "TO-DB-b-12: the order says `client` is 'its id and its account ids, from the 49 Financial directory'; the directory's account ids are opaque (acc_<24 hex>) and the published series sit under account=<10-digit custodian number>, so the summary cannot be built from the directory and the series alone without minting each published account's opaque id (_ids/ids.py opaque_account, the same join reporting/entry.py raw_account_for makes). The summary therefore carries the directory's opaque ids, its address is client=<cli_ id>, and the custodian number is never written.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order: build_client_summary(client, accounts); accounts holds each account's built series and manifest; no key-space statement.",
+  "world_is": "MEASURED: directory 2026-09-24 (4,620 entries, 4,620 client ids, 7,576 account ids, all opaque); the 6 published raw keys mint to 6 opaque ids and all 6 are in the directory (published_accounts_not_in_directory = 0 in CLIENT_SUMMARY_R5.json). The caller keys `accounts` by the client's account id; the dry run does the mint. The directory pointer's own vintage is 2026-09-24 (latest.json written 2026-09-25).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting/entry.py:188-196 raw_account_for",
+      "infra/aws/lambda/investor-reporting/_ids/raw_keys.json 49financial.account",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1/client_summary_dryrun_r5.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the issuer's packet: the publisher's deployed path must do the same raw->opaque mint when it writes summaries (publisher.py stays pure and takes the already-joined map). The summary's contract file should name the key space. Owner: 2.0.0_SA_COO~P."
+}
+```
+
+## IRPT_DASHBD-W1-S16 -- TO-DB-b-12: a window holding a NOT_MEASURABLE (null-return) day is null with status BREAK, so 5 of the 6 published accounts have a null SI today; the order only said 'null when the series does not span it'
+
+```json
+{
+  "id": "IRPT_DASHBD-W1-S16",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1",
+  "surfaced_at": "2026-10-02T22:45:00Z",
+  "one_line": "TO-DB-b-12: the order defines null only for a window the series does not span. Five of the six published series carry null-return days after the inception day (3 to 11 each), and a link across one is not a geometric link of the series. The worker's rule: such a window is null with window_status BREAK (never bridged, never zero-filled), and each account carries window_status {MEASURED|NOT_SPANNED|BREAK} per window so a consumer can reject on the reason; the client also lists unpublished_account_ids so a partial client never reads as whole. These three keys are additions to the order's list.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order: 'A window is null when the series does not span it, never a partial'; the series contract: a null total_return_daily 'breaks the link with a stated gap'.",
+  "world_is": "MEASURED on the 6 published series (.scratch pull 2026-10-02): null-return days after day 0 = 0, 10, 8, 5, 2, 4 for the six accounts; in the dry run, an account whose gap lies inside the window answers BREAK (example in CLIENT_SUMMARY_R5.json shape: SI BREAK, QTD MEASURED). The tests pin: spans -> MEASURED equals the geometric link; not spanned -> NOT_SPANNED; a gap -> BREAK in every window that contains it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-publish/publisher.py window_return",
+      "infra/aws/lambda/investor-reporting/reporting-publish/tests/test_client_summary.py",
+      "org/standards/IRPT_DASHBD_SERIES_CONTRACT.json (null rule)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "If the issuer wants a window linked across a stated gap instead (a figure with a gap count), that is a rule change here and in the page. Owner: 2.0.0_SA_COO~P."
+}
+```
+
+## IRPT_DASHBD-W1-S17 -- TO-DB-b-13: the S22 income fix admits the debit leg of QDV, NDV and PDV only; the plain DIV key is left out because one of its 39 debit rows in 2026 is a long fund with zero shares, and the column that would separate them is not declared
+
+```json
+{
+  "id": "IRPT_DASHBD-W1-S17",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1",
+  "surfaced_at": "2026-10-02T23:20:00Z",
+  "one_line": "TO-DB-b-13: the S22 income fix admits the debit leg of QDV, NDV and PDV only; the plain DIV key is left out because one of its 39 debit rows in 2026 is a long fund with zero shares, and the column that would separate them is not declared",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order: 'Fix the treatment by the code, not by account. Long positions' income does not move'; refusal clause: a fix that moves any account without a short position is a defect.",
+  "world_is": "MEASURED over the 188 fact_trn partitions 2026-01-02..2026-10-01 (SHORT_INCOME_INVARIANCE_R6.json and a scratch census): debit rows on FC/DV by key: QDV 592 and NDV 22, every one with a negative dividend_interest_share_quantity (a short position's dividend); DIV 38 with negative shares and 1 with zero shares (0.37, a long fund, account-day with no short market value); adjustment keys (DIVAJ, DFRAJ, NDVAJ, NDRAJ ...) are debits too, 5,000+ rows, which REVERSE an earlier credit and stay out. Admitting DIV by key alone would move that one no-short account-day by -0.37, which the refusal clause forbids; admitting it by share quantity needs dividend_interest_share_quantity declared as a read column, and sources.json is outside this order's paths. Short-account DIV debits (38 rows, 822.51 absolute in 2026) therefore stay unbooked as income.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1/SHORT_INCOME_INVARIANCE_R6.json",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py SHORT_PAID_DIVIDEND_KEYS",
+      "data/assets/scripts/gold/irpt_reporting/sources.json (transaction_columns derives the read set from this file)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner: 2.0.0_SA_COO~P. To admit DIV: declare the share-quantity column in sources.json and require it negative on the debit leg. Income is not an input of total_return_daily, so no served return moves either way."
+}
+```
+
+## IRPT_DASHBD-W1-S18 -- TO-DB-b-13: Opal's account value (net_mv_plus_cash) leaves out the Schwab margin_balance that Black Diamond's value includes; with it added the three pairs beyond 0.35 pp fall to 0.0044, 0.0264 and 0.0493 pp. A ruling on the value basis is owed
+
+```json
+{
+  "id": "IRPT_DASHBD-W1-S18",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1",
+  "surfaced_at": "2026-10-02T23:20:00Z",
+  "one_line": "TO-DB-b-13: Opal's account value (net_mv_plus_cash) leaves out the Schwab margin_balance that Black Diamond's value includes; with it added the three pairs beyond 0.35 pp fall to 0.0044, 0.0264 and 0.0493 pp. A ruling on the value basis is owed",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "spec_asserts": "C-VALUE (ratified): V_t is the custodian's own whole-account value, declared as dim_balance.net_mv_plus_cash; the order expected each pair beyond 0.35 pp to carry a stated reason and a code defect among them to be fixed and re-measured.",
+  "world_is": "MEASURED at all 6 window endpoints of the 3 pairs (DECOMPOSE_THREE_PAIRS_R6.json): Black Diamond's beginning and ending value = Opal's net_mv_plus_cash + dim_balance.margin_balance + Black Diamond's own accrual, difference 0.00 at 6 of 6. Schwab's own equity field (eqty_excl_option / eqty_incl_option) = net_mv_positions + margin_balance, so for a margin account net_mv_plus_cash is not the equity: e.g. 0084073310 on 2026-10-01 net_mv_plus_cash 1,009,937.16, margin_balance 5,579.04, equity 1,015,516.20 = Black Diamond's ending value to the cent. Replaying the windows with V + margin_balance (counterfactual, written nowhere): 0084073310 0.7078 -> 0.0264 pp; 0027265115 04-09..04-30 0.4555 -> 0.0493 pp; 0027265115 06-25..07-06 1.2130 -> 0.4738 pp (and -> 0.0044 pp with row S20's flow). The declaration's identity check (net_mv_plus_cash - net_mv_positions = money_mkt_funds + net_credit_debit, 92,407 of 92,407) tests the column against itself and cannot see margin_balance. The fix is a change of the ratified value basis in sources.json (outside this order's paths) and moves every margin account's served series, so it is not made here. Pairs 2 and 3 are recorded as defect=false (a basis difference against the ratified text, ruling owed), a classification the CTO may overturn.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1/DECOMPOSE_THREE_PAIRS_R6.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1/TIEOUT_49F_BLACKDIAMOND_R6.json",
+      "data/assets/scripts/gold/irpt_reporting/sources.json account_value_column"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ARMED: the reporting gold is scheduled (DB-b-7) and the dashboard figure reaches clients through the read route, so every margin account's return is off Schwab's equity by up to the margin_balance share of value (0.55 pct of value on these accounts) until ruled. Owner of the ruling: 1.0.0_SA_CTO; owner of the packet: 2.0.0_SA_COO~P (a value-basis change is a new method_version and a recomputation, per the method-row contract). FWD-8 should not be graded REALIZED on defect=false alone before this is answered."
+}
+```
+
+## IRPT_DASHBD-W1-S19 -- TO-DB-b-13: the method row now writes tieout_tolerance and tieout_tolerance_ruling, two columns the dim_return_method contract (0.2.0) does not declare, so its schema_hash is stale for the next write
+
+```json
+{
+  "id": "IRPT_DASHBD-W1-S19",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1",
+  "surfaced_at": "2026-10-02T23:20:00Z",
+  "one_line": "TO-DB-b-13: the method row now writes tieout_tolerance and tieout_tolerance_ruling, two columns the dim_return_method contract (0.2.0) does not declare, so its schema_hash is stale for the next write",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order: emit_method_row writes tieout_tolerance = 0.0035 and tieout_tolerance_ruling = '1.0.0_SA_CTO RULINGS batch 181'; tieout_tolerance_proposed is kept (null) unless the row's contract says otherwise.",
+  "world_is": "org/standards/IRPT_DASHBD_DIM_RETURN_METHOD_CONTRACT.json declares 18 columns and neither new one; its landed row carries tieout_tolerance_proposed = 0.037 (written by DB-b-3 with --tieout), so a re-run without --tieout would write null there, a producer default the contract does not call for. Adding two columns changes the table's parquet schema and therefore its schema_hash; the contract file is outside this order's paths. The handler does not call emit_method_row (reporting-gold/handler.py), so nothing is written until the issuer's packet runs the producer with --method-row-only --tieout 0.037.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/IRPT_DASHBD_DIM_RETURN_METHOD_CONTRACT.json columns, landed_row",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py emit_method_row",
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py (docstring: omits the emit_method_row call)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner: 2.0.0_SA_COO~P: contract bump (0.3.0, new schema_hash, rule24 record for the two columns) lands with the method-row packet, with --tieout 0.037 so the landed proposal is kept."
+}
+```
+
+## IRPT_DASHBD-W1-S20 -- TO-DB-b-13: Schwab's INTRA/FC/IN 'MARGIN INT ADJ' credit (4,429.53 on 2026-06-25) is return in Opal and a net addition in Black Diamond, and margin interest charged (INTR/FC/IN debit, 3,106.83 on 06-29) is in neither Opal's income term nor its flow
+
+```json
+{
+  "id": "IRPT_DASHBD-W1-S20",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~1",
+  "surfaced_at": "2026-10-02T23:20:00Z",
+  "one_line": "TO-DB-b-13: Schwab's INTRA/FC/IN 'MARGIN INT ADJ' credit (4,429.53 on 2026-06-25) is return in Opal and a net addition in Black Diamond, and margin interest charged (INTR/FC/IN debit, 3,106.83 on 06-29) is in neither Opal's income term nor its flow",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Income is recognised on cash receipt from the CRO's classification table; the pair's reason must be measured.",
+  "world_is": "MEASURED for 0027265115: fact_trn 2026-06-25 carries INTRA/FC/IN CREDIT 4,429.53 'MARGIN INT ADJ', classed INTERNAL / 'Dividends and Interest' by SCHWAB_TRANSACTION_CODE_CLASSIFICATION_20260811.json, so it is not an external flow and stays inside the return; Black Diamond's window point 06-25..07-06 shows netAdditions 4,402.22. Treating the 4,429.53 as a flow on that day moves the pair from 0.4738 to 0.0044 pp (counterfactual, after the margin_balance addition of row S18). Separately, INTR/FC/IN DEBIT 3,106.83 on 06-29 ('INTEREST 05/28 THRU 06/28') is a debit outside the fixed income term by design (only QDV/NDV/PDV debits are admitted), so Opal's signed window income is 4,312.61 against Black Diamond's -2,470.31; the remainder is not measured here (Black Diamond's accrual source is not in the stored response). Whether a margin-interest adjustment is return or a contribution is not decidable from the Schwab bytes alone.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Schwab silver fact_trn date=2026-06-25 and date=2026-06-29, account 0027265115",
+      "org/tier1_exec/4.0.0_SA_CRO/deliverables/SCHWAB_TRANSACTION_CODE_CLASSIFICATION_20260811.json (INTRA, INTR on FC/IN)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1/RAW_BD_PERIOD_0027265115.sanitised.json.gz dateRangePoints[3]"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner: 2.0.0_SA_COO~P (the classification table is 4.0.0_SA_CRO's file, not edited). One day, one account in the sample."
+}
+```
+
+## IRPT_DASHBD-W2-S1 -- TO-DB-b-15: under the equity basis 4 of 14 pairs stay beyond 0.35 pp, and 2 of them (0076459710 08-11 and 08-21) are NEW or WORSE than round 4 -- Black Diamond's own accrual and its fee treatment, both outside Opal's figure by ruling
+
+```json
+{
+  "id": "IRPT_DASHBD-W2-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2",
+  "surfaced_at": "2026-10-03T01:40Z",
+  "one_line": "TO-DB-b-15: under the equity basis 4 of 14 pairs stay beyond 0.35 pp, and 2 of them (0076459710 08-11 and 08-21) are NEW or WORSE than round 4 -- Black Diamond's own accrual and its fee treatment, both outside Opal's figure by ruling",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order expects the equity basis to bring the pairs to the tolerance, with Black Diamond's accrual stated per pair (batch 193); a pair beyond 0.35 pp carries a measured reason.",
+  "world_is": "MEASURED over all 14 pairs, method_version 2: 10 within, 4 beyond. Beyond: 0027265115 06-25..07-06 0.4738 pp (S22; the 4,429.53 MARGIN INT ADJ credit, batch 195 RETURN; 0.0044 pp if that credit were a flow); 0076459710 08-11..08-19 0.4998 pp (round 4: 0.3307) and 0076459710 08-21..09-09 0.4608 pp (round 4: 0.0076): Black Diamond's value = equity + its accrual to the cent at 28 of 28 endpoints, its accrual moved +6,022.40 then -5,766.11, which alone is 0.4999 pp and 0.4501 pp of its beginning value, leaving 0.0001 pp and 0.0107 pp; the two windows mirror each other (receipt booked in the second); 0084073310 03-20..08-04 0.4045 pp (round 4: 0.2606): Black Diamond's return equals ending/beginning value - 1 (0.239661) so its 3,020.96 fee stays inside its return (0.3961 pp of beginning value) while Opal is gross of fee. Equity moved the largest round-4 pairs to 0.0264 pp (0084073310 08-21) and 0.0493 pp (0027265115 04-09), max abs diff 1.2130 -> 0.4998 pp. Opal's window fee flow for 0084073310 was inferred from the return, not read as a flow.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~2/TIEOUT_49F_BLACKDIAMOND_R8.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~2/OPAL_REMEASURE_FOURTEEN_R8.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1/RAW_BD_PERIOD_0076459710.sanitised.json.gz dateRangePoints[1],[2]"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner: 1.0.0_SA_CTO at the round-8 analysis (whether the tolerance is to be read on an accrual-adjusted or fee-adjusted Black Diamond figure, or the 0.35 pp bar stands with these reasons). Nothing applied to the producer for this; the ruling stated Black Diamond's accrual stays outside Opal's figure and Opal is gross of fee by C-FEERAIL."
+}
+```
+
+## IRPT_DASHBD-W2-S2 -- TO-DB-b-15: the one-rule proof needed a definition of 'margin_balance 0 that day' (the daily row also reads the prior day), and a null margin_balance makes the value ABSENT; 0 nulls exist in 3,230,967 history rows
+
+```json
+{
+  "id": "IRPT_DASHBD-W2-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2",
+  "surfaced_at": "2026-10-03T01:40Z",
+  "one_line": "TO-DB-b-15: the one-rule proof needed a definition of 'margin_balance 0 that day' (the daily row also reads the prior day), and a null margin_balance makes the value ABSENT; 0 nulls exist in 3,230,967 history rows",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Every account whose margin_balance is 0 that day computes identical rows apart from method_version; a null margin_balance is never silently zero, counted, and a row is filed if any exist.",
+  "world_is": "MEASURED on 2026-10-01 over the 6,861 rows both versions emit (base-commit producer and the worktree producer on the same cached balance bytes): 6,788 accounts have margin_balance exactly 0 on 10-01 AND on the prior trading day 09-30 -- 0 of 6,788 rows changed apart from method_version. 28 accounts have margin 0 on 10-01 but nonzero on 09-30; all 28 rows change, correctly, because the daily return's base V(t-1) is the prior day's equity. 45 rows with nonzero margin all change. The record's zero_margin_accounts is the 6,788 (zero on both inputs of the row). Null margin_balance: 0 rows on 2026-10-01 and 0 of 3,230,967 rows over 563 partitions (2024-07-08..2026-10-01); null net_mv_plus_cash also 0. The producer treats a null component as an ABSENT value (account-day left out of the value map, printed, next day's base absent -> NOT_MEASURABLE), never zero; no day is affected today. Row set: 2 accounts emit a row only under equity (inception moves earlier by a positive equity), 0 only under net_mv_plus_cash; positive population 6,685 -> 6,686 (0 positive-to-nonpositive, 1 nonpositive-to-positive); guard_state over the 6,861 common rows: GRADED_AGREED 6,635 -> 6,639, GRADED_DISAGREED 13 -> 9, GUARD_NOT_REACHED 184 -> 184, NOT_GRADED_OUTSIDE_DOMAIN 29 -> 29.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~2/POPULATION_EQUITY_R8.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~2/population_equity_r8.py",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~2/scan_balance_history_r8.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner: 2.0.0_SA_COO~P (reads the definition at the P-2 packet). The 'before' producer is git show 1ce7e8e9f0 of account_return_daily.py and sources.json, run unmodified apart from its path anchor."
+}
+```
+
+## IRPT_DASHBD-W2-S3 -- TO-DB-b-15: emit_method_row writes two more columns (value_basis, value_basis_ruling) that the dim_return_method contract does not yet carry, the same shape as row W1-S19
+
+```json
+{
+  "id": "IRPT_DASHBD-W2-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2",
+  "surfaced_at": "2026-10-03T01:40Z",
+  "one_line": "TO-DB-b-15: emit_method_row writes two more columns (value_basis, value_basis_ruling) that the dim_return_method contract does not yet carry, the same shape as row W1-S19",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "emit_method_row records the new version and its basis, citing 1.0.0_SA_CTO RULINGS batch 193; the contract file is outside this order's paths.",
+  "world_is": "MEASURED: the row dict now carries value_basis ('EQUITY = net_mv_plus_cash + margin_balance') and value_basis_ruling ('1.0.0_SA_CTO RULINGS batch 193') beside the tolerance fields; org/standards/IRPT_DASHBD_DIM_RETURN_METHOD_CONTRACT.json lists neither column, so a landed method_version=2 row would add two columns to the table's parquet schema and change its schema_hash. The reporting gold handler does not call emit_method_row, so nothing is written until the issuer's method-row packet. Also for that packet: the publisher refuses a file of mixed method_version (publisher.py:173), so every landed gold day must be rewritten under version 2 before it is served.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py emit_method_row",
+      "org/standards/IRPT_DASHBD_DIM_RETURN_METHOD_CONTRACT.json columns"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner: 2.0.0_SA_COO~P: contract bump lands with the method-row packet, in the same commit as the W1-S19 columns."
+}
+```
+
+## IRPT_DASHBD-W3-S1 -- TO-DB-b-16: DB9-1-AC2 cannot pass - the existing test_one_route_and_function_name asserts len(entry.ROUTES) == 1, and the order's own second route (DB9-1-AC3) makes it fail; the test file is outside the order's paths
+
+```json
+{
+  "id": "IRPT_DASHBD-W3-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~3",
+  "surfaced_at": "2026-10-02T23:59:00Z",
+  "one_line": "TO-DB-b-16: DB9-1-AC2 cannot pass - the existing test_one_route_and_function_name asserts len(entry.ROUTES) == 1, and the order's own second route (DB9-1-AC3) makes it fail; the test file is outside the order's paths",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order says the account route's behaviour is unchanged and 'an existing test that moves is a defect', and DB9-1-AC2 wants the whole reporting/tests suite at least 14 passed and 0 failed (11 pass at the base).",
+  "world_is": "MEASURED at 713110dbeb plus this worker's edits: reporting/tests/test_reporting_entry.py::test_one_route_and_function_name asserts `len(entry.ROUTES) == 1` (line 74). With the summary route added to ROUTES (which DB9-1-AC3 requires, exactly one summary key plus the account key) that assertion fails with `assert 2 == 1`; the other 10 tests of that file and the 10 new summary tests pass (pytest: 1 failed, 20 passed). The account route's behaviour and the other 10 existing tests are unchanged. test_reporting_entry.py is not in the order's <paths>, so this worker did not edit it; DB9-1-AC2's checker reads '1 failed' and prints FAIL. The needed edit is one line in that file (len(entry.ROUTES) == 2, or assert the account key maps to OPERATION and the summary key to SUMMARY_OPERATION) and a grant for the path.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting/tests/test_reporting_entry.py:74 (test_one_route_and_function_name)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~P/checks/r9/p9_1_ac2_read_route_summary_tests.py (rejects any '<n> failed')",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~P/checks/r9/p9_1_ac3_summary_route_declared.py (requires exactly one summary key in ROUTES)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner: 2.0.0_SA_COO~P (the issuer amends its own order's paths): add test_reporting_entry.py to the grant and recut or amend DB-b-16, or edit that one assertion at the drain. DB9-1-AC1 and DB9-1-AC3 PASS; DB9-1-AC2 is FAIL by this row alone."
+}
+```
+
+## IRPT_DASHBD-W4-S1 -- TO-DB-b-17: the deployed publisher cannot run the summaries pass until its zip carries the opaque-id normalizer and the firm registry, and its environment names the directory bucket; neither is in this cell's paths
+
+```json
+{
+  "id": "IRPT_DASHBD-W4-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~4",
+  "surfaced_at": "2026-10-03T00:30:00Z",
+  "one_line": "TO-DB-b-17: the summaries pass needs _ids/ids.py (+ raw_keys.json, data/firm_registry.json) and the directory bucket at run time, and the irpt-reporting-publish-lambda package map and lambda.tf carry none of them, so the pass refuses by name on the first deployed fire until the issuer's packet adds them",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order: the pass reads the directory and mints opaque cli_/acc_ ids 'through _ids as reporting/entry.py does'; the order's paths are handler.py, publisher.py, the new test, and iam.tf; the trigger and deploy are the issuer's P-2 packet.",
+  "world_is": "MEASURED at 713110dbeb: infra/aws/lambda/ci/lambda-source-map.json entry irpt-reporting-publish-lambda lists handler.py, publisher.py, lib/opal_naming.py, org/standards/NAMING_SCHEMA.json, infra/logic/registry/*.json and sources.json, and NO ids.py, raw_keys.json, data/custodian_key_seam.json or firm_registry.json (the reporting-read-lambda entry stages all four). infra/aws/terraform/investor-reporting/reporting-publish/lambda.tf sets no environment (IRPT_DIRECTORY_BUCKET_MAP, which _authz/loaders.py reads, is unset). handler.py therefore loads ids.py from the zip root or the repo's _ids package (the repo path is what the tests and the local dry run use), reads the bucket from IRPT_DIRECTORY_BUCKET_MAP or the registry beside ids.py, and otherwise raises SystemExit REFUSED naming the missing piece. The scheduled series fire never reaches this code (the module adds only stdlib imports at load; _ids_module is called only inside the summaries pass), so the 08:15 ET fire is unchanged. Local dry run (reads only) over the live directory and the 6 published accounts: 4,620 clients, 6 summaries built, 4,614 without a published account, 0 refused.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json irpt-reporting-publish-lambda files / staged_from @713110dbeb",
+      "infra/aws/terraform/investor-reporting/reporting-publish/lambda.tf (module irpt_reporting_publish: no environment)",
+      "infra/aws/lambda/investor-reporting/reporting-publish/handler.py _ids_module, directory_bucket",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~4/READ_COST_R9.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner: 2.0.0_SA_COO~P (P-2 packet): stage ids.py, raw_keys.json, data/custodian_key_seam.json and data/firm_registry.json as packaged_as paths in the publish entry (ids.py at the zip root, as the read entry does), or set IRPT_DIRECTORY_BUCKET_MAP in lambda.tf; the two files this cell may not edit. Also ids.py reads IRPT_FIRM_REGISTRY or a firm_registry.json beside it."
+}
+```
+
+## IRPT_DASHBD-W4-S2 -- TO-DB-b-17: the deployed publish function's timeout is 300 s, not the 900 s the order budgets, and the per-account read cost is a laptop measurement, so the summaries pass is sharded by client to fit 300 s
+
+```json
+{
+  "id": "IRPT_DASHBD-W4-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~4",
+  "surfaced_at": "2026-10-03T00:30:00Z",
+  "one_line": "TO-DB-b-17: the order budgets the 900 s Lambda limit; reporting-publish/lambda.tf sets timeout = 300, and no in-region read cost could be measured (invoke is out of bounds), so the projection rests on laptop latency and the shard size is chosen to fit 300 s",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order: 'It must fit the 900 s Lambda limit at 4,620 clients and 7,570 accounts. Measure the per-account read cost with S3 READS on what is published today, and state the projection with its basis. If it does not fit, shard BY CLIENT.'",
+  "world_is": "MEASURED 2026-10-03 from the laptop (S3 reads only), 6 published accounts: 1.126 s per account sequentially (two GETs, ~0.56 s each), 0.234 s per account through a 16-worker pool (24 account reads in 5.62 s); series 6,255 gzip bytes and 187 days on average; directory 6,526,009 bytes in 21.3 s, parse 0.02 s; one delimiter listing 1.09 s. A re-run of the same script (READ_COST_R9.json holds this one, the first run's values are in this row) read 0.257 s per account sequentially, 0.190 s through 16 workers, the directory in 34.8 s, the listing in 0.78 s: latency from the laptop varies run to run, and the projection below takes the slower per-account figure of the two runs. (1 page per 1,000 prefixes, so 8 pages at 7,570 accounts). PROJECTION at laptop latency, the pessimistic bound: 7,570 accounts x 0.234 s = ~1,770 s in ONE invoke, which does not fit 900 s (nor the deployed 300 s); sharded by client at SUMMARY_SHARD_CLIENTS = 300 it is 16 shards of ~470 accounts, ~110 s of reads plus ~30 s of directory and listing, ~140 s per shard, which fits 300 s with margin. In-region latency is not measured here and is expected lower. The live local dry run built 6 summaries in 1.9 s.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~4/READ_COST_R9.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~4/measure_read_cost.py",
+      "infra/aws/terraform/investor-reporting/reporting-publish/lambda.tf timeout = 300, memory_size = 1024"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner: 2.0.0_SA_COO~P: the first deployed summaries fire's CloudWatch REPORT line is the in-region measurement; the fan-out reuses the function's own-invoke grant. The projection is a scaled laptop figure, not a Lambda measurement."
+}
+```
+
+
+## IRPT_DASHBD-W5-S1 -- the read entry's staged_from_note says 'one pin' after the re-pin
+
+```json
+{
+  "id": "IRPT_DASHBD-W5-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~5",
+  "surfaced_at": "2026-10-03T02:35:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "TO-DB-b-18: the read entry's _staged_from_note says its shared boundary members sit at ONE pin; re-pinning the members rounds 6-9 changed (served.py, enforce.py, maintained_sources.py, NAMING_SCHEMA.json, sources.json) leaves that note stale, and the order grants the pins but not the note",
+  "spec_asserts": "Order item 2: re-pin every staged_from member whose blob changed, members that did not change keep their pins. lambda-source-map.json irpt-reporting-read-lambda._staged_from_note: 'The shared boundary members are the Holdings function's own closure ... at one pin'.",
+  "world_is": "After the re-pin the read entry's 28 staged members sit at 5 pins: 5f582dca96 (23 members), acce364286 (served.py), 7605bbf5ab (enforce.py), bb255c4cb2 (maintained_sources.py), aa2b5a42ff (NAMING_SCHEMA.json) and 6ce75d3385 (sources.json). The note was left byte for byte as found. DB10-1-AC2 PASS grades pins and blobs, not the note, so the stale sentence does not fail anything; a reader taking 'one pin' at its word would assume the Holdings closure is byte-identical to the Holdings function's own, which it no longer is for three members.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json irpt-reporting-read-lambda staged_from at this order's commit",
+      "git log -1 --format=%H -- <member> for each of the five moved members"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner: 2.0.0_SA_COO~P: reword the note when the read function is next rebuilt, or accept the divergence knowingly; served.py and enforce.py changed after the Holdings pin, so whether the read artifact should track the Holdings closure or its own HEAD is the issuer's call."
+}
+```
+
+
+## IRPT_DASHBD-W5-S2 -- the 0.3.0 schema_hash needs --tieout at the method-row write
+
+```json
+{
+  "id": "IRPT_DASHBD-W5-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~5",
+  "surfaced_at": "2026-10-03T02:35:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "TO-DB-b-18: the 0.3.0 schema_hash types tieout_tolerance_proposed as double, which holds only if the P-2 packet's method-row write passes --tieout; without it the producer writes None, pyarrow types the column null, and the served hash differs from the contract's",
+  "spec_asserts": "emit_method_row(..., tieout=None) puts the tieout argument into the row as tieout_tolerance_proposed; the 0.2.0 contract declares that column double, nullable, 'a future method_version is emitted before its tie-out has run'.",
+  "world_is": "The row is built by pa.Table.from_pydict({k: [v]}), so a Python float is double and None is null. The 0.3.0 hash 73e80ef7920f59134eda5ab06dfea766de295bd71e71b398023b52ae8acbe919 is over the 22 'name:type' lines with double for that column, as the landed version-1 row (0.037) carried it. A method-row-only write with no --tieout would land a null-typed column and a different hash; the contract provenance states the dependency and says the hash is re-read from the served artifact at the packet's write. The producer was not changed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py emit_method_row, lines 1729-1775 at 1067171ecd",
+      "org/standards/IRPT_DASHBD_DIM_RETURN_METHOD_CONTRACT.json schema_hash_provenance at 0.3.0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner: 2.0.0_SA_COO~P: pass --tieout on the packet's --method-row-only write, or ask the producer's owner for a typed schema on that column; compare the served schema_hash to the contract's after the write."
+}
+```
+
+## IRPT_DASHBD-S23 -- routes.json omits both live reporting routes
+
+```json
+{
+  "id": "IRPT_DASHBD-S23",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-03T19:25:00Z",
+  "one_line": "docs/contracts/investor-reporting/v1/routes.json declares 19 routes and omits both live reporting routes, GET .../reporting/{account_id}/{which} and GET .../reporting/client/{client_id}/summary. Both are declared in reporting/entry.py:92,373, live on the API gateway behind irpt-49f-reporting-read-lambda, and called by PROD portal v2.1.197. The file's own note says every route the product needs is covered.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's grade of the B2 promote 2026-10-03 ~18:5xZ-19:2xZ: routes.json at CLOUD HEAD, 19 entries, neither reporting route; entry.py ROUTES; API gateway routes and the read Lambda's CodeSha256 read via boto3; PROD bundle strings carry the summary route"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "routes.json is the published inventory of the routes the product calls (its own note).",
+  "world_is": "The contract inventory lags the served surface by two routes. A census or gate reading routes.json, such as the _authz unguarded census, cannot see them.",
+  "notes": "INERT (the routes are guarded in code). Owner 2.0.0_SA_COO~P (the reporting routes' issuer; the file sits in ~Y's lease surface): add both routes to routes.json with their guard, and re-run any census that reads it."
+}
+```
+
+## IRPT_DASHBD-S24 -- 557862f1: the pin cannot see the skip direction; a failed PATH B manifest can leave Loading
+
+```json
+{
+  "id": "IRPT_DASHBD-S24",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-03T20:09:00Z",
+  "one_line": "557862f1 (the Performance tab skips the PATH A read when PATH B serves the account) has a pin that cannot see the skip's direction. With `!pathBServes` at ReportingTab.tsx:745, or both skips inverted, the pin and the 44 ReportingTab files give the same 106/1/1. By reading: an account the client summary lists, whose own manifest read fails, sends neither request and stays on Loading; Refresh skips again.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's portal grade 2026-10-03 ~19:5xZ-20:1xZ (scratch worktree of origin/DEV, removed after): pin 1/1; NEG fails; MUT `!pathBServes` at :745 passes; both-inverted 106 pass / 1 fail (iv-e-69, pre-existing) / 1 skip, the same as head",
+      "ReportingTab.tsx:490-497, :692, :745 at 557862f1 (the stuck-on-Loading path is read, not run)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A FAST pin discriminates its claim (rows S54, S55); a read that is skipped has a way back when the read it defers to fails.",
+  "world_is": "Inverting the skip would stop PATH A for Inflection and Cottonwood with every test green. The Loading hang is inferred from the code.",
+  "notes": "INERT (DEV only; not on PROD 98a98e70). Owner 2.0.0_SA_COO~D: one assertion through the component that a PATH A account still requests PATH A and a PATH B account does not; and fall back to PATH A (or show ERROR) when the PATH B manifest read fails."
+}
+```
+
+## IRPT_DASHBD-S25 -- the PATH A skip reads the account's own answer only; pinned through the component (disarms S24)
+
+```json
+{
+  "id": "IRPT_DASHBD-S25",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-10-03T20:38:00Z",
+  "one_line": "The Performance tab's own PATH A read now skips only on the account's OWN served PATH B answer, and a pin runs the real report effect in both directions plus the S24 case (portal f2d2f17c).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal f2d2f17c (origin DEV, push output 49d0a98a..f2d2f17c): ReportingTab's report effect calls pathBServes(focusedAccountId, dashboards, null) -- its own dashboard only; the picker keeps the summary (it reads its line from it)",
+      "path-a-skip-component.test.tsx runs the real report effect (useState slots 5/7/8 seeded behind initial-value guards; the effect run once after the render): nothing known -> PATH A asked; own dashboard served -> not asked; summary lists it but own read absent (S24) -> asked; fixture plane -> asked",
+      "mutants, applied and restored: inverted (!pathBServes) fails (a)(b)(c); the pre-S24 summary skip fails (c); no skip fails (b)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarms IRPT_DASHBD-S24: the pin now sees the skip's direction through the component, and an account whose own PATH B read failed asks PATH A (no Loading hang), measured by the mutants the row named.",
+  "spec_asserts": "Row S24: a FAST pin discriminates its claim; a skipped read has a way back when the read it defers to fails.",
+  "world_is": "Holds at DEV f2d2f17c. The first-load race measured at 19:59:41Z stands: both PATH A GETs leave before the PATH B manifest answers, so the skip saves requests only once the answer is in hand.",
+  "notes": "DEV only; not on PROD 98a98e70."
+}
+```

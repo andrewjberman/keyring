@@ -1,0 +1,4 @@
+HAR source (Andrew-supplied, outside the repo tree, never staged): sha256 53b40d12db640bf4881b0efa7d42b6c9d711ee1e9335e1b8685cc9c56e2d6f07 | bytes 11923467
+inside the repo tree: False
+tracked or staged anywhere in the repo: False
+deletion: not done by this seat; Andrew's file, unrecoverable delete needs his confirmation

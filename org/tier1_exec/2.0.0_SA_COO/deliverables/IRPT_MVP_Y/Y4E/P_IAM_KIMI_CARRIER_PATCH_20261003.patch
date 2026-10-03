@@ -1,0 +1,20 @@
+diff --git a/infra/aws/terraform/investor-reporting/ycharts/iam.tf b/infra/aws/terraform/investor-reporting/ycharts/iam.tf
+index 81dd627862..5766e9f0fd 100644
+--- a/infra/aws/terraform/investor-reporting/ycharts/iam.tf
++++ b/infra/aws/terraform/investor-reporting/ycharts/iam.tf
+@@ -56,11 +56,12 @@
+ locals {
+   secrets_arn_prefix = "arn:aws:secretsmanager:${var.aws_region}:${data.aws_caller_identity.current.account_id}:secret:"
+ 
+-  # The three names the decomposition fixes, and nothing else. The trailing `-*` is Secrets
+-  # Manager's own six-character suffix, not a wildcard over other names.
++  # The three names the decomposition fixes. A trailing `-*` also matches any LONGER name that starts the same way;
++  # the Kimi key's six `?` match only Secrets Manager's own six-character suffix (CTO rulings batch 199; measured by
++  # IAM simulation, ledger irpt-y4e-20261003). The two ycharts names keep `-*` until their own ruling.
+   login_secret_arn   = "${local.secrets_arn_prefix}ycharts/login/credentials-*"
+   session_secret_arn = "${local.secrets_arn_prefix}ycharts/session/current-*"
+-  kimi_secret_arn    = "${local.secrets_arn_prefix}astn/kimi/api-key-*"
++  kimi_secret_arn    = "${local.secrets_arn_prefix}astn/kimi/api-key-??????"
+ }
+ 
+ data "aws_caller_identity" "current" {}

@@ -376,7 +376,7 @@ directives:
       subgroups: []
       projects: [OPAL_TAXSMA, OPAL_TAXROSTER, OPAL_TAXSMA_PT2, OPAL_TAXSMA_REGISTRY,
                  IRPT_FNTEND, IRPT_BCKEND, NFRA_OPLGTW, NFRA_SPMOVE, NFRA_MCPINDEX, NFRA_TRNSPT,
-                 IRPT_DASHBD]
+                 IRPT_DASHBD, IRPT_YCDGEN]
       members_note: "PER-MEMBER PLACEMENT EXCEPTIONS -- THE SECOND AND THIRD (the first is DSGN_AMGTV1 under D13). Recorded
         2026-10-01 by 0.0.0_AB_MSTR (register owner) on 1.0.0_SA_CTO's ask msg 103593
         (org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_LAPTOP_CLOSURE_PLAN_20261001.md section 2 item 2). D9 stays placed

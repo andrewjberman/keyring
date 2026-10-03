@@ -5,7 +5,8 @@
 <issued_to>0.6.2_AE_PartnerETL~C</issued_to>
 <issued_by>2.0.0_SA_COO~P</issued_by>
 <issued_date>2026-09-30</issued_date>
-<status>parked</status>
+<status>superseded</status>
+<disposition>2026-10-03T09:3xZ, issuer 2.0.0_SA_COO~P on CTO batch 223 (@e0aec10552): SUPERSEDED, its data half met by the world. MEASURED: s3://opal-data-assets/schwab/08335338/silver/dim_position and dim_balance date=2026-09-29/data.parquet landed 2026-09-30T21:46:40Z, about 12 h after the usual ~09:46Z; fact_trn landed 09:46:13Z, on time. Positive control: the 09-28 dim_position landed 2026-09-29T09:46:44Z. P27-4-AC1 reads FAIL only on the cause record, which was never written: the cause of the 12 h lag is UNDETERMINED (claim: absent), and the assignee 0.6.2_AE_PartnerETL~C is parked. The recurrence is carried by the consumer class instead: a late silver day is disclosed on the value (IB-pr-299, claim inferred) and healed by the producers' catch-up (IB-pr-300, round 36 D2, served). No partition was fabricated.</disposition>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>lane</worker_class>

@@ -1,0 +1,42 @@
+{
+  "project_code": "IRPT_YCDGEN",
+  "macro_code": "IRPT",
+  "directive": "D9",
+  "fabric": "laptop",
+  "pipeline": null,
+  "status": "active",
+  "dep_stage": "PRD",
+  "created": "2026-10-03",
+  "registered_under_tree": "2026-10-03",
+  "placement": "LAPTOP",
+  "pods": [],
+  "related": [
+    "IRPT_BCKEND",
+    "IRPT_FNTEND",
+    "IRPT_DASHBD",
+    "NFRA_OPLGTW",
+    "LGIC_NAMING"
+  ],
+  "name": "YCharts direct-API generation, Opal-branded: persist and categorize every YCharts API response per call, map each report element to its source, and generate the three report types in Opal's branding with Opal's own script from the same data endpoints",
+  "description": "Research plus one live thread. Opal's own script calls the YCharts data endpoints one at a time, keeps every answer in the client firm's private area of Opal's store with no secret in it, and records which answer each number, table and chart on a YCharts-made report comes from. It then makes Overview (FWD-1, the thread: one Cottonwood portfolio, live), Comparison and Multi reports in Opal's branding without YCharts' report builder; anything YCharts works out only inside its builder is rebuilt from data Opal holds or left out with a note, never imitated. Each run records where its time went (YCharts working kept apart from Opal waiting), and one one-time check per report type lists which figures agree with the YCharts report and why any differ. No second production path: the served YCharts generation (IRPT_BCKEND, the ~Y Analysis workstream) is undisturbed, research runs never interleave with it on the one session, and adoption of Opal generation would be a later decision that replaces the served path in the same window. No client-facing release is in scope.",
+  "brief_ref": "docs/briefs/irpt-ycharts-direct-generation-opal-branded-brief-20261003.md@45f673c2ea",
+  "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_IRPT_YCHARTS_DIRECT_GENERATION_20261003.md@c3f2fb4bb3",
+  "endpoint_approval_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261003_203xZ_ALL_APPROVED_YCHARTS_DIRECT_GEN_ENDPOINT_AND_SITEZ_SCOPE.md (Andrew 'all approved': the seven DONE WHEN lines CONFIRMED, L2 ratified)",
+  "andrew_direct_ref": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/RESEARCH/CRO_REQUEST_YCHARTS_DIRECT_GENERATION_20261003.md@ee801b0505 (the order, verbatim); org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/ANDREW_DIRECT_20261003_173xZ_YCHARTS_EGRESS_WHITELIST_AND_SUBSCRIPTION_CLEARED.md@ce20ca6854 (egress and subscription)",
+  "placement_ref": "D9 is LAPTOP as a whole since 2026-09-10 (DIRECTIVES.yaml D9.placement); the order was given at the laptop seat 2.0.0_SA_COO~Y",
+  "prds": [
+    "org/missions/D9/IRPT/IRPT_YCDGEN/prd/IRPT_YCDGEN_PRD.md"
+  ],
+  "leads": {
+    "cto": "1.0.0_SA_CTO",
+    "coo": "2.0.0_SA_COO",
+    "cvo": "3.0.0_SA_CVO",
+    "cro": "4.0.0_SA_CRO"
+  },
+  "coo_lane": "2.0.0_SA_COO~Y",
+  "seating_ref": "Andrew's YCharts egress word names 2.0.0_SA_COO~Y and its underlying agents only ('COO~Y and any underlying agents have whitelisted egress to YCharts'); a seat outside that scope making YCharts calls needs his word, so the issuing lane is ~Y. A Tier-1 seat may hold several projects (CLAUDE.md rule 27 seating).",
+  "blocking": "Not blocked. L4-R ratified-text half owed by 3.0.0_SA_CVO; then the L4 notifier delivers to 2.0.0_SA_COO~Y for L5/L6. Owned dependencies elsewhere: the YCharts session, its sign-in and the operation lease (IRPT_BCKEND, consumed); retained certified PDFs of each type (IRPT_BCKEND's served runs; a type with no retained PDF waits for ~Y's served run of it); the X10 policy row is this project's round-1 act.",
+  "fabric_ruling": "laptop: D9 is LAPTOP as a whole (Andrew-direct 2026-09-10); the seat is a laptop lane.",
+  "phase": "L3 registered 2026-10-03 @ec37b10ed2 on the L2 endpoint @c3f2fb4bb3, CONFIRMED by Andrew ('all approved', ~20:3xZ). L4 PRD v0.1 written 2026-10-03 (org/missions/D9/IRPT/IRPT_YCDGEN/prd/IRPT_YCDGEN_PRD.md). L4-R: the ratified-text half is owed by 3.0.0_SA_CVO; the brief half is admitted by authorship (CRO wrote the brief).",
+  "last_updated": "2026-10-03"
+}

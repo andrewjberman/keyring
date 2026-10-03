@@ -1,0 +1,3 @@
+after D3 at 2026-10-03T05:12:36Z
+the estate Kimi secret   suffix-len 6 -> allowed
+a sibling name           suffix-len 12 -> allowed

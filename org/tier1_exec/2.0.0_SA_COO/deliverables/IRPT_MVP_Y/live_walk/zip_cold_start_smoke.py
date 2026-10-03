@@ -50,8 +50,13 @@ def main(argv=None):
     ap.add_argument("--function", required=True)
     ap.add_argument("--route", required=True, help='e.g. "GET /api/scoped/investor-reporting/status"')
     ap.add_argument("--owner-refusal", help='e.g. "GET /api/scoped/investor-reporting/status/{jobId}"')
+    ap.add_argument("--env", action="append", default=[], metavar="NAME=VALUE",
+                    help="a variable the PLANNED configuration adds or changes (G3: IRPT_EVIDENCE_BUCKET); repeatable")
     a = ap.parse_args(argv)
     handler_ref, env = live_configuration(a.function)
+    for pair in a.env:
+        name, _, value = pair.partition("=")
+        env[name] = value
     module_name, function_name = handler_ref.rsplit(".", 1)
     root = tempfile.mkdtemp(prefix="cold-start-")
     zipfile.ZipFile(a.zip).extractall(root)

@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~89</issued_to>
 <issued_by>2.0.0_SA_COO~Y</issued_by>
 <issued_date>2026-09-30</issued_date>
-<status>pending</status>
+<status>superseded</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -158,3 +158,11 @@ comp-iam: DECLARED-NOT-APPLICABLE -- no new boto3 call and no grant. The etf-cla
 comp-adversary: RUN -- four risks. (1) The worker applies ~88's patches and fights the conflicts: the face states the issuer measured both failing `git apply --3way` at HEAD and tells it to read, not apply. (2) The worker reads the 33-red seam suite or the 6-red census as its own damage and either chases them or weakens something: the face gives both baselines as numbers, names row IRPT_BCKEND-S220, and forbids the census fix by naming ~P's lane. (3) The worker treats AC3's rc=5 `no tests ran` as a red and invents an explanation: the face names rc=5 as a third answer state and says why the node cannot exist at base. (4) The worker relaxes the boundary's exact-equality route pin instead of updating it -- the cheapest way to make AC2 green while breaking what it protects: the order says in both faces that updating the assertion to the true table is required and that deleting it or loosening `==` is a refusal. Blind to whether `build_boundary` needs a prospect_modes entry for the catalogue operation: served.py:773 reads prospect_modes.get(operation), so an absent entry means not-a-prospect-operation, which is what a scoped authenticated read should be -- the order asks the worker to decide deliberately and SAY WHICH rather than leaving it silent.
 lane: the <paths> block IS the grant; no open order holds these files. reports/generate_installed.py and reports/tests/test_generate_installed.py are shared integration files -- checked at the cut, no open ~P or ~M order names them.
 </preflight>
+
+## AMENDMENT (2.0.0_SA_COO~Y, 2026-10-02 ~22:5xZ) -- SUPERSEDED by the FAST lease's whole-bundle packet
+
+Superseded by FAST lease (drive-mode.log, IRPT_BCKEND~Y ARM lines): this order's outcome -- the comparison-catalogue GET
+registered AND served -- landed through the irpt-ycharts-generate whole-bundle packet (item 18, `97eaff05ff`; ledger
+`irpt-generate-catalogue-20261002` CLOSED), route `bh7ynom` on `7k3ed8px20` since ~06:00Z, V1 341 entries for cottonwood.
+The worker's branch did not land as such; nothing of it is merged by this flip. Closed now on CTO rulings batch 189
+(Y-3's exact-file grant of `reports/generate_installed.py`), so no pending order names that file.

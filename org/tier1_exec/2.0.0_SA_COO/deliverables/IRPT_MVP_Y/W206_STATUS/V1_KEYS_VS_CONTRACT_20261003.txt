@@ -1,0 +1,4 @@
+read+composition REQ-a69e5751d42c374f1d2354f9 | keys 9 | within contract True | required present True | other keys ['accepted_at', 'identity']
+read+both REQ-a69e5751d42c374f1d2354f9 | keys 9 | within contract True | required present True | other keys ['accepted_at', 'comparisons', 'identity']
+read+composition REQ-a1d9abc0bc037ea3d9e4a7ed | keys 9 | within contract True | required present True | other keys ['accepted_at', 'identity']
+read+both REQ-a1d9abc0bc037ea3d9e4a7ed | keys 9 | within contract True | required present True | other keys ['accepted_at', 'comparisons', 'identity']

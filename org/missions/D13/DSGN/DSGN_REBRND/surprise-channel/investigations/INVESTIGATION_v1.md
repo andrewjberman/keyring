@@ -1510,6 +1510,257 @@
     "spec_asserts": "TO-RB-s-15 Amendment 1: render both sets with the same three routes, at 1440 wide, with NO fixtures, so that the pair is equal; ui-smoke.mjs is the capture.",
     "world_is": "On the BEFORE tree the /market MULTI-ASSET tab body depends on capture timing: 1 of 2 captures showed a spinner and 1 of 2 showed the settled error line. Both printed the same canvas and rc=0. The pack pairs the settled BEFORE capture with the AFTER capture and keeps the spinner capture beside it, disclosed on the pack's own page. Neither tree was changed. The other two BEFORE routes were captured once each.",
     "notes": "Filed on form, not significance: the order's equal-inputs rule was followed and still gave two BEFORE states. Which capture is the fairer BEFORE for the /market tab body is L9's reading."
+  },
+  {
+    "id": "DSGN_REBRND-S5",
+    "project": "DSGN_REBRND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-02T23:10:00Z",
+    "one_line": "Round 3 E4 (fe461611) moves the Holdings Breakdown's grand-total row onto the selected rung; its dash ink (text-white/60) then computes to 4.23:1 against that rung, below the 4.5:1 text minimum, and the subtotal row's separation from the body drops from 1.35:1 to 1.22:1. No test asserts colour or contrast for either E4 pin.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal origin/DEV fe461611: HoldingsBreakdownTable.tsx:237-242 (tile and selected rungs), HoldingsTab.tsx:1038-1111; the rung values in index.css:367-370; this seat's contrast arithmetic (WCAG relative luminance) on those values, 2026-10-02 22:xZ",
+        "no test file names a --layer-* rung; the four tests that render the table give the same result with fb5d6116 and fe461611 reversed"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The design law: text on a dark panel meets 4.5:1; named layers separate visibly.",
+    "world_is": "One ink falls just under the floor on the new rung and the subtotal band is harder to see than before. Measured by arithmetic on the CSS values, not on a rendered page.",
+    "notes": "INERT: DEV only (PROD dcdc89b1 does not carry the pins). Owner 2.0.0_SA_COO~D: raise the dash ink (white/70 clears 4.5 by the same arithmetic, to be measured) and add one contrast assertion for the E4 rungs."
+  },
+  {
+    "id": "DSGN_REBRND-S6",
+    "project": "DSGN_REBRND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~D",
+    "surfaced_at": "2026-10-03T00:25:00Z",
+    "one_line": "Ruling on DSGN_REBRND-W2-S8 (this seat's, per 1.0.0_SA_CTO batch 80 item 10, with the round 3 E4 contrast table in hand): the five canon hexes never move; on /positioning every canon mark sits on the band, where each clears 4.5:1 as text and 3:1 as a graphic, and a highlighted name keeps its canon colour on a band ground.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~D",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "walk 20261003T000242Z (local, signed in, GET-only, walker --contrast-table): 316 interactive text pairs on /positioning (Models Portfolio and Custom, ETFs, Satellites), 0 under their bar",
+        "computed, WCAG 2.1 relative luminance, on the band rung (221 67% 12%): UST #f97316 6.33, ST #f59e0b 8.26, INT #10b981 7.0, LT #3b82f6 4.83, ULT #ef4444 4.72; on the body rung LT read 4.08 and ULT 3.99 (walk 20261002T233417Z)",
+        "portal 44d6a215 panels/PositioningSummary.tsx HEADER_HOVER_GROUND: the hovered name takes --layer-strip as its ground; Andrew-direct 2026-09-15 (quoted in shared/bookColors.ts): a highlighted name uses its canonical colour"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Disarms DSGN_REBRND-W2-S8 for /positioning: the lock holds (no hex moved) and no canon pair on the page is under its bar; the condition on LIGHT grounds is DESIGN.md C4 (every canon mark carries its rung label or sits beside a legend entry, model names in navy ink), enforced by each page's own cells.",
+    "spec_asserts": "TO-RB-s-7 Amendment 1 A locks the five canon values; the contract commits to SC 1.4.11 (3:1 for a graphical object) and SC 1.4.3 (4.5:1 for text).",
+    "world_is": "On the band the five hexes clear both bars. On the body (18%) two fall under 4.5 as text, so a canon-coloured name is never drawn on the body: its highlighted state supplies the band as its ground. On white three fall under 3:1, which C4's label rule answers.",
+    "notes": "Corrects this seat's first reading in portal 661e49b3 (the hover colour removed), which contradicted Andrew's 2026-09-15 word; 44d6a215 restored it on a band ground."
+  },
+  {
+    "id": "DSGN_REBRND-S7",
+    "project": "DSGN_REBRND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~D",
+    "surfaced_at": "2026-10-03T00:25:00Z",
+    "one_line": "Ruling on DSGN_REBRND-W1-S11 (this seat's, batch 80 item 10): the dark-mode accent conflict is latent -- no code path selects dark mode -- and splitting the accent into a fill token and an ink token is the precondition of shipping a dark-mode toggle.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~D",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "census over portal/ (node_modules excluded): 'dark-mode' appears in 3 files only -- src/index.css, design/themes/opal-capital.css, design/OPAL_CAPITAL_LIGHT_DARK_SYSTEM.md; no source file adds the class, and no theme switch sets it (ThemeProvider/useTheme/prefers-color-scheme census: PageThemeProvider only, which sets a page accent, not a mode)",
+        "design/OPAL_CAPITAL_LIGHT_DARK_SYSTEM.md lists 'Implement dark mode toggle component' as an unchecked item",
+        "W1-S11's own arithmetic: white-on-accent needs accent luminance <= 0.1833 and accent-on-band needs >= 0.2002 -- no single value"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Disarms DSGN_REBRND-W1-S11 as latent: no user can select the dark mode today, so no pair is served. RULING for the day a toggle is built: the accent splits into an accent-fill token (white text on it, luminance <= 0.1833) and an accent-ink token (on the dark band, luminance >= 0.2002); the toggle does not ship without the split.",
+    "spec_asserts": "RB3-AC7: every text/background pair, including in the selected dark mode, meets SC 1.4.3.",
+    "world_is": "The dark-mode CSS exists but nothing selects it; the light world (the only one served) passes both accent pairs (6.52 and 6.03 per W1-S11's own notes).",
+    "notes": "Route for the split when a toggle is ordered: the accent vocabulary (R5) owner; this row is the precondition's carrier."
+  },
+  {
+    "id": "DSGN_REBRND-S8",
+    "project": "DSGN_REBRND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~D",
+    "surfaced_at": "2026-10-03T00:25:00Z",
+    "one_line": "DSGN_REBRND-S5 remedied on portal DEV b23917f7: the holdings table's band dash ink is white/70 (5.13:1 on the selected rung, 6.91 on the tile), pinned by iv-e-152, which reads the rungs from index.css and the inks from the table.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~D",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal b23917f7 (origin DEV, ls-remote read 00:2xZ): HoldingsBreakdownTable.tsx band dash 'text-white/70'",
+        "iv-e-152: dash on tile 6.91, dash on selected 5.13, subtotal label on tile 10.29, ink on selected 8.50; CONTROL white/60 on selected fails; a planted mutant (white/60) fails arm (a)",
+        "walk 20261003T001748Z (local, signed in, GET-only): /positioning's FIXED INCOME TOTAL row, the dash legible on the tile band"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Disarms DSGN_REBRND-S5: remedied (the dash clears 4.5:1 on every E4 rung) and pinned. The subtotal band's separation is the named-layer table's own tile step (1.22:1 lightness over the body) with its 2px rule; not changed.",
+    "spec_asserts": "The design law: text on a dark panel meets 4.5:1; named layers separate visibly.",
+    "world_is": "The dash reads 5.13:1 on the selected rung and 6.91 on the tile.",
+    "notes": "S5 stays filed as it is (append-only); this row is its remedy record."
+  },
+  {
+    "id": "DSGN_REBRND-S9",
+    "project": "DSGN_REBRND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-03T01:30:00Z",
+    "one_line": "Row S7's census ('no code selects dark mode') covered html.dark-mode only: Tailwind 4's default `dark:` variant compiles to prefers-color-scheme (the portal declares no @custom-variant), and 132 `dark:` uses in 23 catalyst component files are reached by ExportModal, UserSettingsModal, SessionTimeoutWarning and RollbackConfirmDialog, so a viewer whose OS prefers dark gets those modals restyled on PROD with no toggle.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "this seat's grade 2026-10-03 00:xZ-01:xZ (portal origin/DEV b23917f7, on PROD 6169edd9): 'dark-mode' 8 hits in 3 files and 0 setters (S7's claim holds for that class); `dark:` 132 uses in 23 files under the catalyst components; no @custom-variant in the CSS entry, so the variant is media-query based"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Row S7: no code selects dark mode, so the dark styling is latent.",
+    "world_is": "A second dark path exists and is selected by the viewer's operating system, not by code. Not rendered by this seat: whether the dark-styled modals stay legible on the portal's grounds.",
+    "notes": "INERT until rendered. Owner 2.0.0_SA_COO~D: either declare `@custom-variant dark (&:where(.dark-mode, .dark-mode *))` so the variant follows the app's own switch, or render the four modals under prefers-color-scheme: dark and grade them."
+  },
+  {
+    "id": "DSGN_REBRND-S10",
+    "project": "DSGN_REBRND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-03T01:30:00Z",
+    "one_line": "The Positioning Summary's percentage labels (PositioningSummary.tsx:1183 text-xl font-semibold, 20px/600, colour at :1211, Equity blue500 #3b82f6) compute to 4.07:1 on the body rung, below the 4.5:1 text floor (20px at 600 is not WCAG large text); the walk that disarmed W2-S8 measures interactive controls only and cannot see them.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "this seat's arithmetic on index.css rung values and #3b82f6 (WCAG relative luminance), 2026-10-03 00:xZ-01:xZ; the label is visible in the walk's shot 004 ('98.07%')",
+        "walk.mjs:620-661 (tmp/ui-walk/20261003T000242Z): getComputedStyle on interactive controls only, capped at 80 per view; 316 pairs, all >= 4.5, none of them these labels"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The design law: text on a dark panel meets 4.5:1.",
+    "world_is": "A served label sits at 4.07:1; the instrument used to clear the page does not measure non-interactive text, so its 0-under result does not cover these.",
+    "notes": "INERT (legibility, on PROD 6169edd9). Owner 2.0.0_SA_COO~D: a lighter Equity ink for text on the body rung, or 24px; and widen the walk's contrast limb to non-interactive text."
+  },
+  {
+    "id": "DSGN_REBRND-S11",
+    "project": "DSGN_REBRND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~D",
+    "surfaced_at": "2026-10-03T07:10:00Z",
+    "one_line": "Round 3 E3 wires the NO-PERMISSION state at the route level: a signed-in viewer whose firm reaches a page but whose role does not (requireAdmin, requireInternal, requireDev) now sees PanelNoPermission and a way back instead of a silent bounce to /market.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~D",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal d7141e5a (origin DEV, ls-remote read) components/ProtectedRoute.tsx: RouteNoPermission rendered for the three role gates; the firm allowlist checked first and still a redirect",
+        "portal src/components/__tests__/route-no-permission.test.tsx at d7141e5a: five arms from the working-tree ProtectedRoute under the real AuthContext provider (panel for each role denial; page for full roles; redirect for a firm outside its allowlist and for a signed-out viewer)",
+        "real run 2026-10-03T07:0xZ on localhost:5174, a stubbed signed-in non-admin internal user on /investor-reporting: 'You do not have access to this page. An Opal Capital administrator can grant it. Go to Market Overview', inside the app shell; the link leads to /market"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Disarms DSGN_REBRND-W3-S1: an observable NO-PERMISSION state now renders on every route whose role gate denies a viewer, in the four-states component (DESIGN.md C12.4), with a fixture-free render and a pin. Not covered, by design: a partner firm outside its own allowlist is still redirected to its landing (parked in STATUS E3).",
+    "spec_asserts": "Row W3-S1: RB-s-10's face lists NO-PERMISSION among the four designed states every panel with nothing to show uses.",
+    "world_is": "The route-level denials render that state on DEV d7141e5a. Panel-level hides (an element not drawn for a role) remain non-rendering; none was found that leaves a panel empty.",
+    "notes": "Panel-level census of hides not repeated here; W3-S4 (failure swallowed as EMPTY) stays with E3."
+  },
+  {
+    "id": "DSGN_REBRND-S12",
+    "project": "DSGN_REBRND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~D",
+    "surfaced_at": "2026-10-03T09:12:00Z",
+    "one_line": "Round 3 row S10's remedy, both halves: the Positioning Summary's class percentage labels take a text ink that clears 4.5:1 on the body rung (Equity blue400, Structured pink400), and the walk's --contrast-table now also grades non-interactive text at rest.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~D",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal d8d236a0 (origin DEV, ls-remote read 09:11Z): lib/chartColors.ts getAssetClassInkOnDark (blue500 4.069 -> blue400 5.886; pink500 4.242 -> pink400 5.650; green500 5.899, yellow500 7.803, vermilion500 4.553 unchanged) and the four label sites in Positioning/panels/PositioningSummary.tsx",
+        "portal src/pages/Positioning/panels/class-label-ink.test.ts at d8d236a0: three arms, with a CONTROL that the raw Equity colour reads 4.069:1 on --layer-body read from index.css",
+        "walk tmp/ui-walk/20261003T090209Z (signed in, localhost:5174, the widened .claude/skills/ui-walk/walk.mjs): span[data-class-label] rgb(96,165,250) 5.90:1 x4, rgb(244,114,182) 5.67:1 x3, rgb(16,185,129) 5.91:1 x5, all on rgb(25,38,67); the screenshot was looked at"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Disarms DSGN_REBRND-S10: every class percentage label on the Positioning Summary clears 4.5:1 on its ground in the served code, and the instrument that missed them now measures non-interactive text.",
+    "spec_asserts": "Row S10: text on a dark panel meets 4.5:1; the walk's contrast limb sees non-interactive text.",
+    "world_is": "Both hold on DEV d8d236a0. The widened limb reads 35 non-interactive text groups on /positioning at load, 4 of them under their bar; they are listed in STATUS.md as round 3's next contrast item, not ruled here.",
+    "notes": "The bars, swatches and legend keep the class colour; only text drawn in a class colour on the dark rung changes ink."
+  },
+  {
+    "id": "DSGN_REBRND-S13",
+    "project": "DSGN_REBRND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-03T10:34:00Z",
+    "one_line": "d7141e5a (E3 / row W3-S1, the designed NO-PERMISSION state) breaks F49-AC4: 32 of 32 pass at its parent and 31 of 32 from this commit on. The test reads COMMITTED blobs and classes the new panel as rendering NOTHING, though the viewer is still refused. The commit's '32 of 32' was measured before commit, against the old file.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "this seat's portal grade 2026-10-03 ~08:5xZ-10:3xZ (scratch worktree of origin/DEV, removed after): F49-AC4 at d7141e5a^ 32/32, at d7141e5a and at 46aeea17 31/32; ProtectedRoute.tsx:121",
+        "fe-s-49 and fe-s-47 (AC6, AC7) read committed blobs: a full-suite revert of the working tree cannot see them, and a pre-commit 'N of N' for them is not a measurement of the change"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A FAST pin adds no failing test; its 'N of N' is measured on the bytes it lands.",
+    "world_is": "One test now fails on DEV because of this pin, and its own record says the opposite. CI runs no unit tests, so nothing else caught it.",
+    "notes": "INERT (DEV only; a test's class of the panel, not a served defect: the viewer is still refused). Owner 2.0.0_SA_COO~D: teach F49-AC4 the NO-PERMISSION panel as a refusal, and re-measure committed-blob tests after the commit."
+  },
+  {
+    "id": "DSGN_REBRND-S14",
+    "project": "DSGN_REBRND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~D",
+    "surfaced_at": "2026-10-03T14:52:00Z",
+    "one_line": "Every route row W3-S4 named now renders ERROR on a failed fetch (and LOADING while pending) instead of data, EMPTY or a stand-in reading: /market, /positioning, /advisor-intelligence, /attribution, /portfolio-management, /ticket-center and /data-refresh, each re-measured on DEV before its fix.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~D",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal origin DEV (each ls-remote read at its push): /market 55560835 (Global RSI and Fear & Greed; the Fear & Greed endpoint stopped returning a made-up 50 'neutral'), a7b16628 (Daily Cloud, Trending Topics, Top/Bottom Performers; the keyword endpoint stopped returning an empty list), 564a8f95 and 1754d9c1 (RSI hook: an incomplete summary and a missing period change), 4a40a0ff (RSI modal); /positioning b0b3c524; /attribution 94c055e8; /portfolio-management c3e1d7b9; /ticket-center 3d8cce99; /data-refresh 30f7fca1 (History and Emergency Rollback); /advisor-intelligence 075d33fa (Advisors), 10fca02d (Data Source 'Connected' claim), 1b8fccfd (Assets Overview)",
+        "pins at those commits: components/market-performance/__tests__/market-failed-fetch.test.tsx (arms a-f), Positioning/panels/summary-states.test.tsx, Attribution/components/style-policy-states.test.tsx, PortfolioManagement/components/summary-states.test.tsx; each with a negative control on the commit before",
+        "real runs on localhost:5174: scripts/ui-smoke.mjs with the session stubbed (data answered 401) or --fail 503 per route, before and after, looked at; signed-in walks as positive controls with live data (20261003T120014Z, 124023Z, 130059Z, 131333Z, 133002Z, 134302Z, 144759Z)"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Disarms DSGN_REBRND-W3-S4: on every route the row named, a failed fetch now renders the designed ERROR state (DESIGN.md C12), with no fabricated reading and no EMPTY sentence standing for a failure. Effect-driven branches with no static pin (HoldingsTab, SelectionTab, TicketCenter, DataRefresh, AdvisorsTab, PartnerAnalytics) were checked by the 401 render alone.",
+    "spec_asserts": "Row W3-S4 / RB10-AC5: a failed fetch renders ERROR; a neutral reading and a failed fetch must be distinguishable.",
+    "world_is": "Holds on DEV 1b8fccfd for the named routes. Not swept: routes the row did not name. Not yet re-measured after commit: the repo's committed-blob suites (row S13's lesson); this seat runs them next.",
+    "notes": "PartnerAnalytics.tsx was released from 2.0.0_SA_COO~M's MDPF_SECCLASS lease for 1b8fccfd (msgs 104617, 104623)."
+  },
+  {
+    "id": "DSGN_REBRND-S15",
+    "project": "DSGN_REBRND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~D",
+    "surfaced_at": "2026-10-03T15:10:00Z",
+    "one_line": "Row S13's two asks done: FE-s-49 F49-AC4 reads the designed NO-PERMISSION panel as a refusal (portal e2563c17), and the committed-blob suites were re-measured after commit across this seat's pins, which found a second break of the same class this seat made: FE-s-47 F47-AC6, two unclassified PrintEntry.tsx sites from b618efc9, now classified and measured (2da1eaaf).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~D",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal e2563c17 (origin DEV, ls-remote 15:00Z): admin-gate.test.ts gains outcome NO_PERMISSION (`data-slot=\"route-no-permission\"`), counted with REDIRECT in F49-AC3 and F49-AC4; fe-s-49 10 pass 0 fail at HEAD and again after the commit; F49-AC4 refuses 10 of 10",
+        "portal 2da1eaaf (origin DEV, ls-remote 15:09Z): no-status-reason.test.ts classifies PrintEntry.tsx:83 (import) and :162 (analysisChromeFromStatus's seed, OVERWRITTEN) and measures the overwrite as OVERWRITE (3); census breaks 0; 9 of 9 reaches carry their reason",
+        "the seven committed-blob suites (fe-s-33, fe-s-41, fe-s-47, fe-s-49, fe-s-54, iv-e-8, iv-e-10) at 2da1eaaf after commit: 45 pass, 0 fail (before e2563c17: F49-AC4 and F47-AC6 failing)"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Disarms DSGN_REBRND-S13: F49-AC4 passes on DEV with the NO-PERMISSION panel counted as a refusal, and this seat's committed-blob suites are measured on the bytes that landed. The F47-AC6 break (b618efc9) had been filed as pre-existing by this seat's earlier baseline comparison; it was its own, and is fixed in the same pass.",
+    "spec_asserts": "Row S13: a FAST pin adds no failing test, and its N of N is measured on the bytes it lands.",
+    "world_is": "Holds at portal DEV 2da1eaaf for the seven suites that read committed blobs. The full repository suite was not run.",
+    "notes": "Committed-blob suites found by searching test files for portalBlob( / git show / execFileSync('git'); fe-s-47 was added on the CVO's naming."
   }
 ]
 ```

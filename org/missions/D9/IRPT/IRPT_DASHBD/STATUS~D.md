@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~D` (CLAUDE). Contract: PRD `org/missions/D9/IRPT/IRPT_DASHBD/
 (ENDPOINT unchanged since @2cb022f549; C-LEASE and ruling 6.7 place F's items on this seat). Reviewer `3.0.0_SA_CVO`
 (grades each landed pin after the fact, as DSGN_IRPTV1 pins). Authority: Andrew-direct 2026-10-01 ~04:2xZ, record
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261001_042xZ_SELF_DRIVE_60M_LAPTOP_FABRIC_FINAL_SAY_CLOSER_DRIVE_IRPT_FIRST.md`
-@c48af273cc (CTO 103442). **As of 2026-10-02T09:3xZ.** This file holds F's claims and next-list; the pins, the landed
+@c48af273cc (CTO 103442). **As of 2026-10-03T05:2xZ.** This file holds F's claims and next-list; the pins, the landed
 table and the screen are in `org/missions/D13/DSGN/DSGN_IRPTV1/STATUS.md` (one seat, one portal checkout).
 
 ## Pins
@@ -28,8 +28,9 @@ account 0 reads, 85 ms. FWD-1's ACCEPT (Andrew's pick the next morning) and the 
 ## Write claims
 
 - `2.0.0_SA_COO~D`: `portal/src/pages/InvestorReporting/dashboard/*`, `portal/src/pages/InvestorReporting/tabs/reporting/*`.
-- No claim is open at 08:2xZ. Plan item 5 and both signed-in runs are done; the walker's `--dashboard-window` step is the
-  instrument for a re-measure.
+- OPEN CLAIM 03:2xZ (2026-10-03), print half built 04:1xZ: batch 201's print and export cells (item 6 below): `render/Page.tsx`,
+  `render/performance/PerformanceDocument.tsx`, `render/manifest.ts`, `export/ExportButton.tsx`, `export/resolveBundle.ts`
+  (DSGN_IRPTV1 lease surface), built in this seat's worktree DIR `C:\Users\AndrewBerman\Desktop\portal-coo-d-p3`.
 
 ## Next (in order)
 
@@ -51,6 +52,44 @@ account 0 reads, 85 ms. FWD-1's ACCEPT (Andrew's pick the next morning) and the 
 3. When the SERIES contract carries a guard field (today 0.1.0 @b80543a03c, blob 542fc836b3, none), `dashboard/seriesContract.ts` and
    `DashboardPerformance.tsx` read it and say the `guard_state` sentence beside the day; pin iv-e-124 fails the tick
    that contract version is committed, which is the trigger.
+
+4. ~~Row S20 (ruling 28, CTO 104518)~~ LANDED portal `84f2424f` (origin DEV, ls-remote 03:1xZ): the picker's "data through"
+   and the body both read `series.as_of`; no refusal on a manifest/series skew. Pin iv-e-156; fixture-plane run looked at
+   (manifest 09-21, series 09-23: both lines read September 23rd). S20 closes on this landing.
+5. P-3 (2.0.0_SA_COO~P 104511, batch 197): BUILT, HELD off DEV for P-2's window. Local portal branch
+   `coo-d-p3-client-summary` @b06fcb92 (0410f358 + merge of DEV 84f2424f). The picker reads the per-client summary;
+   OBJECT_NOT_COVERED, NOT_READY or an unreadable document fall back to the per-account manifests. Pin iv-e-155; real run
+   from a build of the branch, both shapes. ~P told (msg 20261003T031650Z), with one contract question: the summary's
+   null for NOT_SPANNED/BREAK against the body's clipped figure.
+6. Batch 201 (1.0.0_SA_CTO 104523, RULED (a)) and batch 203 (CTO 104532, the export shape RULED YES with the series
+   frozen at submit). Plan `org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/2.0.0_SA_COO~D/p6/P6_PRINT_EXPORT_PATH_B_PLAN.md`.
+   - PRINT half BUILT on the held branch @79e7cfc8. A print URL with `account=` reads PATH B through the tab's switch;
+     not served -> PATH A; an unreadable series -> refusal. Pin iv-e-158; a run from the build made zero PATH A requests.
+     The same commit makes `summaryYtdSuffix` use the body's `notMeasuredReason` words.
+   - EXPORT half BUILT @16f5c8ea (pin iv-e-159). The dashboard's window is lifted to the tab's target. The body is the
+     bundle with no retained report plus `performance_source` (accepted as is by IB-pr-301 @26240fa401, ~P 104543).
+   - IB-pr-301's print query BUILT @c16a31e9: `account` and `version` with no `selection`; the series is read with
+     `?version_id=`. A run from the build was looked at.
+   - The branch is HELD at @c16a31e9 until ~P names the P-2 window (104548).
+   - The frozen as_of BUILT on the held branch @b847c9f0: "This export uses the performance data through <date>."
+     beside the export (ExportReceipt facts.frozen_as_of; pin iv-e-162; run from a build). P-3 + P-6's page half is
+     COMPLETE on the branch, held for ~P's P-2 window (~P told 083543Z).
+   - **B1 STAGED 2026-10-03 16:1xZ** (CTO 104632, Andrew "1 yes today"; 0.0.0_AB_MSTR 104636 waits on the DEV head sha):
+     origin/DEV 525c9404 merged into the branch, then 426761e4. 426761e4 fixes iv-e-162's read-only writes: the branch
+     tip had failed `bun run typecheck` since b847c9f0. Measured: typecheck rc=0; the branch's tests 9 of 9; the full
+     suite fails the same 57 named tests at DEV head and on the branch. Both were run in worktrees outside the
+     workspace, which adds path failures; the branch adds 5 passing tests. Download is already on DEV (item 93).
+     ~P told 161323Z. ON ~P's CALL: re-merge origin/DEV, `git push origin HEAD:DEV` from the branch worktree, then
+     message 0.0.0_AB_MSTR the DEV head sha. Until B2 is measured, no product change from this seat lands on DEV:
+     the promote carries DEV head, and anything not yet graded would ride to PROD.
+   - **B1 LANDED 2026-10-03 18:0xZ** on ~P's B1 GO (104674): portal `19796bc0` (push output e862b0c4..19796bc0;
+     ls-remote read). DEV 2f326afc (Andrew's two Holdings changes on top) was sent to 0.0.0_AB_MSTR for B2 (104681).
+   - The run also caught a since-first-data figure printed for a window the tab answered "Not measured"; fixed on DEV
+     209e4903.
+7. ~~~P 104529 window_status~~ LANDED portal `936424c3`, plus `209e4903` (any window opening before the history is
+   NOT_SPANNED, preset or custom: a print carries only dates) (origin DEV, ls-remote 03:5xZ). A NOT_SPANNED preset or a BREAK
+   window reads "Not measured" with its reason in the body and the picker, never a partial link. Pin iv-e-157;
+   iv-e-125 re-goldened; real run looked at.
 
 ## Parked (one line each, owner + the condition that un-parks it)
 

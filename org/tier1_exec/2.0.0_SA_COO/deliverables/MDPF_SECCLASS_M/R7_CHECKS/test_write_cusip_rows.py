@@ -71,6 +71,16 @@ def test_vocabulary_duplicate_and_name_refusals(writer):
     assert [r["ticker"] for r in rows] == ["CUSIP:5380366P4"]
 
 
+def test_a_non_ascii_name_is_refused(writer):
+    # MDPF_SECCLASS-S15: CUSIP:025083882 was written as 'AMERICAN CENTURY ULTRA® INV'; a served-table name is ASCII.
+    rows, refused, _ = writer.plan_rows([(1, ["025083882", "equity", "US Large Cap", "AMERICAN CENTURY ULTRA® INV"])],
+                                        VOCAB, set())
+    assert rows == [] and refused and refused[0][1].startswith("NON-ASCII-NAME")
+    rows, refused, _ = writer.plan_rows([(1, ["025083882", "equity", "US Large Cap", "AMERICAN CENTURY ULTRA(R) INV"])],
+                                        VOCAB, set())
+    assert refused == [] and rows[0]["name"] == "AMERICAN CENTURY ULTRA(R) INV"
+
+
 def test_present_key_is_left_alone(writer):
     rows, refused, present = writer.plan_rows(
         [(1, ["66476QFV5", "fixed_income", "", "NORTHERN BANK"])], VOCAB, {"CUSIP:66476QFV5"})

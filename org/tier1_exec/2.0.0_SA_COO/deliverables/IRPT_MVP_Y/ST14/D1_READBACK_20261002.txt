@@ -1,0 +1,2 @@
+22:19:30Z wjSX3zZoFu2EUintXwZVESW+ac8F+bdRHSWm+YfpmgA= 512 900 Successful
+PASS: the cold-start build answered an unauthenticated request with state/statusCode UNAVAILABLE | first-party modules from outside the zip: none

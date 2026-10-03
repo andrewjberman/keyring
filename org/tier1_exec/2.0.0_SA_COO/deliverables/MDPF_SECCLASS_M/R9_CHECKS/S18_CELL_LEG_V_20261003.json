@@ -1,0 +1,70 @@
+{
+ "claim": "measured (served and gold reads after the QA run)",
+ "logs": [],
+ "cube_0930": {
+  "before": [
+   "7sUdoPxTfrBuAgLVLGvkiTAK8sloCTwe",
+   "2026-10-03T04:13:24+00:00",
+   108741,
+   6836,
+   "59dd92a7a9efec6328f35cdaa892de1f"
+  ],
+  "after": [
+   "VzNVuCJR8cDaIH0ff1UTTzn_PuoPqCbS",
+   "2026-10-03T10:15:43+00:00",
+   108741,
+   6836,
+   "59dd92a7a9efec6328f35cdaa892de1f"
+  ],
+  "content_equal": true
+ },
+ "cube_1001": {
+  "s18_version": [
+   "fWbRjNx3YiGMpsCadbGTOnRnzi8GTzcu",
+   "2026-10-03T04:13:24+00:00",
+   6509
+  ],
+  "qa_version": [
+   "oorqoPuTMuGw3Nak2.GL06Rl2P6X5_Tn",
+   "2026-10-03T10:15:43+00:00",
+   6841
+  ],
+  "drop_set": 335,
+  "drop_set_present_now": 332,
+  "drop_set_still_absent": [
+   "z0818919951",
+   "z0821124151",
+   "z0822808251"
+  ]
+ },
+ "mix_summary": {
+  "data_as_of": "2026-10-01",
+  "classes": 8,
+  "pct_sum": 1.0,
+  "mv": 1843207824.5,
+  "pct_vs_0930": 0.005
+ },
+ "z0812888131_tail": [
+  {
+   "date": "2026-09-30",
+   "aua_canonical": 27904.62,
+   "nna_canonical": 0.0,
+   "inflows_canonical": 0.0,
+   "outflows_canonical": 0.0
+  },
+  {
+   "date": "2026-10-01",
+   "aua_canonical": 27814.59,
+   "nna_canonical": 0.0,
+   "inflows_canonical": 0.0,
+   "outflows_canonical": 0.0
+  }
+ ],
+ "drop_set_1001": {
+  "read": 335,
+  "synthetic_correction_sum": -10143.16,
+  "total_aua_sum": 78460457.73,
+  "no_1001_point": 0,
+  "unreadable": 0
+ }
+}

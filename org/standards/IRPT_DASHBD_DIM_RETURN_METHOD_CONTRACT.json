@@ -1,9 +1,9 @@
 {
-  "contract_version": "0.2.0",
+  "contract_version": "0.3.0",
   "project": "IRPT_DASHBD",
   "prd": "org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md v0.5 @0e7fd8eeb6",
   "authored_by": "0.4.0_DS_ClientPlatform~S",
-  "authored_under": "IRPT_DASHBD.TO-DB-b-1 (C-SHAPE, annex 17c, ADDENDUM ruling 12) with amendments 5 and 6. Row IRPT_DASHBD-S2 recorded that this file waited on the MEASURED thresholds; they are measured and landed, so it is written now. UNCOMMITTED by design: org/standards/ is owned-paths lane ANY_EXEC and this seat is refused there, so the issuer lands it (amendment 4, remedy (1) of row S2).",
+  "authored_under": "IRPT_DASHBD.TO-DB-b-1 (C-SHAPE, annex 17c, ADDENDUM ruling 12) with amendments 5 and 6. Row IRPT_DASHBD-S2 recorded that this file waited on the MEASURED thresholds; they are measured and landed, so it is written now. UNCOMMITTED by design: org/standards/ is owned-paths lane ANY_EXEC and this seat is refused there, so the issuer lands it (amendment 4, remedy (1) of row S2). 0.3.0: IRPT_DASHBD.TO-DB-b-18 (0.9.0_WK_IRPT_DASHBD~5) adds the four columns the producer's emit_method_row emits (rows IRPT_DASHBD-W1-S19, W2-S3) and records method_version 2.",
   "table": "dim_return_method",
   "grain": "ONE ROW PER METHOD VERSION. Not per day, not per account, not per firm: the row describes the arithmetic, and a change to the arithmetic is a new method_version.",
   "partition": "method_version=<int>, one partition per version",
@@ -33,6 +33,18 @@
       "type": "string",
       "nullable": false,
       "meaning": "when income enters the numerator"
+    },
+    {
+      "name": "value_basis",
+      "type": "string",
+      "nullable": false,
+      "meaning": "the account value V_t the return arithmetic divides by, stated as data; method_version 2 is EQUITY = net_mv_plus_cash + margin_balance (1.0.0_SA_CTO RULINGS batch 193). A reader cannot otherwise tell a version-2 return from a version-1 return that read net_mv_plus_cash alone"
+    },
+    {
+      "name": "value_basis_ruling",
+      "type": "string",
+      "nullable": false,
+      "meaning": "the ruling that fixed value_basis, cited so the basis is traceable to its authority: 1.0.0_SA_CTO RULINGS batch 193"
     },
     {
       "name": "fee_basis",
@@ -87,6 +99,18 @@
       "type": "double",
       "nullable": true,
       "meaning": "the tie-out tolerance DB-b-3 PROPOSES, never one it ratifies. Null in 0.1.0 because DB-b-1 had no basis to assert a number; 0.037 now, measured by DB-b-3 as the preferred convention's p90 rounded up to the next 5 bp. STILL NULLABLE: a future method_version is emitted before its tie-out has run, so the column must be able to say 'not yet proposed'. READ THE MEASUREMENT RECORD BEFORE USING THE VALUE -- row IRPT_DASHBD-S10 and the record's own `sentence` field say this cell recommends AGAINST adopting it as a bar, because the difference it is a percentile of is dominated by the account-days Opal withheld and Black Diamond counted."
+    },
+    {
+      "name": "tieout_tolerance",
+      "type": "double",
+      "nullable": false,
+      "meaning": "the RATIFIED tie-out tolerance, in return units (0.0035 = 0.35 percentage points of |Opal total return - Black Diamond return| per like-day window). Distinct from tieout_tolerance_proposed, which is the number DB-b-3 PROPOSED and which no ruling adopted as a bar"
+    },
+    {
+      "name": "tieout_tolerance_ruling",
+      "type": "string",
+      "nullable": false,
+      "meaning": "the ruling that ratified tieout_tolerance: 1.0.0_SA_CTO RULINGS batch 181 (IRPT_DASHBD PRD ruling 11)"
     },
     {
       "name": "gips_alignment",
@@ -146,9 +170,9 @@
     "token_census": "The five enum values that are not already ratified estate terms were introduced with this table at 0.1.0 and the producer is their only writer: TWR_DAILY_GEOMETRIC, cash_when_received, GROSS_ONLY, Account365, and the START/MIDPOINT members declared unused. The column name comparability_max_excluded_weight is new with PRD ruling 18 and appears in the PRD, this order and this producer only.",
     "token_census_finding": "NO COLLISION. Stated with its limit: this census is over the declared VALUES of a table minted by this round, so there is no prior consumer to collide with. That is a weaker claim than the account_return_daily 0.2.0 census, where an existing estate term could have clashed and the scans were run to check."
   },
-  "schema_hash": "198109613065ed7b72afd5ff178ac31c7ace2facddf0c65e96a65acfdd42e47d",
+  "schema_hash": "73e80ef7920f59134eda5ab06dfea766de295bd71e71b398023b52ae8acbe919",
   "schema_hash_basis": "sha256 over the sorted 'name:type' lines joined by newline, types as the pyarrow type name the LANDED parquet carries -- identical to the basis the account_return_daily contract declares, so one method verifies both tables.",
-  "schema_hash_provenance": "COMPUTED FROM THE SERVED ARTIFACT after DB-b-3's single gold write, by the basis this file declares. The predecessor hash fe0d01b511ef9b82e98ee031c4d6aefe27f08759e52189941e1e74fb3bb9786b was correct for the same table while tieout_tolerance_proposed carried no value; the change is the column's type, not a change of table.",
+  "schema_hash_provenance": "COMPUTED FROM THE PRODUCER'S ROW, by the basis this file declares: the 'name:type' of each key emit_method_row emits, with the pyarrow type each value carries (int -> int64, str -> string, float -> double) -- NOT yet read from a served artifact, because method_version 2 is not yet written. It is RE-READ FROM THE SERVED ARTIFACT at the P-2 packet's method-row write, and a difference there is a contract bump, not an in-place edit. Types assume the packet passes --tieout (a float), as the landed version-1 row did; a run without --tieout would type tieout_tolerance_proposed as null and change the hash. The predecessor hash 198109613065ed7b72afd5ff178ac31c7ace2facddf0c65e96a65acfdd42e47d (0.2.0) was computed from the served version-1 artifact; the change is four added columns, not a change of table.",
   "landed_row": {
     "basis": "measured",
     "read_at": "2026-10-01, after DB-b-3's method-row write",
@@ -174,9 +198,9 @@
     }
   },
   "supersedes": {
-    "contract_version": "0.1.0",
-    "schema_hash": "fe0d01b511ef9b82e98ee031c4d6aefe27f08759e52189941e1e74fb3bb9786b",
-    "why": "DB-b-3 wrote tieout_tolerance_proposed, so the column's parquet type changed from null to double and the schema_hash changed with it. The ISSUER predicted this when it landed 0.1.0 ('tieout_tolerance_proposed is null-typed in the parquet, so when DB-b-3 proposes a value its type and the hash change; that is a contract bump then'), which is why this is a versioned bump and not an in-place edit."
+    "contract_version": "0.2.0",
+    "schema_hash": "198109613065ed7b72afd5ff178ac31c7ace2facddf0c65e96a65acfdd42e47d",
+    "why": "emit_method_row gained value_basis, value_basis_ruling (method_version 2, 1.0.0_SA_CTO RULINGS batch 193) and tieout_tolerance, tieout_tolerance_ruling (1.0.0_SA_CTO RULINGS batch 181) after 0.2.0 was written, so the emitted row carried four columns the contract did not declare and the parquet schema_hash changed with them; a versioned bump, not an in-place edit (rows IRPT_DASHBD-W1-S19, W2-S3)."
   },
   "method_versions": [
     {
@@ -197,6 +221,21 @@
       "day_count": "Account365",
       "gips_alignment": "GIPS-aligned, not GIPS-compliant",
       "values_read_from": "the LANDED parquet at irpt/49financial/gold/dim_return_method/method_version=1/data.parquet, not from the producer's source: these are the values a consumer actually receives."
+    },
+    {
+      "method_version": 2,
+      "method": "TWR_DAILY_GEOMETRIC",
+      "flow_convention": "END",
+      "value_basis": "EQUITY = net_mv_plus_cash + margin_balance",
+      "value_basis_ruling": "1.0.0_SA_CTO RULINGS batch 193",
+      "value_basis_note": "The equity value basis: C-VALUE became the account's EQUITY, net_mv_plus_cash + margin_balance. Version 1 read net_mv_plus_cash alone. A change to the value basis is a change to the arithmetic, so it is a new method_version with every return recomputed, never an edit to version 1.",
+      "income_basis": "cash_when_received",
+      "fee_basis": "GROSS_ONLY",
+      "day_count": "Account365",
+      "tieout_tolerance": 0.0035,
+      "tieout_tolerance_ruling": "1.0.0_SA_CTO RULINGS batch 181",
+      "gips_alignment": "GIPS-aligned, not GIPS-compliant",
+      "values_read_from": "the producer's source (data/assets/scripts/gold/irpt_reporting/account_return_daily.py, METHOD_VERSION and emit_method_row), NOT a landed parquet: method_version 2 is written by the P-2 packet, which re-reads the served row. The measured guard numbers (tolerance, large_flow_share, band, comparability_max_excluded_weight) are the thresholds file the packet passes and are not asserted here."
     }
   ]
 }

@@ -15315,3 +15315,1598 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Interim disarm: this seat checks git status for ' D' after every build-and-upload and restores tracked files from HEAD. Fix: cleanup restores a tracked path from HEAD instead of deleting it, and staging refuses a tracked dest with uncommitted edits -- in the next repair cell (IRPT_BCKEND owns IB-rte-4's staging)."
 }
 ```
+
+## IRPT_BCKEND-S277 -- DISARMS S270: the history list answers in at most 6.6 s server time after M2
+
+```json
+{
+  "id": "IRPT_BCKEND-S277",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-02T18:20:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARMS row IRPT_BCKEND-S270 (disarm owner 2.0.0_SA_COO~Y): irpt-status answers every history page size in at most 6.6 s of server REPORT time, cold and warm, at 22 Cottonwood requests, after M1 (timeout 29 s) and M2 (the 8-worker per-row pool, one boto3 Table per thread, 1024 MB) served.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/S270/NEVER_WIDEN_SIGNOFF_PACKET_IRPT_STATUS_M2_D2_R1_20261002.md (blob 5518903557; CTO half batch 177); D1 safe-apply 17:04Z read back CodeSha256 h7H7KgX1FsBu4XTLqqpcMOjMnwRdeL9xlGZPwzhibcg=, memory 1024, timeout 29 (S270/M2_APPLY_OUTPUT_20261002.txt)",
+      "V1-a, server REPORT from /aws/lambda/irpt-status (S270/V1A_TIMING_RUN1_20261002.json, RUN2): history default page cold 6567 ms (init 162 ms) and warm 3372 ms; limit=50 2570 and 2578 ms; single read 404 and 256 ms; status 1122 and 1133 ms; every call HTTP 200, 22 items",
+      "deploy ledger irpt-status-m2-d2-r1-20261002 CLOSED, 4 of 4 legs proven (org/critical_paths/change_management/20261002T1436Z_irpt-status-m2-d2-r1-20261002_deploy_completion.md)"
+    ]
+  },
+  "dismissal_reason": "S270's hazard was a history list near the function timeout while the request count grows. The bar the CTO set (batch 174: every page size at or under 10 s server time, cold and warm) is met with 3.4 s of headroom at the slowest call, and the timeout is 29 s. Cottonwood's hold at 22 requests lifts with this row (batch 177).",
+  "spec_asserts": "Row S270: the served history list's server time is measured after E6, and Cottonwood is re-capped while it nears the timeout.",
+  "world_is": "Measured after M2 served: the slowest history call is 6.6 s cold at 22 requests (was 15.0 s cold after M1). Each added request still costs per-row reads, now spread over 8 threads; the per-request growth on the pool is not separately measured.",
+  "notes": "Not claimed: the growth rate at much larger counts. A history page past about 10 s at a future count would be a new row."
+}
+```
+
+## IRPT_BCKEND-W101-S16 -- IB-pr-298: a staging failure part-way through a function's members leaves already-written members on disk, tracked or not...
+
+```json
+{
+  "id": "IRPT_BCKEND-W101-S16",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~101",
+  "surfaced_at": "2026-10-02T18:10:00Z",
+  "one_line": "IB-pr-298: build-and-upload.sh sets STAGED_ABS_SOURCE/STAGED_NAMES only AFTER the staging script succeeds, so a hash mismatch on a later member leaves earlier members written and never cleaned up (a tracked one is left holding the pinned blob).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/build-and-upload.sh (this branch) staging block: 'if ! ... \"$JSON_TOOL\" \"$TMPJS_STAGE\"; then ... continue; fi' precedes 'STAGED_ABS_SOURCE=...; STAGED_NAMES=...'; the staging script writes member N before it checks member N+1 (it sets failed=true and continues the loop)",
+      "Read of the script only; the failure arm was not run (the order bars running build-and-upload.sh against a function)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IB-pr-298: cleanup restores a tracked staged path from HEAD and removes only an untracked one, for every staged name.",
+  "world_is": "That holds for every path that reaches the assignment. On the failure arm (a staged_from sha256 mismatch or a git show failure on one member) the members written before it are not recorded for cleanup. The new dirty-destination refusal still protects uncommitted work, and a tracked member differs from HEAD afterwards only if its pinned blob differs from HEAD.",
+  "notes": "Not repaired: outside the order's stated change. A one-line fix is to assign STAGED_ABS_SOURCE/STAGED_NAMES before running the staging script. Owner 2.0.0_SA_COO~P to cut or decline."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S278",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-02T19:35:00Z",
+  "one_line": "build-and-upload.sh writes a CORRUPTED artifact_sha256 into lambda-source-map.json when the zip's base64 SHA-256 starts with '/': the value reaches node through an environment variable, and Git Bash's MSYS path conversion rewrites it to 'C:/Program Files/Git/...'.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "2026-10-02 ~19:3xZ BAU_PARITY_SKIP=1 build-and-upload.sh investor-reporting irpt-performance-adapter: the map read artifact_sha256 'C:/Program Files/Git/K1eLPuPnwG+HEQaSbvHI0wXgW4wCuXNBgdfsLQ18iQ='; the S3 object's content-sha256 metadata and the zip's own hash are '/K1eLPuPnwG+HEQaSbvHI0wXgW4wCuXNBgdfsLQ18iQ='",
+      "build-and-upload.sh:550-557 guards the computed SHA256 and says the env-var pass is 'already MSYS-safe'; :147 writes sm.functions[fn].artifact_sha256 = sha in the node step"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The source map's artifact_sha256 equals the uploaded zip's base64 SHA-256 (the value Terraform and the deploy ledger compare against).",
+  "world_is": "Corrected by hand at ~19:3xZ in this seat's commit (the S3 metadata and the zip's own hash agree). Any build whose hash begins with '/' (about 1 in 64) corrupts the map again.",
+  "notes": "Interim disarm: this seat compares the map's artifact_sha256 with the uploaded object's content-sha256 after every build. Fix: pass the sha to node by file or set MSYS2_ENV_CONV_EXCL for it, and assert the written value matches the 44-char base64 pattern -- the next repair cell (with row W101-S16)."
+}
+```
+
+## IRPT_BCKEND-S279 -- a fund ticker fails the whole upload (brief 2 item 4.1 is real)
+
+```json
+{
+  "id": "IRPT_BCKEND-S279",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-02T19:55:00Z",
+  "one_line": "Any upload holding a mutual or money-market fund ticker (TIMXX, FBIFX) fails AS A WHOLE FILE: the resident's securities_info answer fails security_resolution.classify_batch's row-shape check, every symbol reads UNAVAILABLE (PROVIDER_READ_UNAVAILABLE:ROWS_UNVERIFIED), four 60 s retries, then NEEDS_CORRECTION with one file-level RESOLVE_RETRY_EXHAUSTED and action REPLACE_FILE. Brief 2's Case A (the easy file holds TIMXX), the typo file and Case D (FBIFX, FDGFX, FHTKX, SPAXX) all hit it, so Y-1 cannot reach READY on today's code.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y (an intake fix that attributes the provider's namespaced fund row to the requested ticker and carries the provider id into the portfolio, plus a resident journal token naming which classify check refused; served as a resident packet)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/YB_BASELINES/: Y-B uploads as svc-irpt-analysis on cottonwood, one K4 each, no K5: typo file (sha256 87afdc7db1c58b38) and Case D (f0d344fa967504bd) both NEEDS_CORRECTION, findings [RESOLVE_RETRY_EXHAUSTED, row null], 182-184 s",
+      "bisect, two-row synthetic CSVs: AAPL+TIMXX and AAPL+FBIFX ROWS_UNVERIFIED x4 then RESOLVE_RETRY_EXHAUSTED; AAPL+BRK.B NORMALIZED (positive control, the session serves); AAPL+M:TIMXX WAF_CHALLENGE x4 (inconclusive)",
+      "YB_BASELINES/RESIDENT_RESOLVE_JOURNAL_20261002.txt: the resident's IRPT_RESIDENT_RESOLVE lines 19:04Z-19:48Z",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py:540-542: ROWS_UNVERIFIED is named by subtraction (the port served the call, the batch still read unavailable); intake/security_resolution.py classify_batch returns all-UNAVAILABLE when any returned row's id is not a requested symbol, or security_id != id, or a field shape differs"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Brief 2 section 4 (inferred): the typo file and Case D reach NEEDS_CORRECTION naming rows (row 2 APPL; rows 14-17 TICKER_NOT_FOUND); section 4.1 names the M: fund form as the highest risk, with no evidence either way.",
+  "world_is": "4.1 is REAL, measured: one fund ticker sinks the whole file before any row is named, so neither baseline shows the brief's per-row codes and the easy file cannot normalize. The exact shape of the provider's fund row is NOT observed: the resident keeps no rejected receipt and its journal names only ROWS_UNVERIFIED.",
+  "notes": "A deterministic shape refusal is retried four times at 60 s (3 min per upload, four vendor calls). Vendor traffic paused 19:48Z after the YCharts WAF challenged five lookups in a row (19:37Z-19:48Z)."
+}
+```
+
+## IRPT_BCKEND-S280 -- an Inflection split account's one-account Holdings view draws the map but lists no securities
+
+```json
+{
+  "id": "IRPT_BCKEND-S280",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-02T20:40:00Z",
+  "one_line": "On the Holdings tab, opening one Inflection split account (two models, 50/50 Opal Intermediate / Opal Long Term) shows its Securities map with every position, but the Securities table under it reads 'No securities match these filters' with Sleeve All and Account All. The all-accounts view of the same client lists those positions and ties (class lines 25,686.61 + 103,856.98 + 2,312.70 = 131,856.29 = custody). Row S259's positions are attributed to neither model part, so a table that filters the one-account view by part shows none of them.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ui-walk 20261002T201802Z (localhost:5174, portal DEV, walker armed/disarmed 20:18-20:24Z): shots 016 and 018 (client 'Ouellette', Inflection, one-account view of ****0071 / Roth, 52,410.56, model 50/50 Opal Intermediate/Opal Long Term): map drawn, table empty at Sleeve All / Account All; shot 008 (all-accounts view): the same positions listed",
+      "holdings-aggregates.json of the same walk: every holdings answer read, served security_aggregates equal the actual-position sums and classes + remainder = custody in each -- the route serves the rows; the page's table does not list them in the one-account view",
+      "served 2026-10-01 Inflection publication (rev 100a0dc22f12): 71 split accounts carry 3,963 positions with part NOT_STATED (35,466,629.25 USD)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Ledger irpt-inf-split-positions-m-20261001 (CTO half @07e4769540): a split Inflection account lists its positions (attributed to neither part); leg S walks one split account.",
+  "world_is": "The route serves the positions and the all-accounts table lists them; the one-account table of a split account lists none, so leg S's walked split account does not tie on that view.",
+  "notes": "Owner of the table: 2.0.0_SA_COO~D (tabs/holdings, DSGN_IRPTV1). Inferred cause, not read in code: the one-account table filters rows by the selected model part, and NOT_STATED rows match no part. Leg S of irpt-inf-split-positions-m-20261001 stays open on this row."
+}
+```
+
+## IRPT_BCKEND-S281 -- S280 resolved: the empty one-account table was the table's own stale choice, fixed on portal DEV 85162beb
+
+```json
+{
+  "id": "IRPT_BCKEND-S281",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-02T21:40:00Z",
+  "one_line": "Row IRPT_BCKEND-S280 is resolved, and its inferred cause was wrong: the walk left the table's Sleeve and Account selects on a model and ****0073, then drilled into ****0071; the table kept those choices (which matched no 0071 row) while its selects showed All. There is no part filter and NOT_STATED rows were never dropped. 2.0.0_SA_COO~D fixed it on portal DEV 85162beb (commit 4742a4b9): a choice the new snapshot does not offer reads as All. Re-walk 20261002T211724Z lists ****0071's 20 positions tying to 52,410.56.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "2.0.0_SA_COO~D msg 104415: cause and fix, portal DEV 85162beb (ls-remote read by ~D), fixture-plane run lists the rows, HEAD reproduces the empty table",
+      "ui-walk 20261002T211724Z shot 016: one-account view of ****0071 lists 20 positions; class lines 11,946.02 + 39,592.83 + 871.71 = 52,410.56",
+      "ui-walk 20261002T213144Z: a NOT_STATED split account (****9905, 36 positions) -- the route served 36 nodes and 36 aggregates equal to their actual sums; the page lists the one non-zero position and ties"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolution record for IRPT_BCKEND-S280: the page defect is fixed on portal DEV 85162beb by its owner and re-walked; the route was never at fault; ledger irpt-inf-split-positions-m-20261001 closed on leg S.",
+  "spec_asserts": "Row S280's inference: the one-account table filters rows by model part, so NOT_STATED rows match no part.",
+  "world_is": "The table kept a stale Sleeve/Account choice across the account drill; NOT_STATED rows list. The inference in S280 is withdrawn.",
+  "notes": "The fix rides portal DEV; PROD carries it at Andrew's next promote."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S282",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-02T23:05:00Z",
+  "one_line": "reports/tests/test_generate_installed.py::test_the_two_revisions_are_derived_never_typed fails on CLOUD: it pins `len(rows) == 24` packaged schemas (line 71), and there are 25 since 31999d12d4 added docs/contracts/investor-reporting/v1/AnalysisRequestPdf.schema.json (hop 11's contract, this seat's).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P (the test's lane, IRPT_COMPLETION_P / STATUSPORTS); the count should be derived from the schemas directory, not typed",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest reports/tests/test_generate_installed.py at CLOUD (2026-10-02 ~23:0xZ): 1 failed, 12 passed -- AssertionError: assert 25 == 24 at line 71; the same on the Y-3 branch",
+      "git log 31999d12d4: the AnalysisRequestPdf contract added one *.schema.json to the v1 directory the ingestion revision hashes"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The ingestion revision is derived, never typed (the test's own name).",
+  "world_is": "The revision itself is derived; the test also types the schema COUNT, so any new contract file fails it. The served code is unaffected (the digest stamps new requests and is only checked for presence).",
+  "notes": "Not a regression of any served path; a test pin. The combined pytest run of reports/tests with other suites also errors at collection on this file."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S283",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-02T23:35:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARMS row IRPT_BCKEND-S279 (disarm owner 2.0.0_SA_COO~Y): with st14 served (resident 22:13Z, generate 22:18Z), Case A's 99-row file holding TIMXX resolves on ONE read in about 2 s, 98 rows accepted, and the one unusable row is NAMED (row 100) -- no whole-file RESOLVE_RETRY_EXHAUSTED.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/ST14/V1_CASE_A_RUN3/OUTCOME_V1_CASE_A_RUN3_20261002.md",
+      "resident journal 23:25:09Z: IRPT_RESIDENT_RESOLVE_FUNDS matched=1 refused=0 causes=-; RESOLVE state=READY (one read, no WAF challenge)",
+      "irpt-requests NORMALIZATION#UP-f0d8aead..: NEEDS_CORRECTION, one finding TICKER_CHECK_UNAVAILABLE row 100 (TIMXX) col A"
+    ]
+  },
+  "dismissal_reason": "S279's hazard was a fund ticker sinking the whole upload before any row was named. The run measures the file resolving and the fund row attributed and named; what remains is that row's own usability (next row), not the whole-file failure.",
+  "spec_asserts": "Row S279 / CTO batch 186: a bad fund row refuses THAT row by name, never the whole file.",
+  "world_is": "Measured: one read, one named row, no retry. The row is unusable for a different reason (next row).",
+  "notes": "V1's packet criterion (NORMALIZED with M:TIMXX, then READY) is NOT met; see the next row."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S284",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-02T23:35:00Z",
+  "one_line": "TIMXX (a money-market fund YCharts keys M:TIMXX) is attributed and verified but unusable on Opal's YCharts account: the freeze names it TICKER_CHECK_UNAVAILABLE. Inferred cause: the provider row needs a data feature (features_needed non-empty -> PROVIDER_ENTITLEMENT_UNVERIFIED), the shape the CRO capture shows for M:BREIT.S. Case A cannot reach READY with TIMXX in it.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y (measure the feature on the next run via a gated= journal count in the Y-3 packet; the user's remedy is Y-5's user-named proxy; an account entitlement is Andrew's vendor-account call)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/ST14/V1_CASE_A_RUN3/OUTCOME_V1_CASE_A_RUN3_20261002.md",
+      "resident journal 23:25:09Z: IRPT_RESIDENT_RESOLVE_FUNDS matched=1 refused=0 causes=-; RESOLVE state=READY (one read, no WAF challenge)",
+      "irpt-requests NORMALIZATION#UP-f0d8aead..: NEEDS_CORRECTION, one finding TICKER_CHECK_UNAVAILABLE row 100 (TIMXX) col A",
+      "intake/security_resolution.py classify_batch: an attributed, verified row with non-empty features_needed is UNAVAILABLE / PROVIDER_ENTITLEMENT_UNVERIFIED; intake/portfolio.py names any non-FOUND, non-NOT_FOUND, non-AMBIGUOUS row TICKER_CHECK_UNAVAILABLE"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Brief 2 Y-1: the easy file reaches a READY Overview from the page.",
+  "world_is": "The file's fund row is not priced for this account (inferred); the finding's words (REPLACE_FILE) do not tell the user it is a real security needing a proxy or an entitlement.",
+  "notes": "Not retried (batch 188: a different row shape is recorded, not retried). Which feature is not determinable without another vendor read; st14's journal counts a gated row as matched."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S285",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-03T00:20:00Z",
+  "one_line": "Y-3 V1-a (REQ-66e9fe1a6b4e1af67d0b7b35, ULT + IWM Multi-Comp on the fund-free 12.03 file): IWM admitted at submission and its identity read verified 1 of 1 (securities_info 200, no WAF), then YCharts refused the holdings upload POST 403 text/plain 76 bytes, no WAF action -> ATTENTION VENDOR_UPLOAD_REFUSED. The same file's upload POST answered 200 at 10:14Z (REQ-c07e64ca).",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y (a control Overview of the same file -- no ETF, so no identity read -- separates Y-3's added GET from a session-level refusal; on the CTO's word)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "irpt-jobs REQ-66e9fe1a.. vendor_requests (3): GET /custom_pdf_reports/generate/14141847 200 set_cookie 1; GET /securities/securities_info 200 354 B set_cookie 0; POST /model_portfolios/fixed/holdings_upload/client 403 text/plain 76 B set_cookie 1, waf_action null",
+      "irpt-jobs REQ-c07e64ca.. (READY 10:14Z): GET template 200 set_cookie 0; POST holdings_upload 200 application/json 313 B",
+      "resident journal 00:10:45Z: IRPT_RESIDENT_STEP_REFUSED step=upload status=403; IRPT_SESSION_ROTATION kept=1 names=multidb_pin_writes; ATTENTION VENDOR_UPLOAD_REFUSED"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Y-3 packet V1-a: IWM admitted, identity 1 of 1 on the first read, then READY.",
+  "world_is": "Admission and identity measured PASS; the vendor refused the first mutation. Not determined: whether the preceding securities_info GET, the session (the 09:45Z sign-in's cookies; multidb_pin_writes rotating), or the vendor's own state caused the 403 -- the ledger keeps no body.",
+  "notes": "Not retried. The template read's set_cookie=1 differs from the good job's 0; the rotation persisted only multidb_pin_writes (no csrftoken rotation)."
+}
+```
+
+## IRPT_BCKEND-S286 -- the st14 generate bundle was built from an autocrlf working tree (15 members CRLF-converted)
+
+```json
+{
+  "id": "IRPT_BCKEND-S286",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-03T00:30:00Z",
+  "one_line": "The st14 irpt-ycharts-generate bundle was built from an autocrlf working tree, not from git blobs: 15 of its 113 members differ from `git show f89fc8e731:<path>` only by CRLF line endings (templates.json and 14 fixtures, one of them a PDF), where the catalogue build of the same function was 112 of 112 byte-equal to its pin.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's st14 grade 2026-10-03 00:xZ: live CodeSha256 wjSX3zZo.. (582,443 B) = zip = map artifact_sha256; 98 of 113 members byte-equal to the pin, 15 of 15 others CRLF-only, 0 differ in content",
+      "this seat's catalogue grade 2026-10-02 06:xZ (97eaff05ff): 112 of 112 members equal git show <pin>:<path>"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A served bundle's members equal the bytes at its pin (the build reads git, so a host's checkout settings cannot change what ships).",
+  "world_is": "This build read the working tree, so the shipping bytes depend on the builder's core.autocrlf. A CRLF-converted binary fixture is no longer the committed file; a text member with CRLF is harmless only where every reader tolerates it. Not read: whether any converted member is read at runtime (fixtures are expected to be test-only).",
+  "notes": "INERT on what was read (the four S279 members equal the pin). Owner 2.0.0_SA_COO~Y (the build path): stage members from `git show <pin>:<path>` or set core.autocrlf=false for the build, and diff every member against the pin before upload, as the catalogue build did."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S287",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-03T00:22:00Z",
+  "one_line": "S284 MEASURED (was inferred): YCharts answers TIMXX with its M:TIMXX fund row needing the feature mutualFundDataUSA, which Opal's account lacks -- the st15 resolve line reads matched=0 gated=1 features=mutualFundDataUSA=1 on an AAPL+TIMXX upload (Y-3 V1-b, 00:20:39Z). Every US mutual or money-market fund is likely gated the same way (not measured beyond TIMXX).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Y (S284 stays the ARMED carrier for Case A until Y-5's user-named proxy serves; an account entitlement is Andrew's vendor-account call, no spend unless he asks -- CTO batch 192)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "resident journal 2026-10-03T00:20:39Z: IRPT_RESIDENT_RESOLVE_FUNDS matched=0 gated=1 features=mutualFundDataUSA=1 refused=0 causes=-; RESOLVE state=READY",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/Y3/V1B/V1B_aapl_timxx_cottonwood.json: UP-fbd4732c.. NEEDS_CORRECTION, K4 only, no submission"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row S284: TIMXX is entitlement-gated (INFERRED).",
+  "world_is": "Measured: the feature is mutualFundDataUSA. The inference was right.",
+  "notes": "The fund-family extent is not measured (one fund read)."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-S288",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-03T00:40:00Z",
+  "one_line": "The YCharts session is EVICTED (measured): since about 00:10Z every vendor request answers 403 text/plain 76 B -- V1-a's holdings upload (row S285) and the control Overview's FIRST request, a template GET with no identity read. The resident's one refresh failed: CAPTURE_FAILED:AUTH_FAILED:NO_AUTHENTICATED_PROBE. S285's cause is the session, not Y-3. No Analysis job can reach READY until a re-capture.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y (the attended sign-in, option A -- SIGNIN_A packet section 4 -- at Andrew's time, queue 0/0; Andrew answers any CAPTCHA, per CTO batch 120 item 7)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/Y3/V1_CONTROL/OUTCOME_Y3_V1_AND_CONTROL_20261003.md",
+      "irpt-jobs REQ-06185d7074a14904d9f0eb68 vendor_requests: GET /custom_pdf_reports/generate/14141822 403 text/plain 76 B, waf_action null",
+      "resident journal 00:31:25Z IRPT_RESIDENT_EVICTION verdict=EVICTED; 00:31:44Z IRPT_RESIDENT_POLL retained_for_retry class=OperationRefused code=CAPTURE_FAILED:AUTH_FAILED:NO_AUTHENTICATED_PROBE"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The stored session (fence 23, 2026-10-02 09:45:43Z) serves Analysis jobs until a refresh is needed, and the resident's one refresh restores it when no challenge is met.",
+  "world_is": "The session stopped authenticating about 00:10Z, and the headless re-capture cannot sign in. The eviction cause is not determined: age about 14.5 h, a browser sign-in elsewhere (S233), or the vendor.",
+  "notes": "Traffic stopped after the control. Y-3 measured: IWM admitted, identity verified; READY pending the re-capture."
+}
+```
+
+## IRPT_BCKEND-S289 -- the Y-3 comparison identity verdict has no carrier (resident_worker.py:245 discards it)
+
+```json
+{
+  "id": "IRPT_BCKEND-S289",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-03T02:50:00Z",
+  "one_line": "The Y-3 packet says the resident 'verifies 1 of 1' ETF comparison identity, but resident_worker.py:245 calls self.step(recipe.step_comparison_identity, ...) and discards its {checked, verified} result: no journal line, no checkpoint and no job field records the count, so the claim is inferred from the next step having run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py:245 at HEAD (unchanged at the st16 pin 34088050e0)",
+      "this seat's st15 read 2026-10-03 02:0xZ-02:1xZ: REQ-66e9fe1a in irpt-jobs has 0 checkpoints; the st15 journal (370 lines) carries no identity line; the upload intent was claimed at 00:10:43Z, so step() returned"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Y-3 packet 5028661cbf: the resident verifies a classified ETF comparison's identity, 1 of 1, before the first mutation.",
+  "world_is": "Verification happened only in the sense that step() raises unless ok. The checked and verified counts exist only in memory, so a partial verification that step() accepts would leave no trace.",
+  "notes": "INERT (the upload was refused downstream; nothing served). Owner 2.0.0_SA_COO~Y: write the step's {checked, verified} to the journal or the job row before the mutation."
+}
+```
+
+## IRPT_BCKEND-S290 -- two OPEN deploy ledgers (irpt-y3, irpt-y5) name the same artifacts; Y-3's rollback is no longer one step
+
+```json
+{
+  "id": "IRPT_BCKEND-S290",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-03T02:50:00Z",
+  "one_line": "Ledger irpt-y3-20261002 (4 of 5 legs closed, V1 open) and irpt-y5-20261003 are both OPEN over the resident root and irpt-ycharts-generate; Y-5 replaced Y-3's bytes by 02:05:42Z (st16, generate aug0YyWc..), so Y-3's V1 can close only on st16 bytes and its stated rollback (st14, wjSX3zZo..) is no longer one step from what runs.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/critical_paths/.open_deploys/irpt-y3-20261002.json and irpt-y5-20261003.json present at HEAD 1067171ecd and in 4 of 4 readable worktrees (this seat, 02:1xZ)",
+      "host read 02:17:52Z (SSM 2eff9df7): active root 34088050e0-st16 since 02:03:31Z; generate CodeSha256 aug0YyWc.. since 02:05:42Z"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md NEVER-2: a confirmed deploy is finished or rolled back in-session; each open ledger names its artifacts and its rollback.",
+  "world_is": "Y-3's ledger describes a state that no longer runs. A rollback from it would skip st16, and its open V1 is now a statement about Y-5's bytes.",
+  "notes": "INERT. Owner 2.0.0_SA_COO~Y: close irpt-y3 SUPERSEDED by irpt-y5 (naming V1 as carried there) or restate its rollback against st16."
+}
+```
+
+## IRPT_BCKEND-S291 -- the host cutover receipt names a superseded root several installs old
+
+```json
+{
+  "id": "IRPT_BCKEND-S291",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-03T03:10:00Z",
+  "one_line": "The resident host's /opt/irpt-resident/cutover_receipt.json still says supersedes_package_root /opt/irpt-resident/ab2e088b5b after the st16 install, which replaced 9bbb38f7a0-st15: each install script merges five fields into the receipt (manifest sha, package_root, written_by, written_at, ledger) and never rewrites this one, so the receipt names a root several installs old.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's st16 read, SSM 0a2231fd-feef-40d9-bc1c-135231852d9e (02:50:30Z, Success rc 0): cutover_receipt.json supersedes_package_root = /opt/irpt-resident/ab2e088b5b",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/Y5/resident_host_install_34088050e0-st16.sh:61-69 (r.update of five keys); infra/aws/lambda/investor-reporting/ycharts/generate/install-resident.sh:30-37 reads instance_id, the four cutover flags, package_manifest_sha256 and evidence_path only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A host receipt states the install it records; the rollback target is the root the install replaced.",
+  "world_is": "No code reads the stale field: the installer's assertions ignore it, and the script's rollback uses its own OLD variable. A person reading the receipt during a rollback would be pointed at the wrong root.",
+  "notes": "INERT. Owner 2.0.0_SA_COO~Y: set supersedes_package_root to the replaced root in the next install script's receipt update, or drop the key."
+}
+```
+
+## IRPT_BCKEND-S292 -- Inflection's gold will never hold 2026-10-01, and the adapter chains over the missing day without disclosing it
+
+```json
+{
+  "id": "IRPT_BCKEND-S292",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-03T03:30:00Z",
+  "one_line": "Inflection's Performance is served from its holdings gold, which ends at 2026-09-30. The daily schedule was created at 21:05:01Z on 10-02, after that day's 14:00Z slot, and each fire computes exactly one day, so no fire will write 2026-10-01. On Mon 10-05 14:00Z the fire writes 10-02 as a one-day return, because 10-01's close is in silver (date=2026-10-02). The adapter then chains 09-30 -> 10-02, silently leaving out 10-01's market move.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3 opal-data-inflection irpt/inflection/gold/holdings_performance_daily/: 1,613 partitions, last date=2026-09-30 (written 2026-10-01T13:09:25Z); 2026 trading days through 09-30 lack only 05-11, 06-30 and 08-10, the linked days (this seat, ~03:2xZ)",
+      "s3 opal-data-assets orion/inflection/silver/fact_positions/date=2026-10-02 present (13:05:33Z); sources.json orion partition_close from 2026-09-26 holds PRIOR_TRADING_DAY, so it carries the 10-01 close",
+      "infra/aws/lambda/investor-reporting/holdings-performance/handler.py:52-59, 62-68: one day per fire, prev_trading_day(expected_last_trading_day(now)), no catch-up; Mon 10-05 14:00Z -> 10-02",
+      "data/assets/scripts/gold/irpt_holdings_performance/holdings_performance.py:1015-1018: a row links across a gap only when the prior close is in NO source partition; the 10-01 close is present, so 10-02's row spans one day",
+      "infra/aws/lambda/investor-reporting/performance/holdings_gold.py:220-246: the chain runs over the partitions that exist inside the window; absences are disclosed for non-OK and linked rows only, never for a trading day with no partition",
+      "ledger irpt-inf-performance-serving-20261002 P3 proof: the schedule was created by the ~21:0xZ apply; the A1 leg reads Monday's fire from its own log, which a missing 10-01 does not change"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD (IRPT_BCKEND performance): a day the data cannot support says so instead of showing a plausible wrong number; the served Inflection return chains every trading day or discloses the one it lacks.",
+  "world_is": "From Monday's fire, every Inflection window containing 10-01 omits that day's return and reports a period end of 10-02 with no absence. The class is general: any missed fire, on either firm, leaves a permanent, undisclosed hole. 49 Financial's 2026 gold has 0 missing trading days today, and Inflection has only the 3 linked ones.",
+  "notes": "ARMED until 2026-10-05T14:00Z. Disarm owner 2.0.0_SA_COO~P: land date=2026-10-01 before Monday's fire (one {source: orion, date: 2026-10-01} upload under its own ledger and whatever sign-off a new served partition needs), or state a disposition. The class remedy is for 1.0.0_SA_CTO: the adapter compares the window's partitions with the trading calendar and discloses a missing day, or the producer catches up from its newest landed partition."
+}
+```
+
+## IRPT_BCKEND-S293 -- the Lambda source map's deploy records for IB-pr-221 are stale; the Inflection function has no entry
+
+```json
+{
+  "id": "IRPT_BCKEND-S293",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-03T03:30:00Z",
+  "one_line": "After IB-pr-221's P2 and F1 applies, infra/aws/lambda/ci/lambda-source-map.json still records the adapter's deployed_code_sha256 as YPSX1+.. with last_deployed_at 2026-09-24, and the producer's last_deployed_at as 2026-09-29 at 11631d1ebf. irpt-inf-holdings-performance-lambda has no entry, and the 49F entry's iam_role names irpt-holdings-performance-role where the live role is irpt-49f-holdings-performance-role.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's IB-pr-221 read ~03:0xZ: live adapter CodeSha256 /K1eLPu.. (21:39:28Z) and producer kKgvbKtG.. (20:54:07Z); both equal the map's artifact_sha256, while the map's deploy-record fields are older",
+      "ledger irpt-inf-performance-serving-20261002 P2/F1 proofs (targeted safe-apply); record-terraform-deploy.sh not run after either"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The source map records what is deployed, so a by-name read of it answers what runs.",
+  "world_is": "The artifact hashes are right and the deploy records are not. A reader who trusts deployed_code_sha256 would conclude the adapter still runs its 09-24 bytes.",
+  "notes": "INERT. Owner 2.0.0_SA_COO~P: run record-terraform-deploy.sh for both applies, add the Inflection function's entry (it shares the producer artifact by design), and correct the iam_role field."
+}
+```
+
+## IRPT_BCKEND-S294 -- DISARM of IRPT_BCKEND-S292: Inflection's 2026-10-01 gold landed as one new key before Monday's fire
+
+```json
+{
+  "id": "IRPT_BCKEND-S294",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-03T03:20Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARM of IRPT_BCKEND-S292 by its disarm owner (CTO batch 202 section 1): Inflection's 2026-10-01 holdings gold landed as ONE new key before Monday's 14:00Z fire, so that fire no longer chains 09-30 -> 10-02 across a missing day",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "irpt-inf-holdings-performance-lambda dry run {date: 2026-10-01, dry_run: true, source: orion} RequestId 42d84d4b: rows=966 DRY prior_holdings=966 computable=795 not_computable=171 complete=True census {OK 795, NON-POSITIVE-BASE 171}",
+      "precondition: s3 opal-data-inflection irpt/inflection/gold/holdings_performance_daily/date=2026-10-01/ held no key; the newest partition was date=2026-09-30",
+      "write {date: 2026-10-01, source: orion} RequestId 1fd2415c: rows=966 LANDED, identical census; key date=2026-10-01/data.parquet 36,138 bytes at 2026-10-03T03:17:55Z, 1 version (a new key, nothing overwritten)",
+      "address from lib/opal_naming.address('irpt', 'inflection', 'gold', 'holdings_performance_daily', 'date=2026-10-01')"
+    ]
+  },
+  "dismissal_reason": "S292's hazard is gone: the 10-01 partition exists, so Monday's fire computes 10-02 beside it and no Inflection window links across 10-01. Batch 202 rules the write a literal one-key list the actor controls, so NEVER-1's never-widen does not apply; no existing key moved. The CLASS stays open and is placed: (i) the adapter's trading-calendar gap disclosure and (ii) producer catch-up are cells in this seat's next IRPT_BCKEND issuance (batch 202 section 2), and A1 of ledger irpt-inf-performance-serving-20261002 is amended to fail on a trading day without a partition.",
+  "spec_asserts": "Batch 202 section 1: land Inflection's 2026-10-01 gold before Mon 10-05 14:00Z, or state a disposition on the row.",
+  "world_is": "MEASURED 2026-10-03 ~03:18Z: the 10-01 gold is landed (966 rows, census OK 795 / NON-POSITIVE-BASE 171), one new key, one version.",
+  "notes": "Monday's 14:00Z scheduled fire stays A1's evidence. The operational write is not production evidence (CLAUDE.md: ad-hoc artifacts are never production evidence)."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-W102-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~102",
+  "surfaced_at": "2026-10-03T05:10Z",
+  "one_line": "IB-pr-299: lib/trading_calendar.py is already packaged with irpt-performance-adapter, but the Lambda runs its hardcoded fallback (holidays 2024-2027 only), so the missing-day check clips to those years and says so",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json functions/irpt-performance-adapter files[] lists lib/trading_calendar.py (packaged_as lib/trading_calendar.py, staged_from pin b905df2c60, sha256 41b1c0c126...); sha256 of lib/trading_calendar.py at b91461602e is the same 41b1c0c126..., so no map edit and no member to add",
+      "holdings_gold.py already imported trading_calendar flat (_covered_days, _resolve_links); the flat name resolves at runtime because installed.build_runtime puts root/lib on sys.path when lib/opal_naming.py is packaged (installed.py:18-25)",
+      "lib/trading_calendar.py:38-44,49-65,160-163: pandas_market_calendars is optional and not a member of the package, so on the Lambda calendar_source() is NYSE/hardcoded-fallback-2024-2027 and NYSE_HOLIDAYS_FALLBACK covers 2024-2027; outside it every weekday would read as a trading day",
+      "holdings_gold.py _missing_trading_days clips the checked span to the fallback years and discloses the clip as a PARTIAL trading_calendar_range absence rather than naming a holiday as a missing day; test_holdings_gold_calendar_gap.py::test_the_fallback_calendar_is_graded_in_its_own_years_and_clipped_outside_them (7 passed)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IB-pr-299 item 4: a window wholly inside the calendar's range uses that range; read how the calendar bounds itself. Item 5: file a row naming the members only if the calendar is not packaged.",
+  "world_is": "The calendar is packaged (no members to name) and bounds itself to 2024-2027 holidays on the Lambda. Two readings the order did not state were taken: the checked span runs from the first partition in the window to the lesser of the window end and the gold's latest partition (a day the gold has not reached is not linked across), and a day covered by a linked row is not named twice.",
+  "notes": "Refresh NYSE_HOLIDAYS_FALLBACK before 2028 (the calendar's own note); until then a 2028 window answers with the clip disclosed, never a guessed gap."
+}
+```
+
+## IRPT_BCKEND-W103-S1 -- IB-pr-300: neither holdings-performance role holds s3:ListBucket on its own GOLD prefix (only the declared sil
+
+```json
+{
+  "id": "IRPT_BCKEND-W103-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~103",
+  "surfaced_at": "2026-10-03T04:17Z",
+  "one_line": "IB-pr-300: neither holdings-performance role holds s3:ListBucket on its own GOLD prefix (only the declared silver prefixes), so the catch-up's read of the newest landed day is denied in the Lambda until the IAM grant lands; the handler then falls back, with a WARN, to the one day it computes today.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/holdings-performance/iam.tf @b91461602e: statements ListExactlyTheDeclaredSilverPrefixes and ListExactlyTheDeclaredOrionSilverPrefix scope s3:ListBucket to the silver prefixes (locals irpt_hp_read_list_conditions / irpt_hp_inf_read_list_condition); the gold grants WriteTheTwoGoldPrefixesOnly and WriteTheTwoInflectionGoldPrefixesOnly are s3:PutObject only",
+      "gold lives in a different bucket from the silver (49F: opal-data-49financial under irpt/49financial/gold/holdings_performance_daily/; Inflection: opal-data-inflection under irpt/inflection/gold/...), so the silver list grants cannot cover it",
+      "read-only listing with the operator credentials through the new handler._landed_days: schwab_08335338 -> 561 partitions, newest 2026-10-01; orion -> 1614 keys, newest 2026-10-01 (the address resolves; the Lambda role was not exercised, no invoke is allowed)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IB-pr-300 preflight comp-iam: 'the roles already list and read their own gold prefix; if a listing grant is missing, that is a row.'",
+  "world_is": "The roles WRITE their gold prefix (PutObject) and do not LIST it. Until each role carries s3:ListBucket with s3:prefix irpt/<firm>/gold/holdings_performance_daily/ (and no GetObject is needed), a deployed fire cannot read the newest landed day: _days_to_compute catches the AccessDenied, prints 'WARN: gold listing failed', and computes the single day, so nothing regresses and nothing catches up.",
+  "notes": "Not repaired: terraform is outside this order's write grant. The deploy packet that ships this handler must add the two ListBucket statements (one per role) or the catch-up is inert in the world. A prefix-scoped ListBucket on the gold daily table only."
+}
+```
+
+## IRPT_BCKEND-W103-S2 -- IB-pr-300: two clauses of the order meet when the newest landed gold day is already T-1 (a re-fire): 'no gap c
+
+```json
+{
+  "id": "IRPT_BCKEND-W103-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~103",
+  "surfaced_at": "2026-10-03T04:17Z",
+  "one_line": "IB-pr-300: two clauses of the order meet when the newest landed gold day is already T-1 (a re-fire): 'no gap computes exactly today's one day' recomputes T-1, 'never rewrite a landed partition' forbids it; the handler follows the first and recomputes T-1.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/holdings-performance/handler.py _days_to_compute: gap empty -> [target]; test_catch_up.py::test_catch_up_no_gap_computes_the_one_trading_day_it_always_did covers newest = T-2 (T-1 not landed)",
+      "producer emit_day writes <partition>/data.parquet at a fixed key, so a recompute of a landed day overwrites it with an idempotent recomputation of the same silver"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IB-pr-300 items 1 and 3: catch-up days are new keys, never a rewrite; with no gap the fire computes exactly the one day it computes today.",
+  "world_is": "Every catch-up day (a day AFTER the newest landed day) is a new key. The only rewrite path is the pre-existing one: a fire whose T-1 is already landed (a second fire the same day) recomputes T-1, exactly as the handler did before this cell. No landed day older than T-1 is ever touched.",
+  "notes": "Choice made to honour the refusal clause (a no-gap fire computing anything other than today's one day is a defect). The alternative (compute nothing when T-1 is landed) is a one-line change if the COO prefers it."
+}
+```
+
+## IRPT_BCKEND-W103-S3 -- IB-pr-300: a catch-up fire runs the producer once per day in sequence inside a 300 s Lambda timeout (memory 15
+
+```json
+{
+  "id": "IRPT_BCKEND-W103-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~103",
+  "surfaced_at": "2026-10-03T04:17Z",
+  "one_line": "IB-pr-300: a catch-up fire runs the producer once per day in sequence inside a 300 s Lambda timeout (memory 1536 MB), and the per-day cost was not measured here, so a 5-day fire could time out part-way.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/holdings-performance/lambda.tf lines 32-33 and 76-77: timeout = 300, memory_size = 1536 on both functions",
+      "handler.py lambda_handler calls hp.main once per day, each with a fresh S3 client and read cache; no day's duration was run (no invoke is allowed in this order)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IB-pr-300: a fire computes up to 5 trading days, oldest first.",
+  "world_is": "A timeout mid-loop lands the days finished so far (each is its own upload) and the next fire resumes from the newest landed day, so the failure heals itself; but a fire that always times out on day 3 would still advance 2 days per fire. The per-day duration is UNMEASURED.",
+  "notes": "Measure one dry-run invoke's duration in the deploy packet; raise the timeout or lower MAX_DAYS_PER_FIRE (a handler constant) if one day costs over about 50 s."
+}
+```
+
+## IRPT_BCKEND-S295 -- DISARM of IRPT_BCKEND-W103-S1: the producer roles' own-prefix listing grant is written (not applied)
+
+```json
+{
+  "id": "IRPT_BCKEND-S295",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-03T04:40Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARM of IRPT_BCKEND-W103-S1 by its disarm owner: both holdings producer roles gain s3:ListBucket on their OWN daily gold prefix (IAM text, planned 0/2/0), so IB-pr-300's catch-up can read the newest landed day once deployed",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/holdings-performance/iam.tf: sids ListTheOwnDailyGoldPrefixForCatchUp (49F role) and ListTheOwnInflectionDailyGoldPrefixForCatchUp (Inflection role), s3:ListBucket conditioned StringLike s3:prefix irpt/<firm>/gold/holdings_performance_daily/*",
+      "terraform plan of the holdings-performance root: 0 to add, 2 to change (the two role policies), 0 to destroy; s3:prefix irpt/49financial/gold/holdings_performance_daily/* on opal-data-49financial and irpt/inflection/gold/holdings_performance_daily/* on opal-data-inflection",
+      "IB-pr-300 merged @598dca08c4: without the grant a scheduled fire's listing fails, it prints WARN and computes T-1 only (the old behaviour), so nothing regresses before the grant is applied"
+    ]
+  },
+  "dismissal_reason": "W103-S1's hazard was that the deployed catch-up would silently not catch up. The grant now exists as text in the same root; it is applied with the producers' rebuilt code in their deploy packet (both halves), never alone. Until then the handler's fallback is the old one-day fire.",
+  "spec_asserts": "IB-pr-300 / batch 202 section 2 (ii): each scheduled fire reads the newest landed gold day and computes every missed trading day.",
+  "world_is": "MEASURED: planned 2 role-policy changes, nothing applied.",
+  "notes": "The apply rides the IB-pr-299/300 deploy packet."
+}
+```
+
+
+## IRPT_BCKEND-W104-S1 -- IB-pr-301: the Enforcer admits a RENDER_DELEGATE to three operations and reporting-read is not one of them
+
+```json
+{
+  "id": "IRPT_BCKEND-W104-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~104",
+  "surfaced_at": "2026-10-03T04:33Z",
+  "one_line": "IB-pr-301: _authz/enforce.py RENDER_DELEGATE_OPERATIONS is (performance_report, analysis_report, narrative_packet), so a PATH B render's read of the reporting route (operation reporting-read) is refused OBJECT_NOT_COVERED before the route's version_id parameter is reached",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/enforce.py@b91461602e:304 RENDER_DELEGATE_OPERATIONS = (\"performance_report\", \"analysis_report\", \"narrative_packet\")",
+      "infra/aws/lambda/investor-reporting/_authz/enforce.py@b91461602e:459-464 any other operation: Refusal OBJECT_NOT_COVERED 'refused before any scope algebra runs'",
+      "infra/aws/lambda/investor-reporting/reporting/entry.py@b91461602e OPERATION = \"reporting-read\" (not in that tuple)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "P-6 plan 'Server half' bullet 3: the render host's read of the reporting route passes that same coverage for the account under the submitter's grant.",
+  "world_is": "Not true at the base: no render principal can read reporting-read at all. IB-pr-301 builds the route's side (version_id, and a refusal of a RENDER_DELEGATE series read that names no version, so a render can never read the current object) and the submit's side (the render grant pins the one covered account), and neither is reachable until the Enforcer admits reporting-read for a RENDER_DELEGATE. Fails closed: a PATH B export would end FAILED/TIMED_OUT, never print a wrong figure.",
+  "notes": "enforce.py is outside this order's <paths>. Owner 2.0.0_SA_COO~P to cut: add \"reporting_read\"/\"reporting-read\" (match the operation spelling the Enforcer receives) to RENDER_DELEGATE_OPERATIONS, in the P-2 window's never-widen half. Not run: no render was attempted (AWS: none)."
+}
+```
+
+
+## IRPT_BCKEND-W104-S2 -- IB-pr-301: the reporting-read role holds s3:GetObject and not s3:GetObjectVersion on the platinum prefix
+
+```json
+{
+  "id": "IRPT_BCKEND-W104-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~104",
+  "surfaced_at": "2026-10-03T04:33Z",
+  "one_line": "IB-pr-301: a read of a pinned VersionId needs s3:GetObjectVersion; the reporting-read role grants only s3:GetObject on the platinum reporting prefix, so version_id reads answer AccessDenied, which the route maps to NOT_READY",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/reporting-read/iam.tf@b91461602e statement ReadThePlatinumReportingPrefixOnly actions = [\"s3:GetObject\"] on local.irpt_rr_platinum_read_arns",
+      "infra/aws/lambda/investor-reporting/reporting/entry.py@b91461602e _fetch: AccessDenied is classified ReportingNotReady (kept; NoSuchVersion added)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order cell item 3: the render reads that exact VersionId through the reporting route under the same coverage.",
+  "world_is": "The route code reads VersionId=; the role that runs it cannot, until one action is added. Fails closed (NOT_READY).",
+  "notes": "reporting-read/iam.tf is outside <paths>. Exact text for 2.0.0_SA_COO~P to land with the window: in statement ReadThePlatinumReportingPrefixOnly set actions = [\"s3:GetObject\", \"s3:GetObjectVersion\"]. Nothing wider; same resources."
+}
+```
+
+
+## IRPT_BCKEND-W104-S3 -- IB-pr-301: the export function's role is outside the firm bucket's DenyForeignFirmPrincipals fence
+
+```json
+{
+  "id": "IRPT_BCKEND-W104-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~104",
+  "surfaced_at": "2026-10-03T04:33Z",
+  "one_line": "IB-pr-301: the submit freezes the series by reading the platinum object, and the platinum bucket's explicit Deny for principals outside the firm scope token overrides the Allow written in export/iam.tf for irpt-export-render-role",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf@b91461602e:150 DenyForeignFirmPrincipals: Deny s3:* unless aws:PrincipalArn matches the fence patterns plus the registry's exemption ARNs",
+      "infra/aws/terraform/investor-reporting/reporting-read/iam.tf@b91461602e header (row IRPT_BCKEND-W65-S1): the bucket denies principals not matching role/*-49f-*, and the reporting role's name is builder-derived to carry the token",
+      "infra/logic/registry/exemptions.json@b91461602e names no irpt-export-render-role row (read by search; the platinum bucket's membership in lgic_managed_firm_buckets was not queried)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order cell item 2: after coverage passes the submit pins the series (VersionId, sha256, as_of).",
+  "world_is": "The Allow is written as text in export/iam.tf (policy irpt-export-render-platinum-series-policy: GetObject and GetObjectVersion on account=*/series.json.gz, ListBucket by prefix condition). If the fence applies to this bucket and this role is not exempt, the read is denied and a PATH B submit refuses DEPENDENCY_UNAVAILABLE with nothing written. INFERRED, not queried live (AWS: none).",
+  "notes": "Owner 2.0.0_SA_COO~P: either a never-widen-signed exemption row for this role in infra/logic/registry/exemptions.json (shared-infra, outside <paths>) or a builder-derived role name carrying the firm token (a role replacement). The choice is a P-2 window decision; the IAM text is ready either way."
+}
+```
+
+
+## IRPT_BCKEND-W104-S4 -- IB-pr-301: ExportReceipt v1 has no slot for the frozen as_of, so the receipt names it only in the sidecar and the receipt object's metadata
+
+```json
+{
+  "id": "IRPT_BCKEND-W104-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~104",
+  "surfaced_at": "2026-10-03T04:33Z",
+  "one_line": "IB-pr-301: the order says the receipt names the frozen as_of so the page can show it, but ExportReceipt.schema.json is additionalProperties:false at every level and is outside <paths>; the as_of rides receipt.build's sidecar and the receipt object's metadata irpt-frozen-as-of, which the receipt route does not return",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_contracts/ExportReceipt.schema.json@b91461602e additionalProperties false on the root, facts, timestamps, export_ref, artifact and download_route",
+      "infra/aws/lambda/investor-reporting/export/handler.py@b91461602e finalize_export validates the built receipt against ExportReceipt.schema.json before persisting, so an extra field fails validation",
+      "infra/aws/lambda/investor-reporting/export/tests/test_export_path_b.py test_the_receipt_names_the_frozen_as_of: sidecar frozen_as_of and object metadata irpt-frozen-as-of read back; the persisted receipt body equals the contract object"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order item 5 / batch 203 item 3: the receipt names the frozen as_of, and the page shows it beside the export.",
+  "world_is": "Server-side, the frozen as_of is named at submit (status.source_dates.business_date), in the bundle, in the sidecar and in the receipt object's metadata. The page-visible receipt (the export-receipt route's answer) carries none, because the contract has no slot.",
+  "notes": "Owner 2.0.0_SA_COO~P: an additive ExportReceipt bump in BOTH copies (infra/aws/lambda/investor-reporting/_contracts/ and docs/contracts/investor-reporting/v1/), e.g. an optional facts.as_of date, then receipt.build puts sidecar['frozen_as_of'] there. Not done: neither file is in <paths>."
+}
+```
+
+
+## IRPT_BCKEND-W104-S5 -- IB-pr-301: the ExportBundle change is wider than 'an item field' in one place (the oneOf) and the version marker is a revision, not the wire version
+
+```json
+{
+  "id": "IRPT_BCKEND-W104-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~104",
+  "surfaced_at": "2026-10-03T04:33Z",
+  "one_line": "IB-pr-301: a PATH B bundle has no retained report, so no narrative_packet_ref and no analysis_report_ref, which the v1 oneOf refused; the schema gains a third branch tied to the item pin, and the 'version bump' is x-contract-revision 1.1 while the wire version const stays v1",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_contracts/ExportBundle.schema.json oneOf (two branches at b91461602e) now three; third = neither ref AND every authorized_report_revisions item requires performance_source",
+      "infra/aws/lambda/investor-reporting/export/handler.py@b91461602e submit_export -> package_mod.assert_supported(package, 'ExportBundle', contract_version): the wire version gates every export against the render package, so a changed const would refuse all of them",
+      "export/tests/test_export_path_b.py test_the_bundle_contract_admits_neither_ref_only_beside_a_platinum_pin: a bare item with neither ref, both refs, and a path other than PLATINUM all fail validation; test_packaged_contracts_match_docs and the IB31-1 fixtures (valid validates, invalid refused) pass"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order item 2: no new top-level field; an additive item-shape change is a version bump in both copies; add the rule-24 record if an enum grows.",
+  "world_is": "No top-level field and no enum was added (path is a const, so rule 24's record is not owed). The oneOf is the one non-item change, forced by 'no retained report'. The bump is the additive marker x-contract-revision 1.1 in both byte-equal copies; the wire version v1 is unchanged on purpose.",
+  "notes": "Judgment for 2.0.0_SA_COO~P / the CTO: confirm the third oneOf branch and that revision 1.1 satisfies 'a version bump'."
+}
+```
+
+
+## IRPT_BCKEND-W104-S6 -- IB-pr-301: choices the order left open -- print_query carries version beside account, and a PATH B body naming a retained report is refused
+
+```json
+{
+  "id": "IRPT_BCKEND-W104-S6",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~104",
+  "surfaced_at": "2026-10-03T04:33Z",
+  "one_line": "IB-pr-301: print_query gains `version` (the frozen VersionId) beside account/start/end so the page can pass version_id to the route, and a body carrying both performance_source and a non-empty authorized_report_revisions is refused INVALID_INPUT",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/retained_export.py platinum_print_query: {bundle, tenant, revision, kind, account, start, end, version}; no selection",
+      "infra/aws/lambda/investor-reporting/export/retained_export.py parse_platinum_source: exactly path/account_id/start/end; a browser VersionId, sha256 or as_of is refused; a retained report beside the source is refused",
+      "export/tests/test_export_path_b.py test_the_browser_names_no_version_sha_or_as_of_and_no_retained_report and test_print_query_carries_the_account_beside_kind_performance_start_and_end"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order items 1 and 4: PATH B is performance_source with no retained report; print_query carries account beside kind, start and end.",
+  "world_is": "The route carrier needs the page to learn the frozen version, and print_query is the one channel the order gives the host's browser, so it carries `version`; ~D's page half must read it and send version_id. A body from the page that sends a placeholder authorized_report_revisions row beside performance_source is refused here.",
+  "notes": "Owner 2.0.0_SA_COO~P to tell 2.0.0_SA_COO~D (page half): read print_query.version, send `?version_id=` on the series read; send no authorized_report_revisions on a PATH B submit."
+}
+```
+
+
+## IRPT_BCKEND-W105-S1 -- IB-pr-302: the edge admits a render token on three investor-reporting API paths and the reporting ro
+
+```json
+{
+  "id": "IRPT_BCKEND-W105-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~105",
+  "surfaced_at": "2026-10-03T05:52Z",
+  "one_line": "IB-pr-302: the edge admits a render token on three investor-reporting API paths and the reporting route is not one, so the submit's token (and the page's) is refused at the edge before the Enforcer admission this cell landed is reached",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda-edge/auth-validator-edge/render_auth.mjs@025a99deb9:221-224 RENDER_API_PATH_PATTERNS = performance, analysis sections, narrative (no /api/scoped/investor-reporting/reporting/{account_id}/series)",
+      "infra/aws/lambda-edge/auth-validator-edge/render_auth.mjs@025a99deb9:232-234 isRenderAdmissibleUri = print path, static assets, or isRenderApiUri over that list",
+      "infra/aws/lambda-edge/auth-validator-edge/index.mjs@025a99deb9 v13 header: 'admits ONLY /investor-reporting/print, the SPA's static assets under that prefix, and the three investor-reporting API paths'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO batch 205 / order cell: the submit and the render read the series through the reporting route as the submitter's render delegate, and the Enforcer admits reporting_read for that delegate.",
+  "world_is": "The Enforcer half is landed and tested (RENDER_DELEGATE_OPERATIONS carries reporting_read; 6 tests). Upstream of it, the Lambda@Edge render branch admits a render token only on the three listed API paths and matches the token's route claims to them (RENDER_ROUTE_CLAIMS), so a GET of the reporting route carrying the render token is not admitted at the edge. Fails closed: the submit's call answers non-200, the freeze refuses DEPENDENCY_UNAVAILABLE and nothing is stored; the page's read of the route is refused the same way.",
+  "notes": "auth-validator-edge is outside this order's <paths>. Owner 2.0.0_SA_COO~P to cut: add a `reporting` pattern /^\\/api\\/scoped\\/investor-reporting\\/reporting\\/[^/]+\\/series$/ to RENDER_API_PATH_PATTERNS and the matching route claim, in the P-2 window's never-widen half (an edge change). Not run: no edge call was made (AWS: none)."
+}
+```
+
+
+## IRPT_BCKEND-W105-S2 -- IB-pr-302: the reporting-read function is not wired to read a render grant -- the route entry now in
+
+```json
+{
+  "id": "IRPT_BCKEND-W105-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~105",
+  "surfaced_at": "2026-10-03T05:52Z",
+  "one_line": "IB-pr-302: the reporting-read function is not wired to read a render grant -- the route entry now installs render_ports_from_env(), which returns None until the function carries IRPT_EVIDENCE_BUCKET, a read of the grant prefix, and the _render_identity modules",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/served.py@025a99deb9:1155-1175 render_ports_from_env: None without IRPT_EVIDENCE_BUCKET; imports grant and report_owner from _render_identity",
+      "infra/aws/terraform/investor-reporting/reporting-read/iam.tf@025a99deb9: statements are the platinum prefix, the two scope dependencies and the log stream; no read of firms/*/generations/*/render_grant.json",
+      "infra/aws/lambda/investor-reporting/reporting/entry.py (this commit): Entry(..., render_ports=_entry.render_ports_from_env())"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order cell item 3: a render delegate is served for a covered account through the reporting route.",
+  "world_is": "With the code as landed and the function as deployed (no IRPT_EVIDENCE_BUCKET, no grant read, _render_identity not in the reporting-read zip), render_ports is None and every delegate read of the route refuses OBJECT_NOT_COVERED/EMPTY_GRANT. Fails closed. The three read functions that already serve render reads (performance, narrative, ops) carry that wiring; this one did not need it until now.",
+  "notes": "reporting-read lambda.tf and PATH_MANIFEST.json are outside <paths>, and the order fixes the iam.tf change to one action. Owner 2.0.0_SA_COO~P to cut, in the window's never-widen half: (1) IRPT_EVIDENCE_BUCKET in the function's environment; (2) s3:GetObject on firms/*/generations/exr_*/render_grant.json of that bucket in reporting-read/iam.tf, nothing wider; (3) _render_identity (grant.py, keys) in the reporting-read package. The export function also needs the portal origin reachable from its network and IRPT_EXPORT_RENDER=on for the submit's mint."
+}
+```
+
+
+## IRPT_BCKEND-W105-S3 -- IB-pr-302: choices the order left open -- a pre-freeze render grant, the Enforcer's account_id pin t
+
+```json
+{
+  "id": "IRPT_BCKEND-W105-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~105",
+  "surfaced_at": "2026-10-03T05:52Z",
+  "one_line": "IB-pr-302: choices the order left open -- a pre-freeze render grant, the Enforcer's account_id pin translation, a census bundle_id the route reads, an ExportReceipt packaged-copy realignment, and a pre-freeze grant that stays in evidence",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/retained_export.py installed_route_fetch: writes a grant (bundle id pre-freeze-read, its own exr_ revision) before the first route call; the export role holds no DeleteObject, so it is not removed",
+      "infra/aws/lambda/investor-reporting/_authz/enforce.py _delegate_path_ids: reporting_read's path ids are account_id and which, never the grant's accountSetId/jobId/reportId, so account_id is compared to the accountSetId pin and which is not compared; census render_delegate.bundle_id added; reporting/entry.py reads it to let ONLY the pre-freeze delegate read with no version_id (the submit's first read has none) and answers X-Opal-Version-Id on that read",
+      "infra/aws/lambda/investor-reporting/_contracts/ExportReceipt.schema.json differed from docs/contracts/investor-reporting/v1/ at 025a99deb9 ($id, optional contract_version, x-contract-version); both are now the docs copy plus facts.frozen_as_of and x-contract.revision 1.1",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~19/test_enforcer_real_operations_and_identity_adapter.py:117 asserts RENDER_DELEGATE_OPERATIONS == the three real operations; it is a historical deliverable outside the suites and now reads four"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order items 1 and 3: the submit reads through the route as the delegate; the route's read operation is admitted; both ExportReceipt copies are byte-equal.",
+  "world_is": "Measured by the 7 route-pin tests and the 6 Enforcer tests. (a) 'Nothing written' on a failed pin holds for bundle, pointer, receipt and pending record; a pre-freeze grant (a delegate's read permission, 5-minute tokens, minted server side only) remains in evidence. (b) The packaged ExportReceipt copy now also accepts the optional contract_version the published copy always allowed. (c) The page's own read of the series (portal print route) is outside this cell: the sha256 check is enforced in the build leg's read-back (retained_export.render_read); the page still passes print_query.version as version_id. (d) With IRPT_EXPORT_RENDER off the function has no mint, so a PATH B submit refuses DEPENDENCY_UNAVAILABLE.",
+  "notes": "No action required to proceed; a lifecycle expiry on the generations/exr_*/render_grant.json objects, or a DeleteObject on that one key shape, would remove (a). Owner 2.0.0_SA_COO~P."
+}
+```
+
+## IRPT_BCKEND-W106-S1 -- IB-pr-303: absence reason text and test docstring still say 'partial' for the claim; left unchanged (outside the grant)
+
+```json
+{
+  "id": "IRPT_BCKEND-W106-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~106",
+  "surfaced_at": "2026-10-03T05:40Z",
+  "one_line": "IB-pr-303: the claim is re-cut to inferred, but the missing_trading_days absence reason text (holdings_gold.py line 318) still says 'the figure is partial, not measured', and the gap test module docstring (line 6) still says the claim is `partial`; both left unchanged as outside the grant",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/performance/holdings_gold.py line 318 (after the edit): the served absence reason string reads '... so the figure is partial, not measured'; it is a fragment inside a string, not a quoted 'partial' literal, so p38_claim_inferred.py IB38-1-AC1 does not flag it (IB38-1-AC1 PASS, IB38-1-AC2 PASS at the worker's edit)",
+      "infra/aws/lambda/investor-reporting/performance/tests/test_holdings_gold_calendar_gap.py line 6: module docstring says `the value's claim is then partial`; no test asserts the reason wording (a repo search of the performance tree for 'not measured' found only line 318)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IB-pr-303: only the claim value, its constant's name, comments and the three test assertions move; 'Nothing else in the file moves' for the test module.",
+  "world_is": "A served reason string and a test docstring still use the word partial for the claim; they are neither comments nor claim assertions, so the worker left both. The PARTIAL absence class is untouched.",
+  "notes": "For 2.0.0_SA_COO~P: if the reason text should read 'inferred, not measured' and the docstring 'inferred', a follow-on cell or an amendment of this order's grant is needed; it would change served text, so it belongs with the D1 build."
+}
+```
+
+## IRPT_BCKEND-W107-S1 -- IB-pr-304: reporting-read wired for render grants without the requests table; decrypt statement rides the grant; no edge claim or PATH_MANIFEST member to extend
+
+```json
+{
+  "id": "IRPT_BCKEND-W107-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~107",
+  "surfaced_at": "2026-10-03T07:10Z",
+  "one_line": "IB-pr-304: the reporting-read function is wired for render grants with NO IRPT_REQUESTS_TABLE (a prospect render has no account to read on this route), a kms:Decrypt-via-S3 statement rides the grant, the edge carries no route-claim match to extend, and PATH_MANIFEST lists no function members",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/enforce.py lines 580-629: the PROSPECT branch (_resolve_prospect_render) is typed on a stored prospect_scope and 'a prospect-owned report holds NO accounts'; the reporting route's path ids are account_id and which (enforce.py line 308), so a prospect render has no platinum account to read and refuses there. served.render_ports_from_env (_authz/served.py line 1155) installs the third owner port only when IRPT_REQUESTS_TABLE is set; unset, a prospect render refuses fail closed, and the grant/delegate render of a client account is unaffected. The reporting-read role has no DynamoDB grant on the requests table and none was added (the order's grant lists no such statement).",
+      "infra/aws/terraform/investor-reporting/reporting-read/iam.tf: irpt_reporting_read_render_grant carries the performance root's three statements (performance/render_grant.tf): GetObject on firms/*/generations/exr_*/render_grant.json, ListBucket bounded by s3:prefix to that shape, and kms:Decrypt on core's kms_key_arn conditioned on kms:ViaService s3 and the evidence-bucket ARN encryption context. The decrypt statement is outside the order's literal 'GetObject' wording; without it every grant read is AccessDenied (performance/render_grant.tf comment, window 18); its reach is bounded by the GetObject set.",
+      "infra/aws/lambda-edge/auth-validator-edge/render_auth.mjs and index.mjs: no code matches a render token's route claims to the request path (isRenderAdmissibleUri is a URI-shape test only; the file's own comment says id-match is V2's job, done in the Enforcer), so no matching claim was added.",
+      "infra/aws/lambda/investor-reporting/PATH_MANIFEST.json: contains no _render_identity member and no reporting-read-lambda entry (a path inventory of ARNs and keys), so nothing was added there."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IB-pr-304 items 2 and 3: wire IRPT_REQUESTS_TABLE or file a row saying why the reporting route never serves a prospect; grant s3:GetObject on the render-grant objects; add members to PATH_MANIFEST if it lists them; add the matching route claim if the edge matches claims.",
+  "world_is": "Measured at the worker's edit: IB39-1-AC1, AC2 and AC3 read PASS. The requests table is deliberately unset, the grant policy carries a KMS decrypt-via-S3 statement beside GetObject and ListBucket, and neither the edge nor PATH_MANIFEST had anything to extend. Nothing is applied or published; the edge publish and the function apply ride P-2's window. terraform fmt -check flags one pre-existing alignment in iam.tf (the ReadThePlatinumReportingPrefixOnly statement), left unchanged.",
+  "notes": "For 2.0.0_SA_COO~P: if a prospect render must be served on the reporting route, a follow-on cell sets IRPT_REQUESTS_TABLE and a read grant on the requests table as the performance root does. Owner 2.0.0_SA_COO~P."
+}
+```
+
+
+## IRPT_BCKEND-S296 -- irpt-status history: an Opal viewer's owner read with no selected_tenant answers UNEXPECTED, not a named refusal
+
+```json
+{
+  "id": "IRPT_BCKEND-S296",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-03T04:05:00Z",
+  "one_line": "irpt-status's history route answers an Opal viewer's owner read with no selected_tenant as UNEXPECTED (an IdRefused classified UNEXPECTED), where the request read answers the named UNSUPPORTED_OPERATION -- measured on the live bundle and on each new one",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/W206_STATUS/ZIP_COLD_START_SMOKE_W206_20261003.txt (the control on live wXzz3 = h7H7KgX1: irpt_internal IdRefused 'the firm token is not one of the 3 enabled client firms', classifier_code UNEXPECTED, operation analysis-request-history)",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/G3_STATUS/ZIP_COLD_START_SMOKE_G3_20261003.txt (the same answer on hC6Pramt, now served)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Every owner-read refusal is a NAMED refusal (zip_cold_start_smoke.py's owner-refusal arm, CTO 102269), as the request read's UNSUPPORTED_OPERATION is.",
+  "world_is": "On analysis-request-history, the same viewer reaches the firm canonicalizer with its own non-client firm, which raises IdRefused; the boundary classifies it UNEXPECTED. Nothing is served and no data moves. The smoke counts it PASS because a public_reason_code is present. Whether a real caller reaches it depends on the portal always sending selected_tenant for an Opal viewer (not measured).",
+  "notes": "Owner 2.0.0_SA_COO~Y (irpt-status's ops/entry.py history) with 2.0.0_SA_COO~P (_authz/served.py classification). Un-parks if a live history call answers UNEXPECTED, or with the next irpt-status packet."
+}
+```
+
+## IRPT_BCKEND-W108-S1 -- IB-pr-305: the revised export-download response contract turns test_seam_paired.py's positive control for export-download RED, because that 
+
+```json
+{
+  "id": "IRPT_BCKEND-W108-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~108",
+  "surfaced_at": "2026-10-03T06:55Z",
+  "one_line": "IB-pr-305: the revised export-download response contract turns test_seam_paired.py's positive control for export-download RED, because that control feeds the ExportReceipt document as `data`, which has no signed url, expires_at, sha256 or byte_length",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_contracts/tests/test_seam_paired.py line 806, test_control_a_known_good_document_conforms_and_a_known_bad_one_does_not[export-download]: AssertionError 'POSITIVE CONTROL FAILED for export-download: sha256 is a required property' (assert 'ExportReceipt' in {}); the whole _contracts suite reads 1 failed, 113 passed at the worker's edit, and the only failure is that parametrization",
+      "docs/contracts/investor-reporting/v1/responses/export-download.response.schema.json after the edit: data.download_route is response-only with url and expires_at required, and data requires sha256 and byte_length; the control's valid fixture is the ExportReceipt document (receipt download_route carries route and requires_reauthorization only, by batch 211 ruling 3), so no receipt document can satisfy the revised response data and none should",
+      "IB40-1-AC1 and IB40-1-AC2 read PASS (export suite 202 passed, 0 failed); the _contracts suite is outside both criteria and outside the order's grant, so the control was left unchanged"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IB-pr-305: the response contract follows the server; ExportReceipt stays byte-identical; the criteria name the contract tests and the export suite, and the grant admits only the schema file, the new test, the deliverables and this channel.",
+  "world_is": "The revised contract is correct against the live handler (14 new tests, the handler's answer validates), but the paired seam test's export-download positive control validates a receipt as the response's data and now fails. It is red on merge unless the control is given a response-shaped fixture for export-download (the handler's answer or a receipt plus a download_route url, expires_at, sha256 and byte_length).",
+  "notes": "For 2.0.0_SA_COO~P: a follow-on cell (or a grant amendment) must edit _contracts/tests/test_seam_paired.py (_data_for / the fixtures it reads) so the export-download control builds a response-shaped data document; fix before the drain merges this branch or the _contracts suite stays red. Owner 2.0.0_SA_COO~P."
+}
+```
+
+## IRPT_BCKEND-W108-S2 -- IB-pr-305: export-download.response.schema.json carried no revision marker of its own (only the family-wide x-contract-version const v1), so
+
+```json
+{
+  "id": "IRPT_BCKEND-W108-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~108",
+  "surfaced_at": "2026-10-03T06:56Z",
+  "one_line": "IB-pr-305: export-download.response.schema.json carried no revision marker of its own (only the family-wide x-contract-version const v1), so the bump is a new `revision` key inside x-response-contract, with x-contract-version left at v1",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/contracts/investor-reporting/v1/responses/export-download.response.schema.json before the edit: versioning fields are x-contract-version 'v1' (the wire version the dispatcher checks against X-Contract-Version) and x-response-contract.published_by; no revision or date field. A search of the 19 response schemas under docs/contracts/investor-reporting/v1/responses/ found no per-file revision key either",
+      "after the edit: x-response-contract.revision reads '2026-10-03.2 (CTO batch 211, IB-pr-305 ...)'; x-contract-version still 'v1' because bumping it would break the v1 header handshake; published_by untouched"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IB-pr-305 item 4: bump the response contract's revision marker, following the file's own versioning fields.",
+  "world_is": "The file has no revision field to bump, and x-contract-version is the wire version, not a revision. The worker added `revision` under x-response-contract (additive, annotation keyword outside the validated shape; the _contracts suite and the new tests read it as valid).",
+  "notes": "For 2.0.0_SA_COO~P: if a different marker was intended (for example a new x-contract-version value), name it in a follow-on. Owner 2.0.0_SA_COO~P."
+}
+```
+
+## IRPT_BCKEND-W108-S3 -- IB-pr-305: the granted control fix is green in the worktree but the lane gate refuses its commit while the order is complete
+
+```json
+{
+  "id": "IRPT_BCKEND-W108-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~108",
+  "surfaced_at": "2026-10-03T07:20Z",
+  "one_line": "IB-pr-305: the issuer's granted fix to test_seam_paired.py (W108-S1) is made and green in the worktree (_contracts 114 passed, 0 failed) but safe-commit refuses it, because the order is status complete (terminal) so its <paths> grant is no longer live",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash .tools/safe-commit.sh ... -- infra/aws/lambda/investor-reporting/_contracts/tests/test_seam_paired.py -> rc=1: 'VIOLATION: ... agent=0.9.0_WK_IRPT_BCKEND~108 not in permitted_agents -- WORKER: no NON-TERMINAL task order at HEAD issued_to this serial names this path in its <paths> block'; org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-305.export-download-response-contract.md line 8 reads <status>complete</status> and line 79 names the path in <paths>",
+      "the edit sits uncommitted in the ~108 worktree: _RESPONSE_ONLY map + _response_shaped() in test_seam_paired.py, applied to the valid and the invalid document of the positive/negative control; python -m pytest -q -p no:cacheprovider infra/aws/lambda/investor-reporting/_contracts/tests -> 114 passed; negative control verified refusing the invalid export-download document ('False was expected')"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The issuer's ruling grants test_seam_paired.py for the export-download control and says to commit it; the order's <status> is already complete and is to be left.",
+  "world_is": "The lane gate admits a worker only through a NON-TERMINAL order, so with the order at complete the granted path cannot be committed by this worker; the branch HEAD still carries the red control until the edit lands.",
+  "notes": "For 2.0.0_SA_COO~P: either reopen the order's <status> long enough for the ~108 commit, or commit the worktree edit (diff preserved in the worker report) under its own lane. Owner 2.0.0_SA_COO~P."
+}
+```
+
+## IRPT_BCKEND-W109-S1 -- IB-pr-306: UNSUPPORTED_OPERATION named, OBJECT_NOT_COVERED mapped; the retirement inherits the mapped code
+
+```json
+{
+  "id": "IRPT_BCKEND-W109-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~109",
+  "surfaced_at": "2026-10-03T07:25Z",
+  "one_line": "IB-pr-306: the order says ProviderPathNotComposed answers UNSUPPORTED_OPERATION, but the boundary's map answers OBJECT_NOT_COVERED, so the new PathARetiredForFirm refusal answers OBJECT_NOT_COVERED (inherited); entry.py is outside the grant and no code was added",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/performance/entry.py lines 376-379 @3e6d0aa4ad: \"ProviderPathNotComposed\": \"OBJECT_NOT_COVERED\", comment 'ONE code for not yet on the holdings basis ... Never INVALID_INPUT' (batch 67 item 4, ruling 103586)",
+      "infra/aws/lambda/investor-reporting/performance/tests/test_retained_performance.py test_the_boundary_answers_one_code_for_a_firm_not_yet_on_the_holdings_basis (asserts the code set == {OBJECT_NOT_COVERED} and says 'not UNSUPPORTED_OPERATION'); UNSUPPORTED_OPERATION is mapped only for WindowNotRuled and HoldingsWindowNotRuled",
+      "performance/tests/test_path_a_retired_49f.py binds PathARetiredForFirm to its base's mapped code (boundary.public_reason_for equality), so it passes under either map; the name UNSUPPORTED_OPERATION appears in its docstrings"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IB-pr-306 items 2 and 5: the refusal's public code is UNSUPPORTED_OPERATION through the boundary's MRO walk, and the test answers UNSUPPORTED_OPERATION; a new public reason code is a defect.",
+  "world_is": "The inherited code is OBJECT_NOT_COVERED. Mapping the subclass to UNSUPPORTED_OPERATION needs an entry.py reasons line (an existing code, not a new one); entry.py is not in the order's paths, so the worker added nothing. IB41-1-AC1 and AC2 read PASS on the inherited code because they check names, not the code.",
+  "notes": "For 2.0.0_SA_COO~P: if the 49F page must read UNSUPPORTED_OPERATION, a follow-on cell adds one line to entry.py (\"PathARetiredForFirm\": \"UNSUPPORTED_OPERATION\") and the retirement test asserts that literal. Served only in P-2's window. Owner 2.0.0_SA_COO~P."
+}
+```
+
+## IRPT_BCKEND-W109-S2 -- IB-pr-306: fresh-path implausible-series guard has no PATH A test after the 49F conversion
+
+```json
+{
+  "id": "IRPT_BCKEND-W109-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~109",
+  "surfaced_at": "2026-10-03T07:25Z",
+  "one_line": "IB-pr-306: converting the 49F fresh-path implausible-series test to the retirement leaves no PATH A test of the fresh-path guard (a linked day at or below -1.0) for any holdings firm",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "performance/tests/test_retained_performance.py test_fresh_path_refuses_an_ok_day_at_or_below_minus_one @worktree HEAD: both arms now expect PathARetiredForFirm; before, arm A expected f49_engine.EngineReturnImplausible and the control arm returned a holdings report",
+      "retained.py still raises f49_engine.EngineReturnImplausible for Inflection's fresh path (the guard code is unchanged); the Inflection test in the same file does not feed a series at or below -1.0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order item 4: tests asserting 49F is composed move to assert the retirement; leave Inflection and Cottonwood tests untouched.",
+  "world_is": "The guard is exercised for no firm on PATH A after the move; the code is unchanged and still reachable for Inflection.",
+  "notes": "For 2.0.0_SA_COO~P: a follow-on cell may add an Inflection arm (a new test, not a change to an Inflection test). Owner 2.0.0_SA_COO~P."
+}
+```
+
+## IRPT_BCKEND-W109-S3 -- IB-pr-306: installed.py 49F holdings port and the 49F source branch are unused wiring
+
+```json
+{
+  "id": "IRPT_BCKEND-W109-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~109",
+  "surfaced_at": "2026-10-03T07:25Z",
+  "one_line": "IB-pr-306: installed.py still builds a 49F holdings source and retained.py's _holdings_source_for still carries a 49F branch; both are now unreachable for serving and left unchanged (outside the grant)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/performance/installed.py lines 64-98: the holdings sources loop covers tenants._CANONICAL_49F and _CANONICAL_INF, and a 49F-only helper returns _holdings_source_for(s3, tenants._CANONICAL_49F); read access to the 49F gold is still installed at cold start",
+      "retained.py _holdings_source_for (49F precedence branch) is now never reached for a served request: _compute refuses 49F first"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IB-pr-306: remove 49F from COMPOSED_FIRMS and refuse it by name; 'no 49F figure may be served by PATH A'.",
+  "world_is": "No 49F figure is served; the installed port and the dead branch remain as unused wiring.",
+  "notes": "For 2.0.0_SA_COO~P: clean-up of installed.py belongs with P-2's window or a later cell. Owner 2.0.0_SA_COO~P."
+}
+```
+
+## IRPT_BCKEND-S297 -- the D2 catch-up re-plans an already-landed target day, so a re-fire overwrites a served key (batch 207: new keys only)
+
+```json
+{
+  "id": "IRPT_BCKEND-S297",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-03T08:00:00Z",
+  "one_line": "The deployed holdings producers' catch-up (round 36 D2, CodeSha256 0PuFBxdJ..) returns [target] when there is no gap, even when the target day has already landed. handler.py:117-121 plans newest-landed+1 through target only when the newest landed day is before the target; otherwise it plans the target itself. V2's own dry run for 49 Financial planned 2026-10-01, which landed 10-02 11:30:18Z, so a real re-fire on the same day would rewrite that served key. CTO batch 207 signed D2 as 'new keys only'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's round-36 read ~07:4xZ: deployed handler.py (14 of 14 members equal their pins) :109-121; local run of the deployed _days_to_compute with a fake listing: target already landed -> [target]",
+      "ledger irpt-round36-gap-catchup-20261003 V2 proof: 49F dry run without date planned [2026-10-01]; s3 opal-data-49financial date=2026-10-01 written 10-02T11:30:18Z",
+      "CTO RULINGS batch 207 @d9f15bc006: 'D2 SIGNED (producer catch-up, at most 5 trading days per fire, new keys only, ...)'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Batch 207: the catch-up writes new keys only; a served partition is moved only under a never-widen sign-off.",
+  "world_is": "A scheduled fire normally targets an unlanded T-1, so the schedule alone never re-plans a landed day. A second fire on the same day, manual or retried, rewrites the landed partition with no sign-off. The pre-D2 handler did the same.",
+  "notes": "INERT. Owner 2.0.0_SA_COO~P: skip a target that is already landed (or refuse unless an explicit rewrite flag names it). The A1 read on Monday does not exercise this branch."
+}
+```
+
+## IRPT_BCKEND-S298 -- the adapter's saved report carries a claim only when a day is missing; a measured figure is saved with no claim field
+
+```json
+{
+  "id": "IRPT_BCKEND-S298",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-03T08:00:00Z",
+  "one_line": "The round 36 D1 adapter (U+miRkw3..) sets the result claim 'inferred' on a missing trading day (holdings_gold.py:291, :340), and the saved report carries optional_facts.value_facts.claim=inferred. On the measured branch the saved report carries no claim field at all. The top-level claim returned at :340 is read by nothing (retained.py:276-311 saves the report and absences only). And the absence text at :318 calls the figure 'partial, not measured' while the claim reads 'inferred'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's round-36 read ~07:4xZ: deployed adapter, 71 of 71 members equal their pins; a local harness importing the deployed holdings_gold with a fake source: gap -> report value_facts.claim inferred; all days present (negative control) -> measured with no claim field in the saved report",
+      "docs/doctrine/A_VALUE_MUST_CARRY_ITS_CLAIM.md: a value without a claim field may not be treated as measured; the consuming half is the whole mechanism"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A value carries its claim in a field a consumer can reject on (measured/inferred/held/absent), on every branch.",
+  "world_is": "Only the inferred branch is self-describing. A consumer cannot tell a measured figure from one written before D1, and the absence's own words disagree with the claim value.",
+  "notes": "INERT. Owner 2.0.0_SA_COO~P: write value_facts.claim on both branches ('measured' when no day is missing) and align the absence text with the claim vocabulary. Also, cosmetically, the Inflection function logs the 49F function's name (handler.py:142)."
+}
+```
+
+## IRPT_BCKEND-S299 -- three other roles still grant astn/kimi/api-key-* (the sibling-name pattern batch 208 closed for the runner)
+
+```json
+{
+  "id": "IRPT_BCKEND-S299",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-03T08:20:00Z",
+  "one_line": "The sibling-name exposure batch 208 closed for the YCharts runner, a GetSecretValue grant on astn/kimi/api-key-* that also matches any secret whose name starts with that string, is still live on three other roles: estate-report-runner-role, bd-49f-auto-login-role and cot-exporter-ec2-role. A fourth statement, in teams-global-chat-assist-policy, names the exact ARN.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's Y-4 read ~07:3xZ: an IAM sweep of 286 roles, 7 users, 1 group and 39 managed policies found 6 statements naming the Kimi secret: the runner's two (ReadTheEstateKimiKey exact `api-key-??????`, and ReadYChartsAndSharedVisionSecrets), three at `api-key-*` on the roles named, and one exact ARN",
+      "simulate-principal-policy on irpt-ycharts-runner-role: api-key-WV6Jlp allowed; sibling api-key-extra-AbCdEf implicitDeny (the runner is closed)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO batch 208: a role reads exactly the secret it needs (the 6-character suffix pattern, never a trailing *).",
+  "world_is": "The runner conforms. Three roles outside IRPT_BCKEND keep the wider pattern, so a future secret named astn/kimi/api-key-<anything> would be readable by them. No such sibling exists today (one secret, no resource policy).",
+  "notes": "INERT. Owner 1.0.0_SA_CTO, to route to the three roles' owners (estate report, BD auto-login, COT exporter): narrow each to `api-key-??????`. Outside this project's write surface."
+}
+```
+
+## IRPT_BCKEND-S300 -- DISPOSITION of IRPT_BCKEND-W104-S1: the Enforcer admits no reporting_read render delegate
+
+```json
+{
+  "id": "IRPT_BCKEND-S300",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-03T08:52Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISPOSITION of IRPT_BCKEND-W104-S1 (BLOCKING, INERT) by the issuer: the Enforcer admits no reporting_read render delegate -- resolved in code and planned; it is SERVED only in P-2's window, leg A6 and A8",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB-pr-302 merged @7d02c6fe8b: _authz/enforce.py RENDER_DELEGATE_OPERATIONS gains reporting_read (tests _authz/tests/test_render_delegate_reporting_read.py, 6)",
+      "the read and export artifacts carry enforce.py @8d08ee54e4 (map @7f80b51429; artifacts Wzf2qS5P and WDAv+kWK @66a931244a)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~P/NEVER_WIDEN_SIGNOFF_PACKET_P2_WINDOW_20261003.md @855fdad77c (COO half) + CTO_HALF_IRPT_DASHBD_P2_WINDOW_20261003.md @e67cba94ac (CTO batch 222)"
+    ]
+  },
+  "dismissal_reason": "The blocking condition no longer holds in code: IB-pr-302 merged @7d02c6fe8b. Nothing is served until the window, under both halves.",
+  "spec_asserts": "IRPT_BCKEND-W104-S1: the Enforcer admits no reporting_read render delegate.",
+  "world_is": "MEASURED: the fix is on CLOUD and in the built artifact or plan named in the evidence; nothing applied.",
+  "notes": "The window's ledger leg A6 and A8 closes the served half."
+}
+```
+
+## IRPT_BCKEND-S301 -- DISPOSITION of IRPT_BCKEND-W104-S2: the reporting-read role lacks s3:GetObjectVersion for a pinned VersionId
+
+```json
+{
+  "id": "IRPT_BCKEND-S301",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-03T08:52Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISPOSITION of IRPT_BCKEND-W104-S2 (BLOCKING, INERT) by the issuer: the reporting-read role lacks s3:GetObjectVersion for a pinned VersionId -- resolved in code and planned; it is SERVED only in P-2's window, leg A6",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB-pr-302 merged @7d02c6fe8b: reporting-read/iam.tf grants s3:GetObjectVersion on the platinum reporting prefix only (CTO batch 205 item 2)",
+      "the reporting-read plan, 2/2/0, shows the policy gaining GetObject and GetObjectVersion",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~P/NEVER_WIDEN_SIGNOFF_PACKET_P2_WINDOW_20261003.md @855fdad77c (COO half) + CTO_HALF_IRPT_DASHBD_P2_WINDOW_20261003.md @e67cba94ac (CTO batch 222)"
+    ]
+  },
+  "dismissal_reason": "The blocking condition no longer holds in code: IB-pr-302 merged @7d02c6fe8b. Nothing is served until the window, under both halves.",
+  "spec_asserts": "IRPT_BCKEND-W104-S2: the reporting-read role lacks s3:GetObjectVersion for a pinned VersionId.",
+  "world_is": "MEASURED: the fix is on CLOUD and in the built artifact or plan named in the evidence; nothing applied.",
+  "notes": "The window's ledger leg A6 closes the served half."
+}
+```
+
+## IRPT_BCKEND-S302 -- DISPOSITION of IRPT_BCKEND-W104-S3: the 49F firm fence denies the multi-firm export role's platinum read
+
+```json
+{
+  "id": "IRPT_BCKEND-S302",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-03T08:52Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISPOSITION of IRPT_BCKEND-W104-S3 (BLOCKING, INERT) by the issuer: the 49F firm fence denies the multi-firm export role's platinum read -- resolved in code and planned; it is SERVED only in P-2's window, leg A8",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO batch 205 ruled (c): the export reads THROUGH the reporting route, and the fence is untouched; IB-pr-302 merged @7d02c6fe8b removed the export role's platinum policy before any apply",
+      "the export plan is 0/1/0, the Lambda only, so the export role gains nothing",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~P/NEVER_WIDEN_SIGNOFF_PACKET_P2_WINDOW_20261003.md @855fdad77c (COO half) + CTO_HALF_IRPT_DASHBD_P2_WINDOW_20261003.md @e67cba94ac (CTO batch 222)"
+    ]
+  },
+  "dismissal_reason": "The blocking condition no longer holds in code: CTO batch 205 ruled (c). Nothing is served until the window, under both halves.",
+  "spec_asserts": "IRPT_BCKEND-W104-S3: the 49F firm fence denies the multi-firm export role's platinum read.",
+  "world_is": "MEASURED: the fix is on CLOUD and in the built artifact or plan named in the evidence; nothing applied.",
+  "notes": "The window's ledger leg A8 closes the served half."
+}
+```
+
+## IRPT_BCKEND-S303 -- DISPOSITION of IRPT_BCKEND-W104-S4: ExportReceipt has no slot for the frozen as_of
+
+```json
+{
+  "id": "IRPT_BCKEND-S303",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-03T08:52Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISPOSITION of IRPT_BCKEND-W104-S4 (BLOCKING, INERT) by the issuer: ExportReceipt has no slot for the frozen as_of -- resolved in code and planned; it is SERVED only in P-2's window, leg A8, B1 and B2",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB-pr-302 merged @7d02c6fe8b: ExportReceipt.schema.json gains additive facts.frozen_as_of (contract revision 1.1, both copies byte-equal); receipt.py writes it",
+      "the export artifact stages ExportReceipt.schema.json @8d08ee54e4; ~D's page shows it at b847c9f0 (msg 104587)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~P/NEVER_WIDEN_SIGNOFF_PACKET_P2_WINDOW_20261003.md @855fdad77c (COO half) + CTO_HALF_IRPT_DASHBD_P2_WINDOW_20261003.md @e67cba94ac (CTO batch 222)"
+    ]
+  },
+  "dismissal_reason": "The blocking condition no longer holds in code: IB-pr-302 merged @7d02c6fe8b. Nothing is served until the window, under both halves.",
+  "spec_asserts": "IRPT_BCKEND-W104-S4: ExportReceipt has no slot for the frozen as_of.",
+  "world_is": "MEASURED: the fix is on CLOUD and in the built artifact or plan named in the evidence; nothing applied.",
+  "notes": "The window's ledger leg A8, B1 and B2 closes the served half."
+}
+```
+
+## IRPT_BCKEND-S304 -- DISPOSITION of IRPT_BCKEND-W105-S1: the edge refuses a render token on the reporting route
+
+```json
+{
+  "id": "IRPT_BCKEND-S304",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-03T08:52Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISPOSITION of IRPT_BCKEND-W105-S1 (BLOCKING, INERT) by the issuer: the edge refuses a render token on the reporting route -- resolved in code and planned; it is SERVED only in P-2's window, leg A7",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB-pr-304 merged @cc13527fa3: render_auth.mjs RENDER_API_PATH_PATTERNS gains the reporting SERIES path only, never the manifest or the summary",
+      "the edge is built and uploaded inside the window, because portal-auth is a shared root whose key any apply would publish",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~P/NEVER_WIDEN_SIGNOFF_PACKET_P2_WINDOW_20261003.md @855fdad77c (COO half) + CTO_HALF_IRPT_DASHBD_P2_WINDOW_20261003.md @e67cba94ac (CTO batch 222)"
+    ]
+  },
+  "dismissal_reason": "The blocking condition no longer holds in code: IB-pr-304 merged @cc13527fa3. Nothing is served until the window, under both halves.",
+  "spec_asserts": "IRPT_BCKEND-W105-S1: the edge refuses a render token on the reporting route.",
+  "world_is": "MEASURED: the fix is on CLOUD and in the built artifact or plan named in the evidence; nothing applied.",
+  "notes": "The window's ledger leg A7 closes the served half."
+}
+```
+
+## IRPT_BCKEND-S305 -- DISPOSITION of IRPT_BCKEND-W105-S2: reporting-read is not wired to read a render grant
+
+```json
+{
+  "id": "IRPT_BCKEND-S305",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-03T08:52Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISPOSITION of IRPT_BCKEND-W105-S2 (BLOCKING, INERT) by the issuer: reporting-read is not wired to read a render grant -- resolved in code and planned; it is SERVED only in P-2's window, leg A6",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB-pr-304 merged @cc13527fa3: IRPT_EVIDENCE_BUCKET env, the render-grant read policy (one prefix, KMS via S3 only), and grant.py + report_owner.py staged",
+      "the reporting-read plan creates irpt-reporting-read-render-grant-read-policy and sets the env; the read artifact adds grant.py and report_owner.py",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~P/NEVER_WIDEN_SIGNOFF_PACKET_P2_WINDOW_20261003.md @855fdad77c (COO half) + CTO_HALF_IRPT_DASHBD_P2_WINDOW_20261003.md @e67cba94ac (CTO batch 222)"
+    ]
+  },
+  "dismissal_reason": "The blocking condition no longer holds in code: IB-pr-304 merged @cc13527fa3. Nothing is served until the window, under both halves.",
+  "spec_asserts": "IRPT_BCKEND-W105-S2: reporting-read is not wired to read a render grant.",
+  "world_is": "MEASURED: the fix is on CLOUD and in the built artifact or plan named in the evidence; nothing applied.",
+  "notes": "The window's ledger leg A6 closes the served half."
+}
+```
+
+
+## IRPT_BCKEND-S306 -- DISARM of IRPT_BCKEND-S288: the stored YCharts session is LIVE again (Andrew's HAR seeded a host capture, no sign-in)
+
+```json
+{
+  "id": "IRPT_BCKEND-S306",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-03T16:36:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARM of IRPT_BCKEND-S288 by its disarm owner: the stored YCharts session is LIVE again -- Andrew's own fresh session (his HAR, 16:16Z) seeded a host capture with no sign-in, persisted at fence 25 as an EC2 capture of the enrolled user, and one read through the resident's runtime answered 200 LIVE",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/SIGNIN_HAR/H1_LEG_H_OUTPUT_20261003.txt: lease fence 25; /dashboard/ 200; probe authenticated 200 LIVE, identity PASS; persisted fence 25 over 23; HAR_SEED_VERDICT=PERSISTED",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/SIGNIN_HAR/V1_LEG_P_READ_20261003.txt: GET /custom_pdf_reports/generate/14141822 200 application/json, no login, no captcha, waf_action None; PROBE_VERDICT=LIVE",
+      "ledger irpt-signin-har-20261003 CLOSED 4/4"
+    ]
+  },
+  "dismissal_reason": "S288's hazard (every vendor request 403, no Analysis job can reach READY) is gone: the stored session authenticates from the host. The class stays open as S233's: one YCharts seat per account, and the host now shares Andrew's browser session, so a logout or a new sign-in by that login elsewhere ends it.",
+  "spec_asserts": "S288 remedy: a session re-capture (option A at Andrew's time) before any further Analysis run.",
+  "world_is": "MEASURED 16:33-16:35Z: re-captured without a sign-in, from Andrew-supplied fresh session cookies (Andrew-direct via 0.0.0_AB_MSTR msgs 104639/104640); option A was not needed.",
+  "notes": "The resident's own failed refresh at 00:31Z (AUTH_FAILED:NO_AUTHENTICATED_PROBE) stays undiagnosed; it sits under S230's class."
+}
+```
+
+## IRPT_BCKEND-S307 -- P-2 leg V: the 49F PATH B export refuses; the authorizer V2 lacks the reporting series render route
+
+```json
+{
+  "id": "IRPT_BCKEND-S307",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-03T19:10Z",
+  "one_line": "P-2 window leg V: a 49F PATH B export on PROD code refuses DEPENDENCY_UNAVAILABLE -- the API Gateway authorizer (opal-portal-authorizer, V2) has no reporting-series entry in RENDER_ROUTE_CLAIMS, so the export's render-delegate GET is denied 403 after the edge (V3, :22) accepted it; IB-pr-304 widened V3 only",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "2.0.0_SA_COO~D's signed-in walk (msg 104700; DSGN_IRPTV1/deliverables/2.0.0_SA_COO~D/p2v/P2_V_WALK_20261003.md): account ****0090 outside the six, tab PASS (PATH B series/manifest 200), print PASS, POST .../export -> UNAVAILABLE DEPENDENCY_UNAVAILABLE, no receipt",
+      "/aws/lambda/irpt-export-render 18:58:43Z correlation corr-0f1d1e0271c5: PlatinumSeriesUnavailable 'the reporting route did not return the series (status 403)' -> public DEPENDENCY_UNAVAILABLE",
+      "/aws/lambda/us-east-1.auth-validator-edge 18:58:43.427Z: render_accepted + 'Auth OK (render)' on /api/scoped/investor-reporting/reporting/acc_.../series (V3 admits it, as IB-pr-304 intended)",
+      "/aws/lambda/opal-portal-authorizer 18:58:43.469Z WARN 'Render token presented on a non-render route: GET /api/scoped/investor-reporting/reporting/{account_id}/{which}'; the read Lambda logged no invocation at 18:58:41-43Z",
+      "infra/aws/users/lambda/portal-authorizer/index.mjs:56-60 RENDER_ROUTE_CLAIMS holds performance/analysis/narrative only; :167-173 matches pathParameters[claimName] where the claim name equals the path parameter name, while the export's render token pins accountSetId (export/retained_export.py:308) and the route's parameter is account_id"
+    ]
+  },
+  "spec_asserts": "CTO batch 205 (c): the export reads the series THROUGH the reporting route as the submitter's render delegate; IB-pr-304: a render token reaches the 49F reporting series route; the P-2 packet's V leg: an account outside the six exports with a receipt naming the frozen as_of.",
+  "world_is": "MEASURED: since B3 (18:44:32Z) and B2 (PROD 98a98e70fb), a 49F Performance export on the served page cannot be created: V3 admits the render token, V2 refuses it as a non-render route. The tab and print serve correctly; nothing wrong is served -- the export refuses by name. PATH A is retired for 49F, so no old export path remains.",
+  "notes": "Remedy (one cell + its own never-widen half, opal-portal-authorizer is the authorizer of every portal API route): add 'GET /api/scoped/investor-reporting/reporting/{account_id}/{which}' to RENDER_ROUTE_CLAIMS with a path-parameter -> claim map (account_id -> accountSetId) and a which == 'series' guard (V3's series-only rule), Node tests beside IB-rtr-2's. Fix forward or window rollback is the CTO's ruling (SERVED). ~D owns the page's silence on the refusal (walk defect 2)."
+}
+```
+
+## IRPT_BCKEND-W110-S1 -- the W15 V2 authorizer test pins exactly three render routes
+
+```json
+{
+  "id": "IRPT_BCKEND-W110-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~110",
+  "surfaced_at": "2026-10-03T20:00Z",
+  "one_line": "The IB-rtq-2 V2 authorizer test (W15 deliverable) asserts RENDER_ROUTE_CLAIMS holds exactly three routes, so it fails once IB-pr-307 adds the fourth; the new IB-pr-307 test is the live test",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~15/test_edge_render_delegate_v2_authorizer.mjs: test 'RENDER_ROUTE_CLAIMS names exactly the three GETs' does assert.deepEqual on Object.keys(mod.RENDER_ROUTE_CLAIMS).sort() against three route keys (read at the worktree base 6850506b19)",
+      "infra/aws/users/lambda/portal-authorizer/index.mjs now holds four keys (IB-pr-307); that file is a recorded deliverable outside this order's paths, so it was not edited and not run"
+    ]
+  },
+  "spec_asserts": "IB-pr-307 order: the three existing routes keep their exact behavior; the order names no change to the W15 deliverable test.",
+  "world_is": "The W15 test's exact-three-keys assertion would now fail if re-run; its other arms (string entries for the three existing routes) are unchanged. The shape of the new entry is an object {param, claim, require}, not a string, which that test does not read.",
+  "notes": "No action taken by the worker; the live regression coverage of the three routes is the performance-route test in tests/test_render_reporting_series.mjs."
+}
+```
+
+## IRPT_BCKEND-S308 -- the served print page refuses the PATH B export's print query (selection still required)
+
+```json
+{
+  "id": "IRPT_BCKEND-S308",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-03T20:20Z",
+  "one_line": "P-2 leg V / authorizer P1: with S307 fixed, the 49F PATH B export is ACCEPTED and frozen, but the render host's print of the served PROD page refuses it -- PrintEntry's performance-query check still requires `selection` (PATH A) while the export's PATH B print query carries `account`, so the receipt never reaches READY",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "~D's P1 walk (msg 104722): POST .../export 20:02:44Z -> QUEUED EXPORT_QUEUED, receipt exr_07fe19290b7846e39a6afa0a; RUNNING EXPORT_BUILDING then EXPORT_RENDERING on every read through 20:04:11Z",
+      "s3://opal-data-ycharts/firms/49financial/generations/exr_07fe19290b7846e39a6afa0a/: bundle.json pins performance_source {path PLATINUM, start 2026-01-01, end 2026-10-01, version_id H1BKI.nQTmldVL.FegvvlUp3T96eazsy, sha256 0b615516.., as_of 2026-10-01}; pending.json stage SUBMITTED -- the S307 fix holds (the render-delegate series read passed V2)",
+      "SSM command 8f095a01 irpt-export-render-run on i-0167fd745ad906a66 (20:02:50Z) FAILED: 'BLOCKED: RENDER_PACKAGE_VERSION -- the package refused this bundle: This bundle was not rendered. This print URL names no selection: a Performance print requires selection, start and end.'",
+      "the command's PrintQuery: bundle, tenant, revision, kind=performance, account=acc_..., start, end, version (IB-pr-301's PATH B print query); PortalOrigin https://opalinvest.dev",
+      "the served build at opalinvest.dev (index last-modified 18:38:19Z, the B2 deploy; assets/PrintEntry-lFovSTi6.js): reads e.get('account') and e.get('version'), but `if (c==='performance' && !i.ok)` refuses with that message, where i = G(e) still requires selection/start/end"
+    ]
+  },
+  "spec_asserts": "CTO batch 203/205 and ~D's P-6 plan: the export's print reads the frozen PATH B series (account + version); the P-2 packet's V leg and the authorizer half's P1: an export outside the six reaches its receipt naming the frozen as_of.",
+  "world_is": "MEASURED: the server half of the PATH B export works end to end through the freeze; the print page served on PROD refuses the PATH B query, so no 49F export can complete (the receipt stays EXPORT_RENDERING; the render command FAILED). Nothing wrong is served.",
+  "notes": "Remedy (~D's page, PrintEntry's performance-query check): accept a PATH B query -- account + start + end (+ version) -- as a performance print, keeping PATH A's selection form; then portal DEV and a PROD promote by 0.0.0_AB_MSTR. Then ~P re-dispatches or ~D re-walks; leg V and the authorizer P1 close on a READY receipt naming the frozen as_of."
+}
+```
+
+## IRPT_BCKEND-S309 -- DISARM of IRPT_BCKEND-S307: the authorizer admits the series render route
+
+```json
+{
+  "id": "IRPT_BCKEND-S309",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-03T20:20Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARM of IRPT_BCKEND-S307 by its disarm owner (CTO batch 228): opal-portal-authorizer V2 admits the render-delegate token on the 49F reporting SERIES route (live gQp2IooA, 19:52:32Z); the export's series read now passes V2 and freezes; ledger irpt-authorizer-series-render-20261003 CLOSED 6 of 6",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB-pr-307 drained @79db37c149: RENDER_ROUTE_CLAIMS gains 'GET .../reporting/{account_id}/{which}' (account_id -> accountSetId, which == series); 9 of 9 tests; the human path byte-unchanged",
+      "ledger irpt-authorizer-series-render-20261003 (change_management/20261003T1946Z_..._deploy_completion.md): N1 401 x4 before/after; D2 live = artifact gQp2IooA; stop: signed-in GETs 200 x2; P2: a foreign-account render token 403 at V2's new entry; P1: the export ACCEPTED (exr_07fe19290b7846e39a6afa0a) with its frozen series pin",
+      "CTO batch 228 (msg 104726, @3066549fe7): 'authorizer ledger CLOSES (S307 disarmed); READY-receipt arm moves to leg V behind S308'"
+    ]
+  },
+  "dismissal_reason": "S307's hazard was V2 denying the export's render-delegate read. That read now passes V2 in production (the export accepted and froze). The remaining failure to a READY receipt is a different defect on the print page, row S308, owned by 2.0.0_SA_COO~D.",
+  "spec_asserts": "IRPT_BCKEND-S307: the API Gateway authorizer refuses the PATH B export's render-delegate series read.",
+  "world_is": "MEASURED: since 19:52:32Z V2 admits the series read for a render token pinned to the same account and refuses a foreign one (403).",
+  "notes": "Leg V of irpt-p2-window-20261003 stays open on S308."
+}
+```
+
+## IRPT_BCKEND-S310 -- RE-POINT of S308: the render host's print-query allow-list drops account and version
+
+```json
+{
+  "id": "IRPT_BCKEND-S310",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-03T20:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "RE-POINT of IRPT_BCKEND-S308 (CTO batch 229, msg 104735): the root cause is the export render host's allow-list, not the served page -- render_export.cjs:83 PRINT_QUERY_KEYS drops account and version (and request); disarm owner is now 2.0.0_SA_COO~P; the fix is cell IB-pr-308 (round 43)",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "2.0.0_SA_COO~D (msg 104732): PROD's PrintEntry-lFovSTi6.js refuses selection only when `!t && !e.get(\"account\")`; with account dropped before the page loads it says 'names no selection'",
+      "infra/aws/ec2/investor-reporting-export/render_export.cjs:83 PRINT_QUERY_KEYS = bundle, tenant, revision, kind, selection, start, end; applyPrintQuery (:116-121) copies only those; the S3 copy s3://opal-313476888478-lambda-artifacts/ec2/investor-reporting-export/render_export.cjs equals the HEAD blob",
+      "CTO batch 229: add account, version and request to PRINT_QUERY_KEYS with a test, under its own half; arms: a PROD export reaches READY with the frozen as_of, and the rendered series is the frozen VersionId; no portal promote owed"
+    ]
+  },
+  "spec_asserts": "IRPT_BCKEND-S308 named the served page (owner ~D) as the refusing layer.",
+  "world_is": "MEASURED: the served page is correct for PATH B; the render host's script removes the PATH B keys before navigation.",
+  "notes": "S308 and this row close together when a PROD export reaches READY with its frozen as_of."
+}
+```
+
+## IRPT_BCKEND-S311 -- the render's page also reads the manifest, which render tokens are refused
+
+```json
+{
+  "id": "IRPT_BCKEND-S311",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-03T20:55Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Render-host R1: with account/version now forwarded (S3 lLkKsNvY), the render's page reads PATH B -- the series under the render token is authorized and served, but its MANIFEST read is refused at the edge (render tokens are admitted on the series only, IB-pr-304's rule), so resolveBundle falls back and refuses 'selection is required'; no READY receipt",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "SSM irpt-export-render-run 8022f0fd (20:49:13Z, tenant 49financial) FAILED with the new render_export.cjs (16434 B on the host): 'BLOCKED: RENDER_PACKAGE_VERSION -- ... resolveBundle cannot request the Performance report: selection is required'",
+      "auth-validator-edge 20:48:57Z and 20:48:58Z: render_accepted + Auth OK (render) on .../reporting/acc_.../series; opal-portal-authorizer: 'Render token authorized' on the series route (claimName accountSetId); the read Lambda served both (no error)",
+      "auth-validator-edge 20:49:06Z WARN render_denied reason uri_not_admitted jti render-17f6b44f.. path .../reporting/acc_.../manifest",
+      "portal origin/PROD src/pages/InvestorReporting/export/resolveBundle.ts:314-336: the PATH B read (readDashboard) fetches the account's manifest and series; when it fails, a PATH B print with no selection refuses by name 'selection is required' (line 336)"
+    ]
+  },
+  "spec_asserts": "CTO batch 205 / IB-pr-304: the render reads the frozen series through the reporting route; render tokens reach the SERIES path only, never the manifest or the client summary.",
+  "world_is": "MEASURED: the served page's render path also needs the manifest, which the render token is (correctly, by the ruled rule) refused; the export cannot complete. Nothing wrong is served.",
+  "notes": "Two remedies, a CTO choice: (a) the page reads only the series under a render (the frozen version present) -- series.as_of is the ruled date field (PRD ruling 28) -- a portal change by 2.0.0_SA_COO~D plus a same-window promote; (b) widen V3 and V2 to admit the manifest for a render token, reversing IB-pr-304's series-only rule. Recommendation: (a)."
+}
+```

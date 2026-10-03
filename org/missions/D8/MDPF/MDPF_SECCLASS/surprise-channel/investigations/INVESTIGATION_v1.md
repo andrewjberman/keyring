@@ -1230,3 +1230,176 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "For the next Black Diamond or Cottonwood gold half: name the shipped artifacts in the act and diff them against their live versions before signing, instead of listing lib/_shared as not moved."
 }
 ```
+
+
+## MDPF_SECCLASS-S17 -- the multi_asset reader census searches table readers, not class renderers
+
+```json
+{
+  "id": "MDPF_SECCLASS-S17",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-02T19:10:00Z",
+  "one_line": "The multi_asset reader census (37fd00f133) says 'uncensused none', but its search domain is the readers of the classification table (tokens etf-classifications, classified_by, etf_classifications_dynamodb), narrower than the claim: it names 2 portal readers while portal item 84 had to change 7 Investor Reporting files the census never names, and Positioning (HoldingsBreakdownTable.tsx:345, HoldingsTreemapChart.tsx:41, grouped by ASSET_CLASS_ORDER without multi_asset) is not in it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's grade of portal item 84 (262be0a4, 2026-10-02 17:xZ-19:xZ): the census names composition.ts and wire HoldingsSnapshot.ts; item 84 changes chartColors.ts, adapt.ts, index.ts, assetClass.ts, SecurityList.tsx, HoldingsTreemap.tsx, HoldingsTreemapChart.tsx plus the wire",
+      "portal origin/DEV ec65c5d6: multi_asset absent from composition.ts:40/:54, PartnerAnalytics.tsx:75, AdvisorAnalytics.tsx:668, ConsolidatedOverviewPanel.tsx:391, TenantLayoutConfig.ts:369 (the Advisor Intelligence half, candidate 6245e92d / ed40c8ee, reviewed in CTO batch 180, not yet on DEV or PROD); Positioning groups by ASSET_CLASS_ORDER, unchanged",
+      "etf-classifications full scan 2026-10-02 19:0xZ: 0 of 2,841 rows carry asset_class multi_asset (no served move yet)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO batches 164 and 180: the multi_asset rows land only after every reader of the served class is on portal PROD; the census is the list of those readers.",
+  "world_is": "The gate is right, but the list it is checked against is short: a reader outside the census (Positioning today) would meet a multi_asset row without handling it. The census searched where classifications are READ FROM, not where a served class is RENDERED.",
+  "notes": "INERT: no multi_asset row exists. Owner 2.0.0_SA_COO~M: widen the census to every renderer of an asset class (the class-name readers in the portal, not the table readers) and add Positioning's reading before the rows act."
+}
+```
+
+## MDPF_SECCLASS-S18 -- the 10-01 BD gold run drops 335 open accounts ($78.5M) from the served AUM via synthetic_correction
+
+```json
+{
+  "id": "MDPF_SECCLASS-S18",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-03T06:45:00Z",
+  "one_line": "The BD gold run of 2026-10-03 04:00Z served the 49 Financial firm mix at data_as_of 2026-10-01 with total $1,764,886,987.32, down $78,227,324.38 (4.24%) from 09-30. 335 accounts carrying $78,634,159.20 on 09-30 are absent from gold/positions_cube/2026-10-01, all of them OPEN in the accounts dimension (closed_date null) with no transaction in the 09-30..10-03 silver files; their served aua_timeseries go to $0 on 10-01 through synthetic_correction (sum -$78,504,236.80), 316 of them still reporting positions.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3 opal-data-bd platinum/firm/mix_summary.json version HvABa_JI45.. (05:35:25Z): data_as_of 2026-10-01, 8 classes, pct sum 1.000000, MV sum 1,764,886,987.32; previous version wma_kZ0XFi.. (00:37:50Z): 2026-09-30, 1,843,114,311.70",
+      "gold/positions_cube/2026-09-30.parquet 6,836 accounts and 2026-10-01.parquet 6,509 accounts (both written 04:13:24Z): 335 gone, 8 new; at earlier month ends 0 to 3 accounts left (07-31 -> 08-01: 0; 08-31 -> 09-01: 3)",
+      "gold/dimensions/accounts_dimension_latest.parquet (04:03Z): 335 of 335 present, account_is_open True, closed_date NaT; opened 2026-07 to 2026-09",
+      "silver/transactions/2026-09-30, 10-01, 10-02, 10-03 parquet: 0 rows for the 335 accounts; trade date 10-01 so far covers 3,327 accounts (file 10-03) against 5,965-6,043 for 09-29 and 09-30",
+      "gold/entities/accounts/<id>/aua_timeseries.json for 335 of 335: total_aua 09-30 sum 78,634,159.20, 10-01 sum 139,614.86, 10-01 synthetic_correction sum -78,504,236.80; e.g. z0812888131 27,904.62 -> 0.00 with num_positions 16",
+      "run log s3://opal-data-bd/logs/gold-layer/gold_incremental_2026-10-03_20261003_060352.log: exit 0; A_03 'Accounts: 6,528' (the 23:00Z run's A_03 read 11,220); 'Mix snapshot (C_06): 8 classes, date=2026-10-01, total_mv=$1,764,886,990'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row S9's measure for every BD gold fire: the firm mix lists every class, sums to 1.0, and drops nothing; an account leaves the served AUM only by a recorded outflow or closure.",
+  "world_is": "The mix sums to 1.0 over a population that lost 335 open accounts. About $78.5M leaves the served 10-01 AUM with no flow and no closure, booked as synthetic_correction. The cause is not determined. Candidates: the 10-01 positions build covers a narrower account set (A_03 read 6,528 accounts, not 11,220); trade date 10-01 is only partly delivered (3,327 accounts). Not read: whether the next run, once the 10-01 delivery completes, restores them.",
+  "notes": "ARMED: the served BD platinum (firm mix, client and account AUA) reads $78.5M low from 05:35Z. Disarm owner 2.0.0_SA_COO~M, as the holder of the BD gold thread and S9's precedent. Either restore the 09-30 served versions under a never-widen sign-off, or fix and re-run before the firm reads it; and say whether Saturday's 23:00Z fire (bd-gold-nightly-fallback, MON-SAT) will repeat it. The pipeline's DS owner is named by rule 13."
+}
+```
+
+## MDPF_SECCLASS-S19 -- why 10-01 dropped the 335 (row S18's cause, read from the two runs' logs): the open-account confirmation never runs
+
+```json
+{
+  "id": "MDPF_SECCLASS-S19",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-03T07:25:00Z",
+  "one_line": "A_03.positions_cube fills a backfill-only account only to its last transaction date unless silver/allocations/<max trade date>.parquet confirms it open, and those allocation files exist only weekly (latest 2026-09-25), so the confirmation returned 0 in both the 10-02 23:00Z and the 10-03 04:00Z runs. When a partial 10-01 delivery (3,327 accounts) moved the global end date from 09-30 to 10-01, backfill-only open accounts whose last transaction was on or before 09-30 stopped at 09-30, left the 10-01 cube, and synthetic_correction zeroed their AUA.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "run log gold_incremental_2026-10-03_20261003_060352.log (the 04:00Z run's section): '6,519 transactions across 3,327 accounts'; A_03 'Accounts with daily export data (active): 6,604', 'Accounts backfill-only, confirmed open by alloc: 0', 'Accounts backfill-only (capped): 4,467 -> fill to last txn date'",
+      "run log gold_incremental_2026-10-03_20261003_010843.log (the 23:00Z run's section): 'Global end date: 2026-10-02 (tx_max: 2026-09-30 ...)', 'WARN: allocations/2026-09-30.parquet not available -- allocation signals unavailable', confirmed open by alloc 0, capped 4,457, forward-fill target 2026-09-30",
+      "data/black_diamond/scripts/gold/A_03.positions_cube.py:1491-1497 (Step 2b reads silver/allocations/<unit_events max trade date>), :1337-1380 (_compute_account_end_dates caps backfill-only accounts not confirmed open), :1545 (global_end_date = max trade date)",
+      "s3 opal-data-bd silver/allocations/: 133 objects, weekly Friday files, newest 2026-09-25.parquet (2026-09-27T00:14:56Z)",
+      "both runs: '[RPS injection] Loaded schwab/silver/rps/date=20260723' -- the RPS authority partition is July 23's"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row S18 / CTO batch 213 item 2: an omitted account is absent, never $0; the BD gold run never publishes an as_of whose positions delivery is incomplete.",
+  "world_is": "The liveness check that would keep open accounts on the end date reads a file that exists one day in five, so it is a no-op on every weekday; the end date then follows the latest partial delivery, and every backfill-only open account whose last trade predates it drops out and is zeroed. INFERRED, to verify against the cube: the 335 are such accounts (last transaction on or before 09-30).",
+  "notes": "Disarmed by the S18 restore (ledger secclass-s18-restore-0930-m-20261003) and the fire hold (both gold rules DISABLED 07:17Z, batch 219). The class cell (batch 213 item 2) is the remedy: refuse an as_of with an open, previously held, unclosed account absent from the new cube -- and the allocation read should use the latest allocation file at or before the date, not only that exact date. Separately: the RPS partition is July's (row to follow if it matters for the cell)."
+}
+```
+
+
+## MDPF_SECCLASS-S20 -- the BD accounts dimension marks accounts open that have not traded since 2022 (account_is_open is not liveness)
+
+```json
+{
+  "id": "MDPF_SECCLASS-S20",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-03T09:30:00Z",
+  "one_line": "The BD accounts dimension marks 10,702 of 11,071 accounts OPEN (account_is_open True, closed_date null), including 3,568 backfill-only accounts whose last transaction is before 2026-09-30, many from 2020-2023; account_is_open is not a liveness signal for pre-2026 accounts.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "R9_CHECKS/S18_CELL_DELTA_CENSUS_20261003.json (read-only, A_03's own end-date rule over 1,917 silver/transactions files, 7,623,501 rows): dimension_open 10,702 of 11,071 accounts; treating every dimension-open account as live uncaps 4,095 backfill-only accounts, 3,568 with a last trade before 09-30 (by month, e.g. 2023-02: 858, 2024-03: 256), ~3.55M account-days; the 1,220 with a readable aua_timeseries last held $223,882,556.85",
+      "gold/dimensions/accounts_dimension_latest.parquet (04:03:21Z): _last_txn_file_date is never before 2025-01-01 for an open account, so it is not the last trade date either",
+      "data/black_diamond/scripts/gold/A_00.accounts_dimension.py:6-13 (header): account status is enriched from silver/allocations 'latest snapshot (left join, Jan 2026+ accounts only)'; inferred: older accounts keep a default open status"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Consumers of ACCOUNTS_DIMENSION (comp-pipescript lists A_03, B_00, C_06, D_04 and 20 more gold scripts) read account_is_open / closed_date as whether an account is open now.",
+  "world_is": "For pre-2026 accounts the field reads open whether or not the account still exists; any consumer that keys liveness or inclusion on it alone over-counts. The S18 class cell does not rely on it alone: A_03 carries an account forward only when it is open in the dimension AND held on the reference day (CLOUD 13d0277249).",
+  "notes": "Off-task finding from the S18 cell census. Not read: which other consumers key inclusion on account_is_open alone (B_00.load_account_closures uses ~account_is_open). Owner of the field: A_00's producer lane (POD4)."
+}
+```
+
+
+## MDPF_SECCLASS-S21 -- BD gold fires on every silver prices file (S3 notification); disabling the two rules is not a hold
+
+```json
+{
+  "id": "MDPF_SECCLASS-S21",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-03T10:05:00Z",
+  "one_line": "BD gold has a THIRD fire path the S18 hold did not cover: the live S3 notification GoldLayerPricesTrigger (opal-data-bd, s3:ObjectCreated:* on silver/prices/20*.parquet) invokes bd-gold-trigger, and silver prices files land daily ~00:10-00:21Z (two each Sunday) whether or not the two EventBridge rules are DISABLED.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "get-bucket-notification-configuration opal-data-bd (10:0xZ): LambdaFunctionConfiguration Id GoldLayerPricesTrigger -> bd-gold-trigger, Events s3:ObjectCreated:*, Filter Prefix silver/prices/20, Suffix .parquet; declared at infra/aws/terraform/bd-pipeline/s3-notifications.tf:54",
+      "s3 silver/prices/2026-09-*.parquet and 2026-10-0[1-3].parquet LastModified: every day ~00:09-00:21Z; on each Sunday the prior Friday's file is rewritten and Sunday's file lands (09-06, 09-13, 09-20, 09-27)",
+      "the S18 restore half (NEVER_WIDEN_HALF_REQUEST_S18_RESTORE_0930_SERVED_20261003.md) leg 0 named only bd-gold-nightly-fallback and bd-canonical-prices-daily; leg H disabled those two (07:17Z)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO batch 219 / restore leg 0: no BD gold fire runs until the class cell lands.",
+  "world_is": "Disabling the two rules does not stop BD gold: the next silver prices file (Sunday 2026-10-04 ~00:10Z) would start the runner. No prices file landed between 07:17Z and the cell's QA run (10:02Z), so the restore held.",
+  "notes": "INERT: the class cell is deployed (A_03 wTaLoeFXO4.., 10:00Z) and its QA run (10:02Z) rebuilds 10-01 before the next prices file. If the cell act stops in its refusal branch, the disarm owner 2.0.0_SA_COO~M holds this path before Sunday 00:00Z (reserved concurrency 0 on bd-gold-trigger, read back), not only the two rules. Any later BD gold hold names three paths."
+}
+```
+
+
+## MDPF_SECCLASS-S22 -- the BD runner boots from at least five paths (the 49F dispatcher among them); one ran the old A_03 during the S18 hold
+
+```json
+{
+  "id": "MDPF_SECCLASS-S22",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-03T12:50:00Z",
+  "one_line": "Row S21 undercounted: the BD gold runner (i-01003b035d2988dfb) runs the BD gold chain on EVERY boot, and at least five paths boot it -- the two EventBridge rules, the S3 prices notification (S21), and the 49F dispatcher advi-49f-gold-dispatch on two triggers (S3 Schwab completeness markers on opal-data-assets; EventBridge Scheduler advi-49f-gold-floor, cron(45 12 * * ? *) UTC, run_class production). One of them ran the OLD A_03 during the S18 hold.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CloudTrail StartInstances i-01003b035d2988dfb 2026-10-03T09:47:03Z by assumed-role advi-49f-gold-dispatch-role/advi-49f-gold-dispatch; /aws/lambda/advi-49f-gold-dispatch 09:47:01-09:47:28Z: 'accelerator fire on marker key=schwab/08335338/meta/complete/date%3D2026-10-02.json', 'host i-01003b035d2988dfb state=stopped -- starting (ensure-running duty)', 'dispatched: doc=advi-49f-chain-dispatch command_id=834d36d6-...'",
+      "logs/gold-layer/gold_incremental_2026-10-03_20261003_121003.log: '[09:47:17Z] BD GOLD LAYER RUNNER STARTED (mode: incremental)', S_00 then PHASE_A1 with the pre-cell A_03 ('confirmed open by alloc: 0', 'capped: 4,467'), cut off in Step 3 (next line is the 10:02:29Z boot of the QA run)",
+      "no served or cube write from it: gold/timeseries/positions_cube/2026-09-30 pre-QA version 04:13:24Z; platinum/firm/mix_summary.json 07:58:18Z (restore) until 11:39:59Z (QA run)",
+      "lambda get-policy advi-49f-gold-dispatch: invoke permitted to scheduler.amazonaws.com (schedule advi-49f-gold-floor, ENABLED, cron(45 12 * * ? *) UTC) and s3.amazonaws.com (opal-data-assets); infra/aws/terraform/bd-pipeline/bd-49f-interim.tf"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO batch 219 / S18 restore leg 0: no BD gold fire runs until the class cell lands; a hold names every path that boots the runner.",
+  "world_is": "Disabling the two rules held two of at least five paths. The S18 restore survived because the 09:47Z run stopped before writing (why it stopped is not read). Not enumerated: any other actor with ec2:StartInstances on the runner.",
+  "notes": "INERT now: the cell is live (A_03 wTaLoeFXO4.., QA run 12:10Z exit 0, frontier whole), so any boot runs the fixed code against a correct 10-01 cube. Lesson for the next BD gold hold: hold the HOST (the runner's boot), not the rules -- e.g. a stop-and-deny on StartInstances for the hold's duration, or reserved concurrency 0 on BOTH bd-gold-trigger and advi-49f-gold-dispatch -- under its own half, since the 49F chain shares the host. Owner of the 49F dispatcher: its producer lane (not read)."
+}
+```
