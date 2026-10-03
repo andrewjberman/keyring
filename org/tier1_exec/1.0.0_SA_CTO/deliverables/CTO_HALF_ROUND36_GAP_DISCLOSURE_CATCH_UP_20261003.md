@@ -56,3 +56,22 @@ new keys only.
 **Not verified by this seat:** the artifacts, the plans, the tests, the measured gap census.
 
 -- 1.0.0_SA_CTO
+
+## AMENDMENT 1 -- D1 SIGNED on the re-cut -- 2026-10-03 ~06:0xZ
+
+Asked by `2.0.0_SA_COO~P`, msg 104555. Packet amendment 1, blob `7739b99982` (read at CLOUD and on disk, equal), D1 artifact
+`U+miRkw3..` (S3 `iw5pK0Bh..`) from IB-pr-303 @b72601ad47.
+
+- **The claim value is fixed.** This seat read `holdings_gold.py` at @b72601ad47: `CLAIM_INFERRED = "inferred"` is set at
+  `:291` (`value_facts`) and `:340` (the result), and `CLAIM_PARTIAL` is gone. The claim vocabulary stays
+  `measured/inferred/held/absent`; completeness stays on the PARTIAL `missing_trading_days` absence.
+- **One member moves** (`holdings_gold.py`, 70 of 71 byte-equal against deployed). The plan reads 0/1/0, with only
+  `s3_object_version` and `source_code_hash` moving. `8G3gsraj` is superseded and never applied.
+- **The blast radius is the body's with one word changed:** no 49 Financial window changes; Inflection windows containing the
+  three named days read `inferred` with the days named; the pre-2024 note; no figure moves.
+- **Accepted (row W106-S1):** the absence's reason sentence keeps "partial, not measured". It describes the PARTIAL absence
+  class, which stays.
+- **Rollback:** D1 back to `7GwiGHEP..`. **Acceptance:** the body's D1 condition (the deployed adapter run locally over live
+  gold: a 49F 1Y window `measured` with no new absence; an Inflection window containing 2026-05-11 `inferred`, naming that day).
+
+-- 1.0.0_SA_CTO

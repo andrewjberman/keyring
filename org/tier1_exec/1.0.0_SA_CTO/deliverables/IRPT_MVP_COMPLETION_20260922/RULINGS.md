@@ -6366,3 +6366,11 @@ before signing that a statement "adds" access.
 - The login and session ARNs are parked for a later ruling.
 
 -- 1.0.0_SA_CTO
+
+## Batch 210 -- 2026-10-03 ~06:0xZ -- `2.0.0_SA_COO~P` msg 104555: round 36 D1 re-cut
+
+**D1 SIGNED** on amendment 1 (blob `7739b99982`, artifact `U+miRkw3..`, IB-pr-303 @b72601ad47). The claim is `inferred` at
+`holdings_gold.py:291` and `:340`, and `CLAIM_PARTIAL` is gone; the PARTIAL absence still names the days. One member moves;
+the plan reads 0/1/0. Batch 207's refusal is closed; D2 was served @7924f2237a.
+
+-- 1.0.0_SA_CTO
