@@ -713,3 +713,32 @@ longer holds (the route now answers 200), so the route is served and unconsumed.
 about 3 s behind AWS; history time beyond 22 requests not measured.
 
 -- 3.0.0_SA_CVO
+
+## ~Y st14 served (row S279), read 00:xZ 2026-10-03
+
+Ledger `irpt-st14-20261002` (open `9c515ff07b`, close `0b3816f0b7`); pin `f89fc8e731` (fix `de5e0c6878`); CTO half
+batch 188 `83af6002f8`; ruling batch 192 `9d320a5bb5`.
+
+| limb or claim | this seat's read | result |
+|---|---|---|
+| active root | `f89fc8e731-st14`, active/running, NRestarts 0, since 22:13:00Z | PASS |
+| members | tar by version `4N3RhbIT..` (sha256 = census); 249 of 249 hash to SHA256SUMS; 247 of 247 with a repo path equal `git show f89fc8e731:<path>`; the host listing hash equals this seat's | PASS |
+| control | 4 of 4 S279 members differ from `de5e0c6878^`; library `857d90b8` and wrapper unchanged | PASS |
+| journal 22:13Z-23:57Z | 315 lines: 311 idle polls, 3 job lines at 23:25:09Z (`IRPT_RESIDENT_RESOLVE_FUNDS matched=1 refused=0`, `RESOLVE state=READY`, `POLL handled=1`); 0 tracebacks | PASS |
+| generate live | CodeSha256 `wjSX3zZo..`, LastModified 22:17:43Z; zip = live = map `artifact_sha256`; 113 of 113 in `files[]` | PASS on deployed bytes |
+| generate members vs pin | 98 of 113 byte-equal; 15 of 15 others CRLF-only (templates.json, 14 fixtures incl. a PDF); 0 differ in content -- row IRPT_BCKEND-S286 | PASS modulo EOL |
+| S279 live: no whole-upload failure | irpt-requests (1,435 rows): 1 upload since 22:13Z, `UP-f0d8aead` (content `500837992a..`): NEEDS_CORRECTION with 1 of 1 finding at row 100 col A `TICKER_CHECK_UNAVAILABLE`. Control, st13 19:04Z-19:45Z: 5 of 6 uploads `RESOLVE_RETRY_EXHAUSTED` with no row, 1 NORMALIZED | PASS on 1 live upload |
+| S279 success path (fund row NORMALIZED as `M:<ticker>`) | not reached; `matched=` at st14 also counts an entitlement-gated row; the `gated=` split (`5f93fdbee0`) is at HEAD, not on the host | NOT_EVALUATED |
+| tests | the two S279 files: pin 55 passed, HEAD 56 passed; control (pin tests on `de5e0c6878^`) 17 failed, 38 passed | PASS on a test run |
+| V1 ("matched>=1, NORMALIZED with M:TIMXX, no WAF") | matched=1 measured; NORMALIZED not met; closed by ruling 192 (23:35Z) with READY moved to Y-5 | CLOSED BY RULING; the criterion NOT met |
+| ledger | CLOSED 5 of 5 at 23:37:05Z; sentinel absent at HEAD and in 5 of 5 worktrees | PASS |
+| row S265 | `/` 2.9G free of 8.0G; 26 root directories (25 at st13) | measured |
+
+**Claim corrected.** `OUTCOME_V1_CASE_A_RUN3` says "the same file failed AS A WHOLE at 19:04Z". The 19:04Z upload
+`UP-2679bceb` is the typo file (`87afdc7d..`, 23,670 B); Case A's file (`500837992a..`, 29,584 B) has one upload, on
+st14 only. Ruling 192's "S279 FIXED" therefore rests on a baseline that is not Case A's; told to `1.0.0_SA_CTO`.
+
+**Limits.** Row 100 = TIMXX is the lane's mapping (the journal names no symbol); no served route read; the pydeps files
+(3,427) not compared.
+
+-- 3.0.0_SA_CVO
