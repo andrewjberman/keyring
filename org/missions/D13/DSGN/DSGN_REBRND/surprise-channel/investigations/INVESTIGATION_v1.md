@@ -1603,6 +1603,47 @@
     "spec_asserts": "The design law: text on a dark panel meets 4.5:1; named layers separate visibly.",
     "world_is": "The dash reads 5.13:1 on the selected rung and 6.91 on the tile.",
     "notes": "S5 stays filed as it is (append-only); this row is its remedy record."
+  },
+  {
+    "id": "DSGN_REBRND-S9",
+    "project": "DSGN_REBRND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-03T01:30:00Z",
+    "one_line": "Row S7's census ('no code selects dark mode') covered html.dark-mode only: Tailwind 4's default `dark:` variant compiles to prefers-color-scheme (the portal declares no @custom-variant), and 132 `dark:` uses in 23 catalyst component files are reached by ExportModal, UserSettingsModal, SessionTimeoutWarning and RollbackConfirmDialog, so a viewer whose OS prefers dark gets those modals restyled on PROD with no toggle.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "this seat's grade 2026-10-03 00:xZ-01:xZ (portal origin/DEV b23917f7, on PROD 6169edd9): 'dark-mode' 8 hits in 3 files and 0 setters (S7's claim holds for that class); `dark:` 132 uses in 23 files under the catalyst components; no @custom-variant in the CSS entry, so the variant is media-query based"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Row S7: no code selects dark mode, so the dark styling is latent.",
+    "world_is": "A second dark path exists and is selected by the viewer's operating system, not by code. Not rendered by this seat: whether the dark-styled modals stay legible on the portal's grounds.",
+    "notes": "INERT until rendered. Owner 2.0.0_SA_COO~D: either declare `@custom-variant dark (&:where(.dark-mode, .dark-mode *))` so the variant follows the app's own switch, or render the four modals under prefers-color-scheme: dark and grade them."
+  },
+  {
+    "id": "DSGN_REBRND-S10",
+    "project": "DSGN_REBRND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-03T01:30:00Z",
+    "one_line": "The Positioning Summary's percentage labels (PositioningSummary.tsx:1183 text-xl font-semibold, 20px/600, colour at :1211, Equity blue500 #3b82f6) compute to 4.07:1 on the body rung, below the 4.5:1 text floor (20px at 600 is not WCAG large text); the walk that disarmed W2-S8 measures interactive controls only and cannot see them.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "this seat's arithmetic on index.css rung values and #3b82f6 (WCAG relative luminance), 2026-10-03 00:xZ-01:xZ; the label is visible in the walk's shot 004 ('98.07%')",
+        "walk.mjs:620-661 (tmp/ui-walk/20261003T000242Z): getComputedStyle on interactive controls only, capped at 80 per view; 316 pairs, all >= 4.5, none of them these labels"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The design law: text on a dark panel meets 4.5:1.",
+    "world_is": "A served label sits at 4.07:1; the instrument used to clear the page does not measure non-interactive text, so its 0-under result does not cover these.",
+    "notes": "INERT (legibility, on PROD 6169edd9). Owner 2.0.0_SA_COO~D: a lighter Equity ink for text on the body rung, or 24px; and widen the walk's contrast limb to non-interactive text."
   }
 ]
 ```

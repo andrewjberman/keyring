@@ -91,11 +91,18 @@ account route is unchanged. Base: FAIL (0 summary routes).
 - **AWS:** none. No plan, no apply, no invoke, no S3 read or write. Tests use stubs.
 - **Refusal clause.** A change to the account route's behaviour, or an existing test that moves, is a defect: stop and file a row.
   No client name in any record; ids only.
+- **ISSUER RULING (2026-10-03 ~01:4xZ, on row IRPT_DASHBD-W3-S1).**
+  - `test_reporting_entry.py::test_one_route_and_function_name` asserts `len(entry.ROUTES) == 1`. Batch 197 adds the summary route
+    by design, so that one assertion is a fact the ruling changes, not a regression.
+  - The file is GRANTED for that assertion only. Replace the bare count with the EXACT set of the two route keys, each mapped to
+    its operation: the account route to `entry.OPERATION`, the summary route to its operation.
+  - Every other line of that file stays as it is. W3-S1 is disarmed by this ruling.
 
 <paths>
 org/standards/IRPT_DASHBD_CLIENT_SUMMARY_CONTRACT.json
 infra/aws/lambda/investor-reporting/reporting/entry.py
 infra/aws/lambda/investor-reporting/reporting/tests/test_reporting_summary.py
+infra/aws/lambda/investor-reporting/reporting/tests/test_reporting_entry.py
 infra/aws/terraform/investor-reporting/reporting-read/locals.tf
 infra/aws/terraform/investor-reporting/reporting-read/api.tf
 org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~3/
