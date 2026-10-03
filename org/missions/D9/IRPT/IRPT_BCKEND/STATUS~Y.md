@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~Y` (CLAUDE). Mode FAST: lease `IRPT_BCKEND~Y` (renewed by the
 Loop `/canonical-drive IRPT_BCKEND`. Way forward: CTO rulings in
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md` (latest read: batches 177, 178, 186)
 and the fold-in `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_FOLD_IN_IRPT_THREE_BRIEFS_20261002.md` section 2 (Y-1..Y-6,
-Y-H). Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-03T07:0xZ.
+Y-H). Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-03T07:2xZ.
 
 ## Pins
 
@@ -79,8 +79,10 @@ and their tests; `infra/aws/ec2/investor-reporting-ycharts/**`; `docs/contracts/
 - The api root's `CHANGELOG.json` entries for routes `bh7ynom` and `ihirb2s`: outside this seat's surface. Un-parks with
   an exact-file grant or that lane's next entry.
 - `record-terraform-deploy.sh investor-reporting` is not run per packet: it stamps every function as deployed at HEAD.
-- The node of `ycharts/session/tests/test_host_capture.py` that needs a POSIX host; `test_composition_admission` errors
-  only in a combined run (13 of 13 alone). Owner this seat.
+- FIXED 07:2xZ (`98314adf6c`): the test_host_capture node failed on every host because sign-in A added an eighth
+  AuthError site without moving the pin (not a POSIX issue); ycharts/session 118 passed. `test_composition_admission`'s
+  earlier combined-run error did not recur in today's ycharts/generate run (396 passed, 0 errors). Separately, one
+  process over every root stops at collection on module-name collisions (20 collection errors, other files).
 
 ## Limits
 
