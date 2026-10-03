@@ -15558,3 +15558,55 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Not retried (batch 188: a different row shape is recorded, not retried). Which feature is not determinable without another vendor read; st14's journal counts a gated row as matched."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S285",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-03T00:20:00Z",
+  "one_line": "Y-3 V1-a (REQ-66e9fe1a6b4e1af67d0b7b35, ULT + IWM Multi-Comp on the fund-free 12.03 file): IWM admitted at submission and its identity read verified 1 of 1 (securities_info 200, no WAF), then YCharts refused the holdings upload POST 403 text/plain 76 bytes, no WAF action -> ATTENTION VENDOR_UPLOAD_REFUSED. The same file's upload POST answered 200 at 10:14Z (REQ-c07e64ca).",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y (a control Overview of the same file -- no ETF, so no identity read -- separates Y-3's added GET from a session-level refusal; on the CTO's word)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "irpt-jobs REQ-66e9fe1a.. vendor_requests (3): GET /custom_pdf_reports/generate/14141847 200 set_cookie 1; GET /securities/securities_info 200 354 B set_cookie 0; POST /model_portfolios/fixed/holdings_upload/client 403 text/plain 76 B set_cookie 1, waf_action null",
+      "irpt-jobs REQ-c07e64ca.. (READY 10:14Z): GET template 200 set_cookie 0; POST holdings_upload 200 application/json 313 B",
+      "resident journal 00:10:45Z: IRPT_RESIDENT_STEP_REFUSED step=upload status=403; IRPT_SESSION_ROTATION kept=1 names=multidb_pin_writes; ATTENTION VENDOR_UPLOAD_REFUSED"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Y-3 packet V1-a: IWM admitted, identity 1 of 1 on the first read, then READY.",
+  "world_is": "Admission and identity measured PASS; the vendor refused the first mutation. Not determined: whether the preceding securities_info GET, the session (the 09:45Z sign-in's cookies; multidb_pin_writes rotating), or the vendor's own state caused the 403 -- the ledger keeps no body.",
+  "notes": "Not retried. The template read's set_cookie=1 differs from the good job's 0; the rotation persisted only multidb_pin_writes (no csrftoken rotation)."
+}
+```
+
+## IRPT_BCKEND-S286 -- the st14 generate bundle was built from an autocrlf working tree (15 members CRLF-converted)
+
+```json
+{
+  "id": "IRPT_BCKEND-S286",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-03T00:30:00Z",
+  "one_line": "The st14 irpt-ycharts-generate bundle was built from an autocrlf working tree, not from git blobs: 15 of its 113 members differ from `git show f89fc8e731:<path>` only by CRLF line endings (templates.json and 14 fixtures, one of them a PDF), where the catalogue build of the same function was 112 of 112 byte-equal to its pin.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's st14 grade 2026-10-03 00:xZ: live CodeSha256 wjSX3zZo.. (582,443 B) = zip = map artifact_sha256; 98 of 113 members byte-equal to the pin, 15 of 15 others CRLF-only, 0 differ in content",
+      "this seat's catalogue grade 2026-10-02 06:xZ (97eaff05ff): 112 of 112 members equal git show <pin>:<path>"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A served bundle's members equal the bytes at its pin (the build reads git, so a host's checkout settings cannot change what ships).",
+  "world_is": "This build read the working tree, so the shipping bytes depend on the builder's core.autocrlf. A CRLF-converted binary fixture is no longer the committed file; a text member with CRLF is harmless only where every reader tolerates it. Not read: whether any converted member is read at runtime (fixtures are expected to be test-only).",
+  "notes": "INERT on what was read (the four S279 members equal the pin). Owner 2.0.0_SA_COO~Y (the build path): stage members from `git show <pin>:<path>` or set core.autocrlf=false for the build, and diff every member against the pin before upload, as the catalogue build did."
+}
+```
