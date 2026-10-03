@@ -93,6 +93,7 @@ output, the closing commit.
   disk at limit, `0.0.0_AB_MSTR~Z` msg 28166): the root is complete, never a pruned copy. Owed: the closing hash to `0.0.0_AB_MSTR~Z` (register row W5-S3; COO~O msg to MSTR, RE 28077).
 
 <status>pending</status>
+<status>failed -- stopped on step 4's BLOCKING branch: Z-W15-S25 classified CONTENT-DIFF (3 of 11 grant-writer files), so AC1/AC2 cannot pass without an apply this cell may not make; item 2 landed (tf.AC3 PASS); row Z-W17-S2 disarmed by Z-S47; the build-source ruling routed to 1.0.0_SA_CTO~O at the round-14 L10</status>
 <round>14</round>
 <slot>~17</slot>
 <fabric>site-z</fabric>
