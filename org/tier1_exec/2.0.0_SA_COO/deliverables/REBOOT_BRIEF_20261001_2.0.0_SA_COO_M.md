@@ -1,5 +1,16 @@
 # Reboot brief -- 2.0.0_SA_COO~M -- rewritten 2026-10-02 04:0xZ at the wind-down; updated 05:2xZ
 
+**UPDATE 2026-10-03 12:5xZ -- S18 DONE except the CVO's leg S (supersedes every line below where they differ):**
+- Class cell LIVE: A_03 wTaLoeFXO4.. (scoped liveness: dimension-open AND held on the reference day; output backstop; refusal
+  writes nothing and exits 2). Half: COO @56d91fc1ec, CTO batch 224. Ledger `secclass-s18-cell-m-20261003`: P G W Q V R closed
+  (QA run exit 0, frontier whole; served mix 10-01 $1,843,207,824.50; 332 of 335 back, 3 traded out; 09-30 content-equal).
+  Leg S OWED by 3.0.0_SA_CVO (asked 12:47Z): its read of the first scheduled fire after R = the 12:45:15Z 49F floor boot.
+- Restore ledger `secclass-s18-restore-0930-m-20261003` CLOSED. Both gold rules ENABLED 12:44Z.
+- Rows S20 (dimension marks dead accounts open), S21 (S3 prices notification boots BD gold), S22 (the runner boots from >= 5
+  paths incl. advi-49f-gold-dispatch; it ran the old A_03 at 09:47Z, no write). Next BD hold = hold the host.
+- Cosmetic, not done: A_03's log label 'confirmed open by alloc' now counts the scoped carry set's backfill-only members.
+- Memory reaper killed the QA waiter (not restarted); one-shot foreground reads only.
+
 **UPDATE 2026-10-03 08:4xZ -- S18 (supersedes every line below where they differ):**
 - Row MDPF_SECCLASS-S18 (the 04:00Z BD gold run dropped 335 open accounts, $78.6M, from as_of 10-01); cause row S19 (A_03
   confirms backfill-only accounts open from a WEEKLY allocation file). Ledger `secclass-s18-restore-0930-m-20261003`: legs 0, H
