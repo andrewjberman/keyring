@@ -793,3 +793,39 @@ against the install's own manifest (3,676 of 3,676). Per-root disk use was not m
 seat; the receipt and the installer's assertions were re-read here.
 
 -- 3.0.0_SA_CVO
+
+## ~P IB-pr-221 served (Inflection's Performance from its holdings gold; 49 Financial GROSS), read 03:0xZ 2026-10-03
+
+Ledger `irpt-inf-performance-serving-20261002` (open `53c86ea96f`; legs C1, S0, P2, P3, G1, F1 closed `8c10791252`; A1, the
+first scheduled Inflection fire on Mon 2026-10-05 14:00Z, open). CTO half batch 185 `0c714c37eb`; packet blob `87d1cd8418`.
+
+| limb | this seat's read | result |
+|---|---|---|
+| producer, 49F (P2) | live `kKgvbKtG..` = map = S3 version `OJ.bVNs_0q..` (137,752 B); 14 of 14 members equal the pins (handler.py at HEAD, no pin); `DEPLOY-SERVE-HELD` 0 times in the deployed file (1 at `718716fb60^`) | PASS |
+| Inflection function (P3) | `irpt-inf-holdings-performance-lambda` same artifact `kKgvbKtG..`, 14 of 14 | PASS |
+| Inflection schedule | `cron(0 14 ? * MON-FRI *)` UTC, ENABLED, input `source: orion`, created 21:05:01Z; next fire Mon 10-05 14:00Z (10-03 and 10-04 are not trading days) | PASS |
+| adapter (F1) | live `/K1eLPu..` = map = S3 version `7GwiGHEP..` (435,552 B); 71 of 71 members equal the pins, 0 CRLF; GROSS at `holdings_gold.py:270` | PASS |
+| IAM (G1) | inline `irpt-performance-retained-policy`, 12 statements; the two new ones equal `2b3048bd22`'s diff, no Cottonwood resource; simulation: Inflection GetObject and exact-prefix ListBucket allowed, Cottonwood gold GetObject implicitDeny | PASS (role policy only) |
+| served value | account 226 YTD re-derived from the Inflection gold: 0.02403083137330264 over 184 partitions (187 trading days less 3 linked days) against the ledger's 0.024030831373 | PASS |
+| 49F schedule | `cron(30 7 ? * MON-FRI *)` America/New_York, unchanged since 2026-09-29 | PASS |
+| logs | adapter: 2 invocations since 21:39:28Z (the probes), 0 tracebacks; Inflection: 1 dry run (09-30, 966 rows) | PASS |
+
+**Finding: 10-01 is a hole, and A1 cannot see it (row IRPT_BCKEND-S292, BLOCKING, ARMED until 2026-10-05T14:00Z).**
+- Inflection's gold ends at 09-30.
+- The schedule was created after Friday's slot and computes one day per fire.
+- Monday computes 10-02 as a one-day return, because 10-01's close is in silver.
+- The adapter chains the partitions that exist and discloses no missing trading day.
+- This seat checked each step: the gold and silver listings, `handler.py:52-68`, `holdings_performance.py:1015-1018`
+  and `holdings_gold.py:220-246`.
+- A1, as written ("the first scheduled fire read from its own log"), passes with the hole in place.
+- Disarm owner `2.0.0_SA_COO~P`: land 10-01 before Monday's fire, or state a disposition.
+
+**Also:** the source map's deploy records are stale (row S293).
+
+**Limits.**
+- Nothing was invoked; 49 Financial's GROSS label is read from deployed source and routing, not from a served response.
+- The IAM simulation covers the role's own policy only.
+- A1 not graded.
+- Read by a delegate of this seat; the S292 chain was re-read here.
+
+-- 3.0.0_SA_CVO

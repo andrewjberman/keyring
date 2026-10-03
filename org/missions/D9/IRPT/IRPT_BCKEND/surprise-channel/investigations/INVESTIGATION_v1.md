@@ -15739,3 +15739,60 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "INERT. Owner 2.0.0_SA_COO~Y: set supersedes_package_root to the replaced root in the next install script's receipt update, or drop the key."
 }
 ```
+
+## IRPT_BCKEND-S292 -- Inflection's gold will never hold 2026-10-01, and the adapter chains over the missing day without disclosing it
+
+```json
+{
+  "id": "IRPT_BCKEND-S292",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-03T03:30:00Z",
+  "one_line": "Inflection's Performance is served from its holdings gold, which ends at 2026-09-30. The daily schedule was created at 21:05:01Z on 10-02, after that day's 14:00Z slot, and each fire computes exactly one day, so no fire will write 2026-10-01. On Mon 10-05 14:00Z the fire writes 10-02 as a one-day return, because 10-01's close is in silver (date=2026-10-02). The adapter then chains 09-30 -> 10-02, silently leaving out 10-01's market move.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3 opal-data-inflection irpt/inflection/gold/holdings_performance_daily/: 1,613 partitions, last date=2026-09-30 (written 2026-10-01T13:09:25Z); 2026 trading days through 09-30 lack only 05-11, 06-30 and 08-10, the linked days (this seat, ~03:2xZ)",
+      "s3 opal-data-assets orion/inflection/silver/fact_positions/date=2026-10-02 present (13:05:33Z); sources.json orion partition_close from 2026-09-26 holds PRIOR_TRADING_DAY, so it carries the 10-01 close",
+      "infra/aws/lambda/investor-reporting/holdings-performance/handler.py:52-59, 62-68: one day per fire, prev_trading_day(expected_last_trading_day(now)), no catch-up; Mon 10-05 14:00Z -> 10-02",
+      "data/assets/scripts/gold/irpt_holdings_performance/holdings_performance.py:1015-1018: a row links across a gap only when the prior close is in NO source partition; the 10-01 close is present, so 10-02's row spans one day",
+      "infra/aws/lambda/investor-reporting/performance/holdings_gold.py:220-246: the chain runs over the partitions that exist inside the window; absences are disclosed for non-OK and linked rows only, never for a trading day with no partition",
+      "ledger irpt-inf-performance-serving-20261002 P3 proof: the schedule was created by the ~21:0xZ apply; the A1 leg reads Monday's fire from its own log, which a missing 10-01 does not change"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD (IRPT_BCKEND performance): a day the data cannot support says so instead of showing a plausible wrong number; the served Inflection return chains every trading day or discloses the one it lacks.",
+  "world_is": "From Monday's fire, every Inflection window containing 10-01 omits that day's return and reports a period end of 10-02 with no absence. The class is general: any missed fire, on either firm, leaves a permanent, undisclosed hole. 49 Financial's 2026 gold has 0 missing trading days today, and Inflection has only the 3 linked ones.",
+  "notes": "ARMED until 2026-10-05T14:00Z. Disarm owner 2.0.0_SA_COO~P: land date=2026-10-01 before Monday's fire (one {source: orion, date: 2026-10-01} upload under its own ledger and whatever sign-off a new served partition needs), or state a disposition. The class remedy is for 1.0.0_SA_CTO: the adapter compares the window's partitions with the trading calendar and discloses a missing day, or the producer catches up from its newest landed partition."
+}
+```
+
+## IRPT_BCKEND-S293 -- the Lambda source map's deploy records for IB-pr-221 are stale; the Inflection function has no entry
+
+```json
+{
+  "id": "IRPT_BCKEND-S293",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-03T03:30:00Z",
+  "one_line": "After IB-pr-221's P2 and F1 applies, infra/aws/lambda/ci/lambda-source-map.json still records the adapter's deployed_code_sha256 as YPSX1+.. with last_deployed_at 2026-09-24, and the producer's last_deployed_at as 2026-09-29 at 11631d1ebf. irpt-inf-holdings-performance-lambda has no entry, and the 49F entry's iam_role names irpt-holdings-performance-role where the live role is irpt-49f-holdings-performance-role.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's IB-pr-221 read ~03:0xZ: live adapter CodeSha256 /K1eLPu.. (21:39:28Z) and producer kKgvbKtG.. (20:54:07Z); both equal the map's artifact_sha256, while the map's deploy-record fields are older",
+      "ledger irpt-inf-performance-serving-20261002 P2/F1 proofs (targeted safe-apply); record-terraform-deploy.sh not run after either"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The source map records what is deployed, so a by-name read of it answers what runs.",
+  "world_is": "The artifact hashes are right and the deploy records are not. A reader who trusts deployed_code_sha256 would conclude the adapter still runs its 09-24 bytes.",
+  "notes": "INERT. Owner 2.0.0_SA_COO~P: run record-terraform-deploy.sh for both applies, add the Inflection function's entry (it shares the producer artifact by design), and correct the iam_role field."
+}
+```
