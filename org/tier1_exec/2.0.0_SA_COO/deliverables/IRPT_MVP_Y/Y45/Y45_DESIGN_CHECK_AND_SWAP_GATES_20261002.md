@@ -65,3 +65,19 @@ suggests." Kimi: VEW-3, "can be called freely". YCharts: Andrew ~18:1xZ for thes
 Two packets:
 - (1) check gate, correction revision and user-named proxy (resident, generate, IAM, route);
 - (2) Kimi swap suggestions, after the web-search QA receipt.
+
+## Addendum (2026-10-03 ~00:0xZ): the correction revision reuses the PRD's shape, rides the upload's options
+
+- **The PRD already defines a correction.** `AnalysisRequest` CONTRACTS row, item 7 "findings/corrections": each
+  correction is `{finding_code, approved_by, from_value, to_value}` ("an approved substitution is captured explicitly with
+  who approved it"). The CSV lane implements it in `intake/corrections.py` (revision r+1, r never rewritten). Y-5 reuses
+  that shape for the template lane; no new correction vocabulary.
+- **No new route.** A NORMALIZATION revision is keyed by the hash of the upload's options (`uploads.py:236-238, 362`). An
+  optional `corrections` array on the same upload re-post (`AnalysisUploadRequest`, additive) therefore opens the next
+  revision of the same upload. `approved_by` is the posting principal, set by the server and never taken from the body.
+- **The template is never rewritten.** `uploads.py:464` refuses a frozen document whose template differs from a fresh
+  read of the original bytes. The corrections ride in `document.options`, and `freeze_template_portfolio` applies them
+  (a row's symbol for the check lookup and the holdings). `disclosures.corrections` records them, so
+  `verify_frozen_portfolio`'s replay reproduces them exactly.
+- **The resolver re-reads the replacements.** `_freeze_template` builds its symbol list after the corrections, so a
+  replacement is checked by the same securities_info read. It must be FOUND exactly, or the row stays named.
