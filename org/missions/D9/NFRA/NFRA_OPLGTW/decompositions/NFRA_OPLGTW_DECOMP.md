@@ -1329,3 +1329,46 @@ deploy never overlap. The other five cells stand alone. fanout: 8 independent st
 - Z-W12-S7, the operator re-consent, is due before 2026-10-15.
 
 Z-S41 is discharged. The D9 -> D6 move stays deferred, and round 14 issues in D9.
+
+## ADDENDUM R3-T.8 (2.0.0_SA_COO~O, 2026-10-03 ~18:3xZ) -- round 15, the CTO's round-14 list (R1-R3)
+
+**Source.** `ledger/ROUND_ANALYSIS.round14.md` @cf6e539a6d section 4 (msg 28925), on R1 (the grant writer's build input
+pinned to the gateway's released ref), R2 (the owner keys in `gateway/principals/rosters`) and R3 (the build and layer
+inputs). Label `<round>15</round>`, ONE issuance, four cells.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-gw-1` | 1 | `build_package.py` stages from `EC2_MANIFEST.json`'s `deployed_commit` (never the checkout); a planted dirty edit is ignored; an unresolvable commit refuses; `.build/` ignored (row Z-W17-S3). | WORLD | ~25 | worker |
+| `OG-gw-2` | 2 | The ONE catch-up apply: the grant writer redeployed from `af2d762970`'s closure, targeted, under CTO + COO + CVO halves. PHASE A names every behaviour change of the 3 differing files. Read back by content. Rollback is Terraform only. Ledger `nfra-oplgtw-grant-writer-catchup`. | WORLD | ~26 | worker |
+| `OG-tf-2` | 3 | R2 + R3: the owner keys move into the rosters secret (hash-equal to live) and are read by a data source; the build and layer inputs need no copy. The untargeted plan from a FRESH worktree reads No changes. Ledger `nfra-oplgtw-tf-root-owner-keys`. The closing hash goes to `0.0.0_AB_MSTR~Z`. | WORLD | ~17 | worker |
+| `OG-gr-2` | 4 | READ-ONLY (Andrew-direct ~17:3xZ): why `dim_position` 2026-09-21 collides at both masters; GRAIN_FOUND (52 of 52) or UPSTREAM_DEFECT with its owner. | LOCAL | ~22 | worker |
+
+**Chains.** `OG-gw-1` -> `OG-gw-2` -> `OG-tf-2`; `OG-gr-2` stands alone. fanout: 2 independent starts (`gw-1`, `gr-2`),
+cap 8.
+
+**Checks** (`deliverables/2.0.0_SA_COO~O/r15/checks/`): gw.AC1/AC2, gw2.AC1/AC2, tf2.AC1/AC2, gr2.AC1. Pre-cut 18:2xZ
+all FAIL. gw2.AC1 reads 3 DIFF (`config.py`, `data_entitlement.py`, the contract JSON), as OG-tf-1 measured. tf2.AC1
+reads plan rc=1 with 2 errors and 2 missing required variables. tf2.AC2 reads the secret's 3 keys, with no owner keys.
+
+**Carried, not cells:**
+- OGO2-J1 (CVO, L9);
+- row Z-W15-S30's allowlist (NFRA_TRNSPT, via `0.0.0_AB_MSTR~Z`);
+- OG-v-7 (Andrew's tests, then Alyssa);
+- OG-v-8 (G-E).
+
+The D9 -> D6 move stays deferred (R5).
+
+## ADDENDUM R3-T.8.1 (2.0.0_SA_COO~O, 2026-10-03 ~18:4xZ) -- OG-v-8 cancelled; OG-o-5 DRAFTED for round 16
+
+**Source.** `ledger/ROUND_ANALYSIS.round14.md` section 6 @2f46788988 (1.0.0_SA_CTO~O msg 28937), on the CVO's L8/L9
+(`ADJUDICATION_v4.Z.md` @d4c58bd8ef):
+- **R6 cancels `OG-v-8`.** It was a round-2 slot held on G-E/G-F. The issuer flips it here. The pilot-walkthrough
+  grading re-enters as a NEW cell when G-E stands.
+- **R7 accepts the CVO's runbook section-7 text remedy** as round-15 cell `OG-o-5`.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-o-5` | 6 | Runbook section 7, text only: 7.1 states the deploy re-renders `schwab`; 7.2 step 2 re-applies 7.1 after any restore and confirms `integration_enabled=false`; 7.3 names the read command. OGO2-J1 is re-graded at L9 by the CVO. | WORLD | ~21 | worker-light |
+
+**NOT issued in round 15.** The TO issuance gate refuses a second issuance into a round that already has one (ONE ISSUER PER ROUND, keyed to the round). OG-o-5 is held as a draft at `deliverables/2.0.0_SA_COO~O/r15/drafts_not_issued/` with its check `r15/checks/o5.AC1.sh` (pre-cut FAIL: anchors absent; rb.AC1-AC3 3 of 3), and is cut with round 16's issuance. Nothing waits on it: the pilot is not cut before G-E. **The pilot's host-side `schwab` flag** (R7) is a later release under
+three halves and is NOT cut before G-E (YAGNI).
