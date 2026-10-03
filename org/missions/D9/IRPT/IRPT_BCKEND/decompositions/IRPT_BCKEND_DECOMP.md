@@ -1597,3 +1597,16 @@ never-widen half the CTO signs on receipt; leg V closes on the walk after that d
 | `IB-pr-307` | P-6 (the export): V2 admits a render token on `GET .../reporting/{account_id}/{which}` for which = series only, account_id matched to the token's accountSetId; manifest, summary, a foreign account and forbidden claims refused; the human path byte-unchanged | WORLD | none | P42 |
 
 fanout: 1 of 1 chains, cap 8, reason: one open cell; worker 0.9.0_WK_IRPT_BCKEND~110 in its own worktree.
+
+
+## 35. ROUND 43, WORKSTREAM ~P (2026-10-03 ~20:2xZ, issuer 2.0.0_SA_COO~P, on 1.0.0_SA_CTO RULINGS batch 229 (S308 re-pointed to ~P))
+
+With S307 fixed, the 49F PATH B export is accepted and frozen, but the render host's `render_export.cjs` allow-list
+(`PRINT_QUERY_KEYS`) drops `account` and `version` from the print URL, so the served print page refuses the bundle (row S308;
+root cause found by 2.0.0_SA_COO~D, msg 104732). Batch 229: add account, version and request, with a test, under its own half.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-308` | P-6 (the export): the render host forwards the PATH B print query (account, version) and an Analysis print's request; unlisted keys still dropped; the render flow unchanged | WORLD | none | P43 |
+
+fanout: 1 of 1 chains, cap 8, reason: one open cell; worker 0.9.0_WK_IRPT_BCKEND~111 in its own worktree.
