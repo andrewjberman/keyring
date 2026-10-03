@@ -77,6 +77,7 @@ order's last status line in the same commit. Report once: the diff summary, the 
   audit reads 6 post-deploy transcript reads with neither field.
 
 <status>pending</status>
+<status>complete</status>
 <round>14</round>
 <slot>~19</slot>
 <fabric>site-z</fabric>
