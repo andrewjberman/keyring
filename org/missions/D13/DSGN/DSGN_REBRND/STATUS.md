@@ -5,7 +5,7 @@ Seat `2.0.0_SA_COO~D` (CLAUDE). Contract: PRD `org/missions/D13/DSGN/DSGN_REBRND
 `org/tier1_exec/3.0.0_SA_CVO/deliverables/DSGN_REBRND_ROUND2_GRADE_20261001.md` @599d33a722). Authority: 1.0.0_SA_CTO RULINGS
 batch 80 items 8-12 (the round-2 analysis; round 3 owed, this seat's, FAST, after the Investor Reporting work) and batch 165
 @10d2b1c445 (msg 104234: round 3 un-parks now, every IR line being blocked outside this seat; its own `/positioning` lease;
-IR keeps priority -- return to DSGN_IRPTV1 the tick any of its Next lines unblocks). **As of 2026-10-03T00:1xZ** (E4: surface half on DEV fe461611; FWD-13 clean in every /positioning view on DEV 44d6a215; row W1-S11 owed).
+IR keeps priority -- return to DSGN_IRPTV1 the tick any of its Next lines unblocks). **As of 2026-10-03T00:5xZ** (E4 done: DEV fe461611/44d6a215/b23917f7, rows S6-S8; E2's clause LOCAL c9d303db, push held by the PROD freeze).
 
 ## Pins
 
@@ -48,7 +48,9 @@ IR keeps priority -- return to DSGN_IRPTV1 the tick any of its Next lines unbloc
    in. Measure first (the page rendered on 5174 and read), then fix in the surface. The two contrast rulings that bound
    FWD-13 (rows W2-S8, W1-S11) are this seat's, made with the contrast table in hand (batch 80 item 10).
 2. E1 -- the Global RSI bands onto one hue (row S3; FWD-3).
-3. E2 -- the page-terminator clause in `portal/DESIGN.md` (row W1-S29; FWD-10).
+3. ~~E2 -- the page-terminator clause in `portal/DESIGN.md` (row W1-S29; FWD-10)~~ WRITTEN: DESIGN.md C10 gains the PAGE END
+   (portal c9d303db, LOCAL: push held by 0.0.0_AB_MSTR's FREEZE 104487 until PROMOTED; lease re-armed with portal/DESIGN.md).
+   The pages adopt it in their own cells: on /positioning, a page-end line after the Holdings Breakdown with the page's as-of.
 4. E3 -- the state census to zero, the no-permission and error states wired (rows W3-S5, W3-S1, W3-S4; FWD-11).
 5. E5 -- the two project checkers that read red on the accepted tree (the grade's Q2).
 6. E6 -- the old law still standing in the `/frontend-dev` skill and the "silver" mentions (Q4, rows W2-S15, W1-S24).
