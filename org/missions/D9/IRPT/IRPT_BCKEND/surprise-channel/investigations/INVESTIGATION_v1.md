@@ -16128,3 +16128,88 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Owner 2.0.0_SA_COO~P to tell 2.0.0_SA_COO~D (page half): read print_query.version, send `?version_id=` on the series read; send no authorized_report_revisions on a PATH B submit."
 }
 ```
+
+
+## IRPT_BCKEND-W105-S1 -- IB-pr-302: the edge admits a render token on three investor-reporting API paths and the reporting ro
+
+```json
+{
+  "id": "IRPT_BCKEND-W105-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~105",
+  "surfaced_at": "2026-10-03T05:52Z",
+  "one_line": "IB-pr-302: the edge admits a render token on three investor-reporting API paths and the reporting route is not one, so the submit's token (and the page's) is refused at the edge before the Enforcer admission this cell landed is reached",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda-edge/auth-validator-edge/render_auth.mjs@025a99deb9:221-224 RENDER_API_PATH_PATTERNS = performance, analysis sections, narrative (no /api/scoped/investor-reporting/reporting/{account_id}/series)",
+      "infra/aws/lambda-edge/auth-validator-edge/render_auth.mjs@025a99deb9:232-234 isRenderAdmissibleUri = print path, static assets, or isRenderApiUri over that list",
+      "infra/aws/lambda-edge/auth-validator-edge/index.mjs@025a99deb9 v13 header: 'admits ONLY /investor-reporting/print, the SPA's static assets under that prefix, and the three investor-reporting API paths'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO batch 205 / order cell: the submit and the render read the series through the reporting route as the submitter's render delegate, and the Enforcer admits reporting_read for that delegate.",
+  "world_is": "The Enforcer half is landed and tested (RENDER_DELEGATE_OPERATIONS carries reporting_read; 6 tests). Upstream of it, the Lambda@Edge render branch admits a render token only on the three listed API paths and matches the token's route claims to them (RENDER_ROUTE_CLAIMS), so a GET of the reporting route carrying the render token is not admitted at the edge. Fails closed: the submit's call answers non-200, the freeze refuses DEPENDENCY_UNAVAILABLE and nothing is stored; the page's read of the route is refused the same way.",
+  "notes": "auth-validator-edge is outside this order's <paths>. Owner 2.0.0_SA_COO~P to cut: add a `reporting` pattern /^\\/api\\/scoped\\/investor-reporting\\/reporting\\/[^/]+\\/series$/ to RENDER_API_PATH_PATTERNS and the matching route claim, in the P-2 window's never-widen half (an edge change). Not run: no edge call was made (AWS: none)."
+}
+```
+
+
+## IRPT_BCKEND-W105-S2 -- IB-pr-302: the reporting-read function is not wired to read a render grant -- the route entry now in
+
+```json
+{
+  "id": "IRPT_BCKEND-W105-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~105",
+  "surfaced_at": "2026-10-03T05:52Z",
+  "one_line": "IB-pr-302: the reporting-read function is not wired to read a render grant -- the route entry now installs render_ports_from_env(), which returns None until the function carries IRPT_EVIDENCE_BUCKET, a read of the grant prefix, and the _render_identity modules",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/served.py@025a99deb9:1155-1175 render_ports_from_env: None without IRPT_EVIDENCE_BUCKET; imports grant and report_owner from _render_identity",
+      "infra/aws/terraform/investor-reporting/reporting-read/iam.tf@025a99deb9: statements are the platinum prefix, the two scope dependencies and the log stream; no read of firms/*/generations/*/render_grant.json",
+      "infra/aws/lambda/investor-reporting/reporting/entry.py (this commit): Entry(..., render_ports=_entry.render_ports_from_env())"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order cell item 3: a render delegate is served for a covered account through the reporting route.",
+  "world_is": "With the code as landed and the function as deployed (no IRPT_EVIDENCE_BUCKET, no grant read, _render_identity not in the reporting-read zip), render_ports is None and every delegate read of the route refuses OBJECT_NOT_COVERED/EMPTY_GRANT. Fails closed. The three read functions that already serve render reads (performance, narrative, ops) carry that wiring; this one did not need it until now.",
+  "notes": "reporting-read lambda.tf and PATH_MANIFEST.json are outside <paths>, and the order fixes the iam.tf change to one action. Owner 2.0.0_SA_COO~P to cut, in the window's never-widen half: (1) IRPT_EVIDENCE_BUCKET in the function's environment; (2) s3:GetObject on firms/*/generations/exr_*/render_grant.json of that bucket in reporting-read/iam.tf, nothing wider; (3) _render_identity (grant.py, keys) in the reporting-read package. The export function also needs the portal origin reachable from its network and IRPT_EXPORT_RENDER=on for the submit's mint."
+}
+```
+
+
+## IRPT_BCKEND-W105-S3 -- IB-pr-302: choices the order left open -- a pre-freeze render grant, the Enforcer's account_id pin t
+
+```json
+{
+  "id": "IRPT_BCKEND-W105-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~105",
+  "surfaced_at": "2026-10-03T05:52Z",
+  "one_line": "IB-pr-302: choices the order left open -- a pre-freeze render grant, the Enforcer's account_id pin translation, a census bundle_id the route reads, an ExportReceipt packaged-copy realignment, and a pre-freeze grant that stays in evidence",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/retained_export.py installed_route_fetch: writes a grant (bundle id pre-freeze-read, its own exr_ revision) before the first route call; the export role holds no DeleteObject, so it is not removed",
+      "infra/aws/lambda/investor-reporting/_authz/enforce.py _delegate_path_ids: reporting_read's path ids are account_id and which, never the grant's accountSetId/jobId/reportId, so account_id is compared to the accountSetId pin and which is not compared; census render_delegate.bundle_id added; reporting/entry.py reads it to let ONLY the pre-freeze delegate read with no version_id (the submit's first read has none) and answers X-Opal-Version-Id on that read",
+      "infra/aws/lambda/investor-reporting/_contracts/ExportReceipt.schema.json differed from docs/contracts/investor-reporting/v1/ at 025a99deb9 ($id, optional contract_version, x-contract-version); both are now the docs copy plus facts.frozen_as_of and x-contract.revision 1.1",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~19/test_enforcer_real_operations_and_identity_adapter.py:117 asserts RENDER_DELEGATE_OPERATIONS == the three real operations; it is a historical deliverable outside the suites and now reads four"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order items 1 and 3: the submit reads through the route as the delegate; the route's read operation is admitted; both ExportReceipt copies are byte-equal.",
+  "world_is": "Measured by the 7 route-pin tests and the 6 Enforcer tests. (a) 'Nothing written' on a failed pin holds for bundle, pointer, receipt and pending record; a pre-freeze grant (a delegate's read permission, 5-minute tokens, minted server side only) remains in evidence. (b) The packaged ExportReceipt copy now also accepts the optional contract_version the published copy always allowed. (c) The page's own read of the series (portal print route) is outside this cell: the sha256 check is enforced in the build leg's read-back (retained_export.render_read); the page still passes print_query.version as version_id. (d) With IRPT_EXPORT_RENDER off the function has no mint, so a PATH B submit refuses DEPENDENCY_UNAVAILABLE.",
+  "notes": "No action required to proceed; a lifecycle expiry on the generations/exr_*/render_grant.json objects, or a DeleteObject on that one key shape, would remove (a). Owner 2.0.0_SA_COO~P."
+}
+```
