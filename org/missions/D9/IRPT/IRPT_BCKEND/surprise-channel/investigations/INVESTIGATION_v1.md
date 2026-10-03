@@ -15932,3 +15932,32 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Measure one dry-run invoke's duration in the deploy packet; raise the timeout or lower MAX_DAYS_PER_FIRE (a handler constant) if one day costs over about 50 s."
 }
 ```
+
+## IRPT_BCKEND-S295 -- DISARM of IRPT_BCKEND-W103-S1: the producer roles' own-prefix listing grant is written (not applied)
+
+```json
+{
+  "id": "IRPT_BCKEND-S295",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-03T04:40Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARM of IRPT_BCKEND-W103-S1 by its disarm owner: both holdings producer roles gain s3:ListBucket on their OWN daily gold prefix (IAM text, planned 0/2/0), so IB-pr-300's catch-up can read the newest landed day once deployed",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/holdings-performance/iam.tf: sids ListTheOwnDailyGoldPrefixForCatchUp (49F role) and ListTheOwnInflectionDailyGoldPrefixForCatchUp (Inflection role), s3:ListBucket conditioned StringLike s3:prefix irpt/<firm>/gold/holdings_performance_daily/*",
+      "terraform plan of the holdings-performance root: 0 to add, 2 to change (the two role policies), 0 to destroy; s3:prefix irpt/49financial/gold/holdings_performance_daily/* on opal-data-49financial and irpt/inflection/gold/holdings_performance_daily/* on opal-data-inflection",
+      "IB-pr-300 merged @598dca08c4: without the grant a scheduled fire's listing fails, it prints WARN and computes T-1 only (the old behaviour), so nothing regresses before the grant is applied"
+    ]
+  },
+  "dismissal_reason": "W103-S1's hazard was that the deployed catch-up would silently not catch up. The grant now exists as text in the same root; it is applied with the producers' rebuilt code in their deploy packet (both halves), never alone. Until then the handler's fallback is the old one-day fire.",
+  "spec_asserts": "IB-pr-300 / batch 202 section 2 (ii): each scheduled fire reads the newest landed gold day and computes every missed trading day.",
+  "world_is": "MEASURED: planned 2 role-policy changes, nothing applied.",
+  "notes": "The apply rides the IB-pr-299/300 deploy packet."
+}
+```
