@@ -84,9 +84,22 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 (msg 28796). Live proof against a real soft block needs barrons collection, which is held on the publisher-terms card
 @8d20bc24c8. This cell proves the status on planted pages only.
 
+**COMPLETE 2026-10-03 ~00:5xZ (issuer):**
+- Pass 1 @37947dc42f; AMENDMENT 1 (worker.py granted) @2ecab274f4, cherry-picked onto the branch @ad86e706b0; pass 2
+  @5b33a747e3. Merged @8d242a4bb7 (channel union).
+- AC1: 15 passed (worker). Plant (vii), the job row through Worker.run, fails 2 of 2 on the old worker.py and passes
+  2 of 2 on the new.
+- AC2 PASS at the base (`round39/al-1.AC2.issuer_grade.txt`).
+- `listing_empty_200` is NOT in STOP_STATUSES. It is also NOT in SUCCESSFUL_JOB_STATUSES, which is pinned to the gold
+  reader's set by test_o1_run_record_reach. Such a job records its reach and covers nothing, which fits a soft block.
+- Rows: Z-W91-S20 (disarmed by Z-W91-S22); Z-W91-S21 (sparse cone only, INERT).
+- Proof instance re-pinned by the worker @ff212273b5 (merged @b52ce0f591): publishers.py at 37947dc42f, worker.py and
+  the test at 5b33a747e3. proof-of-spec-check is VALID at the base.
+- The suites at the base are green: research 344 passed; collector 612 passed with 3 skipped.
+
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>39</round>
 <slot>~91</slot>
 <fabric>site-z</fabric>
