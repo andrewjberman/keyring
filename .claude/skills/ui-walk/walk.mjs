@@ -56,6 +56,9 @@ for (let i = 0; i < argv.length; i++) {
   // presses, before the explore step. Writes contrast-table.json. DSGN_REBRND round 3 E4 (FWD-13). Also every
   // non-interactive text pair at rest, grouped, state 'text' (row S10).
   else if (a === '--contrast-table') opt.contrastTable = true
+  // --tz <IANA zone>: the browser's own time zone (default: this machine's). A page that formats dates must read the
+  // same in every zone; DSGN_REBRND 4c's footer hour did not under UTC.
+  else if (a === '--tz') opt.tz = String(argv[++i] || '')
   else if (a === '--holdings-aggregates') opt.holdingsAggregates = true
   // --map-tiles (with --client): on the Holdings tab's default view, count the Securities map's drawn tiles against the
   // distinct securities in the served snapshot it shows (CTO batch 178 H-1 proof). Counts only.
@@ -1370,7 +1373,8 @@ try {
   } catch {
     browser = await chromium.launch({ headless: !opt.headed })
   }
-  const context = await browser.newContext({ viewport: { width: 1440, height: 900 } })
+  const context = await browser.newContext({ viewport: { width: 1440, height: 900 }, ...(opt.tz ? { timezoneId: opt.tz } : {}) })
+  if (opt.tz) log('TIMEZONE', opt.tz)
   const page = await context.newPage()
   page.on('console', (m) => { if (m.type() === 'error') consoleErrors.push({ step, text: m.text().slice(0, 300) }) })
   page.on('pageerror', (e) => consoleErrors.push({ step, text: 'PAGE ERROR: ' + String(e).slice(0, 300) }))

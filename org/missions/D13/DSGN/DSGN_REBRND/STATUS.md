@@ -5,7 +5,7 @@ Seat `2.0.0_SA_COO~D` (CLAUDE). Contract: PRD `org/missions/D13/DSGN/DSGN_REBRND
 `org/tier1_exec/3.0.0_SA_CVO/deliverables/DSGN_REBRND_ROUND2_GRADE_20261001.md` @599d33a722). Authority: 1.0.0_SA_CTO RULINGS
 batch 80 items 8-12 (the round-2 analysis; round 3 owed, this seat's, FAST, after the Investor Reporting work) and batch 165
 @10d2b1c445 (msg 104234: round 3 un-parks now, every IR line being blocked outside this seat; its own `/positioning` lease;
-IR keeps priority -- return to DSGN_IRPTV1 the tick any of its Next lines unblocks). **As of 2026-10-03T10:3xZ** (E4 done: DEV fe461611/44d6a215/b23917f7, rows S6-S8; E2: clause c9d303db and /positioning's page end 8526dacb on DEV; S10: d8d236a0 on DEV, row S12; Next 4b: 71a946e3, 4c: 46aeea17, Satellite 90 labels: fb5534f8 on DEV).
+IR keeps priority -- return to DSGN_IRPTV1 the tick any of its Next lines unblocks). **As of 2026-10-03T10:4xZ** (E4 done: DEV fe461611/44d6a215/b23917f7, rows S6-S8; E2: clause c9d303db and /positioning's page end 8526dacb on DEV; S10: d8d236a0 on DEV, row S12; Next 4b: 71a946e3, 4c: 46aeea17, Satellite 90 labels: fb5534f8, footer hour: cbfbb77a on DEV).
 
 ## Pins
 
@@ -71,9 +71,11 @@ IR keeps priority -- return to DSGN_IRPTV1 the tick any of its Next lines unbloc
    through formatPanelTimestamp (pin `Positioning/panels/footer-date-format.test.ts`; after-walk `20261003T100559Z` has
    no date finding). The walker's older `design:contrast` check had the same SVG-tile blind spot (32-60 false hits per
    view); fixed in walk.mjs. Parked from this walk, owner this seat:
-   - the footer hour depends on the viewer's zone: `dateUtils.create5pmETDate` decides DST from the RUNTIME's zone, so a
-     browser on UTC writes a summer date as "6:00p ET" (measured: TZ=UTC bun, 2026-10-03 -> 6:00p; 2026-01-09 -> 5:00p).
-     Un-parks with a lease on `portal/src/lib/dateUtils.ts` (decide DST for America/New_York through Intl);
+   - ~~the footer hour depends on the viewer's zone~~ LANDED portal `cbfbb77a` (origin DEV, ls-remote 10:46Z):
+     `dateUtils.create5pmETDate` asks America/New_York (through Intl) whether the date is under EDT. Pin
+     `lib/__tests__/create5pm-et.test.ts` (UTC runner; summer, winter, both changeover days; fails on HEAD). Real run in a
+     UTC browser (walker `--tz UTC`): the page end read "6:00p ET" under a "5:00p ET" footer before (walk
+     `20261003T104156Z`), both "5:00p ET" after (`20261003T104339Z`). The lease gained `src/lib/dateUtils.ts` and the pin;
    - ~~Satellite 90's percentage labels run past the Summary's right edge at 1440px~~ LANDED portal `fb5534f8` (origin
      DEV, ls-remote 10:31Z): in the compact layout (>= 6 books) the labels sit in flow beside the bar in a fixed slot;
      the five-book arm is byte-identical. The walker's new `layout:clipped` check measured 3 labels cut by 9px on the
