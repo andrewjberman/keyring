@@ -17238,6 +17238,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   ]
  },
  "disposition": "UNDER_INVESTIGATION"
+},
+{
+ "id": "AMGT_RESAPP-Z-S341",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~Z",
+ "surfaced_at": "2026-10-03T17:18:41Z",
+ "one_line": "The seating check (.tools/to-decomp-ref-lint.py, gate2) counts a WITHDRAWN task order as OPEN: TERMINAL_STATUS lacks WITHDRAWN, and an unknown status is open by design. At the round-65 issuance it announced that 0.7.0_AE_CloudOps~A holds 2 open AMGT_HARVST orders; both read <status>withdrawn</status> as their only tag.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "CLAUDE.md rule 27 seating: ONE PROJECT PER TIER-2 SEAT INSTANCE, enforced by the lint's seating check, which should count only orders a seat still owes.",
+ "world_is": "Commit 3fde70ec2b (round-65 issuance): gate2 SEATING announced AMGT_RESAPP.TO-AMGT-ao-2 addressed to 0.7.0_AE_CloudOps~A 'already holds open TOs on AMGT_HARVST (2 open: HVST-n-4, HVST-q-7)'. Both files carry one status tag, withdrawn. TERMINAL_STATUS at :80 is {COMPLETE, CLOSED, SUPERSEDED, CANCELLED, DONE, CLOSED-SUPERSEDED}; _is_open at :187 treats any other lead token as open. ANNOUNCE mode today, so nothing was blocked; armed (org/mcp/pipeline-gate2.enforce), it would refuse a correct seating. Whether WITHDRAWN is terminal is the lint owner's call (1.0.0_SA_CTO, last commit 453c6430ec).",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "safe-commit output for 3fde70ec2b, the [gate2] SEATING block.",
+   "grep of <status> in the two AMGT_HARVST orders: one tag each, withdrawn.",
+   ".tools/to-decomp-ref-lint.py :80 TERMINAL_STATUS and :187 _is_open read at HEAD."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
 }
 ]
 ```
