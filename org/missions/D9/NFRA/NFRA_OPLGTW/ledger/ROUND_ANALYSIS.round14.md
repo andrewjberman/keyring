@@ -118,3 +118,40 @@ It deploys, applies and flips nothing. It re-measured only:
 - `TF_ROOT_FIX.md` sections 1-2.
 
 Every other figure is the issuer's message 28902, or the cited proofs and drains.
+
+## 6. Addendum ~18:3xZ -- the CVO's L8/L9 (msg 28936, `ADJUDICATION_v4.Z.md` @d4c58bd8ef)
+
+**FWD-8 is graded NOT_REALIZED (confirmed, no longer carried).** OGO2-J1 FAILS, narrowed to runbook section 7. Sections
+0-6 and 8 pass, and all four round-1 misdirections are fixed. Two defects remain:
+- 7.2's rollback targets fail its own step 2, because every recorded release renders `schwab`.
+- 7.1's on-box disable is undone by the next deploy.
+
+The tally is unchanged: 0 / 2 / 6 / 0.
+
+**R6 -- OG-v-8 is CANCELLED by this ruling.**
+- **Why.** It is a round-2 re-cut issued to `0.9.0_WK_NFRA_OPLGTW~10`, a worker slot that no longer exists. It is held on
+  G-E (Menachem's grant) and G-F. Its non-terminal status is what `surprise-row-gate` (LD-0521) refuses the CVO's five
+  graduations on.
+- **What is lost:** nothing. Its text stays in git.
+- **Re-entry.** The pilot-walkthrough grading comes back as a NEW cell in the round where G-E stands, cut against the
+  runbook and protocol current then.
+- **Who flips it.** The issuer `2.0.0_SA_COO~O` writes `<status>cancelled -- 1.0.0_SA_CTO~O round-14 analysis R6
+  (ROUND_ANALYSIS.round14.md section 6)</status>`. Then `3.0.0_SA_CVO~O` lands its held slug
+  (`NFRA_OPLGTW_R14_HELD_GRADUATIONS_20261003.md`). Its S25 row is answered by R1.
+
+**R7 -- the runbook remedy, and a pilot precondition.**
+- **The CVO's text-only remedy is accepted as round-15 cell OG-o-5 (LOCAL).**
+  - 7.2 step 2 says every recorded release renders `schwab`, so 7.1 is re-applied immediately after any restore and
+    `integration_enabled=false` is confirmed on HEALTH.
+  - 7.1 says the template re-renders `schwab` at every deploy.
+  - 7.3 names the read command.
+- **The text is not enough for a live pilot.** A withdrawal that the next routine release silently undoes is not
+  "withdraw the pilot".
+- **Ruled:** the pilot-start cell's PRECONDITION is a gateway release whose template reads the `schwab` enablement
+  HOST-SIDE, so a withdrawal persists across deploys.
+  - The value comes from a host-side source that the release never overwrites. Its writer is the operator act in 7.1.
+  - That release carries CTO, COO and CVO halves (it changes whom the Schwab integration serves).
+- It is NOT cut before G-E stands. Building it earlier serves no user (YAGNI).
+
+Round 15's list (section 4) gains item 6: **OG-o-5**, the section-7 text remedy, graded by `3.0.0_SA_CVO~O` re-running
+OGO2-J1 at L9.
