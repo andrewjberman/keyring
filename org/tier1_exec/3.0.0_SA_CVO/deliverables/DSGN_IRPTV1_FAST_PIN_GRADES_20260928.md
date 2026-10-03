@@ -729,3 +729,45 @@ Graded in scratch worktrees (a sparse workspace copy with the portal nested), re
 - Read by a delegate of this seat.
 
 -- 3.0.0_SA_CVO
+
+## Grades, 16:5xZ-18:2xZ 2026-10-03 -- portal DEV b0b3c524..e862b0c4 (15 pins; ~D msgs 104612-104630)
+
+Graded in scratch worktrees, removed after. The shared portal status reads 35 lines before and after; no git config was
+written. None of the pins is on PROD (6169edd9). Every CI run concluded success; CI runs no unit tests.
+
+| pin | claim | this seat's read | grade |
+|---|---|---|---|
+| 94c055e8 | /attribution ERROR and LOADING | `StylePolicyComparison.tsx:161`; 1/1; NEG and MUT fail; probe: failed -> ERROR, pending -> LOADING (parent EMPTY both) | PASS |
+| c3e1d7b9 | /portfolio-management placeholders, one ERROR | 1/1; NEG fails (0.00 x28); MUT fails; the wiring `PortfolioManagement.tsx:433` is unpinned (`serviceFailed={false}` passes), the probe shows it right | PASS; pin gap |
+| 3d8cce99 | /ticket-center one ERROR, Try again, no raw JSON | no pin; probe at pin and parent; MUT caught | PASS by probe |
+| 30f7fca1 | /data-refresh History and Rollback ERROR | no pin; probe of the hook and both tabs; MUT caught; no rollback hunk | PASS by probe |
+| 075d33fa | Advisors one ERROR | probe; a no-data control is EMPTY; MUT caught | PASS by probe |
+| 10fca02d | "Connected" only once data arrives | probe on 4 partner pages; the with-data arm rendered on Cottonwood only | PASS by probe |
+| 1754d9c1 | RSI: no marker, "not published" for a missing period change | probe; the Fixed Income control still drawn | PASS by probe |
+| 4a40a0ff | RSI modal "Not published"; a real 0 stays 0 | probe: null -> "Not published", 0 -> "Oversold" (parent "Neutral" both); MUT caught | PASS by probe |
+| 6e31c220 | /positioning notices are PanelError / PanelEmpty | probe on 2 of 6 notices | PASS by probe (2 of 6) |
+| 1b8fccfd | Assets Overview ERROR | probe on 4 arms; MUT caught | PASS by probe |
+| e2563c17 | F49-AC4 counts the NO-PERMISSION panel | fe-s-49 10/10 at the pin, 9/10 at its parent; MUT 6/10 | PASS; row DSGN_REBRND-S13 answered |
+| 2da1eaaf | F47-AC6 classifies PrintEntry :83, :162 | fe-s-47 8/8 at the pin, 7/8 at its parent; MUT fails | PASS; row DSGN_IRPTV1-S56 answered |
+| 7e7f9aa2 | component tests for items 87 and 88 | 10/10; this seat's two S54 mutants (accountFilter = ownAccountFilter; sending []) both fail | PASS; row S54 answered |
+| 525c9404 | S55 four arms | 1/1; each named mutant fails its arm; the catalogue-read mutant passes (disclosed) | PASS; row S55 answered for the four arms |
+| e862b0c4 | Holdings card follows the /portfolios canon | 2/2; NEG and MUT fail; the `undrawnCardRows` rename (`DrillTree.tsx:600`) untested | PASS |
+| full suite | -- | 1145 tests: head 1088 pass / 30 fail; the pins reverted 1084 / 34 (the 4 extra are the pins' own); the same 30 fail in both | -- |
+
+**Rows.**
+- Answered in code on DEV: DSGN_REBRND-S13, and DSGN_IRPTV1-S54, S55 (four arms; the catalogue tenant still blind) and S56.
+- W3-S4 holds on every route this range touched.
+- All of these are recorded at the next compile of each channel.
+
+**Notes.**
+- iv-e-26 regenerates `contracts/wire/ExportBundle.ts` and `ExportReceipt.ts` from the workspace contract, which now
+  carries `frozen_as_of`, so the committed wire types lag the contract. This is row W41-S2's class, and the likely source
+  of the "uncommitted wire-contract edits" row S59 attributes elsewhere.
+- Ticket Center shows "No open tickets." on its first render, before the load starts.
+
+**Limits.**
+- Server-render probes only.
+- The /attribution empty-data case (0.00 weights) was not re-measured.
+- Read by a delegate of this seat.
+
+-- 3.0.0_SA_CVO
