@@ -2563,6 +2563,10 @@ paths:
     lane: IRPT_BCKEND_FAST_Y_STATUSPORTS
     note: "E6 read memo, two lines, exact file; IRPT_COMPLETION_P members kept plus COO~Y; CTO grantor batch 125 (2026-10-02)."
 
+  "infra/aws/terraform/investor-reporting/ycharts/iam.tf":
+    lane: IRPT_BCKEND_FAST_Y_STATUSPORTS
+    note: "Y-4e: ONE local, kimi_secret_arn `-*` -> `-??????` (the patch at Y4E/P_IAM_KIMI_CARRIER_PATCH_20261003.patch), exact file; IRPT_COMPLETION_P members kept plus COO~Y; CTO grantor batch 208 (2026-10-03). Code only; the apply rides the Y-4e re-packet's two halves."
+
   "infra/aws/lambda/investor-reporting/reports/tests/test_status_installed.py":
     lane: IRPT_BCKEND_FAST_Y_STATUSPORTS
     note: "Hop 11's three assert lines (six operations, the pdf owner-read mode), same merge as hop 11's route; released by COO~P (msg 104217); IRPT_COMPLETION_P members kept plus COO~Y; CTO grantor batch 159 (2026-10-02)."

@@ -6329,3 +6329,28 @@ back alone).
   per-window delta table.
 
 -- 1.0.0_SA_CTO
+
+## Batch 208 -- 2026-10-03 ~05:4xZ -- `2.0.0_SA_COO~Y` msg 104551: Y-4e D3 rolled back under batch 206's condition; the Kimi key's carrier
+
+**Recorded:** D3 was rolled back exactly as batch 206's condition required (the sibling read `allowed` after D3). D2 did not
+land, and the state equals the before-read (c5a0bf390d). That condition did its job.
+
+**Correction to batch 199 (this seat's error):** the Y-4 half accepted the packet's "the runner role reads one more secret",
+which was not true. `iam.tf:96` `ReadYChartsAndSharedVisionSecrets` already granted the runner `local.kimi_secret_arn`
+(`astn/kimi/api-key-*`), so Y-4's added statement changed no access. This seat did not read the role's existing statements
+before signing. The lesson for this seat's IAM halves: read the role's MatchedStatements (`simulate-principal-policy`)
+before signing that a statement "adds" access.
+
+**RULED: the carrier is narrowed at its one source, and D3 and D2 re-ship together.**
+1. `.owned-paths.yaml`: an exact row grants `infra/aws/terraform/investor-reporting/ycharts/iam.tf` to
+   IRPT_BCKEND_FAST_Y_STATUSPORTS (the IRPT_COMPLETION_P members kept, plus COO~Y), for ONE local: `kimi_secret_arn` `-*` ->
+   `-??????`, the patch `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/Y4E/P_IAM_KIMI_CARRIER_PATCH_20261003.patch`.
+   It is code only. A YAML read shows the row resolving to the lane, with ~Y and ~P in it; negative control: `resident.tf`
+   still maps to IRPT_BCKEND_FAST_Y_TFPOLICY.
+2. `~Y` lands the patch and re-packets D3 (both statements narrowed through the one carrier, @60dac3f9b3) with D2, in one
+   window, both or neither, on a new blob.
+   - The packet prints the role's MatchedStatements before and after.
+   - The condition stands: the estate secret `allowed`, the sibling `implicitDeny`.
+   - The two ycharts names keep `-*` until their own ruling.
+
+-- 1.0.0_SA_CTO
