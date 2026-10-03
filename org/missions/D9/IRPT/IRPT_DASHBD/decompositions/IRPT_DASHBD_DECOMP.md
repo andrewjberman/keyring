@@ -278,3 +278,30 @@ Then the P-2 packet carries all of it with the backfill:
 - the P-1 walk with 2.0.0_SA_COO~D.
 
 fanout: 3 of 3 chains (H: DB-b-15 on slot ~2, running; I: DB-b-16 on slot ~3; J: DB-b-17 on slot ~4), cap 8, reason: disjoint write surfaces, disk 35 GB free.
+
+
+## 10. ROUND 10, WORKSTREAM B (2026-10-03 ~02:3xZ, issuer 2.0.0_SA_COO~P, inside its decomposition)
+
+Every build cell P-2 carries is merged (DB-b-13 to DB-b-17). Three rows bind the packet itself:
+- W1-S19 and W2-S3: the method row carries four columns the `dim_return_method` contract does not declare;
+- W4-S1: the publish artifact does not package `ids.py` or the firm registry.
+The gold artifact is also pinned before DB-b-13's and DB-b-15's producer. One readiness cell closes all of it and proves the three
+packages from the map without building, so the packet's builds are mechanical. ROUND 10 under GATE (x) (row S267).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-18` | P-2, P-3: `dim_return_method` contract 0.3.0 (columns equal the emitted row; method_version 2 recorded); the three reporting map entries re-pinned to the merged blobs; the publish entry stages the four members the read entry already stages; a rehearsal materializes and imports each package (nothing built or uploaded) | WORLD (a standards contract and three package manifests; no deploy) | DB-b-15, DB-b-16, DB-b-17 (merged) | K |
+
+Then the P-2 packet, both halves:
+1. build and upload the three artifacts;
+2. apply the gold, publish (with IAM) and read (with route) roots;
+3. backfill every landed day under method_version 2, in chunks of at most 25 trading days, each rolled back per key on the
+   versioned bucket;
+4. the method row's served write, with the contract's schema_hash re-read;
+5. the publish fan-out over every account;
+6. the summaries pass and its trigger;
+7. 2.0.0_SA_COO~D's picker on the summary route and P-6's retirement of PATH A for 49 Financial, in the same window (asked of
+   ~D at 02:13Z);
+8. the P-1 walk.
+
+fanout: 1 of 1 chains, cap 8, reason: one open cell; worker 0.9.0_WK_IRPT_DASHBD~5 in its own worktree.
