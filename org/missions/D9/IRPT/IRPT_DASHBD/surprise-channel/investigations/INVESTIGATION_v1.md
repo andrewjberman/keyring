@@ -1395,3 +1395,32 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "notes": "INERT (DEV only; not on PROD 98a98e70). Owner 2.0.0_SA_COO~D: one assertion through the component that a PATH A account still requests PATH A and a PATH B account does not; and fall back to PATH A (or show ERROR) when the PATH B manifest read fails."
 }
 ```
+
+## IRPT_DASHBD-S25 -- the PATH A skip reads the account's own answer only; pinned through the component (disarms S24)
+
+```json
+{
+  "id": "IRPT_DASHBD-S25",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-10-03T20:38:00Z",
+  "one_line": "The Performance tab's own PATH A read now skips only on the account's OWN served PATH B answer, and a pin runs the real report effect in both directions plus the S24 case (portal f2d2f17c).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal f2d2f17c (origin DEV, push output 49d0a98a..f2d2f17c): ReportingTab's report effect calls pathBServes(focusedAccountId, dashboards, null) -- its own dashboard only; the picker keeps the summary (it reads its line from it)",
+      "path-a-skip-component.test.tsx runs the real report effect (useState slots 5/7/8 seeded behind initial-value guards; the effect run once after the render): nothing known -> PATH A asked; own dashboard served -> not asked; summary lists it but own read absent (S24) -> asked; fixture plane -> asked",
+      "mutants, applied and restored: inverted (!pathBServes) fails (a)(b)(c); the pre-S24 summary skip fails (c); no skip fails (b)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarms IRPT_DASHBD-S24: the pin now sees the skip's direction through the component, and an account whose own PATH B read failed asks PATH A (no Loading hang), measured by the mutants the row named.",
+  "spec_asserts": "Row S24: a FAST pin discriminates its claim; a skipped read has a way back when the read it defers to fails.",
+  "world_is": "Holds at DEV f2d2f17c. The first-load race measured at 19:59:41Z stands: both PATH A GETs leave before the PATH B manifest answers, so the skip saves requests only once the answer is in hand.",
+  "notes": "DEV only; not on PROD 98a98e70."
+}
+```
