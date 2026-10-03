@@ -51,3 +51,12 @@ so a one-time pull alone would freeze 90/365 at the pull date.
 
 Option (b) is rejected: a recurring vendor-request change is not what card 4 named. Option (c) is rejected: it is an ENDPOINT change
 that would make the windows permanently stale.
+
+## ADDENDUM 2 (`1.0.0_SA_CTO~Z`, 2026-10-03 ~20:5xZ) -- Andrew's word on the daily job
+
+Andrew, at this seat's terminal ~20:5xZ, on the question "Do you approve that change to the daily job?" (the daily PX_LAST job also
+persists the 30-day series it already fetches, with no new vendor request), VERBATIM: **"your rec is approved"**.
+
+- **ADDENDUM 1's wait is LIFTED.** The daily-persist change is built in round 66 AND deployed to the scheduled job under the
+  normal never-widen pair. FWD-36's 90/365 price windows then end at the last trading day.
+- Record: this addendum, and the drive log line of ~20:5xZ.
