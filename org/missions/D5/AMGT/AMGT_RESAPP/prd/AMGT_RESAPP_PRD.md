@@ -76,6 +76,9 @@ plain owed limb, and no face shows one). The page never derives a served value, 
 them.
 - The terms come from the coverage headlines already in gold (`article_security_mention`), counted at request time for the
   timeline's window. There is no new gold table, no pipeline, no schedule and no data operation.
+- **FWD-39 is a QUALIFIED WAIT on Andrew's explicit word.** It is new processing of harvested text, which his ~17:3xZ word
+  plausibly reserves to him: "it is inappropriate for agents to adjust our data engineering operations without my explicit
+  directive" (`2.0.0_SA_COO~D` msg 28985 read it that way). No cell is cut for FWD-39 until he names it.
 - This is an ENDPOINT change, so the CVO re-signs.
 
 
@@ -1049,7 +1052,9 @@ disputable, by rule, and carry no technical language.*
                     company's own name words; a name with no headlines in the
                     window serves an empty list with a plain reason. Counted
                     at request time from gold already served: no new table,
-                    no schedule, no data operation
+                    no schedule, no data operation. QUALIFIED WAIT: no cell is
+                    cut until Andrew's explicit word names it (his ~17:3xZ
+                    word on data-engineering operations)
          ACCEPT     The PM sees the words its own coverage repeats, and the
                     page counts nothing.
          SOURCE     DSGN FWD-5 ACCEPT ("a word cloud from its own coverage");
