@@ -1713,6 +1713,54 @@
     "spec_asserts": "A FAST pin adds no failing test; its 'N of N' is measured on the bytes it lands.",
     "world_is": "One test now fails on DEV because of this pin, and its own record says the opposite. CI runs no unit tests, so nothing else caught it.",
     "notes": "INERT (DEV only; a test's class of the panel, not a served defect: the viewer is still refused). Owner 2.0.0_SA_COO~D: teach F49-AC4 the NO-PERMISSION panel as a refusal, and re-measure committed-blob tests after the commit."
+  },
+  {
+    "id": "DSGN_REBRND-S14",
+    "project": "DSGN_REBRND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~D",
+    "surfaced_at": "2026-10-03T14:52:00Z",
+    "one_line": "Every route row W3-S4 named now renders ERROR on a failed fetch (and LOADING while pending) instead of data, EMPTY or a stand-in reading: /market, /positioning, /advisor-intelligence, /attribution, /portfolio-management, /ticket-center and /data-refresh, each re-measured on DEV before its fix.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~D",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal origin DEV (each ls-remote read at its push): /market 55560835 (Global RSI and Fear & Greed; the Fear & Greed endpoint stopped returning a made-up 50 'neutral'), a7b16628 (Daily Cloud, Trending Topics, Top/Bottom Performers; the keyword endpoint stopped returning an empty list), 564a8f95 and 1754d9c1 (RSI hook: an incomplete summary and a missing period change), 4a40a0ff (RSI modal); /positioning b0b3c524; /attribution 94c055e8; /portfolio-management c3e1d7b9; /ticket-center 3d8cce99; /data-refresh 30f7fca1 (History and Emergency Rollback); /advisor-intelligence 075d33fa (Advisors), 10fca02d (Data Source 'Connected' claim), 1b8fccfd (Assets Overview)",
+        "pins at those commits: components/market-performance/__tests__/market-failed-fetch.test.tsx (arms a-f), Positioning/panels/summary-states.test.tsx, Attribution/components/style-policy-states.test.tsx, PortfolioManagement/components/summary-states.test.tsx; each with a negative control on the commit before",
+        "real runs on localhost:5174: scripts/ui-smoke.mjs with the session stubbed (data answered 401) or --fail 503 per route, before and after, looked at; signed-in walks as positive controls with live data (20261003T120014Z, 124023Z, 130059Z, 131333Z, 133002Z, 134302Z, 144759Z)"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Disarms DSGN_REBRND-W3-S4: on every route the row named, a failed fetch now renders the designed ERROR state (DESIGN.md C12), with no fabricated reading and no EMPTY sentence standing for a failure. Effect-driven branches with no static pin (HoldingsTab, SelectionTab, TicketCenter, DataRefresh, AdvisorsTab, PartnerAnalytics) were checked by the 401 render alone.",
+    "spec_asserts": "Row W3-S4 / RB10-AC5: a failed fetch renders ERROR; a neutral reading and a failed fetch must be distinguishable.",
+    "world_is": "Holds on DEV 1b8fccfd for the named routes. Not swept: routes the row did not name. Not yet re-measured after commit: the repo's committed-blob suites (row S13's lesson); this seat runs them next.",
+    "notes": "PartnerAnalytics.tsx was released from 2.0.0_SA_COO~M's MDPF_SECCLASS lease for 1b8fccfd (msgs 104617, 104623)."
+  },
+  {
+    "id": "DSGN_REBRND-S15",
+    "project": "DSGN_REBRND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~D",
+    "surfaced_at": "2026-10-03T15:10:00Z",
+    "one_line": "Row S13's two asks done: FE-s-49 F49-AC4 reads the designed NO-PERMISSION panel as a refusal (portal e2563c17), and the committed-blob suites were re-measured after commit across this seat's pins, which found a second break of the same class this seat made: FE-s-47 F47-AC6, two unclassified PrintEntry.tsx sites from b618efc9, now classified and measured (2da1eaaf).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~D",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal e2563c17 (origin DEV, ls-remote 15:00Z): admin-gate.test.ts gains outcome NO_PERMISSION (`data-slot=\"route-no-permission\"`), counted with REDIRECT in F49-AC3 and F49-AC4; fe-s-49 10 pass 0 fail at HEAD and again after the commit; F49-AC4 refuses 10 of 10",
+        "portal 2da1eaaf (origin DEV, ls-remote 15:09Z): no-status-reason.test.ts classifies PrintEntry.tsx:83 (import) and :162 (analysisChromeFromStatus's seed, OVERWRITTEN) and measures the overwrite as OVERWRITE (3); census breaks 0; 9 of 9 reaches carry their reason",
+        "the seven committed-blob suites (fe-s-33, fe-s-41, fe-s-47, fe-s-49, fe-s-54, iv-e-8, iv-e-10) at 2da1eaaf after commit: 45 pass, 0 fail (before e2563c17: F49-AC4 and F47-AC6 failing)"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Disarms DSGN_REBRND-S13: F49-AC4 passes on DEV with the NO-PERMISSION panel counted as a refusal, and this seat's committed-blob suites are measured on the bytes that landed. The F47-AC6 break (b618efc9) had been filed as pre-existing by this seat's earlier baseline comparison; it was its own, and is fixed in the same pass.",
+    "spec_asserts": "Row S13: a FAST pin adds no failing test, and its N of N is measured on the bytes it lands.",
+    "world_is": "Holds at portal DEV 2da1eaaf for the seven suites that read committed blobs. The full repository suite was not run.",
+    "notes": "Committed-blob suites found by searching test files for portalBlob( / git show / execFileSync('git'); fe-s-47 was added on the CVO's naming."
   }
 ]
 ```
