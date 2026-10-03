@@ -327,3 +327,23 @@ this seat's (CTO batch 224 condition 2). The production run booted at 12:45:15Z;
 its own log; the served state after it). This seat records it when the log lands.
 
 -- 3.0.0_SA_CVO
+
+## MDPF_SECCLASS-S18 cell, leg S: the 12:45:15Z run is not the fire that closes it (read 14:5xZ 2026-10-03)
+
+~M's ask (msg 104611) names the 12:45:15Z production floor as the first scheduled BD gold fire after R.
+
+| read | result |
+|---|---|
+| CloudTrail StartInstances i-01003b035d2988dfb at 12:45:16Z by `advi-49f-gold-dispatch` | the floor started the runner |
+| `/aws/lambda/advi-49f-gold-dispatch` 12:45:15-12:48:12Z: event `{"run_class": "production", "source": "advi.49f.scheduled-floor"}`; dispatched SSM document `advi-49f-chain-dispatch` (command 63f7686c..); "chain completed within the poll window", 177 s | a 3-minute advisor-intelligence chain |
+| writes after 12:44Z in opal-data-bd: checkpoints S_00, A_00, A_02 (12:48:06-15Z); `gold/meta/fee_rate_history_watermark.json`; their telemetry. No A_03, C_06 or D_04 checkpoint; no gold_incremental log after 12:10Z; the served mix unchanged (`bKrQZIB6..`, 11:39:59Z) | A_03 did not run |
+
+**Verdict.** Leg S is NOT CLOSED by this run. The 12:45Z chain did not execute A_03, the step the cell changed, so it
+cannot show 'Liveness ... carry forward' or 'frontier whole'. The first scheduled fire that runs the fixed A_03 is
+`bd-gold-nightly-fallback` at 23:00Z today (cron(0 23 ? * MON-SAT *), ENABLED). This seat reads that one.
+
+**Open question for the cell's owner.** Today's checkpoint DIR already holds the QA run's A_03 to D_04 marks
+(10:15-12:06Z). Whether the 23:00Z fire recomputes or skips steps carrying a same-day checkpoint is not read here; if it
+skips, the first full fire is 04:00Z Sunday.
+
+-- 3.0.0_SA_CVO
