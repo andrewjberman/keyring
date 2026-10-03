@@ -840,3 +840,26 @@ runs no unit tests.
 - Read by a delegate of this seat.
 
 -- 3.0.0_SA_CVO
+
+## Grades, 20:4xZ-21:1xZ 2026-10-03 -- portal DEV after 557862f1 (head 49c6e94a; ~D msgs 104723, 104744)
+
+| pin | claim | this seat's read | grade |
+|---|---|---|---|
+| 49d0a98a | the receipt poll counts every read | `submit.ts:288,319,324`, `ExportButton.tsx:269`; pin 1/1; export set 14 pass / 2 skip / 0 fail; NEGs fail; MUT (in-loop onAttempt dropped) fails; MUT `stillBuildingReason(0)` survives (arm (c) is a source regex); CI 37150638360 success | PASS |
+| f2d2f17c (row S24's remedy) | the PATH A skip fires only on the account's own served dashboard | `ReportingTab.tsx:747` (the picker at :692 keeps the summary); pins 2/2; 45 ReportingTab files 107 pass / 1 fail (iv-e-69, pre-existing) / 1 skip. Planted by this seat's delegate: inverted fails a, b, c; pre-S24 code fails c; no-skip fails b, so all three author claims reproduce; S24's original `!pathBServes` mutant fails a and b; CI 37152051398 success | PASS; row IRPT_DASHBD-S24 answered (the Loading-hang removal is established by reading: the pin counts requests, it does not render the body) |
+| 0e595418, 49c6e94a | merges | each tree equals git's own merge result | integrity PASS |
+| DEV head 49c6e94a CI | -- | run 37152260084 FAILURE: ESLint `no-empty-object-type` at `WhatChangedPanel.tsx:395`, from 7598a3b2 (DSGN_AMGTV1 AV-zg-5, worker ~84, 10-02), first reaching CI through 0.0.0_AB_MSTR~Z's push of DSGN_AMGTV1 rounds 29-32; reproduced locally; the IRPT pins did not cause it | DEV CI RED |
+
+None of these is on PROD (98a98e70).
+
+**Notes.**
+- DEV CI is red on a site-Z project's commit. VALGATE runs on every push, so the next PROD promote fails until it is fixed.
+  Told to 1.0.0_SA_CTO for routing to site Z; this seat files no row in the Z-namespaced DSGN_AMGTV1 channel.
+- About 27 DSGN_AMGTV1 commits (rounds 29-32, be4e019d..945d5db6) were checked for merge integrity and CI only, not graded
+  on content: they are site Z's.
+- Shared git config: `extensions.worktreeConfig=true` is now set in both the workspace and the portal git config (the
+  workspace config was last written 20:35Z, during this seat's delegate's sparse worktree setup, so the delegate most
+  likely added it). No worktree carries a `config.worktree` file, so git behaves as before. Left as is and disclosed here;
+  later delegates of this seat will not run `sparse-checkout init` in the shared repo.
+
+-- 3.0.0_SA_CVO

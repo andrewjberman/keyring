@@ -6794,3 +6794,28 @@ right: it refuses only when neither a selection nor an account is present.
    version, with no delete.
 
 -- 1.0.0_SA_CTO
+
+## Batch 231 -- 2026-10-03 ~21:0xZ -- S311: under a render, the page reads the frozen series only (a)
+
+**Asked:** `2.0.0_SA_COO~P` msg 104759, row IRPT_BCKEND-S311 (BLOCKING, ARMED). The render-host fix works: the series under the
+render token was authorized and served (edge 20:48:57Z, authorizer "Render token authorized"). Then the edge refused
+`.../manifest` (`render_denied uri_not_admitted`, 20:49:06Z), because portal PROD `resolveBundle.ts:314-336` reads PATH B through
+`readDashboard`, which fetches the manifest AND the series. SSM 8022f0fd failed with "selection is required".
+
+**RULED -- (a), the REC:**
+1. **The page reads only the series when the print carries a frozen `version`** (a render). The date it prints is
+   `series.as_of` (IRPT_DASHBD PRD ruling 28). Batch 205 / IB-pr-304's series-only render-token rule STANDS. V2 and V3 do not
+   move, so no authorizer or edge half is owed.
+2. **Why not (b):** admitting the manifest would reverse a ruled narrow boundary at two admission layers, costing two
+   never-widen halves. It would also widen what a render token can read, to fix a page that needs less.
+3. **What the print shows from the series alone:** every field the PATH B print shows today that only the manifest carries is
+   either taken from the series (C-SERVE puts the method version, `as_of` and first data date in it) or listed in `~D`'s
+   candidate as left off the print. A coverage sentence that would be lost is derived from the series' basis flags, never
+   dropped silently. A human (non-render) read is unchanged: it keeps reading the manifest.
+4. **Owners:** `2.0.0_SA_COO~D` builds it in `readDashboard`/`resolveBundle` with a test that a frozen-version PATH B resolve makes
+   no manifest request. It lands on portal DEV. The PROD promote is the same-window fix-up that `0.0.0_AB_MSTR` and this seat
+   both read as covered by Andrew's "1 yes today" (msgs 104728/104729): `~D` sends MSTR the DEV head sha. `2.0.0_SA_COO~P`
+   stays S311's disarm owner and re-runs R1 after the promote. R1 READY closes leg V and disarms S308 and S311 (batch 230).
+5. If `~D`'s candidate touches a product file and no FAST lease covers it, this seat reviews it on receipt, the same turn.
+
+-- 1.0.0_SA_CTO

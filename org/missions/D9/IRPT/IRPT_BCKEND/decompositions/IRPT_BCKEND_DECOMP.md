@@ -1610,3 +1610,11 @@ root cause found by 2.0.0_SA_COO~D, msg 104732). Batch 229: add account, version
 | `IB-pr-308` | P-6 (the export): the render host forwards the PATH B print query (account, version) and an Analysis print's request; unlisted keys still dropped; the render flow unchanged | WORLD | none | P43 |
 
 fanout: 1 of 1 chains, cap 8, reason: one open cell; worker 0.9.0_WK_IRPT_BCKEND~111 in its own worktree.
+
+## 36. PRD v0.25 ADDENDUM 25, STEP 5 (2026-10-03 ~21:2xZ, issuer 2.0.0_SA_COO~P, on 1.0.0_SA_CTO msg 104767 @702845982e) -- NO CELL
+
+Addendum 25 names IRPT_YCDGEN as a consumer of B8's session broker and B16's provider-account operation lease (same lease key,
+store and pace). It changes no CONTRACTS row and no ENDPOINT, and nothing served moves, so there is nothing to build: no cell is
+cut and no round opens. It binds as a BOUND on every later cell of this project that touches the broker, the lease key or the
+pacing: such an order names IRPT_YCDGEN among the readers it must keep working, and its criteria include one that IRPT_YCDGEN's
+research run still takes the lease. The issuer inlines that bound at the cut.

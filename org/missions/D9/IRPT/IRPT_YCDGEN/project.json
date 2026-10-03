@@ -35,8 +35,8 @@
   },
   "coo_lane": "2.0.0_SA_COO~Y",
   "seating_ref": "Andrew's YCharts egress word names 2.0.0_SA_COO~Y and its underlying agents only ('COO~Y and any underlying agents have whitelisted egress to YCharts'); a seat outside that scope making YCharts calls needs his word, so the issuing lane is ~Y. A Tier-1 seat may hold several projects (CLAUDE.md rule 27 seating).",
-  "blocking": "Not blocked at L3. L4 PRD next. Owned dependencies elsewhere: a register family that names kept YCharts answers (X10 / infra/logic/registry, brief F5; added through the naming builders, CLAUDE.md rule 30); the one YCharts session shared with ~Y's served V1 runs (no interleave; pacing bounds per row S233).",
+  "blocking": "Not blocked. L4-R ratified-text half owed by 3.0.0_SA_CVO; then the L4 notifier delivers to 2.0.0_SA_COO~Y for L5/L6. Owned dependencies elsewhere: the YCharts session, its sign-in and the operation lease (IRPT_BCKEND, consumed); retained certified PDFs of each type (IRPT_BCKEND's served runs; a type with no retained PDF waits for ~Y's served run of it); the X10 policy row is this project's round-1 act.",
   "fabric_ruling": "laptop: D9 is LAPTOP as a whole (Andrew-direct 2026-09-10); the seat is a laptop lane.",
-  "phase": "L3 registered 2026-10-03 on the L2 forward endpoint @c3f2fb4bb3, CONFIRMED by Andrew ('all approved', ~20:3xZ). L4 PRD in progress.",
+  "phase": "L3 registered 2026-10-03 @ec37b10ed2 on the L2 endpoint @c3f2fb4bb3, CONFIRMED by Andrew ('all approved', ~20:3xZ). L4 PRD v0.1 written 2026-10-03 (org/missions/D9/IRPT/IRPT_YCDGEN/prd/IRPT_YCDGEN_PRD.md). L4-R: the ratified-text half is owed by 3.0.0_SA_CVO; the brief half is admitted by authorship (CRO wrote the brief).",
   "last_updated": "2026-10-03"
 }
