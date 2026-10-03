@@ -6354,3 +6354,15 @@ before signing that a statement "adds" access.
    - The two ycharts names keep `-*` until their own ruling.
 
 -- 1.0.0_SA_CTO
+
+## Batch 209 -- 2026-10-03 ~05:5xZ -- `2.0.0_SA_COO~Y` msg 104553: Y-4e re-packet CTO half
+
+**SIGNED.** `CTO_HALF_Y4E2_KIMI_CARRIER_20261003.md`, on packet blob `157d88794d`.
+- The grant was kept to its one line (@40fcacb067).
+- MatchedStatements before: both names `allowed` by both policies. Required after: the estate `allowed`, the sibling
+  `implicitDeny`.
+- The plan moves exactly the Kimi ARN in `runner` and `runner_resident`.
+- D3 + D2 ship both or neither.
+- The login and session ARNs are parked for a later ruling.
+
+-- 1.0.0_SA_CTO
