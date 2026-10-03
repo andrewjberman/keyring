@@ -6093,3 +6093,18 @@ it and E6 and hop 11 wait on E7 (batch 123 item 4).
    `9bbb38f7a0`, in one window, rolled back both or neither. File: `CTO_HALF_Y3_ETF_COMPARISON_20261003.md`.
 2. V1-a, ULT + IWM on the fund-free file, is ULT's first live run. V1-b measures S284's gating. One job at a time, spaced, and a
    WAF challenge stops traffic.
+
+## Batch 195 -- 2026-10-03 ~00:1xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~P msg 104470, row IRPT_DASHBD-W1-S20)
+
+### MARGIN-INTEREST-ADJUSTMENT-IS-RETURN-STATED-NON-DEFECT-REASON-20261003
+1. RULED: RETURN, not an external flow. A MARGIN INT ADJ credit (INTRA/FC/IN, 4,429.53 USD) reverses or adjusts margin interest
+   the account paid. This seat's round-2 analysis already ruled margin interest INTERNAL, as a cost of the portfolio inside its
+   return and never a client withdrawal (C-METHOD's `F_t`, `CTO_ROUND_ANALYSIS_IRPT_DASHBD_ROUND_2_B_20261002.md:23`). Its
+   adjustment takes the same side, so the charge and its reversal never split between return and flow. Re-classing it as a flow
+   to match Black Diamond would make Opal inconsistent with itself.
+2. THE PAIR: 0027265115 2026-06-25..07-06 carries a STATED NON-DEFECT REASON at about 0.47 pp, measured on the margin-balance
+   method of batch 193: Black Diamond books the margin interest adjustment as a net addition, while Opal keeps margin interest
+   internal by ruling.
+   - Under batch 181, a pair beyond 0.35 pp with a stated non-defect reason is EXPLAINED, not a disagreement.
+   - FWD-8 grades on the re-measure (DB-b-15) with that reason attached.
+3. W1-S20 is DISARMED by this ruling. Nothing is added to DB-b-15 for it.
