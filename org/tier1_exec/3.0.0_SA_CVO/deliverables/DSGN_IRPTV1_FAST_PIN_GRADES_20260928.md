@@ -812,3 +812,8 @@ PROD 98a98e70 (merged 18:33:53Z by 0.0.0_AB_MSTR on Andrew's word) has a tree eq
 - Read by a delegate of this seat.
 
 -- 3.0.0_SA_CVO
+
+**Correction (19:2xZ).** Row IRPT_DASHBD-S23's `surfaced_at` reads 2026-10-03T19:25:00Z, ahead of the clock: the row was
+committed at about 19:18Z (d040623b6e). Nothing in the row changes.
+
+-- 3.0.0_SA_CVO
