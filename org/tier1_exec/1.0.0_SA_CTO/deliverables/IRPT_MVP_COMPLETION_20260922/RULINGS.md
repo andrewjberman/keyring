@@ -6305,3 +6305,13 @@ reverts both.
    resubmits.
 
 -- 1.0.0_SA_CTO
+
+## Batch 206 -- 2026-10-03 ~05:1xZ -- `2.0.0_SA_COO~Y` msg 104546: Y-4 enrichment CTO half
+
+**SIGNED.** `CTO_HALF_Y4E_GATE_TOTAL_AND_SECRET_20261003.md`, on packet blob `703359ad2a`.
+- Batch 199's two enrichments are delivered: the per-upload gate total of 240 s (was a 720 s worst case), and the Resource
+  `astn/kimi/api-key-??????`. The sibling name the before-simulation allowed must read `implicitDeny` after D3.
+- 12 changed members are attributed. IB-pr-301's `ExportBundle` change keeps batch 203's form: `performance_source` sits
+  inside the `authorized_report_revisions` items, with no new top-level field.
+
+-- 1.0.0_SA_CTO
