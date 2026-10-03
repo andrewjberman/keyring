@@ -55,7 +55,7 @@ IR keeps priority -- return to DSGN_IRPTV1 the tick any of its Next lines unbloc
    Other routes adopt it in their own cells.
 4. E3 -- the state census to zero, the no-permission and error states wired (rows W3-S5, W3-S1, W3-S4; FWD-11).
 5. E5 -- the two project checkers that read red on the accepted tree (the grade's Q2).
-6. E6 -- the old law still standing in the `/frontend-dev` skill and the "silver" mentions (Q4, rows W2-S15, W1-S24).
+6. E6 -- the old law still standing in the `/frontend-dev` skill and the "silver" mentions (Q4, rows W2-S15, W1-S24). SKILL HALF LANDED @91c6cbb6d2 (CLOUD, LOCAL): `.claude/skills/frontend-dev/SKILL.md` checks against the 2026-09-11 law by pointer (portal/CLAUDE.md, DESIGN.md C1-C12), port 5174, C12 errors, clause numbers on a rejection. NEXT: the canvas "silver" comments in portal/src. It needs a per-occurrence read (80 hits / 42 files, many the bronze/silver/gold data tier) and a lease re-arm naming the files it edits.
 
 Each of E1-E3, E5 and E6 needs its own surface in the lease (a re-arm), outside today's `/positioning` arm.
 
