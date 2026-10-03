@@ -77,6 +77,7 @@ order's last status line in the same commit. Report once: verdict, peaks, the li
   path). Pre-cut: `r4.AC3` FAIL (record absent).
 
 <status>pending</status>
+<status>complete</status>
 <round>14</round>
 <slot>~16</slot>
 <fabric>site-z</fabric>
