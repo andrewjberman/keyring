@@ -3165,6 +3165,28 @@
     "spec_asserts": "CTO ruling 3 (a value must carry its claim) and RIV-pv-1: the run's trigger is stamped from the payload; the round-7 COO half act 4: detail.ai reads {status: SKIPPED_EXISTS, run_path: 'scheduled'}.",
     "world_is": "The deployed sweep reaches the AI step (proved by S1), and handler_entry stamps ev['run_path'] = 'scheduled' for the schedule payload, but that stamp reaches detail.ai only when run_for_day returns it (OK, FAILED, SKIPPED_ATTEMPTED). A skipped day's response therefore reads run_path null although the event was stamped 'scheduled' -- the response omits the claim rather than misstating it. The account rows and research_hypotheses_run (written only on OK/FAILED) carry the stamp, so no stored value is wrong.",
     "notes": "Remedy for a later round (one line in run_ai_step: fall back to the stamped run_path when the result carries none). Not a blocker: the organic 2026-10-05 sweep runs a real step whose result carries run_path. disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S17",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-03T00:15Z",
+    "one_line": "G5 writes a phantom EXIT for a zero-share line: INEQ JAR_LN and TXUE ATD_CN, fully sold in the 09-30 window, are carried at 0 shares in the 09-30 report and come back as action 'exit' on 10-01 with shares 0 -> 0, delta 0 and est_price/est_notional NULL -- in the served G5 and in a rebuild at the deployed code alike.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3://opal-data-etfs/rivalfunds/etfs/gold/trade_schedule/date=2026-10-01/ (newest object): 2 exit rows with est_notional NULL (INEQ JAR_LN_Equity, TXUE ATD_CN_Equity)",
+        "C:/tmp/r7measure/g5pin/g5.pkl (r6_g5.py at CLOUD 75ad1e4d2e over the served inputs): rows 246 and 249, window 2026-09-30 -> 2026-10-01, shares_before 0.0, shares_after 0.0, shares_delta 0.0, est_price NaN; the same securities' real exits are rows 206/227 (09-30, priced from prior_valuation: -463,335.60 and -7,669,244.85)",
+        "C:/tmp/r7act/served7_index.html: the 213 trade rows show neither 10-01 row (the page drops a zero-size line), so the defect is in the stored table, not on the face"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "FWD-5 / RFW-D10 acceptance: a full exit is priced from the prior report's valuation, 0 'n/a' notional on exits; a trade row is a change in holdings.",
+    "world_is": "gold_trade_schedule classifies a line present at 0 shares in the prior report and absent (or 0) in the next as an exit, so every full sale yields a second, zero-size exit one report later with no price. G5 consumers that count exits or sum unpriced notional (an exit count, a 'missing price' census) read one phantom per full sale; the page hides them only because it drops zero-size lines.",
+    "notes": "Remedy (a round-8 cell, gold_trade_schedule.py): a line whose shares_before is 0 is no trade, never an exit. Separate from D10's six visible n/a cells, which are the 09-30 trims-to-zero built before x-1 and clear on a G5 rebuild at the deployed code (the issuer's G5 replay act). disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV."
   }
 ]
 ```
