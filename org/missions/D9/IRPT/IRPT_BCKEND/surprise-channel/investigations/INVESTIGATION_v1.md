@@ -16239,3 +16239,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "For 2.0.0_SA_COO~P: if the reason text should read 'inferred, not measured' and the docstring 'inferred', a follow-on cell or an amendment of this order's grant is needed; it would change served text, so it belongs with the D1 build."
 }
 ```
+
+## IRPT_BCKEND-W107-S1 -- IB-pr-304: reporting-read wired for render grants without the requests table; decrypt statement rides the grant; no edge claim or PATH_MANIFEST member to extend
+
+```json
+{
+  "id": "IRPT_BCKEND-W107-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~107",
+  "surfaced_at": "2026-10-03T07:10Z",
+  "one_line": "IB-pr-304: the reporting-read function is wired for render grants with NO IRPT_REQUESTS_TABLE (a prospect render has no account to read on this route), a kms:Decrypt-via-S3 statement rides the grant, the edge carries no route-claim match to extend, and PATH_MANIFEST lists no function members",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/enforce.py lines 580-629: the PROSPECT branch (_resolve_prospect_render) is typed on a stored prospect_scope and 'a prospect-owned report holds NO accounts'; the reporting route's path ids are account_id and which (enforce.py line 308), so a prospect render has no platinum account to read and refuses there. served.render_ports_from_env (_authz/served.py line 1155) installs the third owner port only when IRPT_REQUESTS_TABLE is set; unset, a prospect render refuses fail closed, and the grant/delegate render of a client account is unaffected. The reporting-read role has no DynamoDB grant on the requests table and none was added (the order's grant lists no such statement).",
+      "infra/aws/terraform/investor-reporting/reporting-read/iam.tf: irpt_reporting_read_render_grant carries the performance root's three statements (performance/render_grant.tf): GetObject on firms/*/generations/exr_*/render_grant.json, ListBucket bounded by s3:prefix to that shape, and kms:Decrypt on core's kms_key_arn conditioned on kms:ViaService s3 and the evidence-bucket ARN encryption context. The decrypt statement is outside the order's literal 'GetObject' wording; without it every grant read is AccessDenied (performance/render_grant.tf comment, window 18); its reach is bounded by the GetObject set.",
+      "infra/aws/lambda-edge/auth-validator-edge/render_auth.mjs and index.mjs: no code matches a render token's route claims to the request path (isRenderAdmissibleUri is a URI-shape test only; the file's own comment says id-match is V2's job, done in the Enforcer), so no matching claim was added.",
+      "infra/aws/lambda/investor-reporting/PATH_MANIFEST.json: contains no _render_identity member and no reporting-read-lambda entry (a path inventory of ARNs and keys), so nothing was added there."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IB-pr-304 items 2 and 3: wire IRPT_REQUESTS_TABLE or file a row saying why the reporting route never serves a prospect; grant s3:GetObject on the render-grant objects; add members to PATH_MANIFEST if it lists them; add the matching route claim if the edge matches claims.",
+  "world_is": "Measured at the worker's edit: IB39-1-AC1, AC2 and AC3 read PASS. The requests table is deliberately unset, the grant policy carries a KMS decrypt-via-S3 statement beside GetObject and ListBucket, and neither the edge nor PATH_MANIFEST had anything to extend. Nothing is applied or published; the edge publish and the function apply ride P-2's window. terraform fmt -check flags one pre-existing alignment in iam.tf (the ReadThePlatinumReportingPrefixOnly statement), left unchanged.",
+  "notes": "For 2.0.0_SA_COO~P: if a prospect render must be served on the reporting route, a follow-on cell sets IRPT_REQUESTS_TABLE and a read grant on the requests table as the performance root does. Owner 2.0.0_SA_COO~P."
+}
+```
