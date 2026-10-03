@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-03T02:31:20.064502+00:00
-**Status:** HELD-SOVEREIGN-GATED -- gate: sovereign / Andrew option A: the attended YCharts sign-in that replaces the EVICTED session (row S288; ycharts/session/current fence 23) (held since 2026-10-03T07:04:24.583873+00:00)
+**Status:** OPEN
 **Deploy:** Y-4 the check gate: the resident (st16 -> st17), irpt-ycharts-generate at 828c37c6f7, and the runner role's read of the estate Kimi key (ledger opened 02:3xZ, AFTER the U1 upload: the first open was refused on an invalid leg kind and the build proceeded -- recorded, not hidden)
 **Authored by:** 2.0.0_SA_COO~Y
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -28,3 +28,4 @@
 - 20261003T030345Z LEG D1 closed: safe-apply rc=0 of y4_d1.tfplan (code only, s3_object_version w2yfeweDcOFLnVFLFidK1_VCv5EFPCmb); get-function-configurat
 - 20261003T030600Z LEG D2 closed: head-object script VersionId uyayvbDZy_BZXx5rUoshEVXp2knZ6jeq, tar HvfsVMjjD9_YdfKgEXXevpjBDiR321Ux; Y4/install_fetch_an
 - 20261003T070424Z HELD-SOVEREIGN-GATED gate=sovereign/Andrew option A: the attended YCharts sign-in that replaces the EVICTED session 
+- 20261003T163630Z HOLD RELEASED -> OPEN

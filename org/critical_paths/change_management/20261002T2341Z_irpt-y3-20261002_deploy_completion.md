@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-02T23:41:35.136765+00:00
-**Status:** HELD-SOVEREIGN-GATED -- gate: sovereign / Andrew option A: the attended YCharts sign-in that replaces the EVICTED session (row S288; ycharts/session/current fence 23) (held since 2026-10-03T07:04:24.241310+00:00)
+**Status:** OPEN
 **Deploy:** Y-3 (ruling 4) + S284 journal: the resident (st14 -> st15) and irpt-ycharts-generate at 9bbb38f7a0 -- a named ETF as a comparison key
 **Authored by:** 2.0.0_SA_COO~Y
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -26,3 +26,4 @@
 - 20261003T000638Z LEG D2 closed: 00:05Z via SSM (head-object printed ELQvAnfn..; host fetched by key, sha256 1a282fd4.. verified; install rc=0): running 
 - 20261003T000955Z LEG D1 closed: safe-apply ~00:09Z of targeted plan Y3/plan_d1_y3.txt (code only): Modifications complete, Apply complete 0/1/0; read ba
 - 20261003T070424Z HELD-SOVEREIGN-GATED gate=sovereign/Andrew option A: the attended YCharts sign-in that replaces the EVICTED session 
+- 20261003T163630Z HOLD RELEASED -> OPEN

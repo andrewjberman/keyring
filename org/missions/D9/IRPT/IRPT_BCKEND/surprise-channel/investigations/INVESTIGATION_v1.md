@@ -16708,3 +16708,33 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "The window's ledger leg A6 closes the served half."
 }
 ```
+
+
+## IRPT_BCKEND-S306 -- DISARM of IRPT_BCKEND-S288: the stored YCharts session is LIVE again (Andrew's HAR seeded a host capture, no sign-in)
+
+```json
+{
+  "id": "IRPT_BCKEND-S306",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-03T16:36:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARM of IRPT_BCKEND-S288 by its disarm owner: the stored YCharts session is LIVE again -- Andrew's own fresh session (his HAR, 16:16Z) seeded a host capture with no sign-in, persisted at fence 25 as an EC2 capture of the enrolled user, and one read through the resident's runtime answered 200 LIVE",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/SIGNIN_HAR/H1_LEG_H_OUTPUT_20261003.txt: lease fence 25; /dashboard/ 200; probe authenticated 200 LIVE, identity PASS; persisted fence 25 over 23; HAR_SEED_VERDICT=PERSISTED",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/SIGNIN_HAR/V1_LEG_P_READ_20261003.txt: GET /custom_pdf_reports/generate/14141822 200 application/json, no login, no captcha, waf_action None; PROBE_VERDICT=LIVE",
+      "ledger irpt-signin-har-20261003 CLOSED 4/4"
+    ]
+  },
+  "dismissal_reason": "S288's hazard (every vendor request 403, no Analysis job can reach READY) is gone: the stored session authenticates from the host. The class stays open as S233's: one YCharts seat per account, and the host now shares Andrew's browser session, so a logout or a new sign-in by that login elsewhere ends it.",
+  "spec_asserts": "S288 remedy: a session re-capture (option A at Andrew's time) before any further Analysis run.",
+  "world_is": "MEASURED 16:33-16:35Z: re-captured without a sign-in, from Andrew-supplied fresh session cookies (Andrew-direct via 0.0.0_AB_MSTR msgs 104639/104640); option A was not needed.",
+  "notes": "The resident's own failed refresh at 00:31Z (AUTH_FAILED:NO_AUTHENTICATED_PROBE) stays undiagnosed; it sits under S230's class."
+}
+```
