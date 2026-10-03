@@ -1374,3 +1374,32 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "INERT: the class cell is deployed (A_03 wTaLoeFXO4.., 10:00Z) and its QA run (10:02Z) rebuilds 10-01 before the next prices file. If the cell act stops in its refusal branch, the disarm owner 2.0.0_SA_COO~M holds this path before Sunday 00:00Z (reserved concurrency 0 on bd-gold-trigger, read back), not only the two rules. Any later BD gold hold names three paths."
 }
 ```
+
+
+## MDPF_SECCLASS-S22 -- the BD runner boots from at least five paths (the 49F dispatcher among them); one ran the old A_03 during the S18 hold
+
+```json
+{
+  "id": "MDPF_SECCLASS-S22",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-03T12:50:00Z",
+  "one_line": "Row S21 undercounted: the BD gold runner (i-01003b035d2988dfb) runs the BD gold chain on EVERY boot, and at least five paths boot it -- the two EventBridge rules, the S3 prices notification (S21), and the 49F dispatcher advi-49f-gold-dispatch on two triggers (S3 Schwab completeness markers on opal-data-assets; EventBridge Scheduler advi-49f-gold-floor, cron(45 12 * * ? *) UTC, run_class production). One of them ran the OLD A_03 during the S18 hold.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CloudTrail StartInstances i-01003b035d2988dfb 2026-10-03T09:47:03Z by assumed-role advi-49f-gold-dispatch-role/advi-49f-gold-dispatch; /aws/lambda/advi-49f-gold-dispatch 09:47:01-09:47:28Z: 'accelerator fire on marker key=schwab/08335338/meta/complete/date%3D2026-10-02.json', 'host i-01003b035d2988dfb state=stopped -- starting (ensure-running duty)', 'dispatched: doc=advi-49f-chain-dispatch command_id=834d36d6-...'",
+      "logs/gold-layer/gold_incremental_2026-10-03_20261003_121003.log: '[09:47:17Z] BD GOLD LAYER RUNNER STARTED (mode: incremental)', S_00 then PHASE_A1 with the pre-cell A_03 ('confirmed open by alloc: 0', 'capped: 4,467'), cut off in Step 3 (next line is the 10:02:29Z boot of the QA run)",
+      "no served or cube write from it: gold/timeseries/positions_cube/2026-09-30 pre-QA version 04:13:24Z; platinum/firm/mix_summary.json 07:58:18Z (restore) until 11:39:59Z (QA run)",
+      "lambda get-policy advi-49f-gold-dispatch: invoke permitted to scheduler.amazonaws.com (schedule advi-49f-gold-floor, ENABLED, cron(45 12 * * ? *) UTC) and s3.amazonaws.com (opal-data-assets); infra/aws/terraform/bd-pipeline/bd-49f-interim.tf"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO batch 219 / S18 restore leg 0: no BD gold fire runs until the class cell lands; a hold names every path that boots the runner.",
+  "world_is": "Disabling the two rules held two of at least five paths. The S18 restore survived because the 09:47Z run stopped before writing (why it stopped is not read). Not enumerated: any other actor with ec2:StartInstances on the runner.",
+  "notes": "INERT now: the cell is live (A_03 wTaLoeFXO4.., QA run 12:10Z exit 0, frontier whole), so any boot runs the fixed code against a correct 10-01 cube. Lesson for the next BD gold hold: hold the HOST (the runner's boot), not the rules -- e.g. a stop-and-deny on StartInstances for the hold's duration, or reserved concurrency 0 on BOTH bd-gold-trigger and advi-49f-gold-dispatch -- under its own half, since the 49F chain shares the host. Owner of the 49F dispatcher: its producer lane (not read)."
+}
+```
