@@ -62,10 +62,21 @@ FAIL (no file).
 - **AWS:** none.
 - **Refusal clause.** Any edit to `ExportReceipt.schema.json`, or to the server's code, is a defect: stop and file a row. No client
   name in any record.
+- **ISSUER RULING (2026-10-03 ~07:0xZ, on row W108-S1, ARMED).**
+  - `_contracts/tests/test_seam_paired.py`'s positive control for `export-download` builds the response's `data` as a slice of
+    the ExportReceipt valid fixture. That slice can never carry the response-only `download_route` url and expires_at, or
+    `sha256` and `byte_length`, which batch 211 requires and forbids in the receipt. So the control turns red by design, not as a
+    regression.
+  - The file is GRANTED for that one control: give `export-download` a response-shaped valid document by supplementing the
+    receipt slice with the response-only fields (a well-formed https url, a Z date-time, 64-hex sha256, a non-negative
+    byte_length).
+  - The negative control must still fire. No other operation's control may move.
+  - The `_contracts` suite must read 0 failed. W108-S1 is disarmed by this ruling.
 
 <paths>
 docs/contracts/investor-reporting/v1/responses/export-download.response.schema.json
 infra/aws/lambda/investor-reporting/export/tests/test_download_response_contract.py
+infra/aws/lambda/investor-reporting/_contracts/tests/test_seam_paired.py
 org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~108/
 org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
