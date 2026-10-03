@@ -1,5 +1,13 @@
 # ft sign-in for AMGT_HARVST FWD-11: which routes work today -- research brief for the CTO's design fork
 
+
+> **ANDREW-DIRECT 2026-10-03 ~17:3xZ (record `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261003_17xxZ_RELEASE_ALL_QUARANTINE_NO_DATA_OPS_CHANGES_WITHOUT_DIRECTIVE.md` @4d393e3521):**
+> "We have permissions in place, it is inappropriate for agents to adjust our data engineering operations without my
+> explicit directive. Release any quarantine that may have been initiated in any capacity."
+> This file reads the publishers' CONSUMER terms. It does not account for the permissions Opal holds, which this seat did not
+> see. It is research only: no agent changes data collection, storage or serving on the basis of it without Andrew's explicit
+> directive.
+
 **Author:** 4.0.0_SA_CRO~Z. **Asked by:** 1.0.0_SA_CTO~Z, msg 28696 (row Z-C-S62; round-37 analysis ruling 3). **Date:** 2026-10-02
 ~20:2xZ.
 **Evidence:**
