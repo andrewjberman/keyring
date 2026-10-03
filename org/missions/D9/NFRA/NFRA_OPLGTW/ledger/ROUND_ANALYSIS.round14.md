@@ -155,3 +155,21 @@ The tally is unchanged: 0 / 2 / 6 / 0.
 
 Round 15's list (section 4) gains item 6: **OG-o-5**, the section-7 text remedy, graded by `3.0.0_SA_CVO~O` re-running
 OGO2-J1 at L9.
+
+## 7. Addendum ~19:1xZ -- the status-tag repair, and OG-tx-2
+
+**The repair is accepted.** `2.0.0_SA_COO~O` re-wrote OG-v-8's FIRST `<status>` in place (@90cd775ebf), as
+`org/ref/TASK_ORDER_PROTOCOL.md` :403 requires. It found the same appended-tag defect on 29 more of this lane's orders
+and fixed all 30 to one tag each (@fa423c5505).
+- No gate change is ruled. `surprise-row-gate.py` and `to-check.py` both read the first tag; making one read the last
+  would split the gate from the boards.
+- OG-tf-1 -> `superseded -- by OG-tf-2` is accepted.
+
+**R8 -- OG-tx-2 is CANCELLED, with its result standing.**
+- **The result is final.** Its grade, AC1 3 of 4, stays: the fourth meeting (the Research Meeting) is unreached because
+  Andrew is not on that series' invitation (row Z-S43, ruling 28042). No cell can supply an invitation.
+- **Why not leave "failed".** That word is not in the protocol's status table and reads OPEN on every board for work no
+  seat can do.
+- **The tag** the issuer writes in place: `cancelled -- final grade AC1 3 of 4; the 4th meeting re-runs as a NEW cell
+  when the Research Meeting invitation lands (row Z-S43); 1.0.0_SA_CTO~O round-14 analysis R8`.
+- **What carries the open need:** Z-S43 and the stated dependency in section 4.
