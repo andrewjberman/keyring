@@ -1628,3 +1628,33 @@ AC3 = `round29/checks/battery29.sh` with no skip.
 **FWD-26 presets: NOT cut.** The deployed API ignores `?days=` (30/90/365 payloads are byte-identical; round30/fixtures/windows.*.json),
 and RESAPP an-7 is signed @e1c310a414 but not deployed. The presets cut when COO~Z reports c9/c10 YES on deployed (CTO msg 28825).
 **Fan-out:** 2 of 2 chains, disjoint files. **Risk:** LOCAL. **Rule 24:** one row per cell.
+
+## v31 -- ROUND 31 (issuer, 2026-10-03 ~03:0xZ) -- ROLLING WINDOWS + ONE NEWS ITEM AT REST (PRD v0.13 @e398ee2294, ADMITTED)
+
+**Rectangle:** the round-30 close's open list (ROUND30_CLOSE.md section 4, @19b4ced775):
+- FWD-26 presets. The routes now serve every window on the deployed opal-amgt-scoped-api (code KQSA62c3, COO~Z msgs 28860 and
+  28874). Chatter `?days=30|90|365` serves window_days, window_start and window_end (plus window_note on 365). Trending/price
+  `?days=30` serves 94 rows; `?days=90|365` serve 0 rows with window_reason.
+- SAUX-15 first viewport: one news item at rest. The round-30 close walk measured the underline at y=917 (the served feed grew from 1
+  to 69 items; CTO msg 28869).
+**Base:** portal 2defab11, the round-30 candidate (it carries round 29). Its DEV push waits on Andrew's word at MSTR~Z.
+
+| cell | serves | owned files | worker |
+|---|---|---|---|
+| `AV-zi-1` ROLLING WINDOWS | FWD-26 (SAUX-21, 27, 28); FWD-21 and FWD-22 read through the window | `api/endpoints/amgt-lead-panel.ts`, `hooks/useLeadPanelApi.ts`, `constants.ts`, `types.ts` (additive), `components/LeadPanel.tsx`, `components/ChatterBubbles.tsx`, `components/PriceBars.tsx`, two harnesses (follow-only) | ~88 |
+| `AV-zi-2` ONE NEWS ITEM AT REST | SAUX-15 / FWD-12 / FWD-27 first viewport | `components/HeaderBrief.tsx` | ~89 |
+
+**Checks** (issuer). Each FAILS at base 2defab11, and each PLANTED arm passes:
+- `round31/checks/presets/presets.cjs` reads 1/4 and `windowread.cjs` reads 1/4 at base.
+- `round31/checks/viewport/feedrest.cjs` reads 3/4 at base. A green arm with `FEED_OPEN_AT_REST = 1` planted through CHECK_SRC_OVERRIDE
+  reads 4/4.
+AC3 of each order is `round29/checks/battery29.sh` with no skip.
+**Issuer amendment to a round-29 check, landed with this issuance:** `leadprice/leadface.cjs` AMENDMENT 1. FWD-26 retires the month
+cursor, so the Chatter face hands ChatterBubbles no onMonthChange, and the face reads the served 30-day window fixture. At base the
+amended check reads 2/3, failing only on the cursor clause.
+**Kept on purpose:** ChatterBubbles keeps drawing a served month, with its cursor, for a caller that hands it `month` and
+`onMonthChange`, because round-29 `collage.cjs` and `tone.cjs` and round-30 `chrome.cjs` render it that way. The page no longer does.
+A later round may retire month mode together with those checks.
+**Fan-out:** 2 of 2 chains, disjoint files. **Risk:** LOCAL. **Rule 24:** one row per cell.
+**Workers:** the Opus subagent pool returned a weekly rate limit at ~02:2xZ, so the round-31 check agent died before writing. The
+issuer wrote the checks, and the two workers run on the Sonnet model override.
