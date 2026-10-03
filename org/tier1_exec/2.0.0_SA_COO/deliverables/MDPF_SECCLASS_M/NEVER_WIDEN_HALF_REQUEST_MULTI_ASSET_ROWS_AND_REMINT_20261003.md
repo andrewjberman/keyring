@@ -61,9 +61,11 @@ CTO msg 104495 measured the same). The Investor Reporting readers were on PROD v
      class, sub class and `classified_by`; sets `multi_asset`, the sub class, `classified_by` seed, nothing else). The seed
      script cannot move them: its merge rule returns a CONFLICT where table and module disagree, and its caller refuses.
      **DRY RUN 7 of 7 MOVE, 0 REFUSED** (consistent get-item, 02:5xZ).
-  2. The 13 ticker WRITES -- the seed module (`_shared/etf_classification.py`, ETF_CLASSIFICATIONS / ETF_SUB_ASSET_CLASS
-     entries) and `seed-etf-classifications.py`, rows absent so no conflict; dry run owed (it edits the shared module, in a
-     worktree at the act).
+  2. The 13 ticker WRITES -- `R9_CHECKS/add_multi_asset_seed_rows.py` adds all 20 tickers (the 7 moved ones too, so the module
+     stays the one source) to `_shared/etf_classification.py` (class, sub class, sector = sub, name, style), then
+     `seed-etf-classifications.py`. **DRY RUN 03:37Z on a scratch copy of the module (the shared file untouched):** 197
+     tickers, 177 already correct, 20 to write, 1 preserved (VNQ style); the 7 move tickers read CONFLICT (14 fields), which
+     blocks the run -- exactly the state step 1 clears, so the seed runs AFTER the moves and then reads 0 conflicts.
   3. The 12 `CUSIP:` WRITES -- `R7_CHECKS/write_cusip_rows.py` (refuses a non-ASCII name, row S15). Its vocabulary is read
      from the live table, which admits `multi_asset` only once a row carries it, so it runs AFTER step 1.
 - **The readers on PROD:** read above; the Holdings producer admits `multi_asset` at CLOUD (daaef69b9d) and ships with item 2.
