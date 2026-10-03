@@ -47,7 +47,7 @@ IR keeps priority -- return to DSGN_IRPTV1 the tick any of its Next lines unbloc
    rung in both worlds; every interactive role's (ground, ink) state pairs clear the contrast bar in the state it is actually
    in. Measure first (the page rendered on 5174 and read), then fix in the surface. The two contrast rulings that bound
    FWD-13 (rows W2-S8, W1-S11) are this seat's, made with the contrast table in hand (batch 80 item 10).
-2. E1 -- the Global RSI bands onto one hue (row S3; FWD-3).
+2. E1 -- the Global RSI bands onto one hue (row S3; FWD-3). HELD AT ANDREW (card to 0.0.0_AB_MSTR 2026-10-03T06:18Z): Andrew-direct 2026-09-14 ~19:0xZ kept /market's original sentiment gradient ("it was changed to a Blue Gradient, that is not necessary"; portal 45aaf58a; the row predates it), and E1 would put /market's RSI bars on that same blue ramp. BUILT, not landed: the patch `deliverables/2.0.0_SA_COO~D/e1/e1-rsi-ramp.diff` (RSIBars gradients and RSIModal bands, zones and guide lines on `--ramp-1..5`; the modal declares `dark-band`) and its pin `e1/rsi-ramp.test.ts.txt`. Yes -> apply and land; no -> E1 closes. Looked at on 5174 before the hold: the bars read the ramp on the band. Found while looking: the 70D/90D marker labels overlap the bars, a layout item outside E1.
 3. ~~E2 -- the page-terminator clause in `portal/DESIGN.md` (row W1-S29; FWD-10)~~ WRITTEN: DESIGN.md C10 gains the PAGE END
    (portal c9d303db on DEV after PROMOTED 104493; lease re-armed with portal/DESIGN.md). /positioning ADOPTED it (portal 8526dacb,
    origin DEV): shared/PageEnd.tsx after the Holdings section. Signed-in walk 20261003T013711Z reads "End of Positioning. Data as
