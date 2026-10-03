@@ -52,7 +52,18 @@ elif ARM == "inversion":
     print("REQUIRED:", len(need), "MISSING:", len(miss), miss)
     ok = bool(TEXT) and not miss
     print("VERDICT:", "INVERSION-CARRIED" if ok else "INVERSION-MISSING")
+elif ARM in ("", "all"):
+    # Round 3 E5 (the round-2 grade's Q2): run bare -- as an earlier order ran it -- the checker grades BOTH arms and
+    # answers once, instead of a usage error that reads red on the accepted contract.
+    import subprocess
+    verdicts = {}
+    for arm in ("canon", "inversion"):
+        out = subprocess.run([sys.executable, __file__, arm, PATH], capture_output=True, text=True).stdout
+        verdicts[arm] = (re.findall(r"VERDICT: (\S+)", out) or ["NONE"])[-1]
+        print("ARM", arm, "->", verdicts[arm])
+    ok = verdicts == {"canon": "CANON-CLAUSE-ORDERED", "inversion": "INVERSION-CARRIED"}
+    print("VERDICT:", "CONTRACT-CARRIED" if ok else "CONTRACT-MISSING")
 else:
-    print("usage: rb7-contract-check.py canon|inversion [path]")
+    print("usage: rb7-contract-check.py [canon|inversion|all] [path]")
     print("VERDICT: USAGE-ERROR")
     sys.exit(2)

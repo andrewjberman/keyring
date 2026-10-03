@@ -54,7 +54,7 @@ IR keeps priority -- return to DSGN_IRPTV1 the tick any of its Next lines unbloc
    of October 1st, 2026, 5:00p ET.", the footers' own format, with no format:dates finding. The clause names `typography.footnote`.
    Other routes adopt it in their own cells.
 4. E3 -- the state census to zero, the no-permission and error states wired (rows W3-S5, W3-S1, W3-S4; FWD-11).
-5. E5 -- the two project checkers that read red on the accepted tree (the grade's Q2).
+5. ~~E5 -- the two project checkers that read red on the accepted tree (the grade's Q2)~~ LANDED 06:5xZ (CLOUD, LOCAL). `task-orders/rb4-ramp-check.py` grades the portal-wide sentiment tokens and prints the /market `[data-sentiment-original]` block as EXCEPTED (Andrew-direct 2026-09-14; CTO batch 215): ONE-HUE-RAMPED on the accepted tree, and RAINBOW-REMAINS on a control with one rainbow token put back portal-wide. `rb7-contract-check.py` run bare grades both arms: CONTRACT-CARRIED; CONTRACT-MISSING on an absent file.
 6. ~~E6 -- the old law in the `/frontend-dev` skill and the "silver" mentions (Q4, rows W2-S15, W1-S24)~~ LANDED: the skill at CLOUD 91c6cbb6d2 (LOCAL); the canvas comments in 28 portal files at portal `201bfe69` (origin DEV, ls-remote 06:4xZ). Left by reading each: the data tier, the Silver commodity, the brand palette's named silver, and Panel.tsx's history. Parked: renaming the `PRIMARY_ON_SILVER_DROPDOWN_CLASS` export (a code change across its importers and tests; owner 2.0.0_SA_COO~D, un-parks with any edit to PageSurfaceControl).
 
 Each of E1-E3, E5 and E6 needs its own surface in the lease (a re-arm), outside today's `/positioning` arm.
