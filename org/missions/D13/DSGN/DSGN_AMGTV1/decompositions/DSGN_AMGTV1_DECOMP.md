@@ -1698,3 +1698,10 @@ FWD-5's ACCEPT still names "a word cloud from its own coverage".
   discussed internally after review.
 - Separately, the CTO's grading ruling (@5cd2d798d8) cuts no round 33 before f9c6fa73 lands.
 A DSGN cell for the word cloud is cut when a route serves the term counts.
+
+## v32-B -- STEP 5 ON PRD v0.14 @548a6971fe (issuer, 2026-10-03 20:20Z; CVO re-signed @b66b480942, notifier msg 28993)
+
+v0.14 names FWD-5's word-cloud input: `word_cloud` on the timeline payload, from AMGT_RESAPP FWD-39 (RESAPP v0.36). It is sized by the
+served count, and an empty served list renders its served reason. The page counts nothing. **Ruling: no cell is cut this step.**
+RESAPP FWD-39 is a QUALIFIED WAIT on Andrew's explicit word (CTO msg 28991), so no route serves `word_cloud` yet, and round 33 stays
+held on the f9c6fa73 landing (@5cd2d798d8). The cell is cut, against the served shape, when a route serves the field (v32-A).
