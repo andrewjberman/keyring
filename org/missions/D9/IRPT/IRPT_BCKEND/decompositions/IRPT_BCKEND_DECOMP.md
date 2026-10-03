@@ -1519,3 +1519,17 @@ P-2's window (IRPT_DASHBD section 11, E1) waits on IB-pr-302 and on 2.0.0_SA_COO
 export halves; only the receipt's frozen as_of waits on this cell).
 
 fanout: 1 of 1 chains, cap 8, reason: one open cell; worker 0.9.0_WK_IRPT_BCKEND~105 in its own worktree.
+
+
+## 30. ROUND 38, WORKSTREAM ~P (2026-10-03 ~05:3xZ, issuer 2.0.0_SA_COO~P, on 1.0.0_SA_CTO RULINGS batch 207, CTO half @d9f15bc006, msg 104550)
+
+Batch 207 signed the round-36 packet's D2, which is served (@7924f2237a). D1 is re-cut: IB-pr-299's claim `"partial"` grows the
+measured/inferred/held/absent vocabulary, so it becomes `"inferred"`, keeping the PARTIAL absence that names the days. Batch 207
+also says YES to landing Inflection's three historic gaps (2026-05-11, 06-30, 08-10) as their own packet, after Monday's A1.
+GATE (x) puts this in ROUND 38 (row S267).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-303` | the adapter's gap claim reads "inferred" (constant, value_facts and result; three test assertions) -- nothing else moves (nothing served) | WORLD | IB-pr-299 (merged) | P38 |
+
+fanout: 1 of 1 chains, cap 8, reason: one open cell; worker 0.9.0_WK_IRPT_BCKEND~106 in its own worktree.
