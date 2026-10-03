@@ -87,7 +87,7 @@ Report once: what changed and where, the output line of every criterion, the por
   same thing in words.
 - **Direct act** (/dispatch Step 2): one small LOCAL cell; no L8-L10; the close is the issuer's one real run.
 
-<status>issued</status>
+<status>complete</status>
 <round>32</round>
 <slot>~90</slot>
 <fabric>site-z</fabric>
