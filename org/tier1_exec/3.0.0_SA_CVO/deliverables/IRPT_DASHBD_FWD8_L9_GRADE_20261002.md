@@ -45,3 +45,40 @@ tolerance it rules (0.35 pp) is unaffected, and the pairs owing a stated reason 
 account's income sign, the largest) is a defect to fix and re-measure, never accept.
 
 -- 3.0.0_SA_CVO
+
+## Round 8 re-grade, 02:xZ 2026-10-03 -- FWD-8 on method_version 2 (~P msg 104505, DB-b-15 merged @ce1d4a0530)
+
+**Verdict: ACCEPT MET ON THE METHOD; NOT REALIZED AS SERVED.** Method version 2 is on CLOUD and was measured locally. The
+served gold is still version 1, and the record says nothing is served (`IRPT_DASHBD_ROUND8_B_DRAIN_END_20261003.md:53-60`).
+FWD-8 is "a return figure a person can defend". The figure served today for 0027265115 06-25..07-06 is still the
+1.21 pp one, and its cause (C-VALUE leaving out the margin balance) is an Opal defect under batch 181. The grade
+realizes when the P-2 packet serves version 2.
+
+| clause | this seat's read | result |
+|---|---|---|
+| tolerance | 0.35 pp, ruled by batch 181 under PRD ruling 11 | ruled |
+| within | `TIEOUT_49F_BLACKDIAMOND_R8.json`: 10 of 14 at or under 0.35 pp; max 0.4998 (was 1.2130) | 10 of 14 |
+| beyond, with reasons | 4 of 4 carry one (below); each reason re-read against Black Diamond's raw response (`~1/RAW_BD_PERIOD_<acct>.sanitised.json.gz`) | MET |
+| defects fixed and re-measured | S22's cause was the missing margin balance, not the income sign this seat inferred at round 4. Fixed in the producer (DB-b-15), re-measured, not served | fixed on CLOUD; NOT SERVED |
+| label and guard | unchanged since round 4 | MET on earlier reads |
+
+**The four pairs beyond 0.35 pp, re-derived:**
+
+| pair | stated reason | this seat's read | holds |
+|---|---|---|---|
+| 0027265115 06-25..07-06, 0.4738 | MARGIN INT ADJ is return (batch 195); BD books it as a flow | Read from Schwab silver (`opal-data-assets/schwab/08335338/silver/dim_balance/`): 06-24 965,341.13 + 4,816.69, and 07-06 999,065.64 - 2,185.99. Equity ratio 0.027544 equals the producer's figure. BD 0.022806; difference 0.4738 pp. BD value minus accrual minus equity = 0.00 at both endpoints. BD netAdditions 4,402.22 | YES |
+| 0076459710 08-11..08-19, 0.4998 | BD accrual outside Opal (batch 193) | BD accrual 28.88 -> 6,051.28 = +6,022.40 = 0.4999 pp of BMV; residual 0.0001 | YES |
+| 0076459710 08-21..09-09, 0.4608 | the same, reversing | accrual -5,766.11 = 0.4501 pp; income 5,659.35 received in this window; residual 0.0107 | YES |
+| 0084073310 03-20..08-04, 0.4045 | BD net of a fee; Opal gross (C-FEERAIL; FWD-8's own "before advisory fees") | fees 3,020.96 = 0.3961 pp of BMV; EMV/BMV - 1 = 0.239661 = BD's reported return, so the fee sits inside BD's return; residual 0.0084 | YES |
+
+**Ruling text.** Batch 193's grounding says that, with the margin balance added, "the three pairs beyond 0.35 pp fall to
+0.0044, 0.0264 and 0.0493 pp". The 0.0044 is the counterfactual with the 4,429.53 credit also treated as a flow. The
+margin balance alone gives 0.4738. Batch 195 states the pair correctly at about 0.47. The other two figures match R8.
+
+**What closes FWD-8.** The P-2 packet serves method version 2: producer re-pin, landed gold rewritten, method row. Then
+this seat reads one pair from served gold (`method_version` = 2 on the rows) and reproduces it.
+
+**Limits.** One pair was re-derived from silver; the other three were checked on the Black Diamond side only. Opal's
+per-day flows were not re-read. Rows W2-S1..S3 are read at the compile.
+
+-- 3.0.0_SA_CVO
