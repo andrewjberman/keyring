@@ -1,0 +1,31 @@
+ssm 9f1a9d15-85ea-4bec-9fc7-44b11df030cd Success rc 0
+install script sha256 verified on the host at 2026-10-03T22:13:09Z
+before: active=active root=/opt/irpt-resident/a6f6e7165e-st18 library=857d90b81960d69a
+package SHA256SUMS OK (251 members)
+host members 3678 manifest_sha 6d2acf0653fc7cbd5335ca2f9ec975fc53ca6d5b274d00aeee52e2fdf4f51472
+queue visible/in-flight before the library swap: 0 0
+factory OK: ['assembly', 'queue_url', 'sqs'] enrolled 1276035
+queue visible/in-flight: 0 0
+resident service active; verify installed digests and the real browser-to-report trace
+install a163441fb0-st19 rc=0
+active=active polls_30s=2 tracebacks_30s=0
+final active: active
+MainPID=517056
+NRestarts=0
+ExecStart={ path=/usr/bin/python3.12 ; argv[]=/usr/bin/python3.12 /opt/irpt-resident/a163441fb0-st19/ycharts/generate/resident_main.py --factory resident_installed:build_resident_runtime ; ignore_erro
+ActiveEnterTimestamp=Sat 2026-10-03 22:13:37 UTC
+2026-10-03T22:13:35+0000 ip-172-31-87-2.ec2.internal python3.12[485178]: IRPT_RESIDENT_POLL handled=0
+2026-10-03T22:13:35+0000 ip-172-31-87-2.ec2.internal systemd[1]: irpt-analysis-resident.service: Deactivated successfully.
+2026-10-03T22:13:35+0000 ip-172-31-87-2.ec2.internal systemd[1]: Stopped irpt-analysis-resident.service - IRPT resident Analysis worker.
+2026-10-03T22:13:35+0000 ip-172-31-87-2.ec2.internal systemd[1]: irpt-analysis-resident.service: Consumed 2min 4.718s CPU time.
+2026-10-03T22:13:37+0000 ip-172-31-87-2.ec2.internal systemd[1]: Started irpt-analysis-resident.service - IRPT resident Analysis worker.
+2026-10-03T22:13:57+0000 ip-172-31-87-2.ec2.internal python3.12[517056]: IRPT_RESIDENT_POLL handled=0
+running root /opt/irpt-resident/a163441fb0-st19
+running current_authority 5291b3be7e0006ade14db553caa78aa74fc6c91f638e63077a1be15607f16dec allowedFirmIds mentions 6
+running worker 92f88338888a83e569b20f4142e3fbb4d4ac008980da45ba3e1564923f8a5169 PERMANENT_AUTHORITY_REFUSALS mentions 3
+running reader 0ec4a717f2aa2c127df62f5bf0f0f3f56164359875b992620b2006e3d4af9557 host library 857d90b81960d69a7a6700be6fffe33d86628694aef95f8cfb64aca7a82cb839
+install script rc=0 at 2026-10-03T22:14:02Z
+V1 running root /opt/irpt-resident/a163441fb0-st19
+V1 st19 portfolio 1e5c24176baa8960 value=named mentions 3 enforce f5681952cb0901f4 reporting_read mentions 3
+V1 unit active since Sat 2026-10-03 22:13:37 UTC; library 857d90b81960d69a
+

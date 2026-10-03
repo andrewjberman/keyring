@@ -1,0 +1,11 @@
+before-read at 2026-10-03T22:02:24Z
+packet blob at HEAD: 7d815d61db
+CTO half at HEAD: present (c880214d5e)
+CTO half names the blob: 1
+generate: fD2R6OFrT2N086C9Go3e1aA9RKZCP/vfnZCaHCloJTs=	Successful
+jobs non-terminal: []
+queue: 0/0
+lease: expires 0 now 1791064954 not held fence 25
+ssm 24b6a1f6-2889-4fee-8c3f-1a110da379b9 Success rc 0
+root /opt/irpt-resident/a6f6e7165e-st18 active=active since Sat 2026-10-03 05:52:20 UTC; rollback root present: yes
+
