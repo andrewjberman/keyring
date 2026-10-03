@@ -7104,3 +7104,27 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W25-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~25",
+  "surfaced_at": "2026-10-03T18:50Z",
+  "one_line": "The order's ac03 (a manifest naming an unresolvable commit) and ac02 (nothing staged under .build) cannot be run against the real manifest and real .build/staged without editing tracked state, so build_package.py gained three optional flags (--manifest, --repo, --stage-dir) the order does not list; defaults are the old paths.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CODE: infra/aws/lambda/mcportal/mcportal-grant-writer-lambda/build_package.py @22d6f8436b main(): the three argparse flags default to REPO_ROOT/EC2_MANIFEST.json, REPO_ROOT and THIS_DIR/.build/staged, so the Terraform-documented invocation `build_package.py --out <zip>` is unchanged.",
+      "RUN: infra/aws/lambda/mcportal/mcportal-grant-writer-lambda/tests/test_build_input_pinned.py @22d6f8436b: 3 passed; a default-flag run staged 11 files from af2d762970, the 11 the TF_ROOT_FIX.md s.1 measure counted."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order s.1 item 1 lists the builder changes as manifest read, commit-pinned derivation, refusal and the printed sha; item 2 says the tests use temporary git repos or the real repo read-only.",
+  "world_is": "The three tests drive the builder as a subprocess with a temp manifest and a temp stage dir, which needs the flags; the writer's own tests could not otherwise plant a bad commit without editing the real manifest. The refusal exit code is 2 (the order says only non-zero).",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
