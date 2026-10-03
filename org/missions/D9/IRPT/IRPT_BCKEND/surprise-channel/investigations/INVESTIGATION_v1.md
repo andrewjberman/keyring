@@ -15961,3 +15961,170 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "The apply rides the IB-pr-299/300 deploy packet."
 }
 ```
+
+
+## IRPT_BCKEND-W104-S1 -- IB-pr-301: the Enforcer admits a RENDER_DELEGATE to three operations and reporting-read is not one of them
+
+```json
+{
+  "id": "IRPT_BCKEND-W104-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~104",
+  "surfaced_at": "2026-10-03T04:33Z",
+  "one_line": "IB-pr-301: _authz/enforce.py RENDER_DELEGATE_OPERATIONS is (performance_report, analysis_report, narrative_packet), so a PATH B render's read of the reporting route (operation reporting-read) is refused OBJECT_NOT_COVERED before the route's version_id parameter is reached",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/enforce.py@b91461602e:304 RENDER_DELEGATE_OPERATIONS = (\"performance_report\", \"analysis_report\", \"narrative_packet\")",
+      "infra/aws/lambda/investor-reporting/_authz/enforce.py@b91461602e:459-464 any other operation: Refusal OBJECT_NOT_COVERED 'refused before any scope algebra runs'",
+      "infra/aws/lambda/investor-reporting/reporting/entry.py@b91461602e OPERATION = \"reporting-read\" (not in that tuple)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "P-6 plan 'Server half' bullet 3: the render host's read of the reporting route passes that same coverage for the account under the submitter's grant.",
+  "world_is": "Not true at the base: no render principal can read reporting-read at all. IB-pr-301 builds the route's side (version_id, and a refusal of a RENDER_DELEGATE series read that names no version, so a render can never read the current object) and the submit's side (the render grant pins the one covered account), and neither is reachable until the Enforcer admits reporting-read for a RENDER_DELEGATE. Fails closed: a PATH B export would end FAILED/TIMED_OUT, never print a wrong figure.",
+  "notes": "enforce.py is outside this order's <paths>. Owner 2.0.0_SA_COO~P to cut: add \"reporting_read\"/\"reporting-read\" (match the operation spelling the Enforcer receives) to RENDER_DELEGATE_OPERATIONS, in the P-2 window's never-widen half. Not run: no render was attempted (AWS: none)."
+}
+```
+
+
+## IRPT_BCKEND-W104-S2 -- IB-pr-301: the reporting-read role holds s3:GetObject and not s3:GetObjectVersion on the platinum prefix
+
+```json
+{
+  "id": "IRPT_BCKEND-W104-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~104",
+  "surfaced_at": "2026-10-03T04:33Z",
+  "one_line": "IB-pr-301: a read of a pinned VersionId needs s3:GetObjectVersion; the reporting-read role grants only s3:GetObject on the platinum reporting prefix, so version_id reads answer AccessDenied, which the route maps to NOT_READY",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/reporting-read/iam.tf@b91461602e statement ReadThePlatinumReportingPrefixOnly actions = [\"s3:GetObject\"] on local.irpt_rr_platinum_read_arns",
+      "infra/aws/lambda/investor-reporting/reporting/entry.py@b91461602e _fetch: AccessDenied is classified ReportingNotReady (kept; NoSuchVersion added)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order cell item 3: the render reads that exact VersionId through the reporting route under the same coverage.",
+  "world_is": "The route code reads VersionId=; the role that runs it cannot, until one action is added. Fails closed (NOT_READY).",
+  "notes": "reporting-read/iam.tf is outside <paths>. Exact text for 2.0.0_SA_COO~P to land with the window: in statement ReadThePlatinumReportingPrefixOnly set actions = [\"s3:GetObject\", \"s3:GetObjectVersion\"]. Nothing wider; same resources."
+}
+```
+
+
+## IRPT_BCKEND-W104-S3 -- IB-pr-301: the export function's role is outside the firm bucket's DenyForeignFirmPrincipals fence
+
+```json
+{
+  "id": "IRPT_BCKEND-W104-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~104",
+  "surfaced_at": "2026-10-03T04:33Z",
+  "one_line": "IB-pr-301: the submit freezes the series by reading the platinum object, and the platinum bucket's explicit Deny for principals outside the firm scope token overrides the Allow written in export/iam.tf for irpt-export-render-role",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf@b91461602e:150 DenyForeignFirmPrincipals: Deny s3:* unless aws:PrincipalArn matches the fence patterns plus the registry's exemption ARNs",
+      "infra/aws/terraform/investor-reporting/reporting-read/iam.tf@b91461602e header (row IRPT_BCKEND-W65-S1): the bucket denies principals not matching role/*-49f-*, and the reporting role's name is builder-derived to carry the token",
+      "infra/logic/registry/exemptions.json@b91461602e names no irpt-export-render-role row (read by search; the platinum bucket's membership in lgic_managed_firm_buckets was not queried)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order cell item 2: after coverage passes the submit pins the series (VersionId, sha256, as_of).",
+  "world_is": "The Allow is written as text in export/iam.tf (policy irpt-export-render-platinum-series-policy: GetObject and GetObjectVersion on account=*/series.json.gz, ListBucket by prefix condition). If the fence applies to this bucket and this role is not exempt, the read is denied and a PATH B submit refuses DEPENDENCY_UNAVAILABLE with nothing written. INFERRED, not queried live (AWS: none).",
+  "notes": "Owner 2.0.0_SA_COO~P: either a never-widen-signed exemption row for this role in infra/logic/registry/exemptions.json (shared-infra, outside <paths>) or a builder-derived role name carrying the firm token (a role replacement). The choice is a P-2 window decision; the IAM text is ready either way."
+}
+```
+
+
+## IRPT_BCKEND-W104-S4 -- IB-pr-301: ExportReceipt v1 has no slot for the frozen as_of, so the receipt names it only in the sidecar and the receipt object's metadata
+
+```json
+{
+  "id": "IRPT_BCKEND-W104-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~104",
+  "surfaced_at": "2026-10-03T04:33Z",
+  "one_line": "IB-pr-301: the order says the receipt names the frozen as_of so the page can show it, but ExportReceipt.schema.json is additionalProperties:false at every level and is outside <paths>; the as_of rides receipt.build's sidecar and the receipt object's metadata irpt-frozen-as-of, which the receipt route does not return",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_contracts/ExportReceipt.schema.json@b91461602e additionalProperties false on the root, facts, timestamps, export_ref, artifact and download_route",
+      "infra/aws/lambda/investor-reporting/export/handler.py@b91461602e finalize_export validates the built receipt against ExportReceipt.schema.json before persisting, so an extra field fails validation",
+      "infra/aws/lambda/investor-reporting/export/tests/test_export_path_b.py test_the_receipt_names_the_frozen_as_of: sidecar frozen_as_of and object metadata irpt-frozen-as-of read back; the persisted receipt body equals the contract object"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order item 5 / batch 203 item 3: the receipt names the frozen as_of, and the page shows it beside the export.",
+  "world_is": "Server-side, the frozen as_of is named at submit (status.source_dates.business_date), in the bundle, in the sidecar and in the receipt object's metadata. The page-visible receipt (the export-receipt route's answer) carries none, because the contract has no slot.",
+  "notes": "Owner 2.0.0_SA_COO~P: an additive ExportReceipt bump in BOTH copies (infra/aws/lambda/investor-reporting/_contracts/ and docs/contracts/investor-reporting/v1/), e.g. an optional facts.as_of date, then receipt.build puts sidecar['frozen_as_of'] there. Not done: neither file is in <paths>."
+}
+```
+
+
+## IRPT_BCKEND-W104-S5 -- IB-pr-301: the ExportBundle change is wider than 'an item field' in one place (the oneOf) and the version marker is a revision, not the wire version
+
+```json
+{
+  "id": "IRPT_BCKEND-W104-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~104",
+  "surfaced_at": "2026-10-03T04:33Z",
+  "one_line": "IB-pr-301: a PATH B bundle has no retained report, so no narrative_packet_ref and no analysis_report_ref, which the v1 oneOf refused; the schema gains a third branch tied to the item pin, and the 'version bump' is x-contract-revision 1.1 while the wire version const stays v1",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_contracts/ExportBundle.schema.json oneOf (two branches at b91461602e) now three; third = neither ref AND every authorized_report_revisions item requires performance_source",
+      "infra/aws/lambda/investor-reporting/export/handler.py@b91461602e submit_export -> package_mod.assert_supported(package, 'ExportBundle', contract_version): the wire version gates every export against the render package, so a changed const would refuse all of them",
+      "export/tests/test_export_path_b.py test_the_bundle_contract_admits_neither_ref_only_beside_a_platinum_pin: a bare item with neither ref, both refs, and a path other than PLATINUM all fail validation; test_packaged_contracts_match_docs and the IB31-1 fixtures (valid validates, invalid refused) pass"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order item 2: no new top-level field; an additive item-shape change is a version bump in both copies; add the rule-24 record if an enum grows.",
+  "world_is": "No top-level field and no enum was added (path is a const, so rule 24's record is not owed). The oneOf is the one non-item change, forced by 'no retained report'. The bump is the additive marker x-contract-revision 1.1 in both byte-equal copies; the wire version v1 is unchanged on purpose.",
+  "notes": "Judgment for 2.0.0_SA_COO~P / the CTO: confirm the third oneOf branch and that revision 1.1 satisfies 'a version bump'."
+}
+```
+
+
+## IRPT_BCKEND-W104-S6 -- IB-pr-301: choices the order left open -- print_query carries version beside account, and a PATH B body naming a retained report is refused
+
+```json
+{
+  "id": "IRPT_BCKEND-W104-S6",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~104",
+  "surfaced_at": "2026-10-03T04:33Z",
+  "one_line": "IB-pr-301: print_query gains `version` (the frozen VersionId) beside account/start/end so the page can pass version_id to the route, and a body carrying both performance_source and a non-empty authorized_report_revisions is refused INVALID_INPUT",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/retained_export.py platinum_print_query: {bundle, tenant, revision, kind, account, start, end, version}; no selection",
+      "infra/aws/lambda/investor-reporting/export/retained_export.py parse_platinum_source: exactly path/account_id/start/end; a browser VersionId, sha256 or as_of is refused; a retained report beside the source is refused",
+      "export/tests/test_export_path_b.py test_the_browser_names_no_version_sha_or_as_of_and_no_retained_report and test_print_query_carries_the_account_beside_kind_performance_start_and_end"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order items 1 and 4: PATH B is performance_source with no retained report; print_query carries account beside kind, start and end.",
+  "world_is": "The route carrier needs the page to learn the frozen version, and print_query is the one channel the order gives the host's browser, so it carries `version`; ~D's page half must read it and send version_id. A body from the page that sends a placeholder authorized_report_revisions row beside performance_source is refused here.",
+  "notes": "Owner 2.0.0_SA_COO~P to tell 2.0.0_SA_COO~D (page half): read print_query.version, send `?version_id=` on the series read; send no authorized_report_revisions on a PATH B submit."
+}
+```
