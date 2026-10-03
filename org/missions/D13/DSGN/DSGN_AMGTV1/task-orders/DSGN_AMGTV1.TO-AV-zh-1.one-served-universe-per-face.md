@@ -88,7 +88,7 @@ well without the resolution line. resolutionwords.cjs also grades ResolutionNote
 CROSSED). The FWD-26 presets cell will later add `days` to the same hook and LeadPanel; it is sequenced after this cell. A stale
 `types.ts:207-215` comment ("ticker absent today") is not this cell's file.
 
-<status>pending</status>
+<status>complete</status>
 <round>30</round>
 <slot>~86</slot>
 <fabric>site-z</fabric>
