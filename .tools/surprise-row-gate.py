@@ -430,6 +430,11 @@ def _resolve_latest(investigation_files, remediation_ids):
                     if target not in carried:
                         unknown.append("%s (by %s)" % (target, r.get("id")))
                     continue
+                if r.get("disposition") in UNDISPOSITIONED:
+                    # An OPEN row is its own item; its `adjudicates` never moves the target. Files fold in path order and
+                    # adjudications/ sorts before investigations/, so an issuer row "adjudicating" with UNDER_INVESTIGATION
+                    # overwrote the CVO's later disposition (3.0.0_SA_CVO~Z 28889: 40 of 3,886 CVO-terminal targets).
+                    continue
                 latest[target] = r.get("disposition")
     for rid in remediation_ids:
         if rid in latest:
@@ -2934,6 +2939,16 @@ def _self_test(root):
         ("census MUTANT: the same UNDER_INVESTIGATION row filed as an investigation row DOES block (the document decides, not the seat)",
          lambda: _investigations_precondition_violations("r", row, "X_PRJ", "the slug", (
              _resolve_latest([(INV, [{"id": "X_PRJ-S1", "disposition": "GRADUATED"}, {"id": "X_PRJ-S2", "disposition": "UNDER_INVESTIGATION"}])], [])[0], [], 1, "")) != []),
+        ("fold order: an issuer's OPEN row adjudicating a CVO-dispositioned item does not re-open it (28889)",
+         lambda: _resolve_latest([(ADJ, [{"id": "X_PRJ-S9", "disposition": "DISMISSED_WITH_REASON", "adjudicates": ["X_PRJ-S1"]}]),
+                                  (INV, [{"id": "X_PRJ-S1", "disposition": "UNDER_INVESTIGATION"},
+                                         {"id": "X_PRJ-S2", "disposition": "UNDER_INVESTIGATION", "adjudicates": ["X_PRJ-S1"]}])], [])
+         == ({"X_PRJ-S1": "DISMISSED_WITH_REASON", "X_PRJ-S2": "UNDER_INVESTIGATION"}, [])),
+        ("fold order control: a DISPOSITIONED issuer row still applies after the CVO's (later file wins, as before)",
+         lambda: _resolve_latest([(ADJ, [{"id": "X_PRJ-S9", "disposition": "DISMISSED_WITH_REASON", "adjudicates": ["X_PRJ-S1"]}]),
+                                  (INV, [{"id": "X_PRJ-S1", "disposition": "UNDER_INVESTIGATION"},
+                                         {"id": "X_PRJ-S2", "disposition": "GRADUATED", "adjudicates": ["X_PRJ-S1"]}])], [])[0]["X_PRJ-S1"]
+         == "GRADUATED"),
         ("census: `adjudicates` naming an adjudication-document row's own id -> a real row, not a phantom, nothing to flip",
          lambda: _resolve_latest([(INV, [{"id": "X_PRJ-S1", "disposition": "GRADUATED"}]),
                                   (ADJ, [{"id": "X_PRJ-S2", "disposition": "DISMISSED_WITH_REASON"},
