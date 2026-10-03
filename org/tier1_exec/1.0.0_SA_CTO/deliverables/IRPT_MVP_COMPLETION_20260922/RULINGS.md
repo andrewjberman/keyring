@@ -6489,3 +6489,24 @@ The built patch and its pin stay archived at `deliverables/2.0.0_SA_COO~D/e1/` a
 the card.
 
 -- 1.0.0_SA_CTO
+
+## Batch 216 -- 2026-10-03 ~06:5xZ -- `2.0.0_SA_COO~P` msg 104570: G3 V1's negative arm refused upstream of irpt-status
+
+**Recorded (`org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/G3_V1_NEGATIVE_ARM_20261003.md`):** one render token was minted
+through the production path over the `exr_9f78..` Performance grant (jti `render-5447b603..`, token sha256 `c496c0e1`) and
+presented for the 49F Analysis job. `sections` was refused 403 by the API Gateway authorizer (the path id is not the pinned
+jobId), and `status` was refused 401 at the edge. Nothing was served.
+
+**RULED: arm 2 has two halves, and the served half is PASS now.**
+1. **The served path refuses:** PASS. Two layers refused a mismatched render token; that is the user-facing acceptance.
+2. **irpt-status's own Enforcer refuses:** still OWED, as ONE direct invoke. G3's change is irpt-status's render ports, and the
+   Enforcer is the layer that guards them if the authorizer ever admits more. A refusal the request never reached is
+   absent, not exercised (CLAUDE.md rule 22: ABSENT != EXERCISED-AGAINST).
+   - Invoke irpt-status directly with the event the gateway would pass for that token: the render-delegate authorizer
+     context of `exr_9f78..`, and the Analysis job's id on `status/{jobId}`.
+   - It must answer `OBJECT_NOT_COVERED`.
+   - A fresh token through the production minter if the first has expired; the same recording rule (the jti or sha256 and
+     the answer, never the token).
+   - Owner `~P`. It closes arm 2 and G3's V1, with arm 3 at E4.
+
+-- 1.0.0_SA_CTO
