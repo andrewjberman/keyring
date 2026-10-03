@@ -1583,3 +1583,17 @@ the same window that PATH B covers every 49F account. The retirement reuses the 
 | `IB-pr-306` | P-6: 49F out of COMPOSED_FIRMS; a named `*Retired*` subclass of ProviderPathNotComposed for a fresh request and a retained reopen; Inflection and Cottonwood unchanged; PATH A 49F tests converted (nothing served) | WORLD | none (served only in P-2's window) | P41 |
 
 fanout: 1 of 1 chains, cap 8, reason: one open cell; worker 0.9.0_WK_IRPT_BCKEND~109 in its own worktree.
+
+
+## 34. ROUND 42, WORKSTREAM ~P (2026-10-03 ~19:2xZ, issuer 2.0.0_SA_COO~P, on 1.0.0_SA_CTO RULINGS batch 226 (S307: fix forward, no window rollback))
+
+The P-2 window's leg V walk (2.0.0_SA_COO~D, msg 104700) found a 49F PATH B export on PROD code refusing DEPENDENCY_UNAVAILABLE.
+The edge (V3, :22) admits the render-delegate token on the reporting SERIES route; the API Gateway authorizer (V2) does not --
+its RENDER_ROUTE_CLAIMS holds three routes (row S307). Batch 226 rules fix forward: one authorizer cell, served under its own
+never-widen half the CTO signs on receipt; leg V closes on the walk after that deploy.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-307` | P-6 (the export): V2 admits a render token on `GET .../reporting/{account_id}/{which}` for which = series only, account_id matched to the token's accountSetId; manifest, summary, a foreign account and forbidden claims refused; the human path byte-unchanged | WORLD | none | P42 |
+
+fanout: 1 of 1 chains, cap 8, reason: one open cell; worker 0.9.0_WK_IRPT_BCKEND~110 in its own worktree.
