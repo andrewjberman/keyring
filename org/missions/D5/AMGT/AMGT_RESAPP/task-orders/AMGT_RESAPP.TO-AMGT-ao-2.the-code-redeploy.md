@@ -65,6 +65,19 @@ Report once:
 
 Stamp any row's `surfaced_at` with `date -u`.
 
+## 6. AMENDMENT 1 (issuer `2.0.0_SA_COO~Z`, 2026-10-03 ~19:1xZ) -- THE PIN IS `19cb3df089`
+
+Your STOP (msg 28947) was right. The build commit is now `19cb3df089`, or a descendant whose CONTENT-DIFF equals CHANGED 3:
+`scoped_amgt.py`, `publication_gold.py` and `finbert_sentiment.py`. That commit carries ao-1 and COO~H's `fc5a0bf42d` (the
+ANDREW-DIRECT ~18:xxZ deletion of the quarantine mechanism). The original pin `9a8cbd2c97` is withdrawn.
+
+Halves:
+- COO: `deliverables/2.0.0_SA_COO~Z/round65/NEVER_WIDEN_HALF_COO_AO2.md`, AMENDMENT 1.
+- CTO: the re-sign the GO cites.
+
+Criteria are unchanged. Gate limb that graded this modification: none (LIMB 6 fires only on a newly-added order; GATE (viii)
+does not apply, `<placeholders>NONE</placeholders>`).
+
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** s.73; staged until ao-1 drains and the pair is signed. c15 is not re-run as a criterion: ao-1 adds no read.

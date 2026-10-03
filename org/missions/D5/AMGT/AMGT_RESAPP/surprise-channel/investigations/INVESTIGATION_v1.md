@@ -17305,5 +17305,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   ]
  },
  "disposition": "UNDER_INVESTIGATION"
-}]
+},
+{
+ "id": "AMGT_RESAPP-Z-S343",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~Z",
+ "surfaced_at": "2026-10-03T19:21:15Z",
+ "one_line": "Collecting lib/research/harvest/test_am1_marker_once.py or test_al2_content_key.py in the same pytest run as lib/research/management/tests fails 10 test_ceo_search.py tests (TestClassifySerpAttempt, TestSerpBrightdataRecords); each passes alone, and management alone is 142 passed. The interaction predates fc5a0bf42d: it reproduces with the 9a8cbd2c97 versions of finbert_sentiment.py, publication_gold.py and test_am1_marker_once.py.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "A test suite is order-independent: a test that passes alone passes beside any other collected module.",
+ "world_is": "At 19cb3df089 in a clean worktree: the 5-suite union (peers, management, api, harvest/tests, coverage) is 1030 passed. Adding the two root-level harvest test files gives 10 failed, 1031 passed, all 10 in management/tests/test_ceo_search.py. management + test_al2 alone: 10 failed, 140 passed. management + test_am1 alone: 10 failed, 135 passed. Same with the 9a8cbd2c97 versions checked out. Both files import lib.research.harvest.finbert_sentiment at module scope, which is the common factor; the mechanism is not traced. Neither the root files nor test_ceo_search.py is packaged in opal-amgt-scoped-api, and the function imports finbert_sentiment lazily inside build_mention only, so no served effect.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "pytest -q at /c/tmp/r65-216 detached 19cb3df089: union 1030 passed; +2 root files 10 failed / 1031 passed.",
+   "pairwise runs: management + test_al2 -> 10 failed; management + test_am1 -> 10 failed; single test alone -> 1 passed.",
+   "control: the 9a8cbd2c97 versions of the three harvest files reproduce the 10 failures."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+]
 ```
