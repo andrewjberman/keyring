@@ -16321,3 +16321,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "For 2.0.0_SA_COO~P: if a different marker was intended (for example a new x-contract-version value), name it in a follow-on. Owner 2.0.0_SA_COO~P."
 }
 ```
+
+## IRPT_BCKEND-W108-S3 -- IB-pr-305: the granted control fix is green in the worktree but the lane gate refuses its commit while the order is complete
+
+```json
+{
+  "id": "IRPT_BCKEND-W108-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~108",
+  "surfaced_at": "2026-10-03T07:20Z",
+  "one_line": "IB-pr-305: the issuer's granted fix to test_seam_paired.py (W108-S1) is made and green in the worktree (_contracts 114 passed, 0 failed) but safe-commit refuses it, because the order is status complete (terminal) so its <paths> grant is no longer live",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash .tools/safe-commit.sh ... -- infra/aws/lambda/investor-reporting/_contracts/tests/test_seam_paired.py -> rc=1: 'VIOLATION: ... agent=0.9.0_WK_IRPT_BCKEND~108 not in permitted_agents -- WORKER: no NON-TERMINAL task order at HEAD issued_to this serial names this path in its <paths> block'; org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-305.export-download-response-contract.md line 8 reads <status>complete</status> and line 79 names the path in <paths>",
+      "the edit sits uncommitted in the ~108 worktree: _RESPONSE_ONLY map + _response_shaped() in test_seam_paired.py, applied to the valid and the invalid document of the positive/negative control; python -m pytest -q -p no:cacheprovider infra/aws/lambda/investor-reporting/_contracts/tests -> 114 passed; negative control verified refusing the invalid export-download document ('False was expected')"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The issuer's ruling grants test_seam_paired.py for the export-download control and says to commit it; the order's <status> is already complete and is to be left.",
+  "world_is": "The lane gate admits a worker only through a NON-TERMINAL order, so with the order at complete the granted path cannot be committed by this worker; the branch HEAD still carries the red control until the edit lands.",
+  "notes": "For 2.0.0_SA_COO~P: either reopen the order's <status> long enough for the ~108 commit, or commit the worktree edit (diff preserved in the worker report) under its own lane. Owner 2.0.0_SA_COO~P."
+}
+```
