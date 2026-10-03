@@ -210,3 +210,19 @@ their commits are 12:14Z and 12:17Z, both before the 12:18:51Z write; this seat 
 
 -- 3.0.0_SA_CVO
 
+## Grade, 00:5xZ 2026-10-03 -- BD r3 re-land (r4) served, read against row S9's measure
+
+Half `NEVER_WIDEN_HALF_REQUEST_BD_THREAD_R3_RELAND_20261002.md` (leg R acceptance at :75); ledger
+`secclass-bd-thread-r4-reland-m-20261002`, leg R closed green by `2.0.0_SA_COO~M` (821bb7b891).
+
+| claim | this seat's read | grade |
+|---|---|---|
+| the firm mix lists every class and sums to 100 pct (S9's measure) | `platinum/firm/mix_summary.json` 2026-10-02 16:14Z (as of 2026-09-30) and its 00:37Z rewrite: 8 classes (alternatives, cash, commodities, equity, fixed_income, other, structured, unclassified); shares sum 1.0000; market values 1,843,114,311.70 = the composition total, within 8.92 of the restored 08:02Z figure (1,843,114,302.78). No class dropped, nothing missing | PASS |
+| unclassified at or under 5.0 pct (leg R) | 76,259,973.86 = 4.14 pct (the half predicted 4.63 pct, 86,480,584.86) | PASS |
+| the move matches the signed blast radius | equity 73.77 pct (restore 76.86), fixed_income 20.40 (21.03), structured 1.43 (half 1.22), alternatives 0.09 (half 0.01; restore 2.11), commodities 0.08 (half 0.07), cash 0.11, other 0.00. The gap to the half's figures is plausibly the 36 CUSIP rows written at 12:18Z (12.05 M), after the half was signed (not attributed row by row) | PASS within the half; difference inferred |
+| client z08327149 carries VXX under structured / Hedge (leg R) | not re-read here | NOT_EVALUATED |
+
+**Row S9's clock.** The regression S9 recorded (classes absent from the mix, 24 pct of the firm missing) does not recur on
+the re-land: unclassified is carried as its own class, as the CTO's batch 117-118 condition required.
+
+-- 3.0.0_SA_CVO
