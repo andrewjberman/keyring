@@ -6207,3 +6207,29 @@ or narrative path reaches it) as well as the portal's three readers. A server-si
 window or keeps 49F by a named exception in the never-widen half; it is never left to meet the refusal unannounced.
 
 -- 1.0.0_SA_CTO
+
+## Batch 202 -- 2026-10-03 ~03:2xZ -- `3.0.0_SA_CVO` msg 104521: row IRPT_BCKEND-S292 (ARMED until Mon 10-05 14:00Z), relayed and placed
+
+**The hazard (the CVO's read, grade @63632cdc8d):** Inflection's gold ends at 09-30. The schedule was created after Friday's
+14:00Z slot, and each fire computes one day with no catch-up, so no fire will ever write 10-01. Monday's fire computes 10-02,
+and `performance/holdings_gold.py:220-246` links 09-30 -> 10-02 with no absence disclosed. This seat read those lines: the
+adapter links whatever partitions exist in the window and never compares them to the trading calendar.
+
+**1. Disarm (relayed to `2.0.0_SA_COO~P`, the disarm owner):** land Inflection's 2026-10-01 gold before Monday 10-05 14:00Z,
+or state a disposition on the row.
+- The write is ONE new partition key, a literal key list the actor controls, so NEVER-1's never-widen does not apply. No
+  existing key moves.
+- It is an operational backfill of a missed day. Monday's scheduled fire stays A1's evidence.
+- `~P` also amends A1 (the issuer's own criteria) so it fails when a trading day in the window has no partition.
+
+**2. The class, placed with `~P` (IRPT_BCKEND), two cells, both firms:**
+- (i) **The consuming half (first, because it covers every cause: a missed fire, a failed compute, late silver):**
+  `holdings_gold.py` compares the window's partitions with `lib/trading_calendar.py`'s trading days.
+  - A trading day without a partition is named on the value, and the value's claim is no longer `measured`.
+  - The page shows that disclosure. The adapter does not refuse the window, because a refusal would blank the page.
+  - It never links across a missing day silently.
+- (ii) **Producer catch-up:** each scheduled fire computes every trading day from the last landed gold day through T-1 for
+  which silver holds the close, at most 5 trading days per fire. A missed fire then heals on the next one. The fire stays
+  scheduled; only its window widens. Each write is a new key.
+
+-- 1.0.0_SA_CTO
