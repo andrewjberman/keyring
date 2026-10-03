@@ -1600,3 +1600,31 @@ round-30 cell cuts the presets. FWD-26's price caption is cut now, in `AV-zg-3` 
 - **Folded at the cut:** CTO msg 28729 (row Z-C-S41), the Exec caption naming only the served source, goes into `AV-zg-6`.
 - **Checks:** 12 issuer checks (2 per cell), every one dry-run at portal dcdc89b1. Each FAILS at base (1-2 of 3-4 arms; PLANTED/CONTROL
   arms pass by design) and each reached full marks on its agent's scratch reference via `CHECK_SRC_OVERRIDE`.
+
+
+## v30 -- ROUND 30 (issuer, 2026-10-03 ~01:0xZ) -- ONE UNIVERSE PER FACE + REPAIRS (PRD v0.13 @e398ee2294, ADMITTED)
+
+**Rectangle:** round 29's close (@5e413e9b76) plus these sources:
+- the CTO's round-29 review, msg 28820 (FWD-23, the hard-coded no-tone fill);
+- RESAPP row Z-W208-S1 (CTO msg 28772; one universe per face);
+- rows Z-W81-S1 and S3;
+- COO~Z msg 28802 (feed url null);
+- CTO msg 28833 (from CVO~Z v33): SAUX-15's first viewport, the "(movement is measured)" line, and What-changed rounding.
+The "$2.9 billion" money item is ruled (b) by CTO msg 28836: served drafted prose stays as served, so no cell.
+**Base:** portal e370eb7c, the CTO-approved round-29 candidate (review @a43b54dfee). Its DEV push waits on Andrew's word at MSTR~Z.
+
+| cell | serves | owned files | worker |
+|---|---|---|---|
+| `AV-zh-1` ONE UNIVERSE | Z-W208-S1; FWD-27 (movement-basis words) | `components/LeadPanel.tsx`, `hooks/useLeadPanelApi.ts` | ~86 |
+| `AV-zh-2` REPAIRS (batched) | FWD-23 token; Z-W81-S1 canonical Refresh; Z-W81-S3 render-check back control; Z-W212-S2 feed url null; FWD-27 rounding; SAUX-15 first viewport | `portal/src/lib/chartColors.ts` (one additive export), `components/ChatterBubbles.tsx`, `components/SecurityOverlay.tsx`, `__rendercheck__/renderCheck.tsx`, `components/HeaderBrief.tsx`, `components/model/WhatChangedPanel.tsx`, `components/TimelinePanel.tsx` | ~87 |
+
+**Checks** (issuer, each FAILING at base e370eb7c):
+- `round30/checks/universe/universe.cjs` 2/4 and `resolutionwords.cjs` 2/3;
+- `round30/checks/repairs/chrome.cjs` 1/4 and `served.cjs` 1/3.
+AC3 = `round29/checks/battery29.sh` with no skip.
+**Issuer amendments to round-29 checks, landed with this issuance** (each 4/4 at base and FAILING its plants):
+- `header/face.cjs`: a primary button's ink is judged against its own fill, and white ink is caught in every spelling;
+- `timeline/dayopen.cjs`: an href only where a url is served.
+**FWD-26 presets: NOT cut.** The deployed API ignores `?days=` (30/90/365 payloads are byte-identical; round30/fixtures/windows.*.json),
+and RESAPP an-7 is signed @e1c310a414 but not deployed. The presets cut when COO~Z reports c9/c10 YES on deployed (CTO msg 28825).
+**Fan-out:** 2 of 2 chains, disjoint files. **Risk:** LOCAL. **Rule 24:** one row per cell.
