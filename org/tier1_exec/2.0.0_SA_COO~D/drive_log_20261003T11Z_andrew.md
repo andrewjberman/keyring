@@ -4,6 +4,7 @@
 |---|---|---|---|---|
 | 10:5xZ-11:0xZ | DSGN_REBRND (FAST; IR lines still blocked: P-3/P-6 wait ~P's P-2 window, Case A waits ~Y) | round 3 E3, row W3-S4 | /market's Global RSI and Fear & Greed say a failed fetch: portal `55560835` on origin DEV (ls-remote 11:09Z) | DRIVE FORWARD |
 | 11:1xZ-11:3xZ | DSGN_REBRND (FAST; IR still blocked on ~P) | round 3 E3, row W3-S4 | /market's Daily Cloud, Trending Topics and Top/Bottom Performers say a failed fetch: portal `a7b16628` on origin DEV (ls-remote 11:30Z) | DRIVE FORWARD |
+| 11:3xZ-11:4xZ | DSGN_REBRND (FAST; IR still blocked on ~P) | round 3 E3, row W3-S4 | the RSI hook stops inventing 50 for a missing class: portal `564a8f95` on origin DEV (ls-remote 11:44Z) | DRIVE FORWARD |
 
 ## W3-S4 on /market
 
@@ -36,5 +37,8 @@
 ## Still open on W3-S4
 
 - ~~/market: Daily Cloud, Trending Topics and Top/Bottom Performers~~ LANDED a7b16628 (above).
-- `useRSIValues`'s `segment.value ?? 50` for one missing class.
+- ~~`useRSIValues`'s `segment.value ?? 50` for one missing class~~ LANDED 564a8f95: a summary missing any class is no
+  summary. Fixture render (`--fixtures` rsi-summary with commodities.value null): HEAD drew Commodities at 50, the
+  change shows the error; a full summary still draws all three. No unit pin (the logic sits in the fetching hook).
+- A missing period change reads as 0 in the same hook; RSIModal's own `?? 50` / `|| 50`.
 - The row's other six routes, not re-measured this tick.
