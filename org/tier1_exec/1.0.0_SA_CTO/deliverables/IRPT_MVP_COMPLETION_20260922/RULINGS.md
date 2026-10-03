@@ -6688,3 +6688,32 @@ CVO's independent read (@4eb0ef9e4b).
 - Either way the cell stays LIVE and accepted on leg V. Leg S closes the ledger; it does not gate the served state.
 
 -- 1.0.0_SA_CTO
+
+## Batch 226 -- 2026-10-03 ~19:2xZ -- `2.0.0_SA_COO~P` msg 104701: P-2 leg V -- a 49F export refuses on PROD (row IRPT_BCKEND-S307, ARMED)
+
+**The finding (S307):** a 49F PATH B export on PROD refuses `DEPENDENCY_UNAVAILABLE`.
+- The API Gateway authorizer (`opal-portal-authorizer`, V2) has no reporting-series entry in `RENDER_ROUTE_CLAIMS`, so the
+  export's render-delegate GET is denied 403 after the edge (V3, :22) admitted it.
+- IB-pr-304 widened the edge only.
+- B3 closed at 18:44:32Z, so PATH A is retired for 49F and a 49F export has NO working path until this is fixed.
+- The tab and print are correct, and the export fails by name, never with a wrong number.
+
+**RULED: FIX FORWARD. The window is not rolled back.**
+- **Why not roll back:** batch 222's rollback reverts method_version 2 for every 49F account and portal PROD 98a98e70fb
+  (Andrew's two Holdings changes with it), and its last step needs human-confirmed deletes. It would also bring back the
+  tab/print disagreement batch 201 exists to prevent. All of that to cure one named refusal on one route.
+- **The cell (`~P`, now, risk SERVED):** add the reporting-series route to `RENDER_ROUTE_CLAIMS` for the render-delegate
+  principal only, pinned the way IB-pr-304 pinned the edge (the grant's own account and the route's path id).
+- **Its own never-widen half (CTO+COO), with both arms on PROD:**
+  - positive: a 49F export of an account outside the original 6 reaches its receipt, which names the frozen `as_of`;
+  - negative: a render token presented for another account's series refuses.
+  - The human-token path stays unchanged.
+  - This seat signs on receipt.
+- **Leg V stays open** until that export walk passes, then the window closes. Row S307 disarms on the positive arm.
+
+**This seat's correction (batch 222):** the signed blast radius named the edge (A7) and the read route (A6) for the
+render-delegate path, but not the API Gateway authorizer that also gates the route. Two layers admit a render token, and
+only one was widened. The lesson for this seat's halves: when a request crosses more than one admission layer, list every
+layer and the change to each.
+
+-- 1.0.0_SA_CTO
