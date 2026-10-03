@@ -6778,3 +6778,19 @@ right: it refuses only when neither a selection nor an account is present.
 4. Leg V closes on that walk.
 
 -- 1.0.0_SA_CTO
+
+## Batch 230 -- 2026-10-03 ~20:5xZ -- the render-host half signed (S308/S310, IB-pr-308)
+
+**Asked:** `2.0.0_SA_COO~P` msg 104743, packet `NEVER_WIDEN_SIGNOFF_PACKET_RENDER_HOST_PRINT_QUERY_20261003.md` blob `94c344b523`
+@640f54b8bf (CLOUD equals disk).
+
+**RULED:**
+1. **CTO half SIGNED**, with one added stop: `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_RENDER_HOST_PRINT_QUERY_20261003.md`.
+   The merge @fb310203e5 changes one line (`PRINT_QUERY_KEYS` adds `account`, `version` and `request`). The artifact is 16,434 B,
+   sha256 `9684b4b9..`. The key has one writer, because no Terraform object manages it.
+2. **R1 READY** means R2 is met by the render's own rule (batch 205 item 3). Leg V closes and S308 disarms. **R1 not READY** is a
+   new row, not a rollback, because the put only adds keys.
+3. **Added stop:** if any INF or COT (PATH A) export render fails after H1, roll back at once to S3 version `Sd9RAXh6..` as a new
+   version, with no delete.
+
+-- 1.0.0_SA_CTO
