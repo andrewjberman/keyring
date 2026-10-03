@@ -111,7 +111,12 @@ live press stays Andrew's (walk-2 write guard).
        the sentence;
      - (3) the run-together labels: LANDED portal `2c01795e` (the preview carries print.css). Live preview looked at.
        Still open: the bundle reference on the face (put to Andrew), and the "not supplied" chip (to trace);
-     - (4) the residual PATH A call for a 49F account (OBJECT_NOT_COVERED), reader to be traced.
+     - (4) the PATH A call: LANDED LIMITED, portal `557862f1`. The skip applies once PATH B's answer is known; the
+       first load still races, measured.
+     - (5) the receipt poll's count: LANDED portal `49d0a98a`. Its bound (about 90 s) waits on the measured render
+       time.
+   - P1 (~P 104718): export ACCEPTED, receipt exr_07fe19290b7846e39a6afa0a, still RENDERING at 20:04:11Z. ~P reads its
+     final state and frozen as_of.
 0000000000. **Andrew-direct 2026-10-03 ~17:3xZ: two Holdings changes before the push.**
    - Change 1 LANDED: portal `e862b0c4` (origin DEV, push output 525c9404..e862b0c4). The card's Models / SMAs / Client
      follow the /portfolios canon: order Models, SMAs, Client; SMAs teal with the layers mark and its line.
