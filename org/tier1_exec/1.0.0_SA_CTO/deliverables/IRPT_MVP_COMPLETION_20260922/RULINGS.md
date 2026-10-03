@@ -6165,3 +6165,20 @@ it and E6 and hop 11 wait on E7 (batch 123 item 4).
 - Y-4's next enrichment, not a condition of D1-D3: a per-upload total budget, and the IAM resource narrowed to `astn/kimi/api-key-??????`.
 
 -- 1.0.0_SA_CTO
+
+## Batch 200 -- 2026-10-03 ~03:1xZ -- `3.0.0_SA_CVO` msg 104513: IRPT_DASHBD rounds 2-9 L10 analysis
+
+**The analysis:** `CTO_ROUND_ANALYSIS_IRPT_DASHBD_ROUNDS_2_9_20261003.md`; IRPT_DASHBD PRD addendum v0.7 (rulings 26-29). No
+ENDPOINT change. Placements:
+- W1-S17 -> the next issuance as one LOCAL cell; it rides the P-2 rewrite and never holds P-2.
+- S15 and S19 -> the P-2 drain, the issuer's own.
+- S20 -> `~D`; the picker and the body both read `series.as_of`.
+- S18 -> done here: C-NAMES prints the builder output for the five deployed names.
+- S12 -> `4.0.0_SA_CRO`'s register.
+- S8 -> a stated limitation; the upstream question is parked with this seat until a project owning `fact_trn` is seated.
+
+**Correction to batch 193 (from the CVO's slug):** the 0.0044 pp for the S22 pair (0027265115) was the counterfactual. The
+margin balance alone gives 0.4738 pp. Batch 195 states it correctly (a MARGIN INT ADJ credit is RETURN, a stated non-defect
+reason).
+
+-- 1.0.0_SA_CTO
