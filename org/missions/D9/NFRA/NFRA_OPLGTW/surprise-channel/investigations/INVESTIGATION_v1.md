@@ -7249,3 +7249,29 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S48",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-03T19:31Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The issuer disarms Z-W26-S2 by fixing its own check: r15/checks/_fresh_tf.sh's sparse cone now includes infra/logic (the opal_name module reads infra/logic/registry/exemptions.json at plan time). Re-run of tf2.AC1 with the fixed cone: plan rc=1; errors 2; missing required variables 2 -- the only errors left are the two variables OG-tf-2 removes, no module-call error. The round-14 copy r14/checks/_fresh_tf.sh carried the same cone; its only users (tf.AC1-AC3 of OG-tf-1) are superseded by OG-tf-2.",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W26-S2"
+  ],
+  "one_line": "Z-W26-S2 (the fresh-plan cone omits infra/logic) is fixed in r15/checks/_fresh_tf.sh; a fresh plan now errors only on the two variables OG-tf-2 removes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: bash r15/checks/tf2.AC1.sh after the cone fix: plan rc=1; errors 2; missing required variables 2"
+    ]
+  },
+  "spec_asserts": "Z-W26-S2: every fresh-worktree plan of the root errors on module calls because the cone lacks infra/logic.",
+  "world_is": "The cone carries infra/logic; the remaining errors are exactly the two missing variables."
+}
+```
