@@ -67,7 +67,7 @@ Rows: id `NFRA_OPLGTW-Z-W25-S<k>` (next unused), fabric `site-z`, disarm_owner `
 **ISSUER NOTES:**
 - Round label 16 (addendum R3-T.9, item 4). Alone in its chain. Pre-cut 22:1xZ: `ts1.AC1` FAIL (test absent).
 
-<status>pending</status>
+<status>complete</status>
 <round>16</round>
 <slot>~25</slot>
 <fabric>site-z</fabric>
