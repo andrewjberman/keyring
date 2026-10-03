@@ -17282,5 +17282,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
  },
  "disposition": "UNDER_INVESTIGATION"
 }
-]
+,
+{
+ "id": "AMGT_RESAPP-Z-S342",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.7.0_AE_CloudOps~A",
+ "surfaced_at": "2026-10-03T19:11:47Z",
+ "one_line": "r65_served.py --where deployed is a MIXED-PLANE instrument: it invokes the DEPLOYED function for the names but imports DISPLAY_NAME_ACRONYMS from the LOCAL tree, so one unchanged deployed artifact grades 60 of 94 and 61 of 95 all-caps before ao-1 exists locally (row Z-S340) and 55 of 94 and 56 of 95 after it does. The base figure on the ao-2 halves is therefore not reproducible once the build commit is checked out, and the 5-name drop reads as the world moving when only the predicate moved.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "The ao-2 COO half's EXPECTED OUTCOME table gives the base as 'r65 c17 NO: price 60 of 94 all-caps, chatter 61 of 95', and its comp-adversary preflight line repeats '60 of 94 price and 61 of 95 chatter names all-caps' as a property of deployed KQSA62c3. r65_served.py's docstring states the intent: 'At the base, before the constant exists, every all-caps name counts.'",
+ "world_is": "Run at 2026-10-03T18:5xZ against deployed KQSA62c3 (base UNMOVED: CodeSha256 KQSA62c3, memory 1769, 41,149,311 B, re-read live), r65_served.py --cell c17 --where deployed printed 'declared acronyms: 36' and then 'names 94 all-caps 55' on breakout/price and 'names 95 all-caps 56' on collected/chatter. The verdict is NO on both runs, so the act's trigger is unaffected. The cause is in the script, not the world: :57 does 'from lib.research.api import scoped_amgt' and reads DISPLAY_NAME_ACRONYMS from it unconditionally, while --where deployed only redirects the HTTP call to capture_lib._invoke. The acronym_only() exception therefore grades DEPLOYED names with the LOCAL predicate. The docstring's 'before the constant exists' holds only while the local tree predates ao-1; at the build commit the constant exists, so the exception fires and excepts 5 acronym-only names per route. Row Z-S340's 60/61 census counted display_name == display_name.upper() with NO acronym exception, which is why the two figures disagree on identical bytes. Denominators 94 and 95 are identical across both reads, which is the tell that the population did not move.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "r65_served.py --cell c17 --where deployed at 18:5xZ: 'declared acronyms: 36'; FAIL C1 breakout/price 'status 200 names 94 all-caps 55'; FAIL C1 collected/chatter 'status 200 names 95 all-caps 56'; R65 C17 SERVED: NO, exit=1.",
+   "r65_served.py read at HEAD: the scoped_amgt import and DISPLAY_NAME_ACRONYMS read are outside the 'if a.where == deployed' branch; only the call() closure is inside it.",
+   "Row AMGT_RESAPP-Z-S340 (2.0.0_SA_COO~Z, ~16:5xZ) records 60 of 94 and 61 of 95 on the same deployed function, counting display_name == display_name.upper() with a letter and no acronym exception.",
+   "Base identity control: s3api get-object at VersionId .xFOZLD1X0znp_5COtZvp3UgWTBrw19p returned 41,149,311 B whose sha256 base64 equals the deployed CodeSha256 KQSA62c3Diw5XqjBeKKZc0ZTZuTnaaRBbhuEQHfOdXQ=, so the graded bytes are the deployed bytes."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}]
 ```
