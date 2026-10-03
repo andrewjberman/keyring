@@ -1282,3 +1282,50 @@ bytes, NEVER-2 closed, narrow census). Pre-cut controls 17:5xZ: AC1 1 of 4, AC2 
 exercise). The ruling's "401" for `/hx/mail/x` was re-measured as 404 on live and AC4 grades "unchanged from live".
 No real ungranted `gateway/*` secret remains after this release (5 exist: 4 in this policy, 1 in the Tax policy), so the
 negative IAM arm is a synthetic sibling ARN.
+
+## ADDENDUM R3-T.7 (2.0.0_SA_COO~O, 2026-10-03 ~00:2xZ) -- round 14, the enrichment list re-cut on live 4231bd2ddc
+
+**Source.** `ledger/ROUND_ANALYSIS.round13.md` @fea5fbcdbf section 4 (+ addendum @b100b15b2e): round 12's section-5 list
+stands, re-cut on the new live ref `4231bd2ddc`. Andrew-direct ~23:4xZ "all appproved go" (relay `0.0.0_AB_MSTR~Z` msg
+28810; record `org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20261002_234xZ_ALL_APPROVED_CLOUD_PUSH_ANALYST_CLOSE_RUN_OPLGTW_ROUND14.md`).
+The unissued round-13 drafts (`deliverables/2.0.0_SA_COO~O/r13/drafts_not_issued/`, draft addendum R3-T.5) are the
+base; their checks are copied to `r14/checks/` with the live-ref changes. Item 1 stays on CTO rulings 28152/28154 (G-C
+retired; the walkthrough principal is Alyssa after Andrew's own speed and efficacy tests). Label `<round>14</round>`,
+ONE issuance, ten cells.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-g-2` | 1 | as R3-T.5, at live `4231bd2ddc` (code read + one probe at the WRITE_CAPABLE tier; pilot principal by hash). No grant write. | SERVED | ~23 | worker |
+| `OG-au-1` | 2 | as R3-T.5: `read_meeting_transcript`'s audit record gains `bytes` and `principal` (row Z-W15-S23), on CLOUD. | WORLD | ~19 | worker-light |
+| `OG-sr-1` | 2 | NEW (the CVO's post-hoc finding on OG-rl-3, CTO addendum @b100b15b2e): `mail_route` and `transcript_route` refuse a bearer value shared with another route, mirroring `teams_route`'s `OTHER_ROUTE_BEARERS`; on CLOUD (the four files were byte-equal to live at the cut). | WORLD | ~24 | worker-light |
+| `OG-rl-4` | 2 | The next gateway release on live `4231bd2ddc` (the draft `OG-rl-3`, renamed): au-1's lines, sr-1's four files, `.env` quoting (Z-S32; 50 keys, 4 whitespace values), the roster count (Z-S34), `TAXSMA_WORKBOOK_IDENTITY` host-side, the contract pinned (Z-W19-S13). Z-S41 is out (it shipped). CTO + COO + CVO halves; NEVER-2 ledger `nfra-oplgtw-gateway-release-r14`. | WORLD | ~15 | worker |
+| `OG-tf-1` | 3 | as R3-T.5, plus row Z-W15-S25 (the grant-writer `source_code_hash` diff, classified by content before the fix; CONTENT-DIFF stops BLOCKING). No apply. | WORLD | ~17 | worker |
+| `OG-wp-1` | 4 | as R3-T.5 (the `email_deny` record's origin; partitions as fixtures). | SERVED | ~20 | worker-light |
+| `OG-r-4` | 5 | as R3-T.5, against the SERVED `4231bd2ddc`; `r4.AC3` PINNED to that commit. | SERVED | ~16 | worker |
+| `OG-tb-1` | 6 | as R3-T.5 (the 9 OPLGTW red tests). | WORLD | ~18 | worker |
+| `OG-o-4` | 6 | as R3-T.5, handed after `OG-rl-4` closes (the runbook names the live release); OGO2-J1 at L9 by `3.0.0_SA_CVO~O`. | WORLD | ~21 | worker-light |
+| `OG-gr-1` | 7 | as R3-T.5 (grain measurement, row Z-W10-S1). | LOCAL | ~22 | worker |
+
+**Chains.** `OG-au-1` + `OG-sr-1` -> `OG-rl-4` -> `OG-o-4`. `OG-r-4` gates `OG-rl-4`'s PHASE B, so the bench and the
+deploy never overlap. The other five cells stand alone. fanout: 8 independent starts (`au-1`, `sr-1`, `r-4`, `g-2`,
+`tf-1`, `wp-1`, `tb-1`, `gr-1`), cap 8; `rl-4` and `o-4` are handed as their chains clear.
+
+**Changes from the R3-T.5 draft, each with its cause:**
+- live ref `3a7d6a7dc8` -> `4231bd2ddc` everywhere it means "live" (OG-rl-3 shipped);
+- `OG-rl-3` -> `OG-rl-4` (the label is taken), with the CVO half required (analysis round 13, ruling 4);
+- `OG-sr-1` added (the CVO's finding);
+- `.env` 48 -> 50 (`r14/RL4_ENV_KEYS_BEFORE.txt`, SSM b596b265);
+- `r4.AC3` pinned and `OG-o-4` chained (both read the live manifest, which OG-rl-4 moves in this round);
+- `g2.AC1` resolves citations at `4231bd2ddc`;
+- the draft table's risk column is corrected to each order's own `<risk>`.
+
+**Guard N1** (the CVO's half on OG-rl-3): any rotation of `gateway/{teams,mail,transcripts}/bearer` re-runs ht.AC3's
+200 arm the same sitting, until `OG-rl-4` ships the symmetric refusal.
+
+**Stated dependencies, not cells.** These carry over from R3-T.5:
+- The G-E grant write and the `schwab` switch follow Andrew's tests and `OG-g-2`.
+- Z-S43's re-run waits on the invitation.
+- Z-W13-S5 waits on the LGIC gate owner.
+- Z-W12-S7, the operator re-consent, is due before 2026-10-15.
+
+Z-S41 is discharged. The D9 -> D6 move stays deferred, and round 14 issues in D9.
