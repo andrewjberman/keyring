@@ -1,5 +1,19 @@
 # Reboot brief -- 2.0.0_SA_COO~M -- rewritten 2026-10-02 04:0xZ at the wind-down; updated 05:2xZ
 
+**UPDATE 2026-10-03 08:4xZ -- S18 (supersedes every line below where they differ):**
+- Row MDPF_SECCLASS-S18 (the 04:00Z BD gold run dropped 335 open accounts, $78.6M, from as_of 10-01); cause row S19 (A_03
+  confirms backfill-only accounts open from a WEEKLY allocation file). Ledger `secclass-s18-restore-0930-m-20261003`: legs 0, H
+  (both gold rules DISABLED 07:17Z), C (23,542 served keys restored; 1 multipart ETag mismatch content-verified), V (mix 09-30
+  $1,843,114,311.70) CLOSED. Leg R OPEN: when the cell lands, C_06 watermarks to 09-30 + rules re-enabled BEFORE MONDAY 04:00Z,
+  else report by Sunday 18:00Z.
+- Class cell (CTO batch 220; lane batch 221): A_03 liveness from the accounts dimension + a frontier backstop on the built
+  partitions + no gate-watermark advance on refusal. CLOUD 564d5bede9 / 5df4c735fa (drains 4f1c1b2b59, dafb13cfb2), 6 + 74 tests,
+  NOT deployed. Deployed A_03 = VersionId 1MYNHoSQ.. (md5 6bce3508, rollback). NEXT: delta census
+  (R9_CHECKS/s18_cell_delta_census.py), the cell's half to the CTO (signs on receipt), then deploy + watermark reset + one QA
+  run + leg R.
+- Other owed (unchanged): BD r4 leg S walk; cot re-point leg S; cot seed leg G; multi_asset packet and TARGET-fold 49F QA are
+  HEAVY (memory reaper) -- user's word before restarting.
+
 **UPDATE 19:4xZ -- STATE (supersedes every line below where they differ):**
 - Portal PROD f76b02acb6 carries eb90f2ad (Andrew's promote; read 13:56:40Z). Both re-land acts RAN.
 - BD r3 RE-LAND (ledger `secclass-bd-thread-r4-reland-m-20261002`): P, M (drain ac44b6aaaf, release b3442d6ea1), G (five files

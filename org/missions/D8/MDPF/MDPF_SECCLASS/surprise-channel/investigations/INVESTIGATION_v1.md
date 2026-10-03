@@ -1318,3 +1318,31 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Disarmed by the S18 restore (ledger secclass-s18-restore-0930-m-20261003) and the fire hold (both gold rules DISABLED 07:17Z, batch 219). The class cell (batch 213 item 2) is the remedy: refuse an as_of with an open, previously held, unclosed account absent from the new cube -- and the allocation read should use the latest allocation file at or before the date, not only that exact date. Separately: the RPS partition is July's (row to follow if it matters for the cell)."
 }
 ```
+
+
+## MDPF_SECCLASS-S20 -- the BD accounts dimension marks accounts open that have not traded since 2022 (account_is_open is not liveness)
+
+```json
+{
+  "id": "MDPF_SECCLASS-S20",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-03T09:30:00Z",
+  "one_line": "The BD accounts dimension marks 10,702 of 11,071 accounts OPEN (account_is_open True, closed_date null), including 3,568 backfill-only accounts whose last transaction is before 2026-09-30, many from 2020-2023; account_is_open is not a liveness signal for pre-2026 accounts.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "R9_CHECKS/S18_CELL_DELTA_CENSUS_20261003.json (read-only, A_03's own end-date rule over 1,917 silver/transactions files, 7,623,501 rows): dimension_open 10,702 of 11,071 accounts; treating every dimension-open account as live uncaps 4,095 backfill-only accounts, 3,568 with a last trade before 09-30 (by month, e.g. 2023-02: 858, 2024-03: 256), ~3.55M account-days; the 1,220 with a readable aua_timeseries last held $223,882,556.85",
+      "gold/dimensions/accounts_dimension_latest.parquet (04:03:21Z): _last_txn_file_date is never before 2025-01-01 for an open account, so it is not the last trade date either",
+      "data/black_diamond/scripts/gold/A_00.accounts_dimension.py:6-13 (header): account status is enriched from silver/allocations 'latest snapshot (left join, Jan 2026+ accounts only)'; inferred: older accounts keep a default open status"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Consumers of ACCOUNTS_DIMENSION (comp-pipescript lists A_03, B_00, C_06, D_04 and 20 more gold scripts) read account_is_open / closed_date as whether an account is open now.",
+  "world_is": "For pre-2026 accounts the field reads open whether or not the account still exists; any consumer that keys liveness or inclusion on it alone over-counts. The S18 class cell does not rely on it alone: A_03 carries an account forward only when it is open in the dimension AND held on the reference day (CLOUD 13d0277249).",
+  "notes": "Off-task finding from the S18 cell census. Not read: which other consumers key inclusion on account_is_open alone (B_00.load_account_closures uses ~account_is_open). Owner of the field: A_00's producer lane (POD4)."
+}
+```

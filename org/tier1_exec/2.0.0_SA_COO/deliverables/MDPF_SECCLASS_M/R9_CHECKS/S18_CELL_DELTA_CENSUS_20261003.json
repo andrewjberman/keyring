@@ -1,0 +1,212 @@
+{
+ "claim": "measured (A_03's own rule over the current silver inputs, read-only); limit: no transaction_id de-dup",
+ "inputs": {
+  "txn_files": 1917,
+  "txn_rows": 7623501,
+  "files_without__source_file": 0,
+  "accounts": 11071,
+  "max_trade_date": "2026-10-01",
+  "allocation_file_for_max_trade_date_open": 0,
+  "phantom_alive_set": 0,
+  "dimension_open": 10702
+ },
+ "cube": {
+  "latest_partition": "2026-10-01",
+  "day_before": "2026-09-30",
+  "accounts_day_before": 6836,
+  "accounts_latest": 6509,
+  "dimension_open_on_day_before_absent_from_latest": 335
+ },
+ "rule": {
+  "old_capped": 4467,
+  "new_capped": 372,
+  "uncapped_by_the_fix": 4095,
+  "frontier_class": 527,
+  "frontier_class_covers_the_drop": 332,
+  "drop_not_in_frontier_class": [
+   "z0818919951",
+   "z0821124151",
+   "z0822808251"
+  ],
+  "history_class": 3568,
+  "history_class_account_days": 3552899,
+  "history_class_by_last_trade_month": {
+   "2020-08": 1,
+   "2020-10": 1,
+   "2020-12": 2,
+   "2021-01": 3,
+   "2021-02": 3,
+   "2021-03": 1,
+   "2021-04": 4,
+   "2021-05": 2,
+   "2021-07": 3,
+   "2021-08": 7,
+   "2021-09": 7,
+   "2021-10": 7,
+   "2021-11": 11,
+   "2021-12": 8,
+   "2022-01": 12,
+   "2022-02": 16,
+   "2022-03": 14,
+   "2022-04": 25,
+   "2022-05": 20,
+   "2022-06": 24,
+   "2022-07": 15,
+   "2022-08": 19,
+   "2022-09": 10,
+   "2022-10": 8,
+   "2022-11": 47,
+   "2022-12": 207,
+   "2023-01": 225,
+   "2023-02": 858,
+   "2023-03": 40,
+   "2023-04": 11,
+   "2023-05": 6,
+   "2023-06": 8,
+   "2023-07": 8,
+   "2023-08": 23,
+   "2023-09": 19,
+   "2023-10": 9,
+   "2023-11": 8,
+   "2023-12": 11,
+   "2024-01": 14,
+   "2024-02": 73,
+   "2024-03": 256,
+   "2024-04": 122,
+   "2024-05": 103,
+   "2024-06": 245,
+   "2024-07": 53,
+   "2024-08": 73,
+   "2024-09": 32,
+   "2024-10": 26,
+   "2024-11": 47,
+   "2024-12": 55,
+   "2025-01": 66,
+   "2025-02": 37,
+   "2025-03": 43,
+   "2025-04": 34,
+   "2025-05": 62,
+   "2025-06": 37,
+   "2025-07": 60,
+   "2025-08": 39,
+   "2025-09": 51,
+   "2025-10": 85,
+   "2025-11": 42,
+   "2025-12": 61,
+   "2026-01": 28,
+   "2026-07": 12,
+   "2026-08": 13,
+   "2026-09": 96
+  },
+  "history_class_last_positive_aua_sum": 223882556.85,
+  "history_class_unreadable": 2348,
+  "history_class_never_positive": 3
+ },
+ "history_class_sample": {
+  "z0812084971": [
+   "2023-03-17",
+   [
+    "unreadable",
+    "An error occurred (NoSuchKey) when calling the GetObject ope"
+   ]
+  ],
+  "z0812085231": [
+   "2022-12-28",
+   [
+    "unreadable",
+    "An error occurred (NoSuchKey) when calling the GetObject ope"
+   ]
+  ],
+  "z0812085241": [
+   "2022-12-28",
+   [
+    "unreadable",
+    "An error occurred (NoSuchKey) when calling the GetObject ope"
+   ]
+  ],
+  "z0812085251": [
+   "2022-12-28",
+   [
+    "unreadable",
+    "An error occurred (NoSuchKey) when calling the GetObject ope"
+   ]
+  ],
+  "z0812091191": [
+   "2022-11-29",
+   [
+    "unreadable",
+    "An error occurred (NoSuchKey) when calling the GetObject ope"
+   ]
+  ],
+  "z0812091371": [
+   "2022-12-29",
+   [
+    "unreadable",
+    "An error occurred (NoSuchKey) when calling the GetObject ope"
+   ]
+  ],
+  "z0812091591": [
+   "2022-11-29",
+   [
+    "unreadable",
+    "An error occurred (NoSuchKey) when calling the GetObject ope"
+   ]
+  ],
+  "z0812091751": [
+   "2022-12-15",
+   [
+    "unreadable",
+    "An error occurred (NoSuchKey) when calling the GetObject ope"
+   ]
+  ],
+  "z0812091761": [
+   "2022-12-19",
+   [
+    "unreadable",
+    "An error occurred (NoSuchKey) when calling the GetObject ope"
+   ]
+  ],
+  "z0812092511": [
+   "2022-11-02",
+   [
+    "unreadable",
+    "An error occurred (NoSuchKey) when calling the GetObject ope"
+   ]
+  ],
+  "z0812092851": [
+   "2022-12-02",
+   [
+    "unreadable",
+    "An error occurred (NoSuchKey) when calling the GetObject ope"
+   ]
+  ],
+  "z0812096211": [
+   "2022-12-29",
+   [
+    "unreadable",
+    "An error occurred (NoSuchKey) when calling the GetObject ope"
+   ]
+  ],
+  "z0812096221": [
+   "2022-12-29",
+   [
+    "unreadable",
+    "An error occurred (NoSuchKey) when calling the GetObject ope"
+   ]
+  ],
+  "z0812153551": [
+   "2024-03-06",
+   [
+    "unreadable",
+    "An error occurred (NoSuchKey) when calling the GetObject ope"
+   ]
+  ],
+  "z0812153641": [
+   "2025-01-27",
+   [
+    "2024-09-18",
+    58615.99
+   ]
+  ]
+ }
+}
