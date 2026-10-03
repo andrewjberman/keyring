@@ -371,7 +371,7 @@ if ! git merge --no-commit --no-ff "$BRANCH"; then
 fi
 fi
 
-# ⛔ THE PRIVATE INDEX IS TAKEN HERE, RIGHT AFTER THE MERGE, NOT AFTER THE GRADE (NFRA_OPLGTW-Z-S23 residual,
+# STOP: THE PRIVATE INDEX IS TAKEN HERE, RIGHT AFTER THE MERGE, NOT AFTER THE GRADE (NFRA_OPLGTW-Z-S23 residual,
 # 0.0.0_AB_MSTR~Z 2026-10-03: drain 1e54d613a2 carried 1.0.0_SA_CTO~O's NFRA_OPLGTW project.json). The grade takes
 # minutes. A peer that stages a path INSIDE HEAD..MERGE_HEAD during it passes the late sweep, which can only name paths
 # the merge could NOT have staged, and the snapshot used to be taken after that. Taken here, a peer has only the seconds
