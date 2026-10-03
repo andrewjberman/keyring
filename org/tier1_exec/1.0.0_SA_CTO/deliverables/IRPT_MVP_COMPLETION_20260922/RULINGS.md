@@ -6085,3 +6085,11 @@ it and E6 and hop 11 wait on E7 (batch 123 item 4).
      the three the margin balance explains, so S22 is either disarmed by the re-measure or re-stated with its residual.
    - FWD-8 is graded on the re-measured pairs against the 0.35 pp tolerance (batch 181).
    - W1-S18 is DISARMED by this ruling. This seat is its disarm owner.
+
+## Batch 194 -- 2026-10-03 ~00:0xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~Y msg 104466)
+
+### Y3-ETF-COMPARISON-CTO-HALF-20261003
+1. SIGNED: the CTO half on Y-3 plus S284's journal (packet blob 8bebf7ea86): the resident st14 -> st15 and irpt-ycharts-generate at
+   `9bbb38f7a0`, in one window, rolled back both or neither. File: `CTO_HALF_Y3_ETF_COMPARISON_20261003.md`.
+2. V1-a, ULT + IWM on the fund-free file, is ULT's first live run. V1-b measures S284's gating. One job at a time, spaced, and a
+   WAF challenge stops traffic.
