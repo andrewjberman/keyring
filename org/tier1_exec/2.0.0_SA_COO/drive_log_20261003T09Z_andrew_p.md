@@ -1,4 +1,4 @@
-# Drive log -- 2.0.0_SA_COO~P -- 2026-10-03 09Z (ticks 80-82)
+# Drive log -- 2.0.0_SA_COO~P -- 2026-10-03 09Z (ticks 80-85)
 
 Leases FULL (IRPT_BCKEND, IRPT_DASHBD). All day, the P-2 window has been BLOCKED on one thing: Andrew's B2 (portal PROD promote)
 word. `0.0.0_AB_MSTR` read the card at 08:44Z.
@@ -30,3 +30,15 @@ Blocked on Andrew's word. The CVO was compiling.
   - Nothing is parked on a human delete confirmation.
 - The CTO and the CVO were told (104597, 104598).
 - `2.0.0_SA_COO~Y`'s uncommitted IB-yr-242 edit was left untouched.
+
+## Tick 83 (09:37Z-09:4xZ): a correction
+
+Batch 223, read in full, says an absent principal closes COMPLETE on the read.
+- **IB-rtf-3** is re-closed `complete` @e476b6c290, correcting @84fd5af89b's `superseded`. The measurement is unchanged. The CVO
+  was told (inbox 20261003T094051Z).
+- The same batch's IRPT_DASHBD 10-11 addendum adds no cells: the next issuance is the P-2 window.
+- All three batch-223 orders are terminal (~Y closed IB-yr-242 @88752275c0).
+
+## Ticks 84-85 (09:47Z, 09:57Z): NO-OP
+
+Blocked on Andrew's B2 word. The CVO's 36-41 compile is pending.
