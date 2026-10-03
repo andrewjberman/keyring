@@ -4,36 +4,37 @@ Seat `2.0.0_SA_COO~Y` (CLAUDE). Mode FAST: lease `IRPT_BCKEND~Y` (renewed by the
 Loop `/canonical-drive IRPT_BCKEND`. Way forward: CTO rulings in
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md` (latest read: batches 177, 178, 186)
 and the fold-in `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_FOLD_IN_IRPT_THREE_BRIEFS_20261002.md` section 2 (Y-1..Y-6,
-Y-H). Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-03T01:5xZ.
+Y-H). Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-03T03:0xZ.
 
 ## Pins
 
 | What | Value |
 |---|---|
-| CLOUD (local) | Y-3 + S284 journal `9bbb38f7a0` SERVED. No worktree held |
-| SERVED: `irpt-status` | `h7H7KgX1FsBu4XTLqqpcMOjMnwRdeL9xlGZPwzhibcg=` since 17:04Z (M2 pool + per-thread Tables + D2 SigV4 + E7b + E6 + item 22, members at `0f70e6156e`), 1024 MB, timeout 29 s. Ledger `irpt-status-m2-d2-r1-20261002` CLOSED 4/4. Rollback: re-promote S3 `9S5jAZLr..` + memory 256 |
-| SERVED: PDF route | `GET analysis/requests/{requestId}/pdf`, route `ihirb2s` on `7k3ed8px20` (integrations/8ogp332, authorizer naqxlm) since ~17:59Z. V1-b MATCH 4/4 |
-| SERVED: the resident | `/opt/irpt-resident/9bbb38f7a0-st15` since 00:05:11Z (Y-3; CTO half batch 194). Rollback root `f89fc8e731-st14` |
-| SERVED: `irpt-ycharts-generate` | `VZvhvWRMqD6mdaF8COT5JcUcnMxdvzCJe82Gs/9cnRk=` since ~00:09Z (Y-3). Rollback: re-promote S3 `y3LRNAoP..` (st14) -- both moves or neither |
-| Stored YCharts session | **EVICTED since ~00:10Z (row S288)**: every request answers 403; the resident's refresh failed (`AUTH_FAILED:NO_AUTHENTICATED_PROBE`). Vendor traffic STOPPED. Remedy: option A at Andrew's time (asked of the CTO 00:42Z) |
+| CLOUD (local) | Y-4 SERVED, evidence `e4461e1ddc`. Worktree `../coo-y-w206` held for W2-06 (uncommitted, in progress) |
+| SERVED: `irpt-status` | `h7H7KgX1FsBu4XTLqqpcMOjMnwRdeL9xlGZPwzhibcg=` since 2026-10-02 17:04Z, 1024 MB, timeout 29 s. Rollback: re-promote S3 `9S5jAZLr..` + memory 256 |
+| SERVED: PDF route | `GET analysis/requests/{requestId}/pdf`, route `ihirb2s` on `7k3ed8px20` since 2026-10-02 ~17:59Z |
+| SERVED: the resident | `/opt/irpt-resident/828c37c6f7-st17` since 03:04:34Z (Y-4; CTO half batch 199). Rollback root `34088050e0-st16` |
+| SERVED: `irpt-ycharts-generate` | `fD2R6OFrT2N086C9Go3e1aA9RKZCP/vfnZCaHCloJTs=` since 03:02Z (Y-4). Rollback: re-promote S3 `oew.wOPK..` (Y-5, `aug0YyWc..`) -- with the resident, all or none |
+| SERVED: runner role | Sid `ReadTheEstateKimiKey` (GetSecretValue on `astn/kimi/api-key-*`) since 02:58Z (Y-4 D3) |
+| Stored YCharts session | **EVICTED since 2026-10-03 ~00:10Z (row S288)**: every request answers 403. Vendor traffic STOPPED. Remedy: option A at Andrew's time |
 | Push state | LOCAL; CLOUD is pushed by `0.0.0_AB_MSTR` only |
 
-## Live thread -- fold-in Y-1..Y-6 (CTO batch 178; Andrew-direct ~18:1xZ)
+## Live thread -- fold-in Y-1..Y-6 (CTO batch 178; Andrew-direct 2026-10-02 ~18:1xZ)
 
-1. **BLOCKED on the session (S288):** no Analysis job can reach READY until the attended sign-in (option A). Asked of the CTO
-   00:42Z for routing to Andrew. No vendor call until then.
-2. **Y-3 SERVED** (ledger `irpt-y3-20261002`: U1, U2, D1, D2 closed; V1 open). Measured: IWM admitted at submission,
-   identity verified 1 of 1; READY pending the session. V1-b measured S284 = `mutualFundDataUSA` (S287).
-   Outcome `Y3/V1_CONTROL/OUTCOME_Y3_V1_AND_CONTROL_20261003.md`.
-3. **st14 DONE** (S279 fixed; wording corrected per batch 196). Case A's READY -> Y-5 (TIMXX is gated).
-4. **Y-5 packet 1 BUILT, MERGED and PACKETED** (code `a42ad6b675`, merge `34088050e0`; packet `Y5/NEVER_WIDEN_SIGNOFF_PACKET_Y5_20261003.md`
-   blob 2bff7eacdc, CTO half asked 01:5xZ). Ledger `irpt-y5-20261003`: U1, U2 closed (LF-clean build, 0 members differ from
-   git: S286 remedied). Andrew card 3: no mutual-fund data purchase; the proxy is the standing path. Interface sent to ~D.
-   V1 (Case A TIMXX -> SGOV) after option A; Y-3's READY first.
+1. **BLOCKED on the session (S288):** no Analysis job can reach READY until the attended sign-in (option A). No vendor
+   call until then.
+2. **Y-3 SERVED** (ledger `irpt-y3-20261002`: V1 open). IWM admitted and verified; READY waits on the session.
+3. **Y-5 packet 1 SERVED** 02:0xZ (ledger `irpt-y5-20261003`: V1 open). V1 = Case A TIMXX -> SGOV and Case D with proxies,
+   after Y-3's READY.
+4. **Y-4 SERVED** 03:05Z (ledger `irpt-y4-20261003`: U1, U2, D3, D1, D2 closed; V1 open). V1 = the typo file (APPL ->
+   AAPL), recording the check gate's elapsed seconds (CTO 104515). Next enrichment (not a ship condition): a per-upload
+   total budget for the gate; narrow the runner resource to `astn/kimi/api-key-??????`.
+5. After option A, in order: Y-3 READY, Y-5 V1, Y-4 V1, then Y-2 and Y-6.
 
 ## Queued irpt-status work
 
-W2-06 (`include=composition`, the frozen AnalysisSubmissionRequest; CTO batch 165) and G3 (render ports for the
+W2-06 (`include=composition`, the frozen AnalysisSubmissionRequest; CTO batch 165) -- IN PROGRESS in `../coo-y-w206`;
+its packet also attributes the two Y-5 `ops/status.py` entries (CTO batch 198). Then G3 (render ports for the
 Analysis print, CTO batch 175).
 
 ## Rows this lane holds
@@ -53,7 +54,9 @@ Analysis print, CTO batch 175).
 
 ## Ledgers this seat holds open
 
-- `irpt-y3-20261002`: U1, U2, D1, D2 closed; V1 open (READY pending the session re-capture).
+- `irpt-y3-20261002`: V1 open (READY pending the session re-capture).
+- `irpt-y5-20261003`: V1 open (after Y-3's READY).
+- `irpt-y4-20261003`: V1 open (after option A).
 
 ## Write claims
 
