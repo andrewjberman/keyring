@@ -252,3 +252,29 @@ Black Diamond outside it. Owner: 2.0.0_SA_COO~P. Un-park condition: P-2 has publ
 read back, as the next round GATE (x) admits.
 
 fanout: 1 of 1 chains (H: DB-b-15 on slot ~2; chain G's DB-b-14 terminal), cap 8, reason: one open cell; slot ~1's worktree is removed at its drain and slot ~2 gets its own.
+
+
+## 9. ROUND 9, WORKSTREAM B (2026-10-03 ~01:2xZ, issuer 2.0.0_SA_COO~P, on CTO RULINGS batch 197 @7563d60e68, msg 104491)
+
+Batch 197 answers round 5's P-3 ask:
+- (a) the per-client summary gets its OWN versioned contract, `org/standards/IRPT_DASHBD_CLIENT_SUMMARY_CONTRACT.json` 0.1.0;
+- (b) the read route serves it ONLY when the scope enforcer covers every account it names; partial coverage is
+  `OBJECT_NOT_COVERED`.
+
+The issuer adds the act the ruling assumes: no served code writes `summary.json` today (`build_client_summary` is called only by
+tests), so the publisher must write it. Two cells, disjoint from each other and from DB-b-15. ROUND 9 under GATE (x) (row S267).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-16` | P-3 (a)+(b): the summary contract 0.1.0 (window_status with its four-postulate record and census; unpublished_account_ids kept); the read route's summary GET served only on full per-account coverage, declared in the reporting-read Terraform (nothing served) | WORLD (the served read Lambda's source and its route text) | DB-b-12 (merged) | I |
+| `DB-b-17` | P-3 served path: the publisher's summaries pass writes every directory client's summary.json from all its published accounts, measured against 900 s and sharded by client if needed (nothing served) | WORLD (the served publisher's source; possibly its role's text) | DB-b-12, DB-b-14 (merged) | J |
+
+Then the P-2 packet carries all of it with the backfill:
+- DB-b-15's method version;
+- DB-b-14's backfill, union and fan-out;
+- DB-b-16's route and contract;
+- DB-b-17's summaries pass and its trigger;
+- P-6's retirement;
+- the P-1 walk with 2.0.0_SA_COO~D.
+
+fanout: 3 of 3 chains (H: DB-b-15 on slot ~2, running; I: DB-b-16 on slot ~3; J: DB-b-17 on slot ~4), cap 8, reason: disjoint write surfaces, disk 35 GB free.
