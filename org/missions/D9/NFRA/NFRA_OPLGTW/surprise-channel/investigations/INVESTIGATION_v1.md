@@ -7249,3 +7249,50 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W26-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~26",
+  "surfaced_at": "2026-10-03T20:12Z",
+  "one_line": "safe-apply's comp-tagauthz pre-apply gate runs its OWN plan of the root and fails closed with `No value for required variable` unless the two required variables are in the safe-apply process environment, and a PHASE A fresh cone without .tools has no safe-apply at all; step 10 'safe-apply that saved plan' therefore needs both (TF_VAR_* in the child env, .tools in the cone).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN 20:05Z: `bash .tools/safe-apply.sh -chdir=... apply <saved plan>` from the fresh sparse worktree (cone infra/aws infra/logic org/standards lib): rc 127, .tools/safe-apply.sh absent; after `git sparse-checkout add .tools`: rc 4, `safe-apply: ERROR -- could not produce a plan JSON to run the tag-authz gate`, cause two `No value for required variable` errors (mcportal_owner_key_claim, mcportal_owner_key).",
+      "RUN 20:07Z: the same command through a driver that read both values in memory from the live function environment into the child's TF_VAR_* only (output redacted, nothing written): safe-apply rc 0, `comp-tagauthz gate PASSED`, `Apply complete! Resources: 0 added, 1 changed, 0 destroyed.` Saved plan: C:/tmp/og26_off/apply.tfplan (outside the repo)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order step 10: re-plan with the same target and variable feed, then `safe-apply` the saved plan; the fresh cone is `infra/aws infra/logic org/standards lib`.",
+  "world_is": "A saved plan carries the variables, but the tag-authz gate re-plans without it. The apply needed the variable feed on safe-apply itself and .tools in the cone; the act landed after both. OG-tf-2 (which removes the two variables) is the cell that retires the need.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W26-S6",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~26",
+  "surfaced_at": "2026-10-03T20:12Z",
+  "one_line": "Resolves the open observation of row -W26-S3 by measurement: against POST-APPLY state the rollback plan (.build/staged = the saved deployed zip extracted) is one in-place update of the grant writer, changing attributes last_modified and source_code_hash only, environment unchanged; not applied.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN 20:10Z (tfplan_driver, same targeted plan and TF_VAR feed): rc 2, `Plan: 0 to add, 1 to change, 0 to destroy.`, RESOURCE aws_lambda_function.mcportal_grant_writer actions=['update'] changing_attrs=['last_modified','source_code_hash'], environment before==after True (3 keys), source_code_hash before ZyYCPPyP5CV53eZP+UJHIgAjq834J4OsvePgmS6k8rI= after nhz+dwJsDJLO9X3o1exvKdQ+OYE+PraxZSop2BJt9zI=, non-no-op 1 of 4. Plan saved C:/tmp/og26_off/rollback_post.tfplan (outside the repo); not applied."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order step 6: the rollback plan equals step 4's plan in shape (one in-place update, code hash only); row -W26-S3 recorded that this was unobservable before the apply.",
+  "world_is": "The shape is now observed, and the after-hash equals the pre-apply live hash, so the rollback is a measured equal-and-opposite update; it was not needed (read-back PASS).",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
