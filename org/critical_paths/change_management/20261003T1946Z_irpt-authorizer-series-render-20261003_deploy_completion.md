@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-03T19:46:49.560403+00:00
-**Status:** OPEN
+**Status:** CLOSED -- nothing stranded -- closed 20261003T201858Z
 **Deploy:** opal-portal-authorizer: the render-token branch admits the 49F reporting SERIES route (row S307, IB-pr-307 @79db37c149; packet blob 89ac848918 @5c92c0a; CTO half batch 227 @ca49283ff1)
 **Authored by:** 2.0.0_SA_COO~P
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -17,7 +17,7 @@
 | D2 | tf-lambda | targeted safe-apply aws_lambda_function.portal_authorizer (code only) | live CodeSha256 = artifact; re-plan 0 | 19:52:32Z targeted safe-apply 0/1/0 (s3_object_version QLGNN9 -> Ofvov7aT, source_code_hash sgQWoygZ -> gQp2IooA; env unchanged): live opal-portal-authorizer CodeSha256 gQp2IooAM3EgebVQeII27xcE+KuEDhyYfrlwr6Jqcsc= = artifact, Active/Successful, env keys [IRPT_RENDER_JWT_PUBLIC_KEY_PEM]; targeted re-plan No changes | CLOSED 20261003T195352Z |
 | S | verify | CTO stop: right after D2, a signed-in human request to a scoped route answers 200 and N1's 401s hold | human 200 + 401s; else roll D2 back to sgQWoygZ at once | CTO batch 227 stop, after D2 (19:52:32Z) and before P1/P2: 2.0.0_SA_COO~D's signed-in load (msg 104716) -- GET /api/scoped/investor-reporting/reporting/acc_.../manifest HTTP 200 at 19:55:57.885Z and .../series HTTP 200 at 19:55:58.431Z, the tab drew the account; corroborated by the authorizer log (the walker principal verified x19 from 19:55:43Z) and the read Lambda serving 2 invocations with 0 errors; N1's 401s held after D2 (4 of 4). No rollback owed | CLOSED 20261003T195812Z |
 | P2 | verify | a render token for account X asking the series route for account Y refuses | V2 refuses (path id does not match its claim); jti + sha256 recorded, no token | 19:58:18Z auth_p2_foreign_token_probe.py: a render token minted for 49F account X (accountSetId ...24d5; render key read by name, never printed; jti render-85027e4cc0b74436b4f21f2ec8a2ea17, token sha256 62aa058bef0a8e2e, exp-iat 300 s) asked GET .../reporting/acc_...21be/series (account Y) through opalinvest.dev -> HTTP 403 Forbidden; the edge (V3) logged render_accepted for that jti (shape), and the authorizer (V2) refused it on the NEW route entry: 'Render token path id does not match its claim' route GET .../reporting/{account_id}/{which}, claimName accountSetId -- the route is live in V2 and its account pin holds | CLOSED 20261003T195900Z |
-| P1 | verify | ~D re-walks a 49F export outside the six | the export issues a receipt naming the frozen as_of |  | OPEN |
+| P1 | verify | ~D re-walks a 49F export outside the six | the export issues a receipt naming the frozen as_of | CTO batch 228 (msg 104726, @3066549fe7): the authorizer-scoped half MET -- ~D's export for ****0090 (outside the six) was ACCEPTED at 20:02:44Z, receipt exr_07fe19290b7846e39a6afa0a, and its render-delegate series read passed V2 (bundle.json pins version H1BKI.nQTmldVL.FegvvlUp3T96eazsy, sha256 0b615516.., as_of 2026-10-01); the READY-receipt arm moves to the P-2 window's leg V behind row S308 (the served PrintEntry still requires selection; ~D's fix) | CLOSED 20261003T201833Z |
 
 ## Log
 
@@ -27,3 +27,5 @@
 - 20261003T195352Z LEG N1 closed: no-token and bogus-bearer GETs on /api/general/trades/x and /api/scoped/advisor-intelligence/clients/growth at opalinves
 - 20261003T195812Z LEG S closed: CTO batch 227 stop, after D2 (19:52:32Z) and before P1/P2: 2.0.0_SA_COO~D's signed-in load (msg 104716) -- GET /api/scop
 - 20261003T195900Z LEG P2 closed: 19:58:18Z auth_p2_foreign_token_probe.py: a render token minted for 49F account X (accountSetId ...24d5; render key read
+- 20261003T201833Z LEG P1 closed: CTO batch 228 (msg 104726, @3066549fe7): the authorizer-scoped half MET -- ~D's export for ****0090 (outside the six) wa
+- 20261003T201858Z CLOSED -- all 6 legs proven

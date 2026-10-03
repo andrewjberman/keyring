@@ -16824,3 +16824,32 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Remedy (~D's page, PrintEntry's performance-query check): accept a PATH B query -- account + start + end (+ version) -- as a performance print, keeping PATH A's selection form; then portal DEV and a PROD promote by 0.0.0_AB_MSTR. Then ~P re-dispatches or ~D re-walks; leg V and the authorizer P1 close on a READY receipt naming the frozen as_of."
 }
 ```
+
+## IRPT_BCKEND-S309 -- DISARM of IRPT_BCKEND-S307: the authorizer admits the series render route
+
+```json
+{
+  "id": "IRPT_BCKEND-S309",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-03T20:20Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARM of IRPT_BCKEND-S307 by its disarm owner (CTO batch 228): opal-portal-authorizer V2 admits the render-delegate token on the 49F reporting SERIES route (live gQp2IooA, 19:52:32Z); the export's series read now passes V2 and freezes; ledger irpt-authorizer-series-render-20261003 CLOSED 6 of 6",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB-pr-307 drained @79db37c149: RENDER_ROUTE_CLAIMS gains 'GET .../reporting/{account_id}/{which}' (account_id -> accountSetId, which == series); 9 of 9 tests; the human path byte-unchanged",
+      "ledger irpt-authorizer-series-render-20261003 (change_management/20261003T1946Z_..._deploy_completion.md): N1 401 x4 before/after; D2 live = artifact gQp2IooA; stop: signed-in GETs 200 x2; P2: a foreign-account render token 403 at V2's new entry; P1: the export ACCEPTED (exr_07fe19290b7846e39a6afa0a) with its frozen series pin",
+      "CTO batch 228 (msg 104726, @3066549fe7): 'authorizer ledger CLOSES (S307 disarmed); READY-receipt arm moves to leg V behind S308'"
+    ]
+  },
+  "dismissal_reason": "S307's hazard was V2 denying the export's render-delegate read. That read now passes V2 in production (the export accepted and froze). The remaining failure to a READY receipt is a different defect on the print page, row S308, owned by 2.0.0_SA_COO~D.",
+  "spec_asserts": "IRPT_BCKEND-S307: the API Gateway authorizer refuses the PATH B export's render-delegate series read.",
+  "world_is": "MEASURED: since 19:52:32Z V2 admits the series read for a render token pinned to the same account and refuses a foreign one (403).",
+  "notes": "Leg V of irpt-p2-window-20261003 stays open on S308."
+}
+```
