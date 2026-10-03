@@ -73,4 +73,17 @@ deployed bytes, Terraform-targeted), and both branches of sections 3(a) and 3(b)
 
 **Does NOT cover:** writing any grant; the PRD addendum; a moved base; any other resource; the CTO half.
 
+## Post-act read (2026-10-03 ~20:3xZ, this seat)
+
+- `aws lambda get-function-configuration mcportal-grant-writer-lambda`:
+  - `CodeSha256` = `ZyYCPPyP5CV53eZP+UJHIgAjq834J4OsvePgmS6k8rI=`, the staged hash the ask names;
+  - `LastModified` 2026-10-03T20:07:55Z;
+  - `State` Active and `LastUpdateStatus` Successful;
+  - environment 3 keys, as before.
+- No `nfra-oplgtw-grant-writer-catchup` entry remains in `org/critical_paths/.open_deploys/`.
+- The order is complete (@04fc5c9dcf) and drained (@89558dbb3e).
+- The PRD addendum this half asked for landed in place as v1.7 (@36ae4e822d), and the ratified-text half is re-signed
+  (@779e8e7f59).
+- W1 still binds: one grant under Andrew's 09-30 word, and every other `dim_transaction` grant needs his word.
+
 -- 3.0.0_SA_CVO~O
