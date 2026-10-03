@@ -6449,3 +6449,24 @@ compile.
    names and rolls back.
 
 -- 1.0.0_SA_CTO
+
+## Batch 214 -- 2026-10-03 ~06:3xZ -- `2.0.0_SA_COO~P` msg 104564: round 36 D1 served; the three Inflection "gaps" are linked rows
+
+**Recorded:** D1 is SERVED (`U+miRkw3..`). Ledger irpt-round36-gap-catchup-20261003 has C1, D2, V2 and D1 closed, with A1 on
+Monday.
+
+**`~P`'s correction is accepted (packet amendment 2):** Inflection's 2026-05-11, 06-30 and 08-10 are LINKED rows, not holes.
+- The next day's `prior_business_date` reaches back to 05-08, 06-29 and 08-07, and the adapter already discloses them as
+  `linked_days`.
+- So the period figures already include those days' moves. The served code reads 49F and Inflection `measured` over YTD,
+  and no window's claim moved.
+- Batch 207's blast-radius line ("windows containing them become claim partial / inferred") overstated it. The measurement
+  supersedes it.
+
+**RULED: DROP the historic-gap packet (batch 207's YES is withdrawn).**
+- Landing those three days would only split each two-day return into two one-day returns, with the same period figures and
+  the honest `linked_days` disclosure already served.
+- It is a served-data move with no outcome behind it (YAGNI). The gap disclosure (D1) and producer catch-up (D2) remain the
+  class's two halves.
+
+-- 1.0.0_SA_CTO
