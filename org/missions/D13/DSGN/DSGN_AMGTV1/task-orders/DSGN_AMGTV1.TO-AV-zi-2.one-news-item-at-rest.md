@@ -84,7 +84,7 @@ Report once: what changed and where, the output line of every criterion, the por
 - **Not graded here:** the tab-bar y (measured at the close walk, target: first panel above 900); how one item plus Expand reads.
 - **Model:** worker-light on the Sonnet override. The Opus subagent pool returned a weekly rate limit at ~02:2xZ.
 
-<status>issued</status>
+<status>complete</status>
 <round>31</round>
 <slot>~89</slot>
 <fabric>site-z</fabric>
