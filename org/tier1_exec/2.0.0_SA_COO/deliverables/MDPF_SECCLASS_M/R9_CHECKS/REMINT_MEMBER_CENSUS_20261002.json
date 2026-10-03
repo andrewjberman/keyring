@@ -1,0 +1,1285 @@
+{
+ "generated_at": "2026-10-03T01:20:20.410784+00:00",
+ "cloud": "7563d60e68a72e39fc057c2326da0af9dede5bac",
+ "bundles": {
+  "irpt_holdings_49f": {
+   "bucket": "opal-data-49financial",
+   "key": "irpt/49financial/code/gold/investor-reporting-holdings.tar.gz",
+   "served_version": "JSR5ofM0wW5EHpd2qPU2ZyqWEP63VHE0",
+   "served_last_modified": "2026-10-01T20:41:06+00:00",
+   "members": 44,
+   "differing": [
+    {
+     "member": "data/assets/scripts/gold/build_cottonwood_mdpf_pair.py",
+     "state": "differs",
+     "served_equals_commit": "4ce72c343ddba009cc50708bdc294021fd2902e9",
+     "changes_riding": [
+      {
+       "commit": "a3866c3dfb",
+       "author": "0.0.0_AB_MSTR",
+       "date": "10-01",
+       "subject": "hold(0.0.0_AB_MSTR): DEPLOY-SERVE-HELD on seven pipeline scripts -- the laptop push carries no held script; LD-0613 Progress 77"
+      },
+      {
+       "commit": "85dd7adc26",
+       "author": "4.0.0_SA_CRO",
+       "date": "10-01",
+       "subject": "feat(MDPF Cottonwood custom models + SMA sleeves, 4.0.0_SA_CRO, Andrew-direct): Cottonwood's Opal custom models land in Models > Custom; DIVZ SMA and the Pathfi"
+      }
+     ]
+    },
+    {
+     "member": "data/assets/scripts/gold/build_cottonwood_mdpf_slice.py",
+     "state": "differs",
+     "served_equals_commit": "0d09727e5337eb08e89f264edcfeb27466e87da4",
+     "changes_riding": [
+      {
+       "commit": "a3866c3dfb",
+       "author": "0.0.0_AB_MSTR",
+       "date": "10-01",
+       "subject": "hold(0.0.0_AB_MSTR): DEPLOY-SERVE-HELD on seven pipeline scripts -- the laptop push carries no held script; LD-0613 Progress 77"
+      },
+      {
+       "commit": "85dd7adc26",
+       "author": "4.0.0_SA_CRO",
+       "date": "10-01",
+       "subject": "feat(MDPF Cottonwood custom models + SMA sleeves, 4.0.0_SA_CRO, Andrew-direct): Cottonwood's Opal custom models land in Models > Custom; DIVZ SMA and the Pathfi"
+      }
+     ]
+    },
+    {
+     "member": "data/assets/scripts/gold/build_dim_model_portfolio.py",
+     "state": "differs",
+     "served_equals_commit": "75e379d6ae7ba0e1fe2099782dae1838a0640aba",
+     "changes_riding": [
+      {
+       "commit": "a3866c3dfb",
+       "author": "0.0.0_AB_MSTR",
+       "date": "10-01",
+       "subject": "hold(0.0.0_AB_MSTR): DEPLOY-SERVE-HELD on seven pipeline scripts -- the laptop push carries no held script; LD-0613 Progress 77"
+      },
+      {
+       "commit": "85dd7adc26",
+       "author": "4.0.0_SA_CRO",
+       "date": "10-01",
+       "subject": "feat(MDPF Cottonwood custom models + SMA sleeves, 4.0.0_SA_CRO, Andrew-direct): Cottonwood's Opal custom models land in Models > Custom; DIVZ SMA and the Pathfi"
+      }
+     ]
+    },
+    {
+     "member": "data/assets/scripts/gold/investor_reporting/holdings_inf.py",
+     "state": "differs",
+     "served_equals_commit": "b26847ea0422ccb06e0c755d3c1d9235cfc72a44",
+     "changes_riding": [
+      {
+       "commit": "a3866c3dfb",
+       "author": "0.0.0_AB_MSTR",
+       "date": "10-01",
+       "subject": "hold(0.0.0_AB_MSTR): DEPLOY-SERVE-HELD on seven pipeline scripts -- the laptop push carries no held script; LD-0613 Progress 77"
+      }
+     ]
+    },
+    {
+     "member": "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py",
+     "state": "differs",
+     "served_equals_commit": "b26847ea0422ccb06e0c755d3c1d9235cfc72a44",
+     "changes_riding": [
+      {
+       "commit": "4cc72587d6",
+       "author": "2.0.0_SA_COO~M",
+       "date": "10-02",
+       "subject": "feat(MDPF_SECCLASS readers packet, 2.0.0_SA_COO~M): the Holdings producer and its published contract admit `multi_asset` -- readers first, no row carries it yet"
+      },
+      {
+       "commit": "a3866c3dfb",
+       "author": "0.0.0_AB_MSTR",
+       "date": "10-01",
+       "subject": "hold(0.0.0_AB_MSTR): DEPLOY-SERVE-HELD on seven pipeline scripts -- the laptop push carries no held script; LD-0613 Progress 77"
+      }
+     ]
+    },
+    {
+     "member": "data/assets/scripts/silver/rebalancer_schemas.py",
+     "state": "differs",
+     "served_equals_commit": "1351c74d96246baf25ef6032ef17f69e59800a09",
+     "changes_riding": [
+      {
+       "commit": "a3866c3dfb",
+       "author": "0.0.0_AB_MSTR",
+       "date": "10-01",
+       "subject": "hold(0.0.0_AB_MSTR): DEPLOY-SERVE-HELD on seven pipeline scripts -- the laptop push carries no held script; LD-0613 Progress 77"
+      },
+      {
+       "commit": "85dd7adc26",
+       "author": "4.0.0_SA_CRO",
+       "date": "10-01",
+       "subject": "feat(MDPF Cottonwood custom models + SMA sleeves, 4.0.0_SA_CRO, Andrew-direct): Cottonwood's Opal custom models land in Models > Custom; DIVZ SMA and the Pathfi"
+      }
+     ]
+    },
+    {
+     "member": "infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py",
+     "state": "differs",
+     "served_equals_commit": "b0e1f33471658cbd85070371b3de375a9d35c7c8",
+     "changes_riding": [
+      {
+       "commit": "a96e00c279",
+       "author": "2.0.0_SA_COO~M",
+       "date": "10-01",
+       "subject": "fix(MDPF_SECCLASS W12-S2, 2.0.0_SA_COO~M FAST): ETFClassifier.classify_holdings sums any class the table holds instead of raising KeyError (the client and its t"
+      },
+      {
+       "commit": "cf24f07493",
+       "author": "0.9.0_WK_MDPF_SECCLASS~11",
+       "date": "09-30",
+       "subject": "build(MDPF_SECCLASS r6, 0.9.0_WK_MDPF_SECCLASS~11): SC-e-14 -- find_by CUSIP filter (client + 2 byte-identical copies), seed PRE-READ count excludes CUSIP rows,"
+      }
+     ]
+    },
+    {
+     "member": "data/inf/scripts/silver/_orion_api_silver_lib.py",
+     "state": "differs",
+     "served_equals_commit": "4fc07eb397cc0fd5b0af500283a70ba518c7d1fe",
+     "changes_riding": [
+      {
+       "commit": "2e5173d3b6",
+       "author": "0.9.0_WK_IRPT_BCKEND~97",
+       "date": "09-30",
+       "subject": "IB-pr-261: flat fallback import for silver_ids in _orion_api_silver_lib.py; open ledger inf-silver-ids-ship-20260930 (+ sentinel) and the pre-copy readings deli"
+      }
+     ]
+    },
+    {
+     "member": "data/mdpf/scripts/gold/dim_mdpf_account_distribution.py",
+     "state": "differs",
+     "served_equals_commit": "5c685f6d614e55f8443268337eac29f249875ee2",
+     "changes_riding": [
+      {
+       "commit": "e20899bce7",
+       "author": "4.0.0_SA_CRO",
+       "date": "10-01",
+       "subject": "fix(MDPF account-distribution, 4.0.0_SA_CRO): a one-account population's std_dev is None, never NaN"
+      }
+     ]
+    },
+    {
+     "member": "data/mdpf/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py",
+     "state": "differs",
+     "served_equals_commit": "ebd2370ee98cd3785a1919d3e214cf1bba628fcf",
+     "changes_riding": [
+      {
+       "commit": "85dd7adc26",
+       "author": "4.0.0_SA_CRO",
+       "date": "10-01",
+       "subject": "feat(MDPF Cottonwood custom models + SMA sleeves, 4.0.0_SA_CRO, Andrew-direct): Cottonwood's Opal custom models land in Models > Custom; DIVZ SMA and the Pathfi"
+      },
+      {
+       "commit": "62fa52fa6f",
+       "author": "4.0.0_SA_CRO",
+       "date": "09-30",
+       "subject": "build(MDPF_TAXSMA E1 stage B, 4.0.0_SA_CRO FAST): RIA routes each claim to its custodian (Schwab 0833 | Black Diamond), the workbook AUM (Mn) values a claim abs"
+      }
+     ]
+    },
+    {
+     "member": "data/mdpf/scripts/gold/dim_mdpf_aum_metrics.py",
+     "state": "differs",
+     "served_equals_commit": "4707880967cde039674c95301bda4f4f6ff93d4d",
+     "changes_riding": [
+      {
+       "commit": "1e5e13d223",
+       "author": "4.0.0_SA_CRO",
+       "date": "09-30",
+       "subject": "build(MDPF_TAXSMA E2c, 4.0.0_SA_CRO FAST): Cottonwood's Tax is added to Global once, under an overlap control on Cottonwood's model-assigned accounts; contract "
+      },
+      {
+       "commit": "3f03d42024",
+       "author": "4.0.0_SA_CRO",
+       "date": "09-30",
+       "subject": "fix(MDPF_TAXSMA aum-metrics, 4.0.0_SA_CRO FAST): total.tax_additive_aum exists only where the spine carries additive Tax -- with Tax off the document keeps its "
+      },
+      {
+       "commit": "ec7d6ee115",
+       "author": "4.0.0_SA_CRO",
+       "date": "09-30",
+       "subject": "build(MDPF_TAXSMA E2b.2, 4.0.0_SA_CRO FAST): the Global aum-metrics total carries tax_additive_aum -- the same value its taxsma fee-basis component names -- so "
+      },
+      {
+       "commit": "faf88511b9",
+       "author": "4.0.0_SA_CRO",
+       "date": "09-30",
+       "subject": "build(MDPF_TAXSMA E2b, 4.0.0_SA_CRO FAST): Tax folds into the served 49financial and Global totals once -- carry the last complete figure on an unknown day, no "
+      }
+     ]
+    },
+    {
+     "member": "data/mdpf/scripts/gold/mdpf_category_registry.py",
+     "state": "differs",
+     "served_equals_commit": "b6e97e9685466476536424bf45b77a2a8081a1c8",
+     "changes_riding": [
+      {
+       "commit": "46d04eb7b6",
+       "author": "4.0.0_SA_CRO",
+       "date": "10-01",
+       "subject": "build(MDPF_TAXSMA E2d, 4.0.0_SA_CRO FAST): Cottonwood's own tree shows the Tax leaf under SMA as a carve-out of Client, totals unchanged; the SMA basis is decla"
+      }
+     ]
+    },
+    {
+     "member": "data/mdpf/scripts/gold/mdpf_revamp_model_crosswalk.py",
+     "state": "differs",
+     "served_equals_commit": "0d09727e5337eb08e89f264edcfeb27466e87da4",
+     "changes_riding": [
+      {
+       "commit": "85dd7adc26",
+       "author": "4.0.0_SA_CRO",
+       "date": "10-01",
+       "subject": "feat(MDPF Cottonwood custom models + SMA sleeves, 4.0.0_SA_CRO, Andrew-direct): Cottonwood's Opal custom models land in Models > Custom; DIVZ SMA and the Pathfi"
+      }
+     ]
+    },
+    {
+     "member": "data/mdpf/scripts/gold/taxsma_assets.py",
+     "state": "differs",
+     "served_equals_commit": "170733361984bf872e8a0de6416ccd6338c7e4b4",
+     "changes_riding": [
+      {
+       "commit": "faf88511b9",
+       "author": "4.0.0_SA_CRO",
+       "date": "09-30",
+       "subject": "build(MDPF_TAXSMA E2b, 4.0.0_SA_CRO FAST): Tax folds into the served 49financial and Global totals once -- carry the last complete figure on an unknown day, no "
+      },
+      {
+       "commit": "0e1d37e80b",
+       "author": "4.0.0_SA_CRO",
+       "date": "09-30",
+       "subject": "build(MDPF_TAXSMA E2a, 4.0.0_SA_CRO FAST): production wiring the prelude never had -- durable S3 stores, the live custodian loaders, the assets Gold store imple"
+      },
+      {
+       "commit": "62fa52fa6f",
+       "author": "4.0.0_SA_CRO",
+       "date": "09-30",
+       "subject": "build(MDPF_TAXSMA E1 stage B, 4.0.0_SA_CRO FAST): RIA routes each claim to its custodian (Schwab 0833 | Black Diamond), the workbook AUM (Mn) values a claim abs"
+      },
+      {
+       "commit": "79b446e0e0",
+       "author": "4.0.0_SA_CRO",
+       "date": "09-30",
+       "subject": "build(MDPF_TAXSMA E1 stage A, 4.0.0_SA_CRO FAST): contract 0.6.0 -- RIA and AUM (Mn) join the Gateway projection and the Silver columns; S19 fixture repaired; G"
+      }
+     ]
+    },
+    {
+     "member": "data/mdpf/scripts/gold/taxsma_membership.py",
+     "state": "differs",
+     "served_equals_commit": "d3a8c3e7e34a7c8769f916385b9057c3359f4406",
+     "changes_riding": [
+      {
+       "commit": "cf1b4c9707",
+       "author": "4.0.0_SA_CRO",
+       "date": "10-01",
+       "subject": "build(MDPF_TAXSMA, 4.0.0_SA_CRO FAST): the first traded observation also covers the prior trading day (Andrew-direct ~17:4xZ) -- read-time rule in resolve_date_"
+      },
+      {
+       "commit": "bd2e9a1181",
+       "author": "4.0.0_SA_CRO",
+       "date": "09-30",
+       "subject": "build(MDPF_TAXSMA E2a / lane IRPT_TAX_MEMBERSHIP_M, 4.0.0_SA_CRO FAST): the whole-sheet Silver moves to the global scope; dispositions become per firm (disposit"
+      },
+      {
+       "commit": "f4c4614f33",
+       "author": "4.0.0_SA_CRO",
+       "date": "09-30",
+       "subject": "build(MDPF_TAXSMA E1 stage B / lane IRPT_TAX_MEMBERSHIP_M, 4.0.0_SA_CRO FAST): membership carries the firm from the RIA column (normalize_firm, FIRM_ROUTING); s"
+      },
+      {
+       "commit": "56491c907c",
+       "author": "4.0.0_SA_CRO",
+       "date": "09-30",
+       "subject": "build(MDPF_TAXSMA E1 stage A / lane IRPT_TAX_MEMBERSHIP_M, 4.0.0_SA_CRO FAST): Silver BUSINESS_COLUMNS gains RIA and AUM (Mn); membership CONTRACT_VERSION 0.6.0"
+      }
+     ]
+    },
+    {
+     "member": "data/mdpf/scripts/silver/taxsma_workbook.py",
+     "state": "differs",
+     "served_equals_commit": "c354c33a9224ca53b185956e87c8414e75f6104f",
+     "changes_riding": [
+      {
+       "commit": "bd2e9a1181",
+       "author": "4.0.0_SA_CRO",
+       "date": "09-30",
+       "subject": "build(MDPF_TAXSMA E2a / lane IRPT_TAX_MEMBERSHIP_M, 4.0.0_SA_CRO FAST): the whole-sheet Silver moves to the global scope; dispositions become per firm (disposit"
+      },
+      {
+       "commit": "56491c907c",
+       "author": "4.0.0_SA_CRO",
+       "date": "09-30",
+       "subject": "build(MDPF_TAXSMA E1 stage A / lane IRPT_TAX_MEMBERSHIP_M, 4.0.0_SA_CRO FAST): Silver BUSINESS_COLUMNS gains RIA and AUM (Mn); membership CONTRACT_VERSION 0.6.0"
+      }
+     ]
+    },
+    {
+     "member": "lib/opal_naming.py",
+     "state": "differs",
+     "served_equals_commit": "01646908e1744886ab0217fd2b87e93083c3c80f",
+     "changes_riding": [
+      {
+       "commit": "b5dc2e63d1",
+       "author": "1.0.0_SA_CTO",
+       "date": "09-30",
+       "subject": "fix(1.0.0_SA_CTO): a VENDOR row without display_name is a WARN, not a registry refusal -- the refusal from 70c4aa2e1a blocked the naming gate, and with enforcem"
+      },
+      {
+       "commit": "70c4aa2e1a",
+       "author": "1.0.0_SA_CTO",
+       "date": "09-30",
+       "subject": "naming(1.0.0_SA_CTO): VENDOR_DISPLAY_NAMES generated view in lib/opal_naming.py -- a whole-file portal target over systems.json VENDOR rows (key and long form b"
+      }
+     ]
+    },
+    {
+     "member": "data/firm_registry.json",
+     "state": "differs",
+     "served_equals_commit": "f13d9e92225e483ce3b82364ad0e8bbf79d7ebf7",
+     "changes_riding": [
+      {
+       "commit": "8e9ed1b539",
+       "author": "0.9.0_WK_NFRA_TRNSPT~3",
+       "date": "09-30",
+       "subject": "registry(NFRA_TRNSPT TO-TR-g1, 0.9.0_WK_NFRA_TRNSPT~3): systems.json rows outlook and sharepoint (VENDOR, D9) and the 11 workspace generated targets restamped"
+      }
+     ]
+    },
+    {
+     "member": "docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json",
+     "state": "differs",
+     "served_equals_commit": "1206612f63b47cf423a4bb678907071854ee4d7e",
+     "changes_riding": [
+      {
+       "commit": "9e58503be1",
+       "author": "2.0.0_SA_COO~M",
+       "date": "10-02",
+       "subject": "feat(IRPT_BCKEND ~M, 2.0.0_SA_COO~M): the Holdings route's TARGET fold -- opt-in (include=target), labelled basis TARGET, never summed with actual (CTO batch 18"
+      },
+      {
+       "commit": "4cc72587d6",
+       "author": "2.0.0_SA_COO~M",
+       "date": "10-02",
+       "subject": "feat(MDPF_SECCLASS readers packet, 2.0.0_SA_COO~M): the Holdings producer and its published contract admit `multi_asset` -- readers first, no row carries it yet"
+      },
+      {
+       "commit": "cc99dea562",
+       "author": "2.0.0_SA_COO~M",
+       "date": "10-01",
+       "subject": "contract(IRPT_BCKEND ~M item 1, 2.0.0_SA_COO~M FAST): HoldingsSnapshot -- the served blocks cover ACTUAL positions only; custody with no position is its own blo"
+      },
+      {
+       "commit": "a72904d984",
+       "author": "2.0.0_SA_COO~M",
+       "date": "10-01",
+       "subject": "fix(IRPT_BCKEND ~M item 1, 2.0.0_SA_COO~M FAST): the aggregates leave the producer -- a firm-wide fold cannot be served to a selection; contract descriptions re"
+      },
+      {
+       "commit": "1f5d1049c3",
+       "author": "2.0.0_SA_COO~M",
+       "date": "10-01",
+       "subject": "feat(IRPT_BCKEND ~M item 1, 2.0.0_SA_COO~M FAST): Holdings serves per-security aggregates and per-class totals on the narrowed classifier (W2-11, W2-15; CTO DEC"
+      }
+     ]
+    },
+    {
+     "member": "infra/logic/registry/reporting_policies.json",
+     "state": "differs",
+     "served_equals_commit": "7262571e4cf4a2c294480b285fd54c5c91b37053",
+     "changes_riding": [
+      {
+       "commit": "11bf813387",
+       "author": "0.9.0_WK_IRPT_DASHBD~1",
+       "date": "10-01",
+       "subject": "feat(IRPT_DASHBD.TO-DB-b-2, 0.9.0_WK_IRPT_DASHBD~1): platinum publisher (pure functions + handler + tests), platinum/reporting policy row, ledger OPEN before th"
+      }
+     ]
+    },
+    {
+     "member": "infra/logic/registry/systems.json",
+     "state": "differs",
+     "served_equals_commit": "d451070fb19378eafaa4074d81a15b5f1cf86a05",
+     "changes_riding": [
+      {
+       "commit": "224058ea3f",
+       "author": "4.0.0_SA_CRO",
+       "date": "09-30",
+       "subject": "registry(NFRA_TRNSPT, 2.0.0_SA_COO~T): display_name on the outlook and sharepoint VENDOR rows -- they landed with the chain-C drain fed423d013 after the VENDOR "
+      },
+      {
+       "commit": "fed423d013",
+       "author": "2.0.0_SA_COO~T",
+       "date": "09-30",
+       "subject": "drain: merge wk-NFRA_TRNSPT-3 (row gate clean on the merged index)"
+      },
+      {
+       "commit": "cd2ffcca99",
+       "author": "4.0.0_SA_CRO",
+       "date": "09-30",
+       "subject": "register(PLATFORM_LOGIC_DOCS, 4.0.0_SA_CRO): systems.json -- display_name on the 23 VENDOR rows plus the _about row_fields sentence, the CTO's patch @29f7572c42"
+      },
+      {
+       "commit": "8e9ed1b539",
+       "author": "0.9.0_WK_NFRA_TRNSPT~3",
+       "date": "09-30",
+       "subject": "registry(NFRA_TRNSPT TO-TR-g1, 0.9.0_WK_NFRA_TRNSPT~3): systems.json rows outlook and sharepoint (VENDOR, D9) and the 11 workspace generated targets restamped"
+      }
+     ]
+    },
+    {
+     "member": "org/standards/NAMING_SCHEMA.json",
+     "state": "differs",
+     "served_equals_commit": "4eae414dd4ce8c92a92ac1bff18b8c9af0ea67ad",
+     "changes_riding": [
+      {
+       "commit": "aa2b5a42ff",
+       "author": "4.0.0_SA_CRO",
+       "date": "10-02",
+       "subject": "naming(4.0.0_SA_CRO): cadence token \"1min\" joins NAMING_SCHEMA.json cadence.values (the Teams assistant's poll schedule)"
+      }
+     ]
+    }
+   ]
+  },
+  "irpt_holdings_inf": {
+   "bucket": "opal-data-inflection",
+   "key": "irpt/inflection/code/gold/investor-reporting-holdings.tar.gz",
+   "served_version": "dDJb5jlhSpqTz3fi_x2ZO_TafM_VC.F_",
+   "served_last_modified": "2026-10-01T20:39:52+00:00",
+   "members": 44,
+   "differing": [
+    {
+     "member": "data/assets/scripts/gold/build_cottonwood_mdpf_pair.py",
+     "state": "differs",
+     "served_equals_commit": "4ce72c343ddba009cc50708bdc294021fd2902e9",
+     "changes_riding": [
+      {
+       "commit": "a3866c3dfb",
+       "author": "0.0.0_AB_MSTR",
+       "date": "10-01",
+       "subject": "hold(0.0.0_AB_MSTR): DEPLOY-SERVE-HELD on seven pipeline scripts -- the laptop push carries no held script; LD-0613 Progress 77"
+      },
+      {
+       "commit": "85dd7adc26",
+       "author": "4.0.0_SA_CRO",
+       "date": "10-01",
+       "subject": "feat(MDPF Cottonwood custom models + SMA sleeves, 4.0.0_SA_CRO, Andrew-direct): Cottonwood's Opal custom models land in Models > Custom; DIVZ SMA and the Pathfi"
+      }
+     ]
+    },
+    {
+     "member": "data/assets/scripts/gold/build_cottonwood_mdpf_slice.py",
+     "state": "differs",
+     "served_equals_commit": "0d09727e5337eb08e89f264edcfeb27466e87da4",
+     "changes_riding": [
+      {
+       "commit": "a3866c3dfb",
+       "author": "0.0.0_AB_MSTR",
+       "date": "10-01",
+       "subject": "hold(0.0.0_AB_MSTR): DEPLOY-SERVE-HELD on seven pipeline scripts -- the laptop push carries no held script; LD-0613 Progress 77"
+      },
+      {
+       "commit": "85dd7adc26",
+       "author": "4.0.0_SA_CRO",
+       "date": "10-01",
+       "subject": "feat(MDPF Cottonwood custom models + SMA sleeves, 4.0.0_SA_CRO, Andrew-direct): Cottonwood's Opal custom models land in Models > Custom; DIVZ SMA and the Pathfi"
+      }
+     ]
+    },
+    {
+     "member": "data/assets/scripts/gold/build_dim_model_portfolio.py",
+     "state": "differs",
+     "served_equals_commit": "75e379d6ae7ba0e1fe2099782dae1838a0640aba",
+     "changes_riding": [
+      {
+       "commit": "a3866c3dfb",
+       "author": "0.0.0_AB_MSTR",
+       "date": "10-01",
+       "subject": "hold(0.0.0_AB_MSTR): DEPLOY-SERVE-HELD on seven pipeline scripts -- the laptop push carries no held script; LD-0613 Progress 77"
+      },
+      {
+       "commit": "85dd7adc26",
+       "author": "4.0.0_SA_CRO",
+       "date": "10-01",
+       "subject": "feat(MDPF Cottonwood custom models + SMA sleeves, 4.0.0_SA_CRO, Andrew-direct): Cottonwood's Opal custom models land in Models > Custom; DIVZ SMA and the Pathfi"
+      }
+     ]
+    },
+    {
+     "member": "data/assets/scripts/gold/investor_reporting/holdings_inf.py",
+     "state": "differs",
+     "served_equals_commit": "b26847ea0422ccb06e0c755d3c1d9235cfc72a44",
+     "changes_riding": [
+      {
+       "commit": "a3866c3dfb",
+       "author": "0.0.0_AB_MSTR",
+       "date": "10-01",
+       "subject": "hold(0.0.0_AB_MSTR): DEPLOY-SERVE-HELD on seven pipeline scripts -- the laptop push carries no held script; LD-0613 Progress 77"
+      }
+     ]
+    },
+    {
+     "member": "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py",
+     "state": "differs",
+     "served_equals_commit": "b26847ea0422ccb06e0c755d3c1d9235cfc72a44",
+     "changes_riding": [
+      {
+       "commit": "4cc72587d6",
+       "author": "2.0.0_SA_COO~M",
+       "date": "10-02",
+       "subject": "feat(MDPF_SECCLASS readers packet, 2.0.0_SA_COO~M): the Holdings producer and its published contract admit `multi_asset` -- readers first, no row carries it yet"
+      },
+      {
+       "commit": "a3866c3dfb",
+       "author": "0.0.0_AB_MSTR",
+       "date": "10-01",
+       "subject": "hold(0.0.0_AB_MSTR): DEPLOY-SERVE-HELD on seven pipeline scripts -- the laptop push carries no held script; LD-0613 Progress 77"
+      }
+     ]
+    },
+    {
+     "member": "data/assets/scripts/silver/rebalancer_schemas.py",
+     "state": "differs",
+     "served_equals_commit": "1351c74d96246baf25ef6032ef17f69e59800a09",
+     "changes_riding": [
+      {
+       "commit": "a3866c3dfb",
+       "author": "0.0.0_AB_MSTR",
+       "date": "10-01",
+       "subject": "hold(0.0.0_AB_MSTR): DEPLOY-SERVE-HELD on seven pipeline scripts -- the laptop push carries no held script; LD-0613 Progress 77"
+      },
+      {
+       "commit": "85dd7adc26",
+       "author": "4.0.0_SA_CRO",
+       "date": "10-01",
+       "subject": "feat(MDPF Cottonwood custom models + SMA sleeves, 4.0.0_SA_CRO, Andrew-direct): Cottonwood's Opal custom models land in Models > Custom; DIVZ SMA and the Pathfi"
+      }
+     ]
+    },
+    {
+     "member": "infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py",
+     "state": "differs",
+     "served_equals_commit": "b0e1f33471658cbd85070371b3de375a9d35c7c8",
+     "changes_riding": [
+      {
+       "commit": "a96e00c279",
+       "author": "2.0.0_SA_COO~M",
+       "date": "10-01",
+       "subject": "fix(MDPF_SECCLASS W12-S2, 2.0.0_SA_COO~M FAST): ETFClassifier.classify_holdings sums any class the table holds instead of raising KeyError (the client and its t"
+      },
+      {
+       "commit": "cf24f07493",
+       "author": "0.9.0_WK_MDPF_SECCLASS~11",
+       "date": "09-30",
+       "subject": "build(MDPF_SECCLASS r6, 0.9.0_WK_MDPF_SECCLASS~11): SC-e-14 -- find_by CUSIP filter (client + 2 byte-identical copies), seed PRE-READ count excludes CUSIP rows,"
+      }
+     ]
+    },
+    {
+     "member": "data/inf/scripts/silver/_orion_api_silver_lib.py",
+     "state": "differs",
+     "served_equals_commit": "4fc07eb397cc0fd5b0af500283a70ba518c7d1fe",
+     "changes_riding": [
+      {
+       "commit": "2e5173d3b6",
+       "author": "0.9.0_WK_IRPT_BCKEND~97",
+       "date": "09-30",
+       "subject": "IB-pr-261: flat fallback import for silver_ids in _orion_api_silver_lib.py; open ledger inf-silver-ids-ship-20260930 (+ sentinel) and the pre-copy readings deli"
+      }
+     ]
+    },
+    {
+     "member": "data/mdpf/scripts/gold/dim_mdpf_account_distribution.py",
+     "state": "differs",
+     "served_equals_commit": "5c685f6d614e55f8443268337eac29f249875ee2",
+     "changes_riding": [
+      {
+       "commit": "e20899bce7",
+       "author": "4.0.0_SA_CRO",
+       "date": "10-01",
+       "subject": "fix(MDPF account-distribution, 4.0.0_SA_CRO): a one-account population's std_dev is None, never NaN"
+      }
+     ]
+    },
+    {
+     "member": "data/mdpf/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py",
+     "state": "differs",
+     "served_equals_commit": "ebd2370ee98cd3785a1919d3e214cf1bba628fcf",
+     "changes_riding": [
+      {
+       "commit": "85dd7adc26",
+       "author": "4.0.0_SA_CRO",
+       "date": "10-01",
+       "subject": "feat(MDPF Cottonwood custom models + SMA sleeves, 4.0.0_SA_CRO, Andrew-direct): Cottonwood's Opal custom models land in Models > Custom; DIVZ SMA and the Pathfi"
+      },
+      {
+       "commit": "62fa52fa6f",
+       "author": "4.0.0_SA_CRO",
+       "date": "09-30",
+       "subject": "build(MDPF_TAXSMA E1 stage B, 4.0.0_SA_CRO FAST): RIA routes each claim to its custodian (Schwab 0833 | Black Diamond), the workbook AUM (Mn) values a claim abs"
+      }
+     ]
+    },
+    {
+     "member": "data/mdpf/scripts/gold/dim_mdpf_aum_metrics.py",
+     "state": "differs",
+     "served_equals_commit": "4707880967cde039674c95301bda4f4f6ff93d4d",
+     "changes_riding": [
+      {
+       "commit": "1e5e13d223",
+       "author": "4.0.0_SA_CRO",
+       "date": "09-30",
+       "subject": "build(MDPF_TAXSMA E2c, 4.0.0_SA_CRO FAST): Cottonwood's Tax is added to Global once, under an overlap control on Cottonwood's model-assigned accounts; contract "
+      },
+      {
+       "commit": "3f03d42024",
+       "author": "4.0.0_SA_CRO",
+       "date": "09-30",
+       "subject": "fix(MDPF_TAXSMA aum-metrics, 4.0.0_SA_CRO FAST): total.tax_additive_aum exists only where the spine carries additive Tax -- with Tax off the document keeps its "
+      },
+      {
+       "commit": "ec7d6ee115",
+       "author": "4.0.0_SA_CRO",
+       "date": "09-30",
+       "subject": "build(MDPF_TAXSMA E2b.2, 4.0.0_SA_CRO FAST): the Global aum-metrics total carries tax_additive_aum -- the same value its taxsma fee-basis component names -- so "
+      },
+      {
+       "commit": "faf88511b9",
+       "author": "4.0.0_SA_CRO",
+       "date": "09-30",
+       "subject": "build(MDPF_TAXSMA E2b, 4.0.0_SA_CRO FAST): Tax folds into the served 49financial and Global totals once -- carry the last complete figure on an unknown day, no "
+      }
+     ]
+    },
+    {
+     "member": "data/mdpf/scripts/gold/mdpf_category_registry.py",
+     "state": "differs",
+     "served_equals_commit": "b6e97e9685466476536424bf45b77a2a8081a1c8",
+     "changes_riding": [
+      {
+       "commit": "46d04eb7b6",
+       "author": "4.0.0_SA_CRO",
+       "date": "10-01",
+       "subject": "build(MDPF_TAXSMA E2d, 4.0.0_SA_CRO FAST): Cottonwood's own tree shows the Tax leaf under SMA as a carve-out of Client, totals unchanged; the SMA basis is decla"
+      }
+     ]
+    },
+    {
+     "member": "data/mdpf/scripts/gold/mdpf_revamp_model_crosswalk.py",
+     "state": "differs",
+     "served_equals_commit": "0d09727e5337eb08e89f264edcfeb27466e87da4",
+     "changes_riding": [
+      {
+       "commit": "85dd7adc26",
+       "author": "4.0.0_SA_CRO",
+       "date": "10-01",
+       "subject": "feat(MDPF Cottonwood custom models + SMA sleeves, 4.0.0_SA_CRO, Andrew-direct): Cottonwood's Opal custom models land in Models > Custom; DIVZ SMA and the Pathfi"
+      }
+     ]
+    },
+    {
+     "member": "data/mdpf/scripts/gold/taxsma_assets.py",
+     "state": "differs",
+     "served_equals_commit": "170733361984bf872e8a0de6416ccd6338c7e4b4",
+     "changes_riding": [
+      {
+       "commit": "faf88511b9",
+       "author": "4.0.0_SA_CRO",
+       "date": "09-30",
+       "subject": "build(MDPF_TAXSMA E2b, 4.0.0_SA_CRO FAST): Tax folds into the served 49financial and Global totals once -- carry the last complete figure on an unknown day, no "
+      },
+      {
+       "commit": "0e1d37e80b",
+       "author": "4.0.0_SA_CRO",
+       "date": "09-30",
+       "subject": "build(MDPF_TAXSMA E2a, 4.0.0_SA_CRO FAST): production wiring the prelude never had -- durable S3 stores, the live custodian loaders, the assets Gold store imple"
+      },
+      {
+       "commit": "62fa52fa6f",
+       "author": "4.0.0_SA_CRO",
+       "date": "09-30",
+       "subject": "build(MDPF_TAXSMA E1 stage B, 4.0.0_SA_CRO FAST): RIA routes each claim to its custodian (Schwab 0833 | Black Diamond), the workbook AUM (Mn) values a claim abs"
+      },
+      {
+       "commit": "79b446e0e0",
+       "author": "4.0.0_SA_CRO",
+       "date": "09-30",
+       "subject": "build(MDPF_TAXSMA E1 stage A, 4.0.0_SA_CRO FAST): contract 0.6.0 -- RIA and AUM (Mn) join the Gateway projection and the Silver columns; S19 fixture repaired; G"
+      }
+     ]
+    },
+    {
+     "member": "data/mdpf/scripts/gold/taxsma_membership.py",
+     "state": "differs",
+     "served_equals_commit": "d3a8c3e7e34a7c8769f916385b9057c3359f4406",
+     "changes_riding": [
+      {
+       "commit": "cf1b4c9707",
+       "author": "4.0.0_SA_CRO",
+       "date": "10-01",
+       "subject": "build(MDPF_TAXSMA, 4.0.0_SA_CRO FAST): the first traded observation also covers the prior trading day (Andrew-direct ~17:4xZ) -- read-time rule in resolve_date_"
+      },
+      {
+       "commit": "bd2e9a1181",
+       "author": "4.0.0_SA_CRO",
+       "date": "09-30",
+       "subject": "build(MDPF_TAXSMA E2a / lane IRPT_TAX_MEMBERSHIP_M, 4.0.0_SA_CRO FAST): the whole-sheet Silver moves to the global scope; dispositions become per firm (disposit"
+      },
+      {
+       "commit": "f4c4614f33",
+       "author": "4.0.0_SA_CRO",
+       "date": "09-30",
+       "subject": "build(MDPF_TAXSMA E1 stage B / lane IRPT_TAX_MEMBERSHIP_M, 4.0.0_SA_CRO FAST): membership carries the firm from the RIA column (normalize_firm, FIRM_ROUTING); s"
+      },
+      {
+       "commit": "56491c907c",
+       "author": "4.0.0_SA_CRO",
+       "date": "09-30",
+       "subject": "build(MDPF_TAXSMA E1 stage A / lane IRPT_TAX_MEMBERSHIP_M, 4.0.0_SA_CRO FAST): Silver BUSINESS_COLUMNS gains RIA and AUM (Mn); membership CONTRACT_VERSION 0.6.0"
+      }
+     ]
+    },
+    {
+     "member": "data/mdpf/scripts/silver/taxsma_workbook.py",
+     "state": "differs",
+     "served_equals_commit": "c354c33a9224ca53b185956e87c8414e75f6104f",
+     "changes_riding": [
+      {
+       "commit": "bd2e9a1181",
+       "author": "4.0.0_SA_CRO",
+       "date": "09-30",
+       "subject": "build(MDPF_TAXSMA E2a / lane IRPT_TAX_MEMBERSHIP_M, 4.0.0_SA_CRO FAST): the whole-sheet Silver moves to the global scope; dispositions become per firm (disposit"
+      },
+      {
+       "commit": "56491c907c",
+       "author": "4.0.0_SA_CRO",
+       "date": "09-30",
+       "subject": "build(MDPF_TAXSMA E1 stage A / lane IRPT_TAX_MEMBERSHIP_M, 4.0.0_SA_CRO FAST): Silver BUSINESS_COLUMNS gains RIA and AUM (Mn); membership CONTRACT_VERSION 0.6.0"
+      }
+     ]
+    },
+    {
+     "member": "lib/opal_naming.py",
+     "state": "differs",
+     "served_equals_commit": "70c4aa2e1a373b68d2cefbdefb888e9bef215962",
+     "changes_riding": [
+      {
+       "commit": "b5dc2e63d1",
+       "author": "1.0.0_SA_CTO",
+       "date": "09-30",
+       "subject": "fix(1.0.0_SA_CTO): a VENDOR row without display_name is a WARN, not a registry refusal -- the refusal from 70c4aa2e1a blocked the naming gate, and with enforcem"
+      }
+     ]
+    },
+    {
+     "member": "data/firm_registry.json",
+     "state": "differs",
+     "served_equals_commit": "f13d9e92225e483ce3b82364ad0e8bbf79d7ebf7",
+     "changes_riding": [
+      {
+       "commit": "8e9ed1b539",
+       "author": "0.9.0_WK_NFRA_TRNSPT~3",
+       "date": "09-30",
+       "subject": "registry(NFRA_TRNSPT TO-TR-g1, 0.9.0_WK_NFRA_TRNSPT~3): systems.json rows outlook and sharepoint (VENDOR, D9) and the 11 workspace generated targets restamped"
+      }
+     ]
+    },
+    {
+     "member": "docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json",
+     "state": "differs",
+     "served_equals_commit": "1206612f63b47cf423a4bb678907071854ee4d7e",
+     "changes_riding": [
+      {
+       "commit": "9e58503be1",
+       "author": "2.0.0_SA_COO~M",
+       "date": "10-02",
+       "subject": "feat(IRPT_BCKEND ~M, 2.0.0_SA_COO~M): the Holdings route's TARGET fold -- opt-in (include=target), labelled basis TARGET, never summed with actual (CTO batch 18"
+      },
+      {
+       "commit": "4cc72587d6",
+       "author": "2.0.0_SA_COO~M",
+       "date": "10-02",
+       "subject": "feat(MDPF_SECCLASS readers packet, 2.0.0_SA_COO~M): the Holdings producer and its published contract admit `multi_asset` -- readers first, no row carries it yet"
+      },
+      {
+       "commit": "cc99dea562",
+       "author": "2.0.0_SA_COO~M",
+       "date": "10-01",
+       "subject": "contract(IRPT_BCKEND ~M item 1, 2.0.0_SA_COO~M FAST): HoldingsSnapshot -- the served blocks cover ACTUAL positions only; custody with no position is its own blo"
+      },
+      {
+       "commit": "a72904d984",
+       "author": "2.0.0_SA_COO~M",
+       "date": "10-01",
+       "subject": "fix(IRPT_BCKEND ~M item 1, 2.0.0_SA_COO~M FAST): the aggregates leave the producer -- a firm-wide fold cannot be served to a selection; contract descriptions re"
+      },
+      {
+       "commit": "1f5d1049c3",
+       "author": "2.0.0_SA_COO~M",
+       "date": "10-01",
+       "subject": "feat(IRPT_BCKEND ~M item 1, 2.0.0_SA_COO~M FAST): Holdings serves per-security aggregates and per-class totals on the narrowed classifier (W2-11, W2-15; CTO DEC"
+      }
+     ]
+    },
+    {
+     "member": "infra/logic/registry/reporting_policies.json",
+     "state": "differs",
+     "served_equals_commit": "7262571e4cf4a2c294480b285fd54c5c91b37053",
+     "changes_riding": [
+      {
+       "commit": "11bf813387",
+       "author": "0.9.0_WK_IRPT_DASHBD~1",
+       "date": "10-01",
+       "subject": "feat(IRPT_DASHBD.TO-DB-b-2, 0.9.0_WK_IRPT_DASHBD~1): platinum publisher (pure functions + handler + tests), platinum/reporting policy row, ledger OPEN before th"
+      }
+     ]
+    },
+    {
+     "member": "infra/logic/registry/scopes.json",
+     "state": "differs",
+     "served_equals_commit": null,
+     "changes_riding": null
+    },
+    {
+     "member": "infra/logic/registry/systems.json",
+     "state": "differs",
+     "served_equals_commit": null,
+     "changes_riding": null
+    },
+    {
+     "member": "org/standards/NAMING_SCHEMA.json",
+     "state": "differs",
+     "served_equals_commit": "4eae414dd4ce8c92a92ac1bff18b8c9af0ea67ad",
+     "changes_riding": [
+      {
+       "commit": "aa2b5a42ff",
+       "author": "4.0.0_SA_CRO",
+       "date": "10-02",
+       "subject": "naming(4.0.0_SA_CRO): cadence token \"1min\" joins NAMING_SCHEMA.json cadence.values (the Teams assistant's poll schedule)"
+      }
+     ]
+    }
+   ]
+  },
+  "irpt_holdings_cot": {
+   "bucket": "opal-data-cottonwood",
+   "key": "irpt/cottonwood/code/gold/investor-reporting-holdings.tar.gz",
+   "served_version": "o4k8Idb5G.NFG9LytykhWwYipgqEz_fn",
+   "served_last_modified": "2026-10-01T20:41:49+00:00",
+   "members": 44,
+   "differing": [
+    {
+     "member": "data/assets/scripts/gold/build_cottonwood_mdpf_pair.py",
+     "state": "differs",
+     "served_equals_commit": "4ce72c343ddba009cc50708bdc294021fd2902e9",
+     "changes_riding": [
+      {
+       "commit": "a3866c3dfb",
+       "author": "0.0.0_AB_MSTR",
+       "date": "10-01",
+       "subject": "hold(0.0.0_AB_MSTR): DEPLOY-SERVE-HELD on seven pipeline scripts -- the laptop push carries no held script; LD-0613 Progress 77"
+      },
+      {
+       "commit": "85dd7adc26",
+       "author": "4.0.0_SA_CRO",
+       "date": "10-01",
+       "subject": "feat(MDPF Cottonwood custom models + SMA sleeves, 4.0.0_SA_CRO, Andrew-direct): Cottonwood's Opal custom models land in Models > Custom; DIVZ SMA and the Pathfi"
+      }
+     ]
+    },
+    {
+     "member": "data/assets/scripts/gold/build_cottonwood_mdpf_slice.py",
+     "state": "differs",
+     "served_equals_commit": "0d09727e5337eb08e89f264edcfeb27466e87da4",
+     "changes_riding": [
+      {
+       "commit": "a3866c3dfb",
+       "author": "0.0.0_AB_MSTR",
+       "date": "10-01",
+       "subject": "hold(0.0.0_AB_MSTR): DEPLOY-SERVE-HELD on seven pipeline scripts -- the laptop push carries no held script; LD-0613 Progress 77"
+      },
+      {
+       "commit": "85dd7adc26",
+       "author": "4.0.0_SA_CRO",
+       "date": "10-01",
+       "subject": "feat(MDPF Cottonwood custom models + SMA sleeves, 4.0.0_SA_CRO, Andrew-direct): Cottonwood's Opal custom models land in Models > Custom; DIVZ SMA and the Pathfi"
+      }
+     ]
+    },
+    {
+     "member": "data/assets/scripts/gold/build_dim_model_portfolio.py",
+     "state": "differs",
+     "served_equals_commit": "75e379d6ae7ba0e1fe2099782dae1838a0640aba",
+     "changes_riding": [
+      {
+       "commit": "a3866c3dfb",
+       "author": "0.0.0_AB_MSTR",
+       "date": "10-01",
+       "subject": "hold(0.0.0_AB_MSTR): DEPLOY-SERVE-HELD on seven pipeline scripts -- the laptop push carries no held script; LD-0613 Progress 77"
+      },
+      {
+       "commit": "85dd7adc26",
+       "author": "4.0.0_SA_CRO",
+       "date": "10-01",
+       "subject": "feat(MDPF Cottonwood custom models + SMA sleeves, 4.0.0_SA_CRO, Andrew-direct): Cottonwood's Opal custom models land in Models > Custom; DIVZ SMA and the Pathfi"
+      }
+     ]
+    },
+    {
+     "member": "data/assets/scripts/gold/investor_reporting/holdings_inf.py",
+     "state": "differs",
+     "served_equals_commit": "b26847ea0422ccb06e0c755d3c1d9235cfc72a44",
+     "changes_riding": [
+      {
+       "commit": "a3866c3dfb",
+       "author": "0.0.0_AB_MSTR",
+       "date": "10-01",
+       "subject": "hold(0.0.0_AB_MSTR): DEPLOY-SERVE-HELD on seven pipeline scripts -- the laptop push carries no held script; LD-0613 Progress 77"
+      }
+     ]
+    },
+    {
+     "member": "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py",
+     "state": "differs",
+     "served_equals_commit": "b26847ea0422ccb06e0c755d3c1d9235cfc72a44",
+     "changes_riding": [
+      {
+       "commit": "4cc72587d6",
+       "author": "2.0.0_SA_COO~M",
+       "date": "10-02",
+       "subject": "feat(MDPF_SECCLASS readers packet, 2.0.0_SA_COO~M): the Holdings producer and its published contract admit `multi_asset` -- readers first, no row carries it yet"
+      },
+      {
+       "commit": "a3866c3dfb",
+       "author": "0.0.0_AB_MSTR",
+       "date": "10-01",
+       "subject": "hold(0.0.0_AB_MSTR): DEPLOY-SERVE-HELD on seven pipeline scripts -- the laptop push carries no held script; LD-0613 Progress 77"
+      }
+     ]
+    },
+    {
+     "member": "data/assets/scripts/silver/rebalancer_schemas.py",
+     "state": "differs",
+     "served_equals_commit": "1351c74d96246baf25ef6032ef17f69e59800a09",
+     "changes_riding": [
+      {
+       "commit": "a3866c3dfb",
+       "author": "0.0.0_AB_MSTR",
+       "date": "10-01",
+       "subject": "hold(0.0.0_AB_MSTR): DEPLOY-SERVE-HELD on seven pipeline scripts -- the laptop push carries no held script; LD-0613 Progress 77"
+      },
+      {
+       "commit": "85dd7adc26",
+       "author": "4.0.0_SA_CRO",
+       "date": "10-01",
+       "subject": "feat(MDPF Cottonwood custom models + SMA sleeves, 4.0.0_SA_CRO, Andrew-direct): Cottonwood's Opal custom models land in Models > Custom; DIVZ SMA and the Pathfi"
+      }
+     ]
+    },
+    {
+     "member": "infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py",
+     "state": "differs",
+     "served_equals_commit": "b0e1f33471658cbd85070371b3de375a9d35c7c8",
+     "changes_riding": [
+      {
+       "commit": "a96e00c279",
+       "author": "2.0.0_SA_COO~M",
+       "date": "10-01",
+       "subject": "fix(MDPF_SECCLASS W12-S2, 2.0.0_SA_COO~M FAST): ETFClassifier.classify_holdings sums any class the table holds instead of raising KeyError (the client and its t"
+      },
+      {
+       "commit": "cf24f07493",
+       "author": "0.9.0_WK_MDPF_SECCLASS~11",
+       "date": "09-30",
+       "subject": "build(MDPF_SECCLASS r6, 0.9.0_WK_MDPF_SECCLASS~11): SC-e-14 -- find_by CUSIP filter (client + 2 byte-identical copies), seed PRE-READ count excludes CUSIP rows,"
+      }
+     ]
+    },
+    {
+     "member": "data/inf/scripts/silver/_orion_api_silver_lib.py",
+     "state": "differs",
+     "served_equals_commit": "4fc07eb397cc0fd5b0af500283a70ba518c7d1fe",
+     "changes_riding": [
+      {
+       "commit": "2e5173d3b6",
+       "author": "0.9.0_WK_IRPT_BCKEND~97",
+       "date": "09-30",
+       "subject": "IB-pr-261: flat fallback import for silver_ids in _orion_api_silver_lib.py; open ledger inf-silver-ids-ship-20260930 (+ sentinel) and the pre-copy readings deli"
+      }
+     ]
+    },
+    {
+     "member": "data/mdpf/scripts/gold/dim_mdpf_account_distribution.py",
+     "state": "differs",
+     "served_equals_commit": "5c685f6d614e55f8443268337eac29f249875ee2",
+     "changes_riding": [
+      {
+       "commit": "e20899bce7",
+       "author": "4.0.0_SA_CRO",
+       "date": "10-01",
+       "subject": "fix(MDPF account-distribution, 4.0.0_SA_CRO): a one-account population's std_dev is None, never NaN"
+      }
+     ]
+    },
+    {
+     "member": "data/mdpf/scripts/gold/dim_mdpf_aggregate_aua_timeseries.py",
+     "state": "differs",
+     "served_equals_commit": "ebd2370ee98cd3785a1919d3e214cf1bba628fcf",
+     "changes_riding": [
+      {
+       "commit": "85dd7adc26",
+       "author": "4.0.0_SA_CRO",
+       "date": "10-01",
+       "subject": "feat(MDPF Cottonwood custom models + SMA sleeves, 4.0.0_SA_CRO, Andrew-direct): Cottonwood's Opal custom models land in Models > Custom; DIVZ SMA and the Pathfi"
+      },
+      {
+       "commit": "62fa52fa6f",
+       "author": "4.0.0_SA_CRO",
+       "date": "09-30",
+       "subject": "build(MDPF_TAXSMA E1 stage B, 4.0.0_SA_CRO FAST): RIA routes each claim to its custodian (Schwab 0833 | Black Diamond), the workbook AUM (Mn) values a claim abs"
+      }
+     ]
+    },
+    {
+     "member": "data/mdpf/scripts/gold/dim_mdpf_aum_metrics.py",
+     "state": "differs",
+     "served_equals_commit": "4707880967cde039674c95301bda4f4f6ff93d4d",
+     "changes_riding": [
+      {
+       "commit": "1e5e13d223",
+       "author": "4.0.0_SA_CRO",
+       "date": "09-30",
+       "subject": "build(MDPF_TAXSMA E2c, 4.0.0_SA_CRO FAST): Cottonwood's Tax is added to Global once, under an overlap control on Cottonwood's model-assigned accounts; contract "
+      },
+      {
+       "commit": "3f03d42024",
+       "author": "4.0.0_SA_CRO",
+       "date": "09-30",
+       "subject": "fix(MDPF_TAXSMA aum-metrics, 4.0.0_SA_CRO FAST): total.tax_additive_aum exists only where the spine carries additive Tax -- with Tax off the document keeps its "
+      },
+      {
+       "commit": "ec7d6ee115",
+       "author": "4.0.0_SA_CRO",
+       "date": "09-30",
+       "subject": "build(MDPF_TAXSMA E2b.2, 4.0.0_SA_CRO FAST): the Global aum-metrics total carries tax_additive_aum -- the same value its taxsma fee-basis component names -- so "
+      },
+      {
+       "commit": "faf88511b9",
+       "author": "4.0.0_SA_CRO",
+       "date": "09-30",
+       "subject": "build(MDPF_TAXSMA E2b, 4.0.0_SA_CRO FAST): Tax folds into the served 49financial and Global totals once -- carry the last complete figure on an unknown day, no "
+      }
+     ]
+    },
+    {
+     "member": "data/mdpf/scripts/gold/mdpf_category_registry.py",
+     "state": "differs",
+     "served_equals_commit": "b6e97e9685466476536424bf45b77a2a8081a1c8",
+     "changes_riding": [
+      {
+       "commit": "46d04eb7b6",
+       "author": "4.0.0_SA_CRO",
+       "date": "10-01",
+       "subject": "build(MDPF_TAXSMA E2d, 4.0.0_SA_CRO FAST): Cottonwood's own tree shows the Tax leaf under SMA as a carve-out of Client, totals unchanged; the SMA basis is decla"
+      }
+     ]
+    },
+    {
+     "member": "data/mdpf/scripts/gold/mdpf_revamp_model_crosswalk.py",
+     "state": "differs",
+     "served_equals_commit": "0d09727e5337eb08e89f264edcfeb27466e87da4",
+     "changes_riding": [
+      {
+       "commit": "85dd7adc26",
+       "author": "4.0.0_SA_CRO",
+       "date": "10-01",
+       "subject": "feat(MDPF Cottonwood custom models + SMA sleeves, 4.0.0_SA_CRO, Andrew-direct): Cottonwood's Opal custom models land in Models > Custom; DIVZ SMA and the Pathfi"
+      }
+     ]
+    },
+    {
+     "member": "data/mdpf/scripts/gold/taxsma_assets.py",
+     "state": "differs",
+     "served_equals_commit": "170733361984bf872e8a0de6416ccd6338c7e4b4",
+     "changes_riding": [
+      {
+       "commit": "faf88511b9",
+       "author": "4.0.0_SA_CRO",
+       "date": "09-30",
+       "subject": "build(MDPF_TAXSMA E2b, 4.0.0_SA_CRO FAST): Tax folds into the served 49financial and Global totals once -- carry the last complete figure on an unknown day, no "
+      },
+      {
+       "commit": "0e1d37e80b",
+       "author": "4.0.0_SA_CRO",
+       "date": "09-30",
+       "subject": "build(MDPF_TAXSMA E2a, 4.0.0_SA_CRO FAST): production wiring the prelude never had -- durable S3 stores, the live custodian loaders, the assets Gold store imple"
+      },
+      {
+       "commit": "62fa52fa6f",
+       "author": "4.0.0_SA_CRO",
+       "date": "09-30",
+       "subject": "build(MDPF_TAXSMA E1 stage B, 4.0.0_SA_CRO FAST): RIA routes each claim to its custodian (Schwab 0833 | Black Diamond), the workbook AUM (Mn) values a claim abs"
+      },
+      {
+       "commit": "79b446e0e0",
+       "author": "4.0.0_SA_CRO",
+       "date": "09-30",
+       "subject": "build(MDPF_TAXSMA E1 stage A, 4.0.0_SA_CRO FAST): contract 0.6.0 -- RIA and AUM (Mn) join the Gateway projection and the Silver columns; S19 fixture repaired; G"
+      }
+     ]
+    },
+    {
+     "member": "data/mdpf/scripts/gold/taxsma_membership.py",
+     "state": "differs",
+     "served_equals_commit": "d3a8c3e7e34a7c8769f916385b9057c3359f4406",
+     "changes_riding": [
+      {
+       "commit": "cf1b4c9707",
+       "author": "4.0.0_SA_CRO",
+       "date": "10-01",
+       "subject": "build(MDPF_TAXSMA, 4.0.0_SA_CRO FAST): the first traded observation also covers the prior trading day (Andrew-direct ~17:4xZ) -- read-time rule in resolve_date_"
+      },
+      {
+       "commit": "bd2e9a1181",
+       "author": "4.0.0_SA_CRO",
+       "date": "09-30",
+       "subject": "build(MDPF_TAXSMA E2a / lane IRPT_TAX_MEMBERSHIP_M, 4.0.0_SA_CRO FAST): the whole-sheet Silver moves to the global scope; dispositions become per firm (disposit"
+      },
+      {
+       "commit": "f4c4614f33",
+       "author": "4.0.0_SA_CRO",
+       "date": "09-30",
+       "subject": "build(MDPF_TAXSMA E1 stage B / lane IRPT_TAX_MEMBERSHIP_M, 4.0.0_SA_CRO FAST): membership carries the firm from the RIA column (normalize_firm, FIRM_ROUTING); s"
+      },
+      {
+       "commit": "56491c907c",
+       "author": "4.0.0_SA_CRO",
+       "date": "09-30",
+       "subject": "build(MDPF_TAXSMA E1 stage A / lane IRPT_TAX_MEMBERSHIP_M, 4.0.0_SA_CRO FAST): Silver BUSINESS_COLUMNS gains RIA and AUM (Mn); membership CONTRACT_VERSION 0.6.0"
+      }
+     ]
+    },
+    {
+     "member": "data/mdpf/scripts/silver/taxsma_workbook.py",
+     "state": "differs",
+     "served_equals_commit": "c354c33a9224ca53b185956e87c8414e75f6104f",
+     "changes_riding": [
+      {
+       "commit": "bd2e9a1181",
+       "author": "4.0.0_SA_CRO",
+       "date": "09-30",
+       "subject": "build(MDPF_TAXSMA E2a / lane IRPT_TAX_MEMBERSHIP_M, 4.0.0_SA_CRO FAST): the whole-sheet Silver moves to the global scope; dispositions become per firm (disposit"
+      },
+      {
+       "commit": "56491c907c",
+       "author": "4.0.0_SA_CRO",
+       "date": "09-30",
+       "subject": "build(MDPF_TAXSMA E1 stage A / lane IRPT_TAX_MEMBERSHIP_M, 4.0.0_SA_CRO FAST): Silver BUSINESS_COLUMNS gains RIA and AUM (Mn); membership CONTRACT_VERSION 0.6.0"
+      }
+     ]
+    },
+    {
+     "member": "lib/opal_naming.py",
+     "state": "differs",
+     "served_equals_commit": "70c4aa2e1a373b68d2cefbdefb888e9bef215962",
+     "changes_riding": [
+      {
+       "commit": "b5dc2e63d1",
+       "author": "1.0.0_SA_CTO",
+       "date": "09-30",
+       "subject": "fix(1.0.0_SA_CTO): a VENDOR row without display_name is a WARN, not a registry refusal -- the refusal from 70c4aa2e1a blocked the naming gate, and with enforcem"
+      }
+     ]
+    },
+    {
+     "member": "data/firm_registry.json",
+     "state": "differs",
+     "served_equals_commit": "f13d9e92225e483ce3b82364ad0e8bbf79d7ebf7",
+     "changes_riding": [
+      {
+       "commit": "8e9ed1b539",
+       "author": "0.9.0_WK_NFRA_TRNSPT~3",
+       "date": "09-30",
+       "subject": "registry(NFRA_TRNSPT TO-TR-g1, 0.9.0_WK_NFRA_TRNSPT~3): systems.json rows outlook and sharepoint (VENDOR, D9) and the 11 workspace generated targets restamped"
+      }
+     ]
+    },
+    {
+     "member": "docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json",
+     "state": "differs",
+     "served_equals_commit": "1206612f63b47cf423a4bb678907071854ee4d7e",
+     "changes_riding": [
+      {
+       "commit": "9e58503be1",
+       "author": "2.0.0_SA_COO~M",
+       "date": "10-02",
+       "subject": "feat(IRPT_BCKEND ~M, 2.0.0_SA_COO~M): the Holdings route's TARGET fold -- opt-in (include=target), labelled basis TARGET, never summed with actual (CTO batch 18"
+      },
+      {
+       "commit": "4cc72587d6",
+       "author": "2.0.0_SA_COO~M",
+       "date": "10-02",
+       "subject": "feat(MDPF_SECCLASS readers packet, 2.0.0_SA_COO~M): the Holdings producer and its published contract admit `multi_asset` -- readers first, no row carries it yet"
+      },
+      {
+       "commit": "cc99dea562",
+       "author": "2.0.0_SA_COO~M",
+       "date": "10-01",
+       "subject": "contract(IRPT_BCKEND ~M item 1, 2.0.0_SA_COO~M FAST): HoldingsSnapshot -- the served blocks cover ACTUAL positions only; custody with no position is its own blo"
+      },
+      {
+       "commit": "a72904d984",
+       "author": "2.0.0_SA_COO~M",
+       "date": "10-01",
+       "subject": "fix(IRPT_BCKEND ~M item 1, 2.0.0_SA_COO~M FAST): the aggregates leave the producer -- a firm-wide fold cannot be served to a selection; contract descriptions re"
+      },
+      {
+       "commit": "1f5d1049c3",
+       "author": "2.0.0_SA_COO~M",
+       "date": "10-01",
+       "subject": "feat(IRPT_BCKEND ~M item 1, 2.0.0_SA_COO~M FAST): Holdings serves per-security aggregates and per-class totals on the narrowed classifier (W2-11, W2-15; CTO DEC"
+      }
+     ]
+    },
+    {
+     "member": "infra/logic/registry/reporting_policies.json",
+     "state": "differs",
+     "served_equals_commit": "7262571e4cf4a2c294480b285fd54c5c91b37053",
+     "changes_riding": [
+      {
+       "commit": "11bf813387",
+       "author": "0.9.0_WK_IRPT_DASHBD~1",
+       "date": "10-01",
+       "subject": "feat(IRPT_DASHBD.TO-DB-b-2, 0.9.0_WK_IRPT_DASHBD~1): platinum publisher (pure functions + handler + tests), platinum/reporting policy row, ledger OPEN before th"
+      }
+     ]
+    },
+    {
+     "member": "infra/logic/registry/systems.json",
+     "state": "differs",
+     "served_equals_commit": null,
+     "changes_riding": null
+    },
+    {
+     "member": "org/standards/NAMING_SCHEMA.json",
+     "state": "differs",
+     "served_equals_commit": "4eae414dd4ce8c92a92ac1bff18b8c9af0ea67ad",
+     "changes_riding": [
+      {
+       "commit": "aa2b5a42ff",
+       "author": "4.0.0_SA_CRO",
+       "date": "10-02",
+       "subject": "naming(4.0.0_SA_CRO): cadence token \"1min\" joins NAMING_SCHEMA.json cadence.values (the Teams assistant's poll schedule)"
+      }
+     ]
+    }
+   ]
+  }
+ }
+}
