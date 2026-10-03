@@ -16853,3 +16853,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Leg V of irpt-p2-window-20261003 stays open on S308."
 }
 ```
+
+## IRPT_BCKEND-S310 -- RE-POINT of S308: the render host's print-query allow-list drops account and version
+
+```json
+{
+  "id": "IRPT_BCKEND-S310",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-03T20:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "RE-POINT of IRPT_BCKEND-S308 (CTO batch 229, msg 104735): the root cause is the export render host's allow-list, not the served page -- render_export.cjs:83 PRINT_QUERY_KEYS drops account and version (and request); disarm owner is now 2.0.0_SA_COO~P; the fix is cell IB-pr-308 (round 43)",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "2.0.0_SA_COO~D (msg 104732): PROD's PrintEntry-lFovSTi6.js refuses selection only when `!t && !e.get(\"account\")`; with account dropped before the page loads it says 'names no selection'",
+      "infra/aws/ec2/investor-reporting-export/render_export.cjs:83 PRINT_QUERY_KEYS = bundle, tenant, revision, kind, selection, start, end; applyPrintQuery (:116-121) copies only those; the S3 copy s3://opal-313476888478-lambda-artifacts/ec2/investor-reporting-export/render_export.cjs equals the HEAD blob",
+      "CTO batch 229: add account, version and request to PRINT_QUERY_KEYS with a test, under its own half; arms: a PROD export reaches READY with the frozen as_of, and the rendered series is the frozen VersionId; no portal promote owed"
+    ]
+  },
+  "spec_asserts": "IRPT_BCKEND-S308 named the served page (owner ~D) as the refusing layer.",
+  "world_is": "MEASURED: the served page is correct for PATH B; the render host's script removes the PATH B keys before navigation.",
+  "notes": "S308 and this row close together when a PROD export reaches READY with its frozen as_of."
+}
+```
