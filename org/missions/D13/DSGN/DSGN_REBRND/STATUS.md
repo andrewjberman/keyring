@@ -22,6 +22,16 @@ IR keeps priority -- return to DSGN_IRPTV1 the tick any of its Next lines unbloc
 
 ## Next (round 3's enrichment list, batch 80 item 9, in the ruled order; E4 started first by batch 165)
 
+0. **The CVO's census after S14 (grade b296ae47c1): the remaining `?? 50` sites.** BUILT 2026-10-03 16:3xZ.
+   - Commit `3a842221` on the local branch `coo-d-regime-readings`, worktree `C:/Users/AndrewBerman/Desktop/portal-coo-d-regime`.
+   - Covers MarketRegimeIndicator, MarketRegimeModal and FearGreedModal: a missing reading says "Not published", never
+     50. Pin regime-no-reading, with four negative controls.
+   - Real run: a build served with gap and control fixtures, looked at.
+   - HELD off DEV until B2 (the P-2 window's PROD promote, CTO 104632) is measured: B2 carries DEV head, and this
+     change is not graded yet. It lands on DEV after B2.
+   - Still open from the same grade: the untested wiring (MarketPerformance `failed`, Positioning `loadFailed`,
+     HoldingsTab).
+
 1. **E4 -- the page pass for FWD-12 and FWD-13 on `/positioning`** (first by batch 165). SURFACE HALF (FWD-12) LANDED:
    - portal fb5d6116: the Positioning Summary's six translucent fills on opaque rungs (bar tracks, placeholder and
      inputs: tile; the blend strip: body; the Collapse button: tile, hover rung on hover);

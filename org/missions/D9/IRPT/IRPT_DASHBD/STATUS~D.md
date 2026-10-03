@@ -74,6 +74,14 @@ account 0 reads, 85 ms. FWD-1's ACCEPT (Andrew's pick the next morning) and the 
    - The frozen as_of BUILT on the held branch @b847c9f0: "This export uses the performance data through <date>."
      beside the export (ExportReceipt facts.frozen_as_of; pin iv-e-162; run from a build). P-3 + P-6's page half is
      COMPLETE on the branch, held for ~P's P-2 window (~P told 083543Z).
+   - **B1 STAGED 2026-10-03 16:1xZ** (CTO 104632, Andrew "1 yes today"; 0.0.0_AB_MSTR 104636 waits on the DEV head sha):
+     origin/DEV 525c9404 merged into the branch, then 426761e4. 426761e4 fixes iv-e-162's read-only writes: the branch
+     tip had failed `bun run typecheck` since b847c9f0. Measured: typecheck rc=0; the branch's tests 9 of 9; the full
+     suite fails the same 57 named tests at DEV head and on the branch. Both were run in worktrees outside the
+     workspace, which adds path failures; the branch adds 5 passing tests. Download is already on DEV (item 93).
+     ~P told 161323Z. ON ~P's CALL: re-merge origin/DEV, `git push origin HEAD:DEV` from the branch worktree, then
+     message 0.0.0_AB_MSTR the DEV head sha. Until B2 is measured, no product change from this seat lands on DEV:
+     the promote carries DEV head, and anything not yet graded would ride to PROD.
    - The run also caught a since-first-data figure printed for a window the tab answered "Not measured"; fixed on DEV
      209e4903.
 7. ~~~P 104529 window_status~~ LANDED portal `936424c3`, plus `209e4903` (any window opening before the history is
