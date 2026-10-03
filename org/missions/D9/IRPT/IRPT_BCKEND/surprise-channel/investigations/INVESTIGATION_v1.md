@@ -16994,3 +16994,61 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "MEASURED: render 123e754c Success with 20 requests, all to opalinvest.dev; receipt READY with frozen_as_of 2026-10-01; portal PROD dbd29c6320 carries 1f42eb08 (is-ancestor YES, positive control 98a98e70 YES)."
 }
 ```
+
+## IRPT_BCKEND-S315 -- DISARM of S288 on its own stated condition: fence above 23 and authenticated securities_info reads answering
+
+```json
+{
+  "id": "IRPT_BCKEND-S315",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-03T22:45:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARM of IRPT_BCKEND-S288 by its disarm owner, measured on the remediation row's own condition ('fence above 23 and one authenticated securities_info read answering 200'): fence 25, and the resident's securities_info resolve answered on the stored session at 20:55:33Z and 22:28:06Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/Y5V/BEFORE_READ_Y5V_20261003.txt (22:02:24Z): the provider lease item reads fence 25, not held",
+      "resident journal via SSM db9dc7ec (read 2026-10-03 ~22:3xZ): 20:55:33 IRPT_RESIDENT_RESOLVE_FUNDS matched=0 gated=1 features=mutualFundDataUSA=1 refused=0 then IRPT_RESIDENT_RESOLVE state=READY; the same at 22:28:06 and RESOLVE state=READY at 22:28:43 -- each resolve is the securities_info batch, answered with the account's entitlement features, which only an authenticated read returns",
+      "Y-3 REQ-329a5618 READY 17:03:14Z on the same session (Y3/V1A/V1A2_multicomp_ult_iwm_cottonwood_20261003.log @ee801b0505), its comparison identity read through securities_info"
+    ]
+  },
+  "dismissal_reason": "S288's remedy names its disarm: fence above 23 and one authenticated securities_info read answering 200. Both are measured above. S306 carried the disarm at 16:36Z on a template read; this row adds the securities_info read the remedy names, so the remediation row's disarm clock can advance (REMEDIATION_v18 is the CVO's lane, TREE_CVO).",
+  "spec_asserts": "IRPT_BCKEND-S288 (remediation v42): the session stays EVICTED until option A; disarm on fence above 23 and one authenticated securities_info read answering 200.",
+  "world_is": "MEASURED: fence 25; securities_info resolves answered at 20:55:33Z, 22:28:06Z and 22:28:43Z; Y-3 READY 17:03:14Z. The session is live.",
+  "notes": "CTO batch 234 item 3 (msg 104805) asked for this row. The remediation row's disarm ARMED -> DISARMED is the CVO's edit to make."
+}
+```
+
+## IRPT_BCKEND-S316 -- Y-5 V1: YCharts' holdings upload echo is refused on the easy file (VENDOR_UPLOAD_REFUSED); the refusal keeps no counts, so the cause is not measured
+
+```json
+{
+  "id": "IRPT_BCKEND-S316",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-03T22:45:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Y-5 V1 Aproxy (REQ-51d9daacbc9ba24ac01b6c4c): the page half PASSED (proxy box, SGOV named, NORMALIZED), but the job went ATTENTION VENDOR_UPLOAD_REFUSED at 22:28:59Z -- the holdings upload POST answered 200 (11,644 B) and recipe.step_upload's reconciliation refused the echo; neither the journal nor the job keeps rows_sent, rows_echoed, errors or the mismatch",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "irpt-jobs REQ-51d9daacbc9ba24ac01b6c4c: state ATTENTION, job_detail {\"code\":\"VENDOR_UPLOAD_REFUSED\"}; vendor_requests: GET /custom_pdf_reports/generate/14141822 200 (2065 B), POST /model_portfolios/fixed/holdings_upload/client 200 application/json (11644 B), waf_action null",
+      "resident journal via SSM db9dc7ec: 22:28:58 IRPT_RESIDENT_STEP_REFUSED step=upload status=200; 22:28:59 IRPT_RESIDENT_ATTENTION code=VENDOR_UPLOAD_REFUSED",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/recipe.py:505-515: ok needs status ok, no errors, unique echo, expected == echoed (identifier -> Decimal dollars, exact), weight Dollars, an int upload_record_id",
+      "the easy file (sha256 500837992a3b9caa) parsed in memory by intake/template_reader.read_template, counts only: 99 rows, 99 unique symbols, SGOV not already present; amounts by decimal places {2: 76, 1: 10, 0: 3, 12: 3, 13: 3, 14: 3, 15: 1}; 1 symbol with a non-alphanumeric character"
+    ]
+  },
+  "spec_asserts": "Y-5 packet 1 V1: the corrected re-post normalizes with SGOV and the Overview reaches READY.",
+  "world_is": "The upload step refuses the vendor's echo of the easy file. Candidates, NOT measured: (a) 10 amounts carry 12-15 decimals (Excel float noise) and the echo rounds them, so the exact Decimal comparison fails; (b) the one symbol with a punctuation character is echoed under another security_id; (c) the vendor drops or errors a row. The easy file has never reached a YCharts upload before (every earlier Case A stopped at TIMXX).",
+  "notes": "Next: the refusal names its closed counts (rows sent and echoed, missing, extra, amount mismatches and how many are under one cent, errors, the weight unit) with no value, and the upload sends dollars at cents. Ships under a packet; Aproxy re-fires after it."
+}
+```
