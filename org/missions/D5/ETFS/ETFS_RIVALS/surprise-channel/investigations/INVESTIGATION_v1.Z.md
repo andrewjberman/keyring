@@ -3143,6 +3143,28 @@
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "Order RIV-pv-1: 'the sweep stamps scheduled only for an event carrying that value and no only; every other event stamps ad_hoc' and 'sa-1 ... tests/test_r7sa1_sweep_ai_step.py must still pass when you report'.",
     "world_is": "The two cannot both hold: that test passed a hand-made event with no run_path and expected scheduled, the exact claim ruling 3 retires. sweep.run_ai_step now reads the run_path handler_entry stamped (sweep.stamped_run_path); defaulting an absent key to scheduled inside run_ai_step would restore the test but reinstate the unearned claim for any direct caller, so it was not done. The test file is not in this order's paths."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S16",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-03T00:06Z",
+    "one_line": "A skipped AI step reports no run_path: run_ai_step copies run_path from ai_stage.run_for_day's result, and SKIPPED_EXISTS / SKIPPED_GATE carry none, so a sweep whose AI step skips cannot show the trigger it stamped; the round-7 COO half predicted detail.ai would read 'scheduled' and was wrong.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/tmp/r7act/s1.json: RequestId 1e9c8fb9-2b9f-4d75-acd8-082144632c75, event run_path 'scheduled', detail.ai {status SKIPPED_EXISTS, run_path null}",
+        "data/etfs/scripts/rivalfunds/sweep.py run_ai_step@75ad1e4d2e: out = {k: res.get(k) for k in (status, reason, run_id, run_path)}; ai_stage.py run_for_day@75ad1e4d2e: the SKIPPED_GATE / SKIPPED_EXISTS returns carry no run_path",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round7/postact_round7_deploy.json S1.prediction_error"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CTO ruling 3 (a value must carry its claim) and RIV-pv-1: the run's trigger is stamped from the payload; the round-7 COO half act 4: detail.ai reads {status: SKIPPED_EXISTS, run_path: 'scheduled'}.",
+    "world_is": "The deployed sweep reaches the AI step (proved by S1), and handler_entry stamps ev['run_path'] = 'scheduled' for the schedule payload, but that stamp reaches detail.ai only when run_for_day returns it (OK, FAILED, SKIPPED_ATTEMPTED). A skipped day's response therefore reads run_path null although the event was stamped 'scheduled' -- the response omits the claim rather than misstating it. The account rows and research_hypotheses_run (written only on OK/FAILED) carry the stamp, so no stored value is wrong.",
+    "notes": "Remedy for a later round (one line in run_ai_step: fall back to the stamped run_path when the result carries none). Not a blocker: the organic 2026-10-05 sweep runs a real step whose result carries run_path. disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV."
   }
 ]
 ```
