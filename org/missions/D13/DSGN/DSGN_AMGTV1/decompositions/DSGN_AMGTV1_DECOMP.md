@@ -1683,3 +1683,18 @@ there). AC2 = `round29/checks/battery29.sh` with no skip.
   caption's composed "since <date>" says the same thing.
 - A bubble hover's served `places_moved_reason` ISO date stays as served (C-PRESENTATION-ONLY, CTO ruling (b)).
 **Fan-out:** 1 of 1. **Risk:** LOCAL. **Direct act:** one small cell (/dispatch Step 2).
+
+## v32-A -- STEP 5 ON THE PRD AT d5bbef0fb6 (issuer, 2026-10-03 20:01Z; v0.13, CVO re-signed @e082e847ee, notifier msg 28980)
+
+**What changed:** under the Andrew-direct 2026-10-03 ~18:xxZ deletion, the PRD lost the v0.12 clause on FWD-5's word-cloud limb
+(record `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261003_18xxZ_DELETE_AGENT_TOS_CONTEXT_AND_UNAUTHORIZED_GATES.md`).
+FWD-5's ACCEPT still names "a word cloud from its own coverage".
+**Ruling: no cell is cut this step.**
+- The limb has no served input. 0 of 437 captured payloads (every round fixture and the 10-02 served re-read) carry a word-cloud or
+  term-count field. The only `terms` field is the thesis pillars' labels.
+- The input would come from an upstream producer: HARVST/RESAPP processing harvested coverage text into term counts. Andrew's
+  standing word (2026-10-03 ~17:xxZ, record `ANDREW_DIRECT_20261003_17xxZ_RELEASE_ALL_QUARANTINE_NO_DATA_OPS_CHANGES_WITHOUT_DIRECTIVE.md`)
+  is that agents do not adjust data-engineering operations without his explicit directive, and that further data collection is
+  discussed internally after review.
+- Separately, the CTO's grading ruling (@5cd2d798d8) cuts no round 33 before f9c6fa73 lands.
+A DSGN cell for the word cloud is cut when a route serves the term counts.
