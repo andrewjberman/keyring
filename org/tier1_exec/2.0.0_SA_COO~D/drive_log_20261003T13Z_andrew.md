@@ -6,6 +6,7 @@
 | 13:0xZ-13:1xZ | DSGN_REBRND (FAST; IR still blocked on ~P) | round 3 E3, row W3-S4 | /ticket-center says a failed load inside the board: portal `3d8cce99` on origin DEV (ls-remote 13:16Z) | DRIVE FORWARD |
 | 13:1xZ-13:3xZ | DSGN_REBRND (FAST; IR still blocked on ~P) | round 3 E3, row W3-S4 | /data-refresh History and Emergency Rollback say a failed history read: portal `30f7fca1` on origin DEV (ls-remote 13:33Z) | DRIVE FORWARD |
 | 13:3xZ-13:4xZ | DSGN_REBRND (FAST; IR still blocked on ~P) | round 3 E3, row W3-S4 | /advisor-intelligence Advisors tab says a failed leaderboard read: portal `075d33fa` on origin DEV (ls-remote 13:46Z); ~M asked about PartnerAnalytics.tsx | DRIVE FORWARD |
+| 13:4xZ-13:5xZ | DSGN_REBRND (FAST; IR still blocked on ~P) | round 3 E3, row W3-S4 | the Data Source panel claims "Connected" only once data arrived: portal `10fca02d` on origin DEV (ls-remote 13:57Z); PartnerAnalytics.tsx waits on ~M's lease (FAST to 14:27Z) | DRIVE FORWARD |
 
 ## W3-S4 on /portfolio-management
 
@@ -44,10 +45,12 @@
   "Last update: N/A".
 - Landed: AdvisorsTab reads the leaderboard's `isError`; one "Advisors" panel with the error. 401 render after; live
   walk `20261003T134302Z` draws as before (its one API issue, a 403 on cohort_a_summary.json, is not this change's).
-- Asked 2.0.0_SA_COO~M (one message): PartnerAnalytics.tsx sits in the MDPF_SECCLASS lease.
+- Asked 2.0.0_SA_COO~M (one message): PartnerAnalytics.tsx sits in the MDPF_SECCLASS lease. ~M 104617 (acked): take
+  it, land once that lease reads FULL; it was presence-extended to 14:19Z, then 14:27Z.
+- Data Source: the dot and "<Source> Connected:" follow `analyticsData` in all four partner pages (10fca02d); 401
+  render grey and neutral, live walk `20261003T135450Z` green with the 7:22a ET update.
 
 ## Still open on W3-S4
 
-- /advisor-intelligence: Assets Overview (PartnerAnalytics.tsx, ~M's lease; asked) and the static "Connected" label in
-  `_partners/*/index.tsx`.
+- /advisor-intelligence: Assets Overview (PartnerAnalytics.tsx), after ~M's lease reads FULL.
 - /market: a missing period change read as 0; RSIModal's own 50 defaults.
