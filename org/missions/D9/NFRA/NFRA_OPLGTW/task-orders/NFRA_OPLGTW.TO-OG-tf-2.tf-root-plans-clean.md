@@ -79,8 +79,8 @@ Rows: id `NFRA_OPLGTW-Z-W17-S<k>` (next unused), fabric `site-z`, disarm_owner `
 ## 5. WHEN YOU ARE DONE
 
 Instance at `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~17/NFRA_OPLGTW.TO-OG-tf-2.tf-root-plans-clean.proof_of_spec.json`,
-validated with `python .tools/proof-of-spec-check.py <instance>`. If both criteria PASS, append a `complete` status tag
-after the order's last status line in the same commit. Report once: the mechanism, the literal AC output, the closing
+validated with `python .tools/proof-of-spec-check.py <instance>`. If both criteria PASS, edit this order's ONE status tag IN PLACE to
+`complete` in the same commit (the board and the gates read the first status tag; never append a second). Report once: the mechanism, the literal AC output, the closing
 hash, commits and rows.
 
 <!-- ===================== RECORD FACE ===================== -->

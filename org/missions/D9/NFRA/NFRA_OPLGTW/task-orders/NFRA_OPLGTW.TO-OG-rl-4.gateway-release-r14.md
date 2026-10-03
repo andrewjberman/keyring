@@ -147,7 +147,6 @@ validated with `python .tools/proof-of-spec-check.py <instance>`. Report once pe
 - Pre-cut 00:2xZ: `rl4.AC1` 3 of 4 (4 values disagree under systemd vs bash); `rl4.AC3` FAIL (no ledger; live = `4231bd2ddc`);
   `rl4.AC2` FAIL on the round-13 read (no transcript read since carries either field).
 
-<status>pending</status>
 <status>complete</status>
 <round>14</round>
 <slot>~15</slot>

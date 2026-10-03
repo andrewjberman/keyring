@@ -73,7 +73,6 @@ order's last status line in the same commit. Report once: denominator, collision
 - Round label 14 (addendum R3-T.7, item 7). Pre-cut: `gr.AC1` FAIL (absent); a synthetic record PASSes it and a
   planted blank flips ADOPT to "rule says REFUSE" (FAIL).
 
-<status>pending</status>
 <status>complete</status>
 <round>14</round>
 <slot>~22</slot>

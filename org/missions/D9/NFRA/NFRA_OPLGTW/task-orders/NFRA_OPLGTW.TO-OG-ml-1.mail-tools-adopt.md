@@ -88,11 +88,9 @@ count before and after, the pypdf version, the literal AC1-AC2 output, the commi
 - The byte-returning `$value` read is `OG-hr-2`'s (the headless mail route), never an MCP tool.
 - `<risk>` WORLD is GATE (xii)'s floor; the cell deploys nothing.
 
-<status>staged</status>
+<status>complete</status>
 <round>8</round>
 <slot>~15</slot>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
-<status>complete</status>

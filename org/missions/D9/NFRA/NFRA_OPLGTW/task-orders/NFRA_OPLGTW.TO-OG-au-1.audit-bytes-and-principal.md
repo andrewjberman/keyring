@@ -76,7 +76,6 @@ order's last status line in the same commit. Report once: the diff summary, the 
 - Round label 14 (addendum R3-T.7, item 2); feeds `OG-rl-4`. Pre-cut: `au.AC2` FAIL (no commits); `rl4.AC2` on the live
   audit reads 6 post-deploy transcript reads with neither field.
 
-<status>pending</status>
 <status>complete</status>
 <round>14</round>
 <slot>~19</slot>

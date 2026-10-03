@@ -76,10 +76,9 @@ commit. Report once.
   served code (OG-x-2 `0c3d545002`); this cell pins it. The LIVE artifact's runbook is the pre-repair text: the next
   release that ships the runbook carries it (not `OG-rl-4`, which names its files).
 
-<status>pending</status>
+<status>complete</status>
 <round>14</round>
 <slot>~21</slot>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker-light</worker_class>
-<status>complete</status>

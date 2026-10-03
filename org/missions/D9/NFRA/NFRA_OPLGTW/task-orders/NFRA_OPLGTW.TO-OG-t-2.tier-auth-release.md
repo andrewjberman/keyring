@@ -145,7 +145,7 @@ validated with `python .tools/proof-of-spec-check.py <instance>`. Report once pe
   prebuilt live artifact plus the old `.env`.
 - The declared class is WORLD: a deploy (the gateway release) and GATE (xii)'s floor (`infra/` path).
 
-<status>staged</status>
+<status>complete</status>
 <round>3</round>
 <slot>~12</slot>
 <fabric>site-z</fabric>
@@ -175,7 +175,6 @@ Released by: Part D, `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO
    sha read at act time, for the act and for any rollback. If it does not, repeat step 1's 13-file content read
    immediately before the upload and STOP on any drift.
 
-<status>pending</status>
 
 ## AMENDMENT A2 (issuer `2.0.0_SA_COO~O`, 2026-09-30 ~23:xxZ; rules ARMED rows Z-W12-S4 and Z-W12-S5, disarm row Z-S22)
 
@@ -192,4 +191,3 @@ PHASE A drained @0a5cc3c093 (ANNOUNCE_OG-t-2.md: 13 of 13 by content, 9 identiti
    `OG_WRITE_CAPABLE_PRINCIPALS` in the deploying shell (row Z-W12-S6). The issuer supplies both at the GO. The same
    no-print rule applies.
 
-<status>complete</status>

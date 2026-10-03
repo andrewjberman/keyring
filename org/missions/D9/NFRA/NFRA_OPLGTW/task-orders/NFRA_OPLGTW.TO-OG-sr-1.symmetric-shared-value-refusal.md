@@ -90,7 +90,6 @@ commits and rows.
   cut: `git diff 4231bd2ddc -- app/mail_route.py app/transcript_route.py` is empty).
 - Pre-cut 00:1xZ: `sr.AC1` FAIL (named tests 0 of 1 in each file; both suites rc 0); `sr.AC2` FAIL (0 files).
 
-<status>pending</status>
 <status>complete</status>
 <round>14</round>
 <slot>~24</slot>

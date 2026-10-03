@@ -137,7 +137,6 @@ validated with `python .tools/proof-of-spec-check.py <instance>`. Report once pe
 - The ruling's AC4 "401" for `/hx/mail/x` was re-measured: live answers 404 ("Not Found", app-originated) for both
   `/hx/mail/x` and `/hx/transcripts/x`; AC4 grades "unchanged from live".
 
-<status>pending</status>
 <status>complete</status>
 <round>13</round>
 <slot>~15</slot>

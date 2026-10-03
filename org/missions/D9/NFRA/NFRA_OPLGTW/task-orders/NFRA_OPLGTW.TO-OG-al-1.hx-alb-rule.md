@@ -97,7 +97,6 @@ validated with `python .tools/proof-of-spec-check.py <instance>`. Report once pe
 - Blast radius for the GO: one listener rule; two path patterns move from the sign-in to the app's bearer.
 - `<risk>` WORLD: a public-surface rule.
 
-<status>pending</status>
 <status>complete</status>
 <round>10</round>
 <slot>~18</slot>
