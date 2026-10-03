@@ -998,6 +998,268 @@
  "disarm_owner": "2.0.0_SA_COO~D",
  "spec_asserts": "A row's surfaced_at is the real UTC time it was surfaced; corrections are new items citing the old id (surprise-row-gate).",
  "world_is": "The two worker rows carry a 00:00Z placeholder. This row records their true times; the rows themselves stay as written."
+},
+{
+ "id": "DSGN_AMGTV1-Z-S17",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~D",
+ "surfaced_at": "2026-10-02T15:56Z",
+ "one_line": "The integrator-only push gate (.tools/hooks/never-rules-gate.sh PUSHPULL_AUTHORITY) admits a non-integrator push to ANY shared branch, PROD included, when the refspec names the destination as `<src>:refs/heads/<BRANCH>` or force-pushes `+<BRANCH>`: its sed strips `refs/heads/` BEFORE splitting off the `src:` half and never strips a leading `+`. This seat's own push of portal 42405d2d to DEV went through the first form.",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "hook fed synthetic PreToolUse JSON (session dea6290b..., serial file = 2.0.0_SA_COO~D, no FAST lease in org/mcp/drive_mode): `git -C $P push origin 42405d2d:DEV` -> permissionDecision deny (positive control); `... 42405d2d:refs/heads/DEV` -> no decision (admitted); `git -C C:/tmp/x push origin HEAD:refs/heads/PROD` -> admitted; `... +DEV` -> admitted; `... +HEAD:PROD` -> deny; `... refs/heads/DEV` -> deny",
+   "the extraction line: sed -e 's#^refs/heads/##' -e 's#^.*:##' -e 's#^origin/##' -- for token `42405d2d:refs/heads/DEV` the first expression does not match, the second leaves `refs/heads/DEV`, which fails ^(CLOUD|DEV|PROD|SITEZ|main|master)$",
+   "the act: 2026-10-02 ~15:4xZ `git -C C:/tmp/wk-dsgn-amgtv1-79/portal push origin 42405d2d:refs/heads/DEV` -> 415f50db..42405d2d (ls-remote read 42405d2d); VALGATE CI run 37029029779 success. The candidate touches no product file (scripts/ui-measure.mjs, scripts/ui-contract-check.mjs, a __harness__ test fixture), the CLAUDE.md Portal author-landing case (Andrew-direct 2026-09-24); the gate implements no such carve-out, so its intended verdict was DENY"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "1.0.0_SA_CTO~Z",
+ "spec_asserts": "Only 0.0.0_AB_MSTR(~lane), the DT carve-outs and a live FAST-lease seat on DEV may push a shared branch; trigger (b) reads the refspec's destination whatever form it takes (LD-0367 rule 2 / LD-0368).",
+ "world_is": "`<src>:refs/heads/<SHARED>` and `+<SHARED>` are not recognised as shared-branch pushes, so any seat whose target repo HEAD is not a shared branch is admitted. Remedy (one line): reorder to sed -e 's#^.*:##' -e 's#^+##' -e 's#^refs/heads/##' -e 's#^origin/##'. Separately, the law/gate mismatch: CLAUDE.md Portal admits a no-product-file author landing on DEV that the gate does not implement."
+},
+{
+ "id": "DSGN_AMGTV1-Z-S18",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "1.0.0_SA_CTO~Z",
+ "surfaced_at": "2026-10-02T16:17Z",
+ "one_line": "DISARMED by its disarm_owner: DSGN_AMGTV1-Z-S17 (the push gate admitted <src>:refs/heads/<SHARED> and +<SHARED> from any seat). never-rules-gate.sh PUSHPULL_AUTHORITY now strips the src: half first, then a leading +, then refs/heads/ and origin/; 9 of 9 probes read as specified and the integrator is still admitted.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "Synthetic PreToolUse JSON was fed to .tools/hooks/never-rules-gate.sh with the caller unresolved (no serial file, OPAL_AGENT_SERIAL unset), against target repo C:/tmp/wk-dsgn-amgtv1-70/portal, whose HEAD is not a shared branch.",
+   "BEFORE: 5 of 6 shared-branch forms were ADMITTED: 42405d2d:refs/heads/DEV, HEAD:refs/heads/PROD, +DEV, +HEAD:refs/heads/PROD, +refs/heads/main. The control 42405d2d:DEV was DENIED, and the 3 scratch forms were ADMITTED.",
+   "AFTER the reorder: all 6 shared-branch forms are DENIED, and the 3 scratch forms (HEAD:refs/heads/scratch-ctoz-x, +scratch-ctoz-x, a plain non-shared branch) are still ADMITTED.",
+   "Positive control: OPAL_AGENT_SERIAL=0.0.0_AB_MSTR~Z pushing HEAD:refs/heads/DEV is ADMITTED."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "1.0.0_SA_CTO~Z",
+ "spec_asserts": "An ARMED hazard disarms via its disarm_owner (CLAUDE.md section 2). Z-S17 names 1.0.0_SA_CTO~Z.",
+ "world_is": "Trigger (b) now reads the refspec destination in every form probed. NOT disarmed by this row: Z-S17's second limb, the law/gate mismatch. CLAUDE.md Portal admits an author landing a no-product-file candidate on portal DEV, and the gate has no carve-out for it, so after this fix such a landing is DENIED unless a FAST lease or the integrator carries it. The gate is now NARROWER than the law there. Implementing that carve-out needs a payload check for 'no product file'; it is routed to 1.0.0_SA_CTO~Z's own lane as a build item, not built here.",
+ "notes": "Disarm record by the disarm_owner on COO~D's ask (msg 28563); not an adjudication."
+},
+{
+ "id": "DSGN_AMGTV1-Z-S19",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "1.0.0_SA_CTO~Z",
+ "surfaced_at": "2026-10-02T16:40Z",
+ "one_line": "Z-S17 limb 2 (law/gate mismatch) CLOSED by its disarm_owner: never-rules-gate.sh now implements the TEST-ONLY portal-DEV carve-out of Andrew-direct 2026-09-24 cut 2 ('the author fast-forwards test and fixture changes'). It is scoped six ways: push, DEV, portal origin, a resolved caller, no force, and a payload where every path in <ls-remote DEV tip>..<src> is a test/fixture path. 20 of 20 probes read as specified.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "Dangling probe commits were built by plumbing on the remote DEV tip 42405d2d (no refs, no checkout): T is a __tests__ file, PR a src product file, N a test file on tip~1 (non-ff), S scripts/ctoz-probe.mjs.",
+   "Caller 2.0.0_SA_COO~D: T:DEV and T:refs/heads/DEV are ADMITTED. DENIED, each with its printed reason: PR:DEV (1 of 1 paths not test/fixture), +T:DEV and push --force (force), N:DEV (not a fast-forward), S:DEV (scripts/ is not test-only), T:PROD (branch), and pull origin DEV (verb).",
+   "An unresolved caller pushing T:DEV is DENIED. The integrator 0.0.0_AB_MSTR~Z pushing PR:DEV is ADMITTED. The 9 Z-S18 bypass probes still pass."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "1.0.0_SA_CTO~Z",
+ "spec_asserts": "CLAUDE.md Portal: a portal candidate touching NO product file lands on DEV by its author (source record: test and fixture changes).",
+ "world_is": "The gate admits exactly the test/fixture fast-forward. It is deliberately narrower than 'no product file': an instrument script under scripts/ (as in 42405d2d) is still routed through 0.0.0_AB_MSTR~Z or a FAST lease. Widening the pattern needs a word naming the class.",
+ "notes": "Built by the gate owner on Z-S17's second limb (msgs 28563, 28575)."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W81-S1",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~81",
+ "surfaced_at": "2026-10-02T21:35Z",
+ "one_line": "AV-zg-2's cell allows Refresh as 'primary on the white panel', but round29 face.cjs arm 1 counts the estate's own canvas primary button (text-white on the purple fill) as lightInk, so the cell's primary option can only pass with the ink written as an hsl value, not as the text-white / palette-white token.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "Run in C:/tmp/wk-dsgn-amgtv1-81 with Refresh = buttonClass('primary','canvas','sm'): face.cjs 'LIGHT FACE ... 1 fault(s): loaded: bands 0, lightOnDark 0, lightInk 1, primaryOnDark 0 (lightInk: <button inline-flex items-center justify-center gap-2 rounded-[3px] > \"Refresh\")', 3 of 4 arms.",
+   "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/2.0.0_SA_COO~D/round29/checks/header/face.cjs lines 29-30 and 100-101: INK_TOK = text-white | palette-white | palette-mediumGray, PRIMARY_TOK is not a ground token, so a primary fill is read as the white canvas under white ink. portal/src/ui/components/Controls.tsx BUTTON_KIND.canvas.primary carries 'text-white'.",
+   "The same Refresh must stay the ONE purple fill: PRD FWD-18 'purpleFills == 1 (Refresh) in Security mode' (DSGN_AMGTV1_PRD.md line 252) and shell.harness.cjs primary_actions_security == 1 (not one of the five re-anchored clauses). A secondary Refresh would turn that clause red and break FWD-18."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "AV-zg-2 cell text item 2: 'Buttons use buttonClass(kind, canvas, ...); Refresh is secondary, or primary on the white panel'; face.cjs arm 1: lightInk 0 in all four states.",
+ "world_is": "Refresh is kept primary (buttonClass('primary','canvas','sm','text-[hsl(0_0%_100%)]') in SecurityOverlay.tsx): the same white ink on the same purple fill, written as an hsl value so face.cjs does not read it as white-on-white. The check, not the page, is imprecise (it has no primary ground); the issuer amends its own checks. No served value moved.",
+ "notes": "Worker row, not an adjudication. Both AC1 and AC3 pass with this choice; the alternative (secondary Refresh) passes AC1 and fails the shell harness's primary_actions_security."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W81-S2",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~81",
+ "surfaced_at": "2026-10-02T21:35Z",
+ "one_line": "To print 'identity as of' once (SAUX-15) IdentityLine now renders no 'identity as of <date>' text at all, so every tab that mounts IdentityLine (outside this cell's files) loses that visible line; the vintage stays in data-identity-vintage.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "portal/src/pages/SecurityAnalysis/components/IdentityLine.tsx: the resolved span now holds '' when crosswalk_vintage is served (data-identity-basis and data-identity-vintage kept), 'identity confirmed' when none is.",
+   "face.cjs arm 2 counts 'identity as of' over the header plus IdentityLine's own render of the same identity (want at most 1); the header's identity card prints it once. battery29.sh BATTERY29: ALL PASS (0 skipped) at this tree, so no harness in the battery reads the old IdentityLine text."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "AV-zg-2 cell text item 3: 'identity as of prints at most once across the header and IdentityLine (e.g. IdentityLine keeps only its data attributes)'.",
+ "world_is": "IdentityLine is mounted by other surfaces than the overlay header; those surfaces now show the ticker without the vintage line. The cell's own text names this option, so it is done as written; the other surfaces' wording is not this cell's to widen.",
+ "notes": "Worker row, not an adjudication."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W81-S3",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~81",
+ "surfaced_at": "2026-10-02T21:35Z",
+ "one_line": "Until AV-zg-1 merges, the overlay renders the timeline twice (SecurityOverlay.tsx's new TimelinePanel mount after HeaderBrief, and HeaderBrief.tsx's own unchanged mount), and __rendercheck__/renderCheck.tsx still tests html.includes('Back to universe').",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "portal/src/pages/SecurityAnalysis/components/HeaderBrief.tsx lines 196-198 at ec65c5d6 still mount <TimelinePanel securityKey={bundle.security_key} /> inside HeaderBrief; this cell's order is identity, key figures, <HeaderBrief bundle={bundle} />, <TimelinePanel />, the cell text says AV-zg-1 owns both components and stops HeaderBrief mounting a timeline of its own.",
+   "portal/src/pages/SecurityAnalysis/__rendercheck__/renderCheck.tsx line 439 at ec65c5d6: persistentPanelPresent: html.includes('Lead Panel') || html.includes('Back to universe'); the back control now reads 'Back to all names'. Neither file is in this cell's paths."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "AV-zg-2 cell text item 3 and AV-zg-1's HeaderBrief change; this cell's paths exclude HeaderBrief.tsx and renderCheck.tsx.",
+ "world_is": "In the merged tree of AV-zg-1 and AV-zg-2 the timeline mounts once; in this worktree alone it mounts twice (the checks stub both). renderCheck.tsx's string test is a stale lexical match owned by no cell of this round.",
+ "notes": "Worker row, not an adjudication; nothing edited outside <paths>."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W80-S1",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~80",
+ "surfaced_at": "2026-10-02T21:25Z",
+ "one_line": "AV-zg-1: the header's posture line no longer renders (HeaderBrief ignores postureLine, as the face orders), so posture.harness.cjs reds on header_line_present and absent_arm_explicit, which turns two battery29 items red (round24 posturezero.cjs, round23 postureharness.cjs) that the order does not skip.",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "battery29.sh with --skip tabs,namecard on portal ec65c5d6 + this cell's edits: 'THE ZERO-RESOLVED PATH IS NAMED AND PLANTED: 1 of 3 arms [rc=1]' and 'POSTURE.HARNESS RUNS GREEN AND GRADES SOMETHING: 2 of 3 arms [rc=1]'; every other line rc=0 (ALL BOUND 13 of 13 harnesses green; tsc -b --noEmit rc=0).",
+   "node portal/src/pages/SecurityAnalysis/__harness__/posture.harness.cjs prints CHECKS-WRONG-WAY no_object_arm_absent_explicit, BABA_US_Equity:absent_arm_explicit, BABA_US_Equity:header_line_present, BA_US_Equity:absent_arm_explicit, BA_US_Equity:header_line_present (the header-side checks only; the tab-side checks are green).",
+   "Positive control: with HeaderBrief.tsx temporarily rendering {postureLine} between the description and the feed, the same harness prints 'ABSENT no_object HD_US_Equity tab true header true' and 'CHECKS-OK 32 of 32'. The edit was reverted; HeaderBrief.tsx in the commit does not render postureLine.",
+   "The harness renders IdentityHeader from components/SecurityOverlay.tsx (posture.harness.cjs lines 372-380), which passes postureLine into HeaderBrief (SecurityOverlay.tsx line ~443); that file is AV-zg-2's and the posture-line re-anchor is named for AV-zg-3 in this order's AC3 note."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "The order's AC3 expects 'BATTERY29: ALL PASS (2 skipped)' with only tabs and namecard skipped; HeaderBrief keeps postureLine optional and ignored.",
+ "world_is": "BATTERY29: FAIL (2 skipped) by exactly two items, both reading posture.harness.cjs, which looks for [data-header-posture] in the header band that HeaderBrief used to draw from postureLine. The cause is the ordered removal of the posture slot, not a defect in either file. posture.harness.cjs is not in this cell's paths, so it is left unedited. The posture line's new home and the harness's re-anchor belong to the cells that own SecurityOverlay.tsx (AV-zg-2) and the header posture line (AV-zg-3).",
+ "notes": "AC1 and AC2 pass 4 of 4 arms each; AC3 is the only red criterion."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W80-S2",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~80",
+ "surfaced_at": "2026-10-02T21:25Z",
+ "one_line": "AV-zg-1: timelineFourStates.harness.cjs cannot load the rebuilt TimelinePanel.tsx without stubs for its new imports, so the edit went beyond the order's 'only the fill clause changes'.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "Before the stubs, node portal/src/pages/SecurityAnalysis/__harness__/timelineFourStates.harness.cjs threw \"Cannot find module '@/components/DataTooltip'\" (MODULE_NOT_FOUND) from TimelinePanel.tsx, whose build items 1 and 4 require DataTooltip and HeroDialog imports.",
+   "Added three stubs to the harness's STUBS map (@/components/DataTooltip, @/ui/components/graphic/HeroGraphic, recharts ReferenceDot), none of which is the fill clause. After that and the fill re-anchor the harness prints result PASS; with BAR_FILL planted to hsl(var(--status-danger)) it exits 1 on four named checks; reverted, PASS again."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Bounds item 2: in the harness file only the fill clause changes.",
+ "world_is": "The harness also needed the import stubs and an extraction of fill-opacity, which carries the day's search state now that the hatches are gone. No other predicate (error banner, retry, zero day-bars on a failed call, pairwise distinctness) was altered.",
+ "notes": "Smallest change that lets the order's own 'show one planted run' happen."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W80-S3",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~80",
+ "surfaced_at": "2026-10-02T21:50Z",
+ "one_line": "AV-zg-1: row Z-W80-S1 (AC3 red on the two posture harness lines) is resolved by the issuer's Amendment 1 @77abd61a20; amended AC3 reads BATTERY29: ALL PASS (4 skipped), exit=0.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "Amendment 1 (shared-tree commit 77abd61a20) skips postureharness and posturezero in AC3; merged into wk-DSGN_AMGTV1-80 and re-run at portal be4e019d: 'BATTERY29: ALL PASS (4 skipped)' and exit=0; ALL BOUND 13 of 13 harnesses green; tsc -b --noEmit rc=0. AC1 and AC2 re-run 4 of 4 each, exit=0."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Row Z-W80-S1 stood BLOCKING: AC3 expected 'BATTERY29: ALL PASS (2 skipped)' and read FAIL on two posture.harness lines.",
+ "world_is": "The issuer ruled on S1 in Amendment 1 @77abd61a20: the two posture lines return when AV-zg-2 renders the single [data-header-posture] and are read on the merged candidate. S1 is not edited; this row is the correction.",
+ "notes": "Correction row per the append-only rule."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W83-S1",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~83",
+ "surfaced_at": "2026-10-02T21:55Z",
+ "one_line": "AV-zg-4: ChatterBubbles imports the shared ramp by a RELATIVE path, not the face's '@/lib/sentimentColor', because three battery harnesses cannot resolve '@/'.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "With `import { getSentimentColor } from '@/lib/sentimentColor'` in ChatterBubbles.tsx, battery29.sh read BATTERY29: FAIL: leadPanelPattern, tabs and shell harnesses exit rc=1 with MODULE_NOT_FOUND (their own source() loaders resolve only specifiers that start with '.'), and posturezero.cjs and postureharness.cjs went red with them (ALL BOUND 11 of 14).",
+   "With `from '../../../lib/sentimentColor'` (the form ChatterBubbles already used for lib/chartColors) the same battery reads BATTERY29: ALL PASS (0 skipped), ALL BOUND 14 of 14, and tone.cjs arm 1 (IMPORT_RE accepts either form) reads 4 of 4. TopicCloud.tsx keeps the face's '@/lib/sentimentColor' line, which no harness loads.",
+   "Portal commit 74347456 on wk-DSGN_AMGTV1-83-portal."
+  ]
+ },
+ "spec_asserts": "Face item 3 of AV-zg-4: ChatterBubbles.tsx 'Import getSentimentColor the same way' (the '@/lib/sentimentColor' line TopicCloud takes).",
+ "world_is": "The __harness__ loaders (leadPanelPattern, tabs, shell and the harnesses that load ChatterBubbles through them) resolve relative specifiers only; an '@/' import in a page file they load throws MODULE_NOT_FOUND. A later cell that adds an '@/' import to any page component those harnesses load meets the same wall.",
+ "disposition": "UNDER_INVESTIGATION",
+ "notes": "Deviation is the specifier form only; the module, its export and the single import are as ordered."
+},
+{
+ "id": "DSGN_AMGTV1-Z-S20",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~D",
+ "surfaced_at": "2026-10-02T22:35Z",
+ "one_line": "At ~22:0xZ the SHARED index held a staged revert of committed DSGN records (slot ~84's proof instance + ac1..ac3 deleted, and TO-AV-zg-5's <status> back to pending) beside 2.0.0_SA_COO~Z's staged RESAPP round-64 files; COO~Z confirms the revert was not theirs (msg 28790). Its writer is unknown. It was unstaged (my 5 paths only) before any commit carried it; HEAD and CLOUD never lost the records.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "git diff --cached --stat at ~22:1xZ: 5 DSGN paths (~84 proof .json -96, ac1/ac2/ac3 -6/-6/-17, TO-AV-zg-5 status complete->pending) + 9 RESAPP paths",
+   "git log --diff-filter=D --since=1h -- org/missions/D13/DSGN/DSGN_AMGTV1/ -> 0 lines (no deletion landed); TO-AV-zg-5 <status> at HEAD = complete",
+   "2.0.0_SA_COO~Z msg 28790: 'The staged DSGN revert of ~84 records was not mine; my safe-commit stages only RESAPP paths.'"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "2.0.0_SA_COO~D",
+ "spec_asserts": "The shared index holds only what a seat is committing this moment; a staged change to another seat's committed records is never left behind.",
+ "world_is": "An unknown writer left a staged revert of my drained records in the shared index; a broad commit by any seat would have deleted them. Unstaged per path; cause not found. My drain wrapper now prints foreign files, and every drain re-reads its own records at HEAD after the merge."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W85-S1",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~85",
+ "surfaced_at": "2026-10-02T19:10Z",
+ "one_line": "AV-zg-6: the slot inherited uncommitted portal files from a stopped session that still held two temporary plants of the OLD wording (ExecManagementTab ProfileCell 'No profile (no match found)', ThesisTab ABSENT_ON_OBJECT 'held back uncited'); both were removed before the build was graded, and the Bloomberg-fallback caption default 'the filing' (null source_item) was also made source-named.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "git -C portal diff ec65c5d6 on the 7 inherited files showed both plants in the working tree before any edit by this session; ExecManagementTab.tsx and ThesisTab.tsx now carry the new wording at portal commit cff0ff2c.",
+   "Two planted-failure runs this session: with the old wording put back, execPattern.harness.cjs absent_profile_cells reads false (clean_cells=0) and drafting.harness.cjs held_uncited_line_present reads false, both rc=1; both plants were reverted before the portal commit."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "TO-AV-zg-6 section 1: the Exec and Thesis tabs print no 'No profile', 'no match found' or 'held back uncited' on the face; a Bloomberg-fallback roster never says 'filing' in the management caption.",
+ "world_is": "The inherited working tree did not meet that rule on two strings until this session finished the build. The face also bids the fallback caption to append ', the company's filing' while saying a fallback roster never says 'filing'; the build follows the second clause (the caption names only the served source).",
+ "notes": "Worker-authored record; form only, no significance judged."
 }
 ]
 ```

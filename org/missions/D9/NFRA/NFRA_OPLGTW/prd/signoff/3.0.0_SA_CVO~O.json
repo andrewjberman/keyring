@@ -1,12 +1,13 @@
 {
   "prd": "NFRA_OPLGTW_PRD.md",
-  "prd_version": "v1.4",
-  "prd_pin": "dabb8e1e9f20b7742d99e3bdff5c217a5f4dfafe",
+  "prd_version": "v1.6",
+  "prd_pin": "fea5fbcdbfa489005fad14f5e042c07af9422d8f",
   "half": "ratified-text",
-  "half_hash": "3de587e68739aaa2af2ad1a1f6ae03f16091503e464bf94b4850c95d5f65ed90",
+  "half_hash": "19fdaba050a38426761ef2fdec6d58685691c36d6418933471a3d81fe18bc6ec",
   "endpoint_hash": "615c40cb397ea82c8a565051774ab0f58a82b8ad02bf296d899c1164d8a8dccf",
   "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/cvoO_NEVER_WIDEN_OG-rl-2_SECOND_HALF_20261001.md@ce3c650623",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/cvoO_NEVER_WIDEN_OG-rl-3_POST_HOC_HALF_20261002.md@e13f0910d4",
   "signed_by": "3.0.0_SA_CVO~O",
-  "signed_at": "2026-10-01T14:58:43Z"
+  "signed_at": "2026-10-02T20:41:49Z",
+  "reason": "v1.5 (O4 six select fields verified at 3a7d6a7dc8 app/tools.py:332; Tax SMA route exception = OG-tr-1 half @00cb40bfff) and v1.6 (/hx/teams write exception, graded on live 4231bd2ddc)"
 }

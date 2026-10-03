@@ -3399,6 +3399,75 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "The in-file hazard_standing count reads 45 ARMED; the fold reads 9 open. 7 of those 9 have had their owner's evidence on file, one since 2026-09-24 (Z-S12), with no adjudication.",
     "notes": "Ask of 3.0.0_SA_CVO~Z at the next CORPUS compile: adjudicate Z-S12, Z-S48, Z-S77 and Z-S78 and their seven targets. Z-W4-S6 stays open on Z-S79. Z-S3 stays with 1.0.0_SA_CTO~Z. The 47 other UNDER_INVESTIGATION rows (unarmed, non-BLOCKING) are outside this census.",
     "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S81",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-10-02T15:05:00Z",
+    "one_line": "The percent family's magnitude line (build_unit_map.classify_unit: 0 < |v| < 0.3 -> 'DECIMAL (differs from CRO's PERCENT reading on SAP)') labels 92 served figures DECIMAL across 8 mnemonics. Round 32 (CRPS-ah-2) decides only BEST_DIV_YLD (12) by its DPS / PX_LAST identity; the other 80 keep a label that magnitude alone chose.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "build_unit_map.py:452-456 at CLOUD 1c50edaa81: 'if av >= 0.3: return \"PERCENT\" ... if 0 < av < 0.3: return \"DECIMAL (differs from CRO's PERCENT reading on SAP)\", \"MEASURED\", None'.",
+        "Served census 2026-10-02 14:5xZ, 100 blocks in s3://opal-data-harvest/derived/model_block/ (raw-slash copies excluded): DECIMAL-labelled figures by mnemonic -- RETURN_ON_INV_CAPITAL 20 (ORA_FP, RWE_GR), EQY_DVD_YLD_IND 16 (GOOGL, HEI, MELI, PWR), BEST_DIV_YLD 12 (BA, GOOGL, HEI, PWR), RETURN_ON_ASSET 10, RETURN_COM_EQY 10, RETURN_ON_TANGIBLE_ASSETS 10 (all BP-SLASH-_LN), OPER_MARGIN 10 (JD_US), SI_PERCENT_EQUITY_FLOAT 4 (AZN_LN, RKT_LN, TTE_FP, ULVR_LN) -- total 92.",
+        "BA's BEST_DIV_YLD values equal BEST_DPS / PX_LAST x 100 to the digits served (row Z-S76), so at least that member of the class is a percent read as a decimal; a low-yield name's EQY_DVD_YLD_IND (GOOGL ~0.25) is the same shape."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A figure's unit is decided by a ground (field basis, a same-name identity or a cross-field band), never by magnitude alone where magnitude cannot discriminate.",
+    "world_is": "For a percent-family field, a small true percent (a 0.25% yield, a 0.2% return) and a decimal fraction are the same magnitude; the 0.3 line decides between them by magnitude alone, and 92 served figures carry the DECIMAL label it chose. Values are untouched; only the label is at issue.",
+    "notes": "Candidate enrichment for the round-32 analysis: one identity or cross-field read per family member (EQY_DVD_YLD_IND against EQY_DPS / PX_LAST; the returns against their statement inputs), or an UNRESOLVED class where no ground exists. Not cut in round 32 (1.0.0_SA_CTO~Z msg 28540 rules BEST_DIV_YLD only).",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S82",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-10-02T16:00:00Z",
+    "one_line": "AMENDS the population of AMGT_CORPUS-Z-S81 from 80 to 77 non-BEST_DIV_YLD figures: round 32's CRPS-ah-3 served act moved GOOGL's 3 EQY_DVD_YLD_IND figures DECIMAL -> PERCENT (the scoped --remeasure re-read GOOGL's entry under the round-26 series-median rule), accepted by name in the CTO half @b859ebff4c.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "1.0.0_SA_CTO~Z msg 28557 (CTO half NEVER_WIDEN_ROUND32_AH3_CTO_HALF.md @b859ebff4c): \"GOOGL's 3 EQY_DVD_YLD_IND moves are accepted by name. Record them on Z-S81 in the leg-v commit; that row's population becomes 77.\"",
+        "Leg a (map, 7527f440e7): FIELD EQY_DVD_YLD_IND unit GOOGL US Equity DECIMAL -> PERCENT; HEI and PWR EQY_DVD_YLD_IND unchanged (their series median is under 0.3).",
+        "Leg c: GOOGL_US_Equity 20261002T154902Z equals its captured dry-run block; the dry run's TRANS line reads 'unit EQY_DVD_YLD_IND DECIMAL -> PERCENT 3'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Z-S81's population is the served figures still labelled DECIMAL by magnitude alone.",
+    "world_is": "After round 32, the DECIMAL-by-magnitude labels outside BEST_DIV_YLD are 77 figures: EQY_DVD_YLD_IND 13 (HEI, MELI, PWR), RETURN_ON_INV_CAPITAL 20, RETURN_ON_ASSET 10, RETURN_COM_EQY 10, RETURN_ON_TANGIBLE_ASSETS 10, OPER_MARGIN 10, SI_PERCENT_EQUITY_FLOAT 4.",
+    "notes": "Z-S81 stays the candidate enrichment for the round-32 analysis, at 77.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S83",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-10-02T19:08:00Z",
+    "one_line": "DECIDES the population of AMGT_CORPUS-Z-S81 (via Z-S82's 77): round 33 CRPS-ai-2 served 69 of the 77 as PERCENT (60 by the round-26 series rule, 9 by ai-1's row identity) and 8 as UNRESOLVED (no ground); 0 DECIMAL-by-magnitude labels remain over 100 keys. Ledger amgt-corpus-r33-ai2 CLOSED (pair COO e748581d10 / CTO 45a11d1ea8).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "1.0.0_SA_CTO~Z msg 28595 (CTO half @45a11d1ea8): \"Record on Z-S81: 69 PERCENT and 8 UNRESOLVED, so the population is decided.\"",
+        "Leg v census (evidence/r33_ai2_leg_v_census.txt, 19:05Z, 100 keys, 37746 figures): decimal 0, unresolved_before 11, unresolved_after 19, moved_keys 11, value_moves 0.",
+        "PERCENT 69 = RETURN_ON_INV_CAPITAL 20 (ORA, RWE) + RETURN_COM_EQY 10 + RETURN_ON_ASSET 10 + RETURN_ON_TANGIBLE_ASSETS 10 (BP/ LN) + OPER_MARGIN 10 (JD) + EQY_DVD_YLD_IND 9 (PWR). UNRESOLVED 8 = EQY_DVD_YLD_IND 4 (HEI 1, MELI 3) + SI_PERCENT_EQUITY_FLOAT 4 (AZN, RKT, TTE, ULVR)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A figure's unit is decided by a ground, never by magnitude alone where magnitude cannot discriminate.",
+    "world_is": "No served figure over 100 keys carries a DECIMAL label chosen by magnitude. 8 figures with no ground now say so (UNRESOLVED-ON-<security>: ...), with their signs UNRESOLVED by the standing classification split.",
+    "notes": "For the CVO's plausibility read (packet s.3): ORA's FY2025 RETURN_ON_INV_CAPITAL serves 0.2237 PERCENT (0.22%) against its own FY2016-2024 history of 3.7 .. 7.3 -- the unit is the key's by the series rule; whether FY2025's magnitude is a real low year is a value question this round did not touch.",
+    "disarm_owner": "2.0.0_SA_COO~X"
   }
 ]
 ```

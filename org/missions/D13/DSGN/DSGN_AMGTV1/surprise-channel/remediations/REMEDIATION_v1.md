@@ -13,7 +13,7 @@ and the row gate admits a remediation row only when EVERY graduated item has one
 A census over 30 projects and 3,685 stamped items finds exactly those 3 resolving differently by lexical and numeric order. The
 defect is latent, not live.
 
-**Result:** 19 REMEDIATED, 2 OPEN at round 21. **Round-22 update (ADJUDICATION_v20):** `Z-W56-S4` REMEDIATED in place (AV-z-4); `Z-W69-S1` added OPEN. Now 20 REMEDIATED, 2 OPEN (`Z-S11`, `Z-W69-S1`). The two open rows are verification-instrument residuals for the CTO, both INERT.
+**Result:** 19 REMEDIATED, 2 OPEN at round 21. **Round-22 update (ADJUDICATION_v20):** `Z-W56-S4` REMEDIATED in place (AV-z-4); `Z-W69-S1` added OPEN. Now 20 REMEDIATED, 2 OPEN (`Z-S11`, `Z-W69-S1`). The two open rows are verification-instrument residuals for the CTO, both INERT. **Round-28 update (ADJUDICATION_v30):** `Z-C-S29` (BA day route, measured answering) and `Z-C-S35` (FWD-15/20 graded REALIZED) added REMEDIATED; `Z-C-S36` (false places-moved reason, ARMED) and `Z-C-S37` (sector, a ruling) added OPEN. **Update (ADJUDICATION_v32):** `Z-C-S36` REMEDIATED and DISARMED (0 false reasons served; 94 of 94 right) and `Z-C-S37` REMEDIATED (ruled and served), both in place.
 
 ## 1. THE FWD READ (asked in msg 28229: "grade every FWD toward CLOSED")
 
@@ -558,6 +558,99 @@ evidence for FWD-11.
    "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~D",
    "round": "v23"
+  },
+  "closed": true
+ },
+ {
+  "id": "DSGN_AMGTV1-Z-C-S29",
+  "project": "DSGN_AMGTV1",
+  "fabric": "site-z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "mechanism": "BA's timeline day route read whole silver prefixes and timed out at 29.00 s behind the 29 s gateway, so the page's coverage-event link opened to a failure.",
+  "evidence": [
+   "adjudications/ADJUDICATION_v23.md#DSGN_AMGTV1-Z-C-S29 (surfaced 10:35Z)",
+   "RESAPP ADJUDICATION_v74 @5542cd4564 (warm-up adopted; 10240 MB and the 18 s deadline read by this seat)",
+   "3.0.0_SA_CVO~Z invokes of /security/BA_US_Equity/timeline/day/2026-09-08 at 18:2xZ: 200 x3, 6 rows each; Duration 18007 ms (Init 335 ms), 10479 ms, 488 ms"
+  ],
+  "remedy": "The day route answers inside the gateway, cold included (Track A memory, Track B deadline, the warm-up); measured DISARMED by this seat at 18:2xZ.",
+  "owner": "1.0.0_SA_CTO~Z",
+  "round": "v30",
+  "disarm": {
+   "state": "DISARMED",
+   "owner": "1.0.0_SA_CTO~Z",
+   "at": "2026-10-02T18:23Z"
+  },
+  "remediation": {
+   "state": "REMEDIATED",
+   "owner": "1.0.0_SA_CTO~Z",
+   "round": "v30"
+  },
+  "closed": true
+ },
+ {
+  "id": "DSGN_AMGTV1-Z-C-S35",
+  "project": "DSGN_AMGTV1",
+  "fabric": "site-z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "mechanism": "FWD-15 and FWD-20 were NOT_EVALUATED on two stale instrument clauses and a fixture with no ABSENT row.",
+  "evidence": [
+   "adjudications/ADJUDICATION_v29.md#DSGN_AMGTV1-Z-C-S35 @a7f92ef8aa",
+   "grades(DSGN_AMGTV1 round 26, 1.0.0_SA_CTO~Z) @d26ed82f59: FWD-15 and FWD-20 REALIZED"
+  ],
+  "remedy": "The round-28 instrument landed; the CTO graded both REALIZED.",
+  "owner": "1.0.0_SA_CTO~Z",
+  "round": "v30",
+  "remediation": {
+   "state": "REMEDIATED",
+   "owner": "1.0.0_SA_CTO~Z",
+   "round": "v30"
+  },
+  "closed": true
+ },
+ {
+  "id": "DSGN_AMGTV1-Z-C-S36",
+  "project": "DSGN_AMGTV1",
+  "fabric": "site-z",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "mechanism": "scoped_amgt.read_ranking joins security_key before _join_places_moved, whose security_key-or-ticker match misses the 62 prior rows that carry only a ticker, so 62 of 94 bars and 10 of 18 bubbles print a false 'not ranked in the previous generation'.",
+  "evidence": [
+   "adjudications/ADJUDICATION_v30.md#DSGN_AMGTV1-Z-C-S36"
+  ],
+  "remedy": "OPEN: match prior and current rows by ticker (or join places moved before the identity join); proof: the 62 nulls read numeric and equal prior rank minus current rank.",
+  "owner": "1.0.0_SA_CTO~Z",
+  "round": "v30",
+  "disarm": {
+   "state": "DISARMED",
+   "owner": "1.0.0_SA_CTO~Z",
+   "at": "2026-10-02T20:57Z"
+  },
+  "remediation": {
+   "state": "REMEDIATED",
+   "owner": "1.0.0_SA_CTO~Z",
+   "round": "v30"
+  },
+  "closed": true
+ },
+ {
+  "id": "DSGN_AMGTV1-Z-C-S37",
+  "project": "DSGN_AMGTV1",
+  "fabric": "site-z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "mechanism": "etf-classifications holds no sector for any of the 94 ranked equities (their GICS sector is in sub_asset_class), so FWD-2's sector field prints 'not served' on every mark.",
+  "evidence": [
+   "adjudications/ADJUDICATION_v30.md#DSGN_AMGTV1-Z-C-S37"
+  ],
+  "remedy": "OPEN: a CTO ruling (sub-asset class is an equity's sector) or a producer cell that sources a sector.",
+  "owner": "1.0.0_SA_CTO~Z",
+  "round": "v30",
+  "remediation": {
+   "state": "REMEDIATED",
+   "owner": "1.0.0_SA_CTO~Z",
+   "round": "v30"
   },
   "closed": true
  }

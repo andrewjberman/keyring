@@ -1,0 +1,142 @@
+[
+ {
+  "id": "AMGT_HARVST-Z-W21-S1",
+  "file": "remediations/REMEDIATION_v1.md",
+  "new_remediation_state": "REMEDIATED",
+  "new_closed": true,
+  "evidence": "the order is terminal; AC3 passes on the amended text (@76ba64b079)",
+  "new_disarm_state": "DISARMED",
+  "current_disarm_state": "DISARMED"
+ },
+ {
+  "id": "AMGT_HARVST-Z-W21-S2",
+  "file": "remediations/REMEDIATION_v1.md",
+  "new_remediation_state": "REMEDIATED",
+  "new_closed": true,
+  "evidence": "the base suite is green since: lib/opal_data_harvest 442 passed, 1 skipped after 220a74350a (Z-S52 evidence); ab-1 close @da63b88ccd 0 regressed",
+  "new_disarm_state": "DISARMED",
+  "current_disarm_state": "ARMED",
+  "new_disarm_at": "2026-10-01T11:06Z",
+  "new_disarm_at_source": "commit 220a74350a"
+ },
+ {
+  "id": "AMGT_HARVST-Z-S27",
+  "file": "remediations/REMEDIATION_v1.md",
+  "new_remediation_state": "REMEDIATED",
+  "new_closed": true,
+  "evidence": "lib/opal_data_harvest/__main__.py:68-71 help now reads 'writes nothing to S3 by itself ... text fixed by AMGT_HARVST-Z-S27'",
+  "new_disarm_state": "DISARMED",
+  "current_disarm_state": "ARMED",
+  "new_disarm_at": "2026-09-28T00:59Z",
+  "new_disarm_at_source": "commit adc9d85b92"
+ },
+ {
+  "id": "AMGT_HARVST-Z-S31",
+  "file": "remediations/REMEDIATION_v1.md",
+  "new_remediation_state": "REMEDIATED",
+  "new_closed": true,
+  "evidence": "w-4 drain @09230f554a: the ft duplicate reaches gold once per security, no double count",
+  "new_disarm_state": "DISARMED",
+  "current_disarm_state": "ARMED",
+  "new_disarm_at": "2026-09-28T23:50Z",
+  "new_disarm_at_source": "commit 09230f554a"
+ },
+ {
+  "id": "AMGT_HARVST-Z-S32",
+  "file": "remediations/REMEDIATION_v1.md",
+  "new_remediation_state": "REMEDIATED",
+  "new_closed": true,
+  "evidence": "bbg collects on the tab transport: 89 of 89 pairs, 1,239 stored (ROUND37_DRAIN_END_PACKET.md @4162e8837b section 5)",
+  "new_disarm_state": "DISARMED",
+  "current_disarm_state": "ARMED",
+  "new_disarm_at": "2026-10-02T18:51Z",
+  "new_disarm_at_source": "commit 4162e8837b"
+ },
+ {
+  "id": "AMGT_HARVST-Z-S1",
+  "file": "remediations/REMEDIATION_v1.md",
+  "new_remediation_state": "REMEDIATED",
+  "new_closed": true,
+  "evidence": "forward half closed (Z-C-S12, t-2 5 of 5 byte-equal); backward half classified at round 4 (ROUND_ANALYSIS.round4 @2b196119f8); as-received objects now carry their own received-sha256 (lib/research/harvest/store.py:242-245, HVST-n-1)"
+ },
+ {
+  "id": "AMGT_HARVST-Z-S2",
+  "file": "remediations/REMEDIATION_v1.md",
+  "new_remediation_state": "REMEDIATED",
+  "new_closed": true,
+  "evidence": "fix @4793cc8be4 (HVST-r-3): explicit publisher column on gold article_security_mention (publication_gold.py:66)"
+ },
+ {
+  "id": "AMGT_HARVST-Z-S3",
+  "file": "remediations/REMEDIATION_v1.md",
+  "new_remediation_state": "REMEDIATED",
+  "new_closed": true,
+  "evidence": "corrected by row Z-S12 (@fa2234df4d: population 232, not 103); the order is terminal",
+  "new_disarm_state": "DISARMED",
+  "current_disarm_state": "ARMED",
+  "new_disarm_at": "2026-09-23T04:10Z",
+  "new_disarm_at_source": "commit fa2234df4d"
+ },
+ {
+  "id": "AMGT_HARVST-Z-S5",
+  "file": "remediations/REMEDIATION_v1.md",
+  "new_remediation_state": "REMEDIATED",
+  "new_closed": true,
+  "evidence": "withdrawn: row Z-S8 (@b507e89a9f) withdraws Z-S7 and with it Z-S5's universal claim; ADJUDICATION_v4 @8ed2954c2d and v6 @7d9831b17e",
+  "new_disarm_state": "DISARMED",
+  "current_disarm_state": "ARMED",
+  "new_disarm_at": "2026-09-23T02:59Z",
+  "new_disarm_at_source": "commit b507e89a9f"
+ },
+ {
+  "id": "AMGT_HARVST-Z-W10-S3",
+  "file": "remediations/REMEDIATION_v1.md",
+  "new_remediation_state": "REMEDIATED",
+  "new_closed": true,
+  "evidence": "z-3 @58135da029 / drain @03e86f2909: 8 of 8 dotted-string patch sites re-targeted onto the imported module object",
+  "new_disarm_state": "DISARMED",
+  "current_disarm_state": "ARMED",
+  "new_disarm_at": "2026-09-28T20:50Z",
+  "new_disarm_at_source": "commit 03e86f2909"
+ },
+ {
+  "id": "AMGT_HARVST-Z-W10-S8",
+  "file": "remediations/REMEDIATION_v1.md",
+  "new_remediation_state": "REMEDIATED",
+  "new_closed": true,
+  "evidence": "lib/opal_data_harvest/silver_from_bronze.py:189-199 keeps pageProps verbatim in one page_config_json column (row Z-W10-S8)",
+  "new_disarm_state": "DISARMED",
+  "current_disarm_state": "ARMED",
+  "new_disarm_at": "2026-09-23T01:14Z",
+  "new_disarm_at_source": "commit 56037d6bef"
+ },
+ {
+  "id": "AMGT_HARVST-Z-W14-S2",
+  "file": "remediations/REMEDIATION_v1.md",
+  "new_remediation_state": "REMEDIATED",
+  "new_closed": true,
+  "evidence": "z-3 @03e86f2909 re-targeted the patch sites and imports",
+  "new_disarm_state": "DISARMED",
+  "current_disarm_state": "ARMED",
+  "new_disarm_at": "2026-09-28T20:50Z",
+  "new_disarm_at_source": "commit 03e86f2909"
+ },
+ {
+  "id": "AMGT_HARVST-Z-W19-S1",
+  "file": "remediations/REMEDIATION_v1.md",
+  "new_remediation_state": "REMEDIATED",
+  "new_closed": true,
+  "evidence": "TO-HVST-s-1 last <status>closed</status>; the CLI contract is one security object per file (__main__.py:147)"
+ },
+ {
+  "id": "AMGT_HARVST-Z-S33",
+  "file": "remediations/REMEDIATION_v4.md",
+  "new_remediation_state": "REMEDIATED",
+  "new_closed": true,
+  "evidence": "portal HeaderBrief.tsx:198 mounts TimelinePanel in the header; the PROD-equal walk tmp/ui-walk/20261002T180024Z shot 005 shows 'MENTION TIMELINE' (read by 3.0.0_SA_CVO~Z)",
+  "new_disarm_state": "DISARMED",
+  "current_disarm_state": "ARMED",
+  "new_disarm_at": "2026-10-02T18:06Z",
+  "new_disarm_at_source": "the PROD-equal walk 20261002T180024Z (first read of the mounted timeline by this seat)"
+ }
+]

@@ -25,7 +25,9 @@ THE DECIDABILITY SCHEMA (CLAUDE.md Rule 24 TAXONOMY LAW -- four-postulate record
   ARMED? Not "is the carrier important", not "is it fresh" -- those are other axes and mixing them
   is the intent-coherence defect.
 
-  (i) MECE over the DECLARED domain. Domain = the five carriers where gates live in this estate.
+  (i) MECE over the DECLARED domain. Domain = the six carriers where gates live in this estate
+      (C6, the dated scheduled checks, added 2026-10-02 on Andrew-direct ~16:47Z: "keep a note in
+      wherever the comp-schedule routes that we should check on oscilar being funtional in 30 days").
       Every carrier is assigned exactly one decidability, and the assignment is printed beside its
       denominator so a reader can contest it.
   (ii) SAME GRAIN. Every value classifies a CARRIER, never an individual gate and never a file.
@@ -58,14 +60,14 @@ Read-only over the repo. No AWS calls, no model calls, no network, deterministic
 USAGE:
   comp-schedule                      every armed gate, per-carrier denominators
   comp-schedule --budget <seconds>   Rule T: flag > COMP_BUDGET_S > default 90 s
-  comp-schedule --cursor <START|C1..C5>  resume AFTER the last fully compiled carrier
+  comp-schedule --cursor <START|C1..C6>  resume AFTER the last fully compiled carrier
   comp-schedule --drift              EXCEPTIONS ONLY: discharge condition looks satisfied, still armed
   comp-schedule --owner <serial>     gates naming that owner
   comp-schedule --gate <id>          one gate in full, with its evidence
   comp-schedule --answer-state-cases plant all four s.4.3 states in ONE invocation
   comp-schedule --self-test
 
-RC VOCABULARY (verdict-bearing at the five-carrier compile boundary):
+RC VOCABULARY (verdict-bearing at the six-carrier compile boundary):
   0 complete view; 1 failed self-test; 2 usage/repository error;
   3 PARTIAL_OR_BLIND / NOT-DECIDABLE (BUDGET REACHED; never a clean prefix)
 """
@@ -594,6 +596,111 @@ def c5_prose(clock=None):
     return c
 
 
+def _scheduled_gates(rows, rel, today):
+    """Classify one file's `scheduled_checks` rows. Pure, so the self-test can plant rows.
+
+    Grammar (machine-owned): each row is an object with `id`, `due_utc` (YYYY-MM-DD, optionally a full
+    ISO stamp), `what`, `owner` and `status`. `status: armed` is a gate; any other non-empty status is
+    CLOSED and counted. A row missing `due_utc` or `status`, or with an unparseable date, is MALFORMED: it
+    still surfaces as a gate, because a dated check that cannot be read must never read as no check."""
+    gates, closed, malformed = [], 0, 0
+    for r in rows if isinstance(rows, list) else [rows]:
+        if not isinstance(r, dict):
+            malformed += 1
+            gates.append({"owner": "UNKNOWN", "discharge": "MALFORMED scheduled_checks row (not an object)",
+                          "last_verified": _last_touched(rel), "evidence": [rel], "carrier": "C6"})
+            continue
+        status = str(r.get("status") or "").strip().lower()
+        due = str(r.get("due_utc") or "").strip()[:10]
+        rid = str(r.get("id") or "UNNAMED")
+        ev = ["%s#scheduled_checks/%s" % (rel, rid)] + ([str(r["record"])] if r.get("record") else [])
+        if status and status != "armed":
+            closed += 1
+            continue
+        if not status or not re.match(r"^\d{4}-\d{2}-\d{2}$", due):
+            malformed += 1
+            gates.append({"owner": str(r.get("owner") or "UNKNOWN"),
+                          "discharge": "MALFORMED scheduled check %s (status=%r, due_utc=%r): %s"
+                          % (rid, status or None, due or None, " ".join(str(r.get("what") or "").split())),
+                          "last_verified": _last_touched(rel), "evidence": ev, "carrier": "C6"})
+            continue
+        try:
+            days = _date_ordinal(due) - _date_ordinal(today)
+        except ValueError:
+            malformed += 1
+            gates.append({"owner": str(r.get("owner") or "UNKNOWN"),
+                          "discharge": "MALFORMED scheduled check %s (due_utc=%r is not a date)" % (rid, due),
+                          "last_verified": _last_touched(rel), "evidence": ev, "carrier": "C6"})
+            continue
+        when = ("OVERDUE by %d day(s) (due %s)" % (-days, due) if days < 0 else
+                "DUE TODAY (%s)" % due if days == 0 else "due %s, in %d day(s)" % (due, days))
+        gates.append({"owner": str(r.get("owner") or "UNKNOWN"),
+                      "discharge": "%s -- %s: %s" % (when, rid, " ".join(str(r.get("what") or "").split())),
+                      "last_verified": _last_touched(rel), "evidence": ev, "carrier": "C6",
+                      "due_in_days": days})
+    return gates, closed, malformed
+
+
+def _date_ordinal(yyyy_mm_dd):
+    import datetime
+    y, m, d = (int(x) for x in yyyy_mm_dd.split("-"))
+    return datetime.date(y, m, d).toordinal()
+
+
+def _today_utc():
+    import datetime
+    return datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d")
+
+
+def c6_scheduled_checks(clock=None):
+    """`scheduled_checks` rows in project files -- DECIDABLE: a dated check states its own armedness."""
+    c = Carrier("C6", "SCHEDULED-CHECKS", "DECIDABLE")
+    population = []
+    mroot = os.path.join(repo_root(), "org", "missions")
+    if os.path.isdir(mroot):
+        for dirpath, dirnames, filenames in os.walk(mroot):
+            dirnames[:] = [d for d in dirnames if d not in SKIP_DIRS]
+            if "project.json" in filenames:
+                population.append(_rel(os.path.join(dirpath, "project.json")))
+    pdir = os.path.join(repo_root(), "org", "projects")
+    if os.path.isdir(pdir):
+        population.extend("org/projects/%s" % n for n in os.listdir(pdir) if n.endswith(".json"))
+    population.sort()
+    if not population:
+        c.unreadable = "no project files found under org/missions or org/projects"
+        return c
+    today = _today_utc()
+    rows_total = closed = malformed = unread = files_with = 0
+    for index, rel in enumerate(population):
+        if _budget_is_spent(clock):
+            c.denominator = rows_total
+            return _budget_cut(c, index, len(population), "project files", c.work_cursor)
+        try:
+            j = json.load(open(os.path.join(repo_root(), rel), encoding="utf-8"))
+        except Exception:
+            unread += 1
+            c.work_cursor = rel
+            continue
+        rows = j.get("scheduled_checks") if isinstance(j, dict) else None
+        if rows:
+            files_with += 1
+            rows_total += len(rows) if isinstance(rows, list) else 1
+            g, cl, mal = _scheduled_gates(rows, rel, today)
+            c.gates.extend(g)
+            closed += cl
+            malformed += mal
+        c.work_cursor = rel
+    c.denominator = rows_total
+    c.work_scanned, c.work_total, c.work_unit = len(population), len(population), "project files"
+    due_now = sum(1 for g in c.gates if g.get("due_in_days") is not None and g["due_in_days"] <= 0)
+    c.note = ("%d scheduled check row(s) in %d of %d project file(s) (org/missions/**/project.json + "
+              "org/projects/*.json; %d unparseable): %d ARMED (%d due or overdue as of %s UTC), %d closed, "
+              "%d malformed (surfaced, never dropped)" % (rows_total, files_with, len(population), unread,
+                                                         len(c.gates) - malformed, due_now, today, closed,
+                                                         malformed))
+    return c
+
+
 def _drift_flags(g):
     """Exceptions-only signal: the discharge condition NAMES an artifact that now EXISTS.
 
@@ -605,7 +712,9 @@ def _drift_flags(g):
     # have no condition that could become satisfied, so any "drift" on them is definitionally a
     # false positive. Excluded at the top rather than filtered at the end, so the exclusion is a
     # property of the classifier and not a cosmetic on the renderer.
-    if g.get("carrier") == "C3":
+    # A DATED CHECK (C6) discharges by its date passing and a named owner doing the check, not by an
+    # artifact appearing, so the same exclusion applies.
+    if g.get("carrier") in ("C3", "C6"):
         return out
     # SIGNAL A -- the gate's OWN reason text says the condition was met.
     # WARN: THIS IS NOT THE PROSE-COUNTING THIS TOOL REFUSES, AND THE DISTINCTION IS THE WHOLE
@@ -648,12 +757,14 @@ def _number_and_drift(cs):
 
 
 def compile_view():
-    cs = [c1_sentinels(), c2_ledger(), c3_moratoria(), c4_scope_guards(), c5_prose()]
+    cs = [c1_sentinels(), c2_ledger(), c3_moratoria(), c4_scope_guards(), c5_prose(),
+          c6_scheduled_checks()]
     return _number_and_drift(cs)
 
 
-_CARRIER_FACTORIES = (c1_sentinels, c2_ledger, c3_moratoria, c4_scope_guards, c5_prose)
-_CARRIER_IDS = ("C1", "C2", "C3", "C4", "C5")
+_CARRIER_FACTORIES = (c1_sentinels, c2_ledger, c3_moratoria, c4_scope_guards, c5_prose,
+                      c6_scheduled_checks)
+_CARRIER_IDS = ("C1", "C2", "C3", "C4", "C5", "C6")
 
 
 def _answer_state(c):
@@ -889,7 +1000,28 @@ def self_test():
     print("control 6 (a sentinel inside a ``` fence is a QUOTE and is refused; an unfenced one is"
           " NOT refused): %s" % ("PASS" if t6 else "FAIL"))
     ok = ok and t6
-    print("self-test: %s" % ("PASS 6/6" if ok else "FAIL"))
+    # Control 7 is a PLANTED FIXTURE for the dated-check carrier: an armed row past due reads OVERDUE, an
+    # armed future row reads its day count, a closed row is NOT a gate, and a malformed row SURFACES rather
+    # than vanishing (a dated check that cannot be read must never read as no check).
+    _rows = [{"id": "P-OVER", "due_utc": "2026-01-01", "what": "past", "owner": "X", "status": "armed"},
+             {"id": "P-FUT", "due_utc": "2026-01-31", "what": "future", "owner": "X", "status": "armed"},
+             {"id": "P-DONE", "due_utc": "2026-01-01", "what": "done", "owner": "X", "status": "done"},
+             {"id": "P-BAD", "what": "no date", "owner": "X", "status": "armed"}]
+    _g, _cl, _mal = _scheduled_gates(_rows, "fixture.json", "2026-01-11")
+    _heads = [g["discharge"].split(" -- ")[0] for g in _g]
+    t7 = (len(_g) == 3 and _cl == 1 and _mal == 1
+          and "OVERDUE by 10 day(s) (due 2026-01-01)" in _heads
+          and "due 2026-01-31, in 20 day(s)" in _heads
+          and any(h.startswith("MALFORMED scheduled check P-BAD") for h in _heads))
+    print("control 7 (C6: overdue and pending armed rows are gates with day counts; a closed row is not; a"
+          " malformed row SURFACES): %s" % ("PASS" if t7 else "FAIL"))
+    ok = ok and t7
+    c6 = next(c for c in cs if c.cid == "C6")
+    t8 = (c6.decid == "DECIDABLE" and not c6.unreadable and all(g["carrier"] == "C6" for g in c6.gates))
+    print("control 8 (C6 compiles on the live repo as DECIDABLE, readable, every row tagged C6): %s"
+          % ("PASS" if t8 else "FAIL"))
+    ok = ok and t8
+    print("self-test: %s" % ("PASS 8/8" if ok else "FAIL"))
     return 0 if ok else 1
 
 

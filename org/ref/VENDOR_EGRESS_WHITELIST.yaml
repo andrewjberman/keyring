@@ -66,6 +66,7 @@ whitelist:
     since: 2026-10-02T13:3xZ
     landed_by: 1.0.0_SA_CTO~Z
     spend: "PAYG, $0.16 per 1,000 hCaptcha solves (his pasted guide); spend beyond that rate is not covered"
-    not_covered: "any non-hCaptcha use; any project other than AMGT_HARVST's sign-ins; printing or committing the key (rotation is his call)"
+    not_covered: "any non-hCaptcha use; any project other than AMGT_HARVST's sign-ins; printing or committing the key"
+    rotation: "when the Ocilar account is first funded, not before (Andrew-direct 2026-10-02 ~16:47Z, CALL 2 rec approved; record org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261002_164xZ_OPEN_CALLS_RECS_APPROVED_FT_SOLVER_AB_OCILAR_RECHECK_30D.md); 30-day functional re-check carried as scheduled check HVST-RECHECK-OCILAR-1 (due 2026-11-01), surfaced by comp-schedule C6"
 
 struck: []

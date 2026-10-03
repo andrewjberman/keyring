@@ -15,7 +15,36 @@
   - grade 9 (PASS; G8-1 closed, CALL 11 re-grade verified) @33f6db4880;
   - grade 10 (PASS; G8-2 closed; G10-1 latent P2) @c3050c9b94;
   - grade 11 (PASS, the page for the 13:00Z read) @5488015d8f;
-  - grade 12 (r12 deploy PASS on the APPLIED plane) @d2c6208cf0.
+  - grade 12 (r12 deploy PASS on the APPLIED plane) @d2c6208cf0;
+  - grade 13 (1002f PASS) @0c5eaae256.
+- FAST -> FULL at 14:40:14Z on Andrew's word (COO~RV @70c791dc4f). Grades from 14 on are FULL-mode served-change grades.
+
+## Grade 14 -- served page 2026-10-02, batch rv-publish-1002g (RFW-D01 refresh_a1, no deploy; handoff msg 28548), read 2026-10-02 ~15:08-15:20Z
+
+**Verdict: PASS.** The A1 tables were rebuilt over the inputs that arrived after 11:03Z. The moved figures trace to the 10-01
+reports and nothing else.
+
+- **No deploy.** `etfs-rivalfunds-daily-lambda` LastModified is 14:16:05Z (r13), so the code is still 722f0db291 (grade 13).
+- **The pair was complete before the publish:** COO c1bf9ac157 (14:51:40Z), CTO 6507370187 (14:59:58Z), publish 15:04:19Z.
+  Manifest `published`, 13 of 13, readback true, 0 `<script>`.
+- **Why the figures moved.** This seat compared the 11:03Z table (`holding_contribution-20261002T110325Z`) with the rebuilt
+  `...150331Z`:
+  - period_end 2026-10-01 in both;
+  - priced security rows rose from 1,849 to 2,451 (missing 1,498 -> 896): the 10-01 day is now priced;
+  - the 6 funds with no newer report are unchanged to the hundredth: BASG, GQGU and BIDD, CGIC, SCHY, IDVZ (the RFW-D07 four);
+  - the 7 Bloomberg funds whose 10-01 reports landed at the 11:10Z vehicle run moved: INEQ -1.78, PFOE -0.61, ETFT -0.49,
+    WCMG -0.34, TXUE -0.27, PCLG +0.29, TSEL +0.66 points YTD.
+- **INEQ's -1.78 is spread, not a spike.** The largest movers are UCG -0.22, NWG -0.20, EBS -0.11, STAN -0.10 and RIO -0.10, all
+  holding-implied: a broad down day in European banks and miners. Max |holding contribution| is still 0.0362, and YTD refused
+  days are still 5.
+- **Page scope, matching the claim.** Precisely scoped (the `div.rf-card` AI elements and the `<header>` KPI strip): 12 of 12 AI
+  cards and the KPI header are byte-identical to 1002f. The ranking and trend panels changed, which is the rebuild (October
+  MTD now ranks holdings; it showed "No holding added" before).
+- **This seat's own instrument, twice wrong before it was right (CALL 13 C2 in practice).**
+  - A first slice-based comparison read "0 of 12 AI cards identical" and a changed header, contradicting the handoff.
+  - Its slices ran past each card into the next ranking panel.
+  - Re-scoped to the elements, the claim holds.
+  - Recorded so that a contradiction from a mis-scoped instrument is not filed as the producer's defect.
 
 ## Grade 13 -- served page 2026-10-02, batch fast-a1-publish-1002f, code pin 722f0db291 (r13; handoff msg 28521), read 2026-10-02 ~14:20-14:30Z
 

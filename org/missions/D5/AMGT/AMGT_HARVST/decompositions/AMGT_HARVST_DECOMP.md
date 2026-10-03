@@ -2714,3 +2714,128 @@ Issuer act after the merge:
 4. Run AC2.
 
 Base check `round37/checks/aj-8.AC2.py`: FAIL as expected (no manifest).
+
+## 51. ROUND 38 -- the round-37 analysis enrichment list (`ledger/ROUND_ANALYSIS.round37.md` @29fbb123e0), PRD v0.15, 2026-10-02 ~19:5xZ
+
+Round 37 is CLOSED (CVO slug 28694; ADJUDICATION_v49 @76f4381bce). FWD-11 is NOT REALIZED:
+- ft limb (1) is a QUALIFIED WAIT on HVST-RECHECK-OCILAR-1 (2026-11-01);
+- CRO~Z researches alternatives, and no ft cell is cut until that research lands;
+- (2b) is organic only.
+
+This round cuts the enrichment list's items 1 to 3 in ONE issuance. Item 4 (ft) is not cut, per ruling 3.
+
+| cell | order | what | class | slot |
+|---|---|---|---|---|
+| `HVST-ak-1` | `ak-1` | FWD-16: `finbert_sentiment.py` (the scorer client over `opal-news-ai-sentiment`, the append-only `article_sentiment` score store keyed by `record_hash`, a `score`/`census` CLI); the 3 tone fields on every gold mention row | SERVED (code LOCAL; 3 live Lambda calls in AC2, no write) | `~90` |
+| `HVST-ak-2` | `ak-2` | FWD-17: `window_tone.py`; `chatter_window` per name per 30/90/365-day window ending at T-1; articles_total, scored, voters (non-neutral, no threshold), tone over voters (null at 0 voters); a stated served start | SERVED (code LOCAL) | `~92` |
+| `HVST-ak-3` | `ak-3` | FWD-6 density: a read-only census of spikes against dry-built and served events; the spike definition is fixed at the cut at 2x and 3x | LOCAL | `~91` |
+
+**Fan-out: 3 of 3 chains, cap 8.**
+- Chain A (ak-1) and chain B (ak-2) share ONE interface, fixed here: `finbert_sentiment.latest_scores(client=None)`
+  returns `{record_hash: {"label", "score", "scorer"}}`, with the score signed (+conf / -conf / 0.0 for neutral).
+  ak-2 imports it lazily and injects it in tests, so the two chains run in parallel.
+- The write surfaces are disjoint: ak-1 owns `publication_gold.py`; ak-2 owns a new module only; ak-3 owns its
+  deliverables only.
+
+**The IAM invoke-grant cell (analysis item 1) is NOT cut.** The identity that runs HARVST gold builds on site-Z (IAM
+user `Andrew_Berman`) DryRun-invoked `opal-news-ai-sentiment` at 19:4xZ and got StatusCode 204. The grant act would
+move nothing: a ZERO with its cause named. A scheduled gold producer's role, when one exists, will need the grant.
+That is carried, not cut.
+
+**Rule 30:** both new gold tables, `article_sentiment` and `chatter_window`, are addressed through `store.address_of`,
+which wraps `opal_naming.address()`. The scope `harvest` and the systems `amgt` and `harvest` are registered. The
+table is a free snake_case segment, so no registry row is owed (`opal_naming.py:1570-1574`).
+
+**Substrate card (rule 28): `opal-news-ai-sentiment`.**
+- PROCESS: FinBERT, one text per synchronous call. The news pipeline drives it 14x a day through
+  `finbert-batch-processor`; HARVST calls it on demand.
+- ARTIFACT: no persistence of its own. HARVST persists to gold `article_sentiment` at
+  `amgt/harvest/gold/article_sentiment/`.
+- TRUST:
+  - coverage: every silver article with a title or text;
+  - key: `record_hash`;
+  - failure mode: a non-200 or exception is an ERROR row, never a neutral;
+  - its contract is INFERRED from the caller (the container source is not in the repo), so ak-1's AC2 measures it.
+  - owner: the news pipeline (`infra/aws/terraform/news-pipeline/lambdas.tf:246-268`).
+
+**Observation for ak-1** (row filed at the cut): `record_hash` hashes every silver column except
+bronze_key/fetched_at/record_hash, `run_stamp` included (`store.py:330-334`; `silver_from_bronze.py:289`). A re-fetch
+of unchanged text is therefore a new version, and FWD-16's letter re-scores it. FinBERT is deterministic, so the tone
+read is unchanged and only the call is spent.
+
+**Issuer acts after the merges (no TO):**
+1. **The corpus scoring:** `finbert_sentiment score` live, on a measured sample first for throughput, then the corpus.
+2. **Gold rebuild #6** under a NEW never-widen pair (COO half by this seat after a signing dry run; CTO half owed):
+   - every served mention row gains the 3 tone fields and nothing else moves;
+   - the first `chatter_window` snapshot;
+   - the served `chatter_event` rebuild, if ak-3's census shows the dry-built events cover spikes materially better.
+3. **The real run at close:** the `census` subcommand (scored / unscorable / total) and the window rows for the
+   validation security (Lenovo) read from served gold.
+
+**Checks dry-run at the base before the cut** (all FAIL as expected):
+- `round38/checks/ak-1.AC2.py`: the module is absent;
+- `ak-1.AC3.py`: the schema lacks the 3 fields;
+- `ak-2.AC2.py`: the module is absent;
+- `ak-3.AC2.py`: there is no census.
+
+Positive control on their live read paths:
+- served `chatter_event` has 8 rows;
+- served mention has 23,691 rows, 715 of them for the 5 check securities;
+- `published_utc` is a datetime;
+- T-1 = 2026-10-01.
+
+### 51.1 ROUND 38 AMENDMENT 1 -- cell 4: the ft quarantine (CTO msg 28715 ruling 3; analysis addendum 2 @ce138d2314; 28731), 2026-10-02 ~20:3xZ
+
+FT's terms were read verbatim (`4.0.0_SA_CRO~Z` @0fab00b8a0). They bar automated reads, storing and ML use, and the
+named route is a licence. The CTO ruled:
+- STOP_FT is HARD;
+- FinBERT excludes ft (PRD v0.16);
+- the stored ft articles are QUARANTINED, not deleted: excluded from gold serving and every downstream use, with the
+  bytes kept. Deletion is Andrew's word.
+
+Then (CTO 28725 and 28731), all five publishers' terms were read (@961a99cd64), and the card went to Andrew
+(@8d20bc24c8):
+- FWD-16 and FWD-17 are HELD for every publisher;
+- the served event rebuild (ak-3's 438) is HELD with them;
+- collection on wsj, barrons, bbg and sa is unchanged, with the pause readied (`round38/pause_all_publishers.sh`,
+  dry-run verified);
+- **rebuild #6 carries the ft quarantine ALONE.**
+
+| cell | order | what | class | slot |
+|---|---|---|---|---|
+| `HVST-ak-4` | `ak-4` | `QUARANTINED_PUBLISHERS = {"ft": reason}` and `GRADED_PUBLISHERS` in `publication_gold`; every gold builder, the FinBERT queue and the window builder filter ft on READ (an older snapshot still carries it); the bytes are kept | SERVED (code LOCAL; served gold moves at rebuild #6 under its pair) | `~90`, after ak-1 (same file) |
+
+At the cut, served gold holds 926 ft mention rows of 23,691, and 5 daily rows naming ft.
+
+Base checks before the cut: `round38/checks/ak-4.AC2.py` and `ak-4.AC3.py` both FAIL as expected
+(`QUARANTINED_PUBLISHERS` is absent).
+
+**State of round 38 at this amendment:**
+- ak-1 is complete @23b1e6851d. FWD-16 is HELD: no `score` run, and no tone is served.
+- ak-2 is complete @f175fbeb99. FWD-17 is HELD: no window is served.
+- ak-3 is complete @b79d3781bd. The served event rebuild is HELD.
+
+## 52. ROUND 39 -- the round-38 analysis enrichment list (`ledger/ROUND_ANALYSIS.round38.md` @3da5563fd8), PRD v0.17, 2026-10-02 ~23:5xZ
+
+Round 38 is CLOSED (CVO slug 28797; ADJUDICATION_v50 @8f911c0199). The ft quarantine is served (gold rebuild #6 @a85ebb6161).
+ARMED went from 10 to 2; Z-S11 was fixed in the checker @9edfeae04d. FWD-16, FWD-17 and the event rebuild stay HELD on
+Andrew's publisher-terms card @8d20bc24c8, and no round-39 cell processes publisher text.
+
+| cell | order | what | class | slot |
+|---|---|---|---|---|
+| `HVST-al-1` | `al-1` | Z-W91-S10 (placed by Z-S79): a Dow Jones 200 listing with 0 parseable hits sets `listing_empty_200` (status-gated, reset per call); the job records the event and status; NOT a driver STOP status; planted pages only | LOCAL | `~91` |
+| `HVST-al-2` | `al-2` | FWD-16 v0.17: tone keyed to `content_key` = sha256 of the exact `article_text` scored (Z-S67); `sentiment_content_key` on the gold mention row; window join by it; 0 Lambda calls | SERVED (code LOCAL; served at a later rebuild under its own pair) | `~90` |
+
+**Fan-out: 2 of 2 chains, cap 8.** The write surfaces are disjoint: al-1 owns `publishers.py`; al-2 owns
+`finbert_sentiment.py`, `publication_gold.py` and `window_tone.py`.
+
+**Remediation folded, no cell:** Z-S68 (the 3 stale timeline-day tests) was repaired by `2.0.0_SA_COO~Z` @949b24cadb, as
+the RESAPP am-1 regression repair. The research suite reads 334 passed and 0 failed at the cut. Row Z-S81 resolves Z-S68.
+
+**Hygiene at the drain, not a TO criterion:** `round39/checks/suites_green.py` (both suites, 0 failed). At the cut it
+reads 334 passed (research) and 597 passed with 3 skipped (collector).
+
+**Checks dry-run at the base before the cut (all FAIL as expected):**
+- `round39/checks/al-1.AC2.py`: no `LISTING_EMPTY_200`, no flag;
+- `al-2.AC2.py`: `content_key` is absent;
+- `al-2.AC3.py`: `build_mention` has no `sentiment_by_key`.

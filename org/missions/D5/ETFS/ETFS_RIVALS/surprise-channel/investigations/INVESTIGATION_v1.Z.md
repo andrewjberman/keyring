@@ -2908,6 +2908,241 @@
     "spec_asserts": "Row Z-W5-S30 ARMED, disarm_owner 2.0.0_SA_COO~RV: the vehicle's daily G4 (target T-1) would land nothing under refuse-unless-historical.",
     "world_is": "Disarmed in code: a past-date pull never lands nothing for lack of a historical answer; it lands labelled current values. Not measured against a live Bloomberg answer (no vendor call in this order): which securities the live historical request answers in full is the first live run's read; the detail carries as_of_source_counts {historical, pull} and historical_request_failures for that read. A consumer reading as_of for a GICS-only need now sees the run date on a past partition.",
     "notes": "disarm_owner was 2.0.0_SA_COO~RV; the as_of_source_counts figures are in the market marker detail and the object's input_manifest."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S41",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-02T15:40Z",
+    "one_line": "RIV-ap-1 asks main.tf to pass the daily Lambda's `environment` through, but the aws_lambda_function resource is in lambdas.tf, which is outside this order's <paths>: main.tf's variable now accepts `environment` (optional), generated.auto.tfvars.json carries it, and nothing reads it, so the gate and the secret name never reach the Lambda until lambdas.tf gains a dynamic environment block.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/etfs-rivalfunds/lambdas.tf lines 54-75 (aws_lambda_function.stage: function_name .. layers .. tags, no environment)",
+        "infra/aws/terraform/etfs-rivalfunds/main.tf variable lambdas (environment = optional(map(string), {}))"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-ap-1 cell: \"main.tf passes it through\" (the lambdas map's environment onto the daily Lambda).",
+    "world_is": "infra/aws/terraform/etfs-rivalfunds/lambdas.tf aws_lambda_function.stage (for_each var.lambdas) has no environment block; main.tf holds only the variable. The inert state: RIVALFUNDS_AI_ENABLE is unset in the deployed daily Lambda, so ai_stage.run_for_day is a no-op there (the safe direction). Issuer hookup, one block inside the resource: dynamic \"environment\" { for_each = length(each.value.environment) > 0 ? [each.value.environment] : [] content { variables = environment.value } }. Not terraform-validated in this order (no terraform run).",
+    "notes": "disarm_owner is the issuer: the order's AC3 reads the generated map only, so it passes without this block."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S42",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-02T15:40Z",
+    "one_line": "The dedicated OpenAI secret is rivalfunds/openai-api-key: lib/opal_naming.py name() has no SECRET kind (it refuses kind 'secret'), so gen_policies composes {system}/{purpose} from the registry system key and grades it SECRET = CONFORMANT; no registry row was needed. No stack resource creates the secret container (the order sets the value at the deploy), and the policy ARN is the name plus the 6-character random suffix pattern, region and account read from main.tf's layer ARN.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -c grade('rivalfunds/openai-api-key','SECRET') -> ('CONFORMANT', 'rivalfunds/openai-api-key')",
+        "lib/opal_naming.py name(): kind must be a NAMING_SCHEMA.json kind or a cadence; 'secret' is neither"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-ap-1 cell: \"The dedicated secret is named by name() (add an LGIC registry row if the builder refuses).\"",
+    "world_is": "name() raises for kind 'secret' (the slash-path secret grammar is outside its grammar); grade('rivalfunds/openai-api-key','SECRET') returns CONFORMANT, so the builder did not refuse the name and no infra/logic/registry row was added. Whether the secret container exists in AWS, or is created by this stack, was not read (no AWS call): the deploy must create it before the first scheduled run, or GetSecretValue returns ResourceNotFound and run_for_day raises in the daily Lambda.",
+    "notes": "A deploy-time reader should create the secret ({\"api_key\": ...}) and confirm the ARN pattern matches it."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S43",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-02T15:40Z",
+    "one_line": "The scheduled AI run needs the daily (sweep) role to PutObject under gold/research_hypotheses/, which the order does not name (it names only GetSecretValue); gen_policies now grants it to the sweep role alone (the publish-page role keeps its read-only grant), since without it the daily Lambda's account write is AccessDenied.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/etfs-rivalfunds/policies/etfs-rivalfunds-daily-lambda.json PutGetOwnPrefixes now lists gold/research_hypotheses/* (was in GetUpstreamPrefixes)",
+        "test_r6ap1_ai_stage.py::test_policy_and_environment_split_and_committed_copy_is_current: no role but the daily role may put it"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-ap-1 cell: gen_policies grants `secretsmanager:GetSecretValue` on one ARN to the daily role; no S3 write grant is mentioned.",
+    "world_is": "ai_accounts.write_rows puts research_hypotheses-<run_id>.parquet under the page day's partition; the sweep role held only GetObject on that prefix (publish-page's read-only list unioned). One more PutObject resource on one role, no DeleteObject. It is an IAM widening on a served prefix the deploy applies: the issuer's never-widen sign-off should cover it.",
+    "notes": "Also: RestClient.web_search returns a text saying web search is unavailable and no URLs (VEW-2), so a source with no fresh internal reading carries that sentence as its [web] line; it is labelled, never invented."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S44",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-02T16:10Z",
+    "one_line": "Bumping GRADER_VERSION to grounding_check/5 (RIV-r-6) fails tests/test_regrade_call11.py, which asserts the re-grade run id 'R1-ai-rg4'; that test is outside this order's paths so it is left failing.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/tests/test_regrade_call11.py:25 asserts {r['run_id']} == {'R1-ai-rg4'}; ai_accounts.regrade_rows builds the id from GRADER_VERSION's suffix"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-r-6 section 3: run the whole package suite before reporting; it must read 0 failed.",
+    "world_is": "Suite reads 1 failed, 434 passed, 2 skipped after the required bump; the single failure is the stale rg4 literal. The fix is changing the literal to rg5 (one line) by an owner of test_regrade_call11.py or the issuer.",
+    "notes": "No behaviour defect: the id suffix correctly follows the grader version."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W3-S20",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~3",
+    "surfaced_at": "2026-10-02T16:10Z",
+    "one_line": "RIV-e-2 puts DVD_CRNCY in the daily dividend request, which turns 2 tests in test_s4_security_market.py red (lines 153, 160, 171 pin fields == [\"DVD_HIST_ALL\"]); that file is outside my <paths>, so the package suite reads 2 failed, not 0.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/tests/test_s4_security_market.py:153,160,171@wk-ETFS_RIVALS-3 -- the stub tests `fields == [\"DVD_HIST_ALL\"]` (daily lands G3 then G4; market failure is PARTIAL) and the daily call now sends plan[\"fields\"] = [\"DVD_HIST_ALL\", \"DVD_CRNCY\"], so the stub falls through to the market branch",
+        "python -m pytest rivalfunds -q from data/etfs/scripts: 2 failed (test_daily_lands_g3_then_g4_under_distinct_markers, test_daily_market_failure_is_partial_not_silent), 416 passed, 2 skipped; the third stale test, test_e1's, is in my paths and is fixed",
+        "e-2.AC1/AC2/AC3: PASS 0 failures each"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order section 3: run the whole package suite before reporting; it must read 0 failed. Cell RIV-e-2: DVD_CRNCY joins the dividend request.",
+    "world_is": "Both can hold only if test_s4_security_market.py's three `[\"DVD_HIST_ALL\"]` field comparisons read [\"DVD_HIST_ALL\", \"DVD_CRNCY\"] (a mechanical, meaning-preserving edit); that path is not in this order's <paths>, so it is NOT edited here. Suite is red at the drain until the issuer widens the paths or makes the edit.",
+    "notes": "Same class as Z-W5-S29/S32 and Z-W3-S18/S19 (a stale pin outside the order's paths); disarm_owner 2.0.0_SA_COO~RV."
+  },
+  {
+      "id": "ETFS_RIVALS-Z-W3-S21",
+      "project": "ETFS_RIVALS",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_ETFS_RIVALS~3",
+      "surfaced_at": "2026-10-02T17:00Z",
+      "one_line": "Row Z-W3-S20 is DISARMED at ab0a58eaa4 (the three test_s4 pins now read the DVD_CRNCY list); the order says set its state to RESOLVED, but the schema has no such disposition and an existing row is never edited, so this row carries the state.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+          "status": "GROUNDED",
+          "evidence": [
+              "data/etfs/scripts/rivalfunds/tests/test_s4_security_market.py:153,160,171@ab0a58eaa4 -- the three comparisons read [\"DVD_HIST_ALL\", \"DVD_CRNCY\"] and nothing else changed in the file",
+              "python -m pytest rivalfunds -q from data/etfs/scripts at ab0a58eaa4: 422 passed, 2 skipped, 0 failed (the two Z-W3-S20 tests, test_daily_lands_g3_then_g4_under_distinct_markers and test_daily_market_failure_is_partial_not_silent, pass)",
+              "org/surprise_channel/schemas/investigation_item.schema.json disposition enum: UNDER_INVESTIGATION, GRADUATED, DISMISSED_WITH_REASON, DECOMP_INVALIDATING -- no RESOLVED value; the row S20 is left as written"
+          ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "Order amendment A1: change the three test_s4_security_market.py comparisons to the new list, then set row ETFS_RIVALS-Z-W3-S20's state to RESOLVED in the investigation file, citing the commit.",
+      "world_is": "The three comparisons are changed (commit ab0a58eaa4) and the suite reads 0 failed, so S20's hazard (a red suite at the drain) no longer stands. RESOLVED is not a schema disposition and my rules forbid editing an existing row, so S20 still reads UNDER_INVESTIGATION/ARMED in its own text; this row cites it as disarmed. The issuer or the CVO sets S20's standing.",
+      "notes": "Cites ETFS_RIVALS-Z-W3-S20. disarm_owner of S20 was 2.0.0_SA_COO~RV; the disarming edit is A1's grant."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W2-S12",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~2",
+    "surfaced_at": "2026-10-02T22:00Z",
+    "one_line": "Renaming the shadowed _render_page body is not enough for U14: _collect_names broke a frequency tie alphabetically, and capitals sort before lower case, so 'INTUIT INC' (issuer-file name) beat 'Intuit Inc'; _name_rank now ranks an all-capitals name below a mixed-case one.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/render.py _collect_names/_name_rank@wk-ETFS_RIVALS-2: a fixture with one 'INTUIT INC' holdings row and one 'Intuit Inc' trend row rendered 'INTUIT INC' on the page after the rename (tie on count, alphabetical first); test_r7rd1_page_walk_remainder.py::test_render_page_fills_the_name_map_and_the_holdings_row_reads_the_face_name failed until _name_rank changed",
+        "python -m pytest rivalfunds/tests -q from data/etfs/scripts: 542 passed, 2 skipped, 0 failed; rd-1.AC3.py PASS 0 failures"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order cell RIV-rd-1: rename the body and keep the wrapper; the holdings name then reads through the page's one name map with no case-only clashes.",
+    "world_is": "The rename alone fills the map, but the map's tie-break (readable beats raw, then most frequent, then alphabetical) lets an all-capitals issuer-file name win a tie because uppercase sorts first, and a security held by several funds counts its holdings name once per fund. I added one clause to _name_rank (an all-capitals name of 2+ characters ranks with the raw names, below a mixed-case name for the same key); a key with only an all-capitals name keeps it. In render.py, inside the order's paths; the issuer may want the same read at the L8 packet.",
+    "notes": "A name that is genuinely capitals (IBM) loses only to a mixed-case alternative for the same key."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S15",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-02T23:35Z",
+    "one_line": "Resolution of ETFS_RIVALS-Z-W4-S9's timeout class: the I-1 act continued batch d5-gqgu-03 on the deployed canonical-shape Lambda in two synchronous invokes (763.6 s, 423.7 s), neither timed out, and the G1 marker is written with 0 new objects; the continuation half (nothing continues an open cursor across invocations) stays open on round-7 RIV-cu-1.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CloudWatch /aws/lambda/rivalfunds-build-canonical-shape-lambda: REPORT da510729-464b-4bed-aa4e-f79aacf3ca86 Duration 763582.27 ms (22:16:30Z) and REPORT e06315e0-43d3-4160-b71b-e3e01de38fdd Duration 423676.97 ms (22:25:44Z), no Status: timeout on either",
+        "s3://opal-data-etfs/rivalfunds/etfs/state/build_canonical_shape/date=2026-10-01/d5-gqgu-03.json (LastModified 22:22:50Z: status OK, 60 outputs, written_new 0, rows_written 0) and .cursor (22:16:31Z)",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round7/postact_i1_w4s9.json"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Row ETFS_RIVALS-Z-W4-S9 (BLOCKING/ARMED, disarm_owner 2.0.0_SA_COO~RV): a marker-driven batch of more than about 45 report dates times out its G1 stage; the I-1 pair (COO e371794615, CTO 36c17afc0b) expects every REPORT under 900000 ms, PARTIAL then OK, and the G1 marker written with 0 objects.",
+    "world_is": "Met, with one limb observed indirectly: invoke 1's response was lost to a client connection drop, so its PARTIAL is evidenced by the cursor object it left at 22:16:31Z, not by its response; invoke 2 returned OK with no cursor and all stages OK. The round-5 budget bound holds on the deployed code. What it does not do: nothing re-invokes an open cursor, so a PARTIAL batch waits for a seat; that is RIV-cu-1 (the sweep continues open cursors), deployed with round 7.",
+    "notes": "Resolves ETFS_RIVALS-Z-W4-S9's timeout class (an existing row is never edited; this row carries the resolution). disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. The continuation half closes when RIV-cu-1 is deployed and its organic trigger (the 09:00 ET sweep) is read."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S45",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-02T22:50Z",
+    "one_line": "RIV-sa-1: the one-run-per-page-day attempt record has no registered table of its own, so it is written at the publish-page state prefix as ai-run.attempt (a non-.json suffix, like a stage's .cursor); publish-page also READS it so a later plain publish keeps showing a failure.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/ai_stage.py attempt_uri() = homes.marker_prefix('publish-page', day) + '/ai-run.attempt' (address builder output; no address typed)",
+        "infra/aws/terraform/etfs-rivalfunds/policies/etfs-rivalfunds-daily-lambda.json: s3:PutObject+GetObject on opal-data-etfs/rivalfunds/etfs/state/publish_page/* -- the daily role can write it; markers.read_markers filters on .json so the record is never a batch marker (tests/test_r7sa1_sweep_ai_step.py::test_the_attempt_record_is_not_a_batch_marker_and_sits_at_the_builders_prefix)",
+        "sa-1.AC1/AC2/AC3: PASS 0 failures each at the branch HEAD"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cell RIV-sa-1: 'The cell records the attempt where the address builder says.' The order names no table or registry row for it.",
+    "world_is": "No ai_run/ai_attempt state table is registered (homes.STAGES holds stages only), and a registry row is outside this order's paths, so the carrier reuses the publish-page state prefix. A later round may register a table of its own and move it; the sweep and publish-page read it through ai_stage.read_attempt only."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S46",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-02T22:50Z",
+    "one_line": "RIV-sa-1: the AI step's deadline cannot interrupt a vendor call already in flight (no background thread is allowed), so a call started just inside the deadline ends at ai_client.TIMEOUT_S (120 s) and the republish then has MARGIN_MS less that, about 30 s.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/ai_client.py: TIMEOUT_S = 120 on requests.post; sweep.MARGIN_MS = 150_000; sweep._ai_deadline_s caps the step at remaining - MARGIN_MS",
+        "data/etfs/scripts/rivalfunds/ai_stage.py _DeadlineClient: a call is refused BEFORE it starts past the deadline and dropped AFTER it returns past it (Overrun, a BaseException, so run_day never reaches its write); tests/test_r7sa1_sweep_ai_step.py::test_a_deadline_overrun_writes_nothing_and_records_failed",
+        "AC2 offline: first reply delayed 3.0 s under ai_deadline_s 1.0 -> sweep took 3.5 s, FAILED recorded, no object after drain"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cell RIV-sa-1: 'The step never runs past the Lambda's remaining time minus MARGIN_MS.'",
+    "world_is": "Holds to within one vendor call's own timeout. ai_client.py is not in this order's paths; lowering its TIMEOUT_S (or making it deadline-aware) would close the gap, and a republish needing more than about 30 s would be tight. The default AI_DEADLINE_S is 600 s of a 900 s Lambda; the graph's own time is subtracted by the remaining-time cap."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S47",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-02T23:10Z",
+    "one_line": "RIV-pv-1: the required behaviour (an event without run_path stamps ad_hoc) falsifies one existing assertion in tests/test_r7sa1_sweep_ai_step.py, which sits outside this order's paths, so 2 parametrised cases of test_a_ran_step_republishes_under_a_new_batch_with_the_result fail until the issuer adds run_path to its event.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/tests/test_r7sa1_sweep_ai_step.py:95 calls sweep.run_ai_step(dict(_ev7(spec), ai_deadline_s=7.0), ...) with _ev7 = {date, mode, sink, batch_id} (no run_path) and asserts run_for_day got run_path 'scheduled' (line 96) and ai_run run_path 'scheduled' (line 98)",
+        "python -m pytest rivalfunds -q from data/etfs/scripts: 2 failed (both [OK] and [FAILED] cases of that one test), 565 passed, 2 skipped; every other test, sa-1.AC1/AC2/AC3 and pv-1.AC1 pass",
+        "one-line fix: line 95 becomes sweep.run_ai_step(dict(_ev7(spec), ai_deadline_s=7.0, run_path='scheduled'), None, _runners(calls)); other run_ai_step calls in that file make no run_path assertion"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order RIV-pv-1: 'the sweep stamps scheduled only for an event carrying that value and no only; every other event stamps ad_hoc' and 'sa-1 ... tests/test_r7sa1_sweep_ai_step.py must still pass when you report'.",
+    "world_is": "The two cannot both hold: that test passed a hand-made event with no run_path and expected scheduled, the exact claim ruling 3 retires. sweep.run_ai_step now reads the run_path handler_entry stamped (sweep.stamped_run_path); defaulting an absent key to scheduled inside run_ai_step would restore the test but reinstate the unearned claim for any direct caller, so it was not done. The test file is not in this order's paths."
   }
 ]
 ```

@@ -56,3 +56,35 @@ and the promote landed (portal PROD f76b02acb6, ~13:5xZ). Deploys to `opal-amgt-
 | 3 | **FWD-2, chatter-row identity:** the collected-chatter rows serve `ticker`, `classification` and `places_moved` beside `display_name`. DSGN r27 (AV-ze-1) reads them the day they are served | COO~D msg 28526 | served, with the pair |
 | 4 | The reason CLASS served beside each peers absent-column reason, so the page maps by class, not by exact text | DSGN round-26 review | served, with the pair |
 | 5 | Round-60 ruling 3's carried items: Z-S332; the dead chatter legacy inputs; the page universes; the duplicate dossier reads | round 60 | as cut |
+
+**Round 63, cell 3 widened (~15:0xZ, DSGN FWD-24 on `3.0.0_SA_CVO~Z` v28 @17da4156e3):**
+- The overlay route's `breakout_price` row also serves `places_moved` from the same rankings row the route already reads.
+- Today the header prints "#7 | +5.79%" for VLO with no places moved, while the rankings serve 13.
+- Plant: VLO's breakout_price row carries places_moved = the rankings value. A security with no rankings row carries the reason
+  instead.
+- If round 63 is already issued, this is an issuer amendment; otherwise it is part of cell 3.
+
+**Round 63 repair cells (~18:5xZ, issuer amendment; DSGN FWD-2 on `3.0.0_SA_CVO~Z` v30 @ae0d4e7082):**
+
+**R1 -- Z-C-S36, ARMED, a false served reason on PROD.**
+- The defect: `scoped_amgt.read_ranking` joins `security_key` onto every row BEFORE `_join_places_moved`. That function matches
+  security_key-or-ticker against prior rows that carry no key. So 62 of 94 bars and 10 of 18 bubbles serve "not ranked in the
+  previous generation (2026-09-30)" for names that WERE ranked.
+- The fix: the match reads one key form on both sides.
+- Plants:
+  - a name ranked in both generations serves its places_moved;
+  - a name truly new serves the reason;
+  - the served census of the 94 reads the false-reason count 0.
+
+**R2 -- Z-C-S37, sector served.**
+- RULED (a), applied at the SERVING side. For an equity (asset_class equity), `classification.sector` is Opal's `sub_asset_class`
+  when that value is one of the 11 GICS sectors, served with `sector_source: "opal_classification.sub_asset_class"`.
+- Otherwise the route serves `sector` null with its reason.
+- The page never derives a sector.
+- Plants: AMD serves Information Technology; a non-equity or a non-GICS value serves null with the reason.
+
+Both are served changes under one never-widen pair, after am-6 leg 2. Leg 2's content diff stays the one file it was signed for.
+
+**Carried to round 64 (~19:2xZ, msg 28685):** the timeline cold-read cut. Track C step 2's c1 was NOT MET at ~12 s cold at every
+memory (two whole-snapshot gold reads dominate). The cell reads only the needed columns, filters by security on both reads, and prints
+segment timings. The bound stays under 5 s cold. Memory goes 10240 -> 1769 now, under the leg-2 half's addendum.

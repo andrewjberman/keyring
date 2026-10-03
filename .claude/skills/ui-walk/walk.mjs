@@ -27,7 +27,7 @@ const EMAIL = 'opal-ui-walker@opal.test'
 
 // ---- args ---------------------------------------------------------------------------------------------------------
 const argv = process.argv.slice(2)
-const opt = { base: 'http://localhost:5174', routes: [], clients: [], securities: [], maxMinutes: 40, arm: true, keepArmed: false, headed: false, deep: false, login: true, settleExtraMs: 0, periodsPerAccount: false, days: [], thread: null, expectTexts: [], reloadReopen: false }
+const opt = { base: 'http://localhost:5174', routes: [], clients: [], securities: [], maxMinutes: 40, arm: true, keepArmed: false, headed: false, deep: false, hovers: [], login: true, settleExtraMs: 0, periodsPerAccount: false, days: [], thread: null, expectTexts: [], reloadReopen: false }
 for (let i = 0; i < argv.length; i++) {
   const a = argv[i]
   if (a === '--base') opt.base = argv[++i]
@@ -36,6 +36,7 @@ for (let i = 0; i < argv.length; i++) {
     opt.routes.push(argv[++i].replace(/^[A-Za-z]:[\\/].*?[\\/]Git(?=[\\/])/i, '').replace(/\\/g, '/'))
   }
   else if (a === '--client') opt.clients.push(argv[++i])
+  else if (a === '--hover') opt.hovers.push(argv[++i])
   else if (a === '--security') opt.securities.push(argv[++i])
   else if (a === '--thread') opt.thread = argv[++i]
   else if (a === '--max-minutes') opt.maxMinutes = Number(argv[++i])
@@ -1558,6 +1559,21 @@ try {
     } else if (route.startsWith('/security-analysis')) {
       await walkSecurityAnalysis(page, route)
     } else {
+      // --hover <css>: hover each of the first 3 matches BEFORE any press or the generic explore (which click), a viewport
+      // shot + the checks each -- a hover-only popup (role=tooltip, portal-rendered or not) is graded for occlusion
+      for (const sel of opt.hovers) {
+        const els = page.locator(sel)
+        const n = Math.min(await els.count().catch(() => 0), 3)
+        if (!n) findings.push({ step, check: 'hover:no-match', claim: 'measured', observed: `no element matches ${sel}` })
+        for (let i = 0; i < n && timeLeft(); i++) {
+          await els.nth(i).hover({ timeout: 3000 }).catch(() => {})
+          await settle(page, 500)
+          await page.screenshot({ path: path.join(OUT, `shots/hover-${i + 1}-viewport.png`) }).catch(() => {})
+          await checks(page, `${route}-hover-${i + 1}`)
+          await page.mouse.move(0, 0).catch(() => {})
+          await settle(page, 250)
+        }
+      }
       for (const label of opt.presses || []) {
         if (DO_NOT_CLICK.test(label)) { findings.push({ step: `press ${label}`, check: 'walker:press-refused', claim: 'measured', observed: `--press "${label}" names a write word; not pressed` }); continue }
         const pressed = await clickLabel(page, label)

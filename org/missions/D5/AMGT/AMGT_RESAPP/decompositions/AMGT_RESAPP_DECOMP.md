@@ -7822,3 +7822,174 @@ al-2 -> al-1 (B)
 fanout:
   wave_1: [al-1(B) 0.7.0_AE_CloudOps~A]   # GO after the CTO half; deployed AND graded before 12:30Z or it waits for the demo read
 ```
+
+## 71. ROUND 63 -- TRACK C STEP 2, THE OFFICER FALLBACK, CHATTER-ROW IDENTITY, THE REASON CLASS, ROUND 60'S CARRIED ITEMS, THE SLASH-KEY POOL LOOKUP. Eight cells, eight orders
+
+**Cut by `2.0.0_SA_COO~Z`** on `1.0.0_SA_CTO~Z`'s round-62 analysis final addendum (`ledger/ROUND_ANALYSIS.round62.md` @`0ce76710dc`,
+msg 28527). The freeze is lifted (Andrew's demo read is over; PROD promote f76b02acb6). Its five-item list is this round's rectangle.
+Two served carriers close it: one code redeploy and one stored write. Every served move carries the never-widen pair.
+
+**Issuer rulings at the cut:**
+- R1. **Cell 4's reason class is served from ONE map** in `lib/research/peers/csc_plain_reasons.py` (column -> class). Two places read
+  it: the producer writes it on new peers objects, and the peers route fills it at serve time where a stored object lacks it. This is
+  a field, not a rewritten string, so the 234 stored objects are not rewritten; the code redeploy serves it.
+- R2. **Cell 1 begins only after HARVST step 1 lands** (aj-7: `title` and `published_precision` in the gold mention rows) AND gold
+  rebuild #5 completes. The worker's begin-condition checks the newest gold `article_security_mention` snapshot for a `title` column.
+- R3. **Cell 5's items that are page-side** (the portal's own universes) are reported with the page component named, never edited
+  here (DSGN's lane). The served parts are fixed here.
+
+### 71a. MEASUREMENTS (`round63/checks/r63_served.py`, deployed base ~14:4xZ)
+
+- c1: deployed warm 5 of 5 headlines (a warm sandbox, so it does not discriminate; am-6 grades it COLD under 5 s). Local, with the silver
+  read planted to raise: 502 (gold carries no title yet). Base FAIL.
+- c2: ASML_NA ABSENT, ZERO_OFFICERS (its 20-F's officer section is empty); 6501_JP and 2317_TT have NO_OBJECT; 6861_JP serves the
+  BLOOMBERG_FALLBACK as the model. FAIL 3 of 3.
+- c3: 95 chatter rows; 0 carry ticker, classification or places_moved. FAIL.
+- c4: BA and VLO each have 12 absent entries, 0 with reason_class. FAIL.
+- c5: the fabricated key's overlay answers 200 (Z-S332); BA's answers 200. FAIL C1.
+
+### 71b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-am-1` | track C step 2: the day route reads headline from gold; the silver read + 18 s path removed | `0.9.0_WK_AMGT_RESAPP~204` | worker | LOCAL | `lib/research/api/` |
+| `AMGT-am-2` | FWD-7 officer fallback (ASML_NA) + management objects for 6501_JP / 2317_TT (producer + plan) | `0.9.0_WK_AMGT_RESAPP~205` | worker | LOCAL | `lib/research/management/` |
+| `AMGT-am-3` | FWD-2 chatter rows serve ticker, classification, places_moved | `0.9.0_WK_AMGT_RESAPP~206` | worker | LOCAL | `lib/research/api/` |
+| `AMGT-am-4` | the peers reason class (R1) | `0.9.0_WK_AMGT_RESAPP~207` | worker | LOCAL | `lib/research/peers/`, `lib/research/api/` |
+| `AMGT-am-5` | round-60 carried: Z-S332 404, dead chatter legacy inputs, duplicate dossier reads (+ page universes reported, R3) | `0.9.0_WK_AMGT_RESAPP~208` | worker | LOCAL | `lib/research/api/`, `lib/research/coverage/` |
+| `AMGT-am-8` | Z-W4-S6: the peers engine's pool lookup takes the slash-safe key (BP, NG stale 09-25 labels) + the plant (CTO msg 28541 ruling 2) | `0.9.0_WK_AMGT_RESAPP~209` | worker | LOCAL | `lib/research/peers/` |
+| `AMGT-am-6` | the code redeploy carrying am-1/3/4/5 + memory re-measured down from 10240 | `0.7.0_AE_CloudOps~A` | seat order, a pair | WORLD | Lambda artifact + `memory_size`, ledger |
+| `AMGT-am-7` | the stored write of am-2's frozen plan (new/rewritten `management/v1/` objects) | `0.7.0_AE_CloudOps~A` | seat order, a pair | WORLD | the plan's literal key list |
+
+### 71c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** Domain = the addendum's five items; each worker cell is one item; am-6/am-7 are the two served carriers.
+- **(ii) Same grain.** One served field set per cell.
+- **(iii) Intent.** One axis per cell, as the addendum names it.
+- **(iv) What a cell does NOT move.** am-1 moves only how the day route finds a headline (bytes equal where gold carries the title).
+  am-3 and am-4 ADD fields. am-5 changes only the unknown-key status and removes dead reads. am-2 writes no store (am-7 writes). No cell
+  moves a figure, rank or identity.
+
+### 71d. EDGES AND FAN-OUT
+
+```
+am-1 (after HARVST aj-7 + rebuild #5) -+
+am-3 ----------------------------------+-> am-6
+am-4 ----------------------------------+
+am-5 ----------------------------------+
+am-8 ---------------------------------(+)  # served by am-6 if request-time, by am-7 (amended) if build-time
+am-2 ------------------------------------> am-7
+fanout:
+  cap: 8
+  orders_total: 8
+  chains_total: 2
+  wave_0: [am-2 ~205, am-3 ~206, am-4 ~207, am-5 ~208, am-8 ~209]   # am-1 ~204 begins on R2's condition
+  wave_1: [am-6 0.7.0_AE_CloudOps~A, am-7 0.7.0_AE_CloudOps~A]   # each after its drains and its pair
+  no_s3_deletes: true
+  egress: none
+  portal_ref: a730d8ce   # worker AC1 reads the portal fixture (dispatch Step 4)
+```
+
+## 72. ROUND 64 -- FWD-36/37/38 (THE UI/UX WALK'S SERVING CELLS), THE COLD READ, THE REPAIRS. Seven cells, seven orders
+
+**Cut by `2.0.0_SA_COO~Z`**. Inputs:
+- PRD v0.34/v0.35: FWD-36, 37 and 38 (CTO fold @82d1cb21e2; "cut FWD-36, 37 and 38", msg 28690). FWD-36's price half is a QUALIFIED
+  WAIT (CTO ruling msg 28740 @ed61068340).
+- The CTO's round-63 rulings: ruling 3 of the leg-2 addendum @4d0f049203 (the cold-read cell) and msg 28730 (the officer face).
+- Issuer rows Z-S339 (the slash-ticker classification miss) and the date-only as_of tie (am-7 A3 close).
+**Issuance gate:** LIMB 6 refuses a newly added order while the ratified-text half is STALE at v0.35. The orders issue in ONE commit when
+`3.0.0_SA_CVO~Z` re-signs.
+
+**Issuer rulings at the cut:**
+- R1. **FWD-36:** the chatter windows are re-aggregated from gold `chatter_daily` at request time (counts only). Tone and voters are
+  served null with `tone_reason`, because HARVST FWD-16/17 are HELD on the publisher-terms card. The price ranking accepts `?days`,
+  serves 30, and answers 90/365 with "not produced yet" (qualified wait). That answer is never read as the 90/365 path.
+- R2. **FWD-37:** coverage-event markers come from gold `chatter_event` (its `lead_headline`). The earnings kind is served in
+  `marker_kinds_absent` with the reason "no earnings dates are pulled yet" until the CORPUS Model-block pull carries the dates (a
+  qualified wait on Andrew's word).
+- R3. **FWD-38 (a):** the overlay's recent-news feed reads the harvested gold articles (the day view's own source), so containment
+  holds by construction. The publication-pool read stays only where another field needs it.
+- R4. **The repairs batch into ONE cell:** Z-S339, the officer face's raw codes, and `object_as_of` from the served key.
+
+### 72a. MEASUREMENTS (`round64/checks/r64_served.py`, local at CLOUD ~20:4xZ; every cell FAILS at the base)
+
+- c9: collected/chatter serves no window fields; 0 of 95 rows carry articles_total, tone or voters.
+- c10: `?days` is ignored; 90 and 365 serve the 30-day rows.
+- c11: the timeline serves no `markers` (BA: 1 event, 0 markers).
+- c12:
+  - The feed holds 1 / 0 / 0 articles against 71 / 13 / 3 day-view articles in its window (BA / AMD / VLO).
+  - Display names disagree on all 3 (peers 'BOEING CO/THE'; chatter 'ADVANCED MICRO DEVICES'; peers 'VALERO ENERGY CORP').
+- c13: 0 of 94 chatter `places_moved` name an axis or window; no route serves a provenance block.
+- c14:
+  - BP/ LN and NG/ LN serve an untrue "holds no classification".
+  - ASML_NA `source_item`, `pool_read.reason` and `fallback.label` carry COMPANY_EXEC_OFFICERS, ABSENT and RESOLVED.
+  - `object_as_of` is absent on 3 of 3.
+- c15 (deployed): cold BA 2026-09-08 takes 11.5-12.8 s at 1769 (round 63); no AMGT_SEGMENT lines.
+
+### 72b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-an-1` | FWD-36: chatter windows ?days=30/90/365 (counts; tone null + reason) + the price ranking's ?days (30 served, 90/365 "not produced yet") | `0.9.0_WK_AMGT_RESAPP~210` | worker | LOCAL | `lib/research/api/` |
+| `AMGT-an-2` | FWD-37: timeline markers (coverage events from gold; the earnings kind with its reason) | `0.9.0_WK_AMGT_RESAPP~211` | worker | LOCAL | `lib/research/api/`, `lib/research/harvest/timeline_api.py` |
+| `AMGT-an-3` | FWD-38 a + b: the feed holds the day view's articles (R3); ONE display name per security, cased, no share-class code | `0.9.0_WK_AMGT_RESAPP~212` | worker | LOCAL | `lib/research/api/`, `lib/research/coverage/` |
+| `AMGT-an-4` | FWD-38 c + d: every move names its axis + window; the overlay's provenance block (filings, harvested news, Bloomberg, last run) | `0.9.0_WK_AMGT_RESAPP~213` | worker | LOCAL | `lib/research/api/` |
+| `AMGT-an-5` | the cold read: column projection + security filter on both gold reads, AMGT_SEGMENT timings | `0.9.0_WK_AMGT_RESAPP~214` | worker | LOCAL | `lib/research/harvest/`, `lib/research/api/`, `lib/research/coverage/` |
+| `AMGT-an-6` | repairs (R4): Z-S339 slash-ticker classification, officer-face reader words, object_as_of | `0.9.0_WK_AMGT_RESAPP~215` | worker | LOCAL | `lib/research/api/` |
+| `AMGT-an-7` | the code redeploy carrying an-1..an-6 (graded c9-c15 on deployed) | `0.7.0_AE_CloudOps~A` | seat order, a pair | WORLD | Lambda artifact, ledger |
+
+### 72c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** The domain is FWD-36, 37 and 38's DONE WHEN clauses, plus the two CTO-ruled items and the issuer rows. FWD-38's four
+  clauses split into two cells by surface (a+b: what is listed and named; c+d: what is labelled).
+- **(ii) Same grain.** One served surface family per cell.
+- **(iii) Intent.** One axis per cell.
+- **(iv) What a cell does NOT move:**
+  - an-1 changes no rank and no score.
+  - an-2 adds markers only.
+  - an-3 changes the feed's source and the name a route serves; no figure.
+  - an-4 adds labels and a block.
+  - an-5 changes how gold is read; the served bytes are equal.
+  - an-6 changes reader text, one lookup and one added field.
+
+### 72d. EDGES AND FAN-OUT
+
+All six worker cells write `lib/research/api/scoped_amgt.py`. They are drained one at a time, with the union suite re-run after each
+drain (round 63's drain-repair lesson).
+```
+an-1 --+
+an-2 --+
+an-3 --+--> an-7 (one redeploy, one pair, graded c9-c15 on deployed)
+an-4 --+
+an-5 --+
+an-6 --+
+fanout:
+  cap: 8
+  orders_total: 7
+  chains_total: 1
+  wave_0: [an-1 ~210, an-2 ~211, an-3 ~212, an-4 ~213, an-5 ~214, an-6 ~215]
+  wave_1: [an-7 0.7.0_AE_CloudOps~A]   # after the six drains and its pair
+  no_s3_deletes: true
+  egress: none
+  portal_ref: a730d8ce
+```
+
+### 72f. AMENDMENT 1 -- reconciled with the CTO's round-63 analysis @8642d76ceb (msg 28771)
+
+The analysis landed after the issuance (`59aabebf87`). Its seven-item enrichment list maps onto this rectangle as follows:
+
+| analysis item | cell |
+|---|---|
+| 1 cold read | an-5 |
+| 2 FWD-36 | an-1 |
+| 3 FWD-37 (events already in gold only) | an-2 |
+| 4 FWD-38 + the officer face | an-3, an-4, an-6 item 2 |
+| 5 slash keys (ruling 1) | an-6 item 1, RE-RULED: `slash_safe_key` in the classification read + the encoded key in the route template |
+| 6 the 500 attribution (ruling 3) | **an-6 item 4 (AMENDMENT 1c)**: one AMGT_500 line per 500, a 7-day census by signature, a planted fault, no alarm. The issuance gate allows ONE issuance per round, so it is folded into the repairs batch, not a new order |
+| 7 the as_of source stamp (ruling 6) | an-6 item 3, RE-RULED: the body's `source_stamp`, with the key's `object_as_of` for older bodies |
+
+Every unspawned cell (an-2 to an-6) also measures its package delta (`--build-only` SIZE line). an-1 was already running, so the
+issuer measures its delta at the drain. No cell adds new processing of publisher article text (the HARVST terms card). an-7 carries
+it and reads the census after the act. r64_served gains c14 C4 (the encoded key reaches every route) and c16 (the planted fault). Both
+were dry-run at the base: C4 serves 200 with security_key null on 4 of 4 routes (the normal-key control serves it), and c16's fault
+escapes with 0 AMGT_500 lines. The orders stay at 7.

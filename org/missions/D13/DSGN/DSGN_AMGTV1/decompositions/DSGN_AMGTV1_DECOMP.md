@@ -1535,3 +1535,68 @@ asset class, sub-asset class, sector, the period figure and places moved, with a
 bubble prints what its row serves and says the rest is not served. Serving ticker, classification and places_moved on chatter rows
 is a PRODUCER item (RESAPP), routed to the CTO. **Check:** `round27/checks/identity.cjs` (issuer): at base portal fa529337 (PROD's
 tree) it reads 1 of 3. **Chain:** ~78 alone. **Rule 24:** one row, one order; no served value moves.
+
+
+## v28 -- ROUND 28 (issuer, 2026-10-02 ~15:2xZ) -- ONE INSTRUMENT REPAIR CELL
+
+**Rectangle:** `1.0.0_SA_CTO~Z` msg 28537 and the re-grade @6fe6735934 (16 REALIZED / 2 NOT_REALIZED / 5 NOT_EVALUATED / 1 RETIRED). It
+names three instrument items: (i) the two stale clauses CVO~Z ADJUDICATION_v27 section 2 tables (fwd15 counts the consensus `th`;
+fwd16 demands the served reason verbatim on the face); (ii) a contract fixture with an ABSENT model row, so FWD-15's footnote half
+is read; (iii) the contract fixture's collected-chatter names (72 of 95 raw keys, the list.png rejection). The CTO asked for these as
+an amendment to round 27. They are cut as round 28 because round 27 is issued, drained and closed (@8fba1b2e33), and
+to-pipeline-gate refuses a second issuance into a round. The substance is unchanged.
+**Cell:** `AV-zf-1`, DIRECT ACT, `<risk>LOCAL</risk>`, batch repair (`worker-light`). Files: `portal/scripts/ui-measure.mjs`,
+`portal/scripts/ui-contract-check.mjs`, and the fixture `portal/src/pages/SecurityAnalysis/__harness__/tests/uiContractFixtures.json`.
+It touches no product file.
+**Served input:** `round28/fixtures/served-names.collected-chatter.json`, made by the issuer with the served route's own resolver
+(`monthly_chatter._display_names`), 95 of 95 resolved: 48 crosswalk, 25 model block header, 12 classification, 10 ticker; 0 raw keys.
+**Checks (issuer), dry-run at portal 415f50db:** `round28/checks/render.cjs` 0 of 3 (fwd15 FAIL on spans with footnotes 0; fwd16
+FAIL "12 listed column(s) carry no reason"; the planted predicate flags a healthy column) and `round28/checks/fixture.cjs` 1 of 3.
+**Chain:** ~79 alone; base portal 415f50db (remote DEV), independent of round 27's df019dba. **Rule 24:** one row, one order.
+FWD-20's PASS limb and FWD-15 are graded by CVO~Z at L9 on the amended instrument.
+
+
+## v29 -- ROUND 29 (issuer, 2026-10-02 ~19:3xZ) -- THE UI/UX WALK FOLD (PRD v0.10 @175e4081b1)
+
+**Rectangle:** PRD v0.10. The L4 notifier delivered it (CTO msg 28682). The ratified-text half is SIGNED by CVO~Z (current) and the brief half
+is auto-accepted. The fold is CTO record `CTO_FOLD_SECURITY_ANALYSIS_UIUX_20261002.md` (rulings 1-10). Inputs: the 29 COO~D rows of the SAUX
+register (`docs/briefs/amgt-security-analysis-ui-findings-20261002.json`); FWD-5, 12 and 22 amended; FWD-25 and 27 new. FWD-21 is cut for its
+layout and fill limbs only.
+**Base:** portal DEV ec65c5d6. Its SecurityAnalysis tree equals PROD dcdc89b1 (portal-v2.1.195).
+**Write surfaces (disjoint; `types.ts` is owned by NO cell this round -- a cell extends a served row type locally by intersection):**
+
+| cell | outcome(s) | SAUX rows | owned files (`portal/src/pages/SecurityAnalysis/` unless absolute) |
+|---|---|---|---|
+| `AV-zg-1` TIMELINE | FWD-5, FWD-27 (its lines) | 06, 07, 08, 09, 11, 13, 14; 30 ("day(s) rendered (no gap)"); 31 ("Social: no source measured", "MOST-DISCUSSED: NOT MEASURED") | `components/TimelinePanel.tsx`, `components/HeaderBrief.tsx`, new `components/timeline/**` |
+| `AV-zg-2` OVERLAY HEADER | FWD-12 (header), FWD-27 (header) | 02, 03, 04, 05, 15; 30 ("Back to universe", "Export rich text (.md)"); 31 (card empty lines); 33/34 on the header | `components/SecurityOverlay.tsx`, `components/HeaderCards.tsx`, `components/IdentityLine.tsx`, `components/StatTile.tsx`, `components/PrintExportAction.tsx`, `constants.ts` |
+| `AV-zg-3` LEAD PANEL + PRICE | FWD-12 (panel), FWD-22, FWD-26 (the price caption only), FWD-27 | 01, 20, 21, 36; 30 (page subtitle) | `components/LeadPanel.tsx`, `components/PriceBars.tsx`, `components/GenerationCaption.tsx`, `SecurityAnalysis.tsx` |
+| `AV-zg-4` CHATTER COLLAGE | FWD-21 (collage, labels, fill) | 16, 17, 18 | `components/ChatterBubbles.tsx`, new `portal/src/lib/sentimentColor.ts`, `portal/src/components/market-performance/TopicCloud.tsx` (extraction: the import swap only) |
+| `AV-zg-5` MODEL | FWD-25, FWD-27 (Model) | 23, 24, 26; 34 (the Model what-changed cap) | `tabs/ModelTab.tsx`, `modelSheet.ts`, `dateWords.ts`, new `components/model/**` |
+| `AV-zg-6` TABS + ACCOUNT MENU | FWD-27 (tabs) | 32; 31 ("No profile (no match found)"); 30 ("in a union of", "no served drafted sentence ...", "held back uncited"); 33/34 on Peers; 35 | `tabs/ExecManagementTab.tsx`, `tabs/ThesisTab.tsx`, `components/ThesisDriverChart.tsx`, `tabs/PeersTab.tsx`, `portal/src/App.tsx` (the account menu: every page reads it) |
+
+**Issuer rulings inside the decomposition:**
+- (a) ONE money format: `<served currency code> <figure>` (e.g. "USD 196.80", "USD 187B"), never a `$` sign.
+- (b) Every time prints in ET through `dateWords.ts` (owned by `AV-zg-5`); other cells call its helpers and do not format times.
+- (c) A cell's read of a field not yet served (tone, voters, timeline markers of kind earnings_release) renders the designed empty state in words.
+- (d) The sentiment ramp is TopicCloud's own `getSentimentColor`, extracted unchanged. TopicCloud's render is byte-equal before and after.
+
+**FWD-26 presets: NOT cut** (EVENT-GATED: AMGT_RESAPP FWD-36 serving `?days=30|90|365`). The page cannot draw a rolling window from
+calendar-month counts and never computes one (C-PRESENTATION-ONLY). The month cursor stays until the route serves windows; then a
+round-30 cell cuts the presets. FWD-26's price caption is cut now, in `AV-zg-3` from the served `window_days`.
+**Fan-out:** 6 chains, all independent (disjoint files), cap 8. **Risk:** LOCAL, all six. **Classes:** worker, all six.
+**Battery ownership (issuer rulings at the cut, from the six check agents' reference runs):**
+- Each portal harness clause pinning a pre-round-29 face is re-anchored by exactly ONE cell:
+  - `shell` (5 clauses; both band counts become FWD-20 v0.9's `<= 1`): `AV-zg-2`;
+  - `leadPanelPattern` (3 limbs) and `tabs` (`generation_captions_present`, `header_posture_line_matches_payload`): `AV-zg-3`;
+  - `execPattern` (`absent_profile_cells`) and `drafting` (`held_uncited_line_present`): `AV-zg-6`;
+  - `timelineFourStates` (the fill clause; not in the battery): `AV-zg-1`.
+- AC3 is `round29/checks/battery29.sh`, the round 20-26 battery with a per-cell skip list naming items re-anchored by a sibling:
+  `AV-zg-3` skips `shell`; `AV-zg-1` skips `tabs` and `namecard`. The issuer runs it with NO skip on the merged candidate.
+- **Frozen shared exports:** StatTile's `FigureTooltip` / `formatStatValue` / `figureTooltipRows`; `constants.ts`'s `HEADER_CARD_DEFS` /
+  `STAT_TILE_DEFS` / `IDENTITY_CURRENCY_MNEMONIC` / `StatTileFormat`; `dateWords`' `longDate` / `longStamp` / `chartTick` (`etStamp` added).
+  `HeaderCards`' `HeaderCardDetail` stays exported.
+- **Land together:** `AV-zg-1` and `AV-zg-2` (one timeline: HeaderBrief stops mounting it, and SecurityOverlay mounts it). The chatter
+  ink goes navy (`AV-zg-4`) because the panel goes white (`AV-zg-3`).
+- **Folded at the cut:** CTO msg 28729 (row Z-C-S41), the Exec caption naming only the served source, goes into `AV-zg-6`.
+- **Checks:** 12 issuer checks (2 per cell), every one dry-run at portal dcdc89b1. Each FAILS at base (1-2 of 3-4 arms; PLANTED/CONTROL
+  arms pass by design) and each reached full marks on its agent's scratch reference via `CHECK_SRC_OVERRIDE`.

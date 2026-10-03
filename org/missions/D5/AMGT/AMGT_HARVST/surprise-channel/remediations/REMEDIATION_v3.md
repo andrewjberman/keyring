@@ -48,15 +48,15 @@ Two rows, both graduated this round by C-S25: Z-W27-S1 REMEDIATED + DISARMED; Z-
     "owner": "2.0.0_SA_COO~Y",
     "round": "v9",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~Y",
       "round": "v9"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~Y",
-      "at": null
+      "at": "2026-10-02T23:19Z"
     }
   }
 ]

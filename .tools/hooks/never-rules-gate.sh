@@ -621,9 +621,12 @@ _REF_NAMES_SHARED=""
 if [ -n "$_PUSHPULL_HIT" ]; then
     # A COMMENT IS NOT A REFSPEC -- strip it first, exactly as `scan` does for matching
     # (`git push origin scratch  # rebase onto DEV later` must not read as a DEV push).
-    # Then tokenise; strip refs/heads/, origin/, and the src: half of a src:dst refspec.
+    # Then tokenise; strip the src: half of a src:dst refspec FIRST, then a leading force `+`, then refs/heads/
+    # and origin/. ORDER IS THE FIX (row DSGN_AMGTV1-Z-S17): stripping refs/heads/ before the src: half left
+    # `<src>:refs/heads/PROD` as `refs/heads/PROD`, and a `+DEV` kept its `+`; neither matched SHARED_BRANCHES,
+    # so both were admitted from any seat.
     _REF_NAMES_SHARED="$(printf '%s' "$_PUSHPULL_HIT" | sed -E 's/#.*$//' | tr ' \t' '\n\n' \
-        | sed -e 's#^refs/heads/##' -e 's#^.*:##' -e 's#^origin/##' \
+        | sed -e 's#^.*:##' -e 's#^+##' -e 's#^refs/heads/##' -e 's#^origin/##' \
         | grep -E -- "$SHARED_BRANCHES" | head -1)"
 fi
 if [ -n "$_PUSHPULL_HIT" ] \
@@ -704,9 +707,62 @@ if [ -n "$_PUSHPULL_HIT" ] \
                 done ;;
         esac
     fi
-    if [ "$_DT_PORTAL_PROD" -eq 0 ] && [ "$_FAST_DEV" -eq 0 ] \
+    # --- TEST-ONLY PORTAL-DEV CARVE-OUT (Andrew-direct 2026-09-24, cut 2, record
+    # org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260924_141xZ_YES_TO_ALL_SIX_PROCESS_CUTS.md, VERBATIM:
+    # "TEST-ONLY PORTAL CANDIDATES land on DEV without CTO review -- the author fast-forwards test and fixture changes").
+    # Row DSGN_AMGTV1-Z-S17 limb 2: the law admitted it and the gate never implemented it. Scoped six ways, all
+    # required: verb push; branch exactly DEV; origin Opal-Capital/portal; caller resolved; NO force (+, -f, --force*);
+    # and the PAYLOAD -- every path in <remote DEV tip>..<src> matches _RE_TESTPATH, read against the remote tip from
+    # ls-remote at check time, as a fast-forward. Anything unreadable denies (fail-closed). The pattern is
+    # deliberately narrow (tests, harnesses, fixtures, mocks): an instrument script under scripts/ is NOT test-only here.
+    _TESTONLY_DEV=0
+    _TO_WHY=""
+    _RE_TESTPATH='(^|/)(__tests__|__harness__|__fixtures__|__mocks__)/|\.(test|spec)\.[cm]?[jt]sx?$|(^|/)(tests?|e2e|fixtures?)/'
+    if [ "$BRANCH" = "DEV" ] && [ -n "$_CALLER" ] && printf '%s' "$_PUSHPULL_HIT" | grep -qE -- "$_RE_PUSH_ONLY"; then
+        _origin_url="$(git -C "$REPO" config --get remote.origin.url 2>/dev/null)"
+        case "$_origin_url" in
+            *[/:]Opal-Capital/portal|*[/:]Opal-Capital/portal.git)
+                _toks="$(printf '%s' "$_PUSHPULL_HIT" | sed -E 's/#.*$//' | tr ' \t' '\n\n' | awk 'NF')"
+                if printf '%s\n' "$_toks" | grep -qE -- '^(\+|-f$|--force)'; then
+                    _TO_WHY="a force push"
+                else
+                    _src=""
+                    while IFS= read -r _t; do
+                        _d="$(printf '%s' "$_t" | sed -e 's#^.*:##' -e 's#^refs/heads/##' -e 's#^origin/##')"
+                        if [ "$_d" = "DEV" ]; then
+                            case "$_t" in *:*) _src="${_t%%:*}" ;; *) _src="$_t" ;; esac
+                            break
+                        fi
+                    done <<EOF_TESTONLY
+$_toks
+EOF_TESTONLY
+                    [ -n "$_src" ] || _src="HEAD"
+                    _tip="$(git -C "$REPO" ls-remote origin refs/heads/DEV 2>/dev/null | awk 'NR == 1 { print $1 }')"
+                    _srcsha="$(git -C "$REPO" rev-parse --verify --quiet "${_src}^{commit}" 2>/dev/null)"
+                    if [ -z "$_tip" ] || [ -z "$_srcsha" ]; then
+                        _TO_WHY="the remote DEV tip or the source ref is unreadable (tip='${_tip}', src='${_src}')"
+                    elif ! git -C "$REPO" cat-file -e "${_tip}^{commit}" 2>/dev/null; then
+                        _TO_WHY="remote DEV tip ${_tip} is not present locally (fetch first)"
+                    elif ! git -C "$REPO" merge-base --is-ancestor "$_tip" "$_srcsha" 2>/dev/null; then
+                        _TO_WHY="not a fast-forward of remote DEV ${_tip}"
+                    else
+                        _paths="$(git -C "$REPO" diff --name-only "$_tip" "$_srcsha" 2>/dev/null | awk 'NF')"
+                        _np="$(printf '%s\n' "$_paths" | awk 'NF' | wc -l | tr -d ' ')"
+                        _nprod="$(printf '%s\n' "$_paths" | awk 'NF' | grep -vE -- "$_RE_TESTPATH" | wc -l | tr -d ' ')"
+                        if [ "$_np" -eq 0 ]; then
+                            _TO_WHY="an empty payload"
+                        elif [ "$_nprod" -gt 0 ]; then
+                            _TO_WHY="$_nprod of $_np paths are not test/fixture paths (first: $(printf '%s\n' "$_paths" | awk 'NF' | grep -vE -- "$_RE_TESTPATH" | head -1))"
+                        else
+                            _TESTONLY_DEV=1
+                        fi
+                    fi
+                fi ;;
+        esac
+    fi
+    if [ "$_DT_PORTAL_PROD" -eq 0 ] && [ "$_FAST_DEV" -eq 0 ] && [ "$_TESTONLY_DEV" -eq 0 ] \
        && ! printf '%s' "$_CALLER" | grep -qE -- '^0\.0\.0_AB_MSTR(~[A-Za-z0-9]+)?$'; then
-        deny "BLOCKED (LD-0367 rule 2 / LD-0368 -- INTEGRATOR-ONLY push/pull on shared branch '$BRANCH'): only 0.0.0_AB_MSTR (base) / 0.0.0_AB_MSTR~Z (site-Z) may push or pull the shared branch; you are '${_CALLER:-UNRESOLVED}'. ONE EXCEPTION EXISTS AND IT DID NOT ADMIT THIS CALL (Andrew-direct 2026-09-01): a DT serial may push branch PROD or DEV in the PORTAL repo (/prod-deploy Steps 1a + 4; Andrew-direct 2026-09-01 and 2026-09-02), scoped to branch in {PROD,DEV} AND an origin remote of Opal-Capital/portal AND verb push -- so a DT is still denied on the workspace branches and on any pull, and any non-DT is still denied in the portal. An Andrew-directed non-DT uses this same audited override, citing his word (Andrew-direct 2026-09-02). WHY: a push from any other seat PUBLISHES EVERY OTHER SEAT'S LOCAL COMMITS along with yours -- neither of you chooses it and you cannot see what you carried (proven integration-window #1, 2026-07-31: a seat's push carried the site-Z integrator's held commit). Commit your work to a SEAM; the hourly INTEGRATION WINDOW (LD-0367) moves it -- the integrator MSTR runs the pull+push. 'git fetch' (incl. fetch-by-hash, LD-0367 rule 4) is NOT blocked. A scratch branch is your own business (this fired because HEAD is the shared '$BRANCH'). Audited override (rare -- coordinate with the integrator FIRST, because it still republishes the tree): append '# never-override: <reason>' to the SAME simple command."
+        deny "BLOCKED (LD-0367 rule 2 / LD-0368 -- INTEGRATOR-ONLY push/pull on shared branch '$BRANCH'): only 0.0.0_AB_MSTR (base) / 0.0.0_AB_MSTR~Z (site-Z) may push or pull the shared branch; you are '${_CALLER:-UNRESOLVED}'. ONE EXCEPTION EXISTS AND IT DID NOT ADMIT THIS CALL (Andrew-direct 2026-09-01): a DT serial may push branch PROD or DEV in the PORTAL repo (/prod-deploy Steps 1a + 4; Andrew-direct 2026-09-01 and 2026-09-02), scoped to branch in {PROD,DEV} AND an origin remote of Opal-Capital/portal AND verb push -- so a DT is still denied on the workspace branches and on any pull, and any non-DT is still denied in the portal. An Andrew-directed non-DT uses this same audited override, citing his word (Andrew-direct 2026-09-02). WHY: a push from any other seat PUBLISHES EVERY OTHER SEAT'S LOCAL COMMITS along with yours -- neither of you chooses it and you cannot see what you carried (proven integration-window #1, 2026-07-31: a seat's push carried the site-Z integrator's held commit). Commit your work to a SEAM; the hourly INTEGRATION WINDOW (LD-0367) moves it -- the integrator MSTR runs the pull+push. 'git fetch' (incl. fetch-by-hash, LD-0367 rule 4) is NOT blocked. A scratch branch is your own business (this fired because HEAD is the shared '$BRANCH'). Audited override (rare -- coordinate with the integrator FIRST, because it still republishes the tree): append '# never-override: <reason>' to the SAME simple command.${_TO_WHY:+ The TEST-ONLY portal-DEV carve-out (Andrew-direct 2026-09-24 cut 2: the author fast-forwards test and fixture changes) did not admit this push: ${_TO_WHY}.}"
     fi
 fi
 

@@ -3,7 +3,7 @@
   "project": "NFRA_OPLGTW",
   "directive": "D9",
   "fabric": "site-z",
-  "prd_version": "v1.5",
+  "prd_version": "v1.6",
   "step": 4,
   "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_1511ET_NFRA_OPLGTW_D9_REGISTRATION_AND_PRD.md@45ce4e5b73",
   "endpoint_outcomes": [
@@ -458,3 +458,45 @@ halves (it adds a served surface).
 
 **Sign-off.** CONTRACTS text changes and ENDPOINT does not.
 
+
+### v1.6 addendum (2026-10-02 ~20:1xZ, 1.0.0_SA_CTO~O) -- C7 headless TEAMS route, the one write exception
+
+Input: Andrew-direct, relayed by `0.0.0_AB_MSTR~Z` msg 28592 (laptop bus d38d682f, 17:17Z): "release the gateway /hx/teams
+route TODAY". Build authority: laptop record `ANDREW_DIRECT_20261002_020xZ_EOD_UPDATE_AUTOMATION.md` ("you just build
+it"). Request: `org/tier1_exec/4.0.0_SA_CRO/deliverables/SITEZ_GATEWAY_RELEASE_REQUEST_HX_TEAMS_20261002.md` @a53c8452b4.
+Released by OG-rl-3 (opal-gateway `4231bd2ddc`, live 2026-10-02 19:23:40Z; ruling
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_20261002_NFRA_OPLGTW_HX_TEAMS_RELEASE.md` @6b6bccb300).
+
+**The change (C7).** A third headless prefix, the fixed literal `/hx/teams`, graded for distinctness like the other two.
+It serves the laptop's LDO-001 (Andrew's Teams assistant) and is graded there; this project grades only its own release.
+
+**Routes.**
+- `GET /hx/teams/me`
+- `GET /hx/teams/chats`
+- `GET` and `POST /hx/teams/chats/{chat_id}/messages`
+- `GET` and `POST /hx/teams/channels/{team_id}/{channel_id}/messages/{message_id}/replies`
+
+**Rules that carry over from v1.2, unchanged.**
+- An own static bearer (`gateway/teams/bearer`, label `teamsassist`), compared in constant time and accepted ONLY on
+  this prefix.
+- ONE fixed identity: MS_INGEST_IDENTITY's server-held delegated token (Andrew's). No caller-supplied identity.
+- One Graph path allowlist per verb, failing closed; allow-by-key output; opaque page tokens; audit without content.
+
+**The exception, stated plainly.** C7's "Graph calls are GET only" and "There is no write, send or reply verb" stay true
+for `/hx/transcripts` and `/hx/mail`. They are NOT true for `/hx/teams`: its two POST verbs send a chat message and a
+channel reply AS ANDREW. This is Andrew's word, not a widening of the other two prefixes.
+- Send approval lives in the caller (LDO-001's reply-of-1 from Andrew), never in the route.
+- The bearer's only holder is that caller.
+
+**Graph scopes.** Chat.ReadWrite, ChannelMessage.Read.All and ChannelMessage.Send on MS_INGEST_IDENTITY. They were not
+read at release.
+- The two GET reads (`me`, `chats`) passed at OG-rl-3's ht.AC3.
+- The two POST verbs stay UNEXERCISED until the first real send, which is Andrew's first End of Day post.
+- A 502 carrying `graph_status` 403 is a missing scope. That is a row to Andrew, not a code change.
+
+**Sign-off.** CONTRACTS text changes and ENDPOINT does not. The ratified-text half re-opens for `3.0.0_SA_CVO~O`.
+- **Disclosed defect.** Round 12's enrichment list (item 2) requires a CVO never-widen half for any capability
+  change. OG-rl-3 adds a served surface with write verbs, and it ran on the CTO and COO halves only. This seat's
+  ruling named only its own half, so the omission is this seat's.
+- **Remedy.** The CVO grades the live release post hoc against `4231bd2ddc` and this addendum. A REFUSED half
+  routes the rollback named in the ruling (redeploy `3a7d6a7dc8`; revert the IAM ARN and the ALB path).

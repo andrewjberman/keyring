@@ -6165,6 +6165,493 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "Not measured: whether the served gold was built before the barrons dict shape appeared, or whether silver_latest/the barrons silver writer changed. Issuer to rule where the unwrap lives (silver writer, or a verbatim-text rule in the builder)."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S66",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-02T17:25Z",
+      "one_line": "NopeCHA no longer offers hCaptcha solving in any measured form, so the approved option A (NopeCHA browser extension for the unattended ft sign-in) is very unlikely to work. The Token API is discontinued (error 19), the hCaptcha recognition endpoint rejects requests as an 'outdated format', and NopeCHA's current API reference names no hCaptcha at all.",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "2026-10-02 17:19:03Z GET api.nopecha.com/status and /v1/status (VEW-1, key from Secrets nopecha/api-key): 200, plan Starter, status Active, credit 2000 / quota 2000, subscribed, current_period_end 1791774195 (2026-10-31); no solver-type list",
+          "2026-10-02 17:19:59Z POST api.nopecha.com/v1/recognition/hcaptcha (3 NopeCHA demo images): 400 {error 10, 'Invalid request', 'You are using an outdated format for hCaptcha. Please refer to the API documentation (https://nopecha.com/api-reference/#postPopularcaptcha)'}",
+          "nopecha.com/api-reference read 17:2xZ: types covered are AWS CAPTCHA, FunCAPTCHA, GeeTest, Lemin, reCAPTCHA (v2/v3), Text CAPTCHA, Cloudflare Turnstile; no hCaptcha; no 'popularcaptcha' section exists",
+          "row AMGT_HARVST-Z-W92-S18: nopecha.Token.solve error 19 'This API endpoint has been discontinued' (13:15Z)",
+          "org/tier1_exec/4.0.0_SA_CRO/scripts/ft_harvest_session.py:181-192 (2026-09-11): the NopeCHA browser-extension route 'never demonstrably activated' against a live hCaptcha (empty service_workers/background_pages)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Andrew-direct ~16:47Z approved open-calls option A+B: (A) the NopeCHA browser extension for the unattended ft sign-in; aj-6 re-pointed to it (@bd232ecca9).",
+      "world_is": "The NopeCHA account is live (Starter, 2000 credits, renews 2026-10-31), but hCaptcha is absent from its product. aj-6's stage-1 build (~90) makes no ft request; stage 2 (live sign-in) is NOT started. Option B (Andrew's hand-solved sign-in) is live: FTSession_s saved 17:01Z, and the aj-4 2 h keep-alive run started 17:02Z.",
+      "notes": "Put to Andrew in-session 17:2xZ: the unattended route needs another vendor (to be verified from public docs first; each is a new vendor needing his word), hand-solved sessions, or Ocilar (re-check due 2026-11-01, comp-schedule C6). Whether to cancel the NopeCHA renewal is his call. The issuer's recommendation of A rested on an unverified assumption that the extension still worked."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~92",
+      "surfaced_at": "2026-10-02T17:30Z",
+      "id": "AMGT_HARVST-Z-W92-S20",
+      "one_line": "aj-4: with the keep-alive firing every ~3.3 min (6 keepalive_page_load events, all logged_in, 200), the hand-solved ft session still died 24 min after sign-in (job ends 401 sign_in_refused), against the 120 min the order needs.",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Order aj-4 / round-36 ruling 5: a keep-alive article page load every session_keepalive_seconds (180 s) holds FTSession_s for >= 120 min with 0 renewals (the round-36 probe held 54 min with a load every 8 min).",
+      "world_is": "Sign-in by Andrew's hand: identity cookie FTSession_s set 17:00:37Z, vault saved 17:01:01Z (aj4_signin_hand.json). Collector job 20261002T170219Z-ft-969b227cd0 (ASML, --no-sign-in) started 17:02:19Z, fetched 65 keys, 1 stored. Run-record events: keepalive_page_load at 17:05:53, 17:09:14, 17:12:36, 17:16:07, 17:19:21, 17:22:33 (gaps 201/202/211/194/192 s; url_kind article, logged_in true on every one). events.jsonl shows the last ft /content 200 at 17:25:01Z; the job ended 17:25:05Z status sign_in_refused, detail '401 under --no-sign-in: no refresh'. Time from sign-in: 24m04s (24m28s from the cookie); the last keepalive_page_load before the death was 17:22:33Z, 21m32s after sign-in and 2m32s before the 401. auth_refreshes 0. Per order step 4 the run stopped and no second sign-in was made. The keep-alive fires and is recorded (the event half of AC2 is met) but did not hold the session: AC2 FAIL on status sign_in_refused and span 23 min < 120. Same collector, same account as the round-36 attempt (died at 74m45s with no keep-alive load); 3 of the 4 ft sessions measured so far lived 10-75 min.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~92/aj4_ft_keepalive.json",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~92/aj4_signin_hand.json",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~92/aj4_ac2_output.txt",
+          "lib/opal_data_harvest/contracts.json:48"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Not measured: whether the death is a server-side lifetime cap on an hCaptcha-solved session independent of activity, a bot-signal revocation, or tab-side (the keep-alive page load happens in the collector's tab, the vault cookie is not refreshed). Not tested: any other keep-alive shape. The issuer/CTO decide the next act."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~90",
+      "surfaced_at": "2026-10-02T17:28Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W90-S18",
+      "one_line": "aj-6: Chrome 154 ignores --load-extension and --disable-extensions-except blocks the extension, so the order's launch-argument route loads nothing; the build loads it through CDP Extensions.loadUnpacked instead.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Order aj-6 item 2: the module returns the Chrome launch arguments that load the extension (--load-extension, --disable-extensions-except).",
+      "world_is": "Installed Chrome is 154.0.8037.97 (branded). Measured in a scratch profile with the prepared extension: with --load-extension + --disable-extensions-except + --disable-features=DisableLoadExtensionCommandLineSwitch, headed and headless, context.service_workers stayed empty and chrome://extensions showed no extension. With only --enable-unsafe-extension-debugging, CDP Extensions.loadUnpacked (via ctx.browser.new_browser_cdp_session()) returned id dknlfmjaanfblgfdfebhijalfmhmjjjo, chrome-extension://<id>/manifest.json answered 200 and the service worker ran; adding --disable-extensions-except made the same URL answer ERR_BLOCKED_BY_CLIENT. nopecha_extension.launch_args() still returns the three requested flags (plant (i) pins them, plus the debugging switch); cdp_launch_args() + load_unpacked() is the route the stage-2 harness uses. A stage-2 run on launch_args() alone would show an unsolved challenge and extension.id null in aj6_signin_ext.json, not a silent pass.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/nopecha_extension.py (launch_args, cdp_launch_args, load_unpacked)",
+          "lib/opal_data_harvest/test_aj6_nopecha_extension.py::test_i_cdp_launch_args_never_carry_the_disable_except_flag"
+        ]
+      },
+      "notes": "Not measured: whether a CDP-loaded unpacked extension leaves an entry in the ft profile's Preferences that a later keepalive launch (no extension) sees disabled. The issuer should read that before stage 2 shares the profile with aj-4's collector."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~90",
+      "surfaced_at": "2026-10-02T17:28Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W90-S19",
+      "one_line": "aj-6: NopeCHA's official extension release is NopeCHALLC/nopecha-extension (the nopecha.com/github/release redirect target), not the NopeCHA/NopeCHA org repo; 0.6.1 (stable) was taken over the newer 0.6.2-rc.2 prerelease.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Order aj-6 item 1: the extension comes from NopeCHA's own official GitHub release or the Chrome Web Store CRX.",
+      "world_is": "https://nopecha.com/github/release answers 302 to https://github.com/NopeCHALLC/nopecha-extension/releases. The org repo NopeCHA/NopeCHA is listed under the NopeCHA org but its releases API and release page answer 404. Releases: 0.6.2-rc.2 (prerelease, 2026-08-20), 0.6.1 (2026-06-11), 0.6.0, 0.5.6. Taken: 0.6.1 chromium_automation.zip, sha256 92ebe154bd34433b4a36e6b2df33006fa6acb19a1b81031a0acb5b72be5e025a, equal to GitHub's own asset digest. The automation build has no popup and takes its settings, including the key, from the nopecha object in manifest.json (developers.nopecha.com/guides/extension_advanced). Full record: deliverables/0.9.0_WK_AMGT_HARVST~90/aj6_extension_source.md.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~90/aj6_extension_source.md"
+        ]
+      }
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~90",
+      "surfaced_at": "2026-10-02T17:28Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W90-S20",
+      "one_line": "aj-6: stage 1 ran a key-bearing extension in a SCRATCH Chrome profile (no ft request) to measure the loader; the extension's own solve behaviour on a live hCaptcha is unproven until stage 2.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Order aj-6 stage 1: build and plant; no ft request and no live sign-in.",
+      "world_is": "To learn which loader works on Chrome 154 (row S18) the worker launched Chrome 154 three times on a throwaway profile under .scratch, with the prepared extension (the real key read from Secrets nopecha/api-key, in the prepared manifest in the runtime cache only) and navigated only to about:blank, chrome://extensions and the extension's own manifest.json. No ft.com, hcaptcha.com or Bloomberg page was loaded, no Python-side call to NopeCHA was made, and nopecha.Token was never imported. The extension itself may have contacted NopeCHA's servers at start-up (VEW-1 covers NopeCHA egress); that traffic was not captured. What is NOT shown: that the extension clears a live FT hCaptcha. Plants and the smoke prove loading, key placement and no Token API use only.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/nopecha_extension.py",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~92/aj6_signin_ext.py"
+        ]
+      }
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~90",
+      "surfaced_at": "2026-10-02T18:12Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W90-S21",
+      "one_line": "aj-6 stage 2: the NopeCHA extension (0.6.1, loaded and running) did NOT clear the ft hCaptcha in 150 s; no identity cookie, nothing saved; the sign-in was not input-quiet (7042 hardware events).",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Order aj-6 / AC2: one unattended ft sign-in whose hCaptcha the NopeCHA browser extension solves (challenge_presented then challenge_passed, FTSession_s saved, hardware_input none, 0 Token API, 0 Kimi).",
+      "world_is": "Attempt 1 of at most 2 (attempt 2 not taken: it failed after a challenge was presented, not at launch), 2026-10-02 18:06:57Z-18:09:48Z, headed, ft profile free beforehand (0 chrome on it, no SingletonLock). Extension id dknlfmja... loaded via CDP loadUnpacked, service worker seen, persisted in the ft profile's Secure Preferences (location 4, path <runtime>/extensions/nopecha/prepared); Preferences holds no extensions entry. Email and credentials submitted, hCaptcha frame presented at 18:07:12Z, still present at 150 s (challenge_failed); END identity=False, 71 cookies, none FTSession/FTSession_s, rc=1, nothing saved to the vault. nopecha_token_api_calls 0, kimi_vision_calls 0, python-side calls to NopeCHA/Kimi 0. Whether the extension made any solve request to nopecha.com from inside the browser is NOT OBSERVED (the harness has no browser-network capture). hardware_input read detected:7042 (0 injected) so the machine was not input-quiet and the run could not have claimed unattended even if solved. Consistent with row Z-S66 (NopeCHA's current API documents no hCaptcha). AC2 literal: rc 1, FAIL (4 failures: solved_by nopecha_extension_failed, hardware_input detected:7042, no FTSession_s saved, no presented-then-passed). Record: deliverables/0.9.0_WK_AMGT_HARVST~92/aj6_signin_ext.json.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~92/aj6_signin_ext.json",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~90/aj6_ext_run1_log.txt",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~90/aj6_ac2_output.txt"
+        ]
+      }
+    },
+    {
+      "id": "AMGT_HARVST-Z-S67",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-02T19:52Z",
+      "one_line": "Silver record_hash is not a pure content version: it hashes every column except bronze_key, fetched_at and record_hash, and run_stamp (set from fetched_at) is one of them. So FWD-16's 'scored once per version, keyed to record_hash' re-scores a re-fetched article whose text did not change.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/research/harvest/store.py:38,330-334 (record_hash = sha256 over all columns but bronze_key, fetched_at, record_hash)",
+          "lib/opal_data_harvest/silver_from_bronze.py:289 (run_stamp is a silver column)",
+          "lib/opal_data_harvest/uploads.py:250,526 (run_stamp set from fetched_at)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "PRD v0.15 FWD-16: scores 'keyed to the article's record_hash so a re-silvered article is re-scored and an unchanged one never is'.",
+      "world_is": "Every re-fetch writes a new silver row with a new run_stamp, so a new record_hash, even when title and text_blocks are byte-identical. ak-1 follows the letter and keys the score store on record_hash. FinBERT is deterministic, so the tone read is unchanged; only the Lambda call is spent.",
+      "notes": "Not a defect in FWD-16's reading: a re-silvered article IS re-scored. Measure the cost at the corpus scoring as the share of record_hashes whose text_sha256 was already scored. If it is material, an issuer amendment reuses a score by text_sha256 and records reused_from."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S68",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-02T20:12Z",
+      "one_line": "3 HARVST tests in lib/research/harvest/tests/test_timeline_day_read_path.py fail at CLOUD HEAD. They pin the /timeline/day SILVER read path (HVST-n-6) that RESAPP am-1 removed by design @59c2ef1b23, when the headline moved to gold. The tests are stale, and the route is not broken.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "python -m pytest lib/research/harvest -q at CLOUD @f175fbeb99: 294 passed, 3 failed, all 3 in tests/test_timeline_day_read_path.py (body byte-equal across the read-path change; new path reads only the day's publishers; warm process reads no object twice)",
+          "ak-2 worker (~92) measured the same failures before its change (5 failed, 283 passed at its base), so ak-2 did not cause them",
+          "59c2ef1b23 (0.9.0_WK_AMGT_RESAPP~204): the day route serves headline and published_precision from the GOLD mention row; the request-time silver read is removed (CTO track-C ruling msg 28509)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Each round keeps the HARVST research suites green, and a red suite reads as a defect.",
+      "world_is": "The suite is red on 3 tests whose subject (the silver read at request time) no longer exists by ruling. Every round-38 cell reports a 3-failure baseline.",
+      "notes": "Remedy: retire or rewrite the 3 tests against the gold read path. They are HARVST's file over a RESAPP route, so the write surface is HARVST's tests and RESAPP's route is untouched. Batched into the round's repair cell; not a new outcome."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W90-S22",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~90",
+      "surfaced_at": "2026-10-02T21:08Z",
+      "one_line": "ak-4's rule (daily coverage graded over GRADED_PUBLISHERS, ft excluded) turns 4 existing research tests red: they assert the graded set is ENABLED_PUBLISHERS (5 codes incl. ft). The 4 sit in tests/ files outside ak-4's <paths>, so the worker could not update them.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Order HVST-ak-4 section 1 item 5: the research suites stay green except the 3 known stale tests (row Z-S68). Item 1: every place that grades daily coverage or writes publishers_enabled uses GRADED_PUBLISHERS = ENABLED_PUBLISHERS minus the quarantined ones.",
+      "world_is": "python -m pytest lib/research/harvest -q: BEFORE the change 5 failed, 304 passed (m1_move, m2_move: FileNotFoundError on integrations/bloom... in the sparse cone; plus the 3 Z-S68 timeline tests). AFTER: 9 failed, 311 passed (304 - 4 + 11 new plants). The 4 new failures follow directly from item 1 and each pins ft as a graded publisher: tests/test_o1_run_record_coverage.py::test_a_successful_zero_article_job_reads_searched_on_its_reached_days (publishers_enabled 4 != len(ALL)=5), ::test_every_publisher_reaching_a_day_reads_complete (covered codes no longer list ft, ALL = gold.ENABLED_PUBLISHERS), tests/test_publication_gold_daily.py::test_row_carries_its_coverage_denominator (4 == 5), ::test_daily_row_carries_publishers_covered_codes_in_enabled_order (ft missing from the expected order). Those files are not in the order's <paths>; the worker left them untouched. The 5 pre-existing failures are unchanged.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/research/harvest/publication_gold.py daily_rows: covered and publishers_enabled now read GRADED_PUBLISHERS",
+          "lib/research/harvest/tests/test_o1_run_record_coverage.py line ~33 (ALL = gold.ENABLED_PUBLISHERS) and the publishers_enabled == len(ALL) asserts",
+          "deliverables/0.9.0_WK_AMGT_HARVST~90/research-suite.before.txt and research-suite.after.txt"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Remedy: an issuer amendment adds the two test files to a cell's <paths> so ALL becomes gold.GRADED_PUBLISHERS (a one-token change per test). The suite counts in the ak-4 proof read the 4 as ak-4-caused, not stale."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S69",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-02T21:35Z",
+      "one_line": "RESOLVED by its disarm_owner: AMGT_HARVST-Z-W90-S22. The 4 research tests that pinned ENABLED_PUBLISHERS as the graded set now read GRADED_PUBLISHERS (ak-4's rule: ft is quarantined, so daily coverage is graded over 4 publishers). This is an issuer direct act on 2 test files.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/research/harvest/tests/test_o1_run_record_coverage.py:31 and tests/test_publication_gold_daily.py:284,366,372: gold.ENABLED_PUBLISHERS -> gold.GRADED_PUBLISHERS",
+          "python -m pytest lib/research/harvest -q at the base after ak-4's merge @eff5c79d35 plus this edit: 317 passed, 3 failed. The 3 are the Z-S68 timeline-day tests, unchanged; the 4 Z-W90-S22 tests pass"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "HVST-ak-4: daily coverage is graded over GRADED_PUBLISHERS = ENABLED_PUBLISHERS minus the quarantined publishers.",
+      "world_is": "The builder and its tests agree. ENABLED_PUBLISHERS still names ft, because the bytes are kept and the collector's set is unchanged; only the graded set drops it.",
+      "notes": "Direct act under the size floor (LOCAL, 2 test files, 4 lines). The Z-S68 stale timeline tests stay with the round's repair item."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S70",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-02T23:05Z",
+      "one_line": "DISARMED by its disarm_owner: AMGT_HARVST-Z-W9-S1. Both HarvestUploader silver_append call sites now go through the suffix-retry wrapper, so a second-precision run_stamp collision no longer loses a part.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "listings: adc9d85b92, lib/opal_data_harvest/uploads.py:337-385 via _silver_append_retrying_object_name",
+          "articles: d5ef6e6371 (HVST-ai-5), uploads.py:277-309, same wrapper; LegacyUploader covered at :540"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "CTO msg 28792: the 10 ARMED HARVST rows left after 3.0.0_SA_CVO~Z's REMEDIATION_v5 (@41be202aa5) are this seat's to disarm on evidence or place in round 39; none is carried a third time.",
+      "world_is": "Read at CLOUD HEAD 56eaa6d500 against the cited code; every cited fix commit is an ancestor of HEAD.",
+      "notes": "Disposition per CTO 28792 by the issuer. The read-only assessment was run 2026-10-02 ~22:4xZ."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S71",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-02T23:05Z",
+      "one_line": "DISARMED by its disarm_owner: AMGT_HARVST-Z-W11-S1. The tool owner fixed it: missions-tree-index reads the project rows outside a sparse cone from the git index, so a sparse worker cone no longer produces false orphans.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "651f750a5a (1.0.0_SA_CTO~Z, 2026-09-27): .tools/missions-tree-index.py:191,194-219 _index_only_projects (git ls-files)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "CTO msg 28792: the 10 ARMED HARVST rows left after 3.0.0_SA_CVO~Z's REMEDIATION_v5 (@41be202aa5) are this seat's to disarm on evidence or place in round 39; none is carried a third time.",
+      "world_is": "Read at CLOUD HEAD 56eaa6d500 against the cited code; every cited fix commit is an ancestor of HEAD.",
+      "notes": "Disposition per CTO 28792 by the issuer. The read-only assessment was run 2026-10-02 ~22:4xZ."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S72",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-02T23:05Z",
+      "one_line": "DISARMED by its disarm_owner: AMGT_HARVST-Z-S23. The resolver that counts reads REMEDIATION rows by id plus a structured disarm state. The prose cited-by-a-later-row census this row proposed is retired, so its self-contamination has no reader.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          ".tools/surprise-row-gate.py:440 _latest_dispositions (id match, not prose)",
+          "Z-S26 retired the proposed remedy; REMEDIATION_v5 @41be202aa5 carries a structured disarm.state per row"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "CTO msg 28792: the 10 ARMED HARVST rows left after 3.0.0_SA_CVO~Z's REMEDIATION_v5 (@41be202aa5) are this seat's to disarm on evidence or place in round 39; none is carried a third time.",
+      "world_is": "Read at CLOUD HEAD 56eaa6d500 against the cited code; every cited fix commit is an ancestor of HEAD.",
+      "notes": "Disposition per CTO 28792 by the issuer. The read-only assessment was run 2026-10-02 ~22:4xZ."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S73",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-02T23:05Z",
+      "one_line": "DISARMED by its disarm_owner: AMGT_HARVST-Z-W22-S2. On the row's own option (a): the live paths run one job per invocation, and a dropped connection or timeout is retried twice, so one slow body no longer cools the publisher for a whole batch.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "3669bd0f0a: lib/opal_data_harvest/transport.py:137,382-392 (two retries on a dropped connection or timeout)",
+          "4901fd709b: backfill_driver.py:179 --max-jobs 1 and :299 waits out the cooldown; run-local.ps1 and install-schedule.ps1 default MaxJobs=1",
+          "Residual only for a manual --max-jobs N>1 (worker.py:466-474,757), which no live path uses"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "CTO msg 28792: the 10 ARMED HARVST rows left after 3.0.0_SA_CVO~Z's REMEDIATION_v5 (@41be202aa5) are this seat's to disarm on evidence or place in round 39; none is carried a third time.",
+      "world_is": "Read at CLOUD HEAD 56eaa6d500 against the cited code; every cited fix commit is an ancestor of HEAD.",
+      "notes": "Disposition per CTO 28792 by the issuer. The read-only assessment was run 2026-10-02 ~22:4xZ."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S74",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-02T23:05Z",
+      "one_line": "DISARMED by its disarm_owner: AMGT_HARVST-Z-W26-S1. All string patch targets in the harvest tests moved to patch.object, so no test silently patches a module copy that is not the one under test.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "58135da029 (drained 03e86f2909): 8 string patch targets -> patch.object",
+          "CLOUD HEAD 56eaa6d500: 0 patch(\"lib.opal_data_harvest...\") strings; the 3 lib.research string patches import lib.* absolutely (the same module object, Z-W34-S1)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "CTO msg 28792: the 10 ARMED HARVST rows left after 3.0.0_SA_CVO~Z's REMEDIATION_v5 (@41be202aa5) are this seat's to disarm on evidence or place in round 39; none is carried a third time.",
+      "world_is": "Read at CLOUD HEAD 56eaa6d500 against the cited code; every cited fix commit is an ancestor of HEAD.",
+      "notes": "Disposition per CTO 28792 by the issuer. The read-only assessment was run 2026-10-02 ~22:4xZ."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S75",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-02T23:05Z",
+      "one_line": "DISARMED by its disarm_owner: AMGT_HARVST-Z-W29-S1. On the row's second option: one pinned, committed universe file is the cited --securities-json source, and the ~4 file is historical only.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "78aac97ada: deliverables/2.0.0_SA_COO_H/round33/securities.universe.r33.json (212 names), used by rebuilds #5 and #6 (round38/gold_rebuild6.act.py UNIVERSE_R33)",
+          "lib/research/harvest/publication_gold.py:1598 requires an explicit --securities-json"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "CTO msg 28792: the 10 ARMED HARVST rows left after 3.0.0_SA_CVO~Z's REMEDIATION_v5 (@41be202aa5) are this seat's to disarm on evidence or place in round 39; none is carried a third time.",
+      "world_is": "Read at CLOUD HEAD 56eaa6d500 against the cited code; every cited fix commit is an ancestor of HEAD.",
+      "notes": "Disposition per CTO 28792 by the issuer. The read-only assessment was run 2026-10-02 ~22:4xZ."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S76",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-02T23:05Z",
+      "one_line": "DISARMED by its disarm_owner: AMGT_HARVST-Z-W8-S2. INERT-HISTORICAL: the mechanical-only ids invocation lived only in h-8, which is complete. The completion gate passes no ids, and the worker agent definition requires the full criterion set.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          ".tools/proof-of-spec-check.py:530-541 coverage_check is unchanged and works as designed",
+          ".tools/to-pipeline-gate.py:3041 calls the checker without an ids list; .claude/agents/worker.md:62-63 requires the full <expected_criteria>",
+          "No HARVST order since round aa passes an ids list"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "CTO msg 28792: the 10 ARMED HARVST rows left after 3.0.0_SA_CVO~Z's REMEDIATION_v5 (@41be202aa5) are this seat's to disarm on evidence or place in round 39; none is carried a third time.",
+      "world_is": "Read at CLOUD HEAD 56eaa6d500 against the cited code; every cited fix commit is an ancestor of HEAD.",
+      "notes": "Disposition per CTO 28792 by the issuer. The read-only assessment was run 2026-10-02 ~22:4xZ."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S77",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-02T23:05Z",
+      "one_line": "DISARMED by its disarm_owner: AMGT_HARVST-Z-W30-S1. INERT-HISTORICAL: the only `git -C . diff -- portal/...` criterion is in HVST-y-3, which is complete. Any future portal criterion is written `git -C portal diff -- <rel>` with a positive control.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "No other HARVST order diffs a portal path at CLOUD HEAD 56eaa6d500"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "CTO msg 28792: the 10 ARMED HARVST rows left after 3.0.0_SA_CVO~Z's REMEDIATION_v5 (@41be202aa5) are this seat's to disarm on evidence or place in round 39; none is carried a third time.",
+      "world_is": "Read at CLOUD HEAD 56eaa6d500 against the cited code; every cited fix commit is an ancestor of HEAD.",
+      "notes": "Disposition per CTO 28792 by the issuer. The read-only assessment was run 2026-10-02 ~22:4xZ."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S78",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-02T23:05Z",
+      "one_line": "ROUTED: AMGT_HARVST-Z-S11. LIVE in another seat's tool: proof-of-spec-check's invocation-alignment limb still compares the recorded string to the order's string and never parses the recorded command. It is routed to the checker's owner, 1.0.0_SA_CTO: a limb that parses each recorded invocation (shlex / bash -n) and refuses &amp;-type entities. The COO keeps its one-writer discipline on criteria meanwhile.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          ".tools/proof-of-spec-check.py:1441-1484 invocation_alignment_check (string compare only); the only shlex use is _bun_test_call :1771",
+          "Owner inferred from authorship (76ee261895 and most commits are 1.0.0_SA_CTO); the file header names no owner"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "CTO msg 28792: the 10 ARMED HARVST rows left after 3.0.0_SA_CVO~Z's REMEDIATION_v5 (@41be202aa5) are this seat's to disarm on evidence or place in round 39; none is carried a third time.",
+      "world_is": "Read at CLOUD HEAD 56eaa6d500 against the cited code; every cited fix commit is an ancestor of HEAD.",
+      "notes": "Disposition per CTO 28792 by the issuer. The read-only assessment was run 2026-10-02 ~22:4xZ."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S79",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-02T23:05Z",
+      "one_line": "PLACED: AMGT_HARVST-Z-W91-S10. PLACED as a round-39 LOCAL cell (no collection): record a 200 listing with 0 parseable hits as a distinct status (listing_empty_200) instead of 'no articles', proved with a planted page. Live proof against a real barrons soft-block waits on the publisher-terms card (barrons collection is held).",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/publishers.py:1155-1164 discover and :1008-1016 still read a 200 with no hits as no articles; barrons still uses /search (discovery.py covers wsj and bbg only)",
+          "Z-S52 ruled it INERT; REMEDIATION_v5 holds it OPEN"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "CTO msg 28792: the 10 ARMED HARVST rows left after 3.0.0_SA_CVO~Z's REMEDIATION_v5 (@41be202aa5) are this seat's to disarm on evidence or place in round 39; none is carried a third time.",
+      "world_is": "Read at CLOUD HEAD 56eaa6d500 against the cited code; every cited fix commit is an ancestor of HEAD.",
+      "notes": "Disposition per CTO 28792 by the issuer. The read-only assessment was run 2026-10-02 ~22:4xZ."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S80",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-02T23:25Z",
+      "one_line": "DISARMED by its disarm_owner: AMGT_HARVST-Z-S11. The checker's owner fixed it: proof-of-spec-check now compares invocations in their runnable (decoded) form, so an escaped invocation aligns and is NOTED as not runnable as written.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "9edfeae04d (1.0.0_SA_CTO~Z): .tools/proof-of-spec-check.py decodes the order's markup and the record (the five XML entities plus numeric references, semicolon required) before the invocation-alignment compare; self-test 48/48; 8 real entity-carrying instances read VALID before and after (CTO msg 28796)",
+          "routed by row AMGT_HARVST-Z-S78"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "CTO msg 28792: each ARMED HARVST row is disarmed on evidence or placed in round 39.",
+      "world_is": "Z-S11's hazard (agreement certified, never runnability) is closed in the checker. 664 legacy escaped records in 247 of 1,717 proof files stay VALID and are noted, never refused.",
+      "notes": "The CTO accepted the other 8 dispositions (Z-S70..Z-S77) and W91-S10's round-39 placement (Z-S79). The census flip awaits the CVO's adjudication."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S81",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-02T23:50Z",
+      "one_line": "RESOLVED by its disarm_owner: AMGT_HARVST-Z-S68. 2.0.0_SA_COO~Z repaired the 3 stale timeline-day tests (they pinned the silver read path RESAPP am-1 removed) @949b24cadb; the research suite reads 334 passed, 0 failed.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "949b24cadb (2.0.0_SA_COO~Z): repair(AMGT_RESAPP round 63 am-1 regression): lib/research/harvest/tests/test_timeline_day_read_path.py",
+          "python -m pytest lib/research/harvest -q at CLOUD ~23:45Z: 334 passed in 1.79s"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Each round keeps the HARVST research suites green.",
+      "world_is": "Green: 0 failed across lib/research/harvest.",
+      "notes": "No round-39 cell needed; folded into decomposition section 52."
     }
   ]
 ```

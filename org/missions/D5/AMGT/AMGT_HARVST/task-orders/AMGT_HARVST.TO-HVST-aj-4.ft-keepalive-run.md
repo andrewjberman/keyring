@@ -29,9 +29,10 @@ Round 36, ai-2 attempt 3 (records `deliverables/0.9.0_WK_AMGT_HARVST~92/ai2_atte
    `{"event": "keepalive_page_load", "publisher": "ft", "at": <utc iso>, "url_kind": <home|article>, "logged_in": <bool>}`
    into the job's run record `events`. Plant it in `lib/opal_data_harvest/test_aj4_keepalive_event.py` with a stub
    tab and no network. A mutant that skips the record fails the plant.
-2. **Sign-in (AMENDED 13:1xZ, Andrew-direct ~13:08Z):** ONE ft sign-in through the existing path, UNATTENDED. Its
-   hCaptcha is solved through the existing NopeCHA path, which is permanently whitelisted. Kimi and the vision
-   fallback stay barred. Record the NopeCHA call count and the challenge outcome in the sign-in record.
+2. **Sign-in (RE-AMENDED 16:4xZ, Andrew-direct ~16:47Z, option B):** ONE HEADED ft sign-in through the existing
+   path, with ANDREW at the site-Z terminal solving the hCaptcha BY HAND. The NopeCHA Token API is discontinued (row
+   Z-W92-S18), so there are 0 solver calls of any vendor. Wait up to 15 min for his solve, and record it as human-hand
+   in the sign-in record (`solved_by` "andrew_hand"). The unattended route is option A, cell aj-6.
 3. **Run at least 120 minutes:** the real collector on ft names in driver order, from your worktree, with
    `--runtime-root "C:/Users/Opal Bloomberg/Desktop/ajb_workspace/.runtime/opal-data-harvest"`, mirroring the driver's
    job invocation. Use Bash `run_in_background` per job and commit progress at least every 30 minutes. Write
@@ -67,9 +68,20 @@ Andrew. The instrument step (1) may be cut to a worker ahead of the GO; the sign
 Status: `staged` until Andrew is present. AMENDED 13:1xZ: Andrew permanently whitelisted NopeCHA for egress (record
 above), so the sign-in no longer waits on his hand. The order goes `pending` and runs now.
 
+**CANCELLED 2026-10-02 ~18:1xZ (issuer flip; precedent ai-2):** step 2 was re-amended to Andrew's hand-solved sign-in
+(option B, Andrew-direct ~16:47Z). FTSession_s was saved 17:01Z and the run started 17:02Z.
+- AC1 PASS.
+- AC2 FAIL: the session got a 401 (sign_in_refused) at 17:25:05Z, 24m04s after the sign-in, despite 6 keepalive_page_load
+  events about 3.3 min apart, all logged_in.
+Row Z-W92-S20 carries it; the records were merged @1e6610290e.
+
+The keep-alive does NOT hold an ft session: two hand-solved sessions died at about 75 min and at 24 min. FWD-11's ft
+limb therefore needs an unattended re-sign-in, which depends on a working hCaptcha solver (aj-6 stage 2; row Z-S66). The
+round-37 drain-end packet carries it. ft stays OFF (STOP_FT).
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>cancelled</status>
 <round>37</round>
 <slot>~92</slot>
 <fabric>site-z</fabric>

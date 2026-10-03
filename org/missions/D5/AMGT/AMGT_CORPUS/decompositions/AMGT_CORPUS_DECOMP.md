@@ -1,42 +1,77 @@
-# AMGT_CORPUS -- L5 decomposition v31.0 -- ROUND 31 (one page-only wording cell, the issuer's DIRECT ACT)
+# AMGT_CORPUS -- L5 decomposition v33.0 -- ROUND 33 (Z-S81: the percent family decided by a ground, never by magnitude)
 
-**Issuer:** `2.0.0_SA_COO~X`, 2026-10-01 ~10:2xZ. **Source:** `1.0.0_SA_CTO~Z`'s round-30 analysis
-`ledger/ROUND_ANALYSIS.round30.md` @`500c40ecb2` (msg 27740, READ-acked): round 30 CLOSED; ruling 1 = round 31. Round 30's
-decomposition is kept as `AMGT_CORPUS_DECOMP.round30.md`. Base: portal DEV `788afb2e`.
+**Issuer:** `2.0.0_SA_COO~X`, 2026-10-02 ~16:5xZ.
+
+**Source:** `1.0.0_SA_CTO~Z` round-32 analysis `ledger/ROUND_ANALYSIS.round32.md` @`ac45eeeef8`, which closes round 32.
+- **Enrichment list:** 1 item, Z-S81 per rulings 1 and 2.
+- **Ruling 1:** each mnemonic is decided by a GROUND. EQY_DVD_YLD_IND reads against EQY_DPS / PX_LAST. The returns and the margin
+  read their statement inputs, or the series-median rule where a series exists. Where no ground exists, the label becomes
+  UNRESOLVED, not DECIMAL.
+- **Ruling 2:** the act shape copies ah-3 -- a dry run over every key, the per-key map diff, a scoped remeasure, negative arms,
+  and the reach named in the COO half.
+- **Ruling 3:** the disarm owner is this seat; the CTO half is owed on the dry run.
+
+Round 32's decomposition is kept as `AMGT_CORPUS_DECOMP.round32.md`. Base: CLOUD `a0a7214220`.
 
 ## 0. What this round IS
 
-| # | item | cell | path | FWD |
+| # | item | cell | path | risk |
 |---|---|---|---|---|
-| 1 | Nothing on the Model tab presupposes a research pack (the round-30 footer treatment) | `CRPS-ag-1` | **DIRECT ACT** (LOCAL, one file, 5 lines) | 12, 15 |
+| 1 | The ground reads in `build_unit_map` for a percent-family value under the 0.3 line | `CRPS-ai-1` | **DIRECT ACT** | LOCAL |
+| 2 | A scoped remeasure of the 11 DECIMAL-labelled names, ONE re-derive each, and their dossiers | `CRPS-ai-2` | the issuer's paired act after ai-1 | SERVED |
 
-After this, CORPUS's Friday face is done (analysis s.1-3). After Friday: the BEST_DIV_YLD producer label, Z-S74, FWD-20's 49 rows
-and FWD-22, on Andrew's words.
+There is one chain, `ai-1 -> ai-2`: ai-2's map reads ai-1's code.
 
-## 1. The cell, as done
+## 1. Measured at the cut (`build_unit_map.load_raw_for_key` per name, `series_median_abs`, the map entries; read 16:4xZ)
 
-Portal `c6aacc68` (`ModelTab.tsx`), local DEV fast-forwarded 788afb2e -> c6aacc68. A census of every visible "pack" string the tab
-can print (11 hits in source) found three classes of presupposition, all reworded:
-- the growth-rows line: "the model block serves none";
-- the refused-row sentences: "Served, but ..." and "No number is served for this line; ...";
-- the ABSENT-model history compare: "Earlier versions of the model block held these figures" and "The latest version holds no
-  model ...".
-**Kept on purpose:** "the research team's pack" inside a SERVED team case (the team's workbook is then real and cited).
+| figures | names | the ground | expected label |
+|---|---|---|---|
+| 30 | BP/ LN: RETURN_ON_ASSET, RETURN_COM_EQY, RETURN_ON_TANGIBLE_ASSETS | **the series-median rule (round 26)**. Series medians are 1.33, 3.78 and 1.48. The map entries are single samples from 09-16 (0.0196, 0.0962, 0.0212) that a clean MEASURED entry never re-reads. | PERCENT |
+| 10 | JD_US: OPER_MARGIN | the series median: 1.06 (the entry sampled 0.2119) | PERCENT |
+| 20 | ORA_FP and RWE_GR: RETURN_ON_INV_CAPITAL | the series median: ORA 4.47; RWE's series reads -18.2 .. 4.0 | PERCENT |
+| 13 | HEI, MELI and PWR: EQY_DVD_YLD_IND | **NEW in ai-1:** each fiscal row's own identity, EQY_DPS / PX_LAST, both carried per row. Series medians are 0.13, 0.19 and about 0.3, under the line. | decided by the rows |
+| 4 | AZN, RKT, TTE and ULVR: SI_PERCENT_EQUITY_FLOAT (header only, 0.006 .. 0.020) | **none.** SHORT_INT_RATIO x VOLUME_AVG_30D over the free float gives AZN 4.15% (0.0415) against the served 0.0101, so it reconciles neither way. | **UNRESOLVED** (ruling 1) |
 
-**Graded by `checks/round31/face31.cjs`:** base 2 of 4, after 4 of 4. Its arms:
-- BA served face (the fixture still refuses DPS, so the refused sentence is on it);
-- BA absent face;
-- round 30's face30.cjs 4/4;
-- the k-5 history agreement, re-anchored here.
+So 60 of the 77 need no new rule: they need the remeasure the series rule already implies.
 
-Full page suite 15/16 (posture RED on DEV too); tsc -b rc 0.
+## 2. The cells
 
-**Found:** DSGN's frozen round-14 `modelhistory.cjs` reads 1 of 3 at base. It anchors the pre-round-28 empty sentence "No model
-in the research pack ...", which CRPS-ad-3 replaced. Only that anchor fails; the history framing holds (face31 arm 4). Told to
-`2.0.0_SA_COO~D`, whose drains re-run it as a regression.
+**CRPS-ai-1 (the ground reads).**
+- `classify_unit` gains an optional `hist_rows`, which `build_entries` passes.
+- In the percent branch, for 0 < |v| < 0.3:
+  - BEST_DIV_YLD keeps ah-2's identity.
+  - EQY_DVD_YLD_IND reads its fiscal rows. Each row carrying a non-zero yield, a positive EQY_DPS and a positive PX_LAST is tested
+    against `EQY_DPS / PX_LAST x 100` (PERCENT) and `EQY_DPS / PX_LAST` (DECIMAL) within `RECONCILE_TOLERANCE`, on the same-currency
+    gate.
+  - The label is the hypothesis every computable row agrees on. No computable row, or a split, gives UNRESOLVED with the cause.
+  - Every other percent field under the line gives **UNRESOLVED** ("magnitude under 0.3 does not discriminate percent vs decimal;
+    no ground is defined for <mnemonic>").
+- |v| >= 0.3, an exact zero and the series-median input are unchanged.
+- **AMENDMENT 1 (the issuer, at the act; no gate limb grades a decomposition edit):** the row read is a BAND on the ratio, not
+  `RECONCILE_TOLERANCE`, and it decides by a 2/3 majority with zero votes for the other hypothesis.
+  - Measured on real rows: indicated yield / (FY dividend / FY-end price x 100) reads PWR 1.07 .. 1.18, BA 1.00 .. 1.14 and
+    GOOGL 1.01 .. 1.33, because the indicated yield annualises the current dividend. Against the decimal hypothesis it reads about
+    0.01.
+  - The band is `ROW_YIELD_BAND = (0.5, 2.0)`, which spans 4x against a 100x gap.
+  - IS_DIV_PER_SHR is the second dividend field (FIELD_BASIS "Dividend per share").
+  - HEI and MELI carry no per-share dividend in any row, so they read UNRESOLVED. PWR reads PERCENT on 5 of its 6 computable
+    rows.
+- Check: `checks/round33/ai1_check.py`. At base: build 0/4 + control 4/4 (as expected). The act must reach build 4/4 + control 4/4,
+  with the build_unit_map tests green.
+
+**CRPS-ai-2 (the paired SERVED act).** After ai-1:
+1. A serializing dry run over every key with `--securities <the 11> --remeasure`: HEI, MELI, PWR, JD, ORA, RWE, BP/ LN, AZN, RKT,
+   TTE, ULVR.
+2. The COO half names the dry run's whole reach, every mnemonic of those 11 names, as ah-3 named GOOGL.
+3. The CTO half, owed by `1.0.0_SA_CTO~Z` (ruling 3).
+4. One NEVER-2 entry, `amgt-corpus-r33-ai2`, with the legs ah-3 used: gate, a, b, c, d, v.
+
+The negative arms include a figure whose ground confirms DECIMAL staying DECIMAL. One is printed if the dry run finds one;
+otherwise the arm is named as having no member, with its count.
 
 ## 5. Close
 
-- `fanout: 0 worker chains, cap 3, reason: the one cell is under the size floor and LOCAL -- the issuer's direct act.`
-- **Real run:** BA's Model tab on 5174 once MSTR merges DEV c6aacc68 into the walk checkout. ARM and DISARMED are posted to
-  `0.0.0_AB_MSTR~Z`. The L8 packet then goes to `3.0.0_SA_CVO~Z`.
+- `fanout: 0 worker chains of 1, cap 3, reason: ai-1 is one LOCAL cell under the size floor (the issuer's direct act); ai-2 is the issuer's paired act and spawns no worker.`
+- `checks: ai1 base: build FAIL 0/4 + control PASS 4/4 as expected (checks/round33/ai1_check.py).`
+- **Real run:** ai-2's served census over 100 keys. DECIMAL-by-magnitude must reach 0 for the 77, beside the negative arms. The
+  L8 packet then goes to `3.0.0_SA_CVO~Z`.

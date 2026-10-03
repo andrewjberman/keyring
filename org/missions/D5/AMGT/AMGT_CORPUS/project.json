@@ -9,7 +9,7 @@
   "dep_stage": "EXECUTING",
   "created": "2026-09-22",
   "registered_under_tree": "2026-09-22",
-  "last_updated": "2026-10-02T05:10:00Z",
+  "last_updated": "2026-10-02T19:48:00Z",
   "pods": [
     "1.0.0",
     "2.0.0",
@@ -42,6 +42,18 @@
       "version": "v1.0",
       "round": 1,
       "note": "11 cells CRPS-c-1..11 over manifest R1-R11 (bijection), 5 chains, cut against PRD v0.4 @8fbb066b62; c-5's edge moved c-4 -> c-2 before the cut (s.4)"
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_CORPUS/decompositions/AMGT_CORPUS_DECOMP.md",
+      "version": "v32.0",
+      "round": 32,
+      "note": "3 cells CRPS-ah-1..3 on CTO msg 28540; ah-1/ah-2 direct acts, ah-3 paired SERVED act"
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_CORPUS/decompositions/AMGT_CORPUS_DECOMP.md",
+      "version": "v33.0",
+      "round": 33,
+      "note": "2 cells CRPS-ai-1..2 on the round-32 analysis ac45eeeef8 (Z-S81); ai-1 direct act, ai-2 paired SERVED act"
     }
   ],
   "leads": [
@@ -49,8 +61,8 @@
     "THE BACKLOG POPULATION IS HIS, SEPARATELY. Andrew-direct ~18:3xZ, VERBATIM: 'all of the Research folders in the Opal Sharepoint Shared Asset Management/Research/ subfolder will be the basis for our backfill and initial pool.' Record ANDREW_DIRECT_20260922_183xZ_RESEARCH_FOLDERS_ARE_THE_BACKFILL_BASIS_AND_INITIAL_POOL.md. The folder list is a MEASURED DENOMINATOR (93 at the 2026-09-22 scan), never a transcribed list, and an unresolved folder is printed, never dropped.",
     "SENDING BLOOMBERG MODEL-BLOCK FIGURES TO THE CLAUDE API IS ALLOWED (same record, '3.) That is allowed.') -- this closes the CRO's card 1 for both this project and the addendum."
   ],
-  "phase": "L10 CLOSED (round 31): 1.0.0_SA_CTO~Z round-31 analysis @85df450e8d -- CORPUS's Friday face COMPLETE; ruling 1: no further CORPUS cell before the freeze, the issuance held open for a Friday-walk finding. 0 of 87 task orders non-terminal. The face (portal c6aacc68) is an ancestor of origin PROD b3a1d8a6 (portal-v2.1.193, read 2026-10-02 05:0xZ). 2.0.0_SA_COO~X on /canonical-drive AMGT_CORPUS 30m (LIVE_ARMS row 1.0.0_SA_CTO~Z /self-drive 60m).",
-  "blocking": "None before Friday. Carried after Friday (round-31 analysis s.3): the BEST_DIV_YLD producer label (needs a pair); Z-S74; FWD-20's 49 rows (the V3 pull, on Andrew's word); FWD-22's scheduled re-pull (on Andrew's word).",
+  "phase": "L10 CLOSED (round 33): 1.0.0_SA_CTO~Z round-33 analysis @e55e3b5152 on CVO slug 28698 (v39 @7fa6d519fc) -- the 77 magnitude-guessed labels retired (69 PERCENT, 8 UNRESOLVED, 0 values moved); Z-W4-S6 closed (RESAPP am-8 served). No round 34 until Andrew's vendor word lands; the issuance is held open and the first word is cut the same tick.",
+  "blocking": "A qualified L2 wait on Andrew's vendor word (round-33 analysis s.2): FWD-22's scheduled Model-block re-pull (standing word, PRD B.2), FWD-20's 49 rows (the V3 field set, per-use word), and the earnings-date fields (fold ruling 8 @82d1cb21e2; same pull). Carded at Andrew (/open-calls ~17:3xZ calls 2-3).",
   "threads": [],
   "thread_counter": 0
 }

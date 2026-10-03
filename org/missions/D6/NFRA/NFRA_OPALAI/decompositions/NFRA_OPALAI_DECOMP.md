@@ -568,3 +568,15 @@ loopback-exempt: rows Z-W25-S3, Z-S52). It is a precondition of the item-0 close
 
 Chain: alone, slot `~27` (sparse worktree), nested base r2-dev @0fb3fcb694. It is the seam between OA-f-8 (the resolver
 tests the path as the operator) and OA-f-9 (the launcher refuses an elevated parent). It precedes the item-0 close run.
+
+## ADDENDUM R2-A11 -- the WFP sublayer read-back vs. an engine-assigned weight (row Z-S54; issuer ruling, obligation 7)
+
+| Cell | Builds | Risk |
+|---|---|---|
+| `OA-f-13` | `opal_ai/opal/runtime/provision/wall-dapi-8194-wfp.ps1`: the sublayer VERIFY line is graded on name + the PERSISTENT flag and prints the read-back weight (`VERIFY: <name> WEIGHT 0x<hex4> OK|FAIL`), through a pure `SubLayerLine(name, weight, flags)`; filters, apply, scan and the `EndsWith(' OK')` tail unchanged | LOCAL (direct act) |
+
+Chain: alone, slot `~28`, nested base r2-dev @bd7cd5d1ce. On this box the engine holds the sublayer at 0xFFE2 under 29 EDR
+sublayers (F11_SUBLAYER_EVIDENCE.json, from Andrew's elevated `netsh wfp show state` dump), so a re-run exits 4 at VERIFY.
+`1.0.0_SA_CTO~O` msg 28164 point 2 tied the fix to an elevated diagnosis; that dump is the diagnosis. The live read-back
+weight is read at the next elevated run. It does NOT precede the item-0 close run and rides the cutover push, never the
+pending G-PUSH of bd7cd5d.

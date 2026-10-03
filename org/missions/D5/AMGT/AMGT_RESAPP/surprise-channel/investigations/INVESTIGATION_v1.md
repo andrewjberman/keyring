@@ -16955,6 +16955,267 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
  "spec_asserts": "al-1 AMENDMENT 1 / ruling 5a: the timeline day route's silver read runs under an 18 s deadline from handler start, and on the deadline the mentions are served with headline null and one plain headline_reason, as a 200, instead of a sandbox kill. Graded by 3 of 3 cold BA invokes answering 200 with both control days byte-equal.",
  "world_is": "Exactly that, and the branch is not hypothetical: it fired on run 3 of the acceptance run itself, 200 at 18006.03 ms carrying headline_reason, 6 ms past the constant. So act (B) is better evidenced than a normal code deploy -- the new path was exercised against live data by its own grade rather than only by the planted test. What the grade does not say is that the 18 s line sits INSIDE the cold spread rather than above it: 15.1 / 16.5 / 18.0 s here and 16.6 / 16.9 / 19.1 s in act (A) an hour earlier. Not measured: the rate over a larger sample, whether it differs by name or by day's article count, and whether the first cold call after a deploy is systematically slower than later ones -- the three runs here are concurrent, so they share one post-deploy moment.",
  "notes": "Reported to 2.0.0_SA_COO~Z in the act (B) close message rather than left to the channel, because it changes what the demo looks like and the demo is at 13:00Z. The degradation is graceful and the view does not break: PROD renders [no headline]. Nothing here is a rollback trigger -- C1 and C2 both passed, and a 200 on the deadline path is the specified outcome, not a failure."
+},
+{
+ "id": "AMGT_RESAPP-Z-W208-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~208",
+ "surfaced_at": "2026-10-02T15:41:42Z",
+ "one_line": "PAGE-SIDE (DSGN lane, not edited): portal LeadPanel.tsx holds three universes in one component -- the price ranking (94 names), the monthly collected chatter (95 covered names) and the chatter ranking (1 name, read only to join starred names); the one served universe it should read is the covered universe, which /lead-panel/timeseries/collected/chatter already serves. No served route serves more than one universe now.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "am-5 item 4 / R3: if collapsing the page's universes to one is portal code, file ONE row naming the page component, the universes it holds and the one served universe it should read; if a served route serves more than one universe, fix the served part.",
+ "world_is": "portal/src/pages/SecurityAnalysis/components/LeadPanel.tsx (portal fixture a730d8ce) issues three reads: useLeadPanelRankings(movement, subject) (:419; price list), useCollectedChatter(subject === 'CHATTER') (:432; covered universe) and the same useLeadPanelRankings rows reused at :440-442 to join starred tickers to security keys for the Chatter face. Measured live, read-only, 2026-10-02: rankings/trending/price 94 rows (all 94 keyed, 94 of 94 inside the covered universe, 1 covered name absent); rankings/breakout/price 94; rankings/trending/chatter 1 row (BA_US_Equity); rankings/breakout/chatter 0 (EMPTY); collected/chatter 95 rows. So on the served side every ranking universe is already a subset of the 95-name covered universe; the page still reads three lists. The collapse (one covered-universe read, the starred join taken from it) is LeadPanel.tsx and its hooks, which are DSGN's lane.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "portal/src/pages/SecurityAnalysis/components/LeadPanel.tsx:419,432,440-442 at portal a730d8ce",
+   "live handler reads 2026-10-02 (scratch .scratch/univ.py in worktree C:/tmp/r63-208): price 94 rows, 94 in covered, covered-not-in-price 1; collected 95 rows as_of 2026-10-02; trending chatter 1 row; breakout chatter EMPTY"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+},
+{
+ "id": "AMGT_RESAPP-Z-W208-S2",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~208",
+ "surfaced_at": "2026-10-02T15:41:42Z",
+ "one_line": "am-5 items 2 and 3 measured against the face's premise: the chatter path reads NO legacy article layout (0 reads of the articles table, the social prefix or the hyphen research-dossier/), and NO served request reads one dossier object or listing twice; the dead inputs found are unread parquet columns (20 of 23 chatter_daily, 21 of 25 article_security_mention), now not decoded. Also a merge hazard with am-3: monthly_chatter's gold read now takes columns=.",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "am-5 items 2-3: the chatter path still loads inputs no served field reads (legacy), found by tracing read_monthly_chatter and the lead-panel chatter routes; one request reads the same research_dossier/ object or prefix listing more than once.",
+ "world_is": "Traced by wrapping BaseClient._make_api_call and calling the handler on the live pool, read-only, 2026-10-02. collected/chatter: 1 research_dossier/ listing, 2 listings each of chatter_daily/ and article_security_mention/ (one by _gold_latest_snapshot_rows, one by monthly_chatter._newest_snapshot_key for the vintage), 1 GET each of the two snapshots, 32 etf-classifications GetItems, 25 model-block lists+GETs for names, no legacy-layout read. The snapshots carry 23 and 25 columns; the route reads 3 (security_key, day, articles_total) and 4 (article_key, security_key, publisher, published_utc); pool_reader._gold_latest_snapshot_rows now takes columns= (default None, unchanged for its other callers) and monthly_chatter passes DAILY_COLUMNS/MENTION_COLUMNS. Dossier: /thesis and print?format=rich each list the name's prefix once and GET each of its 7 objects once (corpus/dossier.py:1296-1316 reads ALL stored objects to find the current-method one, then serves one: read amplification, not a duplicate; outside this order's paths); rankings and collected/chatter list research_dossier/ once. Test-stub hazard: a test written against the base that stubs pool_reader._gold_latest_snapshot_rows with a one-argument function (the base test_monthly_chatter.py fixture does; I moved it to accept columns) fails if an am-3 version of that fixture merges over mine; the duplicate vintage listing (_newest_snapshot_key) is left in place for the same reason.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "lib/research/api/monthly_chatter.py:30-47,105-107,152 (listing x2 per table) and lib/research/coverage/pool_reader.py:645 at base 1c50edaa81",
+   "gold parquet schemas read 2026-10-02: chatter_daily/date=2026-10-02/part-20261002T062124Z.parquet 23 columns; article_security_mention/date=2026-10-02/part-20261002T061326Z.parquet 25 columns",
+   "lib/research/corpus/dossier.py:1296-1316 (_read_dossier_detail: one listing, each object fetched once, all N fetched to pick one)",
+   "lib/research/api/tests/test_am5_unknown_key_and_chatter_inputs.py: 18 passed; the thesis and covered-listing single-read tests pin 1 read / 1 listing"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+},
+{
+ "id": "AMGT_RESAPP-Z-W205-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~205",
+ "surfaced_at": "2026-10-02T15:32:00Z",
+ "one_line": "AMGT-am-2 AC2 clause C1 (ASML_NA served BLOOMBERG_FALLBACK with officers > 0) cannot be met from stored input: no Bloomberg COMPANY_EXEC_OFFICERS response has ever landed for ASML_NA, 6501_JP or 2317_TT -- the pull was only ever run for 6861_JP and CSL_AU -- so the officers need one fresh Bloomberg pull, which the order forbids.",
+ "class": "BLOCKING",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "aws s3 ls s3://opal-data-harvest/bloomberg/harvest/bronze/exec_officers/ -> 2 prefixes only: security_key=6861_JP_Equity/ and security_key=CSL_AU_Equity/. security_key=ASML_NA_Equity/, 6501_JP_Equity/ and 2317_TT_Equity/ each list 0 objects; raw/bloomberg/<key>/ for the three holds refdata/histdata/identity only, no exec_officers.json.",
+   "The later bronze refdata for the three (ASML 20260925T042151Z, 6501 20260929T232729Z, 2317 20260925T042147Z) carries NAME, CIE_DES, price and size fields and no COMPANY_EXEC_OFFICERS.",
+   "enrich.apply_bloomberg_fallback (enrich.py:619) fires on ANY roster_status other than RESOLVED and has no form exclusion; the stored ASML object management/v1/ASML_NA_Equity/2026-09-18.json is simply older than the fallback (generated_at 2026-09-18T14:00:20Z, no roster_source, no fallback block). So the rule did not need fixing for a 20-F; the input was never pulled.",
+   "The batch driver lib/research/management/batch.py main() builds only partitions['real_filing']; 2317_TT is placeholder_only and 6501_JP is no_object, so the batch would never produce an object for either even with a pull.",
+   "Local result: python r63_served.py --cell c2 --where local --pool .../0.9.0_WK_AMGT_RESAPP~205/m1_pool -> FAIL C1 ASML_NA (status ABSENT officers 0), PASS C2 6501_JP, PASS C2 2317_TT, R63 C2 SERVED: NO, exit=1."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "AMGT-am-2: 'the stored Bloomberg officer input it reads (for example the harvest bronze exec_officers table)' holds the officers for ASML_NA, and the producer path can fall back to them with no vendor call; AC2 expects C1 PASS (ASML_NA SERVED, BLOOMBERG_FALLBACK, officers > 0).",
+ "world_is": "The stored input holds officers for no one of the three. Built: bloomberg_fallback.StoredBloombergInput (reads the newest landed exec_officers bronze object, names its key and pull time in the fallback block, and returns FAILED 'the officer pull was never made' when none exists, never EMPTY) and lib/research/management/fwd7_plan.py, which runs enrich.build_document for the three keys with that reader, a refused Lusha client and no SERP key. Given a landed response the 20-F path serves SERVED / BLOOMBERG_FALLBACK (test_a_twenty_f_with_an_empty_officer_section_takes_the_fallback; test_plan_writes_local_objects_the_route_reads). With none landed the three objects carry officers [] and a plain reason, so 6501_JP and 2317_TT satisfy C2 and ASML_NA fails C1. What closes C1: one Bloomberg COMPANY_EXEC_OFFICERS pull for the three names landed at the bronze grammar via enrich.apply_bloomberg_fallback(write_raw=True) -- a vendor call needing Andrew's per-use word -- then rerun fwd7_plan; and, for 6501_JP and 2317_TT to be produced by the batch rather than by this plan, batch.main's WOULD-BUILD would need to include placeholder_only and no_object (not changed here: it would put Lusha spend on names the batch has never built). Not measured: whether Bloomberg returns officers for these three.",
+ "notes": "The m1_fwd7_plan.json entries for ASML_NA is a reason-only object (officers 0, fallback FAILED); the issuer may drop that entry from am-6 until the pull lands, since writing it replaces an ABSENT/ZERO_OFFICERS read with another ABSENT/ZERO_OFFICERS read."
+},
+{
+ "id": "AMGT_RESAPP-Z-W205-S2",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~205",
+ "surfaced_at": "2026-10-02T15:33:00Z",
+ "one_line": "management.schema.json (additionalProperties false) refused lusha_enrichment.domain_source, a field enrich.build_document has emitted since AMGT-rk-110, so enrich.validate() failed EVERY freshly built object and batch.run_one would have returned BLOCKED-INVALID for every name.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "First fwd7_plan run: ValueError 'ASML_NA_Equity: the produced object fails its schema: lusha_enrichment: Additional properties are not allowed (domain_source was unexpected)'.",
+   "enrich.py:683 sets domain_source in lusha_meta; management.schema.json definitions.lusha_meta listed status, domain, credits_used, results_returned, results_total, matched, contact_keys_removed, reason, absence_reason_class and no domain_source.",
+   "Fixed in this commit: domain_source added to lusha_meta as enum domains.json | verified_site | null (matches enrich.domain_source_for); test_schema_admits_the_domain_source_the_producer_emits builds a document and validates it."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "enrich.validate() accepts the object enrich.build_document produces (batch.run_one validates before any write).",
+ "world_is": "It did not: the schema had not been widened when rk-110 added the field, so a fresh build was refused at validate. The stored objects written by the last live runs predate rk-110 or were re-projected in place, which is why no stored object shows the field. Fixed inside this order's lib/research/management/ path; not measured: whether any scheduled batch run since rk-110 hit BLOCKED-INVALID.",
+ "notes": "Widening a closed schema is a one-line change under this order's paths; the CTO reads it at the round-N analysis."
+},
+{
+ "id": "AMGT_RESAPP-Z-S338",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~Z",
+ "surfaced_at": "2026-10-02T16:17:31Z",
+ "one_line": "Issuer evidence for the two round-63 rows that need a disposition: AMGT_RESAPP-Z-W208-S2 (ARMED, disarm owner 2.0.0_SA_COO~Z) is disarmed on the shared tree, and AMGT_RESAPP-Z-W205-S1 (BLOCKING) is moved to its carrier, so nothing in round 63 waits on it. Both are proposed DISMISSED_WITH_REASON for the CVO's L9.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "spec_asserts": "Z-W208-S2: an am-3 test stub of pool_reader._gold_latest_snapshot_rows taking only `table` fails at the drain once am-5's columns= lands. Z-W205-S1: am-2 AC2 C1 (ASML_NA served BLOOMBERG_FALLBACK with officers) is reachable from stored input.",
+ "world_is": "Z-W208-S2: after all four drains (514cdf5366 am-3, 6899726ed8 am-8, eb6cfa6a3e am-5, 293f95f5bd am-2) the named stub shape did not fire (am-3's tests pass), but a second shape did: am-5's own projected-read test pinned the pre-am-3 chatter row literal and failed 1 of 589. Repaired at f80b97ca36 to assert projected == full (same stub with columns=None) plus the key/name/by_month content; a mutant dropping articles_total from DAILY_COLUMNS fails it; union peers + management + api 589 passed exit=0. Z-W205-S1: re-graded on the shared tree, c2 local --pool reads C1 FAIL ASML_NA ABSENT, C2 PASS 6501_JP and 2317_TT; the cause is the missing stored pull, as the row grounds. am-2 AMENDMENT 1 (28ec01f59b) holds C1 on Andrew's per-use Bloomberg word, asked as a RESERVED card to 0.0.0_AB_MSTR~Z (broker file 20261002T160913Z_2.0.0_SA_COO_Z__RESERVED_for_Andrew__AMGT_RESAPP_r63__o.md); am-7 AMENDMENT 2 writes only the 6501_JP and 2317_TT objects; FWD-7 is reported partial in the L10 slug.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "python -m pytest -q lib/research/peers/tests/ lib/research/management/tests/ lib/research/api/tests/ on CLOUD at 293f95f5bd: 1 failed (test_the_projected_read_serves_the_same_bytes_as_the_full_read), 588 passed; at f80b97ca36: 589 passed, exit=0.",
+   "r63_served.py --cell c2 --where local --pool .../0.9.0_WK_AMGT_RESAPP~205/m1_pool on CLOUD: FAIL C1 ASML_NA status ABSENT source None officers 0; PASS C2 6501_JP_Equity; PASS C2 2317_TT_Equity; R63 C2 SERVED: NO.",
+   "Task orders AMGT_RESAPP.TO-AMGT-am-2 (AMENDMENT 1, ISSUER CLOSE) and AMGT_RESAPP.TO-AMGT-am-7 (AMENDMENT 2) at 28ec01f59b."
+  ]
+ },
+ "disposition": "DISMISSED_WITH_REASON",
+ "dismissal_reason": "This row carries evidence, not a new hazard: it proposes that Z-W208-S2 and Z-W205-S1 be dismissed with the reasons in world_is at the CVO's L9. Nothing is owed on this row itself."
+},
+{
+ "id": "AMGT_RESAPP-Z-S339",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~Z",
+ "surfaced_at": "2026-10-02T20:00:18Z",
+ "one_line": "R2's 2 null-sector bars (BP/ LN, NG/ LN) are a slash-ticker lookup miss, not an absent classification: _classification_for_ticker asks etf-classifications for the bare ticker 'BP/' and 'NG/', while the table holds 'BP' (BP PLC, equity, Energy) and 'NG' (equity, Utilities). The same family as Z-W4-S6.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "R2 (DSGN Z-C-S37 ruling): an equity whose sub_asset_class is a GICS sector serves classification.sector; otherwise null with a reason. The 2 nulls read 'the classifications table holds no classification for this ticker'.",
+ "world_is": "Local read at the R2 tree (8edd67451c): the price ranking's 94 bars serve 92 sectors + 2 nulls, BP/_LN_Equity and NG/_LN_Equity, each with classification {} and the row-level reason above. DynamoDB GetItem on etf-classifications: 'BP/' None, 'NG/' None, 'BP/ LN' None, 'BP.' None, 'NG.' None; 'BP' -> BP PLC, equity, Energy; 'NG' -> name None, equity, Utilities. scoped_amgt.py:629 takes the first space-separated token, which keeps the slash. The reason served is therefore untrue for these two names. Stripping the slash is not a safe one-line fix: the bare-ticker key already collapses exchanges (NG US is a different company from NG/ LN), so the remedy needs the identity's exchange or a crosswalk-keyed classification. Round-64 item; nothing is served wrong-company today.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "python handler local /lead-panel/rankings/breakout/price at 8edd67451c: sector None on BP/_LN_Equity and NG/_LN_Equity only.",
+   "boto3 GetItem etf-classifications ticker in ('BP/','BP','NG/','NG','BP/ LN','BP.','NG.') at ~19:5xZ.",
+   "lib/research/api/scoped_amgt.py:629 bare = str(ticker).strip().split(' ')[0]"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+},
+{
+ "id": "AMGT_RESAPP-Z-W211-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~211",
+ "surfaced_at": "2026-10-02T22:32:26Z",
+ "one_line": "AC1 of AMGT-an-2 cannot read exit=0: 7 tests in lib/research/harvest/tests fail identically at the issuance-descended base with and without the an-2 change (4 != 5 enabled publishers in the daily-row fixtures; timeline-day read-path fixtures).",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "AC1 expects every test in lib/research/api/tests/ and lib/research/harvest/tests/ to pass and exit=0.",
+ "world_is": "Full AC1 run in the worker worktree: 7 failed, 684 passed, exit=1. The same 7 fail in a detached worktree of the branch HEAD before the an-2 edit (47 passed, 7 failed over the three files): test_o1_run_record_coverage.py (2: searched/complete reads 4 where 5 expected), test_publication_gold_daily.py (2: publishers_covered 4 == 5; publishers_covered_codes order), test_timeline_day_read_path.py (3: byte-equal body, publishers read, warm-process reads). The four new an-2 tests and every timeline_api test pass. None of the 7 touches get_timeline; the worker fixed none (outside the cell's act).",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "pytest -q lib/research/api/tests/ lib/research/harvest/tests/ in C:/tmp/r64-211: 7 failed, 684 passed.",
+   "pytest on the three files in a detached worktree of the pre-edit HEAD: 7 failed, 47 passed."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+},
+{
+ "id": "AMGT_RESAPP-Z-W214-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~214",
+ "surfaced_at": "2026-10-02T22:44:32Z",
+ "one_line": "AC1's named test directories carry 3 failing tests in lib/research/harvest/tests/test_timeline_day_read_path.py that fail identically at the issuance descendant with this cell's edits absent; they pin the silver join am-1 removed.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "AMGT-an-5 AC1: pytest over lib/research/api/tests/ lib/research/harvest/tests/ lib/research/coverage/ passes every test and exits 0.",
+ "world_is": "With this cell's edits, 753 passed and 3 failed, exit=1. The 3 are test_timeline_day_body_byte_equal_before_and_after_the_read_path_change, test_timeline_day_new_path_reads_only_the_publishers_the_day_names and test_timeline_day_warm_process_reads_no_object_twice_and_still_lists. The same file on a clean worktree of e0f5c4fd65 (this branch's HEAD before any edit, sparse lib + infra/logic + org/standards) gives 3 failed, 1 passed. Cause: 59c2ef1b23 (AMGT-am-1) made the day route serve headline and published_precision from the gold mention row's title and removed the request-time silver read; these three tests still compare against the OLD silver-joined read (_iter_latest_articles) and still expect silver parts to be listed. Not fixed here: editing them is a neighbouring defect outside the order's act. AC1 therefore cannot read exit=0 until the issuer amends AC1 or the three tests are rewritten for the gold-title read.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "pytest AC1 invocation in C:/tmp/r64-214 (wk-AMGT_RESAPP-214): 3 failed, 753 passed, exit=1",
+   "pytest lib/research/harvest/tests/test_timeline_day_read_path.py in a clean e0f5c4fd65 worktree: 3 failed, 1 passed",
+   "git log 59c2ef1b23: lib/research/api/scoped_amgt.py _timeline_article_loader now reads row.get('title'), no silver"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+},
+{
+ "id": "AMGT_RESAPP-Z-W214-S2",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~214",
+ "surfaced_at": "2026-10-02T22:44:32Z",
+ "one_line": "After the projection cut, the largest remaining cold stages of BA /timeline/day are the identity resolution (~0.85-0.93 s) and the 2.6 MB mention snapshot GET (~0.55-0.8 s locally); neither is in this cell.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "AMGT-an-5 reports the local cold profile before and after, per stage.",
+ "world_is": "Fresh process, first call, local: before = chatter_daily 1246-1331 ms + article_security_mention 1393-1738 ms of a 3551-3895 ms handler; after = identity 847-931, import 1-110, gold_chatter_daily 667-775 (list 138-142, get 168-206, decode 316-342), gold_article_security_mention 691-1222 (list 134-148, get 552-826, decode 5-6), assembly 1-2, serve_total 1369-1998, handler 2244-2870. The mention GET moves 2.63 MB of which ~0.85 MB are served columns (bronze_key 735 KB and record_hash 690 KB are the largest unserved chunks); a ranged column-chunk GET would cut it, and the files are one row group so row-group statistics prune nothing. Not done: it changes the GET call shape for the in-memory fakes and is not what the deployed AMGT_SEGMENT lines have yet shown to matter. identity is resolve_identity, in the handler's timeline branch, and is not the gold read.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "python .scratch/prof.py (fresh process) before at e0f5c4fd65 and after this cell's edits, 2 runs each, response bytes identical (cmp)",
+   "pq.ParquetFile(...).metadata column chunk sizes of amgt/harvest/gold/article_security_mention/date=2026-10-02/part-20261002T165144Z.parquet (2,634,520 B, 1 row group, security_key unsorted, 205 distinct keys)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+},
+{
+ "id": "AMGT_RESAPP-Z-W212-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~212",
+ "surfaced_at": "2026-10-02T22:45:29Z",
+ "one_line": "The one display-name rule strips share-class codes but does not re-case: a name served from the model-block fallback stays all-caps (pinned by test_model_block_names 'HERMES INTERNATIONAL'), so 'not all-caps' holds only where the classifications table or crosswalk holds a cased name.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "AMGT-an-3 item 2: the served name is not all-caps and carries no share-class code, stripped by one rule.",
+ "world_is": "scoped_amgt._clean_display_name strips ADR/GDR/ADS and a trailing class marker only. The chain (monthly_chatter._display_names) is classification -> crosswalk -> model block -> ticker. For BA, AMD and VLO the classifications table holds a cased name, so r64_served c12 C2 passes on all 3. A key reaching the model-block step with an all-caps header NAME is served all-caps on every route alike (one name, not cased); test_model_block_names.py asserts 'HERMES INTERNATIONAL' as the overlay and row display_name. A re-casing rule would change that pinned test and is not in the cell's text.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "lib/research/api/tests/test_model_block_names.py:44 asserts overlay name == display_name == row display_name == 'HERMES INTERNATIONAL'.",
+   "r64_served.py --cell c12 --where local: PASS C2 for BA_US_Equity, AMD_US_Equity, VLO_US_Equity at the an-3 worktree commit."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+},
+{
+ "id": "AMGT_RESAPP-Z-W212-S2",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~212",
+ "surfaced_at": "2026-10-02T22:45:29Z",
+ "one_line": "Gold article_security_mention holds no url column, so the overlay feed items now serve url null; the feed moved from P-1 pool bodies (which carried a url) to the day view's gold source.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "AMGT-an-3 item 1: keep the item fields the page reads (article_key, url where gold has it, title/headline, publisher, published_at).",
+ "world_is": "GOLD_MENTION_SCHEMA (publication_gold.py:64-95) has no url field. read_feed items carry url from row.get('url'), which is None for every gold row; the portal's FeedItemRow links an item by url. The cell bars new processing of publisher article text, so no url is derived. Whether the page degrades to unlinked headlines is the portal's, not read here.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "lib/research/harvest/publication_gold.py GOLD_MENTION_SCHEMA field list, 29 fields, none named url.",
+   "Local gold article_security_mention first row read via _timeline_snapshot_rows: keys include title, published_utc, article_key, publisher; no url."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+},
+{
+ "id": "AMGT_RESAPP-Z-W215-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~215",
+ "surfaced_at": "2026-10-02T22:56:00Z",
+ "one_line": "The r64_served.py on the worker branch (cut from 34e9d1be75) is the PRE-amendment check: it has no c16 and no c14 C4, and its c14 C3 grades object_as_of == '2026-10-02T1840Z'; the amended check lives on CLOUD at 13dc3f05ba, so AC2 and AC3 as written could not run from the branch.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "AC2 and AC3 run org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round64/checks/r64_served.py --cell c14 / --cell c16 from the worktree; the order says c14 gains C4 and c16 exists.",
+ "world_is": "On branch wk-AMGT_RESAPP-215 at 34e9d1be75 the file's --cell choices end at c15 and its c14 C3 reads object_as_of == '2026-10-02T1840Z' (the pre-ruling-6 form). git show 13dc3f05ba:<same path> carries c16 and C4, with C3 reading source_stamp or object_as_of distinct from as_of. The worker wrote nothing into the issuer's checks directory (outside the order's paths); it saved the CLOUD @13dc3f05ba copy unchanged at .scratch/r64_served_amended.py and ran that from the worktree root, so ROOT-relative paths resolve in the worktree. The criteria outputs reported are from that copy. The branch's own file needs the issuer's re-sync before a drain-time re-grade reads the amended clauses.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "diff of the branch's r64_served.py against git show 13dc3f05ba:org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round64/checks/r64_served.py: c16 branch, C4 loop and the C3 source-stamp form present only in the CLOUD copy.",
+   "git log --oneline -3 -- <path> on the worktree: 2c3cc4aed2 as the newest commit touching it."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
 }
 ]
 ```

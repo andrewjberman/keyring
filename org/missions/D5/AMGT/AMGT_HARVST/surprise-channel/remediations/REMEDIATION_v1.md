@@ -190,11 +190,11 @@ owed, and 16 carried OPEN (10 ARMED, 6 INERT) that this seat has NOT re-measured
     "owner": "2.0.0_SA_COO~Y",
     "round": "v7",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~Y",
       "round": "v7"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
       "state": "DISARMED",
       "owner": "2.0.0_SA_COO~Y",
@@ -216,15 +216,15 @@ owed, and 16 carried OPEN (10 ARMED, 6 INERT) that this seat has NOT re-measured
     "owner": "2.0.0_SA_COO~Y",
     "round": "v7",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~Y",
       "round": "v7"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~Y",
-      "at": null
+      "at": "2026-10-02T22:31Z"
     }
   },
   {
@@ -242,15 +242,15 @@ owed, and 16 carried OPEN (10 ARMED, 6 INERT) that this seat has NOT re-measured
     "owner": "2.0.0_SA_COO~Y",
     "round": "v7",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~Y",
       "round": "v7"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~Y",
-      "at": null
+      "at": "2026-10-02T23:19Z"
     }
   },
   {
@@ -268,15 +268,15 @@ owed, and 16 carried OPEN (10 ARMED, 6 INERT) that this seat has NOT re-measured
     "owner": "2.0.0_SA_COO~Y",
     "round": "v7",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~Y",
       "round": "v7"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~Y",
-      "at": null
+      "at": "2026-10-02T22:31Z"
     }
   },
   {
@@ -293,15 +293,15 @@ owed, and 16 carried OPEN (10 ARMED, 6 INERT) that this seat has NOT re-measured
     "owner": "2.0.0_SA_COO~Y",
     "round": "v7",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~Y",
       "round": "v7"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~Y",
-      "at": null
+      "at": "2026-10-02T22:31Z"
     }
   },
   {
@@ -319,15 +319,15 @@ owed, and 16 carried OPEN (10 ARMED, 6 INERT) that this seat has NOT re-measured
     "owner": "2.0.0_SA_COO~Y",
     "round": "v7",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~Y",
       "round": "v7"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~Y",
-      "at": null
+      "at": "2026-10-02T22:31Z"
     }
   },
   {
@@ -345,11 +345,11 @@ owed, and 16 carried OPEN (10 ARMED, 6 INERT) that this seat has NOT re-measured
     ],
     "remedy": "Open, carried to round 8 (graduated in an earlier round without a remediation row). No disarm record found for this row in the channel; not re-measured by this seat.",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~Y",
       "round": "v7"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "AMGT_HARVST-Z-S10",
@@ -460,11 +460,11 @@ owed, and 16 carried OPEN (10 ARMED, 6 INERT) that this seat has NOT re-measured
     ],
     "remedy": "Open, carried to round 8 (graduated in an earlier round without a remediation row). No disarm record found for this row in the channel; not re-measured by this seat.",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~Y",
       "round": "v7"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "AMGT_HARVST-Z-S20",
@@ -544,15 +544,15 @@ owed, and 16 carried OPEN (10 ARMED, 6 INERT) that this seat has NOT re-measured
     ],
     "remedy": "Open, carried to round 8 (graduated in an earlier round without a remediation row). No disarm record found for this row in the channel; not re-measured by this seat.",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~Y",
       "round": "v7"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~Y",
-      "at": null
+      "at": "2026-10-02T23:19Z"
     }
   },
   {
@@ -633,15 +633,15 @@ owed, and 16 carried OPEN (10 ARMED, 6 INERT) that this seat has NOT re-measured
     ],
     "remedy": "Open, carried to round 8 (graduated in an earlier round without a remediation row). No disarm record found for this row in the channel; not re-measured by this seat.",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~Y",
       "round": "v7"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~Y",
-      "at": null
+      "at": "2026-10-02T22:31Z"
     }
   },
   {
@@ -686,15 +686,15 @@ owed, and 16 carried OPEN (10 ARMED, 6 INERT) that this seat has NOT re-measured
     ],
     "remedy": "Open, carried to round 8 (graduated in an earlier round without a remediation row). No disarm record found for this row in the channel; not re-measured by this seat.",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~Y",
       "round": "v7"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~Y",
-      "at": null
+      "at": "2026-10-02T22:31Z"
     }
   },
   {
@@ -759,15 +759,15 @@ owed, and 16 carried OPEN (10 ARMED, 6 INERT) that this seat has NOT re-measured
     ],
     "remedy": "Open, carried to round 8 (graduated in an earlier round without a remediation row). No disarm record found for this row in the channel; not re-measured by this seat.",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~Y",
       "round": "v7"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~Y",
-      "at": null
+      "at": "2026-10-02T22:31Z"
     }
   },
   {
@@ -812,15 +812,15 @@ owed, and 16 carried OPEN (10 ARMED, 6 INERT) that this seat has NOT re-measured
     ],
     "remedy": "Open, carried to round 8 (graduated in an earlier round without a remediation row). No disarm record found for this row in the channel; not re-measured by this seat.",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~Y",
       "round": "v7"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~Y",
-      "at": null
+      "at": "2026-10-02T22:31Z"
     }
   },
   {
@@ -838,15 +838,15 @@ owed, and 16 carried OPEN (10 ARMED, 6 INERT) that this seat has NOT re-measured
     ],
     "remedy": "Open, carried to round 8 (graduated in an earlier round without a remediation row). Confirmed STILL LIVE at HEAD by the disarm owner (AMGT_HARVST-Z-S25): .tools/missions-tree-index.py walks the physical tree, on a shared mechanism the lane does not own.",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~Y",
       "round": "v7"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~Y",
-      "at": null
+      "at": "2026-10-02T23:19Z"
     }
   },
   {
@@ -891,15 +891,15 @@ owed, and 16 carried OPEN (10 ARMED, 6 INERT) that this seat has NOT re-measured
     ],
     "remedy": "Open, carried to round 8 (graduated in an earlier round without a remediation row). No disarm record found for this row in the channel; not re-measured by this seat.",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~Y",
       "round": "v7"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~Y",
-      "at": null
+      "at": "2026-10-02T22:31Z"
     }
   },
   {
@@ -944,11 +944,11 @@ owed, and 16 carried OPEN (10 ARMED, 6 INERT) that this seat has NOT re-measured
     ],
     "remedy": "Open, carried to round 8 (graduated in an earlier round without a remediation row). No disarm record found for this row in the channel; not re-measured by this seat.",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~Y",
       "round": "v7"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "AMGT_HARVST-Z-W8-S2",
@@ -965,15 +965,15 @@ owed, and 16 carried OPEN (10 ARMED, 6 INERT) that this seat has NOT re-measured
     ],
     "remedy": "Open, carried to round 8 (graduated in an earlier round without a remediation row). No disarm record found for this row in the channel; not re-measured by this seat.",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~Y",
       "round": "v7"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~Y",
-      "at": null
+      "at": "2026-10-02T23:19Z"
     }
   },
   {
@@ -991,15 +991,15 @@ owed, and 16 carried OPEN (10 ARMED, 6 INERT) that this seat has NOT re-measured
     ],
     "remedy": "Open, carried to round 8 (graduated in an earlier round without a remediation row). HALVED per the disarm owner (AMGT_HARVST-Z-S25): the articles path is disarmed, the listings path is not (and has never met its precondition). Stays ARMED on the live half.",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~Y",
       "round": "v7"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~Y",
-      "at": null
+      "at": "2026-10-02T23:19Z"
     }
   }
 ]
