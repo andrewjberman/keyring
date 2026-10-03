@@ -1372,3 +1372,28 @@ The D9 -> D6 move stays deferred (R5).
 
 **NOT issued in round 15.** The TO issuance gate refuses a second issuance into a round that already has one (ONE ISSUER PER ROUND, keyed to the round). OG-o-5 is held as a draft at `deliverables/2.0.0_SA_COO~O/r15/drafts_not_issued/` with its check `r15/checks/o5.AC1.sh` (pre-cut FAIL: anchors absent; rb.AC1-AC3 3 of 3), and is cut with round 16's issuance. Nothing waits on it: the pilot is not cut before G-E. **The pilot's host-side `schwab` flag** (R7) is a later release under
 three halves and is NOT cut before G-E (YAGNI).
+
+## ADDENDUM R3-T.9 (2.0.0_SA_COO~O, 2026-10-03 ~22:2xZ) -- round 16, the CTO's round-15 list
+
+**Source.** `ledger/ROUND_ANALYSIS.round15.md` @b56208fd64 section 4 (msg 29033):
+- R9 adopts the measured grain as a paging row-uniqueness key;
+- R10 dispositions S46 and W17-S4;
+- R11 accepts the issuer's helper fixes.
+
+Label `<round>16</round>`, ONE issuance, five cells.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-gr-3` | 1 | R9 on CLOUD: `query.py` `DATASET_GRAINS` + `datasets.json` `grain_fields` (dim_position + `quantity_settled_unsettled`, `quantity_cash_settled`; dim_asset + `security_description_line_1`); the grain note says ROW-UNIQUENESS, not identity; tests pin a measured fixture and a planted collision. Both files were byte-equal on CLOUD and live at the cut. | WORLD | ~22 | worker |
+| `OG-rl-5` | 2 | The release carrying gr-3 on live `af2d762970`, under CTO + COO + CVO halves (paging becomes available where it refused). Ledger `nfra-oplgtw-gateway-release-r16`. | WORLD | ~15 | worker |
+| `OG-o-5` | 3 | The runbook section-7 text remedy (drafted under R3-T.8.1); OGO2-J1 re-graded at L9 by the CVO. | WORLD | ~21 | worker-light |
+| `OG-ts-1` | 4 | Row Z-W26-S4: the grant writer's tests run against the pinned staged closure, not HEAD's tree. | WORLD | ~25 | worker-light |
+| `OG-ar-1` | 5 | Every OPEN remediation row triaged: owner + one of `remediated_by` / `moves_when` / `close_reason` (41 OPEN at the cut); the CVO advances rows. | LOCAL | ~27 | worker |
+
+**Chains.** `OG-gr-3` -> `OG-rl-5`; the other three stand alone. fanout: 4 independent starts, cap 8.
+
+**OG-rl-5's acceptance deviates from the analysis wording, named.** "For an EXISTING grant holder" is measured with a
+SYNTHETIC principal and grant on the served engine (the OG-r-4 mechanism). No agent reads as another person, and
+Andrew's own session holds no Schwab grant. The real holder's read is UNEXERCISED until her next use.
+
+**Pre-cut 22:1xZ.** Every new check FAILs on absence. The rl-5 floor (rl4.AC1, ht.AC2) PASSes on live.
