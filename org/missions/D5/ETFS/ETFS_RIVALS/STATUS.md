@@ -42,7 +42,7 @@ If a seat is not live at its time, its first live session reads before any other
    - the 3 money-market keys (DGCXX x2, IJGXX) in reader words;
    - what the 10-05 grades leave open;
    - the walk-register remainder.
-   Repairs batched into one cell: Z-S16, Z-S17 and Z-S18. The G5 replay (D10) also comes in, because no deployed route
+   Repairs batched into one cell: Z-S16 and Z-S18. The G5 replay (D10) also comes in, because no deployed route
    rebuilds G5.
 
 ## Issuer acts still owed
@@ -54,8 +54,8 @@ If a seat is not live at its time, its first live session reads before any other
 ## Open findings (rows, owner named)
 
 - Z-S16 (COO~RV): a skipped AI step reports no `run_path`. One line in `run_ai_step`; next round.
-- Z-S17 (COO~RV): G5 writes a phantom zero-share exit one report after every full sale (stored, hidden on the page); next
-  round, in `gold_trade_schedule.py`.
+- Z-S17 is RETRACTED by Z-S19. The 0 -> 0 G5 exit row is ruled behaviour (CRO~RV CALL 12, ratified): G5 keeps the row and
+  the page hides and counts it. Round 6's x-1.AC3 pins it. Nothing is owed.
 - Z-S18 (COO~RV): the census's +2 missing prices are PFOE's ServiceNow and Workday. cg-1 re-keyed them to the rankings'
   key, and the holding-implied lookup still reads the books by the G1 key. The page is unaffected; next round.
 - 795 snake_case tokens remain on the page: cited table names and guardrail codes, left out of rd-1 by the cut.

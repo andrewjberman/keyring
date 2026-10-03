@@ -3209,6 +3209,27 @@
     "spec_asserts": "RIV-cg-1 / RIV-cs-1: the census reads what the rankings read; CALL 1: a price the rankings take holding-implied reads covered_by_fallback / holding_implied.",
     "world_is": "The census now keys PFOE's CUSIP lines the way the rankings do, which fixed their sector (missing -> covered g4_prior) but broke their price fallback: the books the implied-price test reads are keyed by the G1 identifier, not the rankings' resolved key. The page is unaffected (the rankings price both); the census under-reports by 2. The 15/15 other key changes between the two objects are market_reading headlines (23 = 23, the day's readings re-read).",
     "notes": "Remedy (round-8 repair cell, gold_input_census.py): run the implied-price lookup in the books' own key space (the row's raw/G1 key) while the census subject stays the rankings' key. Answers 3.0.0_SA_CVO~RV's 'one read before round 8' and the CTO's binding on the 2 extra missing prices. disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S19",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-03T01:05Z",
+    "one_line": "RETRACTION of ETFS_RIVALS-Z-S17: the 0 -> 0 G5 'exit' row is RULED behaviour, not a defect -- CRO~RV CALL 12 (RATIFIED, Addendum 9) keeps the row in G5, hides it on the page with a counted per-window note, and excludes it from the AI facts; round-6 x-1.AC3 pins it and PASSES at the deployed pin.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier1_exec/4.0.0_SA_CRO/deliverables/ETFS_RIVALS_RULINGS_20261002.md CALL 12: 'G5 is unchanged; the page counts what it hides, per window with its note; the AI facts and the page now read the same population'",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round6/checks/x-1.AC3.py: Z0 (quantity 0 prior, absent later) -> 'today's row unchanged: action exit, shares 0 -> 0, NULL notional'; re-run at 75ad1e4d2e 2026-10-03 ~01:0xZ: AC3 RESULT: PASS 0 failures"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Row ETFS_RIVALS-Z-S17 (2026-10-03T00:15Z): 'G5 writes a phantom EXIT for a zero-share line' with the remedy 'a line whose shares_before is 0 is no trade, never an exit' in gold_trade_schedule.py.",
+    "world_is": "The measurement in Z-S17 stands (INEQ JAR_LN and TXUE ATD_CN carry 0 -> 0 exit rows dated 10-01 with NULL price), but its classification and remedy are wrong: CALL 12 ratified keeping the row in G5, and the remedy would break the ratified contract and x-1.AC3. Nothing is owed on it; it leaves the round-8 repair cell. The issuer filed Z-S17 without reading the ruling or the round-6 check that pins the row.",
+    "notes": "Supersedes ETFS_RIVALS-Z-S17 (an existing row is never edited; this row carries the correction). D10's six visible n/a cells are unaffected (the 09-30 trims-to-zero; a G5 rebuild at the deployed code prices them). disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV."
   }
 ]
 ```
