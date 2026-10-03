@@ -94,17 +94,7 @@ Rows: id `NFRA_OPLGTW-Z-W21-S<k>` (next unused), fabric `site-z`, disarm_owner `
 
 1. Write the proof instance at `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~21/NFRA_OPLGTW.TO-OG-o-5.runbook-section7-remedy.proof_of_spec.json`.
 2. Validate it with `python .tools/proof-of-spec-check.py <instance>`.
-3. If AC1 PASSes, edit this order's ONE `<status>` tag IN PLACE to `complete`, in the same commit. Never append a second
-   tag.
-4. Report once: the diff, the literal AC output, commits and rows.
-
-<!-- ===================== RECORD FACE ===================== -->
-
-**ISSUER NOTES:**
-- Round label 16 (addendum R3-T.8.1: the CTO's R7; the issuance gate refused it into round 15, which already had its one issuance). Alone in its chain.
-- Pre-cut: `o5.AC1` FAIL (no anchors).
-
-<status>pending -- A1 (2026-10-03 ~23:1xZ): 7.3 re-cut per CVO ADJUDICATION_v6.Z C-S20 and CTO msg 29057; the first pass (e91507e923) put the HEALTH read in 7.3</status>
+3. If AC1 PASSes, edit this order's ONE `<status>complete</status>
 <round>16</round>
 <slot>~21</slot>
 <fabric>site-z</fabric>
