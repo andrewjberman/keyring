@@ -1,0 +1,247 @@
+{
+ "function": "irpt-ycharts-generate",
+ "pin": "a163441fb051a773801a7c57c6e6c3c7e2839344",
+ "live_code_sha256": "fD2R6OFrT2N086C9Go3e1aA9RKZCP/vfnZCaHCloJTs=",
+ "live_zip_hashes_to_it": true,
+ "live_members": 114,
+ "pin_members": 114,
+ "identical": 105,
+ "eol_only": [],
+ "changed": [
+  "contracts/ExportBundle.schema.json",
+  "contracts/ExportReceipt.schema.json",
+  "contracts/OwnedAnalysisRequest.schema.json",
+  "enforce.py",
+  "infra/logic/registry/reporting_policies.json",
+  "lib/opal_naming.py",
+  "owned_requests.py",
+  "portfolio.py",
+  "resident_worker.py"
+ ],
+ "added": [],
+ "removed": [],
+ "history": [
+  {
+   "member": "contracts/ExportBundle.schema.json",
+   "source": "docs/contracts/investor-reporting/v1/ExportBundle.schema.json",
+   "live_equals": "1dae563e21",
+   "ahead": [
+    [
+     "b66691eb1b",
+     "IRPT_BCKEND IB-pr-301 (0.9.0_WK_IRPT_BCKEND~104): P-6 server half -- submit-export accepts a PLATINU"
+    ]
+   ]
+  },
+  {
+   "member": "contracts/ExportReceipt.schema.json",
+   "source": "docs/contracts/investor-reporting/v1/ExportReceipt.schema.json",
+   "live_equals": "173349a652",
+   "ahead": [
+    [
+     "8d08ee54e4",
+     "build(IRPT_BCKEND round 37, 0.9.0_WK_IRPT_BCKEND~105 IB-pr-302): the PATH B export pins and renders "
+    ]
+   ]
+  },
+  {
+   "member": "contracts/OwnedAnalysisRequest.schema.json",
+   "source": "docs/contracts/investor-reporting/v1/OwnedAnalysisRequest.schema.json",
+   "live_equals": "8c4398e32a",
+   "ahead": [
+    [
+     "7f1135f0ee",
+     "feat(IRPT_BCKEND ~Y W2-06, 2.0.0_SA_COO~Y): the owned request read carries the frozen browser reques"
+    ]
+   ]
+  },
+  {
+   "member": "enforce.py",
+   "source": "infra/aws/lambda/investor-reporting/_authz/enforce.py",
+   "live_equals": "7605bbf5ab",
+   "ahead": [
+    [
+     "8d08ee54e4",
+     "build(IRPT_BCKEND round 37, 0.9.0_WK_IRPT_BCKEND~105 IB-pr-302): the PATH B export pins and renders "
+    ]
+   ]
+  },
+  {
+   "member": "infra/logic/registry/reporting_policies.json",
+   "source": "infra/logic/registry/reporting_policies.json",
+   "live_equals": "11bf813387",
+   "ahead": [
+    [
+     "b77e2af4d5",
+     "registry(X10, IRPT_DASHBD-S12, 4.0.0_SA_CRO): each served reporting file takes a retention family --"
+    ]
+   ]
+  },
+  {
+   "member": "lib/opal_naming.py",
+   "source": "lib/opal_naming.py",
+   "live_equals": "b5dc2e63d1",
+   "ahead": [
+    [
+     "b77e2af4d5",
+     "registry(X10, IRPT_DASHBD-S12, 4.0.0_SA_CRO): each served reporting file takes a retention family --"
+    ]
+   ]
+  },
+  {
+   "member": "owned_requests.py",
+   "source": "infra/aws/lambda/investor-reporting/ops/owned_requests.py",
+   "live_equals": "cee32dcf47",
+   "ahead": [
+    [
+     "7f1135f0ee",
+     "feat(IRPT_BCKEND ~Y W2-06, 2.0.0_SA_COO~Y): the owned request read carries the frozen browser reques"
+    ]
+   ]
+  },
+  {
+   "member": "portfolio.py",
+   "source": "infra/aws/lambda/investor-reporting/intake/portfolio.py",
+   "live_equals": "a42ad6b675",
+   "ahead": [
+    [
+     "1545ec3442",
+     "fix(IRPT_BCKEND ~Y Y-5/Y-4, 2.0.0_SA_COO~Y): a ticker finding carries the file's own symbol as its v"
+    ]
+   ]
+  },
+  {
+   "member": "resident_worker.py",
+   "source": "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py",
+   "live_equals": "8f408b4e14",
+   "ahead": [
+    [
+     "4ed0c7b816",
+     "feat(IRPT_BCKEND ~Y Y-4 enrichment, 2.0.0_SA_COO~Y): the check gate has a per-upload total of 240 s,"
+    ]
+   ]
+  }
+ ],
+ "served_closure": [
+  {
+   "member": "served.py",
+   "pin_sha256": "4a9d374c9806daa9",
+   "live_sha256": "4a9d374c9806daa9",
+   "state": "identical to live"
+  },
+  {
+   "member": "enforce.py",
+   "pin_sha256": "f5681952cb0901f4",
+   "live_sha256": "7d7196406f0a0737",
+   "state": "CHANGED vs live"
+  },
+  {
+   "member": "errors.py",
+   "pin_sha256": "b60f25ccaa706b7a",
+   "live_sha256": "b60f25ccaa706b7a",
+   "state": "identical to live"
+  },
+  {
+   "member": "resolve.py",
+   "pin_sha256": "24b407fa00ff0fc3",
+   "live_sha256": "24b407fa00ff0fc3",
+   "state": "identical to live"
+  },
+  {
+   "member": "grant.py",
+   "pin_sha256": "51785ed4b834b806",
+   "live_sha256": "51785ed4b834b806",
+   "state": "identical to live"
+  },
+  {
+   "member": "report_owner.py",
+   "pin_sha256": "610982ce5bddd38d",
+   "live_sha256": "610982ce5bddd38d",
+   "state": "identical to live"
+  },
+  {
+   "member": "owner_reads.py",
+   "pin_sha256": "f21d26dcce7c46bf",
+   "live_sha256": "f21d26dcce7c46bf",
+   "state": "identical to live"
+  },
+  {
+   "member": "prospect.py",
+   "pin_sha256": "f556b0997dfa7310",
+   "live_sha256": "f556b0997dfa7310",
+   "state": "identical to live"
+  },
+  {
+   "member": "ids.py",
+   "pin_sha256": "f1659861d469c25d",
+   "live_sha256": "f1659861d469c25d",
+   "state": "identical to live"
+  },
+  {
+   "member": "loaders.py",
+   "pin_sha256": "763f0a0d4445481c",
+   "live_sha256": "763f0a0d4445481c",
+   "state": "identical to live"
+  },
+  {
+   "member": "routetable.py",
+   "pin_sha256": "fbd20fb97a64c84c",
+   "live_sha256": "fbd20fb97a64c84c",
+   "state": "identical to live"
+  },
+  {
+   "member": "interactive_access.py",
+   "pin_sha256": "bba07a3f4eeb947b",
+   "live_sha256": "bba07a3f4eeb947b",
+   "state": "identical to live"
+  },
+  {
+   "member": "canonical_profile_reads.py",
+   "pin_sha256": "0ec4a717f2aa2c12",
+   "live_sha256": "0ec4a717f2aa2c12",
+   "state": "identical to live"
+  },
+  {
+   "member": "keys.py",
+   "pin_sha256": "56ee3cc22e802579",
+   "live_sha256": "56ee3cc22e802579",
+   "state": "identical to live"
+  },
+  {
+   "member": "repository.py",
+   "pin_sha256": "f255335beb26f239",
+   "live_sha256": "f255335beb26f239",
+   "state": "identical to live"
+  },
+  {
+   "member": "maintained_sources.py",
+   "pin_sha256": "585950a53879574d",
+   "live_sha256": "585950a53879574d",
+   "state": "identical to live"
+  },
+  {
+   "member": "custody.py",
+   "pin_sha256": "23cda6b0e3dd88df",
+   "live_sha256": "23cda6b0e3dd88df",
+   "state": "identical to live"
+  },
+  {
+   "member": "selection.py",
+   "pin_sha256": "7ba910b85e2fce4f",
+   "live_sha256": "7ba910b85e2fce4f",
+   "state": "identical to live"
+  },
+  {
+   "member": "selection_store.py",
+   "pin_sha256": "583507a70e3a0074",
+   "live_sha256": "583507a70e3a0074",
+   "state": "identical to live"
+  }
+ ],
+ "built": {
+  "members": 114,
+  "differ_from_pin": [],
+  "closure_stale": [],
+  "crlf_members": [],
+  "zip_sha256_b64": "jKsI7pZWzjaTub83yRvk1tass0oiVZkp9jmvr1v9ezQ="
+ }
+}
