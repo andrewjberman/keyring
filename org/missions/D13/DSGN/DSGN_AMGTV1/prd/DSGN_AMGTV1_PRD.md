@@ -5,7 +5,7 @@
  "project": "DSGN_AMGTV1",
  "directive": "D13",
  "fabric": "site-z",
- "prd_version": "v0.14",
+ "prd_version": "v0.15",
  "step": 4,
  "brief_ref": "docs/briefs/dsgn-amgtv1-security-analysis-frontend-brief-20260928.md@08eefaac9d",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21", "FWD-22", "FWD-23", "FWD-24", "FWD-25", "FWD-26", "FWD-27"],
@@ -52,6 +52,14 @@ render the served "not produced yet" reason while that price path waits on Andre
 **v0.14 (2026-10-03 ~20:0xZ):** FWD-5 only, on `3.0.0_SA_CVO~Z` msg 28981. The ACCEPT's word cloud is a plain owed limb, and no face
 shows one. Its producer is AMGT_RESAPP FWD-39 (v0.36), which serves the terms; the page renders them and counts nothing.
 - This is an ENDPOINT change, so the CVO re-signs.
+**v0.15 (2026-10-03 ~22:4xZ):** FWD-1, FWD-4, FWD-13 and FWD-22, on this seat's round-32 grading (`ledger/COMPLETION_GRADES.round32.json`).
+- **The header:** SAUX-03, from Andrew's 2026-10-02 UI/UX walk (folded @CTO_FOLD_SECURITY_ANALYSIS_UIUX_20261002), replaced the
+  four-card header with ONE key-figures row (price, market cap, enterprise value, net debt, beta, average volume, short interest),
+  with no figure twice. The redesign built that row. The fold mapped SAUX-03 to FWD-27 but left "four cards" standing in FWD-1, FWD-4
+  and FWD-13, so the outcomes contradicted the register. They now read the key-figures header.
+- **FWD-22:** its 90/365 limb accepts the interim branch FWD-26 v0.11 already accepts (the served "not produced yet" reason) until the
+  PX_LAST history serves (Andrew's card 4, ~20:3xZ).
+- This is an ENDPOINT change, so the CVO re-signs.
 
 ## ENDPOINT (step 2, /endpoint --forward)
 
@@ -66,7 +74,7 @@ Landed verbatim from `org/tier1_exec/1.0.0_SA_CTO/deliverables/DSGN_AMGTV1_ENDPO
          DONE WHEN  EXERCISED -- one live walk, signed in with a real account,
                     on real data, ending in Valero's Recommendation card open
          ACCEPT     The PM picks Valero out of the list by its company name, reads
-                    its header as four cards and opens the Financials one, opens the
+                    its header's key figures (v0.15: the SAUX-03 row), opens the
                     Thesis and reads it as three cards under the main chart, then
                     opens the Recommendation and can say whose view it is and which
                     document each citation comes from. Any step fed by sample data
@@ -105,13 +113,12 @@ Landed verbatim from `org/tier1_exec/1.0.0_SA_CTO/deliverables/DSGN_AMGTV1_ENDPO
                     view, the per-row sparkline and the highlight chart (fork F1) are
                     removed, not built. Not graded.
 
-  FWD-4  A PM reads a security's headline figures as four cards, each opening
-         to the detail
+  FWD-4  A PM reads a security's headline figures at a glance in the header
          DONE WHEN  EXERCISED -- walked on names in more than one currency
-         ACCEPT     The header holds no more than four cards -- Price, Financials,
-                    Market features, Trading technicals -- each leading with one
-                    figure and opening a window with the rest, and every money figure
-                    is shown in the company's own currency.
+         ACCEPT     (v0.15, SAUX-03) The header holds ONE key-figures row -- price,
+                    market cap, enterprise value, net debt, beta, average volume,
+                    short interest -- every figure at rest, none appearing twice,
+                    and every money figure is shown in the company's own currency.
          SOURCE     brief O4 (:77-82); M7
 
   FWD-5  A PM reads a covered company's story along a timeline
@@ -215,13 +222,13 @@ Landed verbatim from `org/tier1_exec/1.0.0_SA_CTO/deliverables/DSGN_AMGTV1_ENDPO
                     FWD-23's /philosophy family he asked to "keep going with".
   FWD-13 A PM never parses a raw float and can still dispute any headline
          figure
-         DONE WHEN  EXERCISED -- every figure on the four header cards carries
+         DONE WHEN  EXERCISED -- every figure in the header's key-figures row (v0.15) carries
                     its units and tabular numerals, its tooltip carries the
                     figure's plain label and the full-precision value
                     verbatim, the mnemonic travels in the DOM as
                     data-mnemonic and never on the face (v0.7), and price,
                     market cap, net debt, enterprise value, beta and short
-                    interest each sit on one named card
+                    interest each sit in the row once, under its plain label
          ACCEPT     No 161867780096.00003 anywhere; every figure traceable to
                     its field.
          SOURCE     AMGT_RESAPP FWD-22
@@ -337,7 +344,10 @@ Landed verbatim from `org/tier1_exec/1.0.0_SA_CTO/deliverables/DSGN_AMGTV1_ENDPO
                     charts and 0 view toggles; v0.9: at rest it shows the 10
                     largest gainers and the 10 largest losers, the full list
                     opens on demand in the same panel, the face states its window
-                    in words, and no name is clipped without a hover revealing it
+                    in words, and no name is clipped without a hover revealing it;
+                    v0.15: at 90D/365D the face may print the served "not produced
+                    yet" reason instead of bars (FWD-26 v0.11's interim branch)
+                    until the PX_LAST history serves
          ACCEPT     The PM reads the biggest mover first and the sign of each
                     move. Price has this ONE form.
          SOURCE     brief O2; CTO~Z rulings R3, R5
