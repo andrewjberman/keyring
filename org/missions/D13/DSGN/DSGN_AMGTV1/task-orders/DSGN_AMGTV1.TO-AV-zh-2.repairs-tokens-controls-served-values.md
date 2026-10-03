@@ -133,7 +133,7 @@ the tabs (block by block), and any row.
 - **Issuer amendments landed with this issuance:** round29/checks/header/face.cjs (primary ink judged by its own fill; white caught in
   every spelling) and round29/checks/timeline/dayopen.cjs (an href only where a url is served).
 
-<status>pending</status>
+<status>complete</status>
 <round>30</round>
 <slot>~87</slot>
 <fabric>site-z</fabric>

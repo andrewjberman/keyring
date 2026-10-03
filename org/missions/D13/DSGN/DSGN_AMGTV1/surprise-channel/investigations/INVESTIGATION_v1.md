@@ -1260,6 +1260,27 @@
  "spec_asserts": "TO-AV-zg-6 section 1: the Exec and Thesis tabs print no 'No profile', 'no match found' or 'held back uncited' on the face; a Bloomberg-fallback roster never says 'filing' in the management caption.",
  "world_is": "The inherited working tree did not meet that rule on two strings until this session finished the build. The face also bids the fallback caption to append ', the company's filing' while saying a fallback roster never says 'filing'; the build follows the second clause (the caption names only the served source).",
  "notes": "Worker-authored record; form only, no significance judged."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W87-S1",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~87",
+ "surfaced_at": "2026-10-03T01:16Z",
+ "one_line": "AV-zh-2: two shared definitions the order's build needs sit outside its <paths> -- types.ts types CoverageItem.url as `string` (the served overlay now carries null) and constants.ts holds HEADER_FEED_VISIBLE_COUNT = 3 (the order wants at most 2 open news items at rest); the build handled both inside HeaderBrief.tsx.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "portal/src/pages/SecurityAnalysis/types.ts:561-565 @e370eb7c: interface CoverageItem { ... url: string }; the order's build item 4 says the served feed carries url null after RESAPP's redeploy.",
+   "portal/src/pages/SecurityAnalysis/constants.ts:198 @e370eb7c: export const HEADER_FEED_VISIBLE_COUNT = 3; HeaderBrief.tsx now opens Math.min(HEADER_FEED_VISIBLE_COUNT, FEED_OPEN_AT_REST = 2) items at portal 621f553e; shell.harness.cjs (battery29) still green, tsc -b rc=0."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "TO-AV-zh-2 build items 4 and 6: a feed item with no served url prints plain text; at most 2 news items are open at rest.",
+ "world_is": "The shared type still says url is a string and the shared constant still says 3, so another reader of either sees the old contract; HeaderBrief guards the url at runtime (typeof string and non-empty) and takes the smaller of the constant and a local 2. A later cell that owns types.ts and constants.ts can fold both in.",
+ "notes": "Worker-authored record; form only, no significance judged."
 }
 ]
 ```
