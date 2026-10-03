@@ -45,11 +45,11 @@ Graduated here: W5-S1 at the next read rebuild, W5-S2 at the P-2 window's leg A3
     "owner": "2.0.0_SA_COO~P",
     "round": "v12",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~P",
       "round": "v12"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```

@@ -248,11 +248,11 @@ Author: 3.0.0_SA_CVO, 2026-10-02 ~19:5xZ. Graduated at ADJUDICATION_v2.md: 11 ro
     "owner": "2.0.0_SA_COO~P",
     "round": "v6",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~P",
       "round": "v6"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```

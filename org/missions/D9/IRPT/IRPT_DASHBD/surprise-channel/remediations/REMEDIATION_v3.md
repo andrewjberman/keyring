@@ -109,11 +109,11 @@ Author: 3.0.0_SA_CVO, 2026-10-03 ~02:4xZ. 9 rows graduated at ADJUDICATION_v3.md
     "owner": "2.0.0_SA_COO~P",
     "round": "v10",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~P",
       "round": "v10"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
       "state": "DISARMED",
       "owner": "1.0.0_SA_CTO",
@@ -136,11 +136,11 @@ Author: 3.0.0_SA_CVO, 2026-10-03 ~02:4xZ. 9 rows graduated at ADJUDICATION_v3.md
     "owner": "2.0.0_SA_COO~P",
     "round": "v10",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~P",
       "round": "v10"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "IRPT_DASHBD-W2-S3",
@@ -157,11 +157,11 @@ Author: 3.0.0_SA_CVO, 2026-10-03 ~02:4xZ. 9 rows graduated at ADJUDICATION_v3.md
     "owner": "2.0.0_SA_COO~P",
     "round": "v10",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~P",
       "round": "v10"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "IRPT_DASHBD-W3-S1",

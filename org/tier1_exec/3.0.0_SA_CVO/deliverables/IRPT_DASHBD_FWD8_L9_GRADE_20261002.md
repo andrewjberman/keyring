@@ -82,3 +82,35 @@ this seat reads one pair from served gold (`method_version` = 2 on the rows) and
 per-day flows were not re-read. Rows W2-S1..S3 are read at the compile.
 
 -- 3.0.0_SA_CVO
+
+## FWD-8 REALIZED on served gold, 18:5xZ 2026-10-03 (P-2 window `irpt-p2-window-20261003`, leg V's FWD-8 pair)
+
+P-2 is served: the A1-A5 legs rewrote 562 days of `account_return_daily` on method_version 2 and published 6,863 accounts;
+the method row `dim_return_method/method_version=2` landed at 17:50:57Z (~P msg 104695; ledger legs A1-A10, B1 and B2
+closed). PROD portal is 98a98e70 (v2.1.197).
+
+| read (served gold, `opal-data-49financial/irpt/49financial/gold/account_return_daily/`) | result |
+|---|---|
+| 0027265115 2026-06-25..07-06: 7 of 7 trading days, method_version 2 on every row; chained `total_return_daily` 0.027544; Black Diamond 0.022806; 0.4738 pp | equals the round-8 measurement and this seat's silver re-derivation (a108c6bd93) |
+| 0076459710 2026-08-11..08-19: 7 of 7, version 2; 0.037748 against 0.042747; -0.4998 pp | equals round 8 (accrual, stated) |
+| 0084073310 2026-08-21..10-01: 29 of 29, version 2; 0.069120 against 0.068856; 0.0264 pp | equals round 8 (within) |
+| method row: `method_version=2/data.parquet`, 22 columns; sha256 of the sorted `name:type` lines = 73e80ef7.. = contract 0.3.0's `schema_hash`; `tieout_tolerance_proposed` typed double | PASS (row W5-S2's dependency held) |
+
+**FWD-8: REALIZED.**
+- The served figure is the one this seat graded on the method: 10 of 14 pairs within 0.35 pp, and the 4 beyond carry
+  stated non-defect reasons under batches 181, 193 and 195 and C-FEERAIL.
+- The label ("before advisory fees") and C-GUARD were graded earlier.
+- One pair of each kind (beyond-with-reason, accrual and within) was reproduced from served rows.
+
+**Clocks advanced in place (state fields only):**
+- S22 (REMEDIATION_v2): REMEDIATED and closed. Its 1.21 pp pair now serves at 0.4738 pp with the stated reason.
+- W1-S18 (REMEDIATION_v3): REMEDIATED and closed. Version 2 is served, and the closing read named in the row is done.
+- W1-S19 and W2-S3 (REMEDIATION_v3): REMEDIATED and closed. Contract 0.3.0 carries the four columns, and the served row's
+  hash matches it.
+- W5-S2 (REMEDIATION_v4): REMEDIATED and closed (hash above).
+- Not moved: W1-S12, W1-S13, W1-S14, W4-S1 and W4-S2 have their own closing reads, which this seat makes at the window's
+  V leg or the first scheduled fires. W1-S17 closes at A2's read of a short DIV debit in served income, not yet made.
+
+**Limits.** 3 of 14 pairs were re-read from served rows; the other 11 are the round-8 record, on the same method now served.
+
+-- 3.0.0_SA_CVO
