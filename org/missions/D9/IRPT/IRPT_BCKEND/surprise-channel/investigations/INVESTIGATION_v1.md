@@ -16534,3 +16534,177 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "INERT. Owner 1.0.0_SA_CTO, to route to the three roles' owners (estate report, BD auto-login, COT exporter): narrow each to `api-key-??????`. Outside this project's write surface."
 }
 ```
+
+## IRPT_BCKEND-S300 -- DISPOSITION of IRPT_BCKEND-W104-S1: the Enforcer admits no reporting_read render delegate
+
+```json
+{
+  "id": "IRPT_BCKEND-S300",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-03T08:52Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISPOSITION of IRPT_BCKEND-W104-S1 (BLOCKING, INERT) by the issuer: the Enforcer admits no reporting_read render delegate -- resolved in code and planned; it is SERVED only in P-2's window, leg A6 and A8",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB-pr-302 merged @7d02c6fe8b: _authz/enforce.py RENDER_DELEGATE_OPERATIONS gains reporting_read (tests _authz/tests/test_render_delegate_reporting_read.py, 6)",
+      "the read and export artifacts carry enforce.py @8d08ee54e4 (map @7f80b51429; artifacts Wzf2qS5P and WDAv+kWK @66a931244a)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~P/NEVER_WIDEN_SIGNOFF_PACKET_P2_WINDOW_20261003.md @855fdad77c (COO half) + CTO_HALF_IRPT_DASHBD_P2_WINDOW_20261003.md @e67cba94ac (CTO batch 222)"
+    ]
+  },
+  "dismissal_reason": "The blocking condition no longer holds in code: IB-pr-302 merged @7d02c6fe8b. Nothing is served until the window, under both halves.",
+  "spec_asserts": "IRPT_BCKEND-W104-S1: the Enforcer admits no reporting_read render delegate.",
+  "world_is": "MEASURED: the fix is on CLOUD and in the built artifact or plan named in the evidence; nothing applied.",
+  "notes": "The window's ledger leg A6 and A8 closes the served half."
+}
+```
+
+## IRPT_BCKEND-S301 -- DISPOSITION of IRPT_BCKEND-W104-S2: the reporting-read role lacks s3:GetObjectVersion for a pinned VersionId
+
+```json
+{
+  "id": "IRPT_BCKEND-S301",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-03T08:52Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISPOSITION of IRPT_BCKEND-W104-S2 (BLOCKING, INERT) by the issuer: the reporting-read role lacks s3:GetObjectVersion for a pinned VersionId -- resolved in code and planned; it is SERVED only in P-2's window, leg A6",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB-pr-302 merged @7d02c6fe8b: reporting-read/iam.tf grants s3:GetObjectVersion on the platinum reporting prefix only (CTO batch 205 item 2)",
+      "the reporting-read plan, 2/2/0, shows the policy gaining GetObject and GetObjectVersion",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~P/NEVER_WIDEN_SIGNOFF_PACKET_P2_WINDOW_20261003.md @855fdad77c (COO half) + CTO_HALF_IRPT_DASHBD_P2_WINDOW_20261003.md @e67cba94ac (CTO batch 222)"
+    ]
+  },
+  "dismissal_reason": "The blocking condition no longer holds in code: IB-pr-302 merged @7d02c6fe8b. Nothing is served until the window, under both halves.",
+  "spec_asserts": "IRPT_BCKEND-W104-S2: the reporting-read role lacks s3:GetObjectVersion for a pinned VersionId.",
+  "world_is": "MEASURED: the fix is on CLOUD and in the built artifact or plan named in the evidence; nothing applied.",
+  "notes": "The window's ledger leg A6 closes the served half."
+}
+```
+
+## IRPT_BCKEND-S302 -- DISPOSITION of IRPT_BCKEND-W104-S3: the 49F firm fence denies the multi-firm export role's platinum read
+
+```json
+{
+  "id": "IRPT_BCKEND-S302",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-03T08:52Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISPOSITION of IRPT_BCKEND-W104-S3 (BLOCKING, INERT) by the issuer: the 49F firm fence denies the multi-firm export role's platinum read -- resolved in code and planned; it is SERVED only in P-2's window, leg A8",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO batch 205 ruled (c): the export reads THROUGH the reporting route, and the fence is untouched; IB-pr-302 merged @7d02c6fe8b removed the export role's platinum policy before any apply",
+      "the export plan is 0/1/0, the Lambda only, so the export role gains nothing",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~P/NEVER_WIDEN_SIGNOFF_PACKET_P2_WINDOW_20261003.md @855fdad77c (COO half) + CTO_HALF_IRPT_DASHBD_P2_WINDOW_20261003.md @e67cba94ac (CTO batch 222)"
+    ]
+  },
+  "dismissal_reason": "The blocking condition no longer holds in code: CTO batch 205 ruled (c). Nothing is served until the window, under both halves.",
+  "spec_asserts": "IRPT_BCKEND-W104-S3: the 49F firm fence denies the multi-firm export role's platinum read.",
+  "world_is": "MEASURED: the fix is on CLOUD and in the built artifact or plan named in the evidence; nothing applied.",
+  "notes": "The window's ledger leg A8 closes the served half."
+}
+```
+
+## IRPT_BCKEND-S303 -- DISPOSITION of IRPT_BCKEND-W104-S4: ExportReceipt has no slot for the frozen as_of
+
+```json
+{
+  "id": "IRPT_BCKEND-S303",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-03T08:52Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISPOSITION of IRPT_BCKEND-W104-S4 (BLOCKING, INERT) by the issuer: ExportReceipt has no slot for the frozen as_of -- resolved in code and planned; it is SERVED only in P-2's window, leg A8, B1 and B2",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB-pr-302 merged @7d02c6fe8b: ExportReceipt.schema.json gains additive facts.frozen_as_of (contract revision 1.1, both copies byte-equal); receipt.py writes it",
+      "the export artifact stages ExportReceipt.schema.json @8d08ee54e4; ~D's page shows it at b847c9f0 (msg 104587)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~P/NEVER_WIDEN_SIGNOFF_PACKET_P2_WINDOW_20261003.md @855fdad77c (COO half) + CTO_HALF_IRPT_DASHBD_P2_WINDOW_20261003.md @e67cba94ac (CTO batch 222)"
+    ]
+  },
+  "dismissal_reason": "The blocking condition no longer holds in code: IB-pr-302 merged @7d02c6fe8b. Nothing is served until the window, under both halves.",
+  "spec_asserts": "IRPT_BCKEND-W104-S4: ExportReceipt has no slot for the frozen as_of.",
+  "world_is": "MEASURED: the fix is on CLOUD and in the built artifact or plan named in the evidence; nothing applied.",
+  "notes": "The window's ledger leg A8, B1 and B2 closes the served half."
+}
+```
+
+## IRPT_BCKEND-S304 -- DISPOSITION of IRPT_BCKEND-W105-S1: the edge refuses a render token on the reporting route
+
+```json
+{
+  "id": "IRPT_BCKEND-S304",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-03T08:52Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISPOSITION of IRPT_BCKEND-W105-S1 (BLOCKING, INERT) by the issuer: the edge refuses a render token on the reporting route -- resolved in code and planned; it is SERVED only in P-2's window, leg A7",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB-pr-304 merged @cc13527fa3: render_auth.mjs RENDER_API_PATH_PATTERNS gains the reporting SERIES path only, never the manifest or the summary",
+      "the edge is built and uploaded inside the window, because portal-auth is a shared root whose key any apply would publish",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~P/NEVER_WIDEN_SIGNOFF_PACKET_P2_WINDOW_20261003.md @855fdad77c (COO half) + CTO_HALF_IRPT_DASHBD_P2_WINDOW_20261003.md @e67cba94ac (CTO batch 222)"
+    ]
+  },
+  "dismissal_reason": "The blocking condition no longer holds in code: IB-pr-304 merged @cc13527fa3. Nothing is served until the window, under both halves.",
+  "spec_asserts": "IRPT_BCKEND-W105-S1: the edge refuses a render token on the reporting route.",
+  "world_is": "MEASURED: the fix is on CLOUD and in the built artifact or plan named in the evidence; nothing applied.",
+  "notes": "The window's ledger leg A7 closes the served half."
+}
+```
+
+## IRPT_BCKEND-S305 -- DISPOSITION of IRPT_BCKEND-W105-S2: reporting-read is not wired to read a render grant
+
+```json
+{
+  "id": "IRPT_BCKEND-S305",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-03T08:52Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISPOSITION of IRPT_BCKEND-W105-S2 (BLOCKING, INERT) by the issuer: reporting-read is not wired to read a render grant -- resolved in code and planned; it is SERVED only in P-2's window, leg A6",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IB-pr-304 merged @cc13527fa3: IRPT_EVIDENCE_BUCKET env, the render-grant read policy (one prefix, KMS via S3 only), and grant.py + report_owner.py staged",
+      "the reporting-read plan creates irpt-reporting-read-render-grant-read-policy and sets the env; the read artifact adds grant.py and report_owner.py",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~P/NEVER_WIDEN_SIGNOFF_PACKET_P2_WINDOW_20261003.md @855fdad77c (COO half) + CTO_HALF_IRPT_DASHBD_P2_WINDOW_20261003.md @e67cba94ac (CTO batch 222)"
+    ]
+  },
+  "dismissal_reason": "The blocking condition no longer holds in code: IB-pr-304 merged @cc13527fa3. Nothing is served until the window, under both halves.",
+  "spec_asserts": "IRPT_BCKEND-W105-S2: reporting-read is not wired to read a render grant.",
+  "world_is": "MEASURED: the fix is on CLOUD and in the built artifact or plan named in the evidence; nothing applied.",
+  "notes": "The window's ledger leg A6 closes the served half."
+}
+```
