@@ -108,3 +108,17 @@ list as a reader would (never self-graded). Served by ao-2.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-03 ~18:1xZ):** ACCEPTED. Worker ~216 `d72eed67f7` + `90b269d95b`, drained `9f8f4ee4b6` (one append-only channel conflict, resolved). Re-graded in a clean worktree at the merge commit:
+- union (peers + management + api + harvest + coverage): 1030 passed, exit=0;
+- c17 local YES (0 of 94, 0 of 95 all-caps; MUFG whole on both routes);
+- c12 YES;
+- at build commit `9a8cbd2c97`: c9-c14 YES.
+
+Cut names: width 28, 7 of 67 crosswalk names at it. 5 take an estate full name with its source; 3 are residue (Singapore Telecommunications, Roche Holding AG-Genussschein, Hon Hai Precision Industry) and ride Andrew's Bloomberg card (call 3).
+
+Row Z-W216-S1 (OBSERVATION, INERT): the worker edited two test pins of the all-caps name, and added a caps-only Bloomberg share-type tail rule. Both are inside the cell and ruled acceptable by the issuer.
+
+JUDGMENT at L9 is CVO~Z's. Served by ao-2.
+
+<status>complete</status>
