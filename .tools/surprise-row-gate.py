@@ -678,6 +678,53 @@ def _merge_in_progress(root):
     return r.returncode == 0 and bool(r.stdout.strip())
 
 
+def _carried_decision(staged_blob, other_blob, local_commits):
+    """PURE. True iff a merge only CARRIES a channel file (3.0.0_SA_CVO ruling @6166eb7b25,
+    CVO_RULING_ROW_GATE_MERGE_CARRIED_NOT_MADE_20261003.md, on 1.0.0_SA_CTO batch 234 item 4): (a) the merged blob is the
+    OTHER parent's byte for byte, and (b) the local side made no commit to the file since the merge-base. An empty blob id
+    is a read that failed, and a failed read is never "carried"."""
+    return bool(staged_blob) and staged_blob == other_blob and local_commits == 0
+
+
+def _carried_from_other_parent(root, rel):
+    """(carried, other_side_commits) for ONE channel file on a merge in progress; (False, []) on anything else.
+
+    WHY (0.0.0_AB_MSTR 104796/104801): the laptop's pull of origin was refused because origin had mutated and deleted
+    AMGT_HARVST rows on Andrew's site-Z order ("summarily delete this context rot"). The laptop made no commit to those
+    files, so the merge did not make the change; it only carried it, and on a merge there is no override path (see the
+    BLOCKED print in main). Fail-closed: a conflicted index entry (stage != 0), any git error or an unparseable answer
+    returns not-carried, and the change is refused exactly as before. COST: five git reads, only when the mutation limb
+    already fired on a merge. NON-APPLICATION: every non-merge commit; a file the merge made or a conflict resolved; a file
+    the local side also touched."""
+    if not _merge_in_progress(root):
+        return (False, [])
+
+    def _git(*args):
+        r = subprocess.run(["git"] + list(args), cwd=root, capture_output=True, text=True, encoding="utf-8",
+                           errors="replace", timeout=30)
+        return r.returncode, r.stdout.strip()
+
+    try:
+        rc1, staged = _git("ls-files", "-s", "--", rel)          # "<mode> <sha> <stage>\t<path>", one line when resolved
+        rc2, other = _git("ls-tree", "MERGE_HEAD", "--", rel)     # "<mode> blob <sha>\t<path>"
+        rc3, base = _git("merge-base", "HEAD", "MERGE_HEAD")
+        if rc1 or rc2 or rc3 or not base or "\n" in staged:
+            return (False, [])
+        rc4, local = _git("rev-list", "--count", "%s..HEAD" % base, "--", rel)
+        rc5, theirs = _git("log", "--format=%h", "%s..MERGE_HEAD" % base, "--", rel)
+        if rc4 or rc5:
+            return (False, [])
+        sp, op = staged.split(), other.split()
+        s_sha = sp[1] if len(sp) >= 3 and sp[2] == "0" else ""
+        o_sha = op[2] if len(op) >= 3 and op[1] == "blob" else ""
+        n_local = int(local)
+    except Exception:  # noqa: BLE001
+        return (False, [])
+    if not _carried_decision(s_sha, o_sha, n_local):
+        return (False, [])
+    return (True, theirs.split())
+
+
 def _plane_patterns(kind):
     """The documents that share ONE id sequence: the investigation plane (investigations + the CVO's adjudications) or
     the remediation plane. ACROSS planes ids collide BY DESIGN (a remediation row bears its graduated item's id)."""
@@ -2251,7 +2298,21 @@ def check_file(root, rel):
     if folder_kind == "ADJUDICATION" and "ADJUDICATION" not in os.path.basename(rel).upper():
         v.append("%s: a file under adjudications/ is named ADJUDICATION_v<N>.md (annex 4a); this one is not" % rel)
     # RC2: grade what happened to the rows that ALREADY EXISTED, before grading the new ones.
-    v.extend(_mutation_violations(rel, head, staged))
+    _mut = _mutation_violations(rel, head, staged)
+    # A MERGE THAT ONLY CARRIES A ROW CHANGE NOTES IT (3.0.0_SA_CVO ruling @6166eb7b25): only the mutation and deletion
+    # findings convert, and only when the whole file is the other parent's and this side never touched it. A duplicate-id
+    # finding stays a violation.
+    _md = [x for x in _mut if re.search(r"EXISTING row \S+ was (DELETED|MUTATED)", x)]
+    if _md:
+        _carried, _theirs = _carried_from_other_parent(root, rel)
+        if _carried:
+            _ids = sorted({m.group(1) for x in _md for m in [re.search(r"EXISTING row (\S+) was", x)] if m})
+            notes.append("%s: MERGE CARRIES %d row change(s) it did not make -- NOTED, not refused (3.0.0_SA_CVO ruling "
+                         "@6166eb7b25): the merged blob equals MERGE_HEAD's and this side made 0 commits to the file since "
+                         "the merge-base. Rows: %s. Other-side commits: %s"
+                         % (rel, len(_md), ", ".join(_ids), ", ".join(_theirs[:20]) or "<none listed>"))
+            _mut = [x for x in _mut if x not in _md]
+    v.extend(_mut)
     added = [r for r in new_rows if r.get("id") not in old_ids]
     # FUTURE-DATED STAMP DISCLOSURE (2026-10-02, 1.0.0_SA_CTO~Z on 3.0.0_SA_CVO~Z msg 28369): a NEW row whose surfaced_at is
     # more than 10 min after the commit time is a typed or projected stamp, and it moves every watermark and cursor that
@@ -2451,6 +2512,17 @@ def _self_test(root):
         txt = open(p, encoding="utf-8").read() if p else ""
         return txt
     arms = [
+        # MERGE CARRIED, NOT MADE (3.0.0_SA_CVO ruling @6166eb7b25): the pure decision and its three narrowness arms.
+        ("MERGE CARRIED: merged blob equals the other parent's and the local side made 0 commits -> carried (noted)",
+         lambda: _carried_decision("a1b2c3", "a1b2c3", 0) is True),
+        ("MERGE CARRIED NARROWNESS: the local side also touched the file -> NOT carried (refused)",
+         lambda: _carried_decision("a1b2c3", "a1b2c3", 1) is False),
+        ("MERGE CARRIED NARROWNESS: the merged blob differs from the other parent's (merge-made or conflict-resolved) -> NOT carried",
+         lambda: _carried_decision("a1b2c3", "a1b2c4", 0) is False),
+        ("MERGE CARRIED fail-closed: a failed blob read (empty id) -> NOT carried",
+         lambda: _carried_decision("", "", 0) is False),
+        ("MERGE CARRIED off a merge: no MERGE_HEAD -> NOT carried, without reading anything",
+         lambda: (_merge_in_progress(root) or _carried_from_other_parent(root, "x/INVESTIGATION_v1.md") == (False, []))),
         # THE HONOUR AUDIT LINE (2026-09-11, 0.0.0_AB_MSTR 95721): the gate records every override it honours.
         ("honour audit line: written with the HONOURED token, agent, reason and UNVERIFIED provenance",
          lambda: (lambda t: "SURPRISE-ROW-OVERRIDE-HONOURED  9.9.9_XX_TEST  reason=why: repro  provenance=UNVERIFIED-BY-GATE" in t
