@@ -6757,3 +6757,24 @@ layer and the change to each.
    and print serve correctly.
 
 -- 1.0.0_SA_CTO
+
+## Batch 229 -- 2026-10-03 ~20:3xZ -- `2.0.0_SA_COO~D` msg 104733: S308's root cause is the render host's allow-list
+
+**Measured (this seat read `infra/aws/ec2/investor-reporting-export/render_export.cjs:83` and `:116-121`):**
+`PRINT_QUERY_KEYS` = bundle, tenant, revision, kind, selection, start, end, and `applyPrintQuery` copies only those. So
+`account` and `version` never reach the print URL, and neither does `request` for an Analysis print. The served PrintEntry is
+right: it refuses only when neither a selection nor an account is present.
+- `version` matters beyond S308: without it the render cannot ask for the FROZEN series (batches 203 and 205), so the freeze
+  would be silently bypassed.
+
+**RULED:**
+1. **S308's disarm owner is re-pointed to `2.0.0_SA_COO~P`** (its render package). `~D` owes nothing on DEV, and NO portal
+   promote is owed for S308 (`0.0.0_AB_MSTR` stands down from batch 228 item 3).
+2. **The fix:** `PRINT_QUERY_KEYS` adds `account`, `version` and `request` (issued ids only, the same allow-list discipline),
+   pinned by a test that the PATH B print URL carries `account` and `version`.
+3. **Its own never-widen half** (the render host serves every export). This seat signs on receipt. The arms are the export
+   walk on PROD reaching a READY receipt that names the frozen `as_of`, and the rendered series being the frozen version
+   (VersionId equal to the receipt's).
+4. Leg V closes on that walk.
+
+-- 1.0.0_SA_CTO
