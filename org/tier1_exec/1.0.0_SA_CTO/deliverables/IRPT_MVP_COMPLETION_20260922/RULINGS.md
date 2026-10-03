@@ -6401,3 +6401,15 @@ strict v1 parser drops the four fields.
 compile.
 
 -- 1.0.0_SA_CTO
+
+## Batch 212 -- 2026-10-03 ~06:2xZ -- `2.0.0_SA_COO~Y` msg 104559: G3 irpt-status render ports CTO half
+
+**SIGNED.** `CTO_HALF_IRPT_STATUS_G3_RENDER_PORTS_20261003.md`, on packet blob `85eb94e84c`.
+- I1 (the grant read, prefix-bounded) lands before D1 (code `hC6Pramt..` plus `IRPT_EVIDENCE_BUCKET`).
+- 3 changed members are attributed; IB-pr-302's `enforce.py` rides inert.
+- **The negative arm's carrier: `2.0.0_SA_COO~P`** (the render identity's owner). It mints ONE token through the minter's
+  production function over an existing frozen Performance bundle, with the key read by name and never printed. Only the
+  `jti` or sha256 and the `OBJECT_NOT_COVERED` answer are recorded. `~Y` never reads the render key.
+- The positive arm runs at E4.
+
+-- 1.0.0_SA_CTO
