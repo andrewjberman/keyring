@@ -28,7 +28,7 @@
 
 ## Named, and accepted
 
-- **`finbert_sentiment.py` ships inside the artifact while FWD-16 is HELD on the publisher-terms card.** That is acceptable only
+- **`finbert_sentiment.py` ships inside the artifact.** That is acceptable only
   because no route reaches it: it is imported lazily inside `build_mention`, a producer, so no publisher text is processed at request
   time. **Condition:** the post-act record prints the import-graph proof, i.e. the route modules' imports and none reaching
   `finbert_sentiment` (a static census of the packaged route entry points). It is not asserted from the half's prose alone.

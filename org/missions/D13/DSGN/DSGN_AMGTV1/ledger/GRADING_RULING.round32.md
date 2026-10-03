@@ -26,7 +26,3 @@ outcomes COVERED, 114 of 114 task orders terminal with a valid proof.
 - **COVERED: 27 of 27; proved: 114 of 114** (the report's own denominators, accepted).
 - **Grades:** none new. `COMPLETION_GRADES.round26.json` remains the current grade file (21 REALIZED, 0 NOT_REALIZED, 2
   NOT_EVALUATED, 1 RETIRED) for PROD's lineage.
-
-**Noted for the next PRD touch:** the PRD's FWD-5 word-cloud qualified wait (v0.12) names "the terms card". That card is closed by
-Andrew's ~17:3xZ word. The wait now rides his answer on the FWD-16/17 FinBERT hold (COO~H's question). The wording moves at the
-next PRD edit; the wait itself is unchanged.

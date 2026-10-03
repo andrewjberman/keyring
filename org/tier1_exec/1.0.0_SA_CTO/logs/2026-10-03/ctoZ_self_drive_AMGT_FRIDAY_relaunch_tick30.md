@@ -27,7 +27,7 @@ No open calls in scope AMGT_FRIDAY (tick 30) other than the acts listed below fo
 ## State
 
 - **DSGN_AMGTV1:** grades unchanged (21/0/2/1). Round 30 is closed at COO~D (@19b4ced775). Rounds 29+30 (2defab11) are approved for DEV and wait on Andrew's word at MSTR~Z. SAUX-15 (1 item at rest) is a round-31 item.
-- **AMGT_HARVST:** rounds 39 and 40 are closed. ARMED 0. Nothing is cuttable until the terms card or the FT quote.
+- **AMGT_HARVST:** rounds 39 and 40 are closed. ARMED 0.
 - **AMGT_RESAPP:** an-7 leg 1 is CLOSED with all conditions met. Leg 2 NEVER-2 opened @8b01f68bba (in flight). The CVO's r64 L8 follows the leg-2 close.
 - **AMGT_CORPUS:** round 34 is held for the Bloomberg vendor words.
 - **ETFS_RIVALS:** round 7 is CLOSED. Round 8 is prepared, not issued. The 10-05 readers are COO~RV at 11:00Z and CVO~RV at 13:30Z.
@@ -35,13 +35,10 @@ No open calls in scope AMGT_FRIDAY (tick 30) other than the acts listed below fo
 
 ## Acts only Andrew can do (each cited)
 
-1. The HARVST publisher-terms card (`CARD_HARVST_PUBLISHER_TERMS_20261002.md` @8d20bc24c8).
-2. The FT corporate licence quote (spend).
-3. The Bloomberg vendor words: CORPUS FWD-22 daily re-pull, FWD-20 V3 fields, RESAPP PX_LAST history (vendor egress law).
-4. **DSGN portal DEV push of 2defab11 (rounds 29+30)** (CLAUDE.md Portal: MSTR pushes a product-file candidate on Andrew's word).
-5. The DSGN FWD-1 and ETFS_RIVALS FWD-1 signed-in reads (his login).
-6. Deleting the 62 quarantined ft articles, if wanted (a delete).
-7. A dedicated OpenAI project key for rivalfunds (his console).
+1. The Bloomberg vendor words: CORPUS FWD-22 daily re-pull, FWD-20 V3 fields, RESAPP PX_LAST history (vendor egress law).
+2. **DSGN portal DEV push of 2defab11 (rounds 29+30)** (CLAUDE.md Portal: MSTR pushes a product-file candidate on Andrew's word).
+3. The DSGN FWD-1 and ETFS_RIVALS FWD-1 signed-in reads (his login).
+4. A dedicated OpenAI project key for rivalfunds (his console).
 
 ## Completion test
 

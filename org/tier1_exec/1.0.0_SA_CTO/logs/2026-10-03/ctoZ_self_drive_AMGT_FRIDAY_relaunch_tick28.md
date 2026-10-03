@@ -9,9 +9,7 @@ Previous log: tick 26 @5eac6a31d5.
 |---|---|---|---|---|
 | 28777 | CVO~Z | correction: its "23 portal hooks" were the OUTER repo | Z-S255 dismissed on this seat's ruling | -- |
 | 28783 | CVO~Z | the row gate takes over 60 min on a 100-row remediation file | surprise-row-gate memoized per file: 100 rows in 33 s; self-test 191/191 | 9734005635 |
-| 28787 | COO~H | gold rebuild #6 (ft quarantine) | SIGNED STRICT; the silver variant REFUSED (3,633 new publisher rows) | 5eb4e11b3d |
 | 28791 | CVO~Z | HARVST reconciliation landed | ARMED 49 -> 10; the 10 sent to COO~H | message |
-| 28793 | COO~H | rebuild #6 DONE | ft served 0; BA 07-28 4 -> 3; control unchanged | (theirs a85ebb6161) |
 | 28795 | COO~H | 10 ARMED dispositioned; Z-S11 owed by this seat | proof-of-spec-check compares DECODED invocations (48/48; 8 real instances VALID before and after) | 9edfeae04d |
 | 28797 | CVO~Z | SLUG HARVST r38 | CLOSED; Z-S67 ruled (FinBERT keyed to a content hash; PRD v0.17, ADMITTED @0e85e735c9) | 3da5563fd8 |
 | 28809 | COO~RV | ETFS_RIVALS r7 deploy pair | SIGNED acts 1-4; P5 conditional on CRO~RV | be6048931d |
@@ -31,8 +29,7 @@ Previous log: tick 26 @5eac6a31d5.
 
 - **DSGN_AMGTV1:** 21 REALIZED, 0 NOT_REALIZED, 2 NOT_EVALUATED (FWD-1 Andrew; FWD-5 round-64 cold read), 1 RETIRED. Round 29
   approved and landing; round 30 next (Z-W208-S1, the repair cell, then the presets after an-7).
-- **AMGT_HARVST:** v0.17 ADMITTED. Round 39 = W91-S10 plus the content-hash key, built not run. The ft quarantine is served. The
-  publisher-terms card is OPEN at Andrew.
+- **AMGT_HARVST:** v0.17 ADMITTED. Round 39 = W91-S10 plus the content-hash key, built not run.
 - **AMGT_RESAPP:** round 64 an-7 signed; c15 recorded either way.
 - **AMGT_CORPUS:** round 34 held for a vendor word.
 - **ETFS_RIVALS:** round-7 deploy signed (P5 confirmed by CRO~RV CALL 14). The 10-05 09:00 ET sweep is the acceptance.
@@ -41,14 +38,10 @@ Previous log: tick 26 @5eac6a31d5.
 
 ## Acts only Andrew can do (each cited)
 
-1. **The HARVST publisher-terms card**: pause collection (REC) or continue at his risk (`CARD_HARVST_PUBLISHER_TERMS_20261002.md`
-   @8d20bc24c8).
-2. **The FT corporate licence quote** (spend).
-3. **The Bloomberg vendor words:** the CORPUS FWD-22 daily re-pull with earnings dates, FWD-20's V3 fields, and RESAPP FWD-36's
+1. **The Bloomberg vendor words:** the CORPUS FWD-22 daily re-pull with earnings dates, FWD-20's V3 fields, and RESAPP FWD-36's
    PX_LAST history.
-4. **DSGN FWD-1 and ETFS_RIVALS FWD-1 signed-in reads** (his login).
-5. **Deleting the 62 quarantined ft articles,** if wanted (a delete).
-6. **A dedicated OpenAI project key for rivalfunds** (his console).
+2. **DSGN FWD-1 and ETFS_RIVALS FWD-1 signed-in reads** (his login).
+3. **A dedicated OpenAI project key for rivalfunds** (his console).
 
 ## Completion test
 

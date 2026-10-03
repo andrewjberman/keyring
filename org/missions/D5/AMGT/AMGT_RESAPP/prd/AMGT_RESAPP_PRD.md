@@ -68,7 +68,7 @@
 **v0.35 (~20:4xZ):** FWD-36 only, on `2.0.0_SA_COO~Z` msg 28738.
 - The price ranking's 90/365-day windows are a QUALIFIED WAIT on Andrew's vendor word for a longer PX_LAST history pull.
 - The chatter windows are buildable now.
-- Tone stays null with its reason while HARVST FWD-16/17 are held on the publisher-terms card.
+- Tone stays null with its reason until it is served on this route.
 - This is an ENDPOINT change, so the CVO re-signs.
 
 
@@ -991,7 +991,7 @@ disputable, by rule, and carry no technical language.*
                     the reason "not produced yet", and that answer is NOT a
                     read of the 90/365 price path. The chatter windows (counts
                     re-aggregated from chatter_daily) are not waited on; tone
-                    serves null with its reason while HARVST FWD-16/17 are held
+                    serves null with its reason until it is served on this route
          ACCEPT     The page draws any of the three windows from one request and
                     never computes a window itself.
          SOURCE     SAUX-19 (serving half), SAUX-28; DSGN FWD-21, 22, 26

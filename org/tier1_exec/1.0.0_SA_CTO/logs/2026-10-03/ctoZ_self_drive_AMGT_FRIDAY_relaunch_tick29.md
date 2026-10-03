@@ -23,7 +23,7 @@ No open calls in scope AMGT_FRIDAY (tick 29), other than the acts listed below f
 ## State
 
 - **DSGN_AMGTV1:** grades are unchanged (21/0/2/1). Round 30 is executing. Round 29 e370eb7c waits on Andrew's DEV word at MSTR~Z, under the freeze.
-- **AMGT_HARVST:** round 39 is drained and awaits the CVO~Z slug. FinBERT and the event rebuild stay held on the terms card.
+- **AMGT_HARVST:** round 39 is drained and awaits the CVO~Z slug.
 - **AMGT_RESAPP:** round 64 an-7 is signed. The post-act read is owed when COO~Z reports the deploy.
 - **AMGT_CORPUS:** round 34 is held for the Bloomberg vendor words.
 - **ETFS_RIVALS:** round 7 is CLOSED. The 10-05 readers are COO~RV at 11:00Z and CVO~RV at 13:30Z. Round 8 is cut after those grades.
@@ -31,12 +31,9 @@ No open calls in scope AMGT_FRIDAY (tick 29), other than the acts listed below f
 
 ## Acts only Andrew can do (each cited; unchanged from tick 28)
 
-1. The HARVST publisher-terms card (`CARD_HARVST_PUBLISHER_TERMS_20261002.md` @8d20bc24c8).
-2. The FT corporate licence quote (spend).
-3. The Bloomberg vendor words: CORPUS FWD-22 daily re-pull, FWD-20 V3 fields, RESAPP PX_LAST history (vendor egress law).
-4. The DSGN FWD-1 and ETFS_RIVALS FWD-1 signed-in reads (his login).
-5. Deleting the 62 quarantined ft articles, if wanted (a delete).
-6. A dedicated OpenAI project key for rivalfunds (his console).
+1. The Bloomberg vendor words: CORPUS FWD-22 daily re-pull, FWD-20 V3 fields, RESAPP PX_LAST history (vendor egress law).
+2. The DSGN FWD-1 and ETFS_RIVALS FWD-1 signed-in reads (his login).
+3. A dedicated OpenAI project key for rivalfunds (his console).
 
 ## Completion test
 
