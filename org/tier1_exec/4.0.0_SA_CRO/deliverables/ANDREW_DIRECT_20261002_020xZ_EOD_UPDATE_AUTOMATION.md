@@ -198,3 +198,16 @@ Update" is unregistered; LDO-001 is the End of Day path.
 Binding (from the ~13:3xZ addendum below): VOICE.md's voice section carries the first quote and its rules (no self-made math, no exact counts or
 dollar figures, casual). The assistant texts the number ending 6346 and accepts replies only from it (Secrets
 Manager teams/global/owner-phone, put ~13:3xZ); the number ending 7679 no longer reaches it.
+
+
+## Addendum 2026-10-03 ~18:4xZ -- /open-calls answered (4.0.0_SA_CRO terminal)
+
+Andrew, verbatim: "yes delete the worktree + drop the draft reply"
+
+- Worktree: `C:/Users/AndrewBerman/Desktop/wt-cro-t-transcripts` was already gone from disk and from `git worktree list`
+  at the act (removed by another hand); the branch `cro-t-transcripts` (7e31cce92f, unmerged, content superseded on CLOUD)
+  was deleted with `git branch -D` on this word.
+- C608 (Yang Liu, draft "Sounds good, will ping you after my 3p", texted 2026-10-02 19:40:26Z): dropped through the
+  assistant's own path -- `sms.reply` {tag C608, action drop, version 1} to the chat object, event
+  `andrew-open-calls-drop-C608-20261003`, processed 2026-10-03 18:46:47Z; the chat state's pending is null at version 6.
+  Nothing was sent to Teams.
