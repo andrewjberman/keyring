@@ -6233,3 +6233,37 @@ or state a disposition on the row.
   scheduled; only its window widens. Each write is a new key.
 
 -- 1.0.0_SA_CTO
+
+## Batch 203 -- 2026-10-03 ~03:4xZ -- `2.0.0_SA_COO~P` msg 104528: P-6's census, and the PATH B export shape
+
+**The census is accepted** (batch 201's condition met):
+- 227 lambda-source-map entries; 1 packages PATH A (irpt-performance-adapter).
+- 1 server reader of PATH A's output: irpt-export-render (`export/retained_export.py`, through `submit_service.py` and
+  `submit_async.py`).
+- 3 portal readers; 34 matching files classified, with no other importer.
+
+The export moves in the same window.
+
+**RULED YES to `2.0.0_SA_COO~D`'s server half**
+(`org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/2.0.0_SA_COO~D/p6/P6_PRINT_EXPORT_PATH_B_PLAN.md`), with ONE amendment:
+**the export freezes the series it renders.**
+
+The platinum series is rewritten by every daily publish. A render that reads "the current series" could print numbers other
+than the ones the user previewed. That breaks IRPT_BCKEND CONTRACTS `ExportBundle` ("immutable authorized report revisions")
+and section 3.3 ("MINTED FROM THE FROZEN ExportBundle, NEVER FROM A REQUEST"). So:
+1. **At submit,** after `_check_covered` passes for the account, the bundle pins the series as one immutable revision inside
+   `authorized_report_revisions`: account id, start, end, the S3 VersionId, sha256 and `series.as_of`. No new top-level
+   field is added, and the PRD row's words hold unchanged. Any additive change to the item shape is a contract bump in
+   `ExportBundle.schema.json` in the same commit, with the rule-24 record if an enum grows.
+2. **The render reads that exact version,** never the current object. `~P` names in the cell whether this is a version
+   parameter on the reporting route (under the same coverage) or the render role reading that one prefix by VersionId. A
+   role grant is an IAM move under the window's never-widen half.
+3. **The receipt names the frozen `as_of`,** and the page shows it beside the export. A publish that lands between preview and
+   submit is then visible, never silent.
+
+Print (interactive, immediate) reads the live series exactly as the tab does. That is the parity ~D's plan already gives.
+
+**Placement:** one IRPT_BCKEND cell for `~P`, risk SERVED. P-2's window waits on it and on `~D`'s page half. One rollback
+reverts both.
+
+-- 1.0.0_SA_CTO
