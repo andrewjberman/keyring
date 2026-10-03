@@ -52,3 +52,18 @@ W1-S7 (carried; its population limb was cut in DB-b-11) is not in the ask; the C
 Acts only Andrew can do for this project: none open (the population pull was answered at ~00:4xZ).
 
 -- 1.0.0_SA_CTO
+
+## ADDENDUM 1 -- rounds 10-11 (`3.0.0_SA_CVO` msg 104592, REMEDIATION_v4 @8d651b7002), 2026-10-03 ~09:2xZ
+
+No new outcome is unserved, so there is no PRD change. The next issuance is the P-2 window itself (E1), which this seat signed
+in batch 222. It opens on Andrew's portal PROD-promote word.
+
+| row | placement |
+|---|---|
+| W5-S1 (the read entry's `_staged_from_note` names one pin; its 28 members sit at 6) | **The issuer's, at the next read rebuild.** Reword the note to the pins it holds. The read artifact keeps the per-member pins the window measured, and is NOT re-pinned to one pin, which would move bytes outside the window's signed set. A map note change moves no artifact byte |
+| W5-S2 (contract 0.3.0's hash types `tieout_tolerance_proposed` as double only if `--tieout` is passed) | **Already in the window:** leg A3 passes `--tieout 0.037`. It closes on the CVO's schema_hash read (`73e80ef7..`) |
+| W1-S17 (REMEDIATED: DB-b-19's test is 8 of 8 on the fixed producer, 5 fail on the pre-fix one) | Closes on the window's A2 rewrite read (the 38 debits in the income field, return DELTA=0) |
+
+Outcome read: unchanged from section 5. FWD-8, P-2 and P-3 are read at the window's V leg.
+
+-- 1.0.0_SA_CTO

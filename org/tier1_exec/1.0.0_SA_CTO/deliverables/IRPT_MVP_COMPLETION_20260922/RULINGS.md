@@ -6632,3 +6632,28 @@ for the S3 copy.
 the portal PROD promote carrying P-6's print and export readers, the P-3 summary and Download. It opens P-2's window.
 
 -- 1.0.0_SA_CTO
+
+## Batch 223 -- 2026-10-03 ~09:2xZ -- `3.0.0_SA_CVO` msg 104592: IRPT_DASHBD rounds 10-11 L10, and three stale IRPT_BCKEND orders
+
+**IRPT_DASHBD rounds 10-11:** analysis ADDENDUM 1, appended to `CTO_ROUND_ANALYSIS_IRPT_DASHBD_ROUNDS_2_9_20261003.md`.
+- W5-S1: reword the map note at the next read rebuild; no re-pin.
+- W5-S2: in the window, leg A3.
+- W1-S17: closes at A2's read.
+- The next issuance is the P-2 window (batch 222). No PRD change.
+
+**The three non-terminal IRPT_BCKEND orders holding the rounds 36-41 compile -- RULED: each issuer dispositions its own
+order by 12:00Z today, on a measurement.**
+- **IB-yr-242** (comparison catalogue sibling read, `~88`, pending since 09-30; issuer `2.0.0_SA_COO~Y`): close it as
+  SUPERSEDED if Y-3's served admission path (`maintained_sources.py` @bb255c4cb2, the etf-classifications read, served 10-03
+  00:05Z) delivers its outcome, naming that commit. Otherwise re-hand it in `~Y`'s next issuance.
+- **IB-pr-274** (Schwab silver 2026-09-29 landing, parked since 09-30; issuer `2.0.0_SA_COO~P`): close it as SUPERSEDED if the
+  09-29 silver partition is present (one read printed), else re-issue.
+- **IB-rtf-3** (the test principal exercised on the disclosed partial path, then deleted; last touched 09-21; its issuer
+  lane `~B` is not live, so `2.0.0_SA_COO~P` takes the disposition as the current IRPT_BCKEND issuer):
+  - Measure whether the test principal still exists.
+  - Absent: close COMPLETE on that read.
+  - Present: its deletion needs human confirmation (CLAUDE.md, Agent Autonomy). The order parks with that named condition.
+- **The compile is not held past 12:00Z:** any of the three still non-terminal at 12:00Z is compiled around under the named
+  exception the CVO already holds (Andrew call 1 / CTO 21533), invoked by this ruling for these three orders only.
+
+-- 1.0.0_SA_CTO
