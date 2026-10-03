@@ -1,0 +1,2 @@
+Sids ['ConsumeTheGenerationQueue', 'JobStateAcceptanceAndRetainedIndexes', 'TransactionalPublication', 'RetainVendorPdfEvidenceAndCertifiedAnalysis', 'ReadFrozenCompositionAndNormalizedInput', 'ReadTheEstateKimiKey', 'ReportEncryptionViaS3ForResidentFamiliesOnly']
+ReadTheEstateKimiKey Resource [['arn:aws:secretsmanager:us-east-1:313476888478:secret:astn/kimi/api-key-??????']]

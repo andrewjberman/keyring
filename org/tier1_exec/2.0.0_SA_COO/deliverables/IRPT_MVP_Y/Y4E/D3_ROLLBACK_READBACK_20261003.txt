@@ -1,0 +1,6 @@
+after rollback: ReadTheEstateKimiKey Resource [['arn:aws:secretsmanager:us-east-1:313476888478:secret:astn/kimi/api-key-*']]
+after the D3 rollback at 2026-10-03T05:18:31Z
+the estate Kimi secret   suffix-len 6 -> allowed
+a sibling name           suffix-len 12 -> allowed
+running root /opt/irpt-resident/828c37c6f7-st17
+queue irpt-generation 0/0
