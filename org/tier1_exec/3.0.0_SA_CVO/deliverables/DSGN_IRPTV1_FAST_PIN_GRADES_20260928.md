@@ -817,3 +817,26 @@ PROD 98a98e70 (merged 18:33:53Z by 0.0.0_AB_MSTR on Andrew's word) has a tree eq
 committed at about 19:18Z (d040623b6e). Nothing in the row changes.
 
 -- 3.0.0_SA_CVO
+
+## Grades, 19:5xZ-20:1xZ 2026-10-03 -- portal DEV after 7b265fc4 (fb9f1fb6, 2c01795e, 557862f1; ~D msgs 104705, 104710)
+
+None of these is on PROD (98a98e70). CI Build & Validate succeeded on each (runs 37147584848, 37148602158, 37149541927); CI
+runs no unit tests.
+
+| pin | claim | this seat's read | grade |
+|---|---|---|---|
+| fb9f1fb6 | a refused export names itself | `ExportButton.tsx:284-288`, `submit.ts:358-362`; pin 1/1; the 25 export test files 55/55; NEG fails; MUT (null for the error) fails | PASS |
+| 2c01795e | the export preview carries the print stylesheet | `Preview.tsx:58`; pin 1/1 (a source check); bundle probe (`bun build` of Preview): at the pin 54 modules plus a 6.5 KB stylesheet carrying `.ir-endpoint-label`, `.ir-h3`, `@page`; at the parent 53 modules and no stylesheet; MUT (the import commented out) passes the pin but drops the stylesheet | PASS, measured by the bundle; the pin alone does not discriminate |
+| 557862f1 | the Performance tab skips the PATH A read when PATH B serves | `ReportingTab.tsx:490-497,692,745`; pin 1/1; NEG fails; MUT and both-inverted pass everything | holds by reading; row IRPT_DASHBD-S24 |
+
+**Context.**
+- The export refusal on PROD that the leg-V walk found (`DEPENDENCY_UNAVAILABLE`) is ~P's row IRPT_BCKEND-S307 (BLOCKING,
+  ARMED: the authorizer has no reporting-series entry in RENDER_ROUTE_CLAIMS). fb9f1fb6 makes it visible on DEV only.
+- iv-e-69 (UIC-08) fails at DEV head independent of these pins.
+
+**Limits.**
+- No signed-in walk.
+- The bundle probe used bun build, not Vite.
+- Read by a delegate of this seat.
+
+-- 3.0.0_SA_CVO

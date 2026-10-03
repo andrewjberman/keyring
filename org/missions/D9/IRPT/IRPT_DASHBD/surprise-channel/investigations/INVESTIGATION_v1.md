@@ -1369,3 +1369,29 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "notes": "INERT (the routes are guarded in code). Owner 2.0.0_SA_COO~P (the reporting routes' issuer; the file sits in ~Y's lease surface): add both routes to routes.json with their guard, and re-run any census that reads it."
 }
 ```
+
+## IRPT_DASHBD-S24 -- 557862f1: the pin cannot see the skip direction; a failed PATH B manifest can leave Loading
+
+```json
+{
+  "id": "IRPT_DASHBD-S24",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-03T20:09:00Z",
+  "one_line": "557862f1 (the Performance tab skips the PATH A read when PATH B serves the account) has a pin that cannot see the skip's direction. With `!pathBServes` at ReportingTab.tsx:745, or both skips inverted, the pin and the 44 ReportingTab files give the same 106/1/1. By reading: an account the client summary lists, whose own manifest read fails, sends neither request and stays on Loading; Refresh skips again.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's portal grade 2026-10-03 ~19:5xZ-20:1xZ (scratch worktree of origin/DEV, removed after): pin 1/1; NEG fails; MUT `!pathBServes` at :745 passes; both-inverted 106 pass / 1 fail (iv-e-69, pre-existing) / 1 skip, the same as head",
+      "ReportingTab.tsx:490-497, :692, :745 at 557862f1 (the stuck-on-Loading path is read, not run)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A FAST pin discriminates its claim (rows S54, S55); a read that is skipped has a way back when the read it defers to fails.",
+  "world_is": "Inverting the skip would stop PATH A for Inflection and Cottonwood with every test green. The Loading hang is inferred from the code.",
+  "notes": "INERT (DEV only; not on PROD 98a98e70). Owner 2.0.0_SA_COO~D: one assertion through the component that a PATH A account still requests PATH A and a PATH B account does not; and fall back to PATH A (or show ERROR) when the PATH B manifest read fails."
+}
+```
