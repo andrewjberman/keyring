@@ -137,10 +137,13 @@ Opal-branded report.
 
 ## PART V -- WHAT MUST BE TRUE, WITHOUT SCOPING IT NOW
 
-- **Andrew's word on research calls.** His standing word covers Analysis runs one at a time with the queue empty
-  (2026-09-27; 2026-10-02 ~18:1xZ). Whether it covers research calls outside the job queue is his call (open).
-- **The subscription terms.** Whether YCharts-computed figures may appear in an Opal-branded document is Andrew's call
-  (open). O3 and O6 depend on it; O1, O2 and O5 do not.
+- **Andrew's word on research calls -- ANSWERED.** Andrew, 2026-10-03 ~17:3xZ, verbatim: "COO~Y and any underlying
+  agents have whitelisted egress to YCharts." The word's scope is `2.0.0_SA_COO~Y` and its underlying agents, as he
+  stated it; a seat outside that scope making YCharts calls needs his word. Record:
+  `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/ANDREW_DIRECT_20261003_173xZ_YCHARTS_EGRESS_WHITELIST_AND_SUBSCRIPTION_CLEARED.md`
+  @`ce20ca6854`.
+- **The subscription terms -- ANSWERED.** Andrew, same record, verbatim: "Regarding subscription issues, yes we are
+  cleared for use." O3 and O6 are no longer held on it.
 - **A live session that survives the run.** One session per account, shared with Andrew's browser (S233). A WAF
   challenge can cost it. The research call rate has to stay inside what the WAF tolerates.
 - **No secret in any artifact.** Responses are kept with cookies, tokens and credentials scrubbed; none enters a commit.
@@ -176,7 +179,7 @@ Measured from the request file @`ee801b0505`, read 2026-10-03 17:2xZ:
 - **YCharts' calculation time is unmeasured**, and the 15 m is inferred, not measured, to be mostly Opal's wait (F7).
   Whether an Opal-built document is faster depends on it and on the data calls' own WAF tolerance. No time target is
   set here.
-- **The subscription terms were not read.**
+- **The subscription terms were not read by this seat.** Andrew cleared their use on his own word (PART V).
 
 ---
 
@@ -190,6 +193,7 @@ Measured from the request file @`ee801b0505`, read 2026-10-03 17:2xZ:
   SIBLING PROJECTS  IRPT_BCKEND (~Y Analysis workstream); the Opal gateway YCharts integration; the IRPT export/render path; X10 register
   PRIOR ART         recipe.py seven steps + templates.json (F1); gateway YCharts data tools (F3); export bundle brand revision (F4);
                     X10 families (F5); 2026-09-11 captures and variant proof (F6)
-  OPEN FOR ANDREW   (1) does the standing YCharts word cover research calls; (2) do the subscription terms permit Opal-branded output
+  OPEN FOR ANDREW   NONE -- both answered 2026-10-03 ~17:3xZ (egress whitelisted for 2.0.0_SA_COO~Y and its underlying
+                    agents; subscription cleared): ANDREW_DIRECT_20261003_173xZ_YCHARTS_EGRESS_WHITELIST_AND_SUBSCRIPTION_CLEARED.md @ce20ca6854
   MEASURED AT       2026-10-03 17:2xZ (request file read; recipe.py, integration.py, bundle.py, X10 row read at CLOUD HEAD)
 ```
