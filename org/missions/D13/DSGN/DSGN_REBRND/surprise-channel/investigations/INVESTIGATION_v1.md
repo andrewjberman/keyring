@@ -1531,6 +1531,78 @@
     "spec_asserts": "The design law: text on a dark panel meets 4.5:1; named layers separate visibly.",
     "world_is": "One ink falls just under the floor on the new rung and the subtotal band is harder to see than before. Measured by arithmetic on the CSS values, not on a rendered page.",
     "notes": "INERT: DEV only (PROD dcdc89b1 does not carry the pins). Owner 2.0.0_SA_COO~D: raise the dash ink (white/70 clears 4.5 by the same arithmetic, to be measured) and add one contrast assertion for the E4 rungs."
+  },
+  {
+    "id": "DSGN_REBRND-S6",
+    "project": "DSGN_REBRND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~D",
+    "surfaced_at": "2026-10-03T00:25:00Z",
+    "one_line": "Ruling on DSGN_REBRND-W2-S8 (this seat's, per 1.0.0_SA_CTO batch 80 item 10, with the round 3 E4 contrast table in hand): the five canon hexes never move; on /positioning every canon mark sits on the band, where each clears 4.5:1 as text and 3:1 as a graphic, and a highlighted name keeps its canon colour on a band ground.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~D",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "walk 20261003T000242Z (local, signed in, GET-only, walker --contrast-table): 316 interactive text pairs on /positioning (Models Portfolio and Custom, ETFs, Satellites), 0 under their bar",
+        "computed, WCAG 2.1 relative luminance, on the band rung (221 67% 12%): UST #f97316 6.33, ST #f59e0b 8.26, INT #10b981 7.0, LT #3b82f6 4.83, ULT #ef4444 4.72; on the body rung LT read 4.08 and ULT 3.99 (walk 20261002T233417Z)",
+        "portal 44d6a215 panels/PositioningSummary.tsx HEADER_HOVER_GROUND: the hovered name takes --layer-strip as its ground; Andrew-direct 2026-09-15 (quoted in shared/bookColors.ts): a highlighted name uses its canonical colour"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Disarms DSGN_REBRND-W2-S8 for /positioning: the lock holds (no hex moved) and no canon pair on the page is under its bar; the condition on LIGHT grounds is DESIGN.md C4 (every canon mark carries its rung label or sits beside a legend entry, model names in navy ink), enforced by each page's own cells.",
+    "spec_asserts": "TO-RB-s-7 Amendment 1 A locks the five canon values; the contract commits to SC 1.4.11 (3:1 for a graphical object) and SC 1.4.3 (4.5:1 for text).",
+    "world_is": "On the band the five hexes clear both bars. On the body (18%) two fall under 4.5 as text, so a canon-coloured name is never drawn on the body: its highlighted state supplies the band as its ground. On white three fall under 3:1, which C4's label rule answers.",
+    "notes": "Corrects this seat's first reading in portal 661e49b3 (the hover colour removed), which contradicted Andrew's 2026-09-15 word; 44d6a215 restored it on a band ground."
+  },
+  {
+    "id": "DSGN_REBRND-S7",
+    "project": "DSGN_REBRND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~D",
+    "surfaced_at": "2026-10-03T00:25:00Z",
+    "one_line": "Ruling on DSGN_REBRND-W1-S11 (this seat's, batch 80 item 10): the dark-mode accent conflict is latent -- no code path selects dark mode -- and splitting the accent into a fill token and an ink token is the precondition of shipping a dark-mode toggle.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~D",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "census over portal/ (node_modules excluded): 'dark-mode' appears in 3 files only -- src/index.css, design/themes/opal-capital.css, design/OPAL_CAPITAL_LIGHT_DARK_SYSTEM.md; no source file adds the class, and no theme switch sets it (ThemeProvider/useTheme/prefers-color-scheme census: PageThemeProvider only, which sets a page accent, not a mode)",
+        "design/OPAL_CAPITAL_LIGHT_DARK_SYSTEM.md lists 'Implement dark mode toggle component' as an unchecked item",
+        "W1-S11's own arithmetic: white-on-accent needs accent luminance <= 0.1833 and accent-on-band needs >= 0.2002 -- no single value"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Disarms DSGN_REBRND-W1-S11 as latent: no user can select the dark mode today, so no pair is served. RULING for the day a toggle is built: the accent splits into an accent-fill token (white text on it, luminance <= 0.1833) and an accent-ink token (on the dark band, luminance >= 0.2002); the toggle does not ship without the split.",
+    "spec_asserts": "RB3-AC7: every text/background pair, including in the selected dark mode, meets SC 1.4.3.",
+    "world_is": "The dark-mode CSS exists but nothing selects it; the light world (the only one served) passes both accent pairs (6.52 and 6.03 per W1-S11's own notes).",
+    "notes": "Route for the split when a toggle is ordered: the accent vocabulary (R5) owner; this row is the precondition's carrier."
+  },
+  {
+    "id": "DSGN_REBRND-S8",
+    "project": "DSGN_REBRND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~D",
+    "surfaced_at": "2026-10-03T00:25:00Z",
+    "one_line": "DSGN_REBRND-S5 remedied on portal DEV b23917f7: the holdings table's band dash ink is white/70 (5.13:1 on the selected rung, 6.91 on the tile), pinned by iv-e-152, which reads the rungs from index.css and the inks from the table.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~D",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal b23917f7 (origin DEV, ls-remote read 00:2xZ): HoldingsBreakdownTable.tsx band dash 'text-white/70'",
+        "iv-e-152: dash on tile 6.91, dash on selected 5.13, subtotal label on tile 10.29, ink on selected 8.50; CONTROL white/60 on selected fails; a planted mutant (white/60) fails arm (a)",
+        "walk 20261003T001748Z (local, signed in, GET-only): /positioning's FIXED INCOME TOTAL row, the dash legible on the tile band"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Disarms DSGN_REBRND-S5: remedied (the dash clears 4.5:1 on every E4 rung) and pinned. The subtotal band's separation is the named-layer table's own tile step (1.22:1 lightness over the body) with its 2px rule; not changed.",
+    "spec_asserts": "The design law: text on a dark panel meets 4.5:1; named layers separate visibly.",
+    "world_is": "The dash reads 5.13:1 on the selected rung and 6.91 on the tile.",
+    "notes": "S5 stays filed as it is (append-only); this row is its remedy record."
   }
 ]
 ```
