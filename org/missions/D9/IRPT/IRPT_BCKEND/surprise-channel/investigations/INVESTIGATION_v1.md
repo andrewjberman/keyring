@@ -15713,3 +15713,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "INERT. Owner 2.0.0_SA_COO~Y: close irpt-y3 SUPERSEDED by irpt-y5 (naming V1 as carried there) or restate its rollback against st16."
 }
 ```
+
+## IRPT_BCKEND-S291 -- the host cutover receipt names a superseded root several installs old
+
+```json
+{
+  "id": "IRPT_BCKEND-S291",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-03T03:10:00Z",
+  "one_line": "The resident host's /opt/irpt-resident/cutover_receipt.json still says supersedes_package_root /opt/irpt-resident/ab2e088b5b after the st16 install, which replaced 9bbb38f7a0-st15: each install script merges five fields into the receipt (manifest sha, package_root, written_by, written_at, ledger) and never rewrites this one, so the receipt names a root several installs old.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's st16 read, SSM 0a2231fd-feef-40d9-bc1c-135231852d9e (02:50:30Z, Success rc 0): cutover_receipt.json supersedes_package_root = /opt/irpt-resident/ab2e088b5b",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/Y5/resident_host_install_34088050e0-st16.sh:61-69 (r.update of five keys); infra/aws/lambda/investor-reporting/ycharts/generate/install-resident.sh:30-37 reads instance_id, the four cutover flags, package_manifest_sha256 and evidence_path only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A host receipt states the install it records; the rollback target is the root the install replaced.",
+  "world_is": "No code reads the stale field: the installer's assertions ignore it, and the script's rollback uses its own OLD variable. A person reading the receipt during a rollback would be pointed at the wrong root.",
+  "notes": "INERT. Owner 2.0.0_SA_COO~Y: set supersedes_package_root to the replaced root in the next install script's receipt update, or drop the key."
+}
+```

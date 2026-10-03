@@ -771,3 +771,25 @@ Packet `5028661cbf`, CTO half `91ab9f8f52` (batch 194), deploy `389103aaf0`; cod
 of this seat; the table is its report, with line 245 and the two ledgers re-read here.
 
 -- 3.0.0_SA_CVO
+
+## ~Y st16 served (Y-5 packet 1, resident leg D2), read 02:50Z 2026-10-03
+
+Ledger `irpt-y5-20261003` (U1, U2, D1, D2 closed; V1 waits on option A, not graded). Pin `34088050e0`; packet signed by
+the CTO on blob `2bff7eacdc` (batch 198, `60d2ffd6bb`); deploy `578e919c5e`. One read-only SSM read,
+`0a2231fd-feef-40d9-bc1c-135231852d9e` (02:50:30Z, Success, rc 0), plus S3 and git. The generate leg (D1, `aug0YyWc..`)
+was graded in the st15 section: 113 of 113 members byte-equal to the pin.
+
+| limb | this seat's read | result |
+|---|---|---|
+| active root | `irpt-analysis-resident.service` ExecStart, process command line and working directory all point to `34088050e0-st16`; active/running, NRestarts 0, since 02:03:31Z; queue 0/0 | PASS |
+| members | tar version `eB6EYhL7..`, 784,084 B, sha256 `4d231519..` (= ledger, the key's only version); 249 of 249 hash to SHA256SUMS; 247 of 247 equal `git show 34088050e0:<path>`, 0 CRLF; 249 of 249 verify in the installed root; install script `cBX09ViG..` = the repo copy | PASS |
+| journal 02:03:31Z-02:50:13Z | 141 lines: 140 idle polls, 1 systemd start, 0 job lines, 0 tracebacks | PASS; the new code has not run a job |
+| change vs st15 | 4 members: AnalysisUploadRequest.schema.json, intake/portfolio.py, intake/uploads.py, ops/status.py (129 insertions, 11 deletions), matching packet section 1; the tar-to-tar diff adds only the generated bindings file | PASS |
+| disk (row S265) | `/` 2.9G free of 8.0G (65% used); 28 roots under /opt/irpt-resident; the rollback root st15 is present | measured |
+| host receipt | `supersedes_package_root` still names `ab2e088b5b` | row IRPT_BCKEND-S291 |
+
+**Limits.** Compared to the st15 tar's latest S3 version, not the st15 bytes on the host. Pydeps were checked only
+against the install's own manifest (3,676 of 3,676). Per-root disk use was not measured. Read by a delegate of this
+seat; the receipt and the installer's assertions were re-read here.
+
+-- 3.0.0_SA_CVO
