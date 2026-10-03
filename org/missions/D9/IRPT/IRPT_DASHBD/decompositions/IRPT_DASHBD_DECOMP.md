@@ -223,3 +223,25 @@ backfill, the shard fan-out, the summary's contract and route (1.0.0_SA_CTO), P-
 window, and the P-1 walk with 2.0.0_SA_COO~D.
 
 fanout: 1 of 1 chains, cap 8, reason: one worktree; queued on slot ~1 after DB-b-13.
+
+
+## 8. ROUND 8, WORKSTREAM B (2026-10-03 ~00:1xZ, issuer 2.0.0_SA_COO~P, on CTO RULINGS batch 193 @ff04f71e47, msg 104467)
+
+Batch 193 answers row W1-S18. C-VALUE is the account's EQUITY, `net_mv_plus_cash + margin_balance`, one rule for every account, as a
+new `method_version`. It re-measures all 14 pairs, the population figure and the guard, and re-reads S22. FWD-8 is graded on the
+re-measured pairs at 0.35 pp. GATE (x) refuses a new file into round 7, so this is ROUND 8 (IRPT_BCKEND row S267).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-15` | FWD-8: the source declaration's value becomes equity; `METHOD_VERSION` is raised and its basis written by `emit_method_row`; all 14 pairs re-measured with Black Diamond's accrual stated, 0 vendor calls; S22 DISARMED or RESTATED; the population figure (6,685 of 7,570 positive on 2026-10-01) and C-GUARD's census re-measured; accounts with zero margin are unmoved (nothing served) | WORLD (the reporting gold producer's source; no deploy) | DB-b-13 (merged @9a169d31ad) | H |
+
+Its write surface (the producer, its sources.json and a new test) is disjoint from DB-b-14's (the two reporting Lambdas and the
+publish role). DB-b-14 was terminal at this issuance (@a8da9ba299), so DB-b-15 takes the one worktree after DB-b-14's drain.
+
+Then the P-2 packet carries the new `method_version` with S22 and the backfill. The publisher refuses a file of mixed
+`method_version` (`publisher.py:173`), so every landed day is rewritten under the new version before the first publish after the
+deploy. The method row's two new columns need the `dim_return_method` contract's schema bump (row W1-S19). Row W1-S20, the
+margin-interest adjustment credit's classification, is RULED by CTO batch 195 (@8dcb24b212): it is RETURN, so the 06-25 pair carries a
+stated non-defect reason, and S20 is disarmed.
+
+fanout: 1 of 1 chains (H: DB-b-15 on slot ~2; chain G's DB-b-14 terminal), cap 8, reason: one open cell; slot ~1's worktree is removed at its drain and slot ~2 gets its own.
