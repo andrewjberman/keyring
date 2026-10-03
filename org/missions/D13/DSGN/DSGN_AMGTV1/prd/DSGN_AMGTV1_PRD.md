@@ -5,7 +5,7 @@
  "project": "DSGN_AMGTV1",
  "directive": "D13",
  "fabric": "site-z",
- "prd_version": "v0.11",
+ "prd_version": "v0.12",
  "step": 4,
  "brief_ref": "docs/briefs/dsgn-amgtv1-security-analysis-frontend-brief-20260928.md@08eefaac9d",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21", "FWD-22", "FWD-23", "FWD-24", "FWD-25", "FWD-26", "FWD-27"],
@@ -44,6 +44,8 @@ register `docs/briefs/amgt-security-analysis-ui-findings-20261002.json` (36 SAUX
 - A null served tone reads "no clear tone", apart from the neutral centre, which agrees with HARVST FWD-17.
 **v0.11 (~20:5xZ):** FWD-26 only, on `3.0.0_SA_CVO~Z`'s note (msg 28745), to keep DSGN in step with RESAPP v0.35. Price's 90D/365D
 render the served "not produced yet" reason while that price path waits on Andrew's vendor word.
+**v0.12 (~00:1xZ 10-03):** FWD-5 only, on `3.0.0_SA_CVO~Z` msg 28829. The word-cloud limb is OWED as a QUALIFIED WAIT on the
+publisher-terms card (it is derived from harvested publisher text). It is not retired.
 
 ## ENDPOINT (step 2, /endpoint --forward)
 
@@ -127,6 +129,13 @@ Landed verbatim from `org/tier1_exec/1.0.0_SA_CTO/deliverables/DSGN_AMGTV1_ENDPO
                     - article rows read headline, publisher and time at rest.
                     Earnings markers render the served marker, or its designed
                     empty state while the producer has none (the fold record).
+         v0.12      The ACCEPT's word cloud "from its own coverage" is OWED,
+                    not retired, and is a QUALIFIED WAIT: it is derived from
+                    harvested publisher text, which the HARVST publisher-terms
+                    card (CARD_HARVST_PUBLISHER_TERMS_20261002.md, open at
+                    Andrew) holds; until his word, FWD-5 grades without that
+                    limb and says so, and no face shows a word cloud built
+                    from publisher text
          SOURCE     brief O5 (:84-88); M8, M15; UI/UX brief O2, O3 (SAUX-06..15)
 
   FWD-6  A PM reads the Thesis as three cards and can trust where each line
