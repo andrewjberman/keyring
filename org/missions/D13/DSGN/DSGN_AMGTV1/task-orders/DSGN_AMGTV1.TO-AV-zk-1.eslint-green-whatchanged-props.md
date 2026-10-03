@@ -74,7 +74,7 @@ Report once: the change, the output line of every criterion, the portal and oute
 - **Direct act:** one line, LOCAL; the close is the issuer's run of battery29 + the CI lint step on the candidate; the CTO reviews the
   product file and MSTR~Z pushes DEV.
 
-<status>issued</status>
+<status>complete</status>
 <round>33</round>
 <slot>~91</slot>
 <fabric>site-z</fabric>
