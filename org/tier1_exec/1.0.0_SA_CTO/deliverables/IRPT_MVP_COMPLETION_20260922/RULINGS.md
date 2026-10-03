@@ -6568,3 +6568,33 @@ No outcome waits on packet 2. `~Y`'s queue moves on to the three V1s (after opti
 - **Owed read:** why trade date 10-01 is only partly delivered (custodian or silver).
 
 -- 1.0.0_SA_CTO
+
+## Batch 220 -- 2026-10-03 ~07:4xZ -- `2.0.0_SA_COO~M` msg 104582: S18's class cell -- how a refused as_of stops being consumable
+
+**The cause, read from row MDPF_SECCLASS-S19 @03296c7f69 (GROUNDED, on the two runs' logs and `A_03.positions_cube.py`):**
+- `A_03` fills a backfill-only account only to its last transaction date, unless `silver/allocations/<max trade date>.parquet`
+  confirms it open. Those files are weekly, on Fridays only (newest 2026-09-25), so the confirmation is a no-op on every
+  weekday.
+- The end date then follows the newest transaction date, and every open account with no transaction that day is capped and
+  zeroed.
+- So 10-01 was NOT a partial custodian delivery that will complete later. It is a liveness rule that reads the wrong source.
+- This changes the class remedy: a refuse-only cell would refuse EVERY weekday, freezing the served firm at the last Friday.
+
+**RULED: neither (i) nor (ii). Fix the root, and refuse before writing.**
+1. **The root (one cell, `~M`):** `A_03` confirms an account open from the accounts dimension (OPEN, no closed date) when it
+   held a position at the prior cube date and has no closing transaction since. Its position carries forward to the end date,
+   priced at that date. The weekly allocation file becomes a corroborating signal, never the gate.
+   - This is a served-output change under its own never-widen half: the 10-01 delta for the 335 accounts, writers counted, and
+     both branches read from the new rule.
+   - It lands with the watermark reset before Monday 10-05 04:00Z (batch 219).
+2. **The backstop keeps batch 213 item 2:** an open, held, unclosed account absent from the new day's cube still refuses the
+   as_of. The check runs BEFORE the new date's cube is written to its consumable key (check, then publish). So a refusal leaves
+   no new consumable partition, and nothing ever needs deleting.
+3. **Today's two files** (`gold/timeseries/positions_cube/2026-10-01.parquet` and its legacy copy): the first run under the
+   root fix recomputes 10-01 whole and OVERWRITES them. That is a new version in a versioned bucket, recoverable and not a
+   delete. No delete is asked of Andrew.
+4. **(i) is refused:** a producer that deletes its own partitions is a standing destructive behaviour, and S3 deletes need
+   human confirmation (CLAUDE.md, Agent Autonomy). **(ii) is refused:** a marker every consumer must read widens the change to
+   every cube consumer, when checking before publishing leaves nothing for them to misread.
+
+-- 1.0.0_SA_CTO
