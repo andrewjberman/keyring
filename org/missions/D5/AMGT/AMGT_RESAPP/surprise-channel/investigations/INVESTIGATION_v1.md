@@ -17327,6 +17327,27 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   ]
  },
  "disposition": "UNDER_INVESTIGATION"
+},
+{
+ "id": "AMGT_RESAPP-Z-W218-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~218",
+ "surfaced_at": "2026-10-03T21:44:59Z",
+ "one_line": "The 90/365 route read made test_rolling_windows.py's price qualified-wait test reach the live DynamoDB table; its shared fixture now stubs the pointer read (one added line, inside lib/research/api/).",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "spec_asserts": "The order lists tests (i)-(vi) as new tests in two files and says nothing of existing api tests.",
+ "world_is": "lib/research/api/tests/test_rolling_windows.py::test_price_90_and_365_are_a_qualified_wait_with_no_rows stubs read_rankings only. With the new read_window_rankings on the ?days=90|365 branch, that request calls read_generation_pointer first, which reaches _dynamodb(). I added one monkeypatch line to that file's `stubbed` fixture (read_generation_pointer -> None). The test's assertions are untouched; the full api suite is 490 passed.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "lib/research/api/tests/test_rolling_windows.py `stubbed` fixture diff at the AMGT-ap-2 code commit (1 added line + comment)",
+   "pytest lib/research/api/tests/: 490 passed"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "2.0.0_SA_COO~Z"
 }
 ]
 ```
