@@ -632,3 +632,34 @@ Positioning.tsx, PageEnd.tsx and its test), not this read. Contrast is arithmeti
 moved to c9d303db during the read, not graded.
 
 -- 3.0.0_SA_CVO
+
+## Grades, 03:5xZ-04:4xZ 2026-10-03 -- portal DEV items 89, 89 follow-up, 90, 91, DSGN_REBRND E2, IRPT_DASHBD S20 fix
+
+Graded at origin/DEV `84f2424f` in a scratch worktree (removed after; Test-Path False). CI ("Build & Validate") runs
+lint, provenance, typecheck and build, and no unit tests.
+
+| pin | claim | this seat's read | grade |
+|---|---|---|---|
+| b66b6dac (item 89) | the prospect upload and submission carry `selected_tenant` | `investor-reporting.ts:1085`; iv-e-151 3/3; NEG (client half) fails; NEG (composer call sites) 16/16 still pass; CI 37074525848 success; on PROD | PASS on a test run (client half only); row S55 |
+| 39aa21c2 (89 follow-up) | the composer takes the tenant from the selected scope | `AnalysisTab.tsx:225`; no test; scratch render `data-tenant-known` yes, reverted no; CI 37076948990 success; on PROD | PASS by render; row S55 |
+| c9d303db (REBRND E2 contract) | DESIGN.md C10 gains the PAGE END | `DESIGN.md:387-401`; no test reaches it; CI 37085750211 success; not on PROD | NOT_EVALUATED |
+| 8526dacb (REBRND E2) | /positioning ends on its PAGE END | `PageEnd.test.tsx` 2/2; mutants on the date format and `data-page-end` fail; NEG (page wiring) still 2/2, so the render carries the wiring: scratch render ends "End of Positioning.", reverted does not; CI 37086651757 success; not on PROD | PASS on a test run + PASS by render |
+| c32ef52a (item 90) | a NAME_PROXY finding is answered by re-posting with corrections | iv-e-153 4/4; NEG 2 fail; mutants on the gate and the 20-item cap fail; MUT on the re-post line passes 4/4; CI 37088374567 success; not on PROD | PASS on a test run; the re-post NOT_EVALUATED (row S55) |
+| de3eca94 (item 91) | holdings asks for the TARGET fold, shown apart, never summed | iv-e-154 and 5 re-goldened files 22/27, the 5 reds also red with the pin reverted (routes.json 19 vs client table 18); NEG and 4 mutants fail; CI 37090356749 success; not on PROD | PASS on a test run |
+| 84f2424f (IRPT_DASHBD S20) | the picker and the body read one date, `series.as_of` | iv-e-156/139 and fe-s-30 13/13; NEG 2 fail; MUT (picker reads `manifest.as_of`) fails; no `manifest.as_of` read left in `src`; CI 37092338048 success; not on PROD | PASS on a test run; S20's remedy landed on DEV: remediation state OPEN -> REMEDIATED in REMEDIATION_v2, closed stays false until PROD carries it |
+| full suite | -- | DEV head 1052 pass / 34 fail / 2 errors (1113 tests); the 7 pins' non-test changes reverted: 1037 / 45 / 6; 0 tests fail at head and pass reverted; the pins add no failure | -- |
+
+**Known classes, not new rows:**
+- A full `bun test` rewrites tracked wire files through iv-e-26 (row W41-S2).
+- A CRLF checkout fails iv-e-116's source check: 66 fail / 18 errors, against 34 / 2 on the committed LF bytes (rows W4-S3,
+  W26-S2).
+
+**Limits.**
+- Static render only; no clicks and no live page.
+- The workspace contracts are CLOUD HEAD's committed bytes.
+- DEV moved to 936424c3 / 209e4903 during the read, not graded.
+- `git -C portal status --porcelain`: 19 lines before, 15 after. The difference is ~D's own two commits; the reflog shows
+  no write by this seat.
+- Read by a delegate of this seat.
+
+-- 3.0.0_SA_CVO

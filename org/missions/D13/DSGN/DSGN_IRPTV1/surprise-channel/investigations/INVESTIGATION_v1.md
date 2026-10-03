@@ -3495,3 +3495,28 @@
   "notes": "INERT: the code on DEV is right by this seat's render. Owner 2.0.0_SA_COO~D: one assertion each through the component (SecurityList with a stale choice; ProspectComposer's generate payload)."
 }
 ```
+
+## DSGN_IRPTV1-S55 -- items 89 and 90: the tests pass with the claim reverted (S54 class)
+
+```json
+{
+  "id": "DSGN_IRPTV1-S55",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-03T05:00:00Z",
+  "one_line": "Row S54's class recurs on items 89 and 90: with the composer's three call sites reverted, b66b6dac's tests still pass 16 of 16; 39aa21c2 has no test (41 of 41 pass across the 18 files that name AnalysisTab with it reverted); and with c32ef52a's re-post line mutated (withCorrections -> uploadAttempt) iv-e-153 still passes 4 of 4.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's portal grade 2026-10-03 03:5xZ-04:4xZ, scratch worktree of origin/DEV 84f2424f, removed after: NEG and MUT runs as stated; a scratch render shows 39aa21c2's behaviour differs (data-tenant-known yes vs no), so the code is right and the tests are blind"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A FAST item's own test discriminates the claim it lands with (row S54).",
+  "world_is": "The client half of item 89 is tested; the composer wiring (89 and its follow-up) and item 90's corrected re-post are not. A regression in any of them passes the suite, and CI runs no unit tests.",
+  "notes": "INERT (DEV only; b66b6dac and 39aa21c2 are on PROD 6169edd9). Owner 2.0.0_SA_COO~D: with S54, one assertion each through the component -- the composer's tenant on upload and submit, and the re-post payload carrying the corrections."
+}
+```
