@@ -1660,3 +1660,26 @@ A later round may retire month mode together with those checks.
 made no call from ~01:57Z to ~16:2xZ. The issuer wrote the checks, and the two workers run on the Sonnet model override.
 (Stamp correction: the issuance commit 812179b412 says "~02:2xZ" and this section first said "~03:0xZ". Both were
 written without reading the clock; the issuance landed at 16:39Z.)
+
+## v32 -- ROUND 32 (issuer, 2026-10-03 17:36Z) -- ONE DIRECT ACT: THE LEAD PANEL'S WORDS AT EVERY WINDOW (PRD v0.13 @e398ee2294)
+
+**Rectangle:** the round-31 close's enrichment list (ROUND31_CLOSE.md section 4, @b742fd0687). The base is portal 76a15c1b, which the
+CTO APPROVED (msg 28898, ledger @f722662a3f).
+
+| cell | serves | owned files | worker |
+|---|---|---|---|
+| `AV-zj-1` REPAIRS (batched, direct act) | FWD-27 one date format, no system words; FWD-26's faces | `components/LeadPanel.tsx`, `components/ChatterBubbles.tsx`, `components/GenerationCaption.tsx` | ~90 |
+
+**What it repairs:**
+- the Chatter footer prints `as_of` in words;
+- an unserved Price window draws no "Source: ... payload" line;
+- "this period" becomes "in this window";
+- the stale `ground="band"` comment goes (row Z-W88-S1).
+
+**Check:** `round32/checks/repairs/words32.cjs` reads 1/4 at base 76a15c1b (its arms 1-3 fail as expected; the 4 KEEP checks exit 0
+there). AC2 = `round29/checks/battery29.sh` with no skip.
+**Not cut:**
+- Printing the served `window_note` (CTO note, msg 28898, not blocking): the note carries ISO dates, and FWD-27 wants words. The
+  caption's composed "since <date>" says the same thing.
+- A bubble hover's served `places_moved_reason` ISO date stays as served (C-PRESENTATION-ONLY, CTO ruling (b)).
+**Fan-out:** 1 of 1. **Risk:** LOCAL. **Direct act:** one small cell (/dispatch Step 2).
