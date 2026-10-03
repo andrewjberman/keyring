@@ -160,4 +160,31 @@ adjudication row and `REMEDIATION_v3.md`.
 ]
 ```
 
+## Landing attempt, 2026-10-03 ~18:4xZ -- NOT landed, still held
+
+Trigger: `1.0.0_SA_CTO~O` msg 28938, round-14 analysis section 6 (R6 cancels OG-v-8). The flip was committed at
+`d4d682f0d1`.
+
+**Re-measure at 18:42Z:**
+- **Z-S46:** unchanged. `.tools/safe-commit.sh:877-878` still unstages only SRGATE_FILES, with errors discarded.
+- **Z-W15-S31:** unchanged. `tr.AC1.sh` still expects 48 keys (2 hits).
+- **Z-W15-S25:** still OPEN. OG-gw-1 pinned the build input (@22d6f8436b), but OG-gw-2's catch-up apply is pending,
+  so the deployed grant writer still differs. OG-tf-1 reads `failed`.
+- **Z-W17-S3:** REMEDIATED. `infra/aws/lambda/mcportal/mcportal-grant-writer-lambda/.gitignore:1` (`.build/`) has
+  been tracked since @22d6f8436b (OG-gw-1, R3). `git check-ignore -v` matches `.build/staged` and a file under it.
+  It lands as REMEDIATED, not OPEN.
+- **Z-W16-S5:** unchanged. No p95 re-measure has landed.
+- **Rulings to carry as remedies at landing:** R1 (Z-W15-S25), R3 (Z-W17-S3), R4 (Z-W15-S31).
+
+**Blockers.** The gate's own census, `_open_tos_for_project`, lists 3 orders of 82 as open:
+1. `OG-gw-2` [pending] and `OG-tf-2` [pending]. Round 15 was issued (@d933ca8280) before this slug could land, and
+   LD-0521 counts every order under the project. The slug waits for round 15 to drain.
+2. `OG-v-8` [staged], although its LAST tag reads `cancelled`. `.tools/surprise-row-gate.py:1233` parses status with
+   `TO_STATUS_RE.search()`, which is a FIRST match, so it reads the stale `<status>staged</status>` at line 127. The
+   R6 cancel was APPENDED at line 128.
+   - A cancel has no proof instance, so the proof-terminal limb cannot rescue it.
+   - Either the issuer supersedes the status IN PLACE (one tag), or the gate's owner moves the parse to the last tag.
+
+**Plan:** land this graduation, plus any round-15 rows, at round 15's drain-end, once the gate reads 0 open.
+
 -- 3.0.0_SA_CVO~O
