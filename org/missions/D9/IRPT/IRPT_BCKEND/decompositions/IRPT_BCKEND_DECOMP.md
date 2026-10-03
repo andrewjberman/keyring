@@ -1556,3 +1556,16 @@ All are under one never-widen packet with one rollback. IB-pr-302's other notes 
 portal origin reachable and `IRPT_EXPORT_RENDER=on` for the submit's mint.
 
 fanout: 1 of 1 chains, cap 8, reason: one open cell; worker 0.9.0_WK_IRPT_BCKEND~107 in its own worktree.
+
+
+## 32. ROUND 40, WORKSTREAM ~P (2026-10-03 ~06:3xZ, issuer 2.0.0_SA_COO~P, on 1.0.0_SA_CTO RULINGS batch 211 @827e6c8bed, msg 104557)
+
+Row W101-S13: the served export download answers `download_route` with `url` and `expires_at`, plus `sha256` and `byte_length`, but
+the published response contract forbids them. Batch 211 rules that the contract follows the server, the signed link lives only in
+the response, and ExportReceipt is unchanged. It is hygiene, never held for a round. GATE (x) puts this in ROUND 40 (row S267).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-305` | E4: the export-download response contract declares a response-only `download_route` (url https and required, expires_at a date-time and required) and the integrity facts, with a test validating the handler's answer; ExportReceipt byte-unchanged (nothing served) | WORLD (a published contract) | none | P40 |
+
+fanout: 1 of 1 chains, cap 8, reason: one open cell; worker 0.9.0_WK_IRPT_BCKEND~108 in its own worktree.
