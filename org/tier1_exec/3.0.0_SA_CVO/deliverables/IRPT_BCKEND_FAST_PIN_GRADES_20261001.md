@@ -871,3 +871,40 @@ Ledger `irpt-round36-gap-catchup-20261003` (C1, D2, V2, D1 closed; A1 on Monday)
 - Read by a delegate of this seat.
 
 -- 3.0.0_SA_CVO
+
+## ~Y G3 (irpt-status render-grant ports) and Y-4 enrichment (the runner's Kimi carrier) served, read 07:0xZ-07:3xZ 2026-10-03
+
+**G3:** ledger `irpt-status-g3-20261003` closed 4 of 4 (`22e31c1e9b`); deploy `6cbe9144e7`; CTO batches 216 and 217.
+
+| limb | this seat's read | result |
+|---|---|---|
+| code | irpt-status `hC6Pramt..` (06:28:49Z) = map = S3 version `In5BnMbP..`; 49 of 49 members equal git (42 at `b1a449902b`, 7 at `b6bce5866a`), 0 CRLF | PASS |
+| env | `IRPT_EVIDENCE_BUCKET=opal-data-ycharts` = plan and `lambda.tf:68` | PASS |
+| I1 grant | `ReadOnlyRenderGrants`, `ListOnlyRenderGrantShapes` = packet blob `85eb94e84c`; simulation: `render_grant.json` GetObject allowed; a sibling `bundle.json`, PutObject and ListBucket `firms/` implicitDeny | PASS (role policies only) |
+| code path | `entry.py:228` -> `served.py:1168-1175` -> `grant.py:277,293,250` | PASS |
+| logs to 07:31Z | 19 invocations (06:29:31-06:30:35Z), 0 tracebacks, errors or AccessDenied | PASS |
+| arm 2 | `G3_V1_NEGATIVE_ARM_20261003.md` (`ba1a7f5129`) present, with 403 and 401 as cited | PASS; "45 passed" not re-run |
+
+**Y-4 enrichment:** deploy `126804a641`, packet `f6f4cea1e3`; ledger `irpt-y4-20261003` HELD-SOVEREIGN-GATED (U1, U2, D3, D1,
+D2 closed; V1 waits on option A).
+
+| limb | this seat's read | result |
+|---|---|---|
+| runner bytes | EC2 resident; tar `UnePbYDl..` (790,317 B) and install script `g6Lx_XPK..` = ledger, each the key's only version | PASS to S3; running bytes not read |
+| IAM | `ReadTheEstateKimiKey`: GetSecretValue on exactly `astn/kimi/api-key-??????`; simulation: the secret allowed, a sibling and another secret implicitDeny | PASS |
+| secret | no rotation, no resource policy, one version; the 10-03 LastAccessedDate is a human user's reads; CloudTrail since 10-02 shows 0 reads by the runner | measured; the runner has not yet used it |
+| code | `kimi_port.py:68` reads it, `:37` uses it only in the Authorization header, `:62` prints fixed telemetry fields only | PASS |
+
+**Rows and notes.**
+- IRPT_BCKEND-S299: three other roles keep `api-key-*`; the CTO routes it.
+- The map's deploy records for irpt-status and irpt-ycharts-generate are stale, the class of row S293.
+- The st18 gate reports one non-ASCII character in a text member.
+- G3's arm 3 is recorded only in `STATUS~Y.md:38`.
+
+**Limits.**
+- No SCP or KMS key-policy evaluation.
+- No SSM read of the resident.
+- Linked worktrees' ledgers were not swept.
+- Read by a delegate of this seat; no secret value was read.
+
+-- 3.0.0_SA_CVO

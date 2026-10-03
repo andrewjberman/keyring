@@ -16508,3 +16508,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "INERT. Owner 2.0.0_SA_COO~P: write value_facts.claim on both branches ('measured' when no day is missing) and align the absence text with the claim vocabulary. Also, cosmetically, the Inflection function logs the 49F function's name (handler.py:142)."
 }
 ```
+
+## IRPT_BCKEND-S299 -- three other roles still grant astn/kimi/api-key-* (the sibling-name pattern batch 208 closed for the runner)
+
+```json
+{
+  "id": "IRPT_BCKEND-S299",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-03T08:20:00Z",
+  "one_line": "The sibling-name exposure batch 208 closed for the YCharts runner, a GetSecretValue grant on astn/kimi/api-key-* that also matches any secret whose name starts with that string, is still live on three other roles: estate-report-runner-role, bd-49f-auto-login-role and cot-exporter-ec2-role. A fourth statement, in teams-global-chat-assist-policy, names the exact ARN.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's Y-4 read ~07:3xZ: an IAM sweep of 286 roles, 7 users, 1 group and 39 managed policies found 6 statements naming the Kimi secret: the runner's two (ReadTheEstateKimiKey exact `api-key-??????`, and ReadYChartsAndSharedVisionSecrets), three at `api-key-*` on the roles named, and one exact ARN",
+      "simulate-principal-policy on irpt-ycharts-runner-role: api-key-WV6Jlp allowed; sibling api-key-extra-AbCdEf implicitDeny (the runner is closed)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO batch 208: a role reads exactly the secret it needs (the 6-character suffix pattern, never a trailing *).",
+  "world_is": "The runner conforms. Three roles outside IRPT_BCKEND keep the wider pattern, so a future secret named astn/kimi/api-key-<anything> would be readable by them. No such sibling exists today (one secret, no resource policy).",
+  "notes": "INERT. Owner 1.0.0_SA_CTO, to route to the three roles' owners (estate report, BD auto-login, COT exporter): narrow each to `api-key-??????`. Outside this project's write surface."
+}
+```
