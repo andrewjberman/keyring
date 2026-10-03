@@ -81,7 +81,6 @@ order's last status line in the same commit. Report once: per test, PASS or the 
 - Round label 14 (addendum R3-T.7, item 6). Pre-cut on CLOUD: `tb.AC1` passing 3, unaccounted 6, FAIL. A "named" test
   that hides a product defect is the failure mode to watch at the drain.
 
-<status>pending</status>
 <status>complete</status>
 <round>14</round>
 <slot>~18</slot>

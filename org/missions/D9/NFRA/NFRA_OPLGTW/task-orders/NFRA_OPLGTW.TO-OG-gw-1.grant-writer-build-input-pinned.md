@@ -94,7 +94,6 @@ Rows: id `NFRA_OPLGTW-Z-W25-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~O
   `gw.AC2` FAIL (0 files); `gw2.AC1` FAIL with 3 DIFF (config.py, data_entitlement.py, the contract JSON), the
   measurement OG-tf-1 made.
 
-<status>pending</status>
 <status>complete</status>
 <round>15</round>
 <slot>~25</slot>

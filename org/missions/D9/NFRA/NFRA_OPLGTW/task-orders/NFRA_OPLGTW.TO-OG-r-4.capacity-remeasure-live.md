@@ -76,7 +76,6 @@ order's last status line in the same commit. Report once: verdict, peaks, the li
 - Round label 14 (addendum R3-T.7, item 5). `r4.AC3` is PINNED to `4231bd2ddc` (deployed_at 2026-10-02T19:23:40Z), so OG-rl-4's later manifest move cannot turn this grade red. xf.AC1/AC2 take `XF_CAPACITY` (their test-only override, here the record
   path). Pre-cut: `r4.AC3` FAIL (record absent).
 
-<status>pending</status>
 <status>complete</status>
 <round>14</round>
 <slot>~16</slot>

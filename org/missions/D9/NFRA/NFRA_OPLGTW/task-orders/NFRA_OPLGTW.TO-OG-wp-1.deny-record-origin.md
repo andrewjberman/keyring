@@ -73,7 +73,6 @@ order's last status line in the same commit. Report once.
   issuance: OG-v-4's amendment already names the 18:06Z working seal as phase 1's record and marks `OGV4-AC8` MUTATING;
   OG-v-7 retired that probe. A revoke, if proposed, is a separate act with its own halves.
 
-<status>pending</status>
 <status>complete</status>
 <round>14</round>
 <slot>~20</slot>

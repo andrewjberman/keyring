@@ -75,7 +75,6 @@ rows.
 - Round label 15 (addendum R3-T.8, item 4). It stands alone. Read-only by Andrew's 17:3xZ directive.
 - Pre-cut 18:2xZ: `gr2.AC1` FAIL (record absent).
 
-<status>pending</status>
 <status>complete</status>
 <round>15</round>
 <slot>~22</slot>

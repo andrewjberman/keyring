@@ -82,7 +82,6 @@ the order's last status line in the same commit. Report once: the priority, the 
 - Pre-cut control: `tt.AC2.sh` reads 0 Tax rules; the Tax path, an unknown /ms path and / all 302 to sign-in; /ms/sites 401.
 - `<risk>` WORLD: a public-surface rule; the route's capability bearer is the gate.
 
-<status>pending</status>
 <status>complete</status>
 <round>12</round>
 <slot>~18</slot>

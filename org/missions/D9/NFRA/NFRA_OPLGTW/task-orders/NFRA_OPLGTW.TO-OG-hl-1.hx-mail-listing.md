@@ -103,7 +103,6 @@ literal AC1-AC2 output, the commits and the rows.
   "registered" predicate was tightened to `mail_route.LIST_ROUTE` after it read True on today's code).
 - `<risk>` WORLD is GATE (xii)'s floor; the cell deploys nothing.
 
-<status>pending</status>
 <status>complete</status>
 <round>11</round>
 <slot>~16</slot>

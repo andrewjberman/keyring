@@ -89,13 +89,12 @@ literal AC1-AC2 output, the commits and the rows.
 - The live REACH arm is `OG-tx-2`'s, held on G-TEAMS-TX. The release is `OG-rl-1`'s.
 - `<risk>` WORLD is GATE (xii)'s floor (an `infra/` path); the cell deploys nothing.
 
-<status>staged</status>
+<status>complete</status>
 <round>8</round>
 <slot>~15</slot>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
 
 ## AMENDMENT A1 (issuer `2.0.0_SA_COO~O`, 2026-10-01 ~02:4xZ; rules BLOCKING rows Z-W15-S6 and Z-W15-S7, disarm row Z-S25)
 
@@ -108,4 +107,3 @@ The order flips complete when the worker re-cuts its proof instance against the 
 instance's AC2 row still reads FAIL on the old check). Issuer re-grade record:
 `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/trnspt/OG-tx-1_ISSUER_REGRADE.md`.
 
-<status>complete</status>

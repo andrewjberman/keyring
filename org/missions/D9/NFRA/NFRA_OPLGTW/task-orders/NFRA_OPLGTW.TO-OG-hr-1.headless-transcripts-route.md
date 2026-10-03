@@ -93,13 +93,12 @@ stat, the literal AC1-AC2 output, the commits and the rows.
 - The four meeting ids are G-MEETINGS, resolved after release; the allowlist ships empty, so it fails closed.
 - `<risk>` WORLD is GATE (xii)'s floor; the cell deploys nothing.
 
-<status>staged</status>
+<status>complete</status>
 <round>8</round>
 <slot>~16</slot>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>complete</status>
 
 ## AMENDMENT A1 (issuer `2.0.0_SA_COO~O`, 2026-10-01 ~04:3xZ; rules BLOCKING row Z-W16-S1 on PRD v1.3 @2b8f3151c6)
 

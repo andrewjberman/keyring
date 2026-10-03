@@ -88,11 +88,9 @@ validated with `python .tools/proof-of-spec-check.py <instance>`. Record J1 as `
   with the rest of the workstream in the one issuance.
 - The answer is passed to NFRA_TRNSPT's issuer through `1.0.0_SA_CTO~O` (cross-fabric).
 
-<status>staged</status>
+<status>complete</status>
 <round>8</round>
 <slot>~17</slot>
 <fabric>site-z</fabric>
 <risk>SERVED</risk>
 <worker_class>worker-light</worker_class>
-<status>pending</status>
-<status>complete</status>
