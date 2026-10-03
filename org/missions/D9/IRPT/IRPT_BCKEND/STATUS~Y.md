@@ -4,13 +4,13 @@ Seat `2.0.0_SA_COO~Y` (CLAUDE). Mode FAST: lease `IRPT_BCKEND~Y` (renewed by the
 Loop `/canonical-drive IRPT_BCKEND`. Way forward: CTO rulings in
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md` (latest read: batches 177, 178, 186)
 and the fold-in `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_FOLD_IN_IRPT_THREE_BRIEFS_20261002.md` section 2 (Y-1..Y-6,
-Y-H). Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-03T06:3xZ.
+Y-H). Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-03T07:0xZ.
 
 ## Pins
 
 | What | Value |
 |---|---|
-| CLOUD (local) | G3 SERVED, evidence `6cbe9144e7`. No worktree held |
+| CLOUD (local) | G3 ledger CLOSED `22e31c1e9b`; Y-5 packet 2 QA `d41e74093c`. No worktree held |
 | SERVED: `irpt-status` | `hC6PramtsshP40jo3OJ91k4qxlHndylJWxHLIjIdw/E=` since 06:28:49Z (G3 render-grant ports + `IRPT_EVIDENCE_BUCKET`; W2-06 since 04:28Z). Policy `irpt-status-render-grant-read-policy` (I1). Rollback: re-promote S3 `4CQOSM..` (`6VQejBfs..`), drop the variable, delete the policy |
 | SERVED: PDF route | `GET analysis/requests/{requestId}/pdf`, route `ihirb2s` on `7k3ed8px20` since 2026-10-02 ~17:59Z |
 | SERVED: the resident | `/opt/irpt-resident/a6f6e7165e-st18` since 05:52:20Z (Y-4 enrichment: gate total 240 s; CTO half batch 209). Rollback root `828c37c6f7-st17` |
@@ -34,11 +34,13 @@ Y-H). Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-03T06:
 
 ## Queued work
 
-- G3 SERVED 06:28Z (CTO half batch 212). V1 arm 1: 18 of 18 non-render reads equal. Arm 2 (a foreign render token
-  refused) is `2.0.0_SA_COO~P`'s (told 06:32Z). Arm 3 rides E4's first Analysis export.
+- G3 SERVED 06:28Z (CTO half batch 212); ledger CLOSED 4/4. Arm 2 closed by batch 217 (refused live upstream + the
+  at-pin tests). Arm 3, the live wiring, is E4's.
 - Y-2 needs no backend change: AnalysisSubmissionRequest admits `input_id` with variant `comparison` and one key; Y-3's
   V1-a measured the upload + comparison path admitted. Y-2 is the live run after option A.
-- Y-5 packet 2 (the Kimi swap) waits on the web-search QA receipt (`KIMI_WEB_SEARCH_UNVERIFIED` stands).
+- Y-5 packet 2 (the Kimi swap): QA RUN (`Y5P2/KIMI_WEB_SEARCH_QA_FINDINGS_20261003.md`, 9 runs):
+  `KIMI_WEB_SEARCH_UNVERIFIED` stands. kimi-k3 refuses the built-in search echo; kimi-k2.6 accepts it but yields no
+  schema. Direction asked of the CTO 07:01Z; recommended hold, with (b) no-web-search next.
 
 ## Rows this lane holds
 
@@ -60,7 +62,6 @@ Y-H). Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-03T06:
 - `irpt-y3-20261002`: V1 open (READY pending the session re-capture).
 - `irpt-y5-20261003`: V1 open (after Y-3's READY).
 - `irpt-y4-20261003`: V1 open (after option A).
-- `irpt-status-g3-20261003`: U1, I1, D1 closed; V1 open (arm 2 `~P`, arm 3 at E4).
 
 ## Write claims
 
