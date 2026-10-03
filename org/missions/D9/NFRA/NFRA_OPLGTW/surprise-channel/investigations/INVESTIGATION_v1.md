@@ -7152,3 +7152,100 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W26-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~26",
+  "surfaced_at": "2026-10-03T19:18Z",
+  "one_line": "OG-gw-2 order and TF_ROOT_FIX.md call c19f86c295 / aac92bdff8 / c2f5d5a071 'the deployed blobs'; all three are COMMIT ids, and the blobs are what `git rev-parse <commit>:<path>` resolves them to.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: git cat-file -t c19f86c295 -> commit (same for aac92bdff8, c2f5d5a071); git rev-parse c19f86c295:infra/aws/ec2/opal-gateway/app/config.py = b3a9609fad91, aac92bdff8:.../data_entitlement.py = e5db4d307d23, c2f5d5a071:org/standards/NFRA_OPLGTW_CONTRACT.json = 848ec665d885.",
+      "RUN: git hash-object of the three deployed-zip members read in memory = those three blob ids exactly (with and without --no-filters), so the deployed bytes ARE the older committed blobs; GW2_BEHAVIOUR_DIFF.md diffs blob to blob (b3a9609fad..864536c8bb, e5db4d307d..c25f71c7ba, 848ec665d8..2d9181f8bc)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order step 2: 'TF_ROOT_FIX.md names the deployed blobs: config.py = c19f86c295, data_entitlement.py = aac92bdff8, contract = c2f5d5a071'.",
+  "world_is": "Those ids are commits (09-30 03:26, 05:57, 02:10 -04). The control the order wants (deployed == named object) holds once resolved to blobs; a `git diff c19f86c295 <blob>` as literally typed would diff a commit tree, not the file.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W26-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~26",
+  "surfaced_at": "2026-10-03T19:18Z",
+  "one_line": "The issuer's _fresh_tf.sh sparse cone (infra/aws org/standards lib) omits infra/logic, which ../modules/opal_name reads (registry/exemptions.json), so a fresh-worktree plan of the opal-gateway root errors on every module call before any resource is planned.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: fresh sparse worktree of this branch at 4b6afce2d2, cone `infra/aws org/standards lib`, targeted plan -> rc=1, 11 'Error: Invalid function argument', no file exists at ../modules/opal_name/../../../../logic/registry/exemptions.json (main.tf line 82).",
+      "RUN: git sparse-checkout add infra/logic in that worktree -> the same plan returned rc=2 with the one in-place update (the step-4 plan of OG-gw-2).",
+      "CODE: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r15/checks/_fresh_tf.sh line 11: `sparse-checkout set --cone infra/aws org/standards lib`; sourced by tf.AC1/AC2 (its own header)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "_fresh_tf.sh header: the sparse cone 'is complete -- not a pruned copy' and the root plans there.",
+  "world_is": "The cone lacks infra/logic, so any check built on fresh_plan reports PLAN_ERRORS>0 even where the root is fine; the tf2 AC checks that source it inherit the same cone.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W26-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~26",
+  "surfaced_at": "2026-10-03T19:18Z",
+  "one_line": "Order step 6 asks the rollback plan to be 'equal in shape to step 4's plan: one in-place update, code hash only', proven at PHASE A without applying; against the live pre-apply state the rollback config plans `No changes`, so that shape cannot be observed before the apply.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: rollback worktree (sparse, .build/staged = the deployed zip extracted, sha256 9e1cfe77026c0c92cef57de8d5ec6f29d43e39813e3eb6b1652a29d8126df732 = 54650 bytes) targeted plan with the same TF_VAR feed -> rc=0 `No changes`, non-noop resource changes 0 of 4.",
+      "RUN: `terraform show -json` of that plan: aws_lambda_function.mcportal_grant_writer after.source_code_hash = nhz+dwJsDJLO9X3o1exvKdQ+OYE+PraxZSop2BJt9zI=, which is the live CodeSha256 and the `before` of the step-4 plan (forward plan: that value -> ZyYCPPyP5CV53eZP+UJHIgAjq834J4OsvePgmS6k8rI=, 1 update, changing attrs last_modified + source_code_hash)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order step 6: prove at PHASE A that the rollback plan exists and equals step 4's plan in shape (one in-place update, code hash only).",
+  "world_is": "The rollback plan exists and its code hash equals the deployed hash exactly (the extracted bytes re-archive to the deployed artifact), which is the strongest PHASE A fact; the update shape appears only against post-apply state. PHASE B step 11 (or the rollback act) is where it is observed; no plan against a hand-edited state was made, because state holds the owner config values.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W26-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~26",
+  "surfaced_at": "2026-10-03T19:18Z",
+  "one_line": "The grant writer's tests/conftest.py puts the SOURCE gateway tree (CLOUD HEAD checkout) on sys.path, so `pytest tests` does not run against the staged package's closure; step 5 was run in a copy of the staged tree with a conftest that loads only that closure.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: `pytest tests` in the lambda dir: 23 passed, against infra/aws/ec2/opal-gateway of this worktree (CLOUD 4b6afce2d2), whose config.py and data_entitlement.py are not af2d762970's.",
+      "RUN: .scratch/closure (copy of .build/staged built from af2d762970; the 3 writer test files + a conftest + a provenance test asserting app, ops, lambda_function and data_entitlement load from that closure and its contract carries dim_transaction): 21 passed (20 writer tests + 1 provenance); data_entitlement.py sha256[:12] a9eafa664374 = the staged file."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order step 5: 'The tests of the grant writer (tests/) pass against the staged package's closure.'",
+  "world_is": "tests/ as committed exercises HEAD's gateway source; the closure run needed a separate harness. The scratch harness is not committed (not in the order's paths).",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
