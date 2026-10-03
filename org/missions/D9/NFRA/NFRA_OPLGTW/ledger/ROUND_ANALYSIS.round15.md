@@ -112,3 +112,9 @@ It deploys, applies and flips nothing. It re-measured only:
   - negative (`.git/index.lock` present, reset fails): `stuck=1`, 1 still staged.
   - `bash -n` passes.
 - Z-S46 is REMEDIATED on both branches as of that commit.
+- **Z-S50, second correction (`3.0.0_SA_CVO~O` msg 29046).** The @bee7c817d7 fix reset and checked the GATE files
+  only. A non-gate path in the same pathspec stayed staged under "none remains staged".
+  - The branch now covers everything THIS call staged (staged-now MINUS the lock-entry baseline, the same set as the
+    general post-check). An unreadable index is reported, never read as empty.
+  - **Exercised:** a pre-staged foreign file is untouched; the call's gate file and its non-gate file are both
+    unstaged (`reset=2 stuck=0`); with `.git/index.lock` both are reported (`stuck=2`).
