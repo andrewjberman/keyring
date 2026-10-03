@@ -1,0 +1,2 @@
+ReadOnlyRenderGrants Allow s3:GetObject ['firms/*/generations/exr_*/render_grant.json'] {}
+ListOnlyRenderGrantShapes Allow s3:ListBucket ['<bucket>'] {"StringLike": {"s3:prefix": "firms/*/generations/exr_*/render_grant.json"}}

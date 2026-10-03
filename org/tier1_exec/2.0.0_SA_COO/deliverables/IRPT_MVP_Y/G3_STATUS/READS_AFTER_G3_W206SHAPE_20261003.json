@@ -1,0 +1,428 @@
+{
+ "at": "2026-10-03T06:30:10.505858Z",
+ "principal": "svc-irpt-analysis@opalinvest.com",
+ "tenant": "cottonwood",
+ "request_ids": [
+  "REQ-a69e5751d42c374f1d2354f9",
+  "REQ-a1d9abc0bc037ea3d9e4a7ed"
+ ],
+ "rows": [
+  {
+   "call": "read REQ-a69e5751d42c374f1d2354f9",
+   "http": 200,
+   "ok": null,
+   "operation": "analysis-request-read",
+   "state": null,
+   "reason": null,
+   "business_date": null,
+   "actions": [],
+   "top_keys": [
+    "contract_version",
+    "data",
+    "firm_id",
+    "operation",
+    "unprojected_grant"
+   ],
+   "data_keys": [
+    "accepted_at",
+    "identity"
+   ],
+   "data": {
+    "identity": {
+     "destination_policy_revision": "e0046398e23951451498c0fcfec29154db5b26d4c70d80c4121f50fd3dfc8c85",
+     "immutable": true,
+     "ingestion_gate_revision": "schemas-58ffc2ebee9ed61681175e34cd756ec172eb2fa3ad457da3e0995186f9ea81f8",
+     "request_id": "REQ-a69e5751d42c374f1d2354f9",
+     "revision": 1,
+     "tenant_firm_id": "cottonwood"
+    },
+    "accepted_at": 1790856870
+   }
+  },
+  {
+   "call": "read+comparisons REQ-a69e5751d42c374f1d2354f9",
+   "http": 200,
+   "ok": null,
+   "operation": "analysis-request-read",
+   "state": null,
+   "reason": null,
+   "business_date": null,
+   "actions": [],
+   "top_keys": [
+    "contract_version",
+    "data",
+    "firm_id",
+    "operation",
+    "unprojected_grant"
+   ],
+   "data_keys": [
+    "accepted_at",
+    "comparisons",
+    "identity"
+   ],
+   "data": {
+    "identity": {
+     "destination_policy_revision": "e0046398e23951451498c0fcfec29154db5b26d4c70d80c4121f50fd3dfc8c85",
+     "immutable": true,
+     "ingestion_gate_revision": "schemas-58ffc2ebee9ed61681175e34cd756ec172eb2fa3ad457da3e0995186f9ea81f8",
+     "request_id": "REQ-a69e5751d42c374f1d2354f9",
+     "revision": 1,
+     "tenant_firm_id": "cottonwood"
+    },
+    "accepted_at": 1790856870,
+    "comparisons": []
+   }
+  },
+  {
+   "call": "read+composition REQ-a69e5751d42c374f1d2354f9",
+   "http": 200,
+   "ok": null,
+   "operation": "analysis-request-read",
+   "state": null,
+   "reason": null,
+   "business_date": null,
+   "actions": [],
+   "top_keys": [
+    "contract_version",
+    "data",
+    "firm_id",
+    "operation",
+    "unprojected_grant"
+   ],
+   "data_keys": [
+    "accepted_at",
+    "composition",
+    "identity"
+   ],
+   "composition_keys": [
+    "account_ids",
+    "client_id",
+    "comparison_keys",
+    "input_id",
+    "prepared_for",
+    "report_title",
+    "request_id",
+    "snapshot_id",
+    "variant"
+   ],
+   "composition_sha256": "b15887705a5022036035f797b1b606e9b3abf01e7fff2253cc7e550fc7bd2b55",
+   "other_keys": [
+    "accepted_at",
+    "identity"
+   ]
+  },
+  {
+   "call": "read+both REQ-a69e5751d42c374f1d2354f9",
+   "http": 200,
+   "ok": null,
+   "operation": "analysis-request-read",
+   "state": null,
+   "reason": null,
+   "business_date": null,
+   "actions": [],
+   "top_keys": [
+    "contract_version",
+    "data",
+    "firm_id",
+    "operation",
+    "unprojected_grant"
+   ],
+   "data_keys": [
+    "accepted_at",
+    "comparisons",
+    "composition",
+    "identity"
+   ],
+   "composition_keys": [
+    "account_ids",
+    "client_id",
+    "comparison_keys",
+    "input_id",
+    "prepared_for",
+    "report_title",
+    "request_id",
+    "snapshot_id",
+    "variant"
+   ],
+   "composition_sha256": "b15887705a5022036035f797b1b606e9b3abf01e7fff2253cc7e550fc7bd2b55",
+   "other_keys": [
+    "accepted_at",
+    "comparisons",
+    "identity"
+   ]
+  },
+  {
+   "call": "read+duplicate REQ-a69e5751d42c374f1d2354f9",
+   "http": 200,
+   "ok": false,
+   "operation": "analysis-request-read",
+   "state": "UNAVAILABLE",
+   "reason": "INVALID_INPUT",
+   "business_date": null,
+   "actions": [
+    "NONE"
+   ],
+   "top_keys": [
+    "contract_version",
+    "firm_id",
+    "ok",
+    "operation",
+    "status"
+   ]
+  },
+  {
+   "call": "read REQ-a1d9abc0bc037ea3d9e4a7ed",
+   "http": 200,
+   "ok": null,
+   "operation": "analysis-request-read",
+   "state": null,
+   "reason": null,
+   "business_date": null,
+   "actions": [],
+   "top_keys": [
+    "contract_version",
+    "data",
+    "firm_id",
+    "operation",
+    "unprojected_grant"
+   ],
+   "data_keys": [
+    "accepted_at",
+    "identity"
+   ],
+   "data": {
+    "identity": {
+     "destination_policy_revision": "e0046398e23951451498c0fcfec29154db5b26d4c70d80c4121f50fd3dfc8c85",
+     "immutable": true,
+     "ingestion_gate_revision": "schemas-58ffc2ebee9ed61681175e34cd756ec172eb2fa3ad457da3e0995186f9ea81f8",
+     "request_id": "REQ-a1d9abc0bc037ea3d9e4a7ed",
+     "revision": 1,
+     "tenant_firm_id": "cottonwood"
+    },
+    "accepted_at": 1790867798
+   }
+  },
+  {
+   "call": "read+comparisons REQ-a1d9abc0bc037ea3d9e4a7ed",
+   "http": 200,
+   "ok": null,
+   "operation": "analysis-request-read",
+   "state": null,
+   "reason": null,
+   "business_date": null,
+   "actions": [],
+   "top_keys": [
+    "contract_version",
+    "data",
+    "firm_id",
+    "operation",
+    "unprojected_grant"
+   ],
+   "data_keys": [
+    "accepted_at",
+    "comparisons",
+    "identity"
+   ],
+   "data": {
+    "identity": {
+     "destination_policy_revision": "e0046398e23951451498c0fcfec29154db5b26d4c70d80c4121f50fd3dfc8c85",
+     "immutable": true,
+     "ingestion_gate_revision": "schemas-58ffc2ebee9ed61681175e34cd756ec172eb2fa3ad457da3e0995186f9ea81f8",
+     "request_id": "REQ-a1d9abc0bc037ea3d9e4a7ed",
+     "revision": 1,
+     "tenant_firm_id": "cottonwood"
+    },
+    "accepted_at": 1790867798,
+    "comparisons": [
+     {
+      "key": "opal_short_term",
+      "label": "Opal Short-Term"
+     },
+     {
+      "key": "opal_intermediate_term",
+      "label": "Opal Intermediate-Term"
+     }
+    ]
+   }
+  },
+  {
+   "call": "read+composition REQ-a1d9abc0bc037ea3d9e4a7ed",
+   "http": 200,
+   "ok": null,
+   "operation": "analysis-request-read",
+   "state": null,
+   "reason": null,
+   "business_date": null,
+   "actions": [],
+   "top_keys": [
+    "contract_version",
+    "data",
+    "firm_id",
+    "operation",
+    "unprojected_grant"
+   ],
+   "data_keys": [
+    "accepted_at",
+    "composition",
+    "identity"
+   ],
+   "composition_keys": [
+    "account_ids",
+    "client_id",
+    "comparison_keys",
+    "input_id",
+    "prepared_for",
+    "report_title",
+    "request_id",
+    "snapshot_id",
+    "variant"
+   ],
+   "composition_sha256": "56a6a3f8ddb79178a9e71068309872df5871d38d64fbcbecb5aae145cd6033b5",
+   "other_keys": [
+    "accepted_at",
+    "identity"
+   ]
+  },
+  {
+   "call": "read+both REQ-a1d9abc0bc037ea3d9e4a7ed",
+   "http": 200,
+   "ok": null,
+   "operation": "analysis-request-read",
+   "state": null,
+   "reason": null,
+   "business_date": null,
+   "actions": [],
+   "top_keys": [
+    "contract_version",
+    "data",
+    "firm_id",
+    "operation",
+    "unprojected_grant"
+   ],
+   "data_keys": [
+    "accepted_at",
+    "comparisons",
+    "composition",
+    "identity"
+   ],
+   "composition_keys": [
+    "account_ids",
+    "client_id",
+    "comparison_keys",
+    "input_id",
+    "prepared_for",
+    "report_title",
+    "request_id",
+    "snapshot_id",
+    "variant"
+   ],
+   "composition_sha256": "56a6a3f8ddb79178a9e71068309872df5871d38d64fbcbecb5aae145cd6033b5",
+   "other_keys": [
+    "accepted_at",
+    "comparisons",
+    "identity"
+   ]
+  },
+  {
+   "call": "read+duplicate REQ-a1d9abc0bc037ea3d9e4a7ed",
+   "http": 200,
+   "ok": false,
+   "operation": "analysis-request-read",
+   "state": "UNAVAILABLE",
+   "reason": "INVALID_INPUT",
+   "business_date": null,
+   "actions": [
+    "NONE"
+   ],
+   "top_keys": [
+    "contract_version",
+    "firm_id",
+    "ok",
+    "operation",
+    "status"
+   ]
+  }
+ ],
+ "compare": [
+  {
+   "call": "read REQ-a69e5751d42c374f1d2354f9",
+   "equal_to_before": true,
+   "http_before": 200,
+   "http_after": 200,
+   "reason_before": null,
+   "reason_after": null
+  },
+  {
+   "call": "read+comparisons REQ-a69e5751d42c374f1d2354f9",
+   "equal_to_before": true,
+   "http_before": 200,
+   "http_after": 200,
+   "reason_before": null,
+   "reason_after": null
+  },
+  {
+   "call": "read+composition REQ-a69e5751d42c374f1d2354f9",
+   "equal_to_before": true,
+   "http_before": 200,
+   "http_after": 200,
+   "reason_before": null,
+   "reason_after": null
+  },
+  {
+   "call": "read+both REQ-a69e5751d42c374f1d2354f9",
+   "equal_to_before": true,
+   "http_before": 200,
+   "http_after": 200,
+   "reason_before": null,
+   "reason_after": null
+  },
+  {
+   "call": "read+duplicate REQ-a69e5751d42c374f1d2354f9",
+   "equal_to_before": true,
+   "http_before": 200,
+   "http_after": 200,
+   "reason_before": "INVALID_INPUT",
+   "reason_after": "INVALID_INPUT"
+  },
+  {
+   "call": "read REQ-a1d9abc0bc037ea3d9e4a7ed",
+   "equal_to_before": true,
+   "http_before": 200,
+   "http_after": 200,
+   "reason_before": null,
+   "reason_after": null
+  },
+  {
+   "call": "read+comparisons REQ-a1d9abc0bc037ea3d9e4a7ed",
+   "equal_to_before": true,
+   "http_before": 200,
+   "http_after": 200,
+   "reason_before": null,
+   "reason_after": null
+  },
+  {
+   "call": "read+composition REQ-a1d9abc0bc037ea3d9e4a7ed",
+   "equal_to_before": true,
+   "http_before": 200,
+   "http_after": 200,
+   "reason_before": null,
+   "reason_after": null
+  },
+  {
+   "call": "read+both REQ-a1d9abc0bc037ea3d9e4a7ed",
+   "equal_to_before": true,
+   "http_before": 200,
+   "http_after": 200,
+   "reason_before": null,
+   "reason_after": null
+  },
+  {
+   "call": "read+duplicate REQ-a1d9abc0bc037ea3d9e4a7ed",
+   "equal_to_before": true,
+   "http_before": 200,
+   "http_after": 200,
+   "reason_before": "INVALID_INPUT",
+   "reason_after": "INVALID_INPUT"
+  }
+ ]
+}
