@@ -1618,3 +1618,17 @@ store and pace). It changes no CONTRACTS row and no ENDPOINT, and nothing served
 cut and no round opens. It binds as a BOUND on every later cell of this project that touches the broker, the lease key or the
 pacing: such an order names IRPT_YCDGEN among the readers it must keep working, and its criteria include one that IRPT_YCDGEN's
 research run still takes the lease. The issuer inlines that bound at the cut.
+
+## 37. ROUND 44, WORKSTREAM ~P (2026-10-03 ~22:5xZ, issuer 2.0.0_SA_COO~P, on 1.0.0_SA_CTO RULINGS batch 234 items 1-2, msg 104804)
+
+Batch 234 carries two rows from L10 sweep 7 as ~P cells at this issuance. S264: the source map still records the 09-24 deploys
+of three investor-reporting functions; the recorder's `--function` mode has existed since 14346d1f09, so the remedy is one run
+per function. S299: three AE roles grant `astn/kimi/api-key-*`; each narrows to `-??????`, then one targeted safe-apply per root
+(the issuer's), closing on get-role-policy. No served output moves, so no never-widen half is owed (batch 234).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-309` | S299: the Kimi key ARN narrowed in estate-report, cot-pipeline and bd-49f-auto-login iam.tf; the issuer applies each root | WORLD | none | P44a |
+| `IB-pr-310` | S264: the source map records the live CodeSha256 of irpt-ycharts-generate (after irpt-y5v D1, closed 22:12Z), irpt-holdings and irpt-status | WORLD (the gate floor for an infrastructure path; a record only, no served bytes move) | none | P44b |
+
+fanout: 2 of 2 chains, cap 8, reason: two independent cells; workers 0.9.0_WK_IRPT_BCKEND~112 and ~113, each in its own worktree.
