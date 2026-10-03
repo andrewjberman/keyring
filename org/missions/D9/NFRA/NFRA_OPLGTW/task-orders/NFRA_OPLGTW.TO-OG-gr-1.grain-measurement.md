@@ -74,6 +74,7 @@ order's last status line in the same commit. Report once: denominator, collision
   planted blank flips ADOPT to "rule says REFUSE" (FAIL).
 
 <status>pending</status>
+<status>complete</status>
 <round>14</round>
 <slot>~22</slot>
 <fabric>site-z</fabric>
