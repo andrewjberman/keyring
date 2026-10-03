@@ -42,15 +42,23 @@ If a seat is not live at its time, its first live session reads before any other
    - the 3 money-market keys (DGCXX x2, IJGXX) in reader words;
    - what the 10-05 grades leave open;
    - the walk-register remainder.
-   Repairs batched into one cell: Z-S18. Z-S16 was dismissed by the CVO (C-S26) and Z-S17 is retracted (Z-S19). The G5
-   replay (D10) also comes in, because no deployed route
-   rebuilds G5.
+   **PREPARED, not issued:** local branch `rv-prep8` @b483790280 (worktree /c/tmp/rv-fast) holds
+   `deliverables/2.0.0_SA_COO~RV/round8/`:
+   - DECOMP_DRAFT.md: 4 cells on 3 chains (dt-1; an-1 -> rw-1; rp-1), with 7 rulings;
+   - register_r7.json: 33 items, 17 REALIZED / 8 PARTIAL / 6 NOT / 2 not-yet;
+   - 7 checks, each base FAIL and fix PASS.
+   The cut adds item 3, re-runs the checks at the then-current base, and issues once.
+   Repairs batched into one cell: Z-S18 (rp-1). Z-S16 was dismissed by the CVO (C-S26) and Z-S17 is retracted (Z-S19).
+   The G5 replay (D10) is NOT cut (draft ruling 4): its 6 cells roll off around 10-08, and a replay route would help for
+   about 2 days.
 
 ## Issuer acts still owed
 
-- **G5 replay (D10):** a rebuild at the deployed code clears the page's 6 n/a cells (the 09-30 trims-to-zero become exits
-  priced from the prior valuation). Measured locally at `C:/tmp/r7measure/g5pin/`. It needs its own pair.
-- **I-2:** IDVZ/PFOE trend from inception (D12); ACWI/IWM benchmarks (D13, the v0.8 leg).
+- **G5 replay (D10): ruled NOT owed** (round-8 draft ruling 4). A rebuild at the deployed code would clear the 6 n/a
+  cells (measured locally at `C:/tmp/r7measure/g5pin/`). But no deployed route rebuilds G5, a local gold write is QA-only,
+  and the cells roll off around 10-08. If Monday's grades raise it, a replay-route cell joins the repair chain.
+- **I-2:** IDVZ/PFOE trend from inception (D12); ACWI/IWM benchmarks (D13, the v0.8 leg: +4 names on the same 1 query,
+  measured offline; its row cost needs the scripted vehicle). Each runs under its own pair once scoped.
 
 ## Open findings (rows, owner named)
 
