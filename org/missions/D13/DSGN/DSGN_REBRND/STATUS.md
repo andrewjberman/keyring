@@ -22,6 +22,19 @@ IR keeps priority -- return to DSGN_IRPTV1 the tick any of its Next lines unbloc
 
 ## Next (round 3's enrichment list, batch 80 item 9, in the ruled order; E4 started first by batch 165)
 
+00. **W3-S5 /philosophy Views (2026-10-03 21:3xZ):** BUILT `fb73cb1c` in worktree `portal-coo-d-holdings`.
+    - A failed views read is ERROR, a pending one LOADING, and no views is EMPTY; before, a failed read spun forever.
+    - Pin views-states; DEV's page fails it.
+    - Real run on a build with views.json forced to fail, looked at.
+    - LANDED portal DEV `822ce891` (ls-remote 22:0xZ) with cbf41e6e and 3e526a44, after PROMOTED (104785).
+000. **W3-S5 raw JSON bodies in Cause lines (2026-10-03 21:5xZ):** BUILT `3e526a44` in worktree
+    `portal-coo-d-holdings`.
+    - `innermostCause` (the one helper behind every designed ERROR state's Cause line) replaces an interpolated JSON
+      body with its `error`, `message` or `detail` words; other text comes back unchanged.
+    - Pin raw-cause (the helper plus the real /market page); DEV's cause.ts fails it.
+    - Real run: /valuations with its data read forced to a 503 JSON body reads "... - ui-smoke forced failure"; the
+      same render of a DEV-cause build reads `... - {"error":"ui-smoke forced failure"}`.
+    - LANDED portal DEV `822ce891` (ls-remote 22:0xZ), after PROMOTED (104785). The CVO was handed the pins (23:08Z).
 0. **The CVO's census after S14 (grade b296ae47c1): the remaining `?? 50` sites.** LANDED 2026-10-03 18:4xZ:
    portal `7b265fc4` (origin DEV, push output 2f326afc..7b265fc4), after B2 was PROMOTED (PROD 98a98e70fb, 104690).
    It carries 3a842221, a6a77e31, 6cb31b54 and cc1d7cc6; the CVO was handed the pins. BUILT 16:3xZ.
