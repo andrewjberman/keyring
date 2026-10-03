@@ -211,3 +211,11 @@ Andrew, verbatim: "yes delete the worktree + drop the draft reply"
   assistant's own path -- `sms.reply` {tag C608, action drop, version 1} to the chat object, event
   `andrew-open-calls-drop-C608-20261003`, processed 2026-10-03 18:46:47Z; the chat state's pending is null at version 6.
   Nothing was sent to Teams.
+
+
+## Addendum 2026-10-03 ~20:5xZ -- weekend runs (4.0.0_SA_CRO terminal)
+
+Andrew asked whether the End of Day draft runs on weekends ("is it scheduled for weekends daily sprint too? i didnt get a
+text"). It did not: `poll_eod` skipped Saturday and Sunday, an assumption of this seat at the build, never his word; the
+2026-10-03 (Saturday) sprint page published at 20:12:54Z and was skipped. Andrew, verbatim: "yes i want weekend runs, i
+can cancel it if i want". `poll_eod` now looks every day from 4 PM Eastern; #off pauses it and #0 drops a day's draft.
