@@ -696,3 +696,36 @@ resolve), removed after. None of these pins is on PROD (6169edd9). Every CI run 
 - Read by a delegate of this seat.
 
 -- 3.0.0_SA_CVO
+
+## Grades, 10:5xZ-12:3xZ 2026-10-03 -- portal DEV fb5534f8 through b0b3c524 (6 pins; ~D msgs 104605-104610)
+
+Graded in scratch worktrees (a sparse workspace copy with the portal nested), removed after. None of these pins is on PROD
+(6169edd9). Every CI run concluded success; CI runs no unit tests.
+
+| pin | claim | this seat's read | grade |
+|---|---|---|---|
+| fb5534f8 | with 6+ books the percentage labels sit beside the bar; the five-book layout is byte-identical | `PositioningSummary.tsx:1188,1380`; 1/1; NEG fails both arms; render probe: 5- and 4-book markup byte-identical at parent, pin and tip, 8-book differs in exactly 16 elements; CI 37116673391 | PASS |
+| cbfbb77a | daylight saving decided for New York, not the viewer's zone | `dateUtils.ts:333-344`; 1/1 under UTC, Los Angeles, New York, Tokyo; NEG fails; 3 MUTs killed; 17 dates across the March and November changeovers (2026, 2027) against an independent New York check: 0 wrong at the pin, 4-9 wrong at the parent; CI 37117501484 | PASS; the message's "US-zone viewer unchanged" is false on changeover days, where the change corrects them |
+| 55560835 | RSI and Fear & Greed show ERROR; the endpoint no longer fabricates 50 | 1/1; NEG fails; MUT "endpoint returns 50" killed; MUT on the gauge's `: 50` survives; CI 37118751941 | PASS on the claim; its process-wide `mock.module` of React Query errored 4 tests in 4 files (iv-e-101, -16, -38, -57) until b0b3c524 |
+| a7b16628 | Daily Cloud, Trending, Performers show ERROR; the keyword endpoint no longer returns [] | arms a-f pass; NEG fails d-f; 4 MUTs killed; page wiring `failed={false}` survives; CI 37119845342 | PASS |
+| 564a8f95 | the RSI hook no longer invents 50 | no committed test; probe through RSIBars and the real hook: a missing class gives ERROR at the pin, 50 drawn (and a TypeError on a missing segment) at the parent; a full summary draws 3 bars at both; CI 37120582863 | PASS by probe; unpinned |
+| b0b3c524 | a failed Models load is ERROR in all three /positioning panels; the market mocks are restored | 1/1; NEG fails; 2 MUTs killed; the market arms are unchanged; both pin files pass in both orders; CI 37122027543 | PASS; ends the 55560835 leak |
+| full suite | -- | b0b3c524: 1079 pass / 33 fail / 0 errors (1139); six pins' non-test files reverted: 1074 / 38; at 46aeea17: 1074 / 34; every failure at head also fails at the parent (one FE-s-90 timing flake) | -- |
+
+**Rows and notes.**
+- DSGN_IRPTV1-S56: F47-AC6 has failed since b618efc9 (on PROD).
+- W3-S4's remaining sites at the tip: 20 `?? 50` / `|| 50` sites.
+  - Values: `MarketRegimeIndicator.tsx:182-184,202-204,267`, `RSIModal.tsx:192,1002,1004,1015`, `RSIBars.tsx:52-53`.
+  - Colour or label only: `MarketRegimeModal.tsx`, `FearGreedModal.tsx`.
+  - `getAAIILatest` (`sentiment.ts:819`) fabricates 33.3/33.3/33.3 but has no live caller.
+- Untested wiring, row S55's class: `MarketPerformance.tsx` `failed`, `Positioning.tsx` `loadFailed`, and HoldingsTab.
+
+**Limits.**
+- Server-side markup probes only; no viewport or pixels.
+- bun on Windows ignores TZ, so the zones were set through a preload.
+- Process note: the delegate's `git config` wrote `core.autocrlf=false` into the shared workspace `.git/config` at
+  10:51:47Z and removed it about two minutes later. This seat re-read it at ~12:3xZ: no local value; the system true
+  applies; 0 commits landed in 10:49-10:57Z.
+- Read by a delegate of this seat.
+
+-- 3.0.0_SA_CVO

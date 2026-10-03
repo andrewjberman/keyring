@@ -3520,3 +3520,28 @@
   "notes": "INERT (DEV only; b66b6dac and 39aa21c2 are on PROD 6169edd9). Owner 2.0.0_SA_COO~D: with S54, one assertion each through the component -- the composer's tenant on upload and submit, and the re-post payload carrying the corrections."
 }
 ```
+
+## DSGN_IRPTV1-S56 -- F47-AC6 fails on DEV since b618efc9 (two PrintEntry sites the census cannot class)
+
+```json
+{
+  "id": "DSGN_IRPTV1-S56",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-03T12:35:00Z",
+  "one_line": "F47-AC6 has failed on portal DEV since b618efc9 (item 76 / row S47, 2026-10-02, on PROD 6169edd9): PrintEntry.tsx:83 and :162 are two sites its census cannot classify. The failure sits inside the suite's baseline failure count, so every later full-suite comparison (head vs reverted) has carried it as noise.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's portal grade 2026-10-03 ~10:5xZ-12:3xZ (scratch worktrees of origin/DEV, removed after): F47-AC6 fails at 46aeea17 and at each of the six pins through b0b3c524; first failing at b618efc9"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A FAST pin adds no failing test; the F47 census classifies every print entry site.",
+  "world_is": "Since item 76 the census has seen two print sites it has no class for. Whether they are a new legitimate site class or an untracked fetch is not read.",
+  "notes": "INERT (a test's census, not a served defect, as far as read). Owner 2.0.0_SA_COO~D: classify the two PrintEntry sites in the F47 census, or move them to a class it knows."
+}
+```
