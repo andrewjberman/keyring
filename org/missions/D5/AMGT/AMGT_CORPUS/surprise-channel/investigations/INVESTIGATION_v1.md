@@ -3513,6 +3513,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "Four more existing test files (and the unit-family census in build_unit_map.py) pin the old field-list sizes, the old family census or the old December unresolved set, so the drain's repo-wide hygiene will red until they are updated for the 52; the AC1-AC3 criteria and the three test files in <paths> pass.",
     "notes": "Not worked around: the producer's behaviour is what the order specifies. A follow-on cell owning those five test files plus build_unit_map.py's family census (units for the 52, field_map.json rebuild) is the repair; until the map is rebuilt a new figure's unit reads the 'SEE field_map.json ... not yet built' pointer, which the producer already writes for any mnemonic the map lacks.",
     "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S85",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-10-03T22:57:41Z",
+    "one_line": "schedule_induction.ps1 resolves the task's interpreter as the FIRST python on PATH, and PATH now resolves C:/Program Files/Python314/python.exe (no blpapi) ahead of Python311 (blpapi + boto3 + pyarrow): a plain -Register today would silently re-register amgt-induction-daily on an interpreter that cannot reach Bloomberg.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "schedule_induction.ps1 -Plan -Commit a864e82a5c (22:2xZ, issuer) printed the interpreter C:/Program Files/Python314/python.exe.",
+        "The live task (registered at 33c1d096a343) runs C:/Users/Opal Bloomberg/AppData/Local/Programs/Python/Python311/python.exe; Python311 imports blpapi 3.26.4.2 and boto3 1.43.46; Python314 raises ModuleNotFoundError: No module named 'blpapi'.",
+        "Control: the same -Plan with the Python311 directory prepended to PATH prints the Python311 interpreter."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "schedule_induction.ps1 header: 'The python path is resolved at plan time: a Scheduled Task does not inherit the profile' -- the resolved interpreter is assumed to be the estate's PY_AWS interpreter (integrations/bloomberg/READ_HERE.md s.3).",
+    "world_is": "Resolve-Python takes Get-Command python's first real hit; a later install put Python314 first on PATH, so the plan's interpreter depends on install order, not on the interpreter the producer needs.",
+    "notes": "Disarmed for CRPS-aj-2 at the act: its gate leg prepends Python311 to PATH and STOPs unless the plan prints Python311 (NEVER_WIDEN_ROUND34_AJ2_SERVED_ACT.md leg 0). The durable repair (an explicit interpreter parameter, or a resolver that requires blpapi) is a candidate for the round-34 analysis. Any other site-Z registration script that resolves python by PATH order carries the same hazard.",
+    "disarm_owner": "2.0.0_SA_COO~X"
   }
 ]
 ```
