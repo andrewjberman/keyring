@@ -18,7 +18,11 @@ CTO msg 104495 measured the same). The Investor Reporting readers were on PROD v
    (@6f5fb13f91) -- 22 / 23 / 22 members differ from the served tars; every riding change is attributed to its commit and
    author (4.0.0_SA_CRO's MDPF_TAXSMA scripts and Cottonwood custom-model builders, 2.0.0_SA_COO~M's producer / contract /
    shared client, 1.0.0_SA_CTO's opal_naming WARN, four workers' changes, 0.0.0_AB_MSTR's hold lines). One served member
-   (inf `infra/logic/registry/scopes.json`) matches no commit -- to resolve before signing.
+   (inf `infra/logic/registry/scopes.json`) matches no commit -- RESOLVED 02:3xZ: the served copy carries `email_domain` (+ its
+   basis, NFRA_TRNSPT round 1) on the 49financial, inflection and cottonwood scopes, which CLOUD's copy lacks; this seat's
+   10-01 mint ran in worktree `coo_m_mint`, whose registry files were edited uncommitted. The re-mint drops the field; the
+   producer's closure reads it only in `lib/opal_naming.py:676` (`t.get("email_domain")`, a tenant view the Holdings code
+   does not call), so no Holdings value moves with it.
 3. **The directory runner's bundle** (`opal-data-mdpf` `code/scripts/assets_gold/investor_reporting/investor-reporting.tar.gz`,
    `IRPT_DIRECTORY_BUNDLE_URI`, served 2026-09-29 19:45Z, version cl85yArc...): 12 members, 4 differ from CLOUD --
    `directory_runner.py` (registry regenerations 8e9ed1b539 NFRA_TRNSPT~3, f13d9e9222 0.0.0_AB_MSTR), `holdings_snapshot.py`,
