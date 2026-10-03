@@ -2839,3 +2839,21 @@ reads 334 passed (research) and 597 passed with 3 skipped (collector).
 - `round39/checks/al-1.AC2.py`: no `LISTING_EMPTY_200`, no flag;
 - `al-2.AC2.py`: `content_key` is absent;
 - `al-2.AC3.py`: `build_mention` has no `sentiment_by_key`.
+
+## 53. ROUND 40 -- the round-39 analysis enrichment list (`ledger/ROUND_ANALYSIS.round39.md` @481c0a83e8), 2026-10-03 ~01:3xZ
+
+Round 39 is CLOSED (CVO slug 28854). ARMED reads 0 over 294 items. The enrichment list has ONE LOCAL cell; nothing
+else is cuttable until Andrew answers the publisher-terms card or the FT licence quote.
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-am-1` | DIRECT ACT (LOCAL, under the size floor; `/dispatch` Step 2) | Z-C-S69: at most ONE null-label marker row per key-less article (ft or no-text). `finbert_sentiment.marked_article_keys` reads the marked `article_key`s from the written parts; `score_missing(..., marked_keys=)` skips them and dedupes within a run; `score` passes them, and its dry-run count excludes them | LOCAL | `2.0.0_SA_COO~H` |
+
+Proof: `deliverables/2.0.0_SA_COO_H/round40/am-1.proof.txt`.
+- `test_am1_marker_once.py`, 3 of 3 passed:
+  - two runs over a planted key-less pair give 1 marker each and 0 calls;
+  - a re-silvered key-less article is marked once in one run;
+  - a scorable article is still scored once.
+- Mutant (the skip removed): 3 failed.
+- Research suite: 347 passed.
+- 0 Lambda calls; no S3 write; no publisher text.
