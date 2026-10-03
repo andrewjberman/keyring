@@ -1128,3 +1128,58 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "notes": "Owner: 2.0.0_SA_COO~P (the classification table is 4.0.0_SA_CRO's file, not edited). One day, one account in the sample."
 }
 ```
+
+## IRPT_DASHBD-W4-S1 -- TO-DB-b-17: the deployed publisher cannot run the summaries pass until its zip carries the opaque-id normalizer and the firm registry, and its environment names the directory bucket; neither is in this cell's paths
+
+```json
+{
+  "id": "IRPT_DASHBD-W4-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~4",
+  "surfaced_at": "2026-10-03T00:30:00Z",
+  "one_line": "TO-DB-b-17: the summaries pass needs _ids/ids.py (+ raw_keys.json, data/firm_registry.json) and the directory bucket at run time, and the irpt-reporting-publish-lambda package map and lambda.tf carry none of them, so the pass refuses by name on the first deployed fire until the issuer's packet adds them",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order: the pass reads the directory and mints opaque cli_/acc_ ids 'through _ids as reporting/entry.py does'; the order's paths are handler.py, publisher.py, the new test, and iam.tf; the trigger and deploy are the issuer's P-2 packet.",
+  "world_is": "MEASURED at 713110dbeb: infra/aws/lambda/ci/lambda-source-map.json entry irpt-reporting-publish-lambda lists handler.py, publisher.py, lib/opal_naming.py, org/standards/NAMING_SCHEMA.json, infra/logic/registry/*.json and sources.json, and NO ids.py, raw_keys.json, data/custodian_key_seam.json or firm_registry.json (the reporting-read-lambda entry stages all four). infra/aws/terraform/investor-reporting/reporting-publish/lambda.tf sets no environment (IRPT_DIRECTORY_BUCKET_MAP, which _authz/loaders.py reads, is unset). handler.py therefore loads ids.py from the zip root or the repo's _ids package (the repo path is what the tests and the local dry run use), reads the bucket from IRPT_DIRECTORY_BUCKET_MAP or the registry beside ids.py, and otherwise raises SystemExit REFUSED naming the missing piece. The scheduled series fire never reaches this code (the module adds only stdlib imports at load; _ids_module is called only inside the summaries pass), so the 08:15 ET fire is unchanged. Local dry run (reads only) over the live directory and the 6 published accounts: 4,620 clients, 6 summaries built, 4,614 without a published account, 0 refused.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json irpt-reporting-publish-lambda files / staged_from @713110dbeb",
+      "infra/aws/terraform/investor-reporting/reporting-publish/lambda.tf (module irpt_reporting_publish: no environment)",
+      "infra/aws/lambda/investor-reporting/reporting-publish/handler.py _ids_module, directory_bucket",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~4/READ_COST_R9.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner: 2.0.0_SA_COO~P (P-2 packet): stage ids.py, raw_keys.json, data/custodian_key_seam.json and data/firm_registry.json as packaged_as paths in the publish entry (ids.py at the zip root, as the read entry does), or set IRPT_DIRECTORY_BUCKET_MAP in lambda.tf; the two files this cell may not edit. Also ids.py reads IRPT_FIRM_REGISTRY or a firm_registry.json beside it."
+}
+```
+
+## IRPT_DASHBD-W4-S2 -- TO-DB-b-17: the deployed publish function's timeout is 300 s, not the 900 s the order budgets, and the per-account read cost is a laptop measurement, so the summaries pass is sharded by client to fit 300 s
+
+```json
+{
+  "id": "IRPT_DASHBD-W4-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~4",
+  "surfaced_at": "2026-10-03T00:30:00Z",
+  "one_line": "TO-DB-b-17: the order budgets the 900 s Lambda limit; reporting-publish/lambda.tf sets timeout = 300, and no in-region read cost could be measured (invoke is out of bounds), so the projection rests on laptop latency and the shard size is chosen to fit 300 s",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order: 'It must fit the 900 s Lambda limit at 4,620 clients and 7,570 accounts. Measure the per-account read cost with S3 READS on what is published today, and state the projection with its basis. If it does not fit, shard BY CLIENT.'",
+  "world_is": "MEASURED 2026-10-03 from the laptop (S3 reads only), 6 published accounts: 1.126 s per account sequentially (two GETs, ~0.56 s each), 0.234 s per account through a 16-worker pool (24 account reads in 5.62 s); series 6,255 gzip bytes and 187 days on average; directory 6,526,009 bytes in 21.3 s, parse 0.02 s; one delimiter listing 1.09 s. A re-run of the same script (READ_COST_R9.json holds this one, the first run's values are in this row) read 0.257 s per account sequentially, 0.190 s through 16 workers, the directory in 34.8 s, the listing in 0.78 s: latency from the laptop varies run to run, and the projection below takes the slower per-account figure of the two runs. (1 page per 1,000 prefixes, so 8 pages at 7,570 accounts). PROJECTION at laptop latency, the pessimistic bound: 7,570 accounts x 0.234 s = ~1,770 s in ONE invoke, which does not fit 900 s (nor the deployed 300 s); sharded by client at SUMMARY_SHARD_CLIENTS = 300 it is 16 shards of ~470 accounts, ~110 s of reads plus ~30 s of directory and listing, ~140 s per shard, which fits 300 s with margin. In-region latency is not measured here and is expected lower. The live local dry run built 6 summaries in 1.9 s.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~4/READ_COST_R9.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~4/measure_read_cost.py",
+      "infra/aws/terraform/investor-reporting/reporting-publish/lambda.tf timeout = 300, memory_size = 1024"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner: 2.0.0_SA_COO~P: the first deployed summaries fire's CloudWatch REPORT line is the in-region measurement; the fan-out reuses the function's own-invoke grant. The projection is a scaled laptop figure, not a Lambda measurement."
+}
+```
