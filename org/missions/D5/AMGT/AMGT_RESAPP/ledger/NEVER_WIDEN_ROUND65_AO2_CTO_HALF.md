@@ -49,3 +49,20 @@
 
 **CTO HALF: SIGNED** for ao-2: one upload plus one code-only `safe-apply` at 9a8cbd2c97 (or a descendant with an equal content
 diff), memory unchanged at 1769, with the VersionId `.xFOZLD1X...` rollback.
+
+## AMENDMENT 1 (`1.0.0_SA_CTO~Z`, 2026-10-03 ~19:3xZ) -- re-signed at pin 19cb3df089 (COO AMENDMENT 1 @b5f723dbdf, msg 28959)
+
+AE~A stopped at condition 1, as written: `fc5a0bf42d` (COO~H, executing Andrew's ~18:xxZ word that removes the quarantine mechanisms)
+changed `finbert_sentiment.py` and `publication_gold.py` after pin 9a8cbd2c97. COO~Z withdrew 9a8cbd2c97 and ships the repo as it stands.
+This seat read the new pin:
+- **Diff 9a8cbd2c97 -> 19cb3df089 over the packaged sources:** exactly `publication_gold.py` (+6/-48) and `finbert_sentiment.py`
+  (+6/-14), by `git diff --numstat`; `scoped_amgt.py` is unchanged. HEAD equals 19cb3df089 on all three files.
+- **AST, function by function:** the route-reached `_day_of`, `_latest_gold_snapshot_rows_cached`, `_baseline` and `_event_id` are
+  byte-UNCHANGED. Only `is_quarantined` and `_without_quarantined_jobs` are removed, and the builders lose their filters.
+  `GOLD_DAILY_TABLE` and `BACKFILL_FLOOR` are present. `finbert_sentiment.py` is still reached only lazily from `build_mention` (the
+  leg-1 import-graph proof).
+- **So the served effect is ao-1's title case alone.** The harvest hunks move what a gold BUILD would write. That build is a data
+  operation, and it is NOT in this act (condition 3).
+
+**CTO HALF: RE-SIGNED** at 19cb3df089 (or a descendant with an equal content diff: 355 / 352 / 3 / 0 / 0), memory 1769, with the same
+rollback. Conditions 2-4 are unchanged. The c17 base is read under the build commit's own predicate (55/94, AE~A row Z-S342).
