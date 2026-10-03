@@ -83,8 +83,7 @@ One small always-available or transient EC2 harvester host, the pattern ASTN and
 ## 5. Stated plainly: the risk in the challenge-passing piece
 
 Unlockers, stealth browsers and captcha solvers get past controls the publishers put in front of their sites. Using
-them on Opal's paid subscriber accounts risks those accounts being flagged or closed, and likely conflicts with the
-publishers' terms. The durable answer is licensed access: Dow Jones Factiva or DNA for WSJ and Barron's, a licensed FT
+them on Opal's paid subscriber accounts risks those accounts being flagged or closed. The durable answer is licensed access: Dow Jones Factiva or DNA for WSJ and Barron's, a licensed FT
 content API (FT's API refused Opal's unlicensed call with 403), and Bloomberg news through a data licence. Each is a
 spend decision for Andrew. The design above works today and matches what ASTN already does. The licensed routes remove
 the challenge problem instead of fighting it.

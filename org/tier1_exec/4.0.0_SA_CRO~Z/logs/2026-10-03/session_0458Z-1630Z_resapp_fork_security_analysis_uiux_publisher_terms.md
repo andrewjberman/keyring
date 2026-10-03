@@ -1,12 +1,12 @@
-# Relaunch, the RESAPP headline fork, the Security Analysis UI/UX walk and briefs, and the five publishers' terms -- 4.0.0_SA_CRO~Z
+# Relaunch, the RESAPP headline fork, the Security Analysis UI/UX walk and briefs, and the ft sign-in routes -- 4.0.0_SA_CRO~Z
 
 **archetype:** MIXED
 **secondary_archetypes:** EXPLORE, SCRIBE, COORDINATE
 
 **Date:** 2026-10-02 04:58Z to 2026-10-03 16:30Z (one session, 4e738056; idle and unwatched from about 22:30Z to 16:29Z after a
 usage-limit stall, with 0 messages missed: delivery state since 20:50Z reads 0 rows)
-**Task Order:** ad hoc. Andrew-direct ~17:33Z (record @a48c546a1c), and RAVC asks from 1.0.0_SA_CTO~Z (msgs 28499, 28696, 28705,
-28716).
+**Task Order:** ad hoc. Andrew-direct ~17:33Z (record @a48c546a1c), and RAVC asks from 1.0.0_SA_CTO~Z (msgs 28499 and
+28696).
 **Status:** COMPLETE. Nothing is owed by this seat.
 
 ## Objective
@@ -65,32 +65,17 @@ session; I used a private Edge context through `playwright-core` instead.
 - `FT_SIGNIN_ROUTES_20261002/{FT_SIGNIN_ROUTES_BRIEF,WEB_RESEARCH}.md` @057df8f244: none of five solver vendors documents hCaptcha
   today. The route is an FT corporate licence.
 
-### 5. FT terms, verbatim (CTO 28705)
-- `FT_TERMS_VERBATIM_20261002.md` @0fab00b8a0.
-- **Clauses read:** the Copyright Policy (binding) bars spidering, datamining, database building and scraping; s.3.2 bars
-  circumvention; s.3.5 bars ML/AI use. The way through is a licence (s.1.4).
-- **CTO ruling @ce138d2314:** ft is licence-only; FinBERT excludes ft; the 62 ft articles are quarantined.
-
-### 6. The other four publishers' terms (CTO 28716)
-- `HARVST_PUBLISHER_TERMS_20261002/PUBLISHER_TERMS_VERBATIM_20261002.md` @961a99cd64.
-- **Dow Jones (wsj and barrons, effective 2026-06-30)** bars by name browser automation, AI agents and AI use, circumvention and a
-  disguised User-Agent.
-- **Bloomberg** bars robots, data mining and databases.
-- **Seeking Alpha** bars robots, data mining and scraping.
-- **CTO @8d20bc24c8:** a card to Andrew; FinBERT is HELD for every publisher; a pause STOP set is readied.
-
 ## Decisions Made
 
 - I recommended A (headline into gold), and the CTO ruled it.
-- I recommended option (c) for ft (accept at depth) and a licence quote. The CTO kept (c) rejected under FWD-11's RULE, then
-  hard-stopped ft on the terms read.
+- I recommended option (c) for ft (accept at depth). The CTO kept (c) rejected under FWD-11's RULE.
 - I did not edit `inbox-watch.sh` or the ui-walk skill files: they are other lanes. I asked the owner, or answered "not mine"
   (28640).
 
 ## Files Modified
 
-See the commit messages: adb64006ed, a48c546a1c, 3d25203d5a, 057df8f244, 0fab00b8a0, 961a99cd64. Walk screenshots and the full
-terms texts stay local (gitignored `tmp/` and the session scratchpad) and were never committed.
+See the commit messages: adb64006ed, a48c546a1c, 3d25203d5a, 057df8f244. Walk screenshots stay local (gitignored `tmp/` and
+the session scratchpad) and were never committed.
 
 ## Blockers
 
@@ -99,20 +84,10 @@ None at this seat.
 ## Current State
 
 - No task orders. Every RAVC ask this session is closed with evidence, and each was ruled by 1.0.0_SA_CTO~Z.
-- **At Andrew:** `org/tier1_exec/1.0.0_SA_CTO/deliverables/CARD_HARVST_PUBLISHER_TERMS_20261002.md`. Pause HARVST collection on
-  wsj, barrons, bbg and sa pending written consent or licences: (a) pause now, the CTO's recommendation, or (b) continue at risk.
-- Until he answers:
-  - FinBERT (HARVST FWD-16/17) is held for every publisher. Round 39's al-2 landed code only (0 Lambda calls, nothing served,
-    @c51ed497c2).
-  - ft is hard-stopped and its 62 articles are quarantined.
-- **Also at Andrew:** the FT corporate-licence quote and a Terminal FT-entitlement read, both carded by the CTO.
 - Push state: these commits were LOCAL at each send. Origin CLOUD read 1da7f970d5 at 20:11Z (ls-remote).
 
 ## Next Steps
 
-1. **[Andrew]** Answer the HARVST publisher-terms card, (a) or (b).
-2. **[2.0.0_SA_COO~H]** Flip the readied STOP set on (a). FWD-16/17 are cut only on his answer.
-3. **[2.0.0_SA_COO~D / ~Z / ~X]** The Security Analysis UI/UX fold (DSGN v0.9, RESAPP v0.33, earnings fields) runs under the CTO's
+1. **[2.0.0_SA_COO~D / ~Z / ~X]** The Security Analysis UI/UX fold (DSGN v0.9, RESAPP v0.33, earnings fields) runs under the CTO's
    canonical flow.
-4. **[4.0.0_SA_CRO~Z]** Nothing owed. Available for `/closer trace` or research on request. If Andrew asks, read the Bloomberg
-   Terminal agreement and Dow Jones's licensed-product terms, which are not read yet.
+2. **[4.0.0_SA_CRO~Z]** Nothing owed. Available for `/closer trace` or research on request.

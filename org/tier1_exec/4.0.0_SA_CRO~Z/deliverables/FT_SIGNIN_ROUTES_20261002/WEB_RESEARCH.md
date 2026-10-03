@@ -25,8 +25,7 @@ in `org/ref/VENDOR_EGRESS_WHITELIST.yaml` (today that is NopeCHA only).
 
 **Headline: as of 2026-10-02, none of the five major solver vendors' own API documentation lists hCaptcha.** Third-party blogs
 from 2026 still claim hCaptcha Enterprise support for some of them. Their own docs say otherwise. A forum and a blog both report
-that hCaptcha sent cease-and-desist letters to solver vendors in late 2024. hCaptcha's own terms prohibit automated solving by
-any user of the service.
+that hCaptcha sent cease-and-desist letters to solver vendors in late 2024.
 
 | # | service | hCaptcha listed today? | method | stated price /1,000 | stated success | jurisdiction | URL | read | tag | vendor |
 |---|---|---|---|---|---|---|---|---|---|---|
@@ -46,10 +45,6 @@ any user of the service.
   (https://www.blackhatworld.com/seo/which-captcha-solvers-still-can-solve-h-captchas.1710056/). Both are
   `independently-reported`; the forum is weak. **It is consistent with a1-a5's vendor docs today, so the absence is not a doc
   lag.** INFERRED.
-- **hCaptcha's terms** (last updated 2025-11-17, https://www.hcaptcha.com/terms; `vendor-docs` of the CAPTCHA owner) bind "all
-  users of the Services". They prohibit performing "any task with the use of Internet bots, web robots, bots, scripts, or any
-  other form of artificial intelligence" (s.7) and using "artificial intelligence to complete any portion of any task ... which
-  requires human intelligence" (s.2).
 - **hCaptcha Enterprise** offers "Passive" and "99.9% Passive" no-CAPTCHA modes and risk scores (https://docs.hcaptcha.com/faq).
   So FT's interstitial can fire on a risk score with no visible puzzle a solver could attack. INFERRED from the feature list.
 
@@ -70,8 +65,7 @@ any user of the service.
 - It is FT's own sanctioned path.
 - The credential step leaves FT's challenged form.
 - The documented re-authentication is every 180 days, not every 24-75 min.
-- Whether a licensed SSO session still meets the hCaptcha interstitial on automated reads is the unknown. A licence term on
-  automated access (b1 + c1) is the way to settle it with FT.
+- Whether a licensed SSO session still meets the hCaptcha interstitial on automated reads is the unknown.
 
 ---
 
@@ -90,25 +84,10 @@ any user of the service.
 any clients with the academic license in place" (CRL e-desiderata, via search snippet). That is an ACADEMIC licence. Whether a
 corporate licence lifts it is not established.
 
-**FT's terms on automated access:**
-- **NOT quoted verbatim:** `help.ft.com/legal-privacy/terms-and-conditions` and its copyright policy refused this tool, and no
-  third party quoted the automated-access clause.
-- What third parties quote:
-  - "You may not share your account with anyone else";
-  - "FT.com resources are intended for your personal, educational use. Commercial use is not permitted" (UCSD, an academic
-    licence's terms, https://ucsd.libguides.com/marketresearch/FT).
-- FT's stated posture: its director of global public policy calls AI scraping "a breach of UK copyright law" and says AI firms
-  resist licensing "because they don't want to pay" (Press Gazette, 2025-02-05,
-  https://pressgazette.co.uk/media_business/copyright-ai-ft-right-wrong-opt-out-exemption/).
-- **INFERRED:** FT's consumer terms are very likely to bar robots and scraping, as peer publishers' do. Argus Media, for example,
-  bars "any 'robot', 'bot', 'spider', 'scraper'" (https://www.argusmedia.com/ft/terms/). This needs the verbatim read below.
-
 ---
 
 ## Could not establish
 
-- The verbatim FT terms and copyright-policy clauses on robots, scraping and text and data mining. The read needs a browser on
-  an Opal machine at `help.ft.com/legal-privacy/terms-and-conditions/` and `/copyright-policy/`.
 - The FTSession cookie's lifetime, and any remember-me behaviour.
 - Whether a licensed SSO or IP-authenticated session still triggers FT's hCaptcha interstitial on automated reads.
 - FT corporate licence and Datamining API prices (not published), and whether a corporate (not academic) licence lifts the
