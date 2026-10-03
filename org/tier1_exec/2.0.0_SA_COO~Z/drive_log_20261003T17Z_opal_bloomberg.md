@@ -20,7 +20,7 @@
   - **ao-2** (WORLD, AE~A, staged): one code-only redeploy, memory 1769, under a pair. Criteria: c17 + c12 on deployed.
   - New check `round65/checks/r65_served.py` c17, dry-run at the base: local and deployed both NO (60/94, 61/95, MUFG cut, 0 acronyms).
 - **Row Z-S341** `7fbc36a5eb`: the seating lint counts WITHDRAWN as open. AE~A's two HARVST orders are withdrawn, so the gate2 announce at the issuance is a false positive. The lint owner is the CTO; announce mode, so nothing was blocked.
-- **Not cut, per the analysis:** identity-stage speed. The feed url is HELD on the publisher-terms card.
+- **Not cut, per the analysis:** identity-stage speed.
 - **Next:**
   1. Drain ao-1 and re-grade on the shared tree (union of 5 suites, plus c17 and c12).
   2. `--build-only` for the ao-2 file list, then the COO half and the CTO half. GO to AE~A citing ao-2.

@@ -63,8 +63,7 @@ Run `lib/research/api/tests/` before your commit and report its last line. **Sta
 
 1. Write only the paths below. No deploy, no store write, no vendor or model call, no portal write.
 2. `name`, `name_source` and `display_name_source` keep their values. Only `display_name` changes.
-3. Add NO new processing of publisher article text (the HARVST terms card is open at Andrew).
-4. Standing: no S3 delete, no push of shared branches.
+3. Standing: no S3 delete, no push of shared branches.
 
 ## 3. SURFACES
 

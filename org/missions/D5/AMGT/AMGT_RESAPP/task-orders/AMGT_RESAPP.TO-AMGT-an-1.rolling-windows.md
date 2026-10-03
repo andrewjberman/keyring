@@ -30,8 +30,7 @@ PRD `org/missions/D5/AMGT/AMGT_RESAPP/prd/AMGT_RESAPP_PRD.md` FWD-36 (v0.35). Is
    - When the store begins after the requested start (the harvest store begins 2026-01-01), `window_start` is the store's first day and
      `window_note` says so in plain words.
    - Every row serves `articles_total` (an int), re-aggregated from gold `chatter_daily` over the window.
-   - Every row serves `tone` and `voters` as null, each beside `tone_reason`: "window tone is held: the HARVST sentiment outcomes are held
-     on the publisher-terms card". Never compute tone at request time.
+   - Every row serves `tone` and `voters` as null, each beside `tone_reason`. Never compute tone at request time.
    - `by_month` stays on every row, unchanged, because the page still reads the calendar-month view.
    - An unrecognised `days` value answers 400 with the allowed values.
 2. **`/lead-panel/rankings/breakout/price` takes `?days`** (around :4870).
@@ -73,7 +72,7 @@ hash, every criterion's output lines, the functions you changed, and any row. Th
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
-**ISSUER NOTES:** PRD v0.35 FWD-36; CTO msg 28740 (price half a qualified wait; tone held on the publisher-terms card). Served by an-7.
+**ISSUER NOTES:** PRD v0.35 FWD-36; CTO msg 28740 (price half a qualified wait). Served by an-7.
 
 <status>pending</status>
 <round>64</round>

@@ -7902,7 +7902,7 @@ fanout:
 
 **Issuer rulings at the cut:**
 - R1. **FWD-36:** the chatter windows are re-aggregated from gold `chatter_daily` at request time (counts only). Tone and voters are
-  served null with `tone_reason`, because HARVST FWD-16/17 are HELD on the publisher-terms card. The price ranking accepts `?days`,
+  served null with `tone_reason`. The price ranking accepts `?days`,
   serves 30, and answers 90/365 with "not produced yet" (qualified wait). That answer is never read as the 90/365 path.
 - R2. **FWD-37:** coverage-event markers come from gold `chatter_event` (its `lead_headline`). The earnings kind is served in
   `marker_kinds_absent` with the reason "no earnings dates are pulled yet" until the CORPUS Model-block pull carries the dates (a
@@ -7989,7 +7989,7 @@ The analysis landed after the issuance (`59aabebf87`). Its seven-item enrichment
 | 7 the as_of source stamp (ruling 6) | an-6 item 3, RE-RULED: the body's `source_stamp`, with the key's `object_as_of` for older bodies |
 
 Every unspawned cell (an-2 to an-6) also measures its package delta (`--build-only` SIZE line). an-1 was already running, so the
-issuer measures its delta at the drain. No cell adds new processing of publisher article text (the HARVST terms card). an-7 carries
+issuer measures its delta at the drain. an-7 carries
 it and reads the census after the act. r64_served gains c14 C4 (the encoded key reaches every route) and c16 (the planted fault). Both
 were dry-run at the base: C4 serves 200 with security_key null on 4 of 4 routes (the normal-key control serves it), and c16's fault
 escapes with 0 AMGT_500 lines. The orders stay at 7.
