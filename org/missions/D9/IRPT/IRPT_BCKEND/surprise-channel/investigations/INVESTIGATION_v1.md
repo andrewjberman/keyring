@@ -16267,3 +16267,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "For 2.0.0_SA_COO~P: if a prospect render must be served on the reporting route, a follow-on cell sets IRPT_REQUESTS_TABLE and a read grant on the requests table as the performance root does. Owner 2.0.0_SA_COO~P."
 }
 ```
+
+
+## IRPT_BCKEND-S296 -- irpt-status history: an Opal viewer's owner read with no selected_tenant answers UNEXPECTED, not a named refusal
+
+```json
+{
+  "id": "IRPT_BCKEND-S296",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-03T04:05:00Z",
+  "one_line": "irpt-status's history route answers an Opal viewer's owner read with no selected_tenant as UNEXPECTED (an IdRefused classified UNEXPECTED), where the request read answers the named UNSUPPORTED_OPERATION -- measured on the live bundle and on each new one",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/W206_STATUS/ZIP_COLD_START_SMOKE_W206_20261003.txt (the control on live wXzz3 = h7H7KgX1: irpt_internal IdRefused 'the firm token is not one of the 3 enabled client firms', classifier_code UNEXPECTED, operation analysis-request-history)",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/G3_STATUS/ZIP_COLD_START_SMOKE_G3_20261003.txt (the same answer on hC6Pramt, now served)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Every owner-read refusal is a NAMED refusal (zip_cold_start_smoke.py's owner-refusal arm, CTO 102269), as the request read's UNSUPPORTED_OPERATION is.",
+  "world_is": "On analysis-request-history, the same viewer reaches the firm canonicalizer with its own non-client firm, which raises IdRefused; the boundary classifies it UNEXPECTED. Nothing is served and no data moves. The smoke counts it PASS because a public_reason_code is present. Whether a real caller reaches it depends on the portal always sending selected_tenant for an Opal viewer (not measured).",
+  "notes": "Owner 2.0.0_SA_COO~Y (irpt-status's ops/entry.py history) with 2.0.0_SA_COO~P (_authz/served.py classification). Un-parks if a live history call answers UNEXPECTED, or with the next irpt-status packet."
+}
+```
