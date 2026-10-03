@@ -4,14 +4,14 @@ Seat `2.0.0_SA_COO~Y` (CLAUDE). Mode FAST: lease `IRPT_BCKEND~Y` (renewed by the
 Loop `/canonical-drive IRPT_BCKEND`. Way forward: CTO rulings in
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md` (latest read: batches 177, 178, 186)
 and the fold-in `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_FOLD_IN_IRPT_THREE_BRIEFS_20261002.md` section 2 (Y-1..Y-6,
-Y-H). Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-03T06:1xZ.
+Y-H). Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-03T06:3xZ.
 
 ## Pins
 
 | What | Value |
 |---|---|
-| CLOUD (local) | G3 packet `6fb533318c` (blob `85eb94e84c`), CTO half asked 06:15Z; bundle U1 `In5BnMbP..` (`hC6Pramt..`). No worktree held |
-| SERVED: `irpt-status` | `6VQejBfsI/P3mfAVSFjLt/ythlcxXxi12cy9hxXhKNg=` since 04:28Z (W2-06 `include=composition`; CTO half batch 204); ledger `irpt-status-w206-20261003` CLOSED 3/3. Rollback: re-promote S3 `wXzz3_gh..` (`h7H7KgX1..`) |
+| CLOUD (local) | G3 SERVED, evidence `6cbe9144e7`. No worktree held |
+| SERVED: `irpt-status` | `hC6PramtsshP40jo3OJ91k4qxlHndylJWxHLIjIdw/E=` since 06:28:49Z (G3 render-grant ports + `IRPT_EVIDENCE_BUCKET`; W2-06 since 04:28Z). Policy `irpt-status-render-grant-read-policy` (I1). Rollback: re-promote S3 `4CQOSM..` (`6VQejBfs..`), drop the variable, delete the policy |
 | SERVED: PDF route | `GET analysis/requests/{requestId}/pdf`, route `ihirb2s` on `7k3ed8px20` since 2026-10-02 ~17:59Z |
 | SERVED: the resident | `/opt/irpt-resident/a6f6e7165e-st18` since 05:52:20Z (Y-4 enrichment: gate total 240 s; CTO half batch 209). Rollback root `828c37c6f7-st17` |
 | SERVED: `irpt-ycharts-generate` | `fD2R6OFrT2N086C9Go3e1aA9RKZCP/vfnZCaHCloJTs=` since 03:02Z (Y-4). Rollback: re-promote S3 `oew.wOPK..` (Y-5, `aug0YyWc..`) -- with the resident, all or none |
@@ -34,9 +34,10 @@ Y-H). Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-03T06:
 
 ## Queued work
 
-- G3 (render ports on irpt-status, CTO batch 175): PACKETED (`G3_STATUS/`), CTO half asked, with the negative arm's
-  carrier (the render key) asked inside it. The positive arm rides E4's first Analysis export (all three render grants
-  today are Performance exports).
+- G3 SERVED 06:28Z (CTO half batch 212). V1 arm 1: 18 of 18 non-render reads equal. Arm 2 (a foreign render token
+  refused) is `2.0.0_SA_COO~P`'s (told 06:32Z). Arm 3 rides E4's first Analysis export.
+- Y-2 needs no backend change: AnalysisSubmissionRequest admits `input_id` with variant `comparison` and one key; Y-3's
+  V1-a measured the upload + comparison path admitted. Y-2 is the live run after option A.
 - Y-5 packet 2 (the Kimi swap) waits on the web-search QA receipt (`KIMI_WEB_SEARCH_UNVERIFIED` stands).
 
 ## Rows this lane holds
@@ -59,7 +60,7 @@ Y-H). Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-03T06:
 - `irpt-y3-20261002`: V1 open (READY pending the session re-capture).
 - `irpt-y5-20261003`: V1 open (after Y-3's READY).
 - `irpt-y4-20261003`: V1 open (after option A).
-- `irpt-status-g3-20261003`: U1 closed; I1, D1 wait on the CTO half; V1 after them.
+- `irpt-status-g3-20261003`: U1, I1, D1 closed; V1 open (arm 2 `~P`, arm 3 at E4).
 
 ## Write claims
 
