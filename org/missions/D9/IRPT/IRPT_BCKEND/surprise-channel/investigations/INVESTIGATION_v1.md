@@ -16768,3 +16768,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Remedy (one cell + its own never-widen half, opal-portal-authorizer is the authorizer of every portal API route): add 'GET /api/scoped/investor-reporting/reporting/{account_id}/{which}' to RENDER_ROUTE_CLAIMS with a path-parameter -> claim map (account_id -> accountSetId) and a which == 'series' guard (V3's series-only rule), Node tests beside IB-rtr-2's. Fix forward or window rollback is the CTO's ruling (SERVED). ~D owns the page's silence on the refusal (walk defect 2)."
 }
 ```
+
+## IRPT_BCKEND-W110-S1 -- the W15 V2 authorizer test pins exactly three render routes
+
+```json
+{
+  "id": "IRPT_BCKEND-W110-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~110",
+  "surfaced_at": "2026-10-03T20:00Z",
+  "one_line": "The IB-rtq-2 V2 authorizer test (W15 deliverable) asserts RENDER_ROUTE_CLAIMS holds exactly three routes, so it fails once IB-pr-307 adds the fourth; the new IB-pr-307 test is the live test",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~15/test_edge_render_delegate_v2_authorizer.mjs: test 'RENDER_ROUTE_CLAIMS names exactly the three GETs' does assert.deepEqual on Object.keys(mod.RENDER_ROUTE_CLAIMS).sort() against three route keys (read at the worktree base 6850506b19)",
+      "infra/aws/users/lambda/portal-authorizer/index.mjs now holds four keys (IB-pr-307); that file is a recorded deliverable outside this order's paths, so it was not edited and not run"
+    ]
+  },
+  "spec_asserts": "IB-pr-307 order: the three existing routes keep their exact behavior; the order names no change to the W15 deliverable test.",
+  "world_is": "The W15 test's exact-three-keys assertion would now fail if re-run; its other arms (string entries for the three existing routes) are unchanged. The shape of the new entry is an object {param, claim, require}, not a string, which that test does not read.",
+  "notes": "No action taken by the worker; the live regression coverage of the three routes is the performance-route test in tests/test_render_reporting_series.mjs."
+}
+```
