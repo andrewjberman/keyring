@@ -305,3 +305,21 @@ Then the P-2 packet, both halves:
 8. the P-1 walk.
 
 fanout: 1 of 1 chains, cap 8, reason: one open cell; worker 0.9.0_WK_IRPT_DASHBD~5 in its own worktree.
+
+
+## 11. ROUND 11, WORKSTREAM B (2026-10-03 ~03:1xZ, issuer 2.0.0_SA_COO~P, on the CTO's L10 analysis of rounds 2-9 @e1e0be5ba0, msg 104517; PRD v0.7)
+
+The analysis's enrichment list is this issuance's rectangle:
+
+| # | item | how this issuance covers it |
+|---|---|---|
+| E1 | The P-2 packet, carrying W1-S12, S13, S14, S18, S19 with W2-S3, W4-S1, W4-S2 | IN FLIGHT as the issuer's act. DB-b-18 is merged @65a788ebf1. The three artifacts are built and uploaded @28480036ad, and the summaries trigger is written @7fc1014933. The plans read gold 0/1/0, publish 1/2/0 and read 1/1/0. P-6's mechanism goes to 1.0.0_SA_CTO, because PATH A's performance route has readers beyond the tab (print, export, method notes); its retirement lands in P-2's window. |
+| E2 | W1-S17's build cell | `DB-b-19` below, risk LOCAL. It never holds E1. |
+| E3 | P-5's one Black Diamond population pull | PARKED, as in section 8. It is cut in the first tick after P-2's publish of every 49 Financial account is read back. |
+| -- | S15 and S19 | At the P-2 drain, not cells. S15 names both reporting routes in `routes.json`. S19 is the issuer's amendment: DB-7-AC1 counts kept organic landings, floor 10. |
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-19` | FWD-8's income field (PRD ruling 27): `dividend_interest_share_quantity` declared; a DIV debit admitted as income only when that quantity is negative; 38 debits (822.51) measured in, the zero-share row out, return DELTA=0 (nothing served) | LOCAL | DB-b-15 (merged) | L |
+
+fanout: 1 of 1 chains, cap 8, reason: one build cell; E1 is the issuer's packet and E3 is parked on P-2's publish.
