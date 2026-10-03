@@ -663,3 +663,36 @@ lint, provenance, typecheck and build, and no unit tests.
 - Read by a delegate of this seat.
 
 -- 3.0.0_SA_CVO
+
+## Grades, 08:5xZ-10:3xZ 2026-10-03 -- portal DEV 936424c3 through 46aeea17 (12 pins; ~D msgs 104593, 104602, 104604)
+
+Graded in a scratch worktree of origin/DEV (a sparse workspace copy with the portal nested, so the tests' workspace paths
+resolve), removed after. None of these pins is on PROD (6169edd9). Every CI run concluded success; CI runs no unit tests.
+
+| pin | claim | this seat's read | grade |
+|---|---|---|---|
+| 936424c3 (IRPT_DASHBD) | NOT_SPANNED/BREAK say "Not measured" in body and picker | `DashboardPerformance.tsx:247`, `pickerSuffix.ts:39`; 2/2; NEG and 3 MUTs fail; CI 37094927372 | PASS on a test run |
+| 209e4903 (IRPT_DASHBD) | a custom range opening before the history is NOT_SPANNED | `:79`; 2/2; NEG fails; CI 37097260187; leaves the "shortened" note branch unreachable | PASS on a test run |
+| 102c15e0 (item 92) | a needs-attention request offers the refill | `OwnedRequestHistory.tsx:49,226`; 2/2; NEG fails; 3 MUTs survive (the Generate gate, the new request id, the client seed); a render probe shows the client seed | PASS on a test run + by render; the refill submit NOT_EVALUATED |
+| 25b7a59d / f4bad219 | land and revert | `git diff 25b7a59d^ f4bad219` is 0 bytes | nets to zero |
+| 9bd6517d + 3ff86a54 (item 93) | Download opens the signed URL; the parser reads the pdf envelope | `ReceiptPanel.tsx:102`, `adapt.ts:1359`, `download.ts:68`, `envelope.ts:165`; iv-e-161 1/1; NEGs and 3 MUTs fail; a MUT at `investor-reporting.ts:1087` survives the test but fails a LiveClient probe; CI 37108254305 | PASS on a test run + by probe |
+| 201bfe69 (REBRND E6) | comments only | 23 of 28 files have identical comment-stripped ASTs, 2 are non-code, and 3 change string literals only (one demo file undisclosed); readers 34/34 | NOT_EVALUATED (no logic change) |
+| d7141e5a (REBRND E3) | a NO-PERMISSION panel instead of a bounce | `ProtectedRoute.tsx:121`; 1/1; NEG and 2 MUTs fail; F49-AC4 32/32 at the parent, 31/32 from this pin on | PASS on a test run; adds 1 failure (row DSGN_REBRND-S13) |
+| d8d236a0 (REBRND S10) | Equity blue400 5.89:1, Structured pink400 5.65:1 | `chartColors.ts:545-549`; 4/4; NEG and both hex MUTs fail; this seat's WCAG on #192643: 5.886 and 5.650 (old #3b82f6 4.069) | PASS on a test run; row S10 remedied on DEV |
+| 71a946e3 (REBRND 4b) | secondary ink 8.14:1 footer, 6.87:1 body | `PanelFooter.tsx:102`; 1/1; NEG and 2 MUTs fail; the served token is #A8B1C2 (`design/themes/opal-capital.css:28`), not the cited #A8B0C0: 8.19 strip, 6.91 body, 5.69 tile; white/40 0 times in Positioning's 15 source files | PASS on a test run |
+| 46aeea17 (REBRND 4c) | Satellites footers use the footer date format | `formatPanelTimestamp` (`dateUtils.ts:527`), as Models and ETFs already did; 1/1; NEG fails; MUT `formatPanelTimestamp(null, null)` at `HoldingsTab.tsx:307` survives (arm (a) is a source regex) | PASS on a test run (the formatter); footer render NOT_EVALUATED |
+| full suite | -- | DEV 46aeea17 1077 pass / 31 fail / 0 errors (1135 tests); all pins' non-test changes reverted: 1065 / 43 / 3; 0 tests fail at head and pass reverted. The revert cannot see the committed-blob tests, so d7141e5a was checked against its parent separately | -- |
+
+**Other observations.**
+- Untested legs, row S55's class: item 92's refill submit, item 93's live-client read, and the value 46aeea17 passes to
+  the formatter.
+- fe-s-90 CONTROL 3 failed once and passed at three later heads (flaky).
+
+**Limits.**
+- Tests, static renders and probes only; no clicks.
+- The workspace contracts are CLOUD HEAD 2cc72c270e's.
+- DEV moved to fb5534f8 during the read, not graded.
+- `git -C portal status` reads 15 lines before and 15 after.
+- Read by a delegate of this seat.
+
+-- 3.0.0_SA_CVO

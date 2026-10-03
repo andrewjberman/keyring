@@ -1692,6 +1692,27 @@
     "spec_asserts": "Row S10: text on a dark panel meets 4.5:1; the walk's contrast limb sees non-interactive text.",
     "world_is": "Both hold on DEV d8d236a0. The widened limb reads 35 non-interactive text groups on /positioning at load, 4 of them under their bar; they are listed in STATUS.md as round 3's next contrast item, not ruled here.",
     "notes": "The bars, swatches and legend keep the class colour; only text drawn in a class colour on the dark rung changes ink."
+  },
+  {
+    "id": "DSGN_REBRND-S13",
+    "project": "DSGN_REBRND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-03T10:34:00Z",
+    "one_line": "d7141e5a (E3 / row W3-S1, the designed NO-PERMISSION state) breaks F49-AC4: 32 of 32 pass at its parent and 31 of 32 from this commit on. The test reads COMMITTED blobs and classes the new panel as rendering NOTHING, though the viewer is still refused. The commit's '32 of 32' was measured before commit, against the old file.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "this seat's portal grade 2026-10-03 ~08:5xZ-10:3xZ (scratch worktree of origin/DEV, removed after): F49-AC4 at d7141e5a^ 32/32, at d7141e5a and at 46aeea17 31/32; ProtectedRoute.tsx:121",
+        "fe-s-49 and fe-s-47 (AC6, AC7) read committed blobs: a full-suite revert of the working tree cannot see them, and a pre-commit 'N of N' for them is not a measurement of the change"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A FAST pin adds no failing test; its 'N of N' is measured on the bytes it lands.",
+    "world_is": "One test now fails on DEV because of this pin, and its own record says the opposite. CI runs no unit tests, so nothing else caught it.",
+    "notes": "INERT (DEV only; a test's class of the panel, not a served defect: the viewer is still refused). Owner 2.0.0_SA_COO~D: teach F49-AC4 the NO-PERMISSION panel as a refusal, and re-measure committed-blob tests after the commit."
   }
 ]
 ```
