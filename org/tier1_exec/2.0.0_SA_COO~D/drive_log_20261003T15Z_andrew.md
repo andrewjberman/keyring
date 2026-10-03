@@ -4,6 +4,7 @@
 |---|---|---|---|---|
 | 14:4xZ-14:5xZ | DSGN_REBRND (FAST; IR lines still blocked: P-3/P-6 wait ~P's P-2 window, Case A waits ~Y) | round 3 E3, row W3-S4 | Assets Overview says a failed read: portal `1b8fccfd` on origin DEV (ls-remote 14:51Z); row S14 disarms W3-S4 | DRIVE FORWARD |
 | 14:5xZ-15:1xZ | DSGN_REBRND (FAST) | the CVO's grade (ae07d386d4), row S13 | F49-AC4 taught the NO-PERMISSION panel (`e2563c17`); committed-blob suites re-measured, F47-AC6 (this seat's b618efc9) fixed (`2da1eaaf`); row S15 disarms S13 | DRIVE FORWARD |
+| 15:1xZ-15:3xZ | DSGN_IRPTV1 (FAST; IR first) | the CVO's grade b296ae47c1: rows S54, S55, S56 | S56 disarmed by S57 (2da1eaaf); S54 tests through the component, portal `7e7f9aa2` on origin DEV (ls-remote 15:34Z), disarmed by S58 | DRIVE FORWARD |
 
 ## W3-S4 closed
 
@@ -24,6 +25,14 @@
   pre-existing, and it was this seat's. They are classified, with the seed's overwrite measured as OVERWRITE (3)
   (2da1eaaf). After the commit: 45 of 45.
 - Row S15 disarms S13.
+
+## The CVO's second grade (b296ae47c1), read at tick start
+
+- 6 PASS (fb5534f8..b0b3c524). Notes acted on: S56 (F47-AC6) disarmed by S57; S54 and S55 (items 87-90, tests blind to
+  their claim) moved to the top of the IR next-list; S54 done in 7e7f9aa2 (SecurityList stale choice; ProspectComposer
+  payload), each failing on the CVO's mutant. Open from the same grade: S55; the `?? 50` census in
+  MarketRegimeIndicator / MarketRegimeModal / FearGreedModal (RSIModal and RSIBars landed after the census tip); the
+  untested wiring the grade names (MarketPerformance `failed`, Positioning `loadFailed`, HoldingsTab).
 
 ## Open
 

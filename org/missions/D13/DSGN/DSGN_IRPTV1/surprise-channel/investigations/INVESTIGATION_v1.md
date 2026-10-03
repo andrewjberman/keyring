@@ -3573,3 +3573,32 @@
   "notes": "Found by re-measuring this seat's committed-blob suites after commit (DSGN_REBRND row S13's lesson); DSGN_REBRND row S15 records the same pass."
 }
 ```
+
+## DSGN_IRPTV1-S58 -- items 87 and 88 tested through the component (disarms S54)
+
+```json
+{
+  "id": "DSGN_IRPTV1-S58",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-10-03T15:35:00Z",
+  "one_line": "Items 87 and 88 now have a test through the component that fails on the CVO's mutant: SecurityList with a stale stored Account choice (iv-e-149.component-wiring) and ProspectComposer's Generate payload (iv-e-150.component-payload).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal 7e7f9aa2 (origin DEV, ls-remote 15:34Z): the two test files; React's useState (seeding the stored choices) and the JSX runtime (keeping the Generate onClick) wrapped by bun mock.module and restored in afterAll",
+      "negative controls, applied and restored: `accountFilter = ownAccountFilter` makes the iv-e-149 component test fail (0 rows, 'No securities match these filters.'); ProspectComposer sending [] makes the iv-e-150 component test fail (variant overview, comparison_keys []) while the existing iv-e-150 still passes 5 of 5",
+      "36 tests in 13 related files pass in one run; the two tests pass again after the commit"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarms DSGN_IRPTV1-S54: each item's own test now discriminates its claim through the component, measured by the mutant the row named.",
+  "spec_asserts": "Row S54: a FAST item's own test discriminates the claim it lands with.",
+  "world_is": "Holds at DEV 7e7f9aa2. Row S55 (items 89 and 90) is the same class and is this seat's next item.",
+  "notes": "The SecurityList fixture carries one account, so the control proves the seed reaches the component (the offered account shows chosen) rather than a narrowing."
+}
+```
