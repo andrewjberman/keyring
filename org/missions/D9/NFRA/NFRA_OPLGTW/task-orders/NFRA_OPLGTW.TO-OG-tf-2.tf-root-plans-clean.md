@@ -91,7 +91,7 @@ hash, commits and rows.
 - Pre-cut 18:2xZ: `tf2.AC1` FAIL (plan rc=1; errors 2; missing required variables 2); `tf2.AC2` FAIL (the secret holds 3
   keys, no owner keys).
 
-<status>pending</status>
+<status>complete</status>
 <round>15</round>
 <slot>~17</slot>
 <fabric>site-z</fabric>
