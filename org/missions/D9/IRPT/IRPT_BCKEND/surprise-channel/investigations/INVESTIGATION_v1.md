@@ -15826,3 +15826,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Monday's 14:00Z scheduled fire stays A1's evidence. The operational write is not production evidence (CLAUDE.md: ad-hoc artifacts are never production evidence)."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-W102-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~102",
+  "surfaced_at": "2026-10-03T05:10Z",
+  "one_line": "IB-pr-299: lib/trading_calendar.py is already packaged with irpt-performance-adapter, but the Lambda runs its hardcoded fallback (holidays 2024-2027 only), so the missing-day check clips to those years and says so",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json functions/irpt-performance-adapter files[] lists lib/trading_calendar.py (packaged_as lib/trading_calendar.py, staged_from pin b905df2c60, sha256 41b1c0c126...); sha256 of lib/trading_calendar.py at b91461602e is the same 41b1c0c126..., so no map edit and no member to add",
+      "holdings_gold.py already imported trading_calendar flat (_covered_days, _resolve_links); the flat name resolves at runtime because installed.build_runtime puts root/lib on sys.path when lib/opal_naming.py is packaged (installed.py:18-25)",
+      "lib/trading_calendar.py:38-44,49-65,160-163: pandas_market_calendars is optional and not a member of the package, so on the Lambda calendar_source() is NYSE/hardcoded-fallback-2024-2027 and NYSE_HOLIDAYS_FALLBACK covers 2024-2027; outside it every weekday would read as a trading day",
+      "holdings_gold.py _missing_trading_days clips the checked span to the fallback years and discloses the clip as a PARTIAL trading_calendar_range absence rather than naming a holiday as a missing day; test_holdings_gold_calendar_gap.py::test_the_fallback_calendar_is_graded_in_its_own_years_and_clipped_outside_them (7 passed)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IB-pr-299 item 4: a window wholly inside the calendar's range uses that range; read how the calendar bounds itself. Item 5: file a row naming the members only if the calendar is not packaged.",
+  "world_is": "The calendar is packaged (no members to name) and bounds itself to 2024-2027 holidays on the Lambda. Two readings the order did not state were taken: the checked span runs from the first partition in the window to the lesser of the window end and the gold's latest partition (a day the gold has not reached is not linked across), and a day covered by a linked row is not named twice.",
+  "notes": "Refresh NYSE_HOLIDAYS_FALLBACK before 2028 (the calendar's own note); until then a 2028 window answers with the clip disclosed, never a guessed gap."
+}
+```
