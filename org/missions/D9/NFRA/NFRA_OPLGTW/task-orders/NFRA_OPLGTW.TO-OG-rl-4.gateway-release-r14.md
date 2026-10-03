@@ -148,6 +148,7 @@ validated with `python .tools/proof-of-spec-check.py <instance>`. Report once pe
   `rl4.AC2` FAIL on the round-13 read (no transcript read since carries either field).
 
 <status>pending</status>
+<status>complete</status>
 <round>14</round>
 <slot>~15</slot>
 <fabric>site-z</fabric>
