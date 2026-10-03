@@ -78,3 +78,14 @@ NEVER-2 ledger entry is AE~A's as for any act.
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-03 ~23:1xZ):** CLOSED. AE~A `444ad788f4`: ONE `--live` run at `8f10187a78`, exit 0.
+- The terminal was confirmed by a real data read; no sign-in.
+- 95 of 95 tickers usable, 0 excluded.
+- `s3://opal-data-harvest/bloomberg/harvest/bronze/price_history_px_last/date=2026-10-02/year_pull.json` written once, 562,248 B (VersionId `6d2NH.kpXFWSYT5McZXVDLT6j0PRyzkk`).
+- The 90/365 generations hold 94 / 94 / 95 / 95 rows, read off the table and matching the log.
+- The 30-day pointers are untouched (still the 11:06Z run). AC1 c22 local YES; AC2 c10 deployed YES with DELTA=0 exact (8 of 8 lines byte-identical). NEVER-2 entry `012e5c2466` closed, 3 of 3.
+
+Issuer re-read: c22 local YES on trending and breakout x 90 and 365, `window_end` 2026-10-02 equal to the last trading day; c22 deployed NO, the expected base for ap-4.
+
+<status>complete</status>

@@ -39,6 +39,29 @@ verbatim:
 
 Change nothing else in the runbook; sections 0-6 and 8 passed J1. Keep `rb.AC1`-`rb.AC3` passing.
 
+## AMENDMENT A1 (2026-10-03 ~23:1xZ, issuer; CTO msg 29057 on the CVO's L9 re-grade, ADJUDICATION_v6.Z.md)
+
+OGO2-J1 re-graded FAIL, narrowed to 7.3. 7.1 and 7.2 now PASS. The defect is this order's own: item 3 said "name the
+exact read-only command that shows `HEALTH.checks.integration_enabled`" for 7.3. But 7.3 is the A15 SOURCE-BUCKET
+readback, and that command reads no bucket setting. Replace item 3 with:
+
+3'. **Move** the `Read command:` line (`cd infra/aws/ec2/opal-gateway && python ops/schwab_status.py`, `--json` for the
+    machine copy) out of 7.3 and into **7.1 step 3**, where HEALTH is read. 7.2 step 2 refers to it.
+3''. **7.3** names the four read-only bucket reads, each with `--bucket opal-data-assets`, as one line beginning `Bucket
+    reads:`:
+    - `aws s3api get-bucket-versioning`
+    - `aws s3api get-bucket-encryption`
+    - `aws s3api get-public-access-block`
+    - `aws s3api get-bucket-policy-status`
+    **Delete** the sentence "This runbook does not run the AWS read itself ..." (it now contradicts the line). The
+    baseline values and the pass/fail rule stay as they are.
+
+The check `r15/checks/o5.AC1.sh` is amended to grade A1:
+- 7.1 carries `schwab_status.py`;
+- 7.3 carries `Bucket reads:` and all four reads with `--bucket opal-data-assets`;
+- 7.3 carries neither `schwab_status.py` nor "does not run the AWS read".
+Every other anchor and `rb.AC1`-`AC3` stay.
+
 ## 2. BOUNDS
 
 - **Edit ONLY** the runbook.
@@ -60,7 +83,7 @@ Rows: id `NFRA_OPLGTW-Z-W21-S<k>` (next unused), fabric `site-z`, disarm_owner `
 ## 4. PROOF OF SPEC (literal; run from your worktree root after your commit)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="OG-o-5"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r15/checks/o5.AC1.sh; echo "exit=$?"</invocation><expect>(?s)7.1 re-render anchor True; 7.2 re-apply \+ integration_enabled=false anchors True; 7.3 read-command anchor True.*rb.AC1-AC3 passing 3 of 3.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="OG-o-5"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r15/checks/o5.AC1.sh; echo "exit=$?"</invocation><expect>(?s)7.1 re-render anchor True; 7.2 re-apply \+ integration_enabled=false anchors True; 7.1 status read True; 7.3 four bucket reads True; 7.3 no HEALTH read and no "does not run" True.*rb.AC1-AC3 passing 3 of 3.*RESULT: PASS.*exit=0</expect></criterion>
 </proof_of_spec>
 
 - `AC1`: the three anchors landed in their sections, and the runbook's existing checks still pass.
@@ -81,7 +104,7 @@ Rows: id `NFRA_OPLGTW-Z-W21-S<k>` (next unused), fabric `site-z`, disarm_owner `
 - Round label 16 (addendum R3-T.8.1: the CTO's R7; the issuance gate refused it into round 15, which already had its one issuance). Alone in its chain.
 - Pre-cut: `o5.AC1` FAIL (no anchors).
 
-<status>pending</status>
+<status>pending -- A1 (2026-10-03 ~23:1xZ): 7.3 re-cut per CVO ADJUDICATION_v6.Z C-S20 and CTO msg 29057; the first pass (e91507e923) put the HEALTH read in 7.3</status>
 <round>16</round>
 <slot>~21</slot>
 <fabric>site-z</fabric>

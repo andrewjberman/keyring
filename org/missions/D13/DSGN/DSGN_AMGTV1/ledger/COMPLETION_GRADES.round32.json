@@ -1,0 +1,306 @@
+{
+ "kind": "COMPLETION_GRADES",
+ "schema_version": "1.0",
+ "project": "DSGN_AMGTV1",
+ "round": 32,
+ "graded_by": "1.0.0_SA_CTO~Z",
+ "graded_utc": "2026-10-03T22:4xZ",
+ "report_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/ledger/COMPLETION_REPORT.round32.json@0f883b11a3",
+ "ruling_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/ledger/GRADING_RULING.round32.md@5cd2d798d8",
+ "served_ref": "portal PROD dbd29c6320 (Deploy to Production 37156394008 SUCCESS; ls-remote read 22:2xZ); walked candidate f9c6fa73 differs in SecurityAnalysis/src/api/chart libs by one type alias (git diff read by this seat)",
+ "evidence_method": "a drafting subagent read all five close walks (screenshots; no DOM dumps exist) and the close records; this seat verified 3 claims against the screenshots (016-BA-US-Peers: seven header tiles and BOEING CO/THE (subject); 004 Chatter 90D: label collisions) before recording",
+ "prd_version": "v0.15",
+ "tally": {
+  "NOT_EVALUATED": 13,
+  "RETIRED": 1,
+  "NOT_REALIZED": 3,
+  "REALIZED": 10
+ },
+ "closed": false,
+ "closed_reason": "NOT CLOSED: 10 REALIZED of 27. NOT_REALIZED: FWD-5 (no word cloud), FWD-21 (90D label collisions), FWD-27 (names, unlabelled move window, raw-precision changes, provenance at rest). NOT_EVALUATED: the redesign walk did not reach every limb (AMD tabs behind the open day dialog, no non-USD name, no no-officer filing, no six-state capture, no hover reads); FWD-1 is Andrew's signed-in PROD read.",
+ "rows": [
+  {
+   "fwd_id": "FWD-1",
+   "verdict": "NOT_EVALUATED",
+   "artifact_ref": "tmp/ui-walk/20261003T175905Z/shots/002--73ecurity-analysis-press-Price.png; tmp/ui-walk/20261003T170837Z/lead-lists.json",
+   "state_observed": "EXERCISED (close walks of f9c6fa73 on live data; PROD dbd29c6320 differs in SecurityAnalysis by one type alias)",
+   "gaps": [
+    "Andrew's own signed-in walk of /security-analysis on PROD: not done (by instruction this outcome is NOT_EVALUATED until it is).",
+    "ACCEPT 'reads its header as four cards and opens the Financials one' cannot be performed on the redesigned header: it shows seven figure tiles and no Financials card (see FWD-4). The endpoint text needs a CTO restatement before Andrew's walk can pass this step.",
+    "Valero's main-chart slot renders a designed empty state, not a chart; the three cards sit under that empty state."
+   ],
+   "note": "Every hop except the signed-in PROD walk is read on the LOCAL candidate (round 31 walk, byte-equal to f9c6fa73/dddaf3a1 in the Valero path apart from round 32 Lead Panel wording). The four-card step in the ACCEPT no longer exists on the page."
+  },
+  {
+   "fwd_id": "FWD-2",
+   "verdict": "NOT_EVALUATED",
+   "artifact_ref": "tmp/ui-walk/20261003T175905Z/shots/001, 002; tmp/ui-walk/20261003T170837Z/lead-lists.json",
+   "state_observed": "EXERCISED (close walks of f9c6fa73 on live data; PROD dbd29c6320 differs in SecurityAnalysis by one type alias)",
+   "gaps": [
+    "No person's hover read of 3 bubbles and 3 bars on the redesigned page in rounds 29-32.",
+    "The round-26 REALIZED read (ADJUDICATION_v32, PROD f76b02acb6) does not carry: since f76b02acb6, PriceBars.tsx changed +/- 216 lines and ChatterBubbles.tsx +/- 618 lines (portal git diff --stat f76b02acb6 f9c6fa73)."
+   ],
+   "note": "Static identity checks pass on the candidate, but the DONE WHEN is a hover read on the served page, and both mark components were rewritten after round 26."
+  },
+  {
+   "fwd_id": "FWD-3",
+   "verdict": "RETIRED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/prd/DSGN_AMGTV1_PRD.md:101-106",
+   "state_observed": "RETIRED",
+   "gaps": [],
+   "note": "As in round 26."
+  },
+  {
+   "fwd_id": "FWD-4",
+   "verdict": "NOT_EVALUATED",
+   "artifact_ref": "tmp/ui-walk/20261003T170837Z/shots/004-BA-US-overlay.png; crop of 015",
+   "state_observed": "EXERCISED (close walks of f9c6fa73 on live data; PROD dbd29c6320 differs in SecurityAnalysis by one type alias)",
+   "gaps": [
+    "Contrary: the redesigned header shows seven tiles, not 'no more than four cards -- Price, Financials, Market features, Trading technicals', and no tile window was opened in any round 29-32 walk read.",
+    "No non-USD name was walked on the redesigned header in rounds 29-32 (the round-26 grade rests on rounds 11-13 walks of the old four-card header).",
+    "PRD conflict for the CTO: SAUX-03 (FWD-27) prescribes one key-figures card; FWD-4, FWD-1 and FWD-13 still name four cards."
+   ],
+   "note": "v0.15 restates FWD-4 to the SAUX-03 key-figures row, which the redesign built (004-BA-US-overlay: seven tiles, USD). Owed: the DONE WHEN walk on a name in another currency."
+  },
+  {
+   "fwd_id": "FWD-5",
+   "verdict": "NOT_REALIZED",
+   "artifact_ref": "tmp/ui-walk/20261003T170837Z/shots/004-BA-US-overlay.png",
+   "state_observed": "EXERCISED (close walks of f9c6fa73 on live data; PROD dbd29c6320 differs in SecurityAnalysis by one type alias)",
+   "gaps": [
+    "Contrary (owed limb, v0.14): no face renders the word cloud. The producer is built locally (RESAPP round 66) but not shown to be served, and no DSGN cell is cut.",
+    "Hover tooltip (articles, publishers, mentions, headline): graded only by chart.cjs on fixtures; the walker never hovers.",
+    "Article rows at rest in the day dialog: every live day opened was empty (timeline-days.json); rows are read only on the dayopen.cjs fixture.",
+    "Markers 'each opening that day': not pressed live; dayopen.cjs arm 1 only.",
+    "ACCEPT 'the firm's own harvested publications come first': not read in rounds 29-32 (round 26 also left it unread).",
+    "Readability note: the chart's tick labels are drawn rgb(168,176,192) = #A8B0C0 on white, measured contrast 2.18:1 (TimelinePanel.tsx:188 AXIS_TEXT_FILL '#A8B0C0', commented 'the band's own secondary ink')."
+   ],
+   "note": "The v0.9 look limbs are met on the redesign (CVO v33 PASS plus round 29 checks on the candidate); the earnings limb is met only by the interim branch its own text accepts. The v0.14 word cloud is absent, so the outcome cannot be REALIZED."
+  },
+  {
+   "fwd_id": "FWD-6",
+   "verdict": "REALIZED",
+   "artifact_ref": "tmp/ui-walk/20261003T170837Z/shots/004-BA-US-overlay.png",
+   "state_observed": "EXERCISED (close walks of f9c6fa73 on live data; PROD dbd29c6320 differs in SecurityAnalysis by one type alias)",
+   "gaps": [],
+   "note": "Read on the round 31 close walk of the redesign (BA, and VLO's Recommendation)."
+  },
+  {
+   "fwd_id": "FWD-7",
+   "verdict": "NOT_EVALUATED",
+   "artifact_ref": "tmp/ui-walk/20261003T170837Z crop of 014-BA-US-Exec-Management.png; crop of 046",
+   "state_observed": "EXERCISED (close walks of f9c6fa73 on live data; PROD dbd29c6320 differs in SecurityAnalysis by one type alias)",
+   "gaps": [
+    "No name whose filing lists no officers was walked in rounds 29-32 (BA and VLO read their filings; AMD's tab is hidden behind the dialog).",
+    "The round-26 grade (ADJUDICATION_v31: ASML NA, 2317 TT on PROD's code) does not carry: ExecManagementTab.tsx changed +/- 33 lines (round 29: CEO first; Z-W85-S1 'a fallback roster never says filing', ROUND29_CLOSE.md:68)."
+   ],
+   "note": "Static fallback evidence passes on the candidate; the DONE WHEN walk on a no-officer filing is owed on the redesign."
+  },
+  {
+   "fwd_id": "FWD-8",
+   "verdict": "NOT_EVALUATED",
+   "artifact_ref": "tmp/ui-walk/20261003T170837Z crops of 016/017 (BA) and 047 (VLO)",
+   "state_observed": "EXERCISED (close walks of f9c6fa73 on live data; PROD dbd29c6320 differs in SecurityAnalysis by one type alias)",
+   "gaps": [
+    "Only two names' Peers tables are visible in rounds 29-32 (BA, VLO); AMD's are hidden behind the open day dialog in every full walk.",
+    "PeersTab.tsx changed +/- 34 lines in round 29 (money format, cap as-of), so round 26's three-name read does not carry.",
+    "Judgment item: the face prints '12 comparable(s)' and 'universe vintage August 6th, 2026'."
+   ],
+   "note": "Two of three names read cleanly on the redesign; the third is not visible."
+  },
+  {
+   "fwd_id": "FWD-9",
+   "verdict": "NOT_EVALUATED",
+   "artifact_ref": "tmp/ui-walk/20261003T170837Z crops of 018 (BA Model) and 049 (VLO Model)",
+   "state_observed": "EXERCISED (close walks of f9c6fa73 on live data; PROD dbd29c6320 differs in SecurityAnalysis by one type alias)",
+   "gaps": [
+    "No walked name shows a missing line in the shots read (BA and VLO carry every listed line; AMD's Model shots 077-078 are hidden behind the open day dialog).",
+    "ModelTab.tsx changed +/- 319 lines in round 29, so round 13's walk does not carry; the missing-line sentence is read only on a planted fixture."
+   ],
+   "note": "Plain line names are met live; the missing-line half is fixture-only on the redesign."
+  },
+  {
+   "fwd_id": "FWD-10",
+   "verdict": "NOT_EVALUATED",
+   "artifact_ref": "tmp/ui-walk/20261003T170837Z crops of 036/037 (BA) and 067 (VLO)",
+   "state_observed": "EXERCISED (close walks of f9c6fa73 on live data; PROD dbd29c6320 differs in SecurityAnalysis by one type alias)",
+   "gaps": [
+    "No no-call name was walked in rounds 29-32: BA (HOLD) and VLO (BETTER) both carry calls; AMD's Posture shots (079-080) are hidden behind the open day dialog.",
+    "'a designed empty state with its date' is not read live; the harness arm checks the reason text, not a date."
+   ],
+   "note": "Carry-forward candidate: PostureTab.tsx is byte-identical to the round-26 PROD build. Under the rounds 29-32 evidence rule, the no-call walk is still owed."
+  },
+  {
+   "fwd_id": "FWD-11",
+   "verdict": "NOT_EVALUATED",
+   "artifact_ref": "org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/adjudications/ADJUDICATION_v33.md:14, :20",
+   "state_observed": "EXERCISED (close walks of f9c6fa73 on live data; PROD dbd29c6320 differs in SecurityAnalysis by one type alias)",
+   "gaps": [
+    "No side-by-side read against /market and /positioning of the redesigned page in rounds 29-32.",
+    "Tooltips and pop-ups were read live only where the walker opened them (Price tooltip, day dialog, Thesis windows)."
+   ],
+   "note": "Footers and the no-code limbs hold on what was read; the DONE WHEN's three-page side-by-side is owed on the redesign."
+  },
+  {
+   "fwd_id": "FWD-12",
+   "verdict": "REALIZED",
+   "artifact_ref": "round32/ROUND32_CLOSE.md:28; round29/checks/header/face.cjs + leadprice/leadface.cjs headers",
+   "state_observed": "EXERCISED (close walks of f9c6fa73 on live data; PROD dbd29c6320 differs in SecurityAnalysis by one type alias)",
+   "gaps": [],
+   "note": "Every limb is read on the redesign (static census on f9c6fa73, CVO v33's person read, round 31 viewport measure). Outside the two named panels, the timeline's tick labels use band ink #A8B0C0 on white (2.18:1); see FWD-20."
+  },
+  {
+   "fwd_id": "FWD-13",
+   "verdict": "NOT_EVALUATED",
+   "artifact_ref": "tmp/ui-walk/20261003T170837Z/shots/004, 038",
+   "state_observed": "EXERCISED (close walks of f9c6fa73 on live data; PROD dbd29c6320 differs in SecurityAnalysis by one type alias)",
+   "gaps": [
+    "Tabular numerals: not measured on the redesigned header (HeaderCards.tsx changed +/- 319 lines); the render instrument's FWD-13 clause last ran on PROD's pre-redesign tree (ADJUDICATION_v27).",
+    "Full-precision value: the visible tooltip now prints the formatted value (SAUX-04 under FWD-27); the full value rides data-full-value. Whether an attribute meets 'its tooltip carries ... the full-precision value verbatim' needs a CTO ruling.",
+    "The text says 'the four header cards'; the page shows seven tiles (see FWD-4).",
+    "Cross-reference: What changed prints raw-precision changes ('+0.1321', '-1.5278'), which CVO v33 tagged 'also FWD-13' (see FWD-27)."
+   ],
+   "note": "Units, named tiles and data-mnemonic are met. Tabular numerals are unmeasured on the redesign, and the full-precision limb conflicts with SAUX-04."
+  },
+  {
+   "fwd_id": "FWD-14",
+   "verdict": "NOT_EVALUATED",
+   "artifact_ref": "tmp/ui-walk/20261003T170837Z/shots/010, 012 (BA), 044 (VLO)",
+   "state_observed": "EXERCISED (close walks of f9c6fa73 on live data; PROD dbd29c6320 differs in SecurityAnalysis by one type alias)",
+   "gaps": [
+    "PASS face, passage count, the fold and the title= census in an application-route capture were last graded by fwd14_passagesFolded on PROD's tree (ADJUDICATION_v27:22). Rounds 29-32 ran the contract check on the model and peers states only (round28 render.cjs --states model,peers)."
+   ],
+   "note": "Carry-forward candidate: the Thesis window code is unchanged and its static harness passes on the candidate, but no rounds 29-32 capture grades the census limb."
+  },
+  {
+   "fwd_id": "FWD-15",
+   "verdict": "REALIZED",
+   "artifact_ref": "round32/ROUND32_CLOSE.md:29; round29/ROUND29_CLOSE.md:28; round31/ROUND31_CLOSE.md:39; round28/checks/render.cjs header",
+   "state_observed": "EXERCISED (close walks of f9c6fa73 on live data; PROD dbd29c6320 differs in SecurityAnalysis by one type alias)",
+   "gaps": [],
+   "note": "Graded on the same instrument and fixture halves as round 26, re-run on the candidate. Observation: VLO's live sheet repeats a 'PROVISIONAL' chip on each cell of the EPS, BVPS, diluted shares, DPS and EBITDA rows. That is not a REFUSED row, but it is the repeat pattern the ACCEPT warns of."
+  },
+  {
+   "fwd_id": "FWD-16",
+   "verdict": "REALIZED",
+   "artifact_ref": "tmp/ui-walk/20261003T170837Z crops of 016, 017 (BA), 047 (VLO)",
+   "state_observed": "EXERCISED (close walks of f9c6fa73 on live data; PROD dbd29c6320 differs in SecurityAnalysis by one type alias)",
+   "gaps": [],
+   "note": "The chip's hover is read by the peersPattern harness, not live; every other limb is visible on the round 31 walk."
+  },
+  {
+   "fwd_id": "FWD-17",
+   "verdict": "REALIZED",
+   "artifact_ref": "tmp/ui-walk/20261003T170837Z crop of 036 (BA), 067 (VLO)",
+   "state_observed": "EXERCISED (close walks of f9c6fa73 on live data; PROD dbd29c6320 differs in SecurityAnalysis by one type alias)",
+   "gaps": [],
+   "note": "All three limbs are visible on the round 31 walk."
+  },
+  {
+   "fwd_id": "FWD-18",
+   "verdict": "REALIZED",
+   "artifact_ref": "tmp/ui-walk/20261003T175905Z/shots/001, 002",
+   "state_observed": "EXERCISED (close walks of f9c6fa73 on live data; PROD dbd29c6320 differs in SecurityAnalysis by one type alias)",
+   "gaps": [],
+   "note": "The purpleFills counts are a person's read of the PNGs plus the static harnesses, not the ui-smoke DOM census. The Chatter footer carries no generation or resolution line and does not say 'Source:'."
+  },
+  {
+   "fwd_id": "FWD-19",
+   "verdict": "NOT_EVALUATED",
+   "artifact_ref": "tmp/ui-walk/20261003T175905Z/shots/001, 003; tmp/ui-walk/20261003T170837Z/shots/038",
+   "state_observed": "EXERCISED (close walks of f9c6fa73 on live data; PROD dbd29c6320 differs in SecurityAnalysis by one type alias)",
+   "gaps": [
+    "No six-state ui-smoke capture of the redesigned page in rounds 29-32.",
+    "PanelLoading, PanelError and PanelNoPermission are not captured on the rewritten panels (timeline, header, What changed, collage). The last full read was on PROD's pre-redesign tree (ADJUDICATION_v27)."
+   ],
+   "note": "Empty states look designed where seen, but the DONE WHEN's four-state capture on every panel was not re-run on the redesign."
+  },
+  {
+   "fwd_id": "FWD-20",
+   "verdict": "NOT_EVALUATED",
+   "artifact_ref": "round32/ROUND32_CLOSE.md:24",
+   "state_observed": "EXERCISED (close walks of f9c6fa73 on live data; PROD dbd29c6320 differs in SecurityAnalysis by one type alias)",
+   "gaps": [
+    "No six-state ui-smoke run, no DOM JSON clause read, no can-fail arms, no 8fa7abde band failure and no person's read of the six PNGs on the redesigned build in rounds 29-32 (round 26's REALIZED rests on ADJUDICATION_v27/v29 on PROD's pre-redesign tree).",
+    "A candidate lowContrastChars violation is measured on the redesigned timeline (2.18:1 tick labels)."
+   ],
+   "note": "The instrument outcome must be re-run on the redesign. Its v0.9 band clause has never been read by the instrument on the light-family page."
+  },
+  {
+   "fwd_id": "FWD-21",
+   "verdict": "NOT_REALIZED",
+   "artifact_ref": "tmp/ui-walk/20261003T175905Z/shots/001 (30D), 004 (90D); tmp/ui-walk/20261003T171945Z/shots/003 (365D); round31/ROUND31_CLOSE.md:57-60",
+   "state_observed": "EXERCISED (close walks of f9c6fa73 on live data; PROD dbd29c6320 differs in SecurityAnalysis by one type alias)",
+   "gaps": [
+    "Contrary (judgment): on f9c6fa73 at 90D, labels overlap bubble outlines and a leader line runs through a label ('TOKYO ELECTRON LTD', 'UnitedHealth Group Inc'). CVO v33's PASS predates the rolling windows.",
+    "The toned fill depends on tone not yet served (tone null on 95/95, 'window tone is not served on this route yet'). The DONE WHEN accepts a null tone '(no voters)' but does not name an unserved tone; the toned branch is graded only by tone.cjs on a planted fixture.",
+    "'no clear tone' on hover and the full names of shortened labels are not read live (the walker never hovers)."
+   ],
+   "note": "Windows, collage, wording and size change are met on served data. The label-overlap read on the final candidate is the blocking item; the tone limb is met only on its null branch."
+  },
+  {
+   "fwd_id": "FWD-22",
+   "verdict": "REALIZED",
+   "artifact_ref": "tmp/ui-walk/20261003T175905Z/shots/002; tmp/ui-walk/20261003T170837Z/lead-lists.json",
+   "state_observed": "EXERCISED (close walks of f9c6fa73 on live data; PROD dbd29c6320 differs in SecurityAnalysis by one type alias)",
+   "gaps": [
+    "The 'return over the selected window' limb is read at 30D only. At 90D/365D the face shows the served 'not produced yet' reason and no bars. FWD-22's DONE WHEN does not accept that interim branch; FWD-26 v0.11 accepts it for its own face and states the render 'is NOT a read of the 90/365 price face'. This is a qualified wait on RESAPP FWD-36 (round 66 ap-2/ap-3 issued at b1aa5a6bb1).",
+    "Hover on clipped names ('Advanced Micro Devices ...', 'Taiwan Semiconductor M...', 'HERMES INTERNATION...') is not read live; pricemovers.cjs reads the titles statically."
+   ],
+   "note": "Under v0.15: every limb is met at 30D on the served bytes (pricemovers.cjs full marks; 002/008 shots), and the 90/365 face prints the served \"not produced yet\" reason, which v0.15 accepts. Clipped names carry a title on every bar (pricemovers.cjs arm 1)."
+  },
+  {
+   "fwd_id": "FWD-23",
+   "verdict": "REALIZED",
+   "artifact_ref": "ADJUDICATION_v33.md:20; tmp/ui-walk/20261003T175905Z/shots/001; tmp/ui-walk/20261003T170837Z crop of 015; portal git diff --stat f76b02acb6 f9c6fa73",
+   "state_observed": "EXERCISED (close walks of f9c6fa73 on live data; PROD dbd29c6320 differs in SecurityAnalysis by one type alias)",
+   "gaps": [],
+   "note": "The before/after extraction render is the round-18 artifact; both modules are unchanged since, and the redesigned faces were read by CVO v33. TimelinePanel.tsx:188-189 holds two hex literals, but it is not a Lead Panel chart file."
+  },
+  {
+   "fwd_id": "FWD-24",
+   "verdict": "NOT_EVALUATED",
+   "artifact_ref": "tmp/ui-walk/20261003T170837Z crop of 015-BA-US-Exec-Management-expanded.png",
+   "state_observed": "EXERCISED (close walks of f9c6fa73 on live data; PROD dbd29c6320 differs in SecurityAnalysis by one type alias)",
+   "gaps": [
+    "Third name not read: AMD's readings sit in the closed details on its overlay shot (069), and its expanded shots are hidden behind the open day dialog.",
+    "The 0-'not served' DOM census with its positive control was not re-run on the rewritten SecurityOverlay (+/- 135 lines); the round-26 reads (ADJUDICATION_v28/v30) were on the pre-redesign header.",
+    "'every unit prints as served' was not checked against the served overlay on the redesign."
+   ],
+   "note": "Two of three names show correct readings and places moved. The census limb and the third name are owed."
+  },
+  {
+   "fwd_id": "FWD-25",
+   "verdict": "REALIZED",
+   "artifact_ref": "tmp/ui-walk/20261003T170837Z crop of 018-BA-US-Model.png",
+   "state_observed": "EXERCISED (close walks of f9c6fa73 on live data; PROD dbd29c6320 differs in SecurityAnalysis by one type alias)",
+   "gaps": [],
+   "note": "Met on the redesign. Observation for FWD-27: the Change column still prints raw precision for some figures ('+0.1321', '-1.5278', '+0.0633' on a percent figure, '+0.0011', and a signed '-0.00')."
+  },
+  {
+   "fwd_id": "FWD-26",
+   "verdict": "REALIZED",
+   "artifact_ref": "tmp/ui-walk/20261003T175905Z/shots/001-004; tmp/ui-walk/20261003T170837Z/summary.md",
+   "state_observed": "EXERCISED (close walks of f9c6fa73 on live data; PROD dbd29c6320 differs in SecurityAnalysis by one type alias)",
+   "gaps": [],
+   "note": "Met, with the Price 90D/365D limb met through the interim branch v0.11 explicitly accepts. Against the ACCEPT ('No face shows a period it does not name'), the header readings print 'BREAKOUT (PRICE) #62 | -3.78%' with no window named. That face is outside the DONE WHEN's two faces; see FWD-27."
+  },
+  {
+   "fwd_id": "FWD-27",
+   "verdict": "NOT_REALIZED",
+   "artifact_ref": "tmp/ui-walk/20261003T170837Z shots 071-080; tmp/ui-walk/20261002T233653Z shots 072-081; tmp/ui-walk/20261003T012558Z shots 071-081 (pixel test at (1420,600)); shots 073, 077, 079 read",
+   "state_observed": "EXERCISED (close walks of f9c6fa73 on live data; PROD dbd29c6320 differs in SecurityAnalysis by one type alias)",
+   "gaps": [
+    "Every tab was seen on 2 names, not 3: AMD's tab shots are hidden behind the open day dialog in the rounds 29, 30 and 31 walks.",
+    "Contrary: one security prints under two or three display names on one page (BA, VLO, SLB).",
+    "Contrary: unlabelled disagreeing figures. The header breakout move names no window beside the Price face's 30-day move, and What changed prints raw-precision changes that disagree with its rounded before/after.",
+    "SAUX-25's provenance lines ('1 of 6 inputs have run', 'no source set up yet') print at rest on the Model tab (RESAPP FWD-38 serving cell).",
+    "Judgment: lines for unconnected fields still print on populated panels (CEO public profile, company description in the thesis window, thesis pillars). They may be C-PRESENTATION-ONLY designed states; needs a ruling.",
+    "Escape closing the account menu has not been checked live.",
+    "Not every figure shows its as-of date at rest (EV, net debt, beta, average volume, short interest tiles).",
+    "Observation: the served price-window reason on the PM face says '... which waits on Andrew's word' (served prose, C-PRESENTATION-ONLY)."
+   ],
+   "note": "Round 30-32 repairs closed CVO v33 items (a) and (b) and half of (c). Display names, unlabelled measure windows, raw-precision changes and the AMD walk coverage remain."
+  }
+ ]
+}

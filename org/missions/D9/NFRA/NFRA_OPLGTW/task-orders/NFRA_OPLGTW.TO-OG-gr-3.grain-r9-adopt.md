@@ -41,6 +41,24 @@ serving metadata only. It never changes silver data or its producer (Andrew-dire
      own refusal. It never serves a wrong row.
    No account numbers or names in the fixture.
 
+## AMENDMENT A1 (2026-10-03 ~23:3xZ, issuer; row Z-W22-S3)
+
+R9's grain makes existing Schwab tests red. Their fixture writers carry no `quantity_cash_settled` (or
+`security_description_line_1`). The cell's write surface did not include those files. That is the issuer's spec gap.
+
+- **Paths widen** to every `infra/aws/ec2/opal-gateway/tests/test_schwab_*.py` file. An edit to an EXISTING test file
+  may ONLY:
+  - add the R9 grain columns to fixture rows or fixture schemas; or
+  - restate a grain-declaration assertion to R9's grain.
+  It may NEVER delete a test, skip or xfail it, or weaken an assertion.
+- **`GR3_TEST_EDITS.md`** (your deliverables) lists every existing test file you edit, each with one line saying what
+  changed and why.
+- **AC1** now grades "no failure or error beyond the issuer's recorded baseline". The baseline is
+  `deliverables/2.0.0_SA_COO~O/r16/GR3_SUITE_BASELINE.txt`: 12 ids at CLOUD 5454d04761, from
+  `tests -k schwab -rfE` (3 failed, 9 errors, 115 passed). At least 130 tests must be collected. The three named tests
+  must still pass.
+- **AC2** admits the widened set and requires the edits file.
+
 ## 2. BOUNDS
 
 - **Edit ONLY:** `query.py`, `datasets.json` and the new test file.
@@ -53,7 +71,7 @@ serving metadata only. It never changes silver data or its producer (Andrew-dire
 <paths>
 infra/aws/ec2/opal-gateway/app/integrations/schwab/query.py
 infra/aws/ec2/opal-gateway/app/integrations/schwab/datasets.json
-infra/aws/ec2/opal-gateway/tests/test_schwab_grain_r9.py
+infra/aws/ec2/opal-gateway/tests/
 org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~22/
 org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
@@ -63,8 +81,8 @@ Rows: id `NFRA_OPLGTW-Z-W22-S<k>` (next unused), fabric `site-z`, disarm_owner `
 ## 4. PROOF OF SPEC (literal; run from your worktree root after your commit)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="OG-gr-3"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r16/checks/gr3.AC1.sh; echo "exit=$?"</invocation><expect>(?s)named tests passed 3 of 3; failed/error lines 0.*semantics\+query suites rc=0.*RESULT: PASS.*exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="OG-gr-3"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r16/checks/gr3.AC2.sh; echo "exit=$?"</invocation><expect>(?s)outside the allowed three: 0.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="OG-gr-3"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r16/checks/gr3.AC1.sh; echo "exit=$?"</invocation><expect>(?s)named tests passed 3 of 3; failed/error lines 0.*NEW beyond baseline 0 .*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="OG-gr-3"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r16/checks/gr3.AC2.sh; echo "exit=$?"</invocation><expect>(?s)outside the allowed set: 0; edited existing test files \d+, not listed in GR3_TEST_EDITS.md 0.*RESULT: PASS.*exit=0</expect></criterion>
 </proof_of_spec>
 
 ## 5. WHEN YOU ARE DONE

@@ -3490,6 +3490,52 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "The dry-run admit step always fails inside induction_scheduled because the first step's dry-run poison is still installed; the fire path is not poisoned and the 13:00Z fires read rc 0 (task Last Result 0).",
     "notes": "Found at the round-34 cut. Not cut as a cell: off the served path, and round 34's AC3 grades the refresh step's placement rather than its dry-run rc. A repair (scope the poison to step 1, or give the S3 reads a dry-run reader) is a candidate for the round-34 analysis.",
     "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W1-S29",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-10-03T21:50:00Z",
+    "one_line": "Appending the 52 CRPS-aj-1 mnemonics breaks five existing tests that sit OUTSIDE this order's <paths> and so were not edited: test_model_block_22_fields.py::test_lists_carry_46_plus_22 (pins header 18 / hist 39 / forecast 11), test_hist_request_chunks.py::test_39_fields_chunk_into_25_and_14_order_preserved (pins 39 hist fields), test_build_unit_map_families.py::test_census_covers_every_pulled_mnemonic (the unit-family census names none of the 52), and test_currency_labels.py::test_december_block_equal_modulo_new_keys plus test_stage_derive_fye.py::test_december_name_byte_identical_to_pin (the December block now carries 7 more header names under unresolved).",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m pytest integrations/bloomberg/research/tests lib/research/corpus/tests -q on branch wk-AMGT_CORPUS-341 after the producer change: 8 failed, 715 passed. 2 of the 8 also fail on the base (git archive of bcd3b35abc run from .scratch/base: test_readonly_proof_bound.py::test_code_census_arm_leaves_no_amgt_corpus_entry and test_price_axis_pull.py::...loopback_dapi... (ModuleNotFoundError blpapi)). The 6th, lib/research/corpus/tests/test_induction_schedule.py::test_r1_scheduled_path, is inside <paths> and was updated in this order's commit.",
+        "test_build_unit_map_families.py:34 asserts the census leaves no pulled mnemonic outside a family: 'pulled mnemonics in no family' now lists the 52 (BEST_CPS, EXPECTED_REPORT_DT, EV_TO_T12M_EBIT ...); build_unit_map.py (not in <paths>) holds the family census.",
+        "test_currency_labels.py and test_stage_derive_fye.py compare a December block's `unresolved` list against a pinned/expected set: the 7 new header names (SHORT_NAME, COUNTRY_FULL_NAME, AVG_DAILY_VALUE_TRADED_3M, CRNCY_ADJ_MKT_CAP, LONG_COMP_NAME, EXPECTED_REPORT_DT, ERN_ANN_DT_AND_PER) land under unresolved ('empty/no value returned') on a fixture that never returns them, which is the refusal path the order keeps (item 3)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order's <paths> name every file the change touches; test_model_block_admit.py and test_induction_schedule.py are the only existing tests it expects to need an update.",
+    "world_is": "Four more existing test files (and the unit-family census in build_unit_map.py) pin the old field-list sizes, the old family census or the old December unresolved set, so the drain's repo-wide hygiene will red until they are updated for the 52; the AC1-AC3 criteria and the three test files in <paths> pass.",
+    "notes": "Not worked around: the producer's behaviour is what the order specifies. A follow-on cell owning those five test files plus build_unit_map.py's family census (units for the 52, field_map.json rebuild) is the repair; until the map is rebuilt a new figure's unit reads the 'SEE field_map.json ... not yet built' pointer, which the producer already writes for any mnemonic the map lacks.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S85",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-10-03T22:57:41Z",
+    "one_line": "schedule_induction.ps1 resolves the task's interpreter as the FIRST python on PATH, and PATH now resolves C:/Program Files/Python314/python.exe (no blpapi) ahead of Python311 (blpapi + boto3 + pyarrow): a plain -Register today would silently re-register amgt-induction-daily on an interpreter that cannot reach Bloomberg.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "schedule_induction.ps1 -Plan -Commit a864e82a5c (22:2xZ, issuer) printed the interpreter C:/Program Files/Python314/python.exe.",
+        "The live task (registered at 33c1d096a343) runs C:/Users/Opal Bloomberg/AppData/Local/Programs/Python/Python311/python.exe; Python311 imports blpapi 3.26.4.2 and boto3 1.43.46; Python314 raises ModuleNotFoundError: No module named 'blpapi'.",
+        "Control: the same -Plan with the Python311 directory prepended to PATH prints the Python311 interpreter."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "schedule_induction.ps1 header: 'The python path is resolved at plan time: a Scheduled Task does not inherit the profile' -- the resolved interpreter is assumed to be the estate's PY_AWS interpreter (integrations/bloomberg/READ_HERE.md s.3).",
+    "world_is": "Resolve-Python takes Get-Command python's first real hit; a later install put Python314 first on PATH, so the plan's interpreter depends on install order, not on the interpreter the producer needs.",
+    "notes": "Disarmed for CRPS-aj-2 at the act: its gate leg prepends Python311 to PATH and STOPs unless the plan prints Python311 (NEVER_WIDEN_ROUND34_AJ2_SERVED_ACT.md leg 0). The durable repair (an explicit interpreter parameter, or a resolver that requires blpapi) is a candidate for the round-34 analysis. Any other site-Z registration script that resolves python by PATH order carries the same hazard.",
+    "disarm_owner": "2.0.0_SA_COO~X"
   }
 ]
 ```

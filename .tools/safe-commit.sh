@@ -875,8 +875,29 @@ if [ ${#PATHSPEC[@]} -gt 0 ] && [ -f "$SCRIPT_DIR/surprise-row-gate.py" ]; then
       # exists to close. Scoped to this process: git inherits it for the hook, nothing else does.
       export SURPRISE_ROW_OVERRIDE="${SR_OVR}"
     elif [ "$SRGATE_RC" -ne 0 ]; then
-      for _sf in "${SRGATE_FILES[@]}"; do git reset -q HEAD -- "$_sf" 2>/dev/null || true; done
-      echo "ERROR: BLOCKED -- surprise-channel row gate (steps 7/10). Commit aborted; files unstaged." >&2
+      # NFRA_OPLGTW Z-S46 / Z-S50 (3.0.0_SA_CVO~O msgs 29037, 29046): this branch exits before the REMAIN STAGED
+      # post-check below, so it makes the same check itself, over the SAME set: everything THIS call staged (staged-now
+      # MINUS the lock-entry BASELINE), not only the gate files -- a non-gate path in the pathspec is staged too. A file
+      # still staged after the reset is REPORTED, never claimed unstaged; a failed read counts as still staged, and an
+      # unreadable index is said out loud (an empty listing must never read as "nothing left").
+      _sr_reset=0; _sr_stuck=0
+      _sr_list="$(git diff --cached --name-only 2>/dev/null)"; _sr_lrc=$?
+      while IFS= read -r _sf; do
+        [ -z "$_sf" ] && continue
+        [ -n "${BASELINE_SET[$_sf]+x}" ] && continue
+        git reset -q HEAD -- "$_sf" 2>/dev/null || true
+        if git diff --cached --quiet -- "$_sf" 2>/dev/null; then _sr_reset=$((_sr_reset + 1)); else _sr_stuck=$((_sr_stuck + 1)); fi
+      done <<< "$_sr_list"
+      echo "ERROR: BLOCKED -- surprise-channel row gate (steps 7/10). Commit aborted." >&2
+      if [ "$_sr_lrc" -ne 0 ]; then
+        echo "  WARN: the index could not be read (rc=$_sr_lrc); files staged by THIS call may REMAIN STAGED." >&2
+        echo "        Check: git diff --cached --name-only, and clear them yourself: git reset HEAD -- <path>" >&2
+      elif [ "$_sr_stuck" -gt 0 ]; then
+        echo "  WARN: $_sr_stuck file(s) could NOT be unstaged and REMAIN STAGED -- another seat can adopt" >&2
+        echo "        them under their author line. Clear them yourself: git reset HEAD -- <path>" >&2
+      else
+        echo "       Unstaged $_sr_reset file(s) staged by THIS call; none remains staged; staging from before it is untouched." >&2
+      fi
       printf '%s\n' "$SRGATE_OUT" | sed 's/^/  /' >&2
       exit 1
     elif [ -n "$SRGATE_OUT" ]; then

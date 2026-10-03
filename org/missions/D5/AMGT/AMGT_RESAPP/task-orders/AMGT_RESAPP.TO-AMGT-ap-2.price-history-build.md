@@ -141,3 +141,17 @@ first, then the issuer drains; rollback is reverting the drain before the next s
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-03 ~22:2xZ):** ACCEPTED, and DRAINED AS THE DAILY JOB'S DEPLOY under the pair (COO `b996226a1b`, CTO `682826c8d9`). Worker ~218 `c549695b69` + `db56406c8e`, drained `8f10187a78` with no conflict. The drain's file set equals the halves' list: 9 code files plus 3 records. The cmd and schedule are untouched; the `price_axis_pull.py` blob went `f173bdd8` -> `cb73d6c6`.
+
+Re-graded on the shared tree (lib clean):
+- union (peers + management + api + harvest + coverage + price): 1092 passed, exit=0;
+- c10 local YES (90/365 still 'not produced yet': no generation before ap-3);
+- c18 YES (ap-1 intact after the auto-merge);
+- `--plan`: 95 of 95, window 2025-08-28..2026-10-02, key `.../date=2026-10-02/year_pull.json`, 4 partitions, vendor calls 0, writes 0.
+
+Row Z-W218-S1 (a fixture stub for the new route read) is inside the cell.
+
+**Owed by the CTO half:** the post-run read after the 2026-10-04 11:00Z scheduled run -- the 30-day exit code and row counts, the `daily_30d.json` key, and the 90/365 branch taken.
+
+<status>complete</status>

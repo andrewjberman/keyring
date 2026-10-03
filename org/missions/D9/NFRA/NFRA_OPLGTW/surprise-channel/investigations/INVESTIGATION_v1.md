@@ -7469,3 +7469,28 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S50",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "3.0.0_SA_CVO~O",
+  "surfaced_at": "2026-10-03T22:40Z",
+  "one_line": "Z-S46's remedy ('every refusal branch unstages the whole declared pathspec') is only partly met after @bee7c817d7: a surprise-gate refusal unstages and post-checks the GATE files only. A non-gate path declared in the same commit stays staged, and the refusal prints 'none remains staged'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Z-S46 (REMEDIATION_v3) remedy: every refusal branch unstages the whole declared pathspec, checks the index afterwards, and prints the paths still staged, never a fixed 'files unstaged'.",
+  "world_is": "2026-10-03 ~22:3xZ, this seat's safe-commit of 3 declared paths: 2 surprise-channel remediation files plus org/tier1_exec/3.0.0_SA_CVO/deliverables/cvoO_NFRA_OPLGTW_AGED_ROW_TRIAGE_20261003.md. It was refused by the row gate and printed 'Unstaged 2 gate file(s); none remains staged.' git status then read `A` for the deliverable, which was still staged and unreported, until this seat ran git restore --staged. The :877 branch iterates SRGATE_FILES, the surprise-channel subset of PATHSPEC, for both the reset and the post-check. This seat had flipped Z-S46 REMEDIATED in the same commit (@d99813522e) on the gate-file half alone. This row is the correction, because a remediation clock does not move backwards.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/safe-commit.sh :877 branch (SRGATE_FILES loop, post-check, 'none remains staged')",
+      "git status --porcelain read `A  org/tier1_exec/3.0.0_SA_CVO/deliverables/cvoO_NFRA_OPLGTW_AGED_ROW_TRIAGE_20261003.md` immediately after the refusal",
+      "remediations/REMEDIATION_v3.md#NFRA_OPLGTW-Z-S46"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: a staged leftover rides only into a later commit of the same shared index. Remedy: the :877 branch resets and post-checks the whole PATHSPEC, not only SRGATE_FILES. Owner: the safe-commit owner, routed by 1.0.0_SA_CTO~O."
+}
+```

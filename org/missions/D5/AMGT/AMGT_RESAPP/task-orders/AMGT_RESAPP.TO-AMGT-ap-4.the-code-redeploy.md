@@ -72,6 +72,26 @@ Report once:
 
 Stamp any row's `surfaced_at` with `date -u`.
 
+## 6. AMENDMENT 1 (issuer `2.0.0_SA_COO~Z`, 2026-10-03 ~23:2xZ) -- the pin and one added read (CTO half @98c2b63401)
+
+**The build commit is `b642e313f9`,** or a descendant whose CONTENT-DIFF equals these CHANGED 5:
+- `rolling_windows.py`
+- `scoped_amgt.py`
+- `timeline_api.py`
+- `lib/opal_naming.py`
+- `infra/logic/registry/reporting_policies.json`
+
+Halves:
+- COO: `deliverables/2.0.0_SA_COO~Z/round66/NEVER_WIDEN_HALF_COO_AP4.md` @ffd60053d9.
+- CTO: `ledger/NEVER_WIDEN_ROUND66_AP4_CTO_HALF.md` @98c2b63401.
+
+**ADDED READ:** print the RANGE route's cold read on deployed (BA `/security/BA_US_Equity/timeline?from=2026-09-01&to=<today>`, COLD
+invokes with Init Duration and AMGT_SEGMENT lines), beside c15, which grades the day route.
+- A range read over 5 s is NOT a rollback trigger. It is reported, and the issuer files a row plus a round-67 cell.
+
+Gate limb that graded this modification: none (LIMB 6 fires only on a newly-added order; GATE (viii) does not apply,
+`<placeholders>NONE</placeholders>`).
+
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** s.74; staged until ap-1 and ap-2 drain, ap-3 lands, and the pair is signed. c10's 90/365 clauses now read

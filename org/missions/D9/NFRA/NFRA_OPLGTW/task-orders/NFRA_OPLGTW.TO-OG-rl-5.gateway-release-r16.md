@@ -38,6 +38,13 @@ rollback tree, verify script, deploy). STANDING RULE (row Z-S32): never source `
    - Record each outcome (`OK` with row count, or `REFUSED <code>`).
    - Expected today: `dim_position` REFUSED (grain collision).
    - Remove every host scratch copy.
+4b. **Grain-column census (A1, issuer, before the cut is handed).** Run this read-only. For EVERY snapshot the gateway can
+    serve for `dim_position` and `dim_asset` (every closure-marker-qualified date, both masters; print the
+    denominator), confirm the R9 grain columns exist and are never blank:
+    - `dim_position`: `quantity_settled_unsettled` and `quantity_cash_settled`;
+    - `dim_asset`: `security_description_line_1`.
+    A servable snapshot that lacks a column would REFUSE paging after the release where it may have served before. So
+    any such snapshot STOPS the order with a BLOCKING row naming it.
 5. **Verify script** written now: host `/health` 200; shipped md5 = release bytes; tool list unchanged; `.env` 50 key
    names unchanged; then the paging AFTER run (step 4 again), `rl4.AC1.sh` and `ht.AC2.sh`.
 6. `ANNOUNCE_OG-rl-5.md`; commit; report. Do NOT upload.
