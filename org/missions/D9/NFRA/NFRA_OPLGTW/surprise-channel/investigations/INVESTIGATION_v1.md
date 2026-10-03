@@ -7393,3 +7393,28 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W17-S7",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~17",
+  "surfaced_at": "2026-10-03T21:01Z",
+  "one_line": "tf2.AC1 cannot read PASS on ANY clean plan as written: the helper r15/checks/_fresh_tf.sh counts errors with `grep -c ... || echo 0`, which prints two lines when the count is zero, so PLAN_ERRORS and PLAN_NOVALUE are the two-line string \"0\n0\" and the numeric tests and the expected regex both fail. The plan itself is clean.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: bash r15/checks/tf2.AC1.sh at HEAD df3e0e2c06 (fresh sparse worktree, no TF_VAR_*, untracked files in the root 0) printed `plan rc=0; errors 0` / `0; missing required variables 0` / `0; No changes. Your infrastructure matches the configuration.` / `untargeted plan reads No changes: yes` / `RESULT: FAIL` / `exit=1`. The plan summary is 'No changes', rc 0, errors 0, missing variables 0: every substantive limb of the criterion holds.",
+      "CODE: r15/checks/_fresh_tf.sh lines `PLAN_ERRORS=$(grep -c \"^Error:\\|| Error:\" \"$out\" 2>/dev/null || echo 0)` and the same for PLAN_NOVALUE: grep -c prints 0 AND exits 1 on no match, so `|| echo 0` appends a second 0. CONTROL: `x=$(echo -n | grep -c zz || echo 0); printf '[%s]\n' \"$x\"` printed `[0` newline `0]`.",
+      "The same untargeted plan in this worktree (terraform plan -detailed-exitcode, plan3) read rc 0 `No changes. Your infrastructure matches the configuration.`"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 4 AC1: expect `plan rc=0; errors 0; missing required variables 0;.*untargeted plan reads No changes: yes.*RESULT: PASS.*exit=0`.",
+  "world_is": "The helper (outside this order's <paths>, in the issuer's r15/checks) can only print the expected line when grep finds an Error line, i.e. never on a clean plan, so AC1 reads FAIL for a root that plans clean. Not fixed here (write grant). Fix for the issuer: `|| true` in place of `|| echo 0` on both counts (grep -c already prints the count); then re-run AC1 against df3e0e2c06 or later.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
