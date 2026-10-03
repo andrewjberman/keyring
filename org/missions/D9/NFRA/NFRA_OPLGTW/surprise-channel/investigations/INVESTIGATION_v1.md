@@ -7469,3 +7469,53 @@ name the one known failure instead of silently inheriting it.
   "notes": "INERT: a staged leftover rides only into a later commit of the same shared index. Remedy: the :877 branch resets and post-checks the whole PATHSPEC, not only SRGATE_FILES. Owner: the safe-commit owner, routed by 1.0.0_SA_CTO~O."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W27-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~27",
+  "surfaced_at": "2026-10-03T23:25Z",
+  "one_line": "The CVO's aged-row triage on CLOUD (@d99813522e, written after this order's pin 565223dd62) leaves five rows OPEN that measure as remediated or mis-stated: W2-S8, S4, S5, W4-S12 and S57. OG-ar-1's AGED_ROW_TRIAGE.json classifies them remediated_by with the measurement.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W2-S8: the CVO's file says OPEN because .gitattributes 'gains eol rules ... (none at HEAD)'. git show CLOUD:.gitattributes lines 135-141 carry the seven infra/aws/ec2/opal-gateway/**/*.<ext> text eol=lf rules and line 144 the DATA_CATALOG.yaml -text exception (fd841cd02b, ancestor of both CLOUD and the pin). git ls-files --eol over the 43 gateway text-extension files at the pin: 42 i/lf attr/text, 1 i/crlf attr/-text.",
+      "S4/S5/W4-S12: the CVO's file places them with the 49F chain owner and names OG-c-1 only. OG-m-2a (c064389bab) and OG-m-3 (4e14699746) are live: advi-49f-gold-dispatch CodeSha256 read 2026-10-03 equals OG-m-3's proof AC2 value; the dispatcher's log group since 2026-09-29T03:00Z (382 events, no nextToken) holds 57 invocations = 52 s3-triggered (46 SKIP, 6 dispatched) + 5 floor; 10 of 11 chain dispatches logged 'OK: chain completed within the poll window'. OG-m-1's read before: 104 of 104 invocations dispatched, 0 CHAIN OK.",
+      "S57: the CVO's file says OPEN pending a CTO R-OG-22 ruling and cites export.py:204 writing the complete CSV before it serves. CAPACITY_R4.json (OG-r-4, 587d79e64e, served 4231bd2ddc, verdict SUFFICIENT, AC1 PASS): 250,000 x 11 export completes, peak child RSS 184,119,296 against the 268,435,456 cap, ratio to the 25k peak 1.0000 / 1.0697 / 1.0781 (bound 1.10). The row's named mechanism is memory materialisation, not the disk write.",
+      "POPULATION: at the pin the check computes 66 rows, 41 OPEN; CLOUD @d99813522e flipped 16 of them in place, so the OPEN set differs between the pin and CLOUD. AGED_ROW_TRIAGE.json covers all 41 and is a superset of either."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-ar-1 order text: 'At the cut there were 41 rows whose latest state is OPEN ... Many were already resolved by shipped work'; the triage records the measured state of each.",
+  "world_is": "CLOUD moved after the pin, and the CVO's triage there disagrees with the measured state on five rows. This worker edited no remediation row and recorded its measurement in the triage file; reconciling the two records is the CVO's (3.0.0_SA_CVO~O owns advancing remediation rows).",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W27-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~27",
+  "surfaced_at": "2026-10-03T23:25Z",
+  "one_line": "While triaging Z-W16-S5 a read of the ALB's daily TargetResponseTime p95 (all targets) gave 0.5446 s on 2026-09-30, 0.6062 s on 10-01 and 0.8973 s on 10-02 (2,405 requests); the last is +62 % against OG-p-1's 0.5535 s reference. It is not a grade: the method differs from OG-p-1's and 10-02 spans the 4231bd2ddc release.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ: aws cloudwatch get-metric-statistics, namespace AWS/ApplicationELB, TargetResponseTime, LoadBalancer app/opal-gateway/<id>, period 86400, extended-statistics p95, one call per UTC day 2026-09-30, 10-01, 10-02, 2026-10-03T23:2xZ, as the operator identity through .tools/aws; RequestCount Sum 2,510 / 2,458 / 2,405 for the same days.",
+      "REFERENCE: row Z-W16-S5 cites 0.5535 s (OG-p-1) and the +20 % cap of the OG-r-3 form (0.6642 s); the same row's moves_when in AGED_ROW_TRIAGE.json is the first full trading day on live af2d762970 (Monday 2026-10-05)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Z-W16-S5: p95 after 4231bd2ddc read 0.955 s over 5 h, +72.5 %, with no criterion grading it; its remedy is a full-trading-day re-measure on live af2d762970.",
+  "world_is": "A day-level read on the preceding trading day (10-02) is also above the cap, and one earlier day (10-01) sits at +9.5 %; neither was taken on af2d762970. The re-measure the row asks for has not yet had a full trading day to run on.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
