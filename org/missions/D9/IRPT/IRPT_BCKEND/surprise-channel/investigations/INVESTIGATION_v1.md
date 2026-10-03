@@ -16910,3 +16910,87 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Two remedies, a CTO choice: (a) the page reads only the series under a render (the frozen version present) -- series.as_of is the ruled date field (PRD ruling 28) -- a portal change by 2.0.0_SA_COO~D plus a same-window promote; (b) widen V3 and V2 to admit the manifest for a render token, reversing IB-pr-304's series-only rule. Recommendation: (a)."
 }
 ```
+
+## IRPT_BCKEND-S312 -- DISARM of IRPT_BCKEND-S308: the PATH B export render reaches READY
+
+```json
+{
+  "id": "IRPT_BCKEND-S312",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-03T22:30Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARM of IRPT_BCKEND-S308 by its disarm owner since the re-point (S310): with the host forwarding account and version, the 49F PATH B export of ****0090 rendered and reached READY with frozen_as_of 2026-10-01 (22:13Z); ledgers irpt-render-host-print-query-20261003 (4 of 4) and irpt-p2-window-20261003 (14 of 14) CLOSED",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "receipt s3://opal-data-ycharts/firms/49financial/generations/EXP-e29b5415a06f90f943481c41a1a4821b/receipt.json (22:13:15Z): job_state READY, facts.frozen_as_of 2026-10-01 = the bundle's performance_source.as_of; validation PASSED, 11 pages",
+      "SSM irpt-export-render-run 123e754c (22:13:03Z, tenant 49financial) Success; render_export.cjs 16,434 B (S3 lLkKsNvY) on the host; render_guard RENDERED, 0 foreign of 20 requests",
+      "2.0.0_SA_COO~D msg 104799: ****0090 export pressed once at 22:12:52Z, READY at 22:13:41Z; the modal reads the performance data through October 1st, 2026"
+    ]
+  },
+  "dismissal_reason": "S308's hazard was the 49F PATH B export never reaching READY because the print refused the bundle. A PROD export now reaches READY with its frozen as_of.",
+  "spec_asserts": "IRPT_BCKEND-S308: the served print page refuses the PATH B export's render ('names no selection').",
+  "world_is": "MEASURED: the PROD print renders the PATH B bundle on the render host; the receipt reads READY with frozen_as_of 2026-10-01."
+}
+```
+
+## IRPT_BCKEND-S313 -- DISARM of IRPT_BCKEND-S310: the render host forwards account and version
+
+```json
+{
+  "id": "IRPT_BCKEND-S313",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-03T22:30Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARM of IRPT_BCKEND-S310 (the re-point of S308): render_export.cjs PRINT_QUERY_KEYS carries account, version and request (IB-pr-308 @fb310203e5, S3 version lLkKsNvY); the 22:13Z render reached the PROD print page with the PATH B query and produced a READY receipt",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "receipt s3://opal-data-ycharts/firms/49financial/generations/EXP-e29b5415a06f90f943481c41a1a4821b/receipt.json (22:13:15Z): job_state READY, facts.frozen_as_of 2026-10-01 = the bundle's performance_source.as_of; validation PASSED, 11 pages",
+      "SSM irpt-export-render-run 123e754c (22:13:03Z, tenant 49financial) Success; render_export.cjs 16,434 B (S3 lLkKsNvY) on the host; render_guard RENDERED, 0 foreign of 20 requests",
+      "2.0.0_SA_COO~D msg 104799: ****0090 export pressed once at 22:12:52Z, READY at 22:13:41Z; the modal reads the performance data through October 1st, 2026"
+    ]
+  },
+  "dismissal_reason": "S310's hazard was the host's allow-list dropping account and version before navigation. The deployed script forwards them, and a render with them succeeded.",
+  "spec_asserts": "IRPT_BCKEND-S310: render_export.cjs:83 PRINT_QUERY_KEYS drops account and version (and request).",
+  "world_is": "MEASURED: the host runs the 16,434 B script with the three keys; render 123e754c Success."
+}
+```
+
+## IRPT_BCKEND-S314 -- DISARM of IRPT_BCKEND-S311: a frozen export print reads the series alone
+
+```json
+{
+  "id": "IRPT_BCKEND-S314",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-03T22:30Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARM of IRPT_BCKEND-S311 by its disarm owner (CTO batch 231 ruling (a)): 2.0.0_SA_COO~D's series-only frozen print (portal DEV 1f42eb08) is on portal PROD dbd29c6320 (tag portal-v2.1.198, Deploy to Production 37156394008 SUCCESS); the render no longer requests the manifest, and the export reached READY",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "receipt s3://opal-data-ycharts/firms/49financial/generations/EXP-e29b5415a06f90f943481c41a1a4821b/receipt.json (22:13:15Z): job_state READY, facts.frozen_as_of 2026-10-01 = the bundle's performance_source.as_of; validation PASSED, 11 pages",
+      "SSM irpt-export-render-run 123e754c (22:13:03Z, tenant 49financial) Success; render_export.cjs 16,434 B (S3 lLkKsNvY) on the host; render_guard RENDERED, 0 foreign of 20 requests",
+      "2.0.0_SA_COO~D msg 104799: ****0090 export pressed once at 22:12:52Z, READY at 22:13:41Z; the modal reads the performance data through October 1st, 2026"
+    ]
+  },
+  "dismissal_reason": "S311's hazard was the render's page reading the manifest, which render tokens are refused, so the export could not complete. The PROD page now reads the series only under a render; IB-pr-304's series-only token rule stands unwidened.",
+  "spec_asserts": "IRPT_BCKEND-S311: the render's page also reads the manifest, which render tokens are refused, so resolveBundle refuses 'selection is required'.",
+  "world_is": "MEASURED: render 123e754c Success with 20 requests, all to opalinvest.dev; receipt READY with frozen_as_of 2026-10-01; portal PROD dbd29c6320 carries 1f42eb08 (is-ancestor YES, positive control 98a98e70 YES)."
+}
+```
