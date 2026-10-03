@@ -56,9 +56,16 @@ CTO msg 104495 measured the same). The Investor Reporting readers were on PROD v
 - **The served effect of the re-mint:** each firm's producer built at CLOUD over the same day's sources, compared with the
   served publication, every account: which classes move (only the 32 rows' tickers and CUSIPs, by design) and nothing else.
   Heavy (it is the class of job the memory reaper stopped); it runs when memory is confirmed free.
-- **The writer and its dry run:** the 7 moves through the seed path (`classified_by` seed over `scheduled`, as the contract
-  orders), the 25 writes on absence (the seed module for tickers, `R7_CHECKS/write_cusip_rows.py` for CUSIPs, which now
-  refuses a non-ASCII name, row S15); dry run naming exactly the 32 keys, 0 CONFLICT.
+- **The writers, in this order** (measured 02:5xZ where stated):
+  1. The 7 MOVES -- `R9_CHECKS/move_multi_asset_rows.py`, one conditional UpdateItem per row (compare-and-set on today's
+     class, sub class and `classified_by`; sets `multi_asset`, the sub class, `classified_by` seed, nothing else). The seed
+     script cannot move them: its merge rule returns a CONFLICT where table and module disagree, and its caller refuses.
+     **DRY RUN 7 of 7 MOVE, 0 REFUSED** (consistent get-item, 02:5xZ).
+  2. The 13 ticker WRITES -- the seed module (`_shared/etf_classification.py`, ETF_CLASSIFICATIONS / ETF_SUB_ASSET_CLASS
+     entries) and `seed-etf-classifications.py`, rows absent so no conflict; dry run owed (it edits the shared module, in a
+     worktree at the act).
+  3. The 12 `CUSIP:` WRITES -- `R7_CHECKS/write_cusip_rows.py` (refuses a non-ASCII name, row S15). Its vocabulary is read
+     from the live table, which admits `multi_asset` only once a row carries it, so it runs AFTER step 1.
 - **The readers on PROD:** read above; the Holdings producer admits `multi_asset` at CLOUD (daaef69b9d) and ships with item 2.
 
 ## Rollback per key
