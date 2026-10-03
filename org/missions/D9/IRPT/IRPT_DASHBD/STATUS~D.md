@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~D` (CLAUDE). Contract: PRD `org/missions/D9/IRPT/IRPT_DASHBD/
 (ENDPOINT unchanged since @2cb022f549; C-LEASE and ruling 6.7 place F's items on this seat). Reviewer `3.0.0_SA_CVO`
 (grades each landed pin after the fact, as DSGN_IRPTV1 pins). Authority: Andrew-direct 2026-10-01 ~04:2xZ, record
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261001_042xZ_SELF_DRIVE_60M_LAPTOP_FABRIC_FINAL_SAY_CLOSER_DRIVE_IRPT_FIRST.md`
-@c48af273cc (CTO 103442). **As of 2026-10-02T09:3xZ.** This file holds F's claims and next-list; the pins, the landed
+@c48af273cc (CTO 103442). **As of 2026-10-03T03:2xZ.** This file holds F's claims and next-list; the pins, the landed
 table and the screen are in `org/missions/D13/DSGN/DSGN_IRPTV1/STATUS.md` (one seat, one portal checkout).
 
 ## Pins
@@ -28,8 +28,9 @@ account 0 reads, 85 ms. FWD-1's ACCEPT (Andrew's pick the next morning) and the 
 ## Write claims
 
 - `2.0.0_SA_COO~D`: `portal/src/pages/InvestorReporting/dashboard/*`, `portal/src/pages/InvestorReporting/tabs/reporting/*`.
-- No claim is open at 08:2xZ. Plan item 5 and both signed-in runs are done; the walker's `--dashboard-window` step is the
-  instrument for a re-measure.
+- OPEN CLAIM 03:2xZ (2026-10-03): batch 201's print and export cells (item 6 below): `render/Page.tsx`,
+  `render/performance/PerformanceDocument.tsx`, `render/manifest.ts`, `export/ExportButton.tsx`, `export/resolveBundle.ts`
+  (DSGN_IRPTV1 lease surface), built in this seat's worktree DIR `C:\Users\AndrewBerman\Desktop\portal-coo-d-p3`.
 
 ## Next (in order)
 
@@ -51,6 +52,17 @@ account 0 reads, 85 ms. FWD-1's ACCEPT (Andrew's pick the next morning) and the 
 3. When the SERIES contract carries a guard field (today 0.1.0 @b80543a03c, blob 542fc836b3, none), `dashboard/seriesContract.ts` and
    `DashboardPerformance.tsx` read it and say the `guard_state` sentence beside the day; pin iv-e-124 fails the tick
    that contract version is committed, which is the trigger.
+
+4. ~~Row S20 (ruling 28, CTO 104518)~~ LANDED portal `84f2424f` (origin DEV, ls-remote 03:1xZ): the picker's "data through"
+   and the body both read `series.as_of`; no refusal on a manifest/series skew. Pin iv-e-156; fixture-plane run looked at
+   (manifest 09-21, series 09-23: both lines read September 23rd). S20 closes on this landing.
+5. P-3 (2.0.0_SA_COO~P 104511, batch 197): BUILT, HELD off DEV for P-2's window. Local portal branch
+   `coo-d-p3-client-summary` @b06fcb92 (0410f358 + merge of DEV 84f2424f). The picker reads the per-client summary;
+   OBJECT_NOT_COVERED, NOT_READY or an unreadable document fall back to the per-account manifests. Pin iv-e-155; real run
+   from a build of the branch, both shapes. ~P told (msg 20261003T031650Z), with one contract question: the summary's
+   null for NOT_SPANNED/BREAK against the body's clipped figure.
+6. Batch 201 (1.0.0_SA_CTO 104523, RULED (a)): print (render/Page, PerformanceDocument, manifest) and export
+   (ExportButton, resolveBundle) read PATH B. P-2's window opens when these cells are merged; held off DEV with P-3.
 
 ## Parked (one line each, owner + the condition that un-parks it)
 
