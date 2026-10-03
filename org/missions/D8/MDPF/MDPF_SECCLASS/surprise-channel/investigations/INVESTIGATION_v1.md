@@ -1346,3 +1346,31 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Off-task finding from the S18 cell census. Not read: which other consumers key inclusion on account_is_open alone (B_00.load_account_closures uses ~account_is_open). Owner of the field: A_00's producer lane (POD4)."
 }
 ```
+
+
+## MDPF_SECCLASS-S21 -- BD gold fires on every silver prices file (S3 notification); disabling the two rules is not a hold
+
+```json
+{
+  "id": "MDPF_SECCLASS-S21",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-03T10:05:00Z",
+  "one_line": "BD gold has a THIRD fire path the S18 hold did not cover: the live S3 notification GoldLayerPricesTrigger (opal-data-bd, s3:ObjectCreated:* on silver/prices/20*.parquet) invokes bd-gold-trigger, and silver prices files land daily ~00:10-00:21Z (two each Sunday) whether or not the two EventBridge rules are DISABLED.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "get-bucket-notification-configuration opal-data-bd (10:0xZ): LambdaFunctionConfiguration Id GoldLayerPricesTrigger -> bd-gold-trigger, Events s3:ObjectCreated:*, Filter Prefix silver/prices/20, Suffix .parquet; declared at infra/aws/terraform/bd-pipeline/s3-notifications.tf:54",
+      "s3 silver/prices/2026-09-*.parquet and 2026-10-0[1-3].parquet LastModified: every day ~00:09-00:21Z; on each Sunday the prior Friday's file is rewritten and Sunday's file lands (09-06, 09-13, 09-20, 09-27)",
+      "the S18 restore half (NEVER_WIDEN_HALF_REQUEST_S18_RESTORE_0930_SERVED_20261003.md) leg 0 named only bd-gold-nightly-fallback and bd-canonical-prices-daily; leg H disabled those two (07:17Z)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO batch 219 / restore leg 0: no BD gold fire runs until the class cell lands.",
+  "world_is": "Disabling the two rules does not stop BD gold: the next silver prices file (Sunday 2026-10-04 ~00:10Z) would start the runner. No prices file landed between 07:17Z and the cell's QA run (10:02Z), so the restore held.",
+  "notes": "INERT: the class cell is deployed (A_03 wTaLoeFXO4.., 10:00Z) and its QA run (10:02Z) rebuilds 10-01 before the next prices file. If the cell act stops in its refusal branch, the disarm owner 2.0.0_SA_COO~M holds this path before Sunday 00:00Z (reserved concurrency 0 on bd-gold-trigger, read back), not only the two rules. Any later BD gold hold names three paths."
+}
+```
