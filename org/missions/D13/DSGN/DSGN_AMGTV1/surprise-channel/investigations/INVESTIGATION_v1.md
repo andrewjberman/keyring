@@ -1281,6 +1281,27 @@
  "spec_asserts": "TO-AV-zh-2 build items 4 and 6: a feed item with no served url prints plain text; at most 2 news items are open at rest.",
  "world_is": "The shared type still says url is a string and the shared constant still says 3, so another reader of either sees the old contract; HeaderBrief guards the url at runtime (typeof string and non-empty) and takes the smaller of the constant and a local 2. A later cell that owns types.ts and constants.ts can fold both in.",
  "notes": "Worker-authored record; form only, no significance judged."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W88-S1",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~88",
+ "surfaced_at": "2026-10-03T16:55Z",
+ "one_line": "AV-zi-1: the order asks the window Segmented to take ground=\"band\" like its neighbours, but the neighbours (Subject, Starred) pass no ground prop and sit on the GraphicCard's WHITE body; band ground draws white active ink there, so the preset control takes the default ground like them.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "portal/src/ui/components/Controls.tsx:85-96 @2defab11: SEG_ACTIVE.band = font-bold text-[hsl(var(--palette-white))] border-[hsl(var(--palette-white))]; SEG_IDLE.band is palette-mediumGray.",
+   "portal/src/pages/SecurityAnalysis/components/LeadPanel.tsx @2defab11: the Subject and Starred Segmented calls carry no ground prop (GraphicCard bodyClassName is the white body); the only mention of ground=\"band\" is the module header comment at line 26."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "TO-AV-zi-1 build item 3: the window Segmented takes ground=\"band\" like its neighbours.",
+ "world_is": "The neighbours take the default (canvas) ground, so the preset control was built the same way to read navy on white; the order's criteria do not grade the ground prop. If band ground was meant, the neighbours and the header comment disagree with the order.",
+ "notes": "Worker-authored record; form only, no significance judged."
 }
 ]
 ```
