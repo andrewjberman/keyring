@@ -34,7 +34,7 @@ The header stays DRAFT while independent ground-truth certification and the two 
 
 ## Scope and evidence boundary
 
-The first release covers the five Schwab tools, hosted Claude connection, per-principal authorization, two masters and three silver datasets, protected filtered CSVs, support and safe withdrawal. Original bronze/Parquet download, source mutation, arbitrary SQL/code/URLs, cross-master aggregation, security-reference enrichment joins, managed Enterprise Auth, private tunnels, and a new portal are outside v1. Original-file support requires a future version and whole-object grant; its allowed-operation enum is disabled in this version.
+The first release covers the five Schwab tools, hosted Claude connection, per-principal authorization, two masters and four silver datasets (v1.7), protected filtered CSVs, support and safe withdrawal. Original bronze/Parquet download, source mutation, arbitrary SQL/code/URLs, cross-master aggregation, security-reference enrichment joins, managed Enterprise Auth, private tunnels, and a new portal are outside v1. Original-file support requires a future version and whole-object grant; its allowed-operation enum is disabled in this version.
 
 The proposed initial profile is not an active entitlement. The source brief proposes both masters, all accounts, its column lists and a 30-calendar-day window. Menachem's tenant/object IDs are null in the supplied record. An authorized identity/data administrator must verify the immutable identity and approve a concrete account/date/field grant at onboarding; until then the system has no active profile. This is a runtime input to an already specified approval mechanism, not an undecided design choice.
 
@@ -152,7 +152,7 @@ Entitlement updates are operator-only, through an audited repository/release-ope
 
 ### C3 - sources, closure and date semantics
 
-Source bucket is `opal-data-assets`; masters are 08242234 SmartX and 08335338 BlackDiamond. Only their `silver/dim_position/`, `silver/dim_balance/` and `silver/dim_asset/` prefixes are data-readable. A date is a Schwab business-date label, not object LastModified or request time. For each master/dataset the rolling window includes the latest qualified complete business date and the previous 29 calendar days; do not silently fill missing dates from another master or dataset. The available dates and latest qualified date are returned explicitly. A fixed-date grant is an enumerated date set. Staleness is reported as days since the qualified business date and source observation time, without pretending a missing business-calendar feed defines a late arrival.
+Source bucket is `opal-data-assets`; masters are 08242234 SmartX and 08335338 BlackDiamond. Only their `silver/dim_position/`, `silver/dim_balance/`, `silver/dim_asset/` and `silver/dim_transaction/` (v1.7) prefixes are data-readable. A date is a Schwab business-date label, not object LastModified or request time. For each master/dataset the rolling window includes the latest qualified complete business date and the previous 29 calendar days; do not silently fill missing dates from another master or dataset. The available dates and latest qualified date are returned explicitly. A fixed-date grant is an enumerated date set. Staleness is reported as days since the qualified business date and source observation time, without pretending a missing business-calendar feed defines a late arrival.
 
 The existing producer markers at `schwab/<master>/meta/complete/date=<date>.json` do not by themselves prove closure. Their declared fact tables and current-run written tables can differ and they do not pin VersionIds. Extend the producer's completion metadata contract, keeping legacy fields for existing consumers, to include a schema version, master/date, run identity, expected source partitions, explicit non-applicable/empty dispositions, expected table set, successful/failed outputs, counts and exact versioned silver objects. Publish qualified closure only after the complete expected set is reconciled. The allowed completion object must carry sufficient sanitized closure facts itself; the metadata role cannot follow references into meta/conversions or other prefixes. A missing output, failed conversion, unexplained empty day, inconsistent grain, or ambiguous inventory is incomplete. Do not repair source data or rewrite silver values as part of this extension.
 
@@ -224,18 +224,21 @@ builds them because it owns the gateway, and it grades only each order's own cri
   generic `/ms/*` guard and edge-exposed by its own exact-path ALB rule. It is not a widening of `/ms/*`, and its spec
   is MDPF_TAXSMA's. Transcripts, mail
   bodies and attachment bytes are served ONLY on two new prefixes, one for transcripts and one for mail: the fixed
-  literals `/hx/transcripts` and `/hx/mail` (v1.3). A route path is not a `lib/opal_naming.py` kind (`name()` refuses
-  `route`; NAMING_SCHEMA marks API_ROUTE NOT GRADED), so these two are graded only for distinctness: neither is under
-  `/ms/`, neither is a prefix of the other, and neither collides with a route already mounted in `app/server.py`.
+  literals `/hx/transcripts` and `/hx/mail` (v1.3). A third prefix, `/hx/teams` (v1.6), serves the laptop's LDO-001
+  Teams assistant. A route path is not a `lib/opal_naming.py` kind (`name()` refuses `route`; NAMING_SCHEMA marks
+  API_ROUTE NOT GRADED), so the three are graded only for distinctness: none is under `/ms/`, none is a prefix of
+  another, and none collides with a route already mounted in `app/server.py`.
 - **Bearers.** Each prefix has its own static capability bearer:
   - stored in Secrets Manager under a `lib/opal_naming.py` SECRET-grammar name;
   - compared in constant time;
   - accepted ONLY on its own prefix, so one leaked bearer reaches one prefix.
 - **Access.** The routes read with the server-held delegated token of ONE fixed identity, Andrew's (his route ruling:
   "the daily pull runs through the EXISTING Opal gateway under Andrew's account; no new app registration, no IT").
-  - Graph calls are GET only.
+  - Graph calls are GET only on `/hx/transcripts` and `/hx/mail`.
   - The Graph paths each route may reach are a server-side allowlist that fails closed.
-  - There is no write, send or reply verb.
+  - Those two prefixes have no write, send or reply verb. `/hx/teams` is the ONE write exception (v1.6, Andrew-direct
+    2026-10-02): its two POST verbs send a chat message and a channel reply AS ANDREW. Send approval lives in its only
+    caller (LDO-001's reply-of-1), never in the route.
 - **Allow-by-key output.** Each response is built from an explicit output allowlist, so a new Graph field cannot leak:
   - **Transcripts:** meeting id, transcript id, `createdDateTime`, `endDateTime`, the `text/vtt` body, its byte count
     and its sha256. ONLY meetings on a configured meeting allowlist are reachable. That list starts with the four
