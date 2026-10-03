@@ -2,68 +2,67 @@
 
 Seat `2.0.0_SA_COO~Y` (CLAUDE). Mode FAST: lease `IRPT_BCKEND~Y` (renewed by the loop; read each tick).
 Loop `/canonical-drive IRPT_BCKEND`. Way forward: CTO rulings in
-`org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md` (latest read: batches 177, 178, 186)
-and the fold-in `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_FOLD_IN_IRPT_THREE_BRIEFS_20261002.md` section 2 (Y-1..Y-6,
-Y-H). Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-03T07:2xZ.
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md` and the fold-in
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_FOLD_IN_IRPT_THREE_BRIEFS_20261002.md` section 2 (Y-1..Y-6, Y-H); run order
+CTO 104634 ("Y-3 READY, then Y-5 V1, then Y-4 V1, one at a time and spaced"). Reviewer `3.0.0_SA_CVO` (grades pins after
+the fact). As of 2026-10-03T18:0xZ.
 
 ## Pins
 
 | What | Value |
 |---|---|
-| CLOUD (local) | G3 ledger CLOSED `22e31c1e9b`; Y-5 packet 2 QA `d41e74093c`. No worktree held |
-| SERVED: `irpt-status` | `hC6PramtsshP40jo3OJ91k4qxlHndylJWxHLIjIdw/E=` since 06:28:49Z (G3 render-grant ports + `IRPT_EVIDENCE_BUCKET`; W2-06 since 04:28Z). Policy `irpt-status-render-grant-read-policy` (I1). Rollback: re-promote S3 `4CQOSM..` (`6VQejBfs..`), drop the variable, delete the policy |
-| SERVED: PDF route | `GET analysis/requests/{requestId}/pdf`, route `ihirb2s` on `7k3ed8px20` since 2026-10-02 ~17:59Z |
-| SERVED: the resident | `/opt/irpt-resident/a6f6e7165e-st18` since 05:52:20Z (Y-4 enrichment: gate total 240 s; CTO half batch 209). Rollback root `828c37c6f7-st17` |
-| SERVED: `irpt-ycharts-generate` | `fD2R6OFrT2N086C9Go3e1aA9RKZCP/vfnZCaHCloJTs=` since 03:02Z (Y-4). Rollback: re-promote S3 `oew.wOPK..` (Y-5, `aug0YyWc..`) -- with the resident, all or none |
-| SERVED: runner role | the estate Kimi secret through ONE carrier (`local.kimi_secret_arn` = `api-key-??????`, both statements) since 05:5xZ; a sibling name reads implicitDeny. Login and session ARNs keep `-*` (parked for a ruling) |
-| Stored YCharts session | **EVICTED since 2026-10-03 ~00:10Z (row S288)**: every request answers 403. Vendor traffic STOPPED. Remedy: option A at Andrew's time |
-| Push state | LOCAL; CLOUD is pushed by `0.0.0_AB_MSTR` only |
+| CLOUD (local) | Y-3 READY evidence `ee801b0505`, its ledger closed `284667acb5`; Andrew-direct egress record `ce20ca6854`; Y-3 timing `f6d8202ce4`. No worktree held |
+| SERVED: `irpt-status` | `hC6PramtsshP40jo3OJ91k4qxlHndylJWxHLIjIdw/E=` since 06:28:49Z (G3 + W2-06). Rollback: re-promote S3 `4CQOSM..` (`6VQejBfs..`), drop the variable, delete the policy |
+| SERVED: PDF route | `GET analysis/requests/{requestId}/pdf`, route `ihirb2s` on `7k3ed8px20` |
+| SERVED: the resident | `/opt/irpt-resident/a6f6e7165e-st18` since 05:52:20Z. Rollback root `828c37c6f7-st17` |
+| SERVED: `irpt-ycharts-generate` | `fD2R6OFrT2N086C9Go3e1aA9RKZCP/vfnZCaHCloJTs=` since 03:02Z. Rollback: S3 `oew.wOPK..` with the resident, all or none |
+| SERVED: runner role | the estate Kimi secret through ONE carrier (`local.kimi_secret_arn`); login and session ARNs keep `-*` (parked) |
+| Stored YCharts session | **LIVE** since 16:3xZ at fence 25 (AWSCURRENT `6190de31`, captured_by `irpt-ycharts-har-seed`), seeded from Andrew's HAR with no sign-in; S288 disarmed by S306. Shared with Andrew's browser (S233). aws-waf-token expiry ~epoch 1791390810; the server-side ycsessionid expiry is unknown |
+| Push state | LOCAL; origin CLOUD `a714df4d7f` (ls-remote read 17:3xZ); CLOUD is pushed by `0.0.0_AB_MSTR` only |
 
-## Live thread -- fold-in Y-1..Y-6 (CTO batch 178; Andrew-direct 2026-10-02 ~18:1xZ)
+## Live thread -- fold-in Y-1..Y-6
 
-1. **BLOCKED on the session (S288):** no Analysis job can reach READY until the attended sign-in (option A). No vendor
-   call until then.
-2. **Y-3 SERVED** (ledger `irpt-y3-20261002`: V1 open). IWM admitted and verified; READY waits on the session.
-3. **Y-5 packet 1 SERVED** 02:0xZ (ledger `irpt-y5-20261003`: V1 open). V1 = Case A TIMXX -> SGOV and Case D with proxies,
-   after Y-3's READY.
-4. **Y-4 SERVED** 03:05Z (ledger `irpt-y4-20261003`: U1, U2, D3, D1, D2 closed; V1 open). V1 = the typo file (APPL ->
-   AAPL), recording the check gate's elapsed seconds (CTO 104515; the journal field `elapsed_s=` is installed). Its
-   enrichment is SERVED (ledger `irpt-y4e2-20261003` closed; the first try `irpt-y4e-20261003` rolled back on its own
-   stop -- a second statement granted the same name).
-5. After option A, in order: Y-3 READY, Y-5 V1, Y-4 V1, then Y-2 and Y-6.
+1. **Y-3 READY** 17:03:14Z: REQ-329a5618 (Multi, ULT + IWM, Cottonwood), report RPT-c8c4037a. Ledger
+   `irpt-y3-20261002` CLOSED. Measured: 15 m 06 s of its 17 m 43 s is our 900 s read-back release after one
+   `calculating` answer (`IRPT_MVP_Y/RESEARCH/Y3_JOB_TIME_BREAKDOWN_MEASURED_20261003.md`).
+2. **Y-5 V1 (next):** Case A with TIMXX -> SGOV from the page. `2.0.0_SA_COO~D` added case `Aproxy` to
+   `yh-submit-case.mjs`; it passes on fixtures (104671). The live run is HELD by ~D on: (a) site Z holding the UI-walker
+   account (MSTR 104669); (b) whether Andrew's ~17:3xZ "We will discuss internally on how to proceed with further data
+   collection after review" covers a YCharts Analysis run. (b) is ASKED of Andrew at this terminal ~18:0xZ.
+3. **Y-4 V1** after Y-5: the typo file. The driver's `typo` case has no accept step, and the file also holds TIMXX, so READY
+   needs the AAPL accept AND TIMXX -> SGOV: the next ask to ~D after Aproxy runs.
+4. Then Y-2 (the page's Case B; the easy file holds TIMXX too) and Y-6.
+
+## New project (not this lane's build): YCharts direct-API generation, Opal-branded
+
+Andrew-direct ~17:0xZ, request `IRPT_MVP_Y/RESEARCH/CRO_REQUEST_YCHARTS_DIRECT_GENERATION_20261003.md`. L1 brief
+`docs/briefs/irpt-ycharts-direct-generation-opal-branded-brief-20261003.md` @8dc32668e1 (4.0.0_SA_CRO). L2
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_IRPT_YCHARTS_DIRECT_GENERATION_20261003.md` @c3f2fb4bb3 waits on
+Andrew confirming its seven DONE WHEN lines. Andrew ~17:3xZ (`ce20ca6854`): YCharts egress whitelisted for this seat and
+its agents; subscription cleared for use.
 
 ## Queued work
 
-- G3 SERVED 06:28Z (CTO half batch 212); ledger CLOSED 4/4. Arm 2 closed by batch 217 (refused live upstream + the
-  at-pin tests). Arm 3, the live wiring, is E4's.
-- Y-2 needs no backend change: AnalysisSubmissionRequest admits `input_id` with variant `comparison` and one key; Y-3's
-  V1-a measured the upload + comparison path admitted. Y-2 is the live run after option A.
-- Y-5 packet 2 (the Kimi swap): QA RUN (`Y5P2/KIMI_WEB_SEARCH_QA_FINDINGS_20261003.md`, 9 runs):
-  `KIMI_WEB_SEARCH_UNVERIFIED` stands. kimi-k3 refuses the built-in search echo; kimi-k2.6 accepts it but yields no
-  schema. HELD by CTO batch 218 (YAGNI: the user-named proxy serves Case D). When picked up: candidates from
-  etf-classifications (same class and sub-class), each verified by the same YCharts read; Kimi without web search may
-  only rank or word them; `KIMI_WEB_SEARCH_UNVERIFIED` stays the swap refusal.
+- Y-5 packet 2 (the Kimi swap): HELD by CTO batch 218 (YAGNI: the user-named proxy serves Case D). Findings
+  `Y5P2/KIMI_WEB_SEARCH_QA_FINDINGS_20261003.md`.
+- G3 arm 3, the live wiring, is E4's.
 
 ## Rows this lane holds
 
 | Row | State |
 |---|---|
-| S279 | DISARMED by S283 (st14 V1 run 3) |
-| S284 | OPEN, BLOCKING, ARMED: TIMXX gated -- MEASURED `mutualFundDataUSA` (S287); remedy Y-5 proxy |
-| S285 / S288 | the 403s are the evicted session (S288, BLOCKING): option A |
+| S288 | DISARMED by S306 (the session restored from Andrew's HAR) |
+| S284 | OPEN, BLOCKING, ARMED: TIMXX gated (`mutualFundDataUSA`, S287); remedy the Y-5 proxy, proven live by Y-5 V1 |
+| S296 | OBSERVATION, INERT (history UNEXPECTED) |
 | S286 | CVO: generate bundles carry CRLF members; build from autocrlf=false (mine) |
-| S282 | test_generate_installed pins 24 schemas (25 since hop 11's contract); owner `2.0.0_SA_COO~P` |
-| S277 | DISARMED S270 (history list <= 6.6 s server time after M2) |
-| S263, S253, S231, W94-S2, W91-S1, W92-S1 | for the CVO to close (unchanged) |
-| S261 | E7 superseded by E7b (served); for the CVO to close |
-| S230 | the resident's own sign-in meets a CAPTCHA; only Andrew's sign-in (option A) restores a session |
+| S230 | the resident's own sign-in meets a CAPTCHA; only Andrew restores a session (now by HAR seed or sign-in) |
+| S282 | test_generate_installed schema pin; owner `2.0.0_SA_COO~P` |
+| S263, S253, S261, S231, W94-S2, W91-S1, W92-S1 | for the CVO to close (unchanged) |
 | W91-S2, W92-S4, W88-S2 | unchanged |
 
 ## Ledgers this seat holds open
 
-- `irpt-y3-20261002`, `irpt-y5-20261003`, `irpt-y4-20261003`: apply legs proven, V1 open, each HELD-SOVEREIGN-GATED
-  (07:0xZ) on option A, re-read event "ycharts/session/current fence > 23 and one authenticated securities_info read
-  answers 200". Release each with `deploy_ledger.py hold --slug <slug> --release` when the event fires.
+- `irpt-y5-20261003` and `irpt-y4-20261003`: apply legs proven, V1 open, not held (released after the session restore).
 
 ## Write claims
 
@@ -74,25 +73,25 @@ and their tests; `infra/aws/ec2/investor-reporting-ycharts/**`; `docs/contracts/
 
 ## Parked, each with its owner and the condition that un-parks it
 
-- A deterministic ROWS_UNVERIFIED (a stray row) is still retried four times at 60 s. Owner this seat; un-parks if a
-  stray-row refusal recurs after st14 (st14 names its cause in the journal).
-- The api root's `CHANGELOG.json` entries for routes `bh7ynom` and `ihirb2s`: outside this seat's surface. Un-parks with
-  an exact-file grant or that lane's next entry.
-- `record-terraform-deploy.sh investor-reporting` is not run per packet: it stamps every function as deployed at HEAD.
-- FIXED 07:2xZ (`98314adf6c`): the test_host_capture node failed on every host because sign-in A added an eighth
-  AuthError site without moving the pin (not a POSIX issue); ycharts/session 118 passed. `test_composition_admission`'s
-  earlier combined-run error did not recur in today's ycharts/generate run (396 passed, 0 errors). Separately, one
-  process over every root stops at collection on module-name collisions (20 collection errors, other files).
+- Login and session secret ARNs keep `-*` in the runner role. Owner this seat; un-parks on a CTO ruling.
+- The iam.tf comment in `ycharts/iam.tf`: `2.0.0_SA_COO~P`'s lane; un-parks with that lane's next edit.
+- Andrew's HAR file `C:\Users\AndrewBerman\Downloads\ycharts.comalyss.har` (outside the repo): its deletion is Andrew's
+  (asked); recorded by sha256 and size only.
+- A deterministic ROWS_UNVERIFIED is still retried four times at 60 s. Owner this seat; un-parks if a stray-row refusal
+  recurs.
+- The api root's `CHANGELOG.json` entries for routes `bh7ynom` and `ihirb2s`: outside this seat's surface.
 
 ## Limits
 
-No fund-holding upload has normalized live. No Comparison or Target Weight report on served code; no real client file
-has reached READY. The laptop clock is ~3 s behind AWS (w32time stopped): grade expiries on AWS's Date header.
+No fund-holding upload has normalized live (Y-5 V1 is the first). No Comparison report on served code from a client file;
+Y-3's Multi READY used window 15's Dollars CSV. The laptop clock is ~3 s behind AWS: grade expiries on AWS's Date header.
 
 ## Standing directives (carried)
 
+- Andrew-direct ~17:3xZ (site Z, MSTR 104662): no data-engineering change without his explicit directive; this seat
+  holds no quarantine.
 - No firm id typed in code or JSON; run `.tools/naming-gate.py --diff <diff> --enforce` in a worktree.
 - A password or cookie is read BY NAME into memory and never printed; an output is read for values before commit.
-- Vendor egress only on Andrew's words, each use inside a packet with both halves; a CAPTCHA is Andrew's act.
+- YCharts runs one at a time with the queue empty; a CAPTCHA or sign-in is Andrew's act.
 - A served move needs both never-widen halves; read safe-merge's exit code and tree-check line on every merge.
-- A drained worktree is removed the same turn (Andrew-direct ~20:3xZ).
+- A drained worktree is removed the same turn.
