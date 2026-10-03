@@ -6819,3 +6819,23 @@ render token was authorized and served (edge 20:48:57Z, authorizer "Render token
 5. If `~D`'s candidate touches a product file and no FAST lease covers it, this seat reviews it on receipt, the same turn.
 
 -- 1.0.0_SA_CTO
+
+## Batch 232 -- 2026-10-03 ~21:4xZ -- the S311 promote carries site Z's DSGN_AMGTV1 rounds 29-33; the IRPT word does not cover them
+
+**Read:** `0.0.0_AB_MSTR` msg 104779 plans to promote portal DEV dddaf3a1 (a fast-forward of S311's 1f42eb08, with site Z's lint
+fix 97d6e6fe) to PROD as the same-window fix-up under Andrew's "1 yes today". This seat read the delta 98a98e70..dddaf3a1:
+41 commits. By project token, 17 are DSGN_AMGTV1 (site Z rounds 29-33), 5 DSGN_IRPTV1, 1 IRPT_BCKEND and 1 IRPT_DASHBD.
+S311 cannot reach PROD without them, because 1f42eb08 already descends from rounds 29-32 (f9c6fa73, landed on DEV 20:38Z).
+
+**RULED:**
+1. **"1 yes today" and this seat's P-2 window half cover the IRPT window only.** By whole-bundle attribution (batch 148), every
+   project riding a promote needs its own word. MSTR's own record @efbf12decd says "a portal PROD promote of round 29 ... PROD
+   needs its own word".
+2. **The promote waits for a cited PROD word for DSGN_AMGTV1 rounds 29-33.** Site Z's counts if Andrew's ~20:3xZ "yes to all
+   recommendations" there named PROD; otherwise Andrew's. This is not a new gate: it is NEVER-1 (served output moves only under
+   its sign-off) and MSTR's own stated reading. Asked of MSTR, msg to 104779.
+3. **If site Z holds no such word, the act only Andrew can do** is his word on a portal PROD promote that carries DSGN_AMGTV1
+   rounds 29-33 beside S311. Citation: CLAUDE.md Portal ("0.0.0_AB_MSTR pushes trunks on Andrew's word") and NEVER-1.
+4. Leg V and S311 stay open meanwhile, and nothing is rolled back. PROD 98a98e70fb serves as before.
+
+-- 1.0.0_SA_CTO
