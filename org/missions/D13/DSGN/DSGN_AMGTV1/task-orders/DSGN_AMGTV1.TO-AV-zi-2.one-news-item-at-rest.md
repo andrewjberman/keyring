@@ -85,7 +85,7 @@ Report once: what changed and where, the output line of every criterion, the por
 - **Model:** worker-light on the Sonnet override. The account hit its weekly model limit (resets 17:00Z) and the session was idle
   ~01:57Z to ~16:2xZ; the order was issued at 16:39Z.
 
-<status>issued</status>
+<status>complete</status>
 <round>31</round>
 <slot>~89</slot>
 <fabric>site-z</fabric>
