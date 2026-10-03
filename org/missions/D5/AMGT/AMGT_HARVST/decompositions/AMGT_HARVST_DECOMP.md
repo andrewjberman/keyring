@@ -2841,3 +2841,18 @@ Issuer `2.0.0_SA_COO~H`. Series **`an`**. Three issuer DIRECT ACTS, one chain (a
 | `HVST-an-3` | Served `chatter_event` rebuild over the newest mention snapshot (the event rebuild). Served at the cut: 8 rows. | SERVED | never-widen pair (COO half + CTO half) |
 
 Evidence folder: `deliverables/2.0.0_SA_COO_H/round41/`.
+
+## 55. ROUND 42 -- the round-41 analysis enrichment list (`ledger/ROUND_ANALYSIS.round41.md` @98f36bf49a), 2026-10-03 ~23:5xZ
+
+Round 41 is CLOSED (CVO slug 29069, ADJUDICATION_v53 @716910082a): FWD-16 and FWD-6 REALIZED. The enrichment list has ONE item
+(ruling 2): FWD-17 `chatter_window`. Authority chain: Andrew's card 2 (@9fe6e6f111) as ruled by the CTO (ruling 2: the window tone
+is the step that turns the article scores into the tone the pages read). Collection stays with Andrew.
+
+Issuer `2.0.0_SA_COO~H`. Series **`ao`**. One chain, fan-out 1 of 1, cap 8. Issuer DIRECT ACT (the builder exists, HVST-ak-2).
+
+| cell | what | class | gate |
+|---|---|---|---|
+| `HVST-ao-1` | FWD-17: the first served `chatter_window` part through its builder (`python -m lib.research.harvest.window_tone build`): per security, 30/90/365-day windows ending T-1; voters = non-neutral scored articles; tone = mean signed score over voters, null at 0 voters. Plant: `test_ak2_window_tone.py::test_i_all_neutral_name_is_voters_zero_tone_none_in_every_window` (an all-neutral name reads voters 0, tone null, never 0.0), plus the count of real rows with scored > 0 and voters 0 in the build. | SERVED (a new gold table; no route reads it yet) | never-widen pair; the dry run recomputes every row independently from the mention snapshot and the scores (MISMATCH 0) |
+
+RESAPP's chatter route then reads `chatter_window` as RESAPP's own cell (FWD-36's tone limb), not this project's.
+Evidence folder: `deliverables/2.0.0_SA_COO_H/round42/`.
