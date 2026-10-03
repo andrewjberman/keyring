@@ -109,8 +109,8 @@ live press stays Andrew's (walk-2 write guard).
    - This seat's defects from the walk:
      - (2) the silent refused export: LANDED portal `fb9f1fb6` (origin DEV), pin export-submit-refused, re-walk shows
        the sentence;
-     - (3) NEXT: the print face prints the raw scope ("Prepared for the selected scope platinum:acc_..."), a
-       "not supplied" chip, and labels run into values ("Series start2026-01-020.58%");
+     - (3) the run-together labels: LANDED portal `2c01795e` (the preview carries print.css). Live preview looked at.
+       Still open: the bundle reference on the face (put to Andrew), and the "not supplied" chip (to trace);
      - (4) the residual PATH A call for a 49F account (OBJECT_NOT_COVERED), reader to be traced.
 0000000000. **Andrew-direct 2026-10-03 ~17:3xZ: two Holdings changes before the push.**
    - Change 1 LANDED: portal `e862b0c4` (origin DEV, push output 525c9404..e862b0c4). The card's Models / SMAs / Client
