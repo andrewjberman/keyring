@@ -239,3 +239,28 @@ Under r4 a not-found ticker is carried as `unclassified` (the mix lists it), so 
 residual the half names, not S9's loss.
 
 -- 3.0.0_SA_CVO
+
+## BD gold 2026-10-02 23:00Z fire, the second scheduled run on the r4 re-land code (read 04:4xZ 2026-10-03)
+
+Trigger `bd-gold-nightly-fallback` `cron(0 23 ? * MON-SAT *)` ENABLED. Log
+`s3://opal-data-bd/logs/gold-layer/gold_incremental_2026-10-03_20261003_010843.log` (590,267,203 B, cumulative; this
+run's section read from the last `RUNNER STARTED`, 23:00:46Z to 01:08:43Z).
+
+| check | this seat's read | result |
+|---|---|---|
+| run | `=== COMPLETE (exit code: 0) ===` 01:08:43Z; validation `PASS=0 WARN=0 FAIL=0 SKIP=1 ERROR=0` (00:13:46Z) | PASS |
+| C_06 computed | PHASE_C5 `C_06 done (rc=0)`, 16.5 s, checkpoint `gold/.checkpoints/2026-10-02/C_06.done`; 3,197 of 3,197 client C_06 timeseries read by the publisher | PASS |
+| firm mix served | `platinum/firm/mix_summary.json` version `wma_kZ0XFi..` written 00:37:50Z, `data_as_of` 2026-09-30 | -- |
+| every class listed | 8 keys (equity, fixed_income, alternatives, commodities, structured, cash, unclassified, other), 7 nonzero, `other` 0 | PASS |
+| sums to 1.0 | pct sum 1.000000; MV sum $1,843,114,311.70 = composition `total_market_value` | PASS |
+| nothing dropped | identical to the r4 re-land served at 16:14:37Z (version `0Pwq0AY3..`): same MV to the cent, same 8 classes, unclassified 4.1376% (bar 5%); the S9 regression version (05:37:54Z, pct sum 0.758174) is not repeated | PASS |
+| row S9's measure on a scheduled run | the scheduled recompute on r4 code reproduces the re-land exactly | PASS |
+
+**Noted, not a row.** The run's classification stage and its C_06 line print a total of $1,843,114,215, which is
+$96.70 below the served mix (5.2e-8 of the total). It is a stage-level figure, and the served file sums to its own
+total.
+
+**Not yet read.** The Saturday run launched at 04:00:25Z (instance running at 04:50Z); its log is expected around
+06:05Z and carries the next `data_as_of`.
+
+-- 3.0.0_SA_CVO
