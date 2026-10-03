@@ -1,4 +1,4 @@
-# ETFS_RIVALS (rivalfunds) -- status (FULL; round 7 DEPLOYED 2026-10-02 ~23:57Z; L8/L9 at the CVO)
+# ETFS_RIVALS (rivalfunds) -- status (FULL; round 7 DEPLOYED 75ad1e4d2e and CLOSED; round 8 cut after the 2026-10-05 grades)
 
 Seat `2.0.0_SA_COO~RV` (CLAUDE). Mode FULL on Andrew's word ("yes you can move to /canonical-drive for the remainder";
 record `org/tier1_exec/2.0.0_SA_COO/deliverables/cooRV_ANDREW_DIRECT_20261002_141xZ_CANONICAL_DRIVE_MAX_PARALLEL_RELAYED.md`).
@@ -8,7 +8,7 @@ Team:
 - reviewer `3.0.0_SA_CVO~RV`: round-7 L8/L9 part A at caf8f6bf69; the drain-end packet was sent 00:08Z;
 - open calls `4.0.0_SA_CRO~RV`: CALLs 1-14 ruled (CALL 14: LONG_COMP_NAME rides R-21).
 
-As of 2026-10-03T00:2xZ.
+As of 2026-10-03T00:5xZ.
 
 ## Pins
 
@@ -20,15 +20,30 @@ As of 2026-10-03T00:2xZ.
 | Round 7 | 8/8 orders complete (issuance ce9f61d933; flips db36578751 + 2998d045a2); every worker worktree removed |
 | I-1 (W4-S9) | DISARMED (30fb2b5079, row Z-S15); the continuation half is cu-1, now deployed |
 
-## Next proof
+## Round 7 CLOSED (CTO analysis 115645c4b4, on CVO slug 28841 @904caf2003)
 
-1. **L9:** 3.0.0_SA_CVO~RV grades rd-1's J1 on rv-publish-1002r7 and sa-1's J1 on the 10-05 sweep. The L10 slug then goes to
-   the CTO.
-2. **2026-10-05 07:00 / 08:03 ET:** the vehicle's `get(id(), name())` and LONG_COMP_NAME (G4 `security_name`). The proof is
-   `security_name` populated with `__field_errors__` empty (CRO~RV CALL 14). Names then reach the holdings Security cells,
-   which show tickers today.
-3. **2026-10-05 09:00 ET (the acceptance):** the sweep stamps "scheduled", continues any open cursor, runs ONE account for page
-   day 10-05 and republishes under an `ai-` batch.
+The apply PASSES and rd-1's J1 PASSES. sa-1's J1 and ui-5 are NOT_EVALUATED until 10-05, by design.
+
+## Next proof: Monday 2026-10-05, named readers (ROUND_ANALYSIS.round7.md ruling 2)
+
+If a seat is not live at its time, its first live session reads before any other act.
+
+1. **11:00Z (07:00 ET) and after 08:03 ET, `2.0.0_SA_COO~RV`:** the vehicle pull.
+   - `get(id(), name())` gives names, not ticker forms.
+   - G4 `security_name` is populated, with `__field_errors__` empty (CRO~RV CALL 14).
+   - **A LONG_COMP_NAME field error -> revert `enrichment_bloomberg.py` in CLOUD the same session.**
+2. **13:00Z (09:00 ET) sweep -> 13:30Z read.**
+   - `2.0.0_SA_COO~RV` reads the evidence: the REPORT line, `gold/research_hypotheses/date=2026-10-05/` with run_path
+     "scheduled", the attempt record, and the page manifest's `ai-` batch.
+   - `3.0.0_SA_CVO~RV` grades sa-1's J1 and ui-5 on the SERVED 10-05 page.
+   - "Nothing happened" is a FAIL that morning.
+3. **Round 8: ONE issuance after those grades.** The enrichment list:
+   - W1-S46's deadline-aware vendor timeout (a planted deadline still republishes);
+   - the 3 money-market keys (DGCXX x2, IJGXX) in reader words;
+   - what the 10-05 grades leave open;
+   - the walk-register remainder.
+   Repairs batched into one cell: Z-S16, Z-S17 and Z-S18. The G5 replay (D10) also comes in, because no deployed route
+   rebuilds G5.
 
 ## Issuer acts still owed
 
@@ -41,7 +56,8 @@ As of 2026-10-03T00:2xZ.
 - Z-S16 (COO~RV): a skipped AI step reports no `run_path`. One line in `run_ai_step`; next round.
 - Z-S17 (COO~RV): G5 writes a phantom zero-share exit one report after every full sale (stored, hidden on the page); next
   round, in `gold_trade_schedule.py`.
-- Census prices missing 42 -> 44 at round 7: measured, cause not shown (CTO binding: J1 names it).
+- Z-S18 (COO~RV): the census's +2 missing prices are PFOE's ServiceNow and Workday. cg-1 re-keyed them to the rankings'
+  key, and the holding-implied lookup still reads the books by the G1 key. The page is unaffected; next round.
 - 795 snake_case tokens remain on the page: cited table names and guardrail codes, left out of rd-1 by the cut.
 - IDVZ (I-4): the TrueShares layout changed on 10-01 (Andrew's or CRO~RV's call on the source policy).
 

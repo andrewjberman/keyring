@@ -3187,6 +3187,28 @@
     "spec_asserts": "FWD-5 / RFW-D10 acceptance: a full exit is priced from the prior report's valuation, 0 'n/a' notional on exits; a trade row is a change in holdings.",
     "world_is": "gold_trade_schedule classifies a line present at 0 shares in the prior report and absent (or 0) in the next as an exit, so every full sale yields a second, zero-size exit one report later with no price. G5 consumers that count exits or sum unpriced notional (an exit count, a 'missing price' census) read one phantom per full sale; the page hides them only because it drops zero-size lines.",
     "notes": "Remedy (a round-8 cell, gold_trade_schedule.py): a line whose shares_before is 0 is no trade, never an exit. Separate from D10's six visible n/a cells, which are the 09-30 trims-to-zero built before x-1 and clear on a G5 rebuild at the deployed code (the issuer's G5 replay act). disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S18",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-03T00:45Z",
+    "one_line": "The census's +2 missing prices at round 7 are PFOE's two CUSIP lines (81762P102 ServiceNow, 98138H101 Workday): cg-1 re-keyed them to the rankings' NOW_US_Equity / WDAY_US_Equity, and the holding-implied price fallback then looks the fund's books up by that new key and misses, so the census reads 'missing' for two prices the rankings still price holding-implied.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3://opal-data-etfs/rivalfunds/etfs/gold/input_census/date=2026-10-02/ input_census-20261002T194905Z-0a8bebe9371d (r6) vs input_census-20261002T235951Z-a5d731cf88d2 (r7): price 79 arrived / 642 covered / 42 missing -> 79 / 640 / 44; r6-only rows price 81762P102 and 98138H101 (PFOE, covered_by_fallback holding_implied); r7-only rows price NOW_US_Equity and WDAY_US_Equity (PFOE, missing) and gics NOW_US_Equity / WDAY_US_Equity (covered_by_fallback g4_prior)",
+        "s3://opal-data-etfs/rivalfunds/etfs/gold/holding_contribution/date=2026-10-02/ 19:48:22Z vs 23:58:38Z objects: PFOE NOW_US_Equity and WDAY_US_Equity identical in both (8 rows, price_source holding_implied, MTD/QTD coverage full)",
+        "data/etfs/scripts/rivalfunds/gold_input_census.py@75ad1e4d2e:178-194 (subject key = security_id else alias of raw_identifier; _implied_priced(books, f, latest, k) looks the books up by that key)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-cg-1 / RIV-cs-1: the census reads what the rankings read; CALL 1: a price the rankings take holding-implied reads covered_by_fallback / holding_implied.",
+    "world_is": "The census now keys PFOE's CUSIP lines the way the rankings do, which fixed their sector (missing -> covered g4_prior) but broke their price fallback: the books the implied-price test reads are keyed by the G1 identifier, not the rankings' resolved key. The page is unaffected (the rankings price both); the census under-reports by 2. The 15/15 other key changes between the two objects are market_reading headlines (23 = 23, the day's readings re-read).",
+    "notes": "Remedy (round-8 repair cell, gold_input_census.py): run the implied-price lookup in the books' own key space (the row's raw/G1 key) while the census subject stays the rankings' key. Answers 3.0.0_SA_CVO~RV's 'one read before round 8' and the CTO's binding on the 2 extra missing prices. disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV."
   }
 ]
 ```
