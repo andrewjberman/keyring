@@ -145,3 +145,23 @@ on Andrew.
 Next: the 2026-10-03 04:00Z BD gold fire on the r4 re-land code (row S9's measure: firm mix sums to 1.0, no ticker
 leaves), the 23:00Z fire for seed leg G; land the IRPT_DASHBD compile when round 5 drains; IRPT_BCKEND sweep 7 at the
 leases' end; the 13 MDPF_TAXSMA rows when its gate reads 0 open.
+
+## Addendum 2026-10-03 ~02:5xZ
+
+- FWD-8 round 8 (~P msg 104505): ACCEPT met on method_version 2, NOT REALIZED as served. All 4 reasons were re-derived
+  from Black Diamond's raw responses, and one pair from Schwab silver. Commit a108c6bd93.
+- IRPT_DASHBD compile, landed once 15 of 15 orders read complete:
+  - v2 (rounds 2-4, the prepared text) c3883e8f14.
+  - v3 (rounds 5-9, 14 rows: 5 dismissed, 9 graduated, 0 ARMED) 43c3a9b2a7. The gate applied the named exception
+    Andrew call 1 / CTO 21533 because DB-b-18 (round 10) was issued meanwhile; this seat invoked no override.
+- L10 slug sent to 1.0.0_SA_CTO (02:38Z). One ask: place W1-S17 and the carried OPEN rows.
+- ~Y st15 (Y-3) graded, with rows IRPT_BCKEND-S289 and S290: 4c0c4013d6.
+- In flight (delegates, read-only):
+  - st16 / Y-5 host read.
+  - IB-pr-221 served legs (never graded until now; A1 is Monday's fire).
+- Held:
+  - MDPF_TAXSMA prepared rows (6 of 27 orders not terminal).
+  - BD r4 leg S, ~M's.
+  - The 04:00Z BD gold fire, readable after ~06:05Z.
+- Process note: a `timeout 110` wrapper killed a safe-commit mid-run; no lock was left and the files stayed staged.
+  Commits now run in the background with no wrapper.
