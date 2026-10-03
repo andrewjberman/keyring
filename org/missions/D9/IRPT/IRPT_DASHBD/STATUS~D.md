@@ -71,8 +71,8 @@ account 0 reads, 85 ms. FWD-1's ACCEPT (Andrew's pick the next morning) and the 
    - IB-pr-301's print query BUILT @c16a31e9: `account` and `version` with no `selection`; the series is read with
      `?version_id=`. A run from the build was looked at.
    - The branch is HELD at @c16a31e9 until ~P names the P-2 window (104548).
-   - One page line still WAITS: the frozen as_of beside the export, on IB-pr-302 @025a99deb9's field name
-     (W104-S4, at its drain).
+   - The frozen as_of beside the export is NEXT on the held branch: the field is ExportReceipt `facts.frozen_as_of`
+     (an optional date, PATH B bundles only; IB-pr-302 @7d02c6fe8b, ~P 104581).
    - The run also caught a since-first-data figure printed for a window the tab answered "Not measured"; fixed on DEV
      209e4903.
 7. ~~~P 104529 window_status~~ LANDED portal `936424c3`, plus `209e4903` (any window opening before the history is
