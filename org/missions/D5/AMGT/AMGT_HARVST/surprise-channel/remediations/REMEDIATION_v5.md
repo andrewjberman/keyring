@@ -1584,16 +1584,16 @@ row carried no disarm time, `at` is this seat's recording minute 2026-10-02T22:3
   "owner": "1.0.0_SA_CTO~Z",
   "round": "v49",
   "disarm": {
-   "state": "ARMED",
+   "state": "DISARMED",
    "owner": "1.0.0_SA_CTO~Z",
-   "at": null
+   "at": "2026-10-03T01:10Z"
   },
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "1.0.0_SA_CTO~Z",
    "round": "v49"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "AMGT_HARVST-Z-S52",
