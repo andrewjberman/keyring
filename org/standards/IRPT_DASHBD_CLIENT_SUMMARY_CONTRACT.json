@@ -1,0 +1,116 @@
+{
+  "contract_version": "0.1.0",
+  "project": "IRPT_DASHBD",
+  "prd": "org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md",
+  "prd_contracts": ["C-SERVE", "C-SEAM"],
+  "writer": "workstream B (the platinum publisher, reporting-publish/publisher.py build_client_summary)",
+  "reader": "the Performance page, through the reporting read route's client summary operation",
+  "authored_by": "0.9.0_WK_IRPT_DASHBD~3",
+  "authored_under": "IRPT_DASHBD.TO-DB-b-16 under CTO RULINGS batch 197 (@7563d60e68) (a): the per-client summary gets its own versioned contract, because a per-client summary is a different GRAIN from a per-account manifest (rule 24 ii: one grain per schema)",
+  "siblings": [
+    "org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json",
+    "org/standards/IRPT_DASHBD_SERIES_CONTRACT.json"
+  ],
+  "address": {
+    "object": "summary.json",
+    "template": "lib.opal_naming.address(\"irpt\", <firm>, \"platinum\", \"reporting\", \"client=<client_id>\", \"summary.json\")",
+    "key_shape": "platinum/reporting/client=<client_id>/summary.json beneath the firm's irpt prefix; the key is builder output (publisher.summary_address), never a typed key (rule 30)",
+    "client_id": "the ISSUED opaque client id (cli_ + 24 hex) of a directory entry; never a name and never a custodian number"
+  },
+  "change_rule": "C-SEAM: workstream B is the only writer of this file and the page is its only reader. A field the page needs and the file lacks is a change request to the issuer of workstream B, never a page-side derivation from another source. The per-account series and manifest are a different grain with their own contract; this file never restates them.",
+  "read_rule": "The read route serves summary.json ONLY when the viewer's scope covers EVERY account the document names (accounts[].account_id and unpublished_account_ids), each tested with the per-account coverage check the account route uses. A client id in a request is a claim, never a grant: partial coverage, a document of another firm or of another client is refused OBJECT_NOT_COVERED with no bytes; an absent summary is NOT_READY and the page falls back to per-account manifests.",
+  "summary": {
+    "shape": "one JSON object per directory client with at least one published account; ids only, no name and no custodian account number",
+    "required": [
+      "client_id",
+      "firm",
+      "as_of",
+      "windows",
+      "accounts",
+      "unpublished_account_ids",
+      "built_at",
+      "publisher_version"
+    ],
+    "fields": {
+      "client_id": {
+        "sentence": "The issued opaque client id the document is keyed by; never null."
+      },
+      "firm": {
+        "sentence": "The registry-derived firm scope all the named accounts belong to; never null and never a typed token."
+      },
+      "as_of": {
+        "sentence": "The newest as_of among the per-account entries, as YYYY-MM-DD; each account's own as_of rides in its entry; never null."
+      },
+      "windows": {
+        "sentence": "The standard windows computed for every account entry, in order: YTD, QTD, 1Y, 3Y, SI; never null."
+      },
+      "accounts": {
+        "sentence": "One entry per PUBLISHED account of the client, sorted by account_id; never null and never empty (a client with no published account has no summary)."
+      },
+      "unpublished_account_ids": {
+        "sentence": "The client's account ids that have no published series, sorted, so a summary never reads as the whole client when it is not; an empty list when every account is published, never null."
+      },
+      "built_at": {
+        "sentence": "When the publisher built the document, as an ISO-8601 UTC timestamp; never null."
+      },
+      "publisher_version": {
+        "sentence": "The version string of the publisher code that wrote the document; never null."
+      }
+    },
+    "account_entry": {
+      "required": [
+        "account_id",
+        "as_of",
+        "first_data_date",
+        "series_object",
+        "windows",
+        "window_status"
+      ],
+      "fields": {
+        "account_id": {
+          "sentence": "The issued opaque account id of one published account of the client; the id space the viewer's scope is tested in; never null."
+        },
+        "as_of": {
+          "sentence": "The last data day of that account's series, equal to the series file's as_of; never null."
+        },
+        "first_data_date": {
+          "sentence": "The first data day of that account's series, equal to the series file's first_data_date; never null."
+        },
+        "series_object": {
+          "sentence": "The name of the account's series object (series.json.gz) the page fetches for the full history; never null."
+        },
+        "windows": {
+          "sentence": "A map from each window in `windows` to the geometric link of the account's daily total return over that window as a decimal fraction (0.01 is one percent), or null; null exactly where window_status is not MEASURED, and a partial link is never returned."
+        },
+        "window_status": {
+          "sentence": "A map from each window in `windows` to one member of the `window_status` enum below, saying why the figure is what it is; never null."
+        }
+      }
+    }
+  },
+  "window_status": {
+    "domain": "why one account's figure for one standard window is what it is; one value per (account, window) in summary.accounts[].window_status",
+    "values": ["MEASURED", "NOT_SPANNED", "BREAK"],
+    "meanings": {
+      "MEASURED": "the series spans the window and every day in it has a return; the figure is the geometric link of those days",
+      "NOT_SPANNED": "the series starts after the window's opening anchor, so the window has days with no prior day behind them; the figure is null and is never a partial link",
+      "BREAK": "a day inside the window carries a null return; the link breaks there and is never bridged; the figure is null"
+    },
+    "source": "reporting-publish/publisher.py WINDOW_MEASURED, WINDOW_NOT_SPANNED, WINDOW_BREAK, returned by window_return()",
+    "four_postulate_record": {
+      "i": "MECE over a declared domain: the domain is the (account, window) pair, and window_return() takes exactly one of three branches in order - first_data_date after the anchor is NOT_SPANNED; else a null return day in the window is BREAK; else MEASURED - so every pair has exactly one value and the three are disjoint; a figure is non-null if and only if the value is MEASURED. The uncovered member was hunted by subtraction: the three return statements of window_return() are the whole population of outcomes (3 of 3), and the builder's fixture has no pair outside them.",
+      "ii": "Same grain: every value describes one window of one account (the grain of accounts[].window_status[<window>]); none describes the client, the account as a whole or a day. The day-level state lives in the series contract's day_quality at a finer grain and is not restated here.",
+      "iii": "Intent coherence: one axis, one intent - 'can the window's figure be given, and if not why'. NOT_SPANNED is an absence of history before the window and BREAK is an absence of a return inside it; neither is a data-quality grade of a day, which is day_quality's intent.",
+      "iv": "State coherence: a figure exists only under MEASURED; NOT_SPANNED and BREAK both hold a null and differ in remedy (NOT_SPANNED clears when the window ages into the series, BREAK clears only when the missing day is published); neither is moved by the other remedy. The token MEASURED is also a member of day_quality in the daily contract: that is a different field at a different grain, and a consumer keys on the field, never on the bare token."
+    },
+    "token_census": {
+      "method": "git grep -I -o -w -e <token> over the tracked tree at the worker's base 713110dbeb, 2026-10-02; -w is the word boundary, so NOT_SPANNED counts as one word and not as SPANNED",
+      "denominator_tracked_files": 54654,
+      "MEASURED": {"occurrences": 199670, "files": 6842},
+      "NOT_SPANNED": {"occurrences": 8, "files": 4},
+      "BREAK": {"occurrences": 282, "files": 208},
+      "reading": "MEASURED and BREAK are common words in the tree (MEASURED is also a day_quality member, hence the field-not-token rule in postulate iv); NOT_SPANNED is specific to this enum; the counts are a collision census, not a usage count of this field"
+    }
+  },
+  "open_changes": []
+}

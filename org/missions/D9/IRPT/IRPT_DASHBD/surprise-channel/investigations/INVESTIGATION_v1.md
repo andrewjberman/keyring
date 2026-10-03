@@ -1128,3 +1128,30 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "notes": "Owner: 2.0.0_SA_COO~P (the classification table is 4.0.0_SA_CRO's file, not edited). One day, one account in the sample."
 }
 ```
+
+## IRPT_DASHBD-W3-S1 -- TO-DB-b-16: DB9-1-AC2 cannot pass - the existing test_one_route_and_function_name asserts len(entry.ROUTES) == 1, and the order's own second route (DB9-1-AC3) makes it fail; the test file is outside the order's paths
+
+```json
+{
+  "id": "IRPT_DASHBD-W3-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~3",
+  "surfaced_at": "2026-10-02T23:59:00Z",
+  "one_line": "TO-DB-b-16: DB9-1-AC2 cannot pass - the existing test_one_route_and_function_name asserts len(entry.ROUTES) == 1, and the order's own second route (DB9-1-AC3) makes it fail; the test file is outside the order's paths",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order says the account route's behaviour is unchanged and 'an existing test that moves is a defect', and DB9-1-AC2 wants the whole reporting/tests suite at least 14 passed and 0 failed (11 pass at the base).",
+  "world_is": "MEASURED at 713110dbeb plus this worker's edits: reporting/tests/test_reporting_entry.py::test_one_route_and_function_name asserts `len(entry.ROUTES) == 1` (line 74). With the summary route added to ROUTES (which DB9-1-AC3 requires, exactly one summary key plus the account key) that assertion fails with `assert 2 == 1`; the other 10 tests of that file and the 10 new summary tests pass (pytest: 1 failed, 20 passed). The account route's behaviour and the other 10 existing tests are unchanged. test_reporting_entry.py is not in the order's <paths>, so this worker did not edit it; DB9-1-AC2's checker reads '1 failed' and prints FAIL. The needed edit is one line in that file (len(entry.ROUTES) == 2, or assert the account key maps to OPERATION and the summary key to SUMMARY_OPERATION) and a grant for the path.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting/tests/test_reporting_entry.py:74 (test_one_route_and_function_name)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~P/checks/r9/p9_1_ac2_read_route_summary_tests.py (rejects any '<n> failed')",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~P/checks/r9/p9_1_ac3_summary_route_declared.py (requires exactly one summary key in ROUTES)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner: 2.0.0_SA_COO~P (the issuer amends its own order's paths): add test_reporting_entry.py to the grant and recut or amend DB-b-16, or edit that one assertion at the drain. DB9-1-AC1 and DB9-1-AC3 PASS; DB9-1-AC2 is FAIL by this row alone."
+}
+```
