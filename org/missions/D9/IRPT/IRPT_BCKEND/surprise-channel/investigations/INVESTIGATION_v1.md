@@ -16881,3 +16881,32 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "S308 and this row close together when a PROD export reaches READY with its frozen as_of."
 }
 ```
+
+## IRPT_BCKEND-S311 -- the render's page also reads the manifest, which render tokens are refused
+
+```json
+{
+  "id": "IRPT_BCKEND-S311",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-03T20:55Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Render-host R1: with account/version now forwarded (S3 lLkKsNvY), the render's page reads PATH B -- the series under the render token is authorized and served, but its MANIFEST read is refused at the edge (render tokens are admitted on the series only, IB-pr-304's rule), so resolveBundle falls back and refuses 'selection is required'; no READY receipt",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "SSM irpt-export-render-run 8022f0fd (20:49:13Z, tenant 49financial) FAILED with the new render_export.cjs (16434 B on the host): 'BLOCKED: RENDER_PACKAGE_VERSION -- ... resolveBundle cannot request the Performance report: selection is required'",
+      "auth-validator-edge 20:48:57Z and 20:48:58Z: render_accepted + Auth OK (render) on .../reporting/acc_.../series; opal-portal-authorizer: 'Render token authorized' on the series route (claimName accountSetId); the read Lambda served both (no error)",
+      "auth-validator-edge 20:49:06Z WARN render_denied reason uri_not_admitted jti render-17f6b44f.. path .../reporting/acc_.../manifest",
+      "portal origin/PROD src/pages/InvestorReporting/export/resolveBundle.ts:314-336: the PATH B read (readDashboard) fetches the account's manifest and series; when it fails, a PATH B print with no selection refuses by name 'selection is required' (line 336)"
+    ]
+  },
+  "spec_asserts": "CTO batch 205 / IB-pr-304: the render reads the frozen series through the reporting route; render tokens reach the SERIES path only, never the manifest or the client summary.",
+  "world_is": "MEASURED: the served page's render path also needs the manifest, which the render token is (correctly, by the ruled rule) refused; the export cannot complete. Nothing wrong is served.",
+  "notes": "Two remedies, a CTO choice: (a) the page reads only the series under a render (the frozen version present) -- series.as_of is the ruled date field (PRD ruling 28) -- a portal change by 2.0.0_SA_COO~D plus a same-window promote; (b) widen V3 and V2 to admit the manifest for a render token, reversing IB-pr-304's series-only rule. Recommendation: (a)."
+}
+```
