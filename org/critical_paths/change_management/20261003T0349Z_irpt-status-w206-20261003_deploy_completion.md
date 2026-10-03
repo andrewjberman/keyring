@@ -12,10 +12,11 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| U1 | s3-prefix | irpt-status.zip at the W2-06 pin from an autocrlf=false checkout | read back by version; members equal git; census vs live; cold-start smoke |  | OPEN |
+| U1 | s3-prefix | irpt-status.zip at the W2-06 pin from an autocrlf=false checkout | read back by version; members equal git; census vs live; cold-start smoke | s3 version 4CQOSM.R8WDlZQ.ts0HCSiH2JkA6jqQ8, 338660 bytes, read back by version with sha256 6VQejBfsI/P3mfAVSFjLt/ythlcxXxi12cy9hxXhKNg= equal to the build; built from an autocrlf=false checkout at ac1a847617 (row repin 2be7ff7a54); census vs live h7H7KgX1: 41 identical, 6 changed, 0 added, 0 removed, 0 differ from the pin, 0 CRLF; cold-start smoke PASS on 3 routes plus the owner-refusal arm (W206_STATUS/) | CLOSED 20261003T040841Z |
 | D1 | tf-lambda | ONE targeted safe-apply of module.irpt_status.aws_lambda_function.this (ops root) | CodeSha256 read back; live empty-headers invoke |  | OPEN |
 | V1 | verify | live owned reads: plain unchanged, include=comparisons unchanged, include=composition answers the frozen request | reads recorded |  | OPEN |
 
 ## Log
 
 - 20261003T034922Z OPENED by 2.0.0_SA_COO~Y with 3 leg(s)
+- 20261003T040841Z LEG U1 closed: s3 version 4CQOSM.R8WDlZQ.ts0HCSiH2JkA6jqQ8, 338660 bytes, read back by version with sha256 6VQejBfsI/P3mfAVSFjLt/ythlcx
