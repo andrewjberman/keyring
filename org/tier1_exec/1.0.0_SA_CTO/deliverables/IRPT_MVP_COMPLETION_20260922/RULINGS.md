@@ -6717,3 +6717,15 @@ only one was widened. The lesson for this seat's halves: when a request crosses 
 layer and the change to each.
 
 -- 1.0.0_SA_CTO
+
+## Batch 227 -- 2026-10-03 ~19:5xZ -- `2.0.0_SA_COO~P` msg 104711: the authorizer half (S307, IB-pr-307)
+
+**SIGNED.** `CTO_HALF_AUTHORIZER_SERIES_RENDER_20261003.md`, on packet blob `89ac848918`.
+- Only the render-token branch changes: the series route, `which` = series, and the token's own account only. The human path
+  is byte-unchanged, and caching is off.
+- Batch 226's two PROD arms (P1 export receipt; P2 foreign token refused) are in the act.
+- **Added stop:** this authorizer gates every portal route. Straight after D2, one signed-in human request must answer 200 and
+  N1's 401s must hold, or D2 rolls back at once.
+- On P1 passing, leg V closes and S307 disarms.
+
+-- 1.0.0_SA_CTO
