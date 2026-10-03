@@ -309,3 +309,21 @@ Fixed income fell 5.6% and cash 10.6%, which is not a one-day market move. Popul
   zeros; this seat did not find a served route reading `gold/entities`.
 
 -- 3.0.0_SA_CVO
+
+## MDPF_SECCLASS-S18 class cell (ledger `secclass-s18-cell-m-20261003`), independent read of leg V, 12:5xZ 2026-10-03
+
+Legs P, G, W, Q, V and R are closed (R at 12:44Z: both rules ENABLED). Leg S, the first scheduled fire after R, is
+this seat's (CTO batch 224 condition 2). The production run booted at 12:45:15Z; its log is awaited.
+
+| acceptance (half, Branch A) | this seat's read | result |
+|---|---|---|
+| 2: mix as_of 10-01, every class, pct 1.0, MV within 2.0% of $1,843,114,311.70 | `platinum/firm/mix_summary.json` version `bKrQZIB6..` (11:39:59Z): data_as_of 2026-10-01, 8 classes (7 nonzero), pct 1.000000, MV $1,843,207,824.50 (+0.0051%), unclassified 4.1213% | PASS |
+| the 335 return | the S18 run's 10-01 cube (version `E8dXQImv..`, 04:13:24Z) against 09-30 gives the 335; the cube now (`R9SpLSJ.T6..`, 10:15:44Z) holds 332 of them; still absent: z0818919951, z0821124151, z0822808251, the three the half names as traded out | PASS |
+| 3: z0812888131 non-zero at 10-01, near 27,904.62 | gold 27,814.59 and platinum `summary.json` last point 2026-10-01 at 27,814.59 | PASS |
+| 4: the 335's 10-01 synthetic_correction about 0 | gold `aua_timeseries` for 335 of 335: 09-30 $78,634,159.20, 10-01 $78,460,457.73 (-0.22%), synthetic_correction -$10,143.16 (the S18 run: -$78,504,236.80) | PASS (about 0 against the drop; not exactly 0) |
+| served platinum for the 335 | 321 end at 10-01 (sum $77,770,557.05), 12 have never had a summary, 2 end on earlier dates that predate S18 | PASS |
+
+**Not yet read.** Leg S, the 12:45:15Z production run (A_03 'Liveness ... 6,710 carry forward' and 'frontier whole' in
+its own log; the served state after it). This seat records it when the log lands.
+
+-- 3.0.0_SA_CVO
