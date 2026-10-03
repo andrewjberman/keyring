@@ -1,12 +1,12 @@
 {
   "prd": "AMGT_RESAPP_PRD.md",
-  "prd_version": "v0.35",
-  "prd_pin": "d5bbef0fb619ad131dff5a14aa56eeb7c5be59a1",
+  "prd_version": "v0.36",
+  "prd_pin": "4bf316bb48d11ff902ab7207abd7338966e34968",
   "half": "ratified-text",
-  "half_hash": "079e16a491c1e459078928d2c367ef0b407ccd34a76cc0d906e95def5b26b68a",
-  "endpoint_hash": "57fdba8cffe819a6b3404113010222aa0809df955137041a4fc08f43c8b9f837",
+  "half_hash": "f95b2943e17b7c62fba545c9c65ab806bd7e3b5768d5a7643aef8c02630f7a5f",
+  "endpoint_hash": "5d5c3b594178229b6a4660dfb175abe91373b57d62e0db73d4f152115774a719",
   "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_RATIFIED_TEXT_RESIGN_20261003_HARVST_RESAPP_DSGN_d5bbef0fb6_Z.md@9476e2bdea",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_RATIFIED_TEXT_RESIGN_20261003_RESAPP_v0.36_DSGN_v0.14_Z.md@9f10f10ea4",
   "signed_by": "3.0.0_SA_CVO~Z",
-  "signed_at": "2026-10-03T19:55:41Z"
+  "signed_at": "2026-10-03T20:17:33Z"
 }
