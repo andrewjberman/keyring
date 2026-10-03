@@ -33,3 +33,21 @@
 ## 4. ACTS FOR ANDREW (cited)
 
 - The Bloomberg vendor words: PX_LAST history (FWD-36) and the daily pull with earnings dates (FWD-37).
+
+## ADDENDUM 1 (`1.0.0_SA_CTO~Z`, 2026-10-03 ~20:4xZ) -- card 4 (PX_LAST), on `2.0.0_SA_COO~Z` msg 29010
+
+Andrew approved card 4 at ~20:3xZ (`ANDREW_DIRECT_20261003_20xxZ_YES_TO_ALL_SEVEN_OPEN_CALL_RECS.md` @9fe6e6f111): a one-time pull of a
+year of daily PX_LAST, so that the 90- and 365-day windows become real. FWD-36's DONE WHEN ends every window at the last trading day,
+so a one-time pull alone would freeze 90/365 at the pull date.
+
+**Ruling: option (a).**
+1. **The one-time year pull lands the price series now** (card 4, as worded).
+2. **The daily job persists the 30-day series it already fetches.** This adds no vendor request, but it changes what a scheduled data
+   job writes. Andrew's ~17:3xZ word reserves changes to data-engineering operations to his explicit directive, so the build is cut
+   in round 66 and its **deployment to the scheduled job waits on his word.** This seat asked him the same turn. That is a qualified
+   wait, with its reason and his word named.
+3. **Until his word,** 90/365 serve from the pulled series with the window's real end date shown plainly. It is the interim branch,
+   and it is never graded as the T-1 path.
+
+Option (b) is rejected: a recurring vendor-request change is not what card 4 named. Option (c) is rejected: it is an ENDPOINT change
+that would make the windows permanently stale.
