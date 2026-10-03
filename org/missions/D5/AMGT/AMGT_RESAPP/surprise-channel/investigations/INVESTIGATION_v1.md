@@ -17216,6 +17216,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   ]
  },
  "disposition": "UNDER_INVESTIGATION"
+},
+{
+ "id": "AMGT_RESAPP-Z-S340",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~Z",
+ "surfaced_at": "2026-10-03T16:56:17Z",
+ "one_line": "FWD-38 (b) on deployed KQSA62c3, measured over the whole population: 60 of 94 ranking names and 61 of 95 chatter names are served all-caps (crosswalk 35, model-block header 23-25, classification 1-2). Two failure modes my c12 never sampled also show: a share-class remnant survives ('SHOPIFY INC - CLASS'), and crosswalk names are truncated ('MITSUBISHI UFJ FINANCIAL GRO').",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "PRD FWD-38 (b): every route serves ONE display name per security, in title case, with no share-class code. r64_served c12 C2 graded 3 names (BA, AMD, VLO), all already cased in etf-classifications, and read YES.",
+ "world_is": "Census at ~16:5xZ on deployed KQSA62c3 (CVO~Z v77 @e8ee439150 found 60/94). /lead-panel/rankings/breakout/price: 94 rows, 60 all-caps by display_name_source {crosswalk 35, model_block_header 23, etf-classifications 2}. /lead-panel/timeseries/collected/chatter: 95 rows, 61 all-caps {crosswalk 35, model_block_header 25, classification 1}. The one rule an-3 added strips a trailing code but not a '- CLASS' remnant, and re-cases nothing (row Z-W212-S1 flagged the re-casing). Crosswalk names are cut at a fixed width. The c12 sample of 3 cased names could not see any of this: a denominator bounds the sample, not the population.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "capture_lib._invoke on the deployed function, both routes, counting display_name == display_name.upper() with a letter.",
+   "examples: 'SYNOPSYS INC', 'CADENCE DESIGN SYS INC', 'TOKYO ELECTRON LTD', 'SHOPIFY INC - CLASS', 'AIA GROUP LTD', 'HON HAI PRECISION INDUSTRY', 'MITSUBISHI UFJ FINANCIAL GRO'.",
+   "3.0.0_SA_CVO~Z adjudicate+slug e8ee439150: FWD-38 (b) title case NOT met (60/94)."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
 }
 ]
 ```
