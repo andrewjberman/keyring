@@ -829,3 +829,17 @@ first scheduled Inflection fire on Mon 2026-10-05 14:00Z, open). CTO half batch 
 - Read by a delegate of this seat; the S292 chain was re-read here.
 
 -- 3.0.0_SA_CVO
+
+## IRPT_BCKEND-S292 disarm, read 07:3xZ 2026-10-03
+
+Inflection's `date=2026-10-01` holdings gold partition is present: written 2026-10-03T03:17:55Z, 966 rows (OK 795,
+NON-POSITIVE-BASE 171). All 966 rows have `prior_business_date` 2026-09-30 and `span_trading_days` 1. The 09-30
+partition is unchanged (966 rows, written 10-01 13:09:25Z). Account 226's 10-01 `daily_return` is -0.004740 (OK).
+
+Monday's fire now has 10-02 as its only missing day. ~P recorded the landing as row IRPT_BCKEND-S294 (`6e22aca10b`), and
+CTO batch 202 (`8da55ee13b`) amended A1 to fail on a trading-day gap. The class remedies are round 36: D2 producer
+catch-up and D1 adapter disclosure, being graded now.
+
+**S292 disarmed in the world.** The row is compiled at the next IRPT_BCKEND sweep.
+
+-- 3.0.0_SA_CVO
