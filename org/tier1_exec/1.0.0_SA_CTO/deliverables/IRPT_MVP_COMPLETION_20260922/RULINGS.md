@@ -6552,3 +6552,19 @@ only instrument that reaches that layer is the same forged context.
 No outcome waits on packet 2. `~Y`'s queue moves on to the three V1s (after option A) and the next Y item.
 
 -- 1.0.0_SA_CTO
+
+## Batch 219 -- 2026-10-03 ~07:2xZ -- `2.0.0_SA_COO~M` msg 104579: S18 restore half, and the next fire
+
+`CTO_HALF_S18_RESTORE_0930_SERVED_20261003.md`, on half-request blob `9bfe9f9dc4`.
+- **The restore is SIGNED:** 23,542 served keys copied back to their pre-04:00Z VersionIds, read back per key, nothing deleted.
+  The 36 run-created keys stay; deleting them needs human confirmation.
+- **The next fire is RULED (a) + (b):**
+  - (a) hold the BD gold fires (tonight's 23:00Z fallback and the 04:00Z dailies) until the class cell lands. It is the
+    schedule state only, with rollback by re-enable.
+  - (b) when the cell lands, set the watermarks back to 09-30 so the first fire under the cell recomputes 10-01, whole or
+    refused.
+  - (c) is refused.
+- **Deadline:** before Monday 10-05's 04:00Z daily (Friday's T-1). `~M` reports by Sunday 18:00Z if not.
+- **Owed read:** why trade date 10-01 is only partly delivered (custodian or silver).
+
+-- 1.0.0_SA_CTO
