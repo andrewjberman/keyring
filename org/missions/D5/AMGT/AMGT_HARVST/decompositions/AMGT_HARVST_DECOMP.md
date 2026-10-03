@@ -2824,3 +2824,20 @@ Proof: `deliverables/2.0.0_SA_COO_H/round40/am-1.proof.txt`.
 - Mutant (the skip removed): 3 failed.
 - Research suite: 347 passed.
 - 0 Lambda calls; no S3 write; no publisher text.
+
+## 54. ROUND 41 -- Andrew-direct ~20:3xZ card 2 ("yes to all recommendations"), 2026-10-03 ~20:4xZ
+
+**Authority:** `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261003_20xxZ_YES_TO_ALL_SEVEN_OPEN_CALL_RECS.md`
+@9fe6e6f111, card 2: "HARVST: run FinBERT scoring over the stored articles, and the event rebuild" -- yes. Relayed by
+`1.0.0_SA_CTO~Z` msg 29001: "cut and run them through the canonical loop; a served gold move takes its never-widen
+pair". **Not covered:** FT collection and STOP_FT (unchanged; no collector runs).
+
+Issuer `2.0.0_SA_COO~H`. Series **`an`**. Three issuer DIRECT ACTS, one chain (an-1 -> an-2 -> an-3), fan-out 1 of 1, cap 8.
+
+| cell | what | class | gate |
+|---|---|---|---|
+| `HVST-an-1` | FinBERT scoring of the stored silver articles: `python -m lib.research.harvest.finbert_sentiment score --as-of 2026-10-03`, in `--limit` batches so a failed run loses one batch. Dry run at the cut: 13,235 silver articles, 0 already scored, 13,224 to score, 11 no-text markers. Calls the Opal Lambda `opal-news-ai-sentiment` only. Writes new parts of gold `article_sentiment`, a table no served route reads. | WORLD (Opal Lambda + S3 write, nothing served) | the dry run, then the batch receipts |
+| `HVST-an-2` | Served gold rebuild of `article_security_mention` + `chatter_daily` over the scores (FWD-16): every mention row gains the 4 `sentiment_*` fields. | SERVED | never-widen pair (COO half + CTO half), rule checked before and after the write |
+| `HVST-an-3` | Served `chatter_event` rebuild over the newest mention snapshot (the event rebuild). Served at the cut: 8 rows. | SERVED | never-widen pair (COO half + CTO half) |
+
+Evidence folder: `deliverables/2.0.0_SA_COO_H/round41/`.
