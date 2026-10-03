@@ -15852,3 +15852,83 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Refresh NYSE_HOLIDAYS_FALLBACK before 2028 (the calendar's own note); until then a 2028 window answers with the clip disclosed, never a guessed gap."
 }
 ```
+
+## IRPT_BCKEND-W103-S1 -- IB-pr-300: neither holdings-performance role holds s3:ListBucket on its own GOLD prefix (only the declared sil
+
+```json
+{
+  "id": "IRPT_BCKEND-W103-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~103",
+  "surfaced_at": "2026-10-03T04:17Z",
+  "one_line": "IB-pr-300: neither holdings-performance role holds s3:ListBucket on its own GOLD prefix (only the declared silver prefixes), so the catch-up's read of the newest landed day is denied in the Lambda until the IAM grant lands; the handler then falls back, with a WARN, to the one day it computes today.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/holdings-performance/iam.tf @b91461602e: statements ListExactlyTheDeclaredSilverPrefixes and ListExactlyTheDeclaredOrionSilverPrefix scope s3:ListBucket to the silver prefixes (locals irpt_hp_read_list_conditions / irpt_hp_inf_read_list_condition); the gold grants WriteTheTwoGoldPrefixesOnly and WriteTheTwoInflectionGoldPrefixesOnly are s3:PutObject only",
+      "gold lives in a different bucket from the silver (49F: opal-data-49financial under irpt/49financial/gold/holdings_performance_daily/; Inflection: opal-data-inflection under irpt/inflection/gold/...), so the silver list grants cannot cover it",
+      "read-only listing with the operator credentials through the new handler._landed_days: schwab_08335338 -> 561 partitions, newest 2026-10-01; orion -> 1614 keys, newest 2026-10-01 (the address resolves; the Lambda role was not exercised, no invoke is allowed)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IB-pr-300 preflight comp-iam: 'the roles already list and read their own gold prefix; if a listing grant is missing, that is a row.'",
+  "world_is": "The roles WRITE their gold prefix (PutObject) and do not LIST it. Until each role carries s3:ListBucket with s3:prefix irpt/<firm>/gold/holdings_performance_daily/ (and no GetObject is needed), a deployed fire cannot read the newest landed day: _days_to_compute catches the AccessDenied, prints 'WARN: gold listing failed', and computes the single day, so nothing regresses and nothing catches up.",
+  "notes": "Not repaired: terraform is outside this order's write grant. The deploy packet that ships this handler must add the two ListBucket statements (one per role) or the catch-up is inert in the world. A prefix-scoped ListBucket on the gold daily table only."
+}
+```
+
+## IRPT_BCKEND-W103-S2 -- IB-pr-300: two clauses of the order meet when the newest landed gold day is already T-1 (a re-fire): 'no gap c
+
+```json
+{
+  "id": "IRPT_BCKEND-W103-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~103",
+  "surfaced_at": "2026-10-03T04:17Z",
+  "one_line": "IB-pr-300: two clauses of the order meet when the newest landed gold day is already T-1 (a re-fire): 'no gap computes exactly today's one day' recomputes T-1, 'never rewrite a landed partition' forbids it; the handler follows the first and recomputes T-1.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/holdings-performance/handler.py _days_to_compute: gap empty -> [target]; test_catch_up.py::test_catch_up_no_gap_computes_the_one_trading_day_it_always_did covers newest = T-2 (T-1 not landed)",
+      "producer emit_day writes <partition>/data.parquet at a fixed key, so a recompute of a landed day overwrites it with an idempotent recomputation of the same silver"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IB-pr-300 items 1 and 3: catch-up days are new keys, never a rewrite; with no gap the fire computes exactly the one day it computes today.",
+  "world_is": "Every catch-up day (a day AFTER the newest landed day) is a new key. The only rewrite path is the pre-existing one: a fire whose T-1 is already landed (a second fire the same day) recomputes T-1, exactly as the handler did before this cell. No landed day older than T-1 is ever touched.",
+  "notes": "Choice made to honour the refusal clause (a no-gap fire computing anything other than today's one day is a defect). The alternative (compute nothing when T-1 is landed) is a one-line change if the COO prefers it."
+}
+```
+
+## IRPT_BCKEND-W103-S3 -- IB-pr-300: a catch-up fire runs the producer once per day in sequence inside a 300 s Lambda timeout (memory 15
+
+```json
+{
+  "id": "IRPT_BCKEND-W103-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~103",
+  "surfaced_at": "2026-10-03T04:17Z",
+  "one_line": "IB-pr-300: a catch-up fire runs the producer once per day in sequence inside a 300 s Lambda timeout (memory 1536 MB), and the per-day cost was not measured here, so a 5-day fire could time out part-way.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/holdings-performance/lambda.tf lines 32-33 and 76-77: timeout = 300, memory_size = 1536 on both functions",
+      "handler.py lambda_handler calls hp.main once per day, each with a fresh S3 client and read cache; no day's duration was run (no invoke is allowed in this order)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IB-pr-300: a fire computes up to 5 trading days, oldest first.",
+  "world_is": "A timeout mid-loop lands the days finished so far (each is its own upload) and the next fire resumes from the newest landed day, so the failure heals itself; but a fire that always times out on day 3 would still advance 2 days per fire. The per-day duration is UNMEASURED.",
+  "notes": "Measure one dry-run invoke's duration in the deploy packet; raise the timeout or lower MAX_DAYS_PER_FIRE (a handler constant) if one day costs over about 50 s."
+}
+```
