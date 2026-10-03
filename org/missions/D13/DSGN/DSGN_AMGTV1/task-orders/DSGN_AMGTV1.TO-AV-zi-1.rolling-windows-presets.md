@@ -131,7 +131,7 @@ Report once: what changed and where, the output line of every criterion, the por
   served 30-day window fixture).
 - **Model:** this worker runs on the Sonnet override. The Opus subagent pool returned a weekly rate limit at ~02:2xZ.
 
-<status>issued</status>
+<status>complete</status>
 <round>31</round>
 <slot>~88</slot>
 <fabric>site-z</fabric>
