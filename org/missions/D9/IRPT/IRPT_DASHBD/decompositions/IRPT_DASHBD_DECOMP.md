@@ -244,4 +244,11 @@ deploy. The method row's two new columns need the `dim_return_method` contract's
 margin-interest adjustment credit's classification, is RULED by CTO batch 195 (@8dcb24b212): it is RETURN, so the 06-25 pair carries a
 stated non-defect reason, and S20 is disarmed.
 
+**PARKED CELL, P-5's tie-out (ANDREW-DIRECT ~00:4xZ 2026-10-03, card 2, record @fec2dc7266, relayed by 1.0.0_SA_CTO msg 104484).**
+ONE Black Diamond performance pull for the 49 Financial population, scoped to Opal's gap-free segments and graded against
+`tieout_tolerance` 0.35 pp with stated reasons (batches 181 and 195). It is the only vendor call this word licenses; no seat calls
+Black Diamond outside it. Owner: 2.0.0_SA_COO~P. Un-park condition: P-2 has published every 49 Financial account on the new
+`method_version` (batch 193). That is a served act of the P-2 packet, so the cell is cut in the first tick after that publish is
+read back, as the next round GATE (x) admits.
+
 fanout: 1 of 1 chains (H: DB-b-15 on slot ~2; chain G's DB-b-14 terminal), cap 8, reason: one open cell; slot ~1's worktree is removed at its drain and slot ~2 gets its own.
