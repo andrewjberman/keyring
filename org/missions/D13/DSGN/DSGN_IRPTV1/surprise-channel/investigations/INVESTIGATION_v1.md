@@ -3545,3 +3545,31 @@
   "notes": "INERT (a test's census, not a served defect, as far as read). Owner 2.0.0_SA_COO~D: classify the two PrintEntry sites in the F47 census, or move them to a class it knows."
 }
 ```
+
+## DSGN_IRPTV1-S57 -- F47-AC6 passes again: the PrintEntry sites classified and measured (disarms S56)
+
+```json
+{
+  "id": "DSGN_IRPTV1-S57",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-10-03T15:20:00Z",
+  "one_line": "F47-AC6 passes on portal DEV again: the two PrintEntry.tsx sites b618efc9 added are classified in the census (the import NOT A WRITE; analysisChromeFromStatus's seed OVERWRITTEN), and the overwrite is measured, not asserted.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal 2da1eaaf (origin DEV, ls-remote 15:09Z): fe-s-47/no-status-reason.test.ts gains two RULES entries for render/PrintEntry.tsx and OVERWRITE (3): analysisChromeFromStatus on a status with no state returns UNCERTAIN with NO_STATUS_REASON, on READY returns READY; a failed measure is a census break",
+      "fe-s-47 at 2da1eaaf, before and after the commit: 8 pass 0 fail; F47-AC6 census breaks 0; 9 of 9 reaches carry their reason. The seven committed-blob suites: 45 pass 0 fail"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarms DSGN_IRPTV1-S56: the two sites are a known class (an import; a seed the carry seam overwrites), measured on the committed bytes. This seat's earlier baseline comparison had filed the failure as pre-existing; it was this seat's own (b618efc9).",
+  "spec_asserts": "Row S56: the F47 census classifies every print entry site.",
+  "world_is": "Holds at DEV 2da1eaaf. Not on PROD (6169edd9 carries b618efc9 without the census fix; a test-only change).",
+  "notes": "Found by re-measuring this seat's committed-blob suites after commit (DSGN_REBRND row S13's lesson); DSGN_REBRND row S15 records the same pass."
+}
+```
