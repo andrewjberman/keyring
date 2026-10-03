@@ -87,7 +87,7 @@ the audit by transcript id and returned byte count. Grade as written: a meeting 
 dropped. Row `NFRA_OPLGTW-Z-S42`.
 Graded by: no gate limb (a modification; GATE (viii) reads `<placeholders>NONE</placeholders>`).
 
-<status>failed -- AC1 3 of 4, the Research Meeting unreached pending invitation; ruling 28042</status>
+<status>cancelled -- final grade AC1 3 of 4; the 4th meeting re-runs as a NEW cell when the Research Meeting invitation lands (row Z-S43); 1.0.0_SA_CTO~O round-14 analysis R8</status>
 <round>8</round>
 <slot>~15</slot>
 <fabric>site-z</fabric>
