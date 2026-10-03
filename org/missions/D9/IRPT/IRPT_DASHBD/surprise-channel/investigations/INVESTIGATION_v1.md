@@ -1290,3 +1290,57 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "notes": "Owner: 2.0.0_SA_COO~P: the first deployed summaries fire's CloudWatch REPORT line is the in-region measurement; the fan-out reuses the function's own-invoke grant. The projection is a scaled laptop figure, not a Lambda measurement."
 }
 ```
+
+
+## IRPT_DASHBD-W5-S1 -- the read entry's staged_from_note says 'one pin' after the re-pin
+
+```json
+{
+  "id": "IRPT_DASHBD-W5-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~5",
+  "surfaced_at": "2026-10-03T02:35:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "TO-DB-b-18: the read entry's _staged_from_note says its shared boundary members sit at ONE pin; re-pinning the members rounds 6-9 changed (served.py, enforce.py, maintained_sources.py, NAMING_SCHEMA.json, sources.json) leaves that note stale, and the order grants the pins but not the note",
+  "spec_asserts": "Order item 2: re-pin every staged_from member whose blob changed, members that did not change keep their pins. lambda-source-map.json irpt-reporting-read-lambda._staged_from_note: 'The shared boundary members are the Holdings function's own closure ... at one pin'.",
+  "world_is": "After the re-pin the read entry's 28 staged members sit at 5 pins: 5f582dca96 (23 members), acce364286 (served.py), 7605bbf5ab (enforce.py), bb255c4cb2 (maintained_sources.py), aa2b5a42ff (NAMING_SCHEMA.json) and 6ce75d3385 (sources.json). The note was left byte for byte as found. DB10-1-AC2 PASS grades pins and blobs, not the note, so the stale sentence does not fail anything; a reader taking 'one pin' at its word would assume the Holdings closure is byte-identical to the Holdings function's own, which it no longer is for three members.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json irpt-reporting-read-lambda staged_from at this order's commit",
+      "git log -1 --format=%H -- <member> for each of the five moved members"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner: 2.0.0_SA_COO~P: reword the note when the read function is next rebuilt, or accept the divergence knowingly; served.py and enforce.py changed after the Holdings pin, so whether the read artifact should track the Holdings closure or its own HEAD is the issuer's call."
+}
+```
+
+
+## IRPT_DASHBD-W5-S2 -- the 0.3.0 schema_hash needs --tieout at the method-row write
+
+```json
+{
+  "id": "IRPT_DASHBD-W5-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~5",
+  "surfaced_at": "2026-10-03T02:35:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "TO-DB-b-18: the 0.3.0 schema_hash types tieout_tolerance_proposed as double, which holds only if the P-2 packet's method-row write passes --tieout; without it the producer writes None, pyarrow types the column null, and the served hash differs from the contract's",
+  "spec_asserts": "emit_method_row(..., tieout=None) puts the tieout argument into the row as tieout_tolerance_proposed; the 0.2.0 contract declares that column double, nullable, 'a future method_version is emitted before its tie-out has run'.",
+  "world_is": "The row is built by pa.Table.from_pydict({k: [v]}), so a Python float is double and None is null. The 0.3.0 hash 73e80ef7920f59134eda5ab06dfea766de295bd71e71b398023b52ae8acbe919 is over the 22 'name:type' lines with double for that column, as the landed version-1 row (0.037) carried it. A method-row-only write with no --tieout would land a null-typed column and a different hash; the contract provenance states the dependency and says the hash is re-read from the served artifact at the packet's write. The producer was not changed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py emit_method_row, lines 1729-1775 at 1067171ecd",
+      "org/standards/IRPT_DASHBD_DIM_RETURN_METHOD_CONTRACT.json schema_hash_provenance at 0.3.0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner: 2.0.0_SA_COO~P: pass --tieout on the packet's --method-row-only write, or ask the producer's owner for a typed schema on that column; compare the served schema_hash to the contract's after the write."
+}
+```
