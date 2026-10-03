@@ -6908,3 +6908,50 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W17-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~17",
+  "surfaced_at": "2026-10-03T00:35Z",
+  "one_line": "OG-tf-1 STOPPED at step 4: row Z-W15-S25 classifies CONTENT-DIFF -- the deployed mcportal-grant-writer-lambda differs from HEAD's staged build in 3 files, so AC2 cannot read No changes without an apply this cell may not make.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: aws lambda get-function Code.Location, unzipped in memory, per-file sha256 vs build_package.py staged output at HEAD 544b8e2466: 11 files each side, 8 SAME, 3 DIFF -- infra/aws/ec2/opal-gateway/app/config.py (7244283c201a -> 3128d463bd6f, 27507 -> 29788 B), infra/aws/ec2/opal-gateway/app/data_entitlement.py (c12839d856ec -> a9eafa664374, 31834 -> 32133 B), org/standards/NFRA_OPLGTW_CONTRACT.json (f47703a611e5 -> a86f7e667cfc, 8806 -> 9189 B). CR bytes 0 on both sides (not a line-ending diff); zip timestamps fixed (not metadata).",
+      "RUN: each deployed file is byte-identical (git hash-object) to an older committed blob: config.py = c19f86c295 (2026-09-30 03:26 -04), data_entitlement.py = aac92bdff8 (09-30 05:57 -04), contract JSON = c2f5d5a071 (09-30 02:10 -04); HEAD has since advanced (db92656c72, 1afce6312e, adc979b13b, 32ebe6bee6). Deployed Lambda LastModified 2026-09-30T10:58Z. Record: deliverables/0.9.0_WK_NFRA_OPLGTW~17/TF_ROOT_FIX.md."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order step 4: SAME-CONTENT -> make the archive deterministic so the targeted plan reads No changes; CONTENT-DIFF -> do NOT apply, STOP with a BLOCKING row naming the differing files.",
+  "world_is": "CONTENT-DIFF: three gateway-closure files differ in text. Any root that archives HEAD's staged build plans a source_code_hash change on aws_lambda_function.mcportal_grant_writer and an untargeted apply of the opal-gateway root would redeploy the grant writer with unreleased gateway code; AC2 and AC1's zero-error plan need the issuer to rule: deploy HEAD's build deliberately (a separate apply cell), or pin the archive to a released build. Items 1 and 3 not written; item 2 (untrack plans and stray org/ files, add .gitignore) done.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W17-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~17",
+  "surfaced_at": "2026-10-03T00:35Z",
+  "one_line": "The order says the grant-writer .build/staged and the layer zip are gitignored; .build/staged is untracked and NOT ignored, and the layer directory carries only requirements.txt (the zip is built from PyPI wheels, not a repo file).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: git check-ignore -v infra/aws/lambda/mcportal/mcportal-grant-writer-lambda/.build/staged/lambda_function.py -> rc 1 (not ignored); git status --porcelain after build_package.py shows '?? infra/aws/lambda/mcportal/mcportal-grant-writer-lambda/.build/'; git ls-tree -r HEAD infra/aws/lambda/layers/mcportal-grant-writer-deps -> requirements.txt only."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Section 1: the archive_file and layer read gitignored .build paths.",
+  "world_is": "Outside this order's <paths> (infra/aws/lambda is not writable here), so no ignore line was added for .build/staged; the follow-on fix cell needs the lambda dir in its paths or a mechanism that does not depend on it.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
