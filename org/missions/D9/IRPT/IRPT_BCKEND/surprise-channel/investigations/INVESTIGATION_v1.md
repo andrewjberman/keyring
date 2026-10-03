@@ -16738,3 +16738,33 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "The resident's own failed refresh at 00:31Z (AUTH_FAILED:NO_AUTHENTICATED_PROBE) stays undiagnosed; it sits under S230's class."
 }
 ```
+
+## IRPT_BCKEND-S307 -- P-2 leg V: the 49F PATH B export refuses; the authorizer V2 lacks the reporting series render route
+
+```json
+{
+  "id": "IRPT_BCKEND-S307",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-03T19:10Z",
+  "one_line": "P-2 window leg V: a 49F PATH B export on PROD code refuses DEPENDENCY_UNAVAILABLE -- the API Gateway authorizer (opal-portal-authorizer, V2) has no reporting-series entry in RENDER_ROUTE_CLAIMS, so the export's render-delegate GET is denied 403 after the edge (V3, :22) accepted it; IB-pr-304 widened V3 only",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "2.0.0_SA_COO~D's signed-in walk (msg 104700; DSGN_IRPTV1/deliverables/2.0.0_SA_COO~D/p2v/P2_V_WALK_20261003.md): account ****0090 outside the six, tab PASS (PATH B series/manifest 200), print PASS, POST .../export -> UNAVAILABLE DEPENDENCY_UNAVAILABLE, no receipt",
+      "/aws/lambda/irpt-export-render 18:58:43Z correlation corr-0f1d1e0271c5: PlatinumSeriesUnavailable 'the reporting route did not return the series (status 403)' -> public DEPENDENCY_UNAVAILABLE",
+      "/aws/lambda/us-east-1.auth-validator-edge 18:58:43.427Z: render_accepted + 'Auth OK (render)' on /api/scoped/investor-reporting/reporting/acc_.../series (V3 admits it, as IB-pr-304 intended)",
+      "/aws/lambda/opal-portal-authorizer 18:58:43.469Z WARN 'Render token presented on a non-render route: GET /api/scoped/investor-reporting/reporting/{account_id}/{which}'; the read Lambda logged no invocation at 18:58:41-43Z",
+      "infra/aws/users/lambda/portal-authorizer/index.mjs:56-60 RENDER_ROUTE_CLAIMS holds performance/analysis/narrative only; :167-173 matches pathParameters[claimName] where the claim name equals the path parameter name, while the export's render token pins accountSetId (export/retained_export.py:308) and the route's parameter is account_id"
+    ]
+  },
+  "spec_asserts": "CTO batch 205 (c): the export reads the series THROUGH the reporting route as the submitter's render delegate; IB-pr-304: a render token reaches the 49F reporting series route; the P-2 packet's V leg: an account outside the six exports with a receipt naming the frozen as_of.",
+  "world_is": "MEASURED: since B3 (18:44:32Z) and B2 (PROD 98a98e70fb), a 49F Performance export on the served page cannot be created: V3 admits the render token, V2 refuses it as a non-render route. The tab and print serve correctly; nothing wrong is served -- the export refuses by name. PATH A is retired for 49F, so no old export path remains.",
+  "notes": "Remedy (one cell + its own never-widen half, opal-portal-authorizer is the authorizer of every portal API route): add 'GET /api/scoped/investor-reporting/reporting/{account_id}/{which}' to RENDER_ROUTE_CLAIMS with a path-parameter -> claim map (account_id -> accountSetId) and a which == 'series' guard (V3's series-only rule), Node tests beside IB-rtr-2's. Fix forward or window rollback is the CTO's ruling (SERVED). ~D owns the page's silence on the refusal (walk defect 2)."
+}
+```
