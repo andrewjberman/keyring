@@ -42,7 +42,8 @@ If a seat is not live at its time, its first live session reads before any other
    - the 3 money-market keys (DGCXX x2, IJGXX) in reader words;
    - what the 10-05 grades leave open;
    - the walk-register remainder.
-   Repairs batched into one cell: Z-S16 and Z-S18. The G5 replay (D10) also comes in, because no deployed route
+   Repairs batched into one cell: Z-S18. Z-S16 was dismissed by the CVO (C-S26) and Z-S17 is retracted (Z-S19). The G5
+   replay (D10) also comes in, because no deployed route
    rebuilds G5.
 
 ## Issuer acts still owed
@@ -53,7 +54,8 @@ If a seat is not live at its time, its first live session reads before any other
 
 ## Open findings (rows, owner named)
 
-- Z-S16 (COO~RV): a skipped AI step reports no `run_path`. One line in `run_ai_step`; next round.
+- Z-S16 is DISMISSED (CVO C-S26, ADJUDICATION_v7.Z). A skipped step omits `run_path` rather than misstating it; no stored
+  value is wrong.
 - Z-S17 is RETRACTED by Z-S19. The 0 -> 0 G5 exit row is ruled behaviour (CRO~RV CALL 12, ratified): G5 keeps the row and
   the page hides and counts it. Round 6's x-1.AC3 pins it. Nothing is owed.
 - Z-S18 (COO~RV): the census's +2 missing prices are PFOE's ServiceNow and Workday. cg-1 re-keyed them to the rankings'
