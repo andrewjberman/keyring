@@ -1477,3 +1477,21 @@ Andrew's population vendor word; P-1 is the acceptance.
 | `IB-pr-298` | P-4 (holdings_gold.py fee_basis GROSS) + S276 (cleanup_staged restores tracked paths; staging refuses a dirty tracked destination) | WORLD (a served function's source and the shared build tool; no deploy) | none | P35 |
 
 fanout: 1 of 1 chains, cap 8, reason: one worktree (disk 7.0 GB free); queued behind IRPT_DASHBD DB-b-10 on the shared DIR.
+
+
+## 28. ROUND 36, WORKSTREAM ~P (2026-10-03 ~03:4xZ, issuer 2.0.0_SA_COO~P, on 1.0.0_SA_CTO RULINGS batch 202 @8da55ee13b, msg 104524)
+
+Row S292 (ARMED, relayed from 3.0.0_SA_CVO): Inflection's gold missed 2026-10-01 because each scheduled fire computes exactly one
+day, and the adapter links over a missing day silently. The disarm is done: 10-01 was landed as one new key (row S294, @6e22aca10b),
+and the ledger's A1 is amended. Batch 202 places the CLASS here as two cells, both firms: the consuming half first, then producer
+catch-up. GATE (x) puts them in ROUND 36 (row S267).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-299` | the adapter names a trading day with no partition on the value and drops its `measured` claim; never refuses, never links silently (nothing served) | WORLD (the served adapter's source) | none | P36a |
+| `IB-pr-300` | the holdings producer's scheduled fire computes every missed trading day through T-1, at most 5 per fire, stopping at a day without silver; an explicit `date` unchanged (nothing served) | WORLD (the handler of both firms' producers) | none | P36b |
+| `IB-pr-301` | P-6's server half (CTO batches 201 and 203): submit-export accepts a PATH B (PLATINUM) Performance export under the reporting route's coverage; the bundle pins the series revision (VersionId, sha256, as_of) inside `authorized_report_revisions`; the render reads that exact version; the receipt names the frozen as_of; PATH A exports unchanged (nothing served) | WORLD (the export submit, render and ExportBundle contract; batch 203 named SERVED, the gate's floor for infrastructure paths is WORLD) | none | P36c |
+
+P-2's window (IRPT_DASHBD section 11, E1) waits on IB-pr-301 and on 2.0.0_SA_COO~D's print and export page half (batch 201); one rollback reverts both.
+
+fanout: 3 of 3 chains, cap 8, reason: disjoint write surfaces (the adapter, the producer's handler, the export); workers 0.9.0_WK_IRPT_BCKEND~102, ~103 and ~104 in their own worktrees.
