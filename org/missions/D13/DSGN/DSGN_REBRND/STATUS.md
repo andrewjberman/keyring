@@ -29,8 +29,16 @@ IR keeps priority -- return to DSGN_IRPTV1 the tick any of its Next lines unbloc
    - Real run: a build served with gap and control fixtures, looked at.
    - HELD off DEV until B2 (the P-2 window's PROD promote, CTO 104632) is measured: B2 carries DEV head, and this
      change is not graded yet. It lands on DEV after B2.
-   - Still open from the same grade: the untested wiring (MarketPerformance `failed`, Positioning `loadFailed`,
-     HoldingsTab).
+   - The same grade's untested wiring is BUILT on the same branch, `a6a77e31`:
+     - Positioning `loadFailed` and HoldingsTab's fetch failure, through the pages (wiring-states);
+     - MarketPerformance `failed`, through the page (failed-wiring).
+     Each arm fails on its mutant. Held with the branch.
+   - W3-S5's auth item is BUILT on the same branch, `6cb31b54`.
+     - The six auth form errors (login, change/forgot/reset password, both MFA steps) are one compact PanelError.
+     - The invalid reset link's pink circle is gone.
+     - Pin auth/error-state: the DEV files fail every arm.
+     - Real run on a build: a forced forgot-password failure and the invalid link, looked at.
+     - Held with the branch.
 
 1. **E4 -- the page pass for FWD-12 and FWD-13 on `/positioning`** (first by batch 165). SURFACE HALF (FWD-12) LANDED:
    - portal fb5d6116: the Positioning Summary's six translucent fills on opaque rungs (bar tracks, placeholder and

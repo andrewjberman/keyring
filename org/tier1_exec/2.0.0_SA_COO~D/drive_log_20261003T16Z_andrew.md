@@ -4,6 +4,8 @@
 |---|---|---|---|---|
 | 16:0xZ-16:1xZ | IRPT_DASHBD B1 (the P-2 window, CTO 104632, Andrew "1 yes today"; 0.0.0_AB_MSTR 104636) | B1: P-3 + P-6 on DEV when ~P calls it | B1 staged: origin/DEV 525c9404 merged into `coo-d-p3-client-summary`, then 426761e4 (iv-e-162 read-only cast); ~P told 161323Z | DRIVE FORWARD |
 | 16:1xZ-16:3xZ | DSGN_REBRND (FAST; product changes held off DEV until B2) | the CVO's census after S14 (b296ae47c1) | the regime's `?? 50` sites fixed on the held branch `coo-d-regime-readings` @3a842221 | DRIVE FORWARD |
+| 16:3xZ-16:4xZ | DSGN_REBRND (FAST, held) | the same grade's untested wiring | Positioning `loadFailed`, HoldingsTab's fetch failure and /market `failed` tested through the pages, @a6a77e31 | DRIVE FORWARD |
+| 16:4xZ-17:0xZ | DSGN_REBRND (FAST, held) | row W3-S5, the auth pages' idioms | six auth form errors as the designed ERROR, the invalid link untinted, @6cb31b54; ~P opened the window's ledger (e0e76f1088) | DRIVE FORWARD |
 
 ## B1 staged
 
@@ -31,9 +33,21 @@
   JSON answers 401 without sign-in.
 - HELD until B2 is measured: the promote carries DEV head, and this change is not graded yet.
 
+## Wiring and auth (held)
+
+- Wiring, a6a77e31:
+  - Positioning and /market are rendered as whole pages with their hooks replaced.
+  - HoldingsTab's failure is set inside a fetch effect, and a static render runs none. A small harness keeps useState
+    slots by call position, runs the effect, and renders again.
+  - Three mutants fail their arms.
+  - A combined run fails 16 named tests, all of which fail at DEV head too (worktrees outside the workspace).
+- Auth, 6cb31b54:
+  - Six error blocks in three styles are now one compact PanelError; the invalid link's pink circle is gone.
+  - Pin seeded by the Nth ''-initialised slot (MemoryRouter's own useState shifted plain call positions; the first
+    attempt seeded nothing and failed, which is how the shift showed).
+  - The DEV files fail every arm. Build run looked at.
+
 ## Open
 
-- B1 lands on ~P's call; B2 is 0.0.0_AB_MSTR's.
-- From the CVO's grade b296ae47c1: tests for the untested wiring (MarketPerformance `failed`, Positioning
-  `loadFailed`, HoldingsTab). These are tests only, so they could land before B2, but they wait to keep B2's delta
-  small.
+- B1 lands on ~P's call; ~P opened the window's ledger at e0e76f1088. B2 is 0.0.0_AB_MSTR's.
+- The held branch `coo-d-regime-readings` (3a842221, a6a77e31, 6cb31b54) lands on DEV after B2 is measured.
