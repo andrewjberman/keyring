@@ -3,7 +3,7 @@
   "project": "NFRA_OPLGTW",
   "directive": "D9",
   "fabric": "site-z",
-  "prd_version": "v1.6",
+  "prd_version": "v1.7",
   "step": 4,
   "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_1511ET_NFRA_OPLGTW_D9_REGISTRATION_AND_PRD.md@45ce4e5b73",
   "endpoint_outcomes": [
@@ -500,3 +500,37 @@ read at release.
   ruling named only its own half, so the omission is this seat's.
 - **Remedy.** The CVO grades the live release post hoc against `4231bd2ddc` and this addendum. A REFUSED half
   routes the rollback named in the ruling (redeploy `3a7d6a7dc8`; revert the IAM ARN and the ALB path).
+
+### v1.7 addendum (2026-10-03 ~19:5xZ, 1.0.0_SA_CTO~O) -- C3 records the fourth dataset, `dim_transaction`
+
+Input: `3.0.0_SA_CVO~O`'s finding in its OG-gw-2 half (msg 28974,
+`org/tier1_exec/3.0.0_SA_CVO/deliverables/cvoO_NEVER_WIDEN_OG-gw-2_HALF_20261003.md` @0cfe31652e). The ratified text named
+three datasets (:37, :155, :309). The contract it governs has carried four since @32ebe6bee6. That change was written by
+NFRA_MCPINDEX MX-r-6 step 0 under this seat's ruling B4
+(`org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/1.0.0_SA_CTO~O/REINSTATE_RULINGS_20260930.md` @4e598ab7be), released on
+the gateway 2026-09-30 18:33Z under never-widen halves, with no OPLGTW addendum. This is that addendum.
+
+**The change (C3).**
+- The data-readable prefixes are `silver/dim_position/`, `silver/dim_balance/`, `silver/dim_asset/` and
+  `silver/dim_transaction/`.
+- `org/standards/NFRA_OPLGTW_CONTRACT.json` `fields.dim_transaction` is exactly 15 columns: `account_ref`,
+  `business_date`, `trade_date`, `settlmnt_date`, `tr_cd`, `sb_cd`, `transaction_category`, `tran_srcde`,
+  `debit_credit`, `cusip`, `ticker_symbol`, `quantity`, `price`, `gross_amount`, `net_amount` (read at `af2d762970`).
+- C3's date semantics, closure and master rules apply to it unchanged.
+- :37's "three silver datasets" reads "four" from v1.7.
+- :309, the proposed first entitlement, is unchanged: Menachem's proposal names three datasets. Adding the fourth to it
+  is its own act, below.
+
+**Grants -- capability is not authorization.**
+- From OG-gw-2, the grant writer ADMITS a verified-owner candidate naming `dim_transaction` over a non-empty subset of
+  the 15 columns. This aligns the second writer with the contract the gateway serves.
+- **Authorized today:** exactly ONE grant change. Andrew-direct 2026-09-30 ~13:0xZ, "Regarding schwab, sure." (record
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260930_13xxZ_R20_ETFS_BDFEES_YES_SCHWAB_GRANT_YES_ADVI_LIFTED.md`
+  @1eba868308) widens ONE existing Opal principal's Schwab grant to add `dim_transaction`, through the grant admin tool,
+  with "no other grant change". That act is executed under its own record, not by a round-15 cell; it is not barred by
+  this seat's G1 on OG-gw-2.
+- **Every other `dim_transaction` grant** needs its own word from Andrew (the CVO's W1). FWD-9 (Andrew admits staff one
+  at a time) stays DEFERRED.
+
+**Sign-off.** CONTRACTS text changes (C3) and ENDPOINT does not. The ratified-text half re-opens for `3.0.0_SA_CVO~O`.
+`prd-signoff` binds the ENDPOINT hash only, so this seat sends the request itself.
