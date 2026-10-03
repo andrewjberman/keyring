@@ -771,3 +771,44 @@ written. None of the pins is on PROD (6169edd9). Every CI run concluded success;
 - Read by a delegate of this seat.
 
 -- 3.0.0_SA_CVO
+
+## Grades, 18:4xZ-19:2xZ 2026-10-03 -- the B2 PROD promote (98a98e70, portal-v2.1.197) and DEV to 7b265fc4
+
+PROD 98a98e70 (merged 18:33:53Z by 0.0.0_AB_MSTR on Andrew's word) has a tree equal to 2f326afc. Deploy to Production run
+37144813955 succeeded; the site's index.html was rewritten at 18:38:19Z; the shipped JS carries the summary route,
+`performance_source`, `frozen_as_of`, `version_id` and "Sleeve: ".
+
+| pin | claim | this seat's read | grade |
+|---|---|---|---|
+| 19796bc0 (B1 merge) | lands the P-3/P-6 branch unchanged | a scratch re-merge gives an identical tree; 8 clean auto-merges; 24 files = the 6 commits' files; on PROD | PASS |
+| 0410f358 (P-3) | the picker reads the client summary, falling back to the account manifests | iv-e-155 1/1; NEG 0/1; MUTs at `pickerSuffix.ts:94` and on the fallback killed | PASS |
+| 79e7cfc8 (P-6 print) | a print naming its account reads PATH B | iv-e-158 2/2; NEG fails; MUT on the dispatch killed | PASS |
+| 16f5c8ea (P-6 export) | the export sends `performance_source`, naming no retained report | iv-e-159 1/1; NEG fails only as an import error; MUT dropping the field killed | PASS (the MUT carries it) |
+| c16a31e9 | the export's print reads the frozen version | NEG 0/2; MUT killed | PASS |
+| b847c9f0 | the receipt shows the frozen as_of | iv-e-162 1/1; NEG and MUT fail | PASS |
+| 426761e4 | iv-e-162 typecheck | test-only; CI success | PASS |
+| 2f326afc (Andrew-direct) | chips read "Sleeve:", plus "Sleeve: Client" | 3/3; NEG and MUT 0/3; on PROD | PASS |
+| 3a842221, a6a77e31, 6cb31b54, cc1d7cc6, 7b265fc4 (DEV only) | regime no-reading; wiring tests (this seat's untested-wiring note); auth error state; /factor-tilts one state; merge | each 1/1 or 2/2 with NEG and MUT failing; clean re-merge | PASS |
+| full suite | -- | DEV head 991 pass / 35 fail / 7 errors (partial checkout); the code changes reverted 981 / 45 / 9; 0 regressions | -- |
+
+**What a PROD viewer gets (read via read-only AWS, no signed-in walk).**
+- The summary route (`entry.py:92`, `:373`) is live on the gateway behind irpt-49f-reporting-read-lambda, whose deployed
+  hash equals the workspace's. S3 holds 4,241 client summaries.
+- The account route, with `version_id` on the series read, is live.
+- The export submit, receipt and download routes are live on irpt-export-render, which handles `performance_source` and
+  `frozen_as_of`.
+- No UI path calls an undeployed route.
+- B3 (PATH A retired for 49F) is not deployed: irpt-performance-adapter still runs the old code, so PATH A remains a
+  fallback.
+
+**Rows and notes.**
+- IRPT_DASHBD-S23: routes.json omits both live reporting routes.
+- cc1d7cc6 converts `FactorTilts.tsx` CRLF to LF, so a 41-line fix diffs as 507 lines.
+- The wire-regeneration class is row W41-S2's.
+
+**Limits.**
+- No signed-in walk; the edge validator :22 and the render grant come from the ledger.
+- Some NEGs ran at the commit, because the revert did not apply at head.
+- Read by a delegate of this seat.
+
+-- 3.0.0_SA_CVO

@@ -1344,3 +1344,28 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "notes": "Owner: 2.0.0_SA_COO~P: pass --tieout on the packet's --method-row-only write, or ask the producer's owner for a typed schema on that column; compare the served schema_hash to the contract's after the write."
 }
 ```
+
+## IRPT_DASHBD-S23 -- routes.json omits both live reporting routes
+
+```json
+{
+  "id": "IRPT_DASHBD-S23",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-03T19:25:00Z",
+  "one_line": "docs/contracts/investor-reporting/v1/routes.json declares 19 routes and omits both live reporting routes, GET .../reporting/{account_id}/{which} and GET .../reporting/client/{client_id}/summary. Both are declared in reporting/entry.py:92,373, live on the API gateway behind irpt-49f-reporting-read-lambda, and called by PROD portal v2.1.197. The file's own note says every route the product needs is covered.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's grade of the B2 promote 2026-10-03 ~18:5xZ-19:2xZ: routes.json at CLOUD HEAD, 19 entries, neither reporting route; entry.py ROUTES; API gateway routes and the read Lambda's CodeSha256 read via boto3; PROD bundle strings carry the summary route"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "routes.json is the published inventory of the routes the product calls (its own note).",
+  "world_is": "The contract inventory lags the served surface by two routes. A census or gate reading routes.json, such as the _authz unguarded census, cannot see them.",
+  "notes": "INERT (the routes are guarded in code). Owner 2.0.0_SA_COO~P (the reporting routes' issuer; the file sits in ~Y's lease surface): add both routes to routes.json with their guard, and re-run any census that reads it."
+}
+```
