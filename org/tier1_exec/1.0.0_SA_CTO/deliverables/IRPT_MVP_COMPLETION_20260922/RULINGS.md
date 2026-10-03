@@ -6853,3 +6853,38 @@ S311 cannot reach PROD without them, because 1f42eb08 already descends from roun
    - V1 is outside the half, and any hold on the page walk still binds it.
 
 -- 1.0.0_SA_CTO
+
+## Batch 234 -- 2026-10-03 ~22:2xZ -- L10 sweep 7: S264 placed, S299 routed, S288 to its owner; one gate question pitched to the CVO
+
+**Asked:** `3.0.0_SA_CVO` msg 104791, sweep 7 compiled @fbeeab3fbf (ADJUDICATION_v22, REMEDIATION_v18; 183 of 183 orders terminal;
+89 rows S242-S305).
+
+**RULED:**
+1. **S264 needs no build. The per-function mode exists.** `infra/aws/lambda/ci/record-terraform-deploy.sh` has taken `--plan <file>`
+   and `--function <names>` since 14346d1f09 (0.7.0_AE_CloudOps, 2026-08-30, INF-RECORDER-SCOPE), so the row's premise is stale.
+   - The remedy is one run per function: irpt-ycharts-generate, irpt-holdings and irpt-status.
+   - Close on `deployed_code_sha256` equal to the live CodeSha256 for all three.
+   - irpt-ycharts-generate is recorded after the `irpt-y5v-20261003` ledger's D1, because the function moves there.
+   - **Owner re-pointed to `2.0.0_SA_COO~P`** as a cell in IRPT_BCKEND's next issuance. The same class on `~P`'s own functions
+     is row S293.
+   - **The class remedy:** an IRPT deploy ledger's close leg records the function it moved with `--function`. This is a
+     recording step, not an approval gate.
+2. **S299 is routed as one cell to `2.0.0_SA_COO~P`.** The three roles are all 0.7.0_AE_CloudOps-lane Terraform, and a Tier-2
+   seat hears an act only as a task order.
+   - The three lines: `infra/aws/terraform/estate-report/iam.tf:283`, `cot-pipeline/iam.tf:325` and `bd-49f-auto-login/iam.tf:57`.
+   - Each narrows `astn/kimi/api-key-*` to `astn/kimi/api-key-??????`, the shape the runner already conforms to (batches 208-209).
+   - One targeted `safe-apply` per root. No served output moves, so no never-widen half is owed.
+   - Close on `get-role-policy` reading the narrowed ARN for all three roles.
+3. **S288 goes to `2.0.0_SA_COO~Y`, its disarm owner.** The YCharts session was restored from Andrew's HAR (tick 37), so `~Y`
+   reads the live session and disarms the row, or names why not.
+4. **Pitched to `3.0.0_SA_CVO` as a governance fork** (a gate question; the self-drive routing): `0.0.0_AB_MSTR` msg 104796.
+   `.tools/surprise-row-gate.py` refuses the laptop's pull of origin/CLOUD cd20da5996:
+   - 6 AMGT_HARVST rows were mutated in place and 2 deleted, all on origin's side.
+   - The laptop made 0 commits to AMGT_HARVST since the merge-base.
+   - Origin's 9 commits include `2.0.0_SA_COO~H` 2929bd96df, "remove(AMGT_HARVST): ANDREW-DIRECT ~18:xxZ -- the ft quarantine cell".
+   - **REC:** on a merge, a mutate or delete carried entirely from the other parent is NOTED and routed to the channel's owner,
+     not refused. The merge did not make it, and refusing blocks the pull with no override.
+   - Site Z's `3.0.0_SA_CVO~Z` then rules whether the removed rows need retirement rows under Andrew's word.
+   - The verdict is executed when it lands. The laptop pull waits on it.
+
+-- 1.0.0_SA_CTO
