@@ -610,3 +610,25 @@ lines before and after. Contrast is arithmetic on index.css values, not a measur
 89) during the read, not graded. CI runs no unit tests.
 
 -- 3.0.0_SA_CVO
+
+## Grades, 00:xZ-01:xZ 2026-10-03 -- DSGN_REBRND round 3 E4 (5 pins) and rows S5-S8 (handoff 104479)
+
+PROD: all five E4 pins are on PROD 6169edd9 (Deploy run 37084775165 success; is-ancestor rc 0 for 5 of 5; content
+control: the PROD dash is white/70 and toOklab present).
+
+| pin / row | claim | this seat's read | grade |
+|---|---|---|---|
+| 661e49b3 | the Models view's interactive text clears 4.5:1 | HoldingsTab.tsx:80 AGG chip indigo400 #818cf8 on band 5.94 (was 4.22) by arithmetic; no test. CI 37079617916 success | NOT_EVALUATED by test; the ink PASS by arithmetic |
+| 44d6a215 | a highlighted name keeps its colour on a band ground; OKLab ramp | PositioningSummary.tsx:42-46, :1462-1466; bookColors.ts:57-85. Canon on band: UST 6.33, ST 8.26, INT 6.99, LT 4.82, ULT 4.71; #a775a5 4.84 (was 3.86). No test. CI 37080785301 success | PASS on the walk's computed styles; NOT_EVALUATED by test |
+| b23917f7 (S5's remedy) | dash white/70, pinned by iv-e-152 | HoldingsBreakdownTable.tsx:240; iv-e-152 3/3; NEG (white/60, test kept) 2/3, arm (a) fails at 4.23. Arithmetic: selected rung L 0.07350, white/70 composite L 0.58302: 5.13:1; tile rung 6.91:1. CI 37081937697 success | PASS on a test run; S5 REMEDIATED (arithmetic, not pixels) |
+| E4 re-grade (fb5d6116, fe461611) | the rungs carry their text | iv-e-152 hardcodes subtotal = tile and total = selected and never reads subRow/totRow or PositioningSummary; MUT (both pins' rung classes reversed, white/70 kept): still 3/3 | fe461611: inks PASS by arithmetic, rung choice unpinned; fb5d6116 NOT_EVALUATED |
+| full suite | -- | DEV b23917f7 877 pass / 67 fail / 18 errors (969 tests); the three pins reversed: same counts; the pins add no failure | -- |
+| S6 (W2-S8 on /positioning) | every canon mark on the band, 316 pairs, 0 under | W2-S8 asked about canon hexes under 3:1 on WHITE grounds; Positioning has 0 white or light grounds; the walk (getComputedStyle, interactive controls only, 316 rows, min 4.72, bar 4.5) has 48 canon-ink rows, all on the band; bars on the tile rung clear 3:1 (UST 4.39 ... ULT 3.27) | supports the disarm for /positioning; the walk covers text controls only (row S10) |
+| S7 (W1-S11 latent) | no code selects dark mode | `dark-mode`: 8 hits in 3 files, 0 setters | latent CONFIRMED for html.dark-mode; a second, OS-driven dark path exists (row S9) |
+
+**Limits.** bun 1.3.9 in a scratch worktree of origin/DEV b23917f7 at %TEMP%\c90, removed after (Test-Path False);
+`git -C portal status --porcelain` 15 lines before, 19 after -- the 4 new are the live lease's E2 work (DESIGN.md,
+Positioning.tsx, PageEnd.tsx and its test), not this read. Contrast is arithmetic and computed styles, not pixels. DEV
+moved to c9d303db during the read, not graded.
+
+-- 3.0.0_SA_CVO
