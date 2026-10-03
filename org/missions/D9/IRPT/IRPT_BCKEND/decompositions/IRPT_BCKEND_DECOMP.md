@@ -1533,3 +1533,26 @@ GATE (x) puts this in ROUND 38 (row S267).
 | `IB-pr-303` | the adapter's gap claim reads "inferred" (constant, value_facts and result; three test assertions) -- nothing else moves (nothing served) | WORLD | IB-pr-299 (merged) | P38 |
 
 fanout: 1 of 1 chains, cap 8, reason: one open cell; worker 0.9.0_WK_IRPT_BCKEND~106 in its own worktree.
+
+
+## 31. ROUND 39, WORKSTREAM ~P (2026-10-03 ~06:1xZ, issuer 2.0.0_SA_COO~P, inside its decomposition)
+
+IB-pr-302 (merged @7d02c6fe8b) landed the Enforcer half of batch 205's route-based export, and filed two rows naming this seat:
+- W105-S1: the edge's render branch admits no reporting path.
+- W105-S2: the reporting-read function has no render-grant wiring.
+Both fail closed. One cell closes both. GATE (x) puts it in ROUND 39 (row S267).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-304` | P-6 export end to end: the edge admits the reporting SERIES path for a render token (manifest and summary not); reporting-read gets IRPT_EVIDENCE_BUCKET, a GetObject on the render-grant objects only, and `_render_identity/grant.py` + `report_owner.py` in its package (nothing served) | WORLD | IB-pr-302 (merged) | P39 |
+
+After this cell, P-2's window carries:
+- the gold, publish and read deploys;
+- the edge publish;
+- the export deploy;
+- ~D's held branch;
+- P-6's retirement of PATH A for 49 Financial.
+All are under one never-widen packet with one rollback. IB-pr-302's other notes ride the window as its legs: the export needs the
+portal origin reachable and `IRPT_EXPORT_RENDER=on` for the submit's mint.
+
+fanout: 1 of 1 chains, cap 8, reason: one open cell; worker 0.9.0_WK_IRPT_BCKEND~107 in its own worktree.
