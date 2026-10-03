@@ -35,8 +35,12 @@ CTO msg 104495 measured the same). The Investor Reporting readers were on PROD v
   names the directory runner's bundle (item 3) and the re-mint (item 2); the lines come off under a SERVE-RELEASE-ACK commit
   citing this half.
 - **103981** (the four Cottonwood MDPF builders and `rebalancer_schemas.py`): their upload moves the EC2 mdpf-daily-runner's
-  stage 6d (a dormant second writer). Released when 4.0.0_SA_CRO's Cottonwood custom + SMA act names them in its rollback
-  (prior S3 versions) or lands them itself -- that act's state is to be read before signing.
+  stage 6d (a dormant second writer). READ 01:5xZ: 4.0.0_SA_CRO's act (`mdpf-gold-cottonwood-custom-sma-20261001`) is CLOSED
+  (2026-10-01 22:11Z, 6 of 6 legs) and served through `mdpf-gold-lambda` (e20899bce7), NOT the EC2 runner's
+  `opal-data-mdpf/code/scripts/` copies, so stage 6d still runs the prior bytes. The irpt bundles carry the same four files as
+  members, and the bundle guard refuses a mint while a member is held, so the re-mint needs the hold lifted -- and lifting it
+  lets the next push move stage 6d. Condition for release: 4.0.0_SA_CRO's half names that stage-6d move with each file's
+  prior S3 VersionId (or the four ship in the bundles only, if the deploy tool can mint without the loose upload).
 
 ## Owed before signing (measured, not inferred)
 
