@@ -1289,3 +1289,32 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "ARMED: the served BD platinum (firm mix, client and account AUA) reads $78.5M low from 05:35Z. Disarm owner 2.0.0_SA_COO~M, as the holder of the BD gold thread and S9's precedent. Either restore the 09-30 served versions under a never-widen sign-off, or fix and re-run before the firm reads it; and say whether Saturday's 23:00Z fire (bd-gold-nightly-fallback, MON-SAT) will repeat it. The pipeline's DS owner is named by rule 13."
 }
 ```
+
+## MDPF_SECCLASS-S19 -- why 10-01 dropped the 335 (row S18's cause, read from the two runs' logs): the open-account confirmation never runs
+
+```json
+{
+  "id": "MDPF_SECCLASS-S19",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-03T07:25:00Z",
+  "one_line": "A_03.positions_cube fills a backfill-only account only to its last transaction date unless silver/allocations/<max trade date>.parquet confirms it open, and those allocation files exist only weekly (latest 2026-09-25), so the confirmation returned 0 in both the 10-02 23:00Z and the 10-03 04:00Z runs. When a partial 10-01 delivery (3,327 accounts) moved the global end date from 09-30 to 10-01, backfill-only open accounts whose last transaction was on or before 09-30 stopped at 09-30, left the 10-01 cube, and synthetic_correction zeroed their AUA.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "run log gold_incremental_2026-10-03_20261003_060352.log (the 04:00Z run's section): '6,519 transactions across 3,327 accounts'; A_03 'Accounts with daily export data (active): 6,604', 'Accounts backfill-only, confirmed open by alloc: 0', 'Accounts backfill-only (capped): 4,467 -> fill to last txn date'",
+      "run log gold_incremental_2026-10-03_20261003_010843.log (the 23:00Z run's section): 'Global end date: 2026-10-02 (tx_max: 2026-09-30 ...)', 'WARN: allocations/2026-09-30.parquet not available -- allocation signals unavailable', confirmed open by alloc 0, capped 4,457, forward-fill target 2026-09-30",
+      "data/black_diamond/scripts/gold/A_03.positions_cube.py:1491-1497 (Step 2b reads silver/allocations/<unit_events max trade date>), :1337-1380 (_compute_account_end_dates caps backfill-only accounts not confirmed open), :1545 (global_end_date = max trade date)",
+      "s3 opal-data-bd silver/allocations/: 133 objects, weekly Friday files, newest 2026-09-25.parquet (2026-09-27T00:14:56Z)",
+      "both runs: '[RPS injection] Loaded schwab/silver/rps/date=20260723' -- the RPS authority partition is July 23's"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row S18 / CTO batch 213 item 2: an omitted account is absent, never $0; the BD gold run never publishes an as_of whose positions delivery is incomplete.",
+  "world_is": "The liveness check that would keep open accounts on the end date reads a file that exists one day in five, so it is a no-op on every weekday; the end date then follows the latest partial delivery, and every backfill-only open account whose last trade predates it drops out and is zeroed. INFERRED, to verify against the cube: the 335 are such accounts (last transaction on or before 09-30).",
+  "notes": "Disarmed by the S18 restore (ledger secclass-s18-restore-0930-m-20261003) and the fire hold (both gold rules DISABLED 07:17Z, batch 219). The class cell (batch 213 item 2) is the remedy: refuse an as_of with an open, previously held, unclosed account absent from the new cube -- and the allocation read should use the latest allocation file at or before the date, not only that exact date. Separately: the RPS partition is July's (row to follow if it matters for the cell)."
+}
+```
