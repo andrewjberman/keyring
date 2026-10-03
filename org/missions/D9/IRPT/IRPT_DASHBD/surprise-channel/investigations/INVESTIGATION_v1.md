@@ -1128,3 +1128,83 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "notes": "Owner: 2.0.0_SA_COO~P (the classification table is 4.0.0_SA_CRO's file, not edited). One day, one account in the sample."
 }
 ```
+
+## IRPT_DASHBD-W2-S1 -- TO-DB-b-15: under the equity basis 4 of 14 pairs stay beyond 0.35 pp, and 2 of them (0076459710 08-11 and 08-21) are NEW or WORSE than round 4 -- Black Diamond's own accrual and its fee treatment, both outside Opal's figure by ruling
+
+```json
+{
+  "id": "IRPT_DASHBD-W2-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2",
+  "surfaced_at": "2026-10-03T01:40Z",
+  "one_line": "TO-DB-b-15: under the equity basis 4 of 14 pairs stay beyond 0.35 pp, and 2 of them (0076459710 08-11 and 08-21) are NEW or WORSE than round 4 -- Black Diamond's own accrual and its fee treatment, both outside Opal's figure by ruling",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order expects the equity basis to bring the pairs to the tolerance, with Black Diamond's accrual stated per pair (batch 193); a pair beyond 0.35 pp carries a measured reason.",
+  "world_is": "MEASURED over all 14 pairs, method_version 2: 10 within, 4 beyond. Beyond: 0027265115 06-25..07-06 0.4738 pp (S22; the 4,429.53 MARGIN INT ADJ credit, batch 195 RETURN; 0.0044 pp if that credit were a flow); 0076459710 08-11..08-19 0.4998 pp (round 4: 0.3307) and 0076459710 08-21..09-09 0.4608 pp (round 4: 0.0076): Black Diamond's value = equity + its accrual to the cent at 28 of 28 endpoints, its accrual moved +6,022.40 then -5,766.11, which alone is 0.4999 pp and 0.4501 pp of its beginning value, leaving 0.0001 pp and 0.0107 pp; the two windows mirror each other (receipt booked in the second); 0084073310 03-20..08-04 0.4045 pp (round 4: 0.2606): Black Diamond's return equals ending/beginning value - 1 (0.239661) so its 3,020.96 fee stays inside its return (0.3961 pp of beginning value) while Opal is gross of fee. Equity moved the largest round-4 pairs to 0.0264 pp (0084073310 08-21) and 0.0493 pp (0027265115 04-09), max abs diff 1.2130 -> 0.4998 pp. Opal's window fee flow for 0084073310 was inferred from the return, not read as a flow.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~2/TIEOUT_49F_BLACKDIAMOND_R8.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~2/OPAL_REMEASURE_FOURTEEN_R8.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~1/RAW_BD_PERIOD_0076459710.sanitised.json.gz dateRangePoints[1],[2]"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner: 1.0.0_SA_CTO at the round-8 analysis (whether the tolerance is to be read on an accrual-adjusted or fee-adjusted Black Diamond figure, or the 0.35 pp bar stands with these reasons). Nothing applied to the producer for this; the ruling stated Black Diamond's accrual stays outside Opal's figure and Opal is gross of fee by C-FEERAIL."
+}
+```
+
+## IRPT_DASHBD-W2-S2 -- TO-DB-b-15: the one-rule proof needed a definition of 'margin_balance 0 that day' (the daily row also reads the prior day), and a null margin_balance makes the value ABSENT; 0 nulls exist in 3,230,967 history rows
+
+```json
+{
+  "id": "IRPT_DASHBD-W2-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2",
+  "surfaced_at": "2026-10-03T01:40Z",
+  "one_line": "TO-DB-b-15: the one-rule proof needed a definition of 'margin_balance 0 that day' (the daily row also reads the prior day), and a null margin_balance makes the value ABSENT; 0 nulls exist in 3,230,967 history rows",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Every account whose margin_balance is 0 that day computes identical rows apart from method_version; a null margin_balance is never silently zero, counted, and a row is filed if any exist.",
+  "world_is": "MEASURED on 2026-10-01 over the 6,861 rows both versions emit (base-commit producer and the worktree producer on the same cached balance bytes): 6,788 accounts have margin_balance exactly 0 on 10-01 AND on the prior trading day 09-30 -- 0 of 6,788 rows changed apart from method_version. 28 accounts have margin 0 on 10-01 but nonzero on 09-30; all 28 rows change, correctly, because the daily return's base V(t-1) is the prior day's equity. 45 rows with nonzero margin all change. The record's zero_margin_accounts is the 6,788 (zero on both inputs of the row). Null margin_balance: 0 rows on 2026-10-01 and 0 of 3,230,967 rows over 563 partitions (2024-07-08..2026-10-01); null net_mv_plus_cash also 0. The producer treats a null component as an ABSENT value (account-day left out of the value map, printed, next day's base absent -> NOT_MEASURABLE), never zero; no day is affected today. Row set: 2 accounts emit a row only under equity (inception moves earlier by a positive equity), 0 only under net_mv_plus_cash; positive population 6,685 -> 6,686 (0 positive-to-nonpositive, 1 nonpositive-to-positive); guard_state over the 6,861 common rows: GRADED_AGREED 6,635 -> 6,639, GRADED_DISAGREED 13 -> 9, GUARD_NOT_REACHED 184 -> 184, NOT_GRADED_OUTSIDE_DOMAIN 29 -> 29.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~2/POPULATION_EQUITY_R8.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~2/population_equity_r8.py",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~2/scan_balance_history_r8.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner: 2.0.0_SA_COO~P (reads the definition at the P-2 packet). The 'before' producer is git show 1ce7e8e9f0 of account_return_daily.py and sources.json, run unmodified apart from its path anchor."
+}
+```
+
+## IRPT_DASHBD-W2-S3 -- TO-DB-b-15: emit_method_row writes two more columns (value_basis, value_basis_ruling) that the dim_return_method contract does not yet carry, the same shape as row W1-S19
+
+```json
+{
+  "id": "IRPT_DASHBD-W2-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~2",
+  "surfaced_at": "2026-10-03T01:40Z",
+  "one_line": "TO-DB-b-15: emit_method_row writes two more columns (value_basis, value_basis_ruling) that the dim_return_method contract does not yet carry, the same shape as row W1-S19",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "emit_method_row records the new version and its basis, citing 1.0.0_SA_CTO RULINGS batch 193; the contract file is outside this order's paths.",
+  "world_is": "MEASURED: the row dict now carries value_basis ('EQUITY = net_mv_plus_cash + margin_balance') and value_basis_ruling ('1.0.0_SA_CTO RULINGS batch 193') beside the tolerance fields; org/standards/IRPT_DASHBD_DIM_RETURN_METHOD_CONTRACT.json lists neither column, so a landed method_version=2 row would add two columns to the table's parquet schema and change its schema_hash. The reporting gold handler does not call emit_method_row, so nothing is written until the issuer's method-row packet. Also for that packet: the publisher refuses a file of mixed method_version (publisher.py:173), so every landed gold day must be rewritten under version 2 before it is served.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py emit_method_row",
+      "org/standards/IRPT_DASHBD_DIM_RETURN_METHOD_CONTRACT.json columns"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner: 2.0.0_SA_COO~P: contract bump lands with the method-row packet, in the same commit as the W1-S19 columns."
+}
+```
