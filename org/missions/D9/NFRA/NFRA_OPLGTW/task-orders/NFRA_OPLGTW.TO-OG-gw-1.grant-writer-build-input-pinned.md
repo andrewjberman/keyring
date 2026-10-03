@@ -95,6 +95,7 @@ Rows: id `NFRA_OPLGTW-Z-W25-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~O
   measurement OG-tf-1 made.
 
 <status>pending</status>
+<status>complete</status>
 <round>15</round>
 <slot>~25</slot>
 <fabric>site-z</fabric>
