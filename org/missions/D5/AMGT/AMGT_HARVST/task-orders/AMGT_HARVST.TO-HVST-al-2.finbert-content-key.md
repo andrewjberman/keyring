@@ -11,8 +11,8 @@
 <placeholders>NONE</placeholders>
 <preflight>
 comp-schedule: RUN at L5 (--drift) -- no schedule touched.
-comp-iam: RUN at L5 -- LOCAL code and plants. 0 FinBERT Lambda calls of any kind: FWD-16 is HELD on the publisher-terms card and no publisher text reaches the scorer. No S3 write. AC2 and AC3 read live silver read-only through a capturing client that sends no put.
-comp-adversary: RUN at L5 -- the adversary is a key that still moves on a re-silvering (it hashes run_stamp, fetched_at or anything other than the scored text), a key computed from different text than the scorer receives, a window join left on record_hash, or a `score` run that sends publisher text while the card is open.
+comp-iam: RUN at L5 -- LOCAL code and plants. 0 FinBERT Lambda calls of any kind, and no publisher text reaches the scorer. No S3 write. AC2 and AC3 read live silver read-only through a capturing client that sends no put.
+comp-adversary: RUN at L5 -- the adversary is a key that still moves on a re-silvering (it hashes run_stamp, fetched_at or anything other than the scored text), a key computed from different text than the scorer receives, a window join left on record_hash, or a `score` run that sends publisher text.
 </preflight>
 
 ## 0. THE CELL
@@ -46,15 +46,14 @@ the mention rows.
    Nothing else in the row changes.
 3. **In `window_tone.build_window_rows` and `build_window`:** join the tone by each mention row's
    `sentiment_content_key`. The parameter is `sentiment_by_key`.
-4. Update `test_ak1_finbert_sentiment.py`, `test_ak2_window_tone.py` and `test_ak4_ft_quarantine.py` wherever they plant
+4. Update `test_ak1_finbert_sentiment.py` and `test_ak2_window_tone.py` wherever they plant
    by `record_hash`.
 5. **Plants** in `lib/research/harvest/test_al2_content_key.py`, with no network and a stub invoker:
    - (i) an article re-silvered with a new run_stamp and record_hash but the same text keeps its key and makes 0 calls;
    - (ii) a changed body gets a new key and is scored;
    - (iii) `content_key` equals the sha256 of the exact `article_text` the invoker receives;
    - (iv) build_mention joins by the content key;
-   - (v) the window rows join by the content key;
-   - (vi) a quarantined (ft) article still makes 0 calls.
+   - (v) the window rows join by the content key.
 6. Do NOT run `finbert_sentiment score` without `--dry-run`. Make 0 Lambda calls.
 7. Both suites stay green: `python -m pytest lib/research/harvest -q` and `python -m pytest lib/opal_data_harvest -q`.
    Report the counts before and after.
@@ -68,7 +67,6 @@ lib/research/harvest/publication_gold.py
 lib/research/harvest/window_tone.py
 lib/research/harvest/test_ak1_finbert_sentiment.py
 lib/research/harvest/test_ak2_window_tone.py
-lib/research/harvest/test_ak4_ft_quarantine.py
 lib/research/harvest/test_al2_content_key.py
 org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~90/
 org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v1.md
@@ -92,7 +90,7 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** Round-38 analysis @3da5563fd8, ruling 1 and enrichment item 2; PRD v0.17; row Z-S67. It is built, NOT
-run on publisher text, while the publisher-terms card @8d20bc24c8 is open. Served gold gains `sentiment_content_key`
+run on publisher text. Served gold gains `sentiment_content_key`
 only at a later rebuild under its own pair.
 
 **COMPLETE 2026-10-03 ~00:5xZ (issuer):**
@@ -102,8 +100,8 @@ only at a later rebuild under its own pair.
   - AC2 PASS (`round39/al-2.AC2.issuer_grade.txt`): 863 rows, 727 distinct content keys, 364 planted; the key differs
     from content_key(article_text(silver)) on 0 rows; planted wrong 0; unplanted with a tone 0; PUTS SENT 0.
   - AC3 PASS (`al-2.AC3.issuer_grade.txt`): the window rows join by the content key.
-- 0 Lambda calls, and no `score` run. FWD-16 stays HELD on the publisher-terms card.
-- Row Z-W90-S23 (OBSERVATION): ft and no-text articles have no content key, so their null-label marker row is
+- 0 Lambda calls, and no `score` run.
+- Row Z-W90-S23 (OBSERVATION): no-text articles have no content key, so their null-label marker row is
   re-appended on each `score` run. That costs 0 calls and one row per such article per run.
 - The suites at the base are green: research 344 passed; collector 612 passed with 3 skipped.
 

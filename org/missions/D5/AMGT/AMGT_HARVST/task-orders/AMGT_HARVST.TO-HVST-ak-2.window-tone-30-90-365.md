@@ -114,7 +114,7 @@ tone need per-ARTICLE labels. Keeping all three counts on one population (distin
 holds SAME GRAIN (taxonomy law ii). `articles_total` is reconciled against the `chatter_daily` window sum at the
 issuer's real run.
 
-The first served write is at the issuer's rebuild #6, after ak-1's corpus scoring.
+The first served write is at an issuer gold rebuild, after ak-1's corpus scoring.
 
 **COMPLETE 2026-10-02 ~20:1xZ (issuer):**
 - AC1 PASS: 9 passed. A mutant that counts neutrals as voters fails plants (i) and (vii).

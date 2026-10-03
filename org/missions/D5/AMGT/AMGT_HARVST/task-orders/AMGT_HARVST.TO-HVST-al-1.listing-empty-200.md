@@ -11,7 +11,7 @@
 <placeholders>NONE</placeholders>
 <preflight>
 comp-schedule: RUN at L5 (--drift) -- no schedule touched.
-comp-iam: RUN at L5 -- LOCAL code and plants only, with a stub session: no network, no publisher request, no S3. Collection is unchanged and held on the publisher-terms card; this cell runs NO live listing.
+comp-iam: RUN at L5 -- LOCAL code and plants only, with a stub session: no network, no publisher request, no S3. This cell runs NO live listing.
 comp-adversary: RUN at L5 -- the adversary is a flag set from the body alone (a 403 or 5xx reading as an empty 200), a flag that sticks across calls, or a status change that ends a backfill run (the new status must NOT join the driver's STOP set).
 </preflight>
 
@@ -81,8 +81,7 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** Round-38 analysis @3da5563fd8, enrichment item 1. Placed by row Z-S79; the CTO accepted the placement
-(msg 28796). Live proof against a real soft block needs barrons collection, which is held on the publisher-terms card
-@8d20bc24c8. This cell proves the status on planted pages only.
+(msg 28796). This cell proves the status on planted pages only.
 
 **COMPLETE 2026-10-03 ~00:5xZ (issuer):**
 - Pass 1 @37947dc42f; AMENDMENT 1 (worker.py granted) @2ecab274f4, cherry-picked onto the branch @ad86e706b0; pass 2

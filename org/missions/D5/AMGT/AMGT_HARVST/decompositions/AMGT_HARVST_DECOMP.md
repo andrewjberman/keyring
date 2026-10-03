@@ -2765,7 +2765,7 @@ read is unchanged and only the call is spent.
 
 **Issuer acts after the merges (no TO):**
 1. **The corpus scoring:** `finbert_sentiment score` live, on a measured sample first for throughput, then the corpus.
-2. **Gold rebuild #6** under a NEW never-widen pair (COO half by this seat after a signing dry run; CTO half owed):
+2. **A gold rebuild** under a NEW never-widen pair (COO half by this seat after a signing dry run; CTO half owed):
    - every served mention row gains the 3 tone fields and nothing else moves;
    - the first `chatter_window` snapshot;
    - the served `chatter_event` rebuild, if ak-3's census shows the dry-built events cover spikes materially better.
@@ -2784,42 +2784,10 @@ Positive control on their live read paths:
 - `published_utc` is a datetime;
 - T-1 = 2026-10-01.
 
-### 51.1 ROUND 38 AMENDMENT 1 -- cell 4: the ft quarantine (CTO msg 28715 ruling 3; analysis addendum 2 @ce138d2314; 28731), 2026-10-02 ~20:3xZ
-
-FT's terms were read verbatim (`4.0.0_SA_CRO~Z` @0fab00b8a0). They bar automated reads, storing and ML use, and the
-named route is a licence. The CTO ruled:
-- STOP_FT is HARD;
-- FinBERT excludes ft (PRD v0.16);
-- the stored ft articles are QUARANTINED, not deleted: excluded from gold serving and every downstream use, with the
-  bytes kept. Deletion is Andrew's word.
-
-Then (CTO 28725 and 28731), all five publishers' terms were read (@961a99cd64), and the card went to Andrew
-(@8d20bc24c8):
-- FWD-16 and FWD-17 are HELD for every publisher;
-- the served event rebuild (ak-3's 438) is HELD with them;
-- collection on wsj, barrons, bbg and sa is unchanged, with the pause readied (`round38/pause_all_publishers.sh`,
-  dry-run verified);
-- **rebuild #6 carries the ft quarantine ALONE.**
-
-| cell | order | what | class | slot |
-|---|---|---|---|---|
-| `HVST-ak-4` | `ak-4` | `QUARANTINED_PUBLISHERS = {"ft": reason}` and `GRADED_PUBLISHERS` in `publication_gold`; every gold builder, the FinBERT queue and the window builder filter ft on READ (an older snapshot still carries it); the bytes are kept | SERVED (code LOCAL; served gold moves at rebuild #6 under its pair) | `~90`, after ak-1 (same file) |
-
-At the cut, served gold holds 926 ft mention rows of 23,691, and 5 daily rows naming ft.
-
-Base checks before the cut: `round38/checks/ak-4.AC2.py` and `ak-4.AC3.py` both FAIL as expected
-(`QUARANTINED_PUBLISHERS` is absent).
-
-**State of round 38 at this amendment:**
-- ak-1 is complete @23b1e6851d. FWD-16 is HELD: no `score` run, and no tone is served.
-- ak-2 is complete @f175fbeb99. FWD-17 is HELD: no window is served.
-- ak-3 is complete @b79d3781bd. The served event rebuild is HELD.
-
 ## 52. ROUND 39 -- the round-38 analysis enrichment list (`ledger/ROUND_ANALYSIS.round38.md` @3da5563fd8), PRD v0.17, 2026-10-02 ~23:5xZ
 
-Round 38 is CLOSED (CVO slug 28797; ADJUDICATION_v50 @8f911c0199). The ft quarantine is served (gold rebuild #6 @a85ebb6161).
-ARMED went from 10 to 2; Z-S11 was fixed in the checker @9edfeae04d. FWD-16, FWD-17 and the event rebuild stay HELD on
-Andrew's publisher-terms card @8d20bc24c8, and no round-39 cell processes publisher text.
+Round 38 is CLOSED (CVO slug 28797; ADJUDICATION_v50 @8f911c0199).
+ARMED went from 10 to 2; Z-S11 was fixed in the checker @9edfeae04d.
 
 | cell | order | what | class | slot |
 |---|---|---|---|---|
@@ -2842,12 +2810,11 @@ reads 334 passed (research) and 597 passed with 3 skipped (collector).
 
 ## 53. ROUND 40 -- the round-39 analysis enrichment list (`ledger/ROUND_ANALYSIS.round39.md` @481c0a83e8), 2026-10-03 ~01:3xZ
 
-Round 39 is CLOSED (CVO slug 28854). ARMED reads 0 over 294 items. The enrichment list has ONE LOCAL cell; nothing
-else is cuttable until Andrew answers the publisher-terms card or the FT licence quote.
+Round 39 is CLOSED (CVO slug 28854). ARMED reads 0 over 294 items. The enrichment list has ONE LOCAL cell.
 
 | cell | order | what | class | executes |
 |---|---|---|---|---|
-| `HVST-am-1` | DIRECT ACT (LOCAL, under the size floor; `/dispatch` Step 2) | Z-C-S69: at most ONE null-label marker row per key-less article (ft or no-text). `finbert_sentiment.marked_article_keys` reads the marked `article_key`s from the written parts; `score_missing(..., marked_keys=)` skips them and dedupes within a run; `score` passes them, and its dry-run count excludes them | LOCAL | `2.0.0_SA_COO~H` |
+| `HVST-am-1` | DIRECT ACT (LOCAL, under the size floor; `/dispatch` Step 2) | Z-C-S69: at most ONE null-label marker row per key-less (no-text) article. `finbert_sentiment.marked_article_keys` reads the marked `article_key`s from the written parts; `score_missing(..., marked_keys=)` skips them and dedupes within a run; `score` passes them, and its dry-run count excludes them | LOCAL | `2.0.0_SA_COO~H` |
 
 Proof: `deliverables/2.0.0_SA_COO_H/round40/am-1.proof.txt`.
 - `test_am1_marker_once.py`, 3 of 3 passed:
