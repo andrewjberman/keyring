@@ -7993,3 +7993,61 @@ issuer measures its delta at the drain. No cell adds new processing of publisher
 it and reads the census after the act. r64_served gains c14 C4 (the encoded key reaches every route) and c16 (the planted fault). Both
 were dry-run at the base: C4 serves 200 with security_key null on 4 of 4 routes (the normal-key control serves it), and c16's fault
 escapes with 0 AMGT_500 lines. The orders stay at 7.
+
+
+## 73. ROUND 65 -- FWD-38 (b) TITLE CASE AT THE PRODUCER, ITS CODE-ONLY REDEPLOY. Two cells, two orders
+
+**Cut by `2.0.0_SA_COO~Z`**. Input: the CTO's round-64 analysis @504827836c (msg 28890), ruling 1 and the enrichment list (section 3:
+"1. The FWD-38 (b) re-case cell ... then its deploy under a never-widen pair ... 2. Nothing else is cuttable."). Rows: Z-S340 (the
+population census), Z-W212-S1 (the model-block fallback is not re-cased). PRD v0.35 ADMITTED (`prd-signoff.py status`, ratified-text
+SIGNED current).
+
+**Issuer rulings at the cut:**
+- R1. **The seam is `scoped_amgt._clean_display_name`.** Every served display-name chain ends there: `monthly_chatter._display_names`
+  (classification, crosswalk, model block), `_overlay_name`, `_with_display_name`. The re-case lives there, so every route and face
+  gets it at once. A name that already carries lower case is served as it is; only an all-caps name is re-cased.
+- R2. **The acronym list is DECLARED in code** as `scoped_amgt.DISPLAY_NAME_ACRONYMS`, with its source printed from
+  `scoped_amgt.DISPLAY_NAME_ACRONYMS_SOURCE`. The check reads both names.
+- R3. **The share-class remnant ("SHOPIFY INC - CLASS") is in the same cell.** It is FWD-38 (b)'s "no share-class code" clause, which
+  Z-S340 found: the an-3 rule matches "Class" case-sensitively, so an all-caps "CLASS A" loses only the "A".
+- R4. **A cut name takes a full name the estate already holds, with the source cited** (CTO ruling 1). A source the function already
+  reads comes first; otherwise a declared map in the module, each entry citing its source. No guess, no vendor call. The residue is
+  listed and rides Andrew's Bloomberg card (call 3).
+
+### 73a. MEASUREMENTS (`round65/checks/r65_served.py --cell c17`, CLOUD ~17:0xZ; FAILS at the base, local and deployed KQSA62c3)
+
+- C1 breakout/price: 94 names, 60 all-caps (e.g. 'SYNOPSYS INC', 'CADENCE DESIGN SYS INC', 'TOKYO ELECTRON LTD', 'SHOPIFY INC -
+  CLASS'). collected/chatter: 95 names, 61 all-caps (e.g. 'AIA GROUP LTD', 'HON HAI PRECISION INDUSTRY').
+- C2: both routes serve 'MITSUBISHI UFJ FINANCIAL GRO'.
+- Declared acronyms: 0 (the constant does not exist yet).
+
+### 73b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-ao-1` | FWD-38 (b): every served display name re-cased at the producer (R1), legal-form suffixes in conventional case, the declared acronym list (R2), the share-class remnant (R3), the cut names (R4) | `0.9.0_WK_AMGT_RESAPP~216` | worker | LOCAL | `lib/research/api/` |
+| `AMGT-ao-2` | the code redeploy carrying ao-1 (graded c17 + c12 on deployed) | `0.7.0_AE_CloudOps~A` | seat order, a pair | WORLD | Lambda artifact, ledger |
+
+### 73c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** The domain is ruling 1's clauses plus Z-S340's two failure modes (the remnant, the cut). Both serve FWD-38 (b), so one
+  cell holds them; the served move is ao-2.
+- **(ii) Same grain.** One served field, `display_name`, on every route.
+- **(iii) Intent.** One axis: how a name reads.
+- **(iv) What a cell does NOT move:** ao-1 changes no `name`, no `name_source`, no `display_name_source`, no row, rank, score or key; a
+  mixed-case name is untouched. ao-2 changes code only; memory stays 1769.
+
+### 73d. EDGES AND FAN-OUT
+
+```
+ao-1 --> ao-2 (one redeploy, one pair, graded c17 + c12 on deployed)
+fanout:
+  cap: 8
+  orders_total: 2
+  chains_total: 1
+  wave_0: [ao-1 ~216]
+  wave_1: [ao-2 0.7.0_AE_CloudOps~A]   # after the drain and its pair
+  no_s3_deletes: true
+  egress: none
+  portal_ref: a730d8ce
+```
