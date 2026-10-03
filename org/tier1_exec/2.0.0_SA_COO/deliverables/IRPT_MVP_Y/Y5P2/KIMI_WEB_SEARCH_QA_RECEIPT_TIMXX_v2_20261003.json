@@ -1,0 +1,46 @@
+{
+ "at": "2026-10-03T06:42:28Z",
+ "max_rounds": 4,
+ "model": "kimi-k3",
+ "parse_failure": "KIMI_MALFORMED",
+ "parsed": null,
+ "rounds": [
+  {
+   "elapsed_seconds": 8.3,
+   "error": null,
+   "finish_reason": "tool_calls",
+   "has_reasoning_content": false,
+   "round": 1,
+   "tool_call_names": [
+    "$web_search"
+   ],
+   "usage": {
+    "completion_tokens": 1,
+    "prompt_tokens": 234,
+    "total_tokens": 235
+   }
+  },
+  {
+   "elapsed_seconds": 2.9,
+   "error": "KIMI_HTTP 400 {\"error\":{\"message\":\"Invalid request: tokenization failed\",\"type\":\"invalid_request_error\"}}",
+   "finish_reason": null,
+   "has_reasoning_content": false,
+   "round": 2,
+   "tool_call_names": [],
+   "usage": {}
+  }
+ ],
+ "sends": 2,
+ "symbol": "TIMXX",
+ "tool": {
+  "function": {
+   "name": "$web_search"
+  },
+  "type": "builtin_function"
+ },
+ "transcript_sha256": "637967a1a406aa594269087e38e5c905a6ab382002364c962d0d31d4d4e56a3e",
+ "variant": {
+  "QA_ASSISTANT_CONTENT": "as-returned",
+  "QA_TOOL_NAME": "0"
+ }
+}

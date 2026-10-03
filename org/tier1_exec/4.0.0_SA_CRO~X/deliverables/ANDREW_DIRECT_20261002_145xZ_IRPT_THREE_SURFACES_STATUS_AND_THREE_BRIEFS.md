@@ -89,3 +89,26 @@ Verbatim:
   zip; an openpyxl cell diff against the easy file prints exactly one difference, `A2 AAPL -> APPL`. `APPL` is the
   common misspelling of Apple's ticker and is not a listed ticker, so the typo gate has one correct answer. Andrew named no
   variant for this case; the Analysis brief proposes variant 1, as for Case D.
+
+## Addendum 3 -- Andrew-direct 2026-10-02 ~18:1xZ, same channel: the three open calls ruled
+
+Asked by this seat's `/open-calls` at ~17:4xZ (calls 1-3: precompute every 49 Financial account; YCharts calls for the
+five test runs; gross vs net). Verbatim:
+
+> 1.) a, approved. 2.) Yes one at a time with queue empty. We are also going to need to work on that timing, optimizing
+> for more like a 90s end to end operation, or frankly as fast as we can get it, but that comes later once we have a
+> tight iterative cycle structure. 3.) gross fees for now, but we will need to assess net fee ops per custodian/vendor
+> as we proceed through the other firms (since we will be relying on Orion for inflection + potentialy getting full raw
+> custodial data from Cottonwood but otherwise will have to be fucking around in black diamond.).
+
+- **R1 (call 1, option a):** the precomputed Performance path is widened to EVERY 49 Financial account now, then
+  Inflection and Cottonwood as each firm's gold serves. This is the "deliberate act" that
+  `infra/aws/lambda/investor-reporting/reporting-gold/handler.py:18-19` waits for. Brief 1 outcomes P-1..P-3.
+- **R2 (call 2):** YES to the YCharts calls for the five Analysis test runs (cases A, B, C, D and the typo file), one at
+  a time, with the queue empty first. Brief 2 outcomes Y-1..Y-6.
+- **R2a (direction, not now):** a later target of about 90 seconds END TO END (submit to report; today 16.5-20 minutes),
+  "or frankly as fast as we can get it", taken up once a tight iterative cycle structure exists. Not an outcome of
+  this round.
+- **R3 (call 3, option a for now):** performance stays GROSS of fees, labelled so. Net-fee operations are assessed PER
+  CUSTODIAN/VENDOR firm by firm: Orion for Inflection; possibly full raw custodial data from Cottonwood; Black Diamond
+  otherwise (49 Financial). Not an outcome of this round; it is the fee rail's later scope.

@@ -3470,3 +3470,164 @@
   "notes": "Two ways out, neither taken here (batch 158 kept the pin as it is): derive the expected list from routes.json, as item 80 did for the counts; or IRPT_FNTEND names a consumer operation for the catalogue in routes.json (2.0.0_SA_COO~Y's lease holds that file) and the pin's list becomes empty. 1.0.0_SA_CTO to place."
 }
 ```
+
+## DSGN_IRPTV1-S54 -- items 87 and 88: the tests pass with the claim reverted
+
+```json
+{
+  "id": "DSGN_IRPTV1-S54",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-02T23:10:00Z",
+  "one_line": "Two FAST items' tests do not reach the line that carries the claim: with SecurityList.tsx:366-367's wiring reverted, item 87's iv-e-149 still passes 3 of 3; with ProspectComposer.tsx:244 sending [] instead of the picks, item 88's iv-e-150 still passes 5 of 5 (its arm e calls prepareProspectAnalysis directly). Both behaviours rest on the author's local runs.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's portal grade 2026-10-02 22:xZ (scratch worktree of origin/DEV fe461611): planted mutants MUT-87 (wiring at :366-367 reverted, helper kept) 3/3 pass; MUT-88 (:244 sends []) 5/5 pass; a scratch render with a stale account choice seeded shows the behaviour differs (rows vs 'No securities match these filters'), so the tests, not the code, are blind"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A FAST item's own test discriminates the claim it lands with (a test that passes on the reverted claim is not evidence for it).",
+  "world_is": "The helpers are tested; the component wiring and the submission payload are not. A regression in either would pass the suite and CI, which runs no unit tests.",
+  "notes": "INERT: the code on DEV is right by this seat's render. Owner 2.0.0_SA_COO~D: one assertion each through the component (SecurityList with a stale choice; ProspectComposer's generate payload)."
+}
+```
+
+## DSGN_IRPTV1-S55 -- items 89 and 90: the tests pass with the claim reverted (S54 class)
+
+```json
+{
+  "id": "DSGN_IRPTV1-S55",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-03T05:00:00Z",
+  "one_line": "Row S54's class recurs on items 89 and 90: with the composer's three call sites reverted, b66b6dac's tests still pass 16 of 16; 39aa21c2 has no test (41 of 41 pass across the 18 files that name AnalysisTab with it reverted); and with c32ef52a's re-post line mutated (withCorrections -> uploadAttempt) iv-e-153 still passes 4 of 4.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's portal grade 2026-10-03 03:5xZ-04:4xZ, scratch worktree of origin/DEV 84f2424f, removed after: NEG and MUT runs as stated; a scratch render shows 39aa21c2's behaviour differs (data-tenant-known yes vs no), so the code is right and the tests are blind"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A FAST item's own test discriminates the claim it lands with (row S54).",
+  "world_is": "The client half of item 89 is tested; the composer wiring (89 and its follow-up) and item 90's corrected re-post are not. A regression in any of them passes the suite, and CI runs no unit tests.",
+  "notes": "INERT (DEV only; b66b6dac and 39aa21c2 are on PROD 6169edd9). Owner 2.0.0_SA_COO~D: with S54, one assertion each through the component -- the composer's tenant on upload and submit, and the re-post payload carrying the corrections."
+}
+```
+
+## DSGN_IRPTV1-S56 -- F47-AC6 fails on DEV since b618efc9 (two PrintEntry sites the census cannot class)
+
+```json
+{
+  "id": "DSGN_IRPTV1-S56",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-03T12:35:00Z",
+  "one_line": "F47-AC6 has failed on portal DEV since b618efc9 (item 76 / row S47, 2026-10-02, on PROD 6169edd9): PrintEntry.tsx:83 and :162 are two sites its census cannot classify. The failure sits inside the suite's baseline failure count, so every later full-suite comparison (head vs reverted) has carried it as noise.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's portal grade 2026-10-03 ~10:5xZ-12:3xZ (scratch worktrees of origin/DEV, removed after): F47-AC6 fails at 46aeea17 and at each of the six pins through b0b3c524; first failing at b618efc9"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A FAST pin adds no failing test; the F47 census classifies every print entry site.",
+  "world_is": "Since item 76 the census has seen two print sites it has no class for. Whether they are a new legitimate site class or an untracked fetch is not read.",
+  "notes": "INERT (a test's census, not a served defect, as far as read). Owner 2.0.0_SA_COO~D: classify the two PrintEntry sites in the F47 census, or move them to a class it knows."
+}
+```
+
+## DSGN_IRPTV1-S57 -- F47-AC6 passes again: the PrintEntry sites classified and measured (disarms S56)
+
+```json
+{
+  "id": "DSGN_IRPTV1-S57",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-10-03T15:20:00Z",
+  "one_line": "F47-AC6 passes on portal DEV again: the two PrintEntry.tsx sites b618efc9 added are classified in the census (the import NOT A WRITE; analysisChromeFromStatus's seed OVERWRITTEN), and the overwrite is measured, not asserted.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal 2da1eaaf (origin DEV, ls-remote 15:09Z): fe-s-47/no-status-reason.test.ts gains two RULES entries for render/PrintEntry.tsx and OVERWRITE (3): analysisChromeFromStatus on a status with no state returns UNCERTAIN with NO_STATUS_REASON, on READY returns READY; a failed measure is a census break",
+      "fe-s-47 at 2da1eaaf, before and after the commit: 8 pass 0 fail; F47-AC6 census breaks 0; 9 of 9 reaches carry their reason. The seven committed-blob suites: 45 pass 0 fail"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarms DSGN_IRPTV1-S56: the two sites are a known class (an import; a seed the carry seam overwrites), measured on the committed bytes. This seat's earlier baseline comparison had filed the failure as pre-existing; it was this seat's own (b618efc9).",
+  "spec_asserts": "Row S56: the F47 census classifies every print entry site.",
+  "world_is": "Holds at DEV 2da1eaaf. Not on PROD (6169edd9 carries b618efc9 without the census fix; a test-only change).",
+  "notes": "Found by re-measuring this seat's committed-blob suites after commit (DSGN_REBRND row S13's lesson); DSGN_REBRND row S15 records the same pass."
+}
+```
+
+## DSGN_IRPTV1-S58 -- items 87 and 88 tested through the component (disarms S54)
+
+```json
+{
+  "id": "DSGN_IRPTV1-S58",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-10-03T15:35:00Z",
+  "one_line": "Items 87 and 88 now have a test through the component that fails on the CVO's mutant: SecurityList with a stale stored Account choice (iv-e-149.component-wiring) and ProspectComposer's Generate payload (iv-e-150.component-payload).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal 7e7f9aa2 (origin DEV, ls-remote 15:34Z): the two test files; React's useState (seeding the stored choices) and the JSX runtime (keeping the Generate onClick) wrapped by bun mock.module and restored in afterAll",
+      "negative controls, applied and restored: `accountFilter = ownAccountFilter` makes the iv-e-149 component test fail (0 rows, 'No securities match these filters.'); ProspectComposer sending [] makes the iv-e-150 component test fail (variant overview, comparison_keys []) while the existing iv-e-150 still passes 5 of 5",
+      "36 tests in 13 related files pass in one run; the two tests pass again after the commit"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarms DSGN_IRPTV1-S54: each item's own test now discriminates its claim through the component, measured by the mutant the row named.",
+  "spec_asserts": "Row S54: a FAST item's own test discriminates the claim it lands with.",
+  "world_is": "Holds at DEV 7e7f9aa2. Row S55 (items 89 and 90) is the same class and is this seat's next item.",
+  "notes": "The SecurityList fixture carries one account, so the control proves the seed reaches the component (the offered account shows chosen) rather than a narrowing."
+}
+```
+
+## DSGN_IRPTV1-S59 -- items 89 and 90 tested through the components (disarms S55)
+
+```json
+{
+  "id": "DSGN_IRPTV1-S59",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-10-03T15:56:00Z",
+  "one_line": "Items 89 and 90 now have a test through the components that fails on each mutant the row named: the composer's tenant on upload and on submit, AnalysisTab handing the composer the selected scope's tenant, and the proxy re-post carrying the corrections (s55.component-wiring).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal 525c9404 (origin DEV, ls-remote 15:56Z): s55.component-wiring.test.tsx renders ProspectComposer and AnalysisTab; the JSX runtime (button handlers, the composer's props) and React's useState (the earlier attempt and the typed proxy, seeded by call position behind an initial-value guard) wrapped by bun mock.module and restored in afterAll",
+      "negative controls, applied and restored (git diff empty after): uploadAnalysisInput(body) fails arm (a); submitAnalysisRequest(body) fails arm (b); scopeRef.selectedTenant at both AnalysisTab sites fails arm (c); the re-post sending uploadAttempt fails arm (d)",
+      "dsgn-irptv1 + mvp-upload suites: 278 pass / 9 fail with the file, 277 / 9 without it, the same nine VERDICT failures"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarms DSGN_IRPTV1-S55: the composer's tenant on upload and submit, the selected scope's tenant from AnalysisTab, and the re-post payload each have an assertion through the component, measured by the mutant the row named.",
+  "spec_asserts": "Row S55: a FAST item's own test discriminates the claim it lands with.",
+  "world_is": "Holds at DEV 525c9404. b66b6dac's third site, the catalogue read's tenant, is not covered: it runs in a useEffect, which a static render does not run.",
+  "notes": "The nine pre-existing failures in those two directories are not this row's: ModelPortfolios ARM3/ARM4 diff arms (four suites), GENERATE-JOURNEY, WIRE-REGEN, BRIDGE-DROPPED, COLOUR-BY-CODE and PERFORMANCE-FINISHED-ANSWER; the shared portal tree also carries uncommitted wire-contract edits that are not this seat's."
+}
+```

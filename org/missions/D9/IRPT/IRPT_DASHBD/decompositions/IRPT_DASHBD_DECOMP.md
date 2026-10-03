@@ -171,3 +171,155 @@ like-day pairs (PRD v0.6 ruling 23).
 
 fanout: 1 of 1 chains, cap 8, reason: one worktree (disk 7.3 GB free); DB-b-10 queues on the shared worktree DIR behind
 IRPT_BCKEND TO-IB-pr-297 (slot 101), then runs on slot ~1.
+
+
+## 5. ROUND 5, WORKSTREAM B (2026-10-02 ~18:3xZ, issuer 2.0.0_SA_COO~P, on CTO RULINGS batch 178 @2a537cbad4, msg 104324)
+
+Andrew's IR fold-in (14:5xZ; `CTO_FOLD_IN_IRPT_THREE_BRIEFS_20261002.md` section 1) is this round's enrichment list for IRPT_DASHBD:
+P-2 (every 49 Financial account) and P-3 (one per-client summary), with P-1 (under 2 s, a window change computes nothing on the
+backend) as the acceptance. P-4 is IRPT_BCKEND's IB-pr-298. P-6 (retire PATH A for 49 Financial) lands in the same window as P-2's
+served move. P-5 waits on Andrew's population vendor word. Enrichments only; no ENDPOINT change.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-11` | P-2: the 49 Financial holdings population declared as the reporting gold's account set; the producer and publisher MEASURED at that scale against the 900 s Lambda limit; the backfill planned; the widening built (nothing served) | WORLD (two served handlers' source; no deploy) | none | G |
+| `DB-b-12` | P-3: `publisher.build_client_summary` -- one summary per directory client (YTD, QTD, 1Y, 3Y, SI precomputed; series name per account), its address from `opal_naming.address()`, a local dry run (nothing served) | WORLD (the served publisher's module; no deploy) | none | H |
+
+Then, the issuer's acts: the backfill and deploy packet for P-2 (both halves), the summary's contract and read route for P-3 (to
+1.0.0_SA_CTO), ~D's page, P-6's retirement in the same window, and the P-1 walk.
+
+fanout: 1 of 2 chains, cap 8, reason: one worktree (disk 7.0 GB free); DB-b-11 then DB-b-12 on slot ~1, after IRPT_BCKEND IB-pr-298.
+
+
+## 6. ROUND 6, WORKSTREAM B (2026-10-02 ~19:2xZ, issuer 2.0.0_SA_COO~P, on CTO RULINGS batch 181 @57e16650b5 and batch 182 @ff0acc0bc5)
+
+FWD-8's tolerance is ruled at 0.35 pp per like-day window. Of round 4's 14 pairs, 11 are within it and 3 are beyond. FWD-8 grades
+REALIZED once each is dispositioned: S22 (0027265115 06-25, the short-account income sign) is fixed and re-measured, and the other
+two carry a stated reason. The tolerance is written into `dim_return_method` by its producer. The ruling says "the next round-4
+cell"; GATE (x) refuses a new file into rounds 4 and 5, so this is ROUND 6 (IRPT_BCKEND row S267).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-13` | FWD-8: the producer books a short's paid dividend as negative income (S22); the two other pairs' reasons measured; `emit_method_row` carries tieout_tolerance 0.0035 citing batch 181; re-measured from the stored BD responses with 0 vendor calls (nothing served) | WORLD (the reporting gold producer's source; no deploy) | DB-b-10 (merged) | I |
+
+Then the issuer's acts: re-pin and redeploy the reporting gold with the fix, rewrite the affected account-days, and the method row's
+served write, under one packet with both halves. Then FWD-8 goes back to 3.0.0_SA_CVO.
+
+fanout: 1 of 1 chains, cap 8, reason: one worktree (disk 7.6 GB free); queued on slot ~1 after DB-b-11 and DB-b-12.
+
+
+## 7. ROUND 7, WORKSTREAM B (2026-10-02 ~23:0xZ, issuer 2.0.0_SA_COO~P, inside its decomposition)
+
+DB-b-11 (merged @0637b0787d) measured P-2 and filed three rows naming this seat. W1-S14: the landed history can never gain the
+population without a backfill mode. W1-S12: the publisher's newest-partition account set drops 885 population accounts. W1-S13: the
+shard fan-out needs the publish role to invoke its own function. One build cell; ROUND 7 under GATE (x) (IRPT_BCKEND row S267).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-14` | P-2: the reporting gold's guarded backfill mode (an explicit event, chunk <= 25 trading days, refuses otherwise); the publisher's account UNION over the gold's history; `lambda:InvokeFunction` on the publish function itself (nothing served) | WORLD (two served handlers' source and a role policy's text; no deploy) | DB-b-13 (the S22 producer fix the backfill must run) | G |
+
+Then P-2's packet (both halves): the producer re-pin with S22 and the method row, the gold and publisher deploys, the 23-chunk
+backfill, the shard fan-out, the summary's contract and route (1.0.0_SA_CTO), P-6's retirement of 49 Financial PATH A in the same
+window, and the P-1 walk with 2.0.0_SA_COO~D.
+
+fanout: 1 of 1 chains, cap 8, reason: one worktree; queued on slot ~1 after DB-b-13.
+
+
+## 8. ROUND 8, WORKSTREAM B (2026-10-03 ~00:1xZ, issuer 2.0.0_SA_COO~P, on CTO RULINGS batch 193 @ff04f71e47, msg 104467)
+
+Batch 193 answers row W1-S18. C-VALUE is the account's EQUITY, `net_mv_plus_cash + margin_balance`, one rule for every account, as a
+new `method_version`. It re-measures all 14 pairs, the population figure and the guard, and re-reads S22. FWD-8 is graded on the
+re-measured pairs at 0.35 pp. GATE (x) refuses a new file into round 7, so this is ROUND 8 (IRPT_BCKEND row S267).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-15` | FWD-8: the source declaration's value becomes equity; `METHOD_VERSION` is raised and its basis written by `emit_method_row`; all 14 pairs re-measured with Black Diamond's accrual stated, 0 vendor calls; S22 DISARMED or RESTATED; the population figure (6,685 of 7,570 positive on 2026-10-01) and C-GUARD's census re-measured; accounts with zero margin are unmoved (nothing served) | WORLD (the reporting gold producer's source; no deploy) | DB-b-13 (merged @9a169d31ad) | H |
+
+Its write surface (the producer, its sources.json and a new test) is disjoint from DB-b-14's (the two reporting Lambdas and the
+publish role). DB-b-14 was terminal at this issuance (@a8da9ba299), so DB-b-15 takes the one worktree after DB-b-14's drain.
+
+Then the P-2 packet carries the new `method_version` with S22 and the backfill. The publisher refuses a file of mixed
+`method_version` (`publisher.py:173`), so every landed day is rewritten under the new version before the first publish after the
+deploy. The method row's two new columns need the `dim_return_method` contract's schema bump (row W1-S19). Row W1-S20, the
+margin-interest adjustment credit's classification, is RULED by CTO batch 195 (@8dcb24b212): it is RETURN, so the 06-25 pair carries a
+stated non-defect reason, and S20 is disarmed.
+
+**PARKED CELL, P-5's tie-out (ANDREW-DIRECT ~00:4xZ 2026-10-03, card 2, record @fec2dc7266, relayed by 1.0.0_SA_CTO msg 104484).**
+ONE Black Diamond performance pull for the 49 Financial population, scoped to Opal's gap-free segments and graded against
+`tieout_tolerance` 0.35 pp with stated reasons (batches 181 and 195). It is the only vendor call this word licenses; no seat calls
+Black Diamond outside it. Owner: 2.0.0_SA_COO~P. Un-park condition: P-2 has published every 49 Financial account on the new
+`method_version` (batch 193). That is a served act of the P-2 packet, so the cell is cut in the first tick after that publish is
+read back, as the next round GATE (x) admits.
+
+fanout: 1 of 1 chains (H: DB-b-15 on slot ~2; chain G's DB-b-14 terminal), cap 8, reason: one open cell; slot ~1's worktree is removed at its drain and slot ~2 gets its own.
+
+
+## 9. ROUND 9, WORKSTREAM B (2026-10-03 ~01:2xZ, issuer 2.0.0_SA_COO~P, on CTO RULINGS batch 197 @7563d60e68, msg 104491)
+
+Batch 197 answers round 5's P-3 ask:
+- (a) the per-client summary gets its OWN versioned contract, `org/standards/IRPT_DASHBD_CLIENT_SUMMARY_CONTRACT.json` 0.1.0;
+- (b) the read route serves it ONLY when the scope enforcer covers every account it names; partial coverage is
+  `OBJECT_NOT_COVERED`.
+
+The issuer adds the act the ruling assumes: no served code writes `summary.json` today (`build_client_summary` is called only by
+tests), so the publisher must write it. Two cells, disjoint from each other and from DB-b-15. ROUND 9 under GATE (x) (row S267).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-16` | P-3 (a)+(b): the summary contract 0.1.0 (window_status with its four-postulate record and census; unpublished_account_ids kept); the read route's summary GET served only on full per-account coverage, declared in the reporting-read Terraform (nothing served) | WORLD (the served read Lambda's source and its route text) | DB-b-12 (merged) | I |
+| `DB-b-17` | P-3 served path: the publisher's summaries pass writes every directory client's summary.json from all its published accounts, measured against 900 s and sharded by client if needed (nothing served) | WORLD (the served publisher's source; possibly its role's text) | DB-b-12, DB-b-14 (merged) | J |
+
+Then the P-2 packet carries all of it with the backfill:
+- DB-b-15's method version;
+- DB-b-14's backfill, union and fan-out;
+- DB-b-16's route and contract;
+- DB-b-17's summaries pass and its trigger;
+- P-6's retirement;
+- the P-1 walk with 2.0.0_SA_COO~D.
+
+fanout: 3 of 3 chains (H: DB-b-15 on slot ~2, running; I: DB-b-16 on slot ~3; J: DB-b-17 on slot ~4), cap 8, reason: disjoint write surfaces, disk 35 GB free.
+
+
+## 10. ROUND 10, WORKSTREAM B (2026-10-03 ~02:3xZ, issuer 2.0.0_SA_COO~P, inside its decomposition)
+
+Every build cell P-2 carries is merged (DB-b-13 to DB-b-17). Three rows bind the packet itself:
+- W1-S19 and W2-S3: the method row carries four columns the `dim_return_method` contract does not declare;
+- W4-S1: the publish artifact does not package `ids.py` or the firm registry.
+The gold artifact is also pinned before DB-b-13's and DB-b-15's producer. One readiness cell closes all of it and proves the three
+packages from the map without building, so the packet's builds are mechanical. ROUND 10 under GATE (x) (row S267).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-18` | P-2, P-3: `dim_return_method` contract 0.3.0 (columns equal the emitted row; method_version 2 recorded); the three reporting map entries re-pinned to the merged blobs; the publish entry stages the four members the read entry already stages; a rehearsal materializes and imports each package (nothing built or uploaded) | WORLD (a standards contract and three package manifests; no deploy) | DB-b-15, DB-b-16, DB-b-17 (merged) | K |
+
+Then the P-2 packet, both halves:
+1. build and upload the three artifacts;
+2. apply the gold, publish (with IAM) and read (with route) roots;
+3. backfill every landed day under method_version 2, in chunks of at most 25 trading days, each rolled back per key on the
+   versioned bucket;
+4. the method row's served write, with the contract's schema_hash re-read;
+5. the publish fan-out over every account;
+6. the summaries pass and its trigger;
+7. 2.0.0_SA_COO~D's picker on the summary route and P-6's retirement of PATH A for 49 Financial, in the same window (asked of
+   ~D at 02:13Z);
+8. the P-1 walk.
+
+fanout: 1 of 1 chains, cap 8, reason: one open cell; worker 0.9.0_WK_IRPT_DASHBD~5 in its own worktree.
+
+
+## 11. ROUND 11, WORKSTREAM B (2026-10-03 ~03:1xZ, issuer 2.0.0_SA_COO~P, on the CTO's L10 analysis of rounds 2-9 @e1e0be5ba0, msg 104517; PRD v0.7)
+
+The analysis's enrichment list is this issuance's rectangle:
+
+| # | item | how this issuance covers it |
+|---|---|---|
+| E1 | The P-2 packet, carrying W1-S12, S13, S14, S18, S19 with W2-S3, W4-S1, W4-S2 | IN FLIGHT as the issuer's act. DB-b-18 is merged @65a788ebf1. The three artifacts are built and uploaded @28480036ad, and the summaries trigger is written @7fc1014933. The plans read gold 0/1/0, publish 1/2/0 and read 1/1/0. P-6's mechanism goes to 1.0.0_SA_CTO, because PATH A's performance route has readers beyond the tab (print, export, method notes); its retirement lands in P-2's window. |
+| E2 | W1-S17's build cell | `DB-b-19` below, risk LOCAL. It never holds E1. |
+| E3 | P-5's one Black Diamond population pull | PARKED, as in section 8. It is cut in the first tick after P-2's publish of every 49 Financial account is read back. |
+| -- | S15 and S19 | At the P-2 drain, not cells. S15 names both reporting routes in `routes.json`. S19 is the issuer's amendment: DB-7-AC1 counts kept organic landings, floor 10. |
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-19` | FWD-8's income field (PRD ruling 27): `dividend_interest_share_quantity` declared; a DIV debit admitted as income only when that quantity is negative; 38 debits (822.51) measured in, the zero-share row out, return DELTA=0 (nothing served) | LOCAL | DB-b-15 (merged) | L |
+
+fanout: 1 of 1 chains, cap 8, reason: one build cell; E1 is the issuer's packet and E3 is parked on P-2's publish.

@@ -52,7 +52,18 @@ for (let i = 0; i < argv.length; i++) {
   // --press "<label>" (repeatable, plain routes only): press that tab/radio/button by its exact label after the load, wait
   // for the page to settle (PRESS_SETTLE_MS), shoot and check; a DO_NOT_CLICK word is refused. For a chart behind a tab.
   else if (a === '--press') (opt.presses = opt.presses || []).push(String(argv[++i] || ''))
+  // --contrast-table (plain routes): every visible interactive control's (ground, ink) pair at rest, on hover and, where
+  // the control says so (aria-pressed / aria-selected / aria-current), selected -- graded against SC 1.4.3. Run after the
+  // presses, before the explore step. Writes contrast-table.json. DSGN_REBRND round 3 E4 (FWD-13). Also every
+  // non-interactive text pair at rest, grouped, state 'text' (row S10).
+  else if (a === '--contrast-table') opt.contrastTable = true
+  // --tz <IANA zone>: the browser's own time zone (default: this machine's). A page that formats dates must read the
+  // same in every zone; DSGN_REBRND 4c's footer hour did not under UTC.
+  else if (a === '--tz') opt.tz = String(argv[++i] || '')
   else if (a === '--holdings-aggregates') opt.holdingsAggregates = true
+  // --map-tiles (with --client): on the Holdings tab's default view, count the Securities map's drawn tiles against the
+  // distinct securities in the served snapshot it shows (CTO batch 178 H-1 proof). Counts only.
+  else if (a === '--map-tiles') opt.mapTiles = true
   else if (a === '--performance-state') opt.performanceState = true
   else if (a === '--expect-text') opt.expectTexts.push(String(argv[++i] || ''))
   else if (a === '--reload-reopen') opt.reloadReopen = true
@@ -159,7 +170,15 @@ const CHECKS = () => {
   if (topBands.length > 1) out.push({ check: 'design:bands', observed: `${topBands.length} full-width #0A1733 bands`, selectors: topBands.slice(0, 8).map(trail), rule: 'DESIGN.md C3: one band per page' })
   // 5. low-contrast text
   const lum = (c) => { const m = c && c.match(/rgba?\(([^)]+)\)/); if (!m) return null; const p = m[1].split(',').map(Number); const [r, g, b] = p.slice(0, 3).map((v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4) }); return { L: 0.2126 * r + 0.7152 * g + 0.0722 * b, a: p.length > 3 ? p[3] : 1 } }
-  const bgOf = (el) => { for (let e = el; e; e = e.parentElement) { const s = getComputedStyle(e); const l = lum(s.backgroundColor); if (l && l.a > 0.5) return { l, c: s.backgroundColor } } return { l: lum('rgb(244, 246, 250)'), c: 'rgb(244, 246, 250)' } }
+  // HTML text in an SVG foreignObject (treemap tile labels) sits on its sibling <rect>'s fill, not on an ancestor's
+  // background; reading the ancestors gave every tile label 1.18:1 against the panel behind the chart.
+  const bgOf = (el) => {
+    for (let e = el; e; e = e.parentElement) {
+      const s = getComputedStyle(e); const l = lum(s.backgroundColor); if (l && l.a > 0.5) return { l, c: s.backgroundColor }
+      if (e.tagName === 'foreignObject') { const r = [...(e.parentElement ? e.parentElement.children : [])].find((c) => c.tagName === 'rect'); const fill = r && getComputedStyle(r).fill; const lf = lum(fill); if (lf && lf.a > 0.5) return { l: lf, c: fill } }
+    }
+    return { l: lum('rgb(244, 246, 250)'), c: 'rgb(244, 246, 250)' }
+  }
   const low = []
   for (const el of document.querySelectorAll('body *')) {
     if (!vis(el) || ![...el.childNodes].some((n) => n.nodeType === 3 && n.nodeValue.trim())) continue
@@ -168,6 +187,26 @@ const CHECKS = () => {
     if (ratio < 3.0) low.push({ text: (el.innerText || '').trim().slice(0, 50), ratio: +ratio.toFixed(2), color: s.color, background: b.c, selector: trail(el) })
   }
   if (low.length) out.push({ check: 'design:contrast', observed: `${low.length} text element(s) under 3:1 contrast`, samples: low.slice(0, 12), rule: 'portal colour law: no light text on light grounds (DESIGN.md C3/C5)' })
+  // 5b. text cut off SIDEWAYS by its nearest clipping ancestor, e.g. Satellite 90's "90.14%" past the Positioning
+  // Summary's right edge (walk 20261003T095441Z). Not counted: an ancestor that shows a horizontal scrollbar (scrolling
+  // is then visible, by design) and an ellipsis (layout:truncated covers it). Vertical clipping is a scroll area's job.
+  const cut = []
+  // Drawn invisibly (zero opacity up the chain, or a transparent ink): a collapsed sidebar's section titles, by design.
+  const faded = (el) => { if (/rgba\([^)]*,\s*0\)$/.test(getComputedStyle(el).color)) return true; for (let e = el; e; e = e.parentElement) if (getComputedStyle(e).opacity === '0') return true; return false }
+  for (const el of document.querySelectorAll('body *')) {
+    if (!vis(el) || ![...el.childNodes].some((n) => n.nodeType === 3 && n.nodeValue.trim()) || faded(el)) continue
+    const r = el.getBoundingClientRect()
+    for (let a = el.parentElement; a && a !== document.body; a = a.parentElement) {
+      const st = getComputedStyle(a)
+      if (st.overflowX === 'visible') continue
+      if (st.textOverflow === 'ellipsis' || a.offsetHeight - a.clientHeight - parseFloat(st.borderTopWidth) - parseFloat(st.borderBottomWidth) > 1) break
+      const b = a.getBoundingClientRect()
+      const over = Math.max(b.left - r.left, r.right - b.right)
+      if (over > 1 && r.right > b.left && r.left < b.right) cut.push({ text: (el.innerText || '').trim().slice(0, 30), px: Math.round(over), selector: trail(el) })
+      break
+    }
+  }
+  if (cut.length) out.push({ check: 'layout:clipped', observed: `${cut.length} text element(s) cut off sideways by their container`, samples: cut.slice(0, 12), rule: 'every label is drawn whole (no text past its panel edge)' })
   // 6. tinted status blocks
   for (const el of document.querySelectorAll('[role=alert],[role=status],[data-slot*=error],[data-slot*=status]')) {
     if (!vis(el)) continue
@@ -598,6 +637,153 @@ const modelScopes = []
 // nodes included. Counts only; no name and no figure of any client is written. `class_totals` plus the remainder is
 // checked against the custody total. One record per distinct selection path.
 const holdingsAggregates = []
+// ---- --map-tiles: the Securities map's tile count against the served snapshot (DSGN_IRPTV1 item 85, CTO batch 178) ----
+// Every holdings answer the walk receives is reduced to its count of distinct map-eligible securities: SECURITY or CASH
+// nodes with a served of_total and a non-zero amount, one per security_id (else per node id) -- the page's own map rule
+// (treemapLeavesFrom). The step reads the tile rects drawn in [data-slot="treemap-chart"] on the tab's default view and
+// compares them with the answer that view shows: the one with the most distinct securities (the all-accounts selection;
+// the tab's background one-account reads are subsets). Counts only; no name and no figure of any client is written.
+const mapTileAnswers = new Map()
+// ---- --contrast-table: interactive (ground, ink) pairs by state (DSGN_REBRND round 3 E4, FWD-13) ---------------------
+// The ground is the nearest ancestor background with alpha > 0.5, the same reading as the design:contrast check (a
+// translucent layer is skipped, so a page with translucent fills reads its rung under them). The bar is 4.5:1, or 3:1
+// for large text (>= 24 px, or >= 18.66 px at weight 700+). Labels are the controls' own words (page copy).
+const contrastRows = []
+const CONTRAST_CAP = 80
+async function contrastTable(page, label) {
+  const measure = (el) => {
+    // Any CSS colour (rgb, oklab, color-mix ...) is read through a 1x1 canvas, so the parser never decides a pair.
+    const cv = document.createElement('canvas'); cv.width = 1; cv.height = 1
+    const cx = cv.getContext('2d', { willReadFrequently: true })
+    const rgba = (c) => { cx.clearRect(0, 0, 1, 1); cx.fillStyle = 'rgba(0,0,0,0)'; cx.fillStyle = c; cx.fillRect(0, 0, 1, 1); const d = cx.getImageData(0, 0, 1, 1).data; return [d[0], d[1], d[2], d[3] / 255] }
+    const lin = (v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4) }
+    const L = ([r, g, b]) => 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b)
+    const groundOf = (node) => { for (let e = node; e; e = e.parentElement) { const c = rgba(getComputedStyle(e).backgroundColor); if (c[3] > 0.5) return c } return [244, 246, 250, 1] }
+    // The pair is the TEXT the control shows: every element inside it (itself included) that holds visible text,
+    // its ink composited over its own ground by the ink's alpha. The control reports its weakest text.
+    const holders = [el, ...el.querySelectorAll('*')].filter((n) => [...n.childNodes].some((t) => t.nodeType === 3 && t.nodeValue.trim()) && n.getClientRects().length)
+    let worst = null
+    for (const h of holders.length ? holders : [el]) {
+      const s = getComputedStyle(h); const g = groundOf(h); const k = rgba(s.color)
+      const ink = [0, 1, 2].map((i) => Math.round(k[3] * k[i] + (1 - k[3]) * g[i]))
+      const a = L(ink); const b = L(g)
+      const ratio = (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05)
+      const px = parseFloat(s.fontSize); const large = px >= 24 || (px >= 18.66 && Number(s.fontWeight) >= 700)
+      const bar = large ? 3 : 4.5
+      if (!worst || ratio / bar < worst.ratio / worst.bar) worst = { ink: `rgb(${ink.join(', ')})`, ground: `rgb(${g.slice(0, 3).join(', ')})`, ratio: +ratio.toFixed(2), bar }
+    }
+    const selected = ['aria-pressed', 'aria-selected', 'aria-current'].some((x) => { const v = el.getAttribute(x); return v && v !== 'false' })
+    return { label: (el.getAttribute('aria-label') || el.innerText || el.value || '').trim().replace(/\s+/g, ' ').slice(0, 40), tag: el.tagName.toLowerCase(), ...worst, selected, disabled: el.disabled === true }
+  }
+  const controls = page.locator('button:visible, a[href]:visible, [role=tab]:visible, [role=button]:visible, input:not([type=hidden]):visible, select:visible')
+  const n = Math.min(await controls.count().catch(() => 0), CONTRAST_CAP)
+  for (let i = 0; i < n; i++) {
+    const el = controls.nth(i)
+    const rest = await el.evaluate(measure).catch(() => null)
+    if (!rest || !rest.label) continue
+    contrastRows.push({ step: label, state: rest.selected ? 'selected' : 'rest', ...rest, pass: rest.ratio !== null && rest.ratio >= rest.bar })
+    if (rest.disabled) continue
+    await el.hover({ timeout: 1500 }).catch(() => {})
+    await page.waitForTimeout(150)
+    const hover = await el.evaluate(measure).catch(() => null)
+    if (hover) contrastRows.push({ step: label, state: 'hover', ...hover, pass: hover.ratio !== null && hover.ratio >= hover.bar })
+  }
+  await page.mouse.move(2, 2).catch(() => {})
+  // NON-INTERACTIVE TEXT at rest (DSGN_REBRND row S10: the Positioning Summary's class labels read 4.07:1 and no limb
+  // saw them). Every visible element holding its own text outside a control, read as above and grouped by
+  // (ink, ground, bar) with a count. The row's label is a hint -- tag, data-* attribute NAMES, the data-slot value --
+  // never the text, so no client word or figure is written.
+  const textRows = await page.evaluate(() => {
+    const cv = document.createElement('canvas'); cv.width = 1; cv.height = 1
+    const cx = cv.getContext('2d', { willReadFrequently: true })
+    const rgba = (c) => { cx.clearRect(0, 0, 1, 1); cx.fillStyle = 'rgba(0,0,0,0)'; cx.fillStyle = c; cx.fillRect(0, 0, 1, 1); const d = cx.getImageData(0, 0, 1, 1).data; return [d[0], d[1], d[2], d[3] / 255] }
+    const lin = (v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4) }
+    const L = ([r, g, b]) => 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b)
+    // HTML text inside an SVG foreignObject (the treemap's tile labels) sits on the tile's <rect> fill, a sibling, not an
+    // ancestor: walking up from the label would read the panel behind the chart (row S12's probe: 46 labels at 1.18:1).
+    const groundElOf = (node) => {
+      for (let e = node; e; e = e.parentElement) {
+        if (rgba(getComputedStyle(e).backgroundColor)[3] > 0.5) return e
+        if (e.tagName === 'foreignObject') { const r = [...(e.parentElement ? e.parentElement.children : [])].find((c) => c.tagName === 'rect'); if (r && rgba(getComputedStyle(r).fill)[3] > 0.5) return r }
+      }
+      return null
+    }
+    const groundOf = (node) => { const e = groundElOf(node); return e ? rgba(e.tagName === 'rect' ? getComputedStyle(e).fill : getComputedStyle(e).backgroundColor) : [244, 246, 250, 1] }
+    const CONTROL = 'button, a[href], [role=tab], [role=button], input, select, textarea, option'
+    // Where a group sits, in code vocabulary only: tag plus its first four class names.
+    const cls = (e) => (e ? `${e.tagName.toLowerCase()}${typeof e.className === 'string' && e.className.trim() ? `.${e.className.trim().split(/\s+/).slice(0, 4).join('.')}` : ''}` : 'none')
+    // Text a person cannot see is not graded: clipped to nothing by an ancestor whose overflow is not visible (a
+    // collapsed panel), or drawn at zero opacity anywhere up the chain.
+    const unseen = (node) => {
+      let r = node.getBoundingClientRect()
+      for (let e = node.parentElement; e && e !== document.body; e = e.parentElement) {
+        const st = getComputedStyle(e)
+        if (Number(st.opacity) === 0) return true
+        if (st.overflowX !== 'visible' || st.overflowY !== 'visible') {
+          const b = e.getBoundingClientRect()
+          r = { left: Math.max(r.left, b.left), right: Math.min(r.right, b.right), top: Math.max(r.top, b.top), bottom: Math.min(r.bottom, b.bottom) }
+          if (r.right - r.left < 1 || r.bottom - r.top < 1) return true
+        }
+      }
+      return false
+    }
+    const groups = new Map()
+    let skippedUnseen = 0
+    for (const h of document.body.querySelectorAll('*')) {
+      if (['SCRIPT', 'STYLE', 'NOSCRIPT', 'TITLE'].includes(h.tagName) || h.closest(CONTROL)) continue
+      if (![...h.childNodes].some((t) => t.nodeType === 3 && t.nodeValue.trim()) || !h.getClientRects().length) continue
+      const s = getComputedStyle(h)
+      if (s.visibility === 'hidden' || Number(s.opacity) === 0) continue
+      if (unseen(h)) { skippedUnseen++; continue }
+      const g = groundOf(h); const k = rgba(s.color)
+      const ink = [0, 1, 2].map((i) => Math.round(k[3] * k[i] + (1 - k[3]) * g[i]))
+      const a = L(ink); const b = L(g)
+      const ratio = +((Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05)).toFixed(2)
+      const px = parseFloat(s.fontSize); const bar = px >= 24 || (px >= 18.66 && Number(s.fontWeight) >= 700) ? 3 : 4.5
+      const key = `${ink}|${g.slice(0, 3)}|${bar}`
+      const hit = groups.get(key)
+      if (hit) { hit.count++; continue }
+      const names = [...h.attributes].map((x) => x.name).filter((n) => n.startsWith('data-') && n !== 'data-slot')
+      const slot = h.getAttribute('data-slot')
+      const hint = `${h.tagName.toLowerCase()}${slot ? `[data-slot=${slot}]` : ''}${names.length ? `[${names.join(',')}]` : ''} ${px}px/${s.fontWeight}`
+      groups.set(key, { label: hint, tag: h.tagName.toLowerCase(), ink: `rgb(${ink.join(', ')})`, ground: `rgb(${g.slice(0, 3).join(', ')})`, ratio, bar, count: 1,
+        where: `${cls(h.parentElement)} > ${cls(h)}`, ground_from: cls(groundElOf(h)) })
+    }
+    return { rows: [...groups.values()], skippedUnseen }
+  }).catch(() => ({ rows: [], skippedUnseen: null }))
+  for (const r of textRows.rows) contrastRows.push({ step: label, state: 'text', ...r, selected: false, disabled: false, pass: r.ratio >= r.bar })
+  const failing = contrastRows.filter((r) => r.step === label && !r.pass)
+  log('CONTRAST TABLE', label, `${contrastRows.filter((r) => r.step === label).length} pairs (${textRows.rows.length} non-interactive text groups; ${textRows.skippedUnseen} clipped or transparent text elements not graded), ${failing.length} under their bar`)
+}
+const mapTiles = []
+function readMapTileAnswer(p, j) {
+  const d = j && j.data
+  if (!d || !Array.isArray(d.nodes)) return
+  const ids = new Set()
+  for (const n of d.nodes) {
+    if (n.node_kind !== 'SECURITY' && n.node_kind !== 'CASH') continue
+    const pct = n.percentages ? n.percentages.of_total : null
+    const amount = n.amount ? n.amount.value : null
+    if (pct === null || pct === undefined || amount === 0) continue
+    ids.add(n.security_id ? `${n.security_id.namespace}:${n.security_id.value}` : `node:${n.node_id}`)
+  }
+  mapTileAnswers.set(p, { selection: p.split('/').pop().slice(0, 16), distinct_securities: ids.size })
+}
+async function mapTilesStep(page, label) {
+  await page.locator('[data-slot="treemap-chart"]').first().scrollIntoViewIfNeeded().catch(() => {})
+  await page.waitForTimeout(1500)
+  const drawn = await page.evaluate(() => {
+    const root = document.querySelector('[data-slot="treemap-chart"]')
+    const rects = root ? [...root.querySelectorAll('svg g > rect')] : []
+    return { tiles: rects.length, small_tiles: rects.filter((r) => r.getAttribute('data-small-tile') === 'true').length,
+      grouped_words: /Other Securities|Smaller Holdings/.test(document.body.innerText) }
+  })
+  const answers = [...mapTileAnswers.values()].sort((a, b) => b.distinct_securities - a.distinct_securities)
+  const shown = answers[0] || null
+  mapTiles.push({ label, ...drawn, served_distinct_securities: shown ? shown.distinct_securities : null,
+    equal: shown ? shown.distinct_securities === drawn.tiles : null, holdings_answers_read: answers.length })
+  await shot(page, `${label}-map-tiles`)
+}
 // ---- --performance-state: the Performance tab's STATE, not a fixed sleep (DSGN_IRPTV1 FAST item 57) ----------------
 // A performance answer can land after the 2,500 ms settle, so the tab's first shot reads "Loading" (walk
 // 20261001T083028Z: three of three). The tab marks its two finished states: `[data-slot=reporting-refusal-words]` (a
@@ -1188,7 +1374,8 @@ try {
   } catch {
     browser = await chromium.launch({ headless: !opt.headed })
   }
-  const context = await browser.newContext({ viewport: { width: 1440, height: 900 } })
+  const context = await browser.newContext({ viewport: { width: 1440, height: 900 }, ...(opt.tz ? { timezoneId: opt.tz } : {}) })
+  if (opt.tz) log('TIMEZONE', opt.tz)
   const page = await context.newPage()
   page.on('console', (m) => { if (m.type() === 'error') consoleErrors.push({ step, text: m.text().slice(0, 300) }) })
   page.on('pageerror', (e) => consoleErrors.push({ step, text: 'PAGE ERROR: ' + String(e).slice(0, 300) }))
@@ -1203,6 +1390,7 @@ try {
     try {
       const j = await res.json(); body = j; ok = j.ok ?? null; state = j.status?.state ?? null; reason = j.status?.public_reason_code ?? null
       if (opt.holdingsAggregates && /\/investor-reporting\/holdings\//.test(p)) readHoldingsAggregates(p, j)
+      if (opt.mapTiles && /\/investor-reporting\/holdings\//.test(p)) readMapTileAnswer(p, j)
     } catch { /* not json */ }
     if (requestHops && hopStart.has(req)) noteHopResponse(req, res, body, await req.allHeaders().catch(() => req.headers()))
     if (res.status() >= 400 || ok === false || (reason && !/READY$/.test(reason))) apiIssues.push({ step, method: req.method(), path: p, http: res.status(), ok, state, reason })
@@ -1328,6 +1516,10 @@ try {
             // Drill FIRST, on the tab's default view: the explore step below changes selects and opens popups.
             if (/holdings/.test(name)) {
               // --account-drill runs on the tab's default view, BEFORE the generic drill below presses a tile itself.
+              if (opt.mapTiles) {
+                await mapTilesStep(page, `${client}-holdings`)
+                log('MAP TILES', JSON.stringify(mapTiles[mapTiles.length - 1]).slice(0, 600))
+              }
               if (opt.accountDrill) {
                 await accountDrill(page, `${client}-holdings`)
                 log('ACCOUNT DRILL', JSON.stringify(accountDrills[accountDrills.length - 1]).slice(0, 900))
@@ -1389,7 +1581,9 @@ try {
         await settle(page, 2500)
         log('PRESS', label, pressed ? 'pressed' : 'NOT FOUND')
         await checks(page, `${route}-press-${label}`)
+        if (opt.contrastTable) await contrastTable(page, `${route}-press-${label}`)
       }
+      if (opt.contrastTable && !(opt.presses || []).length) await contrastTable(page, `${route}-load`)
       await exploreScope(page, 'body', route)
     }
   }
@@ -1423,6 +1617,8 @@ try {
   if (searchTimings.length) writeFileSync(path.join(OUT, 'search-timings.json'), JSON.stringify(searchTimings, null, 1))
   if (openedRequests.length) writeFileSync(path.join(OUT, 'analysis-request.json'), JSON.stringify(openedRequests, null, 1))
   if (holdingsAggregates.length) writeFileSync(path.join(OUT, 'holdings-aggregates.json'), JSON.stringify(holdingsAggregates, null, 1))
+  if (mapTiles.length) writeFileSync(path.join(OUT, 'map-tiles.json'), JSON.stringify(mapTiles, null, 1))
+  if (contrastRows.length) writeFileSync(path.join(OUT, 'contrast-table.json'), JSON.stringify(contrastRows, null, 1))
   if (performanceStates.length) writeFileSync(path.join(OUT, 'performance-state.json'), JSON.stringify(performanceStates, null, 1))
   writeFileSync(path.join(OUT, 'lead-lists.json'), JSON.stringify({ schema_version: '1.0', tool: 'ui-walk', stamp, lists: leadLists }, null, 1))
   writeFileSync(path.join(OUT, 'netlog.tsv'), netlog.join('\n') + '\n')

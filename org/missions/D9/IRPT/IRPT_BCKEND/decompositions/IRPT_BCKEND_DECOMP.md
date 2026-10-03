@@ -1477,3 +1477,144 @@ Andrew's population vendor word; P-1 is the acceptance.
 | `IB-pr-298` | P-4 (holdings_gold.py fee_basis GROSS) + S276 (cleanup_staged restores tracked paths; staging refuses a dirty tracked destination) | WORLD (a served function's source and the shared build tool; no deploy) | none | P35 |
 
 fanout: 1 of 1 chains, cap 8, reason: one worktree (disk 7.0 GB free); queued behind IRPT_DASHBD DB-b-10 on the shared DIR.
+
+
+## 28. ROUND 36, WORKSTREAM ~P (2026-10-03 ~03:4xZ, issuer 2.0.0_SA_COO~P, on 1.0.0_SA_CTO RULINGS batch 202 @8da55ee13b, msg 104524)
+
+Row S292 (ARMED, relayed from 3.0.0_SA_CVO): Inflection's gold missed 2026-10-01 because each scheduled fire computes exactly one
+day, and the adapter links over a missing day silently. The disarm is done: 10-01 was landed as one new key (row S294, @6e22aca10b),
+and the ledger's A1 is amended. Batch 202 places the CLASS here as two cells, both firms: the consuming half first, then producer
+catch-up. GATE (x) puts them in ROUND 36 (row S267).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-299` | the adapter names a trading day with no partition on the value and drops its `measured` claim; never refuses, never links silently (nothing served) | WORLD (the served adapter's source) | none | P36a |
+| `IB-pr-300` | the holdings producer's scheduled fire computes every missed trading day through T-1, at most 5 per fire, stopping at a day without silver; an explicit `date` unchanged (nothing served) | WORLD (the handler of both firms' producers) | none | P36b |
+| `IB-pr-301` | P-6's server half (CTO batches 201 and 203): submit-export accepts a PATH B (PLATINUM) Performance export under the reporting route's coverage; the bundle pins the series revision (VersionId, sha256, as_of) inside `authorized_report_revisions`; the render reads that exact version; the receipt names the frozen as_of; PATH A exports unchanged (nothing served) | WORLD (the export submit, render and ExportBundle contract; batch 203 named SERVED, the gate's floor for infrastructure paths is WORLD) | none | P36c |
+
+P-2's window (IRPT_DASHBD section 11, E1) waits on IB-pr-301 and on 2.0.0_SA_COO~D's print and export page half (batch 201); one rollback reverts both.
+
+fanout: 3 of 3 chains, cap 8, reason: disjoint write surfaces (the adapter, the producer's handler, the export); workers 0.9.0_WK_IRPT_BCKEND~102, ~103 and ~104 in their own worktrees.
+
+
+## 29. ROUND 37, WORKSTREAM ~P (2026-10-03 ~05:0xZ, issuer 2.0.0_SA_COO~P, on 1.0.0_SA_CTO RULINGS batch 205 @a6f6e7165e, msg 104544)
+
+IB-pr-301 (merged @26240fa401) left four rows that block the PATH B export end to end:
+- W104-S1: the Enforcer does not admit the reporting route for a render delegate.
+- W104-S2: the read role cannot read by VersionId.
+- W104-S3: MEASURED; the 49F bucket's DenyForeignFirmPrincipals denies the multi-firm irpt-export-render-role.
+- W104-S4: no receipt slot for the frozen as_of.
+Batch 205 ruled option (c): read through the 49F reporting route, leave the fence untouched, drop the export role's platinum policy.
+GATE (x) puts this in ROUND 37 (row S267).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-302` | P-6 export end to end: submit pins (X-Opal-Version-Id, sha256, as_of) through the reporting route; render reads that version and refuses on a sha mismatch; the Enforcer admits reporting-read for a render delegate; reporting-read gains GetObjectVersion on the platinum prefix; the export role's platinum policy dropped; ExportReceipt carries the frozen as_of (nothing served) | WORLD | IB-pr-301 (merged) | P37 |
+
+The census suite (`_authz/tests/test_unguarded_census.py`) fails 6 tests at the base, before DB-b-16 included (measured at
+f26fa5fb4d and 00145f3a27). That is row S15, placed by the CTO's rounds 2-9 analysis at the P-2 drain, so this cell grades
+"no new failure", not "all pass".
+
+P-2's window (IRPT_DASHBD section 11, E1) waits on IB-pr-302 and on 2.0.0_SA_COO~D's held branch (@c16a31e9, P-3 + P-6 print and
+export halves; only the receipt's frozen as_of waits on this cell).
+
+fanout: 1 of 1 chains, cap 8, reason: one open cell; worker 0.9.0_WK_IRPT_BCKEND~105 in its own worktree.
+
+
+## 30. ROUND 38, WORKSTREAM ~P (2026-10-03 ~05:3xZ, issuer 2.0.0_SA_COO~P, on 1.0.0_SA_CTO RULINGS batch 207, CTO half @d9f15bc006, msg 104550)
+
+Batch 207 signed the round-36 packet's D2, which is served (@7924f2237a). D1 is re-cut: IB-pr-299's claim `"partial"` grows the
+measured/inferred/held/absent vocabulary, so it becomes `"inferred"`, keeping the PARTIAL absence that names the days. Batch 207
+also says YES to landing Inflection's three historic gaps (2026-05-11, 06-30, 08-10) as their own packet, after Monday's A1.
+GATE (x) puts this in ROUND 38 (row S267).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-303` | the adapter's gap claim reads "inferred" (constant, value_facts and result; three test assertions) -- nothing else moves (nothing served) | WORLD | IB-pr-299 (merged) | P38 |
+
+fanout: 1 of 1 chains, cap 8, reason: one open cell; worker 0.9.0_WK_IRPT_BCKEND~106 in its own worktree.
+
+
+## 31. ROUND 39, WORKSTREAM ~P (2026-10-03 ~06:1xZ, issuer 2.0.0_SA_COO~P, inside its decomposition)
+
+IB-pr-302 (merged @7d02c6fe8b) landed the Enforcer half of batch 205's route-based export, and filed two rows naming this seat:
+- W105-S1: the edge's render branch admits no reporting path.
+- W105-S2: the reporting-read function has no render-grant wiring.
+Both fail closed. One cell closes both. GATE (x) puts it in ROUND 39 (row S267).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-304` | P-6 export end to end: the edge admits the reporting SERIES path for a render token (manifest and summary not); reporting-read gets IRPT_EVIDENCE_BUCKET, a GetObject on the render-grant objects only, and `_render_identity/grant.py` + `report_owner.py` in its package (nothing served) | WORLD | IB-pr-302 (merged) | P39 |
+
+After this cell, P-2's window carries:
+- the gold, publish and read deploys;
+- the edge publish;
+- the export deploy;
+- ~D's held branch;
+- P-6's retirement of PATH A for 49 Financial.
+All are under one never-widen packet with one rollback. IB-pr-302's other notes ride the window as its legs: the export needs the
+portal origin reachable and `IRPT_EXPORT_RENDER=on` for the submit's mint.
+
+fanout: 1 of 1 chains, cap 8, reason: one open cell; worker 0.9.0_WK_IRPT_BCKEND~107 in its own worktree.
+
+
+## 32. ROUND 40, WORKSTREAM ~P (2026-10-03 ~06:3xZ, issuer 2.0.0_SA_COO~P, on 1.0.0_SA_CTO RULINGS batch 211 @827e6c8bed, msg 104557)
+
+Row W101-S13: the served export download answers `download_route` with `url` and `expires_at`, plus `sha256` and `byte_length`, but
+the published response contract forbids them. Batch 211 rules that the contract follows the server, the signed link lives only in
+the response, and ExportReceipt is unchanged. It is hygiene, never held for a round. GATE (x) puts this in ROUND 40 (row S267).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-305` | E4: the export-download response contract declares a response-only `download_route` (url https and required, expires_at a date-time and required) and the integrity facts, with a test validating the handler's answer; ExportReceipt byte-unchanged (nothing served) | WORLD (a published contract) | none | P40 |
+
+fanout: 1 of 1 chains, cap 8, reason: one open cell; worker 0.9.0_WK_IRPT_BCKEND~108 in its own worktree.
+
+
+## 33. ROUND 41, WORKSTREAM ~P (2026-10-03 ~07:1xZ, issuer 2.0.0_SA_COO~P, on 1.0.0_SA_CTO RULINGS batch 201 (P-6 option a) and batch 203 (the census accepted))
+
+P-6's backend half had no cell. PATH A (`performance/retained.py`) still composes 49 Financial, and batch 201 retires it WHOLE, in
+the same window that PATH B covers every 49F account. The retirement reuses the existing `ProviderPathNotComposed` /
+`UNSUPPORTED_OPERATION` refusal through a named subclass: no new reason code, no contract change. GATE (x) puts this in ROUND 41
+(row S267).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-306` | P-6: 49F out of COMPOSED_FIRMS; a named `*Retired*` subclass of ProviderPathNotComposed for a fresh request and a retained reopen; Inflection and Cottonwood unchanged; PATH A 49F tests converted (nothing served) | WORLD | none (served only in P-2's window) | P41 |
+
+fanout: 1 of 1 chains, cap 8, reason: one open cell; worker 0.9.0_WK_IRPT_BCKEND~109 in its own worktree.
+
+
+## 34. ROUND 42, WORKSTREAM ~P (2026-10-03 ~19:2xZ, issuer 2.0.0_SA_COO~P, on 1.0.0_SA_CTO RULINGS batch 226 (S307: fix forward, no window rollback))
+
+The P-2 window's leg V walk (2.0.0_SA_COO~D, msg 104700) found a 49F PATH B export on PROD code refusing DEPENDENCY_UNAVAILABLE.
+The edge (V3, :22) admits the render-delegate token on the reporting SERIES route; the API Gateway authorizer (V2) does not --
+its RENDER_ROUTE_CLAIMS holds three routes (row S307). Batch 226 rules fix forward: one authorizer cell, served under its own
+never-widen half the CTO signs on receipt; leg V closes on the walk after that deploy.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-307` | P-6 (the export): V2 admits a render token on `GET .../reporting/{account_id}/{which}` for which = series only, account_id matched to the token's accountSetId; manifest, summary, a foreign account and forbidden claims refused; the human path byte-unchanged | WORLD | none | P42 |
+
+fanout: 1 of 1 chains, cap 8, reason: one open cell; worker 0.9.0_WK_IRPT_BCKEND~110 in its own worktree.
+
+
+## 35. ROUND 43, WORKSTREAM ~P (2026-10-03 ~20:2xZ, issuer 2.0.0_SA_COO~P, on 1.0.0_SA_CTO RULINGS batch 229 (S308 re-pointed to ~P))
+
+With S307 fixed, the 49F PATH B export is accepted and frozen, but the render host's `render_export.cjs` allow-list
+(`PRINT_QUERY_KEYS`) drops `account` and `version` from the print URL, so the served print page refuses the bundle (row S308;
+root cause found by 2.0.0_SA_COO~D, msg 104732). Batch 229: add account, version and request, with a test, under its own half.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-308` | P-6 (the export): the render host forwards the PATH B print query (account, version) and an Analysis print's request; unlisted keys still dropped; the render flow unchanged | WORLD | none | P43 |
+
+fanout: 1 of 1 chains, cap 8, reason: one open cell; worker 0.9.0_WK_IRPT_BCKEND~111 in its own worktree.
+
+## 36. PRD v0.25 ADDENDUM 25, STEP 5 (2026-10-03 ~21:2xZ, issuer 2.0.0_SA_COO~P, on 1.0.0_SA_CTO msg 104767 @702845982e) -- NO CELL
+
+Addendum 25 names IRPT_YCDGEN as a consumer of B8's session broker and B16's provider-account operation lease (same lease key,
+store and pace). It changes no CONTRACTS row and no ENDPOINT, and nothing served moves, so there is nothing to build: no cell is
+cut and no round opens. It binds as a BOUND on every later cell of this project that touches the broker, the lease key or the
+pacing: such an order names IRPT_YCDGEN among the readers it must keep working, and its criteria include one that IRPT_YCDGEN's
+research run still takes the lease. The issuer inlines that bound at the cut.

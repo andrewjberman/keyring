@@ -1,0 +1,177 @@
+{
+ "function": "irpt-ycharts-generate",
+ "pin": "828c37c6f7fa2a3aa6c06ccd7b7bf48a667d816d",
+ "live_code_sha256": "aug0YyWcP6wwRwwnkyWYH+GBfT8gN9irrmEMCz/Vvj8=",
+ "live_zip_hashes_to_it": true,
+ "live_members": 113,
+ "pin_members": 113,
+ "identical": 110,
+ "eol_only": [],
+ "changed": [
+  "resident_worker.py",
+  "upload_resolution.py",
+  "uploads.py"
+ ],
+ "added": [],
+ "removed": [],
+ "history": [
+  {
+   "member": "resident_worker.py",
+   "source": "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py",
+   "live_equals": "5f93fdbee0",
+   "ahead": [
+    [
+     "8f408b4e14",
+     "feat(IRPT_BCKEND ~Y Y-4, 2.0.0_SA_COO~Y): the check gate -- a not-found ticker gets a likely ticker "
+    ]
+   ]
+  },
+  {
+   "member": "upload_resolution.py",
+   "source": "infra/aws/lambda/investor-reporting/intake/upload_resolution.py",
+   "live_equals": "9efaf2850e",
+   "ahead": [
+    [
+     "8f408b4e14",
+     "feat(IRPT_BCKEND ~Y Y-4, 2.0.0_SA_COO~Y): the check gate -- a not-found ticker gets a likely ticker "
+    ]
+   ]
+  },
+  {
+   "member": "uploads.py",
+   "source": "infra/aws/lambda/investor-reporting/intake/uploads.py",
+   "live_equals": "a42ad6b675",
+   "ahead": [
+    [
+     "8f408b4e14",
+     "feat(IRPT_BCKEND ~Y Y-4, 2.0.0_SA_COO~Y): the check gate -- a not-found ticker gets a likely ticker "
+    ]
+   ]
+  }
+ ],
+ "served_closure": [
+  {
+   "member": "served.py",
+   "pin_sha256": "4a9d374c9806daa9",
+   "live_sha256": "4a9d374c9806daa9",
+   "state": "identical to live"
+  },
+  {
+   "member": "enforce.py",
+   "pin_sha256": "7d7196406f0a0737",
+   "live_sha256": "7d7196406f0a0737",
+   "state": "identical to live"
+  },
+  {
+   "member": "errors.py",
+   "pin_sha256": "b60f25ccaa706b7a",
+   "live_sha256": "b60f25ccaa706b7a",
+   "state": "identical to live"
+  },
+  {
+   "member": "resolve.py",
+   "pin_sha256": "24b407fa00ff0fc3",
+   "live_sha256": "24b407fa00ff0fc3",
+   "state": "identical to live"
+  },
+  {
+   "member": "grant.py",
+   "pin_sha256": "51785ed4b834b806",
+   "live_sha256": "51785ed4b834b806",
+   "state": "identical to live"
+  },
+  {
+   "member": "report_owner.py",
+   "pin_sha256": "610982ce5bddd38d",
+   "live_sha256": "610982ce5bddd38d",
+   "state": "identical to live"
+  },
+  {
+   "member": "owner_reads.py",
+   "pin_sha256": "f21d26dcce7c46bf",
+   "live_sha256": "f21d26dcce7c46bf",
+   "state": "identical to live"
+  },
+  {
+   "member": "prospect.py",
+   "pin_sha256": "f556b0997dfa7310",
+   "live_sha256": "f556b0997dfa7310",
+   "state": "identical to live"
+  },
+  {
+   "member": "ids.py",
+   "pin_sha256": "f1659861d469c25d",
+   "live_sha256": "f1659861d469c25d",
+   "state": "identical to live"
+  },
+  {
+   "member": "loaders.py",
+   "pin_sha256": "763f0a0d4445481c",
+   "live_sha256": "763f0a0d4445481c",
+   "state": "identical to live"
+  },
+  {
+   "member": "routetable.py",
+   "pin_sha256": "fbd20fb97a64c84c",
+   "live_sha256": "fbd20fb97a64c84c",
+   "state": "identical to live"
+  },
+  {
+   "member": "interactive_access.py",
+   "pin_sha256": "bba07a3f4eeb947b",
+   "live_sha256": "bba07a3f4eeb947b",
+   "state": "identical to live"
+  },
+  {
+   "member": "canonical_profile_reads.py",
+   "pin_sha256": "0ec4a717f2aa2c12",
+   "live_sha256": "0ec4a717f2aa2c12",
+   "state": "identical to live"
+  },
+  {
+   "member": "keys.py",
+   "pin_sha256": "56ee3cc22e802579",
+   "live_sha256": "56ee3cc22e802579",
+   "state": "identical to live"
+  },
+  {
+   "member": "repository.py",
+   "pin_sha256": "f255335beb26f239",
+   "live_sha256": "f255335beb26f239",
+   "state": "identical to live"
+  },
+  {
+   "member": "maintained_sources.py",
+   "pin_sha256": "585950a53879574d",
+   "live_sha256": "585950a53879574d",
+   "state": "identical to live"
+  },
+  {
+   "member": "custody.py",
+   "pin_sha256": "23cda6b0e3dd88df",
+   "live_sha256": "23cda6b0e3dd88df",
+   "state": "identical to live"
+  },
+  {
+   "member": "selection.py",
+   "pin_sha256": "7ba910b85e2fce4f",
+   "live_sha256": "7ba910b85e2fce4f",
+   "state": "identical to live"
+  },
+  {
+   "member": "selection_store.py",
+   "pin_sha256": "583507a70e3a0074",
+   "live_sha256": "583507a70e3a0074",
+   "state": "identical to live"
+  }
+ ],
+ "built": {
+  "members": 114,
+  "differ_from_pin": [
+   "kimi_port.py"
+  ],
+  "closure_stale": [],
+  "crlf_members": [],
+  "zip_sha256_b64": "fD2R6OFrT2N086C9Go3e1aA9RKZCP/vfnZCaHCloJTs="
+ }
+}

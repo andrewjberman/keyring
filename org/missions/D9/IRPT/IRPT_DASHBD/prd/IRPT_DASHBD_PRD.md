@@ -5,7 +5,7 @@
  "project": "IRPT_DASHBD",
  "directive": "D9",
  "fabric": "laptop",
- "prd_version": "v0.6",
+ "prd_version": "v0.7",
  "step": 4,
  "brief_ref": "docs/briefs/reporting-dashboard-backend-brief-20260930.md@0ee065b116",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10"],
@@ -446,3 +446,33 @@ flow-bearing account-days of which ONE is eligible. Ruled by `1.0.0_SA_CTO` 2026
 25. **Not ruled here.** FWD-8's ACCEPT ("a tolerance Andrew accepts") stays his, and his word supersedes this ruling (ruling 11).
     The 1,498.38 USD flow residual on 0027265115 (the record's section 6; the fee matches to the cent) is an enrichment line for
     the next round of workstream B, not a defect ruled here.
+
+## ADDENDUM v0.7 -- C-NAMES prints the deployed names; the round 2-9 rows placed (L10; outside the ENDPOINT and CONTRACTS sections, so no half re-opens)
+
+**Source.** `3.0.0_SA_CVO`'s L10 slug msg 104513, over ADJUDICATION_v2/REMEDIATION_v2 @c3883e8f14 and ADJUDICATION_v3/REMEDIATION_v3
+@43c3a9b2a7. The analysis is `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_DASHBD_ROUNDS_2_9_20261003.md`.
+
+26. **C-NAMES, corrected (row `IRPT_DASHBD-S18`).** The function `irpt-49f-reporting-adapter-lambda` was never made, and that
+    name is struck. Builder output printed 2026-10-03 ~03:1xZ by `lib/opal_naming.py name()`. The live plane (comp-find
+    `--corpus aws`, vintage 02:13Z, 16 hits over 2,801 nodes, 3 Lambdas) holds exactly these:
+    - `name("irpt","49financial","reporting-gold","lambda")` -> `irpt-49f-reporting-gold-lambda`
+    - `name("irpt","49financial","reporting-gold","daily")` -> `irpt-49f-reporting-gold-daily`
+    - `name("irpt","49financial","reporting-publish","lambda")` -> `irpt-49f-reporting-publish-lambda`
+    - `name("irpt","49financial","reporting-publish","daily")` -> `irpt-49f-reporting-publish-daily`
+    - `name("irpt","49financial","reporting-read","lambda")` -> `irpt-49f-reporting-read-lambda`
+
+    Each artifact carries the scope-less name (`name("irpt",None,<function>,"lambda")`, for example
+    `irpt-reporting-read-lambda`), per rows W1-S1 and W1-S2. The CONTRACTS row's printed adapter name is read through this ruling.
+27. **A short account's DIV debit is income (row `IRPT_DASHBD-W1-S17`).** A DIV debit on a short position is a dividend the
+    account paid, the same class as the QDV, NDV and PDV debits that the short-dividend fix already admits.
+    - The producer declares `dividend_interest_share_quantity` in `sources.json` and admits a DIV debit only when that quantity
+      is negative.
+    - It moves the per-day income field only. Return does not move on any account-day (DELTA=0 on return is the check).
+    - It rides the P-2 rewrite when merged first; P-2 is never held for it.
+28. **The page reads one date (row `IRPT_DASHBD-S20`).** The account picker's "data through" suffix and the page body both read
+    `series.as_of`. The page does not refuse a pair whose `manifest.as_of` differs, because a refusal would blank the page on a
+    transient skew.
+29. **The duplicate bound stays disclosed (row `IRPT_DASHBD-S8`).** `fact_trn` has no per-event key, so the producer keeps no
+    dedup. The 0.034 pct upper bound (1,099 of 3,209,771 rows) is a stated limitation of the method, not a defect of this
+    project. Whether the raw Schwab CRS record carries a key that silver drops is an upstream question. It is PARKED with
+    `1.0.0_SA_CTO` until a project owning `fact_trn`'s Schwab silver is seated, and it is never a cell here.

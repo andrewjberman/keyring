@@ -5863,3 +5863,959 @@ it and E6 and hop 11 wait on E7 (batch 123 item 4).
    the Black Diamond re-land's leg W path.
 2. The ad hoc QA run is preferred over skipping to leg S: it tests the new code before the scheduled fire, and it does not destroy
    leg S's discriminator, because the 10-02 fire computes 10-02.
+
+## Batch 180 -- 2026-10-02 ~18:1xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~M msg 104338, portal candidate 6245e92d)
+
+### MULTI-ASSET-ADVISOR-INTELLIGENCE-READERS-REVIEW-PASS-20261002
+1. REVIEWED AND PASSED (CLAUDE.md Portal: a product-file candidate is CTO-reviewed). Read by this seat: `origin/DEV...6245e92d`, 10
+   product files plus 1 test, 88 insertions and 10 deletions. Every product change is ADDITIVE:
+   - `multi_asset` appended to the five partner layouts' `ordered` lists, `CANONICAL_CLASSES`, `CANONICAL_CLASSES_WITH_CASH` and
+     the overview legend;
+   - the label "Multi-Asset" added to three label maps;
+   - `AdvisorAnalytics` keys its segments by the served class name, with the colour through `mixPieColor`, whose gray fallback
+     covers a class with no swatch.
+   No existing class, order or label moves. The new test fails 3 of 3 on DEV's sources and passes on the branch, so it
+   discriminates.
+2. LANDING: DEV has moved to `ec65c5d6` (three SecurityAnalysis files, no overlap with the candidate). Merge the current origin/DEV
+   in, never rebase. Land as a DEV fast-forward, with VALGATE on the push: through `2.0.0_SA_COO~M`'s own push if the gate admits
+   it, otherwise through `0.0.0_AB_MSTR`'s integration.
+3. The `multi_asset` ROWS still wait on these readers being on portal PROD (batch 164). A promote that carries them is Andrew's.
+4. Recorded: Andrew's card 4 is DONE. DB-b-10 merged @8b1df51795: one Black Diamond pull, 3 performancePeriod calls plus 1 token
+   mint, 3 mapped accounts, and 14 of 14 like-day pairs (median 0.16 pct, max 1.21 pct). Round 4 is with `3.0.0_SA_CVO` for
+   FWD-8. All four of Andrew's cards are done.
+
+## Batch 181 -- 2026-10-02 ~18:3xZ -- 1.0.0_SA_CTO (self-drive; answers 3.0.0_SA_CVO msg 104341, grade @7a062defc3; IRPT_DASHBD PRD ruling 11)
+
+### IRPT-DASHBD-FWD8-TIEOUT-TOLERANCE-0.35PP-PER-LIKE-DAY-WINDOW-20261002
+1. RULED under PRD ruling 11 (`1.0.0_SA_CTO` rules the tie-out tolerance on read of the measurement; Andrew's word, when given,
+   supersedes it): `tieout_tolerance` = 0.35 PERCENTAGE POINTS of absolute difference between Opal's total return and Black
+   Diamond's return over one like-day window.
+2. GROUNDING, the round-4 measurement: 14 of 14 like-day pairs over 3 accounts, median 0.16 pct, 10 of 14 under 0.35 pct, and the
+   largest three 1.21, 0.71 and 0.46 pct. 0.35 is the observed noise floor of two different methods (end-of-day flows and income on
+   receipt, against Black Diamond's own return). It is not set past the outliers, so the outliers stay visible.
+3. HOW FWD-8 IS GRADED WITH IT:
+   - A pair within 0.35 agrees.
+   - A pair beyond it is graded only with its STATED REASON.
+   - A reason that is an Opal defect is a defect row: it is fixed and the pair re-measured, never accepted as a disagreement.
+     The largest pair (0027265115, 06-25..07-06) already has one: Opal books income +0.46 pct where Black Diamond nets -2,470.31
+     on an account about 47 pct short. That is row IRPT_DASHBD-S22, `2.0.0_SA_COO~P`'s.
+   - FWD-8 stays NOT REALIZED until each of the four pairs beyond 0.35 states its reason and every defect among them is fixed and
+     re-measured.
+4. CARRIERS: `2.0.0_SA_COO~P` writes `tieout_tolerance` = 0.35 into `dim_return_method`, citing this batch, by its producer in the
+   next round-4 cell. The same tolerance governs P-5's population tie-out.
+
+## Batch 182 -- 2026-10-02 ~19:0xZ -- 1.0.0_SA_CTO (self-drive tick 15; records 3.0.0_SA_CVO msg 104371 and 2.0.0_SA_COO~Y's deploy @dd0b783285)
+
+### FWD8-COUNT-CORRECTED-AND-IRPT-STATUS-M2-HOP11-SERVED-20261002
+1. CORRECTION of batch 181 item 3, from `3.0.0_SA_CVO`'s corrected count (record `TIEOUT_49F_BLACKDIAMOND_R4.json`): 11 of 14
+   pairs are within 0.35 pp, and THREE are beyond:
+   - 0027265115 2026-06-25, 1.2130 (row S22);
+   - 0084073310 2026-08-21, 0.7078;
+   - 0027265115 2026-04-09, 0.4555.
+   The pair at 0.3307 is within. The tolerance stands, three pairs owe their stated reasons, and FWD-8 stays NOT REALIZED until
+   then.
+2. RECORDED, measured by this seat: irpt-status runs CodeSha256 `h7H7KgX1..` at 1024 MB and a 29 s timeout, and API `7k3ed8px20`
+   carries `GET .../analysis/requests/{requestId}/pdf`.
+   - The ledger `irpt-status-m2-d2-r1-20261002` is CLOSED, 4 of 4.
+   - V1-a server REPORT: history default 6,567 ms cold and 3,372 ms warm; limit=50 2,570 ms; single read 404 ms; status 1,122 ms.
+     Every page is at or under the 10 s bar.
+   - V1-b: hop 11 MATCH 4 of 4, SigV4 on the regional host, expiry 295-298 s on the AWS clock.
+   S270 is DISARMED (row S277). Hop 11 is SERVED.
+3. Batch 169's suspension ends: Cottonwood's accepted-request cap is LIFTED on V1-a's pass, as batch 171 item 3 ruled.
+
+## Batch 183 -- 2026-10-02 ~20:0xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~M msg 104382, scope record @3b62578f01)
+
+### MULTI-ASSET-PRODUCER-SHIPS-WITH-ITS-ROWS-AFTER-PROD-READERS-ROUTE-RESTAGE-NOW-20261002
+1. RULED: DO NOT RE-MINT THE PRODUCER BUNDLES NOW. A re-mint of `irpt_holdings_{49f,inf,cot}` would ship 22-23 changed members,
+   most of them other seats' unshipped work, while the producer's admission of `multi_asset` stays inert until a row carries it.
+   The rows wait on the portal readers being on PROD (batch 164).
+2. THE TRIGGER AND THE ACT ARE NAMED, so this is not an unbounded wait. When a portal PROD promote carries the `multi_asset`
+   readers (batch 180's candidate and `2.0.0_SA_COO~D`'s colour half), `2.0.0_SA_COO~M` authors ONE packet: the producer re-mint
+   plus the `multi_asset` rows.
+   - Its census attributes every changed member (batch 148): each foreign member to its owner's signed origin, or to that owner's
+     half.
+   - `~M`'s own two serve-holds (msgs 103971 and 103981) are released by their own conditions, stated in the packet.
+3. THE `irpt-holdings` ROUTE RE-STAGE PROCEEDS NOW, under its own small packet: the new contract and the -0.0 display fix
+   @38b72bf469, from committed blobs (`STAGE_MANIFEST.json`). The new enum value changes no answer until a row carries it.
+4. The portal PROD promote that carries the `multi_asset` readers joins the acts only Andrew can do (CLAUDE.md Portal: "DEV only,
+   PROD gated").
+
+## Batch 184 -- 2026-10-02 ~20:1xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~M msg 104385)
+
+### ROUTE-RESTAGE-FOLDS-INTO-THE-ROWS-PACKET-20261002
+1. CORRECTION of batch 183 item 3. Both of its premises were wrong, as measured by `2.0.0_SA_COO~M`:
+   - The -0.0 fix @38b72bf469 is already live: the deployed `tS/APci3..` carries it, from leg R on 10-01 at 20:13Z. This seat took
+     brief 3 item 1.4(b), held from a stale STATUS~M, as unshipped.
+   - `irpt-holdings` does not validate enums while serving: `validate_slice` is called only by tests, and the staged contract is
+     read only for block presence (`snapshot.py:228`). A `multi_asset` node already passes through unchanged.
+2. RULED: no separate re-stage, because it would serve the same bytes. The route's contract pin goes into the ONE rows packet of
+   batch 183 item 2, beside the producer re-mint, after the portal PROD promote that carries the readers.
+
+## Batch 185 -- 2026-10-02 ~20:2xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~P msg 104389)
+
+### IB-PR-221-INFLECTION-PERFORMANCE-SERVING-CTO-HALF-20261002
+1. SIGNED: the CTO half on IB-pr-221, Inflection's Performance from its holdings gold plus 49 Financial's GROSS label (packet blob
+   87d1cd8418). File: `CTO_HALF_IRPT_INFLECTION_PERFORMANCE_SERVING_20261002.md`.
+2. The answer's `Absence("fees_and_income")` and `basis` make GROSS honest on a price return. PATH A serving Inflection is its only
+   path until its reporting gold serves; then P-6 retires it in the same window.
+
+## Batch 186 -- 2026-10-02 ~20:2xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~Y msg 104386, row S279 @44da23a117)
+
+### S279-FUND-ROW-FAILS-THE-UPLOAD-FIX-OFFLINE-FIRST-VENDOR-PAUSE-HOLDS-20261002
+1. RECORDED: brief 2 item 4.1 is MEASURED, not inferred. A fund ticker (TIMXX, FBIFX) fails `classify_batch`'s row check and takes
+   the whole upload to one file-level RESOLVE_RETRY_EXHAUSTED. AAPL+BRK.B normalizes. Case A cannot reach READY until this is
+   fixed.
+2. RULED: `2.0.0_SA_COO~Y`'s remedy proceeds as one resident packet (st14). The packet does three things:
+   - ties YCharts' namespaced fund row to the requested ticker;
+   - carries the provider id into the portfolio;
+   - names the refusing check in the journal.
+   Its PROOF IS OFFLINE FIRST, against the recorded answers in the resident journal (the `M:` shape), with no vendor call. A
+   failing fund row must refuse THAT ROW by name, never the whole file.
+3. VENDOR TRAFFIC STAYS PAUSED (since 19:48Z, five WAF challenges in a row) until `~Y` names the cause.
+   - Resumption is one job at a time under the solo gate, spaced, starting with Y-1 on the fixed code.
+   - A recurring challenge stops traffic and is reported, never pushed through.
+   - Any sign-in path stays option A at Andrew's time (batch 131).
+   - `2.0.0_SA_COO~D` holds Case A's page walk until the fix serves.
+
+## Batch 187 -- 2026-10-02 ~20:3xZ -- 1.0.0_SA_CTO (self-drive tick 17; answers 2.0.0_SA_COO~M's record @8859c2003c, brief 3 item 1.4(d))
+
+### HOLDINGS-TARGET-FOLD-OPTION-A-OPT-IN-AND-LABELLED-20261002
+1. RULED (a), with two conditions. The route gains a separately labelled TARGET fold: `class_totals_target` and
+   `security_aggregates_target`, computed only over TARGET nodes and NEVER summed with the actual blocks (ruling 103025 stands:
+   TARGET cannot be added to actual). The page labels them "the model's target allocation", never as positions.
+   - Grounding, `~M`'s measurement: at 49 Financial, 90.3 pct of custody (5,931 accounts, 1,618.0 M) has only a TARGET drill, and
+     no account carries both kinds. Since H-1, the map draws those TARGET securities while the class lines show one remainder
+     block, so the two views of one selection disagree.
+2. CONDITION 1, OPT-IN. The TARGET blocks are returned only when the request asks (`include=target`, batch 142's pattern). Without
+   it, the answer is today's, key for key, so PROD's reader is unchanged by construction, unless the packet shows PROD's reader
+   tolerates unknown keys. The contract gains two OPTIONAL properties, and no existing field moves.
+3. CONDITION 2, THE LABEL TRAVELS WITH THE VALUE. Each TARGET block names its basis (`basis: TARGET`) in a field a consumer reads.
+   The page's remainder block is renamed "held at the model's target, not position-level" for accounts with no actual positions.
+   Carriers: `2.0.0_SA_COO~M` (route and contract) and `2.0.0_SA_COO~D` (the page).
+4. RECORDED: portal PROD v2.1.195 carries the Investor Reporting `multi_asset` readers (graded @b667b460ba). The Advisor
+   Intelligence half (batch 180's candidate) is NOT yet on PROD, so batch 183's trigger is not met and the rows stay at 0 of
+   2,841. The PROD promote that carries the Advisor Intelligence half remains Andrew's act.
+
+## Batch 188 -- 2026-10-02 ~22:0xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~Y msg 104423)
+
+### ST14-FUND-ROW-FIX-CTO-HALF-20261002
+1. SIGNED: the CTO half on st14 (packet blob bd73135887): the resident st13 -> st14 and irpt-ycharts-generate at `f89fc8e731`, in
+   one window, rolled back both or neither. File: `CTO_HALF_ST14_FUND_ROW_20261002.md`.
+2. V1 is Y-1, Case A on batch 186's terms: the first lookup must face no WAF challenge, or traffic stops and the outcome is
+   reported.
+
+## Batch 189 -- 2026-10-02 ~22:4xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~Y msg 104437, Y-3 design @f7bc231673)
+
+### Y3-ETF-COMPARISON-KEY-THREE-EXACT-FILE-GRANTS-20261002
+1. GRANTED, as exact files:
+   - `_scope/maintained_sources.py` goes to a NEW lane, IRPT_BCKEND_FAST_Y_LIVESCOPE: the IRPT_LIVE_SCOPE_P members preserved,
+     `~M` included, plus `2.0.0_SA_COO~Y`.
+   - `reports/request_composition.py` and `reports/generate_installed.py` go to lane IRPT_BCKEND_FAST_Y_STATUSPORTS (the
+     IRPT_COMPLETION_P members plus `~Y`).
+   Checked with a negative control: each file has one row, `~Y` is in its lane, and `~D` is not.
+2. ONE OVERLAP, `~Y`'s own: pending order IB-yr-261 (issued by `~Y` to worker `~89`) names `generate_installed.py` in its
+   `<paths>`. `~Y` closes or supersedes it before editing, so the file has one writer.
+3. NO PRD HALF RE-OPENS. The CONTRACTS row `AnalysisRequest` reads "variant + ordered comparisons" and does not fix the key
+   domain to the model catalogue. The ETF source enters as `MAINTAINED_RECORD`, already in the enum, so no schema changes. This
+   realizes batch 178 ruling 4 (Andrew's Case C, "against ULT and IWM").
+
+## Batch 190 -- 2026-10-02 ~23:0xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~P msg 104440, packet blob 3c600abb51)
+
+### INGEST-MIRROR-RELEASE-REFUSED-AS-BUILT-NAME-THE-FOREIGN-CLASS-KEEP-THE-TRIPWIRE-20261002
+1. REFUSED AS BUILT, one defect. @2e00498347 turns EVERY unexpected key that no class explains into a counted SKIP. The ALIEN
+   SURPLUS raise is the only tripwire for another writer putting keys into a firm's bronze destination (`eclipse/inflection/bronze/`).
+   That is the cross-firm and foreign-write class the NEVER rules guard, and under the standing no-alerts moratorium a raise is the
+   gate. A counted skip nobody reads would silently absorb a real contamination.
+2. THE FIX, small, then the same packet re-cut. Name the one legitimate foreign writer's key class (the Eclipse membership-map
+   writer's `eclipse_membership_map/date=.../manifest.json`) as an EXPLAINED foreign class: counted and skipped, never copied, never
+   deleted. EVERY key that no class explains STILL RAISES. The test pins both: the named class is skipped and counted, and an
+   unnamed foreign key raises.
+3. Accepted as written and carried into the re-cut:
+   - the conservation check counts the row's own failures;
+   - a failed copy is reported at cycle end, naming the key;
+   - M2's 17:05 UTC Inflection poll, idempotent, with the Cottonwood rule and the 13:05Z rule unmoved;
+   - every other raise is unchanged;
+   - rollback per key, and destroying M2's resources is Andrew's word.
+   M2 ships with the re-cut M1, not alone, because the old code would make the 17:05 run read failed too.
+
+## Batch 191 -- 2026-10-02 ~23:3xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~P msg 104449)
+
+### INGEST-MIRROR-RE-CUT-SIGNED-AND-BATCH-63-ITEM-6-SUPERSEDED-20261002
+1. SIGNED: the re-cut mirror release (packet blob 783729898c, source @b7a2acb18c). File:
+   `CTO_HALF_INGEST_MIRROR_RELEASE_20261002.md`. Exactly the Eclipse membership-map writer's two named files on the
+   eclipse/inflection row are an explained foreign class. Every other unexplained key still raises, and two tests pin the raises.
+2. CORRECTION, this seat's: batch 190 reversed this seat's OWN batch 63 item 6 (2026-10-01), whose words were "An unknown key class
+   is a counted SKIP line, never an error exit". `2.0.0_SA_COO~P` built @2e00498347 faithfully to that ruling, and the defect
+   batch 190 named was this seat's ruling, not the build. Batch 63 item 6's blanket-skip clause is SUPERSEDED: the foreign-write
+   raise stays, and only a NAMED foreign class is counted and skipped. Batch 63 item 6's second scheduled fire stands.
+
+## Batch 192 -- 2026-10-02 ~23:4xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~Y msg 104454, outcome @40632158b9)
+
+### ST14-V1-CLOSES-ON-RUN-3-S279-FIXED-CASE-A-READY-MOVES-TO-Y5-20261002
+1. RULED: st14's V1 closes on run 3 as S279 FIXED, the defect st14 existed to fix. Case A now resolves on ONE read with no WAF
+   challenge (`matched=1 refused=0`), and the one unusable row is NAMED, row 100 TIMXX, instead of taking the whole file down
+   (S283 disarms S279). No retry, per batch 188.
+2. Case A's READY criterion MOVES to Y-5: TIMXX is offered a proxy, the user names one (the swap gate's user-named path, batch
+   178 ruling 5), and the Overview runs to READY. That needs no spend.
+   - The alternative, an account entitlement for the gated fund, is a contract or entitlement beyond Andrew's grants. It is NOT
+     taken unless Andrew asks for it.
+   - Until measured, the gating is INFERRED (`features_needed`, row S284). Y-3's packet adds the `gated=` journal count so the next
+     run measures it.
+3. Batch 178's order is otherwise unchanged: Y-2 and Y-3 run on today's code (Y-3's packet next), then Y-4 and Y-5. Case A's
+   READY is graded with Y-5.
+
+## Batch 193 -- 2026-10-02 ~23:5xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~P msg 104465, row IRPT_DASHBD-W1-S18, evidence DECOMPOSE_THREE_PAIRS_R6.json)
+
+### C-VALUE-IS-ACCOUNT-EQUITY-MARGIN-BALANCE-INCLUDED-NEW-METHOD-VERSION-20261002
+1. RULED: YES. C-VALUE is the account's EQUITY, its net liquidation value: `net_mv_plus_cash + margin_balance`, with the margin
+   balance signed as the custodian reports it (a debit reduces value).
+   - It is ONE rule for every account: an account with no margin carries `margin_balance = 0` and does not move. No margin
+     special case is minted.
+   - It is a new `method_version`, recorded in `dim_return_method`.
+2. GROUNDING, measured by `~P`:
+   - At 6 of 6 endpoints, Black Diamond's value equals `net_mv_plus_cash + margin_balance` plus its own accrual.
+   - Schwab's own equity field includes `margin_balance`.
+   - With it added, the three pairs beyond 0.35 pp fall to 0.0044, 0.0264 and 0.0493 pp.
+   This is C-METHOD's "daily valuation of the WHOLE account, cash included" carried out faithfully, not a change of meaning, so no
+   PRD half re-opens.
+3. CONSEQUENCES:
+   - `~P` cuts the method into the P-2 packet with a re-measure of ALL 14 pairs, the population figure and the guard. Black
+     Diamond's accrual stays outside Opal's figure: C-METHOD books income on receipt, and that difference is stated per pair.
+   - Row S22's diagnosis (the short-account income sign) is RE-READ on the re-measure. The short account's 1.21 pp pair is one of
+     the three the margin balance explains, so S22 is either disarmed by the re-measure or re-stated with its residual.
+   - FWD-8 is graded on the re-measured pairs against the 0.35 pp tolerance (batch 181).
+   - W1-S18 is DISARMED by this ruling. This seat is its disarm owner.
+
+## Batch 194 -- 2026-10-03 ~00:0xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~Y msg 104466)
+
+### Y3-ETF-COMPARISON-CTO-HALF-20261003
+1. SIGNED: the CTO half on Y-3 plus S284's journal (packet blob 8bebf7ea86): the resident st14 -> st15 and irpt-ycharts-generate at
+   `9bbb38f7a0`, in one window, rolled back both or neither. File: `CTO_HALF_Y3_ETF_COMPARISON_20261003.md`.
+2. V1-a, ULT + IWM on the fund-free file, is ULT's first live run. V1-b measures S284's gating. One job at a time, spaced, and a
+   WAF challenge stops traffic.
+
+## Batch 195 -- 2026-10-03 ~00:1xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~P msg 104470, row IRPT_DASHBD-W1-S20)
+
+### MARGIN-INTEREST-ADJUSTMENT-IS-RETURN-STATED-NON-DEFECT-REASON-20261003
+1. RULED: RETURN, not an external flow. A MARGIN INT ADJ credit (INTRA/FC/IN, 4,429.53 USD) reverses or adjusts margin interest
+   the account paid. This seat's round-2 analysis already ruled margin interest INTERNAL, as a cost of the portfolio inside its
+   return and never a client withdrawal (C-METHOD's `F_t`, `CTO_ROUND_ANALYSIS_IRPT_DASHBD_ROUND_2_B_20261002.md:23`). Its
+   adjustment takes the same side, so the charge and its reversal never split between return and flow. Re-classing it as a flow
+   to match Black Diamond would make Opal inconsistent with itself.
+2. THE PAIR: 0027265115 2026-06-25..07-06 carries a STATED NON-DEFECT REASON at about 0.47 pp, measured on the margin-balance
+   method of batch 193: Black Diamond books the margin interest adjustment as a net addition, while Opal keeps margin interest
+   internal by ruling.
+   - Under batch 181, a pair beyond 0.35 pp with a stated non-defect reason is EXPLAINED, not a disagreement.
+   - FWD-8 grades on the re-measure (DB-b-15) with that reason attached.
+3. W1-S20 is DISARMED by this ruling. Nothing is added to DB-b-15 for it.
+
+## Batch 196 -- 2026-10-03 ~00:3xZ -- 1.0.0_SA_CTO (self-drive tick 21; answers 3.0.0_SA_CVO msg 104478, grade @68a9054cc3)
+
+### BATCH-192-BASELINE-CORRECTED-S279-STANDS-ON-NEAR-SAME-FILES-MATCHED-PATH-UNPROVEN-20261003
+1. CORRECTION of batch 192's grounding. It took over the outcome record's phrase "the same file failed AS A WHOLE" (upload
+   UP-2679bceb). That upload is the TYPO file (87afdc7d..), not Case A's file (500837992a..), which has exactly ONE upload, on
+   st14.
+2. WHAT S279 FIXED STANDS ON, re-stated:
+   - On st13, 5 of 6 fund-bearing uploads ended RESOLVE_RETRY_EXHAUSTED for the whole file. Among them was the typo file: the easy
+     file with one cell changed, carrying the same TIMXX row.
+   - On st14, Case A's file ended with ONE per-row finding (row 100, TICKER_CHECK_UNAVAILABLE).
+   The whole-file failure is gone. The comparison is across near-identical files, not the same file, and the record says so.
+3. NOT PROVEN LIVE: the success path, a fund row NORMALIZED as `M:<ticker>`. S284 measured TIMXX as gated (`mutualFundDataUSA`),
+   and the account may gate every mutual fund the same way. The matched path is then proven only offline, until a fund the
+   account is entitled to appears. Case A's READY still moves to Y-5 (batch 192 item 2).
+4. Row S286 is on record: st14's generate build read an autocrlf tree, and 15 of 113 members are CRLF-converted. The next
+   generate build is made from a tree checked out with `core.autocrlf=false`, and its members are compared to `git show` byte for
+   byte. Owner `2.0.0_SA_COO~Y`.
+
+## Batch 197 -- 2026-10-03 ~01:0xZ -- 1.0.0_SA_CTO (self-drive; answers 2.0.0_SA_COO~P msg 104490, DB-b-12 @eaf04fe0d1)
+
+### P3-CLIENT-SUMMARY-OWN-CONTRACT-AND-SERVED-ONLY-ON-FULL-ACCOUNT-COVERAGE-20261003
+1. (a) RULED: A NEW VERSIONED CONTRACT, `org/standards/IRPT_DASHBD_CLIENT_SUMMARY_CONTRACT.json` 0.1.0, beside its three siblings
+   (ACCOUNT_RETURN_DAILY, DIM_RETURN_METHOD, SERIES). It is not a section of the manifest contract: a per-client summary is a
+   different GRAIN (one client over its accounts) from a per-account manifest, and rule 24 (ii) keeps one grain per schema.
+   - Its enums (`window_status`, and any other) carry the rule-24 four-postulate record and token census in the file.
+   - `unpublished_account_ids` stays, so a reader can see which accounts are not yet precomputed (P-2's tail).
+   - The address is builder output: `s3://opal-data-49financial/irpt/49financial/platinum/reporting/client=<cli_id>/summary.json`.
+2. (b) RULED: SERVED ONLY WHEN THE SCOPE ENFORCER COVERS EVERY ACCOUNT THE SUMMARY NAMES, using the same per-account coverage
+   check a manifest read uses, applied to each account.
+   - A client id in a request is a claim, never a grant (the `_authz` principle).
+   - The summary carries client-level windows that cannot be filtered without recomputing them, and the read route streams
+     stored bytes and recomputes nothing. A viewer covering only some of the client's accounts is therefore REFUSED the summary
+     (`OBJECT_NOT_COVERED`), and the page falls back to the per-account manifests that viewer may read.
+   - Test arms: full coverage is served; partial coverage is refused; a client of another firm is refused.
+3. Both ride in the P-2 packet.
+
+## Batch 198 -- 2026-10-03 ~02:0xZ -- `2.0.0_SA_COO~Y` msg 104504: Y-5 packet 1 CTO half
+
+**SIGNED.** `CTO_HALF_Y5_PROXY_CORRECTIONS_20261003.md`, on packet blob `2bff7eacdc`.
+- One writer of the gated row's finding code (`portfolio.py:430-441`); both branches of its rule are stated.
+- PROD portal 6169edd962 reads findings as open records, so the new code and action parse.
+- No vendor call in D1 or D2 while the queue reads 0/0.
+- D1 and D2 may land now; V1 waits on option A.
+- The next irpt-status ship attributes `ops/status.py`'s two new entries (batch 148).
+
+-- 1.0.0_SA_CTO
+
+## Batch 199 -- 2026-10-03 ~03:0xZ -- `2.0.0_SA_COO~Y` msg 104514: Y-4 check gate CTO half
+
+**SIGNED.** `CTO_HALF_Y4_CHECK_GATE_20261003.md`, on packet blob `31d7762346`.
+- Kimi is VEW-3, scope "any"; Andrew's words were re-read at the record path on the laptop.
+- Only tickers go to the vendor (the row symbol and at most 20 others).
+- An unstated blast-radius line is added: at most 720 s more to NEEDS_CORRECTION, with the single worker busy meanwhile; the provider lease is not held.
+- Y-4's next enrichment, not a condition of D1-D3: a per-upload total budget, and the IAM resource narrowed to `astn/kimi/api-key-??????`.
+
+-- 1.0.0_SA_CTO
+
+## Batch 200 -- 2026-10-03 ~03:1xZ -- `3.0.0_SA_CVO` msg 104513: IRPT_DASHBD rounds 2-9 L10 analysis
+
+**The analysis:** `CTO_ROUND_ANALYSIS_IRPT_DASHBD_ROUNDS_2_9_20261003.md`; IRPT_DASHBD PRD addendum v0.7 (rulings 26-29). No
+ENDPOINT change. Placements:
+- W1-S17 -> the next issuance as one LOCAL cell; it rides the P-2 rewrite and never holds P-2.
+- S15 and S19 -> the P-2 drain, the issuer's own.
+- S20 -> `~D`; the picker and the body both read `series.as_of`.
+- S18 -> done here: C-NAMES prints the builder output for the five deployed names.
+- S12 -> `4.0.0_SA_CRO`'s register.
+- S8 -> a stated limitation; the upstream question is parked with this seat until a project owning `fact_trn` is seated.
+
+**Correction to batch 193 (from the CVO's slug):** the 0.0044 pp for the S22 pair (0027265115) was the counterfactual. The
+margin balance alone gives 0.4738 pp. Batch 195 states it correctly (a MARGIN INT ADJ credit is RETURN, a stated non-defect
+reason).
+
+-- 1.0.0_SA_CTO
+
+## Batch 201 -- 2026-10-03 ~03:1xZ -- `2.0.0_SA_COO~P` msg 104520: P-6's scope (PATH A for 49 Financial feeds the tab, print and export)
+
+**RULED (a): retire PATH A for 49 Financial whole, in P-2's window.**
+- 49F leaves `COMPOSED_FIRMS` (`performance/retained.py:67`) with a named refusal.
+- The tab, print (render/Page, PerformanceDocument, manifest) and export (ExportButton, resolveBundle) all read PATH B before
+  that window closes.
+
+**Why:** option (b) keeps two paths serving 49F performance. That is the duplicate output path Andrew vetoed (no shadow or
+build-alongside pipelines; port directly, with same-window rollback). It also lets a printed or exported report disagree with
+the tab once method_version 2 is served.
+
+**Sequencing, so nothing idles:**
+- `2.0.0_SA_COO~D`'s print and export cells are cut now.
+- `~P` takes P-2 to the window: packets, both halves, rehearsal, and the artifacts already uploaded @28480036ad.
+- The window opens when ~D's cells are merged. One window holds three things: the gold, publish and read applies; the three
+  readers on PATH B; and 49F's removal from `COMPOSED_FIRMS`.
+- One rollback restores 49F in `COMPOSED_FIRMS`, reverts the portal, and re-promotes the prior artifacts.
+
+**Owed before the window (the reader census, with its denominator printed):** every caller of `RetainedPerformance` for 49F.
+That covers the server side (`performance/installed.py` imports it; name every Lambda that packages it, and whether any export
+or narrative path reaches it) as well as the portal's three readers. A server-side reader the census finds moves in the same
+window or keeps 49F by a named exception in the never-widen half; it is never left to meet the refusal unannounced.
+
+-- 1.0.0_SA_CTO
+
+## Batch 202 -- 2026-10-03 ~03:2xZ -- `3.0.0_SA_CVO` msg 104521: row IRPT_BCKEND-S292 (ARMED until Mon 10-05 14:00Z), relayed and placed
+
+**The hazard (the CVO's read, grade @63632cdc8d):** Inflection's gold ends at 09-30. The schedule was created after Friday's
+14:00Z slot, and each fire computes one day with no catch-up, so no fire will ever write 10-01. Monday's fire computes 10-02,
+and `performance/holdings_gold.py:220-246` links 09-30 -> 10-02 with no absence disclosed. This seat read those lines: the
+adapter links whatever partitions exist in the window and never compares them to the trading calendar.
+
+**1. Disarm (relayed to `2.0.0_SA_COO~P`, the disarm owner):** land Inflection's 2026-10-01 gold before Monday 10-05 14:00Z,
+or state a disposition on the row.
+- The write is ONE new partition key, a literal key list the actor controls, so NEVER-1's never-widen does not apply. No
+  existing key moves.
+- It is an operational backfill of a missed day. Monday's scheduled fire stays A1's evidence.
+- `~P` also amends A1 (the issuer's own criteria) so it fails when a trading day in the window has no partition.
+
+**2. The class, placed with `~P` (IRPT_BCKEND), two cells, both firms:**
+- (i) **The consuming half (first, because it covers every cause: a missed fire, a failed compute, late silver):**
+  `holdings_gold.py` compares the window's partitions with `lib/trading_calendar.py`'s trading days.
+  - A trading day without a partition is named on the value, and the value's claim is no longer `measured`.
+  - The page shows that disclosure. The adapter does not refuse the window, because a refusal would blank the page.
+  - It never links across a missing day silently.
+- (ii) **Producer catch-up:** each scheduled fire computes every trading day from the last landed gold day through T-1 for
+  which silver holds the close, at most 5 trading days per fire. A missed fire then heals on the next one. The fire stays
+  scheduled; only its window widens. Each write is a new key.
+
+-- 1.0.0_SA_CTO
+
+## Batch 203 -- 2026-10-03 ~03:4xZ -- `2.0.0_SA_COO~P` msg 104528: P-6's census, and the PATH B export shape
+
+**The census is accepted** (batch 201's condition met):
+- 227 lambda-source-map entries; 1 packages PATH A (irpt-performance-adapter).
+- 1 server reader of PATH A's output: irpt-export-render (`export/retained_export.py`, through `submit_service.py` and
+  `submit_async.py`).
+- 3 portal readers; 34 matching files classified, with no other importer.
+
+The export moves in the same window.
+
+**RULED YES to `2.0.0_SA_COO~D`'s server half**
+(`org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/2.0.0_SA_COO~D/p6/P6_PRINT_EXPORT_PATH_B_PLAN.md`), with ONE amendment:
+**the export freezes the series it renders.**
+
+The platinum series is rewritten by every daily publish. A render that reads "the current series" could print numbers other
+than the ones the user previewed. That breaks IRPT_BCKEND CONTRACTS `ExportBundle` ("immutable authorized report revisions")
+and section 3.3 ("MINTED FROM THE FROZEN ExportBundle, NEVER FROM A REQUEST"). So:
+1. **At submit,** after `_check_covered` passes for the account, the bundle pins the series as one immutable revision inside
+   `authorized_report_revisions`: account id, start, end, the S3 VersionId, sha256 and `series.as_of`. No new top-level
+   field is added, and the PRD row's words hold unchanged. Any additive change to the item shape is a contract bump in
+   `ExportBundle.schema.json` in the same commit, with the rule-24 record if an enum grows.
+2. **The render reads that exact version,** never the current object. `~P` names in the cell whether this is a version
+   parameter on the reporting route (under the same coverage) or the render role reading that one prefix by VersionId. A
+   role grant is an IAM move under the window's never-widen half.
+3. **The receipt names the frozen `as_of`,** and the page shows it beside the export. A publish that lands between preview and
+   submit is then visible, never silent.
+
+Print (interactive, immediate) reads the live series exactly as the tab does. That is the parity ~D's plan already gives.
+
+**Placement:** one IRPT_BCKEND cell for `~P`, risk SERVED. P-2's window waits on it and on `~D`'s page half. One rollback
+reverts both.
+
+-- 1.0.0_SA_CTO
+
+## Batch 204 -- 2026-10-03 ~04:3xZ -- `2.0.0_SA_COO~Y` msg 104535: irpt-status W2-06 CTO half
+
+**SIGNED.** `CTO_HALF_IRPT_STATUS_W206_20261003.md`, on packet blob `30daf0f28b`.
+- One move: irpt-status `h7H7KgX1..` -> `6VQejBfs..`.
+- 6 changed members, each attributed. Batch 198's riding `status.py` entries are now attributed.
+- `include=composition` is opt-in; a caller that does not ask receives no new key.
+- The new `CORRECT` action parses on PROD portal 6169edd962 (`public-status.ts`, its closed shape and action list).
+- The ACTIVE `irpt-x10-v1` is byte-equal.
+
+-- 1.0.0_SA_CTO
+
+## Batch 205 -- 2026-10-03 ~04:5xZ -- `2.0.0_SA_COO~P` msg 104542: P-6 export -- the 49F firm fence denies the export role
+
+**RULED (c): the export reads the series THROUGH the reporting route. The firm fence is untouched.**
+- `opal-data-49financial`'s `DenyForeignFirmPrincipals` stays exactly as it is. No exemption row, and no bucket-policy edit.
+- The export role's new platinum policy is dropped. `irpt-export-render-role` (multi-firm) never reads a firm's bucket
+  directly.
+
+**Why:**
+- (a) widens a per-firm fence to a multi-firm role. That is the cross-firm law's mechanism (CLAUDE.md: per-firm buckets get a
+  bucket-scoped Deny), and an exemption would be a gate edit in the wrong direction.
+- (b) puts a firm token on a function that serves every firm.
+- (c) uses the one 49F-scoped reader that already exists, under the coverage check (`_check_covered`) the page passes. It
+  already returns `X-Opal-Version-Id`.
+
+**How batch 203's freeze holds under (c):**
+1. **At submit:** the submit reads the series through the route as the submitter's delegate (row W104-S1's render-delegate
+   admission). It pins the returned `X-Opal-Version-Id`, the sha256 of the bytes it received, and `series.as_of` inside
+   `authorized_report_revisions`.
+2. **At render:** the render reads through the same route and asks for that exact version.
+   - A `version` query parameter is admitted ONLY for the render-delegate principal, never for the page.
+   - The read role (`irpt-49f-reporting-read-role`, a 49F role inside the fence) gains `s3:GetObjectVersion` on the platinum
+     reporting prefix only. That is an IAM move under the window's never-widen half.
+3. **The render checks the bytes' sha256 against the frozen value.** A mismatch refuses by name and is never rendered; the user
+   resubmits.
+
+-- 1.0.0_SA_CTO
+
+## Batch 206 -- 2026-10-03 ~05:1xZ -- `2.0.0_SA_COO~Y` msg 104546: Y-4 enrichment CTO half
+
+**SIGNED.** `CTO_HALF_Y4E_GATE_TOTAL_AND_SECRET_20261003.md`, on packet blob `703359ad2a`.
+- Batch 199's two enrichments are delivered: the per-upload gate total of 240 s (was a 720 s worst case), and the Resource
+  `astn/kimi/api-key-??????`. The sibling name the before-simulation allowed must read `implicitDeny` after D3.
+- 12 changed members are attributed. IB-pr-301's `ExportBundle` change keeps batch 203's form: `performance_source` sits
+  inside the `authorized_report_revisions` items, with no new top-level field.
+
+-- 1.0.0_SA_CTO
+
+## Batch 207 -- 2026-10-03 ~05:3xZ -- `2.0.0_SA_COO~P` msg 104549: round 36 deploy CTO half
+
+`CTO_HALF_ROUND36_GAP_DISCLOSURE_CATCH_UP_20261003.md`, on packet blob `99708eefea`; signed per leg (the packet's legs each roll
+back alone).
+- **D2 SIGNED** (producer catch-up, at most 5 trading days per fire, new keys only, plus one prefix-scoped ListBucket per firm
+  role).
+- **D1 REFUSED as packaged:** `claim = "partial"` adds a fifth value to the claim vocabulary (`measured/inferred/held/absent`,
+  CLAUDE.md) and puts completeness on the provenance axis (rule 24 iii). The re-cut is `claim = "inferred"`, with the PARTIAL
+  absence still naming the days; a new D1 blob comes back before Mon 14:00Z. This seat's batch 202 left the value unnamed.
+- **The three historic Inflection gaps:** YES, as a separate packet after Monday's A1 passes, with silver checked per day and a
+  per-window delta table.
+
+-- 1.0.0_SA_CTO
+
+## Batch 208 -- 2026-10-03 ~05:4xZ -- `2.0.0_SA_COO~Y` msg 104551: Y-4e D3 rolled back under batch 206's condition; the Kimi key's carrier
+
+**Recorded:** D3 was rolled back exactly as batch 206's condition required (the sibling read `allowed` after D3). D2 did not
+land, and the state equals the before-read (c5a0bf390d). That condition did its job.
+
+**Correction to batch 199 (this seat's error):** the Y-4 half accepted the packet's "the runner role reads one more secret",
+which was not true. `iam.tf:96` `ReadYChartsAndSharedVisionSecrets` already granted the runner `local.kimi_secret_arn`
+(`astn/kimi/api-key-*`), so Y-4's added statement changed no access. This seat did not read the role's existing statements
+before signing. The lesson for this seat's IAM halves: read the role's MatchedStatements (`simulate-principal-policy`)
+before signing that a statement "adds" access.
+
+**RULED: the carrier is narrowed at its one source, and D3 and D2 re-ship together.**
+1. `.owned-paths.yaml`: an exact row grants `infra/aws/terraform/investor-reporting/ycharts/iam.tf` to
+   IRPT_BCKEND_FAST_Y_STATUSPORTS (the IRPT_COMPLETION_P members kept, plus COO~Y), for ONE local: `kimi_secret_arn` `-*` ->
+   `-??????`, the patch `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/Y4E/P_IAM_KIMI_CARRIER_PATCH_20261003.patch`.
+   It is code only. A YAML read shows the row resolving to the lane, with ~Y and ~P in it; negative control: `resident.tf`
+   still maps to IRPT_BCKEND_FAST_Y_TFPOLICY.
+2. `~Y` lands the patch and re-packets D3 (both statements narrowed through the one carrier, @60dac3f9b3) with D2, in one
+   window, both or neither, on a new blob.
+   - The packet prints the role's MatchedStatements before and after.
+   - The condition stands: the estate secret `allowed`, the sibling `implicitDeny`.
+   - The two ycharts names keep `-*` until their own ruling.
+
+-- 1.0.0_SA_CTO
+
+## Batch 209 -- 2026-10-03 ~05:5xZ -- `2.0.0_SA_COO~Y` msg 104553: Y-4e re-packet CTO half
+
+**SIGNED.** `CTO_HALF_Y4E2_KIMI_CARRIER_20261003.md`, on packet blob `157d88794d`.
+- The grant was kept to its one line (@40fcacb067).
+- MatchedStatements before: both names `allowed` by both policies. Required after: the estate `allowed`, the sibling
+  `implicitDeny`.
+- The plan moves exactly the Kimi ARN in `runner` and `runner_resident`.
+- D3 + D2 ship both or neither.
+- The login and session ARNs are parked for a later ruling.
+
+-- 1.0.0_SA_CTO
+
+## Batch 210 -- 2026-10-03 ~06:0xZ -- `2.0.0_SA_COO~P` msg 104555: round 36 D1 re-cut
+
+**D1 SIGNED** on amendment 1 (blob `7739b99982`, artifact `U+miRkw3..`, IB-pr-303 @b72601ad47). The claim is `inferred` at
+`holdings_gold.py:291` and `:340`, and `CLAIM_PARTIAL` is gone; the PARTIAL absence still names the days. One member moves;
+the plan reads 0/1/0. Batch 207's refusal is closed; D2 was served @7924f2237a.
+
+-- 1.0.0_SA_CTO
+
+## Batch 211 -- 2026-10-03 ~06:1xZ -- `2.0.0_SA_COO~D` msg 104556: row IRPT_BCKEND-W101-S13 (the signed download answer is not in the response contract)
+
+**The measurement (this seat's read):** the served `export/entry.py:282-288` returns `download_route` carrying `route`,
+`requires_reauthorization`, `url` and `expires_at`, plus top-level `sha256` and `byte_length` (`download.py:176`: a SigV4 link
+of 300 s at most). Both `responses/export-download.response.schema.json` and `ExportReceipt.schema.json`'s `download_route`
+are `additionalProperties: false` without those fields. So the server's own answer violates its published contract, and a
+strict v1 parser drops the four fields.
+
+**RULED: the contract follows the server, and the signed link lives ONLY in the response.**
+1. **`url` and `expires_at` belong in the download RESPONSE, never in `ExportReceipt.download_route`.**
+   - The receipt is the durable record: it is stored and replayed. A link that expires in 300 s and carries a signature must
+     never be part of what a receipt may hold.
+   - So the response schema defines its own response-only `download_route`: `route`, `requires_reauthorization`, `url`
+     (https, required) and `expires_at` (UTC `Z` date-time, required).
+   - `ExportReceipt.download_route` stays exactly as it is.
+2. **`sha256`** (64 hex) and **`byte_length`** (integer, 0 or more) are published at the response's top level, as the server
+   sends them. They are the download's integrity facts for the page to check.
+3. **This is additive:** a response contract revision, with no server change and no deploy. A contract test validates the live
+   handler's answer (the download fixture) against the revised schema, so the server and its contract cannot drift again
+   unseen.
+
+**Owner:** `2.0.0_SA_COO~P` (the export lane): one contract commit with its test, cut now as hygiene, never held for a round.
+`~D`'s page lands the day the schema carries the fields. W101-S13 closes on that commit, read by `3.0.0_SA_CVO` at the next
+compile.
+
+-- 1.0.0_SA_CTO
+
+## Batch 212 -- 2026-10-03 ~06:2xZ -- `2.0.0_SA_COO~Y` msg 104559: G3 irpt-status render ports CTO half
+
+**SIGNED.** `CTO_HALF_IRPT_STATUS_G3_RENDER_PORTS_20261003.md`, on packet blob `85eb94e84c`.
+- I1 (the grant read, prefix-bounded) lands before D1 (code `hC6Pramt..` plus `IRPT_EVIDENCE_BUCKET`).
+- 3 changed members are attributed; IB-pr-302's `enforce.py` rides inert.
+- **The negative arm's carrier: `2.0.0_SA_COO~P`** (the render identity's owner). It mints ONE token through the minter's
+  production function over an existing frozen Performance bundle, with the key read by name and never printed. Only the
+  `jti` or sha256 and the `OBJECT_NOT_COVERED` answer are recorded. `~Y` never reads the render key.
+- The positive arm runs at E4.
+
+-- 1.0.0_SA_CTO
+
+## Batch 213 -- 2026-10-03 ~06:3xZ -- `3.0.0_SA_CVO` msg 104563: row MDPF_SECCLASS-S18 (ARMED) -- served BD AUM for 10-01 is $78.5M low
+
+**The hazard (the CVO's grade @0983970602):**
+- The 04:00Z BD gold run exited 0 and served the 49F firm mix at as_of 10-01: $1,764,886,987.32, down $78.2M (4.24 pct) from
+  09-30.
+- 335 accounts holding $78,634,159.20 on 09-30 are missing from the 10-01 positions cube. All 335 are OPEN in the accounts
+  dimension, and no silver transaction closes them. `synthetic_correction` drove their served AUA to $0 (sum
+  -$78,504,236.80).
+- The positions step read 6,528 accounts (11,220 at 23:00Z); trade date 10-01 is only partly delivered (3,327 accounts).
+- The likeliest reading (inferred, not established): a partial custodian delivery was taken as complete, and the absent open
+  accounts were zeroed.
+
+**RULED, relayed to `2.0.0_SA_COO~M` (the disarm owner):**
+1. **Disarm: restore the last correct served state (as_of 09-30) under a never-widen half.**
+   - The write set is the literal list of served keys the 04:00Z run wrote for as_of 10-01, each restored to the S3
+     VersionId it held before 04:00Z, printed per key.
+   - Both branches are read from the producer's rule: whether the next scheduled fire repeats the zeroing on today's delivery
+     state, or computes whole.
+   - Writers of those keys are counted (N printed).
+   - This seat signs on receipt; it is not held for a round.
+   - "Fix and re-run" is NOT the disarm: a re-run on today's delivery reproduces the hole.
+2. **The class, one cell for `~M`: the BD gold run never publishes an as_of whose positions delivery is incomplete.**
+   - The consuming half: before the positions step, count the accounts that are OPEN in the dimension, held a position on the
+     prior served day, and have no closing transaction since. If any such account is absent from the new day's cube, the
+     day is incomplete.
+   - The run then refuses that as_of with a named reason, keeps the prior as_of served, and retries on the next fire.
+   - `synthetic_correction` never zeroes an account the delivery merely omitted. A value must carry its claim: an omitted
+     account is absent, never $0.
+   - The refusal is the raise; no alert is built (the moratorium stands).
+3. **Tonight's fire:** `~M` answers the CVO's question by measurement, not prediction. Run the producer's positions step dry
+   against the delivery state the next fire will see. If it still shows the 10-01 hole, the restore holds until the class
+   cell lands. The cell must land before a fire that would re-serve the hole, or the next fire is the one the restore's half
+   names and rolls back.
+
+-- 1.0.0_SA_CTO
+
+## Batch 214 -- 2026-10-03 ~06:3xZ -- `2.0.0_SA_COO~P` msg 104564: round 36 D1 served; the three Inflection "gaps" are linked rows
+
+**Recorded:** D1 is SERVED (`U+miRkw3..`). Ledger irpt-round36-gap-catchup-20261003 has C1, D2, V2 and D1 closed, with A1 on
+Monday.
+
+**`~P`'s correction is accepted (packet amendment 2):** Inflection's 2026-05-11, 06-30 and 08-10 are LINKED rows, not holes.
+- The next day's `prior_business_date` reaches back to 05-08, 06-29 and 08-07, and the adapter already discloses them as
+  `linked_days`.
+- So the period figures already include those days' moves. The served code reads 49F and Inflection `measured` over YTD,
+  and no window's claim moved.
+- Batch 207's blast-radius line ("windows containing them become claim partial / inferred") overstated it. The measurement
+  supersedes it.
+
+**RULED: DROP the historic-gap packet (batch 207's YES is withdrawn).**
+- Landing those three days would only split each two-day return into two one-day returns, with the same period figures and
+  the honest `linked_days` disclosure already served.
+- It is a served-data move with no outcome behind it (YAGNI). The gap disclosure (D1) and producer catch-up (D2) remain the
+  class's two halves.
+
+-- 1.0.0_SA_CTO
+
+## Batch 215 -- 2026-10-03 ~06:3xZ -- DSGN_REBRND E1 (row S3), carded by `2.0.0_SA_COO~D` as "HELD AT ANDREW" (@b2ef362b56)
+
+**The call:** should E1 put /market's RSI bars and modal bands on the blue `--ramp-1..5`? The patch is built and not applied.
+
+**Not Andrew's to answer:** it is not a hold he set by name, nor any act on the self-drive skill's cited list, so this seat
+rules it (Andrew-direct 2026-09-29: "none of this should be waiting on me").
+
+**RULED: NO. E1 closes; /market keeps its original gradients.**
+- His word of 2026-09-14 ~19:0xZ about the same page's Fear & Greed gauge: "it was changed to a Blue Gradient, that is not
+  necessary". The page then kept its original sentiment gradient (portal 45aaf58a).
+- The RSI bars are the same class of visual: an indicator whose colors carry zone meaning (overbought and oversold).
+- Converting them to the blue ramp is the change he called unnecessary on its sibling.
+- Row S3 predates his word, and his word supersedes it.
+
+The built patch and its pin stay archived at `deliverables/2.0.0_SA_COO~D/e1/` and are never applied. `0.0.0_AB_MSTR` drops
+the card.
+
+-- 1.0.0_SA_CTO
+
+## Batch 216 -- 2026-10-03 ~06:5xZ -- `2.0.0_SA_COO~P` msg 104570: G3 V1's negative arm refused upstream of irpt-status
+
+**Recorded (`org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/G3_V1_NEGATIVE_ARM_20261003.md`):** one render token was minted
+through the production path over the `exr_9f78..` Performance grant (jti `render-5447b603..`, token sha256 `c496c0e1`) and
+presented for the 49F Analysis job. `sections` was refused 403 by the API Gateway authorizer (the path id is not the pinned
+jobId), and `status` was refused 401 at the edge. Nothing was served.
+
+**RULED: arm 2 has two halves, and the served half is PASS now.**
+1. **The served path refuses:** PASS. Two layers refused a mismatched render token; that is the user-facing acceptance.
+2. **irpt-status's own Enforcer refuses:** still OWED, as ONE direct invoke. G3's change is irpt-status's render ports, and the
+   Enforcer is the layer that guards them if the authorizer ever admits more. A refusal the request never reached is
+   absent, not exercised (CLAUDE.md rule 22: ABSENT != EXERCISED-AGAINST).
+   - Invoke irpt-status directly with the event the gateway would pass for that token: the render-delegate authorizer
+     context of `exr_9f78..`, and the Analysis job's id on `status/{jobId}`.
+   - It must answer `OBJECT_NOT_COVERED`.
+   - A fresh token through the production minter if the first has expired; the same recording rule (the jti or sha256 and
+     the answer, never the token).
+   - Owner `~P`. It closes arm 2 and G3's V1, with arm 3 at E4.
+
+-- 1.0.0_SA_CTO
+
+## Batch 217 -- 2026-10-03 ~06:5xZ -- `2.0.0_SA_COO~Y` msg 104573 (relaying `~P` 104571): G3 arm 2 -- batch 216 item 2 SUPERSEDED
+
+**RULED: arm 2 CLOSES. No direct invoke.** Batch 216 item 2 is withdrawn.
+- A direct invoke would FORGE the authorizer's context, which is exactly what the at-pin tests already do:
+  - `test_render_delegate_pins.py:73`: an unpinned id is refused `OBJECT_NOT_COVERED`;
+  - `:98`: the served boundary installs the ports and passes the path ids.
+- 45 `_authz` tests pass on bytes equal to the deployed function (G3's census: 0 members differ from the pin; CodeSha256 read
+  back).
+- The direct invoke would therefore test nothing those tests do not, and the next check would not change the decision (the
+  speed governor).
+- What the at-pin tests cannot show, the ports' live wiring (the I1 read and the env), is proven POSITIVELY by arm 3 at E4's
+  first Analysis export print.
+
+**Arm 2's record:** the live refusal (authorizer 403, edge 401, nothing served), plus the Enforcer's refusal at equal bytes.
+This seat's batch 216 reasoning ("absent is not exercised") was right about the layer and wrong about the instrument: the
+only instrument that reaches that layer is the same forged context.
+
+-- 1.0.0_SA_CTO
+
+## Batch 218 -- 2026-10-03 ~07:0xZ -- `2.0.0_SA_COO~Y` msg 104577: Y-5 packet 2 (Kimi swap suggestions) -- `KIMI_WEB_SEARCH_UNVERIFIED` stands
+
+**The finding (`org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/Y5P2/KIMI_WEB_SEARCH_QA_FINDINGS_20261003.md`, 9 runs):**
+- kimi-k3 asks for `$web_search`, but its echo is refused (400 "tokenization failed", 3 shapes).
+- kimi-k2.6 accepts the echo but answers outside the schema, and JSON mode breaks the echo (500).
+- Any built-in search also needs a tool loop.
+
+**RULED: (c) HOLD packet 2 now; (b) is the direction when it is picked up. (a) is refused.**
+- **(c) now:** Case D is already served by Y-5's user-named proxy (served 02:06Z, YCharts-verified). Swap suggestions are a
+  convenience on top of a working path, so building them now is YAGNI (the build ladder's first rung).
+- **(a) refused:** a two-model chain (k2.6 searches, k3 structures) stacks two unverified behaviours and a tool loop to fix
+  one. It is fragile by construction.
+- **(b) when picked up:** the estate's own catalogue first. A candidate proxy comes from `etf-classifications` (the same class
+  and sub-class as the gated fund, a deterministic read), and is offered only when the same YCharts read verifies it, as
+  with the check gate. Model knowledge (Kimi, no web search) may rank or word the candidates but never invents one outside
+  the catalogue. The build ladder's second rung: the estate already has the data.
+- `KIMI_WEB_SEARCH_UNVERIFIED` stays in the code as the refusal for any swap call, so nothing reaches a web search by
+  accident.
+
+No outcome waits on packet 2. `~Y`'s queue moves on to the three V1s (after option A) and the next Y item.
+
+-- 1.0.0_SA_CTO
+
+## Batch 219 -- 2026-10-03 ~07:2xZ -- `2.0.0_SA_COO~M` msg 104579: S18 restore half, and the next fire
+
+`CTO_HALF_S18_RESTORE_0930_SERVED_20261003.md`, on half-request blob `9bfe9f9dc4`.
+- **The restore is SIGNED:** 23,542 served keys copied back to their pre-04:00Z VersionIds, read back per key, nothing deleted.
+  The 36 run-created keys stay; deleting them needs human confirmation.
+- **The next fire is RULED (a) + (b):**
+  - (a) hold the BD gold fires (tonight's 23:00Z fallback and the 04:00Z dailies) until the class cell lands. It is the
+    schedule state only, with rollback by re-enable.
+  - (b) when the cell lands, set the watermarks back to 09-30 so the first fire under the cell recomputes 10-01, whole or
+    refused.
+  - (c) is refused.
+- **Deadline:** before Monday 10-05's 04:00Z daily (Friday's T-1). `~M` reports by Sunday 18:00Z if not.
+- **Owed read:** why trade date 10-01 is only partly delivered (custodian or silver).
+
+-- 1.0.0_SA_CTO
+
+## Batch 220 -- 2026-10-03 ~07:4xZ -- `2.0.0_SA_COO~M` msg 104582: S18's class cell -- how a refused as_of stops being consumable
+
+**The cause, read from row MDPF_SECCLASS-S19 @03296c7f69 (GROUNDED, on the two runs' logs and `A_03.positions_cube.py`):**
+- `A_03` fills a backfill-only account only to its last transaction date, unless `silver/allocations/<max trade date>.parquet`
+  confirms it open. Those files are weekly, on Fridays only (newest 2026-09-25), so the confirmation is a no-op on every
+  weekday.
+- The end date then follows the newest transaction date, and every open account with no transaction that day is capped and
+  zeroed.
+- So 10-01 was NOT a partial custodian delivery that will complete later. It is a liveness rule that reads the wrong source.
+- This changes the class remedy: a refuse-only cell would refuse EVERY weekday, freezing the served firm at the last Friday.
+
+**RULED: neither (i) nor (ii). Fix the root, and refuse before writing.**
+1. **The root (one cell, `~M`):** `A_03` confirms an account open from the accounts dimension (OPEN, no closed date) when it
+   held a position at the prior cube date and has no closing transaction since. Its position carries forward to the end date,
+   priced at that date. The weekly allocation file becomes a corroborating signal, never the gate.
+   - This is a served-output change under its own never-widen half: the 10-01 delta for the 335 accounts, writers counted, and
+     both branches read from the new rule.
+   - It lands with the watermark reset before Monday 10-05 04:00Z (batch 219).
+2. **The backstop keeps batch 213 item 2:** an open, held, unclosed account absent from the new day's cube still refuses the
+   as_of. The check runs BEFORE the new date's cube is written to its consumable key (check, then publish). So a refusal leaves
+   no new consumable partition, and nothing ever needs deleting.
+3. **Today's two files** (`gold/timeseries/positions_cube/2026-10-01.parquet` and its legacy copy): the first run under the
+   root fix recomputes 10-01 whole and OVERWRITES them. That is a new version in a versioned bucket, recoverable and not a
+   delete. No delete is asked of Andrew.
+4. **(i) is refused:** a producer that deletes its own partitions is a standing destructive behaviour, and S3 deletes need
+   human confirmation (CLAUDE.md, Agent Autonomy). **(ii) is refused:** a marker every consumer must read widens the change to
+   every cube consumer, when checking before publishing leaves nothing for them to misread.
+
+-- 1.0.0_SA_CTO
+
+## Batch 221 -- 2026-10-03 ~07:5xZ -- `2.0.0_SA_COO~M` msg 104584: GRANT for the S18 class cell (batch 220)
+
+**GRANTED, exact files, code only:**
+- `data/black_diamond/scripts/gold/A_03.positions_cube.py`: Step 2c (liveness from the accounts dimension, with carry-forward)
+  and Step 2d (the check-before-publish backstop: DELIVERY-INCOMPLETE or DIMENSION-UNREADABLE refuses before any write).
+- `data/black_diamond/scripts/gold/tests/test_a03_s18_liveness.py` (NEW).
+
+Both map to lane MDPF_SECCLASS_FAST_M_BD_MIX (the POD4 members kept, plus COO~M; batch 135's precedent for C_06, D_03 and D_04).
+A YAML read shows both rows resolving, with ~M in the lane (17 members). Negative control: no other gold file gains an exact
+row; the rest stay under the `gold/**` POD4 glob.
+
+The deploy rides its own never-widen half (the 10-01 delta for the 335 accounts, writers counted, both branches), with the QA
+run and the watermark reset, before Monday 10-05 04:00Z (batches 219-220). Rule 13's DS deploy path (`safe-deploy.sh`) stands
+for the S3 copy.
+
+-- 1.0.0_SA_CTO
+
+## Batch 222 -- 2026-10-03 ~08:5xZ -- `2.0.0_SA_COO~P` msg 104586: the P-2 window packet CTO half
+
+**SIGNED** for Groups A, B and V. `CTO_HALF_IRPT_DASHBD_P2_WINDOW_20261003.md`, on packet blob `f3532bf5b9`.
+- **Blast radius:** the writers are counted (3 / 1 / 1 / 1), and both branches of the method move are measured (13 of 14 pairs
+  move, by -0.74 to +0.73 pp). No firm fence is edited.
+- **Rollback:** accepted per key. NEW keys need a human's delete confirmation; the interim state before it is named, and it
+  shows true method-v2 data on the tab.
+- **The opening condition (RULED):** the window opens only with Andrew's word for B2 (the portal PROD promote) in hand, in the
+  same session, and runs back to back.
+  - Addition 1: a latest start, so the run finishes before the next scheduled trading-day fire.
+  - Addition 2: if B2 is refused or fails, Group A rolls back in the same session.
+
+**Listed for Andrew** (an act only he can perform; CLAUDE.md Portal, `0.0.0_AB_MSTR` pushes trunks on his word): the word for
+the portal PROD promote carrying P-6's print and export readers, the P-3 summary and Download. It opens P-2's window.
+
+-- 1.0.0_SA_CTO
+
+## Batch 223 -- 2026-10-03 ~09:2xZ -- `3.0.0_SA_CVO` msg 104592: IRPT_DASHBD rounds 10-11 L10, and three stale IRPT_BCKEND orders
+
+**IRPT_DASHBD rounds 10-11:** analysis ADDENDUM 1, appended to `CTO_ROUND_ANALYSIS_IRPT_DASHBD_ROUNDS_2_9_20261003.md`.
+- W5-S1: reword the map note at the next read rebuild; no re-pin.
+- W5-S2: in the window, leg A3.
+- W1-S17: closes at A2's read.
+- The next issuance is the P-2 window (batch 222). No PRD change.
+
+**The three non-terminal IRPT_BCKEND orders holding the rounds 36-41 compile -- RULED: each issuer dispositions its own
+order by 12:00Z today, on a measurement.**
+- **IB-yr-242** (comparison catalogue sibling read, `~88`, pending since 09-30; issuer `2.0.0_SA_COO~Y`): close it as
+  SUPERSEDED if Y-3's served admission path (`maintained_sources.py` @bb255c4cb2, the etf-classifications read, served 10-03
+  00:05Z) delivers its outcome, naming that commit. Otherwise re-hand it in `~Y`'s next issuance.
+- **IB-pr-274** (Schwab silver 2026-09-29 landing, parked since 09-30; issuer `2.0.0_SA_COO~P`): close it as SUPERSEDED if the
+  09-29 silver partition is present (one read printed), else re-issue.
+- **IB-rtf-3** (the test principal exercised on the disclosed partial path, then deleted; last touched 09-21; its issuer
+  lane `~B` is not live, so `2.0.0_SA_COO~P` takes the disposition as the current IRPT_BCKEND issuer):
+  - Measure whether the test principal still exists.
+  - Absent: close COMPLETE on that read.
+  - Present: its deletion needs human confirmation (CLAUDE.md, Agent Autonomy). The order parks with that named condition.
+- **The compile is not held past 12:00Z:** any of the three still non-terminal at 12:00Z is compiled around under the named
+  exception the CVO already holds (Andrew call 1 / CTO 21533), invoked by this ruling for these three orders only.
+
+-- 1.0.0_SA_CTO
+
+## Batch 224 -- 2026-10-03 ~10:0xZ -- `2.0.0_SA_COO~M` msg 104601: S18 class cell CTO half
+
+**SIGNED.** `CTO_HALF_S18_CLASS_CELL_20261003.md`, on half-request blob `fc08c378c8`.
+- The scoping (open in the dimension AND held on the reference day) is batch 220's own text ("held a position at the prior
+  cube date"), not a departure. `~M`'s census shows the held clause prevents about 3.55M phantom account-days.
+- Writers N = 7 rules in 3 scripts. Both branches are read (A: 332 of 335 carried, history DELTA 0; B: refusal, exit 2, the
+  chain aborts).
+- **Condition 1, leg P:** the deployed `runner-telemetry.py` and `gold_prof.py` must equal the read copies, or their exit-code
+  path must be read and shown to propagate. Otherwise STOP: a swallowed exit 2 would re-serve the hole from the S18 run's
+  10-01 partition.
+- **Condition 2, leg V:** the QA run tests; the first scheduled fire after leg R, read by `3.0.0_SA_CVO`, accepts.
+
+-- 1.0.0_SA_CTO
+
+## Batch 225 -- 2026-10-03 ~14:5xZ -- `3.0.0_SA_CVO` msg 104625: S18 cell leg S -- the 12:45Z run was the advi-49f chain, not A_03
+
+**Recorded (grade @ce21ddf35c):** the 12:45:15Z run was `advi-49f-gold-dispatch` (SSM `advi-49f-chain-dispatch`, 177 s). It
+checkpointed only S_00, A_00 and A_02. A_03 did not run, so it cannot show the fixed A_03's liveness lines. Leg V holds on the
+CVO's independent read (@4eb0ef9e4b).
+
+**RULED: leg S is the first SCHEDULED fire that executes A_03, read by `3.0.0_SA_CVO` (batch 224 condition 2 unchanged).**
+- **No act may clear or edit today's checkpoint DIR to make the 23:00Z fire run A_03.** Shaping a scheduled run to produce
+  acceptance evidence would make it a staged run, not the organic one the condition exists to read.
+- `2.0.0_SA_COO~M` answers the CVO's question by reading the dispatcher's rule, not by trial: does a same-day checkpoint
+  (today's DIR holds the QA run's A_03 to D_04) make `bd-gold-nightly-fallback` skip A_03?
+  - If it does not skip: leg S is the 23:00Z fire.
+  - If it skips: leg S is Sunday 10-04's 04:00Z daily, which opens a new day's checkpoint DIR.
+- Either way the cell stays LIVE and accepted on leg V. Leg S closes the ledger; it does not gate the served state.
+
+-- 1.0.0_SA_CTO
+
+## Batch 226 -- 2026-10-03 ~19:2xZ -- `2.0.0_SA_COO~P` msg 104701: P-2 leg V -- a 49F export refuses on PROD (row IRPT_BCKEND-S307, ARMED)
+
+**The finding (S307):** a 49F PATH B export on PROD refuses `DEPENDENCY_UNAVAILABLE`.
+- The API Gateway authorizer (`opal-portal-authorizer`, V2) has no reporting-series entry in `RENDER_ROUTE_CLAIMS`, so the
+  export's render-delegate GET is denied 403 after the edge (V3, :22) admitted it.
+- IB-pr-304 widened the edge only.
+- B3 closed at 18:44:32Z, so PATH A is retired for 49F and a 49F export has NO working path until this is fixed.
+- The tab and print are correct, and the export fails by name, never with a wrong number.
+
+**RULED: FIX FORWARD. The window is not rolled back.**
+- **Why not roll back:** batch 222's rollback reverts method_version 2 for every 49F account and portal PROD 98a98e70fb
+  (Andrew's two Holdings changes with it), and its last step needs human-confirmed deletes. It would also bring back the
+  tab/print disagreement batch 201 exists to prevent. All of that to cure one named refusal on one route.
+- **The cell (`~P`, now, risk SERVED):** add the reporting-series route to `RENDER_ROUTE_CLAIMS` for the render-delegate
+  principal only, pinned the way IB-pr-304 pinned the edge (the grant's own account and the route's path id).
+- **Its own never-widen half (CTO+COO), with both arms on PROD:**
+  - positive: a 49F export of an account outside the original 6 reaches its receipt, which names the frozen `as_of`;
+  - negative: a render token presented for another account's series refuses.
+  - The human-token path stays unchanged.
+  - This seat signs on receipt.
+- **Leg V stays open** until that export walk passes, then the window closes. Row S307 disarms on the positive arm.
+
+**This seat's correction (batch 222):** the signed blast radius named the edge (A7) and the read route (A6) for the
+render-delegate path, but not the API Gateway authorizer that also gates the route. Two layers admit a render token, and
+only one was widened. The lesson for this seat's halves: when a request crosses more than one admission layer, list every
+layer and the change to each.
+
+-- 1.0.0_SA_CTO
+
+## Batch 227 -- 2026-10-03 ~19:5xZ -- `2.0.0_SA_COO~P` msg 104711: the authorizer half (S307, IB-pr-307)
+
+**SIGNED.** `CTO_HALF_AUTHORIZER_SERIES_RENDER_20261003.md`, on packet blob `89ac848918`.
+- Only the render-token branch changes: the series route, `which` = series, and the token's own account only. The human path
+  is byte-unchanged, and caching is off.
+- Batch 226's two PROD arms (P1 export receipt; P2 foreign token refused) are in the act.
+- **Added stop:** this authorizer gates every portal route. Straight after D2, one signed-in human request must answer 200 and
+  N1's 401s must hold, or D2 rolls back at once.
+- On P1 passing, leg V closes and S307 disarms.
+
+-- 1.0.0_SA_CTO
+
+## Batch 228 -- 2026-10-03 ~20:2xZ -- `2.0.0_SA_COO~P` msg 104725: authorizer P1 -- export accepted and frozen, then PROD's print page refuses it (row IRPT_BCKEND-S308)
+
+**Recorded:**
+- With IB-pr-307 deployed, V2 passes the render-delegate read; the 49F PATH B export is ACCEPTED and FROZEN (receipt
+  `exr_07fe..`, frozen `as_of` 2026-10-01). S307's cause is cured.
+- The render host's print of the served PROD page then refuses it: `PrintEntry`'s performance-query check still requires
+  `selection` (PATH A), while the PATH B print query carries `account`. So no READY receipt. Row S308 is ARMED, disarm owner
+  `2.0.0_SA_COO~D`.
+
+**RULED: ACCEPT `~P`'s proposal.**
+1. **The authorizer ledger `irpt-authorizer-series-render-20261003` CLOSES** on what its own scope proves:
+   - the human-path stop (batch 227);
+   - P2 (a foreign-account render token refused);
+   - P1's authorizer half (the render-delegate read passes, and the series is frozen by VersionId and `as_of`).
+   S307 is DISARMED.
+2. **The READY-receipt arm moves to leg V** of `irpt-p2-window-20261003`, behind `~D`'s S308 fix. That fix is a page change:
+   PrintEntry's performance branch accepts the PATH B form (`account`, start, end) beside PATH A's `selection`. It is pinned
+   by a test, with the export walk re-run on PROD after it lands.
+3. **The PROD push for S308:**
+   - This seat reads Andrew's "1 yes today" (the 15:4xZ card: promote DEV -> PROD this weekend, carrying P-6's print and
+     export) as covering a same-window fix-up promote that completes P-6's export path.
+   - `0.0.0_AB_MSTR` pushes trunks on his word, so MSTR applies its own reading. If MSTR reads the word as spent on B2, the
+     push goes to Andrew as one line, and this seat names that act on his list.
+4. **The window stays open** until leg V's export walk reaches a READY receipt. Meanwhile 49F exports refuse by name; the tab
+   and print serve correctly.
+
+-- 1.0.0_SA_CTO
+
+## Batch 229 -- 2026-10-03 ~20:3xZ -- `2.0.0_SA_COO~D` msg 104733: S308's root cause is the render host's allow-list
+
+**Measured (this seat read `infra/aws/ec2/investor-reporting-export/render_export.cjs:83` and `:116-121`):**
+`PRINT_QUERY_KEYS` = bundle, tenant, revision, kind, selection, start, end, and `applyPrintQuery` copies only those. So
+`account` and `version` never reach the print URL, and neither does `request` for an Analysis print. The served PrintEntry is
+right: it refuses only when neither a selection nor an account is present.
+- `version` matters beyond S308: without it the render cannot ask for the FROZEN series (batches 203 and 205), so the freeze
+  would be silently bypassed.
+
+**RULED:**
+1. **S308's disarm owner is re-pointed to `2.0.0_SA_COO~P`** (its render package). `~D` owes nothing on DEV, and NO portal
+   promote is owed for S308 (`0.0.0_AB_MSTR` stands down from batch 228 item 3).
+2. **The fix:** `PRINT_QUERY_KEYS` adds `account`, `version` and `request` (issued ids only, the same allow-list discipline),
+   pinned by a test that the PATH B print URL carries `account` and `version`.
+3. **Its own never-widen half** (the render host serves every export). This seat signs on receipt. The arms are the export
+   walk on PROD reaching a READY receipt that names the frozen `as_of`, and the rendered series being the frozen version
+   (VersionId equal to the receipt's).
+4. Leg V closes on that walk.
+
+-- 1.0.0_SA_CTO
+
+## Batch 230 -- 2026-10-03 ~20:5xZ -- the render-host half signed (S308/S310, IB-pr-308)
+
+**Asked:** `2.0.0_SA_COO~P` msg 104743, packet `NEVER_WIDEN_SIGNOFF_PACKET_RENDER_HOST_PRINT_QUERY_20261003.md` blob `94c344b523`
+@640f54b8bf (CLOUD equals disk).
+
+**RULED:**
+1. **CTO half SIGNED**, with one added stop: `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_RENDER_HOST_PRINT_QUERY_20261003.md`.
+   The merge @fb310203e5 changes one line (`PRINT_QUERY_KEYS` adds `account`, `version` and `request`). The artifact is 16,434 B,
+   sha256 `9684b4b9..`. The key has one writer, because no Terraform object manages it.
+2. **R1 READY** means R2 is met by the render's own rule (batch 205 item 3). Leg V closes and S308 disarms. **R1 not READY** is a
+   new row, not a rollback, because the put only adds keys.
+3. **Added stop:** if any INF or COT (PATH A) export render fails after H1, roll back at once to S3 version `Sd9RAXh6..` as a new
+   version, with no delete.
+
+-- 1.0.0_SA_CTO
+
+## Batch 231 -- 2026-10-03 ~21:0xZ -- S311: under a render, the page reads the frozen series only (a)
+
+**Asked:** `2.0.0_SA_COO~P` msg 104759, row IRPT_BCKEND-S311 (BLOCKING, ARMED). The render-host fix works: the series under the
+render token was authorized and served (edge 20:48:57Z, authorizer "Render token authorized"). Then the edge refused
+`.../manifest` (`render_denied uri_not_admitted`, 20:49:06Z), because portal PROD `resolveBundle.ts:314-336` reads PATH B through
+`readDashboard`, which fetches the manifest AND the series. SSM 8022f0fd failed with "selection is required".
+
+**RULED -- (a), the REC:**
+1. **The page reads only the series when the print carries a frozen `version`** (a render). The date it prints is
+   `series.as_of` (IRPT_DASHBD PRD ruling 28). Batch 205 / IB-pr-304's series-only render-token rule STANDS. V2 and V3 do not
+   move, so no authorizer or edge half is owed.
+2. **Why not (b):** admitting the manifest would reverse a ruled narrow boundary at two admission layers, costing two
+   never-widen halves. It would also widen what a render token can read, to fix a page that needs less.
+3. **What the print shows from the series alone:** every field the PATH B print shows today that only the manifest carries is
+   either taken from the series (C-SERVE puts the method version, `as_of` and first data date in it) or listed in `~D`'s
+   candidate as left off the print. A coverage sentence that would be lost is derived from the series' basis flags, never
+   dropped silently. A human (non-render) read is unchanged: it keeps reading the manifest.
+4. **Owners:** `2.0.0_SA_COO~D` builds it in `readDashboard`/`resolveBundle` with a test that a frozen-version PATH B resolve makes
+   no manifest request. It lands on portal DEV. The PROD promote is the same-window fix-up that `0.0.0_AB_MSTR` and this seat
+   both read as covered by Andrew's "1 yes today" (msgs 104728/104729): `~D` sends MSTR the DEV head sha. `2.0.0_SA_COO~P`
+   stays S311's disarm owner and re-runs R1 after the promote. R1 READY closes leg V and disarms S308 and S311 (batch 230).
+5. If `~D`'s candidate touches a product file and no FAST lease covers it, this seat reviews it on receipt, the same turn.
+
+-- 1.0.0_SA_CTO

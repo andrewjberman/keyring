@@ -1,0 +1,7 @@
+PASS: the cold-start build answered an unauthenticated request with state/statusCode UNAVAILABLE | first-party modules from outside the zip: none
+PASS: owner-read refusal answered a named refusal: UNAVAILABLE UNSUPPORTED_OPERATION
+{"correlation_id":"corr-ddcb54cbc6be","event":"irpt_error","operation":"analysis-request-history","public_reason_code":"UNEXPECTED"}
+PASS: owner-read refusal answered a named refusal: UNAVAILABLE UNEXPECTED
+PASS: the cold-start build answered an unauthenticated request with state/statusCode UNAVAILABLE | first-party modules from outside the zip: none
+PASS: owner-read refusal answered a named refusal: UNAVAILABLE UNSUPPORTED_OPERATION
+CONTROL (live wXzz3 = h7H7KgX1, the same history route, owner-refusal arm): PASS: owner-read refusal answered a named refusal: UNAVAILABLE UNEXPECTED (IdRefused on the smoke's synthetic firm token) -- the history arm's UNEXPECTED is the live bundle's own answer, not this packet's

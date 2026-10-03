@@ -1,0 +1,32 @@
+{
+ "advisory_model": "kimi-k3",
+ "at": "2026-10-03T06:43:57Z",
+ "max_rounds": 4,
+ "model": "kimi-k2-turbo-preview",
+ "parse_failure": "KIMI_MALFORMED",
+ "parsed": null,
+ "rounds": [
+  {
+   "elapsed_seconds": 5.1,
+   "error": "KIMI_HTTP 404 {\"error\":{\"message\":\"Not found the model kimi-k2-turbo-preview or Permission denied\",\"type\":\"resource_not_found_error\"}}",
+   "finish_reason": null,
+   "has_reasoning_content": false,
+   "round": 1,
+   "tool_call_names": [],
+   "usage": {}
+  }
+ ],
+ "sends": 1,
+ "symbol": "TIMXX",
+ "tool": {
+  "function": {
+   "name": "$web_search"
+  },
+  "type": "builtin_function"
+ },
+ "transcript_sha256": "5452d4d7cac96728f5d4a6bd9117321363ad0aa47167b210cc5e4a1fef6866fc",
+ "variant": {
+  "QA_ASSISTANT_CONTENT": "as-returned",
+  "QA_TOOL_NAME": "1"
+ }
+}

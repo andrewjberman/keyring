@@ -1,0 +1,283 @@
+{
+ "function": "irpt-ycharts-generate",
+ "pin": "9bbb38f7a0c305b490ba388c6c568e40e454a989",
+ "live_code_sha256": "wjSX3zZoFu2EUintXwZVESW+ac8F+bdRHSWm+YfpmgA=",
+ "live_zip_hashes_to_it": true,
+ "live_members": 113,
+ "pin_members": 113,
+ "identical": 104,
+ "eol_only": [
+  "fixtures/har/FIXTURE_MANIFEST.json",
+  "fixtures/har/collection.json",
+  "fixtures/har/create_201.json",
+  "fixtures/har/create_422_fee.json",
+  "fixtures/har/dashboard.json",
+  "fixtures/har/decision_branches.json",
+  "fixtures/har/generate_201.json",
+  "fixtures/har/generate_404_minimal.json",
+  "fixtures/har/status_drifted.json",
+  "fixtures/har/status_ok.json",
+  "fixtures/har/templates.json",
+  "fixtures/har/upload_ok.json",
+  "fixtures/har/validate_200.json",
+  "templates.json"
+ ],
+ "changed": [
+  "contracts/HoldingsSnapshot.schema.json",
+  "fixtures/har/report.pdf",
+  "generate_installed.py",
+  "maintained_sources.py",
+  "prospect_submission.py",
+  "recipe.py",
+  "request_composition.py",
+  "resident_worker.py",
+  "security_resolution.py"
+ ],
+ "added": [],
+ "removed": [],
+ "history": [
+  {
+   "member": "contracts/HoldingsSnapshot.schema.json",
+   "source": "docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json",
+   "live_equals": "4cc72587d6",
+   "ahead": [
+    [
+     "9e58503be1",
+     "feat(IRPT_BCKEND ~M, 2.0.0_SA_COO~M): the Holdings route's TARGET fold -- opt-in (include=target), l"
+    ]
+   ]
+  },
+  {
+   "member": "fixtures/har/report.pdf",
+   "source": "infra/aws/lambda/investor-reporting/ycharts/generate/fixtures/har/report.pdf",
+   "live_equals": null,
+   "ahead": [
+    [
+     "5e4a92380b",
+     "IB-s-9: the YCharts generation chain as Opal's own async job -- source"
+    ]
+   ]
+  },
+  {
+   "member": "generate_installed.py",
+   "source": "infra/aws/lambda/investor-reporting/reports/generate_installed.py",
+   "live_equals": "4f43b48050",
+   "ahead": [
+    [
+     "bb255c4cb2",
+     "feat(IRPT_BCKEND ~Y Y-3, 2.0.0_SA_COO~Y): an ETF the etf-classifications table names is admitted as "
+    ]
+   ]
+  },
+  {
+   "member": "maintained_sources.py",
+   "source": "infra/aws/lambda/investor-reporting/_scope/maintained_sources.py",
+   "live_equals": "15b9f85eb3",
+   "ahead": [
+    [
+     "bb255c4cb2",
+     "feat(IRPT_BCKEND ~Y Y-3, 2.0.0_SA_COO~Y): an ETF the etf-classifications table names is admitted as "
+    ]
+   ]
+  },
+  {
+   "member": "prospect_submission.py",
+   "source": "infra/aws/lambda/investor-reporting/ycharts/generate/prospect_submission.py",
+   "live_equals": "03ea5980cc",
+   "ahead": [
+    [
+     "bb255c4cb2",
+     "feat(IRPT_BCKEND ~Y Y-3, 2.0.0_SA_COO~Y): an ETF the etf-classifications table names is admitted as "
+    ]
+   ]
+  },
+  {
+   "member": "recipe.py",
+   "source": "infra/aws/lambda/investor-reporting/ycharts/generate/recipe.py",
+   "live_equals": "3921492913",
+   "ahead": [
+    [
+     "bb255c4cb2",
+     "feat(IRPT_BCKEND ~Y Y-3, 2.0.0_SA_COO~Y): an ETF the etf-classifications table names is admitted as "
+    ]
+   ]
+  },
+  {
+   "member": "request_composition.py",
+   "source": "infra/aws/lambda/investor-reporting/reports/request_composition.py",
+   "live_equals": "f8c72944f3",
+   "ahead": [
+    [
+     "bb255c4cb2",
+     "feat(IRPT_BCKEND ~Y Y-3, 2.0.0_SA_COO~Y): an ETF the etf-classifications table names is admitted as "
+    ]
+   ]
+  },
+  {
+   "member": "resident_worker.py",
+   "source": "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py",
+   "live_equals": "de5e0c6878",
+   "ahead": [
+    [
+     "5f93fdbee0",
+     "fix(IRPT_BCKEND ~Y S284 journal, 2.0.0_SA_COO~Y): an entitlement-gated fund row is counted gated=, n"
+    ],
+    [
+     "bb255c4cb2",
+     "feat(IRPT_BCKEND ~Y Y-3, 2.0.0_SA_COO~Y): an ETF the etf-classifications table names is admitted as "
+    ]
+   ]
+  },
+  {
+   "member": "security_resolution.py",
+   "source": "infra/aws/lambda/investor-reporting/intake/security_resolution.py",
+   "live_equals": "de5e0c6878",
+   "ahead": [
+    [
+     "5f93fdbee0",
+     "fix(IRPT_BCKEND ~Y S284 journal, 2.0.0_SA_COO~Y): an entitlement-gated fund row is counted gated=, n"
+    ]
+   ]
+  }
+ ],
+ "served_closure": [
+  {
+   "member": "served.py",
+   "pin_sha256": "4a9d374c9806daa9",
+   "live_sha256": "4a9d374c9806daa9",
+   "state": "identical to live"
+  },
+  {
+   "member": "enforce.py",
+   "pin_sha256": "7d7196406f0a0737",
+   "live_sha256": "7d7196406f0a0737",
+   "state": "identical to live"
+  },
+  {
+   "member": "errors.py",
+   "pin_sha256": "b60f25ccaa706b7a",
+   "live_sha256": "b60f25ccaa706b7a",
+   "state": "identical to live"
+  },
+  {
+   "member": "resolve.py",
+   "pin_sha256": "24b407fa00ff0fc3",
+   "live_sha256": "24b407fa00ff0fc3",
+   "state": "identical to live"
+  },
+  {
+   "member": "grant.py",
+   "pin_sha256": "51785ed4b834b806",
+   "live_sha256": "51785ed4b834b806",
+   "state": "identical to live"
+  },
+  {
+   "member": "report_owner.py",
+   "pin_sha256": "610982ce5bddd38d",
+   "live_sha256": "610982ce5bddd38d",
+   "state": "identical to live"
+  },
+  {
+   "member": "owner_reads.py",
+   "pin_sha256": "f21d26dcce7c46bf",
+   "live_sha256": "f21d26dcce7c46bf",
+   "state": "identical to live"
+  },
+  {
+   "member": "prospect.py",
+   "pin_sha256": "f556b0997dfa7310",
+   "live_sha256": "f556b0997dfa7310",
+   "state": "identical to live"
+  },
+  {
+   "member": "ids.py",
+   "pin_sha256": "f1659861d469c25d",
+   "live_sha256": "f1659861d469c25d",
+   "state": "identical to live"
+  },
+  {
+   "member": "loaders.py",
+   "pin_sha256": "763f0a0d4445481c",
+   "live_sha256": "763f0a0d4445481c",
+   "state": "identical to live"
+  },
+  {
+   "member": "routetable.py",
+   "pin_sha256": "fbd20fb97a64c84c",
+   "live_sha256": "fbd20fb97a64c84c",
+   "state": "identical to live"
+  },
+  {
+   "member": "interactive_access.py",
+   "pin_sha256": "bba07a3f4eeb947b",
+   "live_sha256": "bba07a3f4eeb947b",
+   "state": "identical to live"
+  },
+  {
+   "member": "canonical_profile_reads.py",
+   "pin_sha256": "0ec4a717f2aa2c12",
+   "live_sha256": "0ec4a717f2aa2c12",
+   "state": "identical to live"
+  },
+  {
+   "member": "keys.py",
+   "pin_sha256": "56ee3cc22e802579",
+   "live_sha256": "56ee3cc22e802579",
+   "state": "identical to live"
+  },
+  {
+   "member": "repository.py",
+   "pin_sha256": "f255335beb26f239",
+   "live_sha256": "f255335beb26f239",
+   "state": "identical to live"
+  },
+  {
+   "member": "maintained_sources.py",
+   "pin_sha256": "585950a53879574d",
+   "live_sha256": "774eca9bde60a1dd",
+   "state": "CHANGED vs live"
+  },
+  {
+   "member": "custody.py",
+   "pin_sha256": "23cda6b0e3dd88df",
+   "live_sha256": "23cda6b0e3dd88df",
+   "state": "identical to live"
+  },
+  {
+   "member": "selection.py",
+   "pin_sha256": "7ba910b85e2fce4f",
+   "live_sha256": "7ba910b85e2fce4f",
+   "state": "identical to live"
+  },
+  {
+   "member": "selection_store.py",
+   "pin_sha256": "583507a70e3a0074",
+   "live_sha256": "583507a70e3a0074",
+   "state": "identical to live"
+  }
+ ],
+ "built": {
+  "members": 113,
+  "differ_from_pin": [
+   "fixtures/har/report.pdf"
+  ],
+  "closure_stale": [],
+  "crlf_members": [
+   "fixtures/har/FIXTURE_MANIFEST.json",
+   "fixtures/har/collection.json",
+   "fixtures/har/create_201.json",
+   "fixtures/har/create_422_fee.json",
+   "fixtures/har/dashboard.json",
+   "fixtures/har/decision_branches.json",
+   "fixtures/har/generate_201.json",
+   "fixtures/har/generate_404_minimal.json",
+   "fixtures/har/status_drifted.json",
+   "fixtures/har/status_ok.json",
+   "fixtures/har/templates.json",
+   "fixtures/har/upload_ok.json",
+   "fixtures/har/validate_200.json",
+   "templates.json"
+  ],
+  "zip_sha256_b64": "VZvhvWRMqD6mdaF8COT5JcUcnMxdvzCJe82Gs/9cnRk="
+ }
+}

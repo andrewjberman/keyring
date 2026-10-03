@@ -1,5 +1,67 @@
 # Reboot brief -- 2.0.0_SA_COO~M -- rewritten 2026-10-02 04:0xZ at the wind-down; updated 05:2xZ
 
+**UPDATE 2026-10-03 17:5xZ -- ANDREW-DIRECT ~17:3xZ (relayed by 0.0.0_AB_MSTR 104661; record
+ANDREW_DIRECT_20261003_17xxZ_RELEASE_ALL_QUARANTINE_NO_DATA_OPS_CHANGES_WITHOUT_DIRECTIVE.md @4d393e3521, site Z):**
+release any quarantine, hold or pause on data collection or pipelines; NO data-engineering change without Andrew's
+explicit directive.
+- This seat holds NO pause or quarantine on data collection or pipelines, read 17:5xZ:
+  - both BD gold rules ENABLED (re-enabled 12:44Z after today's S18 hold);
+  - bd-gold-trigger has no reserved concurrency;
+  - the five HELD-SOVEREIGN-GATED ledgers each await a verify read only.
+  So there was nothing to release.
+- Six DEPLOY-SERVE-HELD lines name this seat. Each keeps undeployed CLOUD code at its served bytes:
+  `data/assets/scripts/gold/investor_reporting/holdings_snapshot.py`, `holdings_inf.py`, `build_dim_model_portfolio.py`,
+  `build_cottonwood_mdpf_slice.py`, `build_cottonwood_mdpf_pair.py` and `silver/rebalancer_schemas.py`. They pause nothing;
+  removing one invites a deploy, which is a data-engineering change, so they stay unless Andrew says otherwise.
+- FROM NOW: every pending act is PARKED on Andrew's explicit directive. That covers the multi_asset packet, the TARGET fold,
+  the cot seed and re-point acts, and any deploy, row write or watermark move. Reads continue, including the CVO's leg S read.
+
+**UPDATE 2026-10-03 12:5xZ -- S18 DONE except the CVO's leg S (supersedes every line below where they differ):**
+- Class cell LIVE: A_03 wTaLoeFXO4.. (scoped liveness: dimension-open AND held on the reference day; output backstop; refusal
+  writes nothing and exits 2). Half: COO @56d91fc1ec, CTO batch 224. Ledger `secclass-s18-cell-m-20261003`: P G W Q V R closed
+  (QA run exit 0, frontier whole; served mix 10-01 $1,843,207,824.50; 332 of 335 back, 3 traded out; 09-30 content-equal).
+  Leg S OWED by 3.0.0_SA_CVO (asked 12:47Z): its read of the first scheduled fire after R = the 12:45:15Z 49F floor boot.
+- Restore ledger `secclass-s18-restore-0930-m-20261003` CLOSED. Both gold rules ENABLED 12:44Z.
+- Rows S20 (dimension marks dead accounts open), S21 (S3 prices notification boots BD gold), S22 (the runner boots from >= 5
+  paths incl. advi-49f-gold-dispatch; it ran the old A_03 at 09:47Z, no write). Next BD hold = hold the host.
+- Cosmetic, not done: A_03's log label 'confirmed open by alloc' now counts the scoped carry set's backfill-only members.
+- Memory reaper killed the QA waiter (not restarted); one-shot foreground reads only.
+
+**UPDATE 2026-10-03 08:4xZ -- S18 (supersedes every line below where they differ):**
+- Row MDPF_SECCLASS-S18 (the 04:00Z BD gold run dropped 335 open accounts, $78.6M, from as_of 10-01); cause row S19 (A_03
+  confirms backfill-only accounts open from a WEEKLY allocation file). Ledger `secclass-s18-restore-0930-m-20261003`: legs 0, H
+  (both gold rules DISABLED 07:17Z), C (23,542 served keys restored; 1 multipart ETag mismatch content-verified), V (mix 09-30
+  $1,843,114,311.70) CLOSED. Leg R OPEN: when the cell lands, C_06 watermarks to 09-30 + rules re-enabled BEFORE MONDAY 04:00Z,
+  else report by Sunday 18:00Z.
+- Class cell (CTO batch 220; lane batch 221): A_03 liveness from the accounts dimension + a frontier backstop on the built
+  partitions + no gate-watermark advance on refusal. CLOUD 564d5bede9 / 5df4c735fa (drains 4f1c1b2b59, dafb13cfb2), 6 + 74 tests,
+  NOT deployed. Deployed A_03 = VersionId 1MYNHoSQ.. (md5 6bce3508, rollback). NEXT: delta census
+  (R9_CHECKS/s18_cell_delta_census.py), the cell's half to the CTO (signs on receipt), then deploy + watermark reset + one QA
+  run + leg R.
+- Other owed (unchanged): BD r4 leg S walk; cot re-point leg S; cot seed leg G; multi_asset packet and TARGET-fold 49F QA are
+  HEAVY (memory reaper) -- user's word before restarting.
+
+**UPDATE 19:4xZ -- STATE (supersedes every line below where they differ):**
+- Portal PROD f76b02acb6 carries eb90f2ad (Andrew's promote; read 13:56:40Z). Both re-land acts RAN.
+- BD r3 RE-LAND (ledger `secclass-bd-thread-r4-reland-m-20261002`): P, M (drain ac44b6aaaf, release b3442d6ea1), G (five files
+  14:16Z), W (watermarks to 09-29), R (QA run green: unclassified 4.14 pct, every class, identity hops in the log) CLOSED. OWED:
+  leg S at tonight's 23:00Z gold fire (firm mix, every class, <= 5.0 pct) + one walked 49F page on PROD readers; and the 22:10Z
+  silver read (batch 129). Rollback: copy-object of the prior VersionIds in leg G's proof; watermarks per leg W.
+- Cottonwood RE-POINT (ledger `secclass-cot-repoint-m-20261002`): PROD, M (bf165606a2; release 917fd2ff02), I (role +1 statement),
+  A + G (17:28-17:30Z), W (CTO addendum 2, batch 179) and R (QA green, 17.37 pct unclassified, 219 of 219 clients sum) CLOSED.
+  OWED: leg S at the 2026-10-03 scheduled Cottonwood gold run (~11:35Z) + walks (firm Mix chart, Books donut, one advisor Mix).
+- Holdings 14:15Z publication read: three row ledgers CLOSED (7421b39e62). Still open: `irpt-inf-split-positions-m-20261001` leg S
+  (branch count read: 71 split / 786 single; the WALK of acc_015d15b45d7a8ac71f951a67 owed) and `secclass-cot-seed-rows-m-20261001`
+  leg S (data read 19 of 19; the Cottonwood selection WALK owed) + leg G at 23:00Z. Walker account is shared with 2.0.0_SA_COO~D.
+- multi_asset readers packet (batch 164): producer + three schema copies on CLOUD (daaef69b9d, ~P 16a3fcfd6a); Advisor
+  Intelligence readers on portal DEV 90a31d7d (CTO PASS 104340, MSTR landed); ~D's colour + IR readers on DEV 7bcedf1b. NEXT: the
+  packet's deploy halves (producer deploy, irpt-holdings re-stage) and PROD readers (Andrew's promote); rows only after.
+- CTO batch 178: STATUS~M.md current (dbc5e1a5c7); item 2 (after ~D's H-1, landed DEV 16c6690e): 49F largest client
+  cli_8499bbbd... expects 17 tiles by the map rule (sent to ~D 104378); bring brief 3 item 1.4(d) TARGET fold back as its own ask.
+- Row S15 code half done (writer refuses non-ASCII names, 821bb7b891); the one row's ASCII rewrite rides the next CUSIP-row act.
+- Row S16 filed (BD gold deploy re-ships lib/_shared; DISMISSED_WITH_REASON). FAST lease MDPF_SECCLASS LAPSED 13:54Z (not re-armed).
+- Push state: every commit of this seat LOCAL; origin CLOUD is the integrator's.
+
 **UPDATE 12:2xZ -- STATE (supersedes the 10:3xZ line where they differ):**
 - Table `etf-classifications` 2,841 rows. Written today under both halves: 19 Cottonwood seed (02:12Z), 29 Cottonwood CUSIP CDs
   (03:40Z), 67 bd-mapped (10:26Z), 3 seed ABNFX/LBNYX/NYT (10:30Z), 16 per-ticker first act (11:21Z), 36 residual CUSIP rows (12:18Z).

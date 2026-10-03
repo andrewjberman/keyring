@@ -1,0 +1,14 @@
+ssm a967ec1c-79ca-4ac5-b8f3-8f36756d815e Success rc 0
+preflight at 2026-10-03T16:02:27Z
+Xvnc: /usr/bin/Xvnc
+vncpasswd: /usr/bin/vncpasswd
+listening on 5901: [0]
+Xvnc processes: [0
+0]
+library attended mode: YC_ATTENDED mentions 3 holdForPerson mentions 2 sha 857d90b81960d69a
+wrapper sha 55ddb8f7947cba7c
+leftover attended files: [0]
+resident unit: active
+running root /opt/irpt-resident/a6f6e7165e-st18
+queue irpt-generation 0/0
+provider lease: holder '' session_fence 23 state None expires_in -1791043355 s

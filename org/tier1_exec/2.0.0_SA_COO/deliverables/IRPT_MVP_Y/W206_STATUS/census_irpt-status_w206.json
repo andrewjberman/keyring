@@ -1,0 +1,187 @@
+{
+ "function": "irpt-status",
+ "pin": "ac1a84761709b567d4d3a68a8797f41588ceb2e3",
+ "live_code_sha256": "h7H7KgX1FsBu4XTLqqpcMOjMnwRdeL9xlGZPwzhibcg=",
+ "live_zip_hashes_to_it": true,
+ "live_members": 47,
+ "pin_members": 47,
+ "identical": 41,
+ "eol_only": [],
+ "changed": [
+  "entry.py",
+  "infra/logic/registry/reporting_policies.json",
+  "lib/opal_naming.py",
+  "maintained_sources.py",
+  "owned_requests.py",
+  "status.py"
+ ],
+ "added": [],
+ "removed": [],
+ "history": [
+  {
+   "member": "entry.py",
+   "source": "infra/aws/lambda/investor-reporting/ops/entry.py",
+   "live_equals": "018a325a84",
+   "ahead": [
+    [
+     "7f1135f0ee",
+     "feat(IRPT_BCKEND ~Y W2-06, 2.0.0_SA_COO~Y): the owned request read carries the frozen browser reques"
+    ]
+   ]
+  },
+  {
+   "member": "infra/logic/registry/reporting_policies.json",
+   "source": "infra/logic/registry/reporting_policies.json",
+   "live_equals": "11bf813387",
+   "ahead": [
+    [
+     "b77e2af4d5",
+     "registry(X10, IRPT_DASHBD-S12, 4.0.0_SA_CRO): each served reporting file takes a retention family --"
+    ]
+   ]
+  },
+  {
+   "member": "lib/opal_naming.py",
+   "source": "lib/opal_naming.py",
+   "live_equals": "b5dc2e63d1",
+   "ahead": [
+    [
+     "b77e2af4d5",
+     "registry(X10, IRPT_DASHBD-S12, 4.0.0_SA_CRO): each served reporting file takes a retention family --"
+    ]
+   ]
+  },
+  {
+   "member": "maintained_sources.py",
+   "source": "infra/aws/lambda/investor-reporting/_scope/maintained_sources.py",
+   "live_equals": "15b9f85eb3",
+   "ahead": [
+    [
+     "bb255c4cb2",
+     "feat(IRPT_BCKEND ~Y Y-3, 2.0.0_SA_COO~Y): an ETF the etf-classifications table names is admitted as "
+    ]
+   ]
+  },
+  {
+   "member": "owned_requests.py",
+   "source": "infra/aws/lambda/investor-reporting/ops/owned_requests.py",
+   "live_equals": "cee32dcf47",
+   "ahead": [
+    [
+     "7f1135f0ee",
+     "feat(IRPT_BCKEND ~Y W2-06, 2.0.0_SA_COO~Y): the owned request read carries the frozen browser reques"
+    ]
+   ]
+  },
+  {
+   "member": "status.py",
+   "source": "infra/aws/lambda/investor-reporting/ops/status.py",
+   "live_equals": "951afdf4e6",
+   "ahead": [
+    [
+     "a42ad6b675",
+     "feat(IRPT_BCKEND ~Y Y-5 packet 1, 2.0.0_SA_COO~Y): a user-named proxy continues an upload without a "
+    ]
+   ]
+  }
+ ],
+ "served_closure": [
+  {
+   "member": "served.py",
+   "pin_sha256": "4a9d374c9806daa9",
+   "live_sha256": "4a9d374c9806daa9",
+   "state": "identical to live"
+  },
+  {
+   "member": "enforce.py",
+   "pin_sha256": "7d7196406f0a0737",
+   "live_sha256": "7d7196406f0a0737",
+   "state": "identical to live"
+  },
+  {
+   "member": "errors.py",
+   "pin_sha256": "b60f25ccaa706b7a",
+   "live_sha256": "b60f25ccaa706b7a",
+   "state": "identical to live"
+  },
+  {
+   "member": "resolve.py",
+   "pin_sha256": "24b407fa00ff0fc3",
+   "live_sha256": "24b407fa00ff0fc3",
+   "state": "identical to live"
+  },
+  {
+   "member": "owner_reads.py",
+   "pin_sha256": "f21d26dcce7c46bf",
+   "live_sha256": "f21d26dcce7c46bf",
+   "state": "identical to live"
+  },
+  {
+   "member": "prospect.py",
+   "pin_sha256": "f556b0997dfa7310",
+   "live_sha256": "f556b0997dfa7310",
+   "state": "identical to live"
+  },
+  {
+   "member": "ids.py",
+   "pin_sha256": "f1659861d469c25d",
+   "live_sha256": "f1659861d469c25d",
+   "state": "identical to live"
+  },
+  {
+   "member": "loaders.py",
+   "pin_sha256": "763f0a0d4445481c",
+   "live_sha256": "763f0a0d4445481c",
+   "state": "identical to live"
+  },
+  {
+   "member": "interactive_access.py",
+   "pin_sha256": "bba07a3f4eeb947b",
+   "live_sha256": "bba07a3f4eeb947b",
+   "state": "identical to live"
+  },
+  {
+   "member": "canonical_profile_reads.py",
+   "pin_sha256": "0ec4a717f2aa2c12",
+   "live_sha256": "0ec4a717f2aa2c12",
+   "state": "identical to live"
+  },
+  {
+   "member": "keys.py",
+   "pin_sha256": "56ee3cc22e802579",
+   "live_sha256": "56ee3cc22e802579",
+   "state": "identical to live"
+  },
+  {
+   "member": "maintained_sources.py",
+   "pin_sha256": "585950a53879574d",
+   "live_sha256": "774eca9bde60a1dd",
+   "state": "CHANGED vs live"
+  },
+  {
+   "member": "custody.py",
+   "pin_sha256": "23cda6b0e3dd88df",
+   "live_sha256": "23cda6b0e3dd88df",
+   "state": "identical to live"
+  },
+  {
+   "member": "selection.py",
+   "pin_sha256": "7ba910b85e2fce4f",
+   "live_sha256": "7ba910b85e2fce4f",
+   "state": "identical to live"
+  },
+  {
+   "member": "selection_store.py",
+   "pin_sha256": "583507a70e3a0074",
+   "live_sha256": "583507a70e3a0074",
+   "state": "identical to live"
+  }
+ ],
+ "built": {
+  "members": 47,
+  "differ_from_pin": [],
+  "closure_stale": [],
+  "crlf_members": [],
+  "zip_sha256_b64": "6VQejBfsI/P3mfAVSFjLt/ythlcxXxi12cy9hxXhKNg="
+ }
+}

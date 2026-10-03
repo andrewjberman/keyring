@@ -117,6 +117,28 @@ carries no scope limit. The whitelist row is site Z's file; 0.0.0_AB_MSTR relays
 
 (The only change to the quotes is the redaction of the phone number: personal data stays out of the repo.)
 
+## Addendum ~20:0xZ to ~20:2xZ -- texting ops: the hybrid (commands vs natural language), verbatim
+
+> I want to workshop the texting ops. technically isnt it just kimi reading the response, so i can respond in natural
+> language?
+
+> I like the hybrid framework, we should workshop that concept. however, no need on faster kimi, i want the draft
+> responses to not be retarded.
+
+> commands should always have some command key in front, that is how we will identify commands versus natural
+> language. e.g. #1 #0 #on #off. if i want to say "disregard all" or something, then that is fine to go on slow path.
+> Only thing that is not super clear is how to handle scenarios when there are multiple items in queue, responding to
+> multiple items at once.
+
+The CRO proposed: every command carries `#` (`#1`, `#0`, `#on`, `#off`, `#dev`, `#close`, new `#list`); text without
+`#` goes to Kimi with the open items; an untagged `#1`/`#0` acts on the newest text (the race guard stands); several
+items take tags (`C279 #1, C608 #0`); natural language applies drops and redrafts at once and echoes any send or job
+back as one confirmation (`K14 ... Reply #1`); bare `1`/`0` stop being commands. Andrew:
+
+> yes build it
+
+Binding: as proposed. Kimi stays kimi-k3 for every call (drafts and reading his texts).
+
 ## Addendum ~16:2xZ to ~17:0xZ -- the switch, several tags, ad hoc dev jobs, /remote-drive, and six rulings, verbatim
 
 > Before sending to sitez, i want to make sure that i can have an on and off switch set up (#on and #off would be good
@@ -176,3 +198,24 @@ Update" is unregistered; LDO-001 is the End of Day path.
 Binding (from the ~13:3xZ addendum below): VOICE.md's voice section carries the first quote and its rules (no self-made math, no exact counts or
 dollar figures, casual). The assistant texts the number ending 6346 and accepts replies only from it (Secrets
 Manager teams/global/owner-phone, put ~13:3xZ); the number ending 7679 no longer reaches it.
+
+
+## Addendum 2026-10-03 ~18:4xZ -- /open-calls answered (4.0.0_SA_CRO terminal)
+
+Andrew, verbatim: "yes delete the worktree + drop the draft reply"
+
+- Worktree: `C:/Users/AndrewBerman/Desktop/wt-cro-t-transcripts` was already gone from disk and from `git worktree list`
+  at the act (removed by another hand); the branch `cro-t-transcripts` (7e31cce92f, unmerged, content superseded on CLOUD)
+  was deleted with `git branch -D` on this word.
+- C608 (Yang Liu, draft "Sounds good, will ping you after my 3p", texted 2026-10-02 19:40:26Z): dropped through the
+  assistant's own path -- `sms.reply` {tag C608, action drop, version 1} to the chat object, event
+  `andrew-open-calls-drop-C608-20261003`, processed 2026-10-03 18:46:47Z; the chat state's pending is null at version 6.
+  Nothing was sent to Teams.
+
+
+## Addendum 2026-10-03 ~20:5xZ -- weekend runs (4.0.0_SA_CRO terminal)
+
+Andrew asked whether the End of Day draft runs on weekends ("is it scheduled for weekends daily sprint too? i didnt get a
+text"). It did not: `poll_eod` skipped Saturday and Sunday, an assumption of this seat at the build, never his word; the
+2026-10-03 (Saturday) sprint page published at 20:12:54Z and was skipped. Andrew, verbatim: "yes i want weekend runs, i
+can cancel it if i want". `poll_eod` now looks every day from 4 PM Eastern; #off pauses it and #0 drops a day's draft.

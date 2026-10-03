@@ -1,0 +1,2 @@
+irpt-ycharts-runner ReadYChartsAndSharedVisionSecrets resources: ['ycharts/login/credentials-*', 'ycharts/session/current-*', 'astn/kimi/api-key-??????']
+irpt-ycharts-runner-resident-policy ReadTheEstateKimiKey resources: ['astn/kimi/api-key-??????']

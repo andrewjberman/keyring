@@ -1,0 +1,48 @@
+{
+ "pin": "9bbb38f7a0",
+ "new_root": "9bbb38f7a0-st15",
+ "old_root": "f89fc8e731-st14",
+ "members": 249,
+ "tar_sha256": "af49e7029825a227911a5817e5d0556d9e21f7a7cad34ac2f67aa6f771ee3b56",
+ "tar_bytes": 782217,
+ "added": [],
+ "removed": [],
+ "changed": [
+  "_contracts/HoldingsSnapshot.schema.json",
+  "_scope/maintained_sources.py",
+  "docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json",
+  "intake/security_resolution.py",
+  "reports/generate_installed.py",
+  "reports/request_composition.py",
+  "reports/resident_bindings.json",
+  "ycharts/generate/prospect_submission.py",
+  "ycharts/generate/recipe.py",
+  "ycharts/generate/resident_worker.py"
+ ],
+ "pinned_members": {
+  "ycharts/generate/resident_main.py": "0e5c17e7b9ccc2386e5104f7a9030e4cee18722f826b04a32dabfdebb493bfb1",
+  "ycharts/generate/resident_worker.py": "dfc9d3efee0d1f380f5288b1ba7e0baca3784ede082f3f85a9d6958f39fb5ebf",
+  "ycharts/generate/current_authority.py": "5291b3be7e0006ade14db553caa78aa74fc6c91f638e63077a1be15607f16dec",
+  "ycharts/generate/recipe.py": "ba4c213134b40ecc646959e0135a17420135c9b5846ff2b32386eb742ee8e70d",
+  "ycharts/generate/job.py": "02137c1bd42556a7d9988b5cbe4178e8f81a6bea75377ab51dad944694a6a4b2",
+  "ycharts/generate/transport.py": "d8cdbf3907a7d1493de208afbb25d6ef9b6ac4b768be936d880ed4ab0c069960",
+  "ycharts/generate/publisher.py": "fd1fb2e3b38305556330ced96e326d632b0c0946aee3badf2f4065c351c37a96",
+  "ycharts/generate/templates.json": "54656584f476b616622368d60c227b1519a70f3e9aced14edb88c776f9823866",
+  "ycharts/extract/extract.py": "c4c4908338fdce62972fe7dc0f6250030ad213c88e6d7c6636639430b3dc0bc3",
+  "ycharts/extract/publication.py": "5a3c676c64ea630909e44d165f126e9351e8a5b8cab9b927d50607a83c1b368b",
+  "ycharts/extract/certify.py": "0a18fdf5bee20ce3856a7d5b9b404f3e63511d84403d68a6e198e146845ceff1",
+  "ycharts/session/broker.py": "96f0e7782c106d4930ab5f348fdef9251fa3de33d51e9dfbc920010a33864393",
+  "ycharts/session/host_capture.py": "8288e724e843cb89b2cf5f8c36564caa61678a76d7a14c822ba325b34893b86d",
+  "_scope/canonical_profile_reads.py": "0ec4a717f2aa2c127df62f5bf0f0f3f56164359875b992620b2006e3d4af9557",
+  "_scope/maintained_sources.py": "585950a53879574d514a5da3f80180849eaebf38466e49ac849aa7142f80efd1",
+  "reports/resident_installed.py": "7e69601a8bfddff61ef4300fb97003beb342bc4cccc380fe28304542a56652fa"
+ },
+ "library_sha256": "857d90b81960d69a7a6700be6fffe33d86628694aef95f8cfb64aca7a82cb839",
+ "wrapper_sha256": "55ddb8f7947cba7cdca1b9139d4d0a1a3ad620e330c86ba3ab648d334763aff9",
+ "gates": {
+  "G1": true,
+  "G2": true,
+  "G3": true,
+  "G4": true
+ }
+}

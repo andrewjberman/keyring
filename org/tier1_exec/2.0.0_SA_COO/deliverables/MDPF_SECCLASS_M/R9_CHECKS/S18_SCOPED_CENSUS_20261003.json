@@ -1,0 +1,51 @@
+{
+ "claim": "measured (A_03's own rule, current silver inputs, read-only); limit: no transaction_id de-dup",
+ "frontier": "2026-10-01",
+ "reference_day": "2026-09-30",
+ "latest_partition": "2026-10-01",
+ "dimension_open": 10702,
+ "held_on_reference_day": 6836,
+ "carry_set_dimension_open_and_held": 6710,
+ "allocation_confirmed": 0,
+ "old_capped": 4467,
+ "scoped_capped": 3965,
+ "scoped_uncapped": 502,
+ "scoped_uncapped_with_last_trade_before_reference_day": 0,
+ "drop_set": 335,
+ "drop_set_carried_by_scoped_rule": 332,
+ "drop_set_not_carried": {
+  "z0818919951": {
+   "daily_feed": true,
+   "last_trade": "2026-10-01",
+   "capped_old_rule": null,
+   "rows_on_ref": [
+    {
+     "asset_name": "Connecticut Stable Value",
+     "units": 0.38615699999987996
+    }
+   ]
+  },
+  "z0821124151": {
+   "daily_feed": true,
+   "last_trade": "2026-10-01",
+   "capped_old_rule": null,
+   "rows_on_ref": [
+    {
+     "asset_name": "MONEY MARKET POOL",
+     "units": 160.44899999999225
+    }
+   ]
+  },
+  "z0822808251": {
+   "daily_feed": true,
+   "last_trade": "2026-10-01",
+   "capped_old_rule": null,
+   "rows_on_ref": [
+    {
+     "asset_name": "FIDELITY PHILLIPS STREET TRUST GOVT CASH RESV",
+     "units": 0.019999999257852324
+    }
+   ]
+  }
+ }
+}

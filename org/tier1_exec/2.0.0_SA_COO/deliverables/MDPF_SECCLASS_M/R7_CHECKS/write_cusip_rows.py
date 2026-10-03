@@ -87,6 +87,10 @@ def plan_rows(lines: List[Tuple[int, List[str]]], vocab: TableVocabulary,
         if not name:
             refused.append((key, "NO-NAME: the row's ground is its custody name"))
             continue
+        if not name.isascii():
+            # MDPF_SECCLASS-S15: a served-table name is ASCII (CLAUDE.md section 4); a default-codec reader misreads it.
+            refused.append((key, "NON-ASCII-NAME: %r -- write the name in ASCII" % name))
+            continue
         if key in existing:
             present.append(key)
             continue

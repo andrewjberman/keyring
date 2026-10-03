@@ -1807,22 +1807,35 @@ def _validate_reporting_policies(reg):
         families = policy["families"]
         if not isinstance(families, dict) or not families:
             raise ValueError("reporting families are required")
-        tables = set()
+        # A family owns its table whole (content-addressed keys from the destination builder), or
+        # names one fixed served object (IRPT_DASHBD-S12: manifest.json, series.json.gz and summary.json
+        # share the served table "reporting"); a table is either one whole family or objects only.
+        whole, objects = set(), {}
         for family, spec in families.items():
             if not re.fullmatch(r"[A-Z]+(?:_[A-Z]+)*", family):
                 raise ValueError("malformed reporting family")
-            if not isinstance(spec, dict) or set(spec) != {
-                    "tier", "table", "extension", "unreferenced_days", "accepted_ceiling_days"}:
+            fields = {"tier", "table", "extension", "unreferenced_days", "accepted_ceiling_days"}
+            if not isinstance(spec, dict) or set(spec) not in (fields, fields | {"object"}):
                 raise ValueError("reporting family metadata has an invalid field set")
             if spec["tier"] not in {"state", "platinum"} or not re.fullmatch(r"[a-z]+(?:_[a-z]+)*", spec["table"]):
                 raise ValueError("reporting tier/table is not admitted")
-            if spec["table"] in tables:
-                raise ValueError("reporting families must have distinct tables")
-            tables.add(spec["table"])
-            if spec["extension"] not in {"csv", "json", "pdf"}:
+            if spec["extension"] not in {"csv", "json", "json.gz", "pdf"}:
                 raise ValueError("reporting content format is not admitted")
-            if spec["tier"] == "platinum" and spec["extension"] != "json":
+            if spec["tier"] == "platinum" and spec["extension"] not in {"json", "json.gz"}:
                 raise ValueError("reporting platinum must be bounded JSON")
+            if "object" in spec:
+                obj = spec["object"]
+                if not isinstance(obj, str) or not re.fullmatch(r"[a-z]+(?:_[a-z]+)*\." + re.escape(spec["extension"]), obj):
+                    raise ValueError("reporting fixed object must be a plain name with the family extension")
+                if spec["table"] in whole or obj in objects.setdefault(spec["table"], set()):
+                    raise ValueError("reporting families must have distinct tables or distinct objects")
+                objects[spec["table"]].add(obj)
+            else:
+                if spec["extension"] == "json.gz":
+                    raise ValueError("gzip JSON is admitted only for a fixed served object")
+                if spec["table"] in whole or spec["table"] in objects:
+                    raise ValueError("reporting families must have distinct tables")
+                whole.add(spec["table"])
             ceiling, draft = spec["accepted_ceiling_days"], spec["unreferenced_days"]
             if type(ceiling) is not int or not 0 < ceiling <= 2555:
                 raise ValueError("reporting accepted ceiling must be finite")
@@ -1862,6 +1875,8 @@ def _reporting_destination(policy, firm, family, artifact_id, sha256):
     if not isinstance(sha256, str) or not re.fullmatch(r"[0-9a-f]{64}", sha256):
         raise ValueError("reporting artifact requires an exact content digest")
     spec = policy["families"][family]
+    if "object" in spec:
+        raise ValueError("a fixed served object is addressed by address(), not the X10 destination builder")
     prefix = key(policy["source"], firm, spec["tier"], spec["table"], artifact_id)
     bucket = _long_scope(reg, policy["product_scope"], {"PRODUCT"})["bucket"]
     return bucket, prefix + "/" + sha256 + "." + spec["extension"]

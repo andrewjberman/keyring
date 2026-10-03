@@ -1,0 +1,47 @@
+{
+ "advisory_model": "kimi-k3",
+ "at": "2026-10-03T06:49:11Z",
+ "max_rounds": 4,
+ "model": "kimi-k2.6",
+ "parse_failure": "KIMI_MALFORMED",
+ "parsed": null,
+ "rounds": [
+  {
+   "elapsed_seconds": 14.1,
+   "error": null,
+   "finish_reason": "tool_calls",
+   "has_reasoning_content": false,
+   "round": 1,
+   "tool_call_names": [
+    "$web_search"
+   ],
+   "usage": {
+    "completion_tokens": 1,
+    "prompt_tokens": 154,
+    "total_tokens": 155
+   }
+  },
+  {
+   "elapsed_seconds": 240.7,
+   "error": "KIMI_TIMEOUT",
+   "finish_reason": null,
+   "has_reasoning_content": false,
+   "round": 2,
+   "tool_call_names": [],
+   "usage": {}
+  }
+ ],
+ "sends": 2,
+ "symbol": "TIMXX",
+ "tool": {
+  "function": {
+   "name": "$web_search"
+  },
+  "type": "builtin_function"
+ },
+ "transcript_sha256": "f3a6b31e5581060d0df7583ba463aaed7e9b43a3f20ab04231d2c093e0bd6d83",
+ "variant": {
+  "QA_ASSISTANT_CONTENT": "as-returned",
+  "QA_TOOL_NAME": "1"
+ }
+}

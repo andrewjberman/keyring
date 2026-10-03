@@ -1,0 +1,46 @@
+# MDPF_SECCLASS batch 183 ONE packet -- the multi_asset row set (CTO batch 164: class multi_asset; sub class on how the mix is set).
+# Class and sub class are INFERRED from each fund's own name (batch 164 boundary: a fund whose stated category is a mix --
+# target-date, balanced, allocation, multi-asset income -- is multi_asset; a one-sleeve fund stays in its sleeve).
+# Sub class rule: a target year in the name -> Target Date; "Balanced" / "LifeStrategy" / a named fixed allocation -> Fixed Mix;
+# "Dynamic" / "Global Allocation" / "Income Builder" / "Income Fund" / "Income" (multi-asset income) / "Global" (flexible
+# global allocation) -> Flexible.
+# Columns: act, key, name (the feed's), row today (class / sub / classified_by, live get-item 2026-10-03 01:3xZ), class, sub, note.
+# 7 MOVES (existing scheduled rows; a served class move each)
+MOVE	AOR	iShares Core Growth Allocation ETF	equity / Global / scheduled	multi_asset	Fixed Mix	a fixed 80/20 allocation
+MOVE	VTHRX	Vanguard Target Retirement 2030 Fund	equity / Global / scheduled	multi_asset	Target Date
+MOVE	VSMGX	Vanguard LifeStrategy Moderate Growth Fund	fixed_income / Intermediate / scheduled	multi_asset	Fixed Mix
+MOVE	VTIVX	Vanguard Target Retirement 2045 Fund	fixed_income / Cash / scheduled	multi_asset	Target Date
+MOVE	VWELX	Vanguard Wellington Fund Investor	equity / US Large Cap / scheduled	multi_asset	Fixed Mix	balanced, about 65/35
+MOVE	VWENX	Vanguard Wellington Fund Admiral	equity / US Large Cap / scheduled	multi_asset	Fixed Mix	share class of VWELX
+MOVE	ABALX	American Funds American Balanced A	equity / US Large Cap / scheduled	multi_asset	Fixed Mix
+# 13 TICKER WRITES (withheld from the BD per-ticker first act, batch 145 C)
+WRITE	AAETX	AMERICAN FUNDS 2030 TRGT DATE RETIRE A	absent	multi_asset	Target Date
+WRITE	VTTHX	VANGUARD TARGET RETIREMENT 2030 FUND	absent	multi_asset	Target Date	peer VTHRX
+WRITE	LIPKX	BlackRock LifePath Index 2050 Fund T	absent	multi_asset	Target Date
+WRITE	FTYPX	FIDELITY FREEDOM INDEX 2055 PREMIER	absent	multi_asset	Target Date
+WRITE	FBALX	FIDELITY BALANCED	absent	multi_asset	Fixed Mix
+WRITE	CLBAX	AMERICAN FUNDS AMERICAN BALANCED 529A	absent	multi_asset	Fixed Mix	peer ABALX
+WRITE	CAIBX	AMERICAN FUNDS CAPITAL INCOME BLDR A	absent	multi_asset	Flexible
+WRITE	CFIHX	AMERICAN FUNDS CAPITAL INCOME BLDR F3	absent	multi_asset	Flexible	share class of CAIBX
+WRITE	AMECX	AMERICAN FUNDS INCOME FUND OF AMER A	absent	multi_asset	Flexible
+WRITE	FKIQX	FRANKLIN INCOME A	absent	multi_asset	Flexible
+WRITE	KAGIX	KENSINGTON DYNAMIC ALLOCATION INST	absent	multi_asset	Flexible
+WRITE	SGIIX	FIRST EAGLE GLOBAL I	absent	multi_asset	Flexible
+WRITE	MDLOX	BLACKROCK GLOBAL ALLOCATION INV A	absent	multi_asset	Flexible
+# 12 CUSIP WRITES (withheld from the residual act, batch 145 C; the blank-ticker lots of the same funds)
+WRITE	CUSIP:02630T712	AMERICAN FUNDS 2030 TRGT DATE RETIRE A	absent	multi_asset	Target Date	the fund of AAETX
+WRITE	CUSIP:92202E508	VANGUARD TARGET RETIREMENT 2035 FUND	absent	multi_asset	Target Date
+WRITE	CUSIP:316345206	FIDELITY BALANCED	absent	multi_asset	Fixed Mix	the fund of FBALX
+WRITE	CUSIP:704223205	IMPAX SUSTAINABLE ALLOCATION INSTL	absent	multi_asset	Fixed Mix	a balanced allocation fund
+WRITE	CUSIP:024071508	AMERICAN FUNDS AMERICAN BALANCED 529A	absent	multi_asset	Fixed Mix	the fund of CLBAX
+WRITE	CUSIP:808516306	BALANCED FUND	absent	multi_asset	Fixed Mix	the feed's name carries no sponsor
+WRITE	CUSIP:140193103	AMERICAN FUNDS CAPITAL INCOME BLDR A	absent	multi_asset	Flexible	the fund of CAIBX
+WRITE	CUSIP:140193780	AMERICAN FUNDS CAPITAL INCOME BLDR F3	absent	multi_asset	Flexible	the fund of CFIHX
+WRITE	CUSIP:453320103	AMERICAN FUNDS INCOME FUND OF AMER A	absent	multi_asset	Flexible	the fund of AMECX
+WRITE	CUSIP:353496490	FRANKLIN INCOME A	absent	multi_asset	Flexible	the fund of FKIQX
+WRITE	CUSIP:32008F606	FIRST EAGLE GLOBAL I	absent	multi_asset	Flexible	the fund of SGIIX
+WRITE	CUSIP:56167N274	KENSINGTON DYNAMIC ALLOCATION INST	absent	multi_asset	Flexible	the fund of KAGIX
+# 3 OUT of batch 164's boundary (named in batch 145 C's group; not a mix by the fund's own stated category) -- NOT written here
+OUT	NICHX	VARIANT ALTERNATIVE INCOME INSTITUTIONAL	absent	--	--	an alternative-income interval fund (one sleeve)
+OUT	KAMIX	KENSINGTON MANAGED INCOME INST	absent	--	--	tactical income, one sleeve (fixed income / cash)
+OUT	XCAPX	ACAP STRATEGIC A	absent	--	--	long/short equity fund-of-funds

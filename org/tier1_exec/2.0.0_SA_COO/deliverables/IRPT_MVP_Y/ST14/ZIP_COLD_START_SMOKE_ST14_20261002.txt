@@ -1,0 +1,9 @@
+zip gen_st14.zip | function irpt-ycharts-generate | handler generate_installed.lambda_handler | env names ['IRPT_DIRECTORY_BUCKET_MAP', 'IRPT_EVIDENCE_BUCKET', 'IRPT_FIRM_DESTINATION_POLICY', 'IRPT_FIRM_REGISTRY', 'IRPT_GENERATE_TIMEOUT_S', 'IRPT_GENERATION_QUEUE_URL', 'IRPT_JOBS_TABLE', 'IRPT_REQUESTS_TABLE', 'IRPT_YCHARTS_BASE', 'IRPT_YCHARTS_SESSION_SECRET_ID']
+   response keys: ['contract_version', 'ok', 'operation', 'status']
+PASS: the cold-start build answered an unauthenticated request with state/statusCode UNAVAILABLE | first-party modules from outside the zip: none
+zip gen_st14.zip | function irpt-ycharts-generate | handler generate_installed.lambda_handler | env names ['IRPT_DIRECTORY_BUCKET_MAP', 'IRPT_EVIDENCE_BUCKET', 'IRPT_FIRM_DESTINATION_POLICY', 'IRPT_FIRM_REGISTRY', 'IRPT_GENERATE_TIMEOUT_S', 'IRPT_GENERATION_QUEUE_URL', 'IRPT_JOBS_TABLE', 'IRPT_REQUESTS_TABLE', 'IRPT_YCHARTS_BASE', 'IRPT_YCHARTS_SESSION_SECRET_ID']
+   response keys: ['contract_version', 'ok', 'operation', 'status']
+PASS: the cold-start build answered an unauthenticated request with state/statusCode UNAVAILABLE | first-party modules from outside the zip: none
+zip gen_st14.zip | function irpt-ycharts-generate | handler generate_installed.lambda_handler | env names ['IRPT_DIRECTORY_BUCKET_MAP', 'IRPT_EVIDENCE_BUCKET', 'IRPT_FIRM_DESTINATION_POLICY', 'IRPT_FIRM_REGISTRY', 'IRPT_GENERATE_TIMEOUT_S', 'IRPT_GENERATION_QUEUE_URL', 'IRPT_JOBS_TABLE', 'IRPT_REQUESTS_TABLE', 'IRPT_YCHARTS_BASE', 'IRPT_YCHARTS_SESSION_SECRET_ID']
+   response keys: ['contract_version', 'ok', 'operation', 'status']
+PASS: the cold-start build answered an unauthenticated request with state/statusCode UNAVAILABLE | first-party modules from outside the zip: none

@@ -1,0 +1,14 @@
+ssm 1a38239d-a3df-415b-aba4-76375ef2473f Success rc 0
+leg H start 20261003T163324Z
+resident pid 485178 user ec2-user; library pin 857d90b81960d69a
+{"lease":"TAKEN","fence":25}
+{"seed_cookie_names":["ycsessionid","csrftoken"]}
+{"dashboard_status":200,"landed_path":"/dashboard/"}
+{"probe":{"authenticated":true,"reason":"OK","http_status":200,"state":"LIVE","identity_leg":"PASS"}}
+{"expires_epoch":{"ycsessionid":-1,"csrftoken":-1,"aws-waf-token":1791390810},"now_epoch":1791045216}
+{"persisted":{"fence":25,"previous_fence":23,"cookie_names":["ycsessionid","csrftoken","page_view_ctr","__cf_bm","__cf_bm","__cf_bm","__cf_bm","_ga","__cf_bm","_ga_29JVRYKWPW","__cf_bm","cookieyes-consent","__hstc","hubspotutk","__hssrc","__hssc","_gcl_au","test_cookie","_fbp","li_sugr","bcookie","l
+{"lease":"RELEASED"}
+HAR_SEED_VERDICT=PERSISTED
+node rc 0; work dir removed: True
+leg H end 2026-10-03T16:33:39Z
+

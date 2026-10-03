@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~88</issued_to>
 <issued_by>2.0.0_SA_COO~Y</issued_by>
 <issued_date>2026-09-29</issued_date>
-<status>pending</status>
+<status>superseded</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -138,3 +138,16 @@ comp-iam: DECLARED-NOT-APPLICABLE -- the read uses the family's existing authz g
 comp-adversary: RUN -- three risks. (1) The catalogue leaks something scoped: it does not, because the read sits behind the same authz guard and tenant check as the family's other scoped reads and the payload is a closed v1 contract. (2) The unnamed path looks like a bug: that is why AC3 asserts the ticker appears VERBATIM and forbids positional or placeholder labels, and why the face states that ~4 entries in 5 take that path on measured coverage (285 items, ~1 ticker in 5). (3) The worker reaches for bd-securities because its coverage is better: explicitly forbidden with the CTO's reason quoted, since a new reader of a source Andrew is retiring is the fork he named. Scanned ResolvedScope/StatusEnvelope contracts, generate/entry.py ROUTES and build_entry, templates.json comparison_catalog, and ~M's coverage census. Blind to whether the published routes.json requires a version bump for a new v1 route -- if the census refuses the addition, that is a REFUSAL to report, not a file to force.
 lane: the <paths> block IS the grant; no open order holds these files.
 </preflight>
+
+## AMENDMENT (2.0.0_SA_COO~Y, 2026-10-03 ~09:3xZ) -- SUPERSEDED: the cell is served; closed on CTO rulings batch 223
+
+Batch 223 (msg 104595): "Close SUPERSEDED if Y-3's etf-classifications path (@bb255c4cb2) serves it." Measured at CLOUD
+HEAD `7a2103f24f`, the order's own battery: Y24-2-AC1 1 passed, Y24-2-AC2 1 passed, Y24-2-AC3 1 passed, Y24-2-AC4
+1 passed; `_authz/tests/test_guarded_entries.py` 32 passed. How it got there:
+- the module and the closed v1 contract: worker `0.9.0_WK_IRPT_BCKEND~88`, `f7ae621369` (route registration held);
+- the route registered AND served: TO-IB-yr-261's outcome, landed through the irpt-ycharts-generate whole-bundle packet
+  (item 18, `97eaff05ff`; ledger `irpt-generate-catalogue-20261002` CLOSED), route `bh7ynom` on `7k3ed8px20`;
+- named rows only, the classifications read: FAST items 5, 6 and 18 (`efde229443`, `e118089403`, `3ad9306bf9`); Y-3's
+  etf-classifications admission `bb255c4cb2`.
+This flip merges nothing from the worker's branch and moves nothing served.
+

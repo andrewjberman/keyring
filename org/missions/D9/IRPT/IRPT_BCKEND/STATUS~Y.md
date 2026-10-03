@@ -1,218 +1,97 @@
 # IRPT_BCKEND~Y (Analysis) -- status
 
-Seat `2.0.0_SA_COO~Y` (CLAUDE), relaunched 2026-10-02 ~01:5xZ on Andrew's word (record
-`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261002_014xZ_BRING_EVERYONE_BACK_ONLINE_PER_REBOOT_RECORDS.md`).
-Mode FAST: lease `IRPT_BCKEND~Y` re-armed 04:33Z until 08:33Z after the withdrawn wind-down (MSTR 104039; CTO 103946
-terms, under Andrew-direct 2026-10-01 ~04:2xZ).
-Loop `/canonical-drive IRPT_BCKEND` 10m (LIVE_ARMS RELAUNCH row). Way forward: CTO rulings batches 61, 62, 65, 70, 72,
-76, 83, 88, 89, 93, 97, 98, 100 and 105 in `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md`.
-Reviewer `3.0.0_SA_CVO` (grades pins after the fact). Lease FAST until 09:43:29Z (read 09:14Z). As of 2026-10-02T11:2xZ.
+Seat `2.0.0_SA_COO~Y` (CLAUDE). Mode FAST: lease `IRPT_BCKEND~Y` (renewed by the loop; read each tick).
+Loop `/canonical-drive IRPT_BCKEND`. Way forward: CTO rulings in
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md` and the fold-in
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_FOLD_IN_IRPT_THREE_BRIEFS_20261002.md` section 2 (Y-1..Y-6, Y-H); run order
+CTO 104634 ("Y-3 READY, then Y-5 V1, then Y-4 V1, one at a time and spaced"). Reviewer `3.0.0_SA_CVO` (grades pins after
+the fact). As of 2026-10-03T18:0xZ.
 
 ## Pins
 
 | What | Value |
 |---|---|
-| Worktree | branch `coo-y-r30` at `C:/Users/AndrewBerman/Desktop/coo-y-r30`, head `cf3ae52aee` (st12 `9718ac5c87`, merged into CLOUD at `cf3ae52aee`) |
-| Items 1 to 17 on CLOUD | 1 to 14 as before (st9 carries them); 15 `3921492913` (the 900 s calculating release, the WAF header token); 16 `7122afefc1` (row S253, the job row's `vendor_requests` ledger); 17 `8c4398e32a` (E7, the request read names the chosen comparisons); 19 `951afdf4e6` (st11, merge `4f68a17d3a`, SERVED in the resident; its words ride the next generate and irpt-status bundles); 21 E6 memo (merge `7a9f76389b`, not served); 20 hop 11 (branch `coo-y-hop11`, not merged); 18 `3ad9306bf9` (the catalogue reads `etf-classifications` once per 300 s warm window, not per request; condition 11 of the whole-bundle packet), merge `87f9b3afab`, NOT served |
-| SERVED: the resident | `/opt/irpt-resident/c657a5966d-st13` since 2026-10-02T10:18:27Z (ledger `irpt-resident-st13-20261002` CLOSED @f74a5c2a76; CTO batches 131 and 138): items 1 to 19, st12 (rotated cookies written back, PROVEN LIVE) and st13 (the capture library's attended hold `857d90b8`, OFF unless `YC_ATTENDED=1`; Xvnc installed, nothing listening). Rollback root `cf3ae52aee-st12` on the host |
-| SERVED: `irpt-status` | `X/JLmPJZ..` since 2026-10-02T11:13:50Z: E7b + E6 + item 22 at `ff8fd77ba2` (rollback S3 `m1LolBKF..`, code `2V7xV1..`) |
-| SERVED: `irpt-ycharts-generate` | `E+FqSWwETrwJ9Gd1..` since 2026-10-02T05:54:19Z (whole bundle at `97eaff05ff`, item 18; ledger `irpt-generate-catalogue-20261002` CLOSED). Rollback: S3 version `J52XmUEj..` (code `arC65KbD..`) |
-| SERVED: catalogue route | `GET /api/scoped/investor-reporting/analysis/comparisons`, route `bh7ynom` on `7k3ed8px20` behind `naqxlm`, since ~06:00Z. V1: 341 entries for cottonwood, `FIRM_BINDING` outside reach, 720 ms with the Scan then 221-260 ms |
-| UPLOADED, NOT APPLIED | `irpt-status.zip` version `gqIQUc_Z..` (sha `iYgp8301..`, E7) is its key's LATEST version. CTO batch 115 item 3: no untargeted apply of the ops or ycharts roots while it is held |
-| Stored YCharts session | the version of 2026-10-01T08:21:20Z (fence 21) |
-| Push state | LOCAL @56457904ed; origin/CLOUD `1f2346734b` (ls-remote read 09:1xZ). CLOUD is pushed by `0.0.0_AB_MSTR` only |
+| CLOUD (local) | Y-3 READY evidence `ee801b0505`, its ledger closed `284667acb5`; Andrew-direct egress record `ce20ca6854`; Y-3 timing `f6d8202ce4`. No worktree held |
+| SERVED: `irpt-status` | `hC6PramtsshP40jo3OJ91k4qxlHndylJWxHLIjIdw/E=` since 06:28:49Z (G3 + W2-06). Rollback: re-promote S3 `4CQOSM..` (`6VQejBfs..`), drop the variable, delete the policy |
+| SERVED: PDF route | `GET analysis/requests/{requestId}/pdf`, route `ihirb2s` on `7k3ed8px20` |
+| SERVED: the resident | `/opt/irpt-resident/a6f6e7165e-st18` since 05:52:20Z. Rollback root `828c37c6f7-st17` |
+| SERVED: `irpt-ycharts-generate` | `fD2R6OFrT2N086C9Go3e1aA9RKZCP/vfnZCaHCloJTs=` since 03:02Z. Rollback: S3 `oew.wOPK..` with the resident, all or none |
+| SERVED: runner role | the estate Kimi secret through ONE carrier (`local.kimi_secret_arn`); login and session ARNs keep `-*` (parked) |
+| Stored YCharts session | **LIVE** since 16:3xZ at fence 25 (AWSCURRENT `6190de31`, captured_by `irpt-ycharts-har-seed`), seeded from Andrew's HAR with no sign-in; S288 disarmed by S306. Shared with Andrew's browser (S233). aws-waf-token expiry ~epoch 1791390810; the server-side ycsessionid expiry is unknown |
+| Push state | LOCAL; origin CLOUD `a714df4d7f` (ls-remote read 17:3xZ); CLOUD is pushed by `0.0.0_AB_MSTR` only |
 
-## Live thread
+## Live thread -- fold-in Y-1..Y-6
 
-**irpt-status queue after M2+D2+R1 (packet blob `b8c06f4e26`, CTO half owed):** (1) W2-06 -- the single read's
-`include=composition` (opt-in, the frozen AnalysisSubmissionRequest; CTO batch 165); (2) G3 -- render ports for the
-Analysis print (CTO batch 175, `~P` msg 104292): env IRPT_EVIDENCE_BUCKET, IAM GetObject on the stored render grants,
-staged `_render_identity/grant.py`, `_render_identity/report_owner.py`, `reports/repository.py`
-(record `deliverables/2.0.0_SA_COO~P/E4_ANALYSIS_EXPORT_READINESS_20261002.md` G3).
+1. **Y-3 READY** 17:03:14Z: REQ-329a5618 (Multi, ULT + IWM, Cottonwood), report RPT-c8c4037a. Ledger
+   `irpt-y3-20261002` CLOSED. Measured: 15 m 06 s of its 17 m 43 s is our 900 s read-back release after one
+   `calculating` answer (`IRPT_MVP_Y/RESEARCH/Y3_JOB_TIME_BREAKDOWN_MEASURED_20261003.md`).
+2. **Y-5 V1 (next):** Case A with TIMXX -> SGOV from the page. `2.0.0_SA_COO~D` added case `Aproxy` to
+   `yh-submit-case.mjs`; it passes on fixtures (104671). The live run is HELD by ~D on: (a) site Z holding the UI-walker
+   account (MSTR 104669); (b) whether Andrew's ~17:3xZ "We will discuss internally on how to proceed with further data
+   collection after review" covers a YCharts Analysis run. (b) is ASKED of Andrew at this terminal ~18:0xZ.
+3. **Y-4 V1** after Y-5: the typo file. The driver's `typo` case has no accept step, and the file also holds TIMXX, so READY
+   needs the AAPL accept AND TIMXX -> SGOV: the next ask to ~D after Aproxy runs.
+4. Then Y-2 (the page's Case B; the easy file holds TIMXX too) and Y-6.
 
-**ARMED row S270 (CVO, CTO batch 169), owner this seat:** M1 SERVED 14:00:48Z (timeout 29 s; cold default history 200,
-15066 ms; ledger CLOSED @4d586f64d8). M2 (8-worker pool + 1024 MB) refused once (batch 176: one boto3 resource Table
-shared by threads) and RE-CUT: one Table per thread (`cee32dcf47`), bundle at `0f70e6156e` (`wXzz3_..`, `h7H7KgX1..`),
-packet blob `5518903557` @0d4325a83c with D2 (SigV4, `5bc562f689`) and R1 (the /pdf route); CTO half asked 16:25Z.
-Acceptance: every history page size <= 10 s server REPORT, cold and warm. Cottonwood holds 22 until then. The laptop's
-network read 8-16 s per AWS call at 15:3xZ (live re-measure not possible then).
+## New project (not this lane's build): YCharts direct-API generation, Opal-branded
 
-**irpt-status SERVES E7b + E6 + item 22 since 11:13:50Z** (`X/JLmPJZ..`, S3 `Jg3uJ0x7..`, members at `ff8fd77ba2`; CTO halves
-batches 146/148; ledger `irpt-status-e7b-20261002` CLOSED @2ab0eec3cb; E7 CLOSED SUPERSEDED). V1: every plain read equal to
-before; `include=comparisons` answers (Multi-Comp names Short-Term, Intermediate-Term); `2.0.0_SA_COO~D` told 11:22Z.
-Rollback S3 `m1LolBKF..` (code `2V7xV1..`). **E6 serves -> Cottonwood's 20-request cap lifts.** FINDING: history `client_id`
-is refused by `_authz/served.py:812-815` (fabricated-scope guard) -- item 22 unusable as named; ruling asked 11:22Z.
-Hop 11 integrated on branch `coo-y-hop11-int` (merge clean, ops 220 passed); its packet needs `~P`'s test line.
+Andrew-direct ~17:0xZ, request `IRPT_MVP_Y/RESEARCH/CRO_REQUEST_YCHARTS_DIRECT_GENERATION_20261003.md`. L1 brief
+`docs/briefs/irpt-ycharts-direct-generation-opal-branded-brief-20261003.md` @8dc32668e1 (4.0.0_SA_CRO). L2
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_IRPT_YCHARTS_DIRECT_GENERATION_20261003.md` @c3f2fb4bb3 waits on
+Andrew confirming its seven DONE WHEN lines. Andrew ~17:3xZ (`ce20ca6854`): YCharts egress whitelisted for this seat and
+its agents; subscription cleared for use.
 
-**The Analysis thread is LIVE** (CTO batch 88) on the Overview `REQ-a69e5751d42c374f1d2354f9`. The Multi-Comp
-`REQ-a1d9abc0bc037ea3d9e4a7ed` is READY, graded PASS and walked, and is NOT live until E7 is served (batch 98).
+## Queued work
 
-**E7 -- both halves SIGNED, apply HELD on row S261.** Packet
-`IRPT_MVP_Y/E7_STATUS/NEVER_WIDEN_SIGNOFF_PACKET_IRPT_STATUS_E7_20261002.md` (blob `cc3ecd9fbb`); CTO half
-`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_IRPT_STATUS_E7_20261002.md` (batch 105), conditional on step 1. The
-page's `readOwnedRequest` accepted exactly two keys, so serving `comparisons` first would break every request the page
-opens. `2.0.0_SA_COO~D` landed a tolerant parser on portal DEV `281b03c6` (msg 104011); the only deployed build calling
-the route is PROD `b3a1d8a638`, still strict. **The apply waits on a portal PROD promote, which is Andrew's word**
-(`2.0.0_SA_COO~D` is putting it to him). Census: 20 of 20 accepted requests derive (16 `[]`, 4 name one or two), 0 refuse.
-
-**st10 -- SERVED 03:19:51Z.** Packet `IRPT_MVP_Y/ST10/NEVER_WIDEN_SIGNOFF_PACKET_RESIDENT_ST10_20261002.md` (blob
-`cf517d1b39`), CTO half batch 106. V1: every digest equals the packet's; unit active and polling; queue 0/0
-(`ST10/INSTALL_OUTPUT_20261002.txt`). Items 15 and 16 are offline-proven only until the next job: its journal is read for
-`IRPT_RESIDENT_VENDOR_REQUESTS` and, if challenged, `WAF_READ`, and the ledger's records are compared with the requests
-made (CTO half item 1).
-
-## Next
-
-1. The next job on st10 (natural or under its own window packet): read items 15 and 16 live (CTO batch 106 item 1).
-2. On Andrew's PROD promote of `281b03c6` (named by `2.0.0_SA_COO~D`): E7's D1 (one targeted apply) and V1; then
-   `2.0.0_SA_COO~D` shows the names and re-walks; the CTO calls the Multi-Comp arm live.
-3. E6 MEASURED (@3fdf23d545, `IRPT_MVP_Y/E6_TIMING/OUTCOME_E6_20261002.md`): the page's status read is 193 AWS calls for 22
-   distinct keys (5.7 s warm, 9.8 s cold in region); the list 280 for 129 (8.9-9.3 s at 18 items, about 0.5 s per
-   listed request, timeout 15 s). The CTO's call on the change was asked 03:54Z (recommended: a per-request read memo
-   that keeps the deliberate `_final` re-reads, as a new irpt-status packet).
-4. E5 (row S230 at its next natural failure; no session is displaced on purpose).
-5. **The catalogue is SERVED** (above). `2.0.0_SA_COO~D` wires the composer (interface sent 06:05Z).
-   **Hop 3 -- window CLOSED, NOT fixed on st10** (`IRPT_MVP_Y/HOP3_PROOF/OUTCOME_HOP3_PROOF_20261002.md` @3743f5a084): an
-   upload during another job's generation is refused `PROVIDER_READ_UNAVAILABLE:OPERATION_BUSY` and exhausts. CTO batch 120
-   ruled the remedy as **st11**: a BUSY receive re-sends a fresh message delayed by the lease's retry-after (<= 900 s) and
-   deletes the received one; a 60-minute wall deadline; a busy end reads a busy code with a retry action, never
-   `REPLACE_FILE`. **st11's code is BUILT and MERGED** (item 19 `951afdf4e6`, IAM `85240e4c82`, merge `4f68a17d3a`): the
-   re-send, the deadline from the row's `requested_at`, `RESOLVE_PROVIDER_BUSY` with action `CORRECT` and its words; 3 new tests
-   (one proves a resolve busy for its whole deadline never reaches the dead-letter queue), negative control, every suite green.
-   **st11 is SERVED** (07:18:54Z; ledger CLOSED @861b9bf176). Its live proof (an upload during another job's generation reads
-   NORMALIZED after it) is the next window's, after Andrew's YCharts sign-in. The `RESOLVE_PROVIDER_BUSY` words ride the next
-   generate and irpt-status bundles (until then the code shows with action `CORRECT`; CTO half item 1).
-   **Hop 11 RULED as recommended** (CTO batch 123): `GET analysis/requests/{requestId}/pdf` on irpt-status, an Opal-signed 300 s
-   URL plus sha256; `irpt-status-policy` gains `vendor_documents` in `ops/iam.tf` (this seat's lane).
-   **THE irpt-status QUEUE (batch 123 item 4):** every irpt-status bundle now carries E7, so E7, then E6's memo, then hop 11 land
-   in that order, one packet each, once the tolerant parser is on every deployed build incl. PROD (row S261). Build now, apply
-   none before the gate, and upload no new irpt-status artifact before E7 applies (E7's step 2 stops on a replaced key).
-   **E6 memo BUILT and MERGED** (item 21, `4c23ef5d98` + `0d6ec02cd0` under CTO batch 125's grant, merge `7a9f76389b`): ReadMemo
-   over the table port, one scope per invocation, the final re-reads fresh; 6 tests with two negative controls; ops 193 passed.
-   **Hop 11 BUILT, on branch `coo-y-hop11` only** (item 20 `a41a349c8b`, IAM `dd6de6ced2`; NOT merged): the route, the signer bound
-   to the builder's address, 12 tests. It merges when its packet is cut (after E7 and E6), with the one line
-   `reports/tests/test_status_installed.py` needs (its five-operation set gains `analysis-request-pdf`; `2.0.0_SA_COO~P`'s file).
-   At each packet, `read_memo.py` (E6) and `pdf_link.py` (hop 11) join irpt-status's source-map `files`.
-   **Client-scoped history route BUILT and MERGED** (item 22 `f27418381d`, merge `408b8186ec`; CTO batch 110 item 4(b), batch 126):
-   optional `client_id` on the history route, read from each request's frozen composition selection; no backfill (all 21
-   requests are upload-lane, measured). Joins the irpt-status queue behind E7. `2.0.0_SA_COO~D` sends the header's client once served.
-   **Probe-rotation read DONE** (`HOP3_PROOF/PROBE_ROTATION_READ_20261002.md` @9fe3ee3e37): very likely yes, and wider -- no path
-   persists a rotated cookie. **CTO batch 127: st12** writes a rotated session cookie back to the secret under the bundle's lease
-   and fence, only when changed, names only in logs; `secretsmanager:PutSecretValue` on that one secret in `ycharts/resident.tf`;
-   the probe uses the same transport; offline rotation test; live proof after Andrew's sign-in.
-   **st12 SERVED 09:21:39Z** (code `9718ac5c87`, merge `cf3ae52aee`; packet `IRPT_MVP_Y/ST12/NEVER_WIDEN_SIGNOFF_PACKET_RESIDENT_ST12_20261002.md`
-   blob `fb132fd0d6`; CTO half batch 130, CONDITIONAL; ledger `irpt-resident-st12-20261002` CLOSED @56457904ed). A rotated or
-   added cookie is written back through the fenced `persist()`; a write never removes a cookie; a failed write is journaled and
-   retried at the next request. **Live proof, the CTO half's condition:** Andrew's CAPTCHA sign-in is taken with the generation
-   queue 0/0 and no non-terminal job; the first job runs after the new session reads back with its higher fence; then read the
-   journal for `IRPT_SESSION_ROTATION` and the secret's version list (fence unchanged), and the next operation is not evicted.
-   **Hop 12** is `2.0.0_SA_COO~P`'s (CTO batch 126 item 1).
-6. Batch 61's order after that: one job per remaining arm (Target Weight, 49 Financial, Inflection), each under a window
-   packet; the resolve concurrency fix; the vendor PDF link; the Analysis export; the email lane. E6's memo follows E7's
-   apply (CTO batch 111). A client-scoped history route is an enrichment item at the next round analysis (CTO batch 110 item 4).
-
-## The YCharts session -- LIVE (fence 23, restored 09:45:44Z by sign-in option C)
-
-Window C CLOSED (`IRPT_MVP_Y/SIGNIN_C/OUTCOME_SIGNIN_C_20261002.md` @2cd3e2ce23): leg S AUTHENTICATED with no challenge; leg J
-`REQ-c07e64ca6c74b8e5310f56e0` READY 10:14:06Z (`RPT-819429e0bd7084a11cdc74f023a9c48c`) on st12 -- the Analysis thread re-ran.
-st12 wrote back `multidb_pin_writes` 4 times, fence unchanged (churn finding at the CTO). FINDING: the fence-21 session was
-taken by a concurrent sign-in (403 EVICTED_HARD) -- row S233. Cottonwood holds 20 accepted requests: any further test job
-uses another firm until E6 serves (CTO half). **Option A SERVED as st13**; leg A (the attended run: Xvnc on loopback 5901,
-Andrew over a Systems Manager port forward and TigerVNC) is the fallback for the next `CHALLENGE_CAPTCHA_UNSUPPORTED`, at
-his time, queue 0/0 (`IRPT_MVP_Y/SIGNIN_A/NEVER_WIDEN_SIGNOFF_PACKET_SIGNIN_A_20261002.md` section 4).
-
-### Before the restore
-
-Leg A of the hop-3 window (06:26Z) read EVICTED 71 s after a probe read LIVE; the resident's refresh met
-`CHALLENGE_CAPTCHA_UNSUPPORTED` (row S230's cause, named). CTO batch 120 item 7: a sign-in that answers a CAPTCHA is a
-person's act on Andrew's YCharts login; no seat attempts one. Until he signs in, no Analysis attempt can produce a report.
-Batch 120 item 6 (the probe's cookie rotation) is read at the next window, which waits on that sign-in.
-
-**No path exists for that sign-in today** (`IRPT_MVP_Y/SIGNIN_PATH/SIGNIN_PATH_READ_20261002.md` @154286ecac): the library refuses
-any CAPTCHA (`ycharts_session.js:546`) and the host has no display. Asked the CTO 09:32Z to rule C (one more scripted leg S in a
-window packet, queue 0/0 first), A (an attended sign-in on the host: Xvnc plus a bounded wait mode; Andrew answers over a Systems
-Manager port forward), both or neither. Recommended: C now, A in parallel. Nothing is built for A before the ruling: it reverses
-the library's FAIL_EXPLICIT design.
+- Y-5 packet 2 (the Kimi swap): HELD by CTO batch 218 (YAGNI: the user-named proxy serves Case D). Findings
+  `Y5P2/KIMI_WEB_SEARCH_QA_FINDINGS_20261003.md`.
+- G3 arm 3, the live wiring, is E4's.
 
 ## Rows this lane holds
 
 | Row | State |
 |---|---|
-| S263 | FIXED on CLOUD @6c4ac61088 (CTO batch 114, this seat's lane IRPT_BCKEND_FAST_Y_TFPOLICY): five roots select the policy by revision; core, export, performance plan no changes, ops and ycharts one held Lambda code move each. For the CVO to close |
-| S261 | OPEN, BLOCKING (2026-10-02 02:41Z): the page parser rejects E7's third key. Disarm owner `2.0.0_SA_COO~D` (parser on DEV `281b03c6`; PROD promote on Andrew's word); this seat holds E7's D1 |
-| S230 | OPEN, CAUSE NAMED 2026-10-02T06:26:18Z: the resident's own sign-in meets a CAPTCHA (`CAPTURE_FAILED:UNEXPECTED_CHALLENGE:CHALLENGE_CAPTCHA_UNSUPPORTED`). Only Andrew's own sign-in restores the session (CTO batch 120 item 7) |
-| S253 | SERVED on st10 and READ LIVE: job `REQ-93441e4e..` carries 2 `vendor_requests` records, one per receive (hop-3 outcome). For the CVO to close |
-| S231 | DONE on served code; for the CVO to close |
-| W88-S2 | reader served in the generate bundle; grant applied; the route is not published |
-| W94-S2, W91-S1, W92-S1 | repaired or read; for the CVO to close |
-| W91-S2 | NOT repaired: `_contracts/tests/test_seam_paired.py` is held by the open order IRPT_DASHBD TO-DB-b-4 |
-| W92-S4 | READ 05:5xZ: S213's path answers INVALID_INPUT (named; the route takes a request id), the same report by request serves 76 sections, served `owned_report.py` carries ReportBundleAbsent. Disarm proposed to the CVO 07:28Z (also S213) |
+| S288 | DISARMED by S306 (the session restored from Andrew's HAR) |
+| S284 | OPEN, BLOCKING, ARMED: TIMXX gated (`mutualFundDataUSA`, S287); remedy the Y-5 proxy, proven live by Y-5 V1 |
+| S296 | OBSERVATION, INERT (history UNEXPECTED) |
+| S286 | CVO: generate bundles carry CRLF members; build from autocrlf=false (mine) |
+| S230 | the resident's own sign-in meets a CAPTCHA; only Andrew restores a session (now by HAR seed or sign-in) |
+| S282 | test_generate_installed schema pin; owner `2.0.0_SA_COO~P` |
+| S263, S253, S261, S231, W94-S2, W91-S1, W92-S1 | for the CVO to close (unchanged) |
+| W91-S2, W92-S4, W88-S2 | unchanged |
 
 ## Ledgers this seat holds open
 
-- `irpt-status-e7-20261001`: U1 closed; HELD (external gate: row S261 and the PROD promote). Nothing applied.
-
-## Enrichment candidates (the measured list is `IRPT_MVP_Y/ENRICHMENT_CANDIDATES_20261001.md`)
-
-- The read challenge after a job's first receive: item 15's journal token names the header's action at the next one.
-- The request history list grows about 0.5 s in region per listed request against a 15 s timeout; a cold first page
-  reaches it at about 22 Cottonwood requests (inferred, E6). Each Analysis attempt adds one.
-- The words a user reads for `RESOLVE_RETRY_EXHAUSTED` say other work was in flight (`2.0.0_SA_COO~D`, batch 72 item 13).
-- A name with no request id is accepted by the cut-name rule on its three-quarter prefix alone (st8 half, item 1).
-- A producer that adds `comparisons` only when the caller asks would remove E7's wait on a PROD promote (CTO half item 1);
-  it would be a new packet.
+- `irpt-y5-20261003` and `irpt-y4-20261003`: apply legs proven, V1 open, not held (released after the session restore).
 
 ## Write claims
 
-`infra/aws/lambda/investor-reporting/ycharts/**`; `infra/aws/ec2/investor-reporting-ycharts/**` (the library file by the
-exact-file grant of batch 74, lane IRPT_BCKEND_FAST_Y_HOST); `docs/contracts/investor-reporting/v1/routes.json`;
-`docs/contracts/investor-reporting/v1/OwnedAnalysisRequest.schema.json`; `infra/aws/lambda/investor-reporting/ops/owned_requests.py`;
-this file; `deliverables/2.0.0_SA_COO~Y/**`; `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/**`; the rows of
-`irpt-status` and `irpt-ycharts-generate` in `infra/aws/lambda/ci/lambda-source-map.json`. NOT this seat's:
-`infra/aws/terraform/investor-reporting/**`, `reports/**`, `_contracts/tests/**`, `portal/**`.
+`infra/aws/lambda/investor-reporting/ycharts/**`; `infra/aws/lambda/investor-reporting/intake/{security_resolution,portfolio,resolution_broker}.py`
+and their tests; `infra/aws/ec2/investor-reporting-ycharts/**`; `docs/contracts/investor-reporting/v1/routes.json`;
+`infra/aws/lambda/investor-reporting/ops/owned_requests.py`; the rows of `irpt-status` and `irpt-ycharts-generate` in
+`infra/aws/lambda/ci/lambda-source-map.json`; `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/**`; this file.
 
 ## Parked, each with its owner and the condition that un-parks it
 
-- A per-run one-time VNC password for leg A (the CTO half of the A packet, item 1: the laptop's forward listens on
-  `localhost:5901` unauthenticated while open). Owner this seat; un-parks before the first leg-A run. The password
-  must reach Andrew alone: never into a host-read output an agent reads.
-
-- Hop 11's test line: `reports/tests/test_status_installed.py`'s five-operation set gains `analysis-request-pdf`. Owner
-  `2.0.0_SA_COO~P` (or an exact-file grant to this seat); un-parks when hop 11's packet is cut, after E7 and E6.
-
-- The api root's `CHANGELOG.json` entry for route `bh7ynom`: outside this seat's write surface (no lane names the
-  api directory; earlier entries are `2.0.0_SA_COO~P`'s). The closed ledger entry holds the record. Un-parks with an
-  exact-file grant or that lane's next entry.
-- `record-terraform-deploy.sh investor-reporting` is not run while E7 is held: it stamps every function of the pipeline
-  as deployed at HEAD, `irpt-status` included.
-
-- The two source-map rows' `last_deployed_*` fields. Owner this seat; un-parks with the pipeline's next recorded deploy
-  (E7's D1 for `irpt-status`).
-- Request history lists the same requests under any selected client. Owner `2.0.0_SA_COO~D` for the label; whether
-  history filters by client is a product call for `1.0.0_SA_CTO`.
-- Three test-path defects in files that are `2.0.0_SA_COO~P`'s (`reports/tests/test_resident_installed.py`;
-  `test_generate_installed.py` at collection; `_authz/tests`, row W98-S1).
-- The node of `ycharts/session/tests/test_host_capture.py` that runs a real wrapper needs a POSIX host. Owner this
-  seat; un-parks at the first resident-run capture on st7 or later.
-- One kept artifact in Cottonwood's partition that nothing references (the refused PDF of `REQ-7c7a9e45`). Owner this
-  seat; it is the fixture's source and needs nothing.
-- The FAST notice to `3.0.0_SA_CVO` is carried by this file.
+- Login and session secret ARNs keep `-*` in the runner role. Owner this seat; un-parks on a CTO ruling.
+- The iam.tf comment in `ycharts/iam.tf`: `2.0.0_SA_COO~P`'s lane; un-parks with that lane's next edit.
+- Andrew's HAR file `C:\Users\AndrewBerman\Downloads\ycharts.comalyss.har` (outside the repo): its deletion is Andrew's
+  (asked); recorded by sha256 and size only.
+- A deterministic ROWS_UNVERIFIED is still retried four times at 60 s. Owner this seat; un-parks if a stray-row refusal
+  recurs.
+- The api root's `CHANGELOG.json` entries for routes `bh7ynom` and `ihirb2s`: outside this seat's surface.
 
 ## Limits
 
-No sign-in has run on the st7 capture library (`9511060e..`). The resident's own sign-in is unrepaired. Every
-certified report so far is Cottonwood's, from this lane's test upload: Overviews and one Multi-Comp; no other firm,
-no Comparison or Target Weight on served code, and no real client file has run.
+No fund-holding upload has normalized live (Y-5 V1 is the first). No Comparison report on served code from a client file;
+Y-3's Multi READY used window 15's Dollars CSV. The laptop clock is ~3 s behind AWS: grade expiries on AWS's Date header.
 
 ## Standing directives (carried)
 
-- No firm id typed in code or JSON; run `.tools/naming-gate.py --diff <diff> --enforce` explicitly in a worktree.
-- A password is read BY NAME from its store into memory and never printed; an output file is read for values before
-  it is committed.
-- Vendor egress is on Andrew's standing words (2026-09-23 for the host's own calls, 2026-09-27 for Analysis attempts),
-  each use inside a packet with both halves; no sign-in is made from the host outside one, except under batch 88
-  item 3's standing terms. A served move needs both never-widen halves. "Nobody runs AC8 again"; do not remove the
-  `wk-nfra-oplgtw-og-v-4-p1` worktree.
-- Read safe-merge's exit code and its "tree check" line on every merge, and build nothing on a merge that did not land.
-- A consumer's parser is part of a served field's blast radius: read it at every deployed build before a served
-  response gains a key (row S261).
+- Andrew-direct ~17:3xZ (site Z, MSTR 104662): no data-engineering change without his explicit directive; this seat
+  holds no quarantine.
+- No firm id typed in code or JSON; run `.tools/naming-gate.py --diff <diff> --enforce` in a worktree.
+- A password or cookie is read BY NAME into memory and never printed; an output is read for values before commit.
+- YCharts runs one at a time with the queue empty; a CAPTCHA or sign-in is Andrew's act.
+- A served move needs both never-widen halves; read safe-merge's exit code and tree-check line on every merge.
+- A drained worktree is removed the same turn.

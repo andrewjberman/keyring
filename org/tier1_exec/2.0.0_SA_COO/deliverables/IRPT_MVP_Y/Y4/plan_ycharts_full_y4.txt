@@ -1,0 +1,140 @@
+data.terraform_remote_state.core: Reading...
+data.aws_ssm_parameter.al2023: Reading...
+module.irpt_ycharts_generate.data.aws_s3_object.artifact: Reading...
+data.aws_lambda_layer_version.irpt_common: Reading...
+data.aws_caller_identity.current: Reading...
+aws_cloudwatch_log_group.research_probe: Refreshing state... [id=/aws/lambda/irpt-ycharts-research-20260911]
+module.irpt_ycharts_generate.aws_cloudwatch_log_group.lambda: Refreshing state... [id=/aws/lambda/irpt-ycharts-generate]
+aws_security_group.runner: Refreshing state... [id=sg-0f643b4963ad6ff15]
+aws_iam_role.generate: Refreshing state... [id=irpt-ycharts-generate-role]
+aws_iam_role.runner: Refreshing state... [id=irpt-ycharts-runner-role]
+data.aws_caller_identity.current: Read complete after 0s [id=313476888478]
+data.aws_dynamodb_table.users: Reading...
+data.aws_ssm_parameter.al2023: Read complete after 0s [id=/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64]
+aws_ssm_document.deploy: Refreshing state... [id=irpt-ycharts-deploy]
+data.aws_lambda_layer_version.irpt_common: Read complete after 0s [id=arn:aws:lambda:us-east-1:313476888478:layer:irpt-common:5]
+aws_ssm_document.run: Refreshing state... [id=irpt-ycharts-run]
+module.irpt_ycharts_generate.data.aws_s3_object.artifact: Read complete after 0s [id=opal-313476888478-lambda-artifacts/investor-reporting/irpt-ycharts-generate.zip]
+aws_secretsmanager_secret.research_session: Refreshing state... [id=arn:aws:secretsmanager:us-east-1:313476888478:secret:ycharts/session/research-20260911-FQCIve]
+data.terraform_remote_state.core: Read complete after 2s
+data.aws_dynamodb_table.users: Read complete after 1s [id=opal-users-v2]
+aws_iam_role_policy.generate: Refreshing state... [id=irpt-ycharts-generate-role:irpt-ycharts-generate]
+aws_iam_role_policy.generate_directory_read: Refreshing state... [id=irpt-ycharts-generate-role:irpt-ycharts-generate-directory-read-policy]
+aws_iam_role_policy.generate_ownership_map: Refreshing state... [id=irpt-ycharts-generate-role:irpt-ycharts-generate-ownership-map-read-policy]
+module.irpt_ycharts_generate.aws_lambda_function.this: Refreshing state... [id=irpt-ycharts-generate]
+aws_iam_role_policy_attachment.runner_ssm: Refreshing state... [id=irpt-ycharts-runner-role-20260911000549354900000001]
+aws_iam_instance_profile.runner: Refreshing state... [id=irpt-ycharts-runner-profile]
+aws_iam_role_policy.runner: Refreshing state... [id=irpt-ycharts-runner-role:irpt-ycharts-runner]
+aws_iam_role_policy.runner_resident: Refreshing state... [id=irpt-ycharts-runner-role:irpt-ycharts-runner-resident-policy]
+aws_instance.runner: Refreshing state... [id=i-0167fd745ad906a66]
+aws_ec2_instance_state.runner: Refreshing state... [id=i-0167fd745ad906a66]
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  ~ update in-place
+
+Terraform will perform the following actions:
+
+  # aws_iam_role_policy.runner_resident will be updated in-place
+  ~ resource "aws_iam_role_policy" "runner_resident" {
+        id          = "irpt-ycharts-runner-role:irpt-ycharts-runner-resident-policy"
+        name        = "irpt-ycharts-runner-resident-policy"
+      ~ policy      = jsonencode(
+          ~ {
+              ~ Statement = [
+                    # (4 unchanged elements hidden)
+                    {
+                        Action   = [
+                            "s3:GetObject",
+                            "s3:GetObjectVersion",
+                        ]
+                        Effect   = "Allow"
+                        Resource = [
+                            "arn:aws:s3:::opal-data-irpt/irpt/49financial/state/request_compositions/*",
+                            "arn:aws:s3:::opal-data-irpt/irpt/49financial/state/original_holdings/*",
+                            "arn:aws:s3:::opal-data-irpt/irpt/cottonwood/state/request_compositions/*",
+                            "arn:aws:s3:::opal-data-irpt/irpt/cottonwood/state/original_holdings/*",
+                            "arn:aws:s3:::opal-data-irpt/irpt/inflection/state/request_compositions/*",
+                            "arn:aws:s3:::opal-data-irpt/irpt/inflection/state/original_holdings/*",
+                        ]
+                        Sid      = "ReadFrozenCompositionAndNormalizedInput"
+                    },
+                  + {
+                      + Action   = [
+                          + "secretsmanager:GetSecretValue",
+                        ]
+                      + Effect   = "Allow"
+                      + Resource = [
+                          + "arn:aws:secretsmanager:us-east-1:313476888478:secret:astn/kimi/api-key-*",
+                        ]
+                      + Sid      = "ReadTheEstateKimiKey"
+                    },
+                    {
+                        Action    = [
+                            "kms:Decrypt",
+                            "kms:GenerateDataKey",
+                        ]
+                        Condition = {
+                            StringEquals = {
+                                "kms:ViaService" = "s3.us-east-1.amazonaws.com"
+                            }
+                            StringLike   = {
+                                "kms:EncryptionContext:aws:s3:arn" = [
+                                    "arn:aws:s3:::opal-data-irpt/irpt/49financial/state/vendor_documents/*",
+                                    "arn:aws:s3:::opal-data-irpt/irpt/49financial/state/extraction_evidence/*",
+                                    "arn:aws:s3:::opal-data-irpt/irpt/49financial/platinum/analysis_reports/*",
+                                    "arn:aws:s3:::opal-data-irpt/irpt/49financial/state/normalized_portfolios/*",
+                                    "arn:aws:s3:::opal-data-irpt/irpt/cottonwood/state/vendor_documents/*",
+                                    "arn:aws:s3:::opal-data-irpt/irpt/cottonwood/state/extraction_evidence/*",
+                                    "arn:aws:s3:::opal-data-irpt/irpt/cottonwood/platinum/analysis_reports/*",
+                                    "arn:aws:s3:::opal-data-irpt/irpt/cottonwood/state/normalized_portfolios/*",
+                                    "arn:aws:s3:::opal-data-irpt/irpt/inflection/state/vendor_documents/*",
+                                    "arn:aws:s3:::opal-data-irpt/irpt/inflection/state/extraction_evidence/*",
+                                    "arn:aws:s3:::opal-data-irpt/irpt/inflection/platinum/analysis_reports/*",
+                                    "arn:aws:s3:::opal-data-irpt/irpt/inflection/state/normalized_portfolios/*",
+                                    "arn:aws:s3:::opal-data-irpt/irpt/49financial/state/request_compositions/*",
+                                    "arn:aws:s3:::opal-data-irpt/irpt/49financial/state/original_holdings/*",
+                                    "arn:aws:s3:::opal-data-irpt/irpt/cottonwood/state/request_compositions/*",
+                                    "arn:aws:s3:::opal-data-irpt/irpt/cottonwood/state/original_holdings/*",
+                                    "arn:aws:s3:::opal-data-irpt/irpt/inflection/state/request_compositions/*",
+                                    "arn:aws:s3:::opal-data-irpt/irpt/inflection/state/original_holdings/*",
+                                ]
+                            }
+                        }
+                        Effect    = "Allow"
+                        Resource  = [
+                            "arn:aws:kms:us-east-1:313476888478:key/7f4d3042-10d8-49a7-b55e-3c963cea8111",
+                        ]
+                        Sid       = "ReportEncryptionViaS3ForResidentFamiliesOnly"
+                    },
+                ]
+                # (1 unchanged attribute hidden)
+            }
+        )
+        # (2 unchanged attributes hidden)
+    }
+
+  # module.irpt_ycharts_generate.aws_lambda_function.this will be updated in-place
+  ~ resource "aws_lambda_function" "this" {
+        id                             = "irpt-ycharts-generate"
+      ~ last_modified                  = "2026-10-03T02:05:42.000+0000" -> (known after apply)
+      ~ s3_object_version              = "oew.wOPKuZQKvi30OCFECa5x7Dk_9MOL" -> "w2yfeweDcOFLnVFLFidK1_VCv5EFPCmb"
+      ~ source_code_hash               = "aug0YyWcP6wwRwwnkyWYH+GBfT8gN9irrmEMCz/Vvj8=" -> "fD2R6OFrT2N086C9Go3e1aA9RKZCP/vfnZCaHCloJTs="
+        tags                           = {
+            "Cell"      = "IB-s-9"
+            "ManagedBy" = "Terraform"
+            "Module"    = "yang-lambda"
+            "Project"   = "IRPT_BCKEND"
+            "System"    = "InvestorReporting"
+        }
+        # (28 unchanged attributes hidden)
+
+        # (4 unchanged blocks hidden)
+    }
+
+Plan: 0 to add, 2 to change, 0 to destroy.
+
+─────────────────────────────────────────────────────────────────────────────
+
+Note: You didn't use the -out option to save this plan, so Terraform can't
+guarantee to take exactly these actions if you run "terraform apply" now.

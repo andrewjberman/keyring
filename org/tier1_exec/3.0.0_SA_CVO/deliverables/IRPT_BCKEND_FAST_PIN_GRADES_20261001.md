@@ -688,3 +688,223 @@ Accounts are matched across dates by `acc_` id. Dollars across OBSERVED and ASSI
 are quoted as node counts.
 
 -- 3.0.0_SA_CVO
+
+## irpt-status M2 + D2 + the /pdf route served, read 19:xZ 2026-10-02 (handoff 104367; S270 disarmed)
+
+| claim | this seat's read | grade |
+|---|---|---|
+| live is the `0f70e6156e` build, 1024 MB | CodeSha256 `h7H7KgX1..` (337,059 B), MemorySize 1024, Timeout 29, LastModified 17:04:07Z; zip = live = map `artifact_sha256`; 47 of 47 members equal `git show 0f70e6156e:<path>`. Control: hop 11's `pdf_link.py` and `read_memo.py` differ | PASS on deployed bytes |
+| M2: one boto3 Table per thread | `read_memo.py:33-42` `threading.local()` with one lock; `status_installed.py:91` a Session().resource per thread; `owned_requests.py:26` 8 workers, one long-lived pool | PASS on bytes |
+| D2: the signer | `pdf_link.py:53-54` regional endpoint, `s3v4`, virtual addressing | PASS on bytes |
+| /pdf route present | API `7k3ed8px20`: 111 routes; `ihirb2s` GET `.../analysis/requests/{requestId}/pdf` to irpt-status (AWS_PROXY 2.0) under the same CUSTOM authorizer as the history route | PASS |
+| owned GET, REQ-c07e64ca | 200, `analysis-request-pdf`: byte_length 581,489, sha256 `db27de07..` (equal to the retained PDF graded in window C), a URL on `opal-data-irpt.s3.us-east-1.amazonaws.com`, X-Amz-Algorithm `AWS4-HMAC-SHA256`, X-Amz-Expires 300; server 1,428.74 ms. The URL was not fetched or printed | PASS |
+| foreign-firm control | inflection: UNAVAILABLE `FIRM_BINDING` (REPORT 75.28 ms, it reached the function) | PASS |
+| S270's bar: this seat's history calls | cold 7,414.05 ms (Init 140.61); warm 3,134.67 ms; 22 items, `next_cursor` null | PASS, 2 of 2 under 10 s |
+| every REPORT since M2 (17:04Z-19:22Z) | 28 lines at 1024 MB, 0 timeouts, 0 over 10 s, 5 cold, maximum 7,428.12 ms (a history call, 18:13:09Z) | PASS against the 10 s bar |
+| CTO half | SIGNED `0b29df2e35` (16:40Z) on blob `5518903557` = HEAD's packet; applied 17:04Z, after the signature | PASS |
+| row S277 (S270's disarm) | written by S270's disarm owner; the bar is met. Its "at most 6.6 s" and "3.4 s of headroom" are wrong: ~Y's own cold read at 18:13:09Z took 7,428.12 ms, before S277's 18:20Z; the headroom is 2.57 s, and the growth per request is unmeasured | PASS on the bar; FAIL on the figure |
+| ledger | CLOSED 4 of 4 at 18:16:04Z; sentinel absent at HEAD; still OPEN in 3 of 11 worktrees whose heads predate the close (the known worktree-lag shape; its window ends 20:36Z) | PASS at HEAD |
+
+**S270: disarmed in the world** -- 0 timeouts and 8 of 8 history calls under 10 s since M2. **S273: still true** --
+`IR_ROUTE_TABLE` has 18 rows on portal DEV `f2d69887` and PROD `dcdc89b1`, 0 for `pdf`; the API part of the row no
+longer holds (the route now answers 200), so the route is served and unconsumed.
+
+**Limits.** REPORT lines carry no route (attribution by call order); no signed URL fetched; the laptop clock runs
+about 3 s behind AWS; history time beyond 22 requests not measured.
+
+-- 3.0.0_SA_CVO
+
+## ~Y st14 served (row S279), read 00:xZ 2026-10-03
+
+Ledger `irpt-st14-20261002` (open `9c515ff07b`, close `0b3816f0b7`); pin `f89fc8e731` (fix `de5e0c6878`); CTO half
+batch 188 `83af6002f8`; ruling batch 192 `9d320a5bb5`.
+
+| limb or claim | this seat's read | result |
+|---|---|---|
+| active root | `f89fc8e731-st14`, active/running, NRestarts 0, since 22:13:00Z | PASS |
+| members | tar by version `4N3RhbIT..` (sha256 = census); 249 of 249 hash to SHA256SUMS; 247 of 247 with a repo path equal `git show f89fc8e731:<path>`; the host listing hash equals this seat's | PASS |
+| control | 4 of 4 S279 members differ from `de5e0c6878^`; library `857d90b8` and wrapper unchanged | PASS |
+| journal 22:13Z-23:57Z | 315 lines: 311 idle polls, 3 job lines at 23:25:09Z (`IRPT_RESIDENT_RESOLVE_FUNDS matched=1 refused=0`, `RESOLVE state=READY`, `POLL handled=1`); 0 tracebacks | PASS |
+| generate live | CodeSha256 `wjSX3zZo..`, LastModified 22:17:43Z; zip = live = map `artifact_sha256`; 113 of 113 in `files[]` | PASS on deployed bytes |
+| generate members vs pin | 98 of 113 byte-equal; 15 of 15 others CRLF-only (templates.json, 14 fixtures incl. a PDF); 0 differ in content -- row IRPT_BCKEND-S286 | PASS modulo EOL |
+| S279 live: no whole-upload failure | irpt-requests (1,435 rows): 1 upload since 22:13Z, `UP-f0d8aead` (content `500837992a..`): NEEDS_CORRECTION with 1 of 1 finding at row 100 col A `TICKER_CHECK_UNAVAILABLE`. Control, st13 19:04Z-19:45Z: 5 of 6 uploads `RESOLVE_RETRY_EXHAUSTED` with no row, 1 NORMALIZED | PASS on 1 live upload |
+| S279 success path (fund row NORMALIZED as `M:<ticker>`) | not reached; `matched=` at st14 also counts an entitlement-gated row; the `gated=` split (`5f93fdbee0`) is at HEAD, not on the host | NOT_EVALUATED |
+| tests | the two S279 files: pin 55 passed, HEAD 56 passed; control (pin tests on `de5e0c6878^`) 17 failed, 38 passed | PASS on a test run |
+| V1 ("matched>=1, NORMALIZED with M:TIMXX, no WAF") | matched=1 measured; NORMALIZED not met; closed by ruling 192 (23:35Z) with READY moved to Y-5 | CLOSED BY RULING; the criterion NOT met |
+| ledger | CLOSED 5 of 5 at 23:37:05Z; sentinel absent at HEAD and in 5 of 5 worktrees | PASS |
+| row S265 | `/` 2.9G free of 8.0G; 26 root directories (25 at st13) | measured |
+
+**Claim corrected.** `OUTCOME_V1_CASE_A_RUN3` says "the same file failed AS A WHOLE at 19:04Z". The 19:04Z upload
+`UP-2679bceb` is the typo file (`87afdc7d..`, 23,670 B); Case A's file (`500837992a..`, 29,584 B) has one upload, on
+st14 only. Ruling 192's "S279 FIXED" therefore rests on a baseline that is not Case A's; told to `1.0.0_SA_CTO`.
+
+**Limits.** Row 100 = TIMXX is the lane's mapping (the journal names no symbol); no served route read; the pydeps files
+(3,427) not compared.
+
+-- 3.0.0_SA_CVO
+
+## ~Y st15 served (Y-3, an ETF as a comparison key; S284's journal), read 02:0xZ-02:1xZ 2026-10-03
+
+Packet `5028661cbf`, CTO half `91ab9f8f52` (batch 194), deploy `389103aaf0`; code `bb255c4cb2`, merge `ce035e9387`, pin
+`9bbb38f7a0`; evidence `0b9d4f696f`. Host reads: SSM `9a3c9eea` (02:02:17Z) and `2eff9df7` (02:17:52Z), both Success rc 0.
+
+| limb or claim | this seat's read | result |
+|---|---|---|
+| active root | 02:02:17Z `9bbb38f7a0-st15`, active, NRestarts 0, since 00:05:11Z; by 02:17:52Z st16 (`34088050e0-st16`, deploy `578e919c5e`) was installed | PASS for st15's window (00:05:11Z-02:03:30Z); st16 not graded |
+| members | 249 of 249 hash to SHA256SUMS; 247 of 247 with a repo path equal `git show 9bbb38f7a0:<path>`; host listing hash = tar manifest; library and wrapper unchanged | PASS |
+| journal 00:05Z-02:02Z | 370 lines (346 idle polls, 5 systemd, 19 job lines, all st15's PID); 0 tracebacks | PASS |
+| S284's line | 1 of 1 `RESOLVE_FUNDS matched=0 gated=1 features=mutualFundDataUSA=1 refused=0` (00:20:39Z, V1-b) | PASS (row S287) |
+| generate (Y-3) | before 02:05Z: CodeSha256 `VZvhvWRM..` = S3 by version = map at `757147b128`; 113 of 113 members, 98 byte-equal to the pin, 15 CRLF-only, 0 differ | PASS modulo EOL |
+| generate now (Y-5) | `aug0YyWc..` since 02:05:42Z = HEAD map; 113 of 113 byte-equal `34088050e0` | S286 remedied |
+| V1-a | `REQ-66e9fe1a` ATTENTION `VENDOR_UPLOAD_REFUSED`, 0 checkpoints; template GET 200, securities_info GET 200, holdings_upload POST 403 (76 B); no WAF action | NOT READY (rows S285, S288) |
+| ETF as a comparison key | composition sha256 `06a87c41..` = request ref = job row (3 of 3); keys `opal_ultra_long_term` and `IWM` (MAINTAINED_RECORD, etf) | PASS |
+| identity verified 1 of 1 | `resident_worker.py:245` discards the step's `{checked, verified}`; step() raises unless ok and the upload intent was claimed | PASS inferred, not carried (row S289) |
+| PDF, certified report, name count | none produced (stopped before upload); "IWM" 0 times in 6 of 6 route bodies, control "SPY" 0 | NOT REACHED |
+| routes (one login, GET) | status-job `ANALYSIS_REQUIRES_ATTENTION`; sections `NOT_FOUND`; inflection 2 of 2 `FIRM_BINDING` | PASS on the boundary |
+| ledger `irpt-y3-20261002` | OPEN, 4 of 5 legs closed, V1 open; `irpt-y5-20261003` also OPEN over the same artifacts | NOT CLOSED, correctly; row S290 |
+| row S265 | `/` 2.9G free of 8.0G; 27 root directories (26 at st14) | measured |
+
+**V1-a against the packet:** admission PASS, identity PASS (inferred), READY not met. ULT has still never run to READY.
+
+**Limits.** `include=comparisons` not read (the one login was spent); st16 not hashed; the vendor side and the
+`etf-classifications` row not read; pydeps checked by the host's own manifest only (3,676 of 3,676). Read by a delegate
+of this seat; the table is its report, with line 245 and the two ledgers re-read here.
+
+-- 3.0.0_SA_CVO
+
+## ~Y st16 served (Y-5 packet 1, resident leg D2), read 02:50Z 2026-10-03
+
+Ledger `irpt-y5-20261003` (U1, U2, D1, D2 closed; V1 waits on option A, not graded). Pin `34088050e0`; packet signed by
+the CTO on blob `2bff7eacdc` (batch 198, `60d2ffd6bb`); deploy `578e919c5e`. One read-only SSM read,
+`0a2231fd-feef-40d9-bc1c-135231852d9e` (02:50:30Z, Success, rc 0), plus S3 and git. The generate leg (D1, `aug0YyWc..`)
+was graded in the st15 section: 113 of 113 members byte-equal to the pin.
+
+| limb | this seat's read | result |
+|---|---|---|
+| active root | `irpt-analysis-resident.service` ExecStart, process command line and working directory all point to `34088050e0-st16`; active/running, NRestarts 0, since 02:03:31Z; queue 0/0 | PASS |
+| members | tar version `eB6EYhL7..`, 784,084 B, sha256 `4d231519..` (= ledger, the key's only version); 249 of 249 hash to SHA256SUMS; 247 of 247 equal `git show 34088050e0:<path>`, 0 CRLF; 249 of 249 verify in the installed root; install script `cBX09ViG..` = the repo copy | PASS |
+| journal 02:03:31Z-02:50:13Z | 141 lines: 140 idle polls, 1 systemd start, 0 job lines, 0 tracebacks | PASS; the new code has not run a job |
+| change vs st15 | 4 members: AnalysisUploadRequest.schema.json, intake/portfolio.py, intake/uploads.py, ops/status.py (129 insertions, 11 deletions), matching packet section 1; the tar-to-tar diff adds only the generated bindings file | PASS |
+| disk (row S265) | `/` 2.9G free of 8.0G (65% used); 28 roots under /opt/irpt-resident; the rollback root st15 is present | measured |
+| host receipt | `supersedes_package_root` still names `ab2e088b5b` | row IRPT_BCKEND-S291 |
+
+**Limits.** Compared to the st15 tar's latest S3 version, not the st15 bytes on the host. Pydeps were checked only
+against the install's own manifest (3,676 of 3,676). Per-root disk use was not measured. Read by a delegate of this
+seat; the receipt and the installer's assertions were re-read here.
+
+-- 3.0.0_SA_CVO
+
+## ~P IB-pr-221 served (Inflection's Performance from its holdings gold; 49 Financial GROSS), read 03:0xZ 2026-10-03
+
+Ledger `irpt-inf-performance-serving-20261002` (open `53c86ea96f`; legs C1, S0, P2, P3, G1, F1 closed `8c10791252`; A1, the
+first scheduled Inflection fire on Mon 2026-10-05 14:00Z, open). CTO half batch 185 `0c714c37eb`; packet blob `87d1cd8418`.
+
+| limb | this seat's read | result |
+|---|---|---|
+| producer, 49F (P2) | live `kKgvbKtG..` = map = S3 version `OJ.bVNs_0q..` (137,752 B); 14 of 14 members equal the pins (handler.py at HEAD, no pin); `DEPLOY-SERVE-HELD` 0 times in the deployed file (1 at `718716fb60^`) | PASS |
+| Inflection function (P3) | `irpt-inf-holdings-performance-lambda` same artifact `kKgvbKtG..`, 14 of 14 | PASS |
+| Inflection schedule | `cron(0 14 ? * MON-FRI *)` UTC, ENABLED, input `source: orion`, created 21:05:01Z; next fire Mon 10-05 14:00Z (10-03 and 10-04 are not trading days) | PASS |
+| adapter (F1) | live `/K1eLPu..` = map = S3 version `7GwiGHEP..` (435,552 B); 71 of 71 members equal the pins, 0 CRLF; GROSS at `holdings_gold.py:270` | PASS |
+| IAM (G1) | inline `irpt-performance-retained-policy`, 12 statements; the two new ones equal `2b3048bd22`'s diff, no Cottonwood resource; simulation: Inflection GetObject and exact-prefix ListBucket allowed, Cottonwood gold GetObject implicitDeny | PASS (role policy only) |
+| served value | account 226 YTD re-derived from the Inflection gold: 0.02403083137330264 over 184 partitions (187 trading days less 3 linked days) against the ledger's 0.024030831373 | PASS |
+| 49F schedule | `cron(30 7 ? * MON-FRI *)` America/New_York, unchanged since 2026-09-29 | PASS |
+| logs | adapter: 2 invocations since 21:39:28Z (the probes), 0 tracebacks; Inflection: 1 dry run (09-30, 966 rows) | PASS |
+
+**Finding: 10-01 is a hole, and A1 cannot see it (row IRPT_BCKEND-S292, BLOCKING, ARMED until 2026-10-05T14:00Z).**
+- Inflection's gold ends at 09-30.
+- The schedule was created after Friday's slot and computes one day per fire.
+- Monday computes 10-02 as a one-day return, because 10-01's close is in silver.
+- The adapter chains the partitions that exist and discloses no missing trading day.
+- This seat checked each step: the gold and silver listings, `handler.py:52-68`, `holdings_performance.py:1015-1018`
+  and `holdings_gold.py:220-246`.
+- A1, as written ("the first scheduled fire read from its own log"), passes with the hole in place.
+- Disarm owner `2.0.0_SA_COO~P`: land 10-01 before Monday's fire, or state a disposition.
+
+**Also:** the source map's deploy records are stale (row S293).
+
+**Limits.**
+- Nothing was invoked; 49 Financial's GROSS label is read from deployed source and routing, not from a served response.
+- The IAM simulation covers the role's own policy only.
+- A1 not graded.
+- Read by a delegate of this seat; the S292 chain was re-read here.
+
+-- 3.0.0_SA_CVO
+
+## IRPT_BCKEND-S292 disarm, read 07:3xZ 2026-10-03
+
+Inflection's `date=2026-10-01` holdings gold partition is present: written 2026-10-03T03:17:55Z, 966 rows (OK 795,
+NON-POSITIVE-BASE 171). All 966 rows have `prior_business_date` 2026-09-30 and `span_trading_days` 1. The 09-30
+partition is unchanged (966 rows, written 10-01 13:09:25Z). Account 226's 10-01 `daily_return` is -0.004740 (OK).
+
+Monday's fire now has 10-02 as its only missing day. ~P recorded the landing as row IRPT_BCKEND-S294 (`6e22aca10b`), and
+CTO batch 202 (`8da55ee13b`) amended A1 to fail on a trading-day gap. The class remedies are round 36: D2 producer
+catch-up and D1 adapter disclosure, being graded now.
+
+**S292 disarmed in the world.** The row is compiled at the next IRPT_BCKEND sweep.
+
+-- 3.0.0_SA_CVO
+
+## ~P round 36 served (D2 producer catch-up; D1 adapter missing-day disclosure), read 07:4xZ 2026-10-03
+
+Ledger `irpt-round36-gap-catchup-20261003` (C1, D2, V2, D1 closed; A1 on Monday). Commits `7924f2237a` (D2) and
+`5b30f3b7b0` (D1). CTO batches 207 (`d9f15bc006`) and 214 (`42effbccbe`).
+
+| limb | this seat's read | result |
+|---|---|---|
+| D2 bytes | both holdings producers `0PuFBxdJ..` (05:25:46Z) = map (`e629c381ac`) = S3 version `IPBj.bgy..`; 14 of 14 members equal the pins, 0 CRLF | PASS |
+| D2 rule | `handler.py:109-121`: target is the prior trading day; plan newest-landed+1 through target, at most 5 days (`:65`); a failed listing WARNs and plans the target (`:114-116`); a non-zero rc stops the run (`:145-147`). The deployed function run locally with a fake listing for Mon 10-05: with 10-01 landed it plans [10-02], with 10-01 absent [10-01, 10-02] | PASS |
+| D2 IAM | one ListBucket statement per role, `s3:prefix` = the firm's own daily gold; simulation: own prefix allowed, other firm and own manifest prefix implicitDeny | PASS (role policy only) |
+| D1 bytes | adapter `U+miRkw3..` (06:09:15Z) = map (`c110361afb`) = S3 version `iw5pK0Bh..`; 71 of 71 members equal the pins | PASS |
+| D1 rule | `holdings_gold.py:355-368`: calendar trading days inside the landed span, minus partitions, minus linked days; on a gap the claim is `inferred` (`:291`), with absence `missing_trading_days` PARTIAL (`:316-321`) | PASS |
+| D1 harness | the deployed module with a fake source: a missing 09-29 gives `inferred` and names the day; all days present (negative control) give `measured` with no absence; 09-29 covered by a linked row gives `measured` with `linked_days` only | PASS |
+| logs | producers: 1 dry run each (05:27-05:28Z), 0 Tracebacks, 0 listing WARNs; adapter: 0 invocations since the deploy | PASS; adapter live NOT_EVALUATED |
+
+**Rows.**
+- IRPT_BCKEND-S297: a re-fire on a landed day overwrites the served key, against batch 207's "new keys only".
+- IRPT_BCKEND-S298: the saved report carries a claim only on the inferred branch.
+- The stale map records and the missing Inflection map row are row S293's.
+
+**Limits.**
+- The harnesses ran locally; D1 used the packaged schema, not the irpt-common layer copy.
+- The IAM simulation covers the role policies only.
+- A1 is not graded.
+- Read by a delegate of this seat.
+
+-- 3.0.0_SA_CVO
+
+## ~Y G3 (irpt-status render-grant ports) and Y-4 enrichment (the runner's Kimi carrier) served, read 07:0xZ-07:3xZ 2026-10-03
+
+**G3:** ledger `irpt-status-g3-20261003` closed 4 of 4 (`22e31c1e9b`); deploy `6cbe9144e7`; CTO batches 216 and 217.
+
+| limb | this seat's read | result |
+|---|---|---|
+| code | irpt-status `hC6Pramt..` (06:28:49Z) = map = S3 version `In5BnMbP..`; 49 of 49 members equal git (42 at `b1a449902b`, 7 at `b6bce5866a`), 0 CRLF | PASS |
+| env | `IRPT_EVIDENCE_BUCKET=opal-data-ycharts` = plan and `lambda.tf:68` | PASS |
+| I1 grant | `ReadOnlyRenderGrants`, `ListOnlyRenderGrantShapes` = packet blob `85eb94e84c`; simulation: `render_grant.json` GetObject allowed; a sibling `bundle.json`, PutObject and ListBucket `firms/` implicitDeny | PASS (role policies only) |
+| code path | `entry.py:228` -> `served.py:1168-1175` -> `grant.py:277,293,250` | PASS |
+| logs to 07:31Z | 19 invocations (06:29:31-06:30:35Z), 0 tracebacks, errors or AccessDenied | PASS |
+| arm 2 | `G3_V1_NEGATIVE_ARM_20261003.md` (`ba1a7f5129`) present, with 403 and 401 as cited | PASS; "45 passed" not re-run |
+
+**Y-4 enrichment:** deploy `126804a641`, packet `f6f4cea1e3`; ledger `irpt-y4-20261003` HELD-SOVEREIGN-GATED (U1, U2, D3, D1,
+D2 closed; V1 waits on option A).
+
+| limb | this seat's read | result |
+|---|---|---|
+| runner bytes | EC2 resident; tar `UnePbYDl..` (790,317 B) and install script `g6Lx_XPK..` = ledger, each the key's only version | PASS to S3; running bytes not read |
+| IAM | `ReadTheEstateKimiKey`: GetSecretValue on exactly `astn/kimi/api-key-??????`; simulation: the secret allowed, a sibling and another secret implicitDeny | PASS |
+| secret | no rotation, no resource policy, one version; the 10-03 LastAccessedDate is a human user's reads; CloudTrail since 10-02 shows 0 reads by the runner | measured; the runner has not yet used it |
+| code | `kimi_port.py:68` reads it, `:37` uses it only in the Authorization header, `:62` prints fixed telemetry fields only | PASS |
+
+**Rows and notes.**
+- IRPT_BCKEND-S299: three other roles keep `api-key-*`; the CTO routes it.
+- The map's deploy records for irpt-status and irpt-ycharts-generate are stale, the class of row S293.
+- The st18 gate reports one non-ASCII character in a text member.
+- G3's arm 3 is recorded only in `STATUS~Y.md:38`.
+
+**Limits.**
+- No SCP or KMS key-policy evaluation.
+- No SSM read of the resident.
+- Linked worktrees' ledgers were not swept.
+- Read by a delegate of this seat; no secret value was read.
+
+-- 3.0.0_SA_CVO

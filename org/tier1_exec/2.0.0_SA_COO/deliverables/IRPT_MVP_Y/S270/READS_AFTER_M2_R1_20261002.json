@@ -1,0 +1,545 @@
+{
+ "at": "2026-10-02T18:13:36.288966Z",
+ "principal": "svc-irpt-analysis@opalinvest.com",
+ "tenant": "cottonwood",
+ "request_ids": [
+  "REQ-a69e5751d42c374f1d2354f9",
+  "REQ-a1d9abc0bc037ea3d9e4a7ed"
+ ],
+ "rows": [
+  {
+   "call": "history",
+   "http": 200,
+   "ok": null,
+   "operation": "analysis-request-history",
+   "state": null,
+   "reason": null,
+   "business_date": null,
+   "actions": [],
+   "top_keys": [
+    "contract_version",
+    "data",
+    "firm_id",
+    "operation",
+    "unprojected_grant"
+   ],
+   "data_keys": [
+    "items",
+    "next_cursor"
+   ],
+   "count_items": 22,
+   "data": {
+    "items": [
+     {
+      "identity": {
+       "destination_policy_revision": "e0046398e23951451498c0fcfec29154db5b26d4c70d80c4121f50fd3dfc8c85",
+       "immutable": true,
+       "ingestion_gate_revision": "schemas-7ad1289e34dc604ea1ad046a2b0851eb7600c9a92f927bc94d8e638a1e0689ae",
+       "request_id": "REQ-2119def4de9e8fea43abb6fe",
+       "revision": 1,
+       "tenant_firm_id": "cottonwood"
+      },
+      "accepted_at": 1790518487
+     },
+     {
+      "identity": {
+       "destination_policy_revision": "e0046398e23951451498c0fcfec29154db5b26d4c70d80c4121f50fd3dfc8c85",
+       "immutable": true,
+       "ingestion_gate_revision": "schemas-cb6e1c3c3b759d6fbae1c92580b91005836a8254d99a182c2c873bd63ef0895f",
+       "request_id": "REQ-3971fc2d5421c12412367e0b",
+       "revision": 1,
+       "tenant_firm_id": "cottonwood"
+      },
+      "accepted_at": 1790702789
+     },
+     {
+      "identity": {
+       "destination_policy_revision": "e0046398e23951451498c0fcfec29154db5b26d4c70d80c4121f50fd3dfc8c85",
+       "immutable": true,
+       "ingestion_gate_revision": "schemas-7ad1289e34dc604ea1ad046a2b0851eb7600c9a92f927bc94d8e638a1e0689ae",
+       "request_id": "REQ-3a1b73a8dead02a17a09043b",
+       "revision": 1,
+       "tenant_firm_id": "cottonwood"
+      },
+      "accepted_at": 1790467925
+     },
+     {
+      "identity": {
+       "destination_policy_revision": "e0046398e23951451498c0fcfec29154db5b26d4c70d80c4121f50fd3dfc8c85",
+       "immutable": true,
+       "ingestion_gate_revision": "schemas-7ad1289e34dc604ea1ad046a2b0851eb7600c9a92f927bc94d8e638a1e0689ae",
+       "request_id": "REQ-4b2d437450499dde471c2f98",
+       "revision": 1,
+       "tenant_firm_id": "cottonwood"
+      },
+      "accepted_at": 1790652778
+     },
+     {
+      "identity": {
+       "destination_policy_revision": "e0046398e23951451498c0fcfec29154db5b26d4c70d80c4121f50fd3dfc8c85",
+       "immutable": true,
+       "ingestion_gate_revision": "schemas-4780eaf85be2013bd939d064b42111337ae53d4839ac2f2aa9df7f34afb3b48b",
+       "request_id": "REQ-51f1413b9d84d26a66aaa71c",
+       "revision": 1,
+       "tenant_firm_id": "cottonwood"
+      },
+      "accepted_at": 1790690389
+     },
+     {
+      "identity": {
+       "destination_policy_revision": "e0046398e23951451498c0fcfec29154db5b26d4c70d80c4121f50fd3dfc8c85",
+       "immutable": true,
+       "ingestion_gate_revision": "schemas-c1c43c6df0b7e2b511f7aacab53262843b54eab71e0589fceba28404676b0a42",
+       "request_id": "REQ-59b42fab4293260d6d439c39",
+       "revision": 1,
+       "tenant_firm_id": "cottonwood"
+      },
+      "accepted_at": 1790941314
+     },
+     {
+      "identity": {
+       "destination_policy_revision": "e0046398e23951451498c0fcfec29154db5b26d4c70d80c4121f50fd3dfc8c85",
+       "immutable": true,
+       "ingestion_gate_revision": "schemas-58ffc2ebee9ed61681175e34cd756ec172eb2fa3ad457da3e0995186f9ea81f8",
+       "request_id": "REQ-602834fd3317160722ab489d",
+       "revision": 1,
+       "tenant_firm_id": "cottonwood"
+      },
+      "accepted_at": 1790845050
+     },
+     {
+      "identity": {
+       "destination_policy_revision": "e0046398e23951451498c0fcfec29154db5b26d4c70d80c4121f50fd3dfc8c85",
+       "immutable": true,
+       "ingestion_gate_revision": "schemas-7ad1289e34dc604ea1ad046a2b0851eb7600c9a92f927bc94d8e638a1e0689ae",
+       "request_id": "REQ-67e12718b0ba7c0c70ebb45b",
+       "revision": 1,
+       "tenant_firm_id": "cottonwood"
+      },
+      "accepted_at": 1790525200
+     },
+     {
+      "identity": {
+       "destination_policy_revision": "e0046398e23951451498c0fcfec29154db5b26d4c70d80c4121f50fd3dfc8c85",
+       "immutable": true,
+       "ingestion_gate_revision": "schemas-7ad1289e34dc604ea1ad046a2b0851eb7600c9a92f927bc94d8e638a1e0689ae",
+       "request_id": "REQ-717c91a59228070704e81cba",
+       "revision": 1,
+       "tenant_firm_id": "cottonwood"
+      },
+      "accepted_at": 1790514021
+     },
+     {
+      "identity": {
+       "destination_policy_revision": "e0046398e23951451498c0fcfec29154db5b26d4c70d80c4121f50fd3dfc8c85",
+       "immutable": true,
+       "ingestion_gate_revision": "schemas-58ffc2ebee9ed61681175e34cd756ec172eb2fa3ad457da3e0995186f9ea81f8",
+       "request_id": "REQ-742fc48185221dc5dec14e65",
+       "revision": 1,
+       "tenant_firm_id": "cottonwood"
+      },
+      "accepted_at": 1790840010
+     },
+     {
+      "identity": {
+       "destination_policy_revision": "e0046398e23951451498c0fcfec29154db5b26d4c70d80c4121f50fd3dfc8c85",
+       "immutable": true,
+       "ingestion_gate_revision": "schemas-58ffc2ebee9ed61681175e34cd756ec172eb2fa3ad457da3e0995186f9ea81f8",
+       "request_id": "REQ-7c7a9e45eb496564f635754a",
+       "revision": 1,
+       "tenant_firm_id": "cottonwood"
+      },
+      "accepted_at": 1790851779
+     },
+     {
+      "identity": {
+       "destination_policy_revision": "e0046398e23951451498c0fcfec29154db5b26d4c70d80c4121f50fd3dfc8c85",
+       "immutable": true,
+       "ingestion_gate_revision": "schemas-4780eaf85be2013bd939d064b42111337ae53d4839ac2f2aa9df7f34afb3b48b",
+       "request_id": "REQ-7ea49c2d9b27957d0ea8888f",
+       "revision": 1,
+       "tenant_firm_id": "cottonwood"
+      },
+      "accepted_at": 1790687690
+     },
+     {
+      "identity": {
+       "destination_policy_revision": "e0046398e23951451498c0fcfec29154db5b26d4c70d80c4121f50fd3dfc8c85",
+       "immutable": true,
+       "ingestion_gate_revision": "schemas-cb6e1c3c3b759d6fbae1c92580b91005836a8254d99a182c2c873bd63ef0895f",
+       "request_id": "REQ-86f1ce7062356bc5c109ce12",
+       "revision": 1,
+       "tenant_firm_id": "cottonwood"
+      },
+      "accepted_at": 1790739368
+     },
+     {
+      "identity": {
+       "destination_policy_revision": "e0046398e23951451498c0fcfec29154db5b26d4c70d80c4121f50fd3dfc8c85",
+       "immutable": true,
+       "ingestion_gate_revision": "schemas-c1c43c6df0b7e2b511f7aacab53262843b54eab71e0589fceba28404676b0a42",
+       "request_id": "REQ-93441e4e201b40e3b119c46b",
+       "revision": 1,
+       "tenant_firm_id": "cottonwood"
+      },
+      "accepted_at": 1790922367
+     },
+     {
+      "identity": {
+       "destination_policy_revision": "e0046398e23951451498c0fcfec29154db5b26d4c70d80c4121f50fd3dfc8c85",
+       "immutable": true,
+       "ingestion_gate_revision": "schemas-58ffc2ebee9ed61681175e34cd756ec172eb2fa3ad457da3e0995186f9ea81f8",
+       "request_id": "REQ-a1d9abc0bc037ea3d9e4a7ed",
+       "revision": 1,
+       "tenant_firm_id": "cottonwood"
+      },
+      "accepted_at": 1790867798
+     },
+     {
+      "identity": {
+       "destination_policy_revision": "e0046398e23951451498c0fcfec29154db5b26d4c70d80c4121f50fd3dfc8c85",
+       "immutable": true,
+       "ingestion_gate_revision": "schemas-58ffc2ebee9ed61681175e34cd756ec172eb2fa3ad457da3e0995186f9ea81f8",
+       "request_id": "REQ-a69e5751d42c374f1d2354f9",
+       "revision": 1,
+       "tenant_firm_id": "cottonwood"
+      },
+      "accepted_at": 1790856870
+     },
+     {
+      "identity": {
+       "destination_policy_revision": "e0046398e23951451498c0fcfec29154db5b26d4c70d80c4121f50fd3dfc8c85",
+       "immutable": true,
+       "ingestion_gate_revision": "schemas-7ad1289e34dc604ea1ad046a2b0851eb7600c9a92f927bc94d8e638a1e0689ae",
+       "request_id": "REQ-a6fa96020798aa2f3276d4d0",
+       "revision": 1,
+       "tenant_firm_id": "cottonwood"
+      },
+      "accepted_at": 1790656978
+     },
+     {
+      "identity": {
+       "destination_policy_revision": "e0046398e23951451498c0fcfec29154db5b26d4c70d80c4121f50fd3dfc8c85",
+       "immutable": true,
+       "ingestion_gate_revision": "schemas-7ad1289e34dc604ea1ad046a2b0851eb7600c9a92f927bc94d8e638a1e0689ae",
+       "request_id": "REQ-a8e81b8eccc800b2f3a00c8c",
+       "revision": 1,
+       "tenant_firm_id": "cottonwood"
+      },
+      "accepted_at": 1790481771
+     },
+     {
+      "identity": {
+       "destination_policy_revision": "e0046398e23951451498c0fcfec29154db5b26d4c70d80c4121f50fd3dfc8c85",
+       "immutable": true,
+       "ingestion_gate_revision": "schemas-c1c43c6df0b7e2b511f7aacab53262843b54eab71e0589fceba28404676b0a42",
+       "request_id": "REQ-abec171d60e0aa1f359c18ed",
+       "revision": 1,
+       "tenant_firm_id": "cottonwood"
+      },
+      "accepted_at": 1790942435
+     },
+     {
+      "identity": {
+       "destination_policy_revision": "e0046398e23951451498c0fcfec29154db5b26d4c70d80c4121f50fd3dfc8c85",
+       "immutable": true,
+       "ingestion_gate_revision": "schemas-c1c43c6df0b7e2b511f7aacab53262843b54eab71e0589fceba28404676b0a42",
+       "request_id": "REQ-c07e64ca6c74b8e5310f56e0",
+       "revision": 1,
+       "tenant_firm_id": "cottonwood"
+      },
+      "accepted_at": 1790935058
+     },
+     {
+      "identity": {
+       "destination_policy_revision": "e0046398e23951451498c0fcfec29154db5b26d4c70d80c4121f50fd3dfc8c85",
+       "immutable": true,
+       "ingestion_gate_revision": "schemas-7ad1289e34dc604ea1ad046a2b0851eb7600c9a92f927bc94d8e638a1e0689ae",
+       "request_id": "REQ-e2fc5dd5dc2e050cc82a57e4",
+       "revision": 1,
+       "tenant_firm_id": "cottonwood"
+      },
+      "accepted_at": 1790478002
+     },
+     {
+      "identity": {
+       "destination_policy_revision": "e0046398e23951451498c0fcfec29154db5b26d4c70d80c4121f50fd3dfc8c85",
+       "immutable": true,
+       "ingestion_gate_revision": "schemas-7ad1289e34dc604ea1ad046a2b0851eb7600c9a92f927bc94d8e638a1e0689ae",
+       "request_id": "REQ-e4b7f5aba7fb218c37f28002",
+       "revision": 1,
+       "tenant_firm_id": "cottonwood"
+      },
+      "accepted_at": 1790652070
+     }
+    ],
+    "next_cursor": null
+   }
+  },
+  {
+   "call": "history+client",
+   "http": 200,
+   "ok": null,
+   "operation": "analysis-request-history",
+   "state": null,
+   "reason": null,
+   "business_date": null,
+   "actions": [],
+   "top_keys": [
+    "contract_version",
+    "data",
+    "firm_id",
+    "operation",
+    "unprojected_grant"
+   ],
+   "data_keys": [
+    "items",
+    "next_cursor"
+   ],
+   "count_items": 0,
+   "data": {
+    "items": [],
+    "next_cursor": null
+   }
+  },
+  {
+   "call": "read REQ-a69e5751d42c374f1d2354f9",
+   "http": 200,
+   "ok": null,
+   "operation": "analysis-request-read",
+   "state": null,
+   "reason": null,
+   "business_date": null,
+   "actions": [],
+   "top_keys": [
+    "contract_version",
+    "data",
+    "firm_id",
+    "operation",
+    "unprojected_grant"
+   ],
+   "data_keys": [
+    "accepted_at",
+    "identity"
+   ],
+   "data": {
+    "identity": {
+     "destination_policy_revision": "e0046398e23951451498c0fcfec29154db5b26d4c70d80c4121f50fd3dfc8c85",
+     "immutable": true,
+     "ingestion_gate_revision": "schemas-58ffc2ebee9ed61681175e34cd756ec172eb2fa3ad457da3e0995186f9ea81f8",
+     "request_id": "REQ-a69e5751d42c374f1d2354f9",
+     "revision": 1,
+     "tenant_firm_id": "cottonwood"
+    },
+    "accepted_at": 1790856870
+   }
+  },
+  {
+   "call": "read+include REQ-a69e5751d42c374f1d2354f9",
+   "http": 200,
+   "ok": null,
+   "operation": "analysis-request-read",
+   "state": null,
+   "reason": null,
+   "business_date": null,
+   "actions": [],
+   "top_keys": [
+    "contract_version",
+    "data",
+    "firm_id",
+    "operation",
+    "unprojected_grant"
+   ],
+   "data_keys": [
+    "accepted_at",
+    "comparisons",
+    "identity"
+   ],
+   "data": {
+    "identity": {
+     "destination_policy_revision": "e0046398e23951451498c0fcfec29154db5b26d4c70d80c4121f50fd3dfc8c85",
+     "immutable": true,
+     "ingestion_gate_revision": "schemas-58ffc2ebee9ed61681175e34cd756ec172eb2fa3ad457da3e0995186f9ea81f8",
+     "request_id": "REQ-a69e5751d42c374f1d2354f9",
+     "revision": 1,
+     "tenant_firm_id": "cottonwood"
+    },
+    "accepted_at": 1790856870,
+    "comparisons": []
+   }
+  },
+  {
+   "call": "status REQ-a69e5751d42c374f1d2354f9",
+   "http": 200,
+   "ok": null,
+   "operation": "status-job",
+   "state": "UNAVAILABLE",
+   "reason": "ANALYSIS_STATUS_DATE_BASIS_UNAVAILABLE",
+   "business_date": null,
+   "actions": [],
+   "top_keys": [
+    "contract_version",
+    "data",
+    "firm_id",
+    "operation",
+    "unprojected_grant"
+   ],
+   "data_keys": [
+    "actions",
+    "operation",
+    "public_reason_code",
+    "source_dates",
+    "state"
+   ]
+  },
+  {
+   "call": "read REQ-a1d9abc0bc037ea3d9e4a7ed",
+   "http": 200,
+   "ok": null,
+   "operation": "analysis-request-read",
+   "state": null,
+   "reason": null,
+   "business_date": null,
+   "actions": [],
+   "top_keys": [
+    "contract_version",
+    "data",
+    "firm_id",
+    "operation",
+    "unprojected_grant"
+   ],
+   "data_keys": [
+    "accepted_at",
+    "identity"
+   ],
+   "data": {
+    "identity": {
+     "destination_policy_revision": "e0046398e23951451498c0fcfec29154db5b26d4c70d80c4121f50fd3dfc8c85",
+     "immutable": true,
+     "ingestion_gate_revision": "schemas-58ffc2ebee9ed61681175e34cd756ec172eb2fa3ad457da3e0995186f9ea81f8",
+     "request_id": "REQ-a1d9abc0bc037ea3d9e4a7ed",
+     "revision": 1,
+     "tenant_firm_id": "cottonwood"
+    },
+    "accepted_at": 1790867798
+   }
+  },
+  {
+   "call": "read+include REQ-a1d9abc0bc037ea3d9e4a7ed",
+   "http": 200,
+   "ok": null,
+   "operation": "analysis-request-read",
+   "state": null,
+   "reason": null,
+   "business_date": null,
+   "actions": [],
+   "top_keys": [
+    "contract_version",
+    "data",
+    "firm_id",
+    "operation",
+    "unprojected_grant"
+   ],
+   "data_keys": [
+    "accepted_at",
+    "comparisons",
+    "identity"
+   ],
+   "data": {
+    "identity": {
+     "destination_policy_revision": "e0046398e23951451498c0fcfec29154db5b26d4c70d80c4121f50fd3dfc8c85",
+     "immutable": true,
+     "ingestion_gate_revision": "schemas-58ffc2ebee9ed61681175e34cd756ec172eb2fa3ad457da3e0995186f9ea81f8",
+     "request_id": "REQ-a1d9abc0bc037ea3d9e4a7ed",
+     "revision": 1,
+     "tenant_firm_id": "cottonwood"
+    },
+    "accepted_at": 1790867798,
+    "comparisons": [
+     {
+      "key": "opal_short_term",
+      "label": "Opal Short-Term"
+     },
+     {
+      "key": "opal_intermediate_term",
+      "label": "Opal Intermediate-Term"
+     }
+    ]
+   }
+  },
+  {
+   "call": "status REQ-a1d9abc0bc037ea3d9e4a7ed",
+   "http": 200,
+   "ok": null,
+   "operation": "status-job",
+   "state": "UNAVAILABLE",
+   "reason": "ANALYSIS_STATUS_DATE_BASIS_UNAVAILABLE",
+   "business_date": null,
+   "actions": [],
+   "top_keys": [
+    "contract_version",
+    "data",
+    "firm_id",
+    "operation",
+    "unprojected_grant"
+   ],
+   "data_keys": [
+    "actions",
+    "operation",
+    "public_reason_code",
+    "source_dates",
+    "state"
+   ]
+  }
+ ],
+ "compare": [
+  {
+   "call": "history",
+   "equal_to_before": true,
+   "http_before": 200,
+   "http_after": 200
+  },
+  {
+   "call": "history+client",
+   "equal_to_before": true,
+   "http_before": 200,
+   "http_after": 200
+  },
+  {
+   "call": "read REQ-a69e5751d42c374f1d2354f9",
+   "equal_to_before": true,
+   "http_before": 200,
+   "http_after": 200
+  },
+  {
+   "call": "read+include REQ-a69e5751d42c374f1d2354f9",
+   "equal_to_before": true,
+   "http_before": 200,
+   "http_after": 200
+  },
+  {
+   "call": "status REQ-a69e5751d42c374f1d2354f9",
+   "equal_to_before": true,
+   "http_before": 200,
+   "http_after": 200
+  },
+  {
+   "call": "read REQ-a1d9abc0bc037ea3d9e4a7ed",
+   "equal_to_before": true,
+   "http_before": 200,
+   "http_after": 200
+  },
+  {
+   "call": "read+include REQ-a1d9abc0bc037ea3d9e4a7ed",
+   "equal_to_before": true,
+   "http_before": 200,
+   "http_after": 200
+  },
+  {
+   "call": "status REQ-a1d9abc0bc037ea3d9e4a7ed",
+   "equal_to_before": true,
+   "http_before": 200,
+   "http_after": 200
+  }
+ ]
+}
