@@ -183,6 +183,26 @@ const CHECKS = () => {
     if (ratio < 3.0) low.push({ text: (el.innerText || '').trim().slice(0, 50), ratio: +ratio.toFixed(2), color: s.color, background: b.c, selector: trail(el) })
   }
   if (low.length) out.push({ check: 'design:contrast', observed: `${low.length} text element(s) under 3:1 contrast`, samples: low.slice(0, 12), rule: 'portal colour law: no light text on light grounds (DESIGN.md C3/C5)' })
+  // 5b. text cut off SIDEWAYS by its nearest clipping ancestor, e.g. Satellite 90's "90.14%" past the Positioning
+  // Summary's right edge (walk 20261003T095441Z). Not counted: an ancestor that shows a horizontal scrollbar (scrolling
+  // is then visible, by design) and an ellipsis (layout:truncated covers it). Vertical clipping is a scroll area's job.
+  const cut = []
+  // Drawn invisibly (zero opacity up the chain, or a transparent ink): a collapsed sidebar's section titles, by design.
+  const faded = (el) => { if (/rgba\([^)]*,\s*0\)$/.test(getComputedStyle(el).color)) return true; for (let e = el; e; e = e.parentElement) if (getComputedStyle(e).opacity === '0') return true; return false }
+  for (const el of document.querySelectorAll('body *')) {
+    if (!vis(el) || ![...el.childNodes].some((n) => n.nodeType === 3 && n.nodeValue.trim()) || faded(el)) continue
+    const r = el.getBoundingClientRect()
+    for (let a = el.parentElement; a && a !== document.body; a = a.parentElement) {
+      const st = getComputedStyle(a)
+      if (st.overflowX === 'visible') continue
+      if (st.textOverflow === 'ellipsis' || a.offsetHeight - a.clientHeight - parseFloat(st.borderTopWidth) - parseFloat(st.borderBottomWidth) > 1) break
+      const b = a.getBoundingClientRect()
+      const over = Math.max(b.left - r.left, r.right - b.right)
+      if (over > 1 && r.right > b.left && r.left < b.right) cut.push({ text: (el.innerText || '').trim().slice(0, 30), px: Math.round(over), selector: trail(el) })
+      break
+    }
+  }
+  if (cut.length) out.push({ check: 'layout:clipped', observed: `${cut.length} text element(s) cut off sideways by their container`, samples: cut.slice(0, 12), rule: 'every label is drawn whole (no text past its panel edge)' })
   // 6. tinted status blocks
   for (const el of document.querySelectorAll('[role=alert],[role=status],[data-slot*=error],[data-slot*=status]')) {
     if (!vis(el)) continue

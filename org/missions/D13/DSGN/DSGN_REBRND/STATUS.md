@@ -5,7 +5,7 @@ Seat `2.0.0_SA_COO~D` (CLAUDE). Contract: PRD `org/missions/D13/DSGN/DSGN_REBRND
 `org/tier1_exec/3.0.0_SA_CVO/deliverables/DSGN_REBRND_ROUND2_GRADE_20261001.md` @599d33a722). Authority: 1.0.0_SA_CTO RULINGS
 batch 80 items 8-12 (the round-2 analysis; round 3 owed, this seat's, FAST, after the Investor Reporting work) and batch 165
 @10d2b1c445 (msg 104234: round 3 un-parks now, every IR line being blocked outside this seat; its own `/positioning` lease;
-IR keeps priority -- return to DSGN_IRPTV1 the tick any of its Next lines unblocks). **As of 2026-10-03T10:1xZ** (E4 done: DEV fe461611/44d6a215/b23917f7, rows S6-S8; E2: clause c9d303db and /positioning's page end 8526dacb on DEV; S10: d8d236a0 on DEV, row S12; Next 4b: 71a946e3, 4c: 46aeea17 on DEV).
+IR keeps priority -- return to DSGN_IRPTV1 the tick any of its Next lines unblocks). **As of 2026-10-03T10:3xZ** (E4 done: DEV fe461611/44d6a215/b23917f7, rows S6-S8; E2: clause c9d303db and /positioning's page end 8526dacb on DEV; S10: d8d236a0 on DEV, row S12; Next 4b: 71a946e3, 4c: 46aeea17, Satellite 90 labels: fb5534f8 on DEV).
 
 ## Pins
 
@@ -74,8 +74,11 @@ IR keeps priority -- return to DSGN_IRPTV1 the tick any of its Next lines unbloc
    - the footer hour depends on the viewer's zone: `dateUtils.create5pmETDate` decides DST from the RUNTIME's zone, so a
      browser on UTC writes a summer date as "6:00p ET" (measured: TZ=UTC bun, 2026-10-03 -> 6:00p; 2026-01-09 -> 5:00p).
      Un-parks with a lease on `portal/src/lib/dateUtils.ts` (decide DST for America/New_York through Intl);
-   - Satellite 90's percentage labels run past the Positioning Summary's right edge at 1440px ("90.14%" clipped; 8 books).
-     Un-parks as the next /positioning layout item;
+   - ~~Satellite 90's percentage labels run past the Summary's right edge at 1440px~~ LANDED portal `fb5534f8` (origin
+     DEV, ls-remote 10:31Z): in the compact layout (>= 6 books) the labels sit in flow beside the bar in a fixed slot;
+     the five-book arm is byte-identical. The walker's new `layout:clipped` check measured 3 labels cut by 9px on the
+     HEAD layout (walk `20261003T101902Z`) and none after (`20261003T102244Z`); pin `compact-labels.test.ts`. Not
+     measured under 1440px: eight books fit from about 1200px of panel width, and scroll sideways below that;
    - the walker's old contrast check reads a CSS gradient/background-image header (the satellite dialog) as white: 4
      false hits per dialog. Un-parks with the next walker edit.
 5. ~~E5 -- the two project checkers that read red on the accepted tree (the grade's Q2)~~ LANDED 06:5xZ (CLOUD, LOCAL). `task-orders/rb4-ramp-check.py` grades the portal-wide sentiment tokens and prints the /market `[data-sentiment-original]` block as EXCEPTED (Andrew-direct 2026-09-14; CTO batch 215): ONE-HUE-RAMPED on the accepted tree, and RAINBOW-REMAINS on a control with one rainbow token put back portal-wide. `rb7-contract-check.py` run bare grades both arms: CONTRACT-CARRIED; CONTRACT-MISSING on an absent file.
