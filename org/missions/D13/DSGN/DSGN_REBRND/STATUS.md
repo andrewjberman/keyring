@@ -39,6 +39,11 @@ IR keeps priority -- return to DSGN_IRPTV1 the tick any of its Next lines unbloc
      - Pin auth/error-state: the DEV files fail every arm.
      - Real run on a build: a forced forgot-password failure and the invalid link, looked at.
      - Held with the branch.
+   - W3-S5's /factor-tilts item is BUILT on the same branch, `cc1d7cc6`.
+     - A failed or empty load is said once, by the overview; the tabs are not drawn under it.
+     - Pin one-state: the DEV page fails it, with each sentence twice under the tabs.
+     - Real run on a build under the 401, looked at.
+     - Held with the branch.
 
 1. **E4 -- the page pass for FWD-12 and FWD-13 on `/positioning`** (first by batch 165). SURFACE HALF (FWD-12) LANDED:
    - portal fb5d6116: the Positioning Summary's six translucent fills on opaque rungs (bar tracks, placeholder and
