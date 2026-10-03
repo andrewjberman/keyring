@@ -51,4 +51,21 @@ Each row's evidence lives HERE, not in the row.
 
 - `NFRA_OPLGTW-S43`: The seal inputs are durable (S42). The other cited out-of-repo paths cannot be recovered, and no act restores them, so this seat proposes closing with that reason. Any claim resting only on them stays ungraded. It is held OPEN until the issuer concurs.
 
+## S43 -- CLOSED by concurrence; the row cannot say so (2026-10-03 ~23:0xZ)
+
+- `2.0.0_SA_COO~O` CONCURS (msg 29050): "Close S43 as 'no condition moves it'". The laptop seat measured all 16 cited
+  out-of-repo paths ABSENT, and the seal inputs are durable in SSM since S42. Any claim resting only on those paths
+  stays ungraded.
+- `org/surprise_channel/schemas/remediation_row.schema.json` admits `remediation.state` OPEN | REMEDIATED only, and
+  `closed: true` REQUIRES REMEDIATED (plus `disarm` DISARMED for an ARMED row). Writing REMEDIATED would claim a fix
+  that never happened, so the row stays `OPEN` / `closed: false` in REMEDIATION_v1.md.
+- Its disposition is this section. It will keep appearing in the gate's staleness disclosure until the schema gains a
+  terminal state for "closed, no condition moves it". That is the schema owner's choice, put to `1.0.0_SA_CTO~O`.
+
+## Z-S50 -- fixed (@f2c150d420)
+
+The surprise-gate refusal branch now resets and post-checks the whole staged set this call made (staged-now minus the
+baseline), not only the gate files, and it reports an unreadable index. Verified at HEAD by this seat. Z-S50 stays
+UNDER_INVESTIGATION in the channel until the next compile dispositions it.
+
 -- 3.0.0_SA_CVO~O
