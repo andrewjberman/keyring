@@ -4,18 +4,18 @@ Seat `2.0.0_SA_COO~Y` (CLAUDE). Mode FAST: lease `IRPT_BCKEND~Y` (renewed by the
 Loop `/canonical-drive IRPT_BCKEND`. Way forward: CTO rulings in
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md` (latest read: batches 177, 178, 186)
 and the fold-in `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_FOLD_IN_IRPT_THREE_BRIEFS_20261002.md` section 2 (Y-1..Y-6,
-Y-H). Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-03T05:0xZ.
+Y-H). Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-03T05:5xZ.
 
 ## Pins
 
 | What | Value |
 |---|---|
-| CLOUD (local) | Y-4 enrichment merged `d82ba47e4e`; packet `f53e219188` (blob `703359ad2a`), CTO half asked 05:03Z. No worktree held |
+| CLOUD (local) | Y-4 enrichment SERVED `126804a641`; G3 source merged `ba7c5c95c0`, ledger `irpt-status-g3-20261003` open (U1 next). No worktree held |
 | SERVED: `irpt-status` | `6VQejBfsI/P3mfAVSFjLt/ythlcxXxi12cy9hxXhKNg=` since 04:28Z (W2-06 `include=composition`; CTO half batch 204); ledger `irpt-status-w206-20261003` CLOSED 3/3. Rollback: re-promote S3 `wXzz3_gh..` (`h7H7KgX1..`) |
 | SERVED: PDF route | `GET analysis/requests/{requestId}/pdf`, route `ihirb2s` on `7k3ed8px20` since 2026-10-02 ~17:59Z |
-| SERVED: the resident | `/opt/irpt-resident/828c37c6f7-st17` since 03:04:34Z (Y-4; CTO half batch 199). Rollback root `34088050e0-st16` |
+| SERVED: the resident | `/opt/irpt-resident/a6f6e7165e-st18` since 05:52:20Z (Y-4 enrichment: gate total 240 s; CTO half batch 209). Rollback root `828c37c6f7-st17` |
 | SERVED: `irpt-ycharts-generate` | `fD2R6OFrT2N086C9Go3e1aA9RKZCP/vfnZCaHCloJTs=` since 03:02Z (Y-4). Rollback: re-promote S3 `oew.wOPK..` (Y-5, `aug0YyWc..`) -- with the resident, all or none |
-| SERVED: runner role | Sid `ReadTheEstateKimiKey` (GetSecretValue on `astn/kimi/api-key-*`) since 02:58Z (Y-4 D3) |
+| SERVED: runner role | the estate Kimi secret through ONE carrier (`local.kimi_secret_arn` = `api-key-??????`, both statements) since 05:5xZ; a sibling name reads implicitDeny. Login and session ARNs keep `-*` (parked for a ruling) |
 | Stored YCharts session | **EVICTED since 2026-10-03 ~00:10Z (row S288)**: every request answers 403. Vendor traffic STOPPED. Remedy: option A at Andrew's time |
 | Push state | LOCAL; CLOUD is pushed by `0.0.0_AB_MSTR` only |
 
@@ -27,14 +27,15 @@ Y-H). Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-03T05:
 3. **Y-5 packet 1 SERVED** 02:0xZ (ledger `irpt-y5-20261003`: V1 open). V1 = Case A TIMXX -> SGOV and Case D with proxies,
    after Y-3's READY.
 4. **Y-4 SERVED** 03:05Z (ledger `irpt-y4-20261003`: U1, U2, D3, D1, D2 closed; V1 open). V1 = the typo file (APPL ->
-   AAPL), recording the check gate's elapsed seconds (CTO 104515). Its enrichment (gate total 240 s; Resource
-   `astn/kimi/api-key-??????`) is merged `d82ba47e4e` and PACKETED (`Y4E/`, ledger `irpt-y4e-20261003`: U2 closed),
-   CTO half asked.
+   AAPL), recording the check gate's elapsed seconds (CTO 104515; the journal field `elapsed_s=` is installed). Its
+   enrichment is SERVED (ledger `irpt-y4e2-20261003` closed; the first try `irpt-y4e-20261003` rolled back on its own
+   stop -- a second statement granted the same name).
 5. After option A, in order: Y-3 READY, Y-5 V1, Y-4 V1, then Y-2 and Y-6.
 
 ## Queued work
 
-- W2-06 SERVED (above). Next: G3 (render ports for the Analysis print, CTO batch 175).
+- G3 (render ports on irpt-status, CTO batch 175): source merged `ba7c5c95c0`; ledger open; build, packet next. Its
+  positive proof arm needs E4's first Analysis export (all three render grants today are Performance exports).
 - Y-5 packet 2 (the Kimi swap) waits on the web-search QA receipt (`KIMI_WEB_SEARCH_UNVERIFIED` stands).
 
 ## Rows this lane holds
@@ -57,7 +58,7 @@ Y-H). Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-03T05:
 - `irpt-y3-20261002`: V1 open (READY pending the session re-capture).
 - `irpt-y5-20261003`: V1 open (after Y-3's READY).
 - `irpt-y4-20261003`: V1 open (after option A).
-- `irpt-y4e-20261003`: U2 closed; D3, D2 wait on the CTO half; V1 after them.
+- `irpt-status-g3-20261003`: U1, I1, D1, V1 open (build next).
 
 ## Write claims
 
