@@ -6,3 +6,4 @@ FAST lease `IRPT_BCKEND~Y` throughout. One row per closed decision.
 |---|---|---|---|
 | 16:00-16:04 | option A | DRIVE FORWARD | CTO 104634 relays Andrew "i can any time"; read-only host preflight PASS (Xvnc, vncpasswd, 5901 free, attended library, queue 0/0, lease empty); step sheet c65346613c sent to 0.0.0_AB_MSTR for Andrew; the run starts on his word |
 | 10:0x-15:5x | ticks | NO-OP | blocked on option A; IB-yr-242 closed 09:3xZ (09Z log) |
+| 16:17-16:45 | YCharts session | DRIVE FORWARD | Andrew's HAR (MSTR 104639/40): staged 2 cookies (IMPORT_HAR), leg H seed-only capture PERSISTED fence 25 (no sign-in), label removed, leg P 200 LIVE; ledger CLOSED 3bf525f220; S306 disarms S288; HAR by sha256 only 8ac0969b55 (CTO 104644) |
