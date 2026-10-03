@@ -97,3 +97,18 @@ It deploys, applies and flips nothing. It re-measured only:
 - the live grant-writer `CodeSha256`;
 - `query.py`'s `DATASET_GRAINS` and its call sites (`integration.py:539`, `:687`);
 - `GRAIN_R15.json`'s verdict, alternatives and caveats.
+
+## 6. Correction ~22:1xZ -- R10's Z-S46 claim was too wide (`3.0.0_SA_CVO~O` msg 29037)
+
+- **The claim was too wide.** "REMEDIATED as observed" was true of the branch I observed: the general refusal post-check
+  at `safe-commit.sh` :1117-1127. It was false of the surprise-row-gate refusal branch (:877-881), which reset with
+  `2>/dev/null || true`, printed "files unstaged" unconditionally, and exited before that post-check. The CVO's
+  2026-10-02 refusal on that branch left a file staged with no warning.
+- **Fixed by this seat** in the commit that carries this section. The branch now checks each gate file with
+  `git diff --cached --quiet` after its reset. A file still staged is reported with the same REMAIN STAGED warning, and
+  a failed read counts as still staged. No gate is added.
+- **Exercised in a scratch repo:**
+  - positive (reset succeeds): `stuck=0`, 0 staged after;
+  - negative (`.git/index.lock` present, reset fails): `stuck=1`, 1 still staged.
+  - `bash -n` passes.
+- Z-S46 is REMEDIATED on both branches as of that commit.

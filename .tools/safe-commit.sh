@@ -876,7 +876,20 @@ if [ ${#PATHSPEC[@]} -gt 0 ] && [ -f "$SCRIPT_DIR/surprise-row-gate.py" ]; then
       export SURPRISE_ROW_OVERRIDE="${SR_OVR}"
     elif [ "$SRGATE_RC" -ne 0 ]; then
       for _sf in "${SRGATE_FILES[@]}"; do git reset -q HEAD -- "$_sf" 2>/dev/null || true; done
-      echo "ERROR: BLOCKED -- surprise-channel row gate (steps 7/10). Commit aborted; files unstaged." >&2
+      # NFRA_OPLGTW Z-S46 (3.0.0_SA_CVO~O msg 29037): this branch exits before the REMAIN STAGED post-check below, so
+      # it must make the same check itself. A file still staged after the reset is REPORTED, never claimed unstaged;
+      # a failed read counts as still staged (the warning errs toward the residue, never toward "clean").
+      _sr_stuck=0
+      for _sf in "${SRGATE_FILES[@]}"; do
+        git diff --cached --quiet -- "$_sf" 2>/dev/null || _sr_stuck=$((_sr_stuck + 1))
+      done
+      echo "ERROR: BLOCKED -- surprise-channel row gate (steps 7/10). Commit aborted." >&2
+      if [ "$_sr_stuck" -gt 0 ]; then
+        echo "  WARN: $_sr_stuck file(s) could NOT be unstaged and REMAIN STAGED -- another seat can adopt" >&2
+        echo "        them under their author line. Clear them yourself: git reset HEAD -- <path>" >&2
+      else
+        echo "       Unstaged ${#SRGATE_FILES[@]} gate file(s); none remains staged." >&2
+      fi
       printf '%s\n' "$SRGATE_OUT" | sed 's/^/  /' >&2
       exit 1
     elif [ -n "$SRGATE_OUT" ]; then
