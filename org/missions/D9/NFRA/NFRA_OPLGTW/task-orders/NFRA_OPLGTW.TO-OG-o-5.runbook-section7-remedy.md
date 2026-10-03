@@ -81,7 +81,7 @@ Rows: id `NFRA_OPLGTW-Z-W21-S<k>` (next unused), fabric `site-z`, disarm_owner `
 - Round label 16 (addendum R3-T.8.1: the CTO's R7; the issuance gate refused it into round 15, which already had its one issuance). Alone in its chain.
 - Pre-cut: `o5.AC1` FAIL (no anchors).
 
-<status>pending</status>
+<status>complete</status>
 <round>16</round>
 <slot>~21</slot>
 <fabric>site-z</fabric>
