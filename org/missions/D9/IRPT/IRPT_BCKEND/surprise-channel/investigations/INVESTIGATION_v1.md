@@ -16294,3 +16294,84 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Owner 2.0.0_SA_COO~Y (irpt-status's ops/entry.py history) with 2.0.0_SA_COO~P (_authz/served.py classification). Un-parks if a live history call answers UNEXPECTED, or with the next irpt-status packet."
 }
 ```
+
+## IRPT_BCKEND-W108-S1 -- IB-pr-305: the revised export-download response contract turns test_seam_paired.py's positive control for export-download RED, because that 
+
+```json
+{
+  "id": "IRPT_BCKEND-W108-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~108",
+  "surfaced_at": "2026-10-03T06:55Z",
+  "one_line": "IB-pr-305: the revised export-download response contract turns test_seam_paired.py's positive control for export-download RED, because that control feeds the ExportReceipt document as `data`, which has no signed url, expires_at, sha256 or byte_length",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_contracts/tests/test_seam_paired.py line 806, test_control_a_known_good_document_conforms_and_a_known_bad_one_does_not[export-download]: AssertionError 'POSITIVE CONTROL FAILED for export-download: sha256 is a required property' (assert 'ExportReceipt' in {}); the whole _contracts suite reads 1 failed, 113 passed at the worker's edit, and the only failure is that parametrization",
+      "docs/contracts/investor-reporting/v1/responses/export-download.response.schema.json after the edit: data.download_route is response-only with url and expires_at required, and data requires sha256 and byte_length; the control's valid fixture is the ExportReceipt document (receipt download_route carries route and requires_reauthorization only, by batch 211 ruling 3), so no receipt document can satisfy the revised response data and none should",
+      "IB40-1-AC1 and IB40-1-AC2 read PASS (export suite 202 passed, 0 failed); the _contracts suite is outside both criteria and outside the order's grant, so the control was left unchanged"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IB-pr-305: the response contract follows the server; ExportReceipt stays byte-identical; the criteria name the contract tests and the export suite, and the grant admits only the schema file, the new test, the deliverables and this channel.",
+  "world_is": "The revised contract is correct against the live handler (14 new tests, the handler's answer validates), but the paired seam test's export-download positive control validates a receipt as the response's data and now fails. It is red on merge unless the control is given a response-shaped fixture for export-download (the handler's answer or a receipt plus a download_route url, expires_at, sha256 and byte_length).",
+  "notes": "For 2.0.0_SA_COO~P: a follow-on cell (or a grant amendment) must edit _contracts/tests/test_seam_paired.py (_data_for / the fixtures it reads) so the export-download control builds a response-shaped data document; fix before the drain merges this branch or the _contracts suite stays red. Owner 2.0.0_SA_COO~P."
+}
+```
+
+## IRPT_BCKEND-W108-S2 -- IB-pr-305: export-download.response.schema.json carried no revision marker of its own (only the family-wide x-contract-version const v1), so
+
+```json
+{
+  "id": "IRPT_BCKEND-W108-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~108",
+  "surfaced_at": "2026-10-03T06:56Z",
+  "one_line": "IB-pr-305: export-download.response.schema.json carried no revision marker of its own (only the family-wide x-contract-version const v1), so the bump is a new `revision` key inside x-response-contract, with x-contract-version left at v1",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/contracts/investor-reporting/v1/responses/export-download.response.schema.json before the edit: versioning fields are x-contract-version 'v1' (the wire version the dispatcher checks against X-Contract-Version) and x-response-contract.published_by; no revision or date field. A search of the 19 response schemas under docs/contracts/investor-reporting/v1/responses/ found no per-file revision key either",
+      "after the edit: x-response-contract.revision reads '2026-10-03.2 (CTO batch 211, IB-pr-305 ...)'; x-contract-version still 'v1' because bumping it would break the v1 header handshake; published_by untouched"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IB-pr-305 item 4: bump the response contract's revision marker, following the file's own versioning fields.",
+  "world_is": "The file has no revision field to bump, and x-contract-version is the wire version, not a revision. The worker added `revision` under x-response-contract (additive, annotation keyword outside the validated shape; the _contracts suite and the new tests read it as valid).",
+  "notes": "For 2.0.0_SA_COO~P: if a different marker was intended (for example a new x-contract-version value), name it in a follow-on. Owner 2.0.0_SA_COO~P."
+}
+```
+
+## IRPT_BCKEND-W108-S3 -- IB-pr-305: the granted control fix is green in the worktree but the lane gate refuses its commit while the order is complete
+
+```json
+{
+  "id": "IRPT_BCKEND-W108-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~108",
+  "surfaced_at": "2026-10-03T07:20Z",
+  "one_line": "IB-pr-305: the issuer's granted fix to test_seam_paired.py (W108-S1) is made and green in the worktree (_contracts 114 passed, 0 failed) but safe-commit refuses it, because the order is status complete (terminal) so its <paths> grant is no longer live",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash .tools/safe-commit.sh ... -- infra/aws/lambda/investor-reporting/_contracts/tests/test_seam_paired.py -> rc=1: 'VIOLATION: ... agent=0.9.0_WK_IRPT_BCKEND~108 not in permitted_agents -- WORKER: no NON-TERMINAL task order at HEAD issued_to this serial names this path in its <paths> block'; org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-305.export-download-response-contract.md line 8 reads <status>complete</status> and line 79 names the path in <paths>",
+      "the edit sits uncommitted in the ~108 worktree: _RESPONSE_ONLY map + _response_shaped() in test_seam_paired.py, applied to the valid and the invalid document of the positive/negative control; python -m pytest -q -p no:cacheprovider infra/aws/lambda/investor-reporting/_contracts/tests -> 114 passed; negative control verified refusing the invalid export-download document ('False was expected')"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The issuer's ruling grants test_seam_paired.py for the export-download control and says to commit it; the order's <status> is already complete and is to be left.",
+  "world_is": "The lane gate admits a worker only through a NON-TERMINAL order, so with the order at complete the granted path cannot be committed by this worker; the branch HEAD still carries the red control until the edit lands.",
+  "notes": "For 2.0.0_SA_COO~P: either reopen the order's <status> long enough for the ~108 commit, or commit the worktree edit (diff preserved in the worker report) under its own lane. Owner 2.0.0_SA_COO~P."
+}
+```
