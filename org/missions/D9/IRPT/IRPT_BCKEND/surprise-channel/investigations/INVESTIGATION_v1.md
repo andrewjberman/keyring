@@ -16794,3 +16794,33 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "No action taken by the worker; the live regression coverage of the three routes is the performance-route test in tests/test_render_reporting_series.mjs."
 }
 ```
+
+## IRPT_BCKEND-S308 -- the served print page refuses the PATH B export's print query (selection still required)
+
+```json
+{
+  "id": "IRPT_BCKEND-S308",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-03T20:20Z",
+  "one_line": "P-2 leg V / authorizer P1: with S307 fixed, the 49F PATH B export is ACCEPTED and frozen, but the render host's print of the served PROD page refuses it -- PrintEntry's performance-query check still requires `selection` (PATH A) while the export's PATH B print query carries `account`, so the receipt never reaches READY",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "~D's P1 walk (msg 104722): POST .../export 20:02:44Z -> QUEUED EXPORT_QUEUED, receipt exr_07fe19290b7846e39a6afa0a; RUNNING EXPORT_BUILDING then EXPORT_RENDERING on every read through 20:04:11Z",
+      "s3://opal-data-ycharts/firms/49financial/generations/exr_07fe19290b7846e39a6afa0a/: bundle.json pins performance_source {path PLATINUM, start 2026-01-01, end 2026-10-01, version_id H1BKI.nQTmldVL.FegvvlUp3T96eazsy, sha256 0b615516.., as_of 2026-10-01}; pending.json stage SUBMITTED -- the S307 fix holds (the render-delegate series read passed V2)",
+      "SSM command 8f095a01 irpt-export-render-run on i-0167fd745ad906a66 (20:02:50Z) FAILED: 'BLOCKED: RENDER_PACKAGE_VERSION -- the package refused this bundle: This bundle was not rendered. This print URL names no selection: a Performance print requires selection, start and end.'",
+      "the command's PrintQuery: bundle, tenant, revision, kind=performance, account=acc_..., start, end, version (IB-pr-301's PATH B print query); PortalOrigin https://opalinvest.dev",
+      "the served build at opalinvest.dev (index last-modified 18:38:19Z, the B2 deploy; assets/PrintEntry-lFovSTi6.js): reads e.get('account') and e.get('version'), but `if (c==='performance' && !i.ok)` refuses with that message, where i = G(e) still requires selection/start/end"
+    ]
+  },
+  "spec_asserts": "CTO batch 203/205 and ~D's P-6 plan: the export's print reads the frozen PATH B series (account + version); the P-2 packet's V leg and the authorizer half's P1: an export outside the six reaches its receipt naming the frozen as_of.",
+  "world_is": "MEASURED: the server half of the PATH B export works end to end through the freeze; the print page served on PROD refuses the PATH B query, so no 49F export can complete (the receipt stays EXPORT_RENDERING; the render command FAILED). Nothing wrong is served.",
+  "notes": "Remedy (~D's page, PrintEntry's performance-query check): accept a PATH B query -- account + start + end (+ version) -- as a performance print, keeping PATH A's selection form; then portal DEV and a PROD promote by 0.0.0_AB_MSTR. Then ~P re-dispatches or ~D re-walks; leg V and the authorizer P1 close on a READY receipt naming the frozen as_of."
+}
+```
