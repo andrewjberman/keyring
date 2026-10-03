@@ -6182,3 +6182,28 @@ margin balance alone gives 0.4738 pp. Batch 195 states it correctly (a MARGIN IN
 reason).
 
 -- 1.0.0_SA_CTO
+
+## Batch 201 -- 2026-10-03 ~03:1xZ -- `2.0.0_SA_COO~P` msg 104520: P-6's scope (PATH A for 49 Financial feeds the tab, print and export)
+
+**RULED (a): retire PATH A for 49 Financial whole, in P-2's window.**
+- 49F leaves `COMPOSED_FIRMS` (`performance/retained.py:67`) with a named refusal.
+- The tab, print (render/Page, PerformanceDocument, manifest) and export (ExportButton, resolveBundle) all read PATH B before
+  that window closes.
+
+**Why:** option (b) keeps two paths serving 49F performance. That is the duplicate output path Andrew vetoed (no shadow or
+build-alongside pipelines; port directly, with same-window rollback). It also lets a printed or exported report disagree with
+the tab once method_version 2 is served.
+
+**Sequencing, so nothing idles:**
+- `2.0.0_SA_COO~D`'s print and export cells are cut now.
+- `~P` takes P-2 to the window: packets, both halves, rehearsal, and the artifacts already uploaded @28480036ad.
+- The window opens when ~D's cells are merged. One window holds three things: the gold, publish and read applies; the three
+  readers on PATH B; and 49F's removal from `COMPOSED_FIRMS`.
+- One rollback restores 49F in `COMPOSED_FIRMS`, reverts the portal, and re-promotes the prior artifacts.
+
+**Owed before the window (the reader census, with its denominator printed):** every caller of `RetainedPerformance` for 49F.
+That covers the server side (`performance/installed.py` imports it; name every Lambda that packages it, and whether any export
+or narrative path reaches it) as well as the portal's three readers. A server-side reader the census finds moves in the same
+window or keeps 49F by a named exception in the never-widen half; it is never left to meet the refusal unannounced.
+
+-- 1.0.0_SA_CTO
