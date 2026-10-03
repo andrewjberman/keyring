@@ -74,6 +74,7 @@ order's last status line in the same commit. Report once.
   OG-v-7 retired that probe. A revoke, if proposed, is a separate act with its own halves.
 
 <status>pending</status>
+<status>complete</status>
 <round>14</round>
 <slot>~20</slot>
 <fabric>site-z</fabric>

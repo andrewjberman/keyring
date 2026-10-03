@@ -6789,3 +6789,26 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W20-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~20",
+  "surfaced_at": "2026-10-02T20:00Z",
+  "one_line": "The email_deny record holds only tid, oid and status (no writer, approver, time or authorization), so its origin is not recoverable from the data; and the table holds a fourth synthetic item (a RUNTIME og-i5 probe, 2026-09-17) beyond the three POLICY probe partitions.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: aws dynamodb scan --consistent-read on gateway-access-state-table: 366 items, no LastEvaluatedKey (describe-table ItemCount 364); 1 email_deny item with attributes pk, sk, record_type, status, tid, oid only; 2 operator_audit items in the real partition (2026-09-27T00:48:46Z, 2026-09-30T19:15:29Z), neither summary naming a deny write; 1 RUNTIME item with a probe-og-i5 key. Recorded in deliverables/0.9.0_WK_NFRA_OPLGTW~20/DENY_RECORD_ORIGIN.json."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Cell item 2: the deny record's origin (writer, approver, written time, source authorization) is read from the partition's operator_audit items and the record itself; item 4: 3 synthetic partitions.",
+  "world_is": "All four origin fields are recorded as ABSENT with the reason; the 2026-09-30 activate is the only post-design audit and the likely write path (inferred only). One extra synthetic RUNTIME fixture exists; nothing deleted.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
