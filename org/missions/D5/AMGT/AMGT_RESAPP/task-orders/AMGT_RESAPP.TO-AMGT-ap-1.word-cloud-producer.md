@@ -118,3 +118,17 @@ reads the served terms as a reader would. Served by the round's redeploy.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-03 ~21:4xZ):** ACCEPTED. Worker ~217 `0f17592996` + `ffcc2d683f`, drained `2674ac7ba8` (no conflict). Re-graded on the shared tree at the drain (lib clean):
+- union (peers + management + api + harvest + coverage): 1039 passed, exit=0;
+- c18 local YES (BA 40, AMD 40, VLO 22 terms; empty window `terms: []` with its reason; 158 declared stop words with source);
+- c11 YES.
+
+Carried to the L8 for the CVO's L9 read, not defects:
+- VLO's 22 terms all count 1, drawn from a handful of roundup headlines.
+- The empty-window block serves the route's clamped `from` (2026-01-01) after its `to` (2025-06-30).
+- The range route's local cold read rises ~1.5 s (the headline read: 1525 ms, 1283 ms of it the S3 GET). c15 grades the DAY route; ap-4 re-reads c15 on deployed.
+
+Served by ap-4.
+
+<status>complete</status>
