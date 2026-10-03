@@ -6983,3 +6983,124 @@ name the one known failure instead of silently inheriting it.
   "world_is": "True only for a hand-fed untargeted apply, which no order in this project makes; the choice of build source is the CTO's."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S28",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-03T01:40Z",
+  "one_line": "tests/test_schwab_host_inputs.py fails one test on the LIVE bytes at 4231bd2ddc (test_printf_names_the_five_host_inputs_and_no_secret_value): its ENABLED_INTEGRATIONS and '%s' count expectations went stale at MX-r-7 and every release since.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: cd /c/tmp/og-rel9/infra/aws/ec2/opal-gateway (HEAD 4231bd2ddc, untouched) && AUDIT_PATH=<scratch> python -m pytest tests/test_schwab_host_inputs.py -> '1 failed, 6 passed'; assert pairs['ENABLED_INTEGRATIONS'].split() == [6 ids] against the live printf's 7 ids (blackdiamond added by MX-r-7); the next assertion pins 9 '%s' where the live printf carries 18.",
+      "FIX (release branch rel-nfra-oplgtw-r14 @af2d762970, tests/test_schwab_host_inputs.py): expectations moved to the live 7 ids and 18; the file then reads 9 passed (7 original + 2 new)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 8: tests/test_schwab_host_inputs.py is run on the release tree and (implicitly) passes at live; step 7 extends it.",
+  "world_is": "The file fails on live bytes before any OG-rl-4 edit; I updated the two stale expectations inside the order's own file (step 7 names it) and added the quoting test and the contract-source test. No other test was touched.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S29",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-03T01:40Z",
+  "one_line": "Step 4's 'every value that can hold whitespace double-quoted' cannot be met for FIRM_ROLE_ARNS under the issuer's own parse: its JSON carries double quotes, so it is rendered single-quoted; and MAIL_SENDER_TABLE (whose validator admits a space) is quoted too, making 5 quoted values, not 4.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: python rl4_render_test.py on the release template (deliverables/0.9.0_WK_NFRA_OPLGTW~15/rl4_render_test.out): MASKED SAMPLE live 'HOST env_keys 50 whitespace_values 4 disagreeing 4'; release 'whitespace_values 4 disagreeing 0'; with a whitespace sender table live 5 and release 0.",
+      "CODE: r14/checks/_env_shape_host.py sysd() strips ONE surrounding quote pair and does not unescape backslashes, so FIRM_ROLE_ARNS=\"{\\\"inflection\\\": ...}\" would read as disagreeing; the single-quoted form ('{...}', printf octal 047) reads equal under sysd, shlex AND systemd 252's EnvironmentFile rules (the live process already holds the unquoted value as valid JSON: SSM c1b4943f, len 77, json_ok, 1 key).",
+      "CODE: deploy-to-ec2.sh MAIL_SENDER_TABLE validator '^[A-Za-z0-9@._%+, -]*$' admits a space; shipped table today has none (SSM-free read of deploy/mail_sender_table.txt)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 4: render every value that can hold whitespace double-quoted; today 4 such values (OTP_BEARER, OTP_BEARER_LABELS, ENABLED_INTEGRATIONS, FIRM_ROLE_ARNS); disagreeing 0 on a masked sample.",
+  "world_is": "OTP_BEARER, OTP_BEARER_LABELS, ENABLED_INTEGRATIONS and MAIL_SENDER_TABLE are double-quoted; FIRM_ROLE_ARNS is single-quoted. No value the app reads changes (PHASE B's verify compares all 50 service-process value hashes before and after). Single-quoted behaviour under real systemd 252 is by its documented rules and the verify arm; not exercised on the host in PHASE A (read-only).",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S30",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-03T01:40Z",
+  "one_line": "Step 10's '/hx/transcripts ... returning 200' cannot be produced: the live TRANSCRIPT_MEETING_ALLOWLIST is empty and the route refuses every meeting (403 meeting_not_allowed) after it accepts the bearer.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CODE: infra/aws/ec2/opal-gateway/app/transcript_route.py @4231bd2ddc: meeting_allowlist() 'Empty (or unset) means NO meeting is reachable'; the bearer gate returns 401 'unauthorized' BEFORE the allowlist check returns 403 'meeting_not_allowed'; deploy-to-ec2.sh renders TRANSCRIPT_MEETING_ALLOWLIST= (empty).",
+      "RUN: rl4_verify.sh before (SSM b9b5caa4-a8ab-4440-b1a6-aba6fcd6c880 + 3 HTTPS reads): /hx/mail listing 200, /hx/teams/me 200, /hx/transcripts own bearer 403 meeting_not_allowed."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 10: ONE authorized read each on /hx/mail, /hx/transcripts and /hx/teams with its OWN bearer returning 200: the new refusal must not fire on the distinct live values.",
+  "world_is": "A 200 on /hx/transcripts needs an allowlisted meeting, which would change live config (out of bounds). The verify script asserts the discriminator instead: own bearer ACCEPTED (403 meeting_not_allowed, or 200) and NOT 401 (the symmetric refusal's response); mail and teams are asserted 200 as written.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S31",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-03T01:40Z",
+  "one_line": "trnspt/checks/tr.AC1.sh arm 4 hard-codes '.env 48 keys' and has failed since OG-rl-3 made the .env 50 keys: on the live host today it reads TAX ARMS 3 of 4, and it will after this release too.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CODE: deliverables/2.0.0_SA_COO~O/trnspt/checks/tr.AC1.sh line 32 @670f2e03ab: grep -qE '^HOST env_keys 48 taxsma_keys 2 identity_empty False bearer_empty False$'.",
+      "RUN: rl4_verify.sh after on the un-deployed live host (deliverables/0.9.0_WK_NFRA_OPLGTW~15/rl4_verify_negative_control.out): 'arm 4 .env keys / capability ON: FAIL; TAX ARMS 3 of 4' with the host line reading env_keys 50 taxsma_keys 2 identity_empty False bearer_empty False."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 10: after the verify's own reads, run tr.AC1.sh (and treat a clean run as the verify's close).",
+  "world_is": "The issuer's check is stale on arm 4 only. rl4_verify.sh grades tr.AC1 as passing when its arms 1-3 read OK and its host line is the capability-ON shape at 50 keys, and prints which rule applied; the script itself is unedited (outside my paths).",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S32",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-03T01:40Z",
+  "one_line": "Step 6's 'extend its validator to admit the one new key' has no key-set validator to extend: the host roster parse reads the named keys one at a time and ignores any other key, so the new key is a new third parse line (rc 3 on a bad value) and the log counts are a separate parse.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CODE: deploy-to-ec2.sh @4231bd2ddc lines 247-249: MASTER_ADMIN_PRINCIPALS and WRITE_CAPABLE_PRINCIPALS are two one-line python parses of ROSTERS_JSON, each reading only its own key; rc 1 (sys.exit under set -e).",
+      "RUN: rl4_render_test.py (rl4_render_test.out): host block run with a stubbed aws: valid roster rc 0 and the log line 'master_admin 1 pair; write_capable 2 pairs; taxsma_workbook_identity 1 pair'; a 3-pair roster reads 3; an extra key admitted; identity missing / non-string / empty / malformed / two pairs each rc 3 with the first-write marker NOT reached."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 6: extend the roster validator to admit one new key and refuse a malformed value with rc 3, before any .env write; step 5: compute both log counts from the parsed roster JSON.",
+  "world_is": "Implemented as one new parse for taxsma_workbook_identity (rc 3 via an explicit exit 3) and one counts parse; the two pre-existing roster parses are unchanged and keep rc 1. PHASE B step 13 must add the key BEFORE the act: a deploy with the key absent refuses rc 3 and leaves the host untouched.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
