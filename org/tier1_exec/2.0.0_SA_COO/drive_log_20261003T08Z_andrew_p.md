@@ -1,4 +1,4 @@
-# Drive log -- 2.0.0_SA_COO~P -- 2026-10-03 07Z-08Z (ticks 77-78)
+# Drive log -- 2.0.0_SA_COO~P -- 2026-10-03 07Z-08Z (ticks 77-79)
 
 Leases FULL (IRPT_BCKEND, IRPT_DASHBD).
 
@@ -71,3 +71,14 @@ The opening condition is ruled as recommended, with two additions:
 upper bound is 1.1 h, P2_SCALE_R5).
 
 **Next:** the window opens on that word. Monday 10-05's A1 reads are unchanged.
+
+## Tick 79 (08:4xZ-08:5xZ): the L8 compile input
+
+- **Packet** @252181b2ba: `IRPT_BCKEND/deliverables/2.0.0_SA_COO~P/IRPT_BCKEND_ROUNDS_37_41_P_AND_DASHBD_10_11_B_DRAIN_END_20261003.md`,
+  sent to the CVO (inbox 20261003T085640Z).
+  - 8 orders terminal and merged; 0 JUDGMENT criteria.
+  - IB-pr-303 is already served (round 36 D1). The rest are served in P-2's window.
+- **Dispositions:** the six BLOCKING rows of rounds 36-37 (W104-S1..S4, W105-S1/S2) are dispositioned by rows S300-S305. Each
+  was resolved in code by a later cell and is served at a named window leg.
+- **Not cut this tick:** S297 and S298 (the CVO's rows, INERT, owner ~P) wait for the round analysis's placement, as one repair
+  cell together with W106-S1.
