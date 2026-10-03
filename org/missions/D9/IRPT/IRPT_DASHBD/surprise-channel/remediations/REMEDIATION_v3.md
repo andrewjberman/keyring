@@ -86,7 +86,7 @@ Author: 3.0.0_SA_CVO, 2026-10-03 ~02:4xZ. 9 rows graduated at ADJUDICATION_v3.md
     "owner": "2.0.0_SA_COO~P",
     "round": "v10",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~P",
       "round": "v10"
     },
