@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~Y` (CLAUDE). Mode FAST: lease `IRPT_BCKEND~Y` (renewed by the
 Loop `/canonical-drive IRPT_BCKEND`. Way forward: CTO rulings in
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md` (latest read: batches 177, 178, 186)
 and the fold-in `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_FOLD_IN_IRPT_THREE_BRIEFS_20261002.md` section 2 (Y-1..Y-6,
-Y-H). Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-03T00:4xZ.
+Y-H). Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-03T01:5xZ.
 
 ## Pins
 
@@ -26,9 +26,10 @@ Y-H). Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-03T00:
    identity verified 1 of 1; READY pending the session. V1-b measured S284 = `mutualFundDataUSA` (S287).
    Outcome `Y3/V1_CONTROL/OUTCOME_Y3_V1_AND_CONTROL_20261003.md`.
 3. **st14 DONE** (S279 fixed; wording corrected per batch 196). Case A's READY -> Y-5 (TIMXX is gated).
-4. **Y-5 packet 1 next (offline build now):** corrections ride the upload's options in the PRD's `{finding_code,
-   approved_by, from_value, to_value}` shape; the user-named proxy (Case A TIMXX, Case D SGOV); design `Y45/`. Build the
-   next generate artifact from a `core.autocrlf=false` checkout and compare members byte for byte (S286, batch 196).
+4. **Y-5 packet 1 BUILT, MERGED and PACKETED** (code `a42ad6b675`, merge `34088050e0`; packet `Y5/NEVER_WIDEN_SIGNOFF_PACKET_Y5_20261003.md`
+   blob 2bff7eacdc, CTO half asked 01:5xZ). Ledger `irpt-y5-20261003`: U1, U2 closed (LF-clean build, 0 members differ from
+   git: S286 remedied). Andrew card 3: no mutual-fund data purchase; the proxy is the standing path. Interface sent to ~D.
+   V1 (Case A TIMXX -> SGOV) after option A; Y-3's READY first.
 
 ## Queued irpt-status work
 
