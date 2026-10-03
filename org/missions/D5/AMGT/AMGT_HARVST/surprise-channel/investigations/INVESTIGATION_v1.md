@@ -6652,6 +6652,28 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "spec_asserts": "Each round keeps the HARVST research suites green.",
       "world_is": "Green: 0 failed across lib/research/harvest.",
       "notes": "No round-39 cell needed; folded into decomposition section 52."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W90-S23",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~90",
+      "surfaced_at": "2026-10-02T21:42Z",
+      "one_line": "HVST-al-2 item 7 says both suites stay green, but 2 research tests fail in the worker's sparse cone before and after the change (FileNotFoundError on integrations/bloom...). The cone omits integrations/bloomberg; the base reads 0 failed (Z-S81).",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Order HVST-al-2 section 1 item 7: python -m pytest lib/research/harvest -q and lib/opal_data_harvest stay green; report the counts before and after.",
+      "world_is": "BEFORE: lib/research/harvest 2 failed, 332 passed; lib/opal_data_harvest 597 passed, 3 skipped. AFTER: lib/research/harvest 2 failed, 342 passed (332 + 10 new al-2 plants); lib/opal_data_harvest 597 passed, 3 skipped. The same 2 fail both times: tests/test_m1_move.py and tests/test_m2_move.py test_import_identity_no_bare_vs_qualified_split (FileNotFoundError: integrations/bloom...). The worktree's sparse cone has no integrations/bloomberg (ls integrations shows seekingalpha only). No al-2 test fails. Separately, a residual of the key change: a quarantined (ft) or no-text article carries no content key, so its null-label marker row in article_sentiment is no longer deduped by latest_scores and score_missing re-appends it on every score run (0 calls, one row per such article per run). The order fixes the key as the text hash and the quarantine test pins text_sha256 None for ft, so the worker left it.",
+      "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                  "deliverables/0.9.0_WK_AMGT_HARVST~90/suites.before.txt and suites.after.txt",
+                  "row AMGT_HARVST-Z-S81: base research suite 334 passed, 0 failed"
+            ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Remedy for the first: run the suite from a cone that includes integrations/bloomberg, or accept the 2. Remedy for the residual: a later cell may add record_hash-keyed dedupe for key-less marker rows; not a new outcome of al-2."
     }
   ]
 ```
