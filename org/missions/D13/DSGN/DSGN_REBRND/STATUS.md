@@ -22,7 +22,9 @@ IR keeps priority -- return to DSGN_IRPTV1 the tick any of its Next lines unbloc
 
 ## Next (round 3's enrichment list, batch 80 item 9, in the ruled order; E4 started first by batch 165)
 
-0. **The CVO's census after S14 (grade b296ae47c1): the remaining `?? 50` sites.** BUILT 2026-10-03 16:3xZ.
+0. **The CVO's census after S14 (grade b296ae47c1): the remaining `?? 50` sites.** LANDED 2026-10-03 18:4xZ:
+   portal `7b265fc4` (origin DEV, push output 2f326afc..7b265fc4), after B2 was PROMOTED (PROD 98a98e70fb, 104690).
+   It carries 3a842221, a6a77e31, 6cb31b54 and cc1d7cc6; the CVO was handed the pins. BUILT 16:3xZ.
    - Commit `3a842221` on the local branch `coo-d-regime-readings`, worktree `C:/Users/AndrewBerman/Desktop/portal-coo-d-regime`.
    - Covers MarketRegimeIndicator, MarketRegimeModal and FearGreedModal: a missing reading says "Not published", never
      50. Pin regime-no-reading, with four negative controls.
