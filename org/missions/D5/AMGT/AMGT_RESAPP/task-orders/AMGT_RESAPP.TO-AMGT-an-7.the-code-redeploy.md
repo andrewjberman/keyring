@@ -88,3 +88,16 @@ segment timings and route it to the CTO; do not raise memory (the round-63 curve
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-03 ~02:0xZ):** CLOSED, both legs.
+- **Leg 1.** AE~A `bf4b04b120`; CodeSha256 `31UL+7/s` -> `kSeyeO0v`; memory 1769; diff 355/349/4/2/0. AC1-AC3 PASS.
+  - **c15: 3 of 3 COLD at 1,894 / 2,307 / 2,294 ms against 5,000 ms.** This is the project's first cold-read pass (round 63: 11.5-12.8 s).
+  - The planted fault was attributed in the function's log: request id, `/security/{security_key}/overlay`, BA_US_Equity, AttributeError.
+  - The finbert import-graph proof was read from the artifact.
+  - Census: 6 of 21,724 in 7 days (5 pre-fix timeouts).
+  - Issuer re-read on deployed: c9-c14 YES; r63 c3/c4/c5/c7/c8 YES.
+- **Leg 2 (AMENDMENT 2, the trending-price `?days`).** AE~A `9b94636a21`; `kSeyeO0v` -> `KQSA62c3`; diff 355/352/3/0/0.
+  - c10 went from 6 of 8 to 8 of 8 (the 2 trending clauses moved; the other 6 are unchanged). The import proof was re-run on the leg-2 zip.
+  - Issuer re-read on deployed: c10 YES 8 of 8; c9/c12/c14 YES.
+
+<status>complete</status>
