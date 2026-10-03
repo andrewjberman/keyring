@@ -1629,7 +1629,7 @@ AC3 = `round29/checks/battery29.sh` with no skip.
 and RESAPP an-7 is signed @e1c310a414 but not deployed. The presets cut when COO~Z reports c9/c10 YES on deployed (CTO msg 28825).
 **Fan-out:** 2 of 2 chains, disjoint files. **Risk:** LOCAL. **Rule 24:** one row per cell.
 
-## v31 -- ROUND 31 (issuer, 2026-10-03 ~03:0xZ) -- ROLLING WINDOWS + ONE NEWS ITEM AT REST (PRD v0.13 @e398ee2294, ADMITTED)
+## v31 -- ROUND 31 (issuer, 2026-10-03 16:39Z) -- ROLLING WINDOWS + ONE NEWS ITEM AT REST (PRD v0.13 @e398ee2294, ADMITTED)
 
 **Rectangle:** the round-30 close's open list (ROUND30_CLOSE.md section 4, @19b4ced775):
 - FWD-26 presets. The routes now serve every window on the deployed opal-amgt-scoped-api (code KQSA62c3, COO~Z msgs 28860 and
@@ -1656,5 +1656,7 @@ amended check reads 2/3, failing only on the cursor clause.
 `onMonthChange`, because round-29 `collage.cjs` and `tone.cjs` and round-30 `chrome.cjs` render it that way. The page no longer does.
 A later round may retire month mode together with those checks.
 **Fan-out:** 2 of 2 chains, disjoint files. **Risk:** LOCAL. **Rule 24:** one row per cell.
-**Workers:** the Opus subagent pool returned a weekly rate limit at ~02:2xZ, so the round-31 check agent died before writing. The
-issuer wrote the checks, and the two workers run on the Sonnet model override.
+**Workers:** the account hit its weekly model limit (resets 17:00Z), so the round-31 check agent died before writing. This session
+made no call from ~01:57Z to ~16:2xZ. The issuer wrote the checks, and the two workers run on the Sonnet model override.
+(Stamp correction: the issuance commit 812179b412 says "~02:2xZ" and this section first said "~03:0xZ". Both were
+written without reading the clock; the issuance landed at 16:39Z.)

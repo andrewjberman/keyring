@@ -82,7 +82,8 @@ Report once: what changed and where, the output line of every criterion, the por
 
 **ISSUER NOTES:**
 - **Not graded here:** the tab-bar y (measured at the close walk, target: first panel above 900); how one item plus Expand reads.
-- **Model:** worker-light on the Sonnet override. The Opus subagent pool returned a weekly rate limit at ~02:2xZ.
+- **Model:** worker-light on the Sonnet override. The account hit its weekly model limit (resets 17:00Z) and the session was idle
+  ~01:57Z to ~16:2xZ; the order was issued at 16:39Z.
 
 <status>issued</status>
 <round>31</round>

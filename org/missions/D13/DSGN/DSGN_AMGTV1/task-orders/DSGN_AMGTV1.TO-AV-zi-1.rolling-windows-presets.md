@@ -129,7 +129,8 @@ Report once: what changed and where, the output line of every criterion, the por
   the two endpoint functions only.
 - **Issuer amendment landed with this issuance:** round29/checks/leadprice/leadface.cjs AMENDMENT 1 (no month cursor; reads the
   served 30-day window fixture).
-- **Model:** this worker runs on the Sonnet override. The Opus subagent pool returned a weekly rate limit at ~02:2xZ.
+- **Model:** this worker runs on the Sonnet override. The account hit its weekly model limit (resets 17:00Z) and the session was idle
+  ~01:57Z to ~16:2xZ; the order was issued at 16:39Z.
 
 <status>issued</status>
 <round>31</round>
