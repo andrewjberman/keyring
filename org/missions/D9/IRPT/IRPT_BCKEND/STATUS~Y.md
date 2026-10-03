@@ -4,14 +4,14 @@ Seat `2.0.0_SA_COO~Y` (CLAUDE). Mode FAST: lease `IRPT_BCKEND~Y` (renewed by the
 Loop `/canonical-drive IRPT_BCKEND`. Way forward: CTO rulings in
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md` (latest read: batches 177, 178, 186)
 and the fold-in `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_FOLD_IN_IRPT_THREE_BRIEFS_20261002.md` section 2 (Y-1..Y-6,
-Y-H). Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-03T04:2xZ.
+Y-H). Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-03T05:0xZ.
 
 ## Pins
 
 | What | Value |
 |---|---|
-| CLOUD (local) | W2-06 merged `6a548c45ab`; irpt-status packet `ff1411caa7` (blob `30daf0f28b`), CTO half asked 04:18Z. No worktree held |
-| SERVED: `irpt-status` | `h7H7KgX1FsBu4XTLqqpcMOjMnwRdeL9xlGZPwzhibcg=` since 2026-10-02 17:04Z, 1024 MB, timeout 29 s. Rollback: re-promote S3 `9S5jAZLr..` + memory 256 |
+| CLOUD (local) | Y-4 enrichment merged `d82ba47e4e`; packet `f53e219188` (blob `703359ad2a`), CTO half asked 05:03Z. No worktree held |
+| SERVED: `irpt-status` | `6VQejBfsI/P3mfAVSFjLt/ythlcxXxi12cy9hxXhKNg=` since 04:28Z (W2-06 `include=composition`; CTO half batch 204); ledger `irpt-status-w206-20261003` CLOSED 3/3. Rollback: re-promote S3 `wXzz3_gh..` (`h7H7KgX1..`) |
 | SERVED: PDF route | `GET analysis/requests/{requestId}/pdf`, route `ihirb2s` on `7k3ed8px20` since 2026-10-02 ~17:59Z |
 | SERVED: the resident | `/opt/irpt-resident/828c37c6f7-st17` since 03:04:34Z (Y-4; CTO half batch 199). Rollback root `34088050e0-st16` |
 | SERVED: `irpt-ycharts-generate` | `fD2R6OFrT2N086C9Go3e1aA9RKZCP/vfnZCaHCloJTs=` since 03:02Z (Y-4). Rollback: re-promote S3 `oew.wOPK..` (Y-5, `aug0YyWc..`) -- with the resident, all or none |
@@ -27,16 +27,15 @@ Y-H). Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-03T04:
 3. **Y-5 packet 1 SERVED** 02:0xZ (ledger `irpt-y5-20261003`: V1 open). V1 = Case A TIMXX -> SGOV and Case D with proxies,
    after Y-3's READY.
 4. **Y-4 SERVED** 03:05Z (ledger `irpt-y4-20261003`: U1, U2, D3, D1, D2 closed; V1 open). V1 = the typo file (APPL ->
-   AAPL), recording the check gate's elapsed seconds (CTO 104515). Next enrichment (not a ship condition): a per-upload
-   total budget for the gate; narrow the runner resource to `astn/kimi/api-key-??????`.
+   AAPL), recording the check gate's elapsed seconds (CTO 104515). Its enrichment (gate total 240 s; Resource
+   `astn/kimi/api-key-??????`) is merged `d82ba47e4e` and PACKETED (`Y4E/`, ledger `irpt-y4e-20261003`: U2 closed),
+   CTO half asked.
 5. After option A, in order: Y-3 READY, Y-5 V1, Y-4 V1, then Y-2 and Y-6.
 
-## Queued irpt-status work
+## Queued work
 
-W2-06 (`include=composition`, CTO batch 165): code merged `6a548c45ab`; bundle U1 `4CQOSM..` (`6VQejBfs..`);
-packet `W206_STATUS/NEVER_WIDEN_SIGNOFF_PACKET_IRPT_STATUS_W206_20261003.md` blob `30daf0f28b`, CTO half asked. It also
-attributes the Y-5 `ops/status.py` words (batch 198). Interface sent to `2.0.0_SA_COO~D`. Then G3 (render ports for the
-Analysis print, CTO batch 175).
+- W2-06 SERVED (above). Next: G3 (render ports for the Analysis print, CTO batch 175).
+- Y-5 packet 2 (the Kimi swap) waits on the web-search QA receipt (`KIMI_WEB_SEARCH_UNVERIFIED` stands).
 
 ## Rows this lane holds
 
@@ -58,7 +57,7 @@ Analysis print, CTO batch 175).
 - `irpt-y3-20261002`: V1 open (READY pending the session re-capture).
 - `irpt-y5-20261003`: V1 open (after Y-3's READY).
 - `irpt-y4-20261003`: V1 open (after option A).
-- `irpt-status-w206-20261003`: U1 closed; D1 waits on the CTO half; V1 after D1.
+- `irpt-y4e-20261003`: U2 closed; D3, D2 wait on the CTO half; V1 after them.
 
 ## Write claims
 
