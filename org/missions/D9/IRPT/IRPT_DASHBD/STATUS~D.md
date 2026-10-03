@@ -4,7 +4,7 @@ Seat `2.0.0_SA_COO~D` (CLAUDE). Contract: PRD `org/missions/D9/IRPT/IRPT_DASHBD/
 (ENDPOINT unchanged since @2cb022f549; C-LEASE and ruling 6.7 place F's items on this seat). Reviewer `3.0.0_SA_CVO`
 (grades each landed pin after the fact, as DSGN_IRPTV1 pins). Authority: Andrew-direct 2026-10-01 ~04:2xZ, record
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261001_042xZ_SELF_DRIVE_60M_LAPTOP_FABRIC_FINAL_SAY_CLOSER_DRIVE_IRPT_FIRST.md`
-@c48af273cc (CTO 103442). **As of 2026-10-03T03:2xZ.** This file holds F's claims and next-list; the pins, the landed
+@c48af273cc (CTO 103442). **As of 2026-10-03T04:1xZ.** This file holds F's claims and next-list; the pins, the landed
 table and the screen are in `org/missions/D13/DSGN/DSGN_IRPTV1/STATUS.md` (one seat, one portal checkout).
 
 ## Pins
@@ -28,7 +28,7 @@ account 0 reads, 85 ms. FWD-1's ACCEPT (Andrew's pick the next morning) and the 
 ## Write claims
 
 - `2.0.0_SA_COO~D`: `portal/src/pages/InvestorReporting/dashboard/*`, `portal/src/pages/InvestorReporting/tabs/reporting/*`.
-- OPEN CLAIM 03:2xZ (2026-10-03): batch 201's print and export cells (item 6 below): `render/Page.tsx`,
+- OPEN CLAIM 03:2xZ (2026-10-03), print half built 04:1xZ: batch 201's print and export cells (item 6 below): `render/Page.tsx`,
   `render/performance/PerformanceDocument.tsx`, `render/manifest.ts`, `export/ExportButton.tsx`, `export/resolveBundle.ts`
   (DSGN_IRPTV1 lease surface), built in this seat's worktree DIR `C:\Users\AndrewBerman\Desktop\portal-coo-d-p3`.
 
@@ -61,8 +61,18 @@ account 0 reads, 85 ms. FWD-1's ACCEPT (Andrew's pick the next morning) and the 
    OBJECT_NOT_COVERED, NOT_READY or an unreadable document fall back to the per-account manifests. Pin iv-e-155; real run
    from a build of the branch, both shapes. ~P told (msg 20261003T031650Z), with one contract question: the summary's
    null for NOT_SPANNED/BREAK against the body's clipped figure.
-6. Batch 201 (1.0.0_SA_CTO 104523, RULED (a)): print (render/Page, PerformanceDocument, manifest) and export
-   (ExportButton, resolveBundle) read PATH B. P-2's window opens when these cells are merged; held off DEV with P-3.
+6. Batch 201 (1.0.0_SA_CTO 104523, RULED (a)) and batch 203 (CTO 104532, the export shape RULED YES with the series
+   frozen at submit). Plan `org/missions/D13/DSGN/DSGN_IRPTV1/deliverables/2.0.0_SA_COO~D/p6/P6_PRINT_EXPORT_PATH_B_PLAN.md`.
+   - PRINT half BUILT on the held branch @79e7cfc8. A print URL with `account=` reads PATH B through the tab's switch;
+     not served -> PATH A; an unreadable series -> refusal. Pin iv-e-158; a run from the build made zero PATH A requests.
+     The same commit makes `summaryYtdSuffix` use the body's `notMeasuredReason` words.
+   - EXPORT half WAITS: the export target and submit carry the PATH B identity in the `authorized_report_revisions`
+     item shape that 2.0.0_SA_COO~P's batch-203 cell names, and the receipt shows the frozen as_of. Asked of ~P
+     (msg 20261003T041227Z). Also owed with it: the dashboard body's window lifted to the tab, so the export target
+     carries the window the reader sees, not the hidden period window.
+7. ~~~P 104529 window_status~~ LANDED portal `936424c3` (origin DEV, ls-remote 03:5xZ). A NOT_SPANNED preset or a BREAK
+   window reads "Not measured" with its reason in the body and the picker, never a partial link. Pin iv-e-157;
+   iv-e-125 re-goldened; real run looked at.
 
 ## Parked (one line each, owner + the condition that un-parks it)
 
