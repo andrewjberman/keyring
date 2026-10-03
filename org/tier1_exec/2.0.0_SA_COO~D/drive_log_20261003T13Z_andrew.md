@@ -1,0 +1,24 @@
+# Drive log -- 2.0.0_SA_COO~D, 2026-10-03 13Z (host andrew)
+
+| Time | Project | Limb | Act | Outcome |
+|---|---|---|---|---|
+| 12:5xZ-13:0xZ | DSGN_REBRND (FAST; IR lines still blocked: P-3/P-6 wait ~P's P-2 window, Case A waits ~Y) | round 3 E3, row W3-S4 | /portfolio-management: no computed zeros without a portfolio, one ERROR for a failed service: portal `c3e1d7b9` on origin DEV (ls-remote 13:04Z) | DRIVE FORWARD |
+
+## W3-S4 on /portfolio-management
+
+- Re-measured on DEV 94c055e8 (ui-smoke on the restarted 5174, auth stubbed; netlog: `/api/private/portfolio/funds`
+  and `.../autosave/PFDE/_` answered 401): every Optimized cell read 0.00 and nothing named the failure.
+- Cause: with no portfolio loaded, `optimization.summary` is all zeros and the header drew them; the page read neither
+  the fund list's nor the autosave read's `isError`. The fund picker's built-in fallback list is a designed fallback
+  and is kept.
+- Fix: the header shows the placeholder for every figure until a portfolio is loaded, and one PanelError (with a
+  hint naming the fallback list and the unavailable resume) when either read failed.
+- Pin `PortfolioManagement/components/summary-states.test.tsx` (negative control on HEAD: 0.00 x28, no error). Real run
+  under the 401 and a live positive control (walk `20261003T130059Z`: no error line, Resume offered).
+- An em dash typed into the pin's comment was replaced with words before commit (no non-ASCII added).
+
+## Still open on W3-S4
+
+- /advisor-intelligence (several of its files sit in 2.0.0_SA_COO~M's MDPF_SECCLASS lease), /ticket-center,
+  /data-refresh.
+- /market: a missing period change read as 0; RSIModal's own 50 defaults.
