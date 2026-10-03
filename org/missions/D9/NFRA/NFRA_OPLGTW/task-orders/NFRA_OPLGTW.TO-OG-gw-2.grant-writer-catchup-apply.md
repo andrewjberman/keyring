@@ -117,7 +117,7 @@ validated with `python .tools/proof-of-spec-check.py <instance>`. Report once pe
 - Halves: CTO + COO + CVO (R1). The never-widen ask is written at PHASE A from `GW2_BEHAVIOUR_DIFF.md`.
 - Pre-cut 18:2xZ: `gw2.AC1` FAIL with 3 DIFF; `gw2.AC2` FAIL (no ledger, no before-record).
 
-<status>pending</status>
+<status>complete</status>
 <round>15</round>
 <slot>~26</slot>
 <fabric>site-z</fabric>
