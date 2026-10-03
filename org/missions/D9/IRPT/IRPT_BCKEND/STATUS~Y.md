@@ -4,13 +4,13 @@ Seat `2.0.0_SA_COO~Y` (CLAUDE). Mode FAST: lease `IRPT_BCKEND~Y` (renewed by the
 Loop `/canonical-drive IRPT_BCKEND`. Way forward: CTO rulings in
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md` (latest read: batches 177, 178, 186)
 and the fold-in `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_FOLD_IN_IRPT_THREE_BRIEFS_20261002.md` section 2 (Y-1..Y-6,
-Y-H). Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-03T05:5xZ.
+Y-H). Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-03T06:1xZ.
 
 ## Pins
 
 | What | Value |
 |---|---|
-| CLOUD (local) | Y-4 enrichment SERVED `126804a641`; G3 source merged `ba7c5c95c0`, ledger `irpt-status-g3-20261003` open (U1 next). No worktree held |
+| CLOUD (local) | G3 packet `6fb533318c` (blob `85eb94e84c`), CTO half asked 06:15Z; bundle U1 `In5BnMbP..` (`hC6Pramt..`). No worktree held |
 | SERVED: `irpt-status` | `6VQejBfsI/P3mfAVSFjLt/ythlcxXxi12cy9hxXhKNg=` since 04:28Z (W2-06 `include=composition`; CTO half batch 204); ledger `irpt-status-w206-20261003` CLOSED 3/3. Rollback: re-promote S3 `wXzz3_gh..` (`h7H7KgX1..`) |
 | SERVED: PDF route | `GET analysis/requests/{requestId}/pdf`, route `ihirb2s` on `7k3ed8px20` since 2026-10-02 ~17:59Z |
 | SERVED: the resident | `/opt/irpt-resident/a6f6e7165e-st18` since 05:52:20Z (Y-4 enrichment: gate total 240 s; CTO half batch 209). Rollback root `828c37c6f7-st17` |
@@ -34,8 +34,9 @@ Y-H). Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-03T05:
 
 ## Queued work
 
-- G3 (render ports on irpt-status, CTO batch 175): source merged `ba7c5c95c0`; ledger open; build, packet next. Its
-  positive proof arm needs E4's first Analysis export (all three render grants today are Performance exports).
+- G3 (render ports on irpt-status, CTO batch 175): PACKETED (`G3_STATUS/`), CTO half asked, with the negative arm's
+  carrier (the render key) asked inside it. The positive arm rides E4's first Analysis export (all three render grants
+  today are Performance exports).
 - Y-5 packet 2 (the Kimi swap) waits on the web-search QA receipt (`KIMI_WEB_SEARCH_UNVERIFIED` stands).
 
 ## Rows this lane holds
@@ -58,7 +59,7 @@ Y-H). Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-03T05:
 - `irpt-y3-20261002`: V1 open (READY pending the session re-capture).
 - `irpt-y5-20261003`: V1 open (after Y-3's READY).
 - `irpt-y4-20261003`: V1 open (after option A).
-- `irpt-status-g3-20261003`: U1, I1, D1, V1 open (build next).
+- `irpt-status-g3-20261003`: U1 closed; I1, D1 wait on the CTO half; V1 after them.
 
 ## Write claims
 
