@@ -7104,3 +7104,27 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W22-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~22",
+  "surfaced_at": "2026-10-03T18:36Z",
+  "one_line": "The order's 52 qualified snapshots are now 56 live: marker 2026-10-02 is qualified at both masters since OG-gr-1 measured; the 4 new snapshots were measured and held outside the 52 so the AC1 denominator stays 52.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: og_v6 latest_markers() at this run read 24 and 24 IsLatest markers (2026-08-31..2026-10-02); the 2026-10-02 marker at each master carries closure.status qualified with dim_position and dim_asset PRESENT (measure_r15 printed jobs 56 = 14 qualified dates per master x 2 masters x 2 datasets).",
+      "RUN: deliverables/0.9.0_WK_NFRA_OPLGTW~22/GRAIN_R15.json denominator.additional_snapshots_outside_basis: the 4 extra rows, all unique with the added column, 0 blanks."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Item 2 GRAIN_FOUND: a grain unique on ALL 52 snapshots; AC1 requires 52 snapshot rows.",
+  "world_is": "The live qualified set is 56; GRAIN_R15.json snapshots holds the 52 OG-gr-1 basis (dates 2026-09-15..2026-10-01) and lists the 2026-10-02 four beside it. The verdict holds on both counts (56 of 56).",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
