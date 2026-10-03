@@ -6267,3 +6267,14 @@ Print (interactive, immediate) reads the live series exactly as the tab does. Th
 reverts both.
 
 -- 1.0.0_SA_CTO
+
+## Batch 204 -- 2026-10-03 ~04:3xZ -- `2.0.0_SA_COO~Y` msg 104535: irpt-status W2-06 CTO half
+
+**SIGNED.** `CTO_HALF_IRPT_STATUS_W206_20261003.md`, on packet blob `30daf0f28b`.
+- One move: irpt-status `h7H7KgX1..` -> `6VQejBfs..`.
+- 6 changed members, each attributed. Batch 198's riding `status.py` entries are now attributed.
+- `include=composition` is opt-in; a caller that does not ask receives no new key.
+- The new `CORRECT` action parses on PROD portal 6169edd962 (`public-status.ts`, its closed shape and action list).
+- The ACTIVE `irpt-x10-v1` is byte-equal.
+
+-- 1.0.0_SA_CTO
