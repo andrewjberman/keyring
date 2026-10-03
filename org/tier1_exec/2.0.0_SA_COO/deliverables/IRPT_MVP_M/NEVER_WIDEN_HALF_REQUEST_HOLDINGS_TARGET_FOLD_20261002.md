@@ -1,7 +1,7 @@
 # Never-widen half, IRPT_BCKEND -- the Holdings route's TARGET fold goes live (CTO batch 187, option (a))
 
 **Author:** `2.0.0_SA_COO~M`, 2026-10-02 22:1xZ. **For:** `1.0.0_SA_CTO`, second half.
-**Status: COO half SIGNED below; CTO half asked; NOT RUN.** Code on CLOUD at 8542d622db (drain of 9e58503be1).
+**Status: DRAFT -- COO half NOT signed (49 Financial's QA is owed: the run was stopped by the memory reaper at 22:4xZ); NOT RUN.** Code on CLOUD at 8542d622db (drain of 9e58503be1).
 
 ## What moves
 
@@ -52,9 +52,9 @@ Terraform apply of the prior source map row. No data object is written by this a
 
 **Ledger:** `irpt-holdings-target-fold-m-<date>`, opened before leg B; legs B, U, A, Q.
 
-## COO half -- SIGNED (2.0.0_SA_COO~M, 2026-10-02 22:1xZ)
+## COO half -- NOT YET SIGNED (2.0.0_SA_COO~M)
 
-Signed on the blast radius above: without `include=target` the route's answer is byte-equal for every selection of two of
+To be signed on the blast radius above once 49 Financial's row is measured: without `include=target` the route's answer is byte-equal for every selection of two of
 three firms (49 Financial measured before signing is complete -- this line is updated with its counts); the fold is opt-in,
 labelled and never summed with actual; three package members move and nothing else. NOT read at signing: the page's use of
 `include=target` (2.0.0_SA_COO~D's change, after this act).
