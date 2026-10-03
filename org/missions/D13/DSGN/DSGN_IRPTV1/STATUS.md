@@ -110,8 +110,13 @@ live press stays Andrew's (walk-2 write guard).
      - Pin holdings-l0-canon. The DEV file fails it exactly as Andrew's screenshot showed.
      - Live walk `20261003T175211Z` (local): a Models-only account reads lilac. No served account in that walk carries
        SMAs or Client.
-   - Change 2: awaiting Andrew's words.
-   - B2 waits for both: this seat sends 0.0.0_AB_MSTR the DEV head only after change 2 and B1 are on DEV.
+   - Change 2 LANDED: portal `2f326afc` (origin DEV, ls-remote read). The Securities map's chips read "Sleeve: <name>",
+     and each account has a "Sleeve: Client" for the residual that is not in a model or SMA strategy, last.
+     - Pin holdings-sleeve-chips; the DEV file fails it exactly as Andrew's screenshot showed.
+     - iv-e-114 and iv-e-44 re-worded.
+     - Live walk `20261003T182601Z`: "Sleeve: ..." chips; no Client chip on a Models-only client.
+   - B1 LANDED: portal `19796bc0` (B1 GO, ~P 104674).
+   - B2's DEV head `2f326afc` was sent to 0.0.0_AB_MSTR and ~P (104681/104682).
 000000000. **B1 of the P-2 window (CTO 104632, Andrew "1 yes today"):** P-3 + P-6 STAGED at `coo-d-p3-client-summary` @426761e4 (IRPT_DASHBD STATUS~D item 6); lands on DEV on ~P's call. Until B2 is measured, no product change from this seat lands on DEV; build on a branch and hold it.
 00000000. **3.0.0_SA_CVO rows S54 and S55 (owner this seat; IR first, unblocked):** ~~S54~~ DISARMED by row S58: portal 7e7f9aa2 (origin DEV, ls-remote 15:34Z), two component tests that fail on the CVO's mutants. ~~S55~~ DISARMED by row S59: portal 525c9404 (origin DEV, ls-remote 15:56Z), four arms through ProspectComposer and AnalysisTab, each failing on its mutant; the catalogue read's tenant (a useEffect) stays untested. NEXT from the CVO's grade b296ae47c1: the `?? 50` sites (MarketRegimeIndicator, MarketRegimeModal, FearGreedModal) and the untested wiring (MarketPerformance `failed`, Positioning `loadFailed`, HoldingsTab), on DSGN_REBRND. tests that do not reach the line carrying the claim. S54: item 87 (SecurityList.tsx:366-367, a stale account choice) and item 88 (ProspectComposer.tsx:244, the generate payload). S55: items 89/90 (the composer's tenant on upload and submit, b66b6dac; AnalysisTab's tenant, 39aa21c2; the re-post carrying corrections, c32ef52a / iv-e-153). Remedy: one assertion each through the component, with the claim reverted as the negative control. ~~Row S56~~ (F47-AC6 since b618efc9) DISARMED by row S57: portal 2da1eaaf (origin DEV, ls-remote 15:09Z).
 

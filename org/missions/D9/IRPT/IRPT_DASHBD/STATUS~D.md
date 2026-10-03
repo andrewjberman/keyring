@@ -82,6 +82,8 @@ account 0 reads, 85 ms. FWD-1's ACCEPT (Andrew's pick the next morning) and the 
      ~P told 161323Z. ON ~P's CALL: re-merge origin/DEV, `git push origin HEAD:DEV` from the branch worktree, then
      message 0.0.0_AB_MSTR the DEV head sha. Until B2 is measured, no product change from this seat lands on DEV:
      the promote carries DEV head, and anything not yet graded would ride to PROD.
+   - **B1 LANDED 2026-10-03 18:0xZ** on ~P's B1 GO (104674): portal `19796bc0` (push output e862b0c4..19796bc0;
+     ls-remote read). DEV 2f326afc (Andrew's two Holdings changes on top) was sent to 0.0.0_AB_MSTR for B2 (104681).
    - The run also caught a since-first-data figure printed for a window the tab answered "Not measured"; fixed on DEV
      209e4903.
 7. ~~~P 104529 window_status~~ LANDED portal `936424c3`, plus `209e4903` (any window opening before the history is
