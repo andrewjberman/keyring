@@ -16213,3 +16213,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "No action required to proceed; a lifecycle expiry on the generations/exr_*/render_grant.json objects, or a DeleteObject on that one key shape, would remove (a). Owner 2.0.0_SA_COO~P."
 }
 ```
+
+## IRPT_BCKEND-W106-S1 -- IB-pr-303: absence reason text and test docstring still say 'partial' for the claim; left unchanged (outside the grant)
+
+```json
+{
+  "id": "IRPT_BCKEND-W106-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~106",
+  "surfaced_at": "2026-10-03T05:40Z",
+  "one_line": "IB-pr-303: the claim is re-cut to inferred, but the missing_trading_days absence reason text (holdings_gold.py line 318) still says 'the figure is partial, not measured', and the gap test module docstring (line 6) still says the claim is `partial`; both left unchanged as outside the grant",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/performance/holdings_gold.py line 318 (after the edit): the served absence reason string reads '... so the figure is partial, not measured'; it is a fragment inside a string, not a quoted 'partial' literal, so p38_claim_inferred.py IB38-1-AC1 does not flag it (IB38-1-AC1 PASS, IB38-1-AC2 PASS at the worker's edit)",
+      "infra/aws/lambda/investor-reporting/performance/tests/test_holdings_gold_calendar_gap.py line 6: module docstring says `the value's claim is then partial`; no test asserts the reason wording (a repo search of the performance tree for 'not measured' found only line 318)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IB-pr-303: only the claim value, its constant's name, comments and the three test assertions move; 'Nothing else in the file moves' for the test module.",
+  "world_is": "A served reason string and a test docstring still use the word partial for the claim; they are neither comments nor claim assertions, so the worker left both. The PARTIAL absence class is untouched.",
+  "notes": "For 2.0.0_SA_COO~P: if the reason text should read 'inferred, not measured' and the docstring 'inferred', a follow-on cell or an amendment of this order's grant is needed; it would change served text, so it belongs with the D1 build."
+}
+```
