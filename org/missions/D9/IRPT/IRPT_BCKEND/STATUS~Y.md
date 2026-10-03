@@ -40,7 +40,9 @@ Y-H). Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-03T07:
   V1-a measured the upload + comparison path admitted. Y-2 is the live run after option A.
 - Y-5 packet 2 (the Kimi swap): QA RUN (`Y5P2/KIMI_WEB_SEARCH_QA_FINDINGS_20261003.md`, 9 runs):
   `KIMI_WEB_SEARCH_UNVERIFIED` stands. kimi-k3 refuses the built-in search echo; kimi-k2.6 accepts it but yields no
-  schema. Direction asked of the CTO 07:01Z; recommended hold, with (b) no-web-search next.
+  schema. HELD by CTO batch 218 (YAGNI: the user-named proxy serves Case D). When picked up: candidates from
+  etf-classifications (same class and sub-class), each verified by the same YCharts read; Kimi without web search may
+  only rank or word them; `KIMI_WEB_SEARCH_UNVERIFIED` stays the swap refusal.
 
 ## Rows this lane holds
 
@@ -59,9 +61,9 @@ Y-H). Reviewer `3.0.0_SA_CVO` (grades pins after the fact). As of 2026-10-03T07:
 
 ## Ledgers this seat holds open
 
-- `irpt-y3-20261002`: V1 open (READY pending the session re-capture).
-- `irpt-y5-20261003`: V1 open (after Y-3's READY).
-- `irpt-y4-20261003`: V1 open (after option A).
+- `irpt-y3-20261002`, `irpt-y5-20261003`, `irpt-y4-20261003`: apply legs proven, V1 open, each HELD-SOVEREIGN-GATED
+  (07:0xZ) on option A, re-read event "ycharts/session/current fence > 23 and one authenticated securities_info read
+  answers 200". Release each with `deploy_ledger.py hold --slug <slug> --release` when the event fires.
 
 ## Write claims
 
