@@ -5,6 +5,7 @@
 | 12:5xZ-13:0xZ | DSGN_REBRND (FAST; IR lines still blocked: P-3/P-6 wait ~P's P-2 window, Case A waits ~Y) | round 3 E3, row W3-S4 | /portfolio-management: no computed zeros without a portfolio, one ERROR for a failed service: portal `c3e1d7b9` on origin DEV (ls-remote 13:04Z) | DRIVE FORWARD |
 | 13:0xZ-13:1xZ | DSGN_REBRND (FAST; IR still blocked on ~P) | round 3 E3, row W3-S4 | /ticket-center says a failed load inside the board: portal `3d8cce99` on origin DEV (ls-remote 13:16Z) | DRIVE FORWARD |
 | 13:1xZ-13:3xZ | DSGN_REBRND (FAST; IR still blocked on ~P) | round 3 E3, row W3-S4 | /data-refresh History and Emergency Rollback say a failed history read: portal `30f7fca1` on origin DEV (ls-remote 13:33Z) | DRIVE FORWARD |
+| 13:3xZ-13:4xZ | DSGN_REBRND (FAST; IR still blocked on ~P) | round 3 E3, row W3-S4 | /advisor-intelligence Advisors tab says a failed leaderboard read: portal `075d33fa` on origin DEV (ls-remote 13:46Z); ~M asked about PartnerAnalytics.tsx | DRIVE FORWARD |
 
 ## W3-S4 on /portfolio-management
 
@@ -36,7 +37,17 @@
   PanelError with Try again; Rollback offers no restore without a target, as before; rollback logic untouched.
 - 401 renders of both tabs and a live walk (`20261003T133002Z`, reads only) listing the real executions.
 
+## W3-S4 on /advisor-intelligence
+
+- Re-measured on DEV 30f7fca1 under the 401: Assets Overview "No AUA or net-new-asset history for this partner yet.",
+  Top Performers blank, Leaderboard "No advisors to rank...", Data Source a green "Black Diamond Connected" beside
+  "Last update: N/A".
+- Landed: AdvisorsTab reads the leaderboard's `isError`; one "Advisors" panel with the error. 401 render after; live
+  walk `20261003T134302Z` draws as before (its one API issue, a 403 on cohort_a_summary.json, is not this change's).
+- Asked 2.0.0_SA_COO~M (one message): PartnerAnalytics.tsx sits in the MDPF_SECCLASS lease.
+
 ## Still open on W3-S4
 
-- /advisor-intelligence (several of its files sit in 2.0.0_SA_COO~M's MDPF_SECCLASS lease).
+- /advisor-intelligence: Assets Overview (PartnerAnalytics.tsx, ~M's lease; asked) and the static "Connected" label in
+  `_partners/*/index.tsx`.
 - /market: a missing period change read as 0; RSIModal's own 50 defaults.
