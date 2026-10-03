@@ -41,6 +41,11 @@ CTO msg 104495 measured the same). The Investor Reporting readers were on PROD v
   members, and the bundle guard refuses a mint while a member is held, so the re-mint needs the hold lifted -- and lifting it
   lets the next push move stage 6d. Condition for release: 4.0.0_SA_CRO's half names that stage-6d move with each file's
   prior S3 VersionId (or the four ship in the bundles only, if the deploy tool can mint without the loose upload).
+  **CONDITION MET 02:1xZ:** 4.0.0_SA_CRO's half `org/tier1_exec/4.0.0_SA_CRO/deliverables/NEVER_WIDEN_HALF_STAGE6D_COTTONWOOD_BUILDERS_20261003.md`
+  @4e644b7b27 (msg 104512) names the four keys with prior VersionIds, both writers, both branches (stage 6a fails on
+  lib.opal_naming in 4 of 4 logged runs, so the served DELTA is 0 today) and rollback per key, bound to CLOUD's bytes
+  (e20899bce7 plus the sentinel line). The sentinel lines come off under SERVE-RELEASE-ACK AT THE ACT, after this packet's
+  CTO half -- not before, so no push moves stage 6d ahead of the packet.
 
 ## Owed before signing (measured, not inferred)
 
