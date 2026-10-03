@@ -6955,3 +6955,31 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S47",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-03T01:08Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The issuer disarms Z-W17-S2's hazard; its open decision is carried, not dropped. (1) The committed opal-gateway root cannot plan untargeted from a fresh worktree (tf.AC1 at 00:5xZ: rc 1, 2 errors, 2 missing required variables), so the hazardous untargeted apply needs hand-fed TF_VAR_* plus a staged grant-writer build. (2) Every opal-gateway apply in this project is a targeted safe-apply (OG-al-1, OG-tt-1, OG-pr-1, OG-rl-3), and no round-14 order applies this root (OG-rl-4 bounds Terraform untouched). (3) The build-source choice -- deploy HEAD's grant-writer build deliberately in its own apply cell under never-widen halves, or pin the archive to the released build -- is a design ruling routed to 1.0.0_SA_CTO~O in this round's L10 message. OG-tf-1 stays open: items 1 and 3 unbuilt, item 2 (hygiene) landed @98b4529db8.",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W17-S2"
+  ],
+  "one_line": "Z-W17-S2 (the grant-writer CONTENT-DIFF blocks OG-tf-1) is disarmed: no untargeted apply path exists without hand-fed variables and no round-14 order applies the root; the build-source ruling goes to the CTO at L10.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: tf.AC1.sh on wk-NFRA_OPLGTW-17-r14 (00:5xZ): plan rc=1; errors 2; missing required variables 2",
+      "deliverables/0.9.0_WK_NFRA_OPLGTW~17/TF_ROOT_FIX.md section 1: 11 files each side, 8 SAME, 3 DIFF (config.py, data_entitlement.py, NFRA_OPLGTW_CONTRACT.json); each deployed file equals an older committed blob",
+      "task-orders/NFRA_OPLGTW.TO-OG-rl-4.gateway-release-r14.md section 2: Terraform untouched"
+    ]
+  },
+  "spec_asserts": "Z-W17-S2: an untargeted apply of the opal-gateway root would redeploy the grant writer with unreleased gateway code.",
+  "world_is": "True only for a hand-fed untargeted apply, which no order in this project makes; the choice of build source is the CTO's."
+}
+```
