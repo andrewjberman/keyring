@@ -82,6 +82,7 @@ order's last status line in the same commit. Report once: per test, PASS or the 
   that hides a product defect is the failure mode to watch at the drain.
 
 <status>pending</status>
+<status>complete</status>
 <round>14</round>
 <slot>~18</slot>
 <fabric>site-z</fabric>
