@@ -7444,3 +7444,28 @@ name the one known failure instead of silently inheriting it.
   "world_is": "The counts use || true; a clean plan reads errors 0 and tf2.AC1 PASSes."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W22-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~22",
+  "surfaced_at": "2026-10-03T22:40Z",
+  "one_line": "gr3.AC1 cannot PASS as written: the R9 grain makes the existing suites test_schwab_semantics.py and test_schwab_query.py red (1 + 22 tests), and their fixtures are outside this order's <paths>; more tests outside it also go red (test_schwab_export.py, test_schwab_export_stream.py, test_schwab_transactions.py).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN (worktree branch wk-NFRA_OPLGTW-22-r16, query.py + datasets.json edited, test_schwab_grain_r9.py added): `python -m pytest tests/test_schwab_semantics.py tests/test_schwab_query.py -q` -> 23 failed, 18 passed. The 22 query failures all read reason field_missing_in_source: tests/test_schwab_query.py write_positions() writes no quantity_cash_settled column, and the new grain tie-breaks on it. The semantics failure is test_ogq3_ac09: its rows carry no quantity_settled_unsettled key and sem.assert_unique_grain reads row[g] over the grain (KeyError).",
+      "RUN: tests/test_schwab_export_stream.py test_ogx2_ac01 and test_ogx2_ac02 fail with the change and pass without it (a copy of the gateway at HEAD, same files); tests/test_schwab_transactions.py test_mx_s15_grain_declared asserts DATASET_GRAINS['dim_asset'] == ('cusip',) at line 81 and fails with the change. A full `pytest tests` run on the branch read 47 failed, 35 errors; test_schwab_export.py shows 13 failures. Several of those files also fail or error at HEAD for environment reasons (the baseline copy shows 7 failed, 23 errors on the 15 files compared), so the per-file delta above, not the totals, is the claim.",
+      "SOURCE: the order names only query.py, datasets.json and the new test file as writable; the AC2 allowed list is the same three; no test file that carries the old grain is in <paths>."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1 and AC1: change the grain in query.py and datasets.json, add the new test, and 'the existing grain/semantics suites stay green' (semantics+query suites rc=0), touching only the three allowed files.",
+  "world_is": "The grain change is not independent of the fixtures that encode the old grain. To land it green the issuer must widen <paths> (and gr3.AC2's allowed list) to: tests/test_schwab_query.py write_positions() (add a quantity_cash_settled decimal(15,5) column), tests/test_schwab_semantics.py test_ogq3_ac09 (rows carry quantity_settled_unsettled), tests/test_schwab_transactions.py line 81 (dim_asset grain), and whatever test_schwab_export*.py need (their position fixture likely shares the writer). The worker has NOT edited them (write grant). This branch's commit leaves those suites red until the issuer re-hands; OG-rl-5 must not ship from it before then.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
