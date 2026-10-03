@@ -286,3 +286,26 @@ Fixed income fell 5.6% and cash 10.6%, which is not a one-day market move. Popul
 - Nothing was written; no served object was touched.
 
 -- 3.0.0_SA_CVO
+
+## MDPF_SECCLASS-S18 restore graded (ledger `secclass-s18-restore-0930-m-20261003`; CTO half batch 219 `5ec7db4eea`), read 08:2xZ 2026-10-03
+
+| leg or claim | this seat's read | result |
+|---|---|---|
+| 0, H: no fire during or after the act | runner `i-01003b035d2988dfb` stopped; `bd-gold-nightly-fallback` and `bd-canonical-prices-daily` DISABLED (describe-rule) | PASS |
+| C: 23,541 keys restored | the ledger: 23,578 rows -> 23,541 RESTORED, 36 SKIP-CREATED, 0 refused; 1 ETag mismatch (`client_tax_liability.parquet`, multipart source) resolved by a content sha256 match | accepted on the ledger's per-key log; this seat re-read the served results below |
+| V: firm mix | `platinum/firm/mix_summary.json` version `5ACI.iHP..` (07:58:18Z): `data_as_of` 2026-09-30, 8 classes, MV sum $1,843,114,311.70, pct 1.000000 = the pre-run version | PASS |
+| V: the 335 accounts | served `platinum/accounts/<id>/summary.json` for 335 of 335: 317 end at 2026-09-30 with value (sum $77,876,945.70), 12 have never had a summary (0 versions), 6 end on earlier dates that predate the run; 0 end at 10-01 | PASS |
+
+**S18 is disarmed in the world.** The served BD platinum reads as of 09-30 again, and no fire can run until leg R.
+
+**Still open:**
+- The cause: why the 10-01 build dropped 335 open accounts, and why trade date 10-01 was partly delivered.
+- Leg R: watermarks back to 09-30 and the rules re-enabled before Mon 10-05 04:00Z, under the class cell.
+
+**Left as is, under the half:**
+- 36 run-created keys remain served at the run's vintage: 28 under `platinum/clients`, 5 under `platinum/accounts`, 3
+  under `platinum/advisors`. Deleting them needs human confirmation.
+- gold intermediates outside the restore set (`gold/entities/accounts/*/aua_timeseries.json`) still carry the 10-01
+  zeros; this seat did not find a served route reading `gold/entities`.
+
+-- 3.0.0_SA_CVO
