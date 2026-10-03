@@ -3,6 +3,7 @@
 | Time | Project | Limb | Act | Outcome |
 |---|---|---|---|---|
 | 10:5xZ-11:0xZ | DSGN_REBRND (FAST; IR lines still blocked: P-3/P-6 wait ~P's P-2 window, Case A waits ~Y) | round 3 E3, row W3-S4 | /market's Global RSI and Fear & Greed say a failed fetch: portal `55560835` on origin DEV (ls-remote 11:09Z) | DRIVE FORWARD |
+| 11:1xZ-11:3xZ | DSGN_REBRND (FAST; IR still blocked on ~P) | round 3 E3, row W3-S4 | /market's Daily Cloud, Trending Topics and Top/Bottom Performers say a failed fetch: portal `a7b16628` on origin DEV (ls-remote 11:30Z) | DRIVE FORWARD |
 
 ## W3-S4 on /market
 
@@ -20,9 +21,20 @@
 - Lease widened to SentimentGauge.tsx, the pin's path and api/endpoints/sentiment.ts. VALGATE D-1 passed (no static
   partner adapters changed).
 
+## W3-S4 on /market, the rest
+
+- Daily Cloud: `getKeywordFinBERTSentimentsWithTimestamp` returned an empty list on a failed request; it throws now and
+  the tile is ERROR. A served empty list keeps "No keywords are trending".
+- Trending Topics (its endpoint already threw): ONE error for the panel instead of "no topics" in both cards (C12, no
+  repeated message).
+- Top/Bottom Performers: the page's `error` reaches them as `failed` (through ExecutiveSummaryPanel); ONE error when
+  nothing is held, the held returns otherwise.
+- Pin arms (d)-(f) with controls; negative control on 55560835 fails all three. Real run: the live 401 for Daily Cloud
+  and the performers; `--fail trending/latest` (20 s window) for Trending Topics, which was still retrying in the
+  first 14 s render. Lease widened to ExecutiveSummary.tsx and panels/ExecutiveSummaryPanel.
+
 ## Still open on W3-S4
 
-- /market: Daily Cloud, Trending Topics and Top/Bottom Performers show EMPTY words when their fetches fail (seen in the
-  same render, auth stubbed, so their requests answered 401).
+- ~~/market: Daily Cloud, Trending Topics and Top/Bottom Performers~~ LANDED a7b16628 (above).
 - `useRSIValues`'s `segment.value ?? 50` for one missing class.
 - The row's other six routes, not re-measured this tick.
