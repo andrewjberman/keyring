@@ -84,6 +84,7 @@ order's last status line in the same commit. Report once: the verdict with its d
 - The verdict decides FWD-3's arms: EVALUATES -> graded on her; BYPASSES -> UNEXERCISED until Menachem (CTO 28154 (2)).
 
 <status>pending</status>
+<status>complete</status>
 <round>14</round>
 <slot>~23</slot>
 <fabric>site-z</fabric>
