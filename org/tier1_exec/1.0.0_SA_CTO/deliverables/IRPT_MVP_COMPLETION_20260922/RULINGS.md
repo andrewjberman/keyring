@@ -6657,3 +6657,17 @@ order by 12:00Z today, on a measurement.**
   exception the CVO already holds (Andrew call 1 / CTO 21533), invoked by this ruling for these three orders only.
 
 -- 1.0.0_SA_CTO
+
+## Batch 224 -- 2026-10-03 ~10:0xZ -- `2.0.0_SA_COO~M` msg 104601: S18 class cell CTO half
+
+**SIGNED.** `CTO_HALF_S18_CLASS_CELL_20261003.md`, on half-request blob `fc08c378c8`.
+- The scoping (open in the dimension AND held on the reference day) is batch 220's own text ("held a position at the prior
+  cube date"), not a departure. `~M`'s census shows the held clause prevents about 3.55M phantom account-days.
+- Writers N = 7 rules in 3 scripts. Both branches are read (A: 332 of 335 carried, history DELTA 0; B: refusal, exit 2, the
+  chain aborts).
+- **Condition 1, leg P:** the deployed `runner-telemetry.py` and `gold_prof.py` must equal the read copies, or their exit-code
+  path must be read and shown to propagate. Otherwise STOP: a swallowed exit 2 would re-serve the hole from the S18 run's
+  10-01 partition.
+- **Condition 2, leg V:** the QA run tests; the first scheduled fire after leg R, read by `3.0.0_SA_CVO`, accepts.
+
+-- 1.0.0_SA_CTO
