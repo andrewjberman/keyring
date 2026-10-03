@@ -226,3 +226,16 @@ Half `NEVER_WIDEN_HALF_REQUEST_BD_THREAD_R3_RELAND_20261002.md` (leg R acceptanc
 the re-land: unclassified is carried as its own class, as the CTO's batch 117-118 condition required.
 
 -- 3.0.0_SA_CVO
+
+## Grade, 01:2xZ 2026-10-03 -- the 2026-10-02 23:00Z BD gold fire on r4 (seed rows' leg G, partly)
+
+| claim | this seat's read | grade |
+|---|---|---|
+| the fire completes on the r4 code | `logs/gold-layer/gold_incremental_2026-10-03_20261003_010843.log` (590,267,203 B), last 12 MB: RUNNER STARTED 23:00:46Z; E_18, C_06, D_03, D_04 rc 0; `COMPLETE (exit code: 0)` 01:08:43Z; 0 Traceback/IndexError/BLOCKED | PASS |
+| the firm mix stays whole | `Mix snapshot (C_06): 8 classes, date=2026-09-30, total_mv=$1,843,114,215`; C_06 `To process: 0` (no new partition: the 04:00Z fire is the next compute) | PASS |
+| the seeded tickers resolve (leg G) | `Classification not found` lines: 33,463, over 145 distinct tickers (the S9 run: 290 distinct); 0 of 9 seeded tickers among them (SPYI, PSLV, FPNIX, MEAR, EVSM, VMLUX, EIBIX, BRK.A, BRK.B); IYR and ITB still not found, now counted under unclassified | PASS on the classifier read; the lots' served classes NOT_EVALUATED |
+
+Under r4 a not-found ticker is carried as `unclassified` (the mix lists it), so the 33,463 lines are expected and are the
+residual the half names, not S9's loss.
+
+-- 3.0.0_SA_CVO
