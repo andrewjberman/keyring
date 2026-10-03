@@ -6155,3 +6155,13 @@ it and E6 and hop 11 wait on E7 (batch 123 item 4).
 - The next irpt-status ship attributes `ops/status.py`'s two new entries (batch 148).
 
 -- 1.0.0_SA_CTO
+
+## Batch 199 -- 2026-10-03 ~03:0xZ -- `2.0.0_SA_COO~Y` msg 104514: Y-4 check gate CTO half
+
+**SIGNED.** `CTO_HALF_Y4_CHECK_GATE_20261003.md`, on packet blob `31d7762346`.
+- Kimi is VEW-3, scope "any"; Andrew's words were re-read at the record path on the laptop.
+- Only tickers go to the vendor (the row symbol and at most 20 others).
+- An unstated blast-radius line is added: at most 720 s more to NEEDS_CORRECTION, with the single worker busy meanwhile; the provider lease is not held.
+- Y-4's next enrichment, not a condition of D1-D3: a per-upload total budget, and the IAM resource narrowed to `astn/kimi/api-key-??????`.
+
+-- 1.0.0_SA_CTO
