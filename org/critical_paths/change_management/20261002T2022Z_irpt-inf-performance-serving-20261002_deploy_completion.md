@@ -29,3 +29,7 @@
 - 20261002T210857Z LEG P3 closed: plan 7 to add, 0 change, 0 destroy (schedule cron(0 14 ? * MON-FRI *) UTC, input source orion); safe-apply ~21:0xZ Apply
 - 20261002T212638Z LEG G1 closed: commit 2b3048bd22 (the held retained.tf half; audited lane override IRPT_BCKEND_FAST_Y_TFPOLICY, logged 21:13:02Z, autho
 - 20261002T221038Z LEG F1 closed: full plan 0/2/0 (G1+F1); targeted plan 0/1/0 s3_object_version wjneBb9_ -> 7GwiGHEPjUOS, source_code_hash cdbFZDJA -> /K
+
+## Amendment -- 20261003T032414Z -- leg A1 (CTO batch 202 @8da55ee13b, row IRPT_BCKEND-S292)
+
+A1 also FAILS when any trading day of 2026 through the fire's day has no `date=` partition under Inflection's holdings gold (`lib/trading_calendar.py`). The missed 2026-10-01 was landed 03:17:55Z as one new key (966 rows; row IRPT_BCKEND-S294), so Monday's fire computes 10-02 beside it. Monday's 14:00Z fire stays A1's evidence.

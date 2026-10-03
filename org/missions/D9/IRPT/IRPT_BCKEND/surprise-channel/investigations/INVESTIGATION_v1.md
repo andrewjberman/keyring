@@ -15796,3 +15796,33 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "INERT. Owner 2.0.0_SA_COO~P: run record-terraform-deploy.sh for both applies, add the Inflection function's entry (it shares the producer artifact by design), and correct the iam_role field."
 }
 ```
+
+## IRPT_BCKEND-S294 -- DISARM of IRPT_BCKEND-S292: Inflection's 2026-10-01 gold landed as one new key before Monday's fire
+
+```json
+{
+  "id": "IRPT_BCKEND-S294",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-03T03:20Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARM of IRPT_BCKEND-S292 by its disarm owner (CTO batch 202 section 1): Inflection's 2026-10-01 holdings gold landed as ONE new key before Monday's 14:00Z fire, so that fire no longer chains 09-30 -> 10-02 across a missing day",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "irpt-inf-holdings-performance-lambda dry run {date: 2026-10-01, dry_run: true, source: orion} RequestId 42d84d4b: rows=966 DRY prior_holdings=966 computable=795 not_computable=171 complete=True census {OK 795, NON-POSITIVE-BASE 171}",
+      "precondition: s3 opal-data-inflection irpt/inflection/gold/holdings_performance_daily/date=2026-10-01/ held no key; the newest partition was date=2026-09-30",
+      "write {date: 2026-10-01, source: orion} RequestId 1fd2415c: rows=966 LANDED, identical census; key date=2026-10-01/data.parquet 36,138 bytes at 2026-10-03T03:17:55Z, 1 version (a new key, nothing overwritten)",
+      "address from lib/opal_naming.address('irpt', 'inflection', 'gold', 'holdings_performance_daily', 'date=2026-10-01')"
+    ]
+  },
+  "dismissal_reason": "S292's hazard is gone: the 10-01 partition exists, so Monday's fire computes 10-02 beside it and no Inflection window links across 10-01. Batch 202 rules the write a literal one-key list the actor controls, so NEVER-1's never-widen does not apply; no existing key moved. The CLASS stays open and is placed: (i) the adapter's trading-calendar gap disclosure and (ii) producer catch-up are cells in this seat's next IRPT_BCKEND issuance (batch 202 section 2), and A1 of ledger irpt-inf-performance-serving-20261002 is amended to fail on a trading day without a partition.",
+  "spec_asserts": "Batch 202 section 1: land Inflection's 2026-10-01 gold before Mon 10-05 14:00Z, or state a disposition on the row.",
+  "world_is": "MEASURED 2026-10-03 ~03:18Z: the 10-01 gold is landed (966 rows, census OK 795 / NON-POSITIVE-BASE 171), one new key, one version.",
+  "notes": "Monday's 14:00Z scheduled fire stays A1's evidence. The operational write is not production evidence (CLAUDE.md: ad-hoc artifacts are never production evidence)."
+}
+```
