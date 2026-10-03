@@ -1,4 +1,4 @@
-# ETFS_RIVALS -- round 7 L8/L9 adjudication, part A (site-Z fabric)
+# ETFS_RIVALS -- round 7 L8/L9 adjudication, parts A and B (site-Z fabric)
 
 Author: 3.0.0_SA_CVO~RV, 2026-10-03 ~00:05Z. Round 7 is drained: 8 of 8 orders terminal (60 complete, 7 superseded across the
 project) at CLOUD a714df4d7f. This seat's suite run reads 596 passed, 0 failed. The round-7 apply pair is signed at pin
@@ -7,7 +7,13 @@ project) at CLOUD a714df4d7f. This seat's suite run reads 596 passed, 0 failed. 
 **Scope:** the 5 rows surfaced in round 7 (the channel reads 144, against 139 through round 6). There is no `<sweep_watermark>`
 and no new remediation row here, so this is not the slug.
 
-**Disposition:**
+**Part B (2026-10-03 ~00:30Z, after the round-7 apply at 75ad1e4d2e; packet msg 28830 @65ebcbdd20):**
+- C-S26 dismisses S16, filed at the deploy.
+- W1-S46 graduates in `remediations/REMEDIATION_v7.Z.md` (P2).
+- J1 grades are in `org/tier1_exec/3.0.0_SA_CVO/deliverables/ETFS_RIVALS_R7_REVIEW_20261003.md`.
+- C-S24's organic proof (2026-10-05 09:00 ET) is a named wait, graded then as an addendum row.
+
+**Part A, disposition:**
 - 4 rows are dismissed by C-S25 below.
 - **W1-S46 stays UNDER_INVESTIGATION and graduates at the round-7 slug as a P2.**
   - The AI step's deadline cannot interrupt a vendor call in flight. With `sweep.MARGIN_MS = 150_000` (sweep.py:75) and
@@ -52,6 +58,31 @@ and no new remediation row here, so this is not the slug.
     },
     "disposition": "DISMISSED_WITH_REASON",
     "dismissal_reason": "Built as the orders allow, or resolved. W1-S45's carrier may move to a registered state table in a later round; that is optional."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-C-S26",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~RV",
+    "surfaced_at": "2026-10-03T00:30:00Z",
+    "one_line": "S16 (a skipped AI step reports no run_path) is the honest direction: the response omits the claim rather than misstating it, and no stored value is wrong. The live schedule's own payload carries run_path 'scheduled', and the stamp is graded on the organic 2026-10-05 run.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "adjudicates": [
+      "ETFS_RIVALS-Z-S16"
+    ],
+    "spec_asserts": "Spine L9 (CLAUDE.md rule 27): every item is dispositioned on grounded evidence, and every BLOCKING or ARMED item before the slug.",
+    "world_is": "This seat's `aws scheduler get-schedule --name etfs-rivalfunds-sweep-daily`: cron(0 9 ? * MON-FRI *), America/New_York, ENABLED, target etfs-rivalfunds-daily-lambda, Input {\"date\": \"<aws.scheduler.scheduled-time>\", \"mode\": \"daily\", \"run_path\": \"scheduled\", \"sink\": \"s3\"}. Both Lambdas hold 36 of 36 rivalfunds files byte-equal to 75ad1e4d2e; the deployed sweep.py differs from eb6e9f04ff. Packet S1 (RequestId 1e9c8fb9, 3.4 s): the deployed sweep reaches the AI step and returns SKIPPED_EXISTS with run_path null, and it wrote nothing (3,996 keys before and after).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "investigation row ETFS_RIVALS-Z-S16",
+        "this seat's scheduler and Lambda reads, 2026-10-03 ~00:20Z",
+        "deliverables/2.0.0_SA_COO~RV/round7/postact_round7_deploy.json @65ebcbdd20 (S1, S1v)"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "An omitted claim, not a false one. If a skipped response should state its trigger, carrying the stamp into a SKIPPED result is one line; it is optional."
   }
 ]
 ```
