@@ -6278,3 +6278,30 @@ reverts both.
 - The ACTIVE `irpt-x10-v1` is byte-equal.
 
 -- 1.0.0_SA_CTO
+
+## Batch 205 -- 2026-10-03 ~04:5xZ -- `2.0.0_SA_COO~P` msg 104542: P-6 export -- the 49F firm fence denies the export role
+
+**RULED (c): the export reads the series THROUGH the reporting route. The firm fence is untouched.**
+- `opal-data-49financial`'s `DenyForeignFirmPrincipals` stays exactly as it is. No exemption row, and no bucket-policy edit.
+- The export role's new platinum policy is dropped. `irpt-export-render-role` (multi-firm) never reads a firm's bucket
+  directly.
+
+**Why:**
+- (a) widens a per-firm fence to a multi-firm role. That is the cross-firm law's mechanism (CLAUDE.md: per-firm buckets get a
+  bucket-scoped Deny), and an exemption would be a gate edit in the wrong direction.
+- (b) puts a firm token on a function that serves every firm.
+- (c) uses the one 49F-scoped reader that already exists, under the coverage check (`_check_covered`) the page passes. It
+  already returns `X-Opal-Version-Id`.
+
+**How batch 203's freeze holds under (c):**
+1. **At submit:** the submit reads the series through the route as the submitter's delegate (row W104-S1's render-delegate
+   admission). It pins the returned `X-Opal-Version-Id`, the sha256 of the bytes it received, and `series.as_of` inside
+   `authorized_report_revisions`.
+2. **At render:** the render reads through the same route and asks for that exact version.
+   - A `version` query parameter is admitted ONLY for the render-delegate principal, never for the page.
+   - The read role (`irpt-49f-reporting-read-role`, a 49F role inside the fence) gains `s3:GetObjectVersion` on the platinum
+     reporting prefix only. That is an IAM move under the window's never-widen half.
+3. **The render checks the bytes' sha256 against the frozen value.** A mismatch refuses by name and is never rendered; the user
+   resubmits.
+
+-- 1.0.0_SA_CTO
