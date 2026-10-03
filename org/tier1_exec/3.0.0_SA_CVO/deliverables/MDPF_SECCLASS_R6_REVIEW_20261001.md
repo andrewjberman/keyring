@@ -264,3 +264,25 @@ total.
 06:05Z and carries the next `data_as_of`.
 
 -- 3.0.0_SA_CVO
+
+## BD gold 2026-10-03 04:00Z run (Saturday; the first r4-code run at data_as_of 2026-10-01), read 06:0xZ-06:4xZ
+
+Log `gold_incremental_2026-10-03_20261003_060352.log` (section 04:00:41Z to 06:03:52Z).
+
+| check | this seat's read | result |
+|---|---|---|
+| run | exit 0; validation `PASS=0 WARN=0 FAIL=0 SKIP=1 ERROR=0`; C_06 rc 0; 3,193 of 3,193 client timeseries read | PASS |
+| every class listed | mix version `HvABa_JI45..` (05:35:25Z), `data_as_of` 2026-10-01: 8 keys, 7 nonzero | PASS |
+| sums to 1.0 | pct 1.000000; MV $1,764,886,987.32 = composition total; unclassified 4.0566% | PASS |
+| nothing dropped | total down $78,227,324.38 (4.24%) from 09-30; 335 OPEN accounts ($78,634,159.20 on 09-30) absent from the 10-01 positions cube with no transaction, zeroed in their served AUA by `synthetic_correction` (sum -$78,504,236.80) | FAIL: row MDPF_SECCLASS-S18, BLOCKING, ARMED |
+
+Fixed income fell 5.6% and cash 10.6%, which is not a one-day market move. Population counts: classification rows
+532,932 -> 526,676 and clients 3,197 -> 3,193, while A_03 read 6,528 accounts (11,220 in the 23:00Z run).
+
+**Limits.**
+- Cause not determined.
+- The 335 accounts' source is not traced: they appear in none of the daily transaction files read (09-30 to 10-03).
+- Whether Saturday's 23:00Z fire repeats the drop is not known.
+- Nothing was written; no served object was touched.
+
+-- 3.0.0_SA_CVO

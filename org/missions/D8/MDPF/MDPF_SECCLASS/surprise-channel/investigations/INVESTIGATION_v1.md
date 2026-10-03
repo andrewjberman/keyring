@@ -1258,3 +1258,34 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "INERT: no multi_asset row exists. Owner 2.0.0_SA_COO~M: widen the census to every renderer of an asset class (the class-name readers in the portal, not the table readers) and add Positioning's reading before the rows act."
 }
 ```
+
+## MDPF_SECCLASS-S18 -- the 10-01 BD gold run drops 335 open accounts ($78.5M) from the served AUM via synthetic_correction
+
+```json
+{
+  "id": "MDPF_SECCLASS-S18",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-03T06:45:00Z",
+  "one_line": "The BD gold run of 2026-10-03 04:00Z served the 49 Financial firm mix at data_as_of 2026-10-01 with total $1,764,886,987.32, down $78,227,324.38 (4.24%) from 09-30. 335 accounts carrying $78,634,159.20 on 09-30 are absent from gold/positions_cube/2026-10-01, all of them OPEN in the accounts dimension (closed_date null) with no transaction in the 09-30..10-03 silver files; their served aua_timeseries go to $0 on 10-01 through synthetic_correction (sum -$78,504,236.80), 316 of them still reporting positions.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3 opal-data-bd platinum/firm/mix_summary.json version HvABa_JI45.. (05:35:25Z): data_as_of 2026-10-01, 8 classes, pct sum 1.000000, MV sum 1,764,886,987.32; previous version wma_kZ0XFi.. (00:37:50Z): 2026-09-30, 1,843,114,311.70",
+      "gold/positions_cube/2026-09-30.parquet 6,836 accounts and 2026-10-01.parquet 6,509 accounts (both written 04:13:24Z): 335 gone, 8 new; at earlier month ends 0 to 3 accounts left (07-31 -> 08-01: 0; 08-31 -> 09-01: 3)",
+      "gold/dimensions/accounts_dimension_latest.parquet (04:03Z): 335 of 335 present, account_is_open True, closed_date NaT; opened 2026-07 to 2026-09",
+      "silver/transactions/2026-09-30, 10-01, 10-02, 10-03 parquet: 0 rows for the 335 accounts; trade date 10-01 so far covers 3,327 accounts (file 10-03) against 5,965-6,043 for 09-29 and 09-30",
+      "gold/entities/accounts/<id>/aua_timeseries.json for 335 of 335: total_aua 09-30 sum 78,634,159.20, 10-01 sum 139,614.86, 10-01 synthetic_correction sum -78,504,236.80; e.g. z0812888131 27,904.62 -> 0.00 with num_positions 16",
+      "run log s3://opal-data-bd/logs/gold-layer/gold_incremental_2026-10-03_20261003_060352.log: exit 0; A_03 'Accounts: 6,528' (the 23:00Z run's A_03 read 11,220); 'Mix snapshot (C_06): 8 classes, date=2026-10-01, total_mv=$1,764,886,990'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row S9's measure for every BD gold fire: the firm mix lists every class, sums to 1.0, and drops nothing; an account leaves the served AUM only by a recorded outflow or closure.",
+  "world_is": "The mix sums to 1.0 over a population that lost 335 open accounts. About $78.5M leaves the served 10-01 AUM with no flow and no closure, booked as synthetic_correction. The cause is not determined. Candidates: the 10-01 positions build covers a narrower account set (A_03 read 6,528 accounts, not 11,220); trade date 10-01 is only partly delivered (3,327 accounts). Not read: whether the next run, once the 10-01 delivery completes, restores them.",
+  "notes": "ARMED: the served BD platinum (firm mix, client and account AUA) reads $78.5M low from 05:35Z. Disarm owner 2.0.0_SA_COO~M, as the holder of the BD gold thread and S9's precedent. Either restore the 09-30 served versions under a never-widen sign-off, or fix and re-run before the firm reads it; and say whether Saturday's 23:00Z fire (bd-gold-nightly-fallback, MON-SAT) will repeat it. The pipeline's DS owner is named by rule 13."
+}
+```
