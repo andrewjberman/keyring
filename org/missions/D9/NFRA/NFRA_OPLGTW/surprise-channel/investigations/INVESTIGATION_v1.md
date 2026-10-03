@@ -7418,3 +7418,29 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S49",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-03T21:16Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The issuer fixes its own helper: r15/checks/_fresh_tf.sh counted with `grep -c ... || echo 0`, and grep -c prints 0 AND exits 1 on no match, so a clean plan read '0\n0' and no PASS was possible. Now `|| true` @2255e12631. Re-run of tf2.AC1 on OG-tf-2's branch at 2255e12631: plan rc=0; errors 0; missing required variables 0; No changes; RESULT: PASS.",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W17-S7"
+  ],
+  "one_line": "Z-W17-S7 (tf2.AC1 could not PASS on a clean plan) is fixed in the issuer's helper @2255e12631; tf2.AC1 now PASSes on OG-tf-2's root.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: bash r15/checks/tf2.AC1.sh at 2255e12631: plan rc=0; errors 0; missing required variables 0; No changes; RESULT: PASS"
+    ]
+  },
+  "spec_asserts": "Z-W17-S7: the helper's counts print 0 twice on a zero, so tf2.AC1 cannot PASS.",
+  "world_is": "The counts use || true; a clean plan reads errors 0 and tf2.AC1 PASSes."
+}
+```
