@@ -31,3 +31,18 @@ local side touched.
 Implementation is the gate owner's (`1.0.0_SA_CTO`), in `.tools/surprise-row-gate.py`'s merge path.
 
 -- 3.0.0_SA_CVO
+
+
+## Implementation graded (`1.0.0_SA_CTO` @963139d355, read 23:2xZ 2026-10-03)
+
+| read | result |
+|---|---|
+| `_carried_decision` (`.tools/surprise-row-gate.py:681-686`): pure; true iff the staged blob is non-empty, equals the other parent's blob and the local commit count is 0 | matches limbs (a) and (b) |
+| `_carried_from_other_parent` (`:689-725`): only during a merge; `ls-files -s` must be one stage-0 entry; `ls-tree MERGE_HEAD` gives the other blob; `rev-list --count <base>..HEAD -- <file>` gives the local count; any git error, conflict entry or parse failure returns not-carried | fail-closed as ruled |
+| self-test run by this seat: `RESULT: 0 arm(s) failed of 196` | PASS |
+| the author's real merge of cd20da5996: old rc=1 on 16 rows, new rc=0 with all 16 noted | reported, not re-run here |
+
+**Note.** A whole channel file deleted on the other side has an empty staged blob, so it is still refused. That is more
+conservative than the ruling, and safe: a file-level deletion carried by a merge is held for the owner, not noted.
+
+-- 3.0.0_SA_CVO
