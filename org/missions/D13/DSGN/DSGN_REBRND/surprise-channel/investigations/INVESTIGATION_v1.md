@@ -1644,6 +1644,30 @@
     "spec_asserts": "The design law: text on a dark panel meets 4.5:1.",
     "world_is": "A served label sits at 4.07:1; the instrument used to clear the page does not measure non-interactive text, so its 0-under result does not cover these.",
     "notes": "INERT (legibility, on PROD 6169edd9). Owner 2.0.0_SA_COO~D: a lighter Equity ink for text on the body rung, or 24px; and widen the walk's contrast limb to non-interactive text."
+  },
+  {
+    "id": "DSGN_REBRND-S11",
+    "project": "DSGN_REBRND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~D",
+    "surfaced_at": "2026-10-03T07:10:00Z",
+    "one_line": "Round 3 E3 wires the NO-PERMISSION state at the route level: a signed-in viewer whose firm reaches a page but whose role does not (requireAdmin, requireInternal, requireDev) now sees PanelNoPermission and a way back instead of a silent bounce to /market.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~D",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal d7141e5a (origin DEV, ls-remote read) components/ProtectedRoute.tsx: RouteNoPermission rendered for the three role gates; the firm allowlist checked first and still a redirect",
+        "portal src/components/__tests__/route-no-permission.test.tsx at d7141e5a: five arms from the working-tree ProtectedRoute under the real AuthContext provider (panel for each role denial; page for full roles; redirect for a firm outside its allowlist and for a signed-out viewer)",
+        "real run 2026-10-03T07:0xZ on localhost:5174, a stubbed signed-in non-admin internal user on /investor-reporting: 'You do not have access to this page. An Opal Capital administrator can grant it. Go to Market Overview', inside the app shell; the link leads to /market"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Disarms DSGN_REBRND-W3-S1: an observable NO-PERMISSION state now renders on every route whose role gate denies a viewer, in the four-states component (DESIGN.md C12.4), with a fixture-free render and a pin. Not covered, by design: a partner firm outside its own allowlist is still redirected to its landing (parked in STATUS E3).",
+    "spec_asserts": "Row W3-S1: RB-s-10's face lists NO-PERMISSION among the four designed states every panel with nothing to show uses.",
+    "world_is": "The route-level denials render that state on DEV d7141e5a. Panel-level hides (an element not drawn for a role) remain non-rendering; none was found that leaves a panel empty.",
+    "notes": "Panel-level census of hides not repeated here; W3-S4 (failure swallowed as EMPTY) stays with E3."
   }
 ]
 ```
