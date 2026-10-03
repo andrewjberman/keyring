@@ -16267,3 +16267,83 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "For 2.0.0_SA_COO~P: if a prospect render must be served on the reporting route, a follow-on cell sets IRPT_REQUESTS_TABLE and a read grant on the requests table as the performance root does. Owner 2.0.0_SA_COO~P."
 }
 ```
+
+## IRPT_BCKEND-W109-S1 -- IB-pr-306: UNSUPPORTED_OPERATION named, OBJECT_NOT_COVERED mapped; the retirement inherits the mapped code
+
+```json
+{
+  "id": "IRPT_BCKEND-W109-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~109",
+  "surfaced_at": "2026-10-03T07:25Z",
+  "one_line": "IB-pr-306: the order says ProviderPathNotComposed answers UNSUPPORTED_OPERATION, but the boundary's map answers OBJECT_NOT_COVERED, so the new PathARetiredForFirm refusal answers OBJECT_NOT_COVERED (inherited); entry.py is outside the grant and no code was added",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/performance/entry.py lines 376-379 @3e6d0aa4ad: \"ProviderPathNotComposed\": \"OBJECT_NOT_COVERED\", comment 'ONE code for not yet on the holdings basis ... Never INVALID_INPUT' (batch 67 item 4, ruling 103586)",
+      "infra/aws/lambda/investor-reporting/performance/tests/test_retained_performance.py test_the_boundary_answers_one_code_for_a_firm_not_yet_on_the_holdings_basis (asserts the code set == {OBJECT_NOT_COVERED} and says 'not UNSUPPORTED_OPERATION'); UNSUPPORTED_OPERATION is mapped only for WindowNotRuled and HoldingsWindowNotRuled",
+      "performance/tests/test_path_a_retired_49f.py binds PathARetiredForFirm to its base's mapped code (boundary.public_reason_for equality), so it passes under either map; the name UNSUPPORTED_OPERATION appears in its docstrings"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IB-pr-306 items 2 and 5: the refusal's public code is UNSUPPORTED_OPERATION through the boundary's MRO walk, and the test answers UNSUPPORTED_OPERATION; a new public reason code is a defect.",
+  "world_is": "The inherited code is OBJECT_NOT_COVERED. Mapping the subclass to UNSUPPORTED_OPERATION needs an entry.py reasons line (an existing code, not a new one); entry.py is not in the order's paths, so the worker added nothing. IB41-1-AC1 and AC2 read PASS on the inherited code because they check names, not the code.",
+  "notes": "For 2.0.0_SA_COO~P: if the 49F page must read UNSUPPORTED_OPERATION, a follow-on cell adds one line to entry.py (\"PathARetiredForFirm\": \"UNSUPPORTED_OPERATION\") and the retirement test asserts that literal. Served only in P-2's window. Owner 2.0.0_SA_COO~P."
+}
+```
+
+## IRPT_BCKEND-W109-S2 -- IB-pr-306: fresh-path implausible-series guard has no PATH A test after the 49F conversion
+
+```json
+{
+  "id": "IRPT_BCKEND-W109-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~109",
+  "surfaced_at": "2026-10-03T07:25Z",
+  "one_line": "IB-pr-306: converting the 49F fresh-path implausible-series test to the retirement leaves no PATH A test of the fresh-path guard (a linked day at or below -1.0) for any holdings firm",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "performance/tests/test_retained_performance.py test_fresh_path_refuses_an_ok_day_at_or_below_minus_one @worktree HEAD: both arms now expect PathARetiredForFirm; before, arm A expected f49_engine.EngineReturnImplausible and the control arm returned a holdings report",
+      "retained.py still raises f49_engine.EngineReturnImplausible for Inflection's fresh path (the guard code is unchanged); the Inflection test in the same file does not feed a series at or below -1.0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order item 4: tests asserting 49F is composed move to assert the retirement; leave Inflection and Cottonwood tests untouched.",
+  "world_is": "The guard is exercised for no firm on PATH A after the move; the code is unchanged and still reachable for Inflection.",
+  "notes": "For 2.0.0_SA_COO~P: a follow-on cell may add an Inflection arm (a new test, not a change to an Inflection test). Owner 2.0.0_SA_COO~P."
+}
+```
+
+## IRPT_BCKEND-W109-S3 -- IB-pr-306: installed.py 49F holdings port and the 49F source branch are unused wiring
+
+```json
+{
+  "id": "IRPT_BCKEND-W109-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~109",
+  "surfaced_at": "2026-10-03T07:25Z",
+  "one_line": "IB-pr-306: installed.py still builds a 49F holdings source and retained.py's _holdings_source_for still carries a 49F branch; both are now unreachable for serving and left unchanged (outside the grant)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/performance/installed.py lines 64-98: the holdings sources loop covers tenants._CANONICAL_49F and _CANONICAL_INF, and a 49F-only helper returns _holdings_source_for(s3, tenants._CANONICAL_49F); read access to the 49F gold is still installed at cold start",
+      "retained.py _holdings_source_for (49F precedence branch) is now never reached for a served request: _compute refuses 49F first"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order IB-pr-306: remove 49F from COMPOSED_FIRMS and refuse it by name; 'no 49F figure may be served by PATH A'.",
+  "world_is": "No 49F figure is served; the installed port and the dead branch remain as unused wiring.",
+  "notes": "For 2.0.0_SA_COO~P: clean-up of installed.py belongs with P-2's window or a later cell. Owner 2.0.0_SA_COO~P."
+}
+```
