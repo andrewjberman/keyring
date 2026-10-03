@@ -76,6 +76,7 @@ rows.
 - Pre-cut 18:2xZ: `gr2.AC1` FAIL (record absent).
 
 <status>pending</status>
+<status>complete</status>
 <round>15</round>
 <slot>~22</slot>
 <fabric>site-z</fabric>
