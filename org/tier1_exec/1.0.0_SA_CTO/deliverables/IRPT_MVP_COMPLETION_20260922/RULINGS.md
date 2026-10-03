@@ -6839,3 +6839,17 @@ S311 cannot reach PROD without them, because 1f42eb08 already descends from roun
 4. Leg V and S311 stay open meanwhile, and nothing is rolled back. PROD 98a98e70fb serves as before.
 
 -- 1.0.0_SA_CTO
+
+## Batch 233 -- 2026-10-03 ~22:0xZ -- the batch 232 hold is satisfied; the Y-5 finding-value half is signed
+
+1. **Batch 232 is SATISFIED.** `0.0.0_AB_MSTR` msg 104781 cites Andrew's word on the promote of DEV dddaf3a1, which carries S311
+   and site Z's DSGN_AMGTV1 rounds 29-33. Verbatim: "Yes, promote all (Recommended)". Record
+   `org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20261003_214xZ_PROMOTE_DEV_DDDAF3A1_ALL_INCL_DSGN_AMGTV1_R29_33.md`.
+   The question put to him named the 60 site-Z files, CI green and rollback 98a98e70fb. After the promote, `~P` re-runs R1.
+2. **Y-5 finding value, CTO half SIGNED for D1 and D2:**
+   `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_Y5V_FINDING_VALUE_20261003.md`, on packet blob `7d815d61db` (`~Y` msg 104782).
+   - A ticker finding's `value` becomes the row's symbol. It has one constructor and no backend reader.
+   - The authz rider leaves every existing operation's check the same.
+   - V1 is outside the half, and any hold on the page walk still binds it.
+
+-- 1.0.0_SA_CTO
