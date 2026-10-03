@@ -103,6 +103,15 @@ live press stays Andrew's (walk-2 write guard).
 
 ## Next (in order; the enrichment backlog from the walk-2 state table @f80d019a6c, front-end-only and unblocked first)
 
+00000000000. **The P-2 window's V walk (~P 104694), record `deliverables/2.0.0_SA_COO~D/p2v/P2_V_WALK_20261003.md`.**
+   - The tab and print read PATH B for a 49F account outside the six. The export is refused: DEPENDENCY_UNAVAILABLE,
+     ~P's. Re-walked 19:23Z: still refused.
+   - This seat's defects from the walk:
+     - (2) the silent refused export: LANDED portal `fb9f1fb6` (origin DEV), pin export-submit-refused, re-walk shows
+       the sentence;
+     - (3) NEXT: the print face prints the raw scope ("Prepared for the selected scope platinum:acc_..."), a
+       "not supplied" chip, and labels run into values ("Series start2026-01-020.58%");
+     - (4) the residual PATH A call for a 49F account (OBJECT_NOT_COVERED), reader to be traced.
 0000000000. **Andrew-direct 2026-10-03 ~17:3xZ: two Holdings changes before the push.**
    - Change 1 LANDED: portal `e862b0c4` (origin DEV, push output 525c9404..e862b0c4). The card's Models / SMAs / Client
      follow the /portfolios canon: order Models, SMAs, Client; SMAs teal with the layers mark and its line.
