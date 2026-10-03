@@ -108,3 +108,17 @@ NOT READ:    the task-order register, any project JSON, any PRD (none exists); r
 ```
 
 -- 1.0.0_SA_CTO
+
+## UPDATE ~17:4xZ -- readings 2 and 3 answered by Andrew at the `2.0.0_SA_COO~Y` terminal (~17:3xZ)
+
+Verbatim: "COO~Y and any underlying agents have whitelisted egress to YCharts. Regarding subscription issues, yes we are cleared
+for use." Record:
+`org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/ANDREW_DIRECT_20261003_173xZ_YCHARTS_EGRESS_WHITELIST_AND_SUBSCRIPTION_CLEARED.md`
+@ce20ca6854 (relayed msg 104655).
+- **Reading 2 is settled:** YCharts egress is whitelisted for `2.0.0_SA_COO~Y` and its agents, as spoken. The pacing bounds
+  above stay, because they protect the one shared session (row S233), not the egress.
+- **Reading 3 is settled:** the subscription clears this use. A client-facing release of an Opal-branded report stays outside
+  this project's scope (brief PART II); it is a separate decision, no longer blocked on the terms.
+- **Reading 1 stands as the CTO's** (the data endpoints), confirmed here.
+
+What remains for L2: Andrew's confirmation of the seven DONE WHEN lines.
