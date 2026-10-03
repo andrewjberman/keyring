@@ -166,7 +166,15 @@ const CHECKS = () => {
   if (topBands.length > 1) out.push({ check: 'design:bands', observed: `${topBands.length} full-width #0A1733 bands`, selectors: topBands.slice(0, 8).map(trail), rule: 'DESIGN.md C3: one band per page' })
   // 5. low-contrast text
   const lum = (c) => { const m = c && c.match(/rgba?\(([^)]+)\)/); if (!m) return null; const p = m[1].split(',').map(Number); const [r, g, b] = p.slice(0, 3).map((v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4) }); return { L: 0.2126 * r + 0.7152 * g + 0.0722 * b, a: p.length > 3 ? p[3] : 1 } }
-  const bgOf = (el) => { for (let e = el; e; e = e.parentElement) { const s = getComputedStyle(e); const l = lum(s.backgroundColor); if (l && l.a > 0.5) return { l, c: s.backgroundColor } } return { l: lum('rgb(244, 246, 250)'), c: 'rgb(244, 246, 250)' } }
+  // HTML text in an SVG foreignObject (treemap tile labels) sits on its sibling <rect>'s fill, not on an ancestor's
+  // background; reading the ancestors gave every tile label 1.18:1 against the panel behind the chart.
+  const bgOf = (el) => {
+    for (let e = el; e; e = e.parentElement) {
+      const s = getComputedStyle(e); const l = lum(s.backgroundColor); if (l && l.a > 0.5) return { l, c: s.backgroundColor }
+      if (e.tagName === 'foreignObject') { const r = [...(e.parentElement ? e.parentElement.children : [])].find((c) => c.tagName === 'rect'); const fill = r && getComputedStyle(r).fill; const lf = lum(fill); if (lf && lf.a > 0.5) return { l: lf, c: fill } }
+    }
+    return { l: lum('rgb(244, 246, 250)'), c: 'rgb(244, 246, 250)' }
+  }
   const low = []
   for (const el of document.querySelectorAll('body *')) {
     if (!vis(el) || ![...el.childNodes].some((n) => n.nodeType === 3 && n.nodeValue.trim())) continue

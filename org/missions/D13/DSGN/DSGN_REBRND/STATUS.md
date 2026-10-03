@@ -5,7 +5,7 @@ Seat `2.0.0_SA_COO~D` (CLAUDE). Contract: PRD `org/missions/D13/DSGN/DSGN_REBRND
 `org/tier1_exec/3.0.0_SA_CVO/deliverables/DSGN_REBRND_ROUND2_GRADE_20261001.md` @599d33a722). Authority: 1.0.0_SA_CTO RULINGS
 batch 80 items 8-12 (the round-2 analysis; round 3 owed, this seat's, FAST, after the Investor Reporting work) and batch 165
 @10d2b1c445 (msg 104234: round 3 un-parks now, every IR line being blocked outside this seat; its own `/positioning` lease;
-IR keeps priority -- return to DSGN_IRPTV1 the tick any of its Next lines unblocks). **As of 2026-10-03T09:4xZ** (E4 done: DEV fe461611/44d6a215/b23917f7, rows S6-S8; E2: clause c9d303db and /positioning's page end 8526dacb on DEV; S10: d8d236a0 on DEV, row S12; Next 4b: 71a946e3 on DEV).
+IR keeps priority -- return to DSGN_IRPTV1 the tick any of its Next lines unblocks). **As of 2026-10-03T10:1xZ** (E4 done: DEV fe461611/44d6a215/b23917f7, rows S6-S8; E2: clause c9d303db and /positioning's page end 8526dacb on DEV; S10: d8d236a0 on DEV, row S12; Next 4b: 71a946e3, 4c: 46aeea17 on DEV).
 
 ## Pins
 
@@ -64,7 +64,20 @@ IR keeps priority -- return to DSGN_IRPTV1 the tick any of its Next lines unbloc
    eight white/40 sites on /positioning (6.87:1 body, 5.65:1 tile); pin `Positioning/panels/secondary-ink.test.tsx`.
    After-walk `20261003T094015Z`: 105 pairs, 0 under their bar. The lease gained `PanelFooter.tsx` and dropped
    `AdvisorIntelligence/_shared/AdvisorBookView.tsx` (2.0.0_SA_COO~M's MDPF_SECCLASS lease holds it). NOT walked yet with
-   the widened limb: the ETFs and Satellites views, the expanded details, the other routes.
+   the widened limb: the expanded details, the other routes (ETFs and Satellites: 4c).
+4c. ~~The ETFs and Satellites views with the widened limb~~ WALKED and LANDED portal `46aeea17` (origin DEV, ls-remote
+   10:10Z). Walk `20261003T095441Z`: ETFs 86 pairs and Satellites 112 pairs, 0 under their bar. One `format:dates`
+   finding: the Satellites footers wrote "holdings as of 2026-10-03" beside the page end's long form; both now go
+   through formatPanelTimestamp (pin `Positioning/panels/footer-date-format.test.ts`; after-walk `20261003T100559Z` has
+   no date finding). The walker's older `design:contrast` check had the same SVG-tile blind spot (32-60 false hits per
+   view); fixed in walk.mjs. Parked from this walk, owner this seat:
+   - the footer hour depends on the viewer's zone: `dateUtils.create5pmETDate` decides DST from the RUNTIME's zone, so a
+     browser on UTC writes a summer date as "6:00p ET" (measured: TZ=UTC bun, 2026-10-03 -> 6:00p; 2026-01-09 -> 5:00p).
+     Un-parks with a lease on `portal/src/lib/dateUtils.ts` (decide DST for America/New_York through Intl);
+   - Satellite 90's percentage labels run past the Positioning Summary's right edge at 1440px ("90.14%" clipped; 8 books).
+     Un-parks as the next /positioning layout item;
+   - the walker's old contrast check reads a CSS gradient/background-image header (the satellite dialog) as white: 4
+     false hits per dialog. Un-parks with the next walker edit.
 5. ~~E5 -- the two project checkers that read red on the accepted tree (the grade's Q2)~~ LANDED 06:5xZ (CLOUD, LOCAL). `task-orders/rb4-ramp-check.py` grades the portal-wide sentiment tokens and prints the /market `[data-sentiment-original]` block as EXCEPTED (Andrew-direct 2026-09-14; CTO batch 215): ONE-HUE-RAMPED on the accepted tree, and RAINBOW-REMAINS on a control with one rainbow token put back portal-wide. `rb7-contract-check.py` run bare grades both arms: CONTRACT-CARRIED; CONTRACT-MISSING on an absent file.
 6. ~~E6 -- the old law in the `/frontend-dev` skill and the "silver" mentions (Q4, rows W2-S15, W1-S24)~~ LANDED: the skill at CLOUD 91c6cbb6d2 (LOCAL); the canvas comments in 28 portal files at portal `201bfe69` (origin DEV, ls-remote 06:4xZ). Left by reading each: the data tier, the Silver commodity, the brand palette's named silver, and Panel.tsx's history. Parked: renaming the `PRIMARY_ON_SILVER_DROPDOWN_CLASS` export (a code change across its importers and tests; owner 2.0.0_SA_COO~D, un-parks with any edit to PageSurfaceControl).
 
