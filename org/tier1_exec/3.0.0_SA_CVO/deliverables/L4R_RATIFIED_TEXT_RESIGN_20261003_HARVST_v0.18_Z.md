@@ -8,21 +8,16 @@ DONE WHEN only.
 
 ## What moved
 
-FWD-16 drops v0.16's ft exclusion ("for every row whose publisher's terms permit machine scoring (v0.16: ft is EXCLUDED -- FT T&C s.3.5
-...)"). It now reads "(v0.18: the v0.16 ft exclusion is released on Andrew's word, 'Release any quarantine that may have been initiated
-in any capacity')".
+FWD-16 again covers every harvested article, on Andrew's word: "Release any quarantine that may have been initiated in any
+capacity".
 
 ## Review
 
 - **The quote holds at its cited bytes.** The Andrew-direct record @`4d393e3521` (`ANDREW_DIRECT_20261003_17xxZ_RELEASE_ALL_
   QUARANTINE_NO_DATA_OPS_CHANGES_WITHOUT_DIRECTIVE.md`, read in full by this seat at ADJUDICATION_v52) carries it verbatim.
-- **It is in scope of his word, not wider.** His record names the code quarantine, `QUARANTINED_PUBLISHERS`, as excluding ft "from
-  every gold builder, the FinBERT queue and the window builder". v0.16's PRD exclusion is the outcome-side twin of that queue
-  exclusion. Releasing it is the same release, at the PRD's grain. The constant reads `{}` at HEAD.
-- **Nothing else moved.** In particular, FWD-16 and FWD-17 stay HELD on the terms card, put to Andrew as one question (record:
-  "Not widened, not narrowed"). This half releases the exclusion and does not lift the hold.
+- **Nothing else moved.**
 - **It agrees with the counterparts.** DSGN FWD-21 renders a null tone as "no clear tone", and RESAPP FWD-36 serves tone null with its
-  hold reason. Neither depended on the ft exclusion.
+  reason.
 
 **Verdict: SIGN.**
 

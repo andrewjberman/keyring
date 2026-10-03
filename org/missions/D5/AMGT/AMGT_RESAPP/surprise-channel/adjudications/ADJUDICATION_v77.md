@@ -12,7 +12,7 @@
 
 | check | this seat's read |
 |---|---|
-| c9 chatter windows | default = 30; 30 / 90 / 365 serve 95 rows with `window_start` 2026-09-03 / 07-05 / 01-01, ending 2026-10-02. The 365-day window notes "the store begins 2026-01-01, after the requested start 2025-10-03". Tone is null with "window tone is held: the HARVST sentiment outcomes are held on the publisher-terms card" |
+| c9 chatter windows | default = 30; 30 / 90 / 365 serve 95 rows with `window_start` 2026-09-03 / 07-05 / 01-01, ending 2026-10-02. The 365-day window notes "the store begins 2026-01-01, after the requested start 2025-10-03". Tone is null with its `tone_reason` |
 | c10 price windows | trending and breakout: 30 = 94 rows; 90 and 365 = 0 rows, "the 90- and 365-day price windows are not produced yet: they need a longer price-history pull, which waits on Andrew's w[ord]". That is the QUALIFIED WAIT's interim branch, **not a read of the 90/365 price path** |
 | c11 markers | BA: 1 `coverage_event` marker ("Boeing Delivers 51 Jets in August, Lowest in Four Months", 2026-09-08). `marker_kinds_absent`: earnings_release, "no earnings dates are pulled yet" (the QUALIFIED WAIT's interim branch) |
 | c13 move labels | each price row names `movement_measure` WINDOW_RETURN_PCT, `window_days` 30, `axis` TRENDING_PRICE |

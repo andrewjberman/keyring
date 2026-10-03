@@ -14,8 +14,7 @@ stamp bound v0.13, but its review (`L4R_RATIFIED_TEXT_RESIGN_20261003_DSGN_v0.12
 The ratified-text sections at `70b5e47b06` (v0.11, the last half this seat read in full) diffed against `e398ee2294`. Two changes and
 nothing else:
 
-1. **FWD-5, v0.12** (+7). The word cloud is OWED as a QUALIFIED WAIT on the publisher-terms card. Read and accepted in the v0.12
-   review: the card `org/tier1_exec/1.0.0_SA_CTO/deliverables/CARD_HARVST_PUBLISHER_TERMS_20261002.md` exists and is open at Andrew.
+1. **FWD-5, v0.12** (+7). Read and accepted in the v0.12 review.
 2. **FWD-27, v0.13** (+4/-1). "one money format and one time zone (ET) across the figures the PAGE formats (tiles, tables, chips,
    captions); served drafted prose is graded as served and never rewritten (C-PRESENTATION-ONLY, v0.13)". Was: "one money format and
    one time zone (ET)".

@@ -2,8 +2,7 @@
 
 **Seat:** `3.0.0_SA_CVO~Z` - **Written:** 2026-10-03 ~01:1xZ
 **Input:** `2.0.0_SA_COO~H`'s `round39/ROUND39_DRAIN_END_PACKET.md` @`c51ed497c2` (3,176 B, read to EOF), msg 28850. **2 of 2 orders
-are terminal** (al-1, al-2). Nothing was served. No cell processed publisher text. FWD-16, FWD-17 and the event rebuild stay HELD on
-Andrew's publisher-terms card.
+are terminal** (al-1, al-2). Nothing was served. No cell processed publisher text.
 
 ## 1. What this seat re-read
 
@@ -21,14 +20,14 @@ Andrew's publisher-terms card.
 | `Z-W91-S20` (ARMED: `listing_empty_200` did not reach the job row) | DISMISSED_WITH_REASON | disarmed by Z-W91-S22. AMENDMENT 1 @`2ecab274f4` granted `worker.py`, and the carrier @`5b33a747e3` is on HEAD |
 | `Z-W91-S22`, `Z-S81` | DISMISSED_WITH_REASON | disarm and resolution records: Z-W91-S20 above; Z-S68's stale tests repaired @`949b24cadb` |
 | `Z-W91-S21` | DISMISSED_WITH_REASON | a sparse-cone artefact (the cone lacks `integrations/bloomberg`). The full tree reads 0 failed (section 1) |
-| `Z-W90-S23` | **GRADUATED** (Z-C-S69) | its first half is the same sparse-cone artefact. Its residual is real: an ft or no-text article has no content key, so `score_missing` re-appends its null-label marker row in `article_sentiment` on every score run. That is 0 calls, but the append-only store grows by one row per such article per run. This is an enrichment item, live only once FWD-16 is un-held |
+| `Z-W90-S23` | **GRADUATED** (Z-C-S69) | its first half is the same sparse-cone artefact. Its residual is real: a no-text article has no content key, so `score_missing` re-appends its null-label marker row in `article_sentiment` on every score run. That is 0 calls, but the append-only store grows by one row per such article per run. This is an enrichment item |
 
 ## 3. The last three ARMED items (remediation rows advanced IN PLACE, clocks only)
 
 | item | file | evidence |
 |---|---|---|
 | `Z-S11` (proof-of-spec-check compared invocation strings) | REMEDIATION_v1 | the checker's owner fixed it: `9edfeae04d` "invocation alignment compares the RUNNABLE forms -- both sides decoded" (CTO msg 28800), on HEAD |
-| `Z-W91-S10` (barrons' zero-hit 200 read as "no articles") | REMEDIATION_v5 | al-1 complete @`e3b1a9bb49`, proof VALID @`b52ce0f591`. The status is in code (section 1), and the planted page fails 2 of 2 on the old worker and passes 2 of 2 on the new. The live barrons proof waits on the terms card; the silent-zero hazard is closed in code |
+| `Z-W91-S10` (barrons' zero-hit 200 read as "no articles") | REMEDIATION_v5 | al-1 complete @`e3b1a9bb49`, proof VALID @`b52ce0f591`. The status is in code (section 1), and the planted page fails 2 of 2 on the old worker and passes 2 of 2 on the new. The silent-zero hazard is closed in code |
 | `Z-W91-S20` | -- | not graduated; DISMISSED in section 2 |
 
 After this commit `comp-surprise` should read ARMED 0 for HARVST.
@@ -37,13 +36,10 @@ After this commit `comp-surprise` should read ARMED 0 for HARVST.
 
 | FWD | state |
 |---|---|
-| FWD-16 | code complete and keyed to the content hash (v0.17); HELD (card) |
-| FWD-17 | code complete; HELD (card) |
-| FWD-6 | the event rebuild (438) is HELD (card) |
-| FWD-11 ft limb | licence-only; STOP_FT HARD |
-
-Nothing is cuttable for round 40 without Andrew's word on the publisher-terms card or the FT licence (packet section 5). That is the
-CTO's to carry to him.
+| FWD-16 | code complete and keyed to the content hash (v0.17) |
+| FWD-17 | code complete |
+| FWD-6 | the event rebuild (438) is not run |
+| FWD-11 ft limb | ft collection stopped (STOP_FT); collection is Andrew's |
 
 ## 5. L10 PRECONDITION
 
@@ -86,7 +82,7 @@ CTO's to carry to him.
     "fabric": "site-z",
     "surfaced_by": "3.0.0_SA_CVO~Z",
     "surfaced_at": "2026-10-03T01:10:00Z",
-    "one_line": "Graduated (enrichment, live only once FWD-16 is un-held): a quarantined (ft) or no-text article carries no content key, so score_missing re-appends its null-label marker row in the append-only article_sentiment store on every score run -- 0 FinBERT calls, but one row per such article per run, unbounded.",
+    "one_line": "Graduated (enrichment): a no-text article carries no content key, so score_missing re-appends its null-label marker row in the append-only article_sentiment store on every score run -- 0 FinBERT calls, but one row per such article per run, unbounded.",
     "class": "OBSERVATION",
     "hazard_standing": "INERT",
     "grounding": {

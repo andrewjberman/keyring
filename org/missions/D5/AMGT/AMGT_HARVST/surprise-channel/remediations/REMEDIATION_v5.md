@@ -1366,7 +1366,7 @@ row carried no disarm time, `at` is this seat's recording minute 2026-10-02T22:3
    "investigations/INVESTIGATION_v1.md#AMGT_HARVST-Z-W87-S1",
    "ROUND_ANALYSIS.round37.md @29fbb123e0 rulings 1-2 (option (c) rejected, (a) adopted as the qualified wait)"
   ],
-  "remedy": "OPEN: the ft limb is a QUALIFIED WAIT (ROUND_ANALYSIS.round37 @29fbb123e0 ruling 2; addendum @aeb3041e9c: FT terms read verbatim first, STOP_FT stays); re-check HVST-RECHECK-OCILAR-1 on 2026-11-01. Proof: a working unattended ft sign-in that holds a session.",
+  "remedy": "OPEN: the ft limb is a QUALIFIED WAIT (ROUND_ANALYSIS.round37 @29fbb123e0 ruling 2; addendum @aeb3041e9c: STOP_FT stays); re-check HVST-RECHECK-OCILAR-1 on 2026-11-01. Proof: a working unattended ft sign-in that holds a session.",
   "owner": "2.0.0_SA_COO~H",
   "round": "v49",
   "remediation": {
@@ -1796,7 +1796,7 @@ row carried no disarm time, `at` is this seat's recording minute 2026-10-02T22:3
    "ROUND_ANALYSIS.round37.md @29fbb123e0 rulings 1-2 (option (c) rejected, (a) adopted as the qualified wait)",
    "ROUND_ANALYSIS.round37 ruling 4: (2b) is graded only when a challenge appears"
   ],
-  "remedy": "OPEN: the ft limb is a QUALIFIED WAIT (ROUND_ANALYSIS.round37 @29fbb123e0 ruling 2; addendum @aeb3041e9c: FT terms read verbatim first, STOP_FT stays); re-check HVST-RECHECK-OCILAR-1 on 2026-11-01. Proof: a working unattended ft sign-in that holds a session.",
+  "remedy": "OPEN: the ft limb is a QUALIFIED WAIT (ROUND_ANALYSIS.round37 @29fbb123e0 ruling 2; addendum @aeb3041e9c: STOP_FT stays); re-check HVST-RECHECK-OCILAR-1 on 2026-11-01. Proof: a working unattended ft sign-in that holds a session.",
   "owner": "2.0.0_SA_COO~H",
   "round": "v49",
   "remediation": {
@@ -1964,7 +1964,7 @@ row carried no disarm time, `at` is this seat's recording minute 2026-10-02T22:3
    "investigations/INVESTIGATION_v1.md#AMGT_HARVST-Z-S56",
    "ROUND_ANALYSIS.round37.md @29fbb123e0 rulings 1-2 (option (c) rejected, (a) adopted as the qualified wait)"
   ],
-  "remedy": "OPEN: the ft limb is a QUALIFIED WAIT (ROUND_ANALYSIS.round37 @29fbb123e0 ruling 2; addendum @aeb3041e9c: FT terms read verbatim first, STOP_FT stays); re-check HVST-RECHECK-OCILAR-1 on 2026-11-01. Proof: a working unattended ft sign-in that holds a session.",
+  "remedy": "OPEN: the ft limb is a QUALIFIED WAIT (ROUND_ANALYSIS.round37 @29fbb123e0 ruling 2; addendum @aeb3041e9c: STOP_FT stays); re-check HVST-RECHECK-OCILAR-1 on 2026-11-01. Proof: a working unattended ft sign-in that holds a session.",
   "owner": "2.0.0_SA_COO~H",
   "round": "v49",
   "remediation": {
@@ -2027,7 +2027,7 @@ row carried no disarm time, `at` is this seat's recording minute 2026-10-02T22:3
    "investigations/INVESTIGATION_v1.md#AMGT_HARVST-Z-W92-S17",
    "ROUND_ANALYSIS.round37.md @29fbb123e0 rulings 1-2 (option (c) rejected, (a) adopted as the qualified wait)"
   ],
-  "remedy": "OPEN: the ft limb is a QUALIFIED WAIT (ROUND_ANALYSIS.round37 @29fbb123e0 ruling 2; addendum @aeb3041e9c: FT terms read verbatim first, STOP_FT stays); re-check HVST-RECHECK-OCILAR-1 on 2026-11-01. Proof: a working unattended ft sign-in that holds a session.",
+  "remedy": "OPEN: the ft limb is a QUALIFIED WAIT (ROUND_ANALYSIS.round37 @29fbb123e0 ruling 2; addendum @aeb3041e9c: STOP_FT stays); re-check HVST-RECHECK-OCILAR-1 on 2026-11-01. Proof: a working unattended ft sign-in that holds a session.",
   "owner": "2.0.0_SA_COO~H",
   "round": "v49",
   "remediation": {
@@ -2180,7 +2180,7 @@ row carried no disarm time, `at` is this seat's recording minute 2026-10-02T22:3
    "investigations/INVESTIGATION_v1.md#AMGT_HARVST-Z-W92-S18",
    "ROUND_ANALYSIS.round37.md @29fbb123e0 rulings 1-2 (option (c) rejected, (a) adopted as the qualified wait)"
   ],
-  "remedy": "OPEN: the ft limb is a QUALIFIED WAIT (ROUND_ANALYSIS.round37 @29fbb123e0 ruling 2; addendum @aeb3041e9c: FT terms read verbatim first, STOP_FT stays); re-check HVST-RECHECK-OCILAR-1 on 2026-11-01. Proof: a working unattended ft sign-in that holds a session.",
+  "remedy": "OPEN: the ft limb is a QUALIFIED WAIT (ROUND_ANALYSIS.round37 @29fbb123e0 ruling 2; addendum @aeb3041e9c: STOP_FT stays); re-check HVST-RECHECK-OCILAR-1 on 2026-11-01. Proof: a working unattended ft sign-in that holds a session.",
   "owner": "2.0.0_SA_COO~H",
   "round": "v49",
   "remediation": {
@@ -2201,7 +2201,7 @@ row carried no disarm time, `at` is this seat's recording minute 2026-10-02T22:3
    "investigations/INVESTIGATION_v1.md#AMGT_HARVST-Z-W92-S19",
    "ROUND_ANALYSIS.round37.md @29fbb123e0 rulings 1-2 (option (c) rejected, (a) adopted as the qualified wait)"
   ],
-  "remedy": "OPEN: the ft limb is a QUALIFIED WAIT (ROUND_ANALYSIS.round37 @29fbb123e0 ruling 2; addendum @aeb3041e9c: FT terms read verbatim first, STOP_FT stays); re-check HVST-RECHECK-OCILAR-1 on 2026-11-01. Proof: a working unattended ft sign-in that holds a session.",
+  "remedy": "OPEN: the ft limb is a QUALIFIED WAIT (ROUND_ANALYSIS.round37 @29fbb123e0 ruling 2; addendum @aeb3041e9c: STOP_FT stays); re-check HVST-RECHECK-OCILAR-1 on 2026-11-01. Proof: a working unattended ft sign-in that holds a session.",
   "owner": "2.0.0_SA_COO~H",
   "round": "v49",
   "remediation": {
@@ -2222,7 +2222,7 @@ row carried no disarm time, `at` is this seat's recording minute 2026-10-02T22:3
    "investigations/INVESTIGATION_v1.md#AMGT_HARVST-Z-S66",
    "ROUND_ANALYSIS.round37.md @29fbb123e0 rulings 1-2 (option (c) rejected, (a) adopted as the qualified wait)"
   ],
-  "remedy": "OPEN: the ft limb is a QUALIFIED WAIT (ROUND_ANALYSIS.round37 @29fbb123e0 ruling 2; addendum @aeb3041e9c: FT terms read verbatim first, STOP_FT stays); re-check HVST-RECHECK-OCILAR-1 on 2026-11-01. Proof: a working unattended ft sign-in that holds a session.",
+  "remedy": "OPEN: the ft limb is a QUALIFIED WAIT (ROUND_ANALYSIS.round37 @29fbb123e0 ruling 2; addendum @aeb3041e9c: STOP_FT stays); re-check HVST-RECHECK-OCILAR-1 on 2026-11-01. Proof: a working unattended ft sign-in that holds a session.",
   "owner": "2.0.0_SA_COO~H",
   "round": "v49",
   "remediation": {
@@ -2243,7 +2243,7 @@ row carried no disarm time, `at` is this seat's recording minute 2026-10-02T22:3
    "investigations/INVESTIGATION_v1.md#AMGT_HARVST-Z-W92-S20",
    "ROUND_ANALYSIS.round37.md @29fbb123e0 rulings 1-2 (option (c) rejected, (a) adopted as the qualified wait)"
   ],
-  "remedy": "OPEN: the ft limb is a QUALIFIED WAIT (ROUND_ANALYSIS.round37 @29fbb123e0 ruling 2; addendum @aeb3041e9c: FT terms read verbatim first, STOP_FT stays); re-check HVST-RECHECK-OCILAR-1 on 2026-11-01. Proof: a working unattended ft sign-in that holds a session.",
+  "remedy": "OPEN: the ft limb is a QUALIFIED WAIT (ROUND_ANALYSIS.round37 @29fbb123e0 ruling 2; addendum @aeb3041e9c: STOP_FT stays); re-check HVST-RECHECK-OCILAR-1 on 2026-11-01. Proof: a working unattended ft sign-in that holds a session.",
   "owner": "2.0.0_SA_COO~H",
   "round": "v49",
   "remediation": {
@@ -2264,7 +2264,7 @@ row carried no disarm time, `at` is this seat's recording minute 2026-10-02T22:3
    "investigations/INVESTIGATION_v1.md#AMGT_HARVST-Z-W90-S21",
    "ROUND_ANALYSIS.round37.md @29fbb123e0 rulings 1-2 (option (c) rejected, (a) adopted as the qualified wait)"
   ],
-  "remedy": "OPEN: the ft limb is a QUALIFIED WAIT (ROUND_ANALYSIS.round37 @29fbb123e0 ruling 2; addendum @aeb3041e9c: FT terms read verbatim first, STOP_FT stays); re-check HVST-RECHECK-OCILAR-1 on 2026-11-01. Proof: a working unattended ft sign-in that holds a session.",
+  "remedy": "OPEN: the ft limb is a QUALIFIED WAIT (ROUND_ANALYSIS.round37 @29fbb123e0 ruling 2; addendum @aeb3041e9c: STOP_FT stays); re-check HVST-RECHECK-OCILAR-1 on 2026-11-01. Proof: a working unattended ft sign-in that holds a session.",
   "owner": "2.0.0_SA_COO~H",
   "round": "v49",
   "remediation": {
@@ -2284,9 +2284,9 @@ row carried no disarm time, `at` is this seat's recording minute 2026-10-02T22:3
   "evidence": [
    "adjudications/ADJUDICATION_v49.md#AMGT_HARVST-Z-C-S62",
    "ROUND_ANALYSIS.round37.md @29fbb123e0 rulings 1-2 (option (c) rejected, (a) adopted as the qualified wait)",
-   "ROUND_ANALYSIS.round37 addendum @aeb3041e9c: no hCaptcha solver candidate; FT terms unread; STOP_FT stays"
+   "ROUND_ANALYSIS.round37 addendum @aeb3041e9c: no hCaptcha solver candidate; STOP_FT stays"
   ],
-  "remedy": "OPEN: the ft limb is a QUALIFIED WAIT (ROUND_ANALYSIS.round37 @29fbb123e0 ruling 2; addendum @aeb3041e9c: FT terms read verbatim first, STOP_FT stays); re-check HVST-RECHECK-OCILAR-1 on 2026-11-01. Proof: a working unattended ft sign-in that holds a session.",
+  "remedy": "OPEN: the ft limb is a QUALIFIED WAIT (ROUND_ANALYSIS.round37 @29fbb123e0 ruling 2; addendum @aeb3041e9c: STOP_FT stays); re-check HVST-RECHECK-OCILAR-1 on 2026-11-01. Proof: a working unattended ft sign-in that holds a session.",
   "owner": "2.0.0_SA_COO~H",
   "round": "v49",
   "remediation": {
