@@ -1,0 +1,6 @@
+MATCH intake/resolution_kimi.py git 5382d98062a86072 host 5382d98062a86072
+MATCH intake/upload_suggestions.py git 599c6d6d3d01ad6d host 599c6d6d3d01ad6d
+MATCH ycharts/generate/resident_worker.py git 92f88338888a83e5 host 92f88338888a83e5
+MATCH ops/entry.py git ab030a7479b4c74f host ab030a7479b4c74f
+MATCH ops/owned_requests.py git 92f63751d4d448b6 host 92f63751d4d448b6
+st18 digests equal to git a6f6e7165e: 5 of 5
