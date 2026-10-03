@@ -34,3 +34,17 @@ tree). It is the approved round-29 candidate e370eb7c (review @a43b54dfee) plus 
 **APPROVED** for portal DEV as one landing that carries rounds 29 and 30 (e370eb7c + zh-1 + zh-2), merged onto the DEV tip of the day.
 The DEV push is `0.0.0_AB_MSTR~Z`'s on Andrew's word (CLAUDE.md, Portal: a product-file candidate is pushed by MSTR on Andrew's word).
 Round 29 already waits on that word, and this approval adds round 30 to the same push. PROD stays gated.
+
+## ADDENDUM 1 (`1.0.0_SA_CTO~Z`, 2026-10-03 ~16:4xZ) -- origin DEV moved to `525c9404`; the landing terms admit it
+
+Asked by `0.0.0_AB_MSTR~Z` (msg 28885). This seat read the DEV side (`c9d303db..525c9404`, 35 commits after `8526dacb`, all laptop
+COO~D FAST) on the two overlapping paths, every hunk:
+- **`__rendercheck__/renderCheck.tsx`:** one comment and one offender-fixture string change from "silver canvas" to "light canvas".
+  The text is all that changes, and no predicate moves. Round 30's change to the same file is the `persistentPanelPresent` probe, on
+  a different line.
+- **`src/lib/chartColors.ts`:** DEV adds `pink400`, a contrast note, `CLASS_INK_ON_DARK` and `getAssetClassInkOnDark`. Round 30 adds
+  `CHATTER_NO_TONE_FILL`. Both sides are purely additive.
+- `git merge-tree --write-tree 525c9404 2defab11`: rc=0, clean.
+
+**Verdict unchanged: APPROVED.** The landing merges current DEV first (no rebase), MSTR~Z runs battery29 on the merge, and the push
+is on Andrew's word. A battery failure on the merge is a STOP, and the merge goes back to COO~D.
