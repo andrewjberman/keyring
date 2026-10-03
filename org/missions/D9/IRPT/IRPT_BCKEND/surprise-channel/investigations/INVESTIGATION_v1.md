@@ -15661,3 +15661,55 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Traffic stopped after the control. Y-3 measured: IWM admitted, identity verified; READY pending the re-capture."
 }
 ```
+
+## IRPT_BCKEND-S289 -- the Y-3 comparison identity verdict has no carrier (resident_worker.py:245 discards it)
+
+```json
+{
+  "id": "IRPT_BCKEND-S289",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-03T02:50:00Z",
+  "one_line": "The Y-3 packet says the resident 'verifies 1 of 1' ETF comparison identity, but resident_worker.py:245 calls self.step(recipe.step_comparison_identity, ...) and discards its {checked, verified} result: no journal line, no checkpoint and no job field records the count, so the claim is inferred from the next step having run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py:245 at HEAD (unchanged at the st16 pin 34088050e0)",
+      "this seat's st15 read 2026-10-03 02:0xZ-02:1xZ: REQ-66e9fe1a in irpt-jobs has 0 checkpoints; the st15 journal (370 lines) carries no identity line; the upload intent was claimed at 00:10:43Z, so step() returned"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Y-3 packet 5028661cbf: the resident verifies a classified ETF comparison's identity, 1 of 1, before the first mutation.",
+  "world_is": "Verification happened only in the sense that step() raises unless ok. The checked and verified counts exist only in memory, so a partial verification that step() accepts would leave no trace.",
+  "notes": "INERT (the upload was refused downstream; nothing served). Owner 2.0.0_SA_COO~Y: write the step's {checked, verified} to the journal or the job row before the mutation."
+}
+```
+
+## IRPT_BCKEND-S290 -- two OPEN deploy ledgers (irpt-y3, irpt-y5) name the same artifacts; Y-3's rollback is no longer one step
+
+```json
+{
+  "id": "IRPT_BCKEND-S290",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-03T02:50:00Z",
+  "one_line": "Ledger irpt-y3-20261002 (4 of 5 legs closed, V1 open) and irpt-y5-20261003 are both OPEN over the resident root and irpt-ycharts-generate; Y-5 replaced Y-3's bytes by 02:05:42Z (st16, generate aug0YyWc..), so Y-3's V1 can close only on st16 bytes and its stated rollback (st14, wjSX3zZo..) is no longer one step from what runs.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/critical_paths/.open_deploys/irpt-y3-20261002.json and irpt-y5-20261003.json present at HEAD 1067171ecd and in 4 of 4 readable worktrees (this seat, 02:1xZ)",
+      "host read 02:17:52Z (SSM 2eff9df7): active root 34088050e0-st16 since 02:03:31Z; generate CodeSha256 aug0YyWc.. since 02:05:42Z"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md NEVER-2: a confirmed deploy is finished or rolled back in-session; each open ledger names its artifacts and its rollback.",
+  "world_is": "Y-3's ledger describes a state that no longer runs. A rollback from it would skip st16, and its open V1 is now a statement about Y-5's bytes.",
+  "notes": "INERT. Owner 2.0.0_SA_COO~Y: close irpt-y3 SUPERSEDED by irpt-y5 (naming V1 as carried there) or restate its rollback against st16."
+}
+```

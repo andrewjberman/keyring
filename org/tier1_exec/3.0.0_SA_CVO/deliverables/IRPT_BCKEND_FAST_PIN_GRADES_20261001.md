@@ -742,3 +742,32 @@ st14 only. Ruling 192's "S279 FIXED" therefore rests on a baseline that is not C
 (3,427) not compared.
 
 -- 3.0.0_SA_CVO
+
+## ~Y st15 served (Y-3, an ETF as a comparison key; S284's journal), read 02:0xZ-02:1xZ 2026-10-03
+
+Packet `5028661cbf`, CTO half `91ab9f8f52` (batch 194), deploy `389103aaf0`; code `bb255c4cb2`, merge `ce035e9387`, pin
+`9bbb38f7a0`; evidence `0b9d4f696f`. Host reads: SSM `9a3c9eea` (02:02:17Z) and `2eff9df7` (02:17:52Z), both Success rc 0.
+
+| limb or claim | this seat's read | result |
+|---|---|---|
+| active root | 02:02:17Z `9bbb38f7a0-st15`, active, NRestarts 0, since 00:05:11Z; by 02:17:52Z st16 (`34088050e0-st16`, deploy `578e919c5e`) was installed | PASS for st15's window (00:05:11Z-02:03:30Z); st16 not graded |
+| members | 249 of 249 hash to SHA256SUMS; 247 of 247 with a repo path equal `git show 9bbb38f7a0:<path>`; host listing hash = tar manifest; library and wrapper unchanged | PASS |
+| journal 00:05Z-02:02Z | 370 lines (346 idle polls, 5 systemd, 19 job lines, all st15's PID); 0 tracebacks | PASS |
+| S284's line | 1 of 1 `RESOLVE_FUNDS matched=0 gated=1 features=mutualFundDataUSA=1 refused=0` (00:20:39Z, V1-b) | PASS (row S287) |
+| generate (Y-3) | before 02:05Z: CodeSha256 `VZvhvWRM..` = S3 by version = map at `757147b128`; 113 of 113 members, 98 byte-equal to the pin, 15 CRLF-only, 0 differ | PASS modulo EOL |
+| generate now (Y-5) | `aug0YyWc..` since 02:05:42Z = HEAD map; 113 of 113 byte-equal `34088050e0` | S286 remedied |
+| V1-a | `REQ-66e9fe1a` ATTENTION `VENDOR_UPLOAD_REFUSED`, 0 checkpoints; template GET 200, securities_info GET 200, holdings_upload POST 403 (76 B); no WAF action | NOT READY (rows S285, S288) |
+| ETF as a comparison key | composition sha256 `06a87c41..` = request ref = job row (3 of 3); keys `opal_ultra_long_term` and `IWM` (MAINTAINED_RECORD, etf) | PASS |
+| identity verified 1 of 1 | `resident_worker.py:245` discards the step's `{checked, verified}`; step() raises unless ok and the upload intent was claimed | PASS inferred, not carried (row S289) |
+| PDF, certified report, name count | none produced (stopped before upload); "IWM" 0 times in 6 of 6 route bodies, control "SPY" 0 | NOT REACHED |
+| routes (one login, GET) | status-job `ANALYSIS_REQUIRES_ATTENTION`; sections `NOT_FOUND`; inflection 2 of 2 `FIRM_BINDING` | PASS on the boundary |
+| ledger `irpt-y3-20261002` | OPEN, 4 of 5 legs closed, V1 open; `irpt-y5-20261003` also OPEN over the same artifacts | NOT CLOSED, correctly; row S290 |
+| row S265 | `/` 2.9G free of 8.0G; 27 root directories (26 at st14) | measured |
+
+**V1-a against the packet:** admission PASS, identity PASS (inferred), READY not met. ULT has still never run to READY.
+
+**Limits.** `include=comparisons` not read (the one login was spent); st16 not hashed; the vendor side and the
+`etf-classifications` row not read; pydeps checked by the host's own manifest only (3,676 of 3,676). Read by a delegate
+of this seat; the table is its report, with line 245 and the two ledgers re-read here.
+
+-- 3.0.0_SA_CVO
