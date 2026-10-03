@@ -3,6 +3,7 @@
 | Time | Project | Limb | Act | Outcome |
 |---|---|---|---|---|
 | 12:5xZ-13:0xZ | DSGN_REBRND (FAST; IR lines still blocked: P-3/P-6 wait ~P's P-2 window, Case A waits ~Y) | round 3 E3, row W3-S4 | /portfolio-management: no computed zeros without a portfolio, one ERROR for a failed service: portal `c3e1d7b9` on origin DEV (ls-remote 13:04Z) | DRIVE FORWARD |
+| 13:0xZ-13:1xZ | DSGN_REBRND (FAST; IR still blocked on ~P) | round 3 E3, row W3-S4 | /ticket-center says a failed load inside the board: portal `3d8cce99` on origin DEV (ls-remote 13:16Z) | DRIVE FORWARD |
 
 ## W3-S4 on /portfolio-management
 
@@ -17,8 +18,15 @@
   under the 401 and a live positive control (walk `20261003T130059Z`: no error line, Resume offered).
 - An em dash typed into the pin's comment was replaced with words before commit (no non-ASCII added).
 
+## W3-S4 on /ticket-center
+
+- Re-measured on DEV c3e1d7b9 under the 401: a canvas error carrying the raw response body above a board reading "No
+  open tickets.".
+- Fix: the board's own `loadError`, one PanelError in the board (Try again; cause via innermostCause, `causeAt="data"`);
+  the list is cleared on failure; the page-level error stays for actions. No pin (fetch effect); the 401 render and
+  the live walk `20261003T131333Z` (served empty list, metrics of 11 tickets) are the checks.
+
 ## Still open on W3-S4
 
-- /advisor-intelligence (several of its files sit in 2.0.0_SA_COO~M's MDPF_SECCLASS lease), /ticket-center,
-  /data-refresh.
+- /advisor-intelligence (several of its files sit in 2.0.0_SA_COO~M's MDPF_SECCLASS lease), /data-refresh.
 - /market: a missing period change read as 0; RSIModal's own 50 defaults.
