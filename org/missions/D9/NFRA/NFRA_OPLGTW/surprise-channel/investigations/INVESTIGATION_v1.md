@@ -6812,3 +6812,27 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W22-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~22",
+  "surfaced_at": "2026-10-02T20:40Z",
+  "one_line": "The order's 2,395 existing silver snapshots shrink to 52 qualified ones on the marker basis it names: 46 closure markers exist (23 per master), only 26 carry a closure block with status qualified; the 20 earlier markers are the pre-closure schema and were bounded out.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: og_v6 latest_markers() for both masters read 23 and 23 IsLatest markers (2026-08-31..2026-10-01); reading each by VersionId, 10 per master (2026-08-31..2026-09-14) have keys date/declared_source/declared_tables/disagreement/emitted_at/master/run_id/schema and no 'closure' key; 13 per master (2026-09-15..2026-10-01) are closure.status qualified with dim_position and dim_asset PRESENT. Denominator 26 markers x 2 datasets = 52 snapshots.",
+      "RUN: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~22/GRAIN_R13.json denominator.basis states the bound."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Section 1 item 1: the qualified dates are those with a closure marker; 2,395 snapshots exist under silver/<dataset>/date=.",
+  "world_is": "Only 46 dates carry a marker; the 20 pre-closure markers have no qualified status so are not in the denominator. The remaining silver dates have no marker at all. Verdict (REFUSE) rests on 52 snapshots, 2 of which fail candidate uniqueness, so including more dates could not turn it to ADOPT.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
