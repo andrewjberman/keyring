@@ -7322,3 +7322,74 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W17-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~17",
+  "surfaced_at": "2026-10-03T21:10Z",
+  "one_line": "R3's layer mechanism as ruled (a data source REPLACING the aws_lambda_layer_version resource) plans a DESTROY of the live layer version 1 the function carries, because the resource is in state; the root keeps the resource block and reads no build output.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN 21:0xZ (fresh-cone-equivalent plan in this worktree, root as ruled, resource block deleted): `Plan: 0 to add, 1 to change, 1 to destroy.`; `# aws_lambda_layer_version.mcportal_grant_writer_deps will be destroyed (because ... is not in configuration)`, id arn:aws:lambda:us-east-1:313476888478:layer:mcportal-grant-writer-deps-layer:1, created_date 2026-09-29T04:58:50.923+0000, skip_destroy false.",
+      "RUN 21:1xZ, after keeping the resource with source_code_hash = data.aws_lambda_layer_version.<same name>.code_sha256 and the function reading the data source's arn: `No changes. Your infrastructure matches the configuration.` rc 0 (-detailed-exitcode), no warnings. Removing the block would need an apply or a removed/moved block (both barred by the order)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1 item 2 / R3: the layer is referenced by its DEPLOYED version through a data source, with no rebuild and no PyPI egress.",
+  "world_is": "The data source is in place and the function reads it, but the resource block stays (retained, not rebuilt: its `filename` is a path never read at plan time, its hash is the deployed version's own). A create of a new layer version would fail on the missing zip until that cell runs the layer build. The CTO may prefer a later cell to retire the resource by an apply; this cell cannot.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W17-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~17",
+  "surfaced_at": "2026-10-03T21:10Z",
+  "one_line": "Replacing the two variables with a sensitive-marked value makes the plan read `~ update in-place` on the grant writer (environment, 'The value is unchanged'): a marks-only diff only an apply clears, so the local is nonsensitive().",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN 21:0xZ: with sensitive(jsondecode(...)) the untargeted plan read `Plan: 0 to add, 1 to change, 1 to destroy` and the function diff was only `MCPORTAL_OWNER_KEY` / `MCPORTAL_OWNER_KEY_CLAIM` = (sensitive value) with `Warning: this attribute value will be marked as sensitive ... The value is unchanged.` (the other env key `(1 unchanged element hidden)`).",
+      "RUN 21:1xZ with nonsensitive(jsondecode(...)): no function diff; plan `No changes` rc 0."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1 item 1: the root reads both keys through a data source (jsondecode), replacing the two variables; AC1 reads No changes.",
+  "world_is": "The old variables were not sensitive, so the state holds the environment unmarked. nonsensitive() restores that parity: a future CHANGE of either key would print in a plan, as before (the values themselves are never printed or committed by this cell). Alternative (keep sensitive, then apply once to record the marks) needs an apply and is not mine to make.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W17-S6",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~17",
+  "surfaced_at": "2026-10-03T21:10Z",
+  "one_line": "The plan-time archive build needs a third provider (hashicorp/external, lock entry added) and `python` on the planning device's PATH; the build reads the released commit from the git object store.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: terraform init added hashicorp/external to .terraform.lock.hcl (21 lines); `data.external.mcportal_grant_writer_stage` read at plan, `data.archive_file.mcportal_grant_writer` read, and the function's source_code_hash read no change against the live function (equal to af2d762970's closure, OG-gw-2)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1 item 2: choose the smallest mechanism and record it; no copied output, no `.build` pre-built.",
+  "world_is": "Recorded with the rejected alternatives in TF_ROOT_FIX_R15.md. Cost: one more provider fetch from the registry that serves aws and archive (no PyPI, no vendor API); another planning device needs python on PATH, and a refusal from build_package.py fails the plan loudly.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
