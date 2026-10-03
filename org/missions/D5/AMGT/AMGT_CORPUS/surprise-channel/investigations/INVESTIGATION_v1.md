@@ -3468,6 +3468,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "No served figure over 100 keys carries a DECIMAL label chosen by magnitude. 8 figures with no ground now say so (UNRESOLVED-ON-<security>: ...), with their signs UNRESOLVED by the standing classification split.",
     "notes": "For the CVO's plausibility read (packet s.3): ORA's FY2025 RETURN_ON_INV_CAPITAL serves 0.2237 PERCENT (0.22%) against its own FY2016-2024 history of 3.7 .. 7.3 -- the unit is the key's by the series rule; whether FY2025's magnitude is a real low year is a value question this round did not touch.",
     "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S84",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-10-03T21:14:04Z",
+    "one_line": "In --mode dry-run the scheduled entry's model_block_admit step reads rc 1 at CLOUD 6527a03cc1: induction_run's dry run poisons boto3.client and admit's S3 read trips it, so the scheduled dry run cannot pre-flight the admit (or, from round 34, the refresh) step.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m lib.research.corpus.induction_scheduled --mode dry-run (2026-10-03 ~21Z, issuer, base 6527a03cc1): 'ERROR: model_block_admit step raised RuntimeError: POISON: boto3.client called -- a real AWS call was attempted' then 'induction_scheduled step model_block_admit rc 1' and closing rc 1.",
+        "Control: PYTHONPATH=. python integrations/bloomberg/research/model_block_pull.py admit --dry-run run directly reads 'admit population registered 96 without_block 0 pulled 0 bloomberg_calls 0', rc 0, 3.5 s -- the stage itself is sound; the poison is the dry-run harness's."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CRPS-t-1: induction_scheduled --mode dry-run runs admit --dry-run as the scheduled entry's pre-flight of its second step.",
+    "world_is": "The dry-run admit step always fails inside induction_scheduled because the first step's dry-run poison is still installed; the fire path is not poisoned and the 13:00Z fires read rc 0 (task Last Result 0).",
+    "notes": "Found at the round-34 cut. Not cut as a cell: off the served path, and round 34's AC3 grades the refresh step's placement rather than its dry-run rc. A repair (scope the poison to step 1, or give the S3 reads a dry-run reader) is a candidate for the round-34 analysis.",
+    "disarm_owner": "2.0.0_SA_COO~X"
   }
 ]
 ```
