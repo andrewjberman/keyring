@@ -17260,6 +17260,27 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   ]
  },
  "disposition": "UNDER_INVESTIGATION"
+},
+{
+ "id": "AMGT_RESAPP-Z-W216-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~216",
+ "surfaced_at": "2026-10-03T17:36:39Z",
+ "one_line": "ao-1 re-case needed two steps the order did not name: it rewrote 2 existing assertions that pinned the all-caps display_name, and it added an all-caps-only tail rule for Bloomberg share-type tails (-CL, -SER, -REG, -SP, -UNSP, -GENUSSCHEIN).",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "Order 1.3: 'No share-class word survives in a served name' and 1.1: only display_name changes; it names the 'CLASS' remnant but not the other Bloomberg tails, and does not mention test_model_block_names.py.",
+ "world_is": "At the base, lib/research/api/tests/test_model_block_names.py asserted display_name 'HERMES INTERNATIONAL' (overlay/row) and ('COSTCO WHOLESALE CORP', model_block_header) for the chatter chain; with the re-case both fail (full suite 2 failed, 477 passed), so those two lines were updated to 'Hermes International' and 'Costco Wholesale Corp' (name stays all-caps in the overlay assertion). Served names also carry '-CL' (NIKE INC -CL), '-REG' (NESTLE SA-REG), '-SP' (ALIBABA GROUP HOLDING-SP) and '-GENUSSCHEIN', which are share-type codes the case-sensitive an-3 rule never matched; they are stripped for all-caps names only (_SHARE_CLASS_TAIL_CAPS). Mixed-case names are untouched.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "pytest lib/research/api/tests/ before the test edit: 2 failed, 477 passed (test_model_block_names.py x2); after: 479 passed.",
+   "lib/research/api/scoped_amgt.py _SHARE_CLASS_TAIL_CAPS; r65_served --cell c17 --where local: 0 all-caps names on both routes."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
 }
 ]
 ```
