@@ -1569,3 +1569,17 @@ the response, and ExportReceipt is unchanged. It is hygiene, never held for a ro
 | `IB-pr-305` | E4: the export-download response contract declares a response-only `download_route` (url https and required, expires_at a date-time and required) and the integrity facts, with a test validating the handler's answer; ExportReceipt byte-unchanged (nothing served) | WORLD (a published contract) | none | P40 |
 
 fanout: 1 of 1 chains, cap 8, reason: one open cell; worker 0.9.0_WK_IRPT_BCKEND~108 in its own worktree.
+
+
+## 33. ROUND 41, WORKSTREAM ~P (2026-10-03 ~07:1xZ, issuer 2.0.0_SA_COO~P, on 1.0.0_SA_CTO RULINGS batch 201 (P-6 option a) and batch 203 (the census accepted))
+
+P-6's backend half had no cell. PATH A (`performance/retained.py`) still composes 49 Financial, and batch 201 retires it WHOLE, in
+the same window that PATH B covers every 49F account. The retirement reuses the existing `ProviderPathNotComposed` /
+`UNSUPPORTED_OPERATION` refusal through a named subclass: no new reason code, no contract change. GATE (x) puts this in ROUND 41
+(row S267).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-306` | P-6: 49F out of COMPOSED_FIRMS; a named `*Retired*` subclass of ProviderPathNotComposed for a fresh request and a retained reopen; Inflection and Cottonwood unchanged; PATH A 49F tests converted (nothing served) | WORLD | none (served only in P-2's window) | P41 |
+
+fanout: 1 of 1 chains, cap 8, reason: one open cell; worker 0.9.0_WK_IRPT_BCKEND~109 in its own worktree.
