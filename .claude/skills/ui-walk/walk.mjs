@@ -53,7 +53,8 @@ for (let i = 0; i < argv.length; i++) {
   else if (a === '--press') (opt.presses = opt.presses || []).push(String(argv[++i] || ''))
   // --contrast-table (plain routes): every visible interactive control's (ground, ink) pair at rest, on hover and, where
   // the control says so (aria-pressed / aria-selected / aria-current), selected -- graded against SC 1.4.3. Run after the
-  // presses, before the explore step. Writes contrast-table.json. DSGN_REBRND round 3 E4 (FWD-13).
+  // presses, before the explore step. Writes contrast-table.json. DSGN_REBRND round 3 E4 (FWD-13). Also every
+  // non-interactive text pair at rest, grouped, state 'text' (row S10).
   else if (a === '--contrast-table') opt.contrastTable = true
   else if (a === '--holdings-aggregates') opt.holdingsAggregates = true
   // --map-tiles (with --client): on the Holdings tab's default view, count the Securities map's drawn tiles against the
@@ -656,8 +657,42 @@ async function contrastTable(page, label) {
     if (hover) contrastRows.push({ step: label, state: 'hover', ...hover, pass: hover.ratio !== null && hover.ratio >= hover.bar })
   }
   await page.mouse.move(2, 2).catch(() => {})
+  // NON-INTERACTIVE TEXT at rest (DSGN_REBRND row S10: the Positioning Summary's class labels read 4.07:1 and no limb
+  // saw them). Every visible element holding its own text outside a control, read as above and grouped by
+  // (ink, ground, bar) with a count. The row's label is a hint -- tag, data-* attribute NAMES, the data-slot value --
+  // never the text, so no client word or figure is written.
+  const textRows = await page.evaluate(() => {
+    const cv = document.createElement('canvas'); cv.width = 1; cv.height = 1
+    const cx = cv.getContext('2d', { willReadFrequently: true })
+    const rgba = (c) => { cx.clearRect(0, 0, 1, 1); cx.fillStyle = 'rgba(0,0,0,0)'; cx.fillStyle = c; cx.fillRect(0, 0, 1, 1); const d = cx.getImageData(0, 0, 1, 1).data; return [d[0], d[1], d[2], d[3] / 255] }
+    const lin = (v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4) }
+    const L = ([r, g, b]) => 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b)
+    const groundOf = (node) => { for (let e = node; e; e = e.parentElement) { const c = rgba(getComputedStyle(e).backgroundColor); if (c[3] > 0.5) return c } return [244, 246, 250, 1] }
+    const CONTROL = 'button, a[href], [role=tab], [role=button], input, select, textarea, option'
+    const groups = new Map()
+    for (const h of document.body.querySelectorAll('*')) {
+      if (['SCRIPT', 'STYLE', 'NOSCRIPT', 'TITLE'].includes(h.tagName) || h.closest(CONTROL)) continue
+      if (![...h.childNodes].some((t) => t.nodeType === 3 && t.nodeValue.trim()) || !h.getClientRects().length) continue
+      const s = getComputedStyle(h)
+      if (s.visibility === 'hidden' || Number(s.opacity) === 0) continue
+      const g = groundOf(h); const k = rgba(s.color)
+      const ink = [0, 1, 2].map((i) => Math.round(k[3] * k[i] + (1 - k[3]) * g[i]))
+      const a = L(ink); const b = L(g)
+      const ratio = +((Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05)).toFixed(2)
+      const px = parseFloat(s.fontSize); const bar = px >= 24 || (px >= 18.66 && Number(s.fontWeight) >= 700) ? 3 : 4.5
+      const key = `${ink}|${g.slice(0, 3)}|${bar}`
+      const hit = groups.get(key)
+      if (hit) { hit.count++; continue }
+      const names = [...h.attributes].map((x) => x.name).filter((n) => n.startsWith('data-') && n !== 'data-slot')
+      const slot = h.getAttribute('data-slot')
+      const hint = `${h.tagName.toLowerCase()}${slot ? `[data-slot=${slot}]` : ''}${names.length ? `[${names.join(',')}]` : ''} ${px}px/${s.fontWeight}`
+      groups.set(key, { label: hint, tag: h.tagName.toLowerCase(), ink: `rgb(${ink.join(', ')})`, ground: `rgb(${g.slice(0, 3).join(', ')})`, ratio, bar, count: 1 })
+    }
+    return [...groups.values()]
+  }).catch(() => [])
+  for (const r of textRows) contrastRows.push({ step: label, state: 'text', ...r, selected: false, disabled: false, pass: r.ratio >= r.bar })
   const failing = contrastRows.filter((r) => r.step === label && !r.pass)
-  log('CONTRAST TABLE', label, `${contrastRows.filter((r) => r.step === label).length} pairs, ${failing.length} under their bar`)
+  log('CONTRAST TABLE', label, `${contrastRows.filter((r) => r.step === label).length} pairs (${textRows.length} non-interactive text groups), ${failing.length} under their bar`)
 }
 const mapTiles = []
 function readMapTileAnswer(p, j) {

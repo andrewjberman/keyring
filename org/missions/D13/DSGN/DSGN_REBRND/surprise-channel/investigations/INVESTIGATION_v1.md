@@ -1668,6 +1668,30 @@
     "spec_asserts": "Row W3-S1: RB-s-10's face lists NO-PERMISSION among the four designed states every panel with nothing to show uses.",
     "world_is": "The route-level denials render that state on DEV d7141e5a. Panel-level hides (an element not drawn for a role) remain non-rendering; none was found that leaves a panel empty.",
     "notes": "Panel-level census of hides not repeated here; W3-S4 (failure swallowed as EMPTY) stays with E3."
+  },
+  {
+    "id": "DSGN_REBRND-S12",
+    "project": "DSGN_REBRND",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~D",
+    "surfaced_at": "2026-10-03T09:12:00Z",
+    "one_line": "Round 3 row S10's remedy, both halves: the Positioning Summary's class percentage labels take a text ink that clears 4.5:1 on the body rung (Equity blue400, Structured pink400), and the walk's --contrast-table now also grades non-interactive text at rest.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~D",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "portal d8d236a0 (origin DEV, ls-remote read 09:11Z): lib/chartColors.ts getAssetClassInkOnDark (blue500 4.069 -> blue400 5.886; pink500 4.242 -> pink400 5.650; green500 5.899, yellow500 7.803, vermilion500 4.553 unchanged) and the four label sites in Positioning/panels/PositioningSummary.tsx",
+        "portal src/pages/Positioning/panels/class-label-ink.test.ts at d8d236a0: three arms, with a CONTROL that the raw Equity colour reads 4.069:1 on --layer-body read from index.css",
+        "walk tmp/ui-walk/20261003T090209Z (signed in, localhost:5174, the widened .claude/skills/ui-walk/walk.mjs): span[data-class-label] rgb(96,165,250) 5.90:1 x4, rgb(244,114,182) 5.67:1 x3, rgb(16,185,129) 5.91:1 x5, all on rgb(25,38,67); the screenshot was looked at"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Disarms DSGN_REBRND-S10: every class percentage label on the Positioning Summary clears 4.5:1 on its ground in the served code, and the instrument that missed them now measures non-interactive text.",
+    "spec_asserts": "Row S10: text on a dark panel meets 4.5:1; the walk's contrast limb sees non-interactive text.",
+    "world_is": "Both hold on DEV d8d236a0. The widened limb reads 35 non-interactive text groups on /positioning at load, 4 of them under their bar; they are listed in STATUS.md as round 3's next contrast item, not ruled here.",
+    "notes": "The bars, swatches and legend keep the class colour; only text drawn in a class colour on the dark rung changes ink."
   }
 ]
 ```
