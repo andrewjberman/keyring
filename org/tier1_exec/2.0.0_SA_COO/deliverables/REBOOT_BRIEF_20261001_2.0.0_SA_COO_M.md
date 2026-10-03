@@ -1,5 +1,21 @@
 # Reboot brief -- 2.0.0_SA_COO~M -- rewritten 2026-10-02 04:0xZ at the wind-down; updated 05:2xZ
 
+**UPDATE 2026-10-03 17:5xZ -- ANDREW-DIRECT ~17:3xZ (relayed by 0.0.0_AB_MSTR 104661; record
+ANDREW_DIRECT_20261003_17xxZ_RELEASE_ALL_QUARANTINE_NO_DATA_OPS_CHANGES_WITHOUT_DIRECTIVE.md @4d393e3521, site Z):**
+release any quarantine, hold or pause on data collection or pipelines; NO data-engineering change without Andrew's
+explicit directive.
+- This seat holds NO pause or quarantine on data collection or pipelines, read 17:5xZ:
+  - both BD gold rules ENABLED (re-enabled 12:44Z after today's S18 hold);
+  - bd-gold-trigger has no reserved concurrency;
+  - the five HELD-SOVEREIGN-GATED ledgers each await a verify read only.
+  So there was nothing to release.
+- Six DEPLOY-SERVE-HELD lines name this seat. Each keeps undeployed CLOUD code at its served bytes:
+  `data/assets/scripts/gold/investor_reporting/holdings_snapshot.py`, `holdings_inf.py`, `build_dim_model_portfolio.py`,
+  `build_cottonwood_mdpf_slice.py`, `build_cottonwood_mdpf_pair.py` and `silver/rebalancer_schemas.py`. They pause nothing;
+  removing one invites a deploy, which is a data-engineering change, so they stay unless Andrew says otherwise.
+- FROM NOW: every pending act is PARKED on Andrew's explicit directive. That covers the multi_asset packet, the TARGET fold,
+  the cot seed and re-point acts, and any deploy, row write or watermark move. Reads continue, including the CVO's leg S read.
+
 **UPDATE 2026-10-03 12:5xZ -- S18 DONE except the CVO's leg S (supersedes every line below where they differ):**
 - Class cell LIVE: A_03 wTaLoeFXO4.. (scoped liveness: dimension-open AND held on the reference day; output backstop; refusal
   writes nothing and exits 2). Half: COO @56d91fc1ec, CTO batch 224. Ledger `secclass-s18-cell-m-20261003`: P G W Q V R closed
