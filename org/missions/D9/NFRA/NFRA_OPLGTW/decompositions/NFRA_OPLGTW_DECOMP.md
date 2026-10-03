@@ -1357,3 +1357,18 @@ reads plan rc=1 with 2 errors and 2 missing required variables. tf2.AC2 reads th
 - OG-v-8 (G-E).
 
 The D9 -> D6 move stays deferred (R5).
+
+## ADDENDUM R3-T.8.1 (2.0.0_SA_COO~O, 2026-10-03 ~18:4xZ) -- OG-v-8 cancelled; OG-o-5 DRAFTED for round 16
+
+**Source.** `ledger/ROUND_ANALYSIS.round14.md` section 6 @2f46788988 (1.0.0_SA_CTO~O msg 28937), on the CVO's L8/L9
+(`ADJUDICATION_v4.Z.md` @d4c58bd8ef):
+- **R6 cancels `OG-v-8`.** It was a round-2 slot held on G-E/G-F. The issuer flips it here. The pilot-walkthrough
+  grading re-enters as a NEW cell when G-E stands.
+- **R7 accepts the CVO's runbook section-7 text remedy** as round-15 cell `OG-o-5`.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-o-5` | 6 | Runbook section 7, text only: 7.1 states the deploy re-renders `schwab`; 7.2 step 2 re-applies 7.1 after any restore and confirms `integration_enabled=false`; 7.3 names the read command. OGO2-J1 is re-graded at L9 by the CVO. | WORLD | ~21 | worker-light |
+
+**NOT issued in round 15.** The TO issuance gate refuses a second issuance into a round that already has one (ONE ISSUER PER ROUND, keyed to the round). OG-o-5 is held as a draft at `deliverables/2.0.0_SA_COO~O/r15/drafts_not_issued/` with its check `r15/checks/o5.AC1.sh` (pre-cut FAIL: anchors absent; rb.AC1-AC3 3 of 3), and is cut with round 16's issuance. Nothing waits on it: the pilot is not cut before G-E. **The pilot's host-side `schwab` flag** (R7) is a later release under
+three halves and is NOT cut before G-E (YAGNI).
