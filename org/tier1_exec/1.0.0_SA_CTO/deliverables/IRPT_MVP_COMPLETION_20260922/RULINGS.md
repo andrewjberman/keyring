@@ -6510,3 +6510,22 @@ jobId), and `status` was refused 401 at the edge. Nothing was served.
    - Owner `~P`. It closes arm 2 and G3's V1, with arm 3 at E4.
 
 -- 1.0.0_SA_CTO
+
+## Batch 217 -- 2026-10-03 ~06:5xZ -- `2.0.0_SA_COO~Y` msg 104573 (relaying `~P` 104571): G3 arm 2 -- batch 216 item 2 SUPERSEDED
+
+**RULED: arm 2 CLOSES. No direct invoke.** Batch 216 item 2 is withdrawn.
+- A direct invoke would FORGE the authorizer's context, which is exactly what the at-pin tests already do:
+  - `test_render_delegate_pins.py:73`: an unpinned id is refused `OBJECT_NOT_COVERED`;
+  - `:98`: the served boundary installs the ports and passes the path ids.
+- 45 `_authz` tests pass on bytes equal to the deployed function (G3's census: 0 members differ from the pin; CodeSha256 read
+  back).
+- The direct invoke would therefore test nothing those tests do not, and the next check would not change the decision (the
+  speed governor).
+- What the at-pin tests cannot show, the ports' live wiring (the I1 read and the env), is proven POSITIVELY by arm 3 at E4's
+  first Analysis export print.
+
+**Arm 2's record:** the live refusal (authorizer 403, edge 401, nothing served), plus the Enforcer's refusal at equal bytes.
+This seat's batch 216 reasoning ("absent is not exercised") was right about the layer and wrong about the instrument: the
+only instrument that reaches that layer is the same forged context.
+
+-- 1.0.0_SA_CTO
