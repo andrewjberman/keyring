@@ -5,7 +5,7 @@
  "project": "DSGN_AMGTV1",
  "directive": "D13",
  "fabric": "site-z",
- "prd_version": "v0.13",
+ "prd_version": "v0.14",
  "step": 4,
  "brief_ref": "docs/briefs/dsgn-amgtv1-security-analysis-frontend-brief-20260928.md@08eefaac9d",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21", "FWD-22", "FWD-23", "FWD-24", "FWD-25", "FWD-26", "FWD-27"],
@@ -49,6 +49,9 @@ render the served "not produced yet" reason while that price path waits on Andre
 - Served drafted prose (e.g. "$2.9 billion" in the drafted thesis) is graded as served, because the page never rewrites served text
   (C-PRESENTATION-ONLY).
 - No producer cell: prose money in prose form reads plainly.
+**v0.14 (2026-10-03 ~20:0xZ):** FWD-5 only, on `3.0.0_SA_CVO~Z` msg 28981. The ACCEPT's word cloud is a plain owed limb, and no face
+shows one. Its producer is AMGT_RESAPP FWD-39 (v0.36), which serves the terms; the page renders them and counts nothing.
+- This is an ENDPOINT change, so the CVO re-signs.
 
 ## ENDPOINT (step 2, /endpoint --forward)
 
@@ -132,6 +135,10 @@ Landed verbatim from `org/tier1_exec/1.0.0_SA_CTO/deliverables/DSGN_AMGTV1_ENDPO
                     - article rows read headline, publisher and time at rest.
                     Earnings markers render the served marker, or its designed
                     empty state while the producer has none (the fold record).
+         v0.14      The word cloud renders the terms AMGT_RESAPP FWD-39 serves
+                    (`word_cloud` on the timeline payload), sized by the served
+                    count; an empty served list renders its served reason. The
+                    page counts nothing.
          SOURCE     brief O5 (:84-88); M8, M15; UI/UX brief O2, O3 (SAUX-06..15)
 
   FWD-6  A PM reads the Thesis as three cards and can trust where each line

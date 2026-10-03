@@ -5,7 +5,7 @@
   "project": "AMGT_RESAPP",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.35",
+  "prd_version": "v0.36",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-security-analysis-20260910.md@19ce7d5b4d",
   "endpoint_outcomes": [
@@ -46,7 +46,8 @@
     "FWD-35",
     "FWD-36",
     "FWD-37",
-    "FWD-38"
+    "FWD-38",
+    "FWD-39"
   ],
   "status": "RATIFIED"
 }
@@ -69,6 +70,12 @@
 - The price ranking's 90/365-day windows are a QUALIFIED WAIT on Andrew's vendor word for a longer PX_LAST history pull.
 - The chatter windows are buildable now.
 - Tone stays null with its reason until it is served on this route.
+- This is an ENDPOINT change, so the CVO re-signs.
+**v0.36 (2026-10-03 ~20:0xZ):** FWD-39 NEW, the producer half of DSGN FWD-5's word cloud (`3.0.0_SA_CVO~Z` msg 28981: the limb is a
+plain owed limb, and no face shows one). The page never derives a served value, so this route serves the terms and the page renders
+them.
+- The terms come from the coverage headlines already in gold (`article_security_mention`), counted at request time for the
+  timeline's window. There is no new gold table, no pipeline, no schedule and no data operation.
 - This is an ENDPOINT change, so the CVO re-signs.
 
 
@@ -1032,6 +1039,21 @@ disputable, by rule, and carry no technical language.*
          ACCEPT     No two served figures for one thing disagree without a
                     label.
          SOURCE     SAUX-12, 22, 25, 29; DSGN FWD-27
+
+  FWD-39 The timeline route serves a security's word cloud from its own coverage
+         DONE WHEN  EXERCISED -- on 3 covered names, the timeline payload
+                    carries `word_cloud`: the security's top terms (at most 40)
+                    with their counts, counted over the headlines of its own
+                    gold mention rows in the timeline's window, after a
+                    DECLARED stop-word list (printed with its source) and the
+                    company's own name words; a name with no headlines in the
+                    window serves an empty list with a plain reason. Counted
+                    at request time from gold already served: no new table,
+                    no schedule, no data operation
+         ACCEPT     The PM sees the words its own coverage repeats, and the
+                    page counts nothing.
+         SOURCE     DSGN FWD-5 ACCEPT ("a word cloud from its own coverage");
+                    CVO~Z msg 28981
 ```
 
 **BAR DISTRIBUTION: 19 of 20 are `EXERCISED`; only `FWD-9` is `APPLIED`.**
