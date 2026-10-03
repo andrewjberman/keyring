@@ -77,4 +77,26 @@ reads it before the act, at the cost of one SSM call.
 
 **Does NOT cover:** a moved base, a changed release pin, a rotation, any Terraform, IAM or ALB write, or the CTO half.
 
+## Post-act read (2026-10-03 ~17:3xZ, this seat, independent of the issuer's verify)
+
+- S3 `opal-gateway-latest.tar.gz` ETag `6b5a9b8a...` equals `opal-gateway-af2d762970.tar.gz` (16:55Z).
+- Host, SSM read-only (command `65f85c34-76b5-4761-8586-a73bd17ecb7f`):
+  - md5 of `app/{mail_route,transcript_route,audit,tools,teams_route,taxsma_workbook}.py` equals the `af2d762970`
+    blobs on 6 of 6. `teams_route` and `taxsma_workbook` are byte-equal to their pre-release hashes (untouched, as
+    required).
+  - The service restarted at 16:55:38Z (MainPID 608118), and `.env` holds 50 keys.
+- Wrong-bearer probes:
+
+| probe | result |
+|---|---|
+| GET `/hx/mail/messages` | 401 |
+| GET `/hx/transcripts/...` | 401 |
+| GET `/hx/teams/me` | 401 |
+| POST `/hx/mail/messages` | 405 (still GET-only) |
+| POST `/hx/teams/me` | 405 |
+
+- The own-bearer admissions (mail 200, transcripts 403 `meeting_not_allowed`, teams 200) are the issuer's verify,
+  10 of 10 (claim: held). This seat holds no bearer.
+- **Guard N1** of the OG-rl-3 half (@e13f0910d4) LAPSES: the symmetric refusal is live.
+
 -- 3.0.0_SA_CVO~O
