@@ -15,9 +15,14 @@
 
 ## Grade against the packet's V1
 
-- **S279's defect is FIXED (measured).** The same file failed AS A WHOLE at 19:04Z (`RESOLVE_RETRY_EXHAUSTED` after four
-  reads). It now resolves on the first read in about 2 s, and every other row of 99 is accepted. The one row that
-  cannot be used is named: row 100, column A. The first lookup met no WAF challenge.
+- **S279's defect is FIXED (measured), on near-identical files (corrected per CTO rulings batch 196).** Case A's file had
+  only this st14 upload. On st13 the TYPO file -- Case A's file with row 2 AAPL changed to APPL, so TIMXX included -- failed
+  AS A WHOLE at 19:04Z (`UP-2679bceb..`, `RESOLVE_RETRY_EXHAUSTED` after four reads), as did all 4 other st13 uploads
+  holding a fund: Case D and the TIMXX and FBIFX bisects by ROWS_UNVERIFIED, and the M:TIMXX run by WAF challenges. That is
+  5 of 6 st13 uploads failing whole; the sixth (AAPL+BRK.B, no fund) normalized. On st14 Case A resolves
+  on the first read in about 2 s, the other 98 rows are accepted, and the unusable row is named (row 100, column A). The
+  first lookup met no WAF challenge. **The live matched `M:` path is UNPROVEN:** TIMXX is gated, so a fund row attributed
+  AND usable has run offline only, until an entitled fund appears.
 - **V1's criterion is NOT met (measured):** the upload is not NORMALIZED with `M:TIMXX`. No report was generated.
 - **Cause of row 100 (inferred, not observed).** The resolver attributed YCharts' `M:TIMXX` row to TIMXX (`matched=1`),
   and the row's display id, ids and fields verified (`refused=0`). The freeze still names it `TICKER_CHECK_UNAVAILABLE`.

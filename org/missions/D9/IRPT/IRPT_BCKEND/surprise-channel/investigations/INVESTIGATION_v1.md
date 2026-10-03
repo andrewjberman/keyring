@@ -15635,3 +15635,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "The fund-family extent is not measured (one fund read)."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S288",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-03T00:40:00Z",
+  "one_line": "The YCharts session is EVICTED (measured): since about 00:10Z every vendor request answers 403 text/plain 76 B -- V1-a's holdings upload (row S285) and the control Overview's FIRST request, a template GET with no identity read. The resident's one refresh failed: CAPTURE_FAILED:AUTH_FAILED:NO_AUTHENTICATED_PROBE. S285's cause is the session, not Y-3. No Analysis job can reach READY until a re-capture.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y (the attended sign-in, option A -- SIGNIN_A packet section 4 -- at Andrew's time, queue 0/0; Andrew answers any CAPTCHA, per CTO batch 120 item 7)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/Y3/V1_CONTROL/OUTCOME_Y3_V1_AND_CONTROL_20261003.md",
+      "irpt-jobs REQ-06185d7074a14904d9f0eb68 vendor_requests: GET /custom_pdf_reports/generate/14141822 403 text/plain 76 B, waf_action null",
+      "resident journal 00:31:25Z IRPT_RESIDENT_EVICTION verdict=EVICTED; 00:31:44Z IRPT_RESIDENT_POLL retained_for_retry class=OperationRefused code=CAPTURE_FAILED:AUTH_FAILED:NO_AUTHENTICATED_PROBE"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The stored session (fence 23, 2026-10-02 09:45:43Z) serves Analysis jobs until a refresh is needed, and the resident's one refresh restores it when no challenge is met.",
+  "world_is": "The session stopped authenticating about 00:10Z, and the headless re-capture cannot sign in. The eviction cause is not determined: age about 14.5 h, a browser sign-in elsewhere (S233), or the vendor.",
+  "notes": "Traffic stopped after the control. Y-3 measured: IWM admitted, identity verified; READY pending the re-capture."
+}
+```
