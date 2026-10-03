@@ -95,9 +95,21 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 run on publisher text, while the publisher-terms card @8d20bc24c8 is open. Served gold gains `sentiment_content_key`
 only at a later rebuild under its own pair.
 
+**COMPLETE 2026-10-03 ~00:5xZ (issuer):**
+- Built @66371e322a; merged @a12f8edbd8.
+- AC1: 10 passed (worker).
+- At the base:
+  - AC2 PASS (`round39/al-2.AC2.issuer_grade.txt`): 863 rows, 727 distinct content keys, 364 planted; the key differs
+    from content_key(article_text(silver)) on 0 rows; planted wrong 0; unplanted with a tone 0; PUTS SENT 0.
+  - AC3 PASS (`al-2.AC3.issuer_grade.txt`): the window rows join by the content key.
+- 0 Lambda calls, and no `score` run. FWD-16 stays HELD on the publisher-terms card.
+- Row Z-W90-S23 (OBSERVATION): ft and no-text articles have no content key, so their null-label marker row is
+  re-appended on each `score` run. That costs 0 calls and one row per such article per run.
+- The suites at the base are green: research 344 passed; collector 612 passed with 3 skipped.
+
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>39</round>
 <slot>~90</slot>
 <fabric>site-z</fabric>
