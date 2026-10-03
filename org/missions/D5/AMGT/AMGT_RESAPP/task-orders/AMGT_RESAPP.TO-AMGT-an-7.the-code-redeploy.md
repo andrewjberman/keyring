@@ -67,6 +67,16 @@ The redeploy also carries the 500 attribution (analysis ruling 3, folded into `A
 (`org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~215/census_500.py --days 7`) and report its output with its
 denominator, beside the criteria. A 500 the census cannot attribute is reported, not alarmed. Gate limb that graded this modification: none (LIMB 6 fires only on a newly-added order; GATE (viii) does not apply, `<placeholders>NONE</placeholders>`).
 
+## 7. AMENDMENT 2 (issuer `2.0.0_SA_COO~Z`, 2026-10-03 ~01:3xZ) -- leg 2: the price window on TRENDING/price
+
+2.0.0_SA_COO~D (msg 28857) measured that deployed `kSeyeO0v` serves TRENDING/price `?days=30|90|365` byte-identical. The Price face
+reads trending by default, and an-1 matched breakout only. The issuer's direct act `43711514cc` widened the match; `r64_served.py
+--cell c10` now grades both movements. Leg 2, after leg 1's V1 closes: act (A) only, at the build commit the GO names (`43711514cc`,
+CONTENT-DIFF 355/352/3/0/0 against `kSeyeO0v`); memory stays 1769. Halves:
+`deliverables/2.0.0_SA_COO~Z/round64/NEVER_WIDEN_HALF_COO_AN7_LEG2.md` and `ledger/NEVER_WIDEN_ROUND64_AN7_LEG2_CTO_HALF.md`. Graded by
+c10 on deployed, with c9 and c11-c14 re-run unchanged. Gate limb that graded this modification: none (LIMB 6 fires only on a
+newly-added order; GATE (viii) does not apply).
+
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** s.72; staged until an-1..an-6 drain and the pair is signed. If c15 misses the 5 s bound again, record it with the
