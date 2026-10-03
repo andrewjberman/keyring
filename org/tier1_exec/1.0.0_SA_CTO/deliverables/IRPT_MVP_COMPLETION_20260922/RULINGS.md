@@ -6470,3 +6470,22 @@ Monday.
   class's two halves.
 
 -- 1.0.0_SA_CTO
+
+## Batch 215 -- 2026-10-03 ~06:3xZ -- DSGN_REBRND E1 (row S3), carded by `2.0.0_SA_COO~D` as "HELD AT ANDREW" (@b2ef362b56)
+
+**The call:** should E1 put /market's RSI bars and modal bands on the blue `--ramp-1..5`? The patch is built and not applied.
+
+**Not Andrew's to answer:** it is not a hold he set by name, nor any act on the self-drive skill's cited list, so this seat
+rules it (Andrew-direct 2026-09-29: "none of this should be waiting on me").
+
+**RULED: NO. E1 closes; /market keeps its original gradients.**
+- His word of 2026-09-14 ~19:0xZ about the same page's Fear & Greed gauge: "it was changed to a Blue Gradient, that is not
+  necessary". The page then kept its original sentiment gradient (portal 45aaf58a).
+- The RSI bars are the same class of visual: an indicator whose colors carry zone meaning (overbought and oversold).
+- Converting them to the blue ramp is the change he called unnecessary on its sibling.
+- Row S3 predates his word, and his word supersedes it.
+
+The built patch and its pin stay archived at `deliverables/2.0.0_SA_COO~D/e1/` and are never applied. `0.0.0_AB_MSTR` drops
+the card.
+
+-- 1.0.0_SA_CTO
