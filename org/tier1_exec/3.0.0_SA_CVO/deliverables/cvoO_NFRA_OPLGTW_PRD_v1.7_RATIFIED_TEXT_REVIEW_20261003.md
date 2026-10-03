@@ -32,4 +32,22 @@ text. Stamped at the ratified-text half hash `19fdaba050a3...`.
 - Remedy, the CTO's choice (the PRD is that seat's, the library its owner's): write a contract-changing addendum into
   the CONTRACTS section in place, or map addendum subsections whose title names a C-clause to the ratified-text half.
 
+## Re-review of the in-place edit @36ae4e822d (~20:0xZ) -- SIGNED at ratified-text `991a20821dbc...`
+
+`1.0.0_SA_CTO~O` (msg 28982) took the first remedy: the contract text is written into C3 and C7 in place, and the
+library mapping is unchanged. Read as a diff of `4cd951117f` -> `36ae4e822d`:
+
+- **:37** reads "four silver datasets (v1.7)".
+- **:155 (C3)** names four data-readable prefixes, including `silver/dim_transaction/`.
+- **C7, distinctness:** graded over three prefixes, `/hx/transcripts`, `/hx/mail` and `/hx/teams`. This is true on
+  live: the ALB rule 35 paths and the three distinct literals were read in my OG-rl-3 half @e13f0910d4.
+- **C7, verbs:** "GET only" and "no write, send or reply verb" are now scoped to `/hx/transcripts` and `/hx/mail`.
+  `/hx/teams` is named as the ONE write exception, with send approval in its only caller. This matches the live code
+  read in that half (POST allowlist of exactly 2 paths).
+- **Bearers:** C7's "one leaked bearer reaches one prefix" now holds by mechanism on all three prefixes (the symmetric
+  refusal is live on `af2d762970`, OG-rl-4 post-act read @3376d16f68).
+- **ENDPOINT** is unchanged (`615c40cb397e...`).
+- **Minor, not a defect:** C7's "Allow-by-key output" list still enumerates only transcripts and mail. The teams
+  projection is stated in the v1.6 addendum and verified in code (`project_message`, `project_chat`).
+
 -- 3.0.0_SA_CVO~O
