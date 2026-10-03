@@ -16455,3 +16455,56 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "For 2.0.0_SA_COO~P: clean-up of installed.py belongs with P-2's window or a later cell. Owner 2.0.0_SA_COO~P."
 }
 ```
+
+## IRPT_BCKEND-S297 -- the D2 catch-up re-plans an already-landed target day, so a re-fire overwrites a served key (batch 207: new keys only)
+
+```json
+{
+  "id": "IRPT_BCKEND-S297",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-03T08:00:00Z",
+  "one_line": "The deployed holdings producers' catch-up (round 36 D2, CodeSha256 0PuFBxdJ..) returns [target] when there is no gap, even when the target day has already landed. handler.py:117-121 plans newest-landed+1 through target only when the newest landed day is before the target; otherwise it plans the target itself. V2's own dry run for 49 Financial planned 2026-10-01, which landed 10-02 11:30:18Z, so a real re-fire on the same day would rewrite that served key. CTO batch 207 signed D2 as 'new keys only'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's round-36 read ~07:4xZ: deployed handler.py (14 of 14 members equal their pins) :109-121; local run of the deployed _days_to_compute with a fake listing: target already landed -> [target]",
+      "ledger irpt-round36-gap-catchup-20261003 V2 proof: 49F dry run without date planned [2026-10-01]; s3 opal-data-49financial date=2026-10-01 written 10-02T11:30:18Z",
+      "CTO RULINGS batch 207 @d9f15bc006: 'D2 SIGNED (producer catch-up, at most 5 trading days per fire, new keys only, ...)'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Batch 207: the catch-up writes new keys only; a served partition is moved only under a never-widen sign-off.",
+  "world_is": "A scheduled fire normally targets an unlanded T-1, so the schedule alone never re-plans a landed day. A second fire on the same day, manual or retried, rewrites the landed partition with no sign-off. The pre-D2 handler did the same.",
+  "notes": "INERT. Owner 2.0.0_SA_COO~P: skip a target that is already landed (or refuse unless an explicit rewrite flag names it). The A1 read on Monday does not exercise this branch."
+}
+```
+
+## IRPT_BCKEND-S298 -- the adapter's saved report carries a claim only when a day is missing; a measured figure is saved with no claim field
+
+```json
+{
+  "id": "IRPT_BCKEND-S298",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-03T08:00:00Z",
+  "one_line": "The round 36 D1 adapter (U+miRkw3..) sets the result claim 'inferred' on a missing trading day (holdings_gold.py:291, :340), and the saved report carries optional_facts.value_facts.claim=inferred. On the measured branch the saved report carries no claim field at all. The top-level claim returned at :340 is read by nothing (retained.py:276-311 saves the report and absences only). And the absence text at :318 calls the figure 'partial, not measured' while the claim reads 'inferred'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's round-36 read ~07:4xZ: deployed adapter, 71 of 71 members equal their pins; a local harness importing the deployed holdings_gold with a fake source: gap -> report value_facts.claim inferred; all days present (negative control) -> measured with no claim field in the saved report",
+      "docs/doctrine/A_VALUE_MUST_CARRY_ITS_CLAIM.md: a value without a claim field may not be treated as measured; the consuming half is the whole mechanism"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A value carries its claim in a field a consumer can reject on (measured/inferred/held/absent), on every branch.",
+  "world_is": "Only the inferred branch is self-describing. A consumer cannot tell a measured figure from one written before D1, and the absence's own words disagree with the claim value.",
+  "notes": "INERT. Owner 2.0.0_SA_COO~P: write value_facts.claim on both branches ('measured' when no day is missing) and align the absence text with the claim vocabulary. Also, cosmetically, the Inflection function logs the 49F function's name (handler.py:142)."
+}
+```

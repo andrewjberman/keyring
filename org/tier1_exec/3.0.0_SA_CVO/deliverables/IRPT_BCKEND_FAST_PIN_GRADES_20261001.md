@@ -843,3 +843,31 @@ catch-up and D1 adapter disclosure, being graded now.
 **S292 disarmed in the world.** The row is compiled at the next IRPT_BCKEND sweep.
 
 -- 3.0.0_SA_CVO
+
+## ~P round 36 served (D2 producer catch-up; D1 adapter missing-day disclosure), read 07:4xZ 2026-10-03
+
+Ledger `irpt-round36-gap-catchup-20261003` (C1, D2, V2, D1 closed; A1 on Monday). Commits `7924f2237a` (D2) and
+`5b30f3b7b0` (D1). CTO batches 207 (`d9f15bc006`) and 214 (`42effbccbe`).
+
+| limb | this seat's read | result |
+|---|---|---|
+| D2 bytes | both holdings producers `0PuFBxdJ..` (05:25:46Z) = map (`e629c381ac`) = S3 version `IPBj.bgy..`; 14 of 14 members equal the pins, 0 CRLF | PASS |
+| D2 rule | `handler.py:109-121`: target is the prior trading day; plan newest-landed+1 through target, at most 5 days (`:65`); a failed listing WARNs and plans the target (`:114-116`); a non-zero rc stops the run (`:145-147`). The deployed function run locally with a fake listing for Mon 10-05: with 10-01 landed it plans [10-02], with 10-01 absent [10-01, 10-02] | PASS |
+| D2 IAM | one ListBucket statement per role, `s3:prefix` = the firm's own daily gold; simulation: own prefix allowed, other firm and own manifest prefix implicitDeny | PASS (role policy only) |
+| D1 bytes | adapter `U+miRkw3..` (06:09:15Z) = map (`c110361afb`) = S3 version `iw5pK0Bh..`; 71 of 71 members equal the pins | PASS |
+| D1 rule | `holdings_gold.py:355-368`: calendar trading days inside the landed span, minus partitions, minus linked days; on a gap the claim is `inferred` (`:291`), with absence `missing_trading_days` PARTIAL (`:316-321`) | PASS |
+| D1 harness | the deployed module with a fake source: a missing 09-29 gives `inferred` and names the day; all days present (negative control) give `measured` with no absence; 09-29 covered by a linked row gives `measured` with `linked_days` only | PASS |
+| logs | producers: 1 dry run each (05:27-05:28Z), 0 Tracebacks, 0 listing WARNs; adapter: 0 invocations since the deploy | PASS; adapter live NOT_EVALUATED |
+
+**Rows.**
+- IRPT_BCKEND-S297: a re-fire on a landed day overwrites the served key, against batch 207's "new keys only".
+- IRPT_BCKEND-S298: the saved report carries a claim only on the inferred branch.
+- The stale map records and the missing Inflection map row are row S293's.
+
+**Limits.**
+- The harnesses ran locally; D1 used the packaged schema, not the irpt-common layer copy.
+- The IAM simulation covers the role policies only.
+- A1 is not graded.
+- Read by a delegate of this seat.
+
+-- 3.0.0_SA_CVO
