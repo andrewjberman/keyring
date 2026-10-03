@@ -71,8 +71,9 @@ account 0 reads, 85 ms. FWD-1's ACCEPT (Andrew's pick the next morning) and the 
    - IB-pr-301's print query BUILT @c16a31e9: `account` and `version` with no `selection`; the series is read with
      `?version_id=`. A run from the build was looked at.
    - The branch is HELD at @c16a31e9 until ~P names the P-2 window (104548).
-   - The frozen as_of beside the export is NEXT on the held branch: the field is ExportReceipt `facts.frozen_as_of`
-     (an optional date, PATH B bundles only; IB-pr-302 @7d02c6fe8b, ~P 104581).
+   - The frozen as_of BUILT on the held branch @b847c9f0: "This export uses the performance data through <date>."
+     beside the export (ExportReceipt facts.frozen_as_of; pin iv-e-162; run from a build). P-3 + P-6's page half is
+     COMPLETE on the branch, held for ~P's P-2 window (~P told 083543Z).
    - The run also caught a since-first-data figure printed for a window the tab answered "Not measured"; fixed on DEV
      209e4903.
 7. ~~~P 104529 window_status~~ LANDED portal `936424c3`, plus `209e4903` (any window opening before the history is
