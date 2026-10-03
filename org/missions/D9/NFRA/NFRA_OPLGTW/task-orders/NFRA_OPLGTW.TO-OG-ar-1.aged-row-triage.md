@@ -72,7 +72,7 @@ Rows: id `NFRA_OPLGTW-Z-W27-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~O
 - Round label 16 (addendum R3-T.9, item 5). Alone. Pre-cut 22:1xZ: `ar1.AC1` FAIL (remediation rows 66; OPEN 41; triage
   absent).
 
-<status>pending</status>
+<status>complete</status>
 <round>16</round>
 <slot>~27</slot>
 <fabric>site-z</fabric>
