@@ -167,3 +167,4 @@ Base CLOUD `6527a03cc1`: aj1_check build 0/5 control 3/3; aj1_refresh_dry FAIL r
 <round>34</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
+<status>complete</status>
