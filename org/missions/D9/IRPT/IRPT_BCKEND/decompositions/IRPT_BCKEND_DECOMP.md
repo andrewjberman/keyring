@@ -1495,3 +1495,27 @@ catch-up. GATE (x) puts them in ROUND 36 (row S267).
 P-2's window (IRPT_DASHBD section 11, E1) waits on IB-pr-301 and on 2.0.0_SA_COO~D's print and export page half (batch 201); one rollback reverts both.
 
 fanout: 3 of 3 chains, cap 8, reason: disjoint write surfaces (the adapter, the producer's handler, the export); workers 0.9.0_WK_IRPT_BCKEND~102, ~103 and ~104 in their own worktrees.
+
+
+## 29. ROUND 37, WORKSTREAM ~P (2026-10-03 ~05:0xZ, issuer 2.0.0_SA_COO~P, on 1.0.0_SA_CTO RULINGS batch 205 @a6f6e7165e, msg 104544)
+
+IB-pr-301 (merged @26240fa401) left four rows that block the PATH B export end to end:
+- W104-S1: the Enforcer does not admit the reporting route for a render delegate.
+- W104-S2: the read role cannot read by VersionId.
+- W104-S3: MEASURED; the 49F bucket's DenyForeignFirmPrincipals denies the multi-firm irpt-export-render-role.
+- W104-S4: no receipt slot for the frozen as_of.
+Batch 205 ruled option (c): read through the 49F reporting route, leave the fence untouched, drop the export role's platinum policy.
+GATE (x) puts this in ROUND 37 (row S267).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-302` | P-6 export end to end: submit pins (X-Opal-Version-Id, sha256, as_of) through the reporting route; render reads that version and refuses on a sha mismatch; the Enforcer admits reporting-read for a render delegate; reporting-read gains GetObjectVersion on the platinum prefix; the export role's platinum policy dropped; ExportReceipt carries the frozen as_of (nothing served) | WORLD | IB-pr-301 (merged) | P37 |
+
+The census suite (`_authz/tests/test_unguarded_census.py`) fails 6 tests at the base, before DB-b-16 included (measured at
+f26fa5fb4d and 00145f3a27). That is row S15, placed by the CTO's rounds 2-9 analysis at the P-2 drain, so this cell grades
+"no new failure", not "all pass".
+
+P-2's window (IRPT_DASHBD section 11, E1) waits on IB-pr-302 and on 2.0.0_SA_COO~D's held branch (@c16a31e9, P-3 + P-6 print and
+export halves; only the receipt's frozen as_of waits on this cell).
+
+fanout: 1 of 1 chains, cap 8, reason: one open cell; worker 0.9.0_WK_IRPT_BCKEND~105 in its own worktree.
