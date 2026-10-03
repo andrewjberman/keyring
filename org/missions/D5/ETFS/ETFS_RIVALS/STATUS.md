@@ -57,7 +57,18 @@ If a seat is not live at its time, its first live session reads before any other
 - **G5 replay (D10): ruled NOT owed** (round-8 draft ruling 4). A rebuild at the deployed code would clear the 6 n/a
   cells (measured locally at `C:/tmp/r7measure/g5pin/`). But no deployed route rebuilds G5, a local gold write is QA-only,
   and the cells roll off around 10-08. If Monday's grades raise it, a replay-route cell joins the repair chain.
-- **I-2: PARKED pending Andrew's explicit directive.**
+- **I-2: UN-PARKED by Andrew-direct ~20:3xZ 2026-10-03** ("yes to all recommendations", card 6 "(b) resume"; record
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261003_20xxZ_YES_TO_ALL_SEVEN_OPEN_CALL_RECS.md` @9fe6e6f111,
+  relayed by CTO~Z msg 29004). Each act runs under its own never-widen pair, and vendor reads go through the scripted
+  vehicle only (CRO CALL 14).
+  - **Measured 2026-10-03 ~21:0xZ, and STOPPED at the gate (row Z-S20, BLOCKING/ARMED).** One scripted query for
+    2026-10-01 returns IDVZ 45 / PFOE 24 / ACWI 2,198 / IWM 1,979 rows (4,246; ~15 s).
+  - The leg's single per-date query is capped at 2,000 rows, and an overflow crashes the WHOLE daily leg. The gate also
+    switches all four names together.
+  - So: NO gate flip and NO backfill until round-8 cell **lg-1** lands. lg-1 queries the controls on their own with a cap
+    sized from this measurement, makes an overflow a per-name partial, and splits the gate (D12 / D13). The issuer's
+    backfill acts follow under their pairs.
+  - The park that preceded it:
   - What it is: IDVZ/PFOE trend from inception (D12); ACWI/IWM benchmarks (D13, the v0.8 leg: +4 names on the same 1
     query, measured offline).
   - Andrew-direct ~17:3xZ 2026-10-03 (MSTR broadcast msg 28913; record

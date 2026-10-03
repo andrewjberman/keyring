@@ -3230,6 +3230,29 @@
     "spec_asserts": "Row ETFS_RIVALS-Z-S17 (2026-10-03T00:15Z): 'G5 writes a phantom EXIT for a zero-share line' with the remedy 'a line whose shares_before is 0 is no trade, never an exit' in gold_trade_schedule.py.",
     "world_is": "The measurement in Z-S17 stands (INEQ JAR_LN and TXUE ATD_CN carry 0 -> 0 exit rows dated 10-01 with NULL price), but its classification and remedy are wrong: CALL 12 ratified keeping the row in G5, and the remedy would break the ratified contract and x-1.AC3. Nothing is owed on it; it leaves the round-8 repair cell. The issuer filed Z-S17 without reading the ruling or the round-6 check that pins the row.",
     "notes": "Supersedes ETFS_RIVALS-Z-S17 (an existing row is never edited; this row carries the correction). D10's six visible n/a cells are unaffected (the 09-30 trims-to-zero; a G5 rebuild at the deployed code prices them). disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S20",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-03T20:50Z",
+    "one_line": "I-2's request-cost measurement (PRD v0.8 'Bloomberg budget'): the four new names return 4,246 holdings rows for ONE report date (IDVZ 45, PFOE 24, ACWI 2,198, IWM 1,979; 13.9-16.6 s), while the leg's single per-date query is capped at 2,000 rows and an overflow raises an uncaught RuntimeError -- so flipping RIVALFUNDS_LEG_ENABLE as built would crash the whole daily leg, including the five funds it lands today.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/tmp/r8prep/i2_measure.json: scripted collector_bloomberg.excel_fetch({2026-10-01: [IDVZ, PFOE, ACWI, IWM]}, max_rows=20000) on the terminal machine (R-21, Andrew-direct card 6 @9fe6e6f111); 4,247 rows incl. header; per id().ORIG_IDS: IDVZ 45, PFOE 24, ACWI 2,198, IWM 1,979; no sink, nothing landed",
+        "data/etfs/scripts/rivalfunds/collector_bloomberg.py@75ad1e4d2e: excel_fetch(max_rows=2000) builds ONE multi-fund BQL query per date and raises RuntimeError('range cap 2000 exceeded') when UsedRange > max_rows; _handler_entry catches only UniverseUnavailable / BloombergUnreachable, so the leg exits as a crash (vehicle code 92, landing UNKNOWN)",
+        "data/etfs/scripts/rivalfunds/universe.py@75ad1e4d2e: LEG_GATE RIVALFUNDS_LEG_ENABLE switches all four pending entries (IDVZ, PFOE, ACWI, IWM) together"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD v0.8: IDVZ and PFOE join the Bloomberg leg's daily queue and its history backfill; ACWI and IWM are the groups' index controls; before the first scheduled fire with the four new names the issuer measures the leg's request cost, and a measured breach STOPs and is rowed. Andrew-direct ~20:3xZ 2026-10-03 card 6: resume I-2 (D12, D13).",
+    "world_is": "Measured breach: the controls alone are about 2x the leg's per-query cap, and the overflow is fatal to the whole leg, not to the two names. The gate is also all-or-nothing, so the cheap half (IDVZ/PFOE, 69 rows/day) cannot go live without the heavy half. Not yet measured: the downstream cost of ~4,200 more lines per day through silver, G1, A1 and the page (1.89 of 2.10 MB today), and the G4 market pull if the controls' ~4,000 constituents join it (the plan holds 601 securities). I-2 STOPS at the gate: no flip, no backfill, until a round-8 cell lands.",
+    "notes": "Remedy (round-8 cell lg-1, collector_bloomberg.py + universe.py): query an index control on its own per date with a cap sized from this measurement (and a range read that never truncates silently), make an overflow a per-name partial rather than a leg crash, and split the gate so D12 (home funds) and D13 (controls) switch independently; then the issuer's backfill acts run under their pairs. Hazard ARMED because anyone flipping the gate today breaks the existing daily leg; it disarms when lg-1 deploys. A YTD backfill of the controls is ~800k rows at ~15 s per date: its Bloomberg budget threshold is not defined in integrations/bloomberg/READ_HERE.md (only the 2-attempt sign-in budget is), so the cell's pair names one."
   }
 ]
 ```
