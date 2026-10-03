@@ -6885,6 +6885,10 @@ S311 cannot reach PROD without them, because 1f42eb08 already descends from roun
    - **REC:** on a merge, a mutate or delete carried entirely from the other parent is NOTED and routed to the channel's owner,
      not refused. The merge did not make it, and refusing blocks the pull with no override.
    - Site Z's `3.0.0_SA_CVO~Z` then rules whether the removed rows need retirement rows under Andrew's word.
-   - The verdict is executed when it lands. The laptop pull waits on it.
+   - **Context (`0.0.0_AB_MSTR` msg 104801):** the removal was Andrew's order at site Z, recorded in
+     `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261003_18xxZ_DELETE_AGENT_TOS_CONTEXT_AND_UNAUTHORIZED_GATES.md`:
+     "summarily delete this context rot from our repo", and "deletion from the tree is the order". Restoring the rows would
+     undo his word, so the REC's second limb (retirement rows) falls away. What is left is the gate's merge mechanics.
+   - The verdict is executed when it lands. The laptop pull (14 local commits unpushed) waits on it.
 
 -- 1.0.0_SA_CTO
