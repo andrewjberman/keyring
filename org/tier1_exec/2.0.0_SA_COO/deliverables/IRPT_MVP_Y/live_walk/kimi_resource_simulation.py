@@ -5,7 +5,8 @@
 
 Simulates secretsmanager:GetSecretValue for irpt-ycharts-runner-role on (a) the estate Kimi secret's real ARN, read
 from describe-secret metadata (no value is read), and (b) a sibling name `astn/kimi/api-key-extra-` plus a 6-character
-suffix that `astn/kimi/api-key-*` admits and `astn/kimi/api-key-??????` refuses. No secret value is read. ASCII only.
+suffix that `astn/kimi/api-key-*` admits and `astn/kimi/api-key-??????` refuses. Prints the decision and the
+MatchedStatements' policy ids (CTO batch 208). No secret value is read. ASCII only.
 """
 import datetime
 import sys
@@ -21,4 +22,6 @@ print("%s at %s" % (label, datetime.datetime.now(datetime.timezone.utc).strftime
 for name, arn in (("the estate Kimi secret", real), ("a sibling name", sibling)):
     r = iam.simulate_principal_policy(PolicySourceArn=role, ActionNames=["secretsmanager:GetSecretValue"],
                                       ResourceArns=[arn])["EvaluationResults"][0]
-    print("%-24s suffix-len %d -> %s" % (name, len(arn.rsplit("api-key-", 1)[1]), r["EvalDecision"]))
+    matched = sorted({m.get("SourcePolicyId") for m in r.get("MatchedStatements", [])})
+    print("%-24s suffix-len %d -> %s | matched %s" % (name, len(arn.rsplit("api-key-", 1)[1]), r["EvalDecision"],
+                                                       ", ".join(matched) or "none"))
