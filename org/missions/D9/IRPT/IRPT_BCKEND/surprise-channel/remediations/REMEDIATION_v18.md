@@ -1071,15 +1071,15 @@ S257 (REMEDIATION_v16) is not moved; it is read at the next compile.
     "owner": "2.0.0_SA_COO~Y",
     "round": "v42",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~Y",
       "round": "v42"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~Y",
-      "at": null
+      "at": "2026-10-03T22:45:00Z"
     }
   },
   {

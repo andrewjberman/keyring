@@ -17216,3 +17216,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "MEASURED: committed @236f660bb6; the naming limb reads PASS 0 graded."
 }
 ```
+
+## IRPT_BCKEND-S320 -- the source map lags irpt-ycharts-generate again (Y-5d deploy not recorded)
+
+```json
+{
+  "id": "IRPT_BCKEND-S320",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-04T20:41:00Z",
+  "one_line": "infra/aws/lambda/ci/lambda-source-map.json records irpt-ycharts-generate's deployed_code_sha256 as FgZcBjJu.., while the live function has run uFTONal.. since 2026-10-04T01:57:24Z; the irpt-y5d ledger closed without recording the deploy, which CTO batch 234's class remedy (record with --function at the close leg) requires.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's sweep-8 read 2026-10-04 ~20:0xZ-20:3xZ (delegate): source map row vs lambda get-function-configuration CodeSha256 and LastModified"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO batch 234: a deploy's close leg records the function with record-terraform-deploy.sh --function, so the source map equals what runs.",
+  "world_is": "The map lags the live function again after ~Y's Y-5d deploy, the same class as rows S293 and S264.",
+  "notes": "INERT. Owner 2.0.0_SA_COO~Y: run the recorder for irpt-ycharts-generate with --function at the current live hash, and add the step to the Y close-leg checklist."
+}
+```
