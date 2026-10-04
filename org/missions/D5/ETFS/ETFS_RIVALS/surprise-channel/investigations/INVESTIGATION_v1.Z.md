@@ -3253,6 +3253,26 @@
     "spec_asserts": "PRD v0.8: IDVZ and PFOE join the Bloomberg leg's daily queue and its history backfill; ACWI and IWM are the groups' index controls; before the first scheduled fire with the four new names the issuer measures the leg's request cost, and a measured breach STOPs and is rowed. Andrew-direct ~20:3xZ 2026-10-03 card 6: resume I-2 (D12, D13).",
     "world_is": "Measured breach: the controls alone are about 2x the leg's per-query cap, and the overflow is fatal to the whole leg, not to the two names. The gate is also all-or-nothing, so the cheap half (IDVZ/PFOE, 69 rows/day) cannot go live without the heavy half. Not yet measured: the downstream cost of ~4,200 more lines per day through silver, G1, A1 and the page (1.89 of 2.10 MB today), and the G4 market pull if the controls' ~4,000 constituents join it (the plan holds 601 securities). I-2 STOPS at the gate: no flip, no backfill, until a round-8 cell lands.",
     "notes": "Remedy (round-8 cell lg-1, collector_bloomberg.py + universe.py): query an index control on its own per date with a cap sized from this measurement (and a range read that never truncates silently), make an overflow a per-name partial rather than a leg crash, and split the gate so D12 (home funds) and D13 (controls) switch independently; then the issuer's backfill acts run under their pairs. Hazard ARMED because anyone flipping the gate today breaks the existing daily leg; it disarms when lg-1 deploys. A YTD backfill of the controls is ~800k rows at ~15 s per date: its Bloomberg budget threshold is not defined in integrations/bloomberg/READ_HERE.md (only the 2-attempt sign-in budget is), so the cell's pair names one."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W4-S18",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~4",
+    "surfaced_at": "2026-10-04T21:45Z",
+    "one_line": "RIV-lg-1: a day whose ONLY fund is an overflowing control lands no OK capture, so the leg reads FAILED/exit 3, not PARTIAL/exit 2",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/collector_bloomberg.py@f8124d0969: _merge_parts yields rows=[] for a date whose only unit overflowed; land_capture analyzes it as NO-ROWS; _finish reports FAILED when n_ok == 0, and exit_code maps FAILED to 3",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round8/checks/lg-1.AC1.py (c) covers the overflow only BESIDE landed rivals (PARTIAL)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Task order RIV-lg-1 section 2: an overflow on one name is exit 2, never a traceback.",
+    "world_is": "Never a traceback, and beside any landed fund it is PARTIAL / exit 2. When the plan for the day holds only the overflowing control (a controls-only backfill date), no capture is OK, so the batch is FAILED and the exit is 3 (nothing landed as OK), with the fund named in detail.failures. _finish and exit_code are outside this order's paths in intent (status semantics for every leg); not changed."
   }
 ]
 ```
