@@ -3253,6 +3253,27 @@
     "spec_asserts": "PRD v0.8: IDVZ and PFOE join the Bloomberg leg's daily queue and its history backfill; ACWI and IWM are the groups' index controls; before the first scheduled fire with the four new names the issuer measures the leg's request cost, and a measured breach STOPs and is rowed. Andrew-direct ~20:3xZ 2026-10-03 card 6: resume I-2 (D12, D13).",
     "world_is": "Measured breach: the controls alone are about 2x the leg's per-query cap, and the overflow is fatal to the whole leg, not to the two names. The gate is also all-or-nothing, so the cheap half (IDVZ/PFOE, 69 rows/day) cannot go live without the heavy half. Not yet measured: the downstream cost of ~4,200 more lines per day through silver, G1, A1 and the page (1.89 of 2.10 MB today), and the G4 market pull if the controls' ~4,000 constituents join it (the plan holds 601 securities). I-2 STOPS at the gate: no flip, no backfill, until a round-8 cell lands.",
     "notes": "Remedy (round-8 cell lg-1, collector_bloomberg.py + universe.py): query an index control on its own per date with a cap sized from this measurement (and a range read that never truncates silently), make an overflow a per-name partial rather than a leg crash, and split the gate so D12 (home funds) and D13 (controls) switch independently; then the issuer's backfill acts run under their pairs. Hazard ARMED because anyone flipping the gate today breaks the existing daily leg; it disarms when lg-1 deploys. A YTD backfill of the controls is ~800k rows at ~15 s per date: its Bloomberg budget threshold is not defined in integrations/bloomberg/READ_HERE.md (only the 2-attempt sign-in budget is), so the cell's pair names one."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W5-S33",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~5",
+    "surfaced_at": "2026-10-04T23:11:00Z",
+    "one_line": "RIV-gc-1 changes what the grader accepts (an uncited fact is attached), so I bumped GRADER_VERSION grounding_check/5 -> /6, which the order did not say; a re-grade of the 2026-10-02 run now writes run id <run>-rg6, and test_r6r6_quoted_name's version assertion moved to /6.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/ai_accounts.py (branch wk-ETFS_RIVALS-5): GRADER_VERSION; regrade_rows builds new_id from it",
+        "data/etfs/scripts/rivalfunds/tests/test_r6r6_quoted_name.py: assert ai.GRADER_VERSION == grounding_check/6",
+        "package suite from data/etfs/scripts: 605 passed 2 skipped 0 failed"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-gc-1 interface: attach_uncited, run_chain and regrade_rows call it; no version bump named. The order lists test_r6r6_quoted_name.py among its paths.",
+    "world_is": "A grade produced with the attach step is a different grade rule from /5; the record (manifest grader field, re-grade run suffix) should say so. PROMPT_VERSION left at a1-chain/5: the prompt text is unchanged. If the issuer would rather keep /5, revert one constant and one test line."
   }
 ]
 ```
