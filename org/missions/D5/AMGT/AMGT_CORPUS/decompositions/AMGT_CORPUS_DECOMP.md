@@ -1,70 +1,77 @@
-# AMGT_CORPUS -- L5 decomposition v34.0 -- ROUND 34 (FWD-22 + FWD-20's V3 set + earnings dates + long name: ONE daily scripted pull)
+# AMGT_CORPUS -- L5 decomposition v35.0 -- ROUND 35 (unit families for the 52, the re-pin's explicit interpreter, the dry-run repair)
 
-**Issuer:** `2.0.0_SA_COO~X`, 2026-10-03 ~21:xxZ.
+**Issuer:** `2.0.0_SA_COO~X`, 2026-10-04 ~00:5xZ.
 
-**Source:**
-- `1.0.0_SA_CTO~Z` round-33 analysis `ledger/ROUND_ANALYSIS.round33.md` @`e55e3b5152` s.2: "The first word that lands is cut as
-  round 34 the same tick: FWD-22 is a scripted, deterministic producer on the terminal box, with the A.4 limits binding; if the
-  word covers V3 and the earnings fields, they ride the same producer from its first run."
-- The word: Andrew-direct 2026-10-03 ~20:3xZ, verbatim "yes to all recommendations", record
-  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261003_20xxZ_YES_TO_ALL_SEVEN_OPEN_CALL_RECS.md` @`9fe6e6f111`,
-  card 3: "CORPUS: a daily Bloomberg re-pull with earnings dates, the V3 fields and a long-name field -- yes, one daily pull for all
-  of it ... this record is the per-use vendor word". Relay: `1.0.0_SA_CTO~Z` msg 29002 (READ-acked).
-- PRD v0.7 `C-NO-VENDOR-CALL` (B.2): on that word, the Model-block pull of every name with a block may recur on a schedule, from a
-  SCRIPTED DETERMINISTIC PRODUCER on the terminal box; A.4 limits 1 (an agent turn is not a producer) and 2 bind.
-- Round 33's decomposition is kept as `AMGT_CORPUS_DECOMP.round33.md`. Base: CLOUD `6527a03cc1`.
+**Source:** `1.0.0_SA_CTO~Z` round-34 analysis `ledger/ROUND_ANALYSIS.round34.md` @`83cd052a9c` s.3, the enrichment list. Relay
+msg 29092 (READ-acked). The rectangle is its three items. Rulings 1 and 3 are LOCAL with at most three mechanical criteria;
+ruling 2's map write is the served move, so it takes a pair. Round 34's decomposition is kept as
+`AMGT_CORPUS_DECOMP.round34.md`. Base: CLOUD `bad41f3f91`.
 
 ## 0. What this round IS
 
-| # | item | cell | path | risk |
+| # | item (analysis s.3) | cell | path | risk |
 |---|---|---|---|---|
-| 1 | The producer: a `refresh` stage that re-pulls every registered name WITH a block, the V3 set + the long name + the earnings dates in its request, and the scheduled entry running it after `admit` | `CRPS-aj-1` | worker `0.9.0_WK_AMGT_CORPUS~1` | LOCAL |
-| 2 | The served act: re-pin `amgt-induction-daily` to the merged commit, fire its own trigger on demand, rebuild the unit map for the new mnemonics, re-derive, verify every block's as_of | `CRPS-aj-2` | the issuer's paired act after aj-1 drains | WORLD |
+| 1 | Unit families for the 52 round-34 mnemonics, decided on the landed values; the census test GREEN | `CRPS-ak-1` | worker `0.9.0_WK_AMGT_CORPUS~1` | LOCAL |
+| 2 | `schedule_induction.ps1` names its interpreter explicitly and refuses a non-blpapi python | `CRPS-ak-2` | worker `0.9.0_WK_AMGT_CORPUS~2` (worker-light) | LOCAL |
+| 3 | The scheduled entry's dry run reads rc 0 with its plan printed and 0 writes | `CRPS-ak-3` | worker `0.9.0_WK_AMGT_CORPUS~3` (worker-light) | LOCAL |
+| 4 | The map rebuild for the 52, one re-derive of each served block, and the re-pin to the commit carrying the map | `CRPS-ak-4` | the issuer's paired act after ak-1 and ak-2 drain | SERVED |
 
-One chain, `aj-1 -> aj-2` (aj-2 runs the code aj-1 lands). Write sets are disjoint:
-- aj-1: `integrations/bloomberg/research/model_block_pull.py`, one new test file beside it, `lib/research/corpus/induction_scheduled.py`;
-- aj-2: the Scheduled Task's pinned checkout, `field_map.json`, the served blocks, the ledger entry.
+**Chains:** `ak-1 -> ak-4`, `ak-2 -> ak-4` and `ak-3` (alone). `ak-4` consumes ak-1's families and re-pins through ak-2's
+script. Write sets are disjoint:
+- ak-1: `integrations/bloomberg/research/build_unit_map.py` + one new test file;
+- ak-2: `lib/research/corpus/schedule_induction.ps1`;
+- ak-3: `lib/research/corpus/induction_scheduled.py` + its test;
+- ak-4: `field_map.json`, the served blocks, the Scheduled Task pin, the ledger entry.
 
 ## 1. The cells
 
-**CRPS-aj-1 (the producer).** Serves FWD-22 and FWD-20; supplies RESAPP FWD-37's earnings dates (fold ruling 8 @`82d1cb21e2`).
-- **The V3 set, measured at the cut:** `python -m lib.research.corpus.typecast --read-latest` (workbooks_read 158, with_mnemonics
-  120, mnemonic_core 96) minus the producer's HEADER+HIST+FORECAST union at the base (66 fields, 46 of the core) = 50, less
-  `BEST_FPERIOD_OVERRIDE` (an override parameter, already the forecast request's override) = **49**. This is the brief's "96 core,
-  46 pulled, 49 real gaps" (`docs/briefs/amgt-security-analysis-friday-demo-brief-20261001.md` IV.1), reproduced.
-- **Placement:** `BEST_CPS` -> FORECAST_FIELDS; `SHORT_NAME`, `COUNTRY_FULL_NAME`, `AVG_DAILY_VALUE_TRADED_3M`,
-  `CRNCY_ADJ_MKT_CAP` -> HEADER_FIELDS; the other 44 -> HIST_FIELDS (yearly, as the team's BDH template calls them). The long
-  name `LONG_COMP_NAME` and the earnings dates `EXPECTED_REPORT_DT` (next) and `ERN_ANN_DT_AND_PER` (history, a BULK field) ->
-  HEADER_FIELDS. Every addition is APPENDED; no base member moves.
-- **A field Bloomberg refuses is a refusal, never a guess:** the existing `__field_errors__` -> `unresolved` path carries it with
-  Bloomberg's own text. A wrong request type surfaces on the first scripted run and is the next round's repair.
-- **refresh:** population = registered names that HAVE a `derived/model_block/<key>/` object; skip a name whose latest block was
-  derived today (UTC), counted `already_current`; batches of at most 3; unreachable DAPI -> REFUSED rc 4.
-- **The scheduled entry** runs `refresh` after `admit` and announces `induction_scheduled step model_block_refresh rc <n>`.
-- Checks (the issuer's files, `deliverables/2.0.0_SA_COO~X/checks/round34/`), at the base: `aj1_check.py` build 0/5, control
-  3/3; `aj1_refresh_dry.sh` FAIL (no stage); `aj1_sched_dry.sh` FAIL (no step line) -- all as expected.
+**CRPS-ak-1 (ruling 2, row Z-W1-S29).**
+- **The defect:** all 52 sit in no family of `build_unit_map.py`. A map rebuild could only write "not in any known field family",
+  and the served figures carry the pointer unit: 32,826 figures over 96 blocks (`evidence/r34_aj2_leg_v_census.txt`).
+- **The act:** place each of the 52 in a family by Bloomberg's own definition (the producer's `FIELD_BASIS` text). The magnitude
+  rule must discriminate on the landed values. A field whose landed values do not discriminate gets UNRESOLVED-ON with its
+  reason, never a guess. Dates and names get a family that says so.
+- **Checks** (`checks/round35/`), at the base:
+  - `ak1_check.py`: build 0/2 (52 unfamilied; 130 of 156 landed entries read "not in any known field family"), control 2/2;
+  - `test_build_unit_map_families.py`: 1 failed.
 
-**CRPS-aj-2 (the issuer's paired served act).** After aj-1 drains to CLOUD:
-1. The never-widen pair: COO half signed here, CTO half owed by `1.0.0_SA_CTO~Z`. The blast radius is the Scheduled Task's pin, one
-   new raw stamp and one new derived stamp per name (write-once keys), and `field_map.json`'s new entries. Rollback per key: re-pin
-   to `33c1d096a343`; the reader serves the prior stamp.
-2. One NEVER-2 entry, slug `amgt-corpus-r34-aj2`, sentinel committed after each leg close.
-3. Legs: `schedule_induction.ps1 -Plan -Commit <merge>` -> `-Register -Commit <merge>` -> fire the task's own trigger on demand
-   (`schtasks /run /tn amgt-induction-daily`) -> read the run log (`refresh population ... pulled <K> bloomberg_calls <c>`) ->
-   rebuild the unit map for the new mnemonics through `build_unit_map.py` (dry run first, the moved entries printed) -> re-derive
-   -> verify: every block's latest stamp is the run's UTC date, denominator printed; the field errors of the new mnemonics
-   censused.
-4. FWD-22's acceptance is the NEXT scheduled fire (13:00Z), read the day after.
+  All as expected.
+
+**CRPS-ak-2 (ruling 1, row Z-S85).**
+- `schedule_induction.ps1` takes `-Python <path>`. The interpreter precedence is that parameter, then the live task's own
+  interpreter, and never PATH resolution alone.
+- `-Plan` and `-Register` refuse an interpreter that cannot import blpapi.
+- **The plant:** with this machine's PATH (Python314 first), `-Plan` still plans Python311.
+- **Check** `ak2_check.sh` at the base: b1 FAIL (plans Python314), b2 FAIL (rc 1, no refusal line). As expected.
+
+**CRPS-ak-3 (ruling 3, row Z-S84).**
+- In `--mode dry-run`, `induction_run`'s `install_poison()` replaces `boto3.client`, `subprocess.run`,
+  `socket.create_connection` and the vendor loader, and never restores them. The model-block steps then fail with rc 1.
+- **The repair:** the scheduled entry keeps step 1's poison for step 1 and restores the originals before the model-block steps.
+  Their dry runs read only (list/get), so the run reads rc 0, prints its plan and attempts 0 writes.
+- **Check** `ak3_check.py` at the base: build 0/2 (admit rc 1, refresh rc 1, no plan lines), control 1/1 (0 writes). As expected.
+
+**CRPS-ak-4 (the issuer's paired SERVED act).** This runs after ak-1 and ak-2 drain, and after the 2026-10-04 13:00Z scheduled
+fire is read as FWD-22's acceptance (on the round-34 pin, which the CVO graded).
+1. A serializing dry run: `build_unit_map.py --population crosswalk --dry-run`, plus a temp-map census per new mnemonic (MEASURED /
+   UNRESOLVED, with reasons).
+2. The pair. The COO half is signed here; the CTO half is owed by `1.0.0_SA_CTO~Z`.
+3. One NEVER-2 entry, slug `amgt-corpus-r35-ak4`.
+4. Legs:
+   - (m) the map write, committed;
+   - (d) one re-derive per registered name from its newest raw stamp, `sa_fallback=False`;
+   - (r) re-pin `amgt-induction-daily` to the commit carrying the map, through ak-2's script;
+   - (v) verify: the pointer-unit census reads 0, or each remaining entry carries its reason. BA's Model tab is looked at.
 
 ## 2. Found at the cut (rows, not cells)
 
-- `AMGT_CORPUS-Z-S84` (OBSERVATION): in `--mode dry-run` the scheduled entry's admit step reads rc 1 at the base --
-  `induction_run`'s dry run poisons `boto3.client`, and admit's S3 read trips it. The fire path is not poisoned. `aj1_sched_dry.sh`
-  grades the refresh step's placement, not its dry-run rc.
+None new. Z-S86 is routed to AMGT_RESAPP by the analysis (ruling 4).
 
 ## 3. Coverage
 
 | cell | order | slot |
 |---|---|---|
-| CRPS-aj-1 | `AMGT_CORPUS.TO-CRPS-aj-1.daily-refresh-producer.md` | `~1` |
-| CRPS-aj-2 | the issuer's paired act (no order) | -- |
+| CRPS-ak-1 | `AMGT_CORPUS.TO-CRPS-ak-1.unit-families-for-the-52.md` | `~1` |
+| CRPS-ak-2 | `AMGT_CORPUS.TO-CRPS-ak-2.repin-explicit-interpreter.md` | `~2` |
+| CRPS-ak-3 | `AMGT_CORPUS.TO-CRPS-ak-3.dry-run-reads-rc0.md` | `~3` |
+| CRPS-ak-4 | the issuer's paired act (no order) | -- |

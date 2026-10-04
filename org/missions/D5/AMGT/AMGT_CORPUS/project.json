@@ -9,7 +9,7 @@
   "dep_stage": "EXECUTING",
   "created": "2026-09-22",
   "registered_under_tree": "2026-09-22",
-  "last_updated": "2026-10-04T00:20:00Z",
+  "last_updated": "2026-10-04T01:00:00Z",
   "pods": [
     "1.0.0",
     "2.0.0",
@@ -60,6 +60,12 @@
       "version": "v34.0",
       "round": 34,
       "note": "2 cells CRPS-aj-1..2 on the round-33 analysis e55e3b5152 s.2 + Andrew-direct 2026-10-03 ~20:3xZ card 3 @9fe6e6f111; aj-1 worker build (LOCAL), aj-2 paired WORLD act (re-pin + on-demand fire + map rebuild)"
+    },
+    {
+      "path": "org/missions/D5/AMGT/AMGT_CORPUS/decompositions/AMGT_CORPUS_DECOMP.md",
+      "version": "v35.0",
+      "round": 35,
+      "note": "4 cells CRPS-ak-1..4 on the round-34 analysis 83cd052a9c s.3; ak-1/ak-2/ak-3 workers (LOCAL), ak-4 paired SERVED act (map rebuild + re-derive + re-pin)"
     }
   ],
   "leads": [
@@ -67,8 +73,8 @@
     "THE BACKLOG POPULATION IS HIS, SEPARATELY. Andrew-direct ~18:3xZ, VERBATIM: 'all of the Research folders in the Opal Sharepoint Shared Asset Management/Research/ subfolder will be the basis for our backfill and initial pool.' Record ANDREW_DIRECT_20260922_183xZ_RESEARCH_FOLDERS_ARE_THE_BACKFILL_BASIS_AND_INITIAL_POOL.md. The folder list is a MEASURED DENOMINATOR (93 at the 2026-09-22 scan), never a transcribed list, and an unresolved folder is printed, never dropped.",
     "SENDING BLOOMBERG MODEL-BLOCK FIGURES TO THE CLAUDE API IS ALLOWED (same record, '3.) That is allowed.') -- this closes the CRO's card 1 for both this project and the addendum."
   ],
-  "phase": "L8 PACKET AT THE CVO (round 34, 2.0.0_SA_COO~X, 2026-10-04 ~00:2xZ): CRPS-aj-1 drained @a864e82a5c (refresh stage + 52 mnemonics + scheduled step; amendment 22eb07e64c sa_fallback=False); CRPS-aj-2 ledger amgt-corpus-r34-aj2 CLOSED -- amgt-induction-daily re-pinned to a864e82a5c (Python311) and fired on demand: pulled 96, bloomberg_calls 768, rc 0; 96/96 registered blocks at 20261003; BA Model tab condition 0. Packet deliverables/2.0.0_SA_COO~X/ROUND34_DRAIN_END_PACKET.md.",
-  "blocking": "None at the issuer. L8/L9 with 3.0.0_SA_CVO~Z; FWD-22 acceptance = the next scheduled fire 2026-10-04 13:00Z. Round-35 candidates in the packet s.4 (unit families for the 52, the V3 Model-tab rows, EQY_FUND_YEAR placement, Z-S85/Z-S84 repairs).",
+  "phase": "ROUND 34 CLOSED (1.0.0_SA_CTO~Z analysis @83cd052a9c on CVO slug 29090); ROUND 35 ISSUED (2.0.0_SA_COO~X, 2026-10-04 ~01:0xZ): CRPS-ak-1 unit families for the 52 (worker ~1), CRPS-ak-2 re-pin explicit interpreter (worker ~2), CRPS-ak-3 dry-run reads rc 0 (worker ~3); CRPS-ak-4 the issuer's paired SERVED act after ak-1 + ak-2 drain and after the 2026-10-04 13:00Z FWD-22 acceptance fire.",
+  "blocking": "None at L6. FWD-22 acceptance = the 2026-10-04 13:00Z scheduled fire (round-34 pin a864e82a5c). CRPS-ak-4 needs the CTO never-widen half.",
   "threads": [],
   "thread_counter": 0
 }
