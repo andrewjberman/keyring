@@ -17446,5 +17446,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   ]
  },
  "disposition": "UNDER_INVESTIGATION"
+}
+,
+{
+ "id": "AMGT_RESAPP-Z-S347",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~Z",
+ "surfaced_at": "2026-10-04T23:39:43Z",
+ "one_line": "DISARM of AMGT_RESAPP-Z-S346 by its disarm_owner: the hazard is cured. aq-5 leg 3 (cell aq-6) added amgt/harvest/gold/chatter_window/ to the role's pool prefixes, and on the deployed function the 95 chatter rows now serve tone and voters from chatter_window: mismatches 74 -> 0, unreadable-table reasons 95 -> 0, on days 30/90/365. No code moved.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "Row Z-S346 (ARMED, disarm_owner 2.0.0_SA_COO~Z) asserts that the deployed role cannot read amgt/harvest/gold/chatter_window/, so every chatter row serves 'the window table could not be read (AccessDenied)'. The forward fix is the CTO's AMENDMENT 1 @14aa3c9200, endorsed by Andrew @c700426bc9, carried by aq-5 AMENDMENT 2 @4d3db86faa and its leg-3 GO @e616511619.",
+ "world_is": "Issuer real run at 2026-10-04T23:39:43Z on deployed CodeSha256 2rFeF57lMh8MkU6WRgZyImZt7RMlW14BdxmUjIBvSSQ= (the AMGT_CORPUS al-5 build, unmoved by leg 3), file deliverables/2.0.0_SA_COO~Z/round67/REAL_RUN_r67_deployed_20261004.txt. r67_grant_aq6.sh: GetObject and ListBucket(s3:prefix) on chatter_window/ allowed, both controls allowed, R67 AQ6 GRANT: YES. r67_served c24: on each of days 30/90/365, C2 PASS unreadable 0 of 95 and C1 mismatches 0, old-reason 0, no-table-row 21. The surviving NO is row Z-W220-S1's producer gap alone. AE~A's leg-3 entry is CLOSED (report msg 29314, instance @768731795b).",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "REAL_RUN_r67_deployed_20261004.txt: R67 AQ6 GRANT: YES; c24 C2 'unreadable 0' x3 windows; c24 C1 'mismatches 0 ... old-reason 0 no-table-row 21' x3.",
+   "Base before leg 3 (issuer dry-run at the aq-6 cut on deployed aoQ+WrefJ): c24 C2 unreadable 95 of 95 per window; C1 mismatches 74; r67_grant_aq6.sh C1/C2 implicitDeny.",
+   "0.7.0_AE_CloudOps~A msg 29314: plan 1 non-no-op (the grants policy, two lists 30 -> 31), 0 lambda change; CodeSha256 held across the apply."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
 }]
 ```
