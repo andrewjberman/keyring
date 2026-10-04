@@ -3536,6 +3536,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "Resolve-Python takes Get-Command python's first real hit; a later install put Python314 first on PATH, so the plan's interpreter depends on install order, not on the interpreter the producer needs.",
     "notes": "Disarmed for CRPS-aj-2 at the act: its gate leg prepends Python311 to PATH and STOPs unless the plan prints Python311 (NEVER_WIDEN_ROUND34_AJ2_SERVED_ACT.md leg 0). The durable repair (an explicit interpreter parameter, or a resolver that requires blpapi) is a candidate for the round-34 analysis. Any other site-Z registration script that resolves python by PATH order carries the same hazard.",
     "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S86",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-10-04T00:07:27Z",
+    "one_line": "/api/scoped/amgt/security/DE_US_Equity/thesis and /peers return 404 on the live API (ui-walk 20261003T235538Z, 3 each), where the 2026-10-01 walk 20261001T083453Z read both 200; Deere is the BA posture card's comparison name.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "tmp/ui-walk/20261003T235538Z/netlog.tsv: 3 x 404 DE_US_Equity/peers, 3 x 404 DE_US_Equity/thesis; every BA_US_Equity request 200.",
+        "tmp/ui-walk/20261001T083453Z/netlog.tsv: DE_US_Equity thesis + peers 200 (2 requests).",
+        "S3 list derived/model_block/DE_US_Equity/: 0 objects; DE_US_Equity is not among the 96 registered names (r34_aj2_leg_v_census.txt)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A name the page links to (the posture comparison) serves its thesis route.",
+    "world_is": "Deere's thesis and peers routes moved from 200 (10-01) to 404 (10-03 23:58Z). Round 34's act wrote nothing for Deere (no block ever, not in the refresh population), so the cause sits outside CRPS-aj-2's blast radius; it is not localised here.",
+    "notes": "Filed at round 34 leg v and kept working (off-task). For the round-34 analysis to route: the thesis route belongs to the AMGT_RESAPP API surface (2.0.0_SA_COO~Z).",
+    "disarm_owner": "2.0.0_SA_COO~X"
   }
 ]
 ```
