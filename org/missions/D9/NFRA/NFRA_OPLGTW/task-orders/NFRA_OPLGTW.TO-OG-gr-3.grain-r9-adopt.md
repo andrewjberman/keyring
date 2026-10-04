@@ -41,6 +41,32 @@ serving metadata only. It never changes silver data or its producer (Andrew-dire
      own refusal. It never serves a wrong row.
    No account numbers or names in the fixture.
 
+## AMENDMENT A2 (2026-10-04 ~00:3xZ, issuer; CTO ruling R9a @c9d5c2dd74, ROUND_ANALYSIS.round15.md section 7; row Z-W22-S4)
+
+Your row S4 is right, and the CTO ruled on it (R9a, option (b), narrowed). Paths gain
+`infra/aws/ec2/opal-gateway/app/integrations/schwab/integration.py`.
+
+1. **The fallback.** In the single-page rows path (`integration.py` ~:687-705), take the branch ONLY when the dataset's
+   grain includes a column that is NOT a served field (no request can carry it). In that branch, replace the
+   per-result duplicate check with `_grain_unique` on the snapshot: the cached check paging already runs (~:536-555,
+   called ~:742-752). A non-unique snapshot refuses with the SAME `duplicate_source_grain` code.
+2. **Nothing else changes:**
+   - a request whose narrower column set omits a SERVED grain field behaves as today;
+   - aggregate mode behaves as today;
+   - `dim_balance` behaves as today.
+3. **Tests:**
+   - restate `test_schwab_query.py::test_ogq2_ac20` to plant a FULL-grain duplicate (equal on all five R9 columns) and
+     assert a single-page `dim_position` request is REFUSED `duplicate_source_grain`. List it in `GR3_TEST_EDITS.md`.
+   - add to `tests/test_schwab_grain_r9.py`:
+     - `test_oggr3_ac04`: a single-page `dim_position` request on a snapshot WITHOUT a full-grain duplicate is served
+       (the fallback does not refuse a unique snapshot);
+     - `test_oggr3_ac05`: a narrow-column `dim_balance` single-page request is unchanged (the control).
+4. **AC1** now requires 5 of 5 named tests in `test_schwab_grain_r9.py` and still NO new failure beyond the baseline.
+   `test_ogq2_ac20` must pass. **AC2** admits `integration.py`.
+5. Build on CLOUD's `integration.py` as your branch has it. CLOUD and live differ by one line there (the live
+   `aws_roles.environ_with_external_ids(...)` call). That line is not yours. `OG-rl-5` merges only your hunks onto the
+   live bytes.
+
 ## AMENDMENT A1 (2026-10-03 ~23:3xZ, issuer; row Z-W22-S3)
 
 R9's grain makes existing Schwab tests red. Their fixture writers carry no `quantity_cash_settled` (or
@@ -69,6 +95,7 @@ R9's grain makes existing Schwab tests red. Their fixture writers carry no `quan
 ## 3. SURFACES
 
 <paths>
+infra/aws/ec2/opal-gateway/app/integrations/schwab/integration.py
 infra/aws/ec2/opal-gateway/app/integrations/schwab/query.py
 infra/aws/ec2/opal-gateway/app/integrations/schwab/datasets.json
 infra/aws/ec2/opal-gateway/tests/
@@ -81,7 +108,7 @@ Rows: id `NFRA_OPLGTW-Z-W22-S<k>` (next unused), fabric `site-z`, disarm_owner `
 ## 4. PROOF OF SPEC (literal; run from your worktree root after your commit)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="OG-gr-3"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r16/checks/gr3.AC1.sh; echo "exit=$?"</invocation><expect>(?s)named tests passed 3 of 3; failed/error lines 0.*NEW beyond baseline 0 .*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="OG-gr-3"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r16/checks/gr3.AC1.sh; echo "exit=$?"</invocation><expect>(?s)named tests passed 5 of 5; failed/error lines 0.*NEW beyond baseline 0 .*RESULT: PASS.*exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="OG-gr-3"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r16/checks/gr3.AC2.sh; echo "exit=$?"</invocation><expect>(?s)outside the allowed set: 0; edited existing test files \d+, not listed in GR3_TEST_EDITS.md 0.*RESULT: PASS.*exit=0</expect></criterion>
 </proof_of_spec>
 
@@ -99,7 +126,7 @@ Rows: id `NFRA_OPLGTW-Z-W22-S<k>` (next unused), fabric `site-z`, disarm_owner `
 - Round label 16 (addendum R3-T.9, item 1); feeds `OG-rl-5`. Pre-cut 22:1xZ: `gr3.AC1` FAIL (test absent; the existing
   suites 41 passed); `gr3.AC2` FAIL (0 files).
 
-<status>pending</status>
+<status>complete</status>
 <round>16</round>
 <slot>~22</slot>
 <fabric>site-z</fabric>

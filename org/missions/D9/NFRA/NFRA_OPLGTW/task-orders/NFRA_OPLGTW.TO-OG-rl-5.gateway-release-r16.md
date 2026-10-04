@@ -24,10 +24,14 @@ rollback tree, verify script, deploy). STANDING RULE (row Z-S32): never source `
 ### PHASE A (pre-GO): read-only on the host; no upload
 
 1. **Live ref.** Confirm `af2d7629702528c050860314a7867d8ea0cecfbf` by host md5 (a mismatch STOPS).
-   - Release tree `/c/tmp/og-rel10`, branch `rel-nfra-oplgtw-r16`, at that commit. Take `OG-gr-3`'s three files from its
-     drained head on CLOUD; the two app files were byte-equal on CLOUD and live at the cut.
-   - Census against live: exactly those three files. The template is untouched.
-2. **Tests** on the release tree: `test_schwab_grain_r9.py`, `test_schwab_semantics.py`, `test_schwab_query.py`,
+   - Release tree `/c/tmp/og-rel10`, branch `rel-nfra-oplgtw-r16`, at that commit. From `OG-gr-3`'s drained head on CLOUD
+     take `query.py`, `datasets.json` and the `tests/test_schwab_*.py` files it changed WHOLE (byte-equal on CLOUD and
+     live before gr-3).
+   - **`integration.py` (A2, R9a): merge ONLY gr-3's hunks onto the LIVE bytes.** CLOUD's copy differs from live by one
+     line, the live `aws_roles.environ_with_external_ids(...)` call, which MUST stay. Prove it:
+     `git diff af2d762970 -- integration.py` on the release equals gr-3's own diff of that file.
+   - Census against live: those files only. The template is untouched.
+2. **Tests** on the release tree: `test_schwab_grain_r9.py` (5 named), `test_schwab_semantics.py`, `test_schwab_query.py` (incl. `test_ogq2_ac20` restated), `test_schwab_transactions.py`,
    `test_entitlement_admin.py::test_ogz2_ac08`.
 3. **Rollback** `/c/tmp/og-rb10` at `af2d762970`, equal file by file to the live S3 artifact.
 4. **The paging measurement, BEFORE** (it is the control). On the host, through the installed engine and its venv, run
