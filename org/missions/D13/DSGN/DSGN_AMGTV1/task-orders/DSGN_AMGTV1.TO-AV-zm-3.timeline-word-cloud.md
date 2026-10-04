@@ -113,7 +113,7 @@ Report once: what changed and where, the output line of every criterion, the por
   not yet deployed. The page prints what is served.
 - **Not graded here** (the issuer's close walk): how the cloud reads in place, and the hover in a browser.
 
-<status>pending</status>
+<status>complete</status>
 <round>35</round>
 <slot>~96</slot>
 <fabric>site-z</fabric>
