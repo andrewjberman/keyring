@@ -41,7 +41,6 @@ Two claims were spot-read:
 | row | disposition | grounds |
 |---|---|---|
 | Z-S70 .. Z-S79 | DISMISSED_WITH_REASON | the issuer's disarm, placement and routing records. Their items are advanced or carried in section 3 |
-| Z-W90-S22, Z-S69 | DISMISSED_WITH_REASON | resolved by Z-S69 |
 | **Z-S67** (silver `record_hash` hashes `run_stamp`) | **GRADUATED** (Z-C-S67) | it breaks FWD-16's "an unchanged one never is [re-scored]": every re-silvering of an unchanged article changes its `record_hash`, so the `record_hash`-keyed FinBERT store would re-score it. This must be decided before FWD-16 runs |
 | Z-S68 (3 stale `/timeline/day` silver-path tests) | **GRADUATED** (Z-C-S67) | the round-39 repair cell (packet 6.2); RESAPP am-1 removed the path by design |
 
@@ -78,12 +77,10 @@ Z-W91-S10) are GRADUATED, with an owner and a placement. Judgment criteria: 0 cu
       "AMGT_HARVST-Z-S76",
       "AMGT_HARVST-Z-S77",
       "AMGT_HARVST-Z-S78",
-      "AMGT_HARVST-Z-S79",
-      "AMGT_HARVST-Z-W90-S22",
-      "AMGT_HARVST-Z-S69"
+      "AMGT_HARVST-Z-S79"
     ],
     "disposition": "DISMISSED_WITH_REASON",
-    "dismissal_reason": "Z-S70..Z-S79 are the issuer's disarm, placement and routing records, whose items are advanced in place (8) or carried open with owner and placement (Z-S11, Z-W91-S10) in REMEDIATION_v1/v3/v4/v5 in this commit; Z-W90-S22 is resolved by Z-S69.",
+    "dismissal_reason": "Z-S70..Z-S79 are the issuer's disarm, placement and routing records, whose items are advanced in place (8) or carried open with owner and placement (Z-S11, Z-W91-S10) in REMEDIATION_v1/v3/v4/v5 in this commit; Z-W90-S22 and Z-S69 were removed from the channel at 2929bd96df (Andrew-direct 2026-10-03 ~18:xxZ) and are no longer adjudicated here.",
     "spec_asserts": "A graduated hazard leaves ARMED only on its remediation row.",
     "world_is": "8 rows advanced, 2 stay open by design.",
     "notes": "L10 precondition MET."

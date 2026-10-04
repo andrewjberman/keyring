@@ -2424,6 +2424,47 @@ row carried no disarm time, `at` is this seat's recording minute 2026-10-02T22:3
    "round": "v51"
   },
   "closed": true
+ },
+ {
+  "id": "AMGT_HARVST-Z-C-S74",
+  "project": "AMGT_HARVST",
+  "fabric": "site-z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "mechanism": "chatter_window carried rows only for securities present in the mention table, so 6 covered names with 0 mentions had no row and their absence read like a missing build.",
+  "evidence": [
+   "adjudications/ADJUDICATION_v54.md#AMGT_HARVST-Z-C-S74",
+   "HVST-ap-1 @5789ad3487; part-20261004T012303Z: 636 rows on 212 names, 18 explicit zeros, 0 gone, 0 changed (read by 3.0.0_SA_CVO~Z, ADJUDICATION_v55)"
+  ],
+  "remedy": "Every universe name carries its 30/90/365 rows; a zero-mention name reads 0/0/0/null.",
+  "owner": "2.0.0_SA_COO~H",
+  "round": "v55",
+  "remediation": {
+   "state": "REMEDIATED",
+   "owner": "2.0.0_SA_COO~H",
+   "round": "v55"
+  },
+  "closed": true
+ },
+ {
+  "id": "AMGT_HARVST-Z-C-S72",
+  "project": "AMGT_HARVST",
+  "fabric": "site-z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "mechanism": "One company's story is served as an event under each of its listings (78 of 507 events) and composite_figi is null on those rows, so no field groups the listings.",
+  "evidence": [
+   "adjudications/ADJUDICATION_v53.md#AMGT_HARVST-Z-C-S72"
+  ],
+  "remedy": "OPEN: a company-level key (populated composite_figi or an issuer id) so cross-security counts collapse listings.",
+  "owner": "1.0.0_SA_CTO~Z",
+  "round": "v55",
+  "remediation": {
+   "state": "OPEN",
+   "owner": "1.0.0_SA_CTO~Z",
+   "round": "v55"
+  },
+  "closed": false
  }
 ]
 ```
