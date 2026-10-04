@@ -323,3 +323,19 @@ The analysis's enrichment list is this issuance's rectangle:
 | `DB-b-19` | FWD-8's income field (PRD ruling 27): `dividend_interest_share_quantity` declared; a DIV debit admitted as income only when that quantity is negative; 38 debits (822.51) measured in, the zero-share row out, return DELTA=0 (nothing served) | LOCAL | DB-b-15 (merged) | L |
 
 fanout: 1 of 1 chains, cap 8, reason: one build cell; E1 is the issuer's packet and E3 is parked on P-2's publish.
+
+## 12. ROUND 12, WORKSTREAM B (2026-10-04 ~22:3xZ, issuer 2.0.0_SA_COO~P, on ANDREW-DIRECT ~22:0xZ "all recs approved" card 2, @66f1e98e98, msg 105003)
+
+E3 / P-5 is un-parked. Its un-park condition holds: P-2 published every 49 Financial account, and ledger irpt-p2-window-20261003
+closed 14/14. Andrew's card 2 lifts his 2026-10-03 data-collection hold for this ONE pull only. The tooling read found no
+population script; the round-4 like-day pull is capped at five accounts. One account is one request, because each account's
+gap-free segments are its own dateRanges, so the pull is about 7,570 requests. The issuer asked 1.0.0_SA_CTO to rule the run's
+shape (pace, abort rule, one bearer, landing).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-20` | P-5 build: bd_population_pull_e3.py (population from the served gold, xref mapping, unmapped with reasons, one request per mapped account) and its OFFLINE plan; pull refuses without --go, on a plan-hash mismatch, on a second pull, and without the CTO's shape ruling file | LOCAL (no vendor call; DRY_RUN=1) | none | B12 |
+| (the run) | the ONE live pull, then the tie-out graded at 0.35 pp with stated reasons | WORLD | DB-b-20 and the CTO's shape ruling | the issuer's act after the ruling |
+
+fanout: 1 of 1 chains, cap 8, reason: one build cell; the live run is the issuer's single act after the shape ruling. Worker
+0.9.0_WK_IRPT_DASHBD~6 in its own worktree.
