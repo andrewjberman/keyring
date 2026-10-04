@@ -27,3 +27,8 @@ widened with the workstream or process rows.
 Read as: push CLOUD so the LDO-001 change (merge 2e2940a4cc, commit f9ba6ba8a8, deployed 22:30Z) and its records reach
 origin. Pushing CLOUD is `0.0.0_AB_MSTR~Z`'s act; this seat relays the word. The redraft-on-republish question is NOT
 answered by this line and stays open.
+
+## Addendum ~22:4xZ, same channel, verbatim
+
+Asked: "should the End of Day post redraft and re-text you when the sprint page is republished before you approve?"
+Andrew: *"yes it should"*
