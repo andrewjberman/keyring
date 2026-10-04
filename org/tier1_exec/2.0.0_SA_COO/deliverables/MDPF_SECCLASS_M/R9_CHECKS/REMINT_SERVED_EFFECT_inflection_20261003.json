@@ -1,0 +1,82 @@
+{
+ "claim": "measured (paired local builds over the same live sources, no upload)",
+ "firm": "inflection",
+ "served_date": "2026-10-01",
+ "served_bundle": {
+  "key": "irpt/inflection/code/gold/investor-reporting-holdings.tar.gz",
+  "version": "dDJb5jlhSpqTz3fi_x2ZO_TafM_VC.F_",
+  "members": 45
+ },
+ "members_missing_at_head": [
+  "SHA256SUMS"
+ ],
+ "served_tree_build": {
+  "business_date": "2026-09-30",
+  "node_count": 36903,
+  "unique_account_count": 884,
+  "reconcile_ok": true,
+  "reconcile_after": 206098981.92,
+  "schema_valid": true
+ },
+ "cloud_tree_build": {
+  "business_date": "2026-09-30",
+  "node_count": 36903,
+  "unique_account_count": 884,
+  "reconcile_ok": true,
+  "reconcile_after": 206098981.92,
+  "schema_valid": true
+ },
+ "nodes": {
+  "served_tree": 36903,
+  "cloud_tree": 36903,
+  "common": 36903,
+  "only_served_tree": 0,
+  "only_cloud_tree": 0,
+  "equal": 36903,
+  "differing": 0
+ },
+ "differing_fields_top": [],
+ "class_change_count": 0,
+ "class_changes": [],
+ "unmatched_by_account": {},
+ "unmatched_account_count": 0,
+ "only_served_tree_sample": [],
+ "only_cloud_tree_sample": [],
+ "account_totals": {
+  "accounts": 884,
+  "equal": 884,
+  "differ": [],
+  "sum_served_tree": 206098981.92,
+  "sum_cloud_tree": 206098981.92
+ },
+ "packet_rows_held": {
+  "CAIBX": [
+   3,
+   25489.9
+  ],
+  "ABALX": [
+   4,
+   0.0
+  ],
+  "SGIIX": [
+   4,
+   15129.32
+  ],
+  "FBALX": [
+   1,
+   0.0
+  ],
+  "VWELX": [
+   2,
+   0.0
+  ],
+  "AMECX": [
+   4,
+   0.0
+  ],
+  "VWENX": [
+   2,
+   0.0
+  ]
+ }
+}

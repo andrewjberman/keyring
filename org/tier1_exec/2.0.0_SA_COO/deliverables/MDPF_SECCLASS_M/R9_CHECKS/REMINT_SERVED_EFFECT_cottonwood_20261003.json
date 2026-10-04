@@ -1,0 +1,92 @@
+{
+ "claim": "measured (paired local builds over the same live sources, no upload)",
+ "firm": "cottonwood",
+ "served_date": "2026-10-01",
+ "served_bundle": {
+  "key": "irpt/cottonwood/code/gold/investor-reporting-holdings.tar.gz",
+  "version": "o4k8Idb5G.NFG9LytykhWwYipgqEz_fn",
+  "members": 45
+ },
+ "members_missing_at_head": [
+  "SHA256SUMS"
+ ],
+ "served_tree_build": {
+  "business_date": "2026-10-01",
+  "node_count": 17870,
+  "unique_account_count": 851,
+  "reconcile_ok": true,
+  "reconcile_after": 540513704.69,
+  "schema_valid": true
+ },
+ "cloud_tree_build": {
+  "business_date": "2026-10-01",
+  "node_count": 17870,
+  "unique_account_count": 851,
+  "reconcile_ok": true,
+  "reconcile_after": 540513704.69,
+  "schema_valid": true
+ },
+ "nodes": {
+  "served_tree": 17870,
+  "cloud_tree": 17870,
+  "common": 17510,
+  "only_served_tree": 360,
+  "only_cloud_tree": 360,
+  "equal": 17510,
+  "differing": 0
+ },
+ "differing_fields_top": [],
+ "class_change_count": 0,
+ "class_changes": [],
+ "only_served_tree_sample": [
+  "acc_01ae2e8903cec124d7ca7809:category:client",
+  "acc_01ae2e8903cec124d7ca7809:client",
+  "acc_01ae2e8903cec124d7ca7809:position:061af9b12f6e46e88828a1ed67beecaa940b69e4937808607a7f2b784347e4a7",
+  "acc_01ae2e8903cec124d7ca7809:position:0a9d0b968c1435b3aa9fb0f5e2ccf4f097a248adfaf7081d48f70cd84402bf7b",
+  "acc_01ae2e8903cec124d7ca7809:position:0ef05e0b716dbe2d3f7caae0b13e1b2fe958b9f2231b7972c9bafe9a6227a3f4",
+  "acc_01ae2e8903cec124d7ca7809:position:10f4615a495db30fc5ce4e26b7ede13a434a7e475051d9b0a8cf85e102e2809c",
+  "acc_01ae2e8903cec124d7ca7809:position:1878eea725a72958da73d5e400bd9e545340232006cf448766559534a7749f18",
+  "acc_01ae2e8903cec124d7ca7809:position:1dab7e960cfd989e11612af7a3d759c00c5e977e817da2d57069afec9b5277c8",
+  "acc_01ae2e8903cec124d7ca7809:position:1e0aa2c36fba0479f0923bb7586dcc35b922332c8d75bcd82e28e28440495695",
+  "acc_01ae2e8903cec124d7ca7809:position:203ac0f9558e87208165f6902bfa8ff8b72ed89011ea5c6ef9ea24de068a83cd",
+  "acc_01ae2e8903cec124d7ca7809:position:245b3bf9db2a0d461b99c2a419d79ff4826a6eb62a8784c9f4964aade5389132",
+  "acc_01ae2e8903cec124d7ca7809:position:246259927b0a8dbc7fd82f12d313cf137767825ad233552af9d26d78fcb4e428",
+  "acc_01ae2e8903cec124d7ca7809:position:29531c2c446ae4335552b89a2bc348083fdfacb65d25da3a66c2eaac8f1df080",
+  "acc_01ae2e8903cec124d7ca7809:position:2df6907cb435cd1f981c485425092f3f298ee875a573d46f11c0716a1ff4c401",
+  "acc_01ae2e8903cec124d7ca7809:position:3818eecd6bb8de04e68b52f8bd354e219b1474c2a741376670fb35a846a25a7b"
+ ],
+ "only_cloud_tree_sample": [
+  "acc_01ae2e8903cec124d7ca7809:category:smas",
+  "acc_01ae2e8903cec124d7ca7809:model:d3885580-7ba1-4143-94f2-cd5c7e9a6f30",
+  "acc_01ae2e8903cec124d7ca7809:position:01a3eaf163d16c20358a9c1835a5fe8b45b097f115914f29f7a28011b05c96df",
+  "acc_01ae2e8903cec124d7ca7809:position:022f96b3cf60531f35db5587ccc9a5a41b0972c0f08ac6fbf48e4e0d9a55c758",
+  "acc_01ae2e8903cec124d7ca7809:position:0359bef7d7e6e4ef18d8ab315673340a344f558a8118788c0bb0f8cd10f26657",
+  "acc_01ae2e8903cec124d7ca7809:position:040d862f4966bc34906f29b605ff094a1c3a981bd604eb6c5f1550eec646a11b",
+  "acc_01ae2e8903cec124d7ca7809:position:0418415a10e8463791a400b29ba820411be8688c28c7eb7c18f2731338517bfb",
+  "acc_01ae2e8903cec124d7ca7809:position:0868891caa538c3787f25beab4498910b649e7399c634699e59fd8352a9a5e32",
+  "acc_01ae2e8903cec124d7ca7809:position:095ec8ceb9fa4650d59df1900d67362c50fbb5b17cc2ad1f2278149cd20915eb",
+  "acc_01ae2e8903cec124d7ca7809:position:0a3a978b7e307e9a47f31a9168fae0b9aba4a430a5a6fe6ad9d1549201e5e933",
+  "acc_01ae2e8903cec124d7ca7809:position:0b46eb262ecf32c51a02604e4dbaa9e9d7d8c9594cd75fe8d1502bb392657a69",
+  "acc_01ae2e8903cec124d7ca7809:position:1419c45fc0b65973f83518a64a4ef1cf427f942a273d11bc0888604e6f30a43a",
+  "acc_01ae2e8903cec124d7ca7809:position:1cbf12bbff5ea8af32f33126777e732fde4225ab716229ad02a656fb91b1046d",
+  "acc_01ae2e8903cec124d7ca7809:position:1d124504c5d2fdb749e4fd4fb23d09c91b1c60d49e6ba5ddaff69f599ddded69",
+  "acc_01ae2e8903cec124d7ca7809:position:20762ac9e9b655b804158a4b2b22e457eb1f7488d86efab783ed5573c794ebb5"
+ ],
+ "account_totals": {
+  "accounts": 851,
+  "equal": 851,
+  "differ": [],
+  "sum_served_tree": 540513704.68,
+  "sum_cloud_tree": 540513704.68
+ },
+ "packet_rows_held": {
+  "SGIIX": [
+   5,
+   159332.54
+  ],
+  "32008F606": [
+   4,
+   130565.58
+  ]
+ }
+}
