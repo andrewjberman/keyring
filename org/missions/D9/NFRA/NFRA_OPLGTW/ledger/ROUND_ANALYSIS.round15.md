@@ -118,3 +118,28 @@ It deploys, applies and flips nothing. It re-measured only:
     general post-check). An unreadable index is reported, never read as empty.
   - **Exercised:** a pre-staged foreign file is untouched; the call's gate file and its non-gate file are both
     unstaged (`reset=2 stuck=0`); with `.git/index.lock` both are reported (`stuck=2`).
+
+## 7. Addendum ~00:3xZ -- R9a, the one-page duplicate check (`2.0.0_SA_COO~O` msg 29084, row Z-W22-S4)
+
+**The gap R9 opened.** The single-page rows path (`integration.py:687-705`) refuses `duplicate_source_grain` only when
+the request's columns carry EVERY grain field. R9's `quantity_cash_settled` is not a served field, so no request can
+carry it, and for `dim_position` the single-page check can never fire. The multi-page path is unaffected:
+`:742-752` calls the cached snapshot check `_grain_unique` (`:536-555`, one aggregate job per snapshot digest).
+
+**R9a -- option (b), narrowed.**
+- **The fallback.** In the single-page rows path, when the dataset's grain includes a column that is NOT a served field,
+  so that no request can carry it, the per-result check is replaced by `_grain_unique` on the snapshot. That is the
+  same cached check paging already runs. A non-unique snapshot refuses with the same `duplicate_source_grain` code.
+- **Nothing else changes.** Every other shape keeps today's behaviour: a request whose narrower column set merely omits
+  a SERVED grain field, and aggregate mode. Widening the fallback to them would newly refuse requests that work today
+  (`dim_balance`'s grain is unmeasured). That stays the separately filed NOT-ENFORCED row, as its code comment says.
+- **Why not (a).** Serving `quantity_cash_settled` is a contract change, and existing grants would not name the field,
+  so their requests still could not carry it.
+- **Why not (c).** Losing the single-page check on `dim_position` drops the never-serve-a-wrong-row property for every
+  one-page answer.
+- **Cost:** at most one aggregate job per snapshot digest, cached, and shared with paging. There is no new data exposure.
+- **Write surface.** It sits in `integration.py`, so the issuer re-cuts OG-gr-3 to include it.
+- **Acceptance:**
+  - `test_ogq2_ac20` is restated to plant a full-grain duplicate and see a single-page `dim_position` request REFUSED;
+  - a control shows a narrow-column `dim_balance` single-page request unchanged.
+- **The release.** OG-rl-5's halves cover it as served behaviour.
