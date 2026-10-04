@@ -124,7 +124,7 @@ Report once: what changed and where, the output line of every criterion, the por
 - **The gap walk is the issuer's real run, not this cell** (decomposition v34). The six-state ui-smoke capture and FWD-24's
   positive control are still owed by the issuer.
 
-<status>issued</status>
+<status>complete</status>
 <round>34</round>
 <slot>~93</slot>
 <fabric>site-z</fabric>
