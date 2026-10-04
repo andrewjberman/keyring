@@ -2,6 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "opal://standards/PROOF_OF_SPEC.schema.json",
   "title": "PROOF-OF-SPEC deliverable (Andrew-direct 2026-08-11 ~0815Z): the machine-readable completion contract every Tier-2 build TO assignee fills to prove work was done TO SPEC. A TO without a schema-valid instance is NOT complete.",
+  "description": "GENRE (2026-10-04, 1.0.0_SA_CTO~Z on the 3.0.0_SA_CVO verdict msg 29306): an instance is genre BUILD (root `genre` absent or BUILD) or genre DEPLOY. BUILD validates exactly as before the split: the `else` branch carries the {mutant, determinism} controls block and the closed key set that sat at the root, both unchanged. DEPLOY (`then`) proves a redeploy, which has no mutant: its `controls` are NAMED controls, each a read with one expected value when the act landed and another when it did not, and it requires never_widen_pair, risk_class and a named rollback. proof-of-spec-check.py adds what draft-07 cannot carry: DEPLOY is admitted only when the governing order carries the issuer's line-anchored <proof_genre>DEPLOY</proof_genre> beside <risk>SERVED</risk> or <risk>WORLD</risk>; at least one control must DISCRIMINATE (status PASS and expected_landed != expected_not_landed); any DID-NOT-DISCRIMINATE control makes the instance INVALID; rollback must be non-empty. The common properties and the 12 required keys stay at the root, so the checker's no-jsonschema fallback still reads them there.",
   "type": "object",
   "required": [
     "schema_version",
@@ -17,8 +18,14 @@
     "session_log",
     "compiler_tools"
   ],
-  "additionalProperties": false,
   "properties": {
+    "genre": {
+      "enum": [
+        "BUILD",
+        "DEPLOY"
+      ],
+      "description": "OPTIONAL; absent means BUILD, so every instance written before 2026-10-04 is BUILD and validates as it did. DEPLOY is a CLAIM the checker grades against the governing order's issuer mark (<proof_genre>DEPLOY</proof_genre> with <risk>SERVED|WORLD</risk>); the graded party cannot confer it on itself, or a build order would escape its mutant."
+    },
     "schema_version": {
       "const": "1.0"
     },
@@ -258,68 +265,7 @@
       }
     },
     "controls": {
-      "type": "object",
-      "required": [
-        "mutant",
-        "determinism"
-      ],
-      "additionalProperties": false,
-      "description": "a passing assertion never mutated has never been tested",
-      "properties": {
-        "mutant": {
-          "type": "object",
-          "required": [
-            "description",
-            "expected",
-            "observed",
-            "status"
-          ],
-          "properties": {
-            "description": {
-              "type": "string",
-              "minLength": 10
-            },
-            "expected": {
-              "type": "string"
-            },
-            "observed": {
-              "type": "string",
-              "minLength": 1
-            },
-            "status": {
-              "enum": [
-                "FIRED-AS-EXPECTED",
-                "DID-NOT-FIRE (deliverable INVALID)",
-                "N/A-SPEC-NAMES-NONE"
-              ]
-            }
-          }
-        },
-        "determinism": {
-          "type": "object",
-          "required": [
-            "method",
-            "observed",
-            "status"
-          ],
-          "properties": {
-            "method": {
-              "type": "string",
-              "description": "two same-input runs compared, or reason N/A"
-            },
-            "observed": {
-              "type": "string"
-            },
-            "status": {
-              "enum": [
-                "STABLE",
-                "UNSTABLE (deliverable INVALID)",
-                "N/A-WITH-REASON"
-              ]
-            }
-          }
-        }
-      }
+      "description": "GENRE-DEPENDENT; the shape lives in the branches below -- BUILD (`else`): {mutant, determinism}, unchanged; DEPLOY (`then`): named discriminating controls. Nothing is constrained here, so no BUILD error is reported twice."
     },
     "declared_exclusions": {
       "type": "array",
@@ -370,6 +316,219 @@
           },
           "result": {
             "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "if": {
+    "properties": {
+      "genre": {
+        "const": "DEPLOY"
+      }
+    },
+    "required": [
+      "genre"
+    ]
+  },
+  "then": {
+    "description": "genre DEPLOY: a redeploy's completion contract. Closed key set: the common keys, the deploy keys, and the deploy convention's carried fields (scope, status, carries, go_message, regression_reads, cold_reads, forward_notes; types from a census of the 23 AE deploy instances, 2026-10-04). A key outside this set is refused, as at BUILD.",
+    "required": [
+      "never_widen_pair",
+      "risk_class",
+      "rollback"
+    ],
+    "additionalProperties": false,
+    "properties": {
+      "genre": true,
+      "schema_version": true,
+      "to_id": true,
+      "firm": true,
+      "decomp_ref": true,
+      "phase": true,
+      "spec_ref": true,
+      "assignee": true,
+      "artifacts_produced": true,
+      "acceptance": true,
+      "declared_exclusions": true,
+      "surprises": true,
+      "session_log": true,
+      "compiler_tools": true,
+      "controls": {
+        "type": "object",
+        "minProperties": 1,
+        "description": "NAMED controls, {<name>: control}. A mutant has no meaning for a redeploy; the mutant's JOB survives as DISCRIMINATION: a read whose expected value differs between landed and not landed (a digest before/after, or a positive control). The checker requires at least one control with status PASS and expected_landed != expected_not_landed, and refuses the instance if any control reads DID-NOT-DISCRIMINATE.",
+        "additionalProperties": {
+          "type": "object",
+          "required": [
+            "description",
+            "expected_landed",
+            "expected_not_landed",
+            "observed",
+            "status"
+          ],
+          "properties": {
+            "description": {
+              "type": "string",
+              "minLength": 10
+            },
+            "expected_landed": {
+              "type": "string",
+              "minLength": 1,
+              "description": "the value this read returns when the act LANDED"
+            },
+            "expected_not_landed": {
+              "type": "string",
+              "minLength": 1,
+              "description": "the value this read returns when the act did NOT land; equal to expected_landed means the read cannot discriminate"
+            },
+            "observed": {
+              "type": "string",
+              "minLength": 1
+            },
+            "status": {
+              "enum": [
+                "PASS",
+                "FAIL",
+                "DID-NOT-DISCRIMINATE"
+              ],
+              "description": "DID-NOT-DISCRIMINATE: the read returned a value that does not separate landed from not landed; the deliverable is INVALID by its own control"
+            }
+          }
+        }
+      },
+      "never_widen_pair": {
+        "type": "object",
+        "required": [
+          "coo_half",
+          "cto_half"
+        ],
+        "properties": {
+          "coo_half": {
+            "type": "string",
+            "minLength": 3
+          },
+          "cto_half": {
+            "type": "string",
+            "minLength": 3
+          }
+        },
+        "description": "the never-widen sign-off pair the act ran under (CLAUDE.md HARD STOPS), each half as path@commit; further per-leg keys are admitted"
+      },
+      "risk_class": {
+        "enum": [
+          "SERVED",
+          "WORLD"
+        ],
+        "description": "the governing order's <risk> class; a LOCAL act is not a deploy"
+      },
+      "rollback": {
+        "type": "string",
+        "minLength": 1,
+        "description": "the NAMED rollback: the act that restores the prior state (e.g. the prior artifact version through one code-only safe-apply) and what triggers it"
+      },
+      "scope": {
+        "type": "string"
+      },
+      "status": {
+        "type": "string"
+      },
+      "carries": {
+        "type": "string"
+      },
+      "go_message": {
+        "type": "string"
+      },
+      "regression_reads": {
+        "type": "object"
+      },
+      "cold_reads": {
+        "type": "object"
+      },
+      "forward_notes": {
+        "type": "array"
+      }
+    }
+  },
+  "else": {
+    "description": "genre BUILD (root `genre` absent or BUILD): exactly the closed key set and the controls block that sat at the root before 2026-10-04.",
+    "additionalProperties": false,
+    "properties": {
+      "genre": true,
+      "schema_version": true,
+      "to_id": true,
+      "firm": true,
+      "decomp_ref": true,
+      "phase": true,
+      "spec_ref": true,
+      "assignee": true,
+      "artifacts_produced": true,
+      "acceptance": true,
+      "declared_exclusions": true,
+      "surprises": true,
+      "session_log": true,
+      "compiler_tools": true,
+      "controls": {
+        "type": "object",
+        "required": [
+          "mutant",
+          "determinism"
+        ],
+        "additionalProperties": false,
+        "description": "a passing assertion never mutated has never been tested",
+        "properties": {
+          "mutant": {
+            "type": "object",
+            "required": [
+              "description",
+              "expected",
+              "observed",
+              "status"
+            ],
+            "properties": {
+              "description": {
+                "type": "string",
+                "minLength": 10
+              },
+              "expected": {
+                "type": "string"
+              },
+              "observed": {
+                "type": "string",
+                "minLength": 1
+              },
+              "status": {
+                "enum": [
+                  "FIRED-AS-EXPECTED",
+                  "DID-NOT-FIRE (deliverable INVALID)",
+                  "N/A-SPEC-NAMES-NONE"
+                ]
+              }
+            }
+          },
+          "determinism": {
+            "type": "object",
+            "required": [
+              "method",
+              "observed",
+              "status"
+            ],
+            "properties": {
+              "method": {
+                "type": "string",
+                "description": "two same-input runs compared, or reason N/A"
+              },
+              "observed": {
+                "type": "string"
+              },
+              "status": {
+                "enum": [
+                  "STABLE",
+                  "UNSTABLE (deliverable INVALID)",
+                  "N/A-WITH-REASON"
+                ]
+              }
+            }
           }
         }
       }
