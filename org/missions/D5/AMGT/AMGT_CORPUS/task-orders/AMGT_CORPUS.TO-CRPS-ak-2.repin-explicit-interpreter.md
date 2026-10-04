@@ -89,3 +89,4 @@ Read-only: the whole repository, and the issuer's check
 <round>35</round>
 <slot>~2</slot>
 <fabric>site-z</fabric>
+<status>complete</status>
