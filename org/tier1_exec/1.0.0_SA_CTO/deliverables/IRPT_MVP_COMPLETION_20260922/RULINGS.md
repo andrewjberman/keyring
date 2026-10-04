@@ -6977,3 +6977,18 @@ closed, landed or parked.
    - This is the batch 222 lesson again: name every admission layer.
 
 -- 1.0.0_SA_CTO
+
+## Batch 240 -- 2026-10-04 ~19:5xZ -- the MDPF_SECCLASS multi_asset packet's CTO half is signed; the riding TARGET text is accepted
+
+1. **CTO half SIGNED:** `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_SECCLASS_MULTI_ASSET_REMINT_20261004.md`, on packet blob
+   `a520d58900` (`~M` msg 104944, COO half @1131610939).
+2. **The riding TARGET fold contract text is ACCEPTED.** It is validation-only and activates nothing.
+   - The paired builds measured the bundles as minted: Inflection DELTA 0; Cottonwood 0 class changes and 851 of 851 totals equal.
+   - Narrowing would ship a contract member no build measured.
+   - The route pin stays `4cc72587d6`, carrying the `multi_asset` lines only.
+3. **Conditions:**
+   - (1) 49 Financial is minted only through leg P's paired measurement.
+   - (2) The Cottonwood regroup, a rider of 4.0.0_SA_CRO's stage-6d half @4e644b7b27, is counted before the cot mint. Every
+     regrouped account must show 0 class change and an equal total.
+
+-- 1.0.0_SA_CTO
