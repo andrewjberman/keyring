@@ -87,3 +87,13 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-04 ~19:5xZ, drain re-entered after the site-Z crash):** CLOSED WITH AC2 FAIL.
+- Worker ~220 commit `7f6ddcb942`, proof-of-spec-check VALID (rc=0). The final report was lost with the pre-crash session.
+- AC1 PASS 5 of 5. AC3 PASS 4 of 4 clauses. AC2 FAIL on ONE clause: per window (30/90/365) 95 rows served, 74 match the
+  table (0 mismatches, 0 old reasons), and 21 covered names have no chatter_window row.
+- The route change is right: it serves the 21 their plain no-row reason (item 3). The gap is the producer's build list
+  (`lib/research/harvest/window_tone.py`; 212 names, 21 covered missing), outside this cell's `<paths>`. Row
+  `AMGT_RESAPP-Z-W220-S1` carries it to the round-67 analysis. Served by aq-5.
+
+<status>complete</status>
