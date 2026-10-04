@@ -7718,3 +7718,52 @@ name the one known failure instead of silently inheriting it.
   "world_is": "The combined-process list gains the two new tests as errors of the unattributed one-process class; every other entry is in the baseline list or is passing alone. Nothing here changes what ships (tests are not in the shipped file set)."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "id": "NFRA_OPLGTW-Z-W15-S38",
+  "surfaced_at": "2026-10-04T23:30Z",
+  "one_line": "rl5 AC1 cannot be met as written: its <expect> pattern requires the line 'host query.py + datasets.json equal the release bytes: yes', but rl5.AC1.sh (A3 version) prints 'host query.py + datasets.json + contract equal the release bytes: yes', so the pattern never matches even though the script reports RESULT: PASS exit=0.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r16/checks/rl5.AC1.sh @e0664cc9d5 prints 'deployed_commit 4b6b823fae; host query.py + datasets.json + contract equal the release bytes: yes' ... 'RESULT: PASS' 'exit=0' (all 11 arms True).",
+      "RUN: re.search of the order's AC1 <expect> '(?s)host query.py \\+ datasets.json equal the release bytes: yes.*dim_position after ok: True...exit=0' against that exact output: no match (False); AC2's expect matches its output (True).",
+      "CODE: the script line is rl5.AC1.sh line 17, 'echo \"deployed_commit ${c:0:10}; host query.py + datasets.json + contract equal the release bytes: $m\"', added by amendment A3 @68c5438a60; the <expect> was not amended with it. proof-of-spec-check requires a PASS row's output to match its expect."
+    ]
+  },
+  "spec_asserts": "Order section 4 AC1: expect '(?s)host query.py \\+ datasets.json equal the release bytes: yes.*...RESULT: PASS.*exit=0'.",
+  "world_is": "The deploy and every arm AC1 grades are met (RL5_PAGING.json 11 of 11 arms True, the host contract md5 equal). Only the order's expectation string is stale against the script's A3 wording. The AC1 proof row is recorded with the literal output and status FAIL-by-pattern, and the order's status tag is left unflipped; the issuer amends its own expect (add ' \\+ contract') and the existing output then grades PASS with no further act on the host."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "id": "NFRA_OPLGTW-Z-W15-S39",
+  "surfaced_at": "2026-10-04T23:35Z",
+  "one_line": "Post-act read for rows Z-W15-S33 and Z-W15-S34: both disarm conditions read met on the served gateway after the release (dim_transaction prefixes live; dim_asset query served held-only).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: rl5_verify.sh after @23:1xZ on the deployed 4b6b823fae (rl5_phaseB_verify_after.out): served census 28 dim_position+dim_asset snapshots servable per master (marker dates 24, 14 qualified), 0 lacking or blank; dim_balance 14 and dim_transaction 14 servable per master (S33: the dim_transaction data prefixes are live and every closure day qualifies).",
+      "RUN: dim_asset rows query by the synthetic grant: OK, returned 49 of an asset universe of 2160 CUSIPs, unheld_returned 0, held_cusips_in_dim_position 49 (S34: served under the C3 restriction); dim_asset prepare_download still REFUSED UNAVAILABLE asset_policy_selection_unavailable (the retained guard)."
+    ]
+  },
+  "spec_asserts": "Rows S33 and S34 / order 4c: 'S33 and S34 disarm on the post-act read'.",
+  "world_is": "Both read as disarmed on the served gateway. The disposition stays the issuer's. The real grant holder's own read is unexercised, as the order's issuer notes say."
+}
+```
