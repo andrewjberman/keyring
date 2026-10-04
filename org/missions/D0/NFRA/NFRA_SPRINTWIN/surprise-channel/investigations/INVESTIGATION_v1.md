@@ -7,7 +7,7 @@
 **Id grammar on this fabric:** a seat's row is `NFRA_SPRINTWIN-Z-S<k>`; every new row carries `"project": "NFRA_SPRINTWIN"` and
 `"fabric": "site-z"`. The CVO's rows live in `adjudications/`, never here.
 
-**Denominator at this write: 3 rows**, `-Z-S1` to `-Z-S3`, all by `4.0.0_SA_CRO~Z`.
+**Denominator at this write: 4 rows**, `-Z-S1` to `-Z-S4`, all by `4.0.0_SA_CRO~Z`.
 
 THIS FILE MUST STAY ONE FENCED JSON BLOCK. An appender targets the FIRST block only, and appends INSIDE the array.
 
@@ -81,6 +81,29 @@ THIS FILE MUST STAY ONE FENCED JSON BLOCK. An appender targets the FIRST block o
       "spec_asserts": "PRD C-CENSUS / FWD-7: the scheduled task runs the script as it stands on origin/CLOUD, never the working tree, so a half-edited checkout cannot change what is sent.",
       "world_is": "The script's bytes were pinned but its address builder was not: the key depended on the checkout's registry. The failure was loud (no file written), not silent. Fixed in the builder fix commit by exporting the builder, schema and registry at the census's origin_cloud.",
       "notes": "Effective on each device once the fix is on origin. Until then the laptop's re-run after its merge of 740fb88d8b uses the working tree's (now current) registry."
+    },
+    {
+      "id": "NFRA_SPRINTWIN-Z-S4",
+      "project": "NFRA_SPRINTWIN",
+      "fabric": "site-z",
+      "surfaced_by": "4.0.0_SA_CRO~Z",
+      "surfaced_at": "2026-10-04T21:52Z",
+      "one_line": "The model wrote a flow diagram's break_after as a stage NAME ('Answers'); the renderer expects an index, so the break marker's cx is NaN and the '!' badge does not draw -- the derived viz contract and the render gate both passed it.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "QA page 2026-10-04 (s3://opal-data-portal-v2/sprint/global/platinum/qa_page/date=2026-10-04/) report JSON: viz {type flow, params.break_after 'Answers', stages [Research, Answers, Overview, Stored]}",
+          "daily_reports/templates/_shared_viz.js V.flow :88 bx=xi(p.break_after)+w+gap/2 -- arithmetic on the param; headless console: '<circle> attribute cx: Expected length, NaN'",
+          "control: the served 2026-10-03 and 2026-10-04 pages (old image) render with 0 console errors"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "4.0.0_SA_CRO~Z",
+      "spec_asserts": "The function's render gate (render_daily_report.py + viz_contract.derive()) refuses any report whose diagrams would paint wrong.",
+      "world_is": "The contract checks that break_after is present, not that it is an integer index; a name passes and paints one badge at NaN. Not caused by this project's changes (model output); cosmetic, one marker on one diagram.",
+      "notes": "Off-thread for NFRA_SPRINTWIN; the template and viz contract are the CTO's surface. Candidate fixes: viz_contract types break_after as an integer, or V.flow accepts a stage name by indexOf. Routed in the round-1 enrichment list."
     }
   ]
 ```
