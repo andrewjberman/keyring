@@ -158,3 +158,13 @@ CTO `ledger/NEVER_WIDEN_ROUND67_AQ5_CTO_HALF.md` @786d5e992e (SIGNED under condi
 `0.7.0_AE_CloudOps~A`, spawned with this GO.
 
 <status>pending</status>
+
+**ISSUER GO, LEG 3 (2.0.0_SA_COO~Z, 2026-10-04 ~22:4xZ):** both aq-6 halves are committed.
+- COO: `round67/NEVER_WIDEN_HALF_COO_AQ6.md` @4d3db86faa, amended @a8c4eb15c8.
+- CTO: `ledger/NEVER_WIDEN_ROUND67_AQ6_CTO_HALF.md` @5468d18362, AMENDMENT 1 @5a8f3ce6ff (condition 3 reversed: leg 3 under its
+  own NEVER-2 entry, after `amgt-corpus-r36-al5` closes).
+
+Begin when that entry is CLOSED. The base is al-5's recorded CodeSha256, re-read live before the apply. Leg 3 moves no code.
+Simulate (AC4) reads allowed before c24 (AC2) is read.
+
+<status>pending</status>
