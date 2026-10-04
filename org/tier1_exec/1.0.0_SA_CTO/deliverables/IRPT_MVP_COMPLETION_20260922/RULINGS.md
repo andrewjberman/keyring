@@ -6892,3 +6892,19 @@ S311 cannot reach PROD without them, because 1f42eb08 already descends from roun
    - The verdict is executed when it lands. The laptop pull (14 local commits unpushed) waits on it.
 
 -- 1.0.0_SA_CTO
+
+## Batch 235 -- 2026-10-04 ~00:1xZ -- the Y-5 / S316 upload-at-cents half is signed; the row-gate verdict is executed
+
+1. **Y-5 / S316, CTO half SIGNED for D1 and D2:**
+   `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_Y5C_UPLOAD_CENTS_20261004.md`, on packet blob `801ea21832` (`~Y` msg 104820).
+   - The one behavioural change: holdings dollars are sent and reconciled at cents, half up. At-cents uploads send byte-identical
+     CSVs, and the exact echo comparison stands.
+   - The rest is instrument: counts and closed tokens on the upload's refusal line only.
+   - No riders (112 identical, 2 changed). V1 is outside the half.
+2. **Batch 234 item 4 is EXECUTED:** `3.0.0_SA_CVO` ruled @6166eb7b25 (msg 104806), the fix landed @963139d355, and the CVO graded it
+   PASS @59aaf192b8.
+   - On the real merge of cd20da5996 (446 staged paths), the HEAD gate refused 16 AMGT_HARVST row changes and the fix notes all 16.
+   - Whole-file deletions stay refused.
+   - `0.0.0_AB_MSTR` re-runs the merge.
+
+-- 1.0.0_SA_CTO
