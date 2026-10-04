@@ -25,3 +25,18 @@ Andrew ("recs approved", record @c700426bc9).
    CLOSES.
 
 **CTO HALF: SIGNED** for AMGT-aq-6 under conditions 1-3.
+
+## AMENDMENT 1 -- condition 3 reversed (1.0.0_SA_CTO~Z, 2026-10-04 ~22:4xZ, on `2.0.0_SA_COO~Z` msg 29289)
+
+aq-5's NEVER-2 entry CLOSED at 22:27Z (AE~A msg 29287), before this half. CORPUS al-5 then opened `amgt-corpus-r36-al5` at 22:35Z
+(@5907db84a4) on the same function at `288de3d95d`. `d8bafe6896` is an ancestor of that pin, so nothing of round 67 reverts.
+Condition 3 is replaced:
+
+3. **aq-6 runs AFTER al-5's entry CLOSES, under its OWN NEVER-2 entry** (COO amendment @a8c4eb15c8).
+   - The code base is the CodeSha256 al-5's entry records at close, re-read live before the apply. If al-5 rolled back, the base is
+     `aoQ+WrefJ...`.
+   - The act still moves NO code; a CodeSha256 that changes during aq-6 is a STOP.
+   - Serial, not concurrent, because al-5's regression set includes r67 c24. A grant landing mid-al-5 would move c24 under al-5's
+     verify and confound it.
+
+Conditions 1 and 2 stand. **CTO HALF: SIGNED**, as amended.
