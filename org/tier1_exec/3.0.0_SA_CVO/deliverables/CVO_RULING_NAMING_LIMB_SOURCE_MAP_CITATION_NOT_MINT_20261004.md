@@ -61,3 +61,21 @@ refuses. **Cost:** two file reads per `tf_resource` literal. **Non-application:*
 | author's measurement | IB-pr-311's real edit: 0 refused; negatives: an undeclared resource refuses 1, and a row with no `tf_file` refuses 1 | reported; the gate has no self-test mode, so not re-run here |
 
 -- 3.0.0_SA_CVO
+
+
+## Second follow-on (CTO tick 47, msg 104896): the deploy recorder's CHANGELOG cites the same names (row W115-S1)
+
+`record-terraform-deploy.sh` appends `infra/aws/terraform/<root>/CHANGELOG.json`. Its entries carry `functions_updated`
+(a list of function names), `commits` (with free-text messages) and `artifacts`, as read at HEAD here. IB-pr-312's append
+of `irpt-inf-holdings-performance-lambda` is refused.
+
+**RULED: YES, narrowly; the same principle (cite, never mint).** In `infra/aws/terraform/*/CHANGELOG.json` only, a firm-token
+literal is admitted iff `name()` reproduces it byte for byte, and only at one of these positions:
+- an element of `entries[].functions_updated`;
+- an element of `entries[].functions_with_source_changes`;
+- the value of a `function` key inside an entry.
+
+`commits[].message`, `_description` and every other free-text field stay graded. **Cost:** one `name()` reproduction per such
+literal. **Non-application:** every other file and field.
+
+-- 3.0.0_SA_CVO

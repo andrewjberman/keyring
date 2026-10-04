@@ -1162,11 +1162,11 @@ S257 (REMEDIATION_v16) is not moved; it is read at the next compile.
     "owner": "2.0.0_SA_COO~P",
     "round": "v42",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~P",
       "round": "v42"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "IRPT_BCKEND-S296",

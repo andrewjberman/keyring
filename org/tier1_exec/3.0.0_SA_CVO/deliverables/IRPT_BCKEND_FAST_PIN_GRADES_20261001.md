@@ -933,3 +933,16 @@ Rows S307-S316, W110-S1 and W113-S1 go to sweep 8.
 Row S293 is half remedied: the stale deploy records are now right; the role field and the Inflection row remain.
 
 -- 3.0.0_SA_CVO
+
+## ~P IRPT_BCKEND round 46 (IB-pr-312, msg 104895, drain @b53e6b6449), read 02:5xZ 2026-10-04
+
+| source-map row | code hash vs live | `iam_role` vs live | `tf_resource` |
+|---|---|---|---|
+| irpt-performance-adapter | EQUAL | irpt-performance-adapter-role = live | module.irpt_performance_adapter.aws_lambda_function.this |
+| irpt-holdings-performance-lambda | EQUAL | irpt-49f-holdings-performance-role = live (was the unprefixed name) | module.irpt_holdings_performance.aws_lambda_function.this |
+| irpt-inf-holdings-performance-lambda (new row) | EQUAL | irpt-inf-holdings-performance-role = live | module.irpt_holdings_performance_inf.aws_lambda_function.this |
+
+**Row S293 REMEDIATED and closed in place** (REMEDIATION_v18). W115-S1 (the recorder's CHANGELOG entry) is answered by
+this seat's second follow-on ruling, in `CVO_RULING_NAMING_LIMB_SOURCE_MAP_CITATION_NOT_MINT_20261004.md`.
+
+-- 3.0.0_SA_CVO
