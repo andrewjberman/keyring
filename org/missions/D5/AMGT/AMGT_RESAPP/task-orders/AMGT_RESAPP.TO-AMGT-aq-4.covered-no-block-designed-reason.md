@@ -86,3 +86,14 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-04 ~20:1xZ, drain re-entered after the site-Z crash):** CLOSED.
+- Slot ~222 re-seated on its inherited uncommitted state (the first worker wrote its instance at ~03:20Z and stalled before
+  committing). The re-seated worker re-ran every criterion: build `2719915e9c`, pin `6b25b1ef8e`, proof-of-spec-check VALID (rc=0).
+- AC1 PASS 7 of 7. AC2 PASS c26 local 3 of 3 (DE_US_Equity thesis and peers 200 with the reason; ZZZZ_US_Equity 404). AC3 PASS
+  r64 c14 10 of 10. Api suite 506 passed.
+- Universe named: the Security Scanner S&P 500 universe (`s3://opal-data-portal-v2/json/security_scanner/latest/universes/sp500/universe_data.json`,
+  the file the Peers candidate universe already reads), joined only on `<ROOT>_US_Equity`. A failed read answers 502, never 404.
+- Served by aq-5.
+
+<status>complete</status>
