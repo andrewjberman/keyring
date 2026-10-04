@@ -17052,3 +17052,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Next: the refusal names its closed counts (rows sent and echoed, missing, extra, amount mismatches and how many are under one cent, errors, the weight unit) with no value, and the upload sends dollars at cents. Ships under a packet; Aproxy re-fires after it."
 }
 ```
+
+## IRPT_BCKEND-W113-S1 -- TO-IB-pr-310: the first recorder run (irpt-ycharts-generate) ran past a 300 s bound and was killed after staging; re-run once with output to a file, completed normally
+
+```json
+{
+  "id": "IRPT_BCKEND-W113-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~113",
+  "surfaced_at": "2026-10-03T23:45:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "record-terraform-deploy.sh --function irpt-ycharts-generate, first invocation (output piped to tail) hit `timeout 300` rc=124 after staging the source map and CHANGELOG but before the commit; the identical re-run completed rc=0 and committed fb8653e0e3",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "first run: rc=124 at 300 s, `git status --short` then showed `M ` on lambda-source-map.json and investor-reporting/CHANGELOG.json (staged, uncommitted), no commit, no process left running",
+      "second run, same arguments, log .scratch/rec1.log: Resolved deployment set = irpt-ycharts-generate; reconcile-deployed 0 reconciled, 0 HELD, 1 already-in-parity; committed fb8653e0e3 (2 files)",
+      "irpt-holdings and irpt-status runs completed normally (a3f4b095ba, d7788267d3); the staged leftover was absorbed by the re-run's commit, whose diff shows exactly one row changed in the source map"
+    ]
+  },
+  "spec_asserts": "The task order: run the recorder once per function; it commits its own changes.",
+  "world_is": "MEASURED: the recorder can exceed 300 s on a cold start (cause not measured; the later runs were faster), and a kill mid-run leaves its edits staged. The order did not name a bound for the recorder, so one re-run was needed.",
+  "notes": "No act beyond the order's own invocation was taken; the source map was never hand-edited."
+}
+```
