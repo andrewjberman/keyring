@@ -1674,3 +1674,13 @@ matches the CTO's 42.
 
 fanout: 2 of 2 chains, cap 8, reason: E1 and E3 are independent; E2 depends on E1's output and is cut when it returns. Workers
 0.9.0_WK_IRPT_BCKEND~116 (E1) and ~117 (E3), each in its own worktree.
+
+## 41. PRD v0.26 STEP 5 (2026-10-04 ~23:2xZ, issuer 2.0.0_SA_COO~P, on 1.0.0_SA_CTO msg 105024 @c74c8439b3 and the adjudication @a2ed4e681a) -- NO NEW CELL
+
+v0.26 amends FWD-3 in place. It now covers the firms whose page serves the holdings basis: Inflection and Cottonwood. 49F's served
+figure is IRPT_DASHBD's flow-adjusted return. IRPT_BCKEND still produces 49F's holdings-basis gold every trading day (FWD-12) as
+IRPT_DASHBD's guard rail. No cell is cut, and no open ~P cell served 49F's FWD-3. Two keys bind every order from round 47's E2
+on (the adjudication, call 2):
+- outcome_ref cites the ratified FWD: export of a branded report FWD-8; a second firm from the global view FWD-11; the Analysis
+  export FWD-4; email intake FWD-9.
+- A 49F holdings-basis figure on a rendered view or PDF is no longer an outcome; a cell that would add one is refused at the cut.
