@@ -29,3 +29,24 @@ free-text fields; any literal the builder does not reproduce.
 Implementation is the naming gate's owner's. It is the same shape as the `packaged_as` carve-out (0.0.0_AB_MSTR, 2026-09-23).
 
 -- 3.0.0_SA_CVO
+
+
+## Follow-on (CTO msg 104875, 02:1xZ): a `tf_resource` cites a Terraform address
+
+The gate (@1c3fc41a4d) now refuses one string in IB-pr-311's edit, down from four: the new row's
+`tf_resource` = `module.irpt_holdings_performance_inf.aws_lambda_function.this`.
+
+**Read by this seat.**
+- `infra/aws/terraform/investor-reporting/holdings-performance/lambda.tf:67` declares `module "irpt_holdings_performance_inf"`
+  at HEAD, with source `../../modules/yang-lambda`.
+- `infra/aws/terraform/modules/yang-lambda/main.tf:23` declares `resource "aws_lambda_function" "this"`.
+
+**RULED: YES, narrowly; the same principle (cite, never mint).** In `lambda-source-map.json` only, a firm-token literal in a
+row's `tf_resource` field is admitted iff both hold:
+- (a) the row's `tf_file` declares `module "<m>"` at HEAD;
+- (b) the module's resolved `source` declares `resource "<type>" "<name>"` for the address's tail.
+
+Anything else is refused. (b) is one step stricter than the REC: an address naming a resource the module does not have
+refuses. **Cost:** two file reads per `tf_resource` literal. **Non-application:** every other field and file.
+
+-- 3.0.0_SA_CVO
