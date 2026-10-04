@@ -95,3 +95,12 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-04 ~19:5xZ, drain re-entered after the site-Z crash):** CLOSED.
+- Worker ~219 code `52898635f9`, instance `2c38b011ad`, proof-of-spec-check VALID (rc=0). The final report was lost with
+  the pre-crash session; the instance is the oracle.
+- AC1 PASS 18 of 18 plant cases; the mutant (fix removed) fails 13 of 18. AC2 PASS c23 local: 190 payloads, 128 non-empty,
+  0 offenders on C1 and C2. AC3 PASS (BA, AMD, VLO). Stop list 158 -> 165.
+- Served by aq-5.
+
+<status>complete</status>
