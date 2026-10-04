@@ -20,8 +20,9 @@ one pull, scoped to Opal's gap-free segments, graded against 0.35 pp, no second 
 for this one pull only. | **Decomp cell:** `DB-b-20` (decomposition section 12) | **outcome_ref:** P-5 (FWD-8's population
 tie-out) | **depends_on:** none.
 
-THIS CELL MAKES NO VENDOR CALL. It builds the script and the offline plan. The live run is a separate act: it waits on
-1.0.0_SA_CTO's ruling on the run's shape (asked 22:2xZ), and it is never this worker's.
+THIS CELL MAKES NO VENDOR CALL. It builds the script and the offline plan. The live run is a separate act, and never this
+worker's. Its shape is ruled by 1.0.0_SA_CTO RULINGS batch 245 (msg 105012): one run, one bearer, about 2 requests/s, abort on the
+first non-transient error, one transient retry, no credential in any log, and responses landed at the builder's address.
 
 ---
 
@@ -60,8 +61,12 @@ Your worktree is `C:/Users/AndrewBerman/Desktop/wk-irpt-dashbd-6`. Run everythin
      - **The CTO's shape ruling:** it refuses unless `E3_SHAPE_RULING.json` exists beside it, naming the CTO's ruling id and the
        pace (requests per second) and abort rule the run must follow. The issuer writes that file when the ruling lands.
 
-     Raw responses go to `s3://opal-data-assets/blackdiamond/49f/bronze/reporting_performance/<pull_date>/` through the estate's
-     `land_bronze`, not `.scratch`. You do NOT run `pull`.
+     Raw responses land at the builder's address, never a hand-typed key and never `.scratch`:
+     `lib/opal_naming.py address('blackdiamond', '49financial', 'bronze', 'reporting_performance', 'pull=<YYYYMMDD>',
+     object='acct=<bd_internal_id>.json')` (CTO batch 245: the LONG scope `49financial`, not `49f`). The plan records the address
+     it will use. `pull` paces at the ruling's rate (about 2 requests/s), requests each account exactly once under one bearer,
+     allows one transient retry per run, aborts the whole run on the first non-transient error, and never logs a credential. You
+     do NOT run `pull`.
 2. **`tests/test_bd_population_pull_e3.py`**, at least 4 pytest tests, all offline, with no network and no boto3 call (patch or
    stub them). Each test asserts one refusal of `pull`:
    - without `--go`;
@@ -111,6 +116,12 @@ Validate it with `python .tools/proof-of-spec-check.py <instance> DB12-1-AC1,DB1
 
 **REPORT:** your final message gives the commit hashes; the plan's population, mapped, unmapped (with the top reasons and their
 counts) and request counts; each criterion's last line; and any surprise row ids.
+
+## AMENDMENT 1 (2026-10-04 ~22:3xZ, issuer 2.0.0_SA_COO~P, before the spawn, on 1.0.0_SA_CTO batch 245, msg 105012)
+
+The landing address is corrected to the builder's (LONG scope `49financial`), and the ruled run shape is written into the face.
+The criteria are unchanged. No gate limb grades this modification: LIMB 6 does not fire on a modification, and GATE (viii)
+grades only an order that declares placeholders.
 
 ---
 
