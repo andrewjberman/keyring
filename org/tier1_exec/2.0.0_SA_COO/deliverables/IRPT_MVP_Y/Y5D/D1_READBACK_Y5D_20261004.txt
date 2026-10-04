@@ -1,0 +1,5 @@
+01:58:51Z uFTONal/RhfoETes4rqJ4xRjJV4d2/nv3OlwuR9AXCQ=	512	900	Successful
+deployed bytes sha256 uFTONal/RhfoETes4rqJ4xRjJV4d2/nv3OlwuR9AXCQ=
+PASS: the cold-start build answered an unauthenticated request with state/statusCode UNAVAILABLE | first-party modules from outside the zip: none
+PASS: the cold-start build answered an unauthenticated request with state/statusCode UNAVAILABLE | first-party modules from outside the zip: none
+PASS: the cold-start build answered an unauthenticated request with state/statusCode UNAVAILABLE | first-party modules from outside the zip: none
