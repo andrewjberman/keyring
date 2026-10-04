@@ -930,7 +930,63 @@ def _builder_reproduces(mod, value):
     return False
 
 
-def _source_map_name_citations(mod, path, added, lits):
+def _tf_block_source(tf_text, module_name):
+    """The `source` string of `module "<module_name>"` in tf_text, or None (no such block, or no source in it)."""
+    m = re.search(r'^\s*module\s+"%s"\s*\{' % re.escape(module_name), tf_text, re.M)
+    if not m:
+        return None
+    depth, i = 1, m.end()
+    while i < len(tf_text) and depth:
+        depth += {"{": 1, "}": -1}.get(tf_text[i], 0)
+        i += 1
+    s = re.search(r'^\s*source\s*=\s*"([^"]+)"', tf_text[m.end():i], re.M)
+    return s.group(1) if s else None
+
+
+def _tf_address_cited(tf_file, address):
+    """3.0.0_SA_CVO follow-on ruling (msg 104877): a source-map `tf_resource` CITES `module.<m>.<type>.<name>` iff (a) tf_file declares
+    `module "<m>"` at HEAD and (b) that module's local `source` declares `resource "<type>" "<name>"` at HEAD. A nested, indexed or
+    remote-source address, or any git read that fails, is a miss, so the literal stays graded."""
+    parts = address.split(".")
+    if len(parts) != 4 or parts[0] != "module" or not tf_file or any(c in address for c in '["]'):
+        return False
+    _m, mname, rtype, rname = parts
+    rc, out, _err = git("show", "HEAD:%s" % tf_file)
+    if rc != 0:
+        return False
+    src = _tf_block_source(text_of(out), mname)
+    if not src or not src.startswith(("./", "../")):
+        return False
+    mdir = os.path.normpath(os.path.join(os.path.dirname(tf_file), src)).replace("\\", "/")
+    rc, out, _err = git("ls-tree", "--name-only", "HEAD", mdir + "/")
+    if rc != 0:
+        return False
+    pat = re.compile(r'^\s*resource\s+"%s"\s+"%s"\s*\{' % (re.escape(rtype), re.escape(rname)), re.M)
+    for f in text_of(out).splitlines():
+        if f.endswith(".tf"):
+            rc2, body, _e = git("show", "HEAD:%s" % f)
+            if rc2 == 0 and pat.search(text_of(body)):
+                return True
+    return False
+
+
+def _row_tf_file(post_text, line_no):
+    """The `tf_file` of the source-map row that holds line `line_no` (1-based): the nearest row key above it, read from the parsed
+    document's `functions` map. None when the row cannot be placed."""
+    lines = post_text.split("\n")
+    for i in range(min(line_no, len(lines)) - 1, -1, -1):
+        m = re.match(r'^ {4}"([^"]+)"\s*:\s*\{', lines[i])
+        if m:
+            try:
+                row = json.loads(post_text).get("functions", {}).get(m.group(1), {})
+            except (ValueError, AttributeError):
+                return None
+            tf = row.get("tf_file") if isinstance(row, dict) else None
+            return tf if isinstance(tf, str) else None
+    return None
+
+
+def _source_map_name_citations(mod, path, added, lits, post_text=""):
     """3.0.0_SA_CVO ruling @7b38f056ca (CVO_RULING_NAMING_LIMB_SOURCE_MAP_CITATION_NOT_MINT_20261004.md, on 2.0.0_SA_COO~P 104859 /
     row W114-S1): in lambda-source-map.json ONLY, a literal in a resource-name position passes iff name() reproduces it byte for
     byte. Such a string CITES a resource Terraform minted through the builder; it mints nothing (Rule 30's existing-pipeline
@@ -939,9 +995,14 @@ def _source_map_name_citations(mod, path, added, lits):
     if path != SOURCE_MAP_PATH:
         return
     for lit in lits:
-        if not lit.permitted and _source_map_name_position(added.get(lit.line, ""), lit.value) \
-                and _builder_reproduces(mod, lit.value):
+        if lit.permitted:
+            continue
+        line_text = added.get(lit.line, "")
+        if _source_map_name_position(line_text, lit.value) and _builder_reproduces(mod, lit.value):
             lit.permitted = True
+        elif re.match(r'^\s*"tf_resource"\s*:\s*%s\s*,?\s*$' % re.escape(json.dumps(lit.value)), line_text) \
+                and _tf_address_cited(_row_tf_file(post_text, lit.line), lit.value):
+            lit.permitted = True  # the follow-on ruling: a tf_resource whose module and resource are declared at HEAD
 
 
 _GITATTR_BINARY_TOKENS = ("binary", "-diff")
@@ -1725,7 +1786,7 @@ def grade_file(nm, f, post_from_index):
         for lit in lits:
             if lit.value in cited:
                 lit.permitted = True  # the packaged name of a tracked source: a citation (R-11), not a mint
-        _source_map_name_citations(nm.mod, path, added, lits)  # a builder-reproduced resource name cites, never mints
+        _source_map_name_citations(nm.mod, path, added, lits, post_text)  # a builder-reproduced name cites, never mints
     else:
         lits = yaml_literals(added)
     waivers = waivers_for(path, post_text) if isinstance(post_text, str) else {}
