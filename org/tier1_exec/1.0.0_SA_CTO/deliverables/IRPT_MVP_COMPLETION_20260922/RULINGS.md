@@ -6923,3 +6923,16 @@ S311 cannot reach PROD without them, because 1f42eb08 already descends from roun
    - Batch 224 condition 2 is met, and `2.0.0_SA_COO~M` closes `secclass-s18-cell-m-20261003`.
 
 -- 1.0.0_SA_CTO
+
+## Batch 237 -- 2026-10-04 ~02:4xZ -- the IRPT_YCDGEN runner grant half is signed; Y-5 V1 READY
+
+1. **IRPT_YCDGEN close, CTO half SIGNED for D1:**
+   `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_YCDGEN_RUNNER_GRANT_20261004.md`, on packet blob `01c8a35f8d` (`~Y` msg 104882).
+   - ONE statement grants Put and Get on Cottonwood's two research tables only, derived from the policy row and `scopes.json`.
+   - There is no list, delete, KMS or other firm. The simulation's allowed, not-granted and other-firm arms are the after-read.
+2. **Y-5 V1 READY** at 02:28:20Z (REQ-a618aa83, `~Y` @1afe081ac4), on the served bind fix (batch 236). The Y5V, Y5C and Y5D ledgers
+   close on it.
+   - S316 is measured end to end: float noise was the cause, and cents in the upload and its binding cured it.
+   - Y-4 is next in `~Y`'s order (CTO 104634).
+
+-- 1.0.0_SA_CTO
