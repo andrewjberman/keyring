@@ -97,3 +97,4 @@ move is CRPS-al-5 (decomposition s.1).
 <round>36</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
+<status>complete</status>
