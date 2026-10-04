@@ -6961,3 +6961,19 @@ closed, landed or parked.
    - `~D` builds it under the FAST lease.
 
 -- 1.0.0_SA_CTO
+
+## Batch 239 -- 2026-10-04 ~19:1xZ -- the IRPT_YCDGEN Cottonwood research principal half is signed; this seat's batch 237 miss
+
+1. **CTO half SIGNED for D1:** `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_YCDGEN_COT_RESEARCH_PRINCIPAL_20261004.md`, on packet
+   blob `97578e0eda` (`~Y` msg 104927, row IRPT_YCDGEN-S1).
+   - A builder-named `irpt-cot-ycharts-research-role` gets Put and Get on Cottonwood's two research prefixes. Only the runner role
+     can assume it.
+   - The host role's inert Put/Get becomes `sts:AssumeRole` on that one ARN.
+   - The bucket fence is untouched.
+   - This is the estate's settled firm-fence pattern (`directory/holdings_refresh.tf:6-10`, CTO R4).
+2. **This seat's miss:** batch 237 signed a grant whose after-read was an identity simulation, which cannot see the bucket policy
+   `DenyForeignFirmPrincipals`. The grant was inert, and the close run's first write was refused; no data moved.
+   - **Correction:** a grant on a firm bucket is signed only on an after-read run WITH the bucket policy.
+   - This is the batch 222 lesson again: name every admission layer.
+
+-- 1.0.0_SA_CTO
