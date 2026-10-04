@@ -3253,6 +3253,27 @@
     "spec_asserts": "PRD v0.8: IDVZ and PFOE join the Bloomberg leg's daily queue and its history backfill; ACWI and IWM are the groups' index controls; before the first scheduled fire with the four new names the issuer measures the leg's request cost, and a measured breach STOPs and is rowed. Andrew-direct ~20:3xZ 2026-10-03 card 6: resume I-2 (D12, D13).",
     "world_is": "Measured breach: the controls alone are about 2x the leg's per-query cap, and the overflow is fatal to the whole leg, not to the two names. The gate is also all-or-nothing, so the cheap half (IDVZ/PFOE, 69 rows/day) cannot go live without the heavy half. Not yet measured: the downstream cost of ~4,200 more lines per day through silver, G1, A1 and the page (1.89 of 2.10 MB today), and the G4 market pull if the controls' ~4,000 constituents join it (the plan holds 601 securities). I-2 STOPS at the gate: no flip, no backfill, until a round-8 cell lands.",
     "notes": "Remedy (round-8 cell lg-1, collector_bloomberg.py + universe.py): query an index control on its own per date with a cap sized from this measurement (and a range read that never truncates silently), make an overflow a per-name partial rather than a leg crash, and split the gate so D12 (home funds) and D13 (controls) switch independently; then the issuer's backfill acts run under their pairs. Hazard ARMED because anyone flipping the gate today breaks the existing daily leg; it disarms when lg-1 deploys. A YTD backfill of the controls is ~800k rows at ~15 s per date: its Bloomberg budget threshold is not defined in integrations/bloomberg/READ_HERE.md (only the 2-attempt sign-in budget is), so the cell's pair names one."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W2-S13",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~2",
+    "surfaced_at": "2026-10-04T21:46:32Z",
+    "one_line": "RIV-rw-1 AC2 (collapse noted 0-trade windows) makes test_no_shares_moved_g82.py::test_the_window_names_how_many_lines_it_did_not_show fail: it asserts a per-window '(0 trades)' heading for a no_move window, and that file is outside rw-1's <paths>.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/tests/test_no_shares_moved_g82.py:21@746eaad457 asserts 'data-no-move=\"1\"' in html and '(0 trades)' in html for a single 0-trade window carrying no_move=1; AC2 (rw-1.AC2.py) requires that window to collapse into a data-empty-run line with no 'Window ...' heading",
+        "data/etfs/scripts/rivalfunds/render.py (this branch): _empty_window no longer excludes no_move/cash_equiv windows; _window_notes keeps both notes inside the run with the data-no-move / data-cash-equiv attributes, so test_g83_cash_equiv_trades.py still passes; full suite run from data/etfs/scripts: 597 passed, 2 skipped, 1 failed (this test)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-rw-1 order: run the whole package suite before reporting, it must read 0 failed; AC2: consecutive noted 0-trade windows collapse into one line with notes inside, no per-window heading.",
+    "world_is": "The two are contradictory on the one line '(0 trades)': the old test pins the pre-AC2 heading. The assertion that the no_move count is carried on the page still holds (data-no-move=\"1\" is inside the run); only the '(0 trades)' heading half is superseded by AC2. Not edited: the file is outside <paths>.",
+    "notes": "Issuer's call: widen rw-1 <paths> to test_no_shares_moved_g82.py (replace '(0 trades)' with 'data-empty-run=\"1\"'), or amend it at the drain. Nothing else in the package suite is affected."
   }
 ]
 ```
