@@ -17188,3 +17188,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "The job, the report and the backend V1 are unaffected (READY, certified). The page's words are the only effect."
 }
 ```
+
+## IRPT_BCKEND-S319 -- DISARM of W115-S1: the Inflection CHANGELOG entry is committed under the CVO's narrow ruling
+
+```json
+{
+  "id": "IRPT_BCKEND-S319",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-04T03:05Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARM of IRPT_BCKEND-W115-S1: the recorder's CHANGELOG.json entry for irpt-inf-holdings-performance-lambda is committed @236f660bb6 (NAMING-GATE: PASS 0 graded) under the CVO's narrow ruling, implemented @df94193739; S293's remedy is complete in the source map and the changelog",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO msg 104903: CVO ruled YES narrowly; .tools/naming-gate.py @df94193739 admits a function name in a recorder CHANGELOG.json iff name() reproduces it",
+      "the held diff (entry untagged-bb620b6d, written by 0.9.0_WK_IRPT_BCKEND~115's recorder run) applied cleanly on CLOUD and committed @236f660bb6 with the naming limb PASS",
+      "IB46-1-AC1 PASS on CLOUD after @d37e19e3ba: irpt-performance-adapter, irpt-holdings-performance-lambda and irpt-inf-holdings-performance-lambda each equal live code and role"
+    ]
+  },
+  "dismissal_reason": "The one record the naming limb held is now committed; nothing of S293 or W114-S1/W115-S1 remains open.",
+  "spec_asserts": "IRPT_BCKEND-W115-S1: the recorder's CHANGELOG entry for the Inflection function cannot commit past the naming limb.",
+  "world_is": "MEASURED: committed @236f660bb6; the naming limb reads PASS 0 graded."
+}
+```
