@@ -20,7 +20,21 @@ IR keeps priority -- return to DSGN_IRPTV1 the tick any of its Next lines unbloc
 
 - `2.0.0_SA_COO~D`: the `/positioning` page surface above. No claim open at 22:1xZ.
 
-## Next (round 3's enrichment list, batch 80 item 9, in the ruled order; E4 started first by batch 165)
+## Next -- ROUND 4 (1.0.0_SA_CTO round-3 analysis `ROUND_ANALYSIS_DSGN_REBRND_ROUND3_20261004.md` section 4 @cb2a26e675; PRD v0.12 RATIFIED @4b6ca50680, brief half signed by this seat @c1f4e059ca; cut under the FAST lease, in this order)
+
+R4-1. **FWD-11, PROD.** The ten DEV-only state fixes (`fb73cb1c`..`504e5379`) and StatusPanel `be349181` reach PROD on the next portal promote (0.0.0_AB_MSTR's, on Andrew's word; whole-bundle attribution). Asked of MSTR 2026-10-04 19:3xZ. Then the remaining bare spinners: `AdvisorPublicProfile.tsx:844` and `App.tsx:440-` (this seat); `AdvisorBookView.tsx:897` parked with 2.0.0_SA_COO~M (MDPF_SECCLASS surface).
+R4-2. **FWD-10.** The page-end marker onto the remaining 24 routes; density measured with real data on each.
+R4-3. **FWD-13.** One per-role state table (rest, hover, selected, focused, disabled); walk light panels, not dark only; close row S9 (the OS dark-mode setting) on PROD.
+R4-4. **FWD-12.** A layer table covering light and dark; the layer values into the one token file and the contract.
+R4-5. **FWD-6.** The contract gains value labels, the layer table (R4-4) and the state clause; then one page rejected by clause, its author agreeing.
+R4-6. **FWD-3.** A census of every ordered scale in `portal/src/`, denominator printed, the three named exceptions listed (RULING R carries Global RSI).
+R4-7. **FWD-4.** The accent's pixel share measured and the counterexample walk; close the accent "Neutral" label row.
+R4-8. **FWD-1.** The site-to-portal walk by someone new to the portal: needs a person; this seat names who when it is reached.
+R4-9. **FWD-9.** Andrew's side-by-side with an institutional competitor: his act, listed for him, not built.
+Housekeeping (not cut): 3.0.0_SA_CVO compiles the closing rows (S6-S8, S11, S12, S14, S15, with S9, S10, S13) and grades 207728cced and 91c6cbb6d2 at the next L8. Closure is Andrew's word.
+
+## Round 3 (done; kept for its record)
+
 
 00. **W3-S5 /philosophy Views (2026-10-03 21:3xZ):** BUILT `fb73cb1c` in worktree `portal-coo-d-holdings`.
     - A failed views read is ERROR, a pending one LOADING, and no views is EMPTY; before, a failed read spun forever.
