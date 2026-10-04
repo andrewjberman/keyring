@@ -5,7 +5,7 @@
  "project": "IRPT_BCKEND",
  "directive": "D9",
  "fabric": "laptop",
- "prd_version": "v0.25",
+ "prd_version": "v0.26",
  "step": 4,
  "brief_ref": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md@2acf23d8fd",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13"],
@@ -34,12 +34,12 @@ Brief: `docs/briefs/investor-reporting-ir-bk-brief-20260910.md` @`2acf23d8fd`, 5
          CONSTRAINT highest blast radius in the set: a defect is a CROSS-FIRM EXPOSURE; the estate's cross-firm rule is substrate-shaped, both shapes live (bucket-scoped Deny; key-prefix + IAM condition); graded on its own, never as a side effect of FWD-1. The same rule binds at ingestion (FWD-10) and is GRANTED to the Opal-user class (FWD-11)
          PIN        58266dab2d
 
-  FWD-3  An advisor reads, for any account at any firm, a performance figure computed by Opal from that account's own end-of-day holdings, and exports the same figure
-         DONE WHEN  EXERCISED -- one invested account per firm (49F, INF, COT) has been computed from landed holdings, carried to the rendered view and the PDF at one gold revision, and reproduced by hand from that day's holdings
+  FWD-3  An advisor reads, for any account at Inflection or Cottonwood, a performance figure computed by Opal from that account's own end-of-day holdings, and exports the same figure
+         DONE WHEN  EXERCISED -- one invested account per firm (INF, COT) has been computed from landed holdings, carried to the rendered view and the PDF at one gold revision, and reproduced by hand from that day's holdings
          ACCEPT     each day's account return is the weight-pro-rated return of the securities it held, weights relative to the account's end-of-day value on the prior day, the delta taken day over day; period figures link the daily returns; a relationship or client composes its accounts' holdings by the same rule, never by summing or averaging period returns; the page and the export read ONE gold shape in which the firm is a column, never a firm code path
          PROOF      for one account per firm, the gold's daily rows are recomputed from the landed silver positions of two consecutive trading days and match; the rendered view, the export and the gold read the same revision
          OWNER      IRPT_FNTEND.  THIS PROJECT: the holdings-basis gold (FWD-12), its adapter, UNITS, dates, the composition rule, the normalized PerformanceReport; the PDF runs in this project's worker
-         CONSTRAINT NO INFLOW/OUTFLOW LOGIC: cash movements do not enter the calculation; the only inputs are end-of-day asset holdings values (Andrew-direct 2026-09-28 ~22:2xZ and ~22:4xZ); a vendor's calculated return is a comparison point (FWD-13), never the served figure
+         CONSTRAINT NO INFLOW/OUTFLOW LOGIC: cash movements do not enter the calculation; the only inputs are end-of-day asset holdings values (Andrew-direct 2026-09-28 ~22:2xZ and ~22:4xZ); a vendor's calculated return is a comparison point (FWD-13), never the served figure; 49 Financial's served figure is IRPT_DASHBD's total return (its FWD-1 and FWD-8; Andrew-direct 2026-09-30 and his P-2 promote word), and this project's 49F holdings-basis gold stays produced (FWD-12) as that figure's guard rail
          PIN        58266dab2d; 0b6f598df4
 
   FWD-4  An advisor obtains a YCharts sensitivity analysis in the same client context and exports it
@@ -639,3 +639,10 @@ agreement was one-sided. Written by `1.0.0_SA_CTO` 2026-10-03 ~21:1xZ under the 
     (`org/missions/D9/IRPT/IRPT_YCDGEN/prd/IRPT_YCDGEN_PRD.md` C-SESSION). They use the same lease key, store and pace as the
     served Analysis runs. This project stays the owner, and nothing it serves changes. A change to the broker, the lease key or
     the pacing names IRPT_YCDGEN among the readers it must keep working. No CONTRACTS row changes. ENDPOINT is not edited.
+
+## ADDENDUM v0.26 -- FWD-3 amended in place: Inflection and Cottonwood; 49F's figure is IRPT_DASHBD's (L10; ENDPOINT changed: the ratified-text half re-opens)
+
+**Source.** `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_IRPT_BCKEND_20261004T232xZ.md` (calls 1-3), on `3.0.0_SA_CVO`'s outcome grade at PROD c69b4747 (msg 105019, @c860c50818). Written by `1.0.0_SA_CTO` under Andrew-direct 2026-09-03 (the CTO adjudicates after L2).
+
+26. **FWD-3 is amended in place, id unchanged.** 49 Financial's page serves IRPT_DASHBD's flow-adjusted total return (PATH B, retired PATH A on Andrew's P-2 promote word; batch 178: IRPT_DASHBD FWD-1, FWD-2 and FWD-8 hold the Performance outcomes), so FWD-3 now reads Inflection and Cottonwood. **Capability no longer promised:** this project does not put a holdings-basis figure on 49F's rendered view or PDF. **Kept:** 49F's holdings-basis gold is still produced every trading day (FWD-12) as IRPT_DASHBD's guard rail, and the 09-28 no-flow constraint binds Inflection and Cottonwood.
+27. **Order `outcome_ref`s cite the ratified FWD** from the next issuance: branded-report export is FWD-8; report and export at a second firm from the global view is FWD-11; the Analysis export is FWD-4; email intake is FWD-9. Past orders stand; the adjudication record is their key.
