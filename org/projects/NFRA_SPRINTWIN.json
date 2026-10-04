@@ -1,0 +1,13 @@
+{
+ "project_code": "NFRA_SPRINTWIN",
+ "home": "org/missions/D0/NFRA/NFRA_SPRINTWIN",
+ "directive": "D0",
+ "macro_code": "NFRA",
+ "fabric": "site-z",
+ "dep_stage": "REGISTERED",
+ "status": "active",
+ "name": "The daily sprint: every hour reported once (previous report to this one), on New York time, with each computer's unpushed commits counted through a per-device census unioned by the cloud run",
+ "generated_from": "org/missions/D0/NFRA/NFRA_SPRINTWIN/project.json",
+ "generated_by": ".tools/missions-tree-index.py",
+ "generated_at": "2026-10-04T18:25:53Z"
+}
