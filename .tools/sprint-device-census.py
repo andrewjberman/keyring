@@ -20,7 +20,8 @@ as the same commit read from the cloud's clone. Commit metadata only: no file co
 that ran, so a reader can tell the pinned copy from a working-tree edit (FWD-7).
 
 Where it goes: lib/opal_naming.py address('sprint', 'global', 'bronze', 'device_census',
-'date=<day>', '<device>.json') -- builder output, never a typed path (CLAUDE.md rule 30). The put is
+'date=<day>', '<device>.json') -- builder output, never a typed path (CLAUDE.md rule 30), from the
+builder and registry AS PUBLISHED at origin/CLOUD (pinned_address), not the working tree's. The put is
 verified by read-back (size + MD5 ETag); the upload's return code is never the proof.
 
 boto3 is an already-installed dependency on both devices (the local /daily-sprint publisher uses it);
@@ -118,11 +119,44 @@ def build(root, day=None):
     }
 
 
+def pinned_address(root, rev, *args):
+    """lib/opal_naming.py address() as it stands at `rev` (origin/CLOUD), never the working tree's.
+
+    The script itself runs pinned (PRD C-CENSUS), but it used to import the builder and its registry
+    from the WORKING TREE -- measured 2026-10-04 20:56Z on the laptop: a tree 80 commits behind
+    origin lacked the `sprint` row and the run failed "source sprint is not a systems.json key".
+    The builder, its schema and the registry are exported from `rev` into a temporary tree, so the
+    key a device writes is the one the published code names, whatever state the checkout is in."""
+    import importlib.util
+    import shutil
+    import tempfile
+    reg = [p for p in _git(root, "ls-tree", "--name-only", rev, "infra/logic/registry/").split() if p.endswith(".json")]
+    need = ["lib/opal_naming.py", "org/standards/NAMING_SCHEMA.json", "org/missions/DIRECTIVES.yaml"] + reg
+    tmp = tempfile.mkdtemp(prefix="sprint-naming-")
+    try:
+        for rel in need:
+            out = subprocess.run(["git", "-C", root, "show", "%s:%s" % (rev, rel)], capture_output=True)
+            if out.returncode != 0 or not out.stdout:
+                raise SystemExit("ERROR: %s:%s unreadable (rc=%d): %s" % (rev, rel, out.returncode,
+                                                                          out.stderr.decode("utf-8", "replace")[-300:]))
+            dst = os.path.join(tmp, *rel.split("/"))
+            os.makedirs(os.path.dirname(dst), exist_ok=True)
+            with open(dst, "wb") as f:
+                f.write(out.stdout)
+        spec = importlib.util.spec_from_file_location("opal_naming_pinned", os.path.join(tmp, "lib", "opal_naming.py"))
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        return mod.address(*args)
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
 def upload(root, census, data):
-    sys.path.insert(0, os.path.join(root, "lib"))
-    from opal_naming import address
-    url = address("sprint", "global", "bronze", "device_census", "date=" + census["day"],
-                  census["device"] + ".json")
+    rev = census["origin_cloud"]
+    if not rev:
+        raise SystemExit("ERROR: this checkout has no origin/CLOUD; the census key comes from the published builder")
+    url = pinned_address(root, rev, "sprint", "global", "bronze", "device_census", "date=" + census["day"],
+                         census["device"] + ".json")
     bucket, key = url[len("s3://"):].split("/", 1)
     import boto3
     s3 = boto3.client("s3")
