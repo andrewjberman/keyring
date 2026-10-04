@@ -108,7 +108,26 @@ def row_keys():
     return keys
 
 
-def main(firm):
+ADMIT_OLD = '"unclassified")'
+ADMIT_NEW = '"multi_asset", "unclassified")  # measurement-only: 4cc72587d6\'s one token (row S23)'
+
+
+def admit_multi_asset(served_tree):
+    """Row S23: since the packet's rows landed, the SERVED producer refuses a canonical row carrying multi_asset, so the
+    served tree cannot build against the live table. For the measurement only, the served tree's ASSET_CLASS_VALUES gets
+    the one token CLOUD's 4cc72587d6 added -- every other riding change still shows as a difference."""
+    path = Path(served_tree) / PRODUCER_REL / "holdings_snapshot.py"
+    text = path.read_text(encoding="utf-8")
+    lines = text.split("\n")
+    idx = [i for i, ln in enumerate(lines) if ADMIT_OLD in ln and "multi_asset" not in ln
+           and any("ASSET_CLASS_VALUES" in lines[j] for j in range(max(0, i - 4), i + 1))]
+    assert len(idx) == 1, ("expected one ASSET_CLASS_VALUES line to patch", idx)
+    lines[idx[0]] = lines[idx[0]].replace(ADMIT_OLD, ADMIT_NEW, 1)
+    path.write_text("\n".join(lines), encoding="utf-8")
+    return idx[0] + 1
+
+
+def main(firm, admit=False):
     date = served_date(firm)
     key, ver, tf = served_tar(firm)
     members = [m for m in tf.getmembers() if m.isfile()]
@@ -116,6 +135,9 @@ def main(firm):
     with tempfile.TemporaryDirectory(prefix=f"remint_{firm}_") as tmp:
         served_tree, cloud_tree = Path(tmp) / "served", Path(tmp) / "cloud"
         tf.extractall(served_tree, members=members)  # noqa: S202 -- our own served bundle, repo-relative member paths
+        if admit:
+            print("served tree: ASSET_CLASS_VALUES admits multi_asset (measurement-only patch) at line",
+                  admit_multi_asset(served_tree), flush=True)
         missing_at_head = []
         for m in members:
             blob = subprocess.run(["git", "-C", str(ROOT), "show", f"HEAD:{m.name}"], capture_output=True)
@@ -130,6 +152,7 @@ def main(firm):
         B, b_meta = build(cloud_tree, firm, date)
         print("CLOUD-tree build", b_meta, flush=True)
     out = {"claim": "measured (paired local builds over the same live sources, no upload)", "firm": firm,
+           "served_tree_admits_multi_asset_patch": admit,
            "served_date": date, "served_bundle": {"key": key, "version": ver, "members": len(members)},
            "members_missing_at_head": missing_at_head, "served_tree_build": s_meta, "cloud_tree_build": b_meta}
     if S is not None and B is not None:
@@ -183,6 +206,7 @@ def main(firm):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2 or sys.argv[1] not in FIRMS:
+    args = [a for a in sys.argv[1:] if a != "--admit-multi-asset-served"]
+    if len(args) != 1 or args[0] not in FIRMS:
         sys.exit(__doc__)
-    sys.exit(main(sys.argv[1]))
+    sys.exit(main(args[0], admit="--admit-multi-asset-served" in sys.argv[1:]))

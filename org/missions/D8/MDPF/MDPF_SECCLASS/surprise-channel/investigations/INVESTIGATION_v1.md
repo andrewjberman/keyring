@@ -1403,3 +1403,33 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "INERT now: the cell is live (A_03 wTaLoeFXO4.., QA run 12:10Z exit 0, frontier whole), so any boot runs the fixed code against a correct 10-01 cube. Lesson for the next BD gold hold: hold the HOST (the runner's boot), not the rules -- e.g. a stop-and-deny on StartInstances for the hold's duration, or reserved concurrency 0 on BOTH bd-gold-trigger and advi-49f-gold-dispatch -- under its own half, since the 49F chain shares the host. Owner of the 49F dispatcher: its producer lane (not read)."
 }
 ```
+
+
+## MDPF_SECCLASS-S23 -- the multi_asset rows landed before two Holdings producers admit the class; Monday's publication refuses for Cottonwood and 49 Financial
+
+```json
+{
+  "id": "MDPF_SECCLASS-S23",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-04T21:45:00Z",
+  "one_line": "The multi_asset packet wrote its 32 rows (legs M, S, C, 19:53-20:15Z) BEFORE re-minting the Cottonwood and 49 Financial Holdings producers; their SERVED bundles refuse a canonical row carrying multi_asset, and both firms hold packet keys, so the next irpt-holdings-snapshot (Monday 2026-10-05 10:15Z) refuses both publications.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "served Cottonwood bundle o4k8Idb5.. extracted and run at the served date (R9_CHECKS/remint_served_effect.py, 21:2xZ): 'ValueError: REFUSED: the canonical table returned 'multi_asset', outside the admitted asset_class enum' (holdings_snapshot.py classify_security, :958); the CLOUD producer admits it since 4cc72587d6 (ASSET_CLASS_VALUES)",
+      "packet keys held in the served publications: Cottonwood SGIIX, CUSIP 32008F606 (REMINT_SERVED_EFFECT_cottonwood); 49 Financial (served date 2026-10-01, 153,345 nodes streamed 21:4xZ) FKIQX, ABALX, VWENX, CAIBX, AMECX, SGIIX, CFIHX, MDLOX and six CUSIPs",
+      "EventBridge Scheduler irpt-holdings-snapshot ENABLED cron(15 10 ? * MON-FRI *) -> irpt-holdings-refresh-lambda; Inflection's bundle is already re-minted (SuRm8tIY.., admits multi_asset); the directory bundle KK09i.JS.. too",
+      "the half NEVER_WIDEN_HALF_REQUEST_MULTI_ASSET_ROWS_AND_REMINT_20261003.md ordered legs M, S, C before R -- the readers-first rule of CTO batch 164 applied to the PROD readers but not to the producers"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO batch 164: readers first, rows only after every reader admits the class.",
+  "world_is": "The rows are live while two of the three producer readers on the served path refuse the class. The failure is loud (a REFUSED publication; the prior publication stays served), not a wrong value.",
+  "notes": "ARMED until Monday 10:15Z. Disarm: mint irpt_holdings_cot and irpt_holdings_49f before then, under CTO batch 240's conditions measured with the served tree admitting multi_asset (the one ASSET_CLASS_VALUES token of 4cc72587d6) so the paired builds can run against the live table; the 49F paired run needs the user's word (memory reaper). Fallback if neither mint lands: roll back the 7 moves (compare-and-set) and ask Andrew for the 25 new rows' deletes, or accept one refused publication day. Lesson: a never-widen half that writes rows orders every reader's deploy first, producers included."
+}
+```
