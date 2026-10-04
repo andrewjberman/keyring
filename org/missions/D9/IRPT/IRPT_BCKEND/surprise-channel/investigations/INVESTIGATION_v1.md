@@ -17079,3 +17079,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "No act beyond the order's own invocation was taken; the source map was never hand-edited."
 }
 ```
+
+## IRPT_BCKEND-S317 -- DISPOSITION of W110-S1: the three-route test is a frozen deliverable; the live suite is green
+
+```json
+{
+  "id": "IRPT_BCKEND-S317",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-04T00:50Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISPOSITION of IRPT_BCKEND-W110-S1: the three-route assertion lives in a frozen worker deliverable (deliverables/0.9.0_WK_IRPT_BCKEND~15/test_edge_render_delegate_v2_authorizer.mjs), which no suite runs; the live authorizer suite passes 9 of 9 with the fourth route",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/users/lambda/portal-authorizer/tests/ holds one file, test_render_reporting_series.mjs; node --test on it at 00:5xZ: tests 9, pass 9, fail 0",
+      "the IB-rtq-2 test sits under org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~15/, a record of that worker's run at its own pin, not a product test"
+    ]
+  },
+  "dismissal_reason": "A deliverable is evidence of its round at its pin. Editing it would rewrite that record, and no suite or gate runs it. The live coverage of the three earlier routes is the performance-route arms in test_render_reporting_series.mjs.",
+  "spec_asserts": "IRPT_BCKEND-W110-S1: the IB-rtq-2 V2 authorizer test fails once IB-pr-307 adds the fourth render route.",
+  "world_is": "MEASURED: that file is a frozen deliverable outside every suite; the product suite is green, 9 of 9."
+}
+```
