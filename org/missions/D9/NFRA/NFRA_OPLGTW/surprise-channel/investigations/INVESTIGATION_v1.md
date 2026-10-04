@@ -7798,3 +7798,33 @@ name the one known failure instead of silently inheriting it.
   "world_is": "Both read as disarmed on the served gateway. The disposition stays the issuer's. The real grant holder's own read is unexercised, as the order's issuer notes say."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S52",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-04T23:45Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-rl-5 released r16 4b6b823fae LIVE at 23:12:32Z (ledger nfra-oplgtw-gateway-release-r16 CLOSED; drain b91a1a44cf). (1) Z-W15-S33 (ARMED) is DISARMED on the post-act read, per CTO R12 and row Z-W15-S39. The served census reads 14 dim_position and 14 dim_asset snapshots servable at each master, 0 lacking or blank, and dim_balance/dim_transaction at 14 per master. (2) Z-W15-S34 is DISARMED on the same read. A dim_asset rows page is served by the shipped construction with no seam: 49 returned, 0 unheld, discriminator 49 held < 2160 universe (CVO Q2). dim_asset prepare_download is still REFUSED asset_policy_selection_unavailable. (3) Z-W15-S38 is resolved by amendment A6, the issuer's own defect: A3 changed rl5.AC1.sh's first line but not AC1's expect. The issuer re-ran AC1 against the served host at CLOUD b91a1a44cf: 11 of 11 arms, RESULT: PASS, exit=0, and the amended expect matches.",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W15-S33",
+    "NFRA_OPLGTW-Z-W15-S34",
+    "NFRA_OPLGTW-Z-W15-S38"
+  ],
+  "one_line": "Post-act read of r16 (4b6b823fae, live 23:12:32Z): S33 and S34 disarmed (snapshots servable 14 per master per dataset; dim_asset held-only, download refused); S38 resolved by A6 with an issuer AC1 re-grade PASS.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r16/checks/rl5.AC1.sh at CLOUD b91a1a44cf: deployed_commit 4b6b823fae; host query.py + datasets.json + contract equal the release bytes: yes; 11 arms True; RESULT: PASS; exit=0",
+      "FILE: deliverables/0.9.0_WK_NFRA_OPLGTW~15/RL5_PAGING.json (census_after, census_after_other, dim_asset_held_check, after_dim_asset_download)",
+      "TOOL: python .tools/proof-of-spec-check.py on the OG-rl-5 instance: VALID (rc=0)"
+    ]
+  },
+  "spec_asserts": "S33/S34 disarm on the release's post-act read (CTO R12); AC1's expect matches a PASS run of rl5.AC1.sh.",
+  "world_is": "The served gateway serves the Schwab snapshots and the held-only dim_asset page, the download control holds, and AC1 matches after A6."
+}
+```
