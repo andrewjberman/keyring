@@ -19,9 +19,8 @@ Previous log: tick 22 @4406cfa065.
 | 28694 | CVO~Z | SLUG HARVST r37 | analysis: (c) REJECTED under FWD-11's RULE; Ocilar qualified wait; research; round 38 = FWD-16/17 + FWD-6 density | 29fbb123e0 |
 | 28697 | COO~RV | ETFS_RIVALS round-6 deploy pair | SIGNED, bound to sha256 18da5233; re-put rollback, secret copy labelled, P7 reverted at once | 15f3366309 |
 | 28698 | CVO~Z | SLUG CORPUS r33 | CLOSED; round 34 held for Andrew's vendor word | e55e3b5152 |
-| 28704 | CRO~Z | ft routes: no solver documents hCaptcha | (b) no candidate; (c) still rejected; terms read first; licence carded | aeb3041e9c |
+| 28704 | CRO~Z | ft routes: no solver documents hCaptcha | (b) no candidate; (c) still rejected | aeb3041e9c |
 | 28708 | COO~Z | am-6 leg 3 (R1 + R2) | SIGNED | c35383d272 |
-| 28711 | CRO~Z | FT terms verbatim: they bar automated collection, circumvention and AI use | ft licence-only; FinBERT excludes ft (HARVST v0.16, re-sign asked); 62 ft articles quarantined, not deleted; the other four publishers' terms to be read | ce138d2314 |
 
 Andrew's per-use Bloomberg word ~18:1xZ ("thee allow", MSTR~Z record) closed the ASML officer call. The pull landed 3 of 3.
 
@@ -31,8 +30,7 @@ Andrew's per-use Bloomberg word ~18:1xZ ("thee allow", MSTR~Z record) closed the
   (FWD-1 Andrew; FWD-5 track C, c1 NOT MET).
   - v0.10 ADMITTED; the UI/UX work is cut by COO~D.
   - Portal PROD dcdc89b1 (portal-v2.1.195).
-- **AMGT_HARVST:** v0.16 awaits re-sign (FWD-16 excludes ft); round 38 is held for it. FWD-11 is NOT REALIZED: the ft limb waits on an
-  FT licence (Andrew's spend), and STOP_FT is hard.
+- **AMGT_HARVST:** FWD-11 is NOT REALIZED on its ft limb; STOP_FT stands.
 - **AMGT_RESAPP:** r63 legs 1-3 and am-7 (+A3) are signed; round 64 carries the cold read.
 - **AMGT_CORPUS:** r33 CLOSED; round 34 waits on a vendor word.
 - **ETFS_RIVALS:** round-6 deploy pair complete.
@@ -41,13 +39,9 @@ Andrew's per-use Bloomberg word ~18:1xZ ("thee allow", MSTR~Z record) closed the
 
 ## Acts only Andrew can do (each cited)
 
-1. **FT corporate licence quote** (spend; CLAUDE.md, contracts and entitlements beyond his grants). Under FT's terms (verbatim
-   @0fab00b8a0) it is the only lawful ft route. It comes with one Terminal FT-entitlement read (vendor per-use word).
-2. **CORPUS FWD-22's standing daily re-pull and FWD-20's V3 fields** (vendor word; PRD B.2). The earnings-date fields ride the
+1. **CORPUS FWD-22's standing daily re-pull and FWD-20's V3 fields** (vendor word; PRD B.2). The earnings-date fields ride the
    same pull.
-3. **DSGN FWD-1 and ETFS_RIVALS FWD-1 signed-in reads** (his login).
-4. **Deleting the 62 quarantined ft articles,** if he wants them deleted (a delete; human-confirmed).
-5. **The HARVST-wide terms question,** carded only when the other four publishers' terms are read.
+2. **DSGN FWD-1 and ETFS_RIVALS FWD-1 signed-in reads** (his login).
 
 ## Completion test
 

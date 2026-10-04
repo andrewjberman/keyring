@@ -6789,3 +6789,809 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W20-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~20",
+  "surfaced_at": "2026-10-02T20:00Z",
+  "one_line": "The email_deny record holds only tid, oid and status (no writer, approver, time or authorization), so its origin is not recoverable from the data; and the table holds a fourth synthetic item (a RUNTIME og-i5 probe, 2026-09-17) beyond the three POLICY probe partitions.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: aws dynamodb scan --consistent-read on gateway-access-state-table: 366 items, no LastEvaluatedKey (describe-table ItemCount 364); 1 email_deny item with attributes pk, sk, record_type, status, tid, oid only; 2 operator_audit items in the real partition (2026-09-27T00:48:46Z, 2026-09-30T19:15:29Z), neither summary naming a deny write; 1 RUNTIME item with a probe-og-i5 key. Recorded in deliverables/0.9.0_WK_NFRA_OPLGTW~20/DENY_RECORD_ORIGIN.json."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Cell item 2: the deny record's origin (writer, approver, written time, source authorization) is read from the partition's operator_audit items and the record itself; item 4: 3 synthetic partitions.",
+  "world_is": "All four origin fields are recorded as ABSENT with the reason; the 2026-09-30 activate is the only post-design audit and the likely write path (inferred only). One extra synthetic RUNTIME fixture exists; nothing deleted.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W22-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~22",
+  "surfaced_at": "2026-10-02T20:40Z",
+  "one_line": "The order's 2,395 existing silver snapshots shrink to 52 qualified ones on the marker basis it names: 46 closure markers exist (23 per master), only 26 carry a closure block with status qualified; the 20 earlier markers are the pre-closure schema and were bounded out.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: og_v6 latest_markers() for both masters read 23 and 23 IsLatest markers (2026-08-31..2026-10-01); reading each by VersionId, 10 per master (2026-08-31..2026-09-14) have keys date/declared_source/declared_tables/disagreement/emitted_at/master/run_id/schema and no 'closure' key; 13 per master (2026-09-15..2026-10-01) are closure.status qualified with dim_position and dim_asset PRESENT. Denominator 26 markers x 2 datasets = 52 snapshots.",
+      "RUN: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~22/GRAIN_R13.json denominator.basis states the bound."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Section 1 item 1: the qualified dates are those with a closure marker; 2,395 snapshots exist under silver/<dataset>/date=.",
+  "world_is": "Only 46 dates carry a marker; the 20 pre-closure markers have no qualified status so are not in the denominator. The remaining silver dates have no marker at all. Verdict (REFUSE) rests on 52 snapshots, 2 of which fail candidate uniqueness, so including more dates could not turn it to ADOPT.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W16-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~16",
+  "surfaced_at": "2026-10-03T00:36Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Step 2 of OG-r-4 says copy onhost_bench.py alone to the host scratch dir; run as written it fails at the contract read (rc=1, 10 s, ContractUnavailable), so I also copied org/standards/NFRA_OPLGTW_CONTRACT.json into the same scratch dir and passed --contract; both removed after.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN (SSM f9001644-8a9f-47ed-9870-0ef36b512541, 2026-10-03T00:31:09Z..00:31:19Z): onhost_bench.py --scale full --out ... without --contract: rc=1, error 'cannot read the contract at NFRA_OPLGTW_CONTRACT.json (FileNotFoundError)'; no state store written (ctx.state_store_written false); the failed raw JSON is not used.",
+      "RUN (SSM 23310e7d-9a59-42fa-8c2a-85b33173fcba, 00:35:11Z..00:35:50Z): same command with --contract /tmp/og-r4-bench/NFRA_OPLGTW_CONTRACT.json (9,189 bytes, the worktree's org/standards copy, unchanged between 4231bd2ddc and the cut): rc=0, SUFFICIENT. SSM 875613bf-5015-4f34-85de-e43f19c89cbf then removed /tmp/og-r4-bench (ls: no such file)."
+    ]
+  },
+  "spec_asserts": "Order step 2: copy onhost_bench.py to the host scratch dir and run --scale full with the venv python, exactly as OG-x-4 did, then remove the copy.",
+  "world_is": "The harness's host fallback default is a bare relative path (onhost_bench.py:241), so a scratch-dir run needs the contract file beside it or a --contract path; the order does not say so. Host read-only bound otherwise held: only the scratch dir was written; engine md5 11 of 11 equal before and after; service unrestarted since 19:23:25Z.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W16-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~16",
+  "surfaced_at": "2026-10-03T00:40Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "CAPACITY_R4.json ac4: the post-4231bd2ddc p95 over 2026-10-02T19:30Z..2026-10-03T00:30Z (5 h, 546 requests, 0 5xx) is 0.955 s, +72.5 percent against OG-p-1's 0.5535 s reference, above the 20 percent cap the OG-r-3 form uses; no OG-r-4 criterion grades ac4.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: probes/assemble_capacity_r4.py (CloudWatch GetMetricStatistics, TargetResponseTime p95, one 18000 s period): window_p95_seconds 0.9546750220078912, baseline_p95_regression_fraction 0.7247892769633654, baseline_p95_within_cap false; hourly p95 1.034 / 0.969 / 1.000 / 0.841 / 1.043 with 99 / 73 / 60 / 227 / 87 requests; 5xx sum 0.0 in every hour (deliverables/0.9.0_WK_NFRA_OPLGTW~16/CAPACITY_R4.json ac4).",
+      "The window is hours long and off-hours (546 requests against 19,473 in OG-x-4's 7 days), so its mix differs from the reference; cause of the 1 s p95 not investigated."
+    ]
+  },
+  "spec_asserts": "Order step 3: the ac4 regression window is a post-4231bd2ddc window (the order sets no cap or criterion on it).",
+  "world_is": "Only about 5 h had elapsed since the 19:23:40Z deploy at the run. Flag-only; the bench verdict (memory, deadlines, admission) is SUFFICIENT and does not read ac4.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W18-S6",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~18",
+  "surfaced_at": "2026-10-03T00:55Z",
+  "one_line": "OG-tb-1: test_ogx4_ac03's 'ServiceError: memory' is the engine's 256 MiB per-job RSS cap against a ~229 MiB Windows child baseline, not host memory exhaustion (31228 of 64978 MiB free); the 11-column 100k export reads 256.6 MiB.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: python .scratch/rss_probe.py (worktree wk-NFRA_OPLGTW-18-r14, real ExecutionEngine via tests/test_schwab_export_stream.py helpers): narrow 200/10k/100k rows -> child peak 228.5/246.6/238.6 MiB OK; 11 columns 200/10k rows -> 249.8/249.3 MiB OK; 11 columns 100000 rows -> ServiceError memory, sampled max 256.6 MiB, job.reason 'memory', peak_child_rss_bytes 269082624. Cap: app/integrations/schwab/engine.py:180 job_memory_bytes = 268435456; kill at :1306 when rss > cap. GlobalMemoryStatusEx: 31228 MiB of 64978 MiB physical available.",
+      "RUN: pytest tests/test_schwab_export_stream.py -> 1 failed (test_ogx4_ac03), 2 passed (test_ogx2_ac01, test_ogx2_ac02)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Section 1 table: test_ogx4_ac03 fails with 'ServiceError: memory', likely class 'environment (memory)'; section 1 item 2: where the environment cannot run it, name it with the measurement.",
+  "world_is": "Named with the measurement in RED_TESTS_R13.json. The cause is the engine's deliberate 256 MiB job cap vs this Windows device's child working-set baseline (~229 MiB), not low host memory; no product file edited. The 1.2x flatness claim at full width is ungraded here and needs a Linux Gateway-host run.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W17-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~17",
+  "surfaced_at": "2026-10-03T00:35Z",
+  "one_line": "OG-tf-1 STOPPED at step 4: row Z-W15-S25 classifies CONTENT-DIFF -- the deployed mcportal-grant-writer-lambda differs from HEAD's staged build in 3 files, so AC2 cannot read No changes without an apply this cell may not make.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: aws lambda get-function Code.Location, unzipped in memory, per-file sha256 vs build_package.py staged output at HEAD 544b8e2466: 11 files each side, 8 SAME, 3 DIFF -- infra/aws/ec2/opal-gateway/app/config.py (7244283c201a -> 3128d463bd6f, 27507 -> 29788 B), infra/aws/ec2/opal-gateway/app/data_entitlement.py (c12839d856ec -> a9eafa664374, 31834 -> 32133 B), org/standards/NFRA_OPLGTW_CONTRACT.json (f47703a611e5 -> a86f7e667cfc, 8806 -> 9189 B). CR bytes 0 on both sides (not a line-ending diff); zip timestamps fixed (not metadata).",
+      "RUN: each deployed file is byte-identical (git hash-object) to an older committed blob: config.py = c19f86c295 (2026-09-30 03:26 -04), data_entitlement.py = aac92bdff8 (09-30 05:57 -04), contract JSON = c2f5d5a071 (09-30 02:10 -04); HEAD has since advanced (db92656c72, 1afce6312e, adc979b13b, 32ebe6bee6). Deployed Lambda LastModified 2026-09-30T10:58Z. Record: deliverables/0.9.0_WK_NFRA_OPLGTW~17/TF_ROOT_FIX.md."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order step 4: SAME-CONTENT -> make the archive deterministic so the targeted plan reads No changes; CONTENT-DIFF -> do NOT apply, STOP with a BLOCKING row naming the differing files.",
+  "world_is": "CONTENT-DIFF: three gateway-closure files differ in text. Any root that archives HEAD's staged build plans a source_code_hash change on aws_lambda_function.mcportal_grant_writer and an untargeted apply of the opal-gateway root would redeploy the grant writer with unreleased gateway code; AC2 and AC1's zero-error plan need the issuer to rule: deploy HEAD's build deliberately (a separate apply cell), or pin the archive to a released build. Items 1 and 3 not written; item 2 (untrack plans and stray org/ files, add .gitignore) done.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W17-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~17",
+  "surfaced_at": "2026-10-03T00:35Z",
+  "one_line": "The order says the grant-writer .build/staged and the layer zip are gitignored; .build/staged is untracked and NOT ignored, and the layer directory carries only requirements.txt (the zip is built from PyPI wheels, not a repo file).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: git check-ignore -v infra/aws/lambda/mcportal/mcportal-grant-writer-lambda/.build/staged/lambda_function.py -> rc 1 (not ignored); git status --porcelain after build_package.py shows '?? infra/aws/lambda/mcportal/mcportal-grant-writer-lambda/.build/'; git ls-tree -r HEAD infra/aws/lambda/layers/mcportal-grant-writer-deps -> requirements.txt only."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Section 1: the archive_file and layer read gitignored .build paths.",
+  "world_is": "Outside this order's <paths> (infra/aws/lambda is not writable here), so no ignore line was added for .build/staged; the follow-on fix cell needs the lambda dir in its paths or a mechanism that does not depend on it.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S47",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-03T01:08Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The issuer disarms Z-W17-S2's hazard; its open decision is carried, not dropped. (1) The committed opal-gateway root cannot plan untargeted from a fresh worktree (tf.AC1 at 00:5xZ: rc 1, 2 errors, 2 missing required variables), so the hazardous untargeted apply needs hand-fed TF_VAR_* plus a staged grant-writer build. (2) Every opal-gateway apply in this project is a targeted safe-apply (OG-al-1, OG-tt-1, OG-pr-1, OG-rl-3), and no round-14 order applies this root (OG-rl-4 bounds Terraform untouched). (3) The build-source choice -- deploy HEAD's grant-writer build deliberately in its own apply cell under never-widen halves, or pin the archive to the released build -- is a design ruling routed to 1.0.0_SA_CTO~O in this round's L10 message. OG-tf-1 stays open: items 1 and 3 unbuilt, item 2 (hygiene) landed @98b4529db8.",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W17-S2"
+  ],
+  "one_line": "Z-W17-S2 (the grant-writer CONTENT-DIFF blocks OG-tf-1) is disarmed: no untargeted apply path exists without hand-fed variables and no round-14 order applies the root; the build-source ruling goes to the CTO at L10.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: tf.AC1.sh on wk-NFRA_OPLGTW-17-r14 (00:5xZ): plan rc=1; errors 2; missing required variables 2",
+      "deliverables/0.9.0_WK_NFRA_OPLGTW~17/TF_ROOT_FIX.md section 1: 11 files each side, 8 SAME, 3 DIFF (config.py, data_entitlement.py, NFRA_OPLGTW_CONTRACT.json); each deployed file equals an older committed blob",
+      "task-orders/NFRA_OPLGTW.TO-OG-rl-4.gateway-release-r14.md section 2: Terraform untouched"
+    ]
+  },
+  "spec_asserts": "Z-W17-S2: an untargeted apply of the opal-gateway root would redeploy the grant writer with unreleased gateway code.",
+  "world_is": "True only for a hand-fed untargeted apply, which no order in this project makes; the choice of build source is the CTO's."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S28",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-03T01:40Z",
+  "one_line": "tests/test_schwab_host_inputs.py fails one test on the LIVE bytes at 4231bd2ddc (test_printf_names_the_five_host_inputs_and_no_secret_value): its ENABLED_INTEGRATIONS and '%s' count expectations went stale at MX-r-7 and every release since.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: cd /c/tmp/og-rel9/infra/aws/ec2/opal-gateway (HEAD 4231bd2ddc, untouched) && AUDIT_PATH=<scratch> python -m pytest tests/test_schwab_host_inputs.py -> '1 failed, 6 passed'; assert pairs['ENABLED_INTEGRATIONS'].split() == [6 ids] against the live printf's 7 ids (blackdiamond added by MX-r-7); the next assertion pins 9 '%s' where the live printf carries 18.",
+      "FIX (release branch rel-nfra-oplgtw-r14 @af2d762970, tests/test_schwab_host_inputs.py): expectations moved to the live 7 ids and 18; the file then reads 9 passed (7 original + 2 new)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 8: tests/test_schwab_host_inputs.py is run on the release tree and (implicitly) passes at live; step 7 extends it.",
+  "world_is": "The file fails on live bytes before any OG-rl-4 edit; I updated the two stale expectations inside the order's own file (step 7 names it) and added the quoting test and the contract-source test. No other test was touched.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S29",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-03T01:40Z",
+  "one_line": "Step 4's 'every value that can hold whitespace double-quoted' cannot be met for FIRM_ROLE_ARNS under the issuer's own parse: its JSON carries double quotes, so it is rendered single-quoted; and MAIL_SENDER_TABLE (whose validator admits a space) is quoted too, making 5 quoted values, not 4.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: python rl4_render_test.py on the release template (deliverables/0.9.0_WK_NFRA_OPLGTW~15/rl4_render_test.out): MASKED SAMPLE live 'HOST env_keys 50 whitespace_values 4 disagreeing 4'; release 'whitespace_values 4 disagreeing 0'; with a whitespace sender table live 5 and release 0.",
+      "CODE: r14/checks/_env_shape_host.py sysd() strips ONE surrounding quote pair and does not unescape backslashes, so FIRM_ROLE_ARNS=\"{\\\"inflection\\\": ...}\" would read as disagreeing; the single-quoted form ('{...}', printf octal 047) reads equal under sysd, shlex AND systemd 252's EnvironmentFile rules (the live process already holds the unquoted value as valid JSON: SSM c1b4943f, len 77, json_ok, 1 key).",
+      "CODE: deploy-to-ec2.sh MAIL_SENDER_TABLE validator '^[A-Za-z0-9@._%+, -]*$' admits a space; shipped table today has none (SSM-free read of deploy/mail_sender_table.txt)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 4: render every value that can hold whitespace double-quoted; today 4 such values (OTP_BEARER, OTP_BEARER_LABELS, ENABLED_INTEGRATIONS, FIRM_ROLE_ARNS); disagreeing 0 on a masked sample.",
+  "world_is": "OTP_BEARER, OTP_BEARER_LABELS, ENABLED_INTEGRATIONS and MAIL_SENDER_TABLE are double-quoted; FIRM_ROLE_ARNS is single-quoted. No value the app reads changes (PHASE B's verify compares all 50 service-process value hashes before and after). Single-quoted behaviour under real systemd 252 is by its documented rules and the verify arm; not exercised on the host in PHASE A (read-only).",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S30",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-03T01:40Z",
+  "one_line": "Step 10's '/hx/transcripts ... returning 200' cannot be produced: the live TRANSCRIPT_MEETING_ALLOWLIST is empty and the route refuses every meeting (403 meeting_not_allowed) after it accepts the bearer.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CODE: infra/aws/ec2/opal-gateway/app/transcript_route.py @4231bd2ddc: meeting_allowlist() 'Empty (or unset) means NO meeting is reachable'; the bearer gate returns 401 'unauthorized' BEFORE the allowlist check returns 403 'meeting_not_allowed'; deploy-to-ec2.sh renders TRANSCRIPT_MEETING_ALLOWLIST= (empty).",
+      "RUN: rl4_verify.sh before (SSM b9b5caa4-a8ab-4440-b1a6-aba6fcd6c880 + 3 HTTPS reads): /hx/mail listing 200, /hx/teams/me 200, /hx/transcripts own bearer 403 meeting_not_allowed."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 10: ONE authorized read each on /hx/mail, /hx/transcripts and /hx/teams with its OWN bearer returning 200: the new refusal must not fire on the distinct live values.",
+  "world_is": "A 200 on /hx/transcripts needs an allowlisted meeting, which would change live config (out of bounds). The verify script asserts the discriminator instead: own bearer ACCEPTED (403 meeting_not_allowed, or 200) and NOT 401 (the symmetric refusal's response); mail and teams are asserted 200 as written.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S31",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-03T01:40Z",
+  "one_line": "trnspt/checks/tr.AC1.sh arm 4 hard-codes '.env 48 keys' and has failed since OG-rl-3 made the .env 50 keys: on the live host today it reads TAX ARMS 3 of 4, and it will after this release too.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CODE: deliverables/2.0.0_SA_COO~O/trnspt/checks/tr.AC1.sh line 32 @670f2e03ab: grep -qE '^HOST env_keys 48 taxsma_keys 2 identity_empty False bearer_empty False$'.",
+      "RUN: rl4_verify.sh after on the un-deployed live host (deliverables/0.9.0_WK_NFRA_OPLGTW~15/rl4_verify_negative_control.out): 'arm 4 .env keys / capability ON: FAIL; TAX ARMS 3 of 4' with the host line reading env_keys 50 taxsma_keys 2 identity_empty False bearer_empty False."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 10: after the verify's own reads, run tr.AC1.sh (and treat a clean run as the verify's close).",
+  "world_is": "The issuer's check is stale on arm 4 only. rl4_verify.sh grades tr.AC1 as passing when its arms 1-3 read OK and its host line is the capability-ON shape at 50 keys, and prints which rule applied; the script itself is unedited (outside my paths).",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S32",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-03T01:40Z",
+  "one_line": "Step 6's 'extend its validator to admit the one new key' has no key-set validator to extend: the host roster parse reads the named keys one at a time and ignores any other key, so the new key is a new third parse line (rc 3 on a bad value) and the log counts are a separate parse.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CODE: deploy-to-ec2.sh @4231bd2ddc lines 247-249: MASTER_ADMIN_PRINCIPALS and WRITE_CAPABLE_PRINCIPALS are two one-line python parses of ROSTERS_JSON, each reading only its own key; rc 1 (sys.exit under set -e).",
+      "RUN: rl4_render_test.py (rl4_render_test.out): host block run with a stubbed aws: valid roster rc 0 and the log line 'master_admin 1 pair; write_capable 2 pairs; taxsma_workbook_identity 1 pair'; a 3-pair roster reads 3; an extra key admitted; identity missing / non-string / empty / malformed / two pairs each rc 3 with the first-write marker NOT reached."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Step 6: extend the roster validator to admit one new key and refuse a malformed value with rc 3, before any .env write; step 5: compute both log counts from the parsed roster JSON.",
+  "world_is": "Implemented as one new parse for taxsma_workbook_identity (rc 3 via an explicit exit 3) and one counts parse; the two pre-existing roster parses are unchanged and keep rc 1. PHASE B step 13 must add the key BEFORE the act: a deploy with the key absent refuses rc 3 and leaves the host untouched.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W25-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~25",
+  "surfaced_at": "2026-10-03T18:50Z",
+  "one_line": "The order's ac03 (a manifest naming an unresolvable commit) and ac02 (nothing staged under .build) cannot be run against the real manifest and real .build/staged without editing tracked state, so build_package.py gained three optional flags (--manifest, --repo, --stage-dir) the order does not list; defaults are the old paths.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CODE: infra/aws/lambda/mcportal/mcportal-grant-writer-lambda/build_package.py @22d6f8436b main(): the three argparse flags default to REPO_ROOT/EC2_MANIFEST.json, REPO_ROOT and THIS_DIR/.build/staged, so the Terraform-documented invocation `build_package.py --out <zip>` is unchanged.",
+      "RUN: infra/aws/lambda/mcportal/mcportal-grant-writer-lambda/tests/test_build_input_pinned.py @22d6f8436b: 3 passed; a default-flag run staged 11 files from af2d762970, the 11 the TF_ROOT_FIX.md s.1 measure counted."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order s.1 item 1 lists the builder changes as manifest read, commit-pinned derivation, refusal and the printed sha; item 2 says the tests use temporary git repos or the real repo read-only.",
+  "world_is": "The three tests drive the builder as a subprocess with a temp manifest and a temp stage dir, which needs the flags; the writer's own tests could not otherwise plant a bad commit without editing the real manifest. The refusal exit code is 2 (the order says only non-zero).",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W22-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~22",
+  "surfaced_at": "2026-10-03T18:36Z",
+  "one_line": "The order's 52 qualified snapshots are now 56 live: marker 2026-10-02 is qualified at both masters since OG-gr-1 measured; the 4 new snapshots were measured and held outside the 52 so the AC1 denominator stays 52.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: og_v6 latest_markers() at this run read 24 and 24 IsLatest markers (2026-08-31..2026-10-02); the 2026-10-02 marker at each master carries closure.status qualified with dim_position and dim_asset PRESENT (measure_r15 printed jobs 56 = 14 qualified dates per master x 2 masters x 2 datasets).",
+      "RUN: deliverables/0.9.0_WK_NFRA_OPLGTW~22/GRAIN_R15.json denominator.additional_snapshots_outside_basis: the 4 extra rows, all unique with the added column, 0 blanks."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Item 2 GRAIN_FOUND: a grain unique on ALL 52 snapshots; AC1 requires 52 snapshot rows.",
+  "world_is": "The live qualified set is 56; GRAIN_R15.json snapshots holds the 52 OG-gr-1 basis (dates 2026-09-15..2026-10-01) and lists the 2026-10-02 four beside it. The verdict holds on both counts (56 of 56).",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W26-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~26",
+  "surfaced_at": "2026-10-03T19:18Z",
+  "one_line": "OG-gw-2 order and TF_ROOT_FIX.md call c19f86c295 / aac92bdff8 / c2f5d5a071 'the deployed blobs'; all three are COMMIT ids, and the blobs are what `git rev-parse <commit>:<path>` resolves them to.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: git cat-file -t c19f86c295 -> commit (same for aac92bdff8, c2f5d5a071); git rev-parse c19f86c295:infra/aws/ec2/opal-gateway/app/config.py = b3a9609fad91, aac92bdff8:.../data_entitlement.py = e5db4d307d23, c2f5d5a071:org/standards/NFRA_OPLGTW_CONTRACT.json = 848ec665d885.",
+      "RUN: git hash-object of the three deployed-zip members read in memory = those three blob ids exactly (with and without --no-filters), so the deployed bytes ARE the older committed blobs; GW2_BEHAVIOUR_DIFF.md diffs blob to blob (b3a9609fad..864536c8bb, e5db4d307d..c25f71c7ba, 848ec665d8..2d9181f8bc)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order step 2: 'TF_ROOT_FIX.md names the deployed blobs: config.py = c19f86c295, data_entitlement.py = aac92bdff8, contract = c2f5d5a071'.",
+  "world_is": "Those ids are commits (09-30 03:26, 05:57, 02:10 -04). The control the order wants (deployed == named object) holds once resolved to blobs; a `git diff c19f86c295 <blob>` as literally typed would diff a commit tree, not the file.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W26-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~26",
+  "surfaced_at": "2026-10-03T19:18Z",
+  "one_line": "The issuer's _fresh_tf.sh sparse cone (infra/aws org/standards lib) omits infra/logic, which ../modules/opal_name reads (registry/exemptions.json), so a fresh-worktree plan of the opal-gateway root errors on every module call before any resource is planned.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: fresh sparse worktree of this branch at 4b6afce2d2, cone `infra/aws org/standards lib`, targeted plan -> rc=1, 11 'Error: Invalid function argument', no file exists at ../modules/opal_name/../../../../logic/registry/exemptions.json (main.tf line 82).",
+      "RUN: git sparse-checkout add infra/logic in that worktree -> the same plan returned rc=2 with the one in-place update (the step-4 plan of OG-gw-2).",
+      "CODE: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r15/checks/_fresh_tf.sh line 11: `sparse-checkout set --cone infra/aws org/standards lib`; sourced by tf.AC1/AC2 (its own header)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "_fresh_tf.sh header: the sparse cone 'is complete -- not a pruned copy' and the root plans there.",
+  "world_is": "The cone lacks infra/logic, so any check built on fresh_plan reports PLAN_ERRORS>0 even where the root is fine; the tf2 AC checks that source it inherit the same cone.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W26-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~26",
+  "surfaced_at": "2026-10-03T19:18Z",
+  "one_line": "Order step 6 asks the rollback plan to be 'equal in shape to step 4's plan: one in-place update, code hash only', proven at PHASE A without applying; against the live pre-apply state the rollback config plans `No changes`, so that shape cannot be observed before the apply.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: rollback worktree (sparse, .build/staged = the deployed zip extracted, sha256 9e1cfe77026c0c92cef57de8d5ec6f29d43e39813e3eb6b1652a29d8126df732 = 54650 bytes) targeted plan with the same TF_VAR feed -> rc=0 `No changes`, non-noop resource changes 0 of 4.",
+      "RUN: `terraform show -json` of that plan: aws_lambda_function.mcportal_grant_writer after.source_code_hash = nhz+dwJsDJLO9X3o1exvKdQ+OYE+PraxZSop2BJt9zI=, which is the live CodeSha256 and the `before` of the step-4 plan (forward plan: that value -> ZyYCPPyP5CV53eZP+UJHIgAjq834J4OsvePgmS6k8rI=, 1 update, changing attrs last_modified + source_code_hash)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order step 6: prove at PHASE A that the rollback plan exists and equals step 4's plan in shape (one in-place update, code hash only).",
+  "world_is": "The rollback plan exists and its code hash equals the deployed hash exactly (the extracted bytes re-archive to the deployed artifact), which is the strongest PHASE A fact; the update shape appears only against post-apply state. PHASE B step 11 (or the rollback act) is where it is observed; no plan against a hand-edited state was made, because state holds the owner config values.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W26-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~26",
+  "surfaced_at": "2026-10-03T19:18Z",
+  "one_line": "The grant writer's tests/conftest.py puts the SOURCE gateway tree (CLOUD HEAD checkout) on sys.path, so `pytest tests` does not run against the staged package's closure; step 5 was run in a copy of the staged tree with a conftest that loads only that closure.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: `pytest tests` in the lambda dir: 23 passed, against infra/aws/ec2/opal-gateway of this worktree (CLOUD 4b6afce2d2), whose config.py and data_entitlement.py are not af2d762970's.",
+      "RUN: .scratch/closure (copy of .build/staged built from af2d762970; the 3 writer test files + a conftest + a provenance test asserting app, ops, lambda_function and data_entitlement load from that closure and its contract carries dim_transaction): 21 passed (20 writer tests + 1 provenance); data_entitlement.py sha256[:12] a9eafa664374 = the staged file."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order step 5: 'The tests of the grant writer (tests/) pass against the staged package's closure.'",
+  "world_is": "tests/ as committed exercises HEAD's gateway source; the closure run needed a separate harness. The scratch harness is not committed (not in the order's paths).",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S48",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-03T19:31Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The issuer disarms Z-W26-S2 by fixing its own check: r15/checks/_fresh_tf.sh's sparse cone now includes infra/logic (the opal_name module reads infra/logic/registry/exemptions.json at plan time). Re-run of tf2.AC1 with the fixed cone: plan rc=1; errors 2; missing required variables 2 -- the only errors left are the two variables OG-tf-2 removes, no module-call error. The round-14 copy r14/checks/_fresh_tf.sh carried the same cone; its only users (tf.AC1-AC3 of OG-tf-1) are superseded by OG-tf-2.",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W26-S2"
+  ],
+  "one_line": "Z-W26-S2 (the fresh-plan cone omits infra/logic) is fixed in r15/checks/_fresh_tf.sh; a fresh plan now errors only on the two variables OG-tf-2 removes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: bash r15/checks/tf2.AC1.sh after the cone fix: plan rc=1; errors 2; missing required variables 2"
+    ]
+  },
+  "spec_asserts": "Z-W26-S2: every fresh-worktree plan of the root errors on module calls because the cone lacks infra/logic.",
+  "world_is": "The cone carries infra/logic; the remaining errors are exactly the two missing variables."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W26-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~26",
+  "surfaced_at": "2026-10-03T20:12Z",
+  "one_line": "safe-apply's comp-tagauthz pre-apply gate runs its OWN plan of the root and fails closed with `No value for required variable` unless the two required variables are in the safe-apply process environment, and a PHASE A fresh cone without .tools has no safe-apply at all; step 10 'safe-apply that saved plan' therefore needs both (TF_VAR_* in the child env, .tools in the cone).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN 20:05Z: `bash .tools/safe-apply.sh -chdir=... apply <saved plan>` from the fresh sparse worktree (cone infra/aws infra/logic org/standards lib): rc 127, .tools/safe-apply.sh absent; after `git sparse-checkout add .tools`: rc 4, `safe-apply: ERROR -- could not produce a plan JSON to run the tag-authz gate`, cause two `No value for required variable` errors (mcportal_owner_key_claim, mcportal_owner_key).",
+      "RUN 20:07Z: the same command through a driver that read both values in memory from the live function environment into the child's TF_VAR_* only (output redacted, nothing written): safe-apply rc 0, `comp-tagauthz gate PASSED`, `Apply complete! Resources: 0 added, 1 changed, 0 destroyed.` Saved plan: C:/tmp/og26_off/apply.tfplan (outside the repo)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order step 10: re-plan with the same target and variable feed, then `safe-apply` the saved plan; the fresh cone is `infra/aws infra/logic org/standards lib`.",
+  "world_is": "A saved plan carries the variables, but the tag-authz gate re-plans without it. The apply needed the variable feed on safe-apply itself and .tools in the cone; the act landed after both. OG-tf-2 (which removes the two variables) is the cell that retires the need.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W26-S6",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~26",
+  "surfaced_at": "2026-10-03T20:12Z",
+  "one_line": "Resolves the open observation of row -W26-S3 by measurement: against POST-APPLY state the rollback plan (.build/staged = the saved deployed zip extracted) is one in-place update of the grant writer, changing attributes last_modified and source_code_hash only, environment unchanged; not applied.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN 20:10Z (tfplan_driver, same targeted plan and TF_VAR feed): rc 2, `Plan: 0 to add, 1 to change, 0 to destroy.`, RESOURCE aws_lambda_function.mcportal_grant_writer actions=['update'] changing_attrs=['last_modified','source_code_hash'], environment before==after True (3 keys), source_code_hash before ZyYCPPyP5CV53eZP+UJHIgAjq834J4OsvePgmS6k8rI= after nhz+dwJsDJLO9X3o1exvKdQ+OYE+PraxZSop2BJt9zI=, non-no-op 1 of 4. Plan saved C:/tmp/og26_off/rollback_post.tfplan (outside the repo); not applied."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order step 6: the rollback plan equals step 4's plan in shape (one in-place update, code hash only); row -W26-S3 recorded that this was unobservable before the apply.",
+  "world_is": "The shape is now observed, and the after-hash equals the pre-apply live hash, so the rollback is a measured equal-and-opposite update; it was not needed (read-back PASS).",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W17-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~17",
+  "surfaced_at": "2026-10-03T21:10Z",
+  "one_line": "R3's layer mechanism as ruled (a data source REPLACING the aws_lambda_layer_version resource) plans a DESTROY of the live layer version 1 the function carries, because the resource is in state; the root keeps the resource block and reads no build output.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN 21:0xZ (fresh-cone-equivalent plan in this worktree, root as ruled, resource block deleted): `Plan: 0 to add, 1 to change, 1 to destroy.`; `# aws_lambda_layer_version.mcportal_grant_writer_deps will be destroyed (because ... is not in configuration)`, id arn:aws:lambda:us-east-1:313476888478:layer:mcportal-grant-writer-deps-layer:1, created_date 2026-09-29T04:58:50.923+0000, skip_destroy false.",
+      "RUN 21:1xZ, after keeping the resource with source_code_hash = data.aws_lambda_layer_version.<same name>.code_sha256 and the function reading the data source's arn: `No changes. Your infrastructure matches the configuration.` rc 0 (-detailed-exitcode), no warnings. Removing the block would need an apply or a removed/moved block (both barred by the order)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1 item 2 / R3: the layer is referenced by its DEPLOYED version through a data source, with no rebuild and no PyPI egress.",
+  "world_is": "The data source is in place and the function reads it, but the resource block stays (retained, not rebuilt: its `filename` is a path never read at plan time, its hash is the deployed version's own). A create of a new layer version would fail on the missing zip until that cell runs the layer build. The CTO may prefer a later cell to retire the resource by an apply; this cell cannot.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W17-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~17",
+  "surfaced_at": "2026-10-03T21:10Z",
+  "one_line": "Replacing the two variables with a sensitive-marked value makes the plan read `~ update in-place` on the grant writer (environment, 'The value is unchanged'): a marks-only diff only an apply clears, so the local is nonsensitive().",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN 21:0xZ: with sensitive(jsondecode(...)) the untargeted plan read `Plan: 0 to add, 1 to change, 1 to destroy` and the function diff was only `MCPORTAL_OWNER_KEY` / `MCPORTAL_OWNER_KEY_CLAIM` = (sensitive value) with `Warning: this attribute value will be marked as sensitive ... The value is unchanged.` (the other env key `(1 unchanged element hidden)`).",
+      "RUN 21:1xZ with nonsensitive(jsondecode(...)): no function diff; plan `No changes` rc 0."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1 item 1: the root reads both keys through a data source (jsondecode), replacing the two variables; AC1 reads No changes.",
+  "world_is": "The old variables were not sensitive, so the state holds the environment unmarked. nonsensitive() restores that parity: a future CHANGE of either key would print in a plan, as before (the values themselves are never printed or committed by this cell). Alternative (keep sensitive, then apply once to record the marks) needs an apply and is not mine to make.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W17-S6",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~17",
+  "surfaced_at": "2026-10-03T21:10Z",
+  "one_line": "The plan-time archive build needs a third provider (hashicorp/external, lock entry added) and `python` on the planning device's PATH; the build reads the released commit from the git object store.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: terraform init added hashicorp/external to .terraform.lock.hcl (21 lines); `data.external.mcportal_grant_writer_stage` read at plan, `data.archive_file.mcportal_grant_writer` read, and the function's source_code_hash read no change against the live function (equal to af2d762970's closure, OG-gw-2)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1 item 2: choose the smallest mechanism and record it; no copied output, no `.build` pre-built.",
+  "world_is": "Recorded with the rejected alternatives in TF_ROOT_FIX_R15.md. Cost: one more provider fetch from the registry that serves aws and archive (no PyPI, no vendor API); another planning device needs python on PATH, and a refusal from build_package.py fails the plan loudly.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W17-S7",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~17",
+  "surfaced_at": "2026-10-03T21:01Z",
+  "one_line": "tf2.AC1 cannot read PASS on ANY clean plan as written: the helper r15/checks/_fresh_tf.sh counts errors with `grep -c ... || echo 0`, which prints two lines when the count is zero, so PLAN_ERRORS and PLAN_NOVALUE are the two-line string \"0\n0\" and the numeric tests and the expected regex both fail. The plan itself is clean.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: bash r15/checks/tf2.AC1.sh at HEAD df3e0e2c06 (fresh sparse worktree, no TF_VAR_*, untracked files in the root 0) printed `plan rc=0; errors 0` / `0; missing required variables 0` / `0; No changes. Your infrastructure matches the configuration.` / `untargeted plan reads No changes: yes` / `RESULT: FAIL` / `exit=1`. The plan summary is 'No changes', rc 0, errors 0, missing variables 0: every substantive limb of the criterion holds.",
+      "CODE: r15/checks/_fresh_tf.sh lines `PLAN_ERRORS=$(grep -c \"^Error:\\|| Error:\" \"$out\" 2>/dev/null || echo 0)` and the same for PLAN_NOVALUE: grep -c prints 0 AND exits 1 on no match, so `|| echo 0` appends a second 0. CONTROL: `x=$(echo -n | grep -c zz || echo 0); printf '[%s]\n' \"$x\"` printed `[0` newline `0]`.",
+      "The same untargeted plan in this worktree (terraform plan -detailed-exitcode, plan3) read rc 0 `No changes. Your infrastructure matches the configuration.`"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 4 AC1: expect `plan rc=0; errors 0; missing required variables 0;.*untargeted plan reads No changes: yes.*RESULT: PASS.*exit=0`.",
+  "world_is": "The helper (outside this order's <paths>, in the issuer's r15/checks) can only print the expected line when grep finds an Error line, i.e. never on a clean plan, so AC1 reads FAIL for a root that plans clean. Not fixed here (write grant). Fix for the issuer: `|| true` in place of `|| echo 0` on both counts (grep -c already prints the count); then re-run AC1 against df3e0e2c06 or later.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S49",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-03T21:16Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The issuer fixes its own helper: r15/checks/_fresh_tf.sh counted with `grep -c ... || echo 0`, and grep -c prints 0 AND exits 1 on no match, so a clean plan read '0\n0' and no PASS was possible. Now `|| true` @2255e12631. Re-run of tf2.AC1 on OG-tf-2's branch at 2255e12631: plan rc=0; errors 0; missing required variables 0; No changes; RESULT: PASS.",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W17-S7"
+  ],
+  "one_line": "Z-W17-S7 (tf2.AC1 could not PASS on a clean plan) is fixed in the issuer's helper @2255e12631; tf2.AC1 now PASSes on OG-tf-2's root.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: bash r15/checks/tf2.AC1.sh at 2255e12631: plan rc=0; errors 0; missing required variables 0; No changes; RESULT: PASS"
+    ]
+  },
+  "spec_asserts": "Z-W17-S7: the helper's counts print 0 twice on a zero, so tf2.AC1 cannot PASS.",
+  "world_is": "The counts use || true; a clean plan reads errors 0 and tf2.AC1 PASSes."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S50",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "3.0.0_SA_CVO~O",
+  "surfaced_at": "2026-10-03T22:40Z",
+  "one_line": "Z-S46's remedy ('every refusal branch unstages the whole declared pathspec') is only partly met after @bee7c817d7: a surprise-gate refusal unstages and post-checks the GATE files only. A non-gate path declared in the same commit stays staged, and the refusal prints 'none remains staged'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Z-S46 (REMEDIATION_v3) remedy: every refusal branch unstages the whole declared pathspec, checks the index afterwards, and prints the paths still staged, never a fixed 'files unstaged'.",
+  "world_is": "2026-10-03 ~22:3xZ, this seat's safe-commit of 3 declared paths: 2 surprise-channel remediation files plus org/tier1_exec/3.0.0_SA_CVO/deliverables/cvoO_NFRA_OPLGTW_AGED_ROW_TRIAGE_20261003.md. It was refused by the row gate and printed 'Unstaged 2 gate file(s); none remains staged.' git status then read `A` for the deliverable, which was still staged and unreported, until this seat ran git restore --staged. The :877 branch iterates SRGATE_FILES, the surprise-channel subset of PATHSPEC, for both the reset and the post-check. This seat had flipped Z-S46 REMEDIATED in the same commit (@d99813522e) on the gate-file half alone. This row is the correction, because a remediation clock does not move backwards.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/safe-commit.sh :877 branch (SRGATE_FILES loop, post-check, 'none remains staged')",
+      "git status --porcelain read `A  org/tier1_exec/3.0.0_SA_CVO/deliverables/cvoO_NFRA_OPLGTW_AGED_ROW_TRIAGE_20261003.md` immediately after the refusal",
+      "remediations/REMEDIATION_v3.md#NFRA_OPLGTW-Z-S46"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: a staged leftover rides only into a later commit of the same shared index. Remedy: the :877 branch resets and post-checks the whole PATHSPEC, not only SRGATE_FILES. Owner: the safe-commit owner, routed by 1.0.0_SA_CTO~O."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W27-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~27",
+  "surfaced_at": "2026-10-03T23:25Z",
+  "one_line": "The CVO's aged-row triage on CLOUD (@d99813522e, written after this order's pin 565223dd62) leaves five rows OPEN that measure as remediated or mis-stated: W2-S8, S4, S5, W4-S12 and S57. OG-ar-1's AGED_ROW_TRIAGE.json classifies them remediated_by with the measurement.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W2-S8: the CVO's file says OPEN because .gitattributes 'gains eol rules ... (none at HEAD)'. git show CLOUD:.gitattributes lines 135-141 carry the seven infra/aws/ec2/opal-gateway/**/*.<ext> text eol=lf rules and line 144 the DATA_CATALOG.yaml -text exception (fd841cd02b, ancestor of both CLOUD and the pin). git ls-files --eol over the 43 gateway text-extension files at the pin: 42 i/lf attr/text, 1 i/crlf attr/-text.",
+      "S4/S5/W4-S12: the CVO's file places them with the 49F chain owner and names OG-c-1 only. OG-m-2a (c064389bab) and OG-m-3 (4e14699746) are live: advi-49f-gold-dispatch CodeSha256 read 2026-10-03 equals OG-m-3's proof AC2 value; the dispatcher's log group since 2026-09-29T03:00Z (382 events, no nextToken) holds 57 invocations = 52 s3-triggered (46 SKIP, 6 dispatched) + 5 floor; 10 of 11 chain dispatches logged 'OK: chain completed within the poll window'. OG-m-1's read before: 104 of 104 invocations dispatched, 0 CHAIN OK.",
+      "S57: the CVO's file says OPEN pending a CTO R-OG-22 ruling and cites export.py:204 writing the complete CSV before it serves. CAPACITY_R4.json (OG-r-4, 587d79e64e, served 4231bd2ddc, verdict SUFFICIENT, AC1 PASS): 250,000 x 11 export completes, peak child RSS 184,119,296 against the 268,435,456 cap, ratio to the 25k peak 1.0000 / 1.0697 / 1.0781 (bound 1.10). The row's named mechanism is memory materialisation, not the disk write.",
+      "POPULATION: at the pin the check computes 66 rows, 41 OPEN; CLOUD @d99813522e flipped 16 of them in place, so the OPEN set differs between the pin and CLOUD. AGED_ROW_TRIAGE.json covers all 41 and is a superset of either."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-ar-1 order text: 'At the cut there were 41 rows whose latest state is OPEN ... Many were already resolved by shipped work'; the triage records the measured state of each.",
+  "world_is": "CLOUD moved after the pin, and the CVO's triage there disagrees with the measured state on five rows. This worker edited no remediation row and recorded its measurement in the triage file; reconciling the two records is the CVO's (3.0.0_SA_CVO~O owns advancing remediation rows).",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W27-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~27",
+  "surfaced_at": "2026-10-03T23:25Z",
+  "one_line": "While triaging Z-W16-S5 a read of the ALB's daily TargetResponseTime p95 (all targets) gave 0.5446 s on 2026-09-30, 0.6062 s on 10-01 and 0.8973 s on 10-02 (2,405 requests); the last is +62 % against OG-p-1's 0.5535 s reference. It is not a grade: the method differs from OG-p-1's and 10-02 spans the 4231bd2ddc release.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ: aws cloudwatch get-metric-statistics, namespace AWS/ApplicationELB, TargetResponseTime, LoadBalancer app/opal-gateway/<id>, period 86400, extended-statistics p95, one call per UTC day 2026-09-30, 10-01, 10-02, 2026-10-03T23:2xZ, as the operator identity through .tools/aws; RequestCount Sum 2,510 / 2,458 / 2,405 for the same days.",
+      "REFERENCE: row Z-W16-S5 cites 0.5535 s (OG-p-1) and the +20 % cap of the OG-r-3 form (0.6642 s); the same row's moves_when in AGED_ROW_TRIAGE.json is the first full trading day on live af2d762970 (Monday 2026-10-05)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Z-W16-S5: p95 after 4231bd2ddc read 0.955 s over 5 h, +72.5 %, with no criterion grading it; its remedy is a full-trading-day re-measure on live af2d762970.",
+  "world_is": "A day-level read on the preceding trading day (10-02) is also above the cap, and one earlier day (10-01) sits at +9.5 %; neither was taken on af2d762970. The re-measure the row asks for has not yet had a full trading day to run on.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W22-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~22",
+  "surfaced_at": "2026-10-03T22:40Z",
+  "one_line": "gr3.AC1 cannot PASS as written: the R9 grain makes the existing suites test_schwab_semantics.py and test_schwab_query.py red (1 + 22 tests), and their fixtures are outside this order's <paths>; more tests outside it also go red (test_schwab_export.py, test_schwab_export_stream.py, test_schwab_transactions.py).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN (worktree branch wk-NFRA_OPLGTW-22-r16, query.py + datasets.json edited, test_schwab_grain_r9.py added): `python -m pytest tests/test_schwab_semantics.py tests/test_schwab_query.py -q` -> 23 failed, 18 passed. The 22 query failures all read reason field_missing_in_source: tests/test_schwab_query.py write_positions() writes no quantity_cash_settled column, and the new grain tie-breaks on it. The semantics failure is test_ogq3_ac09: its rows carry no quantity_settled_unsettled key and sem.assert_unique_grain reads row[g] over the grain (KeyError).",
+      "RUN: tests/test_schwab_export_stream.py test_ogx2_ac01 and test_ogx2_ac02 fail with the change and pass without it (a copy of the gateway at HEAD, same files); tests/test_schwab_transactions.py test_mx_s15_grain_declared asserts DATASET_GRAINS['dim_asset'] == ('cusip',) at line 81 and fails with the change. A full `pytest tests` run on the branch read 47 failed, 35 errors; test_schwab_export.py shows 13 failures. Several of those files also fail or error at HEAD for environment reasons (the baseline copy shows 7 failed, 23 errors on the 15 files compared), so the per-file delta above, not the totals, is the claim.",
+      "SOURCE: the order names only query.py, datasets.json and the new test file as writable; the AC2 allowed list is the same three; no test file that carries the old grain is in <paths>."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1 and AC1: change the grain in query.py and datasets.json, add the new test, and 'the existing grain/semantics suites stay green' (semantics+query suites rc=0), touching only the three allowed files.",
+  "world_is": "The grain change is not independent of the fixtures that encode the old grain. To land it green the issuer must widen <paths> (and gr3.AC2's allowed list) to: tests/test_schwab_query.py write_positions() (add a quantity_cash_settled decimal(15,5) column), tests/test_schwab_semantics.py test_ogq3_ac09 (rows carry quantity_settled_unsettled), tests/test_schwab_transactions.py line 81 (dim_asset grain), and whatever test_schwab_export*.py need (their position fixture likely shares the writer). The worker has NOT edited them (write grant). This branch's commit leaves those suites red until the issuer re-hands; OG-rl-5 must not ship from it before then.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W22-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~22",
+  "surfaced_at": "2026-10-03T23:55Z",
+  "one_line": "A1 resolves Z-W22-S3 for 38 of the 39 tests it turned red, but test_schwab_query.py::test_ogq2_ac20 stays red under R9 and no fixture edit can fix it: its one-page duplicate-grain assertion needs the R24 row check, which cannot fire because quantity_cash_settled is not a served field; gr3.AC1 cannot PASS (1 NEW failure beyond the baseline).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: before the A1 edits `python -m pytest tests -k schwab -q -rfE` from infra/aws/ec2/opal-gateway -> 40 failed, 81 passed, 9 errors (39 failures beyond the baseline's 3 failed 9 errors, ogx4_ac03 being the baseline's). After the fixture edits (test_schwab_query.py, test_schwab_semantics.py, test_schwab_transactions.py) -> 2 failed, 119 passed, 9 errors: test_ogx4_ac03 and the 9 errors are baseline ids; ONE is new, tests/test_schwab_query.py::test_ogq2_ac20.",
+      "SOURCE: app/integrations/schwab/integration.py:686-705 -- the R24 row check (sem.assert_unique_grain) runs only when `all(g in col_names for g in exposed_grain)`, i.e. only when the request's own columns carry EVERY grain field; the code comment calls any other shape NOT-ENFORCED.",
+      "SOURCE: app/integrations/schwab/query.py:157-159 and DATASET_SCHEMAS['dim_position'] (11 served fields, read by import) -- quantity_cash_settled is `a source column that is not a served field`, so no rows-mode request can carry it; the R24 row check therefore never fires for dim_position under R9.",
+      "RUN: scratch probe on test_ogq2_ac20's planted duplicate (same account, cusip, l_s, quantity_settled_unsettled, differing market value): paged request -> isError True; one-page request (page_size 50, columns account_ref/cusip/l_s) -> isError False; the same with quantity_settled_unsettled added -> isError False. Test lines 1000-1010 assert the one-page request returns UNAVAILABLE duplicate_source_grain."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A1: R9's fixture fallout is fixable by fixture-only edits (add grain columns; restate a grain-declaration assertion), and AC1 then passes with no failure beyond the 12-id baseline.",
+  "world_is": "test_ogq2_ac20 encodes the OLD grain's R24 enforcement as a product expectation: with a three-column grain every grain field was a requestable column, so a one-page duplicate was refused as duplicate_source_grain. Under R9 the fifth grain column is not served, so that refusal no longer fires on any rows-mode request. A fixture edit cannot restore it; the options are product ones (run the R24 check on the engine's grain rows instead of the request's columns, or restate the test's one-page expectation as a ruling), both outside this order's write surface. The worker changed neither the product nor the test; an attempted planted-row edit was reverted because it did not fix the test.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W22-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~22",
+  "surfaced_at": "2026-10-04T00:50Z",
+  "one_line": "A2 restates test_ogq2_ac20 for the single-page request only, but the same test's PAGED assertion (duplicate_source_grain) also cannot hold under R9 and R9a: a paged request on a non-unique dim_position snapshot refuses paging_refused_no_unique_grain, as test_oggr3_ac03 already asserts; the worker restated that one assertion.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN (branch wk-NFRA_OPLGTW-22-r16 @518ff0c51a): python -m pytest tests/test_schwab_query.py -k ogq2_ac20 -> 1 passed after the restatement; before it, the planted row was not a full-grain duplicate and the paged request was served.",
+      "SOURCE: integration.py R9a branch takes only a single page (offset 0, matched <= page_size); R9a section 7 'Nothing else changes' leaves the paged path to the :742-752 check, which refuses paging_refused_no_unique_grain.",
+      "SOURCE: GR3_TEST_EDITS.md lists the restatement; both assertions still refuse the request, only the paged refusal code differs."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A2 item 3: restate test_ogq2_ac20 to plant a full-grain duplicate and assert a single-page dim_position request is REFUSED duplicate_source_grain; nothing is said of the paged assertion in the same test.",
+  "world_is": "The paged assertion expected UNAVAILABLE duplicate_source_grain, a code the old per-result check gave when a paged request carried every grain column. Under R9 no request carries quantity_cash_settled, so the paged request on the planted snapshot is refused INVALID_REQUEST paging_refused_no_unique_grain by paging's own snapshot check; the assertion now states that. If the CTO wants the paged code to stay duplicate_source_grain, the fallback must also take the paged path, a serving change beyond R9a.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```

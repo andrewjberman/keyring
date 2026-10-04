@@ -17216,6 +17216,162 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   ]
  },
  "disposition": "UNDER_INVESTIGATION"
+},
+{
+ "id": "AMGT_RESAPP-Z-S340",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~Z",
+ "surfaced_at": "2026-10-03T16:56:17Z",
+ "one_line": "FWD-38 (b) on deployed KQSA62c3, measured over the whole population: 60 of 94 ranking names and 61 of 95 chatter names are served all-caps (crosswalk 35, model-block header 23-25, classification 1-2). Two failure modes my c12 never sampled also show: a share-class remnant survives ('SHOPIFY INC - CLASS'), and crosswalk names are truncated ('MITSUBISHI UFJ FINANCIAL GRO').",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "PRD FWD-38 (b): every route serves ONE display name per security, in title case, with no share-class code. r64_served c12 C2 graded 3 names (BA, AMD, VLO), all already cased in etf-classifications, and read YES.",
+ "world_is": "Census at ~16:5xZ on deployed KQSA62c3 (CVO~Z v77 @e8ee439150 found 60/94). /lead-panel/rankings/breakout/price: 94 rows, 60 all-caps by display_name_source {crosswalk 35, model_block_header 23, etf-classifications 2}. /lead-panel/timeseries/collected/chatter: 95 rows, 61 all-caps {crosswalk 35, model_block_header 25, classification 1}. The one rule an-3 added strips a trailing code but not a '- CLASS' remnant, and re-cases nothing (row Z-W212-S1 flagged the re-casing). Crosswalk names are cut at a fixed width. The c12 sample of 3 cased names could not see any of this: a denominator bounds the sample, not the population.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "capture_lib._invoke on the deployed function, both routes, counting display_name == display_name.upper() with a letter.",
+   "examples: 'SYNOPSYS INC', 'CADENCE DESIGN SYS INC', 'TOKYO ELECTRON LTD', 'SHOPIFY INC - CLASS', 'AIA GROUP LTD', 'HON HAI PRECISION INDUSTRY', 'MITSUBISHI UFJ FINANCIAL GRO'.",
+   "3.0.0_SA_CVO~Z adjudicate+slug e8ee439150: FWD-38 (b) title case NOT met (60/94)."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+},
+{
+ "id": "AMGT_RESAPP-Z-S341",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~Z",
+ "surfaced_at": "2026-10-03T17:18:41Z",
+ "one_line": "The seating check (.tools/to-decomp-ref-lint.py, gate2) counts a WITHDRAWN task order as OPEN: TERMINAL_STATUS lacks WITHDRAWN, and an unknown status is open by design. At the round-65 issuance it announced that 0.7.0_AE_CloudOps~A holds 2 open AMGT_HARVST orders; both read <status>withdrawn</status> as their only tag.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "CLAUDE.md rule 27 seating: ONE PROJECT PER TIER-2 SEAT INSTANCE, enforced by the lint's seating check, which should count only orders a seat still owes.",
+ "world_is": "Commit 3fde70ec2b (round-65 issuance): gate2 SEATING announced AMGT_RESAPP.TO-AMGT-ao-2 addressed to 0.7.0_AE_CloudOps~A 'already holds open TOs on AMGT_HARVST (2 open: HVST-n-4, HVST-q-7)'. Both files carry one status tag, withdrawn. TERMINAL_STATUS at :80 is {COMPLETE, CLOSED, SUPERSEDED, CANCELLED, DONE, CLOSED-SUPERSEDED}; _is_open at :187 treats any other lead token as open. ANNOUNCE mode today, so nothing was blocked; armed (org/mcp/pipeline-gate2.enforce), it would refuse a correct seating. Whether WITHDRAWN is terminal is the lint owner's call (1.0.0_SA_CTO, last commit 453c6430ec).",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "safe-commit output for 3fde70ec2b, the [gate2] SEATING block.",
+   "grep of <status> in the two AMGT_HARVST orders: one tag each, withdrawn.",
+   ".tools/to-decomp-ref-lint.py :80 TERMINAL_STATUS and :187 _is_open read at HEAD."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+},
+{
+ "id": "AMGT_RESAPP-Z-W216-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~216",
+ "surfaced_at": "2026-10-03T17:36:39Z",
+ "one_line": "ao-1 re-case needed two steps the order did not name: it rewrote 2 existing assertions that pinned the all-caps display_name, and it added an all-caps-only tail rule for Bloomberg share-type tails (-CL, -SER, -REG, -SP, -UNSP, -GENUSSCHEIN).",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "Order 1.3: 'No share-class word survives in a served name' and 1.1: only display_name changes; it names the 'CLASS' remnant but not the other Bloomberg tails, and does not mention test_model_block_names.py.",
+ "world_is": "At the base, lib/research/api/tests/test_model_block_names.py asserted display_name 'HERMES INTERNATIONAL' (overlay/row) and ('COSTCO WHOLESALE CORP', model_block_header) for the chatter chain; with the re-case both fail (full suite 2 failed, 477 passed), so those two lines were updated to 'Hermes International' and 'Costco Wholesale Corp' (name stays all-caps in the overlay assertion). Served names also carry '-CL' (NIKE INC -CL), '-REG' (NESTLE SA-REG), '-SP' (ALIBABA GROUP HOLDING-SP) and '-GENUSSCHEIN', which are share-type codes the case-sensitive an-3 rule never matched; they are stripped for all-caps names only (_SHARE_CLASS_TAIL_CAPS). Mixed-case names are untouched.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "pytest lib/research/api/tests/ before the test edit: 2 failed, 477 passed (test_model_block_names.py x2); after: 479 passed.",
+   "lib/research/api/scoped_amgt.py _SHARE_CLASS_TAIL_CAPS; r65_served --cell c17 --where local: 0 all-caps names on both routes."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
 }
-]
+,
+{
+ "id": "AMGT_RESAPP-Z-S342",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.7.0_AE_CloudOps~A",
+ "surfaced_at": "2026-10-03T19:11:47Z",
+ "one_line": "r65_served.py --where deployed is a MIXED-PLANE instrument: it invokes the DEPLOYED function for the names but imports DISPLAY_NAME_ACRONYMS from the LOCAL tree, so one unchanged deployed artifact grades 60 of 94 and 61 of 95 all-caps before ao-1 exists locally (row Z-S340) and 55 of 94 and 56 of 95 after it does. The base figure on the ao-2 halves is therefore not reproducible once the build commit is checked out, and the 5-name drop reads as the world moving when only the predicate moved.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "The ao-2 COO half's EXPECTED OUTCOME table gives the base as 'r65 c17 NO: price 60 of 94 all-caps, chatter 61 of 95', and its comp-adversary preflight line repeats '60 of 94 price and 61 of 95 chatter names all-caps' as a property of deployed KQSA62c3. r65_served.py's docstring states the intent: 'At the base, before the constant exists, every all-caps name counts.'",
+ "world_is": "Run at 2026-10-03T18:5xZ against deployed KQSA62c3 (base UNMOVED: CodeSha256 KQSA62c3, memory 1769, 41,149,311 B, re-read live), r65_served.py --cell c17 --where deployed printed 'declared acronyms: 36' and then 'names 94 all-caps 55' on breakout/price and 'names 95 all-caps 56' on collected/chatter. The verdict is NO on both runs, so the act's trigger is unaffected. The cause is in the script, not the world: :57 does 'from lib.research.api import scoped_amgt' and reads DISPLAY_NAME_ACRONYMS from it unconditionally, while --where deployed only redirects the HTTP call to capture_lib._invoke. The acronym_only() exception therefore grades DEPLOYED names with the LOCAL predicate. The docstring's 'before the constant exists' holds only while the local tree predates ao-1; at the build commit the constant exists, so the exception fires and excepts 5 acronym-only names per route. Row Z-S340's 60/61 census counted display_name == display_name.upper() with NO acronym exception, which is why the two figures disagree on identical bytes. Denominators 94 and 95 are identical across both reads, which is the tell that the population did not move.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "r65_served.py --cell c17 --where deployed at 18:5xZ: 'declared acronyms: 36'; FAIL C1 breakout/price 'status 200 names 94 all-caps 55'; FAIL C1 collected/chatter 'status 200 names 95 all-caps 56'; R65 C17 SERVED: NO, exit=1.",
+   "r65_served.py read at HEAD: the scoped_amgt import and DISPLAY_NAME_ACRONYMS read are outside the 'if a.where == deployed' branch; only the call() closure is inside it.",
+   "Row AMGT_RESAPP-Z-S340 (2.0.0_SA_COO~Z, ~16:5xZ) records 60 of 94 and 61 of 95 on the same deployed function, counting display_name == display_name.upper() with a letter and no acronym exception.",
+   "Base identity control: s3api get-object at VersionId .xFOZLD1X0znp_5COtZvp3UgWTBrw19p returned 41,149,311 B whose sha256 base64 equals the deployed CodeSha256 KQSA62c3Diw5XqjBeKKZc0ZTZuTnaaRBbhuEQHfOdXQ=, so the graded bytes are the deployed bytes."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+},
+{
+ "id": "AMGT_RESAPP-Z-S343",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~Z",
+ "surfaced_at": "2026-10-03T19:21:15Z",
+ "one_line": "Collecting lib/research/harvest/test_am1_marker_once.py or test_al2_content_key.py in the same pytest run as lib/research/management/tests fails 10 test_ceo_search.py tests (TestClassifySerpAttempt, TestSerpBrightdataRecords); each passes alone, and management alone is 142 passed. The interaction predates fc5a0bf42d: it reproduces with the 9a8cbd2c97 versions of finbert_sentiment.py, publication_gold.py and test_am1_marker_once.py.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "A test suite is order-independent: a test that passes alone passes beside any other collected module.",
+ "world_is": "At 19cb3df089 in a clean worktree: the 5-suite union (peers, management, api, harvest/tests, coverage) is 1030 passed. Adding the two root-level harvest test files gives 10 failed, 1031 passed, all 10 in management/tests/test_ceo_search.py. management + test_al2 alone: 10 failed, 140 passed. management + test_am1 alone: 10 failed, 135 passed. Same with the 9a8cbd2c97 versions checked out. Both files import lib.research.harvest.finbert_sentiment at module scope, which is the common factor; the mechanism is not traced. Neither the root files nor test_ceo_search.py is packaged in opal-amgt-scoped-api, and the function imports finbert_sentiment lazily inside build_mention only, so no served effect.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "pytest -q at /c/tmp/r65-216 detached 19cb3df089: union 1030 passed; +2 root files 10 failed / 1031 passed.",
+   "pairwise runs: management + test_al2 -> 10 failed; management + test_am1 -> 10 failed; single test alone -> 1 passed.",
+   "control: the 9a8cbd2c97 versions of the three harvest files reproduce the 10 failures."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+},
+{
+ "id": "AMGT_RESAPP-Z-W218-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~218",
+ "surfaced_at": "2026-10-03T21:44:59Z",
+ "one_line": "The 90/365 route read made test_rolling_windows.py's price qualified-wait test reach the live DynamoDB table; its shared fixture now stubs the pointer read (one added line, inside lib/research/api/).",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "spec_asserts": "The order lists tests (i)-(vi) as new tests in two files and says nothing of existing api tests.",
+ "world_is": "lib/research/api/tests/test_rolling_windows.py::test_price_90_and_365_are_a_qualified_wait_with_no_rows stubs read_rankings only. With the new read_window_rankings on the ?days=90|365 branch, that request calls read_generation_pointer first, which reaches _dynamodb(). I added one monkeypatch line to that file's `stubbed` fixture (read_generation_pointer -> None). The test's assertions are untouched; the full api suite is 490 passed.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "lib/research/api/tests/test_rolling_windows.py `stubbed` fixture diff at the AMGT-ap-2 code commit (1 added line + comment)",
+   "pytest lib/research/api/tests/: 490 passed"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "2.0.0_SA_COO~Z"
+}
+,
+{
+ "id": "AMGT_RESAPP-Z-S344",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.7.0_AE_CloudOps~A",
+ "surfaced_at": "2026-10-04T00:03:15Z",
+ "one_line": "r64_served.py c10 now carries an expectation that r66_served.py c22 contradicts on the same deployed bytes: c10's C2 clauses require the 90- and 365-day price windows to serve 0 rows and 'not produced yet', while c22 requires them to serve 94 and 95 rows. After ap-3 landed the generations and ap-4 shipped the reader, c10 reads SERVED: NO with exactly 4 FAIL lines, all of them those clauses. The ap-4 order and COO half both scope c10 to its 30-day clauses, so nothing was mis-graded here -- but any later round that runs c10 unscoped reads NO on a healthy function.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "The ap-4 order's section 4 lists 'r64_served.py --cell c9 / c10 (30 only) / c11 / c12 / c13 / c14 --where deployed' as the no-regression reads, and the COO half's EXPECTED OUTCOME table row reads 'r64 c10 (30-day clauses) | YES | YES'. The issuer notes say it directly: 'c10's 90/365 clauses now read generation rows, not not-produced-yet; c22 grades them, and c10 is re-read for its 30-day clauses only.' So the carve-out is declared, in three places.",
+ "world_is": "Measured on deployed FcVBPafwzuPI0RMFjOJJfYN/KeZe3YYns9uqTSOlalU= at 2026-10-03T23:5xZ. r64_served --cell c10 --where deployed printed 'R64 C10 SERVED: NO', exit=1, with exactly 4 FAIL lines and no others in the run: 'FAIL C2 trending price days=90 serves no rows and not produced yet status 200 rows 94 reason \"  \"', the same for trending 365 (rows 95), breakout 90 (rows 94) and breakout 365 (rows 95). Its four 30-day clauses all PASS at 94 rows each, identical to the pre-apply baseline. r66_served --cell c22 --where deployed on the SAME bytes printed 'R66 C22 SERVED: YES' with rows 94 / 95 / 94 / 95 and window_end 2026-10-02. The two checks therefore disagree by construction, and c22 is the current contract: ap-3 wrote the generations (TRENDING_PRICE_90D/365D and BREAKOUT_PRICE_90D/365D at #2026-10-02) and ap-4 shipped the reader. The rot is in the round-64 check, not in the function: c10's C2 text encodes a world that ended, and its verdict line aggregates the stale clauses with the live ones, so the single token a future reader greps ('SERVED: NO') is wrong about the product.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "r64_served.py --cell c10 --where deployed at 23:5xZ from the pin checkout b642e313f9: R64 C10 SERVED: NO, exit=1; grep -c FAIL over the whole regression run = 4, and all 4 are c10's days=90/365 C2 clauses.",
+   "The same run: c9, c11, c12, c13, c14 SERVED YES exit=0, and r65 c17 SERVED YES exit=0 -- so the 4 FAILs are not a function-wide defect.",
+   "r66_served.py --cell c22 --where deployed, same bytes, same session: SERVED YES, rows 94 / 95 / 94 / 95, window_end 2026-10-02 = last trading day.",
+   "Pre-apply baseline of c10 on lPTMo20T: SERVED YES 8 of 8, the 90/365 clauses passing on 0 rows -- which is why the clauses were true until this act.",
+   "Declared carve-out: ap-4 order s.4 'c10 (30 only)', COO half @ffd60053d9 EXPECTED OUTCOME row 'r64 c10 (30-day clauses)', and the order's ISSUER NOTES."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}]
 ```

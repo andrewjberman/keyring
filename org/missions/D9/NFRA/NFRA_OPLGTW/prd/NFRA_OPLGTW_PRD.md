@@ -3,7 +3,7 @@
   "project": "NFRA_OPLGTW",
   "directive": "D9",
   "fabric": "site-z",
-  "prd_version": "v1.6",
+  "prd_version": "v1.7",
   "step": 4,
   "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_1511ET_NFRA_OPLGTW_D9_REGISTRATION_AND_PRD.md@45ce4e5b73",
   "endpoint_outcomes": [
@@ -34,7 +34,7 @@ The header stays DRAFT while independent ground-truth certification and the two 
 
 ## Scope and evidence boundary
 
-The first release covers the five Schwab tools, hosted Claude connection, per-principal authorization, two masters and three silver datasets, protected filtered CSVs, support and safe withdrawal. Original bronze/Parquet download, source mutation, arbitrary SQL/code/URLs, cross-master aggregation, security-reference enrichment joins, managed Enterprise Auth, private tunnels, and a new portal are outside v1. Original-file support requires a future version and whole-object grant; its allowed-operation enum is disabled in this version.
+The first release covers the five Schwab tools, hosted Claude connection, per-principal authorization, two masters and four silver datasets (v1.7), protected filtered CSVs, support and safe withdrawal. Original bronze/Parquet download, source mutation, arbitrary SQL/code/URLs, cross-master aggregation, security-reference enrichment joins, managed Enterprise Auth, private tunnels, and a new portal are outside v1. Original-file support requires a future version and whole-object grant; its allowed-operation enum is disabled in this version.
 
 The proposed initial profile is not an active entitlement. The source brief proposes both masters, all accounts, its column lists and a 30-calendar-day window. Menachem's tenant/object IDs are null in the supplied record. An authorized identity/data administrator must verify the immutable identity and approve a concrete account/date/field grant at onboarding; until then the system has no active profile. This is a runtime input to an already specified approval mechanism, not an undecided design choice.
 
@@ -152,7 +152,7 @@ Entitlement updates are operator-only, through an audited repository/release-ope
 
 ### C3 - sources, closure and date semantics
 
-Source bucket is `opal-data-assets`; masters are 08242234 SmartX and 08335338 BlackDiamond. Only their `silver/dim_position/`, `silver/dim_balance/` and `silver/dim_asset/` prefixes are data-readable. A date is a Schwab business-date label, not object LastModified or request time. For each master/dataset the rolling window includes the latest qualified complete business date and the previous 29 calendar days; do not silently fill missing dates from another master or dataset. The available dates and latest qualified date are returned explicitly. A fixed-date grant is an enumerated date set. Staleness is reported as days since the qualified business date and source observation time, without pretending a missing business-calendar feed defines a late arrival.
+Source bucket is `opal-data-assets`; masters are 08242234 SmartX and 08335338 BlackDiamond. Only their `silver/dim_position/`, `silver/dim_balance/`, `silver/dim_asset/` and `silver/dim_transaction/` (v1.7) prefixes are data-readable. A date is a Schwab business-date label, not object LastModified or request time. For each master/dataset the rolling window includes the latest qualified complete business date and the previous 29 calendar days; do not silently fill missing dates from another master or dataset. The available dates and latest qualified date are returned explicitly. A fixed-date grant is an enumerated date set. Staleness is reported as days since the qualified business date and source observation time, without pretending a missing business-calendar feed defines a late arrival.
 
 The existing producer markers at `schwab/<master>/meta/complete/date=<date>.json` do not by themselves prove closure. Their declared fact tables and current-run written tables can differ and they do not pin VersionIds. Extend the producer's completion metadata contract, keeping legacy fields for existing consumers, to include a schema version, master/date, run identity, expected source partitions, explicit non-applicable/empty dispositions, expected table set, successful/failed outputs, counts and exact versioned silver objects. Publish qualified closure only after the complete expected set is reconciled. The allowed completion object must carry sufficient sanitized closure facts itself; the metadata role cannot follow references into meta/conversions or other prefixes. A missing output, failed conversion, unexplained empty day, inconsistent grain, or ambiguous inventory is incomplete. Do not repair source data or rewrite silver values as part of this extension.
 
@@ -224,18 +224,21 @@ builds them because it owns the gateway, and it grades only each order's own cri
   generic `/ms/*` guard and edge-exposed by its own exact-path ALB rule. It is not a widening of `/ms/*`, and its spec
   is MDPF_TAXSMA's. Transcripts, mail
   bodies and attachment bytes are served ONLY on two new prefixes, one for transcripts and one for mail: the fixed
-  literals `/hx/transcripts` and `/hx/mail` (v1.3). A route path is not a `lib/opal_naming.py` kind (`name()` refuses
-  `route`; NAMING_SCHEMA marks API_ROUTE NOT GRADED), so these two are graded only for distinctness: neither is under
-  `/ms/`, neither is a prefix of the other, and neither collides with a route already mounted in `app/server.py`.
+  literals `/hx/transcripts` and `/hx/mail` (v1.3). A third prefix, `/hx/teams` (v1.6), serves the laptop's LDO-001
+  Teams assistant. A route path is not a `lib/opal_naming.py` kind (`name()` refuses `route`; NAMING_SCHEMA marks
+  API_ROUTE NOT GRADED), so the three are graded only for distinctness: none is under `/ms/`, none is a prefix of
+  another, and none collides with a route already mounted in `app/server.py`.
 - **Bearers.** Each prefix has its own static capability bearer:
   - stored in Secrets Manager under a `lib/opal_naming.py` SECRET-grammar name;
   - compared in constant time;
   - accepted ONLY on its own prefix, so one leaked bearer reaches one prefix.
 - **Access.** The routes read with the server-held delegated token of ONE fixed identity, Andrew's (his route ruling:
   "the daily pull runs through the EXISTING Opal gateway under Andrew's account; no new app registration, no IT").
-  - Graph calls are GET only.
+  - Graph calls are GET only on `/hx/transcripts` and `/hx/mail`.
   - The Graph paths each route may reach are a server-side allowlist that fails closed.
-  - There is no write, send or reply verb.
+  - Those two prefixes have no write, send or reply verb. `/hx/teams` is the ONE write exception (v1.6, Andrew-direct
+    2026-10-02): its two POST verbs send a chat message and a channel reply AS ANDREW. Send approval lives in its only
+    caller (LDO-001's reply-of-1), never in the route.
 - **Allow-by-key output.** Each response is built from an explicit output allowlist, so a new Graph field cannot leak:
   - **Transcripts:** meeting id, transcript id, `createdDateTime`, `endDateTime`, the `text/vtt` body, its byte count
     and its sha256. ONLY meetings on a configured meeting allowlist are reachable. That list starts with the four
@@ -500,3 +503,37 @@ read at release.
   ruling named only its own half, so the omission is this seat's.
 - **Remedy.** The CVO grades the live release post hoc against `4231bd2ddc` and this addendum. A REFUSED half
   routes the rollback named in the ruling (redeploy `3a7d6a7dc8`; revert the IAM ARN and the ALB path).
+
+### v1.7 addendum (2026-10-03 ~19:5xZ, 1.0.0_SA_CTO~O) -- C3 records the fourth dataset, `dim_transaction`
+
+Input: `3.0.0_SA_CVO~O`'s finding in its OG-gw-2 half (msg 28974,
+`org/tier1_exec/3.0.0_SA_CVO/deliverables/cvoO_NEVER_WIDEN_OG-gw-2_HALF_20261003.md` @0cfe31652e). The ratified text named
+three datasets (:37, :155, :309). The contract it governs has carried four since @32ebe6bee6. That change was written by
+NFRA_MCPINDEX MX-r-6 step 0 under this seat's ruling B4
+(`org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/1.0.0_SA_CTO~O/REINSTATE_RULINGS_20260930.md` @4e598ab7be), released on
+the gateway 2026-09-30 18:33Z under never-widen halves, with no OPLGTW addendum. This is that addendum.
+
+**The change (C3).**
+- The data-readable prefixes are `silver/dim_position/`, `silver/dim_balance/`, `silver/dim_asset/` and
+  `silver/dim_transaction/`.
+- `org/standards/NFRA_OPLGTW_CONTRACT.json` `fields.dim_transaction` is exactly 15 columns: `account_ref`,
+  `business_date`, `trade_date`, `settlmnt_date`, `tr_cd`, `sb_cd`, `transaction_category`, `tran_srcde`,
+  `debit_credit`, `cusip`, `ticker_symbol`, `quantity`, `price`, `gross_amount`, `net_amount` (read at `af2d762970`).
+- C3's date semantics, closure and master rules apply to it unchanged.
+- :37's "three silver datasets" reads "four" from v1.7.
+- :309, the proposed first entitlement, is unchanged: Menachem's proposal names three datasets. Adding the fourth to it
+  is its own act, below.
+
+**Grants -- capability is not authorization.**
+- From OG-gw-2, the grant writer ADMITS a verified-owner candidate naming `dim_transaction` over a non-empty subset of
+  the 15 columns. This aligns the second writer with the contract the gateway serves.
+- **Authorized today:** exactly ONE grant change. Andrew-direct 2026-09-30 ~13:0xZ, "Regarding schwab, sure." (record
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260930_13xxZ_R20_ETFS_BDFEES_YES_SCHWAB_GRANT_YES_ADVI_LIFTED.md`
+  @1eba868308) widens ONE existing Opal principal's Schwab grant to add `dim_transaction`, through the grant admin tool,
+  with "no other grant change". That act is executed under its own record, not by a round-15 cell; it is not barred by
+  this seat's G1 on OG-gw-2.
+- **Every other `dim_transaction` grant** needs its own word from Andrew (the CVO's W1). FWD-9 (Andrew admits staff one
+  at a time) stays DEFERRED.
+
+**Sign-off.** CONTRACTS text changes (C3) and ENDPOINT does not. The ratified-text half re-opens for `3.0.0_SA_CVO~O`.
+`prd-signoff` binds the ENDPOINT hash only, so this seat sends the request itself.

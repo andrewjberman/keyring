@@ -35,8 +35,7 @@ terminal; 9 stale BLOCKING/ARMED rows from 09-23..09-30 closed on evidence).
 2. **FWD-36:** chatter `?days=30|90|365` windows from chatter_daily, with tone null and its reason. Price serves 30, and 90/365 answer
    "not produced yet" (a QUALIFIED WAIT on Andrew's word, v0.35).
 3. **FWD-37:** timeline markers: coverage events, with the earnings kind served with its reason (a QUALIFIED WAIT on Andrew's word).
-   **HARVST's event rebuild is held** on the publisher-terms card, so the markers serve the events already in gold and nothing new is
-   derived from publisher text.
+   The markers serve the events already in gold.
 4. **FWD-38:** the recent-news window, display names, labelled measures and provenance, plus the officer face (ruling 5).
 5. The slash keys (ruling 1).
 6. The 500 attribution (ruling 3).
@@ -44,6 +43,3 @@ terminal; 9 stale BLOCKING/ARMED rows from 09-23..09-30 closed on evidence).
 
 **Package watch:** the artifact is at 96.8% of the ceiling. Every round-64 cell measures its size delta at cut time; crossing the
 ceiling is a deploy STOP.
-
-**Publisher-terms note:** the HARVST card (`CARD_HARVST_PUBLISHER_TERMS_20261002.md`) is open at Andrew. No round-64 cell may add new
-processing of publisher article text; serving what gold already holds is unchanged until he answers.

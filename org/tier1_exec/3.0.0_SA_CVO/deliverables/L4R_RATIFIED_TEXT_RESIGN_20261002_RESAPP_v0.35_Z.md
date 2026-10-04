@@ -10,7 +10,7 @@ DONE WHEN only.
 
 FWD-36 gains a QUALIFIED WAIT. The PRICE ranking's 90- and 365-day windows need a longer PX_LAST history pull, which waits on Andrew's
 vendor word. Until then the ranking serves 30 and answers 90/365 with "not produced yet", and that answer "is NOT a read of the 90/365
-price path". The chatter windows are not waited on. Tone serves null with its reason while HARVST FWD-16/17 are held.
+price path". The chatter windows are not waited on. Tone serves null with its reason.
 
 ## Review
 

@@ -1600,3 +1600,169 @@ round-30 cell cuts the presets. FWD-26's price caption is cut now, in `AV-zg-3` 
 - **Folded at the cut:** CTO msg 28729 (row Z-C-S41), the Exec caption naming only the served source, goes into `AV-zg-6`.
 - **Checks:** 12 issuer checks (2 per cell), every one dry-run at portal dcdc89b1. Each FAILS at base (1-2 of 3-4 arms; PLANTED/CONTROL
   arms pass by design) and each reached full marks on its agent's scratch reference via `CHECK_SRC_OVERRIDE`.
+
+
+## v30 -- ROUND 30 (issuer, 2026-10-03 ~01:0xZ) -- ONE UNIVERSE PER FACE + REPAIRS (PRD v0.13 @e398ee2294, ADMITTED)
+
+**Rectangle:** round 29's close (@5e413e9b76) plus these sources:
+- the CTO's round-29 review, msg 28820 (FWD-23, the hard-coded no-tone fill);
+- RESAPP row Z-W208-S1 (CTO msg 28772; one universe per face);
+- rows Z-W81-S1 and S3;
+- COO~Z msg 28802 (feed url null);
+- CTO msg 28833 (from CVO~Z v33): SAUX-15's first viewport, the "(movement is measured)" line, and What-changed rounding.
+The "$2.9 billion" money item is ruled (b) by CTO msg 28836: served drafted prose stays as served, so no cell.
+**Base:** portal e370eb7c, the CTO-approved round-29 candidate (review @a43b54dfee). Its DEV push waits on Andrew's word at MSTR~Z.
+
+| cell | serves | owned files | worker |
+|---|---|---|---|
+| `AV-zh-1` ONE UNIVERSE | Z-W208-S1; FWD-27 (movement-basis words) | `components/LeadPanel.tsx`, `hooks/useLeadPanelApi.ts` | ~86 |
+| `AV-zh-2` REPAIRS (batched) | FWD-23 token; Z-W81-S1 canonical Refresh; Z-W81-S3 render-check back control; Z-W212-S2 feed url null; FWD-27 rounding; SAUX-15 first viewport | `portal/src/lib/chartColors.ts` (one additive export), `components/ChatterBubbles.tsx`, `components/SecurityOverlay.tsx`, `__rendercheck__/renderCheck.tsx`, `components/HeaderBrief.tsx`, `components/model/WhatChangedPanel.tsx`, `components/TimelinePanel.tsx` | ~87 |
+
+**Checks** (issuer, each FAILING at base e370eb7c):
+- `round30/checks/universe/universe.cjs` 2/4 and `resolutionwords.cjs` 2/3;
+- `round30/checks/repairs/chrome.cjs` 1/4 and `served.cjs` 1/3.
+AC3 = `round29/checks/battery29.sh` with no skip.
+**Issuer amendments to round-29 checks, landed with this issuance** (each 4/4 at base and FAILING its plants):
+- `header/face.cjs`: a primary button's ink is judged against its own fill, and white ink is caught in every spelling;
+- `timeline/dayopen.cjs`: an href only where a url is served.
+**FWD-26 presets: NOT cut.** The deployed API ignores `?days=` (30/90/365 payloads are byte-identical; round30/fixtures/windows.*.json),
+and RESAPP an-7 is signed @e1c310a414 but not deployed. The presets cut when COO~Z reports c9/c10 YES on deployed (CTO msg 28825).
+**Fan-out:** 2 of 2 chains, disjoint files. **Risk:** LOCAL. **Rule 24:** one row per cell.
+
+## v31 -- ROUND 31 (issuer, 2026-10-03 16:39Z) -- ROLLING WINDOWS + ONE NEWS ITEM AT REST (PRD v0.13 @e398ee2294, ADMITTED)
+
+**Rectangle:** the round-30 close's open list (ROUND30_CLOSE.md section 4, @19b4ced775):
+- FWD-26 presets. The routes now serve every window on the deployed opal-amgt-scoped-api (code KQSA62c3, COO~Z msgs 28860 and
+  28874). Chatter `?days=30|90|365` serves window_days, window_start and window_end (plus window_note on 365). Trending/price
+  `?days=30` serves 94 rows; `?days=90|365` serve 0 rows with window_reason.
+- SAUX-15 first viewport: one news item at rest. The round-30 close walk measured the underline at y=917 (the served feed grew from 1
+  to 69 items; CTO msg 28869).
+**Base:** portal 2defab11, the round-30 candidate (it carries round 29). Its DEV push waits on Andrew's word at MSTR~Z.
+
+| cell | serves | owned files | worker |
+|---|---|---|---|
+| `AV-zi-1` ROLLING WINDOWS | FWD-26 (SAUX-21, 27, 28); FWD-21 and FWD-22 read through the window | `api/endpoints/amgt-lead-panel.ts`, `hooks/useLeadPanelApi.ts`, `constants.ts`, `types.ts` (additive), `components/LeadPanel.tsx`, `components/ChatterBubbles.tsx`, `components/PriceBars.tsx`, two harnesses (follow-only) | ~88 |
+| `AV-zi-2` ONE NEWS ITEM AT REST | SAUX-15 / FWD-12 / FWD-27 first viewport | `components/HeaderBrief.tsx` | ~89 |
+
+**Checks** (issuer). Each FAILS at base 2defab11, and each PLANTED arm passes:
+- `round31/checks/presets/presets.cjs` reads 1/4 and `windowread.cjs` reads 1/4 at base.
+- `round31/checks/viewport/feedrest.cjs` reads 3/4 at base. A green arm with `FEED_OPEN_AT_REST = 1` planted through CHECK_SRC_OVERRIDE
+  reads 4/4.
+AC3 of each order is `round29/checks/battery29.sh` with no skip.
+**Issuer amendment to a round-29 check, landed with this issuance:** `leadprice/leadface.cjs` AMENDMENT 1. FWD-26 retires the month
+cursor, so the Chatter face hands ChatterBubbles no onMonthChange, and the face reads the served 30-day window fixture. At base the
+amended check reads 2/3, failing only on the cursor clause.
+**Kept on purpose:** ChatterBubbles keeps drawing a served month, with its cursor, for a caller that hands it `month` and
+`onMonthChange`, because round-29 `collage.cjs` and `tone.cjs` and round-30 `chrome.cjs` render it that way. The page no longer does.
+A later round may retire month mode together with those checks.
+**Fan-out:** 2 of 2 chains, disjoint files. **Risk:** LOCAL. **Rule 24:** one row per cell.
+**Workers:** the account hit its weekly model limit (resets 17:00Z), so the round-31 check agent died before writing. This session
+made no call from ~01:57Z to ~16:2xZ. The issuer wrote the checks, and the two workers run on the Sonnet model override.
+(Stamp correction: the issuance commit 812179b412 says "~02:2xZ" and this section first said "~03:0xZ". Both were
+written without reading the clock; the issuance landed at 16:39Z.)
+
+## v32 -- ROUND 32 (issuer, 2026-10-03 17:36Z) -- ONE DIRECT ACT: THE LEAD PANEL'S WORDS AT EVERY WINDOW (PRD v0.13 @e398ee2294)
+
+**Rectangle:** the round-31 close's enrichment list (ROUND31_CLOSE.md section 4, @b742fd0687). The base is portal 76a15c1b, which the
+CTO APPROVED (msg 28898, ledger @f722662a3f).
+
+| cell | serves | owned files | worker |
+|---|---|---|---|
+| `AV-zj-1` REPAIRS (batched, direct act) | FWD-27 one date format, no system words; FWD-26's faces | `components/LeadPanel.tsx`, `components/ChatterBubbles.tsx`, `components/GenerationCaption.tsx` | ~90 |
+
+**What it repairs:**
+- the Chatter footer prints `as_of` in words;
+- an unserved Price window draws no "Source: ... payload" line;
+- "this period" becomes "in this window";
+- the stale `ground="band"` comment goes (row Z-W88-S1).
+
+**Check:** `round32/checks/repairs/words32.cjs` reads 1/4 at base 76a15c1b (its arms 1-3 fail as expected; the 4 KEEP checks exit 0
+there). AC2 = `round29/checks/battery29.sh` with no skip.
+**Not cut:**
+- Printing the served `window_note` (CTO note, msg 28898, not blocking): the note carries ISO dates, and FWD-27 wants words. The
+  caption's composed "since <date>" says the same thing.
+- A bubble hover's served `places_moved_reason` ISO date stays as served (C-PRESENTATION-ONLY, CTO ruling (b)).
+**Fan-out:** 1 of 1. **Risk:** LOCAL. **Direct act:** one small cell (/dispatch Step 2).
+
+## v32-A -- STEP 5 ON THE PRD AT d5bbef0fb6 (issuer, 2026-10-03 20:01Z; v0.13, CVO re-signed @e082e847ee, notifier msg 28980)
+
+**What changed:** under the Andrew-direct 2026-10-03 ~18:xxZ deletion, the PRD lost the v0.12 clause on FWD-5's word-cloud limb
+(record `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261003_18xxZ_DELETE_AGENT_TOS_CONTEXT_AND_UNAUTHORIZED_GATES.md`).
+FWD-5's ACCEPT still names "a word cloud from its own coverage".
+**Ruling: no cell is cut this step.**
+- The limb has no served input. 0 of 437 captured payloads (every round fixture and the 10-02 served re-read) carry a word-cloud or
+  term-count field. The only `terms` field is the thesis pillars' labels.
+- The input would come from an upstream producer: HARVST/RESAPP processing harvested coverage text into term counts. Andrew's
+  standing word (2026-10-03 ~17:xxZ, record `ANDREW_DIRECT_20261003_17xxZ_RELEASE_ALL_QUARANTINE_NO_DATA_OPS_CHANGES_WITHOUT_DIRECTIVE.md`)
+  is that agents do not adjust data-engineering operations without his explicit directive, and that further data collection is
+  discussed internally after review.
+- Separately, the CTO's grading ruling (@5cd2d798d8) cuts no round 33 before f9c6fa73 lands.
+A DSGN cell for the word cloud is cut when a route serves the term counts.
+
+## v32-B -- STEP 5 ON PRD v0.14 @548a6971fe (issuer, 2026-10-03 20:20Z; CVO re-signed @b66b480942, notifier msg 28993)
+
+v0.14 names FWD-5's word-cloud input: `word_cloud` on the timeline payload, from AMGT_RESAPP FWD-39 (RESAPP v0.36). It is sized by the
+served count, and an empty served list renders its served reason. The page counts nothing. **Ruling: no cell is cut this step.**
+RESAPP FWD-39 is a QUALIFIED WAIT on Andrew's explicit word (CTO msg 28991), so no route serves `word_cloud` yet, and round 33 stays
+held on the f9c6fa73 landing (@5cd2d798d8). The cell is cut, against the served shape, when a route serves the field (v32-A).
+
+## v33 -- ROUND 33 (issuer, 2026-10-03 20:51Z) -- ONE DIRECT ACT: DEV CI GREEN AGAIN (PRD v0.14 @548a6971fe)
+
+**Rectangle:** portal DEV 49c6e94a0f, the rounds 29-32 landing, is RED in CI ("Build & Validate" 37152260084, step "Run ESLint", 1
+error: WhatChangedPanel.tsx:395 `@typescript-eslint/no-empty-object-type` on `export interface WhatChangedPanelProps extends
+PairContext {}`, from round 29 AV-zg-5, MSTR~Z msg 29015). The CTO asks for the fix as a candidate (msg 29017). A red DEV blocks the
+next PROD promote, and the round-32 grades wait for a green deploy.
+**Base:** portal DEV 49c6e94a0f.
+
+| cell | serves | owned files | worker |
+|---|---|---|---|
+| `AV-zk-1` ESLINT GREEN (direct act) | CI green on DEV; FWD-25 (What changed) unchanged in behaviour | `components/model/WhatChangedPanel.tsx` (one line) | ~91 |
+
+**Check:** `round29/checks/battery29.sh` AMENDMENT 1 (this issuance) adds the CI's ESLint step, errors only, over this project's
+paths. It reads FAIL at base 49c6e94a0f (eslint rc=1, 1 error). Green arm: the one-line fix piped to eslint --stdin reads rc=0.
+AC2 = round29 model/whatchanged.cjs and model/etwords.cjs (they read WhatChangedPanel.tsx).
+**Gate fix (MSTR~Z msg 29018, the issuer's call: adopted):** battery29 now runs ESLint, so "ALL PASS" includes the CI lint gate.
+**Fan-out:** 1 of 1. **Risk:** LOCAL. **Direct act.**
+
+## v34 -- ROUND 34 (issuer, 2026-10-04 00:48Z) -- THE GAP WALK + ONE REPAIR CELL (PRD v0.15 @237d5d742f, ADMITTED)
+
+**Rectangle:** the CTO's round-33 analysis section 3 (`ledger/ROUND_ANALYSIS.round33.md` @ff31355b93), and the round-32 grades on PROD
+dbd29c6320: 10 REALIZED, 3 NOT_REALIZED (FWD-5, 21, 27), 13 NOT_EVALUATED, 1 RETIRED.
+**Base:** portal PROD dbd29c6320, the served build.
+
+**1. The gap walk: the issuer's real run, not a cell.** `round34/walk/gapread.mjs` is an issuer instrument built on
+`served-reread-20261002/servedread.mjs`, using the walk.mjs lease. It ran on a worktree build of PROD dbd29c6320 at 5174 against the
+live API: read-20261004T001928Z, 00:19-00:30Z, DISARMED with login REFUSED afterwards. Result: 20 reads, **16 PASS, 3 FAIL, 1 ERROR**
+(`round34/walk/GAP_READ.md`).
+- PASS:
+  - tabs on BA, VLO and AMD with the day dialog closed (5 of 5 each);
+  - ROG SW's CHF header;
+  - ASML NA's officers (filing empty, 7 served from the Bloomberg fallback);
+  - the overlay census, 0 "not served" on 19 carried fields per name;
+  - hovers: full names on every shortened label at 30/90/365, "no clear tone", the timeline tooltip, and bubble/bar identity;
+  - Escape closing the account menu.
+- FAIL: the display-name census. The Peers subject row prints the served `peers.subject.name` ("BOEING CO/THE") while every other
+  surface prints `display_name`.
+- ERROR: FWD-24's positive control. None of the 3 names lacks a checked field; owed on a sparser name.
+The six-state ui-smoke capture (FWD-19/20) is not yet run; it is owed.
+
+| cell | serves | owned files | worker |
+|---|---|---|---|
+| `AV-zl-1` REPAIRS (batched) | FWD-21 labels; FWD-27: header move window, What-changed precision, axis ink, one display name in Peers | `components/ChatterBubbles.tsx`, `components/SecurityOverlay.tsx`, `components/model/WhatChangedPanel.tsx`, `components/TimelinePanel.tsx`, `cscTable.ts`, `tabs/PeersTab.tsx` | ~93 |
+
+**Checks** (each FAILS at base dbd29c6320 with its PLANTED arm passing; each green arm reads N of N through CHECK_SRC_OVERRIDE):
+- `round34/checks/collage/labels34.cjs` reads 2/4. At base it finds 34 collisions over 30/90/365, and 30 shortened labels without a
+  reachable `<title>`.
+- `round34/checks/repairs/repairs34.cjs` reads 1/4: the move has no window, 11 of 13 changes print at raw precision, and the axis is
+  #A8B0C0 at 2.18:1.
+- `round34/checks/names/peername34.cjs` reads 3/4. Its fixtures are `round34/fixtures/{overlay,peers}.{BA,VLO}_US_Equity.json`,
+  captured read-only on code FcVBPafw.
+AC3 = `round29/checks/battery29.sh` with no skip (it now runs the CI ESLint step).
+**Issuer ruling inside this decomposition:** the Peers subject name joins the repair cell. The CTO's analysis expected RESAPP's
+title-case deploy to settle the name limb, but today's served `peers.subject.name` is still the raw vendor form. Which served name
+the page prints for its own subject is a presentation choice; nothing is rewritten.
+**Not cut:**
+- FWD-5's word cloud: when RESAPP ap-4 serves FWD-39.
+- SAUX-25 provenance lines: RESAPP FWD-38(d), at COO~Z.
+- Officers for the 84 of 95 names whose M-1 management object has not landed (RESAPP upstream; observation sent to the CTO).
+**Fan-out:** 1 of 1. **Risk:** LOCAL.

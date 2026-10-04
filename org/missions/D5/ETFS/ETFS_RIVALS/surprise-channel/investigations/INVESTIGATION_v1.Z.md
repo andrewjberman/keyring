@@ -3143,6 +3143,116 @@
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "Order RIV-pv-1: 'the sweep stamps scheduled only for an event carrying that value and no only; every other event stamps ad_hoc' and 'sa-1 ... tests/test_r7sa1_sweep_ai_step.py must still pass when you report'.",
     "world_is": "The two cannot both hold: that test passed a hand-made event with no run_path and expected scheduled, the exact claim ruling 3 retires. sweep.run_ai_step now reads the run_path handler_entry stamped (sweep.stamped_run_path); defaulting an absent key to scheduled inside run_ai_step would restore the test but reinstate the unearned claim for any direct caller, so it was not done. The test file is not in this order's paths."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S16",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-03T00:06Z",
+    "one_line": "A skipped AI step reports no run_path: run_ai_step copies run_path from ai_stage.run_for_day's result, and SKIPPED_EXISTS / SKIPPED_GATE carry none, so a sweep whose AI step skips cannot show the trigger it stamped; the round-7 COO half predicted detail.ai would read 'scheduled' and was wrong.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/tmp/r7act/s1.json: RequestId 1e9c8fb9-2b9f-4d75-acd8-082144632c75, event run_path 'scheduled', detail.ai {status SKIPPED_EXISTS, run_path null}",
+        "data/etfs/scripts/rivalfunds/sweep.py run_ai_step@75ad1e4d2e: out = {k: res.get(k) for k in (status, reason, run_id, run_path)}; ai_stage.py run_for_day@75ad1e4d2e: the SKIPPED_GATE / SKIPPED_EXISTS returns carry no run_path",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round7/postact_round7_deploy.json S1.prediction_error"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CTO ruling 3 (a value must carry its claim) and RIV-pv-1: the run's trigger is stamped from the payload; the round-7 COO half act 4: detail.ai reads {status: SKIPPED_EXISTS, run_path: 'scheduled'}.",
+    "world_is": "The deployed sweep reaches the AI step (proved by S1), and handler_entry stamps ev['run_path'] = 'scheduled' for the schedule payload, but that stamp reaches detail.ai only when run_for_day returns it (OK, FAILED, SKIPPED_ATTEMPTED). A skipped day's response therefore reads run_path null although the event was stamped 'scheduled' -- the response omits the claim rather than misstating it. The account rows and research_hypotheses_run (written only on OK/FAILED) carry the stamp, so no stored value is wrong.",
+    "notes": "Remedy for a later round (one line in run_ai_step: fall back to the stamped run_path when the result carries none). Not a blocker: the organic 2026-10-05 sweep runs a real step whose result carries run_path. disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S17",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-03T00:15Z",
+    "one_line": "G5 writes a phantom EXIT for a zero-share line: INEQ JAR_LN and TXUE ATD_CN, fully sold in the 09-30 window, are carried at 0 shares in the 09-30 report and come back as action 'exit' on 10-01 with shares 0 -> 0, delta 0 and est_price/est_notional NULL -- in the served G5 and in a rebuild at the deployed code alike.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3://opal-data-etfs/rivalfunds/etfs/gold/trade_schedule/date=2026-10-01/ (newest object): 2 exit rows with est_notional NULL (INEQ JAR_LN_Equity, TXUE ATD_CN_Equity)",
+        "C:/tmp/r7measure/g5pin/g5.pkl (r6_g5.py at CLOUD 75ad1e4d2e over the served inputs): rows 246 and 249, window 2026-09-30 -> 2026-10-01, shares_before 0.0, shares_after 0.0, shares_delta 0.0, est_price NaN; the same securities' real exits are rows 206/227 (09-30, priced from prior_valuation: -463,335.60 and -7,669,244.85)",
+        "C:/tmp/r7act/served7_index.html: the 213 trade rows show neither 10-01 row (the page drops a zero-size line), so the defect is in the stored table, not on the face"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "FWD-5 / RFW-D10 acceptance: a full exit is priced from the prior report's valuation, 0 'n/a' notional on exits; a trade row is a change in holdings.",
+    "world_is": "gold_trade_schedule classifies a line present at 0 shares in the prior report and absent (or 0) in the next as an exit, so every full sale yields a second, zero-size exit one report later with no price. G5 consumers that count exits or sum unpriced notional (an exit count, a 'missing price' census) read one phantom per full sale; the page hides them only because it drops zero-size lines.",
+    "notes": "Remedy (a round-8 cell, gold_trade_schedule.py): a line whose shares_before is 0 is no trade, never an exit. Separate from D10's six visible n/a cells, which are the 09-30 trims-to-zero built before x-1 and clear on a G5 rebuild at the deployed code (the issuer's G5 replay act). disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S18",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-03T00:45Z",
+    "one_line": "The census's +2 missing prices at round 7 are PFOE's two CUSIP lines (81762P102 ServiceNow, 98138H101 Workday): cg-1 re-keyed them to the rankings' NOW_US_Equity / WDAY_US_Equity, and the holding-implied price fallback then looks the fund's books up by that new key and misses, so the census reads 'missing' for two prices the rankings still price holding-implied.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3://opal-data-etfs/rivalfunds/etfs/gold/input_census/date=2026-10-02/ input_census-20261002T194905Z-0a8bebe9371d (r6) vs input_census-20261002T235951Z-a5d731cf88d2 (r7): price 79 arrived / 642 covered / 42 missing -> 79 / 640 / 44; r6-only rows price 81762P102 and 98138H101 (PFOE, covered_by_fallback holding_implied); r7-only rows price NOW_US_Equity and WDAY_US_Equity (PFOE, missing) and gics NOW_US_Equity / WDAY_US_Equity (covered_by_fallback g4_prior)",
+        "s3://opal-data-etfs/rivalfunds/etfs/gold/holding_contribution/date=2026-10-02/ 19:48:22Z vs 23:58:38Z objects: PFOE NOW_US_Equity and WDAY_US_Equity identical in both (8 rows, price_source holding_implied, MTD/QTD coverage full)",
+        "data/etfs/scripts/rivalfunds/gold_input_census.py@75ad1e4d2e:178-194 (subject key = security_id else alias of raw_identifier; _implied_priced(books, f, latest, k) looks the books up by that key)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-cg-1 / RIV-cs-1: the census reads what the rankings read; CALL 1: a price the rankings take holding-implied reads covered_by_fallback / holding_implied.",
+    "world_is": "The census now keys PFOE's CUSIP lines the way the rankings do, which fixed their sector (missing -> covered g4_prior) but broke their price fallback: the books the implied-price test reads are keyed by the G1 identifier, not the rankings' resolved key. The page is unaffected (the rankings price both); the census under-reports by 2. The 15/15 other key changes between the two objects are market_reading headlines (23 = 23, the day's readings re-read).",
+    "notes": "Remedy (round-8 repair cell, gold_input_census.py): run the implied-price lookup in the books' own key space (the row's raw/G1 key) while the census subject stays the rankings' key. Answers 3.0.0_SA_CVO~RV's 'one read before round 8' and the CTO's binding on the 2 extra missing prices. disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S19",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-03T01:05Z",
+    "one_line": "RETRACTION of ETFS_RIVALS-Z-S17: the 0 -> 0 G5 'exit' row is RULED behaviour, not a defect -- CRO~RV CALL 12 (RATIFIED, Addendum 9) keeps the row in G5, hides it on the page with a counted per-window note, and excludes it from the AI facts; round-6 x-1.AC3 pins it and PASSES at the deployed pin.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/tier1_exec/4.0.0_SA_CRO/deliverables/ETFS_RIVALS_RULINGS_20261002.md CALL 12: 'G5 is unchanged; the page counts what it hides, per window with its note; the AI facts and the page now read the same population'",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round6/checks/x-1.AC3.py: Z0 (quantity 0 prior, absent later) -> 'today's row unchanged: action exit, shares 0 -> 0, NULL notional'; re-run at 75ad1e4d2e 2026-10-03 ~01:0xZ: AC3 RESULT: PASS 0 failures"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Row ETFS_RIVALS-Z-S17 (2026-10-03T00:15Z): 'G5 writes a phantom EXIT for a zero-share line' with the remedy 'a line whose shares_before is 0 is no trade, never an exit' in gold_trade_schedule.py.",
+    "world_is": "The measurement in Z-S17 stands (INEQ JAR_LN and TXUE ATD_CN carry 0 -> 0 exit rows dated 10-01 with NULL price), but its classification and remedy are wrong: CALL 12 ratified keeping the row in G5, and the remedy would break the ratified contract and x-1.AC3. Nothing is owed on it; it leaves the round-8 repair cell. The issuer filed Z-S17 without reading the ruling or the round-6 check that pins the row.",
+    "notes": "Supersedes ETFS_RIVALS-Z-S17 (an existing row is never edited; this row carries the correction). D10's six visible n/a cells are unaffected (the 09-30 trims-to-zero; a G5 rebuild at the deployed code prices them). disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S20",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-03T20:50Z",
+    "one_line": "I-2's request-cost measurement (PRD v0.8 'Bloomberg budget'): the four new names return 4,246 holdings rows for ONE report date (IDVZ 45, PFOE 24, ACWI 2,198, IWM 1,979; 13.9-16.6 s), while the leg's single per-date query is capped at 2,000 rows and an overflow raises an uncaught RuntimeError -- so flipping RIVALFUNDS_LEG_ENABLE as built would crash the whole daily leg, including the five funds it lands today.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/tmp/r8prep/i2_measure.json: scripted collector_bloomberg.excel_fetch({2026-10-01: [IDVZ, PFOE, ACWI, IWM]}, max_rows=20000) on the terminal machine (R-21, Andrew-direct card 6 @9fe6e6f111); 4,247 rows incl. header; per id().ORIG_IDS: IDVZ 45, PFOE 24, ACWI 2,198, IWM 1,979; no sink, nothing landed",
+        "data/etfs/scripts/rivalfunds/collector_bloomberg.py@75ad1e4d2e: excel_fetch(max_rows=2000) builds ONE multi-fund BQL query per date and raises RuntimeError('range cap 2000 exceeded') when UsedRange > max_rows; _handler_entry catches only UniverseUnavailable / BloombergUnreachable, so the leg exits as a crash (vehicle code 92, landing UNKNOWN)",
+        "data/etfs/scripts/rivalfunds/universe.py@75ad1e4d2e: LEG_GATE RIVALFUNDS_LEG_ENABLE switches all four pending entries (IDVZ, PFOE, ACWI, IWM) together"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD v0.8: IDVZ and PFOE join the Bloomberg leg's daily queue and its history backfill; ACWI and IWM are the groups' index controls; before the first scheduled fire with the four new names the issuer measures the leg's request cost, and a measured breach STOPs and is rowed. Andrew-direct ~20:3xZ 2026-10-03 card 6: resume I-2 (D12, D13).",
+    "world_is": "Measured breach: the controls alone are about 2x the leg's per-query cap, and the overflow is fatal to the whole leg, not to the two names. The gate is also all-or-nothing, so the cheap half (IDVZ/PFOE, 69 rows/day) cannot go live without the heavy half. Not yet measured: the downstream cost of ~4,200 more lines per day through silver, G1, A1 and the page (1.89 of 2.10 MB today), and the G4 market pull if the controls' ~4,000 constituents join it (the plan holds 601 securities). I-2 STOPS at the gate: no flip, no backfill, until a round-8 cell lands.",
+    "notes": "Remedy (round-8 cell lg-1, collector_bloomberg.py + universe.py): query an index control on its own per date with a cap sized from this measurement (and a range read that never truncates silently), make an overflow a per-name partial rather than a leg crash, and split the gate so D12 (home funds) and D13 (controls) switch independently; then the issuer's backfill acts run under their pairs. Hazard ARMED because anyone flipping the gate today breaks the existing daily leg; it disarms when lg-1 deploys. A YTD backfill of the controls is ~800k rows at ~15 s per date: its Bloomberg budget threshold is not defined in integrations/bloomberg/READ_HERE.md (only the 2-attempt sign-in budget is), so the cell's pair names one."
   }
 ]
 ```

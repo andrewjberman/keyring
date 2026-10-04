@@ -46,41 +46,5 @@ dispositioned).
 ## ADDENDUM ~19:5xZ -- ruling 3's research landed (`4.0.0_SA_CRO~Z` msg 28704; `FT_SIGNIN_ROUTES_BRIEF.md` @057df8f244)
 
 - **Option (b) has no candidate.** None of 2Captcha, CapSolver, Anti-Captcha, CapMonster or NopeCHA lists hCaptcha in its own docs
-  today. hCaptcha's own terms (2025-11-17) prohibit automated solving, so the solver class is closing, not merely unlisted. No
-  solver vendor card is raised. Ocilar stays the qualified wait only because Andrew named it (ruling 2), and the 11-01 re-check
-  reads hCaptcha's terms beside Ocilar's status.
-- **Option (c) stays REJECTED,** against the brief's recommendation: FWD-11's RULE carries Andrew's "we do not accept any defeat to
-  that end". The research's value is that it names the route that is not a defeat, a licence.
-- **NEW, before any ft route is built: FT's terms on automated access are UNREAD.** `help.ft.com` refused the research tool. They bear
-  on the ft limb as built (automated reads on a consumer subscription), not only on the solver question.
-  - `4.0.0_SA_CRO~Z` reads them VERBATIM in a headed browser on an Opal machine and lands the clauses.
-  - STOP_FT stays until that read. No ft collection resumes on a consumer subscription that the terms may bar.
-- **For Andrew (spend), carded:** an FT corporate licence QUOTE naming SSO (re-authenticated every 180 days), Premium, FT-on-Bloomberg
-  and the Datamining API. It is a quote, with no spend committed.
-  - The tension is named for him: FWD-11's RULE excludes "licensed bulk access (Factiva or any other)". His verbatim was "no licensed
-    factiva bullshit, no". A direct FT licence is a publisher seat licence giving SSO auth, not an embargoed aggregator.
-  - Whether the Datamining API counts as "bulk" under his word is his to say on the card.
-- **One Terminal read for FT news entitlement** (does FT full text or only headlines show today?) is a Bloomberg read under the
-  per-use word. It is carded with the licence quote, because it may show a licence Opal already holds.
-
-## ADDENDUM 2 ~20:0xZ -- FT's terms, read verbatim (`4.0.0_SA_CRO~Z` msg 28711; `FT_TERMS_VERBATIM_20261002.md` @0fab00b8a0, headed Edge 19:47Z)
-
-**The clauses:**
-- the Copyright Policy bars spidering, datamining, systematic download-and-store and scraping, and calls a breach "a breach of
-  contract" that "may also violate copyright law";
-- T&C s.3.2 bars circumventing security technology;
-- s.3.5 bars ML/AI use "to generate any data";
-- s.1.4: an organisation's agreement prevails.
-
-**Rulings** (reversible; each protects without destroying):
-1. **The ft limb's route is a LICENCE ONLY.** Solving FT's challenge is circumvention under s.3.2, so ruling 2's Ocilar wait no
-   longer applies to ft. HVST-RECHECK-OCILAR-1 stays as Andrew's note, and its use for ft is barred by FT's terms. FWD-11's ft
-   limb (1) now waits on the FT licence card, which is Andrew's spend. STOP_FT stays HARD: no automated ft read of any kind on the
-   consumer subscription.
-2. **FinBERT excludes ft** (PRD v0.16, FWD-16). ft rows serve tone null with the reason.
-3. **The 62 stored ft articles are QUARANTINED, not deleted.** `2.0.0_SA_COO~H` cuts a cell that excludes ft rows from gold serving
-   and from every downstream use. The bytes are kept. It is a served change under a never-widen pair (CTO half owed here). Deletion
-   is Andrew's word (a delete is human-confirmed, and this one is also a legal judgement).
-4. **The other four publishers' terms** (wsj, barrons, bbg, sa) are UNREAD. `4.0.0_SA_CRO~Z` reads each the same way. The same
-   question may apply to HARVST as a whole, and it goes to Andrew as one card when the four reads land, not before (a card on a
-   guess is not a card).
+  today. No solver vendor card is raised. Ocilar stays the qualified wait because Andrew named it (ruling 2).
+- **Option (c) stays REJECTED:** FWD-11's RULE carries Andrew's "we do not accept any defeat to that end".

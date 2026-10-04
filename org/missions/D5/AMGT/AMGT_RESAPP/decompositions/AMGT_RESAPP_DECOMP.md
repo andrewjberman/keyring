@@ -7902,7 +7902,7 @@ fanout:
 
 **Issuer rulings at the cut:**
 - R1. **FWD-36:** the chatter windows are re-aggregated from gold `chatter_daily` at request time (counts only). Tone and voters are
-  served null with `tone_reason`, because HARVST FWD-16/17 are HELD on the publisher-terms card. The price ranking accepts `?days`,
+  served null with `tone_reason`. The price ranking accepts `?days`,
   serves 30, and answers 90/365 with "not produced yet" (qualified wait). That answer is never read as the 90/365 path.
 - R2. **FWD-37:** coverage-event markers come from gold `chatter_event` (its `lead_headline`). The earnings kind is served in
   `marker_kinds_absent` with the reason "no earnings dates are pulled yet" until the CORPUS Model-block pull carries the dates (a
@@ -7989,7 +7989,240 @@ The analysis landed after the issuance (`59aabebf87`). Its seven-item enrichment
 | 7 the as_of source stamp (ruling 6) | an-6 item 3, RE-RULED: the body's `source_stamp`, with the key's `object_as_of` for older bodies |
 
 Every unspawned cell (an-2 to an-6) also measures its package delta (`--build-only` SIZE line). an-1 was already running, so the
-issuer measures its delta at the drain. No cell adds new processing of publisher article text (the HARVST terms card). an-7 carries
+issuer measures its delta at the drain. an-7 carries
 it and reads the census after the act. r64_served gains c14 C4 (the encoded key reaches every route) and c16 (the planted fault). Both
 were dry-run at the base: C4 serves 200 with security_key null on 4 of 4 routes (the normal-key control serves it), and c16's fault
 escapes with 0 AMGT_500 lines. The orders stay at 7.
+
+
+## 73. ROUND 65 -- FWD-38 (b) TITLE CASE AT THE PRODUCER, ITS CODE-ONLY REDEPLOY. Two cells, two orders
+
+**Cut by `2.0.0_SA_COO~Z`**. Input: the CTO's round-64 analysis @504827836c (msg 28890), ruling 1 and the enrichment list (section 3:
+"1. The FWD-38 (b) re-case cell ... then its deploy under a never-widen pair ... 2. Nothing else is cuttable."). Rows: Z-S340 (the
+population census), Z-W212-S1 (the model-block fallback is not re-cased). PRD v0.35 ADMITTED (`prd-signoff.py status`, ratified-text
+SIGNED current).
+
+**Issuer rulings at the cut:**
+- R1. **The seam is `scoped_amgt._clean_display_name`.** Every served display-name chain ends there: `monthly_chatter._display_names`
+  (classification, crosswalk, model block), `_overlay_name`, `_with_display_name`. The re-case lives there, so every route and face
+  gets it at once. A name that already carries lower case is served as it is; only an all-caps name is re-cased.
+- R2. **The acronym list is DECLARED in code** as `scoped_amgt.DISPLAY_NAME_ACRONYMS`, with its source printed from
+  `scoped_amgt.DISPLAY_NAME_ACRONYMS_SOURCE`. The check reads both names.
+- R3. **The share-class remnant ("SHOPIFY INC - CLASS") is in the same cell.** It is FWD-38 (b)'s "no share-class code" clause, which
+  Z-S340 found: the an-3 rule matches "Class" case-sensitively, so an all-caps "CLASS A" loses only the "A".
+- R4. **A cut name takes a full name the estate already holds, with the source cited** (CTO ruling 1). A source the function already
+  reads comes first; otherwise a declared map in the module, each entry citing its source. No guess, no vendor call. The residue is
+  listed and rides Andrew's Bloomberg card (call 3).
+
+### 73a. MEASUREMENTS (`round65/checks/r65_served.py --cell c17`, CLOUD ~17:0xZ; FAILS at the base, local and deployed KQSA62c3)
+
+- C1 breakout/price: 94 names, 60 all-caps (e.g. 'SYNOPSYS INC', 'CADENCE DESIGN SYS INC', 'TOKYO ELECTRON LTD', 'SHOPIFY INC -
+  CLASS'). collected/chatter: 95 names, 61 all-caps (e.g. 'AIA GROUP LTD', 'HON HAI PRECISION INDUSTRY').
+- C2: both routes serve 'MITSUBISHI UFJ FINANCIAL GRO'.
+- Declared acronyms: 0 (the constant does not exist yet).
+
+### 73b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-ao-1` | FWD-38 (b): every served display name re-cased at the producer (R1), legal-form suffixes in conventional case, the declared acronym list (R2), the share-class remnant (R3), the cut names (R4) | `0.9.0_WK_AMGT_RESAPP~216` | worker | LOCAL | `lib/research/api/` |
+| `AMGT-ao-2` | the code redeploy carrying ao-1 (graded c17 + c12 on deployed) | `0.7.0_AE_CloudOps~A` | seat order, a pair | WORLD | Lambda artifact, ledger |
+
+### 73c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** The domain is ruling 1's clauses plus Z-S340's two failure modes (the remnant, the cut). Both serve FWD-38 (b), so one
+  cell holds them; the served move is ao-2.
+- **(ii) Same grain.** One served field, `display_name`, on every route.
+- **(iii) Intent.** One axis: how a name reads.
+- **(iv) What a cell does NOT move:** ao-1 changes no `name`, no `name_source`, no `display_name_source`, no row, rank, score or key; a
+  mixed-case name is untouched. ao-2 changes code only; memory stays 1769.
+
+### 73d. EDGES AND FAN-OUT
+
+```
+ao-1 --> ao-2 (one redeploy, one pair, graded c17 + c12 on deployed)
+fanout:
+  cap: 8
+  orders_total: 2
+  chains_total: 1
+  wave_0: [ao-1 ~216]
+  wave_1: [ao-2 0.7.0_AE_CloudOps~A]   # after the drain and its pair
+  no_s3_deletes: true
+  egress: none
+  portal_ref: a730d8ce
+```
+
+
+## 74. ROUND 66 -- FWD-39 WORD CLOUD, FWD-36 PRICE 90/365 FROM A ONE-TIME YEAR PULL, THE REDEPLOY CARRYING c20fd8cc98. Four cells, four orders
+
+**Cut by `2.0.0_SA_COO~Z`**. Inputs:
+- The CTO's round-65 analysis @2de1ef2251:
+  - ruling 2: the redeploy at HEAD carrying c20fd8cc98;
+  - ruling 3: the FWD-39 producer;
+  - ADDENDUM 1 @1162e9be0e: option (a) for card 4.
+  - ADDENDUM 2 @205bd13011: ANDREW-DIRECT ~20:5xZ "your rec is approved". The daily-persist is built AND deployed to the
+    scheduled job in round 66, under the normal never-widen pair.
+- ANDREW-DIRECT ~20:3xZ "yes to all recommendations" (record @9fe6e6f111): card 4 (a one-time PX_LAST year pull) and card 5 (FWD-39).
+- PRD v0.37 ADMITTED.
+
+**Issuer rulings at the cut:**
+- R1. **FWD-39 is computed in the route** at request time from gold `article_security_mention` headlines, through the projected
+  read an-5 built. It needs no table, no schedule and no data operation (PRD v0.37).
+- R2. **One worker owns the whole price-history build** (ap-2): the year puller, the 90/365 generations, the route read and the
+  daily job's persist and 90/365 step. The partition contract then has one author.
+  - The 30-day partitions, pointers and every 30-day output stay byte-identical.
+  - Existing functions the 30-day path calls are not edited: additions only, and the existing `lib/research/price/tests` pass
+    unchanged.
+- R3. **The daily job persists and generates (ADDENDUM 2).** After its unchanged 30-day pull, `price_axis_pull.py` persists the
+  series it already fetched (write-once per as_of). It then builds that day's 90/365 generations from the stored history: the year
+  pull plus the daily series.
+  - No new vendor request is made.
+  - The 30-day leg's output and exit codes stay byte-identical.
+  - A failure in the new step never fails the 30-day leg.
+  - With no year history, the step skips with a reason.
+  - The scheduled task runs `scheduled_daily_pull.cmd` from the working tree, and that file is untouched. So **the drain of ap-2
+    into the shared tree IS the deploy of the daily change.** It waits for its never-widen pair (COO + CTO halves) and is the
+    issuer's act. Rollback: revert the drain before the next scheduled run.
+- R4. **The live pull is ONE act** (ap-3) under card 4's per-use vendor word. It writes a new S3 object and new generation
+  partitions only.
+  - DELTA=0 on the deployed function is graded before the redeploy: the deployed code reads only the 30-day partitions.
+  - The terminal must already be signed in. A sign-in spends a budgeted attempt and is not in this order.
+- R5. **Until the first scheduled run after the drain,** 90/365 serve the year pull's generation with its real `window_end` and a
+  plain note. After that run, `window_end` is the last trading day (ADDENDUM 2).
+
+### 74a. MEASUREMENTS (`round66/checks/r66_served.py`, CLOUD ~20:3x-20:5xZ; every cell FAILS at the base)
+
+- c18 (FWD-39): local and deployed `lPTMo20T` serve 0 terms on BA, AMD and VLO and no `word_cloud` on an empty window; 0 declared
+  stop words.
+- c19 (ruling 2): deployed serves "window tone is held: the HARVST sentiment outcomes are held on the publisher-terms card" on all
+  four chatter windows. Local at HEAD serves the new text, so c19 is YES at HEAD.
+- c22 (FWD-36 price 90/365): local and deployed serve 0 rows and "not produced yet" on trending and breakout x 90 and 365.
+
+### 74b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-ap-1` | FWD-39: `word_cloud` on the timeline range route (R1) | `0.9.0_WK_AMGT_RESAPP~217` | worker | LOCAL | `lib/research/api/`, `lib/research/harvest/timeline_api.py` |
+| `AMGT-ap-2` | FWD-36 price 90/365 build: the one-time year puller (plan + live modes), the 90/365 generations, the route read, the daily job's persist + 90/365 step (R2, R3); its drain is the daily job's deploy, under a pair | `0.9.0_WK_AMGT_RESAPP~218` | worker | WORLD | `integrations/bloomberg/research/price_history_pull.py`, `integrations/bloomberg/research/price_series_persist.py`, `integrations/bloomberg/research/price_axis_pull.py`, `lib/research/price/`, `lib/research/api/`, `infra/logic/registry/` |
+| `AMGT-ap-3` | the live one-time year pull (R4) | `0.7.0_AE_CloudOps~A` | seat order | WORLD | the S3 history object, the 90/365 generation partitions, ledger |
+| `AMGT-ap-4` | the code redeploy carrying c20fd8cc98 + ap-1 + ap-2's route read (graded c18, c19, c22 on deployed) | `0.7.0_AE_CloudOps~A` | seat order, a pair | WORLD | Lambda artifact, ledger |
+
+### 74c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** The domain is the analysis's enrichment list (ruling 2, ruling 3) plus ADDENDUM 1 (card 4). The price build is
+  split by act class: build (LOCAL), live pull (WORLD), serve (WORLD).
+- **(ii) Same grain.** One served surface per build cell: the timeline payload, or the price ranking.
+- **(iii) Intent.** One axis per cell.
+- **(iv) What a cell does NOT move:**
+  - ap-1 adds one field and changes no existing timeline field.
+  - ap-2 changes no 30-day output or exit code. It adds a series write and the 90/365 generations to the daily job.
+  - ap-3 writes no 30-day partition and no pointer the deployed code reads.
+  - ap-4 changes code only; memory stays 1769.
+
+### 74d. EDGES AND FAN-OUT
+
+ap-1 and ap-2 both write `lib/research/api/`. They are drained one at a time, with the union suite re-run after each.
+```
+ap-1 ---------------------------+
+ap-2 --(pair; drain = the daily job's deploy)--> ap-3 (live pull) --+--> ap-4 (one redeploy, one pair, graded c18 + c19 + c22 on deployed)
+fanout:
+  cap: 8
+  orders_total: 4
+  chains_total: 2
+  wave_0: [ap-1 ~217, ap-2 ~218]
+  wave_1: [ap-3 0.7.0_AE_CloudOps~A]   # after ap-2 drains under its pair
+  wave_2: [ap-4 0.7.0_AE_CloudOps~A]   # after ap-1 drains, ap-3 lands, and its pair
+  no_s3_deletes: true
+  egress: ap-3 only (Bloomberg PX_LAST, card 4's per-use word, record @9fe6e6f111)
+  portal_ref: a730d8ce
+```
+
+
+## 75. ROUND 67 -- FWD-39 LIST REPAIR, FWD-36 TONE, FWD-38 (d) PROVENANCE, THE Z-S86 DESIGNED REASON, ONE REDEPLOY. Five cells, five orders
+
+**Cut by `2.0.0_SA_COO~Z`**. Input: the CTO's round-66 analysis @d76db3486c (msg 29112, on CVO~Z slug 29108, ADJUDICATION_v79),
+sections 3-4. PRD v0.37 ADMITTED (no ENDPOINT change, no re-sign).
+
+**Issuer rulings at the cut:**
+- R1. **FWD-39's exclusion is graded over EVERY served payload,** not 3 (analysis section 2: c18 tested display-name words on 3
+  names, and the coverage uses the ticker and brand).
+  - c23 names the set it tests: the ticker root and the served short name (`display_name`) words, on BOTH the default range (the
+    population the CVO read) and 2026-09-01..today. The long name (overlay `name`) is graded by the plant test.
+  - The stop list extends with the measured boilerplate (at least among, top, quant, focus, big, notable, higher), still printed
+    with its source.
+  - An inverted window serves its reason and never prints the inverted pair (ruling 2).
+  - Singular and plural stay apart (ruling 3, not cut).
+- R2. **FWD-36 tone reads the latest `chatter_window` part** (the HARVST gold table, `lib/research/harvest/window_tone.py`
+  TABLE/schema).
+  - `tone` and `voters` are served as the table holds them.
+  - 0 voters serves `tone` null with `tone_reason` "no clear tone".
+  - The "not served on this route yet" reason goes.
+- R3. **FWD-38 (d) provenance is the `/ledger` route's producer half** (DSGN's Model tab prints only what `/ledger` serves).
+  - Every class names its real source and last run, or a plain `source_reason` where the estate has none.
+  - The `news` class agrees with the overlay's own harvested_news `last_run`.
+  - No new store write: the route composes from the sources the overlay provenance already reads.
+- R4. **Z-S86:** a name the estate covers but which has no model block serves thesis and peers with their designed reason, never a
+  404.
+  - The cell names the universe that makes Deere covered: it is NOT in `covered_security_keys()` (95) and NOT in the identity
+    crosswalk.
+  - A key covered nowhere still answers 404.
+- R5. **One redeploy** carries aq-1..aq-4 under a never-widen pair. The range route's cold read is printed again (analysis 4.5).
+- R6. **Owed reads, not cells:** the daily job's post-run read after 2026-10-04 11:00Z (analysis 4.6).
+
+### 75a. MEASUREMENTS (`round67/checks/r67_served.py`, CLOUD ~01:5x-02:1xZ; every cell FAILS at the base)
+
+- c23, measured on deployed `FcVBPafw` over 95 names x 2 windows = 190 payloads, 128 non-empty:
+  - C1: 15 offenders carry their own ticker root or a short-name word (ADBE 'adbe', AMD 'amd', COST 'cost', HAL 'hal', CELH,
+    NKE, ...).
+  - C2: 69 payloads carry an extended-list word.
+  - C3: the inverted window is served as 2026-01-01..2025-06-30.
+  - The first version graded 2026-09-01..today only and found 3, because ADBE 'adbe' #5 and UNH 'unh' #3 appear only on the
+    default range. It was widened before the cut, so it grades the population the CVO read.
+- c24: 74 of 95 rows mismatch the 636-row `chatter_window` on each of 30, 90 and 365. Every row serves tone null and the old reason.
+- c25: on BA, AMD and VLO:
+  - 4 of 6 ledger classes are unsourced (filings, news, social, web);
+  - the news class has no run, while the overlay says harvested news last ran (e.g. BA 2026-10-01T05:03:53Z);
+  - `classes_with_a_run` is 1 = 1.
+- c26: DE_US_Equity thesis and peers answer 404, "no security matches"; the control ZZZZ_US_Equity answers 404.
+
+### 75b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-aq-1` | FWD-39 list repair + the inverted window (R1) | `0.9.0_WK_AMGT_RESAPP~219` | worker | LOCAL | `lib/research/api/` |
+| `AMGT-aq-2` | FWD-36 tone from `chatter_window` (R2) | `0.9.0_WK_AMGT_RESAPP~220` | worker | LOCAL | `lib/research/api/` |
+| `AMGT-aq-3` | FWD-38 (d) provenance on `/ledger` (R3) | `0.9.0_WK_AMGT_RESAPP~221` | worker | LOCAL | `lib/research/api/` |
+| `AMGT-aq-4` | Z-S86: the designed reason for a covered name with no block (R4) | `0.9.0_WK_AMGT_RESAPP~222` | worker | LOCAL | `lib/research/api/`, `lib/research/coverage/` |
+| `AMGT-aq-5` | the code redeploy carrying aq-1..aq-4 (graded c23-c26 on deployed) | `0.7.0_AE_CloudOps~A` | seat order, a pair | WORLD | Lambda artifact, ledger |
+
+### 75c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** The domain is the analysis's enrichment list items 1-5; item 6 is a read, not a cell.
+- **(ii) Same grain.** One served surface per cell: the timeline `word_cloud`, chatter `tone`, `/ledger`, or thesis/peers.
+- **(iii) Intent.** One axis per cell.
+- **(iv) What a cell does NOT move:**
+  - aq-1 changes only which words a cloud serves.
+  - aq-2 changes `tone`, `voters` and `tone_reason` only.
+  - aq-3 changes `/ledger`'s classes and runs only; no store write.
+  - aq-4 changes a 404 into a designed answer only for covered names.
+  - aq-5 changes code only; memory stays 1769.
+
+### 75d. EDGES AND FAN-OUT
+
+All four build cells write `lib/research/api/scoped_amgt.py`. They are drained one at a time, with the union suite re-run after
+each.
+```
+aq-1 --+
+aq-2 --+
+aq-3 --+--> aq-5 (one redeploy, one pair, graded c23-c26 on deployed; the range-route cold read printed)
+aq-4 --+
+fanout:
+  cap: 8
+  orders_total: 5
+  chains_total: 1
+  wave_0: [aq-1 ~219, aq-2 ~220, aq-3 ~221, aq-4 ~222]
+  wave_1: [aq-5 0.7.0_AE_CloudOps~A]   # after the four drains and its pair
+  no_s3_deletes: true
+  egress: none
+  portal_ref: a730d8ce
+```

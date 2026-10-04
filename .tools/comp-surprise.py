@@ -216,7 +216,10 @@ def main():
             if target in ambiguous:
                 ambiguous_adj.append((r, "adjudicates %s, an id %d item documents carry -- AMBIGUOUS, NOT applied"
                                       % (target, len(item_docs[target]))))
-            elif target in latest:
+            elif target in latest and r.get("disposition") not in ("UNDER_INVESTIGATION", None, ""):
+                # An OPEN row is its own item and never moves its target -- the row gate's _resolve_latest rule. Path order
+                # folds adjudications/ before investigations/, so an issuer's open row overwrote the CVO's disposition
+                # (3.0.0_SA_CVO~Z 28889: 40 of 3,886 CVO-terminal targets read open).
                 latest[target] = r.get("disposition")
     for r in rem:
         if r.get("id") in latest:
@@ -274,8 +277,11 @@ def main():
     print("                       investigation counts and never added to them.")
     if rem:
         done = len([r for r in rem if (r.get("remediation") or {}).get("state") == "REMEDIATED"])
+        # CLOSED_UNREMEDIATED (proposal @759c693537): finished while world != spec, counted beside REMEDIATED, never in it.
+        cu = len([r for r in rem if (r.get("remediation") or {}).get("state") == "CLOSED_UNREMEDIATED"])
         dis = len([r for r in rem if (r.get("disarm") or {}).get("state") == "DISARMED"])
-        print("                       DISARMED %d | REMEDIATED %d  (two states, two clocks)" % (dis, done))
+        print("                       DISARMED %d | REMEDIATED %d | CLOSED_UNREMEDIATED %d  (two states, two clocks)"
+              % (dis, done, cu))
 
     if dfx:
         print("\n== SCHEMA OBLIGATIONS UNMET (%d) -- the schema's conditionals ARE the law ==\n%s" % (len(dfx), SEP))

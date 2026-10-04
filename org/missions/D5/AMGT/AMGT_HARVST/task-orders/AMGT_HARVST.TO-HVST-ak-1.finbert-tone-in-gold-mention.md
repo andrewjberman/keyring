@@ -112,7 +112,7 @@ is carried in decomposition section 51.
 
 Served gold moves only at the issuer acts after the merge:
 - the one-time corpus scoring (`score`, live);
-- gold rebuild #6, under a NEW never-widen pair.
+- a gold rebuild, under a NEW never-widen pair.
 
 **COMPLETE 2026-10-02 ~20:3xZ (issuer grade; the worker flipped `<status>`, which is outside its `<paths>`):**
 - Merged @23b1e6851d.
@@ -123,13 +123,10 @@ Served gold moves only at the issuer acts after the merge:
   - AC3: PASS (`ak-1.AC3.issuer_grade.txt`). Planted rows wrong 0; unplanted rows carrying a tone 0; PUTS SENT 0.
 - The live Lambda contract, measured: request `{"text"}`; response statusCode 200 with a body of `sentiment`,
   `confidence`, `scores{3}` and `processing_time_ms`. An 11,880-character text returns 200.
-- The worker made 6 live calls, all fixed sentences. 0 publisher text was sent (rulings 1 and 2, CTO 28715/28725).
+- The worker made 6 live calls, all fixed sentences. 0 publisher text was sent.
 - Dry runs:
   - `score`: 11,245 silver articles, 11,234 to score, 11 unscorable.
   - `census`: 9,930 distinct record_hashes over the 23,691-row snapshot, 0 scored.
-**FWD-16/17 are HELD for every publisher (CTO 28725, the card to Andrew @8d20bc24c8).** No `score` runs, and no tone or
-window is served, until he answers. If the hold lifts, `score` covers every source including ft, so it must run with a
-source filter that excludes ft (v0.16).
 
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>

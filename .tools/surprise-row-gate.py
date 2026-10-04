@@ -430,6 +430,11 @@ def _resolve_latest(investigation_files, remediation_ids):
                     if target not in carried:
                         unknown.append("%s (by %s)" % (target, r.get("id")))
                     continue
+                if r.get("disposition") in UNDISPOSITIONED:
+                    # An OPEN row is its own item; its `adjudicates` never moves the target. Files fold in path order and
+                    # adjudications/ sorts before investigations/, so an issuer row "adjudicating" with UNDER_INVESTIGATION
+                    # overwrote the CVO's later disposition (3.0.0_SA_CVO~Z 28889: 40 of 3,886 CVO-terminal targets).
+                    continue
                 latest[target] = r.get("disposition")
     for rid in remediation_ids:
         if rid in latest:
@@ -2179,9 +2184,56 @@ def _mutation_violations(rel, head_text, staged_text):
                 out.append("%s: EXISTING row %s was MUTATED in place (content hash %s -> %s). "
                            "Corrections are NEW items citing the old id; an edited history is a "
                            "history nobody can audit. A remediation row's own clocks may advance in place "
-                           "(disarm ARMED->DISARMED with `at`, remediation OPEN->REMEDIATED, closed false->true, "
-                           "nothing else changed)." % (rel, oid, h_old[:12], h_new[:12]))
+                           "(disarm ARMED->DISARMED with `at`, remediation OPEN->REMEDIATED or OPEN->CLOSED_UNREMEDIATED adding "
+                           "only `remediation.closure`, closed false->true, nothing else changed)." % (rel, oid, h_old[:12], h_new[:12]))
     return out
+
+
+# CLOSED_UNREMEDIATED (proposal org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PROPOSAL_20261003_REMEDIATION_STATE_
+# CLOSED_UNREMEDIATED.md @759c693537; CVO concurrence cvoO_CONCUR_CLOSED_UNREMEDIATED_20261003.md @cfcae02e52). A row
+# that finished while world != spec as asserted carries remediation.closure {reason, pointer}; the schema's conditionals
+# grade a NEW row, and these two helpers grade what the schema cannot see: the closure on the IN-PLACE clock path (only
+# NEW rows meet the schema) and whether the pointer resolves.
+CLOSURE_REASONS = ("NOT_A_DEFECT", "CARRIED_BY", "IRREMEDIABLE", "ACCEPTED_BY_RULING")
+
+
+def _closure_shape_ok(closure):
+    """PURE. True iff `closure` is exactly {reason in CLOSURE_REASONS, pointer: a string of 3+ characters}."""
+    return (isinstance(closure, dict) and set(closure) == {"reason", "pointer"}
+            and closure.get("reason") in CLOSURE_REASONS
+            and isinstance(closure.get("pointer"), str) and len(closure["pointer"].strip()) >= 3)
+
+
+def _closure_pointer_violations(rid, closure, known_ids, path_exists):
+    """PURE given its oracles. The pointer's FIRST token is what it names:
+    CARRIED_BY -- a row id in the project's channel (never the row itself), or else a repo path that exists;
+    ACCEPTED_BY_RULING -- a repo path that exists (an `@vintage` or `:line` suffix is stripped);
+    NOT_A_DEFECT / IRREMEDIABLE -- free-form evidence, graded only for presence by the shape check.
+    `known_ids` None = the project census could not run -> refused (fail-closed), never waved through."""
+    if not isinstance(closure, dict):
+        return []
+    reason, pointer = closure.get("reason"), str(closure.get("pointer") or "").strip()
+    head = pointer.split()[0] if pointer else ""
+    path = head.split("@", 1)[0].split(":", 1)[0]
+    if reason == "CARRIED_BY":
+        if ID_RE.match(head):
+            if known_ids is None:
+                return ["%s: closure CARRIED_BY %s -- the project's row ids could not be read, so the successor cannot "
+                        "be confirmed (fail-closed)" % (rid, head)]
+            if head == rid:
+                return ["%s: closure CARRIED_BY names the row itself; a carrier is another row or an order" % rid]
+            if head not in known_ids:
+                return ["%s: closure CARRIED_BY %s -- no such row in the project's channel" % (rid, head)]
+            return []
+        if path and path_exists(path):
+            return []
+        return ["%s: closure CARRIED_BY %r -- neither a row id of the project nor a repo path that exists"
+                % (rid, head)]
+    if reason == "ACCEPTED_BY_RULING":
+        if path and path_exists(path):
+            return []
+        return ["%s: closure ACCEPTED_BY_RULING %r -- the ruling record must be a repo path that exists" % (rid, head)]
+    return []
 
 
 # MONOTONE STATE ADVANCE (2026-09-03, 3.0.0_SA_CVO 93695 item 4, measured on the round-5 slug): a routed remediation
@@ -2194,6 +2246,11 @@ def _mutation_violations(rel, head_text, staged_text):
 def _monotone_advance(old, new):
     """PURE. True iff `new` differs from `old` only by a forward move of the remediation row's clocks."""
     if not isinstance(old, dict) or not isinstance(new, dict):
+        return False
+    # CVO C3 (@cfcae02e52): `closed` true on an ARMED row needs disarm DISARMED in the same row -- on this path too, because
+    # only NEW rows meet the schema's allOf. A live hazard never closes ARMED, whatever the remediation state.
+    if (new.get("closed") is True and str(new.get("hazard_standing") or "").upper() == "ARMED"
+            and (new.get("disarm") or {}).get("state") != "DISARMED"):
         return False
     o = json.loads(json.dumps(old))
     n = json.loads(json.dumps(new))
@@ -2208,6 +2265,12 @@ def _monotone_advance(old, new):
         if orm.get("state") == "OPEN" and nrm.get("state") == "REMEDIATED":
             moved = True
             nrm["state"] = orm.get("state")
+        elif (orm.get("state") == "OPEN" and nrm.get("state") == "CLOSED_UNREMEDIATED"
+              and "closure" not in orm and _closure_shape_ok(nrm.get("closure"))):
+            # CVO C1 (@cfcae02e52): the same in-place clock, with exactly ONE added field, `closure`.
+            moved = True
+            nrm["state"] = orm.get("state")
+            del nrm["closure"]
     if o.get("closed") is False and n.get("closed") is True:
         moved = True
         n["closed"] = False
@@ -2314,6 +2377,30 @@ def check_file(root, rel):
             _mut = [x for x in _mut if x not in _md]
     v.extend(_mut)
     added = [r for r in new_rows if r.get("id") not in old_ids]
+    # CLOSED_UNREMEDIATED POINTERS: a row ENTERING the state in this commit (a NEW row, or an in-place clock move) has its
+    # pointer resolved against the project's channel ids and the index. COST: one id census per file, only when such a
+    # row exists. NON-APPLICATION: rows already CLOSED_UNREMEDIATED at HEAD; investigation files.
+    if kind == "REMEDIATION":
+        _old_state = {r.get("id"): (r.get("remediation") or {}).get("state") for r in old_rows if r.get("id")}
+        _entering = [r for r in new_rows if (r.get("remediation") or {}).get("state") == "CLOSED_UNREMEDIATED"
+                     and _old_state.get(r.get("id")) != "CLOSED_UNREMEDIATED"]
+        if _entering:
+            _proj = _folder_identity(rel)[0] or str(_entering[0].get("project") or "")
+            _rem_ids, _ = _remediation_ids_for_project(root, _proj) if _proj else (None, "")
+            _inv_paths, _ = _index_paths(root, [pat % _proj for pat in INVESTIGATION_PATTERNS]) if _proj else (None, "")
+            _known = None
+            if _rem_ids is not None and _inv_paths is not None:
+                _known = set(_rem_ids)
+                for _ip in _inv_paths:
+                    _st, _tx = _blob(root, "", _ip)
+                    if _st != "OK":
+                        _known = None
+                        break
+                    _known.update(r.get("id") for r in _rows(_tx, _ip.lower().endswith(".json"))[0] if r.get("id"))
+            _exists = lambda _p: _blob(root, "", _p)[0] == "OK"  # noqa: E731
+            for _r in _entering:
+                v.extend(_closure_pointer_violations(_r.get("id"), (_r.get("remediation") or {}).get("closure"),
+                                                     _known, _exists))
     # FUTURE-DATED STAMP DISCLOSURE (2026-10-02, 1.0.0_SA_CTO~Z on 3.0.0_SA_CVO~Z msg 28369): a NEW row whose surfaced_at is
     # more than 10 min after the commit time is a typed or projected stamp, and it moves every watermark and cursor that
     # reads it. WARN only: it refuses nothing, and arming it as a refusal is announced first. COST: one parse per new row.
@@ -2793,6 +2880,7 @@ def _self_test(root):
         r.update(over)
         return r
     noroute = lambda r: any("carries no `route`" in x for x in _check_row(r, "REMEDIATION", rschema))  # noqa: E731
+    CLOSURE_OK = {"reason": "IRREMEDIABLE", "pointer": "org/x.md:3 -- gone"}
     if rschema is not None:
         arms += [
             ("OPEN remediation, no route -> ADMITTED (spine v3 carrier 6: the route is retired; the slug goes to the CTO)",
@@ -2815,7 +2903,58 @@ def _self_test(root):
                                      disarm={"state": "DISARMED", "owner": "1.0.0_SA_CTO", "at": "2026-09-03T11:00Z"}))),
             ("OPEN with route SPEC_ERROR + loop_target 6 -> no route complaint (unchanged)",
              lambda: not noroute(rem(route="SPEC_ERROR", loop_target=6))),
+            # CLOSED_UNREMEDIATED (proposal @759c693537, CVO concurrence @cfcae02e52): the schema conditionals.
+            ("CLOSED_UNREMEDIATED + closure (IRREMEDIABLE, pointer), INERT, closed -> admitted",
+             lambda: _check_row(rem(closed=True, remediation={"state": "CLOSED_UNREMEDIATED", "owner": "1.0.0_SA_CTO", "round": "v1",
+                                                               "closure": CLOSURE_OK}),
+                                "REMEDIATION", rschema) == []),
+            ("CLOSED_UNREMEDIATED without closure -> REFUSED",
+             lambda: _check_row(rem(closed=True, remediation={"state": "CLOSED_UNREMEDIATED", "owner": "1.0.0_SA_CTO", "round": "v1"}),
+                                "REMEDIATION", rschema) != []),
+            ("closure on an OPEN row -> REFUSED",
+             lambda: _check_row(rem(remediation={"state": "OPEN", "owner": "1.0.0_SA_CTO", "round": "v1", "closure": CLOSURE_OK}),
+                                "REMEDIATION", rschema) != []),
+            ("closure reason outside the four -> REFUSED",
+             lambda: _check_row(rem(closed=True, remediation={"state": "CLOSED_UNREMEDIATED", "owner": "1.0.0_SA_CTO", "round": "v1",
+                                                               "closure": {"reason": "WONTFIX", "pointer": "org/x.md:3"}}),
+                                "REMEDIATION", rschema) != []),
+            ("closure without a pointer -> REFUSED",
+             lambda: _check_row(rem(closed=True, remediation={"state": "CLOSED_UNREMEDIATED", "owner": "1.0.0_SA_CTO", "round": "v1",
+                                                               "closure": {"reason": "IRREMEDIABLE"}}),
+                                "REMEDIATION", rschema) != []),
+            ("C3: ARMED + closed + CLOSED_UNREMEDIATED + disarm still ARMED -> REFUSED",
+             lambda: _check_row(rem(hazard_standing="ARMED", closed=True,
+                                    disarm={"state": "ARMED", "owner": "1.0.0_SA_CTO", "at": None},
+                                    remediation={"state": "CLOSED_UNREMEDIATED", "owner": "1.0.0_SA_CTO", "round": "v1",
+                                                 "closure": CLOSURE_OK}),
+                                "REMEDIATION", rschema) != []),
+            ("C3: ARMED + closed + CLOSED_UNREMEDIATED + DISARMED -> admitted",
+             lambda: _check_row(rem(hazard_standing="ARMED", closed=True,
+                                    disarm={"state": "DISARMED", "owner": "1.0.0_SA_CTO", "at": "2026-10-04T00:00Z"},
+                                    remediation={"state": "CLOSED_UNREMEDIATED", "owner": "1.0.0_SA_CTO", "round": "v1",
+                                                 "closure": CLOSURE_OK}),
+                                "REMEDIATION", rschema) == []),
+            ("control: INERT + closed + OPEN -> REFUSED (unchanged)",
+             lambda: _check_row(rem(closed=True), "REMEDIATION", rschema) != []),
         ]
+    # CLOSED_UNREMEDIATED pointer checks (proposal section 2 item 5), pure: known ids and a path oracle are injected.
+    _pex = lambda p: p in {"org/tier1_exec/1.0.0_SA_CTO/deliverables/R.md", "org/missions/D9/NFRA/X/task-orders/T.md"}  # noqa: E731
+    _cpv = lambda reason, pointer, known=frozenset({"X_PRJ-S9"}): _closure_pointer_violations(  # noqa: E731
+        "X_PRJ-S3", {"reason": reason, "pointer": pointer}, set(known), _pex)
+    arms += [
+        ("pointer: CARRIED_BY a row id present in the project -> admitted", lambda: _cpv("CARRIED_BY", "X_PRJ-S9 carries it") == []),
+        ("pointer: CARRIED_BY a row id absent from the project -> REFUSED", lambda: _cpv("CARRIED_BY", "X_PRJ-S10") != []),
+        ("pointer: CARRIED_BY its own id -> REFUSED", lambda: _cpv("CARRIED_BY", "X_PRJ-S3", known={"X_PRJ-S3"}) != []),
+        ("pointer: CARRIED_BY an order path that exists -> admitted",
+         lambda: _cpv("CARRIED_BY", "org/missions/D9/NFRA/X/task-orders/T.md") == []),
+        ("pointer: ACCEPTED_BY_RULING a record path that exists (with @vintage) -> admitted",
+         lambda: _cpv("ACCEPTED_BY_RULING", "org/tier1_exec/1.0.0_SA_CTO/deliverables/R.md@abc1234567") == []),
+        ("pointer: ACCEPTED_BY_RULING a path that does not exist -> REFUSED",
+         lambda: _cpv("ACCEPTED_BY_RULING", "org/nowhere.md") != []),
+        ("pointer: IRREMEDIABLE free-form evidence -> admitted", lambda: _cpv("IRREMEDIABLE", "the paths are gone; see S42") == []),
+        ("pointer: project ids unreadable (None) on CARRIED_BY -> REFUSED (fail-closed)",
+         lambda: _closure_pointer_violations("X_PRJ-S3", {"reason": "CARRIED_BY", "pointer": "X_PRJ-S9"}, None, _pex) != []),
+    ]
     # FOREIGN-ROW SWEEP arms (pure), the class site Z measured; includes the mutant (a clean commit under the WRONG seat).
     fr = lambda rows, who, cw=frozenset(): _foreign_row_violations("f", "INVESTIGATION", rows, who, coworkers=cw)[0]  # noqa: E731
     fn_ = lambda rows, who, cw=frozenset(): _foreign_row_violations("f", "INVESTIGATION", rows, who, coworkers=cw)[1]  # noqa: E731
@@ -2893,6 +3032,31 @@ def _self_test(root):
         ("advance MUTANT: the clock moves AND the remedy is reworded -> refused",
          lambda: not _monotone_advance(base_row, adv(remediation={"state": "REMEDIATED"}, remedy="fix the other thing"))),
         ("advance: no change at all -> not an advance (False)", lambda: not _monotone_advance(base_row, adv())),
+        # CLOSED_UNREMEDIATED clock (CVO C1): OPEN -> CLOSED_UNREMEDIATED in place, adding `closure` only.
+        ("advance CU: OPEN->CLOSED_UNREMEDIATED adding a well-formed closure -> admitted",
+         lambda: _monotone_advance(base_row, adv(remediation={"state": "CLOSED_UNREMEDIATED", "closure": {"reason": "IRREMEDIABLE", "pointer": "org/x.md:3"}}))),
+        ("advance CU: with closed false->true and disarm ARMED->DISARMED in the same write -> admitted",
+         lambda: _monotone_advance(base_row, adv(disarm={"state": "DISARMED", "at": "2026-10-04T00:00Z"}, closed=True,
+                                                 remediation={"state": "CLOSED_UNREMEDIATED", "closure": {"reason": "IRREMEDIABLE", "pointer": "org/x.md:3"}}))),
+        ("advance CU MUTANT: state moves but no closure -> refused",
+         lambda: not _monotone_advance(base_row, adv(remediation={"state": "CLOSED_UNREMEDIATED"}))),
+        ("advance CU MUTANT: closure added but state stays OPEN -> refused",
+         lambda: not _monotone_advance(base_row, adv(remediation={"closure": {"reason": "IRREMEDIABLE", "pointer": "org/x.md:3"}}))),
+        ("advance CU MUTANT: REMEDIATED->CLOSED_UNREMEDIATED -> refused",
+         lambda: not _monotone_advance(adv(remediation={"state": "REMEDIATED"}),
+                                       adv(remediation={"state": "CLOSED_UNREMEDIATED", "closure": {"reason": "IRREMEDIABLE", "pointer": "org/x.md:3"}}))),
+        ("advance CU MUTANT: the remedy reworded in the same write -> refused",
+         lambda: not _monotone_advance(base_row, adv(remedy="something else",
+                                                     remediation={"state": "CLOSED_UNREMEDIATED", "closure": {"reason": "IRREMEDIABLE", "pointer": "org/x.md:3"}}))),
+        ("advance CU MUTANT: another field added beside closure -> refused",
+         lambda: not _monotone_advance(base_row, adv(remediation={"state": "CLOSED_UNREMEDIATED", "note": "x", "closure": {"reason": "IRREMEDIABLE", "pointer": "org/x.md:3"}}))),
+        ("advance CU MUTANT: a closure reason outside the four -> refused",
+         lambda: not _monotone_advance(base_row, adv(remediation={"state": "CLOSED_UNREMEDIATED",
+                                                                  "closure": {"reason": "WONTFIX", "pointer": "org/x.md:3"}}))),
+        ("advance C3 MUTANT: an ARMED row closed (CLOSED_UNREMEDIATED) while disarm stays ARMED -> refused",
+         lambda: not _monotone_advance(base_row, adv(closed=True, remediation={"state": "CLOSED_UNREMEDIATED", "closure": {"reason": "IRREMEDIABLE", "pointer": "org/x.md:3"}}))),
+        ("advance C3 MUTANT: an ARMED row closed (REMEDIATED) while disarm stays ARMED -> refused (the schema allOf, on the clock path)",
+         lambda: not _monotone_advance(base_row, adv(closed=True, remediation={"state": "REMEDIATED"}))),
         # THE FOURTH ADMITTED MOVE (R-19 addendum): owner change with a same-write CTO-ruling citation, nothing else.
         ("advance OWNER: disarm.owner changes AND exactly one CTO-ruling citation is appended -> admitted",
          lambda: _monotone_advance(base_row, adv(disarm={"owner": "2.0.0_SA_COO~G"},
@@ -3006,6 +3170,16 @@ def _self_test(root):
         ("census MUTANT: the same UNDER_INVESTIGATION row filed as an investigation row DOES block (the document decides, not the seat)",
          lambda: _investigations_precondition_violations("r", row, "X_PRJ", "the slug", (
              _resolve_latest([(INV, [{"id": "X_PRJ-S1", "disposition": "GRADUATED"}, {"id": "X_PRJ-S2", "disposition": "UNDER_INVESTIGATION"}])], [])[0], [], 1, "")) != []),
+        ("fold order: an issuer's OPEN row adjudicating a CVO-dispositioned item does not re-open it (28889)",
+         lambda: _resolve_latest([(ADJ, [{"id": "X_PRJ-S9", "disposition": "DISMISSED_WITH_REASON", "adjudicates": ["X_PRJ-S1"]}]),
+                                  (INV, [{"id": "X_PRJ-S1", "disposition": "UNDER_INVESTIGATION"},
+                                         {"id": "X_PRJ-S2", "disposition": "UNDER_INVESTIGATION", "adjudicates": ["X_PRJ-S1"]}])], [])
+         == ({"X_PRJ-S1": "DISMISSED_WITH_REASON", "X_PRJ-S2": "UNDER_INVESTIGATION"}, [])),
+        ("fold order control: a DISPOSITIONED issuer row still applies after the CVO's (later file wins, as before)",
+         lambda: _resolve_latest([(ADJ, [{"id": "X_PRJ-S9", "disposition": "DISMISSED_WITH_REASON", "adjudicates": ["X_PRJ-S1"]}]),
+                                  (INV, [{"id": "X_PRJ-S1", "disposition": "UNDER_INVESTIGATION"},
+                                         {"id": "X_PRJ-S2", "disposition": "GRADUATED", "adjudicates": ["X_PRJ-S1"]}])], [])[0]["X_PRJ-S1"]
+         == "GRADUATED"),
         ("census: `adjudicates` naming an adjudication-document row's own id -> a real row, not a phantom, nothing to flip",
          lambda: _resolve_latest([(INV, [{"id": "X_PRJ-S1", "disposition": "GRADUATED"}]),
                                   (ADJ, [{"id": "X_PRJ-S2", "disposition": "DISMISSED_WITH_REASON"},

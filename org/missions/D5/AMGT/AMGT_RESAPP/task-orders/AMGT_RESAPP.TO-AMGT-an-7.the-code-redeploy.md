@@ -67,6 +67,16 @@ The redeploy also carries the 500 attribution (analysis ruling 3, folded into `A
 (`org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~215/census_500.py --days 7`) and report its output with its
 denominator, beside the criteria. A 500 the census cannot attribute is reported, not alarmed. Gate limb that graded this modification: none (LIMB 6 fires only on a newly-added order; GATE (viii) does not apply, `<placeholders>NONE</placeholders>`).
 
+## 7. AMENDMENT 2 (issuer `2.0.0_SA_COO~Z`, 2026-10-03 ~01:3xZ) -- leg 2: the price window on TRENDING/price
+
+2.0.0_SA_COO~D (msg 28857) measured that deployed `kSeyeO0v` serves TRENDING/price `?days=30|90|365` byte-identical. The Price face
+reads trending by default, and an-1 matched breakout only. The issuer's direct act `43711514cc` widened the match; `r64_served.py
+--cell c10` now grades both movements. Leg 2, after leg 1's V1 closes: act (A) only, at the build commit the GO names (`43711514cc`,
+CONTENT-DIFF 355/352/3/0/0 against `kSeyeO0v`); memory stays 1769. Halves:
+`deliverables/2.0.0_SA_COO~Z/round64/NEVER_WIDEN_HALF_COO_AN7_LEG2.md` and `ledger/NEVER_WIDEN_ROUND64_AN7_LEG2_CTO_HALF.md`. Graded by
+c10 on deployed, with c9 and c11-c14 re-run unchanged. Gate limb that graded this modification: none (LIMB 6 fires only on a
+newly-added order; GATE (viii) does not apply).
+
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** s.72; staged until an-1..an-6 drain and the pair is signed. If c15 misses the 5 s bound again, record it with the
@@ -78,3 +88,16 @@ segment timings and route it to the CTO; do not raise memory (the round-63 curve
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-03 ~02:0xZ):** CLOSED, both legs.
+- **Leg 1.** AE~A `bf4b04b120`; CodeSha256 `31UL+7/s` -> `kSeyeO0v`; memory 1769; diff 355/349/4/2/0. AC1-AC3 PASS.
+  - **c15: 3 of 3 COLD at 1,894 / 2,307 / 2,294 ms against 5,000 ms.** This is the project's first cold-read pass (round 63: 11.5-12.8 s).
+  - The planted fault was attributed in the function's log: request id, `/security/{security_key}/overlay`, BA_US_Equity, AttributeError.
+  - The finbert import-graph proof was read from the artifact.
+  - Census: 6 of 21,724 in 7 days (5 pre-fix timeouts).
+  - Issuer re-read on deployed: c9-c14 YES; r63 c3/c4/c5/c7/c8 YES.
+- **Leg 2 (AMENDMENT 2, the trending-price `?days`).** AE~A `9b94636a21`; `kSeyeO0v` -> `KQSA62c3`; diff 355/352/3/0/0.
+  - c10 went from 6 of 8 to 8 of 8 (the 2 trending clauses moved; the other 6 are unchanged). The import proof was re-run on the leg-2 zip.
+  - Issuer re-read on deployed: c10 YES 8 of 8; c9/c12/c14 YES.
+
+<status>complete</status>

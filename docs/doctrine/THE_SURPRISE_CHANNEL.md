@@ -78,6 +78,26 @@ a compromise missed look identical six weeks later unless one of them was writte
 *Working instance: `docs/architecture/MDPF_REMEDIATION_REGISTER.md` — opened while its build was still
 running, with the compromises that build knowingly shipped.*
 
+**How a remediation row ENDS (2026-10-04, proposal
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PROPOSAL_20261003_REMEDIATION_STATE_CLOSED_UNREMEDIATED.md`, CVO concurrence
+C1-C5).** A row ends one of two ways:
+- **REMEDIATED:** the world now matches the spec. That includes a row fixed by ANOTHER repair, which cites that repair.
+- **CLOSED_UNREMEDIATED:** the row finished while the world still differs from the spec as asserted. It carries
+  `remediation.closure` = {reason, pointer}. The reasons:
+
+  | reason | when it applies | the pointer names |
+  |---|---|---|
+  | `NOT_A_DEFECT` | the row asserts no defect: the spec was wrong, a ruling amended or withdrew it, or the row is a carried note recording a fact | the read, ruling or note |
+  | `CARRIED_BY` | the remedy is still OWED and lives with another carrier | the successor row id or order |
+  | `IRREMEDIABLE` | no act can restore the world | the evidence |
+  | `ACCEPTED_BY_RULING` | a ruling keeps the spec and accepts the gap | the ruling record |
+
+- **Tie-break:** `IRREMEDIABLE` wins when evidence shows no act can restore the world.
+- **It is a clock move IN PLACE:** OPEN to CLOSED_UNREMEDIATED, adding only `closure`, with `closed` going true. An
+  ARMED row closes only after its disarm.
+- `.tools/surprise-row-gate.py` grades the shape, the clock and the pointer.
+- **Without this state,** a row no act could ever move stayed OPEN, and was counted stale every round.
+
 ## Why the coordinator, not the owner of the surprising thing
 
 Routing to the owner invites a conversation; routing to the coordinator invites a **triage**. The

@@ -3468,6 +3468,166 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "No served figure over 100 keys carries a DECIMAL label chosen by magnitude. 8 figures with no ground now say so (UNRESOLVED-ON-<security>: ...), with their signs UNRESOLVED by the standing classification split.",
     "notes": "For the CVO's plausibility read (packet s.3): ORA's FY2025 RETURN_ON_INV_CAPITAL serves 0.2237 PERCENT (0.22%) against its own FY2016-2024 history of 3.7 .. 7.3 -- the unit is the key's by the series rule; whether FY2025's magnitude is a real low year is a value question this round did not touch.",
     "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S84",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-10-03T21:14:04Z",
+    "one_line": "In --mode dry-run the scheduled entry's model_block_admit step reads rc 1 at CLOUD 6527a03cc1: induction_run's dry run poisons boto3.client and admit's S3 read trips it, so the scheduled dry run cannot pre-flight the admit (or, from round 34, the refresh) step.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m lib.research.corpus.induction_scheduled --mode dry-run (2026-10-03 ~21Z, issuer, base 6527a03cc1): 'ERROR: model_block_admit step raised RuntimeError: POISON: boto3.client called -- a real AWS call was attempted' then 'induction_scheduled step model_block_admit rc 1' and closing rc 1.",
+        "Control: PYTHONPATH=. python integrations/bloomberg/research/model_block_pull.py admit --dry-run run directly reads 'admit population registered 96 without_block 0 pulled 0 bloomberg_calls 0', rc 0, 3.5 s -- the stage itself is sound; the poison is the dry-run harness's."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CRPS-t-1: induction_scheduled --mode dry-run runs admit --dry-run as the scheduled entry's pre-flight of its second step.",
+    "world_is": "The dry-run admit step always fails inside induction_scheduled because the first step's dry-run poison is still installed; the fire path is not poisoned and the 13:00Z fires read rc 0 (task Last Result 0).",
+    "notes": "Found at the round-34 cut. Not cut as a cell: off the served path, and round 34's AC3 grades the refresh step's placement rather than its dry-run rc. A repair (scope the poison to step 1, or give the S3 reads a dry-run reader) is a candidate for the round-34 analysis.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W1-S29",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-10-03T21:50:00Z",
+    "one_line": "Appending the 52 CRPS-aj-1 mnemonics breaks five existing tests that sit OUTSIDE this order's <paths> and so were not edited: test_model_block_22_fields.py::test_lists_carry_46_plus_22 (pins header 18 / hist 39 / forecast 11), test_hist_request_chunks.py::test_39_fields_chunk_into_25_and_14_order_preserved (pins 39 hist fields), test_build_unit_map_families.py::test_census_covers_every_pulled_mnemonic (the unit-family census names none of the 52), and test_currency_labels.py::test_december_block_equal_modulo_new_keys plus test_stage_derive_fye.py::test_december_name_byte_identical_to_pin (the December block now carries 7 more header names under unresolved).",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m pytest integrations/bloomberg/research/tests lib/research/corpus/tests -q on branch wk-AMGT_CORPUS-341 after the producer change: 8 failed, 715 passed. 2 of the 8 also fail on the base (git archive of bcd3b35abc run from .scratch/base: test_readonly_proof_bound.py::test_code_census_arm_leaves_no_amgt_corpus_entry and test_price_axis_pull.py::...loopback_dapi... (ModuleNotFoundError blpapi)). The 6th, lib/research/corpus/tests/test_induction_schedule.py::test_r1_scheduled_path, is inside <paths> and was updated in this order's commit.",
+        "test_build_unit_map_families.py:34 asserts the census leaves no pulled mnemonic outside a family: 'pulled mnemonics in no family' now lists the 52 (BEST_CPS, EXPECTED_REPORT_DT, EV_TO_T12M_EBIT ...); build_unit_map.py (not in <paths>) holds the family census.",
+        "test_currency_labels.py and test_stage_derive_fye.py compare a December block's `unresolved` list against a pinned/expected set: the 7 new header names (SHORT_NAME, COUNTRY_FULL_NAME, AVG_DAILY_VALUE_TRADED_3M, CRNCY_ADJ_MKT_CAP, LONG_COMP_NAME, EXPECTED_REPORT_DT, ERN_ANN_DT_AND_PER) land under unresolved ('empty/no value returned') on a fixture that never returns them, which is the refusal path the order keeps (item 3)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order's <paths> name every file the change touches; test_model_block_admit.py and test_induction_schedule.py are the only existing tests it expects to need an update.",
+    "world_is": "Four more existing test files (and the unit-family census in build_unit_map.py) pin the old field-list sizes, the old family census or the old December unresolved set, so the drain's repo-wide hygiene will red until they are updated for the 52; the AC1-AC3 criteria and the three test files in <paths> pass.",
+    "notes": "Not worked around: the producer's behaviour is what the order specifies. A follow-on cell owning those five test files plus build_unit_map.py's family census (units for the 52, field_map.json rebuild) is the repair; until the map is rebuilt a new figure's unit reads the 'SEE field_map.json ... not yet built' pointer, which the producer already writes for any mnemonic the map lacks.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S85",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-10-03T22:57:41Z",
+    "one_line": "schedule_induction.ps1 resolves the task's interpreter as the FIRST python on PATH, and PATH now resolves C:/Program Files/Python314/python.exe (no blpapi) ahead of Python311 (blpapi + boto3 + pyarrow): a plain -Register today would silently re-register amgt-induction-daily on an interpreter that cannot reach Bloomberg.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "schedule_induction.ps1 -Plan -Commit a864e82a5c (22:2xZ, issuer) printed the interpreter C:/Program Files/Python314/python.exe.",
+        "The live task (registered at 33c1d096a343) runs C:/Users/Opal Bloomberg/AppData/Local/Programs/Python/Python311/python.exe; Python311 imports blpapi 3.26.4.2 and boto3 1.43.46; Python314 raises ModuleNotFoundError: No module named 'blpapi'.",
+        "Control: the same -Plan with the Python311 directory prepended to PATH prints the Python311 interpreter."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "schedule_induction.ps1 header: 'The python path is resolved at plan time: a Scheduled Task does not inherit the profile' -- the resolved interpreter is assumed to be the estate's PY_AWS interpreter (integrations/bloomberg/READ_HERE.md s.3).",
+    "world_is": "Resolve-Python takes Get-Command python's first real hit; a later install put Python314 first on PATH, so the plan's interpreter depends on install order, not on the interpreter the producer needs.",
+    "notes": "Disarmed for CRPS-aj-2 at the act: its gate leg prepends Python311 to PATH and STOPs unless the plan prints Python311 (NEVER_WIDEN_ROUND34_AJ2_SERVED_ACT.md leg 0). The durable repair (an explicit interpreter parameter, or a resolver that requires blpapi) is a candidate for the round-34 analysis. Any other site-Z registration script that resolves python by PATH order carries the same hazard.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-S86",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~X",
+    "surfaced_at": "2026-10-04T00:07:27Z",
+    "one_line": "/api/scoped/amgt/security/DE_US_Equity/thesis and /peers return 404 on the live API (ui-walk 20261003T235538Z, 3 each), where the 2026-10-01 walk 20261001T083453Z read both 200; Deere is the BA posture card's comparison name.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "tmp/ui-walk/20261003T235538Z/netlog.tsv: 3 x 404 DE_US_Equity/peers, 3 x 404 DE_US_Equity/thesis; every BA_US_Equity request 200.",
+        "tmp/ui-walk/20261001T083453Z/netlog.tsv: DE_US_Equity thesis + peers 200 (2 requests).",
+        "S3 list derived/model_block/DE_US_Equity/: 0 objects; DE_US_Equity is not among the 96 registered names (r34_aj2_leg_v_census.txt)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A name the page links to (the posture comparison) serves its thesis route.",
+    "world_is": "Deere's thesis and peers routes moved from 200 (10-01) to 404 (10-03 23:58Z). Round 34's act wrote nothing for Deere (no block ever, not in the refresh population), so the cause sits outside CRPS-aj-2's blast radius; it is not localised here.",
+    "notes": "Filed at round 34 leg v and kept working (off-task). For the round-34 analysis to route: the thesis route belongs to the AMGT_RESAPP API surface (2.0.0_SA_COO~Z).",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W1-S30",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-10-04T00:40:00Z",
+    "one_line": "CRNCY_ADJ_MKT_CAP: the producer's FIELD_BASIS says 'full currency units' but every landed value (BA 152984.02, GOOGL 4182279.8, BP/ LN 87634.56) is the same header's CUR_MKT_CAP divided by 1e6 exactly, so the unit read from the values is MILLIONS and the basis text is wrong.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "In-process read of the landed header (load_raw_for_key + prepare_header, no write): BA CUR_MKT_CAP 152984021071.2 vs CRNCY_ADJ_MKT_CAP 152984.02107120003; GOOGL 4182279825000.0 vs 4182279.825; BP/ LN 87634559634.446 vs 87634.55963444599 (ratio 1e6 on all three).",
+        "integrations/bloomberg/research/model_block_pull.py FIELD_BASIS['CRNCY_ADJ_MKT_CAP'] = 'Market capitalization adjusted to the requested currency (Bloomberg's currency-adjusted market capitalization), full currency units.'",
+        "build_unit_map.classify_unit('CRNCY_ADJ_MKT_CAP', 152984.02, ...) -> MILLIONS (ABSOLUTE_OR_MILLIONS_FIELDS magnitude read), pinned in test_build_unit_map_families_round35.py::test_amount_family_millions_and_absolute."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order: the family is decided by Bloomberg's own definition, the producer's FIELD_BASIS text, and must discriminate on the landed values; a hypothesis is not a ruling.",
+    "world_is": "The definition text and the landed values disagree on the SCALE of CRNCY_ADJ_MKT_CAP: the map will carry MILLIONS (measured), while the basis definition the served block and page may print says full currency units.",
+    "notes": "Not smoothed: model_block_pull.py is read-only for this order, so the FIELD_BASIS text is unchanged. The unit map entry follows the values. Candidate for the issuer: correct the FIELD_BASIS text to 'millions' in a later producer cell, or have ak-4's served act check that the printed basis and the map unit agree for this key.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W1-S31",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-10-04T00:41:00Z",
+    "one_line": "To place the four new dividend-yield fields (DIVIDEND_YIELD, AVERAGE_/HIGH_/LOW_DIVIDEND_YIELD) I added them to ZERO_VALUE_UNIT_FROM_BASIS, which the order did not name; that also exempts them from the ZERO-DOMINATED class, as EQY_DVD_YLD_IND already is.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Landed series, in-process: BA DIVIDEND_YIELD 6 zero years of 10, GOOGL 8 of 10, BP/ LN 0 of 10; without the exemption BA and GOOGL read 'ZERO-DOMINATED: no magnitude' although FIELD_BASIS says 'percent' and a non-paying year is a real zero yield.",
+        "build_unit_map.py ZERO_DOMINATED_EXEMPT = frozenset(ZERO_VALUE_UNIT_FROM_BASIS) | {'EQY_DVD_YLD_IND'}: the module's own rule for a dividend field whose FIELD_BASIS defines the unit of a zero.",
+        "Result over BA, GOOGL, BP/ LN: DIVIDEND_YIELD BA PERCENT / GOOGL UNRESOLVED (median 0.2911 under the 0.3 line, no ground) / BP PERCENT; AVERAGE_ and LOW_ the same shape; HIGH_ PERCENT on all three (GOOGL median 0.366 >= 0.3)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order: use the module's existing families where one fits; a field whose landed values do not discriminate gets UNRESOLVED-ON-<security> with its reason, the module's existing path.",
+    "world_is": "Four fields join an existing exemption set beyond the bare family placement, so a mostly-zero yield series is read by its non-zero years instead of reading ZERO-DOMINATED. GOOGL HIGH_DIVIDEND_YIELD reads PERCENT on two non-zero years (0.317, 0.4147), which the 0.3 magnitude line cannot tell from a decimal fraction by magnitude alone.",
+    "notes": "No base mnemonic moved (ak1_check c1 and c2 PASS). Reversible by deleting the four ZERO_VALUE_UNIT_FROM_BASIS entries; the issuer may disagree with the exemption at the ak-4 dry run.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W1-S32",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-10-04T00:42:00Z",
+    "one_line": "EQY_FUND_YEAR needed a family and the order named only DATE as the expected addition; I added a YEAR family (integer in 1900..2200) that no landed value has tested, since the field landed no value on BA, GOOGL or BP/ LN.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "In-process read of the landed header and 14 hist rows on BA, GOOGL and BP/ LN: EQY_FUND_YEAR is in no header and no row; all three entries read 'UNRESOLVED-ON-<security>: no value returned for this mnemonic (absent value)'.",
+        "FIELD_BASIS['EQY_FUND_YEAR'] = 'The fiscal year of the fundamentals the row carries (a year number, not a financial amount).'; no existing family reads a year (PERCENT/RATIO/PER_SHARE/... would read 2025 as a multiple or an amount).",
+        "unfamilied_mnemonics() would list EQY_FUND_YEAR without a family and the census test would stay RED."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order: add a family only where none fits; a DATE family is the expected case; EQY_FUND_YEAR is a year that landed no value.",
+    "world_is": "The census requires EQY_FUND_YEAR in a family while no landed value can test it, so the YEAR family is the definition applied to a shape; it only ever yields YEAR for an integer year in range, otherwise UNRESOLVED with its reason, and an absent value stays UNRESOLVED.",
+    "notes": "Tested only on fixtures (test_build_unit_map_families_round35.py::test_year_family_with_no_landed_value_is_unresolved_absent). A name that does land a value will be the first real test of the band.",
+    "disarm_owner": "2.0.0_SA_COO~X"
   }
 ]
 ```

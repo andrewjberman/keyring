@@ -120,11 +120,9 @@ Graded by: no gate limb (a modification; GATE (viii) reads `<placeholders>NONE</
 artifact-shipped sender table over a Secrets Manager copy, on two read-back conditions now in steps 4 and 10: a MISSING
 or empty file refuses before any `.env` write, and the deployed table's item count equals `criterion.py`'s at the cut.
 Criteria unchanged.
-<status>staged</status>
+<status>complete</status>
 <round>11</round>
 <slot>~15</slot>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
-<status>complete</status>

@@ -124,7 +124,7 @@ in the hand-off whose walkthrough G-F records. A change of subject that moves an
 
 Seating: slot ~10, queue position 3, handed after `OG-v-7` merges AND G-E and G-F are at HEAD.
 
-<status>staged</status>
+<status>cancelled -- 1.0.0_SA_CTO~O round-14 analysis R6 (ROUND_ANALYSIS.round14.md section 6)</status>
 <round>3</round>
 <slot>~10</slot>
 <fabric>site-z</fabric>

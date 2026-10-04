@@ -1282,3 +1282,118 @@ bytes, NEVER-2 closed, narrow census). Pre-cut controls 17:5xZ: AC1 1 of 4, AC2 
 exercise). The ruling's "401" for `/hx/mail/x` was re-measured as 404 on live and AC4 grades "unchanged from live".
 No real ungranted `gateway/*` secret remains after this release (5 exist: 4 in this policy, 1 in the Tax policy), so the
 negative IAM arm is a synthetic sibling ARN.
+
+## ADDENDUM R3-T.7 (2.0.0_SA_COO~O, 2026-10-03 ~00:2xZ) -- round 14, the enrichment list re-cut on live 4231bd2ddc
+
+**Source.** `ledger/ROUND_ANALYSIS.round13.md` @fea5fbcdbf section 4 (+ addendum @b100b15b2e): round 12's section-5 list
+stands, re-cut on the new live ref `4231bd2ddc`. Andrew-direct ~23:4xZ "all appproved go" (relay `0.0.0_AB_MSTR~Z` msg
+28810; record `org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20261002_234xZ_ALL_APPROVED_CLOUD_PUSH_ANALYST_CLOSE_RUN_OPLGTW_ROUND14.md`).
+The unissued round-13 drafts (`deliverables/2.0.0_SA_COO~O/r13/drafts_not_issued/`, draft addendum R3-T.5) are the
+base; their checks are copied to `r14/checks/` with the live-ref changes. Item 1 stays on CTO rulings 28152/28154 (G-C
+retired; the walkthrough principal is Alyssa after Andrew's own speed and efficacy tests). Label `<round>14</round>`,
+ONE issuance, ten cells.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-g-2` | 1 | as R3-T.5, at live `4231bd2ddc` (code read + one probe at the WRITE_CAPABLE tier; pilot principal by hash). No grant write. | SERVED | ~23 | worker |
+| `OG-au-1` | 2 | as R3-T.5: `read_meeting_transcript`'s audit record gains `bytes` and `principal` (row Z-W15-S23), on CLOUD. | WORLD | ~19 | worker-light |
+| `OG-sr-1` | 2 | NEW (the CVO's post-hoc finding on OG-rl-3, CTO addendum @b100b15b2e): `mail_route` and `transcript_route` refuse a bearer value shared with another route, mirroring `teams_route`'s `OTHER_ROUTE_BEARERS`; on CLOUD (the four files were byte-equal to live at the cut). | WORLD | ~24 | worker-light |
+| `OG-rl-4` | 2 | The next gateway release on live `4231bd2ddc` (the draft `OG-rl-3`, renamed): au-1's lines, sr-1's four files, `.env` quoting (Z-S32; 50 keys, 4 whitespace values), the roster count (Z-S34), `TAXSMA_WORKBOOK_IDENTITY` host-side, the contract pinned (Z-W19-S13). Z-S41 is out (it shipped). CTO + COO + CVO halves; NEVER-2 ledger `nfra-oplgtw-gateway-release-r14`. | WORLD | ~15 | worker |
+| `OG-tf-1` | 3 | as R3-T.5, plus row Z-W15-S25 (the grant-writer `source_code_hash` diff, classified by content before the fix; CONTENT-DIFF stops BLOCKING). No apply. | WORLD | ~17 | worker |
+| `OG-wp-1` | 4 | as R3-T.5 (the `email_deny` record's origin; partitions as fixtures). | SERVED | ~20 | worker-light |
+| `OG-r-4` | 5 | as R3-T.5, against the SERVED `4231bd2ddc`; `r4.AC3` PINNED to that commit. | SERVED | ~16 | worker |
+| `OG-tb-1` | 6 | as R3-T.5 (the 9 OPLGTW red tests). | WORLD | ~18 | worker |
+| `OG-o-4` | 6 | as R3-T.5, handed after `OG-rl-4` closes (the runbook names the live release); OGO2-J1 at L9 by `3.0.0_SA_CVO~O`. | WORLD | ~21 | worker-light |
+| `OG-gr-1` | 7 | as R3-T.5 (grain measurement, row Z-W10-S1). | LOCAL | ~22 | worker |
+
+**Chains.** `OG-au-1` + `OG-sr-1` -> `OG-rl-4` -> `OG-o-4`. `OG-r-4` gates `OG-rl-4`'s PHASE B, so the bench and the
+deploy never overlap. The other five cells stand alone. fanout: 8 independent starts (`au-1`, `sr-1`, `r-4`, `g-2`,
+`tf-1`, `wp-1`, `tb-1`, `gr-1`), cap 8; `rl-4` and `o-4` are handed as their chains clear.
+
+**Changes from the R3-T.5 draft, each with its cause:**
+- live ref `3a7d6a7dc8` -> `4231bd2ddc` everywhere it means "live" (OG-rl-3 shipped);
+- `OG-rl-3` -> `OG-rl-4` (the label is taken), with the CVO half required (analysis round 13, ruling 4);
+- `OG-sr-1` added (the CVO's finding);
+- `.env` 48 -> 50 (`r14/RL4_ENV_KEYS_BEFORE.txt`, SSM b596b265);
+- `r4.AC3` pinned and `OG-o-4` chained (both read the live manifest, which OG-rl-4 moves in this round);
+- `g2.AC1` resolves citations at `4231bd2ddc`;
+- the draft table's risk column is corrected to each order's own `<risk>`.
+
+**Guard N1** (the CVO's half on OG-rl-3): any rotation of `gateway/{teams,mail,transcripts}/bearer` re-runs ht.AC3's
+200 arm the same sitting, until `OG-rl-4` ships the symmetric refusal.
+
+**Stated dependencies, not cells.** These carry over from R3-T.5:
+- The G-E grant write and the `schwab` switch follow Andrew's tests and `OG-g-2`.
+- Z-S43's re-run waits on the invitation.
+- Z-W13-S5 waits on the LGIC gate owner.
+- Z-W12-S7, the operator re-consent, is due before 2026-10-15.
+
+Z-S41 is discharged. The D9 -> D6 move stays deferred, and round 14 issues in D9.
+
+## ADDENDUM R3-T.8 (2.0.0_SA_COO~O, 2026-10-03 ~18:3xZ) -- round 15, the CTO's round-14 list (R1-R3)
+
+**Source.** `ledger/ROUND_ANALYSIS.round14.md` @cf6e539a6d section 4 (msg 28925), on R1 (the grant writer's build input
+pinned to the gateway's released ref), R2 (the owner keys in `gateway/principals/rosters`) and R3 (the build and layer
+inputs). Label `<round>15</round>`, ONE issuance, four cells.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-gw-1` | 1 | `build_package.py` stages from `EC2_MANIFEST.json`'s `deployed_commit` (never the checkout); a planted dirty edit is ignored; an unresolvable commit refuses; `.build/` ignored (row Z-W17-S3). | WORLD | ~25 | worker |
+| `OG-gw-2` | 2 | The ONE catch-up apply: the grant writer redeployed from `af2d762970`'s closure, targeted, under CTO + COO + CVO halves. PHASE A names every behaviour change of the 3 differing files. Read back by content. Rollback is Terraform only. Ledger `nfra-oplgtw-grant-writer-catchup`. | WORLD | ~26 | worker |
+| `OG-tf-2` | 3 | R2 + R3: the owner keys move into the rosters secret (hash-equal to live) and are read by a data source; the build and layer inputs need no copy. The untargeted plan from a FRESH worktree reads No changes. Ledger `nfra-oplgtw-tf-root-owner-keys`. The closing hash goes to `0.0.0_AB_MSTR~Z`. | WORLD | ~17 | worker |
+| `OG-gr-2` | 4 | READ-ONLY (Andrew-direct ~17:3xZ): why `dim_position` 2026-09-21 collides at both masters; GRAIN_FOUND (52 of 52) or UPSTREAM_DEFECT with its owner. | LOCAL | ~22 | worker |
+
+**Chains.** `OG-gw-1` -> `OG-gw-2` -> `OG-tf-2`; `OG-gr-2` stands alone. fanout: 2 independent starts (`gw-1`, `gr-2`),
+cap 8.
+
+**Checks** (`deliverables/2.0.0_SA_COO~O/r15/checks/`): gw.AC1/AC2, gw2.AC1/AC2, tf2.AC1/AC2, gr2.AC1. Pre-cut 18:2xZ
+all FAIL. gw2.AC1 reads 3 DIFF (`config.py`, `data_entitlement.py`, the contract JSON), as OG-tf-1 measured. tf2.AC1
+reads plan rc=1 with 2 errors and 2 missing required variables. tf2.AC2 reads the secret's 3 keys, with no owner keys.
+
+**Carried, not cells:**
+- OGO2-J1 (CVO, L9);
+- row Z-W15-S30's allowlist (NFRA_TRNSPT, via `0.0.0_AB_MSTR~Z`);
+- OG-v-7 (Andrew's tests, then Alyssa);
+- OG-v-8 (G-E).
+
+The D9 -> D6 move stays deferred (R5).
+
+## ADDENDUM R3-T.8.1 (2.0.0_SA_COO~O, 2026-10-03 ~18:4xZ) -- OG-v-8 cancelled; OG-o-5 DRAFTED for round 16
+
+**Source.** `ledger/ROUND_ANALYSIS.round14.md` section 6 @2f46788988 (1.0.0_SA_CTO~O msg 28937), on the CVO's L8/L9
+(`ADJUDICATION_v4.Z.md` @d4c58bd8ef):
+- **R6 cancels `OG-v-8`.** It was a round-2 slot held on G-E/G-F. The issuer flips it here. The pilot-walkthrough
+  grading re-enters as a NEW cell when G-E stands.
+- **R7 accepts the CVO's runbook section-7 text remedy** as round-15 cell `OG-o-5`.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-o-5` | 6 | Runbook section 7, text only: 7.1 states the deploy re-renders `schwab`; 7.2 step 2 re-applies 7.1 after any restore and confirms `integration_enabled=false`; 7.3 names the read command. OGO2-J1 is re-graded at L9 by the CVO. | WORLD | ~21 | worker-light |
+
+**NOT issued in round 15.** The TO issuance gate refuses a second issuance into a round that already has one (ONE ISSUER PER ROUND, keyed to the round). OG-o-5 is held as a draft at `deliverables/2.0.0_SA_COO~O/r15/drafts_not_issued/` with its check `r15/checks/o5.AC1.sh` (pre-cut FAIL: anchors absent; rb.AC1-AC3 3 of 3), and is cut with round 16's issuance. Nothing waits on it: the pilot is not cut before G-E. **The pilot's host-side `schwab` flag** (R7) is a later release under
+three halves and is NOT cut before G-E (YAGNI).
+
+## ADDENDUM R3-T.9 (2.0.0_SA_COO~O, 2026-10-03 ~22:2xZ) -- round 16, the CTO's round-15 list
+
+**Source.** `ledger/ROUND_ANALYSIS.round15.md` @b56208fd64 section 4 (msg 29033):
+- R9 adopts the measured grain as a paging row-uniqueness key;
+- R10 dispositions S46 and W17-S4;
+- R11 accepts the issuer's helper fixes.
+
+Label `<round>16</round>`, ONE issuance, five cells.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-gr-3` | 1 | R9 on CLOUD: `query.py` `DATASET_GRAINS` + `datasets.json` `grain_fields` (dim_position + `quantity_settled_unsettled`, `quantity_cash_settled`; dim_asset + `security_description_line_1`); the grain note says ROW-UNIQUENESS, not identity; tests pin a measured fixture and a planted collision. Both files were byte-equal on CLOUD and live at the cut. | WORLD | ~22 | worker |
+| `OG-rl-5` | 2 | The release carrying gr-3 on live `af2d762970`, under CTO + COO + CVO halves (paging becomes available where it refused). Ledger `nfra-oplgtw-gateway-release-r16`. | WORLD | ~15 | worker |
+| `OG-o-5` | 3 | The runbook section-7 text remedy (drafted under R3-T.8.1); OGO2-J1 re-graded at L9 by the CVO. | WORLD | ~21 | worker-light |
+| `OG-ts-1` | 4 | Row Z-W26-S4: the grant writer's tests run against the pinned staged closure, not HEAD's tree. | WORLD | ~25 | worker-light |
+| `OG-ar-1` | 5 | Every OPEN remediation row triaged: owner + one of `remediated_by` / `moves_when` / `close_reason` (41 OPEN at the cut); the CVO advances rows. | LOCAL | ~27 | worker |
+
+**Chains.** `OG-gr-3` -> `OG-rl-5`; the other three stand alone. fanout: 4 independent starts, cap 8.
+
+**OG-rl-5's acceptance deviates from the analysis wording, named.** "For an EXISTING grant holder" is measured with a
+SYNTHETIC principal and grant on the served engine (the OG-r-4 mechanism). No agent reads as another person, and
+Andrew's own session holds no Schwab grant. The real holder's read is UNEXERCISED until her next use.
+
+**Pre-cut 22:1xZ.** Every new check FAILs on absence. The rl-5 floor (rl4.AC1, ht.AC2) PASSes on live.

@@ -152,7 +152,7 @@ validated with `python .tools/proof-of-spec-check.py <instance>`. Report once pe
   in the app is the ONLY gate there, and both halves name it (`1.0.0_SA_CTO~O` msg 27605). Rollback is the prebuilt live artifact plus the old `.env`; the secrets can be deleted with a recovery window.
 - Risk WORLD: a deploy that adds a content surface.
 
-<status>staged</status>
+<status>complete</status>
 <round>8</round>
 <slot>~15</slot>
 <fabric>site-z</fabric>
@@ -211,5 +211,3 @@ before the halves (step 7a run ahead of the GO), so the halves bind the bytes th
 - the template's principal read is host-side from `gateway/principals/rosters` (R4), so this release needs NO
   off-repo roster hand-off; the rollback on the 2c0f84966d template does (S12 ruling stands).
 Criteria unchanged.
-<status>pending</status>
-<status>complete</status>

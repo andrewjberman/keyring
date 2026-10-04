@@ -11,7 +11,7 @@
 <placeholders>NONE</placeholders>
 <preflight>
 comp-schedule: RUN at L5 (--drift) -- no schedule touched.
-comp-iam: RUN at L5 -- LOCAL code and plants only, with a stub session: no network, no publisher request, no S3. Collection is unchanged and held on the publisher-terms card; this cell runs NO live listing.
+comp-iam: RUN at L5 -- LOCAL code and plants only, with a stub session: no network, no publisher request, no S3. This cell runs NO live listing.
 comp-adversary: RUN at L5 -- the adversary is a flag set from the body alone (a 403 or 5xx reading as an empty 200), a flag that sticks across calls, or a status change that ends a backfill run (the new status must NOT join the driver's STOP set).
 </preflight>
 
@@ -47,8 +47,19 @@ So the run record cannot tell a soft-blocked page from a genuinely empty search.
 Worktree: `C:/Users/Opal Bloomberg/Desktop/wk-hvst-r39-91`, branch `wk-AMGT_HARVST-91-r39a`, cut from CLOUD at the issuance
 commit (sparse cone per decomposition section 50). Do not touch any `.runtime` directory.
 
+**AMENDMENT 1 (issuer, 2026-10-03 ~00:0xZ; row Z-W91-S20):**
+- The job status is assigned in `lib/opal_data_harvest/worker.py`: `result["status"]` around line 655, and
+  `SUCCESSFUL_JOB_STATUSES` at line 46. So `listing_empty_200` stopped at the client attribute and never reached the job
+  row.
+- `worker.py` is GRANTED. Map the client's `listing_empty_200` into the job row's status: `result["status"]` is
+  `listing_empty_200` where it would otherwise read `no_new_articles`.
+- Treat it like `no_new_articles` for the driver (the pair moves on). Do NOT add it to `backfill_driver.STOP_STATUSES`.
+- Add plant (vii): through the worker's own job path with a stub client, an empty-200 page-1 listing yields a job row
+  whose status is `listing_empty_200`.
+
 <paths>
 lib/opal_data_harvest/publishers.py
+lib/opal_data_harvest/worker.py
 lib/opal_data_harvest/test_al1_listing_empty_200.py
 org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/
 org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v1.md
@@ -70,12 +81,24 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** Round-38 analysis @3da5563fd8, enrichment item 1. Placed by row Z-S79; the CTO accepted the placement
-(msg 28796). Live proof against a real soft block needs barrons collection, which is held on the publisher-terms card
-@8d20bc24c8. This cell proves the status on planted pages only.
+(msg 28796). This cell proves the status on planted pages only.
+
+**COMPLETE 2026-10-03 ~00:5xZ (issuer):**
+- Pass 1 @37947dc42f; AMENDMENT 1 (worker.py granted) @2ecab274f4, cherry-picked onto the branch @ad86e706b0; pass 2
+  @5b33a747e3. Merged @8d242a4bb7 (channel union).
+- AC1: 15 passed (worker). Plant (vii), the job row through Worker.run, fails 2 of 2 on the old worker.py and passes
+  2 of 2 on the new.
+- AC2 PASS at the base (`round39/al-1.AC2.issuer_grade.txt`).
+- `listing_empty_200` is NOT in STOP_STATUSES. It is also NOT in SUCCESSFUL_JOB_STATUSES, which is pinned to the gold
+  reader's set by test_o1_run_record_reach. Such a job records its reach and covers nothing, which fits a soft block.
+- Rows: Z-W91-S20 (disarmed by Z-W91-S22); Z-W91-S21 (sparse cone only, INERT).
+- Proof instance re-pinned by the worker @ff212273b5 (merged @b52ce0f591): publishers.py at 37947dc42f, worker.py and
+  the test at 5b33a747e3. proof-of-spec-check is VALID at the base.
+- The suites at the base are green: research 344 passed; collector 612 passed with 3 skipped.
 
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>39</round>
 <slot>~91</slot>
 <fabric>site-z</fabric>

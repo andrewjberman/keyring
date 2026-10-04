@@ -2765,7 +2765,7 @@ read is unchanged and only the call is spent.
 
 **Issuer acts after the merges (no TO):**
 1. **The corpus scoring:** `finbert_sentiment score` live, on a measured sample first for throughput, then the corpus.
-2. **Gold rebuild #6** under a NEW never-widen pair (COO half by this seat after a signing dry run; CTO half owed):
+2. **A gold rebuild** under a NEW never-widen pair (COO half by this seat after a signing dry run; CTO half owed):
    - every served mention row gains the 3 tone fields and nothing else moves;
    - the first `chatter_window` snapshot;
    - the served `chatter_event` rebuild, if ak-3's census shows the dry-built events cover spikes materially better.
@@ -2784,42 +2784,10 @@ Positive control on their live read paths:
 - `published_utc` is a datetime;
 - T-1 = 2026-10-01.
 
-### 51.1 ROUND 38 AMENDMENT 1 -- cell 4: the ft quarantine (CTO msg 28715 ruling 3; analysis addendum 2 @ce138d2314; 28731), 2026-10-02 ~20:3xZ
-
-FT's terms were read verbatim (`4.0.0_SA_CRO~Z` @0fab00b8a0). They bar automated reads, storing and ML use, and the
-named route is a licence. The CTO ruled:
-- STOP_FT is HARD;
-- FinBERT excludes ft (PRD v0.16);
-- the stored ft articles are QUARANTINED, not deleted: excluded from gold serving and every downstream use, with the
-  bytes kept. Deletion is Andrew's word.
-
-Then (CTO 28725 and 28731), all five publishers' terms were read (@961a99cd64), and the card went to Andrew
-(@8d20bc24c8):
-- FWD-16 and FWD-17 are HELD for every publisher;
-- the served event rebuild (ak-3's 438) is HELD with them;
-- collection on wsj, barrons, bbg and sa is unchanged, with the pause readied (`round38/pause_all_publishers.sh`,
-  dry-run verified);
-- **rebuild #6 carries the ft quarantine ALONE.**
-
-| cell | order | what | class | slot |
-|---|---|---|---|---|
-| `HVST-ak-4` | `ak-4` | `QUARANTINED_PUBLISHERS = {"ft": reason}` and `GRADED_PUBLISHERS` in `publication_gold`; every gold builder, the FinBERT queue and the window builder filter ft on READ (an older snapshot still carries it); the bytes are kept | SERVED (code LOCAL; served gold moves at rebuild #6 under its pair) | `~90`, after ak-1 (same file) |
-
-At the cut, served gold holds 926 ft mention rows of 23,691, and 5 daily rows naming ft.
-
-Base checks before the cut: `round38/checks/ak-4.AC2.py` and `ak-4.AC3.py` both FAIL as expected
-(`QUARANTINED_PUBLISHERS` is absent).
-
-**State of round 38 at this amendment:**
-- ak-1 is complete @23b1e6851d. FWD-16 is HELD: no `score` run, and no tone is served.
-- ak-2 is complete @f175fbeb99. FWD-17 is HELD: no window is served.
-- ak-3 is complete @b79d3781bd. The served event rebuild is HELD.
-
 ## 52. ROUND 39 -- the round-38 analysis enrichment list (`ledger/ROUND_ANALYSIS.round38.md` @3da5563fd8), PRD v0.17, 2026-10-02 ~23:5xZ
 
-Round 38 is CLOSED (CVO slug 28797; ADJUDICATION_v50 @8f911c0199). The ft quarantine is served (gold rebuild #6 @a85ebb6161).
-ARMED went from 10 to 2; Z-S11 was fixed in the checker @9edfeae04d. FWD-16, FWD-17 and the event rebuild stay HELD on
-Andrew's publisher-terms card @8d20bc24c8, and no round-39 cell processes publisher text.
+Round 38 is CLOSED (CVO slug 28797; ADJUDICATION_v50 @8f911c0199).
+ARMED went from 10 to 2; Z-S11 was fixed in the checker @9edfeae04d.
 
 | cell | order | what | class | slot |
 |---|---|---|---|---|
@@ -2839,3 +2807,83 @@ reads 334 passed (research) and 597 passed with 3 skipped (collector).
 - `round39/checks/al-1.AC2.py`: no `LISTING_EMPTY_200`, no flag;
 - `al-2.AC2.py`: `content_key` is absent;
 - `al-2.AC3.py`: `build_mention` has no `sentiment_by_key`.
+
+## 53. ROUND 40 -- the round-39 analysis enrichment list (`ledger/ROUND_ANALYSIS.round39.md` @481c0a83e8), 2026-10-03 ~01:3xZ
+
+Round 39 is CLOSED (CVO slug 28854). ARMED reads 0 over 294 items. The enrichment list has ONE LOCAL cell.
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-am-1` | DIRECT ACT (LOCAL, under the size floor; `/dispatch` Step 2) | Z-C-S69: at most ONE null-label marker row per key-less (no-text) article. `finbert_sentiment.marked_article_keys` reads the marked `article_key`s from the written parts; `score_missing(..., marked_keys=)` skips them and dedupes within a run; `score` passes them, and its dry-run count excludes them | LOCAL | `2.0.0_SA_COO~H` |
+
+Proof: `deliverables/2.0.0_SA_COO_H/round40/am-1.proof.txt`.
+- `test_am1_marker_once.py`, 3 of 3 passed:
+  - two runs over a planted key-less pair give 1 marker each and 0 calls;
+  - a re-silvered key-less article is marked once in one run;
+  - a scorable article is still scored once.
+- Mutant (the skip removed): 3 failed.
+- Research suite: 347 passed.
+- 0 Lambda calls; no S3 write; no publisher text.
+
+## 54. ROUND 41 -- Andrew-direct ~20:3xZ card 2 ("yes to all recommendations"), 2026-10-03 ~20:4xZ
+
+**Authority:** `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261003_20xxZ_YES_TO_ALL_SEVEN_OPEN_CALL_RECS.md`
+@9fe6e6f111, card 2: "HARVST: run FinBERT scoring over the stored articles, and the event rebuild" -- yes. Relayed by
+`1.0.0_SA_CTO~Z` msg 29001: "cut and run them through the canonical loop; a served gold move takes its never-widen
+pair". **Not covered:** FT collection and STOP_FT (unchanged; no collector runs).
+
+Issuer `2.0.0_SA_COO~H`. Series **`an`**. Three issuer DIRECT ACTS, one chain (an-1 -> an-2 -> an-3), fan-out 1 of 1, cap 8.
+
+| cell | what | class | gate |
+|---|---|---|---|
+| `HVST-an-1` | FinBERT scoring of the stored silver articles: `python -m lib.research.harvest.finbert_sentiment score --as-of 2026-10-03`, in `--limit` batches so a failed run loses one batch. Dry run at the cut: 13,235 silver articles, 0 already scored, 13,224 to score, 11 no-text markers. Calls the Opal Lambda `opal-news-ai-sentiment` only. Writes new parts of gold `article_sentiment`, a table no served route reads. | WORLD (Opal Lambda + S3 write, nothing served) | the dry run, then the batch receipts |
+| `HVST-an-2` | Served gold rebuild of `article_security_mention` + `chatter_daily` over the scores (FWD-16): every mention row gains the 4 `sentiment_*` fields. | SERVED | never-widen pair (COO half + CTO half), rule checked before and after the write |
+| `HVST-an-3` | Served `chatter_event` rebuild over the newest mention snapshot (the event rebuild). Served at the cut: 8 rows. | SERVED | never-widen pair (COO half + CTO half) |
+
+Evidence folder: `deliverables/2.0.0_SA_COO_H/round41/`.
+
+## 55. ROUND 42 -- the round-41 analysis enrichment list (`ledger/ROUND_ANALYSIS.round41.md` @98f36bf49a), 2026-10-03 ~23:5xZ
+
+Round 41 is CLOSED (CVO slug 29069, ADJUDICATION_v53 @716910082a): FWD-16 and FWD-6 REALIZED. The enrichment list has ONE item
+(ruling 2): FWD-17 `chatter_window`. Authority chain: Andrew's card 2 (@9fe6e6f111) as ruled by the CTO (ruling 2: the window tone
+is the step that turns the article scores into the tone the pages read). Collection stays with Andrew.
+
+Issuer `2.0.0_SA_COO~H`. Series **`ao`**. One chain, fan-out 1 of 1, cap 8. Issuer DIRECT ACT (the builder exists, HVST-ak-2).
+
+| cell | what | class | gate |
+|---|---|---|---|
+| `HVST-ao-1` | FWD-17: the first served `chatter_window` part through its builder (`python -m lib.research.harvest.window_tone build`): per security, 30/90/365-day windows ending T-1; voters = non-neutral scored articles; tone = mean signed score over voters, null at 0 voters. Plant: `test_ak2_window_tone.py::test_i_all_neutral_name_is_voters_zero_tone_none_in_every_window` (an all-neutral name reads voters 0, tone null, never 0.0), plus the count of real rows with scored > 0 and voters 0 in the build. | SERVED (a new gold table; no route reads it yet) | never-widen pair; the dry run recomputes every row independently from the mention snapshot and the scores (MISMATCH 0) |
+
+RESAPP's chatter route then reads `chatter_window` as RESAPP's own cell (FWD-36's tone limb), not this project's.
+Evidence folder: `deliverables/2.0.0_SA_COO_H/round42/`.
+
+## 56. ROUND 43 -- the round-42 analysis enrichment list (`ledger/ROUND_ANALYSIS.round42.md` @bad41f3f91), 2026-10-04 ~00:5xZ
+
+Round 42 is CLOSED (CVO slug 29096, ADJUDICATION_v54 @5428dcb51f). FWD-17 is met on 206 of 212 covered names; the 6 with 0
+mentions (8766_JP, BKRKY_US, EXPD_US, ICT_PM, KCDMY_US, ST_SP) carry no window row, and absent is not zero (Z-C-S74, ruling 1).
+
+Issuer `2.0.0_SA_COO~H`. Series **`ap`**. One chain, fan-out 1 of 1, cap 8. Issuer DIRECT ACT (code under the size floor, then
+the served write).
+
+| cell | what | class | gate |
+|---|---|---|---|
+| `HVST-ap-1` | `window_tone.build_window_rows(..., security_keys=)`: every universe name gets its 3 rows; a name with 0 mentions reads articles_total 0, scored 0, voters 0, tone null, scorer null. `build_window` and the dry-run CLI pass the universe keys. Plant: a universe name with 0 mentions reads three explicit zero rows (`test_ak2_window_tone.py`). Then the served write: a new `chatter_window` part of 212 x 3 = 636 rows, the 618 served rows unchanged. | SERVED (no route reads the table yet) | never-widen pair; dry run: 618 served rows byte-equal, 18 added rows all explicit zeros on the 6 names, independent recompute MISMATCH 0 |
+
+Evidence folder: `deliverables/2.0.0_SA_COO_H/round43/`.
+
+## 57. ROUND 44 -- the round-43 analysis enrichment list (`ledger/ROUND_ANALYSIS.round43.md` @9cacf32e54), 2026-10-04 ~03:2xZ
+
+Round 43 is CLOSED (CVO slug 29129, ADJUDICATION_v55 @30f9a5e5f5): FWD-17 REALIZED. Board: REALIZED 5 of 17; open without new
+collection 4 (FWD-2, 5, 7, 12); open needing new collection 8 (held on Andrew's word: "We will discuss internally on how to
+proceed with further data collection after review").
+
+Issuer `2.0.0_SA_COO~H`. Series **`aq`**. Four READ cells, independent: fan-out 4 of 4 chains, cap 8. Each reads first and
+writes its evidence to `deliverables/2.0.0_SA_COO_H/round44/` only; a repair cell is cut only where a read fails (a served write
+under a pair). No collection, no vendor call, no S3 write, no publisher request.
+
+| cell | FWD | read | class |
+|---|---|---|---|
+| `HVST-aq-1` | FWD-2 | Field census over the stored originals (bronze) per publisher: every field the publisher sent (language, paywall flags, the publisher's ticker tags, sentiment, themes, summary where sent) is typed in the queryable table (silver/gold), and a query by company and date returns it. Missing fields are named per publisher with their count. | LOCAL read |
+| `HVST-aq-2` | FWD-5 | A served read of a company's timeline (`opal-amgt-scoped-api`): pick a day; its articles are listed strongest first (the order key named and checked on every listed article). Graded at L9 as judgment. | SERVED read |
+| `HVST-aq-3` | FWD-7 | The basis of the served chatter rank (graded daily table or raw count), read from the route code at HEAD and the served response; plus one planted pair (a passing mention in many articles vs a subject of a few) through the rank's own function. | SERVED read + LOCAL plant |
+| `HVST-aq-4` | FWD-12 | The grade from the round-32 evidence for (a)-(d), and (d)'s re-check over every stored sa row from storage only. Any limb that needs a publisher request is named. | LOCAL read |

@@ -6345,51 +6345,6 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "notes": "Remedy: retire or rewrite the 3 tests against the gold read path. They are HARVST's file over a RESAPP route, so the write surface is HARVST's tests and RESAPP's route is untouched. Batched into the round's repair cell; not a new outcome."
     },
     {
-      "id": "AMGT_HARVST-Z-W90-S22",
-      "project": "AMGT_HARVST",
-      "fabric": "site-z",
-      "surfaced_by": "0.9.0_WK_AMGT_HARVST~90",
-      "surfaced_at": "2026-10-02T21:08Z",
-      "one_line": "ak-4's rule (daily coverage graded over GRADED_PUBLISHERS, ft excluded) turns 4 existing research tests red: they assert the graded set is ENABLED_PUBLISHERS (5 codes incl. ft). The 4 sit in tests/ files outside ak-4's <paths>, so the worker could not update them.",
-      "class": "OBSERVATION",
-      "hazard_standing": "INERT",
-      "disarm_owner": "2.0.0_SA_COO~H",
-      "spec_asserts": "Order HVST-ak-4 section 1 item 5: the research suites stay green except the 3 known stale tests (row Z-S68). Item 1: every place that grades daily coverage or writes publishers_enabled uses GRADED_PUBLISHERS = ENABLED_PUBLISHERS minus the quarantined ones.",
-      "world_is": "python -m pytest lib/research/harvest -q: BEFORE the change 5 failed, 304 passed (m1_move, m2_move: FileNotFoundError on integrations/bloom... in the sparse cone; plus the 3 Z-S68 timeline tests). AFTER: 9 failed, 311 passed (304 - 4 + 11 new plants). The 4 new failures follow directly from item 1 and each pins ft as a graded publisher: tests/test_o1_run_record_coverage.py::test_a_successful_zero_article_job_reads_searched_on_its_reached_days (publishers_enabled 4 != len(ALL)=5), ::test_every_publisher_reaching_a_day_reads_complete (covered codes no longer list ft, ALL = gold.ENABLED_PUBLISHERS), tests/test_publication_gold_daily.py::test_row_carries_its_coverage_denominator (4 == 5), ::test_daily_row_carries_publishers_covered_codes_in_enabled_order (ft missing from the expected order). Those files are not in the order's <paths>; the worker left them untouched. The 5 pre-existing failures are unchanged.",
-      "grounding": {
-        "status": "GROUNDED",
-        "evidence": [
-          "lib/research/harvest/publication_gold.py daily_rows: covered and publishers_enabled now read GRADED_PUBLISHERS",
-          "lib/research/harvest/tests/test_o1_run_record_coverage.py line ~33 (ALL = gold.ENABLED_PUBLISHERS) and the publishers_enabled == len(ALL) asserts",
-          "deliverables/0.9.0_WK_AMGT_HARVST~90/research-suite.before.txt and research-suite.after.txt"
-        ]
-      },
-      "disposition": "UNDER_INVESTIGATION",
-      "notes": "Remedy: an issuer amendment adds the two test files to a cell's <paths> so ALL becomes gold.GRADED_PUBLISHERS (a one-token change per test). The suite counts in the ak-4 proof read the 4 as ak-4-caused, not stale."
-    },
-    {
-      "id": "AMGT_HARVST-Z-S69",
-      "project": "AMGT_HARVST",
-      "fabric": "site-z",
-      "surfaced_by": "2.0.0_SA_COO~H",
-      "surfaced_at": "2026-10-02T21:35Z",
-      "one_line": "RESOLVED by its disarm_owner: AMGT_HARVST-Z-W90-S22. The 4 research tests that pinned ENABLED_PUBLISHERS as the graded set now read GRADED_PUBLISHERS (ak-4's rule: ft is quarantined, so daily coverage is graded over 4 publishers). This is an issuer direct act on 2 test files.",
-      "class": "OBSERVATION",
-      "hazard_standing": "INERT",
-      "grounding": {
-        "status": "GROUNDED",
-        "evidence": [
-          "lib/research/harvest/tests/test_o1_run_record_coverage.py:31 and tests/test_publication_gold_daily.py:284,366,372: gold.ENABLED_PUBLISHERS -> gold.GRADED_PUBLISHERS",
-          "python -m pytest lib/research/harvest -q at the base after ak-4's merge @eff5c79d35 plus this edit: 317 passed, 3 failed. The 3 are the Z-S68 timeline-day tests, unchanged; the 4 Z-W90-S22 tests pass"
-        ]
-      },
-      "disposition": "UNDER_INVESTIGATION",
-      "disarm_owner": "2.0.0_SA_COO~H",
-      "spec_asserts": "HVST-ak-4: daily coverage is graded over GRADED_PUBLISHERS = ENABLED_PUBLISHERS minus the quarantined publishers.",
-      "world_is": "The builder and its tests agree. ENABLED_PUBLISHERS still names ft, because the bytes are kept and the collector's set is unchanged; only the graded set drops it.",
-      "notes": "Direct act under the size floor (LOCAL, 2 test files, 4 lines). The Z-S68 stale timeline tests stay with the round's repair item."
-    },
-    {
       "id": "AMGT_HARVST-Z-S70",
       "project": "AMGT_HARVST",
       "fabric": "site-z",
@@ -6511,7 +6466,7 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "grounding": {
         "status": "GROUNDED",
         "evidence": [
-          "78aac97ada: deliverables/2.0.0_SA_COO_H/round33/securities.universe.r33.json (212 names), used by rebuilds #5 and #6 (round38/gold_rebuild6.act.py UNIVERSE_R33)",
+          "78aac97ada: deliverables/2.0.0_SA_COO_H/round33/securities.universe.r33.json (212 names), used by rebuild #5",
           "lib/research/harvest/publication_gold.py:1598 requires an explicit --securities-json"
         ]
       },
@@ -6593,7 +6548,7 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "fabric": "site-z",
       "surfaced_by": "2.0.0_SA_COO~H",
       "surfaced_at": "2026-10-02T23:05Z",
-      "one_line": "PLACED: AMGT_HARVST-Z-W91-S10. PLACED as a round-39 LOCAL cell (no collection): record a 200 listing with 0 parseable hits as a distinct status (listing_empty_200) instead of 'no articles', proved with a planted page. Live proof against a real barrons soft-block waits on the publisher-terms card (barrons collection is held).",
+      "one_line": "PLACED: AMGT_HARVST-Z-W91-S10. PLACED as a round-39 LOCAL cell (no collection): record a 200 listing with 0 parseable hits as a distinct status (listing_empty_200) instead of 'no articles', proved with a planted page. Live proof against a real barrons soft-block needs a barrons collection run.",
       "class": "OBSERVATION",
       "hazard_standing": "INERT",
       "grounding": {
@@ -6652,6 +6607,90 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "spec_asserts": "Each round keeps the HARVST research suites green.",
       "world_is": "Green: 0 failed across lib/research/harvest.",
       "notes": "No round-39 cell needed; folded into decomposition section 52."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W90-S23",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~90",
+      "surfaced_at": "2026-10-02T21:42Z",
+      "one_line": "HVST-al-2 item 7 says both suites stay green, but 2 research tests fail in the worker's sparse cone before and after the change (FileNotFoundError on integrations/bloom...). The cone omits integrations/bloomberg; the base reads 0 failed (Z-S81).",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Order HVST-al-2 section 1 item 7: python -m pytest lib/research/harvest -q and lib/opal_data_harvest stay green; report the counts before and after.",
+      "world_is": "BEFORE: lib/research/harvest 2 failed, 332 passed; lib/opal_data_harvest 597 passed, 3 skipped. AFTER: lib/research/harvest 2 failed, 342 passed (332 + 10 new al-2 plants); lib/opal_data_harvest 597 passed, 3 skipped. The same 2 fail both times: tests/test_m1_move.py and tests/test_m2_move.py test_import_identity_no_bare_vs_qualified_split (FileNotFoundError: integrations/bloom...). The worktree's sparse cone has no integrations/bloomberg (ls integrations shows seekingalpha only). No al-2 test fails. Separately, a residual of the key change: a quarantined (ft) or no-text article carries no content key, so its null-label marker row in article_sentiment is no longer deduped by latest_scores and score_missing re-appends it on every score run (0 calls, one row per such article per run). The order fixes the key as the text hash and the quarantine test pins text_sha256 None for ft, so the worker left it.",
+      "grounding": {
+            "status": "GROUNDED",
+            "evidence": [
+                  "deliverables/0.9.0_WK_AMGT_HARVST~90/suites.before.txt and suites.after.txt",
+                  "row AMGT_HARVST-Z-S81: base research suite 334 passed, 0 failed"
+            ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Remedy for the first: run the suite from a cone that includes integrations/bloomberg, or accept the 2. Remedy for the residual: a later cell may add record_hash-keyed dedupe for key-less marker rows; not a new outcome of al-2."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W91-S20",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~91",
+      "surfaced_at": "2026-10-02T21:05Z",
+      "one_line": "HVST-al-1 job status listing_empty_200 reaches the run record's job row only if worker.py maps it; worker.py is outside the order's paths, so the built status stops at the client attribute publishers.Publisher.job_status.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "spec_asserts": "TO HVST-al-1 build item 3: a job whose page-1 listing is an empty 200 records the event and that job's status is listing_empty_200, not no_new_articles.",
+      "world_is": "The job status is assigned in lib/opal_data_harvest/worker.py (result['status'] = ... 'no_new_articles' near line 655, and SUCCESSFUL_JOB_STATUSES at line 46), which the order's <paths> do not grant. The listing loop in publishers.py now records the listing_empty_200 event (publisher, query, page) and sets Publisher.job_status = 'listing_empty_200'; nothing in worker.py reads it, so a live job over a soft-blocked page still reads no_new_articles in its job row until worker.py folds job_status in (and decides whether the status joins SUCCESSFUL_JOB_STATUSES for reach). backfill_driver.STOP_STATUSES is unchanged.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/publishers.py (Publisher.dow_jones, DowJones.discover) on branch wk-AMGT_HARVST-91-r39a",
+          "lib/opal_data_harvest/worker.py:46,655 at fccd14a587"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W91-S21",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~91",
+      "surfaced_at": "2026-10-02T21:05Z",
+      "one_line": "The sparse cone lacks integrations/bloomberg, so 2 of 334 lib/research/harvest tests fail in this worktree at base and after (test_m1_move and test_m2_move test_import_identity_no_bare_vs_qualified_split: FileNotFoundError), against the order's 334 passed at the cut.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "TO HVST-al-1 build item 5: the research suite reads 334 passed.",
+      "world_is": "In worktree wk-hvst-r39-91 (sparse cone) python -m pytest lib/research/harvest -q reads 332 passed, 2 failed at base (before any edit) and 332 passed, 2 failed after; both failures open integrations/bloom... which the cone does not check out. The same suite is green at the full tree (Z-S81 @949b24cadb). Not caused by this cell; opal_data_harvest read 597 passed 3 skipped before and 610 passed 3 skipped after (+13 plants).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "python -m pytest lib/research/harvest -q in wk-hvst-r39-91: 2 failed, 332 passed, before and after",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~91/suite_research_harvest_after.txt"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W91-S22",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~91",
+      "surfaced_at": "2026-10-02T22:10Z",
+      "one_line": "DISARMED by its disarm_owner: AMGT_HARVST-Z-W91-S20. AMENDMENT 1 granted worker.py; the commit carrying this row (on top of 37947dc42f) maps the client's listing_empty_200 into the job row status, and plant (vii) drives the worker's own job path for wsj and barrons.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "AMENDMENT 1 of TO HVST-al-1: an empty-200 page-1 listing yields a job row whose status is listing_empty_200, not no_new_articles, and the status is not a backfill_driver STOP status.",
+      "world_is": "worker.py result['status'] now reads listing_empty_200 where it would read no_new_articles when the client's job_status is listing_empty_200; SUCCESSFUL_JOB_STATUSES does NOT include it (test_o1 pins that set to the gold reader's set, outside the paths), so reach is recorded but covers nothing for such a job; STOP_STATUSES is unchanged. Plant (vii) fails 2 of 2 against the pre-amendment worker.py (status no_new_articles) and passes against the amended one.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/worker.py and test_al1_listing_empty_200.py::test_vii on branch wk-AMGT_HARVST-91-r39a (commit carrying this row, parent 37947dc42f)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H"
     }
+
   ]
 ```

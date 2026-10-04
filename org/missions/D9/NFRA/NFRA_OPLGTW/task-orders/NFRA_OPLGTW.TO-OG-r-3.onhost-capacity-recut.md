@@ -200,7 +200,6 @@ Flip `complete` only when every criterion PASSES by output. If a criterion measu
   not carried: the round's judgment criterion sits on E1.
 - The declared class is WORLD: an on-host benchmark on the production instance.
 
-<status>staged</status>
 <status>superseded</status>
 Superseded by `OG-x-4` (task-orders/NFRA_OPLGTW.TO-OG-x-4.export-flat-at-width.md) on 1.0.0_SA_CTO~O's ruling msg 26488 (R-4 branch (a)); its measurement (AC2/AC3 measured FAIL, capacity INSUFFICIENT) stands as the remedy's input.
 <round>3</round>

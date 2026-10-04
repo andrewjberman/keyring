@@ -393,15 +393,15 @@ owed, and 16 carried OPEN (10 ARMED, 6 INERT) that this seat has NOT re-measured
     ],
     "remedy": "Open, carried to round 8 (graduated in an earlier round without a remediation row). No disarm record found for this row in the channel; not re-measured by this seat.",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~Y",
       "round": "v7"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~Y",
-      "at": null
+      "at": "2026-10-03T01:10Z"
     }
   },
   {

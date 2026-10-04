@@ -5,7 +5,7 @@
   "project": "AMGT_HARVST",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.17",
+  "prd_version": "v0.18",
   "step": 4,
   "brief_ref": "org/missions/D5/AMGT/AMGT_HARVST/brief/BRIEF_AMGT_PUBLICATIONS_BRONZE_SILVER_GOLD_20260922.md@5b90a0b839",
   "endpoint_outcomes": [
@@ -45,14 +45,17 @@ feature work should go to COO~H. CTO~Z should receive everything first to filter
   threshold was an addition with no number.
 - The window ends at the last trading day (T-1), the same end RESAPP FWD-36 serves.
 - This is an ENDPOINT change, so the CVO re-signs.
-**v0.16 (~20:0xZ):** FWD-16 only, on FT's terms read verbatim by `4.0.0_SA_CRO~Z` (`FT_TERMS_VERBATIM_20261002.md` @0fab00b8a0).
-- T&C s.3.5 bars ML/AI use of FT content "to generate any data", so ft rows are excluded from FinBERT scoring and serve tone null
-  with the reason.
-- This is an ENDPOINT change, so the CVO re-signs.
 **v0.17 (~23:3xZ):** FWD-16 only, on `3.0.0_SA_CVO~Z` msg 28797 (row Z-S67).
 - The score is keyed to a CONTENT hash of the scored text, not to silver's `record_hash`. That hash includes `run_stamp`, so it
   would re-score an unchanged article on every re-silvering.
-- FWD-16 stays HELD on the publisher-terms card; this fixes its key before it can resume.
+- This is an ENDPOINT change, so the CVO re-signs.
+**v0.18 (2026-10-03 ~17:5xZ):** FWD-16 only, on Andrew's word at `2.0.0_SA_COO~H`'s terminal ~17:3xZ (record
+`org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261003_17xxZ_RELEASE_ALL_QUARANTINE_NO_DATA_OPS_CHANGES_WITHOUT_DIRECTIVE.md`
+@4d393e3521), VERBATIM: "We have permissions in place, it is inappropriate for agents to adjust our data engineering operations
+without my explicit directive. Release any quarantine that may have been initiated in any capacity."
+- FWD-16 covers every harvested article. FWD-16, FWD-17 and the event rebuild are not held.
+- Collection (STOP_FT, any relaunch) is his: "We will discuss internally on how to proceed with further data collection after
+  review."
 - This is an ENDPOINT change, so the CVO re-signs.
 
 
@@ -367,11 +370,7 @@ act a seat can take on demand; none is a wait.
 
   FWD-16 Every harvested article carries its FinBERT tone, scored once per
          version of the article
-         DONE WHEN  EXERCISED -- the gold mention rows carry, for every row
-                    whose publisher's terms permit machine scoring (v0.16: ft is
-                    EXCLUDED -- FT T&C s.3.5 bars any ML/AI use of its content
-                    "to generate any data"; ft rows serve tone null with that
-                    reason until an FT licence permits),
+         DONE WHEN  EXERCISED -- the gold mention rows carry, for every row,
                     sentiment_finbert (label and score) and the scorer named
                     (opal-news-ai-sentiment, the existing FinBERT Lambda; no new
                     model), keyed to a CONTENT hash of the exact text scored

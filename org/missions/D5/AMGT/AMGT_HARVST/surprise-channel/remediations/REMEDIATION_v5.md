@@ -8,7 +8,7 @@ Author: 3.0.0_SA_CVO~Z. Round: v49. Fabric: site-z. Recorded: 2026-10-02T22:31:0
 
 **Result in this file:** one row per item without a row -- **87 REMEDIATED** (29 of them ARMED items now DISARMED, each on a named
 commit, a terminal order or a served read) and **13 OPEN** (1 still ARMED). The 26 older rows are advanced in place, clocks only, in
-their own files (`advance_existing.json`): 14 to REMEDIATED, 12 stay OPEN.
+their own files (`advance_existing.json`): 14 to REMEDIATED, 12 stay OPEN. **Update (after ADJUDICATION_v51):** 5 rows added REMEDIATED for items graduated at v50/v51 and remedied since (Z-S67, Z-S68, Z-C-S67, Z-W90-S23, Z-C-S69).
 
 **How each verdict was reached:** a later row or commit that names the fix, checked against HEAD (`git log`, file:line), a terminal task
 order (last `<status>`), or a served read (S3 / the deployed function). A superseded item counts as REMEDIATED only with its superseding
@@ -1366,7 +1366,7 @@ row carried no disarm time, `at` is this seat's recording minute 2026-10-02T22:3
    "investigations/INVESTIGATION_v1.md#AMGT_HARVST-Z-W87-S1",
    "ROUND_ANALYSIS.round37.md @29fbb123e0 rulings 1-2 (option (c) rejected, (a) adopted as the qualified wait)"
   ],
-  "remedy": "OPEN: the ft limb is a QUALIFIED WAIT (ROUND_ANALYSIS.round37 @29fbb123e0 ruling 2; addendum @aeb3041e9c: FT terms read verbatim first, STOP_FT stays); re-check HVST-RECHECK-OCILAR-1 on 2026-11-01. Proof: a working unattended ft sign-in that holds a session.",
+  "remedy": "OPEN: the ft limb is a QUALIFIED WAIT (ROUND_ANALYSIS.round37 @29fbb123e0 ruling 2; addendum @aeb3041e9c: STOP_FT stays); re-check HVST-RECHECK-OCILAR-1 on 2026-11-01. Proof: a working unattended ft sign-in that holds a session.",
   "owner": "2.0.0_SA_COO~H",
   "round": "v49",
   "remediation": {
@@ -1584,16 +1584,16 @@ row carried no disarm time, `at` is this seat's recording minute 2026-10-02T22:3
   "owner": "1.0.0_SA_CTO~Z",
   "round": "v49",
   "disarm": {
-   "state": "ARMED",
+   "state": "DISARMED",
    "owner": "1.0.0_SA_CTO~Z",
-   "at": null
+   "at": "2026-10-03T01:10Z"
   },
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "1.0.0_SA_CTO~Z",
    "round": "v49"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "AMGT_HARVST-Z-S52",
@@ -1796,7 +1796,7 @@ row carried no disarm time, `at` is this seat's recording minute 2026-10-02T22:3
    "ROUND_ANALYSIS.round37.md @29fbb123e0 rulings 1-2 (option (c) rejected, (a) adopted as the qualified wait)",
    "ROUND_ANALYSIS.round37 ruling 4: (2b) is graded only when a challenge appears"
   ],
-  "remedy": "OPEN: the ft limb is a QUALIFIED WAIT (ROUND_ANALYSIS.round37 @29fbb123e0 ruling 2; addendum @aeb3041e9c: FT terms read verbatim first, STOP_FT stays); re-check HVST-RECHECK-OCILAR-1 on 2026-11-01. Proof: a working unattended ft sign-in that holds a session.",
+  "remedy": "OPEN: the ft limb is a QUALIFIED WAIT (ROUND_ANALYSIS.round37 @29fbb123e0 ruling 2; addendum @aeb3041e9c: STOP_FT stays); re-check HVST-RECHECK-OCILAR-1 on 2026-11-01. Proof: a working unattended ft sign-in that holds a session.",
   "owner": "2.0.0_SA_COO~H",
   "round": "v49",
   "remediation": {
@@ -1964,7 +1964,7 @@ row carried no disarm time, `at` is this seat's recording minute 2026-10-02T22:3
    "investigations/INVESTIGATION_v1.md#AMGT_HARVST-Z-S56",
    "ROUND_ANALYSIS.round37.md @29fbb123e0 rulings 1-2 (option (c) rejected, (a) adopted as the qualified wait)"
   ],
-  "remedy": "OPEN: the ft limb is a QUALIFIED WAIT (ROUND_ANALYSIS.round37 @29fbb123e0 ruling 2; addendum @aeb3041e9c: FT terms read verbatim first, STOP_FT stays); re-check HVST-RECHECK-OCILAR-1 on 2026-11-01. Proof: a working unattended ft sign-in that holds a session.",
+  "remedy": "OPEN: the ft limb is a QUALIFIED WAIT (ROUND_ANALYSIS.round37 @29fbb123e0 ruling 2; addendum @aeb3041e9c: STOP_FT stays); re-check HVST-RECHECK-OCILAR-1 on 2026-11-01. Proof: a working unattended ft sign-in that holds a session.",
   "owner": "2.0.0_SA_COO~H",
   "round": "v49",
   "remediation": {
@@ -2027,7 +2027,7 @@ row carried no disarm time, `at` is this seat's recording minute 2026-10-02T22:3
    "investigations/INVESTIGATION_v1.md#AMGT_HARVST-Z-W92-S17",
    "ROUND_ANALYSIS.round37.md @29fbb123e0 rulings 1-2 (option (c) rejected, (a) adopted as the qualified wait)"
   ],
-  "remedy": "OPEN: the ft limb is a QUALIFIED WAIT (ROUND_ANALYSIS.round37 @29fbb123e0 ruling 2; addendum @aeb3041e9c: FT terms read verbatim first, STOP_FT stays); re-check HVST-RECHECK-OCILAR-1 on 2026-11-01. Proof: a working unattended ft sign-in that holds a session.",
+  "remedy": "OPEN: the ft limb is a QUALIFIED WAIT (ROUND_ANALYSIS.round37 @29fbb123e0 ruling 2; addendum @aeb3041e9c: STOP_FT stays); re-check HVST-RECHECK-OCILAR-1 on 2026-11-01. Proof: a working unattended ft sign-in that holds a session.",
   "owner": "2.0.0_SA_COO~H",
   "round": "v49",
   "remediation": {
@@ -2180,7 +2180,7 @@ row carried no disarm time, `at` is this seat's recording minute 2026-10-02T22:3
    "investigations/INVESTIGATION_v1.md#AMGT_HARVST-Z-W92-S18",
    "ROUND_ANALYSIS.round37.md @29fbb123e0 rulings 1-2 (option (c) rejected, (a) adopted as the qualified wait)"
   ],
-  "remedy": "OPEN: the ft limb is a QUALIFIED WAIT (ROUND_ANALYSIS.round37 @29fbb123e0 ruling 2; addendum @aeb3041e9c: FT terms read verbatim first, STOP_FT stays); re-check HVST-RECHECK-OCILAR-1 on 2026-11-01. Proof: a working unattended ft sign-in that holds a session.",
+  "remedy": "OPEN: the ft limb is a QUALIFIED WAIT (ROUND_ANALYSIS.round37 @29fbb123e0 ruling 2; addendum @aeb3041e9c: STOP_FT stays); re-check HVST-RECHECK-OCILAR-1 on 2026-11-01. Proof: a working unattended ft sign-in that holds a session.",
   "owner": "2.0.0_SA_COO~H",
   "round": "v49",
   "remediation": {
@@ -2201,7 +2201,7 @@ row carried no disarm time, `at` is this seat's recording minute 2026-10-02T22:3
    "investigations/INVESTIGATION_v1.md#AMGT_HARVST-Z-W92-S19",
    "ROUND_ANALYSIS.round37.md @29fbb123e0 rulings 1-2 (option (c) rejected, (a) adopted as the qualified wait)"
   ],
-  "remedy": "OPEN: the ft limb is a QUALIFIED WAIT (ROUND_ANALYSIS.round37 @29fbb123e0 ruling 2; addendum @aeb3041e9c: FT terms read verbatim first, STOP_FT stays); re-check HVST-RECHECK-OCILAR-1 on 2026-11-01. Proof: a working unattended ft sign-in that holds a session.",
+  "remedy": "OPEN: the ft limb is a QUALIFIED WAIT (ROUND_ANALYSIS.round37 @29fbb123e0 ruling 2; addendum @aeb3041e9c: STOP_FT stays); re-check HVST-RECHECK-OCILAR-1 on 2026-11-01. Proof: a working unattended ft sign-in that holds a session.",
   "owner": "2.0.0_SA_COO~H",
   "round": "v49",
   "remediation": {
@@ -2222,7 +2222,7 @@ row carried no disarm time, `at` is this seat's recording minute 2026-10-02T22:3
    "investigations/INVESTIGATION_v1.md#AMGT_HARVST-Z-S66",
    "ROUND_ANALYSIS.round37.md @29fbb123e0 rulings 1-2 (option (c) rejected, (a) adopted as the qualified wait)"
   ],
-  "remedy": "OPEN: the ft limb is a QUALIFIED WAIT (ROUND_ANALYSIS.round37 @29fbb123e0 ruling 2; addendum @aeb3041e9c: FT terms read verbatim first, STOP_FT stays); re-check HVST-RECHECK-OCILAR-1 on 2026-11-01. Proof: a working unattended ft sign-in that holds a session.",
+  "remedy": "OPEN: the ft limb is a QUALIFIED WAIT (ROUND_ANALYSIS.round37 @29fbb123e0 ruling 2; addendum @aeb3041e9c: STOP_FT stays); re-check HVST-RECHECK-OCILAR-1 on 2026-11-01. Proof: a working unattended ft sign-in that holds a session.",
   "owner": "2.0.0_SA_COO~H",
   "round": "v49",
   "remediation": {
@@ -2243,7 +2243,7 @@ row carried no disarm time, `at` is this seat's recording minute 2026-10-02T22:3
    "investigations/INVESTIGATION_v1.md#AMGT_HARVST-Z-W92-S20",
    "ROUND_ANALYSIS.round37.md @29fbb123e0 rulings 1-2 (option (c) rejected, (a) adopted as the qualified wait)"
   ],
-  "remedy": "OPEN: the ft limb is a QUALIFIED WAIT (ROUND_ANALYSIS.round37 @29fbb123e0 ruling 2; addendum @aeb3041e9c: FT terms read verbatim first, STOP_FT stays); re-check HVST-RECHECK-OCILAR-1 on 2026-11-01. Proof: a working unattended ft sign-in that holds a session.",
+  "remedy": "OPEN: the ft limb is a QUALIFIED WAIT (ROUND_ANALYSIS.round37 @29fbb123e0 ruling 2; addendum @aeb3041e9c: STOP_FT stays); re-check HVST-RECHECK-OCILAR-1 on 2026-11-01. Proof: a working unattended ft sign-in that holds a session.",
   "owner": "2.0.0_SA_COO~H",
   "round": "v49",
   "remediation": {
@@ -2264,7 +2264,7 @@ row carried no disarm time, `at` is this seat's recording minute 2026-10-02T22:3
    "investigations/INVESTIGATION_v1.md#AMGT_HARVST-Z-W90-S21",
    "ROUND_ANALYSIS.round37.md @29fbb123e0 rulings 1-2 (option (c) rejected, (a) adopted as the qualified wait)"
   ],
-  "remedy": "OPEN: the ft limb is a QUALIFIED WAIT (ROUND_ANALYSIS.round37 @29fbb123e0 ruling 2; addendum @aeb3041e9c: FT terms read verbatim first, STOP_FT stays); re-check HVST-RECHECK-OCILAR-1 on 2026-11-01. Proof: a working unattended ft sign-in that holds a session.",
+  "remedy": "OPEN: the ft limb is a QUALIFIED WAIT (ROUND_ANALYSIS.round37 @29fbb123e0 ruling 2; addendum @aeb3041e9c: STOP_FT stays); re-check HVST-RECHECK-OCILAR-1 on 2026-11-01. Proof: a working unattended ft sign-in that holds a session.",
   "owner": "2.0.0_SA_COO~H",
   "round": "v49",
   "remediation": {
@@ -2284,9 +2284,9 @@ row carried no disarm time, `at` is this seat's recording minute 2026-10-02T22:3
   "evidence": [
    "adjudications/ADJUDICATION_v49.md#AMGT_HARVST-Z-C-S62",
    "ROUND_ANALYSIS.round37.md @29fbb123e0 rulings 1-2 (option (c) rejected, (a) adopted as the qualified wait)",
-   "ROUND_ANALYSIS.round37 addendum @aeb3041e9c: no hCaptcha solver candidate; FT terms unread; STOP_FT stays"
+   "ROUND_ANALYSIS.round37 addendum @aeb3041e9c: no hCaptcha solver candidate; STOP_FT stays"
   ],
-  "remedy": "OPEN: the ft limb is a QUALIFIED WAIT (ROUND_ANALYSIS.round37 @29fbb123e0 ruling 2; addendum @aeb3041e9c: FT terms read verbatim first, STOP_FT stays); re-check HVST-RECHECK-OCILAR-1 on 2026-11-01. Proof: a working unattended ft sign-in that holds a session.",
+  "remedy": "OPEN: the ft limb is a QUALIFIED WAIT (ROUND_ANALYSIS.round37 @29fbb123e0 ruling 2; addendum @aeb3041e9c: STOP_FT stays); re-check HVST-RECHECK-OCILAR-1 on 2026-11-01. Proof: a working unattended ft sign-in that holds a session.",
   "owner": "2.0.0_SA_COO~H",
   "round": "v49",
   "remediation": {
@@ -2314,6 +2314,155 @@ row carried no disarm time, `at` is this seat's recording minute 2026-10-02T22:3
    "state": "OPEN",
    "owner": "1.0.0_SA_CTO~Z",
    "round": "v49"
+  },
+  "closed": false
+ },
+ {
+  "id": "AMGT_HARVST-Z-S67",
+  "project": "AMGT_HARVST",
+  "fabric": "site-z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "mechanism": "Silver record_hash hashes run_stamp, so a record_hash-keyed FinBERT store would re-score an unchanged article on every re-silvering.",
+  "evidence": [
+   "investigations/INVESTIGATION_v1.md#AMGT_HARVST-Z-S67",
+   "PRD v0.17 @3da5563fd8 keys FWD-16 to a content hash of the scored text (signed by 3.0.0_SA_CVO~Z @0e85e735c9)",
+   "HVST-al-2 @a12f8edbd8 (on HEAD): content_key = sha256 of article_text; AC2 863 rows, 727 keys, 0 mismatches"
+  ],
+  "remedy": "The scorer keys tone to the scored text's own hash, not record_hash.",
+  "owner": "2.0.0_SA_COO~H",
+  "round": "v51",
+  "remediation": {
+   "state": "REMEDIATED",
+   "owner": "2.0.0_SA_COO~H",
+   "round": "v51"
+  },
+  "closed": true
+ },
+ {
+  "id": "AMGT_HARVST-Z-S68",
+  "project": "AMGT_HARVST",
+  "fabric": "site-z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "mechanism": "3 tests in test_timeline_day_read_path.py pinned the /timeline/day silver read path that RESAPP am-1 removed by design.",
+  "evidence": [
+   "investigations/INVESTIGATION_v1.md#AMGT_HARVST-Z-S68",
+   "investigations/INVESTIGATION_v1.md#AMGT_HARVST-Z-S81",
+   "repair @949b24cadb (on HEAD); round39/checks/suites_green.py re-run by 3.0.0_SA_CVO~Z 2026-10-03 01:03-01:05Z: 344 + 612 passed, 0 failed"
+  ],
+  "remedy": "The stale tests were repaired against the gold read path.",
+  "owner": "2.0.0_SA_COO~H",
+  "round": "v51",
+  "remediation": {
+   "state": "REMEDIATED",
+   "owner": "2.0.0_SA_COO~H",
+   "round": "v51"
+  },
+  "closed": true
+ },
+ {
+  "id": "AMGT_HARVST-Z-C-S67",
+  "project": "AMGT_HARVST",
+  "fabric": "site-z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "mechanism": "Graduation record of Z-S67 and Z-S68 (ADJUDICATION_v50).",
+  "evidence": [
+   "adjudications/ADJUDICATION_v50.md#AMGT_HARVST-Z-C-S67",
+   "both items it graduated carry REMEDIATED rows in this file"
+  ],
+  "remedy": "A graduation record: both of its items are remedied.",
+  "owner": "2.0.0_SA_COO~H",
+  "round": "v51",
+  "remediation": {
+   "state": "REMEDIATED",
+   "owner": "2.0.0_SA_COO~H",
+   "round": "v51"
+  },
+  "closed": true
+ },
+ {
+  "id": "AMGT_HARVST-Z-W90-S23",
+  "project": "AMGT_HARVST",
+  "fabric": "site-z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "mechanism": "A key-less (ft or no-text) article's null-label marker row in article_sentiment was re-appended on every score run.",
+  "evidence": [
+   "investigations/INVESTIGATION_v1.md#AMGT_HARVST-Z-W90-S23",
+   "HVST-am-1 direct act @d2e915e057 (on HEAD): marker rows keyed to article_key, one per key-less article; round40/am-1.proof.txt plants 3/3, mutant fails 3/3",
+   "python -m pytest lib/research/harvest/test_am1_marker_once.py by 3.0.0_SA_CVO~Z 2026-10-03 ~01:3xZ: 3 passed"
+  ],
+  "remedy": "Each key-less article carries one marker row, written once.",
+  "owner": "2.0.0_SA_COO~H",
+  "round": "v51",
+  "remediation": {
+   "state": "REMEDIATED",
+   "owner": "2.0.0_SA_COO~H",
+   "round": "v51"
+  },
+  "closed": true
+ },
+ {
+  "id": "AMGT_HARVST-Z-C-S69",
+  "project": "AMGT_HARVST",
+  "fabric": "site-z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "mechanism": "Graduation record of Z-W90-S23's marker re-append residual (ADJUDICATION_v51).",
+  "evidence": [
+   "adjudications/ADJUDICATION_v51.md#AMGT_HARVST-Z-C-S69",
+   "1.0.0_SA_CTO~Z msg 28861 (resolution named: am-1 @d2e915e057)"
+  ],
+  "remedy": "A graduation record: its item is remedied.",
+  "owner": "2.0.0_SA_COO~H",
+  "round": "v51",
+  "remediation": {
+   "state": "REMEDIATED",
+   "owner": "2.0.0_SA_COO~H",
+   "round": "v51"
+  },
+  "closed": true
+ },
+ {
+  "id": "AMGT_HARVST-Z-C-S74",
+  "project": "AMGT_HARVST",
+  "fabric": "site-z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "mechanism": "chatter_window carried rows only for securities present in the mention table, so 6 covered names with 0 mentions had no row and their absence read like a missing build.",
+  "evidence": [
+   "adjudications/ADJUDICATION_v54.md#AMGT_HARVST-Z-C-S74",
+   "HVST-ap-1 @5789ad3487; part-20261004T012303Z: 636 rows on 212 names, 18 explicit zeros, 0 gone, 0 changed (read by 3.0.0_SA_CVO~Z, ADJUDICATION_v55)"
+  ],
+  "remedy": "Every universe name carries its 30/90/365 rows; a zero-mention name reads 0/0/0/null.",
+  "owner": "2.0.0_SA_COO~H",
+  "round": "v55",
+  "remediation": {
+   "state": "REMEDIATED",
+   "owner": "2.0.0_SA_COO~H",
+   "round": "v55"
+  },
+  "closed": true
+ },
+ {
+  "id": "AMGT_HARVST-Z-C-S72",
+  "project": "AMGT_HARVST",
+  "fabric": "site-z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "mechanism": "One company's story is served as an event under each of its listings (78 of 507 events) and composite_figi is null on those rows, so no field groups the listings.",
+  "evidence": [
+   "adjudications/ADJUDICATION_v53.md#AMGT_HARVST-Z-C-S72"
+  ],
+  "remedy": "OPEN: a company-level key (populated composite_figi or an issuer id) so cross-security counts collapse listings.",
+  "owner": "1.0.0_SA_CTO~Z",
+  "round": "v55",
+  "remediation": {
+   "state": "OPEN",
+   "owner": "1.0.0_SA_CTO~Z",
+   "round": "v55"
   },
   "closed": false
  }

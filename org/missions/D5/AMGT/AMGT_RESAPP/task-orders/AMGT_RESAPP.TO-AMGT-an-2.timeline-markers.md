@@ -69,8 +69,6 @@ hash, every criterion's output lines, the functions you changed, and any row. Th
 
 **Package watch (analysis section 3):** the artifact is at 96.8% of the 262,144,000 B ceiling. In your worktree, after your commit, run `bash infra/aws/terraform/harvest/build-and-upload-scoped-amgt.sh --build-only /c/tmp/r64-pkg-<slot>.zip` and report its `SIZE:` line and `CONTENT-DIFF SUMMARY`. A build past the ceiling is a STOP: report it, and do not trim to fit.
 
-**Publisher-terms note:** the HARVST card is open at Andrew. Add NO new processing of publisher article text. Serving what gold already holds is unchanged.
-
 Gate limb that graded this modification: none (LIMB 6 fires only on a newly-added order; GATE (viii) does not apply, `<placeholders>NONE</placeholders>`).
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->

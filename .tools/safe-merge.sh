@@ -103,6 +103,10 @@ if [ "${1:-}" = "--self-test" ]; then
   # REGRESSION ARM (2.0.0_SA_COO~Y 103457): a PARTIAL drop on parents that merge clean returned 0 and printed MERGED.
   chk "a partial drop is graded against the clean merge tree of the parents (exit 5 when a needed file is lost)" \
       "grep -q 'git merge-tree --write-tree' '$0' && grep -q 'NEEDED FILE(S) WERE NOT CARRIED' '$0'"
+  # REGRESSION ARM (NFRA_OPLGTW-Z-S23 residual, 2026-10-03): the private index is taken BEFORE the grade, and the grade
+  # reads it. Taken after the grade, a peer staging inside HEAD..MERGE_HEAD during the minutes-long grade rode in.
+  chk "the private index is snapshotted before the grade, and the grade reads it" \
+      "[ \"\$(grep -n 'could not snapshot the index after the merge' '$0' | tail -1 | cut -d: -f1)\" -lt \"\$(grep -n 'grading the MERGED index' '$0' | tail -1 | cut -d: -f1)\" ] && grep -q 'GIT_INDEX_FILE=\"\$_PRIV_IDX\" python \"\$GATE\"' '$0'"
   chk "--verify-merge refuses a non-merge commit" \
       "! bash '$0' --verify-merge \"\$(git rev-list --no-merges -n 1 HEAD)\" >/dev/null 2>&1"
   echo "DENOMINATOR: $((n-fails)) of $n arm(s) passed"
@@ -367,15 +371,38 @@ if ! git merge --no-commit --no-ff "$BRANCH"; then
 fi
 fi
 
+# STOP: THE PRIVATE INDEX IS TAKEN HERE, RIGHT AFTER THE MERGE, NOT AFTER THE GRADE (NFRA_OPLGTW-Z-S23 residual,
+# 0.0.0_AB_MSTR~Z 2026-10-03: drain 1e54d613a2 carried 1.0.0_SA_CTO~O's NFRA_OPLGTW project.json). The grade takes
+# minutes. A peer that stages a path INSIDE HEAD..MERGE_HEAD during it passes the late sweep, which can only name paths
+# the merge could NOT have staged, and the snapshot used to be taken after that. Taken here, a peer has only the seconds
+# of `git merge` itself. The sweep, the grade and the commit all read this copy; the shared index is never modified, so a
+# peer's staging stays staged for its owner.
+_PRIV_IDX="$(git rev-parse --git-path index).safe-merge.$$"
+cp "$(git rev-parse --git-path index)" "$_PRIV_IDX" || { echo "safe-merge: REFUSED -- could not snapshot the index after the merge; aborting the merge" >&2; git merge --abort 2>/dev/null || true; exit 1; }
+# FOREIGN SWEEP ON THE SNAPSHOT (DSGN_AMGTV1 round 7: 6fcaa52f79 carried 14 of 2.0.0_SA_COO~X's staged files). The
+# clean-index check runs BEFORE the merge; a peer's safe-commit can stage in the seconds between it and the snapshot. A
+# merge can only stage paths whose sides differ, so anything else in the snapshot is a peer's: drop it from the snapshot
+# (the shared index and working copy are untouched) and name it. The post-commit tree check reports anything that slips.
+git diff --name-only HEAD MERGE_HEAD 2>/dev/null | LC_ALL=C sort -u > "$STATE.own" || true
+_LATE="$(GIT_INDEX_FILE="$_PRIV_IDX" git diff --cached --name-only 2>/dev/null | LC_ALL=C sort -u | LC_ALL=C comm -23 - "$STATE.own")"
+rm -f "$STATE.own" 2>/dev/null || true
+if [ -n "$_LATE" ]; then
+  echo "safe-merge: WARN -- leaving out $(printf '%s\n' "$_LATE" | wc -l | tr -d ' ') path(s) another seat staged (outside HEAD..MERGE_HEAD; they stay staged in the shared index for their owner):" >&2
+  printf '%s\n' "$_LATE" | sed 's/^/              /' >&2
+  while IFS= read -r _p; do [ -n "$_p" ] && GIT_INDEX_FILE="$_PRIV_IDX" git restore --staged -- "$_p" 2>/dev/null; done <<< "$_LATE"
+fi
+
 # ⛔ THE GATE TAKES ITS FILE LIST FROM ARGV (surprise-row-gate.py:1196). Called bare it
 # grades NOTHING and prints "denominator: 0 dispatched path(s)" with rc 0 -- a VACUOUS
 # PASS that reads exactly like a clean one. The first version of this script did that and
-# the collision was caught only by the pre-commit hook downstream. Feed it the staged set.
+# the collision was caught only by the pre-commit hook downstream. Feed it the staged set
+# OF THE SNAPSHOT, the set that will be committed.
 STAGED_ARR=()
-while IFS= read -r _f; do [ -n "$_f" ] && STAGED_ARR+=("$_f"); done < <(git diff --cached --name-only)
+while IFS= read -r _f; do [ -n "$_f" ] && STAGED_ARR+=("$_f"); done < <(GIT_INDEX_FILE="$_PRIV_IDX" git diff --cached --name-only)
 if [ "${#STAGED_ARR[@]}" -eq 0 ]; then
   echo "safe-merge: REFUSED -- the merge staged NO files. Nothing to grade; refusing rather than" >&2
   echo "            reporting a pass over an empty set." >&2
+  rm -f "$_PRIV_IDX" 2>/dev/null || true
   git merge --abort 2>/dev/null || true
   exit 1
 fi
@@ -392,9 +419,9 @@ for _f in "${STAGED_ARR[@]}"; do _argv_chars=$(( _argv_chars + ${#_f} + 1 )); do
 _gate_rc=0
 if [ "$_argv_chars" -gt 28000 ]; then
   echo "safe-merge: ${_argv_chars} argv chars exceed the ~32 KB Windows cliff -- feeding the gate through the STAGED environment (${#STAGED_ARR[@]} paths)"
-  STAGED="$(printf '%s\n' "${STAGED_ARR[@]}")" python "$GATE" || _gate_rc=$?
+  STAGED="$(printf '%s\n' "${STAGED_ARR[@]}")" GIT_INDEX_FILE="$_PRIV_IDX" python "$GATE" || _gate_rc=$?
 else
-  python "$GATE" "${STAGED_ARR[@]}" || _gate_rc=$?
+  GIT_INDEX_FILE="$_PRIV_IDX" python "$GATE" "${STAGED_ARR[@]}" || _gate_rc=$?
 fi
 if [ "$_gate_rc" -ne 0 ]; then
   rc=$_gate_rc
@@ -410,6 +437,7 @@ if [ "$_gate_rc" -ne 0 ]; then
     echo "            FIX ON THE BRANCH (re-mint the row), then re-run -- a collision found" >&2
     echo "            here is a re-mint; found after the merge it is PERMANENT." >&2
   fi
+  rm -f "$_PRIV_IDX" 2>/dev/null || true
   git merge --abort 2>/dev/null || true
   exit 1
 fi
@@ -428,32 +456,18 @@ if [ -z "${OPAL_AGENT_SERIAL:-}" ]; then
   echo "safe-merge: REFUSED -- OPAL_AGENT_SERIAL is unset, so this script cannot name the" >&2
   echo "            draining seat on the merge commit. Export it and re-run; it will not" >&2
   echo "            guess an author. Aborting the merge." >&2
+  rm -f "$_PRIV_IDX" 2>/dev/null || true
   git merge --abort 2>/dev/null || true
   exit 2
 fi
 _AUTH="${OPAL_AGENT_SERIAL} <${OPAL_AGENT_SERIAL}@opal.agent>"
-# LAST FOREIGN SWEEP BEFORE THE COMMIT (DSGN_AMGTV1 round 7: 6fcaa52f79 carried 14 of 2.0.0_SA_COO~X's staged files).
-# The clean-index check above runs BEFORE the merge; the grade takes minutes, and a peer's safe-commit that passed its
-# own merge check just before this merge opened stages into the shared index inside that window. A merge can only
-# stage paths whose sides differ, so anything else staged now is a peer's: unstage it (working copy untouched; its
-# owner re-commits) and name it. The post-commit tree check still reports any path that slips in during the hooks.
-git diff --name-only HEAD MERGE_HEAD 2>/dev/null | LC_ALL=C sort -u > "$STATE.own" || true
-_LATE="$(git diff --cached --name-only 2>/dev/null | LC_ALL=C sort -u | LC_ALL=C comm -23 - "$STATE.own")"
-rm -f "$STATE.own" 2>/dev/null || true
-if [ -n "$_LATE" ]; then
-  echo "safe-merge: WARN -- unstaging $(printf '%s\n' "$_LATE" | wc -l | tr -d ' ') path(s) another seat staged into this merge's index (outside HEAD..MERGE_HEAD; working copies kept; their owner re-commits):" >&2
-  printf '%s\n' "$_LATE" | sed 's/^/              /' >&2
-  while IFS= read -r _p; do [ -n "$_p" ] && git restore --staged -- "$_p" 2>/dev/null; done <<< "$_LATE"
-fi
-# COMMIT FROM A PRIVATE INDEX (row NFRA_OPLGTW-Z-S23, 0.0.0_AB_MSTR~Z 2026-10-02). The sweep above runs BEFORE
-# `git commit`, but the commit's own hooks take 15-45 min and git writes the tree from the index AFTER them, so a
-# peer that stages into the SHARED index inside that window rides into this merge (Z-S23: 0a5cc3c093 carried
-# 1.0.0_SA_CTO~O's project.json line). The commit therefore runs on a COPY of the index taken now: the hooks grade
-# exactly what lands, and a peer's later `git add` stays staged in the shared index for its owner. Proven in a
-# scratch repo with a hook that stages a peer path mid-commit: shared index -> commit carried it; private -> not.
-_PRIV_IDX="$(git rev-parse --git-path index).safe-merge.$$"
-cp "$(git rev-parse --git-path index)" "$_PRIV_IDX" || { echo "safe-merge: REFUSED -- could not snapshot the index for the commit; aborting the merge" >&2; git merge --abort 2>/dev/null || true; exit 1; }
-echo "safe-merge: committing the merge as ${OPAL_AGENT_SERIAL} (from a private index snapshot; a peer's later staging cannot enter it)"
+# COMMIT FROM THE PRIVATE INDEX (row NFRA_OPLGTW-Z-S23, 0.0.0_AB_MSTR~Z 2026-10-02). The commit's own hooks take
+# 15-45 min and git writes the tree from the index AFTER them, so a peer that stages into the SHARED index inside that
+# window would ride into this merge (Z-S23: 0a5cc3c093 carried 1.0.0_SA_CTO~O's project.json line). The commit runs on
+# the snapshot taken right after the merge (above): the hooks grade exactly what lands, and a peer's `git add` stays
+# staged in the shared index for its owner. Proven in a scratch repo with a hook that stages a peer path mid-commit:
+# shared index -> commit carried it; private -> not.
+echo "safe-merge: committing the merge as ${OPAL_AGENT_SERIAL} (from the index snapshot taken right after the merge; a peer's later staging cannot enter it)"
 # HOOK-HANG RETRY (1.0.0_SA_CTO msg 103165, 2026-09-30). The pre-commit hook can stall at PROCESS START
 # (env.exe at 0 CPU, no child; captures in org/mcp/hook-hang-capture.log). Killing it failed the commit, and the abort
 # below then threw away a fully graded merge (1,933 paths, 04:49Z). A watchdog that kills a hung hook first writes the

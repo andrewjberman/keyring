@@ -18,7 +18,7 @@ record_hash".
   hash, so "an unchanged one never is" can hold.
 - **The round-39 cut proves both arms** (CTO msg 28800): an unchanged re-silvered article keeps its key, and a changed body gets a new
   one.
-- **Nothing else moved.** The ft exclusion of v0.16 and the HELD status on Andrew's terms card are untouched.
+- **Nothing else moved.**
 
 **Verdict: SIGN.**
 

@@ -83,7 +83,7 @@ The spike definition is fixed at the cut, at two thresholds, before any number i
 tuned after the fact.
 
 If the dry-built events cover the spikes materially better than the 8 served events, the served event rebuild joins
-rebuild #6 under its pair. If they do not, the next round cuts the rule change with the census's uncovered spikes as
+the next gold rebuild under its pair. If they do not, the next round cuts the rule change with the census's uncovered spikes as
 its held-out set.
 
 **COMPLETE 2026-10-02 ~20:2xZ (issuer):** AC1 PASS ("DENSITY CENSUS: DONE"). Merged @b79d3781bd. AC2 re-run at the base
@@ -100,7 +100,7 @@ Uncovered at 2x is 319, measured from `event_rows`' own rules with no code chang
 - all tier-A/B rows guarded as roundups: 52;
 - thresholds met but no event (story split or headline link, approximated): 25.
 **Decision per the rule fixed at the cut:** the dry-built events cover spikes materially better (49.7% against 1.3%),
-so the served `chatter_event` rebuild joins rebuild #6 under its pair. The uncovered 319 are the held-out set for any
+so the served `chatter_event` rebuild joins the next gold rebuild under its pair. The uncovered 319 are the held-out set for any
 later rule change.
 
 <risk>LOCAL</risk>
