@@ -78,8 +78,11 @@ IR keeps priority -- return to DSGN_IRPTV1 the tick any of its Next lines unbloc
    - RULING on row W2-S8 (this seat, CORRECTED in 44d6a215 after 661e49b3 removed the hover colour against Andrew's
      2026-09-15 word): the locked canon hex stays the hover ink, and the hover state supplies a ground (the band)
      on which every canon hex clears 4.5:1.
-   - OWED: row W1-S11 (in the selected DARK mode no accent clears both white-on-accent and accent-on-band). It is
-     this seat's to rule with a dark-mode table in hand; dark mode is not measured yet.
+   - RULED: row W1-S11 (in the selected DARK mode no accent clears both white-on-accent and accent-on-band), by row
+     DSGN_REBRND-S7 (this seat, 2026-10-03 00:25Z): the conflict is latent, since no code path selects dark mode, and
+     splitting the accent into a fill token and an ink token is the precondition of shipping a dark-mode toggle. A
+     dark-mode table cannot be read until such a toggle exists. Re-read 2026-10-04 03:1xZ: the walker has no dark-mode
+     switch and the portal source still selects none. E4 is complete.
    The original text follows: every surface on the page resolves to a
    role of the one named-layer table (page, section strip, panel body, tile, inset, hover, selected, tooltip) with an opaque
    rung in both worlds; every interactive role's (ground, ink) state pairs clear the contrast bar in the state it is actually
