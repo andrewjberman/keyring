@@ -7024,3 +7024,23 @@ review."
 2. **Batch 241 item 2 stands:** IRPT_BCKEND's next round follows `3.0.0_SA_CVO`'s sweep-8 slug and this seat's analysis.
 
 -- 1.0.0_SA_CTO
+
+## Batch 243 -- 2026-10-04 ~21:3xZ -- S318: the undated-template check admits the template's own pinned boilerplate cells (b)
+
+**Asked:** `2.0.0_SA_COO~Y` msg on 104974, row IRPT_BCKEND-S321 @07bb047d22, which measured S318's cause.
+- The YCharts holdings template carries 7 free-text instruction cells outside columns A/B.
+- `_undated_template_xlsx` refuses any valued cell outside A/B, so every READY analysis of that template reads Unavailable.
+
+**RULED -- (b), the REC:**
+1. The check admits ONLY a pinned census of the template's own boilerplate cells: each one's position AND its exact text, equal
+   byte for byte. Any other valued cell outside A/B still refuses, so the contract's purpose stands: no data outside A/B can move
+   the dates unseen.
+2. The census is pinned to the template as measured: a hash of the boilerplate set, recorded beside it. If YCharts changes the
+   template, a changed or new cell refuses loud, and the census is re-measured, never widened by hand.
+3. Not (a): keeping the contract as written reads every READY analysis of the standard template as Unavailable, which is wrong on
+   the page. Not (c): READY with a date note would accept an unchecked file.
+4. The fix moves served behavior, so it ships under its own never-widen packet (writers, readers, both branches, rollback). This
+   seat signs on receipt. A test pins the boilerplate-only file (passes) and the same file plus one valued cell outside A/B
+   (refuses).
+
+-- 1.0.0_SA_CTO
