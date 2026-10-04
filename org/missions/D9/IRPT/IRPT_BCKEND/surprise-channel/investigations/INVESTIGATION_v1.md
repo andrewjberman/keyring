@@ -17106,3 +17106,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "MEASURED: that file is a frozen deliverable outside every suite; the product suite is green, 9 of 9."
 }
 ```
+
+## IRPT_BCKEND-W114-S1 -- TO-IB-pr-311: the naming limb (ENFORCE) refuses the ordered source-map edit (49F role string and the Inflection row carry NEW firm-token strings); steps 1-2 not committed
+
+```json
+{
+  "id": "IRPT_BCKEND-W114-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~114",
+  "surfaced_at": "2026-10-04T01:40Z",
+  "one_line": "TO-IB-pr-311 steps 1-2: safe-commit's naming limb (ENFORCE) REFUSES the ordered source-map edit -- 'irpt-49f-holdings-performance-role' and the Inflection row's four 'inf' strings are NEW hand-kept firm-token carriers -- so the 49F role correction and the Inflection row are not committed and IB45-1-AC1 stays FAIL",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh run on infra/aws/lambda/ci/lambda-source-map.json (edit saved at .scratch/map_edited.json, untracked): 'NAMING-GATE: REFUSE 4 graded' at lines 5672 (irpt-49f-holdings-performance-role, carrier '49f'), 5681 (irpt-inf-holdings-performance-lambda), 5781 (module.irpt_holdings_performance_inf.aws_lambda_function.this), 5782 (irpt-inf-holdings-performance-role): 'a NEW hand-kept carrier of ... outside every permitted context: read it through lookup(...)'; commit aborted, files unstaged",
+      ".tools/naming-gate.py header: a firm token in a JSON string is a hand-kept carrier outside the permitted contexts (registry files, generated blocks, key()/address()/name()/lookup() args, opal_name module args); ENFORCE is on because org/mcp/naming-gate.enforce exists; the only admitted departure is an R20 register entry with a HEAD-committed waiver, outside this order's write surface",
+      "recorder runs (not refused, naming PASS 0 graded): c64bd53784 irpt-performance-adapter (deployed_code_sha256 now NU6YVERL..., reconcile OK in parity) and 37090d00b1 irpt-holdings-performance-lambda (deployed_code_sha256 now 0PuFBxdJ..., 'reconcile-deployed: 0 reconciled, 0 HELD, 1 already-in-parity'); the Inflection recorder run was NOT made because its row does not exist",
+      "p45_performance_rows_recorded.py after those two runs: IB45-1-AC1 FAIL ('irpt-holdings-performance-lambda iam_role irpt-holdings-performance-role != live irpt-49f-holdings-performance-role'); IB45-1-AC2 PASS (227 rows, added []); IB45-1-AC3 PASS (14 findings, all at base)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IB-pr-311 worker face steps 1-2: set iam_role to irpt-49f-holdings-performance-role and add the irpt-inf-holdings-performance-lambda row, committed together with safe-commit.",
+  "world_is": "MEASURED: the naming limb in ENFORCE mode refuses both edits as new firm-token carriers ('49f', 'inf'); the order's own values are the refused strings, and no flag or write-surface path available to a worker admits them. The order's step 3 for the 49F row ran before step 1 (the recorder only stamps deployed_code_sha256, independent of the role); the 49F and Inflection iam_role/row edits remain to be landed by a seat that can add the R20 register entry or direct a different carrier form."
+}
+```
