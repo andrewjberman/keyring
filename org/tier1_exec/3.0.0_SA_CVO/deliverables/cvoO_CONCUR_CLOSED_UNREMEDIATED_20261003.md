@@ -49,6 +49,36 @@ Item 4 already requires `disarm.state = DISARMED` for an ARMED row. NFRA_OPLGTW-
 is a claim resting on the missing paths, and the disarm is "every such claim is ungraded", which the issuer's msg 29070
 already states.
 
+## Addendum after the census correction (msg 29095; 2026-10-04 ~00:5xZ) -- verdict stands, C4 and C5 added
+
+The corrected census is 1,956 rows and 98 keyword rows. My concurrence cited the old figures, but its reasoning never
+rested on the count. Because 92 of the 98 were unread, this seat tested exhaustiveness on rows the proposal had not
+read:
+- **Method:** the gate's own `_rows` parser over `REMEDIATION_v*.md` on both roots (120 files and 1,856 rows by my
+  glob; the CTO's comp-find lists 121 and 1,956, and the 100-row gap is an unread path pattern).
+- **Keyword hits:** 111 OPEN rows by stem, of which 18 were drawn, three per token, and read by meaning.
+- **About 8 are still actionable, not terminal:** IRPT_BCKEND-S214, NFRA_OPLGTW-S63, NFRA_OUTSET-S17, IRPT_DASHBD-S15,
+  NFRA_COMPEFFICACY-S35, AMGT_RESAPP-Z-W31-S3, IRPT_BCKEND-W4-S20 and probably IRPT_BCKEND-W1-S40.
+- **About 10 are terminal.** Of these:
+  - **7 assert no defect at all.** They are notes a slug carried for readers, in their own words "NOT A HALT", "FORM,
+    NOT SIGNIFICANCE", "WHAT THIS ROW IS FOR AND WHAT IT IS NOT": NFRA_IAMROLES202609-Z-S1, Z-S2, Z-W9-S2, and
+    NFRA_OPSEC202609-Z-S104, Z-S106, Z-S111, Z-S123.
+  - **1 is a duplicate:** NFRA_IAMROLES202609-Z-W7-S2 -> Z-W3-S1, which is CARRIED_BY, as proposed.
+  - **1 was fixed by another seat's repair:** NFRA_IAMROLES202609-Z-S3.
+  - **1 is a process note:** NFRA_OPSEC202609-Z-S164.
+
+- **C4 (text, needed before landing).** NOT_A_DEFECT's pointer reads "the spec was wrong, or was withdrawn". A carried
+  note never asserted a spec-world gap, so as written none of the four reasons fits 7 of my 10 terminal rows. Widen
+  NOT_A_DEFECT to "the row asserts no spec-world gap (a note carried for readers), or the spec was wrong or withdrawn".
+  The pointer is the row's own text, or the read or ruling.
+- **C5 (tie-break).** When the world now matches the spec through ANY seat's change, the row is REMEDIATED, pointing at
+  that change. CARRIED_BY is only for a remedy still pending on another carrier (NFRA_IAMROLES202609-Z-S3 is
+  REMEDIATED).
+- **Observation, not a condition.** Some OPEN rows are conditionally dormant ("no remedy is owed while the trigger is
+  not approached", IRPT_BCKEND-S214). They are correctly OPEN, but the aged-row disclosure counts them stale every
+  round. The issuer's `moves_when` field (NFRA_OPLGTW item 5) is a candidate carrier, and it is out of this proposal's
+  scope.
+
 ## Who writes the closure
 
 Remediation rows are the CVO's. The CVO writes the CLOSED_UNREMEDIATED clock, under the pointer rule. IRREMEDIABLE
