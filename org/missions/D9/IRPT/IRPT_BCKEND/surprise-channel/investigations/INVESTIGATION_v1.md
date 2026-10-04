@@ -17133,3 +17133,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "MEASURED: the naming limb in ENFORCE mode refuses both edits as new firm-token carriers ('49f', 'inf'); the order's own values are the refused strings, and no flag or write-surface path available to a worker admits them. The order's step 3 for the 49F row ran before step 1 (the recorder only stamps deployed_code_sha256, independent of the role); the 49F and Inflection iam_role/row edits remain to be landed by a seat that can add the R20 register entry or direct a different carrier form."
 }
 ```
+
+## IRPT_BCKEND-W115-S1 -- TO-IB-pr-312: the naming limb refuses the recorder's CHANGELOG.json entry for the Inflection function; source-map stamp committed alone, CHANGELOG entry uncommitted
+
+```json
+{
+  "id": "IRPT_BCKEND-W115-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~115",
+  "surfaced_at": "2026-10-04T02:40Z",
+  "one_line": "TO-IB-pr-312 step 2: the recorder's CHANGELOG.json entry for irpt-inf-holdings-performance-lambda is refused by the naming limb (the Inflection function name is a NEW 'inf' carrier in a CHANGELOG file), so the recorder's own commit did not land and the CHANGELOG entry is left uncommitted; the source-map stamp was committed alone",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "record-terraform-deploy.sh investor-reporting --function irpt-inf-holdings-performance-lambda: 'Resolved deployment set ... : irpt-inf-holdings-performance-lambda', 'reconcile-deployed: 0 reconciled, 0 HELD, 1 already-in-parity', no HALF-LANDED; then its commit step: 'BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6)', CHANGELOG.json:14 and :39 'irpt-inf-holdings-performance-lambda ... a NEW hand-kept carrier of inf outside every permitted context: read it through lookup(inflection)'; rc=1",
+      "retry by safe-commit on source map + CHANGELOG (-F .scratch/msg2.txt) refused identically ('NAMING-GATE: REFUSE 2 graded'); safe-commit on the source map alone: 'NAMING-GATE: PASS 0 graded', committed ecba9b57e5",
+      "state: infra/aws/terraform/investor-reporting/CHANGELOG.json holds the recorder's new entry untagged-bb620b6d as an uncommitted working-tree change on wk-IRPT_BCKEND-115; IB46-1-AC1, AC2, AC3 all PASS at HEAD ecba9b57e5 (the checks read the source map only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IB-pr-312 worker face step 2: if the recorder's own commit did not land, commit its written files with safe-commit.",
+  "world_is": "MEASURED: the naming limb (ENFORCE) refuses the CHANGELOG.json entry because it names the Inflection function (the same function name the source-map row, which the gate admits at @7de9db9085, carries); only the source-map half of the deploy record is committed. The CHANGELOG entry needs a gate carve-out for deploy-record entries or an R20 waiver, outside this order's write surface."
+}
+```
