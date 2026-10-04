@@ -2870,3 +2870,20 @@ the served write).
 | `HVST-ap-1` | `window_tone.build_window_rows(..., security_keys=)`: every universe name gets its 3 rows; a name with 0 mentions reads articles_total 0, scored 0, voters 0, tone null, scorer null. `build_window` and the dry-run CLI pass the universe keys. Plant: a universe name with 0 mentions reads three explicit zero rows (`test_ak2_window_tone.py`). Then the served write: a new `chatter_window` part of 212 x 3 = 636 rows, the 618 served rows unchanged. | SERVED (no route reads the table yet) | never-widen pair; dry run: 618 served rows byte-equal, 18 added rows all explicit zeros on the 6 names, independent recompute MISMATCH 0 |
 
 Evidence folder: `deliverables/2.0.0_SA_COO_H/round43/`.
+
+## 57. ROUND 44 -- the round-43 analysis enrichment list (`ledger/ROUND_ANALYSIS.round43.md` @9cacf32e54), 2026-10-04 ~03:2xZ
+
+Round 43 is CLOSED (CVO slug 29129, ADJUDICATION_v55 @30f9a5e5f5): FWD-17 REALIZED. Board: REALIZED 5 of 17; open without new
+collection 4 (FWD-2, 5, 7, 12); open needing new collection 8 (held on Andrew's word: "We will discuss internally on how to
+proceed with further data collection after review").
+
+Issuer `2.0.0_SA_COO~H`. Series **`aq`**. Four READ cells, independent: fan-out 4 of 4 chains, cap 8. Each reads first and
+writes its evidence to `deliverables/2.0.0_SA_COO_H/round44/` only; a repair cell is cut only where a read fails (a served write
+under a pair). No collection, no vendor call, no S3 write, no publisher request.
+
+| cell | FWD | read | class |
+|---|---|---|---|
+| `HVST-aq-1` | FWD-2 | Field census over the stored originals (bronze) per publisher: every field the publisher sent (language, paywall flags, the publisher's ticker tags, sentiment, themes, summary where sent) is typed in the queryable table (silver/gold), and a query by company and date returns it. Missing fields are named per publisher with their count. | LOCAL read |
+| `HVST-aq-2` | FWD-5 | A served read of a company's timeline (`opal-amgt-scoped-api`): pick a day; its articles are listed strongest first (the order key named and checked on every listed article). Graded at L9 as judgment. | SERVED read |
+| `HVST-aq-3` | FWD-7 | The basis of the served chatter rank (graded daily table or raw count), read from the route code at HEAD and the served response; plus one planted pair (a passing mention in many articles vs a subject of a few) through the rank's own function. | SERVED read + LOCAL plant |
+| `HVST-aq-4` | FWD-12 | The grade from the round-32 evidence for (a)-(d), and (d)'s re-check over every stored sa row from storage only. Any limb that needs a publisher request is named. | LOCAL read |
