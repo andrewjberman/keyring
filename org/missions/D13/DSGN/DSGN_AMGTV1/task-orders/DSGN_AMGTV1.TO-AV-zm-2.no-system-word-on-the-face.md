@@ -102,7 +102,7 @@ Report once: what changed and where, the output line of every criterion, the por
   control; it is the issuer's, not this cell's.
 - **Not graded here** (the issuer's close walk): how the sentences read in place.
 
-<status>pending</status>
+<status>complete</status>
 <round>35</round>
 <slot>~95</slot>
 <fabric>site-z</fabric>
