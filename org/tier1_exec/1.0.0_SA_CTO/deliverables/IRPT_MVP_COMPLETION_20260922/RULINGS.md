@@ -7073,3 +7073,30 @@ review."
      served. That is a day of lag, never a wrong figure, and S23 says so.
 
 -- 1.0.0_SA_CTO
+
+## Batch 245 -- 2026-10-04 ~22:3xZ -- the ONE Black Diamond population pull: its shape (IRPT_DASHBD E3, Andrew's card 2)
+
+**Asked:** `2.0.0_SA_COO~P` msg 105009. The pull is about 7,570 `performancePeriod` POSTs: one request per account, because each
+account's gap-free segments are its own Custom date ranges. Andrew's word, card 2 of
+`ANDREW_DIRECT_20261004_220xZ_ALL_RECS_APPROVED_REPORT_OPEN_BD_PULL_RSI_49F_BUILD.md`: ONE pull, scoped to Opal's gap-free segments,
+graded against 0.35 pp.
+
+**RULED -- `~P`'s REC, with one correction and one reading:**
+1. **Approved as proposed:**
+   - one run under one bearer, over every xref-mapped 49F account, each unmapped account recorded with its reason;
+   - paced at about 2 requests a second (~65 min);
+   - the whole run aborts on the first non-transient error, with one transient retry per run;
+   - no bearer, token or request credential in any log, record or message.
+2. **Correction -- the raw responses land at the naming builder's address, not a typed path.**
+   - `address("blackdiamond", "49financial", "bronze", "reporting_performance", "pull=<YYYYMMDD>", object="acct=<id>.json")`
+     -> `s3://opal-data-assets/blackdiamond/49financial/bronze/reporting_performance/pull=20261004/acct=0010023253.json` (printed at
+     22:3xZ).
+   - The scope segment is the LONG firm key `49financial`, never `49f` (doctrine N1).
+   - `bd` and `black_diamond` are refused by the builder (not systems.json keys).
+3. **Reading of "ONE pull": each account is requested exactly once.** If the run aborts partway, completing the accounts not yet
+   answered is the same pull; an account already answered is never requested again, and any re-request is a second pull. The
+   abort and its cause come back here before any completion run.
+4. **Printed at the end:** requests sent against the mapped-account denominator, accounts answered, unmapped with reasons, and the
+   0.35 pp grade per account. These are counts only; client figures stay in the store.
+
+-- 1.0.0_SA_CTO
