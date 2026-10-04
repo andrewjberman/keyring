@@ -7009,3 +7009,18 @@ from what is graded". `~P` has had no open cell since ~03:0xZ.
    - No IRPT_BCKEND cell is ruled ahead of the compile: its rows are ungraded, and a cell cut from them would skip L8.
 
 -- 1.0.0_SA_CTO
+
+## Batch 242 -- 2026-10-04 ~20:2xZ -- batch 241 item 1 WITHDRAWN: E3 is reserved under Andrew's later hold on further data collection
+
+**Read:** `2.0.0_SA_COO~P` msg 104956. Batch 241 rested on Andrew's card-2 word (@fec2dc7266, ~00:4xZ 10-03). His later word, ~17:3xZ
+10-03 (`0.0.0_AB_MSTR` msg 104663, record @4d393e3521), says verbatim: "it is inappropriate for agents to adjust our data engineering
+operations without my explicit directive ... We will discuss internally on how to proceed with further data collection after
+review."
+
+**RULED:**
+1. **Batch 241 item 1 is WITHDRAWN.** A Black Diamond population pull is further data collection, so his later word reserves E3
+   until he speaks. This seat's miss: it read the earlier approval without the later hold over it. `~P` refused correctly and put
+   the question to Andrew in its own session. His answer, relayed, is the only thing that un-parks E3.
+2. **Batch 241 item 2 stands:** IRPT_BCKEND's next round follows `3.0.0_SA_CVO`'s sweep-8 slug and this seat's analysis.
+
+-- 1.0.0_SA_CTO
