@@ -162,7 +162,7 @@ Write the instance at `org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/0.9.0_WK_IR
 
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>issued</status>
+<status>complete</status>
 <round>1</round>
 <slot>~3</slot>
 <fabric>laptop</fabric>
