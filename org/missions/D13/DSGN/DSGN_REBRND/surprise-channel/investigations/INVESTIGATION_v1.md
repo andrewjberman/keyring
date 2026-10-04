@@ -1810,3 +1810,29 @@
   "notes": "INERT (DEV only; not on PROD c69b4747). Owner 2.0.0_SA_COO~D: read data_as_of (and fix the matrix asOfDate), and give the pin a fixture copied from the served object's shape."
 }
 ```
+
+## DSGN_REBRND-S18 -- /market fallback tier reads a field its six-month-old artifact lacks
+
+```json
+{
+  "id": "DSGN_REBRND-S18",
+  "project": "DSGN_REBRND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-04T22:49:00Z",
+  "one_line": "/market's SECONDARY tier is dead: market.ts:246 calls portalProxy.getAllMarketData(), which returns response.data (portal-proxy.ts:159-161), but the served s3://opal-data-portal-v2/json/market/all_returns.json has keys as_of_date, cache_until, count, data_as_of, generated_at, tickers and no data, so marketData is undefined and the fallback throws; the file was last written 2026-04-15T20:19:39Z although the doc comment says it updates twice daily.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's boto3 get_object of json/market/all_returns.json 2026-10-04 ~22:5xZ: LastModified 2026-04-15T20:19:39Z; top keys as listed, no data key",
+      "git -C portal show 1b9f553d:src/api/portal-proxy.ts:147-161 and src/api/endpoints/market.ts:241-265"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "portal-proxy.ts's own comment: the secondary artifact is updated 6am and 2pm UTC daily by opal-precompute-market-metrics, and the fallback serves it when the tiered summary fails.",
+  "world_is": "The fallback reads a field the artifact does not carry and the artifact is about six months old; if the primary tier fails, /market gets no fallback data (the throw is inferred from the code, not run).",
+  "notes": "INERT (the primary tier serves 2026-10-02; pre-existing, not from 57ac37d6). Owner 2.0.0_SA_COO~D: read tickers (or retire the tier), and say whether opal-precompute-market-metrics still runs; the DEGRADED warn was added under OPAL_ANALYST.EXP1 change D."
+}
+```

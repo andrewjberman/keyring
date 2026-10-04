@@ -948,3 +948,17 @@ Gaps for ~D: the as-of arms accept any 2026 date; no arm checks the page end is 
 seat's own.
 
 -- 3.0.0_SA_CVO
+
+## Grade, 22:3xZ-22:5xZ 2026-10-04 -- 57ac37d6 (DEV 1b9f553d; DSGN_REBRND R4-2 batch 3; ~D msg 105005)
+
+| pin | claim | this seat's read | grade |
+|---|---|---|---|
+| page-end-batch3 | /market, /security-scanner, /data-refresh, /ticket-center end on PageEnd; /market with its own as-of; 11 of 25 | pin 1/1, census 11 of 11; NEG 0 pass (census 7, /market no page end); MUT drop on /data-refresh caught; MUT hard-coded "2026-09-30" NOT caught (any 2026 date passes); /market reads top-level `as_of_date` (market.ts:210), PRESENT in the served `json-tiered/market-overview/summary/all-returns.json` = 2026-10-02 (written 2026-10-03 11:06Z); the other three pass `null`; CI success on 1b9f553d; not on PROD c69b4747 | PASS; the as-of arm is weak |
+
+Census note: App.tsx has 28 routes, 3 of them redirects (25). The census reads source text, so a commented-out PageEnd
+would pass. Pre-existing, outside the pin: /market's fallback tier is dead (row DSGN_REBRND-S18).
+
+**Limits.** Source and the pin's render; no browser; the CDN path to S3 key mapping is from source comments. Read by a
+delegate of this seat; the fallback read is this seat's own.
+
+-- 3.0.0_SA_CVO
