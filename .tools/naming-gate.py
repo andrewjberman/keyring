@@ -986,6 +986,46 @@ def _row_tf_file(post_text, line_no):
     return None
 
 
+_CHANGELOG_RE = re.compile(r"^infra/aws/terraform/[^/]+/CHANGELOG\.json$")
+_CHANGELOG_ARRAYS = ("functions_updated", "functions_with_source_changes")
+
+
+def _changelog_name_position(post_lines, line_no, value):
+    """True iff `value` on line `line_no` (1-based) is an element of `functions_updated[]` or `functions_with_source_changes[]`, or
+    the value of a `function` key. Any other position (commits[].message and all free text) is not one."""
+    if not (1 <= line_no <= len(post_lines)):
+        return False
+    q = re.escape(json.dumps(value))
+    line = post_lines[line_no - 1]
+    if re.match(r'^\s*"function"\s*:\s*%s\s*,?\s*$' % q, line):
+        return True
+    if not re.match(r'^\s*%s\s*,?\s*$' % q, line):
+        return False
+    for i in range(line_no - 2, -1, -1):
+        prev = post_lines[i]
+        m = re.match(r'^\s*"([^"]+)"\s*:\s*\[\s*$', prev)
+        if m:
+            return m.group(1) in _CHANGELOG_ARRAYS
+        if re.match(r'^\s*"[^"]*"\s*,?\s*$', prev):
+            continue  # another bare element of the same array
+        return False
+    return False
+
+
+def _changelog_name_citations(mod, path, lits, post_text):
+    """3.0.0_SA_CVO ruling (msg 104898, appended to CVO_RULING_NAMING_LIMB_SOURCE_MAP_CITATION_NOT_MINT_20261004.md, on 2.0.0_SA_COO~P
+    104894 / row W115-S1): in infra/aws/terraform/*/CHANGELOG.json (record-terraform-deploy.sh's generated record), a literal in
+    `functions_updated[]`, `functions_with_source_changes[]` or a `function` key passes iff name() reproduces it. commits[].message
+    and other free text stay graded. COST: a few builder calls per added changelog literal. NON-APPLICATION: every other file."""
+    if not _CHANGELOG_RE.match(path or ""):
+        return
+    post_lines = (post_text or "").split("\n")
+    for lit in lits:
+        if not lit.permitted and _changelog_name_position(post_lines, lit.line, lit.value) \
+                and _builder_reproduces(mod, lit.value):
+            lit.permitted = True
+
+
 def _source_map_name_citations(mod, path, added, lits, post_text=""):
     """3.0.0_SA_CVO ruling @7b38f056ca (CVO_RULING_NAMING_LIMB_SOURCE_MAP_CITATION_NOT_MINT_20261004.md, on 2.0.0_SA_COO~P 104859 /
     row W114-S1): in lambda-source-map.json ONLY, a literal in a resource-name position passes iff name() reproduces it byte for
@@ -1787,6 +1827,7 @@ def grade_file(nm, f, post_from_index):
             if lit.value in cited:
                 lit.permitted = True  # the packaged name of a tracked source: a citation (R-11), not a mint
         _source_map_name_citations(nm.mod, path, added, lits, post_text)  # a builder-reproduced name cites, never mints
+        _changelog_name_citations(nm.mod, path, lits, post_text)  # the recorder's changelog: the same live names
     else:
         lits = yaml_literals(added)
     waivers = waivers_for(path, post_text) if isinstance(post_text, str) else {}
