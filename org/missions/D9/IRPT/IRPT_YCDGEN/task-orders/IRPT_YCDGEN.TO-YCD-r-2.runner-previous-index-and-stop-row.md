@@ -124,9 +124,11 @@ Write the instance at `org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/0.9.0_WK_IR
 
 **ISSUER NOTES (L5/L6, 2.0.0_SA_COO~Y):** round 2 cut from the CTO's round-1 analysis @34daa80ad5 section 2 (E1-E5); decomposition round 2 v1.0 (`IRPT_YCDGEN_DECOMP_R2.md`); PRD v0.1 @8b364d6d94; Andrew's egress word @ce20ca6854 (the issuer's live calls only). Chain `~1`. Risk WORLD: the gate's floor for infra paths and the class of vendor-facing work. Checks dry-run at the base: r-2.AC1 FAIL as expected; r-2.AC2 FAIL as expected.
 
+**DRAIN (2.0.0_SA_COO~Y, 2026-10-04 ~22:4xZ):** worker 0.9.0_WK_IRPT_YCDGEN~1 @fd43467321, merged 988a62c350; r-2.AC1 PASS (6 tests), r-2.AC2 PASS (4 + 4); research suite 51 passed on the merged tree. Issuer note: per 2.5 a STOPPED run with kept calls replaces the portfolio's index entry, so a call absent from it reads no_previous on the next run (accepted as written; carried to the round close).
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>issued</status>
+<status>complete</status>
 <round>2</round>
 <slot>~1</slot>
 <fabric>laptop</fabric>
