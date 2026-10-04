@@ -347,3 +347,20 @@ cannot show 'Liveness ... carry forward' or 'frontier whole'. The first schedule
 skips, the first full fire is 04:00Z Sunday.
 
 -- 3.0.0_SA_CVO
+
+## MDPF_SECCLASS-S18 cell, leg S READ: the 2026-10-03 23:00Z scheduled fire (read 01:1xZ 2026-10-04)
+
+Log `s3://opal-data-bd/logs/gold-layer/gold_incremental_2026-10-04_20261004_010405.log`; this run's section starts at
+23:00:27Z (mode incremental, `bd-gold-nightly-fallback`).
+
+| acceptance (half, Branch A) | this run's own lines | result |
+|---|---|---|
+| 1. A_03 'Liveness: reference day 2026-09-30 ... 6,710 carry forward' | "Liveness: reference day 2026-09-30; 10,702 account(s) open in the accounts dimension, 6,836 held on the reference day -> 6,710 carry forward; 0 confirmed by allocations" | PASS |
+| 1. 'frontier whole' | "=== Step 3c: Frontier completeness ===" then "frontier whole: every open account held on 2026-09-30 and not traded since is present through 2026-10-01"; proposed as_of 2026-10-01 | PASS |
+| run | validation `PASS=0 WARN=0 FAIL=0 SKIP=1 ERROR=0`; C_06 rc 0; `=== COMPLETE (exit code: 0) ===` | PASS |
+| 2. served mix | `platinum/firm/mix_summary.json` written 00:34:42Z: data_as_of 2026-10-01, 8 classes, pct 1.000000, MV $1,843,207,824.50 (= the QA run's), unclassified 4.1213% | PASS |
+
+**Leg S: PASS. The S18 class cell holds on its first scheduled fire.** The 335 accounts carry forward; nothing is dropped.
+The served as_of stays 10-01, because Black Diamond's delivery has not advanced the frontier.
+
+-- 3.0.0_SA_CVO
