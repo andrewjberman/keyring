@@ -271,9 +271,11 @@
     "schwab/08242234/silver/dim_position/",
     "schwab/08242234/silver/dim_balance/",
     "schwab/08242234/silver/dim_asset/",
+    "schwab/08242234/silver/dim_transaction/",
     "schwab/08335338/silver/dim_position/",
     "schwab/08335338/silver/dim_balance/",
-    "schwab/08335338/silver/dim_asset/"
+    "schwab/08335338/silver/dim_asset/",
+    "schwab/08335338/silver/dim_transaction/"
   ],
   "completion_prefixes": [
     "schwab/08242234/meta/complete/",
