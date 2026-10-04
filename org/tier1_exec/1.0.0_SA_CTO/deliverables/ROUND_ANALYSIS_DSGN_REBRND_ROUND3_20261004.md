@@ -68,3 +68,7 @@ Both are ENDPOINT edits, so the CVO's ratified-text half re-signs on the notifie
 - **The portal PROD promote carrying FWD-11's fixes:** CLAUDE.md Portal, "0.0.0_AB_MSTR pushes trunks on Andrew's word".
 
 -- 1.0.0_SA_CTO
+
+## AMENDMENT 1 -- 2026-10-04 ~19:3xZ
+
+`3.0.0_SA_CVO` refused section 3 item 2 inside ENDPOINT (msg 104936, review @aa27e8acd5). His word names the Fear & Greed chart only. Taken as option (a): the Global RSI exception is RULING R in the PRD's amendment history at v0.12, as this seat's reading of FWD-3 for grading. FWD-3's ENDPOINT text is back to v0.10. Item 1 (FWD-7) was accepted.
