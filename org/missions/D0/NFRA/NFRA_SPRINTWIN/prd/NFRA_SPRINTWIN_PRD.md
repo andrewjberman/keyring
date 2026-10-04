@@ -147,22 +147,31 @@ Commit metadata only: no file content and no client data. The scheduled task run
 - The page's source line names the window, each device that reported with its census time, and how many counted commits were not
   yet pushed. A device with no file for the day is named as not reporting, and its pushed work still counts.
 
-**C-HOMES AND C-NAMES (CLAUDE.md rule 30; `lib/opal_naming.py` at the registry of CLOUD a2a5cb3a6a).**
-- **Resolves today, through the reserved `opal` system:**
-  - the schedule: `opal-sprint-daily`, from `name('opal', None, 'sprint', 'daily')`;
-  - the scheduler role: `opal-daily-sprint-scheduler-role`, from `name('opal', None, 'daily-sprint-scheduler', 'role')`.
-- **REFUSED today:** the census and QA homes. `address()` takes a `systems.json` key, and none exists for the sprint (measured:
-  "source 'daily-sprint' is not a systems.json key").
-  - Hop H0 adds ONE row: key `sprint`, class `PLATFORM_SUBSYSTEM`, owner D0.
-  - The homes are then `address('sprint', 'global', 'bronze', 'device_census', 'date=<D>')` and a QA home for FWD-1's trace.
-  - H0's commit pins the resolved strings into this section. That is a CONTRACTS edit, so it re-opens no half (the halves bind to
-    the ENDPOINT hash).
+**C-HOMES AND C-NAMES (CLAUDE.md rule 30; `lib/opal_naming.py`).** PINNED by hop H0 (`4.0.0_SA_CRO~Z`, row @4201d79857): the
+`sprint` row (class `PLATFORM_SUBSYSTEM`, owner D0, `owner_claim` measured from DIRECTIVES.yaml :39) is in
+`infra/logic/registry/systems.json`, and `python lib/opal_naming.py validate` reads OK at 52 system rows. Every string below is
+builder output at that registry.
+- **The homes:**
+  - the device census: `address('sprint', 'global', 'bronze', 'device_census', 'date=<D>', '<device>.json')` =
+    `s3://opal-data-assets/sprint/global/bronze/device_census/date=<D>/<device>.json`, one object per device per New York day;
+  - the QA home for FWD-1's trace and the on-demand runs: `address('sprint', 'global', 'platinum', 'qa_page', 'date=<D>')` =
+    `s3://opal-data-portal-v2/sprint/global/platinum/qa_page/date=<D>/`. No route serves this prefix. A QA run reads and writes
+    its watermark here, never the served one, so a QA run cannot move the scheduled window. `gold` and `state` are refused for
+    scope `global` under a non-product source (tiers.json home `source`), so `platinum` is the tier the rule admits.
+- **The names.** The H0 row changed them: before it, `name('opal', None, 'sprint', 'daily')` resolved to `opal-sprint-daily`; with
+  `sprint` registered the builder refuses it ("opal before 'sprint' reads as a null prefix", GRADING_RULE.md R2).
+  - the schedule: `sprint-generator-daily`, from `name('sprint', None, 'generator', 'daily')`;
+  - the scheduler role: `sprint-scheduler-role`, from `name('sprint', None, 'scheduler', 'role')`, and its inline policy
+    `sprint-scheduler-policy`, from `name('sprint', None, 'scheduler', 'policy')`.
+- This is a CONTRACTS edit, so it re-opens no half (the halves bind to the ENDPOINT hash).
 - **The existing pipeline keeps its names and homes:** `daily-sprint-generator*` and `opal-data-portal-v2/daily-reports/`
   (rule 30 non-application, R19). The watermark sits beside the day's pages in that prefix (brief D1).
 
 **C-ACCESS.**
 - Each device's existing AWS identity is granted `PutObject` on the census prefix only.
 - The function's role is granted `GetObject`, plus `ListBucket` conditioned on that prefix only.
+- The function's role is granted `PutObject` + `GetObject` on the QA home, plus `ListBucket` conditioned on it (H0 pin: the trace
+  publishes there with read-back, and a QA run reads its own watermark there).
 - No other grant changes.
 
 **C-SERVED (CLAUDE.md NEVER-1, NEVER-2).**
