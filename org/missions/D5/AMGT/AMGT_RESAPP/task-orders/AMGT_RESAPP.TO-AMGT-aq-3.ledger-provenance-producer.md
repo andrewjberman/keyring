@@ -91,3 +91,10 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-04 ~19:5xZ, drain re-entered after the site-Z crash):** CLOSED.
+- Worker ~221 commit `7bc8a0cf26`, proof-of-spec-check VALID (rc=0). The final report was lost with the pre-crash session.
+- AC1 PASS 6 of 6. AC2 PASS c25 local, 9 of 9 clauses (BA, AMD, VLO). AC3 PASS 4 of 4 (C1 over 94 chatter rows).
+- Served by aq-5.
+
+<status>complete</status>
