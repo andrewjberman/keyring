@@ -5,7 +5,7 @@
   "fabric": "site-z",
   "pipeline": "daily-sprint-generator",
   "status": "active",
-  "dep_stage": "REGISTERED",
+  "dep_stage": "PRD",
   "created": "2026-10-04",
   "registered_under_tree": "2026-10-04",
   "placement": "SITEZ",
@@ -19,8 +19,20 @@
   "description": "Approved by Andrew-direct 2026-10-04 ~17:3xZ at the 4.0.0_SA_CRO~Z terminal, VERBATIM: '1.) I agree with the covered time, previous report to current report, that is a much better layout. 2.) Agreed. 3.) I like Option A. Let's proceed with getting this incorporated and designed while the fabric is quiet.' (record org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/ANDREW_DIRECT_20261004_173xZ_DAILY_SPRINT_WINDOW_ET_SCHEDULE_OPTION_A_BUILD.md). Placed by 1.0.0_SA_CTO~Z (msg 29152): home D0 because the daily-sprint run's ledger rows LD-0574, LD-0588 and LD-0616 all cite D0. Endpoint FWD-1..7 confirmed by Andrew ~18:0xZ: 'Confirmed, proceed.' (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261004_18xxZ_NFRA_SPRINTWIN_ENDPOINT_CONFIRMED.md).",
   "brief_ref": "docs/briefs/daily-sprint-window-and-device-census-brief-20261004.md",
   "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261004_18xxZ_NFRA_SPRINTWIN_ENDPOINT_CONFIRMED.md",
-  "prds": [],
-  "prd_lineage": [],
+  "prds": [
+    {
+      "path": "org/missions/D0/NFRA/NFRA_SPRINTWIN/prd/NFRA_SPRINTWIN_PRD.md",
+      "version": "v0.1",
+      "status": "DRAFT"
+    }
+  ],
+  "prd_lineage": [
+    {
+      "version": "v0.1",
+      "date": "2026-10-04",
+      "author": "1.0.0_SA_CTO~Z"
+    }
+  ],
   "decompositions": [],
   "decomposition_lineage": [],
   "leads": {
@@ -32,7 +44,7 @@
   },
   "coo_lane": null,
   "fabric_ruling": "site-z -- the brief's author (4.0.0_SA_CRO~Z) and the census's first consumer (0.0.0_AB_MSTR~Z's /integrate) are here; the generator is AWS-side; each device's census emission stays in that device's MSTR lane (1.0.0_SA_CTO~Z msg 29152).",
-  "blocking": "L3 REGISTERED 2026-10-04 by 1.0.0_SA_CTO~Z. L4 PRD v0.1 lands next (1.0.0_SA_CTO~Z); 3.0.0_SA_CVO~Z signs the ratified-text half (proportionate form); the COO lane is to be seated by 0.0.0_AB_MSTR~Z.",
+  "blocking": "L4 PRD v0.1 landed 2026-10-04 by 1.0.0_SA_CTO~Z. Owed: 3.0.0_SA_CVO~Z signs the ratified-text half (proportionate form; the brief half is accepted because the CRO wrote the brief); 0.0.0_AB_MSTR~Z seats the COO lane within the cap; then L5/L6.",
   "thread_counter": 0,
   "threads": []
 }
