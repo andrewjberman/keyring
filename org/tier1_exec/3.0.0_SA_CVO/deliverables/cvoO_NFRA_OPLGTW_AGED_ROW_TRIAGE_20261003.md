@@ -62,6 +62,36 @@ Each row's evidence lives HERE, not in the row.
 - Its disposition is this section. It will keep appearing in the gate's staleness disclosure until the schema gains a
   terminal state for "closed, no condition moves it". That is the schema owner's choice, put to `1.0.0_SA_CTO~O`.
 
+## The issuer's half, reconciled (2026-10-04 ~00:1xZ)
+
+`2.0.0_SA_COO~O` msg 29070 triaged all 41 OPEN rows
+(`deliverables/0.9.0_WK_NFRA_OPLGTW~27/AGED_ROW_TRIAGE.json`): 28 remediated_by, 11 moves_when and 2 close_reason.
+Its five disagreements with this triage were each re-checked here, and the issuer is right on all five:
+
+- **W2-S8.** `.gitattributes:135-141` has carried the gateway eol rules since `fd841cd02b` (09-28). **This seat's error:**
+  my census was `grep -n eol .gitattributes | head -12`, which printed 12 of 38 matches and stopped at line 41. A page
+  is not an answer.
+- **S4, S5 and W4-S12.** OG-m-2a / OG-m-3 are live. This seat re-ran the dispatcher log-group read since
+  2026-09-29T03:00Z and got 57 invocations, 46 "SKIP" and 10 "OK: chain completed", matching the issuer's counts.
+  - My triage left them with the "chain owner" because I read only OG-c-1 and never looked for OG-m-2a/2b/3.
+- **S57.** The streaming producer (OG-x-2/x-3) is in the live lineage, and OG-r-4's CAPACITY_R4.json reads max peak
+  child RSS 184,119,296 bytes against the 268,435,456 cap, flat over 25k/125k/250k rows.
+
+**Also advanced** on the issuer's measurement, each corroborated here:
+- Z-S23: safe-merge's private-index commit cites the row at :450-455.
+- Z-S34: the counts are parsed from the rosters JSON at `af2d762970:246-248`.
+- Z-S41: the Tax tuple, read at `4231bd2ddc`; live md5 equal at `af2d762970`.
+- Z-W10-S1: the spec decision is the CTO's R9.
+- Z-W12-S8: OG-wp-1 records `deny_disposition: KEEP_WITH_REASON`.
+- Z-W15-S23: OG-au-1 is live; the host `audit.py` md5 equals `af2d762970`.
+- Z-W26-S4: the grant-writer `conftest.py` stages the pinned closure through `build_package.py`; OG-ts-1's drain is
+  @685d7f8489 on HEAD.
+
+**12 rows flipped in place, clocks only:**
+- REMEDIATION_v1: S4, S5, S57, W2-S8 (ARMED, disarmed), W4-S12.
+- REMEDIATION_v2: Z-S23, Z-S34, Z-S41 (ARMED, disarmed), Z-W10-S1, Z-W12-S8, Z-W15-S23.
+- REMEDIATION_v3: Z-W26-S4.
+
 ## Z-S50 -- fixed (@f2c150d420)
 
 The surprise-gate refusal branch now resets and post-checks the whole staged set this call made (staged-now minus the

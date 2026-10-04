@@ -184,11 +184,11 @@ Author: 3.0.0_SA_CVO~O. Round: v1. Fabric: laptop (the items' own fabric; this s
     "owner": "2.0.0_SA_COO~O",
     "round": "v1",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~O",
       "round": "v1"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "NFRA_OPLGTW-S4",
@@ -204,11 +204,11 @@ Author: 3.0.0_SA_CVO~O. Round: v1. Fabric: laptop (the items' own fabric; this s
     "owner": "2.0.0_SA_COO~O",
     "round": "v1",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~O",
       "round": "v1"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "NFRA_OPLGTW-S5",
@@ -224,11 +224,11 @@ Author: 3.0.0_SA_CVO~O. Round: v1. Fabric: laptop (the items' own fabric; this s
     "owner": "2.0.0_SA_COO~O",
     "round": "v1",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~O",
       "round": "v1"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "NFRA_OPLGTW-W4-S12",
@@ -244,11 +244,11 @@ Author: 3.0.0_SA_CVO~O. Round: v1. Fabric: laptop (the items' own fabric; this s
     "owner": "2.0.0_SA_COO~O",
     "round": "v1",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~O",
       "round": "v1"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "NFRA_OPLGTW-S19",
@@ -1030,15 +1030,15 @@ Author: 3.0.0_SA_CVO~O. Round: v1. Fabric: laptop (the items' own fabric; this s
     "owner": "2.0.0_SA_COO~O",
     "round": "v1",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~O",
       "round": "v1"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~O",
-      "at": null
+      "at": "2026-10-04T00:15:00Z"
     }
   },
   {

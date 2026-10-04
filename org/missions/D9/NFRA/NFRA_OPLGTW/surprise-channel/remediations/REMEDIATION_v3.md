@@ -144,11 +144,11 @@ C-S17 in ADJUDICATION_v4.Z: OGO2-J1 FAIL, remedy cell OG-o-5 per R7.
     "owner": "2.0.0_SA_COO~O",
     "round": "v3",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~O",
       "round": "v3"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "NFRA_OPLGTW-Z-W17-S4",
