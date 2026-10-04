@@ -7595,3 +7595,53 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S33",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-04T19:55Z",
+  "one_line": "Step 4b's census reads ZERO servable snapshots and the zero is REAL, not a helper defect: the live contract lists dim_transaction in `datasets` but no dim_transaction entry in `data_prefixes`, so the served catalog rejects (REJECTED_FOREIGN_DATASET) every closure-bearing day at both masters (28 of 28), and the gateway serves no dim_position or dim_asset snapshot today.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: SSM 81eb1a24 (rl5_diag_host.py) and 2e7cda61 (rl5_diag2_host.py): the SERVED catalog (installed code, contract file /opt/opal-gateway/deploy/NFRA_OPLGTW_CONTRACT.json, which is the path in the live service process env, read as that one variable from /proc/<MainPID>/environ, never .env) lists 24 marker dates per master; 10 legacy_marker, 14 closure-bearing with closure.status=qualified and every one result=rejected, finding set exactly {REJECTED_FOREIGN_DATASET: dim_transaction} ('entry key is outside the contract's data prefixes'); 14+14 = 28 rejected, 0 qualified.",
+      "CODE: catalog.py membership_findings lines 598-604 (a closure table in contract.datasets whose key matches no contract.data_prefixes entry is rejected); the contract has datasets [dim_position, dim_balance, dim_asset, dim_transaction] (added by 32ebe6bee6, MX-r-6 step 0) and six data_prefixes, none for dim_transaction; the closure's dim_transaction key shape is schwab/<master>/silver/dim_transaction/date=<DATE>/data.parquet.",
+      "RUN: SSM 02bc6129 (rl5_census_host.py): SERVED snapshots_censused 0 (dim_position 0, dim_asset 0); the same code with an IN-MEMORY contract copy that also carries the two dim_transaction data prefixes (host file untouched) serves 14 dates per master per dataset = 56 snapshots, all with the R9 columns present and 0 blank (dim_position quantity_settled_unsettled and quantity_cash_settled; dim_asset security_description_line_1), which is the og_v6 count of Z-W22-S2 (56) reached by a different route.",
+      "RUN: SSM 8c239e41 (rl5_paging_host.py, synthetic principal and grant in memory, 0 grants written, real store untouched): the SERVED construction on master 08242234 date 2026-10-01 REFUSES dim_position INCOMPLETE_SNAPSHOT snapshot_incomplete."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order step 4: 'one qualified snapshot, the newest the measured basis covers' exists and dim_position is expected REFUSED for the grain collision; step 4b: 'every snapshot the gateway can serve' is the 56 closure-marker-qualified dates and a servable snapshot lacking a column STOPS the order.",
+  "world_is": "The gateway serves 0 snapshots of dim_position or dim_asset at either master today, for a reason (contract datasets/data_prefixes disagree on dim_transaction) that the R9 release does not touch (contract and catalog.py are outside the release set). A census over zero is not a pass of step 4b; STEP 4b STOPS THE ORDER per its own text, and PHASE B is not requestable: the release would deploy and change nothing the holder can see. Cure is a contract/catalog decision owned outside this order (a dim_transaction data_prefixes pair, or catalog treatment of a dim_transaction closure table, with the data role's read of it already working per the counterfactual run); not edited here. Counterfactual census for the issuer: 56 of 56 snapshots carry the R9 columns, 0 lacking, 0 blank.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S34",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-04T19:58Z",
+  "one_line": "AC1's 'dim_asset after ok: True' cannot be met by the served gateway even once snapshots are servable: build_default_service() constructs SchwabService with no asset_policy, and every dim_asset rows read refuses UNAVAILABLE asset_policy_selection_unavailable on the live bytes and on the release alike.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CODE: integration.py (release tree og-rel10 and live af2d762970) lines 569-570, 818-819, 895-896 raise ServiceError(UNAVAILABLE, 'asset_policy_selection_unavailable') when q.dataset == 'dim_asset' and self._asset_policy is None; build_default_service() (line 1060) passes no asset_policy; the only SchwabService( construction in app/ is that one.",
+      "RUN: SSM 8c239e41: the SERVED construction refuses dim_asset UNAVAILABLE asset_policy_selection_unavailable; the counterfactual-contract served construction refuses it the same way (so the cause is the policy, independent of S33); only the acceptance harness seam (asset_policy=object(), a disclosed seam of the OG-gr acceptance) reaches the grain check, and there dim_asset is REFUSED INVALID_REQUEST paging_refused_no_unique_grain."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order step 4 and AC1: a rows-mode page of dim_asset on a qualified snapshot is measured before (refused) and after (OK) through the installed engine; rl5.AC1.sh requires dim_asset after ok: True.",
+  "world_is": "Through the served construction dim_asset rows are unreachable before and after the release (no asset policy wired), so the AC1 arm cannot pass and the BEFORE for dim_asset is UNAVAILABLE, not a grain refusal. The R9 grain fix for dim_asset is exercised only under the seam. Not edited here (integration.py wiring beyond gr-3's hunks is outside the release set).",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
