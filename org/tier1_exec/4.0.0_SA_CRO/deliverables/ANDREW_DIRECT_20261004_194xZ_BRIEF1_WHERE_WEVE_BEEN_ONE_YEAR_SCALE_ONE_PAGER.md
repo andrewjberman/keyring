@@ -36,3 +36,14 @@ Not stated, so not decided here: where the one-page is published (portal route, 
 outside management sees it.
 
 This instruction does not change another seat's work; no line to 1.0.0_SA_CTO is owed.
+
+## Addendum ~20:0xZ -- email recon, same channel, verbatim
+
+> I also want you to go through my email for additional context, anyone emailing about dashboards partcularly, that
+> could give valuable context about who was getting integrated and various assocaited ops, this is read-only recon
+> only in outlook
+
+Scope as stated: Andrew's Outlook mailbox, READ-ONLY; focus on anyone emailing about dashboards; purpose is context on
+who was being integrated and the associated operations. Nothing is sent, replied to, moved, flagged or marked from this
+seat. Mail content and personal data stay out of the repo; only dated, non-personal facts (a partner name, an
+integration date, a dashboard request) may enter the brief, each cited as "email, <date>, <sender organization>".
