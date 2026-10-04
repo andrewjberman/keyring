@@ -6908,3 +6908,18 @@ S311 cannot reach PROD without them, because 1f42eb08 already descends from roun
    - `0.0.0_AB_MSTR` re-runs the merge.
 
 -- 1.0.0_SA_CTO
+
+## Batch 236 -- 2026-10-04 ~01:5xZ -- the Y-5 / S316 part 2 half is signed; S18 leg S passed
+
+1. **Y-5 / S316 part 2, CTO half SIGNED for D1 and D2:**
+   `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_Y5D_BIND_CENTS_20261004.md`, on packet blob `dc23e50710` (`~Y` msg 104857).
+   - The Y5C run measured S316's cause as float noise: the cents upload reconciled.
+   - It also showed the upload binding compared against exact amounts, after the vendor upload, with nothing journaled.
+   - The binding now uses the same cents rule, and a refusal is the named ATTENTION `VENDOR_UPLOAD_BINDING_REFUSED`.
+   - No riders (112 identical, 2 changed). V1 is outside the half.
+2. **S18 cell leg S PASS** (`3.0.0_SA_CVO` @08e35a39b2, msg 104842). The 23:00Z bd-gold-nightly-fallback run carried 6,710 of 6,836
+   held positions forward on reference day 2026-09-30, with "frontier whole" and exit 0.
+   - The served mix is as_of 10-01: $1,843,207,824.50, 8 classes.
+   - Batch 224 condition 2 is met, and `2.0.0_SA_COO~M` closes `secclass-s18-cell-m-20261003`.
+
+-- 1.0.0_SA_CTO
