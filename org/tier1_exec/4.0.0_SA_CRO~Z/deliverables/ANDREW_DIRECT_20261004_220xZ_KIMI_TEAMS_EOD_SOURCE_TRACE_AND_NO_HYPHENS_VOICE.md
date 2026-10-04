@@ -19,3 +19,11 @@ hyphen or an em-dash. This seat does not widen or narrow it.
 Read as: the End of Day post's content is the published sprint's own `sprint` list (the items on mcp.opalinvest.dev/sprint,
 the `sprint` array of the day's DAILY_REPORT JSON), item for item, written in his voice -- not regrouped by workstream and not
 widened with the workstream or process rows.
+
+## Addendum ~22:3xZ, same channel, verbatim
+
+*"ok let's make sure that gets pushed."*
+
+Read as: push CLOUD so the LDO-001 change (merge 2e2940a4cc, commit f9ba6ba8a8, deployed 22:30Z) and its records reach
+origin. Pushing CLOUD is `0.0.0_AB_MSTR~Z`'s act; this seat relays the word. The redraft-on-republish question is NOT
+answered by this line and stays open.
