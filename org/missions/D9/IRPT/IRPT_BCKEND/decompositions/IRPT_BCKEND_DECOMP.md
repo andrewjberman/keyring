@@ -1658,3 +1658,19 @@ cell lands the carried steps and records the Inflection function.
 | `IB-pr-312` | S293 / W114-S1: the 49F producer row names its live role; the irpt-inf-holdings-performance-lambda row is added and recorded at live | WORLD (the gate floor for the source map; a record only) | none | P46 |
 
 fanout: 1 of 1 chains, cap 8, reason: one open cell; worker 0.9.0_WK_IRPT_BCKEND~115 in its own worktree.
+
+## 40. ROUND 47, WORKSTREAM ~P (2026-10-04 ~21:3xZ, issuer 2.0.0_SA_COO~P, on 1.0.0_SA_CTO ROUND ANALYSIS rounds 42-46, msg 104972)
+
+The analysis (`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_BCKEND_ROUNDS_42_46_P_20261004.md` section 3) makes
+this a reconciliation round: E1 reconcile, E2 remedies for what E1 finds live, E3 the recorder for S178's class. The issuer's
+census reads 42 ~P remediation rows not closed, by each row's latest copy across REMEDIATION_v1..v19 (388 rows parsed). That
+matches the CTO's 42.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-313` | E1: each of the 42 rows' close condition read against live; a closing row for each that holds; the still-live list handed back | LOCAL (read-only) | none | P47a |
+| `IB-pr-314` | E3 / S178: the recorder --function for the six lagging investor-reporting functions (irpt-ycharts-generate is ~Y's S320) | WORLD (the gate floor for the source map; a record only) | none | P47b |
+| E2 | the live BLOCKING rows IB-pr-313 returns, one remedy cell each (at most three criteria, a never-widen half where served) | by row | IB-pr-313 | cut on E1's return |
+
+fanout: 2 of 2 chains, cap 8, reason: E1 and E3 are independent; E2 depends on E1's output and is cut when it returns. Workers
+0.9.0_WK_IRPT_BCKEND~116 (E1) and ~117 (E3), each in its own worktree.
