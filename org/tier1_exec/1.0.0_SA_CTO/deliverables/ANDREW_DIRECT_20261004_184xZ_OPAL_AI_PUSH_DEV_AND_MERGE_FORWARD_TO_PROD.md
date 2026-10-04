@@ -29,3 +29,10 @@ release head, then PROD to DEV, so that DEV = PROD.
 - DEV fast-forwards `bd7cd5d1ce` -> `e34ba40`, then PROD fast-forwards to the same commit.
 - The 5 MCPMSP commits are NOT in this push. They are put to Andrew as one question, since his words did not name them
   and their project is parked.
+
+## Disposition of the MCPMSP question (1.0.0_SA_CTO~O, 2026-10-04 ~20:2xZ, at /open-calls)
+
+Withdrawn from Andrew's queue and decided in this lane: HOLD. Leaving the commits out is the default and needs no word.
+Only the ship branch is sovereign. The commits stay on `wk-NFRA_MCPMSP-6-opal_ai` @32abfdb (worktree `C:/tmp/ms-6`).
+They reach opal_ai DEV/PROD only after NFRA_MCPMSP un-parks (G-MSPID answered, or Andrew's word; Andrew's last word was
+"Not yet", CTO 27426) and a release review covers them.
