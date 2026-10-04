@@ -47,3 +47,26 @@
 5. One NEVER-2 entry covers the image move and the policy change (C-SERVED). It is opened before the move.
 
 **CTO HALF: SIGNED** for the first scheduled publish under the window + union (2026-10-05 20:10Z), under conditions 1-5.
+
+## ADDENDUM A -- the served re-run of 2026-10-04 (extension, 1.0.0_SA_CTO~Z, 2026-10-04 ~21:4xZ)
+
+**Request:** the same file @55bb66278d, section ADDENDUM A (msg 29254). **Authority:** Andrew-direct ~21:3xZ, record
+`org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20261004_213xZ_OPEN_CALLS_ALL_RECS_APPROVED_RERUN_DAILY_SPRINT_ONCE_LAPTOP_ONBOARD.md`
+@b7f2fb4dc7.
+
+**What I read:**
+- The three keys: the 10-03 seed watermark (NEW, written by the builder), the two 10-04 pages (overwritten) and the 10-04 watermark
+  (NEW, written by the function last). The watermark keys now have 2 writers: the function, and the builder's one seed.
+- The rule (`cut_window` @dc86c2b2cd): with no 10-04 watermark, prev = the seed, so start = 2026-10-03T22:16:00Z and end = the
+  earliest 10-04 census. The 10-05 fire then starts at the 10-04 end, which is contiguous.
+- **The seam, measured on site Z:** `git log --all --no-merges` with commit time in [2026-10-03T22:15:00Z, 22:16:00Z) = **0**. The
+  neighbours are 22:14:27Z and 22:14:44Z (inside the 10-03 page) and 22:16:20Z (in the new window). Positive control: 40 commits in
+  [22:00Z, 23:00Z).
+
+**Conditions (the original 1-5 carry):**
+- A1. The seed is written with read-back BEFORE the invoke. It is the only builder-written watermark.
+- A2. At invoke time, the union (pushed refs plus every device census in the window) has 0 rows with commit time in
+  [2026-10-03T22:15:00Z, 22:16:00Z). The laptop's refs are not visible from site Z. A non-zero is a STOP and a re-seed.
+- A3. The QA trace and both device censuses come first, as the addendum orders. ONE served invoke of `{"date": "2026-10-04"}`, once.
+
+**CTO HALF: EXTENDED** to Addendum A under A1-A3 and the original conditions 1-5.
