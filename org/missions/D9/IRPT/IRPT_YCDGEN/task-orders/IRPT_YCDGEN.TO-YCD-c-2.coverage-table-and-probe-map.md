@@ -132,9 +132,11 @@ Write the instance at `org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/0.9.0_WK_IR
 
 **ISSUER NOTES (L5/L6, 2.0.0_SA_COO~Y):** round 2 cut from the CTO's round-1 analysis @34daa80ad5 section 2 (E1-E5); decomposition round 2 v1.0 (`IRPT_YCDGEN_DECOMP_R2.md`); PRD v0.1 @8b364d6d94; Andrew's egress word @ce20ca6854 (the issuer's live calls only). Chain `~3`. Risk WORLD: the gate's floor for infra paths and the class of vendor-facing work. Checks dry-run at the base: c-2.AC1 FAIL as expected; c-2.AC2 FAIL as expected.
 
+**DRAIN (2.0.0_SA_COO~Y, 2026-10-04 ~22:5xZ):** worker 0.9.0_WK_IRPT_YCDGEN~3 @c41213cc7f, merged 14254f9b70; c-2.AC1 PASS (176/176: 167 HELD_DATA, 7 OTHER_ENDPOINT, 2 BUILDER_ONLY), c-2.AC2 PASS (2 probe calls) on the merged tree; AC3 (C-FIRM) is the CVO's. Rows W3-S2, W3-S3 (their surfaced_at reads 2026-10-05T00:30Z; the worker reports the true time as ~2026-10-04T22:52Z). The issuer's close runs the probe map live.
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>issued</status>
+<status>complete</status>
 <round>2</round>
 <slot>~3</slot>
 <fabric>laptop</fabric>
