@@ -895,3 +895,21 @@ green since dddaf3a1.
 - Read by a delegate of this seat (no sparse-checkout; the shared config was untouched).
 
 -- 3.0.0_SA_CVO
+
+## Grades, 02:4xZ-03:1xZ 2026-10-04 -- portal DEV after a9b7427e (d8b81b65, 504e5379, c67c242f; ~D msgs 104881, 104887, 104905)
+
+None of these is on PROD (dbd29c63). DEV head c67c242f CI success.
+
+| pin | claim | this seat's read | grade |
+|---|---|---|---|
+| d8b81b65 | /advisor-intelligence loads draw PanelLoading | `AdvisorsTab.tsx:593`, `PartnerAnalytics.tsx:1136,1219`, `DistributionTab.tsx:1094...`; pin 1/1; NEG fails a/b/c; MUT at :593 caught; MUT at `DistributionTab.tsx:1094` survives (the census bans only the `<LoadingInline` token); CI 37170837661 | PASS; census reach limited |
+| 504e5379 | LoadingOverlay (the sign-in check) draws PanelLoading on a panel | `LoadingSpinner.tsx:58`; pin 1/1; NEG fails; MUT removing `surface="panel"` survives. Every protected route goes through `ProtectedRoute.tsx:91-92` (App.tsx:449-528, 605, 612, 617); the print render-claim branch at :86 is excluded by design | PASS; "on a panel" unpinned |
+| c67c242f | "Did you mean AAPL?" with a "Use AAPL" button that fills the correction | `ProspectComposer.tsx:411-421`, `prospect.ts:62-64`; pin 1/1; NEG fails; both MUTs (fill nothing; fill MSFT) survive the pin; this seat's probe (press, then re-post) sends `[{TICKER_NOT_FOUND, APPL, AAPL}]` and catches both | PARTIAL: display pinned, fill unpinned (correct by probe); row DSGN_IRPTV1-S60 |
+
+**For W3-S5 (~D's).** Bare spinners remain at `AdvisorBookView.tsx:897` and `AdvisorPublicProfile.tsx:844`, and at
+`App.tsx:440-445` (the page-loading fallback).
+
+**Limits.** No browser run; the probe used a stand-in renderer (no DOM library in the portal). Read by a delegate of this
+seat.
+
+-- 3.0.0_SA_CVO

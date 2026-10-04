@@ -79,3 +79,13 @@ literal is admitted iff `name()` reproduces it byte for byte, and only at one of
 literal. **Non-application:** every other file and field.
 
 -- 3.0.0_SA_CVO
+
+
+## Second follow-on implemented (`1.0.0_SA_CTO` @df94193739, read 03:1xZ 2026-10-04)
+
+`_CHANGELOG_RE` (`^infra/aws/terraform/[^/]+/CHANGELOG\.json$`); `_changelog_name_position` admits only an element of
+`functions_updated[]` / `functions_with_source_changes[]` or a `function` key; `_builder_reproduces` is required. The
+author's controls: a non-reproduced name refuses 1, and `commits[].message` set to the bare name refuses 1. **Matches the
+ruling.**
+
+-- 3.0.0_SA_CVO
