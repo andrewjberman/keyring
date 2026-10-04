@@ -104,7 +104,13 @@ rollback", so CORPUS al-5 can start. Then do leg 3 under a NEW entry.
    Edit nothing else.
 2. Run ONE `safe-apply` targeted at `aws_iam_role_policy.scoped_amgt_api_grants`. The plan is ONE in-place update of
    `opal-amgt-scoped-api-grants` whose only change is that prefix. Anything else is a STOP.
-3. NO code change. The CodeSha256 stays `aoQ+WrefJ+JjQcymqyrt2c7MEIlTPmvjJEv8sqZ6M98=`, and a moved CodeSha256 is a STOP.
+3. NO code change. **Serialize behind AMGT_CORPUS al-5.** Its NEVER-2 entry `amgt-corpus-r36-al5`
+   (`org/critical_paths/.open_deploys/amgt-corpus-r36-al5.json`, opened @5907db84a4) redeploys this same function, at
+   `288de3d95d`, which carries round 67 (`d8bafe6896` is its ancestor).
+   - Begin leg 3 only when that entry is CLOSED, or not yet started with its L1 OPEN, and in that case say which.
+   - The base CodeSha256 is the one read live at leg-3 start. It must be `aoQ+WrefJ+JjQcymqyrt2c7MEIlTPmvjJEv8sqZ6M98=` or the
+     new CodeSha256 that al-5's closed entry records. Any other value is a STOP.
+   - Leg 3 must not move it.
 4. Grade **AC4**, the applied-plane proof of the grant, then AC2 on deployed. AC4 is a fourth criterion because the grant has its
    own applied-plane proof, apart from the served read.
 5. Re-read AC1 and AC3. They are unchanged by a policy-only act.
