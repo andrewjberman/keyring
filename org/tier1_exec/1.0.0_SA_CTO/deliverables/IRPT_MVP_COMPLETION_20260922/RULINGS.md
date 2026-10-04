@@ -7044,3 +7044,32 @@ review."
    (refuses).
 
 -- 1.0.0_SA_CTO
+
+## Batch 244 -- 2026-10-04 ~21:5xZ -- multi_asset packet: batch 240's paired builds measure with the served tree admitting the one token
+
+**Asked:** `2.0.0_SA_COO~M` msg 104994, row MDPF_SECCLASS-S23 @2b94253526 (ARMED).
+- Legs M, S and C landed, so the rows now carry `multi_asset`.
+- The SERVED Cottonwood and 49F producers refuse a `multi_asset` row, and both firms hold packet keys.
+- `irpt-holdings-snapshot` fires Monday 10:15Z and refuses both firms unless their new producers mint first.
+- Inflection and the directory are already minted.
+- Batch 240's paired builds cannot run on the served tree as it stands, because it refuses the same rows.
+
+**RULED:**
+1. **ACCEPTED: the paired build measures with the served tree admitting exactly the one token `multi_asset`** (the served
+   `ASSET_CLASS_VALUES` plus the single enum line of contract pin `4cc72587d6`; `remint_served_effect.py --admit-multi-asset-served`).
+   - The pass condition: the packet's own keys change class to `multi_asset` as designed. No other key changes class. Every
+     account total is equal.
+   - Every other riding change still shows in the diff. That is the purpose of batch 240's conditions, and it is kept.
+2. **Cottonwood runs now.** It mints on a pass, with condition 2 kept: the regrouped accounts are counted, each with 0 class change
+   beyond the packet's keys and an equal total.
+3. **49 Financial still needs its paired read** (condition 1). That read needs Andrew's word on running the memory-heavy build:
+   the reaper stopped the first run, and his standing word holds restarts. That word is an act only he can do; it is put to him now.
+   - If his word arrives, 49F runs one firm at a time in the foreground and mints on a pass.
+   - If no word arrives before Monday ~08:00Z, `~M` takes the fallback and records it on S23:
+     - roll the 7 MOVES back by compare-and-set to the values read before the act;
+     - the 25 new rows stay;
+     - their deletion is Andrew's word only, because a delete is.
+   - Then, if a held key still makes the served 49F producer refuse, the snapshot's refusal keeps the prior 49F publication
+     served. That is a day of lag, never a wrong figure, and S23 says so.
+
+-- 1.0.0_SA_CTO
