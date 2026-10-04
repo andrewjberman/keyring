@@ -3628,6 +3628,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "The census requires EQY_FUND_YEAR in a family while no landed value can test it, so the YEAR family is the definition applied to a shape; it only ever yields YEAR for an integer year in range, otherwise UNRESOLVED with its reason, and an absent value stays UNRESOLVED.",
     "notes": "Tested only on fixtures (test_build_unit_map_families_round35.py::test_year_family_with_no_landed_value_is_unresolved_absent). A name that does land a value will be the first real test of the band.",
     "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W2-S20",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~2",
+    "surfaced_at": "2026-10-04T21:41:24Z",
+    "one_line": "On the served TSM_US_Equity block, 92 of the 167 figures of the 52 round-34 mnemonics are monetary and carry currency null / basis invariant, although the block is mixed (quote USD, reporting TWD).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "read_model_block('TSM_US_Equity') object derived/model_block/TSM_US_Equity/20261004T195814Z/model_block.json: currencies {quote USD, reporting TWD, mixed True, converted False}; of 167 figures of the 52, 91 MILLIONS + 1 ABSOLUTE carry currency None, currency_basis 'invariant'.",
+        "Contrast on the same block: 60 other MILLIONS statement figures (e.g. EBITDA) carry currency TWD / 'reporting (EQY_FUND_CRNCY)', CUR_MKT_CAP carries USD / 'quote (CRNCY)': the labelling exists, the 52 are not wired to it.",
+        "Detail: deliverables/0.9.0_WK_AMGT_CORPUS~2/R36_UNITS_JUDGMENT_READ.md section 2."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order: grade each TSM figure's currency label as right for what the number is (price-based in quote currency, statement in filing currency).",
+    "world_is": "The 90 statement figures (TWD) and CRNCY_ADJ_MKT_CAP / AVG_DAILY_VALUE_TRADED_3M (USD quote) carry no currency; graded WRONG (92), with 75 non-monetary figures RIGHT. Family units are all RIGHT or CANNOT-TELL (19/0/5 of 24). BA and SAP carry the same null label on the monetary figures of the 52 (single-currency blocks, so incomplete not misleading).",
+    "notes": "Fix shape: assign currency_basis for the 52 monetary mnemonics in the producer/classifier as the older MILLIONS fields already get it, then re-derive the blocks. Touches the ABSOLUTE_OR_MILLIONS family's currency label, not its unit.",
+    "disarm_owner": "2.0.0_SA_COO~X"
   }
 ]
 ```
