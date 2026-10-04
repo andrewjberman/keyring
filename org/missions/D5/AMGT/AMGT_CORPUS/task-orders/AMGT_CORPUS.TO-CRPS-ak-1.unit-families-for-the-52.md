@@ -126,3 +126,4 @@ control 2/2; census test 1 failed. The served move is CRPS-ak-4 (decomposition s
 <round>35</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
+<status>complete</status>
