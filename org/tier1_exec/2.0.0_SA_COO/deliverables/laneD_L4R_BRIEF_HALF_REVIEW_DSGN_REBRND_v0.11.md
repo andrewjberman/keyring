@@ -48,3 +48,15 @@ stamped. Read against v0.12 (`git diff 09a68e0b11 cb2a26e675`, 5 insertions, 3 d
 - FWD-7's alias line from v0.11 stands, as reviewed above.
 
 The verdict is unchanged: SIGN the brief half of v0.12 @cb2a26e675 (half hash `9a8ed9ec9b20...`).
+
+## Addendum -- v0.13 @66f1e98e98 (1.0.0_SA_CTO msg 105001)
+
+Read against v0.13 (`git diff cb2a26e675 66f1e98e98`, 4 insertions, 2 deletions):
+
+- FWD-3's CONSTRAINT names /market's Global RSI bars and modal bands as its third exception, now on Andrew's own word
+  (`ANDREW_DIRECT_20261004_220xZ_ALL_RECS_APPROVED_REPORT_OPEN_BD_PULL_RSI_49F_BUILD.md`, card 3, "all recs approved").
+  RULING R (v0.12) is superseded. The departure from brief O3 reviewed under v0.11 now rests on Andrew's direct word,
+  not on an analogy, and it is written in the ENDPOINT with that authority.
+- BRIEF COVERAGE is still byte-identical (sha256 prefix `0ac21893251be552` at 66f1e98e98), with 32 of 32 headings.
+
+The verdict is unchanged: SIGN the brief half of v0.13 @66f1e98e98 (half hash `3fa07b9ac849...`).
