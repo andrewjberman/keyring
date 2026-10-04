@@ -33,6 +33,12 @@ Both REFUSE for a NEW instance and ANNOUNCE for a LEGACY one, NEW meaning the go
 added in a commit descending from the ruling's pin -- repository state, never a clock or a list. And the
 <placeholders> reader is LINE-ANCHORED (RULING M(i), rows S53, W4-S7). See the blocks above each limb.
 
+DEPLOY GENRE LIMB (2026-10-04, 3.0.0_SA_CVO verdict 29306): an instance with root `genre: DEPLOY` proves a redeploy,
+which has no mutant. It is admitted only when the governing order carries the issuer's line-anchored
+<proof_genre>DEPLOY</proof_genre> beside <risk>SERVED</risk> or <risk>WORLD</risk>, read at HEAD; at least one named
+control must discriminate (status PASS, expected_landed != expected_not_landed); a DID-NOT-DISCRIMINATE control or an
+empty rollback is INVALID. Silent for BUILD (genre absent or BUILD). See the block above deploy_genre_check.
+
 INVOCATION ALIGNMENT LIMB (2026-09-12, FE-s-23, row IRPT_FNTEND-S31): each acceptance row's recorded
 `invocation` is compared against the same-id criterion's <invocation> in the GOVERNING TASK ORDER,
 modulo the declared placeholders and trailing/leading whitespace ONLY -- a changed flag, path, query
@@ -2069,6 +2075,89 @@ def drives_check(inst: dict, to_text: str | None = None, to_label: str | None = 
     return v, frames
 
 
+# ---------------------------------------------------------------------------
+# DEPLOY GENRE LIMB (2026-10-04, 1.0.0_SA_CTO~Z on 3.0.0_SA_CVO's verdict msg 29306: "(a), add the DEPLOY genre. A mutant
+# has no meaning for a redeploy, and conforming would delete pair-mandated sections."). The schema carries an optional root
+# `genre` (BUILD | DEPLOY; absent = BUILD). This limb holds the verdict's conditions the schema cannot express:
+#   (1) NOT SELF-DECLARED. DEPLOY is admitted only when the GOVERNING ORDER -- resolved as every other limb resolves it,
+#       the --governing-order binding included -- carries, each on its own line, <risk>SERVED</risk> or <risk>WORLD</risk>
+#       AND <proof_genre>DEPLOY</proof_genre>, read from the order's bytes at HEAD: the issuer's mark at the cut, never a
+#       field the graded party writes and never an uncommitted edit. A prose mention is inert. Otherwise a build order
+#       escapes its mutant.
+#   (2) THE MUTANT'S JOB SURVIVES. At least one named control DISCRIMINATES (status PASS and expected_landed !=
+#       expected_not_landed: a read whose expected value differs between landed and not landed); any control at
+#       DID-NOT-DISCRIMINATE makes the instance INVALID, as DID-NOT-FIRE does a mutant. And a NAMED rollback: `rollback`
+#       present and non-empty.
+# A BUILD instance (genre absent or BUILD) returns ([], []) and prints nothing, so its run reads exactly as before.
+PROOF_GENRE_ELEMENT_RE = re.compile(r"^[ \t]*<proof_genre>\s*([A-Za-z]+)\s*</proof_genre>[ \t]*$", re.M)
+RISK_ELEMENT_RE = re.compile(r"^\s*<risk>\s*([A-Za-z]+)\s*</risk>", re.I | re.M)  # GATE (xii)'s reader (to-pipeline-gate.py)
+
+
+def _committed_order_text(rel: str) -> str | None:
+    """The governing order's bytes at HEAD, or None when HEAD does not carry it (the caller refuses on None)."""
+    try:
+        o = subprocess.run(["git", "show", f"HEAD:{rel}"], cwd=str(_REPO_ROOT), capture_output=True, timeout=30)
+    except Exception:  # noqa: BLE001 -- an unreadable order is a refusal below, never a pass
+        return None
+    return o.stdout.decode("utf-8", errors="replace") if o.returncode == 0 else None
+
+
+def deploy_genre_check(inst: dict, to_text: str | None = None, to_label: str | None = None) -> tuple[list, list]:
+    """(violations, frames). `to_text`/`to_label` are injectable so the battery exercises the limb without planting a
+    task order in the live estate."""
+    if inst.get("genre") != "DEPLOY":
+        return [], []
+    v: list[str] = []
+    cvo = "(3.0.0_SA_CVO verdict 29306, condition %d)"
+    if to_text is None:
+        rel, note = _governing_rel(inst)
+        if rel is None:
+            v.append(f"genre DEPLOY: the governing order did not resolve ({note}), so the issuer's mark cannot be read -- "
+                     f"DEPLOY is never self-declared {cvo % 1}")
+        else:
+            to_label = rel
+            to_text = _committed_order_text(rel)
+            if to_text is None:
+                v.append(f"genre DEPLOY: the governing order '{rel}' is not readable at HEAD -- the issuer's mark is read "
+                         f"from committed bytes only {cvo % 1}")
+    risk_m = RISK_ELEMENT_RE.search(to_text) if to_text is not None else None
+    mark_m = PROOF_GENRE_ELEMENT_RE.search(to_text) if to_text is not None else None
+    risk = risk_m.group(1).upper() if risk_m else None
+    mark = mark_m.group(1) if mark_m else None
+    if to_text is not None:
+        if mark != "DEPLOY":
+            v.append(f"genre DEPLOY: the governing order '{to_label}' lacks the issuer marker <proof_genre>DEPLOY</proof_genre> "
+                     f"on its own line (found: {('<proof_genre>%s</proof_genre>' % mark) if mark else 'none'}) -- DEPLOY is "
+                     f"admitted only for an order its issuer marked a deploy at the cut, or a build order escapes its "
+                     f"mutant {cvo % 1}")
+        if risk not in ("SERVED", "WORLD"):
+            v.append(f"genre DEPLOY: the governing order '{to_label}' declares "
+                     f"{('<risk>%s</risk>' % risk) if risk else 'no line-anchored <risk>'} -- DEPLOY needs <risk>SERVED</risk> "
+                     f"or <risk>WORLD</risk> {cvo % 1}")
+    ctrls = inst.get("controls")
+    named = {k: c for k, c in (ctrls.items() if isinstance(ctrls, dict) else []) if isinstance(c, dict)}
+    dnd = sorted(k for k, c in named.items() if c.get("status") == "DID-NOT-DISCRIMINATE")
+    for k in dnd:
+        v.append(f"controls.{k}: DID-NOT-DISCRIMINATE -- the deliverable is INVALID by its own control {cvo % 2}")
+    disc = sorted(k for k, c in named.items() if c.get("status") == "PASS"
+                  and str(c.get("expected_landed", "")).strip() != str(c.get("expected_not_landed", "")).strip())
+    flat = sorted(k for k, c in named.items() if c.get("status") == "PASS" and k not in disc)
+    if not disc:
+        v.append(f"controls: genre DEPLOY carries NO discriminating control -- 0 of {len(named)} named control(s) read "
+                 f"status PASS with expected_landed != expected_not_landed"
+                 + (f" ({len(flat)} PASS with the two values EQUAL: {flat})" if flat else "")
+                 + f"; the mutant's job survives as a read whose expected value differs between landed and not landed "
+                   f"{cvo % 2}")
+    rb = inst.get("rollback")
+    named_rb = isinstance(rb, str) and bool(rb.strip())
+    if not named_rb:
+        v.append(f"rollback: genre DEPLOY requires a NAMED rollback, present and non-empty {cvo % 2}")
+    frames = [f"deploy-genre: genre=DEPLOY; governing order {to_label or 'UNRESOLVED'}: <risk> {risk or 'none'}, "
+              f"<proof_genre> {mark or 'none'}; controls: {len(disc)} of {len(named)} named discriminate, "
+              f"{len(dnd)} DID-NOT-DISCRIMINATE; rollback {'named' if named_rb else 'ABSENT'}"]
+    return v, frames
+
+
 def _self_test() -> int:
     """RED-FIRST BATTERY for the surprises limb. Six arms; each names its expectation; N of N printed.
     A gate never exercised on its failure limbs is a gate that cannot fail."""
@@ -2298,9 +2387,43 @@ def _self_test() -> int:
     arms.append(("B10 binding: main() runs the binding before every limb; the resolver reads the bound order before "
                  "to_ref", _order_ok, 0, 0, "source order"))
 
+    # ---- DEPLOY GENRE limb (CVO 29306): the issuer's mark, discrimination, the named rollback (pure, injected order) ----
+    _marked = "<risk>WORLD</risk>\n<proof_genre>DEPLOY</proof_genre>\n"
+    _disc = {"description": "CodeSha256 read live", "expected_landed": "new digest", "expected_not_landed": "base digest",
+             "observed": "new digest", "status": "PASS"}
+
+    def _dg_inst(controls=None, rollback="prior artifact version through one code-only safe-apply", genre="DEPLOY"):
+        d = {"genre": genre, "controls": {"digest_moved": _disc} if controls is None else controls}
+        if rollback is not None:
+            d["rollback"] = rollback
+        return d
+
+    def _dg(name, inst_, to_text, expect_v, needle=None, expect_frames=None):
+        got, fr = deploy_genre_check(inst_, to_text=to_text, to_label="<injected>")
+        ok = (len(got) == expect_v and (needle is None or any(needle in x for x in got))
+              and (expect_frames is None or len(fr) == expect_frames))
+        arms.append((name, ok, len(got), expect_v, (got[0] if got else (fr[0] if fr else "no frame"))[:110]))
+
+    _dg("DG1 DEPLOY: marked WORLD order + a discriminating PASS control + rollback -> 0 violations", _dg_inst(), _marked, 0)
+    _dg("DG2 DEPLOY: order carries <risk>WORLD</risk> but NO <proof_genre> -> 1 violation naming the marker",
+        _dg_inst(), "<risk>WORLD</risk>\n", 1, "<proof_genre>DEPLOY</proof_genre>")
+    _dg("DG3 DEPLOY: the marker only in prose (not on its own line) is inert -> 1 violation",
+        _dg_inst(), "<risk>WORLD</risk>\nwe set <proof_genre>DEPLOY</proof_genre> here\n", 1, "lacks the issuer marker")
+    _dg("DG4 DEPLOY: marker present but <risk>LOCAL</risk> -> 1 violation", _dg_inst(),
+        "<risk>LOCAL</risk>\n<proof_genre>DEPLOY</proof_genre>\n", 1, "<risk>LOCAL</risk>")
+    _dg("DG5 DEPLOY: both controls DID-NOT-DISCRIMINATE -> 3 violations (2 controls + none discriminating)",
+        _dg_inst({"a": dict(_disc, status="DID-NOT-DISCRIMINATE"), "b": dict(_disc, status="DID-NOT-DISCRIMINATE")}),
+        _marked, 3, "DID-NOT-DISCRIMINATE")
+    _dg("DG6 DEPLOY: the one PASS control expects the SAME value landed and not landed -> 1 violation",
+        _dg_inst({"flat": dict(_disc, expected_not_landed="new digest")}), _marked, 1, "two values EQUAL")
+    _dg("DG7 DEPLOY: rollback absent -> 1 violation", _dg_inst(rollback=None), _marked, 1, "NAMED rollback")
+    _dg("DG8 DEPLOY: rollback whitespace-only -> 1 violation", _dg_inst(rollback="   "), _marked, 1, "NAMED rollback")
+    _dg("DG9 BUILD (genre absent) -> 0 violations and NO frame (a BUILD run prints what it printed before)",
+        {"controls": {"mutant": {}, "determinism": {}}}, "", 0, None, 0)
+
     passed = sum(1 for a in arms if a[1])
     print("proof-of-spec-check --self-test (surprises limb + v3 carrier 4 + invocation alignment + count-bar + drives "
-          "+ governing-order binding)")
+          "+ governing-order binding + deploy genre)")
     for name, ok, got, exp, tail in arms:
         print("  %s  %s  (violations got=%d expected=%d)  %s" % ("PASS" if ok else "FAIL", name, got, exp, tail))
     print("  RESULT: %d of %d arm(s) behaved" % (passed, len(arms)))
@@ -2422,7 +2545,8 @@ def main() -> int:
     except ImportError:
         # Degrade LOUDLY: minimal required-keys check only.
         structural = "FALLBACK (jsonschema not installed -- structural coverage PARTIAL; install for full)"
-        for k in schema.get("required", []):
+        deploy_req = schema.get("then", {}).get("required", []) if inst.get("genre") == "DEPLOY" else []
+        for k in schema.get("required", []) + deploy_req:
             if k not in inst:
                 violations.append(f"schema-fallback: missing required key '{k}'")
 
@@ -2460,6 +2584,11 @@ def main() -> int:
     dr_violations, dr_frames = drives_check(inst)
     violations.extend(dr_violations)
     align_frames = align_frames + dr_frames
+    # DEPLOY GENRE LIMB (2026-10-04, CVO 29306): silent for BUILD; for DEPLOY it reads the issuer's mark off the governing
+    # order at HEAD and grades discrimination and the named rollback.
+    dg_violations, dg_frames = deploy_genre_check(inst)
+    violations.extend(dg_violations)
+    align_frames = align_frames + dg_frames
 
     n_acc = len(inst.get("acceptance", []))
     print(f"proof-of-spec-check | structural={structural} | acceptance rows={n_acc} | violations={len(violations)}")
