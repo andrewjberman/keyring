@@ -874,6 +874,76 @@ def _packaged_citations(post_text):
     return out
 
 
+SOURCE_MAP_PATH = "infra/aws/lambda/ci/lambda-source-map.json"
+_SOURCE_MAP_NAME_FIELDS = ("function_name", "iam_role")
+
+
+def _source_map_name_position(line_text, value):
+    """True iff `value` sits in a RESOURCE-NAME position on this source-map line: a row key (`"<value>": {`) or the value of
+    `function_name`, `iam_role` or a key ending `_name` / `_role`. A free-text field (`_build_note`, notes) is never one."""
+    q = re.escape(json.dumps(value))
+    if re.match(r'^\s*%s\s*:\s*\{' % q, line_text):
+        return True
+    m = re.match(r'^\s*"([^"]+)"\s*:\s*%s\s*,?\s*$' % q, line_text)
+    if not m:
+        return False
+    key = m.group(1)
+    return key in _SOURCE_MAP_NAME_FIELDS or key.endswith("_name") or key.endswith("_role")
+
+
+def _builder_reproduces(mod, value):
+    """True iff lib/opal_naming.py name() reproduces `value` byte for byte from registry rows: {system}-{scope}-{function}
+    [-{qualifier}]-{kind}, with the scope read through lookup() (or no scope, a shared resource). Any refusal by the builder is
+    a miss, never an error, so a literal the builder cannot reproduce stays graded."""
+    toks = value.split("-")
+    if len(toks) < 3:
+        return False
+    system, kind = toks[0], toks[-1]
+
+    def _firm(tok):
+        try:
+            return (mod.lookup(tok) or {}).get("class") == "FIRM"
+        except Exception:  # noqa: BLE001
+            return False
+
+    try:
+        row = mod.lookup(toks[1])
+    except Exception:  # noqa: BLE001
+        row = None
+    if row is not None:
+        # the second token IS a scope: only the scoped reading counts, so a firm token cannot ride in as a function name
+        if len(toks) < 4:
+            return False
+        candidates = [(row.get("long") or toks[1], toks[2:-1])]
+    elif any(_firm(t) for t in toks[1:-1]):
+        return False  # an unscoped reading that carries a firm token is a mint, never a citation
+    else:
+        candidates = [(None, toks[1:-1])]
+    for scope, mid in candidates:
+        for k in range(len(mid), 0, -1):
+            fn, qual = "-".join(mid[:k]), ("-".join(mid[k:]) or None)
+            try:
+                if mod.name(system, scope, fn, kind, qual) == value:
+                    return True
+            except Exception:  # noqa: BLE001
+                continue
+    return False
+
+
+def _source_map_name_citations(mod, path, added, lits):
+    """3.0.0_SA_CVO ruling @7b38f056ca (CVO_RULING_NAMING_LIMB_SOURCE_MAP_CITATION_NOT_MINT_20261004.md, on 2.0.0_SA_COO~P 104859 /
+    row W114-S1): in lambda-source-map.json ONLY, a literal in a resource-name position passes iff name() reproduces it byte for
+    byte. Such a string CITES a resource Terraform minted through the builder; it mints nothing (Rule 30's existing-pipeline
+    non-application). Free-text fields get no carve-out, and a literal the builder does not reproduce stays refused. COST: a few
+    builder calls per added source-map literal. NON-APPLICATION: every other file."""
+    if path != SOURCE_MAP_PATH:
+        return
+    for lit in lits:
+        if not lit.permitted and _source_map_name_position(added.get(lit.line, ""), lit.value) \
+                and _builder_reproduces(mod, lit.value):
+            lit.permitted = True
+
+
 _GITATTR_BINARY_TOKENS = ("binary", "-diff")
 
 
@@ -1655,6 +1725,7 @@ def grade_file(nm, f, post_from_index):
         for lit in lits:
             if lit.value in cited:
                 lit.permitted = True  # the packaged name of a tracked source: a citation (R-11), not a mint
+        _source_map_name_citations(nm.mod, path, added, lits)  # a builder-reproduced resource name cites, never mints
     else:
         lits = yaml_literals(added)
     waivers = waivers_for(path, post_text) if isinstance(post_text, str) else {}
