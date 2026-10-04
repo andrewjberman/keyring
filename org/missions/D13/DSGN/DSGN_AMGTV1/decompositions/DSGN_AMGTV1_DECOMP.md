@@ -1809,3 +1809,26 @@ AC2 of every cell = `round29/checks/battery29.sh` with no skip (ESLint included)
 - Officers for the names with no M-1 management object (RESAPP upstream).
 **Chain:** three independent chains, each from 055ba370, with disjoint file sets. **Fan-out:** 3 of 3 chains, cap 8. **Risk:** LOCAL.
 **Rule 24:** one row, one order per cell.
+
+## v36 -- ROUND 36 (issuer, 2026-10-04 ~22:3xZ) -- TWO CELLS: THE RENDER INSTRUMENT GRADES THE REDESIGN; THE BATCHED REPAIR (PRD v0.15 @237d5d742f, ADMITTED)
+
+**Rectangle:** `round35/ROUND35_CLOSE.md` section 4, which the CTO's review of d60a0f90 confirms (@98209ce86a, msg 29256 condition 4:
+"Your round-36 list stands"). **Base:** portal 35a723bf, now on DEV (MSTR~Z on Andrew's word, CI 37237977735 success, msg 29263/29269).
+
+| cell | serves | owned files | worker |
+|---|---|---|---|
+| `AV-zn-1` INSTRUMENT RE-ANCHOR | FWD-20 | `portal/scripts/ui-contract-check.mjs`, `portal/scripts/ui-measure.mjs`, `portal/src/pages/SecurityAnalysis/__harness__/tests/uiContractFixtures.json` | ~97 |
+| `AV-zn-2` REPAIRS (batched) | FWD-20 (list-state sizes and radii), FWD-5 (tooltip headline while loading), FWD-27 (no zero move) | `components/ChatterBubbles.tsx`, `components/TimelinePanel.tsx`, `components/model/WhatChangedPanel.tsx` | ~98 |
+
+**Check, AV-zn-2:** `round36/checks/repairs/repairs36.cjs` (+ `_render36.cjs`). At base 35a723bf it reads 2 of 5: Chatter 30/90/365D carry
+39/47/51 page-owned SVG label sizes 8-10.5 px and one 5px legend radius (ChatterBubbles.tsx :264-269, :359, :401, :653); while the day
+read is pending, BA 09-28/09-29/09-08 print the coverage event's lead headline under "Strongest headline"; 3 rows print "-0.00%" /
+"+0.00%". KEEP 6 of 6, PLANTED 9 of 9. Green 5 of 5 through CHECK_SRC_OVERRIDE (issuer re-run). Shared `PanelContent.tsx`
+`rounded-b-lg` is reported, not graded; RankedChart.tsx's 10px ticks are not mounted on the list state (census only, not cut).
+**Check, AV-zn-1:** `round35/checks/instrument/instrument35.cjs` (committed @9e5820652c). At base 35a723bf it reads 0 of 4 in 948 s: arm 1 finds
+no re-anchored band clause and 0 chatter bubbles on the monthly fixture; arm 2 finds 8fa7abde fails no re-anchored clause; arm 3 tells
+no plant apart; arm 4 counts 12 stale darkContainers/bandIsIdentityHeader FAILs. Green arm: 4 of 4 on a scratch reference re-anchor at
+the round-35 cut. AC2 = battery29 with no skip. It touches no product file.
+**Sequencing (CTO msg 29279):** AMGT_CORPUS round 36 has a candidate on `tabs/ModelTab.tsx` and `modelSheet.ts`. Neither cell
+touches either file (checked against both `<paths>` lists).
+**Fan-out:** 2 of 2 chains, cap 8 (disjoint files; both from 35a723bf). **Risk:** LOCAL.
