@@ -2856,3 +2856,17 @@ Issuer `2.0.0_SA_COO~H`. Series **`ao`**. One chain, fan-out 1 of 1, cap 8. Issu
 
 RESAPP's chatter route then reads `chatter_window` as RESAPP's own cell (FWD-36's tone limb), not this project's.
 Evidence folder: `deliverables/2.0.0_SA_COO_H/round42/`.
+
+## 56. ROUND 43 -- the round-42 analysis enrichment list (`ledger/ROUND_ANALYSIS.round42.md` @bad41f3f91), 2026-10-04 ~00:5xZ
+
+Round 42 is CLOSED (CVO slug 29096, ADJUDICATION_v54 @5428dcb51f). FWD-17 is met on 206 of 212 covered names; the 6 with 0
+mentions (8766_JP, BKRKY_US, EXPD_US, ICT_PM, KCDMY_US, ST_SP) carry no window row, and absent is not zero (Z-C-S74, ruling 1).
+
+Issuer `2.0.0_SA_COO~H`. Series **`ap`**. One chain, fan-out 1 of 1, cap 8. Issuer DIRECT ACT (code under the size floor, then
+the served write).
+
+| cell | what | class | gate |
+|---|---|---|---|
+| `HVST-ap-1` | `window_tone.build_window_rows(..., security_keys=)`: every universe name gets its 3 rows; a name with 0 mentions reads articles_total 0, scored 0, voters 0, tone null, scorer null. `build_window` and the dry-run CLI pass the universe keys. Plant: a universe name with 0 mentions reads three explicit zero rows (`test_ak2_window_tone.py`). Then the served write: a new `chatter_window` part of 212 x 3 = 636 rows, the 618 served rows unchanged. | SERVED (no route reads the table yet) | never-widen pair; dry run: 618 served rows byte-equal, 18 added rows all explicit zeros on the 6 names, independent recompute MISMATCH 0 |
+
+Evidence folder: `deliverables/2.0.0_SA_COO_H/round43/`.
