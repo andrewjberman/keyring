@@ -108,6 +108,35 @@ That includes the work site Z committed at 3 PM and has not pushed, counted once
 - **Access:** each device's existing AWS identity is allowed to put the census prefix. The Lambda's role is allowed to get it.
 - **Size:** about 1-2 MB on a 1,500-commit day (inferred). The files hold commit metadata only: no file content, no client data.
 
+### D3a. Every device commit is classified exactly as a pushed one (the area charts)
+
+Andrew, verbatim (2026-10-04 ~17:4xZ): *"Will those commmits be published in a manner that we can classify them for the daily
+sprint surface area charts?"* and *"that is crucial for this to work for thedaily-sprint"*.
+
+**What the two charts consume today (measured in code):**
+- **Work kind (`commit_census.py`):** the files each commit touched (`classify`, `:151`), the author time `%aI` for the
+  30-minute bin (`bin_of`), and `%an <%ae>` for the worker count.
+- **Directive (`project_census.py`):** the hash `%H`, the author time `%aI`, the author name `%an` (it reads the `~X` lane), the
+  subject `%s` (the fallback rule) and the files (`commits_for` and `classify`, `:124-175`).
+- **Both** select commits by `--since/--until`, which is the commit time.
+
+**Therefore the census row carries exactly these, in git's own formats:**
+- `sha` (`%H`), `author_time` (`%aI`), `commit_time` (`%cI`), `author_name` (`%an`), `author_email` (`%ae`), `subject` (`%s`);
+- `files`, from the same `git log --all --no-merges --name-only` invocation, so a commit's file list is byte-identical to the one
+  the cloud's clone would produce.
+
+**One code path, never a second classifier:**
+- The census scripts turn device rows into the SAME internal rows they build from `git log`. They union by hash, filter by
+  `commit_time` against the window, then run their existing `classify` and `bin_of` once over the union.
+- No classification happens on the device, and no rule is duplicated. That keeps the pipeline single and keeps the Lambda's
+  "the two censuses agree" check meaningful.
+
+**Acceptance (testable):**
+1. Take the commits of one pushed day, and read each one both from git and from a device census file. They give the same work
+   kind, the same directive and the same 30-minute bin, for every commit (a positive control on real data).
+2. The renderer's existing assertion still passes on a union page: every timeline series sums to its count.
+3. A commit present in both places is counted once on both charts.
+
 ### D4. The union (O3, O4)
 - The Lambda downloads today's device census files after the clone.
 - Both census scripts gain an `--extra-commits <file>` input. They union those rows with `git log`'s by hash, drop rows outside
