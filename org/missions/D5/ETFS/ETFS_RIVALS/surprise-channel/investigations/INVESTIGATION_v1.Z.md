@@ -3253,6 +3253,29 @@
     "spec_asserts": "PRD v0.8: IDVZ and PFOE join the Bloomberg leg's daily queue and its history backfill; ACWI and IWM are the groups' index controls; before the first scheduled fire with the four new names the issuer measures the leg's request cost, and a measured breach STOPs and is rowed. Andrew-direct ~20:3xZ 2026-10-03 card 6: resume I-2 (D12, D13).",
     "world_is": "Measured breach: the controls alone are about 2x the leg's per-query cap, and the overflow is fatal to the whole leg, not to the two names. The gate is also all-or-nothing, so the cheap half (IDVZ/PFOE, 69 rows/day) cannot go live without the heavy half. Not yet measured: the downstream cost of ~4,200 more lines per day through silver, G1, A1 and the page (1.89 of 2.10 MB today), and the G4 market pull if the controls' ~4,000 constituents join it (the plan holds 601 securities). I-2 STOPS at the gate: no flip, no backfill, until a round-8 cell lands.",
     "notes": "Remedy (round-8 cell lg-1, collector_bloomberg.py + universe.py): query an index control on its own per date with a cap sized from this measurement (and a range read that never truncates silently), make an overflow a per-name partial rather than a leg crash, and split the gate so D12 (home funds) and D13 (controls) switch independently; then the issuer's backfill acts run under their pairs. Hazard ARMED because anyone flipping the gate today breaks the existing daily leg; it disarms when lg-1 deploys. A YTD backfill of the controls is ~800k rows at ~15 s per date: its Bloomberg budget threshold is not defined in integrations/bloomberg/READ_HERE.md (only the 2-attempt sign-in budget is), so the cell's pair names one."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W7-S1",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~7",
+    "surfaced_at": "2026-10-04T23:13:00Z",
+    "one_line": "round8/checks/bt-1.AC1.py (b) expects QTD at day 2026-10-02 to start 2026-07-01 and to hold the 2026-09-10 trade, but 2026-10-02 is in Q4: the calendar quarter starts 2026-10-01, so QTD = MTD, which is the rule gold_holding_contribution.period_start and WORKSTREAM_B_INPUTS.md:27 both state; AC1 cannot pass without a QTD that disagrees with them.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round8/checks/bt-1.AC1.py:12,65: BBB add ending 2026-09-10 is 'YTD, QTD, R30' and want QTD = ({BBB, CCC}, ['2026-07-01']) at DAY 2026-10-02, while the same want gives MTD start 2026-10-01",
+        "data/etfs/scripts/rivalfunds/gold_holding_contribution.py:119-120@c222ecc8fa: QTD start = dt.date(year, 3*((month-1)//3)+1, 1) = 2026-10-01 for 2026-10-02",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round8/WORKSTREAM_B_INPUTS.md:27: 'The as-of 2026-10-01 is the first day of October and Q4, so MTD = QTD = one day for every fund'",
+        "run at this worktree: python bt-1.AC1.py -> got QTD ({CCC}, ['2026-10-01']) want ({BBB, CCC}, ['2026-07-01']); (a) and (c) PASS, (b) FAILS on QTD only (R30 and MTD match)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "bt-1.AC1.py docstring: QTD {BBB, CCC} with window_start 2026-07-01 at day 2026-10-02; the order says MTD/QTD/YTD start on the period's first trading day.",
+    "world_is": "The build writes QTD from the calendar quarter's first trading day (2026-10-01 at that day), the same quarter hc-1 and the page's 'Q4 2026' label use, so QTD holds CCC only; the check's expectation needs a quarter that began 2026-07-01. The worker kept the calendar quarter (a trailing-quarter QTD would disagree with hc-1's QTD and rn-1's label) and pinned the calendar rule in tests/test_r8bt1_periods.py with a mid-quarter day (2026-08-14), where the producer's R30, MTD, QTD and YTD blocks all verify.",
+    "notes": "Remedy owner is the issuer: move the fixture day into Q3 (any day 2026-07-01..09-30 with the 09-10 trade in QTD) or drop the 09-10 trade from QTD in the expectation. disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. rn-1.AC2 START QTD 2026-07-01 may carry the same day assumption; not read by this worker."
   }
 ]
 ```
