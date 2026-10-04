@@ -5,7 +5,7 @@
  "project": "NFRA_SPRINTWIN",
  "directive": "D0",
  "fabric": "site-z",
- "prd_version": "v0.1",
+ "prd_version": "v0.2",
  "step": 4,
  "brief_ref": "docs/briefs/daily-sprint-window-and-device-census-brief-20261004.md@547af2b735",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7"],
@@ -26,8 +26,9 @@ we descirbed. that does not need to go to a new COO/team, you hsould be able to 
 `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/ANDREW_DIRECT_20261004_184xZ_NFRA_SPRINTWIN_CRO_Z_BUILDS_SOLO.md`):
 - build, decomposition and deploy: `4.0.0_SA_CRO~Z`, solo, on site Z. This replaces msg 29152's COO lane and its AE~A deploy owner.
 - L8/L9: `3.0.0_SA_CVO~Z`;
-- the mechanical gates stand: the never-widen pair (this seat holds the CTO half), safe-apply, safe-commit and safe-merge, and the
-  NEVER-2 ledger;
+- the mechanical gates stand: the never-widen pair, safe-apply, safe-commit and safe-merge, and the NEVER-2 ledger. The pair's CTO
+  half is this seat; the COO half is `2.0.0_SA_COO~H` (placement v0.2, CVO~Z review finding 4: the solo change left it unheld).
+  COO~H signs a half only. It holds no build, decomposition or deploy step;
 - each computer's Scheduled Task: that computer's MSTR, in its /integrate lane (the laptop's on request from site Z).
 
 ## ENDPOINT (step 2, /endpoint --forward)
@@ -109,6 +110,9 @@ comparator (CLAUDE.md NEVER, shadow pipelines). Classification runs ONCE, in the
   that reported.
 - The next run starts at the newest watermark's `window_end`. With no watermark it starts 24 hours back. The span is capped at
   7 days; anything beyond the cap is printed as uncovered, in words.
+- `window_end` is the EARLIEST census `generated_at` among the devices that reported, and never later than the run. With no device
+  reporting it is the run time. A commit made on a device after its census and before the run then falls into the NEXT window,
+  where it is counted once; it is never inside a window that no census covers (v0.2, CVO~Z review finding 1).
 - A dated re-run of an earlier day reuses that day's stored watermark. It never recomputes "since the previous report" from now.
 - Both census scripts take explicit `--since` / `--until` (UTC ISO) beside `--window`. The Lambda and the local `/daily-sprint`
   pass the same pair, so a hand run and the scheduled run cut the same span. The Lambda's existing "the two censuses agree" refusal
@@ -125,8 +129,9 @@ comparator (CLAUDE.md NEVER, shadow pipelines). Classification runs ONCE, in the
 
 **C-CENSUS (brief D3, D3a).** One JSON file per device per day, written by a stdlib script in `.tools/`. It holds:
 - `device` from `.tools/agentbus-sqs.sh device`, `generated_at`, the local `HEAD`, and the `origin/CLOUD` it last saw;
-- `commits` from `git log --all --no-merges --since=<now - 48h> --name-only`, each row carrying exactly git's `%H` (sha), `%aI`
-  (author time), `%cI` (commit time), `%an`, `%ae` and `%s`, plus the files;
+- `commits` from `git log --all --no-merges --since=<now - 8 days> --name-only`, each row carrying exactly git's `%H` (sha), `%aI`
+  (author time), `%cI` (commit time), `%an`, `%ae` and `%s`, plus the files. The look-back is the C-WINDOW cap plus one day, so one
+  file covers any window the run can cut (v0.2, CVO~Z review finding 2; the brief's 48 hours assumed a 24-hour window);
 - `notes`, the content of `daily_reports/notes/<today>.md` if present.
 
 Commit metadata only: no file content and no client data. The scheduled task runs the script as it stands on `origin/CLOUD`
@@ -135,6 +140,8 @@ Commit metadata only: no file content and no client data. The scheduled task run
 **C-UNION (brief D4).**
 - Both census scripts take `--extra-commits <file>`. They union its rows with `git log`'s by sha, keep rows whose commit time is in
   the window, and then classify and bin once.
+- The run unions EVERY census file dated inside the window, from every device, deduplicated by sha, not only the run day's files.
+  A device that missed today's census still contributes the unpushed commits its earlier files carry (v0.2, finding 2).
 - The authoring step's commit subjects come from the same union.
 - Notes: the repository's `daily_reports/notes/<day>.md` wins. Otherwise the newest device census's `notes` is used.
 - The page's source line names the window, each device that reported with its census time, and how many counted commits were not
@@ -176,8 +183,8 @@ Each hop is a real call, and a hop fed by a fixture fails FWD-1.
 2. **H1 census script:** the `.tools/` stdlib script writes one device's file to its builder home. It runs once on site Z and once
    on the laptop, each from `origin/CLOUD`.
 3. **H2 union:** `--since/--until` and `--extra-commits` in both census scripts, classified once over the union.
-4. **H3 window:** the function reads the newest watermark, cuts the window, downloads the day's census files and runs both
-   censuses on the union.
+4. **H3 window:** the function reads the newest watermark, cuts the window (`window_end` per C-WINDOW), downloads every census
+   file dated inside the window and runs both censuses on the union.
 5. **H4 page:** the run renders the page with the source line, publishes it to the QA home with read-back, and Andrew reads it.
 
 A build cell carries at most THREE mechanical criteria; repo-wide hygiene runs at the drain. The round-1 analysis ends in the
@@ -250,3 +257,10 @@ enrichment list.
 
 - v0.1 (2026-10-04 ~18:xxZ, `1.0.0_SA_CTO~Z`): first issue, on the brief @547af2b735 and Andrew's endpoint confirmation. Written
   on branch `ctoz-sprintwin-20261004` (@f15b8a86ce) under PARITY HOLD, and landed at its home after registration @9f81b531fb.
+- Seats header @bbfd37b595: Andrew-direct ~18:4xZ, `4.0.0_SA_CRO~Z` builds solo.
+- L4-R: ratified-text half SIGNED by `3.0.0_SA_CVO~Z` @43b01c88f8 (half 5d3955112dd8; review
+  `org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_RATIFIED_TEXT_SIGN_20261004_NFRA_SPRINTWIN_v0.1_Z.md` @86efca38cb). PRD ADMITTED.
+- v0.2 (2026-10-04 ~20:0xZ, `1.0.0_SA_CTO~Z`): CONTRACTS amendments owed before H3, from that review. Finding 1: `window_end` is the
+  earliest reporting census. Finding 2: an 8-day look-back, and the run unions every census file in the window. Finding 4: the
+  never-widen COO half is placed on `2.0.0_SA_COO~H`. These are CONTRACTS and header edits; the ENDPOINT is unchanged, so no half
+  re-opens.

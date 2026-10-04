@@ -45,7 +45,7 @@
   },
   "coo_lane": null,
   "fabric_ruling": "site-z -- the brief's author (4.0.0_SA_CRO~Z) and the census's first consumer (0.0.0_AB_MSTR~Z's /integrate) are here; the generator is AWS-side; each device's census emission stays in that device's MSTR lane (1.0.0_SA_CTO~Z msg 29152).",
-  "blocking": "L4 PRD v0.1 landed 2026-10-04 by 1.0.0_SA_CTO~Z. Andrew ~18:4xZ: 4.0.0_SA_CRO~Z builds it solo (no COO lane). Owed: 3.0.0_SA_CVO~Z's ratified-text half (proportionate); the never-widen pair at the first served publish (CTO half 1.0.0_SA_CTO~Z).",
+  "blocking": "Not blocked. PRD ADMITTED: ratified-text half SIGNED by 3.0.0_SA_CVO~Z @43b01c88f8; v0.2 CONTRACTS amendments (window_end, 8-day look-back, union of every census file in the window) landed before H3. Next: 4.0.0_SA_CRO~Z builds H0-H4 solo (Andrew ~18:4xZ). The never-widen pair at the first served publish: CTO half 1.0.0_SA_CTO~Z, COO half 2.0.0_SA_COO~H.",
   "thread_counter": 0,
   "threads": []
 }
