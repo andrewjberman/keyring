@@ -1302,6 +1302,27 @@
  "spec_asserts": "TO-AV-zi-1 build item 3: the window Segmented takes ground=\"band\" like its neighbours.",
  "world_is": "The neighbours take the default (canvas) ground, so the preset control was built the same way to read navy on white; the order's criteria do not grade the ground prop. If band ground was meant, the neighbours and the header comment disagree with the order.",
  "notes": "Worker-authored record; form only, no significance judged."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W97-S1",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~97",
+ "surfaced_at": "2026-10-04T23:05Z",
+ "one_line": "AV-zn-1: with the fixture replaced by the served WINDOWED chatter shape, the Universe state's sizes and radii clauses now FAIL (the monthly fixture drew no bubbles, so they never read the bubble labels); the run tally is 74 PASS / 2 FAIL, not all-PASS.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "C:/tmp/r36-scratch-wk97/out-20261004T224439Z/candidate/grades.json (AC1 run on portal 35a723bf + this order's three files): states.list.sizes FAIL {smallest 8, below11 [8,9,10]}; states.list.radii FAIL [3.35544e+07px, 3px, 4px, 2px, 5px]; result {PASS 74, FAIL 2, NOT_EXERCISED 0, N/A 1}.",
+   "Same list state, same dist C:/tmp/r35-scratch-c/dist-35a723bf, run twice in my scratch: with the pre-change fixture (git show HEAD:portal/src/pages/SecurityAnalysis/__harness__/tests/uiContractFixtures.json) sizes PASS and radii PASS (list.json sizes keys 11,12,14,20,30; radii 3.35544e+07px, 3px, 4px); with the windowed fixture sizes carry 8:73, 9:234, 10:302 characters and radii add 2px and 5px. The order's cell names no fix for either clause and changes no product file."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "TO-AV-zn-1 cell text: the last redesign run read 62 PASS and 14 FAIL and every FAIL was the instrument's own stale anchor, not the page.",
+ "world_is": "Fixing the three anchors (band clause, price rest rule, windowed chatter fixture) leaves 2 FAIL cells on the list state that are the page's bubble labels (8, 9 and 10 px) and corner radii (2px, 5px) once the chatter face draws its bubbles. AC1 grades 4 of 4 arms and does not read these two cells.",
+ "notes": "Worker-authored record; form only, no significance judged."
 }
 ]
 ```
