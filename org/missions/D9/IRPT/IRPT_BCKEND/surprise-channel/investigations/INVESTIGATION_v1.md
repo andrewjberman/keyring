@@ -17216,3 +17216,57 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "MEASURED: committed @236f660bb6; the naming limb reads PASS 0 graded."
 }
 ```
+
+## IRPT_BCKEND-S320 -- the source map lags irpt-ycharts-generate again (Y-5d deploy not recorded)
+
+```json
+{
+  "id": "IRPT_BCKEND-S320",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-04T20:41:00Z",
+  "one_line": "infra/aws/lambda/ci/lambda-source-map.json records irpt-ycharts-generate's deployed_code_sha256 as FgZcBjJu.., while the live function has run uFTONal.. since 2026-10-04T01:57:24Z; the irpt-y5d ledger closed without recording the deploy, which CTO batch 234's class remedy (record with --function at the close leg) requires.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's sweep-8 read 2026-10-04 ~20:0xZ-20:3xZ (delegate): source map row vs lambda get-function-configuration CodeSha256 and LastModified"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO batch 234: a deploy's close leg records the function with record-terraform-deploy.sh --function, so the source map equals what runs.",
+  "world_is": "The map lags the live function again after ~Y's Y-5d deploy, the same class as rows S293 and S264.",
+  "notes": "INERT. Owner 2.0.0_SA_COO~Y: run the recorder for irpt-ycharts-generate with --function at the current live hash, and add the step to the Y close-leg checklist."
+}
+```
+
+## IRPT_BCKEND-S321 -- S318's cause measured: the easy file's instruction cells outside A/B fail the XLSX undated proof by contract
+
+```json
+{
+  "id": "IRPT_BCKEND-S321",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-04T21:05:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "S318's cause MEASURED, and it is not the correction: the easy file (the YCharts holdings template Andrew's clients fill) has 1,240 cell elements outside columns A/B, 7 of them valued free text (an instructions paragraph in F2, labels in F1, AW7, F11, G11, J11, K11). _undated_template_xlsx refuses any cell outside A/B, so the date basis is never proved and every READY analysis of this template reads Unavailable. That is the proof's stated contract, so changing it is a ruling",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "offline run 2026-10-04 ~21:0xZ of ops/prospect_dates.py at HEAD on Y-5's frozen document (composition 079f8556..., read in memory) and the uploaded bytes (local copy, sha256 equal to template.content_sha256): _template_census -> 100 rows, A1/B1 recognised, 0 formula/invalid cells; _undated_template_xlsx -> False",
+      "the sheet: 1 worksheet; cells in columns A..AY; valued rows 100 == census rows 100; outside A/B: 1,240 cells, 7 valued, all shared strings (lengths 6, 505, 13, 7, 7, 7, 7), 0 formulas, none date-like by pattern (content not printed: client file)",
+      "Y-4's typo-case file has the same 1,240 / 7 shape; both compositions carry no findings, no prices and no price_date",
+      "ops/prospect_dates.py:1-6 and :137-170: extra columns 'require a future explicit source-date contract, never a fallback'; a cell outside A/B returns False"
+    ]
+  },
+  "spec_asserts": "IRPT_BCKEND-S318 (inferred): the corrected rows break the undated-input proof.",
+  "world_is": "The correction is irrelevant: the uncorrected template already fails the proof on its instruction cells. Options for the ruling: (a) keep the contract, so this template always reads Unavailable; (b) admit an XLSX whose cells outside A/B are exactly a pinned census of the template's boilerplate (text equality, bound by sha256; any other valued cell still refuses), with no date detector; (c) the page reads READY with 'date basis unavailable' as a note, not as the status.",
+  "notes": "S318 stays ARMED until the ruling is applied. The job, the report and certification are unaffected."
+}
+```
