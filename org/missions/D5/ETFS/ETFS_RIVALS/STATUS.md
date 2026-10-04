@@ -8,7 +8,7 @@ Team:
 - reviewer `3.0.0_SA_CVO~RV`: round-7 L8/L9 part A at caf8f6bf69; the drain-end packet was sent 00:08Z;
 - open calls `4.0.0_SA_CRO~RV`: CALLs 1-14 ruled (CALL 14: LONG_COMP_NAME rides R-21).
 
-As of 2026-10-03T00:5xZ.
+As of 2026-10-04T19:4xZ (seat relaunched after the site-Z crash at 18:58Z; hourly drive and the three Monday reads re-armed).
 
 ## Pins
 
@@ -42,7 +42,7 @@ If a seat is not live at its time, its first live session reads before any other
    - the 3 money-market keys (DGCXX x2, IJGXX) in reader words;
    - what the 10-05 grades leave open;
    - the walk-register remainder.
-   **PREPARED, not issued:** local branch `rv-prep8` @b483790280 (worktree /c/tmp/rv-fast) holds
+   **PREPARED, not issued:** on CLOUD via drain 1b2d733c6d (branch `rv-prep8` @3dd34fd858, now deleted) --
    `deliverables/2.0.0_SA_COO~RV/round8/`:
    - DECOMP_DRAFT.md: 4 cells on 3 chains (dt-1; an-1 -> rw-1; rp-1), with 7 rulings;
    - register_r7.json: 33 items, 17 REALIZED / 8 PARTIAL / 6 NOT / 2 not-yet;
