@@ -9,6 +9,7 @@
 | 01:0xZ-01:1xZ | DSGN_REBRND W3-S5 (FAST) | /correlations | loading -> LOADING; one ticker -> EMPTY inside the matrix panel, whose header keeps the selectors (the tinted notice had removed the only controls); pin correlation-states; renders looked at | DRIVE FORWARD |
 | 01:1xZ | both (FAST) | landing | portal DEV `c35c66db` (ls-remote): 8071b59b, e2f89bd9, 7a12098c, c35c66db; pins handed to the CVO | DRIVE FORWARD |
 | 01:2xZ-01:3xZ | DSGN_REBRND W3-S5 (FAST) | /data-refresh | the amber "Could not load current data state" band -> PanelError with a retry; that panel and Upload History load as PanelLoading; pin data-refresh-states (DEV fails every arm); ui-smoke render with the manifest forced to a 503 looked at; LANDED portal DEV `a403f466` (ls-remote) | DRIVE FORWARD |
+| 01:4xZ-01:5xZ | DSGN_REBRND W3-S5 (FAST) | /security-scanner | three tabs' grey "Loading ... data..." lines -> PanelLoading; pin scanner-loading-states (DEV fails all three arms); ui-smoke render with the factor read held looked at; LANDED portal DEV `a9b7427e` (ls-remote) | DRIVE FORWARD |
 
 ## Notes
 
@@ -19,6 +20,6 @@
 
 ## Open
 
-- W3-S5: /advisor-intelligence, /security-scanner and /login spinners; the demo page's silver copy. /portfolios stays parked under MDPF_TAXSMA's lease.
+- W3-S5: /advisor-intelligence and /login spinners; the demo page's silver copy. /portfolios stays parked under MDPF_TAXSMA's lease.
 - REQ-6be454cb's server state: ~Y.
 - The print's bundle reference on the face: put to Andrew.
