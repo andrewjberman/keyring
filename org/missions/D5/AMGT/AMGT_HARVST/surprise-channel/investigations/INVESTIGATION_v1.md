@@ -6690,7 +6690,28 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-S82",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-04T18:51Z",
+      "one_line": "19,967 of the 31,042 served gold mention rows (64%) are published BEFORE 2026-01-01 (back to 2013; sa 19,430, ft 507, bbg 21, wsj 9; 8,916 distinct articles), while the store's declared history starts 2026-01-01 (FWD-9; window_tone STORE_START).",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "PRD FWD-9: each company's publication history since 1 January 2026 is in the store and on its timeline; window_tone.STORE_START = 2026-01-01.",
+      "world_is": "The served mention part (chatter rebuild of round 41) carries 19,967 rows dated 2013-2025 (2025 6,666; 2024 4,131; 2023 3,076; 2022 2,449; 2021 1,612; 2020 992; earlier 1,041). They are real articles the sa listing returned deeper than 2026 (the FWD-12 re-check aq-4 reads 0 wrong-article mismatches outside the 33-key quarantine over 11,210 sa rows), e.g. sa:3793704 (2022-01-31) on AMD, NOVN and REGN. Windows are unaffected (served from STORE_START); events and the timeline can show pre-2026 days.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "publication_gold._latest_gold_snapshot_rows(GOLD_TABLE) read 2026-10-04 before 18:51Z: 31,042 rows, 19,967 with published_utc < 2026-01-01",
+          "round44/aq-1.READ.md (the AMD query example) and round44/aq-4.READ.md (d)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "notes": "Not a wrong-article defect (FWD-12 d holds). Whether pre-2026 rows are served, trimmed at gold, or kept as context is the CTO's scope call; recorded here for the round-44 analysis. Nothing changed."
     }
-
   ]
 ```
