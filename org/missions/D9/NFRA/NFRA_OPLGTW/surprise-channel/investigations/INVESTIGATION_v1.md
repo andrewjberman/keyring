@@ -7519,3 +7519,79 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W22-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~22",
+  "surfaced_at": "2026-10-03T22:40Z",
+  "one_line": "gr3.AC1 cannot PASS as written: the R9 grain makes the existing suites test_schwab_semantics.py and test_schwab_query.py red (1 + 22 tests), and their fixtures are outside this order's <paths>; more tests outside it also go red (test_schwab_export.py, test_schwab_export_stream.py, test_schwab_transactions.py).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN (worktree branch wk-NFRA_OPLGTW-22-r16, query.py + datasets.json edited, test_schwab_grain_r9.py added): `python -m pytest tests/test_schwab_semantics.py tests/test_schwab_query.py -q` -> 23 failed, 18 passed. The 22 query failures all read reason field_missing_in_source: tests/test_schwab_query.py write_positions() writes no quantity_cash_settled column, and the new grain tie-breaks on it. The semantics failure is test_ogq3_ac09: its rows carry no quantity_settled_unsettled key and sem.assert_unique_grain reads row[g] over the grain (KeyError).",
+      "RUN: tests/test_schwab_export_stream.py test_ogx2_ac01 and test_ogx2_ac02 fail with the change and pass without it (a copy of the gateway at HEAD, same files); tests/test_schwab_transactions.py test_mx_s15_grain_declared asserts DATASET_GRAINS['dim_asset'] == ('cusip',) at line 81 and fails with the change. A full `pytest tests` run on the branch read 47 failed, 35 errors; test_schwab_export.py shows 13 failures. Several of those files also fail or error at HEAD for environment reasons (the baseline copy shows 7 failed, 23 errors on the 15 files compared), so the per-file delta above, not the totals, is the claim.",
+      "SOURCE: the order names only query.py, datasets.json and the new test file as writable; the AC2 allowed list is the same three; no test file that carries the old grain is in <paths>."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order section 1 and AC1: change the grain in query.py and datasets.json, add the new test, and 'the existing grain/semantics suites stay green' (semantics+query suites rc=0), touching only the three allowed files.",
+  "world_is": "The grain change is not independent of the fixtures that encode the old grain. To land it green the issuer must widen <paths> (and gr3.AC2's allowed list) to: tests/test_schwab_query.py write_positions() (add a quantity_cash_settled decimal(15,5) column), tests/test_schwab_semantics.py test_ogq3_ac09 (rows carry quantity_settled_unsettled), tests/test_schwab_transactions.py line 81 (dim_asset grain), and whatever test_schwab_export*.py need (their position fixture likely shares the writer). The worker has NOT edited them (write grant). This branch's commit leaves those suites red until the issuer re-hands; OG-rl-5 must not ship from it before then.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W22-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~22",
+  "surfaced_at": "2026-10-03T23:55Z",
+  "one_line": "A1 resolves Z-W22-S3 for 38 of the 39 tests it turned red, but test_schwab_query.py::test_ogq2_ac20 stays red under R9 and no fixture edit can fix it: its one-page duplicate-grain assertion needs the R24 row check, which cannot fire because quantity_cash_settled is not a served field; gr3.AC1 cannot PASS (1 NEW failure beyond the baseline).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: before the A1 edits `python -m pytest tests -k schwab -q -rfE` from infra/aws/ec2/opal-gateway -> 40 failed, 81 passed, 9 errors (39 failures beyond the baseline's 3 failed 9 errors, ogx4_ac03 being the baseline's). After the fixture edits (test_schwab_query.py, test_schwab_semantics.py, test_schwab_transactions.py) -> 2 failed, 119 passed, 9 errors: test_ogx4_ac03 and the 9 errors are baseline ids; ONE is new, tests/test_schwab_query.py::test_ogq2_ac20.",
+      "SOURCE: app/integrations/schwab/integration.py:686-705 -- the R24 row check (sem.assert_unique_grain) runs only when `all(g in col_names for g in exposed_grain)`, i.e. only when the request's own columns carry EVERY grain field; the code comment calls any other shape NOT-ENFORCED.",
+      "SOURCE: app/integrations/schwab/query.py:157-159 and DATASET_SCHEMAS['dim_position'] (11 served fields, read by import) -- quantity_cash_settled is `a source column that is not a served field`, so no rows-mode request can carry it; the R24 row check therefore never fires for dim_position under R9.",
+      "RUN: scratch probe on test_ogq2_ac20's planted duplicate (same account, cusip, l_s, quantity_settled_unsettled, differing market value): paged request -> isError True; one-page request (page_size 50, columns account_ref/cusip/l_s) -> isError False; the same with quantity_settled_unsettled added -> isError False. Test lines 1000-1010 assert the one-page request returns UNAVAILABLE duplicate_source_grain."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A1: R9's fixture fallout is fixable by fixture-only edits (add grain columns; restate a grain-declaration assertion), and AC1 then passes with no failure beyond the 12-id baseline.",
+  "world_is": "test_ogq2_ac20 encodes the OLD grain's R24 enforcement as a product expectation: with a three-column grain every grain field was a requestable column, so a one-page duplicate was refused as duplicate_source_grain. Under R9 the fifth grain column is not served, so that refusal no longer fires on any rows-mode request. A fixture edit cannot restore it; the options are product ones (run the R24 check on the engine's grain rows instead of the request's columns, or restate the test's one-page expectation as a ruling), both outside this order's write surface. The worker changed neither the product nor the test; an attempted planted-row edit was reverted because it did not fix the test.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W22-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~22",
+  "surfaced_at": "2026-10-04T00:50Z",
+  "one_line": "A2 restates test_ogq2_ac20 for the single-page request only, but the same test's PAGED assertion (duplicate_source_grain) also cannot hold under R9 and R9a: a paged request on a non-unique dim_position snapshot refuses paging_refused_no_unique_grain, as test_oggr3_ac03 already asserts; the worker restated that one assertion.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN (branch wk-NFRA_OPLGTW-22-r16 @518ff0c51a): python -m pytest tests/test_schwab_query.py -k ogq2_ac20 -> 1 passed after the restatement; before it, the planted row was not a full-grain duplicate and the paged request was served.",
+      "SOURCE: integration.py R9a branch takes only a single page (offset 0, matched <= page_size); R9a section 7 'Nothing else changes' leaves the paged path to the :742-752 check, which refuses paging_refused_no_unique_grain.",
+      "SOURCE: GR3_TEST_EDITS.md lists the restatement; both assertions still refuse the request, only the paged refusal code differs."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A2 item 3: restate test_ogq2_ac20 to plant a full-grain duplicate and assert a single-page dim_position request is REFUSED duplicate_source_grain; nothing is said of the paged assertion in the same test.",
+  "world_is": "The paged assertion expected UNAVAILABLE duplicate_source_grain, a code the old per-result check gave when a paged request carried every grain column. Under R9 no request carries quantity_cash_settled, so the paged request on the planted snapshot is refused INVALID_REQUEST paging_refused_no_unique_grain by paging's own snapshot check; the assertion now states that. If the CTO wants the paged code to stay duplicate_source_grain, the fallback must also take the paged path, a serving change beyond R9a.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
