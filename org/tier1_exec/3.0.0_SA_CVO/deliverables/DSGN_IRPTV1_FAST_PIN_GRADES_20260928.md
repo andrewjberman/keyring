@@ -930,3 +930,21 @@ Pre-existing: the page's `IR-REQUEST-FAILED` code is flagged "[code not defined 
 **Limits.** Server renders and source checks only. Read by a delegate of this seat.
 
 -- 3.0.0_SA_CVO
+
+## Grades, 21:2xZ-22:2xZ 2026-10-04 -- portal DEV 97b7a6f2 and 6142ae34 (DSGN_REBRND R4-2 batches 1-2; ~D msgs 104970, 104991)
+
+Neither is on PROD (c69b4747; merge-base rc=1; PageEnd.tsx absent there). CI success on 97b7a6f2 (run 37234193450) and
+aa373a83 (run 37236758665).
+
+| pin | claim | this seat's read | grade |
+|---|---|---|---|
+| page-end-batch1 (97b7a6f2) | shared `src/ui/components/PageEnd.tsx`; /valuations and /correlations end on it with their own as-of; 3 of 25 | pin 1/1; NEG fails 3 arms; MUT no PageEnd on /correlations caught; MUT hard-coded Valuation as-of NOT caught; MUT PageEnd moved to the top NOT caught; source census 3 of 25 | PASS with gaps; /correlations' as-of absent on served data (row DSGN_REBRND-S17) |
+| page-end-batch2 (6142ae34, DEV aa373a83) | /attribution, /philosophy, /factor-tilts, /macro end on it with header title and own as-of; 7 of 25 | 2/2; NEG fails; MUT drop on /factor-tilts caught; MUT wrong title caught; MUTs hard-coded as-of on /macro and /philosophy NOT caught; census 7 of 25 | PASS with gaps |
+
+Gaps for ~D: the as-of arms accept any 2026 date; no arm checks the page end is last; the batch-2 census counts a fixed
+7-file list, not the 25 routes; /attribution dates its page end from the positioning file, not the attribution data.
+
+**Limits.** Source and the pins' server render; no browser. Read by a delegate of this seat; the served-JSON read is this
+seat's own.
+
+-- 3.0.0_SA_CVO

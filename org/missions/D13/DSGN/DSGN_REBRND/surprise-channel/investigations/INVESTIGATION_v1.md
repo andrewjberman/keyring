@@ -1784,3 +1784,29 @@
   }
 ]
 ```
+
+## DSGN_REBRND-S17 -- /correlations page end reads an as-of field the served JSON lacks
+
+```json
+{
+  "id": "DSGN_REBRND-S17",
+  "project": "DSGN_REBRND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-04T22:21:00Z",
+  "one_line": "97b7a6f2 (R4-2 batch 1) ends /correlations on PageEnd with dataAsOf={data.metadata?.as_of_date} (Correlation.tsx); the served s3://opal-data-portal-v2/json/correlations/correlation_data.json (version obQwHWjT.., written 2026-10-03 11:05Z) has metadata keys generated_at, periods_available, ticker_count and its as-of at top-level data_as_of (2026-10-02), so the page end prints no date on served data; the matrix's own asOfDate reads the same missing field (pre-existing). The batch-1 pin's fixture supplies a field production does not serve.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's boto3 get_object of the served correlation_data.json 2026-10-04 ~22:2xZ: top keys correlations, data_as_of, metadata, tickers; metadata has no as_of_date",
+      "git -C portal show 97b7a6f2:src/pages/Correlation/Correlation.tsx (PageEnd dataAsOf and matrix asOfDate read data.metadata.as_of_date); correlation-states.test.tsx fixture uses data_as_of"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-10: every page ends on the shared page end naming its own as-of.",
+  "world_is": "/correlations ends on the page end with no as-of on served data; the pin passes on a fixture shape production does not serve.",
+  "notes": "INERT (DEV only; not on PROD c69b4747). Owner 2.0.0_SA_COO~D: read data_as_of (and fix the matrix asOfDate), and give the pin a fixture copied from the served object's shape."
+}
+```
