@@ -24,6 +24,25 @@ As of 2026-10-04T19:4xZ (seat relaunched after the site-Z crash at 18:58Z; hourl
 
 The apply PASSES and rd-1's J1 PASSES. sa-1's J1 and ui-5 are NOT_EVALUATED until 10-05, by design.
 
+## Round 8 (2026-10-04 night): BUILT, NOT MERGED -- the Monday runbook
+
+On Andrew's "yes, build round 8 tonight" (@0a4321b843) and his signed-in smoke (@1c31a5f6ce; PRD v0.14 @4cc8e40575).
+- Workstream A @5f6b2a22d7: dt-1, an-1, rw-1, rp-1, lg-1. Workstream B @c222ecc8fa: gc-1, hc-1, bt-1, rn-1.
+- Built on 7 local branches (worktrees `C:/tmp/wk-riv-r8-1..7`): wk-ETFS_RIVALS-1 dt-1; -2 an-1 + rw-1 + rn-1 (+ issuer
+  amend ce381fd792, merge 3ab4b943fc); -3 rp-1; -4 lg-1; -5 gc-1; -6 hc-1; -7 bt-1 (+ issuer check fix 4b33f05d4b).
+- Integration dry-run (all 7 overlaid, 27 disjoint files): suite 638 passed / 0 failed; all 15 round-8 checks PASS.
+- Rows to rule at the drain: Z-W4-S18 (controls-only overflow day reads FAILED/exit 3), Z-W2-S13 (ruled: g82 test amended),
+  Z-W5-S33 (grader /6 bump: kept), Z-W7-S1 (ruled: the check's QTD was wrong, ea8dbeba5e).
+- The four B orders' H1 titles read "WORKSTREAM A" (template residue); fix at the drain.
+
+**Monday, in order (a fresh session runs this list if the session crons are gone):**
+1. 07:12 / 08:17 ET: the vehicle reads (below, item 1).
+2. 07:41 ET, only after the 07:00 ET vehicle run finished: drain the 7 branches into CLOUD via `.tools/safe-merge.sh`, chain
+   by chain (1, 3, 4, 5, 6, 7, then 2), each carrying its order's `<status>` close; suite once; remove the 7 worktrees.
+3. 09:21 ET: the sweep read (below, item 2); 13:30Z: 3.0.0_SA_CVO~RV's grades.
+4. After the grades: the round-8 Lambda deploy under a NEVER-2 ledger entry and its never-widen pair; then the D13 gate flip
+   (ACWI/IWM) and the D12 gate flip (IDVZ/PFOE history), each with its own pair; then cut item 3.
+
 ## Next proof: Monday 2026-10-05, named readers (ROUND_ANALYSIS.round7.md ruling 2)
 
 If a seat is not live at its time, its first live session reads before any other act.
