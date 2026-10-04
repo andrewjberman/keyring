@@ -93,6 +93,10 @@ rollback tree, verify script, deploy). STANDING RULE (row Z-S32): never source `
    - `before {dim_position, dim_asset}` and `after {dim_position, dim_asset}`;
    - `census_after {servable_by_master, lacking_or_blank}`, `dim_asset_held_check {returned, unheld_returned}`,
      `after_dim_asset_download` (A3);
+   - `dim_asset_held_check` also carries `held_cusips_in_dim_position` and `asset_universe_cusips` (the distinct
+     `dim_asset` CUSIPs of the same snapshot) (A5, CVO guard Q2 @d370d16fe3). `unheld_returned = 0` counts only when
+     `returned > 0` AND `held_cusips_in_dim_position < asset_universe_cusips`; otherwise the held check is UNGRADED:
+     re-run it with a principal whose grant names fewer accounts before closing;
    - `census_after_other {dim_balance, dim_transaction}` servable per master (A4, C1). Expected 14 each per master.
      ABOVE 14, or any read by a principal without a grant for that dataset: roll back at once. BELOW 14: a surprise
      row, not a rollback;
