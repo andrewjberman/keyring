@@ -17396,5 +17396,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   ]
  },
  "disposition": "UNDER_INVESTIGATION"
+}
+,
+{
+ "id": "AMGT_RESAPP-Z-S345",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~Z",
+ "surfaced_at": "2026-10-04T20:29:42Z",
+ "one_line": "aq-4 (merged d8bafe6896) reads s3://opal-data-portal-v2/json/security_scanner/latest/universes/sp500/universe_data.json at request time, and opal-amgt-scoped-api-role cannot read it (simulate-principal-policy: implicitDeny; positive control on opal-data-harvest: allowed; the bucket policy grants only CloudFront). Shipped code-only as aq-5 is cut, the read raises and the route answers 502 -- for DE_US_Equity AND for every unknown _US_Equity key that answered 404 before, including the c26 control ZZZZ_US_Equity.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "aq-4's preflight reads 'comp-iam: DECLARED-NOT-APPLICABLE -- no new write; the routes read what they read today, plus the declared coverage list', and aq-5's preflight reads 'comp-iam: RUN by the issuer at the cut -- 0 new actions: the act carries code only, so the plan must show NO IAM change', with 'Any destroy, IAM, route or gateway change in a plan is a STOP'. The worker's own module docstring says the universe is 'the same file the Peers candidate universe reads', which suggested the function already read it.",
+ "world_is": "Measured 2026-10-04 ~20:2xZ. The build at d8bafe6896 (--build-only) packages lib/research/coverage/covered_no_block.py and does NOT package lib/research/peers/universe.py, so this function has never read the scanner file; the Peers engine that does is another function. infra/aws/terraform/harvest/scoped-amgt-api.tf scoped_amgt_api_grants grants s3:GetObject only on opal-data-harvest pool prefixes. Live: simulate-principal-policy for opal-amgt-scoped-api-role, s3:GetObject on the scanner key -> implicitDeny; on opal-data-harvest/amgt/harvest/gold/research_dossier/x.json -> allowed. get-bucket-policy opal-data-portal-v2: 3 statements, principals CloudFront OAI x2 and cloudfront.amazonaws.com, none for this role. covered_no_block.covered_without_block raises on a failed read by design (502, never 404), so local checks (which read with the operator's credentials) pass while the deployed role would fail. Nothing is deployed: aq-5 is staged and fires only on the issuer's GO.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "simulate-principal-policy arn:aws:iam::313476888478:role/opal-amgt-scoped-api-role s3:GetObject arn:aws:s3:::opal-data-portal-v2/json/security_scanner/latest/universes/sp500/universe_data.json -> implicitDeny; arn:aws:s3:::opal-data-harvest/amgt/harvest/gold/research_dossier/x.json -> allowed.",
+   "build-and-upload-scoped-amgt.sh --build-only at d8bafe6896: 356 entries; zip namelist holds lib/research/coverage/covered_no_block.py and no lib/research/peers/universe.py.",
+   "content_diff.py against deployed FcVBPafw: files 356, IDENTICAL 350, CHANGED 5, ADDED 1 (covered_no_block.py), REMOVED 0."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
 }]
 ```
