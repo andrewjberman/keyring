@@ -11,25 +11,41 @@ fixed therefore stays OPEN for ever, and the aged-row disclosure counts it as st
 
 ## 1. The measured gap
 
+**CORRECTION (2026-10-04 ~00:4xZ, this seat).** The first census of this section was WRONG.
+- **What it said:** 299 rows (67 REMEDIATED, 232 OPEN) and 20 keyword rows.
+- **Why:** it parsed each fence with a regex for ONE `{...}` object, but these files fence a JSON ARRAY of rows. Array
+  fences never matched, and were not counted as unparseable either, so about 85% of the rows dropped out silently.
+- **Re-measured with the gate's own parser** (`surprise-row-gate.py` `_rows`) over the same 121 files: 0 unreadable,
+  0 unparsed blocks. The figures below are that run.
+- The 6-row meaning sample below came from the first pass's 20 rows, so its conclusion (the class is real) stands. Its
+  denominator is now 98.
+
 **The census.** Every `REMEDIATION_v*.md` on both roots: `comp-find --name 'REMEDIATION_v*.md' --all` lists 121 files
-in corpus `all`. Their fenced JSON rows parse 299 of 299, with 0 unparseable.
+in corpus `all`. They hold 1,956 remediation rows.
 
 | remediation.state | closed | rows |
 |---|---|---|
-| REMEDIATED | true | 67 |
-| OPEN | false | 232 |
+| REMEDIATED | true | 783 |
+| REMEDIATED | false | 14 |
+| REMEDIATED | absent | 5 |
+| OPEN | false | 1,122 |
+| OPEN | absent | 32 |
 
-**The keyword pass.** 20 of the 232 OPEN rows carry a terminal-sounding token, by substring:
+So 802 rows are REMEDIATED and 1,154 OPEN. The 14 REMEDIATED-but-not-closed rows are a separate finding, and this
+proposal does not touch them.
+
+**The keyword pass.** 98 of the 1,154 OPEN rows carry a terminal-sounding token, counted by the FIRST hit per row:
 
 | token | rows |
 |---|---|
-| superseded | 12 |
-| "no remedy" or unrecoverable | 10 |
-| withdrawn | 3 |
-| not a defect | 3 |
-| duplicate | 1 |
+| "no remedy" | 29 |
+| superseded | 20 |
+| duplicate | 18 |
+| not a defect | 16 |
+| withdrawn | 11 |
+| unrecoverable | 4 |
 
-**A keyword is not a state.** Read by meaning, 6 of the 20 were sampled:
+**A keyword is not a state.** Read by meaning, 6 rows were sampled (from the first, narrower pass):
 - Genuinely terminal without a remedy: LGIC_ENFORCE-S87 (a fact to be CARRIED, "NOT A REPAIR") and LGIC_ENFORCE-S123
   ("DISCHARGED BY RULING ... BOTH WITHDRAWN").
 - Still actionable: LGIC_ENFORCE-S103 (the issuer's status correction is owed), LGIC_LGCTFM-S66 (a one-line correction
@@ -37,8 +53,8 @@ in corpus `all`. Their fenced JSON rows parse 299 of 299, with 0 unparseable.
   NOT YET stated).
 - Unsampled: NFRA_OPLGTW-S43 is a third terminal row.
 
-**So the class is real and small.** About a third of the keyword hits, by this sample, which is a sample and not a rate.
-The other 14 of the 20 are unread. Every row in the class is counted as stale indefinitely.
+**So the class is real.** About a third of a 6-row sample is terminal, which is a sample and not a rate. 92 of the 98
+are unread. Every row in the class is counted as stale indefinitely.
 
 ## 2. The proposal
 
@@ -125,7 +141,7 @@ each reason, plus each refusal: no pointer, a dangling CARRIED_BY, a missing rul
 disarm.
 
 **Existing rows are not migrated in bulk.** A row moves only when its owner writes a NEW superseding row (the
-append-only law). The 20 keyword rows are a reading list, never a batch flip.
+append-only law). The 98 keyword rows are a reading list, never a batch flip.
 
 ## 6. Interim
 
