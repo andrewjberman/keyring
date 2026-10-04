@@ -17159,3 +17159,32 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "MEASURED: the naming limb (ENFORCE) refuses the CHANGELOG.json entry because it names the Inflection function (the same function name the source-map row, which the gate admits at @7de9db9085, carries); only the source-map half of the deploy record is committed. The CHANGELOG entry needs a gate carve-out for deploy-record entries or an R20 waiver, outside this order's write surface."
 }
 ```
+
+## IRPT_BCKEND-S318 -- a READY analysis of a corrected upload reads Unavailable: prospect dates do not derive (cause inferred)
+
+```json
+{
+  "id": "IRPT_BCKEND-S318",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-04T02:52:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "A READY analysis whose upload carried a user correction (Y-5: TIMXX named SGOV) reads 'Unavailable -- analysis status date basis unavailable' on the page: ops/owned_status.py maps READY to UNAVAILABLE when prospect dates do not derive, and the undated-input proof most likely fails because the corrected rows no longer match the raw file (INFERRED, not measured)",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "2.0.0_SA_COO~D msg 104892 (read-only walk tmp/ui-walk/20261004T023652Z): REQ-a618aa83 draws 60 section cards; status line and row read 'Job status: Unavailable -- analysis status date basis unavailable'; the page sends X-IRPT-Status-Dates prospect-v1",
+      "irpt-jobs REQ-a618aa83407689bc95193a01 state READY 02:28:20Z (Y5V/V1/REQ-a618aa83_terminal_wait.txt @1afe081ac4)",
+      "infra/aws/lambda/investor-reporting/ops/owned_status.py:24 PHASES READY -> (UNAVAILABLE, ANALYSIS_STATUS_DATE_BASIS_UNAVAILABLE) unless derive() returns dates (:57-58)",
+      "infra/aws/lambda/investor-reporting/ops/prospect_dates.py:243-251 the template lane proves an undated input against the raw file and returns None otherwise; :92-110 _template_census returns None on any template or document findings"
+    ]
+  },
+  "spec_asserts": "IRPT-Y-DATES-01 (prospect-v1): a READY analysis of an undated prospect upload reads READY with its date basis; a basis that cannot be proven reads unavailable, never invented.",
+  "world_is": "A corrected upload (Y-5's user-named proxy) reaches READY with its report, and the page calls it unavailable. Candidate cause, not measured: the corrections change the frozen rows (SGOV for TIMXX), so the raw-file proof fails. Next: run prospect_dates.input() offline on REQ-a618aa83's retained input to name the failing branch, then extend the proof to map a corrected row back through its disclosed from_value.",
+  "notes": "The job, the report and the backend V1 are unaffected (READY, certified). The page's words are the only effect."
+}
+```
