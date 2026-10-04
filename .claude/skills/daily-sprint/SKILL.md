@@ -40,7 +40,11 @@ sentences are yours; every sentence traces to a packet line, a commit, or a reco
    the packet's `--all` git census already covers both branches.
 6. **BUILD THE STRUCTURED JSON + RENDER — the visual deliverable (Andrew-direct 2026-08-27,
    supersedes the 08-26 `render_sprint.py` step; that renderer is retired):**
-   a. `python daily_reports/scripts/commit_census.py --date <DAY> --window et --json` — the
+   a. **First the window (NFRA_SPRINTWIN C-WINDOW):** `W=$(python .tools/daily-sprint.py --date <DAY> --census-args)`.
+      When the served day carries a watermark it prints the scheduled run's own `--since/--until` pair plus one
+      `--extra-commits` per device census in that window; otherwise `--window et`. Pass `$W` in place of `--window et`
+      in BOTH census calls below -- a local publish then counts exactly the population the served page counts.
+      `python daily_reports/scripts/commit_census.py --date <DAY> --window et --json` — the
       by-author-seat cut (the `commit_kind` enum, a declared PROXY for kind of work; Rule-24
       record in `daily_reports/README.md`) **and** `python daily_reports/scripts/project_census.py
       --date <DAY> --window et --json` — the by-directive cut from the FILES each commit touched,
