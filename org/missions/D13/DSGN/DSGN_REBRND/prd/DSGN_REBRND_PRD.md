@@ -5,7 +5,7 @@
  "project": "DSGN_REBRND",
  "directive": "D13",
  "fabric": "laptop",
- "prd_version": "v0.12",
+ "prd_version": "v0.13",
  "step": 4,
  "brief_ref": "docs/briefs/portal-visual-elevation-brief-20260911.md@bed01b226a",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13"],
@@ -43,7 +43,7 @@ This is an EXECUTION-ONLY PRD: it names cells, contracts, paths, fixtures and th
          ACCEPT     shown a duration ladder, a performance band or an over/under-weight scale with the legend covered, an advisor puts the steps in the right order
          PROOF      a census of every ordered scale in portal/src/ (denominator printed) and, for each, the ramp it now uses; the /positioning five-hue segmented control (UST/ST/INT/LT/ULT) is the named positive case
          SOURCE     brief O3; III.4; VI (the five-hue segmented control)
-         CONSTRAINT the charts keep their colour; what goes quiet is the chrome; a ramp replaces unordered hue on ORDERED quantities only; two named exceptions keep their original colour by Andrew's word (2026-09-14 ~19:0xZ): the Fear & Greed chart's gradient and the Daily Cloud's yellow family
+         CONSTRAINT the charts keep their colour; what goes quiet is the chrome; a ramp replaces unordered hue on ORDERED quantities only; two named exceptions keep their original colour by Andrew's word (2026-09-14 ~19:0xZ): the Fear & Greed chart's gradient and the Daily Cloud's yellow family; and a third by Andrew's word (2026-10-04 ~22:0xZ): /market's Global RSI bars and modal bands keep their overbought/oversold zone colours
 
   FWD-4  An advisor can tell at a glance which single thing on a screen is the action to take
          DONE WHEN  APPLIED -- each view spends the accent on AT MOST ONE PERSISTENT primary action -- none on a view that has no primary action -- plus a CLOSED SET OF IDENTITY accents: the page-title vertical bar, the header subtext, the active tab's label and underline, the sidebar's active item, the user avatar, and the sidebar rail's faint edge; the ring that follows keyboard focus, the highlight on selected text and every tooltip share the accent as TRANSIENT feedback and are budgeted separately, as is the data palette
@@ -280,6 +280,8 @@ Kept out of the ENDPOINT section by design (L4-R excludes history and annotation
   - The closure reading: this project closes on Andrew's word (2026-09-14 ~19:3xZ, "authorize a manual close when I'm happy"); the outcome grades are the evidence put before him.
 - **v0.12 (RULING R, outside ENDPOINT).** `3.0.0_SA_CVO` refused v0.11's FWD-3 line (msg 104936): Andrew's word names the Fear & Greed chart only, so an analogy has no place in the ratified section. FWD-3's text is back to v0.10.
   - RULING R (`1.0.0_SA_CTO`, RULINGS batch 215, carried here as this seat's reading of FWD-3 for grading): /market's Global RSI bars and modal bands are graded as keeping their zone colours, the same class of zone-meaning indicator as the Fear & Greed gauge his word kept. FWD-3's census lists them as excepted BY THIS RULING. It is not his word, and one word of his reverses it.
+- **v0.13 (Andrew's word on the Global RSI bars).** `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261004_220xZ_ALL_RECS_APPROVED_REPORT_OPEN_BD_PULL_RSI_49F_BUILD.md`, card 3: "all recs approved" on "Should /market's Global RSI bars keep their overbought/oversold colours, as the Fear & Greed gauge kept its gradient?" (REC yes).
+  - FWD-3's CONSTRAINT names the Global RSI bars and modal bands as its third exception, now by his word. RULING R (v0.12) is superseded by it.
 - **The project** was minted `DSGN_PORTALVIS` at L3 and renamed `DSGN_REBRND` on Andrew's word the same hour; `2.0.0_SA_COO~D` (promoted from `0.1.1_RD_MarketPerformance`) leads it and, on his word, signs the brief half.
 
 ## SURFACE MANIFEST
