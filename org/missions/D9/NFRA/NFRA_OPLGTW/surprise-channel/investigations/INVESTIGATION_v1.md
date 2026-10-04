@@ -7718,3 +7718,34 @@ name the one known failure instead of silently inheriting it.
   "world_is": "The combined-process list gains the two new tests as errors of the unattributed one-process class; every other entry is in the baseline list or is passing alone. Nothing here changes what ships (tests are not in the shipped file set)."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S51",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-04T23:10Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Issuer L10-precondition sweep of this seat's ARMED/BLOCKING rows. Denominator: 61 rows naming 2.0.0_SA_COO~O ARMED or BLOCKING. 28 are graduated into remediations/v1-v3, and 28 are dispositioned by issuer rows Z-S13..Z-S49 (Z-S25 for W15-S6/S7, by OG-tx-1 A1) or by ADJUDICATION_v3.Z (W12-S1). That leaves 5; this row disposes of 3 of them, plus Z-W22-S5 (OBSERVATION INERT, outside the denominator). (1) Z-W7-S1, ARMED: the built no-refusal deviation was reversed by f660b89f55 (OG-e-1 AMENDMENT A1, 2026-09-27). schwab_entitlement_admin.py prepare() :332-335 raises CandidateRejected when neither the candidate nor the stored profile carries an email, at CLOUD HEAD and at live af2d762970 (1 match each). (2) Z-W22-S3 and Z-W22-S4, BLOCKING INERT: ruled by round-16 amendments A1 @0da94bba7c (fixture paths and no-new-failure baseline) and A2 @8671f5d02f (R9a single-page fallback, test_ogq2_ac20 restated). OG-gr-3 is complete, and its 14 files are on CLOUD at the branch bytes via repair drain ef092da049. (3) Z-W22-S5, OBSERVATION INERT: the paged-assertion restatement is recorded; it took no product change. Not disposed of here: Z-W15-S33 (ARMED) and Z-W15-S34 disarm on OG-rl-5's post-act read (CTO R12 @261571c07e).",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W7-S1",
+    "NFRA_OPLGTW-Z-W22-S3",
+    "NFRA_OPLGTW-Z-W22-S4",
+    "NFRA_OPLGTW-Z-W22-S5"
+  ],
+  "one_line": "The issuer disarms Z-W7-S1 (reversed by f660b89f55; the refusal is on CLOUD and live) and closes Z-W22-S3, S4 and S5 (ruled by gr-3 A1/A2; gr-3 complete on CLOUD @ef092da049).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "SOURCE: infra/aws/ec2/opal-gateway/ops/schwab_entitlement_admin.py:332-335 at CLOUD HEAD; git show af2d762970:<same> contains the refusal string (1 match)",
+      "GIT: git log -S on the refusal string returns f660b89f55 (2026-09-27, 0.9.0_WK_NFRA_OPLGTW~7, OG-e-1 AMENDMENT A1)",
+      "GIT: drain ef092da049 tree check 14 needed / 0 dropped; 14 of 14 paths equal coo-o-gr3-restore blobs; TO-OG-gr-3 last <status> complete"
+    ]
+  },
+  "spec_asserts": "Z-W7-S1: a restricted activate with no resolvable email must refuse (CandidateRejected), and the built code did not. Z-W22-S3/S4: gr3.AC1 cannot pass as written under R9.",
+  "world_is": "The refusal has been in the code since f660b89f55 and is on live. gr3.AC1 was re-cut by A1/A2 and the order closed complete; its bytes are on CLOUD."
+}
+```
