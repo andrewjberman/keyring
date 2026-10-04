@@ -133,3 +133,30 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "The grant ledger irpt-ycdgen-grant-20261004 V1 stays open; the after-read for the remedy reads the bucket policy as well as the identity simulation."
 }
 ```
+
+## IRPT_YCDGEN-S2 -- DISARM of S1: the research writes run on Cottonwood's own principal and are measured landed
+
+```json
+{
+  "id": "IRPT_YCDGEN-S2",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-04T19:55:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARM of IRPT_YCDGEN-S1: the research writes now run on irpt-cot-ycharts-research-role (Cottonwood's own principal, assumed by the runner), applied under both never-widen halves (CTO batch 239); close run 3 wrote 6 kept answers and run.json, and the Opal report was stored and read back",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "fix 9a01678592 + packet bd21077c42 (merged 4e03aecc26); CTO half a44bc85977 on blob 97578e0eda; apply + after-read b9f350b215 (close/AFTER_READ_PRINCIPAL_20261004.txt: WITH the cottonwood bucket policy both research prefixes allowed, ycharts_opal_reports implicitDeny; WITH the 49financial bucket policy explicitDeny; runner sts:AssumeRole allowed)",
+      "close run 3 YCD-R1-20261004T1944Z (close/YCD-R1-20261004T1944Z_host_run.txt): 6 KEPT keys and run.json written on the research principal; ledger irpt-ycdgen-principal-20261004 CLOSED with V1 read back"
+    ]
+  },
+  "dismissal_reason": "The fence admits the firm's own principal by name; the host role gains only the assume; the writes the row named are measured landed.",
+  "spec_asserts": "IRPT_YCDGEN-S1: the close run's writes are denied by opal-data-cottonwood's DenyForeignFirmPrincipals.",
+  "world_is": "MEASURED: run 2 and run 3 wrote their keeps and run.json; the stored report reads back sha256-equal."
+}
+```
