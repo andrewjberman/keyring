@@ -1618,3 +1618,43 @@ store and pace). It changes no CONTRACTS row and no ENDPOINT, and nothing served
 cut and no round opens. It binds as a BOUND on every later cell of this project that touches the broker, the lease key or the
 pacing: such an order names IRPT_YCDGEN among the readers it must keep working, and its criteria include one that IRPT_YCDGEN's
 research run still takes the lease. The issuer inlines that bound at the cut.
+
+## 37. ROUND 44, WORKSTREAM ~P (2026-10-03 ~22:5xZ, issuer 2.0.0_SA_COO~P, on 1.0.0_SA_CTO RULINGS batch 234 items 1-2, msg 104804)
+
+Batch 234 carries two rows from L10 sweep 7 as ~P cells at this issuance. S264: the source map still records the 09-24 deploys
+of three investor-reporting functions; the recorder's `--function` mode has existed since 14346d1f09, so the remedy is one run
+per function. S299: three AE roles grant `astn/kimi/api-key-*`; each narrows to `-??????`, then one targeted safe-apply per root
+(the issuer's), closing on get-role-policy. No served output moves, so no never-widen half is owed (batch 234).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-309` | S299: the Kimi key ARN narrowed in estate-report, cot-pipeline and bd-49f-auto-login iam.tf; the issuer applies each root | WORLD | none | P44a |
+| `IB-pr-310` | S264: the source map records the live CodeSha256 of irpt-ycharts-generate (after irpt-y5v D1, closed 22:12Z), irpt-holdings and irpt-status | WORLD (the gate floor for an infrastructure path; a record only, no served bytes move) | none | P44b |
+
+fanout: 2 of 2 chains, cap 8, reason: two independent cells; workers 0.9.0_WK_IRPT_BCKEND~112 and ~113, each in its own worktree.
+
+## 38. ROUND 45, WORKSTREAM ~P (2026-10-04 ~01:2xZ, issuer 2.0.0_SA_COO~P, on row S293 (owner ~P), CTO batch 234 item 1 and the CVO grade @e73818b94f)
+
+Row S293 is the S264 class on ~P's own functions (CTO batch 234). The source map holds the adapter's 09-24 deploy record and no
+deploy record for the 49F holdings-performance producer. It has no row at all for the Inflection producer, which shares that
+artifact by design, and it names the 49F role wrongly. The CVO's rounds 42-44 grade re-reads it as open. The remedy is the
+row's own: one recorder run per function, the Inflection entry added, the role corrected.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-311` | S293: the source map records what runs for irpt-performance-adapter, irpt-holdings-performance-lambda and irpt-inf-holdings-performance-lambda (new row; the 49F iam_role corrected) | WORLD (the gate floor for the source map; a record only) | none | P45 |
+
+fanout: 1 of 1 chains, cap 8, reason: one open cell; worker 0.9.0_WK_IRPT_BCKEND~114 in its own worktree.
+
+## 39. ROUND 46, WORKSTREAM ~P (2026-10-04 ~02:2xZ, issuer 2.0.0_SA_COO~P, on row W114-S1 and 1.0.0_SA_CTO msg 104879)
+
+IB-pr-311's amendment 1 carried two steps on row W114-S1, the 49F `iam_role` correction and the Inflection producer's row,
+because the naming limb refused them. The CVO's rulings (@7b38f056ca, msg 104877), implemented in the gate @1c3fc41a4d and
+@7de9db9085, admit both: a source-map row may cite a builder-minted name, and a `tf_resource` that its `tf_file` declares. The
+cell lands the carried steps and records the Inflection function.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-312` | S293 / W114-S1: the 49F producer row names its live role; the irpt-inf-holdings-performance-lambda row is added and recorded at live | WORLD (the gate floor for the source map; a record only) | none | P46 |
+
+fanout: 1 of 1 chains, cap 8, reason: one open cell; worker 0.9.0_WK_IRPT_BCKEND~115 in its own worktree.

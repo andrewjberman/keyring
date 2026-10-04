@@ -219,3 +219,11 @@ Andrew asked whether the End of Day draft runs on weekends ("is it scheduled for
 text"). It did not: `poll_eod` skipped Saturday and Sunday, an assumption of this seat at the build, never his word; the
 2026-10-03 (Saturday) sprint page published at 20:12:54Z and was skipped. Andrew, verbatim: "yes i want weekend runs, i
 can cancel it if i want". `poll_eod` now looks every day from 4 PM Eastern; #off pauses it and #0 drops a day's draft.
+
+
+## Addendum 2026-10-03 ~22:0xZ -- the stale-draft post: five fixes approved (4.0.0_SA_CRO terminal)
+
+On the analysis `docs/references/LDO001_EOD_STALE_DRAFT_POSTED_20261003.md` @0e93c3d09d (a 2026-09-30 test draft posted
+2026-10-03 21:29:17Z), Andrew, verbatim: "proceed all five fixes + do not delete the post from today. I went into it and
+made edits about what we actually did." Earlier the same turn: "There is no reason why we would ever want to re-send an
+update from days ago that was already sent prior." The 21:29:17Z post stays as he edited it; this seat does not touch it.

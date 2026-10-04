@@ -16910,3 +16910,309 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Two remedies, a CTO choice: (a) the page reads only the series under a render (the frozen version present) -- series.as_of is the ruled date field (PRD ruling 28) -- a portal change by 2.0.0_SA_COO~D plus a same-window promote; (b) widen V3 and V2 to admit the manifest for a render token, reversing IB-pr-304's series-only rule. Recommendation: (a)."
 }
 ```
+
+## IRPT_BCKEND-S312 -- DISARM of IRPT_BCKEND-S308: the PATH B export render reaches READY
+
+```json
+{
+  "id": "IRPT_BCKEND-S312",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-03T22:30Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARM of IRPT_BCKEND-S308 by its disarm owner since the re-point (S310): with the host forwarding account and version, the 49F PATH B export of ****0090 rendered and reached READY with frozen_as_of 2026-10-01 (22:13Z); ledgers irpt-render-host-print-query-20261003 (4 of 4) and irpt-p2-window-20261003 (14 of 14) CLOSED",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "receipt s3://opal-data-ycharts/firms/49financial/generations/EXP-e29b5415a06f90f943481c41a1a4821b/receipt.json (22:13:15Z): job_state READY, facts.frozen_as_of 2026-10-01 = the bundle's performance_source.as_of; validation PASSED, 11 pages",
+      "SSM irpt-export-render-run 123e754c (22:13:03Z, tenant 49financial) Success; render_export.cjs 16,434 B (S3 lLkKsNvY) on the host; render_guard RENDERED, 0 foreign of 20 requests",
+      "2.0.0_SA_COO~D msg 104799: ****0090 export pressed once at 22:12:52Z, READY at 22:13:41Z; the modal reads the performance data through October 1st, 2026"
+    ]
+  },
+  "dismissal_reason": "S308's hazard was the 49F PATH B export never reaching READY because the print refused the bundle. A PROD export now reaches READY with its frozen as_of.",
+  "spec_asserts": "IRPT_BCKEND-S308: the served print page refuses the PATH B export's render ('names no selection').",
+  "world_is": "MEASURED: the PROD print renders the PATH B bundle on the render host; the receipt reads READY with frozen_as_of 2026-10-01."
+}
+```
+
+## IRPT_BCKEND-S313 -- DISARM of IRPT_BCKEND-S310: the render host forwards account and version
+
+```json
+{
+  "id": "IRPT_BCKEND-S313",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-03T22:30Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARM of IRPT_BCKEND-S310 (the re-point of S308): render_export.cjs PRINT_QUERY_KEYS carries account, version and request (IB-pr-308 @fb310203e5, S3 version lLkKsNvY); the 22:13Z render reached the PROD print page with the PATH B query and produced a READY receipt",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "receipt s3://opal-data-ycharts/firms/49financial/generations/EXP-e29b5415a06f90f943481c41a1a4821b/receipt.json (22:13:15Z): job_state READY, facts.frozen_as_of 2026-10-01 = the bundle's performance_source.as_of; validation PASSED, 11 pages",
+      "SSM irpt-export-render-run 123e754c (22:13:03Z, tenant 49financial) Success; render_export.cjs 16,434 B (S3 lLkKsNvY) on the host; render_guard RENDERED, 0 foreign of 20 requests",
+      "2.0.0_SA_COO~D msg 104799: ****0090 export pressed once at 22:12:52Z, READY at 22:13:41Z; the modal reads the performance data through October 1st, 2026"
+    ]
+  },
+  "dismissal_reason": "S310's hazard was the host's allow-list dropping account and version before navigation. The deployed script forwards them, and a render with them succeeded.",
+  "spec_asserts": "IRPT_BCKEND-S310: render_export.cjs:83 PRINT_QUERY_KEYS drops account and version (and request).",
+  "world_is": "MEASURED: the host runs the 16,434 B script with the three keys; render 123e754c Success."
+}
+```
+
+## IRPT_BCKEND-S314 -- DISARM of IRPT_BCKEND-S311: a frozen export print reads the series alone
+
+```json
+{
+  "id": "IRPT_BCKEND-S314",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-03T22:30Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARM of IRPT_BCKEND-S311 by its disarm owner (CTO batch 231 ruling (a)): 2.0.0_SA_COO~D's series-only frozen print (portal DEV 1f42eb08) is on portal PROD dbd29c6320 (tag portal-v2.1.198, Deploy to Production 37156394008 SUCCESS); the render no longer requests the manifest, and the export reached READY",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "receipt s3://opal-data-ycharts/firms/49financial/generations/EXP-e29b5415a06f90f943481c41a1a4821b/receipt.json (22:13:15Z): job_state READY, facts.frozen_as_of 2026-10-01 = the bundle's performance_source.as_of; validation PASSED, 11 pages",
+      "SSM irpt-export-render-run 123e754c (22:13:03Z, tenant 49financial) Success; render_export.cjs 16,434 B (S3 lLkKsNvY) on the host; render_guard RENDERED, 0 foreign of 20 requests",
+      "2.0.0_SA_COO~D msg 104799: ****0090 export pressed once at 22:12:52Z, READY at 22:13:41Z; the modal reads the performance data through October 1st, 2026"
+    ]
+  },
+  "dismissal_reason": "S311's hazard was the render's page reading the manifest, which render tokens are refused, so the export could not complete. The PROD page now reads the series only under a render; IB-pr-304's series-only token rule stands unwidened.",
+  "spec_asserts": "IRPT_BCKEND-S311: the render's page also reads the manifest, which render tokens are refused, so resolveBundle refuses 'selection is required'.",
+  "world_is": "MEASURED: render 123e754c Success with 20 requests, all to opalinvest.dev; receipt READY with frozen_as_of 2026-10-01; portal PROD dbd29c6320 carries 1f42eb08 (is-ancestor YES, positive control 98a98e70 YES)."
+}
+```
+
+## IRPT_BCKEND-S315 -- DISARM of S288 on its own stated condition: fence above 23 and authenticated securities_info reads answering
+
+```json
+{
+  "id": "IRPT_BCKEND-S315",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-03T22:45:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARM of IRPT_BCKEND-S288 by its disarm owner, measured on the remediation row's own condition ('fence above 23 and one authenticated securities_info read answering 200'): fence 25, and the resident's securities_info resolve answered on the stored session at 20:55:33Z and 22:28:06Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/Y5V/BEFORE_READ_Y5V_20261003.txt (22:02:24Z): the provider lease item reads fence 25, not held",
+      "resident journal via SSM db9dc7ec (read 2026-10-03 ~22:3xZ): 20:55:33 IRPT_RESIDENT_RESOLVE_FUNDS matched=0 gated=1 features=mutualFundDataUSA=1 refused=0 then IRPT_RESIDENT_RESOLVE state=READY; the same at 22:28:06 and RESOLVE state=READY at 22:28:43 -- each resolve is the securities_info batch, answered with the account's entitlement features, which only an authenticated read returns",
+      "Y-3 REQ-329a5618 READY 17:03:14Z on the same session (Y3/V1A/V1A2_multicomp_ult_iwm_cottonwood_20261003.log @ee801b0505), its comparison identity read through securities_info"
+    ]
+  },
+  "dismissal_reason": "S288's remedy names its disarm: fence above 23 and one authenticated securities_info read answering 200. Both are measured above. S306 carried the disarm at 16:36Z on a template read; this row adds the securities_info read the remedy names, so the remediation row's disarm clock can advance (REMEDIATION_v18 is the CVO's lane, TREE_CVO).",
+  "spec_asserts": "IRPT_BCKEND-S288 (remediation v42): the session stays EVICTED until option A; disarm on fence above 23 and one authenticated securities_info read answering 200.",
+  "world_is": "MEASURED: fence 25; securities_info resolves answered at 20:55:33Z, 22:28:06Z and 22:28:43Z; Y-3 READY 17:03:14Z. The session is live.",
+  "notes": "CTO batch 234 item 3 (msg 104805) asked for this row. The remediation row's disarm ARMED -> DISARMED is the CVO's edit to make."
+}
+```
+
+## IRPT_BCKEND-S316 -- Y-5 V1: YCharts' holdings upload echo is refused on the easy file (VENDOR_UPLOAD_REFUSED); the refusal keeps no counts, so the cause is not measured
+
+```json
+{
+  "id": "IRPT_BCKEND-S316",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-03T22:45:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Y-5 V1 Aproxy (REQ-51d9daacbc9ba24ac01b6c4c): the page half PASSED (proxy box, SGOV named, NORMALIZED), but the job went ATTENTION VENDOR_UPLOAD_REFUSED at 22:28:59Z -- the holdings upload POST answered 200 (11,644 B) and recipe.step_upload's reconciliation refused the echo; neither the journal nor the job keeps rows_sent, rows_echoed, errors or the mismatch",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "irpt-jobs REQ-51d9daacbc9ba24ac01b6c4c: state ATTENTION, job_detail {\"code\":\"VENDOR_UPLOAD_REFUSED\"}; vendor_requests: GET /custom_pdf_reports/generate/14141822 200 (2065 B), POST /model_portfolios/fixed/holdings_upload/client 200 application/json (11644 B), waf_action null",
+      "resident journal via SSM db9dc7ec: 22:28:58 IRPT_RESIDENT_STEP_REFUSED step=upload status=200; 22:28:59 IRPT_RESIDENT_ATTENTION code=VENDOR_UPLOAD_REFUSED",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/recipe.py:505-515: ok needs status ok, no errors, unique echo, expected == echoed (identifier -> Decimal dollars, exact), weight Dollars, an int upload_record_id",
+      "the easy file (sha256 500837992a3b9caa) parsed in memory by intake/template_reader.read_template, counts only: 99 rows, 99 unique symbols, SGOV not already present; amounts by decimal places {2: 76, 1: 10, 0: 3, 12: 3, 13: 3, 14: 3, 15: 1}; 1 symbol with a non-alphanumeric character"
+    ]
+  },
+  "spec_asserts": "Y-5 packet 1 V1: the corrected re-post normalizes with SGOV and the Overview reaches READY.",
+  "world_is": "The upload step refuses the vendor's echo of the easy file. Candidates, NOT measured: (a) 10 amounts carry 12-15 decimals (Excel float noise) and the echo rounds them, so the exact Decimal comparison fails; (b) the one symbol with a punctuation character is echoed under another security_id; (c) the vendor drops or errors a row. The easy file has never reached a YCharts upload before (every earlier Case A stopped at TIMXX).",
+  "notes": "Next: the refusal names its closed counts (rows sent and echoed, missing, extra, amount mismatches and how many are under one cent, errors, the weight unit) with no value, and the upload sends dollars at cents. Ships under a packet; Aproxy re-fires after it."
+}
+```
+
+## IRPT_BCKEND-W113-S1 -- TO-IB-pr-310: the first recorder run (irpt-ycharts-generate) ran past a 300 s bound and was killed after staging; re-run once with output to a file, completed normally
+
+```json
+{
+  "id": "IRPT_BCKEND-W113-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~113",
+  "surfaced_at": "2026-10-03T23:45:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "record-terraform-deploy.sh --function irpt-ycharts-generate, first invocation (output piped to tail) hit `timeout 300` rc=124 after staging the source map and CHANGELOG but before the commit; the identical re-run completed rc=0 and committed fb8653e0e3",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "first run: rc=124 at 300 s, `git status --short` then showed `M ` on lambda-source-map.json and investor-reporting/CHANGELOG.json (staged, uncommitted), no commit, no process left running",
+      "second run, same arguments, log .scratch/rec1.log: Resolved deployment set = irpt-ycharts-generate; reconcile-deployed 0 reconciled, 0 HELD, 1 already-in-parity; committed fb8653e0e3 (2 files)",
+      "irpt-holdings and irpt-status runs completed normally (a3f4b095ba, d7788267d3); the staged leftover was absorbed by the re-run's commit, whose diff shows exactly one row changed in the source map"
+    ]
+  },
+  "spec_asserts": "The task order: run the recorder once per function; it commits its own changes.",
+  "world_is": "MEASURED: the recorder can exceed 300 s on a cold start (cause not measured; the later runs were faster), and a kill mid-run leaves its edits staged. The order did not name a bound for the recorder, so one re-run was needed.",
+  "notes": "No act beyond the order's own invocation was taken; the source map was never hand-edited."
+}
+```
+
+## IRPT_BCKEND-S317 -- DISPOSITION of W110-S1: the three-route test is a frozen deliverable; the live suite is green
+
+```json
+{
+  "id": "IRPT_BCKEND-S317",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-04T00:50Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISPOSITION of IRPT_BCKEND-W110-S1: the three-route assertion lives in a frozen worker deliverable (deliverables/0.9.0_WK_IRPT_BCKEND~15/test_edge_render_delegate_v2_authorizer.mjs), which no suite runs; the live authorizer suite passes 9 of 9 with the fourth route",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/users/lambda/portal-authorizer/tests/ holds one file, test_render_reporting_series.mjs; node --test on it at 00:5xZ: tests 9, pass 9, fail 0",
+      "the IB-rtq-2 test sits under org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~15/, a record of that worker's run at its own pin, not a product test"
+    ]
+  },
+  "dismissal_reason": "A deliverable is evidence of its round at its pin. Editing it would rewrite that record, and no suite or gate runs it. The live coverage of the three earlier routes is the performance-route arms in test_render_reporting_series.mjs.",
+  "spec_asserts": "IRPT_BCKEND-W110-S1: the IB-rtq-2 V2 authorizer test fails once IB-pr-307 adds the fourth render route.",
+  "world_is": "MEASURED: that file is a frozen deliverable outside every suite; the product suite is green, 9 of 9."
+}
+```
+
+## IRPT_BCKEND-W114-S1 -- TO-IB-pr-311: the naming limb (ENFORCE) refuses the ordered source-map edit (49F role string and the Inflection row carry NEW firm-token strings); steps 1-2 not committed
+
+```json
+{
+  "id": "IRPT_BCKEND-W114-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~114",
+  "surfaced_at": "2026-10-04T01:40Z",
+  "one_line": "TO-IB-pr-311 steps 1-2: safe-commit's naming limb (ENFORCE) REFUSES the ordered source-map edit -- 'irpt-49f-holdings-performance-role' and the Inflection row's four 'inf' strings are NEW hand-kept firm-token carriers -- so the 49F role correction and the Inflection row are not committed and IB45-1-AC1 stays FAIL",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh run on infra/aws/lambda/ci/lambda-source-map.json (edit saved at .scratch/map_edited.json, untracked): 'NAMING-GATE: REFUSE 4 graded' at lines 5672 (irpt-49f-holdings-performance-role, carrier '49f'), 5681 (irpt-inf-holdings-performance-lambda), 5781 (module.irpt_holdings_performance_inf.aws_lambda_function.this), 5782 (irpt-inf-holdings-performance-role): 'a NEW hand-kept carrier of ... outside every permitted context: read it through lookup(...)'; commit aborted, files unstaged",
+      ".tools/naming-gate.py header: a firm token in a JSON string is a hand-kept carrier outside the permitted contexts (registry files, generated blocks, key()/address()/name()/lookup() args, opal_name module args); ENFORCE is on because org/mcp/naming-gate.enforce exists; the only admitted departure is an R20 register entry with a HEAD-committed waiver, outside this order's write surface",
+      "recorder runs (not refused, naming PASS 0 graded): c64bd53784 irpt-performance-adapter (deployed_code_sha256 now NU6YVERL..., reconcile OK in parity) and 37090d00b1 irpt-holdings-performance-lambda (deployed_code_sha256 now 0PuFBxdJ..., 'reconcile-deployed: 0 reconciled, 0 HELD, 1 already-in-parity'); the Inflection recorder run was NOT made because its row does not exist",
+      "p45_performance_rows_recorded.py after those two runs: IB45-1-AC1 FAIL ('irpt-holdings-performance-lambda iam_role irpt-holdings-performance-role != live irpt-49f-holdings-performance-role'); IB45-1-AC2 PASS (227 rows, added []); IB45-1-AC3 PASS (14 findings, all at base)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IB-pr-311 worker face steps 1-2: set iam_role to irpt-49f-holdings-performance-role and add the irpt-inf-holdings-performance-lambda row, committed together with safe-commit.",
+  "world_is": "MEASURED: the naming limb in ENFORCE mode refuses both edits as new firm-token carriers ('49f', 'inf'); the order's own values are the refused strings, and no flag or write-surface path available to a worker admits them. The order's step 3 for the 49F row ran before step 1 (the recorder only stamps deployed_code_sha256, independent of the role); the 49F and Inflection iam_role/row edits remain to be landed by a seat that can add the R20 register entry or direct a different carrier form."
+}
+```
+
+## IRPT_BCKEND-W115-S1 -- TO-IB-pr-312: the naming limb refuses the recorder's CHANGELOG.json entry for the Inflection function; source-map stamp committed alone, CHANGELOG entry uncommitted
+
+```json
+{
+  "id": "IRPT_BCKEND-W115-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~115",
+  "surfaced_at": "2026-10-04T02:40Z",
+  "one_line": "TO-IB-pr-312 step 2: the recorder's CHANGELOG.json entry for irpt-inf-holdings-performance-lambda is refused by the naming limb (the Inflection function name is a NEW 'inf' carrier in a CHANGELOG file), so the recorder's own commit did not land and the CHANGELOG entry is left uncommitted; the source-map stamp was committed alone",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "record-terraform-deploy.sh investor-reporting --function irpt-inf-holdings-performance-lambda: 'Resolved deployment set ... : irpt-inf-holdings-performance-lambda', 'reconcile-deployed: 0 reconciled, 0 HELD, 1 already-in-parity', no HALF-LANDED; then its commit step: 'BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6)', CHANGELOG.json:14 and :39 'irpt-inf-holdings-performance-lambda ... a NEW hand-kept carrier of inf outside every permitted context: read it through lookup(inflection)'; rc=1",
+      "retry by safe-commit on source map + CHANGELOG (-F .scratch/msg2.txt) refused identically ('NAMING-GATE: REFUSE 2 graded'); safe-commit on the source map alone: 'NAMING-GATE: PASS 0 graded', committed ecba9b57e5",
+      "state: infra/aws/terraform/investor-reporting/CHANGELOG.json holds the recorder's new entry untagged-bb620b6d as an uncommitted working-tree change on wk-IRPT_BCKEND-115; IB46-1-AC1, AC2, AC3 all PASS at HEAD ecba9b57e5 (the checks read the source map only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IB-pr-312 worker face step 2: if the recorder's own commit did not land, commit its written files with safe-commit.",
+  "world_is": "MEASURED: the naming limb (ENFORCE) refuses the CHANGELOG.json entry because it names the Inflection function (the same function name the source-map row, which the gate admits at @7de9db9085, carries); only the source-map half of the deploy record is committed. The CHANGELOG entry needs a gate carve-out for deploy-record entries or an R20 waiver, outside this order's write surface."
+}
+```
+
+## IRPT_BCKEND-S318 -- a READY analysis of a corrected upload reads Unavailable: prospect dates do not derive (cause inferred)
+
+```json
+{
+  "id": "IRPT_BCKEND-S318",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-04T02:52:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "A READY analysis whose upload carried a user correction (Y-5: TIMXX named SGOV) reads 'Unavailable -- analysis status date basis unavailable' on the page: ops/owned_status.py maps READY to UNAVAILABLE when prospect dates do not derive, and the undated-input proof most likely fails because the corrected rows no longer match the raw file (INFERRED, not measured)",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "2.0.0_SA_COO~D msg 104892 (read-only walk tmp/ui-walk/20261004T023652Z): REQ-a618aa83 draws 60 section cards; status line and row read 'Job status: Unavailable -- analysis status date basis unavailable'; the page sends X-IRPT-Status-Dates prospect-v1",
+      "irpt-jobs REQ-a618aa83407689bc95193a01 state READY 02:28:20Z (Y5V/V1/REQ-a618aa83_terminal_wait.txt @1afe081ac4)",
+      "infra/aws/lambda/investor-reporting/ops/owned_status.py:24 PHASES READY -> (UNAVAILABLE, ANALYSIS_STATUS_DATE_BASIS_UNAVAILABLE) unless derive() returns dates (:57-58)",
+      "infra/aws/lambda/investor-reporting/ops/prospect_dates.py:243-251 the template lane proves an undated input against the raw file and returns None otherwise; :92-110 _template_census returns None on any template or document findings"
+    ]
+  },
+  "spec_asserts": "IRPT-Y-DATES-01 (prospect-v1): a READY analysis of an undated prospect upload reads READY with its date basis; a basis that cannot be proven reads unavailable, never invented.",
+  "world_is": "A corrected upload (Y-5's user-named proxy) reaches READY with its report, and the page calls it unavailable. Candidate cause, not measured: the corrections change the frozen rows (SGOV for TIMXX), so the raw-file proof fails. Next: run prospect_dates.input() offline on REQ-a618aa83's retained input to name the failing branch, then extend the proof to map a corrected row back through its disclosed from_value.",
+  "notes": "The job, the report and the backend V1 are unaffected (READY, certified). The page's words are the only effect."
+}
+```
+
+## IRPT_BCKEND-S319 -- DISARM of W115-S1: the Inflection CHANGELOG entry is committed under the CVO's narrow ruling
+
+```json
+{
+  "id": "IRPT_BCKEND-S319",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-04T03:05Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARM of IRPT_BCKEND-W115-S1: the recorder's CHANGELOG.json entry for irpt-inf-holdings-performance-lambda is committed @236f660bb6 (NAMING-GATE: PASS 0 graded) under the CVO's narrow ruling, implemented @df94193739; S293's remedy is complete in the source map and the changelog",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO msg 104903: CVO ruled YES narrowly; .tools/naming-gate.py @df94193739 admits a function name in a recorder CHANGELOG.json iff name() reproduces it",
+      "the held diff (entry untagged-bb620b6d, written by 0.9.0_WK_IRPT_BCKEND~115's recorder run) applied cleanly on CLOUD and committed @236f660bb6 with the naming limb PASS",
+      "IB46-1-AC1 PASS on CLOUD after @d37e19e3ba: irpt-performance-adapter, irpt-holdings-performance-lambda and irpt-inf-holdings-performance-lambda each equal live code and role"
+    ]
+  },
+  "dismissal_reason": "The one record the naming limb held is now committed; nothing of S293 or W114-S1/W115-S1 remains open.",
+  "spec_asserts": "IRPT_BCKEND-W115-S1: the recorder's CHANGELOG entry for the Inflection function cannot commit past the naming limb.",
+  "world_is": "MEASURED: committed @236f660bb6; the naming limb reads PASS 0 graded."
+}
+```

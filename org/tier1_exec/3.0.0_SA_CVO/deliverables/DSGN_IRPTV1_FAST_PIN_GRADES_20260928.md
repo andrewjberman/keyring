@@ -863,3 +863,53 @@ None of these is on PROD (98a98e70).
   later delegates of this seat will not run `sparse-checkout init` in the shared repo.
 
 -- 3.0.0_SA_CVO
+
+## Grades, 02:0xZ-02:3xZ 2026-10-04 -- portal DEV after 49c6e94a (12 pins to a9b7427e; ~D msgs 104815-104867)
+
+PROD moved to dbd29c63 (a DEV->PROD merge of dddaf3a1; Deploy succeeded): it carries 1f42eb08, 97d6e6fe and dddaf3a1, and
+none of the 11 ~D pins below. DEV head a9b7427e CI is GREEN: the site-Z ESLint error was cleared by 97d6e6fe and has been
+green since dddaf3a1.
+
+| pin | claim (line) | read (pin, NEG, MUT, CI) | grade |
+|---|---|---|---|
+| cbf41e6e | receipt failure worded (`submit.ts:381`) | 1/1; NEG fails; MUT caught; covered green | PASS |
+| fb73cb1c | /philosophy Views states (`CapitalMarketAssumptions.tsx:95`) | 1/1; NEG fails; MUT caught | PASS |
+| 3e526a44 | Cause line carries the body's words (`cause.ts:41`) | 1/1; NEG fails; MUT caught | PASS |
+| 46194eed | the preview's firm chip names the firm (`Preview.tsx:294`) | 1/1; NEG fails a/b/c; MUT caught; every `scope` use goes through `approvedAssetsFor` | PASS |
+| 37765a14 | an opened needs-attention request says so (`ProspectJobStatus.tsx:104`) | 1/1; NEG fails; MUT caught | PASS |
+| 8071b59b | request list states (`OwnedRequestHistory.tsx:367`) | 1/1; NEG fails every arm; MUT caught | PASS |
+| e2f89bd9, 7a12098c | /valuations states; Valuation Range "no range" (`RiskPremiumTab.tsx:173`, `ValuationRangePanel.tsx:89`) | 1/1 each; NEGs fail; MUTs caught | PASS |
+| c35c66db | /correlations states (`Correlation.tsx:125`) | 1/1; NEG fails; MUT caught | PASS |
+| a403f466 | /data-refresh ERROR with retry (`CurrentStatePanel.tsx:73`) | 1/1; NEG fails every arm; MUT caught | PASS |
+| a9b7427e | /security-scanner LOADING (`UniverseDataTab.tsx:241`) | 1/1; NEG fails; MUT caught; own run green | PASS |
+| 1f42eb08 (on PROD) | the frozen print reads the series by version (`reportingRead.ts:115`) | 1/1; NEG fails; MUT caught | PASS |
+
+**Notes.**
+- CI runs ESLint, provenance, typecheck and build only, never tests.
+- Merge 822ce891 is authored "Andrew Berman", not a seat serial, from branch `coo-d-holdings-l0-canon`.
+- 46194eed's and 8071b59b's messages report 17 tests already failing in `dsgn-irptv1` on the DEV head; not measured here.
+
+**Limits.**
+- Pin tests only (memory), one mutant per pin.
+- Server-side renders, no browser.
+- Read by a delegate of this seat (no sparse-checkout; the shared config was untouched).
+
+-- 3.0.0_SA_CVO
+
+## Grades, 02:4xZ-03:1xZ 2026-10-04 -- portal DEV after a9b7427e (d8b81b65, 504e5379, c67c242f; ~D msgs 104881, 104887, 104905)
+
+None of these is on PROD (dbd29c63). DEV head c67c242f CI success.
+
+| pin | claim | this seat's read | grade |
+|---|---|---|---|
+| d8b81b65 | /advisor-intelligence loads draw PanelLoading | `AdvisorsTab.tsx:593`, `PartnerAnalytics.tsx:1136,1219`, `DistributionTab.tsx:1094...`; pin 1/1; NEG fails a/b/c; MUT at :593 caught; MUT at `DistributionTab.tsx:1094` survives (the census bans only the `<LoadingInline` token); CI 37170837661 | PASS; census reach limited |
+| 504e5379 | LoadingOverlay (the sign-in check) draws PanelLoading on a panel | `LoadingSpinner.tsx:58`; pin 1/1; NEG fails; MUT removing `surface="panel"` survives. Every protected route goes through `ProtectedRoute.tsx:91-92` (App.tsx:449-528, 605, 612, 617); the print render-claim branch at :86 is excluded by design | PASS; "on a panel" unpinned |
+| c67c242f | "Did you mean AAPL?" with a "Use AAPL" button that fills the correction | `ProspectComposer.tsx:411-421`, `prospect.ts:62-64`; pin 1/1; NEG fails; both MUTs (fill nothing; fill MSFT) survive the pin; this seat's probe (press, then re-post) sends `[{TICKER_NOT_FOUND, APPL, AAPL}]` and catches both | PARTIAL: display pinned, fill unpinned (correct by probe); row DSGN_IRPTV1-S60 |
+
+**For W3-S5 (~D's).** Bare spinners remain at `AdvisorBookView.tsx:897` and `AdvisorPublicProfile.tsx:844`, and at
+`App.tsx:440-445` (the page-loading fallback).
+
+**Limits.** No browser run; the probe used a stand-in renderer (no DOM library in the portal). Read by a delegate of this
+seat.
+
+-- 3.0.0_SA_CVO

@@ -6819,3 +6819,145 @@ render token was authorized and served (edge 20:48:57Z, authorizer "Render token
 5. If `~D`'s candidate touches a product file and no FAST lease covers it, this seat reviews it on receipt, the same turn.
 
 -- 1.0.0_SA_CTO
+
+## Batch 232 -- 2026-10-03 ~21:4xZ -- the S311 promote carries site Z's DSGN_AMGTV1 rounds 29-33; the IRPT word does not cover them
+
+**Read:** `0.0.0_AB_MSTR` msg 104779 plans to promote portal DEV dddaf3a1 (a fast-forward of S311's 1f42eb08, with site Z's lint
+fix 97d6e6fe) to PROD as the same-window fix-up under Andrew's "1 yes today". This seat read the delta 98a98e70..dddaf3a1:
+41 commits. By project token, 17 are DSGN_AMGTV1 (site Z rounds 29-33), 5 DSGN_IRPTV1, 1 IRPT_BCKEND and 1 IRPT_DASHBD.
+S311 cannot reach PROD without them, because 1f42eb08 already descends from rounds 29-32 (f9c6fa73, landed on DEV 20:38Z).
+
+**RULED:**
+1. **"1 yes today" and this seat's P-2 window half cover the IRPT window only.** By whole-bundle attribution (batch 148), every
+   project riding a promote needs its own word. MSTR's own record @efbf12decd says "a portal PROD promote of round 29 ... PROD
+   needs its own word".
+2. **The promote waits for a cited PROD word for DSGN_AMGTV1 rounds 29-33.** Site Z's counts if Andrew's ~20:3xZ "yes to all
+   recommendations" there named PROD; otherwise Andrew's. This is not a new gate: it is NEVER-1 (served output moves only under
+   its sign-off) and MSTR's own stated reading. Asked of MSTR, msg to 104779.
+3. **If site Z holds no such word, the act only Andrew can do** is his word on a portal PROD promote that carries DSGN_AMGTV1
+   rounds 29-33 beside S311. Citation: CLAUDE.md Portal ("0.0.0_AB_MSTR pushes trunks on Andrew's word") and NEVER-1.
+4. Leg V and S311 stay open meanwhile, and nothing is rolled back. PROD 98a98e70fb serves as before.
+
+-- 1.0.0_SA_CTO
+
+## Batch 233 -- 2026-10-03 ~22:0xZ -- the batch 232 hold is satisfied; the Y-5 finding-value half is signed
+
+1. **Batch 232 is SATISFIED.** `0.0.0_AB_MSTR` msg 104781 cites Andrew's word on the promote of DEV dddaf3a1, which carries S311
+   and site Z's DSGN_AMGTV1 rounds 29-33. Verbatim: "Yes, promote all (Recommended)". Record
+   `org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20261003_214xZ_PROMOTE_DEV_DDDAF3A1_ALL_INCL_DSGN_AMGTV1_R29_33.md`.
+   The question put to him named the 60 site-Z files, CI green and rollback 98a98e70fb. After the promote, `~P` re-runs R1.
+2. **Y-5 finding value, CTO half SIGNED for D1 and D2:**
+   `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_Y5V_FINDING_VALUE_20261003.md`, on packet blob `7d815d61db` (`~Y` msg 104782).
+   - A ticker finding's `value` becomes the row's symbol. It has one constructor and no backend reader.
+   - The authz rider leaves every existing operation's check the same.
+   - V1 is outside the half, and any hold on the page walk still binds it.
+
+-- 1.0.0_SA_CTO
+
+## Batch 234 -- 2026-10-03 ~22:2xZ -- L10 sweep 7: S264 placed, S299 routed, S288 to its owner; one gate question pitched to the CVO
+
+**Asked:** `3.0.0_SA_CVO` msg 104791, sweep 7 compiled @fbeeab3fbf (ADJUDICATION_v22, REMEDIATION_v18; 183 of 183 orders terminal;
+89 rows S242-S305).
+
+**RULED:**
+1. **S264 needs no build. The per-function mode exists.** `infra/aws/lambda/ci/record-terraform-deploy.sh` has taken `--plan <file>`
+   and `--function <names>` since 14346d1f09 (0.7.0_AE_CloudOps, 2026-08-30, INF-RECORDER-SCOPE), so the row's premise is stale.
+   - The remedy is one run per function: irpt-ycharts-generate, irpt-holdings and irpt-status.
+   - Close on `deployed_code_sha256` equal to the live CodeSha256 for all three.
+   - irpt-ycharts-generate is recorded after the `irpt-y5v-20261003` ledger's D1, because the function moves there.
+   - **Owner re-pointed to `2.0.0_SA_COO~P`** as a cell in IRPT_BCKEND's next issuance. The same class on `~P`'s own functions
+     is row S293.
+   - **The class remedy:** an IRPT deploy ledger's close leg records the function it moved with `--function`. This is a
+     recording step, not an approval gate.
+2. **S299 is routed as one cell to `2.0.0_SA_COO~P`.** The three roles are all 0.7.0_AE_CloudOps-lane Terraform, and a Tier-2
+   seat hears an act only as a task order.
+   - The three lines: `infra/aws/terraform/estate-report/iam.tf:283`, `cot-pipeline/iam.tf:325` and `bd-49f-auto-login/iam.tf:57`.
+   - Each narrows `astn/kimi/api-key-*` to `astn/kimi/api-key-??????`, the shape the runner already conforms to (batches 208-209).
+   - One targeted `safe-apply` per root. No served output moves, so no never-widen half is owed.
+   - Close on `get-role-policy` reading the narrowed ARN for all three roles.
+3. **S288 goes to `2.0.0_SA_COO~Y`, its disarm owner.** The YCharts session was restored from Andrew's HAR (tick 37), so `~Y`
+   reads the live session and disarms the row, or names why not.
+4. **Pitched to `3.0.0_SA_CVO` as a governance fork** (a gate question; the self-drive routing): `0.0.0_AB_MSTR` msg 104796.
+   `.tools/surprise-row-gate.py` refuses the laptop's pull of origin/CLOUD cd20da5996:
+   - 6 AMGT_HARVST rows were mutated in place and 2 deleted, all on origin's side.
+   - The laptop made 0 commits to AMGT_HARVST since the merge-base.
+   - Origin's 9 commits include `2.0.0_SA_COO~H` 2929bd96df, "remove(AMGT_HARVST): ANDREW-DIRECT ~18:xxZ -- the ft quarantine cell".
+   - **REC:** on a merge, a mutate or delete carried entirely from the other parent is NOTED and routed to the channel's owner,
+     not refused. The merge did not make it, and refusing blocks the pull with no override.
+   - Site Z's `3.0.0_SA_CVO~Z` then rules whether the removed rows need retirement rows under Andrew's word.
+   - **Context (`0.0.0_AB_MSTR` msg 104801):** the removal was Andrew's order at site Z, recorded in
+     `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261003_18xxZ_DELETE_AGENT_TOS_CONTEXT_AND_UNAUTHORIZED_GATES.md`:
+     "summarily delete this context rot from our repo", and "deletion from the tree is the order". Restoring the rows would
+     undo his word, so the REC's second limb (retirement rows) falls away. What is left is the gate's merge mechanics.
+   - The verdict is executed when it lands. The laptop pull (14 local commits unpushed) waits on it.
+
+-- 1.0.0_SA_CTO
+
+## Batch 235 -- 2026-10-04 ~00:1xZ -- the Y-5 / S316 upload-at-cents half is signed; the row-gate verdict is executed
+
+1. **Y-5 / S316, CTO half SIGNED for D1 and D2:**
+   `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_Y5C_UPLOAD_CENTS_20261004.md`, on packet blob `801ea21832` (`~Y` msg 104820).
+   - The one behavioural change: holdings dollars are sent and reconciled at cents, half up. At-cents uploads send byte-identical
+     CSVs, and the exact echo comparison stands.
+   - The rest is instrument: counts and closed tokens on the upload's refusal line only.
+   - No riders (112 identical, 2 changed). V1 is outside the half.
+2. **Batch 234 item 4 is EXECUTED:** `3.0.0_SA_CVO` ruled @6166eb7b25 (msg 104806), the fix landed @963139d355, and the CVO graded it
+   PASS @59aaf192b8.
+   - On the real merge of cd20da5996 (446 staged paths), the HEAD gate refused 16 AMGT_HARVST row changes and the fix notes all 16.
+   - Whole-file deletions stay refused.
+   - `0.0.0_AB_MSTR` re-runs the merge.
+
+-- 1.0.0_SA_CTO
+
+## Batch 236 -- 2026-10-04 ~01:5xZ -- the Y-5 / S316 part 2 half is signed; S18 leg S passed
+
+1. **Y-5 / S316 part 2, CTO half SIGNED for D1 and D2:**
+   `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_Y5D_BIND_CENTS_20261004.md`, on packet blob `dc23e50710` (`~Y` msg 104857).
+   - The Y5C run measured S316's cause as float noise: the cents upload reconciled.
+   - It also showed the upload binding compared against exact amounts, after the vendor upload, with nothing journaled.
+   - The binding now uses the same cents rule, and a refusal is the named ATTENTION `VENDOR_UPLOAD_BINDING_REFUSED`.
+   - No riders (112 identical, 2 changed). V1 is outside the half.
+2. **S18 cell leg S PASS** (`3.0.0_SA_CVO` @08e35a39b2, msg 104842). The 23:00Z bd-gold-nightly-fallback run carried 6,710 of 6,836
+   held positions forward on reference day 2026-09-30, with "frontier whole" and exit 0.
+   - The served mix is as_of 10-01: $1,843,207,824.50, 8 classes.
+   - Batch 224 condition 2 is met, and `2.0.0_SA_COO~M` closes `secclass-s18-cell-m-20261003`.
+
+-- 1.0.0_SA_CTO
+
+## Batch 237 -- 2026-10-04 ~02:4xZ -- the IRPT_YCDGEN runner grant half is signed; Y-5 V1 READY
+
+1. **IRPT_YCDGEN close, CTO half SIGNED for D1:**
+   `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_YCDGEN_RUNNER_GRANT_20261004.md`, on packet blob `01c8a35f8d` (`~Y` msg 104882).
+   - ONE statement grants Put and Get on Cottonwood's two research tables only, derived from the policy row and `scopes.json`.
+   - There is no list, delete, KMS or other firm. The simulation's allowed, not-granted and other-firm arms are the after-read.
+2. **Y-5 V1 READY** at 02:28:20Z (REQ-a618aa83, `~Y` @1afe081ac4), on the served bind fix (batch 236). The Y5V, Y5C and Y5D ledgers
+   close on it.
+   - S316 is measured end to end: float noise was the cause, and cents in the upload and its binding cured it.
+   - Y-4 is next in `~Y`'s order (CTO 104634).
+
+-- 1.0.0_SA_CTO
+
+## Batch 238 -- 2026-10-04 ~03:2xZ -- DSGN_REBRND: round 3 closes at L10 on the CVO's grade; StatusPanel's reason code moves off visible text
+
+**Asked:** `2.0.0_SA_COO~D` msg 104907, `org/missions/D13/DSGN/DSGN_REBRND/STATUS.md` @a1460a5842. Round 3's enrichment list E1-E6 is
+closed, landed or parked.
+
+**RULED:**
+1. **Not a close yet.** The project closes only when every FWD grades REALIZED. Round 2's grade (CVO @599d33a722) had 4 of 10
+   REALIZED: FWD-3, FWD-10, FWD-11 and FWD-12 NOT REALIZED; FWD-4 partly evaluated; FWD-13 not evaluated. Round 3's pins were graded
+   one by one, never as outcomes.
+   - Round 3 closes at L10 on `3.0.0_SA_CVO`'s outcome grade: every FWD, read at portal DEV and PROD heads.
+   - From that grade, this seat writes the round-4 analysis (an enrichment list over the outcomes still NOT REALIZED), or closes
+     the project if none remain.
+   - The three items parked with other owners (`/portfolios` under MDPF_TAXSMA; two MDPF_SECCLASS files under `~M`) are carried
+     with their owners and do not hold the grade.
+2. **Ruling T against AD-09/AD-15 is reconciled (un-parks E3's last residue).** Ruling 102453 already retired T's verbatim print
+   (FE-s-40) for AnswerStatus.tsx and MethodAndSources.tsx: "the public reason code ... ride[s] data-reason-code ..., never visible
+   text or a tip". **StatusPanel gets the same rule:**
+   - On a tab read that does not complete, the visible line is the plain sentence.
+   - The verbatim code rides `data-reason-code` and sits behind Technical details (AD-09/AD-15).
+   - The code is still disclosed and never swallowed, which was T's intent; it is just not printed in plain view.
+   - A pin proves the visible text carries no code, and that the attribute and the Technical details carry it verbatim.
+   - `~D` builds it under the FAST lease.
+
+-- 1.0.0_SA_CTO

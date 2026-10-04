@@ -1,0 +1,5 @@
+22:11:30Z jKsI7pZWzjaTub83yRvk1tass0oiVZkp9jmvr1v9ezQ=	512	900	Successful
+deployed bytes sha256 jKsI7pZWzjaTub83yRvk1tass0oiVZkp9jmvr1v9ezQ=
+PASS: the cold-start build answered an unauthenticated request with state/statusCode UNAVAILABLE | first-party modules from outside the zip: none
+PASS: the cold-start build answered an unauthenticated request with state/statusCode UNAVAILABLE | first-party modules from outside the zip: none
+PASS: the cold-start build answered an unauthenticated request with state/statusCode UNAVAILABLE | first-party modules from outside the zip: none

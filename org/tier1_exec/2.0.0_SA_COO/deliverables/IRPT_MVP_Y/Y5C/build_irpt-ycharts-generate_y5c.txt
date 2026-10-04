@@ -1,0 +1,121 @@
+
+Lambda Build-and-Upload
+  Pipeline:  investor-reporting
+  Bucket:    s3://opal-313476888478-lambda-artifacts/investor-reporting/
+  JSON tool: node
+  Function:  irpt-ycharts-generate (single-function mode)
+
+Found 1 function(s) to build
+
+-> irpt-ycharts-generate
+  Source:  infra/aws/lambda/investor-reporting/ycharts/generate
+  Files:   job.py recipe.py transport.py templates.json enforce.py errors.py gate.py keys.py resolve.py ids.py firm_destination_policy.json firm_registry.json settings.json fixtures/har/FIXTURE_MANIFEST.json fixtures/har/collection.json fixtures/har/create_201.json fixtures/har/create_422_fee.json fixtures/har/dashboard.json fixtures/har/decision_branches.json fixtures/har/generate_201.json fixtures/har/generate_404_minimal.json fixtures/har/report.pdf fixtures/har/status_drifted.json fixtures/har/status_ok.json fixtures/har/templates.json fixtures/har/upload_ok.json fixtures/har/validate_200.json entry.py comparison_catalogue.py served.py loaders.py data/custodian_key_seam.json raw_keys.json selection.py selection_store.py prospect.py owner_reads.py custody.py canonical_profile_reads.py maintained_sources.py submission.py routetable.py portfolio.py composition.py repository.py request_composition.py retention.py acceptance.py composition_admission.py custody_submission.py recipe_snapshot.py submission_service.py contracts/AnalysisReport.schema.json contracts/AnalysisRequest.schema.json contracts/AnalysisSubmissionRequest.schema.json contracts/AnalysisUploadRequest.schema.json contracts/AnalysisUploadResult.schema.json contracts/BoundaryRefusal.schema.json contracts/DirectoryContext.schema.json contracts/DirectoryEntry.schema.json contracts/ExportBundle.schema.json contracts/ExportReceipt.schema.json contracts/HoldingsSnapshot.schema.json contracts/NarrativePacket.schema.json contracts/OwnedAnalysisRequest.schema.json contracts/OwnedAnalysisRequestHistory.schema.json contracts/PerformanceReport.schema.json contracts/PublicStatusEnvelope.schema.json contracts/RenderPackage.schema.json contracts/RequestComposition.schema.json contracts/ResolvedScope.schema.json contracts/SelectedAccounts.schema.json contracts/SelectionRequest.schema.json contracts/StatusEnvelope.schema.json BUILD_MANIFEST.json accepted_custody.py custody_binding.py custody_portfolio.py parse.py current_authority.py durable_job.py frozen_worker.py normalized_input.py prospect_submission.py publication_worker.py publisher.py report_index.py resident_main.py resident_worker.py generate_installed.py lib/opal_naming.py org/standards/NAMING_SCHEMA.json infra/logic/registry/exemptions.json infra/logic/registry/remediations.json infra/logic/registry/reporting_policies.json infra/logic/registry/resources.json infra/logic/registry/scopes.json infra/logic/registry/systems.json infra/logic/registry/tiers.json broker.py owned_requests.py publication.py certify.py extract.py fonts.py upload_entry.py uploads.py upload_resolution.py interactive_access.py template_reader.py security_resolution.py grant.py report_owner.py kimi_port.py
+  OK: staged enforce.py <- infra/aws/lambda/investor-reporting/_authz/enforce.py@136ee09e9f (66577 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged errors.py <- infra/aws/lambda/investor-reporting/_authz/errors.py@136ee09e9f (11269 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged gate.py <- infra/aws/lambda/investor-reporting/_gate/gate.py@136ee09e9f (16105 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged keys.py <- infra/aws/lambda/investor-reporting/_keys/keys.py@136ee09e9f (29894 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged resolve.py <- infra/aws/lambda/investor-reporting/_scope/resolve.py@136ee09e9f (38563 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged firm_destination_policy.json <- infra/aws/terraform/investor-reporting/core/firm_destination_policy.json@136ee09e9f (3892 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged data/custodian_key_seam.json <- infra/aws/lambda/investor-reporting/_ids/data/custodian_key_seam.json@136ee09e9f (191120 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged ids.py <- infra/aws/lambda/investor-reporting/_ids/ids.py@136ee09e9f (19296 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged raw_keys.json <- infra/aws/lambda/investor-reporting/_ids/raw_keys.json@136ee09e9f (6492 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged loaders.py <- infra/aws/lambda/investor-reporting/_authz/loaders.py@136ee09e9f (16658 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged served.py <- infra/aws/lambda/investor-reporting/_authz/served.py@136ee09e9f (72543 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged settings.json <- infra/aws/lambda/investor-reporting/intake/settings.json@136ee09e9f (9670 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged selection.py <- infra/aws/lambda/investor-reporting/_scope/selection.py@136ee09e9f (6453 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged selection_store.py <- infra/aws/lambda/investor-reporting/_scope/selection_store.py@136ee09e9f (2795 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged prospect.py <- infra/aws/lambda/investor-reporting/_scope/prospect.py@136ee09e9f (4729 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged owner_reads.py <- infra/aws/lambda/investor-reporting/_scope/owner_reads.py@136ee09e9f (2316 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged custody.py <- infra/aws/lambda/investor-reporting/_scope/custody.py@136ee09e9f (7216 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged firm_registry.json <- data/firm_registry.json@136ee09e9f (5326 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged canonical_profile_reads.py <- infra/aws/lambda/investor-reporting/_scope/canonical_profile_reads.py@136ee09e9f (9373 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged maintained_sources.py <- infra/aws/lambda/investor-reporting/_scope/maintained_sources.py@136ee09e9f (39611 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged routetable.py <- infra/aws/lambda/investor-reporting/_authz/routetable.py@136ee09e9f (14597 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged portfolio.py <- infra/aws/lambda/investor-reporting/intake/portfolio.py@136ee09e9f (29584 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged composition.py <- infra/aws/lambda/investor-reporting/reports/composition.py@136ee09e9f (2079 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged repository.py <- infra/aws/lambda/investor-reporting/reports/repository.py@136ee09e9f (24014 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged request_composition.py <- infra/aws/lambda/investor-reporting/reports/request_composition.py@136ee09e9f (13622 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged retention.py <- infra/aws/lambda/investor-reporting/reports/retention.py@136ee09e9f (16085 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged contracts/AnalysisReport.schema.json <- docs/contracts/investor-reporting/v1/AnalysisReport.schema.json@136ee09e9f (19370 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged contracts/AnalysisRequest.schema.json <- docs/contracts/investor-reporting/v1/AnalysisRequest.schema.json@136ee09e9f (20263 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged contracts/AnalysisSubmissionRequest.schema.json <- docs/contracts/investor-reporting/v1/AnalysisSubmissionRequest.schema.json@136ee09e9f (4170 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged contracts/AnalysisUploadRequest.schema.json <- docs/contracts/investor-reporting/v1/AnalysisUploadRequest.schema.json@136ee09e9f (3789 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged contracts/AnalysisUploadResult.schema.json <- docs/contracts/investor-reporting/v1/AnalysisUploadResult.schema.json@136ee09e9f (4789 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged contracts/BoundaryRefusal.schema.json <- docs/contracts/investor-reporting/v1/BoundaryRefusal.schema.json@136ee09e9f (913 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged contracts/DirectoryContext.schema.json <- docs/contracts/investor-reporting/v1/DirectoryContext.schema.json@136ee09e9f (2145 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged contracts/DirectoryEntry.schema.json <- docs/contracts/investor-reporting/v1/DirectoryEntry.schema.json@136ee09e9f (14371 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged contracts/ExportBundle.schema.json <- docs/contracts/investor-reporting/v1/ExportBundle.schema.json@136ee09e9f (15024 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged contracts/ExportReceipt.schema.json <- docs/contracts/investor-reporting/v1/ExportReceipt.schema.json@136ee09e9f (9572 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged contracts/HoldingsSnapshot.schema.json <- docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json@136ee09e9f (58133 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged contracts/NarrativePacket.schema.json <- docs/contracts/investor-reporting/v1/NarrativePacket.schema.json@136ee09e9f (13308 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged contracts/OwnedAnalysisRequest.schema.json <- docs/contracts/investor-reporting/v1/OwnedAnalysisRequest.schema.json@136ee09e9f (4614 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged contracts/OwnedAnalysisRequestHistory.schema.json <- docs/contracts/investor-reporting/v1/OwnedAnalysisRequestHistory.schema.json@136ee09e9f (835 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged contracts/PerformanceReport.schema.json <- docs/contracts/investor-reporting/v1/PerformanceReport.schema.json@136ee09e9f (19621 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged contracts/PublicStatusEnvelope.schema.json <- docs/contracts/investor-reporting/v1/PublicStatusEnvelope.schema.json@136ee09e9f (14475 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged contracts/RenderPackage.schema.json <- docs/contracts/investor-reporting/v1/RenderPackage.schema.json@136ee09e9f (11569 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged contracts/RequestComposition.schema.json <- docs/contracts/investor-reporting/v1/RequestComposition.schema.json@136ee09e9f (25777 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged contracts/ResolvedScope.schema.json <- docs/contracts/investor-reporting/v1/ResolvedScope.schema.json@136ee09e9f (9790 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged contracts/SelectedAccounts.schema.json <- docs/contracts/investor-reporting/v1/SelectedAccounts.schema.json@136ee09e9f (1509 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged contracts/SelectionRequest.schema.json <- docs/contracts/investor-reporting/v1/SelectionRequest.schema.json@136ee09e9f (495 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged contracts/StatusEnvelope.schema.json <- docs/contracts/investor-reporting/v1/StatusEnvelope.schema.json@136ee09e9f (15469 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged BUILD_MANIFEST.json <- org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/CUSTODY_FACTORY_BUILD_MANIFEST.json@136ee09e9f (2780 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged accepted_custody.py <- infra/aws/lambda/investor-reporting/_scope/accepted_custody.py@136ee09e9f (8539 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged custody_binding.py <- infra/aws/lambda/investor-reporting/_scope/custody_binding.py@136ee09e9f (8858 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged custody_portfolio.py <- infra/aws/lambda/investor-reporting/intake/custody_portfolio.py@136ee09e9f (16255 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged parse.py <- infra/aws/lambda/investor-reporting/intake/parse.py@136ee09e9f (66866 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged generate_installed.py <- infra/aws/lambda/investor-reporting/reports/generate_installed.py@136ee09e9f (20667 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged lib/opal_naming.py <- lib/opal_naming.py@136ee09e9f (144394 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged org/standards/NAMING_SCHEMA.json <- org/standards/NAMING_SCHEMA.json@136ee09e9f (33716 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged infra/logic/registry/exemptions.json <- infra/logic/registry/exemptions.json@136ee09e9f (35212 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged infra/logic/registry/remediations.json <- infra/logic/registry/remediations.json@136ee09e9f (3233 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged infra/logic/registry/reporting_policies.json <- infra/logic/registry/reporting_policies.json@136ee09e9f (3828 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged infra/logic/registry/resources.json <- infra/logic/registry/resources.json@136ee09e9f (169583 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged infra/logic/registry/scopes.json <- infra/logic/registry/scopes.json@136ee09e9f (18173 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged infra/logic/registry/systems.json <- infra/logic/registry/systems.json@136ee09e9f (33261 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged infra/logic/registry/tiers.json <- infra/logic/registry/tiers.json@136ee09e9f (4647 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged broker.py <- infra/aws/lambda/investor-reporting/ycharts/session/broker.py@136ee09e9f (24646 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged owned_requests.py <- infra/aws/lambda/investor-reporting/ops/owned_requests.py@136ee09e9f (17265 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged publication.py <- infra/aws/lambda/investor-reporting/ycharts/extract/publication.py@136ee09e9f (11828 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged certify.py <- infra/aws/lambda/investor-reporting/ycharts/extract/certify.py@136ee09e9f (37961 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged extract.py <- infra/aws/lambda/investor-reporting/ycharts/extract/extract.py@136ee09e9f (57903 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged fonts.py <- infra/aws/lambda/investor-reporting/ycharts/extract/fonts.py@136ee09e9f (28429 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged upload_entry.py <- infra/aws/lambda/investor-reporting/intake/upload_entry.py@136ee09e9f (3012 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged uploads.py <- infra/aws/lambda/investor-reporting/intake/uploads.py@136ee09e9f (31084 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged upload_resolution.py <- infra/aws/lambda/investor-reporting/intake/upload_resolution.py@136ee09e9f (6646 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged interactive_access.py <- infra/aws/lambda/investor-reporting/_scope/interactive_access.py@136ee09e9f (4865 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged template_reader.py <- infra/aws/lambda/investor-reporting/intake/template_reader.py@136ee09e9f (11689 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged security_resolution.py <- infra/aws/lambda/investor-reporting/intake/security_resolution.py@136ee09e9f (13764 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged grant.py <- infra/aws/lambda/investor-reporting/_render_identity/grant.py@136ee09e9f (20066 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged report_owner.py <- infra/aws/lambda/investor-reporting/_render_identity/report_owner.py@136ee09e9f (3625 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged recipe.py <- infra/aws/lambda/investor-reporting/ycharts/generate/recipe.py@136ee09e9f (51644 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged resident_main.py <- infra/aws/lambda/investor-reporting/ycharts/generate/resident_main.py@136ee09e9f (3082 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged resident_worker.py <- infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py@136ee09e9f (43562 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged current_authority.py <- infra/aws/lambda/investor-reporting/ycharts/generate/current_authority.py@136ee09e9f (6977 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged entry.py <- infra/aws/lambda/investor-reporting/ycharts/generate/entry.py@136ee09e9f (9841 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged job.py <- infra/aws/lambda/investor-reporting/ycharts/generate/job.py@136ee09e9f (34421 bytes, sha256 verified, not committed at the packaged path)
+  OK: staged transport.py <- infra/aws/lambda/investor-reporting/ycharts/generate/transport.py@136ee09e9f (33058 bytes, sha256 verified, not committed at the packaged path)
+  OK: import-closure -- 63 packaged .py file(s), every top-level import satisfied by package/stdlib/runtime/layer. (Nested lazy imports exempt by design.)
+  SKIP: manifest-index gate -- this BUILD_MANIFEST declares no declared_blobs,
+        so there is no index reference to check against (not a pass).
+  SHA256:  FgZcBjJuwuBD0P97xHCgnj37gjdyHzl+8zky26MD2Nk=
+  Size:    580K
+  ✓ s3://opal-313476888478-lambda-artifacts/investor-reporting/irpt-ycharts-generate.zip (write VERIFIED: size=592374, sha256 metadata match)
+
+================================================
+Complete — 1 function(s) built and uploaded
+
+Source map updated with artifact_s3_key + artifact_sha256.
+
+Next steps:
+  git add infra/aws/lambda/ci/lambda-source-map.json
+  git commit -m 'ci: upload artifacts for investor-reporting'
+  cd infra/aws/terraform/investor-reporting
+  .tools/terraform.exe plan    # should show Lambda updates
+  .tools/terraform.exe apply
+  .tools/terraform.exe plan    # must show No changes
+  bash infra/aws/lambda/ci/record-terraform-deploy.sh investor-reporting --version investor-reporting-vX.Y.Z \
+       --author "{your-serial} <{your-serial}@opal.agent>"
+  # --author is REQUIRED for correct attribution: record-terraform-deploy
+  # commits, and its commit must be authored by a permitted agent serial.
+  # Omitting it derives the serial from .comp-graph/.agent_context (shared,
+  # best-effort) -- pass it explicitly to be sure.

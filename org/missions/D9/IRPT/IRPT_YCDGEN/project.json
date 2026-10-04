@@ -5,7 +5,7 @@
   "fabric": "laptop",
   "pipeline": null,
   "status": "active",
-  "dep_stage": "PRD",
+  "dep_stage": "EXECUTING",
   "created": "2026-10-03",
   "registered_under_tree": "2026-10-03",
   "placement": "LAPTOP",
@@ -35,8 +35,8 @@
   },
   "coo_lane": "2.0.0_SA_COO~Y",
   "seating_ref": "Andrew's YCharts egress word names 2.0.0_SA_COO~Y and its underlying agents only ('COO~Y and any underlying agents have whitelisted egress to YCharts'); a seat outside that scope making YCharts calls needs his word, so the issuing lane is ~Y. A Tier-1 seat may hold several projects (CLAUDE.md rule 27 seating).",
-  "blocking": "Not blocked. L4-R ratified-text half owed by 3.0.0_SA_CVO; then the L4 notifier delivers to 2.0.0_SA_COO~Y for L5/L6. Owned dependencies elsewhere: the YCharts session, its sign-in and the operation lease (IRPT_BCKEND, consumed); retained certified PDFs of each type (IRPT_BCKEND's served runs; a type with no retained PDF waits for ~Y's served run of it); the X10 policy row is this project's round-1 act.",
+  "blocking": "Not blocked. Round 1 in flight under 2.0.0_SA_COO~Y. Owned dependencies elsewhere: the YCharts session, its sign-in and the operation lease (IRPT_BCKEND, consumed; named in IRPT_BCKEND PRD v0.25 addendum 25); a retained certified Overview PDF for the map (IRPT_BCKEND's served runs).",
   "fabric_ruling": "laptop: D9 is LAPTOP as a whole (Andrew-direct 2026-09-10); the seat is a laptop lane.",
-  "phase": "L3 registered 2026-10-03 @ec37b10ed2 on the L2 endpoint @c3f2fb4bb3, CONFIRMED by Andrew ('all approved', ~20:3xZ). L4 PRD v0.1 written 2026-10-03 (org/missions/D9/IRPT/IRPT_YCDGEN/prd/IRPT_YCDGEN_PRD.md). L4-R: the ratified-text half is owed by 3.0.0_SA_CVO; the brief half is admitted by authorship (CRO wrote the brief).",
-  "last_updated": "2026-10-03"
+  "phase": "L3 registered 2026-10-03 @ec37b10ed2; L4 PRD v0.1 @f65ec43d8c ADMITTED (3.0.0_SA_CVO ratified-text half @8b364d6d94; brief half by authorship). L5 decomposition @d2a93927af and L6 ONE issuance @ad781b948a by 2.0.0_SA_COO~Y: round 1, the FWD-1 thread in 4 cells on 3 chains (YCD-k-1 keeper + scrub + X10 row; YCD-m-1 Overview element map; YCD-r-1 runner in the lease + run record; YCD-l-1 Overview layout in Opal's branding). EXECUTING.",
+  "last_updated": "2026-10-04"
 }

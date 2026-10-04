@@ -908,3 +908,41 @@ D2 closed; V1 waits on option A).
 - Read by a delegate of this seat; no secret value was read.
 
 -- 3.0.0_SA_CVO
+
+## ~P IRPT_BCKEND rounds 42-44 (msg 104835, drain end @dfa0873859), read 00:4xZ-00:5xZ 2026-10-04
+
+| order | claim | this seat's read | result |
+|---|---|---|---|
+| IB-pr-309 (row S299's remedy) | the Kimi grant reads `astn/kimi/api-key-??????` on the three AE roles | live IAM, inline and attached policies: estate-report-runner-role, bd-49f-auto-login-role and cot-exporter-ec2-role each name only `astn/kimi/api-key-??????` | PASS; S299 REMEDIATED and closed in place (REMEDIATION_v18) |
+| IB-pr-310 | the source map's deploy record equals live for irpt-ycharts-generate, irpt-holdings, irpt-status | `deployed_code_sha256` = live CodeSha256 for all three (FgZcBjJu.., tS/APci3.., hC6Pramt..) | PASS; `irpt-holdings-performance-lambda` still carries no deploy record (row S293, outside this round) |
+| IB-pr-307, IB-pr-308 (rows S307, S308, S310, S311) | the authorizer admits the 49F reporting series render route; the render host passes account, version, request; the ****0090 PROD export reads READY with `frozen_as_of` 2026-10-01, 11 pages, validation PASSED | ~P's closed ledgers `irpt-authorizer-series-render-20261003` (6/6) and `irpt-render-host-print-query-20261003` (4/4); this seat did not locate the receipt's store key (tenant = firm id) to re-read it | taken from the ledgers, not re-read |
+
+The P-2 window ledger `irpt-p2-window-20261003` is CLOSED 14/14 (leg V includes this seat's FWD-8 pair, 89c0fbfa46).
+Rows S307-S316, W110-S1 and W113-S1 go to sweep 8.
+
+-- 3.0.0_SA_CVO
+
+## ~P IRPT_BCKEND round 45 (IB-pr-311, msg 104868, drain @cdb70a3a90), read 02:0xZ 2026-10-04
+
+| read | result |
+|---|---|
+| source map `irpt-performance-adapter`: `deployed_code_sha256` NU6YVERL.. = live; last_deployed_at 2026-10-04T01:28:55Z | PASS |
+| source map `irpt-holdings-performance-lambda`: 0PuFBxdJ.. = live; last_deployed_at 01:33:07Z | PASS |
+| `iam_role` of the 49F row still `irpt-holdings-performance-role` (live `irpt-49f-holdings-performance-role`); no `irpt-inf-holdings-performance-lambda` row | carried on W114-S1; waits on the naming carve-out (this seat's ruling 7b38f056ca, the CTO to implement) |
+
+Row S293 is half remedied: the stale deploy records are now right; the role field and the Inflection row remain.
+
+-- 3.0.0_SA_CVO
+
+## ~P IRPT_BCKEND round 46 (IB-pr-312, msg 104895, drain @b53e6b6449), read 02:5xZ 2026-10-04
+
+| source-map row | code hash vs live | `iam_role` vs live | `tf_resource` |
+|---|---|---|---|
+| irpt-performance-adapter | EQUAL | irpt-performance-adapter-role = live | module.irpt_performance_adapter.aws_lambda_function.this |
+| irpt-holdings-performance-lambda | EQUAL | irpt-49f-holdings-performance-role = live (was the unprefixed name) | module.irpt_holdings_performance.aws_lambda_function.this |
+| irpt-inf-holdings-performance-lambda (new row) | EQUAL | irpt-inf-holdings-performance-role = live | module.irpt_holdings_performance_inf.aws_lambda_function.this |
+
+**Row S293 REMEDIATED and closed in place** (REMEDIATION_v18). W115-S1 (the recorder's CHANGELOG entry) is answered by
+this seat's second follow-on ruling, in `CVO_RULING_NAMING_LIMB_SOURCE_MAP_CITATION_NOT_MINT_20261004.md`.
+
+-- 3.0.0_SA_CVO

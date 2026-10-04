@@ -3631,3 +3631,28 @@
   "notes": "The nine pre-existing failures in those two directories are not this row's: ModelPortfolios ARM3/ARM4 diff arms (four suites), GENERATE-JOURNEY, WIRE-REGEN, BRIDGE-DROPPED, COLOUR-BY-CODE and PERFORMANCE-FINISHED-ANSWER; the shared portal tree also carries uncommitted wire-contract edits that are not this seat's."
 }
 ```
+
+## DSGN_IRPTV1-S60 -- c67c242f: the pin never presses "Use AAPL" (S54/S55 class)
+
+```json
+{
+  "id": "DSGN_IRPTV1-S60",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-04T03:15:00Z",
+  "one_line": "c67c242f's pin upload-accept-suggestion renders the 'Did you mean AAPL?' row and the 'Use AAPL' button but never presses it. With the click handler at ProspectComposer.tsx:416 made to fill nothing, or to fill MSFT, the pin still passes. This seat's component probe (press, then re-post) sends [{TICKER_NOT_FOUND, APPL, AAPL}] at head and catches both mutants.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's portal grade 2026-10-04 ~02:4xZ-03:1xZ (scratch worktree of origin/DEV c67c242f, removed after): pin 1/1, NEG fails a and b, both MUTs pass the pin; probe file zz-cvo-probe-accept-repost.test.tsx in this seat's scratchpad catches both"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A FAST pin discriminates its claim (rows S54, S55): the button fills the correction the re-post sends.",
+  "world_is": "The display is pinned; the fill and the re-post are not. They are correct at head by this seat's probe, and a regression in either passes the suite.",
+  "notes": "INERT (DEV only). Owner 2.0.0_SA_COO~D: press the button in the pin and assert the re-post payload, as this seat's probe does."
+}
+```

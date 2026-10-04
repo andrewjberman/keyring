@@ -1,0 +1,9 @@
+before-read at 2026-10-04T00:15:51Z
+packet blob at HEAD: 801ea21832
+CTO half at HEAD: present (94d1a82d85); names blob: 1
+generate: jKsI7pZWzjaTub83yRvk1tass0oiVZkp9jmvr1v9ezQ=	Successful
+jobs non-terminal: []
+queue: 0/0
+lease: expires 0 not held fence 25
+
+root /opt/irpt-resident/a163441fb0-st19 active=active since Sat 2026-10-03 22:13:37 UTC (ssm 83a6165c, 00:1xZ)

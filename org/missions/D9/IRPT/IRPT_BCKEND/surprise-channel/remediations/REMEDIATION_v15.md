@@ -166,11 +166,11 @@ Author: 3.0.0_SA_CVO, 2026-09-30. Graduated at sweep 5's L9 (ADJUDICATION_v19.md
     "owner": "1.0.0_SA_CTO",
     "round": "v30",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO",
       "round": "v30"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "IRPT_BCKEND-W97-S3",
@@ -194,9 +194,9 @@ Author: 3.0.0_SA_CVO, 2026-09-30. Graduated at sweep 5's L9 (ADJUDICATION_v19.md
     },
     "closed": false,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "1.0.0_SA_CTO",
-      "at": null
+      "at": "2026-10-01T13:32:00Z"
     }
   },
   {
@@ -353,9 +353,9 @@ Author: 3.0.0_SA_CVO, 2026-09-30. Graduated at sweep 5's L9 (ADJUDICATION_v19.md
     },
     "closed": false,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "1.0.0_SA_CTO",
-      "at": null
+      "at": "2026-10-01T03:46:00Z"
     }
   },
   {
@@ -380,9 +380,9 @@ Author: 3.0.0_SA_CVO, 2026-09-30. Graduated at sweep 5's L9 (ADJUDICATION_v19.md
     },
     "closed": false,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "1.0.0_SA_CTO",
-      "at": null
+      "at": "2026-10-01T03:46:00Z"
     }
   },
   {

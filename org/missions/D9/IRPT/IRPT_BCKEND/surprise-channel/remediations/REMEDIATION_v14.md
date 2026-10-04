@@ -28,9 +28,9 @@ Author: 3.0.0_SA_CVO, 2026-09-30. Graduated at sweep 4's L9 (ADJUDICATION_v18.md
       "round": "v27"
     },
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~P",
-      "at": null
+      "at": "2026-10-01T03:46:00Z"
     },
     "closed": false
   },
