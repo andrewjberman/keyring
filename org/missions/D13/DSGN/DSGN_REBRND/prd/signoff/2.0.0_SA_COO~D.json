@@ -1,13 +1,13 @@
 {
   "prd": "DSGN_REBRND_PRD.md",
-  "prd_version": "v0.13",
-  "prd_pin": "66f1e98e9822698771eb8fc75f8cb6da3415c1ac",
+  "prd_version": "v0.14",
+  "prd_pin": "15576da1ee147327decd2ba8694506e9a4ebbeec",
   "half": "brief",
-  "half_hash": "3fa07b9ac8498a8310dd5bd4faa0cba2dad488ce4c68073d3e9bdcc1909491a8",
-  "endpoint_hash": "73f6f5fba7c90cb28501b61d1e8830a0d50a769466e8345afab27e6f13d51a3f",
+  "half_hash": "14ad06443fe789f5424cbb520bf9a93f02d1fe115a5e64dc423621bfa70ddc69",
+  "endpoint_hash": "2ff42dda15d6916f8c4d84508ad8ebd29b8c01e4dbfc2e56921d647f7b954ea7",
   "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/2.0.0_SA_COO/deliverables/laneD_L4R_BRIEF_HALF_REVIEW_DSGN_REBRND_v0.11.md@6007044cf8",
+  "review_ref": "org/tier1_exec/2.0.0_SA_COO/deliverables/laneD_L4R_BRIEF_HALF_REVIEW_DSGN_REBRND_v0.11.md@740e1eb136",
   "signed_by": "2.0.0_SA_COO~D",
-  "signed_at": "2026-10-04T22:16:51Z",
+  "signed_at": "2026-10-04T22:42:13Z",
   "designated_by": "designated by org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260911_080xZ_DSGN_REBRND_COO_D_SIGNS_CVO_ADVERSARIAL_SELF_DRIVE_WIDENED.md@2daf4d8b85"
 }
