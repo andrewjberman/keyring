@@ -7645,3 +7645,76 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "id": "NFRA_OPLGTW-Z-W15-S35",
+  "surfaced_at": "2026-10-04T22:20Z",
+  "one_line": "The floor check rl4.AC1.sh reads FAIL (arm 3) until the release deploys: it compares the host's deploy/ contract to CLOUD's org/standards contract at HEAD, which R12 @261571c07e changed; the deploy of this release is what makes them equal again.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: rl5_verify.sh after (negative control, no deploy): rl4.AC1 'arm 3 host contract a86f7e667cfc vs c69968aa7f70: FAIL', RELEASE READ-BACK ARMS 3 of 4; ht.AC2 4 of 4 PASS. rl4.AC1.sh line 5 and line 22 grade the host copy against org/standards/NFRA_OPLGTW_CONTRACT.json at HEAD (md5 0514b37e = CLOUD after 261571c07e; live af2d762970 deploy copy = 23f8b279).",
+      "CODE: the release tree og-rel10 @4b6b823fae carries the contract byte copy 0514b37eb0198d4f6b114117fc12a5f5 in both deploy/ and org/standards/, so after a deploy of it arm 3 compares equal."
+    ]
+  },
+  "spec_asserts": "Order 4c / rl5.AC2: 'floor: rl4.AC1 yes; ht.AC2 yes' at close, and the issuer's pre-cut note reads the floor PASS today.",
+  "world_is": "With CLOUD's contract edited ahead of the deploy, rl4.AC1 is red on the live host from that commit until the release lands. Not a defect of the release; the only read of it that matters is after the act (rl5_verify.sh runs it then)."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "id": "NFRA_OPLGTW-Z-W15-S36",
+  "surfaced_at": "2026-10-04T22:25Z",
+  "one_line": "Committing on the release branch in /c/tmp/og-rel10 is refused by the owned-paths lane gate (the order is not at that tree's HEAD), so the A3 release commit 4b6b823fae used the audited GIT_COMMIT_AUTHOR_OVERRIDE, as OG-rl-4's two release commits did.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: safe-commit in /c/tmp/og-rel10 without the override: 'owned-paths lane violation(s) ... no NON-TERMINAL task order at HEAD issued_to this serial names this path in its <paths> block' for integration.py, deploy/NFRA_OPLGTW_CONTRACT.json, tests/test_schwab_rl5_asset_query.py and org/standards/NFRA_OPLGTW_CONTRACT.json; org/git-author-override-audit.log line 20557 BLOCK for this serial at 21:37:06Z.",
+      "RUN: the same commit with GIT_COMMIT_AUTHOR_OVERRIDE=0.9.0_WK_NFRA_OPLGTW~15 landed as 4b6b823fae on rel-nfra-oplgtw-r16 (local, never merged); precedent ANNOUNCE_OG-rl-4.md 'audited override ... two uses'."
+    ]
+  },
+  "spec_asserts": "Order step 1 and 4c have the worker commit the release tree (a branch cut from live af2d762970, which predates the task order); the order's Bounds say never override a gate.",
+  "world_is": "The two instructions cannot both be met on that tree: the lane gate reads the order at the release tree's HEAD, where it does not exist. The override was used for release-branch commits only (one commit, four paths); the worktree commit 45b2d8844c passed the gate normally. The org/standards copy is also outside the order's <paths>, so it needed the same override."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "id": "NFRA_OPLGTW-Z-W15-S37",
+  "surfaced_at": "2026-10-04T22:30Z",
+  "one_line": "Test-run notes for step 4c: run in ONE pytest process the schwab set errors at setup for every acceptance-fixture file after the first (the new file joins the 9 baseline errors), one baseline test is flaky, and one release-tree test fails only because the tree lacks a mission artifact; each file passes alone.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: worktree @68c5438a60 (CLOUD HEAD, guard present, new file excluded) tests/test_schwab_*.py in one process: 2 failed (test_ogx2_ac01, test_ogx4_ac03), 119 passed, 9 errors (test_ogq6_ac01-04, test_ogz4_ac01-02, test_ogq4_ac01-03: RuntimeError StreamableHTTP). After @45b2d8844c: 1 failed (test_ogx4_ac03), 120 passed, 11 errors (the same 9 + the 2 new tests, same RuntimeError). Per file in its own process: c3_rules 4, denial_envelope 2, wiring 3, asset_policy 3, rl5_asset_query 2 all pass; export_stream 2 passed 1 failed (test_ogx4_ac03, baseline).",
+      "RUN: test_ogx2_ac01 failed in the baseline one-process run and passed in both later runs (alone and combined): flaky, not moved by the deletion. Release tree og-rel10: tests/test_schwab_engine.py::test_ogq1_ac07 FileNotFoundError on org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~2/BASELINE.json (a mission artifact absent from the live-derived tree); it passes in the CLOUD worktree.",
+      "NOTE: the CTO's R12 section 8 already records the one-process acceptance error, unattributed."
+    ]
+  },
+  "spec_asserts": "Order 4c: 'run the full tests/test_schwab_*.py set: no failure beyond those already failing at CLOUD HEAD (print both lists)'.",
+  "world_is": "The combined-process list gains the two new tests as errors of the unattributed one-process class; every other entry is in the baseline list or is passing alone. Nothing here changes what ships (tests are not in the shipped file set)."
+}
+```
