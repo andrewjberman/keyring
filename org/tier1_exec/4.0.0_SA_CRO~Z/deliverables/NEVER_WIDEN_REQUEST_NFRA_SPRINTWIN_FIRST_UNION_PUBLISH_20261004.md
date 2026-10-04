@@ -41,3 +41,31 @@ The keys of 2026-10-05: its two pages (overwritten as today) and one new waterma
   `{"date": "2026-10-05"}`; the old image re-publishes both pages under its own rule.
 - Watermark: inert to the old image (it never reads one). Left in place, it is the next new-image run's window start.
 - **If either half is unsigned at 2026-10-05 19:30Z, the builder rolls the image back to 446603c3 before the 20:10Z fire.**
+
+## ADDENDUM A (2026-10-04 ~21:4xZ) -- a served re-run of 2026-10-04 on the new image, before the scheduled fire
+
+**Authority:** Andrew-direct ~21:3xZ, verbatim in `org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20261004_213xZ_OPEN_CALLS_ALL_RECS_APPROVED_RERUN_DAILY_SPRINT_ONCE_LAPTOP_ONBOARD.md`
+@b7f2fb4dc7: *"once laptop is onboard with NFRA_SPRINTWIN,we are going to need to rerun the /daily-sprint because currently if you
+look at mcp.opalinvest.dev/sprint, we do not have any commits being tracked in the surface area from the hours since the last
+sprint report"*. Measured: the 2026-10-04 scheduled edition (20:10Z, image 446603c3) logged "censuses agree at 12 commits / 5
+workers" over pushed refs; the served 2026-10-03 page is 0.0.0_AB_MSTR~Z's hand re-run (caa1425afc), window 00:00-18:15 ET, all
+refs, 422 commits.
+
+**The act, after L3 and the QA trace (L4) and the laptop's census:** ONE invoke of the new image with `{"date": "2026-10-04"}`.
+
+**Keys it may touch, every one named:**
+1. `daily-reports/2026-10-03/watermark.json` -- NEW, a SEED written by the builder with read-back, BEFORE the invoke:
+   `{"day": "2026-10-03", "window_start": "2026-10-03T04:00:00Z", "window_end": "2026-10-03T22:16:00Z", "home": "served",
+   "seed": "the served 2026-10-03 page (caa1425afc) covered 00:00-18:15 ET over all refs"}`. Measured: 0 commits on any ref with
+   commit time in [22:15:00Z, 22:16:00Z), so this cut neither drops nor double-counts a commit against that page.
+2. `daily-reports/2026-10-04/{Desktop,Mobile}_DAILY_REPORT_2026-10-04.html` -- overwritten.
+3. `daily-reports/2026-10-04/watermark.json` -- NEW, written by the function last.
+
+**The outcome, read from `cut_window` @dc86c2b2cd:** no 2026-10-04 watermark -> prev = the newest earlier one = the seed ->
+window_start 2026-10-03T22:16:00Z; window_end = the earliest 2026-10-04 census `generated_at` among the devices that reported,
+capped at the run time. Branch A (both devices reported): the union of pushed history and both censuses. Branch B (one device):
+the missing device is named on the page; its pushed work counts. The window is ~23 h, under the 7-day cap.
+**Its effect on the scheduled fire:** 2026-10-05's window then starts at 2026-10-04's window_end -- contiguous, no overlap.
+
+**Rollback, per key:** pages -- re-point to 446603c3 and invoke `{"date": "2026-10-04"}` (the old rule re-publishes its own
+population). Both watermarks are inert to the old image. Writer 2 stays under condition 1(b) (no local publish of a watermarked day).

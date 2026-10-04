@@ -103,3 +103,60 @@ No join cell. No hookup in a shared file is expected; a report that names one ge
 
 `deliverables/2.0.0_SA_COO~RV/round8/checks/`, dry-run at base CLOUD 1c31a5f6ce (the package equals the deployed pin
 75ad1e4d2e). Each order's face names its checks; the issuance commit carries every base line.
+
+## WORKSTREAM B (issued 2026-10-04 ~22:xxZ, same issuer, same round): Andrew's signed-in smoke on PRD v0.14
+
+**Authority:** the smoke record `org/tier1_exec/2.0.0_SA_COO/deliverables/cooRV_ANDREW_DIRECT_20261004_21xxZ_RIVALFUNDS_SIGNED_IN_SMOKE.md`
+@1c31a5f6ce (S2, S3, S7, S8) under "yes, build round 8 tonight" (@0a4321b843), against PRD v0.14 @4cc8e40575 (ADMITTED 21:15:49Z).
+Measured inputs: `deliverables/2.0.0_SA_COO~RV/round8/WORKSTREAM_B_INPUTS.md` @7cc969288b. Item 3 of the round-7 enrichment list
+(what the 10-05 grades leave open) is still cut after the grades. The same two bounds hold: no merge before the 2026-10-05
+07:00 ET vehicle pull, no deploy before the 13:30Z grades.
+
+**Issuer rulings (B):**
+1. The rolling period is the last 30 TRADING days (v0.14 FWD-13/14/15/19; Andrew "the last 30 trading days"), in the rankings,
+   the buying trend and the AI fact pack alike; the existing `R30` id is kept and its meaning moves from 30 calendar days.
+2. A window clipped to a fund's first report says so ("Since first report") and is never labelled year/quarter/month to date
+   (S3). The flag is produced by hc-1 (`period_clipped`, `period_nominal_start`) and read by rn-1.
+3. The buying trend carries one block per period with a `period` column (bt-1); every reader of buying_trend that wants the
+   year reads `period == "YTD"` when the column exists. The AI fact pack is such a reader (gc-1 owns that filter).
+4. rn-1 builds on chain `~2` (render.py after an-1 and rw-1); its worktree is cut from branch `wk-ETFS_RIVALS-2`.
+5. The interfaces between cells are prescribed in the checks, so the four cells build in parallel: rn-1 renders fixture rows in
+   the hc-1/bt-1 shape, gc-1 reads the bt-1 shape.
+
+### `RIV-gc-1` -- the grader attaches an uncited fund-pack fact, and the AI's last 30 days are trading days (S2, S7)
+- Measured: IDVZ "The last 30 days" FAILED on "$1.6 million, $1.3 million"; both are real fact-pack trades (T7 1,564,110.98;
+  T9 1,292,762.88) the model left out of `cited`; with them cited the grade PASSES. "$1.3 million" also matches T8.
+- Interface: `ai_accounts.attach_uncited(body, facts, cited) -> (rows, notes)` (one uncited match -> its row attached with
+  `auto_cited`; two or more -> no attach, one note naming the ids); `run_chain` calls it before `grounding_check` and an
+  ambiguous note joins the FAIL reason. `fact_pack` keeps trades in the last 30 NYSE trading days, and reads the trend rows
+  with `period == "YTD"` when the column exists.
+- Checks: `gc-1.AC1`, `gc-1.AC2`. Organic trigger: the 09:00 ET sweep's AI step.
+
+### `RIV-hc-1` -- the rankings' rolling period is 30 trading days, and every row says whether its window was clipped (S3, S7)
+- Measured: `R30` starts 29 calendar days back (`gold_holding_contribution.py:123`); YTD is clipped to the first report
+  (`:411`, `:417`) with no field saying so.
+- Interface: `period_start("R30", day)` = the 30th NYSE trading day ending on `day`; every row carries `period_nominal_start`
+  and `period_clipped`.
+- Check: `hc-1.AC1`. Organic trigger: the 07:00 ET marker publish (the A1 producer step).
+
+### `RIV-bt-1` -- the buying trend carries every period (S8; v0.14 FWD-15)
+- Measured: `build` writes the year to date only (`gold_buying_trend.py:157`, `:210`).
+- Interface: rows carry `period` in {R30, MTD, QTD, YTD}, each with its own window_start / window_end / n_trading_days;
+  YTD rows are today's rows.
+- Check: `bt-1.AC1`. Organic trigger: the 07:00 ET marker publish.
+
+### `RIV-rn-1` -- the 30-trading-day default, the switch inside both components, and honest window labels (S3, S7, S8)
+- Measured: `render.PERIODS` = MTD/QTD/YTD with YTD first and selected (~:806-813); the switch lives only at the top; the
+  trend card reads "year to date" for every fund (~:1057); IDVZ's clipped window reads "Year to date (2026)".
+- Interface: one `rf-period` radio group (R30 checked); the top switch reads R30, a `data-period-divider`, MTD, QTD, YTD;
+  the rankings component and each trend card hold labels for the same four radios (any one moves all; no script); every rank
+  and trend panel carries a `data-period-window` line (label, first and last date, trading days); R30 reads "Last 30
+  trading days"; a clipped window reads "Since first report".
+- Checks: `rn-1.AC1`, `rn-1.AC2`. Organic trigger: the 07:00 ET marker publish and the 09:00 ET sweep publish.
+
+| chain | cells | writes |
+|---|---|---|
+| `~5` | gc-1 | `ai_accounts.py` |
+| `~6` | hc-1 | `gold_holding_contribution.py` |
+| `~7` | bt-1 | `gold_buying_trend.py` |
+| `~2` (cont.) | rn-1 | `render.py` |

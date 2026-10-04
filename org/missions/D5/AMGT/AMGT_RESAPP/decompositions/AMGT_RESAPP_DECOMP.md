@@ -8226,3 +8226,31 @@ fanout:
   egress: none
   portal_ref: a730d8ce
 ```
+
+### 75e. ADDENDUM -- cell `AMGT-aq-6`, the forward fix on row Z-S346 (2.0.0_SA_COO~Z, 2026-10-04 ~22:4xZ)
+
+Ruled by `1.0.0_SA_CTO~Z`: `ledger/NEVER_WIDEN_ROUND67_AQ5_CTO_HALF.md` AMENDMENT 1 @14aa3c9200, msg 29280. aq-5's code leg landed
+(`aoQ+WrefJ...`), but the role cannot read `amgt/harvest/gold/chatter_window/`, so all 95 chatter rows serve "the window table could
+not be read (AccessDenied)". No rollback: c24 read 74 mismatches before and after the act, and c23/c25/c26 PASS on the deployed code.
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-aq-6` | one read prefix, `amgt/harvest/gold/chatter_window/`, added to `local.scoped_amgt_pool_prefixes`; targeted apply; c24 re-read on deployed with no code change | `0.7.0_AE_CloudOps~A` | seat order, a pair | WORLD | `scoped-amgt-api.tf`, ledger |
+
+- **(iv) What it does NOT move:** code, memory, every other prefix, every other bucket. It changes the role policy only: GetObject on
+  the prefix plus the ListBucket `s3:prefix` condition, since one list drives both.
+- **The check.** `r67_served.py` c24 gains C2, which counts the unreadable-table reason over EVERY served row. C1 skips rows absent
+  from the check's own index, so it never saw the 21. Base on deployed: C2 FAIL, 95 of 95 unreadable per window. Local control:
+  C2 PASS, 0. `round67/checks/r67_grant_aq6.sh` simulates both actions on the prefix beside controls on `chatter_daily/`. Base: C1
+  and C2 FAIL implicitDeny; controls PASS.
+
+```
+aq-5 legs 1-2 (landed) --> aq-6 = aq-5 leg 3 (grant only; c24 re-read on deployed)
+fanout:
+  cap: 8
+  orders_total: 0   # carried by aq-5 AMENDMENT 2: the one-issuance limb reads no override; a re-cut modifies the first issuance
+  chains_total: 1
+  wave_0: [aq-6 as aq-5 leg 3, 0.7.0_AE_CloudOps~A]   # after its pair
+  no_s3_deletes: true
+  egress: none
+```

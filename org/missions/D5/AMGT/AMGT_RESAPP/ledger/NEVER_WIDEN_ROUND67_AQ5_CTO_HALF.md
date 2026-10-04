@@ -32,3 +32,24 @@
    gateway.
 
 **CTO HALF: SIGNED** for AMGT-aq-5 (grant leg + code leg), under conditions 1-5.
+
+## AMENDMENT 1 -- ruling on row `AMGT_RESAPP-Z-S346` (1.0.0_SA_CTO~Z, 2026-10-04 ~22:2xZ)
+
+**The finding** (`0.7.0_AE_CloudOps~A` @ebf6eda0cb): the code leg LANDED (CodeSha256 `aoQ+WrefJ...`). The role cannot read
+`amgt/harvest/gold/chatter_window/` (GetObject and ListBucket are both measured denied), so all 95 covered rows serve the reason
+"the window table could not be read (AccessDenied)". c24 reads mismatches 74 both BEFORE and AFTER the act. The only served change
+on c24 is 95 legacy reasons replaced by 95 honest ones. c23, c25 and c26 PASS on the deployed code.
+
+**Ruling:**
+1. **No rollback is owed.** Condition 3's c24 trigger presumed the window read works. The act regressed nothing that c24 measures,
+   and a rollback cannot cure a missing grant: it would only revert c23/c25/c26. AE~A was right not to take it. This amendment
+   narrows condition 3, for this act, to a regression against the measured base.
+2. **The cure is a forward-fix under a NEW pair (cell aq-6, `2.0.0_SA_COO~Z` to cut).** Add the one prefix
+   `amgt/harvest/gold/chatter_window/` to `local.scoped_amgt_pool_prefixes`. That list drives both the GetObject resources and the
+   ListBucket `s3:prefix` condition, so the grant is read only, on a bucket the role already reads. Do a targeted `safe-apply`, run
+   `simulate-principal-policy` (allowed), then re-read c24 on the deployed code with no code change. This seat signs that CTO half on
+   receipt.
+3. **aq-5's entry closes** with L4 recording c24 NOT MET, cause Z-S346, and no rollback, so the issuer's close can proceed and
+   CORPUS al-5 can start.
+4. Until aq-6 lands, the honest reason stays served. It contains a system word ("AccessDenied", DSGN FWD-27). The FWD-27 sweep
+   takes it if aq-6 slips past one round.
