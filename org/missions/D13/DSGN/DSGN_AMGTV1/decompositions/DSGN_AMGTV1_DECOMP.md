@@ -1723,3 +1723,46 @@ paths. It reads FAIL at base 49c6e94a0f (eslint rc=1, 1 error). Green arm: the o
 AC2 = round29 model/whatchanged.cjs and model/etwords.cjs (they read WhatChangedPanel.tsx).
 **Gate fix (MSTR~Z msg 29018, the issuer's call: adopted):** battery29 now runs ESLint, so "ALL PASS" includes the CI lint gate.
 **Fan-out:** 1 of 1. **Risk:** LOCAL. **Direct act.**
+
+## v34 -- ROUND 34 (issuer, 2026-10-04 00:48Z) -- THE GAP WALK + ONE REPAIR CELL (PRD v0.15 @237d5d742f, ADMITTED)
+
+**Rectangle:** the CTO's round-33 analysis section 3 (`ledger/ROUND_ANALYSIS.round33.md` @ff31355b93), and the round-32 grades on PROD
+dbd29c6320: 10 REALIZED, 3 NOT_REALIZED (FWD-5, 21, 27), 13 NOT_EVALUATED, 1 RETIRED.
+**Base:** portal PROD dbd29c6320, the served build.
+
+**1. The gap walk: the issuer's real run, not a cell.** `round34/walk/gapread.mjs` is an issuer instrument built on
+`served-reread-20261002/servedread.mjs`, using the walk.mjs lease. It ran on a worktree build of PROD dbd29c6320 at 5174 against the
+live API: read-20261004T001928Z, 00:19-00:30Z, DISARMED with login REFUSED afterwards. Result: 20 reads, **16 PASS, 3 FAIL, 1 ERROR**
+(`round34/walk/GAP_READ.md`).
+- PASS:
+  - tabs on BA, VLO and AMD with the day dialog closed (5 of 5 each);
+  - ROG SW's CHF header;
+  - ASML NA's officers (filing empty, 7 served from the Bloomberg fallback);
+  - the overlay census, 0 "not served" on 19 carried fields per name;
+  - hovers: full names on every shortened label at 30/90/365, "no clear tone", the timeline tooltip, and bubble/bar identity;
+  - Escape closing the account menu.
+- FAIL: the display-name census. The Peers subject row prints the served `peers.subject.name` ("BOEING CO/THE") while every other
+  surface prints `display_name`.
+- ERROR: FWD-24's positive control. None of the 3 names lacks a checked field; owed on a sparser name.
+The six-state ui-smoke capture (FWD-19/20) is not yet run; it is owed.
+
+| cell | serves | owned files | worker |
+|---|---|---|---|
+| `AV-zl-1` REPAIRS (batched) | FWD-21 labels; FWD-27: header move window, What-changed precision, axis ink, one display name in Peers | `components/ChatterBubbles.tsx`, `components/SecurityOverlay.tsx`, `components/model/WhatChangedPanel.tsx`, `components/TimelinePanel.tsx`, `cscTable.ts`, `tabs/PeersTab.tsx` | ~93 |
+
+**Checks** (each FAILS at base dbd29c6320 with its PLANTED arm passing; each green arm reads N of N through CHECK_SRC_OVERRIDE):
+- `round34/checks/collage/labels34.cjs` reads 2/4. At base it finds 34 collisions over 30/90/365, and 30 shortened labels without a
+  reachable `<title>`.
+- `round34/checks/repairs/repairs34.cjs` reads 1/4: the move has no window, 11 of 13 changes print at raw precision, and the axis is
+  #A8B0C0 at 2.18:1.
+- `round34/checks/names/peername34.cjs` reads 3/4. Its fixtures are `round34/fixtures/{overlay,peers}.{BA,VLO}_US_Equity.json`,
+  captured read-only on code FcVBPafw.
+AC3 = `round29/checks/battery29.sh` with no skip (it now runs the CI ESLint step).
+**Issuer ruling inside this decomposition:** the Peers subject name joins the repair cell. The CTO's analysis expected RESAPP's
+title-case deploy to settle the name limb, but today's served `peers.subject.name` is still the raw vendor form. Which served name
+the page prints for its own subject is a presentation choice; nothing is rewritten.
+**Not cut:**
+- FWD-5's word cloud: when RESAPP ap-4 serves FWD-39.
+- SAUX-25 provenance lines: RESAPP FWD-38(d), at COO~Z.
+- Officers for the 84 of 95 names whose M-1 management object has not landed (RESAPP upstream; observation sent to the CTO).
+**Fan-out:** 1 of 1. **Risk:** LOCAL.
