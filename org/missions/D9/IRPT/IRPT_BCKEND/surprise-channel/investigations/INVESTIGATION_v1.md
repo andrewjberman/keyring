@@ -17270,3 +17270,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "S318 stays ARMED until the ruling is applied. The job, the report and certification are unaffected."
 }
 ```
+
+## IRPT_BCKEND-S322 -- three source-map rows name no live function (the 49F reporting chain runs under 49f names)
+
+```json
+{
+  "id": "IRPT_BCKEND-S322",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-04T21:45Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Three source-map rows name no live function: irpt-reporting-gold-lambda, irpt-reporting-publish-lambda and irpt-reporting-read-lambda answer ResourceNotFound; the live functions are builder-named irpt-49f-reporting-gold-lambda, -publish-lambda and -read-lambda (the P-2 window's A1/A4/A6), so the map's rows for the served 49F reporting chain record nothing that runs",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "issuer's IB-pr-314 lag census 2026-10-04 ~21:2xZ: 15 IRPT source-map rows; boto3 get_function_configuration on irpt-reporting-gold-lambda, irpt-reporting-publish-lambda, irpt-reporting-read-lambda -> ResourceNotFoundException",
+      "ledger irpt-p2-window-20261003 legs A1, A4, A6 name the live functions irpt-49f-reporting-gold-lambda, irpt-49f-reporting-publish-lambda, irpt-49f-reporting-read-lambda (CodeSha256 Mex71Y5g, AH5r60vp, Wzf2qS5P at the window)"
+    ]
+  },
+  "spec_asserts": "The source map records what is deployed, keyed by the live function name.",
+  "world_is": "MEASURED: the three rows' keys name functions that do not exist; the running 49F reporting functions have no rows.",
+  "notes": "Not IB-pr-314's (that cell records six named functions). The remedy is S293's shape: re-key or add the 49f rows (the naming limb now admits builder-minted names in the source map, CVO ruling @7b38f056ca) and record them. A candidate cell for E2 or the next round; the issuer rules it there."
+}
+```
