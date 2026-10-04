@@ -5,47 +5,43 @@ Loop `/canonical-drive IRPT_BCKEND`. Way forward: CTO rulings in
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md` and the fold-in
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_FOLD_IN_IRPT_THREE_BRIEFS_20261002.md` section 2 (Y-1..Y-6, Y-H); run order
 CTO 104634 ("Y-3 READY, then Y-5 V1, then Y-4 V1, one at a time and spaced"). Reviewer `3.0.0_SA_CVO` (grades pins after
-the fact). As of 2026-10-03T18:0xZ.
+the fact). As of 2026-10-04T02:3xZ.
 
 ## Pins
 
 | What | Value |
 |---|---|
-| CLOUD (local) | Y-3 READY evidence `ee801b0505`, its ledger closed `284667acb5`; Andrew-direct egress record `ce20ca6854`; Y-3 timing `f6d8202ce4`. No worktree held |
-| SERVED: `irpt-status` | `hC6PramtsshP40jo3OJ91k4qxlHndylJWxHLIjIdw/E=` since 06:28:49Z (G3 + W2-06). Rollback: re-promote S3 `4CQOSM..` (`6VQejBfs..`), drop the variable, delete the policy |
-| SERVED: PDF route | `GET analysis/requests/{requestId}/pdf`, route `ihirb2s` on `7k3ed8px20` |
-| SERVED: the resident | `/opt/irpt-resident/a6f6e7165e-st18` since 05:52:20Z. Rollback root `828c37c6f7-st17` |
-| SERVED: `irpt-ycharts-generate` | `fD2R6OFrT2N086C9Go3e1aA9RKZCP/vfnZCaHCloJTs=` since 03:02Z. Rollback: S3 `oew.wOPK..` with the resident, all or none |
-| SERVED: runner role | the estate Kimi secret through ONE carrier (`local.kimi_secret_arn`); login and session ARNs keep `-*` (parked) |
-| Stored YCharts session | **LIVE** since 16:3xZ at fence 25 (AWSCURRENT `6190de31`, captured_by `irpt-ycharts-har-seed`), seeded from Andrew's HAR with no sign-in; S288 disarmed by S306. Shared with Andrew's browser (S233). aws-waf-token expiry ~epoch 1791390810; the server-side ycsessionid expiry is unknown |
-| Push state | LOCAL; origin CLOUD `a714df4d7f` (ls-remote read 17:3xZ); CLOUD is pushed by `0.0.0_AB_MSTR` only |
+| CLOUD (local) | Y-5 READY + 4 ledgers closed `1afe081ac4`; YCDGEN round 1 drained `c1d672f636`; the research grant packet `6b76e61d62`. No worktree held |
+| SERVED: `irpt-ycharts-generate` | `uFTONal/RhfoETes4rqJ4xRjJV4d2/nv3OlwuR9AXCQ=` since ~01:5xZ 2026-10-04 (Y5D: bind at cents). Rollback S3 `31clJjOm..` (`FgZcBjJu..`) with the resident, all or none |
+| SERVED: the resident | `/opt/irpt-resident/3f29017cfc-st21` since 02:01:04Z 2026-10-04. Rollback root `136ee09e9f-st20` |
+| SERVED: `irpt-status` | `hC6PramtsshP40jo3OJ91k4qxlHndylJWxHLIjIdw/E=` (G3 + W2-06) |
+| SERVED: runner role | Kimi key via one carrier; login and session ARNs keep `-*` (parked). Pending: `KeepYChartsResearchAnswersAndRunRecords` (IRPT_YCDGEN; packet at the CTO) |
+| Stored YCharts session | LIVE at fence 25 since the HAR seed (S288 disarm row S315; the remediation clock is the CVO's) |
+| Push state | LOCAL; origin CLOUD is pushed by `0.0.0_AB_MSTR` only |
 
 ## Live thread -- fold-in Y-1..Y-6
 
-1. **Y-3 READY** 17:03:14Z: REQ-329a5618 (Multi, ULT + IWM, Cottonwood), report RPT-c8c4037a. Ledger
-   `irpt-y3-20261002` CLOSED. Measured: 15 m 06 s of its 17 m 43 s is our 900 s read-back release after one
-   `calculating` answer (`IRPT_MVP_Y/RESEARCH/Y3_JOB_TIME_BREAKDOWN_MEASURED_20261003.md`).
-2. **Y-5 V1 (next):** Case A with TIMXX -> SGOV from the page. `2.0.0_SA_COO~D` added case `Aproxy` to
-   `yh-submit-case.mjs`; it passes on fixtures (104671). The live run is HELD by ~D on: (a) site Z holding the UI-walker
-   account (MSTR 104669); (b) whether Andrew's ~17:3xZ "We will discuss internally on how to proceed with further data
-   collection after review" covers a YCharts Analysis run. (b) is ASKED of Andrew at this terminal ~18:0xZ.
-3. **Y-4 V1** after Y-5: the typo file. The driver's `typo` case has no accept step, and the file also holds TIMXX, so READY
-   needs the AAPL accept AND TIMXX -> SGOV: the next ask to ~D after Aproxy runs.
-4. Then Y-2 (the page's Case B; the easy file holds TIMXX too) and Y-6.
+1. **Y-3 READY** 2026-10-03 17:03:14Z (closed).
+2. **Y-5 READY** 2026-10-04 02:28:20Z: REQ-a618aa83 (TIMXX named SGOV on the page; RPT-ffe60035). Three defects found and
+   served on the way (y5v finding value, y5c cents upload, y5d bind at cents; row S316). Ledgers closed.
+3. **Y-4 V1 (next):** the typo file -- accept AAPL for APPL and name SGOV for TIMXX. `2.0.0_SA_COO~D` asked for a
+   `typoAccept` driver case and one live run (02:32Z).
+4. Then Y-2 and Y-6.
 
-## New project (not this lane's build): YCharts direct-API generation, Opal-branded
+## IRPT_YCDGEN (this seat issues; FULL lease)
 
-Andrew-direct ~17:0xZ, request `IRPT_MVP_Y/RESEARCH/CRO_REQUEST_YCHARTS_DIRECT_GENERATION_20261003.md`. L1 brief
-`docs/briefs/irpt-ycharts-direct-generation-opal-branded-brief-20261003.md` @8dc32668e1 (4.0.0_SA_CRO). L2
-`org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_IRPT_YCHARTS_DIRECT_GENERATION_20261003.md` @c3f2fb4bb3 waits on
-Andrew confirming its seven DONE WHEN lines. Andrew ~17:3xZ (`ce20ca6854`): YCharts egress whitelisted for this seat and
-its agents; subscription cleared for use.
+Round 1 (the thread, FWD-1) merged and drained `c1d672f636`: keeper + X10 row, runner inside the served lease, the
+Overview map (249 elements, 12 calls), the Opal-branded layout (real Chromium). The close's one live run waits on the runner
+role's research grant (ledger irpt-ycdgen-grant-20261004; packet blob `01c8a35f8d` at the CTO). Then the L8 compile to the
+CVO (m-1.AC2 is its judgment criterion).
 
 ## Queued work
 
 - Y-5 packet 2 (the Kimi swap): HELD by CTO batch 218 (YAGNI: the user-named proxy serves Case D). Findings
   `Y5P2/KIMI_WEB_SEARCH_QA_FINDINGS_20261003.md`.
 - G3 arm 3, the live wiring, is E4's.
+- The Y-5 jobs spend ~15 min in the 900 s read-back release after one `calculating` answer
+  (`RESEARCH/Y3_JOB_TIME_BREAKDOWN_MEASURED_20261003.md`); IRPT_YCDGEN FWD-6 measures YCharts' real calculation time.
 
 ## Rows this lane holds
 
@@ -62,7 +58,8 @@ its agents; subscription cleared for use.
 
 ## Ledgers this seat holds open
 
-- `irpt-y5-20261003` and `irpt-y4-20261003`: apply legs proven, V1 open, not held (released after the session restore).
+- `irpt-y4-20261003`: apply legs proven, V1 open (the typo run).
+- `irpt-ycdgen-grant-20261004`: D1 and V1 open (the research grant; packet at the CTO).
 
 ## Write claims
 
