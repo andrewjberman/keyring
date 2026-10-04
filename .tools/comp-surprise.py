@@ -277,8 +277,11 @@ def main():
     print("                       investigation counts and never added to them.")
     if rem:
         done = len([r for r in rem if (r.get("remediation") or {}).get("state") == "REMEDIATED"])
+        # CLOSED_UNREMEDIATED (proposal @759c693537): finished while world != spec, counted beside REMEDIATED, never in it.
+        cu = len([r for r in rem if (r.get("remediation") or {}).get("state") == "CLOSED_UNREMEDIATED"])
         dis = len([r for r in rem if (r.get("disarm") or {}).get("state") == "DISARMED"])
-        print("                       DISARMED %d | REMEDIATED %d  (two states, two clocks)" % (dis, done))
+        print("                       DISARMED %d | REMEDIATED %d | CLOSED_UNREMEDIATED %d  (two states, two clocks)"
+              % (dis, done, cu))
 
     if dfx:
         print("\n== SCHEMA OBLIGATIONS UNMET (%d) -- the schema's conditionals ARE the law ==\n%s" % (len(dfx), SEP))

@@ -105,7 +105,8 @@
     "state": {
      "enum": [
       "OPEN",
-      "REMEDIATED"
+      "REMEDIATED",
+      "CLOSED_UNREMEDIATED"
      ]
     },
     "owner": {
@@ -115,12 +116,62 @@
     "round": {
      "type": "string",
      "pattern": "^v[0-9]+$"
+    },
+    "closure": {
+     "type": "object",
+     "required": [
+      "reason",
+      "pointer"
+     ],
+     "additionalProperties": false,
+     "description": "CLOSED_UNREMEDIATED only (proposal org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PROPOSAL_20261003_REMEDIATION_STATE_CLOSED_UNREMEDIATED.md; CVO concurrence cvoO_CONCUR_CLOSED_UNREMEDIATED_20261003.md with C1-C5). How a row finished while world != spec as asserted: NOT_A_DEFECT (the row asserts no defect: the spec was wrong, a ruling AMENDED or withdrew it, or the row is a carried note recording a fact -- the read, ruling or note), CARRIED_BY (the remedy is still OWED and now lives with another carrier: the successor row id or order; a row already fixed by another repair is REMEDIATED, never CARRIED_BY), IRREMEDIABLE (no act can restore the world: the evidence; wins over ACCEPTED_BY_RULING when both apply), ACCEPTED_BY_RULING (a ruling that KEEPS the spec and accepts the gap: the record path). The pointer names that evidence.",
+     "properties": {
+      "reason": {
+       "enum": [
+        "NOT_A_DEFECT",
+        "CARRIED_BY",
+        "IRREMEDIABLE",
+        "ACCEPTED_BY_RULING"
+       ]
+      },
+      "pointer": {
+       "type": "string",
+       "minLength": 3
+      }
+     }
     }
-   }
+   },
+   "allOf": [
+    {
+     "comment": "closure exists exactly when the state is CLOSED_UNREMEDIATED",
+     "if": {
+      "properties": {
+       "state": {
+        "const": "CLOSED_UNREMEDIATED"
+       }
+      },
+      "required": [
+       "state"
+      ]
+     },
+     "then": {
+      "required": [
+       "closure"
+      ]
+     },
+     "else": {
+      "not": {
+       "required": [
+        "closure"
+       ]
+      }
+     }
+    }
+   ]
   },
   "closed": {
    "type": "boolean",
-   "description": "DISARMED IS NOT REMEDIATED: for LATENT_HAZARD, true requires disarm.state=DISARMED AND remediation.state=REMEDIATED; for other classes, remediation.state=REMEDIATED"
+   "description": "DISARMED IS NOT REMEDIATED: true requires remediation.state REMEDIATED or CLOSED_UNREMEDIATED (with its closure); for an ARMED row it ALSO requires disarm.state=DISARMED -- a live hazard never closes ARMED"
   },
   "hazard_standing": {
    "enum": [
@@ -213,7 +264,10 @@
      "remediation": {
       "properties": {
        "state": {
-        "const": "REMEDIATED"
+        "enum": [
+         "REMEDIATED",
+         "CLOSED_UNREMEDIATED"
+        ]
        }
       }
      }
@@ -241,7 +295,10 @@
      "remediation": {
       "properties": {
        "state": {
-        "const": "REMEDIATED"
+        "enum": [
+         "REMEDIATED",
+         "CLOSED_UNREMEDIATED"
+        ]
        }
       }
      }
