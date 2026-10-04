@@ -68,5 +68,10 @@
 - A2. At invoke time, the union (pushed refs plus every device census in the window) has 0 rows with commit time in
   [2026-10-03T22:15:00Z, 22:16:00Z). The laptop's refs are not visible from site Z. A non-zero is a STOP and a re-seed.
 - A3. The QA trace and both device censuses come first, as the addendum orders. ONE served invoke of `{"date": "2026-10-04"}`, once.
+- A4. **Both invoke-time branches are covered,** read from the same rule (`limit` in `cut_window`):
+  - invoked before 2026-10-05T04:00Z (10-04 is still the New York day): end = the earliest 10-04 census, capped at the run;
+  - invoked after it: end = min(the 10-04 censuses, 2026-10-04T20:10Z), and the rest falls contiguously into 10-05. This matches
+    `2.0.0_SA_COO~H`'s extension @7fa231405f.
+  - A 2026-10-03 invoke on the new image is not covered.
 
 **CTO HALF: EXTENDED** to Addendum A under A1-A3 and the original conditions 1-5.
