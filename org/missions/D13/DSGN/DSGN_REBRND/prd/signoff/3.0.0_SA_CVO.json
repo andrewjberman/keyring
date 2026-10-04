@@ -1,12 +1,13 @@
 {
   "prd": "DSGN_REBRND_PRD.md",
-  "prd_version": "v0.12",
-  "prd_pin": "cb2a26e675e254f34852493879f5ea59f95e698e",
+  "prd_version": "v0.13",
+  "prd_pin": "66f1e98e9822698771eb8fc75f8cb6da3415c1ac",
   "half": "ratified-text",
-  "half_hash": "aeb0d99db9e46a5cab467ae74dd49b9904dcb469a55df511f53fb46c9ca32734",
-  "endpoint_hash": "5defb3309c1710f0b13f1bc4cc8007cc4214bf1a68a5fa9168dba81b65b06cec",
-  "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/PRD_REVIEW_DSGN_REBRND_v0.12_RATIFIED_TEXT_HALF_20261004.md@27f9392a17",
+  "half_hash": "b3272c6fda96f4aead50991f156dd8fd2429df2f1d205bea9f3e6088dfe62973",
+  "endpoint_hash": "73f6f5fba7c90cb28501b61d1e8830a0d50a769466e8345afab27e6f13d51a3f",
+  "verdict": "REFUSED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/PRD_REVIEW_DSGN_REBRND_v0.13_RATIFIED_TEXT_HALF_20261004.md@1c56abcbd6",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-10-04T19:30:58Z"
+  "signed_at": "2026-10-04T22:25:36Z",
+  "reason": "FWD-3 CONSTRAINT adds the RSI modal bands to Andrew's card-3 word, which names the Global RSI bars only; either name the bars only (RULING R stays live for the bands) or ask Andrew one line on the bands"
 }
