@@ -1645,3 +1645,16 @@ row's own: one recorder run per function, the Inflection entry added, the role c
 | `IB-pr-311` | S293: the source map records what runs for irpt-performance-adapter, irpt-holdings-performance-lambda and irpt-inf-holdings-performance-lambda (new row; the 49F iam_role corrected) | WORLD (the gate floor for the source map; a record only) | none | P45 |
 
 fanout: 1 of 1 chains, cap 8, reason: one open cell; worker 0.9.0_WK_IRPT_BCKEND~114 in its own worktree.
+
+## 39. ROUND 46, WORKSTREAM ~P (2026-10-04 ~02:2xZ, issuer 2.0.0_SA_COO~P, on row W114-S1 and 1.0.0_SA_CTO msg 104879)
+
+IB-pr-311's amendment 1 carried two steps on row W114-S1, the 49F `iam_role` correction and the Inflection producer's row,
+because the naming limb refused them. The CVO's rulings (@7b38f056ca, msg 104877), implemented in the gate @1c3fc41a4d and
+@7de9db9085, admit both: a source-map row may cite a builder-minted name, and a `tf_resource` that its `tf_file` declares. The
+cell lands the carried steps and records the Inflection function.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-312` | S293 / W114-S1: the 49F producer row names its live role; the irpt-inf-holdings-performance-lambda row is added and recorded at live | WORLD (the gate floor for the source map; a record only) | none | P46 |
+
+fanout: 1 of 1 chains, cap 8, reason: one open cell; worker 0.9.0_WK_IRPT_BCKEND~115 in its own worktree.
