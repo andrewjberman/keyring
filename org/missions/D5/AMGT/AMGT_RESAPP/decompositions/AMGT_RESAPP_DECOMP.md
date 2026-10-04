@@ -8136,3 +8136,93 @@ fanout:
   egress: ap-3 only (Bloomberg PX_LAST, card 4's per-use word, record @9fe6e6f111)
   portal_ref: a730d8ce
 ```
+
+
+## 75. ROUND 67 -- FWD-39 LIST REPAIR, FWD-36 TONE, FWD-38 (d) PROVENANCE, THE Z-S86 DESIGNED REASON, ONE REDEPLOY. Five cells, five orders
+
+**Cut by `2.0.0_SA_COO~Z`**. Input: the CTO's round-66 analysis @d76db3486c (msg 29112, on CVO~Z slug 29108, ADJUDICATION_v79),
+sections 3-4. PRD v0.37 ADMITTED (no ENDPOINT change, no re-sign).
+
+**Issuer rulings at the cut:**
+- R1. **FWD-39's exclusion is graded over EVERY served payload,** not 3 (analysis section 2: c18 tested display-name words on 3
+  names, and the coverage uses the ticker and brand).
+  - c23 names the set it tests: the ticker root and the served short name (`display_name`) words, on BOTH the default range (the
+    population the CVO read) and 2026-09-01..today. The long name (overlay `name`) is graded by the plant test.
+  - The stop list extends with the measured boilerplate (at least among, top, quant, focus, big, notable, higher), still printed
+    with its source.
+  - An inverted window serves its reason and never prints the inverted pair (ruling 2).
+  - Singular and plural stay apart (ruling 3, not cut).
+- R2. **FWD-36 tone reads the latest `chatter_window` part** (the HARVST gold table, `lib/research/harvest/window_tone.py`
+  TABLE/schema).
+  - `tone` and `voters` are served as the table holds them.
+  - 0 voters serves `tone` null with `tone_reason` "no clear tone".
+  - The "not served on this route yet" reason goes.
+- R3. **FWD-38 (d) provenance is the `/ledger` route's producer half** (DSGN's Model tab prints only what `/ledger` serves).
+  - Every class names its real source and last run, or a plain `source_reason` where the estate has none.
+  - The `news` class agrees with the overlay's own harvested_news `last_run`.
+  - No new store write: the route composes from the sources the overlay provenance already reads.
+- R4. **Z-S86:** a name the estate covers but which has no model block serves thesis and peers with their designed reason, never a
+  404.
+  - The cell names the universe that makes Deere covered: it is NOT in `covered_security_keys()` (95) and NOT in the identity
+    crosswalk.
+  - A key covered nowhere still answers 404.
+- R5. **One redeploy** carries aq-1..aq-4 under a never-widen pair. The range route's cold read is printed again (analysis 4.5).
+- R6. **Owed reads, not cells:** the daily job's post-run read after 2026-10-04 11:00Z (analysis 4.6).
+
+### 75a. MEASUREMENTS (`round67/checks/r67_served.py`, CLOUD ~01:5x-02:1xZ; every cell FAILS at the base)
+
+- c23, measured on deployed `FcVBPafw` over 95 names x 2 windows = 190 payloads, 128 non-empty:
+  - C1: 15 offenders carry their own ticker root or a short-name word (ADBE 'adbe', AMD 'amd', COST 'cost', HAL 'hal', CELH,
+    NKE, ...).
+  - C2: 69 payloads carry an extended-list word.
+  - C3: the inverted window is served as 2026-01-01..2025-06-30.
+  - The first version graded 2026-09-01..today only and found 3, because ADBE 'adbe' #5 and UNH 'unh' #3 appear only on the
+    default range. It was widened before the cut, so it grades the population the CVO read.
+- c24: 74 of 95 rows mismatch the 636-row `chatter_window` on each of 30, 90 and 365. Every row serves tone null and the old reason.
+- c25: on BA, AMD and VLO:
+  - 4 of 6 ledger classes are unsourced (filings, news, social, web);
+  - the news class has no run, while the overlay says harvested news last ran (e.g. BA 2026-10-01T05:03:53Z);
+  - `classes_with_a_run` is 1 = 1.
+- c26: DE_US_Equity thesis and peers answer 404, "no security matches"; the control ZZZZ_US_Equity answers 404.
+
+### 75b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-aq-1` | FWD-39 list repair + the inverted window (R1) | `0.9.0_WK_AMGT_RESAPP~219` | worker | LOCAL | `lib/research/api/` |
+| `AMGT-aq-2` | FWD-36 tone from `chatter_window` (R2) | `0.9.0_WK_AMGT_RESAPP~220` | worker | LOCAL | `lib/research/api/` |
+| `AMGT-aq-3` | FWD-38 (d) provenance on `/ledger` (R3) | `0.9.0_WK_AMGT_RESAPP~221` | worker | LOCAL | `lib/research/api/` |
+| `AMGT-aq-4` | Z-S86: the designed reason for a covered name with no block (R4) | `0.9.0_WK_AMGT_RESAPP~222` | worker | LOCAL | `lib/research/api/`, `lib/research/coverage/` |
+| `AMGT-aq-5` | the code redeploy carrying aq-1..aq-4 (graded c23-c26 on deployed) | `0.7.0_AE_CloudOps~A` | seat order, a pair | WORLD | Lambda artifact, ledger |
+
+### 75c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** The domain is the analysis's enrichment list items 1-5; item 6 is a read, not a cell.
+- **(ii) Same grain.** One served surface per cell: the timeline `word_cloud`, chatter `tone`, `/ledger`, or thesis/peers.
+- **(iii) Intent.** One axis per cell.
+- **(iv) What a cell does NOT move:**
+  - aq-1 changes only which words a cloud serves.
+  - aq-2 changes `tone`, `voters` and `tone_reason` only.
+  - aq-3 changes `/ledger`'s classes and runs only; no store write.
+  - aq-4 changes a 404 into a designed answer only for covered names.
+  - aq-5 changes code only; memory stays 1769.
+
+### 75d. EDGES AND FAN-OUT
+
+All four build cells write `lib/research/api/scoped_amgt.py`. They are drained one at a time, with the union suite re-run after
+each.
+```
+aq-1 --+
+aq-2 --+
+aq-3 --+--> aq-5 (one redeploy, one pair, graded c23-c26 on deployed; the range-route cold read printed)
+aq-4 --+
+fanout:
+  cap: 8
+  orders_total: 5
+  chains_total: 1
+  wave_0: [aq-1 ~219, aq-2 ~220, aq-3 ~221, aq-4 ~222]
+  wave_1: [aq-5 0.7.0_AE_CloudOps~A]   # after the four drains and its pair
+  no_s3_deletes: true
+  egress: none
+  portal_ref: a730d8ce
+```
