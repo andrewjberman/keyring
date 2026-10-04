@@ -7520,3 +7520,28 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W22-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~22",
+  "surfaced_at": "2026-10-04T00:50Z",
+  "one_line": "A2 restates test_ogq2_ac20 for the single-page request only, but the same test's PAGED assertion (duplicate_source_grain) also cannot hold under R9 and R9a: a paged request on a non-unique dim_position snapshot refuses paging_refused_no_unique_grain, as test_oggr3_ac03 already asserts; the worker restated that one assertion.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN (branch wk-NFRA_OPLGTW-22-r16 @518ff0c51a): python -m pytest tests/test_schwab_query.py -k ogq2_ac20 -> 1 passed after the restatement; before it, the planted row was not a full-grain duplicate and the paged request was served.",
+      "SOURCE: integration.py R9a branch takes only a single page (offset 0, matched <= page_size); R9a section 7 'Nothing else changes' leaves the paged path to the :742-752 check, which refuses paging_refused_no_unique_grain.",
+      "SOURCE: GR3_TEST_EDITS.md lists the restatement; both assertions still refuse the request, only the paged refusal code differs."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A2 item 3: restate test_ogq2_ac20 to plant a full-grain duplicate and assert a single-page dim_position request is REFUSED duplicate_source_grain; nothing is said of the paged assertion in the same test.",
+  "world_is": "The paged assertion expected UNAVAILABLE duplicate_source_grain, a code the old per-result check gave when a paged request carried every grain column. Under R9 no request carries quantity_cash_settled, so the paged request on the planted snapshot is refused INVALID_REQUEST paging_refused_no_unique_grain by paging's own snapshot check; the assertion now states that. If the CTO wants the paged code to stay duplicate_source_grain, the fallback must also take the paged path, a serving change beyond R9a.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```

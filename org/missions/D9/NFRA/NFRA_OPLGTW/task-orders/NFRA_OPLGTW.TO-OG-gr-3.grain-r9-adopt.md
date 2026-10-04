@@ -126,7 +126,7 @@ Rows: id `NFRA_OPLGTW-Z-W22-S<k>` (next unused), fabric `site-z`, disarm_owner `
 - Round label 16 (addendum R3-T.9, item 1); feeds `OG-rl-5`. Pre-cut 22:1xZ: `gr3.AC1` FAIL (test absent; the existing
   suites 41 passed); `gr3.AC2` FAIL (0 files).
 
-<status>pending -- A2 (R9a): the single-page fallback in integration.py</status>
+<status>complete</status>
 <round>16</round>
 <slot>~22</slot>
 <fabric>site-z</fabric>
