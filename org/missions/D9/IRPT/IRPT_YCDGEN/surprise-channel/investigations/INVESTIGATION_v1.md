@@ -105,3 +105,31 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_YCDGEN-S1 -- the close run's first write is denied by Cottonwood's firm fence; the applied grant was proven by an identity-only simulation
+
+```json
+{
+  "id": "IRPT_YCDGEN-S1",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-04T18:45:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The close run (YCD-R1-20261004T1842Z) stopped at its first write: opal-data-cottonwood's bucket policy DenyForeignFirmPrincipals explicitly denies s3:* to any principal not matching role/*-cot-* (plus three users and irpt-holdings-role), and the resident host's irpt-ycharts-runner-role is none of them. The grant applied at 02:44Z (batch 237) was proven by an identity-policy simulation only, which cannot see a bucket policy's explicit Deny",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~Y/close/YCD-R1-20261004T1842Z_host_run.txt: ssm 9da96471 18:42:50Z-18:42:52Z, runner rc=1, botocore ClientError AccessDenied on s3:PutObject by assumed-role/irpt-ycharts-runner-role on opal-data-cottonwood/irpt/cottonwood/...",
+      "s3api get-bucket-policy opal-data-cottonwood read 2026-10-04 ~18:44Z: Sid DenyForeignFirmPrincipals, Deny s3:* on the bucket and /*, Principal *, ArnNotLike aws:PrincipalArn [role/*-cot-*, user/Andrew_Berman, user/Andrew_Berman_Console, user/Opal_Terminal, role/irpt-holdings-role]",
+      "infra/aws/terraform/investor-reporting/directory/holdings_refresh.tf:6-10: one principal per firm; the host role does not carry the firm's slot and widening it is the forbidden cross-firm act, so each firm's run is ASSUMED onto that firm's principal"
+    ]
+  },
+  "spec_asserts": "IRPT_YCDGEN C-STORE: the runner keeps each answer and run.json at address('irpt','cottonwood','state',ycharts_responses|ycharts_runs,...) = s3://opal-data-cottonwood/irpt/cottonwood/state/..., written by the resident host's runner role under statement KeepYChartsResearchAnswersAndRunRecords.",
+  "world_is": "The firm fence denies that role on the whole bucket, so the statement is inert. The run acquired and released the provider lease (session item lease_expires_at 0 at ~18:44Z); at most one vendor GET (step 1, securities_info) was sent before the first keep failed; nothing was written. Remedy proposed (estate pattern): a Cottonwood-scoped research principal named by opal_name with the cot scope token, holding exactly PutObject+GetObject on the two research prefixes, assumed by the runner role for the writes; the runner composes its S3 client from that role. Never-widen-class act: needs the CTO half.",
+  "notes": "The grant ledger irpt-ycdgen-grant-20261004 V1 stays open; the after-read for the remedy reads the bucket policy as well as the identity simulation."
+}
+```
