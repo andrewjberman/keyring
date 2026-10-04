@@ -103,3 +103,14 @@ generation rows, not "not produced yet"; c22 grades them, and c10 is re-read for
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-04 ~00:5xZ):** CLOSED. AE~A `abb9bd85de` built at pin `b642e313f9` (355 / 350 / 5).
+- CodeSha256 `lPTMo20T` -> `FcVBPafw`, VersionId `Pj6GLEdKjRnDFwBjZzOSR2gYAsQPHilG`; memory 1769.
+- AC1 c19, AC2 c18 and AC3 c22 PASS.
+- c15 cold 3 of 3 at 2.03-2.33 s. The ADDED range read was 9 of 12 cold at 2.03-2.55 s, 0 over 5 s, so no round-67 word-cloud cost cell.
+- Regressions YES. c10's 90/365 clauses were retired at `6e1852e03f` (row Z-S344).
+- NEVER-2 entry `c381a73995` closed.
+
+Issuer re-read on deployed: c18 YES (BA, AMD and VLO 40 terms each; the empty window with its reason), c19 YES (4 windows), c22 YES (94/95 rows, `window_end` 2026-10-02 = the last trading day), c9-c14 YES, c17 YES. Correction: this half's 'VLO 22 terms' was an earlier local read; VLO serves 40 on deployed.
+
+<status>complete</status>
