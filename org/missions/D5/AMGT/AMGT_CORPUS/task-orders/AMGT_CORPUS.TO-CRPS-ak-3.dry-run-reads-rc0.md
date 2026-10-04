@@ -97,3 +97,5 @@ Read-only: the whole repository, in particular `induction_request.py` (`install_
 <round>35</round>
 <slot>~3</slot>
 <fabric>site-z</fabric>
+
+<status>complete</status>
