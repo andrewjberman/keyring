@@ -36,3 +36,8 @@ one another. Once that is complete, we may resume the drive across the fabric."
 - **Not read into the word:** no hold on any other seat. His word names the drive's resumption, and this seat relays nothing wider.
 - **State at the hold:** every seat but this one was quiet since about 03:20Z. Laptop CLOUD is 128 commits ahead of origin and
   245 behind (origin cd20da5996; ls-remote read 17:2xZ).
+
+### RESUMED 2026-10-04 ~18:1xZ -- the hold's own condition is met
+
+`0.0.0_AB_MSTR` msg 104911 reports PARITY at 18:16Z, and this seat read it: laptop CLOUD = HEAD = origin CLOUD = 791909f744.
+43b6ca6f01 (laptop) and a2a5cb3a6a (site Z) are both its ancestors. The drive resumes at the next tick, under the terms above.
