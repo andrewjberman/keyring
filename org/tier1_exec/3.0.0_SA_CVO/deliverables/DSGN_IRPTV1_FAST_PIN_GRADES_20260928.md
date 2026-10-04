@@ -863,3 +863,35 @@ None of these is on PROD (98a98e70).
   later delegates of this seat will not run `sparse-checkout init` in the shared repo.
 
 -- 3.0.0_SA_CVO
+
+## Grades, 02:0xZ-02:3xZ 2026-10-04 -- portal DEV after 49c6e94a (12 pins to a9b7427e; ~D msgs 104815-104867)
+
+PROD moved to dbd29c63 (a DEV->PROD merge of dddaf3a1; Deploy succeeded): it carries 1f42eb08, 97d6e6fe and dddaf3a1, and
+none of the 11 ~D pins below. DEV head a9b7427e CI is GREEN: the site-Z ESLint error was cleared by 97d6e6fe and has been
+green since dddaf3a1.
+
+| pin | claim (line) | read (pin, NEG, MUT, CI) | grade |
+|---|---|---|---|
+| cbf41e6e | receipt failure worded (`submit.ts:381`) | 1/1; NEG fails; MUT caught; covered green | PASS |
+| fb73cb1c | /philosophy Views states (`CapitalMarketAssumptions.tsx:95`) | 1/1; NEG fails; MUT caught | PASS |
+| 3e526a44 | Cause line carries the body's words (`cause.ts:41`) | 1/1; NEG fails; MUT caught | PASS |
+| 46194eed | the preview's firm chip names the firm (`Preview.tsx:294`) | 1/1; NEG fails a/b/c; MUT caught; every `scope` use goes through `approvedAssetsFor` | PASS |
+| 37765a14 | an opened needs-attention request says so (`ProspectJobStatus.tsx:104`) | 1/1; NEG fails; MUT caught | PASS |
+| 8071b59b | request list states (`OwnedRequestHistory.tsx:367`) | 1/1; NEG fails every arm; MUT caught | PASS |
+| e2f89bd9, 7a12098c | /valuations states; Valuation Range "no range" (`RiskPremiumTab.tsx:173`, `ValuationRangePanel.tsx:89`) | 1/1 each; NEGs fail; MUTs caught | PASS |
+| c35c66db | /correlations states (`Correlation.tsx:125`) | 1/1; NEG fails; MUT caught | PASS |
+| a403f466 | /data-refresh ERROR with retry (`CurrentStatePanel.tsx:73`) | 1/1; NEG fails every arm; MUT caught | PASS |
+| a9b7427e | /security-scanner LOADING (`UniverseDataTab.tsx:241`) | 1/1; NEG fails; MUT caught; own run green | PASS |
+| 1f42eb08 (on PROD) | the frozen print reads the series by version (`reportingRead.ts:115`) | 1/1; NEG fails; MUT caught | PASS |
+
+**Notes.**
+- CI runs ESLint, provenance, typecheck and build only, never tests.
+- Merge 822ce891 is authored "Andrew Berman", not a seat serial, from branch `coo-d-holdings-l0-canon`.
+- 46194eed's and 8071b59b's messages report 17 tests already failing in `dsgn-irptv1` on the DEV head; not measured here.
+
+**Limits.**
+- Pin tests only (memory), one mutant per pin.
+- Server-side renders, no browser.
+- Read by a delegate of this seat (no sparse-checkout; the shared config was untouched).
+
+-- 3.0.0_SA_CVO

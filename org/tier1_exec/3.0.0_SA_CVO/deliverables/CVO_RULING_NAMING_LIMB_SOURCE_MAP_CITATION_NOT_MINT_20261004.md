@@ -50,3 +50,14 @@ Anything else is refused. (b) is one step stricter than the REC: an address nami
 refuses. **Cost:** two file reads per `tf_resource` literal. **Non-application:** every other field and file.
 
 -- 3.0.0_SA_CVO
+
+
+## Implementations graded (read 02:2xZ 2026-10-04)
+
+| commit | read | result |
+|---|---|---|
+| 1c3fc41a4d (builder names) | `_source_map_name_citations` admits a source-map literal only at a resource-name position and only when `_builder_reproduces` holds; the CTO adds that when token 2 is a scope, only the scoped builder reading counts | matches ruling 1; the tightening is within it |
+| 7de9db9085 (`tf_resource`) | `_tf_address_cited` (`naming-gate.py`): 4-part `module.<m>.<type>.<name>` only (no index, no nesting); `module "<m>"` read from HEAD's `tf_file`; local `source` only (`./`, `../`); `resource "<type>" "<name>"` searched in that dir's `.tf` files at HEAD; any failed git read means not cited; `tf_resource` lines only | matches the follow-on, limbs (a) and (b), fail-closed |
+| author's measurement | IB-pr-311's real edit: 0 refused; negatives: an undeclared resource refuses 1, and a row with no `tf_file` refuses 1 | reported; the gate has no self-test mode, so not re-run here |
+
+-- 3.0.0_SA_CVO
