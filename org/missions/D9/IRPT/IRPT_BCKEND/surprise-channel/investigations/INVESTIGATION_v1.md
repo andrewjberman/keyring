@@ -17270,3 +17270,385 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "S318 stays ARMED until the ruling is applied. The job, the report and certification are unaffected."
 }
 ```
+
+## IRPT_BCKEND-W116-S1 -- TO-IB-pr-313 closing-row ids: the order says bare S<n>, the gate requires the worker slot form
+
+```json
+{
+  "id": "IRPT_BCKEND-W116-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~116",
+  "surfaced_at": "2026-10-04T23:19Z",
+  "one_line": "TO-IB-pr-313 tells the worker to mint closing rows as the next free IRPT_BCKEND-S<n>; the surprise-row gate refuses a bare S<k> from a worker worktree (a worker mints IRPT_BCKEND-W116-S<k>), so the 13 closing rows are IRPT_BCKEND-W116-S2 .. W116-S14",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/safe-commit.sh 2026-10-04 ~23:1xZ: surprise-row-gate refused 13 new rows IRPT_BCKEND-S322..S334 with 'carries no W<n>. A worker mints <CODE>-W116-S<k> (its own slot, the next unused k within it); a bare S<k> from a worktree is the allocator race that minted S34 twice at v3's first drain (94007)'",
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-313.reconcile-42-not-closed-rows.md worker face: '\"id\": the next free IRPT_BCKEND-S<n> at the time you append'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IB-pr-313: each closing row's id is the next free IRPT_BCKEND-S<n>.",
+  "world_is": "The gate's slot rule governs a worker's ids; the closing rows are W116-S2..W116-S14 and each names the remediation row id it closes in its one_line, which is what the order's AC2 reads.",
+  "notes": "INERT. Owner 2.0.0_SA_COO~P: reword the order template's closing-row id clause to the W<n> form."
+}
+```
+
+## IRPT_BCKEND-W116-S2 -- CLOSE of IRPT_BCKEND-S147, IRPT_BCKEND-S214 -- the adapter's Duration reads clear both rows: no served read near 30 s since the pool fix, none near 48 s since the 49F PATH A retirement
+
+```json
+{
+  "id": "IRPT_BCKEND-W116-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~116",
+  "surfaced_at": "2026-10-04T23:19Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "CLOSE of IRPT_BCKEND-S147 and IRPT_BCKEND-S214: the adapter's Duration reads clear both rows: no served read near 30 s since the pool fix, none near 48 s since the 49F PATH A retirement",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IRPT_BCKEND-S147: bb09a3467c (2026-09-26) is an ancestor of CLOUD HEAD 09ac4f7990 (git merge-base --is-ancestor rc 0). The live adapter zip (irpt-performance-adapter CodeSha256 NU6YVERLJ0i6qmazBYWUF+1xVDPGHwdMKqQ5vgjmVc4=, LastModified 2026-10-03T18:44:32Z, get_function Code.Location read) carries runtime.py 'max_pool_connections=f49_engine.MAX_READ_WORKERS'. CloudWatch AWS/Lambda Duration Maximum, irpt-performance-adapter, per day: 09-25 30.2 s (81 invocations, the row's 30.19 s read); 09-26 9.7; 09-27 7.4; 09-28 17.5; 09-29 10.0; 09-30 9.6; 10-01 11.9; 10-02 5.4; since B3 (10-03 18:45Z, PATH A retired for 49F: ledger irpt-p2-window leg B3) 28 invocations, max 5.1 s. No served adapter invocation since the fix reached the 30 s cap; the engine read is retired for 49F (B3 read-back COMPOSED_FIRMS 49F False). Limit: this is the function population, not the one named account.",
+      "IRPT_BCKEND-S214: CloudWatch AWS/Lambda Duration Maximum for irpt-performance-adapter (daily, 2026-09-20..2026-10-04): the largest value since the 09-25 30.2 s day is 17.5 s (09-28); 10-01 11.9 s; 10-02 5.4 s; 10-03 5.1 s; 28 invocations since B3 (10-03 18:45Z) max 5.1 s. The 48 s trigger is not approached on any day.",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~116/E1_RECONCILE_ROUNDS_42_46.json (TO-IB-pr-313, round 47 E1): the same reads with the close condition per row"
+    ]
+  },
+  "spec_asserts": "Both rows carry a latency hazard on the 49F Performance read (30.19 s against API Gateway's 30 s cap; the holdings-basis press time against the 48 s rollback trigger). The pool fix bb09a3467c rides the live adapter and PATH A is retired for 49F.",
+  "world_is": "MEASURED 2026-10-04 ~22:5xZ: live irpt-performance-adapter zip carries max_pool_connections=f49_engine.MAX_READ_WORKERS; CloudWatch Duration Maximum per day since 09-26 is 9.7, 7.4, 17.5, 10.0, 9.6, 11.9, 5.4, 5.1 s; 28 invocations since the B3 PATH A retirement (10-03 18:45Z) max 5.1 s.",
+  "dismissal_reason": "Each named remediation row's own close condition is true in the live world today, read by this worker on 2026-10-04 (reads in grounding.evidence). The CVO reads this row; the REMEDIATION file is not edited here."
+}
+```
+
+## IRPT_BCKEND-W116-S3 -- CLOSE of IRPT_BCKEND-S216, IRPT_BCKEND-W86-S1 -- Inflection's positions land daily again and lib/silver_ids.py is deployed; per-account 09-29 exists (09-28 stays absent by decision)
+
+```json
+{
+  "id": "IRPT_BCKEND-W116-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~116",
+  "surfaced_at": "2026-10-04T23:19Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "CLOSE of IRPT_BCKEND-S216 and IRPT_BCKEND-W86-S1: Inflection's positions land daily again and lib/silver_ids.py is deployed; per-account 09-29 exists (09-28 stays absent by decision)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IRPT_BCKEND-S216: s3 list_objects_v2 opal-data-assets orion/inflection/silver/fact_positions/ (2026-10-04 ~22:5xZ, 2,350 keys): date=2026-09-27 then 09-29 (LastModified 2026-10-01T12:50:08Z), 09-30, 10-01, 10-02, 10-03, 10-04 each landed 13:05Z on its own day; bronze/positions/ lists 09-30 .. 10-04 (13:05:23Z). date=2026-09-28 is ABSENT and stays absent (row S255 / CTO S242: a 09-28 partition holds Friday's close which 09-26/09-27 hold, no close lost). Six partitions 09-29..10-04 are present and land daily again; the 09-29 per-account read is S255's partition_close_anchor_sweep (PRIOR_TRADING_DAY 149 of 149). Judgment note: the literal text asks for 09-28; the row S255 DISARM (disarm owner 2.0.0_SA_COO~P, 2026-10-01T13:12Z) and CTO 103088 accept 09-29.",
+      "IRPT_BCKEND-W86-S1: s3 head_object opal-data-inf code/silver/silver_ids.py LastModified 2026-09-30T14:42:45Z (2019 B) and code/silver/_orion_api_silver_lib.py 2026-09-30T14:48:26Z; ledger inf-silver-ids-ship-20260930 CLOSED (U1, D1 sha256 equal to lib/silver_ids.py, R1: chain_full_20260930_145412 SILVER_REPS ok, PULL_POSITIONS_DAILY ok). Raw bronze/positions 09-30..10-04 are present and silver fact_positions date=2026-09-29 exists (LastModified 2026-10-01T12:50:08Z, row S255 per-account sweep 149 of 149). Deviation recorded: D1 used 'aws s3 cp' (safe-deploy HALT-GATE refused), with the ledger; 09-28 stays absent by decision (S255).",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~116/E1_RECONCILE_ROUNDS_42_46.json (TO-IB-pr-313, round 47 E1): the same reads with the close condition per row"
+    ]
+  },
+  "spec_asserts": "S216: orion positions stopped landing after 09-27 (disarm: partitions from 09-28 on exist). W86-S1: the gold chain died on lib.silver_ids (disarm together on a per-account read showing 09-29, CTO 103088).",
+  "world_is": "MEASURED: silver fact_positions date=2026-09-29 (LastModified 2026-10-01T12:50:08Z) then 09-30..10-04 exist; code/silver/silver_ids.py LastModified 2026-09-30T14:42:45Z in opal-data-inf; ledger inf-silver-ids-ship-20260930 CLOSED. date=2026-09-28 is absent and stays absent (S255).",
+  "dismissal_reason": "Each named remediation row's own close condition is true in the live world today, read by this worker on 2026-10-04 (reads in grounding.evidence). The CVO reads this row; the REMEDIATION file is not edited here."
+}
+```
+
+## IRPT_BCKEND-W116-S4 -- CLOSE of IRPT_BCKEND-W86-S2 -- the launch monitor hands an empty or unrecognized stop reason within 15 s of launch to the retry path, live and in code
+
+```json
+{
+  "id": "IRPT_BCKEND-W116-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~116",
+  "surfaced_at": "2026-10-04T23:19Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "CLOSE of IRPT_BCKEND-W86-S2: the launch monitor hands an empty or unrecognized stop reason within 15 s of launch to the retry path, live and in code",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IRPT_BCKEND-W86-S2: infra/aws/lambda/inf-pipeline/inf-ec2-launch-monitor/lambda_function.py at HEAD: empty reason is not in NORMAL_PATTERNS (:62-64) and an unrecognized reason stopped within 15 s of launch goes to _hand_off_launch_failure (':elapsed-time-defense', :133-137). Live inf-ec2-launch-monitor CodeSha256 t1QrzaDeMtjGgnFL0oez1DGtL6vLVz7fgV0/BMVuIQo= LastModified 2026-09-30T16:19:48Z = lambda-source-map.json artifact_sha256 = the ledger inf-launch-monitor-empty-reason-served-20260930 AFTER row (CLOSED). Limit: ledger inf-launch-monitor-empty-reason-a1-observation-20260930 records no real empty-reason stop yet (the one stop after the apply read 'User initiated'); the branch is proven by tests and by code, not by a live event.",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~116/E1_RECONCILE_ROUNDS_42_46.json (TO-IB-pr-313, round 47 E1): the same reads with the close condition per row"
+    ]
+  },
+  "spec_asserts": "W86-S2: an EMPTY stop reason four seconds after launch was classified as a normal shutdown and the retry Lambda never fired.",
+  "world_is": "MEASURED: inf-ec2-launch-monitor lambda_function.py at HEAD routes an unrecognized reason stopped within 15 s of launch to _hand_off_launch_failure; live CodeSha256 t1QrzaDe.. = source map = ledger AFTER row. No live empty-reason event has occurred yet; the branch is proven by tests and code.",
+  "dismissal_reason": "Each named remediation row's own close condition is true in the live world today, read by this worker on 2026-10-04 (reads in grounding.evidence). The CVO reads this row; the REMEDIATION file is not edited here."
+}
+```
+
+## IRPT_BCKEND-W116-S5 -- CLOSE of IRPT_BCKEND-S238 -- all six tenant-selecting served bundles carry the API-side allowedFirmIds enforcement the CTO re-read
+
+```json
+{
+  "id": "IRPT_BCKEND-W116-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~116",
+  "surfaced_at": "2026-10-04T23:19Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "CLOSE of IRPT_BCKEND-S238: all six tenant-selecting served bundles carry the API-side allowedFirmIds enforcement the CTO re-read",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IRPT_BCKEND-S238: The CTO re-read exists: investigation row S248 (1.0.0_SA_CTO, 2026-10-01T07:18:15Z, DISMISSED_WITH_REASON): FIRM_BINDING for inflection on six of six tenant-selecting functions, own firm served. Read now: the live zips of all six (irpt-performance-adapter NU6YVERL.., irpt-export-render WDAv+kWK.., irpt-directory-search AVSIaHEh.., irpt-holdings tS/APci3M.., irpt-ycharts-generate uFTONal/.., irpt-status hC6Pramt..; get_function Code.Location) each carry served.py containing 'allowedFirmIds' and the fail-closed 'restricts everything' handler, so no later build dropped it. Limit: no live foreign-firm call was made by this worker (AWS reads only).",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~116/E1_RECONCILE_ROUNDS_42_46.json (TO-IB-pr-313, round 47 E1): the same reads with the close condition per row"
+    ]
+  },
+  "spec_asserts": "S238: the API admitted a service principal to a foreign firm; disarm on the CTO's re-read of the live negative control.",
+  "world_is": "MEASURED: row S248 (1.0.0_SA_CTO 2026-10-01T07:18Z) read FIRM_BINDING six of six; the live zips of irpt-performance-adapter, irpt-export-render, irpt-directory-search, irpt-holdings, irpt-ycharts-generate and irpt-status each carry served.py with allowedFirmIds and the fail-closed handler today.",
+  "dismissal_reason": "Each named remediation row's own close condition is true in the live world today, read by this worker on 2026-10-04 (reads in grounding.evidence). The CVO reads this row; the REMEDIATION file is not edited here."
+}
+```
+
+## IRPT_BCKEND-W116-S6 -- CLOSE of IRPT_BCKEND-S245, IRPT_BCKEND-S257 -- the served Inflection producer is the 1.2 code and its schedule fires at 14:00Z after the 13:05Z landing
+
+```json
+{
+  "id": "IRPT_BCKEND-W116-S6",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~116",
+  "surfaced_at": "2026-10-04T23:19Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "CLOSE of IRPT_BCKEND-S245 and IRPT_BCKEND-S257: the served Inflection producer is the 1.2 code and its schedule fires at 14:00Z after the 13:05Z landing",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IRPT_BCKEND-S245: Live irpt-inf-holdings-performance-lambda CodeSha256 0PuFBxdJSbFHNJ9+Z3weyzLvXyZhgZFk2dkGAbIYb/0= LastModified 2026-10-03T05:25:46Z (= source map); its zip (Code.Location) carries sources.json schema_version 1.2 with the 'orion' entry and handler.py with the catch-up (MAX_DAYS_PER_FIRE). scheduler get_schedule irpt-inf-holdings-performance-daily State ENABLED cron(0 14 ? * MON-FRI *) UTC; the Inflection partitions land 13:05Z (silver fact_positions 10-02 13:05:33Z, 10-03 13:05:30Z, 10-04 13:05:32Z), so 14:00Z is after the landing. Limit: the first scheduled fire is Mon 2026-10-05 14:00Z (ledger irpt-inf-performance-serving-20261002 leg A1 OPEN), not yet read.",
+      "IRPT_BCKEND-S257: Terraform infra/aws/terraform/investor-reporting/holdings-performance/schedule.tf:196 at HEAD: schedule_expression cron(0 14 ? * MON-FRI *) (the 49F entry at :92 is cron(30 7 ...)); live scheduler get_schedule irpt-inf-holdings-performance-daily ENABLED cron(0 14 ? * MON-FRI *) UTC, applied 2026-10-02 ~21:0xZ (ledger irpt-inf-performance-serving-20261002 P3 'Apply complete 7/0/0; re-plan No changes'). 14:00Z is after the 13:05Z landing; no 07:30 entry for Inflection exists in code or live.",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~116/E1_RECONCILE_ROUNDS_42_46.json (TO-IB-pr-313, round 47 E1): the same reads with the close condition per row"
+    ]
+  },
+  "spec_asserts": "S245: the scheduled Inflection producer must be the 1.2 code with a fire after the partition lands. S257: the schedule entry must be re-timed before anything applies it.",
+  "world_is": "MEASURED: live irpt-inf-holdings-performance-lambda 0PuFBxdJ.. zip carries sources.json 1.2 and the catch-up handler; scheduler irpt-inf-holdings-performance-daily ENABLED cron(0 14 ? * MON-FRI *) UTC; schedule.tf:196 at HEAD declares the same; partitions land 13:05Z. The first fire (10-05 14:00Z) is not yet read.",
+  "dismissal_reason": "Each named remediation row's own close condition is true in the live world today, read by this worker on 2026-10-04 (reads in grounding.evidence). The CVO reads this row; the REMEDIATION file is not edited here."
+}
+```
+
+## IRPT_BCKEND-W116-S7 -- CLOSE of IRPT_BCKEND-W99-S3 -- four scheduled Inflection mirror fires since the release end OK with no raise and the foreign class counted
+
+```json
+{
+  "id": "IRPT_BCKEND-W116-S7",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~116",
+  "surfaced_at": "2026-10-04T23:19Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "CLOSE of IRPT_BCKEND-W99-S3: four scheduled Inflection mirror fires since the release end OK with no raise and the foreign class counted",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IRPT_BCKEND-W99-S3: opal-assets-ingest-mirror CodeSha256 V3oFb2ix4BKlxymtaIHOQRHdwx256KfX4mbuoEOQ838= LastModified 2026-10-02T23:34:13Z (ledger opal-assets-ingest-mirror-release-20261002, legs C1, M1, V1, M2 closed). logs filter_log_events /aws/lambda/opal-assets-ingest-mirror since 2026-10-03T12:00Z: 46 events, 0 lines matching MirrorRaise|Traceback|ALIEN SURPLUS|ERROR; scheduled Inflection fires 10-03 13:05Z, 10-03 17:05Z, 10-04 13:05Z, 10-04 17:05Z each end 'OK: mirror cycle complete' with eclipse/inflection foreign_membership_map_class 2, alien_surplus 0, failed 0 (the two keys are named as a class and counted). This is the ledger's own open leg A1 observation. Limit: W99-S4's silver-sweep FAIL (same class, 'read at the same time') was not re-read.",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~116/E1_RECONCILE_ROUNDS_42_46.json (TO-IB-pr-313, round 47 E1): the same reads with the close condition per row"
+    ]
+  },
+  "spec_asserts": "W99-S3: opal-assets-ingest-mirror raised MirrorRaise ALIEN SURPLUS on every Inflection invocation; accept: a scheduled fire ends without the raise and names what it skipped.",
+  "world_is": "MEASURED: mirror V3oFb2ix.. (10-02T23:34:13Z); logs since 10-03T12:00Z hold 0 MirrorRaise/Traceback/ALIEN SURPLUS lines; fires 10-03 13:05Z and 17:05Z and 10-04 13:05Z and 17:05Z each end 'OK: mirror cycle complete' with foreign_membership_map_class 2, alien_surplus 0, failed 0. W99-S4's sweep FAIL was not re-read.",
+  "dismissal_reason": "Each named remediation row's own close condition is true in the live world today, read by this worker on 2026-10-04 (reads in grounding.evidence). The CVO reads this row; the REMEDIATION file is not edited here."
+}
+```
+
+## IRPT_BCKEND-W116-S8 -- CLOSE of IRPT_BCKEND-W101-S15 -- the export role's GetObject and Decrypt on the artifact key family simulate as allowed
+
+```json
+{
+  "id": "IRPT_BCKEND-W116-S8",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~116",
+  "surfaced_at": "2026-10-04T23:19Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "CLOSE of IRPT_BCKEND-W101-S15: the export role's GetObject and Decrypt on the artifact key family simulate as allowed",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IRPT_BCKEND-W101-S15: iam simulate_principal_policy (read-only) PolicySourceArn role/irpt-export-render-role, 2026-10-04 ~22:5xZ: s3:GetObject on arn:aws:s3:::opal-data-ycharts/firms/49financial/generations/exr_5f3c0b757a054bffbe31b431/attempts/1/exports/exr_5f3c0b757a054bffbe31b431/report.pdf -> allowed (matched statement irpt-export-render-evidence 'ReadWriteExportsPrefixOnly'); kms:Decrypt on key/7f4d3042-10d8-49a7-b55e-3c963cea8111 with kms:ViaService s3.us-east-1.amazonaws.com -> allowed (statement UseTheEvidenceKeyThroughS3). get_role_policy irpt-export-render-evidence read back the same two statements.",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~116/E1_RECONCILE_ROUNDS_42_46.json (TO-IB-pr-313, round 47 E1): the same reads with the close condition per row"
+    ]
+  },
+  "spec_asserts": "W101-S15: byte_length comes from a HeadObject on an SSE-KMS artifact the export role was not shown to hold; close on that simulation allowed.",
+  "world_is": "MEASURED: iam simulate_principal_policy irpt-export-render-role: s3:GetObject on the report.pdf key of exr_5f3c0b757a054bffbe31b431 allowed (irpt-export-render-evidence); kms:Decrypt on key 7f4d3042.. via s3 allowed.",
+  "dismissal_reason": "Each named remediation row's own close condition is true in the live world today, read by this worker on 2026-10-04 (reads in grounding.evidence). The CVO reads this row; the REMEDIATION file is not edited here."
+}
+```
+
+## IRPT_BCKEND-W116-S9 -- CLOSE of IRPT_BCKEND-W101-S6 -- the live export artifact's three packaged contract copies are byte-equal to docs at HEAD
+
+```json
+{
+  "id": "IRPT_BCKEND-W116-S9",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~116",
+  "surfaced_at": "2026-10-04T23:19Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "CLOSE of IRPT_BCKEND-W101-S6: the live export artifact's three packaged contract copies are byte-equal to docs at HEAD",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IRPT_BCKEND-W101-S6: Live irpt-export-render CodeSha256 WDAv+kWKGcXBdGsSH8aNxMK/b0GnzRAonmmKars7lFw= LastModified 2026-10-03T17:13:59Z (lambda get_function_configuration): zip (get_function Code.Location) members irpt_contracts/AnalysisReport.schema.json sha256 1bd0dc8584.., ExportBundle.schema.json cac4470a17.., ExportReceipt.schema.json 5a7bda2ecd.. are each byte-equal to docs/contracts/investor-reporting/v1/ at HEAD (python bytes compare: True x3, including CRLF-normalised). Window leg A8 CLOSED in org/critical_paths/change_management/20261003T1652Z_irpt-p2-window-20261003_deploy_completion.md (Status CLOSED, 14 of 14 legs).",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~116/E1_RECONCILE_ROUNDS_42_46.json (TO-IB-pr-313, round 47 E1): the same reads with the close condition per row"
+    ]
+  },
+  "spec_asserts": "W101-S6: the packaged AnalysisReport schema was older than the docs copy; close on the served export artifact carrying the current copies.",
+  "world_is": "MEASURED: live irpt-export-render WDAv+kWKG.. zip members AnalysisReport 1bd0dc8584.., ExportBundle cac4470a17.., ExportReceipt 5a7bda2ecd.. equal docs/contracts/investor-reporting/v1 at HEAD (bytes compare True x3); window leg A8 CLOSED.",
+  "dismissal_reason": "Each named remediation row's own close condition is true in the live world today, read by this worker on 2026-10-04 (reads in grounding.evidence). The CVO reads this row; the REMEDIATION file is not edited here."
+}
+```
+
+## IRPT_BCKEND-W116-S10 -- CLOSE of IRPT_BCKEND-W104-S1, IRPT_BCKEND-W104-S3 -- a 49F PATH B export rendered through the reporting route and froze its series at submit
+
+```json
+{
+  "id": "IRPT_BCKEND-W116-S10",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~116",
+  "surfaced_at": "2026-10-04T23:19Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "CLOSE of IRPT_BCKEND-W104-S1 and IRPT_BCKEND-W104-S3: a 49F PATH B export rendered through the reporting route and froze its series at submit",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IRPT_BCKEND-W104-S1: Receipt s3://opal-data-ycharts/firms/49financial/generations/EXP-e29b5415a06f90f943481c41a1a4821b/receipt.json (boto3 get_object 2026-10-04 ~22:5xZ; LastModified 2026-10-03T22:13:15Z): job_state READY, facts.frozen_as_of 2026-10-01, validation_status PASSED, page_count 11; ledger org/critical_paths/change_management/20261003T1652Z_irpt-p2-window-20261003_deploy_completion.md (Status CLOSED, 14 of 14 legs) leg V CLOSED 20261003T223316Z. bundle.json (opal-data-ycharts .../exr_5f3c0b757a054bffbe31b431/attempts/1/exports/.../bundle.json) names performance_source path PLATINUM; investigation rows S309 (authorizer admits the series route, 19:52:32Z) and S312 (export reached READY) record the chain. irpt-export-render CodeSha256 WDAv+kWKGcXBdGsSH8aNxMK/b0GnzRAonmmKars7lFw= LastModified 2026-10-03T17:13:59Z (lambda get_function_configuration).",
+      "IRPT_BCKEND-W104-S3: pending.json of EXP-e29b5415a06f90f943481c41a1a4821b (submitted_at 2026-10-03T22:13:03Z, report_kind performance, tenant 49financial) and its bundle.json carry authorized_report_revisions[0].performance_source {path PLATINUM, as_of 2026-10-01, sha256 0b61551661.., version_id H1BKI.nQTmldVL.FegvvlUp3T96eazsy}: the series was frozen at submit through the route. The export role's platinum policy is absent: iam list_role_policies irpt-export-render-role names no platinum read (the 9 policies read are directory, dispatch, evidence, logs, ownership-map, receipt, service-profile, submit, token-carriage). irpt-export-render CodeSha256 WDAv+kWKGcXBdGsSH8aNxMK/b0GnzRAonmmKars7lFw= LastModified 2026-10-03T17:13:59Z (lambda get_function_configuration).",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~116/E1_RECONCILE_ROUNDS_42_46.json (TO-IB-pr-313, round 47 E1): the same reads with the close condition per row"
+    ]
+  },
+  "spec_asserts": "W104-S1: the render delegate was refused OBJECT_NOT_COVERED on the reporting route. W104-S3: the export must freeze the series through the route, not through a platinum read by the export role.",
+  "world_is": "MEASURED: receipt EXP-e29b5415a06f90f943481c41a1a4821b READY 2026-10-03T22:13:15Z, frozen_as_of 2026-10-01; its bundle.json names performance_source path PLATINUM, version_id H1BKI.nQTmldVL.FegvvlUp3T96eazsy; irpt-export-render-role holds no platinum policy; ledger irpt-p2-window leg V CLOSED.",
+  "dismissal_reason": "Each named remediation row's own close condition is true in the live world today, read by this worker on 2026-10-04 (reads in grounding.evidence). The CVO reads this row; the REMEDIATION file is not edited here."
+}
+```
+
+## IRPT_BCKEND-W116-S11 -- CLOSE of IRPT_BCKEND-W104-S2 -- the reporting-read role holds GetObjectVersion and the frozen VersionId reads
+
+```json
+{
+  "id": "IRPT_BCKEND-W116-S11",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~116",
+  "surfaced_at": "2026-10-04T23:19Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "CLOSE of IRPT_BCKEND-W104-S2: the reporting-read role holds GetObjectVersion and the frozen VersionId reads",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IRPT_BCKEND-W104-S2: iam get_role_policy irpt-49f-reporting-read-role / irpt-49f-reporting-read-policy read back now: statement ReadThePlatinumReportingPrefixOnly Action [s3:GetObjectVersion, s3:GetObject] on arn:aws:s3:::opal-data-49financial/irpt/49financial/platinum/reporting/*. s3 head_object with the frozen VersionId H1BKI.nQTmldVL.FegvvlUp3T96eazsy (the bundle's performance_source.version_id) on opal-data-49financial irpt/49financial/platinum/reporting/account=0024480090/series.json.gz -> LastModified 2026-10-03T17:52:19Z, 9,305 B (read as this worker's identity); the role's own versioned read is evidenced by the READY receipt that pinned that version (s3://opal-data-ycharts/firms/49financial/generations/EXP-e29b5415a06f90f943481c41a1a4821b/receipt.json (boto3 get_object 2026-10-04 ~22:5xZ; LastModified 2026-10-03T22:13:15Z): job_state READY, facts.frozen_as_of 2026-10-01, validation_status PASSED, page_count 11).",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~116/E1_RECONCILE_ROUNDS_42_46.json (TO-IB-pr-313, round 47 E1): the same reads with the close condition per row"
+    ]
+  },
+  "spec_asserts": "W104-S2: the reporting-read role granted only s3:GetObject, so a pinned VersionId read answered AccessDenied.",
+  "world_is": "MEASURED: irpt-49f-reporting-read-policy now lists s3:GetObjectVersion and s3:GetObject on the platinum reporting prefix; head_object with VersionId H1BKI.nQTmldVL.FegvvlUp3T96eazsy on account=0024480090/series.json.gz answers (17:52:19Z, 9,305 B); the READY receipt pinned that version.",
+  "dismissal_reason": "Each named remediation row's own close condition is true in the live world today, read by this worker on 2026-10-04 (reads in grounding.evidence). The CVO reads this row; the REMEDIATION file is not edited here."
+}
+```
+
+## IRPT_BCKEND-W116-S12 -- CLOSE of IRPT_BCKEND-W104-S4 -- a served receipt names frozen_as_of and the PROD page shows it
+
+```json
+{
+  "id": "IRPT_BCKEND-W116-S12",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~116",
+  "surfaced_at": "2026-10-04T23:19Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "CLOSE of IRPT_BCKEND-W104-S4: a served receipt names frozen_as_of and the PROD page shows it",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IRPT_BCKEND-W104-S4: Served receipt s3://opal-data-ycharts/firms/49financial/generations/EXP-e29b5415a06f90f943481c41a1a4821b/receipt.json (boto3 get_object 2026-10-04 ~22:5xZ; LastModified 2026-10-03T22:13:15Z): job_state READY, facts.frozen_as_of 2026-10-01, validation_status PASSED, page_count 11. Portal PROD c69b474716 (git ls-remote origin refs/heads/PROD) src/pages/InvestorReporting/export/ReceiptPanel.tsx:130-134 renders 'This export uses the performance data through {frozenAsOf}' (data-slot export-frozen-as-of), adapted from facts.frozen_as_of at contracts/adapt.ts:1261 (git grep on the pin). Window legs B1/B2 CLOSED in org/critical_paths/change_management/20261003T1652Z_irpt-p2-window-20261003_deploy_completion.md (Status CLOSED, 14 of 14 legs); ~D's signed-in read (msg 104799) quotes the modal 'through October 1st, 2026'.",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~116/E1_RECONCILE_ROUNDS_42_46.json (TO-IB-pr-313, round 47 E1): the same reads with the close condition per row"
+    ]
+  },
+  "spec_asserts": "W104-S4: ExportReceipt had no slot for the frozen as_of so the page could not show it.",
+  "world_is": "MEASURED: receipt facts.frozen_as_of 2026-10-01; portal PROD c69b474716 ReceiptPanel.tsx:130-134 renders the sentence from adapt.ts:1261; legs B1 and B2 CLOSED.",
+  "dismissal_reason": "Each named remediation row's own close condition is true in the live world today, read by this worker on 2026-10-04 (reads in grounding.evidence). The CVO reads this row; the REMEDIATION file is not edited here."
+}
+```
+
+## IRPT_BCKEND-W116-S13 -- CLOSE of IRPT_BCKEND-W105-S1 -- the published edge admits the reporting series path for a render token
+
+```json
+{
+  "id": "IRPT_BCKEND-W116-S13",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~116",
+  "surfaced_at": "2026-10-04T23:19Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "CLOSE of IRPT_BCKEND-W105-S1: the published edge admits the reporting series path for a render token",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IRPT_BCKEND-W105-S1: lambda list_versions_by_function auth-validator-edge: version 22 CodeSha256 eNvtV2EFQF/pnJCJQyXtEaiHSePaJNL56Cws7m8tf5w= (2026-10-03T17:41:35Z, = ledger A7). CloudFront get_distribution_config EVTSA9VEHNZVH: 26 of 26 auth-validator-edge associations on ':22'. The v22 index.mjs (Code.Location) holds the pattern 'investor-reporting\\/reporting\\/[^/]+\\/series$' beside performance/analysis/narrative. Runtime: investigation row S307 evidence '/aws/lambda/us-east-1.auth-validator-edge 18:58:43Z render_accepted ... Auth OK (render) on .../reporting/acc_.../series'.",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~116/E1_RECONCILE_ROUNDS_42_46.json (TO-IB-pr-313, round 47 E1): the same reads with the close condition per row"
+    ]
+  },
+  "spec_asserts": "W105-S1: the edge admitted a render token on three paths and not the reporting series route.",
+  "world_is": "MEASURED: auth-validator-edge v22 eNvtV2EF.. is on 26 of 26 CloudFront associations of EVTSA9VEHNZVH and its index.mjs holds the reporting series pattern; row S307 evidence shows render_accepted on the series path.",
+  "dismissal_reason": "Each named remediation row's own close condition is true in the live world today, read by this worker on 2026-10-04 (reads in grounding.evidence). The CVO reads this row; the REMEDIATION file is not edited here."
+}
+```
+
+## IRPT_BCKEND-W116-S14 -- CLOSE of IRPT_BCKEND-W105-S2 -- the reporting-read function's environment, render-grant policy and a render delegate read are read back
+
+```json
+{
+  "id": "IRPT_BCKEND-W116-S14",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~116",
+  "surfaced_at": "2026-10-04T23:19Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "CLOSE of IRPT_BCKEND-W105-S2: the reporting-read function's environment, render-grant policy and a render delegate read are read back",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IRPT_BCKEND-W105-S2: lambda get_function_configuration irpt-49f-reporting-read-lambda: CodeSha256 Wzf2qS5PBH8Xl9UHSMDCW7xmIhgQyeGKLBoEYTk01Xk= LastModified 2026-10-03T17:03:23Z, Environment keys [IRPT_DIRECTORY_BUCKET_MAP, IRPT_EVIDENCE_BUCKET, IRPT_FIRM_REGISTRY]. iam list_role_policies irpt-49f-reporting-read-role includes irpt-reporting-read-render-grant-read-policy: ReadOnlyRenderGrants s3:GetObject on opal-data-ycharts firms/*/generations/exr_*/render_grant.json, ListOnlyRenderGrantShapes, DecryptRenderGrantsViaS3Only. Render delegate read served: logs /aws/lambda/irpt-49f-reporting-read-lambda 2026-10-03T22:12:50-22:13:00Z show 7 completed invocations (REPORT lines 304-3090 ms, no error line in the window) while the render ran (receipt READY, render_guard 0 foreign of 20, ledger leg V).",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~116/E1_RECONCILE_ROUNDS_42_46.json (TO-IB-pr-313, round 47 E1): the same reads with the close condition per row"
+    ]
+  },
+  "spec_asserts": "W105-S2: the reporting-read function was not wired to read a render grant (no IRPT_EVIDENCE_BUCKET, no grant-prefix read).",
+  "world_is": "MEASURED: irpt-49f-reporting-read-lambda Wzf2qS5P.. env keys include IRPT_EVIDENCE_BUCKET; irpt-reporting-read-render-grant-read-policy present (GetObject on render_grant.json only, Decrypt via S3 only); 7 reporting-read invocations completed with no error during the 22:13Z render that reached READY.",
+  "dismissal_reason": "Each named remediation row's own close condition is true in the live world today, read by this worker on 2026-10-04 (reads in grounding.evidence). The CVO reads this row; the REMEDIATION file is not edited here."
+}
+```
