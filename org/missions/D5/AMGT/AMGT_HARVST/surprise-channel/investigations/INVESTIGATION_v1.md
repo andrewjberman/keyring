@@ -6734,6 +6734,28 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "disposition": "UNDER_INVESTIGATION",
       "disarm_owner": "2.0.0_SA_COO~H",
       "notes": "Cites Z-S82 and carries no adjudicates field: Z-S82's disposition is 3.0.0_SA_CVO~Z's L9 field (surprise-row-gate A-1 / EN-g-37). The CVO dispositions Z-S82 against this ruling at the round-44 L9."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S84",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-04T20:40Z",
+      "one_line": "Correction to Z-S82: the served timeline already clips at STORE_START. Over 212 names the wired range and day routes serve 0 pre-2026 dates (496 events served; the 11 pre-2026 chatter_event rows on 7 names never cross the floor and are never served; 1,355 day-route probes on pre-2026 days serve no data). Z-S82's 'events and the timeline can show pre-2026 days' was not measured and is wrong for the served routes.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Z-S82 world_is: 'Windows are unaffected (served from STORE_START); events and the timeline can show pre-2026 days.' CTO msg 29207 ruled a served clip at STORE_START under a pair.",
+      "world_is": "get_timeline clamps from at BACKFILL_FLOOR 2026-01-01 and drops events whose last_day precedes it; chatter_daily starts at 2026-01-01, so get_timeline_day answers TIMELINE_DAY_NOT_FOUND on pre-2026 days; the event route is not wired (scoped_amgt.py:5308). Gold holds 11 pre-2026 chatter_event rows (ASML_NA, ASML_US, COST, FDX, HD, NVDA, TSLA) and 19,967 pre-2026 mention rows on 202 names; none is served.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "deliverables/2.0.0_SA_COO_H/round45/checks/ar-3.AC1.py run 2026-10-04 ~20:3xZ over live gold: AC1 RESULT PASS, LEAKS 0 (ar-3.AC1.out, ar-3.served_clip.json)",
+          "lib/research/harvest/timeline_api.py:309-339; lib/research/api/scoped_amgt.py:5308-5324"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "notes": "Cites Z-S82 and Z-S83. Decomposition section 58 rules HVST-ar-3 down from a SERVED clip to an issuer READ: a served change would be a 0-diff deploy. The one future-reachable leak is an event that crosses the floor (0 today)."
     }
   ]
 ```

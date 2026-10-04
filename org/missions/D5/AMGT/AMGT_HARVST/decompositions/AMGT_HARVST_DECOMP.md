@@ -2887,3 +2887,38 @@ under a pair). No collection, no vendor call, no S3 write, no publisher request.
 | `HVST-aq-2` | FWD-5 | A served read of a company's timeline (`opal-amgt-scoped-api`): pick a day; its articles are listed strongest first (the order key named and checked on every listed article). Graded at L9 as judgment. | SERVED read |
 | `HVST-aq-3` | FWD-7 | The basis of the served chatter rank (graded daily table or raw count), read from the route code at HEAD and the served response; plus one planted pair (a passing mention in many articles vs a subject of a few) through the rank's own function. | SERVED read + LOCAL plant |
 | `HVST-aq-4` | FWD-12 | The grade from the round-32 evidence for (a)-(d), and (d)'s re-check over every stored sa row from storage only. Any limb that needs a publisher request is named. | LOCAL read |
+
+## 58. ROUND 45 -- the round-44 analysis enrichment list (`ledger/ROUND_ANALYSIS.round44.md` @ed9efe80ea), 2026-10-04 ~20:5xZ
+
+Round 44 is CLOSED (CVO slug 29208, ADJUDICATION_v56 @876c7d30e1); FWD-5 is REALIZED. Board: REALIZED 6 of 17; open without new
+collection 2 (FWD-2, FWD-12); open needing new collection 9, held on Andrew's word ("We will discuss internally on how to proceed
+with further data collection after review"). FWD-7 is in the collection partition (ruling 2).
+
+Issuer `2.0.0_SA_COO~H`. Series **`ar`**. Three cells, independent: fan-out 3 of 3 chains, cap 8; ONE worker (`~93`, ar-1) and
+two issuer acts (ar-2, ar-3; L7 orders go to Tier-2 seats only, LD-0521). No collection, no vendor call, no backfill.
+
+| cell | order | FWD | what | class | executes |
+|---|---|---|---|---|---|
+| `HVST-ar-1` | `ar-1` | FWD-2 | Type every lost field (barrons first; the bbg, ft and wsj page-level descriptors; ft's JSON-LD publisher block) in `silver_from_bronze.py` and the publisher field maps; diagnose the 3 sampled wsj originals with no silver row; an in-memory field census over the stored originals reads 0 lost; a dry-run re-derivation manifest over every stored original of the four publishers (pre-existing columns changed 0). THEN the issuer's served re-derivation under a never-widen pair, graded by the same census over served silver. | SERVED (pair at the drain) | worker `~93`, then issuer |
+| `HVST-ar-2` | issuer act | FWD-12 (c) | `config.json` `max_listing_pages.sa` 25 -> 200; `worker.listing_page_cap()` carries the backfill branch's expression; plants `test_ar2_sa_listing_cap.py` (5 pass; 2 fail with the config reverted). (a), (b), (d) re-read with the aq-4 instrument. | LOCAL (direct act) | `2.0.0_SA_COO~H` |
+| `HVST-ar-3` | issuer act | FWD-9 (row Z-S82, CTO msg 29207) | The served clip at STORE_START, measured on the served code path before any change: `checks/ar-3.AC1.py` runs `scoped_amgt._serve_timeline_body` for every name over live gold. | LOCAL read (ruled down from SERVED, below) | `2.0.0_SA_COO~H` |
+
+**Issuer ruling on ar-3 (inside this decomposition; no gate limb graded it, recorded here):** the analysis cut the clip as a
+SERVED change under a pair. Measured first, the two WIRED routes already clip at the floor by construction:
+- the range route clamps `from` at `BACKFILL_FLOOR` (2026-01-01) and drops every event whose `last_day` precedes it;
+- `chatter_daily` starts at the floor, so the day route answers TIMELINE_DAY_NOT_FOUND on every pre-2026 day;
+- the event route is NOT wired (`lib/research/api/scoped_amgt.py:5308`).
+
+Over 212 names: 0 leaks; 496 events served; the 11 pre-2026 events (7 names: ASML_NA, ASML_US, COST, FDX, HD, NVDA, TSLA) are
+never served (0 cross the floor); 1,355 day-route probes on pre-2026 days serve no data. Clipped and never served: 11
+`chatter_event` rows and 19,967 `article_security_mention` rows on 202 names; gold is untouched. A served change would be a 0-diff
+deploy, so no code and no deploy is cut (a verified DELTA=0 needs no hold). The one future-reachable leak is an event that crosses
+the floor (0 today); it is named, not built. Row Z-S84 corrects Z-S82's "events and the timeline can show pre-2026 days".
+
+Worktree recipe for ar-1: the sparse cone of section 50. Evidence folder: `deliverables/2.0.0_SA_COO_H/round45/`.
+
+**Checks dry-run at the base before the cut:**
+- `round45/checks/ar-1.AC2.py` base: FAIL as expected (the in-memory census script is absent).
+- `round45/checks/ar-1.AC3.py` base: FAIL as expected (script absent). Its grader `ar1_grade.py` over the base's served-silver
+  census (`round44/aq-1.field_census.json`) reads FAIL: lost per publisher barrons 39, bbg 10, ft 9, sa 0, wsj 20.
+- `round45/checks/ar-3.AC1.py` base: PASS as expected (a bound check; 0 leaks).
