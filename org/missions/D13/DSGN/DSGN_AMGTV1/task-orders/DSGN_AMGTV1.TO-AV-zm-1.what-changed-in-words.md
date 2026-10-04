@@ -93,7 +93,7 @@ Report once: what changed and where, the output line of every criterion, the por
   read-only on code FcVBPafw at 03:08Z.
 - **Not graded here** (the issuer's close walk): how the names read in place on the served compare.
 
-<status>pending</status>
+<status>complete</status>
 <round>35</round>
 <slot>~94</slot>
 <fabric>site-z</fabric>
