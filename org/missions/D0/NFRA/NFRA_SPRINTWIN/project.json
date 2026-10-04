@@ -37,14 +37,15 @@
   "decomposition_lineage": [],
   "leads": {
     "cto": "1.0.0_SA_CTO~Z",
-    "coo": "UNSEATED -- asked of 0.0.0_AB_MSTR~Z at registration, within the COO capacity cap",
+    "coo": "NONE -- Andrew-direct ~18:4xZ: 4.0.0_SA_CRO~Z builds solo on site Z ('does not need to go to a new COO/team'); record org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/ANDREW_DIRECT_20261004_184xZ_NFRA_SPRINTWIN_CRO_Z_BUILDS_SOLO.md",
     "cvo": "3.0.0_SA_CVO~Z",
     "cro": "4.0.0_SA_CRO~Z",
-    "workers": "0.9.0_WK_NFRA_SPRINTWIN~<n>, per the L6 issuance"
+    "workers": "none (solo build)",
+    "builder": "4.0.0_SA_CRO~Z (solo, on Andrew's word; build, decomposition and deploy)"
   },
   "coo_lane": null,
   "fabric_ruling": "site-z -- the brief's author (4.0.0_SA_CRO~Z) and the census's first consumer (0.0.0_AB_MSTR~Z's /integrate) are here; the generator is AWS-side; each device's census emission stays in that device's MSTR lane (1.0.0_SA_CTO~Z msg 29152).",
-  "blocking": "L4 PRD v0.1 landed 2026-10-04 by 1.0.0_SA_CTO~Z. Owed: 3.0.0_SA_CVO~Z signs the ratified-text half (proportionate form; the brief half is accepted because the CRO wrote the brief); 0.0.0_AB_MSTR~Z seats the COO lane within the cap; then L5/L6.",
+  "blocking": "L4 PRD v0.1 landed 2026-10-04 by 1.0.0_SA_CTO~Z. Andrew ~18:4xZ: 4.0.0_SA_CRO~Z builds it solo (no COO lane). Owed: 3.0.0_SA_CVO~Z's ratified-text half (proportionate); the never-widen pair at the first served publish (CTO half 1.0.0_SA_CTO~Z).",
   "thread_counter": 0,
   "threads": []
 }

@@ -21,11 +21,14 @@
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261004_18xxZ_NFRA_SPRINTWIN_ENDPOINT_CONFIRMED.md`).
 **Sign-off:** proportionate (CLAUDE.md rule 27, single-round scale). `3.0.0_SA_CVO~Z` signs the ratified-text half; the brief half
 is accepted because the CRO wrote the brief.
-**Seats:**
-- L5/L6: a site-Z COO lane seated by `0.0.0_AB_MSTR~Z` within the COO cap;
+**Seats** (Andrew-direct ~18:4xZ at `4.0.0_SA_CRO~Z`, VERBATIM: *"I want you to drive the full completion of the daily-sprint update
+we descirbed. that does not need to go to a new COO/team, you hsould be able to handle that solo on this device."*; record
+`org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/ANDREW_DIRECT_20261004_184xZ_NFRA_SPRINTWIN_CRO_Z_BUILDS_SOLO.md`):
+- build, decomposition and deploy: `4.0.0_SA_CRO~Z`, solo, on site Z. This replaces msg 29152's COO lane and its AE~A deploy owner.
 - L8/L9: `3.0.0_SA_CVO~Z`;
-- the AWS deploy: `0.7.0_AE_CloudOps~A`, through safe-apply and the image build;
-- each computer's Scheduled Task: that computer's MSTR, in its /integrate lane.
+- the mechanical gates stand: the never-widen pair (this seat holds the CTO half), safe-apply, safe-commit and safe-merge, and the
+  NEVER-2 ledger;
+- each computer's Scheduled Task: that computer's MSTR, in its /integrate lane (the laptop's on request from site Z).
 
 ## ENDPOINT (step 2, /endpoint --forward)
 
