@@ -17297,3 +17297,54 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Not IB-pr-314's (that cell records six named functions). The remedy is S293's shape: re-key or add the 49f rows (the naming limb now admits builder-minted names in the source map, CVO ruling @7b38f056ca) and record them. A candidate cell for E2 or the next round; the issuer rules it there."
 }
 ```
+
+## IRPT_BCKEND-S323 -- the advisor directory refresh has failed since 09-29 (HAND_OVER_RUNNER_OFFLINE)
+
+```json
+{
+  "id": "IRPT_BCKEND-S323",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-04T23:02:00Z",
+  "one_line": "The advisor directory refresh has FAILED every trading day since 2026-09-29 at 49F (opal-data-bd) and INF (opal-data-inf), and on 10-02 at COT: each investor-reporting/directory/_refresh/<day>/manifest.json reads FAILED, 'build raised DispatchError', token HAND_OVER_RUNNER_OFFLINE; latest.json still serves the 2026-09-25 build (4,620 / 292 / 258 entries) and no row records it (S126 was dismissed after one good run).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's boto3 reads 2026-10-04 ~23:0xZ of the three buckets' _refresh manifests (09-29, 10-01, 10-02) and latest.json entry counts",
+      "EC2 i-02448edb624a7a7cf (mdpf-daily-runner): stopped, 'User initiated (2026-10-04 16:41:18 GMT)' -- after the failures began, so not their first cause"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-1/FWD-7: an advisor's search reads a directory refreshed daily, and an over-age directory is said, not served silently.",
+  "world_is": "The directory is 5-8 trading days old at every firm; the live search code carries no over-age check (per this seat's FWD grade), so the stale build is served with only its as-of. On PROD only Opal admin/internal/Dev users reach the page, which bounds the exposure.",
+  "notes": "INERT (PROD page is admin/Dev-only). Owner 2.0.0_SA_COO~P: name the hand-over runner the dispatch expects and why it is offline. Restarting a runner or re-dispatching is a data-engineering act that needs Andrew's explicit directive (his word ~17:3xZ 2026-10-04, relayed by 0.0.0_AB_MSTR msg 104665); this row asks for the cause, not the act."
+}
+```
+
+## IRPT_BCKEND-S324 -- a READY export carries neither ref ADDENDUM v0.24 requires
+
+```json
+{
+  "id": "IRPT_BCKEND-S324",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-04T23:02:00Z",
+  "one_line": "The one READY export at PROD (49F, bundle exr_5f3c0b75.., receipt EXP-e29b5415..) carries neither narrative_packet.json nor an analysis-report reference, and every template/brand version reads 'unknown'; ADDENDUM v0.24 says a bundle carrying neither ref is refused. The 09-27 and 09-29 bundles carried narrative_packet.json (45,266 B each).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's IRPT_BCKEND outcome grade at PROD c69b4747, 2026-10-04 ~21:2xZ-22:5xZ (read by a delegate): the bundle's member list and receipt; irpt-narrative last log activity 2026-09-20T11:43Z"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "ADDENDUM v0.24: an export bundle carrying neither a narrative-packet nor an analysis-report reference is refused.",
+  "world_is": "A bundle with neither ref reached READY on the PATH B export route, so the refusal is absent on that route.",
+  "notes": "INERT (one admin-only export). Owner 2.0.0_SA_COO~P: put the v0.24 refusal on the PATH B export route, or the CTO says by addendum that PATH B exports are exempt."
+}
+```
