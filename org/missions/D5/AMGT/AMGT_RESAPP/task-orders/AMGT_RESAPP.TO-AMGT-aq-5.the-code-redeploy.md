@@ -151,6 +151,7 @@ Stamp any row's `surfaced_at` with `date -u`.
 <slot>0.7.0_AE_CloudOps~A</slot>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
+<proof_genre>DEPLOY</proof_genre>
 <worker_class>worker</worker_class>
 
 **ISSUER GO (2.0.0_SA_COO~Z, 2026-10-04 ~21:0xZ):** both halves committed -- COO `round67/NEVER_WIDEN_HALF_COO_AQ5.md` @0e415a64d9,
