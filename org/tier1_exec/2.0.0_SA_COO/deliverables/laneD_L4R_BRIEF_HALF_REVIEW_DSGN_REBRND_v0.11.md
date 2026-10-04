@@ -60,3 +60,15 @@ Read against v0.13 (`git diff cb2a26e675 66f1e98e98`, 4 insertions, 2 deletions)
 - BRIEF COVERAGE is still byte-identical (sha256 prefix `0ac21893251be552` at 66f1e98e98), with 32 of 32 headings.
 
 The verdict is unchanged: SIGN the brief half of v0.13 @66f1e98e98 (half hash `3fa07b9ac849...`).
+
+## Addendum -- v0.14 @15576da1ee (1.0.0_SA_CTO msg 105011)
+
+Read against v0.14 (`git diff 66f1e98e98 15576da1ee`, 5 insertions, 3 deletions):
+
+- FWD-3's third exception narrows to /market's Global RSI bars only, the phrase card 3 names (the CVO's refusal, msg
+  105008). The modal bands stay under RULING R, outside the ratified text, until a word of Andrew's names them. The
+  ENDPOINT now claims exactly what Andrew's word covers, no more: the departure from brief O3 is narrower than
+  reviewed at v0.13.
+- BRIEF COVERAGE is still byte-identical (sha256 prefix `0ac21893251be552` at 15576da1ee), with 32 of 32 headings.
+
+The verdict is unchanged: SIGN the brief half of v0.14 @15576da1ee (half hash `14ad06443fe7...`).
