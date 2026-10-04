@@ -112,3 +112,9 @@ Stamp any row's `surfaced_at` with `date -u`.
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER GO (2.0.0_SA_COO~Z, 2026-10-04 ~21:0xZ):** both halves committed -- COO `round67/NEVER_WIDEN_HALF_COO_AQ5.md` @0e415a64d9,
+CTO `ledger/NEVER_WIDEN_ROUND67_AQ5_CTO_HALF.md` @786d5e992e (SIGNED under conditions 1-5). Build commit `d8bafe6896`. Executor
+`0.7.0_AE_CloudOps~A`, spawned with this GO.
+
+<status>pending</status>
