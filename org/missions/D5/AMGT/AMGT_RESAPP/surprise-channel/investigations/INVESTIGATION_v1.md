@@ -17373,5 +17373,51 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   ]
  },
  "disposition": "UNDER_INVESTIGATION"
+}
+,
+{
+ "id": "AMGT_RESAPP-Z-W220-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~220",
+ "surfaced_at": "2026-10-04T03:04:02Z",
+ "one_line": "AMGT-aq-2 AC2 cannot read 0 'no-table-row': the latest gold chatter_window holds 636 rows over 212 securities (30, 90 and 365 each) but 21 of the 95 covered names have no row in it, so the route serves those 21 their plain 'window table holds no row' reason and c24 C1 prints no-table-row 21 on each of days 30, 90 and 365.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "The aq-2 order's AC2 expects 'C1 PASS on days=30, 90 and 365 (0 mismatches, 0 old reasons, 0 rows without a table row)', and the preflight reads the chatter_window as the table the 95 covered rows are served from (74 of 95 rows mismatching at the base).",
+ "world_is": "Measured 2026-10-04 on worktree C:/tmp/r67-220 after the route change: r67_served --cell c24 --where local printed 'chatter_window rows read: 636' and, for each of days=30/90/365, 'rows 95 mismatches 0 old-reason 0 no-table-row 21', verdict 'R67 C24 SERVED: NO', exit=1. The 74 rows that have a table row all match on tone and voters; the 0-voters 'no clear tone' and the old-reason removal also hold. The 21 covered keys absent from the table (covered_security_keys() = 95, table keys = 212, every window 30/90/365 = 212 rows): 1299_HK, 939_HK, AMXB_MM, AZN_LN, BATS_LN, BNP_FP, CNR_CN, GSK_LN, IBE_SM, ISP_IM, KOFUBL_MM, NESN_SW, NOKIA_FH, OMAB_MM, ORA_FP, PWR_US, RIO_LN, SAN_FP, TTE_FP, UBSG_SW, VIVT3_BZ (all _Equity). No case or form variant of them is in the table (a substring scan of the table's 212 keys for 1299, 939, NESN and VIVT finds none). The table's build list is therefore a different 212-name set from the covered universe: the producer (lib/research/harvest/window_tone.py build, fed by --securities-json) did not include these 21. Route-side the only honest serve is the plain no-row reason (order item 3), which is what ships; computing their tone at request time is forbidden by FWD-36.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "r67_served.py --cell c24 --where local at C:/tmp/r67-220: C1 FAIL on days 30, 90, 365 with 'mismatches 0 ... old-reason 0 no-table-row 21'; R67 C24 SERVED: NO exit=1.",
+   "Probe over publication_gold._latest_gold_snapshot_rows('chatter_window') vs covered_universe.covered_security_keys(): 636 rows, 212 distinct keys, 95 covered, 21 covered keys missing, Counter of window_days {30: 212, 90: 212, 365: 212}, as_of 2026-10-04.",
+   "lib/research/api/tests/test_window_tone_route.py plants a covered name with no row and asserts its reason is served: 5 passed; the api suite ends '504 passed'."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+,
+{
+ "id": "AMGT_RESAPP-Z-S345",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~Z",
+ "surfaced_at": "2026-10-04T20:29:42Z",
+ "one_line": "aq-4 (merged d8bafe6896) reads s3://opal-data-portal-v2/json/security_scanner/latest/universes/sp500/universe_data.json at request time, and opal-amgt-scoped-api-role cannot read it (simulate-principal-policy: implicitDeny; positive control on opal-data-harvest: allowed; the bucket policy grants only CloudFront). Shipped code-only as aq-5 is cut, the read raises and the route answers 502 -- for DE_US_Equity AND for every unknown _US_Equity key that answered 404 before, including the c26 control ZZZZ_US_Equity.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "aq-4's preflight reads 'comp-iam: DECLARED-NOT-APPLICABLE -- no new write; the routes read what they read today, plus the declared coverage list', and aq-5's preflight reads 'comp-iam: RUN by the issuer at the cut -- 0 new actions: the act carries code only, so the plan must show NO IAM change', with 'Any destroy, IAM, route or gateway change in a plan is a STOP'. The worker's own module docstring says the universe is 'the same file the Peers candidate universe reads', which suggested the function already read it.",
+ "world_is": "Measured 2026-10-04 ~20:2xZ. The build at d8bafe6896 (--build-only) packages lib/research/coverage/covered_no_block.py and does NOT package lib/research/peers/universe.py, so this function has never read the scanner file; the Peers engine that does is another function. infra/aws/terraform/harvest/scoped-amgt-api.tf scoped_amgt_api_grants grants s3:GetObject only on opal-data-harvest pool prefixes. Live: simulate-principal-policy for opal-amgt-scoped-api-role, s3:GetObject on the scanner key -> implicitDeny; on opal-data-harvest/amgt/harvest/gold/research_dossier/x.json -> allowed. get-bucket-policy opal-data-portal-v2: 3 statements, principals CloudFront OAI x2 and cloudfront.amazonaws.com, none for this role. covered_no_block.covered_without_block raises on a failed read by design (502, never 404), so local checks (which read with the operator's credentials) pass while the deployed role would fail. Nothing is deployed: aq-5 is staged and fires only on the issuer's GO.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "simulate-principal-policy arn:aws:iam::313476888478:role/opal-amgt-scoped-api-role s3:GetObject arn:aws:s3:::opal-data-portal-v2/json/security_scanner/latest/universes/sp500/universe_data.json -> implicitDeny; arn:aws:s3:::opal-data-harvest/amgt/harvest/gold/research_dossier/x.json -> allowed.",
+   "build-and-upload-scoped-amgt.sh --build-only at d8bafe6896: 356 entries; zip namelist holds lib/research/coverage/covered_no_block.py and no lib/research/peers/universe.py.",
+   "content_diff.py against deployed FcVBPafw: files 356, IDENTICAL 350, CHANGED 5, ADDED 1 (covered_no_block.py), REMOVED 0."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
 }]
 ```

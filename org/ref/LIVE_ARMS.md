@@ -69,6 +69,13 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
       /canonical-drive loops are running for all COOs on their respective projects".
     - Egress, verbatim: "All agents have any egress they need to run their operations tonight." It is recorded as
       written. This row does not decide how "tonight" or "the rest of the fabric" bound.
+  - RELAUNCH 2026-10-04 after the SentinelOne crash (shutdown 18:58:20Z). Andrew answered "Restart the AMGT drive
+    loops?" with "2.) Yes" at ~19:4xZ, record
+    `org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20261004_194xZ_RELAUNCH_COO_O_CVO_O_RESTART_AMGT_DRIVE_LOOPS.md`
+    @3166fec43e. Re-arm record:
+    `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261004_194xZ_SELF_DRIVE_60M_AMGT_FRIDAY_RESTART_AFTER_SENTINELONE_CRASH.md`.
+    Class DIRECTED, chooser Andrew; landed by 1.0.0_SA_CTO~Z. The terms above carry unchanged. Each paired seat re-arms
+    its own loop (MSTR~Z relays). `2.0.0_SA_COO~RV` stays on `/canonical-drive` FULL.
 - `2.0.0_SA_COO~A` `/drive` NFRA_CLDGRPH to CLOSED:
   `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_171xZ_CLDGRPH_HOLDS_OFF_WRAP_IT_UP.md`.
 - `2.0.0_SA_COO~X` `/drive` NFRA_C3MATERIALIZE:

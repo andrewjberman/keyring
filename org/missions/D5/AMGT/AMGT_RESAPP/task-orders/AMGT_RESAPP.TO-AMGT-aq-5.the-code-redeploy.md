@@ -38,6 +38,7 @@ A failing criterion is the ROLLBACK trigger: the prior artifact version through 
 ## 3. SURFACES
 
 <paths>
+infra/aws/terraform/harvest/scoped-amgt-api.tf
 org/critical_paths/change_management/
 org/critical_paths/.open_deploys/
 org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~A/
@@ -48,7 +49,7 @@ org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="AMGT-aq-5"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round67/checks/r67_served.py --cell c23 --where deployed; echo "exit=$?"</invocation><expect>run from a checkout at the build commit: C1, C2 and C3 PASS over every served payload; R67 C23 SERVED: YES on the deployed function; and exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="AMGT-aq-5"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round67/checks/r67_served.py --cell c24 --where deployed; echo "exit=$?"</invocation><expect>C1 PASS on days=30, 90 and 365; R67 C24 SERVED: YES on the deployed function; and exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="AMGT-aq-5"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round67/checks/r67_served.py --cell c24 --where deployed; echo "exit=$?"</invocation><expect>on each of days=30, 90 and 365 C1 prints mismatches 0, old-reason 0 and a no-table-row count equal to a local read of the same check run beside it (21 at the pin; row AMGT_RESAPP-Z-W220-S1), so R67 C24 SERVED: NO comes from that one clause alone</expect></criterion>
   <criterion id="AC3" cell_refs="AMGT-aq-5"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; for c in c25 c26; do PYTHONPATH="$(pwd)" python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round67/checks/r67_served.py --cell $c --where deployed || exit 1; done; echo "exit=$?"</invocation><expect>R67 C25 and C26 SERVED: YES on the deployed function; and exit=0</expect></criterion>
 </proof_of_spec>
 
@@ -58,6 +59,37 @@ The following are run with them and reported (no regression), and the issuer re-
 - `r64_served.py --cell c15 --where deployed`, cold, on the day route;
 - the RANGE route's cold read (BA `/security/BA_US_Equity/timeline?from=2026-09-01&to=<today>`). Over 5 s is reported, not rolled
   back.
+
+## 4a. AMENDMENT 1 (issuer `2.0.0_SA_COO~Z`, 2026-10-04 ~20:3xZ) -- the pin, a grant leg, and AC2's expectation
+
+**The build commit is `d8bafe6896`,** or a descendant whose CONTENT-DIFF equals CHANGED 5 + ADDED 1:
+- `scoped_amgt.py`, `monthly_chatter.py`, `rolling_windows.py`;
+- `infra/logic/registry/reporting_policies.json`, `infra/logic/registry/systems.json`;
+- ADDED `lib/research/coverage/covered_no_block.py`.
+
+**THE ACT IS NOW TWO LEGS, in this order (row `AMGT_RESAPP-Z-S345`).** aq-4 reads
+`s3://opal-data-portal-v2/json/security_scanner/latest/universes/sp500/universe_data.json` at request time. The role reads it as
+implicitDeny today, so without the grant every unknown `_US_Equity` key turns from 404 into 502.
+1. **Grant leg first.**
+   - Add exactly this statement to `scoped_amgt_api_grants` in `infra/aws/terraform/harvest/scoped-amgt-api.tf`:
+     `Sid = "ReadTheScannerSp500UniverseForCoveredNoBlock"`, `Action = ["s3:GetObject"]`,
+     `Resource = ["arn:aws:s3:::opal-data-portal-v2/json/security_scanner/latest/universes/sp500/universe_data.json"]`.
+   - `safe-apply` targeted at that role policy. The plan shows ONE in-place update of `opal-amgt-scoped-api-grants` and
+     nothing else, or it is a STOP.
+   - Then `simulate-principal-policy` on the role for that key must read `allowed`.
+2. **Code leg.** As in section 1, at the pin above. Section 1's "any IAM change in a plan is a STOP" binds this leg.
+
+**AC2** expects c24's one known clause, the producer gap of row `AMGT_RESAPP-Z-W220-S1`. Any mismatch, any old reason, or a
+no-table-row count that differs from the local read is the rollback trigger.
+
+**Also a rollback:** a 502 on any key.
+
+Halves:
+- COO: `deliverables/2.0.0_SA_COO~Z/round67/NEVER_WIDEN_HALF_COO_AQ5.md`;
+- CTO: `ledger/NEVER_WIDEN_ROUND67_AQ5_CTO_HALF.md` (owed).
+
+Gate limb that graded this modification: none. LIMB 6 fires only on a newly-added order, and GATE (viii) does not apply
+(`<placeholders>NONE</placeholders>`).
 
 ## 5. WHEN YOU ARE DONE
 

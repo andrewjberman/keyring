@@ -1,0 +1,51 @@
+{
+  "project_code": "NFRA_SPRINTWIN",
+  "macro_code": "NFRA",
+  "directive": "D0",
+  "fabric": "site-z",
+  "pipeline": "daily-sprint-generator",
+  "status": "active",
+  "dep_stage": "PRD",
+  "created": "2026-10-04",
+  "registered_under_tree": "2026-10-04",
+  "placement": "SITEZ",
+  "pods": [],
+  "related": [
+    "NFRA_CLDGRPH",
+    "LGIC_NAMING",
+    "LGIC_ENFORCE"
+  ],
+  "name": "The daily sprint: every hour reported once (previous report to this one), on New York time, with each computer's unpushed commits counted through a per-device census unioned by the cloud run",
+  "description": "Approved by Andrew-direct 2026-10-04 ~17:3xZ at the 4.0.0_SA_CRO~Z terminal, VERBATIM: '1.) I agree with the covered time, previous report to current report, that is a much better layout. 2.) Agreed. 3.) I like Option A. Let's proceed with getting this incorporated and designed while the fabric is quiet.' (record org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/ANDREW_DIRECT_20261004_173xZ_DAILY_SPRINT_WINDOW_ET_SCHEDULE_OPTION_A_BUILD.md). Placed by 1.0.0_SA_CTO~Z (msg 29152): home D0 because the daily-sprint run's ledger rows LD-0574, LD-0588 and LD-0616 all cite D0. Endpoint FWD-1..7 confirmed by Andrew ~18:0xZ: 'Confirmed, proceed.' (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261004_18xxZ_NFRA_SPRINTWIN_ENDPOINT_CONFIRMED.md).",
+  "brief_ref": "docs/briefs/daily-sprint-window-and-device-census-brief-20261004.md",
+  "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261004_18xxZ_NFRA_SPRINTWIN_ENDPOINT_CONFIRMED.md",
+  "prds": [
+    {
+      "path": "org/missions/D0/NFRA/NFRA_SPRINTWIN/prd/NFRA_SPRINTWIN_PRD.md",
+      "version": "v0.1",
+      "status": "DRAFT"
+    }
+  ],
+  "prd_lineage": [
+    {
+      "version": "v0.1",
+      "date": "2026-10-04",
+      "author": "1.0.0_SA_CTO~Z"
+    }
+  ],
+  "decompositions": [],
+  "decomposition_lineage": [],
+  "leads": {
+    "cto": "1.0.0_SA_CTO~Z",
+    "coo": "NONE -- Andrew-direct ~18:4xZ: 4.0.0_SA_CRO~Z builds solo on site Z ('does not need to go to a new COO/team'); record org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/ANDREW_DIRECT_20261004_184xZ_NFRA_SPRINTWIN_CRO_Z_BUILDS_SOLO.md",
+    "cvo": "3.0.0_SA_CVO~Z",
+    "cro": "4.0.0_SA_CRO~Z",
+    "workers": "none (solo build)",
+    "builder": "4.0.0_SA_CRO~Z (solo, on Andrew's word; build, decomposition and deploy)"
+  },
+  "coo_lane": null,
+  "fabric_ruling": "site-z -- the brief's author (4.0.0_SA_CRO~Z) and the census's first consumer (0.0.0_AB_MSTR~Z's /integrate) are here; the generator is AWS-side; each device's census emission stays in that device's MSTR lane (1.0.0_SA_CTO~Z msg 29152).",
+  "blocking": "Not blocked. PRD ADMITTED: ratified-text half SIGNED by 3.0.0_SA_CVO~Z @43b01c88f8; v0.2 CONTRACTS amendments (window_end, 8-day look-back, union of every census file in the window) landed before H3. Next: 4.0.0_SA_CRO~Z builds H0-H4 solo (Andrew ~18:4xZ). The never-widen pair at the first served publish: CTO half 1.0.0_SA_CTO~Z, COO half 2.0.0_SA_COO~H.",
+  "thread_counter": 0,
+  "threads": []
+}

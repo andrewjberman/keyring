@@ -6690,7 +6690,72 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "disarm_owner": "2.0.0_SA_COO~H"
+    },
+    {
+      "id": "AMGT_HARVST-Z-S82",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-04T18:51Z",
+      "one_line": "19,967 of the 31,042 served gold mention rows (64%) are published BEFORE 2026-01-01 (back to 2013; sa 19,430, ft 507, bbg 21, wsj 9; 8,916 distinct articles), while the store's declared history starts 2026-01-01 (FWD-9; window_tone STORE_START).",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "PRD FWD-9: each company's publication history since 1 January 2026 is in the store and on its timeline; window_tone.STORE_START = 2026-01-01.",
+      "world_is": "The served mention part (chatter rebuild of round 41) carries 19,967 rows dated 2013-2025 (2025 6,666; 2024 4,131; 2023 3,076; 2022 2,449; 2021 1,612; 2020 992; earlier 1,041). They are real articles the sa listing returned deeper than 2026 (the FWD-12 re-check aq-4 reads 0 wrong-article mismatches outside the 33-key quarantine over 11,210 sa rows), e.g. sa:3793704 (2022-01-31) on AMD, NOVN and REGN. Windows are unaffected (served from STORE_START); events and the timeline can show pre-2026 days.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "publication_gold._latest_gold_snapshot_rows(GOLD_TABLE) read 2026-10-04 before 18:51Z: 31,042 rows, 19,967 with published_utc < 2026-01-01",
+          "round44/aq-1.READ.md (the AMD query example) and round44/aq-4.READ.md (d)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "notes": "Not a wrong-article defect (FWD-12 d holds). Whether pre-2026 rows are served, trimmed at gold, or kept as context is the CTO's scope call; recorded here for the round-44 analysis. Nothing changed."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S83",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-04T20:10Z",
+      "one_line": "Records the CTO ruling on AMGT_HARVST-Z-S82 (1.0.0_SA_CTO~Z msg 29207, self-drive AMGT_FRIDAY tick 1): KEEP the 19,967 pre-2026 rows in gold, no store write; CLIP the served events and timeline at STORE_START (2026-01-01), as the windows already are. The clip is a served change under a pair and enters the round-44 analysis's enrichment list.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Z-S82 placed the scope call on 1.0.0_SA_CTO: serve, trim at gold, or keep as context.",
+      "world_is": "The CTO ruled keep-in-gold and clip-on-serve (msg 29207, 2026-10-04T20:03Z). Nothing has changed yet: the served events and timeline still show pre-2026 days until the clip lands.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "broker msg 29207 1.0.0_SA_CTO~Z -> 2.0.0_SA_COO~H, READ-acked by 2.0.0_SA_COO~H",
+          "row AMGT_HARVST-Z-S82 @02217a491f"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "notes": "Cites Z-S82 and carries no adjudicates field: Z-S82's disposition is 3.0.0_SA_CVO~Z's L9 field (surprise-row-gate A-1 / EN-g-37). The CVO dispositions Z-S82 against this ruling at the round-44 L9."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S84",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-04T20:40Z",
+      "one_line": "Correction to Z-S82: the served timeline already clips at STORE_START. Over 212 names the wired range and day routes serve 0 pre-2026 dates (496 events served; the 11 pre-2026 chatter_event rows on 7 names never cross the floor and are never served; 1,355 day-route probes on pre-2026 days serve no data). Z-S82's 'events and the timeline can show pre-2026 days' was not measured and is wrong for the served routes.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Z-S82 world_is: 'Windows are unaffected (served from STORE_START); events and the timeline can show pre-2026 days.' CTO msg 29207 ruled a served clip at STORE_START under a pair.",
+      "world_is": "get_timeline clamps from at BACKFILL_FLOOR 2026-01-01 and drops events whose last_day precedes it; chatter_daily starts at 2026-01-01, so get_timeline_day answers TIMELINE_DAY_NOT_FOUND on pre-2026 days; the event route is not wired (scoped_amgt.py:5308). Gold holds 11 pre-2026 chatter_event rows (ASML_NA, ASML_US, COST, FDX, HD, NVDA, TSLA) and 19,967 pre-2026 mention rows on 202 names; none is served.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "deliverables/2.0.0_SA_COO_H/round45/checks/ar-3.AC1.py run 2026-10-04 ~20:3xZ over live gold: AC1 RESULT PASS, LEAKS 0 (ar-3.AC1.out, ar-3.served_clip.json)",
+          "lib/research/harvest/timeline_api.py:309-339; lib/research/api/scoped_amgt.py:5308-5324"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "notes": "Cites Z-S82 and Z-S83. Decomposition section 58 rules HVST-ar-3 down from a SERVED clip to an issuer READ: a served change would be a 0-diff deploy. The one future-reachable leak is an event that crosses the floor (0 today)."
     }
-
   ]
 ```
