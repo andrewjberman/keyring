@@ -160,3 +160,30 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "world_is": "MEASURED: run 2 and run 3 wrote their keeps and run.json; the stored report reads back sha256-equal."
 }
 ```
+
+## IRPT_YCDGEN-S3 -- the step-7 firewall challenge stopped runs 2 and 3 with no row filed (C-SESSION)
+
+```json
+{
+  "id": "IRPT_YCDGEN-S3",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-04T21:15:00Z",
+  "one_line": "Runs 2 and 3 (YCD-R1-20261004T1924Z, T1944Z) stopped at step 7 on a 202 with x-amzn-waf-action (WAF_REFRESH_REQUIRED), at about 1.5 s and 8 s spacing; C-SESSION says a firewall challenge STOPS research and 'files a row', and no row was filed for either stop -- the challenge is recorded only in the drain-end packet's round-2 candidates.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~Y/round1/DRAIN_END_PACKET.md section 2 (run 2 STOPPED WAF_REFRESH_REQUIRED at step 7; run 3 step 07 a 202 with x-amzn-waf-action) and section 5 item 3",
+      "org/missions/D9/IRPT/IRPT_YCDGEN/prd/IRPT_YCDGEN_PRD.md C-SESSION: 'A firewall challenge or a lost session STOPS research: the run releases the lease, files a row and makes no retry storm'",
+      "INVESTIGATION_v1.md at HEAD: 0 rows mention a firewall or WAF challenge (this seat's read)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "C-SESSION: a firewall challenge stops the research run, which releases the lease and files a row.",
+  "world_is": "The runs stopped and did not retry, as C-SESSION requires; the row half of the contract was not done, so the challenge's shape (request-shaped, not rate-shaped, per the packet) is carried only in a packet note.",
+  "notes": "INERT (no retry, session kept). Owner 2.0.0_SA_COO~Y: have the runner file the row on a WAF stop, and carry the step-7 call's split or drop as a round-2 item."
+}
+```
