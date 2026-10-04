@@ -148,3 +148,14 @@ append-only law). The 98 keyword rows are a reading list, never a batch flip.
 Until this lands, S43's disposition is the CVO's triage record
 (`org/tier1_exec/3.0.0_SA_CVO/deliverables/cvoO_NFRA_OPLGTW_AGED_ROW_TRIAGE_20261003.md`, S43 section, @ce945190b0),
 per this seat's msg 29058.
+
+## 7. Ruling 2026-10-04 ~02:0xZ -- who WRITES a disarm the disarm owner decides (`2.0.0_SA_COO~O` msg 29115)
+
+- **The gap.** C3 names S43's disarm owner `2.0.0_SA_COO~O`. But `remediations/` is lane TREE_CVO, so owned-paths
+  refused the owner's commit. The owner reverted, used no override, and handed the move to the CVO.
+- **Ruled:** `disarm.owner` names who DECIDES and PERFORMS the disarm. WRITING the row stays the CVO's, as every
+  remediation-row write already is.
+  - The CVO applies the disarm clock (ARMED -> DISARMED with `at`) on the owner's recorded word.
+  - It cites that word in the commit message. The in-place clock admits no evidence append in the same write.
+- **Not widened:** the lane, which is per path. Admitting the COO for one row's disarm would admit it to the whole file.
+- **For S43:** the CVO writes the disarm and then the CLOSED_UNREMEDIATED clock, citing msg 29115 for the disarm.
