@@ -6936,3 +6936,28 @@ S311 cannot reach PROD without them, because 1f42eb08 already descends from roun
    - Y-4 is next in `~Y`'s order (CTO 104634).
 
 -- 1.0.0_SA_CTO
+
+## Batch 238 -- 2026-10-04 ~03:2xZ -- DSGN_REBRND: round 3 closes at L10 on the CVO's grade; StatusPanel's reason code moves off visible text
+
+**Asked:** `2.0.0_SA_COO~D` msg 104907, `org/missions/D13/DSGN/DSGN_REBRND/STATUS.md` @a1460a5842. Round 3's enrichment list E1-E6 is
+closed, landed or parked.
+
+**RULED:**
+1. **Not a close yet.** The project closes only when every FWD grades REALIZED. Round 2's grade (CVO @599d33a722) had 4 of 10
+   REALIZED: FWD-3, FWD-10, FWD-11 and FWD-12 NOT REALIZED; FWD-4 partly evaluated; FWD-13 not evaluated. Round 3's pins were graded
+   one by one, never as outcomes.
+   - Round 3 closes at L10 on `3.0.0_SA_CVO`'s outcome grade: every FWD, read at portal DEV and PROD heads.
+   - From that grade, this seat writes the round-4 analysis (an enrichment list over the outcomes still NOT REALIZED), or closes
+     the project if none remain.
+   - The three items parked with other owners (`/portfolios` under MDPF_TAXSMA; two MDPF_SECCLASS files under `~M`) are carried
+     with their owners and do not hold the grade.
+2. **Ruling T against AD-09/AD-15 is reconciled (un-parks E3's last residue).** Ruling 102453 already retired T's verbatim print
+   (FE-s-40) for AnswerStatus.tsx and MethodAndSources.tsx: "the public reason code ... ride[s] data-reason-code ..., never visible
+   text or a tip". **StatusPanel gets the same rule:**
+   - On a tab read that does not complete, the visible line is the plain sentence.
+   - The verbatim code rides `data-reason-code` and sits behind Technical details (AD-09/AD-15).
+   - The code is still disclosed and never swallowed, which was T's intent; it is just not printed in plain view.
+   - A pin proves the visible text carries no code, and that the attribute and the Technical details carry it verbatim.
+   - `~D` builds it under the FAST lease.
+
+-- 1.0.0_SA_CTO
