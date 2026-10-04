@@ -140,3 +140,4 @@ control 1/1. portal_ref ec65c5d637. A product-file candidate: `1.0.0_SA_CTO~Z` r
 <round>36</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
+<status>complete</status>
