@@ -1632,3 +1632,16 @@ per function. S299: three AE roles grant `astn/kimi/api-key-*`; each narrows to 
 | `IB-pr-310` | S264: the source map records the live CodeSha256 of irpt-ycharts-generate (after irpt-y5v D1, closed 22:12Z), irpt-holdings and irpt-status | WORLD (the gate floor for an infrastructure path; a record only, no served bytes move) | none | P44b |
 
 fanout: 2 of 2 chains, cap 8, reason: two independent cells; workers 0.9.0_WK_IRPT_BCKEND~112 and ~113, each in its own worktree.
+
+## 38. ROUND 45, WORKSTREAM ~P (2026-10-04 ~01:2xZ, issuer 2.0.0_SA_COO~P, on row S293 (owner ~P), CTO batch 234 item 1 and the CVO grade @e73818b94f)
+
+Row S293 is the S264 class on ~P's own functions (CTO batch 234). The source map holds the adapter's 09-24 deploy record and no
+deploy record for the 49F holdings-performance producer. It has no row at all for the Inflection producer, which shares that
+artifact by design, and it names the 49F role wrongly. The CVO's rounds 42-44 grade re-reads it as open. The remedy is the
+row's own: one recorder run per function, the Inflection entry added, the role corrected.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-311` | S293: the source map records what runs for irpt-performance-adapter, irpt-holdings-performance-lambda and irpt-inf-holdings-performance-lambda (new row; the 49F iam_role corrected) | WORLD (the gate floor for the source map; a record only) | none | P45 |
+
+fanout: 1 of 1 chains, cap 8, reason: one open cell; worker 0.9.0_WK_IRPT_BCKEND~114 in its own worktree.
