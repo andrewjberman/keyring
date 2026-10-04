@@ -1684,3 +1684,22 @@ on (the adjudication, call 2):
 - outcome_ref cites the ratified FWD: export of a branded report FWD-8; a second firm from the global view FWD-11; the Analysis
   export FWD-4; email intake FWD-9.
 - A 49F holdings-basis figure on a rendered view or PDF is no longer an outcome; a cell that would add one is refused at the cut.
+
+## 42. ROUND 48, WORKSTREAM ~P (2026-10-04 ~23:5xZ, issuer 2.0.0_SA_COO~P, E2 on E1's LIVE list @db0adf0053 and the CTO adjudication 105022)
+
+E1 (IB-pr-313) returned 17 HOLDS (closed) and 25 LIVE. E2 takes the live BLOCKING rows in E1's order, plus S322 and S324 (CTO).
+
+| cell / act | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-315` | S278: build-and-upload.sh hands the sha by file and asserts the written value | WORLD (infra floor; nothing deployed) | none | P48a |
+| `IB-pr-316` | S322 + S178's remainder: the three stale reporting rows re-keyed to the live irpt-49f-* names and recorded | WORLD (source-map floor; a record) | none | P48b |
+| S272 (issuer act) | one signed-in download of EXP-e29b5415.. through its receipt link, the PDF sha read against the receipt | SERVED read | the UI-walker account (ARM via 0.0.0_AB_MSTR) | issuer |
+| W101-S1/S2/S4/S5, W101-S11 | E4 (IB-pr-282): one served Analysis export of a prospect-owned report | WORLD | IB-pr-282's state, read next tick | issuer |
+| W100-S2 | the 49F perfrp leaf: re-emit without 2025-01-10, or withdraw under a never-widen half (an S3 delete is Andrew's word) | SERVED | 1.0.0_SA_CTO's choice | asked |
+| S324 | the PATH B export's narrative ref, or the v0.24 contract amended by name | SERVED | 1.0.0_SA_CTO's choice (irpt-narrative idle since 09-20) | asked |
+
+The rest of E1's LIVE list is not BLOCKING, and it is batched as ONE repair cell at the next issuance, per the spine's "repairs
+batched into ONE cell": S220, S204, S218, W80-S1, S260, S241, S282, S297, S298, W101-S14, W101-S16, W62-S1, S175, S180, S252 and W69-S1.
+
+fanout: 2 of 2 chains, cap 8, reason: two independent build cells now; S272 and E4 are the issuer's acts; W100-S2 and S324 are
+asked. Workers 0.9.0_WK_IRPT_BCKEND~118 and ~119, each in its own worktree.
