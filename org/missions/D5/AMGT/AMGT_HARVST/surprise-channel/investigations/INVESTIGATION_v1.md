@@ -6712,6 +6712,28 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "disposition": "UNDER_INVESTIGATION",
       "disarm_owner": "2.0.0_SA_COO~H",
       "notes": "Not a wrong-article defect (FWD-12 d holds). Whether pre-2026 rows are served, trimmed at gold, or kept as context is the CTO's scope call; recorded here for the round-44 analysis. Nothing changed."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S83",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-04T20:10Z",
+      "one_line": "Records the CTO ruling on AMGT_HARVST-Z-S82 (1.0.0_SA_CTO~Z msg 29207, self-drive AMGT_FRIDAY tick 1): KEEP the 19,967 pre-2026 rows in gold, no store write; CLIP the served events and timeline at STORE_START (2026-01-01), as the windows already are. The clip is a served change under a pair and enters the round-44 analysis's enrichment list.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Z-S82 placed the scope call on 1.0.0_SA_CTO: serve, trim at gold, or keep as context.",
+      "world_is": "The CTO ruled keep-in-gold and clip-on-serve (msg 29207, 2026-10-04T20:03Z). Nothing has changed yet: the served events and timeline still show pre-2026 days until the clip lands.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "broker msg 29207 1.0.0_SA_CTO~Z -> 2.0.0_SA_COO~H, READ-acked by 2.0.0_SA_COO~H",
+          "row AMGT_HARVST-Z-S82 @02217a491f"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "notes": "Cites Z-S82 and carries no adjudicates field: Z-S82's disposition is 3.0.0_SA_CVO~Z's L9 field (surprise-row-gate A-1 / EN-g-37). The CVO dispositions Z-S82 against this ruling at the round-44 L9."
     }
   ]
 ```
