@@ -32,3 +32,8 @@ answered by this line and stays open.
 
 Asked: "should the End of Day post redraft and re-text you when the sprint page is republished before you approve?"
 Andrew: *"yes it should"*
+
+## Addendum ~23:4xZ, same channel, verbatim (answer to /open-calls card 1 of 1)
+
+Card: "Push CLOUD so the End of Day redraft feature reaches origin: yes or no?" REC: yes, relayed to 0.0.0_AB_MSTR~Z.
+Andrew: *"rec approved, yes"*
