@@ -7494,3 +7494,29 @@ name the one known failure instead of silently inheriting it.
   "notes": "INERT: a staged leftover rides only into a later commit of the same shared index. Remedy: the :877 branch resets and post-checks the whole PATHSPEC, not only SRGATE_FILES. Owner: the safe-commit owner, routed by 1.0.0_SA_CTO~O."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W22-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~22",
+  "surfaced_at": "2026-10-03T23:55Z",
+  "one_line": "A1 resolves Z-W22-S3 for 38 of the 39 tests it turned red, but test_schwab_query.py::test_ogq2_ac20 stays red under R9 and no fixture edit can fix it: its one-page duplicate-grain assertion needs the R24 row check, which cannot fire because quantity_cash_settled is not a served field; gr3.AC1 cannot PASS (1 NEW failure beyond the baseline).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: before the A1 edits `python -m pytest tests -k schwab -q -rfE` from infra/aws/ec2/opal-gateway -> 40 failed, 81 passed, 9 errors (39 failures beyond the baseline's 3 failed 9 errors, ogx4_ac03 being the baseline's). After the fixture edits (test_schwab_query.py, test_schwab_semantics.py, test_schwab_transactions.py) -> 2 failed, 119 passed, 9 errors: test_ogx4_ac03 and the 9 errors are baseline ids; ONE is new, tests/test_schwab_query.py::test_ogq2_ac20.",
+      "SOURCE: app/integrations/schwab/integration.py:686-705 -- the R24 row check (sem.assert_unique_grain) runs only when `all(g in col_names for g in exposed_grain)`, i.e. only when the request's own columns carry EVERY grain field; the code comment calls any other shape NOT-ENFORCED.",
+      "SOURCE: app/integrations/schwab/query.py:157-159 and DATASET_SCHEMAS['dim_position'] (11 served fields, read by import) -- quantity_cash_settled is `a source column that is not a served field`, so no rows-mode request can carry it; the R24 row check therefore never fires for dim_position under R9.",
+      "RUN: scratch probe on test_ogq2_ac20's planted duplicate (same account, cusip, l_s, quantity_settled_unsettled, differing market value): paged request -> isError True; one-page request (page_size 50, columns account_ref/cusip/l_s) -> isError False; the same with quantity_settled_unsettled added -> isError False. Test lines 1000-1010 assert the one-page request returns UNAVAILABLE duplicate_source_grain."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A1: R9's fixture fallout is fixable by fixture-only edits (add grain columns; restate a grain-declaration assertion), and AC1 then passes with no failure beyond the 12-id baseline.",
+  "world_is": "test_ogq2_ac20 encodes the OLD grain's R24 enforcement as a product expectation: with a three-column grain every grain field was a requestable column, so a one-page duplicate was refused as duplicate_source_grain. Under R9 the fifth grain column is not served, so that refusal no longer fires on any rows-mode request. A fixture edit cannot restore it; the options are product ones (run the R24 check on the engine's grain rows instead of the request's columns, or restate the test's one-page expectation as a ruling), both outside this order's write surface. The worker changed neither the product nor the test; an attempted planted-row edit was reverted because it did not fix the test.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
