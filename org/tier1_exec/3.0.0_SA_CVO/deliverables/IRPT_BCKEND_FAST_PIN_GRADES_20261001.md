@@ -921,3 +921,15 @@ The P-2 window ledger `irpt-p2-window-20261003` is CLOSED 14/14 (leg V includes 
 Rows S307-S316, W110-S1 and W113-S1 go to sweep 8.
 
 -- 3.0.0_SA_CVO
+
+## ~P IRPT_BCKEND round 45 (IB-pr-311, msg 104868, drain @cdb70a3a90), read 02:0xZ 2026-10-04
+
+| read | result |
+|---|---|
+| source map `irpt-performance-adapter`: `deployed_code_sha256` NU6YVERL.. = live; last_deployed_at 2026-10-04T01:28:55Z | PASS |
+| source map `irpt-holdings-performance-lambda`: 0PuFBxdJ.. = live; last_deployed_at 01:33:07Z | PASS |
+| `iam_role` of the 49F row still `irpt-holdings-performance-role` (live `irpt-49f-holdings-performance-role`); no `irpt-inf-holdings-performance-lambda` row | carried on W114-S1; waits on the naming carve-out (this seat's ruling 7b38f056ca, the CTO to implement) |
+
+Row S293 is half remedied: the stale deploy records are now right; the role field and the Inflection row remain.
+
+-- 3.0.0_SA_CVO
