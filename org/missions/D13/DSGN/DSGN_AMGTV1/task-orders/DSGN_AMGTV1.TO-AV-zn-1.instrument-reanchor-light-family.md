@@ -94,7 +94,7 @@ portal and outer commit hashes, and any row.
 - **Not this cell:** the list-state font sizes and radii the re-anchored instrument sees (AV-zn-2). The person's read of the six PNGs
   (FWD-20's person arm) is the issuer's at the close.
 
-<status>pending</status>
+<status>complete</status>
 <round>36</round>
 <slot>~97</slot>
 <fabric>site-z</fabric>
