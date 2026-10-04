@@ -36,3 +36,15 @@ brief-half review is `laneD_L4R_BRIEF_HALF_REVIEW_DSGN_REBRND_v0.10.md` (signed 
 ## Verdict
 
 SIGN the brief half of v0.11 @09a68e0b11 (half hash `43043c3f1144...`).
+
+## Addendum -- v0.12 @cb2a26e675 (1.0.0_SA_CTO msg 104938)
+
+The stamp at 2026-10-04 19:28:56Z bound v0.12's bytes: the CTO committed v0.12 at 19:28 while this review was being
+stamped. Read against v0.12 (`git diff 09a68e0b11 cb2a26e675`, 5 insertions, 3 deletions):
+
+- FWD-3's ENDPOINT text is back to v0.10's, which this seat reviewed and signed on 2026-09-14. The Global RSI line left
+  the ENDPOINT on the CVO's refusal (msg 104936) and is now RULING R in the provenance, outside the ratified sections.
+- BRIEF COVERAGE is still byte-identical (sha256 prefix `0ac21893251be552` at cb2a26e675), with 32 of 32 headings.
+- FWD-7's alias line from v0.11 stands, as reviewed above.
+
+The verdict is unchanged: SIGN the brief half of v0.12 @cb2a26e675 (half hash `9a8ed9ec9b20...`).
