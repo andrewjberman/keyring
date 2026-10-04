@@ -7,7 +7,7 @@
 **Id grammar on this fabric:** a seat's row is `NFRA_SPRINTWIN-Z-S<k>`; every new row carries `"project": "NFRA_SPRINTWIN"` and
 `"fabric": "site-z"`. The CVO's rows live in `adjudications/`, never here.
 
-**Denominator at this write: 1 row**, `-Z-S1`, by `4.0.0_SA_CRO~Z`.
+**Denominator at this write: 2 rows**, `-Z-S1` and `-Z-S2`, both by `4.0.0_SA_CRO~Z`.
 
 THIS FILE MUST STAY ONE FENCED JSON BLOCK. An appender targets the FIRST block only, and appends INSIDE the array.
 
@@ -35,6 +35,29 @@ THIS FILE MUST STAY ONE FENCED JSON BLOCK. An appender targets the FIRST block o
       "spec_asserts": "Brief PART VII and PRD 'WHAT THIS PRD DOES NOT CLAIM': the window change needs nothing from the renderer beyond its existing bins -- an inference left to H4's render to prove or disprove.",
       "world_is": "The bins and the series assertion hold unchanged, but the axis labels assumed a midnight start. One line in _shared_viz.js now derives the label from tl.start. The schema's timeline description ('from 00:00 Eastern through now') is prose only and was not edited.",
       "notes": "Fixed inside round 1 by the builder; the H4 render of the QA page is the check that the axis reads from the window's start."
+    },
+    {
+      "id": "NFRA_SPRINTWIN-Z-S2",
+      "project": "NFRA_SPRINTWIN",
+      "fabric": "site-z",
+      "surfaced_by": "4.0.0_SA_CRO~Z",
+      "surfaced_at": "2026-10-04T20:48Z",
+      "one_line": "Under Git Bash, `git show origin/CLOUD:.tools/sprint-device-census.py > tmp` is path-converted to a bad revision, writes an EMPTY file, and `python tmp` then exits 0 having sent nothing -- a pinned-copy run that fails reads as a success.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "site Z 2026-10-04 ~20:47Z: git show printed fatal: ambiguous argument 'origin\\CLOUD;.tools\\sprint-device-census.py'; git hash-object of the temp file = e69de29bb2 (the empty blob); python on it rc=0",
+          "the same command with MSYS_NO_PATHCONV=1: 7982 bytes, blob 103ad09a7d == origin/CLOUD's; census 8265 commits, put etag MATCH",
+          "CLAUDE.md Git: MSYS_NO_PATHCONV=1 for git show <ref>:<path> with a slashed ref"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "4.0.0_SA_CRO~Z",
+      "spec_asserts": "PRD C-CENSUS: the scheduled task runs the script as it stands on origin/CLOUD (git show origin/CLOUD:<script> to a temporary file) -- read as: that form either runs the pinned bytes or fails visibly.",
+      "world_is": "Under MSYS the git show fails, the redirect leaves a zero-byte file, and Python runs it successfully. No census is written and nothing says so. INERT today: no Scheduled Task exists yet (FWD-7 enrichment).",
+      "notes": "Binds FWD-7: each device's task must refuse a zero-byte or wrong-blob copy (compare git hash-object of the temp file with git rev-parse origin/CLOUD:<script>) before running it, and must not run under an MSYS shell without MSYS_NO_PATHCONV=1. FWD-5's page line then names the device as not reporting rather than counting on a silent pass."
     }
   ]
 ```
