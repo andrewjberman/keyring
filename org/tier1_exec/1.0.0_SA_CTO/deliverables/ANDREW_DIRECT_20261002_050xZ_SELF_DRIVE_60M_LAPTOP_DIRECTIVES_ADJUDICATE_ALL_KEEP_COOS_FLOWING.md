@@ -23,3 +23,16 @@ Recorded by `1.0.0_SA_CTO` the same turn, before tick 1.
 ## Stops
 
 (appended here on DONE, HELD-AT-STOP or stand-down)
+
+### HOLD 2026-10-04 ~17:2xZ -- Andrew-direct at the 1.0.0_SA_CTO terminal (a hold, not a stop)
+
+Verbatim: "I am going to have MSTR Base and MSTR~Z from the sitez box run an /integrate parity to get both boxes up to date with
+one another. Once that is complete, we may resume the drive across the fabric."
+
+- **Held:** this loop's acts. Each tick reads only: no ruling, no half, no commit, no message that moves work. The cron
+  `57facd67` stays armed.
+- **Resumes:** on `0.0.0_AB_MSTR` reporting parity complete between the laptop and site Z. The first tick after that report
+  resumes the drive, and its log names the parity report.
+- **Not read into the word:** no hold on any other seat. His word names the drive's resumption, and this seat relays nothing wider.
+- **State at the hold:** every seat but this one was quiet since about 03:20Z. Laptop CLOUD is 128 commits ahead of origin and
+  245 behind (origin cd20da5996; ls-remote read 17:2xZ).
