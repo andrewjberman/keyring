@@ -1766,3 +1766,46 @@ the page prints for its own subject is a presentation choice; nothing is rewritt
 - SAUX-25 provenance lines: RESAPP FWD-38(d), at COO~Z.
 - Officers for the 84 of 95 names whose M-1 management object has not landed (RESAPP upstream; observation sent to the CTO).
 **Fan-out:** 1 of 1. **Risk:** LOCAL.
+
+## v35 -- ROUND 35 (issuer, 2026-10-04 ~20:5xZ) -- THREE CELLS: WHAT CHANGED IN WORDS, NO SYSTEM WORD, THE WORD CLOUD (PRD v0.15 @237d5d742f, ADMITTED)
+
+**Rectangle:** the round-34 enrichment list, `round34/ROUND34_CLOSE.md` section 4 (@a408efb24a), as the CTO's resume order names it
+(`1.0.0_SA_CTO~Z` msg 29179: "2.0.0_SA_COO~D: round 35"). The CTO's review of 055ba370 (@720f78e6f6) reopens FWD-12, 18, 21, 23, 25,
+26 and 27 for grading on the served build; that grading waits on the 055ba370 DEV push (Andrew's word, MSTR~Z's act).
+**Base:** portal 055ba370 (the CTO-approved round-34 candidate, branch `dsgn-r34-onto-dev`, LOCAL). Round 35 stacks on it. Origin
+DEV is now 7b053135 (7 laptop commits outside SecurityAnalysis, MSTR~Z msg 29215), and it is merged at the close.
+**Restart note:** the site-Z crash (18:58Z) lost this round's first cut; its two authoring agents left nothing on disk. Everything
+here was re-made after the relaunch.
+
+| cell | serves | owned files | worker |
+|---|---|---|---|
+| `AV-zm-1` WHAT CHANGED IN WORDS | FWD-25, FWD-27 | `components/model/WhatChangedPanel.tsx` | ~94 |
+| `AV-zm-2` NO SYSTEM WORD ON THE FACE | FWD-27 (and FWD-24's designed empty state) | `components/{GenerationCaption,LeadPanel,SecurityOverlay,StatTile,ThesisCards}.tsx`, `tabs/{ExecManagement,Posture,Thesis}Tab.tsx`, `readCompleteness.ts` | ~95 (worker-light) |
+| `AV-zm-3` THE TIMELINE'S WORD CLOUD | FWD-5 (v0.14) | `components/TimelinePanel.tsx`, NEW `components/TimelineWordCloud.tsx` | ~96 |
+
+**Served input:** RESAPP AMGT-ap-4 deployed `word_cloud` on the timeline range route (FcVBPafw, closed ~00:5xZ). The issuer's
+read-only capture at this cut, `round35/fixtures/capture_timeline.py`, reads 40 terms on 6 of 6 names (BA, VLO, AMD, MSFT, ASML NA,
+ROG SW; window 2026-01-01..2026-10-03). No name serves an empty list, so the empty and absent arms plant the producer's own reasons
+(`lib/research/api/scoped_amgt.py` `_word_cloud_block`). The What-changed fixtures `round35/fixtures/{compare,thesis,versions}.BA_US_Equity.json`
+were captured read-only on FcVBPafw at 03:08Z.
+
+**Checks** (each dry-run by the issuer at base 055ba370; each FAILS with its PLANTED arm passing, and each green arm reads N of N
+through CHECK_SRC_OVERRIDE with a scratch reference fix outside the repo):
+- `round35/checks/changed/changed35.cjs` reads 2/5: 32 of 37 BA rows unnamed (all consensus forecasts); 11 mnemonics share the fixed
+  phrase; 6 equal-print rows print a move ("0.0%" -> "0.0%" prints "-100.0%").
+- `round35/checks/words/payload35.cjs` reads 2/4: 0 of 18 empty-state renders clean; 14 visible literals say "payload" in 40 files.
+  Its census sets aside a `data-*` attribute value (`RankedChart.tsx:156` `NO_PAYLOAD`, a machine hook never seen). **Issuer ruling:
+  accepted.** The rule is about text a person reads.
+- `round35/checks/cloud/cloud35.cjs` reads 2/5: no `[data-word-cloud]` on BA, VLO or AMD. The negative control (TimelinePanel
+  overridden without the new component) reads 1/5.
+AC2 of every cell = `round29/checks/battery29.sh` with no skip (ESLint included).
+
+**Not cut this round:**
+- **FWD-20 instrument re-anchor** (enrichment item 1: the light-family band clause `bandContainersTopLevel <= 1` plus
+  `lightOnDark == 0`, the price face's top-10 rest count, the windowed chatter fixture). Its check
+  (`round35/checks/instrument/instrument35.cjs`, which builds and drives the instrument) has no base reading yet. A cell is never
+  cut against an undry-run check, and a round has ONE issuance. It is cut as round 36 when its check reads at base.
+- SAUX-25's provenance lines: RESAPP FWD-38(d), at COO~Z.
+- Officers for the names with no M-1 management object (RESAPP upstream).
+**Chain:** three independent chains, each from 055ba370, with disjoint file sets. **Fan-out:** 3 of 3 chains, cap 8. **Risk:** LOCAL.
+**Rule 24:** one row, one order per cell.
