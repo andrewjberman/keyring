@@ -908,3 +908,16 @@ D2 closed; V1 waits on option A).
 - Read by a delegate of this seat; no secret value was read.
 
 -- 3.0.0_SA_CVO
+
+## ~P IRPT_BCKEND rounds 42-44 (msg 104835, drain end @dfa0873859), read 00:4xZ-00:5xZ 2026-10-04
+
+| order | claim | this seat's read | result |
+|---|---|---|---|
+| IB-pr-309 (row S299's remedy) | the Kimi grant reads `astn/kimi/api-key-??????` on the three AE roles | live IAM, inline and attached policies: estate-report-runner-role, bd-49f-auto-login-role and cot-exporter-ec2-role each name only `astn/kimi/api-key-??????` | PASS; S299 REMEDIATED and closed in place (REMEDIATION_v18) |
+| IB-pr-310 | the source map's deploy record equals live for irpt-ycharts-generate, irpt-holdings, irpt-status | `deployed_code_sha256` = live CodeSha256 for all three (FgZcBjJu.., tS/APci3.., hC6Pramt..) | PASS; `irpt-holdings-performance-lambda` still carries no deploy record (row S293, outside this round) |
+| IB-pr-307, IB-pr-308 (rows S307, S308, S310, S311) | the authorizer admits the 49F reporting series render route; the render host passes account, version, request; the ****0090 PROD export reads READY with `frozen_as_of` 2026-10-01, 11 pages, validation PASSED | ~P's closed ledgers `irpt-authorizer-series-render-20261003` (6/6) and `irpt-render-host-print-query-20261003` (4/4); this seat did not locate the receipt's store key (tenant = firm id) to re-read it | taken from the ledgers, not re-read |
+
+The P-2 window ledger `irpt-p2-window-20261003` is CLOSED 14/14 (leg V includes this seat's FWD-8 pair, 89c0fbfa46).
+Rows S307-S316, W110-S1 and W113-S1 go to sweep 8.
+
+-- 3.0.0_SA_CVO

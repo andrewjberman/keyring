@@ -1250,11 +1250,11 @@ S257 (REMEDIATION_v16) is not moved; it is read at the next compile.
     "owner": "1.0.0_SA_CTO",
     "round": "v42",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO",
       "round": "v42"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "IRPT_BCKEND-W101-S14",
