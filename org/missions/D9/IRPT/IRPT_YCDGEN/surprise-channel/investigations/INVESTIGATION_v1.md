@@ -187,3 +187,59 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "INERT (no retry, session kept). Owner 2.0.0_SA_COO~Y: have the runner file the row on a WAF stop, and carry the step-7 call's split or drop as a round-2 item."
 }
 ```
+
+## IRPT_YCDGEN-W3-S2 -- the coverage enum has no member for an element computable from the portfolio's own kept series
+
+```json
+[
+  {
+    "project": "IRPT_YCDGEN",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~3",
+    "surfaced_at": "2026-10-05T00:30:00Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "IRPT_YCDGEN-W3-S2",
+    "one_line": "YCD-c-2: the coverage enum (HELD_DATA, OTHER_ENDPOINT, BUILDER_ONLY) has no member for an element computable from the portfolio's own kept level series; 10 risk, return and drawdown elements were placed under HELD_DATA through the holdings' series.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "C-COVERAGE (decomposition 2.7): HELD_DATA is computable from security-level answers weighted by the portfolio's holdings; OTHER_ENDPOINT is a YCharts endpoint that answers for a model portfolio; BUILDER_ONLY is neither.",
+    "world_is": "Run 3 kept a 200 level series for the portfolio itself (step 02, shape DATA), so periodic returns, drawdowns and the Sharpe, Sortino, alpha, beta, standard deviation and VaR rows are computable from an answer that is neither security-level nor a probe. The worker classed them HELD_DATA (buy-and-hold series from the holdings, step-02 series named as the cross-check) rather than add a class. If the CTO wants the derived-from-portfolio-answer case separate, the enum and check c-2.AC1 change, not the file.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/maps/overview_coverage.json (via.weighting and via.cross-check text on the series rows)",
+        "s3://opal-data-cottonwood/irpt/cottonwood/state/ycharts_responses/request=YCD-R1-20261004T1944Z/step=02_portfolio_level_series.json (status 200, read into OS temp, deleted)"
+      ]
+    },
+    "notes": "INERT: classification choice inside the order's three classes; owner 2.0.0_SA_COO~Y at the round-2 close."
+  }
+]
+```
+
+## IRPT_YCDGEN-W3-S3 -- the probe map cannot reach the dashboard module routes or any per-holding call
+
+```json
+[
+  {
+    "project": "IRPT_YCDGEN",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~3",
+    "surfaced_at": "2026-10-05T00:30:00Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "IRPT_YCDGEN-W3-S3",
+    "one_line": "YCD-c-2: the probe map cannot reach the dashboard module routes (/dashboard/*_module_data/{n}) or any per-holding call, because its placeholders are only {security_id}, {start} and {end}; the two probes it holds use ids evidenced in the estate.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Decomposition 2.7 and the order's section 3: the probe map is planned by runner.plan_calls with placeholders {security_id}, {start}, {end}; one candidate call per OTHER_ENDPOINT route.",
+    "world_is": "The HAR lists /dashboard/fund_chart_module_data/{n} and /dashboard/scatter_plot_module_data/{n}, which need a dashboard id the run does not hold, and the HELD_DATA route needs holding tickers from the upload; neither is a placeholder, so the map holds two probes: a scatter POST with the two axis metric ids documented VERIFIED in docs/briefs/mdsrc-ycharts-endpoint-spec-20260520.md, and a general_data cross-section (xAxis=metrics) with those plus ytd_total_return (the gateway's freshness-probe column). The per-holding security-level queries (table_data, fund_data) are not in this map and need a runner step that reads the frozen upload.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/ycharts/research/runner.py plan_calls (_PLACEHOLDERS = security_id, start, end; READ_ONLY_POSTS = the scatter path)",
+        "C:/Users/ANDREW~1/AppData/Local/Temp/claude/C--Users-AndrewBerman-Desktop-ajb-workspace/b55fbe94-a2b0-45e3-adad-582b87cc1103/scratchpad/har_request_shapes.json (dashboard routes carry {n})"
+      ]
+    },
+    "notes": "INERT: scope of the probe map, not a defect; owner 2.0.0_SA_COO~Y to cut the holdings-reading runner step if the 167 HELD_DATA elements are to be answered."
+  }
+]
+```
