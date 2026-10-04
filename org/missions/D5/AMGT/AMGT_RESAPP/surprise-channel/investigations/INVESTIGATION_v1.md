@@ -17349,5 +17349,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
  "disposition": "UNDER_INVESTIGATION",
  "disarm_owner": "2.0.0_SA_COO~Z"
 }
-]
+,
+{
+ "id": "AMGT_RESAPP-Z-S344",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.7.0_AE_CloudOps~A",
+ "surfaced_at": "2026-10-04T00:03:15Z",
+ "one_line": "r64_served.py c10 now carries an expectation that r66_served.py c22 contradicts on the same deployed bytes: c10's C2 clauses require the 90- and 365-day price windows to serve 0 rows and 'not produced yet', while c22 requires them to serve 94 and 95 rows. After ap-3 landed the generations and ap-4 shipped the reader, c10 reads SERVED: NO with exactly 4 FAIL lines, all of them those clauses. The ap-4 order and COO half both scope c10 to its 30-day clauses, so nothing was mis-graded here -- but any later round that runs c10 unscoped reads NO on a healthy function.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "The ap-4 order's section 4 lists 'r64_served.py --cell c9 / c10 (30 only) / c11 / c12 / c13 / c14 --where deployed' as the no-regression reads, and the COO half's EXPECTED OUTCOME table row reads 'r64 c10 (30-day clauses) | YES | YES'. The issuer notes say it directly: 'c10's 90/365 clauses now read generation rows, not not-produced-yet; c22 grades them, and c10 is re-read for its 30-day clauses only.' So the carve-out is declared, in three places.",
+ "world_is": "Measured on deployed FcVBPafwzuPI0RMFjOJJfYN/KeZe3YYns9uqTSOlalU= at 2026-10-03T23:5xZ. r64_served --cell c10 --where deployed printed 'R64 C10 SERVED: NO', exit=1, with exactly 4 FAIL lines and no others in the run: 'FAIL C2 trending price days=90 serves no rows and not produced yet status 200 rows 94 reason \"  \"', the same for trending 365 (rows 95), breakout 90 (rows 94) and breakout 365 (rows 95). Its four 30-day clauses all PASS at 94 rows each, identical to the pre-apply baseline. r66_served --cell c22 --where deployed on the SAME bytes printed 'R66 C22 SERVED: YES' with rows 94 / 95 / 94 / 95 and window_end 2026-10-02. The two checks therefore disagree by construction, and c22 is the current contract: ap-3 wrote the generations (TRENDING_PRICE_90D/365D and BREAKOUT_PRICE_90D/365D at #2026-10-02) and ap-4 shipped the reader. The rot is in the round-64 check, not in the function: c10's C2 text encodes a world that ended, and its verdict line aggregates the stale clauses with the live ones, so the single token a future reader greps ('SERVED: NO') is wrong about the product.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "r64_served.py --cell c10 --where deployed at 23:5xZ from the pin checkout b642e313f9: R64 C10 SERVED: NO, exit=1; grep -c FAIL over the whole regression run = 4, and all 4 are c10's days=90/365 C2 clauses.",
+   "The same run: c9, c11, c12, c13, c14 SERVED YES exit=0, and r65 c17 SERVED YES exit=0 -- so the 4 FAILs are not a function-wide defect.",
+   "r66_served.py --cell c22 --where deployed, same bytes, same session: SERVED YES, rows 94 / 95 / 94 / 95, window_end 2026-10-02 = last trading day.",
+   "Pre-apply baseline of c10 on lPTMo20T: SERVED YES 8 of 8, the 90/365 clauses passing on 0 rows -- which is why the clauses were true until this act.",
+   "Declared carve-out: ap-4 order s.4 'c10 (30 only)', COO half @ffd60053d9 EXPECTED OUTCOME row 'r64 c10 (30-day clauses)', and the order's ISSUER NOTES."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}]
 ```
