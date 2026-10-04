@@ -59,9 +59,9 @@ Your worktree is `C:/Users/AndrewBerman/Desktop/wk-irpt-bckend-114`. Run everyth
    - After each run, `git status --porcelain` shows nothing staged. If the recorder's own commit did not land, commit its
      written files yourself with safe-commit and say so.
 
-<criterion id="IB45-1-AC1" cell_refs="IB-pr-311"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P/checks/r45/p45_performance_rows_recorded.py" . IB45-1-AC1</invocation><expect>IB45-1-AC1 PASS</expect></criterion>
-`IB45-1-AC1` -- read against live: the three rows each carry `deployed_code_sha256` = live CodeSha256 and `iam_role` = live role;
-the Inflection row's `tf_resource` is its module address. Base: FAIL.
+<criterion id="IB45-1-AC1R" cell_refs="IB-pr-311"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P/checks/r45/p45_performance_rows_recorded.py" . IB45-1-AC1R</invocation><expect>IB45-1-AC1R PASS</expect></criterion>
+`IB45-1-AC1R` -- read against live: irpt-performance-adapter and irpt-holdings-performance-lambda each carry `deployed_code_sha256` =
+live CodeSha256. Base: FAIL. (Amendment 1 replaces IB45-1-AC1; see below.)
 
 <criterion id="IB45-1-AC2" cell_refs="IB-pr-311"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P/checks/r45/p45_performance_rows_recorded.py" . IB45-1-AC2</invocation><expect>IB45-1-AC2 PASS</expect></criterion>
 `IB45-1-AC2` -- a GUARD: against base ad781b948a, no other row changes, and the only row added is the Inflection one. Base: PASS.
@@ -69,7 +69,7 @@ the Inflection row's `tf_resource` is its module address. Base: FAIL.
 <criterion id="IB45-1-AC3" cell_refs="IB-pr-311"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P/checks/r45/p45_performance_rows_recorded.py" . IB45-1-AC3</invocation><expect>IB45-1-AC3 PASS</expect></criterion>
 `IB45-1-AC3` -- a GUARD: `.tools/comp-lambdamap check` reports no finding beyond the 14 at the base. Base: PASS.
 
-<expected_criteria>IB45-1-AC1,IB45-1-AC2,IB45-1-AC3</expected_criteria>
+<expected_criteria>IB45-1-AC1R,IB45-1-AC2,IB45-1-AC3</expected_criteria>
 
 ## BOUNDS
 
@@ -93,13 +93,29 @@ org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-311.performanc
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: IB45-1-AC1, IB45-1-AC2, IB45-1-AC3. The instance goes at
+Criterion ids: IB45-1-AC1R, IB45-1-AC2, IB45-1-AC3. The instance goes at
 `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~114/IRPT_BCKEND.TO-IB-pr-311.performance-rows-record-what-runs.proof_of_spec.json`.
-Validate it with `python .tools/proof-of-spec-check.py <instance> IB45-1-AC1,IB45-1-AC2,IB45-1-AC3` BEFORE the flip.
+Validate it with `python .tools/proof-of-spec-check.py <instance> IB45-1-AC1R,IB45-1-AC2,IB45-1-AC3` BEFORE the flip.
 </proof_of_spec>
 
 **REPORT:** your final message gives the commit hashes, each recorder run's "Resolved deployment set" and reconcile lines, each
 criterion's last line, and any surprise row ids.
+
+## AMENDMENT 1 (2026-10-04 ~01:5xZ, issuer 2.0.0_SA_COO~P, on row W114-S1)
+
+safe-commit's naming limb (`.tools/naming-gate.py`, ENFORCE since `org/mcp/naming-gate.enforce`) refuses steps 1-2. The live
+names `irpt-49f-holdings-performance-role` and the Inflection row's three `inf` strings are new firm-token literals in a JSON
+string, outside every permitted context. The gate admits a new literal only through an R20 declared exception, which Andrew
+acknowledges, or a context carve-out such as the source map's `packaged_as` names (0.0.0_AB_MSTR, 2026-09-23). Neither is
+this order's to make.
+
+- **Removed from this order:** step 1 (the 49F `iam_role` correction), step 2 (the Inflection row) and the Inflection recorder
+  run. They are carried on row W114-S1, and the gate question goes to `1.0.0_SA_CTO`.
+- **Kept:** the two recorder runs that landed: irpt-performance-adapter @c64bd53784 and irpt-holdings-performance-lambda
+  @37090d00b1.
+- **The build criterion** IB45-1-AC1 becomes IB45-1-AC1R (those two deploy records = live). AC2 and AC3 are unchanged.
+- **Gate limb.** This is a modification with `<placeholders>NONE</placeholders>`. `.tools/to-pipeline-gate.py` LIMB 6 does not
+  fire on a modification, and GATE (viii) grades only an order that declares placeholders, so no gate limb grades it.
 
 ---
 
