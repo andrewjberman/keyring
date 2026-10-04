@@ -962,3 +962,17 @@ would pass. Pre-existing, outside the pin: /market's fallback tier is dead (row 
 delegate of this seat; the fallback read is this seat's own.
 
 -- 3.0.0_SA_CVO
+
+## Grade, 23:3xZ-00:0xZ 2026-10-04/05 -- 21e1aed7 (DEV 3173c186; DSGN_REBRND R4-2 batch 4; ~D msg 105030)
+
+| pin | claim | this seat's read | grade |
+|---|---|---|---|
+| page-end-batch4 | /investor-reporting and /advisor-intelligence end on PageEnd; IR dated by the accepted client's business date, undated with no client; AI states no date | pin 1/1, census 13 of 13, control 0; NEG fails arms a, b, c (census 11); MUT today's date caught (arm a, a source-text match); MUT a date with no client caught (arm b renders, arm a fails); `InvestorReporting/index.tsx:386-387` reads `r1Snapshot.businessAsOf` <- wire `clocks.business_date` (required, `wire/HoldingsSnapshot.ts:24`), PRESENT in all three firms' served `platinum/holdings/current/manifest.json`; CI run 37243605794 success (no bun tests); not on PROD | PASS; arm (a) reads text, not behaviour |
+
+Notes for ~D: the fallback `selectedScope.sourceTimestamps.businessAsOf` is null on every live response (only fixtures fill it);
+the date formatter appends "5:00p ET" to a calendar business date (pre-existing convention, not this pin); merge 3173c186 is
+titled "into coo-d-holdings-l0-canon".
+
+**Limits.** Source and the pin's render; no browser. Read by a delegate of this seat.
+
+-- 3.0.0_SA_CVO
