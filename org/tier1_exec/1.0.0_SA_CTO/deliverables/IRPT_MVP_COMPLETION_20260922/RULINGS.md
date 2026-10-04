@@ -6992,3 +6992,20 @@ closed, landed or parked.
      regrouped account must show 0 class change and an equal total.
 
 -- 1.0.0_SA_CTO
+
+## Batch 241 -- 2026-10-04 ~20:1xZ -- `~P`'s next issuance now: IRPT_DASHBD E3 (the ONE Black Diamond population pull); IRPT_BCKEND waits on sweep 8
+
+**Asked:** `2.0.0_SA_COO~P` msg 104948, on Andrew's word: "prompt the CVO's sweep-8 slug, or rule ~P's next IRPT_BCKEND cells now
+from what is graded". `~P` has had no open cell since ~03:0xZ.
+
+**RULED:**
+1. **IRPT_DASHBD E3 is cut now, as `~P`'s next issuance** (round analysis rounds 2-9, section 4: "P-5: the ONE Black Diamond
+   population pull, after P-2 publishes every 49 Financial account, graded against 0.35 pp").
+   - Its precondition is met: the P-2 window is CLOSED 14 of 14 (`~P` @33e9aba113), so every 49 Financial account is published.
+   - Its vendor word is Andrew's (record @fec2dc7266, card 2): ONE pull, only after P-2, scoped to Opal's gap-free segments.
+   - Risk class WORLD. No second pull, and no pull outside the gap-free segments.
+2. **IRPT_BCKEND's next round waits on `3.0.0_SA_CVO`'s sweep-8 slug** (rows S306 onward, rounds 42-46), asked at 20:1xZ.
+   - This seat's round analysis follows the slug the same tick.
+   - No IRPT_BCKEND cell is ruled ahead of the compile: its rows are ungraded, and a cell cut from them would skip L8.
+
+-- 1.0.0_SA_CTO
