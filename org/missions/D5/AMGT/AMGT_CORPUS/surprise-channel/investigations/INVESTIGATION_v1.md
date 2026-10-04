@@ -3559,6 +3559,75 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "Deere's thesis and peers routes moved from 200 (10-01) to 404 (10-03 23:58Z). Round 34's act wrote nothing for Deere (no block ever, not in the refresh population), so the cause sits outside CRPS-aj-2's blast radius; it is not localised here.",
     "notes": "Filed at round 34 leg v and kept working (off-task). For the round-34 analysis to route: the thesis route belongs to the AMGT_RESAPP API surface (2.0.0_SA_COO~Z).",
     "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W1-S30",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-10-04T00:40:00Z",
+    "one_line": "CRNCY_ADJ_MKT_CAP: the producer's FIELD_BASIS says 'full currency units' but every landed value (BA 152984.02, GOOGL 4182279.8, BP/ LN 87634.56) is the same header's CUR_MKT_CAP divided by 1e6 exactly, so the unit read from the values is MILLIONS and the basis text is wrong.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "In-process read of the landed header (load_raw_for_key + prepare_header, no write): BA CUR_MKT_CAP 152984021071.2 vs CRNCY_ADJ_MKT_CAP 152984.02107120003; GOOGL 4182279825000.0 vs 4182279.825; BP/ LN 87634559634.446 vs 87634.55963444599 (ratio 1e6 on all three).",
+        "integrations/bloomberg/research/model_block_pull.py FIELD_BASIS['CRNCY_ADJ_MKT_CAP'] = 'Market capitalization adjusted to the requested currency (Bloomberg's currency-adjusted market capitalization), full currency units.'",
+        "build_unit_map.classify_unit('CRNCY_ADJ_MKT_CAP', 152984.02, ...) -> MILLIONS (ABSOLUTE_OR_MILLIONS_FIELDS magnitude read), pinned in test_build_unit_map_families_round35.py::test_amount_family_millions_and_absolute."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order: the family is decided by Bloomberg's own definition, the producer's FIELD_BASIS text, and must discriminate on the landed values; a hypothesis is not a ruling.",
+    "world_is": "The definition text and the landed values disagree on the SCALE of CRNCY_ADJ_MKT_CAP: the map will carry MILLIONS (measured), while the basis definition the served block and page may print says full currency units.",
+    "notes": "Not smoothed: model_block_pull.py is read-only for this order, so the FIELD_BASIS text is unchanged. The unit map entry follows the values. Candidate for the issuer: correct the FIELD_BASIS text to 'millions' in a later producer cell, or have ak-4's served act check that the printed basis and the map unit agree for this key.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W1-S31",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-10-04T00:41:00Z",
+    "one_line": "To place the four new dividend-yield fields (DIVIDEND_YIELD, AVERAGE_/HIGH_/LOW_DIVIDEND_YIELD) I added them to ZERO_VALUE_UNIT_FROM_BASIS, which the order did not name; that also exempts them from the ZERO-DOMINATED class, as EQY_DVD_YLD_IND already is.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Landed series, in-process: BA DIVIDEND_YIELD 6 zero years of 10, GOOGL 8 of 10, BP/ LN 0 of 10; without the exemption BA and GOOGL read 'ZERO-DOMINATED: no magnitude' although FIELD_BASIS says 'percent' and a non-paying year is a real zero yield.",
+        "build_unit_map.py ZERO_DOMINATED_EXEMPT = frozenset(ZERO_VALUE_UNIT_FROM_BASIS) | {'EQY_DVD_YLD_IND'}: the module's own rule for a dividend field whose FIELD_BASIS defines the unit of a zero.",
+        "Result over BA, GOOGL, BP/ LN: DIVIDEND_YIELD BA PERCENT / GOOGL UNRESOLVED (median 0.2911 under the 0.3 line, no ground) / BP PERCENT; AVERAGE_ and LOW_ the same shape; HIGH_ PERCENT on all three (GOOGL median 0.366 >= 0.3)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order: use the module's existing families where one fits; a field whose landed values do not discriminate gets UNRESOLVED-ON-<security> with its reason, the module's existing path.",
+    "world_is": "Four fields join an existing exemption set beyond the bare family placement, so a mostly-zero yield series is read by its non-zero years instead of reading ZERO-DOMINATED. GOOGL HIGH_DIVIDEND_YIELD reads PERCENT on two non-zero years (0.317, 0.4147), which the 0.3 magnitude line cannot tell from a decimal fraction by magnitude alone.",
+    "notes": "No base mnemonic moved (ak1_check c1 and c2 PASS). Reversible by deleting the four ZERO_VALUE_UNIT_FROM_BASIS entries; the issuer may disagree with the exemption at the ak-4 dry run.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W1-S32",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-10-04T00:42:00Z",
+    "one_line": "EQY_FUND_YEAR needed a family and the order named only DATE as the expected addition; I added a YEAR family (integer in 1900..2200) that no landed value has tested, since the field landed no value on BA, GOOGL or BP/ LN.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "In-process read of the landed header and 14 hist rows on BA, GOOGL and BP/ LN: EQY_FUND_YEAR is in no header and no row; all three entries read 'UNRESOLVED-ON-<security>: no value returned for this mnemonic (absent value)'.",
+        "FIELD_BASIS['EQY_FUND_YEAR'] = 'The fiscal year of the fundamentals the row carries (a year number, not a financial amount).'; no existing family reads a year (PERCENT/RATIO/PER_SHARE/... would read 2025 as a multiple or an amount).",
+        "unfamilied_mnemonics() would list EQY_FUND_YEAR without a family and the census test would stay RED."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order: add a family only where none fits; a DATE family is the expected case; EQY_FUND_YEAR is a year that landed no value.",
+    "world_is": "The census requires EQY_FUND_YEAR in a family while no landed value can test it, so the YEAR family is the definition applied to a shape; it only ever yields YEAR for an integer year in range, otherwise UNRESOLVED with its reason, and an absent value stays UNRESOLVED.",
+    "notes": "Tested only on fixtures (test_build_unit_map_families_round35.py::test_year_family_with_no_landed_value_is_unresolved_absent). A name that does land a value will be the first real test of the band.",
+    "disarm_owner": "2.0.0_SA_COO~X"
   }
 ]
 ```
