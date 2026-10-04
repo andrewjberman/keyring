@@ -103,3 +103,4 @@ the per-family sample across names"). Base: al3_check build 0/2. SAP_GY_Equity b
 <round>36</round>
 <slot>~2</slot>
 <fabric>site-z</fabric>
+<status>complete</status>
