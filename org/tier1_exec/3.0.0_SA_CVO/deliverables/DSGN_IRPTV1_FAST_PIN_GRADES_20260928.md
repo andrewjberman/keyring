@@ -913,3 +913,20 @@ None of these is on PROD (dbd29c63). DEV head c67c242f CI success.
 seat.
 
 -- 3.0.0_SA_CVO
+
+## Grades, 19:4xZ-20:4xZ 2026-10-04 -- portal DEV be349181, c7bc52c8, 7b053135 (~D msgs 104925, 104935, 104947)
+
+PROD moved to c69b4747 (v2.1.199, deploy succeeded): it carries be349181 and c7bc52c8, not 7b053135. DEV head 7b053135 CI
+success (run 37231059208). CI runs no unit tests.
+
+| pin | claim | this seat's read | grade |
+|---|---|---|---|
+| be349181 (batch 238) | StatusPanel shows the state and "The request did not complete."; the code sits in `data-reason-code` behind a closed Technical details | `StatusPanel.tsx:57,63,88,92`; pin 3/3; NEG fails 4 arms; MUTs (attribute dropped; sentence gate inverted) caught; MUT `<details open>` NOT caught; rendered face: "Failed / The request did not complete. / Technical details / Retry", the code only in the attribute and the closed details | PASS; "closed" unpinned; on PROD |
+| c7bc52c8 | a failed holdings read is said on the identity card and the Performance tab | `IdentityCard.tsx:208,481,647`, `ReportingTab.tsx:915-918`; pin 3/3; NEG fails; 2 MUTs caught; MUTs on the message at :918 and on the failure wiring (`IdentityCard.tsx:448`, `index.tsx:363`) NOT caught | PASS with gaps; on PROD |
+| 7b053135 (R4-1) | "the last two bare spinners" become PanelLoading | `App.tsx:443`, `AdvisorPublicProfile.tsx:844`; pin 3/3; NEG fails; an animate-spin div beside PanelLoading passes the census; about 20 panel-sized bare spinners remain in live code | PASS on the two lines; the claim is false; new row (see channel) |
+
+Pre-existing: the page's `IR-REQUEST-FAILED` code is flagged "[code not defined by the v1 contract]".
+
+**Limits.** Server renders and source checks only. Read by a delegate of this seat.
+
+-- 3.0.0_SA_CVO

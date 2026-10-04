@@ -1761,6 +1761,26 @@
     "spec_asserts": "Row S13: a FAST pin adds no failing test, and its N of N is measured on the bytes it lands.",
     "world_is": "Holds at portal DEV 2da1eaaf for the seven suites that read committed blobs. The full repository suite was not run.",
     "notes": "Committed-blob suites found by searching test files for portalBlob( / git show / execFileSync('git'); fe-s-47 was added on the CVO's naming."
+  },
+  {
+    "id": "DSGN_REBRND-S16",
+    "project": "DSGN_REBRND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-04T20:35:00Z",
+    "one_line": "7b053135 (R4-1) claims to replace 'the last two bare spinners'; at portal DEV 7b053135, LoadingInline remains at AdvisorBookView.tsx:897, ClientsTab.tsx:636,645,668,765, ModelPortfolios.tsx:1340,1361,1671,2368, PeersTab.tsx:347, SentimentGauge.tsx:131,195, KeywordSentimentModal.tsx:183, AssetAllocationSummary.tsx:66,69 and MacroTimeSeriesModal.tsx:438, and a panel-sized animate-spin at IndexPerformanceModal.tsx:301, LoadingOverlay.tsx:11, VersionHistoryModal.tsx:94, PrintExportAction.tsx:154, PipelineProgress.tsx:327 and the DataRefresh HistoryTab/EmergencyRollbackTab; the pin's census bans only the named components, so an animate-spin div beside PanelLoading passes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "this seat's portal grade 2026-10-04 ~19:4xZ-20:4xZ (scratch worktree of origin/DEV 7b053135, removed after): source census of the files above, all imported by live code; pin r4-1-remaining-spinners 3/3, NEG fails, MUT (an animate-spin div beside PanelLoading) passes"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "FWD-11 (one designed state per kind) and the R4-1 claim: no bare spinner remains where a panel loads.",
+    "world_is": "The two named sites are fixed; about 20 panel-sized bare spinners remain, so FWD-11's loading clause is not met by this pin.",
+    "notes": "INERT (presentation). Owner 2.0.0_SA_COO~D: widen the census to animate-spin and LoadingInline at panel size, with the list above as its baseline, and retire the sites or name the exceptions."
   }
 ]
 ```
