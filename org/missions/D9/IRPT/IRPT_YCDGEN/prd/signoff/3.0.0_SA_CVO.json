@@ -1,12 +1,13 @@
 {
   "prd": "IRPT_YCDGEN_PRD.md",
-  "prd_version": "v0.1",
-  "prd_pin": "f65ec43d8cea611e0a8219d4d3dab203b175f3c8",
+  "prd_version": "v0.2",
+  "prd_pin": "4635d40c62c93bef990d7027138f17c742c07751",
   "half": "ratified-text",
-  "half_hash": "c78f80ca2cdad43a386132124700565d03a3508d0db991def3bdaf3877ac336e",
-  "endpoint_hash": "7b2744d153c9c5053f1d32cfa3426469bea0d3c377f114d24c32dfec4fe9dfa1",
-  "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_YCDGEN_PRD_V01_RATIFIED_TEXT_REVIEW_20261003.md@156cf41966",
+  "half_hash": "c27c89297ee884ffaed4e7ce412a2608e0bc2fcef7ccf30ec3d4eba63a367abc",
+  "endpoint_hash": "c8f0816fdfc3b87a4863cc53dd391397f7e94c4ff5501114067e4f9612d91e97",
+  "verdict": "REFUSED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_YCDGEN_PRD_V02_RATIFIED_TEXT_REVIEW_20261005.md@3bd1104913",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-10-03T21:04:15Z"
+  "signed_at": "2026-10-05T20:36:47Z",
+  "reason": "ENDPOINT line 45 is a history annotation; FWD-16 ACCEPT 'Nothing is changed until the person accepts it' is not in Andrew's word; C-PRICES names no carrier for the cross-firm rule (the price table is in opal-data-bd)"
 }
