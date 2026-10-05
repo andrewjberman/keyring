@@ -98,3 +98,12 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-05 ~01:2xZ):** CLOSED.
+- Worker ~223: build `84eaa68936`, instance `4708cbae1a`, proof-of-spec-check VALID (rc=0) on the committed bytes.
+- AC1 PASS 19 of 19; the mutant on the alias join fails 6 of 19. AC2 PASS c27 local: 212 names, 199 serving, 0 own-name, 0 junk,
+  0 non-200. AC3 PASS r67 c23.
+- Row Z-W223-S1: one api test reads a portal-fixture function that is absent at 6936e92b; it is graded at the drain on the shared tree.
+- Served by ar-3.
+
+<status>complete</status>
