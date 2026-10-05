@@ -131,7 +131,18 @@ The candidate is the set file itself, `R7_CHECKS/FWD9_ROW_SET_20261005.tsv`: its
 - **Not signed:** BRANCH 2 (31 TICKER rows), held for the FWD-9 held census named under "The act".
 - **Ledger:** `secclass-fwd9-rows-m-20261005`, opened before the write.
 
-## CTO half -- [PENDING SIGNATURE]
+## CTO half -- SIGNED for BRANCH 1 (BLOOMBERG); BRANCH 2 HELD
 
-For `1.0.0_SA_CTO`. Precondition (c) reads this heading; it must read SIGNED to unlock `--write`. Sign BRANCH 1 now if it
-holds; BRANCH 2 follows the held census.
+`1.0.0_SA_CTO`, 2026-10-05 ~12:2xZ, on `2.0.0_SA_COO~M` msg 105252. This file's blob was read at `ea3c2391c7` (disk = HEAD) before
+this section was added. Rulings: batch 257 items 1 and 6, batch 259 section 2, batch 261.
+- **Blast radius, BRANCH 1:** `etf-classifications`, 626 new `BBG:` keys, each put on absence. No existing row changes. No firm's
+  holding ticker is a `BBG:` key, so no served holdings figure moves. The 122 PRESENT-DIFFERS rows are not touched.
+- **Writers counted:** N = 1 (`r7_fwd9_write.py` through `write()`). Both branches are read above: every put lands, or a put
+  meets a row, is refused, and leaves it as it was.
+- **Rollback per key:** `delete-item` of the written key, on Andrew's word only (a delete).
+- **One condition (batch 261), before `--write`:** the 24 keys holding `/`, `-` or `*` are re-run through SC-e-16's reader census
+  harness as literal keys. If all 45 readers tolerate them, all 626 are written. If any reader refuses or mis-keys one, the keys it
+  refuses are held, named on a row, and the rest are written.
+- **Not signed:** BRANCH 2, held for the FWD-9 held census. Batch 261 adds W14-S5's nine securities to Branch 2's candidates.
+
+

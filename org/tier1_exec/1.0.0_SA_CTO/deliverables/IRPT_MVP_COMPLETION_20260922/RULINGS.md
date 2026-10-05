@@ -7552,3 +7552,33 @@ only, and the plan JSON goes on the ledger for it too. **The gate's hang is a ro
 4. The release returns as a never-widen plan for halves, as r54 did.
 
 -- 1.0.0_SA_CTO
+
+## Batch 261 -- 2026-10-05 ~12:2xZ -- MDPF_SECCLASS FWD-9 rows: BRANCH 1 (626 BBG rows) signed, with a punctuation re-census; W14-S5's nine join Branch 2
+
+**Read:** `2.0.0_SA_COO~M` msg 105252, half
+`org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/NEVER_WIDEN_HALF_REQUEST_SECCLASS_FWD9_ROWS_20261005.md`, blob
+`ea3c2391c7` (disk = HEAD), COO half signed @eb1aef1afd.
+- Row set: securities=1051, write=657 (626 `BBG:` plus 31 US bare tickers), present_same=16, present_differs=122 (never
+  overwritten), out=256.
+- Dry run: (a) MET (45 readers: READ-ONLY 11, TOLERATES 34); (b) MET (contract 0.4.0).
+
+**RULED:**
+1. **BRANCH 1 SIGNED** in the half's CTO section.
+   - It is 626 puts on absence, and no holding ticker is a `BBG:` key, so no served figure moves.
+   - N = 1 writer; both put branches are read; rollback is a delete on Andrew's word.
+2. **Condition: the 24 keys holding `/`, `-` or `*` are re-censused before `--write`.**
+   - This is batch 257 Q1's own reasoning: a key character that breaks a reader that splits or URL-builds on it.
+   - `/` is the case that matters in a path segment; for example `BBG:BP/:LN`, where Bloomberg's own ticker is "BP/".
+   - SC-e-16's harness runs the 24 literal keys through the 45 readers. A key any reader refuses or mis-keys is held and named on
+     a row, and the rest are written. The key format is not changed: the `security_bloomberg` attribute carries the vendor's
+     string verbatim, and the key mirrors it.
+3. **W14-S5: the nine are not left out of FWD-9's "every stock".**
+   - Seven real US stocks have no Bloomberg id (BRK/B CRWV EPAM FPS MDLN ORI SLDE). HAL US and VLO US carry the exchange code where
+     the yellow key belongs.
+   - All nine are US listings, so they would be bare-ticker rows. They join **Branch 2's candidates** and go through the same held
+     census, since a firm may hold them.
+   - Each is admitted on a positive signal from data Opal already holds: a US common stock in a held security table. A security
+     with no such signal stays OUT, named.
+   - Branch 2 is signed only on the held census, per the half.
+
+-- 1.0.0_SA_CTO
