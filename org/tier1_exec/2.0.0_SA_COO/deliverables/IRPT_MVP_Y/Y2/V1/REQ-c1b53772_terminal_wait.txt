@@ -1,0 +1,4 @@
+01:36:16Z state CERTIFYING | outbox SENT | detail {"phase":"retained_pdf_publication"}
+01:37:07Z state READY | outbox SENT | detail {"certification_sha256":"169fb581f7e42f2ab443fc17954215c10ad8e533333731921643a1df358a8851","report_id":"RPT-f7228affcbc71e63ea95a30de196d310","revision":"b914d5ecb7d6054c70e1ffc23aeaf6a442cbc5f2dd590281a83483a756fa6b5e"}
+01:37:07Z TERMINAL READY -- holding the 20 s floor before the next body
+01:37:28Z floor held; next body may start
