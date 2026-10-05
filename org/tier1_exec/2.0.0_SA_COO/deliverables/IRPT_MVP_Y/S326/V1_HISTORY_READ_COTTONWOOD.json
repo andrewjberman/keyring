@@ -1,0 +1,175 @@
+{
+ "at": "2026-10-05T04:20:09.030642Z",
+ "principal": "svc-irpt-analysis@opalinvest.com",
+ "tenant": "cottonwood",
+ "limit": 5,
+ "pages": [
+  {
+   "http": 200,
+   "items": [
+    {
+     "request_id": "REQ-c1b537728b221742e335a0c8",
+     "accepted_at": 1791163140
+    },
+    {
+     "request_id": "REQ-0d97252faeebdee1887c31ce",
+     "accepted_at": 1791082861
+    },
+    {
+     "request_id": "REQ-a618aa83407689bc95193a01",
+     "accepted_at": 1791079869
+    },
+    {
+     "request_id": "REQ-6be454cbb317d96a6e4ba5f8",
+     "accepted_at": 1791074472
+    },
+    {
+     "request_id": "REQ-51d9daacbc9ba24ac01b6c4c",
+     "accepted_at": 1791066532
+    }
+   ],
+   "next_cursor": true
+  },
+  {
+   "http": 200,
+   "items": [
+    {
+     "request_id": "REQ-329a56182b2668d44a28c8d7",
+     "accepted_at": 1791045934
+    },
+    {
+     "request_id": "REQ-06185d7074a14904d9f0eb68",
+     "accepted_at": 1790987483
+    },
+    {
+     "request_id": "REQ-66e9fe1a6b4e1af67d0b7b35",
+     "accepted_at": 1790986238
+    },
+    {
+     "request_id": "REQ-abec171d60e0aa1f359c18ed",
+     "accepted_at": 1790942435
+    },
+    {
+     "request_id": "REQ-59b42fab4293260d6d439c39",
+     "accepted_at": 1790941314
+    }
+   ],
+   "next_cursor": true
+  },
+  {
+   "http": 200,
+   "items": [
+    {
+     "request_id": "REQ-c07e64ca6c74b8e5310f56e0",
+     "accepted_at": 1790935058
+    },
+    {
+     "request_id": "REQ-93441e4e201b40e3b119c46b",
+     "accepted_at": 1790922367
+    },
+    {
+     "request_id": "REQ-a1d9abc0bc037ea3d9e4a7ed",
+     "accepted_at": 1790867798
+    },
+    {
+     "request_id": "REQ-a69e5751d42c374f1d2354f9",
+     "accepted_at": 1790856870
+    },
+    {
+     "request_id": "REQ-7c7a9e45eb496564f635754a",
+     "accepted_at": 1790851779
+    }
+   ],
+   "next_cursor": true
+  },
+  {
+   "http": 200,
+   "items": [
+    {
+     "request_id": "REQ-602834fd3317160722ab489d",
+     "accepted_at": 1790845050
+    },
+    {
+     "request_id": "REQ-742fc48185221dc5dec14e65",
+     "accepted_at": 1790840010
+    },
+    {
+     "request_id": "REQ-86f1ce7062356bc5c109ce12",
+     "accepted_at": 1790739368
+    },
+    {
+     "request_id": "REQ-3971fc2d5421c12412367e0b",
+     "accepted_at": 1790702789
+    },
+    {
+     "request_id": "REQ-51f1413b9d84d26a66aaa71c",
+     "accepted_at": 1790690389
+    }
+   ],
+   "next_cursor": true
+  },
+  {
+   "http": 200,
+   "items": [
+    {
+     "request_id": "REQ-7ea49c2d9b27957d0ea8888f",
+     "accepted_at": 1790687690
+    },
+    {
+     "request_id": "REQ-a6fa96020798aa2f3276d4d0",
+     "accepted_at": 1790656978
+    },
+    {
+     "request_id": "REQ-4b2d437450499dde471c2f98",
+     "accepted_at": 1790652778
+    },
+    {
+     "request_id": "REQ-e4b7f5aba7fb218c37f28002",
+     "accepted_at": 1790652070
+    },
+    {
+     "request_id": "REQ-67e12718b0ba7c0c70ebb45b",
+     "accepted_at": 1790525200
+    }
+   ],
+   "next_cursor": true
+  },
+  {
+   "http": 200,
+   "items": [
+    {
+     "request_id": "REQ-2119def4de9e8fea43abb6fe",
+     "accepted_at": 1790518487
+    },
+    {
+     "request_id": "REQ-717c91a59228070704e81cba",
+     "accepted_at": 1790514021
+    },
+    {
+     "request_id": "REQ-a8e81b8eccc800b2f3a00c8c",
+     "accepted_at": 1790481771
+    },
+    {
+     "request_id": "REQ-e2fc5dd5dc2e050cc82a57e4",
+     "accepted_at": 1790478002
+    },
+    {
+     "request_id": "REQ-3a1b73a8dead02a17a09043b",
+     "accepted_at": 1790467925
+    }
+   ],
+   "next_cursor": false
+  }
+ ],
+ "verdict": {
+  "page1_newest_first": true,
+  "walk_newest_first": true,
+  "ids_unique": true,
+  "rows": 30,
+  "pages": 6,
+  "page1_first": {
+   "request_id": "REQ-c1b537728b221742e335a0c8",
+   "accepted_at": 1791163140
+  }
+ }
+}

@@ -5,16 +5,16 @@ Loop `/canonical-drive IRPT_BCKEND`. Way forward: CTO rulings in
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md` and the fold-in
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_FOLD_IN_IRPT_THREE_BRIEFS_20261002.md` section 2 (Y-1..Y-6, Y-H); run order
 CTO 104634 ("Y-3 READY, then Y-5 V1, then Y-4 V1, one at a time and spaced"; then Y-2 and Y-6). Reviewer `3.0.0_SA_CVO`
-(grades pins after the fact). As of 2026-10-05T00:3xZ.
+(grades pins after the fact). As of 2026-10-05T04:3xZ.
 
 ## Pins
 
 | What | Value |
 |---|---|
-| CLOUD (local) | S318 served and closed `4244129fad`; IRPT_YCDGEN round 2 L8 `fda2a4e8c7`. No worktree held by this seat |
+| CLOUD (local) | S326 served `e805bb727a`; IRPT_YCDGEN round 3 L8 `22f9a0b8c0`. No worktree held by this seat |
 | SERVED: `irpt-ycharts-generate` | `uFTONal/RhfoETes4rqJ4xRjJV4d2/nv3OlwuR9AXCQ=` (Y5D). Source map recorded at 3a14a49f48, parity (S320 `40417a1b8c`) |
 | SERVED: the resident | `/opt/irpt-resident/3f29017cfc-st21` since 02:01:04Z 2026-10-04. Rollback root `136ee09e9f-st20` |
-| SERVED: `irpt-status` | `XPta1UMJzLzB+Ba1Yn+KraRRZmxxo6R0/N50sNNN3q8=` since 00:12:13Z 2026-10-05 (S318: the template's pinned boilerplate). Rollback S3 version `In5BnMbP..` (`hC6Pramt..`) |
+| SERVED: `irpt-status` | `jhGc2J4Q5EesJgnLq8EzdE5ErrZLbyqnJ8m00R7CgdE=` since 04:18:20Z 2026-10-05 (S326: history newest first; carries S318). Rollback S3 version `jVkDK9v6..` (`XPta1UMJ..`) |
 | SERVED: research principal | `irpt-cot-ycharts-research-role` (Put/Get on Cottonwood's two research tables), assumed by the runner role (CTO batch 239) |
 | Stored YCharts session | LIVE at fence 25; research runs 2-3 met a WAF challenge on one request shape only (row IRPT_YCDGEN-S3) |
 | Push state | LOCAL; origin CLOUD is pushed by `0.0.0_AB_MSTR` only |
@@ -25,8 +25,8 @@ CTO 104634 ("Y-3 READY, then Y-5 V1, then Y-4 V1, one at a time and spaced"; the
 2. **Y-5 READY** 2026-10-04 02:28:20Z (REQ-a618aa83; TIMXX named SGOV). Its page row now reads READY with its date basis
    (S318 closed, V1 00:13Z 2026-10-05).
 3. **Y-4 READY** 2026-10-04 03:18:02Z (REQ-0d97252f; the typo file; check gate 15.6 s). Ledger closed.
-4. **Y-2 (next):** easy file + SGOV proxy + ONE comparison (Opal Ultra Long-Term). Asked of `2.0.0_SA_COO~D` as a page
-   run (00:32Z); this seat watches the job to its terminal state.
+4. **Y-2 READY** 2026-10-05 01:37:07Z (REQ-c1b53772; the easy file, SGOV, Opal Ultra Long-Term; ~D's page run). Its
+   row now lists first in the history (S326, served 04:18Z).
 5. Then Y-6 (each case twice in a row, from the page, timings recorded).
 
 ## IRPT_YCDGEN (this seat issues; FULL lease)
@@ -50,16 +50,17 @@ CTO 104634 ("Y-3 READY, then Y-5 V1, then Y-4 V1, one at a time and spaced"; the
 | Row | State |
 |---|---|
 | S318 / S321 | DISARMED by S325 (irpt-status serves the pinned-boilerplate proof) |
+| S326 | served (history newest first); V1 closes on ~D's page check |
+| S284 | DISARMED by S327 (the user-named proxy proven by Y-5 and Y-2; the entitlement stays Andrew's vendor call) |
 | S320 | closed (recorder run, parity) |
-| S284 | OPEN, BLOCKING, ARMED: TIMXX gated (`mutualFundDataUSA`); remedy the user-named proxy, proven live by Y-5 V1 |
 | S288 | DISARMED by S306 |
 | S296, S286, S230, S282 | unchanged (see their rows) |
 | S263, S253, S261, S231, W94-S2, W91-S1, W92-S1, W91-S2, W92-S4, W88-S2 | unchanged |
 
 ## Ledgers this seat holds open
 
-None. Closed today: `irpt-y4-20261003`, `irpt-ycdgen-grant-20261004` (V1 superseded), `irpt-ycdgen-principal-20261004`,
-`irpt-s318-boilerplate-20261004`.
+`irpt-s326-history-20261005`: U1 and D1 closed, V1 open (~D's page check). Closed: `irpt-y4-20261003`,
+`irpt-ycdgen-grant-20261004` (V1 superseded), `irpt-ycdgen-principal-20261004`, `irpt-s318-boilerplate-20261004`.
 
 ## Write claims
 
