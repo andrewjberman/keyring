@@ -3563,6 +3563,29 @@
     "spec_asserts": "CLAUDE.md rule 27 L10: the CTO answers the slug with the ROUND-N ANALYSIS that the COO recuts in ONE issuance. ROUND_ANALYSIS.round8.md section 3 ruling 6: 'None is carried silently into round 10'.",
     "world_is": "Of the 5 rows the round-8 slug graduated, 4 are placed in the analysis (S24 ruling 1 and item 6; S29 ruling 2 and item 1; C-S35 ruling 3 and item 4; C-S36 ruling 4 and item 5). S25 is placed nowhere. The G4 10-02 restore (remedy 2) is done, but the guard (remedy 3) is unbuilt. While S24's capacity block can recur, a blocked enrichment can land another empty G4 as the newest revision, and every reader would take it as current.",
     "notes": "For the round-9 issuer (2.0.0_SA_COO~RV): cut S25 remedy 3 as a cell, or carry it under item 6 (the capacity budget) with the reason stated. INERT, so no disarm_owner. Filed as a row because the CVO's one send of the round (the slug) is spent."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W5-S34",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~5",
+    "surfaced_at": "2026-10-05T18:26Z",
+    "one_line": "nm-3's 'page day's newest holding_contribution' may not exist when the 07:00 ET enrichment step runs; the names stage reads the newest within 10 days before the page day, and its production fetch is refused at the daily ceiling, not ceiling minus reserve.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "TO RIV-nm-3 section 1: 'reads the page day's newest holding_contribution' and 'enrichment_bloomberg --mode daily runs it for the page day after its G4 lands'; INFERRED, not measured: the worker did not trace when the page day's holding_contribution is built relative to the 07:00 ET step; if it is built after, a strict page-day read finds none and the stage reads SKIPPED every morning",
+        "data/etfs/scripts/rivalfunds/security_names.py _page_contribution: newest object of the page day, else the newest dated within LOOKBACK_DAYS=10 before it (names belong to the security, not the day); nm-3.AC1 reads the page day exactly and passes either way",
+        "data/etfs/scripts/rivalfunds/security_names.py _budget_refusal: 1 row per key refused when spent(today) + keys > daily_ceiling_rows; bbg_budget.check_backfill's limit (ceiling - reserve) is for backfills and the names request is production (the reserve is what production spends); the order did not name which limit",
+        "page day defaults to today ET (event `page_day` overrides) in enrichment_bloomberg daily; the daily result gains `names` and the daily's own status and exit code are untouched"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-nm-3 cell: the stage reads the page day's newest holding_contribution; production fetch asked through bbg_budget first, refused -> SKIPPED with the reason.",
+    "world_is": "The stage reads the page day's object when present and otherwise the newest of the prior 10 days; the refusal limit is the daily ceiling. Both are one-line changes in security_names.py if the issuer wants the strict read or the backfill limit.",
+    "notes": "Nothing deployed or called; every test stubs the vendor hook. disarm_owner not needed (INERT)."
   }
 ]
 ```
