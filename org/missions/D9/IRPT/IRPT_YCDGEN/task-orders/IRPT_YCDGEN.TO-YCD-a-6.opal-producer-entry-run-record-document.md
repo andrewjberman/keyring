@@ -80,9 +80,11 @@ Write the instance at `org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/0.9.0_WK_IR
 
 **ISSUER NOTES (L5/L6, 2.0.0_SA_COO~Y):** round 6 cut from PRD v0.5 @e6a801f7f0 section 2 (the thread) and IRPT_BCKEND PRD v0.28 @3a8950aa20 items 29-31; CTO ruling msg 105387 (all cells in one issuance); decomposition round 6 revision 1.0 (`IRPT_YCDGEN_DECOMP_R6.md`). Chain `~1`, second order; starts after b-6 and s-6 are merged. The comp-iam question (the resident host role reads `etf-classifications` and writes the two addresses) is the issuer's close act, not this cell's. Risk WORLD: the gate's floor for infra paths and portal product files; nothing live moves inside the cell.
 
+**DRAIN (2.0.0_SA_COO~Y, 2026-10-05 ~22:1xZ):** worker 0.9.0_WK_IRPT_YCDGEN~1 @6ce099aee3, merged 7e31aaa7b1; a-6.AC1-AC7 PASS on the merged tree (AC6: 12 passed; the whole research test folder 153 passed at the worker). Rows: W1-S6 ARMED -> DISARMED by cell YCD-g-6 (addendum A, CTO msg 105423); W1-S7 ARMED -> DISARMED by YCD-c-6 (it owns owned_report.py and its AC1-AC4 cover the sections and pdf reads); W1-S8 (pricing off still prints YCharts wording on 87 vendor-sourced or builder-only elements and a 'Data: YCharts' footer; run.json and the document are right, the printed page is not) is NOT accepted: it breaks PRD C-BRAND on the page Andrew opens, so it is cut as cell YCD-h-6; W1-S9 and W1-S10 INERT, accepted (the producer builds the three classified elements itself; reasons map into the closed set through closed_reason; as_of is the read date with as_of_basis READ_DATE, so STALE_INPUT cannot fire from this producer).
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>issued</status>
+<status>complete</status>
 <round>6</round>
 <slot>~1</slot>
 <fabric>laptop</fabric>
