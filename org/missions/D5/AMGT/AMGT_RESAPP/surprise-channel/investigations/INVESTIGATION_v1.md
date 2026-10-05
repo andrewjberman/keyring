@@ -17607,5 +17607,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   ]
  },
  "disposition": "UNDER_INVESTIGATION"
+}
+,
+{
+ "id": "AMGT_RESAPP-Z-W228-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~228",
+ "surfaced_at": "2026-10-05T07:16:30Z",
+ "one_line": "The Security Scanner universe files carry no currency field, so a peer member's price currency can only come from the member's own company record; on the served peers objects 672 of 676 members have no matched record, so 672 serve a reason and 4 serve a currency.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "AMGT-at-3 asks every member to serve its price currency 'from the same stored source the member's price comes from' (the scanner universe) or a reason.",
+ "world_is": "All six scanner universe_data.json files (sp500, r1000, r1000v, acwx, eafe, eafev, asOf 2026-10-02) carry only ticker, name, mktVal, country, sector, industryGroup, universeWeight, divzWeight, price, values on every row; none carries a currency (types.ts line 71: price is LOCAL trading currency, unlabelled). The currency is therefore read from the CRNCY header figure of the member's own record, matched on the member's stored identity key. Measured over the 95 covered names, 676 members: 4 serve price_currency, 672 serve price_currency_reason because the stored member identity is UNRESOLVED (security_key null). r70_served c32 passes on the reason arm. Two things done beyond the order's text and inside its paths: (1) lib/research/peers/universe.py retains the joined record's CRNCY as row price_currency and engine.py serves it, so a re-landed peer object carries more currencies (no landing was run); (2) test_generation_and_pool_routes.py test_12 asserted members == [{'ticker':'NEW'}] and is updated to expect the one added reason field. test_model_words.py still fails at this portal ref (row Z-W224-S1 class); filed no new row for it. No new S3 path: the read is the model-block pool path _model_block_name already reads.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "r70_served.py --cell c32 --where local on this worktree: 'population: names 95 members 676 non-200 0', 'PASS C1 ... members failing 0', 'R70 C32 SERVED: YES'.",
+   "In-process read over covered_security_keys() (95): Counter {('reason', identity key absent): 672, ('currency', identity key present): 4}.",
+   "An in-process boto3 read of the six scanner universe_data.json files (json/security_scanner/latest/universes/) counted the keys on every security row: 10 keys, none a currency."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
 }]
 ```

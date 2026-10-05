@@ -90,3 +90,14 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-05 ~07:3xZ):** CLOSED, mostly on the reason arm.
+- Worker ~228: commit `bbc3328344`, proof-of-spec-check VALID (rc=0).
+- AC1 PASS 9 of 9. AC2 PASS c32 local: 676 of 676 members served. AC3 PASS r64 c14.
+- **Thin outcome (row Z-W228-S1):** the scanner universe files carry no currency. A member's currency comes from its own record's
+  `CRNCY`, joined on the stored `identity.security_key`, and 672 of 676 stored members have no key. So 4 serve a currency and 672
+  serve the plain reason. A re-landed peer set (engine/loader edited) would carry more; no landing was run. To the CTO for round 71.
+- The route now reads `derived/model_block/<key>/` once per distinct member, in parallel. That is the same prefix the function
+  already reads, so no new grant is needed. /peers latency is read at at-6. Served by at-6.
+
+<status>complete</status>
