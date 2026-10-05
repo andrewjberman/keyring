@@ -1450,3 +1450,85 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-W9-S1 -- Declaring the two reporting routes as DECLARED in routes.json passes AC1 but reds 5 tests the grant cannot touch: the ce
+
+
+```json
+{
+  "id": "IRPT_DASHBD-W9-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~9",
+  "surfaced_at": "2026-10-05T08:01:41Z",
+  "one_line": "Declaring the two reporting routes as DECLARED in routes.json passes AC1 but reds 5 tests the grant cannot touch: the census's literal IN_LANE_FUNCTIONS (2) and the response-contract rule of test_seam_paired (3); AC2 FAILS.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "spec_asserts": "TO-DB-b-23: adding two route objects and updating _denominator leaves test_unguarded_census.py at 0 failed (DB15-1-AC2, base PASS); the census reading an unguarded route would be the finding.",
+  "world_is": "Both routes read as GUARDED (census prints 'WHOLE FILE: OK: every route is guarded', irpt-49f-reporting-read-lambda guarded, mark True). The failures are of the test's own literals: (1) test_zero_of_n_over_the_routes_this_order_may_open asserts out_of_lane == {} but the frozenset IN_LANE_FUNCTIONS (test_unguarded_census.py:60-72) does not name irpt-49f-reporting-read-lambda, so 2 routes are out of lane; (2) test_the_whole_file_census_is_zero asserts set(functions) == set(IN_LANE_FUNCTIONS), and irpt-49f-reporting-read-lambda is extra. Result '2 failed, 7 passed'. Separately _contracts/tests/test_seam_paired.py (outside the grant) fails 3 of 65: test_every_declared_route_has_a_response_contract_whose_refs_resolve asserts a response schema for every DECLARED route's operation (reporting-read has none), and the known-good/known-bad control raises TypeError for reporting-read and reporting-summary-read. The routes carry response_schema null + a reason because the live success body is a raw object, not an envelope; making these green needs either response schemas under docs/contracts/investor-reporting/v1/responses/ (outside the grant) or an edit to the census literal set (refusal clause: not done). Census and seam test were NOT edited. The routes.json change is committed as ordered; the order is left open.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python p15_cells.py . DB15-1-AC2 -> 'FAIL: census: 2 failed, 7 passed in 2.31s'; pytest _authz/tests/test_unguarded_census.py output: 'OUT OF LANE, named and not counted: GET .../reporting/{account_id}/{which} -- irpt-49f-reporting-read-lambda (carries the guard mark: True)'",
+      "pytest -q _contracts/tests/test_seam_paired.py in infra/aws/lambda/investor-reporting -> '3 failed, 62 passed' (AssertionError: reporting-read at :522; TypeError at :775)",
+      "pytest _authz/tests/test_guarded_entries.py 32 passed; test_selection_contract 2, test_upload_contract 8, test_owned_request_contracts 3 all passed with the change"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-W9-S2 -- routes.json is the ONE CARRIER the api Terraform root reads; two DECLARED rows with a handler outside route_functions wo
+
+
+```json
+{
+  "id": "IRPT_DASHBD-W9-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~9",
+  "surfaced_at": "2026-10-05T08:01:41Z",
+  "one_line": "routes.json is the ONE CARRIER the api Terraform root reads; two DECLARED rows with a handler outside route_functions would break its next plan, and the reporting-read root already declares the same two route_keys.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "spec_asserts": "routes.json _carrier: infra/aws/terraform/investor-reporting/api/routes.tf derives aws_apigatewayv2_route resources from every status DECLARED row via function_key_by_name[r.handler]; TO-DB-b-23 premise: the change is 'docs and contract inventory only'.",
+  "world_is": "api/routes.tf:41-44 maps every DECLARED row through local.function_key_by_name[r.handler]; route_functions (api/integrations.tf:25-35) holds 7 functions and not irpt-49f-reporting-read-lambda, so the lookup has no key (inferred from reading, no plan run: no AWS). Were it keyed, the same route_keys are already created by aws_apigatewayv2_route.irpt_reporting_read and .irpt_reporting_read_summary in reporting-read/api.tf:24,34, a duplicate. The next api-root plan after this change merges therefore needs either route_functions/a filter in api/routes.tf (outside the grant) or a status the api root skips. The handler name irpt-49f-reporting-read-lambda is the order's, not the Terraform builder name.",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/api/routes.tf lines 34-44 and integrations.tf lines 25-35 at 9e1d65bc19",
+      "infra/aws/terraform/investor-reporting/reporting-read/api.tf lines 24-36 at 9e1d65bc19"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-W9-S3 -- Amendment 1's ROUTED_ELSEWHERE rows leave two out-of-grant contract tests red on no_handler_at_head == total - declared
+
+
+```json
+{
+  "id": "IRPT_DASHBD-W9-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~9",
+  "surfaced_at": "2026-10-05T08:40:00Z",
+  "one_line": "Amendment 1's ROUTED_ELSEWHERE rows leave two out-of-grant contract tests red: both assert _denominator.no_handler_at_head == total - declared, which counts every non-DECLARED row as handler-less.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "spec_asserts": "Amendment 1: the two reporting rows take status ROUTED_ELSEWHERE and _denominator states routed-here 19 + routed-elsewhere 2 = 21; the order's refusal clause says a test outside the grant is not edited but filed.",
+  "world_is": "infra/aws/lambda/investor-reporting/_contracts/test_owned_request_contracts.py:62 and _contracts/test_upload_contract.py:65 assert contract['_denominator']['no_handler_at_head'] == len(rows) - len(declared). With 21 rows, 19 DECLARED and 2 ROUTED_ELSEWHERE that right side is 2, while the two rows HAVE a handler and the file states no_handler_at_head 0 (setting it to 2 would be false). Both tests fail 'assert 0 == (21 - 19)'; they passed with the rows DECLARED. The fix is an edit to those two assertions (subtract ROUTED_ELSEWHERE rows) or a ruling that no_handler_at_head counts them; neither is in the grant. test_seam_paired.py passes (63 passed) and the census passes (9 passed), so DB15-1-AC1/AC2/AC3 and DB-GUARD are unaffected. Separately, running _authz and _contracts in ONE pytest process fails test_seam_paired[performance-report] on ImportError 'LiveTransport' from 'transport' (a module-name collision between the two suites' sys.path entries); each suite alone is clean of it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest -q _contracts in infra/aws/lambda/investor-reporting -> '2 failed, 183 passed' (test_public_routes_are_declared_against_the_installed_status_handler; test_route_denominators_are_measured_and_upload_is_declared_against_generate), both 'assert 0 == (21 - 19)'",
+      "_contracts/test_owned_request_contracts.py:60-62 and _contracts/test_upload_contract.py:62-65 read at the worker worktree HEAD"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
