@@ -95,7 +95,7 @@ Write the instance at `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ET
 
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>8</round>
 <workstream>C</workstream>
 <slot>~2</slot>
