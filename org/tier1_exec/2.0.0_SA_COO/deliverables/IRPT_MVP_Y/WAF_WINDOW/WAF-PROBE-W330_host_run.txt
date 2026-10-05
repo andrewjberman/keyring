@@ -1,0 +1,19 @@
+ssm 97f3ac1d-a82a-4025-a00b-ca58b2650470 Success rc 0
+waf probe start 2026-10-05T12:54:07Z W=330 resident pid 525132 root /opt/irpt-resident/3f29017cfc-st21
+RUN status=COMPLETE calls=12 stop_reason=None
+RUN key=irpt/cottonwood/state/ycharts_runs/request=WAF-PROBE-20261005T1254Z-W330/run.json
+KEPT irpt/cottonwood/state/ycharts_responses/request=WAF-PROBE-20261005T1254Z-W330/step=01_info_AAPL.json
+KEPT irpt/cottonwood/state/ycharts_responses/request=WAF-PROBE-20261005T1254Z-W330/step=02_info_MSFT.json
+KEPT irpt/cottonwood/state/ycharts_responses/request=WAF-PROBE-20261005T1254Z-W330/step=03_info_GOOGL.json
+KEPT irpt/cottonwood/state/ycharts_responses/request=WAF-PROBE-20261005T1254Z-W330/step=04_info_AMZN.json
+KEPT irpt/cottonwood/state/ycharts_responses/request=WAF-PROBE-20261005T1254Z-W330/step=05_info_NVDA.json
+KEPT irpt/cottonwood/state/ycharts_responses/request=WAF-PROBE-20261005T1254Z-W330/step=06_info_META.json
+KEPT irpt/cottonwood/state/ycharts_responses/request=WAF-PROBE-20261005T1254Z-W330/step=07_info_JPM.json
+KEPT irpt/cottonwood/state/ycharts_responses/request=WAF-PROBE-20261005T1254Z-W330/step=08_info_XOM.json
+KEPT irpt/cottonwood/state/ycharts_responses/request=WAF-PROBE-20261005T1254Z-W330/step=09_info_JNJ.json
+KEPT irpt/cottonwood/state/ycharts_responses/request=WAF-PROBE-20261005T1254Z-W330/step=10_info_PG.json
+KEPT irpt/cottonwood/state/ycharts_responses/request=WAF-PROBE-20261005T1254Z-W330/step=11_info_KO.json
+KEPT irpt/cottonwood/state/ycharts_responses/request=WAF-PROBE-20261005T1254Z-W330/step=12_info_PEP.json
+CLOCKS {"opal_building_ms": null, "opal_waiting_ms": 410001, "ycharts_working_ms": 1977}
+waf probe end 2026-10-05T13:01:04Z runner rc=0 work dir removed: yes
+
