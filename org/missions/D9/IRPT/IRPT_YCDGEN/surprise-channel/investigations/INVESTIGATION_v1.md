@@ -722,3 +722,27 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "world_is": "The ticker items are not valid YCharts security items as sent (the expand join puts ',' after an item that already ends ',,', and a ticker may not be the YCharts id), and the region and maturity column ids are not valid general_data metrics. Next: resolve each holding through /securities/securities_info to its security_id, send items with no extra separator, and validate metric ids on one public security before a holdings run. The 158 rows keep feed YCHARTS_SECURITY; no element is fed yet, so E6 has no new figures to render."
 }
 ```
+
+## IRPT_YCDGEN-W1-S2 -- lookup.py needs a region the order does not name
+
+```json
+{
+  "id": "IRPT_YCDGEN-W1-S2",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~1",
+  "surfaced_at": "2026-10-05T11:07:34Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Contract 5.4's lookup needs an S3 client on the firm's research principal and the order names no region source, so lookup.py takes --region (default us-east-1) and calls runner.research_s3; the issuer confirms the region at the first live lookup.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/lookup.py main(): --region default; runner.py research_s3(boto3, region, firm, request_id); runner._compose reads the region from resident bindings, which a lookup does not load"
+    ]
+  },
+  "spec_asserts": "Contract 5.4: `python lookup.py --firm <f> --request <REQ> --call <name>` prints the call's kept record, reading through the keeper's store.",
+  "world_is": "The three flags alone give no region and no S3 client; the runner's region comes from resident_bindings.json, which the lookup does not load. A tested default (us-east-1, the estate's region) with an override flag was added; the tests inject a fake S3 client and never reach this line."
+}
+```
