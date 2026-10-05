@@ -17866,3 +17866,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Remedy is the owner's: a newest-first read (a time-ordered key or index for the history query), with the cursor contract kept. Page half (2.0.0_SA_COO~D): none needed once the history is newest-first; the page already sorts by time. Found on the Y-2 fold-in Case B live run for 2.0.0_SA_COO~Y msg 105051."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-W122-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~122",
+  "surfaced_at": "2026-10-04T23:55Z",
+  "one_line": "The 49F perfrp_performance_account leaf does not contain the literal 2025-01-10 (0 hits in 1,923,593 bytes read via get_object), so the order's gate (a withdrawal key measured carries_20250110 true) cannot be met by the bytes; IB50-1-AC1 FAILS on that clause with every other part of the packet present.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "get_object s3://opal-data-portal-v2/platinum/advi/49financial/perfrp_performance_account.json 2026-10-04 (ETag 9873b72ef5da73fc0399d2905d4f7821, VersionId E78kI4KB4KsZhdwsAFzfSvkI.kn5Snim, LastModified 2026-09-01T03:16:07Z, 1,923,593 bytes, the only version, no delete marker): count of '2025-01-10' = 0, of '20250110' = 0, of '2025-01' = 0; the only ISO dates in the body are 2024-07-08, 2024-07-09, 2026-08-31, 2026-09-01. Top-level keys: as_of, contract_version, declared_absent_columns, entries (8,632 account rows with window_return only), family, figure_state_census, generated_by, level, periods, si_label, window. No daily series.",
+      "The leaf's SI window (window_start 2024-07-08, window_end 2026-09-01) spans 2025-01-10 by construction, which is how REMEDIATION_v16.md:43 words the claim ('Since-inception figures that include the inflated 2025-01-10 day'). Whether the SI window_return values still embed the S237 error is set by canonical/twr_daily date=2025-01-10 upstream; this cell did not read it (the order's reads 1-4 do not include it).",
+      "Packet written with the leaf in the withdrawal set as the order directs and carries_20250110 recorded false (measured); the order's own checker p50_withdrawal_packet.py exits 1 with 'withdrawal key ... is not measured to carry 2025-01-10'. Other parts: versioning Enabled; 4 perfrp keys, all under 49financial/, of 19 objects under platinum/advi/; rollback by version id; stop rule names the ETag; after-read names PROD and a 49F login."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IB-pr-319 worker face: the withdrawal set is the 49F account leaf plus any performance leaf measured to carry 2025-01-10, and criterion IB50-1-AC1 requires every withdrawal key to be measured carries_20250110 true; the census row W121-S1 says the leaf 'still carries the inflated 2025-01-10 day'.",
+  "world_is": "The leaf's bytes hold no 2025-01-10 date at any field path; it carries the day only as a span inside its SI window, with the values' contamination unread. The packet is complete and the leaf is withdrawable on the CTO's ruling (batch 251), but the order's measured-carrier gate is not satisfied by the bytes.",
+  "notes": "Issuer's choice: (a) amend IB50-1-AC1 / the checker to accept the leaf as ruled-in (CTO batch 251) or to read a spans_20250110 field, or (b) cut a read of canonical/twr_daily date=2025-01-10 and the SI window_return recompute to decide whether the values are contaminated. No AWS write was made; the packet is the unsigned record. perfrp_performance_relationship does not exist in the bucket."
+}
+```
