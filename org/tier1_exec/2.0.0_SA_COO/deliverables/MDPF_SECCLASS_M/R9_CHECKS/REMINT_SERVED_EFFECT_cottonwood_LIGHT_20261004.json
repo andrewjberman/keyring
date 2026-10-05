@@ -1,0 +1,101 @@
+{
+ "claim": "measured (paired local builds over the same live sources, no upload; streamed comparison)",
+ "firm": "cottonwood",
+ "method": "CTO batch 244: served tree admits multi_asset (4cc72587d6's one token)",
+ "served_date": "2026-10-01",
+ "served_bundle": {
+  "key": "irpt/cottonwood/code/gold/investor-reporting-holdings.tar.gz",
+  "version": "o4k8Idb5G.NFG9LytykhWwYipgqEz_fn",
+  "members": 45
+ },
+ "members_missing_at_head": [
+  "SHA256SUMS"
+ ],
+ "served_tree_build": {
+  "business_date": "2026-10-01",
+  "node_count": 17870,
+  "unique_account_count": 851,
+  "reconcile_ok": true,
+  "reconcile_after": 540513704.69,
+  "schema_valid": true
+ },
+ "cloud_tree_build": {
+  "business_date": "2026-10-01",
+  "node_count": 17870,
+  "unique_account_count": 851,
+  "reconcile_ok": true,
+  "reconcile_after": 540513704.69,
+  "schema_valid": true
+ },
+ "nodes": {
+  "served_tree": 17870,
+  "cloud_tree": 17870,
+  "common": 17510,
+  "only_served_tree": 360,
+  "only_cloud_tree": 360,
+  "equal": 17510,
+  "differing": 0
+ },
+ "differing_fields_top": [],
+ "class_change_count": 0,
+ "class_changes": [],
+ "unmatched_account_count": 4,
+ "unmatched_by_account": {
+  "acc_90d185435f6a1f6a7d5bb807": 180,
+  "acc_01ae2e8903cec124d7ca7809": 180,
+  "acc_bedb7a62d882e8d442ad569f": 180,
+  "acc_17c0263a5b12a8a66eb0789c": 180
+ },
+ "account_totals": {
+  "accounts": 851,
+  "equal": 851,
+  "differ": [],
+  "sum_served_tree": 540513704.68,
+  "sum_cloud_tree": 540513704.68
+ },
+ "packet_rows_held": {
+  "SGIIX": [
+   5,
+   159332.54
+  ],
+  "32008F606": [
+   4,
+   130565.58
+  ]
+ },
+ "class_sums_by_account": {
+  "accounts": 851,
+  "equal_class_vectors": 851,
+  "differ": [],
+  "regrouped_accounts": {
+   "acc_01ae2e8903cec124d7ca7809": {
+    "equal": true,
+    "classes": {
+     "equity": 84191.47,
+     "cash": 211.01
+    }
+   },
+   "acc_17c0263a5b12a8a66eb0789c": {
+    "equal": true,
+    "classes": {
+     "equity": 113149.95,
+     "cash": 283.58
+    }
+   },
+   "acc_90d185435f6a1f6a7d5bb807": {
+    "equal": true,
+    "classes": {
+     "equity": 94842.56,
+     "cash": 237.7
+    }
+   },
+   "acc_bedb7a62d882e8d442ad569f": {
+    "equal": true,
+    "classes": {
+     "equity": 113114.31,
+     "cash": 283.49
+    }
+   }
+  }
+ }
+}

@@ -124,7 +124,27 @@ def admit_multi_asset(served_tree):
     assert len(idx) == 1, ("expected one ASSET_CLASS_VALUES line to patch", idx)
     lines[idx[0]] = lines[idx[0]].replace(ADMIT_OLD, ADMIT_NEW, 1)
     path.write_text("\n".join(lines), encoding="utf-8")
-    return idx[0] + 1
+    # 4cc72587d6's other half: the published contract's asset-class enums admit multi_asset (the producer validates its
+    # snapshot against the contract member it ships). Patched in the served tree's copy only.
+    contract = Path(served_tree) / "docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json"
+    doc = json.loads(contract.read_text(encoding="utf-8"))
+    patched = [0]
+
+    def walk(o):
+        if isinstance(o, dict):
+            enum = o.get("enum")
+            if isinstance(enum, list) and "equity" in enum and "unclassified" in enum and "multi_asset" not in enum:
+                enum.insert(enum.index("unclassified"), "multi_asset")
+                patched[0] += 1
+            for v in o.values():
+                walk(v)
+        elif isinstance(o, list):
+            for v in o:
+                walk(v)
+    walk(doc)
+    assert patched[0] >= 1, "expected at least one asset-class enum in the served contract"
+    contract.write_text(json.dumps(doc, indent=2), encoding="utf-8")
+    return f"{idx[0] + 1} (+{patched[0]} contract enum(s))"
 
 
 def main(firm, admit=False):

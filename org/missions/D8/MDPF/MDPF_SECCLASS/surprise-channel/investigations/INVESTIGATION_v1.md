@@ -1433,3 +1433,32 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "ARMED until Monday 10:15Z. Disarm: mint irpt_holdings_cot and irpt_holdings_49f before then, under CTO batch 240's conditions measured with the served tree admitting multi_asset (the one ASSET_CLASS_VALUES token of 4cc72587d6) so the paired builds can run against the live table; the 49F paired run needs the user's word (memory reaper). Fallback if neither mint lands: roll back the 7 moves (compare-and-set) and ask Andrew for the 25 new rows' deletes, or accept one refused publication day. Lesson: a never-widen half that writes rows orders every reader's deploy first, producers included."
 }
 ```
+
+
+## MDPF_SECCLASS-S24 -- row S23 disarmed: all three Holdings producers re-minted before Monday's publication
+
+```json
+{
+  "id": "MDPF_SECCLASS-S24",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-05T00:20:00Z",
+  "one_line": "Row S23 DISARMED: every producer on the irpt-holdings-snapshot path now admits multi_asset -- irpt_holdings_inf (SuRm8tIY..), irpt_holdings_49f (3Q_W49U7.., 23:38Z) and irpt_holdings_cot (NZIQjid2.., 00:16Z) re-minted under CTO batches 240/244 with their paired reads passing; the directory bundle (KK09i.JS..) and the route contract pin (irpt-holdings CodeSha256 RmruvCeo..) too.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ledger secclass-multi-asset-rows-and-remint-m-20261004 legs P, R, T closed 2026-10-05 00:1xZ: 49F 153,291 of 153,291 nodes equal, 7,577 totals and 6,360 class vectors equal; Cottonwood 851 totals and class vectors equal, 4 regrouped accounts each equal",
+      "s3 list-object-versions: opal-data-49financial and opal-data-cottonwood irpt/<firm>/code/gold/investor-reporting-holdings.tar.gz IsLatest = the re-minted versions (md5 7a400c14); opal-data-inflection SuRm8tIY.. (md5 2b94e928)",
+      "the CTO's ~Mon 08:00Z fallback (roll back the 7 moves) falls away on the 49F pass (CTO 105004)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "S23's hazard is removed by the re-mints that the same packet owed; the first scheduled publication after them (irpt-holdings-snapshot Monday 2026-10-05 10:15Z) is the packet's leg V read, owned by 2.0.0_SA_COO~M.",
+  "spec_asserts": "CTO batch 164: readers first; S23's disarm before Monday 10:15Z.",
+  "world_is": "Disarmed at 00:16:41Z, ten hours before the publication that would have refused.",
+  "notes": "Resolves MDPF_SECCLASS-S23."
+}
+```
