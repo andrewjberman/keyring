@@ -2236,6 +2236,26 @@ def _closure_pointer_violations(rid, closure, known_ids, path_exists):
     return []
 
 
+def _disarms_violations(rid, disarms, known_ids):
+    """PURE given its oracle. `disarms` (remediation_row.schema.json, 2026-10-05, 1.0.0_SA_CTO~Z on 3.0.0_SA_CVO~Z msg
+    29407): the ids a NEW remediation row's disarm clock also disarms -- the append-only landing surface for a row written
+    INERT with no `disarm` block (AMGT_RESAPP-Z-S11). Every id must name a row the project's INVESTIGATION plane
+    (investigations/ + adjudications/) carries at the graded index, the same reference discipline as a phantom
+    `adjudicates` and a CARRIED_BY closure pointer. `known_ids` None = the census could not run -> refused (fail-closed).
+    The shape (array of id strings) is the schema's limb; a non-list here returns nothing."""
+    if not isinstance(disarms, list) or not disarms:
+        return []
+    if known_ids is None:
+        return ["%s: `disarms` names %d id(s) but the project's investigation-plane ids could not be read, so the "
+                "targets cannot be confirmed (fail-closed)" % (rid, len(disarms))]
+    unknown = [str(t) for t in disarms if t not in known_ids]
+    if unknown:
+        return ["%s: `disarms` names %s -- no investigation or adjudication row of the project carries %s. A disarm "
+                "lands on a real row; a phantom target disarms nothing and is refused"
+                % (rid, ", ".join(unknown), "that id" if len(unknown) == 1 else "those ids")]
+    return []
+
+
 # MONOTONE STATE ADVANCE (2026-09-03, 3.0.0_SA_CVO 93695 item 4, measured on the round-5 slug): a routed remediation
 # row's two clocks -- disarm.state / disarm.at and remediation.state -- and its `closed` flag can only land ON that row
 # (a second row with the same id is refused; the id IS the graduated item), yet the mutation limb read any in-place
@@ -2401,6 +2421,17 @@ def check_file(root, rel):
             for _r in _entering:
                 v.extend(_closure_pointer_violations(_r.get("id"), (_r.get("remediation") or {}).get("closure"),
                                                      _known, _exists))
+    # `disarms` TARGETS (2026-10-05): every id a NEW remediation row's `disarms` names is a row of the project's
+    # investigation plane at the index. COST: one plane census per file, only when such a row exists. NON-APPLICATION:
+    # rows already at HEAD (the mutation limb forbids changing their `disarms`); investigation files.
+    if kind == "REMEDIATION":
+        _dz_rows = [r for r in new_rows if r.get("id") not in old_ids and r.get("disarms")]
+        if _dz_rows:
+            _proj = _folder_identity(rel)[0] or str(_dz_rows[0].get("project") or "")
+            _pd, _pn = _plane_docs(root, _proj, "INVESTIGATION", "") if _proj else (None, "no project for the file")
+            _plane_ids = None if _pd is None else {i for _p, ids in _pd for i in ids}
+            for _r in _dz_rows:
+                v.extend(_disarms_violations(_r.get("id"), _r.get("disarms"), _plane_ids))
     # FUTURE-DATED STAMP DISCLOSURE (2026-10-02, 1.0.0_SA_CTO~Z on 3.0.0_SA_CVO~Z msg 28369): a NEW row whose surfaced_at is
     # more than 10 min after the commit time is a typed or projected stamp, and it moves every watermark and cursor that
     # reads it. WARN only: it refuses nothing, and arming it as a refusal is announced first. COST: one parse per new row.
@@ -2954,6 +2985,21 @@ def _self_test(root):
         ("pointer: IRREMEDIABLE free-form evidence -> admitted", lambda: _cpv("IRREMEDIABLE", "the paths are gone; see S42") == []),
         ("pointer: project ids unreadable (None) on CARRIED_BY -> REFUSED (fail-closed)",
          lambda: _closure_pointer_violations("X_PRJ-S3", {"reason": "CARRIED_BY", "pointer": "X_PRJ-S9"}, None, _pex) != []),
+    ]
+    # `disarms` TARGETS (2026-10-05), pure: the project's investigation-plane ids are injected.
+    _plane = {"X_PRJ-S11", "X_PRJ-C-S412"}
+    arms += [
+        ("disarms: every id a row of the plane carries (an item and a CVO row) -> admitted",
+         lambda: _disarms_violations("X_PRJ-S500", ["X_PRJ-S11", "X_PRJ-C-S412"], _plane) == []),
+        ("disarms: one id no row carries -> REFUSED, names the phantom id",
+         lambda: any("X_PRJ-S999" in x for x in _disarms_violations("X_PRJ-S500", ["X_PRJ-S11", "X_PRJ-S999"], _plane))),
+        ("disarms: the plane census could not run (None) -> REFUSED (fail-closed)",
+         lambda: _disarms_violations("X_PRJ-S500", ["X_PRJ-S11"], None) != []),
+        ("disarms: absent or empty -> nothing to check",
+         lambda: _disarms_violations("X_PRJ-S500", None, None) == [] and _disarms_violations("X_PRJ-S500", [], None) == []),
+        ("disarms READ: check_file grades NEW remediation rows only, against the INVESTIGATION plane",
+         lambda: (lambda src: "_disarms_violations(" in src and 'r.get("id") not in old_ids and r.get("disarms")' in src
+                  and '_plane_docs(root, _proj, "INVESTIGATION", "")' in src)(inspect.getsource(check_file))),
     ]
     # FOREIGN-ROW SWEEP arms (pure), the class site Z measured; includes the mutant (a clean commit under the WRONG seat).
     fr = lambda rows, who, cw=frozenset(): _foreign_row_violations("f", "INVESTIGATION", rows, who, coworkers=cw)[0]  # noqa: E731

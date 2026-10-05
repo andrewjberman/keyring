@@ -118,9 +118,24 @@ issuer re-derives served silver from the stored originals under a never-widen pa
 round-37 aj-8 path (re-pend the outbox rows of exactly the manifest's originals, then `upload-harvest`). The fourth-criterion slot is
 unused.
 
+**COMPLETE 2026-10-05 ~00:3xZ (issuer):**
+- **Build:** worker ~93 @eab4321d38, with the Z-W93-S1 pin disarm @ccb21d1a4e, merged @38fc65b7bf. Drain suites: collector 641
+  passed, 3 skipped; research 336 passed.
+- **AC1 PASS** (worker): 24 of 24.
+- **AC2 PASS** (worker): the in-memory census, lost 0 on all five publishers, 250 of 250 compared.
+- **The served write** (the re-derivation path is an issuer act script, `round45/ar-1.rederive_act.py`, not the aj-8 outbox path):
+  - Pair: COO @b5d31484b7 + CTO @16eb97eae5, digest 9d7b7d57c651. NEVER-2 entry opened @0f63417bb5, closed @4e84fd3f2e.
+  - 1,995 rows in 13 new parts, nothing overwritten. VERIFY: every planned row serves.
+  - Post-write re-read: 2,069 of 2,069 unchanged, CHANGED 0, GONE 0.
+- **AC3 PASS** (issuer, after the re-derivation): lost 0 on all five publishers (`round45/ar-1.AC3.issuer_grade.reader_rule.out`).
+  - It is graded with the census's served-row choice set to the READER's rule (`round45/ar-1.field_census.reader_rule.py`).
+  - The literal AC3 invocation (`ar-1.AC3.issuer_grade.out`) reads FAIL because of an instrument defect: the census keeps the
+    first-read row on a run_stamp tie, so it graded rows the reader no longer serves. Control: `ar-1.AC3.tie_control.out`.
+    Row Z-S85.
+
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
-<status>issued</status>
+<status>complete</status>
 <round>45</round>
 <slot>~93</slot>
 <fabric>site-z</fabric>

@@ -463,6 +463,14 @@ async function walkTimeline(page, sec) {
     }
   } else findings.push({ step, check: 'timeline:no-day-bar', claim: 'measured', observed: 'the company page carries no day bar to press', rule: 'FWD-5: a day-by-day line the PM can press' })
   await checks(page, `${sec}-timeline-day`)
+  // close the day dialog this step opened, so the next press and every later shot are not taken under it
+  await page.keyboard.press('Escape').catch(() => {})
+  await page.waitForTimeout(400)
+  const dlgOpen = await page.locator('[role="dialog"]:visible').count().catch(() => 0)
+  if (dlgOpen) {
+    await page.locator('[role="dialog"] [aria-label="Close"], [role="dialog"] button:has-text("Close")').first().click({ timeout: 2000, force: true }).catch(() => {})
+    await page.waitForTimeout(400)
+  }
   const ev = page.locator('[data-timeline-event]')
   if (await ev.count().catch(() => 0)) {
     const evPressed = await ev.first().click({ timeout: 4000, force: true }).then(() => true).catch(() => false)
@@ -473,6 +481,14 @@ async function walkTimeline(page, sec) {
       timelineDays.push({ via: 'event', security: sec, date: evDate, pressed: evPressed, state: got.state, waited_ms: got.waited_ms })
     }
     await checks(page, `${sec}-timeline-event`)
+    // close the day dialog this step opened, so the next press and every later shot are not taken under it
+    await page.keyboard.press('Escape').catch(() => {})
+    await page.waitForTimeout(400)
+    const dlgOpen = await page.locator('[role="dialog"]:visible').count().catch(() => 0)
+    if (dlgOpen) {
+      await page.locator('[role="dialog"] [aria-label="Close"], [role="dialog"] button:has-text("Close")').first().click({ timeout: 2000, force: true }).catch(() => {})
+      await page.waitForTimeout(400)
+    }
   } else findings.push({ step, check: 'timeline:no-event-element', claim: 'measured', observed: `no [data-timeline-event] element on the ${sec} timeline (the panel builds no event layer, or none is served)`, rule: 'FWD-6: bursts of coverage appear as marked events with a headline' })
 }
 

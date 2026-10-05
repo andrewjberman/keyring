@@ -22,15 +22,23 @@ comp-adversary: DECLARED-NOT-APPLICABLE the validator-context composer profiles 
 ### `RIV-rn-1` -- the 30-trading-day default, the switch inside both components, and honest window labels (S3, S7, S8)
 - Measured: `render.PERIODS` = MTD/QTD/YTD with YTD first and selected (~:806-813); the switch lives only at the top; the
   trend card reads "year to date" for every fund (~:1057); IDVZ's clipped window reads "Year to date (2026)".
-- Interface: one `rf-period` radio group (R30 checked); the top switch reads R30, a `data-period-divider`, MTD, QTD, YTD;
+- AMENDED 2026-10-05 (PRD v0.15 @e99a733d4c; Andrew-direct @575e7d7250 "there is no need for MTD" and @a36e70f335: "Data
+  available since X", dates under each pill, a short period greys): the switch is R30 | divider | QTD, YTD -- NO MTD.
+- Interface: one `rf-period` radio group (R30 checked; radios R30, QTD, YTD only); the top switch reads R30, a
+  `data-period-divider`, QTD, YTD, each top label holding a `data-period-dates` line with its first and last date;
   the rankings component and each trend card hold labels for the same four radios (any one moves all; no script); every rank
   and trend panel carries a `data-period-window` line (label, first and last date, trading days); R30 reads "Last 30
-  trading days"; a clipped window reads "Since first report".
+  trading days"; a clipped window reads "Data available since <date>"; a period under 5 trading days marks every one of its
+  switch labels `data-period-short` and states its length ("QTD, 1 trading day").
 - **Organic trigger:** the 07:00 ET marker publish and the 09:00 ET sweep publish.
 
 ## 2. WHAT YOU NEED TO KNOW (measured at the cut, base base CLOUD 7cc969288b (the package equals the deployed pin 75ad1e4d2e))
 
-- Each check file's docstring is the exact interface it reads: read `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round8/checks/rn-1.AC1.py` and `rn-1.AC2.py`
+- AMENDMENT (2026-10-05, issuer): the first build of this order (f853bed481, 2ae50ff5ae) is on your branch; it rendered MTD
+  and "Since first report". Re-cut it to the amended criteria: drop MTD from the switch (the producers still write MTD rows;
+  render ignores them), "Data available since <date>", dates under each top pill, the short-period mark. Your earlier proof
+  instance is superseded by the new run.
+- Each check file's docstring is the exact interface it reads: read `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round8/checks/rn-1.AC1.py`, `rn-1.AC2.py` and `rn-1.AC3.py`
   before you build.
 - Andrew, verbatim (2026-10-04): "the last 30 trading days is the default ... then we have a dividing line between the year
   to date, quarter to date, month today ... that toggle can also exist in what drove the return, that toggle can also exist
@@ -69,13 +77,15 @@ org/missions/D5/ETFS/ETFS_RIVALS/surprise-channel/investigations/INVESTIGATION_v
 
 ## 4. PROOF OF SPEC (each invocation LITERAL, run from your worktree root)
 
-- **AC1** -- four rf-period radios with R30 checked; the top switch reads R30, a divider, MTD, QTD, YTD; the rankings component and every trend card hold labels for all four; no script (`org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round8/checks/rn-1.AC1.py`)
-- **AC2** -- every rank and trend panel states its period, first and last date and trading days; a clipped YTD reads 'Since first report' and never 'Year to date'; R30 reads 'Last 30 trading days' (`org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round8/checks/rn-1.AC2.py`)
+- **AC1** -- R30, QTD, YTD radios (no MTD) with R30 checked; the top switch reads R30, a divider, QTD, YTD, each pill with its dates; the rankings component and every trend card hold labels for R30, QTD, YTD; no script (`org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round8/checks/rn-1.AC1.py`)
+- **AC2** -- every rank and trend panel states its period, first and last date and trading days; a clipped YTD reads 'Data available since <date>' and never 'Year to date'; R30 reads 'Last 30 trading days' (`org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round8/checks/rn-1.AC2.py`)
+- **AC3** -- a period under 5 trading days (QTD on a 10-01 as-of) marks every one of its switch labels short and states its length; R30 and YTD are not marked (`org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round8/checks/rn-1.AC3.py`)
 - **J1** (JUDGMENT, graded by 3.0.0_SA_CVO~RV at L9 on the served page) -- the served page after the deploy opens on the last 30 trading days, the switch inside both components moves them together, and no window is mislabelled; positive control: the served 2026-10-02 page (YTD default; IDVZ 'Year to date (2026), 2026-08-21 to 2026-10-01')
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="RIV-rn-1"><invocation>python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round8/checks/rn-1.AC1.py</invocation><expect>AC1 RESULT: PASS 0 failures</expect></criterion>
   <criterion id="AC2" cell_refs="RIV-rn-1"><invocation>python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round8/checks/rn-1.AC2.py</invocation><expect>AC2 RESULT: PASS 0 failures</expect></criterion>
+  <criterion id="AC3" cell_refs="RIV-rn-1"><invocation>python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round8/checks/rn-1.AC3.py</invocation><expect>AC3 RESULT: PASS 0 failures</expect></criterion>
   <criterion id="J1" cell_refs="RIV-rn-1" judgment="true"/>
 </proof_of_spec>
 
@@ -87,9 +97,11 @@ Write the instance at `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ET
 
 **ISSUER NOTES (L5/L6, 2.0.0_SA_COO~RV):** Andrew-direct smoke @1c31a5f6ce (S2, S3, S7, S8) under "yes, build round 8 tonight" @0a4321b843, PRD v0.14 @4cc8e40575; decomposition round 8 WORKSTREAM B section; measured inputs WORKSTREAM_B_INPUTS.md @7cc969288b. Chain `~2`, slot `~2`, position 3 of 3. Checks dry-run at base base CLOUD 7cc969288b (the package equals the deployed pin 75ad1e4d2e): rn-1.AC1 FAIL (3; control OK), rn-1.AC2 FAIL (3; control OK) as expected. Bounds: no merge before the 2026-10-05 07:00 ET vehicle pull; no deploy before the 13:30Z grades.
 
+**AMENDMENT 1 (2026-10-05 ~03:2xZ, issuer):** to PRD v0.15 @e99a733d4c (CTO~Z msg 29405 asked for it before the drain) and Andrew-direct @a36e70f335; criteria AC1/AC2 re-pointed, AC3 added (3 mechanical). Checks dry-run: CLOUD FAIL 3/3/1, the first rn-1 build FAIL 3/1/1, controls OK. Graded by: to-pipeline-gate on a modified order reads only GATE (viii) <placeholders> (NONE).
+
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>8</round>
 <workstream>B</workstream>
 <slot>~2</slot>

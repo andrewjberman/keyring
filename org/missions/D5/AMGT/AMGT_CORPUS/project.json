@@ -9,7 +9,7 @@
   "dep_stage": "EXECUTING",
   "created": "2026-09-22",
   "registered_under_tree": "2026-09-22",
-  "last_updated": "2026-10-04T23:55:00Z",
+  "last_updated": "2026-10-05T15:00:00Z",
   "pods": [
     "1.0.0",
     "2.0.0",
@@ -73,8 +73,8 @@
     "THE BACKLOG POPULATION IS HIS, SEPARATELY. Andrew-direct ~18:3xZ, VERBATIM: 'all of the Research folders in the Opal Sharepoint Shared Asset Management/Research/ subfolder will be the basis for our backfill and initial pool.' Record ANDREW_DIRECT_20260922_183xZ_RESEARCH_FOLDERS_ARE_THE_BACKFILL_BASIS_AND_INITIAL_POOL.md. The folder list is a MEASURED DENOMINATOR (93 at the 2026-09-22 scan), never a transcribed list, and an unresolved folder is printed, never dropped.",
     "SENDING BLOOMBERG MODEL-BLOCK FIGURES TO THE CLAUDE API IS ALLOWED (same record, '3.) That is allowed.') -- this closes the CRO's card 1 for both this project and the addendum."
   ],
-  "phase": "L8 PACKET AT THE CVO (round 36, 2.0.0_SA_COO~X, 2026-10-04 ~23:5xZ; closed tonight with al-4 CARRIED per CTO msg 29322): al-1 drained @98a93db70b; al-2 drained @66edd940a7, portal 75efe9d6 ON DEV (CI green); al-3 drained @288de3d95d; al-5 redeploy ledger amgt-corpus-r36-al5 CLOSED @e2790c8b2b. Packet deliverables/2.0.0_SA_COO~X/ROUND36_DRAIN_END_PACKET.md.",
-  "blocking": "None at the issuer. L8/L9 with 3.0.0_SA_CVO~Z (al-2 AC3 and al-3 AC2 judgments). al-4 carried: the issuer reads the 2026-10-05 13:00Z fire on pin 74e00624b0. Round-37 candidates in the packet s.4.",
+  "phase": "ROUND 37 CLOSED (1.0.0_SA_CTO~Z analysis @b12904724c; FWD-20 open on its currency page limb); ROUND 38 ISSUED (2.0.0_SA_COO~X, 2026-10-05 ~15:0xZ): CRPS-an-1 counts and ratios carry no currency (~1) -> an-2 re-derive 96 + re-pin (issuer pair) -> an-6 currency page read; an-4 walker closes the timeline day (~2); an-3 the 10-06 13:00Z fire read; an-5 today's recovery run on MSTR~Z's line. Decomposition v38.0.",
+  "blocking": "None at L6. an-5 waits on MSTR~Z's line (OPAL_BBGTML re-run OK first, after COO~RV's Bloomberg probe). an-2 needs the CTO never-widen half and lands after an-3 + an-5. an-6 needs a walker slot.",
   "threads": [],
   "thread_counter": 0
 }

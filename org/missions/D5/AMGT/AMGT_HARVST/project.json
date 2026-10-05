@@ -9,7 +9,7 @@
   "dep_stage": "EXECUTING",
   "created": "2026-09-22",
   "registered_under_tree": "2026-09-22",
-  "last_updated": "2026-09-29T07:05:00Z",
+  "last_updated": "2026-10-05T06:15:00Z",
   "pods": [
     "1.0.0",
     "2.0.0",
@@ -170,8 +170,8 @@
   "leads": [
     "REGISTERED 2026-09-22 under D5/AMGT. Andrew-direct at the 1.0.0_SA_CTO~Z terminal, VERBATIM: 'I think this project needs to be run on the side of AMGT_RESAPP. I would make a new project for this called AMGT_HARVST. Then I would have COO~Y drive it to completion.' Record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260922_144xZ_AMGT_HARVST_NEW_PROJECT_COO_Y_DRIVES.md."
   ],
-  "phase": "ROUND 44 CLOSED 2026-10-04 (CTO analysis ledger/ROUND_ANALYSIS.round44.md, on CVO~Z ADJUDICATION_v56 @876c7d30e1): FWD-5 REALIZED; board 6 REALIZED / 2 open without collection (FWD-2, FWD-12) / 9 need collection (FWD-7 moved there). Round 45 = FWD-2 silver field repair (pair), FWD-12(c) sa cap past 25 (LOCAL), Z-S82 served clip at STORE_START (pair); ONE issuance by 2.0.0_SA_COO~H.",
-  "blocking": "Collection held on Andrew's word ('We will discuss internally on how to proceed with further data collection after review', 2026-10-03 ~17:3xZ): 9 of 17 outcomes need it. Not blocked for round 45 (no collection).",
+  "phase": "ROUND 46 CLOSED 2026-10-05 (CTO analysis ledger/ROUND_ANALYSIS.round46.md, on CVO~Z ADJUDICATION_v58 @66e10523bb): FWD-17 re-confirmed REALIZED (699 = 233 x 3); board 8 REALIZED / 0 open without collection / 9 waiting on THE run. THE collection run (as-1b) continues across the boundary under COO @30ed1c8b83 + CTO @138b152f2a; ft held on Andrew's word. Round 47 = the batched listing upload (Z-S86, landed via stop + resume from own checkpoint) and the per-leg report.",
+  "blocking": "Not blocked. The 9 open outcomes wait on THE collection run, in flight since 2026-10-05 01:44:37Z; ft is held on Andrew's word ('Dont attempt FT until I return').",
   "threads": [],
   "thread_counter": 0,
   "scheduled_checks": [

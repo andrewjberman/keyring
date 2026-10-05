@@ -3253,6 +3253,294 @@
     "spec_asserts": "PRD v0.8: IDVZ and PFOE join the Bloomberg leg's daily queue and its history backfill; ACWI and IWM are the groups' index controls; before the first scheduled fire with the four new names the issuer measures the leg's request cost, and a measured breach STOPs and is rowed. Andrew-direct ~20:3xZ 2026-10-03 card 6: resume I-2 (D12, D13).",
     "world_is": "Measured breach: the controls alone are about 2x the leg's per-query cap, and the overflow is fatal to the whole leg, not to the two names. The gate is also all-or-nothing, so the cheap half (IDVZ/PFOE, 69 rows/day) cannot go live without the heavy half. Not yet measured: the downstream cost of ~4,200 more lines per day through silver, G1, A1 and the page (1.89 of 2.10 MB today), and the G4 market pull if the controls' ~4,000 constituents join it (the plan holds 601 securities). I-2 STOPS at the gate: no flip, no backfill, until a round-8 cell lands.",
     "notes": "Remedy (round-8 cell lg-1, collector_bloomberg.py + universe.py): query an index control on its own per date with a cap sized from this measurement (and a range read that never truncates silently), make an overflow a per-name partial rather than a leg crash, and split the gate so D12 (home funds) and D13 (controls) switch independently; then the issuer's backfill acts run under their pairs. Hazard ARMED because anyone flipping the gate today breaks the existing daily leg; it disarms when lg-1 deploys. A YTD backfill of the controls is ~800k rows at ~15 s per date: its Bloomberg budget threshold is not defined in integrations/bloomberg/READ_HERE.md (only the 2-attempt sign-in budget is), so the cell's pair names one."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S21",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-05T06:45Z",
+    "one_line": "lg-1's control path fails on the real Bloomberg Excel: reading sh.Range('A1:Z%d' % CONTROL_ROW_CAP).Value (10,000 rows) raised pywintypes.com_error -2147352566 on the first D13 backfill chunk (2026-01-02..01-30, ACWI+IWM), and the error escaped _handler_entry as a traceback -- the fake-COM check (lg-1.AC1) cannot see either.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/tmp/bbg_backfill_d13_stepA.log (first run, 06:37Z): traceback at collector_bloomberg.py:444 `vals = com(lambda: sh.Range(\"A1:Z%d\" % cap).Value)` -> pywintypes.com_error (-2147352567, 'Exception occurred.', (0, None, None, None, 0, -2147352566)); worktree C:/tmp/wk-riv-r8-4 @481d101ab1; local sink, nothing written to S3",
+        "scratch copy with the read bounded to the used rows (`A1:Z%d % max(used, 1)`): 2026-01-02 ACWI 2,283 + IWM 1,957 rows, status OK (same Terminal, same session)",
+        "row ETFS_RIVALS-Z-S20 evidence: the 10-03 measurement read A1:Z20000 for one date without error, so the over-sized read is the likely, not the proven, cause"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-lg-1 (decomposition round 8 A): an index_control fund is queried on its own under a cap >= 2,500 and < 50,000; the range read never truncates silently; an overflow is a per-name partial, never a leg crash.",
+    "world_is": "Against real Excel the control read fails and crashes the backfill run. Daily runs are not exposed while D13 is off (rivals still read A1:Z2000 as at the deployed pin). Remedy: read only the used rows and turn a COM error on one unit into that unit's `unfetched` partial; add both to lg-1.AC1's fake (a read past UsedRange raises; a planted COM error is a partial).",
+    "notes": "Found by the issuer's D13 Step A (local-only pull, CTO~Z budget ruling msg 29445). The interim fix runs from a scratch copy for the local pull only; the repo change goes through an lg-1 amendment before the merge. Shared append-only file: committed on the shared index."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S22",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-05T06:55Z",
+    "one_line": "Refines ETFS_RIVALS-Z-S21: the cause is NOT the oversized range -- a bounded read of IWM 2026-01-16 (1,958 used rows) raises the same com_error -2147352566 through Range.Value, while Range.Value2 reads all 1,953+2,280 rows; Value2 returns dates as Excel serial numbers, so the capture then fails analyze() as DATE-MISMATCH.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/tmp/bbg_backfill_d13_stepA.log (06:40Z, scratch copy with a used-rows read + a per-unit catch): chunk 2026-01-02..01-30 PARTIAL, 20 of 20 dates OK except IWM 2026-01-16: \"range read failed on 2026-01-16 (1958 rows): (-2147352567, 'Exception occurred.', (0, None, None, None, 0, -2147352566), None)\"; the per-unit catch turned it into a named partial and the run stopped by its budget rule",
+        "probe 2026-01-16 with Range(...).Value2: ACWI 2,280 + IWM 1,953 rows read, sidecar status DATE-MISMATCH, claimed_report_date None (date cells arrive as serial numbers)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-lg-1: the range read never truncates silently; an overflow or a read failure is a per-name partial, never a leg crash.",
+    "world_is": "Range.Value converts some cell of the IWM 2026-01-16 holdings and overflows (DISP_E_OVERFLOW-shaped); Value2 does not convert, so it reads, but the date columns need converting from Excel serials. Remedy for lg-1: read Value2; convert the header's date columns (DATES, REPORT_DATE, and id().DATE as canon_header maps it) from Excel serial (1899-12-30 epoch) to ISO; keep the per-unit com_error -> unfetched partial. Supersedes Z-S21's cause line; Z-S21's hazard and remedy owner stand.",
+    "notes": "Daily rival reads at the deployed pin use Range.Value too; a similar cell could reach them, so the Value2 read applies to every unit, not only controls. disarm_owner 2.0.0_SA_COO~RV."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S23",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-05T07:05Z",
+    "one_line": "lg-1's per-unit merge keeps only the FIRST part's header, but Bloomberg returns each BQL query's columns in its own order: for 2026-01-16 ACWI's id().DATE is column 7 and IWM's is column 1, so every IWM row read as off the requested date (4 of the first 20 backfill days DATE-MISMATCH).",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/tmp/bbg_backfill_d13_stepA.log (06:55Z, lg-1 amend-2 build 5bb37fb4e0, local sink): chunk 2026-01-02..01-30 PARTIAL, 16 of 20 OK; 2026-01-16/20/27/28 DATE-MISMATCH with rows_off_requested_date = IWM's row count (1,953/1,949/1,947/1,947) and claimed_report_date correct for both funds",
+        "capture 2026-01-16: header ['ID','id().SOURCE','id().POSITION',...,'id().DATE','id().REPORT_DATE','id().ORIG_IDS',...]; ACWI row [...,'2026-01-16'(col 7),'2026-01-16'(col 8),'ACWI US Equity',...]; IWM row ['NFBK US Equity','2026-01-16'(col 1),'ETF',958650.0,...]: same width (16), different column order"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-lg-1: an index_control is queried on its own per date and its rows merge into the date's one capture.",
+    "world_is": "Each part carries its own header; the merge must map every part's rows onto the first header by column NAME (a column absent from a part reads None; one absent from the first header is appended), never by position. Daily runs are not exposed while D13 is off (one rival query, one header). Remedy: lg-1 amendment 3; AC1 arm (f) pins it.",
+    "notes": "Found by the issuer's D13 Step A re-run (local only, nothing on S3: 0 backfill-d13 markers listed). disarm_owner 2.0.0_SA_COO~RV."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S24",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-05T07:10Z",
+    "one_line": "The issuer's overnight Bloomberg backfill pulls exhausted the Terminal's BQL DAILY CAPACITY: at 07:06Z every query returned '#N/A Review: Error: #N/A Daily Capacity, request is blocked.' -- the 07:00 ET vehicle's rivalfunds Bloomberg leg (BQL holdings) may be blocked today, and any other BQL consumer on this Terminal with it.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/tmp/bbg_backfill_d13_stepA.log (07:06:37-07:06:50Z): 20 of 20 dates BAD-ANCHOR, anchor '#N/A Review: Error: #N/A Daily Capacity, request is blocked.', 0 rows; local sink, nothing on S3 (0 backfill-d13 markers listed)",
+        "the pulls before it (all local sinks, Andrew-direct @a36e70f335 / CTO~Z budget msg 29445): D12 IDVZ+PFOE 189 dates (12,820 rows, 05:3x-05:44Z); D13 ACWI+IWM first chunks 06:37Z (crash), 06:40Z (76,859 rows), 06:55Z (84,655 rows) plus single-date probes",
+        "bloomberg_health at 07:1xZ: ok (the DAPI/refdata session is up; the block is the BQL capacity, not the sign-in)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CTO~Z ruling msg 29445: the D13 backfill runs inside the PRD's Bloomberg-budget clause, its cost measured before the first fire. Andrew-direct: the daily jobs pull only the new day.",
+    "world_is": "A row budget (1M) was ruled, but the Terminal's own BQL daily capacity -- not documented in integrations/bloomberg/READ_HERE.md -- is lower: about 170k rows (plus probes) exhausted it. Not measured: when the capacity resets, and whether the 07:00 ET OPAL_BBGTML notebooks use BQL (they may use refdata, unaffected). Holds: no further Bloomberg request from this seat until the capacity reset is measured; the D13 Step A resumes only then, in smaller daily slices.",
+    "notes": "Escalated same turn to 1.0.0_SA_CTO~Z (overnight adjudicator) and 0.0.0_AB_MSTR~Z. The 07:00 ET vehicle log (%USERPROFILE%/opal_bbg_logs/bbg_tplus1_20261005_*.log) is the first read at 07:12 ET (the cron). disarm_owner 2.0.0_SA_COO~RV."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S25",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-05T12:45Z",
+    "one_line": "Widens ETFS_RIVALS-Z-S24: the capacity my overnight Bloomberg backfill pulls exhausted covers refdata HISTORY too, not only BQL -- today's OPAL_BBGTML models pull was blocked (rc 50, 'DAPI no data'), and the vehicle's enrichment step landed an ALL-EMPTY G4 for 2026-10-02 (601 rows, 0 prices, 0 GICS, 0 names) as the newest revision.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "0.0.0_AB_MSTR~Z msg 29540 (P0 probe 12:41Z, cma interpreter): refdata session OK; SPX and .ST HistoricalDataRequest: 0 rows, responseError -4001 LIMIT DAILY_CAPACITY_REACHED 'Daily capacity reached.'",
+        "%USERPROFILE%/opal_bbg_logs/bbg_tplus1_20261005_083246.log: 'DAPI: DOWN (openService OK but no data ...) PRECONDITION: FAILED ... PULL NOT ATTEMPTED'; OPAL_BBGTML_daily_pull LastTaskResult 50; site Z in Modern Standby 09:14Z-12:32Z (MSTR~Z, System log 506/507)",
+        "s3://opal-data-etfs/rivalfunds/etfs/gold/security_market/date=2026-10-02/market-20261005T123318Z-c86a8d9e27fa.parquet: 601 rows, px_close / gics_sector / security_name 0 non-null; beside market-20261004T110545Z-ea632b9bca87.parquet (good, 46,943 B)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The 07:00 ET vehicle refreshes the OPAL_BBGTML models and the rivalfunds G4 daily; a backfill never starves production.",
+    "world_is": "Production is starved by an issuer act: the models dashboard has no 10-02 vintage today, and the G4 reader picks an empty revision. Also: enrichment_bloomberg wrote an empty G4 as a successful landing (status OK, 601 security_errors) -- a producer-side gap (an all-error pull should not land as the newest revision). Remedies: (1) MSTR~Z re-runs scheduled_daily_pull.cmd when the capacity returns (the probe's first OK); (2) the G4 shadow -- card to CTO~Z msg 29538 (re-put the 10-04 bytes as a newer key) or a republish after a fresh enrichment; (3) a later cell: enrichment refuses to land an all-error G4.",
+    "notes": "The issuer's own act caused this: ~170k rows of local backfill pulls between 05:30Z and 07:06Z on the Terminal production depends on. disarm_owner 2.0.0_SA_COO~RV."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W4-S18",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~4",
+    "surfaced_at": "2026-10-04T21:45Z",
+    "one_line": "RIV-lg-1: a day whose ONLY fund is an overflowing control lands no OK capture, so the leg reads FAILED/exit 3, not PARTIAL/exit 2",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/collector_bloomberg.py@f8124d0969: _merge_parts yields rows=[] for a date whose only unit overflowed; land_capture analyzes it as NO-ROWS; _finish reports FAILED when n_ok == 0, and exit_code maps FAILED to 3",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round8/checks/lg-1.AC1.py (c) covers the overflow only BESIDE landed rivals (PARTIAL)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Task order RIV-lg-1 section 2: an overflow on one name is exit 2, never a traceback.",
+    "world_is": "Never a traceback, and beside any landed fund it is PARTIAL / exit 2. When the plan for the day holds only the overflowing control (a controls-only backfill date), no capture is OK, so the batch is FAILED and the exit is 3 (nothing landed as OK), with the fund named in detail.failures. _finish and exit_code are outside this order's paths in intent (status semantics for every leg); not changed."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W5-S33",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~5",
+    "surfaced_at": "2026-10-04T23:11:00Z",
+    "one_line": "RIV-gc-1 changes what the grader accepts (an uncited fact is attached), so I bumped GRADER_VERSION grounding_check/5 -> /6, which the order did not say; a re-grade of the 2026-10-02 run now writes run id <run>-rg6, and test_r6r6_quoted_name's version assertion moved to /6.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/ai_accounts.py (branch wk-ETFS_RIVALS-5): GRADER_VERSION; regrade_rows builds new_id from it",
+        "data/etfs/scripts/rivalfunds/tests/test_r6r6_quoted_name.py: assert ai.GRADER_VERSION == grounding_check/6",
+        "package suite from data/etfs/scripts: 605 passed 2 skipped 0 failed"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-gc-1 interface: attach_uncited, run_chain and regrade_rows call it; no version bump named. The order lists test_r6r6_quoted_name.py among its paths.",
+    "world_is": "A grade produced with the attach step is a different grade rule from /5; the record (manifest grader field, re-grade run suffix) should say so. PROMPT_VERSION left at a1-chain/5: the prompt text is unchanged. If the issuer would rather keep /5, revert one constant and one test line."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W7-S1",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~7",
+    "surfaced_at": "2026-10-04T23:13:00Z",
+    "one_line": "round8/checks/bt-1.AC1.py (b) expects QTD at day 2026-10-02 to start 2026-07-01 and to hold the 2026-09-10 trade, but 2026-10-02 is in Q4: the calendar quarter starts 2026-10-01, so QTD = MTD, which is the rule gold_holding_contribution.period_start and WORKSTREAM_B_INPUTS.md:27 both state; AC1 cannot pass without a QTD that disagrees with them.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round8/checks/bt-1.AC1.py:12,65: BBB add ending 2026-09-10 is 'YTD, QTD, R30' and want QTD = ({BBB, CCC}, ['2026-07-01']) at DAY 2026-10-02, while the same want gives MTD start 2026-10-01",
+        "data/etfs/scripts/rivalfunds/gold_holding_contribution.py:119-120@c222ecc8fa: QTD start = dt.date(year, 3*((month-1)//3)+1, 1) = 2026-10-01 for 2026-10-02",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round8/WORKSTREAM_B_INPUTS.md:27: 'The as-of 2026-10-01 is the first day of October and Q4, so MTD = QTD = one day for every fund'",
+        "run at this worktree: python bt-1.AC1.py -> got QTD ({CCC}, ['2026-10-01']) want ({BBB, CCC}, ['2026-07-01']); (a) and (c) PASS, (b) FAILS on QTD only (R30 and MTD match)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "bt-1.AC1.py docstring: QTD {BBB, CCC} with window_start 2026-07-01 at day 2026-10-02; the order says MTD/QTD/YTD start on the period's first trading day.",
+    "world_is": "The build writes QTD from the calendar quarter's first trading day (2026-10-01 at that day), the same quarter hc-1 and the page's 'Q4 2026' label use, so QTD holds CCC only; the check's expectation needs a quarter that began 2026-07-01. The worker kept the calendar quarter (a trailing-quarter QTD would disagree with hc-1's QTD and rn-1's label) and pinned the calendar rule in tests/test_r8bt1_periods.py with a mid-quarter day (2026-08-14), where the producer's R30, MTD, QTD and YTD blocks all verify.",
+    "notes": "Remedy owner is the issuer: move the fixture day into Q3 (any day 2026-07-01..09-30 with the 09-10 trade in QTD) or drop the 09-10 trade from QTD in the expectation. disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. rn-1.AC2 START QTD 2026-07-01 may carry the same day assumption; not read by this worker."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W2-S13",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~2",
+    "surfaced_at": "2026-10-04T21:46:32Z",
+    "one_line": "RIV-rw-1 AC2 (collapse noted 0-trade windows) makes test_no_shares_moved_g82.py::test_the_window_names_how_many_lines_it_did_not_show fail: it asserts a per-window '(0 trades)' heading for a no_move window, and that file is outside rw-1's <paths>.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/tests/test_no_shares_moved_g82.py:21@746eaad457 asserts 'data-no-move=\"1\"' in html and '(0 trades)' in html for a single 0-trade window carrying no_move=1; AC2 (rw-1.AC2.py) requires that window to collapse into a data-empty-run line with no 'Window ...' heading",
+        "data/etfs/scripts/rivalfunds/render.py (this branch): _empty_window no longer excludes no_move/cash_equiv windows; _window_notes keeps both notes inside the run with the data-no-move / data-cash-equiv attributes, so test_g83_cash_equiv_trades.py still passes; full suite run from data/etfs/scripts: 597 passed, 2 skipped, 1 failed (this test)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-rw-1 order: run the whole package suite before reporting, it must read 0 failed; AC2: consecutive noted 0-trade windows collapse into one line with notes inside, no per-window heading.",
+    "world_is": "The two are contradictory on the one line '(0 trades)': the old test pins the pre-AC2 heading. The assertion that the no_move count is carried on the page still holds (data-no-move=\"1\" is inside the run); only the '(0 trades)' heading half is superseded by AC2. Not edited: the file is outside <paths>.",
+    "notes": "Issuer's call: widen rw-1 <paths> to test_no_shares_moved_g82.py (replace '(0 trades)' with 'data-empty-run=\"1\"'), or amend it at the drain. Nothing else in the package suite is affected."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S26",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-05T13:27Z",
+    "one_line": "gold_holding_contribution reads G4 total_return_index as an INDEX LEVEL (ratio of two days), but enrichment_bloomberg fills it from DAY_TO_DAY_TOT_RETURN_GROSS_DVDS, a DAILY PERCENT RETURN -- the first day two adjacent G4 dates both carry it (10-01, 10-02) every such holding returns ~-4,800% and 7 of 13 funds are refused in all 4 windows on the served 10-05 page.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "served platinum/page/date=2026-10-05/manifest.json (13:07:41Z) and the 07:04 build: a1_produced.holding_contribution.detail.refused = 28 keys, BASG ETFT GQGU PCLG PFOE TSEL WCMG x MTD QTD R30 YTD, all total_below_minus_100pct; the 10-01 and 10-02 page manifests: refused 0",
+        "local rebuild at CLOUD ac1b42fcdb from the S3 inputs (nothing written): TSEL R30 security total -3.248; MSFT_US_Equity contribution PCLG -4.43, GQGU -3.98, TSEL -2.94, BASG -2.89, ETFT -1.26, price_source mixed; G4 MSFT total_return_index 10-01 -0.01949698, 10-02 0.9223869, px_close 512.80 -> 517.53 = +0.922% (the field IS the day's percent return)",
+        "enrichment_bloomberg.py:115 ('DAY_TO_DAY_TOT_RETURN_GROSS_DVDS', 'total_return_index', 'num'); gold_holding_contribution.py:348-349 r = b[1] / a[1] - 1.0 (source g4_tri); etf_positioning_gold.py:856 compounds the same field as a daily percent return"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "g4_tri is a G4 total-return-index ratio across the day (gold_holding_contribution docstring, CRO~RV CALL 1 condition 1).",
+    "world_is": "The G4 column named total_return_index holds the day's percent total return, so the ratio is meaningless; it stayed latent while no security had G4 on two adjacent trading days. Remedy (issuer's, inside the decomposition): a round-8 cell -- g4_tri becomes r(s,d) = total_return_index(s,d) / 100 on day d alone, the column's meaning stated in both producers' docs; rides the round-8 deploy under its pair.",
+    "notes": "Latent since G4 began (09-29); not caused by the G4 restore (the 07:04 build, before it, shows the same 28). disarm_owner 2.0.0_SA_COO~RV."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S27",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-05T14:24Z",
+    "one_line": "lg-1 amendment 1 (issuer's) changed SCHY's role in peer_groups.json under the SAME map_version 1, so G0 refuses every date that already holds map-1 and the served page keeps reading SCHY as a benchmark after the round-8 deploy.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "pinned dry run (C:/tmp/rv-r8 @2ab816a408, local mirror of rivalfunds/etfs/ synced 14:1xZ): publish_page 2026-10-05 renders 'Benchmarks (SCHY)' and 'SCHY is a benchmark: it is measured, never analysed'; it reads G0 date=2026-10-05/map-1.parquet (publish_page._load_g0, greatest map_version at the latest date <= day)",
+        "gold_peer_group_map.handler_entry 2026-10-05 on the mirror: FAILED 'map bytes changed under map_version 1: bump map_version; .../map-1.parquet is never overwritten' (gold_peer_group_map.py:100-106, sha256 of the raw map bytes)",
+        "peer_groups.json at the pin: SCHY role rival, 16 of 16 entries map_version 1"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A mapping change carries a map_version bump (gold_peer_group_map docstring); lg-1 AC2: SCHY is a rival in every gate state.",
+    "world_is": "The role change landed with no bump, so on a day with a built map the page keeps the old roles; AC2 graded universe.entries(), not the served G0 the page reads. Remedy (issuer, at the drain): map_version 1 -> 2 on all 16 entries + test_g01 reads the version from the map; the deploy's real run rebuilds G0 (only:[build-peer-group-map]) before the republish.",
+    "notes": "Caused by the issuer's own lg-1 amendment 1. The G0 refusal keys on the raw file sha, so a later gate flip (D12/D13) does not trip it, but a date's G0 rows keep the gate state of their first build. disarm_owner 2.0.0_SA_COO~RV."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S28",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-05T15:50Z",
+    "one_line": "DISARMS ETFS_RIVALS-Z-S26 and ETFS_RIVALS-Z-S27 (disarm_owner 2.0.0_SA_COO~RV): both fixes are live on the served 2026-10-05 page after the round-8 deploy (ledger etfs-rivalfunds-round8 CLOSED, 6 of 6 legs).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Z-S26: served platinum/page/date=2026-10-05 batch rv-publish-1005r8b (15:33:50Z, code b166e04416) reads holding_contribution-20261005T144508Z-b8d441e1966c.parquet built by the hc-1 A1 code: refused 0 (was 28), missing 46 (was 790)",
+        "Z-S27: G0 gold/peer_group_map/date=2026-10-05/map-2.parquet written 14:43:32Z (map_version 2); the same served page reads it: 'Benchmarks (SCHY)' 0, 'SCHY is a benchmark' 0",
+        "ledger org/critical_paths/change_management/20261005T1437Z_etfs-rivalfunds-round8_deploy_completion.md; pair COO @4f46d120d9 + addendum @f5813d499c, CTO @74e2071bec + @3484081815"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "An ARMED hazard disarms via its disarm_owner, recorded as a new row citing the old ids (rows are never edited in place).",
+    "world_is": "Both hazards are removed from the served page and from every future publish at the deployed code; Z-S26 and Z-S27 stand unedited as the record of what was found.",
+    "notes": "Cites ETFS_RIVALS-Z-S26 and ETFS_RIVALS-Z-S27. An in-place ARMED -> INERT edit at 15:4xZ was uncommitted, broke the shared-tree corpus pass for other seats' drains (2.0.0_SA_COO~O msg 29656), and was reverted to HEAD before this row."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S29",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-05T16:25Z",
+    "one_line": "D12 Step B is NOT purely additive at G5: the import batch's served chain rebuilds the trade schedule for all 189 report dates with today's code, and every other fund's G5 changes (old live G5 was built with older code) -- a STOP under CTO~Z's Step B condition (msg 29594).",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "mirror dry run C:/tmp/r8measure/ov_stepb at pin 68329a011c (RIVALFUNDS_LEG_D12=1): import -> silver -> sweep.run_gold_chain: G1 189 dates (0 other-fund deltas), coverage OK, enrichment gate admits, build_trade_schedule OK, 189 G5 objects; IDVZ 272 + PFOE 95 trade rows",
+        "G5 other funds vs the live newest object per date (non-IDVZ/PFOE): confidence differs on 176 dates (e.g. UNRESOLVED -> CLEAN), action on 99 (e.g. trim -> exit), est_price/est_notional on 99, discretionary_shares on 43, income_funded on 10, row count on 3; columns est_price_source and key_resolution new on 183; revision references on 186",
+        "gold_trade_schedule.py:95-101: hold_funds leaves a held fund OUT of the new G5 object, so holding the other funds would drop them from the newest object, not keep their prior rows"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Andrew-direct @33ff3bdac0/@4bd948e824: one purely additive IDVZ/PFOE backfill; CTO~Z msg 29594: any non-IDVZ/PFOE fund delta is a STOP.",
+    "world_is": "G1 is purely additive (189/189 dates) but the chain's G5 rebuild is not: it re-derives every fund's trades on 189 dates with current code. The served Jan-Sep G5 of the other funds was built with older code, so it would change. Options for the CTO: (A) accept a G5 replay of all funds as part of Step B (wider than the word); (B) a round-9 cell: the trade schedule rebuilds only named funds and carries every other fund's rows from the prior object unchanged, then Step B runs; (C) defer Step B.",
+    "notes": "Nothing served moved: every write was to the local mirror. Step B is held. disarm_owner not needed (INERT)."
   }
 ]
 ```

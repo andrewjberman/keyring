@@ -93,6 +93,16 @@
     }
    }
   },
+  "disarms": {
+   "type": "array",
+   "minItems": 1,
+   "uniqueItems": true,
+   "items": {
+    "type": "string",
+    "pattern": "^[A-Z0-9_]+-(Z-)?(W[0-9]+-|C-)?S[0-9]+$"
+   },
+   "description": "OPTIONAL. Row ids (investigation or adjudication rows of THIS project) this row's disarm clock also disarms: when `disarm.state` is DISARMED, a reader treats every id listed here as DISARMED, as well as this row's own id. WHY (2026-10-05, 1.0.0_SA_CTO~Z on 3.0.0_SA_CVO~Z msg 29407): the channel is append-only, so a remediation row written INERT with no `disarm` block (AMGT_RESAPP-Z-S11) can never be disarmed in place -- adding the block is a mutation the row gate refuses. The disarm lands by a NEW row with its own id that cites the item here. The row gate refuses an id no investigation or adjudication row of the project carries. A row carrying `disarms` carries the `disarm` block (allOf below)."
+  },
   "remediation": {
    "type": "object",
    "required": [
@@ -228,6 +238,19 @@
     },
     "required": [
      "hazard_standing"
+    ]
+   },
+   "then": {
+    "required": [
+     "disarm"
+    ]
+   }
+  },
+  {
+   "comment": "A row carrying `disarms` carries the `disarm` block: `disarms` takes effect only when `disarm.state` is DISARMED, and the block cannot be added in place later.",
+   "if": {
+    "required": [
+     "disarms"
     ]
    },
    "then": {

@@ -181,7 +181,8 @@ def main():
     # ITEMS vs THE CVO'S ROWS (2026-09-04, 3.0.0_SA_CVO 94010, the census's second instrument): an ADJUDICATION document's
     # rows are ABOUT items (annex 4a) and are not items -- spine v3 L10 counts worker rows only, and counting the CVO's own
     # UNDER_INVESTIGATION row as an item would block the CVO's own slug. Their `adjudicates` applies below; their own ids
-    # seed nothing. ARMED is a hazard standing and is read over EVERY row, the CVO's included.
+    # seed no ITEM (they seed `adj_latest`, the ARMED read's carrier). ARMED is a hazard standing and is read over EVERY
+    # row, the CVO's included.
     inv_items = [r for r in inv if r.get("_doc") != "ADJUDICATION"]
     # LATEST CARRIER, not own row (2026-09-03, 1.0.0_SA_CTO as disarm_owner of NFRA_COMPEFFICACY-S10, 3.0.0_SA_CVO
     # 93340): the channel is append-only, so an item's disposition moves by a LATER row that names it in
@@ -210,6 +211,18 @@ def main():
             latest[rid] = r.get("disposition")
         elif rid and (r.get("disposition") in OPEN_DISPOSITIONS or not r.get("disposition")):
             latest[rid] = r.get("disposition")   # a second carrier that is open keeps the item open
+    # A CVO ROW IS MOVED BY A LATER CARRIER TOO (2026-10-05, 1.0.0_SA_CTO~Z on 3.0.0_SA_CVO~Z msg 29407): `_latest` was
+    # forced to an ADJUDICATION row's OWN disposition, so an ARMED CVO row (AMGT_RESAPP-Z-C-S412, Z-C-S413) could never
+    # leave ARMED, whatever later row named it in `adjudicates`. Its own disposition now seeds `adj_latest` and a later
+    # `adjudicates` moves it under the SAME rules as an item: path order (later wins), and an OPEN row never moves its
+    # target. Scope: ids carried ONLY by adjudication rows. An id an item document also carries (the declared
+    # NFRA_COMPEFFICACY-S34 pair) keeps the item resolution above, unchanged. Items and L10 counts are untouched:
+    # adjudication rows stay out of `openi`; only the ARMED read, which covers every row, sees the move.
+    adj_latest = {}
+    for r in adj:
+        rid = r.get("id")
+        if rid and rid not in item_docs and rid not in adj_latest:
+            adj_latest[rid] = r.get("disposition")
     ambiguous_adj = []
     for r in inv:
         for target in (r.get("adjudicates") or []):
@@ -221,13 +234,26 @@ def main():
                 # folds adjudications/ before investigations/, so an issuer's open row overwrote the CVO's disposition
                 # (3.0.0_SA_CVO~Z 28889: 40 of 3,886 CVO-terminal targets read open).
                 latest[target] = r.get("disposition")
+            elif target in adj_latest and r.get("disposition") not in ("UNDER_INVESTIGATION", None, ""):
+                adj_latest[target] = r.get("disposition")
     for r in rem:
         if r.get("id") in latest:
             latest[r["id"]] = "GRADUATED"
     for r in inv:
-        r["_latest"] = (r.get("disposition") if r.get("_doc") == "ADJUDICATION"
+        r["_latest"] = (adj_latest.get(r.get("id"), r.get("disposition")) if r.get("_doc") == "ADJUDICATION"
                         else latest.get(r.get("id"), r.get("disposition")))
-    disarmed_ids = {r.get("id") for r in rem if (r.get("disarm") or {}).get("state") == "DISARMED"}
+    # `disarms` (2026-10-05, remediation_row.schema.json): a remediation row is append-only, so a row written INERT with
+    # no disarm block (AMGT_RESAPP-Z-S11) could never be disarmed -- adding the block is an in-place edit the row gate
+    # refuses. A NEW remediation row whose disarm.state is DISARMED disarms its own id AND every id in its `disarms`.
+    # An id no channel row carries matches nothing here and is reported as a DEFECT below (the row gate refuses it).
+    disarmed_ids, unknown_disarms = set(), []
+    for r in rem:
+        cited = [t for t in (r.get("disarms") or []) if isinstance(t, str)]
+        unknown_disarms.extend((r, "disarms %s, an id no investigation or adjudication row carries -- matches nothing" % t)
+                               for t in cited if t not in docs_of)
+        if (r.get("disarm") or {}).get("state") == "DISARMED":
+            disarmed_ids.add(r.get("id"))
+            disarmed_ids.update(cited)
     openi = [r for r in inv_items if r.get("_latest") in OPEN_DISPOSITIONS]
     # ARMED means the hazard is still live: an open item, or a graduated one whose remediation row has not DISARMED it.
     armed = [r for r in inv if r.get("hazard_standing") == "ARMED"
@@ -240,6 +266,7 @@ def main():
                 dfx.append((r, "DUPLICATE ID across %d documents (%s) -- two allocators, one sequence; resolved toward OPEN"
                             % (len(docs), ", ".join(docs))))
     dfx.extend(ambiguous_adj)
+    dfx.extend(unknown_disarms)
 
     if a.json:
         print(json.dumps({"items": items, "open": openi, "armed": armed,

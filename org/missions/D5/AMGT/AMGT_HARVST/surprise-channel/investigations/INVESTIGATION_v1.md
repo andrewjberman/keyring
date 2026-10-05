@@ -6866,6 +6866,163 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "notes": "Expected to pass in a full checkout; not re-run there."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S85",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-05T00:30Z",
+      "one_line": "The FWD-2 field census (round44/aq-1.field_census.py, and its round-45 copy) picks a bronze_key's served silver row by run_stamp, and a tie keeps the FIRST-READ row; the silver reader (store.supersedes) breaks the tie by the later part. Every re-derived row repeats its original run_stamp, so the census graded rows the reader no longer serves.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Order HVST-ar-1 AC3: the same census over SERVED silver reads 0 lost; aq-1 read 'served silver'.",
+      "world_is": "Literal AC3 after the write: lost barrons 39, bbg 10, ft 8, sa 0, wsj 19, which is FAIL. With the selection set to store.supersedes: lost 0 on all five, which is PASS. Control on barrons key 00b99ce0 (three rows, equal run_stamp and fetched_at): the census picks part-20261002T074537Z (61 columns, the pre-round-37 row); the reader picks part-20261002T113110Z-r2 (74 columns). Round 44's aq-1 barrons figures were taken from the same stale pre-round-37 rows.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "deliverables/0.9.0_WK_AMGT_HARVST~93/ar-1.field_census.py:263 (str(run_stamp) > held run_stamp; strict, first-read wins a tie); lib/research/harvest/store.py supersedes()",
+          "round45/ar-1.AC3.issuer_grade.out (FAIL), ar-1.AC3.issuer_grade.reader_rule.out (PASS), ar-1.AC3.tie_control.out"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "notes": "Instrument only; the served data is right (the act's VERIFY uses store.supersedes). Any later reuse of the census uses round45/ar-1.field_census.reader_rule.py."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W94-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~94",
+      "surfaced_at": "2026-10-05T01:08:30Z",
+      "one_line": "HVST-as-1: 1 of the rank's 191 names has no Seeking Alpha symbol the sa publisher can search (2602335D_US_Equity, TPG Inc); sa would raise ContractUnavailable for it, so sa could not conclude a job for all 191 keys. Not dropped.",
+      "class": "BLOCKING",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Order HVST-as-1 item 4: a name lacking an identity a publisher needs to search is NOT dropped; list it per publisher and file ONE BLOCKING row; the issuer rules before the run.",
+      "world_is": "Per publisher need: sa needs sa_symbol (190 of 191 have one; MISSING: 2602335D_US_Equity | ticker '2602335D US Equity' | TPG Inc -- not a folder of the 89 file, not a US letter ticker, so rule R3 UNRESOLVED); ft, wsj, bbg, barrons search by company (191 of 191 present). Also for the ruling: 153 of the 190 sa_symbols are DERIVED by rule R2 (a US-listed Bloomberg ticker used as its own SA symbol, never probed against Seeking Alpha); 23 INFERRED + 14 MEASURED carried from the 89 file. Nine R2 values differ from the 89 file's symbol for the same issuer (an ADR vs ordinary listing): BNPQY (file BNPQF), BZLFY (BZLFF), HESAY (FHI), IBDRY (IBDSF), ICT (ICTEF), QXO (QXO.PR.B), RBGLD (RBGPF), RIO (RTPPF), UNVGY (UMGNF); the file's value was NOT applied because the pool names are not equal to the 89-file folders.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~94/rank_universe_identity_20260916.json (records[].sa_symbol.status)",
+          "python org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~94/build_rank_identity.py printed: coverage sa_symbol 190 of 191 {'INFERRED': 23, 'UNRESOLVED': 1, 'DERIVED': 153, 'MEASURED': 14}",
+          "lib/opal_data_harvest/publishers.py:577-580 seeking_alpha(): no sa_symbol -> ContractUnavailable"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "The issuer rules before the run: supply the sa symbol for TPG, or accept sa not covering 191 of 191, and rule whether the 153 DERIVED symbols need a probe before THE run."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W94-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~94",
+      "surfaced_at": "2026-10-05T01:20:01Z",
+      "one_line": "Issuer ruling on AMGT_HARVST-Z-W94-S1 applied: TPG Inc sa_symbol = TPG (status ISSUER, rule R2b); the nine divergent R2 symbols stand; the 153 unprobed DERIVED symbols are accepted. sa_symbol now 191 of 191.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Row Z-W94-S1 (BLOCKING, ARMED) asked the issuer to rule before the run on three items: the TPG sa_symbol gap, the 153 DERIVED symbols never probed, and nine R2 symbols differing from the 89 file.",
+      "world_is": "Ruling from 2.0.0_SA_COO~H: (1) 2602335D_US_Equity sa_symbol = TPG, status ISSUER (Nasdaq TPG; the Bloomberg ticker is a placeholder); build_rank_identity.py gained R2b + ISSUER_RULED and the identity JSON was regenerated. (2) BNPQY, BZLFY, HESAY, IBDRY, ICT, QXO, RBGLD, RIO, UNVGY STAND (pool keys are those US listings; 89-file values name other securities). (3) 153 DERIVED symbols ACCEPTED unprobed; the run is the probe (a wrong symbol shows as a job that does not conclude). Re-run: builder printed coverage sa_symbol 191 of 191 {'INFERRED': 23, 'ISSUER': 1, 'DERIVED': 153, 'MEASURED': 14}, identity JSON byte-identical on re-run; AC1 6 passed; AC2 RESULT: PASS with identity sa_symbol present 191 of 191.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~94/rank_universe_identity_20260916.json (records[].sa_symbol.status)",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~94/AC1.out",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~94/AC2.out",
+          "Z-W94-S1 in this file"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Records the ruling only; Z-W94-S1 is not edited. Its standing is the issuer's to disposition."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S86",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-05T05:20Z",
+      "one_line": "The round-46 collection run's sa leg is throughput-bound by its uploads: after one deep-listing job (AAPL, stored 37), the driver's upload-harvest has run 81+ min (pid 21252, 03:55Z onward, CPU rising), because listing pages upload in many small (source, run_stamp) groups and each silver_append re-reads the whole sa silver listing_hit prefix (row Z-S58's cost, multiplied by the 200-page sa cap). barrons waits behind sa in the same driver.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Round-46 COO half @30ed1c8b83 sized the sa leg by requests: 191 x 220 = 42,020 at most, about 9.7 days at 4,320/day, with most names stopping far earlier at the 2026-01-01 floor.",
+      "world_is": "At 05:16Z sa has concluded 4 of 191 after 3.5 h. The pending outbox (progress.sqlite3, read-only) holds 37 article objects and 149 listing pages, with 282 listing pages already uploaded. Upload time per job grows with the listing pages the job reached and with the prefix size, so it is not bounded by the request pacing the half sized. bbg and wsj upload in seconds (cap=1/4). Nothing is wrong with the data: all three drivers are alive and the upload process is making progress.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          ".runtime/harvest-backfill/r46_sa_barrons_run.out (last JOB 02:47Z AAPL stored=37, then the upload); pid 21252 upload-harvest --max-objects 237 (CPU 253 -> 405 s over 03:46-05:16Z)",
+          "lib/opal_data_harvest/uploads.py HarvestUploader listing path: one _silver_append_retrying_object_name per (source, run_stamp) group; store.silver_append reads silver_latest over the whole prefix per call"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "notes": "No act mid-round: the spec is frozen, and the CTO half's condition 2 holds pacing, caps and the floor unchanged. For the round-46 analysis: whether to accept a multi-day sa leg, give barrons its own driver root, or batch the listing uploads (one append per source per pass) as a cell."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W95-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~95",
+      "surfaced_at": "2026-10-05T06:25:32Z",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disposition": "UNDER_INVESTIGATION",
+      "one_line": "One batched listing append silently drops columns: pa.Table.from_pylist takes a table's columns from its FIRST row only, so pages whose first hit carries different optional columns lose them when batched.",
+      "spec_asserts": "Order build item 2: for the same pending pages the silver rows written (every column) are identical to the old path's; only the number and names of parquet objects differ.",
+      "world_is": "store.silver_append builds each fetch-date table with pa.Table.from_pylist(date_rows); measured: from_pylist([{'a':1},{'a':2,'b':3}]) has columns ['a'] and the 'b' value is gone, no error. Per page the old path used that page's first hit as the lead; one batch per source uses one row per date, so a later page's optional column (an SA hit attribute only some pages carry) would vanish, with record_hash unchanged (silver_append hashes the full row before the write). Added uploads._listing_key_rounds: pages ordered widest first row first; a page whose first-row keys are not inside its date's lead keys waits for a second round (a second append, never per page). Uniform pages (the 100-page control) are one round, 1 prefix read. An incomparable pair costs 2 rounds, plus one extra read when round 2 shares the batch object name and takes the wrapper's -r1 retry (test_no_column_the_per_page_path_kept_is_lost_across_pages: 2 to 3 reads against 4 per page). New rows carry every old column with equal values and equal record_hash; a late-round column absent on other rows reads null on them instead of an absent column.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/uploads.py _listing_key_rounds and HarvestUploader._run_listings (branch wk-AMGT_HARVST-95-r47a)",
+          "lib/research/harvest/store.py silver_append (pa.Table.from_pylist(date_rows))",
+          "lib/opal_data_harvest/test_at1_batched_listing_upload.py test_no_column_the_per_page_path_kept_is_lost_across_pages"
+        ]
+      },
+      "notes": "Not measured: how often live sa/bbg/ft/wsj/barrons listing pages differ in first-hit columns. The rounds guard makes the occurrence cost only an extra append."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W95-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~95",
+      "surfaced_at": "2026-10-05T06:25:32Z",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "disposition": "UNDER_INVESTIGATION",
+      "one_line": "The article path batched by HVST-ai-5 (HarvestUploader._run_articles, one append per source per pass) has the same first-row-columns exposure as Z-W95-S1 and carries no guard.",
+      "spec_asserts": "HVST-ai-5 / row Z-S58: only the object-name stamp is shared; every silver row is otherwise as the per-row path wrote it (test_ai5_batched_silver_append compares 6 uniform rows).",
+      "world_is": "_run_articles passes every article row of a source in one silver_append call; pa.Table.from_pylist takes a date table's columns from the first row only (see Z-W95-S1, measured). If article rows of one source and date carry different optional columns, those later columns are dropped without error. Not measured on live article rows: test_ai5 plants uniform rows. This order's paths exclude _run_articles, so it is untouched.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/uploads.py _run_articles lines about 310-360 (by_source, _land)",
+          "lib/research/harvest/store.py silver_append"
+        ]
+      },
+      "notes": "Disarm is the issuer's: a measurement of article-row column variance per source per date on already-written silver, or applying _listing_key_rounds-style ordering to articles in a later cell."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S87",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-05T07:58Z",
+      "one_line": "The backfill driver does not catch an upload timeout: sa's old-path upload-harvest (237 objects, started 03:55Z) hit the driver's 14,400 s job timeout, subprocess.TimeoutExpired escaped drive(), and the driver exited at 07:55:49Z with a traceback, no SUMMARY and no checkpoint status for the stop. 55 listing pages and 37 article objects were left pending in the outbox.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "backfill_driver: every job ends with a recorded status and a checkpoint write; an upload after every job that left something pending.",
+      "world_is": "r46_sa_barrons_run.err ends in TimeoutExpired raised from Collector.upload -> _spawn -> subprocess.run(timeout=JOB_TIMEOUT_SECONDS) at backfill_driver.py:204 and :312. The checkpoint holds 4 done pairs (the AAPL job is recorded as new_articles, stored 37). The pending outbox objects are intact and upload on the next job's upload, now on the batched path @23baacf0e1. Resumed 07:57:37Z from its own checkpoint (pid 37112; 187 sa pairs + 191 barrons planned), as the same run (CTO ruling 2).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          ".runtime/harvest-backfill/r46_sa_barrons_run.err (TimeoutExpired, 14400 s) and r46_sa_barrons_run.out (no SUMMARY line)",
+          "progress.sqlite3 read-only: harvest_listing_outbox pending 55, harvest_raw_outbox pending 37 at 07:56Z"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "notes": "No data lost: bronze and the outbox hold everything. The upload slowness that drove the timeout is cured by at-1 (Z-S86). For a later analysis: catch TimeoutExpired in Collector.upload and record it as a transport-class stop, so the driver checkpoints and resumes rather than exiting."
     }
   ]
 ```

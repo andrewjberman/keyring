@@ -7828,3 +7828,454 @@ name the one known failure instead of silently inheriting it.
   "world_is": "The served gateway serves the Schwab snapshots and the held-only dim_asset page, the download control holds, and AC1 matches after A6."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S53",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-05T01:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The disarm owner's recorded word for remediation row NFRA_OPLGTW-W6-S2. Decision: REMEDIATED; the CVO writes the clock (ruling @cc05804f8f). W6-S2 asserted that no carrier declares the three datasets' unique grain. (1) dim_position and dim_asset: R9's grains on CLOUD via OG-gr-3 (repair drain ef092da049) and live in r16 4b6b823fae (OG-rl-5). The served census found 56 of 56 snapshots carrying the grain columns, 0 blank, and dim_position pages OK. (2) dim_balance: OG-gr-4 (drain 06e6db2995) measured grain (account_id,) unique on 28 of 28 served snapshots, with 0 duplicate keys and 0 null grain cells, and served a rows page OK with a synthetic principal and 0 grants. OG-ar-2's moves_when for W6-S2 named exactly this condition (ISSUER_ROWS_R17.json).",
+  "adjudicates": [
+    "NFRA_OPLGTW-W6-S2"
+  ],
+  "one_line": "W6-S2 (no declared unique grain) is REMEDIATED on the owner's word: R9 grains live in r16 for dim_position and dim_asset, and OG-gr-4 measured dim_balance's (account_id,) unique on 28 of 28 served snapshots; the CVO writes the clock.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r17/checks/gr4.AC1.sh at CLOUD 06e6db2995: served census 28; measured 28; duplicates 0; page OK; branch UNIQUE+SERVED; RESULT: PASS",
+      "FILE: deliverables/0.9.0_WK_NFRA_OPLGTW~15/RL5_PAGING.json census_after (56 snapshots, lacking_or_blank 0)",
+      "FILE: deliverables/0.9.0_WK_NFRA_OPLGTW~21/ISSUER_ROWS_R17.json (W6-S2 moves_when = gr-4 zero duplicates)"
+    ]
+  },
+  "spec_asserts": "W6-S2: a carrier declares each dataset's unique grain, and served snapshots honor it.",
+  "world_is": "All three datasets carry declared grains on the served gateway, and each is measured unique on every served snapshot."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W25-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~25",
+  "surfaced_at": "2026-10-05T00:30Z",
+  "one_line": "Clearing the session-manager once-flag exposed a second order-dependent test (rl5 download): SchwabIntegration caches the first service built in the process, so rl5 needed its own fresh read; fixed in tests only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: tests/test_schwab_wiring.py + tests/test_schwab_rl5_asset_query.py after the conftest fix: test_rl5_asset_download_still_refused FAILED (download_url issued; service carried the harness asset_policy=object()); after the rl5 class-level monkeypatch of SchwabIntegration.service: 38 passed on the five-file subset",
+      "CODE: infra/aws/ec2/opal-gateway/app/integrations/schwab/integration.py SchwabIntegration.service() caches self._service on first call; og_v2 resets only the module-level _default_service"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order s.1: the cause class is a session manager or app started more than once; a fixture per module fixes it, tests only.",
+  "world_is": "A second cause stood behind the first: the registered integration instance holds the first service built in the process, so any later module reading the served construction gets the earlier harness service. Other og_v2 tests after the first in a process also read that cached service; this cell changed only rl5.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W22-S6",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~22",
+  "surfaced_at": "2026-10-05T00:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "q7.AC1.sh counts a test as passed only when '::<test> PASSED' sits on ONE line, so a test that prints under capsys.disabled() (the rl5 harness the order says to copy) reads 0 of 4 passed though pytest rc=0; the q7 tests were written without prints.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r17/checks/q7.AC1.sh at 275133f66b (worktree wk-NFRA_OPLGTW-22-r17): 'pytest rc=0; named tests passed 0 of 4; failed/error lines 0', RESULT: FAIL, exit=1, with 4 tests that each printed under capsys.disabled() (pytest -v then writes '::test_ogq7_ac01 ' and 'PASSED' on different lines).",
+      "FILE: infra/aws/ec2/opal-gateway/tests/test_schwab_rl5_asset_query.py (the harness the order says to copy) prints under capsys.disabled(); trnspt/checks/_root.sh pytest_named greps '::$t(\\[.*\\])? PASSED' per line."
+    ]
+  },
+  "spec_asserts": "Order s.1 item 3: build the q7 test file by copying the harness of tests/test_schwab_rl5_asset_query.py; AC1's expect is 'named tests passed 4 of 4'.",
+  "world_is": "The copied harness's capsys.disabled() prints break pytest_named's one-line PASSED grep, so the q7 file carries no prints (evidence lives in assertion messages and the AC run). Same class would hit any future named-test file that prints. The rl5 file is not graded by pytest_named, so it is unaffected."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W22-S7",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~22",
+  "surfaced_at": "2026-10-05T00:50Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The order asks for one extracted helper reusing the query path's code, but q7.AC2.sh grep -c 'qualify_asset_plan(' wants >= 3 textual call sites; a single helper that calls qualify_asset_plan once reads 1 (RESULT: FAIL), so the helper now ends at the holdings read and each of the three paths calls sem.qualify_asset_plan itself.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r17/checks/q7.AC2.sh at 70c83fe97b: guards '_asset_policy is None' 0 (want 0); qualify_asset_plan call sites 1 (want >= 3); failures beyond baseline 0; RESULT: FAIL, exit=1 (integration.py had one helper, SchwabService._qualify_asset, holding the only call).",
+      "FILE: org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-q-7.asset-download-c3.md s.1 item 1 ('reusing the query path's code (extract a helper if the three call sites would otherwise copy it)') against s.4 AC2 ('call sites >= 3')."
+    ]
+  },
+  "spec_asserts": "Order s.1 item 1 allows a helper in place of three copies; AC2 expects at least three qualify_asset_plan( call sites in integration.py.",
+  "world_is": "Both hold once the shared part (the position snapshot read, SchwabService._asset_holdings) is extracted and the three sites each keep their own sem.qualify_asset_plan( call plus a four-line SemanticError mapping; the copy is the mapping only. The grep counts lines, not paths, so a future refactor to one call site would fail AC2 with the behaviour unchanged."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W22-S8",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~22",
+  "surfaced_at": "2026-10-05T01:20Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "tests/test_schwab_engine.py::test_ogq1_ac04 failed once inside q7.AC2.sh while a second pytest process (q7.AC1.sh) ran on the same device, then passed alone and in the clean AC2 re-run: a load-sensitive test, not in Q7_SUITE_BASELINE.txt.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: q7.AC2.sh at 1120c97540 with q7.AC1.sh running concurrently: 'failures beyond baseline 1 tests/test_schwab_engine.py::test_ogq1_ac04', RESULT: FAIL, exit=1.",
+      "RUN: python -m pytest tests/test_schwab_engine.py -q at 1120c97540, nothing else running: 14 passed in 45.43s; then q7.AC2.sh alone: 'failures beyond baseline 0', RESULT: PASS, exit=0."
+    ]
+  },
+  "spec_asserts": "AC2: the schwab test files add no failure beyond Q7_SUITE_BASELINE.txt (which lists only test_ogx4_ac03 and the recorded flake test_ogx2_ac01).",
+  "world_is": "test_ogq1_ac04 is a second engine test that fails under concurrent load on this device; the file does not import the code this cell changed. The baseline does not list it, so an AC2 run beside another pytest process can read FAIL with no code cause."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "id": "NFRA_OPLGTW-Z-W15-S40",
+  "surfaced_at": "2026-10-05T02:10Z",
+  "one_line": "OG-rl-6 step 2: the five named test targets pass one process each on the release tree, but run together in ONE pytest process they fail on CLOUD 17dd36e08b as well (6 failed, with ti-1's conftest fix present); tests/conftest.py is left at live's bytes on the release tree because it is outside the release set.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: release tree C:/tmp/og-rel11 @e91819e281 (live 4b6b823fae + q-7's integration.py hunks + the two test files; conftest.py at live's bytes), each target in its own process: test_schwab_q7_asset_download.py 4 passed; test_schwab_rl5_asset_query.py 2 passed; test_schwab_query.py 26 passed; test_schwab_grain_r9.py 5 passed; test_entitlement_admin.py::test_ogz2_ac08 1 passed (DENOMINATOR 60 registered tool(s) ... 0 hit(s)). Output: deliverables/0.9.0_WK_NFRA_OPLGTW~15/rl6_step2_perfile.txt.",
+      "RUN: the same five targets in ONE process (-p no:randomly): release tree 4 failed (test_ogq7_ac01-04, 'AssertionError' / TypeError) + 2 errors at setup (test_rl5_asset_query_*, RuntimeError StreamableHTTP session manager), 32 passed; CLOUD worktree @17dd36e08b (conftest.py WITH ti-1's _fresh_session_manager_per_module fixture) 6 failed, 33 passed. Pairs on CLOUD: q7+rl5 6 passed, rl5+q7 6 passed, query+grain_r9+rl5 2 failed 32 passed.",
+      "FILE: tests/conftest.py on CLOUD carries 18 lines of ti-1 (audit-path and session-manager reset) that the live tree lacks; the release order's AC2 admits only tests/test_schwab_*.py, so the release does not ship it."
+    ]
+  },
+  "spec_asserts": "Order step 2: the named tests run on the release tree; the issuer note: leave conftest.py at live's bytes and show step 2's tests pass there, or file a row naming the choice.",
+  "world_is": "Each named target passes in its own process on the release tree with conftest.py at live's bytes, which is the choice made. A single-process run of the whole set fails on CLOUD itself, so the failure is not caused by the release carry; ti-1's one-process fix (measured on CLOUD 4e84fd3f2e, before q-7's test file existed) does not cover the combination that now includes test_schwab_q7_asset_download.py. Tests are not in the shipped file set, so nothing served is affected."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "id": "NFRA_OPLGTW-Z-W15-S41",
+  "surfaced_at": "2026-10-05T02:25Z",
+  "one_line": "OG-rl-6 step 7: the one live grant naming dim_asset carries operations list/describe/query and NOT download_filtered, so the released dim_asset download opens for NO real principal today; the ask's property (d) text 'those holders gain downloads their grants already authorize' reads as if that holder gains one, and she does not.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: read-only consistent DynamoDB scan of gateway-access-state-table, sort-key prefix data_entitlement#, counts only, 2026-10-05T02:14:50Z: 2 records, both active; 1 names dim_asset; its scope.operations = ['describe','list','query']; ACTIVE dim_asset AND download_filtered = 0; distinct principals 1. Output: deliverables/0.9.0_WK_NFRA_OPLGTW~15/rl6_grants_before.out (no write, no identity printed).",
+      "FILE: app/data_entitlement.py:69 OPERATIONS = ('list','describe','query','download_filtered'); :90 schwab_prepare_download is classified to download_filtered, so the guard refuses her prepare_download before any dim_asset path runs."
+    ]
+  },
+  "spec_asserts": "NEVER_WIDEN_ASK_OG-rl-6 section 3(d): the pre-act read prints the count of live grants naming dim_asset; 'those holders gain downloads their grants already authorize'.",
+  "world_is": "The count is 1, and that grant does not authorize downloads (no download_filtered), so after the release a real dim_asset download is refused by the entitlement guard, not served; the capability is exercised only by the synthetic in-memory grant of the verify run. The act added no authorization and wrote no grant; whether the holder is later granted download_filtered is a grant change outside this order."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-05T03:25Z",
+  "id": "NFRA_OPLGTW-Z-W15-S42",
+  "one_line": "OG-rl-6 Phase C: yr.AC3 expects host kit files equal the release bytes: 4 of 4, but the deploy tarball ships app/, deploy/, requirements.txt and identity_tool_allowlist.txt only, so tests/test_yearinreview_view.py can never be on the host: the criterion reads at most 3 of 4 after any correct deploy.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE: infra/aws/ec2/opal-gateway/deploy-to-ec2.sh:204-208 tar -czf ... app deploy requirements.txt identity_tool_allowlist.txt (no tests/); the live S3 artifact opal-gateway-e91819e281.tar.gz holds 97 files = 94 under app/ deploy/ + 2 root files + 3 dashboard (deliverables/0.9.0_WK_NFRA_OPLGTW~15/rl7_cmp_rollback.out), none under tests/.",
+      "RUN: SSM read-only on i-07dccb1615503ac99 2026-10-05T03:21Z: 'ls -d /opt/opal-gateway/tests' -> 'No such file or directory'; the only test file on the host is app/tests/test_rivalfunds_view.py (inside app/, which ships).",
+      "RUN: bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r17/checks/yr.AC3.sh at the live e91819e281 -> 'host kit files equal the release bytes: 1 of 4' (server.py only; the other three are absent on host AND absent at e91819e281, so the want-side md5 of empty output is not counted); output deliverables/0.9.0_WK_NFRA_OPLGTW~15/rl7_floor_preGO.out.",
+      "FILE: the release (rel-nfra-oplgtw-r17b 14e0af86fa) ships 3 of the 4 kit files to the host (rl7_release_md5.txt: server.py changed, app/yearinreview_view.py and app/static/yearinreview/index.html new); the 4th is the kit's test."
+    ]
+  },
+  "spec_asserts": "TO OG-rl-6 AC3 / yr.AC3.sh: 'host kit files equal the release bytes: 4 of 4'; kit README: the 4 files copied into infra/aws/ec2/opal-gateway/ at the same relative paths.",
+  "world_is": "The host can hold 3 of the 4 files (the three under app/); tests/test_yearinreview_view.py is a repo-only file by the deploy's own tar list, so yr.AC3 returns FAIL on a correct, fully verified deploy. Phase C-A did not change the kit or the check (the check is the issuer's; the kit file path is the kit's). Options for the issuer: amend yr.AC3 to the 3 shipped files, or move the kit test to app/tests/ (as /rivalfunds' test sits) which is outside this order's <paths> and a change to the kit. Phase C-B should not be read as failing on this arm: all other AC3 arms and the verify script's 15 checks are independent of it."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-05T03:25Z",
+  "id": "NFRA_OPLGTW-Z-W15-S43",
+  "one_line": "OG-rl-6 Phase C step 12: the kit's app/static/yearinreview/index.html is CRLF (344 CRLF lines, sha256 a31571e8012026a8, 48366 bytes) but the repo rule infra/aws/ec2/opal-gateway/**/*.html text eol=lf stores and checks it out as LF (48022 bytes, sha256 d61fe2e7da947985), so the page the gateway would serve is not byte-equal to the kit's page.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: python byte count of the kit blob origin/CLOUD:...gateway_candidate/app/static/yearinreview/index.html: 48366 bytes, 344 CRLF; sha256 prefix a31571e8012026a8 = the README's 'byte-equal to ../YEAR_ONE_ONE_PAGER.html (sha256 prefix a31571e8012026a8)'.",
+      "FILE: .gitattributes:140 infra/aws/ec2/opal-gateway/**/*.html text eol=lf (row NFRA_OPLGTW-W2-S8); git add printed 'CRLF will be replaced by LF'; committed blob 17d151f6cc: 48022 bytes, 0 CR, sha256 d61fe2e7da947985, md5 1869ef212742171be3cf8f837514b1c9 = the rl7_release_md5.txt entry the verify script checks on the host.",
+      "RUN: tests/test_yearinreview_view.py 5 passed on the LF file (ASCII-only, title present, size within the cap): the page is functionally the same; only line endings differ."
+    ]
+  },
+  "spec_asserts": "Kit README: app/static/yearinreview/index.html is 'byte-equal to ../YEAR_ONE_ONE_PAGER.html (sha256 prefix a31571e8012026a8), ASCII-only'.",
+  "world_is": "The served page is the LF-normalised file (sha256 prefix d61fe2e7da947985); content identical, line endings differ, by the repo's standing eol rule for opal-gateway text. A reader who compares the served bytes to the kit's sha256 will see a difference that is this normalisation, not a corruption. The kit's page rebuild (build_year_one.py) would carry the same normalisation at each release."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-05T03:25Z",
+  "id": "NFRA_OPLGTW-Z-W15-S44",
+  "one_line": "OG-rl-6 Phase C step 13: CLOUD's app/server.py is not the live e91819e281 server.py (CLOUD carries OA-e-10's /login 18-line change that is not on live), so the worktree diff of the kit's 3 edits and the release diff differ in ONE hunk header (third hunk starts at line 1008 on CLOUD, 994 on the release); every +/- and context line is equal.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: git diff e91819e281 HEAD(8068200b8f) -- app/server.py: one hunk '@@ -450,11 +450,25 @@' (_login_allowed_identities and the 403 in login()), 18 lines, no kit content.",
+      "RUN: diff of the two kit diffs with index lines removed: only '@@ -1008,6 +1008,9 @@' vs '@@ -994,6 +994,9 @@'; the body-lines-only diff (+, -, space lines) is EMPTY (BODY-EQUAL). Both apply_hookup.py runs reported 'OK: 3 edits applied' (3 of 3 anchors).",
+      "RUN: release server.py md5 b13b1e54bf22c5955f425177c799cd7c (git show 14e0af86fa); host live server.py md5 173dbf15b3c9d1487c4d80a8915553f3 = the e91819e281 tree (host md5 96 of 96 on the e91819e281 list, rl7_live_md5_host.out)."
+    ]
+  },
+  "spec_asserts": "TO step 13: 'Prove the release's git diff e91819e281 -- app/server.py equals your worktree's diff of that file'.",
+  "world_is": "Equal in content, not byte-for-byte as a patch: the worktree base (CLOUD 8068200b8f) and the release base (live e91819e281) differ in /login, so one hunk's line numbers differ by 14. The release's server.py is live's bytes plus exactly the kit's 5 inserted and 2 changed lines. The OA-e-10 /login change stays on CLOUD only and is NOT in the release."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-05T03:25Z",
+  "id": "NFRA_OPLGTW-Z-W15-S45",
+  "one_line": "OG-rl-6 Phase C step 16: rl6.AC1.sh (named in the verify list) reads RL6_DOWNLOAD.json's served_release against the manifest's deployed_commit, so after the r17b deploy it can read PASS only if the file is rewritten for the new sha; its 'download before refused' arm is the pre-r17 state, which no longer exists as a 'before' of the r17b act.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r17/checks/rl6.AC1.sh: ok['served_release'] = d.get('served_release') == c where c = HEAD manifest deployed_commit; ok['download before refused'] = before.dim_asset_download startswith 'REFUSED'.",
+      "RUN: rl6.AC1.sh today (deployed_commit e91819e281, file served_release e91819e281): RESULT PASS (deliverables/0.9.0_WK_NFRA_OPLGTW~15/rl7_floor_preGO.out); after the r17b deploy the manifest names the r17b sha and the same file would read served_release False.",
+      "FILE: deliverables/0.9.0_WK_NFRA_OPLGTW~15/rl7_verify.py (written at Phase C-A): on a FULL pass only, copies RL6_DOWNLOAD.json to RL6_DOWNLOAD.r17.json, rewrites RL6_DOWNLOAD.json with served_release = the new sha, 'before' CARRIED from the r17 file (labelled 'before_source'), 'after' = the fresh re-read through the deployed code, plus 'pre_act_read_on_live'; a failing run writes RL6_DOWNLOAD.r17b_failed.json and leaves RL6_DOWNLOAD.json untouched. Positive control (the two undeployed-host reads forced to their deployed values, scratch out dir): VERIFY PASS 15 of 15, doc carries before REFUSED / after OK / served_release 14e0af86fa; negative control against the undeployed host: VERIFY FAIL 13 of 15 (md5 93 of 96, host-local 404), nothing written beside the repo file."
+    ]
+  },
+  "spec_asserts": "TO step 16: 'Then rl6.AC1.sh (the r17 download behaviour re-read), rl4.AC1.sh and ht.AC2.sh'.",
+  "world_is": "rl6.AC1.sh cannot read PASS after the r17b deploy against the r17 file; the verify script therefore re-reads the r17 behaviour through the deployed code and rewrites RL6_DOWNLOAD.json for the new release, keeping the r17 file as RL6_DOWNLOAD.r17.json (it is also in git history at the r17 deploy commit). This is a choice made by the worker inside the order's paths, named here for the issuer; AC1 as graded at r17 stands on the r17 file."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-05T03:30Z",
+  "id": "NFRA_OPLGTW-Z-W15-S46",
+  "one_line": "OG-rl-6 Phase C step 17: the order's blast-radius sentence 'one new GET route behind the /sprint identity wall' is true of GuardMiddleware but NOT of /sprint's app-level roster: /yearinreview has no roster check, so every signed-in tenant account (not the owner alone, as /sprint is on the host) can read the page after the release.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE: rel-nfra-oplgtw-r17b 14e0af86fa app/server.py:202 adds yearinreview_view.is_yearinreview_path(path) to the same GuardMiddleware branch as /sprint (get_user_email, enforce, _email_denied, 401 on IdentityError, 403 on AccessDenied).",
+      "FILE: app/sprint_view.py:173-184,222-223 _allowed(email) against SPRINT_VIEW_ALLOWED_EMAILS returns 403 'Not on the Daily Sprint roster'; deploy/deploy-to-ec2.sh:308 records that setting narrows /sprint 'from every signed-in tenant account (empty-roster default) to the owner only' (Andrew-direct 2026-09-27). app/yearinreview_view.py yearinreview_page has no equivalent: identity present -> 200 (README: 'Viewers: any signed-in account (the /sprint wall)').",
+      "NOT MEASURED: the ALB's OIDC audience (which accounts it signs in); no live signed-in request was made (Andrew's act, per the order)."
+    ]
+  },
+  "spec_asserts": "TO step 17: the blast radius is 'one new GET route behind the /sprint identity wall'.",
+  "world_is": "The wall is the same at the guard (ALB-OIDC identity, blocklist, email deny list) and different at the page: /sprint also filters by roster, /yearinreview does not. The ANNOUNCE states it for the three halves in those terms. Whether the Year One page should be roster-limited is a call for the halves, not a worker act; a roster check would be a code change to the kit's view file."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-05T13:50Z",
+  "id": "NFRA_OPLGTW-Z-W15-S47",
+  "one_line": "OG-rl-6 C-A2 step 16b: 'the server.py, config.py and deploy-to-ec2.sh diffs each equal the CLOUD-source diffs' holds for config.py in full and for server.py in body lines, but for deploy-to-ec2.sh only on the CHANGE: CLOUD's template is OLDER than live's, so the one .env printf line differs between the two trees for reasons outside this order.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~15/rl8_diff_equality.py (run on rel-nfra-oplgtw-r17c 37be3485db against the CLOUD commits 52ef7bef94 and 17d151f6cc): app/config.py release and CLOUD diff text equal INCLUDING the hunk header @@ -116,6 +116,14 @@; app/server.py body lines equal (33 lines each), hunk header 3 differs (-994 release, -1008 CLOUD) as in row Z-W15-S44; deploy-to-ec2.sh: added comment line byte-equal in both, the .env printf line delta is exactly one inserted token in both, 0 other added lines, 1 removed line in each.",
+      "GIT: git diff e91819e281 52ef7bef94~1 -- infra/aws/ec2/opal-gateway/deploy-to-ec2.sh is 126 lines (5 hunks, e.g. @@ -165,16 +165,6 @@ and @@ -235,58 +225,10 @@): the live release template carries OG-rl-1..4 / OG-tr-1 host-side roster and bearer reads that CLOUD's template lacks, so the CLOUD patch cannot git-apply to the release tree.",
+      "METHOD: the release tree's deploy-to-ec2.sh was produced by inserting the same comment line and the same one printf token into the LIVE e91819e281 file (string substitution, anchors asserted unique), not by git apply."
+    ]
+  },
+  "spec_asserts": "TO step 16b: 'Prove the server.py, config.py and deploy-to-ec2.sh diffs each equal the CLOUD-source diffs.'",
+  "world_is": "Equal in the sense the order needs (the same change on a different base) for all three; literally equal diff text only for config.py. The CLOUD-source deploy template lagging live's is a standing divergence of the release-branch lineage (releases carry template lines CLOUD does not), not something this release created."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-05T13:50Z",
+  "id": "NFRA_OPLGTW-Z-W15-S48",
+  "one_line": "OG-rl-6 C-A2 step 16b: the kit's index.html is CRLF ON DISK in the CLOUD-source worktree (344 CR) though the committed blob is LF, so a release tree seeded by copying from that worktree carries disk bytes (md5 306f6238) that differ from the committed blob (1869ef21) and from the shipped-md5 list; corrected in the r17c tree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE: .scratch/chk_eol.py output (worktree-local): wk-oplgtw-15-r17 disk md5 306f6238 CR 344 vs blob md5 1869ef21 CR 0; og-rel13 (as first copied) the same; og-rel12 (the superseded r17b tree) disk 1869ef21 CR 0. git check-attr: text set, eol lf for app/static/yearinreview/index.html.",
+      "ACT: og-rel13's disk copy was rewritten from `git show HEAD:<path>` bytes (disk == blob, CR 0) and, because git kept reporting `needs update` for the stat-dirty entry, `git add` of the byte-identical blob refreshed the index entry in the release worktree only (no staged difference, no commit). rl7_release_md5.txt lists the LF bytes (1869ef21), as in r17b.",
+      "FILE: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~15/rl7_release_md5.txt: 96 files, only app/config.py (0d486a1f) and app/yearinreview_view.py (0d26f064) differ from the r17b list; app/static/yearinreview/index.html stays 1869ef21."
+    ]
+  },
+  "spec_asserts": "TO step 16b: 'Re-cut ... with the 6 files at their new bytes'; row Z-W15-S43 (the page committed as LF).",
+  "world_is": "The page bytes the host must read are the LF form. A re-cut that copies from the CLOUD-source worktree's disk file instead of the blob reads index.html as 1 of 96 files wrong at the verify script's md5 compare. Inert now; the CLOUD-source worktree's disk copy remains CRLF (blob LF), so the same trap stands for any later re-cut that copies from it."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-05T13:50Z",
+  "id": "NFRA_OPLGTW-Z-W15-S49",
+  "one_line": "OG-rl-6 C-A2 step 16c: the verify script's host-local PLANTED-identity check (a well-formed ES256-shaped JWT with an unknown kid) makes the gateway fetch https://public-keys.auth.elb.us-east-1.amazonaws.com/<kid> from the host, an egress the order's declared class does not name; it first occurs at the deploy-time `after` run, not before.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE: infra/aws/ec2/opal-gateway/app/identity.py:_alb_oidc_identity and _fetch_elb_public_key (release tree 37be3485db): kid read from the unverified header, public key fetched by httpx GET from public-keys.auth.elb.<region>.amazonaws.com, then jwt.decode with ES256; any exception becomes IdentityError -> 401. This is the gateway's own per-request path, unchanged by the release.",
+      "FILE: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~15/rl8_guard_arms.py (local, no network: identity._fetch_elb_public_key pointed at a locally generated ES256 public key): owner signed 200, non-owner signed 403 + audit DENIED/roster, planted 401, no identity 401; roster empty and roster missing: owner 403, non-owner 403, no identity 401 (11 of 11 across the 3 modes).",
+      "FILE: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~15/rl8_negative_control.out: against the undeployed host the planted request got 404 (the route did not exist, so no JWT was processed and no fetch occurred); the check FAILED there as designed (host-local 404, want 401)."
+    ]
+  },
+  "spec_asserts": "TO preflight: 'EGRESS CLASS, declared: NONE beyond Opal's own AWS (S3 upload, SSM, Secrets Manager reads) and the public gateway URL.' TO step 16c: 'a request carrying a planted, NON-ALB-signed identity header gets 401 (identity is verified by signature)'.",
+  "world_is": "The planted check can only be exercised after the route exists, and exercising it makes the host call the AWS-owned regional ELB key endpoint once (a 4xx/network error also yields 401). It is the gateway's standard identity path, not a vendor call; named here so the issuer can strike the planted check from the verify script instead if AWS-owned public endpoints are outside the declared class."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-05T15:29Z",
+  "id": "NFRA_OPLGTW-Z-W15-S50",
+  "one_line": "OG-rl-6 C-B step 20: the floor check ht.AC2.sh hard-codes `HOST env_keys 50` (arm 2), so it FAILS 3 of 4 against the signed 51-name release although every other field it reads is true; yr.AC4 runs the same script, so AC4's `floor: ... ht.AC2 yes` cannot be met as written on ANY correct r17c deploy. The order's roll-back-at-once trigger (a floor regression, ht.AC2 named) fired on a stale constant, and the worker did NOT roll back (judgment, stated here).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/hxteams/checks/ht.AC2.sh:4 and :17 -- the header says '.env holds 50 keys' and the arm greps `^HOST env_keys 50 teams_bearer_present True teams_bearer_empty False teams_labels_ok True tax_nonempty True$`; the r17c ask/halves set .env to 51 names by design (r17/ENV_KEYS_R17B.txt), and rl4.AC1 was given a baseline override for it but ht.AC2 was not.",
+      "FILE: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~15/rl9_phaseB_verify_after.out (rl7_verify.sh after, 14:23-14:24Z): host+AFTER checks 19 of 19 PASS; rl4.AC1 (R17B baseline) 4 of 4 PASS; ht.AC2 3 of 4: `HOST env_keys 51 teams_bearer_present True teams_bearer_empty False teams_labels_ok True tax_nonempty True`, `arm 2 .env shape: FAIL`, arms 1, 3, 4 OK.",
+      "FILE: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~15/rl9_ht_AC2_env51_equivalent.out: the SAME script run verbatim through bash -c with $0 = the original path and ONE substitution, `env_keys 50` -> `env_keys 51`: SERVED ARMS 4 of 4, RESULT PASS, exit 0 (SSM 4b31d3bf). So the only difference between FAIL and PASS is that constant.",
+      "ACT: no roll-back from /c/tmp/og-rb12 was run. A roll-back to e91819e281 would also fail yr.AC4 (no descent, no 6 shipped files), so it cannot make AC4 pass; the live state is the one all three signed halves name and the T2 arms (51 names, 50 value hashes equal, new-key digest, non-owner 403 on the deployed host) all PASS. The roll-back remains one command away: DEPLOY_BASE_REF=37be3485db9a00522c55a260666f708336c918f3 HALT_ACK=1 from /c/tmp/og-rb12."
+    ]
+  },
+  "spec_asserts": "TO step 20: 'On any failure, or if rl6.AC1 regresses: roll back, re-verify, and close ROLLED BACK.' TO AC4 expect: 'floor: rl4.AC1 yes; ht.AC2 yes'. Issuer instruction: roll back at once on a floor regression, ht.AC2 named. TO step 16c/A4: .env goes from 50 to 51 names.",
+  "world_is": "ht.AC2.sh's arm 2 is a count-equality on 50, which is contradicted by the release's own signed 51-name .env, so AC4 is unmeetable as written and the roll-back trigger is ambiguous (stale constant vs regression). Fix owner (the issuer amends its own check): ht.AC2.sh arm 2 expects 51 (or takes the same RL4_ENV_KEYS_BASELINE-style override as rl4.AC1). The worker could not edit it (not in <paths>) and did not roll back; the issuer decides whether to re-order a roll-back."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-05T15:29Z",
+  "id": "NFRA_OPLGTW-Z-W15-S51",
+  "one_line": "OG-rl-6 C-B step 20: rl7_verify.sh runs rl6.AC1.sh as part of `after`, and rl6.AC1.sh reads deployed_commit from the manifest AT HEAD of the worktree, which the wrapper commits only on the release branch; so the floor's rl6.AC1 read FAILs (`served_release: False`, deployed_commit still e91819e281) until step 21's hand manifest edit is committed. A sequencing defect of the worker's own verify script, not a service regression.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~15/rl9_phaseB_verify_after.out: `--- rl6.AC1.sh ---` `deployed_commit e91819e281; host integration.py equals the release bytes: yes` `served_release: False` and every other line True (download before refused, after ok, held-only unheld 0, empty holdings refused, query unchanged, synthetic, grants_written 0, state_store_written false) RESULT: FAIL.",
+      "FILE: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r17/checks/rl6.AC1.sh reads the manifest from git HEAD (same pattern as yr.AC3 line 10); the hand edit of infra/aws/ec2/EC2_MANIFEST.json is committed in the step-21 close commit, after which rl6.AC1 is re-run (result in the proof instance)."
+    ]
+  },
+  "spec_asserts": "TO step 16 / 20: the verify script's floor includes `rl6.AC1.sh` run IMMEDIATELY after the deploy; TO step 21: the manifest is recorded by hand AFTER the verify.",
+  "world_is": "The two orderings contradict for rl6.AC1: its anchor (manifest at HEAD) does not exist until step 21. Reading it before the manifest commit is guaranteed to read served_release False on a correct deploy. Re-running it after the manifest commit is the meaningful read."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S54",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-05T16:15Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-rl-6 Phase C closed: r17c 37be3485db LIVE at 14:22:36Z; ledger nfra-oplgtw-gateway-release-r17b CLOSED; drain 7426f8dfee. (1) Z-W15-S42 (BLOCKING: yr.AC3 could not read 4 of 4 because tests/ never ships): resolved by amendment A2, which grades the shipped app files; AC3 PASSed on the served host. (2) Z-W15-S46 (no roster check, tenant-wide): ruled by Andrew-direct 'Visible to me only' (record @121b7b016e) and CTO R15 @16f729348e. Shipped owner-only with its own fail-closed key; the deployed-bytes arms read 403 for a non-owner and 403 for an empty roster. (3) Z-W15-S50 (BLOCKING: ht.AC2 hard-coded 50 .env keys): the issuer's stale constant, fixed @86b1cd2e86 with the HT_ENV_KEYS_COUNT override (default unchanged); the issuer's yr.AC4 re-grade at CLOUD 7426f8dfee PASSed.",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W15-S42",
+    "NFRA_OPLGTW-Z-W15-S46",
+    "NFRA_OPLGTW-Z-W15-S50"
+  ],
+  "one_line": "OG-rl-6 Phase C closed with r17c live owner-only: S42 resolved by A2, S46 ruled by Andrew (owner-only) and shipped, S50 fixed (ht.AC2 count override); issuer AC4 re-grade PASS.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r17/checks/yr.AC4.sh at CLOUD 7426f8dfee: shipped 6, outside the kit set 0; floor rl4.AC1 yes, ht.AC2 yes; RESULT: PASS; exit=0",
+      "RUN: yr.AC3.sh from the worker worktree at fb2c79369a: host kit files 4 of 4; public 302 to login.microsoftonline.com; host-local no-identity 401; RESULT: PASS",
+      "FILE: deliverables/0.9.0_WK_NFRA_OPLGTW~15/ (rl7 verify after: 19/19, T2 arms 11/11, .env 51 names, 50 hashes equal)"
+    ]
+  },
+  "spec_asserts": "S42/S46/S50: AC3 and AC4 as cut, and the audience question, gated Phase C.",
+  "world_is": "r17c serves /yearinreview owner-only; AC3 and AC4 PASS on the served host; the check defects are fixed."
+}
+```

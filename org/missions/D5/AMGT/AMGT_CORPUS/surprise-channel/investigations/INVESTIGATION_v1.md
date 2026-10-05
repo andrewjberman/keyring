@@ -3651,6 +3651,121 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "The 90 statement figures (TWD) and CRNCY_ADJ_MKT_CAP / AVG_DAILY_VALUE_TRADED_3M (USD quote) carry no currency; graded WRONG (92), with 75 non-monetary figures RIGHT. Family units are all RIGHT or CANNOT-TELL (19/0/5 of 24). BA and SAP carry the same null label on the monetary figures of the 52 (single-currency blocks, so incomplete not misleading).",
     "notes": "Fix shape: assign currency_basis for the 52 monetary mnemonics in the producer/classifier as the older MILLIONS fields already get it, then re-derive the blocks. Touches the ABSOLUTE_OR_MILLIONS family's currency label, not its unit.",
     "disarm_owner": "2.0.0_SA_COO~X"
-  }
+  },
+{
+  "id": "AMGT_CORPUS-Z-W3-S12",
+  "project": "AMGT_CORPUS",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_CORPUS~3",
+  "surfaced_at": "2026-10-05T00:19:00Z",
+  "one_line": "lib/research/corpus/tests/test_induction_planted_drive.py::test_fwd4_planted_drive asserts induction_request.run() writes induction_request.json under DELIVERABLES_DIR; CRPS-am-4 removes that write, so the test fails and is outside the am-4 paths.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest lib/research/corpus/tests/test_induction_request_pick_writes_nothing.py test_induction_request.py test_induction_run.py test_induction_schedule.py test_induction_planted_drive.py: 1 failed, 42 passed; failure FileNotFoundError at the read of (deliverables / ir.REQUEST_FILE_NAME) in test_induction_planted_drive.py (about line 164, plus the line-182 assertion that the request file is the only file written).",
+      "test_induction_schedule.py only patched ir.DELIVERABLES_DIR and passes because the name is retained as None."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order: --pick writes nothing; keep every function induction_run imports; only the files in <paths> change.",
+  "world_is": "One existing test in a file outside <paths> encodes the removed write; it needs to call run(argv=['--pick','--write',<path>]) and read that path.",
+  "notes": "Fix: edit that test to pass --write to a tmp path and read it back. Left alone it fails at the drain's hygiene run.",
+  "disarm_owner": "2.0.0_SA_COO~X"
+},
+  {
+    "id": "AMGT_CORPUS-Z-W1-S33",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-10-05T00:23:07Z",
+    "one_line": "The issuer's am1_check.py counts the share-count figures EQY_SH_OUT_REAL and VOLUME_AVG_30D (unit 'ABSOLUTE (share count)') as money, so its build arm reads 0/1 with 8 figures left even though the order says share counts stay invariant.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round37/am1_check.py is_money(): returns True for any unit starting MILLIONS (not 'MILLIONS (share count)'), ABSOLUTE or PER SHARE; 'ABSOLUTE (share count)' starts with ABSOLUTE.",
+        "In-memory stage_derive on TSM, 1299 HK, SAP, BA after the change: 'ARM b1 FAIL unlabelled money figures before 913 after 8'; the 8 are exactly EQY_SH_OUT_REAL + VOLUME_AVG_30D on each of the 4 names (2 per name); c1 and c2 PASS.",
+        "FIELD_BASIS: EQY_SH_OUT_REAL 'Real-time shares outstanding, absolute share count.'; VOLUME_AVG_30D '30-trading-day average daily volume, absolute share count.' Order section 1 item 3: share counts stay invariant."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order and AC1: 0 money figures null without a reason after the build; non-money figures (share counts among them) stay invariant. The order's unit rule excludes 'MILLIONS (share count)' only.",
+    "world_is": "The check's money predicate and the order's item 3 disagree on 'ABSOLUTE (share count)'. The producer follows item 3 (a share count has no currency), so AC1 reads build 0/1 with after=8. Across the 96 served blocks the same two mnemonics are 191 figures (96 + 95) of the census's null-unlabelled count.",
+    "notes": "Fix shape (issuer's file, not mine): exclude units containing '(share count)' in is_money in am1_check.py and money_currency_census.py, then AC1 reads build 1/1. The alternative, labelling a share count with a reasoned null, would put a currency reason on a number that has no currency.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W1-S34",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-10-05T00:23:07Z",
+    "one_line": "HISTORICAL_MARKET_CAP is stated by FIELD_BASIS as 'millions of the trading currency', but the landed values on the mixed names read in the REPORTING currency; the producer now labels it reporting.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Latest-FY HISTORICAL_MARKET_CAP x 1e6 / CUR_MKT_CAP over the served blocks: BABA 7.89 and JD 7.81 (CNY against a USD header cap), 1299 HK 0.1506, 992 HK 0.034 and ICT PM 0.011 (a USD value against an HKD / PHP header cap); on same-currency names the ratio sits near 1 (0.4-1.9). A quote-currency reading needs a 7-90x price move on each of those five; the reporting reading needs ordinary ones.",
+        "1299 HK FY2025 HISTORICAL_MARKET_CAP 107,852 beside CUR_MKT_CAP 715,987,825,004 HKD (= 715,988 millions): 107,852 as HKD millions would be about USD 13.8bn for AIA, as USD millions it is a plausible market cap.",
+        "FIELD_BASIS['HISTORICAL_MARKET_CAP'] = 'Market capitalization at the fiscal period end, millions of the trading currency.' (model_block_pull.py).",
+        "Probe: .scratch/probe.py and .scratch/probe2.py in the worker worktree (read-only over scope_amgt.read_model_block)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The order item 1: decide each money field's side from FIELD_BASIS and check it against the landed values where a sibling makes it decidable. FIELD_BASIS says the quote side for this field.",
+    "world_is": "The landed values decide the reporting side on the five names where the two currencies differ by a large factor; ambiguous names (FX near 1) neither confirm nor refute. The producer labels it reporting (EQY_FUND_CRNCY), against its own definition text, which still reads 'trading currency' on every figure's basis.definition.",
+    "notes": "CVO AC3 should grade this one first. If the quote side is ruled instead, move HISTORICAL_MARKET_CAP from _MONEY_REPORTING_FIELDS to _MONEY_QUOTE_FIELDS; the FIELD_BASIS text is not mine to edit.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+  {
+    "id": "AMGT_CORPUS-Z-W1-S35",
+    "project": "AMGT_CORPUS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_AMGT_CORPUS~1",
+    "surfaced_at": "2026-10-05T00:23:07Z",
+    "one_line": "IS_SH_FOR_DILUTED_EPS, a share count (unit 'MILLIONS (share count)'), already carries the reporting currency through _CURRENCY_SENSITIVE_FIELDS (BA USD, SAP EUR, 1299 HK USD, 10 figures each); the order's rule 4 keeps it.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "In-memory read of the served blocks: BA_US_Equity, SAP_GY_Equity and 1299_HK_Equity each carry 10 IS_SH_FOR_DILUTED_EPS figures with unit 'MILLIONS (share count)', currency = the reporting currency, basis 'reporting (EQY_FUND_CRNCY)'.",
+        "model_block_pull.py _CURRENCY_SENSITIVE_FIELDS lists IS_SH_FOR_DILUTED_EPS; FIELD_BASIS: 'Weighted-average diluted shares used for EPS, millions of shares.'",
+        "Order section 1 items 3 and 4: share counts stay invariant; a figure that already carries a currency keeps exactly that currency."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Non-money figures (share counts among them) stay invariant; an already-labelled figure keeps its currency.",
+    "world_is": "The two rules collide on one mnemonic. The pre-existing label stays (rule 4 and the issuer's c2 control, which fails on any changed currency); a share count carrying a currency is a labelling defect of the older rule, outside this cell.",
+    "notes": "Fix shape: remove IS_SH_FOR_DILUTED_EPS from _CURRENCY_SENSITIVE_FIELDS under a cell that re-derives the 96 blocks and relaxes c2 for it; not done here.",
+    "disarm_owner": "2.0.0_SA_COO~X"
+  },
+{
+  "id": "AMGT_CORPUS-Z-S87",
+  "project": "AMGT_CORPUS",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~X",
+  "surfaced_at": "2026-10-05T13:21:51Z",
+  "one_line": "The 2026-10-05 13:00Z amgt-induction-daily fire (pin 74e00624b0) was REFUSED by the Bloomberg Terminal's daily capacity: 96 of 96 refreshes 'BlpResponseError: LIMIT: Daily capacity reached', pulled 0, rc 1; capacity was already exhausted before the fire (ETFS_RIVALS overnight backfill, row ETFS_RIVALS-Z-S24).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/Users/Opal Bloomberg/AppData/Local/opal/amgt-induction-daily/2026-10-05.log: line 105 'refresh population registered 96 with_block 96 already_current 0 pulled 0 bloomberg_calls 192', line 107 'induction_scheduled mode fire as_of 2026-10-05 rc 1'; REFRESH FAILED 96, all one signature 'LIMIT: Daily capacity reached'; the FIRST refresh (1299 HK) already failed.",
+      "schtasks amgt-induction-daily: Last Run Time 10/5/2026 9:00:00 AM local, Last Result 1, Status Ready (read 13:1xZ).",
+      "Cause owned elsewhere: ETFS_RIVALS-Z-S24 (BLOCKING/ARMED, 07:09Z, the overnight backfill pulls exhausted the Terminal's daily capacity) and ETFS_RIVALS-Z-S25; CTO~Z self-drive tick 15 @1aa51f0074 names the Bloomberg outage as daily capacity."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-22 (REALIZED round 35): the daily scheduled fire re-pulls every registered name; round 37 CRPS-am-5 reads the 2026-10-05 fire on pin 74e00624b0 (expect 96 pulled, rc 0).",
+  "world_is": "The fire ran on its own clock and pin and refused cleanly (no blocks written; the served newest blocks remain the 2026-10-04 19:56Z re-derive, which already carries Friday 2026-10-02's close). FWD-22's regression on the new pin is NOT read today; it is not retried (round-34 CTO half: a REFUSED day is recorded, never retried in a loop).",
+  "notes": "Not a CORPUS producer defect: the refusal precedes any CORPUS call. The regression read moves to the 2026-10-06 13:00Z fire. CRPS-am-2 (re-derive from landed raw, no vendor call) is unaffected.",
+  "disarm_owner": "2.0.0_SA_COO~X"
+}
 ]
 ```

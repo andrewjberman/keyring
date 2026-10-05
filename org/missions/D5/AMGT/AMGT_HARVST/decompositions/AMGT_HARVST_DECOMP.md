@@ -2922,3 +2922,64 @@ Worktree recipe for ar-1: the sparse cone of section 50. Evidence folder: `deliv
 - `round45/checks/ar-1.AC3.py` base: FAIL as expected (script absent). Its grader `ar1_grade.py` over the base's served-silver
   census (`round44/aq-1.field_census.json`) reads FAIL: lost per publisher barrons 39, bbg 10, ft 9, sa 0, wsj 20.
 - `round45/checks/ar-3.AC1.py` base: PASS as expected (a bound check; 0 leaks).
+
+## 59. ROUND 46 -- the round-45 analysis enrichment list (`ledger/ROUND_ANALYSIS.round45.md` @4f01f5ab8d), 2026-10-05 ~01:0xZ
+
+Round 45 is CLOSED (CVO slug 29353, ADJUDICATION_v57 @f38cf87fbf); FWD-2 and FWD-12 are REALIZED. Board: REALIZED 8 of 17; open
+without new collection 0; open needing new collection 9 (FWD-1, 3, 7, 9, 10, 11, 13, 14, 15).
+
+Issuer `2.0.0_SA_COO~H`. Series **`as`**. Fan-out 3 of 3 chains, cap 8.
+- One worker, `~94`, on as-1.
+- Three issuer acts. L7 orders go to Tier-2 seats only (LD-0521).
+- as-1b is chained after as-1; it is the run, and it waits on the run universe.
+
+| cell | order | FWD | what | class | executes |
+|---|---|---|---|---|---|
+| `HVST-as-1` | `as-1` | FWD-7 (+ the 9 collection outcomes) | **The run's universe.** The collector's universe becomes the RANK's 191 names (pool `universe/v1/2026-09-16.json`). Every security carries `security_key` = the pool key, which is the declared-set join key that `worker.py:467` stamps as `gold_security_key`. The search identities (company, ticker, aliases, sa_symbol) are resolved with NO vendor call, and per-publisher coverage is printed. The driver's dry run plans 191 x 5 jobs. | LOCAL | worker `~94` |
+| `HVST-as-1b` | issuer act, after as-1 merges | FWD-1, 3, 7, 9, 10, 11, 13, 14, 15 | **THE collection run** (CTO ruling @a142505a06; Andrew @441338fdf7: ONE universe-scope run per publisher). Gates before the first request: 191/191 resolved, and the sa bound printed (191 x 220 = 42,020 requests at most, about 9.7 days at 4,320/day; the 2026-01-01 floor stops most names far earlier). It runs under its own never-widen pair: bronze and silver append through the uploader, plus run records. No recurring cadence and no new mechanism. | WORLD (publisher egress on Andrew's word) | `2.0.0_SA_COO~H` |
+| `HVST-as-2` | issuer act | FWD-17 (RESAPP FWD-36, routed @2db6fd3e3d ruling 2) | `chatter_window` built over the rank universe UNION RESAPP's covered set (`covered_universe.covered_security_keys()`, 95). A 0-mention name gets FWD-17's explicit zero row. It goes through the existing `window_tone build --securities-json` under a never-widen pair, with no code change. If the served table's 212 names are not all in the union, they stay in the list (GONE 0). | SERVED | `2.0.0_SA_COO~H` |
+| `HVST-as-3` | issuer act | (instrument, row Z-S85) | The named field census (`round45/ar-1.field_census.reader_rule.py`) chooses the served row through one function that uses `store.supersedes`. Plant: on barrons key 00b99ce0, the tie reads the `-r2` part (74 columns); the run_stamp rule as a mutant reads the pre-round part. | LOCAL (direct act) | `2.0.0_SA_COO~H` |
+
+Worktree recipe for as-1: the sparse cone of section 50. Evidence folder: `deliverables/2.0.0_SA_COO_H/round46/`.
+
+**Checks dry-run at the base before the cut:**
+- `round46/checks/as-1.AC2.py` base: FAIL as expected. The collector universe has 89 securities, 0 carrying `security_key`, and
+  0 of the 191 rank names are resolved.
+- `round46/checks/as-1.AC3.py` base: FAIL as expected. The driver dry run plans UNIVERSE 89, 445 PLAN lines, NETWORK CALLS 0.
+
+## 60. ROUND 47 -- the round-46 analysis enrichment list (`ledger/ROUND_ANALYSIS.round46.md` @585391af7f), 2026-10-05 ~06:1xZ
+
+Round 46 is CLOSED. Board: REALIZED 8 of 17; open without new collection 0; open needing new collection 9. The collection run
+(as-1b, pair COO @30ed1c8b83 + CTO @138b152f2a) continues across the boundary. ft is held (Andrew-direct @b023b75324).
+
+Issuer `2.0.0_SA_COO~H`. Series **`at`**.
+- **Fan-out:** 1 of 2 chains, cap 8. One worker, `~95`, on at-1; two issuer acts. at-2 chains after at-1.
+- **Ruling 2 (standing, no cell):** a transport-class stop on any leg is resumed by the issuer from the leg's own checkpoint, as
+  the same run.
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-at-1` | `at-1` | **Batched listing upload** (row Z-S86, ruling 1). `HarvestUploader._run_listings` makes ONE `silver_append` per SOURCE per pass, at the batch's greatest run_stamp, isolating untableable rows locally first, exactly as the article path does since HVST-ai-5. Plants: identical silver ROWS on a planted set (only the object count differs) and prefix reads = 1 per source per pass. Timing control: 100 listing pages, old against new. | LOCAL | worker `~95` |
+| `HVST-at-2` | issuer act, after at-1 merges | **The landing:** place `R46_STOP_SA_BARRONS`, `R46_STOP_BBG` and `R46_STOP_WSJ`; wait until every driver ends after its current job (no harvest code lands while a leg runs, because each job spawns from the working tree); merge; then resume each leg from its OWN checkpoint, as the same run (CTO condition 1). ft stays held. | WORLD (the run's own legs) | `2.0.0_SA_COO~H` |
+| `HVST-at-3` | issuer act, at the round-47 drain | **The per-leg report** (condition 4): concluded and stopped jobs by status out of 191, plus `publisher_universe_verdicts` per publisher (`round46/as-1b.report.py`). | LOCAL read | `2.0.0_SA_COO~H` |
+
+**Checks dry-run at the base before the cut:**
+- `round47/checks/at-1.AC2.py` base: FAIL as expected (the timing control is absent).
+
+### 60.1 AMENDMENT 1 (issuer, 2026-10-05 ~06:5xZ): cell `HVST-at-4`, the silver_append column-union fix (row Z-W95-S2)
+
+Worker ~95's row Z-W95-S2 (ARMED; disarm owner the issuer): `pa.Table.from_pylist` takes its columns from the FIRST row.
+Measured in pyarrow 24.0.0: `[{'a':1},{'a':2,'b':3}]` -> `['a']`, and row 2's `b` is gone. `store.silver_append` builds each date
+group that way, so every multi-row append (the article path since HVST-ai-5, the live collection run's uploads, and round 45's
+re-derivation bins) can silently drop a later row's extra columns. Bronze keeps every original, so the loss is recoverable by
+re-derivation.
+- Round 45's VERIFY could not see it: it compared record_hash, which is computed from the row before the write, and only the
+  columns PRESENT in the served row.
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-at-4` | issuer act | `store.silver_append` gives every row of a date group the union of the group's keys (first-seen order) before the table is built. Plants 4/4; the mutant drops `dek`. Held on branch `coo-h-r47-store-union` @46f165ea6e. It lands WITH at-1 through at-2 (every leg stopped). | SERVED (all silver writers) -> CTO decision | `2.0.0_SA_COO~H` |
+
+- **The damage census** (`round47/at-4.dropped_columns_census.py`, read-only) rebuilds every served article row written since
+  2026-10-04T23:00Z from its original and counts the dropped keys. Its result decides the re-derivation scope for round 48.
+- **Gate limb:** none graded this amendment. It is recorded here.

@@ -17469,5 +17469,347 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   ]
  },
  "disposition": "UNDER_INVESTIGATION"
+}
+,
+{
+ "id": "AMGT_RESAPP-Z-S348",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~Z",
+ "surfaced_at": "2026-10-05T00:52:22Z",
+ "one_line": "to-decomp-ref-lint's seating limb (gate2, ANNOUNCE) refused round 68's ar-3 and ar-4 because 0.7.0_AE_CloudOps~A 'already holds open TOs' on AMGT_HARVST (n-4, q-7), but both orders read <status>withdrawn</status>, a terminal state. The lint counts withdrawn as open, so the seat is legal and the refusal is false. Under ENFORCE it would block a legal seating.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "1.0.0_SA_CTO~Z",
+ "spec_asserts": "CLAUDE.md rule 27: ONE PROJECT PER TIER-2 SEAT INSTANCE, enforced by .tools/to-decomp-ref-lint.py's seating check. The check is meant to count OPEN task orders a seat holds on another project.",
+ "world_is": "Issuance commit 8ba8bf3ab0: '[gate2] REFUSED ... ar-3 / ar-4 ... 0.7.0_AE_CloudOps~A, which already holds open TOs on 1 OTHER pipeline project(s): AMGT_HARVST (2 open: AMGT_HARVST.TO-HVST-n-4.chatter-axis-source-gold-flip.md, AMGT_HARVST.TO-HVST-q-7.chatter-axis-gold-flip.md)'. Both files carry exactly one status tag, <status>withdrawn</status> (last touched 78425f62a7 2026-09-29 and 3a735f88e6 2026-09-30 by 2.0.0_SA_COO~H). Mode is ANNOUNCE ('NOT blocking this commit'), so nothing was refused in fact.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "grep of both HARVST order files: one <status>withdrawn</status> each; <issued_to>0.7.0_AE_CloudOps~A</issued_to>.",
+   "the gate2 output in the 8ba8bf3ab0 commit run, quoted above."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+,
+{
+ "id": "AMGT_RESAPP-Z-W223-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~223",
+ "surfaced_at": "2026-10-05T01:10:16Z",
+ "one_line": "lib/research/api/tests/ has one failing test at the issuance pin, outside this order's cells: test_model_words.py::test_formula_words_equals_the_pages_own_function_run_in_node reads portal ModelTab.tsx for `function formulaInWords` and the pinned portal (6936e92b) does not carry that function, so re.search returns None.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "The order asks for the api suite's last line before commit and implies the suite is otherwise green; the cut states the portal fixture the api tests read is present at --portal-ref 6936e92b.",
+ "world_is": "Full run `python -m pytest -q lib/research/api/tests/` in C:/tmp/r68-223 after the AMGT-ar-1 change: '1 failed, 556 passed'. The one failure is test_model_words.py:63 `AttributeError: 'NoneType' object has no attribute 'group'` from re.search(r\"function formulaInWords\\(formula: string\\): string \\{(.*?)\n\\}\", src, re.S) over portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx; grep for formulaInWords in that file returns no match. The test reads no word-cloud code and the change touches only scoped_amgt word-cloud functions; the pre-change run on the base could not be taken (git stash is hook-blocked here).",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "pytest tail: FAILED lib/research/api/tests/test_model_words.py::test_formula_words_equals_the_pages_own_function_run_in_node - AttributeError: 'NoneType' object has no attribute 'group'; 1 failed, 556 passed in 106.31s.",
+   "grep -n formulaInWords portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx at portal HEAD 6936e92b546f3fb79de220a63705b56365f143d3: no output."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+,
+{
+ "id": "AMGT_RESAPP-Z-W224-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~224",
+ "surfaced_at": "2026-10-05T01:08:04Z",
+ "one_line": "lib/research/api/tests/test_model_words.py::test_formula_words_equals_the_pages_own_function_run_in_node fails in the cut worktree before and after this order's edit: the pinned portal fixture (6936e92b) has no `function formulaInWords` in tabs/ModelTab.tsx.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "AMGT-ar-2 asks the worker to run lib/research/api/tests/ and report its last line; the order does not say the suite is green at the cut.",
+ "world_is": "Full api suite: 1 failed, 545 passed. The one failure is AttributeError 'NoneType' has no attribute 'group' at test_model_words.py:63 (re.search for `function formulaInWords(formula: string): string {` over portal tabs/ModelTab.tsx returns None). A native Grep for formulaInWords over C:/tmp/r68-224/portal ModelTab.tsx finds 0 matches. This order's diff touches no portal path and no model_words path. Not fixed (outside paths and the cell).",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "pytest lib/research/api/tests/: '1 failed, 545 passed' on worktree wk-AMGT_RESAPP-224.",
+   "Grep formulaInWords in portal ModelTab.tsx: 0 matches."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+,
+{
+ "id": "AMGT_RESAPP-Z-S349",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.7.0_AE_CloudOps~A",
+ "surfaced_at": "2026-10-05T05:01:56Z",
+ "one_line": "round64/checks/r64_served.py --cell c15 CONJOINS container coldness with the 5 s latency bar in one C1 clause, so the cell is SELF-DEFEATING ON REPETITION: its own 3-concurrency run leaves exactly the 3 warm containers the next run needs to be cold. Graded on as-2's deployed code it read NO twice (2 of 3 cold, then 0 of 3) while all 6 invokes answered 200 with headlines 6 of articles 6 and the slowest COLD invoke was 1949.75 ms against the 5000 ms bar. The halves' named trigger -- 'c15 reads over 5 s' -- did NOT fire; only the verdict token moved. Rollback NOT taken; the disposition is the issuer's.",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "AMGT_RESAPP.TO-AMGT-as-2 s.4 lists 'r64_served.py --cell c15 --where deployed, cold, on the day route' in the reported no-regression set, and the COO half's expected-outcome table predicts it 'YES, 1.84-1.95 s at ar-3 -- read on deployed'. The half's failure branch makes two things a ROLLBACK: 'c15 reads over 5 s' and 'any other check moves'. Both clauses treat the c15 VERDICT TOKEN as a latency oracle, which it is not: C1 is the conjunction status==200 AND cold AND duration_ms<5000 AND articles AND headlines==articles, graded over 3 invokes fired through ThreadPoolExecutor(max_workers=3) (r64_served.py :273-:280). The order gives no cold-induction step and the cell exposes no flag to force one, so coldness is a property of the function's INVOCATION HISTORY, not of the artifact under test.",
+ "world_is": "Two reads on the as-2 build (deployed CodeSha256 OcKZF34X9liuVKg9ZnpaqBcbSxwcDl6JlW+PlxWyF4k=), taken after AC1-AC3 and the r64/r65/r66 reported set had already invoked the function. READ 1 (04:5xZ): run 1 cold=False 245.03 ms, run 2 cold=True init 215.18 ms 1949.75 ms, run 3 cold=True init 220.13 ms 1938.50 ms -> 'FAIL C1 ... 2 of 3', 'PASS C2 ... 3 of 3', SERVED NO, exit=1. READ 2 (05:01:02Z, the first invoke after a quiet window): run 1 268.93 ms, run 2 264.49 ms, run 3 255.32 ms, all cold=False -> 'FAIL C1 ... 0 of 3', SERVED NO, exit=1. The second read is WORSE than the first because READ 1 left 3 warm containers for READ 2's 3 concurrent invokes to land on; repetition destroys the discriminator the cell exists to produce. Across all 6 invokes: status 200 on 6 of 6, headlines==articles==6 on 6 of 6, AMGT_SEGMENT timings present on 6 of 6 (C2 PASS both reads), max duration 1949.75 ms = 39 percent of the 5000 ms bar, and both COLD samples (1949.75 / 1938.50 ms) sit inside the half's own predicted 1.84-1.95 s band at ar-3. The only failing conjunct in either read is r['cold']. Not fixed: the cell is the issuer's deliverable (deliverables/2.0.0_SA_COO~Z/round64/checks/), outside this order's <paths>, and the act under test changed one file (lib/research/api/scoped_amgt.py) that touches neither the day route's loaders nor import-time cost.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "READ 1 verbatim: 'FAIL C1 3 of 3 COLD BA Sept 8 invokes under 5 s with every headline 2 of 3' / 'PASS C2 every run's log carries AMGT_SEGMENT timings 3 of 3' / 'R64 C15 SERVED: NO' / exit=1, with run 2 init_ms 215.18 duration_ms 1949.75 and run 3 init_ms 220.13 duration_ms 1938.5.",
+   "READ 2 verbatim: 'FAIL C1 3 of 3 COLD BA Sept 8 invokes under 5 s with every headline 0 of 3' / 'PASS C2 ... 3 of 3' / 'R64 C15 SERVED: NO' / exit=1, all three runs cold=False at 268.93 / 264.49 / 255.32 ms.",
+   "The predicate, read at the bytes: r64_served.py good = [r for r in runs if r['status']==200 and r['cold'] and r['duration_ms'] is not None and r['duration_ms'] < 5000 and r['articles'] and r['headlines']==r['articles']]; clause('C1 3 of 3 COLD ...', len(good)==3). Cold induction is ThreadPoolExecutor(max_workers=3) only.",
+   "The act's content diff is one file: CONTENT-DIFF SUMMARY files 356, IDENTICAL 355, CHANGED 1, ADDED 0, REMOVED 0 against the base 6wwEU3Sw+zFE66qfpFMXKL07e5QobD35LsRm2GsOZws=, the one being lib/research/api/scoped_amgt.py.",
+   "Every other graded and reported cell reads YES on the same deployed bytes: AC1 r69 c29, AC2 r68 c27/c28, AC3 r67 c23/c24/c25/c26, and the reported r64 c9/c10/c11/c12/c13/c14, r65 c17, r66 c18/c19/c22 -- each exit=0."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+,
+{
+ "id": "AMGT_RESAPP-Z-S350",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.7.0_AE_CloudOps~A",
+ "surfaced_at": "2026-10-05T05:16:32Z",
+ "one_line": "CITES AMGT_RESAPP-Z-S349 and settles its open half: given the precondition S349 identified -- a measured invoke-free idle, 925 s here -- r64 c15 reads 3 of 3 COLD at 1944.80 / 2007.98 / 1964.64 ms and SERVED YES, exit=0, on the as-2 deployed build. So c15 did NOT move, no rollback trigger ever fired, and S349's ARMED standing is cured. The finding that SURVIVES is narrower and still owed: the cell conjoins coldness with the latency bar in one clause and the order does not declare the sequencing precondition. The fix is the issuer's.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "AMGT_RESAPP.TO-AMGT-as-2 s.4 lists r64 c15 --where deployed LAST in the reported no-regression set, after AC1-AC3 and the r64/r65/r66 reads, and the COO half makes 'c15 reads over 5 s' and 'any other check moves' ROLLBACK triggers. Read literally, the order's own sequence makes a gradeable c15 read impossible: the eleven reads ahead of it leave the function warm and c15's only cold induction is ThreadPoolExecutor(max_workers=3). ar-3's instance records the unwritten remedy -- a 900 s invoke-free idle before firing c15 -- but no order states it.",
+ "world_is": "Three reads of c15 on the SAME deployed bytes (CodeSha256 OcKZF34X9liuVKg9ZnpaqBcbSxwcDl6JlW+PlxWyF4k=), differing only in how warm the function was. READ 1 (04:5xZ, straight after the other reported reads): 2 of 3 cold -> SERVED NO. READ 2 (05:01:02Z): 0 of 3 cold -> SERVED NO, worse than read 1 because read 1's own three invokes left three warm containers. READ 3 (05:16:32Z, after a MEASURED 925 s in which nothing invoked the function): 3 of 3 COLD, init 226.84 / 214.03 / 216.15 ms, duration 1944.80 / 2007.98 / 1964.64 ms, 'PASS C1 3 of 3 COLD BA Sept 8 invokes under 5 s with every headline 3 of 3', 'PASS C2 ... 3 of 3', 'R64 C15 SERVED: YES', exit=0. Across all nine invokes: status 200 on 9 of 9, headlines equal articles equal 6 on 9 of 9, AMGT_SEGMENT timings on 9 of 9, slowest single invoke 2007.98 ms = 40 percent of the 5000 ms bound. The cold band 1945-2008 ms sits inside the established spread for this cell (ar-3 1841-1946, aq-5 1936-1972, ap-4 2036-2328), so as-1 did not cost the cold path. What this row CURES in S349: the apparent 'any other check moves' trigger. What it does NOT cure, and what remains the issuer's: (i) C1 is one conjunction, so a warm 245 ms invoke fails it exactly as a cold 6 s invoke would and the verdict token cannot distinguish them -- two clauses would ('every cold sample under 5 s' and 'at least N of 3 were cold'); (ii) the order should state the sequencing, e.g. 'take c15 FIRST, before any other deployed read, or after a 900 s invoke-free idle'. Not fixed here: the cell lives under deliverables/2.0.0_SA_COO~Z/round64/checks/, outside this order's <paths>.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "READ 3 verbatim: 'PASS C1 3 of 3 COLD BA Sept 8 invokes under 5 s with every headline 3 of 3' / 'PASS C2 every run's log carries AMGT_SEGMENT timings 3 of 3' / 'R64 C15 SERVED: YES' / exit=0, fired 2026-10-05T05:16:32Z.",
+   "Per-run REPORT figures for READ 3, coldness proven by Init Duration rather than assumed: (1944.80 ms, init 226.84), (2007.98 ms, init 214.03), (1964.64 ms, init 216.15); AMGT_SEGMENT identity 518-555 ms and import 787-812 ms on each, which is where the cold cost sits.",
+   "The idle was measured, not estimated: last prior invoke 2026-10-05T05:01:03Z, fired 2026-10-05T05:16:32Z, 925 s, and nothing invoked opal-amgt-scoped-api in between.",
+   "The predicate at the bytes (r64_served.py): good = [r for r in runs if r['status']==200 and r['cold'] and r['duration_ms'] is not None and r['duration_ms'] < 5000 and r['articles'] and r['headlines']==r['articles']]; clause('C1 3 of 3 COLD ...', len(good)==3). Cold induction is ThreadPoolExecutor(max_workers=3) only.",
+   "Deployed state unchanged across all three reads: get-function-configuration CodeSha256 OcKZF34X9liuVKg9ZnpaqBcbSxwcDl6JlW+PlxWyF4k=, MemorySize 1769, LastModified 2026-10-05T04:44:13Z, and a full terraform replan reading 'No changes.' -- so the three differing verdicts are not three different artifacts."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+,
+{
+ "id": "AMGT_RESAPP-Z-S351",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~Z",
+ "surfaced_at": "2026-10-05T05:23:42Z",
+ "one_line": "DISARM of AMGT_RESAPP-Z-S349 by its disarm_owner: r64_served.py c15 is amended per the CTO's ruling (msg 29487) so the 5,000 ms bar grades EVERY invoke and the cold count is recorded, not required. Read on deployed OcKZF34X: 3 of 3 under 5 s (1,949.53 / 272.23 / 270.62 ms), cold 1 of 3, every headline served, AMGT_SEGMENT on 3 of 3, R64 C15 SERVED: YES.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "Row Z-S349 (ARMED, disarm_owner 2.0.0_SA_COO~Z): c15 conjoins container coldness with the 5 s bar in one C1 clause, so the cell defeats itself on repetition. The CTO ruled the deploy stands (its trigger, latency over 5 s, never fired) and assigned the amendment and the disarm to this seat.",
+ "world_is": "The amendment is in round64/checks/r64_served.py: the docstring and C1. A clause no longer fails on cold=False. The dry-run on deployed OcKZF34X just now: run 1 cold (Init 209.9 ms) at 1,949.53 ms, runs 2 and 3 warm at 272.23 and 270.62 ms; 6 of 6 headlines each; C1 PASS 3 of 3 (cold 1 of 3); C2 PASS 3 of 3; R64 C15 SERVED: YES.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "r64_served.py --cell c15 --where deployed after the amendment: the run lines and verdict quoted above.",
+   "CTO msg 29487: 'amend c15 so the 5000 ms bar grades every invoke and cold count is recorded, not required ... Your amendment, your disarm.'"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+,
+{
+ "id": "AMGT_RESAPP-Z-W228-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~228",
+ "surfaced_at": "2026-10-05T07:16:30Z",
+ "one_line": "The Security Scanner universe files carry no currency field, so a peer member's price currency can only come from the member's own company record; on the served peers objects 672 of 676 members have no matched record, so 672 serve a reason and 4 serve a currency.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "AMGT-at-3 asks every member to serve its price currency 'from the same stored source the member's price comes from' (the scanner universe) or a reason.",
+ "world_is": "All six scanner universe_data.json files (sp500, r1000, r1000v, acwx, eafe, eafev, asOf 2026-10-02) carry only ticker, name, mktVal, country, sector, industryGroup, universeWeight, divzWeight, price, values on every row; none carries a currency (types.ts line 71: price is LOCAL trading currency, unlabelled). The currency is therefore read from the CRNCY header figure of the member's own record, matched on the member's stored identity key. Measured over the 95 covered names, 676 members: 4 serve price_currency, 672 serve price_currency_reason because the stored member identity is UNRESOLVED (security_key null). r70_served c32 passes on the reason arm. Two things done beyond the order's text and inside its paths: (1) lib/research/peers/universe.py retains the joined record's CRNCY as row price_currency and engine.py serves it, so a re-landed peer object carries more currencies (no landing was run); (2) test_generation_and_pool_routes.py test_12 asserted members == [{'ticker':'NEW'}] and is updated to expect the one added reason field. test_model_words.py still fails at this portal ref (row Z-W224-S1 class); filed no new row for it. No new S3 path: the read is the model-block pool path _model_block_name already reads.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "r70_served.py --cell c32 --where local on this worktree: 'population: names 95 members 676 non-200 0', 'PASS C1 ... members failing 0', 'R70 C32 SERVED: YES'.",
+   "In-process read over covered_security_keys() (95): Counter {('reason', identity key absent): 672, ('currency', identity key present): 4}.",
+   "An in-process boto3 read of the six scanner universe_data.json files (json/security_scanner/latest/universes/) counted the keys on every security row: 10 keys, none a currency."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+,
+{
+ "id": "AMGT_RESAPP-Z-W227-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~227",
+ "surfaced_at": "2026-10-05T07:22:21Z",
+ "one_line": "84 of 95 covered names have no stored filing, no stored research-notes officer list and no stored Bloomberg officer list, so the F3 chain's Bloomberg leg is reported not tried (no vendor call made); those names serve officers only after ONE new Bloomberg COMPANY_EXEC_OFFICERS pull, which is Andrew's act.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "Order AMGT-at-2 item 3: a leg that would need a NEW vendor pull is not called, appears in chain_tried as not tried and why, and ONE row lists those names for Andrew's act.",
+ "world_is": "Measured at lib/research/management/exec_roster_chain.py on the worktree branch wk-AMGT_RESAPP-227, run over the 95 covered names against the live stores: 11 SERVED from an M-1 object (unchanged), 84 not served; for every one of the 84 the Bloomberg leg is 'not tried' with needs_new_pull true (no object under bloomberg/harvest/bronze/exec_officers/security_key=<key>/; the store holds 5 securities: 2317_TT, 6501_JP, 6861_JP, ASML_NA, CSL_AU). The filing leg found no usable stored filing for the 84 (the stored filing table holds 14 names, all but KMB_US_Equity already served or without a CEO; KMB's 12 stored officers name no chief executive, only 'Chairman of the Board', so the ruled completeness rule does not serve them). The research-notes leg: 47 of 95 names carry a management section, all prose; no officer names are taken from prose by code. Names needing a new Bloomberg pull (84): 1299_HK_Equity, 8035_JP_Equity, 8306_JP_Equity, 8316_JP_Equity, 8766_JP_Equity, 939_HK_Equity, 9433_JP_Equity, 992_HK_Equity, ADBE_US_Equity, AI_FP_Equity, AMD_US_Equity, AMXB_MM_Equity, AZN_LN_Equity, BATS_LN_Equity, BBSE3_BZ_Equity, BNP_FP_Equity, BP/_LN_Equity, BZLFY_US_Equity, CDNS_US_Equity, CELH_US_Equity, CLX_US_Equity, CNR_CN_Equity, CPA_US_Equity, ENEL_IM_Equity, GOOGL_US_Equity, GPN_US_Equity, GSK_LN_Equity, HEI_US_Equity, HSBA_LN_Equity, IBE_SM_Equity, ICICIBC_IN_Equity, ICT_PM_Equity, IDXX_US_Equity, IMB_LN_Equity, ISP_IM_Equity, ISRG_US_Equity, JD_US_Equity, KMB_US_Equity, KOFUBL_MM_Equity, KPN_NA_Equity, LLY_US_Equity, MA_US_Equity, MELI_US_Equity, MER_PM_Equity, ML_FP_Equity, MNST_US_Equity, MSCI_US_Equity, NESN_SW_Equity, NFLX_US_Equity, NG/_LN_Equity, NKE_US_Equity, NOKIA_FH_Equity, NOVN_SW_Equity, NOW_US_Equity, OMAB_MM_Equity, ORA_FP_Equity, PBR_US_Equity, PWR_US_Equity, QXO_US_Equity, RIO_LN_Equity, RKT_LN_Equity, RMS_FP_Equity, ROG_SW_Equity, RWE_GR_Equity, SAN_FP_Equity, SHOP_CN_Equity, SLB_US_Equity, SNPS_US_Equity, SPOT_US_Equity, SSE_LN_Equity, ST_SP_Equity, TSM_US_Equity, TTE_FP_Equity, UBER_US_Equity, UBSG_SW_Equity, ULVR_LN_Equity, UNH_US_Equity, UNVGY_US_Equity, VIVT3_BZ_Equity, V_US_Equity, WALMEX*_MM_Equity, WDAY_US_Equity, ZTS_US_Equity, ZURN_SW_Equity.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "r70_served.py --cell c31 --where local after the change: population names 95 served 11 non-200 0; PASS C1 names failing 0; R70 C31 SERVED: YES; exit=0.",
+   "Per-name aggregate over the same 95 (read_management with the stored notes read): ('ABSENT','NO_OBJECT'): 82, ('ABSENT','ZERO_OFFICERS'): 2 (KMB_US_Equity, PBR_US_Equity), ('SERVED'): 11; needs_new_pull 84; no chain reason carries a banned word."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+,
+{
+ "id": "AMGT_RESAPP-Z-S352",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.7.0_AE_CloudOps~A",
+ "surfaced_at": "2026-10-05T08:32:00Z",
+ "one_line": "at-6's packaged diff carries TWO store-shaped path literals that are neither on the halves' new-read-path list nor granted to this role: amgt/harvest/state/pull_log/ in the ADDED lib/research/harvest/bloomberg.py and filings/v1/ in the ADDED lib/research/management/roster.py -- a prefix this role's grant DELIBERATELY REMOVED at AMGT-rk-91 M2. Measured: neither is reachable from the request path (pull_log is a put_object reached only from the one-shot --move-m1 CLI; filings/v1/ is a module-level constant defined and never referenced), so neither is a STOP and no grant is owed. Found by SUBTRACTION from the code's own literals, not by reading the halves' list.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "The order s.1 says 'For every new S3 read path the halves list, a simulate-principal-policy on the function's role must read allowed. If one does not, it is a STOP.' AMENDMENT 1 then LISTS five: sec/harvest/silver/filing_source/, amgt/harvest/state/filing_attempt/, bloomberg/harvest/bronze/exec_officers/, derived/model_block/ (allowed) and issuer-site/harvest/silver/filing_source/ (the grant leg). Both halves present that enumeration as the complete set. A FORWARD LIST has no denominator, and CLAUDE.md rule 24(i) says to hunt the uncovered member BY SUBTRACTION from a printed one rather than by reading the list back.",
+ "world_is": "I took the subtraction instead of accepting the list. Denominator printed on both sides: 32 granted prefixes parsed out of local.scoped_amgt_pool_prefixes in infra/aws/terraform/harvest/scoped-amgt-api.tf at HEAD (post-grant), against 24 distinct slash-bearing string literals extracted from the 9 CHANGED/ADDED files at the pin e041c86791. 11 of 24 literals matched no granted prefix. Nine of those eleven are not S3 at all (application/json, application/octet-stream, application/pdf, application/zip, text/html, n/a, role/name/..., opal-management-roster/1.0.0, timeline/day/{date}). The remaining TWO are store-shaped and are the finding: (1) amgt/harvest/state/pull_log/ in the ADDED lib/research/harvest/bloomberg.py -- the granted sibling is amgt/harvest/state/filing_attempt/, so pull_log/ is NOT covered. It is a WRITE (state_put_pull_log -> client.put_object with a never-overwrite precondition), reachable only from move_m1(), the one-shot AMGT-rk-90 M1 CLI mover invoked by --move-m1. The adapter never calls it at request time. Same class as store.py's silver_append, which the CTO already ruled rides harmlessly (msg 29511). (2) filings/v1/ in the ADDED lib/research/management/roster.py as FILINGS_PREFIX, beside POOL_BUCKET = 'opal-data-harvest'. This prefix's grant was DELIBERATELY REMOVED from this role at AMGT-rk-91 M2 (the .tf comment says 'No production reader of this adapter still reads filings/v1/ after this cell'), so a live read would answer AccessDenied -- the exact shape of row Z-S346. MEASURED: both FILINGS_PREFIX and POOL_BUCKET have occurrence count 1 in the 1321-line file, i.e. the definition and nothing else -- DEAD CONSTANTS. roster.py's ONE real get_object reads amgt/harvest/state/filing_attempt/<partition>/UNRESOLVED-SOURCE.json via store.address_of (builder output, confirmed by running it), which IS granted and simulated allowed. The only other filings/v1/ mention in the seven added modules is a DOCSTRING in lib/research/management/__init__.py describing rj-6's old interface. So the halves' list is COMPLETE for request-time reads and ruling 4 is discharged -- but it is complete by accident of reachability, not because the enumeration was checked. Not fixed: both literals are in the issuer's and HARVST's source, outside this order's <paths>, and removing a dead constant is not a redeploy this act is signed for.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "Subtraction output: 'GRANTED PREFIXES (from the .tf at HEAD): 32' / 'SLASH-BEARING STRING LITERALS across the 9 files: 24 distinct' / 'SUBTRACTION -- literals NOT covered by any granted prefix: 11 of 24'.",
+   "bloomberg.py at the pin: 'def state_put_pull_log(security_key, stamp, body, client=None)' calling client.put_object, with _NEW_STATE_PREFIX = 'amgt/harvest/state/pull_log/' used only inside move_m1()'s assertion; bronze_write REFUSES request 'pull_log' outright ('pull_log is STATE, model_block_fye is RETIRED').",
+   "roster.py at the pin: line 98 POOL_BUCKET = \"opal-data-harvest\", line 99 FILINGS_PREFIX = \"filings/v1/\"; grep occurrence counts over the whole 1321-line file are 1 and 1, so neither is read anywhere. Its one get_object is at line 1159 against store.address_of('amgt','state','filing_attempt',...).",
+   "Builder confirmation, run live: store.address_of('amgt','state','filing_attempt', 'security_key=BA_US_Equity', object_name='UNRESOLVED-SOURCE.json') -> s3://opal-data-harvest/amgt/harvest/state/filing_attempt/security_key=BA_US_Equity/UNRESOLVED-SOURCE.json.",
+   "All five halves-listed paths simulated allowed on both limbs before the code leg landed, each call one --resource-arns, beside an isolated ungranted control (identity/) that read implicitDeny on both limbs -- so the allowed verdicts are not a saturated instrument.",
+   "A METHOD NOTE AGAINST MYSELF: my first read of roster.py used a filtered grep piped to head -40 and showed no S3 call, from which I nearly concluded the file makes none. The truncation hid boto3 x2, get_object x1 and Bucket= x1. The occurrence-count census with a positive control on scoped_amgt.py (boto3 6, get_object 10, list_objects 6, Bucket= 11) is what corrected it."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+,
+{
+ "id": "AMGT_RESAPP-Z-S353",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.7.0_AE_CloudOps~A",
+ "surfaced_at": "2026-10-05T08:32:00Z",
+ "one_line": "CTO condition 3 and AMENDMENT 1 require /peers to be 'timed PER SEGMENT', but the /security/<key>/peers route emits NO AMGT_SEGMENT line, so a per-segment breakdown cannot be read off the function's own logs: 0 of 6 invokes carried one. The total latency IS measurable and answers the STOP bar with room to spare (worst 136.83 ms against 5,000 ms, 0 non-200 over 6 invokes on 3 names, 12 members each), so nothing is blocked -- but the per-segment half of the condition is UNMEETABLE as written and is reported as such rather than satisfied by presenting the total as a breakdown.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "The CTO half's condition 3 reads '/peers timed per segment' and AMENDMENT 1 reads 'Time /peers per segment' and 'Also report: the /security/<key>/peers latency on 3 names. at-3 adds one stored read per member, in parallel.' The COO half makes a /peers over 5 s a STOP (not a rollback). The per-segment phrasing presupposes the route emits AMGT_SEGMENT timings the way the day route does -- which is where r64 c15's C2 clause gets 'every run's log carries AMGT_SEGMENT timings'.",
+ "world_is": "Measured on deployed GS//XHnVd4+bBIg1VU++r1fp9v495pi6jKFat9KbEYE= with deliverables/0.7.0_AE_CloudOps~A/at6_peers_latency.py, one Lambda invoke per read with LogType='Tail' so Duration and any AMGT_SEGMENT line come from the function's OWN REPORT line rather than a client-side stopwatch that would also time the network. Six invokes, two per name on BA/AMD/VLO: 112.22, 111.65, 110.60, 112.81, 104.82, 136.83 ms, all status 200, 12 members each, and AMGT_SEGMENT lines on 0 of 6. The zero is NOT 'no time was spent' and it is not a dead parser: the same regex over the day route's logs returns six segment lines per invoke in r64 c15 minutes earlier, and scoped_amgt.py at the pin carries 5 AMGT_SEGMENT emit sites -- so the mechanism exists and simply is not wired into the /peers handler. The absence is ROUTE-SPECIFIC. Consequence for the grading: the STOP question ('/peers over 5 s') is fully answered at 136.83 ms, 2.7 percent of the bar, and at-3's one-stored-read-per-member did not make the route expensive. The diagnostic question the per-segment phrasing was reaching for -- WHERE the time goes now that there are 12 parallel member reads -- cannot be answered with the current instrumentation. Not fixed: adding emit sites to the /peers handler is a served-code change in lib/research/api/scoped_amgt.py, which this order's bounds forbid (the act and nothing else) and which would invalidate the signed CONTENT-DIFF.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "Probe output: 'DENOMINATOR: 6 invokes over 3 names; non-200 0' / 'WORST duration: 136.83 ms against the 5000 ms STOP bar' / 'PER-SEGMENT COVERAGE: 0 of 6 invokes emitted any AMGT_SEGMENT line' / 'R70 AT6 PEERS LATENCY: YES'.",
+   "Per-invoke rows, all cold=False (warm, measured after the apply and after c15): BA 112.22 / 111.65, AMD 110.60 / 112.81, VLO 104.82 / 136.83 ms; members 12 on each.",
+   "POSITIVE CONTROL that the parser and the mechanism both work: r64 c15 on the same deployed bytes minutes earlier printed six AMGT_SEGMENT pairs per invoke (identity=525, import=776, gold_chatter_daily=365, _list=74, _get=37, _decode=182 on run 1), read by the same regex shape. And scoped_amgt.py at pin e041c86791 contains 5 AMGT_SEGMENT emit sites.",
+   "The probe is committed at org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~A/at6_peers_latency.py and passes .tools/commit-gate.sh (py_compile + ds-precommit + ruff py39), so the measurement is reproducible rather than a one-off transcript."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+},
+{
+ "id": "AMGT_RESAPP-Z-W230-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~230",
+ "surfaced_at": "2026-10-05T13:05:00Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "one_line": "The round-45 FWD-30 grader (sweep.py --served) cannot render the portal page at this portal checkout: its page_render.cjs loader is stale against DSGN_AMGTV1's new imports, so FWD-30's field-by-field comparison against the page was NOT read at round 70.",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "The AMGT-at-5 order and the round-51 zz-7 pass treat sweep.py --served (deliverables/2.0.0_SA_COO~Z/round45/checks/sweep.py) as FWD-30's one grader: it renders the SecurityAnalysis page from a served capture (page_render.cjs, react-dom/server) and compares the page's data attributes to the rich export. At round 51 it read OK on 96 of 96. FWD-30's DONE WHEN is a field-by-field comparison against the page.",
+ "world_is": "At this worktree's portal checkout (portal HEAD 6936e92b; the parent gitlink reads ec65c5d6) sweep.py --live --served --only BA_US_Equity,AMD_US_Equity reads CAPTURE_FAILED 2 of 2: page_render.cjs exits rc=1 with MODULE_NOT_FOUND '@/ui/components/graphic/GraphicCard' (DSGN_AMGTV1's LeadPanel.tsx and HeaderCards now import @/ui/components/graphic/*, which the loader's STUBS table does not name; it carries a null stub for HeroGraphic that drops PanelEyebrow and ICON_GLOW). This worktree's portal also has no node_modules (not tracked), so a bare run fails one step earlier. With node_modules reached through a scratch junction to the shared tree's portal/node_modules and a SCRATCH copy of page_render.cjs patched in three ways (an @ -> src alias resolver with a null-component Proxy fallback, default-export interop for CJS packages such as clsx, and a Proxy for the hooks module), the page renders and the grader reads NOT_OK on 3 of 3 probed names (AMD, ASML_NA, BA: FIGURES+ABSENCES+CASES differ; value facts compared 1,495, differ 1,312; CASES page 0 rich 9). That NOT_OK is NOT trusted as a page-versus-export difference: a served-bundle comparison of the same routes over all 95 names reads every served value that is in the rich export as equal to it (0 differing), the fiscal-year figures that are served but not in the export's tables are the ones their own check REFUSED (stated in the export as 'MNEMONIC: REFUSED -- reason' lines), drafting cites and posture cites are equal both ways, and only the header figures /thesis serves beyond the export's ten (e.g. NAME, EQY_SH_OUT_REAL, SHORT_INT_RATIO, CIE_DES) are not exported, whether the page shows them being exactly the unread limb. So FWD-30 is recorded UNMEASURABLE_WITH_REASON in FWD_SWEEP_ROUND70.json, with branch (b) read as 200 Markdown on 95 of 95 names. ARMED because the grader will read CAPTURE_FAILED or a false NOT_OK on any later pass at this portal (and round 51's 'equal 96 of 96' no longer reproduces); not fixed: the grader sits outside this order's paths and the scratch patch was not committed. The junction was removed.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "Unpatched: 'served over 2 of 97 folders: OK 0, NOT_OK 0, CAPTURE_FAILED 2' and 'Cannot find module @/ui/components/graphic/GraphicCard' with requireStack portal/package.json (run 2026-10-05, python -W ignore sweep.py --live --served --require-cases --only BA_US_Equity,AMD_US_Equity).",
+   "Scratch-patched loader: 'served over 3 of 97 folders: OK 0, NOT_OK 3, CAPTURE_FAILED 0'; 'value facts over 3 compared names: compared=1495 differ=1312'; AMD, ASML_NA and BA each read fig_page 592-633 against fig_rich 769-812 in the TSV.",
+   "Served-bundle second reading (fwd_sweep.py, FWD-30 evidence in FWD_SWEEP_ROUND70.json): over 95 of 95 names every served value present in the export equals it, the fiscal-year figures absent from the export's tables are counted with how many were REFUSED by their own check and stated as REFUSED lines, drafting and posture cites are equal both ways, and the header figures served but not exported are counted by mnemonic.",
+   "ec65c5d637 is the parent index's portal gitlink; 6936e92b54 is this worktree's portal HEAD (git diff --submodule=short portal)."
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W230-S2",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~230",
+ "surfaced_at": "2026-10-05T13:05:00Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "one_line": "No overlay feed item on any covered name carries a url (600 items across 56 names, 0 with a url), so the 'followed one out' limb of FWD-4 and FWD-16 has no served precondition; round 51 read 2 of 2 items with a url.",
+ "hazard_standing": "INERT",
+ "spec_asserts": "FWD-4 and FWD-16 (PRD v0.37 ENDPOINT) DONE WHEN: an analyst has read a recent item and 'followed it out'; their ACCEPT lines say each item is clickable through to its original. The round-51 zz-7 pass read the 30-day feed as 2 items across 96 names (BA wsj, HD bbg), both with a url (FWD_EVIDENCE_ROUND51.json FWD-4).",
+ "world_is": "Read at 2026-10-05 on deployed GS//XHnVd4+bBIg1VU++r1fp9v495pi6jKFat9KbEYE=: /security/<key>/overlay feed.items over the 95 covered names holds 600 items on 56 names (feed.source is gold article_security_mention, the day view's own source), and url is null on 600 of 600 (BA: sa 31, barrons 19, bbg 17, wsj 1, all url null; the day-view article rows carry article_key, headline, publisher and origin but no url field). The feed was re-sourced from gold since round 51, and gold does not carry the original link. fwd_sweep.py therefore grades FWD-4 and FWD-16 DOES_NOT_MEET on the precondition-absent rule (no served item can be followed out to its source); if the page builds a link some other way, the sweep did not read it. Not fixed: serving a url is a route change outside this order.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "fwd_sweep.py FWD-4 evidence in FWD_SWEEP_ROUND70.json: feed_items 600, feed_items_with_url 0, names_with_items 56, over 95 of 95 names read (all seven routes 200).",
+   "BA_US_Equity overlay feed.items probe: Counter of (publisher, has url) = sa/False 31, barrons/False 19, bbg/False 17, wsj/False 1.",
+   "Round-51 comparison: FWD_EVIDENCE_ROUND51.json FWD-4 output_excerpt 'feed items in the 30-day window: 2 items across 96 names (BA wsj, HD bbg), 2 of 2 with a url'."
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W230-S3",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~230",
+ "surfaced_at": "2026-10-05T13:05:00Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "one_line": "FWD-35's exclusion record and its scheduled-versus-ad-hoc provenance are not on the served plane: the generation pointer carries no excluded_names, and the only record of the one excluded covered name is an UNTRACKED producer record copy in the shared checkout.",
+ "hazard_standing": "INERT",
+ "spec_asserts": "FWD-35's DONE WHEN: names without two price observations 'are counted and named in the generation's own exclusion record, never silently absent', and 'the generation came from the scheduled producer, not an ad-hoc run'. The round-58 analysis grades Branch A as '94 rows, stale 0'.",
+ "world_is": "The TRENDING_PRICE _CURRENT pointer for 2026-10-02 (generation 20261004T110517Z-4ff62071cb80, run R20261004T110517Z, COMPLETE) carries row_count 94 and no excluded_names, and the ranking route serves 94 rows against 95 covered names read fresh; the one missing name (ROG_SW_Equity) is named only in the producer's record copy price_axis_rows_2026-10-02.json ('excluded': {'ROG SW': 'INSUFFICIENT_PRICE_OBSERVATIONS_IN_WINDOW_LT_2'}, universe_denominator 95), which sits UNTRACKED under deliverables/0.9.0_WK_AMGT_RESAPP~6/ in the shared checkout and is absent from every worktree cut from a commit. fwd_sweep.py finds it through the git common dir; a tree without the shared checkout would read FWD-35 UNMEASURABLE_WITH_REASON. Scheduled-versus-ad-hoc is likewise not a served field: the sweep states computed_at 2026-10-04T11:05Z (07:05 ET) and the run_id and grades MEETS on the measurable limbs with that limb listed as not read. Not fixed: a served exclusion record is a route change outside this order.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "fwd_sweep.py FWD-35 evidence: rows 94, rows_with_signed_30d_return_pct 94, covered_denominator 95, covered_names_with_no_row ['ROG_SW_Equity'], exclusion_record {'ROG SW': 'INSUFFICIENT_PRICE_OBSERVATIONS_IN_WINDOW_LT_2'}, record_copy resolved through git rev-parse --git-common-dir.",
+   "scoped_amgt.read_generation_pointer for TRENDING_PRICE on 2026-10-05 falls back to the 2026-10-02 pointer: keys coverage_vintage, run_id, axis_date, generation_id, payload_hash, row_count, written_at, axis, as_of_date, state, record_type, ticker; no excluded_names.",
+   "git ls-files over deliverables/0.9.0_WK_AMGT_RESAPP~6 lists price_axis_rows_2026-09-10.json only; the 2026-10-01 and 2026-10-02 copies are untracked."
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W232-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~232",
+ "surfaced_at": "2026-10-05T16:12:57Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "one_line": "The AMGT-au-2 repair list (GraphicCard, HeroGraphic, useCollectedChatter stubs) does not make page_render.cjs load: the page also imports @/ui/components/PageEnd (and its @/lib/dateUtils), which the round-45 loader neither stubs nor resolves.",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "TO AMGT-au-2 section 1 names the repair as the GraphicCard and HeroGraphic (PanelEyebrow, ICON_GLOW) stubs plus a useCollectedChatter stub, 'as tabs.harness.cjs:90-100 does'; with those the copied grader should render the page at portal e6ab82ad.",
+ "world_is": "After exactly those three stubs the copied page_render.cjs still exits rc=1 on all three names (sweep.py: CAPTURE_FAILED 3 of 3), MODULE_NOT_FOUND '@/ui/components/PageEnd' from SecurityAnalysis.tsx:11 (DSGN_AMGTV1 round 38 made the page end on the shared PageEnd). tabs.harness.cjs:204-206 loads the REAL src/ui/components/PageEnd.tsx and src/lib/dateUtils.ts inside its load(); the copy now does the same (two lines in load(), grader/page_render.cjs). With them the page renders (BA_US_Equity 598842 bytes) and AC1 reads NOT_OK 3, CAPTURE_FAILED 0. The originals under round45/checks are untouched. Edit is inside the order's grader copy, so no widening of the write grant; the loader still has no stub for any other import.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "node org/.../0.9.0_WK_AMGT_RESAPP~232/grader/page_render.cjs <BA fixture> before the PageEnd/dateUtils lines: Error: Cannot find module '@/ui/components/PageEnd'; after: stdout 598842 bytes, rc 0.",
+   "portal/src/pages/SecurityAnalysis/__harness__/tabs.harness.cjs:204-206 (read only).",
+   "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~232/grader/page_render.cjs load()."
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W232-S2",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~232",
+ "surfaced_at": "2026-10-05T16:12:57Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "one_line": "The repaired grader reads about 195-200 export-only fiscal figures per name (20 mnemonics x their years), not the issuer's 539-629 including ARD_* rows; no ARD_* row is export-only here, and the ABSENCES class (one MODEL_NOTE per name) was not in the order's list.",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "TO AMGT-au-2 section 1.3: the issuer measured on a scratch repair 'about 539-629 export-only fiscal figures per name (including ARD_* rows), 3 export-only case lines per name, 17-18 page-only 2026E-2028E figures per name and 19 value differences, all x-suffixed ratios'.",
+ "world_is": "With the order's repairs applied to the copies (years reset per header tr, x suffix read), the --diff of BA_US_Equity, AMD_US_Equity, ASML_NA_Equity prints per name: FIGURES rich-only 195, 198, 200 (the same 20 mnemonics each, none ARD_*; the BA page renders its 5 ARD_* rows with no difference), FIGURES page-only 20, 21, 21 (7 mnemonics x 2026E-2028E, PE_RATIO 2027E-2028E on BA), CASES rich-only 3 each, ABSENCES rich-only 1 each (MODEL_NOTE 'the block carries fiscal years 2016 to 2025 only.'), value differences 0 of 1674 compared. Control: the same copies with the years reset disabled print 772 FIGURES rich-only over the 3 names and 1348 value differences of 1495 compared, so the reset is what takes the value differences to 0; the issuer's 539-629 is not reproduced by either arm and its scratch repair is not in the tree, so its cause is not stated here.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~232/fwd30_r71.tsv and the AC1 run (--diff) of 2026-10-05.",
+   "Control run (scratch, no-reset copy): FIGURES rich-only 772, FIGURES page-only 241, 'compared=1495 differ=1348'; repaired: 'compared=1674 differ=0'.",
+   "FWD30_READ_ROUND71.md in the same folder carries the per-name table."
+  ]
+ }
 }]
 ```

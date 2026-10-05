@@ -1832,3 +1832,106 @@ the round-35 cut. AC2 = battery29 with no skip. It touches no product file.
 **Sequencing (CTO msg 29279):** AMGT_CORPUS round 36 has a candidate on `tabs/ModelTab.tsx` and `modelSheet.ts`. Neither cell
 touches either file (checked against both `<paths>` lists).
 **Fan-out:** 2 of 2 chains, cap 8 (disjoint files; both from 35a723bf). **Risk:** LOCAL.
+
+## v37 -- ROUND 37 (issuer, 2026-10-05 ~04:3xZ) -- ONE BATCHED REPAIR CELL + THE READS (PRD v0.15 @237d5d742f, ADMITTED)
+
+**Rectangle:** the CTO's ENRICHMENT LIST @9b2ed08fe2 (`ledger/CTO_COUNTERSIGN_COMPLETION_GRADES_ROUND36.md`, msg 29466): (1) FWD-21 365D
+edge labels inside the plot with no collision; (2) FWD-8 no cross-currency average ever, a mixed group says so; (3) FWD-10 the no-call
+state carries its as-of date; (4) reads of FWD-5/11/19 on the served build. Grades @c706123ec2, countersigned @d0fd16fba5.
+**Base:** portal DEV 56b71adb (carries AMGT_CORPUS's ModelTab.tsx/modelSheet.ts; this round touches neither).
+
+| cell | serves | owned files | worker |
+|---|---|---|---|
+| `AV-zo-1` REPAIRS (batched) | FWD-21, FWD-8, FWD-10 | `components/ChatterBubbles.tsx`, `cscTable.ts`, `tabs/PeersTab.tsx`, `components/LeadPanel.tsx`, `components/SecurityOverlay.tsx`, `tabs/PostureTab.tsx` | ~99 |
+
+**Check:** `round37/checks/repairs/repairs37.cjs` (+ `_render37.cjs`, `_collage37.cjs`), fixtures `round37/fixtures/` captured read-only on
+the deployed scoped API (`capture_r37.py`: chatter 30/90/365; MSFT and AMD peers/overlay/thesis). At base 56b71adb it reads 2 of 5: the
+static render reproduces the live 365D offenders ("Kim...", "Synopsys Inc") plus 90D "IDEXX Laboratories Inc" -- each straddles its OWN
+bubble's outline, the case labels34 skipped; 18 currency faults (MSFT "Average 158,633 (n=12)"); 9 undated no-call renders. KEEP 8/8,
+PLANTED pass. Green 5 of 5 (issuer re-run).
+**Issuer ruling inside the decomposition (FWD-8):** the served peers carry no member price currency (`cap_currency` only). The page reads
+"never a cross-currency average" as no Price summary until a currency is served; the producer gap goes to the CTO for RESAPP at the close.
+**Item 4 is not a cell:** the reads of FWD-5/11/19 are the issuer's real run at the close, `round37/walk/reads37.mjs` (FWD-5 marker press
+and day dialog; FWD-11 side-by-side captures of /market, /positioning, /philosophy; FWD-19 loading/error on the timeline, header and
+What changed by intercepting one GET, and PanelNoPermission on its real route).
+**Fan-out:** 1 of 1 chains, cap 8. **Risk:** LOCAL.
+
+## v38 -- ROUND 38 (issuer, 2026-10-05 ~07:3xZ) -- ONE BATCHED CELL: THE SHARED FOOTERS, THE END LINE, WHAT CHANGED'S STATES (PRD v0.15 @237d5d742f, ADMITTED)
+
+**Rectangle:** the CTO's list @0a865d7e8f (`ledger/CTO_LIST_ROUND38.md`, msg 29501): (1) FWD-19 What changed uses PanelLoading and
+PanelError; (2) FWD-11 every card ends in the shared time|source footer from served fields only, and the page ends with the shared
+"End of Security Analysis. Data as of <served date>." line; (3) the FWD-11 re-read on the served candidate. FWD-11 was judged NOT_REALIZED
+for the footers and the end line, not for the card family (FWD-12 governs that).
+**Base:** portal 85e24287, the CTO-approved round-37 candidate (7f679aee on DEV 3e1aa46f); its DEV push is held for Andrew's word, so
+round 38 stacks on it as round 35 did on 055ba370.
+
+| cell | serves | owned files | worker |
+|---|---|---|---|
+| `AV-zp-1` FOOTERS + END LINE + STATES (batched) | FWD-11, FWD-19 | `SecurityAnalysis.tsx`, NEW `components/CardFooter.tsx`, `components/model/WhatChangedPanel.tsx`, `components/SecurityOverlay.tsx`, `components/LeadPanel.tsx`, `tabs/{Thesis,ExecManagement,Peers,Posture,Model}Tab.tsx`, `src/ui/components/panels/PanelFooter.tsx` | ~100 |
+
+Items 1 and 2 share What changed (its card needs the footer too), so they are one cell.
+**Check:** `round38/checks/repairs/repairs38.cjs` (+ `_render38.cjs`, `_cards38.cjs`; served fixtures from rounds 35 and 37). At base
+85e24287 it reads 2 of 5 (issuer re-run): What changed shows no designed states and a skeleton on a 500 (incl. the remount path); 14
+cards carry no footer and the Lead Panel prints a hand-rolled "date | Source" line; PageEnd renders 0 times. KEEP 9/9, PLANTED 17/17.
+Green 5 of 5 through CHECK_SRC_OVERRIDE. A per-card census of served time/source fields is in the check (`_cards38.cjs`); a card with
+neither prints no footer line (the timeline serves no source).
+**Issuer rulings inside the decomposition:**
+- `tabs/ModelTab.tsx`: one import + one footer line inside its own Panel. AMGT_CORPUS's ModelTab candidate has landed on DEV, and
+  COO~X confirms nothing is in flight (msg 29519).
+- `src/ui/components/panels/PanelFooter.tsx` (shared estate): ONE optional prop (a light ground), default unchanged, so every other page
+  is unchanged. It is needed because the band-painted footer fails the light-card checks. Flagged to the CTO in the issuance; the CTO
+  reviews the product-file candidate.
+**Item 3 is not a cell:** the FWD-11 re-read is the issuer's real run at the close (round37/walk/reads37.mjs fwd11-side-by-side).
+**Fan-out:** 1 of 1 chains, cap 8. **Risk:** LOCAL.
+
+## v39 -- ROUND 39 (issuer, 2026-10-05 ~13:4xZ) -- ONE DIRECT ACT: AN UNKNOWN SOURCE READS THE FIXED PHRASE (PRD v0.15)
+
+**Rectangle:** the CTO's review of round 38 (@2e225582da, msg 29549): APPROVED pending ONE required fix -- `CardFooter.tsx:95` prints a
+de-punctuated raw code for an unknown source; it must return `UNNAMED_SOURCE_WORDS`, with one repairs38 arm on an unknown long source.
+Andrew's word for the round 37+38 DEV push follows this fix (record 121b7b016e, msg 29560).
+**Base:** portal `dsgn-r38-zp1` (75f9f477, the round-38 cell branch); the candidate is rebuilt at the close on current DEV.
+
+| cell | serves | owned files | worker |
+|---|---|---|---|
+| `AV-zq-1` UNKNOWN SOURCE (direct act) | FWD-11 | `components/CardFooter.tsx` (one line) | ~101 (worker-light) |
+
+**Check:** `round38/checks/repairs/repairs38.cjs` AMENDMENT 2 (arm 4, "AN UNKNOWN SOURCE READS THE FIXED PHRASE"; renders the real
+CardFooter through `_render38.cjs`'s new footer mode). At the round-38 candidate 5fe58e89 it reads 5 of 6 (arm 4 FAIL); with the one-line
+reference fix, 6 of 6. AC2 = battery29 with no skip.
+**Not cut (the CTO's next list):** row S3 (the end line's "5:00p ET" after a bare served day) and reads37's What-changed scope selector.
+**Fan-out:** 1 of 1. **Risk:** LOCAL. **Direct act.**
+
+## v40 -- ROUND 40 (issuer, 2026-10-05 ~15:1xZ) -- ONE DIRECT ACT: SECURITY ANALYSIS OPEN TO EVERY OPAL EMPLOYEE
+
+**Rectangle:** Andrew-direct 2026-10-05 ~15:0xZ at this seat (record
+`org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261005_150xZ_SECURITY_ANALYSIS_ALL_OPAL_EMPLOYEES_REQUIREINTERNAL_LEADPANEL_LOAD_TO_COO_Z.md`):
+"It should be visible for all Opal Employees" / "should not require admin access to see" / "requireInternal is the correct approac".
+**Base:** portal DEV 71097b53 (r39 pushed first, MSTR~Z msg 29616 answered (a), msg 29619).
+
+| cell | serves | owned files | worker |
+|---|---|---|---|
+| `AV-zr-1` ACCESS (direct act) | the page gate (Andrew-direct) | `portal/src/App.tsx` (nav entry + 2 routes + their comments) | ~102 (worker-light) |
+
+**Check:** `round40/checks/access/access40.cjs` (static read of App.tsx, ProtectedRoute.tsx, firmAccess.ts). At 71097b53 it reads 2 of 4: nav
+requiresDev + requiresAdmin with no internal tier; both routes requireDev requireAdmin. KEEP (Investor Reporting unchanged; requireInternal is
+firmId === 'opal-capital'; no partner allowlist names the path) and PLANTED pass. Green 4 of 4 on a scratch copy with the edit.
+**Backend, measured:** the scoped AMGT API admits on the edge-injected firm identity only (scoped_amgt.py `_firm_id`); no Dev/admin role
+check, so no backend change. **Not cut:** the Lead Panel's slow load (Andrew: to COO~Z; message sent 15:03Z).
+**Fan-out:** 1 of 1. **Risk:** LOCAL. **Direct act.**
+
+## v41 -- ROUND 41 (issuer, 2026-10-05 ~15:4xZ) -- ONE ISSUER ACT: THE COMPLETION GRADING WALK ON DEV e6ab82ad
+
+**Rectangle:** `ledger/CTO_LIST_ROUND41.md` @9a476b6ee0 (msg 29654): (1) grade FWD-1..27 on DEV e6ab82ad against RESAPP GS//XHnV, each on
+its DONE WHEN, into `COMPLETION_GRADES.round41.json` for the CTO's countersign; (2) re-read FWD-4 (ROG SW + a US name), FWD-7 (AMD, ASML),
+FWD-8 (a mixed-currency name) where the producer moved. **Base:** portal DEV e6ab82ad (CI 37332239294 success).
+
+| cell | serves | owned files | actor |
+|---|---|---|---|
+| `AV-zs-G` GRADING (issuer act, no product file) | FWD-1..27 | `deliverables/2.0.0_SA_COO~D/round41/` | 2.0.0_SA_COO~D (as round 36, per CTO ruling msg 29406) |
+
+**Instruments, unchanged and already proven able to fail:** `round35/walk/closewalk35.mjs --no-officer "ASML NA" --names "BA US,VLO US,AMD
+US,MSFT US"` (FWD-2/4/5/6-11/21/24/27, ROG SW non-USD header, ASML no-filing roster, AMD and MSFT tabs); `round37/walk/reads37.mjs
+--names "BA US,AMD US"` (FWD-5 markers + own-first, FWD-11 side-by-side, FWD-19 panels; its no-permission arm RETIRED in round 40);
+`round35/checks/instrument/instrument35.cjs` (FWD-12..20 states sweep). Live: localhost:5174 = C:/tmp/wk-dsgn-amgtv1-92/portal at e6ab82ad
+(dev:live, live API). Walker ARM/DISARMED through MSTR~Z.
+**Fan-out:** 0 worker chains (no product change). **Risk:** SERVED read (no write). **Not cut:** the Lead Panel load (COO~Z).

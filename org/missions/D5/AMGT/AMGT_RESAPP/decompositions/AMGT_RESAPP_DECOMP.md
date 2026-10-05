@@ -8254,3 +8254,231 @@ fanout:
   no_s3_deletes: true
   egress: none
 ```
+
+## 76. ROUND 68 -- FWD-39 CLOUD REPAIR OVER EVERY CLOUD-SERVING NAME, PLAIN WORDS ON /thesis AND /ledger, ONE REDEPLOY, THE c24 RE-READ. Four cells, four orders
+
+**Input:** the CTO's round-67 analysis `ledger/ROUND_ANALYSIS.round67.md` @2db6fd3e3d (msg 29346), section 5 items 1-4 and rulings
+1, 3, 4 and 5. The CVO's slug ADJUDICATION_v80 @69ce44def1. PRD v0.37. Ruling 2 (the chatter_window build list) is HARVST round
+46's (`2.0.0_SA_COO~H`), not a cell here.
+
+### 76a. MEASUREMENTS (`round68/checks/r68_served.py`, CLOUD ~00:4xZ; every cell FAILS at the base, deployed `2rFeF57l` and local)
+
+- **c27 (FWD-39, ruling 1).** The census is over the latest `chatter_window` part: names 212, serving a cloud 199, terms read
+  6,962, non-200 0.
+  - C1 FAIL: 6 own-name offenders, exactly the CVO's (AZN astra, GOOGL/GOOG google, HESAY herm, NSRGY nestl, XOM exxon,mobil).
+  - C2 FAIL: 82 clouds carry a measured junk or boilerplate token (estimates, sees, movers, premarket, hon, hai, ...).
+- **c28 (ruling 3).**
+  - C1 FAIL: DE /thesis serves 18 jargon reasons (identity, UNRESOLVED, crosswalk, dossier, landed, model block).
+  - C2 FAIL: DE /peers serves 3.
+  - C3 FAIL: /ledger on BA, AMD, VLO, NVDA serves 12 reasons with "estate", "stage" or "input ledger".
+- **c24 (r67, FWD-36).** Deployed: mismatches 0, unreadable 0, no-table-row 21. It turns on HARVST round 46.
+
+### 76b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-ar-1` | FWD-39: an accent-safe tokenizer, a DECLARED own-name alias list, the compound-name split, the measured boilerplate; census over every cloud-serving name (R1) | `0.9.0_WK_AMGT_RESAPP~223` | worker | LOCAL | `lib/research/api/` |
+| `AMGT-ar-2` | plain words: /thesis and /peers for a covered name with no block; the /ledger source reasons (R3, DSGN FWD-27) | `0.9.0_WK_AMGT_RESAPP~224` | worker | LOCAL | `lib/research/api/`, `lib/research/coverage/` |
+| `AMGT-ar-3` | the code redeploy carrying ar-1 and ar-2. DEPLOY genre; content diff against DEPLOYED `2rFeF57l`; a simulate arm for each new S3 read path (R4, R5) | `0.7.0_AE_CloudOps~A` | seat order, a pair | WORLD | Lambda artifact, ledger |
+| `AMGT-ar-4` | c24 re-read on the deployed function after HARVST round 46 widens `chatter_window` (item 4) | `0.7.0_AE_CloudOps~A` | seat order | LOCAL (a read) | deliverables only |
+
+### 76c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** The domain is the analysis's enrichment list, items 1-4. Ruling 2 is routed to HARVST.
+- **(ii) Same grain.** One served surface per cell: the cloud's terms, the reason wording, the deployed code, or one read.
+- **(iii) Intent.** One axis per cell.
+- **(iv) What a cell does NOT move:**
+  - ar-1 changes which terms a cloud serves only.
+  - ar-2 changes reason TEXT only, with no status, key or figure.
+  - ar-3 changes code only; memory stays 1769, and no IAM unless a new read path is simulated and paired.
+  - ar-4 writes nothing.
+
+### 76d. EDGES AND FAN-OUT
+
+ar-1 and ar-2 both write `lib/research/api/scoped_amgt.py`. They drain one at a time, with the union suite re-run after each
+(the round-67 precedent).
+```
+ar-1 --+
+ar-2 --+--> ar-3 (one redeploy, one pair, graded c27/c28 on deployed + r67 c23/c25/c26 regression)
+HARVST r46 (external) --> ar-4 (c24 re-read)
+fanout:
+  cap: 8
+  orders_total: 4
+  chains_total: 2
+  wave_0: [ar-1 ~223, ar-2 ~224]
+  wave_1: [ar-3 0.7.0_AE_CloudOps~A]   # after the two drains and its pair
+  external: [ar-4 0.7.0_AE_CloudOps~A]   # after HARVST round 46 lands the widened chatter_window
+  no_s3_deletes: true
+  egress: none
+  portal_ref: 6936e92b
+```
+
+## 77. ROUND 69 -- THE /ledger DEDUPE AND THE ARTICLE NIT, ONE REDEPLOY. Two cells, two orders
+
+**Input:** the CTO's round-68 analysis `ledger/ROUND_ANALYSIS.round68.md` @f54b52325e (msg 29455), rulings 1 and 3. The CVO slug is
+ADJUDICATION_v82 @cc67db12e5. PRD v0.37. FWD-36 and FWD-39 were REALIZED in round 68. Ruling 2 (the seating lint, Z-S348) is the
+CTO's own.
+
+### 77a. MEASUREMENTS (`round69/checks/r69_served.py`, CLOUD ~03:3xZ; the cell FAILS at the base, deployed `6wwEU3Sw` and local)
+
+- **c29 C1 FAIL.** The census is over every covered name (95 names, 570 classes, 0 non-200). 95 filings reasons repeat a clause:
+  "... no filings run is recorded yet for this name: no filings run is recorded yet for this name". The CVO saw it on BA and NVDA,
+  and it is on every name.
+  - The detector catches a clause that repeats inside another; a clean social reason is the control.
+- **c29 C2 FAIL.** DE `/thesis` `.thesis_driver_chart.reason` reads "... nothing is shown here for driver chart".
+
+### 77b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-as-1` | the `/ledger` filings reason prints its clause once; "for the driver chart" (R1) | `0.9.0_WK_AMGT_RESAPP~225` | worker-light | LOCAL | `lib/research/api/` |
+| `AMGT-as-2` | the code redeploy carrying as-1. DEPLOY genre; content diff against DEPLOYED `6wwEU3Sw`; a simulate arm per new S3 read path (R3) | `0.7.0_AE_CloudOps~A` | seat order, a pair | WORLD | Lambda artifact, ledger |
+
+### 77c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** The domain is the enrichment list, items 1-2.
+- **(ii) Same grain.** Served reason text, then the deployed code.
+- **(iii) Intent.** One axis per cell.
+- **(iv) What a cell does NOT move:**
+  - as-1 changes reason TEXT only: no class, source, run or status.
+  - as-2 changes code only; memory stays 1769, no IAM.
+
+### 77d. EDGES AND FAN-OUT
+```
+as-1 --> as-2 (one redeploy, one pair, graded c29 + r68 c27/c28 + r67 c23-c26 on deployed)
+fanout:
+  cap: 8
+  orders_total: 2
+  chains_total: 1
+  wave_0: [as-1 ~225 worker-light]
+  wave_1: [as-2 0.7.0_AE_CloudOps~A]   # after the drain and its pair
+  no_s3_deletes: true
+  egress: none
+  portal_ref: 6936e92b
+```
+
+## 78. ROUND 70 -- THE FOUR DSGN PRODUCER GAPS, THE 30-OUTCOME SWEEP, ONE REDEPLOY. Six cells, six orders
+
+**Input:** the CTO's round-69 analysis `ledger/ROUND_ANALYSIS.round69.md` @0bdf5b47ae (msg 29505), section 4 items 1-5. Its s.6
+(@030d5d1e87, msg 29506) adds item 6, the sweep. The board is `ledger/FWD_BOARD_ROUND69.md`. CVO slug ADJUDICATION_v84 @cff4114f62.
+PRD v0.37. Rulings 2-3: only sources already in use, and a needed vendor leg is LISTED for Andrew, never pulled. A redeploy happens if
+the function is touched. CTO msg 29511: the redeploy diff may carry HARVST's shared `store.py` change, and the pair names it.
+
+### 78a. MEASUREMENTS (`round70/checks/r70_served.py`, CLOUD ~06:3xZ; every build cell FAILS at the base on deployed `OcKZF34X`)
+
+- **c30 (FWD-4):** over 95 names, 43 headers miss a figure with no reason. Examples: short interest on HK/JP names; enterprise value.
+  `/thesis` `header_figures` is the same set `/overlay` serves (measured identical on ROG_SW and BA). It is read because `/overlay`
+  costs 6-15 s a name.
+- **c31 (FWD-7):** 95 names, 11 SERVED, 84 failing (82 NO_OBJECT, 2 ZERO_OFFICERS), none naming a chain tried.
+- **c32 (FWD-8):** 95 names, 676 peer members, 676 with no price currency and no reason.
+- **c33 (FWD-5):** 5 day probes, 8 rows, 8 with no `origin`. C2 (order) holds vacuously.
+
+### 78b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-at-1` | FWD-4: the header's seven figures, or a plain reason per missing one | `0.9.0_WK_AMGT_RESAPP~226` | worker | LOCAL | `lib/research/api/` |
+| `AMGT-at-2` | FWD-7: the exec-roster F3 chain (filing, dossier, Bloomberg) at request time over stored objects only | `0.9.0_WK_AMGT_RESAPP~227` | worker | LOCAL | `lib/research/api/`, `lib/research/management/` |
+| `AMGT-at-3` | FWD-8: each peer member's price currency, or a reason | `0.9.0_WK_AMGT_RESAPP~228` | worker | LOCAL | `lib/research/api/`, `lib/research/peers/` |
+| `AMGT-at-4` | FWD-5: an `origin` field (own / external) on every day-route row, own first | `0.9.0_WK_AMGT_RESAPP~229` | worker | LOCAL | `lib/research/api/` |
+| `AMGT-at-5` | the 30-outcome sweep on DEPLOYED, each against its DONE WHEN (FWD-21..29 RE-HOMED) | `0.9.0_WK_AMGT_RESAPP~230` | worker | LOCAL (a read) | deliverables only |
+| `AMGT-at-6` | the code redeploy carrying at-1..at-4, DEPLOY genre, diffed against the deployed CodeSha256 at build | `0.7.0_AE_CloudOps~A` | seat order, a pair | WORLD | Lambda artifact, ledger |
+
+### 78c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** The domain is enrichment-list items 1-6.
+- **(ii) Same grain.** One served field family per build cell, then the deploy, then one read.
+- **(iii) Intent.** One axis per cell.
+- **(iv) What a cell does NOT move:**
+  - at-1..at-4 add fields or reasons only; no figure value changes, no store write, no vendor call.
+  - at-5 writes nothing but its deliverables.
+  - at-6 changes code only; memory stays 1769.
+
+### 78d. EDGES AND FAN-OUT
+
+at-1..at-4 may each write `lib/research/api/scoped_amgt.py`. They drain one at a time, with the union suite re-run after each.
+```
+at-1 --+
+at-2 --+
+at-3 --+--> at-6 (one redeploy, one pair) --> at-5 (the sweep reads the round-70 deployed state)
+at-4 --+
+fanout:
+  cap: 8
+  orders_total: 6
+  chains_total: 1
+  wave_0: [at-1 ~226, at-2 ~227, at-3 ~228, at-4 ~229]
+  wave_1: [at-6 0.7.0_AE_CloudOps~A]   # after the four drains and its pair
+  wave_2: [at-5 ~230]                  # after at-6 lands
+  no_s3_deletes: true
+  egress: none (a needed vendor leg is a row listed for Andrew)
+  portal_ref: 6936e92b
+```
+
+## 79. ROUND 71 -- FWD-34 UNIT, FWD-30 GRADER, FWD-4 URLS, FWD-7 FRESHNESS, THE SIGNED-IN WALK, THE LEAD PANEL LOAD TIME, ONE REDEPLOY. Seven cells
+
+**Input:**
+- The CTO's round-70 analysis `ledger/ROUND_ANALYSIS.round70.md` @21e6a2dc1c (msg 29598), section 4 items 1-6, and its ruling on the
+  walk role (msg 29615: admin role, captures plus a positive control per act, as the CVO's L9 artifacts).
+- PRD v0.38, ADMITTED @f87ca71f42.
+- **ANDREW-DIRECT 2026-10-05 ~15:0xZ** (via 2.0.0_SA_COO~D msg 29618, record
+  `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261005_150xZ_SECURITY_ANALYSIS_ALL_OPAL_EMPLOYEES_REQUIREINTERNAL_LEADPANEL_LOAD_TO_COO_Z.md`):
+  "I suspect that some lambdas are doing live computation when the served file should be precomputed ... the chatter/price views
+  take almost a minute to load". It is cut here as au-6.
+
+### 79a. MEASUREMENTS (CLOUD ~15:0xZ; every build cell FAILS at the base, deployed `GS//XHnV`, and local where named)
+
+- **c34 (FWD-34):** 11 reads, 572 objects carrying `score`, 572 without `score_unit` (deployed and local). The page reads `row.score`
+  (RankedList.tsx:156-157), so the unit is ADDED, never a rename.
+- **c35 (FWD-4):** 95 names, 600 feed items, 0 with a url (deployed and local). Gold carries no url column. The silver article files
+  carry it per source: bbg `url`, barrons `canonicalUrl`, sa `links.self` (relative); ft and wsj carry none.
+- **c36 (FWD-7):** /freshness serves 250 rows, and 42 of 95 covered names are missing. The rows come from the pool's universe file,
+  not `covered_security_keys()`.
+- **c38 (ANDREW-DIRECT, r71_latency.py, warm; local runs 16-45 s a read, so au-6's local bar is 6,000 ms):**
+  - collected/chatter takes 9.4-9.8 s at days 30/90/365;
+  - rankings trending/breakout price take 3.7-4.9 s (default, 90, 365);
+  - all 9 reads are over the 2,000 ms cell bar.
+- **FWD-30 grader:** `round45/checks/page_render.cjs` fails with `Cannot find module '@/ui/components/graphic/GraphicCard'`
+  (Z-W230-S1). With a scratch repair it renders, and real export-vs-page differences remain; that product work is round 72.
+
+### 79b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-au-1` | FWD-34: every served `score` carries `score_unit: "percent"` (added, never renamed) | `0.9.0_WK_AMGT_RESAPP~231` | worker | LOCAL | `lib/research/api/` |
+| `AMGT-au-2` | Z-W230-S1: repair copies of the page-render grader, then read FWD-30 (page vs export) on deployed for BA, AMD, ASML_NA and classify each difference product or grader | `0.9.0_WK_AMGT_RESAPP~232` | worker | LOCAL | own deliverables (the round-45 originals stay the record) |
+| `AMGT-au-3` | FWD-4: the gold mention rows carry the article's url (bbg/barrons/sa; ft/wsj null), and each feed item serves it or null plus a plain `url_reason`. Code and a dry build only; the gold rebuild is au-7's leg | `0.9.0_WK_AMGT_RESAPP~233` | worker | LOCAL | `lib/research/api/`, `publication_gold.py` + its test (shared with HARVST) |
+| `AMGT-au-4` | FWD-7: /freshness carries every covered name | `0.9.0_WK_AMGT_RESAPP~234` | worker | LOCAL | `lib/research/api/` |
+| `AMGT-au-5` | the signed-in walk (admin role) over FWD-1, 3, 6, 10, 15, 17, 18, 19, 31 + FWD-5's three-name print + FWD-8's identity read, on deployed `GS//XHnV` while the walker slot is free (CTO msg 29648) | `0.9.0_WK_AMGT_RESAPP~235` | worker | LOCAL (a read) | own deliverables |
+| `AMGT-au-6` | ANDREW-DIRECT: the Lead Panel load. Find where the 9.4 s and 4.5 s go, and serve from stored/precomputed reads, not request-time compute | `0.9.0_WK_AMGT_RESAPP~236` | worker | LOCAL | `lib/research/api/` |
+| `AMGT-au-7` | the redeploy carrying au-1, au-3, au-4, au-6, then the gold mention rebuild with au-3's url column. DEPLOY genre; diff against deployed; a simulate arm per new read path; the pair counts the gold table's writers | `0.7.0_AE_CloudOps~A` | seat order, a pair | WORLD | Lambda artifact, the GO's gold keys, ledger |
+
+### 79c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** The domain is items 1-6 plus the Andrew-direct load-time item.
+- **(ii) Same grain.** One served field family or one route family per build cell, a tool repair, one walk, one deploy.
+- **(iii) Intent.** One axis per cell.
+- **(iv) What a cell does NOT move:**
+  - au-1, au-3 and au-4 add fields or rows only.
+  - au-6 changes how a value is read, not the value: the r67 c24 tone and the ranking rows are unchanged.
+  - au-2 and au-5 write only deliverables. au-5 arms only the dormant walker under the issuer's MSTR~Z slot.
+  - au-7 changes code, plus a grant if a read path needs one, plus the gold mention keys the GO lists (one added column; no row key or
+    existing column moves).
+
+### 79d. EDGES AND FAN-OUT
+```
+au-1 --+
+au-3 --+--> au-7 (one redeploy, one pair, then the gold leg)
+au-4 --+
+au-6 --+
+au-2 (independent; FWD-30 read on deployed)
+au-5 (independent: none of its nine walked FWDs depends on au-1/3/4/6; it takes the free walker slot now)
+fanout:
+  cap: 8
+  orders_total: 7
+  chains_total: 3
+  wave_0: [au-1 ~231, au-2 ~232, au-3 ~233, au-4 ~234, au-5 ~235, au-6 ~236]   # au-5 under the issuer's MSTR~Z walker slot
+  wave_1: [au-7 0.7.0_AE_CloudOps~A]   # after au-1/3/4/6 drain and its pair
+  no_s3_deletes: true
+  egress: none
+  portal_ref: e6ab82ad   # portal origin/DEV at the cut (DSGN AV-zr-1)
+```
