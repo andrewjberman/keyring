@@ -483,3 +483,56 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "INERT: a map-side repair; owner 2.0.0_SA_COO~Y if map_pdf is to be fixed for the layout cell."
 }
 ```
+
+## IRPT_YCDGEN-S5 -- Research run YCD-R3-20261005T0219Z STOPPED: WAF_REFRESH_REQUIRED at step 7 (holdings_key_stats__c05)...
+
+```json
+{
+  "id": "IRPT_YCDGEN-S5",
+  "class": "OBSERVATION",
+  "disposition": "UNDER_INVESTIGATION",
+  "fabric": "laptop",
+  "grounding": {
+    "evidence": [
+      "run record s3 key (bucket of the firm's store): irpt/cottonwood/state/ycharts_runs/request=YCD-R3-20261005T0219Z/run.json",
+      "stop reason in that run record: WAF_REFRESH_REQUIRED at step 7 (holdings_key_stats__c05) status=202"
+    ],
+    "status": "GROUNDED"
+  },
+  "hazard_standing": "INERT",
+  "one_line": "Research run YCD-R3-20261005T0219Z STOPPED: WAF_REFRESH_REQUIRED at step 7 (holdings_key_stats__c05) status=202",
+  "project": "IRPT_YCDGEN",
+  "spec_asserts": "C-SESSION: a firewall challenge or a lost session STOPS research; the run releases the lease, files a row and makes no retry storm.",
+  "surfaced_at": "2026-10-05T02:20:17Z",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "world_is": "The run STOPPED at step 7, call holdings_key_stats__c05: HTTP status 202, decision WAF_REFRESH_REQUIRED; no later call was sent, nothing was retried."
+}
+```
+
+## IRPT_YCDGEN-S6 -- the firewall challenges the 7th request of any run, and table_data answers 404 for the holdings' tickers
+
+```json
+{
+  "id": "IRPT_YCDGEN-S6",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-05T02:25:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Round-3 close measured two things that bound E1. (1) The firewall challenge falls on the 7th request of every run, not on one request's shape: runs 2, 3 and 4 were each challenged at step 7, at ~1.5 s, 8 s and 2 s spacing, and on three different calls. A run gets about 6 YCharts requests per window. (2) /indices/table_data answers 404 for chunks of the holdings' own tickers (4 of 4 chunks of 20, holdings_key_stats), so the coverage table's HELD_DATA route is wrong for these holdings",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "run 2 YCD-R1-20261004T1924Z: steps 1-6 ok, step 7 (portfolio_equity_exposure) 202 x-amzn-waf-action, spacing ~1.5 s (close/YCD-R1-20261004T1924Z_host_run.txt)",
+      "run 3 YCD-R1-20261004T1944Z: same, --min-gap-s 8 (close/YCD-R1-20261004T1944Z_host_run.txt)",
+      "run 4 YCD-R3-20261005T0219Z: steps 1-6 ok, step 7 (holdings_key_stats__c05, a 5-column call over 19 tickers) 202, lease spacing 2 s (close/YCD-R3-20261005T0219Z_host_run.txt); row S5",
+      "run 4 run.json: holdings_key_stats__c01..c04 each HTTP 404 with no indicesData; holdings 99 rows from REQ-a618aa83's frozen input",
+      "the round-2 probe runs A and B (2 calls each, 10 s apart) were not challenged"
+    ]
+  },
+  "spec_asserts": "IRPT_YCDGEN-S3 and the round-2 drain packet: the step-7 challenge is request-shaped (the long table_data column list). Coverage table (round 2): HELD_DATA elements are computable from /indices/table_data over the holdings' tickers.",
+  "world_is": "S3's reading is corrected: the challenge is count-shaped (the 7th request), at every spacing tried. And table_data with indices=<holding tickers> answers 404 like indices=P:<id>. So E1 needs a different security-level route (or the served path's own data) and a call budget of about 6 per window, measured before the next build. No retry was made; the session served Y-2 READY between runs."
+}
+```
