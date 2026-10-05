@@ -48,7 +48,7 @@ comp-adversary: DECLARED-NOT-APPLICABLE the validator-context composer profiles 
 
 You READ (never edit): `lib/`, `integrations/bloomberg/` (the Positioning pull is under an Andrew-direct no-modify order: no file there is written or read differently), the package's other modules and tests, `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round10/checks/` and the earlier rounds' `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round{8,9}/checks/`, the decomposition `org/missions/D5/ETFS/ETFS_RIVALS/decompositions/ETFS_RIVALS_DECOMP.md` (round 10), the analysis `org/missions/D5/ETFS/ETFS_RIVALS/ledger/ROUND_ANALYSIS.round9.md`, and live S3 READ-ONLY where a check reads it.
 
-You WRITE only the `<paths>` below (plus `deliverables/0.9.0_WK_ETFS_RIVALS~RV/`). NEVER: any S3 write, any deploy, any Bloomberg or OpenAI call (stub every vendor hook in tests), the vehicle, any environment gate flip outside a test, any file another round-10 chain owns. Tests go beside the code as `tests/test_r10iam1_*.py`, run with `python -m pytest <file> -q` from `data/etfs/scripts/`; run the whole package suite before you report (it must read 0 failed). A check you cannot satisfy without leaving your `<paths>` is a surprise row in the investigation file (`surfaced_at` = `date -u +%FT%TZ` at filing), never an edit outside them.
+You WRITE only the `<paths>` below (plus `deliverables/0.7.0_AE_CloudOps~RV/`). NEVER: any S3 write, any deploy, any Bloomberg or OpenAI call (stub every vendor hook in tests), the vehicle, any environment gate flip outside a test, any file another round-10 chain owns. Tests go beside the code as `tests/test_r10iam1_*.py`, run with `python -m pytest <file> -q` from `data/etfs/scripts/`; run the whole package suite before you report (it must read 0 failed). A check you cannot satisfy without leaving your `<paths>` is a surprise row in the investigation file (`surfaced_at` = `date -u +%FT%TZ` at filing), never an edit outside them.
 
 <paths>
 infra/aws/terraform/etfs-rivalfunds/gen_policies.py
@@ -58,6 +58,7 @@ infra/aws/terraform/etfs-rivalfunds/generated.auto.tfvars.json
 org/critical_paths/change_management/
 org/critical_paths/.open_deploys/etfs-rivalfunds-iam-1.json
 org/missions/D5/ETFS/ETFS_RIVALS/surprise-channel/investigations/INVESTIGATION_v1.Z.md
+org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~RV/
 </paths>
 
 ## 4. PROOF OF SPEC (each invocation LITERAL, run from your worktree root)
@@ -70,7 +71,7 @@ org/missions/D5/ETFS/ETFS_RIVALS/surprise-channel/investigations/INVESTIGATION_v
 
 ## 5. WHEN YOU ARE DONE
 
-Write the instance at `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~RV/ETFS_RIVALS.TO-RIV-iam-1.round9-table-grants.proof_of_spec.json` with `to_id` `ETFS_RIVALS.TO-RIV-iam-1.round9-table-grants`. Report once: each mechanical criterion's verdict line with the output above it; each judgment criterion left UNVERIFIABLE-BY-INSTRUMENT for the CVO; files written; any existing test assertion changed and why; rows filed (id + one line); the hookups you need the issuer to add at the merge. Leave the `<status>` flip to the issuer.
+Write the instance at `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~RV/ETFS_RIVALS.TO-RIV-iam-1.round9-table-grants.proof_of_spec.json` with `to_id` `ETFS_RIVALS.TO-RIV-iam-1.round9-table-grants`. Report once: each mechanical criterion's verdict line with the output above it; each judgment criterion left UNVERIFIABLE-BY-INSTRUMENT for the CVO; files written; any existing test assertion changed and why; rows filed (id + one line); the hookups you need the issuer to add at the merge. Leave the `<status>` flip to the issuer.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 

@@ -3835,6 +3835,27 @@
     "spec_asserts": "The assignee writes its proof_of_spec instance, and its never-widen plan and before/after policy documents, under org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~RV/ (RIV-iam-1 sections 3 and 5).",
     "world_is": "Clause 4 keys the permission on the serial in the path, and this cell went to an AE seat rather than a worker slot (issuance 35e554c407 fanout line: 'iam-1 goes to the AE lane 0.7.0_AE_CloudOps~RV'), so the granted folder is unwritable by its own assignee. By the clause's own rule deliverables/0.7.0_AE_CloudOps~RV/ would be permitted, but it is outside the order's <paths> and section 3 forbids an edit outside them. The evidence is therefore held device-local at C:/tmp/rv-iam1.plan.txt and C:/tmp/rv-iam1-signoff/ (same device as both never-widen signers) and quoted in commit 762a984992 until a path is granted.",
     "notes": "disarm_owner: 2.0.0_SA_COO~RV (the issuer, who owns the order's <paths>). Disarm is one amendment adding a writable deliverables path for this serial. It does not block the apply, which is held on the never-widen pair; it blocks only the section-5 instance write and so a 'complete' flip."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S41",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-05T23:52Z",
+    "one_line": "Cites ETFS_RIVALS-Z-S40: DISARMED by issuer amendment -- RIV-iam-1 now grants and names deliverables/0.7.0_AE_CloudOps~RV/ for its instance and never-widen packet.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RIV-iam-1 <paths> gains org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~RV/; sections 3 and 5 name that folder (0 references to deliverables/0.9.0_WK_ETFS_RIVALS~RV/ remain)",
+        "owned-paths clause 4 permits the serial named by the sub-folder, which is the assignee 0.7.0_AE_CloudOps~RV"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The assignee writes its proof_of_spec instance and never-widen evidence under a deliverables folder it may write.",
+    "world_is": "The cut copied the worker-slot deliverables convention onto an AE assignee; the amendment re-points it to the assignee's own folder.",
+    "notes": "Cites ETFS_RIVALS-Z-S40. The row's disposition stays the CVO's."
   }
 ]
 ```
