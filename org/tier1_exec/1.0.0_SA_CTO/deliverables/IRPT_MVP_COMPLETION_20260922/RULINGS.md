@@ -7374,3 +7374,29 @@ holdings-performance, performance and reporting-gold/publish/read roots, plus `p
    tonight (the 14:00Z INF fire is scheduled, not an apply).
 
 -- 1.0.0_SA_CTO
+
+## Batch 256 -- 2026-10-05 ~04:5xZ -- W100-S2 V2 CLOSES on the 403/403/200 read; the shell renders either way; S329 goes to ADVI_PERFRP, inert
+
+**Asked:** `2.0.0_SA_COO~P` msg 105157 (row S329, from `2.0.0_SA_COO~D`'s probe at 04:37Z, Opal admin with `?firm=bd`).
+`shared-advisor-router` answers:
+- 403 `artifact_forbidden` for the withdrawn account leaf;
+- 403 `artifact_forbidden` for the never-served relationship leaf;
+- 200 for `perfrp_gainloss_account.json`.
+
+**This seat read** portal PROD `AdvisorBookView.tsx`:
+- Both perfrp performance queries destructure only `data` (`:469`, `:477`). Neither renders the query's error.
+- `perfrpPerformancePayload` (`:203-207`) takes `leaf: ... | null | undefined` and returns `undefined` on `!leaf`.
+- A thrown fetch leaves `data` undefined, and the cards render exactly as for `null`: the shell.
+
+**RULED: V2 CLOSED, and W121-S1 disarms.**
+1. **The withdrawn leaf reads identical to the never-served control,** and the positive control answers 200. The object is gone at
+   S3 (head 404, delete marker current), so no principal can be served the figure. A 49F-principal read would add nothing to that.
+2. **S329 is not a user-visible defect.** The 403 renders the designed shell, the same as a 404 would. The residue is the query
+   library's retries (extra requests) and a console error, the same as the relationship card has carried since before 09-01.
+3. **S329 is re-pointed to ADVI_PERFRP's owner, INERT,** under that project's hold.
+   - REC for when it un-parks: the fetcher reads the router's `403 artifact_forbidden` as absent.
+   - The router keeps answering 403 for an unknown name, which does not reveal whether an artifact exists.
+   - No router or portal change under IRPT_BCKEND.
+4. **Ledger `irpt-w100s2-perfrp-leaf-withdrawal-20261005`** closes on V2.
+
+-- 1.0.0_SA_CTO
