@@ -16,6 +16,7 @@ rectangle is its four items, plus one instrument repair the page read needs. Rou
 | 2 (repair) | The /ui-walk walker closes the timeline day it opened before pressing the tabs (the TSM walk of 10-05 was occluded) | `CRPS-an-4` | worker `0.9.0_WK_AMGT_CORPUS~2` (worker-light, direct act) | LOCAL |
 | 4 | Today's recovery run of the refused 10-05 fire (row Z-S87), on MSTR~Z's line after OPAL_BBGTML re-runs OK | `CRPS-an-5` | the issuer's act: the same pinned task re-invoked | LOCAL (the daily pull, re-run once) |
 | 2 | FWD-20's currency limb read on the page: a signed-in walk on TSM (TWD), SAP (EUR) and BA (USD, the positive control) | `CRPS-an-6` | the issuer's read, after an-2 and an-4 | LOCAL (read) |
+| v38.1 | The FWD sweep: the 9 outcomes whose grade is stale (10, 11, 12, 14, 15, 18, 19), conflicting (16) or absent (21), each exercised against its DONE WHEN on the served product and carried in the drain packet for the CVO to grade whole | `CRPS-an-7` | the issuer's read: the census reads for FWD-14/19 now; the 7 page outcomes ride an-6's walk | LOCAL (read) |
 
 **Chains:**
 - `an-1 -> an-2 -> an-6`;
@@ -65,6 +66,23 @@ its own pin `3ffe37a57a`. Read the log: pulled 96, rc 0. One NEVER-2 entry. If t
 **CRPS-an-6.** Run only with a walker slot from MSTR~Z (ARM and DISARMED through it). Run only after verifying the local `:5174`
 answers 200 before arming. Each money row on the Model tab names its currency: TSM TWD, SAP EUR, BA USD.
 
+**CRPS-an-7 (amendment v38.1, 2026-10-05 ~20:5xZ, the issuer's own ruling under the CTO's word).**
+
+- **Source:** `1.0.0_SA_CTO~Z` msg 29786 ("Put the sweep in your round-38 drain packet if it is cheap; otherwise it goes in round
+  39"). The issuer's ledger-gap record is `deliverables/2.0.0_SA_COO~X/FWD_LEDGER_GAP_20261005.md` @`d1acde2040`.
+- **Why it is cheap:** it is read-only. Two of the nine are CLI census reads (`python -m lib.research.corpus.backlog
+  --coverage-dry-run`, `--folder <name>`). The other seven are page reads that ride an-6's walk slot, adding names and tabs to the
+  same session:
+  - FWD-10: IMB LN (pillars);
+  - FWD-11: Exec Management;
+  - FWD-12 and FWD-21: the Model tab;
+  - FWD-15: the posture line and the Posture tab;
+  - FWD-16: one PDF-only name and one docx control;
+  - FWD-18: a pillar's terms and the filtered feed.
+- **No new code, no write, no worker.**
+- **Gate:** the amendment changes only this decomposition. `.tools/to-pipeline-gate.py` grades task orders, so no limb graded this
+  modification.
+
 ## 2. Found at the cut (rows, not cells)
 
 None new. Row Z-W1-S34 is INERT (no cell, analysis ruling 4).
@@ -79,3 +97,4 @@ None new. Row Z-W1-S34 is INERT (no cell, analysis ruling 4).
 | CRPS-an-4 | `AMGT_CORPUS.TO-CRPS-an-4.walker-closes-the-timeline-day.md` | `~2` |
 | CRPS-an-5 | the issuer's act (no order) | -- |
 | CRPS-an-6 | the issuer's read (no order) | -- |
+| CRPS-an-7 | the issuer's read (no order); amendment v38.1 | -- |
