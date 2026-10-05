@@ -9,7 +9,7 @@
   "dep_stage": "EXECUTING",
   "created": "2026-09-22",
   "registered_under_tree": "2026-09-22",
-  "last_updated": "2026-10-05T00:40:00Z",
+  "last_updated": "2026-10-05T14:05:00Z",
   "pods": [
     "1.0.0",
     "2.0.0",
@@ -73,8 +73,8 @@
     "THE BACKLOG POPULATION IS HIS, SEPARATELY. Andrew-direct ~18:3xZ, VERBATIM: 'all of the Research folders in the Opal Sharepoint Shared Asset Management/Research/ subfolder will be the basis for our backfill and initial pool.' Record ANDREW_DIRECT_20260922_183xZ_RESEARCH_FOLDERS_ARE_THE_BACKFILL_BASIS_AND_INITIAL_POOL.md. The folder list is a MEASURED DENOMINATOR (93 at the 2026-09-22 scan), never a transcribed list, and an unresolved folder is printed, never dropped.",
     "SENDING BLOOMBERG MODEL-BLOCK FIGURES TO THE CLAUDE API IS ALLOWED (same record, '3.) That is allowed.') -- this closes the CRO's card 1 for both this project and the addendum."
   ],
-  "phase": "ROUND 36 CLOSED (1.0.0_SA_CTO~Z analysis @4c3e3755a7; FWD-20 open on two limits); ROUND 37 ISSUED (2.0.0_SA_COO~X, 2026-10-05 ~00:4xZ) on the analysis s.4: CRPS-am-1 every money figure carries its currency (~1) -> CRPS-am-2 the re-derive of 96 + re-pin (issuer pair, after am-5); CRPS-am-3 gap reasons + row currency on the Model tab (~2, portal candidate); CRPS-am-4 --pick writes nothing (~3); CRPS-am-5 the issuer's read of the 2026-10-05 13:00Z fire (al-4 carried). Decomposition v37.0.",
-  "blocking": "None at L6. CRPS-am-2 needs the CTO never-widen half (1.0.0_SA_CTO~Z) and lands after am-5's read of the 10-05 13:00Z fire; the am-3 portal DEV push needs Andrew's word after the CTO review.",
+  "phase": "L8 PACKET AT THE CVO (round 37, 2.0.0_SA_COO~X, 2026-10-05 ~14:0xZ): am-1 drained @3ffe37a57a; am-3 portal 2e7c5cdb ON DEV; am-4 drained @78e4bb3f11; am-2 ledger amgt-corpus-r37-am2 CLOSED @ab5337b876 (96 re-derived, census unlabelled money 0, task re-pinned 3ffe37a57a); am-5 read: the 10-05 fire REFUSED by Bloomberg daily capacity (row Z-S87). Packet deliverables/2.0.0_SA_COO~X/ROUND37_DRAIN_END_PACKET.md.",
+  "blocking": "None at the issuer. L8/L9 with 3.0.0_SA_CVO~Z (am-1 AC3 and am-3 AC3 judgments). FWD-22's regression read moves to the 2026-10-06 13:00Z fire on pin 3ffe37a57a.",
   "threads": [],
   "thread_counter": 0
 }
