@@ -17702,5 +17702,70 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   ]
  },
  "disposition": "UNDER_INVESTIGATION"
+},
+{
+ "id": "AMGT_RESAPP-Z-W230-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~230",
+ "surfaced_at": "2026-10-05T13:05:00Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "one_line": "The round-45 FWD-30 grader (sweep.py --served) cannot render the portal page at this portal checkout: its page_render.cjs loader is stale against DSGN_AMGTV1's new imports, so FWD-30's field-by-field comparison against the page was NOT read at round 70.",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "The AMGT-at-5 order and the round-51 zz-7 pass treat sweep.py --served (deliverables/2.0.0_SA_COO~Z/round45/checks/sweep.py) as FWD-30's one grader: it renders the SecurityAnalysis page from a served capture (page_render.cjs, react-dom/server) and compares the page's data attributes to the rich export. At round 51 it read OK on 96 of 96. FWD-30's DONE WHEN is a field-by-field comparison against the page.",
+ "world_is": "At this worktree's portal checkout (portal HEAD 6936e92b; the parent gitlink reads ec65c5d6) sweep.py --live --served --only BA_US_Equity,AMD_US_Equity reads CAPTURE_FAILED 2 of 2: page_render.cjs exits rc=1 with MODULE_NOT_FOUND '@/ui/components/graphic/GraphicCard' (DSGN_AMGTV1's LeadPanel.tsx and HeaderCards now import @/ui/components/graphic/*, which the loader's STUBS table does not name; it carries a null stub for HeroGraphic that drops PanelEyebrow and ICON_GLOW). This worktree's portal also has no node_modules (not tracked), so a bare run fails one step earlier. With node_modules reached through a scratch junction to the shared tree's portal/node_modules and a SCRATCH copy of page_render.cjs patched in three ways (an @ -> src alias resolver with a null-component Proxy fallback, default-export interop for CJS packages such as clsx, and a Proxy for the hooks module), the page renders and the grader reads NOT_OK on 3 of 3 probed names (AMD, ASML_NA, BA: FIGURES+ABSENCES+CASES differ; value facts compared 1,495, differ 1,312; CASES page 0 rich 9). That NOT_OK is NOT trusted as a page-versus-export difference: a served-bundle comparison of the same routes over all 95 names reads every served value that is in the rich export as equal to it (0 differing), the fiscal-year figures that are served but not in the export's tables are the ones their own check REFUSED (stated in the export as 'MNEMONIC: REFUSED -- reason' lines), drafting cites and posture cites are equal both ways, and only the header figures /thesis serves beyond the export's ten (e.g. NAME, EQY_SH_OUT_REAL, SHORT_INT_RATIO, CIE_DES) are not exported, whether the page shows them being exactly the unread limb. So FWD-30 is recorded UNMEASURABLE_WITH_REASON in FWD_SWEEP_ROUND70.json, with branch (b) read as 200 Markdown on 95 of 95 names. ARMED because the grader will read CAPTURE_FAILED or a false NOT_OK on any later pass at this portal (and round 51's 'equal 96 of 96' no longer reproduces); not fixed: the grader sits outside this order's paths and the scratch patch was not committed. The junction was removed.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "Unpatched: 'served over 2 of 97 folders: OK 0, NOT_OK 0, CAPTURE_FAILED 2' and 'Cannot find module @/ui/components/graphic/GraphicCard' with requireStack portal/package.json (run 2026-10-05, python -W ignore sweep.py --live --served --require-cases --only BA_US_Equity,AMD_US_Equity).",
+   "Scratch-patched loader: 'served over 3 of 97 folders: OK 0, NOT_OK 3, CAPTURE_FAILED 0'; 'value facts over 3 compared names: compared=1495 differ=1312'; AMD, ASML_NA and BA each read fig_page 592-633 against fig_rich 769-812 in the TSV.",
+   "Served-bundle second reading (fwd_sweep.py, FWD-30 evidence in FWD_SWEEP_ROUND70.json): over 95 of 95 names every served value present in the export equals it, the fiscal-year figures absent from the export's tables are counted with how many were REFUSED by their own check and stated as REFUSED lines, drafting and posture cites are equal both ways, and the header figures served but not exported are counted by mnemonic.",
+   "ec65c5d637 is the parent index's portal gitlink; 6936e92b54 is this worktree's portal HEAD (git diff --submodule=short portal)."
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W230-S2",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~230",
+ "surfaced_at": "2026-10-05T13:05:00Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "one_line": "No overlay feed item on any covered name carries a url (600 items across 56 names, 0 with a url), so the 'followed one out' limb of FWD-4 and FWD-16 has no served precondition; round 51 read 2 of 2 items with a url.",
+ "hazard_standing": "INERT",
+ "spec_asserts": "FWD-4 and FWD-16 (PRD v0.37 ENDPOINT) DONE WHEN: an analyst has read a recent item and 'followed it out'; their ACCEPT lines say each item is clickable through to its original. The round-51 zz-7 pass read the 30-day feed as 2 items across 96 names (BA wsj, HD bbg), both with a url (FWD_EVIDENCE_ROUND51.json FWD-4).",
+ "world_is": "Read at 2026-10-05 on deployed GS//XHnVd4+bBIg1VU++r1fp9v495pi6jKFat9KbEYE=: /security/<key>/overlay feed.items over the 95 covered names holds 600 items on 56 names (feed.source is gold article_security_mention, the day view's own source), and url is null on 600 of 600 (BA: sa 31, barrons 19, bbg 17, wsj 1, all url null; the day-view article rows carry article_key, headline, publisher and origin but no url field). The feed was re-sourced from gold since round 51, and gold does not carry the original link. fwd_sweep.py therefore grades FWD-4 and FWD-16 DOES_NOT_MEET on the precondition-absent rule (no served item can be followed out to its source); if the page builds a link some other way, the sweep did not read it. Not fixed: serving a url is a route change outside this order.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "fwd_sweep.py FWD-4 evidence in FWD_SWEEP_ROUND70.json: feed_items 600, feed_items_with_url 0, names_with_items 56, over 95 of 95 names read (all seven routes 200).",
+   "BA_US_Equity overlay feed.items probe: Counter of (publisher, has url) = sa/False 31, barrons/False 19, bbg/False 17, wsj/False 1.",
+   "Round-51 comparison: FWD_EVIDENCE_ROUND51.json FWD-4 output_excerpt 'feed items in the 30-day window: 2 items across 96 names (BA wsj, HD bbg), 2 of 2 with a url'."
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W230-S3",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~230",
+ "surfaced_at": "2026-10-05T13:05:00Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "one_line": "FWD-35's exclusion record and its scheduled-versus-ad-hoc provenance are not on the served plane: the generation pointer carries no excluded_names, and the only record of the one excluded covered name is an UNTRACKED producer record copy in the shared checkout.",
+ "hazard_standing": "INERT",
+ "spec_asserts": "FWD-35's DONE WHEN: names without two price observations 'are counted and named in the generation's own exclusion record, never silently absent', and 'the generation came from the scheduled producer, not an ad-hoc run'. The round-58 analysis grades Branch A as '94 rows, stale 0'.",
+ "world_is": "The TRENDING_PRICE _CURRENT pointer for 2026-10-02 (generation 20261004T110517Z-4ff62071cb80, run R20261004T110517Z, COMPLETE) carries row_count 94 and no excluded_names, and the ranking route serves 94 rows against 95 covered names read fresh; the one missing name (ROG_SW_Equity) is named only in the producer's record copy price_axis_rows_2026-10-02.json ('excluded': {'ROG SW': 'INSUFFICIENT_PRICE_OBSERVATIONS_IN_WINDOW_LT_2'}, universe_denominator 95), which sits UNTRACKED under deliverables/0.9.0_WK_AMGT_RESAPP~6/ in the shared checkout and is absent from every worktree cut from a commit. fwd_sweep.py finds it through the git common dir; a tree without the shared checkout would read FWD-35 UNMEASURABLE_WITH_REASON. Scheduled-versus-ad-hoc is likewise not a served field: the sweep states computed_at 2026-10-04T11:05Z (07:05 ET) and the run_id and grades MEETS on the measurable limbs with that limb listed as not read. Not fixed: a served exclusion record is a route change outside this order.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "fwd_sweep.py FWD-35 evidence: rows 94, rows_with_signed_30d_return_pct 94, covered_denominator 95, covered_names_with_no_row ['ROG_SW_Equity'], exclusion_record {'ROG SW': 'INSUFFICIENT_PRICE_OBSERVATIONS_IN_WINDOW_LT_2'}, record_copy resolved through git rev-parse --git-common-dir.",
+   "scoped_amgt.read_generation_pointer for TRENDING_PRICE on 2026-10-05 falls back to the 2026-10-02 pointer: keys coverage_vintage, run_id, axis_date, generation_id, payload_hash, row_count, written_at, axis, as_of_date, state, record_type, ticker; no excluded_names.",
+   "git ls-files over deliverables/0.9.0_WK_AMGT_RESAPP~6 lists price_axis_rows_2026-09-10.json only; the 2026-10-01 and 2026-10-02 copies are untracked."
+  ]
+ }
 }]
 ```
