@@ -13,6 +13,10 @@ and no new remediation row here, so this is not the slug.
 - J1 grades are in `org/tier1_exec/3.0.0_SA_CVO/deliverables/ETFS_RIVALS_R7_REVIEW_20261003.md`.
 - C-S24's organic proof (2026-10-05 09:00 ET) is a named wait, graded then as an addendum row.
 
+**Part C (2026-10-05 ~13:50Z, the 13:30Z read under ROUND_ANALYSIS.round7.md ruling 2(b)):**
+- C-S27: sa-1 J1 PASS on the organic 09:00 ET sweep. C-S24 is advanced to REMEDIATED in place.
+- C-S28: ui-5 J1 NOT MET. 0 multi-name holdings, but 22 of 22 carried ticker-form names are unchanged. This is round-8 enrichment item 3.
+
 **Part A, disposition:**
 - 4 rows are dismissed by C-S25 below.
 - **W1-S46 stays UNDER_INVESTIGATION and graduates at the round-7 slug as a P2.**
@@ -83,6 +87,50 @@ and no new remediation row here, so this is not the slug.
     },
     "disposition": "DISMISSED_WITH_REASON",
     "dismissal_reason": "An omitted claim, not a false one. If a skipped response should state its trigger, carrying the stamp into a SKIPPED result is one line; it is optional."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-C-S27",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~RV",
+    "surfaced_at": "2026-10-05T13:50:00Z",
+    "one_line": "sa-1 J1 PASS, which is C-S24's organic proof: the 2026-10-05 09:00 ET sweep ran with no seat act, wrote that day's AI account (run_path scheduled, status OK) and republished the page at 13:07:41Z. C-S24 is advanced to REMEDIATED in place.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "ROUND_ANALYSIS.round7.md ruling 2(b) and the sa-1 J1 text: the 2026-10-05 09:00 ET organic sweep writes that day's account and republishes, with no seat act; read from the served page at 13:30Z.",
+    "world_is": "Schedule etfs-rivalfunds-sweep-daily: cron(0 9 ? * MON-FRI *) America/New_York, ENABLED, Input run_path 'scheduled', target etfs-rivalfunds-daily-lambda. That Lambda's log shows ONE START from 10:00Z to 13:40Z, at 13:00:11.449Z (RequestId de6ac39f), with REPORT Duration 449267.66 ms and 0 'Task timed out' events. state/publish_page/date=2026-10-05/ai-run.attempt reads {status OK, run_path scheduled, run_id 20261005T130020Z-ai, 13:00:19Z-13:06:21Z}. gold/research_hypotheses/date=2026-10-05/research_hypotheses-20261005T130020Z-ai.parquet was written at 13:06:22Z. The served platinum/page/date=2026-10-05/ manifest has batch ai-2026-10-05-a53411fb, status published, and a1_produced.research_hypotheses_run {status OK, run_path scheduled}. The rendered page carries 24 data-ai-dialog elements over 12 funds. Negative arm: the 2026-10-02 sweep reached no AI stage (C-S24 evidence). Not in this grade: the batch reads PARTIAL because 4 IDVZ-group funds are not updated (a Bloomberg report lag, W5-S28), and 28 contribution windows are refused (row Z-S26, fix RIV-tr-1).",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "this seat's reads 2026-10-05 13:24-13:40Z: scheduler get-schedule; CloudWatch /aws/lambda/etfs-rivalfunds-daily-lambda START/REPORT/timeout filters; s3api list-objects-v2 and s3 cp of platinum/page, state/publish_page and gold/research_hypotheses date=2026-10-05",
+        "remediations/REMEDIATION_v6.Z.md ETFS_RIVALS-Z-C-S24 (proof clause: the next trading day's 09:00 ET sweep, no seat act)",
+        "COO~RV msg 29563 (the same objects, read independently)"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A grade record, not a defect: C-S24's proof is met on its organic trigger, and C-S24 is advanced in place to REMEDIATED."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-C-S28",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~RV",
+    "surfaced_at": "2026-10-05T13:50:00Z",
+    "one_line": "ui-5 J1 NOT MET on its positive control. Consistency holds: 0 of 247 holdings are shown under two names. But 22 of the 22 holdings that read as raw Bloomberg ticker forms on 10-02 (e.g. 'ATD CN Equity', 'MSCI US Equity') still read that way on 10-05, and 0 were renamed. The 28 -> 22 drop is only the 6 holdings not on the thinner 10-05 page.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "ui-5 J1 (RFW-U14): one display name per security across the page; positive control: the served 2026-10-02 page's raw '<id> XX Equity' names on the Bloomberg-sourced funds, graded after the issuer's names hookup (the LONG_COMP_NAME names, nm-2, landing with the 2026-10-05 vehicle run per ROUND_ANALYSIS.round7.md section 2 rows 2 and 3).",
+    "world_is": "Headless Chromium on the served index.html, clicking each of the 13 fund views and reading visible text, holding-modal headings and the AI dialogs. 10-05: 247 holding keys; 0 keys with more than one name across face, modal and AI prose; 22 keys whose only name is a ticker form; 28 visible ticker-form occurrences (TXUE 6, INEQ 6, PCLG 8, BIDD 2, TSEL 2, ETFT 2, CGIC 1, GQGU 1). Control, the 10-02 page as served now: 297 keys, 28 ticker-named, 71 occurrences, and 46 long-named keys whose ticker form also appeared in AI prose (0 on 10-05, because the fresh AI run uses the face names). All 22 10-05 ticker-named keys are among the 10-02 28: 3774_JP 8053_JP 9433_JP ABT_US AON_US ATD_CN BABA_US BSX_US CPG_LN DASH_US EVD_GR JAR_LN MICC_LN MOTV3_BZ MSCI_US MTD_US NOVN_SW NU_US PAYC_US RHM_GR SNPS_US TCEHY_US. A click control on 4 modals matched the heading read. The served page is the round-7 pin; round 8 is merged to CLOUD and not deployed.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "this seat's playwright measure 2026-10-05 ~13:35-13:45Z over s3://opal-data-etfs/rivalfunds/etfs/platinum/page/date=2026-10-05/index.html (1,263,046 B, 13:07:41Z) and date=2026-10-02/index.html (1,895,310 B)",
+        "task-orders/ETFS_RIVALS.TO-RIV-ui-5.census-and-audit-trail.md J1 text",
+        "ledger/ROUND_ANALYSIS.round7.md section 3 item 3"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "Carried by the round-8 enrichment list (ROUND_ANALYSIS.round7.md section 3 item 3: whatever the 10-05 grades leave open). The 22 ticker-named holdings are the residue that round cuts. No new remediation row."
   }
 ]
 ```
