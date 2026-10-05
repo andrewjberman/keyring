@@ -1810,3 +1810,16 @@ plan itself: on disk 3.4 GB, no worktree fit.
 | (the release) | a never-widen plan for halves on the census-clean functions | SERVED | IB-pr-324 | the issuer's act |
 
 fanout: 1 of 1 chains, cap 8, reason: one carrier edit. Worker 0.9.0_WK_IRPT_BCKEND~127 in its own worktree.
+
+## 50. ROUND 57, WORKSTREAM ~P (2026-10-05 ~15:1xZ, issuer 2.0.0_SA_COO~P, on CTO batch 264 @f49b5958b0, row S335)
+
+The 13:30Z directory refresh failed at all three firms again after the runner restart (S335): it starts the host and ends, and the next
+fire is a day later. Batch 264 rules a second schedule 10 minutes later, plus a never-widen packet for the first successful fire, which
+replaces three latest.json keys frozen at 09-25. Round 56 (IB-pr-324) drained @f36a8cdefd. Release r57's halves are signed (CTO
+@3d6e1ed58c, COO @e860151215), and its deploys follow the invoke-payload prep.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-325` | S335: the 09:40 ET retry schedule + the latest.json never-widen packet | WORLD (Terraform under infra/; the apply is the issuer's after both halves) | none | P57 |
+
+fanout: 1 of 1 chains, cap 8, reason: one schedule edit + packet. Worker 0.9.0_WK_IRPT_BCKEND~128 in its own worktree.
