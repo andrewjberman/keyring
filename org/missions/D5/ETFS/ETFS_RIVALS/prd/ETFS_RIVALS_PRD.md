@@ -5,10 +5,10 @@
  "project": "ETFS_RIVALS",
  "directive": "D5",
  "fabric": "site-z",
- "prd_version": "v0.15",
+ "prd_version": "v0.16",
  "step": 4,
  "brief_ref": "docs/briefs/etf-holdings-research-20260929.md@77c891c869",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20"],
+ "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21"],
  "status": "DRAFT"
 }
 ```
@@ -381,6 +381,21 @@ approved it.
                     named on the page, never silently skipped
          SOURCE     backend brief O9; transcript 1 ("locked in bronze
                     ingestion for all relevant funds", "the operations as well")
+
+  FWD-21 (NEW, v0.16) Andrew clicks any stock named anywhere on the page and
+         reads that security's holding modal with its history
+         DONE WHEN  EXERCISED -- on the live page, every security named in the
+                    rankings, the buying trend, the AI accounts and the detail
+                    lists opens its holding modal when clicked, and the modal
+                    shows the security's history (its price and the fund's
+                    holding over time) as far back as the store holds it
+         ACCEPT     no ticker on the page is dead text; a security whose
+                    history is not yet backfilled says so in its modal, never
+                    an empty chart; the page's no-script rule stands
+         SOURCE     Andrew-direct 2026-10-05 ~03:3xZ at the COO~RV terminal
+                    ("anytime a stock/ticker is mentioned, it should be
+                    clickable to the modal, and we should be able to see
+                    backfill on it")
 
   CTO RULINGS ON THE BRIEFS' OPEN POINTS (Andrew may overrule any):
   - The fund picker shows one fund at a time, grouped under its Opal fund, and
@@ -807,6 +822,17 @@ the `/sprint` precedent files.
 - The CVO grades JUDGMENT criteria at L9, citing the contract clause.
 
 ## PROVENANCE AND AMENDMENT HISTORY
+
+- v0.16 (2026-10-05 ~03:1xZ, `1.0.0_SA_CTO~Z`), an ENDPOINT addendum on Andrew-direct ~03:3xZ at the `2.0.0_SA_COO~RV` terminal
+  (record `org/tier1_exec/2.0.0_SA_COO/deliverables/cooRV_ANDREW_DIRECT_20261005_03xxZ_RIVALFUNDS_BENCHMARKS_CLICKABLE_TICKERS_ETFCLASSIFIER_BACKFILL.md`),
+  item 2, VERBATIM: *"anytime a stock/ticker is mentioned, it should be clickable to the modal, and we should be able to see backfill
+  on it."*
+  - **NEW FWD-21:** every security named on the page opens its holding modal with its history. A security not yet backfilled says
+    so; it never shows an empty chart. The no-script rule stands.
+  - Item 1 (ACWI for IDVZ, IWM for PFOE; SCHY is not a benchmark) serves the existing FWD-13/14 and rides round 8 (lg-1).
+  - Items 3-4 (every Rival Funds stock backfilled into the ETFClassifier canonical table, with a routine for new stocks) belong to
+    MDPF_SECCLASS, a laptop-fabric table. They are routed to `1.0.0_SA_CTO` for placement; ETFS_RIVALS supplies the security list.
+  - **The ENDPOINT changed, so the ratified-text half RE-OPENS.** One `3.0.0_SA_CVO~Z` re-sign covers v0.15 and v0.16.
 
 - v0.15 (2026-10-05 ~02:5xZ, `1.0.0_SA_CTO~Z`), an ENDPOINT addendum on Andrew-direct ~02:4xZ at the `2.0.0_SA_COO~RV` terminal
   (record `org/tier1_exec/2.0.0_SA_COO/deliverables/cooRV_ANDREW_DIRECT_20261005_02xxZ_RIVALFUNDS_30D_DEFAULT_DROP_MTD.md` @575e7d7250),
