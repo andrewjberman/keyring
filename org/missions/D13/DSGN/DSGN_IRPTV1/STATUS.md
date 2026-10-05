@@ -113,7 +113,9 @@ live press stays Andrew's (walk-2 write guard).
 0000000000000. **Y-2 fold-in Case B (2.0.0_SA_COO~Y 105051) RUN 2026-10-05:**
    - Driver case `Bproxy` (easy file, TIMXX named SGOV, one comparison, Opal Ultra Long-Term). The driver now selects the variant through the card, or through the card's explanation dialog, and records the page's own words when the picker does not open.
    - Live run `tmp/yh-submit/20261005T011505Z-Bproxy` (local only) submitted REQ-c1b537728b221742e335a0c8 at 01:18:56Z with variant comparison and keys [opal_ultra_long_term]. ~Y read it READY at 01:37:07Z (105086).
-   - The page's list never showed the request: the backend pages history by request id (row IRPT_BCKEND-S326, owner ~Y, BLOCKING, CLOUD d5068d85a4). The page needs no change once the history reads newest-first.
+   - The page's list never showed the request: the backend paged history by request id (row IRPT_BCKEND-S326, owner ~Y, BLOCKING, CLOUD d5068d85a4).
+     - FIXED by ~Y: irpt-status newest-first, 04:18Z (105145).
+     - Confirmed on the page by a read-only walk at 04:40Z on portal 3e1aa46f: REQ-c1b53772 is `position_in_list` 1 of 25, and its dialog reads "Compared with Opal Ultra Long-Term. / Job status: Ready". The disarm of the row is ~Y's.
    - The offline `--fixture` drive cannot reach the comparison step: the fixture selection carries no tenant, so the catalogue is never read. PARKED; owner this seat; un-parks on the next driver touch.
    - Item 100's real run: DONE by replaying the live answer (driver `--replay-normalized`, no vendor call). ~Y's YCharts session is free again (DONE 105097).
 000000000000. ~~A failed holdings snapshot (R1) is never said~~ LANDED as item 99 (`c7bc52c8`).
