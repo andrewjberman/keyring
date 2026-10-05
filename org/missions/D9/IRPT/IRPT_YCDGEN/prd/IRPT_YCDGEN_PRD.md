@@ -5,7 +5,7 @@
  "project": "IRPT_YCDGEN",
  "directive": "D9",
  "fabric": "laptop",
- "prd_version": "v0.3",
+ "prd_version": "v0.4",
  "step": 4,
  "brief_ref": "docs/briefs/irpt-ycharts-inhouse-generation-feasibility-20261005.md@69141b561e",
  "endpoint_outcomes": ["FWD-1", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16"],
@@ -16,6 +16,8 @@
 Author: `1.0.0_SA_CTO`. D9 / IRPT / laptop. v0.2 of 2026-10-05 replaces v0.1 (@ec37b10ed2 lineage; v0.1's text is in git).
 v0.3 (same day) corrects C-CLASSIFY to the table as `2.0.0_SA_COO~M` measured it and points C-REPORT at its design; the ENDPOINT
 section is unchanged from v0.2 @4635d40c62.
+v0.4 answers `3.0.0_SA_CVO`'s refusal of the v0.2 half (review @3bd1104913): the history line is out of the ENDPOINT block, FWD-16's
+ACCEPT carries only Andrew's words, and C-PRICES names its bucket, its universe address and the carrier of the cross-firm rule.
 
 **Why v0.2.** Andrew turned the project from "Opal's script on YCharts' data endpoints" to "the report made entirely in Opal's
 cloud". Inputs:
@@ -43,8 +45,6 @@ cloud". Inputs:
                     YCharts during the run. A figure Opal cannot work out says so on the page, with the
                     reason. A step that used a saved example fails the outcome
          SOURCE     parent brief section 6, stage 1; addendum section 6; Andrew, call 1
-
-  (the second outcome of v0.1 was retired 2026-10-05 on Andrew's word, call 3; its number stays vacant)
 
   FWD-3  For each of the three report types, an analyst can point at anything on a YCharts-made
          report and say where it came from
@@ -160,8 +160,8 @@ cloud". Inputs:
          ACCEPT     a mistyped ticker gets a suggested correction that is a real security. A security
                     Opal has no data for gets suggested stand-ins of the same kind, taken first from
                     the funds Opal's own table already knows for stocks, bonds, commodities and the
-                    rest. Nothing is changed until the person accepts it. Whatever is accepted has a
-                    row in Opal's table, in the same shape as every other security there
+                    rest. Whatever is accepted has a row in Opal's table, in the
+                    same shape as every other security there
          SOURCE     Andrew, 2026-10-05 ~20:4xZ ("typo" check 1 and "swap" check 2)
 ```
 
@@ -185,9 +185,9 @@ cloud". Inputs:
 | C-SWITCH: who gets the Opal producer before FWD-11 | this project; the served path's owner applies it | Selection is made on the server from the signed-in principal, against one short allow list that starts with Andrew's sign-in only. A client-sent flag never selects the producer. The list changes only on Andrew's word. FWD-11 deletes the list and the branch together. |
 | C-ENDPOINTS | RETIRED in v0.2 | v0.1 named YCharts' data endpoints as the source of figures. No figure in an Opal-made report comes from a YCharts call. |
 | C-VENDOR: which outside sources, and when | Andrew's cards 1, 2 and 5; his yfinance word | **Yahoo (through yfinance):** allowed for the securities in live client portfolios only. It is called by the scheduled refresh and by the one first-seen fetch (C-MART), never while a report is being made. **Bloomberg:** scheduled batches on the Terminal seat only, `integrations/bloomberg/READ_HERE.md` read first; FWD-14's capture is approved and waits on quota; no cell starts it on a day the quota is spent. **SEC filings:** inside card 1; no cell uses them until a round-N analysis names one. **YCharts:** no call in an in-house run. `2.0.0_SA_COO~Y`'s existing egress word stands for FWD-7 only. A source not named here needs Andrew's word. |
-| C-MART: the security data Opal keeps | this project (new tables); the existing Yahoo price pull (extended) | Per security: (1) a daily price history with the close, the dividend-adjusted close and the dividends as SEPARATE NAMED columns; (2) a reference snapshot (for a stock: sector, industry, country, market value and the ratios Yahoo serves; for a fund: asset mix, costs, yield, size, start date); (3) a fund look-through (sector weights, credit-quality weights, bond averages, top holdings). Every row carries its as-of date and its fetch date. The universe is the union of securities in live client portfolios; it carries tickers only, never a firm, an account or a weight. A security first named by an upload is fetched once, then joins the schedule. Snapshot fields have no history at the source, so history accrues from the first capture. |
-| C-PRICES: the existing price table is extended, not replaced | the existing pull `data/black_diamond/scripts/silver/fetch_historical_prices_yfinance.py`; never-widen | The price history is the existing `silver/historical_prices.parquet` pull with columns ADDED (adjusted close, dividends) and its ticker list extended by the C-MART universe. The existing `close` column keeps its bytes and meaning; changing it is a served-output move for its other readers and is not in this PRD. Before the change, the issuer counts the table's readers and shows each reads columns by name; the release goes under a never-widen packet (delta on existing columns = 0). No second price pull is built beside it. |
-| C-STORE: addresses from the builder | CLAUDE.md rule 30; X10 | **Unchanged:** the run record and the report stay in the firm's bucket at v0.1's registered tables, `address('irpt','cottonwood','state','ycharts_runs','request=<REQ>',object='run.json')` and `address('irpt','cottonwood','state','ycharts_opal_reports','request=<REQ>',object='overview.pdf')` (X10 row `irpt-ycdgen-research`). Renaming them is not this revision. **New, builder output printed at L4 (2026-10-05 ~20:4xZ):** `address('marketdata','global','silver','security_reference','date=2026-10-05',object='reference.parquet')` -> `s3://opal-data-assets/marketdata/global/silver/security_reference/date=2026-10-05/reference.parquet`; `address('marketdata','global','silver','fund_lookthrough','date=2026-10-05',object='lookthrough.parquet')` -> `s3://opal-data-assets/marketdata/global/silver/fund_lookthrough/date=2026-10-05/lookthrough.parquet`. `opal-data-assets` is a shared bucket: these tables hold public market data only (C-MART's universe rule). **Raw Yahoo answers:** `address('yahoo', ...)` is REFUSED today ("source 'yahoo' is not a systems.json key", READ at L4). Round 1 adds the `yahoo` vendor row to `infra/logic/registry/systems.json`; the order that writes raw answers prints the builder's output after the row lands. No address is typed by hand. |
+| C-MART: the security data Opal keeps | this project (new tables); the existing Yahoo price pull (extended) | Per security: (1) a daily price history (C-PRICES); (2) a reference snapshot (for a stock: sector, industry, country, market value and the ratios Yahoo serves; for a fund: asset mix, costs, yield, size, start date); (3) a fund look-through (sector weights, credit-quality weights, bond averages, top holdings). Every row carries its as-of date and its fetch date. The universe is the union of securities in live client portfolios; it carries tickers only, never a firm, an account or a weight. A security first named by an upload is fetched once, then joins the schedule. Snapshot fields have no history at the source, so history accrues from the first capture. |
+| C-PRICES: the report's price history, in the shared market-data home | this project (new table); CLAUDE.md section 5 (no other firm's bucket) | The existing Yahoo price table is `s3://opal-data-bd/silver/historical_prices.parquet` (parent brief M1). `opal-data-bd` is 49financial's firm bucket, so a report for any other firm may NOT read it: that is a cross-firm reference by bucket. The report therefore reads ONE new table, builder output printed at L4: `address('marketdata','global','silver','security_total_return_prices','date=2026-10-05',object='prices.parquet')` -> `s3://opal-data-assets/marketdata/global/silver/security_total_return_prices/date=2026-10-05/prices.parquet`, with the close, the dividend-adjusted close and the dividends as separate named columns, written by the C-MART refresh. **The universe** is `address('marketdata','global','silver','security_universe','date=2026-10-05',object='universe.parquet')` -> `s3://opal-data-assets/marketdata/global/silver/security_universe/date=2026-10-05/universe.parquet`: bare tickers and first-seen dates, no firm, account or weight. **The carrier of the cross-firm rule:** a ticker reaches the universe only when a firm's OWN step pushes it (the upload's resolution, or that firm's own holdings job); no global job reads a firm bucket to build it, and no firm-scoped job reads another firm's bucket. `.tools/ds-precommit-check.py`'s foreign-bucket limb grades the refresh and the producer like any pipeline tree. The `opal-data-bd` table is not read, not modified and not extended by this project; folding that pull into the shared home is its own migration (R19), never a rider here. |
+| C-STORE: addresses from the builder | CLAUDE.md rule 30; X10 | **Unchanged:** the run record and the report stay in the firm's bucket at v0.1's registered tables, `address('irpt','cottonwood','state','ycharts_runs','request=<REQ>',object='run.json')` and `address('irpt','cottonwood','state','ycharts_opal_reports','request=<REQ>',object='overview.pdf')` (X10 row `irpt-ycdgen-research`). Renaming them is not this revision. **New, builder output printed at L4 (2026-10-05 ~20:4xZ), beside C-PRICES' two:** `address('marketdata','global','silver','security_reference','date=2026-10-05',object='reference.parquet')` -> `s3://opal-data-assets/marketdata/global/silver/security_reference/date=2026-10-05/reference.parquet`; `address('marketdata','global','silver','fund_lookthrough','date=2026-10-05',object='lookthrough.parquet')` -> `s3://opal-data-assets/marketdata/global/silver/fund_lookthrough/date=2026-10-05/lookthrough.parquet`. `opal-data-assets` is a shared bucket: these tables hold public market data only (C-MART's universe rule). **Raw Yahoo answers:** `address('yahoo', ...)` is REFUSED today ("source 'yahoo' is not a systems.json key", READ at L4). Round 1 adds the `yahoo` vendor row to `infra/logic/registry/systems.json`; the order that writes raw answers prints the builder's output after the row lands. No address is typed by hand. |
 | C-REGISTER: registry rows before writes | this project, round 1 | (1) the `yahoo` vendor row in `systems.json`; (2) the X10 families for the two new `marketdata` tables, in the grammar of the sibling families. Each lands before any object is written under it. Resource names are `name()` output printed in the order: `name('marketdata','global','security-reference-refresh','lambda')` -> `marketdata-global-security-reference-refresh-lambda` (READ at L4). The schedule's name is printed by its order; `name(..., 'schedule')` is refused, and the kind is a cadence. |
 | C-SCHEDULE: production refresh is scheduled | law (CLAUDE.md section 5) | The reference and look-through refresh runs on its own daily schedule, on the trading-day frontier of `lib/trading_calendar.py`. An ad hoc run is QA and is never the acceptance of FWD-8. |
 | C-CLASSIFY: one classification table | Andrew, call 2; the table is MDPF_SECCLASS's | Every name, asset class, sub asset class and sector the report prints FOR A SECURITY is read from `etf-classifications` through its one client (`infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py`). A security the table does not hold gets a row added by the table's own classifier mechanism, cleaned and properly capitalized; Yahoo's labels are an INPUT to that row and are never printed in its place. This project adds no second writer to the table: it asks for the row through MDPF_SECCLASS's mechanism, and until the row exists the holding prints as not yet classified. **The table as measured by `2.0.0_SA_COO~M`** (`org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/ETF_CLASSIFICATIONS_VOCABULARY_AND_UNKNOWN_ROW_PATH_20261005.md` @73a3c60af8; 3,493 rows): `asset_class` has 6 values; the GICS sector names ARE the equity `sub_asset_class` values, with no separate sector field; the legacy `sector` attribute (179 rows) is a different grain and is NOT read by this project. So a stock's sector on the report is its `sub_asset_class` where that is a GICS name, and a fund's sector weights are keyed to those same ten names plus Real Estate. **An unknown security gets a row today** only through the scheduled plan and one conditional put, from a direct match in an existing source; a security with no direct match gets no row and is listed UNRESOLVED; no model is called. A model verdict fits the row shape only as `classified_by model` with its confidence fields, landed from a reviewed set (13 rows). Andrew's AI classifier is therefore NOT in service in that path; building it is MDPF_SECCLASS's, on his word, and this project consumes whichever path writes the row. |
@@ -232,7 +232,7 @@ element maps of all three report types, a research layout with its statistics, a
 
 Round 1 builds only this thread: cover, holdings, allocation by the table's labels, and the return and risk tables to five
 years against the S&P 500 total return. A row Opal cannot yet compute says so with the reason. The cells are the COO's to cut at
-L5, over these hops. What round 1 needs that does not exist yet: C-PRICES' added columns, the risk-free read, the Opal form of
+L5, over these hops. What round 1 needs that does not exist yet: the C-PRICES table for the thread's securities, the risk-free read, the Opal form of
 C-REPORT, and the C-SWITCH branch.
 
 ## 3. ENRICHMENT BACKLOG (ordered, one line each)
@@ -255,7 +255,6 @@ C-REPORT, and the C-SWITCH branch.
 |---|---|---|---|
 | the Opal producer (`infra/aws/lambda/investor-reporting/ycharts/research/`: `layout_overview.py`, `held_data.py`, the runner) | today an on-demand research run; in v0.2 the producer the generation worker calls for C-SWITCH principals | reads, classifies, computes, renders, records | the existing resident host and renderer; no new compute class (parent brief section 4, INHERITED) |
 | the served generation worker and queue `irpt-generation` (IRPT_BCKEND) | the resident worker | carries the C-SWITCH branch | IRPT_BCKEND's release path, under a never-widen half |
-| the existing Yahoo price pull (`data/black_diamond/scripts/silver/fetch_historical_prices_yfinance.py`) | a scheduled daily pull | C-PRICES | its own deploy lane (rule 13); never-widen packet |
 | the reference and look-through refresh (NEW) | a scheduled daily job | C-MART tables | names and addresses from the builders (C-STORE, C-REGISTER) |
 | the classification table and its classifier (`etf-classifications`; MDPF_SECCLASS) | one table, one client | C-CLASSIFY | MDPF_SECCLASS; consumed |
 | the Bloomberg morning pull (the Terminal seat) | scheduled batches | the risk-free series (held); FWD-14's capture | `integrations/bloomberg/READ_HERE.md` first |
@@ -266,8 +265,8 @@ C-REPORT, and the C-SWITCH branch.
 - **One workstream, issued by `2.0.0_SA_COO~Y`.** That lane is not seated at this writing; seating it is Andrew's word.
 - **Write surface:** `ycharts/research/` and its tests; the C-MART refresh job and its two tables; the registry rows of
   C-REGISTER; `org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/`.
-- **Written through another owner's release, each as a named cell with its half:** the C-SWITCH branch in the served worker
-  (IRPT_BCKEND); the added columns of C-PRICES (the price pull's lane).
+- **Written through another owner's release, as a named cell with its half:** the C-SWITCH branch in the served worker
+  (IRPT_BCKEND).
 - **Not written here:** `etf-classifications` (MDPF_SECCLASS, `2.0.0_SA_COO~M`); the `AnalysisReport` contract file (this
   seat); the session and lease modules; the export path.
 - **L4-R:** the ENDPOINT changed, so `3.0.0_SA_CVO` re-signs the ratified-text half. The CRO wrote both briefs, so the brief
@@ -277,7 +276,8 @@ C-REPORT, and the C-SWITCH branch.
 
 1. One producer per request; the Opal producer serves only the allow list until FWD-11; the list is server-side (C-SWITCH).
 2. Nothing is fetched from an outside source while a report is being made (C-VENDOR, C-MART).
-3. The price history is the existing table, extended by added columns; no second price pull (C-PRICES).
+3. The report's price history is one new table at the shared market-data address; the 49financial-bucket price table is not read
+   and not changed (C-PRICES).
 4. New market-data tables live at the `marketdata` / `global` builder addresses; raw Yahoo answers wait for the `yahoo` registry
    row (C-STORE, C-REGISTER).
 5. A security's printed name and classes come from the classification table only; this project never writes that table
@@ -300,7 +300,7 @@ and S05 are not used by an in-house run.
 | S13 | FWD-1, FWD-11 | the C-SWITCH branch in the served generation worker | unmeasured | C-SWITCH | ~Y, through IRPT_BCKEND's release | wire | S20 | server-side; never-widen half |
 | S14 | FWD-1 | the Opal producer reading accepted holdings from the firm's store | held (handoff; 99 holdings read by the CRO) | parent brief section 2 | ~Y | wire | -- | no saved example |
 | S15 | FWD-1, FWD-15 | the classification read through the one client | measured (client's record shape carries `asset_class`, `sub_asset_class`, `sector`, `name`) | client file header | ~Y | consume | -- | no second writer |
-| S16 | FWD-1, FWD-10 | `silver/historical_prices.parquet` with adjusted close and dividends added | held (96 of 99 holdings; one close column from two fetches) | parent brief M1, G1 | ~Y, through the pull's lane | wire | -- | existing columns unchanged |
+| S16 | FWD-1, FWD-10 | `security_total_return_prices` and `security_universe` at the `marketdata`/`global` builder addresses | measured (addresses printed); coverage held (addendum: 98 of 99 on yfinance) | C-PRICES | ~Y | wire | S21 | no firm bucket read; tickers only |
 | S17 | FWD-1 | the S&P 500 total return series and the Bloomberg 3-month yield | held (INHERITED in the brief) | parent brief G3, G4 | ~Y | measure, then consume | -- | row S9: no FRED |
 | S18 | FWD-1, FWD-9 | the computed trace and coverage rule in `layout_overview.py` | held (methods exist; floor per batch 267) | parent brief section 3 | ~Y | wire | S16, S17 | two states only |
 | S19 | FWD-1, FWD-6 | `run.json` v2 with inputs' dates and three clocks | unmeasured | C-RUN | ~Y | wire | S18 | no client figure in git |
