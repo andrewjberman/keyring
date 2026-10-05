@@ -49,6 +49,13 @@ comp-adversary: DECLARED-NOT-APPLICABLE the validator-context composer profiles 
   to rival by this amendment.
 - AMENDMENT (2026-10-05, issuer): your first build (f8124d0969, 2c885a91f3) is on your branch and passes AC1; re-cut only
   what AC2 now asks (SCHY rival in the map) and re-run both checks.
+- AMENDMENT 2 (2026-10-05 ~07:0xZ, issuer; rows ETFS_RIVALS-Z-S21 / Z-S22, measured on the real Terminal): the read
+  `sh.Range("A1:Z%d" % cap).Value` raised pywintypes.com_error -2147352566 for IWM 2026-01-16 (1,958 used rows) and the error
+  escaped `_handler_entry` as a traceback. `Range.Value2` read every row but returns date cells as Excel serial numbers, which
+  then fail `analyze()` as DATE-MISMATCH. Re-cut the read for EVERY unit (rivals and controls): read only the used rows
+  through `.Value2`; convert the date columns (`DATES`, `REPORT_DATE`, and `id().DATE` as `canon_header` maps it) from Excel
+  serial (epoch 1899-12-30) to ISO dates; a `pywintypes.com_error` on one unit's read becomes that unit's `unfetched` partial,
+  never a traceback. AC1 arm (e) pins it with a fake whose `Value` raises and whose `Value2` returns date serials.
 
 ## 3. SURFACES AND BOUNDS
 
@@ -70,7 +77,7 @@ org/missions/D5/ETFS/ETFS_RIVALS/surprise-channel/investigations/INVESTIGATION_v
 
 ## 4. PROOF OF SPEC (each invocation LITERAL, run from your worktree root)
 
-- **AC1** -- a 2,300-row control beside two rivals lands whole, queried on its own; a 50,000-row overflow is a per-name PARTIAL with the fund named and the others landed; two rivals alone still land OK (`org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round8/checks/lg-1.AC1.py`)
+- **AC1** -- a 2,300-row control beside two rivals lands whole, queried on its own; a 50,000-row overflow is a per-name PARTIAL with the fund named and the others landed; two rivals alone still land OK; a sheet whose Range.Value overflows still lands whole through Value2 with ISO dates (`org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round8/checks/lg-1.AC1.py`)
 - **AC2** -- RIVALFUNDS_LEG_D12 and RIVALFUNDS_LEG_D13 switch the home funds' source and the benchmarks independently; SCHY reads rival in every state; RIVALFUNDS_LEG_ENABLE=1 turns both on (`org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round8/checks/lg-1.AC2.py`)
 
 <proof_of_spec>
@@ -87,6 +94,8 @@ Write the instance at `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ET
 **ISSUER NOTES (L5/L6, 2.0.0_SA_COO~RV):** Round-7 analysis @115645c4b4 section 3 (items 1, 2, 4) + Andrew-direct @0a4321b843 ("yes, build round 8 tonight"); decomposition round 8 workstream A v1.0. Chain `~4`, slot `~4`, position 1 of 1. Checks dry-run at base CLOUD 1c31a5f6ce (the package equals the deployed pin 75ad1e4d2e): lg-1.AC1 FAIL (3; control OK), lg-1.AC2 FAIL (2; control OK) as expected. Bounds: no merge before the 2026-10-05 07:00 ET vehicle pull; no deploy before the 13:30Z grades.
 
 **AMENDMENT 1 (2026-10-05 ~03:5xZ, issuer):** Andrew-direct benchmarks (record cooRV_ANDREW_DIRECT_20261005_03xxZ_RIVALFUNDS_BENCHMARKS_...); AC2 re-pointed (SCHY rival in every state); paths += peer_groups.json. Dry-run: CLOUD FAIL 3, the first lg-1 build FAIL 2 ((b),(c)). Graded by: to-pipeline-gate on a modified order reads only GATE (viii) <placeholders> (NONE).
+
+**AMENDMENT 2 (2026-10-05 ~07:0xZ, issuer):** rows Z-S21/Z-S22 (real-Terminal com_error on Range.Value); AC1 arm (e) added. Dry-run: CLOUD FAIL 4; the lg-1 build 481d101ab1 FAIL 1 ((e)), (a)-(d) OK. Graded by: to-pipeline-gate on a modified order reads only GATE (viii) <placeholders> (NONE).
 
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
