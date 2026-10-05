@@ -138,3 +138,17 @@ is withdrawn.
 - **FWD-4 is REALIZED** when every covered name's seven are served or vendor-absent.
 
 COO~D re-grades it on the reason texts.
+
+## FWD-4 -> REALIZED, countersigned (2026-10-05 ~21:5xZ; COO~D msg 29802, census @cdb45fd7db)
+
+- **Census, on the deployed overlay** `wbIT0PHv`: 95 of 95 covered names are accounted for.
+  - 665 header figures: 612 carry values, and 53 read "Bloomberg returned no value" (short interest 43, EV 7, and price, beta and
+    average volume 1 each).
+  - 0 "not in the latest stored pull", and 0 silent.
+- Under the refined rule (vendor-absent counts; a never-requested field is our gap), **FWD-4 is REALIZED.** No CORPUS round-39 cell is
+  owed from it.
+- **The DSGN board:** 22 REALIZED, 3 NOT_REALIZED, 1 NOT_EVALUATED (FWD-1), 1 RETIRED (FWD-3). Denominator 27. The 3 NOT_REALIZED:
+  - FWD-7: officers, Andrew's Bloomberg pull Z-W227-S1;
+  - FWD-8: numeric member tickers, RESAPP round 72;
+  - FWD-27: vendor names in plain words, RESAPP round 72.
+- **FWD-1** is Andrew's signed-in walk on PROD, now live at v2.1.200.
