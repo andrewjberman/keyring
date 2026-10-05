@@ -107,27 +107,36 @@ are not re-run after Phase C, because AC2's shipped set is anchored to its own r
 Verbatim: "2.) Visible to me only. Eventually will be visible to select managers at my discretion." The release
 `14e0af86fa` (tenant-wide) is SUPERSEDED, and its three halves have lapsed (CTO @0fba676f84, CVO S2 @0366ca3748).
 
-16a. **In YOUR worktree (CLOUD source):**
-   - `app/yearinreview_view.py` gates every `/yearinreview` request through the EXISTING owner gate,
-     `app/owner_gate.py`, by calling its `require_owner` (or its equivalent). It has three outcomes:
-     - no identity, or one that fails verification: 401;
-     - a verified identity not on `DASHBOARD_OWNER_EMAILS`: 403;
-     - the owner: 200.
-     The gate fails closed: an empty roster refuses everyone.
-   - Do NOT add a roster, an `.env` key or a template change. The "select managers" extension is a later act on
-     Andrew's word, not a default.
-   - Extend `tests/test_yearinreview_view.py` with `test_yearinreview_non_owner_403`: a verified non-owner identity
-     gets 403 and none of the page bytes. Keep the existing 5 tests, restating the 200 test so it uses the owner
-     identity.
+16a. **In YOUR worktree (CLOUD source) -- AS AMENDED BY A4 (CTO R15 @16f729348e, `ledger/ROUND_ANALYSIS.round16.md`
+   section 7; this SUPERSEDES A3's owner_gate route):**
+   - `app/config.py` gains `YEARINREVIEW_VIEW_ALLOWED_EMAILS`, a frozenset parsed exactly like
+     `SPRINT_VIEW_ALLOWED_EMAILS` (`config.py:116-117`).
+   - `app/yearinreview_view.py` gains `_allowed(email)`, checked after identity exactly where `/sprint`'s is
+     (`sprint_view.py:173-184`). An EMPTY or MISSING roster DENIES (403); never `/sprint`'s empty-admits default. A
+     denial is audit-logged `DENIED` / `roster`, as `/sprint` logs it.
+   - `deploy-to-ec2.sh` writes `YEARINREVIEW_VIEW_ALLOWED_EMAILS=andrew@opalinvest.com` beside
+     `SPRINT_VIEW_ALLOWED_EMAILS` (`:314`), with a comment line citing record @121b7b016e. `.env` goes from 50 to 51
+     key names.
+   - Tests in `tests/test_yearinreview_view.py`. Keep the existing 5 and restate the 200 test with the owner. Add three
+     named tests:
+     - `test_yearinreview_owner_200`;
+     - `test_yearinreview_non_owner_403` (a verified tenant identity not on the roster gets 403 and no page bytes);
+     - `test_yearinreview_empty_roster_403` (an empty roster refuses even the owner).
+     The no-identity 401 test stands.
+   - The "select managers" extension is a later template edit and release, on Andrew's word. It is not built here.
    - Commit.
 16b. **Release tree:**
-   - Re-cut `rel-nfra-oplgtw-r17b` from `e91819e281` with the 4 kit files at their new bytes. Use a NEW branch,
-     `rel-nfra-oplgtw-r17c`; never rewrite `14e0af86fa`.
-   - Prove `server.py`'s diff equals the CLOUD-source diff.
-   - R13 (a) applies. Re-run step 14's tests plus the new 403 test.
-16c. **Verify script:** add a host-local check: a request carrying a planted, NON-ALB-signed identity header gets 401
-   (the gate verifies signatures). The public 302 and the host-local no-identity 401 stand. Update
-   `rl7_release_md5.txt`.
+   - Re-cut from `e91819e281` with the 6 files at their new bytes (A4): the 4 kit files, `app/config.py` and
+     `deploy-to-ec2.sh`. Use a NEW branch, `rel-nfra-oplgtw-r17c`; never rewrite `14e0af86fa`.
+   - Prove the `server.py`, `config.py` and `deploy-to-ec2.sh` diffs each equal the CLOUD-source diffs.
+   - R13 (a) applies. Re-run step 14's tests plus the three new named tests.
+16c. **Verify script:**
+   - Host-local checks: a request carrying a planted, NON-ALB-signed identity header gets 401 (identity is verified
+     by signature); the no-identity 401 stands; the public 302 stands.
+   - The `.env` check expects 51 key names: the 50 before plus exactly `YEARINREVIEW_VIEW_ALLOWED_EMAILS`. Read its
+     VALUE as a sha256 only, and compare it to `sha256("andrew@opalinvest.com")`.
+   - The floor runs `rl4.AC1.sh` with `RL4_ENV_KEYS_BASELINE` set to `r17/ENV_KEYS_R17B.txt`.
+   - Update `rl7_release_md5.txt`.
 16d. Write `ANNOUNCE_OG-rl-6-C2.md` with the blast radius for three FRESH halves: owner-only, the same wall as the
    dashboard. Commit and report. Do NOT upload.
 
@@ -160,6 +169,8 @@ org/critical_paths/change_management/
 org/critical_paths/.open_deploys/nfra-oplgtw-gateway-release-r17.json
 org/critical_paths/.open_deploys/nfra-oplgtw-gateway-release-r17b.json
 infra/aws/ec2/opal-gateway/app/server.py
+infra/aws/ec2/opal-gateway/app/config.py
+infra/aws/ec2/opal-gateway/deploy-to-ec2.sh
 infra/aws/ec2/opal-gateway/app/yearinreview_view.py
 infra/aws/ec2/opal-gateway/app/static/yearinreview/index.html
 infra/aws/ec2/opal-gateway/tests/test_yearinreview_view.py
@@ -174,8 +185,8 @@ Rows: id `NFRA_OPLGTW-Z-W15-S<k>` (next unused), fabric `site-z`, disarm_owner `
 <proof_of_spec>
   <criterion id="AC1" cell_refs="OG-rl-6"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r17/checks/rl6.AC1.sh; echo "exit=$?"</invocation><expect>(?s)host integration.py equals the release bytes: yes.*download before refused: True.*download after ok: True.*held-only \(unheld 0, discriminated\): True.*empty holdings refused: True.*query unchanged: True.*grants_written 0: True.*RESULT: PASS.*exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="OG-rl-6"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r17/checks/rl6.AC2.sh; echo "exit=$?"</invocation><expect>(?s)sentinel at HEAD=no;.*descends from 4b6b823fae=yes;.*outside the release set 0.*floor: rl4.AC1 yes; ht.AC2 yes.*RESULT: PASS.*exit=0</expect></criterion>
-  <criterion id="AC3" cell_refs="OG-rl-6"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r17/checks/yr.AC3.sh; echo "exit=$?"</invocation><expect>(?s)host kit files equal the release bytes: 3 of 3; public unauthenticated GET: 302 to login.microsoftonline.com=yes; host-local no-identity GET: 401.*RESULT: PASS.*exit=0</expect></criterion>
-  <criterion id="AC4" cell_refs="OG-rl-6"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r17/checks/yr.AC4.sh; echo "exit=$?"</invocation><expect>(?s)sentinel at HEAD=no;.*descends from e91819e281=yes; gateway files shipped 4, outside the kit set 0.*floor: rl4.AC1 yes; ht.AC2 yes.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC3" cell_refs="OG-rl-6"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r17/checks/yr.AC3.sh; echo "exit=$?"</invocation><expect>(?s)host kit files equal the release bytes: 4 of 4; public unauthenticated GET: 302 to login.microsoftonline.com=yes; host-local no-identity GET: 401.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC4" cell_refs="OG-rl-6"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r17/checks/yr.AC4.sh; echo "exit=$?"</invocation><expect>(?s)sentinel at HEAD=no;.*descends from e91819e281=yes; gateway files shipped 6, outside the kit set 0.*floor: rl4.AC1 yes; ht.AC2 yes.*RESULT: PASS.*exit=0</expect></criterion>
 </proof_of_spec>
 
 ## 5. WHEN YOU ARE DONE
@@ -212,6 +223,15 @@ and validate it with `python .tools/proof-of-spec-check.py <instance>`. Report o
   - The release sha moves (`rel-nfra-oplgtw-r17c`), so the C-B halves are owed fresh.
   - The managers' extension is a later act on Andrew's word. `owner_gate.validate_owner_emails` refuses boot on any
     non-owner entry, so that extension needs a separate roster.
+- **A4 (2026-10-05 ~13:2xZ, issuer, on CTO R15 @16f729348e, msg 29561):** R15 supersedes A3's owner_gate route.
+  - **The design:** a key of its own, `YEARINREVIEW_VIEW_ALLOWED_EMAILS`, in config and the template, failing closed.
+  - **The release set** grows to 6 (adds `app/config.py` and `deploy-to-ec2.sh`), and `.env` to 51 names.
+  - **AC3** now reads 4 shipped app files.
+  - **AC4** now reads 6 shipped files. Its floor `rl4.AC1` runs against `r17/ENV_KEYS_R17B.txt` (the r14 50 plus the
+    one ruled key), through the new `RL4_ENV_KEYS_BASELINE` override in `rl4.AC1.sh`. The default stays the r14 set.
+  - **Step 16c's verify** expects 51 names, with exactly that one added.
+  - **The four acceptance arms** are owner 200, non-owner 403, empty roster 403 and no identity 401, each a named test.
+    Host-local, the no-identity 401 is graded by AC3.
 
 <status>pending</status>
 <round>17</round>
