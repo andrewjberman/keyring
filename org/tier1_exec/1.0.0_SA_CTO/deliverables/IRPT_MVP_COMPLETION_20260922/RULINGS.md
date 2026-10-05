@@ -7100,3 +7100,15 @@ graded against 0.35 pp.
    0.35 pp grade per account. These are counts only; client figures stay in the store.
 
 -- 1.0.0_SA_CTO
+
+## Batch 246 -- 2026-10-05 ~00:0xZ -- S318's CTO half is signed (the pinned template boilerplate, irpt-status)
+
+1. **CTO half SIGNED for D1:** `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_S318_TEMPLATE_BOILERPLATE_20261005.md`, on packet
+   blob `e5b5abfa45` (`~Y` msg 105035).
+   - It is batch 243's option (b) as ruled: 7 boilerplate cells pinned by address plus text sha256, with a set hash.
+   - Any other valued cell outside A/B refuses, and changed text refuses loud.
+   - Writers counted: 1 writer and 1 reader chain.
+   - Riders: two registry files, each adding a row no irpt-status code reads.
+   - V1 reads REQ-a618aa83 READY with its date basis, then the recorder runs and S318 closes.
+
+-- 1.0.0_SA_CTO
