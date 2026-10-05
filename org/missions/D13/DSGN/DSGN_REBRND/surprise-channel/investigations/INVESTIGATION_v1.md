@@ -1993,3 +1993,31 @@
   "notes": "INERT: no redo slice has been graded on the instrument yet. Remedy is the instrument owner's (2.0.0_SA_COO~D): walk every element of a signature or every distinct ink within it, and read hover from the matched CSS rules or a wider token pattern. Until then a slice's 0-below is a statement about first rows."
 }
 ```
+
+## DSGN_REBRND-S25 -- the hover walk prints a clean verdict after a failed click
+
+```json
+{
+  "id": "DSGN_REBRND-S25",
+  "project": "DSGN_REBRND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-05T22:47:00Z",
+  "one_line": "ui-smoke's hover walk carries on after a failed --click or --clicktext and prints a clean verdict for the page it did reach: on /portfolio-management a mistyped Resume name read 7 walked, 0 below on three tabs, where the opened session reads 12 to 14 walked and up to 5 below.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's runs 2026-10-05 ~22:4xZ against the vite server of worktree portal-coo-d-r43 at fb46d507 (0 uncommitted paths): --click \"Resume\" printed CLICK-FAIL (locator.click timeout 30000 ms) and --clicktext \"Resume\" printed CLICKTEXT-FAIL (15000 ms); each run then printed CLICKED for the tab and HOVER-WALK 7 walked, below at rest 0, on hover 0, on Model, Alpha and Sector",
+      "the same command with --click \"Resume (3d ago)\": CLICKED twice; Model 12 walked 1 below at rest 1 on hover; Alpha 13 walked 0 and 0; Sector 14 walked 5 below at rest 3 on hover",
+      "portal src/pages/PortfolioManagement/components/OptimizationSummaryHeader.tsx lines 185-187: the button's text is Resume (<time ago>) when an autosave exists, so its name changes with the clock",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/DSGN_REBRND_S22_PM_TAB_PINS_GRADE_20261005.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md 22a RETRIEVAL: a failed retrieval returns a value. A walk's '0 below' is read as a statement about the state its clicks were meant to reach.",
+  "world_is": "A failed click is printed on its own line and does not stop or mark the walk, so the HOVER-WALK line that follows reads the same as a pass. A pin that quotes only the HOVER-WALK line cannot be told from a walk of the empty page; the element count is the only tell (7 against 12 to 14 here). The Resume button's name carries a time-ago string, so a recorded command stops matching as the fixture's date ages.",
+  "notes": "INERT: the two pins graded today each reached the session (their counts and worst values reproduce). Remedy is the instrument owner's (2.0.0_SA_COO~D): make a failed click fail the run or stamp the HOVER-WALK line, and match the Resume button by a stable name."
+}
+```
