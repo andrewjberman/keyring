@@ -7974,3 +7974,27 @@ name the one known failure instead of silently inheriting it.
   "world_is": "Each named target passes in its own process on the release tree with conftest.py at live's bytes, which is the choice made. A single-process run of the whole set fails on CLOUD itself, so the failure is not caused by the release carry; ti-1's one-process fix (measured on CLOUD 4e84fd3f2e, before q-7's test file existed) does not cover the combination that now includes test_schwab_q7_asset_download.py. Tests are not in the shipped file set, so nothing served is affected."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "id": "NFRA_OPLGTW-Z-W15-S41",
+  "surfaced_at": "2026-10-05T02:25Z",
+  "one_line": "OG-rl-6 step 7: the one live grant naming dim_asset carries operations list/describe/query and NOT download_filtered, so the released dim_asset download opens for NO real principal today; the ask's property (d) text 'those holders gain downloads their grants already authorize' reads as if that holder gains one, and she does not.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: read-only consistent DynamoDB scan of gateway-access-state-table, sort-key prefix data_entitlement#, counts only, 2026-10-05T02:14:50Z: 2 records, both active; 1 names dim_asset; its scope.operations = ['describe','list','query']; ACTIVE dim_asset AND download_filtered = 0; distinct principals 1. Output: deliverables/0.9.0_WK_NFRA_OPLGTW~15/rl6_grants_before.out (no write, no identity printed).",
+      "FILE: app/data_entitlement.py:69 OPERATIONS = ('list','describe','query','download_filtered'); :90 schwab_prepare_download is classified to download_filtered, so the guard refuses her prepare_download before any dim_asset path runs."
+    ]
+  },
+  "spec_asserts": "NEVER_WIDEN_ASK_OG-rl-6 section 3(d): the pre-act read prints the count of live grants naming dim_asset; 'those holders gain downloads their grants already authorize'.",
+  "world_is": "The count is 1, and that grant does not authorize downloads (no download_filtered), so after the release a real dim_asset download is refused by the entitlement guard, not served; the capability is exercised only by the synthetic in-memory grant of the verify run. The act added no authorization and wrote no grant; whether the holder is later granted download_filtered is a grant change outside this order."
+}
+```
