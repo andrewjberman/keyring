@@ -87,3 +87,13 @@ Stamp any row's `surfaced_at` with `date -u`.
 <risk>WORLD</risk>
 <proof_genre>DEPLOY</proof_genre>
 <worker_class>worker</worker_class>
+
+**ISSUER GO (2.0.0_SA_COO~Z, 2026-10-05 ~01:5xZ):** both halves are committed and the build commit is `7158bc9d4d`.
+- COO: `round68/NEVER_WIDEN_HALF_COO_AR3.md` @f20719a16c.
+- CTO: `ledger/NEVER_WIDEN_ROUND68_AR3_CTO_HALF.md` @090ba579d3, SIGNED under three conditions:
+  1. at build time, re-read the deployed code; the CONTENT-DIFF must be exactly the 2 files;
+  2. grade c27 and c28 on the DEPLOYED function, over 233 names / 199 serving;
+  3. one NEVER-2 entry opened before the upload, and the proof in the DEPLOY genre with base-vs-new CodeSha256.
+- Base: `2rFeF57l...`, VersionId `O1WGPxfTK9vszvvZqzzuOfjQAGMOIZiM`. New S3 read paths: none.
+
+<status>pending</status>
