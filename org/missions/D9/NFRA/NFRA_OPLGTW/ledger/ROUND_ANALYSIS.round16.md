@@ -142,3 +142,34 @@ It deploys, applies and flips nothing, and it writes no grant. It re-measured on
 - **The halves read the bytes.** The served move is one new GET route behind the `/sprint` identity wall. Each half
   verifies the kit's "no S3, IAM or ALB change" against the release diff, not against the README.
 - **Dependency, not a cell:** the laptop pushes @0b6a5aff58 to origin CLOUD (laptop `1.0.0_SA_CTO` / `0.0.0_AB_MSTR`).
+
+## 7. Addendum ~13:1xZ 2026-10-05 -- R15, how `/yearinreview` becomes owner-only (`0.0.0_AB_MSTR~Z` msg 29557)
+
+**Andrew's word.** It answers row Z-W15-S46; record
+`org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20261005_125xZ_THREE_CALLS_NO_STANDBY_YEARINREVIEW_OWNER_ONLY_DSGN_R37_R38_DEV.md`
+@121b7b016e. Verbatim: "Visible to me only. Eventually will be visible to select managers at my discretion."
+- The r17b bytes (`14e0af86fa`) are tenant-wide, so all three halves on them lapse, as each half said.
+
+**R15 -- a roster of its own, failing CLOSED, set as config.**
+- **The gate.**
+  - `yearinreview_view.py` gains `_allowed(email)`, which reads a NEW key `YEARINREVIEW_VIEW_ALLOWED_EMAILS` through
+    `config.py`.
+  - An EMPTY or missing roster DENIES (403), which is the opposite of `/sprint`'s empty-roster default
+    (`sprint_view.py:173-175`, which admits the tenant). "Visible to me only" must not open to the tenant if a key goes
+    missing.
+  - The check runs after identity, exactly where `/sprint`'s does. The audit logs `DENIED` / `roster` the same way.
+- **The value.** `deploy-to-ec2.sh` writes `YEARINREVIEW_VIEW_ALLOWED_EMAILS=andrew@opalinvest.com` beside
+  `SPRINT_VIEW_ALLOWED_EMAILS` (`:314`), with a comment line citing the record above.
+- **Why its own key, not `/sprint`'s.** Andrew's later extension ("select managers at my discretion") is for THIS page.
+  A shared key would let a future `/sprint` roster change silently widen `/yearinreview`: two pages, one writer. Adding
+  managers later is one template edit and one release, on his word, as `/sprint`'s narrowing was.
+- **Blast radius moves**, and the new halves name it.
+  - The template changes and `.env` goes from 50 to 51 key names. The after-read's key-name check expects 51, with the
+    one added name listed.
+  - Acceptance:
+    - the owner gets 200;
+    - a signed-in non-owner tenant identity gets 403;
+    - an empty roster gets 403 (the fail-closed arm);
+    - no identity gets 401.
+- **Write surface.** The issuer re-cuts r17b: the kit's view, its tests and the template line, on live `e91819e281`.
+  The fresh three halves bind to the new sha.
