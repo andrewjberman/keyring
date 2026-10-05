@@ -1,198 +1,109 @@
-# ETFS_RIVALS -- DECOMPOSITION, ROUND 8 WORKSTREAM A (ENRICHMENT): the AI step never costs the page, one name in the AI prose, the render remainder, the census price repair, and the Bloomberg leg sized for the benchmarks
+# ETFS_RIVALS -- DECOMPOSITION, ROUND 9 (ENRICHMENT): the backfill made purely additive, the IDVZ/PFOE daily join, an incremental security list, AI-text links, real names for past holdings, a Bloomberg capacity budget, and the G5 drift read
 
 ```json
 {
  "project": "ETFS_RIVALS",
- "round": 8,
- "workstream": "A",
- "prd_ref": "org/missions/D5/ETFS/ETFS_RIVALS/prd/ETFS_RIVALS_PRD.md (v0.14 @4cc8e40575; ADMITTED 21:15:49Z, ratified-text re-signed by 3.0.0_SA_CVO~Z)",
- "prd_version": "v0.14",
- "analysis_ref": "org/missions/D5/ETFS/ETFS_RIVALS/ledger/ROUND_ANALYSIS.round7.md@115645c4b4 (section 3, ENRICHMENT LIST items 1, 2, 4)",
- "authority": "org/tier1_exec/2.0.0_SA_COO/deliverables/cooRV_ANDREW_DIRECT_20261004_20xxZ_BUILD_ETFS_RIVALS_ROUND8_TONIGHT.md@0a4321b843",
- "draft_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round8/DECOMP_DRAFT.md@1b2d733c6d",
+ "round": 9,
+ "prd_ref": "org/missions/D5/ETFS/ETFS_RIVALS/prd/ETFS_RIVALS_PRD.md (v0.17 @43a5542d11; ADMITTED)",
+ "prd_version": "v0.17",
+ "analysis_ref": "org/missions/D5/ETFS/ETFS_RIVALS/ledger/ROUND_ANALYSIS.round8.md@2097b5212b (section 4, ENRICHMENT LIST items 1-8)",
+ "rulings": [
+  "CTO~Z ruling (B) on row Z-S29 2026-10-05 16:22Z (G5 named-fund rebuild; gate file accepted)",
+  "CTO~Z msg 29624 term 4 (security_universe incremental)"
+ ],
+ "draft_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round9/DECOMP_DRAFT.md",
  "author": "2.0.0_SA_COO~RV",
- "cells": 5,
- "chains": 4,
+ "cells": 7,
+ "chains": 6,
  "join_cells": 0,
  "frozen": true,
  "revision": "1.0",
- "round7_decomposition": "org/missions/D5/ETFS/ETFS_RIVALS/decompositions/ETFS_RIVALS_DECOMP.round7.md"
+ "round8_decomposition": "org/missions/D5/ETFS/ETFS_RIVALS/decompositions/ETFS_RIVALS_DECOMP.round8.md"
 }
 ```
 
-**Issuer:** `2.0.0_SA_COO~RV`, 2026-10-04 ~21:xxZ, FULL.
+## Rectangle (the round-8 analysis section 4, 8 items)
 
-## Issuer rulings at this cut
+| item | cell | chain | risk |
+|---|---|---|---|
+| 1 G5 named-fund rebuild (then Step B, an issuer act) | RIV-nf-1 | ~1 | SERVED |
+| 2 IDVZ/PFOE daily join via a gate file | RIV-gf-1 | ~2 | SERVED |
+| 3 security_universe incremental | RIV-su-2 | ~3 | SERVED |
+| 4 C-S35 AI-text links | RIV-ln-1 | ~4 | SERVED |
+| 6 S24 capacity budget | RIV-cb-1 | ~5 (1 of 2) | SERVED |
+| 5 C-S36 ticker-form names | RIV-nm-3 | ~5 (2 of 2; asks cb-1's budget) | SERVED |
+| 7 G5 drift classification (read) | RIV-gd-1 | ~6 | LOCAL |
+| 8 triage of the 8 stale rows | issuer act, done: deliverables/2.0.0_SA_COO~RV/round9/STALE_ROWS_TRIAGE.md @f70677780a | - | - |
 
-1. **Andrew's word issues workstream A now** ("yes, build round 8 tonight", @0a4321b843). The round-7 analysis deferred the
-   ONE issuance until after the 2026-10-05 grades; that deferral binds item 3 only, which becomes **workstream B** after the
-   grades, together with the smoke items (record `cooRV_ANDREW_DIRECT_20261004_21xxZ_RIVALFUNDS_SIGNED_IN_SMOKE.md`
-   @1c31a5f6ce, S2-S8). Two bounds ride every cell: **no merge into CLOUD before the 2026-10-05 07:00 ET vehicle pull has
-   run** (the vehicle runs the CLOUD tree), and **no Lambda deploy before 3.0.0_SA_CVO~RV's 13:30Z grades**.
-2. **The draft's rulings stand** (DECOMP_DRAFT.md @1b2d733c6d): U02 and U08 SUPERSEDED by Andrew's layout word; Z-S16 and
-   Z-S17 not cut; D10 rolls off ~10-08; D07 upstream; D04/D05/D06/D11 read Monday; I-2's data acts follow lg-1.
-3. **The D12/D13 split (lg-1):** D12 = the HOME entries' `pending_source_policy` (IDVZ, PFOE through Bloomberg, history from
-   inception); D13 = the `"leg": "pending"` entries plus `pending_role` (ACWI and IWM join as the benchmarks, SCHY reads rival).
-   This matches Andrew's smoke S1: "S-C-H-Y is not the benchmark. The benchmark is ACWI ... P-F-O-E, the benchmark is I-W-M".
-4. **Cut by write set (C10):** one file set per chain, below. an-1 -> rw-1 share `render.py`, so they are one chain, one queue.
+Edges: RIV-cb-1 -> RIV-nm-3 (nm-3's production fetch asks bbg_budget). Write sets are disjoint; the shared-file hookups are the issuer's at the merge: collector_bloomberg import copies `rebuild_funds` onto its marker (for nf-1); `build-security-universe` in sweep.ONLY_STAGES, its runner and its call after publish-page (for su-2).
 
-## Rulings reaching every cell
+After the drain and the deploy (issuer acts, each under a never-widen pair): the D12 gate flip in leg_gates.json, then D12 Step B (the IDVZ/PFOE import) with its per-date census of 0 other-fund deltas in G1 and G5.
 
-Rounds 1-7's rulings stand (`ETFS_RIVALS_DECOMP.round{1..7}.md`). CALL 5 holds: one AI run per page day; a FAIL is shown,
-never re-rolled. The standing L5 rule (CTO round-7 ruling 4): every production outcome names its ORGANIC trigger.
+## Cells
 
-## 3. THE CELLS
+### `RIV-nf-1` -- the trade schedule rebuilds only the named funds (row Z-S29; CTO~Z ruling B)
+- Measured: `gold_trade_schedule.run_stage` builds one G5 object (and its G6) per report date from every fund's windows; the D12
+  Step B mirror dry run re-derived every fund's trades on 189 dates with current code (confidence 176 dates, action 99, est
+  price 99, discretionary_shares 43, income_funded 10, row counts 3); `hold_funds` leaves a fund OUT of the new object
+  (`:95-101`), so it cannot keep a fund's prior rows.
+- Interface: the stage event key `rebuild_funds` (a list of tickers). With it, for each scope date the new G5 object is the
+  newest prior G5 object's rows for every fund NOT named (values unchanged) plus freshly inferred rows for the named funds; G6
+  likewise from the newest prior G6 object. A date with no prior object builds every fund. Without the key nothing changes.
+  `sweep.run_gold_chain` passes the batch's `rebuild_funds` (read from the fetch-bloomberg marker of the batch) to the
+  trade-schedule stage.
+- **Organic trigger:** the import batch's S3 marker event (canonical-shape Lambda -> run_gold_chain).
 
-### `RIV-dt-1` -- the deadline-aware vendor timeout (W1-S46; CTO round-7 ruling 1; item 1)
-- The worst case today: a vendor call starting near the AI deadline runs `ai_client.TIMEOUT_S` = 120 s, which leaves 30 s
-  of the 150 s margin for a republish that takes ~68 s at p95 (publish-page Lambda, 14 days, n=29: p95 68.1 s, max 81.2 s;
-  the act-3 publish with refresh_a1 took 117.5 s; the CVO measured ~88 s).
-- Interface: `chat(timeout=)`; a deadline client hands each call min(TIMEOUT_S, the time left); `sweep.REPUBLISH_RESERVE_S`
-  >= 88 s is subtracted from the remaining time. A planted slow vendor at the deadline still republishes: the account is
-  recorded FAILED and the page publishes without it.
-- Check: `dt-1.AC1`. Organic trigger: the 09:00 ET sweep.
+### `RIV-gf-1` -- a rivalfunds-owned gate file (CTO~Z ruling; Andrew-direct @33ff3bdac0)
+- Measured: `universe.d12_enabled()` reads only the process environment (`universe.py:36-37`); the vehicle sets no D12 variable
+  and its file `integrations/bloomberg/pipeline/scheduled_daily_pull.cmd` may not be edited.
+- Interface: `data/etfs/scripts/rivalfunds/leg_gates.json` {"RIVALFUNDS_LEG_ENABLE", "RIVALFUNDS_LEG_D12", "RIVALFUNDS_LEG_D13":
+  "0"|"1"}; a gate reads ON when the environment says "1" OR the file says "1" (one direction); `universe.GATES_FILE` names the
+  file; the committed file ships every gate "0". The map cache stamp includes the file's gate state.
+- **Organic trigger:** every process that reads the map (the vehicle's leg, every Lambda).
 
-### `RIV-an-1` -- the AI prose reads each security under the page's one name (item 2 + U14's AI-text residue)
-- The 3 money-market keys (DGCXX x2, IJGXX) sit in the stored prose; 13 casing clashes in the opening lines, 26 in the full
-  text.
-- Interface: `render._rich` maps whole security keys and casing variants to `_NAMES`; a cash-like key reads
-  "<TICKER> money market fund" with the original in a title; the stored row is unchanged; the `.rf-cite` citation list keeps
-  its keys.
-- Check: `an-1.AC1`. Organic trigger: the 07:00 ET marker publish and the 09:00 ET sweep publish.
+### `RIV-su-2` -- security_universe as its own incremental invocation (CTO~Z msg 29624 term 4)
+- Measured: round 8's `gold_security_universe.handler_entry` rescans every G1 date of 3 years (504 on S3) and ran the publish
+  Lambda into its 900 s timeout at 1024/1024 MB; its publish-path call was removed (b166e04416).
+- Interface: `handler_entry({"date", "sink", "mode": "incremental"|"seed"})`: `incremental` reads the newest prior universe object
+  dated before the as-of and the as-of date's canonical_shape ONLY and writes the merged list (new securities added, first_seen
+  kept, last_seen advanced, funds and date counts merged); `seed` is today's full build; `incremental` with no prior object
+  builds as `seed`.
+- **Organic trigger:** the 09:00 ET sweep after publish-page (the issuer registers the stage at the merge).
 
-### `RIV-rw-1` -- the render remainder (RFW-U07, U12, U18)
-- U07: the trend caption reads the dates and trading days only; the unit moves off it (`rw-1.AC1`).
-- U12: consecutive noted 0-trade windows collapse into one line, with the notes kept inside (`rw-1.AC2`).
-- U18: an all-caps "CORP." ends a sentence, so the account's lead is two sentences (`rw-1.AC3`).
-- Organic trigger: as an-1.
+### `RIV-ln-1` -- the AI-text name links (CVO C-S35)
+- Measured on the served 10-05 page: 395 AI-text mentions of 43 securities that have a modal are plain text; in the page's render
+  context 428 of 860 display names are carried by more than one key ('Enel SpA' <- 29265W207, ENEL_IM_Equity, 'ENEL IM Equity'),
+  and `render._render_page` keeps a name in `_NAME_KEYS` only when ONE key carries it (render.py:1769).
+- Interface: a page name whose keys include exactly ONE key with a dialog on the page links to that key; a name two
+  dialog-bearing securities share links to the key the account's citation list names, else stays plain with both identifiers
+  in its title; a one-key name links as today. The page stays under the gateway cap (2,097,152 B).
+- **Organic trigger:** the 07:00 ET marker publish and the 09:00 ET sweep publish.
 
-### `RIV-rp-1` -- the census price repair (row Z-S18 + the contradictory miss reason)
-- Z-S18: `alias` comes from the wide g1w and `books` from the 14-day g1, so a CUSIP resolved only in an older report misses
-  its holding-implied price (`rp-1.AC1`).
-- A census price row that reads `missing` never claims the rankings price it (`gold_input_census.py` ~:183, 44 served rows)
-  (`rp-1.AC2`).
-- Organic trigger: the 07:00 ET marker publish.
+### `RIV-cb-1` -- the measured Bloomberg capacity budget (rows Z-S24, Z-C-S32)
+- Measured 2026-10-05: about 175k BQL rows of local backfill (IDVZ+PFOE 12,820; ACWI+IWM 76,859 + 84,655; probes) between 05:30Z
+  and 07:06Z exhausted the Terminal's daily capacity and blocked the 07:00 ET production pulls; nothing recorded the spend and
+  nothing refused a pull before it ran.
+- Interface: `rivalfunds.bbg_budget` (`CONFIG_PATH` -> `bbg_budget.json` {daily_ceiling_rows, production_reserve_rows,
+  est_rows_per_fund_date}; ledger dir from RIVALFUNDS_BBG_BUDGET_DIR, one JSON-lines file per UTC day); `spent(day)`,
+  `record(mode, rows, batch_id)`; `collector_bloomberg` records every capture's rows and REFUSES a backfill whose estimate
+  passes ceiling - reserve (status "BUDGET", no fetch); `daily` (production) is never refused, only recorded.
+- **Organic trigger:** every collector run on the terminal machine (the vehicle's daily leg records; an ad hoc backfill asks).
 
-### `RIV-lg-1` -- the Bloomberg leg carries index-control-sized holdings and switches D12 and D13 apart (row Z-S20)
-- Measured 2026-10-03 for 2026-10-01: IDVZ 45 / PFOE 24 / ACWI 2,198 / IWM 1,979 rows. `excel_fetch` runs one query per
-  date with max_rows=2000 and raises RuntimeError on overflow, which `_handler_entry` does not catch: the leg crashes. The
-  gate `RIVALFUNDS_LEG_ENABLE` switches every pending key at once.
-- Interface: an `index_control` fund is queried on its own per date under a cap >= 2,500 and < 50,000; the range read never
-  truncates silently; an overflow is a per-name partial (PARTIAL, the fund named, the others land); `universe` reads
-  `RIVALFUNDS_LEG_D12` and `RIVALFUNDS_LEG_D13` per ruling 3, `RIVALFUNDS_LEG_ENABLE=1` turns both on, all unset is today.
-- Checks: `lg-1.AC1` (fetch), `lg-1.AC2` (gates). Organic trigger: the vehicle's 07:00 ET leg. Nothing here flips a gate:
-  each gate flip and its backfill is an issuer act under its own never-widen pair after the merge.
+### `RIV-nm-3` -- real names for past holdings (CVO C-S36)
+- Measured on the 10-05 render context: 135 keys carry a ticker-form name ('ATD CN Equity'); 0 of them sit in any fund's latest
+  holdings; 128 were never in any G4 date and 7 sit in G4 with no name -- the G4 enrichment asks only for current holdings.
+- Interface: `rivalfunds.security_names.handler_entry({"date", "sink"}, fetch=None)` reads the page day's newest
+  holding_contribution, takes the keys with a blank or ticker-form name, drops the keys the newest `gold/security_names` object
+  already names, asks `fetch(keys) -> {key: name}` for the rest (production: one LONG_COMP_NAME reference request, asked through
+  `bbg_budget` first) and writes a new object with the prior names plus the new; `gold_holding_contribution` takes a key's name
+  from it when G4 has none, before any G1 name. `enrichment_bloomberg --mode daily` runs it for the page day after its G4 lands.
+- **Organic trigger:** the vehicle's 07:00 ET enrichment step (no vehicle file changes).
 
-## ISSUER ACTS (no worker; each under its own pair)
-- After lg-1 merges (after the 10-05 07:00 ET pull): the D13 gate flip + the ACWI/IWM backfill from 2026-01-02, then the D12
-  gate flip + the IDVZ/PFOE backfill to inception; each with its budget threshold named in the pair.
-- After the 13:30Z grades: the round-8 Lambda deploy (NEVER-2 ledger entry).
-
-## 4. DEPENDENCY EDGES AND CHAINS
-
-| chain | cells (serial) | writes |
-|---|---|---|
-| `~1` | dt-1 | `ai_client.py`, `ai_stage.py`, `sweep.py` |
-| `~2` | an-1 -> rw-1 | `render.py` |
-| `~3` | rp-1 | `gold_input_census.py` |
-| `~4` | lg-1 | `collector_bloomberg.py`, `universe.py` |
-
-No join cell. No hookup in a shared file is expected; a report that names one gets it at the merge.
-
-## 5. BATTERY
-
-`deliverables/2.0.0_SA_COO~RV/round8/checks/`, dry-run at base CLOUD 1c31a5f6ce (the package equals the deployed pin
-75ad1e4d2e). Each order's face names its checks; the issuance commit carries every base line.
-
-## WORKSTREAM B (issued 2026-10-04 ~22:xxZ, same issuer, same round): Andrew's signed-in smoke on PRD v0.14
-
-**Authority:** the smoke record `org/tier1_exec/2.0.0_SA_COO/deliverables/cooRV_ANDREW_DIRECT_20261004_21xxZ_RIVALFUNDS_SIGNED_IN_SMOKE.md`
-@1c31a5f6ce (S2, S3, S7, S8) under "yes, build round 8 tonight" (@0a4321b843), against PRD v0.14 @4cc8e40575 (ADMITTED 21:15:49Z).
-Measured inputs: `deliverables/2.0.0_SA_COO~RV/round8/WORKSTREAM_B_INPUTS.md` @7cc969288b. Item 3 of the round-7 enrichment list
-(what the 10-05 grades leave open) is still cut after the grades. The same two bounds hold: no merge before the 2026-10-05
-07:00 ET vehicle pull, no deploy before the 13:30Z grades.
-
-**Issuer rulings (B):**
-1. The rolling period is the last 30 TRADING days (v0.14 FWD-13/14/15/19; Andrew "the last 30 trading days"), in the rankings,
-   the buying trend and the AI fact pack alike; the existing `R30` id is kept and its meaning moves from 30 calendar days.
-2. A window clipped to a fund's first report says so ("Since first report") and is never labelled year/quarter/month to date
-   (S3). The flag is produced by hc-1 (`period_clipped`, `period_nominal_start`) and read by rn-1.
-3. The buying trend carries one block per period with a `period` column (bt-1); every reader of buying_trend that wants the
-   year reads `period == "YTD"` when the column exists. The AI fact pack is such a reader (gc-1 owns that filter).
-4. rn-1 builds on chain `~2` (render.py after an-1 and rw-1); its worktree is cut from branch `wk-ETFS_RIVALS-2`.
-5. The interfaces between cells are prescribed in the checks, so the four cells build in parallel: rn-1 renders fixture rows in
-   the hc-1/bt-1 shape, gc-1 reads the bt-1 shape.
-
-### `RIV-gc-1` -- the grader attaches an uncited fund-pack fact, and the AI's last 30 days are trading days (S2, S7)
-- Measured: IDVZ "The last 30 days" FAILED on "$1.6 million, $1.3 million"; both are real fact-pack trades (T7 1,564,110.98;
-  T9 1,292,762.88) the model left out of `cited`; with them cited the grade PASSES. "$1.3 million" also matches T8.
-- Interface: `ai_accounts.attach_uncited(body, facts, cited) -> (rows, notes)` (one uncited match -> its row attached with
-  `auto_cited`; two or more -> no attach, one note naming the ids); `run_chain` calls it before `grounding_check` and an
-  ambiguous note joins the FAIL reason. `fact_pack` keeps trades in the last 30 NYSE trading days, and reads the trend rows
-  with `period == "YTD"` when the column exists.
-- Checks: `gc-1.AC1`, `gc-1.AC2`. Organic trigger: the 09:00 ET sweep's AI step.
-
-### `RIV-hc-1` -- the rankings' rolling period is 30 trading days, and every row says whether its window was clipped (S3, S7)
-- Measured: `R30` starts 29 calendar days back (`gold_holding_contribution.py:123`); YTD is clipped to the first report
-  (`:411`, `:417`) with no field saying so.
-- Interface: `period_start("R30", day)` = the 30th NYSE trading day ending on `day`; every row carries `period_nominal_start`
-  and `period_clipped`.
-- Check: `hc-1.AC1`. Organic trigger: the 07:00 ET marker publish (the A1 producer step).
-
-### `RIV-bt-1` -- the buying trend carries every period (S8; v0.14 FWD-15)
-- Measured: `build` writes the year to date only (`gold_buying_trend.py:157`, `:210`).
-- Interface: rows carry `period` in {R30, MTD, QTD, YTD}, each with its own window_start / window_end / n_trading_days;
-  YTD rows are today's rows.
-- Check: `bt-1.AC1`. Organic trigger: the 07:00 ET marker publish.
-
-### `RIV-rn-1` -- the 30-trading-day default, the switch inside both components, and honest window labels (S3, S7, S8)
-- Measured: `render.PERIODS` = MTD/QTD/YTD with YTD first and selected (~:806-813); the switch lives only at the top; the
-  trend card reads "year to date" for every fund (~:1057); IDVZ's clipped window reads "Year to date (2026)".
-- Interface: one `rf-period` radio group (R30 checked); the top switch reads R30, a `data-period-divider`, MTD, QTD, YTD;
-  the rankings component and each trend card hold labels for the same four radios (any one moves all; no script); every rank
-  and trend panel carries a `data-period-window` line (label, first and last date, trading days); R30 reads "Last 30
-  trading days"; a clipped window reads "Since first report".
-- Checks: `rn-1.AC1`, `rn-1.AC2`. Organic trigger: the 07:00 ET marker publish and the 09:00 ET sweep publish.
-
-| chain | cells | writes |
-|---|---|---|
-| `~5` | gc-1 | `ai_accounts.py` |
-| `~6` | hc-1 | `gold_holding_contribution.py` |
-| `~7` | bt-1 | `gold_buying_trend.py` |
-| `~2` (cont.) | rn-1 | `render.py` |
-
-## WORKSTREAM C (2026-10-05, same issuer, same round): FWD-21, every security opens its modal
-
-**Authority:** Andrew-direct ~03:3xZ 2026-10-05 (record @41158af7f9, item 2), PRD v0.16 @646ce7f4b8 FWD-21 (CTO~Z msg 29442).
-Items 3-4 of that record (the ETFClassifier full backfill and its routine mechanism) are routed by CTO~Z to 1.0.0_SA_CTO
-(MDPF_SECCLASS); ETFS_RIVALS supplies a published list of every security the rivals and the Opal ETFs hold (a later cell).
-Andrew's 3-year lookback cap (@357e681ddf) bounds every backfill.
-
-**Issuer ruling:** one dialog per security page-wide, keyed by its security key, reused by every mention (the page is 1.89 MB
-of the 2.10 MB gateway cap, so dialogs per fund x mention cannot fit). fc-1 continues chain `~2` (render.py) after rn-1.
-
-### `RIV-fc-1` -- every security named on the page opens its one modal (FWD-21)
-- Interface: every security mention in the rankings, trend, trade log and AI text is a `<button data-sec="<key>"
-  popovertarget="<id>">`; one `data-sec-dialog="<key>"` element per security; no history -> "History not yet backfilled"
-  (`data-history="none"`); no script; DIALOG_SOFT_CAP and its fallback kept.
-- Check: `fc-1.AC1` (FAIL 3 at the rn-1 build 280b8dc66a, control OK). Organic trigger: the 07:00 ET marker publish.
-
-| chain | cells | writes |
-|---|---|---|
-| `~2` (cont.) | fc-1 | `render.py` |
-
-## WORKSTREAM D (2026-10-05, same issuer, same round): the served security list
-
-**Authority:** CTO~Z ruling msg 29426 ("ETFS_RIVALS supplies its input: a published list of every security the rivals and Opal
-ETFs hold"); laptop 1.0.0_SA_CTO msg 105132 (MDPF_SECCLASS FWD-9/FWD-10 read it); Andrew-direct 3-year cap @357e681ddf.
-The interim source until it lands is gold canonical_shape (answered to the laptop CTO, msg 29471).
-
-### `RIV-su-1` -- one served list of every security held within 3 years (gold security_universe)
-- Interface: `gold_security_universe.handler_entry` -> one object at `address("rivalfunds","etfs","gold","security_universe",
-  "date=<as-of>","universe-<revision>.parquet")` (builder output, measured: no refusal); one row per security; no cash lines.
-- Check: `su-1.AC1` (FAIL 3 at base, control OK). The `produce_a1` hookup is the issuer's at the merge.
-
-| chain | cells | writes |
-|---|---|---|
-| `~8` | su-1 | `gold_security_universe.py` (new) |
-
+### `RIV-gd-1` -- the G5 history-drift classification (round-8 analysis item 7, row Z-S29)
+- Measured by the D12 Step B mirror dry run: a G5 built by current code differs from the live G5 on most of 189 dates for the
+  funds other than IDVZ/PFOE (confidence 176 dates, action 99, est price 99, discretionary_shares 43, income_funded 10, row count
+  3; est_price_source and key_resolution new on 183).
+- Interface: `data/etfs/scripts/rivalfunds/tools/g5_drift.py` (live S3 READ-ONLY; G5 rebuilt into a LOCAL sink) writes
+  `deliverables/0.9.0_WK_ETFS_RIVALS~6/g5_drift.json` (dates, rows_compared, rows_differing, classes [{name, columns, n_dates,
+  n_rows, cause {commit, cell}, reader_visible}], unclassified_rows) and a one-page G5_DRIFT.md. No S3 write, no replay.
+- **Organic trigger:** none; a one-off read for the CTO's ruling on the history.
