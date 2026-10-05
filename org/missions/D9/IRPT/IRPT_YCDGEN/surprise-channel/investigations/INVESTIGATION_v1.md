@@ -907,3 +907,83 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "INERT: no served report reads this object today (layout_overview.py takes it as a CLI file). Owner of the ingestion Lambda is outside this project; placed here because the in-house build would make the object load-bearing. Feasibility analysis: docs/briefs/irpt-ycharts-inhouse-generation-feasibility-20261005.md."
 }
 ```
+
+## IRPT_YCDGEN-W1-S3 -- the round-6 methods are not in overview_map.json, and pricing=False is a parameter whose default stays True
+
+```json
+{
+  "id": "IRPT_YCDGEN-W1-S3",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~1",
+  "surfaced_at": "2026-10-05T21:25:51Z",
+  "one_line": "Round 6 b-6's classified elements need three new computed method names the shipped overview_map.json does not carry, and the no-pricing mode is switched on by pricing=False (default True), so the producer that calls build must pass it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "spec_asserts": "YCD-b-6 / R2: price-based elements print NOT_AVAILABLE with NOT_IN_THIS_VERSION; allocation by asset class and sub asset class is computed; the order also says keep every existing test in test_layout_overview.py passing.",
+  "world_is": "Existing tests call compute_element, compute_all, build and main with no mode argument and expect OWN_SERIES statistics to compute (test_six_statistic_*, test_wired_both_render_paths_pass_the_two_series), so the no-pricing behaviour cannot be the default. It is built as pricing=False on compute_element, compute_all and build, and --no-pricing on main; default True is the YCharts-priced path, unchanged. The new computed methods are HOLDINGS_CLASSIFIED, ALLOCATION_ASSET_CLASS and ALLOCATION_SUB_ASSET_CLASS (constants CLASSIFY_METHODS); deliverables/maps/overview_map.json carries none of them (its computed methods are OPAL_HELD 158, OWN_SERIES 9, and 65 BUILDER_ONLY), so a map the a-6 producer uses must name them. A producer that calls build or compute_all without pricing=False prints the OWN_SERIES elements from kept answers (INPUT_MISSING:<call> when nothing is kept), not NOT_IN_THIS_VERSION.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python count of overview_map.json elements by source.computed: OPAL_HELD 153+4+1 (158 per the existing map test), OWN_SERIES 8+1, BUILDER_ONLY 52+9+2+2, plain 11+4+4+3",
+      "pytest test_layout_overview.py -k not_in_this_version: 1 passed (pricing=False on the six price-based forms and the 9 real OWN_SERIES elements; positive control with pricing on computes)",
+      "layout_overview.py compute_element, compute_all, build, main signatures on branch wk-IRPT_YCDGEN-61"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ARMED until a-6's order names pricing=False (or its own map) at its build call and its test asserts a price element reads NOT_IN_THIS_VERSION through the producer. Owner 2.0.0_SA_COO~Y at the a-6 cut."
+}
+```
+
+## IRPT_YCDGEN-W1-S4 -- R2's closed reason set is narrower than the module's other reasons, and _scan_classifications is kept (retired from the path) because an existing test calls it
+
+```json
+{
+  "id": "IRPT_YCDGEN-W1-S4",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~1",
+  "surfaced_at": "2026-10-05T21:25:51Z",
+  "one_line": "R2 states a closed reason set (COVERAGE_BELOW_0.95, STALE_INPUT, INPUT_MISSING:<name>, NOT_IN_THIS_VERSION); the module's existing paths still produce NOT_HELD:<reason>, SERIES_TOO_SHORT, OUTSIDE_TIME_BUDGET and others, and plain vendor-call elements carry no price marker.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "R2: two states only, a value or NOT_AVAILABLE with a reason from the closed set COVERAGE_BELOW_0.95, STALE_INPUT, INPUT_MISSING:<name>, NOT_IN_THIS_VERSION. R1: the module's own _scan_classifications path is removed from the Overview path.",
+  "world_is": "The new classified methods use only COVERAGE_BELOW_0.95 and INPUT_MISSING:<name>, and pricing=False uses NOT_IN_THIS_VERSION. The older OPAL_HELD path still returns NOT_HELD:<reason> (pinned by existing tests test_opal_held_*), the series methods return SERIES_TOO_SHORT / SERIES_INVALID / STATISTIC_UNKNOWN:<id>, and a map-less call returns OUTSIDE_TIME_BUDGET; none are in the closed set. A plain (non-computed) element reading a YCharts call has no marker saying it is price-based, so pricing=False does not turn it into NOT_IN_THIS_VERSION: with nothing kept it prints the existing 'YCharts gave no answer' line. _scan_classifications is no longer called by load_held_rows, main, compute_all or build (test no_second_classification_read asserts it); the function body stays, marked retired, because the existing test test_opal_held_default_readers_are_read_only_s3_get_and_dynamodb_scan calls it directly and the order says keep every existing test passing.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "layout_overview.py on branch wk-IRPT_YCDGEN-61: reasons raised by _NA(...) in _compute_held, _compute_opal_held, statistic_of, compute_element",
+      "pytest test_layout_overview.py: 38 passed (the 6 held tests and the scan test unchanged)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: the a-6 producer maps each reason to the v2 schema's status; whether NOT_HELD:<reason> and the series reasons map into the closed set is its and YCD-s-6's call. Deleting the retired scan function and its test is a one-line follow-up for a cell that owns the test."
+}
+```
+
+## IRPT_YCDGEN-W1-S5 -- the criterion expectations anchor at the line start, and this shell forces ANSI colour into pytest output
+
+```json
+{
+  "id": "IRPT_YCDGEN-W1-S5",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~1",
+  "surfaced_at": "2026-10-05T21:25:51Z",
+  "one_line": "With FORCE_COLOR=3 in the environment the literal pytest invocations print their summary line behind ANSI escapes, so an expectation anchored at the line start (^[1-9][0-9]* passed) does not match the raw bytes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Proof of spec AC1-AC6: each invocation's output matches ^[1-9][0-9]* passed (AC6 ^[0-9]+ passed).",
+  "world_is": "env in the worker shell shows FORCE_COLOR=3; the last output line of `python -m pytest ... -q -p no:cacheprovider -k not_in_this_version` begins with bytes 033 [ 3 2 m 033 [ 3 2 m 033 [ 1 m then '1 passed'. With the escape sequences stripped the line reads '1 passed, 37 deselected' and each criterion matches. The recorded outputs in the proof instance are the stripped lines, and the raw-bytes difference is stated here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "env | grep -i color -> FORCE_COLOR=3",
+      "od -c of the pytest summary line printed 033 [ 3 2 m before the count"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: a checker that runs the invocation with FORCE_COLOR unset, or strips ANSI, reads the same pass."
+}
+```
