@@ -854,3 +854,30 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "INERT: owner 2.0.0_SA_COO~Y at the round-5 close; a wider feed (a per-holding look-through table) is a data decision, not a cell."
 }
 ```
+
+## IRPT_YCDGEN-W2-S10 -- contract 3.5's 0.95 coverage floor is not applied to an OPAL_HELD element; its held-of count is the honesty carrier
+
+```json
+{
+  "id": "IRPT_YCDGEN-W2-S10",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~2",
+  "surfaced_at": "2026-10-05T12:58:00Z",
+  "one_line": "Contract 3.5's 0.95 coverage floor is not applied to an OPAL_HELD element (the issuer's spawn ruling renormalizes over the held holdings), so a held value can print at any coverage with its held-of count in the trace and on the page.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Contract 3.5: below 0.95 coverage a computed element is NOT_AVAILABLE with reason COVERAGE_BELOW_0.95. Contract 5.2 / the issuer's ruling at spawn: an OPAL_HELD value is renormalized over the held holdings and its method says how many of how many.",
+  "world_is": "layout_overview._compute_opal_held applies no floor: trace.coverage is the weight share of holdings carrying the figure (informational) and the trace for an OPAL_HELD value adds `held` and `of` beside `method` ('OPAL_HELD: <held_data method> (held n of N)'); the page prints 'Opal-held data: n of N holdings.' under the value. Measured on Y-5 by the census (row W3-S7): the figures stand on at most 37 of 99 holdings, so a sector or region share would print on roughly that weight share; only the page note and the trace say so. The wiring also calls two of held_data's module-private helpers (_held_pairs, _decimal) for the coverage share, because value_of returns counts but not the weight share. The default loader readers (S3 get of the latest dated bbg characteristics.parquet, paginated DynamoDB scan of etf-classifications) were exercised against fakes in tests and the layout was CLI-confirmed (bucket layout, table key, column names) but not run live by this cell.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py _compute_opal_held and load_held_rows (branch wk-ycdgen-r5-5)",
+      "tests test_layout_overview.py -k opal_held: 6 passed",
+      "aws s3 ls s3://opal-data-etfs/bbg/ (dated folders and constituents/), describe-table etf-classifications (hash key ticker), characteristics.parquet schema read into temp and deleted"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: owner 2.0.0_SA_COO~Y at the round-5 close; if a floor on held values is wanted it is one constant in _compute_opal_held."
+}
+```
