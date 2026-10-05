@@ -536,3 +536,33 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "world_is": "S3's reading is corrected: the challenge is count-shaped (the 7th request), at every spacing tried. And table_data with indices=<holding tickers> answers 404 like indices=P:<id>. So E1 needs a different security-level route (or the served path's own data) and a call budget of about 6 per window, measured before the next build. No retry was made; the session served Y-2 READY between runs."
 }
 ```
+
+## IRPT_YCDGEN-W2-S6 -- no Opal table holds the held-data columns per holding; the feed is all YCharts security-level and the 6-request budget has no slack
+
+```json
+[
+  {
+    "id": "IRPT_YCDGEN-W2-S6",
+    "project": "IRPT_YCDGEN",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~2",
+    "surfaced_at": "2026-10-05T05:50:00Z",
+    "one_line": "YCD-o-4: no Opal table found holds any of the 158 held-data columns as the same per-holding figure, so all 158 feeds are YCHARTS_SECURITY; the probe map plans to exactly 6 requests (zero slack) through three expand calls, two general_data calls with 68 and 80 metric ids (request paths about 3.8K and 4.6K characters) and one fund_data series call, and the metric ids and the answer field are inferred.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order YCD-o-4 / contract 4.2: for each HELD_DATA column group find whether Opal holds the figure per holding (OPAL_HELD with table, field, key) else a YCHARTS_SECURITY call of at most 6 requests for 99 holdings.",
+    "world_is": "Measured with schema and field-name reads only (no client figure, no vendor call): etf-classifications (key ticker, 2866 items, fields asset_class, sub_asset_class, name) and bd-securities (key ticker, 10965 items, same classes) hold a class LABEL per ticker, not a look-through share; opal-data-etfs bbg/<date>/characteristics.parquet (114 rows, key `security` = '<TICKER> US Equity') holds FUND_EXPENSE_RATIO, EQY_DVD_YLD_IND_NET, HB_OAS_EFF_DURTN, TOTAL_NUMBER_OF_HOLDINGS_IN_PORT, GICS_SECTOR_NAME, CNTRY_OF_DOMICILE for the ETF book's universe only, and gold/holding (188 rows) and gold/book (4 rows) are the four Opal ETF books and their constituents; their overlap with the upload's tickers was not measured (the client file is not read), and they are universes of other purposes, not the upload; no table found holds region, sector-share, maturity, credit-quality or market-cap-bucket shares per holding. With chunk 50 each expand call is 2 requests, so the 6-request bound allows exactly three calls: general_data twice (a single 148-id call would not fit one URL comfortably) and fund_data once. The metric ids are the table_data column ids, inferred to be the general_data metric ids, and the field `$.chart_data[*]` is the round-3 map's inferred general_data shape; the issuer's live run decides all three, and whether general_data admits 50 securities and 80 metric ids in one GET. A leaf that returns nothing for a holding is a NONE for that holding at run time, not at the map.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws dynamodb describe-table etf-classifications, bd-securities, trade-security-identifiers (read-only, key schema + item count; item field names only)",
+        "s3 opal-data-etfs/bbg/2026-10-02/characteristics.parquet and gold/{book,holding}/date=2026-10-02 (parquet schema and row counts only)",
+        "data/etfs/scripts/gold/etf_positioning_gold.py (the fields it reads: lines 1263-1280, 1521-1530)",
+        "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/maps/feed_probe_map.json; check o-4.AC2 planned 6 requests (3 calls x 2 chunks of <=50)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "INERT: owner 2.0.0_SA_COO~Y at the round-4 close run; a refusal of the 80-id URL would split the metric list and needs a runner or budget ruling because the budget has no slack."
+  }
+]
+```
