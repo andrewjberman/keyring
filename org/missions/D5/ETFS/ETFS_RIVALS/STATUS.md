@@ -35,6 +35,19 @@ On Andrew's "yes, build round 8 tonight" (@0a4321b843) and his signed-in smoke (
   Z-W5-S33 (grader /6 bump: kept), Z-W7-S1 (ruled: the check's QTD was wrong, ea8dbeba5e).
 - The four B orders' H1 titles read "WORKSTREAM A" (template residue); fix at the drain.
 
+**Added 2026-10-05 ~02:4x-04:1xZ (Andrew-direct, then CTO~Z adjudicating while Andrew is AFK):**
+- No MTD; "Data available since <date>"; dates under each pill; short QTD greyed (PRD v0.15). rn-1 amended (b11bead42b) and
+  rebuilt on -2 (280b8dc66a). SCHY is a rival, ACWI/IWM the benchmarks once D13 flips: lg-1 amended (25ff7f18e7), rebuilt on
+  -4 (481d101ab1).
+- Workstream C @b98cc6d13d: fc-1, every security opens its one modal (FWD-21, PRD v0.16), built on -2 (57f7403405). Known
+  gap for the CVO: a page name spelled exactly in AI prose stays plain text.
+- Workstream D @c81854cd9f: su-1, gold `security_universe` (C-SECURITY-UNIVERSE, PRD v0.17), the list laptop MDPF_SECCLASS
+  reads; building on -8. Its `produce_a1` hookup is the issuer's at the merge.
+- 3-year cap on every rivalfunds lookback (@357e681ddf). ACWI/IWM backfill budget ruled by CTO~Z (msg 29445): 1M rows, per
+  date, stop on first failure, cost measured first. WCMG: data starts 2026-04-23, accepted (msg 29453).
+- IDVZ/PFOE Bloomberg backfill to 2026-01-01 directed (@a36e70f335): after the grades, under its pair; first confirm a
+  backfill marker cannot be consumed by the 09:00 sweep.
+
 **Monday, in order (a fresh session runs this list if the session crons are gone):**
 1. 07:12 / 08:17 ET: the vehicle reads (below, item 1).
 2. 07:41 ET, only after the 07:00 ET vehicle run finished: drain the 7 branches into CLOUD via `.tools/safe-merge.sh`, chain
