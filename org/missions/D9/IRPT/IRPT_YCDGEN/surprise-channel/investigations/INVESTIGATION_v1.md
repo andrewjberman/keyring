@@ -1174,3 +1174,29 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "INERT: the STALE_INPUT reason cannot fire from this producer until a loader returns the table's own date; exposing the dated folder is a small change in the layout's loader (another cell's file)."
 }
 ```
+
+## IRPT_YCDGEN-W2-S13 -- the published analysis-report response contract is closed to the v1 form, so the Opal sections answer does not validate against it
+
+```json
+{
+  "id": "IRPT_YCDGEN-W2-S13",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~2",
+  "surfaced_at": "2026-10-05T22:46:55Z",
+  "one_line": "OwnedAnalysisReader.sections now answers provider, request_ref, sections and computation_validation for an OPAL_ENGINE document, but the published response schema for the sections route requires extraction_validation and forbids any other member, so that answer is outside the published contract.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "YCD-c-6: sections returns provider, request_ref, sections and computation_validation (never extraction_validation) for an OPAL_ENGINE document.",
+  "world_is": "docs/contracts/investor-reporting/v1/responses/analysis-report.response.schema.json data: additionalProperties false, required request_ref, sections, extraction_validation; sections and extraction_validation are $ref to the v1 AnalysisReport schema. The existing test test_sections_projection_matches_existing_closed_response_schema validates only the v1 projection. Whether ops/entry.py validates a served response against this schema at runtime was not read (not in this cell's paths). The docs/ schema and any frontend parser are outside this order's paths.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/contracts/investor-reporting/v1/responses/analysis-report.response.schema.json lines 46-64 @wk-IRPT_YCDGEN-64",
+      "infra/aws/lambda/investor-reporting/ops/entry.py sections 194-195 (read only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT until an OPAL_ENGINE report is READY on a served route: the response contract needs a v2 data branch (provider discriminator) and the frontend consumer a matching parse before the first Opal report is opened."
+}
+```
