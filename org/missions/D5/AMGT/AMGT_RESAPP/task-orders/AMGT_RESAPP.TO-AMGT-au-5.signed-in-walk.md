@@ -93,3 +93,7 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-05 ~18:0xZ):** CLOSED -- drained @0a0ba90abc. The re-seat at 16:06Z resolved Z-W235-S1. AC1: FWD8 WRONG 0 of 95. AC2: the walker reads disarmed (DISARMED sent to MSTR~Z 17:03Z). AC3 (judgment) goes to CVO L9 via WALK_ROUND71.md plus 3 print PDFs. proof VALID. Rows S2-S5 INERT.
+
+<status>complete</status>

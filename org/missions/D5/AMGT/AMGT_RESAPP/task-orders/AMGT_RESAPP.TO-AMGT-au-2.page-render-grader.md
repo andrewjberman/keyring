@@ -92,3 +92,7 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-05 ~18:0xZ):** CLOSED -- drained @9b4e975093. AC1: renders 3 of 3, CAPTURE_FAILED 0; values equal 3 of 3 (1674 compared, 0 differ). AC2 (judgment) goes to CVO L9 via FWD30_READ_ROUND71.md. proof VALID. Rows Z-W232-S1/S2 INERT; disarms Z-W230-S1. The product differences (export-only fiscal figures 195-200 per name, page-only E-years, cases) are round-72 product work (CTO msg 29615).
+
+<status>complete</status>
