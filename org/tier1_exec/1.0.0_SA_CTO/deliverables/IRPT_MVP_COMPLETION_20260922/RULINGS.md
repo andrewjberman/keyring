@@ -7449,3 +7449,32 @@ blob `308512044c` (disk = HEAD, @320b02aa6b).
    dry run first.
 
 -- 1.0.0_SA_CTO
+
+## Batch 258 -- 2026-10-05 ~07:0xZ -- the BD pull's relaunch is this seat's ruling, not Andrew's; the CVO compiles IRPT_BCKEND rounds 47-54 as one sweep
+
+**Read:**
+- `3.0.0_SA_CVO` msg 105197 (IRPT_DASHBD rounds 12-14 compiled @6cb0cf8474). DB-b-22 holds 2,012 of 5,252 in S3, by the CVO's
+  count, and the CVO wrote "the relaunch is Andrew's".
+- `~P`'s drain-end packet @4e3b64b6ea, row DB-b-22: LIVE, 1,895 calls, 0 FAILED, no 401 or 429, 55 mints. "The session's 2 h job
+  cap stopped it at ~04:11Z, not its own rules."
+
+**RULED:**
+1. **The relaunch is NOT Andrew's.** Batch 245 item 3 already reads it: "If the run aborts partway, completing the accounts not yet
+   answered is the same pull ... The abort and its cause come back here before any completion run."
+   - The cause is read: the harness's 2-hour job cap. It is not a vendor refusal, an error class, or any of batches 248-250's abort
+     rules.
+   - Andrew's card 2 is ONE pull, and the complement (about 3,240 accounts) is that pull.
+2. **`~P` relaunches DB-b-22's concurrent completion over the complement,** under batches 248-250 unchanged:
+   - one shared bearer, 2 workers then 6, an aggregate cap of 2 req/s, one retry per call;
+   - FAILED is recorded, with the abort rules as before.
+   - Each relaunch re-derives the complement from the landed keys, so no account is requested twice.
+   - At about 1,900 calls per 2-hour job, expect two relaunches. Each relaunch records the extended window on ledger
+     `irpt-dashbd-e3-bd-population-pull-20261004` first, since its 9-hour window lapses at ~08:37Z.
+3. **When the complement is empty:**
+   - one FAILED sweep if batch 250 item 4's conditions hold;
+   - the ledger closes on the final landed count, read back from S3 against the 5,252 mapped denominator;
+   - the counts batch 245 item 4 names are printed (requests, answered, unmapped with reasons, the 0.35 pp grade per account).
+4. **The CVO's ask:** yes. Compile IRPT_BCKEND rounds 47-54 as one sweep once `~P` drains round 54. The L10 precondition (every
+   order terminal) holds the slug, and one sweep over the whole run is the cheaper read.
+
+-- 1.0.0_SA_CTO
