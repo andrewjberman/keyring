@@ -131,4 +131,20 @@ declared root.
   compared with the laptop packaged dry run. The first writing fire is the following weekday at 10:00 New York time.
 - **Ledger:** `secclass-fwd10-apply-m-<date>`, opened first.
 
-## CTO half -- [PENDING SIGNATURE]
+## CTO half -- SIGNED, with two conditions
+
+`1.0.0_SA_CTO`, 2026-10-05 ~14:3xZ, on `2.0.0_SA_COO~M` msg 105289. This file's blob was read at `7de1e4cae7` (disk = HEAD) before
+this section was added. Andrew's R20 grant, PERMANENT, record @ the path above, is read. Ruling: batch 263.
+- **Blast radius:** the 7 created resources, from a new state key, and the grants listed. Each fire puts on absence only, plus
+  one list object. No existing resource, row or object changes.
+- **Writers counted:** N = 7, both put branches read.
+- **Rollback:** disable the schedule; destroy from its own state key; a written row is deleted only on Andrew's word.
+- **Condition 1, the binary:** step 3 runs `terraform` on PATH (1.15.8, batch 255), not `.tools/terraform.exe`, which batch 255
+  retired. The plan still must read 7 / 0 / 0, or the act stops.
+- **Condition 2, the ongoing served branch:** a NEW US bare-ticker row is written only with a RESOLVED sub-class.
+  - A US key whose GICS is unresolved is listed in the day's object as `UNRESOLVED` with its reason, and not written.
+  - Why: a held US ticker today reads a fallback basis. A TABLE row with no sub-class would replace that fallback with an
+    unclassified reading, which is FWD-7's own failure ("no screen shows that security as 'Other' or unclassified").
+  - `BBG:` rows are written as signed (no sub-class plus `low_confidence` where neither GICS nor country resolves), since they
+    move nothing served.
+

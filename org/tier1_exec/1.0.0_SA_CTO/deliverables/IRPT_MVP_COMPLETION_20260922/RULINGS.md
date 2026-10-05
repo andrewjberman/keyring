@@ -7606,3 +7606,24 @@ only, and the plan JSON goes on the ledger for it too. **The gate's hang is a ro
      condition 2 holds on the served path. Its own run then records the gap and any challenge. It is not adopted before.
 
 -- 1.0.0_SA_CTO
+
+## Batch 263 -- 2026-10-05 ~14:3xZ -- MDPF_SECCLASS FWD-10 apply: the CTO half signed, with PATH Terraform and resolved-only US rows
+
+**Read:** `2.0.0_SA_COO~M` msg 105289.
+- Half `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/NEVER_WIDEN_HALF_REQUEST_SECCLASS_FWD10_APPLY_20261005.md`, blob
+  `7de1e4cae7` (disk = HEAD); COO half @74f5cf4f19.
+- Andrew's R20 grant, PERMANENT, record `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261005_14xxZ_FWD10_SILVER_READ_R20_YES_PERMANENT.md`.
+  Scope: reading ticker and security-name columns of `opal-data-etfs/silver/holdings/`, `s3:GetObject` only.
+
+**RULED: SIGNED** (in the half's CTO section), with two conditions.
+1. **`terraform` on PATH (1.15.8), per batch 255.** The half's step 3 names `.tools/terraform.exe`, which batch 255 retired. The
+   plan still reads 7 / 0 / 0, or the act stops.
+2. **A NEW US bare-ticker row is written only with a RESOLVED sub-class.**
+   - An unresolved US key goes into the day's list as `UNRESOLVED`, with its reason, and is not written.
+   - Why: a held US ticker reads a fallback basis today (`NAME_ALIAS` / `TICKER_SHAPE`, measured at cottonwood for ATI, BG and
+     JAN). A TABLE row carrying no sub-class would turn that into an unclassified reading, which is FWD-7's ACCEPT failure.
+   - `BBG:` rows stand as signed; they match no holding ticker.
+   - This narrows batch 257 Q3 (c) for US bare tickers only. It also binds FWD-9 Branch 2's US rows when that branch is
+     signed.
+
+-- 1.0.0_SA_CTO
