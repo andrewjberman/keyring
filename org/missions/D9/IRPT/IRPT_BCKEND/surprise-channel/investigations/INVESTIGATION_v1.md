@@ -17892,6 +17892,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
 }
 ```
 
+```json
+{
+  "id": "IRPT_BCKEND-W123-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~123",
+  "surfaced_at": "2026-10-05T04:10Z",
+  "one_line": "S297's fix (_days_to_compute returns [] when the newest landed day is at or after the target) leaves two callers in infra/aws/lambda/investor-reporting/holdings-performance/handler.py that index the empty list: lambda_handler (results[-1], line 146) and _target_day (days[-1], line 130), so a re-fire on a landed target raises IndexError instead of answering a no-op.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P (issuer: the empty-plan guard in lambda_handler and _target_day is a handler contract change, left out of IB-pr-320 and cut before the S297 release is served)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/holdings-performance/handler.py @wk-IRPT_BCKEND-123 working tree: lambda_handler reads `last = results[-1]` after a loop over `days`; _target_day returns `_days_to_compute(now, event)[-1]`; with days == [] both raise IndexError.",
+      "infra/aws/lambda/investor-reporting/holdings-performance/tests/test_catch_up.py test_S297_landed_target_writes_nothing: _days_to_compute(MON, {}) == [] with the listing landed through 2026-10-02; the handler's return shape for an empty plan is not named by the order."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IB-pr-320 worker face item 5: when max(landed) >= target, _days_to_compute returns [] (CTO batch 207: the catch-up writes new keys only); the order names no change to lambda_handler or _target_day.",
+  "world_is": "Returning [] is correct for the planner, but lambda_handler and _target_day assume at least one planned day, so the next scheduled fire after a landed target fails with IndexError (a Lambda error) rather than returning a no-op result.",
+  "notes": "Left out per the refusal clause (a contract change: the empty-plan return shape). The test exercises _days_to_compute directly. Suggested owner fix: lambda_handler returns {date: None, rc: 0, ok: True, days: [], planned: []} for an empty plan and _target_day returns None."
+}
+```
+
 ## IRPT_BCKEND-S327 -- DISARM of S284: the user-named proxy for the gated TIMXX row is proven live twice (Y-5 Overview, Y-2 Comparison)
 
 ```json
