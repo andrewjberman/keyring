@@ -7949,3 +7949,28 @@ name the one known failure instead of silently inheriting it.
   "world_is": "test_ogq1_ac04 is a second engine test that fails under concurrent load on this device; the file does not import the code this cell changed. The baseline does not list it, so an AC2 run beside another pytest process can read FAIL with no code cause."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "id": "NFRA_OPLGTW-Z-W15-S40",
+  "surfaced_at": "2026-10-05T02:10Z",
+  "one_line": "OG-rl-6 step 2: the five named test targets pass one process each on the release tree, but run together in ONE pytest process they fail on CLOUD 17dd36e08b as well (6 failed, with ti-1's conftest fix present); tests/conftest.py is left at live's bytes on the release tree because it is outside the release set.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: release tree C:/tmp/og-rel11 @e91819e281 (live 4b6b823fae + q-7's integration.py hunks + the two test files; conftest.py at live's bytes), each target in its own process: test_schwab_q7_asset_download.py 4 passed; test_schwab_rl5_asset_query.py 2 passed; test_schwab_query.py 26 passed; test_schwab_grain_r9.py 5 passed; test_entitlement_admin.py::test_ogz2_ac08 1 passed (DENOMINATOR 60 registered tool(s) ... 0 hit(s)). Output: deliverables/0.9.0_WK_NFRA_OPLGTW~15/rl6_step2_perfile.txt.",
+      "RUN: the same five targets in ONE process (-p no:randomly): release tree 4 failed (test_ogq7_ac01-04, 'AssertionError' / TypeError) + 2 errors at setup (test_rl5_asset_query_*, RuntimeError StreamableHTTP session manager), 32 passed; CLOUD worktree @17dd36e08b (conftest.py WITH ti-1's _fresh_session_manager_per_module fixture) 6 failed, 33 passed. Pairs on CLOUD: q7+rl5 6 passed, rl5+q7 6 passed, query+grain_r9+rl5 2 failed 32 passed.",
+      "FILE: tests/conftest.py on CLOUD carries 18 lines of ti-1 (audit-path and session-manager reset) that the live tree lacks; the release order's AC2 admits only tests/test_schwab_*.py, so the release does not ship it."
+    ]
+  },
+  "spec_asserts": "Order step 2: the named tests run on the release tree; the issuer note: leave conftest.py at live's bytes and show step 2's tests pass there, or file a row naming the choice.",
+  "world_is": "Each named target passes in its own process on the release tree with conftest.py at live's bytes, which is the choice made. A single-process run of the whole set fails on CLOUD itself, so the failure is not caused by the release carry; ti-1's one-process fix (measured on CLOUD 4e84fd3f2e, before q-7's test file existed) does not cover the combination that now includes test_schwab_q7_asset_download.py. Tests are not in the shipped file set, so nothing served is affected."
+}
+```
