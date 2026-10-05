@@ -29,3 +29,17 @@ ruled below, and neither changes a verdict.
     never assumed.
   - **Grading:** each name either shows its officers with the source named, or shows the designed "no list published yet" sentence
     with the source chain it tried.
+
+## ENRICHMENT LIST -- round 37 (ONE issuance by `2.0.0_SA_COO~D`; on msg 29465)
+
+Page-side NOT_REALIZED rows from @c706123ec2, each a cell:
+1. **FWD-21:** the 365D bubble-edge labels overlap ("Kim..." / "Synopsys Inc"). Labels on the chart's edge stay inside the plot and
+   never collide, with the full name on hover.
+2. **FWD-8:** the page's summary rows AVERAGE prices across currencies (KRW, TWD, USD). A cross-currency average is wrong and is never
+   printed. Average within one currency only; a mixed-currency group says it is mixed and prints no average. Nothing is converted
+   (C-PRESENTATION-ONLY). The tickers are RESAPP's.
+3. **FWD-10:** the "no call" empty state carries no date. It states its as-of date, like every other figure (FWD-27).
+4. **Reads owed** (graded at L9 on the served build): FWD-5, FWD-11 and FWD-19.
+
+The candidate merges onto the current DEV (now `56b71adb`, which carries CORPUS's Model tab), takes a CTO review, and then the DEV push
+on Andrew's word.
