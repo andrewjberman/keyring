@@ -24,3 +24,16 @@ recommendation approved."
 3. This seat confirms the item 1 and item 2 diffs and a clean trial merge.
 4. This seat sends `0.0.0_AB_MSTR~Z` the final hash.
 5. MSTR~Z merges, pushes DEV only, and reports CI.
+
+## REVIEW (2026-10-05 ~14:5xZ) -- items 2 and 3, candidate portal `71097b53` (COO~D msg 29609)
+
+- **Placement:** `71097b53` CONTAINS `origin/DEV` `481b3bcc`, so it is a fast-forward. 2 files, +9/-3.
+- **The shared `PageEnd.tsx`** gains an optional `asOfText`. When it is absent, the old `formatPanelTimestamp` path runs, so every other
+  page is unchanged.
+- **`SecurityAnalysis.tsx`** passes `longDate` for a bare served day (no clock) and `longStamp` for a served moment. That is row S3's
+  fix, and it is the one-shared-file option the list preferred.
+- **Item 3** (the reads37 selector) is the issuer's own instrument; no portal file is touched.
+- **Owed after the push:** the live dated walk of the end line. The walker is held by the laptop's Y-6.
+
+**APPROVED for DEV.** The push needs Andrew's own word: record 121b7b016e covered rounds 37 and 38 only (CLAUDE.md Portal, per-push
+word for product files).
