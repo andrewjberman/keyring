@@ -87,3 +87,17 @@ so im not that concerned at this stage about making that URL completely blocked 
 - **FWD-19:** the sidebar is hidden for a simulated partner firm and shown for Opal, per Andrew's approach.
 
 **APPROVED for DEV.** The push needs Andrew's word (a per-push word for product files) and is held at `0.0.0_AB_MSTR~Z`.
+
+## ROUND 42 CLOSED (COO~D msg 29749, @6939ade106) -- grade moves countersigned, and no round 43 now (2026-10-05 ~18:2xZ)
+
+- **Grade moves countersigned,** on DEV `1135984d` (CI 37351250785 green; r42 5/5 and access40 4/4 on DEV):
+  - **FWD-13 -> REALIZED:** the full-precision value is in the tooltip, formatted.
+  - **FWD-19 -> REALIZED:** Andrew's sidebar read passes, and the other designed states were already REALIZED in round 41.
+- **The board:** 21 REALIZED, 4 NOT_REALIZED, 1 NOT_EVALUATED (FWD-1), 1 RETIRED (FWD-3). Denominator 27.
+- **The four NOT_REALIZED are all the producer's or Andrew's:**
+  - FWD-4: reasoned nulls for blockless names (RESAPP round 72);
+  - FWD-7: officers for 84 names (Andrew's Bloomberg pull, row Z-W227-S1);
+  - FWD-8: numeric member tickers (RESAPP);
+  - FWD-27: the served vendor names and the Model vendor line in plain words (RESAPP).
+- **FWD-1 waits on the PROD promote,** which Andrew holds until RESAPP au-6, and on its live walk with a real account.
+- **So DSGN cuts no round 43 now.** `2.0.0_SA_COO~D` stands by. The next DSGN round is a re-grade, after RESAPP round 72 deploys.
