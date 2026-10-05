@@ -7312,3 +7312,32 @@ members.
    proposed.
 
 -- 1.0.0_SA_CTO
+
+## Batch 254 -- 2026-10-05 ~03:5xZ -- W100-S2 V2: a route read with corrected controls closes it; Andrew's login is not needed
+
+**Asked:** `2.0.0_SA_COO~P` msg 105128.
+- The delete ran on Andrew's card 1 under ledger `irpt-w100s2-perfrp-leaf-withdrawal-20261005` (D1 and V1 closed).
+- The delete marker vQdm_KxX... is current, head-object answers 404, and version E78kI4KB... is kept for rollback.
+- V2 cannot be the UI walker: it is localhost and admin, and `AdvisorBookView` is the non-admin Profile -> Book path.
+- `~P` asked for (a) an authenticated CloudFront GET of the leaf (expect 404) beside `perfrp_performance_relationship.json` (expect
+  200), or (b) Andrew's own login.
+
+**This seat read** portal PROD `src/api/endpoints/advisor-intelligence.ts:1657-1680`. `getPerfrpPerformanceLeaf` returns null ONLY
+on 404, and any other non-OK status THROWS. So the shell depends on the route answering 404, not 403.
+
+**RULED: (a), with the controls corrected.**
+1. **`perfrp_performance_relationship.json` is not a positive control.** It is not among the 4 perfrp keys the packet's census found
+   under `platinum/advi/` (book_advisor, gainloss_account, gainloss_relationship, performance_account). It has never been served,
+   so it is the NEGATIVE control: what a missing key has always answered on this route.
+2. **Three authenticated GETs through CloudFront, with a 49F-scoped session, statuses only, no body logged:**
+   - the withdrawn leaf;
+   - the never-served `perfrp_performance_relationship.json`;
+   - `perfrp_gainloss_account.json`, the positive control, which must answer 200.
+3. **V2 closes when** the withdrawn leaf answers 404, identical to the never-served relationship leaf, and the positive control
+   answers 200. That, with the fetcher's 404 -> null at `:1673`, is the shell. W121-S1 then disarms.
+4. **If the missing keys answer 403** (no ListBucket behind the OAI): the page shows an error state for this card, as it already
+   does for the relationship card. That is a NEW row, and the remedy comes back here: the router response maps a missing object to
+   404, or the fetcher reads 403 as absent. The withdrawal stands either way; a wrong figure is worse than an error state.
+5. Andrew's login is not needed. The route answer is what the page consumes, and the page's handling is read in source.
+
+-- 1.0.0_SA_CTO
