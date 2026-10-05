@@ -1,12 +1,12 @@
 {
   "prd": "MDPF_SECCLASS_PRD.md",
-  "prd_version": "v0.3",
-  "prd_pin": "35e313ec06594a4385599b57461b887cc9805483",
+  "prd_version": "v0.4",
+  "prd_pin": "ee234fc3d705b0ea1adfcc5c9664d79d584e3900",
   "half": "ratified-text",
-  "half_hash": "066397f2493a7f5a5d6c6cfc76778b1c1f6ffdaac8ae09652b06a769d98ca0e5",
-  "endpoint_hash": "680fa3bccfbfee5902dfefd8ab9ffcfc837370d33330ae38cb3d48ff05c9632d",
+  "half_hash": "f7a68e041d1f2dde4d44413fa99edee2542d208e1b1c4337a52bf3dcc65cbe23",
+  "endpoint_hash": "1473fdd0e2be76d75fea8afd023d47c8ba63d476d9ac5d291c104175a155dfe6",
   "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/PRD_REVIEW_MDPF_SECCLASS_v0.3_RATIFIED_TEXT_HALF_20261005.md@a44d101677",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/MDPF_SECCLASS_PRD_V04_RATIFIED_TEXT_REVIEW_20261005.md@3fd0fc4e87",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-10-05T04:00:00Z"
+  "signed_at": "2026-10-05T20:46:52Z"
 }
