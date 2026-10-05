@@ -2983,3 +2983,21 @@ re-derivation.
 - **The damage census** (`round47/at-4.dropped_columns_census.py`, read-only) rebuilds every served article row written since
   2026-10-04T23:00Z from its original and counts the dropped keys. Its result decides the re-derivation scope for round 48.
 - **Gate limb:** none graded this amendment. It is recorded here.
+
+### 60.2 AMENDMENT 2 (issuer, 2026-10-05 ~16:5xZ): cell `HVST-at-5`, widen the run universe by the approved research names
+
+Andrew-direct 2026-10-05 ~16:3xZ, verbatim, answering "Do you want me to add the 59?": "Yes I do". The run universe
+(`rank_universe_20260916.json`, 191 names) predates the research-name resolutions in `lib/research/identity/registrations.json`
+(56 approved resolutions, @b7819604e0 + @505fc14404, 2026-09-24; plus folders added after the 2026-09-16 snapshot).
+- Measured at the build: 16 of the 56 were ALREADY in the run under their fund-holding keys (for example Netflix, Visa,
+  Mastercard, TSM). The widening therefore ADDS 43 names: 40 of the 56, plus Quanta PWR US, AIA 1299 HK and Hitachi 6501 JP.
+  Universe 191 -> 234. The 191 original identity records are byte-identical (same collector keys).
+- AIA and Hitachi carry no SA symbol (rule R3), so their sa jobs have nothing to search; the other publishers search by name.
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-at-5` | issuer act | `round47/at-5.widen_universe.py` writes `round47/rank_universe_20261005.json` + `rank_universe_identity_20261005.json` (no vendor or S3 call); `config.json` points `universe_source` / `symbol_resolution_source` at them. Lands after PARITY CLOSED; then each leg is stopped at a job boundary by its stop file and relaunched from its OWN checkpoint (dry-run plans: sa 221, barrons 194, bbg 185, wsj 135 pairs). ft stays held (Andrew-direct @b023b75324). | LOCAL code + config; the added collection is the run Andrew widened | `2.0.0_SA_COO~H` |
+
+- **Not moved:** the declared-set denominator. `publisher_universe_verdicts` reads the pool universe (`universe/v1/2026-09-16.json`,
+  191 resolved keys), not this file; rebuilding that pool universe is the identity owner's act, not this cell's.
+- **Gate limb:** none graded this amendment. It is recorded here.
