@@ -17891,3 +17891,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Issuer's choice: (a) amend IB50-1-AC1 / the checker to accept the leaf as ruled-in (CTO batch 251) or to read a spans_20250110 field, or (b) cut a read of canonical/twr_daily date=2025-01-10 and the SI window_return recompute to decide whether the values are contaminated. No AWS write was made; the packet is the unsigned record. perfrp_performance_relationship does not exist in the bucket."
 }
 ```
+
+## IRPT_BCKEND-S327 -- DISARM of S284: the user-named proxy for the gated TIMXX row is proven live twice (Y-5 Overview, Y-2 Comparison)
+
+```json
+{
+  "id": "IRPT_BCKEND-S327",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-05T03:58:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARM of IRPT_BCKEND-S284 on its named condition: the user's remedy for the gated TIMXX fund row (a user-named proxy) is proven live twice -- Y-5 V1 (REQ-a618aa83, Overview) and Y-2 V1 (REQ-c1b53772, Comparison vs Opal Ultra Long-Term) each named SGOV for TIMXX on the page and reached READY with the status route reading READY. The account entitlement (mutualFundDataUSA) stays Andrew's vendor-account call and is not changed by this row",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Y-5 V1: REQ-a618aa83 READY 2026-10-04T02:28:20Z (IRPT_MVP_Y/Y5V/V1/REQ-a618aa83_terminal_wait.txt @1afe081ac4); its frozen input carries SGOV for TIMXX (99 rows; read 2026-10-05 for the round-3 close, TIMXX absent)",
+      "Y-2 V1: REQ-c1b53772 READY 2026-10-05T01:37:07Z after 2.0.0_SA_COO~D's page Bproxy run named SGOV for TIMXX (msg 105081); status with prospect-v1 READY ANALYSIS_READY (IRPT_MVP_Y/Y2/V1 @16c9f8964b)",
+      "S284's disarm_owner text: 'the user's remedy is Y-5's user-named proxy; an account entitlement is Andrew's vendor-account call'"
+    ]
+  },
+  "dismissal_reason": "The blocking hazard (a gated fund row stops the analysis) has a measured user remedy that completes an Overview and a Comparison; the entitlement question remains open only as Andrew's vendor-account decision, not as a blocking hazard.",
+  "spec_asserts": "IRPT_BCKEND-S284 (BLOCKING, ARMED): TIMXX is attributed and verified but unusable on Opal's YCharts account.",
+  "world_is": "MEASURED: with the user-named proxy, both an Overview (Y-5) and a Comparison (Y-2) of the same file reach READY."
+}
+```
