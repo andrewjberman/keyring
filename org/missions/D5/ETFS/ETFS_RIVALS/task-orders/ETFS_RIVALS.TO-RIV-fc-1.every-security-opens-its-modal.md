@@ -33,7 +33,10 @@ comp-adversary: DECLARED-NOT-APPLICABLE the validator-context composer profiles 
 
 ## 2. WHAT YOU NEED TO KNOW (measured at the cut, base branch wk-ETFS_RIVALS-2 at the amended rn-1 build 280b8dc66a)
 
-- The check file's docstring is the exact interface it reads: read `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round8/checks/fc-1.AC1.py` before you build. On
+- AMENDMENT (2026-10-05 ~04:4xZ, issuer): your first build (cb67f943a6, 57f7403405) is on your branch and passes AC1. Its
+  own report named the gap AC2 now closes: a display name written exactly as the page spells it in AI prose stays plain
+  text. Link every whole-word occurrence of a `_NAMES` display name in the AI text; keep `.rf-cite` keys as text.
+- The check files' docstrings are the exact interface they read: read `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round8/checks/fc-1.AC1.py` and `fc-1.AC2.py` before you build. On
   this branch it reads FAIL 3 at the start (control OK).
 - Andrew, verbatim (2026-10-05): "anytime a stock/ticker is mentioned, it should be clickable to the modal, and we should be
   able to see backfill on it."
@@ -71,10 +74,12 @@ org/missions/D5/ETFS/ETFS_RIVALS/surprise-channel/investigations/INVESTIGATION_v
 ## 4. PROOF OF SPEC (each invocation LITERAL, run from your worktree root)
 
 - **AC1** -- every security mention in rankings, trend, trade log and AI text is a data-sec button opening its one page-wide dialog; no dialog key repeats; a security without history reads 'History not yet backfilled'; no script (`org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round8/checks/fc-1.AC1.py`)
+- **AC2** -- the AI text links a security it names by the page's own display name ("Apple Inc"), not only by its key; a bare part of a name ("Inc") is not linked (`org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round8/checks/fc-1.AC2.py`)
 - **J1** (JUDGMENT, graded by 3.0.0_SA_CVO~RV at L9 on the served page) -- on the served page after the deploy, clicking any security name anywhere opens its modal, and the page loads within the gateway cap; positive control: the served 2026-10-02 page (trade-log and AI names are plain text)
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="RIV-fc-1"><invocation>python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round8/checks/fc-1.AC1.py</invocation><expect>AC1 RESULT: PASS 0 failures</expect></criterion>
+  <criterion id="AC2" cell_refs="RIV-fc-1"><invocation>python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round8/checks/fc-1.AC2.py</invocation><expect>AC2 RESULT: PASS 0 failures</expect></criterion>
   <criterion id="J1" cell_refs="RIV-fc-1" judgment="true"/>
 </proof_of_spec>
 
@@ -85,6 +90,8 @@ Write the instance at `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ET
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES (L5/L6, 2.0.0_SA_COO~RV):** Andrew-direct ~03:3xZ 2026-10-05 (record cooRV_ANDREW_DIRECT_20261005_03xxZ_RIVALFUNDS_BENCHMARKS_CLICKABLE_TICKERS_ETFCLASSIFIER_BACKFILL.md @41158af7f9, item 2), PRD v0.16 @646ce7f4b8 FWD-21 (CTO~Z msg 29442); decomposition round 8 WORKSTREAM C section. Chain `~2`, slot `~2`, position 4 of 4. Checks dry-run at base branch wk-ETFS_RIVALS-2 at the amended rn-1 build 280b8dc66a: fc-1.AC1 FAIL (3; control OK) at the rn-1 build 280b8dc66a, as expected. Bounds: no merge before the 2026-10-05 07:00 ET vehicle pull; no deploy before the 13:30Z grades.
+
+**AMENDMENT 1 (2026-10-05 ~04:4xZ, issuer):** AC2 added (AI prose names by display name link too), from the first build's own reported gap. Dry-run at the first fc-1 build 57f7403405: AC2 FAIL 1 (control OK). Graded by: to-pipeline-gate on a modified order reads only GATE (viii) <placeholders> (NONE).
 
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
