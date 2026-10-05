@@ -1855,3 +1855,31 @@ PLANTED pass. Green 5 of 5 (issuer re-run).
 and day dialog; FWD-11 side-by-side captures of /market, /positioning, /philosophy; FWD-19 loading/error on the timeline, header and
 What changed by intercepting one GET, and PanelNoPermission on its real route).
 **Fan-out:** 1 of 1 chains, cap 8. **Risk:** LOCAL.
+
+## v38 -- ROUND 38 (issuer, 2026-10-05 ~07:3xZ) -- ONE BATCHED CELL: THE SHARED FOOTERS, THE END LINE, WHAT CHANGED'S STATES (PRD v0.15 @237d5d742f, ADMITTED)
+
+**Rectangle:** the CTO's list @0a865d7e8f (`ledger/CTO_LIST_ROUND38.md`, msg 29501): (1) FWD-19 What changed uses PanelLoading and
+PanelError; (2) FWD-11 every card ends in the shared time|source footer from served fields only, and the page ends with the shared
+"End of Security Analysis. Data as of <served date>." line; (3) the FWD-11 re-read on the served candidate. FWD-11 was judged NOT_REALIZED
+for the footers and the end line, not for the card family (FWD-12 governs that).
+**Base:** portal 85e24287, the CTO-approved round-37 candidate (7f679aee on DEV 3e1aa46f); its DEV push is held for Andrew's word, so
+round 38 stacks on it as round 35 did on 055ba370.
+
+| cell | serves | owned files | worker |
+|---|---|---|---|
+| `AV-zp-1` FOOTERS + END LINE + STATES (batched) | FWD-11, FWD-19 | `SecurityAnalysis.tsx`, NEW `components/CardFooter.tsx`, `components/model/WhatChangedPanel.tsx`, `components/SecurityOverlay.tsx`, `components/LeadPanel.tsx`, `tabs/{Thesis,ExecManagement,Peers,Posture,Model}Tab.tsx`, `src/ui/components/panels/PanelFooter.tsx` | ~100 |
+
+Items 1 and 2 share What changed (its card needs the footer too), so they are one cell.
+**Check:** `round38/checks/repairs/repairs38.cjs` (+ `_render38.cjs`, `_cards38.cjs`; served fixtures from rounds 35 and 37). At base
+85e24287 it reads 2 of 5 (issuer re-run): What changed shows no designed states and a skeleton on a 500 (incl. the remount path); 14
+cards carry no footer and the Lead Panel prints a hand-rolled "date | Source" line; PageEnd renders 0 times. KEEP 9/9, PLANTED 17/17.
+Green 5 of 5 through CHECK_SRC_OVERRIDE. A per-card census of served time/source fields is in the check (`_cards38.cjs`); a card with
+neither prints no footer line (the timeline serves no source).
+**Issuer rulings inside the decomposition:**
+- `tabs/ModelTab.tsx`: one import + one footer line inside its own Panel. AMGT_CORPUS's ModelTab candidate has landed on DEV, and
+  COO~X confirms nothing is in flight (msg 29519).
+- `src/ui/components/panels/PanelFooter.tsx` (shared estate): ONE optional prop (a light ground), default unchanged, so every other page
+  is unchanged. It is needed because the band-painted footer fails the light-card checks. Flagged to the CTO in the issuance; the CTO
+  reviews the product-file candidate.
+**Item 3 is not a cell:** the FWD-11 re-read is the issuer's real run at the close (round37/walk/reads37.mjs fwd11-side-by-side).
+**Fan-out:** 1 of 1 chains, cap 8. **Risk:** LOCAL.
