@@ -33,6 +33,25 @@ A decision that is **genuinely Andrew's to make** (sovereign-class) and **curren
   skill wherever he wants the view). You MAY end with a one-line pointer if you know of another
   lane holding calls, clearly marked NOT-MINE.
 
+## At a seat running /self-drive -- the driver has already ruled; Andrew sees only what arrived since the last tick
+
+**Andrew-direct 2026-10-05 ~03:0xZ at the 1.0.0_SA_CTO terminal, VERBATIM:** *"your /self-drive skill must handle open calls at
+this seat. please note the skill details; you are the adjudicator when that skill is running. As a result, I should never see
+available open calls at this seat unless open calls have arisen post-selfdrive tick and pre-the next selfdrive tick."* Record:
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261005_030xZ_ALL_RECS_APPROVED_SELF_DRIVE_SEAT_ADJUDICATES_OPEN_CALLS.md`.
+
+These rules apply when this seat has a `/self-drive` armed, meaning its arming record's latest self-drive log reads `state: ARMED`:
+1. **A call found before the last tick is not a card.** The seat ruled it at that tick (`/self-drive` Step 1). Listing it again is
+   the defect.
+2. **Cards list only calls that arrived after the last tick's log commit** (`git log -1 --format=%aI -- <that log>`). Rule each one
+   now if it can be ruled; otherwise it carries the REC the next tick will rule on.
+3. **An ACT only Andrew can perform is not a call.** These are `/self-drive` Step 1's cited acts: an S3 delete, his signature on a
+   never-widen half, a vendor use he has not worded, lifting a hold he set by name. They print under one line
+   `ACTS ONLY ANDREW CAN DO`, each with its citation, never as a card.
+4. **A "not yet" or "wait" REC is a decision.** The seat rules it and never cards it.
+5. **With nothing new:** print `No open sovereign calls at this lane (self-drive tick N ruled the rest).`, then the cited act list
+   if there is one, and STOP.
+
 ## Step 1 — Sweep your own record (fast; do not fan out)
 
 Sources, in order of reliability:

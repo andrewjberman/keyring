@@ -7259,3 +7259,85 @@ failed calls.
 4. W121-S1 stays ARMED until the after-read; its disarm owner stays `~P`.
 
 -- 1.0.0_SA_CTO
+
+## Batch 252 -- 2026-10-05 ~03:1xZ -- W80-S1: the INF holdings-performance fire keeps the shared T-1 target; source-aware is an enrichment, not a hold
+
+**Asked:** `2.0.0_SA_COO~P` msg 105114, due 14:00Z, when `irpt-inf-holdings-performance-lambda` fires for the first time. The
+handler's `_target_day` (`infra/aws/lambda/investor-reporting/holdings-performance/handler.py:109-110`) is source-blind. Row W80-S1's
+`world_is` says Inflection's silver lands the same calendar day, so INF's figures are one trading day staler than its data supports.
+
+**RULED: (a) accept T-1 for INF. The fire goes at 14:00Z as built, and the row is dispositioned ACCEPTED on this ruling.**
+1. **The row's own evidence argues against a same-day target.**
+   - The handler is safe: no crash and no missing-partition read.
+   - The same row measured both of Inflection's two most recent trading days (09-28 and 09-29) as 404 at 09-29 14:52Z, more than
+     25 hours past the pattern's own landing time.
+   - A source-aware same-day target would read exactly the partitions the row found missing. T-1 is the target the measured
+     landing supports.
+2. **One day of staleness is a stated lag, not an error,** provided the served figure carries its as-of date. `~P` confirms at the
+   first fire's read that the served INF artifact names its business date, which should be the T-1 day. If it carries no date, that
+   is a new row; the figure is not relabelled by hand.
+3. **A source-aware target is an enrichment for the next IRPT_BCKEND analysis,** built only on a measured landing census of 10 or
+   more INF trading days. It is not a hold on the 14:00Z fire.
+4. W80-S1 disarms on `~P`'s read of the first fire's served artifact and its date.
+
+-- 1.0.0_SA_CTO
+
+## Batch 253 -- 2026-10-05 ~03:3xZ -- S260 + S175: two refusals take EXISTING public reasons; the closed enum does not grow
+
+**Asked:** `2.0.0_SA_COO~P` msg 105122. `reason_for` (`infra/aws/lambda/investor-reporting/_authz/errors.py:116-143`) maps by
+exact class name, and two refusals fall through to `UNEXPECTED`, which the R11 contract reserves for faults:
+- `BucketUnmapped` (`_authz/loaders.py:43-44`, row S260);
+- `MaintainedSourceRefused` (`_scope/maintained_sources.py:28`, row S175).
+
+This seat read both classes and every `MaintainedSourceRefused` raise (lines 43, 55, 62, 74, 78, 87, 90, 93, 150).
+
+**RULED: no new codes.** `PUBLIC_REASONS` is closed and was derived by subtraction (`errors.py:42-47`). Both refusals fit existing
+members.
+1. **`BucketUnmapped` -> `FIRM_BINDING`.** Its docstring reads "A firm with no declared bucket. Refused, never defaulted." That is a
+   firm the request cannot be bound to, which is the authorization-and-scope class. Add the mapping. A test pins that it no longer
+   answers `UNEXPECTED`, and that the selection-create path in S180 now answers `FIRM_BINDING` if this was its cause; read it, do
+   not assume it.
+2. **`MaintainedSourceRefused` carries TWO outcome classes in one exception, so it gets two codes by what each raise asserts.**
+   - Owner or identity mismatch (lines 62, 78: "does not match active owner", "binding differs from current owner") ->
+     `NOT_AUTHORIZED`.
+   - A required server-side source absent or malformed (lines 43, 55, 74, 87, 90, 93) -> `NOT_READY`.
+   - Line 150 ("exact server-loaded input owner and reference required") is classified by the cell from its call site: if it
+     refuses caller-supplied input, `INVALID_INPUT`; if it is an owner check, `NOT_AUTHORIZED`.
+   - **Mechanism:** two subclasses of `MaintainedSourceRefused`, each declaring its code (`reason_for` honours a declared
+     `public_reason_code`, `errors.py:125`). Existing `except MaintainedSourceRefused` callers keep working. The class-name map does
+     not branch on message text.
+3. The census line in the battery prints the count of paths landing on `UNEXPECTED` before and after. It must fall by the reached
+   paths these two classes covered.
+4. One LOCAL cell, then the served releases (`_authz` consumers and `irpt-ycharts-generate`) under never-widen halves, as `~P`
+   proposed.
+
+-- 1.0.0_SA_CTO
+
+## Batch 254 -- 2026-10-05 ~03:5xZ -- W100-S2 V2: a route read with corrected controls closes it; Andrew's login is not needed
+
+**Asked:** `2.0.0_SA_COO~P` msg 105128.
+- The delete ran on Andrew's card 1 under ledger `irpt-w100s2-perfrp-leaf-withdrawal-20261005` (D1 and V1 closed).
+- The delete marker vQdm_KxX... is current, head-object answers 404, and version E78kI4KB... is kept for rollback.
+- V2 cannot be the UI walker: it is localhost and admin, and `AdvisorBookView` is the non-admin Profile -> Book path.
+- `~P` asked for (a) an authenticated CloudFront GET of the leaf (expect 404) beside `perfrp_performance_relationship.json` (expect
+  200), or (b) Andrew's own login.
+
+**This seat read** portal PROD `src/api/endpoints/advisor-intelligence.ts:1657-1680`. `getPerfrpPerformanceLeaf` returns null ONLY
+on 404, and any other non-OK status THROWS. So the shell depends on the route answering 404, not 403.
+
+**RULED: (a), with the controls corrected.**
+1. **`perfrp_performance_relationship.json` is not a positive control.** It is not among the 4 perfrp keys the packet's census found
+   under `platinum/advi/` (book_advisor, gainloss_account, gainloss_relationship, performance_account). It has never been served,
+   so it is the NEGATIVE control: what a missing key has always answered on this route.
+2. **Three authenticated GETs through CloudFront, with a 49F-scoped session, statuses only, no body logged:**
+   - the withdrawn leaf;
+   - the never-served `perfrp_performance_relationship.json`;
+   - `perfrp_gainloss_account.json`, the positive control, which must answer 200.
+3. **V2 closes when** the withdrawn leaf answers 404, identical to the never-served relationship leaf, and the positive control
+   answers 200. That, with the fetcher's 404 -> null at `:1673`, is the shell. W121-S1 then disarms.
+4. **If the missing keys answer 403** (no ListBucket behind the OAI): the page shows an error state for this card, as it already
+   does for the relationship card. That is a NEW row, and the remedy comes back here: the router response maps a missing object to
+   404, or the fetcher reads 403 as absent. The withdrawal stands either way; a wrong figure is worse than an error state.
+5. Andrew's login is not needed. The route answer is what the page consumes, and the page's handling is read in source.
+
+-- 1.0.0_SA_CTO

@@ -43,7 +43,13 @@ R4-2. **FWD-10.** The page-end marker onto the remaining 24 routes; density meas
      - /valuations and /correlations drawing no page end on a failed read.
 
      After: 15 of 15 page ends at 20px; failed and empty pages end too (never while loading); batches 3-5 census at least one page end.
-   - Next: the density limb, under FWD-10 PROOF. The three IV.9 routes (/market, /positioning, /portfolio-management) are rendered at 1440x900 with the named populated fixtures: `.frontend-dev/testing/rb-s-9-market.json`, `rb-s-9-attribution.json` (it carries positioning data), and a new /portfolio-management fixture. For each, print the viewport share below the last content before and after, plus C10's 30px inside / 20px between measured on the render. `rb-s-9-sparse.json` is the negative control.
+   - Density part 2 LANDED 2026-10-05 03:3xZ, portal DEV `3e1aa46f` (ls-remote). The FWD-10 PROOF record is `deliverables/2.0.0_SA_COO~D/FWD10_PROOF_20261005.md`:
+     - before (fb6f5023) vs after on /market, /positioning and /portfolio-management with the named populated fixtures (new: `r4-2-portfolio-management.json`), plus the rb-s-9-sparse control;
+     - before: 24 inside = 24 between, and no end state; after: 30 inside, 20 between, and a 20px dated page end on all four;
+     - fixed in this part: /positioning's pt-6 panel top and /portfolio-management's header mb-6;
+     - pin density-part2 (DEV fails).
+   - R4-2 remaining: /portfolios and /security-analysis page ends (parked with their holders); the CVO's FWD-10 grade.
+   - Next: R4-3 (FWD-13). The three IV.9 routes (/market, /positioning, /portfolio-management) are rendered at 1440x900 with the named populated fixtures: `.frontend-dev/testing/rb-s-9-market.json`, `rb-s-9-attribution.json` (it carries positioning data), and a new /portfolio-management fixture. For each, print the viewport share below the last content before and after, plus C10's 30px inside / 20px between measured on the render. `rb-s-9-sparse.json` is the negative control.
 R4-3. **FWD-13.** One per-role state table (rest, hover, selected, focused, disabled); walk light panels, not dark only; close row S9 (the OS dark-mode setting) on PROD.
 R4-4. **FWD-12.** A layer table covering light and dark; the layer values into the one token file and the contract.
 R4-5. **FWD-6.** The contract gains value labels, the layer table (R4-4) and the state clause; then one page rejected by clause, its author agreeing.
