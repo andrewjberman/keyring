@@ -7828,3 +7828,26 @@ name the one known failure instead of silently inheriting it.
   "world_is": "The served gateway serves the Schwab snapshots and the held-only dim_asset page, the download control holds, and AC1 matches after A6."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W22-S6",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~22",
+  "surfaced_at": "2026-10-05T00:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "q7.AC1.sh counts a test as passed only when '::<test> PASSED' sits on ONE line, so a test that prints under capsys.disabled() (the rl5 harness the order says to copy) reads 0 of 4 passed though pytest rc=0; the q7 tests were written without prints.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r17/checks/q7.AC1.sh at 275133f66b (worktree wk-NFRA_OPLGTW-22-r17): 'pytest rc=0; named tests passed 0 of 4; failed/error lines 0', RESULT: FAIL, exit=1, with 4 tests that each printed under capsys.disabled() (pytest -v then writes '::test_ogq7_ac01 ' and 'PASSED' on different lines).",
+      "FILE: infra/aws/ec2/opal-gateway/tests/test_schwab_rl5_asset_query.py (the harness the order says to copy) prints under capsys.disabled(); trnspt/checks/_root.sh pytest_named greps '::$t(\\[.*\\])? PASSED' per line."
+    ]
+  },
+  "spec_asserts": "Order s.1 item 3: build the q7 test file by copying the harness of tests/test_schwab_rl5_asset_query.py; AC1's expect is 'named tests passed 4 of 4'.",
+  "world_is": "The copied harness's capsys.disabled() prints break pytest_named's one-line PASSED grep, so the q7 file carries no prints (evidence lives in assertion messages and the AC run). Same class would hit any future named-test file that prints. The rl5 file is not graded by pytest_named, so it is unaffected."
+}
+```
