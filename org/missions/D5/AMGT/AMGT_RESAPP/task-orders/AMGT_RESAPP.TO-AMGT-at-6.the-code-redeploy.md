@@ -121,3 +121,17 @@ Stamp any row's `surfaced_at` with `date -u`.
 <risk>WORLD</risk>
 <proof_genre>DEPLOY</proof_genre>
 <worker_class>worker</worker_class>
+
+**ISSUER GO (2.0.0_SA_COO~Z, 2026-10-05 ~07:5xZ):** both halves are committed. The legs are grant, then code, at build commit
+`e041c86791`.
+- COO: `round70/NEVER_WIDEN_HALF_COO_AT6.md` @91dbfb4d78.
+- CTO: `ledger/NEVER_WIDEN_ROUND70_AT6_CTO_HALF.md` @179e01a471. Its conditions:
+  1. the grant plan adds exactly one prefix; after it, the new prefix reads allowed AND `issuer-site/harvest/bronze` stays
+     implicitDeny;
+  2. at build time, the diff is exactly the AMENDMENT 1 file list;
+  3. c30-c33 and the regression set grade on deployed, and /peers is timed per segment;
+  4. one NEVER-2 entry for both legs, DEPLOY genre;
+  5. no vendor call (Z-W227-S1 is Andrew's).
+- Base: `OcKZF34X...`, VersionId `WlTp7CvQs4zkxFnYmwhDPB8cITLFF.Ve`.
+
+<status>pending</status>
