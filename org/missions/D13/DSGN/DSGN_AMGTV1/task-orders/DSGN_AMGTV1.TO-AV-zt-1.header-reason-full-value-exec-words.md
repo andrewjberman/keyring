@@ -96,7 +96,7 @@ Report once: the exact diff, the output line of every criterion, the portal and 
   with ONE live read by the issuer: a non-Opal viewer sees no Security Analysis sidebar item. No cell is cut for it.
 - **Parity hold** (MSTR~Z msg 29688): issued on branch `wk-DSGN_AMGTV1-r42-issue`; drains to CLOUD at PARITY CLOSED.
 
-<status>pending</status>
+<status>complete</status>
 <round>42</round>
 <slot>~103</slot>
 <fabric>site-z</fabric>
