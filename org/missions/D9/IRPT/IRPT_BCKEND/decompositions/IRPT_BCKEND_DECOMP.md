@@ -1717,3 +1717,16 @@ Batch 247 answers E2's two forks.
 | `IB-pr-318` | W100-S2: one read-only readers census of the 49F perfrp leaf (CloudFront, routes, portal PROD) | LOCAL (read-only) | none | P49b |
 
 fanout: 2 of 2 chains, cap 8, reason: two independent cells. Workers 0.9.0_WK_IRPT_BCKEND~120 and ~121, each in its own worktree.
+
+## 44. ROUND 50, WORKSTREAM ~P (2026-10-05 ~01:5xZ, issuer 2.0.0_SA_COO~P, on 1.0.0_SA_CTO RULINGS batch 251 @8ea5889048, msg 105089)
+
+The W100-S2 census (IB-pr-318, drained @0f69381e7c) read LIVE_READER: the PROD portal's AdvisorBookView still loads the 49F perfrp
+leaf through shared-advisor-router. Row W121-S1 is BLOCKING / ARMED. Batch 251 rules: withdraw the leaf and keep the portal's call,
+since its 404 is the designed shell state. The never-widen packet goes to the CTO, and the S3 delete is Andrew's.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-319` | W121-S1: the withdrawal packet (versioning, every perfrp key under platinum/advi/*/ with its writer and its 2025-01-10 measurement, the withdrawal set, rollback per key, ETag stop, PROD after-read) | LOCAL (reads only) | IB-pr-318 (merged) | P50 |
+| (the act) | the withdrawal under the CTO half and Andrew's word, then the after-read; W121-S1 disarms on the after-read | SERVED | IB-pr-319 | the issuer's act |
+
+fanout: 1 of 1 chains, cap 8, reason: one read-only cell; the delete is a signed act. Worker 0.9.0_WK_IRPT_BCKEND~122 in its own worktree.
