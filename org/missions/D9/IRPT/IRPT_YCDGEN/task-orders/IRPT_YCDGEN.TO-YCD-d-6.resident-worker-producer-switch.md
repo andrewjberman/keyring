@@ -31,6 +31,8 @@ comp-adversary: DECLARED-NOT-APPLICABLE thread round; the lens runs on the enric
 ## 3. WHAT YOU NEED TO KNOW (measured at the cut, base CLOUD at the issuance commit)
 
 - Read first: `resident_worker.py` `execute` (480-535), `poll_once` (638), `ycharts/generate/current_authority.py` (`decide`, `allowed_firm_ids`; the existing checks grade the actor's firm access and stay as they are), and `opal_producer.produce` (merged from a-6).
+- g-6 (merged) added to the persist path: `publisher.metadata_kind` (vendor key set or Opal key set, never both), `_publish_opal` (persists the whole v2 document with a retained PDF of family `OPAL_REPORT_PDF`, runs no extraction), and `publication_worker.checkpoint_pdf`/`finish` accepting the Opal key set from RECEIVED, CLAIMED or CERTIFYING (an Opal job goes RECEIVED -> CERTIFYING -> READY, no download states). Cell i-6 (running beside you on other files) changes what those persist internally (the PDF is retained through the repository, the document spills out of the checkpoint) and keeps their entry points' shapes; call them through those entry points only.
+- Worker row IRPT_YCDGEN-W3-S9 (yours): `resident_worker.py` lines 513-519 reopen a READY job through `retained['provenance']['extraction_evidence_ref']['sha256']` and compare it with the receipt's `certification_sha256`. An Opal report's provenance is `{schema_version irpt-opal-publication.v1, provider, composition_ref, opal_artifact_ref}` and its READY receipt's `certification_sha256` is the Opal PDF's own sha256, so a redelivered message for a READY Opal job raises KeyError there. The reopen reads the Opal evidence for an OPAL_ENGINE job (criterion AC6).
 - This file ships through IRPT_BCKEND's release under its own never-widen half: you change code and tests only; the issuer packages the half for the CTO. No deploy.
 - Module home and test layout: tests sit beside the code, no `conftest.py`, paths inserted at the top of each test file (as `ycharts/session/tests/test_resident_session.py:9`). Python tests run with `python -m pytest <file> -q -p no:cacheprovider` from your worktree root. Encoding: ASCII only in code and logs; no client figure and no secret in any committed file (C-FIRM, C-SECRET).
 
@@ -51,12 +53,14 @@ org/missions/D9/IRPT/IRPT_YCDGEN/surprise-channel/investigations/INVESTIGATION_v
 - **AC3** -- a client-sent flag does not change the producer (tests -k client_flag_never_selects, >= 1 passed)
 - **AC4** -- one request never runs both producers (tests -k one_producer_per_request, >= 1 passed)
 - **AC5** -- the whole test file passes (tests, all, no failure)
+- **AC6** -- a redelivered message for a READY Opal job is acknowledged without a KeyError (tests -k redelivered_ready_opal_job, >= 1 passed)
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="YCD-d-6"><invocation>python -m pytest infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_resident_worker.py -q -p no:cacheprovider -k allow_listed_principal_opal_producer</invocation><expect>^[1-9][0-9]* passed</expect></criterion>
   <criterion id="AC2" cell_refs="YCD-d-6"><invocation>python -m pytest infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_resident_worker.py -q -p no:cacheprovider -k other_principal_ycharts_path</invocation><expect>^[1-9][0-9]* passed</expect></criterion>
   <criterion id="AC3" cell_refs="YCD-d-6"><invocation>python -m pytest infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_resident_worker.py -q -p no:cacheprovider -k client_flag_never_selects</invocation><expect>^[1-9][0-9]* passed</expect></criterion>
   <criterion id="AC4" cell_refs="YCD-d-6"><invocation>python -m pytest infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_resident_worker.py -q -p no:cacheprovider -k one_producer_per_request</invocation><expect>^[1-9][0-9]* passed</expect></criterion>
+  <criterion id="AC6" cell_refs="YCD-d-6"><invocation>python -m pytest infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_resident_worker.py -q -p no:cacheprovider -k redelivered_ready_opal_job</invocation><expect>^[1-9][0-9]* passed</expect></criterion>
   <criterion id="AC5" cell_refs="YCD-d-6"><invocation>python -m pytest infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_resident_worker.py -q -p no:cacheprovider</invocation><expect>^[0-9]+ passed</expect></criterion>
 </proof_of_spec>
 

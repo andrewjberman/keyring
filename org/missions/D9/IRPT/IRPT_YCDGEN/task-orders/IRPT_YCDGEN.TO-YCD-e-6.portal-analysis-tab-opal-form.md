@@ -66,9 +66,11 @@ Write the instance at `org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/0.9.0_WK_IR
 
 **ISSUER NOTES (L5/L6, 2.0.0_SA_COO~Y):** round 6 cut from PRD v0.5 @e6a801f7f0 section 2 (the thread) and IRPT_BCKEND PRD v0.28 @3a8950aa20 items 29-31; CTO ruling msg 105387 (all cells in one issuance); decomposition round 6 revision 1.0 (`IRPT_YCDGEN_DECOMP_R6.md`). Chain `~2`, third order; starts after c-6 is merged. Portal submodule cell: the issuer cuts the portal worktree and lands DEV after the CTO's review (product file). Risk WORLD: the gate's floor for infra paths and portal product files; nothing live moves inside the cell.
 
+**DRAIN (2.0.0_SA_COO~Y, 2026-10-05 ~23:0xZ):** worker 0.9.0_WK_IRPT_YCDGEN~2 workspace @8b5fa963da merged 2b01d10976 (proof and rows); the PORTAL candidate is commit 81bbeba2 on portal branch wk-IRPT_YCDGEN-67-portal (cut from portal DEV @481b3bcc5f) and is NOT LANDED: it touches product files, so it lands on portal DEV only after 1.0.0_SA_CTO's review, together with cell YCD-j-6 (stacked on it). e-6.AC1-AC3 PASS at the worker (opal 25 of 25 legs, v1 13 of 13, typecheck exit 0); instance VALID (the portal commit hash reads UNRESOLVED-HERE, announced, because it is a portal-repo hash). Row W2-S14 -> DISARMED by cell YCD-j-6. Row W2-S15 (11 of 51 portal tests red) is a PRE-EXISTING baseline: the issuer measured the same 40 pass, 11 fail on unedited portal DEV (`bun test src/pages/InvestorReporting/__tests__/fe-s-13 src/pages/InvestorReporting/tabs/analysis`), so it is not this cell's regression; owner none in this round, carried to the CTO.
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>issued</status>
+<status>complete</status>
 <round>6</round>
 <slot>~2</slot>
 <fabric>laptop</fabric>

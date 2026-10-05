@@ -78,9 +78,11 @@ Write the instance at `org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/0.9.0_WK_IR
 
 **WRITER READ (2.0.0_SA_COO~Y, 2026-10-05 ~22:1xZ, CTO condition 1 of msg 105423):** a scan of 4,237 task-order files (both roots) for a non-terminal order whose `<paths>` names any of the six files of this cell found 6 hits, all this order (6 files x 1 order); no order of 2.0.0_SA_COO~P names any of them. Status regex is conservative (an unparsed status counts non-terminal). **CONDITION 2:** g-6 ships with d-6 through IRPT_BCKEND's release under one never-widen packet; AC2 and AC6 are the packet's evidence that the YCHARTS path is unchanged.
 
+**DRAIN (2.0.0_SA_COO~Y, 2026-10-05 ~23:0xZ):** worker 0.9.0_WK_IRPT_YCDGEN~3 @bfed18a189, merged a9c65fa1b3 (investigations-file conflict resolved as a union); g-6.AC1-AC6 PASS on the merged tree (AC5: 23 passed), instance VALID; the YCharts path unchanged (v1 byte-equal pin passes against an unmodified HEAD publisher). Opal state sequence RECEIVED -> CERTIFYING -> READY (row W3-S10 INERT, accepted). Rows: W3-S8 ARMED and W3-S11 ARMED -> DISARMED by cell YCD-i-6 (addendum B); W3-S9 ARMED -> DISARMED by the d-6 amendment (resident_worker.py is d-6's file); W3-S12 INERT, accepted (a pre-existing test imports `extract` and needs ycharts/extract on PYTHONPATH when the file runs alone; AC4 selects only the added tests).
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>issued</status>
+<status>complete</status>
 <round>6</round>
 <workstream>R6A_PERSIST_AND_PAGE</workstream>
 <slot>~3</slot>
