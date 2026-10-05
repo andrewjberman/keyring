@@ -3343,6 +3343,29 @@
     "spec_asserts": "CTO~Z ruling msg 29445: the D13 backfill runs inside the PRD's Bloomberg-budget clause, its cost measured before the first fire. Andrew-direct: the daily jobs pull only the new day.",
     "world_is": "A row budget (1M) was ruled, but the Terminal's own BQL daily capacity -- not documented in integrations/bloomberg/READ_HERE.md -- is lower: about 170k rows (plus probes) exhausted it. Not measured: when the capacity resets, and whether the 07:00 ET OPAL_BBGTML notebooks use BQL (they may use refdata, unaffected). Holds: no further Bloomberg request from this seat until the capacity reset is measured; the D13 Step A resumes only then, in smaller daily slices.",
     "notes": "Escalated same turn to 1.0.0_SA_CTO~Z (overnight adjudicator) and 0.0.0_AB_MSTR~Z. The 07:00 ET vehicle log (%USERPROFILE%/opal_bbg_logs/bbg_tplus1_20261005_*.log) is the first read at 07:12 ET (the cron). disarm_owner 2.0.0_SA_COO~RV."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S25",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-05T12:45Z",
+    "one_line": "Widens ETFS_RIVALS-Z-S24: the capacity my overnight Bloomberg backfill pulls exhausted covers refdata HISTORY too, not only BQL -- today's OPAL_BBGTML models pull was blocked (rc 50, 'DAPI no data'), and the vehicle's enrichment step landed an ALL-EMPTY G4 for 2026-10-02 (601 rows, 0 prices, 0 GICS, 0 names) as the newest revision.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "0.0.0_AB_MSTR~Z msg 29540 (P0 probe 12:41Z, cma interpreter): refdata session OK; SPX and .ST HistoricalDataRequest: 0 rows, responseError -4001 LIMIT DAILY_CAPACITY_REACHED 'Daily capacity reached.'",
+        "%USERPROFILE%/opal_bbg_logs/bbg_tplus1_20261005_083246.log: 'DAPI: DOWN (openService OK but no data ...) PRECONDITION: FAILED ... PULL NOT ATTEMPTED'; OPAL_BBGTML_daily_pull LastTaskResult 50; site Z in Modern Standby 09:14Z-12:32Z (MSTR~Z, System log 506/507)",
+        "s3://opal-data-etfs/rivalfunds/etfs/gold/security_market/date=2026-10-02/market-20261005T123318Z-c86a8d9e27fa.parquet: 601 rows, px_close / gics_sector / security_name 0 non-null; beside market-20261004T110545Z-ea632b9bca87.parquet (good, 46,943 B)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The 07:00 ET vehicle refreshes the OPAL_BBGTML models and the rivalfunds G4 daily; a backfill never starves production.",
+    "world_is": "Production is starved by an issuer act: the models dashboard has no 10-02 vintage today, and the G4 reader picks an empty revision. Also: enrichment_bloomberg wrote an empty G4 as a successful landing (status OK, 601 security_errors) -- a producer-side gap (an all-error pull should not land as the newest revision). Remedies: (1) MSTR~Z re-runs scheduled_daily_pull.cmd when the capacity returns (the probe's first OK); (2) the G4 shadow -- card to CTO~Z msg 29538 (re-put the 10-04 bytes as a newer key) or a republish after a fresh enrichment; (3) a later cell: enrichment refuses to land an all-error G4.",
+    "notes": "The issuer's own act caused this: ~170k rows of local backfill pulls between 05:30Z and 07:06Z on the Terminal production depends on. disarm_owner 2.0.0_SA_COO~RV."
   }
 ]
 ```
