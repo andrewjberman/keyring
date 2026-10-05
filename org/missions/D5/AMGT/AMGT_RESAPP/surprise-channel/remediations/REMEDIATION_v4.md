@@ -20,33 +20,33 @@ The initial no-new-remedy draft hit the gate's ZERO rows refusal. Before that dr
 
 ```json
 [
-  {
-    "id": "AMGT_RESAPP-Z-S5",
-    "project": "AMGT_RESAPP",
-    "fabric": "site-z",
-    "class": "OBSERVATION",
-    "hazard_standing": "ARMED",
-    "mechanism": "The current PRD carries an obsolete bucket-absence premise into the next S6 cut although opal-data-research now exists as a declared S3 bucket.",
-    "evidence": [
-      "CVO independent live read2026-09-11T15:44Z: bash .tools/aws s3api head-bucket --bucket opal-data-research returns rc0, ARN arn:aws:s3:::opal-data-research, region us-east-1. Same command with opal-data-research-nope-xyz returns404, wrapper rc1. This distinguishes this existing bucket from a nonexistent name; it does not prove read/write access or historical creation time.",
-      "comp-find opal-data-research --corpus aws --limit10:1 hit across2445 nodes, S3_BUCKET driftDECLARED, estate vintage2026-09-11T12:23:19Z.",
-      "PRD@371286cf78 s.5 still lists existence under WHAT MUST BE TRUE AND IS NOT YET; S6 measured-by still cites PART V measured ABSENT. The source brief is a historical measurement and must not be rewritten. The current planning premise must be refreshed.",
-      "Investigation AMGT_RESAPP-Z-S5@e324335c4d was appended during CVO round4 verification, after the original30-row census. Final intake is31 investigations, with this one additionally requiring disposition."
-    ],
-    "remedy": "CTO amend the current PRD s.5 and S6 measured-by to carry measured existing-resource state with its vintage while preserving the historical brief. COO re-read opal-data-research live identity/configuration at the next S6 cut and state existing-resource integration versus any separately authorized change, instead of inheriting an absent-bucket creation premise.",
-    "owner": "1.0.0_SA_CTO~Z",
-    "round": "v4",
-    "remediation": {
-      "state": "OPEN",
-      "owner": "1.0.0_SA_CTO~Z",
-      "round": "v4"
-    },
-    "disarm": {
-      "state": "ARMED",
-      "owner": "2.0.0_SA_COO~ZZZ",
-      "at": null
-    },
-    "closed": false
-  }
+ {
+  "id": "AMGT_RESAPP-Z-S5",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "mechanism": "The current PRD carries an obsolete bucket-absence premise into the next S6 cut although opal-data-research now exists as a declared S3 bucket.",
+  "evidence": [
+   "CVO independent live read2026-09-11T15:44Z: bash .tools/aws s3api head-bucket --bucket opal-data-research returns rc0, ARN arn:aws:s3:::opal-data-research, region us-east-1. Same command with opal-data-research-nope-xyz returns404, wrapper rc1. This distinguishes this existing bucket from a nonexistent name; it does not prove read/write access or historical creation time.",
+   "comp-find opal-data-research --corpus aws --limit10:1 hit across2445 nodes, S3_BUCKET driftDECLARED, estate vintage2026-09-11T12:23:19Z.",
+   "PRD@371286cf78 s.5 still lists existence under WHAT MUST BE TRUE AND IS NOT YET; S6 measured-by still cites PART V measured ABSENT. The source brief is a historical measurement and must not be rewritten. The current planning premise must be refreshed.",
+   "Investigation AMGT_RESAPP-Z-S5@e324335c4d was appended during CVO round4 verification, after the original30-row census. Final intake is31 investigations, with this one additionally requiring disposition."
+  ],
+  "remedy": "CTO amend the current PRD s.5 and S6 measured-by to carry measured existing-resource state with its vintage while preserving the historical brief. COO re-read opal-data-research live identity/configuration at the next S6 cut and state existing-resource integration versus any separately authorized change, instead of inheriting an absent-bucket creation premise.",
+  "owner": "1.0.0_SA_CTO~Z",
+  "round": "v4",
+  "remediation": {
+   "state": "REMEDIATED",
+   "owner": "1.0.0_SA_CTO~Z",
+   "round": "v4"
+  },
+  "disarm": {
+   "state": "DISARMED",
+   "owner": "2.0.0_SA_COO~ZZZ",
+   "at": "2026-09-11T20:46Z"
+  },
+  "closed": true
+ }
 ]
 ```
