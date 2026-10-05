@@ -4,6 +4,11 @@
 `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/NEVER_WIDEN_ASK_OG-rl-6-C_20261005.md` @f93545276f (the
 file's last commit is that same commit). The ask names this half REQUIRED because a new page route is served.
 
+**STATUS 2026-10-05 ~13:0xZ: LAPSED under guard S2.** Andrew ruled the audience OWNER-ONLY ("Visible to me only";
+record org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20261005_125xZ_THREE_CALLS_NO_STANDBY_YEARINREVIEW_OWNER_ONLY_DSGN_R37_R38_DEV.md
+@121b7b016e, relayed by 0.0.0_AB_MSTR~Z msg 29558). The kit changes before the deploy, so release `14e0af86fa` is not the
+release that ships. Nothing may deploy on this half; the re-cut bytes need a new ask and a new half.
+
 **VERDICT: SIGNED** with guards S1-S2, on these pins:
 - release `rel-nfra-oplgtw-r17b` HEAD `14e0af86fa`;
 - live base `e91819e281` (the issuer's host md5 read, 94 of 94; NOT re-read by this seat);
