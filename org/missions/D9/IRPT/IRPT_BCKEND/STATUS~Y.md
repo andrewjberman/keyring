@@ -5,7 +5,7 @@ Loop `/canonical-drive IRPT_BCKEND`. Way forward: CTO rulings in
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md` and the fold-in
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_FOLD_IN_IRPT_THREE_BRIEFS_20261002.md` section 2 (Y-1..Y-6, Y-H); run order
 CTO 104634 ("Y-3 READY, then Y-5 V1, then Y-4 V1, one at a time and spaced"; then Y-2 and Y-6). Reviewer `3.0.0_SA_CVO`
-(grades pins after the fact). As of 2026-10-05T08:2xZ.
+(grades pins after the fact). As of 2026-10-05T10:5xZ.
 
 ## Pins
 
@@ -32,18 +32,23 @@ CTO 104634 ("Y-3 READY, then Y-5 V1, then Y-4 V1, one at a time and spaced"; the
    - run 2 REQ-14fe69cf READY (page 06:58:51Z, 17.9 min; open to sections 1.4 s);
    - run 3 REQ-724a493e READY 07:38:14Z server-side (18m40s). The page lost the row from 07:27Z on portal 0edab95f;
      server-side the row is position 0 of 33 (page-side miss, ~D reading its screenshot);
-   - runs 4-10 are next. This seat records each run's backend states (`IRPT_MVP_Y/Y6/`, @0d980ceca5) and writes
+   - run 4 REQ-1352d8c1 READY 08:41:43Z; runs 5-6 (Multi-Comp) READY 09:40:23Z and 10:07:22Z, each read-back
+     WAF-challenged and absorbed by the release (`Y6/Y6_BACKEND_SUMMARY.md`);
+   - runs 7-10 are next. This seat records each run's backend states (`IRPT_MVP_Y/Y6/`, @0d980ceca5) and writes
      the Y-6 evidence at the end.
 
 ## IRPT_YCDGEN (this seat issues; FULL lease)
 
-- Round 4 (E1-E6), issued `f867ec3bca`: 4/4 orders merged and complete `0bdc75c6c2`; 7/7 checks, suite 104.
-- Live close, three windows:
-  - FWD-2's true arm realized by a zoom lever (run G changed true / portfolio_info false).
-  - `--end` is not a driver (S7).
-  - The held-data feed answered 400 on 6/6 (S8), so E6 is not rendered.
-- L8 packet `742b4665df` sent to the CVO at 07:13Z.
-- Next: the CVO's L9 (m-4.AC3) and slug, then the CTO's round-4 analysis, then ONE issuance.
+- Round 4 graded (CVO @d6f334c003): m-4.AC3 FAIL narrowly; FWD-2 not realized (a changed request).
+- Round 5 issued `2f901c0a21` from the CTO's round-4 analysis (FWD-6 binds the Overview at 12 requests):
+  - r-5 (~1): runner plan cap 12, request hash, lookup;
+  - p-5 (~2): budgeted map, six statistics wired;
+  - h-5 (~3): Opal-held census;
+  - m-5 (~4): map residuals;
+  - w-5 (~2, join after p-5 and h-5).
+  Workers run in SPARSE worktrees `wk-ycdgen-r5-1..4` (disk full).
+- Close acts: E4 (indexed level-series run, then the identical request after today's close); E6 (the budgeted
+  Overview live, link to Andrew).
 
 ## Queued work
 
@@ -82,6 +87,9 @@ and their tests; `infra/aws/lambda/investor-reporting/ops/{owned_requests,prospe
 `infra/aws/lambda/ci/lambda-source-map.json`; `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/**`; this file.
 
 ## Parked, each with its owner and the condition that un-parks it
+
+- C: is full (1.7 GB free at 10:5xZ). Twelve merged worktrees of ~P and ~M hold ~30 GB. Owner 0.0.0_AB_MSTR (asked
+  10:34Z); un-parks when space returns. Until then this seat's workers use sparse worktrees.
 
 - Login and session secret ARNs keep `-*` in the runner role. Owner this seat; un-parks on a CTO ruling.
 - The recorder's CHANGELOG entries for irpt-ycharts-generate (S320) and irpt-status (S318) are `2.0.0_SA_COO~P`'s lane,
