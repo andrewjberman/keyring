@@ -5,7 +5,7 @@
  "project": "MDPF_SECCLASS",
  "directive": "D8",
  "fabric": "laptop",
- "prd_version": "v0.7",
+ "prd_version": "v0.8",
  "step": 4,
  "brief_ref": "docs/briefs/canonical-security-table-brief-20260929.md@87ad6973f3",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16"],
@@ -551,3 +551,16 @@ surfaces the manifest did not name.
 
 **Sign-off:** an ENDPOINT change, so the ratified-text half re-opens. The brief half: the brief's author is the research seat.
 The four new DONE WHEN lines are put to Andrew for confirmation.
+
+## ADDENDUM v0.8 (1.0.0_SA_CTO, clock read 21:31Z 2026-10-05) -- contract notes only: two of ADDENDUM v0.7's rulings answered by Andrew
+
+**Word:** Andrew-direct at the research seat's terminal, "Recs approved", record `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261005_213xZ_THREE_RECS_APPROVED_AND_CIK_QUESTION.md`
+@a998e96856 (relayed by msg 105404). The ENDPOINT section is not edited.
+
+- **The AI classifier covers the 668 securities labelled today by a guess** (his card 1, with the index of AI-made rows as the
+  condition already set). This confirms ADDENDUM v0.7 ruling 1; it is now his word, not this seat's reading.
+- **The Schwab firm composition stays an exception, agreed by name** (his card 3: "keep it as the one named exception for now;
+  revisit once the canonical table covers every held security"). This answers ADDENDUM v0.7 ruling 2. Under FWD-6 as amended it
+  is the one exception that exists; C-DEPARTURE names it and nothing else once FWD-12's move lands.
+- **Not a ruling:** in the same record he asks whether a CIK field belongs on the table beside sector. It is a question, answered
+  to him by the research seat; nothing is added to the table's shape on it.
