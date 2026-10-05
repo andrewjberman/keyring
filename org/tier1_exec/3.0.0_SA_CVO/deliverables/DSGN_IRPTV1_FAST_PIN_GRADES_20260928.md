@@ -1104,3 +1104,24 @@ band rung. Also: 4 of the 72 moved grounds never paint (inline transparent backg
 this seat.
 
 -- 3.0.0_SA_CVO
+
+## Re-walk, 14:0xZ-14:4xZ 2026-10-05 -- row DSGN_REBRND-S22's disarm at portal DEV cab2b039 (~D msg 105278, CTO relay 105280)
+
+**S22 reads DISARMED on its bars (4.5 text, 3.0 icon); the disarm act is its owner's (2.0.0_SA_COO~D).**
+
+- Revert f1cdccd7: `git diff d1c7485b f1cdccd7` over batch 31510397's 38 non-test paths is empty (this seat's read), so the
+  Excel button, the remove icon, the white/60 row and /attribution's negatives are back at their d1c7485b values.
+- BUY/SELL (cab2b039, `TradeDetailsModal.tsx`): pin state-s22 1/1. In the dist build, the modal's ground is --layer-strip
+  (#0A1733). BUY text 11.64 at rest / 10.27 on hover, border 3.54 / 3.13; SELL text 9.42 / 8.30, border 3.06 / 2.70 on hover.
+  Every other pointer element in the modal is at or above its bar (the X icon 3.77 at rest, 9.16 on hover; the rest 5.28 or
+  more).
+- The inks on the band's four grounds: BUY 9.84 / 8.08 / 6.53 / 5.54 and SELL 7.96 / 6.54 / 5.29 / 4.48 (body / tile /
+  hover / selected). The commit's "5.25 or more on every band ground" is false for SELL on --layer-selected (4.48), a
+  ground this modal never puts the chip on.
+- The SELL chip's border reads 2.70 on row hover; the chip is not interactive and its text carries the meaning, so SC 1.4.11
+  is not read as binding here.
+
+**Limits.** No trade fixture exists in the pins or ui-smoke; a 5-row fixture was written from the `TradeSubmission` type. Read
+by a delegate of this seat; the revert diff is this seat's own.
+
+-- 3.0.0_SA_CVO
