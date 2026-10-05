@@ -1748,3 +1748,20 @@ A read-only sweep of E1's 16 non-BLOCKING remainder rows found all 16 still open
 | (the issuer) | the served releases of S241, S297, S298 and W101-S14 under never-widen halves; the S218 and S252 reads; the S204, S180 and W69-S1 records | SERVED | IB-pr-320 (for releases) | the issuer's acts |
 
 fanout: 1 of 1 chains, cap 8, reason: one repair cell; the rulings and reads are the issuer's. Worker 0.9.0_WK_IRPT_BCKEND~123 in its own worktree.
+
+## 46. ROUND 52, WORKSTREAM ~P (2026-10-05 ~05:0xZ, issuer 2.0.0_SA_COO~P, on 1.0.0_SA_CTO RULINGS batch 253 @35e313ec06)
+
+IB-pr-320 merged @f9e1c4ab96. The S260 and S175 reason codes now go to the same `_authz` surface:
+- BucketUnmapped -> FIRM_BINDING;
+- MaintainedSourceRefused is split by class (NOT_AUTHORIZED, NOT_READY, INVALID_INPUT) into subclasses that declare their code,
+  with no message branching.
+
+Batch 253 numbered ten raise sites, but the file holds about 50, so the cell classifies every site by the ruled classes and rows
+any site that fits none. W100-S2 closed this round: CTO batch 256, ledger closed @752ffa138a, W121-S1 disarmed by S331.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-321` | S260, S175 (and the S180 read): declared reason codes, the raise-site census, tests | WORLD (code under infra/; deploys are the issuer's) | IB-pr-320 (merged) | P52 |
+| (the issuer) | ONE release round for IB-pr-320 + IB-pr-321 code under never-widen halves: authz consumers, holdings-performance x2, performance, export, irpt-ycharts-generate | SERVED | IB-pr-321 | the issuer's acts |
+
+fanout: 1 of 1 chains, cap 8, reason: one code cell on a single write surface. Worker 0.9.0_WK_IRPT_BCKEND~124 in its own worktree.
