@@ -536,3 +536,53 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "world_is": "S3's reading is corrected: the challenge is count-shaped (the 7th request), at every spacing tried. And table_data with indices=<holding tickers> answers 404 like indices=P:<id>. So E1 needs a different security-level route (or the served path's own data) and a call budget of about 6 per window, measured before the next build. No retry was made; the session served Y-2 READY between runs."
 }
 ```
+
+## IRPT_YCDGEN-W3-S5 -- the base's test_computed_own_series_statistics asserts beta_1y is STATISTIC_UNKNOWN; 4.3 makes beta_1y a statistic id
+
+```json
+{
+  "id": "IRPT_YCDGEN-W3-S5",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~3",
+  "surfaced_at": "2026-10-05T05:40:06Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Order YCD-l-4 says keep every existing test passing, but one existing assertion pins the pre-4.3 world: test_computed_own_series_statistics expects beta_1y to read STATISTIC_UNKNOWN:beta_1y. Contract 4.3 makes beta_1y a known id, so the assertion could not stay; it now uses kurtosis_1y (an id no contract names) and the same reason shape.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_layout_overview.py @ f867ec3bca: line 205 asserted STATISTIC_UNKNOWN:beta_1y",
+      "contract 4.3 (task order YCD-l-4 section 2): statistic ids alpha_<w>, beta_<w>, sharpe_<w>, sortino_<w>, var_monthly_<w>"
+    ]
+  },
+  "spec_asserts": "The order: keep every existing test passing (14 at the base); the order's contract 4.3: beta_<w> is a statistic id.",
+  "world_is": "Both cannot hold for that one assertion; the assertion's intent (an unnamed id is STATISTIC_UNKNOWN) is kept with an id no contract names. The other 13 existing tests are unchanged and pass (21 passed in all with the 7 new tests)."
+}
+```
+
+## IRPT_YCDGEN-W3-S6 -- contract 4.3 names "a risk-free series Opal holds" but not its form (level or rate), nor how the inputs reach compute_element
+
+```json
+{
+  "id": "IRPT_YCDGEN-W3-S6",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~3",
+  "surfaced_at": "2026-10-05T05:40:06Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "4.3 does not say whether the risk-free input is a level (index) series or a rate series, nor the signature that carries benchmark and risk-free into the computation. Built: both are optional LEVEL series [[ms, level], ...] (or {series, key}), passed as benchmark= / risk_free= to statistic_of, compute_element and compute_all; the monthly return of each is taken from month-end levels exactly as for the portfolio. Conventions fixed where 4.3 is silent: sample (n-1) variance and covariance; alpha = (mean(rp-rf) - beta*mean(rb-rf)) x 12 in percent; Sharpe = mean excess x sqrt(12) / sample sd of excess; Sortino downside deviation about 0 over all n excess months; VaR = linear-interpolation 5th percentile of monthly returns in percent.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "contract 4.3 (task order YCD-l-4 section 2): 'a benchmark series kept by the run, and a risk-free series Opal holds'; the map wiring is a later cell (section 3)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py: _risk_stat, _named_series, statistic_of(points, statistic, benchmark, risk_free)"
+    ]
+  },
+  "spec_asserts": "4.3: each statistic computed only from held series, an input not kept or held reads NOT_AVAILABLE with INPUT_MISSING:<series>.",
+  "world_is": "The wiring cell must hand a rate series through a level conversion (or this function must gain a rate form) if Opal's held risk-free series is a yield. Series names in the reason are `benchmark` and `risk_free`. Nothing was called or read from a store; only fixtures."
+}
+```
