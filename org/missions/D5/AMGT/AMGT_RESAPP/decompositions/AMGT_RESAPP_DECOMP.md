@@ -8312,3 +8312,47 @@ fanout:
   egress: none
   portal_ref: 6936e92b
 ```
+
+## 77. ROUND 69 -- THE /ledger DEDUPE AND THE ARTICLE NIT, ONE REDEPLOY. Two cells, two orders
+
+**Input:** the CTO's round-68 analysis `ledger/ROUND_ANALYSIS.round68.md` @f54b52325e (msg 29455), rulings 1 and 3. The CVO slug is
+ADJUDICATION_v82 @cc67db12e5. PRD v0.37. FWD-36 and FWD-39 were REALIZED in round 68. Ruling 2 (the seating lint, Z-S348) is the
+CTO's own.
+
+### 77a. MEASUREMENTS (`round69/checks/r69_served.py`, CLOUD ~03:3xZ; the cell FAILS at the base, deployed `6wwEU3Sw` and local)
+
+- **c29 C1 FAIL.** The census is over every covered name (95 names, 570 classes, 0 non-200). 95 filings reasons repeat a clause:
+  "... no filings run is recorded yet for this name: no filings run is recorded yet for this name". The CVO saw it on BA and NVDA,
+  and it is on every name.
+  - The detector catches a clause that repeats inside another; a clean social reason is the control.
+- **c29 C2 FAIL.** DE `/thesis` `.thesis_driver_chart.reason` reads "... nothing is shown here for driver chart".
+
+### 77b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-as-1` | the `/ledger` filings reason prints its clause once; "for the driver chart" (R1) | `0.9.0_WK_AMGT_RESAPP~225` | worker-light | LOCAL | `lib/research/api/` |
+| `AMGT-as-2` | the code redeploy carrying as-1. DEPLOY genre; content diff against DEPLOYED `6wwEU3Sw`; a simulate arm per new S3 read path (R3) | `0.7.0_AE_CloudOps~A` | seat order, a pair | WORLD | Lambda artifact, ledger |
+
+### 77c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** The domain is the enrichment list, items 1-2.
+- **(ii) Same grain.** Served reason text, then the deployed code.
+- **(iii) Intent.** One axis per cell.
+- **(iv) What a cell does NOT move:**
+  - as-1 changes reason TEXT only: no class, source, run or status.
+  - as-2 changes code only; memory stays 1769, no IAM.
+
+### 77d. EDGES AND FAN-OUT
+```
+as-1 --> as-2 (one redeploy, one pair, graded c29 + r68 c27/c28 + r67 c23-c26 on deployed)
+fanout:
+  cap: 8
+  orders_total: 2
+  chains_total: 1
+  wave_0: [as-1 ~225 worker-light]
+  wave_1: [as-2 0.7.0_AE_CloudOps~A]   # after the drain and its pair
+  no_s3_deletes: true
+  egress: none
+  portal_ref: 6936e92b
+```
