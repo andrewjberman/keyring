@@ -67,7 +67,13 @@ TO_ID_RE = re.compile(r'<task_order\b[^>]*\bid\s*=\s*"([^"]+)"')
 PROJECT_ATTR_RE = re.compile(r'<task_order\b[^>]*\bproject\s*=\s*"([^"]+)"')
 PROJECT_TAG_RE = re.compile(r"<project(?:_code)?>(.*?)</project(?:_code)?>", re.S)
 ISSUED_TO_RE = re.compile(r"<issued_to>(.*?)</issued_to>", re.S)
-STATUS_RE = re.compile(r"<status>(.*?)</status>", re.S)
+# LINE-ANCHORED, LAST MATCH (row AMGT_RESAPP-Z-S348, 1.0.0_SA_CTO~Z 2026-10-05). The same pattern as
+# surprise-row-gate.py TO_STATUS_RE: a real tag starts its line, a prose mention ("flip this order's
+# `<status>` to `complete`") does not, and an unclosed tag still reads. Measured over 2089 tracked orders
+# on 69 pipeline projects (shared tree @432c3f0fbb): the old paired first-match read 525 open; a paired
+# LAST match read 407 and disagreed with this form on 352 orders, every sampled one a prose mention AFTER
+# the real tag; this form reads 59.
+STATUS_RE = re.compile(r"^\s*<status>\s*([A-Za-z_-]+)", re.I | re.M)
 # A concrete seat instance, lane suffix included. Deliberately does NOT match a CLASS token
 # ("AE-class"), because the seating rule binds an INSTANCE, not a class.
 # The name class holds an underscore: a worker's serial is 0.9.0_WK_<CODE>~<n> and a project code is
@@ -77,8 +83,12 @@ SERIAL_RE = re.compile(r"\b\d+\.\d+\.\d+_[A-Z]{2}_[A-Za-z][A-Za-z0-9_]*(?:~[A-Za
 # MEASURED from the live corpus 2026-08-25, not invented (Rule 24: classify the axis that
 # exists, do not mint one). Leading token only -- real statuses carry trailing prose
 # ("CLOSED -- COO STALE-TO SWEEP", "COMPLETE -- CLOSED 2026-08-2").
+# WITHDRAWN added 2026-10-05 (row AMGT_RESAPP-Z-S348, 1.0.0_SA_CTO~Z): the state an issuer writes on a
+# mis-seated or retired dispatch, already terminal in surprise-row-gate.py TERMINAL_TO_WORDS. Without it
+# issuance 8ba8bf3ab0 was refused because 0.7.0_AE_CloudOps~A "held" AMGT_HARVST TO-HVST-n-4 and q-7,
+# both `<status>withdrawn</status>`.
 TERMINAL_STATUS = {"COMPLETE", "CLOSED", "SUPERSEDED", "CANCELLED", "DONE",
-                   "CLOSED-SUPERSEDED"}
+                   "CLOSED-SUPERSEDED", "WITHDRAWN"}
 
 
 def staged_added() -> list[str]:
@@ -186,11 +196,16 @@ def _to_check_resolver():
 def _is_open(text: str) -> bool:
     """UNKNOWN COUNTS AS OPEN -- fail-closed, deliberately. An unrecognised status makes the
     seat look MORE occupied, so the lint refuses more rather than less. A false refusal is
-    loud and gets argued with; a false pass is believed."""
-    m = STATUS_RE.search(text)
-    if not m:
+    loud and gets argued with; a false pass is believed.
+
+    THE LAST TAG IS THE CURRENT STATUS (row AMGT_RESAPP-Z-S348): a task order APPENDS its status
+    flips (staged -> pending -> complete), so a first-match read returns the STALE tag and a finished
+    order reads open. Only a tag that STARTS ITS LINE counts (STATUS_RE), so a prose mention after the
+    real tag cannot become the last one."""
+    matches = STATUS_RE.findall(text)
+    if not matches:
         return True
-    lead = re.split(r"[\s\-]", m.group(1).strip().upper(), maxsplit=1)[0].strip()
+    lead = re.split(r"[\s\-]", matches[-1].strip().upper(), maxsplit=1)[0].strip()
     return lead not in TERMINAL_STATUS
 
 
