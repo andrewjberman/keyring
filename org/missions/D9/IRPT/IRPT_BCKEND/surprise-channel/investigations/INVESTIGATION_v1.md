@@ -17919,3 +17919,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "MEASURED: with the user-named proxy, both an Overview (Y-5) and a Comparison (Y-2) of the same file reach READY."
 }
 ```
+
+## IRPT_BCKEND-S328 -- DISARM of W69-S1: orders name `terraform` on PATH and .tools/safe-apply.sh (MSTR ruling 105150)
+
+```json
+{
+  "id": "IRPT_BCKEND-S328",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-05T04:38:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARM of IRPT_BCKEND-W69-S1 on 0.0.0_AB_MSTR's provisioning ruling (msg 105150): .tools/*.exe is gitignored, so no worktree ever holds .tools/terraform.exe, and it will not be vendored. A task order names `terraform` on PATH for init/validate/plan and `.tools/safe-apply.sh` (PATH fallback at :40-43) for apply. Forward-only: every order this issuer cuts from now uses that wording; closed orders are history and are not edited.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "0.0.0_AB_MSTR msg 105150 (2026-10-05T04:33Z): measured .tools/terraform.exe v1.9.8 in the shared tree, terraform v1.14.5 on PATH, absent at site Z; .tools/safe-apply.sh:40-43 falls back to PATH",
+      "IRPT_BCKEND-W69-S1 disarm_owner text: 'either vendor .tools/terraform.exe into every new worker worktree or re[word the order]'"
+    ]
+  },
+  "dismissal_reason": "The provisioning owner ruled the path: orders reword to PATH terraform plus safe-apply. The two-version state hazard (1.9.8 vs 1.14.5) is routed by MSTR to 1.0.0_SA_CTO as its own decision and is not carried by this row.",
+  "spec_asserts": "IRPT_BCKEND-W69-S1 (ARMED): task orders instruct `.tools/terraform.exe plan`, which a fresh worker worktree does not hold.",
+  "world_is": "RULED: no vendoring; orders name PATH terraform and .tools/safe-apply.sh. The rule applies to every order cut from now."
+}
+```
