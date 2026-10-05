@@ -8413,3 +8413,72 @@ fanout:
   egress: none (a needed vendor leg is a row listed for Andrew)
   portal_ref: 6936e92b
 ```
+
+## 79. ROUND 71 -- FWD-34 UNIT, FWD-30 GRADER, FWD-4 URLS, FWD-7 FRESHNESS, THE SIGNED-IN WALK, THE LEAD PANEL LOAD TIME, ONE REDEPLOY. Seven cells
+
+**Input:**
+- The CTO's round-70 analysis `ledger/ROUND_ANALYSIS.round70.md` @21e6a2dc1c (msg 29598), section 4 items 1-6, and its ruling on the
+  walk role (msg 29615: admin role, captures plus a positive control per act, as the CVO's L9 artifacts).
+- PRD v0.38, ADMITTED @f87ca71f42.
+- **ANDREW-DIRECT 2026-10-05 ~15:0xZ** (via 2.0.0_SA_COO~D msg 29618, record
+  `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261005_150xZ_SECURITY_ANALYSIS_ALL_OPAL_EMPLOYEES_REQUIREINTERNAL_LEADPANEL_LOAD_TO_COO_Z.md`):
+  "I suspect that some lambdas are doing live computation when the served file should be precomputed ... the chatter/price views
+  take almost a minute to load". It is cut here as au-6.
+
+### 79a. MEASUREMENTS (CLOUD ~15:0xZ; every build cell FAILS at the base, deployed `GS//XHnV`, and local where named)
+
+- **c34 (FWD-34):** 11 reads, 572 objects carrying `score`, 572 without `score_unit` (deployed and local). The page reads `row.score`
+  (RankedList.tsx:156-157), so the unit is ADDED, never a rename.
+- **c35 (FWD-4):** 95 names, 600 feed items, 0 with a url (deployed and local). Gold carries no url column. The silver article files
+  carry it per source: bbg `url`, barrons `canonicalUrl`, sa `links.self` (relative); ft and wsj carry none.
+- **c36 (FWD-7):** /freshness serves 250 rows, and 42 of 95 covered names are missing. The rows come from the pool's universe file,
+  not `covered_security_keys()`.
+- **c38 (ANDREW-DIRECT, r71_latency.py, warm; local runs 16-45 s a read, so au-6's local bar is 6,000 ms):**
+  - collected/chatter takes 9.4-9.8 s at days 30/90/365;
+  - rankings trending/breakout price take 3.7-4.9 s (default, 90, 365);
+  - all 9 reads are over the 2,000 ms cell bar.
+- **FWD-30 grader:** `round45/checks/page_render.cjs` fails with `Cannot find module '@/ui/components/graphic/GraphicCard'`
+  (Z-W230-S1). With a scratch repair it renders, and real export-vs-page differences remain; that product work is round 72.
+
+### 79b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-au-1` | FWD-34: every served `score` carries `score_unit: "percent"` (added, never renamed) | `0.9.0_WK_AMGT_RESAPP~231` | worker | LOCAL | `lib/research/api/` |
+| `AMGT-au-2` | Z-W230-S1: repair copies of the page-render grader, then read FWD-30 (page vs export) on deployed for BA, AMD, ASML_NA and classify each difference product or grader | `0.9.0_WK_AMGT_RESAPP~232` | worker | LOCAL | own deliverables (the round-45 originals stay the record) |
+| `AMGT-au-3` | FWD-4: the gold mention rows carry the article's url (bbg/barrons/sa; ft/wsj null), and each feed item serves it or null plus a plain `url_reason`. Code and a dry build only; the gold rebuild is au-7's leg | `0.9.0_WK_AMGT_RESAPP~233` | worker | LOCAL | `lib/research/api/`, `publication_gold.py` + its test (shared with HARVST) |
+| `AMGT-au-4` | FWD-7: /freshness carries every covered name | `0.9.0_WK_AMGT_RESAPP~234` | worker | LOCAL | `lib/research/api/` |
+| `AMGT-au-5` | the signed-in walk (admin role) over FWD-1, 3, 6, 10, 15, 17, 18, 19, 31 + FWD-5's three-name print + FWD-8's identity read, on deployed `GS//XHnV` while the walker slot is free (CTO msg 29648) | `0.9.0_WK_AMGT_RESAPP~235` | worker | LOCAL (a read) | own deliverables |
+| `AMGT-au-6` | ANDREW-DIRECT: the Lead Panel load. Find where the 9.4 s and 4.5 s go, and serve from stored/precomputed reads, not request-time compute | `0.9.0_WK_AMGT_RESAPP~236` | worker | LOCAL | `lib/research/api/` |
+| `AMGT-au-7` | the redeploy carrying au-1, au-3, au-4, au-6, then the gold mention rebuild with au-3's url column. DEPLOY genre; diff against deployed; a simulate arm per new read path; the pair counts the gold table's writers | `0.7.0_AE_CloudOps~A` | seat order, a pair | WORLD | Lambda artifact, the GO's gold keys, ledger |
+
+### 79c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** The domain is items 1-6 plus the Andrew-direct load-time item.
+- **(ii) Same grain.** One served field family or one route family per build cell, a tool repair, one walk, one deploy.
+- **(iii) Intent.** One axis per cell.
+- **(iv) What a cell does NOT move:**
+  - au-1, au-3 and au-4 add fields or rows only.
+  - au-6 changes how a value is read, not the value: the r67 c24 tone and the ranking rows are unchanged.
+  - au-2 and au-5 write only deliverables. au-5 arms only the dormant walker under the issuer's MSTR~Z slot.
+  - au-7 changes code, plus a grant if a read path needs one, plus the gold mention keys the GO lists (one added column; no row key or
+    existing column moves).
+
+### 79d. EDGES AND FAN-OUT
+```
+au-1 --+
+au-3 --+--> au-7 (one redeploy, one pair, then the gold leg)
+au-4 --+
+au-6 --+
+au-2 (independent; FWD-30 read on deployed)
+au-5 (independent: none of its nine walked FWDs depends on au-1/3/4/6; it takes the free walker slot now)
+fanout:
+  cap: 8
+  orders_total: 7
+  chains_total: 3
+  wave_0: [au-1 ~231, au-2 ~232, au-3 ~233, au-4 ~234, au-5 ~235, au-6 ~236]   # au-5 under the issuer's MSTR~Z walker slot
+  wave_1: [au-7 0.7.0_AE_CloudOps~A]   # after au-1/3/4/6 drain and its pair
+  no_s3_deletes: true
+  egress: none
+  portal_ref: e6ab82ad   # portal origin/DEV at the cut (DSGN AV-zr-1)
+```
