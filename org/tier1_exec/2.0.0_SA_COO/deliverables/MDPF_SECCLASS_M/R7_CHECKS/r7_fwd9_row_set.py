@@ -13,9 +13,12 @@ Actions:
   PRESENT-SAME   a row exists with the same asset_class and sub_asset_class. Left as it is.
   PRESENT-DIFFERS a row exists with another class or sub-class. NEVER overwritten; listed for the CTO. Its item JSON
                  holds {"planned": ..., "existing": ...}.
-  OUT            not in the domain (Q4: not Equity, a cash line, or no parseable Bloomberg identifier).
+  OUT            not in the domain (Q4, CTO batch 259: a cash line; a yellow key other than Equity; a provider type
+                 other than Equity or empty; a US money-market fund; no parseable Bloomberg identifier).
 
-Prints: FWD9-ROW-SET securities=<n> write=<n> present_same=<n> present_differs=<n> out=<n>
+Prints: FWD9-OUT reason=<reason> n=<n>  (one line per OUT reason, before the total)
+        FWD9-ROW-SET securities=<n> write=<n> present_same=<n> present_differs=<n> out=<n>
+A present row is never overwritten, so its instrument_kind is kept whatever this set plans.
 
 A security is taken as its NEWEST record in the window (a class can resolve later). Nothing here writes to S3 or to
 DynamoDB, apart from the local set file.
@@ -40,7 +43,7 @@ _SHARED = ROOT / "infra" / "aws" / "lambda" / "v2_portal" / "_shared"
 if str(_SHARED) not in sys.path:
     sys.path.insert(0, str(_SHARED))
 
-from rivalfunds_classification import classify_canonical_row  # noqa: E402
+from rivalfunds_classification import classify_canonical_row, out_reason  # noqa: E402
 
 REGION = "us-east-1"
 TABLE = "etf-classifications"
@@ -159,15 +162,6 @@ def _plain(value):
     return value
 
 
-def out_reason(rec):
-    if rec.get("provider_security_type") != "Equity":
-        return "provider_security_type=%s (Q4 needs Equity); asset_class=%s" % (rec.get("provider_security_type"),
-                                                                            rec.get("asset_class"))
-    if (str(rec.get("position_type") or "").lower() == "cash") or rec.get("is_cash_line") is True:
-        return "cash line"
-    return "no parseable Bloomberg identifier"
-
-
 def main(argv=None):
     parser = argparse.ArgumentParser(description="FWD-9 universe row set (reads only)")
     parser.add_argument("--out", default=str(DEFAULT_OUT))
@@ -235,7 +229,7 @@ def main(argv=None):
     print("by sub-class input: %s; low_confidence=%d; non-US=%d; non-ASCII names=%d"
           % (dict(inputs), sum(1 for r in planned.values() if r.get("low_confidence")),
              sum(1 for r in planned.values() if r["ticker"].startswith("BBG:")),
-             sum(1 for r in planned.values() if not r["name"].isascii())))
+             sum(1 for r in planned.values() if not r.get("name", "").isascii())))
     kinds = collections.Counter()
     for line in lines:
         if line[0] == "PRESENT-DIFFERS":
@@ -251,8 +245,9 @@ def main(argv=None):
                 kinds["both have a sub-class and they differ"] += 1
     print("PRESENT-DIFFERS by kind: %s" % dict(kinds))
     print("PRESENT-DIFFERS keys: %s" % " ".join(line[1] for line in lines if line[0] == "PRESENT-DIFFERS"))
-    outs_by = collections.Counter(json.loads(line[4])["reason"].split(";")[0] for line in lines if line[0] == "OUT")
-    print("OUT by reason: %s" % dict(outs_by))
+    outs_by = collections.Counter(json.loads(line[4])["reason"] for line in lines if line[0] == "OUT")
+    for reason, n in sorted(outs_by.items()):
+        print("FWD9-OUT reason=%s n=%d" % (reason, n))
     print("FWD9-ROW-SET securities=%d write=%d present_same=%d present_differs=%d out=%d"
           % (len(lines), counts["WRITE"], counts["PRESENT-SAME"], counts["PRESENT-DIFFERS"], counts["OUT"]))
     return 0

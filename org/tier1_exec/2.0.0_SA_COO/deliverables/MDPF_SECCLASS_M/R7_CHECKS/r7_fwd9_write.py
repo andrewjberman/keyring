@@ -7,9 +7,8 @@ What it does, and nothing else:
     `WRITE` lines only. A PRESENT-SAME, PRESENT-DIFFERS or OUT line is never written, never overwritten.
   - writes through `etf_classification_scheduled.write()`, the scheduled path's conditional put
     (`attribute_not_exists(ticker)`); this file issues no PutItem of its own and has NO overwrite and NO delete path.
-  - the shared write() copies only its own attribute list, which does not name `security_bloomberg`. The ruling
-    keeps that string in its own attribute, so a thin table wrapper below adds it to the item of the same put. It
-    adds nothing else and changes no condition.
+  - the shared write() carries `security_bloomberg` and `listing_country` in its own attribute list (cell SC-e-17
+    amendment 1), so this file has no table wrapper: the producer (SC-e-19) and this writer put through one path.
   - DRY RUN BY DEFAULT: it prints the plan and puts nothing.
   - `--write` REFUSES unless ALL of these hold (each printed):
       (a) R7_BBG_READER_CENSUS_20261005.json (cell SC-e-16) has crashes, refuses, miskeys and fails_contract all 0;
@@ -122,20 +121,6 @@ def preconditions(half):
     return results, all(ok for _, (ok, _) in results)
 
 
-class _BloombergTable:
-    """Adds `security_bloomberg` to the item of the SAME conditional put; nothing else changes."""
-
-    def __init__(self, table, bloomberg_by_key):
-        self._table = table
-        self._by_key = bloomberg_by_key
-
-    def put_item(self, Item, **kw):
-        verbatim = self._by_key.get(Item.get("ticker"))
-        if verbatim:
-            Item = dict(Item, security_bloomberg=verbatim)
-        return self._table.put_item(Item=Item, **kw)
-
-
 def main(argv=None):
     parser = argparse.ArgumentParser(description="Write the FWD-9 row set (absent keys only; dry run by default)")
     parser.add_argument("--set-file", default=str(DEFAULT_SET))
@@ -169,8 +154,7 @@ def main(argv=None):
     import etf_classification_scheduled as scheduled
 
     table = boto3.resource("dynamodb", region_name=scheduled.REGION).Table(scheduled.TABLE_NAME)
-    wrapped = _BloombergTable(table, {r["ticker"]: r.get("security_bloomberg") for r in rows})
-    outcome = scheduled.write(rows, table=wrapped)
+    outcome = scheduled.write(rows, table=table)
     written = [k for k, s in outcome if s == "written"]
     left = [k for k, s in outcome if s != "written"]
     print("WRITTEN %d of %d" % (len(written), len(rows)))
