@@ -103,7 +103,35 @@ are not re-run after Phase C, because AC2's shipped set is anchored to its own r
     identity wall, and no S3, IAM, ALB, template or contract change, read from the release diff, not the README. Commit
     and report. Do NOT upload.
 
-**PHASE C-B (GO): only after the issuer says GO with CTO + COO + CVO halves SIGNED.**
+**PHASE C-A2 -- AMENDMENT A3 (Andrew-direct 2026-10-05 ~12:5xZ, record @121b7b016e, msg 29556): OWNER-ONLY.**
+Verbatim: "2.) Visible to me only. Eventually will be visible to select managers at my discretion." The release
+`14e0af86fa` (tenant-wide) is SUPERSEDED, and its three halves have lapsed (CTO @0fba676f84, CVO S2 @0366ca3748).
+
+16a. **In YOUR worktree (CLOUD source):**
+   - `app/yearinreview_view.py` gates every `/yearinreview` request through the EXISTING owner gate,
+     `app/owner_gate.py`, by calling its `require_owner` (or its equivalent). It has three outcomes:
+     - no identity, or one that fails verification: 401;
+     - a verified identity not on `DASHBOARD_OWNER_EMAILS`: 403;
+     - the owner: 200.
+     The gate fails closed: an empty roster refuses everyone.
+   - Do NOT add a roster, an `.env` key or a template change. The "select managers" extension is a later act on
+     Andrew's word, not a default.
+   - Extend `tests/test_yearinreview_view.py` with `test_yearinreview_non_owner_403`: a verified non-owner identity
+     gets 403 and none of the page bytes. Keep the existing 5 tests, restating the 200 test so it uses the owner
+     identity.
+   - Commit.
+16b. **Release tree:**
+   - Re-cut `rel-nfra-oplgtw-r17b` from `e91819e281` with the 4 kit files at their new bytes. Use a NEW branch,
+     `rel-nfra-oplgtw-r17c`; never rewrite `14e0af86fa`.
+   - Prove `server.py`'s diff equals the CLOUD-source diff.
+   - R13 (a) applies. Re-run step 14's tests plus the new 403 test.
+16c. **Verify script:** add a host-local check: a request carrying a planted, NON-ALB-signed identity header gets 401
+   (the gate verifies signatures). The public 302 and the host-local no-identity 401 stand. Update
+   `rl7_release_md5.txt`.
+16d. Write `ANNOUNCE_OG-rl-6-C2.md` with the blast radius for three FRESH halves: owner-only, the same wall as the
+   dashboard. Commit and report. Do NOT upload.
+
+**PHASE C-B (GO): only after the issuer says GO with CTO + COO + CVO halves SIGNED on the C2 release sha.**
 
 18. Re-read live; if it moved, re-cut. Open the NEVER-2 ledger `nfra-oplgtw-gateway-release-r17b`, with the same legs.
     Commit the entry AND the sentinel before the act.
@@ -177,6 +205,13 @@ and validate it with `python .tools/proof-of-spec-check.py <instance>`. Report o
   - **Phase C-A** is drained @432c3f0fbb: release `rel-nfra-oplgtw-r17b` @14e0af86fa, rollback `og-rb12`.
   - **Row Z-W15-S46** (no roster check: any signed-in tenant account reads the page, where `/sprint` is owner-only) is
     an audience question routed to Andrew with the never-widen ask. Neither half decides it.
+- **A3 (2026-10-05 ~13:0xZ, issuer):** Andrew ruled OWNER-ONLY (record @121b7b016e, msg 29556), which resolves row
+  S46.
+  - Steps 16a-16d re-cut the kit through the existing `owner_gate.py` (fail closed; `DASHBOARD_OWNER_EMAILS` holds only
+    andrew@). There is no new roster or `.env` key.
+  - The release sha moves (`rel-nfra-oplgtw-r17c`), so the C-B halves are owed fresh.
+  - The managers' extension is a later act on Andrew's word. `owner_gate.validate_owner_emails` refuses boot on any
+    non-owner entry, so that extension needs a separate roster.
 
 <status>pending</status>
 <round>17</round>
