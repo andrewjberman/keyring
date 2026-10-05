@@ -17535,5 +17535,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   ]
  },
  "disposition": "UNDER_INVESTIGATION"
+}
+,
+{
+ "id": "AMGT_RESAPP-Z-S349",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.7.0_AE_CloudOps~A",
+ "surfaced_at": "2026-10-05T05:01:56Z",
+ "one_line": "round64/checks/r64_served.py --cell c15 CONJOINS container coldness with the 5 s latency bar in one C1 clause, so the cell is SELF-DEFEATING ON REPETITION: its own 3-concurrency run leaves exactly the 3 warm containers the next run needs to be cold. Graded on as-2's deployed code it read NO twice (2 of 3 cold, then 0 of 3) while all 6 invokes answered 200 with headlines 6 of articles 6 and the slowest COLD invoke was 1949.75 ms against the 5000 ms bar. The halves' named trigger -- 'c15 reads over 5 s' -- did NOT fire; only the verdict token moved. Rollback NOT taken; the disposition is the issuer's.",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "AMGT_RESAPP.TO-AMGT-as-2 s.4 lists 'r64_served.py --cell c15 --where deployed, cold, on the day route' in the reported no-regression set, and the COO half's expected-outcome table predicts it 'YES, 1.84-1.95 s at ar-3 -- read on deployed'. The half's failure branch makes two things a ROLLBACK: 'c15 reads over 5 s' and 'any other check moves'. Both clauses treat the c15 VERDICT TOKEN as a latency oracle, which it is not: C1 is the conjunction status==200 AND cold AND duration_ms<5000 AND articles AND headlines==articles, graded over 3 invokes fired through ThreadPoolExecutor(max_workers=3) (r64_served.py :273-:280). The order gives no cold-induction step and the cell exposes no flag to force one, so coldness is a property of the function's INVOCATION HISTORY, not of the artifact under test.",
+ "world_is": "Two reads on the as-2 build (deployed CodeSha256 OcKZF34X9liuVKg9ZnpaqBcbSxwcDl6JlW+PlxWyF4k=), taken after AC1-AC3 and the r64/r65/r66 reported set had already invoked the function. READ 1 (04:5xZ): run 1 cold=False 245.03 ms, run 2 cold=True init 215.18 ms 1949.75 ms, run 3 cold=True init 220.13 ms 1938.50 ms -> 'FAIL C1 ... 2 of 3', 'PASS C2 ... 3 of 3', SERVED NO, exit=1. READ 2 (05:01:02Z, the first invoke after a quiet window): run 1 268.93 ms, run 2 264.49 ms, run 3 255.32 ms, all cold=False -> 'FAIL C1 ... 0 of 3', SERVED NO, exit=1. The second read is WORSE than the first because READ 1 left 3 warm containers for READ 2's 3 concurrent invokes to land on; repetition destroys the discriminator the cell exists to produce. Across all 6 invokes: status 200 on 6 of 6, headlines==articles==6 on 6 of 6, AMGT_SEGMENT timings present on 6 of 6 (C2 PASS both reads), max duration 1949.75 ms = 39 percent of the 5000 ms bar, and both COLD samples (1949.75 / 1938.50 ms) sit inside the half's own predicted 1.84-1.95 s band at ar-3. The only failing conjunct in either read is r['cold']. Not fixed: the cell is the issuer's deliverable (deliverables/2.0.0_SA_COO~Z/round64/checks/), outside this order's <paths>, and the act under test changed one file (lib/research/api/scoped_amgt.py) that touches neither the day route's loaders nor import-time cost.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "READ 1 verbatim: 'FAIL C1 3 of 3 COLD BA Sept 8 invokes under 5 s with every headline 2 of 3' / 'PASS C2 every run's log carries AMGT_SEGMENT timings 3 of 3' / 'R64 C15 SERVED: NO' / exit=1, with run 2 init_ms 215.18 duration_ms 1949.75 and run 3 init_ms 220.13 duration_ms 1938.5.",
+   "READ 2 verbatim: 'FAIL C1 3 of 3 COLD BA Sept 8 invokes under 5 s with every headline 0 of 3' / 'PASS C2 ... 3 of 3' / 'R64 C15 SERVED: NO' / exit=1, all three runs cold=False at 268.93 / 264.49 / 255.32 ms.",
+   "The predicate, read at the bytes: r64_served.py good = [r for r in runs if r['status']==200 and r['cold'] and r['duration_ms'] is not None and r['duration_ms'] < 5000 and r['articles'] and r['headlines']==r['articles']]; clause('C1 3 of 3 COLD ...', len(good)==3). Cold induction is ThreadPoolExecutor(max_workers=3) only.",
+   "The act's content diff is one file: CONTENT-DIFF SUMMARY files 356, IDENTICAL 355, CHANGED 1, ADDED 0, REMOVED 0 against the base 6wwEU3Sw+zFE66qfpFMXKL07e5QobD35LsRm2GsOZws=, the one being lib/research/api/scoped_amgt.py.",
+   "Every other graded and reported cell reads YES on the same deployed bytes: AC1 r69 c29, AC2 r68 c27/c28, AC3 r67 c23/c24/c25/c26, and the reported r64 c9/c10/c11/c12/c13/c14, r65 c17, r66 c18/c19/c22 -- each exit=0."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
 }]
 ```
