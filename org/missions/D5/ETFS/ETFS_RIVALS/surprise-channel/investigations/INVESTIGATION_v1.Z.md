@@ -3407,6 +3407,29 @@
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "RIV-gc-1 interface: attach_uncited, run_chain and regrade_rows call it; no version bump named. The order lists test_r6r6_quoted_name.py among its paths.",
     "world_is": "A grade produced with the attach step is a different grade rule from /5; the record (manifest grader field, re-grade run suffix) should say so. PROMPT_VERSION left at a1-chain/5: the prompt text is unchanged. If the issuer would rather keep /5, revert one constant and one test line."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W7-S1",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~7",
+    "surfaced_at": "2026-10-04T23:13:00Z",
+    "one_line": "round8/checks/bt-1.AC1.py (b) expects QTD at day 2026-10-02 to start 2026-07-01 and to hold the 2026-09-10 trade, but 2026-10-02 is in Q4: the calendar quarter starts 2026-10-01, so QTD = MTD, which is the rule gold_holding_contribution.period_start and WORKSTREAM_B_INPUTS.md:27 both state; AC1 cannot pass without a QTD that disagrees with them.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round8/checks/bt-1.AC1.py:12,65: BBB add ending 2026-09-10 is 'YTD, QTD, R30' and want QTD = ({BBB, CCC}, ['2026-07-01']) at DAY 2026-10-02, while the same want gives MTD start 2026-10-01",
+        "data/etfs/scripts/rivalfunds/gold_holding_contribution.py:119-120@c222ecc8fa: QTD start = dt.date(year, 3*((month-1)//3)+1, 1) = 2026-10-01 for 2026-10-02",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round8/WORKSTREAM_B_INPUTS.md:27: 'The as-of 2026-10-01 is the first day of October and Q4, so MTD = QTD = one day for every fund'",
+        "run at this worktree: python bt-1.AC1.py -> got QTD ({CCC}, ['2026-10-01']) want ({BBB, CCC}, ['2026-07-01']); (a) and (c) PASS, (b) FAILS on QTD only (R30 and MTD match)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "bt-1.AC1.py docstring: QTD {BBB, CCC} with window_start 2026-07-01 at day 2026-10-02; the order says MTD/QTD/YTD start on the period's first trading day.",
+    "world_is": "The build writes QTD from the calendar quarter's first trading day (2026-10-01 at that day), the same quarter hc-1 and the page's 'Q4 2026' label use, so QTD holds CCC only; the check's expectation needs a quarter that began 2026-07-01. The worker kept the calendar quarter (a trailing-quarter QTD would disagree with hc-1's QTD and rn-1's label) and pinned the calendar rule in tests/test_r8bt1_periods.py with a mid-quarter day (2026-08-14), where the producer's R30, MTD, QTD and YTD blocks all verify.",
+    "notes": "Remedy owner is the issuer: move the fixture day into Q3 (any day 2026-07-01..09-30 with the 09-10 trade in QTD) or drop the 09-10 trade from QTD in the expectation. disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. rn-1.AC2 START QTD 2026-07-01 may carry the same day assumption; not read by this worker."
   }
 ]
 ```
