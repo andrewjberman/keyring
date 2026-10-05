@@ -3743,6 +3743,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "The two rules collide on one mnemonic. The pre-existing label stays (rule 4 and the issuer's c2 control, which fails on any changed currency); a share count carrying a currency is a labelling defect of the older rule, outside this cell.",
     "notes": "Fix shape: remove IS_SH_FOR_DILUTED_EPS from _CURRENCY_SENSITIVE_FIELDS under a cell that re-derives the 96 blocks and relaxes c2 for it; not done here.",
     "disarm_owner": "2.0.0_SA_COO~X"
-  }
+  },
+{
+  "id": "AMGT_CORPUS-Z-S87",
+  "project": "AMGT_CORPUS",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~X",
+  "surfaced_at": "2026-10-05T13:21:51Z",
+  "one_line": "The 2026-10-05 13:00Z amgt-induction-daily fire (pin 74e00624b0) was REFUSED by the Bloomberg Terminal's daily capacity: 96 of 96 refreshes 'BlpResponseError: LIMIT: Daily capacity reached', pulled 0, rc 1; capacity was already exhausted before the fire (ETFS_RIVALS overnight backfill, row ETFS_RIVALS-Z-S24).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/Users/Opal Bloomberg/AppData/Local/opal/amgt-induction-daily/2026-10-05.log: line 105 'refresh population registered 96 with_block 96 already_current 0 pulled 0 bloomberg_calls 192', line 107 'induction_scheduled mode fire as_of 2026-10-05 rc 1'; REFRESH FAILED 96, all one signature 'LIMIT: Daily capacity reached'; the FIRST refresh (1299 HK) already failed.",
+      "schtasks amgt-induction-daily: Last Run Time 10/5/2026 9:00:00 AM local, Last Result 1, Status Ready (read 13:1xZ).",
+      "Cause owned elsewhere: ETFS_RIVALS-Z-S24 (BLOCKING/ARMED, 07:09Z, the overnight backfill pulls exhausted the Terminal's daily capacity) and ETFS_RIVALS-Z-S25; CTO~Z self-drive tick 15 @1aa51f0074 names the Bloomberg outage as daily capacity."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-22 (REALIZED round 35): the daily scheduled fire re-pulls every registered name; round 37 CRPS-am-5 reads the 2026-10-05 fire on pin 74e00624b0 (expect 96 pulled, rc 0).",
+  "world_is": "The fire ran on its own clock and pin and refused cleanly (no blocks written; the served newest blocks remain the 2026-10-04 19:56Z re-derive, which already carries Friday 2026-10-02's close). FWD-22's regression on the new pin is NOT read today; it is not retried (round-34 CTO half: a REFUSED day is recorded, never retried in a loop).",
+  "notes": "Not a CORPUS producer defect: the refusal precedes any CORPUS call. The regression read moves to the 2026-10-06 13:00Z fire. CRPS-am-2 (re-derive from landed raw, no vendor call) is unaffected.",
+  "disarm_owner": "2.0.0_SA_COO~X"
+}
 ]
 ```
