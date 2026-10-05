@@ -1964,3 +1964,32 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "The producer compares day unions as ordered. A per-fund previous day would be a design change for the issuer to rule on; the write itself is put-on-absence either way."
 }
 ```
+
+
+## MDPF_SECCLASS-S27 -- leg V: CUSIP:808516306 reads unclassified because the producer keys on display.symbol SCGB1
+
+```json
+{
+  "id": "MDPF_SECCLASS-S27",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-05T20:05Z",
+  "one_line": "49financial leg V: CUSIP:808516306 reads unclassified on 9 nodes ($175,356.90) because the producer classifies by display.symbol (SCGB1) and never consults the CUSIP row it was written to serve.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "LEG-V firm=49financial post=2026-10-02 merged 8 of 8 shards: post_classes multi_asset 25, unclassified 9; every unclassified node is key 808516306; reader pin T valid and reconciled",
+      "served node: security_id {CUSIP, 808516306}, display.symbol SCGB1, asset_class unclassified, basis NONE, facts ticker=SCGB1; node 453320103 by contrast shows display.symbol AMECX, basis TABLE, multi_asset",
+      "etf-classifications (key attribute 'ticker') holds CUSIP:808516306 multi_asset / Fixed Mix (updated_by mdpf-secclass-cusip-rows, 2026-10-04T20:15:19Z); no row keyed SCGB1 was read",
+      "holdings_snapshot.py annotate_classification passes display.symbol to classify_security; canonical_lookup(ticker) reads that one key; security_id is never read"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The packet wrote a CUSIP row for 808516306 so the node reads multi_asset.",
+  "world_is": "A CUSIP row serves only a node whose display.symbol is that CUSIP or whose symbol has its own ticker row; a Schwab node carrying a ticker the table lacks never reaches the CUSIP row. Fix options (a served-output move, so never-widen applies): a SCGB1 ticker row, or a producer fallback to CUSIP:<security_id> after the symbol misses.",
+  "notes": "Leg V closes only with this fixed or ruled. Not tested here: whether other firms hold CUSIP-only rows with the same shape; cottonwood and inflection read PASS."
+}
+```
