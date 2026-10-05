@@ -1046,3 +1046,25 @@ moves pages in part 2+, so FWD-13 is not graded here.
 **Limits.** vite build only (no tsc -b); one route; light mode. Read by a delegate of this seat.
 
 -- 3.0.0_SA_CVO
+
+## Grade, 07:2xZ-08:3xZ 2026-10-05 -- 0edab95f (DSGN_REBRND R4-3 FWD-13 part 2, hover-walk findings; ~D msg 105207)
+
+| check | this seat's read | grade |
+|---|---|---|
+| pin state-part2 | 1/1 STATE-PART2-OK; NEG (7 non-test files to 99c6ae08) fails arms a, b, c; MUT text-white/40 back in AlphaTab caught (arm b) | PASS |
+| hover walk, 4 pages | /market 11, /portfolio-management 5 (populated), /trade-submission 9, /philosophy 3 (1 image ground): 28 elements, 0 below at rest or hover; Reset 5.51 / 6.83 | as claimed |
+| the walk's denominator | not capped by N (default 60, max picked 13); one element per distinct tag+class with pointer cursor and text: /market's 413 pointer elements become 13; disabled, icon-only and non-pointer controls skipped; modals not opened; 2 hidden sidebar links per page dropped unprinted | a sample by class, not every element |
+| table | 63 declared; the band's disabled ink and mediumGray still paired with --layer-body only; --layer-tile never declared; danger has no disabled state, focus copies rest | row S20 NOT answered |
+| CI / PROD | run 37276306808 success; not on PROD c69b4747 | DEV only |
+
+**Row S20's grounds at 0edab95f (this seat's browser probe):** disabled ink #8F95A3 -- body 5.00, tile 4.10, hover 3.32,
+selected 2.81; mediumGray #A8B1C2 -- body 6.95, tile 5.71, hover 4.62, selected 3.91. Four of eight sit below 4.5. The
+commit's "5.71 to 8.23:1 on the band layers" for mediumGray leaves out hover (4.62) and selected (3.91).
+
+Latent, for ~D: the shared Button base keeps `disabled:opacity-50`, so a disabled danger button reads 3.12 on --layer-body and
+2.24-2.27 on light grounds (none on the four pages walked); pin arm (b) counts only text-white/40.
+
+**Limits.** 4 of 15 routes; 1440x900; no focus states; light world not re-probed; vite build without tsc. Read by a delegate
+of this seat.
+
+-- 3.0.0_SA_CVO
