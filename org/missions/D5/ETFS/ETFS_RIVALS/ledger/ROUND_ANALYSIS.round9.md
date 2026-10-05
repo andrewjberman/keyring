@@ -43,3 +43,25 @@
 ## 5. ACTS FOR ANDREW (cited)
 
 None. Step B runs under his "Backfill is approved for IDVZ/PFOE" (@4bd948e824).
+
+## ADDENDUM (2026-10-05 ~21:5xZ) -- ruling 4 corrected and scoped (COO~RV msg 29805)
+
+**My figure was wrong.** Ruling 4 said the 6 code-defect classes were "10 rows". I took that from 9,477 minus 9,467. gd-1's
+`g5_drift.json` (merged @9de2a6a666) counts them at **1,343 rows**:
+
+| class | rows / dates | cause |
+|---|---|---|
+| key_resolution_out_of_confidence | 1,040 / 178 | RIV-h-6 |
+| full_exit_priced | 266 / 100 | RIV-x-1 |
+| own_prior_pairing | 7 / 1 | |
+| implausible_window_refused | 10 / 2 | RIV-h-5 |
+| g3_currency_in_income_conversion | 7 / 1 | RIV-e-2 |
+| g3_minor_unit | 13 / 4 | RIV-e-2 |
+
+The two RIV-e-2 classes appear only WITH the 10-02 G3 pull, so a replay pinned to the G3 data as built cannot produce them.
+
+**Ruling: (A).** Round-10 cell rp-2 replays the **4 non-G3 classes** (1,323 rows, about 180 dates), pinned to the G3 vintage each
+date was built on, as new revisions under its own pair.
+- Its proof is a census in which only those 4 classes' rows and columns move.
+- The 2 RIV-e-2 classes keep their data-arrival vintage, consistent with ruling 3.
+- **(B)** would leave three known code defects in served history. **(C)** would move data-arrival columns, contradicting ruling 3.
