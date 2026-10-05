@@ -1823,7 +1823,27 @@ def _honour_audit_line(root, reason, log_path=None, agent=None, now=None):
         return None
 
 
+# ONE READ PER (ref, path) PER GRADING RUN. main() switches this on for a real grade; None (the default) means no
+# memo, which is what --self-test and --acceptance get, since the self-test rewrites its scratch repos between reads.
+# A grade never writes to git, so HEAD, MERGE_HEAD and the index it reads cannot change under it. ERROR is never
+# kept: a git failure is re-asked. Profile, 743-path merge, 38 channel files: 11,144 reads cost 1,125 s of 1,147 s,
+# and 8,828 of them were _seats_with_open_orders re-reading one project's task orders once per channel file.
+_BLOB_MEMO = None
+
+
 def _blob(root, ref, rel):
+    if _BLOB_MEMO is None:
+        return _blob_read(root, ref, rel)
+    key = (root, ref, rel)
+    if key not in _BLOB_MEMO:
+        got = _blob_read(root, ref, rel)
+        if got[0] == "ERROR":
+            return got
+        _BLOB_MEMO[key] = got
+    return _BLOB_MEMO[key]
+
+
+def _blob_read(root, ref, rel):
     """(status, text) of rel at ref ('' = staged index). status is one of:
          OK      -- text is the content
          ABSENT  -- the path does not exist at that ref (a NEW file, or not staged)
@@ -3595,6 +3615,8 @@ def main(argv):
               "(denominator: %d dispatched path(s))." % len(files))
         return 0
 
+    global _BLOB_MEMO
+    _BLOB_MEMO = {}
     all_v, all_notes = [], []
     for rel in targets:
         v, notes = check_file(root, rel)
