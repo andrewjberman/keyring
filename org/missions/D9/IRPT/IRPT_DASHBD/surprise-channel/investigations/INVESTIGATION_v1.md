@@ -1505,3 +1505,30 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-W9-S3 -- Amendment 1's ROUTED_ELSEWHERE rows leave two out-of-grant contract tests red on no_handler_at_head == total - declared
+
+
+```json
+{
+  "id": "IRPT_DASHBD-W9-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~9",
+  "surfaced_at": "2026-10-05T08:40:00Z",
+  "one_line": "Amendment 1's ROUTED_ELSEWHERE rows leave two out-of-grant contract tests red: both assert _denominator.no_handler_at_head == total - declared, which counts every non-DECLARED row as handler-less.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "spec_asserts": "Amendment 1: the two reporting rows take status ROUTED_ELSEWHERE and _denominator states routed-here 19 + routed-elsewhere 2 = 21; the order's refusal clause says a test outside the grant is not edited but filed.",
+  "world_is": "infra/aws/lambda/investor-reporting/_contracts/test_owned_request_contracts.py:62 and _contracts/test_upload_contract.py:65 assert contract['_denominator']['no_handler_at_head'] == len(rows) - len(declared). With 21 rows, 19 DECLARED and 2 ROUTED_ELSEWHERE that right side is 2, while the two rows HAVE a handler and the file states no_handler_at_head 0 (setting it to 2 would be false). Both tests fail 'assert 0 == (21 - 19)'; they passed with the rows DECLARED. The fix is an edit to those two assertions (subtract ROUTED_ELSEWHERE rows) or a ruling that no_handler_at_head counts them; neither is in the grant. test_seam_paired.py passes (63 passed) and the census passes (9 passed), so DB15-1-AC1/AC2/AC3 and DB-GUARD are unaffected. Separately, running _authz and _contracts in ONE pytest process fails test_seam_paired[performance-report] on ImportError 'LiveTransport' from 'transport' (a module-name collision between the two suites' sys.path entries); each suite alone is clean of it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest -q _contracts in infra/aws/lambda/investor-reporting -> '2 failed, 183 passed' (test_public_routes_are_declared_against_the_installed_status_handler; test_route_denominators_are_measured_and_upload_is_declared_against_generate), both 'assert 0 == (21 - 19)'",
+      "_contracts/test_owned_request_contracts.py:60-62 and _contracts/test_upload_contract.py:62-65 read at the worker worktree HEAD"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
