@@ -17946,3 +17946,32 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "RULED: no vendoring; orders name PATH terraform and .tools/safe-apply.sh. The rule applies to every order cut from now."
 }
 ```
+
+## IRPT_BCKEND-S329 -- DISARM of S326: the request history is served newest first; Y-2 is first on the route and the page
+
+```json
+{
+  "id": "IRPT_BCKEND-S329",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-05T04:48:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARM of IRPT_BCKEND-S326: irpt-status serves the request history newest first (read whole, bounded at 2000; accepted_at descending; the cursor contract unchanged) since 04:18:20Z; Y-2's REQ-c1b53772 is first on the route and on the page",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "fix 44cc631396 (merged 80a79a7462); packet blob 2ed731d890 @41459ca2f5; CTO half batch 253 @4bbe1bd830 (condition met: HISTORY_TOO_LARGE answers INVALID_INPUT at the boundary, never UNEXPECTED)",
+      "D1: before-read XPta1UMJ.., ONE safe-apply (0/1/0), after-read 04:18:20Z jhGc2J4Q5EesJgnLq8EzdE5ErrZLbyqnJ8m00R7CgdE= Successful; recorder @e805bb727a",
+      "V1 route: IRPT_MVP_Y/S326/V1_HISTORY_READ_COTTONWOOD.json @202da5f5dc (REQ-c1b53772 first, 30 unique rows newest first); V1 page: 2.0.0_SA_COO~D msg 105156 (position 1 of 25, Ready)",
+      "ledger irpt-s326-history-20261005 CLOSED (U1, D1, V1)"
+    ]
+  },
+  "dismissal_reason": "The page's request list now carries the firm's newest requests first; the defect the row names (the newest request never listed past 25) is measured gone on the route and on the page.",
+  "spec_asserts": "IRPT_BCKEND-S326: the request history pages by id, so the newest request never lists.",
+  "world_is": "MEASURED: Y-2's request is first on the served route and on the page."
+}
+```
