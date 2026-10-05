@@ -3653,6 +3653,166 @@
     "spec_asserts": "Every new read or write ships with its grant (rule 30: the stack's grants come from gen_policies); the package tests are independent of an operational switch.",
     "world_is": "The served page is intact (it reads the prior holding_contribution object), but every holding_contribution build fails until the grant lands, and tomorrow's page day has no prior object to fall back on; the sweep's security_universe step would fail the same way. Remedy (issuer drain repair): gen_policies grants Get+List on gold/security_names and Put+Get+List on gold/security_universe to the publish-page stage (so the daily union), regenerated policies; holding_contribution treats an unreadable names table as no stored names; a test conftest pins every test to an all-off gate file. Deploy under a pair before the 2026-10-06 publish, then one refresh republish.",
     "notes": "The issuer's own miss at the round-9 cut (nm-3 and su-2 orders named no IAM path) and at the D12 flip (the suite was not re-run after it). disarm_owner 2.0.0_SA_COO~RV."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S32",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-05T21:52Z",
+    "one_line": "Cites ETFS_RIVALS-Z-W3-S11: CLOSED -- remediated in code (round-9 analysis ruling 5, C-S41; triage deliverables/2.0.0_SA_COO~RV/round9/STALE_ROWS_TRIAGE.md @f70677780a).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "enrichment_bloomberg.py:80 requests DVD_CRNCY beside DVD_HIST_ALL (plan fields :11); gold_trade_schedule.py:170 takes the G3 `currency` first, labelled g3"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Every open remediation row of the project is cut, closed or names its blocker (C-S41).",
+    "world_is": "Close the remediation row: the remedy is live in the deployed code (round 9 pin 8ba7b13b90 and later).",
+    "notes": "Cites ETFS_RIVALS-Z-W3-S11. The row's disposition stays the CVO's."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S33",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-05T21:52Z",
+    "one_line": "Cites ETFS_RIVALS-Z-S14: CUT -- the history depth rides the capacity budget (round-9 analysis ruling 5, C-S41; triage deliverables/2.0.0_SA_COO~RV/round9/STALE_ROWS_TRIAGE.md @f70677780a).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "served 10-05 holding_contribution: g4_tri 897-973 security rows priced from G4 (was 0 at 10-01); G4 holds 3 dates; RIV-cb-1's budget is live (8ba7b13b90)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Every open remediation row of the project is cut, closed or names its blocker (C-S41).",
+    "world_is": "The rankings price from G4 where it exists; the G4 history pull is blocked until the Terminal's capacity returns and then runs inside the cb-1 budget in daily slices (Z-S24).",
+    "notes": "Cites ETFS_RIVALS-Z-S14. The row's disposition stays the CVO's."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S34",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-05T21:52Z",
+    "one_line": "Cites ETFS_RIVALS-Z-S13: BLOCKED -- a never-widen config change not yet cut (round-9 analysis ruling 5, C-S41; triage deliverables/2.0.0_SA_COO~RV/round9/STALE_ROWS_TRIAGE.md @f70677780a).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "guardrails_config.json thresholds.min_resolved_fraction.value.issuer = 0.23, a scalar (last change 3c7177004e, round 6)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Every open remediation row of the project is cut, closed or names its blocker (C-S41).",
+    "world_is": "Per-fund issuer floors {BASG, GQGU} = round_down_2dp(resolved fraction - 2/n) need a served config change under a pair; blocker: not on the round-10 list; owner 2.0.0_SA_COO~RV proposes it for the next round's repair cell.",
+    "notes": "Cites ETFS_RIVALS-Z-S13. The row's disposition stays the CVO's."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S35",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-05T21:52Z",
+    "one_line": "Cites ETFS_RIVALS-Z-W3-S12: PARKED -- no failing case (round-9 analysis ruling 5, C-S41; triage deliverables/2.0.0_SA_COO~RV/round9/STALE_ROWS_TRIAGE.md @f70677780a).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "no spinoff, rights or warrant action on a universe security inside a page window since the row; G3 carries DVD_HIST_ALL types only"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Every open remediation row of the project is cut, closed or names its blocker (C-S41).",
+    "world_is": "Un-park condition: such an action appears in G3 for a held security; owner 1.0.0_SA_CTO~Z.",
+    "notes": "Cites ETFS_RIVALS-Z-W3-S12. The row's disposition stays the CVO's."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S36",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-05T21:52Z",
+    "one_line": "Cites ETFS_RIVALS-Z-W5-S3: RE-HOMED -- outside the ETFS_RIVALS write surface (round-9 analysis ruling 5, C-S41; triage deliverables/2.0.0_SA_COO~RV/round9/STALE_ROWS_TRIAGE.md @f70677780a).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the gateway stack's fresh-tree plan is not a file any ETFS_RIVALS order may write"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Every open remediation row of the project is cut, closed or names its blocker (C-S41).",
+    "world_is": "Owner: the gateway stack's owning lane; this project carries no act on it.",
+    "notes": "Cites ETFS_RIVALS-Z-W5-S3. The row's disposition stays the CVO's."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S37",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-05T21:52Z",
+    "one_line": "Cites ETFS_RIVALS-Z-W5-S7: RE-HOMED -- outside the ETFS_RIVALS write surface (round-9 analysis ruling 5, C-S41; triage deliverables/2.0.0_SA_COO~RV/round9/STALE_ROWS_TRIAGE.md @f70677780a).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the commit-time naming gate is a .tools file (owner 1.0.0_SA_CTO)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Every open remediation row of the project is cut, closed or names its blocker (C-S41).",
+    "world_is": "Owner 1.0.0_SA_CTO decides carve-out vs refusal; this project carries no act on it.",
+    "notes": "Cites ETFS_RIVALS-Z-W5-S7. The row's disposition stays the CVO's."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S38",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-05T21:52Z",
+    "one_line": "Cites ETFS_RIVALS-Z-W5-S14: RE-HOMED -- outside the ETFS_RIVALS write surface (round-9 analysis ruling 5, C-S41; triage deliverables/2.0.0_SA_COO~RV/round9/STALE_ROWS_TRIAGE.md @f70677780a).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the wrapper's manifest writer is not an ETFS_RIVALS path"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Every open remediation row of the project is cut, closed or names its blocker (C-S41).",
+    "world_is": "Owner: the wrapper tool's lane; this project carries no act on it.",
+    "notes": "Cites ETFS_RIVALS-Z-W5-S14. The row's disposition stays the CVO's."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S39",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-05T21:52Z",
+    "one_line": "Cites ETFS_RIVALS-Z-S7: RE-HOMED -- outside the ETFS_RIVALS write surface (round-9 analysis ruling 5, C-S41; triage deliverables/2.0.0_SA_COO~RV/round9/STALE_ROWS_TRIAGE.md @f70677780a).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "to-decomp-ref-lint.py and to-check.py are .tools files (owner 1.0.0_SA_CTO)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Every open remediation row of the project is cut, closed or names its blocker (C-S41).",
+    "world_is": "Owner 1.0.0_SA_CTO fixes the resolver before the seating limb enforces; this project carries no act on it.",
+    "notes": "Cites ETFS_RIVALS-Z-S7. The row's disposition stays the CVO's."
   }
 ]
 ```
