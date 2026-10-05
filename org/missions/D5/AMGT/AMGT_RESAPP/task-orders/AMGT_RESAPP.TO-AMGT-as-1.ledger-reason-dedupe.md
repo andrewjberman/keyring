@@ -89,3 +89,11 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-05 ~03:5xZ):** CLOSED.
+- Worker ~225: code `cb7ff2fb1a`, instance at `ce9eb1a5a8`, proof-of-spec-check VALID (rc=0) on the committed bytes.
+- AC1 PASS 3 of 3; the mutant (code reverted) fails 2 of 3. AC2 PASS c29 local: 95 names, 570 classes, 0 offenders, 0 hits.
+  AC3 PASS r68 c28 + r67 c25.
+- The forecast reason also got its article. Served by as-2.
+
+<status>complete</status>
