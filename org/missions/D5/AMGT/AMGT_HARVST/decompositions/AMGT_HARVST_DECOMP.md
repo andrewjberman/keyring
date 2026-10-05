@@ -2922,3 +2922,27 @@ Worktree recipe for ar-1: the sparse cone of section 50. Evidence folder: `deliv
 - `round45/checks/ar-1.AC3.py` base: FAIL as expected (script absent). Its grader `ar1_grade.py` over the base's served-silver
   census (`round44/aq-1.field_census.json`) reads FAIL: lost per publisher barrons 39, bbg 10, ft 9, sa 0, wsj 20.
 - `round45/checks/ar-3.AC1.py` base: PASS as expected (a bound check; 0 leaks).
+
+## 59. ROUND 46 -- the round-45 analysis enrichment list (`ledger/ROUND_ANALYSIS.round45.md` @4f01f5ab8d), 2026-10-05 ~01:0xZ
+
+Round 45 is CLOSED (CVO slug 29353, ADJUDICATION_v57 @f38cf87fbf); FWD-2 and FWD-12 are REALIZED. Board: REALIZED 8 of 17; open
+without new collection 0; open needing new collection 9 (FWD-1, 3, 7, 9, 10, 11, 13, 14, 15).
+
+Issuer `2.0.0_SA_COO~H`. Series **`as`**. Fan-out 3 of 3 chains, cap 8.
+- One worker, `~94`, on as-1.
+- Three issuer acts. L7 orders go to Tier-2 seats only (LD-0521).
+- as-1b is chained after as-1; it is the run, and it waits on the run universe.
+
+| cell | order | FWD | what | class | executes |
+|---|---|---|---|---|---|
+| `HVST-as-1` | `as-1` | FWD-7 (+ the 9 collection outcomes) | **The run's universe.** The collector's universe becomes the RANK's 191 names (pool `universe/v1/2026-09-16.json`). Every security carries `security_key` = the pool key, which is the declared-set join key that `worker.py:467` stamps as `gold_security_key`. The search identities (company, ticker, aliases, sa_symbol) are resolved with NO vendor call, and per-publisher coverage is printed. The driver's dry run plans 191 x 5 jobs. | LOCAL | worker `~94` |
+| `HVST-as-1b` | issuer act, after as-1 merges | FWD-1, 3, 7, 9, 10, 11, 13, 14, 15 | **THE collection run** (CTO ruling @a142505a06; Andrew @441338fdf7: ONE universe-scope run per publisher). Gates before the first request: 191/191 resolved, and the sa bound printed (191 x 220 = 42,020 requests at most, about 9.7 days at 4,320/day; the 2026-01-01 floor stops most names far earlier). It runs under its own never-widen pair: bronze and silver append through the uploader, plus run records. No recurring cadence and no new mechanism. | WORLD (publisher egress on Andrew's word) | `2.0.0_SA_COO~H` |
+| `HVST-as-2` | issuer act | FWD-17 (RESAPP FWD-36, routed @2db6fd3e3d ruling 2) | `chatter_window` built over the rank universe UNION RESAPP's covered set (`covered_universe.covered_security_keys()`, 95). A 0-mention name gets FWD-17's explicit zero row. It goes through the existing `window_tone build --securities-json` under a never-widen pair, with no code change. If the served table's 212 names are not all in the union, they stay in the list (GONE 0). | SERVED | `2.0.0_SA_COO~H` |
+| `HVST-as-3` | issuer act | (instrument, row Z-S85) | The named field census (`round45/ar-1.field_census.reader_rule.py`) chooses the served row through one function that uses `store.supersedes`. Plant: on barrons key 00b99ce0, the tie reads the `-r2` part (74 columns); the run_stamp rule as a mutant reads the pre-round part. | LOCAL (direct act) | `2.0.0_SA_COO~H` |
+
+Worktree recipe for as-1: the sparse cone of section 50. Evidence folder: `deliverables/2.0.0_SA_COO_H/round46/`.
+
+**Checks dry-run at the base before the cut:**
+- `round46/checks/as-1.AC2.py` base: FAIL as expected. The collector universe has 89 securities, 0 carrying `security_key`, and
+  0 of the 191 rank names are resolved.
+- `round46/checks/as-1.AC3.py` base: FAIL as expected. The driver dry run plans UNIVERSE 89, 445 PLAN lines, NETWORK CALLS 0.
