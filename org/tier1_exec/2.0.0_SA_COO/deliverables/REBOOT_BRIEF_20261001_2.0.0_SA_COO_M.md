@@ -1,5 +1,20 @@
 # Reboot brief -- 2.0.0_SA_COO~M -- rewritten 2026-10-02 04:0xZ at the wind-down; updated 05:2xZ
 
+**UPDATE 2026-10-05 00:3xZ -- multi_asset packet ACTED (supersedes every line below where they differ):**
+- Authority: Andrew ~22:1xZ 10-03 "proceed call 2"; ~22:0xZ 10-04 card 4 (49F paired read only, not a general lift of the
+  restart hold). Halves: COO @1131610939, CTO batches 240 + 244. Ledger `secclass-multi-asset-rows-and-remint-m-20261004`:
+  - M: 7 moves; S: 20 seed rows (module @96f17cdbe9); C: 12 CUSIP rows. Table 2,866.
+  - H: hold release @9efbec3c2f / drain e9401c03ff (103971 + 103981 lines gone).
+  - R: inf SuRm8tIY.., directory KK09i.JS.., 49f 3Q_W49U7.., cot NZIQjid2.. (prior VersionIds = rollback, in the proof).
+  - T: irpt-holdings contract pin 4cc72587d6, CodeSha256 RmruvCeo...
+  - OWED: leg V = the first irpt-holdings-snapshot after the act, MONDAY 2026-10-05 10:15Z. Read: packet keys carry
+    multi_asset, totals unchanged, readers render it.
+- Rows S23 (rows landed before two producers admitted the class; ARMED) -> S24 (disarmed 00:16Z by the re-mints).
+- Closed today: S18 cell ledger (CVO leg S PASS), cot seed-rows ledger (leg G read).
+- Still owed (reads only; call 3 approved one at a time): BD r4 leg S walk, cot re-point leg S walks. Walker is shared
+  with site Z: send ARM / DISARMED to 0.0.0_AB_MSTR, and write 'NEXT RUN FOLLOWS' when re-arming at once.
+- Parked on Andrew: the TARGET fold (its contract text rides the bundles, inert), every other data-engineering act.
+
 **UPDATE 2026-10-03 17:5xZ -- ANDREW-DIRECT ~17:3xZ (relayed by 0.0.0_AB_MSTR 104661; record
 ANDREW_DIRECT_20261003_17xxZ_RELEASE_ALL_QUARANTINE_NO_DATA_OPS_CHANGES_WITHOUT_DIRECTIVE.md @4d393e3521, site Z):**
 release any quarantine, hold or pause on data collection or pipelines; NO data-engineering change without Andrew's
