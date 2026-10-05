@@ -18347,3 +18347,54 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "MEASURED: irpt-ycharts-generate carries 15 unattributed members; it is held out of the release. The other 6 functions' issuer re-census matches the re-pinned members only."
 }
 ```
+
+## IRPT_BCKEND-W128-S1 -- The naming gate REFUSES the name the order fixes for the retry schedule: irpt-directory-refresh-retry is out of pattern as SCHEDULE (grammar ends in a
+
+```json
+{
+  "id": "IRPT_BCKEND-W128-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~128",
+  "surfaced_at": "2026-10-05T15:40:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The naming gate REFUSES the name the order fixes for the retry schedule: irpt-directory-refresh-retry is out of pattern as SCHEDULE (grammar ends in a cadence token); the name is kept as ordered and a registry row is proposed, not hand-typed around.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/naming-gate.py --diff <schedule.tf diff> -> 'NAMING REFUSE infra/aws/terraform/investor-reporting/directory/schedule.tf:424 irpt-directory-refresh-retry -> irpt-directory-refresh-retry-{cadence}; NEW and OUT-OF-PATTERN as SCHEDULE: REFUSE', rc=1",
+      "org/standards/NAMING_SCHEMA.json cadence.values = daily, weekly, monthly, hourly, 5min, 1min (event_form on-{event})",
+      "proposal for the issuer/CTO: either register the row irpt-directory-refresh-retry (the existing irpt-directory-refresh is itself cadence-less and predates the gate), or rename in the cadence grammar after a registry decision"
+    ]
+  },
+  "spec_asserts": "Order step 1: name irpt-directory-refresh-retry; .tools/naming-gate.py must not refuse it, and if it does a row is filed and the registry row proposed.",
+  "world_is": "MEASURED: the gate refuses the name (rc=1) with org/mcp/naming-gate.enforce present, and bash .tools/safe-commit.sh BLOCKED the schedule.tf commit (naming limb, ENFORCE mode, rc=1). The edit sits UNCOMMITTED in the worktree wk-irpt-bckend-128 with the ordered name; the only waiver kinds (an R20 ledger row in the gate carrier, or a registry row in infra/logic/registry/) are outside this order's paths, and a cadence-suffixed rename would hand-type around the registry as the order forbids. The issuer or CTO decides: register the name, or name a compliant one. IB57-1-AC1 passes on the worktree file; AC2 packet is committed; the TO stays issued and no proof instance is committed."
+}
+```
+
+## IRPT_BCKEND-W128-S2 -- latest.json is a 270-272 byte pointer with an entry_count field and no entries array, so the packet's entry_count is that field, not a recount of entr
+
+```json
+{
+  "id": "IRPT_BCKEND-W128-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~128",
+  "surfaced_at": "2026-10-05T15:41:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "latest.json is a 270-272 byte pointer with an entry_count field and no entries array, so the packet's entry_count is that field, not a recount of entries; the dated directory.json (outside the three keys the order's AWS bound allows) was not read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3api get-object --version-id on the three latest.json keys: keys as_of_business_date, directory_revision, entry_count, generated_at, key, source_completion_date; entry_count 4620 / 292 / 258",
+      "data/assets/scripts/gold/investor_reporting/directory_runner.py:880-885 builds the pointer with entry_count taken from payload['entry_count']"
+    ]
+  },
+  "spec_asserts": "Order step 2: read the object and count its entries; name the field you counted.",
+  "world_is": "MEASURED: the object read has no entries to count; the field counted is entry_count, which matches the 4,620 / 292 / 258 the order states."
+}
+```
