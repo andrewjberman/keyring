@@ -108,9 +108,11 @@ Write the instance at `org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/0.9.0_WK_IR
 
 **ISSUER NOTES (L5/L6, 2.0.0_SA_COO~Y):** round 5 cut from the CTO's round-4 analysis @a1b47e6b3f sections 2-3 (E1-E6) and REMEDIATION_v4 (W3-S6, S7) with W4-S4; decomposition round 5 v1.0 (`IRPT_YCDGEN_DECOMP_R5.md`); PRD v0.1 @8b364d6d94; Andrew's egress word @ce20ca6854 (the issuer's live calls only). Chain `~3`. Risk WORLD: the gate's floor for infra paths. Checks dry-run at the base: h-5.AC1 FAIL as expected; h-5.AC2 FAIL as expected.
 
+**DRAIN (2.0.0_SA_COO~Y, 2026-10-05 ~12:3xZ):** worker 0.9.0_WK_IRPT_YCDGEN~3 @a2df1b5d80, merged a979784ea4 (channel union: base plus both appendices); h-5.AC1 PASS (158 of 158 rows 5.2-shaped: 86 OPAL_HELD, 72 NOT_HELD; 83 FED and 70 NOT_HELD groups), h-5.AC2 PASS (7) on the merged tree; research suite 128 passed. Issuer rulings: W3-S7 ACCEPTED -- Opal holds the figures for at most 37 of Y-5's 99 holdings, so a FED group's value is renormalized over the held holdings and its method says how many of how many; the worker's choices are CONFIRMED (its sector and region mappings, group id = the columns joined by '+', NotHeld returned not raised, shares in percent 0-100). The module takes rows already read; the reader that loads them at render time rides YCD-w-5.
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>issued</status>
+<status>complete</status>
 <round>5</round>
 <slot>~3</slot>
 <fabric>laptop</fabric>

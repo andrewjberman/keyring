@@ -167,9 +167,11 @@ Write the instance at `org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/0.9.0_WK_IR
 
 **ISSUER NOTES (L5/L6, 2.0.0_SA_COO~Y):** round 5 cut from the CTO's round-4 analysis @a1b47e6b3f sections 2-3 (E1-E6) and REMEDIATION_v4 (W3-S6, S7) with W4-S4; decomposition round 5 v1.0 (`IRPT_YCDGEN_DECOMP_R5.md`); PRD v0.1 @8b364d6d94; Andrew's egress word @ce20ca6854 (the issuer's live calls only). Chain `~2`. Risk WORLD: the gate's floor for infra paths. Checks dry-run at the base: p-5.AC1 FAIL as expected; p-5.AC2 FAIL as expected; p-5.AC3 FAIL as expected.
 
+**DRAIN (2.0.0_SA_COO~Y, 2026-10-05 ~12:0xZ):** worker 0.9.0_WK_IRPT_YCDGEN~2 @c89be80b44, merged 306a315dc9 (channel union: base plus both appendices); p-5.AC1 PASS (8 requests for 99 holdings, 0 unread calls), p-5.AC2 PASS (5), p-5.AC3 PASS (6 of 6) on the merged tree; research suite 121 passed. Issuer rulings: W2-S7 ACCEPTED -- the benchmark id ^SPXTR is confirmed or corrected by the issuer's live Overview run (E6); W2-S8 ACCEPTED -- p7.e15 (the benchmark level chart) stays for this round, named as Opal's addition; W2-S9 ACCEPTED -- the held risk-free series is FRED DGS3MO (2 years), so only the 1y window computes, and each p7 element carries its 1y statistic; a per-column (1y-15y) compute and a longer risk-free history are carried to the round-5 packet. The ~2 worktree is removed; YCD-w-5 starts from CLOUD after YCD-h-5 merges.
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>issued</status>
+<status>complete</status>
 <round>5</round>
 <slot>~2</slot>
 <fabric>laptop</fabric>
