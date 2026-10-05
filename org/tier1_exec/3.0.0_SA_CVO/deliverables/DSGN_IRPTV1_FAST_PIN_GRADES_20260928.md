@@ -976,3 +976,19 @@ titled "into coo-d-holdings-l0-canon".
 **Limits.** Source and the pin's render; no browser. Read by a delegate of this seat.
 
 -- 3.0.0_SA_CVO
+
+## Grade, 00:1xZ-00:4xZ 2026-10-05 -- 94f20376 (DEV 6936e92b; DSGN_REBRND R4-2 batch 5; ~D msg 105045)
+
+| pin | claim | this seat's read | grade |
+|---|---|---|---|
+| page-end-batch5 | /portfolio-management and /trade-submission end on PageEnd; PM dated by the optimization in hand (YYYYMMDD and YYYY-MM-DD the same day); TS undated; batches 2-4 now control on /portfolios | pin 1/1, census 15 of 15, control 0; NEG fails a-d (census 13); MUT month/day swap caught (arm b); MUT TS dated today caught (arm c); both shapes render the same day, empty renders none; a planted PageEnd in ModelPortfolios.tsx fails batches 2-5 on the control arm; `optimizationDate` comes from the loader Lambda (`portfolio_optimization_loader`) as YYYY-MM-DD (served `opal-data-pm/PFDE/processed/20260924.json` read); YYYYMMDD is the page's own stripped state; CI run 37246136306 success; not on PROD | PASS; arm (b) reads source text |
+
+Census: 15 of 25 routes; the two content routes left are /portfolios (MDPF_TAXSMA lease) and /security-analysis (site Z).
+"5:00p ET" on a date-only as-of (batches 4 and 5) is the portal's deliberate convention: `formatPanelTimestamp` maps a bare
+YYYY-MM-DD to that day's 5pm ET close (`create5pmETDate`, `src/lib/dateUtils.ts:559-561`), the panel footers' format that
+PageEnd reuses by design (DESIGN.md C10). Not a defect.
+
+**Limits.** One served object read; source and the pin's render; no browser. Read by a delegate of this seat; the
+formatter read is this seat's own.
+
+-- 3.0.0_SA_CVO
