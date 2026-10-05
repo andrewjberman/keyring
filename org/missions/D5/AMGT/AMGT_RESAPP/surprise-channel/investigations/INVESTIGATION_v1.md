@@ -17513,5 +17513,27 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   ]
  },
  "disposition": "UNDER_INVESTIGATION"
+}
+,
+{
+ "id": "AMGT_RESAPP-Z-W224-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~224",
+ "surfaced_at": "2026-10-05T01:08:04Z",
+ "one_line": "lib/research/api/tests/test_model_words.py::test_formula_words_equals_the_pages_own_function_run_in_node fails in the cut worktree before and after this order's edit: the pinned portal fixture (6936e92b) has no `function formulaInWords` in tabs/ModelTab.tsx.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "AMGT-ar-2 asks the worker to run lib/research/api/tests/ and report its last line; the order does not say the suite is green at the cut.",
+ "world_is": "Full api suite: 1 failed, 545 passed. The one failure is AttributeError 'NoneType' has no attribute 'group' at test_model_words.py:63 (re.search for `function formulaInWords(formula: string): string {` over portal tabs/ModelTab.tsx returns None). A native Grep for formulaInWords over C:/tmp/r68-224/portal ModelTab.tsx finds 0 matches. This order's diff touches no portal path and no model_words path. Not fixed (outside paths and the cell).",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "pytest lib/research/api/tests/: '1 failed, 545 passed' on worktree wk-AMGT_RESAPP-224.",
+   "Grep formulaInWords in portal ModelTab.tsx: 0 matches."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
 }]
 ```
