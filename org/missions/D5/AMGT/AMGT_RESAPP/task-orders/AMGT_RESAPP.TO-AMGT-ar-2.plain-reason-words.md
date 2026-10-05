@@ -91,3 +91,12 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-05 ~01:2xZ):** CLOSED.
+- Worker ~224: commit `8d1b80de75`, proof-of-spec-check VALID (rc=0) on the committed bytes.
+- AC1 PASS 8 of 8. AC2 PASS c28 local: DE /thesis 0 and /peers 0 jargon reasons, /ledger 0 on 4 names. AC3 PASS r67 c25 and c26.
+- Two existing tests were re-pointed to the new wording.
+- Row Z-W224-S1 is the same portal-fixture test as Z-W223-S1; it is graded at the drain on the shared tree.
+- Served by ar-3.
+
+<status>complete</status>
