@@ -38,7 +38,7 @@
     "MDPF_CANON"
   ],
   "fabric_ruling": "laptop: D8 is LAPTOP by placement; Andrew named 2.0.0_SA_COO~M (laptop) for the FWD-7/8 backend. D4 (Positioning, the table's first consumer and POSN_ASTTAX's home) is SITEZ by placement, and placement attaches to a directive, never a member, so the project cannot sit under D4 on this fabric.",
-  "blocking": "L4-R: the ratified-text half (ENDPOINT + CONTRACTS) is owed by 3.0.0_SA_CVO; the brief half is admitted without a signature (brief authored by 4.0.0_SA_CRO). The COO delivery waits on ADMITTED.",
+  "blocking": "PRD v0.3 ADMITTED 2026-10-05 (ratified-text half SIGNED by 3.0.0_SA_CVO @ffb329af49; brief half is Andrew's own word): FWD-9 and FWD-10 (Rival Funds stocks in etf-classifications with history back 3 years; a routine for stocks newly entering via Opal or rival ETF trading) are cuttable now by 2.0.0_SA_COO~M as a disjoint workstream (input: ETFS_RIVALS canonical_shape holdings, then security_universe; the read grant on opal-data-etfs/rivalfunds/etfs/gold/ is a laptop cell). The multi_asset packet's leg V reads Monday 10:15Z. Previous: L4-R ratified-text half owed (met).",
   "thread_counter": 0,
   "threads": []
 }
