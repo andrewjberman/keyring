@@ -1836,3 +1836,28 @@
   "notes": "INERT (the primary tier serves 2026-10-02; pre-existing, not from 57ac37d6). Owner 2.0.0_SA_COO~D: read tickers (or retire the tier), and say whether opal-precompute-market-metrics still runs; the DEGRADED warn was added under OPAL_ANALYST.EXP1 change D."
 }
 ```
+
+## DSGN_REBRND-S19 -- the FWD-10 density instrument sees one nesting level; /market keeps 24px gaps and 8px chart-card bodies
+
+```json
+{
+  "id": "DSGN_REBRND-S19",
+  "project": "DSGN_REBRND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-05T04:55:00Z",
+  "one_line": "ui-smoke --density (the FWD-10 PROOF instrument, portal DEV 3e1aa46f) measures only the gaps between the page column's direct children and the top padding of panel bodies, so it reports 20 between / 30 inside on /market while, measured panel edge to panel edge on the same build, four vertical gaps there are still 24px (Trending to Top/Bottom and the two between the three performance tables), the four-card chart row has three 24px gaps across, and the four chart cards (Daily Cloud, Global RSI, U.S. Regime, Fear & Greed) have 8px bodies; ~D's record calls those cards inner cells. /positioning and the sparse control each keep one 24px gap.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's FWD-10 grade 2026-10-05 ~04:0xZ-04:5xZ (delegate): dist builds of fb6f5023 and 3e1aa46f at 1440x900 with rb-s-9-market, rb-s-9-attribution, r4-2 and rb-s-9-sparse; the instrument's figures equal ~D's on all eight renders; a panel edge-to-edge probe on the after build"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-10 PROOF: the inside-container and between-section spacing values read from the contract (DESIGN.md C10: 30 inside, 20 between) and measured on the render.",
+  "world_is": "The instrument sees only one nesting level, so 24px gaps and 8px card bodies inside /market's column pass it; the PROOF's 'measured on the render' holds only at the column level.",
+  "notes": "INERT (DEV only; presentation). Owner 2.0.0_SA_COO~D: measure every panel's edges (or say why a chart card is an inner cell under C10), bring /market's 24px gaps to 20, and re-run the PROOF."
+}
+```
