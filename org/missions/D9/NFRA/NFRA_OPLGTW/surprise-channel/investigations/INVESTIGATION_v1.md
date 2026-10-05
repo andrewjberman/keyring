@@ -8199,3 +8199,53 @@ name the one known failure instead of silently inheriting it.
   "world_is": "The planted check can only be exercised after the route exists, and exercising it makes the host call the AWS-owned regional ELB key endpoint once (a 4xx/network error also yields 401). It is the gateway's standard identity path, not a vendor call; named here so the issuer can strike the planted check from the verify script instead if AWS-owned public endpoints are outside the declared class."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-05T15:29Z",
+  "id": "NFRA_OPLGTW-Z-W15-S50",
+  "one_line": "OG-rl-6 C-B step 20: the floor check ht.AC2.sh hard-codes `HOST env_keys 50` (arm 2), so it FAILS 3 of 4 against the signed 51-name release although every other field it reads is true; yr.AC4 runs the same script, so AC4's `floor: ... ht.AC2 yes` cannot be met as written on ANY correct r17c deploy. The order's roll-back-at-once trigger (a floor regression, ht.AC2 named) fired on a stale constant, and the worker did NOT roll back (judgment, stated here).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/hxteams/checks/ht.AC2.sh:4 and :17 -- the header says '.env holds 50 keys' and the arm greps `^HOST env_keys 50 teams_bearer_present True teams_bearer_empty False teams_labels_ok True tax_nonempty True$`; the r17c ask/halves set .env to 51 names by design (r17/ENV_KEYS_R17B.txt), and rl4.AC1 was given a baseline override for it but ht.AC2 was not.",
+      "FILE: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~15/rl9_phaseB_verify_after.out (rl7_verify.sh after, 14:23-14:24Z): host+AFTER checks 19 of 19 PASS; rl4.AC1 (R17B baseline) 4 of 4 PASS; ht.AC2 3 of 4: `HOST env_keys 51 teams_bearer_present True teams_bearer_empty False teams_labels_ok True tax_nonempty True`, `arm 2 .env shape: FAIL`, arms 1, 3, 4 OK.",
+      "FILE: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~15/rl9_ht_AC2_env51_equivalent.out: the SAME script run verbatim through bash -c with $0 = the original path and ONE substitution, `env_keys 50` -> `env_keys 51`: SERVED ARMS 4 of 4, RESULT PASS, exit 0 (SSM 4b31d3bf). So the only difference between FAIL and PASS is that constant.",
+      "ACT: no roll-back from /c/tmp/og-rb12 was run. A roll-back to e91819e281 would also fail yr.AC4 (no descent, no 6 shipped files), so it cannot make AC4 pass; the live state is the one all three signed halves name and the T2 arms (51 names, 50 value hashes equal, new-key digest, non-owner 403 on the deployed host) all PASS. The roll-back remains one command away: DEPLOY_BASE_REF=37be3485db9a00522c55a260666f708336c918f3 HALT_ACK=1 from /c/tmp/og-rb12."
+    ]
+  },
+  "spec_asserts": "TO step 20: 'On any failure, or if rl6.AC1 regresses: roll back, re-verify, and close ROLLED BACK.' TO AC4 expect: 'floor: rl4.AC1 yes; ht.AC2 yes'. Issuer instruction: roll back at once on a floor regression, ht.AC2 named. TO step 16c/A4: .env goes from 50 to 51 names.",
+  "world_is": "ht.AC2.sh's arm 2 is a count-equality on 50, which is contradicted by the release's own signed 51-name .env, so AC4 is unmeetable as written and the roll-back trigger is ambiguous (stale constant vs regression). Fix owner (the issuer amends its own check): ht.AC2.sh arm 2 expects 51 (or takes the same RL4_ENV_KEYS_BASELINE-style override as rl4.AC1). The worker could not edit it (not in <paths>) and did not roll back; the issuer decides whether to re-order a roll-back."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-05T15:29Z",
+  "id": "NFRA_OPLGTW-Z-W15-S51",
+  "one_line": "OG-rl-6 C-B step 20: rl7_verify.sh runs rl6.AC1.sh as part of `after`, and rl6.AC1.sh reads deployed_commit from the manifest AT HEAD of the worktree, which the wrapper commits only on the release branch; so the floor's rl6.AC1 read FAILs (`served_release: False`, deployed_commit still e91819e281) until step 21's hand manifest edit is committed. A sequencing defect of the worker's own verify script, not a service regression.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~15/rl9_phaseB_verify_after.out: `--- rl6.AC1.sh ---` `deployed_commit e91819e281; host integration.py equals the release bytes: yes` `served_release: False` and every other line True (download before refused, after ok, held-only unheld 0, empty holdings refused, query unchanged, synthetic, grants_written 0, state_store_written false) RESULT: FAIL.",
+      "FILE: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r17/checks/rl6.AC1.sh reads the manifest from git HEAD (same pattern as yr.AC3 line 10); the hand edit of infra/aws/ec2/EC2_MANIFEST.json is committed in the step-21 close commit, after which rl6.AC1 is re-run (result in the proof instance)."
+    ]
+  },
+  "spec_asserts": "TO step 16 / 20: the verify script's floor includes `rl6.AC1.sh` run IMMEDIATELY after the deploy; TO step 21: the manifest is recorded by hand AFTER the verify.",
+  "world_is": "The two orderings contradict for rl6.AC1: its anchor (manifest at HEAD) does not exist until step 21. Reading it before the manifest commit is guaranteed to read served_release False on a correct deploy. Re-running it after the manifest commit is the meaningful read."
+}
+```
