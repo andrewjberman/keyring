@@ -5,10 +5,10 @@
  "project": "MDPF_SECCLASS",
  "directive": "D8",
  "fabric": "laptop",
- "prd_version": "v0.4",
+ "prd_version": "v0.5",
  "step": 4,
  "brief_ref": "docs/briefs/canonical-security-table-brief-20260929.md@87ad6973f3",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11"],
+ "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12"],
  "status": "RATIFIED"
 }
 ```
@@ -76,11 +76,13 @@ The section below carries the endpoint's outcomes verbatim.
          can tell which rule a security follows
          DONE WHEN  EXERCISED -- a reader looks up securities on the screens that follow another
                     authority and can say, for each, which rule applied and who owns it
-         ACCEPT     each declared exception names its owner and its reason; a reader of Positioning's
-                    ETF view or the Schwab firm data can tell a class that came from the shared list
-                    from one that came from the declared exception; the old quiet rules such as "treat
-                    hedges as alternatives" or "VXX is equity" are gone, not declared
-         SOURCE     brief O6 (l.68-73); section 2 below (the CTO's decision)
+         ACCEPT     each declared exception names its owner and its reason; a reader of the Schwab firm
+                    data can tell a class that came from the shared list from one that came from the
+                    declared exception; the old quiet rules such as "treat hedges as alternatives" or
+                    "VXX is equity" are gone, not declared
+         SOURCE     brief O6 (l.68-73); section 2 below (the CTO's decision); amended 2026-10-05 on
+                    Andrew's word ("consolidating sector onto this table"): Positioning's ETF view is no
+                    longer a declared exception (FWD-12)
 
   FWD-7  A security that newly appears in any firm's daily holdings gets its entry in the shared
          list on a regular schedule, before anyone has to notice it
@@ -140,6 +142,18 @@ The section below carries the endpoint's outcomes verbatim.
                     theyre cleaned up and proper capitalized in that table") and ~20:5xZ ("Yes add the AI
                     Classifier. Those can land without human review, but we want an index somewhere of
                     all those that land by AI")
+
+  FWD-12 The shared list carries each security's sector, and the Positioning page's ETF view shows
+         sector, class and sub-class from the shared list
+         DONE WHEN  EXERCISED -- the ETF view opened for one Opal ETF and its holdings' sectors read
+                    against the shared list
+         ACCEPT     every holding in an ETF's view shows the sector the shared list gives it, and the
+                    page takes no sector or class from anywhere else. The list holds no measurements
+                    about a security, only what kind of thing it is
+         SOURCE     Andrew-direct 2026-10-05 21:05Z ("I am ok with consolidating sector onto this table.
+                    The question at that point isw whether the characteristics would need to be handled
+                    here as well, which I'd prefer they were not"); his word at the 4.0.0_SA_CRO terminal
+                    ~20:4xZ ("consistently using ONLY the canonical ETFClassifier table")
 
 ```
 
@@ -392,3 +406,39 @@ spec and decomposition stay frozen.
 
 **Sign-off:** an ENDPOINT change, so `3.0.0_SA_CVO` re-signs the ratified-text half. The brief half: Andrew's own word, recorded
 at this seat, so no CRO brief precedes it.
+
+## ADDENDUM v0.5 (1.0.0_SA_CTO, clock read 21:06Z 2026-10-05) -- an ENDPOINT change: FWD-6 amended in place, FWD-12 added
+
+**Word:** `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261005_2105Z_SECTOR_CONSOLIDATED_ONTO_THE_TABLE_CHARACTERISTICS_NOT.md`,
+and his word at the `4.0.0_SA_CRO` terminal
+(`org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261005_204xZ_HOLDINGS_SURFACES_ONLY_CANONICAL_ETFCLASSIFIER_TABLE.md`).
+The check behind it: `docs/briefs/holdings-surfaces-canonical-classifier-check-20261005.md` @35859eb97d, placed by
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20261005_2056Z_HOLDINGS_SURFACES_CANONICAL_ONLY_INTO_MDPF_SECCLASS.md`.
+
+**What changed and why (endpoint re-entry):**
+- FWD-6 was WRONG in one member: it named Positioning's ETF view as a declared exception. Andrew's "ONLY" removes it. FWD-6 is
+  amended in place, id unchanged; the Schwab firm data stays a declared exception, since no word of his names it.
+- FWD-12 is added at the next unused number. No outcome is retired.
+
+**Read by this seat (measured):** `data/etfs/scripts/gold/etf_positioning_gold.py:986-1009` and `:1208-1219`. The ETF producer
+takes each holding's `GICS_SECTOR_NAME` from the daily Bloomberg characteristics file and serves it as `sub_asset_class`, accepted
+only if it is one of the 11 adopted names (`:121-150`); `asset_class` comes from the cash flag. The table has no sector field:
+its equity `sub_asset_class` mixes ten GICS names with size and region labels (`2.0.0_SA_COO~M`'s scan @73a3c60af8).
+
+**Contract notes (bind the next round's cells):**
+- **C-SECTOR (new).** One new attribute on `etf-classifications`, its name and closed values declared as data in
+  `org/standards/MDPF_SECCLASS_CONTRACT.json` with the four-postulate record and a token census (rule 24). It is NOT the legacy
+  `sector` attribute (179 seed rows of another grain), which keeps its bytes. Its values are the 11 names the ETF producer
+  already adopts, so the page's vocabulary does not change. `sub_asset_class` is not rewritten by this change.
+- **The writer.** The Bloomberg characteristics file is an INPUT: a scheduled writer copies `GICS_SECTOR_NAME` onto the security's
+  row. A correction is made in the seed source and wins, as for every field (C-WRITER).
+- **C-NOCHAR (new; Andrew's preference).** No measurement enters the table: no ratio, market value, yield, duration, beta or
+  price. The characteristics file keeps its home and its readers. The table says what kind of thing a security is.
+- **C-DEPARTURE** loses its Positioning member when FWD-12's move lands; until then it stands as written.
+- **The move is a served-output move** (C-SERVED): per ETF, the sector of every holding is listed before and read after, and
+  delta 0 is the expected read. A holding the table lacks is added first (FWD-9, FWD-10, FWD-11), never shown blank.
+- **Not decided:** the ETF view's finer level, `industry_group`, stays on its current path until Andrew says.
+
+**Placement:** the next MDPF_SECCLASS round. The current round's spec and decomposition stay frozen.
+
+**Sign-off:** an ENDPOINT change, so `3.0.0_SA_CVO` re-signs the ratified-text half. The brief half: Andrew's own word.
