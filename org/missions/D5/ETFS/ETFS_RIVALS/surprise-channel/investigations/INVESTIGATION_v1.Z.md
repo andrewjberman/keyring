@@ -3253,6 +3253,29 @@
     "spec_asserts": "PRD v0.8: IDVZ and PFOE join the Bloomberg leg's daily queue and its history backfill; ACWI and IWM are the groups' index controls; before the first scheduled fire with the four new names the issuer measures the leg's request cost, and a measured breach STOPs and is rowed. Andrew-direct ~20:3xZ 2026-10-03 card 6: resume I-2 (D12, D13).",
     "world_is": "Measured breach: the controls alone are about 2x the leg's per-query cap, and the overflow is fatal to the whole leg, not to the two names. The gate is also all-or-nothing, so the cheap half (IDVZ/PFOE, 69 rows/day) cannot go live without the heavy half. Not yet measured: the downstream cost of ~4,200 more lines per day through silver, G1, A1 and the page (1.89 of 2.10 MB today), and the G4 market pull if the controls' ~4,000 constituents join it (the plan holds 601 securities). I-2 STOPS at the gate: no flip, no backfill, until a round-8 cell lands.",
     "notes": "Remedy (round-8 cell lg-1, collector_bloomberg.py + universe.py): query an index control on its own per date with a cap sized from this measurement (and a range read that never truncates silently), make an overflow a per-name partial rather than a leg crash, and split the gate so D12 (home funds) and D13 (controls) switch independently; then the issuer's backfill acts run under their pairs. Hazard ARMED because anyone flipping the gate today breaks the existing daily leg; it disarms when lg-1 deploys. A YTD backfill of the controls is ~800k rows at ~15 s per date: its Bloomberg budget threshold is not defined in integrations/bloomberg/READ_HERE.md (only the 2-attempt sign-in budget is), so the cell's pair names one."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S21",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-05T06:45Z",
+    "one_line": "lg-1's control path fails on the real Bloomberg Excel: reading sh.Range('A1:Z%d' % CONTROL_ROW_CAP).Value (10,000 rows) raised pywintypes.com_error -2147352566 on the first D13 backfill chunk (2026-01-02..01-30, ACWI+IWM), and the error escaped _handler_entry as a traceback -- the fake-COM check (lg-1.AC1) cannot see either.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/tmp/bbg_backfill_d13_stepA.log (first run, 06:37Z): traceback at collector_bloomberg.py:444 `vals = com(lambda: sh.Range(\"A1:Z%d\" % cap).Value)` -> pywintypes.com_error (-2147352567, 'Exception occurred.', (0, None, None, None, 0, -2147352566)); worktree C:/tmp/wk-riv-r8-4 @481d101ab1; local sink, nothing written to S3",
+        "scratch copy with the read bounded to the used rows (`A1:Z%d % max(used, 1)`): 2026-01-02 ACWI 2,283 + IWM 1,957 rows, status OK (same Terminal, same session)",
+        "row ETFS_RIVALS-Z-S20 evidence: the 10-03 measurement read A1:Z20000 for one date without error, so the over-sized read is the likely, not the proven, cause"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-lg-1 (decomposition round 8 A): an index_control fund is queried on its own under a cap >= 2,500 and < 50,000; the range read never truncates silently; an overflow is a per-name partial, never a leg crash.",
+    "world_is": "Against real Excel the control read fails and crashes the backfill run. Daily runs are not exposed while D13 is off (rivals still read A1:Z2000 as at the deployed pin). Remedy: read only the used rows and turn a COM error on one unit into that unit's `unfetched` partial; add both to lg-1.AC1's fake (a read past UsedRange raises; a planted COM error is a partial).",
+    "notes": "Found by the issuer's D13 Step A (local-only pull, CTO~Z budget ruling msg 29445). The interim fix runs from a scratch copy for the local pull only; the repo change goes through an lg-1 amendment before the merge. Shared append-only file: committed on the shared index."
   }
 ]
 ```
