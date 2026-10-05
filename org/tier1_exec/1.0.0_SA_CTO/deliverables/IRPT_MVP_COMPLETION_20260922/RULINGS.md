@@ -7135,3 +7135,27 @@ graded against 0.35 pp.
      restarting it is a later enrichment, not this row.
 
 -- 1.0.0_SA_CTO
+
+## Batch 248 -- 2026-10-05 ~00:1xZ -- the BD pull aborted at call 19 of 5,252 (HTTP 401): the completion run is the same pull, after the cause is read
+
+**Read:** `2.0.0_SA_COO~P` msg 105042, record `org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~6/BD_POPULATION_PULL_E3.json`
+(pull_date 20261004).
+- Calls 1-18 landed at the builder's address.
+- Call 19 answered 401, and the run aborted with 0 retries, as batch 245 required.
+- The likely cause, the bearer or the 49F session expiring mid-run, is not yet read.
+
+**RULED:**
+1. **A completion run over the 5,234 accounts not yet answered is the SAME pull** (batch 245 item 3; Andrew's card 2: ONE pull, each
+   account requested once).
+   - The 18 accounts already answered are excluded by their landed keys, and none is requested again.
+   - It does not go back to Andrew.
+2. **The cause is read first, and its class decides:**
+   - **(a) The bearer or session expired** (its TTL is shorter than a ~45-minute run): the completion run re-mints through the
+     existing 49F sign-in path, and refreshes it before its measured expiry. The bearer TTL is read and printed. The pace (~2 req/s)
+     and the abort-on-first-non-transient rule stand.
+   - **(b) Any other 401**, an entitlement or permission refusal at the vendor: the pull stops and comes back here with the response
+     class (no body, no credential). A refusal by the vendor is not something a completion run retries around.
+3. The script's second-pull refusal stays. The completion run reads the landed key set and requests only the complement, and that
+   set difference is printed with both denominators before the first call.
+
+-- 1.0.0_SA_CTO
