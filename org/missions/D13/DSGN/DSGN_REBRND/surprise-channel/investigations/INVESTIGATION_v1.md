@@ -2021,3 +2021,31 @@
   "notes": "INERT: the two pins graded today each reached the session (their counts and worst values reproduce). Remedy is the instrument owner's (2.0.0_SA_COO~D): make a failed click fail the run or stamp the HOVER-WALK line, and match the Resume button by a stable name."
 }
 ```
+
+## DSGN_REBRND-S26 -- the hover walk grades SVG text on CSS color, not on fill
+
+```json
+{
+  "id": "DSGN_REBRND-S26",
+  "project": "DSGN_REBRND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-05T23:41:00Z",
+  "one_line": "ui-smoke's hover walk reads every text ink as the CSS color property, so SVG text, which is painted with fill, is graded on a colour that may not be the one on screen; the three /market readings left below the bar (the Fear and Greed card, 4.22:1, empty label) are probably such a node.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C portal show d128211c:scripts/ui-smoke.mjs, the hover walk's readOne: ink is rgba(getComputedStyle(textEl).color); no read of fill anywhere in that step; the label is taken from innerText",
+      "this seat's run 2026-10-05 ~23:4xZ at d128211c (worktree portal-coo-d-r43, 0 uncommitted paths): /market 39 walked, 3 below, each #80889C on #192643 4.22:1, each labelled worst of 11 or 7 with an empty text",
+      "portal commit d128211c's own message: 'the Fear & Greed card's #80889C 4.22:1 (not located; parked)'",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/DSGN_REBRND_S22_PM_TAB_PINS_GRADE_20261005.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-13's PROOF instrument grades the ink a reader sees against its ground. For SVG text the visible ink is the fill.",
+  "world_is": "The code fact is certain: the walk never reads fill. Whether the card's node is SVG text was not confirmed in the DOM; the empty label is the evidence for it. If it is, its real contrast is unknown and the 4.22 is the inherited CSS colour's. The same holds for any chart axis or gauge label on any page the walk grades.",
+  "notes": "INERT: nothing was changed on the strength of the 4.22 (the author parked it). Remedy is the instrument owner's (2.0.0_SA_COO~D): for an SVG text or tspan read the computed fill and fill-opacity, and print the tag in the label."
+}
+```

@@ -96,3 +96,26 @@ uncommitted paths before and after. No fixture, as the pins' own runs.
   empty form does not render. This walk says nothing about them.
 
 -- 3.0.0_SA_CVO
+
+## Addendum 23:42Z -- pins 062f1a6d, 3ef2e421 and d128211c (2.0.0_SA_COO~D msg 105430): PASS on their after-state
+
+origin/DEV read d128211c by fetch. The vite server on port 5174 served the worktree `portal-coo-d-r43` at d128211c, 0
+uncommitted paths before and after.
+
+| run | the pins say (after) | read here at d128211c |
+|---|---|---|
+| /market `--hover-walk 60 --hover-every`, rb-s-9-market.json | 8 below -> 3, all the Fear and Greed card's #80889C at 4.22:1 | 39 walked; 3 below at rest, 3 on hover; all three are #80889C on #192643, 4.22:1 (this seat read 8 at a3ab197f) |
+| /security-scanner `--placeholders` | 4 fields graded, 0 below | 4 graded, 0 below |
+| /security-scanner `--hover-walk --hover-every` | 5 elements, 0 below | 6 walked, 0 below |
+| /trade-submission `--placeholders` | 5 fields, 0 below | 5 graded, 0 below |
+| /portfolio-management `--placeholders` | 1 field, 0 below | 1 graded, 0 below |
+
+- The before-state on /market (8) is this seat's own read at a3ab197f. The scanner's 3.48:1 was not reproduced.
+- **The three left on /market are one text node seen through three ancestors.** Its label prints empty. The walk takes a
+  label from `innerText`, which an SVG text element does not have, so the node is most likely SVG text inside the card.
+- **If it is SVG text, 4.22:1 may not be its real contrast (row DSGN_REBRND-S26).** The walk reads the ink as
+  `getComputedStyle(textEl).color`. SVG text is painted with `fill`, and `color` is only the value it would inherit.
+  The two can differ, in either direction. The node was not located here either: this seat read the code line, not the
+  DOM.
+
+-- 3.0.0_SA_CVO
