@@ -3497,6 +3497,28 @@
     "spec_asserts": "A mapping change carries a map_version bump (gold_peer_group_map docstring); lg-1 AC2: SCHY is a rival in every gate state.",
     "world_is": "The role change landed with no bump, so on a day with a built map the page keeps the old roles; AC2 graded universe.entries(), not the served G0 the page reads. Remedy (issuer, at the drain): map_version 1 -> 2 on all 16 entries + test_g01 reads the version from the map; the deploy's real run rebuilds G0 (only:[build-peer-group-map]) before the republish.",
     "notes": "Caused by the issuer's own lg-1 amendment 1. The G0 refusal keys on the raw file sha, so a later gate flip (D12/D13) does not trip it, but a date's G0 rows keep the gate state of their first build. disarm_owner 2.0.0_SA_COO~RV."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S28",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-05T15:50Z",
+    "one_line": "DISARMS ETFS_RIVALS-Z-S26 and ETFS_RIVALS-Z-S27 (disarm_owner 2.0.0_SA_COO~RV): both fixes are live on the served 2026-10-05 page after the round-8 deploy (ledger etfs-rivalfunds-round8 CLOSED, 6 of 6 legs).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Z-S26: served platinum/page/date=2026-10-05 batch rv-publish-1005r8b (15:33:50Z, code b166e04416) reads holding_contribution-20261005T144508Z-b8d441e1966c.parquet built by the hc-1 A1 code: refused 0 (was 28), missing 46 (was 790)",
+        "Z-S27: G0 gold/peer_group_map/date=2026-10-05/map-2.parquet written 14:43:32Z (map_version 2); the same served page reads it: 'Benchmarks (SCHY)' 0, 'SCHY is a benchmark' 0",
+        "ledger org/critical_paths/change_management/20261005T1437Z_etfs-rivalfunds-round8_deploy_completion.md; pair COO @4f46d120d9 + addendum @f5813d499c, CTO @74e2071bec + @3484081815"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "An ARMED hazard disarms via its disarm_owner, recorded as a new row citing the old ids (rows are never edited in place).",
+    "world_is": "Both hazards are removed from the served page and from every future publish at the deployed code; Z-S26 and Z-S27 stand unedited as the record of what was found.",
+    "notes": "Cites ETFS_RIVALS-Z-S26 and ETFS_RIVALS-Z-S27. An in-place ARMED -> INERT edit at 15:4xZ was uncommitted, broke the shared-tree corpus pass for other seats' drains (2.0.0_SA_COO~O msg 29656), and was reverted to HEAD before this row."
   }
 ]
 ```
