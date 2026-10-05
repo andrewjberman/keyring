@@ -3366,6 +3366,26 @@
     "spec_asserts": "The 07:00 ET vehicle refreshes the OPAL_BBGTML models and the rivalfunds G4 daily; a backfill never starves production.",
     "world_is": "Production is starved by an issuer act: the models dashboard has no 10-02 vintage today, and the G4 reader picks an empty revision. Also: enrichment_bloomberg wrote an empty G4 as a successful landing (status OK, 601 security_errors) -- a producer-side gap (an all-error pull should not land as the newest revision). Remedies: (1) MSTR~Z re-runs scheduled_daily_pull.cmd when the capacity returns (the probe's first OK); (2) the G4 shadow -- card to CTO~Z msg 29538 (re-put the 10-04 bytes as a newer key) or a republish after a fresh enrichment; (3) a later cell: enrichment refuses to land an all-error G4.",
     "notes": "The issuer's own act caused this: ~170k rows of local backfill pulls between 05:30Z and 07:06Z on the Terminal production depends on. disarm_owner 2.0.0_SA_COO~RV."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W4-S18",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~4",
+    "surfaced_at": "2026-10-04T21:45Z",
+    "one_line": "RIV-lg-1: a day whose ONLY fund is an overflowing control lands no OK capture, so the leg reads FAILED/exit 3, not PARTIAL/exit 2",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/collector_bloomberg.py@f8124d0969: _merge_parts yields rows=[] for a date whose only unit overflowed; land_capture analyzes it as NO-ROWS; _finish reports FAILED when n_ok == 0, and exit_code maps FAILED to 3",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round8/checks/lg-1.AC1.py (c) covers the overflow only BESIDE landed rivals (PARTIAL)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Task order RIV-lg-1 section 2: an overflow on one name is exit 2, never a traceback.",
+    "world_is": "Never a traceback, and beside any landed fund it is PARTIAL / exit 2. When the plan for the day holds only the overflowing control (a controls-only backfill date), no capture is OK, so the batch is FAILED and the exit is 3 (nothing landed as OK), with the fund named in detail.failures. _finish and exit_code are outside this order's paths in intent (status semantics for every leg); not changed."
   }
 ]
 ```
