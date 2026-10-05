@@ -1767,3 +1767,59 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Not changed by this cell. The CTO can ask for the 7 to be dropped from the write set (or written as fund / cash) before the half is signed. Non-US BLOOMBERG rows were not scanned for funds; the input gives no fund flag."
 }
 ```
+
+
+## MDPF_SECCLASS-W14-S4 -- Writer precondition (a) reads NOT MET because R7_BBG_READER_CENSUS_20261005.json holds no crashes, refuses, miskeys or f
+
+```json
+{
+  "id": "MDPF_SECCLASS-W14-S4",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~14",
+  "surfaced_at": "2026-10-05T11:30Z",
+  "one_line": "Writer precondition (a) reads NOT MET because R7_BBG_READER_CENSUS_20261005.json holds no crashes, refuses, miskeys or fails_contract keys, not because any is non-zero.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "r7_fwd9_write.py dry run 2026-10-05: PRECONDITION (a) NOT MET: census not clean: crashes missing, refuses missing, miskeys missing, fails_contract missing",
+      "the census file at 8f547ee6f5 has top-level keys what, bbg_rows, readers, denominator, search, search_scope, comp_find_at_build, not_readers; it records 45 readers with one verdict each and no four-zero counters",
+      "precondition (b) now reads MET: org/standards/MDPF_SECCLASS_CONTRACT.json line 30 lists BLOOMBERG in identifier_namespace values"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "This order's build item 3(a): the SC-e-16 census has crashes, refuses, miskeys and fails_contract all 0.",
+  "world_is": "The committed census carries per-reader verdicts, not those four counters, so the check cannot read them. The writer refuses --write until the census carries the four fields (or the check is re-pointed at the verdict list).",
+  "notes": "Fail-closed as designed; nothing was weakened. The issuer decides whether SC-e-16 adds the four counters or the check reads the verdicts."
+}
+```
+
+
+## MDPF_SECCLASS-W14-S5 -- Under the batch 259 yellow-key rule, 192 securities with no Bloomberg id (real stocks keyed only by security_ticker) and
+
+```json
+{
+  "id": "MDPF_SECCLASS-W14-S5",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~14",
+  "surfaced_at": "2026-10-05T11:30Z",
+  "one_line": "Under the batch 259 yellow-key rule, 192 securities with no Bloomberg id (real stocks keyed only by security_ticker) and 2 with a bare 'US' key (HAL US, VLO US) stay OUT; 7 of them have no table row.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "r7_fwd9_row_set.py AC2 run: FWD9-OUT reason=no parseable Bloomberg identifier n=192; FWD9-OUT reason=yellow key US (Q4 needs Equity); provider_security_type=empty n=2",
+      "the 192 are NOBBG:<ticker> securities (asset_class Equity, long, security_ticker and cusip present, security_bloomberg empty); 112 of them match no planned key, 105 of those already have a table row, 7 have none: BRK/B CRWV EPAM FPS MDLN ORI SLDE",
+      "HAL US (HALLIBURTON CO) and VLO US (VALERO ENERGY CORP): the yellow key position holds the exchange code, 11 days each"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Batch 259 section 2: an empty provider type with any other yellow key stays OUT and the OUT reason names the key.",
+  "world_is": "A record with no security_bloomberg has no yellow key; the module reports it as 'no parseable Bloomberg identifier'. The 7 listed stocks cannot be written under the ruled rule.",
+  "notes": "Applied as ruled; not widened. The CTO can rule a security_ticker fallback key for a record with no Bloomberg id if the 7 should be written."
+}
+```
