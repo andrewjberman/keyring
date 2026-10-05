@@ -72,9 +72,11 @@ Write the instance at `org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/0.9.0_WK_IR
 
 **ISSUER NOTES (L5/L6, 2.0.0_SA_COO~Y):** round 6 cut from PRD v0.5 @e6a801f7f0 section 2 (the thread) and IRPT_BCKEND PRD v0.28 @3a8950aa20 items 29-31; CTO ruling msg 105387 (all cells in one issuance); decomposition round 6 revision 1.0 (`IRPT_YCDGEN_DECOMP_R6.md`). Chain `~1`, third order; starts after a-6 is merged. The never-widen half for the resident worker release goes to the CTO at the drain (msg 105387). Risk WORLD: the gate's floor for infra paths and portal product files; nothing live moves inside the cell.
 
+**DRAIN (2.0.0_SA_COO~Y, 2026-10-05 ~23:3xZ):** worker 0.9.0_WK_IRPT_YCDGEN~1 @8ec25b2a33, merged 3b16f00db3; d-6.AC1-AC6 PASS on the merged tree (AC5: 53 passed, 8 skipped, the 8 skips pre-existing; AC4: 4 passed), instance VALID; the AC6 test fails with a KeyError when the new Opal reopen branch is disabled, so it exercises the W3-S9 fix. The allow list `OPAL_PRODUCER_PRINCIPALS` holds the inert placeholder `PRINCIPAL_ID_TO_BE_SET_BY_ISSUER`; the issuer sets Andrew's principal id at release, AFTER cell YCD-k-6. Rows: W3-S9 DISARMED by this cell. W1-S11 ARMED (the installer does not pass `opal_stores`; a listed principal's job raises OPAL_STORES_REQUIRED) -> DISARMED by cell YCD-k-6 (addendum C, with W3-S15). W1-S12 INERT, accepted (capture port for persist; request_ref and attempt_id shape; ProducerRefused ends the job as ATTENTION OPAL_PRODUCER_REFUSED; a retained pdf checkpoint skips the producer on redelivery; the reopen branches on provenance.provider). The worker added OPAL_REPORT_PDF to the world fixture's family loop in its test: a test fixture change, consistent with i-6's registry row.
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>issued</status>
+<status>complete</status>
 <round>6</round>
 <slot>~1</slot>
 <fabric>laptop</fabric>

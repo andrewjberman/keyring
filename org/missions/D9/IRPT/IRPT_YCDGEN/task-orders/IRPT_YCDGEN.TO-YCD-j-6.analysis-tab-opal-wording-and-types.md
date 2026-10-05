@@ -73,9 +73,11 @@ Write the instance at `org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/0.9.0_WK_IR
 
 **ISSUER NOTES (L5/L6, 2.0.0_SA_COO~Y):** round 6 cut from PRD v0.5 @e6a801f7f0 section 2 (the thread) and IRPT_BCKEND PRD v0.28 @3a8950aa20 items 29-31; CTO ruling msg 105387 (all cells in one issuance); decomposition round 6 revision 1.0 (`IRPT_YCDGEN_DECOMP_R6.md`). Chain `~4`, first order; addendum B cell (decomposition IRPT_YCDGEN_DECOMP_R6B.md), cut by the issuer to disarm worker row W2-S14, which breaks the Opal page Andrew opens; stacked on e-6's UNLANDED portal commit 81bbeba2 (branch wk-IRPT_YCDGEN-67-portal), so e-6 and j-6 land on portal DEV together after the CTO's review. Portal submodule cell. Risk WORLD: the gate's floor for infra paths and portal product files; nothing live moves inside the cell.
 
+**DRAIN (2.0.0_SA_COO~Y, 2026-10-05 ~23:3xZ):** worker 0.9.0_WK_IRPT_YCDGEN~4 workspace @c123fcc251 merged 1785e50b03 (proof and rows); the PORTAL candidate is commit cd3924d5 on portal branch wk-IRPT_YCDGEN-70-portal, stacked on e-6's 81bbeba2, and is NOT LANDED (product files: lands on portal DEV with e-6 after 1.0.0_SA_CTO's review). j-6.AC1-AC3 PASS at the worker (opal 22 of 22 legs, v1 13 of 13, typecheck exit 0), instance VALID; the portal test baseline holds (40 pass, 11 fail, the same 11 names as unedited DEV); a v1 render compared byte-identical against 81bbeba2. Row W2-S14 DISARMED by this cell. Rows W4-S7 (the endpoints client the order named at `portal/src/pages/InvestorReporting/api/endpoints/investor-reporting.ts` is really `portal/src/api/endpoints/investor-reporting.ts`; the order's path was the issuer's error, the file is unedited, lines 1093 and 1188 still declare `send<AnalysisReportWire,...>` and typecheck through the wider union) and W4-S8 (adapt.ts sets no `provider`, so the tab recognises the Opal form from `provider` or from every section being an Opal section, and an Opal report with zero sections would render the v1 wording; `consumed.ts` is GENERATED and the hand-added WIRE_CONSUMED_OPAL_FIELDS would drop on regeneration) are INERT for FWD-1 (the Overview has sections) and are carried to the CTO as portal-contract items.
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>issued</status>
+<status>complete</status>
 <round>6</round>
 <workstream>R6B_ARTIFACTS</workstream>
 <slot>~4</slot>

@@ -79,9 +79,11 @@ Write the instance at `org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/0.9.0_WK_IR
 
 **ISSUER NOTES (L5/L6, 2.0.0_SA_COO~Y):** round 6 cut from PRD v0.5 @e6a801f7f0 section 2 (the thread) and IRPT_BCKEND PRD v0.28 @3a8950aa20 items 29-31; CTO ruling msg 105387 (all cells in one issuance); decomposition round 6 revision 1.0 (`IRPT_YCDGEN_DECOMP_R6.md`). Chain `~3`, second order (after g-6, merged); addendum B cell (decomposition IRPT_YCDGEN_DECOMP_R6B.md), cut by the issuer to disarm worker rows W3-S8 and W3-S11 (measured gaps in the live thread: no registered PDF family and a checkpoint that a full document overflows). AC2 runs in test_opal_producer.py, AC1 in test_irpt_destination.py and AC4 in test_publication_worker.py. Risk WORLD: the gate's floor for infra paths and portal product files; nothing live moves inside the cell.
 
+**DRAIN (2.0.0_SA_COO~Y, 2026-10-05 ~23:3xZ):** worker 0.9.0_WK_IRPT_YCDGEN~3 @e923e0f463, merged 14eb4d115d (investigations-file conflict resolved as a union); i-6.AC1-AC6 PASS on the merged tree (AC6: 25 passed), instance VALID; with d-6 merged the persist, worker, producer and installer tests pass together (103 passed, 8 skipped; lib test_irpt_destination 76 passed). Family OPAL_REPORT_PDF registered (table opal_report_documents); the Opal document spills unconditionally to the existing family EXTRACTION_EVIDENCE (W3-S13 INERT, accepted) and the checkpoint is {pdf_ref, census, metadata_ref, metadata_sha256}. Rows W3-S8 and W3-S11 DISARMED by this cell. W3-S15 ARMED (produce retains the PDF only when its caller injects stores['artifacts']) -> DISARMED by cell YCD-k-6. W3-S16 INERT, accepted (run.json's report.key still names the layout's S3 address where no object is written; artifact_ref is the true location). **W3-S14 ARMED, NOT DISARMED:** adding the family changed irpt-x10-v1's policy_sha256 (e0046398 to a65635d3) and reports/retention.py:108-113 refuses any retention row stored under the old digest once the deployed registry carries the new one; the registry change is NOT SHIPPED and the CTO is asked to rule (a new policy version, a migration, or acceptance) in msg 20261005T233433Z; the registry file is merged to CLOUD but deployed nowhere.
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>issued</status>
+<status>complete</status>
 <round>6</round>
 <workstream>R6B_ARTIFACTS</workstream>
 <slot>~3</slot>
