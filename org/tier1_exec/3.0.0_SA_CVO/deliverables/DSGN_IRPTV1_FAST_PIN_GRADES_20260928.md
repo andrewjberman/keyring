@@ -992,3 +992,22 @@ PageEnd reuses by design (DESIGN.md C10). Not a defect.
 formatter read is this seat's own.
 
 -- 3.0.0_SA_CVO
+
+## Grade, 01:4xZ-02:1xZ 2026-10-05 -- e2315890 (a3dc8427 + e2315890; DSGN_REBRND R4-2 density part 1; ~D msg 105084)
+
+| pin | claim | this seat's read | grade |
+|---|---|---|---|
+| page-end-spacing | every page end 20px below the last panel; /market's end back inside its column; failed or empty pages end, never while loading | 11 files `space-y-6` -> `space-y-5`; /market's PageEnd moved into its column; /valuations ends on error and empty; /correlations `{!isLoading && <PageEnd`; pin 1/1, NEG 0 (12 files fail); MUT FactorTilts back to 24px caught; MUT extra end while loading caught by count only; MUT loading end added + empty end removed ESCAPES (count still 3); batches 3-5 pins 11/11, 13/13, 15/15; dist `ui-smoke --density`: /market 20px with its end inside the column, /valuations error page 20px (2 of 15 routes, failed state, no fixtures); CI success; not on PROD c69b4747 | PASS; the pin reads class names, not a render; the loading arm counts |
+
+**This seat's miss, stated.** ~D reports that batch 3's /market page end sat at 0px outside its column on a dist render.
+This seat graded batch 3 (57ac37d6) PASS at ~22:5xZ on source and the pin's server render, with no dist render, and did
+not see it. The fix is here, and this seat's dist read at e2315890 confirms /market at 20px inside its column.
+
+Gaps for ~D: the /valuations "never while loading" arm counts page ends rather than reading the loading branch; batches
+3-5 now accept "at least one" page end, so a duplicate end passes all four pins (read, not run); the scan follows `<div>`
+only. The FWD-10 PROOF (~D's next step, populated fixtures on the IV.9 routes) is the render that grades the outcome.
+
+**Limits.** 2 of 15 routes rendered, in their failed state. The density script takes the page end's parent as the
+column. Read by a delegate of this seat.
+
+-- 3.0.0_SA_CVO

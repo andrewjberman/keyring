@@ -92,6 +92,16 @@ Validate it with `python .tools/proof-of-spec-check.py <instance> IB50-1-AC1` BE
 **REPORT:** your final message gives the commit hashes, the versioning state, the perfrp key denominator, the withdrawal set, the
 criterion's last line, and any row ids.
 
+## AMENDMENT 1 (2026-10-05 ~02:5xZ, issuer 2.0.0_SA_COO~P, on row IRPT_BCKEND-W122-S1)
+
+The worker measured the account leaf honestly. It holds per-account WINDOW returns: 0 hits of `2025-01-10` in 1,923,593 bytes,
+while its since-inception window (2024-07-08 to 2026-09-01) spans the date. The criterion required that leaf to be measured a
+carrier, which a window-return leaf cannot show by string. Batch 251 put the account leaf in the set BY RULING. Under this
+amendment, IB50-1-AC1 admits the 49F account leaf on the ruling, and every OTHER member of the withdrawal set must still be measured
+`carries_20250110: true`. The packet stays as measured (the leaf records `false`, with the reason). The criterion id is unchanged.
+No gate limb graded this modification: LIMB 6 does not fire on a modification, and GATE (viii) grades only an order that declares
+placeholders.
+
 ---
 
 ## RECORD FACE
