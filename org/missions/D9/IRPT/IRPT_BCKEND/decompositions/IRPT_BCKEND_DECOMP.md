@@ -1795,3 +1795,18 @@ build-and-upload.sh has no build-only mode, so the census cannot run before an u
 | (the release) | 10 functions under both halves: before-read stop, census, build+upload, targeted safe-apply, record, change invoke + happy-path invoke, per-function legs | SERVED | IB-pr-323 | the issuer's acts |
 
 fanout: 1 of 1 chains, cap 8, reason: one tooling cell; the release is the issuer's. Worker 0.9.0_WK_IRPT_BCKEND~126 in its own worktree.
+
+## 49. ROUND 56, WORKSTREAM ~P (2026-10-05 ~12:1xZ, issuer 2.0.0_SA_COO~P, on CTO batch 260 @7bd2946ccd)
+
+Release r54 shipped irpt-holdings-performance-lambda (handler.py, IB-pr-320). V2 proved TARGET_ALREADY_LANDED live after the 11:30Z
+landing; A2 (INF) follows the 14:00Z fire. The rest of rounds 49-53's code reaches no served function through the staged_from pins.
+The r55 re-pin plan (REPIN_PLAN_R55.json @db3b9632d3; CTO count 26 CLEAN / 10 RIDER of 36) is approved as proposed, with three
+conditions: an import smoke per function, the census attribution rule, and irpt-status stays in ~Y's lane. The issuer computed the
+plan itself: on disk 3.4 GB, no worktree fit.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-324` | the approved re-pin set in the source map + BUILD_ONLY census + import smoke per function | WORLD (carrier edit under infra/; no upload) | IB-pr-323 (merged) | P56 |
+| (the release) | a never-widen plan for halves on the census-clean functions | SERVED | IB-pr-324 | the issuer's act |
+
+fanout: 1 of 1 chains, cap 8, reason: one carrier edit. Worker 0.9.0_WK_IRPT_BCKEND~127 in its own worktree.
