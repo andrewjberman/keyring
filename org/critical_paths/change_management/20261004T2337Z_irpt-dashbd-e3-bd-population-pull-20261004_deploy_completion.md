@@ -18,3 +18,7 @@
 ## Log
 
 - 20261004T233745Z OPENED by 2.0.0_SA_COO~P with 2 leg(s)
+
+## Window extension (20261005T014110Z)
+
+window_hours 3.0 -> 9.0, recorded before the completion relaunch (CTO RULINGS batches 249 and 250). About 144 of the 5,252 planned requests have landed. Two runs aborted, neither on the pull's shape: a 401 (bearer expiry, fixed by re-minting) and a transport URLError (fixed by batch 250's one retry per call). The relaunch covers only the complement re-derived from the landed keys.
