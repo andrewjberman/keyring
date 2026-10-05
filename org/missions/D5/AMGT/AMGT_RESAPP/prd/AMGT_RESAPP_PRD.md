@@ -5,7 +5,7 @@
   "project": "AMGT_RESAPP",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.37",
+  "prd_version": "v0.38",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-security-analysis-20260910.md@19ce7d5b4d",
   "endpoint_outcomes": [
@@ -81,6 +81,11 @@ them.
 operation, so Andrew's ~17:3xZ word does not plainly reach it, and his ~18:xxZ order is against waits built without his
 authorization. FWD-39 is carried to him as a question, not held.
 - This is an ENDPOINT change, so the CVO re-signs.
+
+**v0.38 (2026-10-05 ~14:3xZ, `1.0.0_SA_CTO~Z`, L10 self-adjudication on `3.0.0_SA_CVO~Z` ADJUDICATION_v85):** FWD-5 and FWD-8
+only. Their DONE WHENs named acts no seat can take on demand ("Adam has actually forwarded one"; "an analyst who distrusted it has
+stopped"), which breaks spine L2. They are restated as on-demand proofs, and their ACCEPTs are unchanged. This is an ENDPOINT change,
+so `3.0.0_SA_CVO~Z` re-signs the ratified-text half.
 
 
 
@@ -507,7 +512,11 @@ disputable, by rule, and carry no technical language.*
          SOURCE     brief O4
 
   FWD-5  Adam forwards a printed pack without reformatting it
-         DONE WHEN  EXERCISED -- Adam has actually forwarded one
+         DONE WHEN  EXERCISED -- (v0.38) a seat prints the pack on demand for
+                    three covered names, and each reads as a document: Opal
+                    Brand form, every figure traceable to its page field, no
+                    raw code, no dashboard chrome (a JUDGMENT read at L9).
+                    Adam's actual forward stays the ACCEPT
          ACCEPT     Adam prints a pack and sends it on unchanged. It replaces the
                     document he circulates today, rather than looking like a
                     screenshot of a dashboard.
@@ -528,7 +537,10 @@ disputable, by rule, and carry no technical language.*
          SOURCE     brief O7
 
   FWD-8  The comparison block is about the company on the page
-         DONE WHEN  EXERCISED -- an analyst who distrusted it has stopped
+         DONE WHEN  EXERCISED -- (v0.38) on every covered name the comparison
+                    block's subject identity equals the page's subject, and a
+                    name with no sensible set says so in words; F6's
+                    measure re-run reads 0 wrong
          ACCEPT     The list of comparable companies is genuinely about the
                     company being shown. Where a sensible comparison cannot be
                     worked out, the page says so rather than showing another
