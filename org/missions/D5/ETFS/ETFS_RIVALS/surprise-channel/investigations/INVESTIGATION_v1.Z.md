@@ -3430,6 +3430,27 @@
     "spec_asserts": "bt-1.AC1.py docstring: QTD {BBB, CCC} with window_start 2026-07-01 at day 2026-10-02; the order says MTD/QTD/YTD start on the period's first trading day.",
     "world_is": "The build writes QTD from the calendar quarter's first trading day (2026-10-01 at that day), the same quarter hc-1 and the page's 'Q4 2026' label use, so QTD holds CCC only; the check's expectation needs a quarter that began 2026-07-01. The worker kept the calendar quarter (a trailing-quarter QTD would disagree with hc-1's QTD and rn-1's label) and pinned the calendar rule in tests/test_r8bt1_periods.py with a mid-quarter day (2026-08-14), where the producer's R30, MTD, QTD and YTD blocks all verify.",
     "notes": "Remedy owner is the issuer: move the fixture day into Q3 (any day 2026-07-01..09-30 with the 09-10 trade in QTD) or drop the 09-10 trade from QTD in the expectation. disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. rn-1.AC2 START QTD 2026-07-01 may carry the same day assumption; not read by this worker."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W2-S13",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~2",
+    "surfaced_at": "2026-10-04T21:46:32Z",
+    "one_line": "RIV-rw-1 AC2 (collapse noted 0-trade windows) makes test_no_shares_moved_g82.py::test_the_window_names_how_many_lines_it_did_not_show fail: it asserts a per-window '(0 trades)' heading for a no_move window, and that file is outside rw-1's <paths>.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/tests/test_no_shares_moved_g82.py:21@746eaad457 asserts 'data-no-move=\"1\"' in html and '(0 trades)' in html for a single 0-trade window carrying no_move=1; AC2 (rw-1.AC2.py) requires that window to collapse into a data-empty-run line with no 'Window ...' heading",
+        "data/etfs/scripts/rivalfunds/render.py (this branch): _empty_window no longer excludes no_move/cash_equiv windows; _window_notes keeps both notes inside the run with the data-no-move / data-cash-equiv attributes, so test_g83_cash_equiv_trades.py still passes; full suite run from data/etfs/scripts: 597 passed, 2 skipped, 1 failed (this test)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-rw-1 order: run the whole package suite before reporting, it must read 0 failed; AC2: consecutive noted 0-trade windows collapse into one line with notes inside, no per-window heading.",
+    "world_is": "The two are contradictory on the one line '(0 trades)': the old test pins the pre-AC2 heading. The assertion that the no_move count is carried on the page still holds (data-no-move=\"1\" is inside the run); only the '(0 trades)' heading half is superseded by AC2. Not edited: the file is outside <paths>.",
+    "notes": "Issuer's call: widen rw-1 <paths> to test_no_shares_moved_g82.py (replace '(0 trades)' with 'data-empty-run=\"1\"'), or amend it at the drain. Nothing else in the package suite is affected."
   }
 ]
 ```
