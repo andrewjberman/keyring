@@ -17759,3 +17759,53 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "MEASURED: the same request reads READY with its date basis on the served status route."
 }
 ```
+
+## IRPT_BCKEND-W120-S1 -- TO-IB-pr-317: the docs copy of ExportBundle.schema.json is byte-compared to the packaged copy but is outside the grant
+
+```json
+{
+  "id": "IRPT_BCKEND-W120-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~120",
+  "surfaced_at": "2026-10-04T23:00:00Z",
+  "one_line": "IB49-1-AC2 cannot pass: test_packaged_contracts_match_docs.py byte-compares the packaged ExportBundle schema with docs/contracts/investor-reporting/v1/ExportBundle.schema.json, a path the order's paths block does not grant",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/tests/test_packaged_contracts_match_docs.py:13,21-24 (DOCS = docs/contracts/investor-reporting/v1)",
+      "python org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P/checks/r49/p49_cells.py . IB49-1-AC2 -> FAIL, 2 failed 20 passed, one is the byte-equality test"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IB-pr-317 says to update every copy test_packaged_contracts_match_docs.py names so they stay equal, and IB49-1-AC2 expects 0 failed.",
+  "world_is": "MEASURED: the test names two copies, infra/aws/lambda/investor-reporting/_contracts/ExportBundle.schema.json (granted, edited) and docs/contracts/investor-reporting/v1/ExportBundle.schema.json (NOT in paths; unedited). Before the edit the two were cmp-equal. After it, p49_cells.py IB49-1-AC2 reports test_the_packaged_schema_is_byte_equal_to_the_published_docs_copy[ExportBundle.schema.json] failed. export/contracts/ named in paths does not exist. The same JSON edit applied to the docs copy would restore equality; the issuer must grant that path or apply it."
+}
+```
+
+## IRPT_BCKEND-W120-S2 -- TO-IB-pr-317: test_export_path_b.py asserts the old PATH B top-level key set and is outside the grant
+
+```json
+{
+  "id": "IRPT_BCKEND-W120-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~120",
+  "surfaced_at": "2026-10-04T23:00:00Z",
+  "one_line": "IB49-1-AC2 cannot pass: test_export_path_b.py line 106 asserts a PATH B stored bundle has exactly six top-level keys, which ruling 28 makes eight; the file is not in the order's paths",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/tests/test_export_path_b.py:105-107",
+      "pytest tests/test_export_path_b.py from export/ -> 1 failed, 12 passed; extra items narrative_state, narrative_reason"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IB-pr-317 expects test_export_path_b.py to pass 0 failed after freeze() adds narrative_state and narrative_reason to a PLATINUM bundle.",
+  "world_is": "MEASURED: tests/test_export_path_b.py::test_a_covered_platinum_submit_pins_versionid_sha256_and_as_of_inside_authorized_report_revisions asserts set(bundle) == the six old keys with the comment 'no new top-level field'; the bundle now also holds narrative_state and narrative_reason (the two fields the order requires), so it fails with those two as extra items. The fix is one assertion line in a file outside paths; the issuer must grant it or amend the criterion."
+}
+```
