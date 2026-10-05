@@ -1,0 +1,3 @@
+zip irpt-status-s318.zip | function irpt-status | handler status_installed.lambda_handler | env names ['IRPT_DIRECTORY_BUCKET_MAP', 'IRPT_DIRECTORY_KEY', 'IRPT_EVIDENCE_BUCKET', 'IRPT_JOBS_TABLE', 'IRPT_REQUESTS_TABLE']
+   response keys: ['contract_version', 'ok', 'operation', 'status']
+PASS: the cold-start build answered an unauthenticated request with state/statusCode UNAVAILABLE | first-party modules from outside the zip: none

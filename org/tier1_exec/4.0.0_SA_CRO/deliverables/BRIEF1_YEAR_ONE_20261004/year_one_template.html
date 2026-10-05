@@ -1,0 +1,344 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<title>Opal Year One Review</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+ --canvas:#E9ECF1; --card:#FFFFFF; --card2:#F5F7FA; --plot:#FCFCFB;
+ --ink:#10141D; --dim:#5D6675; --faint:#8B94A6; --hair:#E4E8EE; --axis:#C9CFDA;
+ --accent:#5e72e4;
+ --s-product:#2a78d6; --s-delivery:#1baf7a; --s-controls:#4a3aa7; --s-other:#C9CFDA;
+ --ev:#10141D; --ev-soft:rgba(16,20,29,.28);
+ --r:16px; --shadow:0 1px 2px rgba(16,20,29,.05),0 10px 30px rgba(16,20,29,.06);
+ color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+ :root:not([data-theme="light"]){
+  --canvas:#121418; --card:#1B1E24; --card2:#23272F; --plot:#1A1A19;
+  --ink:#F2F4F8; --dim:#AEB5C2; --faint:#8790A0; --hair:#2C313A; --axis:#3A404B;
+  --accent:#8193f0;
+  --s-product:#3987e5; --s-delivery:#199e70; --s-controls:#9085e9; --s-other:#4A505C;
+  --ev:#F2F4F8; --ev-soft:rgba(242,244,248,.30);
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.25);
+  color-scheme:dark;
+ }
+}
+:root[data-theme="dark"]{
+  --canvas:#121418; --card:#1B1E24; --card2:#23272F; --plot:#1A1A19;
+  --ink:#F2F4F8; --dim:#AEB5C2; --faint:#8790A0; --hair:#2C313A; --axis:#3A404B;
+  --accent:#8193f0;
+  --s-product:#3987e5; --s-delivery:#199e70; --s-controls:#9085e9; --s-other:#4A505C;
+  --ev:#F2F4F8; --ev-soft:rgba(242,244,248,.30);
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.25);
+  color-scheme:dark;
+}
+html{background:var(--canvas)}
+body{background:var(--canvas);font-family:"Helvetica Neue","Segoe UI",Arial,sans-serif;color:var(--ink);
+ -webkit-font-smoothing:antialiased;padding:48px 0 96px}
+.page{width:100%;max-width:1180px;margin:0 auto;padding:0 20px}
+.nw{overflow-wrap:anywhere}
+.hrow{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-bottom:40px}
+.brand{font-size:14.5px;font-weight:700;letter-spacing:.015em}
+.brand span{font-weight:400;color:var(--dim);font-size:13.5px}
+.date{font-size:12.5px;color:var(--faint);margin-top:5px}
+.headline{font-size:38px;font-weight:700;letter-spacing:-.03em;line-height:1.08;margin-bottom:10px;text-wrap:balance}
+.headsub{font-size:14.5px;color:var(--dim);line-height:1.5;max-width:960px;margin-bottom:34px}
+.sect{font-size:11px;font-weight:700;letter-spacing:.14em;color:var(--faint);margin:44px 0 14px}
+
+/* filter row: one row above everything it scopes */
+.filters{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;margin-bottom:12px}
+.fgroup{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.flab{font-size:10px;font-weight:700;letter-spacing:.12em;color:var(--faint);margin-right:2px}
+.tg{font:inherit;font-size:12px;font-weight:600;color:var(--dim);background:var(--card);border:1px solid var(--hair);
+ border-radius:999px;padding:6px 12px;cursor:pointer;display:inline-flex;gap:7px;align-items:center}
+.tg[aria-pressed="true"]{color:var(--ink);border-color:var(--accent)}
+.tg:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.tg .ln{display:inline-block;width:14px;height:0;border-top:2px solid var(--ev)}
+.tg[aria-pressed="false"] .ln{opacity:.3}
+
+.team{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);padding:22px 26px 20px;position:relative}
+.trow{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:baseline;margin-bottom:10px}
+.tread{font-size:15px;font-weight:650}
+.tnums{font-size:12px;color:var(--dim)}
+.tlab{font-size:10px;font-weight:700;letter-spacing:.12em;color:var(--faint);margin-bottom:6px}
+.chart svg{width:100%;height:auto;display:block;overflow:visible}
+.lanes svg{width:100%;height:auto;display:block;overflow:visible}
+.tkey{display:flex;gap:10px 22px;flex-wrap:wrap;font-size:11.5px;color:var(--dim);margin-top:12px}
+.tkey i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:7px;vertical-align:-1px}
+.tkey b{color:var(--ink);font-weight:700;margin-right:5px}
+.tmeth{font-size:10.5px;color:var(--dim);margin-top:8px;line-height:1.45}
+.tip{position:absolute;pointer-events:none;background:var(--card);color:var(--ink);border:1px solid var(--hair);
+ border-radius:10px;box-shadow:var(--shadow);padding:10px 12px;font-size:12px;line-height:1.45;max-width:300px;display:none;z-index:5}
+.tip b{font-weight:700}.tip .r{display:flex;justify-content:space-between;gap:14px;font-variant-numeric:tabular-nums}
+.tip .sw{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:6px}
+.tip .ev{margin-top:6px;padding-top:6px;border-top:1px solid var(--hair);color:var(--dim)}
+
+/* key moments */
+.moments{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 28px;margin-top:16px;padding-top:14px;border-top:1px solid var(--hair)}
+.mo{display:grid;grid-template-columns:22px 86px minmax(0,1fr);gap:8px;align-items:baseline;font-size:12.4px;line-height:1.4;cursor:default}
+.mo .n{display:inline-flex;justify-content:center;align-items:center;width:20px;height:20px;border-radius:50%;
+ background:var(--ev);color:var(--card);font-size:10.5px;font-weight:700}
+.mo .d{color:var(--faint);font-size:11.5px;font-variant-numeric:tabular-nums}
+.mo .c{color:var(--faint);font-size:10px;font-weight:700;letter-spacing:.08em;margin-left:6px}
+.mo.hide{display:none}
+
+/* kpis */
+.kpis{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
+.kpi{background:var(--card);border-radius:14px;box-shadow:var(--shadow);padding:16px 18px}
+.kpi b{display:block;font-size:26px;font-weight:700;letter-spacing:-.02em;line-height:1.1}
+.kpi span{display:block;font-size:11.5px;color:var(--dim);margin-top:6px;line-height:1.4}
+
+/* phases */
+.phases{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.ph{background:var(--card);border-radius:14px;box-shadow:var(--shadow);padding:18px 18px 16px;display:flex;flex-direction:column}
+.ph .when{font-size:10.5px;font-weight:700;letter-spacing:.1em;color:var(--accent)}
+.ph h3{font-size:15px;font-weight:700;margin-top:6px;letter-spacing:-.01em}
+.ph p{font-size:12.4px;color:var(--dim);line-height:1.55;margin-top:8px;flex:1}
+.ph .st{display:flex;gap:8px;margin-top:12px}
+.ph .st div{flex:1;background:var(--card2);border-radius:10px;padding:9px 10px}
+.ph .st b{display:block;font-size:16px;font-weight:700}
+.ph .st span{font-size:10.5px;color:var(--dim)}
+
+/* what went live */
+.live{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.col{background:var(--card);border-radius:14px;box-shadow:var(--shadow);padding:18px 20px}
+.col h3{font-size:13px;font-weight:700;display:flex;justify-content:space-between;align-items:baseline}
+.col h3 span{font-size:11.5px;color:var(--faint);font-weight:600}
+.li{display:grid;grid-template-columns:78px minmax(0,1fr);gap:10px;padding:8px 0;border-bottom:1px solid var(--hair);font-size:12.4px;line-height:1.45}
+.li:last-child{border-bottom:0}
+.li .d{color:var(--faint);font-size:11.5px;font-variant-numeric:tabular-nums}
+.li .t{font-weight:650}
+.li .x{color:var(--dim);font-size:12px}
+.li .q{font-size:9.5px;font-weight:700;letter-spacing:.08em;color:var(--faint);margin-left:6px}
+
+/* table view */
+details.tv{margin-top:14px}
+details.tv summary{cursor:pointer;font-size:12px;font-weight:600;color:var(--dim)}
+.tbl{width:100%;border-collapse:collapse;margin-top:10px;font-size:12px;font-variant-numeric:tabular-nums}
+.tbl th,.tbl td{padding:7px 8px;border-bottom:1px solid var(--hair);text-align:right}
+.tbl th:first-child,.tbl td:first-child{text-align:left}
+.tbl th{font-size:10px;letter-spacing:.08em;color:var(--faint);font-weight:700}
+.tscroll{overflow-x:auto}
+
+.notes{background:var(--card);border-radius:14px;box-shadow:var(--shadow);padding:16px 20px;font-size:12px;color:var(--dim);line-height:1.6}
+.notes li{margin-left:16px}
+footer{margin-top:36px;font-size:11px;color:var(--faint);display:flex;flex-wrap:wrap;gap:6px;justify-content:space-between}
+
+@media (max-width: 940px){
+ body{padding:28px 0 72px}
+ .headline{font-size:30px}
+ .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .phases,.live,.moments{grid-template-columns:1fr}
+}
+@media (max-width: 600px){
+ .page{padding:0 16px}
+ .headline{font-size:25px;line-height:1.15}
+ .team{padding:16px}
+ .mo{grid-template-columns:22px 74px minmax(0,1fr)}
+}
+</style></head><body>
+<div class="page">
+ <div class="hrow">
+  <div>
+   <div class="brand nw">OPAL CAPITAL <span>&mdash; Year One Operating Review</span></div>
+   <div class="date nw" id="span"></div>
+  </div>
+  <div class="date nw" id="asof"></div>
+ </div>
+ <h1 class="headline nw" id="hl"></h1>
+ <div class="headsub nw" id="hsub"></div>
+
+ <div class="sect">ONE YEAR OF BUILDING</div>
+ <div class="filters" role="toolbar" aria-label="Chart controls">
+  <div class="fgroup" id="fcat"><span class="flab">EVENTS</span></div>
+  <div class="fgroup"><span class="flab">SCALE</span>
+   <button class="tg" type="button" data-scale="lin" aria-pressed="true">Linear</button>
+   <button class="tg" type="button" data-scale="log" aria-pressed="false">Log</button>
+  </div>
+ </div>
+ <div class="team" id="team">
+  <div class="trow"><div class="tread nw" id="tread"></div><div class="tnums nw" id="tnums"></div></div>
+  <div class="tlab" id="tlab">COMMITS PER WEEK, STACKED BY KIND OF WORK</div>
+  <div class="chart" id="chart"></div>
+  <div class="lanes" id="lanes"></div>
+  <div class="tkey" id="tkey"></div>
+  <div class="tmeth nw" id="tmeth"></div>
+  <div class="moments" id="moments"></div>
+  <details class="tv"><summary>Table view: commits by month</summary><div class="tscroll"><table class="tbl" id="tbl"></table></div></details>
+  <div class="tip" id="tip" role="status" aria-live="polite"></div>
+ </div>
+
+ <div class="sect">THE YEAR IN NUMBERS</div>
+ <div class="kpis" id="kpis"></div>
+
+ <div class="sect">HOW WE SCALED</div>
+ <div class="phases" id="phases"></div>
+
+ <div class="sect">WHAT WENT LIVE</div>
+ <div class="live" id="live"></div>
+
+ <div class="sect">HOW TO READ THIS PAGE</div>
+ <div class="notes" id="notes"></div>
+
+ <footer><span id="fsrc"></span><span>Opal Capital &mdash; internal</span></footer>
+</div>
+
+<script>
+const DATA=__DATA__;
+const esc=s=>String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+const fmt=n=>Number(n).toLocaleString("en-US");
+const MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const pd=s=>{const [y,m,d]=s.split("-").map(Number);return new Date(Date.UTC(y,m-1,d));};
+const nice=s=>{const d=pd(s);return MON[d.getUTCMonth()]+" "+d.getUTCDate()+", "+d.getUTCFullYear();};
+const short=s=>{const d=pd(s);return MON[d.getUTCMonth()]+" "+d.getUTCDate()+" '"+String(d.getUTCFullYear()).slice(2);};
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const CAT=DATA.page.categories;            /* [[key,label],...] fixed order */
+const CATL=Object.fromEntries(CAT);
+const GROUP=DATA.groups;                    /* [[key,label,desc],...] stack order bottom->top */
+const state={scale:"lin",cats:new Set(CAT.map(c=>c[0]))};
+
+document.getElementById("hl").textContent=DATA.page.headline;
+document.getElementById("hsub").textContent=DATA.page.sub;
+document.getElementById("span").textContent=DATA.page.span;
+document.getElementById("asof").textContent="Data through "+nice(DATA.until);
+document.getElementById("tread").textContent=DATA.page.chart_read;
+document.getElementById("tnums").textContent=fmt(DATA.total)+" commits \u00b7 "+DATA.weeks.length+" weeks";
+document.getElementById("tmeth").textContent="Method: "+DATA.method+". Counts measured; kind of work inferred. Event dates: see each item's claim.";
+document.getElementById("fsrc").textContent=DATA.page.source;
+
+/* event numbering: key events in date order */
+const EV=DATA.events.slice().sort((a,b)=>a.date<b.date?-1:a.date>b.date?1:0);
+let kn=0; EV.forEach(e=>{if(e.key)e.n=++kn;});
+
+/* filter chips */
+const fcat=document.getElementById("fcat");
+CAT.forEach(([k,l])=>{const b=document.createElement("button");b.type="button";b.className="tg";b.dataset.cat=k;
+ b.setAttribute("aria-pressed","true");b.innerHTML=`<span class="ln"></span>${esc(l)} <span style="color:var(--faint)">${EV.filter(e=>e.cat===k).length}</span>`;fcat.appendChild(b);});
+fcat.addEventListener("click",e=>{const b=e.target.closest("[data-cat]");if(!b)return;const k=b.dataset.cat;
+ state.cats.has(k)?state.cats.delete(k):state.cats.add(k);b.setAttribute("aria-pressed",String(state.cats.has(k)));draw();});
+document.querySelectorAll("[data-scale]").forEach(b=>b.addEventListener("click",()=>{state.scale=b.dataset.scale;
+ document.querySelectorAll("[data-scale]").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));draw();}));
+
+const W0=1100,PL=56,PR=170,PT=46,PB=34;
+function geom(){const narrow=window.matchMedia("(max-width:600px)").matches;
+ return narrow?{W:560,H:360,PL:40,PR:12,PT:40,PB:30,fs:12,lane:22,labels:false}:{W:W0,H:430,PL,PR,PT,PB,fs:11,lane:24,labels:true};}
+
+function draw(){
+ const g=geom(), n=DATA.weeks.length, W=g.W, H=g.H;
+ document.getElementById("tlab").textContent=state.scale==="lin"?"COMMITS PER WEEK, STACKED BY KIND OF WORK":"ALL COMMITS PER WEEK, LOG SCALE";
+ const t0=pd(DATA.weeks[0]).getTime(), t1=pd(DATA.weeks[n-1]).getTime();
+ const X=t=>g.PL+(W-g.PL-g.PR)*(t-t0)/(t1-t0);
+ const Xi=i=>X(pd(DATA.weeks[i]).getTime());
+ const ser=GROUP.map(([k])=>DATA.series.find(s=>s[0]===k)[1]);
+ const tot=DATA.weeks.map((_,i)=>ser.reduce((a,s)=>a+s[i],0));
+ const top=Math.max(...tot);
+ let Y;
+ if(state.scale==="lin"){const ymax=Math.ceil(top/1000)*1000;Y=v=>g.PT+(H-g.PT-g.PB)*(1-v/ymax);Y.ticks=[0,ymax/4,ymax/2,3*ymax/4,ymax];}
+ else{const lo=Math.log10(10),hi=Math.log10(Math.pow(10,Math.ceil(Math.log10(top))));
+  Y=v=>g.PT+(H-g.PT-g.PB)*(1-(Math.log10(Math.max(v,10))-lo)/(hi-lo));Y.ticks=[10,100,1000,10000].filter(v=>Math.log10(v)<=hi);}
+ let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Commits per week from ${esc(nice(DATA.weeks[0]))} to ${esc(nice(DATA.weeks[n-1]))}, peaking at ${fmt(top)}">`;
+ /* recessive solid hairline grid + y ticks */
+ Y.ticks.forEach(v=>{s+=`<line x1="${g.PL}" x2="${W-g.PR}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--hair)"/>
+  <text x="${g.PL-8}" y="${Y(v)+4}" text-anchor="end" font-size="${g.fs}" fill="var(--dim)" style="font-variant-numeric:tabular-nums">${fmt(v)}</text>`;});
+ /* month ticks */
+ const d0=pd(DATA.weeks[0]); let mm=new Date(Date.UTC(d0.getUTCFullYear(),d0.getUTCMonth()+1,1));
+ const end=t1+6*864e5;
+ while(mm.getTime()<=end){const x=X(Math.min(mm.getTime(),t1));const m=mm.getUTCMonth();
+  const lab=(g.labels||m%2===0)?(MON[m]+(m===0||mm.getTime()===Date.UTC(2025,11,1)?" '"+String(mm.getUTCFullYear()).slice(2):"")):"";
+  s+=`<line x1="${x}" x2="${x}" y1="${H-g.PB}" y2="${H-g.PB+5}" stroke="var(--axis)"/><text x="${x}" y="${H-g.PB+19}" text-anchor="middle" font-size="${g.fs}" fill="var(--dim)">${lab}</text>`;
+  mm=new Date(Date.UTC(mm.getUTCFullYear(),mm.getUTCMonth()+1,1));}
+ /* bands */
+ if(state.scale==="lin"){
+  const cum=[];DATA.weeks.forEach((_,i)=>{let a=0;cum.push(ser.map(v=>a+=v[i]));});
+  for(let k=0;k<GROUP.length;k++){const up=[],dn=[];
+   for(let i=0;i<n;i++){up.push(`${Xi(i).toFixed(1)},${Y(cum[i][k]).toFixed(1)}`);dn.push(`${Xi(i).toFixed(1)},${Y(k?cum[i][k-1]:0).toFixed(1)}`);}
+   s+=`<path d="M${up.join(" L")} L${dn.reverse().join(" L")} Z" fill="var(--s-${GROUP[k][0]})" stroke="var(--card)" stroke-width="1.5" stroke-linejoin="round"/>`;}
+  /* direct labels at the right end, only where the band is tall enough */
+  /* top band first, each label pushed below the previous one so two-line labels never collide;
+     the residual band is not direct-labelled (legend + table carry it) */
+  if(g.labels){const i=n-1;let floor=-1e9;
+   for(let k=GROUP.length-1;k>=0;k--){if(GROUP[k][0]==="other"||ser[k][i]<=0)continue;
+    const yTop=Y(cum[i][k]),yBot=Y(k?cum[i][k-1]:0);
+    const yy=Math.max((yTop+yBot)/2,floor+28);
+    s+=`<line x1="${Xi(i)+3}" x2="${W-g.PR+6}" y1="${(yTop+yBot)/2}" y2="${yy-4}" stroke="var(--axis)"/>
+     <text x="${W-g.PR+10}" y="${yy}" font-size="11.5" font-weight="700" fill="var(--ink)">${esc(GROUP[k][1])}</text>
+     <text x="${W-g.PR+10}" y="${yy+13}" font-size="10.5" fill="var(--dim)">${fmt(ser[k][i])} in the last week</text>`;floor=yy;}}
+ }else{
+  const up=tot.map((v,i)=>`${Xi(i).toFixed(1)},${Y(v).toFixed(1)}`);
+  s+=`<path d="M${up.join(" L")} L${Xi(n-1)},${H-g.PB} L${Xi(0)},${H-g.PB} Z" fill="var(--s-product)" fill-opacity=".9"/>`;
+  if(g.labels)s+=`<text x="${W-g.PR+10}" y="${Y(tot[n-1])+4}" font-size="11.5" font-weight="700" fill="var(--ink)">All commits</text>
+   <text x="${W-g.PR+10}" y="${Y(tot[n-1])+17}" font-size="10.5" fill="var(--dim)">log scale: equal steps = 10x</text>`;
+ }
+ s+=`<line x1="${g.PL}" x2="${W-g.PR}" y1="${H-g.PB}" y2="${H-g.PB}" stroke="var(--axis)"/>`;
+ /* key event lines with numbered heads, staggered when close */
+ const keyEv=EV.filter(e=>e.key&&state.cats.has(e.cat));let lastX=-99,lvl=0;
+ keyEv.forEach(e=>{const x=X(pd(e.date).getTime());lvl=(x-lastX<20)?(lvl+1)%3:0;lastX=x;const hy=10+lvl*13;
+  s+=`<line x1="${x}" x2="${x}" y1="${hy+7}" y2="${H-g.PB}" stroke="var(--ev-soft)" stroke-width="1"/>
+   <g class="evh" data-id="${e.n}" tabindex="0"><circle cx="${x}" cy="${hy}" r="8" fill="var(--ev)" stroke="var(--card)" stroke-width="2"/>
+   <text x="${x}" y="${hy+3.5}" text-anchor="middle" font-size="9.5" font-weight="700" fill="var(--card)">${e.n}</text>
+   <circle cx="${x}" cy="${hy}" r="13" fill="transparent"/></g>`;});
+ /* hover capture */
+ s+=`<rect id="hit" x="${g.PL}" y="${g.PT}" width="${W-g.PL-g.PR}" height="${H-g.PT-g.PB}" fill="transparent"/><line id="xh" x1="0" x2="0" y1="${g.PT}" y2="${H-g.PB}" stroke="var(--ink)" stroke-width="1" visibility="hidden"/></svg>`;
+ document.getElementById("chart").innerHTML=s;
+
+ /* swimlanes on the same time axis: every event, by category */
+ const L=CAT.length, LH=g.lane, LHgt=L*LH+10;
+ let l=`<svg viewBox="0 0 ${W} ${LHgt}" role="img" aria-label="Events by category on the same timeline">`;
+ CAT.forEach(([k,lab],r)=>{const y=r*LH+LH/2+4,on=state.cats.has(k);
+  l+=`<line x1="${g.PL}" x2="${W-g.PR}" y1="${y}" y2="${y}" stroke="var(--hair)"/>
+   <text x="${g.labels?g.PL-8:g.PL}" y="${g.labels?y+4:y-7}" text-anchor="${g.labels?"end":"start"}" font-size="${g.labels?10.5:10}" font-weight="700" fill="${on?"var(--dim)":"var(--axis)"}">${esc(lab.toUpperCase())}</text>`;
+  EV.filter(e=>e.cat===k).forEach(e=>{const x=X(pd(e.date).getTime());
+   l+=`<g class="evd" data-i="${EV.indexOf(e)}" tabindex="0" opacity="${on?1:.15}"><circle cx="${x}" cy="${y}" r="${e.key?5:3.5}" fill="${e.key?"var(--ev)":"var(--card)"}" stroke="var(--ev)" stroke-width="1.5"/><circle cx="${x}" cy="${y}" r="11" fill="transparent"/></g>`;});});
+ l+=`</svg>`;document.getElementById("lanes").innerHTML=l;
+
+ /* legend: shares of the year */
+ const tsum=DATA.total;
+ document.getElementById("tkey").innerHTML=GROUP.map(([k,lab,desc])=>{const v=DATA.by_group[k];const p=100*v/tsum;
+  return `<span title="${esc(desc)}"><i style="background:var(--s-${k})"></i><b>${esc(lab)}</b>${p<1&&p>0?"<1":Math.round(p)}% \u00b7 ${esc(desc)}</span>`;}).join("");
+
+ /* key moments list */
+ document.getElementById("moments").innerHTML=EV.filter(e=>e.key).map(e=>
+  `<div class="mo${state.cats.has(e.cat)?"":" hide"}"><span class="n">${e.n}</span><span class="d">${esc(short(e.date))}</span><span><b>${esc(e.title)}</b><span class="c">${esc(CATL[e.cat].toUpperCase())}</span></span></div>`).join("");
+ wire(X,Xi,tot,ser,g,W);
+}
+
+function wire(X,Xi,tot,ser,g,W){
+ const team=document.getElementById("team"),tip=document.getElementById("tip");
+ const svg=document.querySelector("#chart svg"),xh=svg.querySelector("#xh");
+ const place=(cx,cy)=>{const r=team.getBoundingClientRect();tip.style.display="block";
+  let x=cx-r.left+14,y=cy-r.top+14;if(x+tip.offsetWidth>r.width-8)x=cx-r.left-tip.offsetWidth-14;tip.style.left=x+"px";tip.style.top=y+"px";};
+ const hide=()=>{tip.style.display="none";xh.setAttribute("visibility","hidden");};
+ const weekTip=i=>{const w=DATA.weeks[i],nx=DATA.weeks[i+1];
+  const evs=EV.filter(e=>state.cats.has(e.cat)&&e.date>=w&&(!nx||e.date<nx));
+  return `<b>Week of ${esc(nice(w))}</b><div class="r"><span>All commits</span><b>${fmt(tot[i])}</b></div>`+
+   GROUP.slice().reverse().map(([k,lab])=>{const v=ser[GROUP.findIndex(x=>x[0]===k)][i];return `<div class="r"><span><span class="sw" style="background:var(--s-${k})"></span>${esc(lab)}</span><span>${fmt(v)}</span></div>`;}).join("")+
+   (evs.length?`<div class="ev">${evs.map(e=>(e.n?`<b>${e.n}</b> `:"")+esc(e.title)).join("<br>")}</div>`:"");};
+ const evTip=e=>`<b>${esc(e.title)}</b><div style="color:var(--dim)">${esc(CATL[e.cat])} \u00b7 ${esc(nice(e.date))}</div>`+
+   (e.detail?`<div style="margin-top:5px">${esc(e.detail)}</div>`:"")+`<div style="margin-top:5px;color:var(--faint);font-size:11px">${esc(e.claim)}${e.evidence?" \u00b7 "+esc(e.evidence):""}</div>`;
+ svg.querySelector("#hit").addEventListener("mousemove",ev=>{const p=svg.createSVGPoint();p.x=ev.clientX;p.y=ev.clientY;
+  const loc=p.matrixTransform(svg.getScreenCTM().inverse());let bi=0,bd=1e9;
+  DATA.weeks.forEach((_,i)=>{const d=Math.abs(Xi(i)-loc.x);if(d<bd){bd=d;bi=i;}});
+  xh.setAttribute("x1",Xi(bi));xh.setAttribute("x2",Xi(bi));xh.setAttribute("visibility","visible");tip.innerHTML=weekTip(bi);place(ev.clientX,ev.clientY);});
+ svg.querySelector("#hit").addEventListener("mouseleave",hide);
+ const evOn=(el,e)=>{const show=(cx,cy)=>{tip.innerHTML=evTip(e);place(cx,cy);};
+  el.addEventListener("mouseenter",x=>show(x.clientX,x.clientY));el.addEventListener("mouseleave",hide);
+  el.addEventListener("focus",()=>{const b=el.getBoundingClientRect();show(b.right,b.top);});el.addEventListener("blur",hide);};
+ document.querySelectorAll(".evh").forEach(el=>evOn(el,EV.find(e=>e.n===+el.dataset.id)));
+ document.querySelectorAll(".evd").forEach(el=>evOn(el,EV[+el.dataset.i]));
+}
+
+/* KPIs, phases, live lists, table, notes */
+document.getElementById("kpis").innerHTML=DATA.page.kpis.map(([v,l])=>`<div class="kpi"><b>${esc(v)}</b><span>${esc(l)}</span></div>`).join("");
+document.getElementById("phases").innerHTML=DATA.page.phases.map(p=>`<div class="ph"><div class="when">${esc(p.when)}</div><h3>${esc(p.name)}</h3><p>${esc(p.text)}</p>
+ <div class="st">${p.stats.map(([b,s])=>`<div><b>${esc(b)}</b><span>${esc(s)}</span></div>`).join("")}</div></div>`).join("");
+document.getElementById("live").innerHTML=CAT.map(([k,lab])=>{const items=EV.filter(e=>e.cat===k);
+ return `<div class="col"><h3>${esc(lab)}<span>${items.length}</span></h3>${items.map(e=>`<div class="li"><span class="d">${esc(short(e.date))}</span><span><span class="t">${esc(e.title)}</span>${e.claim==="inferred"?'<span class="q">INFERRED DATE</span>':""}${e.detail?`<div class="x">${esc(e.detail)}</div>`:""}</span></div>`).join("")}</div>`;}).join("");
+{const M=DATA.months;const cols=[["month","Month"],["total","All"],["workspace","Workspace"],["portal","Portal"],["product","Product build"],["delivery","Plan/test/deliver"],["controls","Coord./controls"],["other","Unclassified"],["human","By Andrew"],["agent","By agents"],["seats","Agent seats"]];
+ document.getElementById("tbl").innerHTML=`<thead><tr>${cols.map(c=>`<th scope="col">${c[1]}</th>`).join("")}</tr></thead><tbody>`+
+  M.map(r=>`<tr>${cols.map(([k])=>`<td>${k==="month"?esc(MON[+r.month.slice(5)-1]+" "+r.month.slice(0,4)):fmt(r[k])}</td>`).join("")}</tr>`).join("")+`</tbody>`;}
+document.getElementById("notes").innerHTML="<ul>"+DATA.page.notes.map(n=>`<li>${esc(n)}</li>`).join("")+"</ul>";
+
+draw();
+let rt;window.addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(draw,120);});
+</script>
+</body></html>

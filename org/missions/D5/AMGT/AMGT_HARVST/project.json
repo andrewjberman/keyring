@@ -170,11 +170,10 @@
   "leads": [
     "REGISTERED 2026-09-22 under D5/AMGT. Andrew-direct at the 1.0.0_SA_CTO~Z terminal, VERBATIM: 'I think this project needs to be run on the side of AMGT_RESAPP. I would make a new project for this called AMGT_HARVST. Then I would have COO~Y drive it to completion.' Record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260922_144xZ_AMGT_HARVST_NEW_PROJECT_COO_Y_DRIVES.md."
   ],
-  "phase": "ROUND 44 CLOSED 2026-10-04 (CTO analysis ledger/ROUND_ANALYSIS.round44.md, on CVO~Z ADJUDICATION_v56 @876c7d30e1): FWD-5 REALIZED; board 6 REALIZED / 2 open without collection (FWD-2, FWD-12) / 9 need collection (FWD-7 moved there). Round 45 = FWD-2 silver field repair (pair), FWD-12(c) sa cap past 25 (LOCAL), Z-S82 served clip at STORE_START (pair); ONE issuance by 2.0.0_SA_COO~H.",
-  "blocking": "Collection held on Andrew's word ('We will discuss internally on how to proceed with further data collection after review', 2026-10-03 ~17:3xZ): 9 of 17 outcomes need it. Not blocked for round 45 (no collection).",
+  "phase": "ROUND 45 CLOSED 2026-10-05 (CTO analysis ledger/ROUND_ANALYSIS.round45.md, on CVO~Z ADJUDICATION_v57 @f38cf87fbf): FWD-2 and FWD-12 REALIZED; board 8 REALIZED / 0 open without collection / 9 need collection. Round 46 = the ONE universe-scope collection run per publisher (Andrew @441338fdf7; 191-name rank universe, ruling @a142505a06), chatter_window over rank UNION RESAPP covered set, Z-S85 census fix; ONE issuance by 2.0.0_SA_COO~H.",
+  "blocking": "Not blocked: Andrew lifted the collection hold for ONE universe-scope run per publisher (@441338fdf7); FWD-12 (the backfill precondition) is REALIZED. The 9 open outcomes all need that run.",
   "threads": [],
   "thread_counter": 0,
-  "closer_contract": "org/tier1_exec/1.0.0_SA_CTO/deliverables/AMGT_COMPLETION_20260923/CONTRACT.md",
   "scheduled_checks": [
     {
       "id": "HVST-RECHECK-OCILAR-1",

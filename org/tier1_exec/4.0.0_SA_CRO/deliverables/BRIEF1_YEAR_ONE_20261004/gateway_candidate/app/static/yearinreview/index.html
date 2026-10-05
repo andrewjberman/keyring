@@ -1,0 +1,344 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<title>Opal Year One Review</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+ --canvas:#E9ECF1; --card:#FFFFFF; --card2:#F5F7FA; --plot:#FCFCFB;
+ --ink:#10141D; --dim:#5D6675; --faint:#8B94A6; --hair:#E4E8EE; --axis:#C9CFDA;
+ --accent:#5e72e4;
+ --s-product:#2a78d6; --s-delivery:#1baf7a; --s-controls:#4a3aa7; --s-other:#C9CFDA;
+ --ev:#10141D; --ev-soft:rgba(16,20,29,.28);
+ --r:16px; --shadow:0 1px 2px rgba(16,20,29,.05),0 10px 30px rgba(16,20,29,.06);
+ color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+ :root:not([data-theme="light"]){
+  --canvas:#121418; --card:#1B1E24; --card2:#23272F; --plot:#1A1A19;
+  --ink:#F2F4F8; --dim:#AEB5C2; --faint:#8790A0; --hair:#2C313A; --axis:#3A404B;
+  --accent:#8193f0;
+  --s-product:#3987e5; --s-delivery:#199e70; --s-controls:#9085e9; --s-other:#4A505C;
+  --ev:#F2F4F8; --ev-soft:rgba(242,244,248,.30);
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.25);
+  color-scheme:dark;
+ }
+}
+:root[data-theme="dark"]{
+  --canvas:#121418; --card:#1B1E24; --card2:#23272F; --plot:#1A1A19;
+  --ink:#F2F4F8; --dim:#AEB5C2; --faint:#8790A0; --hair:#2C313A; --axis:#3A404B;
+  --accent:#8193f0;
+  --s-product:#3987e5; --s-delivery:#199e70; --s-controls:#9085e9; --s-other:#4A505C;
+  --ev:#F2F4F8; --ev-soft:rgba(242,244,248,.30);
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.25);
+  color-scheme:dark;
+}
+html{background:var(--canvas)}
+body{background:var(--canvas);font-family:"Helvetica Neue","Segoe UI",Arial,sans-serif;color:var(--ink);
+ -webkit-font-smoothing:antialiased;padding:48px 0 96px}
+.page{width:100%;max-width:1180px;margin:0 auto;padding:0 20px}
+.nw{overflow-wrap:anywhere}
+.hrow{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-bottom:40px}
+.brand{font-size:14.5px;font-weight:700;letter-spacing:.015em}
+.brand span{font-weight:400;color:var(--dim);font-size:13.5px}
+.date{font-size:12.5px;color:var(--faint);margin-top:5px}
+.headline{font-size:38px;font-weight:700;letter-spacing:-.03em;line-height:1.08;margin-bottom:10px;text-wrap:balance}
+.headsub{font-size:14.5px;color:var(--dim);line-height:1.5;max-width:960px;margin-bottom:34px}
+.sect{font-size:11px;font-weight:700;letter-spacing:.14em;color:var(--faint);margin:44px 0 14px}
+
+/* filter row: one row above everything it scopes */
+.filters{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;margin-bottom:12px}
+.fgroup{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.flab{font-size:10px;font-weight:700;letter-spacing:.12em;color:var(--faint);margin-right:2px}
+.tg{font:inherit;font-size:12px;font-weight:600;color:var(--dim);background:var(--card);border:1px solid var(--hair);
+ border-radius:999px;padding:6px 12px;cursor:pointer;display:inline-flex;gap:7px;align-items:center}
+.tg[aria-pressed="true"]{color:var(--ink);border-color:var(--accent)}
+.tg:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.tg .ln{display:inline-block;width:14px;height:0;border-top:2px solid var(--ev)}
+.tg[aria-pressed="false"] .ln{opacity:.3}
+
+.team{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);padding:22px 26px 20px;position:relative}
+.trow{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:baseline;margin-bottom:10px}
+.tread{font-size:15px;font-weight:650}
+.tnums{font-size:12px;color:var(--dim)}
+.tlab{font-size:10px;font-weight:700;letter-spacing:.12em;color:var(--faint);margin-bottom:6px}
+.chart svg{width:100%;height:auto;display:block;overflow:visible}
+.lanes svg{width:100%;height:auto;display:block;overflow:visible}
+.tkey{display:flex;gap:10px 22px;flex-wrap:wrap;font-size:11.5px;color:var(--dim);margin-top:12px}
+.tkey i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:7px;vertical-align:-1px}
+.tkey b{color:var(--ink);font-weight:700;margin-right:5px}
+.tmeth{font-size:10.5px;color:var(--dim);margin-top:8px;line-height:1.45}
+.tip{position:absolute;pointer-events:none;background:var(--card);color:var(--ink);border:1px solid var(--hair);
+ border-radius:10px;box-shadow:var(--shadow);padding:10px 12px;font-size:12px;line-height:1.45;max-width:300px;display:none;z-index:5}
+.tip b{font-weight:700}.tip .r{display:flex;justify-content:space-between;gap:14px;font-variant-numeric:tabular-nums}
+.tip .sw{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:6px}
+.tip .ev{margin-top:6px;padding-top:6px;border-top:1px solid var(--hair);color:var(--dim)}
+
+/* key moments */
+.moments{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 28px;margin-top:16px;padding-top:14px;border-top:1px solid var(--hair)}
+.mo{display:grid;grid-template-columns:22px 86px minmax(0,1fr);gap:8px;align-items:baseline;font-size:12.4px;line-height:1.4;cursor:default}
+.mo .n{display:inline-flex;justify-content:center;align-items:center;width:20px;height:20px;border-radius:50%;
+ background:var(--ev);color:var(--card);font-size:10.5px;font-weight:700}
+.mo .d{color:var(--faint);font-size:11.5px;font-variant-numeric:tabular-nums}
+.mo .c{color:var(--faint);font-size:10px;font-weight:700;letter-spacing:.08em;margin-left:6px}
+.mo.hide{display:none}
+
+/* kpis */
+.kpis{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
+.kpi{background:var(--card);border-radius:14px;box-shadow:var(--shadow);padding:16px 18px}
+.kpi b{display:block;font-size:26px;font-weight:700;letter-spacing:-.02em;line-height:1.1}
+.kpi span{display:block;font-size:11.5px;color:var(--dim);margin-top:6px;line-height:1.4}
+
+/* phases */
+.phases{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.ph{background:var(--card);border-radius:14px;box-shadow:var(--shadow);padding:18px 18px 16px;display:flex;flex-direction:column}
+.ph .when{font-size:10.5px;font-weight:700;letter-spacing:.1em;color:var(--accent)}
+.ph h3{font-size:15px;font-weight:700;margin-top:6px;letter-spacing:-.01em}
+.ph p{font-size:12.4px;color:var(--dim);line-height:1.55;margin-top:8px;flex:1}
+.ph .st{display:flex;gap:8px;margin-top:12px}
+.ph .st div{flex:1;background:var(--card2);border-radius:10px;padding:9px 10px}
+.ph .st b{display:block;font-size:16px;font-weight:700}
+.ph .st span{font-size:10.5px;color:var(--dim)}
+
+/* what went live */
+.live{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.col{background:var(--card);border-radius:14px;box-shadow:var(--shadow);padding:18px 20px}
+.col h3{font-size:13px;font-weight:700;display:flex;justify-content:space-between;align-items:baseline}
+.col h3 span{font-size:11.5px;color:var(--faint);font-weight:600}
+.li{display:grid;grid-template-columns:78px minmax(0,1fr);gap:10px;padding:8px 0;border-bottom:1px solid var(--hair);font-size:12.4px;line-height:1.45}
+.li:last-child{border-bottom:0}
+.li .d{color:var(--faint);font-size:11.5px;font-variant-numeric:tabular-nums}
+.li .t{font-weight:650}
+.li .x{color:var(--dim);font-size:12px}
+.li .q{font-size:9.5px;font-weight:700;letter-spacing:.08em;color:var(--faint);margin-left:6px}
+
+/* table view */
+details.tv{margin-top:14px}
+details.tv summary{cursor:pointer;font-size:12px;font-weight:600;color:var(--dim)}
+.tbl{width:100%;border-collapse:collapse;margin-top:10px;font-size:12px;font-variant-numeric:tabular-nums}
+.tbl th,.tbl td{padding:7px 8px;border-bottom:1px solid var(--hair);text-align:right}
+.tbl th:first-child,.tbl td:first-child{text-align:left}
+.tbl th{font-size:10px;letter-spacing:.08em;color:var(--faint);font-weight:700}
+.tscroll{overflow-x:auto}
+
+.notes{background:var(--card);border-radius:14px;box-shadow:var(--shadow);padding:16px 20px;font-size:12px;color:var(--dim);line-height:1.6}
+.notes li{margin-left:16px}
+footer{margin-top:36px;font-size:11px;color:var(--faint);display:flex;flex-wrap:wrap;gap:6px;justify-content:space-between}
+
+@media (max-width: 940px){
+ body{padding:28px 0 72px}
+ .headline{font-size:30px}
+ .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .phases,.live,.moments{grid-template-columns:1fr}
+}
+@media (max-width: 600px){
+ .page{padding:0 16px}
+ .headline{font-size:25px;line-height:1.15}
+ .team{padding:16px}
+ .mo{grid-template-columns:22px 74px minmax(0,1fr)}
+}
+</style></head><body>
+<div class="page">
+ <div class="hrow">
+  <div>
+   <div class="brand nw">OPAL CAPITAL <span>&mdash; Year One Operating Review</span></div>
+   <div class="date nw" id="span"></div>
+  </div>
+  <div class="date nw" id="asof"></div>
+ </div>
+ <h1 class="headline nw" id="hl"></h1>
+ <div class="headsub nw" id="hsub"></div>
+
+ <div class="sect">ONE YEAR OF BUILDING</div>
+ <div class="filters" role="toolbar" aria-label="Chart controls">
+  <div class="fgroup" id="fcat"><span class="flab">EVENTS</span></div>
+  <div class="fgroup"><span class="flab">SCALE</span>
+   <button class="tg" type="button" data-scale="lin" aria-pressed="true">Linear</button>
+   <button class="tg" type="button" data-scale="log" aria-pressed="false">Log</button>
+  </div>
+ </div>
+ <div class="team" id="team">
+  <div class="trow"><div class="tread nw" id="tread"></div><div class="tnums nw" id="tnums"></div></div>
+  <div class="tlab" id="tlab">COMMITS PER WEEK, STACKED BY KIND OF WORK</div>
+  <div class="chart" id="chart"></div>
+  <div class="lanes" id="lanes"></div>
+  <div class="tkey" id="tkey"></div>
+  <div class="tmeth nw" id="tmeth"></div>
+  <div class="moments" id="moments"></div>
+  <details class="tv"><summary>Table view: commits by month</summary><div class="tscroll"><table class="tbl" id="tbl"></table></div></details>
+  <div class="tip" id="tip" role="status" aria-live="polite"></div>
+ </div>
+
+ <div class="sect">THE YEAR IN NUMBERS</div>
+ <div class="kpis" id="kpis"></div>
+
+ <div class="sect">HOW WE SCALED</div>
+ <div class="phases" id="phases"></div>
+
+ <div class="sect">WHAT WENT LIVE</div>
+ <div class="live" id="live"></div>
+
+ <div class="sect">HOW TO READ THIS PAGE</div>
+ <div class="notes" id="notes"></div>
+
+ <footer><span id="fsrc"></span><span>Opal Capital &mdash; internal</span></footer>
+</div>
+
+<script>
+const DATA={"weeks": ["2025-11-10", "2025-11-17", "2025-11-24", "2025-12-01", "2025-12-08", "2025-12-15", "2025-12-22", "2025-12-29", "2026-01-05", "2026-01-12", "2026-01-19", "2026-01-26", "2026-02-02", "2026-02-09", "2026-02-16", "2026-02-23", "2026-03-02", "2026-03-09", "2026-03-16", "2026-03-23", "2026-03-30", "2026-04-06", "2026-04-13", "2026-04-20", "2026-04-27", "2026-05-04", "2026-05-11", "2026-05-18", "2026-05-25", "2026-06-01", "2026-06-08", "2026-06-15", "2026-06-22", "2026-06-29", "2026-07-06", "2026-07-13", "2026-07-20", "2026-07-27", "2026-08-03", "2026-08-10", "2026-08-17", "2026-08-24", "2026-08-31", "2026-09-07", "2026-09-14", "2026-09-21", "2026-09-28"], "series": [["product", [1, 63, 11, 32, 25, 34, 30, 294, 102, 256, 343, 79, 221, 249, 331, 583, 409, 158, 166, 184, 109, 718, 594, 182, 319, 330, 466, 333, 237, 187, 222, 124, 381, 267, 471, 552, 363, 158, 262, 200, 227, 478, 158, 234, 255, 1028, 949]], ["delivery", [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 10, 2, 6, 4, 5, 15, 48, 16, 5, 4, 4, 32, 57, 76, 107, 60, 73, 220, 381, 116, 92, 36, 213, 186, 411, 590, 616, 444, 572, 920, 829, 2236, 520, 543, 932, 1788, 1434]], ["controls", [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 2, 121, 80, 19, 29, 44, 121, 248, 393, 716, 393, 311, 984, 1742, 519, 590, 370, 535, 720, 967, 958, 587, 513, 529, 536, 744, 2364, 1386, 1974, 2950, 3287, 4727]], ["other", [0, 3, 8, 10, 7, 7, 4, 30, 9, 33, 67, 15, 27, 33, 50, 70, 61, 23, 10, 9, 2, 38, 49, 114, 166, 62, 28, 251, 490, 64, 149, 121, 119, 197, 202, 122, 174, 115, 175, 76, 68, 64, 29, 69, 60, 93, 88]]], "months": [{"month": "2025-11", "total": 86, "workspace": 19, "portal": 67, "human": 86, "agent": 0, "product": 75, "delivery": 0, "controls": 0, "other": 11, "seats": 0, "identities": 0}, {"month": "2025-12", "total": 164, "workspace": 58, "portal": 106, "human": 164, "agent": 0, "product": 136, "delivery": 0, "controls": 0, "other": 28, "seats": 0, "identities": 0}, {"month": "2026-01", "total": 1226, "workspace": 838, "portal": 388, "human": 1226, "agent": 0, "product": 1059, "delivery": 13, "controls": 0, "other": 154, "seats": 0, "identities": 0}, {"month": "2026-02", "total": 1597, "workspace": 1250, "portal": 347, "human": 1597, "agent": 0, "product": 1383, "delivery": 30, "controls": 4, "other": 180, "seats": 0, "identities": 0}, {"month": "2026-03", "total": 1414, "workspace": 1175, "portal": 239, "human": 230, "agent": 1184, "product": 976, "delivery": 76, "controls": 259, "other": 103, "seats": 37, "identities": 37}, {"month": "2026-04", "total": 3837, "workspace": 3354, "portal": 483, "human": 74, "agent": 3763, "product": 1836, "delivery": 263, "controls": 1388, "other": 350, "seats": 48, "identities": 59}, {"month": "2026-05", "total": 6542, "workspace": 6274, "portal": 268, "human": 44, "agent": 6498, "product": 1394, "delivery": 744, "controls": 3554, "other": 850, "seats": 33, "identities": 58}, {"month": "2026-06", "total": 4638, "workspace": 4544, "portal": 94, "human": 2, "agent": 4636, "product": 1100, "delivery": 571, "controls": 2406, "other": 561, "seats": 24, "identities": 42}, {"month": "2026-07", "total": 7779, "workspace": 7700, "portal": 79, "human": 0, "agent": 7779, "product": 1613, "delivery": 2121, "controls": 3345, "other": 700, "seats": 24, "identities": 58}, {"month": "2026-08", "total": 10558, "workspace": 10418, "portal": 140, "human": 1, "agent": 10557, "product": 1198, "delivery": 4697, "controls": 4277, "other": 386, "seats": 21, "identities": 104}, {"month": "2026-09", "total": 18656, "workspace": 18039, "portal": 617, "human": 471, "agent": 18185, "product": 2038, "delivery": 4276, "controls": 12056, "other": 286, "seats": 23, "identities": 796}, {"month": "2026-10", "total": 3604, "workspace": 3429, "portal": 175, "human": 0, "agent": 3604, "product": 567, "delivery": 813, "controls": 2172, "other": 52, "seats": 7, "identities": 152}], "total": 60101, "by_repo": {"workspace": 57098, "portal": 3003}, "by_group": {"product": 13375, "delivery": 13604, "controls": 29461, "other": 3661}, "peak_week": {"week": "2026-09-28", "commits": 7198}, "first_commit": {"workspace": "2025-11-18T10:45:33-05:00", "portal": "2025-11-12T16:10:35-05:00"}, "first_agent_commit": {"date": "2026-03-02T22:23:17-05:00", "author": "1.0.0_SA_CTO", "commit": "e36a3901b5"}, "until": "2026-10-03", "method": "both repos, all refs, merges excluded; kind of work from the files each commit touched (daily_reports/scripts/commit_census.py rules), grouped into three bands plus a named residual", "claim": {"counts": "measured", "kind": "inferred"}, "events": [{"date": "2025-11-12", "cat": "system", "title": "Portal repository begins", "detail": "The client and advisor portal's first commit.", "claim": "measured", "evidence": "portal ddb7271a"}, {"date": "2025-11-18", "cat": "page", "title": "Market Overview, the portal's first page", "detail": "Built with the News Intelligence panel. In production by Jan 4, 2026.", "key": true, "claim": "measured", "evidence": "portal f2a24940, 64ed071e"}, {"date": "2025-11-18", "cat": "system", "title": "Workspace repository begins", "detail": "The news scanner, SmartX and Schwab code arrive with the first commit.", "claim": "measured", "evidence": "38057ad7e9"}, {"date": "2025-11-18", "cat": "partner", "title": "49 Financial data already in place", "detail": "Six months of its Schwab custodian data (from May 2025) was in storage at the first commit; the relationship predates the repositories.", "claim": "measured", "evidence": "38057ad7e9"}, {"date": "2025-11-22", "cat": "pipeline", "title": "News scanner in production", "detail": "Scheduled news ingestion verified; sentiment and trending topics feed the portal. Its code predates the repositories.", "key": true, "claim": "inferred", "evidence": "07b2ef9367"}, {"date": "2025-11-25", "cat": "page", "title": "Model Portfolios and Positioning", "detail": "In production by Jan 4, 2026.", "claim": "measured", "evidence": "portal bcb59ef5"}, {"date": "2025-12-04", "cat": "page", "title": "Factor Tilts", "detail": "In production by Jan 4, 2026.", "claim": "measured", "evidence": "portal e2ea4ff6"}, {"date": "2025-12-05", "cat": "page", "title": "Macroeconomics, Valuations and Correlations", "detail": "In production by Jan 4, 2026.", "claim": "measured", "evidence": "portal 5e27a87d"}, {"date": "2025-12-23", "cat": "page", "title": "Capital Market Assumptions", "detail": "Replaced by Investment Philosophy on Aug 11, 2026.", "claim": "measured", "evidence": "portal e9efa127"}, {"date": "2025-12-29", "cat": "page", "title": "Secure sign-in", "detail": "Login, forgot, reset and change password.", "claim": "measured", "evidence": "portal 1dcc2a55"}, {"date": "2026-01-03", "cat": "pipeline", "title": "SmartX ingest automated", "detail": "Model accounts, assets and performance from SmartX on a cloud server.", "claim": "inferred", "evidence": "9a4cc1e60d"}, {"date": "2026-01-04", "cat": "system", "title": "Portal live in production", "detail": "First recorded production release behind CloudFront: eight analysis pages and sign-in.", "key": true, "claim": "inferred", "evidence": "portal a0de9996, 6b89bdb7"}, {"date": "2026-01-13", "cat": "pipeline", "title": "Black Diamond pipeline for 49 Financial", "detail": "Exporter and data pipeline; scheduled orchestration from Feb 12.", "claim": "measured", "evidence": "c4eeb4b8d6, a5dab4686e"}, {"date": "2026-01-15", "cat": "page", "title": "Advisor Intelligence, built on 49 Financial data", "detail": "Partner analytics page; open to all internal users Apr 1, partner editions from Apr 15.", "key": true, "claim": "measured", "evidence": "portal 162c44fd; 1c9543620e"}, {"date": "2026-01-19", "cat": "page", "title": "Portfolio Management and Data Refresh", "detail": "Opened to users on production Feb 25.", "claim": "measured", "evidence": "portal c3d6fef2, 6df01302"}, {"date": "2026-01-20", "cat": "page", "title": "Trade Submission", "detail": "Opened on production Feb 25; partner firms from Apr 29.", "claim": "measured", "evidence": "portal 335151cf"}, {"date": "2026-02-03", "cat": "system", "title": "All 43 Lambdas under Terraform", "detail": "Cloud functions defined in versioned code, after a first pilot on Feb 2.", "key": true, "claim": "measured", "evidence": "e671d9c215, 0c85796c8a"}, {"date": "2026-02-09", "cat": "page", "title": "Attribution", "detail": "Split out of Positioning; in production by Feb 17.", "claim": "measured", "evidence": "portal 90ee5a3e"}, {"date": "2026-02-17", "cat": "pipeline", "title": "Seeking Alpha research scraper", "detail": "Cloud scraper on a schedule.", "claim": "inferred", "evidence": "eae1689fd0, a3c888534e"}, {"date": "2026-02-23", "cat": "pipeline", "title": "Market prices for Market Overview", "detail": "Historical price pipeline on a schedule.", "claim": "inferred", "evidence": "48b8a27664"}, {"date": "2026-03-02", "cat": "system", "title": "AI agent organization founded", "detail": "First commit by an agent seat; agents wrote 83% of March commits and nearly all from April.", "key": true, "claim": "measured", "evidence": "8129d3fcb3, e36a3901b5"}, {"date": "2026-03-04", "cat": "partner", "title": "Partner identity checked at sign-in", "detail": "49 Financial first; the start of a multi-partner portal.", "claim": "measured", "evidence": "3ac75f9d81"}, {"date": "2026-03-05", "cat": "page", "title": "Security Scanner", "detail": "All internal users from Mar 10.", "claim": "measured", "evidence": "portal-v2.1.7"}, {"date": "2026-03-23", "cat": "system", "title": "Portal deploys itself on every production push", "detail": "Validate, build, publish and tag, automatically.", "claim": "measured", "evidence": "portal 8f5b18ce"}, {"date": "2026-03-26", "cat": "system", "title": "Agent message broker", "detail": "The switchboard agents use to register, report and hand off work.", "claim": "measured", "evidence": "d331613ad7"}, {"date": "2026-04-07", "cat": "system", "title": "Compiler tools and dependency graph", "detail": "In-house tools to search and map code and cloud; 98 tools by August.", "claim": "measured", "evidence": "98dd7b1f1e"}, {"date": "2026-04-15", "cat": "partner", "title": "49 Financial live on the portal", "detail": "First partner firm: Market Overview, Model Portfolios and its own Advisor Intelligence edition.", "key": true, "claim": "measured", "evidence": "portal-v2.1.50"}, {"date": "2026-04-21", "cat": "partner", "title": "Inflection onboarding begins", "detail": "Orion data pipeline, exporter and portal access; onboarding complete May 22. Its advisors began sending client work to Opal's investment team the same day (email).", "claim": "measured", "evidence": "1c611056af"}, {"date": "2026-04-24", "cat": "partner", "title": "Inflection live on the portal", "detail": "Its own Advisor Intelligence edition, on Orion data.", "key": true, "claim": "measured", "evidence": "portal-v2.1.60"}, {"date": "2026-04-29", "cat": "partner", "title": "Cottonwood onboarded and live", "detail": "Registered, given portal access and smoke-tested the same day.", "key": true, "claim": "measured", "evidence": "3e97f7947c; portal-v2.1.65"}, {"date": "2026-05-07", "cat": "pipeline", "title": "Orion pipeline for Inflection", "detail": "Daily position and transaction pulls; about six years of history backfilled.", "claim": "inferred", "evidence": "253821db1c"}, {"date": "2026-05-14", "cat": "pipeline", "title": "Eclipse model ingestion for Inflection", "detail": "Inflection model portfolios and account overlay.", "claim": "measured", "evidence": "23d2e2c546"}, {"date": "2026-05-18", "cat": "pipeline", "title": "Model portfolios refresh daily for every partner", "detail": "Assets under advisement per partner and in aggregate.", "key": true, "claim": "measured", "evidence": "864c6b2500"}, {"date": "2026-05-21", "cat": "pipeline", "title": "YCharts and FRED market data", "detail": "Market and macro data on schedules.", "claim": "inferred", "evidence": "586733c01b, b0e05c363a"}, {"date": "2026-05-22", "cat": "system", "title": "Governance layer and decision ledger", "detail": "A supervising agent and a numbered record of Andrew's decisions; 617 decisions by September.", "claim": "measured", "evidence": "e9546d7003"}, {"date": "2026-05-28", "cat": "partner", "title": "Demo tenant live for prospects", "detail": "A copy of 49 Financial's data with all personal details replaced.", "claim": "measured", "evidence": "portal-v2.1.100; db0883eafe"}, {"date": "2026-06-09", "cat": "pipeline", "title": "Black Diamond pipeline for Cottonwood", "detail": "Schedules enabled for Cottonwood's book of business.", "claim": "inferred", "evidence": "1df206c882"}, {"date": "2026-06-12", "cat": "system", "title": "Deploy record for every cloud change", "detail": "Each change opens a record and closes only with proof; 1,334 records to date.", "claim": "measured", "evidence": "a1506a0a4f"}, {"date": "2026-06-22", "cat": "partner", "title": "Cottonwood Advisor Intelligence launched", "detail": "Its own edition; recorded live Jun 23.", "claim": "inferred", "evidence": "b61982881e"}, {"date": "2026-06-23", "cat": "system", "title": "Opal gateway live", "detail": "Teams, email and Opal data available inside Claude under each person's own access; YCharts tools Jul 1.", "key": true, "claim": "measured", "evidence": "ledger 20260623T1731Z"}, {"date": "2026-06-25", "cat": "pipeline", "title": "Daily Opal ETF ownership for each partner", "detail": "Per-firm holdings of Opal ETFs and the monthly ownership report.", "claim": "inferred", "evidence": "349c91e35b, 3f617291dc"}, {"date": "2026-06-29", "cat": "partner", "title": "Five partner users signed in on production", "detail": "Three at Cottonwood and two at Inflection. The same day Cottonwood's founder had an Opal Dashboard walkthrough and Inflection asked for more logins, calling it 'an awesome tool' (email).", "claim": "measured", "evidence": "94e13605a4, 5e7b8da9e4"}, {"date": "2026-07-02", "cat": "system", "title": "Cross-device agent bus", "detail": "Two machines, two agent teams working in parallel.", "claim": "inferred", "evidence": "6d25c4165b"}, {"date": "2026-07-14", "cat": "pipeline", "title": "Schwab becomes 49 Financial's source of record", "detail": "First scheduled Schwab runs verified for both master accounts.", "key": true, "claim": "measured", "evidence": "d827e1147b"}, {"date": "2026-07-15", "cat": "page", "title": "Ticket Center", "detail": "Internal request board.", "claim": "measured", "evidence": "portal-v2.1.136"}, {"date": "2026-07-15", "cat": "system", "title": "Bloomberg terminal data flows in", "detail": "Automated intake; tunnel live Jul 30.", "claim": "measured", "evidence": "63a5b8bdd2"}, {"date": "2026-08-11", "cat": "page", "title": "Investment Philosophy", "detail": "Replaces Capital Market Assumptions; all four partner firms keep access.", "claim": "measured", "evidence": "portal-v2.1.161"}, {"date": "2026-08-19", "cat": "pipeline", "title": "Schwab-based Advisor Intelligence for 49 Financial", "detail": "Serving layer applied on the new source of record.", "claim": "measured", "evidence": "647c432a7d"}, {"date": "2026-08-21", "cat": "system", "title": "Surprise channel in use", "detail": "Any agent logs an unexpected finding and keeps working.", "claim": "measured", "evidence": "01834861ff"}, {"date": "2026-08-25", "cat": "pipeline", "title": "ETF Positioning producer", "detail": "First scheduled run proven on content.", "claim": "measured", "evidence": "146203af16"}, {"date": "2026-08-27", "cat": "pipeline", "title": "Opal Satellites for Cottonwood", "detail": "Registry and characteristics producers on schedules.", "claim": "inferred", "evidence": "3f5f8bace5"}, {"date": "2026-08-28", "cat": "system", "title": "Daily Operating Report at mcp.opalinvest.dev/sprint", "detail": "Behind company sign-in; written automatically in the cloud every night from Sep 11.", "key": true, "claim": "measured", "evidence": "ledger 20260828T1758Z"}, {"date": "2026-09-03", "cat": "system", "title": "Ten-step workflow with worker agents", "detail": "One owner per step; disposable worker agents do the build steps (771 so far).", "key": true, "claim": "measured", "evidence": "c3602bcf1a"}, {"date": "2026-09-10", "cat": "pipeline", "title": "Investor Reporting backend deployed", "detail": "Client directory, permissions and performance data for all three firms; not yet in client use.", "claim": "measured", "evidence": "f44cab8208"}, {"date": "2026-09-14", "cat": "pipeline", "title": "Research harvest", "detail": "Barron's, WSJ, FT and filings for asset-management research.", "claim": "inferred", "evidence": "ea6cd450fa"}, {"date": "2026-09-15", "cat": "page", "title": "Investor Reporting on production", "detail": "Internal preview for Opal admins, with print and download.", "key": true, "claim": "measured", "evidence": "portal-v2.1.178"}, {"date": "2026-09-15", "cat": "system", "title": "One naming standard for every pipeline", "detail": "Storage homes and resource names generated from one canon, then enforced.", "claim": "measured", "evidence": "845abef6c9, a925c8a642"}, {"date": "2026-09-17", "cat": "page", "title": "Security Analysis", "detail": "Internal preview; 30, 90 and 365-day views added Oct 3.", "claim": "measured", "evidence": "portal-v2.1.180"}, {"date": "2026-09-25", "cat": "system", "title": "Opal tool index and Opal Analyst", "detail": "One catalog of Opal data for Claude, and a Teams-facing analyst built on it.", "claim": "inferred", "evidence": "ledger nfra-mcportal-r2"}, {"date": "2026-09-30", "cat": "page", "title": "Rival Funds research page", "detail": "On mcp.opalinvest.dev/rivalfunds.", "claim": "measured", "evidence": "ledger 20260930T1013Z"}, {"date": "2026-09-30", "cat": "partner", "title": "Teams analyst for partner firms started", "detail": "Inflection and Cottonwood first.", "claim": "measured", "evidence": "6cc12c2e06"}, {"date": "2026-10-02", "cat": "system", "title": "End of Day Teams assistant", "detail": "Drafts the End of Day post and sends only on Andrew's approval; idea to live in about a day.", "claim": "measured", "evidence": "ledger 20261002T0535Z"}, {"date": "2026-07-08", "cat": "partner", "title": "Dashboard used to reconcile Inflection's books", "detail": "Inflection advisor assets on the dashboard checked against Orion; billing gaps diagnosed from the dashboard's billing field on Aug 11.", "claim": "measured", "evidence": "email, 2026-07-08 and 2026-08-11, Opal and Inflection"}, {"date": "2026-09-01", "cat": "partner", "title": "Cottonwood asks for Attribution and Factor Tilts; live same day", "detail": "Requested in a meeting with Cottonwood's leadership and added to their dashboard that afternoon; the deploy tag shows the same date.", "claim": "measured", "evidence": "email, 2026-09-01, Opal and Cottonwood; portal-v2.1.175"}, {"date": "2026-09-14", "cat": "partner", "title": "Prospect demo: VM Wealth Partners", "detail": "Advisor Intelligence Dashboard walkthrough on the demo tenant; capability roadmap shared with Alongside on Sep 21.", "claim": "measured", "evidence": "email, 2026-09-09 to 2026-09-21, Opal, Alongside, prospect"}, {"date": "2026-09-28", "cat": "partner", "title": "About $2.1B of partner-firm assets managed by Opal", "detail": "49 Financial about $1.77B, Cottonwood about $179M, Inflection about $145M; Opal ETFs about $650M of it. Reported to Alongside, which calls Opal its key partner.", "key": true, "claim": "measured", "evidence": "email, 2026-09-30, Opal to Alongside (figures as of Sep 28)"}, {"date": "2026-09-28", "cat": "partner", "title": "49 Financial operations asks for a platform review", "detail": "Its operations and advisor-technology lead asked for the current and future state of the platform; Performance System Review scheduled.", "claim": "measured", "evidence": "email, 2026-09-28 to 2026-10-01, 49 Financial"}, {"date": "2026-10-01", "cat": "partner", "title": "Opal bridges Cottonwood's historical-performance gap", "detail": "Cottonwood's Black Diamond history conversion slipped to late December or January; Opal supplied legacy-model performance in the meantime.", "claim": "measured", "evidence": "email, 2026-10-01, Alongside and Opal"}], "page": {"headline": "Year one: 3 partner firms live, 17 portal pages, and 114 times the monthly build rate", "sub": "Since the portal (Nov 12, 2025) and workspace (Nov 18, 2025) repositories began: 60,101 commits across both. Andrew built alone through February; an AI agent organization joined on Mar 2, 2026 and now writes almost every commit.", "span": "November 2025 to October 2026", "chart_read": "Weekly commits rose from a few dozen to 7,198 at the peak. Agents took over in March, and monthly volume has more than doubled every two months on average since.", "source": "Sources: git history of ajb_workspace and portal (all branches); portal deploy tags; deploy ledger org/critical_paths/change_management; research files in this folder", "categories": [["partner", "Partners"], ["page", "Portal pages"], ["pipeline", "Pipelines"], ["system", "Systems"]], "kpis": [["60,101", "commits in the year, both repositories"], ["114x", "monthly commit volume, Dec 2025 (164) to Sep 2026 (18,656)"], ["17", "portal pages in the navigation today"], ["3", "partner firms live on the portal, plus a demo tenant"], ["34", "scheduled pipeline setups, up from 5 in February"], ["$2.1B", "partner-firm assets managed by Opal on the platform (Sep 28, email)"]], "phases": [{"when": "NOV 2025 - FEB 2026", "name": "Founder build", "text": "Andrew built alone: the news scanner, Market Overview and seven more analysis pages live by Jan 4, Advisor Intelligence on 49 Financial data, and every Lambda moved under Terraform.", "stats": [["3,073", "commits"], ["1", "author"]]}, {"when": "MAR - APR 2026", "name": "Agents join", "text": "An AI agent organization starts committing on Mar 2. The portal deploys itself on every production push from Mar 23, and the first three partner firms go live between Apr 15 and Apr 29.", "stats": [["5,251", "commits"], ["48", "agent seats in April"]]}, {"when": "MAY - JUL 2026", "name": "An operating fabric", "text": "Model portfolios refresh daily for every partner, the Opal gateway brings Teams, email and data into Claude, every cloud change gets a deploy record, and Schwab becomes 49 Financial's source of record.", "stats": [["18,959", "commits"], ["136", "active projects in July"]]}, {"when": "AUG - OCT 2026", "name": "Scale", "text": "A ten-step workflow hands build steps to disposable worker agents. The daily operating report goes live, the Investor Reporting backend is deployed, and September closes at 18,656 commits.", "stats": [["32,818", "commits"], ["796", "agent identities in September"]]}], "notes": ["A commit is one saved change. Counts cover both repositories, all branches, with merges excluded, and are measured from git.", "The kind of work (the three colored bands) is inferred from the files each commit touched, using the same rules as the Daily Operating Report.", "Commit volume measures activity, not output. Product-build commits rose about 15 times (136 in December to 2,038 in September); most of the added volume is coordination and controls (49% of the year), the records that let many agents work in parallel safely.", "Portal page dates are the day each page was first built (measured). Production dates before Feb 26, 2026 are bounds, because the portal's deploy tags start that day.", "Pipeline dates are the day a schedule first appeared in the infrastructure code unless a first run is cited, so they are marked inferred.", "Partner context and the $2.1B figure come from Andrew's Outlook (read-only pass, Oct 4, 2026); they are cited as email, date and organization, and carry no personal details.", "The news scanner and the 49 Financial relationship both predate the repositories; their dates here are the earliest git evidence.", "Not covered: the opal_ai and mcportal repositories, and the separate tradeops fabric."]}, "groups": [["product", "Product build", "Portal screens, back-end services, data pipelines"], ["delivery", "Planning, testing and delivery", "Designs, specifications, tests, finished deliverables"], ["controls", "Coordination and controls", "Task orders, governance records, audit logs, tooling"], ["other", "Unclassified", "Paths no rule claims (named residual)"]]};
+const esc=s=>String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+const fmt=n=>Number(n).toLocaleString("en-US");
+const MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const pd=s=>{const [y,m,d]=s.split("-").map(Number);return new Date(Date.UTC(y,m-1,d));};
+const nice=s=>{const d=pd(s);return MON[d.getUTCMonth()]+" "+d.getUTCDate()+", "+d.getUTCFullYear();};
+const short=s=>{const d=pd(s);return MON[d.getUTCMonth()]+" "+d.getUTCDate()+" '"+String(d.getUTCFullYear()).slice(2);};
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const CAT=DATA.page.categories;            /* [[key,label],...] fixed order */
+const CATL=Object.fromEntries(CAT);
+const GROUP=DATA.groups;                    /* [[key,label,desc],...] stack order bottom->top */
+const state={scale:"lin",cats:new Set(CAT.map(c=>c[0]))};
+
+document.getElementById("hl").textContent=DATA.page.headline;
+document.getElementById("hsub").textContent=DATA.page.sub;
+document.getElementById("span").textContent=DATA.page.span;
+document.getElementById("asof").textContent="Data through "+nice(DATA.until);
+document.getElementById("tread").textContent=DATA.page.chart_read;
+document.getElementById("tnums").textContent=fmt(DATA.total)+" commits \u00b7 "+DATA.weeks.length+" weeks";
+document.getElementById("tmeth").textContent="Method: "+DATA.method+". Counts measured; kind of work inferred. Event dates: see each item's claim.";
+document.getElementById("fsrc").textContent=DATA.page.source;
+
+/* event numbering: key events in date order */
+const EV=DATA.events.slice().sort((a,b)=>a.date<b.date?-1:a.date>b.date?1:0);
+let kn=0; EV.forEach(e=>{if(e.key)e.n=++kn;});
+
+/* filter chips */
+const fcat=document.getElementById("fcat");
+CAT.forEach(([k,l])=>{const b=document.createElement("button");b.type="button";b.className="tg";b.dataset.cat=k;
+ b.setAttribute("aria-pressed","true");b.innerHTML=`<span class="ln"></span>${esc(l)} <span style="color:var(--faint)">${EV.filter(e=>e.cat===k).length}</span>`;fcat.appendChild(b);});
+fcat.addEventListener("click",e=>{const b=e.target.closest("[data-cat]");if(!b)return;const k=b.dataset.cat;
+ state.cats.has(k)?state.cats.delete(k):state.cats.add(k);b.setAttribute("aria-pressed",String(state.cats.has(k)));draw();});
+document.querySelectorAll("[data-scale]").forEach(b=>b.addEventListener("click",()=>{state.scale=b.dataset.scale;
+ document.querySelectorAll("[data-scale]").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));draw();}));
+
+const W0=1100,PL=56,PR=170,PT=46,PB=34;
+function geom(){const narrow=window.matchMedia("(max-width:600px)").matches;
+ return narrow?{W:560,H:360,PL:40,PR:12,PT:40,PB:30,fs:12,lane:22,labels:false}:{W:W0,H:430,PL,PR,PT,PB,fs:11,lane:24,labels:true};}
+
+function draw(){
+ const g=geom(), n=DATA.weeks.length, W=g.W, H=g.H;
+ document.getElementById("tlab").textContent=state.scale==="lin"?"COMMITS PER WEEK, STACKED BY KIND OF WORK":"ALL COMMITS PER WEEK, LOG SCALE";
+ const t0=pd(DATA.weeks[0]).getTime(), t1=pd(DATA.weeks[n-1]).getTime();
+ const X=t=>g.PL+(W-g.PL-g.PR)*(t-t0)/(t1-t0);
+ const Xi=i=>X(pd(DATA.weeks[i]).getTime());
+ const ser=GROUP.map(([k])=>DATA.series.find(s=>s[0]===k)[1]);
+ const tot=DATA.weeks.map((_,i)=>ser.reduce((a,s)=>a+s[i],0));
+ const top=Math.max(...tot);
+ let Y;
+ if(state.scale==="lin"){const ymax=Math.ceil(top/1000)*1000;Y=v=>g.PT+(H-g.PT-g.PB)*(1-v/ymax);Y.ticks=[0,ymax/4,ymax/2,3*ymax/4,ymax];}
+ else{const lo=Math.log10(10),hi=Math.log10(Math.pow(10,Math.ceil(Math.log10(top))));
+  Y=v=>g.PT+(H-g.PT-g.PB)*(1-(Math.log10(Math.max(v,10))-lo)/(hi-lo));Y.ticks=[10,100,1000,10000].filter(v=>Math.log10(v)<=hi);}
+ let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Commits per week from ${esc(nice(DATA.weeks[0]))} to ${esc(nice(DATA.weeks[n-1]))}, peaking at ${fmt(top)}">`;
+ /* recessive solid hairline grid + y ticks */
+ Y.ticks.forEach(v=>{s+=`<line x1="${g.PL}" x2="${W-g.PR}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--hair)"/>
+  <text x="${g.PL-8}" y="${Y(v)+4}" text-anchor="end" font-size="${g.fs}" fill="var(--dim)" style="font-variant-numeric:tabular-nums">${fmt(v)}</text>`;});
+ /* month ticks */
+ const d0=pd(DATA.weeks[0]); let mm=new Date(Date.UTC(d0.getUTCFullYear(),d0.getUTCMonth()+1,1));
+ const end=t1+6*864e5;
+ while(mm.getTime()<=end){const x=X(Math.min(mm.getTime(),t1));const m=mm.getUTCMonth();
+  const lab=(g.labels||m%2===0)?(MON[m]+(m===0||mm.getTime()===Date.UTC(2025,11,1)?" '"+String(mm.getUTCFullYear()).slice(2):"")):"";
+  s+=`<line x1="${x}" x2="${x}" y1="${H-g.PB}" y2="${H-g.PB+5}" stroke="var(--axis)"/><text x="${x}" y="${H-g.PB+19}" text-anchor="middle" font-size="${g.fs}" fill="var(--dim)">${lab}</text>`;
+  mm=new Date(Date.UTC(mm.getUTCFullYear(),mm.getUTCMonth()+1,1));}
+ /* bands */
+ if(state.scale==="lin"){
+  const cum=[];DATA.weeks.forEach((_,i)=>{let a=0;cum.push(ser.map(v=>a+=v[i]));});
+  for(let k=0;k<GROUP.length;k++){const up=[],dn=[];
+   for(let i=0;i<n;i++){up.push(`${Xi(i).toFixed(1)},${Y(cum[i][k]).toFixed(1)}`);dn.push(`${Xi(i).toFixed(1)},${Y(k?cum[i][k-1]:0).toFixed(1)}`);}
+   s+=`<path d="M${up.join(" L")} L${dn.reverse().join(" L")} Z" fill="var(--s-${GROUP[k][0]})" stroke="var(--card)" stroke-width="1.5" stroke-linejoin="round"/>`;}
+  /* direct labels at the right end, only where the band is tall enough */
+  /* top band first, each label pushed below the previous one so two-line labels never collide;
+     the residual band is not direct-labelled (legend + table carry it) */
+  if(g.labels){const i=n-1;let floor=-1e9;
+   for(let k=GROUP.length-1;k>=0;k--){if(GROUP[k][0]==="other"||ser[k][i]<=0)continue;
+    const yTop=Y(cum[i][k]),yBot=Y(k?cum[i][k-1]:0);
+    const yy=Math.max((yTop+yBot)/2,floor+28);
+    s+=`<line x1="${Xi(i)+3}" x2="${W-g.PR+6}" y1="${(yTop+yBot)/2}" y2="${yy-4}" stroke="var(--axis)"/>
+     <text x="${W-g.PR+10}" y="${yy}" font-size="11.5" font-weight="700" fill="var(--ink)">${esc(GROUP[k][1])}</text>
+     <text x="${W-g.PR+10}" y="${yy+13}" font-size="10.5" fill="var(--dim)">${fmt(ser[k][i])} in the last week</text>`;floor=yy;}}
+ }else{
+  const up=tot.map((v,i)=>`${Xi(i).toFixed(1)},${Y(v).toFixed(1)}`);
+  s+=`<path d="M${up.join(" L")} L${Xi(n-1)},${H-g.PB} L${Xi(0)},${H-g.PB} Z" fill="var(--s-product)" fill-opacity=".9"/>`;
+  if(g.labels)s+=`<text x="${W-g.PR+10}" y="${Y(tot[n-1])+4}" font-size="11.5" font-weight="700" fill="var(--ink)">All commits</text>
+   <text x="${W-g.PR+10}" y="${Y(tot[n-1])+17}" font-size="10.5" fill="var(--dim)">log scale: equal steps = 10x</text>`;
+ }
+ s+=`<line x1="${g.PL}" x2="${W-g.PR}" y1="${H-g.PB}" y2="${H-g.PB}" stroke="var(--axis)"/>`;
+ /* key event lines with numbered heads, staggered when close */
+ const keyEv=EV.filter(e=>e.key&&state.cats.has(e.cat));let lastX=-99,lvl=0;
+ keyEv.forEach(e=>{const x=X(pd(e.date).getTime());lvl=(x-lastX<20)?(lvl+1)%3:0;lastX=x;const hy=10+lvl*13;
+  s+=`<line x1="${x}" x2="${x}" y1="${hy+7}" y2="${H-g.PB}" stroke="var(--ev-soft)" stroke-width="1"/>
+   <g class="evh" data-id="${e.n}" tabindex="0"><circle cx="${x}" cy="${hy}" r="8" fill="var(--ev)" stroke="var(--card)" stroke-width="2"/>
+   <text x="${x}" y="${hy+3.5}" text-anchor="middle" font-size="9.5" font-weight="700" fill="var(--card)">${e.n}</text>
+   <circle cx="${x}" cy="${hy}" r="13" fill="transparent"/></g>`;});
+ /* hover capture */
+ s+=`<rect id="hit" x="${g.PL}" y="${g.PT}" width="${W-g.PL-g.PR}" height="${H-g.PT-g.PB}" fill="transparent"/><line id="xh" x1="0" x2="0" y1="${g.PT}" y2="${H-g.PB}" stroke="var(--ink)" stroke-width="1" visibility="hidden"/></svg>`;
+ document.getElementById("chart").innerHTML=s;
+
+ /* swimlanes on the same time axis: every event, by category */
+ const L=CAT.length, LH=g.lane, LHgt=L*LH+10;
+ let l=`<svg viewBox="0 0 ${W} ${LHgt}" role="img" aria-label="Events by category on the same timeline">`;
+ CAT.forEach(([k,lab],r)=>{const y=r*LH+LH/2+4,on=state.cats.has(k);
+  l+=`<line x1="${g.PL}" x2="${W-g.PR}" y1="${y}" y2="${y}" stroke="var(--hair)"/>
+   <text x="${g.labels?g.PL-8:g.PL}" y="${g.labels?y+4:y-7}" text-anchor="${g.labels?"end":"start"}" font-size="${g.labels?10.5:10}" font-weight="700" fill="${on?"var(--dim)":"var(--axis)"}">${esc(lab.toUpperCase())}</text>`;
+  EV.filter(e=>e.cat===k).forEach(e=>{const x=X(pd(e.date).getTime());
+   l+=`<g class="evd" data-i="${EV.indexOf(e)}" tabindex="0" opacity="${on?1:.15}"><circle cx="${x}" cy="${y}" r="${e.key?5:3.5}" fill="${e.key?"var(--ev)":"var(--card)"}" stroke="var(--ev)" stroke-width="1.5"/><circle cx="${x}" cy="${y}" r="11" fill="transparent"/></g>`;});});
+ l+=`</svg>`;document.getElementById("lanes").innerHTML=l;
+
+ /* legend: shares of the year */
+ const tsum=DATA.total;
+ document.getElementById("tkey").innerHTML=GROUP.map(([k,lab,desc])=>{const v=DATA.by_group[k];const p=100*v/tsum;
+  return `<span title="${esc(desc)}"><i style="background:var(--s-${k})"></i><b>${esc(lab)}</b>${p<1&&p>0?"<1":Math.round(p)}% \u00b7 ${esc(desc)}</span>`;}).join("");
+
+ /* key moments list */
+ document.getElementById("moments").innerHTML=EV.filter(e=>e.key).map(e=>
+  `<div class="mo${state.cats.has(e.cat)?"":" hide"}"><span class="n">${e.n}</span><span class="d">${esc(short(e.date))}</span><span><b>${esc(e.title)}</b><span class="c">${esc(CATL[e.cat].toUpperCase())}</span></span></div>`).join("");
+ wire(X,Xi,tot,ser,g,W);
+}
+
+function wire(X,Xi,tot,ser,g,W){
+ const team=document.getElementById("team"),tip=document.getElementById("tip");
+ const svg=document.querySelector("#chart svg"),xh=svg.querySelector("#xh");
+ const place=(cx,cy)=>{const r=team.getBoundingClientRect();tip.style.display="block";
+  let x=cx-r.left+14,y=cy-r.top+14;if(x+tip.offsetWidth>r.width-8)x=cx-r.left-tip.offsetWidth-14;tip.style.left=x+"px";tip.style.top=y+"px";};
+ const hide=()=>{tip.style.display="none";xh.setAttribute("visibility","hidden");};
+ const weekTip=i=>{const w=DATA.weeks[i],nx=DATA.weeks[i+1];
+  const evs=EV.filter(e=>state.cats.has(e.cat)&&e.date>=w&&(!nx||e.date<nx));
+  return `<b>Week of ${esc(nice(w))}</b><div class="r"><span>All commits</span><b>${fmt(tot[i])}</b></div>`+
+   GROUP.slice().reverse().map(([k,lab])=>{const v=ser[GROUP.findIndex(x=>x[0]===k)][i];return `<div class="r"><span><span class="sw" style="background:var(--s-${k})"></span>${esc(lab)}</span><span>${fmt(v)}</span></div>`;}).join("")+
+   (evs.length?`<div class="ev">${evs.map(e=>(e.n?`<b>${e.n}</b> `:"")+esc(e.title)).join("<br>")}</div>`:"");};
+ const evTip=e=>`<b>${esc(e.title)}</b><div style="color:var(--dim)">${esc(CATL[e.cat])} \u00b7 ${esc(nice(e.date))}</div>`+
+   (e.detail?`<div style="margin-top:5px">${esc(e.detail)}</div>`:"")+`<div style="margin-top:5px;color:var(--faint);font-size:11px">${esc(e.claim)}${e.evidence?" \u00b7 "+esc(e.evidence):""}</div>`;
+ svg.querySelector("#hit").addEventListener("mousemove",ev=>{const p=svg.createSVGPoint();p.x=ev.clientX;p.y=ev.clientY;
+  const loc=p.matrixTransform(svg.getScreenCTM().inverse());let bi=0,bd=1e9;
+  DATA.weeks.forEach((_,i)=>{const d=Math.abs(Xi(i)-loc.x);if(d<bd){bd=d;bi=i;}});
+  xh.setAttribute("x1",Xi(bi));xh.setAttribute("x2",Xi(bi));xh.setAttribute("visibility","visible");tip.innerHTML=weekTip(bi);place(ev.clientX,ev.clientY);});
+ svg.querySelector("#hit").addEventListener("mouseleave",hide);
+ const evOn=(el,e)=>{const show=(cx,cy)=>{tip.innerHTML=evTip(e);place(cx,cy);};
+  el.addEventListener("mouseenter",x=>show(x.clientX,x.clientY));el.addEventListener("mouseleave",hide);
+  el.addEventListener("focus",()=>{const b=el.getBoundingClientRect();show(b.right,b.top);});el.addEventListener("blur",hide);};
+ document.querySelectorAll(".evh").forEach(el=>evOn(el,EV.find(e=>e.n===+el.dataset.id)));
+ document.querySelectorAll(".evd").forEach(el=>evOn(el,EV[+el.dataset.i]));
+}
+
+/* KPIs, phases, live lists, table, notes */
+document.getElementById("kpis").innerHTML=DATA.page.kpis.map(([v,l])=>`<div class="kpi"><b>${esc(v)}</b><span>${esc(l)}</span></div>`).join("");
+document.getElementById("phases").innerHTML=DATA.page.phases.map(p=>`<div class="ph"><div class="when">${esc(p.when)}</div><h3>${esc(p.name)}</h3><p>${esc(p.text)}</p>
+ <div class="st">${p.stats.map(([b,s])=>`<div><b>${esc(b)}</b><span>${esc(s)}</span></div>`).join("")}</div></div>`).join("");
+document.getElementById("live").innerHTML=CAT.map(([k,lab])=>{const items=EV.filter(e=>e.cat===k);
+ return `<div class="col"><h3>${esc(lab)}<span>${items.length}</span></h3>${items.map(e=>`<div class="li"><span class="d">${esc(short(e.date))}</span><span><span class="t">${esc(e.title)}</span>${e.claim==="inferred"?'<span class="q">INFERRED DATE</span>':""}${e.detail?`<div class="x">${esc(e.detail)}</div>`:""}</span></div>`).join("")}</div>`;}).join("");
+{const M=DATA.months;const cols=[["month","Month"],["total","All"],["workspace","Workspace"],["portal","Portal"],["product","Product build"],["delivery","Plan/test/deliver"],["controls","Coord./controls"],["other","Unclassified"],["human","By Andrew"],["agent","By agents"],["seats","Agent seats"]];
+ document.getElementById("tbl").innerHTML=`<thead><tr>${cols.map(c=>`<th scope="col">${c[1]}</th>`).join("")}</tr></thead><tbody>`+
+  M.map(r=>`<tr>${cols.map(([k])=>`<td>${k==="month"?esc(MON[+r.month.slice(5)-1]+" "+r.month.slice(0,4)):fmt(r[k])}</td>`).join("")}</tr>`).join("")+`</tbody>`;}
+document.getElementById("notes").innerHTML="<ul>"+DATA.page.notes.map(n=>`<li>${esc(n)}</li>`).join("")+"</ul>";
+
+draw();
+let rt;window.addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(draw,120);});
+</script>
+</body></html>

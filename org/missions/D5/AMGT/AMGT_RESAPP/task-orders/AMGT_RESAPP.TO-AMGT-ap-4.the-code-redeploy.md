@@ -102,6 +102,7 @@ generation rows, not "not produced yet"; c22 grades them, and c10 is re-read for
 <slot>0.7.0_AE_CloudOps~A</slot>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
+<proof_genre>DEPLOY</proof_genre>
 <worker_class>worker</worker_class>
 
 **ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-04 ~00:5xZ):** CLOSED. AE~A `abb9bd85de` built at pin `b642e313f9` (355 / 350 / 5).

@@ -26,8 +26,10 @@ comp-adversary: DECLARED-NOT-APPLICABLE the validator-context composer profiles 
 - Interface: an `index_control` fund is queried on its own per date under a cap >= 2,500 and < 50,000; the range read never
   truncates silently; an overflow is a per-name partial (PARTIAL, the fund named, the others land); `universe` reads
   `RIVALFUNDS_LEG_D12` (the HOME entries' `pending_source_policy`: IDVZ, PFOE) and `RIVALFUNDS_LEG_D13` (the `"leg":
-  "pending"` entries ACWI and IWM, plus `pending_role`: SCHY reads rival); `RIVALFUNDS_LEG_ENABLE=1` turns both on; all unset
-  is today's map.
+  "pending"` entries ACWI and IWM); `RIVALFUNDS_LEG_ENABLE=1` turns both on.
+- AMENDED 2026-10-05 (Andrew-direct: "SCHY is NOT the benchmark for IDVZ. The benchmark for IDVZ is ACWI ... the benchmark
+  for PFOE is IWM"): SCHY is a rival in `peer_groups.json` itself (role rival, its pending_role removed), under every gate
+  state; ACWI and IWM are the benchmarks once D13 flips.
 - **Organic trigger:** the vehicle's 07:00 ET leg. Nothing here flips a gate: each flip and its backfill is an issuer act.
 
 ## 2. WHAT YOU NEED TO KNOW (measured at the cut, base CLOUD 1c31a5f6ce (the package equals the deployed pin 75ad1e4d2e))
@@ -42,8 +44,11 @@ comp-adversary: DECLARED-NOT-APPLICABLE the validator-context composer profiles 
   an overflow on one name is exit 2, never a traceback.
 - Andrew's smoke (2026-10-04): "S-C-H-Y is not the benchmark. The benchmark is ACWI ... P-F-O-E, the benchmark is I-W-M."
   That is the D13 gate's effect once the issuer flips it; this order only builds the switch.
-- Keep round 5's leg-inert contract (`tests/test_r5l1_leg_inert.py`: all gates unset reads the map as before the pending
-  entries existed) and the b-1 channel tests.
+- Keep round 5's leg-inert contract for the pending ENTRIES (`tests/test_r5l1_leg_inert.py`: all gates unset admits no
+  ACWI/IWM) and the b-1 channel tests; the SCHY role assertions in `test_r5l1_leg_inert.py` and `test_g01_universe.py` move
+  to rival by this amendment.
+- AMENDMENT (2026-10-05, issuer): your first build (f8124d0969, 2c885a91f3) is on your branch and passes AC1; re-cut only
+  what AC2 now asks (SCHY rival in the map) and re-run both checks.
 
 ## 3. SURFACES AND BOUNDS
 
@@ -54,6 +59,7 @@ You WRITE only the `<paths>` below (plus `deliverables/0.9.0_WK_ETFS_RIVALS~4/`)
 <paths>
 data/etfs/scripts/rivalfunds/collector_bloomberg.py
 data/etfs/scripts/rivalfunds/universe.py
+data/etfs/scripts/rivalfunds/peer_groups.json
 data/etfs/scripts/rivalfunds/tests/test_r8lg1_*.py
 data/etfs/scripts/rivalfunds/tests/test_b1_bloomberg_channel.py
 data/etfs/scripts/rivalfunds/tests/test_r5l1_leg_inert.py
@@ -65,7 +71,7 @@ org/missions/D5/ETFS/ETFS_RIVALS/surprise-channel/investigations/INVESTIGATION_v
 ## 4. PROOF OF SPEC (each invocation LITERAL, run from your worktree root)
 
 - **AC1** -- a 2,300-row control beside two rivals lands whole, queried on its own; a 50,000-row overflow is a per-name PARTIAL with the fund named and the others landed; two rivals alone still land OK (`org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round8/checks/lg-1.AC1.py`)
-- **AC2** -- RIVALFUNDS_LEG_D12 and RIVALFUNDS_LEG_D13 switch the home funds' source and the benchmarks independently; all unset reads today's map; RIVALFUNDS_LEG_ENABLE=1 turns both on (`org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round8/checks/lg-1.AC2.py`)
+- **AC2** -- RIVALFUNDS_LEG_D12 and RIVALFUNDS_LEG_D13 switch the home funds' source and the benchmarks independently; SCHY reads rival in every state; RIVALFUNDS_LEG_ENABLE=1 turns both on (`org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round8/checks/lg-1.AC2.py`)
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="RIV-lg-1"><invocation>python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round8/checks/lg-1.AC1.py</invocation><expect>AC1 RESULT: PASS 0 failures</expect></criterion>
@@ -79,6 +85,8 @@ Write the instance at `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ET
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES (L5/L6, 2.0.0_SA_COO~RV):** Round-7 analysis @115645c4b4 section 3 (items 1, 2, 4) + Andrew-direct @0a4321b843 ("yes, build round 8 tonight"); decomposition round 8 workstream A v1.0. Chain `~4`, slot `~4`, position 1 of 1. Checks dry-run at base CLOUD 1c31a5f6ce (the package equals the deployed pin 75ad1e4d2e): lg-1.AC1 FAIL (3; control OK), lg-1.AC2 FAIL (2; control OK) as expected. Bounds: no merge before the 2026-10-05 07:00 ET vehicle pull; no deploy before the 13:30Z grades.
+
+**AMENDMENT 1 (2026-10-05 ~03:5xZ, issuer):** Andrew-direct benchmarks (record cooRV_ANDREW_DIRECT_20261005_03xxZ_RIVALFUNDS_BENCHMARKS_...); AC2 re-pointed (SCHY rival in every state); paths += peer_groups.json. Dry-run: CLOUD FAIL 3, the first lg-1 build FAIL 2 ((b),(c)). Graded by: to-pipeline-gate on a modified order reads only GATE (viii) <placeholders> (NONE).
 
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>

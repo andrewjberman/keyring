@@ -130,7 +130,7 @@ Rows: id `NFRA_OPLGTW-Z-W15-S<k>` (next unused), fabric `site-z`, disarm_owner `
 ## 4. PROOF OF SPEC (literal; run from your worktree root after the ledger close is committed)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="OG-rl-5"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r16/checks/rl5.AC1.sh; echo "exit=$?"</invocation><expect>(?s)host query.py \+ datasets.json equal the release bytes: yes.*dim_position after ok: True.*dim_asset after ok: True.*dim_position before refused: True.*synthetic principal: True.*grants_written 0: True.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="OG-rl-5"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r16/checks/rl5.AC1.sh; echo "exit=$?"</invocation><expect>(?s)host query.py \+ datasets.json \+ contract equal the release bytes: yes.*dim_position after ok: True.*dim_asset after ok: True.*dim_position before refused: True.*synthetic principal: True.*grants_written 0: True.*RESULT: PASS.*exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="OG-rl-5"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r16/checks/rl5.AC2.sh; echo "exit=$?"</invocation><expect>(?s)sentinel at HEAD=no;.*descends from af2d762970=yes;.*outside the release set 0.*floor: rl4.AC1 yes; ht.AC2 yes.*RESULT: PASS.*exit=0</expect></criterion>
 </proof_of_spec>
 
@@ -156,10 +156,14 @@ validated with `python .tools/proof-of-spec-check.py <instance>`. Report once pe
   download control; `rl5.AC2`'s shipped set admits `deploy/NFRA_OPLGTW_CONTRACT.json`. Never-widen: the release moves
   served output (0 -> servable snapshots; `dim_asset` queries servable under the C3 holdings restriction); the CTO's
   Phase B half names that blast radius. No grant changes. S33 and S34 disarm on the post-act read.
+- **A6 (2026-10-04 ~23:4xZ, issuer; row Z-W15-S38):** A3 changed `rl5.AC1.sh`'s first line to name the contract but
+  left AC1's `<expect>` unamended, so the PASS output could not match. The issuer's defect: the expect now reads
+  `... + contract equal ...`. Issuer re-grade at CLOUD b91a1a44cf against the served host: 11 of 11 arms, RESULT: PASS,
+  exit=0. Release 4b6b823fae LIVE 23:12:32Z; ledger CLOSED; AC2 PASS (worker).
 - Pre-cut 22:1xZ: `rl5.AC1` FAIL (record absent; host bytes equal live); `rl5.AC2` FAIL (no ledger); floor rl4.AC1 and
   ht.AC2 PASS today.
 
-<status>pending</status>
+<status>complete</status>
 <round>16</round>
 <slot>~15</slot>
 <fabric>site-z</fabric>

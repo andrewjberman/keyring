@@ -488,3 +488,33 @@ REMEDIATION LEDGER, ADVI_49F, updated: (1) item 79538, BD's nightly -- **DISARME
 ⛔ **WHAT I DID GET WRONG IS THE DISPOSITION SENTENCE, AND THE SHARPENING IS REAL.** I wrote *"DIES: the overwrite mechanism, **AND WITH IT row 7 (n)'s stated HAZARD**."* **That reads as retiring the ITEM, while the body keeps its first clause** -- an entry whose **summary line and body disagree about what survives**. Same family as the summary-vs-body defect I have flagged in others: **a reader who takes the disposition line and stops gets a different answer from one who reads on.**
 
 **ADOPTED AS RULED:** the retraction is **scoped to clause (ii)**; **clause (i) -- a second full chain per boot, running for the NEXT date after UTC midnight -- STANDS as a LIVE, SEPARATELY-OWNED DISPATCH observation**, untouched by `data_as_of`'s derivation because **nothing in that derivation speaks to dispatch.** **CTO's framing is the keeper:** this would have been **the mirror of the compound arm** -- one statement carrying two claims, refuted as a unit and unresolvable as parts. **Conjoining two claims into one prediction and disjoining one refutation across two claims are the same fault in opposite directions.**
+
+### ADVI_49F-Z-S1 -- placed from NFRA_OPLGTW-Z-W13-S2 (a burst dispatch's chain aborted on a missing code dir, logged UNKNOWN)
+
+`1.0.0_SA_CTO~O`, 2026-10-04. Placement only: the observation was surfaced inside NFRA_OPLGTW round 13 and belongs to
+the 49F ADVI chain's owners. This seat neither re-measured it nor holds the remedy.
+
+```json
+{
+  "id": "ADVI_49F-Z-S1",
+  "project": "ADVI_49F",
+  "fabric": "site-z",
+  "surfaced_by": "1.0.0_SA_CTO~O",
+  "surfaced_at": "2026-10-04T23:58Z",
+  "one_line": "On 2026-09-23 09:46:32Z one of ten concurrent burst dispatches for date=2026-09-22 aborted its chain at stage a00_dim_account (rc 1, 0.7 s) because /tmp/advi_49f_code/chain_49f_entrypoint.py did not exist on the host; the dispatcher logged it UNKNOWN, not ABORT, because that command's stdout carries no CHAIN line.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Placed from org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v1.md#NFRA_OPLGTW-Z-W13-S2 (surfaced by 0.9.0_WK_NFRA_OPLGTW~13, 2026-09-28T23:59Z).",
+      "ssm get-command-invocation b127a4df-5c19-4041-b6de-096fce9bf64e on i-01003b035d2988dfb: Status Failed, ResponseCode 2, first stdout line \"python3: can't open file '/tmp/advi_49f_code/chain_49f_entrypoint.py'\", no line starting CHAIN.",
+      "s3://opal-data-49financial/gold/advi/_logs/chain_20260923T094632Z.log: 'CHAIN START date=2026-09-22 mode=production ...' then 'CHAIN ABORT stage=a00_dim_account rc=1 wall=0.7s'."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A dispatch that starts a chain either runs it, is refused by the lock, or aborts on a named stage (silver.tf:744-746 treats the accelerator as harmless beside the floor), and the dispatcher's log names which.",
+  "world_is": "One concurrent burst dispatch found the chain's code directory absent on the shared host, so its chain never ran a stage, and the dispatcher classified it UNKNOWN. Whether a concurrent chain's cleanup removed /tmp/advi_49f_code is unmeasured.",
+  "notes": "INERT: the same day's floor run ended CHAIN OK and the lock bounds the burst. A remedy cell reads the host's bootstrap and cleanup order before touching the trigger, and classifies a dispatch with no CHAIN line as ABORT (or proves the bootstrap order makes it impossible). NFRA_OPLGTW-Z-W13-S2 closes CARRIED_BY this id (NFRA_OPLGTW round-16 analysis R13)."
+}
+```

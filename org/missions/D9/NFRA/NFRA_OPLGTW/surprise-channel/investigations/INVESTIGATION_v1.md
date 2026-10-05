@@ -7718,3 +7718,283 @@ name the one known failure instead of silently inheriting it.
   "world_is": "The combined-process list gains the two new tests as errors of the unattributed one-process class; every other entry is in the baseline list or is passing alone. Nothing here changes what ships (tests are not in the shipped file set)."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S51",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-04T23:10Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Issuer L10-precondition sweep of this seat's ARMED/BLOCKING rows. Denominator: 61 rows naming 2.0.0_SA_COO~O ARMED or BLOCKING. 28 are graduated into remediations/v1-v3, and 28 are dispositioned by issuer rows Z-S13..Z-S49 (Z-S25 for W15-S6/S7, by OG-tx-1 A1) or by ADJUDICATION_v3.Z (W12-S1). That leaves 5; this row disposes of 3 of them, plus Z-W22-S5 (OBSERVATION INERT, outside the denominator). (1) Z-W7-S1, ARMED: the built no-refusal deviation was reversed by f660b89f55 (OG-e-1 AMENDMENT A1, 2026-09-27). schwab_entitlement_admin.py prepare() :332-335 raises CandidateRejected when neither the candidate nor the stored profile carries an email, at CLOUD HEAD and at live af2d762970 (1 match each). (2) Z-W22-S3 and Z-W22-S4, BLOCKING INERT: ruled by round-16 amendments A1 @0da94bba7c (fixture paths and no-new-failure baseline) and A2 @8671f5d02f (R9a single-page fallback, test_ogq2_ac20 restated). OG-gr-3 is complete, and its 14 files are on CLOUD at the branch bytes via repair drain ef092da049. (3) Z-W22-S5, OBSERVATION INERT: the paged-assertion restatement is recorded; it took no product change. Not disposed of here: Z-W15-S33 (ARMED) and Z-W15-S34 disarm on OG-rl-5's post-act read (CTO R12 @261571c07e).",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W7-S1",
+    "NFRA_OPLGTW-Z-W22-S3",
+    "NFRA_OPLGTW-Z-W22-S4",
+    "NFRA_OPLGTW-Z-W22-S5"
+  ],
+  "one_line": "The issuer disarms Z-W7-S1 (reversed by f660b89f55; the refusal is on CLOUD and live) and closes Z-W22-S3, S4 and S5 (ruled by gr-3 A1/A2; gr-3 complete on CLOUD @ef092da049).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "SOURCE: infra/aws/ec2/opal-gateway/ops/schwab_entitlement_admin.py:332-335 at CLOUD HEAD; git show af2d762970:<same> contains the refusal string (1 match)",
+      "GIT: git log -S on the refusal string returns f660b89f55 (2026-09-27, 0.9.0_WK_NFRA_OPLGTW~7, OG-e-1 AMENDMENT A1)",
+      "GIT: drain ef092da049 tree check 14 needed / 0 dropped; 14 of 14 paths equal coo-o-gr3-restore blobs; TO-OG-gr-3 last <status> complete"
+    ]
+  },
+  "spec_asserts": "Z-W7-S1: a restricted activate with no resolvable email must refuse (CandidateRejected), and the built code did not. Z-W22-S3/S4: gr3.AC1 cannot pass as written under R9.",
+  "world_is": "The refusal has been in the code since f660b89f55 and is on live. gr3.AC1 was re-cut by A1/A2 and the order closed complete; its bytes are on CLOUD."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "id": "NFRA_OPLGTW-Z-W15-S38",
+  "surfaced_at": "2026-10-04T23:30Z",
+  "one_line": "rl5 AC1 cannot be met as written: its <expect> pattern requires the line 'host query.py + datasets.json equal the release bytes: yes', but rl5.AC1.sh (A3 version) prints 'host query.py + datasets.json + contract equal the release bytes: yes', so the pattern never matches even though the script reports RESULT: PASS exit=0.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r16/checks/rl5.AC1.sh @e0664cc9d5 prints 'deployed_commit 4b6b823fae; host query.py + datasets.json + contract equal the release bytes: yes' ... 'RESULT: PASS' 'exit=0' (all 11 arms True).",
+      "RUN: re.search of the order's AC1 <expect> '(?s)host query.py \\+ datasets.json equal the release bytes: yes.*dim_position after ok: True...exit=0' against that exact output: no match (False); AC2's expect matches its output (True).",
+      "CODE: the script line is rl5.AC1.sh line 17, 'echo \"deployed_commit ${c:0:10}; host query.py + datasets.json + contract equal the release bytes: $m\"', added by amendment A3 @68c5438a60; the <expect> was not amended with it. proof-of-spec-check requires a PASS row's output to match its expect."
+    ]
+  },
+  "spec_asserts": "Order section 4 AC1: expect '(?s)host query.py \\+ datasets.json equal the release bytes: yes.*...RESULT: PASS.*exit=0'.",
+  "world_is": "The deploy and every arm AC1 grades are met (RL5_PAGING.json 11 of 11 arms True, the host contract md5 equal). Only the order's expectation string is stale against the script's A3 wording. The AC1 proof row is recorded with the literal output and status FAIL-by-pattern, and the order's status tag is left unflipped; the issuer amends its own expect (add ' \\+ contract') and the existing output then grades PASS with no further act on the host."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "id": "NFRA_OPLGTW-Z-W15-S39",
+  "surfaced_at": "2026-10-04T23:35Z",
+  "one_line": "Post-act read for rows Z-W15-S33 and Z-W15-S34: both disarm conditions read met on the served gateway after the release (dim_transaction prefixes live; dim_asset query served held-only).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: rl5_verify.sh after @23:1xZ on the deployed 4b6b823fae (rl5_phaseB_verify_after.out): served census 28 dim_position+dim_asset snapshots servable per master (marker dates 24, 14 qualified), 0 lacking or blank; dim_balance 14 and dim_transaction 14 servable per master (S33: the dim_transaction data prefixes are live and every closure day qualifies).",
+      "RUN: dim_asset rows query by the synthetic grant: OK, returned 49 of an asset universe of 2160 CUSIPs, unheld_returned 0, held_cusips_in_dim_position 49 (S34: served under the C3 restriction); dim_asset prepare_download still REFUSED UNAVAILABLE asset_policy_selection_unavailable (the retained guard)."
+    ]
+  },
+  "spec_asserts": "Rows S33 and S34 / order 4c: 'S33 and S34 disarm on the post-act read'.",
+  "world_is": "Both read as disarmed on the served gateway. The disposition stays the issuer's. The real grant holder's own read is unexercised, as the order's issuer notes say."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S52",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-04T23:45Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-rl-5 released r16 4b6b823fae LIVE at 23:12:32Z (ledger nfra-oplgtw-gateway-release-r16 CLOSED; drain b91a1a44cf). (1) Z-W15-S33 (ARMED) is DISARMED on the post-act read, per CTO R12 and row Z-W15-S39. The served census reads 14 dim_position and 14 dim_asset snapshots servable at each master, 0 lacking or blank, and dim_balance/dim_transaction at 14 per master. (2) Z-W15-S34 is DISARMED on the same read. A dim_asset rows page is served by the shipped construction with no seam: 49 returned, 0 unheld, discriminator 49 held < 2160 universe (CVO Q2). dim_asset prepare_download is still REFUSED asset_policy_selection_unavailable. (3) Z-W15-S38 is resolved by amendment A6, the issuer's own defect: A3 changed rl5.AC1.sh's first line but not AC1's expect. The issuer re-ran AC1 against the served host at CLOUD b91a1a44cf: 11 of 11 arms, RESULT: PASS, exit=0, and the amended expect matches.",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W15-S33",
+    "NFRA_OPLGTW-Z-W15-S34",
+    "NFRA_OPLGTW-Z-W15-S38"
+  ],
+  "one_line": "Post-act read of r16 (4b6b823fae, live 23:12:32Z): S33 and S34 disarmed (snapshots servable 14 per master per dataset; dim_asset held-only, download refused); S38 resolved by A6 with an issuer AC1 re-grade PASS.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r16/checks/rl5.AC1.sh at CLOUD b91a1a44cf: deployed_commit 4b6b823fae; host query.py + datasets.json + contract equal the release bytes: yes; 11 arms True; RESULT: PASS; exit=0",
+      "FILE: deliverables/0.9.0_WK_NFRA_OPLGTW~15/RL5_PAGING.json (census_after, census_after_other, dim_asset_held_check, after_dim_asset_download)",
+      "TOOL: python .tools/proof-of-spec-check.py on the OG-rl-5 instance: VALID (rc=0)"
+    ]
+  },
+  "spec_asserts": "S33/S34 disarm on the release's post-act read (CTO R12); AC1's expect matches a PASS run of rl5.AC1.sh.",
+  "world_is": "The served gateway serves the Schwab snapshots and the held-only dim_asset page, the download control holds, and AC1 matches after A6."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S53",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-05T01:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The disarm owner's recorded word for remediation row NFRA_OPLGTW-W6-S2. Decision: REMEDIATED; the CVO writes the clock (ruling @cc05804f8f). W6-S2 asserted that no carrier declares the three datasets' unique grain. (1) dim_position and dim_asset: R9's grains on CLOUD via OG-gr-3 (repair drain ef092da049) and live in r16 4b6b823fae (OG-rl-5). The served census found 56 of 56 snapshots carrying the grain columns, 0 blank, and dim_position pages OK. (2) dim_balance: OG-gr-4 (drain 06e6db2995) measured grain (account_id,) unique on 28 of 28 served snapshots, with 0 duplicate keys and 0 null grain cells, and served a rows page OK with a synthetic principal and 0 grants. OG-ar-2's moves_when for W6-S2 named exactly this condition (ISSUER_ROWS_R17.json).",
+  "adjudicates": [
+    "NFRA_OPLGTW-W6-S2"
+  ],
+  "one_line": "W6-S2 (no declared unique grain) is REMEDIATED on the owner's word: R9 grains live in r16 for dim_position and dim_asset, and OG-gr-4 measured dim_balance's (account_id,) unique on 28 of 28 served snapshots; the CVO writes the clock.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r17/checks/gr4.AC1.sh at CLOUD 06e6db2995: served census 28; measured 28; duplicates 0; page OK; branch UNIQUE+SERVED; RESULT: PASS",
+      "FILE: deliverables/0.9.0_WK_NFRA_OPLGTW~15/RL5_PAGING.json census_after (56 snapshots, lacking_or_blank 0)",
+      "FILE: deliverables/0.9.0_WK_NFRA_OPLGTW~21/ISSUER_ROWS_R17.json (W6-S2 moves_when = gr-4 zero duplicates)"
+    ]
+  },
+  "spec_asserts": "W6-S2: a carrier declares each dataset's unique grain, and served snapshots honor it.",
+  "world_is": "All three datasets carry declared grains on the served gateway, and each is measured unique on every served snapshot."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W25-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~25",
+  "surfaced_at": "2026-10-05T00:30Z",
+  "one_line": "Clearing the session-manager once-flag exposed a second order-dependent test (rl5 download): SchwabIntegration caches the first service built in the process, so rl5 needed its own fresh read; fixed in tests only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: tests/test_schwab_wiring.py + tests/test_schwab_rl5_asset_query.py after the conftest fix: test_rl5_asset_download_still_refused FAILED (download_url issued; service carried the harness asset_policy=object()); after the rl5 class-level monkeypatch of SchwabIntegration.service: 38 passed on the five-file subset",
+      "CODE: infra/aws/ec2/opal-gateway/app/integrations/schwab/integration.py SchwabIntegration.service() caches self._service on first call; og_v2 resets only the module-level _default_service"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order s.1: the cause class is a session manager or app started more than once; a fixture per module fixes it, tests only.",
+  "world_is": "A second cause stood behind the first: the registered integration instance holds the first service built in the process, so any later module reading the served construction gets the earlier harness service. Other og_v2 tests after the first in a process also read that cached service; this cell changed only rl5.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W22-S6",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~22",
+  "surfaced_at": "2026-10-05T00:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "q7.AC1.sh counts a test as passed only when '::<test> PASSED' sits on ONE line, so a test that prints under capsys.disabled() (the rl5 harness the order says to copy) reads 0 of 4 passed though pytest rc=0; the q7 tests were written without prints.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r17/checks/q7.AC1.sh at 275133f66b (worktree wk-NFRA_OPLGTW-22-r17): 'pytest rc=0; named tests passed 0 of 4; failed/error lines 0', RESULT: FAIL, exit=1, with 4 tests that each printed under capsys.disabled() (pytest -v then writes '::test_ogq7_ac01 ' and 'PASSED' on different lines).",
+      "FILE: infra/aws/ec2/opal-gateway/tests/test_schwab_rl5_asset_query.py (the harness the order says to copy) prints under capsys.disabled(); trnspt/checks/_root.sh pytest_named greps '::$t(\\[.*\\])? PASSED' per line."
+    ]
+  },
+  "spec_asserts": "Order s.1 item 3: build the q7 test file by copying the harness of tests/test_schwab_rl5_asset_query.py; AC1's expect is 'named tests passed 4 of 4'.",
+  "world_is": "The copied harness's capsys.disabled() prints break pytest_named's one-line PASSED grep, so the q7 file carries no prints (evidence lives in assertion messages and the AC run). Same class would hit any future named-test file that prints. The rl5 file is not graded by pytest_named, so it is unaffected."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W22-S7",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~22",
+  "surfaced_at": "2026-10-05T00:50Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The order asks for one extracted helper reusing the query path's code, but q7.AC2.sh grep -c 'qualify_asset_plan(' wants >= 3 textual call sites; a single helper that calls qualify_asset_plan once reads 1 (RESULT: FAIL), so the helper now ends at the holdings read and each of the three paths calls sem.qualify_asset_plan itself.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r17/checks/q7.AC2.sh at 70c83fe97b: guards '_asset_policy is None' 0 (want 0); qualify_asset_plan call sites 1 (want >= 3); failures beyond baseline 0; RESULT: FAIL, exit=1 (integration.py had one helper, SchwabService._qualify_asset, holding the only call).",
+      "FILE: org/missions/D9/NFRA/NFRA_OPLGTW/task-orders/NFRA_OPLGTW.TO-OG-q-7.asset-download-c3.md s.1 item 1 ('reusing the query path's code (extract a helper if the three call sites would otherwise copy it)') against s.4 AC2 ('call sites >= 3')."
+    ]
+  },
+  "spec_asserts": "Order s.1 item 1 allows a helper in place of three copies; AC2 expects at least three qualify_asset_plan( call sites in integration.py.",
+  "world_is": "Both hold once the shared part (the position snapshot read, SchwabService._asset_holdings) is extracted and the three sites each keep their own sem.qualify_asset_plan( call plus a four-line SemanticError mapping; the copy is the mapping only. The grep counts lines, not paths, so a future refactor to one call site would fail AC2 with the behaviour unchanged."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W22-S8",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~22",
+  "surfaced_at": "2026-10-05T01:20Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "tests/test_schwab_engine.py::test_ogq1_ac04 failed once inside q7.AC2.sh while a second pytest process (q7.AC1.sh) ran on the same device, then passed alone and in the clean AC2 re-run: a load-sensitive test, not in Q7_SUITE_BASELINE.txt.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: q7.AC2.sh at 1120c97540 with q7.AC1.sh running concurrently: 'failures beyond baseline 1 tests/test_schwab_engine.py::test_ogq1_ac04', RESULT: FAIL, exit=1.",
+      "RUN: python -m pytest tests/test_schwab_engine.py -q at 1120c97540, nothing else running: 14 passed in 45.43s; then q7.AC2.sh alone: 'failures beyond baseline 0', RESULT: PASS, exit=0."
+    ]
+  },
+  "spec_asserts": "AC2: the schwab test files add no failure beyond Q7_SUITE_BASELINE.txt (which lists only test_ogx4_ac03 and the recorded flake test_ogx2_ac01).",
+  "world_is": "test_ogq1_ac04 is a second engine test that fails under concurrent load on this device; the file does not import the code this cell changed. The baseline does not list it, so an AC2 run beside another pytest process can read FAIL with no code cause."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "id": "NFRA_OPLGTW-Z-W15-S40",
+  "surfaced_at": "2026-10-05T02:10Z",
+  "one_line": "OG-rl-6 step 2: the five named test targets pass one process each on the release tree, but run together in ONE pytest process they fail on CLOUD 17dd36e08b as well (6 failed, with ti-1's conftest fix present); tests/conftest.py is left at live's bytes on the release tree because it is outside the release set.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: release tree C:/tmp/og-rel11 @e91819e281 (live 4b6b823fae + q-7's integration.py hunks + the two test files; conftest.py at live's bytes), each target in its own process: test_schwab_q7_asset_download.py 4 passed; test_schwab_rl5_asset_query.py 2 passed; test_schwab_query.py 26 passed; test_schwab_grain_r9.py 5 passed; test_entitlement_admin.py::test_ogz2_ac08 1 passed (DENOMINATOR 60 registered tool(s) ... 0 hit(s)). Output: deliverables/0.9.0_WK_NFRA_OPLGTW~15/rl6_step2_perfile.txt.",
+      "RUN: the same five targets in ONE process (-p no:randomly): release tree 4 failed (test_ogq7_ac01-04, 'AssertionError' / TypeError) + 2 errors at setup (test_rl5_asset_query_*, RuntimeError StreamableHTTP session manager), 32 passed; CLOUD worktree @17dd36e08b (conftest.py WITH ti-1's _fresh_session_manager_per_module fixture) 6 failed, 33 passed. Pairs on CLOUD: q7+rl5 6 passed, rl5+q7 6 passed, query+grain_r9+rl5 2 failed 32 passed.",
+      "FILE: tests/conftest.py on CLOUD carries 18 lines of ti-1 (audit-path and session-manager reset) that the live tree lacks; the release order's AC2 admits only tests/test_schwab_*.py, so the release does not ship it."
+    ]
+  },
+  "spec_asserts": "Order step 2: the named tests run on the release tree; the issuer note: leave conftest.py at live's bytes and show step 2's tests pass there, or file a row naming the choice.",
+  "world_is": "Each named target passes in its own process on the release tree with conftest.py at live's bytes, which is the choice made. A single-process run of the whole set fails on CLOUD itself, so the failure is not caused by the release carry; ti-1's one-process fix (measured on CLOUD 4e84fd3f2e, before q-7's test file existed) does not cover the combination that now includes test_schwab_q7_asset_download.py. Tests are not in the shipped file set, so nothing served is affected."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "id": "NFRA_OPLGTW-Z-W15-S41",
+  "surfaced_at": "2026-10-05T02:25Z",
+  "one_line": "OG-rl-6 step 7: the one live grant naming dim_asset carries operations list/describe/query and NOT download_filtered, so the released dim_asset download opens for NO real principal today; the ask's property (d) text 'those holders gain downloads their grants already authorize' reads as if that holder gains one, and she does not.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: read-only consistent DynamoDB scan of gateway-access-state-table, sort-key prefix data_entitlement#, counts only, 2026-10-05T02:14:50Z: 2 records, both active; 1 names dim_asset; its scope.operations = ['describe','list','query']; ACTIVE dim_asset AND download_filtered = 0; distinct principals 1. Output: deliverables/0.9.0_WK_NFRA_OPLGTW~15/rl6_grants_before.out (no write, no identity printed).",
+      "FILE: app/data_entitlement.py:69 OPERATIONS = ('list','describe','query','download_filtered'); :90 schwab_prepare_download is classified to download_filtered, so the guard refuses her prepare_download before any dim_asset path runs."
+    ]
+  },
+  "spec_asserts": "NEVER_WIDEN_ASK_OG-rl-6 section 3(d): the pre-act read prints the count of live grants naming dim_asset; 'those holders gain downloads their grants already authorize'.",
+  "world_is": "The count is 1, and that grant does not authorize downloads (no download_filtered), so after the release a real dim_asset download is refused by the entitlement guard, not served; the capability is exercised only by the synthetic in-memory grant of the verify run. The act added no authorization and wrote no grant; whether the holder is later granted download_filtered is a grant change outside this order."
+}
+```

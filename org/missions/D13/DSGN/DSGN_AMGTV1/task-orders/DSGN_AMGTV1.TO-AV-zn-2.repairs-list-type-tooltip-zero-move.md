@@ -105,7 +105,7 @@ Report once: what changed and where, the output line of every criterion, the por
 - **Sequencing (CTO msg 29279):** AMGT_CORPUS's round-36 candidate is on ModelTab.tsx and modelSheet.ts; this cell touches neither.
 - **Not graded here** (the issuer's close walk): how the collage reads at 11px; the tooltip while loading in a browser.
 
-<status>pending</status>
+<status>complete</status>
 <round>36</round>
 <slot>~98</slot>
 <fabric>site-z</fabric>

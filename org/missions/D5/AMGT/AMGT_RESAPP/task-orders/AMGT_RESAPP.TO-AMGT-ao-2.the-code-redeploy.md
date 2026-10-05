@@ -87,6 +87,7 @@ does not apply, `<placeholders>NONE</placeholders>`).
 <slot>0.7.0_AE_CloudOps~A</slot>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
+<proof_genre>DEPLOY</proof_genre>
 <worker_class>worker</worker_class>
 
 **ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-03 ~20:0xZ):** CLOSED. AE~A `76c5170831` built at pin `19cb3df089` (355 / 352 / 3, 96.8%). CodeSha256 `KQSA62c3` -> `lPTMo20T` (VersionId `5xO0vR9UWlx.XI59G0KNLJyAsjMKOes4`), memory 1769. AC1 c17 + AC2 c12 PASS; c9, c10, c11, c13 and c14 unchanged; NEVER-2 entry opened `4922fbb96f` and closed. Issuer re-read on deployed from a checkout at the pin: c17 YES (0 of 94, 0 of 95; MUFG whole), c12 YES, c9-c14 YES; the 5 cut names are served whole on both routes (`round65/served_names_lPTMo20T.json`). The pin moved once on AE~A's STOP (AMENDMENT 1). Not carried: `c20fd8cc98` (after the pin).

@@ -1,0 +1,30 @@
+--- a/app/server.py	2026-10-04 21:27:33.631904700 -0400
++++ b/app/server.py	2026-10-04 21:27:34.060346200 -0400
+@@ -54,7 +54,7 @@
+ from starlette.responses import FileResponse, HTMLResponse, JSONResponse, RedirectResponse, Response
+ from starlette.routing import Mount, Route
+ 
+-from . import admin_api, audit, browser_oidc, data_entitlement, download_routes, graph, graph_read, integrations, ms_ingest, oauth_as, otp, owner_gate, query_v0 as query_v0_mod, ratelimit, rivalfunds_view, sprint_view, token_broker
++from . import admin_api, audit, browser_oidc, data_entitlement, download_routes, graph, graph_read, integrations, ms_ingest, oauth_as, otp, owner_gate, query_v0 as query_v0_mod, ratelimit, rivalfunds_view, sprint_view, token_broker, yearinreview_view
+ from .blocklist import AccessDenied, enforce
+ from .config import get_config
+ from .context import Principal, set_current_email, set_current_principal
+@@ -199,7 +199,7 @@
+                     raw = scope.get("raw_path")
+                     if isinstance(raw, (bytes, bytearray)):
+                         scope["raw_path"] = bytes(raw) + b"/"
+-            elif path == "/login" or sprint_view.is_sprint_path(path) or rivalfunds_view.is_rivalfunds_path(path):
++            elif path == "/login" or sprint_view.is_sprint_path(path) or rivalfunds_view.is_rivalfunds_path(path) or yearinreview_view.is_yearinreview_path(path):
+                 # /sprint* (the Daily Sprint web client, 2026-08-28) is the GUI path made real: same
+                 # ALB-OIDC-verified identity + blocklist as /login, fail-closed on a missing header.
+                 request = Request(scope, receive)
+@@ -1008,6 +1008,9 @@
+         Route("/rivalfunds/", rivalfunds_view.rivalfunds_redirect, methods=["GET"]),
+         Route("/rivalfunds/archive", rivalfunds_view.rivalfunds_archive, methods=["GET"]),
+         Route("/rivalfunds/{day}", rivalfunds_view.rivalfunds_day, methods=["GET"]),
++        # Brief #1 (4.0.0_SA_CRO~2026): the Year One Operating Review, one static page in the release.
++        Route("/yearinreview", yearinreview_view.yearinreview_page, methods=["GET"]),
++        Route("/yearinreview/", yearinreview_view.yearinreview_redirect, methods=["GET"]),
+         # MP-t-1: Andrew's dashboard admin API + static bundle, both owner-gated (app/owner_gate.py).
+         # A Mount is prefix-matched but "/api/admin" is a new, exact, non-overlapping prefix, so it
+         # cannot shadow any existing route above. "/" is an exact-path Route (Starlette Route never

@@ -5,10 +5,10 @@
  "project": "ETFS_RIVALS",
  "directive": "D5",
  "fabric": "site-z",
- "prd_version": "v0.14",
+ "prd_version": "v0.16",
  "step": 4,
  "brief_ref": "docs/briefs/etf-holdings-research-20260929.md@77c891c869",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20"],
+ "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21"],
  "status": "DRAFT"
 }
 ```
@@ -255,13 +255,13 @@ approved it.
   thread.
 
   FWD-13 (NEW, THE THREAD) Andrew opens the rival-funds page, reads IDVZ's best
-         and worst over the last 30 trading days and this month, quarter and
-         year, then picks one rival and reads its rankings, its buying trend
+         and worst over the last 30 trading days and this quarter and year,
+         then picks one rival and reads its rankings, its buying trend
          and the AI's account of it
          DONE WHEN  EXERCISED -- one live, signed-in read: the page opens on
                     IDVZ's ranking for the last 30 trading days (v0.14); Andrew
-                    switches to month-, quarter- and year-to-date and the
-                    tables change; he
+                    switches to quarter- and year-to-date (v0.15: no
+                    month-to-date) and the tables change; he
                     picks one IDVZ rival and reads its ten best and ten worst
                     holdings, five best and five worst sectors, its buying
                     trend for the same period and the AI's two-part account;
@@ -273,13 +273,14 @@ approved it.
                     ("default to IDVZ", "toggle MTD, QTD, YTD")
 
   FWD-14 (NEW) Andrew ranks any fund's best and worst holdings and sectors for
-         the last 30 trading days and the month, quarter and year to date, by
+         the last 30 trading days and the quarter and year to date (v0.15), by
          the same rules for every fund
          DONE WHEN  EXERCISED -- for every fund in both groups, Opal's own and
                     each group's benchmark included, Andrew reads the ten
                     holdings that added most to the fund's return and the ten
                     that cost it most, and the five best and five worst sectors,
-                    for each of the four periods (v0.14)
+                    for each of the three periods (v0.15: 30 trading days,
+                    quarter to date, year to date)
          ACCEPT     a figure Andrew checks agrees with what that fund's holdings
                     and their prices add up to over the period; each table says
                     which period, its first and last trading day, and how many
@@ -355,9 +356,9 @@ approved it.
 
   FWD-19 (NEW) The page looks and behaves like the Opal portal
          DONE WHEN  EXERCISED -- a rendered page read side by side with the
-                    portal: the same card style, the same period switch (v0.14:
+                    portal: the same card style, the same period switch (v0.15:
                     the last 30 trading days first and selected by default, a
-                    dividing line, then month, quarter, year), and the same
+                    dividing line, then quarter, year; no month), and the same
                     light background; a fund picker lists each Opal fund with
                     its rivals and its benchmark; the period switch also sits
                     inside "What drove the return" and "Buying trend", and
@@ -380,6 +381,21 @@ approved it.
                     named on the page, never silently skipped
          SOURCE     backend brief O9; transcript 1 ("locked in bronze
                     ingestion for all relevant funds", "the operations as well")
+
+  FWD-21 (NEW, v0.16) Andrew clicks any stock named anywhere on the page and
+         reads that security's holding modal with its history
+         DONE WHEN  EXERCISED -- on the live page, every security named in the
+                    rankings, the buying trend, the AI accounts and the detail
+                    lists opens its holding modal when clicked, and the modal
+                    shows the security's history (its price and the fund's
+                    holding over time) as far back as the store holds it
+         ACCEPT     no ticker on the page is dead text; a security whose
+                    history is not yet backfilled says so in its modal, never
+                    an empty chart; the page's no-script rule stands
+         SOURCE     Andrew-direct 2026-10-05 ~03:3xZ at the COO~RV terminal
+                    ("anytime a stock/ticker is mentioned, it should be
+                    clickable to the modal, and we should be able to see
+                    backfill on it")
 
   CTO RULINGS ON THE BRIEFS' OPEN POINTS (Andrew may overrule any):
   - The fund picker shows one fund at a time, grouped under its Opal fund, and
@@ -750,7 +766,7 @@ it into COO~RVs existing work on ETFS_RIVALS."
 |---|---|---|---|---|---|
 | RFW-D01 | data | FWD-20, FWD-14, FWD-9 | The 2026-10-02 page (republished 14:17:10Z, batch fast-a1-publish-1002f) serves A1 tables built at 11:03-11:04Z. | When a G1 or G4 object newer than an A1 table's newest input lands, the next publish rebuilds that A1 table, or refuses to show it as current. A planted newer G1 object forces the rebuild. | new |
 | RFW-D02 | data | FWD-20, FWD-2 | The page contradicts itself. | On one page the fund-current headline and the census's holdings line agree (same G1 vintage), or the page names the vintage gap. | new |
-| RFW-D03 | data | FWD-14 | Month to date and quarter to date rank 0 holdings for 12 of 13 funds (every fund but BASG, which ranks 32). | After RFW-D01 lands, MTD ranks at least one holding for every fund whose 09-30 and 10-01 reports are both in G1; a fund-period with no priced day shows ONE line, not four empty tables (RFW-U03). | new |
+| RFW-D03 | data | FWD-14 | Month to date and quarter to date rank 0 holdings for 12 of 13 funds (every fund but BASG, which ranks 32). | v0.15: MTD is no longer served (Andrew ~02:4xZ), so the MTD limb is void; QTD keeps the rule. After RFW-D01 lands, MTD ranks at least one holding for every fund whose 09-30 and 10-01 reports are both in G1; a fund-period with no priced day shows ONE line, not four empty tables (RFW-U03). | new |
 | RFW-D04 | data | FWD-20, FWD-14, FWD-6 | Inputs that did not arrive: 'Security prices: 0 of 765 arrived' and 'GICS sectors: 0 of 765 arrived'. | G4 for the as-of date carries px_close and gics_sector for at least 95% of the universe's priced holdings, and the census reads that share. | known |
 | RFW-D05 | data | FWD-14, FWD-15, FWD-5, FWD-18 | For all 9 Bloomberg-sourced funds (TXUE, BIDD, CGIC, INEQ, SCHY, WCMG, TSEL, ETFT, PCLG), holdings show raw Bloomberg tickers instead of names: '8306 JP Equity', 'TTE ... | Every holding on the face shows a security name. A raw ticker appears only as secondary text, and the count of nameless holdings is 0, or each is listed in the census. | new |
 | RFW-D06 | data | FWD-6, FWD-14, FWD-15 | 'Unclassified' is ranked as a sector in the YTD sector tables of 10 funds, and is the single largest sector in 6: ETFT -6.59%, BASG -3.00%, TSEL -2.93%, BIDD -2.28%, T... | MEASURED (CRO~RV GICS census @308f982bb8, sections 2-4; replaces the walk's unmeasured 10%). Unclassified is never ranked as a sector (RFW-U16), and each fund's unclassified share is printed by weight of its latest report. After fix 1 (the CALL 9 cross-fund fallback in the rankings or in G1, with `gics_source` naming the other fund's file): INEQ >= 99% and TXUE >= 89% classified, and every other fund's unclassified share is at or below its section-4 level (IDVZ 78%, WCMG 58%, ETFT 42%, GQGU 38%, PFOE 27%, TSEL 15%, PCLG 13%). After fix 2 (CUSIP-keyed GICS in the scripted G4 pull) and fix 3 (G4 at universe scale): only the 7 not-eligible lines stay unclassified. Each level is graded on the served page beside its census denominator. | new |
@@ -806,6 +822,28 @@ the `/sprint` precedent files.
 - The CVO grades JUDGMENT criteria at L9, citing the contract clause.
 
 ## PROVENANCE AND AMENDMENT HISTORY
+
+- v0.16 (2026-10-05 ~03:1xZ, `1.0.0_SA_CTO~Z`), an ENDPOINT addendum on Andrew-direct ~03:3xZ at the `2.0.0_SA_COO~RV` terminal
+  (record `org/tier1_exec/2.0.0_SA_COO/deliverables/cooRV_ANDREW_DIRECT_20261005_03xxZ_RIVALFUNDS_BENCHMARKS_CLICKABLE_TICKERS_ETFCLASSIFIER_BACKFILL.md`),
+  item 2, VERBATIM: *"anytime a stock/ticker is mentioned, it should be clickable to the modal, and we should be able to see backfill
+  on it."*
+  - **NEW FWD-21:** every security named on the page opens its holding modal with its history. A security not yet backfilled says
+    so; it never shows an empty chart. The no-script rule stands.
+  - Item 1 (ACWI for IDVZ, IWM for PFOE; SCHY is not a benchmark) serves the existing FWD-13/14 and rides round 8 (lg-1).
+  - Items 3-4 (every Rival Funds stock backfilled into the ETFClassifier canonical table, with a routine for new stocks) belong to
+    MDPF_SECCLASS, a laptop-fabric table. They are routed to `1.0.0_SA_CTO` for placement; ETFS_RIVALS supplies the security list.
+  - **The ENDPOINT changed, so the ratified-text half RE-OPENS.** One `3.0.0_SA_CVO~Z` re-sign covers v0.15 and v0.16.
+
+- v0.15 (2026-10-05 ~02:5xZ, `1.0.0_SA_CTO~Z`), an ENDPOINT addendum on Andrew-direct ~02:4xZ at the `2.0.0_SA_COO~RV` terminal
+  (record `org/tier1_exec/2.0.0_SA_COO/deliverables/cooRV_ANDREW_DIRECT_20261005_02xxZ_RIVALFUNDS_30D_DEFAULT_DROP_MTD.md` @575e7d7250),
+  VERBATIM in part: *"I think there should be a clear bifurcation of 30d as the default selection, and then there is a divider where
+  the user can select QTD or YTD for more clarity. If we are centering around 30 rolling days as the default, there is no need for
+  MTD."*
+  - FWD-13, 14 and 19: the switch is "last 30 trading days" (default), a dividing line, then quarter to date and year to date. No
+    month to date. FWD-14 ranks three periods, not four.
+  - RFW-D03's MTD limb is void; its QTD rule stands.
+  - **The ENDPOINT text changed, so the ratified-text half RE-OPENS** (`3.0.0_SA_CVO~Z` re-signs). His own words are the ENDPOINT
+    confirmation for these lines.
 
 - v0.14 (2026-10-04 ~21:1xZ, `1.0.0_SA_CTO~Z`), an ENDPOINT addendum on Andrew-direct ~21:0xZ, the signed-in smoke at the
   `2.0.0_SA_COO~RV` terminal (record `org/tier1_exec/2.0.0_SA_COO/deliverables/cooRV_ANDREW_DIRECT_20261004_21xxZ_RIVALFUNDS_SIGNED_IN_SMOKE.md`

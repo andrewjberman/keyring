@@ -160,3 +160,24 @@ Measured inputs: `deliverables/2.0.0_SA_COO~RV/round8/WORKSTREAM_B_INPUTS.md` @7
 | `~6` | hc-1 | `gold_holding_contribution.py` |
 | `~7` | bt-1 | `gold_buying_trend.py` |
 | `~2` (cont.) | rn-1 | `render.py` |
+
+## WORKSTREAM C (2026-10-05, same issuer, same round): FWD-21, every security opens its modal
+
+**Authority:** Andrew-direct ~03:3xZ 2026-10-05 (record @41158af7f9, item 2), PRD v0.16 @646ce7f4b8 FWD-21 (CTO~Z msg 29442).
+Items 3-4 of that record (the ETFClassifier full backfill and its routine mechanism) are routed by CTO~Z to 1.0.0_SA_CTO
+(MDPF_SECCLASS); ETFS_RIVALS supplies a published list of every security the rivals and the Opal ETFs hold (a later cell).
+Andrew's 3-year lookback cap (@357e681ddf) bounds every backfill.
+
+**Issuer ruling:** one dialog per security page-wide, keyed by its security key, reused by every mention (the page is 1.89 MB
+of the 2.10 MB gateway cap, so dialogs per fund x mention cannot fit). fc-1 continues chain `~2` (render.py) after rn-1.
+
+### `RIV-fc-1` -- every security named on the page opens its one modal (FWD-21)
+- Interface: every security mention in the rankings, trend, trade log and AI text is a `<button data-sec="<key>"
+  popovertarget="<id>">`; one `data-sec-dialog="<key>"` element per security; no history -> "History not yet backfilled"
+  (`data-history="none"`); no script; DIALOG_SOFT_CAP and its fallback kept.
+- Check: `fc-1.AC1` (FAIL 3 at the rn-1 build 280b8dc66a, control OK). Organic trigger: the 07:00 ET marker publish.
+
+| chain | cells | writes |
+|---|---|---|
+| `~2` (cont.) | fc-1 | `render.py` |
+

@@ -1658,3 +1658,62 @@ cell lands the carried steps and records the Inflection function.
 | `IB-pr-312` | S293 / W114-S1: the 49F producer row names its live role; the irpt-inf-holdings-performance-lambda row is added and recorded at live | WORLD (the gate floor for the source map; a record only) | none | P46 |
 
 fanout: 1 of 1 chains, cap 8, reason: one open cell; worker 0.9.0_WK_IRPT_BCKEND~115 in its own worktree.
+
+## 40. ROUND 47, WORKSTREAM ~P (2026-10-04 ~21:3xZ, issuer 2.0.0_SA_COO~P, on 1.0.0_SA_CTO ROUND ANALYSIS rounds 42-46, msg 104972)
+
+The analysis (`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_BCKEND_ROUNDS_42_46_P_20261004.md` section 3) makes
+this a reconciliation round: E1 reconcile, E2 remedies for what E1 finds live, E3 the recorder for S178's class. The issuer's
+census reads 42 ~P remediation rows not closed, by each row's latest copy across REMEDIATION_v1..v19 (388 rows parsed). That
+matches the CTO's 42.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-313` | E1: each of the 42 rows' close condition read against live; a closing row for each that holds; the still-live list handed back | LOCAL (read-only) | none | P47a |
+| `IB-pr-314` | E3 / S178: the recorder --function for the six lagging investor-reporting functions (irpt-ycharts-generate is ~Y's S320) | WORLD (the gate floor for the source map; a record only) | none | P47b |
+| E2 | the live BLOCKING rows IB-pr-313 returns, one remedy cell each (at most three criteria, a never-widen half where served) | by row | IB-pr-313 | cut on E1's return |
+
+fanout: 2 of 2 chains, cap 8, reason: E1 and E3 are independent; E2 depends on E1's output and is cut when it returns. Workers
+0.9.0_WK_IRPT_BCKEND~116 (E1) and ~117 (E3), each in its own worktree.
+
+## 41. PRD v0.26 STEP 5 (2026-10-04 ~23:2xZ, issuer 2.0.0_SA_COO~P, on 1.0.0_SA_CTO msg 105024 @c74c8439b3 and the adjudication @a2ed4e681a) -- NO NEW CELL
+
+v0.26 amends FWD-3 in place. It now covers the firms whose page serves the holdings basis: Inflection and Cottonwood. 49F's served
+figure is IRPT_DASHBD's flow-adjusted return. IRPT_BCKEND still produces 49F's holdings-basis gold every trading day (FWD-12) as
+IRPT_DASHBD's guard rail. No cell is cut, and no open ~P cell served 49F's FWD-3. Two keys bind every order from round 47's E2
+on (the adjudication, call 2):
+- outcome_ref cites the ratified FWD: export of a branded report FWD-8; a second firm from the global view FWD-11; the Analysis
+  export FWD-4; email intake FWD-9.
+- A 49F holdings-basis figure on a rendered view or PDF is no longer an outcome; a cell that would add one is refused at the cut.
+
+## 42. ROUND 48, WORKSTREAM ~P (2026-10-04 ~23:5xZ, issuer 2.0.0_SA_COO~P, E2 on E1's LIVE list @db0adf0053 and the CTO adjudication 105022)
+
+E1 (IB-pr-313) returned 17 HOLDS (closed) and 25 LIVE. E2 takes the live BLOCKING rows in E1's order, plus S322 and S324 (CTO).
+
+| cell / act | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-315` | S278: build-and-upload.sh hands the sha by file and asserts the written value | WORLD (infra floor; nothing deployed) | none | P48a |
+| `IB-pr-316` | S322 + S178's remainder: the three stale reporting rows re-keyed to the live irpt-49f-* names and recorded | WORLD (source-map floor; a record) | none | P48b |
+| S272 (issuer act) | one signed-in download of EXP-e29b5415.. through its receipt link, the PDF sha read against the receipt | SERVED read | the UI-walker account (ARM via 0.0.0_AB_MSTR) | issuer |
+| W101-S1/S2/S4/S5, W101-S11 | E4 (IB-pr-282): one served Analysis export of a prospect-owned report | WORLD | IB-pr-282's state, read next tick | issuer |
+| W100-S2 | the 49F perfrp leaf: re-emit without 2025-01-10, or withdraw under a never-widen half (an S3 delete is Andrew's word) | SERVED | 1.0.0_SA_CTO's choice | asked |
+| S324 | the PATH B export's narrative ref, or the v0.24 contract amended by name | SERVED | 1.0.0_SA_CTO's choice (irpt-narrative idle since 09-20) | asked |
+
+The rest of E1's LIVE list is not BLOCKING, and it is batched as ONE repair cell at the next issuance, per the spine's "repairs
+batched into ONE cell": S220, S204, S218, W80-S1, S260, S241, S282, S297, S298, W101-S14, W101-S16, W62-S1, S175, S180, S252 and W69-S1.
+
+fanout: 2 of 2 chains, cap 8, reason: two independent build cells now; S272 and E4 are the issuer's acts; W100-S2 and S324 are
+asked. Workers 0.9.0_WK_IRPT_BCKEND~118 and ~119, each in its own worktree.
+
+## 43. ROUND 49, WORKSTREAM ~P (2026-10-05 ~00:5xZ, issuer 2.0.0_SA_COO~P, on 1.0.0_SA_CTO RULINGS batch 247 and PRD v0.27 @06ad58d478)
+
+Batch 247 answers E2's two forks.
+- S324 is accepted, narrowed: v0.27 ruling 28 gives a PATH B performance export `narrative_state: NOT_ATTACHED` with its reason.
+- W100-S2 is not withdrawn under IRPT_BCKEND. One readers census is owed first: no reader re-points the row to ADVI_PERFRP inert;
+  a live reader brings a never-widen packet back to the CTO.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-317` | S324: PATH B bundles carry narrative_state NOT_ATTACHED + reason; the ExportBundle schema requires it on the PLATINUM branch | WORLD (served Lambda code; the deploy is the issuer's, under a never-widen half) | none | P49a |
+| `IB-pr-318` | W100-S2: one read-only readers census of the 49F perfrp leaf (CloudFront, routes, portal PROD) | LOCAL (read-only) | none | P49b |
+
+fanout: 2 of 2 chains, cap 8, reason: two independent cells. Workers 0.9.0_WK_IRPT_BCKEND~120 and ~121, each in its own worktree.

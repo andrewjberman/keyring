@@ -8254,3 +8254,61 @@ fanout:
   no_s3_deletes: true
   egress: none
 ```
+
+## 76. ROUND 68 -- FWD-39 CLOUD REPAIR OVER EVERY CLOUD-SERVING NAME, PLAIN WORDS ON /thesis AND /ledger, ONE REDEPLOY, THE c24 RE-READ. Four cells, four orders
+
+**Input:** the CTO's round-67 analysis `ledger/ROUND_ANALYSIS.round67.md` @2db6fd3e3d (msg 29346), section 5 items 1-4 and rulings
+1, 3, 4 and 5. The CVO's slug ADJUDICATION_v80 @69ce44def1. PRD v0.37. Ruling 2 (the chatter_window build list) is HARVST round
+46's (`2.0.0_SA_COO~H`), not a cell here.
+
+### 76a. MEASUREMENTS (`round68/checks/r68_served.py`, CLOUD ~00:4xZ; every cell FAILS at the base, deployed `2rFeF57l` and local)
+
+- **c27 (FWD-39, ruling 1).** The census is over the latest `chatter_window` part: names 212, serving a cloud 199, terms read
+  6,962, non-200 0.
+  - C1 FAIL: 6 own-name offenders, exactly the CVO's (AZN astra, GOOGL/GOOG google, HESAY herm, NSRGY nestl, XOM exxon,mobil).
+  - C2 FAIL: 82 clouds carry a measured junk or boilerplate token (estimates, sees, movers, premarket, hon, hai, ...).
+- **c28 (ruling 3).**
+  - C1 FAIL: DE /thesis serves 18 jargon reasons (identity, UNRESOLVED, crosswalk, dossier, landed, model block).
+  - C2 FAIL: DE /peers serves 3.
+  - C3 FAIL: /ledger on BA, AMD, VLO, NVDA serves 12 reasons with "estate", "stage" or "input ledger".
+- **c24 (r67, FWD-36).** Deployed: mismatches 0, unreadable 0, no-table-row 21. It turns on HARVST round 46.
+
+### 76b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-ar-1` | FWD-39: an accent-safe tokenizer, a DECLARED own-name alias list, the compound-name split, the measured boilerplate; census over every cloud-serving name (R1) | `0.9.0_WK_AMGT_RESAPP~223` | worker | LOCAL | `lib/research/api/` |
+| `AMGT-ar-2` | plain words: /thesis and /peers for a covered name with no block; the /ledger source reasons (R3, DSGN FWD-27) | `0.9.0_WK_AMGT_RESAPP~224` | worker | LOCAL | `lib/research/api/`, `lib/research/coverage/` |
+| `AMGT-ar-3` | the code redeploy carrying ar-1 and ar-2. DEPLOY genre; content diff against DEPLOYED `2rFeF57l`; a simulate arm for each new S3 read path (R4, R5) | `0.7.0_AE_CloudOps~A` | seat order, a pair | WORLD | Lambda artifact, ledger |
+| `AMGT-ar-4` | c24 re-read on the deployed function after HARVST round 46 widens `chatter_window` (item 4) | `0.7.0_AE_CloudOps~A` | seat order | LOCAL (a read) | deliverables only |
+
+### 76c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** The domain is the analysis's enrichment list, items 1-4. Ruling 2 is routed to HARVST.
+- **(ii) Same grain.** One served surface per cell: the cloud's terms, the reason wording, the deployed code, or one read.
+- **(iii) Intent.** One axis per cell.
+- **(iv) What a cell does NOT move:**
+  - ar-1 changes which terms a cloud serves only.
+  - ar-2 changes reason TEXT only, with no status, key or figure.
+  - ar-3 changes code only; memory stays 1769, and no IAM unless a new read path is simulated and paired.
+  - ar-4 writes nothing.
+
+### 76d. EDGES AND FAN-OUT
+
+ar-1 and ar-2 both write `lib/research/api/scoped_amgt.py`. They drain one at a time, with the union suite re-run after each
+(the round-67 precedent).
+```
+ar-1 --+
+ar-2 --+--> ar-3 (one redeploy, one pair, graded c27/c28 on deployed + r67 c23/c25/c26 regression)
+HARVST r46 (external) --> ar-4 (c24 re-read)
+fanout:
+  cap: 8
+  orders_total: 4
+  chains_total: 2
+  wave_0: [ar-1 ~223, ar-2 ~224]
+  wave_1: [ar-3 0.7.0_AE_CloudOps~A]   # after the two drains and its pair
+  external: [ar-4 0.7.0_AE_CloudOps~A]   # after HARVST round 46 lands the widened chatter_window
+  no_s3_deletes: true
+  egress: none
+  portal_ref: 6936e92b
+```

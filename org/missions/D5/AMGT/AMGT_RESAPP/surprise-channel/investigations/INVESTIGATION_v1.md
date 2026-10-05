@@ -17446,5 +17446,94 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   ]
  },
  "disposition": "UNDER_INVESTIGATION"
+}
+,
+{
+ "id": "AMGT_RESAPP-Z-S347",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~Z",
+ "surfaced_at": "2026-10-04T23:39:43Z",
+ "one_line": "DISARM of AMGT_RESAPP-Z-S346 by its disarm_owner: the hazard is cured. aq-5 leg 3 (cell aq-6) added amgt/harvest/gold/chatter_window/ to the role's pool prefixes, and on the deployed function the 95 chatter rows now serve tone and voters from chatter_window: mismatches 74 -> 0, unreadable-table reasons 95 -> 0, on days 30/90/365. No code moved.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "Row Z-S346 (ARMED, disarm_owner 2.0.0_SA_COO~Z) asserts that the deployed role cannot read amgt/harvest/gold/chatter_window/, so every chatter row serves 'the window table could not be read (AccessDenied)'. The forward fix is the CTO's AMENDMENT 1 @14aa3c9200, endorsed by Andrew @c700426bc9, carried by aq-5 AMENDMENT 2 @4d3db86faa and its leg-3 GO @e616511619.",
+ "world_is": "Issuer real run at 2026-10-04T23:39:43Z on deployed CodeSha256 2rFeF57lMh8MkU6WRgZyImZt7RMlW14BdxmUjIBvSSQ= (the AMGT_CORPUS al-5 build, unmoved by leg 3), file deliverables/2.0.0_SA_COO~Z/round67/REAL_RUN_r67_deployed_20261004.txt. r67_grant_aq6.sh: GetObject and ListBucket(s3:prefix) on chatter_window/ allowed, both controls allowed, R67 AQ6 GRANT: YES. r67_served c24: on each of days 30/90/365, C2 PASS unreadable 0 of 95 and C1 mismatches 0, old-reason 0, no-table-row 21. The surviving NO is row Z-W220-S1's producer gap alone. AE~A's leg-3 entry is CLOSED (report msg 29314, instance @768731795b).",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "REAL_RUN_r67_deployed_20261004.txt: R67 AQ6 GRANT: YES; c24 C2 'unreadable 0' x3 windows; c24 C1 'mismatches 0 ... old-reason 0 no-table-row 21' x3.",
+   "Base before leg 3 (issuer dry-run at the aq-6 cut on deployed aoQ+WrefJ): c24 C2 unreadable 95 of 95 per window; C1 mismatches 74; r67_grant_aq6.sh C1/C2 implicitDeny.",
+   "0.7.0_AE_CloudOps~A msg 29314: plan 1 non-no-op (the grants policy, two lists 30 -> 31), 0 lambda change; CodeSha256 held across the apply."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+,
+{
+ "id": "AMGT_RESAPP-Z-S348",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~Z",
+ "surfaced_at": "2026-10-05T00:52:22Z",
+ "one_line": "to-decomp-ref-lint's seating limb (gate2, ANNOUNCE) refused round 68's ar-3 and ar-4 because 0.7.0_AE_CloudOps~A 'already holds open TOs' on AMGT_HARVST (n-4, q-7), but both orders read <status>withdrawn</status>, a terminal state. The lint counts withdrawn as open, so the seat is legal and the refusal is false. Under ENFORCE it would block a legal seating.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "1.0.0_SA_CTO~Z",
+ "spec_asserts": "CLAUDE.md rule 27: ONE PROJECT PER TIER-2 SEAT INSTANCE, enforced by .tools/to-decomp-ref-lint.py's seating check. The check is meant to count OPEN task orders a seat holds on another project.",
+ "world_is": "Issuance commit 8ba8bf3ab0: '[gate2] REFUSED ... ar-3 / ar-4 ... 0.7.0_AE_CloudOps~A, which already holds open TOs on 1 OTHER pipeline project(s): AMGT_HARVST (2 open: AMGT_HARVST.TO-HVST-n-4.chatter-axis-source-gold-flip.md, AMGT_HARVST.TO-HVST-q-7.chatter-axis-gold-flip.md)'. Both files carry exactly one status tag, <status>withdrawn</status> (last touched 78425f62a7 2026-09-29 and 3a735f88e6 2026-09-30 by 2.0.0_SA_COO~H). Mode is ANNOUNCE ('NOT blocking this commit'), so nothing was refused in fact.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "grep of both HARVST order files: one <status>withdrawn</status> each; <issued_to>0.7.0_AE_CloudOps~A</issued_to>.",
+   "the gate2 output in the 8ba8bf3ab0 commit run, quoted above."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+,
+{
+ "id": "AMGT_RESAPP-Z-W223-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~223",
+ "surfaced_at": "2026-10-05T01:10:16Z",
+ "one_line": "lib/research/api/tests/ has one failing test at the issuance pin, outside this order's cells: test_model_words.py::test_formula_words_equals_the_pages_own_function_run_in_node reads portal ModelTab.tsx for `function formulaInWords` and the pinned portal (6936e92b) does not carry that function, so re.search returns None.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "The order asks for the api suite's last line before commit and implies the suite is otherwise green; the cut states the portal fixture the api tests read is present at --portal-ref 6936e92b.",
+ "world_is": "Full run `python -m pytest -q lib/research/api/tests/` in C:/tmp/r68-223 after the AMGT-ar-1 change: '1 failed, 556 passed'. The one failure is test_model_words.py:63 `AttributeError: 'NoneType' object has no attribute 'group'` from re.search(r\"function formulaInWords\\(formula: string\\): string \\{(.*?)\n\\}\", src, re.S) over portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx; grep for formulaInWords in that file returns no match. The test reads no word-cloud code and the change touches only scoped_amgt word-cloud functions; the pre-change run on the base could not be taken (git stash is hook-blocked here).",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "pytest tail: FAILED lib/research/api/tests/test_model_words.py::test_formula_words_equals_the_pages_own_function_run_in_node - AttributeError: 'NoneType' object has no attribute 'group'; 1 failed, 556 passed in 106.31s.",
+   "grep -n formulaInWords portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx at portal HEAD 6936e92b546f3fb79de220a63705b56365f143d3: no output."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+,
+{
+ "id": "AMGT_RESAPP-Z-W224-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~224",
+ "surfaced_at": "2026-10-05T01:08:04Z",
+ "one_line": "lib/research/api/tests/test_model_words.py::test_formula_words_equals_the_pages_own_function_run_in_node fails in the cut worktree before and after this order's edit: the pinned portal fixture (6936e92b) has no `function formulaInWords` in tabs/ModelTab.tsx.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "AMGT-ar-2 asks the worker to run lib/research/api/tests/ and report its last line; the order does not say the suite is green at the cut.",
+ "world_is": "Full api suite: 1 failed, 545 passed. The one failure is AttributeError 'NoneType' has no attribute 'group' at test_model_words.py:63 (re.search for `function formulaInWords(formula: string): string {` over portal tabs/ModelTab.tsx returns None). A native Grep for formulaInWords over C:/tmp/r68-224/portal ModelTab.tsx finds 0 matches. This order's diff touches no portal path and no model_words path. Not fixed (outside paths and the cell).",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "pytest lib/research/api/tests/: '1 failed, 545 passed' on worktree wk-AMGT_RESAPP-224.",
+   "Grep formulaInWords in portal ModelTab.tsx: 0 matches."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
 }]
 ```

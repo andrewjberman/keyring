@@ -6866,6 +6866,75 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "notes": "Expected to pass in a full checkout; not re-run there."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S85",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-05T00:30Z",
+      "one_line": "The FWD-2 field census (round44/aq-1.field_census.py, and its round-45 copy) picks a bronze_key's served silver row by run_stamp, and a tie keeps the FIRST-READ row; the silver reader (store.supersedes) breaks the tie by the later part. Every re-derived row repeats its original run_stamp, so the census graded rows the reader no longer serves.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Order HVST-ar-1 AC3: the same census over SERVED silver reads 0 lost; aq-1 read 'served silver'.",
+      "world_is": "Literal AC3 after the write: lost barrons 39, bbg 10, ft 8, sa 0, wsj 19, which is FAIL. With the selection set to store.supersedes: lost 0 on all five, which is PASS. Control on barrons key 00b99ce0 (three rows, equal run_stamp and fetched_at): the census picks part-20261002T074537Z (61 columns, the pre-round-37 row); the reader picks part-20261002T113110Z-r2 (74 columns). Round 44's aq-1 barrons figures were taken from the same stale pre-round-37 rows.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "deliverables/0.9.0_WK_AMGT_HARVST~93/ar-1.field_census.py:263 (str(run_stamp) > held run_stamp; strict, first-read wins a tie); lib/research/harvest/store.py supersedes()",
+          "round45/ar-1.AC3.issuer_grade.out (FAIL), ar-1.AC3.issuer_grade.reader_rule.out (PASS), ar-1.AC3.tie_control.out"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "notes": "Instrument only; the served data is right (the act's VERIFY uses store.supersedes). Any later reuse of the census uses round45/ar-1.field_census.reader_rule.py."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W94-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~94",
+      "surfaced_at": "2026-10-05T01:08:30Z",
+      "one_line": "HVST-as-1: 1 of the rank's 191 names has no Seeking Alpha symbol the sa publisher can search (2602335D_US_Equity, TPG Inc); sa would raise ContractUnavailable for it, so sa could not conclude a job for all 191 keys. Not dropped.",
+      "class": "BLOCKING",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Order HVST-as-1 item 4: a name lacking an identity a publisher needs to search is NOT dropped; list it per publisher and file ONE BLOCKING row; the issuer rules before the run.",
+      "world_is": "Per publisher need: sa needs sa_symbol (190 of 191 have one; MISSING: 2602335D_US_Equity | ticker '2602335D US Equity' | TPG Inc -- not a folder of the 89 file, not a US letter ticker, so rule R3 UNRESOLVED); ft, wsj, bbg, barrons search by company (191 of 191 present). Also for the ruling: 153 of the 190 sa_symbols are DERIVED by rule R2 (a US-listed Bloomberg ticker used as its own SA symbol, never probed against Seeking Alpha); 23 INFERRED + 14 MEASURED carried from the 89 file. Nine R2 values differ from the 89 file's symbol for the same issuer (an ADR vs ordinary listing): BNPQY (file BNPQF), BZLFY (BZLFF), HESAY (FHI), IBDRY (IBDSF), ICT (ICTEF), QXO (QXO.PR.B), RBGLD (RBGPF), RIO (RTPPF), UNVGY (UMGNF); the file's value was NOT applied because the pool names are not equal to the 89-file folders.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~94/rank_universe_identity_20260916.json (records[].sa_symbol.status)",
+          "python org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~94/build_rank_identity.py printed: coverage sa_symbol 190 of 191 {'INFERRED': 23, 'UNRESOLVED': 1, 'DERIVED': 153, 'MEASURED': 14}",
+          "lib/opal_data_harvest/publishers.py:577-580 seeking_alpha(): no sa_symbol -> ContractUnavailable"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "The issuer rules before the run: supply the sa symbol for TPG, or accept sa not covering 191 of 191, and rule whether the 153 DERIVED symbols need a probe before THE run."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W94-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~94",
+      "surfaced_at": "2026-10-05T01:20:01Z",
+      "one_line": "Issuer ruling on AMGT_HARVST-Z-W94-S1 applied: TPG Inc sa_symbol = TPG (status ISSUER, rule R2b); the nine divergent R2 symbols stand; the 153 unprobed DERIVED symbols are accepted. sa_symbol now 191 of 191.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Row Z-W94-S1 (BLOCKING, ARMED) asked the issuer to rule before the run on three items: the TPG sa_symbol gap, the 153 DERIVED symbols never probed, and nine R2 symbols differing from the 89 file.",
+      "world_is": "Ruling from 2.0.0_SA_COO~H: (1) 2602335D_US_Equity sa_symbol = TPG, status ISSUER (Nasdaq TPG; the Bloomberg ticker is a placeholder); build_rank_identity.py gained R2b + ISSUER_RULED and the identity JSON was regenerated. (2) BNPQY, BZLFY, HESAY, IBDRY, ICT, QXO, RBGLD, RIO, UNVGY STAND (pool keys are those US listings; 89-file values name other securities). (3) 153 DERIVED symbols ACCEPTED unprobed; the run is the probe (a wrong symbol shows as a job that does not conclude). Re-run: builder printed coverage sa_symbol 191 of 191 {'INFERRED': 23, 'ISSUER': 1, 'DERIVED': 153, 'MEASURED': 14}, identity JSON byte-identical on re-run; AC1 6 passed; AC2 RESULT: PASS with identity sa_symbol present 191 of 191.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~94/rank_universe_identity_20260916.json (records[].sa_symbol.status)",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~94/AC1.out",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~94/AC2.out",
+          "Z-W94-S1 in this file"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Records the ruling only; Z-W94-S1 is not edited. Its standing is the issuer's to disposition."
     }
   ]
 ```

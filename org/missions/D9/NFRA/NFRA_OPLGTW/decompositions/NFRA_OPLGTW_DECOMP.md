@@ -1397,3 +1397,40 @@ SYNTHETIC principal and grant on the served engine (the OG-r-4 mechanism). No ag
 Andrew's own session holds no Schwab grant. The real holder's read is UNEXERCISED until her next use.
 
 **Pre-cut 22:1xZ.** Every new check FAILs on absence. The rl-5 floor (rl4.AC1, ht.AC2) PASSes on live.
+
+## ADDENDUM R3-T.10 (2.0.0_SA_COO~O, 2026-10-05 ~00:3xZ) -- round 17, the CTO's round-16 list
+
+**Source.** `ledger/ROUND_ANALYSIS.round16.md` @1f439fe6aa, section 4 (msg 29338). The grades read 0/2/6:
+- FWD-4 is NOT_REALIZED because `dim_asset` can be queried but not downloaded;
+- FWD-2 is narrowed to balances.
+
+R13 rules row Z-W15-S36 as (a): the release-branch commit is made under the audited override. Label
+`<round>17</round>`, ONE issuance, six cells.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-q-7` | 1 | The C3 holdings restriction (`sem.qualify_asset_plan`) on `prepare_download` and `export_query`, retiring their two placeholder guards. A no-seam test of four named cases (held only, planted unheld absent, empty holdings refused, query unchanged). | WORLD | ~22 | worker |
+| `OG-rl-6` | 2 | The release carrying q-7 on live `4b6b823fae`, under CTO + COO + CVO halves: `dim_asset` downloads open under C3. Ledger `nfra-oplgtw-gateway-release-r17`. Its release-branch commit follows R13 (a). | WORLD | ~15 | worker |
+| `OG-gr-4` | 3 | Read-only: `dim_balance`'s grain `(account,)` measured for uniqueness on every served snapshot (28 at the cut), and one `dim_balance` rows page served (synthetic principal, 0 grants). AC1 passes on either branch; a not-unique result sends a grain ruling to the CTO. | WORLD | ~26 | worker |
+| `OG-ti-1` | 4 | Row Z-W15-S37: per-module session managers or apps, so the whole schwab set passes in ONE pytest process with 0 setup errors. Tests only. | WORLD | ~25 | worker-light |
+| `OG-pm-1` | 5 | Row Z-W16-S5: p95 over the full trading day 2026-10-05 on `4b6b823fae`, against 0.5535 s and the 20% cap, graded. Handed after 2026-10-06T00:00Z. | WORLD | ~27 | worker-light |
+| `OG-ar-2` | 6 | The issuer's seven OPEN remediation rows (W6-S2, W1-S9, W2-S6, Z-W13-S5, Z-W12-S7, S63, Z-W15-S31): each gets an owner plus one of `remediated_by`, `moves_when` or `closure` with one of the four reasons. Z-W12-S7 is dated (~2026-10-18). | LOCAL | ~21 | worker-light |
+
+**Renamed, named.** The analysis calls item 1 "OG-q-6". That id is the completed C3-rules wiring cell of 2026-09-18
+(R-OG-18, `TO-OG-q-6.c3-rules-wiring.md`), so item 1 is `OG-q-7`. The release, which the analysis calls "OG-rl-6",
+keeps that id.
+
+**Chains.** `OG-q-7` -> `OG-rl-6`. `OG-gr-4`, `OG-ti-1` and `OG-ar-2` stand alone. `OG-pm-1` stands alone, with a dated
+start.
+
+**fanout.** 4 independent starts now (q-7, gr-4, ti-1, ar-2), then rl-6 after the q-7 drain and pm-1 after
+2026-10-06T00:00Z. Cap 8.
+
+**Stated dependencies, not cells (analysis section 4):**
+- OG-v-7 waits on Andrew's tests, then Alyssa.
+- The pilot waits on G-E and R7's flag.
+- Z-S43 waits on the meeting invitation.
+- The D9 -> D6 move waits on the joint boundary with NFRA_MCPINDEX.
+
+**Pre-cut.** Every new check FAILs on absence. The rl-6 floor (rl4.AC1, ht.AC2) PASSes on live `4b6b823fae`. The
+one-process and per-file suite readings are in the issuance commit.

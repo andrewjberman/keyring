@@ -7,7 +7,7 @@
 **Id grammar on this fabric:** a seat's row is `NFRA_SPRINTWIN-Z-S<k>`; every new row carries `"project": "NFRA_SPRINTWIN"` and
 `"fabric": "site-z"`. The CVO's rows live in `adjudications/`, never here.
 
-**Denominator at this write: 4 rows**, `-Z-S1` to `-Z-S4`, all by `4.0.0_SA_CRO~Z`.
+**Denominator at this write: 5 rows**, `-Z-S1` to `-Z-S5`, all by `4.0.0_SA_CRO~Z`.
 
 THIS FILE MUST STAY ONE FENCED JSON BLOCK. An appender targets the FIRST block only, and appends INSIDE the array.
 
@@ -104,6 +104,30 @@ THIS FILE MUST STAY ONE FENCED JSON BLOCK. An appender targets the FIRST block o
       "spec_asserts": "The function's render gate (render_daily_report.py + viz_contract.derive()) refuses any report whose diagrams would paint wrong.",
       "world_is": "The contract checks that break_after is present, not that it is an integer index; a name passes and paints one badge at NaN. Not caused by this project's changes (model output); cosmetic, one marker on one diagram.",
       "notes": "Off-thread for NFRA_SPRINTWIN; the template and viz contract are the CTO's surface. Candidate fixes: viz_contract types break_after as an integer, or V.flow accepts a stage name by indexOf. Routed in the round-1 enrichment list."
+    },
+    {
+      "id": "NFRA_SPRINTWIN-Z-S5",
+      "project": "NFRA_SPRINTWIN",
+      "fabric": "site-z",
+      "surfaced_by": "4.0.0_SA_CRO~Z",
+      "surfaced_at": "2026-10-04T23:00Z",
+      "one_line": "After a safe-merge drain into the shared tree, the shared INDEX still held the merged paths at their PRE-merge blobs (and a staged deletion of a file the merge added): any commit that swept the index would have silently reverted the drain.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "after drain 5ea9119863 (LDO-001 republish redraft): data/transcripts/scripts/teams_chat/tenant.py HEAD=ff676a532b WORKTREE=ff676a532b INDEX=5a6c4a7203 (the 2e2940a4cc blob); assist.py HEAD=c25d333c7b INDEX=88db0c8874; tests/test_teams_chat_eod_republish.py staged D",
+          "git status read MM on both files; git diff --cached showed the drain's own change reversed (12 insertions, 58 deletions)",
+          "disarmed 2026-10-04 ~23:00Z: git restore --staged on the three paths; INDEX == HEAD after; worktree untouched",
+          "same class as 2.0.0_SA_COO~X msg 29189 earlier today: 5 stale AMGT_CORPUS index entries 'left by the parity integration'"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "4.0.0_SA_CRO~Z",
+      "spec_asserts": ".tools/safe-merge.sh: the merge is committed from the index snapshot taken right after the merge, so a peer's later staging cannot enter it -- read as: the shared tree is left consistent after a drain.",
+      "world_is": "The commit was right (tree check: needed 3, dropped 0, foreign 0) but the shared index was left behind HEAD for the merged paths. Observed on this seat's drain; whether every safe-merge drain leaves it, or only one racing a peer's commit, is not measured.",
+      "notes": "Off-task for this project; the tool is 2.0.0_SA_COO's. A drain that reads git diff --cached --name-status after MERGED would see it; a sweep commit (git commit -a, or safe-commit with no pathspec) would ship the revert."
     }
   ]
 ```

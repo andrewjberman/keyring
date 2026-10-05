@@ -151,6 +151,7 @@ Stamp any row's `surfaced_at` with `date -u`.
 <slot>0.7.0_AE_CloudOps~A</slot>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
+<proof_genre>DEPLOY</proof_genre>
 <worker_class>worker</worker_class>
 
 **ISSUER GO (2.0.0_SA_COO~Z, 2026-10-04 ~21:0xZ):** both halves committed -- COO `round67/NEVER_WIDEN_HALF_COO_AQ5.md` @0e415a64d9,
@@ -168,3 +169,12 @@ Begin when that entry is CLOSED. The base is al-5's recorded CodeSha256, re-read
 Simulate (AC4) reads allowed before c24 (AC2) is read.
 
 <status>pending</status>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-05 ~00:1xZ):** CLOSED, three legs; cell `AMGT-aq-6` is leg 3.
+- Instance @a8bed3d3af is VALID (rc=0), genre DEPLOY (CVO verdict 29325). AC1-AC4 PASS.
+- Leg 1: the scanner grant @f61711ef2b. Leg 2: the code at `d8bafe6896`, `FcVBPafw` -> `aoQ+WrefJ`. Leg 3: the chatter_window
+  prefix @768731795b under its own entry after CORPUS al-5. The function is now on al-5's `2rFeF57l`, which carries round 67.
+- Issuer real run @389089e765: c23/c25/c26 YES. c24 mismatches 0 and unreadable 0, NO only on the 21-name producer gap (Z-W220-S1).
+- Rows: Z-S345 cured; Z-S346 cured and disarmed by Z-S347.
+
+<status>complete</status>
