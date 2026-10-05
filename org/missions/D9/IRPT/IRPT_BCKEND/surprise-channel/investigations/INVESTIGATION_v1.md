@@ -18055,3 +18055,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "MEASURED: head-object 404 with the delete marker current; the route answers 403 artifact_forbidden for it, the same as for the never-served relationship leaf."
 }
 ```
+
+## IRPT_BCKEND-S332 -- DISARM of S204 (MOOT): 49F PATH A retired by p2-window B3; ledger 49f-r3 A1 closed SUPERSEDED
+
+```json
+{
+  "id": "IRPT_BCKEND-S332",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-05T05:28:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARM of IRPT_BCKEND-S204 as MOOT: the 49F PATH A whose ruled periods (YTD/QTD/1Y) answered UNEXPECTED (ModuleNotFoundError parity_period_returns) was retired for 49F by ledger irpt-p2-window-20261003 leg B3 (18:44:32Z). The live irpt-performance-adapter is B3's artifact (CodeSha256 NU6YVERLJ0.., LastModified 2026-10-03T18:44:32Z, read 05:2xZ). 49F performance is served by PATH B. Ledger irpt-adapter-holdings-gold-49f-r3-20260929 leg A1 is closed SUPERSEDED and the ledger is CLOSED.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lambda get-function-configuration irpt-performance-adapter 2026-10-05 ~05:2xZ: CodeSha256 NU6YVERLJ0.., LastModified 2026-10-03T18:44:32Z",
+      "org/critical_paths/change_management/20261003T1652Z_irpt-p2-window-20261003_deploy_completion.md:27 and :45 (B3: PATH A retired for 49F, 49F PATH A refuses OBJECT_NOT_COVERED)",
+      "E1 reconcile org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~116/E1_RECONCILE_ROUNDS_42_46.json, S204 next: 'record A1 superseded by B3's PATH A retirement, then one row states S204's hazard is moot'"
+    ]
+  },
+  "dismissal_reason": "The failing path no longer serves 49F; a census of it would grade nothing served. Inflection still composes on PATH A, and its ruled periods are not this row's claim.",
+  "spec_asserts": "IRPT_BCKEND-S204: after the 49F holdings switch every 49F YTD/QTD/1Y read answered UNEXPECTED; ledger leg A1 (the all-accounts served census) was owed.",
+  "world_is": "MEASURED: the live adapter is the B3 artifact that retired PATH A for 49F; leg A1 closed SUPERSEDED and the ledger closed."
+}
+```
