@@ -5,7 +5,7 @@
  "project": "MDPF_SECCLASS",
  "directive": "D8",
  "fabric": "laptop",
- "prd_version": "v0.5",
+ "prd_version": "v0.6",
  "step": 4,
  "brief_ref": "docs/briefs/canonical-security-table-brief-20260929.md@87ad6973f3",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12"],
@@ -80,9 +80,8 @@ The section below carries the endpoint's outcomes verbatim.
                     data can tell a class that came from the shared list from one that came from the
                     declared exception; the old quiet rules such as "treat hedges as alternatives" or
                     "VXX is equity" are gone, not declared
-         SOURCE     brief O6 (l.68-73); section 2 below (the CTO's decision); amended 2026-10-05 on
-                    Andrew's word ("consolidating sector onto this table"): Positioning's ETF view is no
-                    longer a declared exception (FWD-12)
+         SOURCE     brief O6 (l.68-73); section 2 below (the CTO's decision); Andrew-direct
+                    2026-10-05 21:05Z ("consolidating sector onto this table")
 
   FWD-7  A security that newly appears in any firm's daily holdings gets its entry in the shared
          list on a regular schedule, before anyone has to notice it
@@ -152,8 +151,8 @@ The section below carries the endpoint's outcomes verbatim.
                     about a security, only what kind of thing it is
          SOURCE     Andrew-direct 2026-10-05 21:05Z ("I am ok with consolidating sector onto this table.
                     The question at that point isw whether the characteristics would need to be handled
-                    here as well, which I'd prefer they were not"); his word at the 4.0.0_SA_CRO terminal
-                    ~20:4xZ ("consistently using ONLY the canonical ETFClassifier table")
+                    here as well, which I'd prefer they were not"); Andrew-direct 2026-10-05 ~20:4xZ
+                    ("consistently using ONLY the canonical ETFClassifier table")
 
 ```
 
@@ -442,3 +441,15 @@ its equity `sub_asset_class` mixes ten GICS names with size and region labels (`
 **Placement:** the next MDPF_SECCLASS round. The current round's spec and decomposition stay frozen.
 
 **Sign-off:** an ENDPOINT change, so `3.0.0_SA_CVO` re-signs the ratified-text half. The brief half: Andrew's own word.
+
+## ADDENDUM v0.6 (1.0.0_SA_CTO, clock read 21:12Z 2026-10-05) -- form only, on `3.0.0_SA_CVO`'s refusal of the v0.5 half
+
+Review `org/tier1_exec/3.0.0_SA_CVO/deliverables/MDPF_SECCLASS_PRD_V05_RATIFIED_TEXT_REVIEW_20261005.md` @4d959d5ee5. Two SOURCE
+lines in the ENDPOINT block are corrected: FWD-6's carries no dated history clause (ADDENDUM v0.5 records the amendment), and
+FWD-12's names no seat serial. No outcome's meaning changes.
+
+**Andrew-direct, 21:12Z at this terminal:** "I am having CRO run an analysis and brief of this. It seems like this should be able
+to be folded into the MDPF_SECCLASS project." Record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261005_2112Z_CRO_BRIEF_ON_SECTOR_FOLD_INTO_MDPF_SECCLASS.md`. FWD-12 and
+ADDENDUM v0.5 are that fold as this seat wrote it from his direct words, before the brief. When the brief lands, this seat
+reconciles FWD-12 and the contract notes to it here, by amendment or a next-id outcome. No second project is opened.
