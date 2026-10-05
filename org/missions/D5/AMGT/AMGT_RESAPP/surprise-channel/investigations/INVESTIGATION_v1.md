@@ -18080,5 +18080,47 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
    "lib.research.identity.crosswalk.load_crosswalk() on the served crosswalk/v1/2026-09-29.json: 237 records, 67 with identity.name, none of the 23 keys among them"
   ]
  }
+},
+{
+ "id": "AMGT_RESAPP-Z-W243-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~243",
+ "surfaced_at": "2026-10-05T22:03:31Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "The only stored SEC object is the raw ticker list (no EDGAR filing history), so a --write-pool run now would write form_expected 'none' over 13 names the 2026-09-16 pool object holds as 10-K or 20-F.",
+ "spec_asserts": "TO-AMGT-av-7 item 1: load_sec_cache reads the NEWEST stored object under sec/harvest/bronze/company_tickers/ and --dry-run names 95 of 95; preflight: never fetch from the SEC, 'if none is stored, file a row and stop'.",
+ "world_is": "The prefix holds ONE object: date=2026-09-22/company_tickers.json (800703 B, the SEC's raw list: cik_str/ticker/title). The pinned sec_ticker_cik_cache.json projection (rows + submissions.by_cik from EDGAR) was never stored. load_sec_cache now projects the raw list in memory over every ticker, prints 'SEC CACHE: partition date=2026-09-22 ...' to stderr, and marks submissions.unmeasured; each filing note says form_expected is NOT measured. The dry-run names 95 of 95. MEASURED on the stored universe/v1/2026-09-16.json: form_expected 10-K 7, 20-F 6, none 237 of 250 names. A --write-pool built from the raw list yields 'none' for those 13, a served regression av-8 must not land. Disarm: av-8 either stores the EDGAR-history projection first (an egress act the order forbids this cell) or carries the 13 forward before any write. No store write was made here.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "boto3 paginated list of s3://opal-data-harvest/sec/harvest/bronze/company_tickers/ at 2026-10-05: 1 object, date=2026-09-22/company_tickers.json 800703 B",
+   "universe/v1/2026-09-16.json read: Counter(form_expected) = {'none': 237, '10-K': 7, '20-F': 6} over 250 names",
+   "lib/research/identity/build_universe.py _project_raw_sec_list and the filing_identity_for 'NOT measured' branch; test_union_universe.py LoadSecCache"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W243-S2",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~243",
+ "surfaced_at": "2026-10-05T22:03:31Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "one_line": "c45 (no name of 5+ capital letters) cannot pass with the shared rule's 'BP PLC', 'RWE AG', 'SAP SE', 'SSE PLC', so /peers alone serves them without the legal form.",
+ "spec_asserts": "TO-AMGT-av-7 item 2: /peers serves display_name through _clean_display_name; AC2 grades 0 names with 5+ letters all upper case.",
+ "world_is": "_clean_display_name keeps declared initialisms and legal forms upper (DISPLAY_NAME_ACRONYMS, CTO round 65), so those four names are still all capitals: 8 of 735 objects failed c45 after the shared rule. _peer_plain_name drops a trailing legal form only when what is left is wholly capitals, giving 'BP', 'RWE', 'SAP', 'SSE'. Every other route still serves 'BP PLC'; the issuer decides whether the shared rule should follow. Names with a lower-case letter are untouched.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "c45 local run after the shared rule: failing 8 of 735, all four names above",
+   "scoped_amgt.py _peer_plain_name and test_peers_plain_names_av7.py::test_an_initialism_with_its_legal_form_is_served_as_the_initialism"
+  ]
+ }
 }]
 ```
