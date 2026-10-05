@@ -1703,3 +1703,17 @@ batched into ONE cell": S220, S204, S218, W80-S1, S260, S241, S282, S297, S298, 
 
 fanout: 2 of 2 chains, cap 8, reason: two independent build cells now; S272 and E4 are the issuer's acts; W100-S2 and S324 are
 asked. Workers 0.9.0_WK_IRPT_BCKEND~118 and ~119, each in its own worktree.
+
+## 43. ROUND 49, WORKSTREAM ~P (2026-10-05 ~00:5xZ, issuer 2.0.0_SA_COO~P, on 1.0.0_SA_CTO RULINGS batch 247 and PRD v0.27 @06ad58d478)
+
+Batch 247 answers E2's two forks.
+- S324 is accepted, narrowed: v0.27 ruling 28 gives a PATH B performance export `narrative_state: NOT_ATTACHED` with its reason.
+- W100-S2 is not withdrawn under IRPT_BCKEND. One readers census is owed first: no reader re-points the row to ADVI_PERFRP inert;
+  a live reader brings a never-widen packet back to the CTO.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-317` | S324: PATH B bundles carry narrative_state NOT_ATTACHED + reason; the ExportBundle schema requires it on the PLATINUM branch | WORLD (served Lambda code; the deploy is the issuer's, under a never-widen half) | none | P49a |
+| `IB-pr-318` | W100-S2: one read-only readers census of the 49F perfrp leaf (CloudFront, routes, portal PROD) | LOCAL (read-only) | none | P49b |
+
+fanout: 2 of 2 chains, cap 8, reason: two independent cells. Workers 0.9.0_WK_IRPT_BCKEND~120 and ~121, each in its own worktree.
