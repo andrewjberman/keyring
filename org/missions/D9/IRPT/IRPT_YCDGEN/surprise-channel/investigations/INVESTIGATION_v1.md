@@ -269,3 +269,29 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "INERT (no element sourced from the scatter yet). Owner 2.0.0_SA_COO~Y: teach the shape rule the series key and pin it with the round-2 scatter answer's shape, before the OTHER_ENDPOINT re-pointing (packet section 5 item 2) reads it."
 }
 ```
+
+## IRPT_YCDGEN-W1-S1 -- run.json schema is v2 only for a run given holdings; the kept runner tests pin v1
+
+```json
+{
+  "id": "IRPT_YCDGEN-W1-S1",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~1",
+  "surfaced_at": "2026-10-05T01:08:00Z",
+  "one_line": "YCD-r-3: contract 3.2 says run.json schema 'becomes irpt-ycdgen-run-v2', but the 25 kept runner tests pin v1 and the exact v1 key set; the runner writes v2 (with the holdings block) only for a run given holdings, and v1 unchanged otherwise.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_runner.py valid_run_record (asserts schema == irpt-ycdgen-run-v1 and the exact 13-key set) at base 7616d7a7d9",
+      "infra/aws/lambda/investor-reporting/ycharts/research/runner.py run(): schema v2 and the holdings key only when holdings is not None"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "C-RUN v2 (decomposition 3.2): run.json gains a holdings block and schema becomes irpt-ycdgen-run-v2, every v1 key kept; the order also says keep every existing test passing.",
+  "world_is": "Both cannot hold for a run without holdings: an unconditional v2 breaks valid_run_record. A run with holdings writes v2 plus the block; a run without writes v1 with no holdings key, which is honest (it read none). Also: _compose now returns (session, research_s3, {s3, dynamodb} host clients), so World.main's _compose fake in test_runner.py returns a 3-tuple.",
+  "notes": "INERT: a consumer (YCD-l-3) must read schema v1 as 'no holdings' and v2 as holdings present. Owner 2.0.0_SA_COO~Y to rule if v2 should be unconditional (then valid_run_record is amended)."
+}
+```
