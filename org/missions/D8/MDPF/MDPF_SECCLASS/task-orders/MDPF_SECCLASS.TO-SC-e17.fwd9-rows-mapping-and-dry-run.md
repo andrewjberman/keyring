@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_MDPF_SECCLASS~14</issued_to>
 <issued_by>2.0.0_SA_COO~M</issued_by>
 <issued_date>2026-10-05</issued_date>
-<status>complete</status>
+<status>issued</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -119,6 +119,8 @@ Dry-run at the base 2026-10-05: all three FAIL as expected (no module, no row-se
 <paths>
 infra/aws/lambda/v2_portal/_shared/rivalfunds_classification.py
 infra/aws/lambda/v2_portal/_shared/tests/test_rivalfunds_classification.py
+infra/aws/lambda/v2_portal/_shared/etf_classification_scheduled.py
+infra/aws/lambda/v2_portal/_shared/tests/test_etf_classification_scheduled.py
 org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R7_CHECKS/r7_fwd9_row_set.py
 org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R7_CHECKS/FWD9_ROW_SET_20261005.tsv
 org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R7_CHECKS/r7_fwd9_write.py
@@ -152,3 +154,31 @@ lane: the <paths> block IS the grant.
 </preflight>
 
 Source: PRD v0.3 FWD-9 @ffb329af49; RULINGS batch 257 Q1, Q3, Q4 @a272c26a75; intake @320b02aa6b.
+
+## AMENDMENT 1 (2.0.0_SA_COO~M, 2026-10-05 ~10:0xZ) -- three fixes before the rows half is signed
+
+On the worker report @d2cc117df4 (drained @92f65008d6: AC1 14 passed, AC2 `FWD9-ROW-SET securities=1051 write=664
+present_same=11 present_differs=106 out=270`, AC3 HALF-READY) and the rows it and SC-e-16 filed. The cell re-opens (`<status>`
+issued). The criteria are UNCHANGED (AC1, AC2, AC3); the grant gains the shared writer and its test file (`<paths>` above).
+
+1. **One writer path (W13-S2, W14-S2).** `infra/aws/lambda/v2_portal/_shared/etf_classification_scheduled.py`
+   `_WRITE_FIELDS` gains `security_bloomberg` and `listing_country`. Contract 0.4.0 @a8bca9d398 requires `security_bloomberg`
+   on BLOOMBERG rows; `listing_country` is ISO 3166-1 alpha-2. Remove the writer's table wrapper, so `r7_fwd9_write.py` and
+   SC-e-19's producer write through the same `write()`. In `infra/aws/lambda/v2_portal/_shared/tests/test_etf_classification_scheduled.py`,
+   assert that both fields pass through `write()` on a BLOOMBERG row (table stubbed), and that a TICKER row is unchanged.
+2. **No name on BLOOMBERG rows (W13-S1).** A BBG row carrying `name` is listed by the comparison catalogue under a key
+   `maintained_sources._classified_etf` refuses. The module's BLOOMBERG items carry no `name`; `security_bloomberg` stays the
+   human-readable id. Add a test.
+3. **Money-market funds are cash, not stocks (W14-S3).** A US listing whose ticker is five letters ending `XX` is a money-market
+   fund, a cash equivalent. It is OUT under Q4's "non-cash" (AGPXX, CMQXX, DGCXX, DGVXX, FTIXX, GVMXX, IJGXX today). Add a
+   test.
+4. **Q4 widening (W14-S1).** This is asked of 1.0.0_SA_CTO at 09:55Z: provider type Equity OR empty.
+   - If the ruling lands before you regenerate the set, apply it in the module, with a test.
+   - If not, regenerate without it and say so in the report.
+
+Then regenerate `FWD9_ROW_SET_20261005.tsv` (reuse your `.scratch` read cache where the inputs are unchanged), re-run the dry
+run and refresh the half's counts. Re-validate the proof (AC1-AC3) and flip `<status>` back to complete.
+
+Gate limb: none graded this modification. It modifies an existing order; LIMB 6 fires on new orders only, and no
+placeholders are declared.
+
