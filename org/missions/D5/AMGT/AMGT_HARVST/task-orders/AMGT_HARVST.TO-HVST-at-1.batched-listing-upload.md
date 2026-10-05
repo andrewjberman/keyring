@@ -91,9 +91,21 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 It lands through at-2: every leg is stopped by its stop file before the merge (no harvest code lands while a leg runs), then
 each leg is resumed from its own checkpoint as the same run.
 
+**COMPLETE 2026-10-05 ~07:2xZ (issuer):**
+- **Built:** worker ~95 @7d2166a180 + @a567807afa.
+- **Landed:** with at-4 through at-2 on the CTO's word @08580b1fd6 + ADDENDUM @ff4e31bcd0, merge @23baacf0e1 (11 files, dropped 0,
+  foreign 0).
+- **AC1 PASS:** 8 of 8.
+- **AC2 PASS:** silver prefix reads, old 100 against new 1; wall time 84.04 s against 0.91 s; rows identical, 200 of 200.
+- **Suites on CLOUD after the landing:** research harvest 342 passed; collector 655 passed, 3 skipped. Before the landing, the
+  integration branch also passed management 142, and corpus 475 with 1 pre-existing failure identical on CLOUD.
+- **Legs:** bbg and wsj stopped by their stop files and were resumed 07:25:46Z from their own checkpoints (169 and 148 pairs
+  planned = 191 - 22 and 191 - 43). sa resumes when its driver exits from its old-path upload.
+- **Rows:** Z-W95-S1 (column rounds); Z-W95-S2 (first-row columns), disarmed by at-4.
+
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>issued</status>
+<status>complete</status>
 <round>47</round>
 <slot>~95</slot>
 <fabric>site-z</fabric>
