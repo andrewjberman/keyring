@@ -1,0 +1,307 @@
+{
+ "what": "CTO batch 261: the FWD-9 BBG keys holding / - * run through SC-e-16's reader harness as literal keys",
+ "claim": "measured (the harness's own exercises, table stubbed; no AWS call)",
+ "baseline": {
+  "key": "BBG:REL:LN",
+  "counts": {
+   "TOLERATES": 34,
+   "READ-ONLY": 11
+  }
+ },
+ "keys": {
+  "BBG:AC*:MM": {
+   "security_bloomberg": "AC* MM Equity",
+   "sub_asset_class": "Consumer Staples",
+   "pass2_counts": {
+    "TOLERATES": 34,
+    "READ-ONLY": 11
+   },
+   "pass1_fixture_only_failures": 4,
+   "status": "TOLERATED",
+   "failing": []
+  },
+  "BBG:ADVANC-R:TB": {
+   "security_bloomberg": "ADVANC-R TB Equity",
+   "sub_asset_class": "Communication Services",
+   "pass2_counts": {
+    "TOLERATES": 34,
+    "READ-ONLY": 11
+   },
+   "pass1_fixture_only_failures": 4,
+   "status": "TOLERATED",
+   "failing": []
+  },
+  "BBG:ADVANC/F:TB": {
+   "security_bloomberg": "ADVANC/F TB Equity",
+   "sub_asset_class": "Communication Services",
+   "pass2_counts": {
+    "TOLERATES": 34,
+    "READ-ONLY": 11
+   },
+   "pass1_fixture_only_failures": 4,
+   "status": "TOLERATED",
+   "failing": []
+  },
+  "BBG:AV/:LN": {
+   "security_bloomberg": "AV/ LN Equity",
+   "sub_asset_class": "Financials",
+   "pass2_counts": {
+    "TOLERATES": 34,
+    "READ-ONLY": 11
+   },
+   "pass1_fixture_only_failures": 4,
+   "status": "TOLERATED",
+   "failing": []
+  },
+  "BBG:BA/:LN": {
+   "security_bloomberg": "BA/ LN Equity",
+   "sub_asset_class": "Industrials",
+   "pass2_counts": {
+    "TOLERATES": 34,
+    "READ-ONLY": 11
+   },
+   "pass1_fixture_only_failures": 4,
+   "status": "TOLERATED",
+   "failing": []
+  },
+  "BBG:BBD/B:CN": {
+   "security_bloomberg": "BBD/B CN Equity",
+   "sub_asset_class": "Industrials",
+   "pass2_counts": {
+    "TOLERATES": 34,
+    "READ-ONLY": 11
+   },
+   "pass1_fixture_only_failures": 4,
+   "status": "TOLERATED",
+   "failing": []
+  },
+  "BBG:BDMS-R:TB": {
+   "security_bloomberg": "BDMS-R TB Equity",
+   "sub_asset_class": "Health Care",
+   "pass2_counts": {
+    "TOLERATES": 34,
+    "READ-ONLY": 11
+   },
+   "pass1_fixture_only_failures": 4,
+   "status": "TOLERATED",
+   "failing": []
+  },
+  "BBG:BP/:LN": {
+   "security_bloomberg": "BP/ LN Equity",
+   "sub_asset_class": "Developed",
+   "pass2_counts": {
+    "TOLERATES": 34,
+    "READ-ONLY": 11
+   },
+   "pass1_fixture_only_failures": 0,
+   "status": "TOLERATED",
+   "failing": []
+  },
+  "BBG:BT/A:LN": {
+   "security_bloomberg": "BT/A LN Equity",
+   "sub_asset_class": "Communication Services",
+   "pass2_counts": {
+    "TOLERATES": 34,
+    "READ-ONLY": 11
+   },
+   "pass1_fixture_only_failures": 4,
+   "status": "TOLERATED",
+   "failing": []
+  },
+  "BBG:CPN-R:TB": {
+   "security_bloomberg": "CPN-R TB Equity",
+   "sub_asset_class": "EM",
+   "pass2_counts": {
+    "TOLERATES": 34,
+    "READ-ONLY": 11
+   },
+   "pass1_fixture_only_failures": 4,
+   "status": "TOLERATED",
+   "failing": []
+  },
+  "BBG:GULF-R:TB": {
+   "security_bloomberg": "GULF-R TB Equity",
+   "sub_asset_class": "EM",
+   "pass2_counts": {
+    "TOLERATES": 34,
+    "READ-ONLY": 11
+   },
+   "pass1_fixture_only_failures": 4,
+   "status": "TOLERATED",
+   "failing": []
+  },
+  "BBG:IBE/D:SM": {
+   "security_bloomberg": "IBE/D SM Equity",
+   "sub_asset_class": "Developed",
+   "pass2_counts": {
+    "TOLERATES": 34,
+    "READ-ONLY": 11
+   },
+   "pass1_fixture_only_failures": 0,
+   "status": "TOLERATED",
+   "failing": []
+  },
+  "BBG:INTUCH-R:TB": {
+   "security_bloomberg": "INTUCH-R TB Equity",
+   "sub_asset_class": "EM",
+   "pass2_counts": {
+    "TOLERATES": 34,
+    "READ-ONLY": 11
+   },
+   "pass1_fixture_only_failures": 4,
+   "status": "TOLERATED",
+   "failing": []
+  },
+  "BBG:KBANK-R:TB": {
+   "security_bloomberg": "KBANK-R TB Equity",
+   "sub_asset_class": "Financials",
+   "pass2_counts": {
+    "TOLERATES": 34,
+    "READ-ONLY": 11
+   },
+   "pass1_fixture_only_failures": 4,
+   "status": "TOLERATED",
+   "failing": []
+  },
+  "BBG:KTB-R:TB": {
+   "security_bloomberg": "KTB-R TB Equity",
+   "sub_asset_class": "Financials",
+   "pass2_counts": {
+    "TOLERATES": 34,
+    "READ-ONLY": 11
+   },
+   "pass1_fixture_only_failures": 4,
+   "status": "TOLERATED",
+   "failing": []
+  },
+  "BBG:PTTEP-R:TB": {
+   "security_bloomberg": "PTTEP-R TB Equity",
+   "sub_asset_class": "Energy",
+   "pass2_counts": {
+    "TOLERATES": 34,
+    "READ-ONLY": 11
+   },
+   "pass1_fixture_only_failures": 4,
+   "status": "TOLERATED",
+   "failing": []
+  },
+  "BBG:QBR/B:CN": {
+   "security_bloomberg": "QBR/B CN Equity",
+   "sub_asset_class": "Communication Services",
+   "pass2_counts": {
+    "TOLERATES": 34,
+    "READ-ONLY": 11
+   },
+   "pass1_fixture_only_failures": 4,
+   "status": "TOLERATED",
+   "failing": []
+  },
+  "BBG:RR/:LN": {
+   "security_bloomberg": "RR/ LN Equity",
+   "sub_asset_class": "Developed",
+   "pass2_counts": {
+    "TOLERATES": 34,
+    "READ-ONLY": 11
+   },
+   "pass1_fixture_only_failures": 0,
+   "status": "TOLERATED",
+   "failing": []
+  },
+  "BBG:SCB-R:TB": {
+   "security_bloomberg": "SCB-R TB Equity",
+   "sub_asset_class": "Financials",
+   "pass2_counts": {
+    "TOLERATES": 34,
+    "READ-ONLY": 11
+   },
+   "pass1_fixture_only_failures": 4,
+   "status": "TOLERATED",
+   "failing": []
+  },
+  "BBG:TECK/B:CN": {
+   "security_bloomberg": "TECK/B CN Equity",
+   "sub_asset_class": "Materials",
+   "pass2_counts": {
+    "TOLERATES": 34,
+    "READ-ONLY": 11
+   },
+   "pass1_fixture_only_failures": 4,
+   "status": "TOLERATED",
+   "failing": []
+  },
+  "BBG:TISCO-R:TB": {
+   "security_bloomberg": "TISCO-R TB Equity",
+   "sub_asset_class": "Financials",
+   "pass2_counts": {
+    "TOLERATES": 34,
+    "READ-ONLY": 11
+   },
+   "pass1_fixture_only_failures": 4,
+   "status": "TOLERATED",
+   "failing": []
+  },
+  "BBG:TTB-R:TB": {
+   "security_bloomberg": "TTB-R TB Equity",
+   "sub_asset_class": "Financials",
+   "pass2_counts": {
+    "TOLERATES": 34,
+    "READ-ONLY": 11
+   },
+   "pass1_fixture_only_failures": 4,
+   "status": "TOLERATED",
+   "failing": []
+  },
+  "BBG:TTB/F:TB": {
+   "security_bloomberg": "TTB/F TB Equity",
+   "sub_asset_class": "EM",
+   "pass2_counts": {
+    "TOLERATES": 34,
+    "READ-ONLY": 11
+   },
+   "pass1_fixture_only_failures": 4,
+   "status": "TOLERATED",
+   "failing": []
+  },
+  "BBG:TW/:LN": {
+   "security_bloomberg": "TW/ LN Equity",
+   "sub_asset_class": "Consumer Discretionary",
+   "pass2_counts": {
+    "TOLERATES": 34,
+    "READ-ONLY": 11
+   },
+   "pass1_fixture_only_failures": 4,
+   "status": "TOLERATED",
+   "failing": []
+  }
+ },
+ "summary": {
+  "keys": 24,
+  "tolerated": [
+   "BBG:AC*:MM",
+   "BBG:ADVANC-R:TB",
+   "BBG:ADVANC/F:TB",
+   "BBG:AV/:LN",
+   "BBG:BA/:LN",
+   "BBG:BBD/B:CN",
+   "BBG:BDMS-R:TB",
+   "BBG:BP/:LN",
+   "BBG:BT/A:LN",
+   "BBG:CPN-R:TB",
+   "BBG:GULF-R:TB",
+   "BBG:IBE/D:SM",
+   "BBG:INTUCH-R:TB",
+   "BBG:KBANK-R:TB",
+   "BBG:KTB-R:TB",
+   "BBG:PTTEP-R:TB",
+   "BBG:QBR/B:CN",
+   "BBG:RR/:LN",
+   "BBG:SCB-R:TB",
+   "BBG:TECK/B:CN",
+   "BBG:TISCO-R:TB",
+   "BBG:TTB-R:TB",
+   "BBG:TTB/F:TB",
+   "BBG:TW/:LN"
+  ],
+  "held": []
+ }
+}

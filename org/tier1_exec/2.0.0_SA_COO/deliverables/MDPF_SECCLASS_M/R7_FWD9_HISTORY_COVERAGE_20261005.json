@@ -41,19 +41,26 @@
     "bytes": 46943,
     "rows": 601,
     "px_close_nonnull": 597
+   },
+   {
+    "partition": "2026-10-02",
+    "file": "market-20261005T123318Z-c86a8d9e27fa.parquet",
+    "bytes": 19670,
+    "rows": 601,
+    "px_close_nonnull": 0
    }
   ]
  },
  "universe_source": {
-  "canonical_files": 1169,
+  "canonical_files": 1170,
   "canonical_days": 504,
-  "rows": 300030
+  "rows": 300102
  },
  "counts": {
-  "stocks": 781,
+  "stocks": 795,
   "covered_3y": 0,
-  "starts_late": 497,
-  "no_series": 284,
+  "starts_late": 509,
+  "no_series": 286,
   "beyond_cap": 0
  },
  "stocks": [
@@ -1738,13 +1745,6 @@
    "joined_by": null
   },
   {
-   "security_bloomberg": "AGPXX US Equity",
-   "first": null,
-   "last": null,
-   "status": "NO_SERIES",
-   "joined_by": null
-  },
-  {
    "security_bloomberg": "AHT LN Equity",
    "first": null,
    "last": null,
@@ -1806,6 +1806,13 @@
    "last": null,
    "status": "NO_SERIES",
    "joined_by": null
+  },
+  {
+   "security_bloomberg": "ALNY US Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
   },
   {
    "security_bloomberg": "ALV GR Equity",
@@ -1878,6 +1885,13 @@
    "joined_by": "security_bloomberg"
   },
   {
+   "security_bloomberg": "ANET US Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
    "security_bloomberg": "AON US Equity",
    "first": null,
    "last": null,
@@ -1887,6 +1901,13 @@
   {
    "security_bloomberg": "APP US Equity",
    "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "ARES US Equity",
+   "first": "2026-09-29",
    "last": "2026-10-02",
    "status": "STARTS_LATE",
    "joined_by": "security_bloomberg"
@@ -2368,6 +2389,13 @@
    "joined_by": "security_bloomberg"
   },
   {
+   "security_bloomberg": "CARR US Equity",
+   "first": "2026-10-01",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
    "security_bloomberg": "CAST SS Equity",
    "first": null,
    "last": null,
@@ -2397,6 +2425,13 @@
   },
   {
    "security_bloomberg": "CCO CN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "CDNS US Equity",
    "first": "2026-09-29",
    "last": "2026-10-02",
    "status": "STARTS_LATE",
@@ -2438,18 +2473,18 @@
    "joined_by": "security_bloomberg"
   },
   {
+   "security_bloomberg": "CMG US Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
    "security_bloomberg": "CMIG4 BZ Equity",
    "first": "2026-09-29",
    "last": "2026-10-02",
    "status": "STARTS_LATE",
    "joined_by": "security_bloomberg"
-  },
-  {
-   "security_bloomberg": "CMQXX US Equity",
-   "first": null,
-   "last": null,
-   "status": "NO_SERIES",
-   "joined_by": null
   },
   {
    "security_bloomberg": "CNQ CN Equity",
@@ -2550,6 +2585,13 @@
    "joined_by": "security_bloomberg"
   },
   {
+   "security_bloomberg": "CTAS US Equity",
+   "first": "2026-10-01",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
    "security_bloomberg": "CVC NA Equity",
    "first": null,
    "last": null,
@@ -2620,25 +2662,11 @@
    "joined_by": "security_bloomberg"
   },
   {
-   "security_bloomberg": "DGCXX US Equity",
-   "first": "2026-10-02",
-   "last": "2026-10-02",
-   "status": "STARTS_LATE",
-   "joined_by": "security_bloomberg"
-  },
-  {
    "security_bloomberg": "DGE LN Equity",
    "first": "2026-09-29",
    "last": "2026-10-02",
    "status": "STARTS_LATE",
    "joined_by": "security_bloomberg"
-  },
-  {
-   "security_bloomberg": "DGVXX US Equity",
-   "first": null,
-   "last": null,
-   "status": "NO_SERIES",
-   "joined_by": null
   },
   {
    "security_bloomberg": "DHL GR Equity",
@@ -2649,6 +2677,13 @@
   },
   {
    "security_bloomberg": "DHLGY US Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "DHR US Equity",
    "first": "2026-09-29",
    "last": "2026-10-02",
    "status": "STARTS_LATE",
@@ -2697,6 +2732,13 @@
    "joined_by": null
   },
   {
+   "security_bloomberg": "DT US Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
    "security_bloomberg": "DTE GR Equity",
    "first": "2026-09-29",
    "last": "2026-10-02",
@@ -2725,6 +2767,13 @@
    "joined_by": "security_bloomberg"
   },
   {
+   "security_bloomberg": "ECL US Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
    "security_bloomberg": "EDEN FP Equity",
    "first": null,
    "last": null,
@@ -2733,6 +2782,13 @@
   },
   {
    "security_bloomberg": "EDV CN Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "EFX US Equity",
    "first": null,
    "last": null,
    "status": "NO_SERIES",
@@ -2984,13 +3040,6 @@
    "joined_by": "security_bloomberg"
   },
   {
-   "security_bloomberg": "FTIXX US Equity",
-   "first": null,
-   "last": null,
-   "status": "NO_SERIES",
-   "joined_by": null
-  },
-  {
    "security_bloomberg": "FTNT US Equity",
    "first": "2026-10-02",
    "last": "2026-10-02",
@@ -3143,13 +3192,6 @@
    "last": null,
    "status": "NO_SERIES",
    "joined_by": null
-  },
-  {
-   "security_bloomberg": "GVMXX US Equity",
-   "first": "2026-09-29",
-   "last": "2026-10-02",
-   "status": "STARTS_LATE",
-   "joined_by": "security_bloomberg"
   },
   {
    "security_bloomberg": "GWO CN Equity",
@@ -3404,13 +3446,6 @@
    "joined_by": "security_bloomberg"
   },
   {
-   "security_bloomberg": "IJGXX US Equity",
-   "first": "2026-10-02",
-   "last": "2026-10-02",
-   "status": "STARTS_LATE",
-   "joined_by": "security_bloomberg"
-  },
-  {
    "security_bloomberg": "IMB LN Equity",
    "first": "2026-09-29",
    "last": "2026-10-02",
@@ -3629,6 +3664,13 @@
   },
   {
    "security_bloomberg": "KIMBERA MM Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "KKR US Equity",
    "first": "2026-09-29",
    "last": "2026-10-02",
    "status": "STARTS_LATE",
@@ -3901,11 +3943,25 @@
    "joined_by": "security_bloomberg"
   },
   {
+   "security_bloomberg": "MPWR US Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
    "security_bloomberg": "MRK GR Equity",
    "first": null,
    "last": null,
    "status": "NO_SERIES",
    "joined_by": null
+  },
+  {
+   "security_bloomberg": "MRVL US Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
   },
   {
    "security_bloomberg": "MSCI US Equity",
@@ -4202,6 +4258,13 @@
    "joined_by": "security_bloomberg"
   },
   {
+   "security_bloomberg": "PANW US Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
    "security_bloomberg": "PAYC US Equity",
    "first": null,
    "last": null,
@@ -4218,6 +4281,13 @@
   {
    "security_bloomberg": "PG US Equity",
    "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "PGR US Equity",
+   "first": "2026-09-29",
    "last": "2026-10-02",
    "status": "STARTS_LATE",
    "joined_by": "security_bloomberg"
@@ -4641,6 +4711,13 @@
    "last": null,
    "status": "NO_SERIES",
    "joined_by": null
+  },
+  {
+   "security_bloomberg": "SCHW US Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
   },
   {
    "security_bloomberg": "SCI SP Equity",
@@ -5217,6 +5294,13 @@
    "joined_by": null
   },
   {
+   "security_bloomberg": "TTD US Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
    "security_bloomberg": "TTE FP Equity",
    "first": "2026-09-29",
    "last": "2026-10-02",
@@ -5357,6 +5441,13 @@
    "joined_by": "security_bloomberg"
   },
   {
+   "security_bloomberg": "VLTO US Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
    "security_bloomberg": "VNA GR Equity",
    "first": null,
    "last": null,
@@ -5386,6 +5477,13 @@
   },
   {
    "security_bloomberg": "VOLVB SS Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "VRSK US Equity",
    "first": null,
    "last": null,
    "status": "NO_SERIES",
@@ -5446,6 +5544,13 @@
    "last": null,
    "status": "NO_SERIES",
    "joined_by": null
+  },
+  {
+   "security_bloomberg": "WST US Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
   },
   {
    "security_bloomberg": "XP US Equity",

@@ -21,6 +21,7 @@ from __future__ import annotations
 import argparse
 import collections
 import concurrent.futures
+import hashlib
 import io
 import json
 import sys
@@ -127,9 +128,10 @@ def deployed_reader():
 def reader_read(reader, firm, as_of, accounts):
     snap = reader.load_snapshot(firm, as_of=as_of, account_ids=accounts)
     # The handler's scope carries the viewer's selection fingerprint and the verified firm; project() copies both into the
-    # slice's scope block, which the contract types as strings. This read names itself in the fingerprint.
+    # slice's scope block; the contract types the fingerprint as 64 hex, so this read uses the sha256 of its selection.
+    fingerprint = hashlib.sha256(",".join(sorted(accounts)).encode("ascii")).hexdigest()
     sliced = reader.project(snap, {"permitted_account_set": accounts, "selected_account_ids": accounts,
-                                   "selected_account_set_fingerprint": "legv-read-%d-accounts" % len(accounts),
+                                   "selected_account_set_fingerprint": fingerprint,
                                    "verified_request_firm_id": firm})
     out = {"accounts": len(accounts), "validate": reader.validate_slice(sliced)}
     try:

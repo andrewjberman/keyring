@@ -6,8 +6,9 @@ FWD-9's second half: each Rival Funds stock's history (the G4 `security_market` 
 filled in back three years, or to its first trading day if younger; none reaches further back than three years.
 
 What it does, and nothing else:
-  1. The universe: non-cash `provider_security_type == "Equity"` across every canonical_shape day (newest revision per
-     day), one per `security_bloomberg`.
+  1. The universe: every canonical_shape row the shared module admits (`rivalfunds_classification.out_reason()` is None:
+     CTO batch 259 Q4 -- non-cash, Bloomberg yellow key Equity, provider type Equity or empty, no money-market fund),
+     across every day (newest revision per day), one per `security_bloomberg`.
   2. The series: reads `security_market` (columns pruned) and keeps, per security, the first and last `date` with a
      non-null `px_close`. The series is joined to the universe on `security_bloomberg`, then on `security_id`.
   3. One status per stock against the window `[max(run_day - 3 years, first trading day), run_day]`:
@@ -41,12 +42,14 @@ from botocore.exceptions import BotoCoreError, ClientError
 ROOT = Path(__file__).resolve().parents[6]  # R7_CHECKS -> MDPF_SECCLASS_M -> deliverables -> 2.0.0_SA_COO -> tier1_exec -> org -> root
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
+sys.path.insert(0, str(ROOT / "infra" / "aws" / "lambda" / "v2_portal" / "_shared"))
+from rivalfunds_classification import out_reason  # noqa: E402 -- the FWD-9 domain is the module's, never restated here
 
 BUCKET = "opal-data-etfs"
 CANON = "rivalfunds/etfs/gold/canonical_shape/"
 MARKET = "rivalfunds/etfs/gold/security_market/"
 OUT = ROOT / "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R7_FWD9_HISTORY_COVERAGE_20261005.json"
-CACHE = ROOT / ".scratch" / "r7_e18_cache"  # per-file reduced results; the key carries the revision, so it never goes stale
+CACHE = ROOT / ".scratch" / "r7_e18_cache_b259"  # per-file reduced results under the batch 259 domain; the key carries the revision
 THREADS = 8
 TRIES = 12
 
@@ -115,10 +118,9 @@ def _next_trading_day(day: dt.date) -> dt.date:
 
 
 def _reduce_canon(tb):
-    df = tb.to_pandas()
-    eq = df[(df["provider_security_type"] == "Equity") & (df["is_cash_line"] != True)]  # noqa: E712
-    eq = eq[eq["security_bloomberg"].notna()]
-    return int(len(df)), sorted({(r.security_bloomberg, r.security_id) for r in eq.itertuples()}, key=str)
+    rows = tb.to_pylist()  # nulls arrive as None, never NaN, so the module's rule reads them as written
+    keep = [r for r in rows if out_reason(r) is None]
+    return int(len(rows)), sorted({(r["security_bloomberg"], r["security_id"]) for r in keep}, key=str)
 
 
 def universe():
@@ -129,7 +131,7 @@ def universe():
         if m:
             byday[m.group(1)].append((m.group(2), i.path))
     newest = {d: max(v, key=lambda x: x[0])[1] for d, v in byday.items()}
-    cols = ["security_bloomberg", "security_id", "provider_security_type", "is_cash_line"]
+    cols = ["security_bloomberg", "security_id", "provider_security_type", "is_cash_line", "position_type"]
     with ThreadPoolExecutor(THREADS) as ex:
         res = list(ex.map(lambda p: _cached(p, _reduce_canon, cols), newest.values()))
     ids = collections.defaultdict(set)
