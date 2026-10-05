@@ -1,6 +1,6 @@
 # CHECK -- do the holdings tables use ONLY the canonical ETFClassifier table?
 
-- **Author:** `4.0.0_SA_CRO` (base), 2026-10-05 ~21:0xZ (5:0x PM Eastern). Read-only; nothing was changed.
+- **Author:** `4.0.0_SA_CRO` (base), 2026-10-05 ~20:5xZ (4:5x PM Eastern). Read-only; nothing was changed.
 - **Order:** Andrew-direct 2026-10-05 ~20:4xZ, verbatim in
   `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261005_204xZ_HOLDINGS_SURFACES_ONLY_CANONICAL_ETFCLASSIFIER_TABLE.md`.
 - **The canonical table:** DynamoDB `etf-classifications` (3,493 rows today), read through its one client
