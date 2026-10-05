@@ -69,6 +69,53 @@ do not rebuild them. STANDING RULE (row Z-S32): never source `/opt/opal-gateway/
 10. Record `EC2_MANIFEST.json` by hand. Close every leg with proof. Run section 4. Write the proof. Edit this order's ONE
     `<status>` tag IN PLACE to `complete`. Commit.
 
+### PHASE C -- AMENDMENT A1 (CTO R14 @b478972fec, msg 29402): the r17b release carrying /yearinreview on live e91819e281
+
+Phases A and B are DONE: r17 `e91819e281` is LIVE, and AC1 and AC2 were graded at that deploy (proof @2994d320b4). They
+are not re-run after Phase C, because AC2's shipped set is anchored to its own release. The kit is Andrew's
+`/yearinreview` page. It sits on origin CLOUD (laptop push 9c4eb4a7d5) at
+`org/tier1_exec/4.0.0_SA_CRO/deliverables/BRIEF1_YEAR_ONE_20261004/gateway_candidate/`; read it with
+`MSYS_NO_PATHCONV=1 git show origin/CLOUD:<path>`. Its README lists 4 files plus `apply_hookup.py`, and its 3 anchored
+`server.py` edits reproduce how `/sprint` and `/rivalfunds` are hooked up.
+
+**PHASE C-A (pre-GO; read-only on the host; no upload):**
+
+11. **Live ref.** Confirm `e91819e2819df8c8df5708bc66e4f4273bb1a834` by host md5. A mismatch STOPS.
+12. **CLOUD source first, in YOUR worktree.**
+    - Copy `app/yearinreview_view.py`, `app/static/yearinreview/index.html` and `tests/test_yearinreview_view.py` into
+      `infra/aws/ec2/opal-gateway/`.
+    - Run `python apply_hookup.py infra/aws/ec2/opal-gateway/app/server.py`. It must report 3 of 3 anchors.
+    - `python -m pytest -q tests/test_yearinreview_view.py` must give 5 passed.
+    - The served `/sprint` and `/rivalfunds` tests must still pass.
+    - Commit.
+13. **Release tree.** Create a fresh worktree on branch `rel-nfra-oplgtw-r17b` at `e91819e281`, and carry the same 4
+    files there. Prove the release's `git diff e91819e281 -- app/server.py` equals your worktree's diff of that file.
+    Commit under R13 (a) and cite the audit-log line.
+14. **Tests on the release tree:** `test_yearinreview_view.py` (5), plus the `/sprint` and `/rivalfunds` view tests,
+    `test_schwab_q7_asset_download.py` (4) and `test_entitlement_admin.py::test_ogz2_ac08`.
+15. **Rollback:** a worktree at `e91819e281`, equal file by file to the live S3 artifact `opal-gateway-e91819e281.tar.gz`.
+16. **Verify script.**
+    - Host `/health` 200; shipped md5 equals the release bytes; tool list unchanged (65); `.env` 50 key names unchanged.
+    - Host-local `GET http://localhost:8080/yearinreview` with no identity returns 401 (404 today).
+    - Public unauthenticated GET is 302 to login.microsoftonline.com.
+    - Then `rl6.AC1.sh` (the r17 download behaviour re-read), `rl4.AC1.sh` and `ht.AC2.sh`.
+17. Write `ANNOUNCE_OG-rl-6-C.md` with the blast radius for the three halves: one new GET route behind the `/sprint`
+    identity wall, and no S3, IAM, ALB, template or contract change, read from the release diff, not the README. Commit
+    and report. Do NOT upload.
+
+**PHASE C-B (GO): only after the issuer says GO with CTO + COO + CVO halves SIGNED.**
+
+18. Re-read live; if it moved, re-cut. Open the NEVER-2 ledger `nfra-oplgtw-gateway-release-r17b`, with the same legs.
+    Commit the entry AND the sentinel before the act.
+19. Deploy from the release tree with `DEPLOY_BASE_REF=e91819e2819df8c8df5708bc66e4f4273bb1a834 HALT_ACK=1
+    AGENT_NAME=0.9.0_WK_NFRA_OPLGTW~15` through `safe-ec2-deploy.sh`.
+20. Run the verify script IMMEDIATELY. On any failure, or if `rl6.AC1` regresses: roll back, re-verify, and close
+    ROLLED BACK.
+21. Record the manifest by hand and close every leg. Run AC3 and AC4 (section 4) and check each output against its
+    `<expect>` literally. Write the proof as a second instance,
+    `...TO-OG-rl-6.gateway-release-r17.phaseC.proof_of_spec.json`. Edit this order's ONE `<status>` tag IN PLACE to
+    `complete`. Commit.
+
 ## 2. BOUNDS
 
 - No grant is created or changed. The real holder's download is her act, at her next use.
@@ -83,6 +130,11 @@ do not rebuild them. STANDING RULE (row Z-S32): never source `/opt/opal-gateway/
 infra/aws/ec2/EC2_MANIFEST.json
 org/critical_paths/change_management/
 org/critical_paths/.open_deploys/nfra-oplgtw-gateway-release-r17.json
+org/critical_paths/.open_deploys/nfra-oplgtw-gateway-release-r17b.json
+infra/aws/ec2/opal-gateway/app/server.py
+infra/aws/ec2/opal-gateway/app/yearinreview_view.py
+infra/aws/ec2/opal-gateway/app/static/yearinreview/index.html
+infra/aws/ec2/opal-gateway/tests/test_yearinreview_view.py
 org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~15/
 org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
@@ -94,6 +146,8 @@ Rows: id `NFRA_OPLGTW-Z-W15-S<k>` (next unused), fabric `site-z`, disarm_owner `
 <proof_of_spec>
   <criterion id="AC1" cell_refs="OG-rl-6"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r17/checks/rl6.AC1.sh; echo "exit=$?"</invocation><expect>(?s)host integration.py equals the release bytes: yes.*download before refused: True.*download after ok: True.*held-only \(unheld 0, discriminated\): True.*empty holdings refused: True.*query unchanged: True.*grants_written 0: True.*RESULT: PASS.*exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="OG-rl-6"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r17/checks/rl6.AC2.sh; echo "exit=$?"</invocation><expect>(?s)sentinel at HEAD=no;.*descends from 4b6b823fae=yes;.*outside the release set 0.*floor: rl4.AC1 yes; ht.AC2 yes.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC3" cell_refs="OG-rl-6"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r17/checks/yr.AC3.sh; echo "exit=$?"</invocation><expect>(?s)host kit files equal the release bytes: 4 of 4; public unauthenticated GET: 302 to login.microsoftonline.com=yes; host-local no-identity GET: 401.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC4" cell_refs="OG-rl-6"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r17/checks/yr.AC4.sh; echo "exit=$?"</invocation><expect>(?s)sentinel at HEAD=no;.*descends from e91819e281=yes; gateway files shipped 4, outside the kit set 0.*floor: rl4.AC1 yes; ht.AC2 yes.*RESULT: PASS.*exit=0</expect></criterion>
 </proof_of_spec>
 
 ## 5. WHEN YOU ARE DONE
@@ -107,8 +161,17 @@ and validate it with `python .tools/proof-of-spec-check.py <instance>`. Report o
 - Round 17 (addendum R3-T.10, item 2), after `OG-q-7`. Halves: CTO + COO + CVO. Served output moves: `dim_asset`
   downloads open under C3.
 - Pre-cut: `rl6.AC2` FAIL (no ledger; deployed = 4b6b823fae); floor `rl4.AC1` and `ht.AC2` PASS on live.
+- **A1 (2026-10-05 ~03:2xZ, issuer; CTO R14 @b478972fec, msg 29402).** Phases A and B completed r17 `e91819e281` LIVE
+  (drain daa5f5ef70). R14 places `/yearinreview` on this train as "the next release after rl-6, under three halves".
+  - **Why an amendment, not a new order.** `.tools/to-pipeline-gate.py` GATE (x) refuses a second issuance into round
+    17. R14's own text names amending rl-6 as the carrier.
+  - **Status.** The order's status returns from complete to pending for Phase C. AC1 and AC2 stand as graded at r17.
+  - **Pre-cut.** `yr.AC3` FAIL: 1 of 4 files equal (server.py only); public GET 302 to login.microsoftonline.com=yes,
+    the ALB wall answers every path; host-local GET 404. `yr.AC4` FAIL: no ledger, deployed = e91819e281. Floor
+    `rl4.AC1` and `ht.AC2` PASS.
+  - **Not graded.** The signed-in 200 is Andrew's act at his browser.
 
-<status>complete</status>
+<status>pending</status>
 <round>17</round>
 <slot>~15</slot>
 <fabric>site-z</fabric>
