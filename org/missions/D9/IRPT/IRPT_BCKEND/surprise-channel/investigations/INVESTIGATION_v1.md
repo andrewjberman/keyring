@@ -17730,3 +17730,32 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "dismissal_reason": "Each named remediation row's own close condition is true in the live world today, read by this worker on 2026-10-04 (reads in grounding.evidence). The CVO reads this row; the REMEDIATION file is not edited here."
 }
 ```
+
+## IRPT_BCKEND-S325 -- DISARM of S318: the template's pinned boilerplate is admitted; Y-5 reads READY with its date basis
+
+```json
+{
+  "id": "IRPT_BCKEND-S325",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-05T00:20:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARM of IRPT_BCKEND-S318 (with S321): irpt-status now proves the YCharts holdings template undated when its only cells outside A/B are the template's pinned boilerplate (CTO batch 243 b, CTO half batch 246); Y-5's READY analysis reads READY with its date basis on the dates-capable status read",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "fix 780c86d763 (merged 7100c2f432); packet blob e5b5abfa45 @64f30ab5a3; CTO half @a57f80e852",
+      "D1: before-read hC6Pramt.., ONE safe-apply (0/1/0), after-read 00:12:13Z CodeSha256 XPta1UMJzLzB+Ba1Yn+KraRRZmxxo6R0/N50sNNN3q8= Successful",
+      "V1: job_status_route_read.py cottonwood REQ-a618aa83 ~00:13Z: status with X-IRPT-Status-Dates prospect-v1 -> 200 READY ANALYSIS_READY with source_dates (was UNAVAILABLE ANALYSIS_STATUS_DATE_BASIS_UNAVAILABLE); IRPT_MVP_Y/S318/V1_STATUS_READ_REQ-a618aa83.json",
+      "ledger irpt-s318-boilerplate-20261004 CLOSED (U1, D1, V1)"
+    ]
+  },
+  "dismissal_reason": "The served proof now admits exactly the template's pinned boilerplate; any other valued cell outside A/B, and any change to the boilerplate text, still refuses.",
+  "spec_asserts": "IRPT_BCKEND-S318: a READY analysis of the YCharts holdings template reads Unavailable on the page.",
+  "world_is": "MEASURED: the same request reads READY with its date basis on the served status route."
+}
+```
