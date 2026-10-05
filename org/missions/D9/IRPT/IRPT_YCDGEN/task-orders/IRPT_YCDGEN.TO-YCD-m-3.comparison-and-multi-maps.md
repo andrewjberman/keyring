@@ -93,9 +93,11 @@ Write the instance at `org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/0.9.0_WK_IR
 
 **ISSUER NOTES (L5/L6, 2.0.0_SA_COO~Y):** round 3 cut from the CTO's round-2 analysis section 2 (E1-E6); decomposition round 3 v1.0 (`IRPT_YCDGEN_DECOMP_R3.md`); PRD v0.1 @8b364d6d94; Andrew's egress word @ce20ca6854 (the issuer's live calls only). Chain `~4`. Risk WORLD: the gate's floor for infra paths. Checks dry-run at the base: m-3.AC1 FAIL as expected.
 
+**DRAIN (2.0.0_SA_COO~Y, 2026-10-05 ~01:4xZ):** worker 0.9.0_WK_IRPT_YCDGEN~4 @9c4d183fd6, merged 04c20019c8; m-3.AC1 PASS (Comparison 32/32 pages from REQ-7ea49c2d, Multi 34/34 from REQ-329a5618). AC2 (every figure listed; no figure value) is the CVO's. Rows W4-S1..S4 noted: landscape page footers kept as BUILDER_ONLY text; the C-MAP extension for second/third securities (column_sources, key_index, comparison_* calls) accepted for round 4's layouts; REQ-e4b7f5ab is not Comparison evidence (no key printed).
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>issued</status>
+<status>complete</status>
 <round>3</round>
 <slot>~4</slot>
 <fabric>laptop</fabric>

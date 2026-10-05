@@ -147,9 +147,11 @@ Write the instance at `org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/0.9.0_WK_IR
 
 **ISSUER NOTES (L5/L6, 2.0.0_SA_COO~Y):** round 3 cut from the CTO's round-2 analysis section 2 (E1-E6); decomposition round 3 v1.0 (`IRPT_YCDGEN_DECOMP_R3.md`); PRD v0.1 @8b364d6d94; Andrew's egress word @ce20ca6854 (the issuer's live calls only). Chain `~2`. Risk WORLD: the gate's floor for infra paths. Checks dry-run at the base: w-3.AC1 FAIL as expected; w-3.AC2 PASS (control) as expected.
 
+**DRAIN (2.0.0_SA_COO~Y, 2026-10-05 ~01:4xZ):** worker 0.9.0_WK_IRPT_YCDGEN~2 @039cec613f, merged 37e2a053c6 (channel append resolved as base + both appendices); w-3.AC1 PASS (22 expand calls, 158 HELD_DATA, 9 OWN_SERIES, 7 OTHER_ENDPOINT, 0 unwired), w-3.AC2 PASS (control). Issuer rulings: 9 not 10 elements to OWN_SERIES (p12.e04 stays BUY_AND_HOLD, no market price of its own) -- accepted; W2-S4 (alpha/beta/Sharpe/Sortino/VaR and max_drawdown_15y outside 3.4's statistic list) -- those elements read not available this round, carried to the round-3 analysis; W2-S5 (a 16-column element spans two chunks; inferred field paths) -- accepted, measured by the close run.
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>issued</status>
+<status>complete</status>
 <round>3</round>
 <slot>~2</slot>
 <fabric>laptop</fabric>
