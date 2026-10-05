@@ -5,10 +5,10 @@
  "project": "MDPF_SECCLASS",
  "directive": "D8",
  "fabric": "laptop",
- "prd_version": "v0.3",
+ "prd_version": "v0.4",
  "step": 4,
  "brief_ref": "docs/briefs/canonical-security-table-brief-20260929.md@87ad6973f3",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10"],
+ "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11"],
  "status": "RATIFIED"
 }
 ```
@@ -128,6 +128,18 @@ The section below carries the endpoint's outcomes verbatim.
          SOURCE     Andrew-direct 2026-10-05 ~03:3xZ at site Z, item 4 ("As new stocks enter from trading
                     activity of the Opal ETFs and the Rival ETFs, those stocks should be backfilled and
                     included in the ETFClassifier table through some kind of routine, dedicated mechanism")
+
+  FWD-11 A security that no source Opal already holds can place still gets its entry in the shared
+         list, classified by Opal's AI classifier, and every entry made that way can be listed
+         DONE WHEN  EXERCISED -- the classifier has run on a security nothing else could place, its
+                    entry has been read, and the list of AI-made entries has been read and holds it
+         ACCEPT     a security nothing else can place gets an entry with an asset class, a sub class and
+                    a clean, properly capitalized name, and no person has to review it first. Anyone can
+                    pull up one list of every entry the AI made
+         SOURCE     Andrew-direct 2026-10-05 ~20:2xZ ("new rows are added for unrecognized securities and
+                    theyre cleaned up and proper capitalized in that table") and ~20:5xZ ("Yes add the AI
+                    Classifier. Those can land without human review, but we want an index somewhere of
+                    all those that land by AI")
 
 ```
 
@@ -334,3 +346,49 @@ spec and decomposition stay frozen, with the multi_asset leg V on Monday 10:15Z.
 
 **Sign-off:** an ENDPOINT change, so `3.0.0_SA_CVO` re-signs the ratified-text half. The brief half: this is Andrew's own word,
 recorded at site Z, so no CRO brief precedes it.
+
+## ADDENDUM v0.4 (1.0.0_SA_CTO, 2026-10-05 ~21:0xZ) -- an ENDPOINT change: FWD-11 added on Andrew's word
+
+**Word:** Andrew-direct at the `1.0.0_SA_CTO` terminal, three records in `org/tier1_exec/1.0.0_SA_CTO/deliverables/`:
+- `ANDREW_DIRECT_20261005_202xZ_YCDGEN_INHOUSE_ENDPOINT_THREE_CALLS_ANSWERED_CLASSIFICATION_THROUGH_CANONICAL_TABLE.md`
+  ("all security classification for ALL Opal applications passes through that table");
+- `ANDREW_DIRECT_20261005_204xZ_YCDGEN_TYPO_AND_SWAP_AI_PIPELINE_CLASSIFY_IN_ETFCLASSIFIER_SHAPE.md`;
+- `ANDREW_DIRECT_20261005_205xZ_AI_CLASSIFIER_YES_NO_HUMAN_REVIEW_INDEX_OF_AI_ROWS_YAHOO_PRICE_TABLE_OK_IF_NECESSARY.md`.
+
+**What the table does today** (`2.0.0_SA_COO~M`,
+`org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/ETF_CLASSIFICATIONS_VOCABULARY_AND_UNKNOWN_ROW_PATH_20261005.md`
+@73a3c60af8): a new security gets a row only from a direct match; one with no match is listed UNRESOLVED; no model is called.
+13 rows are `classified_by model`, landed once from a reviewed set.
+
+**What changed and why (endpoint re-entry):**
+- FWD-7 and FWD-10 were RIGHT and INCOMPLETE: both end at UNRESOLVED when no held source matches. They stand unchanged. FWD-11
+  is added at the next unused number. No outcome is retired.
+
+**Contract notes (bind the next round's cells):**
+- **C-WRITER.** The `model` value already exists in `org/standards/MDPF_SECCLASS_CONTRACT.json` (`classified_by.values`), with its
+  writer `infra/aws/lambda/v2_portal/yang_pipeline/classify-residual-model.py` and its two confidence fields. FWD-11 puts that
+  writer in service after the direct-match plan, for the tickers the plan leaves UNRESOLVED. It writes by the same conditional
+  put, so it never replaces a row. The contract's precedence stands: a seed row always wins, and a correction is made in the seed
+  source.
+- **C-VENDOR.** Andrew's ~20:5xZ word is the recorded word for this use: the AI classifier in this path, with no human review
+  before a row lands. It names no model. The cell uses the model the existing writer already calls and sends what that writer
+  sends today (the security's name and ticker only). A different model, or a wider payload, needs his word.
+- **Value bound.** A model verdict lands only if its `asset_class` and `sub_asset_class` are members of the table's own
+  vocabulary; a verdict outside it leaves the ticker UNRESOLVED. The model never mints a class.
+- **Clean naming.** The row's `name` is written in proper case from the source name, with vendor suffixes and all-caps removed.
+  The rule is one function with a test table, not a model output.
+- **C-AIINDEX (new).** The index of AI-landed rows is the rows themselves: `classified_by = model` with
+  `classification_confidence`, `low_confidence` and the write time. One readable listing of them is rewritten by each classifier
+  run. Builder output printed at this addendum: `address('mdpf','global','gold','ai_classified_securities','date=2026-10-05',
+  object='index.json')` -> `s3://opal-data-mdpf/mdpf/global/gold/ai_classified_securities/date=2026-10-05/index.json`. This amends
+  C-NAMES' "no new S3 address" by this one. A row a later seed run corrects leaves the listing, because it is no longer
+  `classified_by model`.
+- **Consumers named, not built here:** IRPT_YCDGEN PRD v0.4 (C-CLASSIFY, C-RESOLVE) reads the table and asks for a row through
+  this path. It adds no writer.
+- **Moratorium:** the classifier is a scheduled producer. The listing is an artifact, not a notification.
+
+**Placement:** the next MDPF_SECCLASS round, cut by `2.0.0_SA_COO~M` from this seat's next round analysis. The current round's
+spec and decomposition stay frozen.
+
+**Sign-off:** an ENDPOINT change, so `3.0.0_SA_CVO` re-signs the ratified-text half. The brief half: Andrew's own word, recorded
+at this seat, so no CRO brief precedes it.
