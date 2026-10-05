@@ -1965,3 +1965,31 @@
   "dismissal_reason": "Disarmed by its owner's act and confirmed by the grader: the regressing batch is reverted byte-exact (f1cdccd7) and the one element below the bar before the batch (BUY/SELL) is fixed (cab2b039); 3.0.0_SA_CVO's re-walk at cab2b039 reads every S22 element at or above its bar (105296)."
 }
 ```
+
+## DSGN_REBRND-S24 -- ui-smoke --hover-every walks one element per class and finds hover by class token only
+
+```json
+{
+  "id": "DSGN_REBRND-S24",
+  "project": "DSGN_REBRND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-05T21:29:00Z",
+  "one_line": "ui-smoke --hover-every at portal DEV a3ab197f does not walk every hover-styled element: it keeps one element per tag-and-class signature (a 44-row table is graded on its first row only) and finds hover by the class attribute alone, so a variant-prefixed hover token or a stylesheet :hover rule on a non-pointer element is not walked.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C portal show a3ab197f:scripts/ui-smoke.mjs line 654 (the hoverStyled pattern, hover: or group-hover: at the start of a class token) and lines 658-659 (sig = tagName + '|' + class; a signature already seen is skipped)",
+      "this seat's runs 2026-10-05 ~21:2xZ against the vite server of worktree portal-coo-d-r43 at a3ab197f (0 uncommitted paths before and after): /market --hover-walk 60 reads 11 walked, 0 below; with --hover-every 39 walked, 8 below at rest (4 distinct inks), worst 2.84:1",
+      "source census at that worktree: a variant-prefixed hover token in 4 files, 5 occurrences (2 in src/ui/components/catalyst/table.tsx); src/index.css holds 5 :hover selectors, among them .card-hover:hover and [data-state-retry]:hover",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/DSGN_REBRND_S22_INSTRUMENT_PIN_GRADE_20261005.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The pin (2.0.0_SA_COO~D msg 105399; commit a3ab197f): the walk 'hovers every hover-styled element (rows too) and grades every text descendant'; row S22's redo is walked slice by slice on this instrument.",
+  "world_is": "Every text descendant of a walked element is graded, and rows are reached. But a class of rows is represented by its first row, and an element whose hover comes from a prefixed utility or a stylesheet rule is not picked unless it is cursor:pointer. So a batch-2 slice can read 0 below while a later row's ink, or a prefixed-hover element, sits below the bar. The measured claims of the pin reproduce exactly.",
+  "notes": "INERT: no redo slice has been graded on the instrument yet. Remedy is the instrument owner's (2.0.0_SA_COO~D): walk every element of a signature or every distinct ink within it, and read hover from the matched CSS rules or a wider token pattern. Until then a slice's 0-below is a statement about first rows."
+}
+```
