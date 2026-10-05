@@ -18014,5 +18014,25 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
    "deployed runs this session: R64 C14 SERVED: YES, R68 C27 SERVED: YES, R68 C28 SERVED: YES, each exit=0"
   ]
  }
+},
+{
+ "id": "AMGT_RESAPP-Z-W240-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~240",
+ "surfaced_at": "2026-10-05T21:55:39Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "one_line": "83 of 95 covered names have no segment prose or numeric segment data; a numeric segment table for them needs a Bloomberg segment pull, a vendor use for Andrew's word.",
+ "hazard_standing": "INERT",
+ "spec_asserts": "AMGT_RESAPP.TO-AMGT-av-4 item 2: file ONE row listing the names without segments, for Andrew's Bloomberg segment pull (a vendor use).",
+ "world_is": "Measured by read_segment_breakdown over covered_security_keys() (95): 12 names serve rows from stored filing analyses (filings/v1, 12 analysis objects in 12 folders), 83 serve rows [] with a plain reason. No pull was made. Census: org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~240/SEGMENT_CENSUS.md. The 83 names: 1299_HK_Equity, 2317_TT_Equity, 8035_JP_Equity, 8306_JP_Equity, 8316_JP_Equity, 8766_JP_Equity, 939_HK_Equity, 9433_JP_Equity, 992_HK_Equity, ADBE_US_Equity, AI_FP_Equity, AMD_US_Equity, AMXB_MM_Equity, AZN_LN_Equity, BATS_LN_Equity, BBSE3_BZ_Equity, BNP_FP_Equity, BP/_LN_Equity, BZLFY_US_Equity, CDNS_US_Equity, CELH_US_Equity, CLX_US_Equity, CNR_CN_Equity, CPA_US_Equity, ENEL_IM_Equity, GOOGL_US_Equity, GPN_US_Equity, GSK_LN_Equity, HEI_US_Equity, HSBA_LN_Equity, IBE_SM_Equity, ICICIBC_IN_Equity, ICT_PM_Equity, IDXX_US_Equity, IMB_LN_Equity, ISP_IM_Equity, ISRG_US_Equity, JD_US_Equity, KOFUBL_MM_Equity, KPN_NA_Equity, LLY_US_Equity, MA_US_Equity, MELI_US_Equity, MER_PM_Equity, ML_FP_Equity, MNST_US_Equity, MSCI_US_Equity, NESN_SW_Equity, NFLX_US_Equity, NG/_LN_Equity, NKE_US_Equity, NOKIA_FH_Equity, NOVN_SW_Equity, NOW_US_Equity, OMAB_MM_Equity, ORA_FP_Equity, PWR_US_Equity, QXO_US_Equity, RIO_LN_Equity, RKT_LN_Equity, RMS_FP_Equity, ROG_SW_Equity, RWE_GR_Equity, SAN_FP_Equity, SHOP_CN_Equity, SLB_US_Equity, SNPS_US_Equity, SPOT_US_Equity, SSE_LN_Equity, ST_SP_Equity, TSM_US_Equity, TTE_FP_Equity, UBER_US_Equity, UBSG_SW_Equity, ULVR_LN_Equity, UNH_US_Equity, UNVGY_US_Equity, VIVT3_BZ_Equity, V_US_Equity, WALMEX*_MM_Equity, WDAY_US_Equity, ZTS_US_Equity, ZURN_SW_Equity.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "SEGMENT_CENSUS.md totals line: covered names 95; names serving segment rows 12; names serving a plain reason 83",
+   "python r72_served.py --cell c43 --where local: names 95 with segment rows 12 non-200 0"
+  ]
+ }
 }]
 ```
