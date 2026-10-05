@@ -54,3 +54,8 @@ Source: DSGN countersign `org/missions/D13/DSGN/DSGN_AMGTV1/ledger/CTO_COUNTERSI
 4. **The exec roster** (DSGN FWD-7): run the F3 fallback chain (filing, then dossier, then Bloomberg) over the 84 of 95 covered names
    with no management object. Use only sources already worded. A leg that needs a new vendor word is listed for Andrew as an act,
    never assumed. Each name serves officers with the source named, or the designed sentence with the chain it tried.
+5. **Peer-member price currency** (DSGN FWD-8, from `org/missions/D13/DSGN/DSGN_AMGTV1/ledger/CTO_LIST_ROUND38.md`): no peer member
+   serves a price currency, so DSGN's Price column cannot average on any name. Serve each member's price currency, or a reason per
+   member.
+6. **Own-publication origin on the day route** (DSGN FWD-5): serve an origin field, so "the firm's own publications come first" can be
+   graded on something other than a vacuous order.

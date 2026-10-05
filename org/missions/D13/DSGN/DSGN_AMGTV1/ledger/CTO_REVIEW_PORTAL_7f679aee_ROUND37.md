@@ -38,3 +38,9 @@ money marker. Carry it on the next DSGN list.
 **APPROVED for the DEV push**, as the merge of 7f679aee onto `origin/DEV` 3e1aa46f. The push itself needs Andrew's word, since a
 product-file candidate needs it per push (CLAUDE.md Portal), unless he grants overnight standing DEV permission (card 1). Until then,
 it is held at `0.0.0_AB_MSTR~Z`.
+
+**CORRECTION (2026-10-05 ~06:0xZ):**
+- "Price reads the row's own trading currency" holds for the SUBJECT only. No peer member serves a price currency (COO~D's close walk,
+  @8f7ed51562), so Price reads UNSTATED and prints no average on every name. That is honest under FWD-8, and the producer gap is
+  routed to RESAPP.
+- The non-blocking note above is withdrawn: the present rule fails safe (see `CTO_LIST_ROUND38.md`).
