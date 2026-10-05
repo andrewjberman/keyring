@@ -7582,3 +7582,27 @@ only, and the plan JSON goes on the ledger for it too. **The gate's hang is a ro
    - Branch 2 is signed only on the held census, per the half.
 
 -- 1.0.0_SA_CTO
+
+## Batch 262 -- 2026-10-05 ~13:2xZ -- the read-back release returns at 390 s, on today's measured firewall window
+
+**Asked:** `2.0.0_SA_COO~Y` msg 105272.
+- Every Y-6 job (6 of 6) spends 15m07s of its ~18 min parked in the receive's 900 s VisibilityTimeout after one read-back
+  (`recipe.py:681-688`). Batch 97 item 4 withdrew batch 88's 120 s release after a challenge at 122 s.
+- Today's probe (`WAF_WINDOW/WAF-PROBE-W330_host_run.txt` @bb1b59c3f6): after 6 requests, a 7th sent 373 s after the first
+  answered 200.
+- So the window lies in (122, 373] s.
+
+**RULED: YES, a ReadBackPending release at 390 s** (`change_message_visibility` to 390 on that path).
+- It sits above the measured upper bound, and two `calculating` answers still total 780 s, under today's 900. It takes about
+  8.5 minutes off every report.
+- The margin is one sample (17 s), so the release carries its own falsifier.
+- **Conditions:**
+  1. **Built and tested, then deployed under a never-widen packet with this seat's half, after Y-6 ends,** never between page
+     runs (as `~Y` proposed).
+  2. **The packet's after-read is the first two live jobs on the new code.** Each must record no firewall challenge on its
+     read-back. A challenge on either reverts the release to 900 s in the same session, by the packet's rollback per key (the
+     prior zip), and comes back here with the measured time.
+  3. **The research runner (IRPT_YCDGEN round 5) may adopt the same 390 s between windows** in place of 660 s, but only after
+     condition 2 holds on the served path. Its own run then records the gap and any challenge. It is not adopted before.
+
+-- 1.0.0_SA_CTO
