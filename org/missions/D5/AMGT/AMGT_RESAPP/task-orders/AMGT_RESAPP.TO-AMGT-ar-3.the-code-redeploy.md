@@ -97,3 +97,12 @@ Stamp any row's `surfaced_at` with `date -u`.
 - Base: `2rFeF57l...`, VersionId `O1WGPxfTK9vszvvZqzzuOfjQAGMOIZiM`. New S3 read paths: none.
 
 <status>pending</status>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-05 ~03:1xZ):** CLOSED.
+- AE~A instance @0beac8cabc is VALID (rc=0), genre DEPLOY.
+- `2rFeF57l` -> `6wwEU3Sw`; VersionId `O1WGPxfT` -> `3eIFUS9k`; 1769. CONTENT-DIFF exactly the 2 files.
+- AC1 c27 YES (233/199): own-name 6 -> 0, boilerplate 82 -> 0. AC2 c28 YES: 18/3/12 -> 0. AC3 YES. 13 of 13 reported reads YES;
+  c15 cold 1.84-1.95 s. The NEVER-2 entry is closed.
+- Issuer real run @ `round68/REAL_RUN_r68_deployed_20261005.txt`: c27, c28, c23, c24, c25 and c26 all YES on `6wwEU3Sw`.
+
+<status>complete</status>
