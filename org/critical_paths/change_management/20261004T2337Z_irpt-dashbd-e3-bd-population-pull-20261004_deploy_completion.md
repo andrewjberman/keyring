@@ -26,3 +26,7 @@ window_hours 3.0 -> 9.0, recorded before the completion relaunch (CTO RULINGS ba
 ## Window extension 2 (20261005T071308Z)
 
 window_hours 9.0 -> 15.0, recorded before the relaunch ruled by CTO batch 258 (the same pull, batches 245 item 3 and 248-250). S3 holds 2,012 of 5,252. The relaunch runs the DB-b-22 concurrent runner over the re-derived complement, launched outside the session's 2 h background-job cap.
+
+## Window extension 3 (20261005T081606Z)
+
+window_hours 15.0 -> 22.0 (to ~21:37Z). The relaunched run is vendor-latency bound at ~0.077 accounts per second: 6 workers, no 401 or 429, 1 FAILED (transport). It projects to end ~19:00Z.
