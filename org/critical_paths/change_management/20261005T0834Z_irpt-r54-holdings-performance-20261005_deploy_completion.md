@@ -27,3 +27,9 @@
 - 20261005T101414Z LEG A1 closed: safe-apply targeted 10:08Z under TAGAUTHZ_OVERRIDE (CTO batch 259; audited INTENT id=20261005T100734Z-64084): Apply comp
 - 20261005T101414Z LEG V1 closed: NEW code invokes (source schwab_08335338, dry_run): undated planned [2026-10-02] rc 0 (landed max 2026-10-01 of 561 per 
 - 20261005T101815Z LEG R1 closed: record-terraform-deploy investor-reporting --function irpt-holdings-performance-lambda --code-sha256 DaDtnTCq..: committ
+
+## Leg V2 added (20261005T102739Z, CTO msg 105239)
+
+| V2 | verify | after the next scheduled 49F fire lands 2026-10-02: one undated dry_run invoke (source schwab_08335338) answers TARGET_ALREADY_LANDED with nothing written | | OPEN |
+
+The ledger closes on V2 and A2.
