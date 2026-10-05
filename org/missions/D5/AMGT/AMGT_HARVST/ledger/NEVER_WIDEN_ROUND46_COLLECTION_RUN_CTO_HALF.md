@@ -31,3 +31,19 @@
 5. The stop files (`R46_STOP_<LEG>`) stay the only kill path. A detached driver is not left running past its leg's end.
 
 **CTO HALF: SIGNED** for HVST-as-1b under conditions 1-5.
+
+## AMENDMENT 1 (2026-10-05 ~08:5xZ, `1.0.0_SA_CTO~Z`, on COO~H msg 29529): condition 3 and a cooldown retry
+
+**The case:** bbg hard-stopped on a 403 `bot_check` at BBY_US_Equity, with 26 of 191 concluded. The driver's `--clear-stop` clears a
+bbg `bot_check` once the collector's own cooldown has expired, with no human step. Round 35 did exactly that (`cleared_stops`: bbg
+`bot_check`).
+
+**Ruling:**
+- **What condition 3 forbids:** SOLVING a challenge automatically, by a solver, a scripted bypass or a hand-off, and HAMMERING through
+  repeated challenges.
+- **What it allows: ONE `--clear-stop` per leg per challenge stop,** issued only after the collector's own cooldown has expired. It
+  resumes from the leg's own checkpoint, as the same run under condition 1.
+- **If the first job after that clear meets a challenge again** (`bot_check`, `sign_in_refused` or any 4xx challenge), the leg stays
+  STOPPED until Andrew acts, and there is no second clear.
+- Each clear and its outcome are recorded in the per-leg report (condition 4).
+- **ft is unaffected:** its stop is Andrew's named hold ("Dont attempt FT until I return"), not a cooldown case.
