@@ -8356,3 +8356,60 @@ fanout:
   egress: none
   portal_ref: 6936e92b
 ```
+
+## 78. ROUND 70 -- THE FOUR DSGN PRODUCER GAPS, THE 30-OUTCOME SWEEP, ONE REDEPLOY. Six cells, six orders
+
+**Input:** the CTO's round-69 analysis `ledger/ROUND_ANALYSIS.round69.md` @0bdf5b47ae (msg 29505), section 4 items 1-5. Its s.6
+(@030d5d1e87, msg 29506) adds item 6, the sweep. The board is `ledger/FWD_BOARD_ROUND69.md`. CVO slug ADJUDICATION_v84 @cff4114f62.
+PRD v0.37. Rulings 2-3: only sources already in use, and a needed vendor leg is LISTED for Andrew, never pulled. A redeploy happens if
+the function is touched. CTO msg 29511: the redeploy diff may carry HARVST's shared `store.py` change, and the pair names it.
+
+### 78a. MEASUREMENTS (`round70/checks/r70_served.py`, CLOUD ~06:3xZ; every build cell FAILS at the base on deployed `OcKZF34X`)
+
+- **c30 (FWD-4):** over 95 names, 43 headers miss a figure with no reason. Examples: short interest on HK/JP names; enterprise value.
+  `/thesis` `header_figures` is the same set `/overlay` serves (measured identical on ROG_SW and BA). It is read because `/overlay`
+  costs 6-15 s a name.
+- **c31 (FWD-7):** 95 names, 11 SERVED, 84 failing (82 NO_OBJECT, 2 ZERO_OFFICERS), none naming a chain tried.
+- **c32 (FWD-8):** 95 names, 676 peer members, 676 with no price currency and no reason.
+- **c33 (FWD-5):** 5 day probes, 8 rows, 8 with no `origin`. C2 (order) holds vacuously.
+
+### 78b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-at-1` | FWD-4: the header's seven figures, or a plain reason per missing one | `0.9.0_WK_AMGT_RESAPP~226` | worker | LOCAL | `lib/research/api/` |
+| `AMGT-at-2` | FWD-7: the exec-roster F3 chain (filing, dossier, Bloomberg) at request time over stored objects only | `0.9.0_WK_AMGT_RESAPP~227` | worker | LOCAL | `lib/research/api/`, `lib/research/management/` |
+| `AMGT-at-3` | FWD-8: each peer member's price currency, or a reason | `0.9.0_WK_AMGT_RESAPP~228` | worker | LOCAL | `lib/research/api/`, `lib/research/peers/` |
+| `AMGT-at-4` | FWD-5: an `origin` field (own / external) on every day-route row, own first | `0.9.0_WK_AMGT_RESAPP~229` | worker | LOCAL | `lib/research/api/` |
+| `AMGT-at-5` | the 30-outcome sweep on DEPLOYED, each against its DONE WHEN (FWD-21..29 RE-HOMED) | `0.9.0_WK_AMGT_RESAPP~230` | worker | LOCAL (a read) | deliverables only |
+| `AMGT-at-6` | the code redeploy carrying at-1..at-4, DEPLOY genre, diffed against the deployed CodeSha256 at build | `0.7.0_AE_CloudOps~A` | seat order, a pair | WORLD | Lambda artifact, ledger |
+
+### 78c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** The domain is enrichment-list items 1-6.
+- **(ii) Same grain.** One served field family per build cell, then the deploy, then one read.
+- **(iii) Intent.** One axis per cell.
+- **(iv) What a cell does NOT move:**
+  - at-1..at-4 add fields or reasons only; no figure value changes, no store write, no vendor call.
+  - at-5 writes nothing but its deliverables.
+  - at-6 changes code only; memory stays 1769.
+
+### 78d. EDGES AND FAN-OUT
+
+at-1..at-4 may each write `lib/research/api/scoped_amgt.py`. They drain one at a time, with the union suite re-run after each.
+```
+at-1 --+
+at-2 --+
+at-3 --+--> at-6 (one redeploy, one pair) --> at-5 (the sweep reads the round-70 deployed state)
+at-4 --+
+fanout:
+  cap: 8
+  orders_total: 6
+  chains_total: 1
+  wave_0: [at-1 ~226, at-2 ~227, at-3 ~228, at-4 ~229]
+  wave_1: [at-6 0.7.0_AE_CloudOps~A]   # after the four drains and its pair
+  wave_2: [at-5 ~230]                  # after at-6 lands
+  no_s3_deletes: true
+  egress: none (a needed vendor leg is a row listed for Andrew)
+  portal_ref: 6936e92b
+```
