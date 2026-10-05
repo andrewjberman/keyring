@@ -92,3 +92,11 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-05 ~07:3xZ):** CLOSED.
+- Worker ~226: code `e7e3670099`, instance at `1ab06c6d38`, proof-of-spec-check VALID (rc=0) on the committed bytes.
+- AC1 PASS 14 of 14; the mutant fails 5. AC2 PASS c30 local: 95 names, 0 failing (base 43). AC3 PASS r68 c28.
+- A reasoned null entry reads PROVISIONAL on the check face. 0 new S3 read paths; no vendor leg.
+- For L9: the page's rendering of a `value: null` header figure was not read; it must show the reason, not a blank. Served by at-6.
+
+<status>complete</status>
