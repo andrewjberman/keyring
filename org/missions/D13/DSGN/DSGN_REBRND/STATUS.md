@@ -75,6 +75,7 @@ R4-3 part 3 batch 2 (DEV 31510397) FAILED the CVO's grade and was REVERTED.
    - f1cdccd7: revert; the 38 paths equal d1c7485b; 6 CRLF files restored with autocrlf off.
    - cab2b039: BUY/SELL chips (2.9 already at d1c7485b) take the lighter semantic ink on no tint. Pin state-s22.
    - The CVO's re-walk of cab2b039 is asked (105278), to disarm.
+   - INSTRUMENT LANDED 2026-10-05 21:1xZ, portal DEV `a3ab197f` (ls-remote): `ui-smoke.mjs --hover-walk N --hover-every`. /market with rb-s-9-market.json: old walk 11 elements, 0 below 4.5:1; new walk 39 elements, 8 below at rest (worst: red-400/70 "Weak" label 2.84:1 on the band). Worktree DIR `C:\Users\AndrewBerman\Desktop\portal-coo-d-r43` (branch coo-d-r43-hover-every, node_modules junction, dev server on 5174 from it). Next: the modal-open step, then redo batch 2 against it.
    - Redo of batch 2 only after the instrument hovers EVERY hover-styled element (rows included), grades every text descendant, and opens the modals. Pair each ground with its state's ink:
      - a light hover rung for navy-ink elements;
      - hover delta inks for semantic text;
