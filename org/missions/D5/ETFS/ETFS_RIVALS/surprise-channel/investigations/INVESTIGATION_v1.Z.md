@@ -3541,6 +3541,29 @@
     "spec_asserts": "Andrew-direct @33ff3bdac0/@4bd948e824: one purely additive IDVZ/PFOE backfill; CTO~Z msg 29594: any non-IDVZ/PFOE fund delta is a STOP.",
     "world_is": "G1 is purely additive (189/189 dates) but the chain's G5 rebuild is not: it re-derives every fund's trades on 189 dates with current code. The served Jan-Sep G5 of the other funds was built with older code, so it would change. Options for the CTO: (A) accept a G5 replay of all funds as part of Step B (wider than the word); (B) a round-9 cell: the trade schedule rebuilds only named funds and carries every other fund's rows from the prior object unchanged, then Step B runs; (C) defer Step B.",
     "notes": "Nothing served moved: every write was to the local mirror. Step B is held. disarm_owner not needed (INERT)."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W5-S34",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~5",
+    "surfaced_at": "2026-10-05T18:26Z",
+    "one_line": "nm-3's 'page day's newest holding_contribution' may not exist when the 07:00 ET enrichment step runs; the names stage reads the newest within 10 days before the page day, and its production fetch is refused at the daily ceiling, not ceiling minus reserve.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "TO RIV-nm-3 section 1: 'reads the page day's newest holding_contribution' and 'enrichment_bloomberg --mode daily runs it for the page day after its G4 lands'; INFERRED, not measured: the worker did not trace when the page day's holding_contribution is built relative to the 07:00 ET step; if it is built after, a strict page-day read finds none and the stage reads SKIPPED every morning",
+        "data/etfs/scripts/rivalfunds/security_names.py _page_contribution: newest object of the page day, else the newest dated within LOOKBACK_DAYS=10 before it (names belong to the security, not the day); nm-3.AC1 reads the page day exactly and passes either way",
+        "data/etfs/scripts/rivalfunds/security_names.py _budget_refusal: 1 row per key refused when spent(today) + keys > daily_ceiling_rows; bbg_budget.check_backfill's limit (ceiling - reserve) is for backfills and the names request is production (the reserve is what production spends); the order did not name which limit",
+        "page day defaults to today ET (event `page_day` overrides) in enrichment_bloomberg daily; the daily result gains `names` and the daily's own status and exit code are untouched"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-nm-3 cell: the stage reads the page day's newest holding_contribution; production fetch asked through bbg_budget first, refused -> SKIPPED with the reason.",
+    "world_is": "The stage reads the page day's object when present and otherwise the newest of the prior 10 days; the refusal limit is the daily ceiling. Both are one-line changes in security_names.py if the issuer wants the strict read or the backfill limit.",
+    "notes": "Nothing deployed or called; every test stubs the vendor hook. disarm_owner not needed (INERT)."
   }
 ]
 ```
