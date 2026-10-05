@@ -1883,3 +1883,20 @@ neither prints no footer line (the timeline serves no source).
   reviews the product-file candidate.
 **Item 3 is not a cell:** the FWD-11 re-read is the issuer's real run at the close (round37/walk/reads37.mjs fwd11-side-by-side).
 **Fan-out:** 1 of 1 chains, cap 8. **Risk:** LOCAL.
+
+## v39 -- ROUND 39 (issuer, 2026-10-05 ~13:4xZ) -- ONE DIRECT ACT: AN UNKNOWN SOURCE READS THE FIXED PHRASE (PRD v0.15)
+
+**Rectangle:** the CTO's review of round 38 (@2e225582da, msg 29549): APPROVED pending ONE required fix -- `CardFooter.tsx:95` prints a
+de-punctuated raw code for an unknown source; it must return `UNNAMED_SOURCE_WORDS`, with one repairs38 arm on an unknown long source.
+Andrew's word for the round 37+38 DEV push follows this fix (record 121b7b016e, msg 29560).
+**Base:** portal `dsgn-r38-zp1` (75f9f477, the round-38 cell branch); the candidate is rebuilt at the close on current DEV.
+
+| cell | serves | owned files | worker |
+|---|---|---|---|
+| `AV-zq-1` UNKNOWN SOURCE (direct act) | FWD-11 | `components/CardFooter.tsx` (one line) | ~101 (worker-light) |
+
+**Check:** `round38/checks/repairs/repairs38.cjs` AMENDMENT 2 (arm 4, "AN UNKNOWN SOURCE READS THE FIXED PHRASE"; renders the real
+CardFooter through `_render38.cjs`'s new footer mode). At the round-38 candidate 5fe58e89 it reads 5 of 6 (arm 4 FAIL); with the one-line
+reference fix, 6 of 6. AC2 = battery29 with no skip.
+**Not cut (the CTO's next list):** row S3 (the end line's "5:00p ET" after a bare served day) and reads37's What-changed scope selector.
+**Fan-out:** 1 of 1. **Risk:** LOCAL. **Direct act.**
