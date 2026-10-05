@@ -668,3 +668,57 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "INERT: the maps have no reader yet that keys on a data-row label (layout reads source and ids). Owner 2.0.0_SA_COO~Y."
 }
 ```
+
+## IRPT_YCDGEN-S7 -- E5's --end driver is false: fund_data ignores startDate and endDate
+
+```json
+{
+  "id": "IRPT_YCDGEN-S7",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-05T06:43:17Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "E5's driver is false: /charts/fund_data.json ignores startDate and endDate. Four runs with --end 2026-09-30 and 2026-10-02, with zoom=max and without zoom, kept byte-identical level series (23,651 points through 2026-10-02, the last close), so a different --end cannot drive FWD-2's true arm",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "runs YCD-R4-20261005T0552Z-A (--end 2026-09-30) and -B (--end 2026-10-02), zoom=max: portfolio_level_series sha256 539579bbaee2.. in both; B reads changed_since_previous false (close/YCD-R4-20261005T0552Z_host_run.txt, run.json read 06:1xZ)",
+      "A also reads false against run 3 (YCD-R3-20261005T0219Z, empty start and end)",
+      "runs YCD-R4-20261005T0620Z-D (--start 2025-10-01 --end 2026-09-30) and -E (--end 2026-10-02), no zoom (close/e5_dated_level_map_r4.json): sha256 ef306d6162e1.. in both; E reads false (close/YCD-R4-20261005T0620Z_host_run.txt)",
+      "the kept series of A and D both hold 23,651 points, the first in 1962 and the last on 2026-10-02 (dates read, no value)"
+    ]
+  },
+  "spec_asserts": "CTO round-3 analysis E5 (ROUND_ANALYSIS_IRPT_YCDGEN_ROUND3_20261005.md:28-30, :66): a run whose --end differs from the indexed run's changes that call's answer under the same call name, so two runs with different --end dates show changed_since_previous true.",
+  "world_is": "The endpoint returns the whole series whatever the dates, so --end is not a driver. The false arm is measured twice (B vs A, E vs D). The issuer substitutes a lever that does change the answer under one call name: zoom=5y then zoom=max (2 requests, run at ~D's next free slot), and records the result in the round-4 packet. No retry was made."
+}
+```
+
+## IRPT_YCDGEN-S8 -- E1's live probe: the held-data feed calls answer 400 (invalid security items and metric ids)
+
+```json
+{
+  "id": "IRPT_YCDGEN-S8",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-05T06:43:17Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "E1's live probe: all 6 requests of feed_probe_map.json answered HTTP 400. general_data says security_needed ('At least one valid, included security is required') on the 68-metric call and metrics_needed ('Metrics X-Axis needs to have more than one metric') on the 80-metric call; fund_data over the holdings says 'There are no valid items on this chart'. /securities/securities_info answers 200 for a public ticker with its security_id",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "run YCD-R4-20261005T0620Z-C: 6 of 6 requests HTTP 400, COMPLETE, no challenge at 8 s spacing; holdings from REQ-a618aa83 (99 rows; tickers not printed)",
+      "kept bodies read for err_code and err_message only: step 01 security_needed, step 03 metrics_needed, step 05 text/plain no valid items",
+      "run YCD-R4-20261005T0552Z-A step 05 security_info_probe (securities=AAPL): 200, a list of 1 with security_id and display_security_id",
+      "run A step 06 security_price_probe (general_data, id:AAPL price, xAxis time): 500, BACKOFF stop (same in run B)"
+    ]
+  },
+  "spec_asserts": "Contract 4.2 / YCD-o-4: feed_probe_map.json's calls fetch the 158 held-data figures per holding by passing the holdings' tickers as id:<ticker> items joined by ',' with table_data column ids as general_data metric ids (W2-S6 marked the ids and the answer field as inferred).",
+  "world_is": "The ticker items are not valid YCharts security items as sent (the expand join puts ',' after an item that already ends ',,', and a ticker may not be the YCharts id), and the region and maturity column ids are not valid general_data metrics. Next: resolve each holding through /securities/securities_info to its security_id, send items with no extra separator, and validate metric ids on one public security before a holdings run. The 158 rows keep feed YCHARTS_SECURITY; no element is fed yet, so E6 has no new figures to render."
+}
+```
