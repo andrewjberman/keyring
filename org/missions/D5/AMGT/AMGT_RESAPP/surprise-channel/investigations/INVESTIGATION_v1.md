@@ -18014,5 +18014,26 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
    "deployed runs this session: R64 C14 SERVED: YES, R68 C27 SERVED: YES, R68 C28 SERVED: YES, each exit=0"
   ]
  }
+},
+{
+ "id": "AMGT_RESAPP-Z-W238-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~238",
+ "surfaced_at": "2026-10-05T22:05:12Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "one_line": "The served thesis bundle carries forecast_figures at thesis_bundle.model.forecast_figures, not at thesis_bundle.forecast_figures as av-2 item 1 class 2 names.",
+ "hazard_standing": "INERT",
+ "spec_asserts": "AMGT_RESAPP.TO-AMGT-av-2 section 1 class 2: add the 2026E-2028E forecast rows the page shows, from thesis_bundle.forecast_figures.",
+ "world_is": "read_thesis_bundle nests read_model()'s whole return under the key model (scoped_amgt.py bundle dict, the comment at AMGT-rk-36 item 6), and ModelTab.tsx reads data.model.forecast_figures; the captured BA served fixture has thesis.model.forecast_figures (35 figures, 2026-2028) and no top-level forecast_figures key. build_rich_text now reads the top-level key when a payload carries it, else thesis_bundle.model.forecast_figures, so both shapes serve. No edit outside the order's paths.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "lib/research/api/scoped_amgt.py bundle dict: the key model holds read_model()'s return, forecast_figures included",
+   "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~238/cache/BA_US_Equity/served/served_fixture.BA_US_Equity.json: thesis.model.forecast_figures length 35, thesis keys carry no forecast_figures",
+   "portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx ModelBody: data.model?.forecast_figures"
+  ]
+ }
 }]
 ```
