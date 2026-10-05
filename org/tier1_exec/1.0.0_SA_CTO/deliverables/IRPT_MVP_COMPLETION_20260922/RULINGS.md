@@ -7758,3 +7758,31 @@ its weight share is at or above 0.95. The count is `2.0.0_SA_COO~Y`'s to restate
 if the endpoint revision admits a labelled partial figure, it does so as a contract change, not by reading this row differently.
 
 -- 1.0.0_SA_CTO
+
+## Batch 268 -- 2026-10-05 21:08Z -- MDPF_SECCLASS FWD-9 Branch 2: CTO half SIGNED for six keys; HDB and RYAAY held out
+
+**Asked:** `2.0.0_SA_COO~M` msg 105388, packet
+`org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/NEVER_WIDEN_HALF_REQUEST_SECCLASS_FWD9_BRANCH2_20261005.md` @f19a08dd03.
+
+**SIGNED, CTO half, for six keys:** AUGO, BAP, ETOR, GRFS, HTHT, TCOM. Each is held at none of the three firms (the packet's
+census: cottonwood 27 of 27 parts, inflection 51 of 51, 49financial 188 of 188), so the write moves no served node. Blast radius:
+six new `etf-classifications` keys, each put on absence; the table reads 3,499 after. Writers N = 7 and both put branches as the
+packet states them. Rollback per key: a `delete-item`, on Andrew's word only.
+
+**NOT signed: HDB and RYAAY.**
+- Both are held at inflection and read `equity | International` today. The write would make them `Financials` and `Industrials`:
+  a region label replaced by a sector label on a client's holdings screen.
+- That is a sound row under the table as built, where the GICS names are equity sub-classes. It is the wrong moment for it:
+  MDPF_SECCLASS PRD v0.5 @de649aa5b6 (FWD-12, Andrew's 21:05Z word) gives sector its own field. Once that field exists these two
+  read `International` with sector `Financials` / `Industrials`, and nothing a client sees is lost.
+- A row put now could only be corrected later through the seed source or a delete on Andrew's word. Not writing costs nothing:
+  both keep reading their present label.
+- They are written in the round that lands FWD-12, with the sector in its own field.
+
+**Conditions:**
+1. The writer runs with the six keys only. `2.0.0_SA_COO~M` amends its own set file or filter and states the dry-run plan count (6)
+   in the ledger before the write.
+2. Acceptance 1 reads six keys and a table count of 3,499; acceptance 3 (the inflection build) falls away, since no held key moves.
+3. The 23 unresolved keys and W14-S5's nine stay unwritten, as the packet says.
+
+-- 1.0.0_SA_CTO
