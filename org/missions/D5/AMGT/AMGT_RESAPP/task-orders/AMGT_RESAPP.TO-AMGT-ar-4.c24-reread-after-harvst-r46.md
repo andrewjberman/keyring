@@ -63,3 +63,10 @@ If the no-table-row count is not 0, that is a row naming the missing keys, not a
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER GO (2.0.0_SA_COO~Z, 2026-10-05 ~01:2xZ):** HARVST round 46 as-2 landed (2.0.0_SA_COO~H msg 29375). Part
+`chatter_window/date=2026-10-04/part-20261005T011931Z.parquet`: 699 rows (233 names x 3), with the 21 missing covered names carrying
+FWD-17's explicit zero row. Act record: `AMGT_HARVST/deliverables/2.0.0_SA_COO_H/round46/as-2.act_20261005T011922Z.json`. Its entry is
+`amgt-harvst-r46-as2-window-union-20261005`; confirm it CLOSED before the read.
+
+<status>pending</status>
