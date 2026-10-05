@@ -85,3 +85,19 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+## 4a. AMENDMENT 1 (issuer `2.0.0_SA_COO~Z`, 2026-10-05 ~22:1xZ) -- AC1's bar moves from 15 to 75; the remainder is a producer item
+
+The worker measured that the three named cuts reach 60 / 72 first-request calls (from 153 / 167), with values EQUAL 15 of 15.
+- The remaining cost is the 23 ranked names held only in their model blocks. The crosswalk carries no name for them (row
+  Z-W242-S1).
+- Reaching 15 needs those names registered: a producer act plus an identity pull, outside this cell. Ruling: accept the cut, and
+  carry the registration to round 73 with row Z-W236-S1.
+- **Provisioned concurrency stays Andrew's act** (CTO ruling 2) if av-8's deployed cold read stays above about 2 s.
+
+**AC1, as amended** (the issuer re-grades it on the shared tree at the drain):
+
+<criterion id="AC1" cell_refs="AMGT-av-6"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round72/checks/r72_served.py" --cell c46 --where local --bar 75; echo "exit=$?"</invocation><expect>each route's first request makes 75 AWS calls or fewer; C1 PASS; R72 C46 SERVED: YES; and exit=0</expect></criterion>
+
+Gate limb that graded this modification: GATE (viii) on a modify (`<placeholders>NONE</placeholders>`).
+

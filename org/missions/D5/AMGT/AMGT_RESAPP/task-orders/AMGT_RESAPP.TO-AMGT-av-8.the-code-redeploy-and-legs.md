@@ -88,3 +88,16 @@ Stamp any row's `surfaced_at` with `date -u`.
 <risk>WORLD</risk>
 <proof_genre>DEPLOY</proof_genre>
 <worker_class>worker</worker_class>
+
+## 4a. AMENDMENT 1 (issuer `2.0.0_SA_COO~Z`, 2026-10-05 ~22:1xZ) -- the POOL UNIVERSE WRITE LEG IS REMOVED
+
+**Row Z-W243-S1 (ARMED) is disarmed here.** The only stored SEC object (`company_tickers/date=2026-09-22/company_tickers.json`) carries
+no EDGAR filing history. A `--write-pool` from it would write `form_expected` "none" over 13 names that the 2026-09-16 pool object
+holds as 10-K (7) or 20-F (6), a served-data regression.
+- **This act writes NO pool universe object.** av-7's dry-run unblock and plain names still ride the code leg.
+- The write returns in round 73 with a rule that keeps the prior `form_expected` when the input does not measure it.
+- **The legs are now:** grant (`filings/v1/` read, plus `dynamodb:BatchGetItem` on `etf-classifications` if the role lacks it),
+  code, and the drafting rebuild of `drafting/v1/BA_US_Equity.json` and `drafting/v1/ASML_NA_Equity.json` (av-3's named keys).
+
+Gate limb that graded this modification: GATE (viii) on a modify (`<placeholders>NONE</placeholders>`).
+
