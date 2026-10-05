@@ -1,0 +1,110 @@
+{
+ "schema": "irpt-ycdgen-map-v1",
+ "report_type": "OVERVIEW",
+ "template_id": "14141822",
+ "source_pdf": {
+  "bucket": "opal-data-irpt",
+  "artifact_prefix": "ART-ac668d3baaab",
+  "pages": 23
+ },
+ "purpose": "firewall window probe (IRPT_BCKEND~Y, READ_BACK_LEASE_TTL_S): 12 public-ticker securities_info reads in 2 windows of 6 with --window-seconds W between; request 7 challenged means the window is longer than W",
+ "calls": [
+  {
+   "name": "info_AAPL",
+   "method": "GET",
+   "path": "/securities/securities_info",
+   "params": {
+    "securities": "AAPL"
+   }
+  },
+  {
+   "name": "info_MSFT",
+   "method": "GET",
+   "path": "/securities/securities_info",
+   "params": {
+    "securities": "MSFT"
+   }
+  },
+  {
+   "name": "info_GOOGL",
+   "method": "GET",
+   "path": "/securities/securities_info",
+   "params": {
+    "securities": "GOOGL"
+   }
+  },
+  {
+   "name": "info_AMZN",
+   "method": "GET",
+   "path": "/securities/securities_info",
+   "params": {
+    "securities": "AMZN"
+   }
+  },
+  {
+   "name": "info_NVDA",
+   "method": "GET",
+   "path": "/securities/securities_info",
+   "params": {
+    "securities": "NVDA"
+   }
+  },
+  {
+   "name": "info_META",
+   "method": "GET",
+   "path": "/securities/securities_info",
+   "params": {
+    "securities": "META"
+   }
+  },
+  {
+   "name": "info_JPM",
+   "method": "GET",
+   "path": "/securities/securities_info",
+   "params": {
+    "securities": "JPM"
+   }
+  },
+  {
+   "name": "info_XOM",
+   "method": "GET",
+   "path": "/securities/securities_info",
+   "params": {
+    "securities": "XOM"
+   }
+  },
+  {
+   "name": "info_JNJ",
+   "method": "GET",
+   "path": "/securities/securities_info",
+   "params": {
+    "securities": "JNJ"
+   }
+  },
+  {
+   "name": "info_PG",
+   "method": "GET",
+   "path": "/securities/securities_info",
+   "params": {
+    "securities": "PG"
+   }
+  },
+  {
+   "name": "info_KO",
+   "method": "GET",
+   "path": "/securities/securities_info",
+   "params": {
+    "securities": "KO"
+   }
+  },
+  {
+   "name": "info_PEP",
+   "method": "GET",
+   "path": "/securities/securities_info",
+   "params": {
+    "securities": "PEP"
+   }
+  }
+ ],
+ "elements": []
+}
