@@ -269,3 +269,60 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "INERT (no element sourced from the scatter yet). Owner 2.0.0_SA_COO~Y: teach the shape rule the series key and pin it with the round-2 scatter answer's shape, before the OTHER_ENDPOINT re-pointing (packet section 5 item 2) reads it."
 }
 ```
+
+## IRPT_YCDGEN-W2-S4 -- the 3.4 statistic id list does not hold the statistics five OWN_SERIES elements and one buy-and-hold element name
+
+```json
+[
+  {
+    "id": "IRPT_YCDGEN-W2-S4",
+    "project": "IRPT_YCDGEN",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~2",
+    "surfaced_at": "2026-10-05T01:13:00Z",
+    "one_line": "YCD-w-3: contract 3.4's statistic ids lack alpha, beta, sharpe, sortino, monthly VaR and max_drawdown_15y; the OWN_SERIES elements p7.e02, p7.e03, p7.e05, p7.e06, p7.e08, p7.e07 name those ids in source.columns with statistic null, and p12.e04 (market-price returns) is BUY_AND_HOLD with total/annualized ids.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Decomposition R3 contract 3.4: statistic ids are total_return_<1m..15y>, annualized_return_<3y..15y>, std_dev_<1y..15y>, max_drawdown_<1y|3y|5y|10y|all>, cumulative_series; row W3-S2 says the risk and return rows are computable from the portfolio's own kept series.",
+    "world_is": "Of the 9 elements moved to OWN_SERIES, p2.e08, p2.e13 and p6.e22 use only listed ids; p7.e07 needs max_drawdown_15y (unlisted) and p7.e02, p7.e03, p7.e05, p7.e06, p7.e08 need alpha_/beta_/sharpe_/sortino_/value_at_risk_monthly_5_ over 1y..15y, which need a benchmark or risk-free series the id list does not name. p12.e04 prints market-price returns and an inception date; the portfolio has no market price, so it stays HELD_DATA on BUY_AND_HOLD over the holdings' level series (the one consumer of holdings_level_series), and its price-only basis is inferred. Each such element carries its ids in source.columns, statistic null, claim inferred; YCD-l-3 prints NOT_AVAILABLE for an id it does not implement.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_YCDGEN/decompositions/IRPT_YCDGEN_DECOMP_R3.md contract 3.4 (statistic ids)",
+        "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/maps/overview_map.json elements p7.e02 p7.e03 p7.e05 p7.e06 p7.e07 p7.e08 p12.e04 (source.columns)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "INERT: wiring is complete against the contract; owner 2.0.0_SA_COO~Y at the round-3 close (extend the id list or accept NOT_AVAILABLE for these)."
+  }
+]
+```
+
+## IRPT_YCDGEN-W2-S5 -- one element needs 16 columns against the 8-column call bound, and the computed `field` and the probe answers' shapes are inferred
+
+```json
+[
+  {
+    "id": "IRPT_YCDGEN-W2-S5",
+    "project": "IRPT_YCDGEN",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~2",
+    "surfaced_at": "2026-10-05T01:13:00Z",
+    "one_line": "YCD-w-3: element p6.e02 names 16 bond-maturity columns, so with the 8-column bound they span holdings_bond_exposure_01 and _02 while a 3.4 source names one call; its source.call is the first chunk and source.columns lists all 16. Computed fields are per-security paths in the table_data entry dialect, and the two probe answers' shapes are inferred.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order section 3: split any table_data group above 8 columns (round 1's long column list drew the firewall); contract 3.4: a computed source names one `call` and a `field` JSONPath per security.",
+    "world_is": "Every other multi-column element fits one chunk call (checked: the columns of all 156 other table_data held-data elements lie in their named call). For p6.e02 the layout must find columns 9-16 in the following chunk. `field` for table_data calls is `$.data[?(@.calc_name in columns)].calc_raw_value`, applied to one indicesData entry (entry shape per ycharts_client.parse_table_data: security_id|id, data[].calc_name/calc_raw_value); for fund_data `$.raw_data`. The two probe-call elements use `$.chart_data[*]` (general_data xAxis=metrics, shape not yet kept) and `$.data.series[*]` (scatter, shape per the endpoint spec WS2-MP-03); no answer was read, so these paths are inferred.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/ycharts-market-data-pull/ycharts_client.py parse_table_data and parse_chart_series (entry and chart shapes)",
+        "docs/briefs/mdsrc-ycharts-endpoint-spec-20260520.md WS2-MP-03 (data.series[])",
+        "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/maps/overview_map.json element p6.e02 and calls holdings_bond_exposure_01, _02"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "INERT: YCD-l-3 reads the dialect against its own contract; owner 2.0.0_SA_COO~Y to join at the drain and the close run."
+  }
+]
+```
