@@ -177,6 +177,8 @@ cloud". Inputs:
   query-language purchase, a standing word for pulls scoped to live client holdings, and yfinance for now (the five cards).
 - The standing of v0.1's work: the three element maps, the research layout module and its statistics, the keeper and the kept
   YCharts answers all stay. v0.2 changes where the figures come from, not what the page is.
+- C-CLASSIFY's reading of the sector pages (Yahoo's sector names there only; names, asset class and sub asset class from the
+  table) was confirmed by Andrew at 21:49Z (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261005_2149Z_FIVE_CALLS_ALL_OF_BD_SECURITIES_SIX_ASSET_CLASSES_INDUSTRY_GROUP_ONTO_TABLE.md`, call 4).
 - A word of his that amends an FWD becomes an addendum under the next unused id (FWD-16), or an in-place amendment. It is never
   a cell's choice.
 

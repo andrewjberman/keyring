@@ -5,10 +5,10 @@
  "project": "MDPF_SECCLASS",
  "directive": "D8",
  "fabric": "laptop",
- "prd_version": "v0.9",
+ "prd_version": "v0.10",
  "step": 4,
  "brief_ref": "docs/briefs/canonical-security-table-brief-20260929.md@87ad6973f3",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16"],
+ "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17"],
  "status": "RATIFIED"
 }
 ```
@@ -143,17 +143,18 @@ The section below carries the endpoint's outcomes verbatim.
                     Classifier. Those can land without human review, but we want an index somewhere of
                     all those that land by AI")
 
-  FWD-12 The shared list carries each security's sector, and the Positioning page's ETF view shows
-         sector, class and sub-class from the shared list
+  FWD-12 The shared list carries each security's sector and industry group, and the Positioning
+         page's ETF view shows sector, industry group, class and sub-class from the shared list
          DONE WHEN  EXERCISED -- the ETF view opened for one Opal ETF and its holdings' sectors read
                     against the shared list
-         ACCEPT     every holding in an ETF's view shows the sector the shared list gives it, and the
-                    page takes no sector or class from anywhere else. The list holds no measurements
-                    about a security, only what kind of thing it is
+         ACCEPT     every holding in an ETF's view shows the sector and the industry group the shared
+                    list gives it, and the page takes no sector, industry group or class from anywhere
+                    else. The list holds no measurements about a security, only what kind of thing it is
          SOURCE     Andrew-direct 2026-10-05 21:05Z ("I am ok with consolidating sector onto this table.
                     The question at that point isw whether the characteristics would need to be handled
                     here as well, which I'd prefer they were not"); Andrew-direct 2026-10-05 ~20:4xZ
-                    ("consistently using ONLY the canonical ETFClassifier table")
+                    ("consistently using ONLY the canonical ETFClassifier table"); Andrew-direct
+                    2026-10-05 21:49Z (industry group moves onto the list with sector: "Yes agreed")
 
   FWD-13 An advisor opens any client's Holdings tab on Investor Reporting and every security's
          class and sub-class is the shared list's
@@ -187,6 +188,17 @@ The section below carries the endpoint's outcomes verbatim.
                     stated mapping that the person looking at it can read. Every security that changes
                     group when a screen switches to the shared list was named before the switch
          SOURCE     midstream brief O6 (l.100-104) and PART III item 3 (l.152)
+
+  FWD-17 Every security the old Black Diamond list holds has its entry in the shared list, placed
+         again under the shared list's six classes
+         DONE WHEN  EXERCISED -- the count of old-list securities with no entry in the shared list
+                    read at zero
+         ACCEPT     every security in the old list, held today or not, has an entry in the shared
+                    list. Each was placed again under the shared list's own six classes and its own
+                    wording, not carried across as the old list had it
+         SOURCE     Andrew-direct 2026-10-05 21:49Z ("B all of it"; "i meant the asset classes"); his
+                    word of ~21:4xZ the same day ("run it on a 6 field basis with the new
+                    nomenclature/fields as part of the adaptation/reclassifier process")
 
 ```
 
@@ -587,3 +599,34 @@ not edited.
      held), or all of it.
   FWD-15 as written counts HELD securities with no entry. If his answer to point 2 is "all of it", FWD-15's bar changes and this
   seat amends it then; no cell that fills rows is cut on the wider reading before he says.
+
+## ADDENDUM v0.10 (1.0.0_SA_CTO, clock read 21:49Z 2026-10-05) -- an ENDPOINT change on Andrew's five answers: FWD-12 amended, FWD-17 added
+
+**Word:** `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261005_2149Z_FIVE_CALLS_ALL_OF_BD_SECURITIES_SIX_ASSET_CLASSES_INDUSTRY_GROUP_ONTO_TABLE.md`.
+
+**What changed and why (endpoint re-entry):**
+- **FWD-17 is new** (his call 1, "all of it"). FWD-15 was RIGHT and INCOMPLETE: it counts HELD securities with no entry. It stands
+  unchanged, and the whole old list gets its own outcome at the next unused number. This replaces ADDENDUM v0.9's statement that
+  FWD-15's bar would be amended.
+- **FWD-12 is amended in place** (his call 5): the industry group moves onto the list with sector. ADDENDUM v0.5's "not decided"
+  line on `industry_group` is closed.
+- **FWD-13 to FWD-16:** their DONE WHEN lines are confirmed by him (call 3).
+- No outcome is retired.
+
+**Contract notes (bind the next round's cells):**
+- **Six means the six asset classes** (his call 2). The reclassifier places every old row under the shared list's six
+  `asset_class` values; the old list's four classes and its two quiet folds are not carried. FWD-16's mapping is where a screen
+  that shows fewer groups states how the six became its own.
+- **The whole old list, in this order:** securities held today first (FWD-13 and FWD-15 depend on them), then the rest. The
+  research seat's brief counts 10,873 old rows, 2,378 of them already in both lists. Each remaining row goes through the
+  direct-match plan, then the AI classifier (FWD-11), with the value bound and the index of AI-made rows as already set. A row
+  nothing can place is listed UNRESOLVED by name; FWD-17 does not grade REALIZED while that list is not empty.
+- **Key forms.** The old list keys some rows `NAME::<slug>`. The key form for a security with no ticker and no CUSIP (ADDENDUM
+  v0.7) is declared before any such row is written; it now gates part of FWD-17, not only the 58 held.
+- **C-SECTOR gains a second attribute for the industry group.** Same rule: its own new attribute, its closed values declared as
+  data in the contract file with the four-postulate record and a token census. Its source is the Bloomberg industry-group name
+  the ETF producer already reads (`etf_positioning_gold.py`, `GICS_INDUSTRY_GROUP_FIELD`). That producer's own header says the
+  field's values were not yet measured in the served artifact; the values are measured before they are declared.
+- **C-NOCHAR stands:** sector and industry group are labels. No measurement enters the list. No CIK field (ADDENDUM v0.9).
+
+**Placement:** the next MDPF_SECCLASS round. **Sign-off:** an ENDPOINT change, so the ratified-text half re-opens.
