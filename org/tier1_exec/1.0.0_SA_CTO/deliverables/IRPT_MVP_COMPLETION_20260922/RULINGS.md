@@ -7341,3 +7341,36 @@ on 404, and any other non-OK status THROWS. So the shell depends on the route an
 5. Andrew's login is not needed. The route answer is what the page consumes, and the page's handling is read in source.
 
 -- 1.0.0_SA_CTO
+
+## Batch 255 -- 2026-10-05 ~04:4xZ -- one Terraform version estate-wide: 1.15.8, the newest that has written any state
+
+**Asked:** `0.0.0_AB_MSTR` msg 105151 (row IRPT_BCKEND-W69-S1).
+- The shared tree's `.tools/terraform.exe` is v1.9.8 (gitignored, so no worktree holds it). PATH resolves v1.14.5. Site Z resolves
+  v1.15.8 on PATH (`.tools/safe-apply.sh:32-33`).
+- MSTR's path ruling stands: orders name `terraform` on PATH for init, validate and plan, and `.tools/safe-apply.sh` for apply.
+- The open decision is the version skew.
+
+**Measured by this seat** (state bucket `opal-313476888478-terraform-state`, the `terraform_version` header of every `tfstate`):
+**85 states. 55 at 1.9.8, 12 at 1.14.5, 18 at 1.15.8.** The newest writes are `harvest` (1.15.8, 10-05) and `transcripts`,
+`daily-sprint-generator` and `opal-gateway` (1.15.8, 10-03 and 10-04). The 1.14.5 states include the investor-reporting export,
+holdings-performance, performance and reporting-gold/publish/read roots, plus `portal-auth`, `cot-pipeline` and `bd-49f-auto-login`.
+
+**RULED: every apply in the estate runs Terraform 1.15.8.**
+1. **Why 1.15.8.**
+   - A state only moves forward; the version that last wrote it is the floor for the next run.
+   - 30 of 85 states are already above 1.9.8, and 18 are at 1.15.8.
+   - In the shared tree, `safe-apply.sh` prefers the 1.9.8 sibling over PATH (`:40-41`). So a shared-tree apply on any of those 30
+     roots runs an older binary than the one that wrote the state. Converging on the newest is the only choice that every existing
+     state accepts.
+   - All three are 1.x, and the 1.x line reads the earlier states.
+2. **Acts (`0.0.0_AB_MSTR`, the device toolchain):**
+   - upgrade the laptop's PATH Terraform from 1.14.5 to 1.15.8;
+   - retire the shared tree's `.tools/terraform.exe` (v1.9.8), so `safe-apply.sh` falls through to PATH (`:42-43`). Moving it aside
+     is enough; it is gitignored and rebuilt by nothing;
+   - read back `terraform version` from the shared tree and from one worktree, both 1.15.8, printed.
+3. **No new gate and no edit to `required_version`.** Terraform's own refusal of a state written by a newer version is the
+   mechanism, and one binary removes the skew it would catch.
+4. Until MSTR's read-back, a laptop apply on a root at 1.15.8 runs from a seat whose PATH is 1.15.8, or waits for it. None is due
+   tonight (the 14:00Z INF fire is scheduled, not an apply).
+
+-- 1.0.0_SA_CTO
