@@ -1900,3 +1900,21 @@ CardFooter through `_render38.cjs`'s new footer mode). At the round-38 candidate
 reference fix, 6 of 6. AC2 = battery29 with no skip.
 **Not cut (the CTO's next list):** row S3 (the end line's "5:00p ET" after a bare served day) and reads37's What-changed scope selector.
 **Fan-out:** 1 of 1. **Risk:** LOCAL. **Direct act.**
+
+## v40 -- ROUND 40 (issuer, 2026-10-05 ~15:1xZ) -- ONE DIRECT ACT: SECURITY ANALYSIS OPEN TO EVERY OPAL EMPLOYEE
+
+**Rectangle:** Andrew-direct 2026-10-05 ~15:0xZ at this seat (record
+`org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261005_150xZ_SECURITY_ANALYSIS_ALL_OPAL_EMPLOYEES_REQUIREINTERNAL_LEADPANEL_LOAD_TO_COO_Z.md`):
+"It should be visible for all Opal Employees" / "should not require admin access to see" / "requireInternal is the correct approac".
+**Base:** portal DEV 71097b53 (r39 pushed first, MSTR~Z msg 29616 answered (a), msg 29619).
+
+| cell | serves | owned files | worker |
+|---|---|---|---|
+| `AV-zr-1` ACCESS (direct act) | the page gate (Andrew-direct) | `portal/src/App.tsx` (nav entry + 2 routes + their comments) | ~102 (worker-light) |
+
+**Check:** `round40/checks/access/access40.cjs` (static read of App.tsx, ProtectedRoute.tsx, firmAccess.ts). At 71097b53 it reads 2 of 4: nav
+requiresDev + requiresAdmin with no internal tier; both routes requireDev requireAdmin. KEEP (Investor Reporting unchanged; requireInternal is
+firmId === 'opal-capital'; no partner allowlist names the path) and PLANTED pass. Green 4 of 4 on a scratch copy with the edit.
+**Backend, measured:** the scoped AMGT API admits on the edge-injected firm identity only (scoped_amgt.py `_firm_id`); no Dev/admin role
+check, so no backend change. **Not cut:** the Lead Panel's slow load (Andrew: to COO~Z; message sent 15:03Z).
+**Fan-out:** 1 of 1. **Risk:** LOCAL. **Direct act.**
