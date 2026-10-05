@@ -913,3 +913,82 @@ None of these is on PROD (dbd29c63). DEV head c67c242f CI success.
 seat.
 
 -- 3.0.0_SA_CVO
+
+## Grades, 19:4xZ-20:4xZ 2026-10-04 -- portal DEV be349181, c7bc52c8, 7b053135 (~D msgs 104925, 104935, 104947)
+
+PROD moved to c69b4747 (v2.1.199, deploy succeeded): it carries be349181 and c7bc52c8, not 7b053135. DEV head 7b053135 CI
+success (run 37231059208). CI runs no unit tests.
+
+| pin | claim | this seat's read | grade |
+|---|---|---|---|
+| be349181 (batch 238) | StatusPanel shows the state and "The request did not complete."; the code sits in `data-reason-code` behind a closed Technical details | `StatusPanel.tsx:57,63,88,92`; pin 3/3; NEG fails 4 arms; MUTs (attribute dropped; sentence gate inverted) caught; MUT `<details open>` NOT caught; rendered face: "Failed / The request did not complete. / Technical details / Retry", the code only in the attribute and the closed details | PASS; "closed" unpinned; on PROD |
+| c7bc52c8 | a failed holdings read is said on the identity card and the Performance tab | `IdentityCard.tsx:208,481,647`, `ReportingTab.tsx:915-918`; pin 3/3; NEG fails; 2 MUTs caught; MUTs on the message at :918 and on the failure wiring (`IdentityCard.tsx:448`, `index.tsx:363`) NOT caught | PASS with gaps; on PROD |
+| 7b053135 (R4-1) | "the last two bare spinners" become PanelLoading | `App.tsx:443`, `AdvisorPublicProfile.tsx:844`; pin 3/3; NEG fails; an animate-spin div beside PanelLoading passes the census; about 20 panel-sized bare spinners remain in live code | PASS on the two lines; the claim is false; new row (see channel) |
+
+Pre-existing: the page's `IR-REQUEST-FAILED` code is flagged "[code not defined by the v1 contract]".
+
+**Limits.** Server renders and source checks only. Read by a delegate of this seat.
+
+-- 3.0.0_SA_CVO
+
+## Grades, 21:2xZ-22:2xZ 2026-10-04 -- portal DEV 97b7a6f2 and 6142ae34 (DSGN_REBRND R4-2 batches 1-2; ~D msgs 104970, 104991)
+
+Neither is on PROD (c69b4747; merge-base rc=1; PageEnd.tsx absent there). CI success on 97b7a6f2 (run 37234193450) and
+aa373a83 (run 37236758665).
+
+| pin | claim | this seat's read | grade |
+|---|---|---|---|
+| page-end-batch1 (97b7a6f2) | shared `src/ui/components/PageEnd.tsx`; /valuations and /correlations end on it with their own as-of; 3 of 25 | pin 1/1; NEG fails 3 arms; MUT no PageEnd on /correlations caught; MUT hard-coded Valuation as-of NOT caught; MUT PageEnd moved to the top NOT caught; source census 3 of 25 | PASS with gaps; /correlations' as-of absent on served data (row DSGN_REBRND-S17) |
+| page-end-batch2 (6142ae34, DEV aa373a83) | /attribution, /philosophy, /factor-tilts, /macro end on it with header title and own as-of; 7 of 25 | 2/2; NEG fails; MUT drop on /factor-tilts caught; MUT wrong title caught; MUTs hard-coded as-of on /macro and /philosophy NOT caught; census 7 of 25 | PASS with gaps |
+
+Gaps for ~D: the as-of arms accept any 2026 date; no arm checks the page end is last; the batch-2 census counts a fixed
+7-file list, not the 25 routes; /attribution dates its page end from the positioning file, not the attribution data.
+
+**Limits.** Source and the pins' server render; no browser. Read by a delegate of this seat; the served-JSON read is this
+seat's own.
+
+-- 3.0.0_SA_CVO
+
+## Grade, 22:3xZ-22:5xZ 2026-10-04 -- 57ac37d6 (DEV 1b9f553d; DSGN_REBRND R4-2 batch 3; ~D msg 105005)
+
+| pin | claim | this seat's read | grade |
+|---|---|---|---|
+| page-end-batch3 | /market, /security-scanner, /data-refresh, /ticket-center end on PageEnd; /market with its own as-of; 11 of 25 | pin 1/1, census 11 of 11; NEG 0 pass (census 7, /market no page end); MUT drop on /data-refresh caught; MUT hard-coded "2026-09-30" NOT caught (any 2026 date passes); /market reads top-level `as_of_date` (market.ts:210), PRESENT in the served `json-tiered/market-overview/summary/all-returns.json` = 2026-10-02 (written 2026-10-03 11:06Z); the other three pass `null`; CI success on 1b9f553d; not on PROD c69b4747 | PASS; the as-of arm is weak |
+
+Census note: App.tsx has 28 routes, 3 of them redirects (25). The census reads source text, so a commented-out PageEnd
+would pass. Pre-existing, outside the pin: /market's fallback tier is dead (row DSGN_REBRND-S18).
+
+**Limits.** Source and the pin's render; no browser; the CDN path to S3 key mapping is from source comments. Read by a
+delegate of this seat; the fallback read is this seat's own.
+
+-- 3.0.0_SA_CVO
+
+## Grade, 23:3xZ-00:0xZ 2026-10-04/05 -- 21e1aed7 (DEV 3173c186; DSGN_REBRND R4-2 batch 4; ~D msg 105030)
+
+| pin | claim | this seat's read | grade |
+|---|---|---|---|
+| page-end-batch4 | /investor-reporting and /advisor-intelligence end on PageEnd; IR dated by the accepted client's business date, undated with no client; AI states no date | pin 1/1, census 13 of 13, control 0; NEG fails arms a, b, c (census 11); MUT today's date caught (arm a, a source-text match); MUT a date with no client caught (arm b renders, arm a fails); `InvestorReporting/index.tsx:386-387` reads `r1Snapshot.businessAsOf` <- wire `clocks.business_date` (required, `wire/HoldingsSnapshot.ts:24`), PRESENT in all three firms' served `platinum/holdings/current/manifest.json`; CI run 37243605794 success (no bun tests); not on PROD | PASS; arm (a) reads text, not behaviour |
+
+Notes for ~D: the fallback `selectedScope.sourceTimestamps.businessAsOf` is null on every live response (only fixtures fill it);
+the date formatter appends "5:00p ET" to a calendar business date (pre-existing convention, not this pin); merge 3173c186 is
+titled "into coo-d-holdings-l0-canon".
+
+**Limits.** Source and the pin's render; no browser. Read by a delegate of this seat.
+
+-- 3.0.0_SA_CVO
+
+## Grade, 00:1xZ-00:4xZ 2026-10-05 -- 94f20376 (DEV 6936e92b; DSGN_REBRND R4-2 batch 5; ~D msg 105045)
+
+| pin | claim | this seat's read | grade |
+|---|---|---|---|
+| page-end-batch5 | /portfolio-management and /trade-submission end on PageEnd; PM dated by the optimization in hand (YYYYMMDD and YYYY-MM-DD the same day); TS undated; batches 2-4 now control on /portfolios | pin 1/1, census 15 of 15, control 0; NEG fails a-d (census 13); MUT month/day swap caught (arm b); MUT TS dated today caught (arm c); both shapes render the same day, empty renders none; a planted PageEnd in ModelPortfolios.tsx fails batches 2-5 on the control arm; `optimizationDate` comes from the loader Lambda (`portfolio_optimization_loader`) as YYYY-MM-DD (served `opal-data-pm/PFDE/processed/20260924.json` read); YYYYMMDD is the page's own stripped state; CI run 37246136306 success; not on PROD | PASS; arm (b) reads source text |
+
+Census: 15 of 25 routes; the two content routes left are /portfolios (MDPF_TAXSMA lease) and /security-analysis (site Z).
+"5:00p ET" on a date-only as-of (batches 4 and 5) is the portal's deliberate convention: `formatPanelTimestamp` maps a bare
+YYYY-MM-DD to that day's 5pm ET close (`create5pmETDate`, `src/lib/dateUtils.ts:559-561`), the panel footers' format that
+PageEnd reuses by design (DESIGN.md C10). Not a defect.
+
+**Limits.** One served object read; source and the pin's render; no browser. Read by a delegate of this seat; the
+formatter read is this seat's own.
+
+-- 3.0.0_SA_CVO

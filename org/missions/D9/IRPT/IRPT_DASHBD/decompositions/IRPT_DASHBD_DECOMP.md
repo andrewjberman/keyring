@@ -323,3 +323,52 @@ The analysis's enrichment list is this issuance's rectangle:
 | `DB-b-19` | FWD-8's income field (PRD ruling 27): `dividend_interest_share_quantity` declared; a DIV debit admitted as income only when that quantity is negative; 38 debits (822.51) measured in, the zero-share row out, return DELTA=0 (nothing served) | LOCAL | DB-b-15 (merged) | L |
 
 fanout: 1 of 1 chains, cap 8, reason: one build cell; E1 is the issuer's packet and E3 is parked on P-2's publish.
+
+## 12. ROUND 12, WORKSTREAM B (2026-10-04 ~22:3xZ, issuer 2.0.0_SA_COO~P, on ANDREW-DIRECT ~22:0xZ "all recs approved" card 2, @66f1e98e98, msg 105003)
+
+E3 / P-5 is un-parked. Its un-park condition holds: P-2 published every 49 Financial account, and ledger irpt-p2-window-20261003
+closed 14/14. Andrew's card 2 lifts his 2026-10-03 data-collection hold for this ONE pull only. The tooling read found no
+population script; the round-4 like-day pull is capped at five accounts. One account is one request, because each account's
+gap-free segments are its own dateRanges, so the pull is about 7,570 requests. The issuer asked 1.0.0_SA_CTO to rule the run's
+shape (pace, abort rule, one bearer, landing).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-20` | P-5 build: bd_population_pull_e3.py (population from the served gold, xref mapping, unmapped with reasons, one request per mapped account) and its OFFLINE plan; pull refuses without --go, on a plan-hash mismatch, on a second pull, and without the CTO's shape ruling file | LOCAL (no vendor call; DRY_RUN=1) | none | B12 |
+| (the run) | the ONE live pull, then the tie-out graded at 0.35 pp with stated reasons | WORLD | DB-b-20 and the CTO's shape ruling | the issuer's act after the ruling |
+
+fanout: 1 of 1 chains, cap 8, reason: one build cell; the live run is the issuer's single act after the shape ruling. Worker
+0.9.0_WK_IRPT_DASHBD~6 in its own worktree.
+
+## 13. ROUND 13, WORKSTREAM B (2026-10-05 ~00:4xZ, issuer 2.0.0_SA_COO~P, on 1.0.0_SA_CTO RULINGS batch 248, msg 105044)
+
+The ONE pull's first run (DB-b-20's script, launched by the issuer at 23:4xZ) aborted at call 19 of 5,252 on HTTP 401, and 18
+responses landed. Batch 248 rules that the completion run over the accounts not yet answered is the SAME pull, with the cause read
+first. The issuer's cause read made 2 vendor calls in the licensed complement:
+- the session minted a fresh opaque bearer;
+- account 14292051 answered 200 with it and landed (19 landed now).
+
+That is class (a), a bearer expiry after about 18 calls. The completion mode re-mints every 10 calls.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-21` | P-5: completion mode (complement only, both denominators printed, bearer re-minted every 10 calls, same pace and abort rule) and its offline completion plan | LOCAL (no vendor call) | DB-b-20 (merged) | B13 |
+| (the run) | the completion run over the complement (~5,233), then the 0.35 pp tie-out grade from the landed responses | WORLD | DB-b-21 | the issuer's act |
+
+fanout: 1 of 1 chains, cap 8, reason: one build cell; the completion run is the issuer's act. Worker 0.9.0_WK_IRPT_DASHBD~7 in its
+own worktree.
+
+## 14. ROUND 14, WORKSTREAM B (2026-10-05 ~01:5xZ, issuer 2.0.0_SA_COO~P, on 1.0.0_SA_CTO RULINGS batches 249 and 250, msgs 105079 and 105082)
+
+The sequential completion (DB-b-21) is vendor-latency bound, at about 12 s per call. It made 127 calls and landed 125, then aborted
+on a second transport error (URLError): its retry budget was one per run. 144 of 5,252 have landed. Batch 249 rules a concurrent
+shape: one coordinator and ONE shared bearer at the proven sign-in rate, 2 workers ramping to 6, 2 req/s aggregate. Batch 250 rules
+one retry per call, a twice-failed account recorded FAILED and not fatal, the abort set, and one sweep over the FAILED set. The
+ledger window was extended to 9 h before the relaunch (@df045ab288).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-22` | P-5: the concurrent completion (coordinator-owned shared bearer, ramp, rate cap, per-call retry, FAILED record, abort set, sweep) and its offline plan carrying the ruling values | LOCAL (no vendor call) | DB-b-21 (merged) | B14 |
+| (the run) | the concurrent completion over the complement (~5,108), the one sweep, then the 0.35 pp tie-out grade from the landed responses | WORLD | DB-b-22 | the issuer's act |
+
+fanout: 1 of 1 chains, cap 8, reason: one build cell; the run is the issuer's act. Worker 0.9.0_WK_IRPT_DASHBD~8 in its own worktree.

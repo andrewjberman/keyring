@@ -1761,6 +1761,78 @@
     "spec_asserts": "Row S13: a FAST pin adds no failing test, and its N of N is measured on the bytes it lands.",
     "world_is": "Holds at portal DEV 2da1eaaf for the seven suites that read committed blobs. The full repository suite was not run.",
     "notes": "Committed-blob suites found by searching test files for portalBlob( / git show / execFileSync('git'); fe-s-47 was added on the CVO's naming."
+  },
+  {
+    "id": "DSGN_REBRND-S16",
+    "project": "DSGN_REBRND",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-04T20:35:00Z",
+    "one_line": "7b053135 (R4-1) claims to replace 'the last two bare spinners'; at portal DEV 7b053135, LoadingInline remains at AdvisorBookView.tsx:897, ClientsTab.tsx:636,645,668,765, ModelPortfolios.tsx:1340,1361,1671,2368, PeersTab.tsx:347, SentimentGauge.tsx:131,195, KeywordSentimentModal.tsx:183, AssetAllocationSummary.tsx:66,69 and MacroTimeSeriesModal.tsx:438, and a panel-sized animate-spin at IndexPerformanceModal.tsx:301, LoadingOverlay.tsx:11, VersionHistoryModal.tsx:94, PrintExportAction.tsx:154, PipelineProgress.tsx:327 and the DataRefresh HistoryTab/EmergencyRollbackTab; the pin's census bans only the named components, so an animate-spin div beside PanelLoading passes.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "this seat's portal grade 2026-10-04 ~19:4xZ-20:4xZ (scratch worktree of origin/DEV 7b053135, removed after): source census of the files above, all imported by live code; pin r4-1-remaining-spinners 3/3, NEG fails, MUT (an animate-spin div beside PanelLoading) passes"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "FWD-11 (one designed state per kind) and the R4-1 claim: no bare spinner remains where a panel loads.",
+    "world_is": "The two named sites are fixed; about 20 panel-sized bare spinners remain, so FWD-11's loading clause is not met by this pin.",
+    "notes": "INERT (presentation). Owner 2.0.0_SA_COO~D: widen the census to animate-spin and LoadingInline at panel size, with the list above as its baseline, and retire the sites or name the exceptions."
   }
 ]
+```
+
+## DSGN_REBRND-S17 -- /correlations page end reads an as-of field the served JSON lacks
+
+```json
+{
+  "id": "DSGN_REBRND-S17",
+  "project": "DSGN_REBRND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-04T22:21:00Z",
+  "one_line": "97b7a6f2 (R4-2 batch 1) ends /correlations on PageEnd with dataAsOf={data.metadata?.as_of_date} (Correlation.tsx); the served s3://opal-data-portal-v2/json/correlations/correlation_data.json (version obQwHWjT.., written 2026-10-03 11:05Z) has metadata keys generated_at, periods_available, ticker_count and its as-of at top-level data_as_of (2026-10-02), so the page end prints no date on served data; the matrix's own asOfDate reads the same missing field (pre-existing). The batch-1 pin's fixture supplies a field production does not serve.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's boto3 get_object of the served correlation_data.json 2026-10-04 ~22:2xZ: top keys correlations, data_as_of, metadata, tickers; metadata has no as_of_date",
+      "git -C portal show 97b7a6f2:src/pages/Correlation/Correlation.tsx (PageEnd dataAsOf and matrix asOfDate read data.metadata.as_of_date); correlation-states.test.tsx fixture uses data_as_of"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-10: every page ends on the shared page end naming its own as-of.",
+  "world_is": "/correlations ends on the page end with no as-of on served data; the pin passes on a fixture shape production does not serve.",
+  "notes": "INERT (DEV only; not on PROD c69b4747). Owner 2.0.0_SA_COO~D: read data_as_of (and fix the matrix asOfDate), and give the pin a fixture copied from the served object's shape."
+}
+```
+
+## DSGN_REBRND-S18 -- /market fallback tier reads a field its six-month-old artifact lacks
+
+```json
+{
+  "id": "DSGN_REBRND-S18",
+  "project": "DSGN_REBRND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-04T22:49:00Z",
+  "one_line": "/market's SECONDARY tier is dead: market.ts:246 calls portalProxy.getAllMarketData(), which returns response.data (portal-proxy.ts:159-161), but the served s3://opal-data-portal-v2/json/market/all_returns.json has keys as_of_date, cache_until, count, data_as_of, generated_at, tickers and no data, so marketData is undefined and the fallback throws; the file was last written 2026-04-15T20:19:39Z although the doc comment says it updates twice daily.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's boto3 get_object of json/market/all_returns.json 2026-10-04 ~22:5xZ: LastModified 2026-04-15T20:19:39Z; top keys as listed, no data key",
+      "git -C portal show 1b9f553d:src/api/portal-proxy.ts:147-161 and src/api/endpoints/market.ts:241-265"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "portal-proxy.ts's own comment: the secondary artifact is updated 6am and 2pm UTC daily by opal-precompute-market-metrics, and the fallback serves it when the tiered summary fails.",
+  "world_is": "The fallback reads a field the artifact does not carry and the artifact is about six months old; if the primary tier fails, /market gets no fallback data (the throw is inferred from the code, not run).",
+  "notes": "INERT (the primary tier serves 2026-10-02; pre-existing, not from 57ac37d6). Owner 2.0.0_SA_COO~D: read tickers (or retire the tier), and say whether opal-precompute-market-metrics still runs; the DEGRADED warn was added under OPAL_ANALYST.EXP1 change D."
+}
 ```

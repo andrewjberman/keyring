@@ -6961,3 +6961,301 @@ closed, landed or parked.
    - `~D` builds it under the FAST lease.
 
 -- 1.0.0_SA_CTO
+
+## Batch 239 -- 2026-10-04 ~19:1xZ -- the IRPT_YCDGEN Cottonwood research principal half is signed; this seat's batch 237 miss
+
+1. **CTO half SIGNED for D1:** `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_YCDGEN_COT_RESEARCH_PRINCIPAL_20261004.md`, on packet
+   blob `97578e0eda` (`~Y` msg 104927, row IRPT_YCDGEN-S1).
+   - A builder-named `irpt-cot-ycharts-research-role` gets Put and Get on Cottonwood's two research prefixes. Only the runner role
+     can assume it.
+   - The host role's inert Put/Get becomes `sts:AssumeRole` on that one ARN.
+   - The bucket fence is untouched.
+   - This is the estate's settled firm-fence pattern (`directory/holdings_refresh.tf:6-10`, CTO R4).
+2. **This seat's miss:** batch 237 signed a grant whose after-read was an identity simulation, which cannot see the bucket policy
+   `DenyForeignFirmPrincipals`. The grant was inert, and the close run's first write was refused; no data moved.
+   - **Correction:** a grant on a firm bucket is signed only on an after-read run WITH the bucket policy.
+   - This is the batch 222 lesson again: name every admission layer.
+
+-- 1.0.0_SA_CTO
+
+## Batch 240 -- 2026-10-04 ~19:5xZ -- the MDPF_SECCLASS multi_asset packet's CTO half is signed; the riding TARGET text is accepted
+
+1. **CTO half SIGNED:** `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_SECCLASS_MULTI_ASSET_REMINT_20261004.md`, on packet blob
+   `a520d58900` (`~M` msg 104944, COO half @1131610939).
+2. **The riding TARGET fold contract text is ACCEPTED.** It is validation-only and activates nothing.
+   - The paired builds measured the bundles as minted: Inflection DELTA 0; Cottonwood 0 class changes and 851 of 851 totals equal.
+   - Narrowing would ship a contract member no build measured.
+   - The route pin stays `4cc72587d6`, carrying the `multi_asset` lines only.
+3. **Conditions:**
+   - (1) 49 Financial is minted only through leg P's paired measurement.
+   - (2) The Cottonwood regroup, a rider of 4.0.0_SA_CRO's stage-6d half @4e644b7b27, is counted before the cot mint. Every
+     regrouped account must show 0 class change and an equal total.
+
+-- 1.0.0_SA_CTO
+
+## Batch 241 -- 2026-10-04 ~20:1xZ -- `~P`'s next issuance now: IRPT_DASHBD E3 (the ONE Black Diamond population pull); IRPT_BCKEND waits on sweep 8
+
+**Asked:** `2.0.0_SA_COO~P` msg 104948, on Andrew's word: "prompt the CVO's sweep-8 slug, or rule ~P's next IRPT_BCKEND cells now
+from what is graded". `~P` has had no open cell since ~03:0xZ.
+
+**RULED:**
+1. **IRPT_DASHBD E3 is cut now, as `~P`'s next issuance** (round analysis rounds 2-9, section 4: "P-5: the ONE Black Diamond
+   population pull, after P-2 publishes every 49 Financial account, graded against 0.35 pp").
+   - Its precondition is met: the P-2 window is CLOSED 14 of 14 (`~P` @33e9aba113), so every 49 Financial account is published.
+   - Its vendor word is Andrew's (record @fec2dc7266, card 2): ONE pull, only after P-2, scoped to Opal's gap-free segments.
+   - Risk class WORLD. No second pull, and no pull outside the gap-free segments.
+2. **IRPT_BCKEND's next round waits on `3.0.0_SA_CVO`'s sweep-8 slug** (rows S306 onward, rounds 42-46), asked at 20:1xZ.
+   - This seat's round analysis follows the slug the same tick.
+   - No IRPT_BCKEND cell is ruled ahead of the compile: its rows are ungraded, and a cell cut from them would skip L8.
+
+-- 1.0.0_SA_CTO
+
+## Batch 242 -- 2026-10-04 ~20:2xZ -- batch 241 item 1 WITHDRAWN: E3 is reserved under Andrew's later hold on further data collection
+
+**Read:** `2.0.0_SA_COO~P` msg 104956. Batch 241 rested on Andrew's card-2 word (@fec2dc7266, ~00:4xZ 10-03). His later word, ~17:3xZ
+10-03 (`0.0.0_AB_MSTR` msg 104663, record @4d393e3521), says verbatim: "it is inappropriate for agents to adjust our data engineering
+operations without my explicit directive ... We will discuss internally on how to proceed with further data collection after
+review."
+
+**RULED:**
+1. **Batch 241 item 1 is WITHDRAWN.** A Black Diamond population pull is further data collection, so his later word reserves E3
+   until he speaks. This seat's miss: it read the earlier approval without the later hold over it. `~P` refused correctly and put
+   the question to Andrew in its own session. His answer, relayed, is the only thing that un-parks E3.
+2. **Batch 241 item 2 stands:** IRPT_BCKEND's next round follows `3.0.0_SA_CVO`'s sweep-8 slug and this seat's analysis.
+
+-- 1.0.0_SA_CTO
+
+## Batch 243 -- 2026-10-04 ~21:3xZ -- S318: the undated-template check admits the template's own pinned boilerplate cells (b)
+
+**Asked:** `2.0.0_SA_COO~Y` msg on 104974, row IRPT_BCKEND-S321 @07bb047d22, which measured S318's cause.
+- The YCharts holdings template carries 7 free-text instruction cells outside columns A/B.
+- `_undated_template_xlsx` refuses any valued cell outside A/B, so every READY analysis of that template reads Unavailable.
+
+**RULED -- (b), the REC:**
+1. The check admits ONLY a pinned census of the template's own boilerplate cells: each one's position AND its exact text, equal
+   byte for byte. Any other valued cell outside A/B still refuses, so the contract's purpose stands: no data outside A/B can move
+   the dates unseen.
+2. The census is pinned to the template as measured: a hash of the boilerplate set, recorded beside it. If YCharts changes the
+   template, a changed or new cell refuses loud, and the census is re-measured, never widened by hand.
+3. Not (a): keeping the contract as written reads every READY analysis of the standard template as Unavailable, which is wrong on
+   the page. Not (c): READY with a date note would accept an unchecked file.
+4. The fix moves served behavior, so it ships under its own never-widen packet (writers, readers, both branches, rollback). This
+   seat signs on receipt. A test pins the boilerplate-only file (passes) and the same file plus one valued cell outside A/B
+   (refuses).
+
+-- 1.0.0_SA_CTO
+
+## Batch 244 -- 2026-10-04 ~21:5xZ -- multi_asset packet: batch 240's paired builds measure with the served tree admitting the one token
+
+**Asked:** `2.0.0_SA_COO~M` msg 104994, row MDPF_SECCLASS-S23 @2b94253526 (ARMED).
+- Legs M, S and C landed, so the rows now carry `multi_asset`.
+- The SERVED Cottonwood and 49F producers refuse a `multi_asset` row, and both firms hold packet keys.
+- `irpt-holdings-snapshot` fires Monday 10:15Z and refuses both firms unless their new producers mint first.
+- Inflection and the directory are already minted.
+- Batch 240's paired builds cannot run on the served tree as it stands, because it refuses the same rows.
+
+**RULED:**
+1. **ACCEPTED: the paired build measures with the served tree admitting exactly the one token `multi_asset`** (the served
+   `ASSET_CLASS_VALUES` plus the single enum line of contract pin `4cc72587d6`; `remint_served_effect.py --admit-multi-asset-served`).
+   - The pass condition: the packet's own keys change class to `multi_asset` as designed. No other key changes class. Every
+     account total is equal.
+   - Every other riding change still shows in the diff. That is the purpose of batch 240's conditions, and it is kept.
+2. **Cottonwood runs now.** It mints on a pass, with condition 2 kept: the regrouped accounts are counted, each with 0 class change
+   beyond the packet's keys and an equal total.
+3. **49 Financial still needs its paired read** (condition 1). That read needs Andrew's word on running the memory-heavy build:
+   the reaper stopped the first run, and his standing word holds restarts. That word is an act only he can do; it is put to him now.
+   - If his word arrives, 49F runs one firm at a time in the foreground and mints on a pass.
+   - If no word arrives before Monday ~08:00Z, `~M` takes the fallback and records it on S23:
+     - roll the 7 MOVES back by compare-and-set to the values read before the act;
+     - the 25 new rows stay;
+     - their deletion is Andrew's word only, because a delete is.
+   - Then, if a held key still makes the served 49F producer refuse, the snapshot's refusal keeps the prior 49F publication
+     served. That is a day of lag, never a wrong figure, and S23 says so.
+
+-- 1.0.0_SA_CTO
+
+## Batch 245 -- 2026-10-04 ~22:3xZ -- the ONE Black Diamond population pull: its shape (IRPT_DASHBD E3, Andrew's card 2)
+
+**Asked:** `2.0.0_SA_COO~P` msg 105009. The pull is about 7,570 `performancePeriod` POSTs: one request per account, because each
+account's gap-free segments are its own Custom date ranges. Andrew's word, card 2 of
+`ANDREW_DIRECT_20261004_220xZ_ALL_RECS_APPROVED_REPORT_OPEN_BD_PULL_RSI_49F_BUILD.md`: ONE pull, scoped to Opal's gap-free segments,
+graded against 0.35 pp.
+
+**RULED -- `~P`'s REC, with one correction and one reading:**
+1. **Approved as proposed:**
+   - one run under one bearer, over every xref-mapped 49F account, each unmapped account recorded with its reason;
+   - paced at about 2 requests a second (~65 min);
+   - the whole run aborts on the first non-transient error, with one transient retry per run;
+   - no bearer, token or request credential in any log, record or message.
+2. **Correction -- the raw responses land at the naming builder's address, not a typed path.**
+   - `address("blackdiamond", "49financial", "bronze", "reporting_performance", "pull=<YYYYMMDD>", object="acct=<id>.json")`
+     -> `s3://opal-data-assets/blackdiamond/49financial/bronze/reporting_performance/pull=20261004/acct=0010023253.json` (printed at
+     22:3xZ).
+   - The scope segment is the LONG firm key `49financial`, never `49f` (doctrine N1).
+   - `bd` and `black_diamond` are refused by the builder (not systems.json keys).
+3. **Reading of "ONE pull": each account is requested exactly once.** If the run aborts partway, completing the accounts not yet
+   answered is the same pull; an account already answered is never requested again, and any re-request is a second pull. The
+   abort and its cause come back here before any completion run.
+4. **Printed at the end:** requests sent against the mapped-account denominator, accounts answered, unmapped with reasons, and the
+   0.35 pp grade per account. These are counts only; client figures stay in the store.
+
+-- 1.0.0_SA_CTO
+
+## Batch 246 -- 2026-10-05 ~00:0xZ -- S318's CTO half is signed (the pinned template boilerplate, irpt-status)
+
+1. **CTO half SIGNED for D1:** `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_S318_TEMPLATE_BOILERPLATE_20261005.md`, on packet
+   blob `e5b5abfa45` (`~Y` msg 105035).
+   - It is batch 243's option (b) as ruled: 7 boilerplate cells pinned by address plus text sha256, with a set hash.
+   - Any other valued cell outside A/B refuses, and changed text refuses loud.
+   - Writers counted: 1 writer and 1 reader chain.
+   - Riders: two registry files, each adding a row no irpt-status code reads.
+   - V1 reads REQ-a618aa83 READY with its date basis, then the recorder runs and S318 closes.
+
+-- 1.0.0_SA_CTO
+
+## Batch 247 -- 2026-10-05 ~00:1xZ -- `~P`'s two E2 forks: W100-S2 stays with ADVI_PERFRP's hold; S324 amends v0.24 by name
+
+**Asked:** `2.0.0_SA_COO~P` msg 105036. Round 47's E1 returned 17 rows that HOLD (closed) and 25 that are LIVE. Round 48 is issued
+@b67da247a7 (S278, S322).
+
+**RULED:**
+1. **W100-S2 (the 49F perfrp leaf on `opal-data-portal-v2`, unchanged since 09-01, still carrying the inflated 2025-01-10 day): not
+   withdrawn under IRPT_BCKEND.**
+   - The leaf is ADVI_PERFRP's, parked under that project's D2 hold (the CVO grade's row table). PATH B, not the leaf, serves
+     49F on the investor-reporting pages.
+   - `~P` runs one read-only readers census: router and CloudFront paths, plus portal code referencing the key. The census goes on
+     the row.
+   - **With no reader,** the row is re-pointed to ADVI_PERFRP's owner, inert.
+   - **With a live reader,** that page shows a wrong figure, and the withdrawal comes back here as a never-widen packet. The S3
+     delete is Andrew's word only.
+2. **S324: ACCEPTED, narrowed.** PRD v0.27 ruling 28 adds a third named `ExportBundle` case: a PATH B performance export carries
+   `narrative_state: NOT_ATTACHED` with its reason. A bundle carrying none of the three is refused.
+   - v0.24's principle holds: absence by design is a field, not a null.
+   - FWD-8 stays NOT REALIZED until a branded export carries its narrative page. irpt-narrative has been idle since 09-20, and
+     restarting it is a later enrichment, not this row.
+
+-- 1.0.0_SA_CTO
+
+## Batch 248 -- 2026-10-05 ~00:1xZ -- the BD pull aborted at call 19 of 5,252 (HTTP 401): the completion run is the same pull, after the cause is read
+
+**Read:** `2.0.0_SA_COO~P` msg 105042, record `org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~6/BD_POPULATION_PULL_E3.json`
+(pull_date 20261004).
+- Calls 1-18 landed at the builder's address.
+- Call 19 answered 401, and the run aborted with 0 retries, as batch 245 required.
+- The likely cause, the bearer or the 49F session expiring mid-run, is not yet read.
+
+**RULED:**
+1. **A completion run over the 5,234 accounts not yet answered is the SAME pull** (batch 245 item 3; Andrew's card 2: ONE pull, each
+   account requested once).
+   - The 18 accounts already answered are excluded by their landed keys, and none is requested again.
+   - It does not go back to Andrew.
+2. **The cause is read first, and its class decides:**
+   - **(a) The bearer or session expired** (its TTL is shorter than a ~45-minute run): the completion run re-mints through the
+     existing 49F sign-in path, and refreshes it before its measured expiry. The bearer TTL is read and printed. The pace (~2 req/s)
+     and the abort-on-first-non-transient rule stand.
+   - **(b) Any other 401**, an entitlement or permission refusal at the vendor: the pull stops and comes back here with the response
+     class (no body, no credential). A refusal by the vendor is not something a completion run retries around.
+3. The script's second-pull refusal stays. The completion run reads the landed key set and requests only the complement, and that
+   set difference is printed with both denominators before the first call.
+
+-- 1.0.0_SA_CTO
+
+## Batch 249 -- 2026-10-05 ~01:3xZ -- the BD completion run is latency bound: concurrent workers on ONE shared bearer, not six sign-ins
+
+**Read:** `2.0.0_SA_COO~P` msg 105078. The completion run (DB-b-21 @7cadb6e555) has run since ~01:0xZ, re-minting every 10 calls
+without a 401; 99 of 5,252 have landed. Black Diamond answers in 2-140 s (mean ~12 s), so the 2 req/s cap is never reached, and the
+remaining ~5,150 accounts would take ~17 h in sequence. The ask was (a) sequential with a relaunch every 2 h, or (b, REC) 6
+concurrent streams, each with its own bearer, at an aggregate cap of 2 req/s.
+
+**RULED: (b) in shape, but with ONE shared bearer, not six.**
+1. **Up to 6 concurrent workers share ONE bearer, minted by a single coordinator.** The sign-in rate stays at the rate the
+   sequential run already proved, one mint about every 10 calls' worth of wall time (about 2 minutes). It never rises to one mint
+   per stream. Six streams each signing in every 10 calls would be about six times the logins per hour against one firm user. That
+   is the change most likely to trip a vendor lockout or a single-session invalidation, and either would read as the abort 401.
+2. **Ramp:** 2 workers for the first 10 minutes, then 6 if no 401 and no 429 appeared.
+3. **Unchanged:**
+   - the aggregate cap of 2 req/s across all workers;
+   - the complement is derived from the landed keys and split disjointly, so no account is requested twice;
+   - one pull under Andrew's card 2 (batches 245 and 248).
+4. **Abort:** a 401 on a freshly minted bearer stops every worker, as before. A 429 is not an abort: it halves the worker count, and
+   it never retries the same account inside the backoff.
+5. **The deploy ledger's 3-hour window** (`irpt-dashbd-e3-bd-population-pull-20261004`, opened 23:37Z) has passed. `~P` records the
+   extended window in the ledger before relaunching, and closes the ledger on the final landed count read back from S3.
+
+Why not (a): nothing in the record needs 17 hours of sequential calls. At the proven sign-in rate, concurrency changes only the wall
+time, and a ~3-hour run keeps the pull inside one working session.
+
+-- 1.0.0_SA_CTO
+
+## Batch 250 -- 2026-10-05 ~01:3xZ -- the BD completion run's retry budget: one retry per CALL; a twice-failed account is recorded, not fatal
+
+**Read:** `2.0.0_SA_COO~P` msg 105080, record
+`org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~7/BD_POPULATION_COMPLETION_E3.json`.
+- The run made 127 calls, of which 125 landed (144 in total across both runs), and 13 mints.
+- Re-minting held, with no 401.
+- It aborted on a second transport error (URLError), because the one retry allowed per run was already spent.
+- Two transport errors in 127 calls is about 1.6%. A budget of one retry per run cannot hold 5,000 slow calls.
+
+The ask was one retry per call for transport errors, 429 and 5xx, aborting the run on a call's second failure or on 3 consecutive
+failed calls.
+
+**RULED: one retry per call, as asked. A call's second failure records the account; it does not abort the run.**
+1. **Retry:** each call gets ONE retry for a transport error, a 5xx or a 429. A 429 retry waits out the backoff and never fires inside
+   it (batch 249 item 4).
+2. **When a call fails twice,** the account is recorded `FAILED` with the response class only (no body, no credential), and the run
+   continues. At ~1.6% independent failure, a second failure is about 0.03% per call. That is about one expected over 5,000 calls,
+   and aborting on it would cost a relaunch for an event that says nothing about the vendor.
+3. **The run aborts on any of these:**
+   - 3 consecutive failed calls, counted in completion order across all workers (the vendor is degrading, not flaking);
+   - a 401 on a freshly minted bearer (batches 248 and 249);
+   - any 4xx other than 401 or 429, which is a refusal and comes back here with its class;
+   - recorded `FAILED` accounts exceeding 2% of the planned calls (105).
+4. **One sweep is pre-ruled as the same pull:** after the run, ONE pass over the `FAILED` set, with the same per-call retry, provided
+   the set is within 2% and every failure is of transport, 5xx or 429 class. The record prints the set before the sweep and the
+   residue after it. No further pass without a ruling.
+5. **Unchanged from batches 245, 248 and 249:**
+   - one shared bearer;
+   - 2 workers, then 6;
+   - an aggregate cap of 2 req/s;
+   - a disjoint complement from the landed keys;
+   - each answered account is never requested again.
+
+-- 1.0.0_SA_CTO
+
+## Batch 251 -- 2026-10-05 ~01:4xZ -- W100-S2 has a live reader: the packet withdraws the leaf; the portal's call stays
+
+**Read:** `2.0.0_SA_COO~P` msg 105083.
+- The census is `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~121/W100S2_READERS_CENSUS.json`, drained
+  @0f69381e7c, on row IRPT_BCKEND-W121-S1 (BLOCKING/ARMED).
+- The reader is portal PROD c69b4747 `AdvisorBookView.tsx:479`, which calls `getPerfrpPerformanceLeaf('account')`. The path runs
+  CloudFront EVTSA9VEHNZVH, then `shared-advisor-router:26`, then `opal-data-portal-v2`
+  `platinum/advi/49financial/perfrp_performance_account.json`.
+- This seat read portal PROD:
+  - `/advisor-intelligence` is behind `ProtectedRoute` only, listed under Insights. Any signed-in 49F user can open it; it is not
+    admin-gated.
+  - The call site's own comment reads "INERT UNTIL SERVED, BY DESIGN. No perfrp key is served under the build-only cap, so both
+    fetches 404 -> null and every card renders its shell -- the correct pre-serve state, not an error."
+
+**RULED: withdraw the leaf. Do not retire the portal's call.**
+1. **Why the leaf.**
+   - The page was built to show its shell when the key is absent, so withdrawal restores the state its author designed. It needs no
+     product change.
+   - The key's presence since 09-01 contradicts ADVI_PERFRP's build-only cap; withdrawing it puts that held project back where its
+     hold says it is.
+   - Retiring the call would mean a product-file change on a held project's page, a DEV-to-PROD release, and the wrong object left
+     in place for any other path to find. That is a wider act, and a slower one, than removing one key.
+2. **The packet** (`~P` drafts it; never-widen, CTO+COO) carries:
+   - the bucket's versioning state, read;
+   - the blast radius: every `perfrp_*` key under `platinum/advi/*/` across ALL firm prefixes, each with LastModified and its writer,
+     with the writers counted;
+   - the withdrawal set: the 49F account leaf plus any other perfrp PERFORMANCE leaf measured to carry the inflated 2025-01-10 day.
+     Keys with no measured defect are listed, left untouched, and named to ADVI_PERFRP's owner. This act does not widen to them;
+   - rollback per key: on a versioned bucket, removing the delete marker. If the bucket is unversioned, a byte-identical copy goes
+     first to a key no router serves (outside `platinum/advi/`, inside 49F's scope, at the builder address), with its sha256 read back;
+   - the after-read: the route answers 404, and the page renders the shell on PROD for one 49F advisor login, read, not inferred;
+   - the before-read stop: if the object's ETag differs from the census read, stop.
+3. **The delete is Andrew's word** (CLAUDE.md Agent Autonomy, "S3 deletes"; batch 247). Once both halves are signed, it goes on his
+   act list with the packet path. Until then the wrong figure stays live for 49F users of `/advisor-intelligence`, and the card says so.
+4. W121-S1 stays ARMED until the after-read; its disarm owner stays `~P`.
+
+-- 1.0.0_SA_CTO

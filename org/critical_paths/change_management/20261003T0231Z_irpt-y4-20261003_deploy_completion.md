@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-03T02:31:20.064502+00:00
-**Status:** OPEN
+**Status:** CLOSED -- nothing stranded -- closed 20261004T183827Z
 **Deploy:** Y-4 the check gate: the resident (st16 -> st17), irpt-ycharts-generate at 828c37c6f7, and the runner role's read of the estate Kimi key (ledger opened 02:3xZ, AFTER the U1 upload: the first open was refused on an invalid leg kind and the build proceeded -- recorded, not hidden)
 **Authored by:** 2.0.0_SA_COO~Y
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -17,7 +17,7 @@
 | D3 | activation | ONE targeted safe-apply of aws_iam_role_policy.runner_resident (Sid ReadTheEstateKimiKey) | policy read back with the one statement | safe-apply rc=0 of y4_d3.tfplan (1 to change: runner_resident gains Sid ReadTheEstateKimiKey); get-role-policy read 2026-10-03T02:58:04Z shows ReadTheEstateKimiKey Allow secretsmanager:GetSecretValue on astn/kimi/api-key-*; Y4/D3_READBACK_20261003.txt | CLOSED 20261003T025845Z |
 | D1 | tf-lambda | ONE targeted safe-apply of module.irpt_ycharts_generate.aws_lambda_function.this | CodeSha256 read back | safe-apply rc=0 of y4_d1.tfplan (code only, s3_object_version w2yfeweDcOFLnVFLFidK1_VCv5EFPCmb); get-function-configuration CodeSha256 fD2R6OFrT2N086C9Go3e1aA9RKZCP/vfnZCaHCloJTs= LastUpdateStatus Successful; live empty-headers invoke StatusCode 200, no FunctionError, refusal CONTRACT_VERSION; Y4/D1_READBACK_20261003.txt | CLOSED 20261003T030345Z |
 | D2 | activation | resident install via SSM (root 828c37c6f7-st17) | running root, digests, unit active, queue 0/0 | head-object script VersionId uyayvbDZy_BZXx5rUoshEVXp2knZ6jeq, tar HvfsVMjjD9_YdfKgEXXevpjBDiR321Ux; Y4/install_fetch_and_run.sh over SSM rc=0 at 2026-10-03T03:04:59Z: SHA256SUMS OK 251 members; running root /opt/irpt-resident/828c37c6f7-st17; unit active since 03:04:34Z, NRestarts=0, tracebacks_30s=0; queue 0/0; SSM sha256 of kimi_port, upload_suggestions, resident_worker, resident_session, uploads equal git 828c37c6f7 5 of 5 (Y4/D2_DIGESTS_VS_GIT_20261003.txt) | CLOSED 20261003T030600Z |
-| V1 | verify | after option A: the typo file from the page | row 2 APPL offered AAPL (verified); accepted -> NORMALIZED; READY |  | OPEN |
+| V1 | verify | after option A: the typo file from the page | row 2 APPL offered AAPL (verified); accepted -> NORMALIZED; READY | REQ-0d97252faeebdee1887c31ce READY 2026-10-04T03:18:02Z (report RPT-fff47c701c25083061b091ef7455f466, certification ff385e8cc327..); check gate IRPT_RESIDENT_SUGGEST asked=1 suggested=1 verified=1 elapsed_s=15.6 at 03:00:15Z; one READ_BACK_PENDING:WAF_CHALLENGE retained for retry at 03:01:10Z then READY; evidence Y4/V1/REQ-0d97252f_terminal_wait.txt | CLOSED 20261004T183806Z |
 
 ## Log
 
@@ -29,3 +29,5 @@
 - 20261003T030600Z LEG D2 closed: head-object script VersionId uyayvbDZy_BZXx5rUoshEVXp2knZ6jeq, tar HvfsVMjjD9_YdfKgEXXevpjBDiR321Ux; Y4/install_fetch_an
 - 20261003T070424Z HELD-SOVEREIGN-GATED gate=sovereign/Andrew option A: the attended YCharts sign-in that replaces the EVICTED session 
 - 20261003T163630Z HOLD RELEASED -> OPEN
+- 20261004T183806Z LEG V1 closed: REQ-0d97252faeebdee1887c31ce READY 2026-10-04T03:18:02Z (report RPT-fff47c701c25083061b091ef7455f466, certification ff38
+- 20261004T183827Z CLOSED -- all 6 legs proven

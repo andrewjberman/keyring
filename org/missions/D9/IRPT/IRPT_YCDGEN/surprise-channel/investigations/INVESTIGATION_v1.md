@@ -105,3 +105,381 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_YCDGEN-S1 -- the close run's first write is denied by Cottonwood's firm fence; the applied grant was proven by an identity-only simulation
+
+```json
+{
+  "id": "IRPT_YCDGEN-S1",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-04T18:45:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The close run (YCD-R1-20261004T1842Z) stopped at its first write: opal-data-cottonwood's bucket policy DenyForeignFirmPrincipals explicitly denies s3:* to any principal not matching role/*-cot-* (plus three users and irpt-holdings-role), and the resident host's irpt-ycharts-runner-role is none of them. The grant applied at 02:44Z (batch 237) was proven by an identity-policy simulation only, which cannot see a bucket policy's explicit Deny",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~Y/close/YCD-R1-20261004T1842Z_host_run.txt: ssm 9da96471 18:42:50Z-18:42:52Z, runner rc=1, botocore ClientError AccessDenied on s3:PutObject by assumed-role/irpt-ycharts-runner-role on opal-data-cottonwood/irpt/cottonwood/...",
+      "s3api get-bucket-policy opal-data-cottonwood read 2026-10-04 ~18:44Z: Sid DenyForeignFirmPrincipals, Deny s3:* on the bucket and /*, Principal *, ArnNotLike aws:PrincipalArn [role/*-cot-*, user/Andrew_Berman, user/Andrew_Berman_Console, user/Opal_Terminal, role/irpt-holdings-role]",
+      "infra/aws/terraform/investor-reporting/directory/holdings_refresh.tf:6-10: one principal per firm; the host role does not carry the firm's slot and widening it is the forbidden cross-firm act, so each firm's run is ASSUMED onto that firm's principal"
+    ]
+  },
+  "spec_asserts": "IRPT_YCDGEN C-STORE: the runner keeps each answer and run.json at address('irpt','cottonwood','state',ycharts_responses|ycharts_runs,...) = s3://opal-data-cottonwood/irpt/cottonwood/state/..., written by the resident host's runner role under statement KeepYChartsResearchAnswersAndRunRecords.",
+  "world_is": "The firm fence denies that role on the whole bucket, so the statement is inert. The run acquired and released the provider lease (session item lease_expires_at 0 at ~18:44Z); at most one vendor GET (step 1, securities_info) was sent before the first keep failed; nothing was written. Remedy proposed (estate pattern): a Cottonwood-scoped research principal named by opal_name with the cot scope token, holding exactly PutObject+GetObject on the two research prefixes, assumed by the runner role for the writes; the runner composes its S3 client from that role. Never-widen-class act: needs the CTO half.",
+  "notes": "The grant ledger irpt-ycdgen-grant-20261004 V1 stays open; the after-read for the remedy reads the bucket policy as well as the identity simulation."
+}
+```
+
+## IRPT_YCDGEN-S2 -- DISARM of S1: the research writes run on Cottonwood's own principal and are measured landed
+
+```json
+{
+  "id": "IRPT_YCDGEN-S2",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-04T19:55:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARM of IRPT_YCDGEN-S1: the research writes now run on irpt-cot-ycharts-research-role (Cottonwood's own principal, assumed by the runner), applied under both never-widen halves (CTO batch 239); close run 3 wrote 6 kept answers and run.json, and the Opal report was stored and read back",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "fix 9a01678592 + packet bd21077c42 (merged 4e03aecc26); CTO half a44bc85977 on blob 97578e0eda; apply + after-read b9f350b215 (close/AFTER_READ_PRINCIPAL_20261004.txt: WITH the cottonwood bucket policy both research prefixes allowed, ycharts_opal_reports implicitDeny; WITH the 49financial bucket policy explicitDeny; runner sts:AssumeRole allowed)",
+      "close run 3 YCD-R1-20261004T1944Z (close/YCD-R1-20261004T1944Z_host_run.txt): 6 KEPT keys and run.json written on the research principal; ledger irpt-ycdgen-principal-20261004 CLOSED with V1 read back"
+    ]
+  },
+  "dismissal_reason": "The fence admits the firm's own principal by name; the host role gains only the assume; the writes the row named are measured landed.",
+  "spec_asserts": "IRPT_YCDGEN-S1: the close run's writes are denied by opal-data-cottonwood's DenyForeignFirmPrincipals.",
+  "world_is": "MEASURED: run 2 and run 3 wrote their keeps and run.json; the stored report reads back sha256-equal."
+}
+```
+
+## IRPT_YCDGEN-S3 -- the step-7 firewall challenge stopped runs 2 and 3 with no row filed (C-SESSION)
+
+```json
+{
+  "id": "IRPT_YCDGEN-S3",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-04T21:15:00Z",
+  "one_line": "Runs 2 and 3 (YCD-R1-20261004T1924Z, T1944Z) stopped at step 7 on a 202 with x-amzn-waf-action (WAF_REFRESH_REQUIRED), at about 1.5 s and 8 s spacing; C-SESSION says a firewall challenge STOPS research and 'files a row', and no row was filed for either stop -- the challenge is recorded only in the drain-end packet's round-2 candidates.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~Y/round1/DRAIN_END_PACKET.md section 2 (run 2 STOPPED WAF_REFRESH_REQUIRED at step 7; run 3 step 07 a 202 with x-amzn-waf-action) and section 5 item 3",
+      "org/missions/D9/IRPT/IRPT_YCDGEN/prd/IRPT_YCDGEN_PRD.md C-SESSION: 'A firewall challenge or a lost session STOPS research: the run releases the lease, files a row and makes no retry storm'",
+      "INVESTIGATION_v1.md at HEAD: 0 rows mention a firewall or WAF challenge (this seat's read)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "C-SESSION: a firewall challenge stops the research run, which releases the lease and files a row.",
+  "world_is": "The runs stopped and did not retry, as C-SESSION requires; the row half of the contract was not done, so the challenge's shape (request-shaped, not rate-shaped, per the packet) is carried only in a packet note.",
+  "notes": "INERT (no retry, session kept). Owner 2.0.0_SA_COO~Y: have the runner file the row on a WAF stop, and carry the step-7 call's split or drop as a round-2 item."
+}
+```
+
+## IRPT_YCDGEN-W3-S2 -- the coverage enum has no member for an element computable from the portfolio's own kept series
+
+```json
+[
+  {
+    "project": "IRPT_YCDGEN",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~3",
+    "surfaced_at": "2026-10-05T00:30:00Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "IRPT_YCDGEN-W3-S2",
+    "one_line": "YCD-c-2: the coverage enum (HELD_DATA, OTHER_ENDPOINT, BUILDER_ONLY) has no member for an element computable from the portfolio's own kept level series; 10 risk, return and drawdown elements were placed under HELD_DATA through the holdings' series.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "C-COVERAGE (decomposition 2.7): HELD_DATA is computable from security-level answers weighted by the portfolio's holdings; OTHER_ENDPOINT is a YCharts endpoint that answers for a model portfolio; BUILDER_ONLY is neither.",
+    "world_is": "Run 3 kept a 200 level series for the portfolio itself (step 02, shape DATA), so periodic returns, drawdowns and the Sharpe, Sortino, alpha, beta, standard deviation and VaR rows are computable from an answer that is neither security-level nor a probe. The worker classed them HELD_DATA (buy-and-hold series from the holdings, step-02 series named as the cross-check) rather than add a class. If the CTO wants the derived-from-portfolio-answer case separate, the enum and check c-2.AC1 change, not the file.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/maps/overview_coverage.json (via.weighting and via.cross-check text on the series rows)",
+        "s3://opal-data-cottonwood/irpt/cottonwood/state/ycharts_responses/request=YCD-R1-20261004T1944Z/step=02_portfolio_level_series.json (status 200, read into OS temp, deleted)"
+      ]
+    },
+    "notes": "INERT: classification choice inside the order's three classes; owner 2.0.0_SA_COO~Y at the round-2 close."
+  }
+]
+```
+
+## IRPT_YCDGEN-W3-S3 -- the probe map cannot reach the dashboard module routes or any per-holding call
+
+```json
+[
+  {
+    "project": "IRPT_YCDGEN",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~3",
+    "surfaced_at": "2026-10-05T00:30:00Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "IRPT_YCDGEN-W3-S3",
+    "one_line": "YCD-c-2: the probe map cannot reach the dashboard module routes (/dashboard/*_module_data/{n}) or any per-holding call, because its placeholders are only {security_id}, {start} and {end}; the two probes it holds use ids evidenced in the estate.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Decomposition 2.7 and the order's section 3: the probe map is planned by runner.plan_calls with placeholders {security_id}, {start}, {end}; one candidate call per OTHER_ENDPOINT route.",
+    "world_is": "The HAR lists /dashboard/fund_chart_module_data/{n} and /dashboard/scatter_plot_module_data/{n}, which need a dashboard id the run does not hold, and the HELD_DATA route needs holding tickers from the upload; neither is a placeholder, so the map holds two probes: a scatter POST with the two axis metric ids documented VERIFIED in docs/briefs/mdsrc-ycharts-endpoint-spec-20260520.md, and a general_data cross-section (xAxis=metrics) with those plus ytd_total_return (the gateway's freshness-probe column). The per-holding security-level queries (table_data, fund_data) are not in this map and need a runner step that reads the frozen upload.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/investor-reporting/ycharts/research/runner.py plan_calls (_PLACEHOLDERS = security_id, start, end; READ_ONLY_POSTS = the scatter path)",
+        "C:/Users/ANDREW~1/AppData/Local/Temp/claude/C--Users-AndrewBerman-Desktop-ajb-workspace/b55fbe94-a2b0-45e3-adad-582b87cc1103/scratchpad/har_request_shapes.json (dashboard routes carry {n})"
+      ]
+    },
+    "notes": "INERT: scope of the probe map, not a defect; owner 2.0.0_SA_COO~Y to cut the holdings-reading runner step if the 167 HELD_DATA elements are to be answered."
+  }
+]
+```
+
+## IRPT_YCDGEN-S4 -- the keeper classes a data.series answer as IDENTIFIERS (C-KEEP)
+
+```json
+{
+  "id": "IRPT_YCDGEN-S4",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-05T00:31:00Z",
+  "one_line": "The keeper labels the scatter_plot_data answer IDENTIFIERS although it carries a data series (data.series): in round 2's close runs YCD-R2-20261004T2315Z-A/B the POST with the documented metric ids answered 200 with data.series, and C-KEEP's shape rule has no member for that key, so a DATA answer is filed as identifiers and an element sourced from it would read as not available.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~Y/round2/DRAIN_END_PACKET.md section 3 ('One defect found') and section 5 item 3",
+      "this seat's round-2 L9 read (delegate): both close runs' run.json, scatter call status 200 with data.series"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "C-KEEP: each kept answer is classed by its shape, and an answer carrying data is DATA.",
+  "world_is": "An answer with data.series is classed IDENTIFIERS; no element reads it yet, so nothing printed is wrong today.",
+  "notes": "INERT (no element sourced from the scatter yet). Owner 2.0.0_SA_COO~Y: teach the shape rule the series key and pin it with the round-2 scatter answer's shape, before the OTHER_ENDPOINT re-pointing (packet section 5 item 2) reads it."
+}
+```
+
+## IRPT_YCDGEN-W1-S1 -- run.json schema is v2 only for a run given holdings; the kept runner tests pin v1
+
+```json
+{
+  "id": "IRPT_YCDGEN-W1-S1",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~1",
+  "surfaced_at": "2026-10-05T01:08:00Z",
+  "one_line": "YCD-r-3: contract 3.2 says run.json schema 'becomes irpt-ycdgen-run-v2', but the 25 kept runner tests pin v1 and the exact v1 key set; the runner writes v2 (with the holdings block) only for a run given holdings, and v1 unchanged otherwise.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_runner.py valid_run_record (asserts schema == irpt-ycdgen-run-v1 and the exact 13-key set) at base 7616d7a7d9",
+      "infra/aws/lambda/investor-reporting/ycharts/research/runner.py run(): schema v2 and the holdings key only when holdings is not None"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "C-RUN v2 (decomposition 3.2): run.json gains a holdings block and schema becomes irpt-ycdgen-run-v2, every v1 key kept; the order also says keep every existing test passing.",
+  "world_is": "Both cannot hold for a run without holdings: an unconditional v2 breaks valid_run_record. A run with holdings writes v2 plus the block; a run without writes v1 with no holdings key, which is honest (it read none). Also: _compose now returns (session, research_s3, {s3, dynamodb} host clients), so World.main's _compose fake in test_runner.py returns a 3-tuple.",
+  "notes": "INERT: a consumer (YCD-l-3) must read schema v1 as 'no holdings' and v2 as holdings present. Owner 2.0.0_SA_COO~Y to rule if v2 should be unconditional (then valid_run_record is amended)."
+}
+```
+
+## IRPT_YCDGEN-W3-S4 -- contract 3.4/3.5 leaves the computation conventions open; YCD-l-3 chose five and the issuer should confirm them
+
+```json
+{
+  "id": "IRPT_YCDGEN-W3-S4",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~3",
+  "surfaced_at": "2026-10-05T01:09:00Z",
+  "one_line": "YCD-l-3: contracts 3.4/3.5 do not fix five conventions the layout needs (renormalization of the plain weighted mean, statistic units, the BUY_AND_HOLD start, the per-security field root, the sleeve source), so layout_overview.py fixes them and pins each in a test.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Contract 3.4: WEIGHTED_MEAN is `sum_i w_i * v_i` over holdings with an answer; the statistic ids give no unit; BUY_AND_HOLD is `V(t) = sum_i amount_i * series_i(t) / series_i(t0)`; `field` is a JSONPath per security; the sleeve share is the holding's asset_allocation_stock or asset_allocation_bond answer.",
+  "world_is": "Chosen in layout_overview.py (all pinned by tests/test_layout_overview.py): (1) WEIGHTED_MEAN, HARMONIC_WEIGHTED_MEAN and the sleeve mean renormalize the weights over the holdings with an answer, so a weighted mean is a mean (the literal un-renormalized sum is biased low by the unanswered weight; the two agree at coverage 1.0); a harmonic holding with value 0 counts as no answer; SUM is the plain sum over answered holdings. (2) Series statistics return PERCENT (total_return, annualized_return, std_dev, max_drawdown, the last negative or 0), matching YCharts' calc values; cumulative_series returns [[ts_ms, V]] pairs. (3) BUY_AND_HOLD t0 is the latest first observation among the answered holdings, V runs on the union of their observation times with as-of carry-forward, and a window longer than that common history is NOT_AVAILABLE reason SERIES_TOO_SHORT. (4) A per-security `field` is read from that security's node (chart_data[k] or the indicesData entry); a field that starts `$.chart_data[N]` or `$.indicesData[N]` has that prefix re-rooted at the security's node; `columns` (calc ids) read an indicesData entry by calc_name; a chunk's tickers come from the kept query param whose items are all held tickers, and a chunk whose chart_data length differs from its ticker count is treated as unanswered. (5) The sleeve share is read by calc_name `asset_allocation_<sleeve>` from any kept 2xx table answer, not from a named call; absent everywhere gives INPUT_MISSING:asset_allocation_<sleeve>. The trace `inputs` are the run.json `calls[].key` of each kept answer that supplied an answered holding (the filename form `step=NN_<name>.json` when the run record lacks the call).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py compute_element / statistic_of / _nodes @ branch wk-ycdgen-r3-3",
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_layout_overview.py test_computed_* and test_coverage_below_* @ branch wk-ycdgen-r3-3",
+      "org/missions/D9/IRPT/IRPT_YCDGEN/decompositions/IRPT_YCDGEN_DECOMP_R3.md sections 3.4 and 3.5"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: no element is computed yet in a served report; the issuer's close run is the first read. Owner 2.0.0_SA_COO~Y: confirm or amend each convention before the map's computed sources are graded against YCharts' own printed values."
+}
+```
+
+## IRPT_YCDGEN-W2-S4 -- the 3.4 statistic id list does not hold the statistics five OWN_SERIES elements and one buy-and-hold element name
+
+```json
+[
+  {
+    "id": "IRPT_YCDGEN-W2-S4",
+    "project": "IRPT_YCDGEN",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~2",
+    "surfaced_at": "2026-10-05T01:13:00Z",
+    "one_line": "YCD-w-3: contract 3.4's statistic ids lack alpha, beta, sharpe, sortino, monthly VaR and max_drawdown_15y; the OWN_SERIES elements p7.e02, p7.e03, p7.e05, p7.e06, p7.e08, p7.e07 name those ids in source.columns with statistic null, and p12.e04 (market-price returns) is BUY_AND_HOLD with total/annualized ids.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Decomposition R3 contract 3.4: statistic ids are total_return_<1m..15y>, annualized_return_<3y..15y>, std_dev_<1y..15y>, max_drawdown_<1y|3y|5y|10y|all>, cumulative_series; row W3-S2 says the risk and return rows are computable from the portfolio's own kept series.",
+    "world_is": "Of the 9 elements moved to OWN_SERIES, p2.e08, p2.e13 and p6.e22 use only listed ids; p7.e07 needs max_drawdown_15y (unlisted) and p7.e02, p7.e03, p7.e05, p7.e06, p7.e08 need alpha_/beta_/sharpe_/sortino_/value_at_risk_monthly_5_ over 1y..15y, which need a benchmark or risk-free series the id list does not name. p12.e04 prints market-price returns and an inception date; the portfolio has no market price, so it stays HELD_DATA on BUY_AND_HOLD over the holdings' level series (the one consumer of holdings_level_series), and its price-only basis is inferred. Each such element carries its ids in source.columns, statistic null, claim inferred; YCD-l-3 prints NOT_AVAILABLE for an id it does not implement.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/IRPT/IRPT_YCDGEN/decompositions/IRPT_YCDGEN_DECOMP_R3.md contract 3.4 (statistic ids)",
+        "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/maps/overview_map.json elements p7.e02 p7.e03 p7.e05 p7.e06 p7.e07 p7.e08 p12.e04 (source.columns)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "INERT: wiring is complete against the contract; owner 2.0.0_SA_COO~Y at the round-3 close (extend the id list or accept NOT_AVAILABLE for these)."
+  }
+]
+```
+
+## IRPT_YCDGEN-W2-S5 -- one element needs 16 columns against the 8-column call bound, and the computed `field` and the probe answers' shapes are inferred
+
+```json
+[
+  {
+    "id": "IRPT_YCDGEN-W2-S5",
+    "project": "IRPT_YCDGEN",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~2",
+    "surfaced_at": "2026-10-05T01:13:00Z",
+    "one_line": "YCD-w-3: element p6.e02 names 16 bond-maturity columns, so with the 8-column bound they span holdings_bond_exposure_01 and _02 while a 3.4 source names one call; its source.call is the first chunk and source.columns lists all 16. Computed fields are per-security paths in the table_data entry dialect, and the two probe answers' shapes are inferred.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order section 3: split any table_data group above 8 columns (round 1's long column list drew the firewall); contract 3.4: a computed source names one `call` and a `field` JSONPath per security.",
+    "world_is": "Every other multi-column element fits one chunk call (checked: the columns of all 156 other table_data held-data elements lie in their named call). For p6.e02 the layout must find columns 9-16 in the following chunk. `field` for table_data calls is `$.data[?(@.calc_name in columns)].calc_raw_value`, applied to one indicesData entry (entry shape per ycharts_client.parse_table_data: security_id|id, data[].calc_name/calc_raw_value); for fund_data `$.raw_data`. The two probe-call elements use `$.chart_data[*]` (general_data xAxis=metrics, shape not yet kept) and `$.data.series[*]` (scatter, shape per the endpoint spec WS2-MP-03); no answer was read, so these paths are inferred.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/lambda/ycharts-market-data-pull/ycharts_client.py parse_table_data and parse_chart_series (entry and chart shapes)",
+        "docs/briefs/mdsrc-ycharts-endpoint-spec-20260520.md WS2-MP-03 (data.series[])",
+        "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/maps/overview_map.json element p6.e02 and calls holdings_bond_exposure_01, _02"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "INERT: YCD-l-3 reads the dialect against its own contract; owner 2.0.0_SA_COO~Y to join at the drain and the close run."
+  }
+]
+```
+
+## IRPT_YCDGEN-W4-S1 -- map_pdf's footer-chrome rule is portrait-only, so the Multi PDF's 34 landscape pages each yield a footer logo read as a chart plus a footer caption and date read as text
+
+```json
+{
+  "id": "IRPT_YCDGEN-W4-S1",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~4",
+  "surfaced_at": "2026-10-05T01:27:00Z",
+  "one_line": "map_pdf's footer-chrome rule is portrait-only, so the Multi PDF's 34 landscape pages each yield a footer logo read as a chart plus a footer caption and date read as text",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "YCD-m-3 section 3: map_pdf.py gives the element skeleton per page, and its chrome rule drops the page footer.",
+  "world_is": "map_pdf.py FOOTER_TOP is 755 pt and CHROME_IMAGE_BOTTOM 112 pt, both set for a 612x792 portrait page. The Multi PDF's pages are landscape (a scatter chart's bbox runs to x1 above 740), so the 'Built with YCharts' logo at about y 588-603 survives as a 'chart' element and the footer line as 'caption' and 'date range' elements on every one of the 34 pages (34 logos, 34 captions, 34 dates), and the 'chart k of n' numbering counts the logo. comparison_map.json (portrait) has none. multi_map.json keeps all of them as kind text, labels 'page footer logo' / 'page footer text' / 'page footer date', BUILDER_ONLY, and renumbers the real charts of each heading; map_pdf.py was not edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "multi_map.json elements labelled 'page footer logo' (34), 'page footer text' (34), 'page footer date' (34)",
+      "skeleton p12 chart bbox [45, 86, 747, 479] (a landscape page) and the logo bbox [35, 588, 94, 603] repeated on every Multi page; infra/aws/lambda/investor-reporting/ycharts/research/map_pdf.py constants HEADING/FOOTER_TOP/CHROME_IMAGE_BOTTOM"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: a map-side repair, no consumer reads the footer. Owner 2.0.0_SA_COO~Y: if the layout cell reuses map_pdf on a landscape report, a page-size-aware footer rule belongs in map_pdf (a later cell, not this one)."
+}
+```
+
+## IRPT_YCDGEN-W4-S2 -- the C-MAP shape has no member for a second or third security's source; the two maps add three optional keys and one placeholder
+
+```json
+{
+  "id": "IRPT_YCDGEN-W4-S2",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~4",
+  "surfaced_at": "2026-10-05T01:27:00Z",
+  "one_line": "the C-MAP shape has no member for a second or third security's source; the two maps add three optional keys and one placeholder",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "C-MAP (decomposition 2.3): an element's source is ONE {call, field}; params placeholders are {security_id}, {start}, {end}.",
+  "world_is": "A Comparison prints each figure for two securities and a Multi for three, so one source per element cannot name them. The maps keep source as the portfolio's {call, field} and add: column_sources (list of {key_index, call, field}) on an element that prints all securities in one row or chart, key_index on a source that names one comparison key, and calls named comparison_<x> (the Overview call with {security_id} replaced by the new placeholder {comparison_security_id}, issued once per comparison key, key order = printed column order). The comparison_ table_data calls keep the Overview's `indices` parameter, correct for a model-portfolio key (Opal Long-Term, Opal Ultra Long-Term) and UNMEASURED for an ETF key (IWM in the Multi): the entity parameter of an ETF read is not in the Overview's measured answers. All claims are inferred.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "comparison_map.json and multi_map.json calls[] carry comparison_* entries; elements carry column_sources / key_index",
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/maps/overview_map.json: the 12 portfolio_* calls the comparison_* calls copy"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: extra keys are ignored by a reader of the Overview shape. Owner 2.0.0_SA_COO~Y: the layout and runner cells that read these maps must read the new keys, and the round-3 close should read one comparison key's table_data answer to settle the ETF entity parameter."
+}
+```
+
+## IRPT_YCDGEN-W4-S3 -- Cottonwood's retained PDF for REQ-e4b7f5aba7fb218c37f28002 is a variant-2 Comparison whose pages never print the comparison key's name
+
+```json
+{
+  "id": "IRPT_YCDGEN-W4-S3",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~4",
+  "surfaced_at": "2026-10-05T01:27:00Z",
+  "one_line": "Cottonwood's retained PDF for REQ-e4b7f5aba7fb218c37f28002 is a variant-2 Comparison whose pages never print the comparison key's name",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order: Comparison REQ-e4b7f5ab... or REQ-7ea49c2d... are interchangeable sources for the Comparison map.",
+  "world_is": "Both jobs are READY, variant comparison, one key (opal_long_term), template 14141824. REQ-7ea49c2d9b27957d0ea8888f's PDF (32 pages) prints the key's name 'Opal Long-Term' on 16 pages and a Security B section; REQ-e4b7f5aba7fb218c37f28002's PDF (28 pages) prints it on none (only the 'Sec A'/'Sec B' column heads and Security A holdings pages). The map is read from REQ-7ea49c2d9b27957d0ea8888f (source_pdf.request_id). The two are not interchangeable for FWD-3 evidence.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "each retained PDF read into OS temp by the job checkpoint's pdf_ref (the case_trace.py route), pdfplumber text, search for 'Opal Long-Term': 0 of 28 pages in e4b7f5ab, 16 of 32 pages in 7ea49c2d",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/live_walk/case_trace.py: its 'the PDF prints exactly the chosen comparisons' link is the check e4b7f5ab would fail"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: an observation about a retained live artifact; this cell only reads. Owner 3.0.0_SA_CVO / 2.0.0_SA_COO~Y to decide whether REQ-e4b7f5ab is a defect of the vendor build or of the case."
+}
+```
+
+## IRPT_YCDGEN-W4-S4 -- map_pdf reads 17 labels of the two PDFs wrongly; the maps carry the repaired printed label and say so in the note
+
+```json
+{
+  "id": "IRPT_YCDGEN-W4-S4",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~4",
+  "surfaced_at": "2026-10-05T01:27:00Z",
+  "one_line": "map_pdf reads 17 labels of the two PDFs wrongly; the maps carry the repaired printed label and say so in the note",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "YCD-m-3: elements carry the printed label text the skeleton gives.",
+  "world_is": "The skeleton gives a blank label to a first or last row (Asset Allocation Cash, Bond Sector Securitized, four Multi Fundamentals rows), glues a legend name into a label (Comparison Region Exposure), splits a wrapped long name over two lines (United Arab Emirates, Africa And Middle East / Indonesia) and reads the '5 percent' of the Monthly Value at Risk label as a number in the Multi. Each label in the maps is repaired from the page text order (numbers masked, nothing printed kept) and the element note says 'printed label repaired'; the Value at Risk stray is re-kinded text.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "comparison_map.json (13 notes) and multi_map.json (4 notes) containing 'printed label repaired'",
+      "page text of Comparison pages 3, 4 and Multi pages 10, 13 read with numbers masked, in OS temp only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: a map-side repair; owner 2.0.0_SA_COO~Y if map_pdf is to be fixed for the layout cell."
+}
+```

@@ -596,6 +596,28 @@ Worker rows carry their slot's coordinate, `MDPF_TAXSMA-W<n>-S<k>`; a seat's row
     "spec_asserts": "CLAUDE.md section 5, NEVER leave a confirmed deploy half-landed: the ledger entry is opened at start and closed at completion; the closing commit removes the .open_deploys entry with the completion record.",
     "world_is": "The world is complete and the record says OPEN: every reader of CLOUD at HEAD (the other device after a pull, any worktree, a check --red sweep run there) sees an expired OPEN deploy. Under NEVER-2 such a reader must measure the artifact and close SUPERSEDED, never re-execute; until the removal is committed each reader pays that read. The uncommitted deletion in the shared tree can also ride another seat's commit under the wrong lane.",
     "notes": "One-line disarm by the owner; nothing to re-run. Found while grading the act."
+  },
+  {
+    "id": "MDPF_TAXSMA-S16",
+    "project": "MDPF_TAXSMA",
+    "fabric": "laptop",
+    "surfaced_by": "4.0.0_SA_CRO",
+    "surfaced_at": "2026-10-04T20:15:00Z",
+    "one_line": "Every daily Gold run restates the previous frontier point of the served aggregate-aua-timeseries: totals hold, but the model/non-model split shifts by a few thousand dollars at 49financial and global, Inflection's account count moves 548 -> 571, global's by +100, and Cottonwood's account count goes from measured to null (count_basis absent). Measured the same on the 09-29, 09-30 and 10-02 rolls, so it predates the HEALGAP hookup.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "opal-data-assets portal/gold/mdpf/<scope>/aggregate-aua-timeseries/<as_of>.json, columnar (dates + one list per field), point D in the as_of D document vs the as_of D+1 document, all four scopes, read 2026-10-04 ~20:0xZ.",
+        "Roll of 2026-09-30 (as_of 09-30 version 10-01 19:19Z/22:08Z vs as_of 10-01 version 10-02 13:31Z): 478-487 common dates per scope, only 09-30 differs. 49financial model 1,450,922,817.77 -> 1,450,927,466.97, non-model down by the same 4,649.20, total 1,757,099,818.07 unchanged; cottonwood account_count_total 378 -> null, count_basis measured -> absent; inflection 548 -> 571; global 8263 -> 8363 and the same 4,649.20 split shift; tax_coverage business_active_accounts -> null at 09-30 (an admitted Tax extension field).",
+        "Roll of 2026-09-28 (runs 09-29 13:31Z -> 09-30 13:31Z) and of 2026-09-29 (09-30 13:31Z -> 10-01 13:31Z), both before the HEALGAP hookup (applied 2026-10-01T15:00:26Z): the same fields change the same way (cottonwood 361 -> null; inflection 548 -> 571; global 8242 -> 8342; 49financial split shifts 1.44 and 1,637.76)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A served historical point is stable once published: the next day's document carries the same values for every date it shares with the prior one (the V2 leg of mdpf-gold-healgap-hookup-20261001 reads 'everything else unchanged').",
+    "world_is": "The newest point is computed on a different basis from an interior point, so each roll rewrites the prior day: the account counts switch source (Cottonwood loses its count; Inflection and global gain accounts) and the model/non-model split moves while the total holds. A reader that cached yesterday's newest point disagrees with today's document at that date.",
+    "notes": "INERT for this project: totals never move and the Tax identities hold. Found while closing V2 of mdpf-gold-healgap-hookup-20261001, which it does not block (the same change on the two pre-deploy rolls rules out the hookup as its cause). For the MDPF series owner: decide whether the frontier point should use the interior basis, or whether the series should mark its newest point provisional."
   }
 ]
 ```

@@ -1424,3 +1424,29 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "notes": "DEV only; not on PROD 98a98e70."
 }
 ```
+
+## IRPT_DASHBD-W7-S1 -- the shape ruling and the pull record are untracked in the base checkout, absent from the worker worktree
+
+
+```json
+{
+  "id": "IRPT_DASHBD-W7-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~7",
+  "surfaced_at": "2026-10-04T23:59:00Z",
+  "one_line": "The DB-b-20 folder's E3_SHAPE_RULING.json and BD_POPULATION_PULL_E3.json are untracked in the base checkout and absent from a worker worktree, so `run --go` cannot be exercised there; the ruling's bearer line ('one, minted once') is superseded by batch 248.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-21 worker face: `run` refuses unless the DB-b-20 folder's E3_SHAPE_RULING.json exists and reads its pace_rps.",
+  "world_is": "In worktree wk-irpt-dashbd-7 (base b77b84cbb4) the folder deliverables/0.9.0_WK_IRPT_DASHBD~6/ holds the plan and script but not E3_SHAPE_RULING.json or BD_POPULATION_PULL_E3.json; both exist only in the base checkout ajb_workspace (untracked). The script reads the ruling from that sibling folder at run time, so the issuer runs it from the checkout that holds the file; the tests stub the ruling. The ruling text still says bearer 'one, minted once'; the completion script re-mints every 10 calls per batch 248.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls of the worktree folder deliverables/0.9.0_WK_IRPT_DASHBD~6 at b77b84cbb4: no E3_SHAPE_RULING.json, no BD_POPULATION_PULL_E3.json",
+      "ls of C:/Users/AndrewBerman/Desktop/ajb_workspace/org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~6: both present"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

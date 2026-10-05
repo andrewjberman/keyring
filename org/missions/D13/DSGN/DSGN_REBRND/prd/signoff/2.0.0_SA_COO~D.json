@@ -1,12 +1,13 @@
 {
   "prd": "DSGN_REBRND_PRD.md",
-  "prd_version": "v0.10",
-  "prd_pin": "f3f726763ddef55c563e0e5858b8dcee456f766b",
+  "prd_version": "v0.14",
+  "prd_pin": "15576da1ee147327decd2ba8694506e9a4ebbeec",
   "half": "brief",
-  "half_hash": "9f9b8c4693d3e18aa1a268833cd0db4eed6058846f946a9bf1f43a2c4e01bd7f",
+  "half_hash": "14ad06443fe789f5424cbb520bf9a93f02d1fe115a5e64dc423621bfa70ddc69",
+  "endpoint_hash": "2ff42dda15d6916f8c4d84508ad8ebd29b8c01e4dbfc2e56921d647f7b954ea7",
   "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/2.0.0_SA_COO/deliverables/laneD_L4R_BRIEF_HALF_REVIEW_DSGN_REBRND_v0.10.md@ee2c63f649",
+  "review_ref": "org/tier1_exec/2.0.0_SA_COO/deliverables/laneD_L4R_BRIEF_HALF_REVIEW_DSGN_REBRND_v0.11.md@740e1eb136",
   "signed_by": "2.0.0_SA_COO~D",
-  "signed_at": "2026-09-14T19:40:23Z",
+  "signed_at": "2026-10-04T22:42:13Z",
   "designated_by": "designated by org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260911_080xZ_DSGN_REBRND_COO_D_SIGNS_CVO_ADVERSARIAL_SELF_DRIVE_WIDENED.md@2daf4d8b85"
 }
