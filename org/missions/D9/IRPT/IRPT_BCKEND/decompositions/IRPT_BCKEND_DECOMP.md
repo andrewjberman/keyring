@@ -1781,3 +1781,17 @@ closed SUPERSEDED).
 | `IB-pr-322` | W124-S1, W124-S2: the remaining refusal codes, a census, tests | WORLD (code under infra/; deploys are the issuer's) | IB-pr-321 (merged) | P53 |
 
 fanout: 1 of 1 chains, cap 8, reason: one code cell on the same write surface. Worker 0.9.0_WK_IRPT_BCKEND~125 in its own worktree.
+
+## 48. ROUND 54, WORKSTREAM ~P (2026-10-05 ~06:4xZ, issuer 2.0.0_SA_COO~P, on the CTO half for release r54 @f342ba6664)
+
+IB-pr-322 is merged @23f867773a. The r54 release plan (@07d113a19c) covers 10 functions. The CTO half is signed with four
+conditions; condition 2 is a per-function census of the built zip against the live bundle, with every change attributed or the
+function dropped as a rider. 2.0.0_SA_COO~Y answered that HEAD is shippable for irpt-status and irpt-ycharts-generate (msg 105192).
+build-and-upload.sh has no build-only mode, so the census cannot run before an upload. One tooling cell first.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-323` | CTO condition 2: BUILD_ONLY in build-and-upload.sh + release_census.py (built vs live, attributed or RIDER) | WORLD (script under infra/; no upload) | none | P54 |
+| (the release) | 10 functions under both halves: before-read stop, census, build+upload, targeted safe-apply, record, change invoke + happy-path invoke, per-function legs | SERVED | IB-pr-323 | the issuer's acts |
+
+fanout: 1 of 1 chains, cap 8, reason: one tooling cell; the release is the issuer's. Worker 0.9.0_WK_IRPT_BCKEND~126 in its own worktree.
