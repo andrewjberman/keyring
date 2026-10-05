@@ -17809,3 +17809,34 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "MEASURED: tests/test_export_path_b.py::test_a_covered_platinum_submit_pins_versionid_sha256_and_as_of_inside_authorized_report_revisions asserts set(bundle) == the six old keys with the comment 'no new top-level field'; the bundle now also holds narrative_state and narrative_reason (the two fields the order requires), so it fails with those two as extra items. The fix is one assertion line in a file outside paths; the issuer must grant it or amend the criterion."
 }
 ```
+
+## IRPT_BCKEND-W121-S1 -- READERS CENSUS for IRPT_BCKEND-W100-S2: LIVE_READER, the 49financial Advisor Intelligence page can still load the perfrp performance leaf
+
+```json
+{
+  "id": "IRPT_BCKEND-W121-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~121",
+  "surfaced_at": "2026-10-04T23:30Z",
+  "one_line": "READERS CENSUS for IRPT_BCKEND-W100-S2: verdict LIVE_READER. The perfrp_performance_account leaf, which still carries the inflated 2025-01-10 day, is loaded by the portal PROD 49financial Advisor Intelligence page through the shared-advisor-router, so a served page can still read it. Census: org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~121/W100S2_READERS_CENSUS.json",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P (issuer; per the task order the issuer brings the withdrawal packet to the CTO). Not disarmed here: this worker holds a read-only grant.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Census file org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~121/W100S2_READERS_CENSUS.json: verdict LIVE_READER over 4 surfaces (CloudFront 2 distributions, 30 behaviors on the opalinvest.dev one; code/Lambda 231 functions + 8,172 tracked files in the three named directories; portal src 1346 files at c69b4747; logging 1 bucket + 2 trails).",
+      "Portal PROD c69b4747 (equals origin/PROD): src/api/endpoints/advisor-intelligence.ts getPerfrpPerformanceLeaf('account') builds /api/scoped/advisor-intelligence/platinum/advi/{firm}/perfrp_performance_account.json; src/pages/AdvisorIntelligence/_shared/AdvisorBookView.tsx:479 queries it whenever advisorId is set; mounted via AdvisorPublicProfile.tsx:1400 from _partners/49financial/index.tsx:124.",
+      "CloudFront EVTSA9VEHNZVH behavior /api/scoped/advisor-intelligence/*.json -> origin S3-opal-data-bd (OAI E139998VWH0PD) with origin-request shared-advisor-router:26 (deployed 2026-09-14, CodeSha256 ZnPN8IRdjoq+qmWI7soWuSYLYTdqylYAEINfFj7I6D0=). The deployed bundle sends the platinum/advi/{firm}/ suffix to opal-data-portal-v2 after the tenant assertion.",
+      "opal-data-portal-v2 bucket policy statement AllowAdvisorRouterOAIPlatinumAdvi: GetObject on platinum/advi/* to OAI E139998VWH0PD. head_object 2026-10-04: leaf 1,923,593 bytes, LastModified 2026-09-01T03:16:07Z.",
+      "Direct CloudFront behaviors on opal-data-portal-v2 (/api/general/*, /json-tiered/*) cannot reach platinum/advi/ (public-data-router:7 and the OAC grant cover json, json-tiered, platinum/mdpf, platinum/etfs only). Lambda environments: 0 of 231 reference the key. No S3 access log or CloudTrail data event covers opal-data-portal-v2, so actual reads are unmeasured.",
+      "NOT MEASURED: an authenticated HTTP fetch of the leaf (no token held; config census only)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IRPT_BCKEND-W100-S2 and CTO batch 247 item 1 ask whether anything still reads the leaf; the portal comments at advisor-intelligence.ts:1647-1651 say no perfrp key is served today and 404 returns null.",
+  "world_is": "READ in code and config: the leaf exists and the 49financial Advisor Intelligence page requests it on every book-view mount through a router branch and an OAI grant that are both live, so it can load. Not exercised end to end.",
+  "notes": "Closes the census half of W100-S2 only; the remedy (re-point, withdrawal, or a rebuilt leaf) is the issuer's packet to the CTO. The relationship-level perfrp performance leaf and four other perfrp leaves are fetched on the same mount and were not censused."
+}
+```
