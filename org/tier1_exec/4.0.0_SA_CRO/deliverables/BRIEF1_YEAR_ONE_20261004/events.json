@@ -45,8 +45,8 @@
     "scheduled pipeline setups, up from 5 in February"
    ],
    [
-    "199",
-    "tagged production releases of the portal since Feb 26"
+    "$2.1B",
+    "partner-firm assets managed by Opal on the platform (Sep 28, email)"
    ]
   ],
   "phases": [
@@ -117,6 +117,7 @@
    "Commit volume measures activity, not output. Product-build commits rose about {{product_multiple}} times ({{dec_product}} in December to {{sep_product}} in September); most of the added volume is coordination and controls ({{controls_share}}% of the year), the records that let many agents work in parallel safely.",
    "Portal page dates are the day each page was first built (measured). Production dates before Feb 26, 2026 are bounds, because the portal's deploy tags start that day.",
    "Pipeline dates are the day a schedule first appeared in the infrastructure code unless a first run is cited, so they are marked inferred.",
+   "Partner context and the $2.1B figure come from Andrew's Outlook (read-only pass, Oct 4, 2026); they are cited as email, date and organization, and carry no personal details.",
    "The news scanner and the 49 Financial relationship both predate the repositories; their dates here are the earliest git evidence.",
    "Not covered: the opal_ai and mcportal repositories, and the separate tradeops fabric."
   ]
@@ -349,7 +350,7 @@
    "date": "2026-04-21",
    "cat": "partner",
    "title": "Inflection onboarding begins",
-   "detail": "Orion data pipeline, exporter and portal access; onboarding complete May 22.",
+   "detail": "Orion data pipeline, exporter and portal access; onboarding complete May 22. Its advisors began sending client work to Opal's investment team the same day (email).",
    "claim": "measured",
    "evidence": "1c611056af"
   },
@@ -465,7 +466,7 @@
    "date": "2026-06-29",
    "cat": "partner",
    "title": "Five partner users signed in on production",
-   "detail": "Three at Cottonwood and two at Inflection.",
+   "detail": "Three at Cottonwood and two at Inflection. The same day Cottonwood's founder had an Opal Dashboard walkthrough and Inflection asked for more logins, calling it 'an awesome tool' (email).",
    "claim": "measured",
    "evidence": "94e13605a4, 5e7b8da9e4"
   },
@@ -632,6 +633,55 @@
    "detail": "Drafts the End of Day post and sends only on Andrew's approval; idea to live in about a day.",
    "claim": "measured",
    "evidence": "ledger 20261002T0535Z"
+  },
+  {
+   "date": "2026-07-08",
+   "cat": "partner",
+   "title": "Dashboard used to reconcile Inflection's books",
+   "detail": "Inflection advisor assets on the dashboard checked against Orion; billing gaps diagnosed from the dashboard's billing field on Aug 11.",
+   "claim": "measured",
+   "evidence": "email, 2026-07-08 and 2026-08-11, Opal and Inflection"
+  },
+  {
+   "date": "2026-09-01",
+   "cat": "partner",
+   "title": "Cottonwood asks for Attribution and Factor Tilts; live same day",
+   "detail": "Requested in a meeting with Cottonwood's leadership and added to their dashboard that afternoon; the deploy tag shows the same date.",
+   "claim": "measured",
+   "evidence": "email, 2026-09-01, Opal and Cottonwood; portal-v2.1.175"
+  },
+  {
+   "date": "2026-09-14",
+   "cat": "partner",
+   "title": "Prospect demo: VM Wealth Partners",
+   "detail": "Advisor Intelligence Dashboard walkthrough on the demo tenant; capability roadmap shared with Alongside on Sep 21.",
+   "claim": "measured",
+   "evidence": "email, 2026-09-09 to 2026-09-21, Opal, Alongside, prospect"
+  },
+  {
+   "date": "2026-09-28",
+   "cat": "partner",
+   "title": "About $2.1B of partner-firm assets managed by Opal",
+   "detail": "49 Financial about $1.77B, Cottonwood about $179M, Inflection about $145M; Opal ETFs about $650M of it. Reported to Alongside, which calls Opal its key partner.",
+   "key": true,
+   "claim": "measured",
+   "evidence": "email, 2026-09-30, Opal to Alongside (figures as of Sep 28)"
+  },
+  {
+   "date": "2026-09-28",
+   "cat": "partner",
+   "title": "49 Financial operations asks for a platform review",
+   "detail": "Its operations and advisor-technology lead asked for the current and future state of the platform; Performance System Review scheduled.",
+   "claim": "measured",
+   "evidence": "email, 2026-09-28 to 2026-10-01, 49 Financial"
+  },
+  {
+   "date": "2026-10-01",
+   "cat": "partner",
+   "title": "Opal bridges Cottonwood's historical-performance gap",
+   "detail": "Cottonwood's Black Diamond history conversion slipped to late December or January; Opal supplied legacy-model performance in the meantime.",
+   "claim": "measured",
+   "evidence": "email, 2026-10-01, Alongside and Opal"
   }
  ]
 }

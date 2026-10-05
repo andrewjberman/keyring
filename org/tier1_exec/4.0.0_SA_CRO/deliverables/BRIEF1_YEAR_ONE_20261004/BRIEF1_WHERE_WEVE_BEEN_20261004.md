@@ -20,6 +20,10 @@ carries its evidence in the research files listed in section 9.
   34 scheduled pipeline setups (up from 5 in February 2026), 199 tagged production releases of the portal since
   Feb 26, and about 2,816 cloud resources in the dependency graph, including 232 Lambdas (graph built 2026-10-04,
   not a direct AWS read).
+- **What it serves:** about $2.09B of partner-firm assets managed by Opal as of Sep 28, 2026 (49 Financial about
+  $1.77B, Cottonwood about $179M, Inflection about $145M), of which about $650M sits in Opal ETFs. Source: Andrew's
+  email to Alongside, 2026-09-30 (section 8a). Alongside, the advisory platform the three firms work through, calls
+  Opal its key partner.
 - **What the growth is made of:** product-build commits (frontend, back end, data) rose about 15 times, from 136 in
   December to 2,038 in September. Most of the added volume is coordination and controls (49% of the year): task
   orders, governance records, audit logs and tooling that let dozens of agents work in parallel without breaking
@@ -167,6 +171,38 @@ YCharts (May), Bloomberg (live intake Jul 15), Lusha (prospecting), Microsoft 36
 | Opal tool index and Opal Analyst | 2026-09-25 (inferred) | One catalog of Opal data for Claude, and a Teams-facing analyst |
 | End of Day Teams assistant | 2026-10-02 | Drafts the End of Day post; sends only on Andrew's approval |
 
+## 8a. What the email shows (Andrew's Outlook, read-only pass, 2026-10-04)
+
+Order: the addendum ~20:0xZ to the record. Searched by partner domain (49financial.com, inflectionwealth.com,
+cottonwoodmail.com, alongsideria.com), by exact partner senders before 2026-07-01, and by "dashboard", "onboarding",
+"Dashboard Demo" and "Advisor Intelligence". Nothing was sent, moved, flagged or marked. Firm-level facts only; no
+personal details, account numbers or client names are recorded here.
+
+| Date | Organization | What it shows |
+|---|---|---|
+| 2025-10-27 | 49 Financial operations | Andrew's onboarding as a new Opal member begins, three weeks before the repositories |
+| 2026-02-04 | 49 Financial operations | Data-system credentials provided to Opal |
+| 2026-04-21 | Inflection | Advisors begin sending client analysis and market questions to Opal's investment team (the day its onboarding was registered) |
+| 2026-05-11 | Opal (internal) | Written explanation of how a firm engages with Opal: Black Diamond holds the ledger; the Opal Dashboard is the analytics layer |
+| 2026-06-29 | Cottonwood, Inflection | Opal Dashboard walkthrough with Cottonwood's founder; Inflection asks for two more logins and calls the dashboard "an awesome tool" |
+| 2026-06-30 | Cottonwood | Connects Opal with its Black Diamond data lead: "Opal has built out an advisor/business analytics dashboard" |
+| 2026-07-08 to 08-11 | Inflection | The dashboard is used to reconcile advisor assets against Orion and to diagnose unbilled accounts |
+| 2026-07-09 to 07-28 | Cottonwood | Revenue and historical-performance work; Cottonwood's history conversion from its prior broker-dealer runs through Black Diamond |
+| 2026-08-25 | Cottonwood | Dashboard updated from the founder's feedback; he asks to discuss custom tooling |
+| 2026-09-01 | Cottonwood | Leadership asks for Attribution and Factor Tilts; Andrew adds both to Cottonwood's dashboard the same day (the deploy tag agrees) |
+| 2026-09-09 to 09-14 | VM Wealth Partners (prospect) | Advisor Intelligence Dashboard demo on demo-tenant logins |
+| 2026-09-17 to 09-25 | Opal compliance | Automatic encryption for email between Opal and 49 Financial and Alongside |
+| 2026-09-21 | Alongside, for the prospect | Roadmap Andrew stated: performance reporting pilot by end of 4Q26 and live by end of 1Q27; CRM pilot 1Q27, live 2Q27; billing as interface only |
+| 2026-09-25 | Opal | Trade Submission in daily use: a fund trade submitted, approved and routed for execution through the dashboard |
+| 2026-09-28 | Inflection | Operations lead asks how the dashboard's performance figures are calculated (answer: total return) |
+| 2026-09-28 | 49 Financial | Director of operations and advisor technology asks for the current and future state of the platform; a Performance System Review is scheduled |
+| 2026-09-30 | Alongside | Platform statistics (as of Sep 28): about $2.09B managed by Opal (49 Financial 84.5%, Cottonwood 8.6%, Inflection 6.9%); Opal ETFs about $650M (31%). The total includes about $269M at 49 Financial that Opal advises and bills on but does not place in an Opal model; about $21M of tax SMA accounts sits outside the ETF figure |
+| 2026-10-01 | Alongside, Cottonwood | Cottonwood's historical data from Black Diamond slips to late December or January; Opal supplies legacy-model performance to bridge client meetings |
+| Aug to Oct 2026 | Opal | Month-end Opal ETF ownership report emailed for all three firms (Aug and Sep editions) |
+
+Claim: these are measured as stated in the emails; the AUM figures are Andrew's own calculation as reported, not
+re-derived here.
+
 ## 8. What not to claim (read before presenting)
 
 - **Commits are activity, not output.** Say "the build rate rose 114 times" only next to the mix. Product-build
@@ -192,7 +228,7 @@ YCharts (May), Bloomberg (live intake Jul 15), Lusha (prospecting), Microsoft 36
 - Research files with per-row evidence (commit hashes, deploy tags, ledger files): `research_portal_pages.md`,
   `research_partners_pipelines.md`, `research_systems.md` (FILES, this folder). Twenty-nine key dates were re-checked
   against git, tags or the ledger by this seat; all matched.
-- Email recon (Andrew's Outlook, read-only, addendum ~20:0xZ): PENDING. The gateway's mail tools have not loaded in
-  this session yet. Findings will be added as dated, non-personal facts only.
+- Email recon (Andrew's Outlook, read-only, addendum ~20:0xZ): DONE 2026-10-04 through the Opal gateway, signed in as
+  Andrew; findings in section 8a and as partner events on the page.
 - Publishing: the one-pager is a local file today. Where it is published (an Opal route such as the /sprint site, or a
   private claude.ai page) is Andrew's call; nothing has been published.
