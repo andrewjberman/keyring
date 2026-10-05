@@ -5,7 +5,7 @@
   "project": "AMGT_RESAPP",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.38",
+  "prd_version": "v0.39",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-security-analysis-20260910.md@19ce7d5b4d",
   "endpoint_outcomes": [
@@ -86,6 +86,12 @@ authorization. FWD-39 is carried to him as a question, not held.
 only. Their DONE WHENs named acts no seat can take on demand ("Adam has actually forwarded one"; "an analyst who distrusted it has
 stopped"), which breaks spine L2. They are restated as on-demand proofs, and their ACCEPTs are unchanged. This is an ENDPOINT change,
 so `3.0.0_SA_CVO~Z` re-signs the ratified-text half.
+
+**v0.39 (2026-10-05 ~20:3xZ, `1.0.0_SA_CTO~Z`, L10 self-adjudication on `3.0.0_SA_CVO~Z` ADJUDICATION_v86):** FWD-7 and FWD-19
+only. Their DONE WHENs named acts no seat can take on demand ("Adam has used it"; "a PM has ... acted on it, or declined it, on the
+page"), which breaks spine L2. They are restated as on-demand proofs, and their ACCEPTs are unchanged. FWD-19 builds no
+accept/decline control: the ACCEPT asks for the machine's-view marking, and storing PM decisions would be a new write surface and a
+new outcome. This is an ENDPOINT change, so `3.0.0_SA_CVO~Z` re-signs the ratified-text half.
 
 
 
@@ -530,7 +536,10 @@ disputable, by rule, and carry no technical language.*
          SOURCE     brief O6; III-B bar 5
 
   FWD-7  Adam can see which covered companies have gone stale
-         DONE WHEN  EXERCISED -- Adam has used it to find a stale name
+         DONE WHEN  EXERCISED -- (v0.39) a seat opens the one place on demand,
+                    sees every covered company with its last-refreshed date,
+                    and finds a stale one without opening any folders.
+                    Adam's own use stays the ACCEPT
          ACCEPT     Adam looks in one place, sees every company the team covers
                     with the date its research was last refreshed, and finds one
                     that has gone stale without opening any folders.
@@ -661,8 +670,12 @@ disputable, by rule, and carry no technical language.*
                     analyzer), the voice memo of ~05:5xZ (parts one and four)
 
   FWD-19 An analyst sees what this company means for Opal
-         DONE WHEN  EXERCISED -- a PM has read a posture and acted on it, or
-                    declined it, on the page
+         DONE WHEN  EXERCISED -- (v0.39) a seat walks a covered name's posture on
+                    demand: the header line and the last tab name the
+                    comparable, give the reasons each linked to what it rests
+                    on, and carry the machine's-view marking. Accepting or
+                    rejecting it is the reader's act; the page stores no
+                    decision (a decision record would be a new outcome)
          ACCEPT     The last tab, and a line in the header, say whether this
                     company looks like a better or a worse pick than the
                     most similar name on the other side -- an Opal holding
