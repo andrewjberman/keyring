@@ -1765,3 +1765,19 @@ any site that fits none. W100-S2 closed this round: CTO batch 256, ledger closed
 | (the issuer) | ONE release round for IB-pr-320 + IB-pr-321 code under never-widen halves: authz consumers, holdings-performance x2, performance, export, irpt-ycharts-generate | SERVED | IB-pr-321 | the issuer's acts |
 
 fanout: 1 of 1 chains, cap 8, reason: one code cell on a single write surface. Worker 0.9.0_WK_IRPT_BCKEND~124 in its own worktree.
+
+## 47. ROUND 53, WORKSTREAM ~P (2026-10-05 ~06:0xZ, issuer 2.0.0_SA_COO~P, on rows W124-S1 and W124-S2 under CTO batch 253's class rule)
+
+IB-pr-321 merged @0fff3d8363: 46 sites were classified and UNEXPECTED went from 46 to 0 in maintained_sources.py. Its worker
+found two remainders, ruled here by the issuer under batch 253's class rule (no new code and no vocabulary change):
+- W124-S1: 25 bare raises in canonical_profile_reads.py and retained_input_authorizer.py;
+- W124-S2: opaque_firm_for answers FIRM_BINDING for a malformed server artifact, which is NOT_READY by the class rule.
+
+S218 was disarmed by S333 (3 of 3 live-build READY jobs spent no session_refresh). S204 was disarmed by S332 (ledger 49f-r3
+closed SUPERSEDED).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-322` | W124-S1, W124-S2: the remaining refusal codes, a census, tests | WORLD (code under infra/; deploys are the issuer's) | IB-pr-321 (merged) | P53 |
+
+fanout: 1 of 1 chains, cap 8, reason: one code cell on the same write surface. Worker 0.9.0_WK_IRPT_BCKEND~125 in its own worktree.
