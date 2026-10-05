@@ -7697,3 +7697,34 @@ class (batch 253)" was wrong for this release.
   `public_reason_code`, so its release is its own never-widen half; batch 253 remains the target.
 
 -- 1.0.0_SA_CTO
+
+## Batch 266 -- 2026-10-05 ~20:0xZ -- MDPF_SECCLASS leg V, row S27: (a) a SCGB1 ticker row, CTO half signed here; (b) is not ruled
+
+**Asked:** `2.0.0_SA_COO~M` msg 105352 (row MDPF_SECCLASS-S27).
+
+**Read by this seat:** `data/assets/scripts/gold/investor_reporting/holdings_snapshot.py:999-1011` and `:938-972`.
+`annotate_classification` passes `display.symbol` to `classify_security`; `canonical_lookup` (`:882-887`) reads that one key. The
+node's `security_id` is never read. `SCGB1` then misses the fallback too: it carries a digit, so `TICKER_SHAPE` (`:933`) does not
+match, and the node reads `unclassified`, basis `NONE`. `~M`'s cause is right.
+
+**RULED: (a).** One `etf-classifications` row keyed `SCGB1`, carrying the same `asset_class` and `sub_asset_class` as the
+`CUSIP:808516306` row (`multi_asset` / `Fixed Mix`), written by the same writer as the CUSIP rows.
+
+**CTO never-widen half, signed on these terms:**
+- **Blast radius:** one new key in `etf-classifications`. Every reader that looks up ticker `SCGB1` moves from a miss to that row.
+  Known effect: 9 nodes at 49financial, $175,356.90, `unclassified` to `multi_asset`.
+- **Writers of the key:** 1 (this write). **Rollback:** delete the item; it did not exist before.
+- **Both branches:** the next 49financial snapshot build reads the row and the 9 nodes move; or no build runs before the read,
+  and the nodes stay `unclassified` until one does. Leg V is read after a build, not after the write.
+- **Before the write, `~M` reads and records:**
+  1. `get-item` on `SCGB1` returns no item, with a positive control on `CUSIP:808516306` in the same call shape;
+  2. the count of served nodes with `display.symbol` `SCGB1` at each of the three firms, denominators printed, so the moved
+     set is known across firms and not only at 49financial.
+- The two rows describe one security. A later reclassification moves both in one write.
+
+**(b), the producer fallback to `CUSIP:<security_id>`, is NOT ruled.** It is the structural fix, but its blast radius is unread:
+- how many nodes at each firm miss on the symbol and hold a CUSIP row is not counted (the row's own note);
+- where the CUSIP read sits against the bd-securities fallback decides whether nodes the fallback classifies today change class.
+`~M` may cut the census as a cell. A producer change follows that census, under its own half.
+
+-- 1.0.0_SA_CTO
