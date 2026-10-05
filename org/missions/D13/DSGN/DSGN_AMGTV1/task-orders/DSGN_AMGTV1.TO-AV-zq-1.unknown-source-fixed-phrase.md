@@ -45,6 +45,8 @@ The constant already exists in the file ("a source this page has no name for yet
 
 <paths>
 portal/src/pages/SecurityAnalysis/components/CardFooter.tsx
+portal/src/ui/components/PageEnd.tsx
+portal/src/pages/SecurityAnalysis/SecurityAnalysis.tsx
 org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~101/
 org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
@@ -55,6 +57,29 @@ org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/investigations/INVESTIGATION_
   <criterion id="AC1" cell_refs="AV-zq-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; node "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/2.0.0_SA_COO~D/round38/checks/repairs/repairs38.cjs"; echo "exit=$?"</invocation><expect>WHAT CHANGED USES THE SHARED STATES, EVERY CARD ENDS IN THE SHARED FOOTER, THE PAGE ENDS ON THE SHARED END LINE: 6 of 6 arms -- and exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="AV-zq-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; bash "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/2.0.0_SA_COO~D/round29/checks/battery29.sh" "$(git rev-parse --show-toplevel)"; echo "exit=$?"</invocation><expect>BATTERY29: ALL PASS (0 skipped) -- and exit=0</expect></criterion>
 </proof_of_spec>
+
+## 4a. AMENDMENT 1 (issuer, 2026-10-05 ~14:2xZ) -- ITEM 2 OF THE CTO'S ROUND-39 LIST: THE END LINE PRINTS NO INVENTED CLOCK
+
+Item 1 (above) has landed (portal 72c60f2b). This amendment re-opens the order for item 2 of the CTO's round-39 list
+(`org/missions/D13/DSGN/DSGN_AMGTV1/ledger/CTO_LIST_ROUND39.md`).
+
+**The fault:** the page ends "End of Security Analysis. Data as of October 2nd, 2026, 5:00p ET." The served date is a BARE day
+(the overlay's `price.as_of_date`, e.g. `2026-10-02`). The shared `portal/src/ui/components/PageEnd.tsx` formats it with a 5:00p ET clock
+nobody served.
+
+**The fix, touching the fewest shared files (one):**
+- Add ONE optional prop to `PageEnd.tsx`, e.g. `asOfText?: string`. When given, PageEnd prints it as the date words. The default is
+  unchanged, so every other page (Market, Philosophy and the rest) prints exactly what it printed before. This is the same pattern as
+  PanelFooter's `timeText`.
+- `src/pages/SecurityAnalysis/SecurityAnalysis.tsx` passes the served day in words through `dateWords.ts` (`longDate` for a bare day,
+  `longStamp` for a served stamp): "End of Security Analysis. Data as of October 2nd, 2026."
+- Universe mode still prints no date.
+
+Added to `<paths>`: `portal/src/ui/components/PageEnd.tsx`, `portal/src/pages/SecurityAnalysis/SecurityAnalysis.tsx`.
+**The check:** repairs38 AMENDMENT 3 extends arm 3. It renders the REAL PageEnd, fails any time of day after a bare served day, and
+requires the other pages' end lines unchanged. At portal 481b3bcc it reads 5 of 6 (arm 3: "5:00p ET" on MSFT and AMD); with the
+reference fix, 6 of 6. AC1 and AC2 are unchanged in form. Run both again, update your proof instance, and flip `<status>` back to
+`complete` in the same commit.
 
 ## 5. WHEN YOU ARE DONE
 
@@ -72,7 +97,7 @@ Report once: the one-line change, the output line of every criterion, the portal
 - **Not this cell:** row S3 (the shared PageEnd prints "5:00p ET" after a bare served day) and reads37's What-changed selector -- for the
   CTO's next list.
 
-<status>complete</status>
+<status>pending</status>
 <round>39</round>
 <slot>~101</slot>
 <fabric>site-z</fabric>
