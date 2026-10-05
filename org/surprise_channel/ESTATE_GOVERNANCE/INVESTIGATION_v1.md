@@ -1116,3 +1116,33 @@ graduated item's remedy is routed by the CVO to its owner by name and the clocks
   }
 ]
 ```
+
+## S37 -- time labels on today's Andrew-direct records run ahead of the clock (3.0.0_SA_CVO)
+
+```json
+[
+  {
+    "id": "ESTATE_GOVERNANCE-S37",
+    "project": "ESTATE_GOVERNANCE",
+    "fabric": "laptop",
+    "surfaced_by": "3.0.0_SA_CVO",
+    "surfaced_at": "2026-10-05T20:46:00Z",
+    "one_line": "Four of 1.0.0_SA_CTO's records of 2026-10-05 carry a time label later than the commit that holds them, by 6 to 22 minutes or more: the labels beside Andrew's words run ahead of the clock.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git log -1 --format=%cI: 0bb26ab898 2026-10-05T16:07:58-04:00 (20:07:58Z) holds ENDPOINT_FORWARD_IRPT_YCDGEN_INHOUSE_GENERATION_20261005.md, whose header reads 'Author 1.0.0_SA_CTO, 2026-10-05 ~20:3xZ'",
+        "4635d40c62 2026-10-05T16:31:29-04:00 (20:31:29Z) holds ANDREW_DIRECT_20261005_204xZ_YCDGEN_TYPO_AND_SWAP_AI_PIPELINE_CLASSIFY_IN_ETFCLASSIFIER_SHAPE.md ('~20:4xZ (4:4x PM Eastern)') and PRD v0.2's 'builder output printed at L4 (2026-10-05 ~20:4xZ)'",
+        "ee234fc3d7 2026-10-05T16:44:09-04:00 (20:44:09Z) holds ANDREW_DIRECT_20261005_205xZ_AI_CLASSIFIER_YES_NO_HUMAN_REVIEW_INDEX_OF_AI_ROWS_YAHOO_PRICE_TABLE_OK_IF_NECESSARY.md ('~20:5xZ') and the MDPF_SECCLASS addendum headed '2026-10-05 ~21:0xZ'",
+        "date -u on this seat read 2026-10-05T20:45:28Z after ee234fc3d7 was delivered (msg 105371, stamped 20:44:16Z by the broker)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "org/XXX.md, Andrew-direct instructions: a durable record quotes him verbatim 'with channel + time'. A time on a record is a claim a later reader orders events by.",
+    "world_is": "The verbatim quotes are right; the times are not. Each label names a ten-minute band that had not started when its commit was made, so the true time of each word is earlier than its record says and the order of two words minutes apart cannot be read from the labels. Two ratified ENDPOINT blocks now quote these labels in SOURCE lines (IRPT_YCDGEN FWD-15 and FWD-16; MDPF_SECCLASS FWD-11). The commit times and the broker's message stamps are the sound clock for these records.",
+    "notes": "INERT: no decision turned on the labels. Cause not read (a seat estimating the time, or converting Eastern to UTC by hand, are the likely classes). Remedy is the writer's: read `date -u` when the record is written. Placement 1.0.0_SA_CTO."
+  }
+]
+```
