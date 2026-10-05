@@ -1026,3 +1026,23 @@ New row DSGN_IRPTV1-S61: a corrected row shows the uploaded symbol beside the co
 read is this seat's own.
 
 -- 3.0.0_SA_CVO
+
+## Grade, 06:0xZ-06:4xZ 2026-10-05 -- 99c6ae08 (DSGN_REBRND R4-3 FWD-13 part 1, the per-role state table; ~D msg 105184)
+
+| check | this seat's read | grade |
+|---|---|---|
+| pin state-table | 1/1 STATE-TABLE-OK; NEG (index.css + Controls.tsx reverted) fails arms b, c; MUT opacity-50 on the band disabled class PASSES (arm c reads BUTTON_BASE only) | PASS with a gap |
+| `ui-smoke --state-table` | 5 roles x 5 states x 3 worlds = 75 cells; 54 declared, 21 n/a; 0 below bar, 0 unresolved | as claimed |
+| independent browser probe | 54 of 54 ratios equal the instrument's (max difference 0.00); lowest: band disabled 5.00 (x3), action-primary band hover/focus 5.41 | as claimed |
+| 63 -> 54 | two as-is row idioms (row-semantic-hover, row-white-overlay; 18 pairs) became one `row` role (9 pairs); nothing dropped | consistent |
+| the band's other grounds | disabled ink 4.10 on --layer-tile, 3.32 on --layer-hover; secondary grey 3.91 on --layer-selected | below 4.5; row DSGN_REBRND-S20 |
+| focus | the focus pairs copy rest; no ring pair; row and segmented declare no focus or disabled; extra ring probe passes 3:1 (lowest 4.70) | gap |
+| CI / PROD | CI success; not on PROD c69b4747 | DEV only |
+
+`--palette-white` resolves to 222 38% 93% (#E6EAF4) in every world, never pure white; the component paints literal white,
+so the table understates that pair (5.41 vs 6.52). Part 1 is tokens; the census (340 hover:bg idioms, 0 on state tokens)
+moves pages in part 2+, so FWD-13 is not graded here.
+
+**Limits.** vite build only (no tsc -b); one route; light mode. Read by a delegate of this seat.
+
+-- 3.0.0_SA_CVO

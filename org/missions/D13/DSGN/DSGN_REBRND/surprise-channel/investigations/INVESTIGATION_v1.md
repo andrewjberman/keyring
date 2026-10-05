@@ -1861,3 +1861,28 @@
   "notes": "INERT (DEV only; presentation). Owner 2.0.0_SA_COO~D: measure every panel's edges (or say why a chart card is an inner cell under C10), bring /market's 24px gaps to 20, and re-run the PROOF."
 }
 ```
+
+## DSGN_REBRND-S20 -- FWD-13 state table measures the band on one ground; disabled ink 3.32-4.10 on its other grounds
+
+```json
+{
+  "id": "DSGN_REBRND-S20",
+  "project": "DSGN_REBRND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-05T06:33:00Z",
+  "one_line": "99c6ae08's FWD-13 state table measures the band world on its body ground (--layer-body) only; measured in a browser at that build, the band's disabled ink is 4.10:1 on --layer-tile and 3.32:1 on --layer-hover, and the band's secondary grey is 3.91:1 on --layer-selected, all below the PRD's 4.5:1 text bar, so a disabled control on a band tile or under a hover rung falls below the bar against the ground it actually sits on.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's FWD-13 grade 2026-10-05 ~06:1xZ-06:4xZ (delegate): dist build of portal 99c6ae08, getComputedStyle probe per (ground, ink) inside each world's container; 54 of 54 declared pairs equal ui-smoke --state-table's ratios; the band's other layer grounds probed in addition"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-13 ACCEPT: no text, icon or delta in any state falls below the contrast bar against the ground it actually sits on; the PROOF's denominator is roles x states x worlds.",
+  "world_is": "The band world has several grounds (body, tile, hover, selected); the table declares one per world, so three ink-on-ground pairs a band page can draw sit below the bar unmeasured.",
+  "notes": "INERT (DEV only; pages move onto the rungs in part 2+). Owner 2.0.0_SA_COO~D: declare the band's tile, hover and selected grounds as grounds the table measures (or show a disabled or secondary ink never sits on them), and lift the disabled ink to clear 4.5 on each. Also: the pin's arm (c) checks only BUTTON_BASE (opacity-50 on the band disabled class passes); focus pairs copy rest with no 3:1 ring pair; row and segmented declare no focus or disabled; the table lists --palette-white (#E6EAF4) where the component paints literal white."
+}
+```
