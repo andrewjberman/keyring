@@ -43,6 +43,7 @@ A failing criterion is the ROLLBACK trigger: the prior artifact version through 
 ## 3. SURFACES
 
 <paths>
+infra/aws/terraform/harvest/scoped-amgt-api.tf
 org/critical_paths/change_management/
 org/critical_paths/.open_deploys/
 org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~A/
@@ -55,12 +56,46 @@ org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v
   <criterion id="AC1" cell_refs="AMGT-at-6"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; for c in c30 c31; do PYTHONPATH="$(pwd)" python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round70/checks/r70_served.py" --cell $c --where deployed || exit 1; done; echo "exit=$?"</invocation><expect>R70 C30 and C31 SERVED: YES on the deployed function (95 names, 0 failing); and exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="AMGT-at-6"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; for c in c32 c33; do PYTHONPATH="$(pwd)" python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round70/checks/r70_served.py" --cell $c --where deployed || exit 1; done; echo "exit=$?"</invocation><expect>R70 C32 and C33 SERVED: YES on the deployed function; and exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="AMGT-at-6"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round69/checks/r69_served.py" --cell c29 --where deployed &amp;&amp; for c in c27 c28; do PYTHONPATH="$(pwd)" python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round68/checks/r68_served.py" --cell $c --where deployed || exit 1; done &amp;&amp; for c in c23 c24 c25 c26; do PYTHONPATH="$(pwd)" python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round67/checks/r67_served.py" --cell $c --where deployed || exit 1; done; echo "exit=$?"</invocation><expect>R69 C29, R68 C27/C28 and R67 C23-C26 SERVED: YES on the deployed function (no regression); and exit=0</expect></criterion>
+  <criterion id="AC4" cell_refs="AMGT-at-6"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; bash "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round70/checks/r70_grant_at6.sh"; echo "exit=$?"</invocation><expect>both controls PASS, C1 (GetObject) and C2 (ListBucket with the s3:prefix context) PASS allowed on issuer-site/harvest/silver/filing_source/; R70 AT6 GRANT: YES; and exit=0</expect></criterion>
 </proof_of_spec>
 
 These are run with them and reported (no regression), and the issuer re-reads them:
 - `r64_served.py --cell c9 / c10 (30-day clauses) / c11 / c12 / c13 / c14`, `r65_served.py --cell c17` and
   `r66_served.py --cell c18 / c19 / c22`, all `--where deployed`;
 - `r64_served.py --cell c15 --where deployed`, cold, on the day route.
+
+## 4a. AMENDMENT 1 (issuer `2.0.0_SA_COO~Z`, 2026-10-05 ~08:0xZ) -- the pin, the file list, and a GRANT LEG first
+
+**The build commit is `e041c86791`** (all four drains), or a descendant whose CONTENT-DIFF against the deployed `OcKZF34X` equals
+CHANGED 2 + ADDED 7:
+- CHANGED: `lib/research/api/scoped_amgt.py` (at-1..at-4) and `lib/research/harvest/store.py` (HARVST HVST-at-4 @46f165ea6e,
+  `silver_append`, a writer this function never calls; CTO msg 29511).
+- ADDED: `lib/research/harvest/bloomberg.py`, `lib/research/harvest/filings.py`, `lib/research/management/__init__.py`,
+  `bloomberg_fallback.py`, `exec_roster_chain.py`, `roster.py` (at-2's chain closure), and `lib/research/peers/price_currency.py`
+  (at-3).
+- The issuer build: 363 entries, 96.9% of the ceiling, cold-start FATAL [] and request-time break []. pyarrow is in the package.
+
+**The new S3 read paths, simulated on the role at the cut (CTO round-67 ruling 4):**
+- allowed: `sec/harvest/silver/filing_source/`, `amgt/harvest/state/filing_attempt/`, `bloomberg/harvest/bronze/exec_officers/`
+  (Get + List), and `derived/model_block/` (at-3's per-member read);
+- **implicitDeny: `issuer-site/harvest/silver/filing_source/`** (Get and List).
+
+**So the act is TWO legs, in this order:**
+1. **Grant leg.**
+   - Add ONE entry, `"issuer-site/harvest/silver/filing_source/",`, to `local.scoped_amgt_pool_prefixes` in
+     `infra/aws/terraform/harvest/scoped-amgt-api.tf`. The list drives both GetObject and the ListBucket `s3:prefix` condition.
+   - Then one `safe-apply` targeted at `aws_iam_role_policy.scoped_amgt_api_grants`. The plan is ONE in-place update of the grants
+     policy; anything else is a STOP.
+   - Then AC4 must read YES before the code leg.
+2. **Code leg,** as in section 1, at the pin above.
+
+**Also report:** the `/security/<key>/peers` latency on 3 names. at-3 adds one stored read per member, in parallel.
+
+Halves:
+- COO: `deliverables/2.0.0_SA_COO~Z/round70/NEVER_WIDEN_HALF_COO_AT6.md`;
+- CTO: `ledger/NEVER_WIDEN_ROUND70_AT6_CTO_HALF.md` (owed).
+
+Gate limb that graded this modification: GATE (viii) on a modify (`<placeholders>NONE</placeholders>`).
 
 ## 5. WHEN YOU ARE DONE
 
