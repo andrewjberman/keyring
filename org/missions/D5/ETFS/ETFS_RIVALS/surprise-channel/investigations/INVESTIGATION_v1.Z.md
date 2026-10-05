@@ -3856,6 +3856,51 @@
     "spec_asserts": "The assignee writes its proof_of_spec instance and never-widen evidence under a deliverables folder it may write.",
     "world_is": "The cut copied the worker-slot deliverables convention onto an AE assignee; the amendment re-points it to the assignee's own folder.",
     "notes": "Cites ETFS_RIVALS-Z-S40. The row's disposition stays the CVO's."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W3-S22",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~3",
+    "surfaced_at": "2026-10-05T23:44:40Z",
+    "one_line": "The live newest G5 now carries rows an nf-1 run carried forward under an older G1 revision label and with the additive columns (est_price_source, key_resolution) null, so a G3-pinned code replay of the 4 classes also changes provenance labels on 4,950 rows (9,892 label cells) and fills 5,287 additive cells; no trade-fact column outside the 4 classes moves.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~3/g5_replay_dry.json: rows_moved 1316 (1040/266/7/10 by class), rows_moved_outside_classes 0, rows_with_g1_label_moves 4950, g1_label_columns_moved 9892, additive_columns_filled 5287, rows_differing_in_labels_or_additive_columns_only 3651",
+        "live G5 date=2026-01-02: newest trades-20261005T054335Z-8b69497a75c4 holds ETFT IJGXX with dataset_revision 20260930T151241Z-b02-a94587f78df0 and key_resolution null, while the newest G1 is holdings-20261005T054335Z-8b69497a75c4 (read at 2026-10-05 ~23:00Z)",
+        "RIV-gd-1 (g5_drift.json) read the older live objects as lacking the two columns; the tool counts dataset_revision/prior_dataset_revision (G1 revision labels) and null->value in the two ADDED_COLS apart from moves (g5_code_replay.py _moves)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-rp-2 AC1: nothing outside the 4 classes moves in the dry run and no G3 label column moves (check docstring (b)).",
+    "world_is": "Read literally, rows differing at all are 4,950 + the class rows: the G1 revision label and the null additive columns differ on rows outside the classes. The tool reports them under their own keys and does not count them as moves (gd-1's additive rule; a G1 revision label is provenance, not a trade fact); whether AC1 (b) means that is the issuer's and CVO's reading, not the worker's.",
+    "notes": "INERT: nothing is served. The served replay will move these labels for every row of a rebuilt fund."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W3-S23",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~3",
+    "surfaced_at": "2026-10-05T23:44:40Z",
+    "one_line": "A rebuild_funds replay (RIV-nf-1) over a date whose live G5 already has the newest G1 revision and the same held funds writes NOTHING and returns OK: _g5_target returns the existing object as 'already have it' (probe: written_new 0, object count 2 before and after).",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/gold_trade_schedule.py:783-794@33d9077d5f: _g5_target returns (newest, True, name) when _held_of(newest) == held, with no regard to rebuild_funds; the write is skipped at lines 1011-1019",
+        "probe on a local sink (live G5 built at the newest G1 revision, then handler_entry replay rebuild_funds=['TXUE']): status OK, detail written_new 0, trade_schedule objects 2 before and 2 after",
+        "the live newest G5 of 2026-01-02 is trades-20261005T054335Z-8b69497a75c4 and the newest G1 is holdings-20261005T054335Z-8b69497a75c4: the same revision, so a served replay at that date hits this branch"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-rp-2 / round-9 ruling 4: the served replay writes new G5 revisions for the planned (date, fund) set with rebuild_funds carrying every other fund unchanged (RIV-nf-1: 'the new G5 object is the newest prior G5 object's rows for every fund NOT named plus the freshly inferred rows of the named funds').",
+    "world_is": "At a date whose live G5 is at the newest G1 revision the rebuild returns the existing object and writes nothing, so a served replay of the 182 planned dates would report OK and move none of them. The dry tool avoids it by seeding the live object under a name the stage does not read as that revision.",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "notes": "ARMED for the issuer's served replay act, which this tool exists to precede: a fix is in gold_trade_schedule.py (not this cell's paths) or the replay names a new revision. Not a worker act."
   }
 ]
 ```
