@@ -1558,3 +1558,30 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+
+## IRPT_DASHBD-W12-S1 -- the E2 tie-out: day coverage does not dominate; BD fees are consistent with most of the UNEXPLAINED rows
+
+```json
+{
+  "id": "IRPT_DASHBD-W12-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~12",
+  "surfaced_at": "2026-10-05T17:30:00Z",
+  "one_line": "TO-DB-b-26 E2 tie-out: 6,975 of 9,078 graded segments sit outside 0.35 pp and 6,250 of them have no reason in the closed set; 4,905 of those are consistent with BD's own reported fees (a class the closed set lacks), and 3,395 segments carry a BD +1 day offset that is the 2025-01-09 market closure.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-26: an OUTSIDE row carries a reason from FLOW_TIMING, MISSING_PRICE, INCOME_DATE, COVERAGE_DAYS or UNEXPLAINED; the round-1 reading says day-coverage dominates the difference.",
+  "world_is": "Over 9,082 planned segments (9,078 graded, 4 NOT_GRADABLE BD_NO_VALUE): 2,103 WITHIN, 6,975 OUTSIDE = FLOW_TIMING 150, MISSING_PRICE 2, INCOME_DATE 568, COVERAGE_DAYS 5, UNEXPLAINED 6,250. Day coverage does NOT dominate here: BD daysHeld equals Opal's linked days on 5,678 segments, exceeds by exactly 1 on 3,395 (every one spans 2025-01-09, the national day of mourning market closure, which BD counts and Opal's trading calendar does not; no return effect), and differs by 5 or more on only 5. The BD request is feeMethod NetOfFees and the served series carries no fee (fee_amount_reason FEE_RAIL_UNUSED); BD's response reports fees per range. Netting BD's own reported fees (fees / average of beginning and ending value) from Opal's link lands within 0.35 pp of BD on 4,905 of the 6,250 UNEXPLAINED rows. Fees are not in the closed reason set, so those rows stay UNEXPLAINED with an OBSERVATION BD_FEES clause in `evidence`; the signed difference is BD below Opal on 8,054 of 9,078 graded segments. FLOW_TIMING and INCOME_DATE evidence is a re-link test (alternate flow convention, or income removed, lands within tolerance), which fees could confound; it is a necessary-not-sufficient reading. The served series now holds 6,869 accounts in 563 partitions against the plan's 6,863 accounts (the plan's own opal_twr matched the re-link on all 9,082 segments).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~12/TIEOUT_49F_BD_POPULATION_E2.json counts block and per-row evidence, produced by tieout_e2.py from s3://opal-data-assets/blackdiamond/49financial/bronze/reporting_performance/pull=20261004/ (5,252 objects) and s3://opal-data-49financial/irpt/49financial/gold/account_return_daily/ (563 partitions)",
+      "measured on the record: segments whose BD daysHeld - Opal linked days == 1: 3,395, all 3,395 contain 2025-01-09; segments containing 2025-01-09 with offset 0: 0",
+      "counts.unexplained_consistent_with_bd_fees = 4905 of outside_by_reason.UNEXPLAINED = 6250"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
