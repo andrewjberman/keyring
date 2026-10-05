@@ -1323,6 +1323,71 @@
  "spec_asserts": "TO-AV-zn-1 cell text: the last redesign run read 62 PASS and 14 FAIL and every FAIL was the instrument's own stale anchor, not the page.",
  "world_is": "Fixing the three anchors (band clause, price rest rule, windowed chatter fixture) leaves 2 FAIL cells on the list state that are the page's bubble labels (8, 9 and 10 px) and corner radii (2px, 5px) once the chatter face draws its bubbles. AC1 grades 4 of 4 arms and does not read these two cells.",
  "notes": "Worker-authored record; form only, no significance judged."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W100-S1",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~100",
+ "surfaced_at": "2026-10-05T08:03Z",
+ "one_line": "AV-zp-1: AC2 (battery29, no skip) cannot read ALL PASS from this order's <paths>: 11 of 14 page harnesses and the starredclaims check go red because the harness loaders (outside <paths>) name every module a page file may import, and two of them assert the retired hand-rolled caption.",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~D",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "AC2 literal run on portal dsgn-r38-zp1 (85e24287 + this order's files), outer HEAD wk-DSGN_AMGTV1-100: 'ALL BOUND: 3 of 14 harnesses green [rc=1]'; 'ERROREMPTY'S STARRED CLAIMS GRADE A RENDERED FACE: 1 of 3 arms [rc=1]'; tsc -b --noEmit rc=0; eslint --quiet rc=0; 'BATTERY29: FAIL (0 skipped)'. AC1 (repairs38.cjs) reads 5 of 5 arms, exit=0, on the same tree.",
+   "Per harness, the first error with the shared footer and end line in place (portal/src/pages/SecurityAnalysis/__harness__/*.harness.cjs @85e24287): errorEmpty 'Cannot find module ./CardFooter'; drafting, execFallback, execText 'Cannot find module ../components/CardFooter' (their load() names each module a tab may import: drafting.harness.cjs:80-110, execFallback.harness.cjs:76-90, execText.harness.cjs:74-88); tabs and shell 'Cannot find module @/ui/components/PageEnd' (shell.harness.cjs STUBS names @/ui/components/* one by one and its relative loader cannot resolve the real PageEnd.tsx's '@/lib/dateUtils' import); execPattern 'Cannot find module @/ui/components/panels' (its source() loader maps only @/lib/utils); modelPattern 'Cannot find module @/ui/components/states'; posturePattern and thesisLadder 'Element type is invalid ... got: undefined' (their @/ui/components/panels stub carries Panel, PanelHeader, PanelContent only, so PanelFooter is undefined); leadPanelPattern 'CHECK source_footer = false', 'CHECK caption_facts_unchanged = false' (they assert LeadPanel's hand-rolled 'date | Source' caption, which FWD-11 retires).",
+   "Green: peersCarry, peersPattern, peersReadFailed (their fixtures serve no source, so no footer renders). The new import specifiers are intrinsic to the order (PanelFooter, PageEnd and states are the required shared components); the harnesses are not in <paths>, and no import shape resolves in all fourteen loaders."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "TO-AV-zp-1 AC2: battery29.sh with no skip reads 'BATTERY29: ALL PASS (0 skipped)' on a tree whose only changes are the order's <paths>.",
+ "world_is": "The code in <paths> satisfies AC1 (5 of 5), tsc and ESLint. battery29's harness line and the starredclaims check read red because the harness files that load these page files carry fixed import lists and caption assertions, and they are outside <paths>. Left alone, the drain's real-grade battery run on the combined candidate reads FAIL until those harnesses are amended in a cell that owns them.",
+ "notes": "Worker-authored record; form only, no significance judged. I did not edit any harness (bound 2, only the files in <paths>)."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W100-S2",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~100",
+ "surfaced_at": "2026-10-05T08:03Z",
+ "one_line": "AV-zp-1: the shared PanelFooter prints a clock the payload did not serve when handed a bare day ('September 15th, 2026, 5:00p ET' for a served '2026-09-15'); the order allows one prop and forbids anything else in that file.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "portal/src/lib/dateUtils.ts formatPanelTimestamp @85e24287: a bare YYYY-MM-DD goes through create5pmETDate and prints '<month> <day>th, <year>, 5:00p ET'.",
+   "repairs38.cjs CENSUS on this tree: 'BA Exec Management tab ... renders footer yes (\"September 15th, 2026, 5:00p ET | Source: company filings.\")' for served management.as_of '2026-09-15'; likewise the Posture tab (posture.as_of), the Lead Panel Price face (as_of_date 2026-10-01) and the Chatter face (as_of 2026-10-03)."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "TO-AV-zp-1 contract C-PRESENTATION-ONLY: a time is printed only when served; the footer time is one of the card's served values printed in words.",
+ "world_is": "Where a card serves only a day, the shared footer (the estate's own format on /market and /philosophy) appends 5:00p ET. The card hands over the served day unchanged and the check grades it as served (same day); the added clock is the shared formatter's house convention, not a served value. dateWords.longDate prints the same day with no clock, but PanelFooter does not call it.",
+ "notes": "Worker-authored record; form only, no significance judged."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W100-S3",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~100",
+ "surfaced_at": "2026-10-05T08:39Z",
+ "one_line": "AV-zp-1 amendment 1: the shared PageEnd prints a clock the payload did not serve on a bare served day ('Data as of October 2nd, 2026, 5:00p ET.' for a served price.as_of_date day); PageEnd.tsx is outside <paths>, so the card footers are fixed and the end line is not.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "portal/src/ui/components/PageEnd.tsx @75f9f477: asOf = formatPanelTimestamp(null, dataAsOf), the same formatter row Z-W100-S2 names; a bare day prints '5:00p ET'.",
+   "repairs38.cjs ARM 3 on this tree: 'MSFT thesis: \"End of Security Analysis. Data as of October 2nd, 2026, 5:00p ET.\"' -- graded PASS (it grades the served day)."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "TO-AV-zp-1 AMENDMENT 1 section 2 (and C-PRESENTATION-ONLY): a bare served day prints as a day, never a time of day; the amendment scopes this to a card's footer (CardFooter.tsx, PanelFooter.tsx).",
+ "world_is": "The card footers print a bare day as a day (CardFooter passes the pre-formatted day through the new PanelFooter timeText prop). The page's end line is the shared PageEnd, which this order cannot edit; it still appends 5:00p ET to the served day.",
+ "notes": "Worker-authored record; form only, no significance judged."
 }
 ]
 ```
