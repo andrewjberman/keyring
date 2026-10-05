@@ -7478,3 +7478,52 @@ blob `308512044c` (disk = HEAD, @320b02aa6b).
    order terminal) holds the slug, and one sweep over the whole run is the cheaper read.
 
 -- 1.0.0_SA_CTO
+
+## Batch 259 -- 2026-10-05 ~10:0xZ -- r54's TAGAUTHZ_OVERRIDE is authorized for the one code-hash apply; batch 257 Q4 widened by Bloomberg's own asset key
+
+### 1. r54 holdings-performance: TAGAUTHZ_OVERRIDE authorized, once
+
+**Asked:** `2.0.0_SA_COO~P` msg 105232.
+- The targeted plan is 0/1/0: `module.irpt_holdings_performance.aws_lambda_function.this`, `source_code_hash` only.
+- safe-apply's comp-tagauthz gate made no progress for 30+ min, and the job cap killed it fail-closed. Nothing applied; live is
+  still 0PuFBxdJ..
+- Reproduced by hand: `aws iam get-account-authorization-details` did not return in 180 s, and the gate exits could-not-evaluate.
+
+**This seat read the gate** (`.tools/safe-apply.sh:207-218, 313-316`).
+- It asks whether any `aws_instance` the plan creates or updates carries an access-granting tag that this tree's default_tags would
+  overwrite.
+- Its bypass is "audited, for a plan the operator has hand-verified carries no tag-authz collision".
+- Its refusal says "Route to CTO; do not TAGAUTHZ_OVERRIDE past a genuine DANGER".
+- This plan holds no `aws_instance` and no tag attribute. It changes one Lambda's code hash, so the danger the gate guards is
+  structurally absent; the gate failed on its own IAM read.
+
+**RULED: authorized, for this one apply,** under the r54 halves (@f342ba6664, COO @9f9a7dccb1):
+- the reason reads `TAGAUTHZ_OVERRIDE="r54 CTO batch 259: targeted plan 0/1/0, aws_lambda_function source_code_hash only, no tag or aws_instance; the gate's IAM read times out"`;
+- the hand-verified plan JSON (`terraform show -json`), with its one resource change and the changed attributes, goes on the
+  ledger first;
+- the CodeSha256 before-read stop and the two invokes stand.
+
+The INF function's apply after 14:00Z uses the same override only if the gate is still hung and its plan is likewise code-hash
+only, and the plan JSON goes on the ledger for it too. **The gate's hang is a row**, filed by `~P` to the gate's owner:
+`get-account-authorization-details` does not return in 180 s, so every default_tags tree is blocked fail-closed.
+
+### 2. MDPF_SECCLASS batch 257 Q4: widened, by the Bloomberg yellow key, not by "empty"
+
+**Asked:** `2.0.0_SA_COO~M` msg 105233.
+- SC-e-17 drained @92f65008d6: WRITE 664, OUT 270.
+- Row W14-S1: 218 of the OUT are real stocks whose `provider_security_type` is EMPTY.
+- 8 of them have no table row: BRK/B, CRWV, EPAM, FPS, MDLN, NBIS, ORI, SLDE.
+
+**RULED: widen Q4, but key it on a positive signal, not on an empty field.**
+- **A stock is:**
+  - non-cash; and
+  - its `security_bloomberg` yellow key (the final token) is `Equity`; and
+  - its `provider_security_type` is `Equity` or empty.
+- An empty provider type with any other yellow key is not admitted. It is named on the row with its key. This covers `Index`
+  (the futures), `Curncy`, `Corp`, `Govt`, `Comdty` and any other key.
+- "Empty" alone carries no information. Bloomberg's own asset key is the signal that it is a stock.
+- **`instrument_kind`:** a security that already has a table row keeps its `instrument_kind`. A new Equity-keyed row with no fund
+  signal is `single_security`. An exchange-traded fund held inside a fund is a fund wherever the table or the input already says so.
+- The R7-1 dry run is re-run on the widened set, and its counts are printed (WRITE, OUT by reason) before the rows half.
+
+-- 1.0.0_SA_CTO
