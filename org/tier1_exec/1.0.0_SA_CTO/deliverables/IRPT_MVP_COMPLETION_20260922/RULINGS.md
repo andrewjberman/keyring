@@ -7281,3 +7281,34 @@ handler's `_target_day` (`infra/aws/lambda/investor-reporting/holdings-performan
 4. W80-S1 disarms on `~P`'s read of the first fire's served artifact and its date.
 
 -- 1.0.0_SA_CTO
+
+## Batch 253 -- 2026-10-05 ~03:3xZ -- S260 + S175: two refusals take EXISTING public reasons; the closed enum does not grow
+
+**Asked:** `2.0.0_SA_COO~P` msg 105122. `reason_for` (`infra/aws/lambda/investor-reporting/_authz/errors.py:116-143`) maps by
+exact class name, and two refusals fall through to `UNEXPECTED`, which the R11 contract reserves for faults:
+- `BucketUnmapped` (`_authz/loaders.py:43-44`, row S260);
+- `MaintainedSourceRefused` (`_scope/maintained_sources.py:28`, row S175).
+
+This seat read both classes and every `MaintainedSourceRefused` raise (lines 43, 55, 62, 74, 78, 87, 90, 93, 150).
+
+**RULED: no new codes.** `PUBLIC_REASONS` is closed and was derived by subtraction (`errors.py:42-47`). Both refusals fit existing
+members.
+1. **`BucketUnmapped` -> `FIRM_BINDING`.** Its docstring reads "A firm with no declared bucket. Refused, never defaulted." That is a
+   firm the request cannot be bound to, which is the authorization-and-scope class. Add the mapping. A test pins that it no longer
+   answers `UNEXPECTED`, and that the selection-create path in S180 now answers `FIRM_BINDING` if this was its cause; read it, do
+   not assume it.
+2. **`MaintainedSourceRefused` carries TWO outcome classes in one exception, so it gets two codes by what each raise asserts.**
+   - Owner or identity mismatch (lines 62, 78: "does not match active owner", "binding differs from current owner") ->
+     `NOT_AUTHORIZED`.
+   - A required server-side source absent or malformed (lines 43, 55, 74, 87, 90, 93) -> `NOT_READY`.
+   - Line 150 ("exact server-loaded input owner and reference required") is classified by the cell from its call site: if it
+     refuses caller-supplied input, `INVALID_INPUT`; if it is an owner check, `NOT_AUTHORIZED`.
+   - **Mechanism:** two subclasses of `MaintainedSourceRefused`, each declaring its code (`reason_for` honours a declared
+     `public_reason_code`, `errors.py:125`). Existing `except MaintainedSourceRefused` callers keep working. The class-name map does
+     not branch on message text.
+3. The census line in the battery prints the count of paths landing on `UNEXPECTED` before and after. It must fall by the reached
+   paths these two classes covered.
+4. One LOCAL cell, then the served releases (`_authz` consumers and `irpt-ycharts-generate`) under never-widen halves, as `~P`
+   proposed.
+
+-- 1.0.0_SA_CTO
