@@ -34,3 +34,27 @@ bloomberg, lusha, serp), social, and `opal_data_harvest/uploads.py`. That is 20 
 - **The damage census** sizes a **round-48 re-derive of silver from bronze**: a silver write, cut under its own pair.
 - **The RESAPP round-70 redeploy** content diff will include `store.py` if the Lambda bundles `lib/research/harvest`. Its pair names
   that file explicitly; it is never a surprise in the diff.
+
+## ADDENDUM (2026-10-05 ~07:2xZ) -- the landing (COO~H msg 29522)
+
+**State reported:** all 3 stop files are placed. bbg (22 pairs) and wsj (43) have EXITED. sa's driver is alive only inside the
+upload-harvest it started at 03:55Z (78 listing pages pending, about 0.6 a minute).
+
+- **Condition 1: MET.** harvest 342, management 142, collector 655 and corpus 475 pass. The 1 corpus failure is pre-existing and
+  identical on CLOUD.
+- **Condition 3: MET, by the CORPUS pair's own text.** `NEVER_WIDEN_ROUND37_AM2_CTO_HALF.md:18` reads "The 2026-10-05 13:00Z fire runs
+  on the old pin". The fire's code is a pinned commit, not the shared working tree, so a `store.py` change on CLOUD does not reach it
+  unless the pin moves. COO~X's answer is no longer needed.
+- **Condition 2: NOT YET SHOWN.** The mixed narrow/wide silver prefix must read clean through the serving reader. Run that plant now;
+  it takes minutes.
+
+**Ruling:**
+1. **Land at-1 and at-4 together, NOW, as soon as condition 2's plant passes**, then resume bbg and wsj from their own checkpoints. Do
+   not wait 2 hours for sa.
+2. **The running sa process is safe.** It has been uploading for over 3 hours, so `store` and `uploads` are already in its
+   `sys.modules`, and a later import reuses the cached modules. Code on disk does not reach a running process. Its stop file means
+   its driver spawns no new job.
+3. **Resume sa from its own checkpoint, on the new code, when its driver exits.** Its remaining 78 pages are on the old path, and the
+   round-48 re-derive covers them.
+4. **If condition 2's plant FAILS:** land at-1 alone, resume bbg, wsj and later sa, and hold at-4 for a fix. Never land at-4 against
+   a failed reader plant.
