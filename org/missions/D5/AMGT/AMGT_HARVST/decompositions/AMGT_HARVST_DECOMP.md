@@ -2946,3 +2946,22 @@ Worktree recipe for as-1: the sparse cone of section 50. Evidence folder: `deliv
 - `round46/checks/as-1.AC2.py` base: FAIL as expected. The collector universe has 89 securities, 0 carrying `security_key`, and
   0 of the 191 rank names are resolved.
 - `round46/checks/as-1.AC3.py` base: FAIL as expected. The driver dry run plans UNIVERSE 89, 445 PLAN lines, NETWORK CALLS 0.
+
+## 60. ROUND 47 -- the round-46 analysis enrichment list (`ledger/ROUND_ANALYSIS.round46.md` @585391af7f), 2026-10-05 ~06:1xZ
+
+Round 46 is CLOSED. Board: REALIZED 8 of 17; open without new collection 0; open needing new collection 9. The collection run
+(as-1b, pair COO @30ed1c8b83 + CTO @138b152f2a) continues across the boundary. ft is held (Andrew-direct @b023b75324).
+
+Issuer `2.0.0_SA_COO~H`. Series **`at`**.
+- **Fan-out:** 1 of 2 chains, cap 8. One worker, `~95`, on at-1; two issuer acts. at-2 chains after at-1.
+- **Ruling 2 (standing, no cell):** a transport-class stop on any leg is resumed by the issuer from the leg's own checkpoint, as
+  the same run.
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-at-1` | `at-1` | **Batched listing upload** (row Z-S86, ruling 1). `HarvestUploader._run_listings` makes ONE `silver_append` per SOURCE per pass, at the batch's greatest run_stamp, isolating untableable rows locally first, exactly as the article path does since HVST-ai-5. Plants: identical silver ROWS on a planted set (only the object count differs) and prefix reads = 1 per source per pass. Timing control: 100 listing pages, old against new. | LOCAL | worker `~95` |
+| `HVST-at-2` | issuer act, after at-1 merges | **The landing:** place `R46_STOP_SA_BARRONS`, `R46_STOP_BBG` and `R46_STOP_WSJ`; wait until every driver ends after its current job (no harvest code lands while a leg runs, because each job spawns from the working tree); merge; then resume each leg from its OWN checkpoint, as the same run (CTO condition 1). ft stays held. | WORLD (the run's own legs) | `2.0.0_SA_COO~H` |
+| `HVST-at-3` | issuer act, at the round-47 drain | **The per-leg report** (condition 4): concluded and stopped jobs by status out of 191, plus `publisher_universe_verdicts` per publisher (`round46/as-1b.report.py`). | LOCAL read | `2.0.0_SA_COO~H` |
+
+**Checks dry-run at the base before the cut:**
+- `round47/checks/at-1.AC2.py` base: FAIL as expected (the timing control is absent).
