@@ -3386,6 +3386,27 @@
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "Task order RIV-lg-1 section 2: an overflow on one name is exit 2, never a traceback.",
     "world_is": "Never a traceback, and beside any landed fund it is PARTIAL / exit 2. When the plan for the day holds only the overflowing control (a controls-only backfill date), no capture is OK, so the batch is FAILED and the exit is 3 (nothing landed as OK), with the fund named in detail.failures. _finish and exit_code are outside this order's paths in intent (status semantics for every leg); not changed."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W5-S33",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~5",
+    "surfaced_at": "2026-10-04T23:11:00Z",
+    "one_line": "RIV-gc-1 changes what the grader accepts (an uncited fact is attached), so I bumped GRADER_VERSION grounding_check/5 -> /6, which the order did not say; a re-grade of the 2026-10-02 run now writes run id <run>-rg6, and test_r6r6_quoted_name's version assertion moved to /6.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/ai_accounts.py (branch wk-ETFS_RIVALS-5): GRADER_VERSION; regrade_rows builds new_id from it",
+        "data/etfs/scripts/rivalfunds/tests/test_r6r6_quoted_name.py: assert ai.GRADER_VERSION == grounding_check/6",
+        "package suite from data/etfs/scripts: 605 passed 2 skipped 0 failed"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-gc-1 interface: attach_uncited, run_chain and regrade_rows call it; no version bump named. The order lists test_r6r6_quoted_name.py among its paths.",
+    "world_is": "A grade produced with the attach step is a different grade rule from /5; the record (manifest grader field, re-grade run suffix) should say so. PROMPT_VERSION left at a1-chain/5: the prompt text is unchanged. If the issuer would rather keep /5, revert one constant and one test line."
   }
 ]
 ```
