@@ -18217,3 +18217,80 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "MEASURED: with the instance restarted and then stopped again before the refresh, the refresh's own start-then-hand-over fails at all three firms; the directory is still served from the 2026-09-25 build."
 }
 ```
+
+## IRPT_BCKEND-W127-S1 -- irpt-performance-adapter cannot be built at base or now: the ADHC_DRIFTD.002 parity gate refuses three source_dir files absent from files[]
+
+```json
+{
+  "id": "IRPT_BCKEND-W127-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~127",
+  "surfaced_at": "2026-10-05T13:00:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "irpt-performance-adapter cannot be built at base or now: the ADHC_DRIFTD.002 parity gate refuses three source_dir files absent from files[]",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P (the release plan for halves for irpt-performance-adapter: register build_candidate.py, build_dependencies.py and cot_probe.py in files[] or rule them out, before any deploy build)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "BUILD_ONLY build of irpt-performance-adapter after the re-pin: 'ERROR: ADHC_DRIFTD.002 parity check failed ... + build_candidate.py + build_dependencies.py + cot_probe.py' (source_dir infra/aws/lambda/investor-reporting/performance), PARTIAL 0 built; the gate reads files[] which the re-pin does not touch, so base fails identically",
+      "census built with BAU_PARITY_SKIP=1, BUILD_ONLY, nothing uploaded; recorded in org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~127/R56_REPIN_CENSUS.json functions.irpt-performance-adapter.build_note"
+    ]
+  },
+  "spec_asserts": "IB-pr-324 step 2: BUILD_ONLY=1 bash build-and-upload.sh investor-reporting <fn> builds each re-pinned function without override.",
+  "world_is": "MEASURED: irpt-performance-adapter's build refuses on the parity gate, so its census (2 changed members, 0 riders, 49 modules import clean) is of a BAU_PARITY_SKIP=1 bundle; a real build and deploy of that function hits the same refusal until files[] is settled."
+}
+```
+
+## IRPT_BCKEND-W127-S2 -- The order's worker face lists five functions, but the plan's repin lists, the checker and the user bound cover seven: irpt-performance-adapter (holdings_gold.py, loaders.py) and irpt-ycharts-generate (four members) were also re-pinned
+
+```json
+{
+  "id": "IRPT_BCKEND-W127-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~127",
+  "surfaced_at": "2026-10-05T13:00:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The order's worker face lists five functions, but the plan's repin lists, the checker and the user bound cover seven: irpt-performance-adapter (holdings_gold.py, loaders.py) and irpt-ycharts-generate (four members) were also re-pinned",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "REPIN_PLAN_R55.json proposal: repin non-empty for 7 functions (49f, directory-search, export-render, holdings, performance-adapter, status, ycharts-generate); only irpt-narrative is empty",
+      "p56_repin.py AC1 iterates every function in the plan and AC2/AC3 want all 7 in the census; 20 pins moved = the sum of the repin lists",
+      "order text names 49f, status, export-render, directory-search, holdings only (14 pins)"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-324 WORKER FACE: 'The approved set is exactly the repin lists' followed by five functions (14 pins).",
+  "world_is": "MEASURED: the repin lists total 20 pins over 7 functions; I moved all 20 (the plan, the checker and the instruction to move only proposal[fn].repin agree), and none of the 6 held_rider / held_dependency pins moved. If the CTO's batch 260 meant the five only, irpt-performance-adapter and irpt-ycharts-generate (6 pins) revert with one re-run of the re-pin script."
+}
+```
+
+## IRPT_BCKEND-W127-S3 -- Attribution of a source_dir member (irpt-export-render bundle.py) has no pin to read git log from; attributed by content-match to the commit whose blob equals the live member
+
+```json
+{
+  "id": "IRPT_BCKEND-W127-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~127",
+  "surfaced_at": "2026-10-05T13:00:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Attribution of a source_dir member (irpt-export-render bundle.py) has no pin to read git log from; attributed by content-match to the commit whose blob equals the live member",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "irpt-export-render census: bundle.py changed vs live is not a staged_from row; `git log -- infra/aws/lambda/investor-reporting/export/bundle.py` shows 73d0bbc37b (TO-IB-pr-317, ~120) after b66691eb1b whose blob equals the live member",
+      "recorded in org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~127/R56_REPIN_CENSUS.json with basis.live_matches_commit"
+    ]
+  },
+  "spec_asserts": "IB-pr-324 step 2: order = the order id whose commits produced the change, read from `git log <old pin>..<head> -- <path>`.",
+  "world_is": "MEASURED: for a non-pinned member there is no old pin, so the live-matching commit stands in as the old pin; bundle.py is attributed to IB-pr-317 (0 riders). The same method applied to every non-pinned changed member in the 7 functions: bundle.py is the only one."
+}
+```
