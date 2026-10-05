@@ -1,7 +1,7 @@
 # FEASIBILITY ANALYSIS -- running the Analysis-tab report generation in house, without YCharts
 
-- **Author:** `4.0.0_SA_CRO` (base), 2026-10-05 ~20:0xZ (4:0x PM Eastern).
-- **Order:** Andrew-direct 2026-10-05 ~19:4xZ, verbatim in
+- **Author:** `4.0.0_SA_CRO` (base), 2026-10-05 ~19:4xZ (3:4x PM Eastern).
+- **Order:** Andrew-direct 2026-10-05 ~19:3xZ, verbatim in
   `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261005_194xZ_YCHARTS_INHOUSE_FEASIBILITY_ANALYSIS.md`.
 - **Input:** `2.0.0_SA_COO~Y`'s handoff,
   `org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~Y/HANDOFF_TO_CRO_ONPREM_GENERATION_20261005.md`
@@ -219,5 +219,5 @@ Stage 6 is a one-time check. A standing comparison against YCharts is barred (CL
                     research/layout_overview.py (function index); IRPT_MVP_Y/Y6/Y6_BACKEND_SUMMARY.md;
                     integrations/bloomberg/READ_HERE.md; S3 and DynamoDB reads listed in section 2
   OPEN FOR ANDREW   section 8, five decisions
-  MEASURED AT       2026-10-05 19:4xZ to 20:0xZ
+  MEASURED AT       2026-10-05 19:3xZ to 19:4xZ
 ```

@@ -1,4 +1,4 @@
-# Andrew-direct, 2026-10-05 ~19:4xZ (3:4x PM Eastern), at the 4.0.0_SA_CRO terminal -- VERBATIM
+# Andrew-direct, 2026-10-05 ~19:3xZ (3:3x PM Eastern; the file name's 194x stamp is approximate), at the 4.0.0_SA_CRO terminal -- VERBATIM
 
 Channel: typed by Andrew into the 4.0.0_SA_CRO (base) session, mid-startup, after the device reboot.
 
