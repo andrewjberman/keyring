@@ -18134,3 +18134,32 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "MEASURED: bucket_for (loaders.py:57) raises it for a firm absent from IRPT_DIRECTORY_BUCKET_MAP (an unmapped firm: FIRM_BINDING fits); opaque_firm_for (loaders.py:209 at 7c1fd584bc) raises it when the artifact lacks firm_id_opaque (a NOT_READY-shaped fault). Both now answer FIRM_BINDING. Out of scope to split (a new class is a ruling); the issuer rules."
 }
 ```
+
+## IRPT_BCKEND-S333 -- DISARM of S218: three live-build jobs reached READY without spending the session_refresh allowance
+
+```json
+{
+  "id": "IRPT_BCKEND-S333",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-05T05:55:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARM of IRPT_BCKEND-S218 on its own condition: three jobs on the LIVE resident build reached READY without consuming the one session_refresh allowance at fence 1 or at any fence -- REQ-a618aa83 (READY 10-04 02:28Z), REQ-c1b53772 (READY 10-05 01:37Z) and REQ-777d7546 (last intent 10-05 05:16Z, report RPT-365b1228). Each carries no intent_session_refresh on its irpt-jobs row; their first intents (holdings_upload, portfolio_create) are at fence 1 and report_create at fence 2. The last session_refresh claim in the table is REQ-06185d70 at fence 1, 10-03 00:31Z, ATTENTION, before the re-seed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "DynamoDB irpt-jobs read-only Scan 2026-10-05 ~05:4xZ: 35 rows, 15 READY, 10 carrying intent_session_refresh; the 4 named READY jobs carry none (intent records written by durable_job.py:159-184 claim_intent)",
+      "resident host i-0167fd745ad906a66 package /opt/irpt-resident/3f29017cfc-st21 installed 2026-10-04T02:00:42Z, process started 02:01:04Z (read-only SSM cat/ls/grep); live SHA256SUMS of resident_worker.py, durable_job.py and resident_main.py equal the repo at HEAD, and the one-refresh check is still in code (resident_worker.py:174-175, :256), so an absent intent is a refresh not consumed, not a removed check",
+      "irpt-ycharts-generate CodeSha256 uFTONal/... LastModified 2026-10-04T01:57:24Z",
+      "REQ-329a5618 (READY 10-03 17:03Z) also carries no session_refresh intent, but it ran before the 10-04 install, so it is supporting and not live-build evidence"
+    ]
+  },
+  "dismissal_reason": "The row's named disarm condition is met on the live build three times. The one-refresh-per-request allowance is unchanged in code. A future job that must refresh at fence 1 (a session evicted before the job starts) would re-arm the hazard and is a new row; the CTO allowance question is held until that happens.",
+  "spec_asserts": "IRPT_BCKEND-S218: a job whose first act is a session refresh spends its only allowance and dies on the next eviction; 2 of 2 jobs on inrij6hL did so.",
+  "world_is": "MEASURED: on the live resident (3f29017cfc-st21, since 10-04 02:01Z), 3 of 3 READY jobs consumed no session_refresh."
+}
+```
