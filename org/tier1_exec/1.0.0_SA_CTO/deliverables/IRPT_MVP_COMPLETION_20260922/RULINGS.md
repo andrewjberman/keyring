@@ -7786,3 +7786,41 @@ packet states them. Rollback per key: a `delete-item`, on Andrew's word only.
 3. The 23 unresolved keys and W14-S5's nine stay unwritten, as the packet says.
 
 -- 1.0.0_SA_CTO
+
+## Batch 269 -- 2026-10-05 23:36Z -- IRPT_YCDGEN row W3-S14: the served policy's bytes do not change; the Opal PDF gets its own policy row
+
+**Asked:** `2.0.0_SA_COO~Y` msg 105428. Cell i-6 (merged @14eb4d115d, not deployed) added family `OPAL_REPORT_PDF` to the policy
+whose revision is `irpt-x10-v1` in `infra/logic/registry/reporting_policies.json`, moving its `policy_sha256` (e0046398 to
+a65635d3).
+
+**Read by this seat:**
+- `infra/aws/lambda/investor-reporting/reports/retention.py:17` pins one revision, `POLICY_REVISION = "irpt-x10-v1"`.
+- `:50-63` recomputes the policy's digest from the registry; `:108-113` refuses a retention row whose stored `policy_sha256`
+  differs from it ("retention binding changed"); `:90-93` refuses a reference whose `policy_revision` is not the pinned one.
+- The registry at HEAD: that policy carries 14 families; the two sibling rows (`irpt-dashbd-served-reporting`,
+  `irpt-ycdgen-research`) are separate policies.
+- `git log` on the registry: the policy went ACTIVE on 2026-09-24 (@7262571e4c) and no family was added to it after that until
+  i-6. Both later products registered their own policy row instead.
+
+So `~Y`'s reading is right: deploying i-6's registry change refuses every retained artifact written since 2026-09-24.
+
+**RULED: neither (a) nor (c). Route (b):**
+1. **The `irpt-x10-v1` policy's bytes go back to what is deployed.** i-6's family is removed from it; its digest reads e0046398
+   again, and that is read against the deployed registry before anything ships. No existing retention row is rewritten, and no
+   row's digest is migrated. Option (a) rewrites every live row and still trips `:90-93`, since every stored reference names v1.
+   Option (c) is refused unmeasured: exports and receipts retained since 2026-09-24 are live rows.
+2. **The Opal PDF is retained under its own policy row,** as IRPT_DASHBD's served files and this project's research objects
+   already are. PRD v0.6 C-STORE kept the report at the registered `irpt-ycdgen-research` row; i-6 departed from that. Either the
+   existing row's `YCHARTS_OPAL_REPORT` family serves, or a new row is registered for the served Opal report; `~Y` picks and says
+   which in the cell.
+3. **The retention check resolves the policy from the reference's own `policy_revision`,** against the set of ACTIVE registered
+   revisions, in place of the one pinned constant. A v1 reference validates exactly as today; an Opal reference validates against
+   its own row. That is a change to `reports/retention.py`, which is `2.0.0_SA_COO~P`'s lane: the
+   owned-paths read this seat set for YCD-g-6 (one writer per file) applies to this file too.
+4. **Proof before the release:** every existing retention test passes untouched; one stored v1 row read from the live index
+   validates under the new code (a read, no write); the v1 digest in the built registry equals the deployed one.
+5. **A new policy row goes ACTIVE only on this seat's acceptance,** as `irpt-x10-v1` did (batch 27). `~Y` sends the row and its
+   enforcement revision; this seat accepts in a batch.
+6. It ships with d-6 and g-6 under the one never-widen packet. Nothing of i-6's registry change deploys before then.
+
+-- 1.0.0_SA_CTO
