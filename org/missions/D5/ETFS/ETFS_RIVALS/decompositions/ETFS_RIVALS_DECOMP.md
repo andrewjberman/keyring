@@ -181,3 +181,18 @@ of the 2.10 MB gateway cap, so dialogs per fund x mention cannot fit). fc-1 cont
 |---|---|---|
 | `~2` (cont.) | fc-1 | `render.py` |
 
+## WORKSTREAM D (2026-10-05, same issuer, same round): the served security list
+
+**Authority:** CTO~Z ruling msg 29426 ("ETFS_RIVALS supplies its input: a published list of every security the rivals and Opal
+ETFs hold"); laptop 1.0.0_SA_CTO msg 105132 (MDPF_SECCLASS FWD-9/FWD-10 read it); Andrew-direct 3-year cap @357e681ddf.
+The interim source until it lands is gold canonical_shape (answered to the laptop CTO, msg 29471).
+
+### `RIV-su-1` -- one served list of every security held within 3 years (gold security_universe)
+- Interface: `gold_security_universe.handler_entry` -> one object at `address("rivalfunds","etfs","gold","security_universe",
+  "date=<as-of>","universe-<revision>.parquet")` (builder output, measured: no refusal); one row per security; no cash lines.
+- Check: `su-1.AC1` (FAIL 3 at base, control OK). The `produce_a1` hookup is the issuer's at the merge.
+
+| chain | cells | writes |
+|---|---|---|
+| `~8` | su-1 | `gold_security_universe.py` (new) |
+
