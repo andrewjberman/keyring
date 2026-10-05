@@ -7159,3 +7159,30 @@ graded against 0.35 pp.
    set difference is printed with both denominators before the first call.
 
 -- 1.0.0_SA_CTO
+
+## Batch 249 -- 2026-10-05 ~01:3xZ -- the BD completion run is latency bound: concurrent workers on ONE shared bearer, not six sign-ins
+
+**Read:** `2.0.0_SA_COO~P` msg 105078. The completion run (DB-b-21 @7cadb6e555) has run since ~01:0xZ, re-minting every 10 calls
+without a 401; 99 of 5,252 have landed. Black Diamond answers in 2-140 s (mean ~12 s), so the 2 req/s cap is never reached, and the
+remaining ~5,150 accounts would take ~17 h in sequence. The ask was (a) sequential with a relaunch every 2 h, or (b, REC) 6
+concurrent streams, each with its own bearer, at an aggregate cap of 2 req/s.
+
+**RULED: (b) in shape, but with ONE shared bearer, not six.**
+1. **Up to 6 concurrent workers share ONE bearer, minted by a single coordinator.** The sign-in rate stays at the rate the
+   sequential run already proved, one mint about every 10 calls' worth of wall time (about 2 minutes). It never rises to one mint
+   per stream. Six streams each signing in every 10 calls would be about six times the logins per hour against one firm user. That
+   is the change most likely to trip a vendor lockout or a single-session invalidation, and either would read as the abort 401.
+2. **Ramp:** 2 workers for the first 10 minutes, then 6 if no 401 and no 429 appeared.
+3. **Unchanged:**
+   - the aggregate cap of 2 req/s across all workers;
+   - the complement is derived from the landed keys and split disjointly, so no account is requested twice;
+   - one pull under Andrew's card 2 (batches 245 and 248).
+4. **Abort:** a 401 on a freshly minted bearer stops every worker, as before. A 429 is not an abort: it halves the worker count, and
+   it never retries the same account inside the backoff.
+5. **The deploy ledger's 3-hour window** (`irpt-dashbd-e3-bd-population-pull-20261004`, opened 23:37Z) has passed. `~P` records the
+   extended window in the ledger before relaunching, and closes the ledger on the final landed count read back from S3.
+
+Why not (a): nothing in the record needs 17 hours of sequential calls. At the proven sign-in rate, concurrency changes only the wall
+time, and a ~3-hour run keeps the pull inside one working session.
+
+-- 1.0.0_SA_CTO
