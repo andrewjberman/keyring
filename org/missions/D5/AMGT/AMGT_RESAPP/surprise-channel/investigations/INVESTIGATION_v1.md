@@ -17469,5 +17469,27 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   ]
  },
  "disposition": "UNDER_INVESTIGATION"
+}
+,
+{
+ "id": "AMGT_RESAPP-Z-W223-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~223",
+ "surfaced_at": "2026-10-05T01:10:16Z",
+ "one_line": "lib/research/api/tests/ has one failing test at the issuance pin, outside this order's cells: test_model_words.py::test_formula_words_equals_the_pages_own_function_run_in_node reads portal ModelTab.tsx for `function formulaInWords` and the pinned portal (6936e92b) does not carry that function, so re.search returns None.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "The order asks for the api suite's last line before commit and implies the suite is otherwise green; the cut states the portal fixture the api tests read is present at --portal-ref 6936e92b.",
+ "world_is": "Full run `python -m pytest -q lib/research/api/tests/` in C:/tmp/r68-223 after the AMGT-ar-1 change: '1 failed, 556 passed'. The one failure is test_model_words.py:63 `AttributeError: 'NoneType' object has no attribute 'group'` from re.search(r\"function formulaInWords\\(formula: string\\): string \\{(.*?)\n\\}\", src, re.S) over portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx; grep for formulaInWords in that file returns no match. The test reads no word-cloud code and the change touches only scoped_amgt word-cloud functions; the pre-change run on the base could not be taken (git stash is hook-blocked here).",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "pytest tail: FAILED lib/research/api/tests/test_model_words.py::test_formula_words_equals_the_pages_own_function_run_in_node - AttributeError: 'NoneType' object has no attribute 'group'; 1 failed, 556 passed in 106.31s.",
+   "grep -n formulaInWords portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx at portal HEAD 6936e92b546f3fb79de220a63705b56365f143d3: no output."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
 }]
 ```
