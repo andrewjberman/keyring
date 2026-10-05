@@ -1,13 +1,12 @@
 {
   "prd": "MDPF_SECCLASS_PRD.md",
-  "prd_version": "v0.5",
-  "prd_pin": "de649aa5b6977724f7dd31a443f839a84b71dc2f",
+  "prd_version": "v0.6",
+  "prd_pin": "a36bc94920d3ddbe6f35648aeaf6eb4717a55eca",
   "half": "ratified-text",
-  "half_hash": "70f99f49abc11f80bf71c63aa6f0ce68e358a594b777554ca26ff7f9e7646d88",
-  "endpoint_hash": "c3800db3561a849c428d68fa35a20c6061be729ba14b36833e23f43ad435b4f5",
-  "verdict": "REFUSED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/MDPF_SECCLASS_PRD_V05_RATIFIED_TEXT_REVIEW_20261005.md@4d959d5ee5",
+  "half_hash": "00ce8ad504343b897700456da384491c70e01cca6d0e6fad15b6154988d3b315",
+  "endpoint_hash": "407b3f29cd50b52b5f2df64d47e86a2a6eb7d4260937a5041faf18976e9edad6",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/MDPF_SECCLASS_PRD_V05_RATIFIED_TEXT_REVIEW_20261005.md@1b943327e3",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-10-05T21:11:18Z",
-  "reason": "Two lines of form inside the ENDPOINT block: FWD-6 SOURCE carries a dated history clause (lines 83-85) and FWD-12 SOURCE a seat serial (line 155); the outcomes are within Andrew's words"
+  "signed_at": "2026-10-05T21:16:23Z"
 }
