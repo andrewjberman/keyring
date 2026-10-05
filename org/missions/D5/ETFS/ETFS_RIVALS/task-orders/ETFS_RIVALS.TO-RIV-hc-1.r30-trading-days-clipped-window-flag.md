@@ -89,3 +89,4 @@ Write the instance at `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ET
 <slot>~6</slot>
 <fabric>site-z</fabric>
 <status>executing</status>
+<status>complete</status>
