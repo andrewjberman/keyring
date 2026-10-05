@@ -37,6 +37,12 @@ comp-adversary: DECLARED-NOT-APPLICABLE the validator-context composer profiles 
   ask the never-widen pair -- 2.0.0_SA_COO~RV and 1.0.0_SA_CTO~Z -- with the plan text and the before/after policy documents.
 - Apply with `safe-apply` from a saved plan; open and close a NEVER-2 ledger entry (`.tools/deploy_ledger.py`), committing its sentinel
   at open.
+- (Issuer amendment, 2026-10-05 23:2xZ.) The plan changes the two role policies ONLY -- zero Lambda code changes. CLOUD now carries
+  round-10 code (RIV-eg-1, RIV-ok-1) that must NOT deploy before the issuer's G5 replay, and `lambdas.tf` hashes the package staged
+  under `<tree root>/.runtime/rivalfunds-build`. So stage that package at the deployed pin b8b47bb8e7 (`git worktree add <path>
+  b8b47bb8e7`, apply the policy edit there, run `python infra/aws/lambda/etfs-pipeline/rivalfunds_package.py` there, plan there), or plan with
+  `-target` on the two role-policy resources. Live code today: daily CGLr1BNO, fetch nhBoabXY, canonical wLYfa47Z, silver CTEET1+c,
+  publish RBRmqCj9 -- a plan naming any `source_code_hash` change is wrong.
 
 ## 3. SURFACES AND BOUNDS
 
