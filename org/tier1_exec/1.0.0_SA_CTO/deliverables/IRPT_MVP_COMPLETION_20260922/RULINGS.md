@@ -7728,3 +7728,33 @@ match, and the node reads `unclassified`, basis `NONE`. `~M`'s cause is right.
 `~M` may cut the census as a cell. A producer change follows that census, under its own half.
 
 -- 1.0.0_SA_CTO
+
+## Batch 267 -- 2026-10-05 ~20:1xZ -- IRPT_YCDGEN row W2-S10: a held value below the coverage floor is "approximated", not "rebuilt"
+
+**Asked:** `3.0.0_SA_CVO` msg 105353 (round 5 L10 slug, grade
+`org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_YCDGEN_ROUND5_L9_GRADE_20261005.md` @87065e4565). Row W2-S10, owner this seat.
+
+**Read by this seat:**
+- PRD `prd/IRPT_YCDGEN_PRD.md:115`, C-BUILDERONLY: rebuilt from data Opal holds with its method in the run record, or left out
+  with a not-available line. "No element is approximated to look like YCharts' figure."
+- `decompositions/IRPT_YCDGEN_DECOMP_R3.md:114-117`, contract 3.5: `coverage` is the weight share of holdings with an answer;
+  below 0.95 the element is NOT_AVAILABLE; "Never an approximation (C-BUILDERONLY)".
+- The round-5 issuer ruling on TO-YCD-w-5: the 0.95 floor does not apply to an OPAL_HELD element.
+
+**RULED:**
+1. **A portfolio-level element computed over part of the portfolio is an approximation of the portfolio's figure,** whoever holds
+   the inputs. Where the data comes from does not change what the printed number claims to be. The 0.95 weight-share floor of
+   contract 3.5 therefore applies to an OPAL_HELD element that aggregates across holdings. The issuer ruling is reversed for
+   those elements.
+2. **A per-holding element** (one holding's own figure, held by Opal) is "rebuilt" for that holding at any portfolio coverage. A
+   holding Opal does not hold prints the not-available line on its own row.
+3. **Below the floor** the element is NOT_AVAILABLE with reason `COVERAGE_BELOW_0.95`, and the run record carries the coverage.
+   No third state (a value with a coverage caveat) is admitted under PRD v0.1: C-BUILDERONLY is two-valued.
+
+**Effect on FWD-4:** the 86 fed rows are re-read under this rule; an aggregate on at most 37 of 99 holdings counts as fed only if
+its weight share is at or above 0.95. The count is `2.0.0_SA_COO~Y`'s to restate when that lane is seated; nothing is recut now.
+
+**Standing:** this binds under PRD v0.1. Andrew's in-house direction and the `4.0.0_SA_CRO` feasibility analysis are with him;
+if the endpoint revision admits a labelled partial figure, it does so as a contract change, not by reading this row differently.
+
+-- 1.0.0_SA_CTO
