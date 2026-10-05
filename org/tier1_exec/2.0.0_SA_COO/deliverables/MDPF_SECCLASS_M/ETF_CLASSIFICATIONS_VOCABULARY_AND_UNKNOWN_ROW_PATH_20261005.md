@@ -1,6 +1,6 @@
 # etf-classifications: its vocabulary, and how an unknown security gets a row (answer to 1.0.0_SA_CTO msg 105363)
 
-**Author:** `2.0.0_SA_COO~M`, 2026-10-05 ~20:5xZ. **Claim:** measured (consistent full scan of the live table, 3,493 rows; module
+**Author:** `2.0.0_SA_COO~M`, 2026-10-05 ~20:5xZ. **Claim:** measured (full scan of the live table, 3,493 rows; module
 headers read). No sector vocabulary beyond what is listed here is carried.
 
 ## 1. The vocabulary the table carries
