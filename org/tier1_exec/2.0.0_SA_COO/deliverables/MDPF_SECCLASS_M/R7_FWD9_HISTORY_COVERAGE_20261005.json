@@ -1,0 +1,5528 @@
+{
+ "cell": "SC-e-18",
+ "run_day": "2026-10-05",
+ "window_cap_start": "2023-10-05",
+ "target_start": "2023-10-05",
+ "target_rule": "max(run_day - 3 years, first trading day); first trading day not knowable from security_market",
+ "security_market": {
+  "identity_columns": [
+   "security_id",
+   "security_bloomberg"
+  ],
+  "joined_on": "security_bloomberg, then security_id",
+  "partitions": 3,
+  "first_partition": "2026-09-29",
+  "last_partition": "2026-10-02",
+  "files": [
+   {
+    "partition": "2026-09-29",
+    "file": "market-20260929-53bc393958bd.parquet",
+    "bytes": 29661,
+    "rows": 434,
+    "px_close_nonnull": 430
+   },
+   {
+    "partition": "2026-09-29",
+    "file": "market-20260929-afcd903ad844.parquet",
+    "bytes": 11511,
+    "rows": 172,
+    "px_close_nonnull": 0
+   },
+   {
+    "partition": "2026-10-01",
+    "file": "market-20261002T111038Z-34d2fc770ae5.parquet",
+    "bytes": 11098,
+    "rows": 32,
+    "px_close_nonnull": 32
+   },
+   {
+    "partition": "2026-10-02",
+    "file": "market-20261004T110545Z-ea632b9bca87.parquet",
+    "bytes": 46943,
+    "rows": 601,
+    "px_close_nonnull": 597
+   }
+  ]
+ },
+ "universe_source": {
+  "canonical_files": 1169,
+  "canonical_days": 504,
+  "rows": 300030
+ },
+ "counts": {
+  "stocks": 781,
+  "covered_3y": 0,
+  "starts_late": 497,
+  "no_series": 284,
+  "beyond_cap": 0
+ },
+ "stocks": [
+  {
+   "security_bloomberg": "000270 KS Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "000333 CH Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "000660 KS Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "005380 KS Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "005385 KS Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "005930 KS Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "005935 KS Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "012450 KS Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "030000 KS Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "030200 KS Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "032640 KS Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "032830 KS Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "033780 KS Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "051910 KS Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "078930 KS Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "086790 KS Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "1 HK Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "105560 KS Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "11 HK Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "1109 HK Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "1113 HK Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "1128 HK Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "1299 HK Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "1308 HK Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "1339 HK Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "1605 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "168 HK Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "175 HK Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "1801 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "1878 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "1925 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "1928 HK Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "1929 HK Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "2006 TT Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "2020 HK Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "2181 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "2269 HK Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "2282 HK Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "2282 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "2318 HK Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "2328 HK Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "2330 TT Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "2331 HK Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "2345 TT Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "2347 TT Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "2385 TT Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "2388 HK Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "2395 TT Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "2454 TT Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "2502 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "2503 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "2587 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "2597868D JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "2603718D SM Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "2653282D FP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "2663721D SM Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "27 HK Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "2802 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "285A JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "288 HK Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "2897 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "2914 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "293 HK Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "3003 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "300750 CH Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "3099 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "3231 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "3289 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "3382 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "3407 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "3491 TT Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "352820 KS Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "3626 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "3653 TT Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "3659 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "3690 HK Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "3774 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "388 HK Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "4063 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "4091 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "4151 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "4183 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "4188 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "4307 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "4502 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "4507 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "4519 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "4528 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "4568 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "4578 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "4613 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "4704 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "4716 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "4768 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "4901 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "5020 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "5108 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "5110 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "5201 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "522 HK Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "5333 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "5334 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "5706 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "5713 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "5803 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "5838 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "5904 TT Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "5929 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "600519 CH Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "600660 CH Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "601100 CH Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "6098 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "6121 TT Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "6146 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "6147 TT Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "6176 TT Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "6273 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "6301 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "6305 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "6367 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "6448 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "6475395Z GR Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "6501 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "6503 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "6532 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "6586 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "6594 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "669 HK Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "6701 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "6702 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "6724 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "6752 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "6758 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "6841 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "6861 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "6902 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "6923 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "6954 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "6988 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "700 HK Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "7011 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "7013 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "7164 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "7181 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "7182 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "7259 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "7261 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "7267 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "7269 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "7270 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "7272 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "7735 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "7741 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "7751 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "7752 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "7974 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "8001 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "8015 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "8031 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "8035 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "8053 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "8058 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "8069 TT Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "8227 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "823 HK Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "8283 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "8306 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "8308 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "8316 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "8354 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "8411 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "8439 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "8473 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "8591 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "8630 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "8697 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "8725 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "8729 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "8750 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "8766 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "8795 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "8801 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "8802 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "8830 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "9101 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "9107 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "914 HK Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "9147 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "9201 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "939 HK Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "9404 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "9433 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "9434 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "9435 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "9502 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "9503 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "9506 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "9513 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "9531 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "9532 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "960 HK Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "9719 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "9766 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "9843 JP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "9888 HK Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "992 HK Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "9983 JP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "9988 HK Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "9999 HK Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "AAGIY US Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "AAL LN Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "AAPL US Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "ABBN SW Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "ABEV3 BZ Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "ABI BB Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "ABN NA Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "ABNB US Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "ABT US Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "ABX CN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "AC* MM Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "ACEVECTO IN Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "ACGL US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "ACKB BB Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "ACN US Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "ACS SM Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "AD NA Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "ADANI IN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "ADBE US Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "ADCB UH Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "ADIB UH Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "ADM LN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "ADP US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "ADS GR Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "ADVANC-R TB Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "ADVANC/F TB Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "ADYEN NA Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "ADYEY US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "AEM CN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "AENA SM Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "AGI PM Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "AGPXX US Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "AHT LN Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "AI FP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "AIR FP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "AJG US Equity",
+   "first": "2026-09-29",
+   "last": "2026-09-29",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "AKRBP NO Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "AKZA NA Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "ALC SW Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "ALD AU Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "ALFA SS Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "ALV GR Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "AMC AU Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "AMCR US Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "AMD US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "AMP IM Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "AMRZ SW Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "AMS SM Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "AMV0 GR Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "AMX US Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "AMZN US Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "AON US Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "APP US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "ARNB AB Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "AS US Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "ASM NA Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "ASML NA Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "ASML US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "ASRNL NA Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "ASSAB SS Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "ATCOA SS Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "ATD CN Equity",
+   "first": "2026-09-29",
+   "last": "2026-09-29",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "ATI US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "ATM NZ Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "AUGO US Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "AV/ LN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "AVGO US Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "AXFO SS Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "AXON US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "AXSB IN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "AZN LN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "BA/ LN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "BAB LN Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "BABA US Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "BAP US Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "BAS GR Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "BATS LN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "BAYN GR Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "BBAS3 BZ Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "BBCA IJ Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "BBD/B CN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "BBRI IJ Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "BBSE3 BZ Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "BBVA SM Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "BC8 GR Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "BCE CN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "BDMS-R TB Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "BE US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "BEI GR Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "BG US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "BHARTI IN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "BHP AU Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "BIM FP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "BIP US Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "BJAUT IN Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "BKD US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "BKR US Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "BKT SM Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "BME LN Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "BMED IM Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "BMRI IJ Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "BMW GR Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "BN CN Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "BN FP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "BNP FP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "BNR GR Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "BNS CN Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "BP/ LN Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "BPAC11 BZ Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "BSL AU Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "BSX US Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "BT/A LN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "BTRW LN Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "BURSA MK Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "BVT SJ Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "BZ US Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "CA FP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "CABK SM Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "CACI US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "CAP FP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "CARLB DC Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "CAST SS Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "CB US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "CBK GR Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "CCH LN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "CCO CN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "CFR SW Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "CHD US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "CHMF RM Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "CM CN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "CME US Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "CMIG4 BZ Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "CMQXX US Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "CNQ CN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "CNR CN Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "COLOB DC Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "CON GR Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "CP CN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "CPA US Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "CPG LN Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "CPN-R TB Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "CPU AU Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "CRS US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "CS FP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "CSG NA Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "CSGP US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "CSU CN Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "CVC NA Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "CVE CN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "CVNA US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "DASH US Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "DB1 GR Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "DBK GR Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "DBS SP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "DDOG US Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "DEO US Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "DG FP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "DGCXX US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "DGE LN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "DGVXX US Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "DHL GR Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "DHLGY US Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "DIB UH Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "DNB NO Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "DPLM LN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "DSV DC Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "DSY FP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "DSY SJ Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "DTE GR Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "DXCM US Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "EBAY US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "EBS AV Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "EDEN FP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "EDV CN Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "EGIE3 BZ Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "EL FP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "ELE SM Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "ELISA FH Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "EMBASSY IN Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "EME US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "EMIRATES UH Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "EN FP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "ENEL IM Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "ENGI FP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "ENI IM Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "ENR GR Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "ENT LN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "ENTG US Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "ENX FP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "EOAN GR Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "EPIA SS Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "EQNR NO Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "ERICB SS Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "ESSITYB SS Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "ETOR US Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "EVD GR Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "EVK GR Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "EVN AU Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "EVO SS Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "EXPN LN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "FBK IM Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "FCX US Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "FER SM Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "FIBRAPL MM Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "FME GR Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "FMG AU Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "FORTUM FH Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "FRE GR Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "FRES LN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "FTIXX US Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "FTNT US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "G IM Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "G1A GR Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "GAPB MM Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "GDDY US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "GE US Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "GENI US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "GENS SP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "GEV US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "GFNORTEO MM Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "GIL CN Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "GJF NO Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "GLE FP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "GLEN LN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "GMEXICOB MM Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "GNS LN Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "GOOG US Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "GOOGL US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "GRFS US Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "GSK LN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "GTT FP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "GULF-R TB Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "GVMXX US Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "GWO CN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "GXYYY US Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "HCLT IN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "HDB US Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "HDFCB IN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "HEI GR Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "HEXAB SS Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "HIK LN Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "HKXCY US Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "HLN LN Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "HLN US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "HMB SS Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "HMCL IN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "HNR1 GR Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "HO FP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "HOLMB SS Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "HOLN SW Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "HOT GR Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "HSBA LN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "HSX LN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "HTHT US Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "HUSQB SS Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "HVN AU Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "HWM US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "IAG AU Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "IAG CN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "IAG LN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "IBE SM Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "IBE/D SM Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "IBKR US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "IBN US Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "ICE US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "ICT PM Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "IDXX US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "IHG LN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "III LN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "IJGXX US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "IMB LN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "IMP SJ Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "INDT SS Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "INDUSTOW IN Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "INFO IN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "INGA NA Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "INTU US Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "INTUCH-R TB Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "INVEB SS Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "IOCL IN Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "IOT US Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "IQCD QD Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "ISRG US Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "ITC IN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "ITCHOTEL IN Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "ITRK LN Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "ITSA4 BZ Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "ITUB4 BZ Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "ITX SM Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "IVN CN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "JAN US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "JAR LN Equity",
+   "first": "2026-09-29",
+   "last": "2026-09-29",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "JARIR AB Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "JBH AU Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "JCNC SP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "JD US Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "KB US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "KBANK-R TB Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "KBC BB Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "KBX GR Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "KESKOB FH Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "KIMBERA MM Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "KLBN11 BZ Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "KLBN4 BZ Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "KMB IN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "KNEBV FH Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "KNIN SW Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "KOFUBL MM Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "KOG NO Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "KPN NA Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "KRX ID Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "KTB-R TB Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "LHA GR Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "LIN US Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "LLOY LN Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "LLY US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "LOGN SW Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "LPP PW Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "LR FP Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "LRCX US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "LSEG LN Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "LTMC IM Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "LUMI IT Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "MA US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "MAERSKA DC Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "MAERSKB DC Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "MAP SM Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "MAR US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "MBG GR Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "MC FP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "MCK US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "META US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "MFC CN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "MICC LN Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "MICC NA Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "ML FP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "MONC IM Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "MOTV3 BZ Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "MOWI NO Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "MPL AU Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "MRK GR Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "MSCI US Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "MSFT US Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "MTD US Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "MTN SJ Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "MTX GR Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "MU US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "MUV2 GR Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "NBIS US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "NED SJ Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "NEM US Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "NEOE3 BZ Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "NESN SW Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "NET US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "NFLX US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "NHY NO Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "NKE US Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "NN NA Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "NOKIA FH Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "NOVN SW Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "NOVOB DC Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "NOW US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "NTGY SM Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "NTR CN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "NU US Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "NVDA US Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "NVO US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "NWG LN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "NXT LN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "NXT US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "OCBC SP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "OCDO LN Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "OMV AV Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "OR FP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "ORA FP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "ORCL US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "ORDS QD Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "ORG AU Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "ORK NO Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "ORNBV FH Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "OTIS US Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "OUT SJ Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "PAAS CN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "PAYC US Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "PBR US Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "PG US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "PLNG IN Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "PLUS LN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "PLX FP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "PM US Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "PNDORA DC Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "POLI IT Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "PRU LN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "PRX NA Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "PRY IM Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "PSON LN Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "PSSA3 BZ Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "PTTEP-R TB Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "PUB FP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "PWGR IN Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "PWR US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "QAN AU Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "QBE AU Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "QBR/B CN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "QFLS QD Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "QSR CN Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "RAA GR Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "RARE US Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "RBI AV Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "RBLX US Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "REC IM Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "REL LN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "REP SM Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "RGA US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "RHM GR Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "RI FP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "RIO AU Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "RIO LN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "RKT LN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "RNO FP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "ROG SW Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "ROL US Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "ROP SW Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "RR/ LN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "RTO LN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "RWE GR Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "RY CN Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "RYAAY US Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "SAB SM Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "SABIC AB Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "SAF FP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "SAFCO AB Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "SAGAB SS Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "SAN FP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "SAN SM Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "SAND SS Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "SAP GR Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "SBER RM Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "SBERP RM Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "SBK SJ Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "SBRY LN Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "SBUX US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "SCAB SS Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "SCB-R TB Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "SCCO US Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "SCHN SW Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "SCI SP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "SCMN SW Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "SDR LN Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "SE US Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "SEBA SS Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "SEK AU Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "SGE LN Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "SGH AU Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "SGO FP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "SGSN SW Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "SGX SP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "SHBA SS Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "SHEL LN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "SHL AU Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "SHL GR Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "SHOP CN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "SIA SP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "SIE GR Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "SKFB SS Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "SLB US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "SLF CN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "SLM SJ Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "SNB AB Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "SNDK US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "SNOW US Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "SNPS US Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "SOBO CN Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "SOLB BB Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "SONY US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "SPCX US Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "SPHR US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "SPIE FP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "SPK NZ Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "SPOT US Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "SSABB SS Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "SSE LN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "ST SP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "STAN LN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "STC AB Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "STE SP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "STLA US Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "STR AV Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "STVN US Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "STX US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "SU FP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "SUN AU Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "SUNB US Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "SW US Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "SWEDA SS Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "SYK US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "T CN Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "T MK Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "TCEHY US Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "TCOM US Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "TD CN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "TEAM US Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "TECK/B CN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "TEF SM Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "TEL NO Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "TEL2B SS Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "TELIA SS Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "TEMN SW Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "TEVA IT Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "TFII CN Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "THC US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "TIMS3 BZ Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "TISCO TB Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "TISCO-R TB Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "TISI US Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "TJX US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "TLKM IJ Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "TLS AU Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "TLX GR Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "TOU CN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "TPG AU Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "TPR US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "TRELB SS Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "TRP CN Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "TRYG DC Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "TSM US Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "TTB-R TB Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "TTB/F TB Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "TTE FP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "TW/ LN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "TXN US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "UBER US Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "UBSG SW Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "UCG IM Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "ULVR LN Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "UMG NA Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "UOB SP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "UOL SP Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "UPM FH Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "V US Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "VACN SW Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "VAL SJ Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "VALE US Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "VEEV US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "VER AV Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "VG US Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "VIVT3 BZ Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "VLO US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "VNA GR Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "VOD LN Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "VOD SJ Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "VOE AV Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "VOLVB SS Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "WAT US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "WCN CN Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "WDAY US Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "WDC US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "WES AU Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "WIZZ LN Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "WKL NA Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "WRT1V FH Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "XP US Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "XTSLA US Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "XYZ US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "YAR NO Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "YMM US Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "YUM US Equity",
+   "first": "2026-10-02",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "YZJSGD SP Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "ZAIN KK Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  },
+  {
+   "security_bloomberg": "ZIM US Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "ZTS US Equity",
+   "first": null,
+   "last": null,
+   "status": "NO_SERIES",
+   "joined_by": null
+  },
+  {
+   "security_bloomberg": "ZURN SW Equity",
+   "first": "2026-09-29",
+   "last": "2026-10-02",
+   "status": "STARTS_LATE",
+   "joined_by": "security_bloomberg"
+  }
+ ]
+}

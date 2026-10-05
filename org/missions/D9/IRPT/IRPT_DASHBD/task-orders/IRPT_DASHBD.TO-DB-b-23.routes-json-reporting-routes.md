@@ -57,6 +57,8 @@ Your worktree is `C:/Users/AndrewBerman/Desktop/wk-irpt-dashbd-9`; run everythin
 <paths>
 docs/contracts/investor-reporting/v1/routes.json
 infra/aws/lambda/investor-reporting/_authz/tests/test_unguarded_census.py
+infra/aws/lambda/investor-reporting/_contracts/test_owned_request_contracts.py
+infra/aws/lambda/investor-reporting/_contracts/test_upload_contract.py
 org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~9/
 org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-23.routes-json-reporting-routes.md
@@ -96,6 +98,16 @@ Criterion `DB15-1-AC3` is added:
 
 `<expected_criteria>` is now DB15-1-AC1,DB15-1-AC2,DB15-1-AC3. No gate limb graded this modification: LIMB 6 does not fire on a
 modification, and GATE (viii) grades the unchanged `<placeholders>NONE</placeholders>`.
+
+## AMENDMENT 2 (2026-10-05 ~09:1xZ, issuer 2.0.0_SA_COO~P, on row W9-S3)
+
+`infra/aws/lambda/investor-reporting/_contracts/test_owned_request_contracts.py:62` and `_contracts/test_upload_contract.py:65`
+assert `no_handler_at_head == total - declared`. That identity held only while every row was DECLARED or handler-less.
+ROUTED_ELSEWHERE rows have a handler and are not routed here, so the identity must leave them out. Ruled: both assertions count over
+the rows routed by this root, `no_handler_at_head == total - declared - routed_elsewhere`, with routed_elsewhere read from
+routes.json, never typed. Both files are added to the grant. `DB15-1-AC3` now also runs both files. Do not set `no_handler_at_head`
+to 2: both rows have a handler. The cross-suite `ImportError: LiveTransport` seen when `_authz` and `_contracts` run in one process
+is a test-isolation observation, out of scope: leave the row open. No gate limb graded this modification.
 
 ---
 

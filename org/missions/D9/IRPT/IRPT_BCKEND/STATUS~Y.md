@@ -5,7 +5,7 @@ Loop `/canonical-drive IRPT_BCKEND`. Way forward: CTO rulings in
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md` and the fold-in
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_FOLD_IN_IRPT_THREE_BRIEFS_20261002.md` section 2 (Y-1..Y-6, Y-H); run order
 CTO 104634 ("Y-3 READY, then Y-5 V1, then Y-4 V1, one at a time and spaced"; then Y-2 and Y-6). Reviewer `3.0.0_SA_CVO`
-(grades pins after the fact). As of 2026-10-05T07:1xZ.
+(grades pins after the fact). As of 2026-10-05T08:2xZ.
 
 ## Pins
 
@@ -30,7 +30,10 @@ CTO 104634 ("Y-3 READY, then Y-5 V1, then Y-4 V1, one at a time and spaced"; the
 5. **Y-6** (~D, 5 cases x 2 from the page, one at a time):
    - run 1 REQ-777d7546 READY 05:18:26Z (page 18.2 min; open to sections 2.0 s);
    - run 2 REQ-14fe69cf READY (page 06:58:51Z, 17.9 min; open to sections 1.4 s);
-   - runs 3-10 are next. This seat records each run and writes the Y-6 evidence at the end.
+   - run 3 REQ-724a493e READY 07:38:14Z server-side (18m40s). The page lost the row from 07:27Z on portal 0edab95f;
+     server-side the row is position 0 of 33 (page-side miss, ~D reading its screenshot);
+   - runs 4-10 are next. This seat records each run's backend states (`IRPT_MVP_Y/Y6/`, @0d980ceca5) and writes
+     the Y-6 evidence at the end.
 
 ## IRPT_YCDGEN (this seat issues; FULL lease)
 
@@ -45,8 +48,13 @@ CTO 104634 ("Y-3 READY, then Y-5 V1, then Y-4 V1, one at a time and spaced"; the
 ## Queued work
 
 - Y-5 packet 2 (the Kimi swap): HELD by CTO batch 218.
-- The Y jobs spend ~15 min in the 900 s read-back release after one `calculating` answer; IRPT_YCDGEN FWD-6 measures
-  YCharts' real calculation time.
+- **Submit-to-READY is mostly a fixed wait.**
+  - Y-6 runs 1-3 each spend 15m07s in `READ_BACK_LEASE_TTL_S = 900` (`ycharts/generate/recipe.py:688`, CTO batch 97
+    item 4) after one `calculating` read-back.
+  - The firewall window is bounded to (122, 660] s: 122 s was challenged (batch 97), and 660 s was clean in 5 of 5 windows
+    on 2026-10-05.
+  - Next, after Y-6 (never between its runs): measure the window with research probes, then a never-widen packet to cut
+    the release to it (about 4+ minutes saved a job). The value is the CTO's (batch 97).
 
 ## Rows this lane holds
 
