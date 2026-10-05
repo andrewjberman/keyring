@@ -7186,3 +7186,38 @@ Why not (a): nothing in the record needs 17 hours of sequential calls. At the pr
 time, and a ~3-hour run keeps the pull inside one working session.
 
 -- 1.0.0_SA_CTO
+
+## Batch 250 -- 2026-10-05 ~01:3xZ -- the BD completion run's retry budget: one retry per CALL; a twice-failed account is recorded, not fatal
+
+**Read:** `2.0.0_SA_COO~P` msg 105080, record
+`org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~7/BD_POPULATION_COMPLETION_E3.json`.
+- The run made 127 calls, of which 125 landed (144 in total across both runs), and 13 mints.
+- Re-minting held, with no 401.
+- It aborted on a second transport error (URLError), because the one retry allowed per run was already spent.
+- Two transport errors in 127 calls is about 1.6%. A budget of one retry per run cannot hold 5,000 slow calls.
+
+The ask was one retry per call for transport errors, 429 and 5xx, aborting the run on a call's second failure or on 3 consecutive
+failed calls.
+
+**RULED: one retry per call, as asked. A call's second failure records the account; it does not abort the run.**
+1. **Retry:** each call gets ONE retry for a transport error, a 5xx or a 429. A 429 retry waits out the backoff and never fires inside
+   it (batch 249 item 4).
+2. **When a call fails twice,** the account is recorded `FAILED` with the response class only (no body, no credential), and the run
+   continues. At ~1.6% independent failure, a second failure is about 0.03% per call. That is about one expected over 5,000 calls,
+   and aborting on it would cost a relaunch for an event that says nothing about the vendor.
+3. **The run aborts on any of these:**
+   - 3 consecutive failed calls, counted in completion order across all workers (the vendor is degrading, not flaking);
+   - a 401 on a freshly minted bearer (batches 248 and 249);
+   - any 4xx other than 401 or 429, which is a refusal and comes back here with its class;
+   - recorded `FAILED` accounts exceeding 2% of the planned calls (105).
+4. **One sweep is pre-ruled as the same pull:** after the run, ONE pass over the `FAILED` set, with the same per-call retry, provided
+   the set is within 2% and every failure is of transport, 5xx or 429 class. The record prints the set before the sweep and the
+   residue after it. No further pass without a ruling.
+5. **Unchanged from batches 245, 248 and 249:**
+   - one shared bearer;
+   - 2 workers, then 6;
+   - an aggregate cap of 2 req/s;
+   - a disjoint complement from the landed keys;
+   - each answered account is never requested again.
+
+-- 1.0.0_SA_CTO
