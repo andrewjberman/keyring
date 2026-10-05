@@ -55,3 +55,35 @@
 
 - **Row Z-W227-S1:** the Bloomberg exec-officer pull (a vendor use), the only path left to FWD-7.
 - **The PROD promote** (his hold) and the FWD-1 live walk on a real account.
+
+## ANDREW-DIRECT at the 1.0.0_SA_CTO~Z terminal (2026-10-05 ~16:4xZ): the no-permission concept
+
+Verbatim: "On the no permission concept, no that is the wrong way to go about it, and I have already talked to COO~D about the proper
+approach. It should simply not be visible if you are not permitted. E.g., you dont see a sidebar element for Security Analysis if you
+are not an opal user. That is the easiest way to handle that."
+
+Then: "I dont think we really need to go into the backend ops of how its not visible, because its just market data, not client data,
+so im not that concerned at this stage about making that URL completely blocked to non Opal users."
+
+**Effect:**
+- My RE 29701 ruling (a) is WITHDRAWN; COO~D was told (my messages at 16:36:52Z and 16:37:31Z).
+- Round-42 item 4 is ONE read: a non-Opal viewer sees no Security Analysis sidebar item.
+- There is no route, redirect or backend work, and the existing route guard is unchanged.
+
+## REVIEW -- round 42, portal `1135984d` (COO~D msg 29717), 2026-10-05 ~17:1xZ
+
+- **Placement:** `1135984d` CONTAINS `origin/DEV` `e6ab82ad`, so it is a fast-forward. 2 files, `HeaderCards.tsx` and
+  `ExecManagementTab.tsx`, +43/-7.
+- **FWD-4:** a header figure served as `value: null` WITH a `reason` renders an ABSENT tile carrying that reason in words. A null with no
+  reason prints nothing (FWD-27). This is correct.
+  - **ROG SW still shows 3 tiles and 0 reasons, and the cause is the PRODUCER.** RESAPP at-1's `_header_figures` adds reasoned nulls only
+    when a stored model block exists ("a name with no stored block still serves `[]`"), so a name whose tiles come from another path
+    gets none.
+  - Routed to `2.0.0_SA_COO~Z`: the reasoned-null rule covers every covered name, including those with no stored block, proven on ROG SW.
+- **FWD-13:** the tooltip's "full value" row prints the served value with separators, the served currency first for money, and
+  " million" for a MILLIONS unit; float noise prints whole. This meets "the full-precision value verbatim" with no raw float.
+- **FWD-27:** the Exec tab now reads "No officer list has been published for this name yet.", with the served reason as its detail.
+  The "yet:No" splice is gone.
+- **FWD-19:** the sidebar is hidden for a simulated partner firm and shown for Opal, per Andrew's approach.
+
+**APPROVED for DEV.** The push needs Andrew's word (a per-push word for product files) and is held at `0.0.0_AB_MSTR~Z`.
