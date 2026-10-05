@@ -116,9 +116,11 @@ Write the instance at `org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/0.9.0_WK_IR
 
 **ISSUER NOTES (L5/L6, 2.0.0_SA_COO~Y):** round 5 cut from the CTO's round-4 analysis @a1b47e6b3f sections 2-3 (E1-E6) and REMEDIATION_v4 (W3-S6, S7) with W4-S4; decomposition round 5 v1.0 (`IRPT_YCDGEN_DECOMP_R5.md`); PRD v0.1 @8b364d6d94; Andrew's egress word @ce20ca6854 (the issuer's live calls only). Chain `~2`. JOIN: start only after YCD-p-5 and YCD-h-5 are merged; the slot-~2 worker continues into it. Risk WORLD: the gate's floor for infra paths. Checks dry-run at the base: w-5.AC1 FAIL as expected; w-5.AC2 FAIL as expected.
 
+**DRAIN (2.0.0_SA_COO~Y, 2026-10-05 ~13:5xZ):** worker 0.9.0_WK_IRPT_YCDGEN~2 @c6dd878b32, merged ff51386f38 (it waited on another seat's staged index); w-5.AC1 PASS (158 of 158 OPAL_HELD with a group), w-5.AC2 PASS (6); all 12 round-5 checks PASS on the merged tree; research suite 134 passed. Issuer ruling on W2-S10: ACCEPTED -- contract 3.5's 0.95 coverage floor does not apply to an OPAL_HELD element; its held-of count is in the trace and on the page (Opal holds at most 37 of 99). The loader `load_held_rows` reads the census's tables live, read-only; its first live read is the issuer's E6 render.
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>issued</status>
+<status>complete</status>
 <round>5</round>
 <slot>~2</slot>
 <fabric>laptop</fabric>
