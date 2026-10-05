@@ -616,3 +616,55 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   }
 ]
 ```
+
+## IRPT_YCDGEN-W4-S5 -- the skeleton gives no stat name to a comparison security's Risk Info row, and a baselines-only chart column is outside map_pdf's vector rule, so two m
+
+```json
+{
+  "id": "IRPT_YCDGEN-W4-S5",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~4",
+  "surfaced_at": "2026-10-05T06:09:07Z",
+  "one_line": "the skeleton gives no stat name to a comparison security's Risk Info row, and a baselines-only chart column is outside map_pdf's vector rule, so two map-side steps remain after the label rule",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "YCD-m-4 and contract 4.4: the two maps' rows come from the label rule, with no map-side repair.",
+  "world_is": "The 29 Multi and 21 Comparison rows come from the rule alone (map_pdf at this commit gives 573 and 423 elements, equal to the maps' skeleton counts). Two things the rule does not give: (1) the Multi's third-security Risk Info rows print the statistic's name only on the portfolio's line, so the skeleton labels all seven 'Risk Info: iShares Russell 2000 ETF'; the maps carry the statistic name copied from the key-1 row printed just above, as round 3 did for the key-1 rows. (2) Comparison page 8's portfolio Bond Maturity column is drawn with baseline rules only; map_pdf's vector-chart rule needs a bar, so the chart is listed in the map as p8.e33 from the page's shapes, and p8.e03 (the comparison key's bars) is sourced to comparison_bond_exposure at key_index 1. The existing key-1 labels repaired in round 3 (W4-S4) were not re-derived by the rule.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "multi_map.json p10.e21 to p10.e27 labels; comparison_map.json p8.e03 and p8.e33",
+      "page 10 of REQ-329a56182b2668d44a28c8d7 and page 8 of REQ-7ea49c2d9b27957d0ea8888f read in OS temp: statistic names only on the IRPT line; the p8 portfolio column holds 0.9 pt wide axis rules and no bar"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: map-side labels and one listed chart. Owner 2.0.0_SA_COO~Y: a later map_pdf cell could carry the stat name down a Risk Info block and list a baselines-only column."
+}
+```
+
+## IRPT_YCDGEN-W4-S6 -- round 3's map sourced a Multi holdings row as comparison key 2 because the third security's row was missing; with that row listed, p21.e06 is a holdin
+
+```json
+{
+  "id": "IRPT_YCDGEN-W4-S6",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~4",
+  "surfaced_at": "2026-10-05T06:09:07Z",
+  "one_line": "round 3's map sourced a Multi holdings row as comparison key 2 because the third security's row was missing; with that row listed, p21.e06 is a holdings row and 129 existing data-row labels moved by their rule ordinal",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "YCD-m-4: element ids are never renumbered; the m-3 rows W4-S4 names are added.",
+  "world_is": "multi_map.json p21.e06 was sourced to comparison_standardized_returns at key_index 2 ('row printed after the portfolio's own row, taken as comparison key 2'), but the row it stands for is Global X's; the key-2 row (iShares Russell 2000 ETF) was one of the dropped rows. p21.e06 is now BUILDER_ONLY like its neighbours and the new key-2 row is p21.e21. Separately, a masked 'data row N' label counts the rows of its heading, so the 50 added rows moved the ordinal of 129 existing elements (83 Comparison, 46 Multi, including the four Waivers rows now masked as data rows); their labels were updated to the rule's ordinal, their ids and sources kept. A consumer that matched an element by its old 'data row N' label would now miss it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git diff of multi_map.json and comparison_map.json (labels only on the 129; p21.e06 source)",
+      "page 21 of REQ-329a56182b2668d44a28c8d7: the iShares Russell 2000 ETF row is printed between the Opal Ultra Long-Term row and the Global X row"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: the maps have no reader yet that keys on a data-row label (layout reads source and ids). Owner 2.0.0_SA_COO~Y."
+}
+```
