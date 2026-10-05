@@ -1450,3 +1450,29 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-W10-S1 -- the ruling's bearer line already named batch 248; batch 249 added
+
+
+```json
+{
+  "id": "IRPT_DASHBD-W10-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~10",
+  "surfaced_at": "2026-10-05T08:00:00Z",
+  "one_line": "TO-DB-b-24 says the ruling's bearer line reads 'one, minted once'; the shared-checkout file already read 're-minted ... every 10 calls (batch 248 ...)' and named no batch 249.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-24 worker face: the ruling's bearer line still reads 'one, minted once'; correct it to name batches 248 and 249.",
+  "world_is": "The copy of E3_SHAPE_RULING.json read from the shared checkout (876 bytes, 2026-10-05 05:30 local) already carried a bearer line naming batch 248 and not 'minted once'; it named no batch 249. Only the bearer value was rewritten, to name batch 248 (re-mint before the measured expiry) and batch 249 (one coordinator-owned shared bearer, re-minted on an interval, never one sign-in per worker); every other byte is identical (git diff --no-index: 1 line changed). Row W7-S1 described an older state of the line.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "cat of the copied E3_SHAPE_RULING.json before the edit: bearer line begins 're-minted through the 49F sign-in path every 10 calls (batch 248 class (a) ...'",
+      "git diff --no-index --stat shared-checkout copy vs worktree file: 1 insertion, 1 deletion"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
