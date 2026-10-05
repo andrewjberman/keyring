@@ -1832,3 +1832,26 @@ the round-35 cut. AC2 = battery29 with no skip. It touches no product file.
 **Sequencing (CTO msg 29279):** AMGT_CORPUS round 36 has a candidate on `tabs/ModelTab.tsx` and `modelSheet.ts`. Neither cell
 touches either file (checked against both `<paths>` lists).
 **Fan-out:** 2 of 2 chains, cap 8 (disjoint files; both from 35a723bf). **Risk:** LOCAL.
+
+## v37 -- ROUND 37 (issuer, 2026-10-05 ~04:3xZ) -- ONE BATCHED REPAIR CELL + THE READS (PRD v0.15 @237d5d742f, ADMITTED)
+
+**Rectangle:** the CTO's ENRICHMENT LIST @9b2ed08fe2 (`ledger/CTO_COUNTERSIGN_COMPLETION_GRADES_ROUND36.md`, msg 29466): (1) FWD-21 365D
+edge labels inside the plot with no collision; (2) FWD-8 no cross-currency average ever, a mixed group says so; (3) FWD-10 the no-call
+state carries its as-of date; (4) reads of FWD-5/11/19 on the served build. Grades @c706123ec2, countersigned @d0fd16fba5.
+**Base:** portal DEV 56b71adb (carries AMGT_CORPUS's ModelTab.tsx/modelSheet.ts; this round touches neither).
+
+| cell | serves | owned files | worker |
+|---|---|---|---|
+| `AV-zo-1` REPAIRS (batched) | FWD-21, FWD-8, FWD-10 | `components/ChatterBubbles.tsx`, `cscTable.ts`, `tabs/PeersTab.tsx`, `components/LeadPanel.tsx`, `components/SecurityOverlay.tsx`, `tabs/PostureTab.tsx` | ~99 |
+
+**Check:** `round37/checks/repairs/repairs37.cjs` (+ `_render37.cjs`, `_collage37.cjs`), fixtures `round37/fixtures/` captured read-only on
+the deployed scoped API (`capture_r37.py`: chatter 30/90/365; MSFT and AMD peers/overlay/thesis). At base 56b71adb it reads 2 of 5: the
+static render reproduces the live 365D offenders ("Kim...", "Synopsys Inc") plus 90D "IDEXX Laboratories Inc" -- each straddles its OWN
+bubble's outline, the case labels34 skipped; 18 currency faults (MSFT "Average 158,633 (n=12)"); 9 undated no-call renders. KEEP 8/8,
+PLANTED pass. Green 5 of 5 (issuer re-run).
+**Issuer ruling inside the decomposition (FWD-8):** the served peers carry no member price currency (`cap_currency` only). The page reads
+"never a cross-currency average" as no Price summary until a currency is served; the producer gap goes to the CTO for RESAPP at the close.
+**Item 4 is not a cell:** the reads of FWD-5/11/19 are the issuer's real run at the close, `round37/walk/reads37.mjs` (FWD-5 marker press
+and day dialog; FWD-11 side-by-side captures of /market, /positioning, /philosophy; FWD-19 loading/error on the timeline, header and
+What changed by intercepting one GET, and PanelNoPermission on its real route).
+**Fan-out:** 1 of 1 chains, cap 8. **Risk:** LOCAL.
