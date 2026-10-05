@@ -117,3 +117,28 @@ It deploys, applies and flips nothing, and it writes no grant. It re-measured on
 - the Phase B after-read and ledger entry, against C1;
 - `comp-surprise --project NFRA_OPLGTW`: 69 remediation rows (54 REMEDIATED, 14 OPEN, 1 CLOSED_UNREMEDIATED), 319
   items, 0 undispositioned, 1 ARMED.
+
+## 6. Addendum ~01:5xZ 2026-10-05 -- R14, `/yearinreview` placed on the gateway release train (`0.0.0_AB_MSTR~Z` msg 29386)
+
+**The request.** Andrew-direct 2026-10-04, recorded on the laptop: "id publish it at mcp.opalinvest.dev/yearinreview".
+- Record: `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261004_194xZ_BRIEF1_WHERE_WEVE_BEEN_ONE_YEAR_SCALE_ONE_PAGER.md`.
+- It reached this seat from the laptop's `1.0.0_SA_CTO` through the bus (40f0e93a) and `0.0.0_AB_MSTR~Z`'s relay.
+- The release kit is `BRIEF1_YEAR_ONE_20261004/gateway_candidate/README.md` @0b6a5aff58. Per its author, it is:
+  - one bundled page behind the existing `/sprint` identity wall;
+  - three anchored `server.py` edits and 5 tests;
+  - no S3, IAM or ALB change.
+- The kit and the record are LAPTOP-LOCAL. Neither was read by this seat.
+
+**R14 -- PLACED. `/yearinreview` is a release item on this project's gateway train, owned by `2.0.0_SA_COO~O`.**
+- **Footing.** It stands like `/sprint` (`server.py:1002-1005`) and `/rivalfunds` (`:1006`): a route this project ships
+  because it owns the gateway. It is graded where Andrew's record places it, and this project grades only the order's own
+  criteria. No PRD text moves and the ENDPOINT does not change, so no half re-opens.
+- **Timing: it rides the first gateway release cut after its bytes are on origin CLOUD.** It never holds `OG-rl-6`, and
+  the download fix does not wait on a laptop push.
+  - If the bytes land before `OG-rl-6` is cut, the issuer amends `OG-rl-6` to carry them.
+  - Otherwise they ride the next release.
+- **The re-cut.** The kit names live base `af2d762970`. `server.py` is byte-equal between `af2d762970` and the live
+  `4b6b823fae` (`git diff --stat` empty), so its anchors should re-apply. The release worker proves that they do.
+- **The halves read the bytes.** The served move is one new GET route behind the `/sprint` identity wall. Each half
+  verifies the kit's "no S3, IAM or ALB change" against the release diff, not against the README.
+- **Dependency, not a cell:** the laptop pushes @0b6a5aff58 to origin CLOUD (laptop `1.0.0_SA_CTO` / `0.0.0_AB_MSTR`).
