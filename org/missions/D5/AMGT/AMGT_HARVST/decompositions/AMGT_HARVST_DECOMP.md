@@ -2965,3 +2965,21 @@ Issuer `2.0.0_SA_COO~H`. Series **`at`**.
 
 **Checks dry-run at the base before the cut:**
 - `round47/checks/at-1.AC2.py` base: FAIL as expected (the timing control is absent).
+
+### 60.1 AMENDMENT 1 (issuer, 2026-10-05 ~06:5xZ): cell `HVST-at-4`, the silver_append column-union fix (row Z-W95-S2)
+
+Worker ~95's row Z-W95-S2 (ARMED; disarm owner the issuer): `pa.Table.from_pylist` takes its columns from the FIRST row.
+Measured in pyarrow 24.0.0: `[{'a':1},{'a':2,'b':3}]` -> `['a']`, and row 2's `b` is gone. `store.silver_append` builds each date
+group that way, so every multi-row append (the article path since HVST-ai-5, the live collection run's uploads, and round 45's
+re-derivation bins) can silently drop a later row's extra columns. Bronze keeps every original, so the loss is recoverable by
+re-derivation.
+- Round 45's VERIFY could not see it: it compared record_hash, which is computed from the row before the write, and only the
+  columns PRESENT in the served row.
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-at-4` | issuer act | `store.silver_append` gives every row of a date group the union of the group's keys (first-seen order) before the table is built. Plants 4/4; the mutant drops `dek`. Held on branch `coo-h-r47-store-union` @46f165ea6e. It lands WITH at-1 through at-2 (every leg stopped). | SERVED (all silver writers) -> CTO decision | `2.0.0_SA_COO~H` |
+
+- **The damage census** (`round47/at-4.dropped_columns_census.py`, read-only) rebuilds every served article row written since
+  2026-10-04T23:00Z from its original and counts the dropped keys. Its result decides the re-derivation scope for round 48.
+- **Gate limb:** none graded this amendment. It is recorded here.
