@@ -71,7 +71,7 @@ PLACE to `complete`. Report once.
   on the union; the issuer re-grades at the drain.
 - Pre-cut: see the issuance commit for the `ti1.AC1` one-process reading at b91a1a44cf.
 
-<status>pending</status>
+<status>complete</status>
 <round>17</round>
 <slot>~25</slot>
 <fabric>site-z</fabric>

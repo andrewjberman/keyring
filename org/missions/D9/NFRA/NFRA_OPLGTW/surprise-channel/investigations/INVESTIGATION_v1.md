@@ -7856,3 +7856,27 @@ name the one known failure instead of silently inheriting it.
   "world_is": "All three datasets carry declared grains on the served gateway, and each is measured unique on every served snapshot."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W25-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~25",
+  "surfaced_at": "2026-10-05T00:30Z",
+  "one_line": "Clearing the session-manager once-flag exposed a second order-dependent test (rl5 download): SchwabIntegration caches the first service built in the process, so rl5 needed its own fresh read; fixed in tests only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: tests/test_schwab_wiring.py + tests/test_schwab_rl5_asset_query.py after the conftest fix: test_rl5_asset_download_still_refused FAILED (download_url issued; service carried the harness asset_policy=object()); after the rl5 class-level monkeypatch of SchwabIntegration.service: 38 passed on the five-file subset",
+      "CODE: infra/aws/ec2/opal-gateway/app/integrations/schwab/integration.py SchwabIntegration.service() caches self._service on first call; og_v2 resets only the module-level _default_service"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order s.1: the cause class is a session manager or app started more than once; a fixture per module fixes it, tests only.",
+  "world_is": "A second cause stood behind the first: the registered integration instance holds the first service built in the process, so any later module reading the served construction gets the earlier harness service. Other og_v2 tests after the first in a process also read that cached service; this cell changed only rl5.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
