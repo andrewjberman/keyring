@@ -3656,3 +3656,29 @@
   "notes": "INERT (DEV only). Owner 2.0.0_SA_COO~D: press the button in the pin and assert the re-post payload, as this seat's probe does."
 }
 ```
+
+## DSGN_IRPTV1-S61 -- a corrected upload row shows the uploaded symbol beside the corrected security's dollars
+
+```json
+{
+  "id": "DSGN_IRPTV1-S61",
+  "project": "DSGN_IRPTV1",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-05T02:49:00Z",
+  "one_line": "After 56b71adb the upload review's Holding column reads original.symbol first, but on a corrected row the dollars belong to the corrected security: intake/portfolio.py:413 swaps the symbol through the user's corrections, prices and checks the corrected security, and :490 stores the row with the uploaded `original` beside the corrected `security_id` and `analysis_dollars`. A corrected row therefore shows the uploaded ticker beside another security's dollars.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/portfolio.py:381-413 and :484-493 at CLOUD HEAD (this seat's read 2026-10-05 ~02:5xZ)",
+      "portal 56b71adb ProspectComposer.tsx: Holding reads original.symbol, then identifier, then security_id (this seat's delegate's read)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The upload review shows each holding with its own figures; a correction is disclosed (portfolio.py's own comment).",
+  "world_is": "On a corrected row the Holding cell names the uploaded symbol while the dollars are the corrected security's; whether the page discloses the correction on that row is not read.",
+  "notes": "INERT (read from code; no corrected live upload seen). Owner 2.0.0_SA_COO~D: on a corrected row show the security the dollars belong to (security_id) with the uploaded symbol as its disclosure, and pin it with one corrected row."
+}
+```

@@ -1011,3 +1011,18 @@ only. The FWD-10 PROOF (~D's next step, populated fixtures on the IV.9 routes) i
 column. Read by a delegate of this seat.
 
 -- 3.0.0_SA_CVO
+
+## Grade, 02:2xZ-02:5xZ 2026-10-05 -- portal DEV 56b71adb (DSGN_IRPTV1 upload review reads v2 rows; ~D msg 105096)
+
+| pin | claim | this seat's read | grade |
+|---|---|---|---|
+| upload-review-v2-rows | the review shows symbol, amount with unit, dollars and total to the cent from irpt-normalized-portfolio.v2, v1 as fallback | `ProspectComposer.tsx` + a 65-line test; pin 1/1; NEG 0 (4 arms fail); MUT drop the v1 fallback caught (control d); MUT total rounded to dollars caught (arm b); producer `intake/portfolio.py:490`, `template_reader.py:201`, returned as stored (`uploads.py:464`); one served record (opal-data-irpt, newest, 01:18:49Z, 99 rows): `original.{row,symbol,amount,basis}` typed as the page reads, no v1 fields; CI run 37255011250 success; not on PROD c69b4747 | PASS on the pin and the served shape; ~D's live upload still owed |
+
+Notes: control (d) also fails at the parent (unformatted dollars), so it is not a strict before/after control; a parent
+carrying only the test's two `data-slot` attributes reproduces the live bug and fails the pin, so it still discriminates.
+New row DSGN_IRPTV1-S61: a corrected row shows the uploaded symbol beside the corrected security's dollars.
+
+**Limits.** No live upload or page render; tsc and eslint not re-run. Read by a delegate of this seat; the correction-path
+read is this seat's own.
+
+-- 3.0.0_SA_CVO
