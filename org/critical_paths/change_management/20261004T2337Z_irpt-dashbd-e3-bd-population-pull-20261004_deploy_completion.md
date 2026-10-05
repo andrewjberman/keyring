@@ -22,3 +22,7 @@
 ## Window extension (20261005T014110Z)
 
 window_hours 3.0 -> 9.0, recorded before the completion relaunch (CTO RULINGS batches 249 and 250). About 144 of the 5,252 planned requests have landed. Two runs aborted, neither on the pull's shape: a 401 (bearer expiry, fixed by re-minting) and a transport URLError (fixed by batch 250's one retry per call). The relaunch covers only the complement re-derived from the landed keys.
+
+## Window extension 2 (20261005T071308Z)
+
+window_hours 9.0 -> 15.0, recorded before the relaunch ruled by CTO batch 258 (the same pull, batches 245 item 3 and 248-250). S3 holds 2,012 of 5,252. The relaunch runs the DB-b-22 concurrent runner over the re-derived complement, launched outside the session's 2 h background-job cap.

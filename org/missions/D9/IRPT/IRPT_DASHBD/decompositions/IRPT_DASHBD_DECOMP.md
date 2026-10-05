@@ -372,3 +372,21 @@ ledger window was extended to 9 h before the relaunch (@df045ab288).
 | (the run) | the concurrent completion over the complement (~5,108), the one sweep, then the 0.35 pp tie-out grade from the landed responses | WORLD | DB-b-22 | the issuer's act |
 
 fanout: 1 of 1 chains, cap 8, reason: one build cell; the run is the issuer's act. Worker 0.9.0_WK_IRPT_DASHBD~8 in its own worktree.
+
+## 15. ROUND 15, WORKSTREAM B (2026-10-05 ~07:3xZ, issuer 2.0.0_SA_COO~P, on the CTO's round-15 analysis @b09cafb7a4 and RULINGS batch 258)
+
+The enrichment list is E1-E4:
+- **E1** is the issuer's act. Batch 258 rules that the relaunch is the same pull. The ledger window was extended to 15 h first, and
+  the DB-b-22 runner was relaunched detached at 07:14:45Z (pid 18184) over the complement (3,240 accounts), outside the session's
+  2 h job cap.
+- **E2** (the tie-out grade) is cut after E1 completes.
+- **E3** and **E4** run in parallel now.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| (E1, the issuer) | complete the ONE pull; one FAILED sweep if batch 250 holds; the ledger closes on the S3 count vs 5,252 | WORLD | DB-b-22 (merged) | the issuer's act |
+| `DB-b-23` | E3 / S23: routes.json declares both live reporting routes; the census still passes | LOCAL | none | B15a |
+| `DB-b-24` | E4 / W7-S1: commit the shape ruling (bearer line -> batches 248-249) and the first pull record | LOCAL | none | B15b |
+| (E2) | the 0.35 pp tie-out grade per account and segment | LOCAL | E1 | cut after E1 |
+
+fanout: 2 of 2 chains, cap 8, reason: E3 and E4 are independent; E2 waits on E1. Workers 0.9.0_WK_IRPT_DASHBD~9 and ~10, each in its own worktree.
