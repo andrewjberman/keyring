@@ -1,6 +1,6 @@
 {
   "_what": "MDPF_SECCLASS data contract: the two enumerations the PRD closes as data (PRD CONTRACTS C-FIELD and C-WRITER). The canonical table is DynamoDB etf-classifications; its existing columns (ticker, asset_class, sub_asset_class, sector, name, management_style) are POSN_ASTTAX's and are not restated here.",
-  "contract_version": "0.3.0",
+  "contract_version": "0.4.0",
   "project": "MDPF_SECCLASS",
   "prd": "org/missions/D8/MDPF/MDPF_SECCLASS/prd/MDPF_SECCLASS_PRD.md",
   "fields": {
@@ -25,13 +25,14 @@
       }
     },
     "identifier_namespace": {
-      "serves": "FWD-2, FWD-7 (E9, CTO RULING 103140)",
+      "serves": "FWD-2, FWD-7 (E9, CTO RULING 103140); FWD-9, FWD-10 (CTO RULINGS batch 257 Q1)",
       "type": "string",
-      "values": ["TICKER", "CUSIP"],
+      "values": ["TICKER", "CUSIP", "BLOOMBERG"],
       "domain": "every row of etf-classifications, one row per ticker",
       "definitions": {
         "TICKER": "the row's ticker column holds an ordinary exchange ticker symbol -- the pre-existing shape of every row before E9, and the default reading for any row where identifier_namespace is absent",
-        "CUSIP": "the row's ticker column holds a CUSIP-prefixed key, `\"CUSIP:<9 chars>\"` (the literal 9-character CUSIP), for a security with no exchange ticker (e.g. a bond); the table gains no new column -- the existing ticker attribute carries the prefixed string"
+        "CUSIP": "the row's ticker column holds a CUSIP-prefixed key, `\"CUSIP:<9 chars>\"` (the literal 9-character CUSIP), for a security with no exchange ticker (e.g. a bond); the table gains no new column -- the existing ticker attribute carries the prefixed string",
+        "BLOOMBERG": "the row's ticker attribute holds 'BBG:<ticker>:<exch>' (CTO RULINGS batch 257 Q1): the input's Bloomberg security id with its trailing ' Equity' dropped and its space replaced by ':', no whitespace anywhere in the key (e.g. 'REL LN Equity' -> 'BBG:REL:LN'), for a listing with no ISIN, no CUSIP and no US exchange ticker; the verbatim Bloomberg id is carried in security_bloomberg, never re-derived from the key"
       },
       "absent": "a row without identifier_namespace reads as TICKER (CTO RULING 103140); the value is never inferred from the ticker column's own shape (e.g. a leading \"CUSIP:\" substring) -- it is a stated attribute, not a derived one, so a row's identifier_namespace and its ticker's shape are two carriers that must agree by construction of the writer, never by a reader re-parsing the key",
       "rule24_record": {
@@ -93,6 +94,34 @@
         "intent_coherence": "one axis: whether THIS row's own model confidence cleared the 0.80 bar; no ordering, class or vendor meaning is carried in it",
         "state_coherence": "low_confidence moves no asset_class, sub_asset_class, classified_by or classification_confidence value -- it is a read-only derived flag of the row's own confidence, never itself a write input; a later seed correction of a model row replaces classified_by = seed and drops low_confidence entirely, same as classification_confidence",
         "token_census": "word-boundary census of low_confidence, 2026-09-30, native Grep: infra/aws/lambda/v2_portal 0 hits outside this cell's own new files, data/**/*.py 0 hits, portal/src 0 hits -- no collision"
+      }
+    },
+    "security_bloomberg": {
+      "serves": "FWD-9, FWD-10 (CTO RULINGS batch 257 Q1)",
+      "type": "string",
+      "domain": "rows whose identifier_namespace is BLOOMBERG (required there); optional on any other row that has a Bloomberg id",
+      "definition": "the verbatim Bloomberg security id as the input serves it (ETFS_RIVALS canonical_shape column security_bloomberg, e.g. 'REL LN Equity'); written once by the writer from the input, never parsed back out of the ticker key",
+      "rule24_record": {
+        "domain_declared": "the rows of etf-classifications that carry a Bloomberg id",
+        "same_grain": "one value per row (ticker)",
+        "intent_coherence": "one axis: the vendor's own identifier string; it carries no class, region or ordering meaning",
+        "state_coherence": "setting security_bloomberg moves no asset_class, sub_asset_class, identifier_namespace or ticker value",
+        "token_census": "word-boundary census of security_bloomberg, 2026-10-05 ~07:0xZ, git grep over data, portal/src, infra/aws/lambda, lib, org/standards: 18 files, all in data/etfs/scripts/rivalfunds (the input's own column, the SAME meaning -- deliberate reuse of the source's name); 0 in portal/src and infra/aws/lambda"
+      }
+    },
+    "listing_country": {
+      "serves": "FWD-9, FWD-10 (CTO RULINGS batch 257 Q3 fallback (b))",
+      "type": "string",
+      "values_format": "ISO 3166-1 alpha-2, upper case",
+      "domain": "rows keyed BLOOMBERG, and any row whose listing exchange is known; absent where the exchange code is unmapped",
+      "definition": "the country of the listing's exchange, derived from the Bloomberg exchange code by a mapping table held as DATA in the repo (never a code literal); it feeds the regional sub-class fallback only where GICS is unresolved",
+      "absent": "absent means the exchange code is unmapped; the writer never guesses a country, and an unmapped code is named as a row",
+      "rule24_record": {
+        "domain_declared": "listings in etf-classifications with a known exchange",
+        "same_grain": "one value per row (listing)",
+        "intent_coherence": "one axis: where the listing trades; it is not the issuer's domicile and carries no class",
+        "state_coherence": "setting listing_country moves no asset_class or classified_by value; sub_asset_class moves only through the batch 257 Q3 order (GICS first)",
+        "token_census": "word-boundary census of listing_country, 2026-10-05 ~07:0xZ, git grep over data, portal/src, infra/aws/lambda, lib, org/standards: 0 files (positive control: security_bloomberg 18 files); no collision"
       }
     }
   }
