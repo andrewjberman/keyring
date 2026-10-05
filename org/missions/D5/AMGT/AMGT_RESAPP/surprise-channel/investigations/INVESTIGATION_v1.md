@@ -18057,5 +18057,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
    "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~241/f6_served.json names covered counts"
   ]
  }
+},
+{
+ "id": "AMGT_RESAPP-Z-W242-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~242",
+ "surfaced_at": "2026-10-05T21:59:57Z",
+ "class": "BLOCKING",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "AC1 cannot be met by the three named cuts: 23 of 94 ranked names are held ONLY in their model blocks, the crosswalk holds no name for them, and each name costs a listing and a GET -- first read is 60 calls (rankings) and 72 (chatter) after the cuts, from 153 and 167.",
+ "spec_asserts": "TO-AMGT-av-6 section 1: `_model_block_name` reads a whole model block per unnamed name just for NAME -- 'use the crosswalk name it already holds'; with that, the first rankings and chatter reads make 15 AWS calls or fewer.",
+ "world_is": "Measured locally, one fresh process per route, botocore _make_api_call counted by operation. BEFORE: rankings 153 (GetItem 99, Query 2, ListObjectsV2 27, GetObject 25), chatter 167. AFTER the cuts (one BatchGetItem for classifications, module-init resource, crosswalk name asked before the block in _slash_row_unconfirmed): rankings 60 (BatchGetItem 1, GetItem 5, Query 2, ListObjectsV2 27, GetObject 25), chatter 72 (BatchGetItem 2, GetItem 5, Query 2, ListObjectsV2 34, GetObject 29). The 24 and 25 _model_block_name reads are 23 distinct names that no earlier source in the chain supplies: over the served TRENDING/PRICE default body 23 rows carry name_source model_block_header, 36 etf-classifications, 35 crosswalk; for the 23 the crosswalk (237 records, 67 holding identity.name) holds no name. Other stored sources checked for those names and not usable without changing a served value: universe/v1/2026-09-16.json names are folder labels ('Costco COST'), repo registrations.json holds none, derived/model_block, derived/model_block_fye, peers, scores and bloomberg identity are all one object per key. Excluding the 23 name reads (about 48 calls) the rankings read is 12 calls, so the cut is cuttable only if those 23 names reach the crosswalk (a registration write and a Bloomberg identity pull, not this order's) or the cold read is accepted above 15; the provisioned-concurrency fallback in ruling 2 applies. AC2 holds: EQUAL 15 of 15. Not adjudicated by this seat.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "python r72_served.py --cell c46 --where local after the cuts: {'rankings': 60, 'chatter': 72}; R72 C46 SERVED: NO; exit=1",
+   "same check before any edit at this worktree: {'rankings': 153, 'chatter': 167}",
+   "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~242/before/lead-panel_rankings_trending_price_default.json: 23 rows name_source model_block_header",
+   "lib.research.identity.crosswalk.load_crosswalk() on the served crosswalk/v1/2026-09-29.json: 237 records, 67 with identity.name, none of the 23 keys among them"
+  ]
+ }
 }]
 ```
