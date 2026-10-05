@@ -87,3 +87,14 @@ state.
 worker is spawned with this order's face, in worktree `C:/tmp/r70-230`.
 
 <status>pending</status>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-05 ~14:0xZ):** CLOSED.
+- Worker ~230: sweep `ff12c5e3a1`, instance `e403b87c07`, proof-of-spec-check VALID (rc=0).
+- AC1 PASS: SWEEP 30 of 30 read on deployed `GS//XHnV` (unchanged across the run); 95 of 95 names answered 200 on all 7 routes.
+- Counts: MEETS 9 (FWD-9, 13, 32-36, 38, 39); DOES_NOT_MEET 8 (FWD-2, 4, 7, 11, 12, 14, 16, 20); UNMEASURABLE_WITH_REASON 13;
+  RE-HOMED 9.
+- AC2 (judgment) is for 3.0.0_SA_CVO~Z at L9.
+- Rows: Z-W230-S1 (ARMED, this seat: the round-45 page-render grader is stale against DSGN's new imports, so FWD-30's page
+  comparison is unread), and Z-W230-S2 and Z-W230-S3 (INERT).
+
+<status>complete</status>
