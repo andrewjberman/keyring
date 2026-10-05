@@ -5,7 +5,7 @@
  "project": "ETFS_RIVALS",
  "directive": "D5",
  "fabric": "site-z",
- "prd_version": "v0.16",
+ "prd_version": "v0.17",
  "step": 4,
  "brief_ref": "docs/briefs/etf-holdings-research-20260929.md@77c891c869",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21"],
@@ -418,6 +418,16 @@ and it never touches the client-ownership products already in `opal-data-etfs` o
 (`bronze/`, `silver/`, `gold/`, `daily/`, `platinum/`). Andrew, gap-pass item 1: *"This is a separate function ... conflating the
 two would be messy."*
 
+**C-SECURITY-UNIVERSE (v0.17; the interface MDPF_SECCLASS reads, Andrew-direct ~03:3xZ items 3-4 and the 3-year cap @357e681ddf).**
+- Gold `security_universe`: one row per security that any rival or Opal ETF held within the last 3 years, built from `canonical_shape`.
+- Keys: `security_id`, `security_bloomberg`, `security_cusip`, `security_isin`, `security_ticker` and `security_name`, plus
+  `first_seen`, `last_seen` and `funds`. `first_seen` is what lets the consumer's new-stock routine (MDPF_SECCLASS FWD-10) find
+  new entries.
+- Same cadence as gold (Mon-Fri ~07:10 ET, plus the 09:00 ET late sweep). Written once per as-of date, never overwritten.
+- Its only consumer outside this project is MDPF_SECCLASS (laptop fabric), which reads it and never writes it. No work crosses
+  fabrics. The consumer's read grant on this one prefix is the laptop's act.
+- Until it lands, the interim source is `canonical_shape` (one object per report date, newest revision wins).
+
 **C-HOMES (builder output, `lib/opal_naming.py address()` at the landed registry @`d451070fb1`; nothing here is typed).**
 
 | tier | builder output |
@@ -428,6 +438,7 @@ two would be messy."*
 | Bloomberg silver | `s3://opal-data-etfs/bloomberg/etfs/silver/holdings/date=<D>` |
 | gold, the master shape | `s3://opal-data-etfs/rivalfunds/etfs/gold/canonical_shape/date=<D>` |
 | gold, the trade schedule | `s3://opal-data-etfs/rivalfunds/etfs/gold/trade_schedule/date=<D>` |
+| gold, the security universe (v0.17) | `s3://opal-data-etfs/rivalfunds/etfs/gold/security_universe/date=<D>` |
 | platinum, the served page by day | `s3://opal-data-etfs/rivalfunds/etfs/platinum/page/date=<D>` |
 | run state and batch-complete markers | `s3://opal-data-etfs/rivalfunds/etfs/state/<stage>/date=<D>` |
 
@@ -822,6 +833,10 @@ the `/sprint` precedent files.
 - The CVO grades JUDGMENT criteria at L9, citing the contract clause.
 
 ## PROVENANCE AND AMENDMENT HISTORY
+
+- v0.17 (2026-10-05 ~04:0xZ, `1.0.0_SA_CTO~Z`), CONTRACTS only: **C-SECURITY-UNIVERSE**, a gold `security_universe` table, the
+  interface laptop MDPF_SECCLASS reads (its PRD v0.3 FWD-9/FWD-10, placed by `1.0.0_SA_CTO`, relay msg 29469). The address is builder
+  output (verified). The ENDPOINT is unchanged, so no half re-opens.
 
 - v0.16 (2026-10-05 ~03:1xZ, `1.0.0_SA_CTO~Z`), an ENDPOINT addendum on Andrew-direct ~03:3xZ at the `2.0.0_SA_COO~RV` terminal
   (record `org/tier1_exec/2.0.0_SA_COO/deliverables/cooRV_ANDREW_DIRECT_20261005_03xxZ_RIVALFUNDS_BENCHMARKS_CLICKABLE_TICKERS_ETFCLASSIFIER_BACKFILL.md`),
