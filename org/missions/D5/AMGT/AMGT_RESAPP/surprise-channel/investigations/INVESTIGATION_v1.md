@@ -17992,5 +17992,27 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
    "test_aj7_gold_title_precision.py:36 NEW and :78-80 the pin comparison"
   ]
  }
+},
+{
+ "id": "AMGT_RESAPP-Z-S354",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.7.0_AE_CloudOps~A",
+ "surfaced_at": "2026-10-05T19:36:21Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "one_line": "au-7's AC3 grades 9 regression cells; the CTO half it was signed under names 13 (c14, c15, c23-c33), so 4 cells sat outside the graded criterion.",
+ "hazard_standing": "INERT",
+ "spec_asserts": "AMGT_RESAPP.TO-AMGT-au-7 AC3 invocation grades exactly r70 c30-c33, r69 c29 and r67 c23-c26 -- 9 cells -- and AMENDMENT 1 makes 'the AC3 regressions' one of the three rollback triggers.",
+ "world_is": "NEVER_WIDEN_ROUND71_AU7_CTO_HALF.md condition 2 requires 'au-1..au-5's checks, and the full regression set (c14, c15 as amended, c23-c33)'. c23-c33 is 11 cells, plus c14 and c15 = 13. AC3's 9 omit c14, c15, c27 and c28. The gap is in the CUT, not in the product: this seat ran the four anyway on the deployed build wbIT0PHvxKIgJvgVy+u0XhLuSXFK5dUE/wypJPDcf8o= and c14 (r64), c27 and c28 (r68) all read SERVED: YES, so condition 2 reads 12 of 13 YES. The 13th, c15, is the r64 cold-read cell: its only sound oracle is a COLD invoke proven by Init Duration, and by the time the scope gap was found the function had been warmed by AC1, AC2, AC3 and the leadpanel after-measurement, so c15 is taken last, after a measured idle, and reported separately. Nothing here is a rollback trigger under AMENDMENT 1's three named ones. Not adjudicated by this seat: whether AC3 should be re-cut to match the half, which is the issuer's.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D5/AMGT/AMGT_RESAPP/ledger/NEVER_WIDEN_ROUND71_AU7_CTO_HALF.md condition 2, read at the bytes (2656 B, present at its cited pin a9c145359a)",
+   "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-au-7.the-code-redeploy.md section 4 AC3 invocation",
+   "r64_served.py:56 --cell choices include c14 and c15; r68_served.py:65 --cell choices are c27 and c28",
+   "deployed runs this session: R64 C14 SERVED: YES, R68 C27 SERVED: YES, R68 C28 SERVED: YES, each exit=0"
+  ]
+ }
 }]
 ```
