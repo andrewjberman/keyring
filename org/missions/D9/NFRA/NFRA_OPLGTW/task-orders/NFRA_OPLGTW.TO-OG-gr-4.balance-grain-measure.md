@@ -79,7 +79,7 @@ PLACE to `complete`. Report once: denominator, duplicates per snapshot (counts),
   CTO.
 - Pre-cut: `gr4.AC1` FAIL (the record is absent).
 
-<status>pending</status>
+<status>complete</status>
 <round>17</round>
 <slot>~26</slot>
 <fabric>site-z</fabric>
