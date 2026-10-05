@@ -3651,6 +3651,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "world_is": "The 90 statement figures (TWD) and CRNCY_ADJ_MKT_CAP / AVG_DAILY_VALUE_TRADED_3M (USD quote) carry no currency; graded WRONG (92), with 75 non-monetary figures RIGHT. Family units are all RIGHT or CANNOT-TELL (19/0/5 of 24). BA and SAP carry the same null label on the monetary figures of the 52 (single-currency blocks, so incomplete not misleading).",
     "notes": "Fix shape: assign currency_basis for the 52 monetary mnemonics in the producer/classifier as the older MILLIONS fields already get it, then re-derive the blocks. Touches the ABSOLUTE_OR_MILLIONS family's currency label, not its unit.",
     "disarm_owner": "2.0.0_SA_COO~X"
-  }
+  },
+{
+  "id": "AMGT_CORPUS-Z-W3-S12",
+  "project": "AMGT_CORPUS",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_CORPUS~3",
+  "surfaced_at": "2026-10-05T00:19:00Z",
+  "one_line": "lib/research/corpus/tests/test_induction_planted_drive.py::test_fwd4_planted_drive asserts induction_request.run() writes induction_request.json under DELIVERABLES_DIR; CRPS-am-4 removes that write, so the test fails and is outside the am-4 paths.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest lib/research/corpus/tests/test_induction_request_pick_writes_nothing.py test_induction_request.py test_induction_run.py test_induction_schedule.py test_induction_planted_drive.py: 1 failed, 42 passed; failure FileNotFoundError at the read of (deliverables / ir.REQUEST_FILE_NAME) in test_induction_planted_drive.py (about line 164, plus the line-182 assertion that the request file is the only file written).",
+      "test_induction_schedule.py only patched ir.DELIVERABLES_DIR and passes because the name is retained as None."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order: --pick writes nothing; keep every function induction_run imports; only the files in <paths> change.",
+  "world_is": "One existing test in a file outside <paths> encodes the removed write; it needs to call run(argv=['--pick','--write',<path>]) and read that path.",
+  "notes": "Fix: edit that test to pass --write to a tmp path and read it back. Left alone it fails at the drain's hygiene run.",
+  "disarm_owner": "2.0.0_SA_COO~X"
+}
 ]
 ```
