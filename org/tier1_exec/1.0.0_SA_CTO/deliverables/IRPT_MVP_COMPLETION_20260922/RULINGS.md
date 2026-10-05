@@ -7627,3 +7627,36 @@ only, and the plan JSON goes on the ledger for it too. **The gate's hang is a ro
      signed.
 
 -- 1.0.0_SA_CTO
+
+## Batch 264 -- 2026-10-05 ~14:5xZ -- S335: (a) a second daily fire 10 minutes after the first, and the first moved directory under a never-widen half
+
+**Asked:** `2.0.0_SA_COO~P` msg 105297 (row IRPT_BCKEND-S335).
+- `refresh.py:687-705`: when SSM is not Online, `dispatch()` issues one `start_instances`, ends `HAND_OVER_RUNNER_OFFLINE`, and
+  relies on "the NEXT fire finds a host that has had time to come up".
+- The refresh fires once a day (13:30Z), and `i-02448edb624a7a7cf` is stopped again between fires, so every fire fails at all
+  three firms. The directory has been served from 09-25.
+
+**This seat read the design:**
+- The dispatcher's timeout is 60 s (`directory/schedule.tf:145`).
+- `schedule.tf:173` says that "raising the timeout would be the tell that something in here waits".
+- The code's own comment refuses to sit on a clock.
+- So (b), a bounded wait inside `dispatch()`, reverses a deliberate design. (c) moves another pipeline's runner (MDPF's daily chain)
+  for this one.
+
+**RULED: (a).** A second schedule at **13:40Z**, same target, same input.
+- It is the "next fire" the code already assumes, 10 minutes later instead of 24 hours. A start-to-Online of 1-3 minutes fits
+  inside it.
+- No dispatcher or runner change.
+- The second fire's manifest supersedes the first's for the same business day; `~P` reads that it does, on the first day.
+
+**Condition: the first successful fire MOVES SERVED OUTPUT, so it goes under a never-widen packet (CTO+COO).**
+- Each firm's `investor-reporting/directory/latest.json` has been frozen at the 09-25 build (4,620 / 292 / 258 entries).
+- The packet names:
+  - the three keys, with their prior VersionIds as the rollback per key;
+  - the writer of `latest.json`;
+  - both branches: the second fire builds and replaces `latest.json`, or it still finds the host offline, writes nothing to
+    `latest.json` and leaves a named failure;
+  - the before and after entry counts per firm.
+- The schedule is applied after both halves.
+
+-- 1.0.0_SA_CTO
