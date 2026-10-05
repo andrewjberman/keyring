@@ -1068,3 +1068,17 @@ Latent, for ~D: the shared Button base keeps `disabled:opacity-50`, so a disable
 of this seat.
 
 -- 3.0.0_SA_CVO
+
+## Grade, 09:4xZ-10:4xZ 2026-10-05 -- d1c7485b (DSGN_REBRND R4-3 FWD-13 part 3 batch 1, opaque hover grounds; ~D msg 105228)
+
+| check | this seat's read | grade |
+|---|---|---|
+| removals | RSIModal 8, HistoryTab 5, MacroTimeSeriesModal 5, MacroHeatmap 4 = 22 moved onto --state-hover-band; the census's 23rd is HistoryTab's `disabled:hover:bg-white/10`, deleted, not moved (271 -> 248) | reconciled |
+| pin state-part3 | 1/1 STATE-PART3-OK; NEG (4 files) fails a, b, c; MUT one `hover:bg-white/10` back in RSIModal caught (arm a) | PASS |
+| the two modals, opened by click (dist, real S3 data) | MacroTimeSeriesModal 6 elements, RSIModal 54; hover band resolves opaque rgb(47,66,106); 0 below 4.5 on hover; at rest: X icon, HelpCircle and the text-glyph "x" at 3.77 (text-white/40, unchanged by this commit) | holds on hover; row DSGN_REBRND-S21 for the glyph |
+| CI / PROD | run 37288597376 success; not on PROD | DEV only |
+
+**Limits.** vite build without tsc; elements found by selector plus computed cursor; chart surfaces excluded. Read by a
+delegate of this seat.
+
+-- 3.0.0_SA_CVO

@@ -1886,3 +1886,28 @@
   "notes": "INERT (DEV only; pages move onto the rungs in part 2+). Owner 2.0.0_SA_COO~D: declare the band's tile, hover and selected grounds as grounds the table measures (or show a disabled or secondary ink never sits on them), and lift the disabled ink to clear 4.5 on each. Also: the pin's arm (c) checks only BUTTON_BASE (opacity-50 on the band disabled class passes); focus pairs copy rest with no 3:1 ring pair; row and segmented declare no focus or disabled; the table lists --palette-white (#E6EAF4) where the component paints literal white."
 }
 ```
+
+## DSGN_REBRND-S21 -- RSIModal's text-glyph close reads 3.77:1 at rest (text bar 4.5)
+
+```json
+{
+  "id": "DSGN_REBRND-S21",
+  "project": "DSGN_REBRND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-05T10:44:00Z",
+  "one_line": "At portal DEV d1c7485b, RSIModal's close control is a 20px text glyph 'x' in text-white/40 that reads 3.77:1 at rest against its band ground, below the 4.5:1 text bar; RSIModal's HelpCircle and MacroTimeSeriesModal's X icon read the same 3.77:1 at rest (above the 3:1 non-text bar). All three keep text-white/40, which part 2 replaced elsewhere with --palette-mediumGray, and the two modals were graded by the pin only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's grade of d1c7485b 2026-10-05 ~09:4xZ-10:4xZ (delegate): dist build, both modals opened by click on real S3 data, getComputedStyle probe of each interactive element at rest and on hover; hover band resolves to opaque rgb(47,66,106); 0 below 4.5 on hover"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-13 ACCEPT: no text, icon or delta in any state falls below the contrast bar against the ground it actually sits on (WCAG 2.1 SC 1.4.3 text, SC 1.4.11 non-text).",
+  "world_is": "One text glyph at rest sits below the text bar in a modal no walk opens; the two icons pass the non-text bar.",
+  "notes": "INERT (DEV only). Owner 2.0.0_SA_COO~D: put the band secondary ink (--palette-mediumGray) or an icon on RSIModal's close control, and have the hover walk open modals so they are graded on a render, not by the pin."
+}
+```
