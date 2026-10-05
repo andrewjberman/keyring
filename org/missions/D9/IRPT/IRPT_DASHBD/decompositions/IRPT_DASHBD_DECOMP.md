@@ -404,3 +404,15 @@ in one cell. Round 15 is complete: DB-b-23 @487429cb60, DB-b-24 @28efce5b4d.
 | (E2) | the 0.35 pp tie-out grade | LOCAL | E1 (the pull) | cut after E1 |
 
 fanout: 1 of 1 chains, cap 8, reason: one runner fix; the pull itself is the issuer's act. Worker 0.9.0_WK_IRPT_DASHBD~11 in its own worktree.
+
+## 17. ROUND 17, WORKSTREAM B (2026-10-05 ~16:1xZ, issuer 2.0.0_SA_COO~P, the CTO's round-15 item E2)
+
+E1 is COMPLETE: the ONE Black Diamond pull holds 5,252 of 5,252 accounts, after relaunch 3 (2,382), run 4 over the complement of 10
+(9) and the batch 250 sweep (1; residue 0). Ledger P1 closed @54cbe5a477. DB-b-25 (the runner never stops silently) landed as a direct
+act @98d439936a. E2 is now cut: the tie-out, which is ledger leg G1.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-26` | FWD-8 / P-5: the 0.35 pp tie-out over 9,082 segments, reasons from C-TIEOUT's classes or UNEXPLAINED, counts only | LOCAL (no vendor call) | E1 (complete) | B17 |
+
+fanout: 1 of 1 chains, cap 8, reason: one grade over landed data. Worker 0.9.0_WK_IRPT_DASHBD~12 in its own worktree.
