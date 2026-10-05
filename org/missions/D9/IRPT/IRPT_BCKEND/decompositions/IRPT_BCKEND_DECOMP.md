@@ -1730,3 +1730,21 @@ since its 404 is the designed shell state. The never-widen packet goes to the CT
 | (the act) | the withdrawal under the CTO half and Andrew's word, then the after-read; W121-S1 disarms on the after-read | SERVED | IB-pr-319 | the issuer's act |
 
 fanout: 1 of 1 chains, cap 8, reason: one read-only cell; the delete is a signed act. Worker 0.9.0_WK_IRPT_BCKEND~122 in its own worktree.
+
+## 45. ROUND 51, WORKSTREAM ~P (2026-10-05 ~03:1xZ, issuer 2.0.0_SA_COO~P, the batched remainder of section 42)
+
+A read-only sweep of E1's 16 non-BLOCKING remainder rows found all 16 still open. They sort into three groups:
+- **Eight are LOCAL code or test repairs:** S220, S282, W62-S1, S241, S297, S298, W101-S14, W101-S16. Per the spine, they are ONE repair cell.
+- **Five wait on a ruling or a read:**
+  - W80-S1 is a CTO ruling, asked 03:01Z and due before the INF fire at 14:00Z.
+  - S260 and S175 need a CTO reason-code vocabulary, then a served release.
+  - S218 needs an SSM journal read, then a CTO allowance ruling.
+  - S252 needs an S3 read.
+- **Three are records:** S204 is the issuer's ledger record; S180 is disposed with S260; W69-S1 is 0.0.0_AB_MSTR's worktree provisioning.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-320` | the eight LOCAL remainder rows, each fixed with a test naming it | WORLD (code under infra/; deploys are the issuer's) | none | P51 |
+| (the issuer) | the served releases of S241, S297, S298 and W101-S14 under never-widen halves; the S218 and S252 reads; the S204, S180 and W69-S1 records | SERVED | IB-pr-320 (for releases) | the issuer's acts |
+
+fanout: 1 of 1 chains, cap 8, reason: one repair cell; the rulings and reads are the issuer's. Worker 0.9.0_WK_IRPT_BCKEND~123 in its own worktree.
