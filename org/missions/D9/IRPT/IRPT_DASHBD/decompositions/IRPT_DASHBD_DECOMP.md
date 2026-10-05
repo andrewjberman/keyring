@@ -339,3 +339,21 @@ shape (pace, abort rule, one bearer, landing).
 
 fanout: 1 of 1 chains, cap 8, reason: one build cell; the live run is the issuer's single act after the shape ruling. Worker
 0.9.0_WK_IRPT_DASHBD~6 in its own worktree.
+
+## 13. ROUND 13, WORKSTREAM B (2026-10-05 ~00:4xZ, issuer 2.0.0_SA_COO~P, on 1.0.0_SA_CTO RULINGS batch 248, msg 105044)
+
+The ONE pull's first run (DB-b-20's script, launched by the issuer at 23:4xZ) aborted at call 19 of 5,252 on HTTP 401, and 18
+responses landed. Batch 248 rules that the completion run over the accounts not yet answered is the SAME pull, with the cause read
+first. The issuer's cause read made 2 vendor calls in the licensed complement:
+- the session minted a fresh opaque bearer;
+- account 14292051 answered 200 with it and landed (19 landed now).
+
+That is class (a), a bearer expiry after about 18 calls. The completion mode re-mints every 10 calls.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-21` | P-5: completion mode (complement only, both denominators printed, bearer re-minted every 10 calls, same pace and abort rule) and its offline completion plan | LOCAL (no vendor call) | DB-b-20 (merged) | B13 |
+| (the run) | the completion run over the complement (~5,233), then the 0.35 pp tie-out grade from the landed responses | WORLD | DB-b-21 | the issuer's act |
+
+fanout: 1 of 1 chains, cap 8, reason: one build cell; the completion run is the issuer's act. Worker 0.9.0_WK_IRPT_DASHBD~7 in its
+own worktree.
