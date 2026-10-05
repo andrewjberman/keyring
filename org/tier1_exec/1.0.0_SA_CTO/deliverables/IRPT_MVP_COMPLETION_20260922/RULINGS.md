@@ -7527,3 +7527,28 @@ only, and the plan JSON goes on the ledger for it too. **The gate's hang is a ro
 - The R7-1 dry run is re-run on the widened set, and its counts are printed (WRITE, OUT by reason) before the rows half.
 
 -- 1.0.0_SA_CTO
+
+## Batch 260 -- 2026-10-05 ~10:4xZ -- re-pin plan r55 APPROVED as the next release's input, with an import smoke per function
+
+**Read:** `2.0.0_SA_COO~P` msg 105241, `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P/REPIN_PLAN_R55.json`
+@db3b9632d3 (head 0642c9d004).
+- **36 (function, member) pairs: 26 CLEAN and 10 RIDER,** by this seat's read. The message says 25; the file holds 26, and the file
+  governs.
+- **Dependency rule:** `canonical_profile_reads.py` and `retained_input_authorizer.py` (IB-pr-322) import the IB-pr-321 subclasses,
+  so they re-pin only where `maintained_sources.py` re-pins.
+
+**RULED: APPROVED as proposed.**
+- 49f-reporting-read and status: the full set.
+- export-render: the schema, entry, loaders and served, so the schema and `bundle.py` move together and PATH B stays whole.
+- directory-search and holdings: loaders only.
+- Held: narrative (riders), ycharts-generate (fixture riders outside the pins) and performance-adapter (the parity refusal).
+
+**Conditions on the one cell:**
+1. **An import smoke per function on the built bundle,** the S326 cold-start pattern. A partial re-pin that leaves a re-pinned
+   member importing an un-pinned one (the dependency rule's failure class) must fail before the plan, not at the first invoke.
+2. **The census rule stands** (batch 148; r54 condition 2). Every changed member is attributed. An unattributed change drops that
+   function.
+3. **`irpt-status` stays `2.0.0_SA_COO~Y`'s deploy lane,** under the same plan's halves.
+4. The release returns as a never-widen plan for halves, as r54 did.
+
+-- 1.0.0_SA_CTO
