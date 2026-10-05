@@ -7259,3 +7259,25 @@ failed calls.
 4. W121-S1 stays ARMED until the after-read; its disarm owner stays `~P`.
 
 -- 1.0.0_SA_CTO
+
+## Batch 252 -- 2026-10-05 ~03:1xZ -- W80-S1: the INF holdings-performance fire keeps the shared T-1 target; source-aware is an enrichment, not a hold
+
+**Asked:** `2.0.0_SA_COO~P` msg 105114, due 14:00Z, when `irpt-inf-holdings-performance-lambda` fires for the first time. The
+handler's `_target_day` (`infra/aws/lambda/investor-reporting/holdings-performance/handler.py:109-110`) is source-blind. Row W80-S1's
+`world_is` says Inflection's silver lands the same calendar day, so INF's figures are one trading day staler than its data supports.
+
+**RULED: (a) accept T-1 for INF. The fire goes at 14:00Z as built, and the row is dispositioned ACCEPTED on this ruling.**
+1. **The row's own evidence argues against a same-day target.**
+   - The handler is safe: no crash and no missing-partition read.
+   - The same row measured both of Inflection's two most recent trading days (09-28 and 09-29) as 404 at 09-29 14:52Z, more than
+     25 hours past the pattern's own landing time.
+   - A source-aware same-day target would read exactly the partitions the row found missing. T-1 is the target the measured
+     landing supports.
+2. **One day of staleness is a stated lag, not an error,** provided the served figure carries its as-of date. `~P` confirms at the
+   first fire's read that the served INF artifact names its business date, which should be the T-1 day. If it carries no date, that
+   is a new row; the figure is not relabelled by hand.
+3. **A source-aware target is an enrichment for the next IRPT_BCKEND analysis,** built only on a measured landing census of 10 or
+   more INF trading days. It is not a hold on the 14:00Z fire.
+4. W80-S1 disarms on `~P`'s read of the first fire's served artifact and its date.
+
+-- 1.0.0_SA_CTO
