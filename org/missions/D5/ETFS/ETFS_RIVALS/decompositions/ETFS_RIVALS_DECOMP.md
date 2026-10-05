@@ -1,168 +1,162 @@
-# ETFS_RIVALS -- DECOMPOSITION, ROUND 7 (ENRICHMENT): the sweep runs the AI step itself, runs carry their trigger, the census reads the rankings' classification, one name per security, and the page-walk remainder
+# ETFS_RIVALS -- DECOMPOSITION, ROUND 8 WORKSTREAM A (ENRICHMENT): the AI step never costs the page, one name in the AI prose, the render remainder, the census price repair, and the Bloomberg leg sized for the benchmarks
 
 ```json
 {
  "project": "ETFS_RIVALS",
- "round": 7,
- "prd_ref": "org/missions/D5/ETFS/ETFS_RIVALS/prd/ETFS_RIVALS_PRD.md (v0.13 @b69262724d; ADMITTED)",
- "prd_version": "v0.13",
- "analysis_ref": "org/missions/D5/ETFS/ETFS_RIVALS/ledger/ROUND_ANALYSIS.round6.md@94f682c868 (section 3, ENRICHMENT LIST)",
+ "round": 8,
+ "workstream": "A",
+ "prd_ref": "org/missions/D5/ETFS/ETFS_RIVALS/prd/ETFS_RIVALS_PRD.md (v0.14 @4cc8e40575; ADMITTED 21:15:49Z, ratified-text re-signed by 3.0.0_SA_CVO~Z)",
+ "prd_version": "v0.14",
+ "analysis_ref": "org/missions/D5/ETFS/ETFS_RIVALS/ledger/ROUND_ANALYSIS.round7.md@115645c4b4 (section 3, ENRICHMENT LIST items 1, 2, 4)",
+ "authority": "org/tier1_exec/2.0.0_SA_COO/deliverables/cooRV_ANDREW_DIRECT_20261004_20xxZ_BUILD_ETFS_RIVALS_ROUND8_TONIGHT.md@0a4321b843",
+ "draft_ref": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round8/DECOMP_DRAFT.md@1b2d733c6d",
  "author": "2.0.0_SA_COO~RV",
- "cells": 8,
+ "cells": 5,
  "chains": 4,
  "join_cells": 0,
  "frozen": true,
  "revision": "1.0",
- "round6_decomposition": "org/missions/D5/ETFS/ETFS_RIVALS/decompositions/ETFS_RIVALS_DECOMP.round6.md"
+ "round7_decomposition": "org/missions/D5/ETFS/ETFS_RIVALS/decompositions/ETFS_RIVALS_DECOMP.round7.md"
 }
 ```
 
-**Issuer:** `2.0.0_SA_COO~RV`, 2026-10-02 ~21:3xZ, FULL.
-**Source:**
-- The round-6 analysis section 3 (CTO~Z msg 28735). It lists six items: C-S24 (the lead), provenance, page-size headroom,
-  the census's 33 GICS rows, the name tie-break, and the RFW remainder.
-- The RFW register graded against the served page (rv-publish-1002r6, 21:0xZ): 14 REALIZED, 4 SUPERSEDED by Andrew's
-  layout word, 3 PENDING-TRIGGER, 11 NOT-REALIZED, 1 out of scope. The 11 are cut below by write set.
+**Issuer:** `2.0.0_SA_COO~RV`, 2026-10-04 ~21:xxZ, FULL.
 
 ## Issuer rulings at this cut
 
-1. **The standing L5 rule from round 7 (CTO ruling 4):** every outcome that claims production names its ORGANIC
-   trigger, and that trigger's own invocation is its evidence. A deliberate fire is the positive control only. Each cell
-   below carries an `Organic trigger:` line.
-2. **Analysis item 3 (page size) is REALIZED by existing code; no cell.** Check `round7/checks/ps-1.AC1.py` PASSES at base:
-   - a heavy day refuses with nothing written and the prior page kept (`publish_page.py:719-721`);
-   - a medium day publishes without holding dialogs (`render.py:1433-1443`).
-   The served page is 1,833,385 B against the 2,097,152 B cap.
-3. **Cut by write set (C10):**
-   - `~1` sa-1 -> pv-1 -> cu-1: `sweep.py`, `ai_stage.py`, `publish_page.py`, the sweep schedule in `gen_policies.py` and
-     its outputs;
-   - `~2` rd-1: `render.py`;
-   - `~3` nt-1 -> nm-2: the name maps in `gold_holding_contribution.py` and `gold_buying_trend.py`, `names.py`,
-     `enrichment_bloomberg.py`;
-   - `~4` cg-1 -> cs-1: `gold_input_census.py`.
-4. **Workers never call a vendor, write S3, deploy or run Terraform.** The issuer's acts, each under its own pair:
-   - the deploy with the regenerated schedule;
-   - the deliberate invoke of the SWEEP Lambda with its own schedule payload (sa-1's positive control);
-   - I-1 (W4-S9);
-   - I-2 (the backfills: D12, D13);
-   - the G5 replay (D10's residue).
-5. **Acceptance (CTO ruling 2):** the organic 2026-10-05 09:00 ET sweep, with no seat act, writes that day's account and
-   republishes.
+1. **Andrew's word issues workstream A now** ("yes, build round 8 tonight", @0a4321b843). The round-7 analysis deferred the
+   ONE issuance until after the 2026-10-05 grades; that deferral binds item 3 only, which becomes **workstream B** after the
+   grades, together with the smoke items (record `cooRV_ANDREW_DIRECT_20261004_21xxZ_RIVALFUNDS_SIGNED_IN_SMOKE.md`
+   @1c31a5f6ce, S2-S8). Two bounds ride every cell: **no merge into CLOUD before the 2026-10-05 07:00 ET vehicle pull has
+   run** (the vehicle runs the CLOUD tree), and **no Lambda deploy before 3.0.0_SA_CVO~RV's 13:30Z grades**.
+2. **The draft's rulings stand** (DECOMP_DRAFT.md @1b2d733c6d): U02 and U08 SUPERSEDED by Andrew's layout word; Z-S16 and
+   Z-S17 not cut; D10 rolls off ~10-08; D07 upstream; D04/D05/D06/D11 read Monday; I-2's data acts follow lg-1.
+3. **The D12/D13 split (lg-1):** D12 = the HOME entries' `pending_source_policy` (IDVZ, PFOE through Bloomberg, history from
+   inception); D13 = the `"leg": "pending"` entries plus `pending_role` (ACWI and IWM join as the benchmarks, SCHY reads rival).
+   This matches Andrew's smoke S1: "S-C-H-Y is not the benchmark. The benchmark is ACWI ... P-F-O-E, the benchmark is I-W-M".
+4. **Cut by write set (C10):** one file set per chain, below. an-1 -> rw-1 share `render.py`, so they are one chain, one queue.
 
 ## Rulings reaching every cell
 
-Rounds 1-6's rulings stand (`ETFS_RIVALS_DECOMP.round{1..6}.md`). CALL 5 holds: one AI run per page day; a FAIL is shown,
-never re-rolled.
+Rounds 1-7's rulings stand (`ETFS_RIVALS_DECOMP.round{1..7}.md`). CALL 5 holds: one AI run per page day; a FAIL is shown,
+never re-rolled. The standing L5 rule (CTO round-7 ruling 4): every production outcome names its ORGANIC trigger.
 
 ## 3. THE CELLS
 
-### `RIV-sa-1` -- the sweep runs the AI step itself, with a deadline, then republishes (C-S24; RFW-D08)
-- `sweep.handler_entry` runs the AI step after `run_dag`, or after the `only` stages when they include publish-page. It runs
-  only when `RIVALFUNDS_AI_ENABLE == "1"` and the day already holds a publish-page marker.
-- Today `sweep.py:469-472` skips the publish whenever the marker exists, and the gateless morning publish always writes it,
-  so no scheduled path reaches the AI stage.
-- If the step ran (OK or FAILED), the sweep republishes through `publish_page.handler_entry` under a new batch id, passing
-  the result as `event["ai_run"]`. publish-page makes NO AI call: it records `ai_run` as
-  `a1_produced.research_hypotheses_run` `{status, reason, run_id, run_path}`.
-- **Deadline:** event field `ai_deadline_s` (passed through by `trigger_event`), default constant `sweep.AI_DEADLINE_S`. The
-  step never runs past the Lambda's remaining time minus `MARGIN_MS`. On an overrun:
-  - no research_hypotheses object is written, now or later (no background writer);
-  - the result is `{"status": "FAILED", "reason": "...deadline..."}`;
-  - the page shows the failure.
-- **One run per page day (CALL 5), OK or FAILED:** a later sweep makes no AI call. The cell records the attempt where the
-  address builder says.
-- **Gate unset:** the sweep writes nothing extra and does not republish.
-- `ai_stage.run_for_day(sink_spec, day, run_path="ad_hoc", deadline_s=None, **kw)`.
-- **Organic trigger:** the EventBridge sweep schedule (`etfs-rivalfunds-daily-lambda`, 09:00 ET trading days). Its
-  invocation on 2026-10-05 is the acceptance.
+### `RIV-dt-1` -- the deadline-aware vendor timeout (W1-S46; CTO round-7 ruling 1; item 1)
+- The worst case today: a vendor call starting near the AI deadline runs `ai_client.TIMEOUT_S` = 120 s, which leaves 30 s
+  of the 150 s margin for a republish that takes ~68 s at p95 (publish-page Lambda, 14 days, n=29: p95 68.1 s, max 81.2 s;
+  the act-3 publish with refresh_a1 took 117.5 s; the CVO measured ~88 s).
+- Interface: `chat(timeout=)`; a deadline client hands each call min(TIMEOUT_S, the time left); `sweep.REPUBLISH_RESERVE_S`
+  >= 88 s is subtracted from the remaining time. A planted slow vendor at the deadline still republishes: the account is
+  recorded FAILED and the page publishes without it.
+- Check: `dt-1.AC1`. Organic trigger: the 09:00 ET sweep.
 
-### `RIV-pv-1` -- a run carries its trigger: `run_path` "scheduled" only from the schedule (CTO ruling 3)
-- The sweep schedule's input in `gen_policies.py` gains `"run_path": "scheduled"`, regenerated into
-  `generated.auto.tfvars.json`.
-- The sweep stamps "scheduled" only for an event carrying that value and no `only`. Every other event stamps "ad_hoc":
-  an `only` fire, or a hand-made event.
-- `run_path` goes into each account row's `input_manifest` and into `research_hypotheses_run`.
-- A seat replaying the schedule payload verbatim still stamps "scheduled", and the docstring says so.
-- **Organic trigger:** the same schedule. Its payload is the evidence.
+### `RIV-an-1` -- the AI prose reads each security under the page's one name (item 2 + U14's AI-text residue)
+- The 3 money-market keys (DGCXX x2, IJGXX) sit in the stored prose; 13 casing clashes in the opening lines, 26 in the full
+  text.
+- Interface: `render._rich` maps whole security keys and casing variants to `_NAMES`; a cash-like key reads
+  "<TICKER> money market fund" with the original in a title; the stored row is unchanged; the `.rf-cite` citation list keeps
+  its keys.
+- Check: `an-1.AC1`. Organic trigger: the 07:00 ET marker publish and the 09:00 ET sweep publish.
 
-### `RIV-cu-1` -- the sweep continues every open G1 cursor (W4-S9, continuation half; found at I-1's measurement)
-- Round 5 bounded a long G1 batch: `_budget_s` 600 s returns PARTIAL with a cursor and NO G1 marker, and `run_gold_chain`
-  re-runs G1 once inside one invocation.
-- The issuer's I-1 measurement (C:/tmp/r7i1/, batch d5-gqgu-03: 60 dates, PARTIAL, PARTIAL, OK) found that NOTHING continues an
-  open cursor across invocations. The silver trigger fires only on a new marker, and the 09:00 ET sweep walks only its own
-  page day, so a PARTIAL batch stays incomplete until a seat re-invokes it.
-- The sweep continues every OPEN G1 cursor (a cursor object without its G1 marker), within a bounded lookback the cell
-  states and within its budget. A cursor older than the lookback is reported in the sweep's detail, never silently dropped.
-  With no open cursor, the sweep behaves exactly as today.
-- **Organic trigger:** the 09:00 ET sweep schedule. A PARTIAL batch completes on the next scheduled sweep.
+### `RIV-rw-1` -- the render remainder (RFW-U07, U12, U18)
+- U07: the trend caption reads the dates and trading days only; the unit moves off it (`rw-1.AC1`).
+- U12: consecutive noted 0-trade windows collapse into one line, with the notes kept inside (`rw-1.AC2`).
+- U18: an all-caps "CORP." ends a sentence, so the account's lead is two sentences (`rw-1.AC3`).
+- Organic trigger: as an-1.
 
-### `RIV-rd-1` -- the page-walk remainder in render.py (RFW-D12, U09, U13, U14, U16)
-- **The name-map shadow (found at the cut):** a second `def _render_page` at `render.py:1457` replaces the wrapper at :1446.
-  The wrapper fills `_NAMES`, so `render_page` never fills it. U14 (one display name per security) has been dead since
-  95af466e67. Rename the body and keep the wrapper.
-- D12: a buying-trend line built from ONE window reads "Single trade", not BET or TILT (`render.py` ~:970).
-- U09: the account text's stored reading keys display as labels. That includes multi-word keys and bare family names
-  (`fear_greed`, `"middle" east oil`; the label regex ~:1072). The face's vintage line shows no raw table names.
-- U13: the holdings table reads plain words ("UNRESOLVED" ~:436, identifier types, "source policy ..." ~:399), each with
-  its code in a title tooltip, as the trade log does.
-- U14: the holdings-table name (~:438) reads through the page's one name map (no case-only clashes).
-- U16: the buying trend's no-sector row becomes a footnote with its share, like the rankings' data-unclassified-share.
-- **Organic trigger:** the 07:00 ET marker publish and the 09:00 ET sweep publish. The page they write is the evidence.
+### `RIV-rp-1` -- the census price repair (row Z-S18 + the contradictory miss reason)
+- Z-S18: `alias` comes from the wide g1w and `books` from the 14-day g1, so a CUSIP resolved only in an older report misses
+  its holding-implied price (`rp-1.AC1`).
+- A census price row that reads `missing` never claims the rankings price it (`gold_input_census.py` ~:183, 44 served rows)
+  (`rp-1.AC2`).
+- Organic trigger: the 07:00 ET marker publish.
 
-### `RIV-nt-1` -- one deterministic name pick (analysis item 5; RFW-U14 producer half)
-- The newest-name map in `identity_maps` (`gold_holding_contribution.py` ~:140-165) and its use in `gold_buying_trend.py`
-  (~:76-84) take `display_name(sorted(set(candidates)))` over the names on the key's newest named date. Older dates never
-  compete. The row order changes nothing (today it moves 12 + 2 cells; TSM flips between two names).
-- `hc.build` and `bt.build` keep their signatures, and a fund's own name still comes first in holding_contribution.
-- **Organic trigger:** the A1 producers in the 07:00 ET publish.
-
-### `RIV-nm-2` -- the CUSIP-keyed G4 request asks for a name (RFW-D11)
-- The OFFLINE G4 plan (`enrichment_bloomberg.py` ~:103-114) requests a security-name field, and G4 rows carry it.
-- The producers' name candidates include the G4 name, so `names.display_name` prefers it over a 30-character cut (IDVZ's
-  "International Container Termin").
-- The 2026-10-05 vehicle run does NOT fix these without this cell: the IDVZ CUSIP lines share no key with any named line.
-- **Organic trigger:** the vehicle's 08:03 ET enrichment step. Its G4 object is the evidence.
-
-### `RIV-cg-1` -- the census reads the rankings' GICS classification (analysis item 4; RFW-D14)
-- All 33 understated rows (ETFT 9, PCLG 11, TSEL 9, WCMG 4) are a G4 DATE-SCOPE difference:
-  - the census matches G4 on security_id plus the as-of date in the as-of partition only (`gold_input_census.py:87`, `:102`);
-  - the rankings match G4's sector on security_id across their window (`gold_holding_contribution.py:636-639`,
-    `_prices` `:217-228`).
-- A second difference is latent: the census's other_fund rule matches the exact key within 14 days (`:56`, `:141`); the
-  rankings' `_cross_sectors` (`:232-264`) match any shared identifier over the year to date.
-- A GICS row the rankings classify reads `arrived`, or `covered_by_fallback` with `fallback` "other_fund" or a value
-  beginning "g4" (e.g. "g4_prior"). `missing` only where the rankings say Unclassified. The rankings producer is unchanged.
-- **Organic trigger:** the census producer in the 07:00 ET publish.
-
-### `RIV-cs-1` -- the census and the header agree on freshness (RFW-D02)
-- The header says "13 of 13 funds current" (a 1-trading-day allowance), while the census says "9 of 13 arrived, 4 missing"
-  (the exact date) (`gold_input_census.py:109-113` against `render.py:508-510`).
-- A holdings report inside the allowance reads covered, consistent with ic-2's states. A report outside it stays missing.
-- **Organic trigger:** the census producer in the 07:00 ET publish.
+### `RIV-lg-1` -- the Bloomberg leg carries index-control-sized holdings and switches D12 and D13 apart (row Z-S20)
+- Measured 2026-10-03 for 2026-10-01: IDVZ 45 / PFOE 24 / ACWI 2,198 / IWM 1,979 rows. `excel_fetch` runs one query per
+  date with max_rows=2000 and raises RuntimeError on overflow, which `_handler_entry` does not catch: the leg crashes. The
+  gate `RIVALFUNDS_LEG_ENABLE` switches every pending key at once.
+- Interface: an `index_control` fund is queried on its own per date under a cap >= 2,500 and < 50,000; the range read never
+  truncates silently; an overflow is a per-name partial (PARTIAL, the fund named, the others land); `universe` reads
+  `RIVALFUNDS_LEG_D12` and `RIVALFUNDS_LEG_D13` per ruling 3, `RIVALFUNDS_LEG_ENABLE=1` turns both on, all unset is today.
+- Checks: `lg-1.AC1` (fetch), `lg-1.AC2` (gates). Organic trigger: the vehicle's 07:00 ET leg. Nothing here flips a gate:
+  each gate flip and its backfill is an issuer act under its own never-widen pair after the merge.
 
 ## ISSUER ACTS (no worker; each under its own pair)
-
-- **I-1 (W4-S9, CTO ruling 5, owed now):** one deliberate marker batch above 45 report dates (d5-gqgu-03, 60 dates)
-  against the deployed canonical-shape Lambda; it must end PARTIAL-and-continued, never timed out. Measured: G1 writes 0;
-  the publish leg rewrites the 10-01 page, so it runs under its own pair (COO half `round7/NEVER_WIDEN_HALF_COO_I1_W4S9_DISARM.md`).
-- **The round-7 deploy:** five Lambdas + the regenerated schedule; then the deliberate SWEEP invoke with its own schedule
-  payload (sa-1's positive control). The organic 2026-10-05 09:00 ET sweep is the acceptance.
-- **I-2:** the IDVZ/PFOE trend from inception (D12) and the ACWI/IWM benchmarks (D13, the v0.8 leg's gate).
-- **The G5 replay** for D10's six n/a cells in the 09-25 -> 09-30 windows. Otherwise they roll off around 2026-10-08.
-- **Pending a trigger:** D04 and D05 (the 2026-10-05 vehicle run with the 601-security plan).
-- **Out of scope:** D07 (upstream arrival: the TrueShares layout break is Andrew's/CRO~RV's call) and U19 (Andrew's
-  signed-in walk).
+- After lg-1 merges (after the 10-05 07:00 ET pull): the D13 gate flip + the ACWI/IWM backfill from 2026-01-02, then the D12
+  gate flip + the IDVZ/PFOE backfill to inception; each with its budget threshold named in the pair.
+- After the 13:30Z grades: the round-8 Lambda deploy (NEVER-2 ledger entry).
 
 ## 4. DEPENDENCY EDGES AND CHAINS
 
 | chain | cells (serial) | writes |
 |---|---|---|
-| `~1` | sa-1 -> pv-1 -> cu-1 | `sweep.py`, `ai_stage.py`, `publish_page.py`, `infra/aws/terraform/etfs-rivalfunds/{gen_policies.py, generated.auto.tfvars.json}` |
-| `~2` | rd-1 | `render.py` |
-| `~3` | nt-1 -> nm-2 | `gold_holding_contribution.py`, `gold_buying_trend.py`, `names.py`, `enrichment_bloomberg.py` |
-| `~4` | cg-1 -> cs-1 | `gold_input_census.py` |
+| `~1` | dt-1 | `ai_client.py`, `ai_stage.py`, `sweep.py` |
+| `~2` | an-1 -> rw-1 | `render.py` |
+| `~3` | rp-1 | `gold_input_census.py` |
+| `~4` | lg-1 | `collector_bloomberg.py`, `universe.py` |
+
+No join cell. No hookup in a shared file is expected; a report that names one gets it at the merge.
 
 ## 5. BATTERY
 
-`deliverables/2.0.0_SA_COO~RV/round7/checks/`, dry-run at the base. Each order's face names its checks; the issuance commit
-carries every base line.
+`deliverables/2.0.0_SA_COO~RV/round8/checks/`, dry-run at base CLOUD 1c31a5f6ce (the package equals the deployed pin
+75ad1e4d2e). Each order's face names its checks; the issuance commit carries every base line.
+
+## WORKSTREAM B (issued 2026-10-04 ~22:xxZ, same issuer, same round): Andrew's signed-in smoke on PRD v0.14
+
+**Authority:** the smoke record `org/tier1_exec/2.0.0_SA_COO/deliverables/cooRV_ANDREW_DIRECT_20261004_21xxZ_RIVALFUNDS_SIGNED_IN_SMOKE.md`
+@1c31a5f6ce (S2, S3, S7, S8) under "yes, build round 8 tonight" (@0a4321b843), against PRD v0.14 @4cc8e40575 (ADMITTED 21:15:49Z).
+Measured inputs: `deliverables/2.0.0_SA_COO~RV/round8/WORKSTREAM_B_INPUTS.md` @7cc969288b. Item 3 of the round-7 enrichment list
+(what the 10-05 grades leave open) is still cut after the grades. The same two bounds hold: no merge before the 2026-10-05
+07:00 ET vehicle pull, no deploy before the 13:30Z grades.
+
+**Issuer rulings (B):**
+1. The rolling period is the last 30 TRADING days (v0.14 FWD-13/14/15/19; Andrew "the last 30 trading days"), in the rankings,
+   the buying trend and the AI fact pack alike; the existing `R30` id is kept and its meaning moves from 30 calendar days.
+2. A window clipped to a fund's first report says so ("Since first report") and is never labelled year/quarter/month to date
+   (S3). The flag is produced by hc-1 (`period_clipped`, `period_nominal_start`) and read by rn-1.
+3. The buying trend carries one block per period with a `period` column (bt-1); every reader of buying_trend that wants the
+   year reads `period == "YTD"` when the column exists. The AI fact pack is such a reader (gc-1 owns that filter).
+4. rn-1 builds on chain `~2` (render.py after an-1 and rw-1); its worktree is cut from branch `wk-ETFS_RIVALS-2`.
+5. The interfaces between cells are prescribed in the checks, so the four cells build in parallel: rn-1 renders fixture rows in
+   the hc-1/bt-1 shape, gc-1 reads the bt-1 shape.
+
+### `RIV-gc-1` -- the grader attaches an uncited fund-pack fact, and the AI's last 30 days are trading days (S2, S7)
+- Measured: IDVZ "The last 30 days" FAILED on "$1.6 million, $1.3 million"; both are real fact-pack trades (T7 1,564,110.98;
+  T9 1,292,762.88) the model left out of `cited`; with them cited the grade PASSES. "$1.3 million" also matches T8.
+- Interface: `ai_accounts.attach_uncited(body, facts, cited) -> (rows, notes)` (one uncited match -> its row attached with
+  `auto_cited`; two or more -> no attach, one note naming the ids); `run_chain` calls it before `grounding_check` and an
+  ambiguous note joins the FAIL reason. `fact_pack` keeps trades in the last 30 NYSE trading days, and reads the trend rows
+  with `period == "YTD"` when the column exists.
+- Checks: `gc-1.AC1`, `gc-1.AC2`. Organic trigger: the 09:00 ET sweep's AI step.
+
+### `RIV-hc-1` -- the rankings' rolling period is 30 trading days, and every row says whether its window was clipped (S3, S7)
+- Measured: `R30` starts 29 calendar days back (`gold_holding_contribution.py:123`); YTD is clipped to the first report
+  (`:411`, `:417`) with no field saying so.
+- Interface: `period_start("R30", day)` = the 30th NYSE trading day ending on `day`; every row carries `period_nominal_start`
+  and `period_clipped`.
+- Check: `hc-1.AC1`. Organic trigger: the 07:00 ET marker publish (the A1 producer step).
+
+### `RIV-bt-1` -- the buying trend carries every period (S8; v0.14 FWD-15)
+- Measured: `build` writes the year to date only (`gold_buying_trend.py:157`, `:210`).
+- Interface: rows carry `period` in {R30, MTD, QTD, YTD}, each with its own window_start / window_end / n_trading_days;
+  YTD rows are today's rows.
+- Check: `bt-1.AC1`. Organic trigger: the 07:00 ET marker publish.
+
+### `RIV-rn-1` -- the 30-trading-day default, the switch inside both components, and honest window labels (S3, S7, S8)
+- Measured: `render.PERIODS` = MTD/QTD/YTD with YTD first and selected (~:806-813); the switch lives only at the top; the
+  trend card reads "year to date" for every fund (~:1057); IDVZ's clipped window reads "Year to date (2026)".
+- Interface: one `rf-period` radio group (R30 checked); the top switch reads R30, a `data-period-divider`, MTD, QTD, YTD;
+  the rankings component and each trend card hold labels for the same four radios (any one moves all; no script); every rank
+  and trend panel carries a `data-period-window` line (label, first and last date, trading days); R30 reads "Last 30
+  trading days"; a clipped window reads "Since first report".
+- Checks: `rn-1.AC1`, `rn-1.AC2`. Organic trigger: the 07:00 ET marker publish and the 09:00 ET sweep publish.
+
+| chain | cells | writes |
+|---|---|---|
+| `~5` | gc-1 | `ai_accounts.py` |
+| `~6` | hc-1 | `gold_holding_contribution.py` |
+| `~7` | bt-1 | `gold_buying_trend.py` |
+| `~2` (cont.) | rn-1 | `render.py` |

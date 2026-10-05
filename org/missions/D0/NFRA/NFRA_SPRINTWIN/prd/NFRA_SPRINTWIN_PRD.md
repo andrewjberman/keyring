@@ -5,7 +5,7 @@
  "project": "NFRA_SPRINTWIN",
  "directive": "D0",
  "fabric": "site-z",
- "prd_version": "v0.2",
+ "prd_version": "v0.3",
  "step": 4,
  "brief_ref": "docs/briefs/daily-sprint-window-and-device-census-brief-20261004.md@547af2b735",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7"],
@@ -152,8 +152,13 @@ Commit metadata only: no file content and no client data. The scheduled task run
 `infra/logic/registry/systems.json`, and `python lib/opal_naming.py validate` reads OK at 52 system rows. Every string below is
 builder output at that registry.
 - **The homes:**
-  - the device census: `address('sprint', 'global', 'bronze', 'device_census', 'date=<D>', '<device>.json')` =
-    `s3://opal-data-assets/sprint/global/bronze/device_census/date=<D>/<device>.json`, one object per device per New York day;
+  - the device census (v0.3: ONE OBJECT PER CENSUS RUN, never overwritten):
+    `address('sprint', 'global', 'bronze', 'device_census', 'date=<D>', '<device>-<generated_at as YYYYMMDDTHHMMSSZ>.json')` =
+    `s3://opal-data-assets/sprint/global/bronze/device_census/date=<D>/<device>-<stamp>.json`. Builder output was verified at
+    v0.3: `.../date=2026-10-04/sitez-20261004T215100Z.json`. The run unions every census file dated inside the window by sha
+    (C-UNION), so several files per device per day change no count. "Who reported" for a day reads the NEWEST file per device. A
+    dated re-run reads exactly the files that existed for its stored watermark. (v0.1-v0.2 named one object per device per day,
+    `<device>.json`; the 2026-10-04 served re-run overwrote site Z's copy, round-1 analysis ruling 1.)
   - the QA home for FWD-1's trace and the on-demand runs: `address('sprint', 'global', 'platinum', 'qa_page', 'date=<D>')` =
     `s3://opal-data-portal-v2/sprint/global/platinum/qa_page/date=<D>/`. No route serves this prefix. A QA run reads and writes
     its watermark here, never the served one, so a QA run cannot move the scheduled window. `gold` and `state` are refused for
@@ -273,3 +278,6 @@ enrichment list.
   earliest reporting census. Finding 2: an 8-day look-back, and the run unions every census file in the window. Finding 4: the
   never-widen COO half is placed on `2.0.0_SA_COO~H`. These are CONTRACTS and header edits; the ENDPOINT is unchanged, so no half
   re-opens.
+- v0.3 (2026-10-04 ~22:1xZ, `1.0.0_SA_CTO~Z`): CONTRACTS, from round-1 analysis ruling 1 (`ledger/ROUND_ANALYSIS.round1.md`).
+  The device census is one object per run (`<device>-<stamp>.json`), never overwritten. The 2026-10-04 served re-run had
+  overwritten site Z's day key. The ENDPOINT is unchanged, so no half re-opens.

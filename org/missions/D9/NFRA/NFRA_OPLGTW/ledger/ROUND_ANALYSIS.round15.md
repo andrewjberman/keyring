@@ -143,3 +143,59 @@ carry it, and for `dim_position` the single-page check can never fire. The multi
   - `test_ogq2_ac20` is restated to plant a full-grain duplicate and see a single-page `dim_position` request REFUSED;
   - a control shows a narrow-column `dim_balance` single-page request unchanged.
 - **The release.** OG-rl-5's halves cover it as served behaviour.
+
+## 8. Addendum ~20:5xZ 2026-10-04 -- R12, the live Schwab gap (`2.0.0_SA_COO~O` msg 29216, rows Z-W15-S33, Z-W15-S34)
+
+**S33 is a carrier defect, not a spec change.** PRD v1.7 C3 already makes `silver/dim_transaction/` data-readable
+(ratified-text half signed @779e8e7f59). The contract JSON never got the matching prefixes. MX-r-6 step 0 (@32ebe6bee6)
+added the dataset under ruling B4, and this seat's v1.7 addendum ratified the prefix but never carried it into the JSON.
+The miss is this seat's.
+- **Cure, by this seat, in the commit that lands this section:** `org/standards/NFRA_OPLGTW_CONTRACT.json`
+  `data_prefixes` gains exactly `schwab/08242234/silver/dim_transaction/` and `schwab/08335338/silver/dim_transaction/`.
+  - No other byte changes, and `contract_version` stays 1.3 (precedent @32ebe6bee6).
+  - Before the edit, CLOUD's contract equalled live `af2d762970`'s (`git diff` empty).
+  - No PRD addendum and no re-sign: the ratified text does not move.
+- **Tests on the edited tree.**
+  - 80 passed in the schwab suites: catalog, c3_rules, wiring, query, grain_r9, asset_policy, semantics, transactions,
+    ssavail_contract.
+  - `tests/acceptance` passed 15 of 15 when run alone.
+  - Run in one process after the other suites, the acceptance tests error at setup (RuntimeError, 20 errors). That
+    interaction was not attributed in this session.
+- **Since when: not established.** The zero is MEASURED only on live `af2d762970`, on 10-04 (SSM 81eb1a24, 2e7cda61).
+  Before @32ebe6bee6 (released 2026-09-30 at 18:33Z), `catalog.py:605-607` rejected a closure's `dim_transaction`
+  table for the opposite reason: the contract did not carry the dataset. So any date whose closure already named that
+  table was rejected either way. When closures began to name it is unmeasured.
+
+**S34: retire the query path's placeholder guard; the download paths keep theirs.**
+- `self._asset_policy is None` is OG-q-2's placeholder (@c3728d6bdb). OG-q-5 half one built the C3 holdings
+  restriction inline on the query path (`integration.py:622-654`, `sem.qualify_asset_plan`). It covers rows and
+  aggregate mode, and it runs before any engine job. The attribute itself is never read.
+- `build_default_service()` (`:1060`) passes no policy, so `:569-570` refuses every served `dim_asset` query.
+- `prepare_download` (`:818-819`) and `export_query` (`:895-896`) apply NO holdings restriction. On those paths the
+  guard is the only barrier between a `dim_asset` grant and an unrestricted CUSIP list, so lifting it there would widen
+  served output beyond C3.
+- **Ruling:**
+  - Delete `:569-570` only.
+  - `:818-819`, `:895-896`, `build_default_service()` and the `asset_policy` parameter stay byte-identical, so the
+    acceptance seam still works.
+  - `dim_asset` downloads stay UNAVAILABLE `asset_policy_selection_unavailable`, which is fail-closed.
+  - The C3 restriction on the download paths is a round-17 enrichment item, not an rl-5 rider.
+- **What acceptance must show,** through the served construction with no seam:
+  - a `dim_asset` rows query on a qualified snapshot returns only CUSIPs held by the grant's accounts for that
+    master/date, and a planted unheld CUSIP is absent;
+  - `dim_asset` `prepare_download` still refuses `asset_policy_selection_unavailable` (the control).
+
+**(a) or (b): (a), one widened OG-rl-5 release.**
+- (a) is the measured state: rl-5's counterfactual (SSM 02bc6129) ran this code with these prefixes and served 56
+  snapshots, with the R9 columns present and 0 blank.
+- (b) ships a state nobody measured. It restores the catalog, but a multi-page `dim_position` read still refuses
+  `paging_refused_no_unique_grain` (rl-5's PAGING BEFORE read, counterfactual contract), and it costs two deploy acts.
+- **Write surfaces.** The issuer amends OG-rl-5; this is the same mechanism as R9a's A2 on gr-3. The release tree takes:
+  - the contract whole from CLOUD at this commit (live plus the two strings);
+  - gr-3's hunks, as before;
+  - the two-line deletion and its tests.
+- **Never-widen.** The release moves served output: Schwab snapshots go from 0 servable to servable at both masters,
+  and `dim_asset` queries become servable under the C3 holdings restriction. This seat's half names that blast radius
+  at Phase B. No grant changes: capability is not authorization, and per v1.7 every `dim_transaction` grant beyond the
+  one authorized act needs Andrew's word.
+- S33 and S34 keep `2.0.0_SA_COO~O` as disarm owner; each disarms on the release's post-act read.

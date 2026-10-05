@@ -7645,3 +7645,186 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "id": "NFRA_OPLGTW-Z-W15-S35",
+  "surfaced_at": "2026-10-04T22:20Z",
+  "one_line": "The floor check rl4.AC1.sh reads FAIL (arm 3) until the release deploys: it compares the host's deploy/ contract to CLOUD's org/standards contract at HEAD, which R12 @261571c07e changed; the deploy of this release is what makes them equal again.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: rl5_verify.sh after (negative control, no deploy): rl4.AC1 'arm 3 host contract a86f7e667cfc vs c69968aa7f70: FAIL', RELEASE READ-BACK ARMS 3 of 4; ht.AC2 4 of 4 PASS. rl4.AC1.sh line 5 and line 22 grade the host copy against org/standards/NFRA_OPLGTW_CONTRACT.json at HEAD (md5 0514b37e = CLOUD after 261571c07e; live af2d762970 deploy copy = 23f8b279).",
+      "CODE: the release tree og-rel10 @4b6b823fae carries the contract byte copy 0514b37eb0198d4f6b114117fc12a5f5 in both deploy/ and org/standards/, so after a deploy of it arm 3 compares equal."
+    ]
+  },
+  "spec_asserts": "Order 4c / rl5.AC2: 'floor: rl4.AC1 yes; ht.AC2 yes' at close, and the issuer's pre-cut note reads the floor PASS today.",
+  "world_is": "With CLOUD's contract edited ahead of the deploy, rl4.AC1 is red on the live host from that commit until the release lands. Not a defect of the release; the only read of it that matters is after the act (rl5_verify.sh runs it then)."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "id": "NFRA_OPLGTW-Z-W15-S36",
+  "surfaced_at": "2026-10-04T22:25Z",
+  "one_line": "Committing on the release branch in /c/tmp/og-rel10 is refused by the owned-paths lane gate (the order is not at that tree's HEAD), so the A3 release commit 4b6b823fae used the audited GIT_COMMIT_AUTHOR_OVERRIDE, as OG-rl-4's two release commits did.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: safe-commit in /c/tmp/og-rel10 without the override: 'owned-paths lane violation(s) ... no NON-TERMINAL task order at HEAD issued_to this serial names this path in its <paths> block' for integration.py, deploy/NFRA_OPLGTW_CONTRACT.json, tests/test_schwab_rl5_asset_query.py and org/standards/NFRA_OPLGTW_CONTRACT.json; org/git-author-override-audit.log line 20557 BLOCK for this serial at 21:37:06Z.",
+      "RUN: the same commit with GIT_COMMIT_AUTHOR_OVERRIDE=0.9.0_WK_NFRA_OPLGTW~15 landed as 4b6b823fae on rel-nfra-oplgtw-r16 (local, never merged); precedent ANNOUNCE_OG-rl-4.md 'audited override ... two uses'."
+    ]
+  },
+  "spec_asserts": "Order step 1 and 4c have the worker commit the release tree (a branch cut from live af2d762970, which predates the task order); the order's Bounds say never override a gate.",
+  "world_is": "The two instructions cannot both be met on that tree: the lane gate reads the order at the release tree's HEAD, where it does not exist. The override was used for release-branch commits only (one commit, four paths); the worktree commit 45b2d8844c passed the gate normally. The org/standards copy is also outside the order's <paths>, so it needed the same override."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "id": "NFRA_OPLGTW-Z-W15-S37",
+  "surfaced_at": "2026-10-04T22:30Z",
+  "one_line": "Test-run notes for step 4c: run in ONE pytest process the schwab set errors at setup for every acceptance-fixture file after the first (the new file joins the 9 baseline errors), one baseline test is flaky, and one release-tree test fails only because the tree lacks a mission artifact; each file passes alone.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: worktree @68c5438a60 (CLOUD HEAD, guard present, new file excluded) tests/test_schwab_*.py in one process: 2 failed (test_ogx2_ac01, test_ogx4_ac03), 119 passed, 9 errors (test_ogq6_ac01-04, test_ogz4_ac01-02, test_ogq4_ac01-03: RuntimeError StreamableHTTP). After @45b2d8844c: 1 failed (test_ogx4_ac03), 120 passed, 11 errors (the same 9 + the 2 new tests, same RuntimeError). Per file in its own process: c3_rules 4, denial_envelope 2, wiring 3, asset_policy 3, rl5_asset_query 2 all pass; export_stream 2 passed 1 failed (test_ogx4_ac03, baseline).",
+      "RUN: test_ogx2_ac01 failed in the baseline one-process run and passed in both later runs (alone and combined): flaky, not moved by the deletion. Release tree og-rel10: tests/test_schwab_engine.py::test_ogq1_ac07 FileNotFoundError on org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~2/BASELINE.json (a mission artifact absent from the live-derived tree); it passes in the CLOUD worktree.",
+      "NOTE: the CTO's R12 section 8 already records the one-process acceptance error, unattributed."
+    ]
+  },
+  "spec_asserts": "Order 4c: 'run the full tests/test_schwab_*.py set: no failure beyond those already failing at CLOUD HEAD (print both lists)'.",
+  "world_is": "The combined-process list gains the two new tests as errors of the unattributed one-process class; every other entry is in the baseline list or is passing alone. Nothing here changes what ships (tests are not in the shipped file set)."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S51",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-04T23:10Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Issuer L10-precondition sweep of this seat's ARMED/BLOCKING rows. Denominator: 61 rows naming 2.0.0_SA_COO~O ARMED or BLOCKING. 28 are graduated into remediations/v1-v3, and 28 are dispositioned by issuer rows Z-S13..Z-S49 (Z-S25 for W15-S6/S7, by OG-tx-1 A1) or by ADJUDICATION_v3.Z (W12-S1). That leaves 5; this row disposes of 3 of them, plus Z-W22-S5 (OBSERVATION INERT, outside the denominator). (1) Z-W7-S1, ARMED: the built no-refusal deviation was reversed by f660b89f55 (OG-e-1 AMENDMENT A1, 2026-09-27). schwab_entitlement_admin.py prepare() :332-335 raises CandidateRejected when neither the candidate nor the stored profile carries an email, at CLOUD HEAD and at live af2d762970 (1 match each). (2) Z-W22-S3 and Z-W22-S4, BLOCKING INERT: ruled by round-16 amendments A1 @0da94bba7c (fixture paths and no-new-failure baseline) and A2 @8671f5d02f (R9a single-page fallback, test_ogq2_ac20 restated). OG-gr-3 is complete, and its 14 files are on CLOUD at the branch bytes via repair drain ef092da049. (3) Z-W22-S5, OBSERVATION INERT: the paged-assertion restatement is recorded; it took no product change. Not disposed of here: Z-W15-S33 (ARMED) and Z-W15-S34 disarm on OG-rl-5's post-act read (CTO R12 @261571c07e).",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W7-S1",
+    "NFRA_OPLGTW-Z-W22-S3",
+    "NFRA_OPLGTW-Z-W22-S4",
+    "NFRA_OPLGTW-Z-W22-S5"
+  ],
+  "one_line": "The issuer disarms Z-W7-S1 (reversed by f660b89f55; the refusal is on CLOUD and live) and closes Z-W22-S3, S4 and S5 (ruled by gr-3 A1/A2; gr-3 complete on CLOUD @ef092da049).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "SOURCE: infra/aws/ec2/opal-gateway/ops/schwab_entitlement_admin.py:332-335 at CLOUD HEAD; git show af2d762970:<same> contains the refusal string (1 match)",
+      "GIT: git log -S on the refusal string returns f660b89f55 (2026-09-27, 0.9.0_WK_NFRA_OPLGTW~7, OG-e-1 AMENDMENT A1)",
+      "GIT: drain ef092da049 tree check 14 needed / 0 dropped; 14 of 14 paths equal coo-o-gr3-restore blobs; TO-OG-gr-3 last <status> complete"
+    ]
+  },
+  "spec_asserts": "Z-W7-S1: a restricted activate with no resolvable email must refuse (CandidateRejected), and the built code did not. Z-W22-S3/S4: gr3.AC1 cannot pass as written under R9.",
+  "world_is": "The refusal has been in the code since f660b89f55 and is on live. gr3.AC1 was re-cut by A1/A2 and the order closed complete; its bytes are on CLOUD."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "id": "NFRA_OPLGTW-Z-W15-S38",
+  "surfaced_at": "2026-10-04T23:30Z",
+  "one_line": "rl5 AC1 cannot be met as written: its <expect> pattern requires the line 'host query.py + datasets.json equal the release bytes: yes', but rl5.AC1.sh (A3 version) prints 'host query.py + datasets.json + contract equal the release bytes: yes', so the pattern never matches even though the script reports RESULT: PASS exit=0.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r16/checks/rl5.AC1.sh @e0664cc9d5 prints 'deployed_commit 4b6b823fae; host query.py + datasets.json + contract equal the release bytes: yes' ... 'RESULT: PASS' 'exit=0' (all 11 arms True).",
+      "RUN: re.search of the order's AC1 <expect> '(?s)host query.py \\+ datasets.json equal the release bytes: yes.*dim_position after ok: True...exit=0' against that exact output: no match (False); AC2's expect matches its output (True).",
+      "CODE: the script line is rl5.AC1.sh line 17, 'echo \"deployed_commit ${c:0:10}; host query.py + datasets.json + contract equal the release bytes: $m\"', added by amendment A3 @68c5438a60; the <expect> was not amended with it. proof-of-spec-check requires a PASS row's output to match its expect."
+    ]
+  },
+  "spec_asserts": "Order section 4 AC1: expect '(?s)host query.py \\+ datasets.json equal the release bytes: yes.*...RESULT: PASS.*exit=0'.",
+  "world_is": "The deploy and every arm AC1 grades are met (RL5_PAGING.json 11 of 11 arms True, the host contract md5 equal). Only the order's expectation string is stale against the script's A3 wording. The AC1 proof row is recorded with the literal output and status FAIL-by-pattern, and the order's status tag is left unflipped; the issuer amends its own expect (add ' \\+ contract') and the existing output then grades PASS with no further act on the host."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "id": "NFRA_OPLGTW-Z-W15-S39",
+  "surfaced_at": "2026-10-04T23:35Z",
+  "one_line": "Post-act read for rows Z-W15-S33 and Z-W15-S34: both disarm conditions read met on the served gateway after the release (dim_transaction prefixes live; dim_asset query served held-only).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: rl5_verify.sh after @23:1xZ on the deployed 4b6b823fae (rl5_phaseB_verify_after.out): served census 28 dim_position+dim_asset snapshots servable per master (marker dates 24, 14 qualified), 0 lacking or blank; dim_balance 14 and dim_transaction 14 servable per master (S33: the dim_transaction data prefixes are live and every closure day qualifies).",
+      "RUN: dim_asset rows query by the synthetic grant: OK, returned 49 of an asset universe of 2160 CUSIPs, unheld_returned 0, held_cusips_in_dim_position 49 (S34: served under the C3 restriction); dim_asset prepare_download still REFUSED UNAVAILABLE asset_policy_selection_unavailable (the retained guard)."
+    ]
+  },
+  "spec_asserts": "Rows S33 and S34 / order 4c: 'S33 and S34 disarm on the post-act read'.",
+  "world_is": "Both read as disarmed on the served gateway. The disposition stays the issuer's. The real grant holder's own read is unexercised, as the order's issuer notes say."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S52",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-04T23:45Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-rl-5 released r16 4b6b823fae LIVE at 23:12:32Z (ledger nfra-oplgtw-gateway-release-r16 CLOSED; drain b91a1a44cf). (1) Z-W15-S33 (ARMED) is DISARMED on the post-act read, per CTO R12 and row Z-W15-S39. The served census reads 14 dim_position and 14 dim_asset snapshots servable at each master, 0 lacking or blank, and dim_balance/dim_transaction at 14 per master. (2) Z-W15-S34 is DISARMED on the same read. A dim_asset rows page is served by the shipped construction with no seam: 49 returned, 0 unheld, discriminator 49 held < 2160 universe (CVO Q2). dim_asset prepare_download is still REFUSED asset_policy_selection_unavailable. (3) Z-W15-S38 is resolved by amendment A6, the issuer's own defect: A3 changed rl5.AC1.sh's first line but not AC1's expect. The issuer re-ran AC1 against the served host at CLOUD b91a1a44cf: 11 of 11 arms, RESULT: PASS, exit=0, and the amended expect matches.",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W15-S33",
+    "NFRA_OPLGTW-Z-W15-S34",
+    "NFRA_OPLGTW-Z-W15-S38"
+  ],
+  "one_line": "Post-act read of r16 (4b6b823fae, live 23:12:32Z): S33 and S34 disarmed (snapshots servable 14 per master per dataset; dim_asset held-only, download refused); S38 resolved by A6 with an issuer AC1 re-grade PASS.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r16/checks/rl5.AC1.sh at CLOUD b91a1a44cf: deployed_commit 4b6b823fae; host query.py + datasets.json + contract equal the release bytes: yes; 11 arms True; RESULT: PASS; exit=0",
+      "FILE: deliverables/0.9.0_WK_NFRA_OPLGTW~15/RL5_PAGING.json (census_after, census_after_other, dim_asset_held_check, after_dim_asset_download)",
+      "TOOL: python .tools/proof-of-spec-check.py on the OG-rl-5 instance: VALID (rc=0)"
+    ]
+  },
+  "spec_asserts": "S33/S34 disarm on the release's post-act read (CTO R12); AC1's expect matches a PASS run of rl5.AC1.sh.",
+  "world_is": "The served gateway serves the Schwab snapshots and the held-only dim_asset page, the download control holds, and AC1 matches after A6."
+}
+```

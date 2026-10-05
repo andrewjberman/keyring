@@ -59,6 +59,13 @@
       "round": 4,
       "prd_ref": "prd/ETFS_RIVALS_PRD.md@01114ae8a8",
       "note": "L5, 2026-10-01, 2.0.0_SA_COO~RV. Round 4 from the round-3 analysis @d4a1e22801: 6 cells (RIV-t-5, v-2, i-2, q-1, f-3, d-5), 3 chains + join RIV-d-5."
+    },
+    {
+      "path": "org/missions/D5/ETFS/ETFS_RIVALS/decompositions/ETFS_RIVALS_DECOMP.md",
+      "version": "v8.0-A",
+      "round": 8,
+      "prd_ref": "prd/ETFS_RIVALS_PRD.md@4cc8e40575",
+      "note": "L5/L6, 2026-10-04, 2.0.0_SA_COO~RV. Round 8 workstream A on Andrew-direct @0a4321b843: 5 cells (RIV-dt-1, an-1, rw-1, rp-1, lg-1), 4 chains, no join. Round 7 archived as ETFS_RIVALS_DECOMP.round7.md. Workstream B follows the 2026-10-05 grades."
     }
   ],
   "decomposition_lineage": [],

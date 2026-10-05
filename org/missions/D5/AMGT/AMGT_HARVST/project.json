@@ -174,7 +174,6 @@
   "blocking": "Collection held on Andrew's word ('We will discuss internally on how to proceed with further data collection after review', 2026-10-03 ~17:3xZ): 9 of 17 outcomes need it. Not blocked for round 45 (no collection).",
   "threads": [],
   "thread_counter": 0,
-  "closer_contract": "org/tier1_exec/1.0.0_SA_CTO/deliverables/AMGT_COMPLETION_20260923/CONTRACT.md",
   "scheduled_checks": [
     {
       "id": "HVST-RECHECK-OCILAR-1",

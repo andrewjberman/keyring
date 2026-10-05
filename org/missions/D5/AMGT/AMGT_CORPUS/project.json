@@ -9,7 +9,7 @@
   "dep_stage": "EXECUTING",
   "created": "2026-09-22",
   "registered_under_tree": "2026-09-22",
-  "last_updated": "2026-10-04T20:20:00Z",
+  "last_updated": "2026-10-04T23:55:00Z",
   "pods": [
     "1.0.0",
     "2.0.0",
@@ -73,8 +73,8 @@
     "THE BACKLOG POPULATION IS HIS, SEPARATELY. Andrew-direct ~18:3xZ, VERBATIM: 'all of the Research folders in the Opal Sharepoint Shared Asset Management/Research/ subfolder will be the basis for our backfill and initial pool.' Record ANDREW_DIRECT_20260922_183xZ_RESEARCH_FOLDERS_ARE_THE_BACKFILL_BASIS_AND_INITIAL_POOL.md. The folder list is a MEASURED DENOMINATOR (93 at the 2026-09-22 scan), never a transcribed list, and an unresolved folder is printed, never dropped.",
     "SENDING BLOOMBERG MODEL-BLOCK FIGURES TO THE CLAUDE API IS ALLOWED (same record, '3.) That is allowed.') -- this closes the CRO's card 1 for both this project and the addendum."
   ],
-  "phase": "L8 PACKET AT THE CVO (round 35, 2.0.0_SA_COO~X, 2026-10-04 ~20:2xZ): CRPS-ak-1/ak-2/ak-3 drained @7c43d48775/@61c58e31bc/@a5a561d96b; CRPS-ak-4 SERVED act ledger amgt-corpus-r35-ak4 CLOSED @66a15668e1 (map 74e00624b0 118 fields, 96 re-derives, task re-pinned to 74e00624b0; base values moved 0, pointer units 0). Packet deliverables/2.0.0_SA_COO~X/ROUND35_DRAIN_END_PACKET.md.",
-  "blocking": "None at the issuer. L8/L9 with 3.0.0_SA_CVO~Z (FWD-22 read of the 2026-10-04 13:00Z fire: rc 0, 96 pulled). First fire on the new pin 2026-10-05 13:00Z. Round-36 candidates in the packet s.4.",
+  "phase": "L8 PACKET AT THE CVO (round 36, 2.0.0_SA_COO~X, 2026-10-04 ~23:5xZ; closed tonight with al-4 CARRIED per CTO msg 29322): al-1 drained @98a93db70b; al-2 drained @66edd940a7, portal 75efe9d6 ON DEV (CI green); al-3 drained @288de3d95d; al-5 redeploy ledger amgt-corpus-r36-al5 CLOSED @e2790c8b2b. Packet deliverables/2.0.0_SA_COO~X/ROUND36_DRAIN_END_PACKET.md.",
+  "blocking": "None at the issuer. L8/L9 with 3.0.0_SA_CVO~Z (al-2 AC3 and al-3 AC2 judgments). al-4 carried: the issuer reads the 2026-10-05 13:00Z fire on pin 74e00624b0. Round-37 candidates in the packet s.4.",
   "threads": [],
   "thread_counter": 0
 }

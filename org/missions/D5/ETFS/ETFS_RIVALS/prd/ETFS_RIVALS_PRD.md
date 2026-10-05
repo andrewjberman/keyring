@@ -5,7 +5,7 @@
  "project": "ETFS_RIVALS",
  "directive": "D5",
  "fabric": "site-z",
- "prd_version": "v0.13",
+ "prd_version": "v0.14",
  "step": 4,
  "brief_ref": "docs/briefs/etf-holdings-research-20260929.md@77c891c869",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20"],
@@ -255,14 +255,17 @@ approved it.
   thread.
 
   FWD-13 (NEW, THE THREAD) Andrew opens the rival-funds page, reads IDVZ's best
-         and worst this month, quarter and year, then picks one rival and reads
-         its rankings, its buying trend and the AI's account of it
+         and worst over the last 30 trading days and this month, quarter and
+         year, then picks one rival and reads its rankings, its buying trend
+         and the AI's account of it
          DONE WHEN  EXERCISED -- one live, signed-in read: the page opens on
-                    IDVZ's ranking for month-to-date; Andrew switches to
-                    quarter-to-date and year-to-date and the tables change; he
+                    IDVZ's ranking for the last 30 trading days (v0.14); Andrew
+                    switches to month-, quarter- and year-to-date and the
+                    tables change; he
                     picks one IDVZ rival and reads its ten best and ten worst
-                    holdings, five best and five worst sectors, its year's
-                    buying trend and the AI's two-part account; he follows one
+                    holdings, five best and five worst sectors, its buying
+                    trend for the same period and the AI's two-part account;
+                    he follows one
                     ranked figure back to the holdings and prices it came from
          ACCEPT     everything he reads comes from that morning's real run; a
                     figure built from sample data fails the outcome
@@ -270,16 +273,18 @@ approved it.
                     ("default to IDVZ", "toggle MTD, QTD, YTD")
 
   FWD-14 (NEW) Andrew ranks any fund's best and worst holdings and sectors for
-         the month, quarter and year to date, by the same rules for every fund
+         the last 30 trading days and the month, quarter and year to date, by
+         the same rules for every fund
          DONE WHEN  EXERCISED -- for every fund in both groups, Opal's own and
                     each group's benchmark included, Andrew reads the ten
                     holdings that added most to the fund's return and the ten
                     that cost it most, and the five best and five worst sectors,
-                    for each of the three periods
+                    for each of the four periods (v0.14)
          ACCEPT     a figure Andrew checks agrees with what that fund's holdings
                     and their prices add up to over the period; each table says
-                    which period and how many holdings it ranks; a holding with
-                    no price shows as missing, never dropped
+                    which period, its first and last trading day, and how many
+                    holdings it ranks, up front; a holding with no price shows
+                    as missing, never dropped
          SOURCE     backend brief O2; transcript 1 point one; transcript 2
                     component 1
          RULED (v0.10, CTO on Andrew's release): CONTRIBUTION -- how much each
@@ -289,15 +294,18 @@ approved it.
                     benchmarks too. The trading result stays in FWD-6.
 
   FWD-15 (NEW) Andrew reads each fund's tilts and bets: where its buying has
-         trended this year, by holding and by sector
-         DONE WHEN  EXERCISED -- for every fund Andrew reads a simple
-                    year-to-date table in the same shape as the rankings: the
+         trended over the period the page is set to, by holding and by sector
+         DONE WHEN  EXERCISED -- for every fund Andrew reads a simple table,
+                    over the page's period (the last 30 trading days by default,
+                    v0.14), in the same shape as the rankings: the
                     ten holdings and five sectors its buying leaned into most,
                     and the ten holdings and five sectors it leaned away from
                     most, each line read as a tilt or a bet with a plain trend
                     mark
          ACCEPT     a trend is never presented as one that will continue; the
-                    table says how many trading days it covers
+                    table states its period, its first and last trading day and
+                    how many trading days it covers, up front; it never says
+                    "year to date" for a window that is not year to date
          SOURCE     backend brief O3; transcript 1 point two ("just because
                     there is a trend does not mean it is expected to continue
                     indefinitely"); transcript 2 component 2
@@ -347,13 +355,18 @@ approved it.
 
   FWD-19 (NEW) The page looks and behaves like the Opal portal
          DONE WHEN  EXERCISED -- a rendered page read side by side with the
-                    portal: the same card style, the same period switch in the
-                    order month, quarter, year, and the same light background;
-                    a fund picker lists each Opal fund with its rivals and its
-                    benchmark
+                    portal: the same card style, the same period switch (v0.14:
+                    the last 30 trading days first and selected by default, a
+                    dividing line, then month, quarter, year), and the same
+                    light background; a fund picker lists each Opal fund with
+                    its rivals and its benchmark; the period switch also sits
+                    inside "What drove the return" and "Buying trend", and
+                    switching it in any one place moves every one of them
+                    together
          ACCEPT     someone used to the portal reads the page as part of it;
                     switching the period or the fund changes the tables and
-                    nothing else
+                    nothing else; Andrew never has to scroll back up to change
+                    the period
          SOURCE     frontend brief O2, O6; transcript 2 ("You should not be
                     reinventing the wheel", "philosophy fixture cards",
                     "a little dropdown")
@@ -750,7 +763,7 @@ it into COO~RVs existing work on ETFS_RIVALS."
 | RFW-D13 | data | FWD-11 | The only benchmark on the page is SCHY (IDVZ peers). | ACWI and IWM appear as benchmarks with their own rankings and trend. | known |
 | RFW-D14 | data | FWD-20 | The census lists all 765 securities as 'missing, no G4 row ... | The census reads three states (arrived / covered by fallback, naming the fallback / missing), each with its count. | new |
 | RFW-U01 | ui | FWD-18 | '13 of 13 funds current' is printed twice: the stat tile and the sentence under it. | The current-funds count appears once; the sentence names only lagging funds, and is absent when none lag. | new |
-| RFW-U02 | ui | FWD-18, FWD-14 | The page opens on Month to date, which is empty for 12 of 13 funds (RFW-D03). | The default period is the shortest one that ranks at least one holding for the selected fund; an empty period's switch shows its state (for example, greyed with a tooltip). | new |
+| RFW-U02 | ui | FWD-18, FWD-14 | The page opens on Month to date, which is empty for 12 of 13 funds (RFW-D03). | v0.14 (Andrew ~21:0xZ, superseding the shortest-ranking-period rule and any "default YTD" reading): the default period is the last 30 trading days; an empty period's switch shows its state (for example, greyed with a tooltip). | new |
 | RFW-U03 | ui | FWD-18 | An empty period renders four table shells, each saying 'No holding added to the return' or 'No sector took from the return'. | A fund-period with 0 ranked renders ONE empty-state line with the reason and the count without a price. | new |
 | RFW-U04 | ui | FWD-18 | Every ranking block repeats a two-line method sentence ('Ranks N holding(s) by their contribution ... | Each block shows a one-line count chip ('39 ranked; 1 refused day'). The method text sits once behind an info icon or modal ('How this is computed'). | new |
 | RFW-U05 | ui | FWD-15, FWD-19 | The month trend is ASCII marks ('0 0 0 0 + + + + + 0', '. | The month trend is a small bar or sparkline with month ticks, no legend sentence, and 0 overlap between the two tables at 1280-1920 px. | new |
@@ -793,6 +806,28 @@ the `/sprint` precedent files.
 - The CVO grades JUDGMENT criteria at L9, citing the contract clause.
 
 ## PROVENANCE AND AMENDMENT HISTORY
+
+- v0.14 (2026-10-04 ~21:1xZ, `1.0.0_SA_CTO~Z`), an ENDPOINT addendum on Andrew-direct ~21:0xZ, the signed-in smoke at the
+  `2.0.0_SA_COO~RV` terminal (record `org/tier1_exec/2.0.0_SA_COO/deliverables/cooRV_ANDREW_DIRECT_20261004_21xxZ_RIVALFUNDS_SIGNED_IN_SMOKE.md`
+  @1c31a5f6ce, items S3, S7 and S8). VERBATIM, in part: *"the way that the period should work is that the last 30 trading days is
+  the default. We keep it on a rolling 30 day default, and then we have a dividing line between the year to date, quarter to
+  date, month today ... that should really exist in the what drove the return component, and it should exist in the buying trend
+  component ... when you click a toggle in any of those components, all the others move in tandem."* and *"if it is not year to
+  date, we should not be saying year to date."*
+  - FWD-13: the page opens on the last 30 trading days; the rival's buying trend follows the same period.
+  - FWD-14: four periods (the last 30 trading days, then month, quarter and year to date); each table states its period and its
+    first and last trading day up front.
+  - FWD-15: the buying-trend table follows the page's period (default the last 30 trading days), states its window up front,
+    and never says "year to date" for another window.
+  - FWD-19: the switch reads "last 30 trading days" first and is selected by default, then a dividing line, then month, quarter,
+    year (the portal's order, kept). The switch also sits inside "What drove the return" and "Buying trend", and any one moves
+    them all.
+  - RFW-U02's expected state is replaced. Any "default YTD" reading in earlier rulings is superseded by his word.
+  - The CTO ruling "the page keeps working with no scripts" STANDS. The linked switches must meet it. The mechanism is the cell's;
+    one shared set of inputs with a label in each place is one way.
+  - FWD-16 and FWD-17 are unchanged: the AI's account is already the last 30 days.
+  - **The ENDPOINT text changed, so the ratified-text half RE-OPENS** (`3.0.0_SA_CVO~Z` re-signs). His own words are the ENDPOINT
+    confirmation for these lines. Items S1, S2, S4, S5 and S6 serve existing outcomes and ride round 8 under the issuer.
 
 - v0.13 (2026-10-02 ~16:2xZ, `1.0.0_SA_CTO~Z`), on `4.0.0_SA_CRO~RV` msg 28560 (GICS census `docs/briefs/rivalfunds-gics-census-20261002.md` @308f982bb8, Andrew-direct ~15:4xZ "Do it now"):
   - RFW-D06's acceptance takes the census's measured levels in place of the walk's unmeasured 10%.

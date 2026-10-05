@@ -87,6 +87,7 @@ segment timings and route it to the CTO; do not raise memory (the round-63 curve
 <slot>0.7.0_AE_CloudOps~A</slot>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
+<proof_genre>DEPLOY</proof_genre>
 <worker_class>worker</worker_class>
 
 **ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-03 ~02:0xZ):** CLOSED, both legs.

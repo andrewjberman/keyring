@@ -17419,5 +17419,55 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   ]
  },
  "disposition": "UNDER_INVESTIGATION"
+}
+,
+{
+ "id": "AMGT_RESAPP-Z-S346",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.7.0_AE_CloudOps~A",
+ "surfaced_at": "2026-10-04T21:56:37Z",
+ "one_line": "aq-5's code leg is LANDED and aq-2's window tone is still not served: the deployed role cannot read the chatter_window prefix, so 95 of 95 rows on /lead-panel/timeseries/collected/chatter serve tone_reason 'the window table could not be read (AccessDenied)'. AC2's expectation (mismatches 0) is unmet at mismatches 74, so the halves' rollback trigger has fired on its literal terms -- but the rollback cannot cure it (the base read the same 74) and would revert c23, c25 and c26, all three of which now PASS. Rollback NOT taken; the disposition is the issuer's.",
+ "class": "OBSERVATION",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "The COO half's expected-outcome table predicts r67 c24 after the act as 'NO by ONE clause only: mismatches 0, old-reason 0, no-table-row 21 per window', and its failure branch makes 'c24 shows a mismatch' a ROLLBACK of the code leg; the CTO half's condition 3 repeats it ('any mismatch ... triggers the COO half's rollback'). Both predictions were read from a LOCAL run at d8bafe6896 (the half says so: 'after (local at d8bafe6896, ~20:2xZ)'), and a local run executes under the operator's credentials, never the function role's. The order's own preflight DECLARED this blindness in advance: 'BLIND: no IAM simulation was run for this act (0 new actions); the criteria read served fields off the deployed function, so a denied read shows as a FAIL there.' The grant leg's one statement was scoped to the scanner universe object (row Z-S345) and to nothing else, and both halves make any further IAM change a STOP.",
+ "world_is": "Measured 2026-10-04 ~21:5xZ on deployed CodeSha256 aoQ+WrefJ+JjQcymqyrt2c7MEIlTPmvjJEv8sqZ6M98=. lib/research/api/monthly_chatter.py sets WINDOW_TABLE = 'chatter_window' and reads it through publication_gold._latest_gold_snapshot_rows_cached; store.table_prefix('amgt','gold','chatter_window') resolves to amgt/harvest/gold/chatter_window/ on opal-data-harvest. That prefix is NOT in local.scoped_amgt_pool_prefixes, which is the single list driving both the GetObject resources and the ListBucket s3:prefix condition in scoped_amgt_api_grants -- so the role holds neither action on it. _window_index() catches every exception by design and returns one reason for EVERY row, which is why the failure degrades to a plain reason instead of a 502 and why no 502 appears anywhere in this act. The check cannot see that reason: its 'old-reason' counter greps only for the legacy phrase 'not served on this route yet', and its 'no-table-row' counter measures gaps in the CHECK's OWN table index (21 of the 95 covered names are absent from the 212-name producer set, row Z-S344), skipping those rows before any comparison -- so 74 mismatches + 21 skipped = 95 exactly, and the 21 are NOT evidence the function read the table. The deployed mismatch count is UNCHANGED by this act: the pre-apply base arm read mismatches 74 / old-reason 95 / no-table-row 21, and the post-apply read is mismatches 74 / old-reason 0 / no-table-row 21. So the only served change on c24 is 95 misleading legacy tone reasons replaced by 95 honest ones; nothing regressed. The cure is a SECOND grant this never-widen pair does not cover (the prefix added to local.scoped_amgt_pool_prefixes, which is the ONE list driving both the GetObject resources and the ListBucket s3:prefix condition, so one entry covers both -- and BOTH are measured denied, not assumed), which is a STOP for this seat: proposing is legal, implementing is not.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "Served payload, read directly off the deployed function: /api/scoped/amgt/lead-panel/timeseries/collected/chatter?days=30 -> status 200, 95 rows, and the tone_reason DISTRIBUTION over the full 95-row denominator is a single bucket: 95 x 'the window table could not be read (AccessDenied)'. 2317_TT_Equity (a named mismatch) serves tone=None voters=None with that reason.",
+   "simulate-principal-policy arn:aws:iam::313476888478:role/opal-amgt-scoped-api-role s3:GetObject arn:aws:s3:::opal-data-harvest/amgt/harvest/gold/chatter_window/date=2026-10-01/part-0.json -> implicitDeny, ONE --resource-arns per call; the ISOLATED positive control on the same bucket and action (arn:aws:s3:::opal-data-harvest/universe/v1/sp500.json -> allowed) was run as its own invocation and also disposes of the typo false-deny mode, since a nonexistent action cannot read allowed.",
+   "lib/research/api/monthly_chatter.py:228 -- 'except Exception as exc' returns (empty index, 'the window table could not be read ({0})'.format(type(exc).__name__)), and _tone_fields returns that reason for every row when the index is unreadable.",
+   "r67_served.py:130-143 -- 'old' counts only reasons containing 'not served on this route yet', and 'missing' is incremented from the check's own idx lookup then `continue`s, so an AccessDenied reason is invisible to both counters.",
+   "CloudWatch /aws/lambda/opal-amgt-scoped-api over the last 1500 s: 0 events match AccessDenied, Denied, ClientError or chatter_window, against a POSITIVE CONTROL showing the same window and log group do return events -- consistent with the guarded read, which never logs.",
+   "Pre-apply base arm of the same check on deployed FcVBPafw: mismatches 74, old-reason 95, no-table-row 21 on each of days 30/90/365 -- the same 74.",
+   "simulate-principal-policy s3:ListBucket on arn:aws:s3:::opal-data-harvest WITH --context-entries s3:prefix=amgt/harvest/gold/chatter_window/ -> implicitDeny, against an ISOLATED positive control using the identical context form on the GRANTED sibling prefix amgt/harvest/gold/chatter_daily/ -> allowed. The control proves the --context-entries were accepted, so cloud-ops false-deny mode (2) is disposed of and the deny is the world. The role therefore lacks BOTH s3:GetObject and the conditioned s3:ListBucket on chatter_window, while its siblings chatter_daily/ and chatter_event/ hold both -- chatter_window was simply never added to the prefix list when aq-2 introduced the read."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+,
+{
+ "id": "AMGT_RESAPP-Z-S347",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~Z",
+ "surfaced_at": "2026-10-04T23:39:43Z",
+ "one_line": "DISARM of AMGT_RESAPP-Z-S346 by its disarm_owner: the hazard is cured. aq-5 leg 3 (cell aq-6) added amgt/harvest/gold/chatter_window/ to the role's pool prefixes, and on the deployed function the 95 chatter rows now serve tone and voters from chatter_window: mismatches 74 -> 0, unreadable-table reasons 95 -> 0, on days 30/90/365. No code moved.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "Row Z-S346 (ARMED, disarm_owner 2.0.0_SA_COO~Z) asserts that the deployed role cannot read amgt/harvest/gold/chatter_window/, so every chatter row serves 'the window table could not be read (AccessDenied)'. The forward fix is the CTO's AMENDMENT 1 @14aa3c9200, endorsed by Andrew @c700426bc9, carried by aq-5 AMENDMENT 2 @4d3db86faa and its leg-3 GO @e616511619.",
+ "world_is": "Issuer real run at 2026-10-04T23:39:43Z on deployed CodeSha256 2rFeF57lMh8MkU6WRgZyImZt7RMlW14BdxmUjIBvSSQ= (the AMGT_CORPUS al-5 build, unmoved by leg 3), file deliverables/2.0.0_SA_COO~Z/round67/REAL_RUN_r67_deployed_20261004.txt. r67_grant_aq6.sh: GetObject and ListBucket(s3:prefix) on chatter_window/ allowed, both controls allowed, R67 AQ6 GRANT: YES. r67_served c24: on each of days 30/90/365, C2 PASS unreadable 0 of 95 and C1 mismatches 0, old-reason 0, no-table-row 21. The surviving NO is row Z-W220-S1's producer gap alone. AE~A's leg-3 entry is CLOSED (report msg 29314, instance @768731795b).",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "REAL_RUN_r67_deployed_20261004.txt: R67 AQ6 GRANT: YES; c24 C2 'unreadable 0' x3 windows; c24 C1 'mismatches 0 ... old-reason 0 no-table-row 21' x3.",
+   "Base before leg 3 (issuer dry-run at the aq-6 cut on deployed aoQ+WrefJ): c24 C2 unreadable 95 of 95 per window; C1 mismatches 74; r67_grant_aq6.sh C1/C2 implicitDeny.",
+   "0.7.0_AE_CloudOps~A msg 29314: plan 1 non-no-op (the grants policy, two lists 30 -> 31), 0 lambda change; CodeSha256 held across the apply."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
 }]
 ```

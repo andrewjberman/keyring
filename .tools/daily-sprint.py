@@ -200,12 +200,62 @@ def scaffold(day, p):
     return out
 
 
+def census_args(day: str) -> str:
+    """The census scripts' window arguments for <day>, the SAME pair the scheduled run used.
+
+    NFRA_SPRINTWIN C-WINDOW (local half): when the served day carries a watermark
+    (s3://opal-data-portal-v2/daily-reports/<day>/watermark.json, written by daily-sprint-generator), a local
+    /daily-sprint cuts the same window and unions the same device census files, so a local publish can
+    never replace the union page with a different population. Prints `--since S --until U
+    --extra-commits F ...`; with no served watermark it prints the legacy `--window et`.
+    The census files (builder addresses) are downloaded OUTSIDE the repo, under the system temp dir, so a 5 MB
+    census can never be committed by accident; and because the skill word-splits this output, a path carrying
+    whitespace (site Z's workspace has one) is refused rather than silently split."""
+    import boto3
+    from botocore.exceptions import ClientError
+    s3 = boto3.client("s3")
+    try:
+        wm = json.loads(s3.get_object(Bucket="opal-data-portal-v2",
+                                      Key="daily-reports/%s/watermark.json" % day)["Body"].read())
+    except ClientError as e:
+        if e.response.get("Error", {}).get("Code") in ("NoSuchKey", "404"):
+            return "--window et"
+        raise
+    sys.path.insert(0, os.path.join(ROOT, "lib"))
+    from opal_naming import address
+    from zoneinfo import ZoneInfo
+    ny = ZoneInfo("America/New_York")
+    start = datetime.datetime.fromisoformat(wm["window_start"].replace("Z", "+00:00"))
+    end = datetime.datetime.fromisoformat(wm["window_end"].replace("Z", "+00:00"))
+    out_dir = os.path.join(tempfile.gettempdir(), "sprint-census", day).replace("\\", "/")
+    if re.search(r"\s", out_dir):
+        raise SystemExit("ERROR: census download dir %r carries whitespace; set TMP/TEMP to a path without it" % out_dir)
+    os.makedirs(out_dir, exist_ok=True)
+    files, d = [], start.astimezone(ny).date()
+    while d <= end.astimezone(ny).date():
+        bucket, prefix = address("sprint", "global", "bronze", "device_census", "date=" + d.isoformat())[5:].split("/", 1)
+        for page in s3.get_paginator("list_objects_v2").paginate(Bucket=bucket, Prefix=prefix + "/"):
+            for o in page.get("Contents", []):
+                if o["Key"].endswith(".json"):
+                    path = "%s/%s_%s" % (out_dir, d.isoformat(), os.path.basename(o["Key"]))
+                    s3.download_file(bucket, o["Key"], path)
+                    files.append(path)
+        d += datetime.timedelta(days=1)
+    return " ".join(["--since", wm["window_start"], "--until", wm["window_end"]]
+                    + [x for f in files for x in ("--extra-commits", f)])
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--date", default=datetime.datetime.now(datetime.UTC).strftime("%Y-%m-%d"))
     ap.add_argument("--packet-only", action="store_true")
     ap.add_argument("--json", action="store_true")
+    ap.add_argument("--census-args", action="store_true",
+                    help="print the census scripts' window arguments for --date (the served watermark's pair)")
     a = ap.parse_args()
+    if a.census_args:
+        print(census_args(a.date))
+        return
     p = packet(a.date)
     if a.json:
         print(json.dumps(p, indent=2, default=str))

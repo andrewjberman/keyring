@@ -6756,6 +6756,116 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "disposition": "UNDER_INVESTIGATION",
       "disarm_owner": "2.0.0_SA_COO~H",
       "notes": "Cites Z-S82 and Z-S83. Decomposition section 58 rules HVST-ar-3 down from a SERVED clip to an issuer READ: a served change would be a 0-diff deploy. The one future-reachable leak is an event that crosses the floor (0 today)."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~93",
+      "surfaced_at": "2026-10-04T21:42:32Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W93-S1",
+      "one_line": "Two golden pins outside this order's paths fail BY DESIGN once barrons is typed: the barrons fixture row gains exactly one column, isServerUnlockedArticle.",
+      "spec_asserts": "Order HVST-ar-1 build item 7: the readers stay green, `python -m pytest lib/opal_data_harvest -q`; item 2: only columns are added. <paths> lists test_silver_from_bronze.py and test_ar1_silver_fields.py, no other test file.",
+      "world_is": "lib/opal_data_harvest/test_q2_bbg_as_received.py GOLDEN['barrons'] pins sha256 b6da43de797c... of the whole barrons fixture row, and test_ai4_bbg_html_silver.py::test_ii_json_controls_are_byte_identical_to_the_base_rows[barrons_json] pins fixtures/json_control.expected.json['barrons_json']. The barrons fixture (test_silver_from_bronze.BARRONS_FIXTURE) carries isServerUnlockedArticle: true at top level, one of the paywall flags this order types, so the row gains that one column and both pins fail. Measured diff of the ai4 pin: added {'isServerUnlockedArticle': True}, changed [], removed []. New sha for the q2 pin: dbab293b26c7ab6858d9ceef7e52ef0012caf400823b3a0158c8499e071d49da. `python -m pytest lib/opal_data_harvest -q` = 2 failed, 634 passed, 3 skipped. Not edited: the lane gate admits only the paths the order names.",
+      "class": "BLOCKING",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/test_q2_bbg_as_received.py GOLDEN['barrons'] (line ~86) and test_ai4_bbg_html_silver.py:78-83 on branch wk-AMGT_HARVST-93-r45a",
+          "pytest lib/opal_data_harvest -q: 2 failed, 634 passed, 3 skipped (this worktree, 2026-10-04)",
+          "row diff computed from fixtures/json_control.expected.json['barrons_json'] against the new builder: added isServerUnlockedArticle only"
+        ]
+      },
+      "notes": "Disarm: the issuer updates the two pins (new q2 sha above; the ai4 expected string gains one key) in an amendment or the drain, since both are outside this worker's write grant. Left alone, the drain-end repo-wide pytest reads red on two tests that did their job."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~93",
+      "surfaced_at": "2026-10-04T21:42:32Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W93-S2",
+      "one_line": "The 15 wsj and 2 bbg originals with no served silver row are a builder fault for 11 of them (type conflicts inside one page, one empty struct) and a batch-composition conflict for 6; the builder is fixed for the 11 and every one of the 17 now builds and writes.",
+      "spec_asserts": "Order build item 3: 3 of 50 sampled wsj originals have no silver row; find the cause from the stored bytes and the builder; fix the builder if it drops or fails them, else say where.",
+      "world_is": "Manifest baseline (HEAD builder, 0 build errors): every original builds a row, so nothing is dropped. The rows fail at the parquet write. wsj, 15 originals without a served row: 8 hold a path with two kinds of value in ONE page (articleData.flattenedBody[].caption is a string on an image node and a list on a video node; pa.Table.from_pylist raises 'cannot mix list and non-list'): 3f5e8027, 4ea98595, 544d1735, a2209d7d, aca51921, b32b5eec, bc5a8c32 and cc8d1d4d (a sampled one); 1 holds articleData...instrumentData: {} on every node that has the key (struct with no child, pq.write_table raises ArrowNotImplementedError): d4f38252; 6 build and write alone and conflict only with 2 SERVED rows whose caption is a list (f51363fe... 20261002T062536Z, 77a918a8... 20261002T063501Z) when tabled in one append: 3a43d41f, 5a265aca, 74fcd899, abad5ca3, b27bbdc2 and f721b35d (the last two sampled). bbg, 2 originals (7449174d, cb8ff20a): body.content[].data.attachment.duration an int on some nodes and a string such as '2215323' on another (ArrowInvalid). Fix: article_rows holds a path with two kinds in one row as strings (JSON text for a non-string) and nulls a wsj path whose every mapping is empty; a row with neither is unchanged. After the fix all 15 wsj rows write together and all 17 write alone (manifest table_build_errors 0). The 6 cross-row ones are NOT a builder fault: written in an append with no list-caption row they pass, written beside the 2 list-caption served rows they conflict. Whether any of the 17 is also pending in the local upload outbox was not read (the outbox is under .runtime, which this order forbids touching).",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~93/ar-1.rederive_manifest.json originals_with_no_served_row (wsj 15, bbg 2) and table_build_errors 0 on every publisher",
+          "baseline manifest run on HEAD silver_from_bronze.py: wsj 18 table errors = 9 rows (8 caption, 1 instrumentData) listed twice; bbg 4 = 2 rows listed twice",
+          "lib/opal_data_harvest/test_ar1_silver_fields.py test_a_path_with_two_kinds_in_one_row_is_held_as_text_and_the_row_writes, test_an_empty_mapping_in_a_wsj_page_no_longer_strands_the_row"
+        ]
+      },
+      "notes": "ARMED for the served re-derivation only: a re-derive append that puts one of the 6 cross-row wsj rows in the same table as f51363fe or 77a918a8 (list captions) will refuse that table with SilverRowError. The manifest's batch check keeps each row beside the rows of its own served part, which passes. The issuer's append should keep that grouping or isolate per row (uploads._isolate_bad_silver_rows does)."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~93",
+      "surfaced_at": "2026-10-04T21:42:32Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W93-S3",
+      "one_line": "The new silver columns keep the vendor's values with five lossless reshapes the order did not name; the issuer's never-widen half should read them.",
+      "spec_asserts": "Order build item 1: type every lost path as a column carrying the vendor's value VERBATIM (a dict stays a struct, a list a list, a scalar its type); adversary: a value reshaped instead of kept verbatim.",
+      "world_is": "(1) html_meta maps each <meta> name to the LIST of its contents: a name repeats on a page (wsj description on 420 of 429 pages, bbg viewport on all 1247) and one table cannot hold a string on one page and a list on the next. (2) json_ld maps @type to the LIST of that type's objects, and a JSON-LD property whose value is one object is held as a one-item list: wsj sends image and author as an object on one page and an array on the next (measured, 3 paths). (3) barrons snippet[].content[].alt.picture.sources is an object on 26 originals and an array on 13: held as a one-item list in the new snippet column only. (4) a path with two kinds of value inside one row is held as strings, JSON text for a non-string (see Z-W93-S2). (5) the vendor's own `publisher` (ft JSON-LD Organization block on 170 of 170 html originals; barrons articleData.publisher string on 149 of 149 as-received) was shadowed by the lineage column publisher, so it is kept under a new column vendor_publisher; the pre-existing publisher column is unchanged. Columns not typed: barrons chrome (ads config, header, footer, byline, session), wsj/bbg pageProps other than articleData/story/analytics, the Next.js query beyond lang. Manifest result: rows whose pre-existing columns change = 0 on all four publishers.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/silver_from_bronze.py section 'HVST-ar-1' (header comment lists the reshapes)",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~93/ar-1.rederive_manifest.json: columns_added per publisher, rows_whose_preexisting_columns_change 0, new_column_paths_with_two_kinds_across_rows empty",
+          "survey of all stored originals: wsj 429 html, bbg 1247 html, ft 170 html, barrons 149 as-received json"
+        ]
+      },
+      "notes": "html_meta is one struct column: wsj carries 105 distinct meta names across its originals, bbg 50, ft 18; a part's schema holds the union of the names in that part."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~93",
+      "surfaced_at": "2026-10-04T21:42:32Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W93-S4",
+      "one_line": "'The served row of a bronze_key (latest run_stamp)' is ambiguous for 149 barrons keys: a re-derived part repeats the original's run_stamp, so two served rows tie; the manifest breaks the tie by part order.",
+      "spec_asserts": "Order build item 5: compare with the served silver row of the same bronze_key (latest run_stamp).",
+      "world_is": "barrons silver has 313 rows for 164 originals; 149 bronze_keys have 2 rows with the SAME run_stamp, one in part-<stamp>.parquet and one in rt-20261002T113110Z-r1.parquet (title is a dict {'text': ...} in the first and a string in the second; the builder's HVST-aj-8 fix produced the second). store.supersedes breaks a fetched_at tie toward the later part_order_key; the manifest does the same (run_stamp, then store.part_order_key). With a first-seen tie-break the baseline read 148 'pre-existing column changes' (title) on unchanged code; with the shared rule it reads 0.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~93/ar-1.rederive_manifest.py (tie-break comment) and ar-1.rederive_manifest.json served_keys_with_more_than_one_row: barrons 149, bbg 11",
+          "lib/research/harvest/store.py supersedes() and part_order_key()"
+        ]
+      },
+      "notes": "Any later check of 'the latest row per bronze_key' should use the reader's rule, not max(run_stamp) alone."
+    },
+    {
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~93",
+      "surfaced_at": "2026-10-04T21:42:32Z",
+      "disposition": "UNDER_INVESTIGATION",
+      "id": "AMGT_HARVST-Z-W93-S5",
+      "one_line": "`python -m pytest lib/research/harvest -q` has 2 failures in this sparse worktree that are about absent files, not the typing.",
+      "spec_asserts": "Order build item 7: report the count of `python -m pytest lib/research/harvest -q`.",
+      "world_is": "334 passed, 2 failed: tests/test_m1_move.py and tests/test_m2_move.py test_import_identity_no_bare_vs_qualified_split raise FileNotFoundError 'integrations/bloomberg/research/model_block_pull.py'; the sparse cone of this worktree carries integrations/seekingalpha only. Neither test touches silver_from_bronze or any file of this order.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "pytest lib/research/harvest -q in wk-hvst-r45-93: 2 failed, 334 passed",
+          "ls integrations in the worktree: seekingalpha/ only"
+        ]
+      },
+      "notes": "Expected to pass in a full checkout; not re-run there."
     }
   ]
 ```
