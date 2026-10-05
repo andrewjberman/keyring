@@ -56,6 +56,11 @@ comp-adversary: DECLARED-NOT-APPLICABLE the validator-context composer profiles 
   through `.Value2`; convert the date columns (`DATES`, `REPORT_DATE`, and `id().DATE` as `canon_header` maps it) from Excel
   serial (epoch 1899-12-30) to ISO dates; a `pywintypes.com_error` on one unit's read becomes that unit's `unfetched` partial,
   never a traceback. AC1 arm (e) pins it with a fake whose `Value` raises and whose `Value2` returns date serials.
+- AMENDMENT 3 (2026-10-05 ~07:0xZ, issuer; row ETFS_RIVALS-Z-S23, measured on the real Terminal): Bloomberg returns each BQL
+  query's columns in its own order (2026-01-16: ACWI's `id().DATE` at column 7, IWM's at column 1), and `_merge_parts` keeps
+  only the first part's header, so the second control's rows read as off the requested date. Map every part's rows onto the
+  first part's header BY COLUMN NAME (a column a part lacks reads None; a column the first header lacks is appended to the
+  header and filled None for the other parts), never by position. AC1 arm (f) pins it.
 
 ## 3. SURFACES AND BOUNDS
 
@@ -96,6 +101,8 @@ Write the instance at `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ET
 **AMENDMENT 1 (2026-10-05 ~03:5xZ, issuer):** Andrew-direct benchmarks (record cooRV_ANDREW_DIRECT_20261005_03xxZ_RIVALFUNDS_BENCHMARKS_...); AC2 re-pointed (SCHY rival in every state); paths += peer_groups.json. Dry-run: CLOUD FAIL 3, the first lg-1 build FAIL 2 ((b),(c)). Graded by: to-pipeline-gate on a modified order reads only GATE (viii) <placeholders> (NONE).
 
 **AMENDMENT 2 (2026-10-05 ~07:0xZ, issuer):** rows Z-S21/Z-S22 (real-Terminal com_error on Range.Value); AC1 arm (e) added. Dry-run: CLOUD FAIL 4; the lg-1 build 481d101ab1 FAIL 1 ((e)), (a)-(d) OK. Graded by: to-pipeline-gate on a modified order reads only GATE (viii) <placeholders> (NONE).
+
+**AMENDMENT 3 (2026-10-05 ~07:0xZ, issuer):** row Z-S23 (per-query column order); AC1 arm (f) added. Dry-run: the amend-2 build 5bb37fb4e0 FAIL 1 ((f)); (a)-(e) OK; CLOUD (f) passes (one query, one header). Graded by: to-pipeline-gate on a modified order reads only GATE (viii) <placeholders> (NONE).
 
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
