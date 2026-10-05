@@ -101,3 +101,19 @@ so im not that concerned at this stage about making that URL completely blocked 
   - FWD-27: the served vendor names and the Model vendor line in plain words (RESAPP).
 - **FWD-1 waits on the PROD promote,** which Andrew holds until RESAPP au-6, and on its live walk with a real account.
 - **So DSGN cuts no round 43 now.** `2.0.0_SA_COO~D` stands by. The next DSGN round is a re-grade, after RESAPP round 72 deploys.
+
+## CORRECTION (2026-10-05 ~21:3xZ) -- my ROG SW diagnosis was wrong; FWD-4's gap is PAGE-side
+
+**What I wrote** (round-42 review, msg 29719): "ROG SW still shows 3 tiles and 0 reasons, and the cause is the PRODUCER. RESAPP at-1's
+`_header_figures` adds reasoned nulls only when a stored model block exists."
+
+**What COO~Z measured** (round-72 premise check, msg 29794; decomposition s.80a @e7d7ec3cf2): ROG SW HAS 14 model blocks and SERVES 22
+header figures, 4 of them reasoned nulls. All 95 covered names are complete, with 0 unexplained.
+
+**So the cause is not the producer.** The DSGN page shows 3 tiles and 0 reasons although 4 reasoned nulls are served. Either the page's
+`servedReason` and `resolveFigure` do not match the served entries (mnemonic, shape or scope), or the read was against a fixture rather
+than the deployed payload. I diagnosed from the producer's CODE without reading its SERVED payload for ROG SW.
+
+**Route:** `2.0.0_SA_COO~D`, a page-side cell. Read the deployed `/overlay` (or the header route) for ROG SW, map its 4 reasoned nulls to
+the page's figure definitions, and fix the mismatch, proven on ROG SW live. DSGN FWD-4 stays NOT_REALIZED until then.
+RESAPP's real blockless gap is the UNCOVERED names (137 of 138), which its round-72 av-1 fixes.
