@@ -1462,3 +1462,88 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Resolves MDPF_SECCLASS-S23."
 }
 ```
+
+
+## MDPF_SECCLASS-W14-S1 -- Q4 read literally (provider_security_type == Equity) puts 218 real-stock securities OUT: their canonical_shape
+
+```json
+{
+  "id": "MDPF_SECCLASS-W14-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~14",
+  "surfaced_at": "2026-10-05T03:50Z",
+  "one_line": "Q4 read literally (provider_security_type == Equity) puts 218 real-stock securities OUT: their canonical_shape records carry provider_security_type None (asset_class Equity, long, not cash); 195 of them have no Bloomberg id at all.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "canonical_shape 504 days read 2026-10-05 (newest revision per day): 19,109 rows of 'None' provider_security_type, long, not cash; 7,705 carry a security_bloomberg, 11,404 carry only ticker + CUSIP",
+      "r7_fwd9_row_set.py output: OUT by reason {'provider_security_type=None (Q4 needs Equity)': 218, Curncy: 32, Index: 17, cash line: 3}; none of the 218 is an Index future or a currency",
+      "208 of the 218 tickers already have a table row; 8 distinct stocks do not: BRK/B, CRWV, EPAM, FPS, MDLN, NBIS, ORI, SLDE (plus 2 junk cash lines named Cash and Cash&Other)",
+      "the module follows Q4 as ruled (RULINGS.md batch 257 item 4) and widens nothing"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO batch 257 Q4: a stock is provider_security_type Equity and non-cash; the 17 Index futures are out. PRD FWD-9: every stock Rival Funds collects has a row.",
+  "world_is": "The input also holds stocks whose provider_security_type is empty. Under the literal rule they are OUT, so 8 collected stocks would have no row after the write. The FWD-9 outcome needs the CTO to say whether asset_class Equity with an empty type is in the domain.",
+  "notes": "Not changed by this cell. If the CTO widens Q4, the mapping module's domain test is one line and the row set reruns; those records have no Bloomberg id, so the key would be the bare US ticker."
+}
+```
+
+
+## MDPF_SECCLASS-W14-S2 -- The shared writer's attribute list (etf_classification_scheduled._WRITE_FIELDS) does not name security_bloombe
+
+```json
+{
+  "id": "MDPF_SECCLASS-W14-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~14",
+  "surfaced_at": "2026-10-05T03:50Z",
+  "one_line": "The shared writer's attribute list (etf_classification_scheduled._WRITE_FIELDS) does not name security_bloomberg, so write() would drop the verbatim Bloomberg string batch 257 Q1 says to keep; the FWD-9 writer adds it through a table wrapper on the same put.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/v2_portal/_shared/etf_classification_scheduled.py _WRITE_FIELDS = ticker, asset_class, sub_asset_class, instrument_kind, industry, classified_by, updated_by, name, identifier_namespace, classification_confidence, low_confidence",
+      "org/standards/MDPF_SECCLASS_CONTRACT.json identifier_namespace values read TICKER, CUSIP only (contract 0.4.0 is the CTO's carrier); it names no security_bloomberg field either",
+      "that file is outside this order's paths, so r7_fwd9_write.py wraps the table object passed to write(): same condition expression, one extra attribute on BLOOMBERG rows"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Batch 257 Q1: the verbatim security_bloomberg string is kept in its own attribute. The writer rule: writes go through etf_classification_scheduled.write().",
+  "world_is": "write() alone would land BLOOMBERG rows without the attribute. The SC-e-19 producer, which also writes through write(), needs the same field, so the better home is _WRITE_FIELDS plus a contract 0.4.0 field entry.",
+  "notes": "The wrapper is a stopgap inside the order's grant. Contract 0.4.0 should name security_bloomberg beside the BLOOMBERG namespace value."
+}
+```
+
+
+## MDPF_SECCLASS-W14-S3 -- Seven money-market funds sit in the FWD-9 WRITE set as single_security stocks: the input types them provider_s
+
+```json
+{
+  "id": "MDPF_SECCLASS-W14-S3",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~14",
+  "surfaced_at": "2026-10-05T04:10Z",
+  "one_line": "Seven money-market funds sit in the FWD-9 WRITE set as single_security stocks: the input types them provider_security_type Equity, and the ruled rule gives every row instrument_kind single_security.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FWD9_ROW_SET_20261005.tsv WRITE lines: AGPXX, CMQXX (CAPITAL GROUP CNTRL CSH-M), DGCXX (BNY DREYFUS GOVERNMENT CASH), DGVXX, FTIXX, GVMXX (STATE ST INST US GOV MM-PREM), IJGXX (JPMORGAN US GOVT MMKT-L); all US listings with unresolved GICS, so each lands as equity / no sub-class / low_confidence",
+      "r7_fwd9_row_set.py reads each newest record as provider_security_type Equity, asset_class Equity, long, not cash",
+      "batch 257 Q3 fixes instrument_kind single_security for every row; PRD FWD-9 asks for fund versus individual stock"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Batch 257 Q3: every row is instrument_kind single_security. PRD FWD-9: the shared list says whether each security is a fund or an individual stock.",
+  "world_is": "A money-market fund would be recorded as an equity single security. The 7 are in the WRITE set as ruled; the set has no field to tell a fund from a stock beyond the XX ticker suffix and the name.",
+  "notes": "Not changed by this cell. The CTO can ask for the 7 to be dropped from the write set (or written as fund / cash) before the half is signed. Non-US BLOOMBERG rows were not scanned for funds; the input gives no fund flag."
+}
+```
