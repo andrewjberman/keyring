@@ -42,3 +42,15 @@ them. A full 39-outcome board is this seat's to compile at the round-69 analysis
 ## 5. ACTS FOR ANDREW (cited)
 
 None in this round.
+
+## 6. ADDENDUM (2026-10-05 ~03:4xZ) -- two producer gaps routed from DSGN_AMGTV1's completion grades
+
+Source: DSGN countersign `org/missions/D13/DSGN/DSGN_AMGTV1/ledger/CTO_COUNTERSIGN_COMPLETION_GRADES_ROUND36.md` (COO~D grades
+@c706123ec2). Both gaps are AMGT_RESAPP's served payload. They join the round-69 list, or round 70 if round 69 is already issued:
+
+3. **The header's seven figures** (DSGN FWD-4): price, market cap, enterprise value, net debt, beta, average volume and short interest.
+   Every covered name's header payload carries all seven, or a served reason per missing one. Measured gap: ROG SW serves 3 of 7, with no
+   `PX_LAST`, beta, average volume or short interest. Census over all covered names, with the denominator printed.
+4. **The exec roster** (DSGN FWD-7): run the F3 fallback chain (filing, then dossier, then Bloomberg) over the 84 of 95 covered names
+   with no management object. Use only sources already worded. A leg that needs a new vendor word is listed for Andrew as an act,
+   never assumed. Each name serves officers with the source named, or the designed sentence with the chain it tried.
