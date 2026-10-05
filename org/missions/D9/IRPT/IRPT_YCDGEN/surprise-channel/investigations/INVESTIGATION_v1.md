@@ -269,3 +269,107 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "INERT (no element sourced from the scatter yet). Owner 2.0.0_SA_COO~Y: teach the shape rule the series key and pin it with the round-2 scatter answer's shape, before the OTHER_ENDPOINT re-pointing (packet section 5 item 2) reads it."
 }
 ```
+
+## IRPT_YCDGEN-W4-S1 -- map_pdf's footer-chrome rule is portrait-only, so the Multi PDF's 34 landscape pages each yield a footer logo read as a chart plus a footer caption and date read as text
+
+```json
+{
+  "id": "IRPT_YCDGEN-W4-S1",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~4",
+  "surfaced_at": "2026-10-05T01:27:00Z",
+  "one_line": "map_pdf's footer-chrome rule is portrait-only, so the Multi PDF's 34 landscape pages each yield a footer logo read as a chart plus a footer caption and date read as text",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "YCD-m-3 section 3: map_pdf.py gives the element skeleton per page, and its chrome rule drops the page footer.",
+  "world_is": "map_pdf.py FOOTER_TOP is 755 pt and CHROME_IMAGE_BOTTOM 112 pt, both set for a 612x792 portrait page. The Multi PDF's pages are landscape (a scatter chart's bbox runs to x1 above 740), so the 'Built with YCharts' logo at about y 588-603 survives as a 'chart' element and the footer line as 'caption' and 'date range' elements on every one of the 34 pages (34 logos, 34 captions, 34 dates), and the 'chart k of n' numbering counts the logo. comparison_map.json (portrait) has none. multi_map.json keeps all of them as kind text, labels 'page footer logo' / 'page footer text' / 'page footer date', BUILDER_ONLY, and renumbers the real charts of each heading; map_pdf.py was not edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "multi_map.json elements labelled 'page footer logo' (34), 'page footer text' (34), 'page footer date' (34)",
+      "skeleton p12 chart bbox [45, 86, 747, 479] (a landscape page) and the logo bbox [35, 588, 94, 603] repeated on every Multi page; infra/aws/lambda/investor-reporting/ycharts/research/map_pdf.py constants HEADING/FOOTER_TOP/CHROME_IMAGE_BOTTOM"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: a map-side repair, no consumer reads the footer. Owner 2.0.0_SA_COO~Y: if the layout cell reuses map_pdf on a landscape report, a page-size-aware footer rule belongs in map_pdf (a later cell, not this one)."
+}
+```
+
+## IRPT_YCDGEN-W4-S2 -- the C-MAP shape has no member for a second or third security's source; the two maps add three optional keys and one placeholder
+
+```json
+{
+  "id": "IRPT_YCDGEN-W4-S2",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~4",
+  "surfaced_at": "2026-10-05T01:27:00Z",
+  "one_line": "the C-MAP shape has no member for a second or third security's source; the two maps add three optional keys and one placeholder",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "C-MAP (decomposition 2.3): an element's source is ONE {call, field}; params placeholders are {security_id}, {start}, {end}.",
+  "world_is": "A Comparison prints each figure for two securities and a Multi for three, so one source per element cannot name them. The maps keep source as the portfolio's {call, field} and add: column_sources (list of {key_index, call, field}) on an element that prints all securities in one row or chart, key_index on a source that names one comparison key, and calls named comparison_<x> (the Overview call with {security_id} replaced by the new placeholder {comparison_security_id}, issued once per comparison key, key order = printed column order). The comparison_ table_data calls keep the Overview's `indices` parameter, correct for a model-portfolio key (Opal Long-Term, Opal Ultra Long-Term) and UNMEASURED for an ETF key (IWM in the Multi): the entity parameter of an ETF read is not in the Overview's measured answers. All claims are inferred.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "comparison_map.json and multi_map.json calls[] carry comparison_* entries; elements carry column_sources / key_index",
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/maps/overview_map.json: the 12 portfolio_* calls the comparison_* calls copy"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: extra keys are ignored by a reader of the Overview shape. Owner 2.0.0_SA_COO~Y: the layout and runner cells that read these maps must read the new keys, and the round-3 close should read one comparison key's table_data answer to settle the ETF entity parameter."
+}
+```
+
+## IRPT_YCDGEN-W4-S3 -- Cottonwood's retained PDF for REQ-e4b7f5aba7fb218c37f28002 is a variant-2 Comparison whose pages never print the comparison key's name
+
+```json
+{
+  "id": "IRPT_YCDGEN-W4-S3",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~4",
+  "surfaced_at": "2026-10-05T01:27:00Z",
+  "one_line": "Cottonwood's retained PDF for REQ-e4b7f5aba7fb218c37f28002 is a variant-2 Comparison whose pages never print the comparison key's name",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order: Comparison REQ-e4b7f5ab... or REQ-7ea49c2d... are interchangeable sources for the Comparison map.",
+  "world_is": "Both jobs are READY, variant comparison, one key (opal_long_term), template 14141824. REQ-7ea49c2d9b27957d0ea8888f's PDF (32 pages) prints the key's name 'Opal Long-Term' on 16 pages and a Security B section; REQ-e4b7f5aba7fb218c37f28002's PDF (28 pages) prints it on none (only the 'Sec A'/'Sec B' column heads and Security A holdings pages). The map is read from REQ-7ea49c2d9b27957d0ea8888f (source_pdf.request_id). The two are not interchangeable for FWD-3 evidence.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "each retained PDF read into OS temp by the job checkpoint's pdf_ref (the case_trace.py route), pdfplumber text, search for 'Opal Long-Term': 0 of 28 pages in e4b7f5ab, 16 of 32 pages in 7ea49c2d",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/live_walk/case_trace.py: its 'the PDF prints exactly the chosen comparisons' link is the check e4b7f5ab would fail"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: an observation about a retained live artifact; this cell only reads. Owner 3.0.0_SA_CVO / 2.0.0_SA_COO~Y to decide whether REQ-e4b7f5ab is a defect of the vendor build or of the case."
+}
+```
+
+## IRPT_YCDGEN-W4-S4 -- map_pdf reads 17 labels of the two PDFs wrongly; the maps carry the repaired printed label and say so in the note
+
+```json
+{
+  "id": "IRPT_YCDGEN-W4-S4",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~4",
+  "surfaced_at": "2026-10-05T01:27:00Z",
+  "one_line": "map_pdf reads 17 labels of the two PDFs wrongly; the maps carry the repaired printed label and say so in the note",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "YCD-m-3: elements carry the printed label text the skeleton gives.",
+  "world_is": "The skeleton gives a blank label to a first or last row (Asset Allocation Cash, Bond Sector Securitized, four Multi Fundamentals rows), glues a legend name into a label (Comparison Region Exposure), splits a wrapped long name over two lines (United Arab Emirates, Africa And Middle East / Indonesia) and reads the '5 percent' of the Monthly Value at Risk label as a number in the Multi. Each label in the maps is repaired from the page text order (numbers masked, nothing printed kept) and the element note says 'printed label repaired'; the Value at Risk stray is re-kinded text.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "comparison_map.json (13 notes) and multi_map.json (4 notes) containing 'printed label repaired'",
+      "page text of Comparison pages 3, 4 and Multi pages 10, 13 read with numbers masked, in OS temp only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: a map-side repair; owner 2.0.0_SA_COO~Y if map_pdf is to be fixed for the layout cell."
+}
+```
