@@ -826,3 +826,31 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "world_is": "Opal holds a Treasury 3M yield series (object and key named above) but its coded history is 2 years, so alpha_3y and longer would read SERIES_TOO_SHORT even with the series passed. The 1y window is the only one this wiring can make computable, which is why every p7 element carries its _1y id. A multi-column element needs a per-column compute (a dict of window to value) to print the five windows the PDF shows; that is not in this cell's contract and was not built."
 }
 ```
+
+## IRPT_YCDGEN-W3-S7 -- Opal holds the held-data figures for 37 of Y-5's 99 holdings at most, no price series for the rest, and the order names no loader for the census's sources
+
+```json
+{
+  "id": "IRPT_YCDGEN-W3-S7",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~3",
+  "surfaced_at": "2026-10-05T12:06:00Z",
+  "one_line": "YCD-h-5 census over Y-5's 99 holdings: 86 of 158 HELD_DATA rows OPAL_HELD (83 of 153 groups) but every FED figure is label-grain or field-grain over at most 37 of 99 holdings (asset-class labels 97 of 99), 72 rows NOT_HELD, and `census`/`value_of` take already-read rows because 5.2 names no loader.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Contract 5.2 / cell YCD-h-5: the sources are Opal's security tables, prices and classifications; each group's weights are the holdings' amounts renormalized over the held holdings, so a held figure stands for the portfolio's.",
+  "world_is": "Measured read-only, counts only (no ticker or amount printed or written): etf-classifications 97 of 99 holdings (asset_class: equity, fixed_income, multi_asset, structured, commodities, alternatives; no cash label), bd-securities 98 of 99 (a label), opal-data-etfs bbg characteristics 37 of 99 (all 37 single stocks, domicile US; EQY_DVD_YLD_IND_NET non-null for 27, GICS_SECTOR_NAME, CNTRY_OF_DOMICILE, CUR_MKT_CAP, BETA_ADJ_OVERRIDABLE for 37; FUND_EXPENSE_RATIO, HB_OAS_EFF_DURTN, TOTAL_NUMBER_OF_HOLDINGS_IN_PORT null for all 99), gold/holding 47 (it is derived from the characteristics row), history_topup PX_LAST 37, fund_daily and etf_history 0, trade-security-identifiers 8, opal-harvest-security-metrics 0. So Opal holds no price series for 62 of 99 holdings (p12.e04 is NOT_HELD) and no look-through share of any kind: the 83 FED groups are sector and region LABEL shares of the 37 stocks (100 or 0 per holding), asset-class label shares (stock, bond, other) and three field means (dividend_yield 27 of 99, weighted_avg_market_cap 37, net_expense_ratio measured empty so NOT_HELD). A FED value is renormalized over its held holdings, so the sector and region elements describe the 37 stocks only; the held-of count is in `value_of`'s method, and the layout (YCD-w-5) shows it in the 3.5 trace. The order names no way to read the sources, so held_data takes ready rows (`sources`, `held_rows`) and reads no store; the census's reads were made by a scratch script that is not committed, so the issuer or YCD-w-5 loads characteristics (parquet) and etf-classifications (DynamoDB scan) before calling it. Region and super-sector mappings are my own (decided countries US CA GB CH JP DE FR IE NL AU; GICS sectors to the Morningstar-style group names) and the group id is `group_id_of(columns)` (the columns joined by '+', 'level_series' for the no-column row); each feed also carries `group`.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "runner.read_holdings over REQ-a618aa83407689bc95193a01 (99 rows, 99 distinct, basis USD), counts only",
+      "s3 opal-data-etfs bbg/2026-10-02/{characteristics,fund_daily,history_topup}.parquet, etf_history.csv, silver/holdings/2026-10-04.parquet, gold/{book,holding}/date=2026-10-02 (schema and key overlap counts)",
+      "dynamodb scan of etf-classifications, bd-securities, trade-security-identifiers, opal-harvest-security-metrics (field names, key overlap counts, label value counts)",
+      "data/etfs/scripts/gold/etf_positioning_gold.py lines 1263-1280 (gold holding yield and beta are the characteristics row's)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: owner 2.0.0_SA_COO~Y at the round-5 close; a wider feed (a per-holding look-through table) is a data decision, not a cell."
+}
+```
