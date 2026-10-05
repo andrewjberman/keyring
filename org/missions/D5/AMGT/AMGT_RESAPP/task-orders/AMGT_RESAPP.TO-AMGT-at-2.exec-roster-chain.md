@@ -94,3 +94,15 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-05 ~07:4xZ):** CLOSED; the chain serves no new names today.
+- Worker ~227: commit `243431eebf`, proof-of-spec-check VALID (rc=0).
+- AC1 PASS 6 of 6; the mutant fails 5. AC2 PASS c31 local: 95 names, 11 SERVED from M-1, 84 serving `chain_tried` + a reason.
+  AC3 PASS r67 c26.
+- No stored filing or Bloomberg officer list is usable for the 84. Row Z-W227-S1 lists them for Andrew's act: one new Bloomberg
+  COMPANY_EXEC_OFFICERS pull each. No vendor call was made.
+- **NEW S3 reads for at-6 (simulate each):** `sec/harvest/silver/filing_source/`, `issuer-site/harvest/silver/filing_source/`,
+  `amgt/harvest/state/filing_attempt/`, `bloomberg/harvest/bronze/exec_officers/`. They are new import closure members and need
+  pyarrow. Served by at-6.
+
+<status>complete</status>

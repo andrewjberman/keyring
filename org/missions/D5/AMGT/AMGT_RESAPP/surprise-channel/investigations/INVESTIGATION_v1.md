@@ -17630,5 +17630,27 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   ]
  },
  "disposition": "UNDER_INVESTIGATION"
+}
+,
+{
+ "id": "AMGT_RESAPP-Z-W227-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~227",
+ "surfaced_at": "2026-10-05T07:22:21Z",
+ "one_line": "84 of 95 covered names have no stored filing, no stored research-notes officer list and no stored Bloomberg officer list, so the F3 chain's Bloomberg leg is reported not tried (no vendor call made); those names serve officers only after ONE new Bloomberg COMPANY_EXEC_OFFICERS pull, which is Andrew's act.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "Order AMGT-at-2 item 3: a leg that would need a NEW vendor pull is not called, appears in chain_tried as not tried and why, and ONE row lists those names for Andrew's act.",
+ "world_is": "Measured at lib/research/management/exec_roster_chain.py on the worktree branch wk-AMGT_RESAPP-227, run over the 95 covered names against the live stores: 11 SERVED from an M-1 object (unchanged), 84 not served; for every one of the 84 the Bloomberg leg is 'not tried' with needs_new_pull true (no object under bloomberg/harvest/bronze/exec_officers/security_key=<key>/; the store holds 5 securities: 2317_TT, 6501_JP, 6861_JP, ASML_NA, CSL_AU). The filing leg found no usable stored filing for the 84 (the stored filing table holds 14 names, all but KMB_US_Equity already served or without a CEO; KMB's 12 stored officers name no chief executive, only 'Chairman of the Board', so the ruled completeness rule does not serve them). The research-notes leg: 47 of 95 names carry a management section, all prose; no officer names are taken from prose by code. Names needing a new Bloomberg pull (84): 1299_HK_Equity, 8035_JP_Equity, 8306_JP_Equity, 8316_JP_Equity, 8766_JP_Equity, 939_HK_Equity, 9433_JP_Equity, 992_HK_Equity, ADBE_US_Equity, AI_FP_Equity, AMD_US_Equity, AMXB_MM_Equity, AZN_LN_Equity, BATS_LN_Equity, BBSE3_BZ_Equity, BNP_FP_Equity, BP/_LN_Equity, BZLFY_US_Equity, CDNS_US_Equity, CELH_US_Equity, CLX_US_Equity, CNR_CN_Equity, CPA_US_Equity, ENEL_IM_Equity, GOOGL_US_Equity, GPN_US_Equity, GSK_LN_Equity, HEI_US_Equity, HSBA_LN_Equity, IBE_SM_Equity, ICICIBC_IN_Equity, ICT_PM_Equity, IDXX_US_Equity, IMB_LN_Equity, ISP_IM_Equity, ISRG_US_Equity, JD_US_Equity, KMB_US_Equity, KOFUBL_MM_Equity, KPN_NA_Equity, LLY_US_Equity, MA_US_Equity, MELI_US_Equity, MER_PM_Equity, ML_FP_Equity, MNST_US_Equity, MSCI_US_Equity, NESN_SW_Equity, NFLX_US_Equity, NG/_LN_Equity, NKE_US_Equity, NOKIA_FH_Equity, NOVN_SW_Equity, NOW_US_Equity, OMAB_MM_Equity, ORA_FP_Equity, PBR_US_Equity, PWR_US_Equity, QXO_US_Equity, RIO_LN_Equity, RKT_LN_Equity, RMS_FP_Equity, ROG_SW_Equity, RWE_GR_Equity, SAN_FP_Equity, SHOP_CN_Equity, SLB_US_Equity, SNPS_US_Equity, SPOT_US_Equity, SSE_LN_Equity, ST_SP_Equity, TSM_US_Equity, TTE_FP_Equity, UBER_US_Equity, UBSG_SW_Equity, ULVR_LN_Equity, UNH_US_Equity, UNVGY_US_Equity, VIVT3_BZ_Equity, V_US_Equity, WALMEX*_MM_Equity, WDAY_US_Equity, ZTS_US_Equity, ZURN_SW_Equity.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "r70_served.py --cell c31 --where local after the change: population names 95 served 11 non-200 0; PASS C1 names failing 0; R70 C31 SERVED: YES; exit=0.",
+   "Per-name aggregate over the same 95 (read_management with the stored notes read): ('ABSENT','NO_OBJECT'): 82, ('ABSENT','ZERO_OFFICERS'): 2 (KMB_US_Equity, PBR_US_Equity), ('SERVED'): 11; needs_new_pull 84; no chain reason carries a banned word."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
 }]
 ```
