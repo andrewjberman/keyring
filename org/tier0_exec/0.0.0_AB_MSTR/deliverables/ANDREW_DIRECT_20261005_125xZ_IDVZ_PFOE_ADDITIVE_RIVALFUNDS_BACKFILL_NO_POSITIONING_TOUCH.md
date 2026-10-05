@@ -22,3 +22,11 @@ the daily incremental pull with the rest of the rivalfunds."
    recorded on site Z and not decided here:
    - Z-S24 (CTO~Z ruling b5167de528): no backfill until production reads OK, under a daily row budget.
    - Andrew's 3-year lookback cap: record @357e681ddf.
+
+## Addendum ~13:5xZ -- the backfill is approved (Andrew-direct at the laptop)
+
+- **Channel:** the laptop terminal of `0.0.0_AB_MSTR`, relayed over the agentbus (frame 7d48fbb1, 13:52Z).
+- **Verbatim:** "Backfill is approved for IDVZ/PFOE, please relay that to sitez MSTR~Z. They may already be aware of that."
+- **Read with the 12:5xZ word above:** this approves the one ad hoc targeted backfill named there. `2.0.0_SA_COO~RV` reads it
+  as round 8's D12 Step B (msg 29553). How it meets the standing bounds (the Z-S24 capacity ruling and the 3-year cap) is
+  for `2.0.0_SA_COO~RV` and `1.0.0_SA_CTO~Z` to read; this record does not decide that. Relayed to both.
