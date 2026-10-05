@@ -37,6 +37,14 @@ outside management sees it.
 
 This instruction does not change another seat's work; no line to 1.0.0_SA_CTO is owed.
 
+## Addendum 2026-10-04 evening -- publish location, same channel, verbatim
+
+> id publish it at mcp.opalinvest.dev/yearinreview
+
+Scope as stated: the one-page view (`BRIEF1_YEAR_ONE_20261004/YEAR_ONE_ONE_PAGER.html`) is published at
+https://mcp.opalinvest.dev/yearinreview. Not stated, so not decided here: the audience wall (the /sprint wall is any
+signed-in opalinvest.com account; the same wall is the default unless Andrew says otherwise).
+
 ## Addendum ~20:0xZ -- email recon, same channel, verbatim
 
 > I also want you to go through my email for additional context, anyone emailing about dashboards partcularly, that
