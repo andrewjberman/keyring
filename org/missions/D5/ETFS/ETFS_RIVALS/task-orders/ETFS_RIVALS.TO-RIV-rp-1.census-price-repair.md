@@ -69,7 +69,7 @@ Write the instance at `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ET
 
 <risk>SERVED</risk>
 <worker_class>worker-light</worker_class>
-<status>pending</status>
+<status>complete</status>
 <round>8</round>
 <slot>~3</slot>
 <fabric>site-z</fabric>
