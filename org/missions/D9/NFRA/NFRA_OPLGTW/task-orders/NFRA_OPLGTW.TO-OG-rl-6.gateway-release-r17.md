@@ -146,7 +146,7 @@ Rows: id `NFRA_OPLGTW-Z-W15-S<k>` (next unused), fabric `site-z`, disarm_owner `
 <proof_of_spec>
   <criterion id="AC1" cell_refs="OG-rl-6"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r17/checks/rl6.AC1.sh; echo "exit=$?"</invocation><expect>(?s)host integration.py equals the release bytes: yes.*download before refused: True.*download after ok: True.*held-only \(unheld 0, discriminated\): True.*empty holdings refused: True.*query unchanged: True.*grants_written 0: True.*RESULT: PASS.*exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="OG-rl-6"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r17/checks/rl6.AC2.sh; echo "exit=$?"</invocation><expect>(?s)sentinel at HEAD=no;.*descends from 4b6b823fae=yes;.*outside the release set 0.*floor: rl4.AC1 yes; ht.AC2 yes.*RESULT: PASS.*exit=0</expect></criterion>
-  <criterion id="AC3" cell_refs="OG-rl-6"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r17/checks/yr.AC3.sh; echo "exit=$?"</invocation><expect>(?s)host kit files equal the release bytes: 4 of 4; public unauthenticated GET: 302 to login.microsoftonline.com=yes; host-local no-identity GET: 401.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC3" cell_refs="OG-rl-6"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r17/checks/yr.AC3.sh; echo "exit=$?"</invocation><expect>(?s)host kit files equal the release bytes: 3 of 3; public unauthenticated GET: 302 to login.microsoftonline.com=yes; host-local no-identity GET: 401.*RESULT: PASS.*exit=0</expect></criterion>
   <criterion id="AC4" cell_refs="OG-rl-6"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r17/checks/yr.AC4.sh; echo "exit=$?"</invocation><expect>(?s)sentinel at HEAD=no;.*descends from e91819e281=yes; gateway files shipped 4, outside the kit set 0.*floor: rl4.AC1 yes; ht.AC2 yes.*RESULT: PASS.*exit=0</expect></criterion>
 </proof_of_spec>
 
@@ -170,6 +170,13 @@ and validate it with `python .tools/proof-of-spec-check.py <instance>`. Report o
     the ALB wall answers every path; host-local GET 404. `yr.AC4` FAIL: no ledger, deployed = e91819e281. Floor
     `rl4.AC1` and `ht.AC2` PASS.
   - **Not graded.** The signed-in 200 is Andrew's act at his browser.
+- **A2 (2026-10-05 ~03:5xZ, issuer; row Z-W15-S42, the issuer's own defect).** The deploy tarball ships `app/`,
+  `deploy/`, `requirements.txt` and `identity_tool_allowlist.txt`, never `tests/`. So `yr.AC3` grades the THREE shipped
+  kit files (`3 of 3`). `yr.AC4` is unchanged: its shipped set is a git diff between commits, which does include the
+  test file.
+  - **Phase C-A** is drained @432c3f0fbb: release `rel-nfra-oplgtw-r17b` @14e0af86fa, rollback `og-rb12`.
+  - **Row Z-W15-S46** (no roster check: any signed-in tenant account reads the page, where `/sprint` is owner-only) is
+    an audience question routed to Andrew with the never-widen ask. Neither half decides it.
 
 <status>pending</status>
 <round>17</round>
