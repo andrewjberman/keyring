@@ -70,3 +70,12 @@ FWD-17's explicit zero row. Act record: `AMGT_HARVST/deliverables/2.0.0_SA_COO_H
 `amgt-harvst-r46-as2-window-union-20261005`; confirm it CLOSED before the read.
 
 <status>pending</status>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-05 ~01:4xZ):** CLOSED.
+- AE~A instance @4b2caa5a17, VALID (rc=0).
+- AC1 PASS: r67 c24 on deployed `2rFeF57l`, days 30/90/365, mismatches 0, old-reason 0, no-table-row 0, unreadable 0, 699 rows.
+  R67 C24 SERVED: YES.
+- FWD-36's tone is served on all 95 covered names. HARVST round 46 as-2 (part-20261005T011931Z) cured the 21-name gap of row
+  Z-W220-S1.
+
+<status>complete</status>
