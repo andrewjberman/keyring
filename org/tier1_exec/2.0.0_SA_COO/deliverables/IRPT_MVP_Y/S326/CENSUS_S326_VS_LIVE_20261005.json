@@ -1,0 +1,145 @@
+{
+ "added": [],
+ "built": {
+  "closure_stale": [],
+  "crlf_members": [],
+  "differ_from_pin": [],
+  "members": 49,
+  "zip_sha256_b64": "jhGc2J4Q5EesJgnLq8EzdE5ErrZLbyqnJ8m00R7CgdE="
+ },
+ "changed": [
+  "owned_requests.py"
+ ],
+ "eol_only": [],
+ "function": "irpt-status",
+ "history": [
+  {
+   "ahead": [
+    [
+     "44cc631396",
+     "fix(IRPT_BCKEND ~Y S326, 2.0.0_SA_COO~Y): the request history reads newest first -- read whole (boun"
+    ]
+   ],
+   "live_equals": "7f1135f0ee",
+   "member": "owned_requests.py",
+   "source": "infra/aws/lambda/investor-reporting/ops/owned_requests.py"
+  }
+ ],
+ "identical": 48,
+ "live_code_sha256": "XPta1UMJzLzB+Ba1Yn+KraRRZmxxo6R0/N50sNNN3q8=",
+ "live_members": 49,
+ "live_zip_hashes_to_it": true,
+ "pin": "c3de44f260456aedf8b49c961c6c03ca6b9e113e",
+ "pin_members": 49,
+ "removed": [],
+ "served_closure": [
+  {
+   "live_sha256": "4a9d374c9806daa9",
+   "member": "served.py",
+   "pin_sha256": "4a9d374c9806daa9",
+   "state": "identical to live"
+  },
+  {
+   "live_sha256": "f5681952cb0901f4",
+   "member": "enforce.py",
+   "pin_sha256": "f5681952cb0901f4",
+   "state": "identical to live"
+  },
+  {
+   "live_sha256": "b60f25ccaa706b7a",
+   "member": "errors.py",
+   "pin_sha256": "b60f25ccaa706b7a",
+   "state": "identical to live"
+  },
+  {
+   "live_sha256": "24b407fa00ff0fc3",
+   "member": "resolve.py",
+   "pin_sha256": "24b407fa00ff0fc3",
+   "state": "identical to live"
+  },
+  {
+   "live_sha256": "51785ed4b834b806",
+   "member": "grant.py",
+   "pin_sha256": "51785ed4b834b806",
+   "state": "identical to live"
+  },
+  {
+   "live_sha256": "610982ce5bddd38d",
+   "member": "report_owner.py",
+   "pin_sha256": "610982ce5bddd38d",
+   "state": "identical to live"
+  },
+  {
+   "live_sha256": "f21d26dcce7c46bf",
+   "member": "owner_reads.py",
+   "pin_sha256": "f21d26dcce7c46bf",
+   "state": "identical to live"
+  },
+  {
+   "live_sha256": "f556b0997dfa7310",
+   "member": "prospect.py",
+   "pin_sha256": "f556b0997dfa7310",
+   "state": "identical to live"
+  },
+  {
+   "live_sha256": "f1659861d469c25d",
+   "member": "ids.py",
+   "pin_sha256": "f1659861d469c25d",
+   "state": "identical to live"
+  },
+  {
+   "live_sha256": "763f0a0d4445481c",
+   "member": "loaders.py",
+   "pin_sha256": "763f0a0d4445481c",
+   "state": "identical to live"
+  },
+  {
+   "live_sha256": "bba07a3f4eeb947b",
+   "member": "interactive_access.py",
+   "pin_sha256": "bba07a3f4eeb947b",
+   "state": "identical to live"
+  },
+  {
+   "live_sha256": "0ec4a717f2aa2c12",
+   "member": "canonical_profile_reads.py",
+   "pin_sha256": "0ec4a717f2aa2c12",
+   "state": "identical to live"
+  },
+  {
+   "live_sha256": "56ee3cc22e802579",
+   "member": "keys.py",
+   "pin_sha256": "56ee3cc22e802579",
+   "state": "identical to live"
+  },
+  {
+   "live_sha256": "f255335beb26f239",
+   "member": "repository.py",
+   "pin_sha256": "f255335beb26f239",
+   "state": "identical to live"
+  },
+  {
+   "live_sha256": "585950a53879574d",
+   "member": "maintained_sources.py",
+   "pin_sha256": "585950a53879574d",
+   "state": "identical to live"
+  },
+  {
+   "live_sha256": "23cda6b0e3dd88df",
+   "member": "custody.py",
+   "pin_sha256": "23cda6b0e3dd88df",
+   "state": "identical to live"
+  },
+  {
+   "live_sha256": "7ba910b85e2fce4f",
+   "member": "selection.py",
+   "pin_sha256": "7ba910b85e2fce4f",
+   "state": "identical to live"
+  },
+  {
+   "live_sha256": "583507a70e3a0074",
+   "member": "selection_store.py",
+   "pin_sha256": "583507a70e3a0074",
+   "state": "identical to live"
+  }
+ ]
+}
