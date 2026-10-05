@@ -1462,3 +1462,58 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Resolves MDPF_SECCLASS-S23."
 }
 ```
+
+
+## MDPF_SECCLASS-W15-S1 -- TO-SC-e18 expected 805 FWD-9 stocks (822 less 17 Index); the order's own rule over canonic
+
+```json
+{
+  "id": "MDPF_SECCLASS-W15-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~15",
+  "surfaced_at": "2026-10-05T14:30:00Z",
+  "one_line": "TO-SC-e18 expected 805 FWD-9 stocks (822 less 17 Index); the order's own rule over canonical_shape reads 781, and security_market holds one trading day per stock (3 partitions, first 2026-09-29), so no stock is COVERED_3Y.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "r7_fwd9_history_coverage.py run 2026-10-05: 504 canonical days, 1169 files, newest revision per day, non-cash provider_security_type Equity, distinct security_bloomberg = 781; newest-by-file-mtime instead of by-name (114 days differ) adds 0",
+      "latest canonical day 2026-10-02 holds no Index rows (types Equity 207, Curncy 10), so the 17 Index futures are not in the newest slice the 822 may have been counted on",
+      "security_market: 3 partition dates (2026-09-29, 2026-10-01, 2026-10-02), 4 files, 1239 rows; every stock's first px_close date is 2026-09-29 or 2026-10-02 (497 STARTS_LATE, 284 NO_SERIES, 0 COVERED_3Y, 0 BEYOND_CAP)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e18 step 1: 805 stocks expected (822 less 17 Index futures); step 2 expects a series to measure against the three-year window.",
+  "world_is": "781 stocks by the order's rule; the series table is days old (one date per stock), so FWD-9 history is entirely unfilled: 497 stocks start late, 284 have no px_close at all (12 of them have rows with null px_close).",
+  "notes": "Counts read under the order's rule, not tuned to 805. Gaps routed by the issuer to site Z (batch 257 Q2). Evidence: org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R7_FWD9_HISTORY_COVERAGE_20261005.json."
+}
+```
+
+
+## MDPF_SECCLASS-W15-S2 -- security_market keys its newest file (2026-10-02, 601 rows) with 87 security_bloomberg val
+
+```json
+{
+  "id": "MDPF_SECCLASS-W15-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~15",
+  "surfaced_at": "2026-10-05T14:31:00Z",
+  "one_line": "security_market keys its newest file (2026-10-02, 601 rows) with 87 security_bloomberg values of the form /cusip/<cusip> that join to no canonical_shape stock; 227 of its 736 distinct security_bloomberg values are outside the 781-stock universe.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "probe over the 4 security_market files: distinct security_bloomberg 736, of which /cusip/ 87, in the universe 509, not in the universe 227; example /cusip/037833100",
+      "canonical_shape Equity security_bloomberg values: 0 begin with / (781 distinct); security_id is a cusip in market's newest file and NAME_EXCHANGE_Equity in the others"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e18 step 2: the identity column (security_id or security_bloomberg) joins security_market to canonical_shape; read it, do not assume.",
+  "world_is": "Neither column joins alone across revisions: security_bloomberg joins the ticker-form rows (509 universe stocks) and the cusip-form rows carry a different security_bloomberg; the check joins on security_bloomberg then security_id, and the cusip-form rows match no stock.",
+  "notes": "Identity drift in the writer (enrichment_bloomberg.py at site Z) across revisions; the check reports the join it used per stock (joined_by). Whether those 87 cusip rows are stocks in the universe under another key is the issuer's to route."
+}
+```
