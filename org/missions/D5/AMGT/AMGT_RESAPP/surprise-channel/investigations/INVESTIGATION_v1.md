@@ -17811,5 +17811,26 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
    "FWD30_READ_ROUND71.md in the same folder carries the per-name table."
   ]
  }
+},
+{
+ "id": "AMGT_RESAPP-Z-W236-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~236",
+ "surfaced_at": "2026-10-05T16:39:00Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "AMGT-au-6 serves the Lead Panel warm from per-container memos, but the FIRST read of a cold container still makes about 100 classification GetItems and 23-57 model-block reads; removing that needs a NEW producer (a stored per-name roster of display name + classification), which this cell does not build.",
+ "spec_asserts": "AMGT-au-6 item 2: serve stored results; 'if the only real fix is a NEW producer or served file, do not build it: file ONE row naming the producer, the file and the measured gain, and do what is possible inside the route.'",
+ "world_is": "Inside the route the nine reads now hold the generation rows (keyed on generation_id + row_count), pointers (60 s), classification rows (300 s) and model-block names (300 s) per container: warm 0.15-0.97 s against 17-64 s before, calls per warm request GetItem 0 (was 99-289), S3 lists 1-8 (was 24-57). A cold container (first Lead Panel read after a deploy or idle recycle) still pays GetItem 99-110 (8 in parallel) and List 26-34 + GetObject 25-29, measured 5.1-29 s from this device against 18-62 s before. PRODUCER that would remove it: a scheduled harvest-gold writer of ONE served file per covered name set (security_key, ticker, display_name, name_source, classification) read as a single GET; measured gain on a cold container: about 100 GetItems and about 50 S3 calls become 1 GET (estimated 4-5 s to under 1 s locally; not built, so not measured). The memos also bound freshness: a new generation shows within 60 s, a classification or model-block name edit within 300 s (SLOW_TTL/POINTER_TTL in lib/research/api/served_cache.py); the 60 s and 300 s are this worker's choice, not a ratified figure. One api test, test_model_words.py::test_formula_words_equals_the_pages_own_function_run_in_node, fails at the issuance commit and after (it reads a portal function absent at this worktree's portal ref); no row beyond this mention.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~236/PROFILE.md section 3: per-route BEFORE/AFTER table, cold and warm, with boto call counts by operation, fresh process per route (9 of 9 routes, status 200).",
+   "lib/research/api/served_cache.py POINTER_TTL=60.0, SLOW_TTL=300.0; consumers: read_generation_pointer, read_generation_rows, _classification_for_ticker, _model_block_name in lib/research/api/scoped_amgt.py."
+  ]
+ }
 }]
 ```
