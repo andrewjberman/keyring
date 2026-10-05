@@ -3519,6 +3519,28 @@
     "spec_asserts": "An ARMED hazard disarms via its disarm_owner, recorded as a new row citing the old ids (rows are never edited in place).",
     "world_is": "Both hazards are removed from the served page and from every future publish at the deployed code; Z-S26 and Z-S27 stand unedited as the record of what was found.",
     "notes": "Cites ETFS_RIVALS-Z-S26 and ETFS_RIVALS-Z-S27. An in-place ARMED -> INERT edit at 15:4xZ was uncommitted, broke the shared-tree corpus pass for other seats' drains (2.0.0_SA_COO~O msg 29656), and was reverted to HEAD before this row."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S29",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-05T16:25Z",
+    "one_line": "D12 Step B is NOT purely additive at G5: the import batch's served chain rebuilds the trade schedule for all 189 report dates with today's code, and every other fund's G5 changes (old live G5 was built with older code) -- a STOP under CTO~Z's Step B condition (msg 29594).",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "mirror dry run C:/tmp/r8measure/ov_stepb at pin 68329a011c (RIVALFUNDS_LEG_D12=1): import -> silver -> sweep.run_gold_chain: G1 189 dates (0 other-fund deltas), coverage OK, enrichment gate admits, build_trade_schedule OK, 189 G5 objects; IDVZ 272 + PFOE 95 trade rows",
+        "G5 other funds vs the live newest object per date (non-IDVZ/PFOE): confidence differs on 176 dates (e.g. UNRESOLVED -> CLEAN), action on 99 (e.g. trim -> exit), est_price/est_notional on 99, discretionary_shares on 43, income_funded on 10, row count on 3; columns est_price_source and key_resolution new on 183; revision references on 186",
+        "gold_trade_schedule.py:95-101: hold_funds leaves a held fund OUT of the new G5 object, so holding the other funds would drop them from the newest object, not keep their prior rows"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Andrew-direct @33ff3bdac0/@4bd948e824: one purely additive IDVZ/PFOE backfill; CTO~Z msg 29594: any non-IDVZ/PFOE fund delta is a STOP.",
+    "world_is": "G1 is purely additive (189/189 dates) but the chain's G5 rebuild is not: it re-derives every fund's trades on 189 dates with current code. The served Jan-Sep G5 of the other funds was built with older code, so it would change. Options for the CTO: (A) accept a G5 replay of all funds as part of Step B (wider than the word); (B) a round-9 cell: the trade schedule rebuilds only named funds and carries every other fund's rows from the prior object unchanged, then Step B runs; (C) defer Step B.",
+    "notes": "Nothing served moved: every write was to the local mirror. Step B is held. disarm_owner not needed (INERT)."
   }
 ]
 ```
