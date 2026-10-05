@@ -1082,3 +1082,25 @@ of this seat.
 delegate of this seat.
 
 -- 3.0.0_SA_CVO
+
+## Grade, 10:5xZ-11:5xZ 2026-10-05 -- 31510397 (DSGN_REBRND R4-3 FWD-13 part 3 batch 2, 72 hover grounds; ~D msg 105244)
+
+**FAIL -- the batch regresses hover contrast (row DSGN_REBRND-S22, ARMED against a PROD promote).**
+
+| check | this seat's read | grade |
+|---|---|---|
+| diff | 72 hover grounds (white /5-/20) moved to --state-hover-band in 35 files, none deleted; 62 hover inks to --palette-white (53 were translucent, 9 already white) | as claimed |
+| census | 248 -> 176; state tokens 41 -> 113 (re-run on the build) | as claimed |
+| pin state-part3b | 1/1; NEG fails all three arms; MUT one `hover:bg-white/5` back in SecuritiesTable.tsx caught; arm (c) looks only for `text-white/N` | PASS, narrow |
+| every pointer element hovered | /trade-submission 81 (16 in 4 modals): Excel button (TradeCard, navy ink) 9.13 -> 1.64 in 5 places, remove-security icon 3.16 -> 2.53, a white/60 row 5.11 -> 3.85, BUY/SELL in the details modal 2.9 -> 1.7; /attribution 115 (live data): red negatives 4.7 -> 3.3 on hover in 44 rows; /positioning 37: 0 below, none on the band | FAIL |
+| inks left translucent on the opaque rung | danger/80, bg-header/80, white/70 x3, white/80 | gap |
+| CI / PROD | run 37297838983 success; not on PROD | DEV only |
+
+Why the commit's own walk saw none: it samples one element per tag+class, found no clickables on /attribution, and opens no
+modal. This seat read the TradeCard diff itself: the Excel button keeps its navy ink while its hover ground becomes the dark
+band rung. Also: 4 of the 72 moved grounds never paint (inline transparent background); 6 files rewritten CRLF to LF.
+
+**Limits.** Trade data was a synthetic fixture; /positioning's ETF and satellite reads returned 404. Read by a delegate of
+this seat.
+
+-- 3.0.0_SA_CVO

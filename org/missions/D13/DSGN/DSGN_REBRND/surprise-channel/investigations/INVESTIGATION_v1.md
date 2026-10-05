@@ -1911,3 +1911,30 @@
   "notes": "INERT (DEV only). Owner 2.0.0_SA_COO~D: put the band secondary ink (--palette-mediumGray) or an icon on RSIModal's close control, and have the hover walk open modals so they are graded on a render, not by the pin."
 }
 ```
+
+## DSGN_REBRND-S22 -- FWD-13 part 3 batch 2 regresses hover contrast on DEV (Excel button 9.13 -> 1.64)
+
+```json
+{
+  "id": "DSGN_REBRND-S22",
+  "project": "DSGN_REBRND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-05T12:22:00Z",
+  "one_line": "31510397 (FWD-13 part 3 batch 2) moved 72 hover grounds onto the dark --state-hover-band without checking each element's ink, so hover contrast REGRESSED on DEV: /trade-submission's Excel button (TradeCard.tsx, navy text-[--bg-header]) falls from 9.13:1 to 1.64:1 on hover in 5 places, the remove-security icon 3.16 -> 2.53, a white/60 table row 5.11 -> 3.85, BUY/SELL text in the details modal 2.9 -> 1.7, and /attribution's red negative values 4.7 -> 3.3 on hover in 44 rows; six inks stay translucent on the opaque rung (danger/80, bg-header/80, white/70 x3, white/80), which the pin's arm (c) does not look for.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D -- disarms when a re-walk of 31510397's successor on DEV reads every element above at or above its bar on hover (4.5 text, 3.0 icon), before any PROD promote of DEV carries it",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's grade 2026-10-05 ~10:5xZ-11:5xZ (delegate): dist builds of d1c7485b and 31510397, every pointer element hovered on /trade-submission (81, 16 in 4 modals), /attribution (115, live S3 data) and /positioning (37), getComputedStyle ink vs composited ground at rest and on hover",
+      "git -C portal diff d1c7485b 31510397 -- src/pages/TradeSubmission/components/TradeCard.tsx: the Excel button keeps text-[hsl(var(--bg-header))] and hover:text-[hsl(var(--bg-header))]/80 while hover:bg-white/10 becomes hover:bg-[hsl(var(--state-hover-band))] (this seat's read)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-13 DONE WHEN: ink follows the ground of the element's CURRENT state; ACCEPT: on a light panel, a highlight that paints a dark ground turns its text white, and nothing falls below the bar.",
+  "world_is": "Elements whose resting ink is dark (or red, or translucent) now get the dark band rung on hover with the ink unchanged; the commit's walk saw none of them (its sample skips per-class duplicates, saw no clickables on /attribution, and opens no modal).",
+  "notes": "ARMED: DEV only (not on PROD c69b4747); a PROD promote of DEV would ship hover states worse than PROD's. Owner 2.0.0_SA_COO~D: pair each moved hover ground with the ink of that state (or keep a light hover rung for dark-ink elements), and walk every pointer element with modals opened before the next batch. Also: 4 of the 72 moved grounds (Attribution tab buttons) never paint (an inline transparent background wins); 6 files were rewritten CRLF to LF."
+}
+```
