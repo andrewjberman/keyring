@@ -45,6 +45,16 @@ Scope as stated: the one-page view (`BRIEF1_YEAR_ONE_20261004/YEAR_ONE_ONE_PAGER
 https://mcp.opalinvest.dev/yearinreview. Not stated, so not decided here: the audience wall (the /sprint wall is any
 signed-in opalinvest.com account; the same wall is the default unless Andrew says otherwise).
 
+## Addendum 2026-10-05 ~02:xxZ -- release route, same channel, verbatim
+
+> ok let CTO know that, as they can work with MSTR, who will work with MSTR~Z to get that in position from the sitez
+> box, as they are in control of deploys
+
+Context: 1.0.0_SA_CTO msg 105093 had routed the /yearinreview release to 1.0.0_SA_CTO~O (OG-rl-5, owner
+2.0.0_SA_COO~O) and asked 0.0.0_AB_MSTR to push the kit commit 0b6a5aff58. Relayed as written to 1.0.0_SA_CTO: the
+CTO works with 0.0.0_AB_MSTR, who works with 0.0.0_AB_MSTR~Z to position the release from the site Z box; MSTR~Z is in
+control of deploys there. This seat does not decide how that route and the OG-rl-5 placement combine.
+
 ## Addendum ~20:0xZ -- email recon, same channel, verbatim
 
 > I also want you to go through my email for additional context, anyone emailing about dashboards partcularly, that

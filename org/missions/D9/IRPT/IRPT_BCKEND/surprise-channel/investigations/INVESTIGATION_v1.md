@@ -17840,3 +17840,54 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Closes the census half of W100-S2 only; the remedy (re-point, withdrawal, or a rebuilt leaf) is the issuer's packet to the CTO. The relationship-level perfrp performance leaf and four other perfrp leaves are fetched on the same mount and were not censused."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S326",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-10-05T01:50Z",
+  "one_line": "The analysis request history (GET /analysis/requests, ops/owned_requests.py history) pages in request-id order, not newest first: the DynamoDB query walks sort key analysis#REQ-<random hex>#1 ascending with Limit 25, so page 1 is the 25 LOWEST ids. A request just submitted appears on the page's first list page only when its random id sorts low; REQ-c1b537728b221742e335a0c8 (Y-2, READY 01:37:07Z) never appeared in 22 list reads over 24 minutes.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Y (IRPT_BCKEND~Y lease holds infra/aws/lambda/investor-reporting/ops; author of the last three commits to owned_requests.py). INERT: nothing is written wrong; the newest request is unlisted, not lost.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ops/owned_requests.py:286-293 @CLOUD HEAD: query KeyConditionExpression '#t = :t AND begins_with(#r, :r)' on request_revision 'analysis#...', Limit=limit (default 25), no ScanIndexForward and no time index -- ascending sort-key order; :301 binds the key to analysis#REQ-[0-9a-f]{24}#1.",
+      "Live run tmp/yh-submit/20261005T011505Z-Bproxy/page.har (local, not committed): 22 GET /analysis/requests?limit=25&selected_tenant=... reads 01:16:54Z-01:40:19Z, every one 'Miss from cloudfront', ONE distinct body; its 25 items' identity.request_id are strictly ascending REQ-06185d70.. to REQ-a8e81b8e..; their accepted_at are neither newest-first nor oldest-first; next_cursor present; the submitted REQ-c1b537728b221742e335a0c8 sorts after the page's last id and is in 0 of 22 bodies.",
+      "Same run: SUBMIT 200 REQ-c1b537728b221742e335a0c8 RECEIVED 01:18:56Z; 2.0.0_SA_COO~Y msg 105086: CERTIFYING 01:36:16Z, READY 01:37:07Z; the driver's row-state poll read null at every poll to its 20-minute ceiling (outcome READY_CEILING)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "DSGN_IRPTV1 W2-07 (pin IV-e-116): Generate leads to the request's own status view and the list re-lists itself -- an advisor sees the request just made in 'Your analysis requests'.",
+  "world_is": "The list re-reads, but the backend's first page is the 25 lowest random ids; with more than 25 requests on a firm, a new request is listed on page 1 only by chance. The page then orders that page by time, so it reads newest-first while omitting the newest.",
+  "notes": "Remedy is the owner's: a newest-first read (a time-ordered key or index for the history query), with the cursor contract kept. Page half (2.0.0_SA_COO~D): none needed once the history is newest-first; the page already sorts by time. Found on the Y-2 fold-in Case B live run for 2.0.0_SA_COO~Y msg 105051."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-W122-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~122",
+  "surfaced_at": "2026-10-04T23:55Z",
+  "one_line": "The 49F perfrp_performance_account leaf does not contain the literal 2025-01-10 (0 hits in 1,923,593 bytes read via get_object), so the order's gate (a withdrawal key measured carries_20250110 true) cannot be met by the bytes; IB50-1-AC1 FAILS on that clause with every other part of the packet present.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "get_object s3://opal-data-portal-v2/platinum/advi/49financial/perfrp_performance_account.json 2026-10-04 (ETag 9873b72ef5da73fc0399d2905d4f7821, VersionId E78kI4KB4KsZhdwsAFzfSvkI.kn5Snim, LastModified 2026-09-01T03:16:07Z, 1,923,593 bytes, the only version, no delete marker): count of '2025-01-10' = 0, of '20250110' = 0, of '2025-01' = 0; the only ISO dates in the body are 2024-07-08, 2024-07-09, 2026-08-31, 2026-09-01. Top-level keys: as_of, contract_version, declared_absent_columns, entries (8,632 account rows with window_return only), family, figure_state_census, generated_by, level, periods, si_label, window. No daily series.",
+      "The leaf's SI window (window_start 2024-07-08, window_end 2026-09-01) spans 2025-01-10 by construction, which is how REMEDIATION_v16.md:43 words the claim ('Since-inception figures that include the inflated 2025-01-10 day'). Whether the SI window_return values still embed the S237 error is set by canonical/twr_daily date=2025-01-10 upstream; this cell did not read it (the order's reads 1-4 do not include it).",
+      "Packet written with the leaf in the withdrawal set as the order directs and carries_20250110 recorded false (measured); the order's own checker p50_withdrawal_packet.py exits 1 with 'withdrawal key ... is not measured to carry 2025-01-10'. Other parts: versioning Enabled; 4 perfrp keys, all under 49financial/, of 19 objects under platinum/advi/; rollback by version id; stop rule names the ETag; after-read names PROD and a 49F login."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IB-pr-319 worker face: the withdrawal set is the 49F account leaf plus any performance leaf measured to carry 2025-01-10, and criterion IB50-1-AC1 requires every withdrawal key to be measured carries_20250110 true; the census row W121-S1 says the leaf 'still carries the inflated 2025-01-10 day'.",
+  "world_is": "The leaf's bytes hold no 2025-01-10 date at any field path; it carries the day only as a span inside its SI window, with the values' contamination unread. The packet is complete and the leaf is withdrawable on the CTO's ruling (batch 251), but the order's measured-carrier gate is not satisfied by the bytes.",
+  "notes": "Issuer's choice: (a) amend IB50-1-AC1 / the checker to accept the leaf as ruled-in (CTO batch 251) or to read a spans_20250110 field, or (b) cut a read of canonical/twr_daily date=2025-01-10 and the SI window_return recompute to decide whether the values are contaminated. No AWS write was made; the packet is the unsigned record. perfrp_performance_relationship does not exist in the bucket."
+}
+```

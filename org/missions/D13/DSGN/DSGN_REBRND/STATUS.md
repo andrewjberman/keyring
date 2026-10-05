@@ -37,6 +37,12 @@ R4-2. **FWD-10.** The page-end marker onto the remaining 24 routes; density meas
      - /dev/page-surface-control is a component test fixture (`components/ui/__tests__/PageSurfaceControl.demo.tsx`), not a product page.
 
      The census is therefore 15 of 18, and the 3 left are the two parked routes above (/security-analysis has two paths).
+   - Density part 1 LANDED 2026-10-05 01:4xZ, portal DEV `e2315890` (ls-remote; a3dc8427 + e2315890), pin page-end-spacing. The new `scripts/ui-smoke.mjs --density` line found:
+     - /market's page end at 0px, outside its column (batch 3's defect);
+     - eleven `space-y-6` columns, 24px;
+     - /valuations and /correlations drawing no page end on a failed read.
+
+     After: 15 of 15 page ends at 20px; failed and empty pages end too (never while loading); batches 3-5 census at least one page end.
    - Next: the density limb, under FWD-10 PROOF. The three IV.9 routes (/market, /positioning, /portfolio-management) are rendered at 1440x900 with the named populated fixtures: `.frontend-dev/testing/rb-s-9-market.json`, `rb-s-9-attribution.json` (it carries positioning data), and a new /portfolio-management fixture. For each, print the viewport share below the last content before and after, plus C10's 30px inside / 20px between measured on the render. `rb-s-9-sparse.json` is the negative control.
 R4-3. **FWD-13.** One per-role state table (rest, hover, selected, focused, disabled); walk light panels, not dark only; close row S9 (the OS dark-mode setting) on PROD.
 R4-4. **FWD-12.** A layer table covering light and dark; the layer values into the one token file and the contract.
