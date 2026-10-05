@@ -6935,6 +6935,28 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "Records the ruling only; Z-W94-S1 is not edited. Its standing is the issuer's to disposition."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S86",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-05T05:20Z",
+      "one_line": "The round-46 collection run's sa leg is throughput-bound by its uploads: after one deep-listing job (AAPL, stored 37), the driver's upload-harvest has run 81+ min (pid 21252, 03:55Z onward, CPU rising), because listing pages upload in many small (source, run_stamp) groups and each silver_append re-reads the whole sa silver listing_hit prefix (row Z-S58's cost, multiplied by the 200-page sa cap). barrons waits behind sa in the same driver.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Round-46 COO half @30ed1c8b83 sized the sa leg by requests: 191 x 220 = 42,020 at most, about 9.7 days at 4,320/day, with most names stopping far earlier at the 2026-01-01 floor.",
+      "world_is": "At 05:16Z sa has concluded 4 of 191 after 3.5 h. The pending outbox (progress.sqlite3, read-only) holds 37 article objects and 149 listing pages, with 282 listing pages already uploaded. Upload time per job grows with the listing pages the job reached and with the prefix size, so it is not bounded by the request pacing the half sized. bbg and wsj upload in seconds (cap=1/4). Nothing is wrong with the data: all three drivers are alive and the upload process is making progress.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          ".runtime/harvest-backfill/r46_sa_barrons_run.out (last JOB 02:47Z AAPL stored=37, then the upload); pid 21252 upload-harvest --max-objects 237 (CPU 253 -> 405 s over 03:46-05:16Z)",
+          "lib/opal_data_harvest/uploads.py HarvestUploader listing path: one _silver_append_retrying_object_name per (source, run_stamp) group; store.silver_append reads silver_latest over the whole prefix per call"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "notes": "No act mid-round: the spec is frozen, and the CTO half's condition 2 holds pacing, caps and the floor unchanged. For the round-46 analysis: whether to accept a multi-day sa leg, give barrons its own driver root, or batch the listing uploads (one append per source per pass) as a cell."
     }
   ]
 ```
