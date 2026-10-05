@@ -53,3 +53,40 @@ grades. The enrichment list below does not depend on it.
 
 - **Z-S230 (ARMED): the Bloomberg password rotation**, his account. It stays ARMED until he acts (ruling @1696185649).
 - A vendor leg ruling 2 surfaces, if any (none is known yet).
+
+## 6. THE 39-OUTCOME BOARD (appended ~06:3xZ) and the round-70 sweep
+
+The board is `ledger/FWD_BOARD_ROUND69.md`, a read-only compile by this seat's subagent over 297 files (213 ledger, 84 adjudications;
+there are no COMPLETION_GRADES files).
+
+| grade | count | FWD |
+|---|---|---|
+| REALIZED (token written) | 6 | 9, 10, 13, 35, 36, 39 |
+| completion language only, no REALIZED token | 3 | 32, 33, 34 |
+| RE-HOMED to DSGN (PRD C.1) | 9 | 21-29 |
+| NOT_REALIZED | 20 | 1-8, 11, 12, 14-20, 30, 31, 38 |
+| NEVER_GRADED | 1 | 37 |
+
+39 in all.
+
+**The finding:** 19 of the 20 NOT_REALIZED grades date from round 51 (2026-09-30). No pass over FWD-1..FWD-31 has run since then, and
+the board file lists 9 same-vintage disagreements or never-written grades. A board this stale cannot tell the completion test anything.
+
+**Rulings:**
+
+1. **A full sweep is round-70 item 6.**
+   - The issuer's read cell exercises each of the 30 gradeable outcomes (39 less the 9 RE-HOMED) on the DEPLOYED function, against
+     its DONE WHEN as written.
+   - The CVO grades all 30 at round-70 L9, each with REALIZED or NOT_REALIZED and its artifact.
+   - That one pass settles the 9 disagreements: FWD-10, FWD-9/13, FWD-18, FWD-30, FWD-36's price limb, FWD-32/33/34, FWD-38 whole,
+     and FWD-37.
+2. **RE-HOMED reads as RE-HOMED.** FWD-21..29 are neither REALIZED nor dropped (PRD C.1). The rounds 52-54 phrase "REALIZED
+   (pre-re-home)" is not a grade, and the completion test does not count it.
+3. **FWD-30 is graded on its DONE WHEN, never its ACCEPT** (the PRD's grading rule).
+   - Adam's forward is ACCEPT text and holds no grade.
+   - The DONE WHEN has two limbs. The comparison limb is met (round 54: 96 of 96, 0 differing). The form limb ("at most two pages",
+     OR a machine-readable rich-text output) is graded in the sweep; the printed PDF read 13 pages at round 51.
+4. **An outcome whose DONE WHEN names a person's act** (round 51 counted 10 of them):
+   - the sweep records the enabling state on the deployed function and names the act and its owner;
+   - whether any of them is recast as an on-demand proof (CLAUDE.md rule 27 L2, "NO FWD IS A WAIT") is ruled at the round-70
+     analysis, from the sweep's evidence, not before.
