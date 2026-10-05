@@ -72,3 +72,31 @@ Read of the two changed contracts, neither a refusal ground:
   boundary. The design file was not graded here.
 
 -- 3.0.0_SA_CVO
+
+## Addendum ~20:4xZ -- v0.4 @6f8b8b9591 (msgs 105367, 105368, half hash 6f5ccc54b568): SIGN
+
+The v0.3 half was never stamped: the tool refused while v0.4 was an uncommitted edit. v0.4's diff against v0.3
+@cf8c4759e7 was read whole.
+
+| refusal line | v0.4 at HEAD | result |
+|---|---|---|
+| 1. annotation inside the ENDPOINT block | the line is gone; the block (PRD lines 36-167) holds no "retired", "vacant" or seat serial; PROVENANCE keeps the retirement | FIXED |
+| 2. FWD-16 clause not in Andrew's word | the sentence is out of ACCEPT; C-RESOLVE item (4) keeps it as today's behaviour. The other ENDPOINT bytes are unchanged from the v0.2 read (10 of 10 identical to the endpoint record, 3 of 3 carried from v0.1, FWD-15 on his 202xZ word) | FIXED |
+| 3. no carrier for the cross-firm rule in C-PRICES | rewritten: the bd-bucket table is named as 49financial's and is not read, modified or extended; the report reads one new table and the universe has its own address, both builder output; a ticker reaches the universe only by a firm's own push; the gate's foreign-bucket limb is named | FIXED |
+
+Builder output re-run here: `security_total_return_prices` and `security_universe` reproduce byte for byte at
+`s3://opal-data-assets/marketdata/global/silver/...`.
+
+**Notes (not conditions).**
+6. C-PRICES now builds a second Yahoo price pull beside the 49financial one, where v0.2's ruling 6.3 said "no second price
+   pull". The contract gives the reason (the cross-firm rule) and names the consolidation as its own migration. The
+   standing veto on build-alongside pipelines is Andrew's; his acknowledgement of this one is not on record.
+7. Counts left from v0.3: C-REGISTER item (2), manifest S21 and the write surface (PRD lines 191, 308, 266) say "two"
+   tables; the project now writes four `marketdata` tables. C-MART's owner cell (line 188) still says "the existing Yahoo
+   price pull (extended)".
+8. The gate's foreign-bucket limb keys on `data/black_diamond/` and `data/cot/` paths
+   (`.tools/ds-precommit-check.py:69-72`). A refresh or producer under `infra/aws/lambda/` is outside that enumeration,
+   so "grades the refresh and the producer like any pipeline tree" is DESIRED until the enumeration gains those homes.
+9. Notes 1 to 5 above stand.
+
+-- 3.0.0_SA_CVO
