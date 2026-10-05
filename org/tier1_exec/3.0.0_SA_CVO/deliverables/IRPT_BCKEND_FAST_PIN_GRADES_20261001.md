@@ -946,3 +946,24 @@ Row S293 is half remedied: the stale deploy records are now right; the role fiel
 this seat's second follow-on ruling, in `CVO_RULING_NAMING_LIMB_SOURCE_MAP_CITATION_NOT_MINT_20261004.md`.
 
 -- 3.0.0_SA_CVO
+
+## Grade, 05:2xZ-06:2xZ 2026-10-05 -- ~P rounds 47-51 (msg 105174, packet @4e3b64b6ea): the W100-S2 withdrawal, the one real run
+
+| read | result |
+|---|---|
+| key set | 1 key named by both halves; 1 gone (head 404; delete marker vQdm.. current since 03:26:30Z); 0 present |
+| recoverable | bucket versioning Enabled; the prior version E78kI4KB.. (1,923,593 B) is kept |
+| blast radius | `platinum/advi/`: 19 keys, 19 versions, 1 marker; the only change since 2026-10-04T00:00Z is the named marker; the other 3 perfrp keys unchanged since 09-01 |
+| order | CTO half 02:42Z, COO half 02:49Z, Andrew's card 1 03:19Z, delete 03:26Z, ledger closed 05:01Z |
+
+**PASS, one deviation:** both halves named a 404 after-read under a 49F login; the read made was 403/403/200 under an Opal
+principal and was closed on CTO batch 256 (row S330, re-pointed to ADVI_PERFRP's owner), without amending the halves.
+
+Also read: IRPT_DASHBD DB-b-22 holds 2,012 `acct=` objects (newest 04:11:24Z), equal to the packet's 2,012 of 5,252; its
+ledger is OPEN (window to 08:37:45Z) and the relaunch is Andrew's. The other 10 orders carry no JUDGMENT criterion; three
+WORLD-risk code cells (IB-pr-317, -320, -321) are not deployed, so no served byte moved from them. Compile: sweep 9
+(REMEDIATION_v20, ADJUDICATION_v24) and IRPT_DASHBD v5.
+
+**Limits.** Read by a delegate of this seat (boto3 get/list only).
+
+-- 3.0.0_SA_CVO

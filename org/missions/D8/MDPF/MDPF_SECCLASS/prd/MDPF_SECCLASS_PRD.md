@@ -5,10 +5,10 @@
  "project": "MDPF_SECCLASS",
  "directive": "D8",
  "fabric": "laptop",
- "prd_version": "v0.2",
+ "prd_version": "v0.3",
  "step": 4,
  "brief_ref": "docs/briefs/canonical-security-table-brief-20260929.md@87ad6973f3",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8"],
+ "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10"],
  "status": "RATIFIED"
 }
 ```
@@ -103,6 +103,31 @@ The section below carries the endpoint's outcomes verbatim.
                     after them, and nothing but the shared list decides which is which
          SOURCE     brief addendum O8 (CRO 102981, brief addendum pending); Andrew, walk 2 of 2026-09-29
                     ("individual securities should be marked as such ... a field in that DynamoDB table")
+
+  FWD-9  Every stock collected for Rival Funds has its entry in the shared list, with its history
+         filled in as far back as three years
+         DONE WHEN  EXERCISED -- the whole Rival Funds stock list read against the shared list and the
+                    history it fills
+         ACCEPT     for every stock Rival Funds collects, the shared list gives its class, sub-class and
+                    whether it is a fund or an individual stock, and its history is filled in back three
+                    years (or to its first trading day, if it is younger); none is missing, and no history
+                    reaches further back than three years
+         SOURCE     Andrew-direct 2026-10-05 ~03:3xZ at site Z, item 3 ("Every single stock that is
+                    collected for the purpose of Rival Funds should be ingested with full backfill on the
+                    ETFClassifier canonical opal table"); the cap, "we can just put a cap on all lookback
+                    of 3 years for rivalfunds inclusions"
+
+  FWD-10 A stock that newly enters through the trading of the Opal ETFs or the rival ETFs gets its
+         entry and its history by a dedicated routine, before anyone has to notice it
+         DONE WHEN  EXERCISED -- the routine fired on demand on a day a stock first appears in an Opal
+                    ETF's or a rival ETF's holdings. The ordinary scheduled run that follows is the check
+                    that it keeps working
+         ACCEPT     when a stock first appears in the holdings of an Opal ETF or a rival ETF, the routine
+                    adds its entry and fills its history back three years without a person starting it;
+                    where it asks an outside source or model, that use has Andrew's word, never a default
+         SOURCE     Andrew-direct 2026-10-05 ~03:3xZ at site Z, item 4 ("As new stocks enter from trading
+                    activity of the Opal ETFs and the Rival ETFs, those stocks should be backfilled and
+                    included in the ETFClassifier table through some kind of routine, dedicated mechanism")
 
 ```
 
@@ -271,3 +296,41 @@ The brief at @87ad6973f3 has 1 level-1 title, 8 level-2 headings (Parts I-VII an
 Records rulings already made and carried by the round-1 analysis `org/tier1_exec/1.0.0_SA_CTO/deliverables/ROUND1_ANALYSIS_MDPF_SECCLASS_20260930.md` @151c890591 (C-WRITER: four `classified_by` values, the 238 unlabelled rows to `legacy`)
 and by ruling 103139 (E9: a CUSIP key as `CUSIP:<9 chars>` with `identifier_namespace`). C-FIELD and C-WRITER above are amended in place. No FWD line, DONE WHEN or ACCEPT changes: this is a change to the CONTRACTS
 section under the sign-off's proportionate rule (Andrew-direct 2026-09-24: only an ENDPOINT change re-signs). The CVO may read it; nothing waits on it.
+
+## ADDENDUM v0.3 (1.0.0_SA_CTO, 2026-10-05 ~03:4xZ) -- an ENDPOINT change: FWD-9 and FWD-10 added on Andrew's word
+
+**Word:** Andrew-direct 2026-10-05 ~03:3xZ at site Z `2.0.0_SA_COO~RV`.
+- Record `org/tier1_exec/2.0.0_SA_COO/deliverables/cooRV_ANDREW_DIRECT_20261005_03xxZ_RIVALFUNDS_BENCHMARKS_CLICKABLE_TICKERS_ETFCLASSIFIER_BACKFILL.md`
+  on origin CLOUD @41158af7f9, items 3 and 4. The three-year cap is record `cooRV_ANDREW_DIRECT_20261005_03xxZ_RIVALFUNDS_LOOKBACK_CAP_3Y.md`
+  @357e681ddf (site-Z local, relayed verbatim by `0.0.0_AB_MSTR` msg 105116).
+- Site Z (`1.0.0_SA_CTO~Z` msgs 29427 and 29446) asked this seat to place it.
+- The "ETFClassifier canonical opal table" is this project's canonical table, DynamoDB `etf-classifications` (C-TABLE). That is why
+  the work lands here and not in ETFS_RIVALS.
+
+**What changed and why (endpoint re-entry):**
+- FWD-7 was RIGHT and INCOMPLETE. Its domain is any firm's daily holdings; Andrew's item 4 adds the Opal ETFs' and the rival ETFs'
+  trading. FWD-7 stands unchanged; FWD-10 is added at the next unused number.
+- FWD-9 is new: a universe this project never named, Rival Funds' collected stocks.
+- No outcome is retired.
+
+**Contract notes (bind the next round's cells):**
+- **C-BACKFILL.** "History" means the series a holding's modal reads for that security. Its homes and names are builder output
+  (`lib/opal_naming.py address()` / `name()`, rule 30). The classification itself stays the `etf-classifications` row (C-TABLE,
+  C-FIELD). The lookback is capped at three years, measured from the run day.
+- **The security list is an INPUT from ETFS_RIVALS (site Z).** It is read from the artifact that project serves; it is never routed
+  as work across fabrics. If no such served list exists, the next round's first cell names the gap as a row and comes back here.
+  **Measured answer** (site Z `2.0.0_SA_COO~RV` msg 29471, relayed by `0.0.0_AB_MSTR` msg 105136): there is no dedicated list
+  today.
+  - **Interim input:** `s3://opal-data-etfs/rivalfunds/etfs/gold/canonical_shape/date=<report_date>/holdings-<revision>.parquet`,
+    refreshed Monday to Friday at about 07:10 ET, with a 09:00 ET sweep.
+  - **Planned:** gold table `security_universe` (3-year window, same cadence). Its served path comes from site Z, and the round
+    switches to it when that path is served.
+- **Vendor:** a history or classification source not already worded by Andrew needs his per-use word (CLAUDE.md). The routine never
+  defaults to one.
+- **Moratorium:** FWD-10's routine is a scheduled producer, not an alert or monitor (CLAUDE.md NEVER moratorium).
+
+**Placement:** the next MDPF_SECCLASS round, cut by `2.0.0_SA_COO~M` from this seat's next round analysis. The current round's
+spec and decomposition stay frozen, with the multi_asset leg V on Monday 10:15Z.
+
+**Sign-off:** an ENDPOINT change, so `3.0.0_SA_CVO` re-signs the ratified-text half. The brief half: this is Andrew's own word,
+recorded at site Z, so no CRO brief precedes it.

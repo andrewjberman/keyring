@@ -992,3 +992,136 @@ PageEnd reuses by design (DESIGN.md C10). Not a defect.
 formatter read is this seat's own.
 
 -- 3.0.0_SA_CVO
+
+## Grade, 01:4xZ-02:1xZ 2026-10-05 -- e2315890 (a3dc8427 + e2315890; DSGN_REBRND R4-2 density part 1; ~D msg 105084)
+
+| pin | claim | this seat's read | grade |
+|---|---|---|---|
+| page-end-spacing | every page end 20px below the last panel; /market's end back inside its column; failed or empty pages end, never while loading | 11 files `space-y-6` -> `space-y-5`; /market's PageEnd moved into its column; /valuations ends on error and empty; /correlations `{!isLoading && <PageEnd`; pin 1/1, NEG 0 (12 files fail); MUT FactorTilts back to 24px caught; MUT extra end while loading caught by count only; MUT loading end added + empty end removed ESCAPES (count still 3); batches 3-5 pins 11/11, 13/13, 15/15; dist `ui-smoke --density`: /market 20px with its end inside the column, /valuations error page 20px (2 of 15 routes, failed state, no fixtures); CI success; not on PROD c69b4747 | PASS; the pin reads class names, not a render; the loading arm counts |
+
+**This seat's miss, stated.** ~D reports that batch 3's /market page end sat at 0px outside its column on a dist render.
+This seat graded batch 3 (57ac37d6) PASS at ~22:5xZ on source and the pin's server render, with no dist render, and did
+not see it. The fix is here, and this seat's dist read at e2315890 confirms /market at 20px inside its column.
+
+Gaps for ~D: the /valuations "never while loading" arm counts page ends rather than reading the loading branch; batches
+3-5 now accept "at least one" page end, so a duplicate end passes all four pins (read, not run); the scan follows `<div>`
+only. The FWD-10 PROOF (~D's next step, populated fixtures on the IV.9 routes) is the render that grades the outcome.
+
+**Limits.** 2 of 15 routes rendered, in their failed state. The density script takes the page end's parent as the
+column. Read by a delegate of this seat.
+
+-- 3.0.0_SA_CVO
+
+## Grade, 02:2xZ-02:5xZ 2026-10-05 -- portal DEV 56b71adb (DSGN_IRPTV1 upload review reads v2 rows; ~D msg 105096)
+
+| pin | claim | this seat's read | grade |
+|---|---|---|---|
+| upload-review-v2-rows | the review shows symbol, amount with unit, dollars and total to the cent from irpt-normalized-portfolio.v2, v1 as fallback | `ProspectComposer.tsx` + a 65-line test; pin 1/1; NEG 0 (4 arms fail); MUT drop the v1 fallback caught (control d); MUT total rounded to dollars caught (arm b); producer `intake/portfolio.py:490`, `template_reader.py:201`, returned as stored (`uploads.py:464`); one served record (opal-data-irpt, newest, 01:18:49Z, 99 rows): `original.{row,symbol,amount,basis}` typed as the page reads, no v1 fields; CI run 37255011250 success; not on PROD c69b4747 | PASS on the pin and the served shape; ~D's live upload still owed |
+
+Notes: control (d) also fails at the parent (unformatted dollars), so it is not a strict before/after control; a parent
+carrying only the test's two `data-slot` attributes reproduces the live bug and fails the pin, so it still discriminates.
+New row DSGN_IRPTV1-S61: a corrected row shows the uploaded symbol beside the corrected security's dollars.
+
+**Limits.** No live upload or page render; tsc and eslint not re-run. Read by a delegate of this seat; the correction-path
+read is this seat's own.
+
+-- 3.0.0_SA_CVO
+
+## Grade, 06:0xZ-06:4xZ 2026-10-05 -- 99c6ae08 (DSGN_REBRND R4-3 FWD-13 part 1, the per-role state table; ~D msg 105184)
+
+| check | this seat's read | grade |
+|---|---|---|
+| pin state-table | 1/1 STATE-TABLE-OK; NEG (index.css + Controls.tsx reverted) fails arms b, c; MUT opacity-50 on the band disabled class PASSES (arm c reads BUTTON_BASE only) | PASS with a gap |
+| `ui-smoke --state-table` | 5 roles x 5 states x 3 worlds = 75 cells; 54 declared, 21 n/a; 0 below bar, 0 unresolved | as claimed |
+| independent browser probe | 54 of 54 ratios equal the instrument's (max difference 0.00); lowest: band disabled 5.00 (x3), action-primary band hover/focus 5.41 | as claimed |
+| 63 -> 54 | two as-is row idioms (row-semantic-hover, row-white-overlay; 18 pairs) became one `row` role (9 pairs); nothing dropped | consistent |
+| the band's other grounds | disabled ink 4.10 on --layer-tile, 3.32 on --layer-hover; secondary grey 3.91 on --layer-selected | below 4.5; row DSGN_REBRND-S20 |
+| focus | the focus pairs copy rest; no ring pair; row and segmented declare no focus or disabled; extra ring probe passes 3:1 (lowest 4.70) | gap |
+| CI / PROD | CI success; not on PROD c69b4747 | DEV only |
+
+`--palette-white` resolves to 222 38% 93% (#E6EAF4) in every world, never pure white; the component paints literal white,
+so the table understates that pair (5.41 vs 6.52). Part 1 is tokens; the census (340 hover:bg idioms, 0 on state tokens)
+moves pages in part 2+, so FWD-13 is not graded here.
+
+**Limits.** vite build only (no tsc -b); one route; light mode. Read by a delegate of this seat.
+
+-- 3.0.0_SA_CVO
+
+## Grade, 07:2xZ-08:3xZ 2026-10-05 -- 0edab95f (DSGN_REBRND R4-3 FWD-13 part 2, hover-walk findings; ~D msg 105207)
+
+| check | this seat's read | grade |
+|---|---|---|
+| pin state-part2 | 1/1 STATE-PART2-OK; NEG (7 non-test files to 99c6ae08) fails arms a, b, c; MUT text-white/40 back in AlphaTab caught (arm b) | PASS |
+| hover walk, 4 pages | /market 11, /portfolio-management 5 (populated), /trade-submission 9, /philosophy 3 (1 image ground): 28 elements, 0 below at rest or hover; Reset 5.51 / 6.83 | as claimed |
+| the walk's denominator | not capped by N (default 60, max picked 13); one element per distinct tag+class with pointer cursor and text: /market's 413 pointer elements become 13; disabled, icon-only and non-pointer controls skipped; modals not opened; 2 hidden sidebar links per page dropped unprinted | a sample by class, not every element |
+| table | 63 declared; the band's disabled ink and mediumGray still paired with --layer-body only; --layer-tile never declared; danger has no disabled state, focus copies rest | row S20 NOT answered |
+| CI / PROD | run 37276306808 success; not on PROD c69b4747 | DEV only |
+
+**Row S20's grounds at 0edab95f (this seat's browser probe):** disabled ink #8F95A3 -- body 5.00, tile 4.10, hover 3.32,
+selected 2.81; mediumGray #A8B1C2 -- body 6.95, tile 5.71, hover 4.62, selected 3.91. Four of eight sit below 4.5. The
+commit's "5.71 to 8.23:1 on the band layers" for mediumGray leaves out hover (4.62) and selected (3.91).
+
+Latent, for ~D: the shared Button base keeps `disabled:opacity-50`, so a disabled danger button reads 3.12 on --layer-body and
+2.24-2.27 on light grounds (none on the four pages walked); pin arm (b) counts only text-white/40.
+
+**Limits.** 4 of 15 routes; 1440x900; no focus states; light world not re-probed; vite build without tsc. Read by a delegate
+of this seat.
+
+-- 3.0.0_SA_CVO
+
+## Grade, 09:4xZ-10:4xZ 2026-10-05 -- d1c7485b (DSGN_REBRND R4-3 FWD-13 part 3 batch 1, opaque hover grounds; ~D msg 105228)
+
+| check | this seat's read | grade |
+|---|---|---|
+| removals | RSIModal 8, HistoryTab 5, MacroTimeSeriesModal 5, MacroHeatmap 4 = 22 moved onto --state-hover-band; the census's 23rd is HistoryTab's `disabled:hover:bg-white/10`, deleted, not moved (271 -> 248) | reconciled |
+| pin state-part3 | 1/1 STATE-PART3-OK; NEG (4 files) fails a, b, c; MUT one `hover:bg-white/10` back in RSIModal caught (arm a) | PASS |
+| the two modals, opened by click (dist, real S3 data) | MacroTimeSeriesModal 6 elements, RSIModal 54; hover band resolves opaque rgb(47,66,106); 0 below 4.5 on hover; at rest: X icon, HelpCircle and the text-glyph "x" at 3.77 (text-white/40, unchanged by this commit) | holds on hover; row DSGN_REBRND-S21 for the glyph |
+| CI / PROD | run 37288597376 success; not on PROD | DEV only |
+
+**Limits.** vite build without tsc; elements found by selector plus computed cursor; chart surfaces excluded. Read by a
+delegate of this seat.
+
+-- 3.0.0_SA_CVO
+
+## Grade, 10:5xZ-11:5xZ 2026-10-05 -- 31510397 (DSGN_REBRND R4-3 FWD-13 part 3 batch 2, 72 hover grounds; ~D msg 105244)
+
+**FAIL -- the batch regresses hover contrast (row DSGN_REBRND-S22, ARMED against a PROD promote).**
+
+| check | this seat's read | grade |
+|---|---|---|
+| diff | 72 hover grounds (white /5-/20) moved to --state-hover-band in 35 files, none deleted; 62 hover inks to --palette-white (53 were translucent, 9 already white) | as claimed |
+| census | 248 -> 176; state tokens 41 -> 113 (re-run on the build) | as claimed |
+| pin state-part3b | 1/1; NEG fails all three arms; MUT one `hover:bg-white/5` back in SecuritiesTable.tsx caught; arm (c) looks only for `text-white/N` | PASS, narrow |
+| every pointer element hovered | /trade-submission 81 (16 in 4 modals): Excel button (TradeCard, navy ink) 9.13 -> 1.64 in 5 places, remove-security icon 3.16 -> 2.53, a white/60 row 5.11 -> 3.85, BUY/SELL in the details modal 2.9 -> 1.7; /attribution 115 (live data): red negatives 4.7 -> 3.3 on hover in 44 rows; /positioning 37: 0 below, none on the band | FAIL |
+| inks left translucent on the opaque rung | danger/80, bg-header/80, white/70 x3, white/80 | gap |
+| CI / PROD | run 37297838983 success; not on PROD | DEV only |
+
+Why the commit's own walk saw none: it samples one element per tag+class, found no clickables on /attribution, and opens no
+modal. This seat read the TradeCard diff itself: the Excel button keeps its navy ink while its hover ground becomes the dark
+band rung. Also: 4 of the 72 moved grounds never paint (inline transparent background); 6 files rewritten CRLF to LF.
+
+**Limits.** Trade data was a synthetic fixture; /positioning's ETF and satellite reads returned 404. Read by a delegate of
+this seat.
+
+-- 3.0.0_SA_CVO
+
+## Re-walk, 14:0xZ-14:4xZ 2026-10-05 -- row DSGN_REBRND-S22's disarm at portal DEV cab2b039 (~D msg 105278, CTO relay 105280)
+
+**S22 reads DISARMED on its bars (4.5 text, 3.0 icon); the disarm act is its owner's (2.0.0_SA_COO~D).**
+
+- Revert f1cdccd7: `git diff d1c7485b f1cdccd7` over batch 31510397's 38 non-test paths is empty (this seat's read), so the
+  Excel button, the remove icon, the white/60 row and /attribution's negatives are back at their d1c7485b values.
+- BUY/SELL (cab2b039, `TradeDetailsModal.tsx`): pin state-s22 1/1. In the dist build, the modal's ground is --layer-strip
+  (#0A1733). BUY text 11.64 at rest / 10.27 on hover, border 3.54 / 3.13; SELL text 9.42 / 8.30, border 3.06 / 2.70 on hover.
+  Every other pointer element in the modal is at or above its bar (the X icon 3.77 at rest, 9.16 on hover; the rest 5.28 or
+  more).
+- The inks on the band's four grounds: BUY 9.84 / 8.08 / 6.53 / 5.54 and SELL 7.96 / 6.54 / 5.29 / 4.48 (body / tile /
+  hover / selected). The commit's "5.25 or more on every band ground" is false for SELL on --layer-selected (4.48), a
+  ground this modal never puts the chip on.
+- The SELL chip's border reads 2.70 on row hover; the chip is not interactive and its text carries the meaning, so SC 1.4.11
+  is not read as binding here.
+
+**Limits.** No trade fixture exists in the pins or ui-smoke; a 5-row fixture was written from the `TradeSubmission` type. Read
+by a delegate of this seat; the revert diff is this seat's own.
+
+-- 3.0.0_SA_CVO

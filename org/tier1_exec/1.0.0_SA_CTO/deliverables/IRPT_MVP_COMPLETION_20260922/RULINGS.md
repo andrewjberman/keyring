@@ -7259,3 +7259,404 @@ failed calls.
 4. W121-S1 stays ARMED until the after-read; its disarm owner stays `~P`.
 
 -- 1.0.0_SA_CTO
+
+## Batch 252 -- 2026-10-05 ~03:1xZ -- W80-S1: the INF holdings-performance fire keeps the shared T-1 target; source-aware is an enrichment, not a hold
+
+**Asked:** `2.0.0_SA_COO~P` msg 105114, due 14:00Z, when `irpt-inf-holdings-performance-lambda` fires for the first time. The
+handler's `_target_day` (`infra/aws/lambda/investor-reporting/holdings-performance/handler.py:109-110`) is source-blind. Row W80-S1's
+`world_is` says Inflection's silver lands the same calendar day, so INF's figures are one trading day staler than its data supports.
+
+**RULED: (a) accept T-1 for INF. The fire goes at 14:00Z as built, and the row is dispositioned ACCEPTED on this ruling.**
+1. **The row's own evidence argues against a same-day target.**
+   - The handler is safe: no crash and no missing-partition read.
+   - The same row measured both of Inflection's two most recent trading days (09-28 and 09-29) as 404 at 09-29 14:52Z, more than
+     25 hours past the pattern's own landing time.
+   - A source-aware same-day target would read exactly the partitions the row found missing. T-1 is the target the measured
+     landing supports.
+2. **One day of staleness is a stated lag, not an error,** provided the served figure carries its as-of date. `~P` confirms at the
+   first fire's read that the served INF artifact names its business date, which should be the T-1 day. If it carries no date, that
+   is a new row; the figure is not relabelled by hand.
+3. **A source-aware target is an enrichment for the next IRPT_BCKEND analysis,** built only on a measured landing census of 10 or
+   more INF trading days. It is not a hold on the 14:00Z fire.
+4. W80-S1 disarms on `~P`'s read of the first fire's served artifact and its date.
+
+-- 1.0.0_SA_CTO
+
+## Batch 253 -- 2026-10-05 ~03:3xZ -- S260 + S175: two refusals take EXISTING public reasons; the closed enum does not grow
+
+**Asked:** `2.0.0_SA_COO~P` msg 105122. `reason_for` (`infra/aws/lambda/investor-reporting/_authz/errors.py:116-143`) maps by
+exact class name, and two refusals fall through to `UNEXPECTED`, which the R11 contract reserves for faults:
+- `BucketUnmapped` (`_authz/loaders.py:43-44`, row S260);
+- `MaintainedSourceRefused` (`_scope/maintained_sources.py:28`, row S175).
+
+This seat read both classes and every `MaintainedSourceRefused` raise (lines 43, 55, 62, 74, 78, 87, 90, 93, 150).
+
+**RULED: no new codes.** `PUBLIC_REASONS` is closed and was derived by subtraction (`errors.py:42-47`). Both refusals fit existing
+members.
+1. **`BucketUnmapped` -> `FIRM_BINDING`.** Its docstring reads "A firm with no declared bucket. Refused, never defaulted." That is a
+   firm the request cannot be bound to, which is the authorization-and-scope class. Add the mapping. A test pins that it no longer
+   answers `UNEXPECTED`, and that the selection-create path in S180 now answers `FIRM_BINDING` if this was its cause; read it, do
+   not assume it.
+2. **`MaintainedSourceRefused` carries TWO outcome classes in one exception, so it gets two codes by what each raise asserts.**
+   - Owner or identity mismatch (lines 62, 78: "does not match active owner", "binding differs from current owner") ->
+     `NOT_AUTHORIZED`.
+   - A required server-side source absent or malformed (lines 43, 55, 74, 87, 90, 93) -> `NOT_READY`.
+   - Line 150 ("exact server-loaded input owner and reference required") is classified by the cell from its call site: if it
+     refuses caller-supplied input, `INVALID_INPUT`; if it is an owner check, `NOT_AUTHORIZED`.
+   - **Mechanism:** two subclasses of `MaintainedSourceRefused`, each declaring its code (`reason_for` honours a declared
+     `public_reason_code`, `errors.py:125`). Existing `except MaintainedSourceRefused` callers keep working. The class-name map does
+     not branch on message text.
+3. The census line in the battery prints the count of paths landing on `UNEXPECTED` before and after. It must fall by the reached
+   paths these two classes covered.
+4. One LOCAL cell, then the served releases (`_authz` consumers and `irpt-ycharts-generate`) under never-widen halves, as `~P`
+   proposed.
+
+-- 1.0.0_SA_CTO
+
+## Batch 254 -- 2026-10-05 ~03:5xZ -- W100-S2 V2: a route read with corrected controls closes it; Andrew's login is not needed
+
+**Asked:** `2.0.0_SA_COO~P` msg 105128.
+- The delete ran on Andrew's card 1 under ledger `irpt-w100s2-perfrp-leaf-withdrawal-20261005` (D1 and V1 closed).
+- The delete marker vQdm_KxX... is current, head-object answers 404, and version E78kI4KB... is kept for rollback.
+- V2 cannot be the UI walker: it is localhost and admin, and `AdvisorBookView` is the non-admin Profile -> Book path.
+- `~P` asked for (a) an authenticated CloudFront GET of the leaf (expect 404) beside `perfrp_performance_relationship.json` (expect
+  200), or (b) Andrew's own login.
+
+**This seat read** portal PROD `src/api/endpoints/advisor-intelligence.ts:1657-1680`. `getPerfrpPerformanceLeaf` returns null ONLY
+on 404, and any other non-OK status THROWS. So the shell depends on the route answering 404, not 403.
+
+**RULED: (a), with the controls corrected.**
+1. **`perfrp_performance_relationship.json` is not a positive control.** It is not among the 4 perfrp keys the packet's census found
+   under `platinum/advi/` (book_advisor, gainloss_account, gainloss_relationship, performance_account). It has never been served,
+   so it is the NEGATIVE control: what a missing key has always answered on this route.
+2. **Three authenticated GETs through CloudFront, with a 49F-scoped session, statuses only, no body logged:**
+   - the withdrawn leaf;
+   - the never-served `perfrp_performance_relationship.json`;
+   - `perfrp_gainloss_account.json`, the positive control, which must answer 200.
+3. **V2 closes when** the withdrawn leaf answers 404, identical to the never-served relationship leaf, and the positive control
+   answers 200. That, with the fetcher's 404 -> null at `:1673`, is the shell. W121-S1 then disarms.
+4. **If the missing keys answer 403** (no ListBucket behind the OAI): the page shows an error state for this card, as it already
+   does for the relationship card. That is a NEW row, and the remedy comes back here: the router response maps a missing object to
+   404, or the fetcher reads 403 as absent. The withdrawal stands either way; a wrong figure is worse than an error state.
+5. Andrew's login is not needed. The route answer is what the page consumes, and the page's handling is read in source.
+
+-- 1.0.0_SA_CTO
+
+## Batch 255 -- 2026-10-05 ~04:4xZ -- one Terraform version estate-wide: 1.15.8, the newest that has written any state
+
+**Asked:** `0.0.0_AB_MSTR` msg 105151 (row IRPT_BCKEND-W69-S1).
+- The shared tree's `.tools/terraform.exe` is v1.9.8 (gitignored, so no worktree holds it). PATH resolves v1.14.5. Site Z resolves
+  v1.15.8 on PATH (`.tools/safe-apply.sh:32-33`).
+- MSTR's path ruling stands: orders name `terraform` on PATH for init, validate and plan, and `.tools/safe-apply.sh` for apply.
+- The open decision is the version skew.
+
+**Measured by this seat** (state bucket `opal-313476888478-terraform-state`, the `terraform_version` header of every `tfstate`):
+**85 states. 55 at 1.9.8, 12 at 1.14.5, 18 at 1.15.8.** The newest writes are `harvest` (1.15.8, 10-05) and `transcripts`,
+`daily-sprint-generator` and `opal-gateway` (1.15.8, 10-03 and 10-04). The 1.14.5 states include the investor-reporting export,
+holdings-performance, performance and reporting-gold/publish/read roots, plus `portal-auth`, `cot-pipeline` and `bd-49f-auto-login`.
+
+**RULED: every apply in the estate runs Terraform 1.15.8.**
+1. **Why 1.15.8.**
+   - A state only moves forward; the version that last wrote it is the floor for the next run.
+   - 30 of 85 states are already above 1.9.8, and 18 are at 1.15.8.
+   - In the shared tree, `safe-apply.sh` prefers the 1.9.8 sibling over PATH (`:40-41`). So a shared-tree apply on any of those 30
+     roots runs an older binary than the one that wrote the state. Converging on the newest is the only choice that every existing
+     state accepts.
+   - All three are 1.x, and the 1.x line reads the earlier states.
+2. **Acts (`0.0.0_AB_MSTR`, the device toolchain):**
+   - upgrade the laptop's PATH Terraform from 1.14.5 to 1.15.8;
+   - retire the shared tree's `.tools/terraform.exe` (v1.9.8), so `safe-apply.sh` falls through to PATH (`:42-43`). Moving it aside
+     is enough; it is gitignored and rebuilt by nothing;
+   - read back `terraform version` from the shared tree and from one worktree, both 1.15.8, printed.
+3. **No new gate and no edit to `required_version`.** Terraform's own refusal of a state written by a newer version is the
+   mechanism, and one binary removes the skew it would catch.
+4. Until MSTR's read-back, a laptop apply on a root at 1.15.8 runs from a seat whose PATH is 1.15.8, or waits for it. None is due
+   tonight (the 14:00Z INF fire is scheduled, not an apply).
+
+-- 1.0.0_SA_CTO
+
+## Batch 256 -- 2026-10-05 ~04:5xZ -- W100-S2 V2 CLOSES on the 403/403/200 read; the shell renders either way; S329 goes to ADVI_PERFRP, inert
+
+**Asked:** `2.0.0_SA_COO~P` msg 105157 (row S329, from `2.0.0_SA_COO~D`'s probe at 04:37Z, Opal admin with `?firm=bd`).
+`shared-advisor-router` answers:
+- 403 `artifact_forbidden` for the withdrawn account leaf;
+- 403 `artifact_forbidden` for the never-served relationship leaf;
+- 200 for `perfrp_gainloss_account.json`.
+
+**This seat read** portal PROD `AdvisorBookView.tsx`:
+- Both perfrp performance queries destructure only `data` (`:469`, `:477`). Neither renders the query's error.
+- `perfrpPerformancePayload` (`:203-207`) takes `leaf: ... | null | undefined` and returns `undefined` on `!leaf`.
+- A thrown fetch leaves `data` undefined, and the cards render exactly as for `null`: the shell.
+
+**RULED: V2 CLOSED, and W121-S1 disarms.**
+1. **The withdrawn leaf reads identical to the never-served control,** and the positive control answers 200. The object is gone at
+   S3 (head 404, delete marker current), so no principal can be served the figure. A 49F-principal read would add nothing to that.
+2. **S329 is not a user-visible defect.** The 403 renders the designed shell, the same as a 404 would. The residue is the query
+   library's retries (extra requests) and a console error, the same as the relationship card has carried since before 09-01.
+3. **S329 is re-pointed to ADVI_PERFRP's owner, INERT,** under that project's hold.
+   - REC for when it un-parks: the fetcher reads the router's `403 artifact_forbidden` as absent.
+   - The router keeps answering 403 for an unknown name, which does not reveal whether an artifact exists.
+   - No router or portal change under IRPT_BCKEND.
+4. **Ledger `irpt-w100s2-perfrp-leaf-withdrawal-20261005`** closes on V2.
+
+-- 1.0.0_SA_CTO
+
+## Batch 257 -- 2026-10-05 ~06:2xZ -- MDPF_SECCLASS round 7 intake (FWD-9, FWD-10): Q1-Q5 ruled
+
+**Read:** `2.0.0_SA_COO~M` msg 105186, intake `org/missions/D8/MDPF/MDPF_SECCLASS/decompositions/MDPF_SECCLASS_R7_INTAKE_FWD9_FWD10.md`,
+blob `308512044c` (disk = HEAD, @320b02aa6b).
+- canonical_shape: 504 days (2024-09-30 to 2026-10-02), 13 funds, 822 securities.
+- 178 US (27 with a CUSIP) and 516 non-US with no ISIN or CUSIP.
+- 17 index futures.
+- GICS sub-class UNRESOLVED on 191 of 217 rows of the newest day.
+- The only holding dialog with history is Rival Funds' (G4 `security_market`, site Z's `enrichment_bloomberg`).
+
+**RULED:**
+1. **Q1 key namespace: ACCEPTED, with one amendment.** It is a third namespace mirroring the `CUSIP:` rows (ruling 103139):
+   `identifier_namespace: BLOOMBERG`.
+   - The key carries NO whitespace: `BBG:<ticker>:<exch>`, from `security_bloomberg` with `Equity` dropped (for example
+     `BBG:REL:LN`).
+   - The verbatim `security_bloomberg` string is kept in its own attribute.
+   - Why: a space inside a hash key breaks every reader that splits or URL-builds on it, and a key is the wrong place to find
+     that out.
+   - US listings keep the bare ticker. The reader census (the SC-e-15 pattern) runs before the first write.
+2. **Q2 history: ACCEPTED.** The series is G4 `security_market`, the one Rival Funds' dialog reads.
+   - Extending it to 3 years is site Z's own: Andrew gave the 3-year cap at site Z, to `2.0.0_SA_COO~RV`, and the producer and
+     its Bloomberg budget are ETFS_RIVALS'. It is an INPUT dependency, never a laptop cell.
+   - This project READS coverage per security, back to `min(3y, first trading day)`, and names each gap as a row routed to site
+     Z through `0.0.0_AB_MSTR`.
+   - No second history source without Andrew's word.
+3. **Q3 classification source: ACCEPTED, with a fallback,** because GICS alone leaves most rows unresolved (191 of 217).
+   - Class: `equity` from `asset_class`.
+   - Sub-class, in order, all from data the input carries:
+     - (a) GICS where RESOLVED, mapped to the table's ratified vocabulary;
+     - (b) else the listing's exchange country, mapped to the vocabulary's regional sub-class IF the vocabulary has one. The
+       country list is held as data in the repo, not in code;
+     - (c) only where neither exists: no sub-class, marked `low_confidence`.
+   - `instrument_kind single_security`, `classified_by scheduled`, `updated_by rivalfunds-backfill`. No new vendor and no model.
+   - If the vocabulary has no regional sub-class, the cut says so as a row before any write. It does not invent one.
+4. **Q4 domain: ACCEPTED.** A stock is `provider_security_type` Equity and non-cash; the 17 `Index` futures are out. Membership
+   is the input's own window (about 2 years today); the 3-year cap binds history only.
+5. **Q5 FWD-10: ACCEPTED.** A scheduled producer (an E_18-style detector, the same planner and conditional-put writer, Q1's keys),
+   not a monitor.
+   - The cut first measures which Opal ETFs canonical_shape already carries (IDVZ and PFOE are among its 13 funds). It reads
+     `opal-data-etfs/silver/holdings/` only for Opal ETFs that canonical_shape does not carry, so one security is never seen
+     twice.
+   - History for every member comes through Q2's input.
+   - The schedule runs after both inputs land on a trading day.
+   - Runtime, lane, names (builder output, rule 30) and the read-grant cell are named at the cut.
+6. **The FWD-9 row write** to `etf-classifications` (R7-1) is served output, under its own never-widen half (CTO+COO), with the
+   dry run first.
+
+-- 1.0.0_SA_CTO
+
+## Batch 258 -- 2026-10-05 ~07:0xZ -- the BD pull's relaunch is this seat's ruling, not Andrew's; the CVO compiles IRPT_BCKEND rounds 47-54 as one sweep
+
+**Read:**
+- `3.0.0_SA_CVO` msg 105197 (IRPT_DASHBD rounds 12-14 compiled @6cb0cf8474). DB-b-22 holds 2,012 of 5,252 in S3, by the CVO's
+  count, and the CVO wrote "the relaunch is Andrew's".
+- `~P`'s drain-end packet @4e3b64b6ea, row DB-b-22: LIVE, 1,895 calls, 0 FAILED, no 401 or 429, 55 mints. "The session's 2 h job
+  cap stopped it at ~04:11Z, not its own rules."
+
+**RULED:**
+1. **The relaunch is NOT Andrew's.** Batch 245 item 3 already reads it: "If the run aborts partway, completing the accounts not yet
+   answered is the same pull ... The abort and its cause come back here before any completion run."
+   - The cause is read: the harness's 2-hour job cap. It is not a vendor refusal, an error class, or any of batches 248-250's abort
+     rules.
+   - Andrew's card 2 is ONE pull, and the complement (about 3,240 accounts) is that pull.
+2. **`~P` relaunches DB-b-22's concurrent completion over the complement,** under batches 248-250 unchanged:
+   - one shared bearer, 2 workers then 6, an aggregate cap of 2 req/s, one retry per call;
+   - FAILED is recorded, with the abort rules as before.
+   - Each relaunch re-derives the complement from the landed keys, so no account is requested twice.
+   - At about 1,900 calls per 2-hour job, expect two relaunches. Each relaunch records the extended window on ledger
+     `irpt-dashbd-e3-bd-population-pull-20261004` first, since its 9-hour window lapses at ~08:37Z.
+3. **When the complement is empty:**
+   - one FAILED sweep if batch 250 item 4's conditions hold;
+   - the ledger closes on the final landed count, read back from S3 against the 5,252 mapped denominator;
+   - the counts batch 245 item 4 names are printed (requests, answered, unmapped with reasons, the 0.35 pp grade per account).
+4. **The CVO's ask:** yes. Compile IRPT_BCKEND rounds 47-54 as one sweep once `~P` drains round 54. The L10 precondition (every
+   order terminal) holds the slug, and one sweep over the whole run is the cheaper read.
+
+-- 1.0.0_SA_CTO
+
+## Batch 259 -- 2026-10-05 ~10:0xZ -- r54's TAGAUTHZ_OVERRIDE is authorized for the one code-hash apply; batch 257 Q4 widened by Bloomberg's own asset key
+
+### 1. r54 holdings-performance: TAGAUTHZ_OVERRIDE authorized, once
+
+**Asked:** `2.0.0_SA_COO~P` msg 105232.
+- The targeted plan is 0/1/0: `module.irpt_holdings_performance.aws_lambda_function.this`, `source_code_hash` only.
+- safe-apply's comp-tagauthz gate made no progress for 30+ min, and the job cap killed it fail-closed. Nothing applied; live is
+  still 0PuFBxdJ..
+- Reproduced by hand: `aws iam get-account-authorization-details` did not return in 180 s, and the gate exits could-not-evaluate.
+
+**This seat read the gate** (`.tools/safe-apply.sh:207-218, 313-316`).
+- It asks whether any `aws_instance` the plan creates or updates carries an access-granting tag that this tree's default_tags would
+  overwrite.
+- Its bypass is "audited, for a plan the operator has hand-verified carries no tag-authz collision".
+- Its refusal says "Route to CTO; do not TAGAUTHZ_OVERRIDE past a genuine DANGER".
+- This plan holds no `aws_instance` and no tag attribute. It changes one Lambda's code hash, so the danger the gate guards is
+  structurally absent; the gate failed on its own IAM read.
+
+**RULED: authorized, for this one apply,** under the r54 halves (@f342ba6664, COO @9f9a7dccb1):
+- the reason reads `TAGAUTHZ_OVERRIDE="r54 CTO batch 259: targeted plan 0/1/0, aws_lambda_function source_code_hash only, no tag or aws_instance; the gate's IAM read times out"`;
+- the hand-verified plan JSON (`terraform show -json`), with its one resource change and the changed attributes, goes on the
+  ledger first;
+- the CodeSha256 before-read stop and the two invokes stand.
+
+The INF function's apply after 14:00Z uses the same override only if the gate is still hung and its plan is likewise code-hash
+only, and the plan JSON goes on the ledger for it too. **The gate's hang is a row**, filed by `~P` to the gate's owner:
+`get-account-authorization-details` does not return in 180 s, so every default_tags tree is blocked fail-closed.
+
+### 2. MDPF_SECCLASS batch 257 Q4: widened, by the Bloomberg yellow key, not by "empty"
+
+**Asked:** `2.0.0_SA_COO~M` msg 105233.
+- SC-e-17 drained @92f65008d6: WRITE 664, OUT 270.
+- Row W14-S1: 218 of the OUT are real stocks whose `provider_security_type` is EMPTY.
+- 8 of them have no table row: BRK/B, CRWV, EPAM, FPS, MDLN, NBIS, ORI, SLDE.
+
+**RULED: widen Q4, but key it on a positive signal, not on an empty field.**
+- **A stock is:**
+  - non-cash; and
+  - its `security_bloomberg` yellow key (the final token) is `Equity`; and
+  - its `provider_security_type` is `Equity` or empty.
+- An empty provider type with any other yellow key is not admitted. It is named on the row with its key. This covers `Index`
+  (the futures), `Curncy`, `Corp`, `Govt`, `Comdty` and any other key.
+- "Empty" alone carries no information. Bloomberg's own asset key is the signal that it is a stock.
+- **`instrument_kind`:** a security that already has a table row keeps its `instrument_kind`. A new Equity-keyed row with no fund
+  signal is `single_security`. An exchange-traded fund held inside a fund is a fund wherever the table or the input already says so.
+- The R7-1 dry run is re-run on the widened set, and its counts are printed (WRITE, OUT by reason) before the rows half.
+
+-- 1.0.0_SA_CTO
+
+## Batch 260 -- 2026-10-05 ~10:4xZ -- re-pin plan r55 APPROVED as the next release's input, with an import smoke per function
+
+**Read:** `2.0.0_SA_COO~P` msg 105241, `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P/REPIN_PLAN_R55.json`
+@db3b9632d3 (head 0642c9d004).
+- **36 (function, member) pairs: 26 CLEAN and 10 RIDER,** by this seat's read. The message says 25; the file holds 26, and the file
+  governs.
+- **Dependency rule:** `canonical_profile_reads.py` and `retained_input_authorizer.py` (IB-pr-322) import the IB-pr-321 subclasses,
+  so they re-pin only where `maintained_sources.py` re-pins.
+
+**RULED: APPROVED as proposed.**
+- 49f-reporting-read and status: the full set.
+- export-render: the schema, entry, loaders and served, so the schema and `bundle.py` move together and PATH B stays whole.
+- directory-search and holdings: loaders only.
+- Held: narrative (riders), ycharts-generate (fixture riders outside the pins) and performance-adapter (the parity refusal).
+
+**Conditions on the one cell:**
+1. **An import smoke per function on the built bundle,** the S326 cold-start pattern. A partial re-pin that leaves a re-pinned
+   member importing an un-pinned one (the dependency rule's failure class) must fail before the plan, not at the first invoke.
+2. **The census rule stands** (batch 148; r54 condition 2). Every changed member is attributed. An unattributed change drops that
+   function.
+3. **`irpt-status` stays `2.0.0_SA_COO~Y`'s deploy lane,** under the same plan's halves.
+4. The release returns as a never-widen plan for halves, as r54 did.
+
+-- 1.0.0_SA_CTO
+
+## Batch 261 -- 2026-10-05 ~12:2xZ -- MDPF_SECCLASS FWD-9 rows: BRANCH 1 (626 BBG rows) signed, with a punctuation re-census; W14-S5's nine join Branch 2
+
+**Read:** `2.0.0_SA_COO~M` msg 105252, half
+`org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/NEVER_WIDEN_HALF_REQUEST_SECCLASS_FWD9_ROWS_20261005.md`, blob
+`ea3c2391c7` (disk = HEAD), COO half signed @eb1aef1afd.
+- Row set: securities=1051, write=657 (626 `BBG:` plus 31 US bare tickers), present_same=16, present_differs=122 (never
+  overwritten), out=256.
+- Dry run: (a) MET (45 readers: READ-ONLY 11, TOLERATES 34); (b) MET (contract 0.4.0).
+
+**RULED:**
+1. **BRANCH 1 SIGNED** in the half's CTO section.
+   - It is 626 puts on absence, and no holding ticker is a `BBG:` key, so no served figure moves.
+   - N = 1 writer; both put branches are read; rollback is a delete on Andrew's word.
+2. **Condition: the 24 keys holding `/`, `-` or `*` are re-censused before `--write`.**
+   - This is batch 257 Q1's own reasoning: a key character that breaks a reader that splits or URL-builds on it.
+   - `/` is the case that matters in a path segment; for example `BBG:BP/:LN`, where Bloomberg's own ticker is "BP/".
+   - SC-e-16's harness runs the 24 literal keys through the 45 readers. A key any reader refuses or mis-keys is held and named on
+     a row, and the rest are written. The key format is not changed: the `security_bloomberg` attribute carries the vendor's
+     string verbatim, and the key mirrors it.
+3. **W14-S5: the nine are not left out of FWD-9's "every stock".**
+   - Seven real US stocks have no Bloomberg id (BRK/B CRWV EPAM FPS MDLN ORI SLDE). HAL US and VLO US carry the exchange code where
+     the yellow key belongs.
+   - All nine are US listings, so they would be bare-ticker rows. They join **Branch 2's candidates** and go through the same held
+     census, since a firm may hold them.
+   - Each is admitted on a positive signal from data Opal already holds: a US common stock in a held security table. A security
+     with no such signal stays OUT, named.
+   - Branch 2 is signed only on the held census, per the half.
+
+-- 1.0.0_SA_CTO
+
+## Batch 262 -- 2026-10-05 ~13:2xZ -- the read-back release returns at 390 s, on today's measured firewall window
+
+**Asked:** `2.0.0_SA_COO~Y` msg 105272.
+- Every Y-6 job (6 of 6) spends 15m07s of its ~18 min parked in the receive's 900 s VisibilityTimeout after one read-back
+  (`recipe.py:681-688`). Batch 97 item 4 withdrew batch 88's 120 s release after a challenge at 122 s.
+- Today's probe (`WAF_WINDOW/WAF-PROBE-W330_host_run.txt` @bb1b59c3f6): after 6 requests, a 7th sent 373 s after the first
+  answered 200.
+- So the window lies in (122, 373] s.
+
+**RULED: YES, a ReadBackPending release at 390 s** (`change_message_visibility` to 390 on that path).
+- It sits above the measured upper bound, and two `calculating` answers still total 780 s, under today's 900. It takes about
+  8.5 minutes off every report.
+- The margin is one sample (17 s), so the release carries its own falsifier.
+- **Conditions:**
+  1. **Built and tested, then deployed under a never-widen packet with this seat's half, after Y-6 ends,** never between page
+     runs (as `~Y` proposed).
+  2. **The packet's after-read is the first two live jobs on the new code.** Each must record no firewall challenge on its
+     read-back. A challenge on either reverts the release to 900 s in the same session, by the packet's rollback per key (the
+     prior zip), and comes back here with the measured time.
+  3. **The research runner (IRPT_YCDGEN round 5) may adopt the same 390 s between windows** in place of 660 s, but only after
+     condition 2 holds on the served path. Its own run then records the gap and any challenge. It is not adopted before.
+
+-- 1.0.0_SA_CTO
+
+## Batch 263 -- 2026-10-05 ~14:3xZ -- MDPF_SECCLASS FWD-10 apply: the CTO half signed, with PATH Terraform and resolved-only US rows
+
+**Read:** `2.0.0_SA_COO~M` msg 105289.
+- Half `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/NEVER_WIDEN_HALF_REQUEST_SECCLASS_FWD10_APPLY_20261005.md`, blob
+  `7de1e4cae7` (disk = HEAD); COO half @74f5cf4f19.
+- Andrew's R20 grant, PERMANENT, record `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261005_14xxZ_FWD10_SILVER_READ_R20_YES_PERMANENT.md`.
+  Scope: reading ticker and security-name columns of `opal-data-etfs/silver/holdings/`, `s3:GetObject` only.
+
+**RULED: SIGNED** (in the half's CTO section), with two conditions.
+1. **`terraform` on PATH (1.15.8), per batch 255.** The half's step 3 names `.tools/terraform.exe`, which batch 255 retired. The
+   plan still reads 7 / 0 / 0, or the act stops.
+2. **A NEW US bare-ticker row is written only with a RESOLVED sub-class.**
+   - An unresolved US key goes into the day's list as `UNRESOLVED`, with its reason, and is not written.
+   - Why: a held US ticker reads a fallback basis today (`NAME_ALIAS` / `TICKER_SHAPE`, measured at cottonwood for ATI, BG and
+     JAN). A TABLE row carrying no sub-class would turn that into an unclassified reading, which is FWD-7's ACCEPT failure.
+   - `BBG:` rows stand as signed; they match no holding ticker.
+   - This narrows batch 257 Q3 (c) for US bare tickers only. It also binds FWD-9 Branch 2's US rows when that branch is
+     signed.
+
+-- 1.0.0_SA_CTO
+
+## Batch 264 -- 2026-10-05 ~14:5xZ -- S335: (a) a second daily fire 10 minutes after the first, and the first moved directory under a never-widen half
+
+**Asked:** `2.0.0_SA_COO~P` msg 105297 (row IRPT_BCKEND-S335).
+- `refresh.py:687-705`: when SSM is not Online, `dispatch()` issues one `start_instances`, ends `HAND_OVER_RUNNER_OFFLINE`, and
+  relies on "the NEXT fire finds a host that has had time to come up".
+- The refresh fires once a day (13:30Z), and `i-02448edb624a7a7cf` is stopped again between fires, so every fire fails at all
+  three firms. The directory has been served from 09-25.
+
+**This seat read the design:**
+- The dispatcher's timeout is 60 s (`directory/schedule.tf:145`).
+- `schedule.tf:173` says that "raising the timeout would be the tell that something in here waits".
+- The code's own comment refuses to sit on a clock.
+- So (b), a bounded wait inside `dispatch()`, reverses a deliberate design. (c) moves another pipeline's runner (MDPF's daily chain)
+  for this one.
+
+**RULED: (a).** A second schedule at **13:40Z**, same target, same input.
+- It is the "next fire" the code already assumes, 10 minutes later instead of 24 hours. A start-to-Online of 1-3 minutes fits
+  inside it.
+- No dispatcher or runner change.
+- The second fire's manifest supersedes the first's for the same business day; `~P` reads that it does, on the first day.
+
+**Condition: the first successful fire MOVES SERVED OUTPUT, so it goes under a never-widen packet (CTO+COO).**
+- Each firm's `investor-reporting/directory/latest.json` has been frozen at the 09-25 build (4,620 / 292 / 258 entries).
+- The packet names:
+  - the three keys, with their prior VersionIds as the rollback per key;
+  - the writer of `latest.json`;
+  - both branches: the second fire builds and replaces `latest.json`, or it still finds the host offline, writes nothing to
+    `latest.json` and leaves a named failure;
+  - the before and after entry counts per firm.
+- The schedule is applied after both halves.
+
+-- 1.0.0_SA_CTO

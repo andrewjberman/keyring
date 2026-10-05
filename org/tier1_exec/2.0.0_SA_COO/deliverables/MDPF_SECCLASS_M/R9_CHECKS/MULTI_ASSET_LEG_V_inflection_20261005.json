@@ -1,0 +1,121 @@
+{
+ "claim": "measured (served platinum, streamed; deployed reader bytes)",
+ "current_manifest_last_modified": "2026-10-05T14:19:09+00:00",
+ "firm": "inflection",
+ "packet_keys": 32,
+ "post": {
+  "accounts": 17,
+  "amount_by_class": {
+   "multi_asset": 40560.31
+  },
+  "as_of_timestamp": "2026-10-05T14:17:14Z",
+  "by_key": {
+   "ABALX": {
+    "multi_asset": 4
+   },
+   "AMECX": {
+    "multi_asset": 4
+   },
+   "CAIBX": {
+    "multi_asset": 3
+   },
+   "FBALX": {
+    "multi_asset": 1
+   },
+   "SGIIX": {
+    "multi_asset": 4
+   },
+   "VWELX": {
+    "multi_asset": 2
+   },
+   "VWENX": {
+    "multi_asset": 2
+   }
+  },
+  "fwd9_us_held": {
+   "AAGIY": {
+    "account_ids": [
+     "acc_5a0574ab1ee6a1668cf1111e"
+    ],
+    "accounts": 1,
+    "class_sub_basis": {
+     "equity | International | TABLE": 1
+    }
+   },
+   "BKD": {
+    "account_ids": [
+     "acc_0d71435f3b4a578543c99571"
+    ],
+    "accounts": 1,
+    "class_sub_basis": {
+     "equity | None | TICKER_SHAPE": 1
+    }
+   },
+   "HDB": {
+    "account_ids": [
+     "acc_5a0574ab1ee6a1668cf1111e"
+    ],
+    "accounts": 1,
+    "class_sub_basis": {
+     "equity | International | TABLE": 1
+    }
+   },
+   "RYAAY": {
+    "account_ids": [
+     "acc_5a0574ab1ee6a1668cf1111e"
+    ],
+    "accounts": 1,
+    "class_sub_basis": {
+     "equity | International | TABLE": 1
+    }
+   }
+  },
+  "keys_held": 7,
+  "nodes_by_class": {
+   "multi_asset": 20
+  },
+  "partitions_declared": 51,
+  "parts_read": 51,
+  "revision": "f0c2dc91f908558d518642e8280ef56e525245d6976b2c2c3c3848e9eb00e227"
+ },
+ "post_custody_total": 206764647.31,
+ "post_date": "2026-10-02",
+ "post_reconcile": {
+  "difference": 0.0,
+  "reconciled": true,
+  "tolerance": 0.01,
+  "total_after": 206764647.31,
+  "total_before": 206764647.31
+ },
+ "pre_date": "2026-10-01",
+ "reader": {
+  "accounts": 17,
+  "business_date": "2026-10-02",
+  "class_totals_classes": [
+   "alternatives",
+   "cash",
+   "commodities",
+   "equity",
+   "fixed_income",
+   "multi_asset",
+   "structured"
+  ],
+  "code_sha256": "RmruvCeoZtaxgSSFgmeFCL7ioOJTJrGv7MCsUJi8jxU=",
+  "last_modified": "2026-10-05T00:12:28.000+0000",
+  "multi_asset_row": {
+   "amount": {
+    "units": "USD",
+    "value": 40560.31
+   },
+   "asset_class": "multi_asset"
+  },
+  "pin_t_match": true,
+  "reconciled": true,
+  "validate": {
+   "available": true,
+   "errors": [],
+   "schema_path": "C:\\Users\\AndrewBerman\\AppData\\Local\\Temp\\legv_reader_kkz6_j2r\\contracts\\HoldingsSnapshot.schema.json",
+   "valid": true
+  }
+ }
+}

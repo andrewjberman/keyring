@@ -37,7 +37,48 @@ R4-2. **FWD-10.** The page-end marker onto the remaining 24 routes; density meas
      - /dev/page-surface-control is a component test fixture (`components/ui/__tests__/PageSurfaceControl.demo.tsx`), not a product page.
 
      The census is therefore 15 of 18, and the 3 left are the two parked routes above (/security-analysis has two paths).
-   - Next: the density limb, under FWD-10 PROOF. The three IV.9 routes (/market, /positioning, /portfolio-management) are rendered at 1440x900 with the named populated fixtures: `.frontend-dev/testing/rb-s-9-market.json`, `rb-s-9-attribution.json` (it carries positioning data), and a new /portfolio-management fixture. For each, print the viewport share below the last content before and after, plus C10's 30px inside / 20px between measured on the render. `rb-s-9-sparse.json` is the negative control.
+   - Density part 1 LANDED 2026-10-05 01:4xZ, portal DEV `e2315890` (ls-remote; a3dc8427 + e2315890), pin page-end-spacing. The new `scripts/ui-smoke.mjs --density` line found:
+     - /market's page end at 0px, outside its column (batch 3's defect);
+     - eleven `space-y-6` columns, 24px;
+     - /valuations and /correlations drawing no page end on a failed read.
+
+     After: 15 of 15 page ends at 20px; failed and empty pages end too (never while loading); batches 3-5 census at least one page end.
+   - Density part 2 LANDED 2026-10-05 03:3xZ, portal DEV `3e1aa46f` (ls-remote). The FWD-10 PROOF record is `deliverables/2.0.0_SA_COO~D/FWD10_PROOF_20261005.md`:
+     - before (fb6f5023) vs after on /market, /positioning and /portfolio-management with the named populated fixtures (new: `r4-2-portfolio-management.json`), plus the rb-s-9-sparse control;
+     - before: 24 inside = 24 between, and no end state; after: 30 inside, 20 between, and a 20px dated page end on all four;
+     - fixed in this part: /positioning's pt-6 panel top and /portfolio-management's header mb-6;
+     - pin density-part2 (DEV fails).
+   - R4-2 remaining: /portfolios and /security-analysis page ends (parked with their holders); the CVO's FWD-10 grade.
+   - Next: R4-3 (FWD-13).
+R4-3 part 1 LANDED 2026-10-05 06:0xZ, portal DEV `99c6ae08`.
+   - Instrument `ui-smoke.mjs --state-table`. As-is: 63 declared pairs, 13 below the bar: every disabled state, and the dark hover/selected rung under navy on light. The white-overlay hover is invisible on light.
+   - To-be `src/ui/tokens/state-table.json`: 54 declared, 0 below the bar.
+   - Eight opaque `--state-*` rungs in index.css. Controls' disabled state is off opacity, and `rowStateClass(world)` (rowState.ts) serves rows.
+   - Census instrument `scripts/state-census.mjs` (590 files; state tokens 0). Pin state-table.test.ts.
+R4-3 part 2 LANDED 2026-10-05 07:1xZ, portal DEV `0edab95f` (ls-remote).
+   - Instrument `ui-smoke.mjs --hover-walk`: rest and hover pairs per distinct clickable element; image grounds are counted, not graded.
+   - Before: 54 elements over 15 routes, 4 below 4.5:1 (/market Expand 3.62; PM AlphaTab headers 3.77; TS Reset 3.13 / 2.83 on hover).
+   - After: danger state rungs in the shared Button; band secondary ink `--palette-mediumGray` replacing text-white/40 in ExecutiveSummary, FearGreedModal and AlphaTab.
+   - Re-walk: 0 below; table 63 declared, 0 below. Pin state-part2.
+   - The semantic-hover light-world FAIL in the as-is table is LATENT: all 17 sites sit on band grounds, and the 3 shared constants in ui/styles/interactive.ts have no importer.
+   - Next, R4-3 part 3: the translucent state GROUNDS. Every rendered pair now passes contrast, but FWD-13's constraint requires an opaque rung: hover:bg-white/N is about 215 occurrences (white/10 121, /5 54, /20 22, /15 13, /8 5), and there are 140 ternary grounds. They move onto --state-hover-band / --state-selected-band / rowStateClass, by file, worst first, each re-censused and re-walked.
+   - Still owed for the PROOF: a hover render per delivered page.
+R4-3 part 3 batch 1 LANDED 2026-10-05 09:1xZ, portal DEV `d1c7485b` (ls-remote).
+   - HistoryTab, MacroTimeSeriesModal, MacroHeatmap and RSIModal: 22 translucent hover grounds onto --state-hover-band, and 17 hover inks onto the band ink. HistoryTab's disabled buttons are off opacity.
+   - Census row `hover:bg-translucent`: 271 on DEV -> 248. Pin state-part3.
+   - Walks: /data-refresh and /macro 0 below; the two modals are graded by the pin only.
+   - Next batches: the rest of the 248, page by page on this seat's surfaces. AdvisorIntelligence (DistributionTab 14 ...), ClientsTab (~M) and ModelPortfolios (CRO lease) need their holders' grant first.
+   - NO builds or test suites while a Y-6 run polls (the run-3/4 lesson).
+R4-3 part 3 batch 2 (DEV 31510397) FAILED the CVO's grade and was REVERTED.
+   - Row DSGN_REBRND-S22 (ARMED, PROD held): 72 hover grounds moved onto the dark band rung without their inks. Navy Excel button 9.13 -> 1.64; BUY/SELL 2.9 -> 1.7; /attribution negatives 4.7 -> 3.3 in 44 rows.
+   - Why this seat's walk missed it: one element per class, cursor:pointer only (rows invisible), no modal opened.
+   - f1cdccd7: revert; the 38 paths equal d1c7485b; 6 CRLF files restored with autocrlf off.
+   - cab2b039: BUY/SELL chips (2.9 already at d1c7485b) take the lighter semantic ink on no tint. Pin state-s22.
+   - The CVO's re-walk of cab2b039 is asked (105278), to disarm.
+   - Redo of batch 2 only after the instrument hovers EVERY hover-styled element (rows included), grades every text descendant, and opens the modals. Pair each ground with its state's ink:
+     - a light hover rung for navy-ink elements;
+     - hover delta inks for semantic text;
+     - an opaque hover ink wherever the resting ink is translucent. That starts with the 17 `semantic-background-hover` sites on light grounds and the white-overlay hovers that land on light panels, each page re-censused, with a highlighted element walked on the band and on a light panel. The three IV.9 routes (/market, /positioning, /portfolio-management) are rendered at 1440x900 with the named populated fixtures: `.frontend-dev/testing/rb-s-9-market.json`, `rb-s-9-attribution.json` (it carries positioning data), and a new /portfolio-management fixture. For each, print the viewport share below the last content before and after, plus C10's 30px inside / 20px between measured on the render. `rb-s-9-sparse.json` is the negative control.
 R4-3. **FWD-13.** One per-role state table (rest, hover, selected, focused, disabled); walk light panels, not dark only; close row S9 (the OS dark-mode setting) on PROD.
 R4-4. **FWD-12.** A layer table covering light and dark; the layer values into the one token file and the contract.
 R4-5. **FWD-6.** The contract gains value labels, the layer table (R4-4) and the state clause; then one page rejected by clause, its author agreeing.

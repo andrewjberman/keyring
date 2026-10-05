@@ -1,0 +1,6 @@
+09:29:37Z state SUBMITTING | outbox SENT | detail {"operation":"portfolio_create"}
+09:37:39Z state DOWNLOADING | outbox SENT | detail {"phase":"vendor_pdf"}
+09:38:27Z state CERTIFYING | outbox SENT | detail {"phase":"retained_pdf_publication"}
+09:40:23Z state READY | outbox SENT | detail {"certification_sha256":"f1d52f7f24e3d41fc121777b3e537aa8c82126f4f752158e76ec15839df2cf88","report_id":"RPT-032205681395479deb06ee3cd23e18d4","revision":"99043cad4ff604fea8fb72dac8bc17e02c1c1611e9380d9628ad0d589103122b"}
+09:40:23Z TERMINAL READY -- holding the 20 s floor before the next body
+09:40:43Z floor held; next body may start

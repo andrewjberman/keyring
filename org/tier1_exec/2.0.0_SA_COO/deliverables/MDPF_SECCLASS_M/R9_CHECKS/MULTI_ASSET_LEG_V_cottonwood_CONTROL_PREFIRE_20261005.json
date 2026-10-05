@@ -1,0 +1,110 @@
+{
+ "claim": "measured (served platinum, streamed; deployed reader bytes)",
+ "current_manifest_last_modified": "2026-10-02T14:18:01+00:00",
+ "firm": "cottonwood",
+ "packet_keys": 32,
+ "post": {
+  "accounts": 5,
+  "amount_by_class": {
+   "alternatives": 159332.54
+  },
+  "as_of_timestamp": "2026-10-02T14:17:13Z",
+  "by_key": {
+   "32008F606": {
+    "alternatives": 4
+   },
+   "SGIIX": {
+    "alternatives": 1
+   }
+  },
+  "fwd9_us_held": {
+   "ATI": {
+    "accounts": 2,
+    "class_sub_basis": {
+     "equity | US Small Cap | NAME_ALIAS": 2
+    }
+   },
+   "BG": {
+    "accounts": 2,
+    "class_sub_basis": {
+     "equity | None | TICKER_SHAPE": 2
+    }
+   },
+   "JAN": {
+    "accounts": 2,
+    "class_sub_basis": {
+     "equity | None | TICKER_SHAPE": 2
+    }
+   },
+   "VG": {
+    "accounts": 1,
+    "class_sub_basis": {
+     "equity | US Large Cap | TABLE": 1
+    }
+   }
+  },
+  "keys_held": 2,
+  "nodes_by_class": {
+   "alternatives": 5
+  },
+  "partitions_declared": 27,
+  "parts_read": 27,
+  "revision": "a3751a6acff2eb579ab07ebea42b48443eb2d04f04d2b03e3e654a3842ff3c6f"
+ },
+ "post_custody_total": 540513704.69,
+ "post_date": "2026-10-01",
+ "post_reconcile": {
+  "difference": 0.0,
+  "reconciled": true,
+  "tolerance": 0.01,
+  "total_after": 540513704.69,
+  "total_before": 540513704.69
+ },
+ "pre": {
+  "accounts": 5,
+  "amount_by_class": {
+   "alternatives": 159924.77
+  },
+  "as_of_timestamp": "2026-10-01T14:17:30Z",
+  "by_key": {
+   "32008F606": {
+    "alternatives": 4
+   },
+   "SGIIX": {
+    "alternatives": 1
+   }
+  },
+  "fwd9_us_held": {},
+  "keys_held": 2,
+  "nodes_by_class": {
+   "alternatives": 5
+  },
+  "partitions_declared": 27,
+  "parts_read": 27,
+  "revision": "e40691520b50a2aa18bbeffefaca9517d78fe1a15750d023ee1b66ffd156716d"
+ },
+ "pre_date": "2026-09-30",
+ "reader": {
+  "accounts": 5,
+  "business_date": "2026-10-01",
+  "class_totals_classes": [
+   "alternatives",
+   "cash",
+   "commodities",
+   "equity",
+   "fixed_income",
+   "structured"
+  ],
+  "code_sha256": "RmruvCeoZtaxgSSFgmeFCL7ioOJTJrGv7MCsUJi8jxU=",
+  "last_modified": "2026-10-05T00:12:28.000+0000",
+  "multi_asset_row": {},
+  "pin_t_match": true,
+  "reconciled": true,
+  "validate": {
+   "available": true,
+   "errors": [],
+   "schema_path": "C:\\Users\\AndrewBerman\\AppData\\Local\\Temp\\legv_reader_79dp_skt\\contracts\\HoldingsSnapshot.schema.json",
+   "valid": true
+  }
+ }
+}

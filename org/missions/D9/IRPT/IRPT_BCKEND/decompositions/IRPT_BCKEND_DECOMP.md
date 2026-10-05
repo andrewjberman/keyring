@@ -1717,3 +1717,109 @@ Batch 247 answers E2's two forks.
 | `IB-pr-318` | W100-S2: one read-only readers census of the 49F perfrp leaf (CloudFront, routes, portal PROD) | LOCAL (read-only) | none | P49b |
 
 fanout: 2 of 2 chains, cap 8, reason: two independent cells. Workers 0.9.0_WK_IRPT_BCKEND~120 and ~121, each in its own worktree.
+
+## 44. ROUND 50, WORKSTREAM ~P (2026-10-05 ~01:5xZ, issuer 2.0.0_SA_COO~P, on 1.0.0_SA_CTO RULINGS batch 251 @8ea5889048, msg 105089)
+
+The W100-S2 census (IB-pr-318, drained @0f69381e7c) read LIVE_READER: the PROD portal's AdvisorBookView still loads the 49F perfrp
+leaf through shared-advisor-router. Row W121-S1 is BLOCKING / ARMED. Batch 251 rules: withdraw the leaf and keep the portal's call,
+since its 404 is the designed shell state. The never-widen packet goes to the CTO, and the S3 delete is Andrew's.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-319` | W121-S1: the withdrawal packet (versioning, every perfrp key under platinum/advi/*/ with its writer and its 2025-01-10 measurement, the withdrawal set, rollback per key, ETag stop, PROD after-read) | LOCAL (reads only) | IB-pr-318 (merged) | P50 |
+| (the act) | the withdrawal under the CTO half and Andrew's word, then the after-read; W121-S1 disarms on the after-read | SERVED | IB-pr-319 | the issuer's act |
+
+fanout: 1 of 1 chains, cap 8, reason: one read-only cell; the delete is a signed act. Worker 0.9.0_WK_IRPT_BCKEND~122 in its own worktree.
+
+## 45. ROUND 51, WORKSTREAM ~P (2026-10-05 ~03:1xZ, issuer 2.0.0_SA_COO~P, the batched remainder of section 42)
+
+A read-only sweep of E1's 16 non-BLOCKING remainder rows found all 16 still open. They sort into three groups:
+- **Eight are LOCAL code or test repairs:** S220, S282, W62-S1, S241, S297, S298, W101-S14, W101-S16. Per the spine, they are ONE repair cell.
+- **Five wait on a ruling or a read:**
+  - W80-S1 is a CTO ruling, asked 03:01Z and due before the INF fire at 14:00Z.
+  - S260 and S175 need a CTO reason-code vocabulary, then a served release.
+  - S218 needs an SSM journal read, then a CTO allowance ruling.
+  - S252 needs an S3 read.
+- **Three are records:** S204 is the issuer's ledger record; S180 is disposed with S260; W69-S1 is 0.0.0_AB_MSTR's worktree provisioning.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-320` | the eight LOCAL remainder rows, each fixed with a test naming it | WORLD (code under infra/; deploys are the issuer's) | none | P51 |
+| (the issuer) | the served releases of S241, S297, S298 and W101-S14 under never-widen halves; the S218 and S252 reads; the S204, S180 and W69-S1 records | SERVED | IB-pr-320 (for releases) | the issuer's acts |
+
+fanout: 1 of 1 chains, cap 8, reason: one repair cell; the rulings and reads are the issuer's. Worker 0.9.0_WK_IRPT_BCKEND~123 in its own worktree.
+
+## 46. ROUND 52, WORKSTREAM ~P (2026-10-05 ~05:0xZ, issuer 2.0.0_SA_COO~P, on 1.0.0_SA_CTO RULINGS batch 253 @35e313ec06)
+
+IB-pr-320 merged @f9e1c4ab96. The S260 and S175 reason codes now go to the same `_authz` surface:
+- BucketUnmapped -> FIRM_BINDING;
+- MaintainedSourceRefused is split by class (NOT_AUTHORIZED, NOT_READY, INVALID_INPUT) into subclasses that declare their code,
+  with no message branching.
+
+Batch 253 numbered ten raise sites, but the file holds about 50, so the cell classifies every site by the ruled classes and rows
+any site that fits none. W100-S2 closed this round: CTO batch 256, ledger closed @752ffa138a, W121-S1 disarmed by S331.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-321` | S260, S175 (and the S180 read): declared reason codes, the raise-site census, tests | WORLD (code under infra/; deploys are the issuer's) | IB-pr-320 (merged) | P52 |
+| (the issuer) | ONE release round for IB-pr-320 + IB-pr-321 code under never-widen halves: authz consumers, holdings-performance x2, performance, export, irpt-ycharts-generate | SERVED | IB-pr-321 | the issuer's acts |
+
+fanout: 1 of 1 chains, cap 8, reason: one code cell on a single write surface. Worker 0.9.0_WK_IRPT_BCKEND~124 in its own worktree.
+
+## 47. ROUND 53, WORKSTREAM ~P (2026-10-05 ~06:0xZ, issuer 2.0.0_SA_COO~P, on rows W124-S1 and W124-S2 under CTO batch 253's class rule)
+
+IB-pr-321 merged @0fff3d8363: 46 sites were classified and UNEXPECTED went from 46 to 0 in maintained_sources.py. Its worker
+found two remainders, ruled here by the issuer under batch 253's class rule (no new code and no vocabulary change):
+- W124-S1: 25 bare raises in canonical_profile_reads.py and retained_input_authorizer.py;
+- W124-S2: opaque_firm_for answers FIRM_BINDING for a malformed server artifact, which is NOT_READY by the class rule.
+
+S218 was disarmed by S333 (3 of 3 live-build READY jobs spent no session_refresh). S204 was disarmed by S332 (ledger 49f-r3
+closed SUPERSEDED).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-322` | W124-S1, W124-S2: the remaining refusal codes, a census, tests | WORLD (code under infra/; deploys are the issuer's) | IB-pr-321 (merged) | P53 |
+
+fanout: 1 of 1 chains, cap 8, reason: one code cell on the same write surface. Worker 0.9.0_WK_IRPT_BCKEND~125 in its own worktree.
+
+## 48. ROUND 54, WORKSTREAM ~P (2026-10-05 ~06:4xZ, issuer 2.0.0_SA_COO~P, on the CTO half for release r54 @f342ba6664)
+
+IB-pr-322 is merged @23f867773a. The r54 release plan (@07d113a19c) covers 10 functions. The CTO half is signed with four
+conditions; condition 2 is a per-function census of the built zip against the live bundle, with every change attributed or the
+function dropped as a rider. 2.0.0_SA_COO~Y answered that HEAD is shippable for irpt-status and irpt-ycharts-generate (msg 105192).
+build-and-upload.sh has no build-only mode, so the census cannot run before an upload. One tooling cell first.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-323` | CTO condition 2: BUILD_ONLY in build-and-upload.sh + release_census.py (built vs live, attributed or RIDER) | WORLD (script under infra/; no upload) | none | P54 |
+| (the release) | 10 functions under both halves: before-read stop, census, build+upload, targeted safe-apply, record, change invoke + happy-path invoke, per-function legs | SERVED | IB-pr-323 | the issuer's acts |
+
+fanout: 1 of 1 chains, cap 8, reason: one tooling cell; the release is the issuer's. Worker 0.9.0_WK_IRPT_BCKEND~126 in its own worktree.
+
+## 49. ROUND 56, WORKSTREAM ~P (2026-10-05 ~12:1xZ, issuer 2.0.0_SA_COO~P, on CTO batch 260 @7bd2946ccd)
+
+Release r54 shipped irpt-holdings-performance-lambda (handler.py, IB-pr-320). V2 proved TARGET_ALREADY_LANDED live after the 11:30Z
+landing; A2 (INF) follows the 14:00Z fire. The rest of rounds 49-53's code reaches no served function through the staged_from pins.
+The r55 re-pin plan (REPIN_PLAN_R55.json @db3b9632d3; CTO count 26 CLEAN / 10 RIDER of 36) is approved as proposed, with three
+conditions: an import smoke per function, the census attribution rule, and irpt-status stays in ~Y's lane. The issuer computed the
+plan itself: on disk 3.4 GB, no worktree fit.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-324` | the approved re-pin set in the source map + BUILD_ONLY census + import smoke per function | WORLD (carrier edit under infra/; no upload) | IB-pr-323 (merged) | P56 |
+| (the release) | a never-widen plan for halves on the census-clean functions | SERVED | IB-pr-324 | the issuer's act |
+
+fanout: 1 of 1 chains, cap 8, reason: one carrier edit. Worker 0.9.0_WK_IRPT_BCKEND~127 in its own worktree.
+
+## 50. ROUND 57, WORKSTREAM ~P (2026-10-05 ~15:1xZ, issuer 2.0.0_SA_COO~P, on CTO batch 264 @f49b5958b0, row S335)
+
+The 13:30Z directory refresh failed at all three firms again after the runner restart (S335): it starts the host and ends, and the next
+fire is a day later. Batch 264 rules a second schedule 10 minutes later, plus a never-widen packet for the first successful fire, which
+replaces three latest.json keys frozen at 09-25. Round 56 (IB-pr-324) drained @f36a8cdefd. Release r57's halves are signed (CTO
+@3d6e1ed58c, COO @e860151215), and its deploys follow the invoke-payload prep.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-325` | S335: the 09:40 ET retry schedule + the latest.json never-widen packet | WORLD (Terraform under infra/; the apply is the issuer's after both halves) | none | P57 |
+
+fanout: 1 of 1 chains, cap 8, reason: one schedule edit + packet. Worker 0.9.0_WK_IRPT_BCKEND~128 in its own worktree.

@@ -483,3 +483,401 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "INERT: a map-side repair; owner 2.0.0_SA_COO~Y if map_pdf is to be fixed for the layout cell."
 }
 ```
+
+## IRPT_YCDGEN-S5 -- Research run YCD-R3-20261005T0219Z STOPPED: WAF_REFRESH_REQUIRED at step 7 (holdings_key_stats__c05)...
+
+```json
+{
+  "id": "IRPT_YCDGEN-S5",
+  "class": "OBSERVATION",
+  "disposition": "UNDER_INVESTIGATION",
+  "fabric": "laptop",
+  "grounding": {
+    "evidence": [
+      "run record s3 key (bucket of the firm's store): irpt/cottonwood/state/ycharts_runs/request=YCD-R3-20261005T0219Z/run.json",
+      "stop reason in that run record: WAF_REFRESH_REQUIRED at step 7 (holdings_key_stats__c05) status=202"
+    ],
+    "status": "GROUNDED"
+  },
+  "hazard_standing": "INERT",
+  "one_line": "Research run YCD-R3-20261005T0219Z STOPPED: WAF_REFRESH_REQUIRED at step 7 (holdings_key_stats__c05) status=202",
+  "project": "IRPT_YCDGEN",
+  "spec_asserts": "C-SESSION: a firewall challenge or a lost session STOPS research; the run releases the lease, files a row and makes no retry storm.",
+  "surfaced_at": "2026-10-05T02:20:17Z",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "world_is": "The run STOPPED at step 7, call holdings_key_stats__c05: HTTP status 202, decision WAF_REFRESH_REQUIRED; no later call was sent, nothing was retried."
+}
+```
+
+## IRPT_YCDGEN-S6 -- the firewall challenges the 7th request of any run, and table_data answers 404 for the holdings' tickers
+
+```json
+{
+  "id": "IRPT_YCDGEN-S6",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-05T02:25:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Round-3 close measured two things that bound E1. (1) The firewall challenge falls on the 7th request of every run, not on one request's shape: runs 2, 3 and 4 were each challenged at step 7, at ~1.5 s, 8 s and 2 s spacing, and on three different calls. A run gets about 6 YCharts requests per window. (2) /indices/table_data answers 404 for chunks of the holdings' own tickers (4 of 4 chunks of 20, holdings_key_stats), so the coverage table's HELD_DATA route is wrong for these holdings",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "run 2 YCD-R1-20261004T1924Z: steps 1-6 ok, step 7 (portfolio_equity_exposure) 202 x-amzn-waf-action, spacing ~1.5 s (close/YCD-R1-20261004T1924Z_host_run.txt)",
+      "run 3 YCD-R1-20261004T1944Z: same, --min-gap-s 8 (close/YCD-R1-20261004T1944Z_host_run.txt)",
+      "run 4 YCD-R3-20261005T0219Z: steps 1-6 ok, step 7 (holdings_key_stats__c05, a 5-column call over 19 tickers) 202, lease spacing 2 s (close/YCD-R3-20261005T0219Z_host_run.txt); row S5",
+      "run 4 run.json: holdings_key_stats__c01..c04 each HTTP 404 with no indicesData; holdings 99 rows from REQ-a618aa83's frozen input",
+      "the round-2 probe runs A and B (2 calls each, 10 s apart) were not challenged"
+    ]
+  },
+  "spec_asserts": "IRPT_YCDGEN-S3 and the round-2 drain packet: the step-7 challenge is request-shaped (the long table_data column list). Coverage table (round 2): HELD_DATA elements are computable from /indices/table_data over the holdings' tickers.",
+  "world_is": "S3's reading is corrected: the challenge is count-shaped (the 7th request), at every spacing tried. And table_data with indices=<holding tickers> answers 404 like indices=P:<id>. So E1 needs a different security-level route (or the served path's own data) and a call budget of about 6 per window, measured before the next build. No retry was made; the session served Y-2 READY between runs."
+}
+```
+
+## IRPT_YCDGEN-W3-S5 -- the base's test_computed_own_series_statistics asserts beta_1y is STATISTIC_UNKNOWN; 4.3 makes beta_1y a statistic id
+
+```json
+{
+  "id": "IRPT_YCDGEN-W3-S5",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~3",
+  "surfaced_at": "2026-10-05T05:40:06Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Order YCD-l-4 says keep every existing test passing, but one existing assertion pins the pre-4.3 world: test_computed_own_series_statistics expects beta_1y to read STATISTIC_UNKNOWN:beta_1y. Contract 4.3 makes beta_1y a known id, so the assertion could not stay; it now uses kurtosis_1y (an id no contract names) and the same reason shape.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_layout_overview.py @ f867ec3bca: line 205 asserted STATISTIC_UNKNOWN:beta_1y",
+      "contract 4.3 (task order YCD-l-4 section 2): statistic ids alpha_<w>, beta_<w>, sharpe_<w>, sortino_<w>, var_monthly_<w>"
+    ]
+  },
+  "spec_asserts": "The order: keep every existing test passing (14 at the base); the order's contract 4.3: beta_<w> is a statistic id.",
+  "world_is": "Both cannot hold for that one assertion; the assertion's intent (an unnamed id is STATISTIC_UNKNOWN) is kept with an id no contract names. The other 13 existing tests are unchanged and pass (21 passed in all with the 7 new tests)."
+}
+```
+
+## IRPT_YCDGEN-W3-S6 -- contract 4.3 names "a risk-free series Opal holds" but not its form (level or rate), nor how the inputs reach compute_element
+
+```json
+{
+  "id": "IRPT_YCDGEN-W3-S6",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~3",
+  "surfaced_at": "2026-10-05T05:40:06Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "4.3 does not say whether the risk-free input is a level (index) series or a rate series, nor the signature that carries benchmark and risk-free into the computation. Built: both are optional LEVEL series [[ms, level], ...] (or {series, key}), passed as benchmark= / risk_free= to statistic_of, compute_element and compute_all; the monthly return of each is taken from month-end levels exactly as for the portfolio. Conventions fixed where 4.3 is silent: sample (n-1) variance and covariance; alpha = (mean(rp-rf) - beta*mean(rb-rf)) x 12 in percent; Sharpe = mean excess x sqrt(12) / sample sd of excess; Sortino downside deviation about 0 over all n excess months; VaR = linear-interpolation 5th percentile of monthly returns in percent.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "contract 4.3 (task order YCD-l-4 section 2): 'a benchmark series kept by the run, and a risk-free series Opal holds'; the map wiring is a later cell (section 3)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py: _risk_stat, _named_series, statistic_of(points, statistic, benchmark, risk_free)"
+    ]
+  },
+  "spec_asserts": "4.3: each statistic computed only from held series, an input not kept or held reads NOT_AVAILABLE with INPUT_MISSING:<series>.",
+  "world_is": "The wiring cell must hand a rate series through a level conversion (or this function must gain a rate form) if Opal's held risk-free series is a yield. Series names in the reason are `benchmark` and `risk_free`. Nothing was called or read from a store; only fixtures."
+}
+```
+
+## IRPT_YCDGEN-W2-S6 -- no Opal table holds the held-data columns per holding; the feed is all YCharts security-level and the 6-request budget has no slack
+
+```json
+[
+  {
+    "id": "IRPT_YCDGEN-W2-S6",
+    "project": "IRPT_YCDGEN",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~2",
+    "surfaced_at": "2026-10-05T05:50:00Z",
+    "one_line": "YCD-o-4: no Opal table found holds any of the 158 held-data columns as the same per-holding figure, so all 158 feeds are YCHARTS_SECURITY; the probe map plans to exactly 6 requests (zero slack) through three expand calls, two general_data calls with 68 and 80 metric ids (request paths about 3.8K and 4.6K characters) and one fund_data series call, and the metric ids and the answer field are inferred.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "spec_asserts": "Order YCD-o-4 / contract 4.2: for each HELD_DATA column group find whether Opal holds the figure per holding (OPAL_HELD with table, field, key) else a YCHARTS_SECURITY call of at most 6 requests for 99 holdings.",
+    "world_is": "Measured with schema and field-name reads only (no client figure, no vendor call): etf-classifications (key ticker, 2866 items, fields asset_class, sub_asset_class, name) and bd-securities (key ticker, 10965 items, same classes) hold a class LABEL per ticker, not a look-through share; opal-data-etfs bbg/<date>/characteristics.parquet (114 rows, key `security` = '<TICKER> US Equity') holds FUND_EXPENSE_RATIO, EQY_DVD_YLD_IND_NET, HB_OAS_EFF_DURTN, TOTAL_NUMBER_OF_HOLDINGS_IN_PORT, GICS_SECTOR_NAME, CNTRY_OF_DOMICILE for the ETF book's universe only, and gold/holding (188 rows) and gold/book (4 rows) are the four Opal ETF books and their constituents; their overlap with the upload's tickers was not measured (the client file is not read), and they are universes of other purposes, not the upload; no table found holds region, sector-share, maturity, credit-quality or market-cap-bucket shares per holding. With chunk 50 each expand call is 2 requests, so the 6-request bound allows exactly three calls: general_data twice (a single 148-id call would not fit one URL comfortably) and fund_data once. The metric ids are the table_data column ids, inferred to be the general_data metric ids, and the field `$.chart_data[*]` is the round-3 map's inferred general_data shape; the issuer's live run decides all three, and whether general_data admits 50 securities and 80 metric ids in one GET. A leaf that returns nothing for a holding is a NONE for that holding at run time, not at the map.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "aws dynamodb describe-table etf-classifications, bd-securities, trade-security-identifiers (read-only, key schema + item count; item field names only)",
+        "s3 opal-data-etfs/bbg/2026-10-02/characteristics.parquet and gold/{book,holding}/date=2026-10-02 (parquet schema and row counts only)",
+        "data/etfs/scripts/gold/etf_positioning_gold.py (the fields it reads: lines 1263-1280, 1521-1530)",
+        "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/maps/feed_probe_map.json; check o-4.AC2 planned 6 requests (3 calls x 2 chunks of <=50)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "INERT: owner 2.0.0_SA_COO~Y at the round-4 close run; a refusal of the 80-id URL would split the metric list and needs a runner or budget ruling because the budget has no slack."
+  }
+]
+```
+
+## IRPT_YCDGEN-W4-S5 -- the skeleton gives no stat name to a comparison security's Risk Info row, and a baselines-only chart column is outside map_pdf's vector rule, so two m
+
+```json
+{
+  "id": "IRPT_YCDGEN-W4-S5",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~4",
+  "surfaced_at": "2026-10-05T06:09:07Z",
+  "one_line": "the skeleton gives no stat name to a comparison security's Risk Info row, and a baselines-only chart column is outside map_pdf's vector rule, so two map-side steps remain after the label rule",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "YCD-m-4 and contract 4.4: the two maps' rows come from the label rule, with no map-side repair.",
+  "world_is": "The 29 Multi and 21 Comparison rows come from the rule alone (map_pdf at this commit gives 573 and 423 elements, equal to the maps' skeleton counts). Two things the rule does not give: (1) the Multi's third-security Risk Info rows print the statistic's name only on the portfolio's line, so the skeleton labels all seven 'Risk Info: iShares Russell 2000 ETF'; the maps carry the statistic name copied from the key-1 row printed just above, as round 3 did for the key-1 rows. (2) Comparison page 8's portfolio Bond Maturity column is drawn with baseline rules only; map_pdf's vector-chart rule needs a bar, so the chart is listed in the map as p8.e33 from the page's shapes, and p8.e03 (the comparison key's bars) is sourced to comparison_bond_exposure at key_index 1. The existing key-1 labels repaired in round 3 (W4-S4) were not re-derived by the rule.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "multi_map.json p10.e21 to p10.e27 labels; comparison_map.json p8.e03 and p8.e33",
+      "page 10 of REQ-329a56182b2668d44a28c8d7 and page 8 of REQ-7ea49c2d9b27957d0ea8888f read in OS temp: statistic names only on the IRPT line; the p8 portfolio column holds 0.9 pt wide axis rules and no bar"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: map-side labels and one listed chart. Owner 2.0.0_SA_COO~Y: a later map_pdf cell could carry the stat name down a Risk Info block and list a baselines-only column."
+}
+```
+
+## IRPT_YCDGEN-W4-S6 -- round 3's map sourced a Multi holdings row as comparison key 2 because the third security's row was missing; with that row listed, p21.e06 is a holdin
+
+```json
+{
+  "id": "IRPT_YCDGEN-W4-S6",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~4",
+  "surfaced_at": "2026-10-05T06:09:07Z",
+  "one_line": "round 3's map sourced a Multi holdings row as comparison key 2 because the third security's row was missing; with that row listed, p21.e06 is a holdings row and 129 existing data-row labels moved by their rule ordinal",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "YCD-m-4: element ids are never renumbered; the m-3 rows W4-S4 names are added.",
+  "world_is": "multi_map.json p21.e06 was sourced to comparison_standardized_returns at key_index 2 ('row printed after the portfolio's own row, taken as comparison key 2'), but the row it stands for is Global X's; the key-2 row (iShares Russell 2000 ETF) was one of the dropped rows. p21.e06 is now BUILDER_ONLY like its neighbours and the new key-2 row is p21.e21. Separately, a masked 'data row N' label counts the rows of its heading, so the 50 added rows moved the ordinal of 129 existing elements (83 Comparison, 46 Multi, including the four Waivers rows now masked as data rows); their labels were updated to the rule's ordinal, their ids and sources kept. A consumer that matched an element by its old 'data row N' label would now miss it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git diff of multi_map.json and comparison_map.json (labels only on the 129; p21.e06 source)",
+      "page 21 of REQ-329a56182b2668d44a28c8d7: the iShares Russell 2000 ETF row is printed between the Opal Ultra Long-Term row and the Global X row"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: the maps have no reader yet that keys on a data-row label (layout reads source and ids). Owner 2.0.0_SA_COO~Y."
+}
+```
+
+## IRPT_YCDGEN-S7 -- E5's --end driver is false: fund_data ignores startDate and endDate
+
+```json
+{
+  "id": "IRPT_YCDGEN-S7",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-05T06:43:17Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "E5's driver is false: /charts/fund_data.json ignores startDate and endDate. Four runs with --end 2026-09-30 and 2026-10-02, with zoom=max and without zoom, kept byte-identical level series (23,651 points through 2026-10-02, the last close), so a different --end cannot drive FWD-2's true arm",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "runs YCD-R4-20261005T0552Z-A (--end 2026-09-30) and -B (--end 2026-10-02), zoom=max: portfolio_level_series sha256 539579bbaee2.. in both; B reads changed_since_previous false (close/YCD-R4-20261005T0552Z_host_run.txt, run.json read 06:1xZ)",
+      "A also reads false against run 3 (YCD-R3-20261005T0219Z, empty start and end)",
+      "runs YCD-R4-20261005T0620Z-D (--start 2025-10-01 --end 2026-09-30) and -E (--end 2026-10-02), no zoom (close/e5_dated_level_map_r4.json): sha256 ef306d6162e1.. in both; E reads false (close/YCD-R4-20261005T0620Z_host_run.txt)",
+      "the kept series of A and D both hold 23,651 points, the first in 1962 and the last on 2026-10-02 (dates read, no value)"
+    ]
+  },
+  "spec_asserts": "CTO round-3 analysis E5 (ROUND_ANALYSIS_IRPT_YCDGEN_ROUND3_20261005.md:28-30, :66): a run whose --end differs from the indexed run's changes that call's answer under the same call name, so two runs with different --end dates show changed_since_previous true.",
+  "world_is": "The endpoint returns the whole series whatever the dates, so --end is not a driver. The false arm is measured twice (B vs A, E vs D). The issuer substitutes a lever that does change the answer under one call name: zoom=5y then zoom=max (2 requests, run at ~D's next free slot), and records the result in the round-4 packet. No retry was made."
+}
+```
+
+## IRPT_YCDGEN-S8 -- E1's live probe: the held-data feed calls answer 400 (invalid security items and metric ids)
+
+```json
+{
+  "id": "IRPT_YCDGEN-S8",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-05T06:43:17Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "E1's live probe: all 6 requests of feed_probe_map.json answered HTTP 400. general_data says security_needed ('At least one valid, included security is required') on the 68-metric call and metrics_needed ('Metrics X-Axis needs to have more than one metric') on the 80-metric call; fund_data over the holdings says 'There are no valid items on this chart'. /securities/securities_info answers 200 for a public ticker with its security_id",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "run YCD-R4-20261005T0620Z-C: 6 of 6 requests HTTP 400, COMPLETE, no challenge at 8 s spacing; holdings from REQ-a618aa83 (99 rows; tickers not printed)",
+      "kept bodies read for err_code and err_message only: step 01 security_needed, step 03 metrics_needed, step 05 text/plain no valid items",
+      "run YCD-R4-20261005T0552Z-A step 05 security_info_probe (securities=AAPL): 200, a list of 1 with security_id and display_security_id",
+      "run A step 06 security_price_probe (general_data, id:AAPL price, xAxis time): 500, BACKOFF stop (same in run B)"
+    ]
+  },
+  "spec_asserts": "Contract 4.2 / YCD-o-4: feed_probe_map.json's calls fetch the 158 held-data figures per holding by passing the holdings' tickers as id:<ticker> items joined by ',' with table_data column ids as general_data metric ids (W2-S6 marked the ids and the answer field as inferred).",
+  "world_is": "The ticker items are not valid YCharts security items as sent (the expand join puts ',' after an item that already ends ',,', and a ticker may not be the YCharts id), and the region and maturity column ids are not valid general_data metrics. Next: resolve each holding through /securities/securities_info to its security_id, send items with no extra separator, and validate metric ids on one public security before a holdings run. The 158 rows keep feed YCHARTS_SECURITY; no element is fed yet, so E6 has no new figures to render."
+}
+```
+
+## IRPT_YCDGEN-W1-S2 -- lookup.py needs a region the order does not name
+
+```json
+{
+  "id": "IRPT_YCDGEN-W1-S2",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~1",
+  "surfaced_at": "2026-10-05T11:07:34Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Contract 5.4's lookup needs an S3 client on the firm's research principal and the order names no region source, so lookup.py takes --region (default us-east-1) and calls runner.research_s3; the issuer confirms the region at the first live lookup.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/lookup.py main(): --region default; runner.py research_s3(boto3, region, firm, request_id); runner._compose reads the region from resident bindings, which a lookup does not load"
+    ]
+  },
+  "spec_asserts": "Contract 5.4: `python lookup.py --firm <f> --request <REQ> --call <name>` prints the call's kept record, reading through the keeper's store.",
+  "world_is": "The three flags alone give no region and no S3 client; the runner's region comes from resident_bindings.json, which the lookup does not load. A tested default (us-east-1, the estate's region) with an override flag was added; the tests inject a fake S3 client and never reach this line."
+}
+```
+
+## IRPT_YCDGEN-W2-S7 -- the model portfolio's portfolio_info answer names its benchmark by display name, not by a YCharts id; the map'
+
+```json
+{
+  "id": "IRPT_YCDGEN-W2-S7",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~2",
+  "surfaced_at": "2026-10-05T11:38:47Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "YCD-p-5: the model portfolio's portfolio_info answer names its benchmark by display name, not by a YCharts id; the map's benchmark call uses ^SPXTR from the COO's record",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-cottonwood/irpt/cottonwood/state/ycharts_responses/request=YCD-R4-20261005T0700Z-G/step=01_portfolio_info.json read-only: body_json[0] keys include `benchmark` (a string, the display name 'S&P 500 Total Return') and no benchmark id field; the other keys are security_id, display_security_id, id, security_name",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/COMPARISON_BENCHMARK_NEVER_RENDERS_20260927.md line 28 pairs the display name 'S&P 500 Total Return' with `^SPXTR`; overview_map.json has no p7 element naming a benchmark, so the source PDF's p7 names none",
+      "overview_map.json call benchmark_level_series: securities=id:^SPXTR,include:true,, (the same fund_data level-series params as portfolio_level_series); no vendor call was made by this worker"
+    ]
+  },
+  "spec_asserts": "Contract 5.3: the benchmark level series is one fund_data call for the benchmark the source PDF's p7 names, else the one portfolio_info's answer names.",
+  "world_is": "portfolio_info names a display name only; the id ^SPXTR is taken from a prior record (pairing name and id), not from this answer. If YCharts does not accept ^SPXTR as a fund_data security id the benchmark call answers non-2xx, benchmark_from_kept returns None and alpha and beta read INPUT_MISSING:benchmark; nothing is approximated. The issuer's live window confirms or corrects the id."
+}
+```
+
+## IRPT_YCDGEN-W2-S8 -- AC1 requires every map call to be read by an element, so the benchmark call is read by a new map element p7.e1
+
+```json
+{
+  "id": "IRPT_YCDGEN-W2-S8",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~2",
+  "surfaced_at": "2026-10-05T11:38:47Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "YCD-p-5: AC1 requires every map call to be read by an element, so the benchmark call is read by a new map element p7.e15 that the source PDF does not print",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~Y/round5/checks/p-5.AC1.py: unread = calls whose name is no element's source.call; PASS needs none",
+      "overview_map.json: element p7.e15 'Benchmark level series (input to Alpha and Beta)', kind chart, source call benchmark_level_series; the 6 statistic elements read portfolio_level_series, so no existing element could carry the benchmark call",
+      "the page renders p7.e15 as a line chart of the benchmark's level over the run window; the map now holds 254 elements (253 + 1) and 8 calls (plan 8 requests for 99 holdings)"
+    ]
+  },
+  "spec_asserts": "Contract 5.1: the Overview map keeps only the calls an element reads, counting YCD-p-5's benchmark call; contract C-MAP labels are printed label text only.",
+  "world_is": "The benchmark call can only stay in the map if some element reads it, so one element was added whose label is not printed text of the source PDF. Option for the issuer: drop p7.e15 and the check's read test for this call (the layout reads the benchmark by call name, BENCHMARK_CALL, not through an element)."
+}
+```
+
+## IRPT_YCDGEN-W2-S9 -- the held risk-free series is the portal's FRED 3M Treasury yield, coded for a 2-year history, so only the 1y w
+
+```json
+{
+  "id": "IRPT_YCDGEN-W2-S9",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~2",
+  "surfaced_at": "2026-10-05T11:38:47Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "YCD-p-5: the held risk-free series is the portal's FRED 3M Treasury yield, coded for a 2-year history, so only the 1y window of alpha, Sharpe and Sortino can compute; and one `statistic` per five-column element prints one window",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "comp-which 'risk-free rate treasury yield series' timed out inside its 90 s budget (rc, no result); comp-estate --definitions has no risk-free or Treasury definition; the search then fell back to Grep over data/ and infra/aws/lambda",
+      "infra/aws/lambda/fred-data-ingestion/ingest_yield_curve_fred.py: series DGS3MO displayed as 'US Treasury 3M', output s3://opal-data-portal-v2/json/macro/yield_curve_fred.json, list of {date, value}, fetch_series(lookback_years=2) and fetch_all_treasury_yields(lookback_years=2) (a coded default, the object itself not read: the order names no S3 read for it)",
+      "infra/aws/lambda/fred-macro-ingestion/ingest_fred_macro.py: group 'Treasury Yields' DGS3MO writes json/macro/macro_data_fred.json with a trailing-12-month window only",
+      "layout_overview.py RISK_FREE_SOURCE / risk_free_levels(): the yield becomes a level series (starts 100, grows at each earlier observation's yield, days/365); CLI --risk-free takes a copy of that object",
+      "overview_map.json p7.e02,e03,e05,e06,e07,e08: `statistic` is one id (the first column's window: alpha_1y, beta_1y, sharpe_1y, sortino_1y, max_drawdown_1y, var_monthly_1y) over five `columns`; compute_element reads `statistic` only, so each p7 element prints one value, and the three other OWN_SERIES elements with statistic null (p2.e08, p2.e13, p6.e22) still read STATISTIC_UNKNOWN:None"
+    ]
+  },
+  "spec_asserts": "Contract 5.3: a risk-free series Opal holds, named by table and field; 4.3: alpha, Sharpe and Sortino for 1y, 3y, 5y, 10y and 15y; 3.4: one statistic per computed element.",
+  "world_is": "Opal holds a Treasury 3M yield series (object and key named above) but its coded history is 2 years, so alpha_3y and longer would read SERIES_TOO_SHORT even with the series passed. The 1y window is the only one this wiring can make computable, which is why every p7 element carries its _1y id. A multi-column element needs a per-column compute (a dict of window to value) to print the five windows the PDF shows; that is not in this cell's contract and was not built."
+}
+```
+
+## IRPT_YCDGEN-W3-S7 -- Opal holds the held-data figures for 37 of Y-5's 99 holdings at most, no price series for the rest, and the order names no loader for the census's sources
+
+```json
+{
+  "id": "IRPT_YCDGEN-W3-S7",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~3",
+  "surfaced_at": "2026-10-05T12:06:00Z",
+  "one_line": "YCD-h-5 census over Y-5's 99 holdings: 86 of 158 HELD_DATA rows OPAL_HELD (83 of 153 groups) but every FED figure is label-grain or field-grain over at most 37 of 99 holdings (asset-class labels 97 of 99), 72 rows NOT_HELD, and `census`/`value_of` take already-read rows because 5.2 names no loader.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Contract 5.2 / cell YCD-h-5: the sources are Opal's security tables, prices and classifications; each group's weights are the holdings' amounts renormalized over the held holdings, so a held figure stands for the portfolio's.",
+  "world_is": "Measured read-only, counts only (no ticker or amount printed or written): etf-classifications 97 of 99 holdings (asset_class: equity, fixed_income, multi_asset, structured, commodities, alternatives; no cash label), bd-securities 98 of 99 (a label), opal-data-etfs bbg characteristics 37 of 99 (all 37 single stocks, domicile US; EQY_DVD_YLD_IND_NET non-null for 27, GICS_SECTOR_NAME, CNTRY_OF_DOMICILE, CUR_MKT_CAP, BETA_ADJ_OVERRIDABLE for 37; FUND_EXPENSE_RATIO, HB_OAS_EFF_DURTN, TOTAL_NUMBER_OF_HOLDINGS_IN_PORT null for all 99), gold/holding 47 (it is derived from the characteristics row), history_topup PX_LAST 37, fund_daily and etf_history 0, trade-security-identifiers 8, opal-harvest-security-metrics 0. So Opal holds no price series for 62 of 99 holdings (p12.e04 is NOT_HELD) and no look-through share of any kind: the 83 FED groups are sector and region LABEL shares of the 37 stocks (100 or 0 per holding), asset-class label shares (stock, bond, other) and three field means (dividend_yield 27 of 99, weighted_avg_market_cap 37, net_expense_ratio measured empty so NOT_HELD). A FED value is renormalized over its held holdings, so the sector and region elements describe the 37 stocks only; the held-of count is in `value_of`'s method, and the layout (YCD-w-5) shows it in the 3.5 trace. The order names no way to read the sources, so held_data takes ready rows (`sources`, `held_rows`) and reads no store; the census's reads were made by a scratch script that is not committed, so the issuer or YCD-w-5 loads characteristics (parquet) and etf-classifications (DynamoDB scan) before calling it. Region and super-sector mappings are my own (decided countries US CA GB CH JP DE FR IE NL AU; GICS sectors to the Morningstar-style group names) and the group id is `group_id_of(columns)` (the columns joined by '+', 'level_series' for the no-column row); each feed also carries `group`.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "runner.read_holdings over REQ-a618aa83407689bc95193a01 (99 rows, 99 distinct, basis USD), counts only",
+      "s3 opal-data-etfs bbg/2026-10-02/{characteristics,fund_daily,history_topup}.parquet, etf_history.csv, silver/holdings/2026-10-04.parquet, gold/{book,holding}/date=2026-10-02 (schema and key overlap counts)",
+      "dynamodb scan of etf-classifications, bd-securities, trade-security-identifiers, opal-harvest-security-metrics (field names, key overlap counts, label value counts)",
+      "data/etfs/scripts/gold/etf_positioning_gold.py lines 1263-1280 (gold holding yield and beta are the characteristics row's)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: owner 2.0.0_SA_COO~Y at the round-5 close; a wider feed (a per-holding look-through table) is a data decision, not a cell."
+}
+```
+
+## IRPT_YCDGEN-W2-S10 -- contract 3.5's 0.95 coverage floor is not applied to an OPAL_HELD element; its held-of count is the honesty carrier
+
+```json
+{
+  "id": "IRPT_YCDGEN-W2-S10",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~2",
+  "surfaced_at": "2026-10-05T12:58:00Z",
+  "one_line": "Contract 3.5's 0.95 coverage floor is not applied to an OPAL_HELD element (the issuer's spawn ruling renormalizes over the held holdings), so a held value can print at any coverage with its held-of count in the trace and on the page.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Contract 3.5: below 0.95 coverage a computed element is NOT_AVAILABLE with reason COVERAGE_BELOW_0.95. Contract 5.2 / the issuer's ruling at spawn: an OPAL_HELD value is renormalized over the held holdings and its method says how many of how many.",
+  "world_is": "layout_overview._compute_opal_held applies no floor: trace.coverage is the weight share of holdings carrying the figure (informational) and the trace for an OPAL_HELD value adds `held` and `of` beside `method` ('OPAL_HELD: <held_data method> (held n of N)'); the page prints 'Opal-held data: n of N holdings.' under the value. Measured on Y-5 by the census (row W3-S7): the figures stand on at most 37 of 99 holdings, so a sector or region share would print on roughly that weight share; only the page note and the trace say so. The wiring also calls two of held_data's module-private helpers (_held_pairs, _decimal) for the coverage share, because value_of returns counts but not the weight share. The default loader readers (S3 get of the latest dated bbg characteristics.parquet, paginated DynamoDB scan of etf-classifications) were exercised against fakes in tests and the layout was CLI-confirmed (bucket layout, table key, column names) but not run live by this cell.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py _compute_opal_held and load_held_rows (branch wk-ycdgen-r5-5)",
+      "tests test_layout_overview.py -k opal_held: 6 passed",
+      "aws s3 ls s3://opal-data-etfs/bbg/ (dated folders and constituents/), describe-table etf-classifications (hash key ticker), characteristics.parquet schema read into temp and deleted"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: owner 2.0.0_SA_COO~Y at the round-5 close; if a floor on held values is wanted it is one constant in _compute_opal_held."
+}
+```

@@ -1836,3 +1836,132 @@
   "notes": "INERT (the primary tier serves 2026-10-02; pre-existing, not from 57ac37d6). Owner 2.0.0_SA_COO~D: read tickers (or retire the tier), and say whether opal-precompute-market-metrics still runs; the DEGRADED warn was added under OPAL_ANALYST.EXP1 change D."
 }
 ```
+
+## DSGN_REBRND-S19 -- the FWD-10 density instrument sees one nesting level; /market keeps 24px gaps and 8px chart-card bodies
+
+```json
+{
+  "id": "DSGN_REBRND-S19",
+  "project": "DSGN_REBRND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-05T04:55:00Z",
+  "one_line": "ui-smoke --density (the FWD-10 PROOF instrument, portal DEV 3e1aa46f) measures only the gaps between the page column's direct children and the top padding of panel bodies, so it reports 20 between / 30 inside on /market while, measured panel edge to panel edge on the same build, four vertical gaps there are still 24px (Trending to Top/Bottom and the two between the three performance tables), the four-card chart row has three 24px gaps across, and the four chart cards (Daily Cloud, Global RSI, U.S. Regime, Fear & Greed) have 8px bodies; ~D's record calls those cards inner cells. /positioning and the sparse control each keep one 24px gap.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's FWD-10 grade 2026-10-05 ~04:0xZ-04:5xZ (delegate): dist builds of fb6f5023 and 3e1aa46f at 1440x900 with rb-s-9-market, rb-s-9-attribution, r4-2 and rb-s-9-sparse; the instrument's figures equal ~D's on all eight renders; a panel edge-to-edge probe on the after build"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-10 PROOF: the inside-container and between-section spacing values read from the contract (DESIGN.md C10: 30 inside, 20 between) and measured on the render.",
+  "world_is": "The instrument sees only one nesting level, so 24px gaps and 8px card bodies inside /market's column pass it; the PROOF's 'measured on the render' holds only at the column level.",
+  "notes": "INERT (DEV only; presentation). Owner 2.0.0_SA_COO~D: measure every panel's edges (or say why a chart card is an inner cell under C10), bring /market's 24px gaps to 20, and re-run the PROOF."
+}
+```
+
+## DSGN_REBRND-S20 -- FWD-13 state table measures the band on one ground; disabled ink 3.32-4.10 on its other grounds
+
+```json
+{
+  "id": "DSGN_REBRND-S20",
+  "project": "DSGN_REBRND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-05T06:33:00Z",
+  "one_line": "99c6ae08's FWD-13 state table measures the band world on its body ground (--layer-body) only; measured in a browser at that build, the band's disabled ink is 4.10:1 on --layer-tile and 3.32:1 on --layer-hover, and the band's secondary grey is 3.91:1 on --layer-selected, all below the PRD's 4.5:1 text bar, so a disabled control on a band tile or under a hover rung falls below the bar against the ground it actually sits on.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's FWD-13 grade 2026-10-05 ~06:1xZ-06:4xZ (delegate): dist build of portal 99c6ae08, getComputedStyle probe per (ground, ink) inside each world's container; 54 of 54 declared pairs equal ui-smoke --state-table's ratios; the band's other layer grounds probed in addition"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-13 ACCEPT: no text, icon or delta in any state falls below the contrast bar against the ground it actually sits on; the PROOF's denominator is roles x states x worlds.",
+  "world_is": "The band world has several grounds (body, tile, hover, selected); the table declares one per world, so three ink-on-ground pairs a band page can draw sit below the bar unmeasured.",
+  "notes": "INERT (DEV only; pages move onto the rungs in part 2+). Owner 2.0.0_SA_COO~D: declare the band's tile, hover and selected grounds as grounds the table measures (or show a disabled or secondary ink never sits on them), and lift the disabled ink to clear 4.5 on each. Also: the pin's arm (c) checks only BUTTON_BASE (opacity-50 on the band disabled class passes); focus pairs copy rest with no 3:1 ring pair; row and segmented declare no focus or disabled; the table lists --palette-white (#E6EAF4) where the component paints literal white."
+}
+```
+
+## DSGN_REBRND-S21 -- RSIModal's text-glyph close reads 3.77:1 at rest (text bar 4.5)
+
+```json
+{
+  "id": "DSGN_REBRND-S21",
+  "project": "DSGN_REBRND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-05T10:44:00Z",
+  "one_line": "At portal DEV d1c7485b, RSIModal's close control is a 20px text glyph 'x' in text-white/40 that reads 3.77:1 at rest against its band ground, below the 4.5:1 text bar; RSIModal's HelpCircle and MacroTimeSeriesModal's X icon read the same 3.77:1 at rest (above the 3:1 non-text bar). All three keep text-white/40, which part 2 replaced elsewhere with --palette-mediumGray, and the two modals were graded by the pin only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's grade of d1c7485b 2026-10-05 ~09:4xZ-10:4xZ (delegate): dist build, both modals opened by click on real S3 data, getComputedStyle probe of each interactive element at rest and on hover; hover band resolves to opaque rgb(47,66,106); 0 below 4.5 on hover"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-13 ACCEPT: no text, icon or delta in any state falls below the contrast bar against the ground it actually sits on (WCAG 2.1 SC 1.4.3 text, SC 1.4.11 non-text).",
+  "world_is": "One text glyph at rest sits below the text bar in a modal no walk opens; the two icons pass the non-text bar.",
+  "notes": "INERT (DEV only). Owner 2.0.0_SA_COO~D: put the band secondary ink (--palette-mediumGray) or an icon on RSIModal's close control, and have the hover walk open modals so they are graded on a render, not by the pin."
+}
+```
+
+## DSGN_REBRND-S22 -- FWD-13 part 3 batch 2 regresses hover contrast on DEV (Excel button 9.13 -> 1.64)
+
+```json
+{
+  "id": "DSGN_REBRND-S22",
+  "project": "DSGN_REBRND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-05T12:22:00Z",
+  "one_line": "31510397 (FWD-13 part 3 batch 2) moved 72 hover grounds onto the dark --state-hover-band without checking each element's ink, so hover contrast REGRESSED on DEV: /trade-submission's Excel button (TradeCard.tsx, navy text-[--bg-header]) falls from 9.13:1 to 1.64:1 on hover in 5 places, the remove-security icon 3.16 -> 2.53, a white/60 table row 5.11 -> 3.85, BUY/SELL text in the details modal 2.9 -> 1.7, and /attribution's red negative values 4.7 -> 3.3 on hover in 44 rows; six inks stay translucent on the opaque rung (danger/80, bg-header/80, white/70 x3, white/80), which the pin's arm (c) does not look for.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D -- disarms when a re-walk of 31510397's successor on DEV reads every element above at or above its bar on hover (4.5 text, 3.0 icon), before any PROD promote of DEV carries it",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's grade 2026-10-05 ~10:5xZ-11:5xZ (delegate): dist builds of d1c7485b and 31510397, every pointer element hovered on /trade-submission (81, 16 in 4 modals), /attribution (115, live S3 data) and /positioning (37), getComputedStyle ink vs composited ground at rest and on hover",
+      "git -C portal diff d1c7485b 31510397 -- src/pages/TradeSubmission/components/TradeCard.tsx: the Excel button keeps text-[hsl(var(--bg-header))] and hover:text-[hsl(var(--bg-header))]/80 while hover:bg-white/10 becomes hover:bg-[hsl(var(--state-hover-band))] (this seat's read)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-13 DONE WHEN: ink follows the ground of the element's CURRENT state; ACCEPT: on a light panel, a highlight that paints a dark ground turns its text white, and nothing falls below the bar.",
+  "world_is": "Elements whose resting ink is dark (or red, or translucent) now get the dark band rung on hover with the ink unchanged; the commit's walk saw none of them (its sample skips per-class duplicates, saw no clickables on /attribution, and opens no modal).",
+  "notes": "ARMED: DEV only (not on PROD c69b4747); a PROD promote of DEV would ship hover states worse than PROD's. Owner 2.0.0_SA_COO~D: pair each moved hover ground with the ink of that state (or keep a light hover rung for dark-ink elements), and walk every pointer element with modals opened before the next batch. Also: 4 of the 72 moved grounds (Attribution tab buttons) never paint (an inline transparent background wins); 6 files were rewritten CRLF to LF."
+}
+```
+
+```json
+{
+  "id": "DSGN_REBRND-S23",
+  "project": "DSGN_REBRND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-10-05T14:50:00Z",
+  "one_line": "Row S22 DISARMED. FWD-13 part 3 batch 2 (31510397) is reverted by portal DEV f1cdccd7: the 38 batch-2 paths equal d1c7485b byte for byte, the 6 CRLF files committed with autocrlf off. The BUY/SELL chips, below the bar at d1c7485b as well, take the lighter semantic ink on no tint (cab2b039). 3.0.0_SA_CVO's re-walk at DEV cab2b039 reads every S22 element at or above its bar on hover (msg 105296, grades @6401060252); the PROD hold on S22 lifts.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C portal diff d1c7485b f1cdccd7 -- <the 38 paths of 31510397>: empty (repo level); state-part3b.test.ts removed",
+      "portal cab2b039 TradeDetailsModal.tsx: BUY 'border border-[hsl(var(--success))] text-[hsl(var(--delta-positive-hover))]', SELL the same on --danger / --delta-negative-hover; pin state-s22.test.ts OK, DEV's modal fails it",
+      "3.0.0_SA_CVO re-walk at DEV cab2b039 (105296 relayed by 1.0.0_SA_CTO 105300): the revert byte-exact; BUY/SELL text 9.42:1 or more, borders 2.70-3.54"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "spec_asserts": "Row S22's disarm: a re-walk of 31510397's successor on DEV reads every element S22 names at or above its bar on hover (4.5 text, 3.0 icon), before any PROD promote of DEV carries it.",
+  "world_is": "Met at DEV cab2b039: the regressing batch is out and BUY/SELL clear the bar. The translucent white hover overlays batch 2 targeted remain translucent (as at d1c7485b) until a redo pairs each ground with its state's ink.",
+  "notes": "Correction carried from the CVO's re-walk: this seat's claim that the lighter SELL ink reads 5.25:1 or more 'on every band ground' is false for --layer-selected (4.48:1), a ground the details modal never uses. Batch 2's redo waits on an instrument that hovers every hover-styled element (rows included), grades every text descendant and opens the modals.",
+  "dismissal_reason": "Disarmed by its owner's act and confirmed by the grader: the regressing batch is reverted byte-exact (f1cdccd7) and the one element below the bar before the batch (BUY/SELL) is fixed (cab2b039); 3.0.0_SA_CVO's re-walk at cab2b039 reads every S22 element at or above its bar (105296)."
+}
+```

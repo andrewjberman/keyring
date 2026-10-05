@@ -17840,3 +17840,561 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Closes the census half of W100-S2 only; the remedy (re-point, withdrawal, or a rebuilt leaf) is the issuer's packet to the CTO. The relationship-level perfrp performance leaf and four other perfrp leaves are fetched on the same mount and were not censused."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S326",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-10-05T01:50Z",
+  "one_line": "The analysis request history (GET /analysis/requests, ops/owned_requests.py history) pages in request-id order, not newest first: the DynamoDB query walks sort key analysis#REQ-<random hex>#1 ascending with Limit 25, so page 1 is the 25 LOWEST ids. A request just submitted appears on the page's first list page only when its random id sorts low; REQ-c1b537728b221742e335a0c8 (Y-2, READY 01:37:07Z) never appeared in 22 list reads over 24 minutes.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Y (IRPT_BCKEND~Y lease holds infra/aws/lambda/investor-reporting/ops; author of the last three commits to owned_requests.py). INERT: nothing is written wrong; the newest request is unlisted, not lost.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ops/owned_requests.py:286-293 @CLOUD HEAD: query KeyConditionExpression '#t = :t AND begins_with(#r, :r)' on request_revision 'analysis#...', Limit=limit (default 25), no ScanIndexForward and no time index -- ascending sort-key order; :301 binds the key to analysis#REQ-[0-9a-f]{24}#1.",
+      "Live run tmp/yh-submit/20261005T011505Z-Bproxy/page.har (local, not committed): 22 GET /analysis/requests?limit=25&selected_tenant=... reads 01:16:54Z-01:40:19Z, every one 'Miss from cloudfront', ONE distinct body; its 25 items' identity.request_id are strictly ascending REQ-06185d70.. to REQ-a8e81b8e..; their accepted_at are neither newest-first nor oldest-first; next_cursor present; the submitted REQ-c1b537728b221742e335a0c8 sorts after the page's last id and is in 0 of 22 bodies.",
+      "Same run: SUBMIT 200 REQ-c1b537728b221742e335a0c8 RECEIVED 01:18:56Z; 2.0.0_SA_COO~Y msg 105086: CERTIFYING 01:36:16Z, READY 01:37:07Z; the driver's row-state poll read null at every poll to its 20-minute ceiling (outcome READY_CEILING)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "DSGN_IRPTV1 W2-07 (pin IV-e-116): Generate leads to the request's own status view and the list re-lists itself -- an advisor sees the request just made in 'Your analysis requests'.",
+  "world_is": "The list re-reads, but the backend's first page is the 25 lowest random ids; with more than 25 requests on a firm, a new request is listed on page 1 only by chance. The page then orders that page by time, so it reads newest-first while omitting the newest.",
+  "notes": "Remedy is the owner's: a newest-first read (a time-ordered key or index for the history query), with the cursor contract kept. Page half (2.0.0_SA_COO~D): none needed once the history is newest-first; the page already sorts by time. Found on the Y-2 fold-in Case B live run for 2.0.0_SA_COO~Y msg 105051."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-W122-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~122",
+  "surfaced_at": "2026-10-04T23:55Z",
+  "one_line": "The 49F perfrp_performance_account leaf does not contain the literal 2025-01-10 (0 hits in 1,923,593 bytes read via get_object), so the order's gate (a withdrawal key measured carries_20250110 true) cannot be met by the bytes; IB50-1-AC1 FAILS on that clause with every other part of the packet present.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "get_object s3://opal-data-portal-v2/platinum/advi/49financial/perfrp_performance_account.json 2026-10-04 (ETag 9873b72ef5da73fc0399d2905d4f7821, VersionId E78kI4KB4KsZhdwsAFzfSvkI.kn5Snim, LastModified 2026-09-01T03:16:07Z, 1,923,593 bytes, the only version, no delete marker): count of '2025-01-10' = 0, of '20250110' = 0, of '2025-01' = 0; the only ISO dates in the body are 2024-07-08, 2024-07-09, 2026-08-31, 2026-09-01. Top-level keys: as_of, contract_version, declared_absent_columns, entries (8,632 account rows with window_return only), family, figure_state_census, generated_by, level, periods, si_label, window. No daily series.",
+      "The leaf's SI window (window_start 2024-07-08, window_end 2026-09-01) spans 2025-01-10 by construction, which is how REMEDIATION_v16.md:43 words the claim ('Since-inception figures that include the inflated 2025-01-10 day'). Whether the SI window_return values still embed the S237 error is set by canonical/twr_daily date=2025-01-10 upstream; this cell did not read it (the order's reads 1-4 do not include it).",
+      "Packet written with the leaf in the withdrawal set as the order directs and carries_20250110 recorded false (measured); the order's own checker p50_withdrawal_packet.py exits 1 with 'withdrawal key ... is not measured to carry 2025-01-10'. Other parts: versioning Enabled; 4 perfrp keys, all under 49financial/, of 19 objects under platinum/advi/; rollback by version id; stop rule names the ETag; after-read names PROD and a 49F login."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IB-pr-319 worker face: the withdrawal set is the 49F account leaf plus any performance leaf measured to carry 2025-01-10, and criterion IB50-1-AC1 requires every withdrawal key to be measured carries_20250110 true; the census row W121-S1 says the leaf 'still carries the inflated 2025-01-10 day'.",
+  "world_is": "The leaf's bytes hold no 2025-01-10 date at any field path; it carries the day only as a span inside its SI window, with the values' contamination unread. The packet is complete and the leaf is withdrawable on the CTO's ruling (batch 251), but the order's measured-carrier gate is not satisfied by the bytes.",
+  "notes": "Issuer's choice: (a) amend IB50-1-AC1 / the checker to accept the leaf as ruled-in (CTO batch 251) or to read a spans_20250110 field, or (b) cut a read of canonical/twr_daily date=2025-01-10 and the SI window_return recompute to decide whether the values are contaminated. No AWS write was made; the packet is the unsigned record. perfrp_performance_relationship does not exist in the bucket."
+}
+```
+
+```json
+{
+  "id": "IRPT_BCKEND-W123-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~123",
+  "surfaced_at": "2026-10-05T04:10Z",
+  "one_line": "S297's fix (_days_to_compute returns [] when the newest landed day is at or after the target) leaves two callers in infra/aws/lambda/investor-reporting/holdings-performance/handler.py that index the empty list: lambda_handler (results[-1], line 146) and _target_day (days[-1], line 130), so a re-fire on a landed target raises IndexError instead of answering a no-op.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P (issuer: the empty-plan guard in lambda_handler and _target_day is a handler contract change, left out of IB-pr-320 and cut before the S297 release is served)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/holdings-performance/handler.py @wk-IRPT_BCKEND-123 working tree: lambda_handler reads `last = results[-1]` after a loop over `days`; _target_day returns `_days_to_compute(now, event)[-1]`; with days == [] both raise IndexError.",
+      "infra/aws/lambda/investor-reporting/holdings-performance/tests/test_catch_up.py test_S297_landed_target_writes_nothing: _days_to_compute(MON, {}) == [] with the listing landed through 2026-10-02; the handler's return shape for an empty plan is not named by the order."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IB-pr-320 worker face item 5: when max(landed) >= target, _days_to_compute returns [] (CTO batch 207: the catch-up writes new keys only); the order names no change to lambda_handler or _target_day.",
+  "world_is": "Returning [] is correct for the planner, but lambda_handler and _target_day assume at least one planned day, so the next scheduled fire after a landed target fails with IndexError (a Lambda error) rather than returning a no-op result.",
+  "notes": "Left out per the refusal clause (a contract change: the empty-plan return shape). The test exercises _days_to_compute directly. Suggested owner fix: lambda_handler returns {date: None, rc: 0, ok: True, days: [], planned: []} for an empty plan and _target_day returns None."
+}
+```
+
+## IRPT_BCKEND-S327 -- DISARM of S284: the user-named proxy for the gated TIMXX row is proven live twice (Y-5 Overview, Y-2 Comparison)
+
+```json
+{
+  "id": "IRPT_BCKEND-S327",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-05T03:58:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARM of IRPT_BCKEND-S284 on its named condition: the user's remedy for the gated TIMXX fund row (a user-named proxy) is proven live twice -- Y-5 V1 (REQ-a618aa83, Overview) and Y-2 V1 (REQ-c1b53772, Comparison vs Opal Ultra Long-Term) each named SGOV for TIMXX on the page and reached READY with the status route reading READY. The account entitlement (mutualFundDataUSA) stays Andrew's vendor-account call and is not changed by this row",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Y-5 V1: REQ-a618aa83 READY 2026-10-04T02:28:20Z (IRPT_MVP_Y/Y5V/V1/REQ-a618aa83_terminal_wait.txt @1afe081ac4); its frozen input carries SGOV for TIMXX (99 rows; read 2026-10-05 for the round-3 close, TIMXX absent)",
+      "Y-2 V1: REQ-c1b53772 READY 2026-10-05T01:37:07Z after 2.0.0_SA_COO~D's page Bproxy run named SGOV for TIMXX (msg 105081); status with prospect-v1 READY ANALYSIS_READY (IRPT_MVP_Y/Y2/V1 @16c9f8964b)",
+      "S284's disarm_owner text: 'the user's remedy is Y-5's user-named proxy; an account entitlement is Andrew's vendor-account call'"
+    ]
+  },
+  "dismissal_reason": "The blocking hazard (a gated fund row stops the analysis) has a measured user remedy that completes an Overview and a Comparison; the entitlement question remains open only as Andrew's vendor-account decision, not as a blocking hazard.",
+  "spec_asserts": "IRPT_BCKEND-S284 (BLOCKING, ARMED): TIMXX is attributed and verified but unusable on Opal's YCharts account.",
+  "world_is": "MEASURED: with the user-named proxy, both an Overview (Y-5) and a Comparison (Y-2) of the same file reach READY."
+}
+```
+
+## IRPT_BCKEND-S328 -- DISARM of W69-S1: orders name `terraform` on PATH and .tools/safe-apply.sh (MSTR ruling 105150)
+
+```json
+{
+  "id": "IRPT_BCKEND-S328",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-05T04:38:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARM of IRPT_BCKEND-W69-S1 on 0.0.0_AB_MSTR's provisioning ruling (msg 105150): .tools/*.exe is gitignored, so no worktree ever holds .tools/terraform.exe, and it will not be vendored. A task order names `terraform` on PATH for init/validate/plan and `.tools/safe-apply.sh` (PATH fallback at :40-43) for apply. Forward-only: every order this issuer cuts from now uses that wording; closed orders are history and are not edited.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "0.0.0_AB_MSTR msg 105150 (2026-10-05T04:33Z): measured .tools/terraform.exe v1.9.8 in the shared tree, terraform v1.14.5 on PATH, absent at site Z; .tools/safe-apply.sh:40-43 falls back to PATH",
+      "IRPT_BCKEND-W69-S1 disarm_owner text: 'either vendor .tools/terraform.exe into every new worker worktree or re[word the order]'"
+    ]
+  },
+  "dismissal_reason": "The provisioning owner ruled the path: orders reword to PATH terraform plus safe-apply. The two-version state hazard (1.9.8 vs 1.14.5) is routed by MSTR to 1.0.0_SA_CTO as its own decision and is not carried by this row.",
+  "spec_asserts": "IRPT_BCKEND-W69-S1 (ARMED): task orders instruct `.tools/terraform.exe plan`, which a fresh worker worktree does not hold.",
+  "world_is": "RULED: no vendoring; orders name PATH terraform and .tools/safe-apply.sh. The rule applies to every order cut from now."
+}
+```
+
+## IRPT_BCKEND-S329 -- DISARM of S326: the request history is served newest first; Y-2 is first on the route and the page
+
+```json
+{
+  "id": "IRPT_BCKEND-S329",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-05T04:48:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARM of IRPT_BCKEND-S326: irpt-status serves the request history newest first (read whole, bounded at 2000; accepted_at descending; the cursor contract unchanged) since 04:18:20Z; Y-2's REQ-c1b53772 is first on the route and on the page",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "fix 44cc631396 (merged 80a79a7462); packet blob 2ed731d890 @41459ca2f5; CTO half batch 253 @4bbe1bd830 (condition met: HISTORY_TOO_LARGE answers INVALID_INPUT at the boundary, never UNEXPECTED)",
+      "D1: before-read XPta1UMJ.., ONE safe-apply (0/1/0), after-read 04:18:20Z jhGc2J4Q5EesJgnLq8EzdE5ErrZLbyqnJ8m00R7CgdE= Successful; recorder @e805bb727a",
+      "V1 route: IRPT_MVP_Y/S326/V1_HISTORY_READ_COTTONWOOD.json @202da5f5dc (REQ-c1b53772 first, 30 unique rows newest first); V1 page: 2.0.0_SA_COO~D msg 105156 (position 1 of 25, Ready)",
+      "ledger irpt-s326-history-20261005 CLOSED (U1, D1, V1)"
+    ]
+  },
+  "dismissal_reason": "The page's request list now carries the firm's newest requests first; the defect the row names (the newest request never listed past 25) is measured gone on the route and on the page.",
+  "spec_asserts": "IRPT_BCKEND-S326: the request history pages by id, so the newest request never lists.",
+  "world_is": "MEASURED: Y-2's request is first on the served route and on the page."
+}
+```
+
+## IRPT_BCKEND-S330 -- W100-S2 after-read 2 answered 403/403/200 under an Opal principal; INERT, re-pointed to ADVI_PERFRP (CTO batch 256 'S329')
+
+```json
+{
+  "id": "IRPT_BCKEND-S330",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-05T04:50:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "W100-S2 after-read 2 answered 403 / 403 / 200, not 404 / 404 / 200. Under a signed-in Opal principal (?firm=bd), shared-advisor-router refuses the withdrawn account leaf AND the never-served relationship leaf by name (artifact_forbidden, firmId opal-capital), while perfrp_gainloss_account.json answers 200. CTO batch 256 calls this row 'S329' (the id was renumbered: 2.0.0_SA_COO~Y's S329 landed first at 02641aacbd). Not user-visible: re-pointed to ADVI_PERFRP's owner, INERT.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO (ADVI_PERFRP owner; CTO batch 256 @cbb9281add). REC for when ADVI_PERFRP un-parks: the perfrp fetcher (advisor-intelligence.ts:1673) reads a 403 artifact_forbidden as absent, the same as a 404",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "2.0.0_SA_COO~D msg 105155, walker probe 04:37Z (tmp/ui-walk/20261005T043558Z/probe-get.json, local): account 403 artifact_forbidden; relationship 403 artifact_forbidden; gainloss_account 200 (11,896,644 bytes, body not kept); each without headers 401",
+      "1.0.0_SA_CTO batch 256 @cbb9281add: the withdrawn leaf reads identical to the never-served control and the object is gone at S3; the page destructures only data (AdvisorBookView.tsx:469, 477) and perfrpPerformancePayload returns undefined on !leaf (:203-207), so a 403 renders the same shell"
+    ]
+  },
+  "dismissal_reason": "CTO batch 256: not user-visible; the 403 renders the designed shell. The fetcher's 403 handling is a recommendation for ADVI_PERFRP when it un-parks, not a hazard on this project.",
+  "spec_asserts": "CTO batch 254: under a 49F-scoped session the withdrawn leaf answers 404, the same as the never-served leaf, and gainloss_account answers 200; a 403 is a new row.",
+  "world_is": "MEASURED under an Opal principal: 403 / 403 / 200. The router name-refuses both perfrp_performance leaves for opal-capital. No 49F principal was read; batch 256 rules none is needed."
+}
+```
+
+## IRPT_BCKEND-S331 -- DISARM of W121-S1: the 49F perfrp account leaf is withdrawn and reads as never-served (CTO batch 256)
+
+```json
+{
+  "id": "IRPT_BCKEND-S331",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-05T04:58:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARM of IRPT_BCKEND-W121-S1 (and W100-S2) on CTO batch 256: the 49F perfrp account leaf is withdrawn (Andrew card 1 @c9c8e0c191; delete marker vQdm_KxXCknlz3LooZIS.ViTHQiTiZVn current, head 404, version E78kI4KB... kept for rollback), and after-read 2 read the withdrawn leaf identical to the never-served control. Ledger irpt-w100s2-perfrp-leaf-withdrawal-20261005 closes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ledger irpt-w100s2-perfrp-leaf-withdrawal-20261005 D1 and V1 @92c527758b: pre-head ETag and version matched; delete marker IsLatest; head-object 404",
+      "after-read 2: row IRPT_BCKEND-S330 (403/403/200); CTO batch 256 @cbb9281add closes V2 on it",
+      "CTO half @4a63c9b600, COO half @48fa2860ab, Andrew card 1 @c9c8e0c191"
+    ]
+  },
+  "dismissal_reason": "The live reader W121-S1 named (AdvisorBookView -> shared-advisor-router -> the leaf) can no longer load the inflated leaf: the object is withdrawn and the route answers the same as for a never-served key.",
+  "spec_asserts": "IRPT_BCKEND-W121-S1 (BLOCKING, ARMED): a served page can still load the 49F perfrp leaf carrying the inflated 2025-01-10 day.",
+  "world_is": "MEASURED: head-object 404 with the delete marker current; the route answers 403 artifact_forbidden for it, the same as for the never-served relationship leaf."
+}
+```
+
+## IRPT_BCKEND-S332 -- DISARM of S204 (MOOT): 49F PATH A retired by p2-window B3; ledger 49f-r3 A1 closed SUPERSEDED
+
+```json
+{
+  "id": "IRPT_BCKEND-S332",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-05T05:28:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARM of IRPT_BCKEND-S204 as MOOT: the 49F PATH A whose ruled periods (YTD/QTD/1Y) answered UNEXPECTED (ModuleNotFoundError parity_period_returns) was retired for 49F by ledger irpt-p2-window-20261003 leg B3 (18:44:32Z). The live irpt-performance-adapter is B3's artifact (CodeSha256 NU6YVERLJ0.., LastModified 2026-10-03T18:44:32Z, read 05:2xZ). 49F performance is served by PATH B. Ledger irpt-adapter-holdings-gold-49f-r3-20260929 leg A1 is closed SUPERSEDED and the ledger is CLOSED.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lambda get-function-configuration irpt-performance-adapter 2026-10-05 ~05:2xZ: CodeSha256 NU6YVERLJ0.., LastModified 2026-10-03T18:44:32Z",
+      "org/critical_paths/change_management/20261003T1652Z_irpt-p2-window-20261003_deploy_completion.md:27 and :45 (B3: PATH A retired for 49F, 49F PATH A refuses OBJECT_NOT_COVERED)",
+      "E1 reconcile org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~116/E1_RECONCILE_ROUNDS_42_46.json, S204 next: 'record A1 superseded by B3's PATH A retirement, then one row states S204's hazard is moot'"
+    ]
+  },
+  "dismissal_reason": "The failing path no longer serves 49F; a census of it would grade nothing served. Inflection still composes on PATH A, and its ruled periods are not this row's claim.",
+  "spec_asserts": "IRPT_BCKEND-S204: after the 49F holdings switch every 49F YTD/QTD/1Y read answered UNEXPECTED; ledger leg A1 (the all-accounts served census) was owed.",
+  "world_is": "MEASURED: the live adapter is the B3 artifact that retired PATH A for 49F; leg A1 closed SUPERSEDED and the ledger closed."
+}
+```
+
+## IRPT_BCKEND-W124-S1 -- MaintainedSourceRefused is still raised bare at 25 sites outside maintained_sources.py; they still answer UNEXPECTED
+
+```json
+{
+  "id": "IRPT_BCKEND-W124-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~124",
+  "surfaced_at": "2026-10-05T05:40:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "TO-IB-pr-321 classified the 46 raises in _scope/maintained_sources.py; _scope/canonical_profile_reads.py (14 raises) and _scope/retained_input_authorizer.py (11 raises) also `raise MaintainedSourceRefused(` bare, are outside the cell's named file and checker, and were left as is.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_scope/canonical_profile_reads.py@7c1fd584bc (lines 37-154)",
+      "infra/aws/lambda/investor-reporting/_scope/retained_input_authorizer.py@7c1fd584bc (lines 29-79)",
+      "count: grep -c 'raise MaintainedSourceRefused(' -> 14 and 11"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-321 / CTO batch 253 item 3: replace EVERY `raise MaintainedSourceRefused(...)` with the right subclass; the order's census and checker name maintained_sources.py only (about 50 sites).",
+  "world_is": "MEASURED by Grep at worktree HEAD: canonical_profile_reads.py 14 and retained_input_authorizer.py 11 bare raises of the base class, which reason_for answers UNEXPECTED (the base declares no code, the test test_S175_the_base_class_declares_nothing_so_a_bare_raise_stays_visible pins that). Both files are inside the grant (_scope/); the order scoped the cut to one file, so the issuer rules whether to classify them in a later cell."
+}
+```
+
+## IRPT_BCKEND-W124-S2 -- BucketUnmapped is also raised for a directory artifact with no firm_id_opaque (loaders.py:209); FIRM_BINDING now answers it
+
+```json
+{
+  "id": "IRPT_BCKEND-W124-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~124",
+  "surfaced_at": "2026-10-05T05:40:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Declaring FIRM_BINDING on the BucketUnmapped class (S260) also maps its second raise site, opaque_firm_for at loaders.py:209 (the firm's directory artifact declares no firm_id_opaque), which is a server-artifact fault rather than an unmapped firm.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/loaders.py@7c1fd584bc lines 57 and 209",
+      "infra/aws/lambda/investor-reporting/_authz/served.py@7c1fd584bc lines 738-743 (both sites are on every request's context build)"
+    ]
+  },
+  "spec_asserts": "CTO batch 253 ruling 1: BucketUnmapped declares public_reason_code = FIRM_BINDING (an unmapped firm). The class is raised at two sites.",
+  "world_is": "MEASURED: bucket_for (loaders.py:57) raises it for a firm absent from IRPT_DIRECTORY_BUCKET_MAP (an unmapped firm: FIRM_BINDING fits); opaque_firm_for (loaders.py:209 at 7c1fd584bc) raises it when the artifact lacks firm_id_opaque (a NOT_READY-shaped fault). Both now answer FIRM_BINDING. Out of scope to split (a new class is a ruling); the issuer rules."
+}
+```
+
+## IRPT_BCKEND-S333 -- DISARM of S218: three live-build jobs reached READY without spending the session_refresh allowance
+
+```json
+{
+  "id": "IRPT_BCKEND-S333",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-05T05:55:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARM of IRPT_BCKEND-S218 on its own condition: three jobs on the LIVE resident build reached READY without consuming the one session_refresh allowance at fence 1 or at any fence -- REQ-a618aa83 (READY 10-04 02:28Z), REQ-c1b53772 (READY 10-05 01:37Z) and REQ-777d7546 (last intent 10-05 05:16Z, report RPT-365b1228). Each carries no intent_session_refresh on its irpt-jobs row; their first intents (holdings_upload, portfolio_create) are at fence 1 and report_create at fence 2. The last session_refresh claim in the table is REQ-06185d70 at fence 1, 10-03 00:31Z, ATTENTION, before the re-seed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "DynamoDB irpt-jobs read-only Scan 2026-10-05 ~05:4xZ: 35 rows, 15 READY, 10 carrying intent_session_refresh; the 4 named READY jobs carry none (intent records written by durable_job.py:159-184 claim_intent)",
+      "resident host i-0167fd745ad906a66 package /opt/irpt-resident/3f29017cfc-st21 installed 2026-10-04T02:00:42Z, process started 02:01:04Z (read-only SSM cat/ls/grep); live SHA256SUMS of resident_worker.py, durable_job.py and resident_main.py equal the repo at HEAD, and the one-refresh check is still in code (resident_worker.py:174-175, :256), so an absent intent is a refresh not consumed, not a removed check",
+      "irpt-ycharts-generate CodeSha256 uFTONal/... LastModified 2026-10-04T01:57:24Z",
+      "REQ-329a5618 (READY 10-03 17:03Z) also carries no session_refresh intent, but it ran before the 10-04 install, so it is supporting and not live-build evidence"
+    ]
+  },
+  "dismissal_reason": "The row's named disarm condition is met on the live build three times. The one-refresh-per-request allowance is unchanged in code. A future job that must refresh at fence 1 (a session evicted before the job starts) would re-arm the hazard and is a new row; the CTO allowance question is held until that happens.",
+  "spec_asserts": "IRPT_BCKEND-S218: a job whose first act is a session refresh spends its only allowance and dies on the next eviction; 2 of 2 jobs on inrij6hL did so.",
+  "world_is": "MEASURED: on the live resident (3f29017cfc-st21, since 10-04 02:01Z), 3 of 3 READY jobs consumed no session_refresh."
+}
+```
+
+## IRPT_BCKEND-S334 -- safe-apply's comp-tagauthz gate cannot evaluate: its account-wide IAM read hangs (CTO batch 259)
+
+```json
+{
+  "id": "IRPT_BCKEND-S334",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-05T10:15:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "safe-apply's comp-tagauthz pre-apply gate cannot evaluate: its read `aws iam get-account-authorization-details` makes no progress (0 CPU for 30+ min in the r54 apply, killed by the job cap; a manual repro got no answer within 180 s, rc 143), so the gate fails closed on every tree that sets default_tags. The r54 holdings-performance apply went through on TAGAUTHZ_OVERRIDE (CTO batch 259) after a hand-verified plan (one aws_lambda_function, source_code_hash only, tags identical).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "the comp-tagauthz gate's owner via 1.0.0_SA_CTO (batch 259: file the gate's IAM hang to the gate's owner). Disarms when the gate evaluates a default_tags tree within a bounded time (a timeout on the IAM read, or a narrower read than the account-wide authorization details)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "r54 apply 2026-10-05 ~09:03-09:4xZ: comp-tagauthz check --from-plan pids 48704 and 9168, cpu=0s after 30+ min; no apply happened (live CodeSha256 unchanged until the override apply at 10:08Z)",
+      "manual repro: plan rc 0 (13 s), show -json 216,321 bytes, comp-tagauthz `ERROR: aws iam get-account-authorization-details --output... rc=143` under timeout 180",
+      ".tools/safe-apply.sh:296-330 (fail-closed branches); ledger irpt-r54-holdings-performance-20261005 (override audited INTENT id=20261005T100734Z-64084)"
+    ]
+  },
+  "spec_asserts": "safe-apply.sh:207-218: a tree that sets default_tags is gated by comp-tagauthz before every apply, and the gate evaluates the plan.",
+  "world_is": "MEASURED: the gate's account-wide IAM read does not return in 180 s and made no progress in 30 min, so every default_tags-tree apply on this laptop needs an override or waits indefinitely."
+}
+```
+
+## IRPT_BCKEND-S335 -- the directory refresh still fails after the runner restart: its own start races the SSM hand-over (S323)
+
+```json
+{
+  "id": "IRPT_BCKEND-S335",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-05T13:42:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "S323's remedy was not the restart: the 2026-10-05 13:30Z directory refresh again FAILED at 49F, INF and COT with build_dispatch_failure HAND_OVER_RUNNER_OFFLINE, 'start issued, no build sent'. The runner EC2 i-02448edb624a7a7cf was STARTED at 13:30:36Z (its LaunchTime), so something stopped it after the 03:49Z one-time start, and the refresh dispatcher itself issues the start, then hands the build over before the instance's SSM agent is Online. The hand-over races the boot: a start-then-immediate-dispatch fails by construction.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P (the directory refresh is this workstream's: S126, S323). Disarms when a refresh after the fix lands READY at all three firms: either the dispatcher waits, bounded, for SSM PingStatus Online after its start before the hand-over, or the runner's stop schedule is aligned to leave it up across the refresh",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3 investor-reporting/directory/_refresh/2026-10-05/manifest.json at opal-data-bd, opal-data-inf and opal-data-cot (LastModified 13:30Z): delta {build_command_status 'start issued, no build sent', build_dispatch_failure HAND_OVER_RUNNER_OFFLINE, build_dispatch_half HAND_OVER, build_error DispatchError}",
+      "ec2 describe-instances i-02448edb624a7a7cf at ~13:4xZ: running, LaunchTime 2026-10-05T13:30:36Z (the 03:49:32Z start from ledger mdpf-daily-runner-restart-s323-20261005 S1 was followed by a stop before 13:30Z)",
+      "ssm describe-instance-information at ~13:4xZ: PingStatus Online, LastPing 13:42Z (Online only after the boot, too late for the 13:30Z hand-over)"
+    ]
+  },
+  "spec_asserts": "IRPT_BCKEND-S323 (via Andrew card 2): restarting the mdpf-daily-runner instance lets the directory refresh build again.",
+  "world_is": "MEASURED: with the instance restarted and then stopped again before the refresh, the refresh's own start-then-hand-over fails at all three firms; the directory is still served from the 2026-09-25 build."
+}
+```
+
+## IRPT_BCKEND-W127-S1 -- irpt-performance-adapter cannot be built at base or now: the ADHC_DRIFTD.002 parity gate refuses three source_dir files absent from files[]
+
+```json
+{
+  "id": "IRPT_BCKEND-W127-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~127",
+  "surfaced_at": "2026-10-05T13:00:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "irpt-performance-adapter cannot be built at base or now: the ADHC_DRIFTD.002 parity gate refuses three source_dir files absent from files[]",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P (the release plan for halves for irpt-performance-adapter: register build_candidate.py, build_dependencies.py and cot_probe.py in files[] or rule them out, before any deploy build)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "BUILD_ONLY build of irpt-performance-adapter after the re-pin: 'ERROR: ADHC_DRIFTD.002 parity check failed ... + build_candidate.py + build_dependencies.py + cot_probe.py' (source_dir infra/aws/lambda/investor-reporting/performance), PARTIAL 0 built; the gate reads files[] which the re-pin does not touch, so base fails identically",
+      "census built with BAU_PARITY_SKIP=1, BUILD_ONLY, nothing uploaded; recorded in org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~127/R56_REPIN_CENSUS.json functions.irpt-performance-adapter.build_note"
+    ]
+  },
+  "spec_asserts": "IB-pr-324 step 2: BUILD_ONLY=1 bash build-and-upload.sh investor-reporting <fn> builds each re-pinned function without override.",
+  "world_is": "MEASURED: irpt-performance-adapter's build refuses on the parity gate, so its census (2 changed members, 0 riders, 49 modules import clean) is of a BAU_PARITY_SKIP=1 bundle; a real build and deploy of that function hits the same refusal until files[] is settled."
+}
+```
+
+## IRPT_BCKEND-W127-S2 -- The order's worker face lists five functions, but the plan's repin lists, the checker and the user bound cover seven: irpt-performance-adapter (holdings_gold.py, loaders.py) and irpt-ycharts-generate (four members) were also re-pinned
+
+```json
+{
+  "id": "IRPT_BCKEND-W127-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~127",
+  "surfaced_at": "2026-10-05T13:00:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The order's worker face lists five functions, but the plan's repin lists, the checker and the user bound cover seven: irpt-performance-adapter (holdings_gold.py, loaders.py) and irpt-ycharts-generate (four members) were also re-pinned",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "REPIN_PLAN_R55.json proposal: repin non-empty for 7 functions (49f, directory-search, export-render, holdings, performance-adapter, status, ycharts-generate); only irpt-narrative is empty",
+      "p56_repin.py AC1 iterates every function in the plan and AC2/AC3 want all 7 in the census; 20 pins moved = the sum of the repin lists",
+      "order text names 49f, status, export-render, directory-search, holdings only (14 pins)"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-324 WORKER FACE: 'The approved set is exactly the repin lists' followed by five functions (14 pins).",
+  "world_is": "MEASURED: the repin lists total 20 pins over 7 functions; I moved all 20 (the plan, the checker and the instruction to move only proposal[fn].repin agree), and none of the 6 held_rider / held_dependency pins moved. If the CTO's batch 260 meant the five only, irpt-performance-adapter and irpt-ycharts-generate (6 pins) revert with one re-run of the re-pin script."
+}
+```
+
+## IRPT_BCKEND-W127-S3 -- Attribution of a source_dir member (irpt-export-render bundle.py) has no pin to read git log from; attributed by content-match to the commit whose blob equals the live member
+
+```json
+{
+  "id": "IRPT_BCKEND-W127-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~127",
+  "surfaced_at": "2026-10-05T13:00:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Attribution of a source_dir member (irpt-export-render bundle.py) has no pin to read git log from; attributed by content-match to the commit whose blob equals the live member",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "irpt-export-render census: bundle.py changed vs live is not a staged_from row; `git log -- infra/aws/lambda/investor-reporting/export/bundle.py` shows 73d0bbc37b (TO-IB-pr-317, ~120) after b66691eb1b whose blob equals the live member",
+      "recorded in org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~127/R56_REPIN_CENSUS.json with basis.live_matches_commit"
+    ]
+  },
+  "spec_asserts": "IB-pr-324 step 2: order = the order id whose commits produced the change, read from `git log <old pin>..<head> -- <path>`.",
+  "world_is": "MEASURED: for a non-pinned member there is no old pin, so the live-matching commit stands in as the old pin; bundle.py is attributed to IB-pr-317 (0 riders). The same method applied to every non-pinned changed member in the 7 functions: bundle.py is the only one."
+}
+```
+
+## IRPT_BCKEND-S336 -- DISARM of W80-S1: the first INF fire served T-1 (2026-10-02), named in its key (batch 252)
+
+```json
+{
+  "id": "IRPT_BCKEND-S336",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-05T14:25:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARM of IRPT_BCKEND-W80-S1 on CTO batch 252 (INF keeps T-1): the first scheduled INF holdings-performance fire (Mon 2026-10-05 14:00Z) computed and landed business date 2026-10-02, the T-1 day (974 rows, 798 computable, 176 NON-POSITIVE-BASE), and the served artifact names it: s3://opal-data-inflection/irpt/inflection/gold/holdings_performance_daily/date=2026-10-02/data.parquet.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CloudWatch /aws/lambda/irpt-inf-holdings-performance-lambda 14:00:27Z: computing date=2026-10-02 upload=True source=orion firm=inflection; 2026-10-02 rows=974 LANDED complete=True",
+      "s3 list of the producer's own gold address: date=2026-10-02/data.parquet LastModified 14:00Z, 36,472 bytes"
+    ]
+  },
+  "dismissal_reason": "Batch 252 accepted T-1 for INF; the first fire read shows the artifact named by its business date. A source-aware target stays a later enrichment, not a hold.",
+  "spec_asserts": "IRPT_BCKEND-W80-S1: the INF target day is not source-aware.",
+  "world_is": "MEASURED: the 14:00Z INF fire served T-1 (2026-10-02), named in its partition key."
+}
+```
+
+## IRPT_BCKEND-S337 -- IB-pr-324's census under-reported irpt-ycharts-generate (15 unattributed fixture/template members); held out
+
+```json
+{
+  "id": "IRPT_BCKEND-S337",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-05T14:26:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "IB-pr-324's census (R56_REPIN_CENSUS.json, worker ~127) reports irpt-ycharts-generate with 4 changed members and 0 riders, and IB56-1-AC2 PASSED on it. The issuer's own re-census at merged HEAD f36a8cdefd (BUILD_ONLY vs live get_function) reads 19 changed: the 4 re-pinned members plus 15 under fixtures/har/* and templates.json, which no order of this round produced. The worker's census under-reported, and the checker trusted the census file.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P (this issuer: irpt-ycharts-generate is held out of the re-pin release; the checker pattern is noted for the next census criterion: re-derive, never trust a worker-written census)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P/r57_census/census-irpt-ycharts-generate.json: counts changed 19, members fixtures/har/{FIXTURE_MANIFEST,collection,create_201,create_422_fee,dashboard,decision_branches,generate_201,generate_404_minimal,status_drifted,status_ok,templates,upload_ok,validate_200}.json, report.pdf, templates.json",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~127/R56_REPIN_CENSUS.json: irpt-ycharts-generate 4 changed, 0 riders"
+    ]
+  },
+  "spec_asserts": "IB56-1-AC2: the census attributes every changed member, with no riders.",
+  "world_is": "MEASURED: irpt-ycharts-generate carries 15 unattributed members; it is held out of the release. The other 6 functions' issuer re-census matches the re-pinned members only."
+}
+```
+
+## IRPT_BCKEND-W128-S1 -- The naming gate REFUSES the name the order fixes for the retry schedule: irpt-directory-refresh-retry is out of pattern as SCHEDULE (grammar ends in a
+
+```json
+{
+  "id": "IRPT_BCKEND-W128-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~128",
+  "surfaced_at": "2026-10-05T15:40:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The naming gate REFUSES the name the order fixes for the retry schedule: irpt-directory-refresh-retry is out of pattern as SCHEDULE (grammar ends in a cadence token); the name is kept as ordered and a registry row is proposed, not hand-typed around.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/naming-gate.py --diff <schedule.tf diff> -> 'NAMING REFUSE infra/aws/terraform/investor-reporting/directory/schedule.tf:424 irpt-directory-refresh-retry -> irpt-directory-refresh-retry-{cadence}; NEW and OUT-OF-PATTERN as SCHEDULE: REFUSE', rc=1",
+      "org/standards/NAMING_SCHEMA.json cadence.values = daily, weekly, monthly, hourly, 5min, 1min (event_form on-{event})",
+      "proposal for the issuer/CTO: either register the row irpt-directory-refresh-retry (the existing irpt-directory-refresh is itself cadence-less and predates the gate), or rename in the cadence grammar after a registry decision"
+    ]
+  },
+  "spec_asserts": "Order step 1: name irpt-directory-refresh-retry; .tools/naming-gate.py must not refuse it, and if it does a row is filed and the registry row proposed.",
+  "world_is": "MEASURED: the gate refuses the name (rc=1) with org/mcp/naming-gate.enforce present, and bash .tools/safe-commit.sh BLOCKED the schedule.tf commit (naming limb, ENFORCE mode, rc=1). The edit sits UNCOMMITTED in the worktree wk-irpt-bckend-128 with the ordered name; the only waiver kinds (an R20 ledger row in the gate carrier, or a registry row in infra/logic/registry/) are outside this order's paths, and a cadence-suffixed rename would hand-type around the registry as the order forbids. The issuer or CTO decides: register the name, or name a compliant one. IB57-1-AC1 passes on the worktree file; AC2 packet is committed; the TO stays issued and no proof instance is committed."
+}
+```
+
+## IRPT_BCKEND-W128-S2 -- latest.json is a 270-272 byte pointer with an entry_count field and no entries array, so the packet's entry_count is that field, not a recount of entr
+
+```json
+{
+  "id": "IRPT_BCKEND-W128-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~128",
+  "surfaced_at": "2026-10-05T15:41:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "latest.json is a 270-272 byte pointer with an entry_count field and no entries array, so the packet's entry_count is that field, not a recount of entries; the dated directory.json (outside the three keys the order's AWS bound allows) was not read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3api get-object --version-id on the three latest.json keys: keys as_of_business_date, directory_revision, entry_count, generated_at, key, source_completion_date; entry_count 4620 / 292 / 258",
+      "data/assets/scripts/gold/investor_reporting/directory_runner.py:880-885 builds the pointer with entry_count taken from payload['entry_count']"
+    ]
+  },
+  "spec_asserts": "Order step 2: read the object and count its entries; name the field you counted.",
+  "world_is": "MEASURED: the object read has no entries to count; the field counted is entry_count, which matches the 4,620 / 292 / 258 the order states."
+}
+```
