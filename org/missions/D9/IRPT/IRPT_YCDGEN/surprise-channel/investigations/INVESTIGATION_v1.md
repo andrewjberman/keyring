@@ -295,3 +295,30 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "INERT: a consumer (YCD-l-3) must read schema v1 as 'no holdings' and v2 as holdings present. Owner 2.0.0_SA_COO~Y to rule if v2 should be unconditional (then valid_run_record is amended)."
 }
 ```
+
+## IRPT_YCDGEN-W3-S4 -- contract 3.4/3.5 leaves the computation conventions open; YCD-l-3 chose five and the issuer should confirm them
+
+```json
+{
+  "id": "IRPT_YCDGEN-W3-S4",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~3",
+  "surfaced_at": "2026-10-05T01:09:00Z",
+  "one_line": "YCD-l-3: contracts 3.4/3.5 do not fix five conventions the layout needs (renormalization of the plain weighted mean, statistic units, the BUY_AND_HOLD start, the per-security field root, the sleeve source), so layout_overview.py fixes them and pins each in a test.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Contract 3.4: WEIGHTED_MEAN is `sum_i w_i * v_i` over holdings with an answer; the statistic ids give no unit; BUY_AND_HOLD is `V(t) = sum_i amount_i * series_i(t) / series_i(t0)`; `field` is a JSONPath per security; the sleeve share is the holding's asset_allocation_stock or asset_allocation_bond answer.",
+  "world_is": "Chosen in layout_overview.py (all pinned by tests/test_layout_overview.py): (1) WEIGHTED_MEAN, HARMONIC_WEIGHTED_MEAN and the sleeve mean renormalize the weights over the holdings with an answer, so a weighted mean is a mean (the literal un-renormalized sum is biased low by the unanswered weight; the two agree at coverage 1.0); a harmonic holding with value 0 counts as no answer; SUM is the plain sum over answered holdings. (2) Series statistics return PERCENT (total_return, annualized_return, std_dev, max_drawdown, the last negative or 0), matching YCharts' calc values; cumulative_series returns [[ts_ms, V]] pairs. (3) BUY_AND_HOLD t0 is the latest first observation among the answered holdings, V runs on the union of their observation times with as-of carry-forward, and a window longer than that common history is NOT_AVAILABLE reason SERIES_TOO_SHORT. (4) A per-security `field` is read from that security's node (chart_data[k] or the indicesData entry); a field that starts `$.chart_data[N]` or `$.indicesData[N]` has that prefix re-rooted at the security's node; `columns` (calc ids) read an indicesData entry by calc_name; a chunk's tickers come from the kept query param whose items are all held tickers, and a chunk whose chart_data length differs from its ticker count is treated as unanswered. (5) The sleeve share is read by calc_name `asset_allocation_<sleeve>` from any kept 2xx table answer, not from a named call; absent everywhere gives INPUT_MISSING:asset_allocation_<sleeve>. The trace `inputs` are the run.json `calls[].key` of each kept answer that supplied an answered holding (the filename form `step=NN_<name>.json` when the run record lacks the call).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py compute_element / statistic_of / _nodes @ branch wk-ycdgen-r3-3",
+      "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_layout_overview.py test_computed_* and test_coverage_below_* @ branch wk-ycdgen-r3-3",
+      "org/missions/D9/IRPT/IRPT_YCDGEN/decompositions/IRPT_YCDGEN_DECOMP_R3.md sections 3.4 and 3.5"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: no element is computed yet in a served report; the issuer's close run is the first read. Owner 2.0.0_SA_COO~Y: confirm or amend each convention before the map's computed sources are graded against YCharts' own printed values."
+}
+```
