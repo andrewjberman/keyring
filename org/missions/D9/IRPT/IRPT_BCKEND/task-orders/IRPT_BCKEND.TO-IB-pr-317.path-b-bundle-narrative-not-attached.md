@@ -64,6 +64,8 @@ infra/aws/lambda/investor-reporting/export/tests/test_bundle_narrative_state.py
 infra/aws/lambda/investor-reporting/_contracts/ExportBundle.schema.json
 infra/aws/lambda/investor-reporting/_contracts/fixtures/
 infra/aws/lambda/investor-reporting/export/contracts/
+docs/contracts/investor-reporting/v1/ExportBundle.schema.json
+infra/aws/lambda/investor-reporting/export/tests/test_export_path_b.py
 org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~120/
 org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-317.path-b-bundle-narrative-not-attached.md
@@ -82,6 +84,16 @@ Validate it with `python .tools/proof-of-spec-check.py <instance> IB49-1-AC1,IB4
 
 **REPORT:** your final message gives the commit hashes, each criterion's last line, every contract copy you changed, and any
 surprise row ids.
+
+## AMENDMENT 1 (2026-10-05 ~01:1xZ, issuer 2.0.0_SA_COO~P, on rows W120-S1 and W120-S2)
+
+The regression criterion IB49-1-AC2 needs two files the cut did not grant:
+- `docs/contracts/investor-reporting/v1/ExportBundle.schema.json`, the docs copy that `test_packaged_contracts_match_docs.py` byte-compares;
+- `export/tests/test_export_path_b.py:106`, which asserts a PATH B bundle's exact six top-level keys.
+
+Both now go to the grant. The docs copy takes the same edit as the packaged schema, and the key-set assertion admits
+`narrative_state` and `narrative_reason`. The criteria are unchanged. No gate limb graded this modification: LIMB 6 does not fire on a
+modification, and GATE (viii) grades only an order that declares placeholders.
 
 ---
 
