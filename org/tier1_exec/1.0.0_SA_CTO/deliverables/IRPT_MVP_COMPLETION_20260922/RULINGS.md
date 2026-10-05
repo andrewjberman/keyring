@@ -7400,3 +7400,52 @@ holdings-performance, performance and reporting-gold/publish/read roots, plus `p
 4. **Ledger `irpt-w100s2-perfrp-leaf-withdrawal-20261005`** closes on V2.
 
 -- 1.0.0_SA_CTO
+
+## Batch 257 -- 2026-10-05 ~06:2xZ -- MDPF_SECCLASS round 7 intake (FWD-9, FWD-10): Q1-Q5 ruled
+
+**Read:** `2.0.0_SA_COO~M` msg 105186, intake `org/missions/D8/MDPF/MDPF_SECCLASS/decompositions/MDPF_SECCLASS_R7_INTAKE_FWD9_FWD10.md`,
+blob `308512044c` (disk = HEAD, @320b02aa6b).
+- canonical_shape: 504 days (2024-09-30 to 2026-10-02), 13 funds, 822 securities.
+- 178 US (27 with a CUSIP) and 516 non-US with no ISIN or CUSIP.
+- 17 index futures.
+- GICS sub-class UNRESOLVED on 191 of 217 rows of the newest day.
+- The only holding dialog with history is Rival Funds' (G4 `security_market`, site Z's `enrichment_bloomberg`).
+
+**RULED:**
+1. **Q1 key namespace: ACCEPTED, with one amendment.** It is a third namespace mirroring the `CUSIP:` rows (ruling 103139):
+   `identifier_namespace: BLOOMBERG`.
+   - The key carries NO whitespace: `BBG:<ticker>:<exch>`, from `security_bloomberg` with `Equity` dropped (for example
+     `BBG:REL:LN`).
+   - The verbatim `security_bloomberg` string is kept in its own attribute.
+   - Why: a space inside a hash key breaks every reader that splits or URL-builds on it, and a key is the wrong place to find
+     that out.
+   - US listings keep the bare ticker. The reader census (the SC-e-15 pattern) runs before the first write.
+2. **Q2 history: ACCEPTED.** The series is G4 `security_market`, the one Rival Funds' dialog reads.
+   - Extending it to 3 years is site Z's own: Andrew gave the 3-year cap at site Z, to `2.0.0_SA_COO~RV`, and the producer and
+     its Bloomberg budget are ETFS_RIVALS'. It is an INPUT dependency, never a laptop cell.
+   - This project READS coverage per security, back to `min(3y, first trading day)`, and names each gap as a row routed to site
+     Z through `0.0.0_AB_MSTR`.
+   - No second history source without Andrew's word.
+3. **Q3 classification source: ACCEPTED, with a fallback,** because GICS alone leaves most rows unresolved (191 of 217).
+   - Class: `equity` from `asset_class`.
+   - Sub-class, in order, all from data the input carries:
+     - (a) GICS where RESOLVED, mapped to the table's ratified vocabulary;
+     - (b) else the listing's exchange country, mapped to the vocabulary's regional sub-class IF the vocabulary has one. The
+       country list is held as data in the repo, not in code;
+     - (c) only where neither exists: no sub-class, marked `low_confidence`.
+   - `instrument_kind single_security`, `classified_by scheduled`, `updated_by rivalfunds-backfill`. No new vendor and no model.
+   - If the vocabulary has no regional sub-class, the cut says so as a row before any write. It does not invent one.
+4. **Q4 domain: ACCEPTED.** A stock is `provider_security_type` Equity and non-cash; the 17 `Index` futures are out. Membership
+   is the input's own window (about 2 years today); the 3-year cap binds history only.
+5. **Q5 FWD-10: ACCEPTED.** A scheduled producer (an E_18-style detector, the same planner and conditional-put writer, Q1's keys),
+   not a monitor.
+   - The cut first measures which Opal ETFs canonical_shape already carries (IDVZ and PFOE are among its 13 funds). It reads
+     `opal-data-etfs/silver/holdings/` only for Opal ETFs that canonical_shape does not carry, so one security is never seen
+     twice.
+   - History for every member comes through Q2's input.
+   - The schedule runs after both inputs land on a trading day.
+   - Runtime, lane, names (builder output, rule 30) and the read-grant cell are named at the cut.
+6. **The FWD-9 row write** to `etf-classifications` (R7-1) is served output, under its own never-widen half (CTO+COO), with the
+   dry run first.
+
+-- 1.0.0_SA_CTO
