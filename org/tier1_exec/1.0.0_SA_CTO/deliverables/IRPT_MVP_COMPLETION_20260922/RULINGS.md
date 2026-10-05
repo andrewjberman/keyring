@@ -7221,3 +7221,41 @@ failed calls.
    - each answered account is never requested again.
 
 -- 1.0.0_SA_CTO
+
+## Batch 251 -- 2026-10-05 ~01:4xZ -- W100-S2 has a live reader: the packet withdraws the leaf; the portal's call stays
+
+**Read:** `2.0.0_SA_COO~P` msg 105083.
+- The census is `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~121/W100S2_READERS_CENSUS.json`, drained
+  @0f69381e7c, on row IRPT_BCKEND-W121-S1 (BLOCKING/ARMED).
+- The reader is portal PROD c69b4747 `AdvisorBookView.tsx:479`, which calls `getPerfrpPerformanceLeaf('account')`. The path runs
+  CloudFront EVTSA9VEHNZVH, then `shared-advisor-router:26`, then `opal-data-portal-v2`
+  `platinum/advi/49financial/perfrp_performance_account.json`.
+- This seat read portal PROD:
+  - `/advisor-intelligence` is behind `ProtectedRoute` only, listed under Insights. Any signed-in 49F user can open it; it is not
+    admin-gated.
+  - The call site's own comment reads "INERT UNTIL SERVED, BY DESIGN. No perfrp key is served under the build-only cap, so both
+    fetches 404 -> null and every card renders its shell -- the correct pre-serve state, not an error."
+
+**RULED: withdraw the leaf. Do not retire the portal's call.**
+1. **Why the leaf.**
+   - The page was built to show its shell when the key is absent, so withdrawal restores the state its author designed. It needs no
+     product change.
+   - The key's presence since 09-01 contradicts ADVI_PERFRP's build-only cap; withdrawing it puts that held project back where its
+     hold says it is.
+   - Retiring the call would mean a product-file change on a held project's page, a DEV-to-PROD release, and the wrong object left
+     in place for any other path to find. That is a wider act, and a slower one, than removing one key.
+2. **The packet** (`~P` drafts it; never-widen, CTO+COO) carries:
+   - the bucket's versioning state, read;
+   - the blast radius: every `perfrp_*` key under `platinum/advi/*/` across ALL firm prefixes, each with LastModified and its writer,
+     with the writers counted;
+   - the withdrawal set: the 49F account leaf plus any other perfrp PERFORMANCE leaf measured to carry the inflated 2025-01-10 day.
+     Keys with no measured defect are listed, left untouched, and named to ADVI_PERFRP's owner. This act does not widen to them;
+   - rollback per key: on a versioned bucket, removing the delete marker. If the bucket is unversioned, a byte-identical copy goes
+     first to a key no router serves (outside `platinum/advi/`, inside 49F's scope, at the builder address), with its sha256 read back;
+   - the after-read: the route answers 404, and the page renders the shell on PROD for one 49F advisor login, read, not inferred;
+   - the before-read stop: if the object's ETag differs from the census read, stop.
+3. **The delete is Andrew's word** (CLAUDE.md Agent Autonomy, "S3 deletes"; batch 247). Once both halves are signed, it goes on his
+   act list with the packet path. Until then the wrong figure stays live for 49F users of `/advisor-intelligence`, and the card says so.
+4. W121-S1 stays ARMED until the after-read; its disarm owner stays `~P`.
+
+-- 1.0.0_SA_CTO
