@@ -18163,3 +18163,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "MEASURED: on the live resident (3f29017cfc-st21, since 10-04 02:01Z), 3 of 3 READY jobs consumed no session_refresh."
 }
 ```
+
+## IRPT_BCKEND-S334 -- safe-apply's comp-tagauthz gate cannot evaluate: its account-wide IAM read hangs (CTO batch 259)
+
+```json
+{
+  "id": "IRPT_BCKEND-S334",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-05T10:15:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "safe-apply's comp-tagauthz pre-apply gate cannot evaluate: its read `aws iam get-account-authorization-details` makes no progress (0 CPU for 30+ min in the r54 apply, killed by the job cap; a manual repro got no answer within 180 s, rc 143), so the gate fails closed on every tree that sets default_tags. The r54 holdings-performance apply went through on TAGAUTHZ_OVERRIDE (CTO batch 259) after a hand-verified plan (one aws_lambda_function, source_code_hash only, tags identical).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "the comp-tagauthz gate's owner via 1.0.0_SA_CTO (batch 259: file the gate's IAM hang to the gate's owner). Disarms when the gate evaluates a default_tags tree within a bounded time (a timeout on the IAM read, or a narrower read than the account-wide authorization details)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "r54 apply 2026-10-05 ~09:03-09:4xZ: comp-tagauthz check --from-plan pids 48704 and 9168, cpu=0s after 30+ min; no apply happened (live CodeSha256 unchanged until the override apply at 10:08Z)",
+      "manual repro: plan rc 0 (13 s), show -json 216,321 bytes, comp-tagauthz `ERROR: aws iam get-account-authorization-details --output... rc=143` under timeout 180",
+      ".tools/safe-apply.sh:296-330 (fail-closed branches); ledger irpt-r54-holdings-performance-20261005 (override audited INTENT id=20261005T100734Z-64084)"
+    ]
+  },
+  "spec_asserts": "safe-apply.sh:207-218: a tree that sets default_tags is gated by comp-tagauthz before every apply, and the gate evaluates the plan.",
+  "world_is": "MEASURED: the gate's account-wide IAM read does not return in 180 s and made no progress in 30 min, so every default_tags-tree apply on this laptop needs an override or waits indefinitely."
+}
+```
