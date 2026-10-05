@@ -17767,5 +17767,49 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
    "git ls-files over deliverables/0.9.0_WK_AMGT_RESAPP~6 lists price_axis_rows_2026-09-10.json only; the 2026-10-01 and 2026-10-02 copies are untracked."
   ]
  }
+},
+{
+ "id": "AMGT_RESAPP-Z-W232-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~232",
+ "surfaced_at": "2026-10-05T16:12:57Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "one_line": "The AMGT-au-2 repair list (GraphicCard, HeroGraphic, useCollectedChatter stubs) does not make page_render.cjs load: the page also imports @/ui/components/PageEnd (and its @/lib/dateUtils), which the round-45 loader neither stubs nor resolves.",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "TO AMGT-au-2 section 1 names the repair as the GraphicCard and HeroGraphic (PanelEyebrow, ICON_GLOW) stubs plus a useCollectedChatter stub, 'as tabs.harness.cjs:90-100 does'; with those the copied grader should render the page at portal e6ab82ad.",
+ "world_is": "After exactly those three stubs the copied page_render.cjs still exits rc=1 on all three names (sweep.py: CAPTURE_FAILED 3 of 3), MODULE_NOT_FOUND '@/ui/components/PageEnd' from SecurityAnalysis.tsx:11 (DSGN_AMGTV1 round 38 made the page end on the shared PageEnd). tabs.harness.cjs:204-206 loads the REAL src/ui/components/PageEnd.tsx and src/lib/dateUtils.ts inside its load(); the copy now does the same (two lines in load(), grader/page_render.cjs). With them the page renders (BA_US_Equity 598842 bytes) and AC1 reads NOT_OK 3, CAPTURE_FAILED 0. The originals under round45/checks are untouched. Edit is inside the order's grader copy, so no widening of the write grant; the loader still has no stub for any other import.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "node org/.../0.9.0_WK_AMGT_RESAPP~232/grader/page_render.cjs <BA fixture> before the PageEnd/dateUtils lines: Error: Cannot find module '@/ui/components/PageEnd'; after: stdout 598842 bytes, rc 0.",
+   "portal/src/pages/SecurityAnalysis/__harness__/tabs.harness.cjs:204-206 (read only).",
+   "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~232/grader/page_render.cjs load()."
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W232-S2",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~232",
+ "surfaced_at": "2026-10-05T16:12:57Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "one_line": "The repaired grader reads about 195-200 export-only fiscal figures per name (20 mnemonics x their years), not the issuer's 539-629 including ARD_* rows; no ARD_* row is export-only here, and the ABSENCES class (one MODEL_NOTE per name) was not in the order's list.",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "TO AMGT-au-2 section 1.3: the issuer measured on a scratch repair 'about 539-629 export-only fiscal figures per name (including ARD_* rows), 3 export-only case lines per name, 17-18 page-only 2026E-2028E figures per name and 19 value differences, all x-suffixed ratios'.",
+ "world_is": "With the order's repairs applied to the copies (years reset per header tr, x suffix read), the --diff of BA_US_Equity, AMD_US_Equity, ASML_NA_Equity prints per name: FIGURES rich-only 195, 198, 200 (the same 20 mnemonics each, none ARD_*; the BA page renders its 5 ARD_* rows with no difference), FIGURES page-only 20, 21, 21 (7 mnemonics x 2026E-2028E, PE_RATIO 2027E-2028E on BA), CASES rich-only 3 each, ABSENCES rich-only 1 each (MODEL_NOTE 'the block carries fiscal years 2016 to 2025 only.'), value differences 0 of 1674 compared. Control: the same copies with the years reset disabled print 772 FIGURES rich-only over the 3 names and 1348 value differences of 1495 compared, so the reset is what takes the value differences to 0; the issuer's 539-629 is not reproduced by either arm and its scratch repair is not in the tree, so its cause is not stated here.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~232/fwd30_r71.tsv and the AC1 run (--diff) of 2026-10-05.",
+   "Control run (scratch, no-reset copy): FIGURES rich-only 772, FIGURES page-only 241, 'compared=1495 differ=1348'; repaired: 'compared=1674 differ=0'.",
+   "FWD30_READ_ROUND71.md in the same folder carries the per-name table."
+  ]
+ }
 }]
 ```
