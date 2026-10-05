@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_MDPF_SECCLASS~16</issued_to>
 <issued_by>2.0.0_SA_COO~M</issued_by>
 <issued_date>2026-10-05</issued_date>
-<status>complete</status>
+<status>issued</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -87,7 +87,7 @@ half):**
 <criterion id="SC7-e19-AC2" cell_refs="SC-e-19"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R7_CHECKS/r7_fwd10_dry_run.py --packaged</invocation><expect>FWD10-DRY-RUN day=</expect></criterion>
 `SC7-e19-AC2` -- imported from its packaged layout, the producer dry-runs the latest real day end to end.
 
-<criterion id="SC7-e19-AC3" cell_refs="SC-e-19"><invocation>.tools/terraform.exe -chdir=infra/aws/terraform/mdpf-secclass/new-security-classifier validate -no-color</invocation><expect>The configuration is valid</expect></criterion>
+<criterion id="SC7-e19-AC3" cell_refs="SC-e-19"><invocation>terraform -chdir=infra/aws/terraform/mdpf-secclass/new-security-classifier validate -no-color</invocation><expect>The configuration is valid</expect></criterion>
 `SC7-e19-AC3` -- the declared infra validates. Before `validate`, run `init -backend=false -plugin-dir=C:/Users/AndrewBerman/.terraform.d/plugin-cache`, so no registry egress.
 
 <expected_criteria>SC7-e19-AC1,SC7-e19-AC2,SC7-e19-AC3</expected_criteria>
@@ -145,3 +145,30 @@ lane: the <paths> block IS the grant.
 </preflight>
 
 Source: PRD v0.3 FWD-10 @ffb329af49; RULINGS batch 257 Q5 @a272c26a75; intake @320b02aa6b.
+
+## AMENDMENT 1 (2.0.0_SA_COO~M, 2026-10-05 ~14:4xZ) -- CTO batch 263 condition 2: no unresolved US row is written
+
+The cell re-opens (`<status>` issued). The FWD-10 apply half's CTO section is SIGNED @ca5be51cea with batch 263. Its condition
+2: "A NEW US bare-ticker row is written only with a resolved sub-class. An unresolved US key goes into the day's list as
+UNRESOLVED, not written: a held ticker's fallback basis must not become an unclassified TABLE read (FWD-7's ACCEPT). BBG
+rows stand as signed."
+
+1. **In the producer** (`infra/aws/lambda/mdpf-secclass/new-security-classifier/lambda_function.py`):
+   - A new stock whose planned item is US-keyed (`identifier_namespace` absent or `TICKER`) and carries no
+     `sub_asset_class` gets state `unresolved` in the day's list.
+   - It is never passed to `write()`, in a dry run or a writing run.
+   - A `BLOOMBERG` item is written with or without a sub-class, unchanged.
+   - The summary counts `unresolved` beside `planned_writes` and `present`.
+   - Decide unresolved from the planned item the module returns. Never re-derive the sub-class here.
+2. **Tests** (`.../tests/test_new_security_classifier.py`), with the table stubbed:
+   - a new US key with no sub-class is listed `unresolved` and puts nothing (count the put attempts);
+   - a new US key with a GICS sub-class is written;
+   - a new BBG key with no sub-class is written.
+3. **The dry-run line** (`R7_CHECKS/r7_fwd10_dry_run.py`) appends ` unresolved=<n>` after `present=<n>`. AC2's expectation
+   `FWD10-DRY-RUN day=` still matches.
+4. Re-run AC1-AC3 (AC3: `terraform` on PATH, 1.15.8, per batch 263 condition 1; `.tools/terraform.exe` is retired). Then
+   re-validate the proof and flip `<status>` to complete.
+
+AC1 and AC2 are unchanged. AC3's invocation now names `terraform` on PATH instead of `.tools/terraform.exe` (batch 263
+condition 1); its expectation is unchanged. Gate limb: none graded this modification (LIMB 6 fires on new orders only; no
+placeholders).
