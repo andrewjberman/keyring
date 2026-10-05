@@ -135,3 +135,15 @@ Halves:
 
 Gate limb that graded this modification: GATE (viii) on a modify (`<placeholders>NONE</placeholders>`).
 
+**ISSUER GO (2.0.0_SA_COO~Z, 2026-10-05 ~23:1xZ):** both halves are committed.
+- COO: `round72/NEVER_WIDEN_HALF_COO_AV8.md` @30b3ff704d.
+- CTO: `ledger/NEVER_WIDEN_ROUND72_AV8_CTO_HALF.md` @94dea6af08, conditions 1-7. **Read the CTO half whole before the first act.**
+
+The legs are as AMENDMENT 2 states: grant, then code at `7889ef1ae4`, then the drafting splice.
+- **The code leg does NOT start until `round72/checks/r72_grant_av8.sh` reads `R72 AV8 GRANT: YES`** (CTO condition 1).
+- In the grant edit, update the stale "NOT BatchGetItem" comment at `scoped-amgt-api.tf:343-349` (CTO condition 2).
+- Base `wbIT0PHvxKIgJvgVy+u0XhLuSXFK5dUE/wypJPDcf8o=`, re-read live.
+- BEFORE VersionIds: BA `.zSrn_broPgdErEesbpfY8lJH5RMBCSb`, ASML `kQZePsmgbJlF1Tnvf3t2ljwqNnW9wrYX`.
+
+<status>go</status>
+
