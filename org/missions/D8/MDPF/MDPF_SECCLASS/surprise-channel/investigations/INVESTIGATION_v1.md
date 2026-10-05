@@ -1852,3 +1852,115 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Resolves MDPF_SECCLASS-W14-S4 and MDPF_SECCLASS-W14-S5."
 }
 ```
+
+## MDPF_SECCLASS-W16-S1 -- The Opal ETFs' silver holdings have no builder address: the producer and its IAM read grant name the legacy etfs-netasse
+
+```json
+{
+  "id": "MDPF_SECCLASS-W16-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~16",
+  "surfaced_at": "2026-10-05T11:17Z",
+  "one_line": "The Opal ETFs' silver holdings (s3://opal-data-etfs/silver/holdings/{run_date}.parquet) cannot be produced by address() (a silver key homes in opal-data-assets), so the FWD-10 producer reads them from that legacy location as a named, read-only departure.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py address() homes a silver key in opal-data-assets per tiers.json silver rule (R4); the live file is s3://opal-data-etfs/silver/holdings/2026-10-04.parquet (114 objects listed)",
+      "infra/aws/lambda/etfs-pipeline/etfs-netassets-daily/lambda_function.py:1501-1508 writes it with SILVER_ROOT + S3_HOLDINGS_PREFIX",
+      "the naming gate refused a new out-of-pattern key literal in main.tf (NAMING REFUSE: silver/holdings -> {source}/{scope}/silver/holdings), so the .tf root takes it as var.silver_prefix with no default; r7_fwd10_dry_run.py (under org/, outside the gate's domain) carries SILVER_BUCKET and SILVER_PREFIX"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md rule 30: every S3 address is address() output; a deliberate departure is an R20 register entry Andrew acknowledges. The order names this location as an input.",
+  "world_is": "The one address in the cell with no builder home. It is read-only here. The producer would follow the data when etfs-netassets migrates (R19).",
+  "notes": "Needs an R20 register entry for the departure (outside this order's paths) or the etfs-netassets migration. Until then a plan or apply of this root must pass -var silver_prefix=<the etfs-netassets prefix, ending in a slash>; validate needs no value."
+}
+```
+
+
+## MDPF_SECCLASS-W16-S2 -- The producer is not yet a row of lambda-source-map.json: the first artifact build needs files[] across two trees
+
+```json
+{
+  "id": "MDPF_SECCLASS-W16-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~16",
+  "surfaced_at": "2026-10-05T11:17Z",
+  "one_line": "infra/aws/lambda/ci/lambda-source-map.json has no row for the new-security-classifier, and its package needs four files from infra/aws/lambda/v2_portal/_shared beside the handler; the map is outside this order's paths.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "r7_fwd10_dry_run.py --packaged printed FWD10-PACKAGE files=lambda_function.py,etf_classification.py,etf_classification_scheduled.py,etf_classifications_dynamodb.py,rivalfunds_classification.py",
+      "infra/aws/lambda/ci/lambda-source-map.json 'THIRD PACKAGE MEMBER' note: files[] is joined to ONE source_dir, so a module from a second tree needs the map's cross-tree form",
+      "lambda.tf reads s3://opal-313476888478-lambda-artifacts/mdpf-secclass/<function name>.zip through the yang-lambda module; a plan fails on the data source until that object exists"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order: the Lambda is sourced from the S3 artifact pattern the other modules use. Applying and uploading the artifact are the issuer's act.",
+  "world_is": "The build-and-upload.sh step for pipeline mdpf-secclass has nothing to build until the issuer adds the map row and the cross-tree members.",
+  "notes": "Issuer step before the first build. The package list above is the measured closure (read from the handler's import statements, transitively)."
+}
+```
+
+
+## MDPF_SECCLASS-W16-S3 -- The worktree has no .tools/terraform.exe (gitignored) and TF_PLUGIN_CACHE_DIR equals the order's plugin-dir; AC3 ran wit
+
+```json
+{
+  "id": "MDPF_SECCLASS-W16-S3",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~16",
+  "surfaced_at": "2026-10-05T11:17Z",
+  "one_line": "AC3's invocation .tools/terraform.exe does not exist in a fresh worktree; the base checkout parks terraform-1.9.8-aside.exe, and init -plugin-dir=<plugin-cache> fails while TF_PLUGIN_CACHE_DIR points at the same directory.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls .tools in the worktree: no terraform.exe (.gitignore:193 .tools/*.exe); base checkout .tools holds jq.exe and terraform-1.9.8-aside.exe only",
+      "first init: 'cannot install existing provider directory ... to itself' with TF_PLUGIN_CACHE_DIR=C:/Users/AndrewBerman/.terraform.d/plugin-cache set",
+      "second init with the variable unset and an empty CLI config copied the 718 MB provider into .terraform/ and, on the first try, failed 'There is not enough space on the disk' (C: showed 1.6G free, 100% used)",
+      "final run: cp of the aside binary to the worktree's ignored .tools/terraform.exe; TF_CLI_CONFIG_FILE=empty, TF_PLUGIN_CACHE_DIR unset; init -backend=false -plugin-dir=... then validate: Success! The configuration is valid. rc=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order: run .tools/terraform.exe init -backend=false -plugin-dir=<plugin-cache> then validate.",
+  "world_is": "A worker must supply the binary and clear the cache variable to run AC3 as written; the copy is an ignored file, not committed. The local disk is at 100% (about 0.9 GB free after the copy), which can fail any worker's write.",
+  "notes": "Provider copy removed from the worktree after the final AC3 run. The disk state is the integrator's to read."
+}
+```
+
+
+## MDPF_SECCLASS-W16-S4 -- The latest canonical_shape day is a partial landing and weekend revisions land despite the declared Monday-to-Friday sch
+
+```json
+{
+  "id": "MDPF_SECCLASS-W16-S4",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~16",
+  "surfaced_at": "2026-10-05T11:17Z",
+  "one_line": "The 2026-10-02 canonical_shape partition holds 4 of the 13 funds (ETFT, INEQ, PCLG, TXUE), so the latest-day dry run reads new_stocks=0; earlier days show the producer finding new stocks (2026-09-30: many, 2026-09-29: 1).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "canonical_shape fund_ticker per newest revision: 2026-09-30 and earlier 12 funds, 2026-10-01 9 funds, 2026-10-02 4 funds (read live 2026-10-05)",
+      "S3 LastModified (ET) of date=2026-10-02 revisions: Sat 10-03 07:07 and Sun 10-04 07:06, so the fetch revision lands on weekends although etfs-rivalfunds declares MON-FRI",
+      "r7_fwd10_dry_run.py --packaged: FWD10-DRY-RUN day=2026-10-02 previous=2026-10-01 sources=2 new_stocks=0; --date 2026-09-29 gave new_stocks=1 (MRNA, opal_silver, present); --date 2026-09-30 listed new stocks in states planned and present"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order: a stock is NEW when it is in today's holdings and not in the previous available day's.",
+  "world_is": "A previous day that carries funds the current day lacks only hides stocks; a current day that carries funds the previous lacks lists stocks that may be old (they show as present in the table, or as planned where the table lacks them, which is the intended write).",
+  "notes": "The producer compares day unions as ordered. A per-fund previous day would be a design change for the issuer to rule on; the write itself is put-on-absence either way."
+}
+```
