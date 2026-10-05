@@ -7874,3 +7874,26 @@ name the one known failure instead of silently inheriting it.
   "world_is": "Both hold once the shared part (the position snapshot read, SchwabService._asset_holdings) is extracted and the three sites each keep their own sem.qualify_asset_plan( call plus a four-line SemanticError mapping; the copy is the mapping only. The grep counts lines, not paths, so a future refactor to one call site would fail AC2 with the behaviour unchanged."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W22-S8",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~22",
+  "surfaced_at": "2026-10-05T01:20Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "tests/test_schwab_engine.py::test_ogq1_ac04 failed once inside q7.AC2.sh while a second pytest process (q7.AC1.sh) ran on the same device, then passed alone and in the clean AC2 re-run: a load-sensitive test, not in Q7_SUITE_BASELINE.txt.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: q7.AC2.sh at 1120c97540 with q7.AC1.sh running concurrently: 'failures beyond baseline 1 tests/test_schwab_engine.py::test_ogq1_ac04', RESULT: FAIL, exit=1.",
+      "RUN: python -m pytest tests/test_schwab_engine.py -q at 1120c97540, nothing else running: 14 passed in 45.43s; then q7.AC2.sh alone: 'failures beyond baseline 0', RESULT: PASS, exit=0."
+    ]
+  },
+  "spec_asserts": "AC2: the schwab test files add no failure beyond Q7_SUITE_BASELINE.txt (which lists only test_ogx4_ac03 and the recorded flake test_ogx2_ac01).",
+  "world_is": "test_ogq1_ac04 is a second engine test that fails under concurrent load on this device; the file does not import the code this cell changed. The baseline does not list it, so an AC2 run beside another pytest process can read FAIL with no code cause."
+}
+```

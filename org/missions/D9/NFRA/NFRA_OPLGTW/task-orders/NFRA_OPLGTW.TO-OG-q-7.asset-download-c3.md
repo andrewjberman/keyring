@@ -85,7 +85,7 @@ Rows: id `NFRA_OPLGTW-Z-W22-S<k>` (next unused), fabric `site-z`, disarm_owner `
 - Chain: `OG-q-7` -> `OG-rl-6`.
 - Pre-cut: `q7.AC1` FAIL (the test file is absent); `q7.AC2` FAIL (2 guards, 1 call site).
 
-<status>pending</status>
+<status>complete</status>
 <round>17</round>
 <slot>~22</slot>
 <fabric>site-z</fabric>
