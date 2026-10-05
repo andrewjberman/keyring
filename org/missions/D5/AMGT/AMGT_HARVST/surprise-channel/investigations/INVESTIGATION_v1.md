@@ -7023,6 +7023,28 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "disposition": "UNDER_INVESTIGATION",
       "disarm_owner": "2.0.0_SA_COO~H",
       "notes": "No data lost: bronze and the outbox hold everything. The upload slowness that drove the timeout is cured by at-1 (Z-S86). For a later analysis: catch TimeoutExpired in Collector.upload and record it as a transport-class stop, so the driver checkpoints and resumes rather than exiting."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S88",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-05T18:48Z",
+      "one_line": "barrons listing_empty_200 rose from about 26% of jobs (through 17:16Z) to 12 of the last 25 jobs (17:53-18:46Z), and the empties fall on large US names Barron's covers (ISRG, FIX, EXPD, INCY, HSBC ADR), so they read as soft blocks, not genuine absences; they are interleaved with concluded jobs a minute apart.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "HVST-al-1: a page-1 HTTP 200 with 0 parseable hits is its own status (a probable soft block), not 'no articles', and not a backfill_driver STOP status; the pair is left unconcluded.",
+      "world_is": "barrons job_finished events today: 30 listing_empty_200 against 64 concluded; 12 of the last 25 (17:53-18:46Z) are empty_200. The driver keeps its normal pacing (no stop, no retry storm). wsj (also Dow Jones, own runtime root) shows 0 listing_empty_200. Every empty_200 pair stays unconcluded, so it is retried, not lost.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          ".runtime/opal-data-harvest/events.jsonl barrons job_finished statuses (read-only, 18:47Z)",
+          "as-1b.report.py 18:46Z: barrons 64 of 191 concluded, listing_empty_200 30"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "notes": "Issuer ruling (inside the round-47 decomposition): keep the leg running at its configured pacing; at leg end, re-run every barrons pair whose last status is listing_empty_200 in ONE --names pass with the errored pairs (CTO ruling 2's leg-end pass). If the empty rate reaches every job (a hard block), stop the barrons leg by its stop file and carry it to Andrew. For a later analysis: back off pacing on consecutive empty_200s."
     }
   ]
 ```
