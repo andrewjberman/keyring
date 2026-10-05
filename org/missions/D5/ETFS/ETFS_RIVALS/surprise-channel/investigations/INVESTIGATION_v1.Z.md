@@ -3298,6 +3298,28 @@
     "spec_asserts": "RIV-lg-1: the range read never truncates silently; an overflow or a read failure is a per-name partial, never a leg crash.",
     "world_is": "Range.Value converts some cell of the IWM 2026-01-16 holdings and overflows (DISP_E_OVERFLOW-shaped); Value2 does not convert, so it reads, but the date columns need converting from Excel serials. Remedy for lg-1: read Value2; convert the header's date columns (DATES, REPORT_DATE, and id().DATE as canon_header maps it) from Excel serial (1899-12-30 epoch) to ISO; keep the per-unit com_error -> unfetched partial. Supersedes Z-S21's cause line; Z-S21's hazard and remedy owner stand.",
     "notes": "Daily rival reads at the deployed pin use Range.Value too; a similar cell could reach them, so the Value2 read applies to every unit, not only controls. disarm_owner 2.0.0_SA_COO~RV."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S23",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-05T07:05Z",
+    "one_line": "lg-1's per-unit merge keeps only the FIRST part's header, but Bloomberg returns each BQL query's columns in its own order: for 2026-01-16 ACWI's id().DATE is column 7 and IWM's is column 1, so every IWM row read as off the requested date (4 of the first 20 backfill days DATE-MISMATCH).",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/tmp/bbg_backfill_d13_stepA.log (06:55Z, lg-1 amend-2 build 5bb37fb4e0, local sink): chunk 2026-01-02..01-30 PARTIAL, 16 of 20 OK; 2026-01-16/20/27/28 DATE-MISMATCH with rows_off_requested_date = IWM's row count (1,953/1,949/1,947/1,947) and claimed_report_date correct for both funds",
+        "capture 2026-01-16: header ['ID','id().SOURCE','id().POSITION',...,'id().DATE','id().REPORT_DATE','id().ORIG_IDS',...]; ACWI row [...,'2026-01-16'(col 7),'2026-01-16'(col 8),'ACWI US Equity',...]; IWM row ['NFBK US Equity','2026-01-16'(col 1),'ETF',958650.0,...]: same width (16), different column order"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-lg-1: an index_control is queried on its own per date and its rows merge into the date's one capture.",
+    "world_is": "Each part carries its own header; the merge must map every part's rows onto the first header by column NAME (a column absent from a part reads None; one absent from the first header is appended), never by position. Daily runs are not exposed while D13 is off (one rival query, one header). Remedy: lg-1 amendment 3; AC1 arm (f) pins it.",
+    "notes": "Found by the issuer's D13 Step A re-run (local only, nothing on S3: 0 backfill-d13 markers listed). disarm_owner 2.0.0_SA_COO~RV."
   }
 ]
 ```
