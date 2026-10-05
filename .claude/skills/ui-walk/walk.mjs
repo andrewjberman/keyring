@@ -36,6 +36,10 @@ for (let i = 0; i < argv.length; i++) {
     opt.routes.push(argv[++i].replace(/^[A-Za-z]:[\\/].*?[\\/]Git(?=[\\/])/i, '').replace(/\\/g, '/'))
   }
   else if (a === '--client') opt.clients.push(argv[++i])
+  // --probe-get <path> (repeatable; 2.0.0_SA_COO~P 105138 via MSTR 105141): after sign-in, GET that same-origin path
+  // from inside the page with the Authorization header the page itself sent, and once WITHOUT it (the control);
+  // statuses only are printed and written (probe-get.json). GET only: the guard is unchanged.
+  else if (a === '--probe-get') (opt.probeGets = opt.probeGets || []).push(argv[++i].replace(/^[A-Za-z]:[\\/].*?[\\/]Git(?=[\\/])/i, '').replace(/\\/g, '/'))
   else if (a === '--hover') opt.hovers.push(argv[++i])
   else if (a === '--security') opt.securities.push(argv[++i])
   else if (a === '--thread') opt.thread = argv[++i]
@@ -81,7 +85,8 @@ for (let i = 0; i < argv.length; i++) {
   }
   else throw new Error('unknown argument ' + a)
 }
-if (!opt.routes.length) opt.routes.push('/investor-reporting')
+if (!opt.routes.length && !opt.probeGets?.length) opt.routes.push('/investor-reporting')
+if ((opt.probeGets || []).some((p) => !/^\/api\//.test(p))) throw new Error('REFUSED: --probe-get takes a same-origin /api/ path')
 if (!/^http:\/\/(localhost|127\.0\.0\.1):\d+$/.test(opt.base)) throw new Error('REFUSED: --base must be a localhost dev build (the protected dev channel)')
 const deadline = Date.now() + opt.maxMinutes * 60000
 
@@ -914,7 +919,9 @@ async function openRequest(page, label, requestId, afterReload = false) {
   let target = listed.find((r) => r.id === requestId)
   const byId = Boolean(target)
   if (!target) target = listed.find((r) => /^Ready\b/.test(r.state || ''))
-  const rec = { label, asked: requestId, listed: listed.length, listed_ready: listed.filter((r) => /^Ready\b/.test(r.state || '')).length, opened: target ? target.id : null, opened_by_id: byId, row_state: target ? target.state : null }
+  // position_in_list: the asked request's 1-based place in the list as the page draws it (null when not listed).
+  const position = listed.findIndex((r) => r.id === requestId)
+  const rec = { label, asked: requestId, listed: listed.length, listed_ready: listed.filter((r) => /^Ready\b/.test(r.state || '')).length, opened: target ? target.id : null, opened_by_id: byId, position_in_list: position < 0 ? null : position + 1, row_state: target ? target.state : null }
   if (!target) {
     await checks(page, `${label}-request-not-listed`)
     findings.push({ step: `${label}-open-request`, check: 'analysis:no-ready-request-listed', claim: 'measured', observed: `${listed.length} request(s) listed, none Ready and none with the asked id`, rule: 'a READY request opens with its sections on screen' })
@@ -1377,9 +1384,15 @@ try {
   const context = await browser.newContext({ viewport: { width: 1440, height: 900 }, ...(opt.tz ? { timezoneId: opt.tz } : {}) })
   if (opt.tz) log('TIMEZONE', opt.tz)
   const page = await context.newPage()
+  let lastAuthorization = null
+  let lastScopedHeaders = null
   page.on('console', (m) => { if (m.type() === 'error') consoleErrors.push({ step, text: m.text().slice(0, 300) }) })
   page.on('pageerror', (e) => consoleErrors.push({ step, text: 'PAGE ERROR: ' + String(e).slice(0, 300) }))
   page.on('request', noteHopRequest)
+  page.on('request', (req) => {
+    const h = req.headers(); const p = pathOnly(req.url())
+    if (h.authorization && /\/api\//.test(p)) { lastAuthorization = h.authorization; if (/\/api\/scoped\//.test(p)) lastScopedHeaders = h }
+  })
   page.on('response', async (res) => {
     const req = res.request(); const p = pathOnly(req.url())
     netlog.push([req.method(), res.status(), p].join('\t'))
@@ -1420,6 +1433,35 @@ try {
       throw new Error('login did not complete (still on /login) -- see the login-failed shot')
     }
     log('LOGGED IN at', page.url())
+  }
+
+  if (opt.probeGets?.length) {
+    step = 'probe-get'
+    // Same-origin paths need the page on the base (a --no-login run is still on about:blank).
+    if (!page.url().startsWith(opt.base)) await page.goto(opt.base + '/', { waitUntil: 'domcontentloaded', timeout: 30000 }).catch(() => {})
+    // The headers the page itself sends on its scoped reads (Authorization among them), replayed as sent; held in this
+    // process only. Only their NAMES are printed and written. A non-2xx answer keeps its first 200 characters (an
+    // error text); a 2xx answer keeps only its byte count, never its body.
+    const waitAuth = Date.now() + 20000
+    while (!(lastScopedHeaders || lastAuthorization) && Date.now() < waitAuth) await page.waitForTimeout(250)
+    const SKIP = /^(host|connection|content-length|accept-encoding|cookie|origin|referer|user-agent|sec-|:)/i
+    const sent = Object.fromEntries(Object.entries(lastScopedHeaders || (lastAuthorization ? { authorization: lastAuthorization } : {})).filter(([k]) => !SKIP.test(k)))
+    const probes = []
+    for (const p of opt.probeGets) {
+      const answer = (headers) => page.evaluate(async ({ url, headers }) => {
+        try {
+          const r = await fetch(url, { method: 'GET', headers, cache: 'no-store' }); const t = await r.text()
+          return { status: r.status, bytes: t.length, error_text: r.status >= 300 ? t.slice(0, 200) : null }
+        } catch (e) { return { status: `fetch failed: ${String(e).slice(0, 80)}`, bytes: null, error_text: null } }
+      }, { url: p, headers })
+      const withHeaders = await answer(sent)
+      const control = await answer({})
+      const row = { path: p, status: withHeaders.status, bytes: withHeaders.bytes, error_text: withHeaders.error_text, header_names_sent: Object.keys(sent).sort(),
+        control_status_without_headers: control.status, at: new Date().toISOString() }
+      probes.push(row)
+      log('PROBE GET', p, '->', row.status, `(${row.bytes} bytes; headers sent: ${row.header_names_sent.join(',') || 'none'}; control without them: ${row.control_status_without_headers})${row.error_text ? ' error: ' + row.error_text : ''}`)
+    }
+    writeFileSync(path.join(OUT, 'probe-get.json'), JSON.stringify({ base: opt.base, probes }, null, 1))
   }
 
   for (const route of opt.routes) {
