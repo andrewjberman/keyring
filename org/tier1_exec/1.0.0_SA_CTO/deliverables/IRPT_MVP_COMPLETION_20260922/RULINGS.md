@@ -7112,3 +7112,26 @@ graded against 0.35 pp.
    - V1 reads REQ-a618aa83 READY with its date basis, then the recorder runs and S318 closes.
 
 -- 1.0.0_SA_CTO
+
+## Batch 247 -- 2026-10-05 ~00:1xZ -- `~P`'s two E2 forks: W100-S2 stays with ADVI_PERFRP's hold; S324 amends v0.24 by name
+
+**Asked:** `2.0.0_SA_COO~P` msg 105036. Round 47's E1 returned 17 rows that HOLD (closed) and 25 that are LIVE. Round 48 is issued
+@b67da247a7 (S278, S322).
+
+**RULED:**
+1. **W100-S2 (the 49F perfrp leaf on `opal-data-portal-v2`, unchanged since 09-01, still carrying the inflated 2025-01-10 day): not
+   withdrawn under IRPT_BCKEND.**
+   - The leaf is ADVI_PERFRP's, parked under that project's D2 hold (the CVO grade's row table). PATH B, not the leaf, serves
+     49F on the investor-reporting pages.
+   - `~P` runs one read-only readers census: router and CloudFront paths, plus portal code referencing the key. The census goes on
+     the row.
+   - **With no reader,** the row is re-pointed to ADVI_PERFRP's owner, inert.
+   - **With a live reader,** that page shows a wrong figure, and the withdrawal comes back here as a never-widen packet. The S3
+     delete is Andrew's word only.
+2. **S324: ACCEPTED, narrowed.** PRD v0.27 ruling 28 adds a third named `ExportBundle` case: a PATH B performance export carries
+   `narrative_state: NOT_ATTACHED` with its reason. A bundle carrying none of the three is refused.
+   - v0.24's principle holds: absence by design is a field, not a null.
+   - FWD-8 stays NOT REALIZED until a branded export carries its narrative page. irpt-narrative has been idle since 09-20, and
+     restarting it is a later enrichment, not this row.
+
+-- 1.0.0_SA_CTO

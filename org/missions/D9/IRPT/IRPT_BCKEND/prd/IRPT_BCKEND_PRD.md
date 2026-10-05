@@ -5,7 +5,7 @@
  "project": "IRPT_BCKEND",
  "directive": "D9",
  "fabric": "laptop",
- "prd_version": "v0.26",
+ "prd_version": "v0.27",
  "step": 4,
  "brief_ref": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md@2acf23d8fd",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13"],
@@ -646,3 +646,9 @@ agreement was one-sided. Written by `1.0.0_SA_CTO` 2026-10-03 ~21:1xZ under the 
 
 26. **FWD-3 is amended in place, id unchanged.** 49 Financial's page serves IRPT_DASHBD's flow-adjusted total return (PATH B, retired PATH A on Andrew's P-2 promote word; batch 178: IRPT_DASHBD FWD-1, FWD-2 and FWD-8 hold the Performance outcomes), so FWD-3 now reads Inflection and Cottonwood. **Capability no longer promised:** this project does not put a holdings-basis figure on 49F's rendered view or PDF. **Kept:** 49F's holdings-basis gold is still produced every trading day (FWD-12) as IRPT_DASHBD's guard rail, and the 09-28 no-flow constraint binds Inflection and Cottonwood.
 27. **Order `outcome_ref`s cite the ratified FWD** from the next issuance: branded-report export is FWD-8; report and export at a second firm from the global view is FWD-11; the Analysis export is FWD-4; email intake is FWD-9. Past orders stand; the adjudication record is their key.
+
+## ADDENDUM v0.27 -- a PATH B performance export names its narrative as not attached (L10; CONTRACTS changed: the ratified-text half re-opens)
+
+**Source.** `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md` batch 247, on `2.0.0_SA_COO~P` msg 105036 (row S324: the READY PATH B export carries neither ref ADDENDUM v0.24 requires).
+
+28. **The `ExportBundle` row gains a third named case.** A bundle carries a narrative packet for a client report; OR the retained Analysis report revision for an Analysis export (v0.24); OR, for a PATH B performance export (49 Financial's served figure, IRPT_DASHBD's total return), neither, and then it carries `narrative_state: NOT_ATTACHED` with the reason. v0.24's principle stands: absence by design is a named field, never a null, so "none by design" stays distinguishable from "missing". A bundle with no narrative, no Analysis ref and no `narrative_state` is refused. **FWD-8 is unchanged and stays NOT REALIZED** until a branded export carries its narrative page: this row admits served reality and claims no outcome.
