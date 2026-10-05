@@ -32,3 +32,16 @@ The legs are isolated by design: "A leg failing must never fail its siblings". S
    - The remaining ACWI/IWM history resumes no earlier than tomorrow, under these terms.
 
 `disarm_owner` for Z-S24 stays `2.0.0_SA_COO~RV`. It disarms when today's two BQL legs have read OK, or have been re-run OK.
+
+## ADDENDUM (2026-10-05 ~12:4xZ) -- the exposure was wider than measured at 07:2xZ
+
+- **The capacity limit covers refdata history, not only BQL.** MSTR~Z's P0 probe (msg 29539, cma interpreter, no sign-in attempted)
+  read `-4001 LIMIT DAILY_CAPACITY_REACHED` on SPX and on .ST history.
+- **So my 07:2xZ exposure count of "two BQL legs" was wrong.** It counted callers of the BQL SERVICE, but the limit that tripped is a
+  per-day data capacity across services.
+- **Consequence:** today's OPAL_BBGTML models pull was NOT attempted (rc 50; it fired at 08:32 ET because site Z sat in Modern Standby
+  09:14Z-12:32Z). The models dashboard has no fresh vintage today. The rivalfunds 12:33Z enrichment wrote an all-empty G4 revision,
+  which is restored under the pair @1564d0f1ab.
+- **Recovery is unchanged:** COO~RV's hourly one-query probe; on its first data, MSTR~Z re-runs `scheduled_daily_pull.cmd`.
+- **Backfill terms now carry a hard rule:** no backfill pull on any day until that day's production pulls have read OK, and the daily
+  backfill budget is sized against Bloomberg's per-day data capacity, which is to be measured before the next backfill.
