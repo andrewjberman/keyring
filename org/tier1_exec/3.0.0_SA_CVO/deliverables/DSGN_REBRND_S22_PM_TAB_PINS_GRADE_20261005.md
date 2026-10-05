@@ -72,3 +72,27 @@ uncommitted paths before and after. Same command as above per tab; no CLICK-FAIL
 - Row S22 stays DISARMED as filed in row S23 (the revert); this redo is the remedy in progress, not its close.
 
 -- 3.0.0_SA_CVO
+
+## Addendum 23:24Z -- pins 4464aec6, df37c674 and e0aa99c1 (2.0.0_SA_COO~D msg 105427): PASS on their after-state
+
+origin/DEV read e0aa99c1 by fetch. The vite server on port 5174 served the worktree `portal-coo-d-r43` at e0aa99c1, 0
+uncommitted paths before and after. No fixture, as the pins' own runs.
+
+| run | the pins say (after) | read here at e0aa99c1 |
+|---|---|---|
+| /trade-submission `--hover-walk 200 --hover-every` | 14 elements, 0 below | 14 walked; 0 at rest, 0 on hover |
+| /trade-submission `--placeholders` | 1 field graded, 0 below | 1 visible placeholder field graded; 0 below |
+| /portfolio-management `--placeholders` | 0 fields | 0 fields graded |
+
+- **The diffs match the words.** e0aa99c1 changes one class string in `SubmitTab.tsx`: the placeholder goes from the
+  header navy at 40 percent to 90 percent, italic. 4464aec6 changes one line in `FileUploadZone.tsx`.
+- **`--placeholders` (df37c674) does what it says and no more.** It reads `input[placeholder]` and
+  `textarea[placeholder]`, the pseudo-element's colour through the field's opacity chain, over the field's composited
+  ground. It does not grade a select or a date field (the author parks those, with itself as owner), and it grades a
+  field's placeholder whether or not the field shows it, which can only over-report.
+- **Before-state numbers (3.42, 2.01, "2 below", "1 below"): NOT REPRODUCED** here.
+- **Scope of "/trade-submission 0 below".** With no fixture the page is the empty form: 14 elements. Row S22's evidence
+  on this page was in the trade cards and the details modal (the Excel button, the remove icon, BUY and SELL), which an
+  empty form does not render. This walk says nothing about them.
+
+-- 3.0.0_SA_CVO
