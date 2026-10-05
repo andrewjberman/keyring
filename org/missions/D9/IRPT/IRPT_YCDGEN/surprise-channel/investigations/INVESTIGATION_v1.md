@@ -1393,3 +1393,111 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "INERT for this order (AC3 is the typecheck). Left for the issuer to compare against portal DEV @481b3bcc5f."
 }
 ```
+
+## IRPT_YCDGEN-W3-S13 -- the Opal document spills to the EXTRACTION_EVIDENCE family, always, for an Opal checkpoint
+
+```json
+{
+  "id": "IRPT_YCDGEN-W3-S13",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~3",
+  "surfaced_at": "2026-10-05T23:29:10Z",
+  "one_line": "The Opal document is spilled to an artifact of the existing json family EXTRACTION_EVIDENCE, on every Opal checkpoint rather than only past the limit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "R9 (3): spill to an existing registered json family; name the choice in a surprise row.",
+  "world_is": "R9 (3) asks the Opal path to spill an over-limit document to an EXISTING registered json family. Chosen: EXTRACTION_EVIDENCE (tier state, json, 30 unreferenced days, 2555 ceiling), the family the vendor path spills its census to; no family was added. The spill is unconditional for kind OPAL (checkpoint = pdf_ref, census {}, metadata_ref, metadata_sha256), not size-gated as the vendor census is, so one code path and one checkpoint shape serve every Opal job; the logical id is request_id-opal-document-<sha256> so a replay retains to the same ref. finish reads the document back, verifies the digest and promotes the artifact beside the PDF. A checkpoint stored in the earlier inline form (metadata) is still read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ycharts/generate/publisher.py retain_document, read_document@wk-IRPT_YCDGEN-69",
+      "ycharts/generate/publication_worker.py checkpoint_pdf, finish@wk-IRPT_YCDGEN-69",
+      "ycharts/generate/tests/test_publication_worker.py test_opal_checkpoint_is_a_reference_to_the_retained_document_and_finish_publishes_the_document@wk-IRPT_YCDGEN-69"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: the choice is named and tested. The family also holds the vendor evidence wrapper, so a retention sweep of EXTRACTION_EVIDENCE sees Opal documents beside vendor ones; the owner may rule a family of its own."
+}
+```
+
+## IRPT_YCDGEN-W3-S14 -- adding OPAL_REPORT_PDF changes irpt-x10-v1's policy_sha256, and a retention row stored under the old digest is refused 'retention binding changed' by a deployed registry that carries the new one
+
+```json
+{
+  "id": "IRPT_YCDGEN-W3-S14",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~3",
+  "surfaced_at": "2026-10-05T23:29:10Z",
+  "one_line": "Registering OPAL_REPORT_PDF changes irpt-x10-v1's policy_sha256 from e0046398... to a65635d3..., and retention.py refuses any retained artifact stored under the old digest once the deployed registry carries the new one.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "spec_asserts": "R9 (1): add family OPAL_REPORT_PDF to irpt-x10-v1 with the retention fields of its sibling.",
+  "world_is": "reporting_policies.json now holds 14 families in irpt-x10-v1 (OPAL_REPORT_PDF, table opal_report_documents, added). reporting_policy('irpt-x10-v1')['policy_sha256'] is a65635d318c6c10f9466fc831c36417a3c934294ed3e27391bbfcbc4fd62c3ab; before it was e0046398e23951451498c0fcfec29154db5b26d4c70d80c4121f50fd3dfc8c85 (test_s12_active_policy_row_is_unchanged pinned it; re-pinned in this cell's test file). reports/retention.py:108-113 compares each stored retention row's policy_sha256 with the packaged registry's and raises RetentionRefused('retention binding changed') on a difference; generate_installed.py:105-110 and status_installed.py:125 publish the digest as destination_revision. Nothing here deploys: the packaged registry in the live Lambda still carries the old digest until the issuer's deploy.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/logic/registry/reporting_policies.json OPAL_REPORT_PDF@wk-IRPT_YCDGEN-69",
+      "infra/aws/lambda/investor-reporting/reports/retention.py:108-113@wk-IRPT_YCDGEN-69",
+      "lib/tests/test_irpt_destination.py ACTIVE_ROW_SHA@wk-IRPT_YCDGEN-69"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ARMED: loud (RetentionRefused) at the first read of an already-retained artifact (a vendor PDF, a composition, a report) after the registry with the new digest is deployed. The issuer deploys the registry and the code together and reads whether the existing retention rows carry the old digest; retention.py and the live rows are not this cell's. reports/tests (retention, generate_installed: 31 tests) pass in this worktree."
+}
+```
+
+## IRPT_YCDGEN-W3-S15 -- produce retains the PDF only when its caller injects an artifact store, and no caller of produce injects one yet
+
+```json
+{
+  "id": "IRPT_YCDGEN-W3-S15",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~3",
+  "surfaced_at": "2026-10-05T23:29:10Z",
+  "one_line": "opal_producer.produce retains the PDF through put only when stores carry artifacts; resident_worker (cell d-6) is the caller that must inject it and hand the returned artifact_ref to the checkpoint.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "spec_asserts": "R9 (2): produce retains the PDF through put and returns the retained artifact_ref; the publisher takes that ref.",
+  "world_is": "produce(request_ref, firm, stores) keeps its signature. With stores['artifacts'] (an ArtifactRepository-shaped put) it retains the PDF as OPAL_REPORT_PDF (logical id request-overview-<sha256>, dependencies stores['retention_dependencies']) and returns the run record with artifact_ref; without it the PDF still goes to the ycharts_opal_reports S3 family and the record has no artifact_ref (the 12 earlier producer tests build stores without it and must keep passing). resident_worker.py is d-6's file and was not read here for its call.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ycharts/research/opal_producer.py produce@wk-IRPT_YCDGEN-69",
+      "ycharts/research/tests/test_opal_producer.py test_produce_retains_pdf_artifact_through_put_and_returns_its_artifact_ref@wk-IRPT_YCDGEN-69"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ARMED: a live Opal request whose caller omits artifacts writes the PDF to S3 only, has no ref, and the publisher refuses it (RETAINED_OPAL_PDF_REQUIRED). The caller also passes the accepted composition's retention ref as retention_dependencies and then calls checkpoint_pdf with pdf_ref=record['artifact_ref'] and metadata=the document."
+}
+```
+
+## IRPT_YCDGEN-W3-S16 -- with the PDF retained, the run record's report.key still names the layout's ycharts_opal_reports address, where no object is written
+
+```json
+{
+  "id": "IRPT_YCDGEN-W3-S16",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~3",
+  "surfaced_at": "2026-10-05T23:29:10Z",
+  "one_line": "When the PDF is retained as an artifact, run.json's report.key (the layout's own key) names an S3 address nothing is written to; the retained location is artifact_ref.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "R9 (2): the PDF is a retained artifact; run.json's report key is the layout's.",
+  "world_is": "layout_overview.finish sets report.key from _report_key(run_doc) and produce checks it equals the builder's ycharts_opal_reports address. In the retained path produce skips the S3 put of the PDF, so that key is an address with no object, and the record's artifact_ref (top level) is the true location. Left as is: the layout and run.json shape are not this cell's, and the check keeps the key equal to the builder output.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ycharts/research/opal_producer.py produce@wk-IRPT_YCDGEN-69",
+      "ycharts/research/layout_overview.py finish (1157-1172)@wk-IRPT_YCDGEN-69"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: a reader of run.json who follows report.key finds nothing; the reader should follow artifact_ref when present."
+}
+```
