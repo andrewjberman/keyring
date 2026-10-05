@@ -3630,6 +3630,29 @@
     "spec_asserts": "RIV-gd-1 interface: G5 rebuilt into a LOCAL sink with gold_trade_schedule.handler_entry (mode replay or daily per date), per report date 2026-01-02..2026-10-02.",
     "world_is": "A replay scoped to a start date silently drops the first window of a fund that did not report the global previous date; a named-fund rebuild (RIV-nf-1) or any scoped replay that starts at the first date it serves has the same blind edge. No error, the rows are simply absent.",
     "notes": "INERT for round 9 (the tool avoids it by starting the replay 31 days before the first compared date). Latent for any scoped replay; the issuer decides whether the nf-1 cell's named-fund rebuild needs the same guard."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S31",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-05T21:25Z",
+    "one_line": "Round 9 shipped two reads/writes with no IAM grant -- holding_contribution now lists gold/security_names (RIV-nm-3) and the sweep writes gold/security_universe (RIV-su-2) -- so the D12 Step B refresh republish failed holding_contribution with AccessDenied; and the package tests read the committed leg_gates.json, so the D12 flip broke 25 of them.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "served platinum/page/date=2026-10-05 batch rv-publish-1005d12 (21:17:54Z, refresh_a1): a1_produced.holding_contribution FAILED 'AccessDenied ... etfs-rivalfunds-daily-role ... not authorized to perform: s3:ListBucket on opal-data-etfs' (the security_names read); buying_trend and input_census OK; IDVZ no longer not-updated (latest report 2 Oct, BBG)",
+        "infra/aws/terraform/etfs-rivalfunds/gen_policies.py at CLOUD 35c6b3a923: no prefix for gold/security_names or gold/security_universe in any stage grant; the daily Lambda's role is the union of the stage grants",
+        "package suite at 35c6b3a923: 25 failed (test_hp1, test_g12, test_g21, test_g01, test_r5l1, test_p2, test_r8lg1, test_r9gf1, test_b1) -- every one reads the committed gate file as its default map"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Every new read or write ships with its grant (rule 30: the stack's grants come from gen_policies); the package tests are independent of an operational switch.",
+    "world_is": "The served page is intact (it reads the prior holding_contribution object), but every holding_contribution build fails until the grant lands, and tomorrow's page day has no prior object to fall back on; the sweep's security_universe step would fail the same way. Remedy (issuer drain repair): gen_policies grants Get+List on gold/security_names and Put+Get+List on gold/security_universe to the publish-page stage (so the daily union), regenerated policies; holding_contribution treats an unreadable names table as no stored names; a test conftest pins every test to an all-off gate file. Deploy under a pair before the 2026-10-06 publish, then one refresh republish.",
+    "notes": "The issuer's own miss at the round-9 cut (nm-3 and su-2 orders named no IAM path) and at the D12 flip (the suite was not re-run after it). disarm_owner 2.0.0_SA_COO~RV."
   }
 ]
 ```
