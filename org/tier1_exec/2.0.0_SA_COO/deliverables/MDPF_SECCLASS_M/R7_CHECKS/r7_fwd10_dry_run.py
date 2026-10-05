@@ -5,7 +5,7 @@ r7_fwd10_dry_run.py -- the FWD-10 producer's dry run against the live inputs (MD
 READS ONLY. It takes the latest canonical_shape day that has a previous day, runs the new-security-classifier handler
 in its default dry run for that day, and prints:
 
-    FWD10-DRY-RUN day=<d> previous=<d> sources=<n> new_stocks=<n> planned_writes=<n> present=<n>
+    FWD10-DRY-RUN day=<d> previous=<d> sources=<n> new_stocks=<n> planned_writes=<n> present=<n> unresolved=<n>
 
 With --packaged it first assembles the files the Lambda would ship (the handler plus every `_shared` module it imports,
 transitively, found by reading its import statements) into a temp directory, and imports the handler from THAT layout
@@ -187,8 +187,9 @@ def main(argv=None):
                                                         it["security_bloomberg"] or it["ticker"], it["state"]))
     n = result["counts"]
     print("FWD10-WOULD-WRITE s3://%s/%s" % (result["output"]["bucket"], result["output"]["key"]))
-    print("FWD10-DRY-RUN day=%s previous=%s sources=%d new_stocks=%d planned_writes=%d present=%d"
-          % (c["day"], c["previous"], result["sources"], n["new_stocks"], n["planned_writes"], n["present"]))
+    print("FWD10-DRY-RUN day=%s previous=%s sources=%d new_stocks=%d planned_writes=%d present=%d unresolved=%d"
+          % (c["day"], c["previous"], result["sources"], n["new_stocks"], n["planned_writes"], n["present"],
+             n["unresolved"]))
     return 0
 
 
