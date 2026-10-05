@@ -1393,3 +1393,57 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "INERT for this order (AC3 is the typecheck). Left for the issuer to compare against portal DEV @481b3bcc5f."
 }
 ```
+
+## IRPT_YCDGEN-W1-S11 -- the resident installer composes no ports for the Opal producer, so a listed principal's job is refused until it does
+
+```json
+{
+  "id": "IRPT_YCDGEN-W1-S11",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~1",
+  "surfaced_at": "2026-10-05T23:26:38Z",
+  "one_line": "ResidentAssembly now takes an opal_stores(principal, record) port, but reports/resident_installed.py (outside the d-6 paths) does not pass one, so an allow-listed principal's job raises OPAL_STORES_REQUIRED until the issuer wires it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "spec_asserts": "R6: a principal on the allow list gets opal_producer.produce. The order's paths are resident_worker.py and its test file.",
+  "world_is": "opal_producer.produce(request_ref, firm, stores) needs dynamodb, s3 (host-role read clients), classifier (ETFClassifier), objects (the firm's research-principal put_object client) and map (the Overview element map); reports, principal and owner the worker supplies. build_resident_runtime (reports/resident_installed.py:269) constructs ResidentAssembly with none of those, and the file is outside this order's paths. resident_worker.py adds an optional opal_stores keyword; with it absent a listed principal's job raises ValueError OPAL_STORES_REQUIRED at the switch (loud, retried by the queue, never served by the YCharts producer). With the shipped placeholder allow list no real principal is listed, so nothing is affected until the issuer sets Andrew's principal id.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ycharts/generate/resident_worker.py ResidentAssembly.__init__ and execute@wk-IRPT_YCDGEN-68",
+      "reports/resident_installed.py:269-272@wk-IRPT_YCDGEN-68",
+      "ycharts/research/opal_producer.py produce docstring (the stores dict)@wk-IRPT_YCDGEN-68"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ARMED until the installer passes opal_stores AND the allow list names Andrew's id; setting the list first makes his Overview request fail loud on every receive. Both are the issuer's release acts (a never-widen half). The ports are built from the instance role's clients; the worker adds no client of its own."
+}
+```
+
+## IRPT_YCDGEN-W1-S12 -- five choices the order left to the switch: the persist port, the PDF family call, the attempt id, the refusal code and the missing-ports outcome
+
+```json
+{
+  "id": "IRPT_YCDGEN-W1-S12",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~1",
+  "surfaced_at": "2026-10-05T23:26:38Z",
+  "one_line": "The order says only 'choose the producer'; the worker took five unstated choices to make an Opal job reach READY through the existing entry points.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "R6 names the switch only; g-6 and i-6 name checkpoint_pdf and finish as the persist entry points.",
+  "world_is": "(1) produce() calls stores['reports'].persist itself; the worker hands it a capture port that keeps the document and writes nothing, then retains the PDF (family OPAL_REPORT_PDF, read from the objects.put_object call whose ContentType is application/pdf) and publishes through checkpoint_pdf(census={}) and finish, so the repository is written once, by _publish_opal. (2) request_ref is {request_id, request_revision, attempt_id, attempt_number}, with attempt_id ATT- plus the first 24 hex of sha256 of request_id|revision|opal. (3) producer.ProducerRefused ends the job as ATTENTION code OPAL_PRODUCER_REFUSED; any other exception propagates for queue redelivery; a producer that wrote no PDF or no document ends as ATTENTION OPAL_PRODUCER_OUTPUT. (4) A retained 'pdf' checkpoint skips the producer on redelivery. (5) The reopen of a READY job reads provenance.provider: OPAL_ENGINE compares opal_artifact_ref.sha256, every other form keeps extraction_evidence_ref.sha256 (row W3-S9).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ycharts/generate/resident_worker.py run_opal, _OpalCapture, execute@wk-IRPT_YCDGEN-68",
+      "ycharts/generate/tests/test_resident_worker.py test_allow_listed_principal_opal_producer and test_redelivered_ready_opal_job_is_acknowledged_without_a_key_error@wk-IRPT_YCDGEN-68"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: each choice is in the code and under a test. The produce-side objects.put_object for the PDF reaches the firm's store before the retained copy is made, so a redelivery before the checkpoint writes the same key again (a deterministic address)."
+}
+```
