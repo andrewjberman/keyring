@@ -8482,3 +8482,78 @@ fanout:
   egress: none
   portal_ref: e6ab82ad   # portal origin/DEV at the cut (DSGN AV-zr-1)
 ```
+
+## 80. ROUND 72 -- BLOCKLESS HEADER, EXPORT = PAGE + PLAIN PRINT, DRIVER-CHART PASSAGES, SEGMENTS, NUMERIC TICKERS, COLD START, POOL UNIVERSE + PLAIN NAMES, REDEPLOY, WALK. Nine orders
+
+**Input:** the CTO's round-71 analysis `ledger/ROUND_ANALYSIS.round71.md` @be50c0d724 (msg 29780), section 4 items 1-8 and rulings
+1-4. PRD v0.39 is ADMITTED (the CVO re-signed). Research read on deployed `wbIT0PHv`, 2026-10-05 ~20:3xZ-21:2xZ.
+
+### 80a. PREMISE CORRECTIONS (measured; they change the cut, not the list)
+
+- **Item 1:** ROG_SW_Equity HAS 14 stored model blocks and serves 22 header figures (4 reasoned nulls) on deployed.
+  - All 95 covered names serve a full header: 612 values + 53 reasoned nulls, 0 unexplained.
+  - The blockless gap is OUTSIDE the covered set. Of the 138 uncovered names with a key on /freshness, 137 serve no header
+    figures (`/overlay` 404 for most; 95 return `header_figures: []`).
+  - DSGN's 16:58Z "ROG 3 tiles, 0 reasons" read is page-side or a fixture; DSGN re-reads.
+- **Item 7:** the pool universe rebuild is BLOCKED. `build_universe --dry-run` fails on the missing
+  `sec/harvest/bronze/company_tickers/date=2026-09-22/sec_ticker_cik_cache.json`. The rebuild (`--write-pool`) is a served-data
+  move.
+- **Item 4:** NO stored numeric segment data exists (0 of 95 model blocks; 0 of 117 Bloomberg bronze fields). Segment PROSE
+  exists only in `filings/v1/<key>/*.analysis.json` for 12 of 95 names, and `filings/v1/` was removed from the Lambda grant
+  (`scoped-amgt-api.tf:123`). The other 83 need a Bloomberg segment pull, a vendor use for Andrew's list.
+- **Item 6:** init and imports are not the cost (Init Duration median 214 ms over 182 cold REPORTs). The first request's own
+  reads are: c46 counts 153 AWS calls on the first rankings read and 167 on the first chatter read.
+
+### 80b. BASE READS (deployed `wbIT0PHv` unless named; every build check FAILS)
+
+- c39: 137 of 138 uncovered names lack 7 explained header figures.
+- c41: the 3 prints carry 2,389 raw field-code tokens (BA 733, AMD 810, ASML 846).
+- c42: 0 of 6 driver-chart points serve passage text.
+- c43: 0 of 95 names serve `segment_breakdown`.
+- c44: 94 numeric-ticker members over 24 names, all unresolved and unexplained.
+- c45: 680 of 735 peers subjects and members lack a non-capitals `display_name`.
+- c46 (local, a fresh process per route): 153 and 167 calls; the bar is 15.
+- c47 (local): the dry-run fails, covering 0 of 95.
+- FWD-30, with the repaired au-2 grader: equal 0 of 3.
+
+### 80c. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-av-1` | DSGN FWD-4: every uncovered name's overlay serves the 7 header figures with reasoned nulls (`_header_figures` no-block branch; `overlay` in `_COVERED_NO_BLOCK_LEAVES`), plus the census of missing figures and causes | `~237` | worker | LOCAL | `lib/research/api/` |
+| `AMGT-av-2` | FWD-30 export = page (4 classes) + FWD-5 print in plain words (0 field codes) | `~238` | worker | LOCAL | `lib/research/print/` |
+| `AMGT-av-3` | FWD-18: drafting evidence carries the driver-chart point passages; the route serves `passage_text`. Code + dry build; the drafting rebuild is av-8's leg | `~239` | worker | LOCAL | `lib/research/filings/drafting_build.py` + its test, `lib/research/api/` |
+| `AMGT-av-4` | FWD-1: `segment_breakdown` on /thesis from the stored filing analyses (12 names), a plain reason elsewhere; census; the 83 listed for Andrew | `~240` | worker | LOCAL | `lib/research/api/` |
+| `AMGT-av-5` | DSGN FWD-8: numeric member tickers resolve or carry a plain reason; F6's measure re-run on served peers | `~241` | worker | LOCAL | `lib/research/peers/`, `lib/research/api/` |
+| `AMGT-av-6` | cold start (ruling 2, no spend): BatchGetItem classification, crosswalk names, init-time resource; the first request <= 15 calls; values unchanged | `~242` | worker | LOCAL | `lib/research/api/` |
+| `AMGT-av-7` | the pool universe dry-run unblocked (the newest stored SEC cache, no egress), covering 95 of 95, + DSGN FWD-27 plain `display_name` on peers. The `--write-pool` is av-8's leg | `~243` | worker | LOCAL | `lib/research/identity/build_universe.py` + its test, `lib/research/api/` |
+| `AMGT-av-8` | the redeploy carrying av-1..av-7, plus the legs: the `filings/v1` read grant (av-4), the drafting rebuild (av-3), the pool universe write (av-7). One pair; simulate arms | `0.7.0_AE_CloudOps~A` | seat order | WORLD | Lambda artifact, IAM grants, named store keys, ledger |
+| `AMGT-av-9` | the walk after av-8: FWD-7 and FWD-19 (v0.39 on-demand), FWD-31's byte arm (a harness render without `management`) | `~244` | worker | LOCAL (a read) | own deliverables |
+
+### 80d. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** The domain is items 1-8 of the list.
+  - Item 3 is split by write surface: the print goes to av-2 (`render_pack.py`, shared with FWD-30), the passages to av-3.
+  - Item 8 is split into the act (av-8) and the read (av-9).
+- **(ii) Same grain.** One served field family or one producer per build cell; one deploy; one walk.
+- **(iii) Intent.** One axis per cell. av-7 carries two bundled by the CTO, on disjoint files.
+- **(iv) What a cell does NOT move:**
+  - av-1 leaves the 95 covered headers unchanged.
+  - av-2 leaves the page (DSGN) unchanged.
+  - av-6 changes no value (bodies equal).
+  - The store writes are av-8's legs alone, each under the pair.
+
+### 80e. EDGES AND FAN-OUT
+```
+av-1..av-7 (7 independent chains) --> av-8 (one redeploy + three legs, one pair) --> av-9 (the walk)
+fanout:
+  cap: 8
+  orders_total: 9
+  chains_total: 7
+  wave_0: [av-1 ~237, av-2 ~238, av-3 ~239, av-4 ~240, av-5 ~241, av-6 ~242, av-7 ~243]
+  wave_1: [av-8 0.7.0_AE_CloudOps~A]   # after the seven drains and its pair
+  wave_2: [av-9 ~244]                  # after av-8; the issuer holds the MSTR~Z walker slot
+  no_s3_deletes: true
+  egress: none   # the SEC cache is read from the newest STORED object; a fresh SEC pull is egress and is not cut
+  portal_ref: a3ab197f   # portal origin/DEV at the cut
+```
