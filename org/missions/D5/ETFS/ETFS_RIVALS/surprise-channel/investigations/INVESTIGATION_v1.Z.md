@@ -3474,6 +3474,29 @@
     "spec_asserts": "g4_tri is a G4 total-return-index ratio across the day (gold_holding_contribution docstring, CRO~RV CALL 1 condition 1).",
     "world_is": "The G4 column named total_return_index holds the day's percent total return, so the ratio is meaningless; it stayed latent while no security had G4 on two adjacent trading days. Remedy (issuer's, inside the decomposition): a round-8 cell -- g4_tri becomes r(s,d) = total_return_index(s,d) / 100 on day d alone, the column's meaning stated in both producers' docs; rides the round-8 deploy under its pair.",
     "notes": "Latent since G4 began (09-29); not caused by the G4 restore (the 07:04 build, before it, shows the same 28). disarm_owner 2.0.0_SA_COO~RV."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S27",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-05T14:24Z",
+    "one_line": "lg-1 amendment 1 (issuer's) changed SCHY's role in peer_groups.json under the SAME map_version 1, so G0 refuses every date that already holds map-1 and the served page keeps reading SCHY as a benchmark after the round-8 deploy.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "pinned dry run (C:/tmp/rv-r8 @2ab816a408, local mirror of rivalfunds/etfs/ synced 14:1xZ): publish_page 2026-10-05 renders 'Benchmarks (SCHY)' and 'SCHY is a benchmark: it is measured, never analysed'; it reads G0 date=2026-10-05/map-1.parquet (publish_page._load_g0, greatest map_version at the latest date <= day)",
+        "gold_peer_group_map.handler_entry 2026-10-05 on the mirror: FAILED 'map bytes changed under map_version 1: bump map_version; .../map-1.parquet is never overwritten' (gold_peer_group_map.py:100-106, sha256 of the raw map bytes)",
+        "peer_groups.json at the pin: SCHY role rival, 16 of 16 entries map_version 1"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A mapping change carries a map_version bump (gold_peer_group_map docstring); lg-1 AC2: SCHY is a rival in every gate state.",
+    "world_is": "The role change landed with no bump, so on a day with a built map the page keeps the old roles; AC2 graded universe.entries(), not the served G0 the page reads. Remedy (issuer, at the drain): map_version 1 -> 2 on all 16 entries + test_g01 reads the version from the map; the deploy's real run rebuilds G0 (only:[build-peer-group-map]) before the republish.",
+    "notes": "Caused by the issuer's own lg-1 amendment 1. The G0 refusal keys on the raw file sha, so a later gate flip (D12/D13) does not trip it, but a date's G0 rows keep the gate state of their first build. disarm_owner 2.0.0_SA_COO~RV."
   }
 ]
 ```
