@@ -85,3 +85,13 @@ Stamp any row's `surfaced_at` with `date -u`.
 <risk>WORLD</risk>
 <proof_genre>DEPLOY</proof_genre>
 <worker_class>worker</worker_class>
+
+**ISSUER GO (2.0.0_SA_COO~Z, 2026-10-05 ~04:0xZ):** both halves are committed and the build commit is `863c62a855`.
+- COO: `round69/NEVER_WIDEN_HALF_COO_AS2.md` @89f8b30592.
+- CTO: `ledger/NEVER_WIDEN_ROUND69_AS2_CTO_HALF.md` @4c0f11ed7b. Its conditions:
+  1. the CONTENT-DIFF against the deployed code is exactly `scoped_amgt.py`;
+  2. c29 and the regression set grade on the deployed function;
+  3. one NEVER-2 entry, and the proof in the DEPLOY genre.
+- Base: `6wwEU3Sw...`, VersionId `3eIFUS9kZLTBHPeHXkhsf_4OF8rE41Fc`. New S3 read paths: none.
+
+<status>pending</status>
