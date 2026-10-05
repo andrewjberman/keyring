@@ -881,3 +881,29 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "INERT: owner 2.0.0_SA_COO~Y at the round-5 close; if a floor on held values is wanted it is one constant in _compute_opal_held."
 }
 ```
+
+## IRPT_YCDGEN-S9 -- the held risk-free object stopped updating on 2026-08-05 (last observation 2026-08-04)
+
+```json
+{
+  "id": "IRPT_YCDGEN-S9",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "4.0.0_SA_CRO",
+  "surfaced_at": "2026-10-05T19:55:00Z",
+  "one_line": "The held risk-free object (portal FRED Treasury yields) was last written 2026-08-05 and its last observation is 2026-08-04, so it is two months behind as well as two years short.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Handoff HANDOFF_TO_CRO_ONPREM_GENERATION_20261005.md section 6 family 5 and row IRPT_YCDGEN-W2-S9: opal-data-portal-v2/json/macro/yield_curve_fred.json is written daily (EventBridge 6pm ET) with a 2-year lookback; W2-S9 says the object itself was not read.",
+  "world_is": "Read 2026-10-05 ~19:5xZ: head-object LastModified 2026-08-05T23:02:30Z; body data_as_of 2026-08-05, generated_at 2026-08-05T23:02:29Z; series 'US Treasury 3M' has 499 observations, first 2024-08-05, last 2026-08-04. No later write exists at that key. Whether the ingestion schedule is disabled, failing, or writing elsewhere was not read. An in-house 1y alpha, Sharpe or Sortino computed from this object today would use a risk-free series ending two months before the report date.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "boto3 s3 head_object + get_object opal-data-portal-v2 json/macro/yield_curve_fred.json (ContentLength 675314), keys and first/last list entries printed",
+      "positive control: same session read opal-data-bd silver/historical_prices.parquet with max date 2026-10-02"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: no served report reads this object today (layout_overview.py takes it as a CLI file). Owner of the ingestion Lambda is outside this project; placed here because the in-house build would make the object load-bearing. Feasibility analysis: docs/briefs/irpt-ycharts-inhouse-generation-feasibility-20261005.md."
+}
+```
