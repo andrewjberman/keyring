@@ -113,7 +113,7 @@ Report once: what changed and where, the output line of every criterion, the por
 - **Item 4 of the list** (reads of FWD-5/11/19) is the issuer's real run at the close: `round37/walk/reads37.mjs`.
 - **Not graded here** (the issuer's close walk): the collage at 365D in a browser; the Peers face on MSFT; the dated no-call on AMD.
 
-<status>pending</status>
+<status>complete</status>
 <round>37</round>
 <slot>~99</slot>
 <fabric>site-z</fabric>
