@@ -17560,5 +17560,52 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   ]
  },
  "disposition": "UNDER_INVESTIGATION"
+}
+,
+{
+ "id": "AMGT_RESAPP-Z-S350",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.7.0_AE_CloudOps~A",
+ "surfaced_at": "2026-10-05T05:16:32Z",
+ "one_line": "CITES AMGT_RESAPP-Z-S349 and settles its open half: given the precondition S349 identified -- a measured invoke-free idle, 925 s here -- r64 c15 reads 3 of 3 COLD at 1944.80 / 2007.98 / 1964.64 ms and SERVED YES, exit=0, on the as-2 deployed build. So c15 did NOT move, no rollback trigger ever fired, and S349's ARMED standing is cured. The finding that SURVIVES is narrower and still owed: the cell conjoins coldness with the latency bar in one clause and the order does not declare the sequencing precondition. The fix is the issuer's.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "AMGT_RESAPP.TO-AMGT-as-2 s.4 lists r64 c15 --where deployed LAST in the reported no-regression set, after AC1-AC3 and the r64/r65/r66 reads, and the COO half makes 'c15 reads over 5 s' and 'any other check moves' ROLLBACK triggers. Read literally, the order's own sequence makes a gradeable c15 read impossible: the eleven reads ahead of it leave the function warm and c15's only cold induction is ThreadPoolExecutor(max_workers=3). ar-3's instance records the unwritten remedy -- a 900 s invoke-free idle before firing c15 -- but no order states it.",
+ "world_is": "Three reads of c15 on the SAME deployed bytes (CodeSha256 OcKZF34X9liuVKg9ZnpaqBcbSxwcDl6JlW+PlxWyF4k=), differing only in how warm the function was. READ 1 (04:5xZ, straight after the other reported reads): 2 of 3 cold -> SERVED NO. READ 2 (05:01:02Z): 0 of 3 cold -> SERVED NO, worse than read 1 because read 1's own three invokes left three warm containers. READ 3 (05:16:32Z, after a MEASURED 925 s in which nothing invoked the function): 3 of 3 COLD, init 226.84 / 214.03 / 216.15 ms, duration 1944.80 / 2007.98 / 1964.64 ms, 'PASS C1 3 of 3 COLD BA Sept 8 invokes under 5 s with every headline 3 of 3', 'PASS C2 ... 3 of 3', 'R64 C15 SERVED: YES', exit=0. Across all nine invokes: status 200 on 9 of 9, headlines equal articles equal 6 on 9 of 9, AMGT_SEGMENT timings on 9 of 9, slowest single invoke 2007.98 ms = 40 percent of the 5000 ms bound. The cold band 1945-2008 ms sits inside the established spread for this cell (ar-3 1841-1946, aq-5 1936-1972, ap-4 2036-2328), so as-1 did not cost the cold path. What this row CURES in S349: the apparent 'any other check moves' trigger. What it does NOT cure, and what remains the issuer's: (i) C1 is one conjunction, so a warm 245 ms invoke fails it exactly as a cold 6 s invoke would and the verdict token cannot distinguish them -- two clauses would ('every cold sample under 5 s' and 'at least N of 3 were cold'); (ii) the order should state the sequencing, e.g. 'take c15 FIRST, before any other deployed read, or after a 900 s invoke-free idle'. Not fixed here: the cell lives under deliverables/2.0.0_SA_COO~Z/round64/checks/, outside this order's <paths>.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "READ 3 verbatim: 'PASS C1 3 of 3 COLD BA Sept 8 invokes under 5 s with every headline 3 of 3' / 'PASS C2 every run's log carries AMGT_SEGMENT timings 3 of 3' / 'R64 C15 SERVED: YES' / exit=0, fired 2026-10-05T05:16:32Z.",
+   "Per-run REPORT figures for READ 3, coldness proven by Init Duration rather than assumed: (1944.80 ms, init 226.84), (2007.98 ms, init 214.03), (1964.64 ms, init 216.15); AMGT_SEGMENT identity 518-555 ms and import 787-812 ms on each, which is where the cold cost sits.",
+   "The idle was measured, not estimated: last prior invoke 2026-10-05T05:01:03Z, fired 2026-10-05T05:16:32Z, 925 s, and nothing invoked opal-amgt-scoped-api in between.",
+   "The predicate at the bytes (r64_served.py): good = [r for r in runs if r['status']==200 and r['cold'] and r['duration_ms'] is not None and r['duration_ms'] < 5000 and r['articles'] and r['headlines']==r['articles']]; clause('C1 3 of 3 COLD ...', len(good)==3). Cold induction is ThreadPoolExecutor(max_workers=3) only.",
+   "Deployed state unchanged across all three reads: get-function-configuration CodeSha256 OcKZF34X9liuVKg9ZnpaqBcbSxwcDl6JlW+PlxWyF4k=, MemorySize 1769, LastModified 2026-10-05T04:44:13Z, and a full terraform replan reading 'No changes.' -- so the three differing verdicts are not three different artifacts."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+,
+{
+ "id": "AMGT_RESAPP-Z-S351",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~Z",
+ "surfaced_at": "2026-10-05T05:23:42Z",
+ "one_line": "DISARM of AMGT_RESAPP-Z-S349 by its disarm_owner: r64_served.py c15 is amended per the CTO's ruling (msg 29487) so the 5,000 ms bar grades EVERY invoke and the cold count is recorded, not required. Read on deployed OcKZF34X: 3 of 3 under 5 s (1,949.53 / 272.23 / 270.62 ms), cold 1 of 3, every headline served, AMGT_SEGMENT on 3 of 3, R64 C15 SERVED: YES.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "Row Z-S349 (ARMED, disarm_owner 2.0.0_SA_COO~Z): c15 conjoins container coldness with the 5 s bar in one C1 clause, so the cell defeats itself on repetition. The CTO ruled the deploy stands (its trigger, latency over 5 s, never fired) and assigned the amendment and the disarm to this seat.",
+ "world_is": "The amendment is in round64/checks/r64_served.py: the docstring and C1. A clause no longer fails on cold=False. The dry-run on deployed OcKZF34X just now: run 1 cold (Init 209.9 ms) at 1,949.53 ms, runs 2 and 3 warm at 272.23 and 270.62 ms; 6 of 6 headlines each; C1 PASS 3 of 3 (cold 1 of 3); C2 PASS 3 of 3; R64 C15 SERVED: YES.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "r64_served.py --cell c15 --where deployed after the amendment: the run lines and verdict quoted above.",
+   "CTO msg 29487: 'amend c15 so the 5000 ms bar grades every invoke and cold count is recorded, not required ... Your amendment, your disarm.'"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
 }]
 ```
