@@ -3451,6 +3451,29 @@
     "spec_asserts": "RIV-rw-1 order: run the whole package suite before reporting, it must read 0 failed; AC2: consecutive noted 0-trade windows collapse into one line with notes inside, no per-window heading.",
     "world_is": "The two are contradictory on the one line '(0 trades)': the old test pins the pre-AC2 heading. The assertion that the no_move count is carried on the page still holds (data-no-move=\"1\" is inside the run); only the '(0 trades)' heading half is superseded by AC2. Not edited: the file is outside <paths>.",
     "notes": "Issuer's call: widen rw-1 <paths> to test_no_shares_moved_g82.py (replace '(0 trades)' with 'data-empty-run=\"1\"'), or amend it at the drain. Nothing else in the package suite is affected."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S26",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-05T13:27Z",
+    "one_line": "gold_holding_contribution reads G4 total_return_index as an INDEX LEVEL (ratio of two days), but enrichment_bloomberg fills it from DAY_TO_DAY_TOT_RETURN_GROSS_DVDS, a DAILY PERCENT RETURN -- the first day two adjacent G4 dates both carry it (10-01, 10-02) every such holding returns ~-4,800% and 7 of 13 funds are refused in all 4 windows on the served 10-05 page.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "served platinum/page/date=2026-10-05/manifest.json (13:07:41Z) and the 07:04 build: a1_produced.holding_contribution.detail.refused = 28 keys, BASG ETFT GQGU PCLG PFOE TSEL WCMG x MTD QTD R30 YTD, all total_below_minus_100pct; the 10-01 and 10-02 page manifests: refused 0",
+        "local rebuild at CLOUD ac1b42fcdb from the S3 inputs (nothing written): TSEL R30 security total -3.248; MSFT_US_Equity contribution PCLG -4.43, GQGU -3.98, TSEL -2.94, BASG -2.89, ETFT -1.26, price_source mixed; G4 MSFT total_return_index 10-01 -0.01949698, 10-02 0.9223869, px_close 512.80 -> 517.53 = +0.922% (the field IS the day's percent return)",
+        "enrichment_bloomberg.py:115 ('DAY_TO_DAY_TOT_RETURN_GROSS_DVDS', 'total_return_index', 'num'); gold_holding_contribution.py:348-349 r = b[1] / a[1] - 1.0 (source g4_tri); etf_positioning_gold.py:856 compounds the same field as a daily percent return"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "g4_tri is a G4 total-return-index ratio across the day (gold_holding_contribution docstring, CRO~RV CALL 1 condition 1).",
+    "world_is": "The G4 column named total_return_index holds the day's percent total return, so the ratio is meaningless; it stayed latent while no security had G4 on two adjacent trading days. Remedy (issuer's, inside the decomposition): a round-8 cell -- g4_tri becomes r(s,d) = total_return_index(s,d) / 100 on day d alone, the column's meaning stated in both producers' docs; rides the round-8 deploy under its pair.",
+    "notes": "Latent since G4 began (09-29); not caused by the G4 restore (the 07:04 build, before it, shows the same 28). disarm_owner 2.0.0_SA_COO~RV."
   }
 ]
 ```
