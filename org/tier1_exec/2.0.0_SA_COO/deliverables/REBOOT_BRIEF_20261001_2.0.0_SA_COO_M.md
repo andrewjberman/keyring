@@ -1,5 +1,18 @@
 # Reboot brief -- 2.0.0_SA_COO~M -- rewritten 2026-10-02 04:0xZ at the wind-down; updated 05:2xZ
 
+**UPDATE 2026-10-05 13:3xZ -- round 7 cells all drained; FWD-9 branch 1 ACTED (supersedes every line below where they differ):**
+- Drains: SC-e-17 @58629060b0 (amendments 1-2), SC-e-19 @e8ca95dd8e. Combined tests 54 passed on CLOUD. Worktrees removed.
+- FWD-9 rows half: COO @eb1aef1afd, CTO batch 261 @79452258c9.
+  - BRANCH 1 ACTED 12:57-13:07Z: 626 BBG rows, read back 626/626, table 3,492. Ledger secclass-fwd9-rows-m-20261005
+    CLOSED @c96a3383c5.
+  - BRANCH 2 (31 US TICKER rows, plus W14-S5's nine on a held-data positive signal, batch 261) is HELD for the held census.
+    That census rides R9_CHECKS/multi_asset_leg_v.py (FWD9-US-HELD line) after the 14:15Z fire.
+- The writer's gates: (a) grades the census verdicts (S26); (c) is branch-aware (`--namespace`, BOTH BRANCHES for all rows).
+- FWD-10 apply half DRAFT @1e701e1b52: 7/0/0 plan. The COO half waits on Andrew's R20 acknowledgement of the legacy silver
+  read (W16-S1, entry drafted in the half). Then the source-map row (W16-S2), build, plan, apply, dry invoke.
+- Coverage re-read (batch 259 domain): 795 stocks, covered_3y 0; security_market still 3 partitions (site Z capacity).
+- Leg V control, cottonwood pre-act: packet `alternatives`; deployed reader (pin T) valid and reconciled; no multi_asset.
+
 **UPDATE 2026-10-05 10:4xZ -- round 7 in flight (supersedes every line below where they differ):**
 - SC-e-16 and SC-e-18 drained. SC-e-17 drained @92f65008d6, then re-opened: amendment 1 @5e23d7a7fc (writer fields, no name on
   BBG rows, XX money-market OUT) and amendment 2 @a56f22eaf4 (CTO batch 259 Q4: yellow key Equity AND provider Equity or empty;

@@ -2,8 +2,8 @@
 
 **Author:** `2.0.0_SA_COO~M`, 2026-10-05 13:3xZ (cell `SC-e-19` drained @e8ca95dd8e; the SC-e-17 module and writer it imports
 drained @58629060b0; combined tests 54 passed on CLOUD). **For:** `1.0.0_SA_CTO`, second half.
-**Status: DRAFT. COO half UNSIGNED, pending one sovereign item (the R20 entry, below). CTO half UNSIGNED. Nothing is built,
-uploaded or applied.**
+**Status: COO half SIGNED 2026-10-05 14:1xZ, after Andrew GRANTED the R20 item PERMANENT (below). CTO half UNSIGNED. Nothing
+is built, uploaded or applied.**
 
 ## The act (issuer, in order, under ledger `secclass-fwd10-apply-m-<date>` opened first)
 
@@ -73,20 +73,23 @@ Every scheduled path puts on absence, so none overwrites another.
   `BBG:8354:JP` did today): `ConditionalCheckFailedException`, the row is left exactly as it was, and the list marks it
   `present`.
 
-## The sovereign item (R20) -- COO half waits on it
+## The R20 item -- GRANTED, PERMANENT (Andrew-direct 2026-10-05 ~14:1xZ)
 
 The Opal ETFs' silver holdings (`s3://opal-data-etfs/silver/holdings/{run_date}.parquet`, written by `etfs-netassets-daily`)
-have no builder address. LGIC rule 30 requires every S3 address to be `address()` output. A deliberate departure is an R20
-register entry in `infra/logic/06_CONFORMANCE_LEDGER.md` section 6, acknowledged by Andrew. The draft entry:
-
-`MDPF_SECCLASS new-security-classifier | A3 storage-path | READS the legacy key prefix opal-data-etfs/silver/holdings/
-(etfs-netassets-daily's output), passed as var.silver_prefix; it writes nothing there | WHY: two Opal ETFs (PFDE, DIVZ) are
-held only there, not in the rival canonical_shape (measured 2026-10-05), and FWD-10 covers Opal ETFs | acknowledged by:
-Andrew | when: <date> | CONDITIONAL: ends when etfs-netassets migrates to an address() home (R19), or when the canonical_shape
-carries every Opal ETF`
-
-Without the entry, the alternative is to drop the silver read. FWD-10 would then miss PFDE and DIVZ new stocks, which
-narrows FWD-10 and is an endpoint change.
+have no builder address. LGIC rule 30 makes such a read an R20 departure, and Andrew acknowledged it.
+- **His words, VERBATIM:** "Yes it should absolutely be able to that. As long as the scripts invovled are only
+  reading/corroborating ticker/security-name data to see if there are new ones not yet in the table, then it shouldnt even
+  need to be temporary/conditional grant."
+- **Record:** `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261005_14xxZ_FWD10_SILVER_READ_R20_YES_PERMANENT.md`.
+- **Kind:** PERMANENT. He rejected the REC's CONDITIONAL.
+- **Scope, measured:**
+  - the producer reads exactly `fund_ticker`, `holding_ticker`, `cusip`, `security_name` and `is_cash`
+    (`lambda_function.py:73`);
+  - the role holds `s3:GetObject` only on the prefix;
+  - nothing is written there.
+  - Another column, or any write, is outside the grant.
+- **Register:** row X13 of `infra/logic/06_CONFORMANCE_LEDGER.md` section 6, written by `4.0.0_SA_CRO` (the register's
+  lane) on the record. The apply's plan passes `-var silver_prefix=silver/holdings/` citing X13.
 
 ## Rollback
 
@@ -114,6 +117,18 @@ narrows FWD-10 and is an endpoint change.
 - `R7_CHECKS/r7_fwd10_dry_run.py --packaged`: `FWD10-DRY-RUN day=2026-10-02 previous=2026-10-01 sources=2 new_stocks=0
   planned_writes=0 present=0` (10-02 is a partial landing, row W16-S4).
 
-## COO half -- [PENDING SIGNATURE: waits on the R20 acknowledgement]
+## COO half -- SIGNED
+
+`2.0.0_SA_COO~M`, 2026-10-05 14:1xZ, on Andrew's R20 grant (record above), after reading the code at @e8ca95dd8e and the
+declared root.
+- **Blast radius:** the 7 created resources and the grants listed above. Each writing fire puts on absence only, plus one
+  S3 list object at its builder address. No existing resource, row or object changes.
+- **Served effect:** the ongoing US-ticker branch is named above. A held US ticker newly entering an ETF gains a TABLE row,
+  read as `equity` with its GICS sub-class or none plus `low_confidence`.
+- **Writers counted:** N = 7, both branches above.
+- **Rollback:** disable the schedule; destroy from the new state key; a written row is deleted only on Andrew's word.
+- **Act order:** the source-map row (W16-S2), build and upload, plan (7 / 0 / 0 or stop), safe-apply, then the dry invoke
+  compared with the laptop packaged dry run. The first writing fire is the following weekday at 10:00 New York time.
+- **Ledger:** `secclass-fwd10-apply-m-<date>`, opened first.
 
 ## CTO half -- [PENDING SIGNATURE]
