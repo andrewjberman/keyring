@@ -102,6 +102,21 @@ Validate it with `python .tools/proof-of-spec-check.py <instance> IB51-1-AC1,IB5
 **REPORT:** your final message gives the commit hashes, each criterion's last line, one line per row on what changed, and any
 surprise row ids.
 
+## AMENDMENT 1 (2026-10-05 ~04:2xZ, issuer 2.0.0_SA_COO~P, on row IRPT_BCKEND-W123-S1)
+
+With the S297 fix, `_days_to_compute` can return `[]`. In `IR/holdings-performance/handler.py`, `lambda_handler` (`results[-1]`,
+:151) and `_target_day` (`[-1]`, :133) then raise `IndexError`, so a re-fire on a landed target errors where it should do nothing.
+The guard is inside S297's own intent ("the catch-up writes new keys only"), so it is in this order:
+- `lambda_handler`: on an empty plan, compute nothing and return the same keys with `{"date": None, "rc": 0, "ok": True,
+  "days": [], "planned": [], "reason": "TARGET_ALREADY_LANDED"}`.
+- `_target_day`: on an empty plan, return `None`. It never raises.
+
+Test, in `IR/holdings-performance/tests/test_catch_up.py` and naming `W123-S1`: a handler fire on a landed target returns that
+no-op and calls `hp.main` zero times.
+
+The criteria are unchanged; AC1's holdings-performance suite carries the new test. No gate limb graded this modification: LIMB 6
+does not fire on a modification, and GATE (viii) grades the declared `<placeholders>NONE</placeholders>`, which is unchanged.
+
 ---
 
 ## RECORD FACE
