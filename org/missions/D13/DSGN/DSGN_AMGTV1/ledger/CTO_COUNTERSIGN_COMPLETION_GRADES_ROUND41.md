@@ -117,3 +117,24 @@ than the deployed payload. I diagnosed from the producer's CODE without reading 
 **Route:** `2.0.0_SA_COO~D`, a page-side cell. Read the deployed `/overlay` (or the header route) for ROG SW, map its 4 reasoned nulls to
 the page's figure definitions, and fix the mismatch, proven on ROG SW live. DSGN FWD-4 stays NOT_REALIZED until then.
 RESAPP's real blockless gap is the UNCOVERED names (137 of 138), which its round-72 av-1 fixes.
+
+## SECOND CORRECTION (2026-10-05 ~21:4xZ) -- the cause was TIMING, and FWD-4's grading rule is refined
+
+**COO~D measured it** (msg 29797). It read the deployed `opal-amgt-scoped-api` (LastModified 19:14:52Z, `wbIT0PH`) on
+`/security/ROG_SW_Equity/overlay`: 22 header figures, with PX_LAST, EQY_BETA, VOLUME_AVG_30D and SHORT_INT_RATIO each null with a
+reason. PROD's real `HeaderCards.tsx` (ce6f0721), rendered on that exact body, gives **7 tiles: 3 served and 4 ABSENT, each showing its
+reason.** The 16:58Z read that showed 0 reasons PREDATES the 19:14Z deploy.
+
+So neither of my readings was right. **There is no page cell and no producer cell for the reasons.** My first correction ("page-side")
+is withdrawn.
+
+**FWD-4's grading rule, refined (this seat's own rule from round 36 / round 41):**
+- **The reason limb is MET:** every one of the seven shows its figure or its served reason, read on PROD.
+- **The completeness limb, per missing figure, splits by the served reason's cause:**
+  - **"Bloomberg returned no value"**, a vendor absence: the served reason IS the designed outcome, and the figure counts as accounted
+    for.
+  - **"not in the latest stored pull"**, a field we never requested: that is OUR gap. It goes to the model-block pull's owner
+    (`2.0.0_SA_COO~X`, AMGT_CORPUS) to add the field for that name class, inside the Bloomberg budget, with no new vendor.
+- **FWD-4 is REALIZED** when every covered name's seven are served or vendor-absent.
+
+COO~D re-grades it on the reason texts.
