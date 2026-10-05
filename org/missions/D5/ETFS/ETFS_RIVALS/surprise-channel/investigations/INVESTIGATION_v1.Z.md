@@ -3541,6 +3541,28 @@
     "spec_asserts": "Andrew-direct @33ff3bdac0/@4bd948e824: one purely additive IDVZ/PFOE backfill; CTO~Z msg 29594: any non-IDVZ/PFOE fund delta is a STOP.",
     "world_is": "G1 is purely additive (189/189 dates) but the chain's G5 rebuild is not: it re-derives every fund's trades on 189 dates with current code. The served Jan-Sep G5 of the other funds was built with older code, so it would change. Options for the CTO: (A) accept a G5 replay of all funds as part of Step B (wider than the word); (B) a round-9 cell: the trade schedule rebuilds only named funds and carries every other fund's rows from the prior object unchanged, then Step B runs; (C) defer Step B.",
     "notes": "Nothing served moved: every write was to the local mirror. Step B is held. disarm_owner not needed (INERT)."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S30",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~RV",
+    "surfaced_at": "2026-10-05T17:35Z",
+    "one_line": "S25's graduated remedy (enrichment refuses to land an all-error or all-empty G4 revision) has no placement in ROUND_ANALYSIS.round8.md: no ruling, and not one of the 8 round-9 enrichment items. Its remediation row in REMEDIATION_v8.Z.md is OPEN and owned by 1.0.0_SA_CTO~Z.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "remediations/REMEDIATION_v8.Z.md row ETFS_RIVALS-Z-S25 (state OPEN, owner 1.0.0_SA_CTO~Z) @5867175a58",
+        "ledger/ROUND_ANALYSIS.round8.md @2097b5212b: section 3 rulings 1-7 and section 4 items 1-8 name S24, S29, C-S35, C-S36, the G5 drift and the 8 stale rows; none names S25, G4 or the all-error guard",
+        "investigation row ETFS_RIVALS-Z-S25 (remedy 3 not cut in round 8)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md rule 27 L10: the CTO answers the slug with the ROUND-N ANALYSIS that the COO recuts in ONE issuance. ROUND_ANALYSIS.round8.md section 3 ruling 6: 'None is carried silently into round 10'.",
+    "world_is": "Of the 5 rows the round-8 slug graduated, 4 are placed in the analysis (S24 ruling 1 and item 6; S29 ruling 2 and item 1; C-S35 ruling 3 and item 4; C-S36 ruling 4 and item 5). S25 is placed nowhere. The G4 10-02 restore (remedy 2) is done, but the guard (remedy 3) is unbuilt. While S24's capacity block can recur, a blocked enrichment can land another empty G4 as the newest revision, and every reader would take it as current.",
+    "notes": "For the round-9 issuer (2.0.0_SA_COO~RV): cut S25 remedy 3 as a cell, or carry it under item 6 (the capacity budget) with the reason stated. INERT, so no disarm_owner. Filed as a row because the CVO's one send of the round (the slug) is spent."
   }
 ]
 ```
