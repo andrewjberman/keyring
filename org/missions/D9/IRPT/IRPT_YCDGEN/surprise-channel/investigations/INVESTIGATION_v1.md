@@ -1200,3 +1200,139 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "INERT until an OPAL_ENGINE report is READY on a served route: the response contract needs a v2 data branch (provider discriminator) and the frontend consumer a matching parse before the first Opal report is opened."
 }
 ```
+
+## IRPT_YCDGEN-W3-S8 -- the Opal artifact family OPAL_REPORT_PDF is named by the publisher but registered nowhere, and the producer does not write the PDF through the artifact store
+
+```json
+{
+  "id": "IRPT_YCDGEN-W3-S8",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~3",
+  "surfaced_at": "2026-10-05T22:57:27Z",
+  "one_line": "The Opal artifact family OPAL_REPORT_PDF is named by the publisher but registered nowhere, and the producer does not write the PDF through the artifact store.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "spec_asserts": "R7: the Opal path takes an artifact reference of its own family, not ORIGINAL_VENDOR_PDF; the family is named in a surprise row.",
+  "world_is": "publisher.py (OPAL_FAMILY) and publication_worker.py accept a retained ref of family OPAL_REPORT_PDF (application/pdf, immutable, retention_ref). The reporting policy irpt-x10-v1 holds 13 families (lib/tests/test_irpt_destination.py FAMILIES) and none is OPAL_REPORT_PDF, so ArtifactRepository.put refuses that family until a registry row exists in infra/logic/registry/ (not this cell's file). opal_producer.produce writes the PDF straight to the ycharts_opal_reports S3 family through an injected put_object and never calls artifacts.put, so no retained Opal artifact_ref exists for the publisher to take. Tests register the family in the retention world themselves.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ycharts/generate/publisher.py OPAL_FAMILY, _publish_opal@wk-IRPT_YCDGEN-65",
+      "lib/tests/test_irpt_destination.py FAMILIES (13 members)@wk-IRPT_YCDGEN-65",
+      "ycharts/research/opal_producer.py produce (put_object, no artifacts.put)@wk-IRPT_YCDGEN-65"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ARMED: the live Opal request reaches the publisher only after (a) the family is registered in the reporting policy and (b) the driver of the Opal request retains the PDF as that family and hands the ref in. Until then publish() refuses with a loud policy/registry error. The name is this worker's choice; the owner of the registry may rule another."
+}
+```
+
+## IRPT_YCDGEN-W3-S9 -- resident_worker reopens a READY job through provenance.extraction_evidence_ref, which an Opal report's provenance does not carry
+
+```json
+{
+  "id": "IRPT_YCDGEN-W3-S9",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~3",
+  "surfaced_at": "2026-10-05T22:57:27Z",
+  "one_line": "Resident_worker reopens a READY job through provenance.extraction_evidence_ref, which an Opal report's provenance does not carry.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "spec_asserts": "R7: an Opal job reaches READY; a redelivered message for a READY job reopens the retained report and checks its certification.",
+  "world_is": "ycharts/generate/resident_worker.py:513-519 reads retained['provenance']['extraction_evidence_ref']['sha256'] and compares it to detail['certification_sha256'] for a READY job. The Opal publication writes provenance {schema_version irpt-opal-publication.v1, provider, composition_ref, opal_artifact_ref} (no extraction evidence exists) and the READY receipt's certification_sha256 is the Opal PDF's own sha256, so a redelivery of a READY Opal job raises KeyError there. Not this cell's file.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ycharts/generate/resident_worker.py:513-519@wk-IRPT_YCDGEN-65",
+      "ycharts/generate/publisher.py _publish_opal provenance@wk-IRPT_YCDGEN-65"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ARMED: loud (KeyError) on the first redelivery of an Opal job's SQS message after READY. The resident-worker owner reads provenance by provider (opal_artifact_ref.sha256 against certification_sha256 for OPAL_ENGINE)."
+}
+```
+
+## IRPT_YCDGEN-W3-S10 -- the job-state sequence for an Opal job is RECEIVED -> CERTIFYING -> READY, and the READY receipt's certification_sha256 is the PDF's sha256
+
+```json
+{
+  "id": "IRPT_YCDGEN-W3-S10",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~3",
+  "surfaced_at": "2026-10-05T22:57:27Z",
+  "one_line": "The job-state sequence for an Opal job is RECEIVED -> CERTIFYING -> READY, and the READY receipt's certification_sha256 is the PDF's sha256.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "R7: the job reaches READY without DOWNLOADING, EXTRACTING and CERTIFYING, or through a state sequence named in a surprise row if the machine forces one.",
+  "world_is": "durable_job.put_state accepts READY only from CERTIFYING (condition '#state = :certifying') and demands report_id, revision and certification_sha256 in the receipt. The Opal path therefore passes through CERTIFYING alone: PublicationWorker.finish sets CERTIFYING (phase opal_report_publication) from RECEIVED (the accepted job's first state; CLAIMED also admitted), the caller then puts READY. DOWNLOADING and EXTRACTING are never entered. With no extraction wrapper, certification_sha256 is the sha256 of the Opal PDF (pdf_ref.sha256, equal to document.opal_artifact.sha256). The vendor path's states are unchanged and a vendor checkpoint is still refused in RECEIVED.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ycharts/generate/durable_job.py put_state (143-153)@wk-IRPT_YCDGEN-65",
+      "ycharts/generate/publication_worker.py OPAL_STATES, finish@wk-IRPT_YCDGEN-65",
+      "ycharts/generate/tests/test_publication_worker.py test_opal_engine_worker_reaches_ready_without_the_vendor_download_states@wk-IRPT_YCDGEN-65"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: stated in code and covered by a test. CERTIFYING for an Opal job means 'document persisted', not 'extraction certified'; the status wire shows the same word for both."
+}
+```
+
+## IRPT_YCDGEN-W3-S11 -- a full OPAL_ENGINE document does not fit the 32 KiB pdf checkpoint when its sections carry tables, and the Opal path has no spill
+
+```json
+{
+  "id": "IRPT_YCDGEN-W3-S11",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~3",
+  "surfaced_at": "2026-10-05T22:57:27Z",
+  "one_line": "A full OPAL_ENGINE document does not fit the 32 KiB pdf checkpoint when its sections carry tables, and the Opal path has no spill.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "spec_asserts": "R7: the Opal metadata key set and the sections and computation_validation the v2 schema carries are accepted by the worker.",
+  "world_is": "PublicationWorker.checkpoint_pdf stores {pdf_ref, census, metadata} in the job row via put_checkpoint, which refuses more than CHECKPOINT_BYTES = 32 KiB (WORKER_CHECKPOINT_SIZE). The vendor path spills only the census to an EXTRACTION_EVIDENCE artifact. The Opal metadata is the whole v2 document (opal_producer writes table values as canonical JSON strings inside sections), so an Overview with the three classified tables over a large portfolio can exceed 32 KiB; the Opal path does not spill (it is skipped for kind OPAL) and the store refuses loudly. The 99-holding Cottonwood portfolio was not measured here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ycharts/generate/durable_job.py CHECKPOINT_BYTES, put_checkpoint@wk-IRPT_YCDGEN-65",
+      "ycharts/generate/publication_worker.py checkpoint_pdf@wk-IRPT_YCDGEN-65",
+      "ycharts/research/opal_producer.py _section (table values as JSON strings)@wk-IRPT_YCDGEN-65"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ARMED: loud (WORKER_CHECKPOINT_SIZE) for a large document. A fix is a spill of the sections to a retained artifact of a registered family (needs the registry row of S8) or a checkpoint of the document's hash with the document read from the repository; neither is in this cell's paths."
+}
+```
+
+## IRPT_YCDGEN-W3-S12 -- test_factory_returns_exactly_the_resident_shape_without_any_aws_call fails when test_resident_installed.py is run alone
+
+```json
+{
+  "id": "IRPT_YCDGEN-W3-S12",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~3",
+  "surfaced_at": "2026-10-05T22:57:27Z",
+  "one_line": "Test_factory_returns_exactly_the_resident_shape_without_any_aws_call fails when test_resident_installed.py is run alone.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Cell g-6: keep every existing test in test_resident_installed.py passing.",
+  "world_is": "Run alone (python -m pytest reports/tests/test_resident_installed.py -q -p no:cacheprovider) the test fails at resident_worker.py:18 'import extract' (ModuleNotFoundError): the file's sys.path list names reports, ycharts/generate, ycharts/session, _scope, _ids, _keys, _authz, intake and ops but not ycharts/extract. With PYTHONPATH=infra/aws/lambda/investor-reporting/ycharts/extract all 14 original tests pass (and the 3 added). The failure does not depend on R7: resident_installed's import list and the test's imports are unchanged by this cell. The AC4 criterion (-k resident_validator_v2) selects only the added tests.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "reports/tests/test_resident_installed.py:18-22@wk-IRPT_YCDGEN-65",
+      "ycharts/generate/resident_worker.py:18@wk-IRPT_YCDGEN-65"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: an order-dependent test (it passes when a sibling test file has already put ycharts/extract on sys.path). A one-line path addition in the test file's loop is the owner's."
+}
+```
