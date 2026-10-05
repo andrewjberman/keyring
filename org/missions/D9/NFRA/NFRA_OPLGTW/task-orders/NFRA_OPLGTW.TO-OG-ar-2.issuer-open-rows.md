@@ -80,7 +80,7 @@ PLACE to `complete`. Report once: per row the kind and its one-line basis.
 - Round 17 (addendum R3-T.10, item 6). Alone.
 - Pre-cut: `ar2.AC1` FAIL (the record is absent).
 
-<status>pending</status>
+<status>complete</status>
 <round>17</round>
 <slot>~21</slot>
 <fabric>site-z</fabric>
