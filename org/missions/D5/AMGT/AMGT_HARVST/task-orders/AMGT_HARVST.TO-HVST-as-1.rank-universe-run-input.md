@@ -101,9 +101,23 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 **ISSUER NOTES:** Round-45 analysis @4f01f5ab8d ruling 1 and enrichment item 1; CTO ruling @a142505a06; decomposition section 59.
 as-1b (the run) follows the merge under its own never-widen pair, and it opens a NEVER-2 entry before the first request.
 
+**COMPLETE 2026-10-05 ~01:3xZ (issuer):**
+- **Built and merged:** worker ~94 built @3a93a33849. The slot was re-seated to apply the Z-W94-S1 ruling, @e379f86719. Merged
+  @dfd3ce3498 (12 files, dropped 0, foreign 0).
+- **AC1 PASS:** 6 of 6.
+- **AC2 PASS:** 191 of 191 rank names carry `security_key` = the pool key. sa_symbol is present for 191 of 191 (INFERRED 23,
+  MEASURED 14, DERIVED 153, ISSUER 1).
+- **AC3 PASS:** UNIVERSE 191, 955 PLAN lines, NETWORK CALLS 0.
+- **Collector suite on CLOUD:** 647 passed, 3 skipped.
+- **Ruling Z-W94-S1** (row Z-W94-S2):
+  - TPG Inc = TPG (ISSUER);
+  - the nine R2 symbols stand, because the pool keys are those US listings;
+  - the 153 unprobed symbols are accepted, and the run is their probe.
+- **Gate limb:** proof-of-spec-check graded the flip.
+
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
-<status>issued</status>
+<status>complete</status>
 <round>46</round>
 <slot>~94</slot>
 <fabric>site-z</fabric>
