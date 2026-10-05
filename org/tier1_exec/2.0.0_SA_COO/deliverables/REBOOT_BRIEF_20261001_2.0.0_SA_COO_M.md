@@ -1,5 +1,14 @@
 # Reboot brief -- 2.0.0_SA_COO~M -- rewritten 2026-10-02 04:0xZ at the wind-down; updated 05:2xZ
 
+**UPDATE 2026-10-05 10:4xZ -- round 7 in flight (supersedes every line below where they differ):**
+- SC-e-16 and SC-e-18 drained. SC-e-17 drained @92f65008d6, then re-opened: amendment 1 @5e23d7a7fc (writer fields, no name on
+  BBG rows, XX money-market OUT) and amendment 2 @a56f22eaf4 (CTO batch 259 Q4: yellow key Equity AND provider Equity or empty;
+  existing rows keep instrument_kind; OUT by reason). Worker ~14 runs in C:/Users/AndrewBerman/Desktop/wk-secclass-r7-14.
+- SC-e-19 (FWD-10 producer) issued to worker ~16 in C:/Users/AndrewBerman/Desktop/wk-secclass-r7-16, in parallel; it imports
+  the module and writer and never re-implements them.
+- After ~14 drains: sign the COO half of NEVER_WIDEN_HALF_REQUEST_SECCLASS_FWD9_ROWS_20261005.md, send it to the CTO, then the
+  rows act (r7_fwd9_write.py --write --half) under its own ledger. FWD-10 apply is an issuer act under its own half.
+
 **UPDATE 2026-10-05 00:3xZ -- multi_asset packet ACTED (supersedes every line below where they differ):**
 - Authority: Andrew ~22:1xZ 10-03 "proceed call 2"; ~22:0xZ 10-04 card 4 (49F paired read only, not a general lift of the
   restart hold). Halves: COO @1131610939, CTO batches 240 + 244. Ledger `secclass-multi-asset-rows-and-remint-m-20261004`:
@@ -7,7 +16,8 @@
   - H: hold release @9efbec3c2f / drain e9401c03ff (103971 + 103981 lines gone).
   - R: inf SuRm8tIY.., directory KK09i.JS.., 49f 3Q_W49U7.., cot NZIQjid2.. (prior VersionIds = rollback, in the proof).
   - T: irpt-holdings contract pin 4cc72587d6, CodeSha256 RmruvCeo...
-  - OWED: leg V = the first irpt-holdings-snapshot after the act, MONDAY 2026-10-05 10:15Z. Read: packet keys carry
+  - OWED: leg V = the first irpt-holdings-snapshot after the act, MONDAY 2026-10-05 14:15Z (cron 10:15 America/New_York,
+    read live 10:2xZ; target irpt-holdings-refresh-lambda). Script: R9_CHECKS/multi_asset_leg_v.py <firm>. Read: packet keys carry
     multi_asset, totals unchanged, readers render it.
 - Rows S23 (rows landed before two producers admitted the class; ARMED) -> S24 (disarmed 00:16Z by the re-mints).
 - Closed today: S18 cell ledger (CVO leg S PASS), cot seed-rows ledger (leg G read).

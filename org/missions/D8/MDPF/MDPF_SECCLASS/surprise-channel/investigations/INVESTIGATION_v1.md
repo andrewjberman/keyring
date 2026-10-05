@@ -1823,3 +1823,32 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Applied as ruled; not widened. The CTO can rule a security_ticker fallback key for a record with no Bloomberg id if the 7 should be written."
 }
 ```
+
+## MDPF_SECCLASS-S26 -- W14-S4 resolved (the census gate grades verdicts); W14-S5 carried in the half; the US-ticker branch held for its served-effect read
+
+```json
+{
+  "id": "MDPF_SECCLASS-S26",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-05T11:39Z",
+  "one_line": "W14-S4 resolved: r7_fwd9_write.py precondition (a) now grades SC-e-16's census by its own verdicts (every reader TOLERATES or READ-ONLY, none uncensused, any counter it carries 0) and reads MET; W14-S5's 9 keyless stocks stay OUT under batch 259 and are named in the FWD-9 rows half; the half's 31 US bare-ticker rows are held until their served effect is read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "SC-e-17 drained @58629060b0; R7_BBG_READER_CENSUS_20261005.json holds 45 readers graded by verdict (TOLERATES 34, READ-ONLY 11) and denominator.uncensused [] -- no top-level counter fields, so the old check read 'missing' (W14-S4)",
+      "check_census() after the fix: REAL (True, 'census clean: 45 readers (READ-ONLY 11, TOLERATES 34), 0 uncensused'); negative controls: a CRASHES verdict, one uncensused file, an empty reader list and crashes=2 each return False",
+      "dry run --namespace BLOOMBERG: plan=626, (a) MET, (b) MET, (c) NOT MET; --namespace TICKER: plan=31",
+      "the half's own blast-radius line: the 31 US keys are bare tickers a firm may hold, and their holdings served effect is NOT measured"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "W14-S4 is fixed in the issuer's own gate script with controls. W14-S5 is the ruled rule's boundary (batch 259: the Bloomberg yellow key is the signal) and is carried to the CTO inside the half, not widened here. The US-ticker branch is held by its own issuer until the FWD-9 held census (R9_CHECKS/multi_asset_leg_v.py, the same pass as leg V) reads which served holdings carry those tickers and with what class today.",
+  "spec_asserts": "Precondition (a): the BBG reader census reads crashes, refuses, miskeys and fails_contract all 0.",
+  "world_is": "The census grades readers by verdict and carries no counters, so a counter test can only read 'missing'; the verdicts are all clean.",
+  "notes": "Resolves MDPF_SECCLASS-W14-S4 and MDPF_SECCLASS-W14-S5."
+}
+```

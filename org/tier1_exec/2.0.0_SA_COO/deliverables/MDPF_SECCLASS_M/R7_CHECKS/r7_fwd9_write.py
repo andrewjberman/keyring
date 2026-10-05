@@ -11,10 +11,12 @@ What it does, and nothing else:
     amendment 1), so this file has no table wrapper: the producer (SC-e-19) and this writer put through one path.
   - DRY RUN BY DEFAULT: it prints the plan and puts nothing.
   - `--write` REFUSES unless ALL of these hold (each printed):
-      (a) R7_BBG_READER_CENSUS_20261005.json (cell SC-e-16) has crashes, refuses, miskeys and fails_contract all 0;
+      (a) R7_BBG_READER_CENSUS_20261005.json (cell SC-e-16) grades every reader TOLERATES or READ-ONLY, lists none
+          uncensused, and any crashes / refuses / miskeys / fails_contract counter it carries is 0 (row W14-S4);
       (b) org/standards/MDPF_SECCLASS_CONTRACT.json lists BLOOMBERG in identifier_namespace values (contract 0.4.0,
           the CTO's carrier);
-      (c) `--half <path>` names a half whose CTO section reads SIGNED.
+      (c) `--half <path>` names a half whose COO and CTO headings both read SIGNED for the branch written (`--namespace`);
+          a run over every WRITE line needs both headings to read BOTH BRANCHES.
 
 Usage:
   python r7_fwd9_write.py                       # dry run
@@ -23,6 +25,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import collections
 import json
 import re
 import sys
@@ -38,6 +41,9 @@ DEFAULT_SET = HERE / "FWD9_ROW_SET_20261005.tsv"
 CENSUS = HERE.parent / "R7_BBG_READER_CENSUS_20261005.json"
 CONTRACT = ROOT / "org" / "standards" / "MDPF_SECCLASS_CONTRACT.json"
 CENSUS_ZEROES = ("crashes", "refuses", "miskeys", "fails_contract")
+# SC-e-16 grades each reader with a verdict, not with counters (row W14-S4): a reader is clean only when its verdict is
+# one of these. Any other verdict, an empty reader list or an uncensused file fails closed.
+CLEAN_VERDICTS = ("TOLERATES", "READ-ONLY")
 
 
 def read_write_lines(path):
@@ -73,22 +79,33 @@ def _find_key(obj, key):
 
 
 def check_census(path=CENSUS):
+    """(ok, why). The census is clean when every reader's verdict is in CLEAN_VERDICTS, nothing is uncensused and any of the
+    four counters it carries is 0. A counter the census does not carry is not read as 0; the verdicts carry the grade."""
     if not Path(path).exists():
         return False, "census %s is absent" % Path(path).name
     data = json.loads(Path(path).read_text(encoding="utf-8"))
+    readers = data.get("readers") or []
+    if not readers:
+        return False, "census lists no readers"
     bad = []
+    verdicts = collections.Counter(str(r.get("verdict")) for r in readers)
+    for verdict, n in sorted(verdicts.items()):
+        if verdict not in CLEAN_VERDICTS:
+            bad.append("verdict %s=%d" % (verdict, n))
+    uncensused = (data.get("denominator") or {}).get("uncensused")
+    if uncensused is None:
+        bad.append("denominator.uncensused missing")
+    elif (len(uncensused) if isinstance(uncensused, (list, dict)) else uncensused) != 0:
+        bad.append("uncensused=%s" % (len(uncensused) if isinstance(uncensused, (list, dict)) else uncensused))
     for key in CENSUS_ZEROES:
-        values = _find_key(data, key)
-        if not values:
-            bad.append("%s missing" % key)
-            continue
-        for value in values:
+        for value in _find_key(data, key):
             count = len(value) if isinstance(value, (list, dict)) else value
             if count != 0:
                 bad.append("%s=%s" % (key, count))
     if bad:
         return False, "census not clean: %s" % ", ".join(bad)
-    return True, "census clean: crashes, refuses, miskeys, fails_contract all 0"
+    return True, "census clean: %d readers (%s), 0 uncensused" % (
+        len(readers), ", ".join("%s %d" % kv for kv in sorted(verdicts.items())))
 
 
 def check_contract(path=CONTRACT):
@@ -100,24 +117,50 @@ def check_contract(path=CONTRACT):
         data.get("contract_version"), spec.get("values"))
 
 
-def check_half(half):
+BRANCH_WORDS = {"BLOOMBERG": ("BRANCH 1", "BLOOMBERG"), "TICKER": ("BRANCH 2", "TICKER")}
+
+
+def _section_signs(text, who, namespace):
+    """(ok, why) for one `## <who> half` heading. It must read SIGNED (no PENDING / UNSIGNED / NOT SIGNED) and name the
+    branch being written: `BRANCH 1` or `BLOOMBERG` for --namespace BLOOMBERG, `BRANCH 2` or `TICKER` for --namespace
+    TICKER, `BOTH BRANCHES` for either or for a run over every WRITE line. A heading that names a branch as HELD does
+    not sign it."""
+    match = re.search(r"^## %s half\b[^\n]*$" % who, text, re.MULTILINE)
+    if not match:
+        return False, "half has no %s section" % who
+    heading = match.group(0)
+    upper = heading.upper()
+    if not re.search(r"\bSIGNED\b", upper) or re.search(r"NOT SIGNED|PENDING|UNSIGNED", upper):
+        return False, "%s section does not read SIGNED: %s" % (who, heading)
+    if "BOTH BRANCHES" in upper:
+        return True, "%s section signs both branches: %s" % (who, heading)
+    if namespace is None:
+        return False, "%s section signs one branch; a run over every WRITE line needs BOTH BRANCHES: %s" % (who, heading)
+    for word in BRANCH_WORDS[namespace]:
+        at = upper.find(word)
+        if at >= 0 and "HELD" not in upper[at:at + len(word) + 12]:
+            return True, "%s section signs %s: %s" % (who, namespace, heading)
+    return False, "%s section does not sign %s: %s" % (who, namespace, heading)
+
+
+def check_half(half, namespace=None):
     if not half:
         return False, "no --half named"
     path = Path(half)
     if not path.exists():
         return False, "half %s is absent" % half
     text = path.read_text(encoding="utf-8")
-    match = re.search(r"^## CTO half\b[^\n]*$", text, re.MULTILINE)
-    if not match:
-        return False, "half has no CTO section"
-    heading = match.group(0)
-    if re.search(r"\bSIGNED\b", heading) and not re.search(r"NOT SIGNED|PENDING|UNSIGNED", heading):
-        return True, "CTO section reads SIGNED: %s" % heading
-    return False, "CTO section does not read SIGNED: %s" % heading
+    whys = []
+    for who in ("COO", "CTO"):
+        ok, why = _section_signs(text, who, namespace)
+        if not ok:
+            return False, why
+        whys.append(why)
+    return True, "; ".join(whys)
 
 
-def preconditions(half):
-    results = [("a", check_census()), ("b", check_contract()), ("c", check_half(half))]
+def preconditions(half, namespace=None):
+    results = [("a", check_census()), ("b", check_contract()), ("c", check_half(half, namespace))]
     return results, all(ok for _, (ok, _) in results)
 
 
@@ -126,9 +169,14 @@ def main(argv=None):
     parser.add_argument("--set-file", default=str(DEFAULT_SET))
     parser.add_argument("--write", action="store_true")
     parser.add_argument("--half", default=None)
+    parser.add_argument("--namespace", choices=("BLOOMBERG", "TICKER"), default=None,
+                        help="write only the WRITE lines of this identifier_namespace (the half signs one branch at a time)")
     args = parser.parse_args(argv)
 
     rows = read_write_lines(args.set_file)
+    if args.namespace:
+        rows = [row for row in rows if row.get("identifier_namespace", "TICKER") == args.namespace]
+        print("NAMESPACE %s: %d WRITE line(s) selected" % (args.namespace, len(rows)))
     by_ns = {}
     for row in rows:
         by_ns[row.get("identifier_namespace", "TICKER")] = by_ns.get(row.get("identifier_namespace", "TICKER"), 0) + 1
@@ -138,7 +186,7 @@ def main(argv=None):
         print("REFUSED: a WRITE row carries a non-ASCII name (a served-table name is ASCII).")
         return 3
 
-    results, ok = preconditions(args.half)
+    results, ok = preconditions(args.half, args.namespace)
     for letter, (passed, why) in results:
         print("PRECONDITION (%s) %s: %s" % (letter, "MET" if passed else "NOT MET", why))
 
