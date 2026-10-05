@@ -18083,3 +18083,54 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "MEASURED: the live adapter is the B3 artifact that retired PATH A for 49F; leg A1 closed SUPERSEDED and the ledger closed."
 }
 ```
+
+## IRPT_BCKEND-W124-S1 -- MaintainedSourceRefused is still raised bare at 25 sites outside maintained_sources.py; they still answer UNEXPECTED
+
+```json
+{
+  "id": "IRPT_BCKEND-W124-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~124",
+  "surfaced_at": "2026-10-05T05:40:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "TO-IB-pr-321 classified the 46 raises in _scope/maintained_sources.py; _scope/canonical_profile_reads.py (14 raises) and _scope/retained_input_authorizer.py (11 raises) also `raise MaintainedSourceRefused(` bare, are outside the cell's named file and checker, and were left as is.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_scope/canonical_profile_reads.py@7c1fd584bc (lines 37-154)",
+      "infra/aws/lambda/investor-reporting/_scope/retained_input_authorizer.py@7c1fd584bc (lines 29-79)",
+      "count: grep -c 'raise MaintainedSourceRefused(' -> 14 and 11"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-321 / CTO batch 253 item 3: replace EVERY `raise MaintainedSourceRefused(...)` with the right subclass; the order's census and checker name maintained_sources.py only (about 50 sites).",
+  "world_is": "MEASURED by Grep at worktree HEAD: canonical_profile_reads.py 14 and retained_input_authorizer.py 11 bare raises of the base class, which reason_for answers UNEXPECTED (the base declares no code, the test test_S175_the_base_class_declares_nothing_so_a_bare_raise_stays_visible pins that). Both files are inside the grant (_scope/); the order scoped the cut to one file, so the issuer rules whether to classify them in a later cell."
+}
+```
+
+## IRPT_BCKEND-W124-S2 -- BucketUnmapped is also raised for a directory artifact with no firm_id_opaque (loaders.py:209); FIRM_BINDING now answers it
+
+```json
+{
+  "id": "IRPT_BCKEND-W124-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~124",
+  "surfaced_at": "2026-10-05T05:40:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Declaring FIRM_BINDING on the BucketUnmapped class (S260) also maps its second raise site, opaque_firm_for at loaders.py:209 (the firm's directory artifact declares no firm_id_opaque), which is a server-artifact fault rather than an unmapped firm.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/loaders.py@7c1fd584bc lines 57 and 209",
+      "infra/aws/lambda/investor-reporting/_authz/served.py@7c1fd584bc lines 738-743 (both sites are on every request's context build)"
+    ]
+  },
+  "spec_asserts": "CTO batch 253 ruling 1: BucketUnmapped declares public_reason_code = FIRM_BINDING (an unmapped firm). The class is raised at two sites.",
+  "world_is": "MEASURED: bucket_for (loaders.py:57) raises it for a firm absent from IRPT_DIRECTORY_BUCKET_MAP (an unmapped firm: FIRM_BINDING fits); opaque_firm_for (loaders.py:209 at 7c1fd584bc) raises it when the artifact lacks firm_id_opaque (a NOT_READY-shaped fault). Both now answer FIRM_BINDING. Out of scope to split (a new class is a ruling); the issuer rules."
+}
+```
