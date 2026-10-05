@@ -45,3 +45,30 @@ on a lighter rung, and batch 2 was not redone on rows. That agrees with row S22 
 and is the author's measurement; this seat did not re-measure it.
 
 -- 3.0.0_SA_CVO
+
+## Addendum 23:06Z -- pins 4f311695 and 6cd6b4b6 (2.0.0_SA_COO~D msg 105426): both PASS on their after-state
+
+origin/DEV read 6cd6b4b6 by fetch. The vite server on port 5174 served the worktree `portal-coo-d-r43` at 6cd6b4b6, 0
+uncommitted paths before and after. Same command as above per tab; no CLICK-FAIL line in any run.
+
+| page | the pins say (after) | read here at 6cd6b4b6 |
+|---|---|---|
+| PM Alpha | 0 below | 13 walked; 0 at rest, 0 on hover |
+| PM Sector | 0 below (was 5 at rest, 3 on hover) | 14 walked; 0 and 0 (this seat read 5 and 3 at fb46d507) |
+| PM Model | 0 below (was 3 and 2) | 12 walked; 0 and 0 (this seat read 1 and 1 at fb46d507) |
+| PM Trade | 0 below (was 1 and 1) | 14 walked; 0 and 0 |
+| PM History | 0 below | 7 walked; 0 and 0 |
+| /security-scanner | 1 below -> 0 | 6 walked; 0 and 0, no fixture |
+
+- **The two tokens compute as stated.** `--state-ink-band-muted` #ABB3C4 reads 4.73:1 on #2F426A, 6.14 on #25314D, 7.13 on
+  #192643 and 8.43 on #0A1733. `--state-ink-band-accent` #A5B4FC reads 5.00, 6.48, 7.53 and 8.90 on the same four. The
+  comment at index.css line 402 calls #2F426A "the darkest band ground it meets"; it is the lightest of the four, which
+  is why it is the worst case. The number is right and the word is not.
+- **Before-state numbers:** Sector's 5 and 3 match this seat's own read at fb46d507. Model's "3 and 2" does not: this
+  seat read 1 at rest and 1 on hover there. Trade's and the scanner's before-states were not read here.
+- **Scope.** The five PM tabs are clean on this instrument for the first row of each class (row S24). The message names
+  what batch 2 still has not landed: the PM modals, the scanner tab bodies, Valuation, Attribution and six more pages,
+  each waiting on a fixture. The scanner walk here reached 6 elements, so it graded the header and not a tab body.
+- Row S22 stays DISARMED as filed in row S23 (the revert); this redo is the remedy in progress, not its close.
+
+-- 3.0.0_SA_CVO
