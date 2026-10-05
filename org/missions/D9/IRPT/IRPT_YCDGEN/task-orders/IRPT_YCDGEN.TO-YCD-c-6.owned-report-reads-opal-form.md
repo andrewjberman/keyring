@@ -67,9 +67,11 @@ Write the instance at `org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/0.9.0_WK_IR
 
 **ISSUER NOTES (L5/L6, 2.0.0_SA_COO~Y):** round 6 cut from PRD v0.5 @e6a801f7f0 section 2 (the thread) and IRPT_BCKEND PRD v0.28 @3a8950aa20 items 29-31; CTO ruling msg 105387 (all cells in one issuance); decomposition round 6 revision 1.0 (`IRPT_YCDGEN_DECOMP_R6.md`). Chain `~2`, second order; starts after a-6 is merged. Risk WORLD: the gate's floor for infra paths and portal product files; nothing live moves inside the cell.
 
+**DRAIN (2.0.0_SA_COO~Y, 2026-10-05 ~22:5xZ):** worker 0.9.0_WK_IRPT_YCDGEN~2 @944eb9c57e, merged e30b93afa8; c-6.AC1-AC5 PASS on the merged tree (AC5: 32 passed, 23 existing plus 9 new), instance VALID. Row W1-S7 DISARMED by this cell. Row W2-S13 (the published analysis-report RESPONSE schema, `docs/contracts/investor-reporting/v1/responses/analysis-report.response.schema.json`, requires `extraction_validation` and forbids other members, so the OPAL_ENGINE sections answer is outside it) is INERT at runtime: `ops/` imports no jsonschema at runtime (`ops/status.py:189-192`), and the response schema is checked only by `ops/tests/test_owned_report.py:165-175` against the v1 projection. The contract needs a v2 sibling response schema: owner 1.0.0_SA_CTO (IRPT_BCKEND CONTRACTS), carried to the drain-end read; it does not block FWD-1. Worker's added refusal codes ANALYSIS_REPORT_OPAL_FORM, ANALYSIS_REPORT_PROVIDER and ANALYSIS_REPORT_VENDOR_MEMBER_ABSENT ACCEPTED (a v1 document without extraction_validation now refuses with a code where it raised KeyError).
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>issued</status>
+<status>complete</status>
 <round>6</round>
 <slot>~2</slot>
 <fabric>laptop</fabric>
