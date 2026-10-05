@@ -108,7 +108,7 @@ and validate it with `python .tools/proof-of-spec-check.py <instance>`. Report o
   downloads open under C3.
 - Pre-cut: `rl6.AC2` FAIL (no ledger; deployed = 4b6b823fae); floor `rl4.AC1` and `ht.AC2` PASS on live.
 
-<status>pending</status>
+<status>complete</status>
 <round>17</round>
 <slot>~15</slot>
 <fabric>site-z</fabric>
