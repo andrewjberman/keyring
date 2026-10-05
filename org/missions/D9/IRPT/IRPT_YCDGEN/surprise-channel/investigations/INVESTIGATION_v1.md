@@ -746,3 +746,83 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "world_is": "The three flags alone give no region and no S3 client; the runner's region comes from resident_bindings.json, which the lookup does not load. A tested default (us-east-1, the estate's region) with an override flag was added; the tests inject a fake S3 client and never reach this line."
 }
 ```
+
+## IRPT_YCDGEN-W2-S7 -- the model portfolio's portfolio_info answer names its benchmark by display name, not by a YCharts id; the map'
+
+```json
+{
+  "id": "IRPT_YCDGEN-W2-S7",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~2",
+  "surfaced_at": "2026-10-05T11:38:47Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "YCD-p-5: the model portfolio's portfolio_info answer names its benchmark by display name, not by a YCharts id; the map's benchmark call uses ^SPXTR from the COO's record",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-cottonwood/irpt/cottonwood/state/ycharts_responses/request=YCD-R4-20261005T0700Z-G/step=01_portfolio_info.json read-only: body_json[0] keys include `benchmark` (a string, the display name 'S&P 500 Total Return') and no benchmark id field; the other keys are security_id, display_security_id, id, security_name",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/COMPARISON_BENCHMARK_NEVER_RENDERS_20260927.md line 28 pairs the display name 'S&P 500 Total Return' with `^SPXTR`; overview_map.json has no p7 element naming a benchmark, so the source PDF's p7 names none",
+      "overview_map.json call benchmark_level_series: securities=id:^SPXTR,include:true,, (the same fund_data level-series params as portfolio_level_series); no vendor call was made by this worker"
+    ]
+  },
+  "spec_asserts": "Contract 5.3: the benchmark level series is one fund_data call for the benchmark the source PDF's p7 names, else the one portfolio_info's answer names.",
+  "world_is": "portfolio_info names a display name only; the id ^SPXTR is taken from a prior record (pairing name and id), not from this answer. If YCharts does not accept ^SPXTR as a fund_data security id the benchmark call answers non-2xx, benchmark_from_kept returns None and alpha and beta read INPUT_MISSING:benchmark; nothing is approximated. The issuer's live window confirms or corrects the id."
+}
+```
+
+## IRPT_YCDGEN-W2-S8 -- AC1 requires every map call to be read by an element, so the benchmark call is read by a new map element p7.e1
+
+```json
+{
+  "id": "IRPT_YCDGEN-W2-S8",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~2",
+  "surfaced_at": "2026-10-05T11:38:47Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "YCD-p-5: AC1 requires every map call to be read by an element, so the benchmark call is read by a new map element p7.e15 that the source PDF does not print",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~Y/round5/checks/p-5.AC1.py: unread = calls whose name is no element's source.call; PASS needs none",
+      "overview_map.json: element p7.e15 'Benchmark level series (input to Alpha and Beta)', kind chart, source call benchmark_level_series; the 6 statistic elements read portfolio_level_series, so no existing element could carry the benchmark call",
+      "the page renders p7.e15 as a line chart of the benchmark's level over the run window; the map now holds 254 elements (253 + 1) and 8 calls (plan 8 requests for 99 holdings)"
+    ]
+  },
+  "spec_asserts": "Contract 5.1: the Overview map keeps only the calls an element reads, counting YCD-p-5's benchmark call; contract C-MAP labels are printed label text only.",
+  "world_is": "The benchmark call can only stay in the map if some element reads it, so one element was added whose label is not printed text of the source PDF. Option for the issuer: drop p7.e15 and the check's read test for this call (the layout reads the benchmark by call name, BENCHMARK_CALL, not through an element)."
+}
+```
+
+## IRPT_YCDGEN-W2-S9 -- the held risk-free series is the portal's FRED 3M Treasury yield, coded for a 2-year history, so only the 1y w
+
+```json
+{
+  "id": "IRPT_YCDGEN-W2-S9",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~2",
+  "surfaced_at": "2026-10-05T11:38:47Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "YCD-p-5: the held risk-free series is the portal's FRED 3M Treasury yield, coded for a 2-year history, so only the 1y window of alpha, Sharpe and Sortino can compute; and one `statistic` per five-column element prints one window",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "comp-which 'risk-free rate treasury yield series' timed out inside its 90 s budget (rc, no result); comp-estate --definitions has no risk-free or Treasury definition; the search then fell back to Grep over data/ and infra/aws/lambda",
+      "infra/aws/lambda/fred-data-ingestion/ingest_yield_curve_fred.py: series DGS3MO displayed as 'US Treasury 3M', output s3://opal-data-portal-v2/json/macro/yield_curve_fred.json, list of {date, value}, fetch_series(lookback_years=2) and fetch_all_treasury_yields(lookback_years=2) (a coded default, the object itself not read: the order names no S3 read for it)",
+      "infra/aws/lambda/fred-macro-ingestion/ingest_fred_macro.py: group 'Treasury Yields' DGS3MO writes json/macro/macro_data_fred.json with a trailing-12-month window only",
+      "layout_overview.py RISK_FREE_SOURCE / risk_free_levels(): the yield becomes a level series (starts 100, grows at each earlier observation's yield, days/365); CLI --risk-free takes a copy of that object",
+      "overview_map.json p7.e02,e03,e05,e06,e07,e08: `statistic` is one id (the first column's window: alpha_1y, beta_1y, sharpe_1y, sortino_1y, max_drawdown_1y, var_monthly_1y) over five `columns`; compute_element reads `statistic` only, so each p7 element prints one value, and the three other OWN_SERIES elements with statistic null (p2.e08, p2.e13, p6.e22) still read STATISTIC_UNKNOWN:None"
+    ]
+  },
+  "spec_asserts": "Contract 5.3: a risk-free series Opal holds, named by table and field; 4.3: alpha, Sharpe and Sortino for 1y, 3y, 5y, 10y and 15y; 3.4: one statistic per computed element.",
+  "world_is": "Opal holds a Treasury 3M yield series (object and key named above) but its coded history is 2 years, so alpha_3y and longer would read SERIES_TOO_SHORT even with the series passed. The 1y window is the only one this wiring can make computable, which is why every p7 element carries its _1y id. A multi-column element needs a per-column compute (a dict of window to value) to print the five windows the PDF shows; that is not in this cell's contract and was not built."
+}
+```
