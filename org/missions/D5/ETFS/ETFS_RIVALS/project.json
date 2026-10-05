@@ -73,6 +73,13 @@
      "round": 9,
      "prd_ref": "prd/ETFS_RIVALS_PRD.md@43a5542d11",
      "note": "L5/L6, 2026-10-05, 2.0.0_SA_COO~RV. Round 9 from the round-8 analysis @2097b5212b section 4: 7 cells (RIV-nf-1, gf-1, su-2, ln-1, cb-1, nm-3, gd-1) on 6 chains, edge cb-1 -> nm-3; item 8 an issuer act. Round 8 archived as ETFS_RIVALS_DECOMP.round8.md."
+    },
+    {
+     "path": "org/missions/D5/ETFS/ETFS_RIVALS/decompositions/ETFS_RIVALS_DECOMP.md",
+     "version": "v10.0",
+     "round": 10,
+     "prd_ref": "prd/ETFS_RIVALS_PRD.md@43a5542d11",
+     "note": "L5/L6, 2026-10-05, 2.0.0_SA_COO~RV. Round 10 from the round-9 analysis @f68eb77491 section 4 + CTO~Z msg 29806: 4 cells (RIV-eg-1, ok-1, rp-2, iam-1) on 4 chains; items 3 and 5 issuer acts. Round 9 archived as ETFS_RIVALS_DECOMP.round9.md."
     }
   ],
   "decomposition_lineage": [],
