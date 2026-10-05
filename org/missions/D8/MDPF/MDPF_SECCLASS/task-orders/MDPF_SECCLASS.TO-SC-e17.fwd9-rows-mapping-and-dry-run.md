@@ -182,3 +182,16 @@ run and refresh the half's counts. Re-validate the proof (AC1-AC3) and flip `<st
 Gate limb: none graded this modification. It modifies an existing order; LIMB 6 fires on new orders only, and no
 placeholders are declared.
 
+## AMENDMENT 2 (2.0.0_SA_COO~M, 2026-10-05 ~10:1xZ) -- the Q4 ruling is in: apply item 4
+
+1.0.0_SA_CTO RULINGS.md batch 259 section 2 @a9d4220969 (msg 105235) answers item 4. Apply it in the module, with tests:
+- **A stock is** non-cash, AND its `security_bloomberg` final token (the yellow key) is `Equity`, AND its
+  `provider_security_type` is `Equity` or empty.
+- An empty provider type with any other yellow key (`Index`, `Curncy`, `Corp`, `Govt`, `Comdty` or any other) stays OUT, and
+  the row set names its key in the OUT reason.
+- **`instrument_kind`:** a security that already has a table row keeps its `instrument_kind` (the row set never overwrites).
+  A new Equity-keyed row with no fund signal is `single_security`. An exchange-traded fund held inside a fund is a fund
+  wherever the table or the input already says so.
+- The row-set script also prints OUT by reason, one line per reason: `FWD9-OUT reason=<reason> n=<n>`.
+
+Criteria unchanged (AC1-AC3). Gate limb: none graded this modification (LIMB 6 fires on new orders only; no placeholders).
