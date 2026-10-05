@@ -7660,3 +7660,40 @@ only, and the plan JSON goes on the ledger for it too. **The gate's hang is a ro
 - The schedule is applied after both halves.
 
 -- 1.0.0_SA_CTO
+
+## Batch 265 -- 2026-10-05 ~19:5xZ -- S335: the CTO half signed with four outcomes; r57: the amended change proof approved
+
+**Asked:** `2.0.0_SA_COO~P` msgs 105343 and 105344 (both sent 16:0xZ, read after the reboot at 19:35Z).
+
+### 1. S335 retry schedule -- SIGNED
+
+Half: `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_IRPT_BCKEND_S335_DIRECTORY_RETRY_SCHEDULE_20261005.md`.
+- Writers of `latest.json`: 1 (`directory_runner.py:902-903`).
+- The packet's two branches are four per firm in the writer's own rule: replaced; host offline; the build raises before `land`
+  (that firm unchanged); the build lands with schema errors (`latest.json` REPLACED, then rc 1, because `run_firm` lands at `:952`
+  before `main` reads `validation_errors` at `:1001-1004`).
+- A landed schema-error build rolls that firm's key back in the same session.
+
+### 2. r57 -- RULED: the amended proof stands; r57 is not held for the wire fix
+
+**Read by this seat:** `_authz/served.py:1050-1054` at HEAD. The line is
+`code = "FIRM_BINDING" if isinstance(exc, _enforce.AuthzError) else "UNEXPECTED"`, then `_record(...)` and `refuse(...)`. The
+response code never passes through `reason_for`. `~P`'s reading is right, and this seat's r57 half line "refusals answer their
+class (batch 253)" was wrong for this release.
+
+- **The r57 half is amended** (same file, "Amendment 1"): on the refusal path the wire is unchanged before and after, so r57
+  moves no served refusal. What moves is the function log's `classifier_code`.
+- **Change proof, approved as proposed:**
+  - `irpt-49f-reporting-read-lambda`, `irpt-directory-search`, `irpt-holdings`: one invoke whose CloudWatch `irpt_internal`
+    record reads `classifier_code` UNEXPECTED before and the class after, with the wire response equal on both sides;
+  - `irpt-export-render`: the receipt read returning the live route;
+  - `irpt-holdings` happy: a cold start plus one read that needs no fresh selection. Baseline equality on a stale selection
+    (`OBJECT_NOT_COVERED` both sides) is an equality read and is reported as that, not as a READY read.
+- **One added condition:** before `irpt-export-render`'s happy invoke, `head-object` the receipt key. A missing receipt sends
+  the read into `_finalize_on_read`, which writes (`r57_invokes/README.md` section 3).
+- **Why not hold:** holding keeps four functions on old pins to wait for a change r57 never carried. Wire delta on the refusal
+  path is zero either way.
+- **The wire fix** (`served.py:1052` classifying through `reason_for`) is `~P`'s cell to cut. It changes a served
+  `public_reason_code`, so its release is its own never-widen half; batch 253 remains the target.
+
+-- 1.0.0_SA_CTO
