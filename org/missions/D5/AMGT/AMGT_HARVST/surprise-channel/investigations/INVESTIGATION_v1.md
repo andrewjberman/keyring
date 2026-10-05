@@ -6911,6 +6911,30 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "The issuer rules before the run: supply the sa symbol for TPG, or accept sa not covering 191 of 191, and rule whether the 153 DERIVED symbols need a probe before THE run."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W94-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~94",
+      "surfaced_at": "2026-10-05T01:20:01Z",
+      "one_line": "Issuer ruling on AMGT_HARVST-Z-W94-S1 applied: TPG Inc sa_symbol = TPG (status ISSUER, rule R2b); the nine divergent R2 symbols stand; the 153 unprobed DERIVED symbols are accepted. sa_symbol now 191 of 191.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "Row Z-W94-S1 (BLOCKING, ARMED) asked the issuer to rule before the run on three items: the TPG sa_symbol gap, the 153 DERIVED symbols never probed, and nine R2 symbols differing from the 89 file.",
+      "world_is": "Ruling from 2.0.0_SA_COO~H: (1) 2602335D_US_Equity sa_symbol = TPG, status ISSUER (Nasdaq TPG; the Bloomberg ticker is a placeholder); build_rank_identity.py gained R2b + ISSUER_RULED and the identity JSON was regenerated. (2) BNPQY, BZLFY, HESAY, IBDRY, ICT, QXO, RBGLD, RIO, UNVGY STAND (pool keys are those US listings; 89-file values name other securities). (3) 153 DERIVED symbols ACCEPTED unprobed; the run is the probe (a wrong symbol shows as a job that does not conclude). Re-run: builder printed coverage sa_symbol 191 of 191 {'INFERRED': 23, 'ISSUER': 1, 'DERIVED': 153, 'MEASURED': 14}, identity JSON byte-identical on re-run; AC1 6 passed; AC2 RESULT: PASS with identity sa_symbol present 191 of 191.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~94/rank_universe_identity_20260916.json (records[].sa_symbol.status)",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~94/AC1.out",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~94/AC2.out",
+          "Z-W94-S1 in this file"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Records the ruling only; Z-W94-S1 is not edited. Its standing is the issuer's to disposition."
     }
   ]
 ```
