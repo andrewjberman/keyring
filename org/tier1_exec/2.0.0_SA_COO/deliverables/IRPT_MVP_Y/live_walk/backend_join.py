@@ -14,7 +14,8 @@ from the HAR's own response Date headers (median, 1 s resolution) and applied be
 Per hop: method, route, handler, HTTP status, page ms, the REQ-/UP- ids the hop carried (URL, request body, response
 body), and its invocation's RequestId, START, Duration, Init Duration, Max Memory, plus the queue ms (START - hop start).
 Then, per REQ- id: the irpt-jobs row's state and time fields (consistent GetItem). With --journal: the YCharts resident's
-journal lines that name any of the ids (SSM on the host; read-only). No value of a client holding, cookie or credential
+journal lines in the window -- any line naming an id, and every IRPT_ line but an idle poll (SSM on the host;
+read-only). No value of a client holding, cookie or credential
 is read or written: response bodies are scanned for ids only and never stored. ASCII only.
 """
 import argparse
@@ -168,14 +169,18 @@ def job_rows(tenant_by_req):
     return rows
 
 
-def journal_lines(ids, since_ms):
-    """The resident's journal lines naming any id, via SSM (read-only). The id list is the only pattern sent."""
+def journal_lines(ids, since_ms, until_ms):
+    """The resident's journal lines in the walk's window, via SSM (read-only): every line naming an id, and every
+    IRPT_ line except an idle poll (`IRPT_RESIDENT_POLL handled=0`). The resident names no REQ- id in its journal
+    (measured on Y-6 runs 1-3, 2026-10-05: an id-only grep read 0 lines), so its operations are joined by window."""
     import boto3
     ssm = boto3.client("ssm", region_name="us-east-1")
-    since = datetime.datetime.fromtimestamp(since_ms / 1000.0, datetime.timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
-    pattern = "|".join(sorted(ids))
-    script = ("journalctl -u %s --since '%s UTC' --no-pager -o short-iso | grep -E '%s' | cut -c1-400 | tail -400"
-              % (RESIDENT_UNIT, since, pattern))
+    def stamp(ms):
+        return datetime.datetime.fromtimestamp(ms / 1000.0, datetime.timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
+    pattern = "|".join(sorted(ids) + ["IRPT_"])
+    script = ("journalctl -u %s --since '%s UTC' --until '%s UTC' --no-pager -o short-iso | grep -E '%s' "
+              "| grep -v 'IRPT_RESIDENT_POLL handled=0' | cut -c1-400 | tail -400"
+              % (RESIDENT_UNIT, stamp(since_ms), stamp(until_ms), pattern))
     cid = ssm.send_command(InstanceIds=[RESIDENT_INSTANCE], DocumentName="AWS-RunShellScript",
                            Comment="2.0.0_SA_COO~Y read-only backend join (Y-H)",
                            Parameters={"commands": [script]})["Command"]["CommandId"]
@@ -219,7 +224,7 @@ def main(argv=None):
               "window": [utc(lo), utc(hi)], "handlers": handlers, "hops": hops, "unclaimed_invocations": spare,
               "ids": ids, "jobs": job_rows(tenant_by_req)}
     if a.journal and ids:
-        result["journal"] = journal_lines(ids, lo)
+        result["journal"] = journal_lines(ids, lo, hi)
     print("clock offset (AWS - laptop) %d ms from %d dated responses; window %s .. %s" % (offset, dated, *result["window"]))
     for h in hops:
         inv = h["invocation"] or {}

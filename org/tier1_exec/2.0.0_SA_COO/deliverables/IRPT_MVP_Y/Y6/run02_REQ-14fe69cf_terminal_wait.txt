@@ -1,0 +1,5 @@
+07:00:01Z state READY | outbox SENT | detail {"certification_sha256":"c56e4fc521d4295417f346541cc4e9e13506191e61789ce6fb72628a07aed20e","report_id":"RPT-ccf0377a1ae418fd49f9aa1d635e8c7e","revision":"f341e7fe500935c62f3547340f510853c29b38ee0fa6d5edf9236a49e4352375"}
+07:00:01Z TERMINAL READY -- holding the 20 s floor before the next body
+07:00:21Z floor held; next body may start
+
+[exited with code 0]

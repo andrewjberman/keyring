@@ -46,7 +46,7 @@ Your worktree is `C:/Users/AndrewBerman/Desktop/wk-irpt-dashbd-9`; run everythin
 <criterion id="DB15-1-AC2" cell_refs="DB-b-23"><invocation>python "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~P/checks/r15/p15_cells.py" . DB15-1-AC2</invocation><expect>DB15-1-AC2 PASS</expect></criterion>
 `DB15-1-AC2` -- the census that reads the file passes with 0 failed. Base: PASS.
 
-<expected_criteria>DB15-1-AC1,DB15-1-AC2</expected_criteria>
+<expected_criteria>DB15-1-AC1,DB15-1-AC2,DB15-1-AC3</expected_criteria>
 
 ## BOUNDS
 
@@ -56,6 +56,7 @@ Your worktree is `C:/Users/AndrewBerman/Desktop/wk-irpt-dashbd-9`; run everythin
 
 <paths>
 docs/contracts/investor-reporting/v1/routes.json
+infra/aws/lambda/investor-reporting/_authz/tests/test_unguarded_census.py
 org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~9/
 org/missions/D9/IRPT/IRPT_DASHBD/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-23.routes-json-reporting-routes.md
@@ -74,6 +75,27 @@ Validate it with `python .tools/proof-of-spec-check.py <instance> DB15-1-AC1,DB1
 
 **REPORT:** your final message gives the commit hashes, the two route_keys and guards you declared, each criterion's last line, and
 any row ids.
+
+## AMENDMENT 1 (2026-10-05 ~08:2xZ, issuer 2.0.0_SA_COO~P, on rows W9-S1 and W9-S2)
+
+`routes.json` is also Terraform's carrier. `infra/aws/terraform/investor-reporting/api/routes.tf:41-42` routes every row whose
+`status == "DECLARED"` through the api root's `route_functions`. That root does not hold irpt-49f-reporting-read-lambda, and the
+reporting-read root already creates both route keys. A DECLARED reporting row would break the api root's next plan and duplicate
+routes (W9-S2). The inventory still has to see them (S23). Ruled:
+1. Both reporting rows take `"status": "ROUTED_ELSEWHERE"` and a `routed_by` naming the Terraform root that creates them (read it
+   from the repo). `_denominator` states routed-here 19 + routed-elsewhere 2 = 21.
+2. **W9-S1:** in `infra/aws/lambda/investor-reporting/_authz/tests/test_unguarded_census.py`, replace the literal
+   `IN_LANE_FUNCTIONS` set (`:60-72`) with the set DERIVED from routes.json's handlers (the S220 rule: derive, never type). Keep
+   its mutant arm. The census must still fail an unguarded route. The file is added to the grant.
+3. `_contracts/tests/test_seam_paired.py` must pass. If it still requires a response schema for a non-DECLARED row, do not edit it:
+   file a row naming the line.
+
+Criterion `DB15-1-AC3` is added:
+<criterion id="DB15-1-AC3" cell_refs="DB-b-23"><invocation>python "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/2.0.0_SA_COO~P/checks/r15/p15_cells.py" . DB15-1-AC3</invocation><expect>DB15-1-AC3 PASS</expect></criterion>
+`DB15-1-AC3` -- both reporting routes are ROUTED_ELSEWHERE with `routed_by`, and the seam test passes with 0 failed. Base: FAIL.
+
+`<expected_criteria>` is now DB15-1-AC1,DB15-1-AC2,DB15-1-AC3. No gate limb graded this modification: LIMB 6 does not fire on a
+modification, and GATE (viii) grades the unchanged `<placeholders>NONE</placeholders>`.
 
 ---
 

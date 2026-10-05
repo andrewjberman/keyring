@@ -1462,3 +1462,170 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Resolves MDPF_SECCLASS-S23."
 }
 ```
+
+
+## MDPF_SECCLASS-W13-S1 -- a named BLOOMBERG row is listed in the comparison picker but refused by the comparison resolver
+
+```json
+{
+  "id": "MDPF_SECCLASS-W13-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~13",
+  "surfaced_at": "2026-10-05T07:55:00Z",
+  "one_line": "A BLOOMBERG row that carries a `name` is LISTED in the comparison picker (build_catalogue offers key/ticker 'BBG:REL:LN'), but maintained_sources._classified_etf refuses that key (CLASSIFIED_ETF_TICKER is a bare-ticker grammar), so the list offers a comparison the resolver rejects.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M (rows ACT gate; asks 2.0.0_SA_COO~Y for the catalogue filter if the rows are named)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R7_BBG_READER_CENSUS_20261005.json reader comparison_catalogue.py, NAMED PROBE in its evidence: a BBG row with name 'RELX PLC' IS offered in the picker list (1 entry for BBG:REL:LN) and passes the closed schema",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R7_BBG_READER_CENSUS_20261005.json reader maintained_sources.py: _classified_etf(BBG key) is None with or without a name (pattern [A-Z][A-Z0-9.]{0,9} does not match)",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/comparison_catalogue.py lines 105-118 (the CUSIP-only drop) and _scope/maintained_sources.py CLASSIFIED_ETF_TICKER"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "SC-e-16: no reader may refuse the row or serve it where it cannot be used; the census row (order face) carries no `name`, so the order's own row is not listed and TOLERATES.",
+  "world_is": "comparison_catalogue.build_catalogue lists every table row with a name and drops only identifier_namespace == CUSIP (a BLOOMBERG row passes); the closed ComparisonCatalogue schema accepts key 'BBG:REL:LN'; resolve_comparison_fields then reaches _classified_etf, whose regex [A-Z][A-Z0-9.]{0,9} does not match the key, and raises 'comparison key unknown or ambiguous'. etf_classification_scheduled.plan_rows writes `name: name or ticker`, so a FWD-9 row written through it WOULD carry a name.",
+  "notes": "ARMED from the first named BLOOMBERG row. Disarm, any one: the FWD-9 mapping writes no `name` on a BBG row (SC-e-17), or comparison_catalogue.classifications_reader drops identifier_namespace BLOOMBERG as it drops CUSIP (2.0.0_SA_COO~Y owns that file; ~M asks). The census grades the order's unnamed row TOLERATES; the named case is recorded here for the L9 reader, not graded."
+}
+```
+
+
+## MDPF_SECCLASS-W13-S2 -- scheduled write() drops security_bloomberg and listing_country
+
+```json
+{
+  "id": "MDPF_SECCLASS-W13-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~13",
+  "surfaced_at": "2026-10-05T07:55:00Z",
+  "one_line": "etf_classification_scheduled.write() drops `security_bloomberg` and `listing_country`: _WRITE_FIELDS omits both, so a BBG row written through it lands without the Bloomberg id the ruling puts in its own attribute.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M (SC-e-17's cell and the rows ACT)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "probe 2026-10-05: write([row with ticker BBG:NEWCO:LN, security_bloomberg 'NEWCO LN Equity', listing_country GB], table=<double>) -> [('BBG:NEWCO:LN','written')]; stored attributes: asset_class classified_by identifier_namespace instrument_kind last_updated low_confidence name sub_asset_class ticker updated_by (security_bloomberg False, listing_country False)",
+      "infra/aws/lambda/v2_portal/_shared/etf_classification_scheduled.py lines 108-110 (_WRITE_FIELDS)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "RULINGS batch 257 Q1: `security_bloomberg` = the Bloomberg id verbatim, in its own attribute; the order's census row carries `security_bloomberg` and `listing_country`.",
+  "world_is": "write() builds the item from _WRITE_FIELDS = (ticker, asset_class, sub_asset_class, instrument_kind, industry, classified_by, updated_by, name, identifier_namespace, classification_confidence, low_confidence). A planned row with security_bloomberg and listing_country is written WITHOUT both (the conditional put succeeds, no error).",
+  "notes": "Relevant to SC-e-17 (0.9.0_WK_MDPF_SECCLASS~14, the dry-run writer through write()) and to the R7 rows ACT. The file is outside this order's grant and outside the census; the fix is a one-line widening of _WRITE_FIELDS (or a BBG-specific writer) in the writer's own cell. Disarmed when a dry run shows both attributes in the planned item and in a stored one."
+}
+```
+
+
+## MDPF_SECCLASS-W13-S3 -- scoped_amgt reads a Bloomberg ticker by its bare first token, so the BBG rows do not reach it
+
+```json
+{
+  "id": "MDPF_SECCLASS-W13-S3",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~13",
+  "surfaced_at": "2026-10-05T07:55:00Z",
+  "one_line": "scoped_amgt reads the table by the FIRST space-separated token of a Bloomberg ticker ('REL LN' -> 'REL'), so a London ranking row joins the bare US `REL` row, never the BBG:REL:LN row FWD-9 adds; the new rows do not reach this reader.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R7_BBG_READER_CENSUS_20261005.json reader scoped_amgt.py evidence: NOTE on 'REL LN' joining the US `REL` control",
+      "lib/research/api/scoped_amgt.py lines 671-680 (bare = ticker.strip().split(' ')[0]; get_item Key bare)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-9 puts every Rival Funds stock into etf-classifications so non-US securities classify; SC-e-16 asks that no reader mis-key the new row.",
+  "world_is": "lib/research/api/scoped_amgt.py _classification_for_ticker: bare = first token; GetItem Key=bare. A BBG key passed as a ticker is read whole (joins the BBG row), but the ranking rows carry Bloomberg tickers ('REL LN'), which are reduced to the bare token. PRE-EXISTING: the BBG row neither causes nor cures it.",
+  "notes": "Not a tolerance failure of the BBG row (verdict TOLERATES): no reader reads the new key for a Bloomberg-ticker holding, so the rows add classification to the Rival Funds consumers only. If a ranking surface is meant to use them, its join key is a separate cell."
+}
+```
+
+
+## MDPF_SECCLASS-W13-S4 -- find_by_* lists BLOOMBERG rows (the CUSIP filter is namespace-specific); no caller
+
+```json
+{
+  "id": "MDPF_SECCLASS-W13-S4",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~13",
+  "surfaced_at": "2026-10-05T07:55:00Z",
+  "one_line": "find_by_asset_class / find_by_sub_asset_class drop CUSIP rows (SC-e-14 repair a) but list BLOOMBERG rows; the client's _drop_cusip_rows tests identifier_namespace != 'CUSIP' only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R7_BBG_READER_CENSUS_20261005.json reader etf_classifications_dynamodb.py (three copies): evidence 'find_by_* has ZERO functional call sites'",
+      "infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py lines 116-120 (_drop_cusip_rows)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "SC-e-14 repair (a): no find_by_* result carries a key that is not a ticker classification.",
+  "world_is": "The three client copies (_shared and the two Lambda copies) return a BBG:... row in find_by_asset_class('equity') and, when sub_asset_class is present, in find_by_sub_asset_class. The functions have zero functional call sites in the repo (tests only), so nothing consumes the list today.",
+  "notes": "INERT: no caller. Armed only if a caller of find_by_* is added before the filter is widened beyond the CUSIP namespace."
+}
+```
+
+
+## MDPF_SECCLASS-W13-S5 -- the R6 census check reads stale on the current tree
+
+```json
+{
+  "id": "MDPF_SECCLASS-W13-S5",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~13",
+  "surfaced_at": "2026-10-05T07:55:00Z",
+  "one_line": "The round-6 census check r6_model_reader_census.py reads STALE on the current tree: BD C_06's deciding line moved (FAILS-CONTRACT) and three investor-reporting files are UNCENSUSED, so it no longer prints MODEL-READER-TOLERATED.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bare run of the R6 check in worktree wk-secclass-r7-13, 2026-10-05 (tail of its output)",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R7_BBG_READER_CENSUS_20261005.json denominator.added_since_round6 lists the readers this census adds (E_25, the Cottonwood library and its three gold consumers, maintained_sources, request_composition, prospect_submission, generate_installed, write-model-rows, the ComparisonCatalogue wire type)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "R6 census: 34 readers, MODEL-READER-TOLERATED, zero UNCENSUSED (R6_MODEL_READER_CENSUS_20260930.json).",
+  "world_is": "A bare run of r6_model_reader_census.py at CLOUD 85c0f94853 prints readers=37 tolerates=28 read_only=8 fails_contract=1, with `deciding line missing in data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py: canonical_subs.append(classifier.get_sub_asset_class(ticker, name))` and UNCENSUSED for _scope/maintained_sources.py, reports/request_composition.py and ycharts/generate/prospect_submission.py.",
+  "notes": "The R6 record file is a dated record and stays; this census supersedes its reader set for the BLOOMBERG question (it imports the R6 table double, not its verdicts). The R6 check is outside this order's grant and is not edited."
+}
+```
+
+
+## MDPF_SECCLASS-S25 -- W13-S1 / W13-S2 disarmed by holding the FWD-9 rows act until the writer carries the BLOOMBERG fields
+
+```json
+{
+  "id": "MDPF_SECCLASS-S25",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-05T08:24Z",
+  "one_line": "W13-S1 and W13-S2 (ARMED, disarm owner 2.0.0_SA_COO~M) disarmed by HOLD: the FWD-9 rows act is the issuer's own act and does not run until etf_classification_scheduled.write() carries security_bloomberg and listing_country (W13-S2) and no BLOOMBERG row reaches the comparison picker under a key its resolver refuses (W13-S1).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "SC-e-16 drained @c051a128d9; the issuer re-ran its check on CLOUD 2026-10-05 08:2xZ: BBG-READER-CENSUS readers=45 tolerates=34 read_only=11 crashes=0 refuses=0 miskeys=0 fails_contract=0, BBG-READER-TOLERATED; proof VALID",
+      "W13-S2: _WRITE_FIELDS in infra/aws/lambda/v2_portal/_shared/etf_classification_scheduled.py omits security_bloomberg and listing_country (worker write against the table double); contract 0.4.0 @a8bca9d398 REQUIRES security_bloomberg on BLOOMBERG rows",
+      "W13-S1: a BBG row carrying name is listed by the comparison catalogue while maintained_sources._classified_etf refuses its key"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "No write path is open: the rows act is held by its own issuer, and SC-e-17's writer refuses --write without a signed half. The two fixes ride an amendment to TO-SC-e17 when its worker reports, before the half is signed.",
+  "spec_asserts": "Contract 0.4.0: security_bloomberg is required on BLOOMBERG rows; every reader tolerates a BLOOMBERG row.",
+  "world_is": "The census tolerates the row, but the one writer path drops two contract fields and one picker would list a key it cannot resolve.",
+  "notes": "Resolves the armed standing of MDPF_SECCLASS-W13-S1 and MDPF_SECCLASS-W13-S2."
+}
+```
