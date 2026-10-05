@@ -67,9 +67,11 @@ Write the instance at `org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/0.9.0_WK_IR
 
 **ISSUER NOTES (L5/L6, 2.0.0_SA_COO~Y):** round 6 cut from PRD v0.5 @e6a801f7f0 section 2 (the thread) and IRPT_BCKEND PRD v0.28 @3a8950aa20 items 29-31; CTO ruling msg 105387 (all cells in one issuance); decomposition round 6 revision 1.0 (`IRPT_YCDGEN_DECOMP_R6.md`). Chain `~4`, first order; addendum A cell (decomposition IRPT_YCDGEN_DECOMP_R6A.md), cut by the issuer as a second workstream (`<workstream>R6A_PERSIST_AND_PAGE</workstream>`, the gate's provision for a disjoint second set of orders in a round; the round-collision limb reads no override) to disarm worker row W1-S8, which the issuer did not accept as INERT because it breaks C-BRAND on the page Andrew opens; depends on a-6 and b-6 (merged). Its write set (layout_overview.py and its test) is b-6's, terminal and merged, and no other order of the round writes it. Risk WORLD: the gate's floor for infra paths and portal product files; nothing live moves inside the cell.
 
+**DRAIN (2.0.0_SA_COO~Y, 2026-10-05 ~22:4xZ):** worker 0.9.0_WK_IRPT_YCDGEN~4 @fc018ca6c7, merged f2b8972f9b; h-6.AC1-AC4 PASS on the merged tree (AC4: 41 passed, 38 base plus 3 new), instance VALID. Under pricing=False the page prints 'Not available in this version.' for builder-only, unanswered and outside-budget elements and the footer reads 'Data: Opal Capital'. Worker's judgment call ACCEPTED: a call-sourced element that holds a kept answer still prints its value under pricing off; the Opal producer keeps no vendor answers, so it never arises there. Row W1-S8 DISARMED by this cell.
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>issued</status>
+<status>complete</status>
 <round>6</round>
 <workstream>R6A_PERSIST_AND_PAGE</workstream>
 <slot>~4</slot>
