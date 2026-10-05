@@ -17767,5 +17767,65 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
    "git ls-files over deliverables/0.9.0_WK_AMGT_RESAPP~6 lists price_axis_rows_2026-09-10.json only; the 2026-10-01 and 2026-10-02 copies are untracked."
   ]
  }
+},
+{
+ "id": "AMGT_RESAPP-Z-W233-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~233",
+ "surfaced_at": "2026-10-05T16:40:00Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "one_line": "Silver stores the original link in more fields than the task order names: barrons 70 of 170 and sa 41 of 11429 articles lack the named field; 29 ft/wsj articles carry a url.",
+ "hazard_standing": "INERT",
+ "spec_asserts": "AMGT-au-3 items: bbg url, barrons canonicalUrl and sa links.self carry the link; ft and wsj store no link (so url null with a reason).",
+ "world_is": "Newest silver per article, read through publication_gold._iter_latest_articles at 2026-10-05: barrons 170 articles, 55 have canonicalUrl null with sourceUrl set (backfill form) and 15 are normalised records with top-level url; sa 11429 articles, 41 have links null but a top-level url (normalised record); bbg 1733 articles, 11 carry no link in any field; ft 14 and wsj 15 articles (of 185 and 454) carry a top-level url. article_url therefore reads barrons canonicalUrl then sourceUrl then url, and sa links.self then url, so the dry build reads barrons 162 of 162 and sa 10220 of 10220 mention rows with a url. ft and wsj are left null as ordered, so 29 stored ft/wsj links are not served and those items say the copy carries no link. Not changed: whether ft/wsj should read url is the issuer's call.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~233/dry_build_urls.txt",
+   "probe over _iter_latest_articles, counts above, run in worktree C:/tmp/r71-233 on the branch from the issuance commit"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W233-S2",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~233",
+ "surfaced_at": "2026-10-05T16:40:30Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "one_line": "The producer's own securities reader holds 53 of the 95 covered names, so the dry build covers 53 names, not 95.",
+ "hazard_standing": "INERT",
+ "spec_asserts": "AMGT-au-3 item 4: build the mention rows for the covered names (covered_security_keys, 95) with the producer's own readers.",
+ "world_is": "universe_securities.build() reads the newest pool universe object (pool:universe/v1/2026-09-16.json, 191 keyed names, as_of 2026-09-16); 42 of the 95 covered keys (e.g. 1299_HK_Equity, ADBE_US_Equity, AZN_LN_Equity) are not in its names list, so no alias set exists for them and the dry build skips them. Per-source rows are therefore over 53 names. The next gold rebuild reads the same securities and has the same 53-name reach unless the universe object is refreshed.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "covered_security_keys() 95; universe_securities.build() securities 191, intersect 53; 42 covered keys absent from the universe document's 250 names",
+   "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~233/dry_build_urls.txt first line"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W233-S3",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~233",
+ "surfaced_at": "2026-10-05T16:43:43Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "one_line": "The new url key on mention_rows fails lib/research/harvest/test_aj7_gold_title_precision.py::test_iv_pre_existing_fields_byte_identical, a file outside this order's paths.",
+ "hazard_standing": "INERT",
+ "spec_asserts": "AMGT-au-3 item 1: mention_rows copies the link into a new url key; paths list publication_gold.py and test_mention_url.py in harvest, not test_aj7.",
+ "world_is": "test_aj7 strips only NEW=('title','published_precision') from the rows before comparing to its byte pin, so every new mention_rows key fails it. Result in worktree C:/tmp/r71-233: lib/research/harvest 1 failed, 352 passed; the one failure is that test. The fix is one word, adding 'url' to NEW at test_aj7_gold_title_precision.py line 36, which this order may not write. Left unedited. Without it the drain's harvest suite is red on this commit.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "python -m pytest -q lib/research/harvest at the worktree HEAD: 1 failed, 352 passed",
+   "test_aj7_gold_title_precision.py:36 NEW and :78-80 the pin comparison"
+  ]
+ }
 }]
 ```
