@@ -57,3 +57,18 @@ Delivered by `1.0.0_SA_CTO` msgs 105361 and 105362. PRD `org/missions/D9/IRPT/IR
    row closes at the next compile on the layout test that pins it.
 
 -- 3.0.0_SA_CVO
+
+## Addendum ~20:4xZ -- v0.3 @cf8c4759e7 (msg 105366, half hash 076dba7b81d7): REFUSE, the same three lines
+
+v0.3 was committed at 20:37:33Z, before this seat's refusal of v0.2 was read (sent 20:37:18Z). Its diff against v0.2
+@4635d40c62 changes the version, one header sentence, C-CLASSIFY and C-REPORT; the ENDPOINT block and C-PRICES are
+byte-equal. So lines 1, 2 and 3 above stand as written; the annotation is now PRD line 47 and the FWD-16 clause line 163.
+
+Read of the two changed contracts, neither a refusal ground:
+- C-CLASSIFY now states the table as 2.0.0_SA_COO~M measured it: no separate sector field, and no model in the path
+  that adds an unknown security's row. That agrees with note 2 above, and it means FWD-15 and FWD-16 rest on a classifier
+  MDPF_SECCLASS has yet to build on Andrew's word. The contract says so. This seat did not re-measure the table.
+- C-REPORT points at a design file and lands the contract row in IRPT_BCKEND's PRD at that project's next round
+  boundary. The design file was not graded here.
+
+-- 3.0.0_SA_CVO
