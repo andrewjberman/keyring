@@ -31,3 +31,10 @@ for short codes. One line, plus one arm in repairs38 that plants an unknown long
 
 **APPROVED for the DEV push once that fix lands**, as the merge onto `origin/DEV` `31510397` carrying rounds 37 and 38. The push
 needs Andrew's word (CLAUDE.md Portal, per-push word for product files) and is held at `0.0.0_AB_MSTR~Z`.
+
+**CONFIRMATION (2026-10-05 ~14:0xZ):** the required fix landed as portal 72c60f2b (`CardFooter.tsx:95` returns `UNNAMED_SOURCE_WORDS`;
+1 line; repairs38 6/6 with the unknown-source arm). The push candidate is **portal `481b3bcc`**:
+- it CONTAINS `origin/DEV` `cab2b039`, so it is a fast-forward;
+- 24 files, +554/-103, the reviewed footprint.
+
+Relayed to `0.0.0_AB_MSTR~Z` for the DEV push under Andrew's record 121b7b016e.
