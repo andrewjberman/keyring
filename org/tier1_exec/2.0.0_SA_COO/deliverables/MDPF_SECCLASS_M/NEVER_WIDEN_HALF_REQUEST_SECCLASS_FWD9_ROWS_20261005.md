@@ -1,8 +1,13 @@
 # Never-widen half, MDPF_SECCLASS FWD-9 -- the Rival Funds universe rows (CTO rulings batch 257 Q1, Q3, Q4, item 6; batch 259 section 2)
 
 **Author:** `0.9.0_WK_MDPF_SECCLASS~14` for `2.0.0_SA_COO~M`, 2026-10-05 (cell `SC-e-17`, amendments 1 and 2 applied). **For:** `1.0.0_SA_CTO`, second half.
-**Status: COO half SIGNED for BRANCH 1 (BLOOMBERG, 626 rows) 2026-10-05 11:4xZ; BRANCH 2 (TICKER, 31 rows) HELD; CTO half
-UNSIGNED. The act is NOT RUN, and its writer REFUSES `--write` until three preconditions hold (below).** Ruling: batch 257 item 6 ("the FWD-9 row write is served output, under its own never-widen half (CTO+COO), with the
+**Status: BRANCH 1 ACTED 2026-10-05 12:57-13:07Z (both halves signed it; batch 261's condition met @c3fc274af4): 626 of 626
+BBG keys present and matching (`FWD9-READBACK namespace=BLOOMBERG keys=626 match=626 differs=0 absent=0 table_count=3492`);
+ledger `secclass-fwd9-rows-m-20261005` CLOSED. The writer printed `WRITTEN 625 of 626` with `BBG:8354:JP` left alone: its row
+reads `last_updated` 12:57:16Z (this act's first second), so the put landed and a retried put met its own row (branch B).
+Acceptance 2 does not apply as written: the writer plans from the set file, not the live table, so a second dry run still
+prints `plan=626`; the read-back's 626 present keys stand in for it. BRANCH 2 (TICKER, 31 rows, plus W14-S5's nine
+candidates per batch 261) HELD for the held census.** Ruling: batch 257 item 6 ("the FWD-9 row write is served output, under its own never-widen half (CTO+COO), with the
 dry run first").
 
 ## The act
